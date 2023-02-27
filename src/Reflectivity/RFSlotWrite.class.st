@@ -22,7 +22,7 @@ RFSlotWrite >> object: anObject [
 
 { #category : #accessing }
 RFSlotWrite >> value [
-	^variable write: assignedValue to: object 
+	^variable write: assignedValue to: object
 ]
 
 { #category : #accessing }

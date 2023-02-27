@@ -8,6 +8,10 @@ Class {
 }
 
 { #category : #operations }
+SDLOSXPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
+]
+
+{ #category : #operations }
 SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	| aParam cocoaWindow wmInfo selector |
@@ -19,9 +23,8 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	selector := self lookupSelector: 'setTitleWithRepresentedFilename:'.
 
 	self sendMessage: selector to: cocoaWindow getHandle with: aParam.
-	
-	self release: aParam.
 
+	self release: aParam
 ]
 
 { #category : #'ffi-calls' }
@@ -31,7 +34,7 @@ SDLOSXPlatform >> ffiLibraryName [
 ]
 
 { #category : #initialization }
-SDLOSXPlatform >> initPlatformSpecific [ 
+SDLOSXPlatform >> initPlatformSpecific [
 	| sel cls |
 
 	sel := self lookupSelector: 'sharedApplication'.
@@ -49,34 +52,31 @@ SDLOSXPlatform >> lookupClass: aString [
 SDLOSXPlatform >> lookupSelector: aString [
 
 	^ self ffiCall: #(void* sel_registerName(const char *aString))
-
 ]
 
 { #category : #'utilities - objectiveC' }
-SDLOSXPlatform >> nsStringOf: aString [ 
+SDLOSXPlatform >> nsStringOf: aString [
 
 	| class selector encoded param |
 	class := self lookupClass: 'NSString'.
 	selector:= self lookupSelector: 'stringWithUTF8String:'.
-	
+
 	encoded := aString utf8Encoded.
 	param := ByteArray new: encoded size + 1.
 	param pinInMemory.
-	
+
 	LibC memCopy: encoded to: param size: encoded size.
 	param at: encoded size + 1 put: 0.
-		
-	^ self sendMessage: selector to: class with: param
 
+	^ self sendMessage: selector to: class with: param
 ]
 
 { #category : #'utilities - objectiveC' }
-SDLOSXPlatform >> release: aObjCObject [ 
+SDLOSXPlatform >> release: aObjCObject [
 
 	| releaseSelector |
 	releaseSelector:= self lookupSelector: 'release'.
-	self sendMessage: releaseSelector to: aObjCObject.
-
+	self sendMessage: releaseSelector to: aObjCObject
 ]
 
 { #category : #'utilities - objectiveC' }

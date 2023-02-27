@@ -15,30 +15,30 @@ Class {
 { #category : #'instance creation' }
 ReMissingMethodCritique class >> for: anEntity by: aRule class: aClass selector: aSymbol [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeRule: aRule target: anEntity class: aClass selector: aSymbol;
-		yourself 
+		yourself
 ]
 
 { #category : #actions }
 ReMissingMethodCritique >> beShouldBeImplemented [
 	"set the sorce code of the method-to-be-created to shouldBeImplemented"
 
-	source := '^ self shouldBeImplemented' 
+	source := '^ self shouldBeImplemented'
 ]
 
 { #category : #actions }
 ReMissingMethodCritique >> beSubclassResponsibility [
 	"set the sorce code of the method-to-be-created to subclassResponsibility"
 
-	source := '^ self subclassResponsibility' 
+	source := '^ self subclassResponsibility'
 ]
 
 { #category : #accessing }
 ReMissingMethodCritique >> change [
 	"an 'add method' change that create the missing method"
-	
-	^ (RBRefactoryChangeFactory instance) 
+
+	^ (RBRefactoryChangeFactory instance)
 		addMethodSource: (self methodHeader), String cr, String tab, source
 		in: class
 ]
@@ -55,8 +55,8 @@ ReMissingMethodCritique >> initializeRule: aRule target: anEntity class: aClass 
 	self initializeRule: aRule target: anEntity.
 	class := aClass.
 	selector :=  aSymbol.
-	
-	tinyHint := class == self entity 
+
+	tinyHint := class == self entity
 		ifTrue: [ selector ]
 		ifFalse: [ class name, '>>#', selector ]
 ]
@@ -64,13 +64,16 @@ ReMissingMethodCritique >> initializeRule: aRule target: anEntity class: aClass 
 { #category : #private }
 ReMissingMethodCritique >> methodHeader [
 
-	 ^ ($: split: selector) allButLast
-		ifEmpty: [ selector ]
-		ifNotEmpty: [ :keywords |
-			| index |
-			index := 0.
-			keywords inject: '' into: [ :header :keyword |
-				header, keyword, ': arg', (index := index + 1) asString, ' ' ] ]
+	^ ($: split: selector) allButLast
+		  ifEmpty: [ selector ]
+		  ifNotEmpty: [ :keywords |
+			  | index argumentNames |
+			  argumentNames := (class subclasses anyOne >> selector)
+				                   argumentNames.
+			  index := 0.
+			  keywords inject: '' into: [ :header :keyword |
+				  index := index + 1.
+				  header , keyword , ': ' , (argumentNames at: index) , ' ' ] ]
 ]
 
 { #category : #testing }

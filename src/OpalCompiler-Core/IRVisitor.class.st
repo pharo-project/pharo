@@ -13,7 +13,6 @@ IRVisitor >> visitBlockReturnTop: blockReturnTop [
 
 { #category : #visiting }
 IRVisitor >> visitInstruction: instr [
-	 
 ]
 
 { #category : #visiting }
@@ -26,7 +25,7 @@ IRVisitor >> visitJumpIf: jumpIf [
 
 { #category : #visiting }
 IRVisitor >> visitMethod: method [
-	self visitNodes: method allSequences.
+	self visitNodes: method allSequences
 ]
 
 { #category : #visiting }
@@ -61,10 +60,6 @@ IRVisitor >> visitPopIntoTemp: tmp [
 
 { #category : #visiting }
 IRVisitor >> visitPushArray: pushArray [
-]
-
-{ #category : #visiting }
-IRVisitor >> visitPushClosureCopy: pushClosureCopy [
 ]
 
 { #category : #visiting }
@@ -129,7 +124,7 @@ IRVisitor >> visitSend: send [
 
 { #category : #visiting }
 IRVisitor >> visitSequence: sequence [
-	sequence do: [ :instr | self visitInstruction: instr].
+	sequence do: [ :instr | self visitInstruction: instr]
 ]
 
 { #category : #visiting }

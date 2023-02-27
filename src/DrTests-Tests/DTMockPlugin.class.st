@@ -17,7 +17,7 @@ DTMockPlugin class >> isAbstract [
 
 { #category : #'api - accessing' }
 DTMockPlugin class >> pluginName [
-	
+
 	^ 'Mock plugin for test'
 ]
 
@@ -32,20 +32,15 @@ DTMockPlugin class >> weight [
 ]
 
 { #category : #accessing }
-DTMockPlugin >> announcer [
-	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #accessing }
 DTMockPlugin >> hasBeenRun [
 	^ hasBeenRun
 ]
 
-{ #category : #api }
+{ #category : #initialization }
 DTMockPlugin >> initialize [
 
 	super initialize.
-	hasBeenRun := false.
+	hasBeenRun := false
 ]
 
 { #category : #api }
@@ -62,7 +57,7 @@ DTMockPlugin >> pragmaForResultTrees [
 
 { #category : #api }
 DTMockPlugin >> resultButtonHelp [
-	
+
 	^ 'Result help?'
 ]
 
@@ -74,12 +69,12 @@ DTMockPlugin >> runForConfiguration: aDTpluginConfiguration [
 
 { #category : #api }
 DTMockPlugin >> startButtonHelp [
-	
+
 	^ 'Help me!'
 ]
 
 { #category : #api }
 DTMockPlugin >> startButtonLabel [
-	
+
 	^ 'Mock start'
 ]

@@ -1,0 +1,1 @@
+# Contribute to base code## IntroductionThis help summarizes the process to contribute to the Pharo base code. Proposing a bug fix or enhancement is easy and relatively well documented. The following website contains a clear description of the change:	http://pharo.org/contribute-propose-fix  

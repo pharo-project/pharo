@@ -43,18 +43,16 @@ ZnEasy class >> delete: urlObject username: username password: password [
 		setBasicAuthenticationUsername: username password: password;
 		delete;
 		response
-	
 ]
 
 { #category : #operations }
 ZnEasy class >> get: urlObject [
 	"self get: 'http://stfx.eu/small.html'."
-	
+
 	^ self client
 		url: urlObject;
 		get;
 		response
-	
 ]
 
 { #category : #operations }
@@ -64,24 +62,36 @@ ZnEasy class >> get: urlObject username: username password: password [
 		setBasicAuthenticationUsername: username password: password;
 		get;
 		response
-	
 ]
 
 { #category : #operations }
 ZnEasy class >> getGif: urlObject [
 	"self getGif: 'http://zn.stfx.eu/zn/Hot-Air-Balloon.gif'."
-	
-	^ self 
-		getImageOfType: ZnMimeType imageGif 
-		fromUrl: urlObject	
+
+	^ self
+		getImageOfType: ZnMimeType imageGif
+		fromUrl: urlObject
+]
+
+{ #category : #private }
+ZnEasy class >> getImageOfType: mimeType fromUrl: urlObject [
+	| client |
+	(client := self client)
+		url: urlObject;
+		accept: mimeType;
+		enforceHttpSuccess: true;
+		enforceAcceptContentType: true;
+		get.
+	"ImageReadWriter does automatic type detection"
+	^ (self environment at: #ImageReadWriter) formFromStream: client entity readStream
 ]
 
 { #category : #operations }
 ZnEasy class >> getJpeg: urlObject [
 	"self getJpeg: 'http://stfx.eu/sun-fire-x2100.jpg'."
-	
-	^ self 
-		getImageOfType: ZnMimeType imageJpeg 
+
+	^ self
+		getImageOfType: ZnMimeType imageJpeg
 		fromUrl: urlObject
 ]
 
@@ -90,9 +100,9 @@ ZnEasy class >> getPng: urlObject [
 	"self getPng: 'http://pharo.org/files/pharo.png'."
 	"(self getPng: 'http://chart.googleapis.com/chart?cht=tx&chl=',
 		'a^2+b^2=c^2' urlEncoded) asMorph openInHand."
-	
-	^ self 
-		getImageOfType: ZnMimeType imagePng 
+
+	^ self
+		getImageOfType: ZnMimeType imagePng
 		fromUrl: urlObject
 ]
 
@@ -138,7 +148,7 @@ ZnEasy class >> put: urlObject data: entity [
 		url: urlObject;
 		entity: entity;
 		put;
-		response	
+		response
 ]
 
 { #category : #operations }
@@ -148,5 +158,5 @@ ZnEasy class >> put: urlObject data: entity username: username password: passwor
 		setBasicAuthenticationUsername: username password: password;
 		entity: entity;
 		put;
-		response	
+		response
 ]

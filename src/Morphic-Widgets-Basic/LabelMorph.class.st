@@ -18,7 +18,6 @@ Class {
 LabelMorph class >> example [
 	"self example"
 	<sampleInstance>
-	<exampleWidget>
 	^ (self newLabel: 'A Label') openInWindow
 ]
 
@@ -26,7 +25,6 @@ LabelMorph class >> example [
 LabelMorph class >> exampleDisable [
 	"self exampleDisable"
 	<sampleInstance>
-	<exampleWidget>
 	^ (self newLabel: 'A Label')
 		disable;
 		openInWindow
@@ -36,7 +34,6 @@ LabelMorph class >> exampleDisable [
 LabelMorph class >> exampleDisableInset [
 	"self exampleDisable"
 	<sampleInstance>
-	<exampleWidget>
 	^ (self newLabel: 'A Label')
 		disable;
 		disabledStyle: #inset;
@@ -47,7 +44,7 @@ LabelMorph class >> exampleDisableInset [
 { #category : #'instance creation' }
 LabelMorph class >> labelFont [
 	"in the future should access an instance variable"
-		
+
 	^StandardFonts defaultFont
 ]
 
@@ -77,7 +74,7 @@ LabelMorph >> adoptPaneColor: aColor [
 { #category : #protocol }
 LabelMorph >> disable [
 	"Disable the receiver."
-	
+
 	self enabled: false
 ]
 
@@ -108,19 +105,13 @@ LabelMorph >> drawOn: aCanvas [
 			in: (self stringBounds translateBy: 1)
 			font: self fontToUse
 			color: self theme lightBackgroundColor.
-	].
-
-
-
-
-		
-
+	]
 ]
 
 { #category : #protocol }
 LabelMorph >> enable [
 	"Enable the receiver."
-	
+
 	self enabled: true
 ]
 
@@ -173,7 +164,7 @@ LabelMorph >> getTextSelector: aSymbol [
 { #category : #initialization }
 LabelMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 	"Grrr, why do they do basicNew?"
-	
+
 	super initWithContents: aString font: aFont emphasis: emphasisCode.
 	self
 		disabledStyle: #plain;
@@ -200,7 +191,7 @@ LabelMorph >> interactionState: aSymbol [
 LabelMorph >> minHeight [
 	"Answer the receiver's minimum height.
 	based on font height."
-	
+
 	^self fontToUse height rounded max: super minHeight
 ]
 
@@ -237,7 +228,7 @@ LabelMorph >> stringColor [
 ]
 
 { #category : #updating }
-LabelMorph >> update: aSymbol [ 
+LabelMorph >> update: aSymbol [
 	"Refer to the comment in View|update:."
 
 	aSymbol == self getEnabledSelector ifTrue:

@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReBooleanPrecedenceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'BooleanPrecedenceRule'
 ]
 
@@ -31,7 +31,6 @@ ReBooleanPrecedenceRule >> initialize [
 			'`@object1 | `@object2 ~~ `@object3'
 			'`@object1 & `@object2 ~= `@object3'
 			'`@object1 & `@object2 ~~ `@object3' )
-		
 ]
 
 { #category : #accessing }

@@ -43,7 +43,6 @@ STONTestDomainObject class >> dummy [
  			with: #(#alpha #beta #gamma) atRandom 
 			with: #(#low #medium #high) atRandom);
 		yourself
-
 ]
 
 { #category : #'ston-core' }
@@ -75,7 +74,6 @@ STONTestDomainObject >> = anObject [
 														and: [ 
 															integer = anObject integer 
 																and: [ tags = anObject tags ] ] ] ] ] ] ] ]
-
 ]
 
 { #category : #accessing }
@@ -152,7 +150,7 @@ STONTestDomainObject >> hash [
 								bitXor: (boolean hash bitXor: (float hash bitXor: (bytes hash bitXor: (integer hash bitXor: tags hash)))))))
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONTestDomainObject >> initialize [
 	created := modified := DateAndTime now.
 ]

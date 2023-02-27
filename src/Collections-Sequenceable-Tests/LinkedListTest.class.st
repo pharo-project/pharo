@@ -4,8 +4,8 @@ A set of test cases which thoroughly test functionality of the LinkedList class.
 Class {
 	#name : #LinkedListTest,
 	#superclass : #TestCase,
-	#traits : 'TAddTest - {#testTAddWithOccurrences. #testTAddTwice. #testTWriteTwice} + TEmptyTest + TIterateTest + TIterateSequencedReadableTest + TPrintTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + (TCopySequenceableSameContents - {#testSortBy. #integerCollection}) + TCopySequenceableWithOrWithoutSpecificElements + TCopyTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TBeginsEndsWith + TRemoveTest + TSetArithmetic + TIncludesWithIdentityCheckTest + TStructuralEqualityTest + TOccurrencesTest + TSortTest',
-	#classTraits : 'TAddTest classTrait + TEmptyTest classTrait + TIterateTest classTrait + TIterateSequencedReadableTest classTrait + TPrintTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TConvertTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopyTest classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TRemoveTest classTrait + TSetArithmetic classTrait + TIncludesWithIdentityCheckTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSortTest classTrait',
+	#traits : 'TAddTest - {#testTAddWithOccurrences. #testTAddTwice. #testTWriteTwice} + TEmptyTest + TIterateTest + TIterateSequencedReadableTest + TPrintTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + (TCopySequenceableSameContents - {#testSortBy. #integerCollection}) + TCopySequenceableWithOrWithoutSpecificElements + TCopyTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TBeginsEndsWith + TRemoveTest + TSetArithmetic + TIncludesWithIdentityCheckTest + TStructuralEqualityTest + TOccurrencesTest + TSortTest + TSequenceableTruncatedToSize',
+	#classTraits : 'TAddTest classTrait + TEmptyTest classTrait + TIterateTest classTrait + TIterateSequencedReadableTest classTrait + TPrintTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TConvertTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopyTest classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TRemoveTest classTrait + TSetArithmetic classTrait + TIncludesWithIdentityCheckTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSortTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'nextLink',
 		'n',
@@ -32,13 +32,13 @@ Class {
 
 { #category : #requirements }
 LinkedListTest >> accessCollection [
-	^collectionWithoutEqualElements 
+	^collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> anotherElementNotIn [
 " return an element included  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -50,7 +50,7 @@ LinkedListTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 LinkedListTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -61,7 +61,7 @@ LinkedListTest >> collection [
 { #category : #requirements }
 LinkedListTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ LinkedList
 ]
 
@@ -74,13 +74,19 @@ LinkedListTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 LinkedListTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
 LinkedListTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ self oldSubCollection 
+	^ self oldSubCollection
+]
+
+{ #category : #requirements }
+LinkedListTest >> collectionWith5Elements [
+
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -98,13 +104,13 @@ LinkedListTest >> collectionWithElement [
 { #category : #requirements }
 LinkedListTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
 LinkedListTest >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -117,7 +123,7 @@ LinkedListTest >> collectionWithoutEqualElements [
 { #category : #requirements }
 LinkedListTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element "
-	^collectionWithoutNil 
+	^collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -128,13 +134,13 @@ LinkedListTest >> element [
 { #category : #requirements }
 LinkedListTest >> elementInForElementAccessing [
 " return an element inculded in 'accessCollection '"
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementInForIndexAccessing [
 " return an element included in 'accessCollection' "
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -145,19 +151,19 @@ LinkedListTest >> elementNotIn [
 { #category : #requirements }
 LinkedListTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementNotInForIndexAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementNotInForOccurrences [
 " return an element notIncluded in #collectionWithoutEqualElements"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -187,14 +193,14 @@ LinkedListTest >> indexInNonEmpty [
 { #category : #requirements }
 LinkedListTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #accessing }
@@ -204,8 +210,7 @@ LinkedListTest >> n [
 
 { #category : #accessing }
 LinkedListTest >> n: number [
-	n := number.
-	
+	n := number
 ]
 
 { #category : #accessing }
@@ -226,26 +231,26 @@ LinkedListTest >> nonEmpty [
 { #category : #requirements }
 LinkedListTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyMoreThan1Element [
-" return a collection that don't includes equl elements'" 
-	^collectionWithoutNil 
+" return a collection that don't includes equl elements'"
+	^collectionWithoutNil
 ]
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
@@ -255,8 +260,8 @@ LinkedListTest >> otherCollection [
 
 { #category : #requirements }
 LinkedListTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
-	^ collectionWithoutNil 
+" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -267,7 +272,7 @@ LinkedListTest >> result [
 
 { #category : #running }
 LinkedListTest >> setUp [
-	
+
 	super setUp.
 	list := LinkedList new.
 	link1 := 133.
@@ -287,26 +292,24 @@ LinkedListTest >> setUp [
 	 "so that we can recognize this link"
 	"nonEmpty := LinkedList with: link with: Link new."
 	"otherList := LinkedList with: Link new with: Link new."
-
 ]
 
 { #category : #requirements }
 LinkedListTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ sortedCollection
-	
 ]
 
 { #category : #requirements }
 LinkedListTest >> speciesClass [
-	
+
 	^LinkedList
 ]
 
 { #category : #requirements }
 LinkedListTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'accessCollection' "
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #running }
@@ -316,11 +319,11 @@ LinkedListTest >> tearDown [
 	link2 := nil.
 	link3 := nil.
 	link4 := nil.
-	
+
 	link := nil.
 	nonEmpty := nil.
 	otherList := nil.
-	
+
 	super tearDown
 ]
 
@@ -714,22 +717,22 @@ LinkedListTest >> test22addAll [
 	link6 := Link new.
 	link7 := Link new.
 	link8 := Link new.
-	
+
 	list
 		add: link1;
 		add: link2;
 		add: link3;
 		add: link4.
-		
+
 	listToBeAdded := LinkedList new.
 	listToBeAdded
 		add: link5;
 		add: link6;
 		add: link7;
 		add: link8.
-		
+
 	list addAll: listToBeAdded.
-	
+
 	self should: [(list at: 1) == link1].
 	self should: [(list at: 2) == link2].
 	self should: [(list at: 3) == link3].
@@ -737,7 +740,7 @@ LinkedListTest >> test22addAll [
 	self should: [(list at: 5) == link5].
 	self should: [(list at: 6) == link6].
 	self should: [(list at: 7) == link7].
-	self should: [(list at: 8) == link8].
+	self should: [(list at: 8) == link8]
 ]
 
 { #category : #tests }
@@ -827,6 +830,19 @@ LinkedListTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
+{ #category : #'tests - instance creation' }
+LinkedListTest >> testNewFromCollection [
+
+	|d|
+	d := LinkedList newFrom: #(a b c).
+
+	self assert: d firstLink value equals: #a.
+	self assert: d lastLink value equals: #c.
+
+	self assert: d firstLink nextLink value equals: #b.
+	self assert: d firstLink nextLink nextLink value equals: #c
+]
+
 { #category : #tests }
 LinkedListTest >> testRemoveAll [
 	| list2 |
@@ -853,55 +869,54 @@ LinkedListTest >> testSort [
 LinkedListTest >> testSwapAdjacent [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 3 with: 4.
 	self assert: (aList at: 3) equals: 2.
-	self assert: (aList at: 4) equals: 3.
+	self assert: (aList at: 4) equals: 3
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapAdjacentEnd [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 4 with: 5.
 	self assert: (aList at: 4) equals: 1.
 	self assert: (aList at: 5) equals: 2.
-	self assert: aList last equals: 2.
+	self assert: aList last equals: 2
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapAdjacentStart [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 1 with: 2.
 	self assert: (aList at: 1) equals: 4.
 	self assert: (aList at: 2) equals: 5.
-	self assert: aList first equals: 4.
+	self assert: aList first equals: 4
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapBasic [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 2 with: 4.
 	self assert: (aList at: 2) equals: 2.
-	self assert: (aList at: 4) equals: 4.
-
+	self assert: (aList at: 4) equals: 4
 ]
 
 { #category : #'tests - swap' }
 LinkedListTest >> testSwapStartAndEnd [
 	|aList|
 	aList := LinkedList with: 5 with: 4 with: 3 with: 2 with: 1.
-	
+
 	aList swap: 1 with: 5.
 	self assert: (aList at: 1) equals: 1.
 	self assert: (aList at: 5) equals: 5.
 	self assert: aList first equals: 1.
-	self assert: aList last equals: 5.
+	self assert: aList last equals: 5
 ]
 
 { #category : #'tests - adding' }

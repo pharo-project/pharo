@@ -7,8 +7,7 @@ TraitBehavior >> calypsoEnvironmentType [
 
 { #category : #'*Calypso-SystemQueries' }
 TraitBehavior >> includesMethodsAffectedBy: aSystemAnnouncement [
-	^aSystemAnnouncement affectsMethodsDefinedInClass: self 
-
+	^aSystemAnnouncement affectsMethodsDefinedInClass: self
 ]
 
 { #category : #'*Calypso-SystemQueries' }

@@ -34,7 +34,7 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'tests - after' }
@@ -624,13 +624,13 @@ ReflectivityControlTest >> testBeforeMethodPrimitive [
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec.
-	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.	
+	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.
 	methodNode link: link.
 	self assert: methodNode hasMetalink.
 	self assert: (ReflectivityExamples >> #examplePrimitiveMethod) class equals: CompiledMethod.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new examplePrimitiveMethod class equals: ByteString.
-	self deny: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.	
+	self deny: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.
 	self assert: tag equals: #yes.
 	self assert: (ReflectivityExamples >> #examplePrimitiveMethod) class equals: CompiledMethod.
 	link uninstall.
@@ -811,7 +811,6 @@ ReflectivityControlTest >> testConditionDisableEnableNoArguments [
 	link enable.
 	ReflectivityExamples new exampleMethod.
 	self assert: tag class equals: RBMessageNode
-
 ]
 
 { #category : #'tests - conditions' }
@@ -904,30 +903,30 @@ ReflectivityControlTest >> testFailingDoubleRWInstead [
 
 	|readLink readMO writeLink writeMO readSites writeSites|
 
-	readSites := (ReflectivityExamples>>#exampleLazyInit) 
+	readSites := (ReflectivityExamples>>#exampleLazyInit)
 		variableReadNodes select: [ :node | node name = 'singleton' ].
-		
-	writeSites :=  (ReflectivityExamples>>#exampleLazyInit) 
+
+	writeSites :=  (ReflectivityExamples>>#exampleLazyInit)
 		variableWriteNodes select: [ :node | node name = 'singleton' ].
-	
+
 	"default MO for rw -- bug manifests on install"
 	readMO := [ :object | object class classVarNamed: 'singleton' ].
 	writeMO := [ :object :newValue | object class classVarNamed: 'singleton' put: newValue ].
-		
-	readLink := MetaLink new 
-		metaObject: readMO; 
+
+	readLink := MetaLink new
+		metaObject: readMO;
 		selector: #value:;
 		control: #instead;
 		options: #(+ optionCompileOnLinkInstallation);
 		arguments: #(object).
-		
-	writeLink := MetaLink new 
-		metaObject: writeMO; 
+
+	writeLink := MetaLink new
+		metaObject: writeMO;
 		selector: #value:value:;
 		control: #instead;
 		options: #(+ optionCompileOnLinkInstallation);
 		arguments: #(newValue object).
-	
+
 	readSites do: [ :readNode | readNode link: readLink ].
 	writeSites do: [ :writeNode | writeNode link: writeLink ].
 	readLink uninstall.
@@ -939,22 +938,21 @@ ReflectivityControlTest >> testFailingDoubleRWInsteadSimplified [
 
 	|readLink readMO readNode|
 
-	readNode := ((ReflectivityExamples>>#exampleLazyInit) 
+	readNode := ((ReflectivityExamples>>#exampleLazyInit)
 		variableReadNodes select: [ :node | node name = 'singleton' ]) first.
 
 	"default MO for rw -- bug manifests on install"
 	readMO := [ :object | object class classVarNamed: 'singleton' ].
-		
-	readLink := MetaLink new 
-		metaObject: readMO; 
+
+	readLink := MetaLink new
+		metaObject: readMO;
 		selector: #value:;
 		control: #instead;
 		options: #(+ optionCompileOnLinkInstallation);
 		arguments: #(object).
-			
+
 	readNode link: readLink.
 	readLink uninstall
-
 ]
 
 { #category : #'tests - instead' }
@@ -1184,7 +1182,7 @@ ReflectivityControlTest >> testInsteadSequence [
 	self assert: tag isNil.
 	ReflectivityExamples new exampleAssignment.
 	self assert: tag equals: 'yes'.
-	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: CompiledMethod.
+	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: CompiledMethod
 ]
 
 { #category : #'tests - instead' }
@@ -1256,8 +1254,8 @@ ReflectivityControlTest >> testInsteadVariableWrite [
 ReflectivityControlTest >> testLinkOneShot [
 	| sendNode |
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		options: #(+ optionOneShot);
 		selector: #tagExec.
 	sendNode link: link.
@@ -1265,19 +1263,18 @@ ReflectivityControlTest >> testLinkOneShot [
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: tag equals: #yes.
-	self deny: sendNode hasMetalink.	
+	self deny: sendNode hasMetalink.
 	tag := nil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: tag isNil
-
 ]
 
 { #category : #'tests - options' }
 ReflectivityControlTest >> testLinkOptionDisabledLink [
 	| sendNode |
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		options: #(+ optionDisabledLink);
 		selector: #tagExec.
 	sendNode link: link.
@@ -1293,8 +1290,8 @@ ReflectivityControlTest >> testLinkOptionDisabledLink [
 ReflectivityControlTest >> testLinkoptionInlineCondition [
 	| sendNode |
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		options: #(- optionInlineCondition);
 		condition: [ true ];
 		selector: #tagExec.
@@ -1322,8 +1319,8 @@ ReflectivityControlTest >> testLinkoptionInlineCondition [
 ReflectivityControlTest >> testLinkoptionInlineMetaObject [
 	| sendNode |
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		options: #(- optionInlineMetaObject);
 		selector: #tagExec.
 	sendNode link: link.

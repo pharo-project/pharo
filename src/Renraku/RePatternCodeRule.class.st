@@ -8,21 +8,21 @@ Class {
 }
 
 { #category : #testing }
-RePatternCodeRule class >> isAbstract [ 
+RePatternCodeRule class >> isAbstract [
 
 	 ^ self = RePatternCodeRule
 ]
 
 { #category : #testing }
 RePatternCodeRule class >> isVisible [
-	
+
 	^ self name ~=  #RePatternCodeRule
 ]
 
 { #category : #testing }
 RePatternCodeRule class >> noteCompilationOf: aSelector meta: isMeta [
 
-	 aSelector == #initialize & isMeta not ifTrue: [ 
+	 aSelector == #initialize & isMeta not ifTrue: [
 		ReRuleManager reset ]
 ]
 
@@ -30,16 +30,16 @@ RePatternCodeRule class >> noteCompilationOf: aSelector meta: isMeta [
 RePatternCodeRule >> afterCheck: aNode mappings: mappingDict [
 	"after a node was match you can do a post-validation here on the node and the dictionalry of wildcars with matched nodes as values"
 
-	^ true	
+	^ true
 ]
 
 { #category : #private }
 RePatternCodeRule >> flattenMatchMap: aDictionary [
 	^ aDictionary keysAndValuesDo: [ :key :val |
-		((key isKindOf: RBProgramNode) and: [ 
+		((key isKindOf: RBProgramNode) and: [
 		 key isPatternNode ])
 			ifTrue: [
 				aDictionary
 					at: key pattern
-					put: val ] ] 
+					put: val ] ]
 ]

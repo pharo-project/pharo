@@ -29,11 +29,11 @@ OSWindowGenericRendererExampleEventHandler >> visitWindowCloseEvent: anEvent [
 { #category : #visiting }
 OSWindowGenericRendererExampleEventHandler >> visitWindowExposeEvent: anEvent [
 	example enqueueRender.
-	anEvent suppressDefaultAction.
+	anEvent suppressDefaultAction
 ]
 
 { #category : #visiting }
 OSWindowGenericRendererExampleEventHandler >> visitWindowFrameEvent: anEvent [
 	example ifNotNil: [ example update: Time millisecondClockValue *0.001. ].
-	example enqueueRender 
+	example enqueueRender
 ]

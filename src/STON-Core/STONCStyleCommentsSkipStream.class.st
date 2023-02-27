@@ -195,7 +195,6 @@ STONCStyleCommentsSkipStream >> nextNonCommentChar [
 			self consumeComment.
 			stream next ]
 		ifFalse: [ char ]
-
 ]
 
 { #category : #'initialize-release' }
@@ -210,7 +209,6 @@ STONCStyleCommentsSkipStream >> peek [
 			stream atEnd
 				ifFalse: [ 
 					peekedCharacter := self nextNonCommentChar ] ]
-
 ]
 
 { #category : #accessing }

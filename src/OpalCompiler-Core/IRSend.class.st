@@ -18,7 +18,7 @@ IRSend >> accept: aVisitor [
 
 { #category : #testing }
 IRSend >> isSend [
-	^true.
+	^true
 ]
 
 { #category : #testing }
@@ -40,7 +40,7 @@ IRSend >> selector: symbol [
 { #category : #accessing }
 IRSend >> superOf [
 
-	^ superOf 
+	^ superOf
 ]
 
 { #category : #accessing }

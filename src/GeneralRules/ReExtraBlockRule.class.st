@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 ReExtraBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ExtraBlockRule'
 ]
 
@@ -25,7 +25,7 @@ ReExtraBlockRule >> basicCheck: node [
 
 { #category : #enumerating }
 ReExtraBlockRule >> blockEvaluatingMessages [
-	^ #(value 
+	^ #(value
 	value: value:value: value:value:value: value:value:value:value:
 	cull: cull:cull: cull:cull:cull: cull:cull:cull:cull:
 	#valueWithArguments: valueWithPossibleArgs: valueWithPossibleArgument)

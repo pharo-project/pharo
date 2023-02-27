@@ -35,7 +35,6 @@ EFInternalTest >> testLineStartIsCorrectAfterIndent [
 	formatter newLines: 3.
 	self assert: formatter lineStart equals: 3
 	"indeed the lineStart in the beginning of the last line."
-
 ]
 
 { #category : #tests }
@@ -45,7 +44,6 @@ EFInternalTest >> testLineStartIsCorrectAfterNewLines [
 	formatter := EFFormatter new.
 	formatter newLines: 3.
 	self assert: formatter lineStart equals: 3
-	
 ]
 
 { #category : #tests }
@@ -54,7 +52,6 @@ EFInternalTest >> testLineStartIsInitializedToZero [
 	| formatter |
 	formatter := EFFormatter new.
 	self assert: formatter lineStart equals: 0.
-	
 ]
 
 { #category : #tests }

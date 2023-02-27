@@ -3,12 +3,12 @@ Extension { #name : #RGClassStrategy }
 { #category : #'*Ring-Monticello' }
 RGClassStrategy >> asMCDefinition [
 
-	^ MCClassDefinition 
+	^ MCClassDefinition
 		name: self owner name
 		superclassName: (self owner superclass ifNil: [ 'nil' ] ifNotNil: [ :aSuperclass | aSuperclass name ])
-		traitComposition: self owner traitCompositionString 
+		traitComposition: self owner traitCompositionString
 		classTraitComposition: self owner metaclass traitCompositionString
-		category: self owner category 
+		category: self owner category
 		instVarNames: self instVarNames
 		classVarNames: self owner classVarNames
 		poolDictionaryNames: self owner sharedPoolNames
@@ -22,7 +22,7 @@ RGClassStrategy >> asMCDefinition [
 RGClassStrategy >> classLayout [
 	"TODO"
 	^ layout"
-		ifNil: [ 
+		ifNil: [
 			| superLayout scope |
 			superLayout := superclass classLayout.
 			scope := superLayout slotScope extend.
@@ -45,5 +45,5 @@ RGClassStrategy >> mcType [
 { #category : #'*Ring-Monticello' }
 RGClassStrategy >> referencedPackages [
 
-	^ Array with: self package.
+	^ Array with: self package
 ]

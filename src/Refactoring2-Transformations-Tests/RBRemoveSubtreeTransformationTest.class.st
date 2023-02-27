@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveSubtreeTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }
@@ -35,17 +35,17 @@ RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 RBRemoveSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
-	transformation := (RBRemoveSubtreeTransformation 
-							code: 'selector := aSelector' 
+	transformation := (RBRemoveSubtreeTransformation
+							code: 'selector := aSelector'
 							from: #selector:from:
 							in: #RBRemoveMethodTransformation)
-							asRefactoring transform. 
-	
+							asRefactoring transform.
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: #RBRemoveMethodTransformation.
 	self assert: (class directlyDefinesMethod: #selector:from:).
-	self assert: (class parseTreeFor: #selector:from:) body statements size equals: 1
+	self assert: (class parseTreeForSelector: #selector:from:) body statements size equals: 1
 ]
 
 { #category : #tests }
@@ -57,7 +57,7 @@ RBRemoveSubtreeTransformationTest >> testTransform [
 
 	class := transformation model classNamed: self changeMock name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
-	self assertEmpty: (class parseTreeFor: #one) body statements
+	self assertEmpty: (class parseTreeForSelector: #one) body statements
 ]
 
 { #category : #tests }
@@ -74,5 +74,5 @@ RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 
 	class := transformation model classNamed: self changeMock name asSymbol.
 	self assert: (class directlyDefinesMethod: #printString1).
-	self assertEmpty: (class parseTreeFor: #printString1) body statements
+	self assertEmpty: (class parseTreeForSelector: #printString1) body statements
 ]

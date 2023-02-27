@@ -22,20 +22,19 @@ Class {
 
 { #category : #signaling }
 SubscriptOutOfBounds class >> signalFor: subscript [
-	^ self 
-		signalFor: subscript 
-		lowerBound: nil 
+	^ self
+		signalFor: subscript
+		lowerBound: nil
 		upperBound: nil
 ]
 
 { #category : #signaling }
 SubscriptOutOfBounds class >> signalFor: subscript lowerBound: lowerBound upperBound: upperBound [
-	^ self 
-		signalFor: subscript 
-		lowerBound: lowerBound 
-		upperBound: upperBound 
+	^ self
+		signalFor: subscript
+		lowerBound: lowerBound
+		upperBound: upperBound
 		in: nil
-
 ]
 
 { #category : #signaling }
@@ -45,7 +44,7 @@ SubscriptOutOfBounds class >> signalFor: subscript lowerBound: lowerBound upperB
 		subscript: subscript;
 		lowerBound: lowerBound;
 		upperBound: upperBound;
-		signal		 
+		signal
 ]
 
 { #category : #accessing }
@@ -61,19 +60,19 @@ SubscriptOutOfBounds >> lowerBound: anObject [
 { #category : #accessing }
 SubscriptOutOfBounds >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #printing }
 SubscriptOutOfBounds >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
-		self subscript 
+		self subscript
 			ifNil: [
 				stream << 'subscript' ]
-			ifNotNil: [ 
+			ifNotNil: [
 				stream print: self subscript ].
 		(self lowerBound notNil and: [ self upperBound notNil])
 			ifTrue: [

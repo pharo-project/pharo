@@ -43,16 +43,16 @@ AbstractLayout >> checkIntegrity [
 
 { #category : #validation }
 AbstractLayout >> checkSanity [
-	host ifNil: [ self error: 'Host should not be nil' ].
+	host ifNil: [ self error: 'Host should not be nil' ]
 ]
 
 { #category : #api }
-AbstractLayout >> definesSlot: aSlot [ 
-	^self slots identityIncludes: aSlot 
+AbstractLayout >> definesSlot: aSlot [
+	^self slots identityIncludes: aSlot
 ]
 
 { #category : #accessing }
-AbstractLayout >> extend: arg1 [ 
+AbstractLayout >> extend: arg1 [
 	^ self subclassResponsibility
 ]
 
@@ -77,7 +77,7 @@ AbstractLayout >> extendImmediate [
 ]
 
 { #category : #accessing }
-AbstractLayout >> extendVariable: arg1 [ 
+AbstractLayout >> extendVariable: arg1 [
 	^ self subclassResponsibility
 ]
 
@@ -104,7 +104,7 @@ AbstractLayout >> hasFields [
 
 { #category : #api }
 AbstractLayout >> hasSlot: aSlot [
-	^ self allSlots identityIncludes: aSlot 
+	^ self allSlots identityIncludes: aSlot
 ]
 
 { #category : #api }

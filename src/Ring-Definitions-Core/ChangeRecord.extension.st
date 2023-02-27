@@ -3,7 +3,7 @@ Extension { #name : #ChangeRecord }
 { #category : #'*Ring-Definitions-Core' }
 ChangeRecord >> asRingDefinition [
 	"Retrieves a RGMethodDefinition object based on the data of the receiver"
-	
+
 	self type == #method
 		ifTrue: [ ^self createMethodDefinition ].
 	self type == #classComment
@@ -18,16 +18,16 @@ ChangeRecord >> createCommentDefinition [
 	^ (RGCommentDefinition class: self commentClass)
 		content: self string;
 		stamp: stamp;
-		yourself 
+		yourself
 ]
 
 { #category : #'*Ring-Definitions-Core' }
 ChangeRecord >> createMethodDefinition [
 	"Retrieves a RGMethodDefinition object based on the data of the receiver"
-	
+
 	^(RGMethodDefinition named: self methodSelector)
 		parentName: self methodClassName;
-		isMetaSide: meta;  
+		isMetaSide: meta;
 		sourceCode: self string;
 		protocol: category;
 		stamp: stamp;

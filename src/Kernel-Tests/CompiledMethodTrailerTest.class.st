@@ -11,24 +11,23 @@ Class {
 CompiledMethodTrailerTest >> testEmbeddingSourceCode: sourceCode [
 
 	| trailer newTrailer |
-	
+
 	trailer := CompiledMethodTrailer new.
 	trailer embeddedSourceCode: sourceCode.
 	newTrailer := trailer testEncoding.
-	
+
 	self assert: (#(EmbeddedSource EmbeddedSourceWide) includes: trailer kind).
 	self assert: newTrailer sourceCode equals: sourceCode.
 
 	"the last bytecode index must be at 0"
-	self assert: newTrailer endPC equals: 0.
+	self assert: newTrailer endPC equals: 0
 ]
 
 { #category : #tests }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [	
+CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [
 	"Test that wide strings survive"
-	
-	self testEmbeddingSourceCode: 'doit ^''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'' '.
-	
+
+	self testEmbeddingSourceCode: 'doit ^''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'' '
 ]
 
 { #category : #tests }
@@ -54,7 +53,7 @@ CompiledMethodTrailerTest >> testEncodingSourcePointer [
 	trailer := CompiledMethodTrailer new.
 
 	CompiledMethod
-		allInstancesDo: [ :method | 
+		allInstancesDo: [ :method |
 			| ptr |
 			trailer method: method.
 			self assert: (ptr := method sourcePointer) identicalTo: trailer sourcePointer.
@@ -66,14 +65,14 @@ CompiledMethodTrailerTest >> testEncodingSourcePointer [
 CompiledMethodTrailerTest >> testEncodingVarLengthSourcePointer [
 
 	| trailer newTrailer |
-	
+
 	trailer := CompiledMethodTrailer new.
-	
+
 	trailer sourcePointer: 1.
 	newTrailer := trailer testEncoding.
-	
+
 	self assert: newTrailer sourcePointer equals: 1.
-	
+
 	trailer sourcePointer: 16r100000000000000.
 	newTrailer := trailer testEncoding.
 	self assert: newTrailer sourcePointer equals: 16r100000000000000.
@@ -85,9 +84,8 @@ CompiledMethodTrailerTest >> testEncodingVarLengthSourcePointer [
 CompiledMethodTrailerTest >> testEncodingZeroSourcePointer [
 
 	| trailer |
-	
+
 	trailer := CompiledMethodTrailer new.
 
 	self assert: (trailer sourcePointer: 0) testEncoding sourcePointer equals: 0
-	
 ]

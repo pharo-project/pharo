@@ -18,14 +18,14 @@ Class {
 ZnByteArrayEntity class >> bytes: byteArray [
 	^ (self type: ZnMimeType applicationOctetStream length: byteArray size)
 		bytes: byteArray;
-		yourself 
+		yourself
 ]
 
 { #category : #testing }
 ZnByteArrayEntity class >> designatedMimeType [
 	"I have no designated mime type, I can handle all binary content.
 	See #concreteSubclassForType: "
-	
+
 	^ nil
 ]
 
@@ -33,7 +33,7 @@ ZnByteArrayEntity class >> designatedMimeType [
 ZnByteArrayEntity class >> matches: mimeType [
 	"I have no designated mime type, I can handle all binary content.
 	See #concreteSubclassForType: "
-	
+
 	^ false
 ]
 
@@ -63,33 +63,35 @@ ZnByteArrayEntity >> hash [
 ]
 
 { #category : #testing }
-ZnByteArrayEntity >> isEmpty [ 
+ZnByteArrayEntity >> isEmpty [
 	^ self bytes isNil or: [ self bytes isEmpty ]
 ]
 
 { #category : #printing }
 ZnByteArrayEntity >> printContentsOn: stream [
 	super printContentsOn: stream.
-	self bytes notNil ifTrue: [ 
+	self bytes notNil ifTrue: [
 		stream space; print: self bytes ]
 ]
 
 { #category : #'initialize-release' }
 ZnByteArrayEntity >> readFrom: stream [
-	self contentLength isNil
-		ifTrue: [ 
-			self bytes: (ZnUtils readUpToEnd: stream limit: ZnMaximumEntitySize value).
-			self contentLength: self bytes size ]
-		ifFalse: [ | byteArray |
-			self contentLength > ZnMaximumEntitySize value
+
+	self contentLength
+		ifNil: [
+			self bytes: (ZnUtils readUpToEnd: stream limit: (ZnCurrentOptions at: #maximumEntitySize)).
+			self contentLength: self bytes size
+			]
+		ifNotNil: [ | byteArray |
+
+			self contentLength > (ZnCurrentOptions at: #maximumEntitySize)
 				ifTrue: [ ZnEntityTooLarge signal ].
 			byteArray := ByteArray ofSize: self contentLength.
-			self contentLength > ZnUtils streamingBufferSize 
-				ifTrue: [
-					ZnUtils streamFrom: stream to: byteArray writeStream size: self contentLength ]
-				ifFalse: [
-					stream next: self contentLength into: byteArray ]. 
-			self bytes: byteArray ]
+			self contentLength > ZnUtils streamingBufferSize
+				ifTrue: [ ZnUtils streamFrom: stream to: byteArray writeStream size: self contentLength ]
+				ifFalse: [ stream next: self contentLength into: byteArray ].
+			self bytes: byteArray
+			]
 ]
 
 { #category : #accessing }

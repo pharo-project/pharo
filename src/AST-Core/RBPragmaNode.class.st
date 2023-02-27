@@ -26,16 +26,16 @@ Class {
 
 { #category : #'instance creation' }
 RBPragmaNode class >> selector: aSymbol arguments: valueNodes [
-	^ self selector: aSymbol keywordsPositions: nil arguments: valueNodes 
+	^ self selector: aSymbol keywordsPositions: nil arguments: valueNodes
 ]
 
 { #category : #'instance creation' }
 RBPragmaNode class >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
-	^ self new selector: aSymbol keywordsPositions: positionList arguments: valueNodes 
+	^ self new selector: aSymbol keywordsPositions: positionList arguments: valueNodes
 ]
 
 { #category : #comparing }
-RBPragmaNode >> = anObject [ 
+RBPragmaNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	self selector = anObject selector ifFalse: [^false].
@@ -53,7 +53,7 @@ RBPragmaNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #accessing }
 RBPragmaNode >> argumentAt: keywordSelector [
-	^ self 
+	^ self
 		argumentAt: keywordSelector
 		ifAbsent: [ KeyNotFound signalFor: keywordSelector ]
 ]
@@ -72,7 +72,7 @@ RBPragmaNode >> arguments [
 ]
 
 { #category : #accessing }
-RBPragmaNode >> arguments: aLiteralCollection [ 
+RBPragmaNode >> arguments: aLiteralCollection [
 	arguments := aLiteralCollection.
 	arguments do: [ :each | each parent: self ]
 ]
@@ -83,7 +83,7 @@ RBPragmaNode >> children [
 ]
 
 { #category : #matching }
-RBPragmaNode >> copyInContext: aDictionary [ 
+RBPragmaNode >> copyInContext: aDictionary [
 	^ self class
 		selector: self selector
 		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ])
@@ -95,12 +95,12 @@ RBPragmaNode >> defines: aName [
 ]
 
 { #category : #comparing }
-RBPragmaNode >> equalTo: anObject withMapping: aDictionary [ 
+RBPragmaNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [ ^ false ].
 	self selector = anObject selector ifFalse: [ ^ false ].
 	self arguments size = anObject arguments size ifFalse: [ ^ false ].
 	self arguments with: anObject arguments do: [ :first :second |
-		(first equalTo: second withMapping: aDictionary) 
+		(first equalTo: second withMapping: aDictionary)
 			ifFalse: [ ^ false ] ].
 	^ true
 ]
@@ -132,7 +132,7 @@ RBPragmaNode >> isFaulty [
 
 { #category : #testing }
 RBPragmaNode >> isKeyword [
-	^(selector indexOf: $:) ~= 0.
+	^(selector indexOf: $:) ~= 0
 ]
 
 { #category : #testing }
@@ -153,8 +153,8 @@ RBPragmaNode >> isUnary [
 { #category : #accessing }
 RBPragmaNode >> keywordsIntervals [
 	^selector keywords
-		with: self keywordsPositions 
-		collect: [:keyword :start| start to: (start = 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ].
+		with: self keywordsPositions
+		collect: [:keyword :start| start to: (start = 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ]
 ]
 
 { #category : #accessing }
@@ -164,7 +164,7 @@ RBPragmaNode >> keywordsPositions [
 
 { #category : #accessing }
 RBPragmaNode >> keywordsPositions: aPositionsList [
-	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ].
+	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ]
 ]
 
 { #category : #'accessing - token' }
@@ -178,7 +178,7 @@ RBPragmaNode >> left: anInteger [
 ]
 
 { #category : #matching }
-RBPragmaNode >> match: aNode inContext: aDictionary [ 
+RBPragmaNode >> match: aNode inContext: aDictionary [
 	aNode class = self class
 		ifFalse: [ ^ false ].
 	self selector = aNode selector
@@ -201,9 +201,9 @@ RBPragmaNode >> postCopy [
 ]
 
 { #category : #replacing }
-RBPragmaNode >> replaceNode: aNode withNode: anotherNode [ 
-	self arguments: (arguments collect: [ :each | 
-		each == aNode 
+RBPragmaNode >> replaceNode: aNode withNode: anotherNode [
+	self arguments: (arguments collect: [ :each |
+		each == aNode
 			ifTrue: [ anotherNode ]
 			ifFalse: [ each ] ])
 ]
@@ -224,26 +224,26 @@ RBPragmaNode >> selector [
 ]
 
 { #category : #accessing }
-RBPragmaNode >> selector: aSelector [ 
+RBPragmaNode >> selector: aSelector [
 	keywordsPositions := nil.
-	selector := aSelector asSymbol.
+	selector := aSelector asSymbol
 ]
 
 { #category : #initialization }
 RBPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	aSymbol numArgs == valueNodes size
-		ifFalse: 
+		ifFalse:
 			[self error: 'Attempting to assign selector with wrong number of arguments.'].
 
-	self 
+	self
 		arguments: valueNodes;
 		selector: aSymbol;
-		keywordsPositions: positionList.
+		keywordsPositions: positionList
 ]
 
 { #category : #accessing }
 RBPragmaNode >> selectorParts [
-	^ selector keywords collect: [:keyword| keyword asSymbol ].
+	^ selector keywords collect: [:keyword| keyword asSymbol ]
 ]
 
 { #category : #accessing }

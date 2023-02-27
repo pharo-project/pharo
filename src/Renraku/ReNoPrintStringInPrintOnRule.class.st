@@ -8,28 +8,28 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReNoPrintStringInPrintOnRule class >> checksMethod [
 
 	^ true
 ]
 
-{ #category : #'testing-interest' }
+{ #category : #'class initialization' }
 ReNoPrintStringInPrintOnRule class >> initialize [
-    ReRuleManager cleanUp 
+    ReRuleManager cleanUp
 ]
 
 { #category : #running }
 ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemPrintStrings |
 	aMethod selector = #printOn: ifFalse: [ ^self ].
-	problemPrintStrings := 
+	problemPrintStrings :=
 		aMethod sendNodes select: [ :msgSend | msgSend selector = #printString].
-	
+
 	problemPrintStrings do: [ :msgSend |
-			aCriticBlock cull: (self 
-				createTrivialCritiqueOn: aMethod 
-				intervalOf: msgSend 
+			aCriticBlock cull: (self
+				createTrivialCritiqueOn: aMethod
+				intervalOf: msgSend
 				hint: msgSend selector asString )]
 ]
 
@@ -40,7 +40,7 @@ ReNoPrintStringInPrintOnRule >> group [
 
 { #category : #accessing }
 ReNoPrintStringInPrintOnRule >> name [
-	^ 'No printString inside printOn' 
+	^ 'No printString inside printOn'
 ]
 
 { #category : #accessing }

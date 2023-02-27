@@ -42,28 +42,28 @@ Class {
 { #category : #'testing - interest' }
 ReAbstractRule class >> checksClass [
 	"Not checking a class by default - but subclasses should return true when the receiver rule checks on class level."
-	
+
 	^ false
 ]
 
 { #category : #'testing - interest' }
 ReAbstractRule class >> checksMethod [
 	"Not checking a method by default - but subclasses should return true when the receiver rule checks on method level."
-	
+
 	^ false
 ]
 
 { #category : #'testing - interest' }
 ReAbstractRule class >> checksNode [
 	"Not checking a node by default - but subclasses should return true when the receiver rule checks on AST node level."
-	
+
 	^ false
 ]
 
 { #category : #'testing - interest' }
 ReAbstractRule class >> checksPackage [
 	"Not checking a package by default - but subclasses should return true when the receiver rule checks on package level."
-	
+
 	^ false
 ]
 
@@ -114,7 +114,7 @@ ReAbstractRule class >> isDefaultRule [
 { #category : #testing }
 ReAbstractRule class >> isUsed [
 	"all my sublasses are used"
-	
+
 	^self name = 'ReAbstractRule'
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
@@ -122,7 +122,7 @@ ReAbstractRule class >> isUsed [
 
 { #category : #testing }
 ReAbstractRule class >> isVisible [
-	
+
 	^ self methodOfInteresetSelectors anySatisfy: [ :selector |
 		self perform: selector ]
 ]
@@ -136,7 +136,7 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 { #category : #manifest }
 ReAbstractRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^ self name
 ]
 
@@ -155,8 +155,8 @@ ReAbstractRule >> anchorFor: anEntity [
 { #category : #running }
 ReAbstractRule >> basicCheck: anEntity [
 	"If you end here, you should most likely implement this in a subclass"
-	
-	^ self shouldBeImplemented  
+
+	^ self shouldBeImplemented
 ]
 
 { #category : #running }
@@ -174,7 +174,7 @@ ReAbstractRule >> check: anEntity [
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock [
 	"Accepts an entity and a block which could be evaluated for each detected critique
 	aCriticBlock may accept one argument: the critique object"
-	
+
 	(self basicCheck: anEntity)
 		ifTrue: [ aCriticBlock cull: (self critiqueFor: anEntity) ]
 ]
@@ -185,7 +185,7 @@ ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternati
 	| encounteredCritique |
 	encounteredCritique := false.
 
-	self check: anEntity forCritiquesDo: [ :crit | 
+	self check: anEntity forCritiquesDo: [ :crit |
 		encounteredCritique := true.
 		aCriticBlock cull: crit ].
 
@@ -233,7 +233,7 @@ ReAbstractRule >> critiqueFor: aClass about: aVarName [
 			entity: aClass
 			string: aVarName)
 		by: self.
-	crit tinyHint: aVarName.	
+	crit tinyHint: aVarName.
 	^ crit
 ]
 

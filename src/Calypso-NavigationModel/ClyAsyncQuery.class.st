@@ -68,7 +68,7 @@ ClyAsyncQuery >> asyncResult: anObject [
 
 { #category : #execution }
 ClyAsyncQuery >> buildResult: aQueryResult [
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #execution }
@@ -89,7 +89,7 @@ ClyAsyncQuery >> hash [
 { #category : #initialization }
 ClyAsyncQuery >> initialize [
 	super initialize.
-	
+
 	asyncResult := ClyAsyncQueryResult new
 ]
 
@@ -100,12 +100,12 @@ ClyAsyncQuery >> isAsync [
 
 { #category : #execution }
 ClyAsyncQuery >> prepareNewResult [
-	
+
 	^asyncResult prepareNewFor: self actualQuery in: self environment
 ]
 
 { #category : #converting }
 ClyAsyncQuery >> semiAsync [
-	^self copy 
+	^self copy
 		asyncResult: ClySemiAsyncQueryResult new
 ]

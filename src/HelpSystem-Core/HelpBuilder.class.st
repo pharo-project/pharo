@@ -25,13 +25,12 @@ HelpBuilder class >> buildHelpTopicFrom: aHelpTopicDescription [
 	^(self new)
 		rootToBuildFrom: aHelpTopicDescription;
 		build;
-		topicToBuild 
+		topicToBuild
 ]
 
 { #category : #building }
 HelpBuilder >> build [
-	self subclassResponsibility 
-
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -40,7 +39,6 @@ HelpBuilder >> initialize [
 	
 	super initialize.
 	topicToBuild := self topicClass new.
-	 
 ]
 
 { #category : #accessing }

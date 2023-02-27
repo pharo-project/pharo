@@ -25,19 +25,16 @@ Class {
 { #category : #'instance creation' }
 WeakMessageSend class >> new [
 	^self new: 1
-
 ]
 
 { #category : #'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol [
 	^ self receiver: anObject selector: aSymbol arguments: #()
-
 ]
 
 { #category : #'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol argument: aParameter [
 	^ self receiver: anObject selector: aSymbol arguments: (Array with: aParameter)
-
 ]
 
 { #category : #'instance creation' }
@@ -46,7 +43,6 @@ WeakMessageSend class >> receiver: anObject selector: aSymbol arguments: anArray
 		receiver: anObject;
 		selector: aSymbol;
 		arguments: anArray
-
 ]
 
 { #category : #comparing }
@@ -56,35 +52,31 @@ WeakMessageSend >> = anObject [
 		and: [self receiver == anObject receiver
 		and: [selector == anObject selector
 		and: [(Array withAll: arguments) = (Array withAll: anObject arguments)]]]
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> arguments [
 	^arguments ifNil: [ Array new ]
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> arguments: anArray [
 	arguments := WeakArray withAll: anArray.
 	"no reason this should be a WeakArray"
-	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ]).
-
+	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ])
 ]
 
 { #category : #converting }
 WeakMessageSend >> asMessageSend [
-	^MessageSend receiver: self receiver selector: selector arguments: (Array withAll: self arguments) 
-
+	^MessageSend receiver: self receiver selector: selector arguments: (Array withAll: self arguments)
 ]
 
 { #category : #converting }
 WeakMessageSend >> asMinimalRepresentation [
 
-	self isReceiverOrAnyArgumentGarbage
-		ifTrue: [^nil]
-		ifFalse:[^self].
+	^ self isReceiverOrAnyArgumentGarbage
+		  ifTrue: [ nil ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #private }
@@ -102,26 +94,25 @@ WeakMessageSend >> collectArguments: anArgArray [
                     to: (anArgArray size min: staticArgs size)
                     with: anArgArray
                     startingAt: 1]
-
 ]
 
 { #category : #evaluating }
 WeakMessageSend >> cull: arg [
-	^ selector numArgs = 0 
+	^ selector numArgs = 0
 		ifTrue: [ self value ]
-		ifFalse: [ self value: arg ].
+		ifFalse: [ self value: arg ]
 ]
 
 { #category : #evaluating }
 WeakMessageSend >> cull: arg1 cull: arg2 [
-	^ selector numArgs < 2 
+	^ selector numArgs < 2
 		ifTrue: [ self cull: arg1]
 		ifFalse: [ self value: arg1 value: arg2 ]
 ]
 
 { #category : #evaluating }
 WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 [
-	^ selector numArgs < 3 
+	^ selector numArgs < 3
 		ifTrue: [ self cull: arg1 cull: arg2 ]
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
 ]
@@ -135,7 +126,6 @@ WeakMessageSend >> ensureArguments [
 		]
 	].
 	^true
-
 ]
 
 { #category : #private }
@@ -144,8 +134,7 @@ WeakMessageSend >> ensureReceiver [
   self receiver ifNil: [^ false].
   (self receiver class isObsolete) ifTrue: [^ false].
   (self receiver isBehavior and: [self receiver isObsolete]) ifTrue: [^ false].
-  ^ true.
-
+  ^ true
 ]
 
 { #category : #private }
@@ -154,8 +143,7 @@ WeakMessageSend >> ensureReceiver: anObject [
   anObject ifNil: [^ false].
   (anObject class isObsolete) ifTrue: [^ false].
   (anObject isBehavior and: [anObject isObsolete]) ifTrue: [^ false].
-  ^ true.
-
+  ^ true
 ]
 
 { #category : #private }
@@ -174,7 +162,6 @@ WeakMessageSend >> ensureReceiverAndArguments [
   ].
 
   ^true
-
 ]
 
 { #category : #private }
@@ -193,14 +180,12 @@ WeakMessageSend >> ensureReceiverAndArguments: aReceiver [
   ].
 
   ^true
-
 ]
 
 { #category : #comparing }
 WeakMessageSend >> hash [
 	"work like MessageSend>>hash"
 	^self receiver hash bitXor: selector hash
-
 ]
 
 { #category : #private }
@@ -213,72 +198,62 @@ WeakMessageSend >> isAnyArgumentGarbage [
 		]
 	].
 	^false
-
 ]
 
 { #category : #testing }
 WeakMessageSend >> isMessageSend [
 	^true
-
 ]
 
 { #category : #private }
 WeakMessageSend >> isReceiverGarbage [
 	"Make sure that my receiver hasn't gone away"
 	^self receiver isNil
-
 ]
 
 { #category : #private }
 WeakMessageSend >> isReceiverOrAnyArgumentGarbage [
 	"Make sure that my receiver hasn't gone away"
-	^self isReceiverGarbage 
+	^self isReceiverGarbage
 		or: [self isAnyArgumentGarbage]
-
 ]
 
 { #category : #testing }
 WeakMessageSend >> isValid [
 	^self isReceiverOrAnyArgumentGarbage not
-
 ]
 
 { #category : #printing }
 WeakMessageSend >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		print: selector;
 		nextPutAll: ' -> ';
 		print: self receiver;
-		nextPut: $).
-
+		nextPut: $)
 ]
 
 { #category : #accessing }
 WeakMessageSend >> receiver [
 	^self at: 1
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> receiver: anObject [
 	self at: 1 put: anObject
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> selector [
 	^selector
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> selector: aSymbol [
 	selector := aSymbol
-
 ]
 
 { #category : #evaluating }
@@ -303,27 +278,27 @@ WeakMessageSend >> value [
 WeakMessageSend >> value: anObject [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
-	
+
 	^ strongReceiver
-		perform: selector 
+		perform: selector
 		with: anObject
 ]
 
 { #category : #evaluating }
-WeakMessageSend >> value: anObject1 value: anObject2 [ 
+WeakMessageSend >> value: anObject1 value: anObject2 [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
-	
-	^ strongReceiver 
-		perform: selector 
+
+	^ strongReceiver
+		perform: selector
 		with: anObject1
 		with: anObject2
 ]
@@ -332,13 +307,13 @@ WeakMessageSend >> value: anObject1 value: anObject2 [
 WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
-	
+
 	^ strongReceiver
-		perform: selector 
+		perform: selector
 		with: anObject1
 		with: anObject2
 		with: anObject3
@@ -348,12 +323,12 @@ WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 WeakMessageSend >> valueWithArguments: anArray [
 
 	| strongReceiver |
-	
+
 	strongReceiver := self receiver.
 
 	(self ensureReceiverAndArguments: strongReceiver) ifFalse: [ ^nil ].
-	^ strongReceiver 
-		perform: selector 
+	^ strongReceiver
+		perform: selector
 		withArguments: (self collectArguments: anArray)
 ]
 
@@ -361,9 +336,9 @@ WeakMessageSend >> valueWithArguments: anArray [
 WeakMessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
 	| args strongReceiver |
-	
+
 	strongReceiver := self receiver.
-	
+
 	(self ensureReceiverAndArguments: strongReceiver) ifFalse: [ ^nil ].
 	args := Array new: selector numArgs.
 	args replaceFrom: 1
@@ -377,5 +352,4 @@ WeakMessageSend >> valueWithEnoughArguments: anArray [
 			startingAt: 1.
 	].
 	^ strongReceiver perform: selector withArguments: args
-
 ]

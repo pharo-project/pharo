@@ -16,7 +16,6 @@ EmbeddedFreeTypeFontDescription class >> canBeInstalled [
 { #category : #accessing }
 EmbeddedFreeTypeFontDescription class >> fontContents [
 	self subclassResponsibility
-
 ]
 
 { #category : #accessing }
@@ -28,18 +27,16 @@ EmbeddedFreeTypeFontDescription class >> installAllFontsIn: provider [
 EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 	self canBeInstalled ifFalse: [ ^ self ].
 	provider
-		addFromFileContents: self fontContents 
-		baseName: self originalFileName 
+		addFromFileContents: self fontContents
+		baseName: self originalFileName
 ]
 
 { #category : #testing }
-EmbeddedFreeTypeFontDescription class >> isAbstract [ 
-	^self name = #EmbeddedFreeTypeFontDescription 
-	
+EmbeddedFreeTypeFontDescription class >> isAbstract [
+	^self name = #EmbeddedFreeTypeFontDescription
 ]
 
 { #category : #accessing }
 EmbeddedFreeTypeFontDescription class >> originalFileName [
 	self subclassResponsibility
-
 ]

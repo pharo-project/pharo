@@ -28,63 +28,63 @@ Class {
 
 { #category : #testing }
 TestCaseAnnouncement >> hasErrors [
-        "Return true if the test result has errors."
-        
-        ^testResult hasErrors
+	"Return true if the test result has errors."
+
+	^ testResult hasErrors
 ]
 
 { #category : #testing }
 TestCaseAnnouncement >> hasFailures [
-        "Return true if the test result has failures."
-        
-        ^testResult hasFailures
+	"Return true if the test result has failures."
+
+	^ testResult hasFailures
 ]
 
 { #category : #testing }
 TestCaseAnnouncement >> hasPassed [
-        "Return true if the test has passed."
-        
-        ^testResult hasPassed
+	"Return true if the test has passed."
+
+	^ testResult hasPassed
 ]
 
 { #category : #accessing }
 TestCaseAnnouncement >> testCase [
-        "Returns the test case."
-        
-        ^testCase
+	"Returns the test case."
+
+	^ testCase
 ]
 
 { #category : #accessing }
 TestCaseAnnouncement >> testCase: aTestCase [
-        "Sets the test case to the given test case."
-        
-        testCase := aTestCase
+	"Sets the test case to the given test case."
+
+	testCase := aTestCase
 ]
 
 { #category : #accessing }
 TestCaseAnnouncement >> testResult [
-        "Returns the test result."
-        
-        ^testResult
+	"Returns the test result."
+
+	^ testResult
 ]
 
 { #category : #accessing }
 TestCaseAnnouncement >> testResult: aTestResult [
-        "Sets the test result to the given test result."
-        
-        testResult := aTestResult
+	"Sets the test result to the given test result."
+
+	testResult := aTestResult
 ]
 
 { #category : #accessing }
 TestCaseAnnouncement >> testSelector [
-        "Returns the test selector."
-        
-        ^testSelector
+	"Returns the test selector."
+
+	^ testSelector
 ]
 
 { #category : #accessing }
 TestCaseAnnouncement >> testSelector: aSymbol [
-        "Sets the test selector to the given symbol."
-        
-        testSelector := aSymbol
+	"Sets the test selector to the given symbol."
+
+	testSelector := aSymbol
 ]

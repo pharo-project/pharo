@@ -9,7 +9,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnBivalentWriteStream,
-	#superclass : #Stream,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'binary'
@@ -20,9 +20,9 @@ Class {
 { #category : #'instance creation' }
 ZnBivalentWriteStream class >> on: writeStream [
 	"Wrap writeStream as a ZnBivalentWriteStream, unless it is already one"
-	
+
 	(writeStream isKindOf: self) ifTrue: [ ^ writeStream ].
-	
+
 	^ self basicNew
 		on: writeStream;
 		yourself
@@ -40,25 +40,31 @@ ZnBivalentWriteStream >> flush [
 
 { #category : #private }
 ZnBivalentWriteStream >> isBinary [
-	binary isNil
-		ifTrue: [ [ binary := stream isBinary ] on: MessageNotUnderstood do: [ :err | binary := false ] ].
+
+	binary
+		ifNil: [ binary := [ stream isBinary ] on: MessageNotUnderstood do: [ :err | false ] ].
 	^ binary
+]
+
+{ #category : #testing }
+ZnBivalentWriteStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
 ZnBivalentWriteStream >> next: count putAll: collection startingAt: offset [
 	| buffer |
 	self isBinary
-		ifTrue: [ 
+		ifTrue: [
 			(collection isKindOf: ByteArray)
 				ifTrue: [ stream next: count putAll: collection startingAt: offset ]
-				ifFalse: [ 
+				ifFalse: [
 					buffer := ByteArray new: count.
 					buffer replaceFrom: 1 to: count with: collection startingAt: offset.
 					stream nextPutAll: buffer ] ]
-		ifFalse: [ 
+		ifFalse: [
 			(collection isKindOf: ByteArray)
-				ifTrue: [ 
+				ifTrue: [
 					buffer := String new: count.
 					buffer replaceFrom: 1 to: count with: collection startingAt: offset.
 					stream nextPutAll: buffer ]
@@ -82,13 +88,6 @@ ZnBivalentWriteStream >> nextPutAll: collection [
 { #category : #'initialize-release' }
 ZnBivalentWriteStream >> on: writeStream [
 	stream := writeStream
-]
-
-{ #category : #printing }
-ZnBivalentWriteStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
-		nextPutAll: self class name
 ]
 
 { #category : #accessing }

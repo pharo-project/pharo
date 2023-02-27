@@ -20,22 +20,25 @@ Class {
 
 { #category : #'instance creation' }
 StringSignal class >> emit: aString [
-	^ self new 
+	^ self new
 		message: aString;
 		emit
 ]
 
 { #category : #accessing }
 StringSignal >> message [
+
 	^ message
 ]
 
 { #category : #accessing }
 StringSignal >> message: anObject [
+
 	message := anObject
 ]
 
 { #category : #printing }
 StringSignal >> printOneLineContentsOn: stream [
+
 	stream nextPutAll: self message
 ]

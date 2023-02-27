@@ -23,41 +23,41 @@ Class {
 { #category : #accessing }
 CmdMenuItem >> actualParentGroup [
 	parentGroup isRoot ifTrue: [ ^parentGroup ].
-	
-	^parentGroup isInlined 
+
+	^parentGroup isInlined
 		ifTrue: [ parentGroup actualParentGroup ]
 		ifFalse: [ parentGroup]
 ]
 
 { #category : #accessing }
 CmdMenuItem >> description [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> findGroupLike: menuGroupClass ifExists: aBlockClosure [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> icon [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 CmdMenuItem >> includesCommand: aCommandClass [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 CmdMenuItem >> isActive [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 CmdMenuItem >> isCommandItem [
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -77,17 +77,17 @@ CmdMenuItem >> isLastInMenu [
 
 { #category : #testing }
 CmdMenuItem >> isSimilarTo: aMenuItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> name [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> order [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -102,12 +102,12 @@ CmdMenuItem >> parentGroup: anObject [
 
 { #category : #accessing }
 CmdMenuItem >> pathToRoot [
-	^parentGroup 
+	^parentGroup
 		ifNil: [ ^#() ]
 		ifNotNil: [ parentGroup pathToRoot, {parentGroup} ]
 ]
 
 { #category : #updating }
 CmdMenuItem >> synchronizeContentWith: anotherMenuItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

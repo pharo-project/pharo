@@ -37,7 +37,7 @@ Class {
 DiskDirectoryEntry class >> exists: aPath in: aStore [
 	"Answer a boolean indicating whether the supplied path exists"
 
-	^aStore exists: aPath.
+	^aStore exists: aPath
 ]
 
 { #category : #'instance creation' }
@@ -59,7 +59,7 @@ DiskDirectoryEntry class >> store: aDiskStore path: aPath node: aNode [
 
 	^(super store: aDiskStore path: aPath)
 		statAttributes: (aNode at: 2);
-		yourself.
+		yourself
 ]
 
 { #category : #'private - accessing' }
@@ -123,7 +123,6 @@ DiskDirectoryEntry >> changeTime [
 	On platforms that don't support change time, use the modification time"
 
 	^DateAndTime fromInternalTime: ((self statAttributes at: 11) ifNil: [ self statAttributes at: 12 ])
-
 ]
 
 { #category : #accessing }
@@ -131,7 +130,6 @@ DiskDirectoryEntry >> changeUnixTime [
 	"Answer the receiver's change time in Unix time_t format"
 
 	^self changeTime asUnixTime
-
 ]
 
 { #category : #accessing }
@@ -151,7 +149,7 @@ DiskDirectoryEntry >> creationUnixTime [
 { #category : #accessing }
 DiskDirectoryEntry >> deviceId [
 	"Answer the device ID of the receiver"
-	
+
 	^self statAttributes at: 4
 ]
 
@@ -167,45 +165,24 @@ DiskDirectoryEntry >> getAllAttributes [
 	"Store all the receivers attributes for future reference"
 
 	| allAttributes |
-	
+
 	allAttributes := self primitives fileAttributes: self pathString mask: self allAttributeMask.
 	statAttributes := allAttributes at: 1.
-	accessAttributes := allAttributes at: 2.
-
+	accessAttributes := allAttributes at: 2
 ]
 
 { #category : #'cache management' }
 DiskDirectoryEntry >> getStatAttributes [
 	"Store the receivers stat() attributes for future reference"
 
-	^statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask.
-
+	^statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> gid [
 	"Answer the GID of the owner of the receiver"
-	
+
 	^self statAttributes at: 7
-]
-
-{ #category : #inspecting }
-DiskDirectoryEntry >> gtInspectAttributesIn: composite [
-	<gtInspectorPresentationOrder: 2>
-
-	| attrDictionary |
-
-	attrDictionary := Dictionary new.
-	self class methodsDo: [ :method |
-		method methodNode arguments size = 0 ifTrue:
-			[ attrDictionary at: method selector put:
-				([ (method selector value: self) ]
-					on: Error
-					do: [ 'N/A' translated ]) ] ].
-	^(attrDictionary gtInspectorItemsIn: composite)
-		when: [ attrDictionary isNotEmpty ];
-		title: 'Attributes' translated;
-		yourself.
 ]
 
 { #category : #testing }
@@ -218,7 +195,7 @@ DiskDirectoryEntry >> hasCreationTime [
 { #category : #initialization }
 DiskDirectoryEntry >> initializeWithReference: aFileReference statAttributes: anArray [
 
-	super initialize.	
+	super initialize.
 	reference := aFileReference.
 	statAttributes := anArray
 ]
@@ -226,22 +203,22 @@ DiskDirectoryEntry >> initializeWithReference: aFileReference statAttributes: an
 { #category : #accessing }
 DiskDirectoryEntry >> inode [
 	"Answer the index number of the receiver"
-	
+
 	^self statAttributes at: 3
 ]
 
 { #category : #testing }
 DiskDirectoryEntry >> isBlock [
 	"Answer true if the receiver is a block device"
-	
-	^self primitives modeIsBlock: self mode.
+
+	^ self primitives modeIsBlock: self mode
 ]
 
 { #category : #testing }
 DiskDirectoryEntry >> isCharacter [
 	"Answer true if the receiver is a character device"
-	
-	^self primitives modeIsCharacter: self mode
+
+	^ self primitives modeIsCharacter: self mode
 ]
 
 { #category : #testing }
@@ -251,7 +228,7 @@ DiskDirectoryEntry >> isDirectory [
 	reference isRoot ifTrue: [ ^true ].
 	^[ self primitives modeIsDirectory: self mode ]
 		on: FileDoesNotExistException
-		do: [ false ].
+		do: [ false ]
 ]
 
 { #category : #testing }
@@ -271,11 +248,11 @@ DiskDirectoryEntry >> isFIFO [
 { #category : #testing }
 DiskDirectoryEntry >> isFile [
 	"Answer true if the receiver is a file (exists and is not a directory)"
-	
+
 	reference isRoot ifTrue: [ ^false ].
 	^[ (self primitives modeIsDirectory: self mode) not ]
 		on: FileDoesNotExistException
-		do: [ false ].
+		do: [ false ]
 ]
 
 { #category : #testing }
@@ -295,14 +272,14 @@ DiskDirectoryEntry >> isReadable [
 { #category : #testing }
 DiskDirectoryEntry >> isRegular [
 	"Answer true if the receiver is a regular file"
-	
+
 	^self primitives modeIsRegular: self mode
 ]
 
 { #category : #testing }
 DiskDirectoryEntry >> isSocket [
 	"Answer true if the receiver is a socket"
-	
+
 	^self primitives modeIsSocket: self mode
 ]
 
@@ -325,7 +302,7 @@ DiskDirectoryEntry >> isWritable [
 { #category : #accessing }
 DiskDirectoryEntry >> mode [
 	"Answer the mode of the receiver"
-	
+
 	^self statAttributes at: 2
 ]
 
@@ -346,7 +323,7 @@ DiskDirectoryEntry >> modificationUnixTime [
 { #category : #accessing }
 DiskDirectoryEntry >> numberOfHardLinks [
 	"Answer the number of hard links to the receiver"
-	
+
 	^(self statAttributes at: 5) ifNil:
 		[ FileAttributeNotSupported signalWith: reference ]
 ]
@@ -354,14 +331,14 @@ DiskDirectoryEntry >> numberOfHardLinks [
 { #category : #accessing }
 DiskDirectoryEntry >> permissions [
 	"Answer the receivers permissions"
-	
+
 	^FileSystemPermission posixPermissions: self posixPermissions
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> posixPermissions [
 	"Answer the receivers posix permissions"
-	
+
 	^self mode bitAnd: 8r777
 ]
 
@@ -375,7 +352,7 @@ DiskDirectoryEntry >> primitives [
 { #category : #accessing }
 DiskDirectoryEntry >> size [
 	"Answer the number of bytes in the receiver"
-	
+
 	^self statAttributes at: 8
 ]
 
@@ -400,6 +377,6 @@ DiskDirectoryEntry >> statAttributes: anArray [
 { #category : #accessing }
 DiskDirectoryEntry >> uid [
 	"Answer the UID of the owner of the receiver"
-	
+
 	^self statAttributes at: 6
 ]

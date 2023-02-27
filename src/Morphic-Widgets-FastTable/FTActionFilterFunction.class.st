@@ -44,7 +44,7 @@ FTActionFilterFunction class >> table: aFTTableMorph action: aBlockClosure named
 { #category : #option }
 FTActionFilterFunction >> action: aBlockClosure named: aString [
 	actionBlock := aBlockClosure.
-	self initializeActionButtonNamed: aString 
+	self initializeActionButtonNamed: aString
 ]
 
 { #category : #accessing }

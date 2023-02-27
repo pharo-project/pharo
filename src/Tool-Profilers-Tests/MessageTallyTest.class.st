@@ -12,12 +12,12 @@ MessageTallyTest >> testClosedTally [
 
 	| tally |
 	tally := MessageTally
-				tallySendsTo: nil 
-				inBlock:  [ 3.14159 printString ] 
-				showTree: true 
-				closeAfter: true 
+				tallySendsTo: nil
+				inBlock:  [ 3.14159 printString ]
+				showTree: true
+				closeAfter: true
 				openResultWindow: false.
-				
+
 	"The tally is closed, therefore nothing may be accessed"
 	self assert: tally receivers isNil
 ]
@@ -36,21 +36,19 @@ MessageTallyTest >> testSampling1 [
 
 	| tally |
 	tally := MessageTally
-				spyOn: [ 1000  timesRepeat: [ 3.14159 printString  ] ]  
-				reportOtherProcesses: false 
-				cutoff: 1 
+				spyOn: [ 1000  timesRepeat: [ 3.14159 printString  ] ]
+				reportOtherProcesses: false
+				cutoff: 1
 				openResultWindow: false
 				closeAfter: false.
 
 	"No process is accessible from the tally, the reason is that using the sampling method execute the block in the current process"
 	self assert: tally process isNil
-
-
 ]
 
 { #category : #tallying }
 MessageTallyTest >> testTallySends [
-	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest |
+	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest|
 	allProcesses := Process allInstances.
 
 	blockToTest := [ 3.14159s printString ].
@@ -66,8 +64,7 @@ MessageTallyTest >> testTallySends [
 	thisMethod := blockToTest method.
 	self assert: tally hash equals: thisMethod hash.
 	self assert: tally method identicalTo: thisMethod.
-	self assert: tally theClass identicalTo: self class.
-
+	"we do not check the return of theClass, as the block is clean and does not know the instance".
 
 	processUsedByTally := tally process.
 	self deny: (allProcesses includes: processUsedByTally).
@@ -108,13 +105,12 @@ MessageTallyTest >> testTallySends [
 MessageTallyTest >> testTallyShouldNotContainsAReturn [
 
 	"The block passed to MessageTally should not have a ^ "
-	
+
 	self should: [ MessageTally
-						tallySendsTo: nil 
-						inBlock:  [ ^ 3.14159 printString ] 
-						showTree: true 
-						closeAfter: false 
-						openResultWindow: false ] 
+						tallySendsTo: nil
+						inBlock:  [ ^ 3.14159 printString ]
+						showTree: true
+						closeAfter: false
+						openResultWindow: false ]
 		 raise: Error
-	
 ]

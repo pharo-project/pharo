@@ -12,7 +12,6 @@ Class {
 
 { #category : #accessing }
 PackageAbstractNodeExample >> browseItem [
-	
 ]
 
 { #category : #menu }
@@ -46,26 +45,24 @@ PackageAbstractNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	c = $I
 		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #accessing }
-PackageAbstractNodeExample >> menu: menu shifted: b [ 
+PackageAbstractNodeExample >> menu: menu shifted: b [
 	menu
-		add: 'Expand all' 
+		add: 'Expand all'
 		target: self
 		selector: #expandAll.
 	menu
-		add: 'Browse (b)' 
+		add: 'Browse (b)'
 		target: self
 		selector: #browseItem.
 	menu
-		add: 'Inspect (i)' 
+		add: 'Inspect (i)'
 		target: self
 		selector: #inspectItem.
 	menu
-		add: 'Explore (I)' 
+		add: 'Explore (I)'
 		target: self
-		selector: #exploreItem.
-
+		selector: #exploreItem
 ]

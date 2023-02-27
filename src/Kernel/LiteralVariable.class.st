@@ -21,25 +21,8 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
-{ #category : #validating }
-LiteralVariable class >> checkValidName: aString [ 
-	"aString first canBeGlobalVarInitial
-		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
-]
-
-{ #category : #'gt-inspector-extension' }
-LiteralVariable class >> gtInspectorAllVariablesIn: composite [
- 	"This provides a list of all defined Class or Global Variables"
- 	<gtInspectorPresentationOrder: 20>
- 	composite list 
- 		title: 'All Defined Variables';
- 		display: [ self allSubclasses sorted: #name ascending ];
- 		tags: [ :each | { each package name } ];
- 		when: [self == LiteralVariable  ].
-]
-
 { #category : #'instance creation' }
-LiteralVariable class >> key: aKey [ 
+LiteralVariable class >> key: aKey [
 	"Answer an instance of me with the argument as the lookup up."
 
 	^self basicNew key: aKey
@@ -47,7 +30,7 @@ LiteralVariable class >> key: aKey [
 
 { #category : #'instance creation' }
 LiteralVariable class >> key: newKey value: newValue [
-	"Answer an instance of me with the arguments as the key and value of 
+	"Answer an instance of me with the arguments as the key and value of
 	the association."
 
 	^self basicNew key: newKey value: newValue
@@ -70,7 +53,7 @@ LiteralVariable >> analogousCodeTo: anAssociation [
 ]
 
 { #category : #converting }
-LiteralVariable >> asClassVariable [	
+LiteralVariable >> asClassVariable [
 	^self
 ]
 
@@ -119,8 +102,8 @@ LiteralVariable >> installingIn: aClass [
 ]
 
 { #category : #testing }
-LiteralVariable >> isAccessedIn: aMethod [ 
-	
+LiteralVariable >> isAccessedIn: aMethod [
+
 	^aMethod accessesRef: self
 ]
 
@@ -144,7 +127,7 @@ LiteralVariable >> isReadIn: aCompiledCode [
 LiteralVariable >> isReferenced [
 	"my subclasses override this if they know better"
 
-	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior | 
+	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior |
 		  behavior hasMethodAccessingVariable: self ]
 ]
 
@@ -173,17 +156,17 @@ LiteralVariable >> isWrittenIn: aCompiledCode [
 ]
 
 { #category : #accessing }
-LiteralVariable >> key [ 
+LiteralVariable >> key [
 	^name
 ]
 
 { #category : #accessing }
-LiteralVariable >> key: anObject [ 
+LiteralVariable >> key: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-LiteralVariable >> key: aKey value: anObject [ 
+LiteralVariable >> key: aKey value: anObject [
 	"Store the arguments as the variables of the receiver."
 
 	name := aKey.
@@ -199,7 +182,7 @@ LiteralVariable >> literalEqual: otherLiteral [
 ]
 
 { #category : #accessing }
-LiteralVariable >> name: aString [ 
+LiteralVariable >> name: aString [
 	self key: aString asSymbol
 ]
 
@@ -259,7 +242,7 @@ LiteralVariable >> write: anObject [
 
 { #category : #debugging }
 LiteralVariable >> write: aValue inContext: aContext [
-	self isWritable ifFalse: [ 
+	self isWritable ifFalse: [
 		^self error: 'Variable ' , name, ' is read only'].
 
 	^value := aValue

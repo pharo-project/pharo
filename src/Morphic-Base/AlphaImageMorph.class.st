@@ -65,7 +65,7 @@ AlphaImageMorph >> autoSize: anObject [
 { #category : #accessing }
 AlphaImageMorph >> cachedForm [
 	"Answer the value of cachedForm"
-	
+
 	|form i effectiveAlpha|
 	cachedForm ifNil: [
 		i := self scaledImage.
@@ -111,14 +111,13 @@ AlphaImageMorph >> displayBounds [
 	Just one rep for the tiled case."
 
 	^self layoutPosition extent: self cachedForm extent
-	
 ]
 
 { #category : #drawing }
 AlphaImageMorph >> drawOn: aCanvas [
 	"Draw with the current alpha
 	Can't do simple way since BitBlt rules are dodgy!."
-	
+
 	aCanvas fillRectangle: self bounds fillStyle: self fillStyle borderStyle: self borderStyle.
 	(self cachedForm width = 0 or: [self cachedForm height = 0]) ifTrue: [^self].
 	self layout == #tiled
@@ -147,11 +146,10 @@ AlphaImageMorph >> enabled: anObject [
 { #category : #geometry }
 AlphaImageMorph >> extent: aPoint [
 	"Allow as normal."
-	
-	self basicExtent: aPoint.
-	
-	(self layout = #scaled or: [self layout = #scaledAspect]) ifTrue: [self cachedForm: nil]
 
+	self basicExtent: aPoint.
+
+	(self layout = #scaled or: [self layout = #scaledAspect]) ifTrue: [self cachedForm: nil]
 ]
 
 { #category : #accessing }
@@ -167,9 +165,9 @@ AlphaImageMorph >> getImageSelector: anObject [
 ]
 
 { #category : #accessing }
-AlphaImageMorph >> image: anImage [ 
+AlphaImageMorph >> image: anImage [
 	"Clear the cached form."
-	
+
 	^self image: anImage size: anImage extent
 ]
 
@@ -259,7 +257,7 @@ AlphaImageMorph >> layout: aSymbol [
 AlphaImageMorph >> layoutPosition [
 	"Answer the position that the cached form should be drawn
 	based on the layout"
-	
+
 	self layout == #topCenter ifTrue: [^self innerBounds topCenter - (self cachedForm width // 2 @ 0)].
 	self layout == #topRight ifTrue: [^self innerBounds topRight - (self cachedForm width @ 0)].
 	self layout == #rightCenter ifTrue: [^self innerBounds rightCenter - (self cachedForm width @ (self cachedForm height // 2))].
@@ -293,13 +291,12 @@ AlphaImageMorph >> model: anObject [
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
 	model := anObject
-
 ]
 
 { #category : #geometry }
 AlphaImageMorph >> optimalExtent [
 	"Answer the optimal extent for the receiver."
-	
+
 	^self form extent * self scale + (self borderWidth * 2)
 ]
 
@@ -325,7 +322,7 @@ AlphaImageMorph >> scale: aNumber [
 { #category : #accessing }
 AlphaImageMorph >> scaledImage [
 	"Answer the image scaled as required."
-	
+
 	|i|
 	i := self form.
 	i boundingBox area = 0 ifTrue: [^i].
@@ -343,7 +340,7 @@ AlphaImageMorph >> scaledImage [
 { #category : #accessing }
 AlphaImageMorph >> update: aSymbol [
 	"Update the image if changed."
-	
+
 	super update: aSymbol.
 	aSymbol = self getImageSelector ifTrue: [
 		self updateImage]
@@ -352,7 +349,7 @@ AlphaImageMorph >> update: aSymbol [
 { #category : #accessing }
 AlphaImageMorph >> updateImage [
 	"Get the image from the model."
-	
+
 	(self model notNil and: [self getImageSelector notNil]) ifTrue: [
 		(self model perform: self getImageSelector) ifNotNil: [:i | self image: i]]
 ]

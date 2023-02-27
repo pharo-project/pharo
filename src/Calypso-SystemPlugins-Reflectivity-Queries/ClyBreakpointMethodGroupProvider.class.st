@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyBreakpointMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'breakpoints' priority: 8.4 on: aMethodQuery 
+	^ClyMethodGroup named: 'breakpoints' priority: 8.4 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

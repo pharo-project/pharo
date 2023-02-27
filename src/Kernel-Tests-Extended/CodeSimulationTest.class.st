@@ -8,11 +8,9 @@ Class {
 }
 
 { #category : #private }
-CodeSimulationTest >> indexedBasicAt: index [ 
+CodeSimulationTest >> indexedBasicAt: index [
 	<primitive: 60 error: code >
 	^ code
-
-
 ]
 
 { #category : #tests }
@@ -116,7 +114,7 @@ CodeSimulationTest >> testErrorWithErrorHandler [
 
 { #category : #tests }
 CodeSimulationTest >> testGoodSimulation [
-	self runSimulated: [ 1 + 2 ].
+	self runSimulated: [ 1 + 2 ]
 ]
 
 { #category : #tests }
@@ -130,8 +128,7 @@ CodeSimulationTest >> testTranscriptPrintingWithOpenedTranscriptExists [
 ]
 
 { #category : #private }
-CodeSimulationTest >> veryBasicAt: index [ 
+CodeSimulationTest >> veryBasicAt: index [
 	<primitive: 'dooo' module: 'bar' error: code>
 	^ code
-
 ]

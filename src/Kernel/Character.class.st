@@ -22,18 +22,21 @@ Class {
 { #category : #'instance creation' }
 Character class >> allByteCharacters [
 	"Answer all the characters that can be encoded in a byte"
-	
-	^ (0 to: 255) collect: [:v | Character value: v] as: String
 
+	^ (0 to: 255) collect: [:v | Character value: v] as: String
 ]
 
 { #category : #'instance creation' }
 Character class >> allCharacters [
-	"This name is obsolete since only the characters that will fit in a byte can be queried"
-	
-	^self allByteCharacters
-	
 
+	"This name is obsolete since only the characters that will fit in a byte can be queried"
+
+	self
+		deprecated:
+			'This name is obsolete since only the characters that will fit in a byte can be queried'
+		transformWith: '`@rec allCharacters' -> '`@rec allByteCharacters'.
+
+	^ self allByteCharacters
 ]
 
 { #category : #constants }
@@ -86,24 +89,23 @@ Character class >> characterSet: aCharSet [
 ]
 
 { #category : #'instance creation' }
-Character class >> codePoint: anInteger [ 
-	"Just for ANSI Compliance"	
-		
+Character class >> codePoint: anInteger [
+	"Just for ANSI Compliance"
+
 	^self value: anInteger
-	
 ]
 
 { #category : #private }
 Character class >> constantNameFor: aCharacter [
 	^ self constantNames
 		detect: [ :each | (self perform: each) = aCharacter ]
-		ifNone: [ nil ].
+		ifNone: [ nil ]
 ]
 
 { #category : #private }
 Character class >> constantNames [
 	"Added the rest of them!"
-	
+
 	^#(backspace cr delete escape lf newPage space tab
 		arrowDown arrowLeft arrowRight arrowUp
 		enter end home insert nbsp pageDown pageUp null)
@@ -122,7 +124,7 @@ Character class >> delete [
 ]
 
 { #category : #'instance creation' }
-Character class >> digitValue: x [ 
+Character class >> digitValue: x [
 	"Answer the Character whose digit value is x. For example,
 	 answer $9 for x=9, $0 for x=0, $A for x=10, $Z for x=35."
 
@@ -160,10 +162,10 @@ Character class >> home [
 	^ self value: 1
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Character class >> initialize [
 	"Create the DigitsValues table."
- 
+
 	self initializeDigitValues
 ]
 
@@ -278,7 +280,7 @@ Character class >> specialCharacters [
 { #category : #queries }
 Character class >> supportsNonASCII [
 
-	^ (self environment includesKey: #Unicode) and: [ 
+	^ (self environment includesKey: #Unicode) and: [
 		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
 ]
 
@@ -302,14 +304,14 @@ Character class >> value: anInteger [
 ]
 
 { #category : #comparing }
-Character >> < aCharacter [ 
+Character >> < aCharacter [
 	"Answer true if the receiver's value < aCharacter's value."
 
 	^self asciiValue < aCharacter asciiValue
 ]
 
 { #category : #comparing }
-Character >> = aCharacter [ 
+Character >> = aCharacter [
 	"Primitive. Answer if the receiver and the argument are the
 	 same object (have the same object pointer). Optional. See
 	 Object documentation whatIsAPrimitive."
@@ -318,7 +320,7 @@ Character >> = aCharacter [
 ]
 
 { #category : #comparing }
-Character >> > aCharacter [ 
+Character >> > aCharacter [
 	"Answer true if the receiver's value > aCharacter's value."
 
 	^self asciiValue > aCharacter asciiValue
@@ -334,7 +336,7 @@ Character >> asCharacter [
 { #category : #converting }
 Character >> asHTMLString [
 	"substitute the < & > into HTML compliant elements"
-	
+
 	#($< '&lt;' $> '&gt;' $& '&amp;') pairsDo: [:k :v |
 		self = k ifTrue: [^ v]].
 	^ String with: self
@@ -359,10 +361,9 @@ Character >> asString [
 ]
 
 { #category : #converting }
-Character >> asSymbol [ 
+Character >> asSymbol [
 	"Answer a Symbol consisting of the receiver as the only element."
-
-	^Symbol internCharacter: self
+	^ self asString asSymbol
 ]
 
 { #category : #converting }
@@ -375,8 +376,6 @@ Character >> asUnicode [
 Character >> asUppercase [
 	"If the receiver is lowercase, answer its matching uppercase Character."
 	^ self characterSet toUppercase: self
-	
-
 ]
 
 { #category : #accessing }
@@ -410,16 +409,6 @@ Character >> basicPharoToIso [
 	^ Character value: tmp1
 ]
 
-{ #category : #testing }
-Character >> canBeGlobalVarInitial [
-	^ self characterSet canBeGlobalVarInitial: self 
-]
-
-{ #category : #testing }
-Character >> canBeNonGlobalVarInitial [
-  ^ self characterSet canBeNonGlobalVarInitial: self
-]
-
 { #category : #accessing }
 Character >> charCode [
 	^ self asInteger bitAnd: 4194303
@@ -432,7 +421,7 @@ Character >> characterSet [
 
 { #category : #accessing }
 Character >> codePoint [
-	"Just for ANSI Compliance"	
+	"Just for ANSI Compliance"
 	^self asciiValue
 ]
 
@@ -465,10 +454,10 @@ Character >> hash [
 
 { #category : #printing }
 Character >> hex [
-	"Returns a string representation of the receiver as hex, prefixed with 16r.  
+	"Returns a string representation of the receiver as hex, prefixed with 16r.
 	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
-	"$A hex >>> '16r41'"	
-			
+	"$A hex >>> '16r41'"
+
 	^ self asInteger hex
 ]
 
@@ -478,7 +467,7 @@ Character >> hexDigitValue [
 	$0 to: $9 will return 0 to 9, while $a to $f and $A to $F both will return 10 to 15.
 	If the receiver does not represent a hexadecimal digit, return nil.
 	Returns an integer between 0 and 15."
-	
+
 	| codePoint |
 	^ ((codePoint := self asInteger) between: 0 and: 127)
 		ifTrue: [ #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil) at: codePoint + 1 ]
@@ -509,7 +498,7 @@ Character >> isCasedLetter [
 	This method only returning false."
 	"$a isCasedLetter >>> false"
 	"$A isCasedLetter >>> false"
-	
+
 	^ self characterSet isCasedLetter: self
 ]
 
@@ -517,7 +506,6 @@ Character >> isCasedLetter [
 Character >> isCharacter [
 
 	^ true
-
 ]
 
 { #category : #testing }
@@ -528,7 +516,7 @@ Character >> isClosePunctuation [
 	"$) isClosePunctuation >>> true"
 	"$] isClosePunctuation >>> true"
 	"$} isClosePunctuation >>> true"
-	
+
 	^ self characterSet isClosePunctuation: self
 ]
 
@@ -540,7 +528,7 @@ Character >> isConnectorPunctuation [
 	"$) isConnectorPunctuation >>> false"
 	"$> isConnectorPunctuation >>> false"
 	"$} isConnectorPunctuation >>> false"
-	
+
 	^ self characterSet isConnectorPunctuation: self
 ]
 
@@ -554,13 +542,12 @@ Character >> isControlOther [
 	"Character pageUp isControlOther >>> true"
 	"Character arrowDown isControlOther >>> true"
 	"Character end isControlOther >>> true"
-	
+
 	"$) isControlOther >>> false"
 	"$> isControlOther >>> false"
 	"$} isControlOther >>> false"
-	
-	^ self characterSet isControlOther: self
 
+	^ self characterSet isControlOther: self
 ]
 
 { #category : #testing }
@@ -569,7 +556,7 @@ Character >> isCurrencySymbol [
 	"$$ isCurrencySymbol >>> true"
 	"Character euro isCurrencySymbol >>> true"
 	"$} isControlOther >>> false"
-	
+
 	^ self characterSet isCurrencySymbol: self
 ]
 
@@ -578,7 +565,7 @@ Character >> isDashPunctuation [
 	"Return whether the receiver is one of these characters:   $-"
 	"$- isDashPunctuation >>> true"
 	"$_ isDashPunctuation >>> false"
-	
+
 	^ self characterSet isDashPunctuation: self
 ]
 
@@ -596,9 +583,8 @@ Character >> isDigit [
 	"Return whether the receiver is a digit."
 	"$1 isDigit >>> true"
 	"$0 isDigit >>> true"
-	
-	^ self characterSet isDigit: self
 
+	^ self characterSet isDigit: self
 ]
 
 { #category : #testing }
@@ -612,8 +598,8 @@ Character >> isDoubleQuote [
 Character >> isEnclosingMark [
 	"Return whether the receiver is ... one of these https://www.compart.com/en/unicode/category/Me"
 	"$' isEnclosingMark >>> false"
-	
-	
+
+
 	^ self characterSet isEnclosingMark: self
 ]
 
@@ -621,7 +607,7 @@ Character >> isEnclosingMark [
 Character >> isFinalQuote [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pf"
 	"$' isFinalQuote >>> false"
-	
+
 	^ self characterSet isFinalQuote: self
 ]
 
@@ -641,7 +627,7 @@ Character >> isImmediateObject [
 Character >> isInitialQuote [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pi"
 	"$' isInitialQuote >>> false"
-	
+
 	^ self characterSet isInitialQuote: self
 ]
 
@@ -653,13 +639,12 @@ Character >> isLetter [
 	"$A isLetter >>> true"
 
 	^ self characterSet isLetter: self
-
 ]
 
 { #category : #'testing - unicode' }
 Character >> isLetterModifier [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Lm"
-	
+
 	^ self characterSet isLetterModifier: self
 ]
 
@@ -672,7 +657,7 @@ Character >> isLetterNumber [
 { #category : #'testing - unicode' }
 Character >> isLineSeparator [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Zl"
-	
+
 	^ self characterSet isLineSeparator: self
 ]
 
@@ -686,7 +671,6 @@ Character >> isLiteral [
 Character >> isLowercase [
 
 	^ self characterSet isLowercase: self
-
 ]
 
 { #category : #testing }
@@ -741,15 +725,28 @@ Character >> isParagraphSeparator [
 ]
 
 { #category : #testing }
+Character >> isPinnedInMemory [
+	"Immediate instances can't be pinned"
+
+	^ false
+]
+
+{ #category : #testing }
 Character >> isPrivateOther [
 ^ self characterSet isPrivateOther: self
+]
+
+{ #category : #testing }
+Character >> isPunctuation [
+
+	^ self isOpenPunctuation or: [ self isClosePunctuation ]
 ]
 
 { #category : #testing }
 Character >> isSafeForHTTP [
 	"Return whether a character is 'safe', or needs to be escaped when used, eg, in a URL"
 	"See http://www.faqs.org/rfcs/rfc1738.html. ~ is unsafe and has been removed"
-	
+
 	^ self charCode < 128
 		and: [self isAlphaNumeric
 				or: ['.-_' includes: (Character value: self charCode)]]
@@ -764,7 +761,7 @@ Character >> isSeparator [
 	"Character newPage isSeparator >>> true"
 	"Character tab isSeparator >>> true"
 	"$' isSeparator >>> false"
-	
+
 	| in |
 	^ (in := self asInteger) == 32 or: [ in == 13 or: [ in == 9 or: [ in == 10 or: [ in == 12 ] ] ] ]
 ]
@@ -784,7 +781,6 @@ Character >> isSpecial [
 	"Answer whether the receiver is one of the special characters: i.e., +-/\*~<>=@,%|&?! and a couple of others."
 
 	^ self class specialCharacters includes: self
-
 ]
 
 { #category : #testing }
@@ -801,12 +797,11 @@ Character >> isTitlecaseLetter [
 Character >> isUppercase [
 
 	^ self characterSet isUppercase: self
-
 ]
 
 { #category : #testing }
 Character >> isVowel [
-	"Answer whether the receiver is one of the vowels, AEIOU, in upper or 
+	"Answer whether the receiver is one of the vowels, AEIOU, in upper or
 	lower case."
 
 	^'AEIOU' includes: self asUppercase
@@ -821,7 +816,7 @@ Character >> lowercase [
 Character >> nextObject [
 	"Characters are immediate objects, and, as such, do not have successors in object memory."
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #printing }
@@ -845,9 +840,9 @@ Character >> printStringHex [
 ]
 
 { #category : #comparing }
-Character >> sameAs: aCharacter [ 
+Character >> sameAs: aCharacter [
 	"Answer whether the receiver is equal to aCharacter, ignoring case"
-	^ (self asLowercase = aCharacter asLowercase)	
+	^ (self asLowercase = aCharacter asLowercase)
 ]
 
 { #category : #private }
@@ -885,8 +880,8 @@ Character >> storeOn: aStream [
 			name notNil
 				ifTrue: [ aStream nextPutAll: self class name; space; nextPutAll: name ]
 				ifFalse: [
-					aStream 
-						nextPut: $(; nextPutAll: self class name; 
+					aStream
+						nextPut: $(; nextPutAll: self class name;
 						nextPutAll: ' value: '; print: self asInteger; nextPut: $) ] ]
 ]
 
@@ -904,7 +899,7 @@ Character >> tokenish [
 	"$: tokenish >>> true"
 	"${ tokenish >>> false"
 	"Character space tokenish >>> false"
-	
+
 	^ self isLetter or: [ self isDigit or: [ self = $_ or: [ self = $: ] ] ]
 ]
 

@@ -3,13 +3,89 @@ A String is an indexed collection of Characters. Class String provides the abstr
 
 Strings support a vast array of useful methods, which can best be learned by browsing and trying out examples as you find them in the code.
 
-Here are a few useful methods to look at...
-	String match:
-	String contractTo:
+## Substrings and slicing
 
-String also inherits many useful methods from its hierarchy, such as
-	SequenceableCollection ,
-	SequenceableCollection copyReplaceAll:with:
+A number of selectors can be used to get substrings. `String>>#lines` will return a colection containing substrings separated by `\\n`, `\\r`, or `\\r\\n`; `String>>#trim` will return a substring with whitespace removed from the beginning and end. 
+
+Obtaining parts of a string can also be achieved using numbered indices, also known as slicing. There are shortcut methods for some common operations that are often inherited from `SequenceableCollection` inclusing `allButFirst`, `allButLast`, `first`, or `last`.
+
+```
+s := 'abcdefg'.
+
+s first. ""$a""
+s allButFirst.  ""bcdefg""
+
+s last.  ""$g""
+s allButLast.  ""abcdef""
+
+""pass a number argument to change the number of characters removed/kept""
+
+s first: 2.  ""ab""  
+s allButFirst: 2.  ""cdefg""
+
+s last: 2.  ""fg""
+s allButLast: 2.  ""abcde""
+```
+
+To get the middle of a string use `SequenceableCollection>>#copyFrom:to:`
+
+```
+s := 'abcdefg'.
+s copyFrom: 2 to: 6. ""bcdef""
+```
+
+To count back from the end of the string use the `size` selector
+```
+s := 'abcdefg'
+s copyFrom: 2 to: s size - 1 
+```
+
+## Formatting
+
+Strings have a `String>>#format:` selector that can be used for interpolating other objects.
+The ""string template"" can either have numbers between curly bracket characters (`{` and `}`)
+where the argument to format is a collection where values are indexed by number. Or pass in
+a `HashedCollection` where the placeholders are the keys of the collection
+```
+'ab {1} ef {2}' format: {'cd'. 'gh'}.  ""ab cd ef gh""
+
+'ab {one} ef {two}' format: 
+    (Dictionary with: #one -> 'cd' with: #two -> 'gh').
+```
+
+`String>>#contractTo:` is also useful for shortening strings to a particular length by replacing 
+middle characters.
+
+## Copying and Streaming
+As well as the `format:` selector it is possible to build up a string using contatenation with
+`SequenceableCollection>>#,` 
+
+```
+a := 'abc'.
+b := ' easy as '.
+c := '123'.
+a , b , c.  ""abc easy as 123""
+```
+Or alternatively, construct a string from a stream using `SequenceableCollection class>>#streamContents:`.
+
+```
+s := String streamContents: [ :stream |
+	  stream nextPutAll: 'abcdefg';
+	  space;
+	  nextPutAll: '123456';
+	  space.
+	  '7890' putOn: stream. ].  ""abcdefg 123456 7890""
+```
+
+## Finding/Searching
+
+Simple reqular expression type searching can be performed using `String>>#match:`, which has similar
+symantics as ""globbing"" in a shell. The reciever is a template string where the `#` character matches any single character and the `*` character matches any number of characters. A `Boolean` object is returned. 
+```
+'#abb*cdch' match: '4abbadskfakjdfadiadfnvcdch'  ""true""
+```
+
+For more complex matching use `String>>#matchesRegex:` which is an extension method implmented by `RxMatcher`. See the help documentation on regular expressions `HelpBrowser openOn: RegexHelp.`
 
 "
 Class {
@@ -38,7 +114,7 @@ String class >> compare: string1 with: string2 collated: order [
 	order
 		ifNil: [ len1 := string1 size.
 			len2 := string2 size.
-			1 to: (len1 min: len2) do: [ :i | 
+			1 to: (len1 min: len2) do: [ :i |
 				c1 := string1 basicAt: i.
 				c2 := string2 basicAt: i.
 				c1 = c2
@@ -51,7 +127,7 @@ String class >> compare: string1 with: string2 collated: order [
 				ifFalse: [ 3 ] ].
 	len1 := string1 size.
 	len2 := string2 size.
-	1 to: (len1 min: len2) do: [ :i | 
+	1 to: (len1 min: len2) do: [ :i |
 		c1 := string1 basicAt: i.
 		c2 := string2 basicAt: i.
 		c1 < 256 ifTrue: [ c1 := order at: c1 + 1 ].
@@ -71,7 +147,6 @@ String class >> cr [
 	"Answer a string containing a single carriage return character."
 
 	^ self with: Character cr
-
 ]
 
 { #category : #'instance creation' }
@@ -79,13 +154,11 @@ String class >> crlf [
 	"Answer a string containing a carriage return and a linefeed."
 
 	^ self with: Character cr with: Character lf
-
 ]
 
 { #category : #'instance creation' }
 String class >> crlfcrlf [
-	^self crlf , self crlf.
-
+	^self crlf , self crlf
 ]
 
 { #category : #'instance creation' }
@@ -95,7 +168,7 @@ String class >> empty [
 ]
 
 { #category : #formatting }
-String class >> expandMacro: macroType argument: argument withExpansions: expansions [ 
+String class >> expandMacro: macroType argument: argument withExpansions: expansions [
 	macroType = $s ifTrue: [^expansions at: argument].
 	macroType = $p ifTrue: [^(expansions at: argument) printString].
 	macroType = $n ifTrue: [^String cr].
@@ -104,9 +177,9 @@ String class >> expandMacro: macroType argument: argument withExpansions: expans
 ]
 
 { #category : #primitives }
-String class >> findFirstInString: aString inCharacterSet: aCharacterSet startingAt: start [ 
+String class >> findFirstInString: aString inCharacterSet: aCharacterSet startingAt: start [
 	"Trivial, non-primitive version"
-	
+
 	start
 		to: aString size
 		do: [:i | (aCharacterSet
@@ -118,7 +191,7 @@ String class >> findFirstInString: aString inCharacterSet: aCharacterSet startin
 { #category : #primitives }
 String class >> findFirstInString: aString inSet: inclusionMap startingAt: start [
 	"Trivial, non-primitive version"
-	
+
 	| i stringSize ascii more |
 	inclusionMap size ~= 256 ifTrue: [^ 0].
 	stringSize := aString size.
@@ -137,30 +210,27 @@ String class >> findFirstInString: aString inSet: inclusionMap startingAt: start
 String class >> fromByteArray: aByteArray [
 
 	^ aByteArray asString
-
 ]
 
 { #category : #'instance creation' }
-String class >> fromString: aString [ 
+String class >> fromString: aString [
 	"Answer an instance of me that is a copy of the argument, aString."
-	
+
 	^ aString copyFrom: 1 to: aString size
 ]
 
 { #category : #primitives }
-String class >> indexOfAscii: anInteger inString: aString startingAt: start [	
+String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 	start to: aString size do: [ :index |
 		(aString basicAt: index) = anInteger ifTrue: [ ^index ] ].
 	^0
-
-
 ]
 
-{ #category : #initialization }
-String class >> initialize [   
-	
+{ #category : #'class initialization' }
+String class >> initialize [
+
 	self initializeTypeTable.
-	
+
 	AsciiOrder := self newAsciiOrder.
 	CaseInsensitiveOrder := self newCaseInsensitiveOrder.
 	CaseSensitiveOrder := self newCaseSensitiveOrder.
@@ -171,10 +241,10 @@ String class >> initialize [
 
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
-	CSNonSeparators := CSSeparators complement.
+	CSNonSeparators := CSSeparators complement
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 String class >> initializeTypeTable [
 
 	| newTable |
@@ -205,7 +275,6 @@ String class >> initializeTypeTable [
 	newTable at: $_ asciiValue put: #xLetter. "by default, do not accept _ as assignement"
 	newTable at: $| asciiValue put: #verticalBar.
 	TypeTable := newTable
-
 ]
 
 { #category : #'instance creation' }
@@ -219,7 +288,7 @@ String class >> lf [
 String class >> loremIpsum [
 	"Return a constant string with one paragraph of text, the famous Lorem ipsum filler text.
 	The result is pure ASCII (Latin words) and contains no newlines."
-	
+
 	^ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 ]
 
@@ -227,19 +296,19 @@ String class >> loremIpsum [
 String class >> loremIpsum: size [
 	"Return a mostly random multi-paragraph filler string of the specified size.
 	The result is pure ASCII, uses CR for newlines and ends with a dot and newline."
-	
+
 	"self loremIpsum: 2048"
-	
+
 	| words out |
 	words := (self loremIpsum findTokens: ' ,.') collect: [:each | each asLowercase].
 	(out := LimitedWriteStream on: (self new: size))
 		limit: size - 2;
 		limitBlock: [
-			^ out originalContents 
-				at: size - 1 put: $.; 
-				at: size put: Character cr; 
+			^ out originalContents
+				at: size - 1 put: $.;
+				at: size put: Character cr;
 				yourself ].
-	[ 
+	[
 		out << self loremIpsum; cr; cr.
 		5 atRandom timesRepeat: [
 			15 atRandom timesRepeat: [
@@ -258,18 +327,18 @@ String class >> new: sizeRequested [
 		ifFalse: [ self basicNew: sizeRequested ]
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newAsciiOrder [
 	^ (0 to: 255) as: ByteArray
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCSLineEnders [
 	"CR and LF--characters that terminate a line"
 	^ CharacterSet crlf
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCaseInsensitiveOrder [
 	"map char and char asLower (Lowercase Latin1 stays in the Latin1 range, uppercase not.)"
 	| newCollection |
@@ -279,13 +348,13 @@ String class >> newCaseInsensitiveOrder [
             char := v asCharacter.
             lower := char asLowercase.
             newCollection at: lower asciiValue + 1 put: (newCollection at: char asciiValue + 1) ].
-	^ newCollection 
+	^ newCollection
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCaseSensitiveOrder [
 	"Case-sensitive compare sorts space, digits, letters, all the rest..."
-	
+
 	| newTab order |
 	newTab := ByteArray new: 256 withAll: 255.
 	order := -1.
@@ -298,23 +367,23 @@ String class >> newCaseSensitiveOrder [
 		[:i | (newTab  at: i) = 255 ifTrue:
 			[newTab  at: i put: (order := order+1)]].
 	order = 255 ifFalse: [self error: 'order problem'].
-	^ newTab 
+	^ newTab
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asLowercase])
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newTokenish [
 	"a table for testing tokenish (for fast numArgs)"
-	^ String withAll: (Character allByteCharacters 
+	^ String withAll: (Character allByteCharacters
 		collect: [:c | c tokenish ifTrue: [ c ] ifFalse: [ $~ ]])
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newUppercasingTable [
 	"a table for translating to upper case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asUppercase])
@@ -322,19 +391,19 @@ String class >> newUppercasingTable [
 
 { #category : #'instance creation' }
 String class >> readFrom: inStream [
-	"Answer an instance of me that is determined by reading the stream, 
+	"Answer an instance of me that is determined by reading the stream,
 	inStream. Embedded double quotes become the quote Character."
 
 	| char done |
-	^ self streamContents: [ :outStream | 
+	^ self streamContents: [ :outStream |
 		"go to first quote"
 		inStream skipTo: $'.
 		done := false.
 		[ done or: [ inStream atEnd ] ]
-			whileFalse: [ 
+			whileFalse: [
 				char := inStream next.
 				char = $'
-					ifTrue: [ 
+					ifTrue: [
 						char := inStream next.
 						char = $'
 							ifTrue: [ outStream nextPut: char ]
@@ -347,7 +416,6 @@ String class >> space [
 	"Answer a string containing a single space character."
 
 	^ self with: Character space
-
 ]
 
 { #category : #primitives }
@@ -362,7 +430,6 @@ String class >> stringHash: aString initialHash: speciesHash [
 		hash := (16r260D * low + ((16r260D * (hash // 16384) + (16r0065 * low) bitAnd: 16383) * 16384)) bitAnd: 16r0FFFFFFF.
 	].
 	^ hash
-
 ]
 
 { #category : #'instance creation' }
@@ -370,7 +437,6 @@ String class >> tab [
 	"Answer a string containing a single tab character."
 
 	^ self with: Character tab
-
 ]
 
 { #category : #primitives }
@@ -381,7 +447,6 @@ String class >> translate: aString from: start  to: stop  table: table [
 		(char := aString basicAt: i) < 256 ifTrue: [
 			aString at: i put: (table at: char+1)].
 	]
-
 ]
 
 { #category : #accessing }
@@ -394,7 +459,6 @@ String class >> typeTable [
 String class >> value: anInteger [
 
 	^ self with: (Character value: anInteger)
-
 ]
 
 { #category : #'instance creation' }
@@ -408,42 +472,42 @@ String class >> with: aCharacter [
 ]
 
 { #category : #comparing }
-String >> < aString [ 
+String >> < aString [
 	"Answer whether the receiver sorts before aString.
 	The collation order is simple ascii (with case differences)."
 	" 'abc' < 'def' >>> true"
 	" 'abc' < 'abc' >>> false"
 	" 'def' < 'abc' >>> false"
-	
-	
+
+
 	^ (self compare: self with: aString collated: AsciiOrder) = 1
 ]
 
 { #category : #comparing }
-String >> <= aString [ 
+String >> <= aString [
 	"Answer whether the receiver sorts before or equal to aString.
 	The collation order is simple ascii (with case differences)."
 	" 'abc' <= 'def' >>> true"
 	" 'abc' <= 'abc' >>> true"
 	" 'def' <= 'abc' >>> false"
-	
+
 	^ (self compare: self with: aString collated: AsciiOrder) <= 2
 ]
 
 { #category : #comparing }
-String >> = aString [ 
+String >> = aString [
 	"Answer whether the receiver sorts equally as aString.
 	The collation order is simple ascii (with case differences)."
 	" 'abc' = 'def' >>> false"
 	" 'abc' = 'abc' >>> true"
 	" 'def' = 'abc' >>> false"
-	
+
 	(aString isString and: [self size = aString size]) ifFalse: [^false].
 	^ (self compare: self with: aString collated: AsciiOrder) = 2
 ]
 
 { #category : #comparing }
-String >> > aString [ 
+String >> > aString [
 	"Answer whether the receiver sorts after aString.
 	The collation order is simple ascii (with case differences)."
 	" 'def' > 'abc' >>> true"
@@ -455,7 +519,7 @@ String >> > aString [
 ]
 
 { #category : #comparing }
-String >> >= aString [ 
+String >> >= aString [
 	"Answer whether the receiver sorts after or equal to aString.
 	The collation order is simple ascii (with case differences)."
 	" 'def' >= 'abc' >>> true"
@@ -466,12 +530,12 @@ String >> >= aString [
 ]
 
 { #category : #comparing }
-String >> alike: aString [ 
+String >> alike: aString [
 	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score (but see example with 7).  Case is ignored. This method is used to help find mistyped variable names in methods."
 	"('abc' alike: 'abc') >>> 7."
 	"('action' alike: 'actions') >>> 7."
 	"('action' alike: 'caption') >>> 5."
-	"('action' alike: 'name') >>> 0."	
+	"('action' alike: 'name') >>> 0."
 
 	| i j k minSize bonus |
 	minSize := (j := self size) min: (k := aString size).
@@ -489,13 +553,13 @@ String >> alike: aString [
 String >> allRangesOfSubstring: aSubstring [
 	"('Ab cd ef Ab cd' allRangesOfSubstring: 'cd') >>> {(4 to: 5). (13 to: 14)}"
 	"('Ab cd ef Ab cd' allRangesOfSubstring: 'zz') >>> #()"
-	
+
 	^ Array streamContents: [:s | | start subSize |
 		start := 1.
 		subSize := aSubstring size.
 		[start isZero]
 			whileFalse: [ start := self findString: aSubstring startingAt: start.
-				start > 0 
+				start > 0
 					ifTrue: [s nextPut: (start to: start + subSize - 1).
 						start := start + subSize]]]
 ]
@@ -506,13 +570,13 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
 String >> asByteString [
 	"Convert the receiver into a ByteString, if possible"
-	"Do not raise an error if it's not possible, since my use case is usually one in which WideStrings may or may not have been mutated to something representable in a ByteString, and we mostly do this to save space if possible. If the percentage of such cases are small, it may be better to use isOctetString check first to avoid creating String instances"	
+	"Do not raise an error if it's not possible, since my use case is usually one in which WideStrings may or may not have been mutated to something representable in a ByteString, and we mostly do this to save space if possible. If the percentage of such cases are small, it may be better to use isOctetString check first to avoid creating String instances"
 	^self asOctetString
 ]
 
@@ -534,7 +598,7 @@ String >> asComment [
 		| quoteCount first |
 
 		str nextPut: $".
-	
+
 		quoteCount := 0.
 		first := true.
 		self do: [ :char |
@@ -549,7 +613,7 @@ String >> asComment [
 						str nextPut: $" ].
 					quoteCount := 0.
 					str nextPut: char ].
-			first := false ]. 
+			first := false ].
 
 		quoteCount odd ifTrue: [
 			"check at the end"
@@ -557,7 +621,6 @@ String >> asComment [
 
 		str nextPut: $".
 	]
-	
 ]
 
 { #category : #converting }
@@ -569,17 +632,16 @@ String >> asDate [
 
 { #category : #converting }
 String >> asDateAndTime [
- 	"Convert from UTC format" 	
-	
+ 	"Convert from UTC format"
+
 	^ DateAndTime fromString: self
 ]
 
 { #category : #converting }
 String >> asDuration [
  	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
- 
+
  	^ Duration fromString: self
- 
 ]
 
 { #category : #converting }
@@ -588,26 +650,24 @@ String >> asFourCode [
 	"'1111' asFourCode >>> 825307441"
 	"'1234' asFourCode >>> 825373492"
 	| result |
-	self size = 4 
+	self size = 4
 		ifFalse: [^self error: 'must be exactly four characters'].
-		
+
 	result := self inject: 0 into: [:val :each | 256 * val + each asciiValue ].
-	(result bitAnd: 16r80000000) = 0 
+	(result bitAnd: 16r80000000) = 0
 		ifFalse: [ Error signal: 'cannot resolve fourcode' ].
-		
-	(result bitAnd: 16r40000000) = 0 
+
+	(result bitAnd: 16r40000000) = 0
 		ifFalse: [ ^ result - 16r80000000 ].
 	^ result
-
 ]
 
 { #category : #converting }
 String >> asHTMLString [
 	"substitute the < & > into HTML compliant elements"
 	"'<a>' asHTMLString"
-	^ self species new: self size streamContents: [ :s| 
+	^ self species new: self size streamContents: [ :s|
 		self do: [:c | s nextPutAll: c asHTMLString ]]
-
 ]
 
 { #category : #converting }
@@ -619,7 +679,7 @@ String >> asHex [
 ]
 
 { #category : #converting }
-String >> asInteger [ 
+String >> asInteger [
 	"Return the integer present in the receiver, or nil. In case of float, returns the integer part."
 	"'1' asInteger >>> 1"
 	"'-1' asInteger >>> -1"
@@ -627,7 +687,6 @@ String >> asInteger [
 	"'a' asInteger >>> nil"
 	"'1.234' asInteger >>> 1"
 	^self asSignedInteger
-
 ]
 
 { #category : #converting }
@@ -635,8 +694,15 @@ String >> asLowercase [
 	"Answer a String made up from the receiver whose characters are all lowercase."
 	"'PhaRo' asLowercase >>> 'pharo'"
 	"'' asLowercase >>> ''"
-	"' ' asLowercase >>> ' '"	
+	"' ' asLowercase >>> ' '"
 	^ self copy asString translateToLowercase
+]
+
+{ #category : #converting }
+String >> asNumber [
+	"Answer the Number created by interpreting the receiver as the string representation of a number."
+
+	^ Number readFromString: self
 ]
 
 { #category : #converting }
@@ -657,11 +723,10 @@ String >> asPluralBasedOn: aNumberOrCollection [
 		[aNumberOrCollection isCollection and: [aNumberOrCollection size = 1]])
 			ifTrue: [self]
 			ifFalse: [self, 's']
-
 ]
 
 { #category : #converting }
-String >> asSignedInteger [ 
+String >> asSignedInteger [
 	"Returns the first signed integer it can find or nil."
 
 	| start stream |
@@ -678,13 +743,11 @@ String >> asString [
 	"Answer this string."
 
 	^ self
-
 ]
 
 { #category : #converting }
 String >> asSymbol [
-	"Answer the unique Symbol whose characters are the characters of the 
-	string."
+	"Answer the unique Symbol whose characters are the characters of the string."
 	^Symbol intern: self
 ]
 
@@ -692,32 +755,30 @@ String >> asSymbol [
 String >> asTime [
 	"Many allowed forms, see Time>>readFrom:"
 
-	^ Time fromString: self.
+	^ Time fromString: self
 ]
 
 { #category : #converting }
 String >> asUncommentedCode [
 	"this string reprensent a commented code, let's uncomment it"
-	
+
 	^String streamContents:  [ :str |
-		
+
 		|doubleQuoteAlreadyFound|
 		doubleQuoteAlreadyFound := false.
-		
+
 		self withoutQuoting do: [ :char |
 			char = $"
-				ifTrue: [ 
-					doubleQuoteAlreadyFound 	ifTrue: [ 
+				ifTrue: [
+					doubleQuoteAlreadyFound 	ifTrue: [
 							str nextPut: $" ].
 					doubleQuoteAlreadyFound := doubleQuoteAlreadyFound not.
 				]
-				ifFalse: [ 
+				ifFalse: [
 					str nextPut: char
 				]
 		 ]
 	]
-
-
 ]
 
 { #category : #converting }
@@ -742,20 +803,20 @@ String >> asValidSelector [
 	"Returns a symbol that is a valid selector by removing any space or forbidden characters"
 	"'234znak ::x43 ''åå) _ : 2' asValidSelector >>> #'v234znak:x43:v2'"
 	"'234znak ::x43 åå) :2' asValidSelector >>> #v234znak:x43:v2"
-	
+
 ^(((
-	$: join: (	
+	$: join: (
 		(
 			$: split: (
 				self select: [ :char |
-					(char charCode < 128) and: [ 
-						char isAlphaNumeric or: [ 
-							char = $:	
-						]	
-					]	
+					(char charCode < 128) and: [
+						char isAlphaNumeric or: [
+							char = $:
+						]
+					]
 				]
 			)
-		)  
+		)
 		select: [ :split | split isNotEmpty ]
 		thenCollect: [ :nonEmptyString |
 			nonEmptyString first isLetter
@@ -764,30 +825,59 @@ String >> asValidSelector [
 		]
 	)
 ) ifEmpty: [ 'v' ]), ((self isNotEmpty and: [ self last = $: ]) ifTrue: [ ':' ] ifFalse: [ #() ]) )asSymbol
-
 ]
 
 { #category : #converting }
-String >> asWideString [ 
+String >> asWideString [
 
 	^ WideString from: self
 ]
 
 { #category : #testing }
-String >> beginsWithEmpty: prefix caseSensitive: aBoolean [ 
-	"Answer whether the receiver begins with the given prefix string. 
-	The comparison is case-sensitive." 
-	| matchTable |
-	prefix isEmpty ifTrue: [ ^ true ].
-	self size < prefix size ifTrue: [ ^ false ].
-	matchTable := aBoolean 
-		ifTrue: [ CaseSensitiveOrder ]
-		ifFalse: [ CaseInsensitiveOrder ].
-	^ (self 
-		findSubstring: prefix
-		in: self
-		startingAt: 1
-		matchTable: matchTable) = 1
+String >> beginsWith: prefix [
+	"Answer whether the receiver begins with the given prefix string.
+	The comparison is case-sensitive."
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self is wide, then super outperforms,
+	Otherwise, if prefix is wide, primitive is not correct"
+
+	"('pharo' beginsWith: '') >>> true"
+	"('pharo' beginsWith: 'pharo-project') >>> false"
+	"('pharo' beginsWith: 'phuro') >>> false"
+	"('pharo' beginsWith: 'pha') >>> true"
+	prefix ifEmpty: [ ^true ].
+	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
+
+	self size < prefix size ifTrue: [^ false].
+	^ (self findSubstring: prefix in: self startingAt: 1
+			  matchTable: CaseSensitiveOrder) = 1
+]
+
+{ #category : #testing }
+String >> beginsWith: prefix caseSensitive: aBoolean [
+	"Answer whether the receiver begins with the given prefix string"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self or prefix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
+
+	"('pharo' beginsWith: '' caseSensitive: false) >>> true"
+	"('pharo' beginsWith: 'pharo-project' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'phuro' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'Pha' caseSensitive: false) >>> true"
+	prefix ifEmpty: [ ^true ].
+	aBoolean ifTrue: [ ^self beginsWith: prefix ].
+	self size < prefix size ifTrue: [^ false].
+	(self class isBytes and: [prefix class isBytes]) ifTrue: [
+		"Optimized version based on primitive"
+		^ (self findSubstring: prefix in: self startingAt: 1 matchTable: CaseInsensitiveOrder) = 1 ].
+	prefix withIndexDo: [ :each :index |
+		(self at: index) asLowercase = each asLowercase ifFalse: [ ^false ]
+	].
+	^true
 ]
 
 { #category : #accessing }
@@ -816,14 +906,14 @@ String >> capitalized [
 ]
 
 { #category : #comparing }
-String >> caseInsensitiveLessOrEqual: aString [ 
+String >> caseInsensitiveLessOrEqual: aString [
 	"Answer whether the receiver sorts before or equal to aString.
 	The collation order is case insensitive."
 	^(self compare: aString caseSensitive: false) <= 2
 ]
 
 { #category : #comparing }
-String >> caseSensitiveLessOrEqual: aString [ 
+String >> caseSensitiveLessOrEqual: aString [
 	"Answer whether the receiver sorts before or equal to aString.
 	The collation order is case sensitive."
 	^(self compare: aString caseSensitive: true) <= 2
@@ -835,17 +925,17 @@ String >> charactersExactlyMatching: aString [
 	"('s' charactersExactlyMatching: 'abc') >>> 0"
 	"('fear is the little death that the.' charactersExactlyMatching: 'the') >>> 0"
 	"('fear is the little death that the.' charactersExactlyMatching: 'fear is') >>> 7"
-	
+
 	| count |
 	count := self size min: aString size.
-	1 to: count do: [:i | 
+	1 to: count do: [:i |
 		(self at: i) = (aString at: i) ifFalse: [
 			^ i - 1]].
 	^ count
 ]
 
 { #category : #comparing }
-String >> compare: aString [ 
+String >> compare: aString [
 	"Answer a comparison code telling how the receiver sorts relative to aString:
 		1 - before
 		2 - equal
@@ -855,7 +945,7 @@ String >> compare: aString [
 	"('aa' compare: 'ab') >>> 1"
 	"('aa' compare: 'aa') >>> 2"
 	"('ab' compare: 'aa') >>> 3"
-	
+
 	^self compare: aString caseSensitive: false
 ]
 
@@ -873,7 +963,7 @@ String >> compare: aString caseSensitive: aBool [
 
 { #category : #comparing }
 String >> compare: string1 with: string2 collated: order [
-	
+
 	"'abc' = 'abc' asWideString >>> true"
 	"'abc' asWideString = 'abc' >>> true"
 	"(ByteArray with: 97 with: 0 with: 0 with: 0) asString ~= 'a000' asWideString >>> true"
@@ -882,7 +972,7 @@ String >> compare: string1 with: string2 collated: order [
 	"('a000' asWideString ~= (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> true"
 	"((ByteArray with: 97 with: 0 with: 0 with: 0) asString sameAs: 'Abcd' asWideString) >>> false"
 	"('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> false"
-	
+
 	(string1 isByteString and: [string2 isByteString]) ifTrue: [
 		^ ByteString compare: string1 with: string2 collated: order].
      "Primitive does not fail properly right now"
@@ -895,7 +985,7 @@ String >> contractTo: smallSize [
 	"('abcd' contractTo: 10) >>> 'abcd'"
 	"('Pharo is really super cool' contractTo: 10) >>> 'Phar...ool'"
 	"('A clear but rather long-winded summary' contractTo: 18) >>> 'A clear ...summary'"
-	
+
 	| leftSize |
 	self size <= smallSize
 		ifTrue: [^ self].  "short enough"
@@ -905,24 +995,23 @@ String >> contractTo: smallSize [
 	^ self copyReplaceFrom: leftSize+1		"First N/2 ... last N/2"
 		to: self size - (smallSize - leftSize - 3)
 		with: '...'
-
 ]
 
 { #category : #copying }
 String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
 	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
-    | idx |        
+    | idx |
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
     ^ self species new: self size streamContents: [ :stream | | foundIdx |
-        [ (foundIdx := self findString: oldSubstring startingAt: idx) isZero ] whileFalse: [ 
-            stream 
+        [ (foundIdx := self findString: oldSubstring startingAt: idx) isZero ] whileFalse: [
+            stream
                 next: (foundIdx - idx) putAll: self startingAt: idx;
                 nextPutAll: newSubstring.
             idx := foundIdx + oldSubstring size ].
-        idx <= self size ifTrue: [ 
+        idx <= self size ifTrue: [
             stream next: (self size - idx + 1) putAll: self startingAt: idx ] ]
 ]
 
@@ -939,7 +1028,7 @@ String >> copyReplaceAll: oldSubstring with: newSubstring asTokens: ifTokens [
 	startSearch := 1.
 	[(currentIndex := aString indexOfSubCollection: oldSubstring startingAt: startSearch)
 			 > 0]
-		whileTrue: 
+		whileTrue:
 		[endIndex := currentIndex + oldSubstring size - 1.
 		(ifTokens not
 			or: [(currentIndex = 1
@@ -952,30 +1041,27 @@ String >> copyReplaceAll: oldSubstring with: newSubstring asTokens: ifTokens [
 					with: newSubstring.
 				startSearch := currentIndex + newSubstring size]
 			ifFalse: [
-				ifTokens 
+				ifTokens
 					ifTrue: [startSearch := currentIndex + 1]
 					ifFalse: [startSearch := currentIndex + newSubstring size]]].
 	^ aString
-
-
 ]
 
 { #category : #copying }
-String >> copyReplaceTokens: oldSubstring with: newSubstring [ 
+String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	"Replace all occurrences of oldSubstring that are surrounded by non-alphanumeric characters"
 	"('File asFile Files File''s File' copyReplaceTokens: 'File' with: 'Snick') >>> 'Snick asFile Files Snick''s Snick'"
-	
+
 	^ self copyReplaceAll: oldSubstring with: newSubstring asTokens: true
-	
 ]
 
 { #category : #copying }
 String >> copyUpToSubstring: aSubstring [
 
-	aSubstring ifEmpty: [ 
+	aSubstring ifEmpty: [
 		"preserve compatiblity with `readStream upToAll:`"
 		^ String new ].
-	
+
 	^ (self findString: aSubstring)
 		in: [ :index | index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ] ]
 ]
@@ -993,7 +1079,7 @@ String >> correctAgainst: wordList [
 String >> correctAgainst: wordList continuedFrom: oldCollection [
 	"Like correctAgainst:.  Use when you want to correct against several lists, give nil as the first oldCollection, and nil as the last wordList."
 
-	^ wordList 
+	^ wordList
 		ifNil: [ self correctAgainstEnumerator: nil
 					continuedFrom: oldCollection ]
 		ifNotNil: [ self correctAgainstEnumerator: [ :action | wordList do: action without: nil]
@@ -1004,7 +1090,7 @@ String >> correctAgainst: wordList continuedFrom: oldCollection [
 String >> correctAgainstDictionary: wordDict continuedFrom: oldCollection [
 	"Like correctAgainst:continuedFrom:.  Use when you want to correct against a dictionary."
 
-	^ wordDict 
+	^ wordDict
 		ifNil: [ self correctAgainstEnumerator: nil
 					continuedFrom: oldCollection ]
 		ifNotNil: [ self correctAgainstEnumerator: [ :action | wordDict keysDo: action ]
@@ -1028,7 +1114,7 @@ String >> correctAgainstEnumerator: wordBlock continuedFrom: oldCollection [
 			1 to: ( maxChoices min: choices size ) do: [ :i | results add: ( choices at: i ) key ]
 			]
 		ifNotNil: [ wordBlock
-				value: [ :word | 
+				value: [ :word |
 					| score |
 
 					( score := self alike: word ) >= scoreMin
@@ -1044,7 +1130,7 @@ String >> correctAgainstEnumerator: wordBlock continuedFrom: oldCollection [
 
 { #category : #copying }
 String >> deepCopy [
-	"DeepCopy would otherwise mean make a copy of the character;  since 
+	"DeepCopy would otherwise mean make a copy of the character;  since
 	characters are unique, just return a shallowCopy."
 
 	^self shallowCopy
@@ -1058,26 +1144,63 @@ String >> displayStringOn: aStream [
 
 { #category : #testing }
 String >> endsWith: suffix [
-	"Answer whether the tail end of the receiver is the same as suffix.
+	"Answer whether the receiver ends with the given prefix string.
 	The comparison is case-sensitive."
- 
-	"('Elvis' endsWith: 'vis') >>> true"
-	
-	| extra |
-	extra := self size - suffix size.
-	^extra < 0 
-		ifTrue: [ false]
-	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self is wide, then super outperforms,
+	Otherwise, if prefix is wide, primitive is not correct"
+
+	"('pharo' endsWith: '') >>> true"
+	"('pharo' endsWith: 'project-pharo') >>> false"
+	"('pharo' endsWith: 'phuro') >>> false"
+	"('pharo' endsWith: 'aro') >>> true"
+	"('pharo' endsWith: 'aRo') >>> false"
+
+	| requiredStart |
+	suffix ifEmpty: [ ^ true ].
+	(self class isBytes and: [ suffix class isBytes ]) ifFalse: [^super endsWith: suffix].
+	requiredStart := self size - suffix size + 1.
+	requiredStart <= 0 ifTrue: [  ^false ].
+
+	^ (self findSubstring: suffix in: self startingAt: requiredStart
+			  matchTable: CaseSensitiveOrder) = requiredStart
 ]
 
 { #category : #testing }
-String >> endsWithAColon [ 
+String >> endsWith: suffix caseSensitive: aBoolean [
+	"Answer whether the tail end of the receiver is the same as suffix"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and suffix are bytes like.
+	Otherwise, if self or suffix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
+
+	"('pharo' endsWith: '' caseSensitive: false) >>> true"
+	"('pharo' endsWith: 'project-pharo' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'phuro' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'aRo' caseSensitive: false) >>> true"
+	suffix ifEmpty: [ ^ true ].
+	aBoolean ifTrue: [ ^self endsWith: suffix ].
+	self size < suffix size ifTrue: [^ false].
+	(self class isBytes and: [suffix class isBytes]) ifTrue: [
+		"Optimized version based on primitive"
+		^ (self findSubstring: suffix in: self startingAt: self size - suffix size + 1
+				  matchTable: CaseInsensitiveOrder) = (self size - suffix size + 1) ].
+	suffix withIndexDo: [ :each :index |
+		(self at: self size - suffix size + index) asLowercase = each asLowercase ifFalse: [ ^false ]
+	].
+	^true
+]
+
+{ #category : #testing }
+String >> endsWithAColon [
 	"Answer whether the final character of the receiver is a colon"
 	"'displayStringOn:' endsWithAColon >>> true"
 	"'displayStringOn:foo' endsWithAColon >>> false"
-	
-	^ self notEmpty and: [ self last == $: ]
 
+	^ self notEmpty and: [ self last == $: ]
 ]
 
 { #category : #testing }
@@ -1086,8 +1209,32 @@ String >> endsWithDigit [
 	"'foo10' endsWithDigit >>> true"
 	"'foo10foo' endsWithDigit >>> false"
 	"'foo1' endsWithDigit >>> true"
-	
+
 	^ self notEmpty and: [self last isDigit]
+]
+
+{ #category : #converting }
+String >> escapeCharacter: aCharacter [
+	"Returns a copy of the string doubling all occurence of aCharacter."
+	"See `unescapeCharacter:` for the opposite"
+
+	"('abc' escapeCharacter: $X) >>> 'abc'"
+
+	"('aXb' escapeCharacter: $X) >>> 'aXXb'"
+
+	"('XaX' escapeCharacter: $X) >>> 'XXaXX'"
+
+	"('XXaXbXXcXXXdXX' escapeCharacter: $X) >>> 'XXXXaXXbXXXXcXXXXXXdXXXX'"
+
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: self.
+	[ stream atEnd ] whileFalse: [
+		result nextPutAll: (stream upTo: aCharacter).
+		stream peekBack = aCharacter ifTrue: [
+			result nextPut: aCharacter.
+			result nextPut: aCharacter ] ].
+	^ result contents
 ]
 
 { #category : #formatting }
@@ -1095,12 +1242,12 @@ String >> expandMacros [
 	"'<t>' expandMacros >>> String tab"
 	"'<r>' expandMacros >>> String cr"
 	"'<n>' expandMacros >>> OSPlatform current lineEnding"
-	
+
 	^self expandMacrosWithArguments: #()
 ]
 
 { #category : #formatting }
-String >> expandMacrosWith: anObject [ 
+String >> expandMacrosWith: anObject [
 	"('Pharo is <1s>' expandMacrosWith: 'cool') >>> 'Pharo is cool'"
 	"('Pharo is <1p>' expandMacrosWith: 'cool') >>> 'Pharo is ''cool'''"
 
@@ -1108,22 +1255,22 @@ String >> expandMacrosWith: anObject [
 ]
 
 { #category : #formatting }
-String >> expandMacrosWith: anObject with: anotherObject [ 
-	^self 
+String >> expandMacrosWith: anObject with: anotherObject [
+	^self
 		expandMacrosWithArguments: (Array with: anObject with: anotherObject)
 ]
 
 { #category : #formatting }
-String >> expandMacrosWith: anObject with: anotherObject with: thirdObject [ 
-	^self expandMacrosWithArguments: (Array 
+String >> expandMacrosWith: anObject with: anotherObject with: thirdObject [
+	^self expandMacrosWithArguments: (Array
 				with: anObject
 				with: anotherObject
 				with: thirdObject)
 ]
 
 { #category : #formatting }
-String >> expandMacrosWith: anObject with: anotherObject with: thirdObject with: fourthObject [ 
-	^self expandMacrosWithArguments: (Array 
+String >> expandMacrosWith: anObject with: anotherObject with: thirdObject with: fourthObject [
+	^self expandMacrosWithArguments: (Array
 				with: anObject
 				with: anotherObject
 				with: thirdObject
@@ -1133,24 +1280,24 @@ String >> expandMacrosWith: anObject with: anotherObject with: thirdObject with:
 { #category : #formatting }
 String >> expandMacrosWithArguments: anArray [
 	"Interpret the receiver pattern (<1p>, <1s>, <t>...) with argument passed in anArray."
-	
+
 	"<Np> writes the N-th argument using #printString, but without trancating it."
 	"('<1p>: <2p>' expandMacrosWith: 'Number' with: 5 with: nil) >>> '''Number'': 5'"
-	
+
 	"<Ns> writes the N-th argument, which should be a String, or a collection of printable objects.
 	Note also important distinction for single-quotes inside the argument; with <p> they will be doubled."
 	"('<1s> vs <1p>' expandMacrosWith: 'it''em') >>> 'it''em vs ''it''''em'''"
-	
+
 	"Whitespace characters:"
 	"'<t>' expandMacros >>> String tab"
 	"'<r>' expandMacros >>> String cr"
 	"'<n>' expandMacros >>> OSPlatform current lineEnding"
 	"'<l>' expandMacros >>> String lf"
-	
+
 	"Writing '<' character:
 	To write '<', prepend it with a percent sign."
 	"'%<n>' expandMacros >>> '<n>'"
-	
+
 	"Ternary operator:
 	An if-else string can be written with <N?yes-string:no-string>.
 	The N-th argument must be a Boolean.
@@ -1158,12 +1305,12 @@ String >> expandMacrosWithArguments: anArray [
 	No-string cannot contain closing angle bracket '>', as it terminates the no-string."
 	"('<1?success:error>' expandMacrosWith: true) >>> 'success'"
 	"('<1?success:is error>' expandMacrosWith: false) >>> 'is error'"
-	
+
 	| readStream char index |
 	^ self species
 		new: self size
 		streamContents:
-			[ :newStream | 
+			[ :newStream |
 			readStream := self readStream.
 			[ readStream atEnd ]
 				whileFalse:
@@ -1209,12 +1356,12 @@ String >> expandMacrosWithArguments: anArray [
 ]
 
 { #category : #'finding/searching' }
-String >> findAnySubstring: aCollection startingAt: start [ 
+String >> findAnySubstring: aCollection startingAt: start [
 	"Answer the index where an element of aCollection begins. If none are found, answer size + 1. aCollection is an Array of Strings or Characters."
 
 	^aCollection inject: 1 + self size into: [:min :searchTerm |
 		| ind |
-		ind := searchTerm isCharacter 
+		ind := searchTerm isCharacter
 			ifTrue: [self indexOf: searchTerm startingAt: start ifAbsent: [min]]
 			ifFalse: [self indexOfSubCollection: searchTerm startingAt: start ifAbsent: [min]].
 		min min: ind]
@@ -1253,25 +1400,26 @@ String >> findCloseParenthesisFor: startIndex [
 ]
 
 { #category : #'finding/searching' }
-String >> findDelimiters: delimiters startingAt: start [ 
+String >> findDelimiters: delimiters startingAt: start [
 	"Answer the index of the character within the receiver, starting at start, that matches one of the delimiters. If the receiver does not contain any of the delimiters, answer size + 1."
 
+	"delimiters is any collection of characters and is often passed as a String. This is fine when the number of possible delimiters is small even though String>>includes: is an O(n) operation because n is small.  When using a large number of possible delimiters, using a CharacterSet with a lookup efficiency of O(1) will produce much better performance."
+
 	start to: self size do: [:i |
-		delimiters do: [:delim | 
-			delim = (self at: i) 
-				ifTrue: [^ i]]].
+		(delimiters includes: (self at: i))
+				ifTrue: [^ i]].
 	^ self size + 1
 ]
 
 { #category : #comparing }
 String >> findIn: body startingAt: start matchTable: matchTable [
-	
+
 	^ self findSubstringViaPrimitive: self in: body startingAt: start matchTable: matchTable
 ]
 
 { #category : #'finding/searching' }
-String >> findLastOccurrenceOfString: substring startingAt: start [ 
-	"Answer the index of the last occurrence of substring within the receiver, starting at start. If 
+String >> findLastOccurrenceOfString: substring startingAt: start [
+	"Answer the index of the last occurrence of substring within the receiver, starting at start. If
 	the receiver does not contain substring, answer 0.  Case-sensitive match used."
 
 	| last now |
@@ -1282,13 +1430,12 @@ String >> findLastOccurrenceOfString: substring startingAt: start [
 		last := self findString: substring startingAt: last + 1].
 
 	^ now
-
 ]
 
 { #category : #converting }
 String >> findSelector [
 	"Extract a selector with keyword parts from the receiver. While this doesn't give a true parse, in most cases it does what we want, in where it doesn't, we're none the worse for it."
-	
+
 	"'isSymbol' findSelector >>> #isSymbol"
 	"'x isSymbol' findSelector >>> nil"
 	"'x isSymbol: 33' findSelector >>> #isSymbol:"
@@ -1296,7 +1443,7 @@ String >> findSelector [
 	"'2 between: 0 and: 4' findSelector >>> #'between:and:'"
 	"'2 between: ( 1 and: 4)' findSelector >>> #between:"
 	"'( 1 and: 4)' findSelector >>> nil"
-	
+
 	| sel possibleParens |
 	sel := self trimBoth.
 	sel := sel copyReplaceAll: '#' with: ''.
@@ -1327,33 +1474,33 @@ String >> findString: substring [
 	"Answer the index of the first substring within the receiver. If the receiver does not contain substring, answer 0."
 	"('salkjsdlkgfee' findString: 'al') >>> 2"
 	"('salkjsdlkgfeesd' findString: 'sd') >>> 6"
-	
-	^self findString: substring startingAt: 1.
+
+	^self findString: substring startingAt: 1
 ]
 
 { #category : #'finding/searching' }
-String >> findString: substring startingAt: start [ 
+String >> findString: substring startingAt: start [
 	"Answer the index of the first substring within the receiver, starting at start. If the receiver does not contain substring, answer 0."
 	"('salkjsdlkgfee' findString: 'ee'startingAt: 3) >>> 12"
 	"('salkjsdlkgfee' findString: 'al'startingAt: 3) >>> 0"
 	"('salkjsdlkgfeeal' findString: 'al' startingAt: 1) >>> 2"
-	
+
 	^self findString: substring startingAt: start caseSensitive: true
 ]
 
 { #category : #'finding/searching' }
-String >> findString: key startingAt: start caseSensitive: caseSensitive [ 
+String >> findString: key startingAt: start caseSensitive: caseSensitive [
 	"Answer the index in this String at which the substring key first occurs,
 	at or beyond start. The match can be case-sensitive or not. If no match
 	is found, zero will be returned."
-	
+
 	"IMPLEMENTATION NOTE: do not use CaseSensitiveOrder because it is broken for WideString
 	This is a temporary work around until Wide CaseSensitiveOrder search is fixed
 	Code should revert to:
 	caseSensitive
 		ifTrue: [^ self findSubstring: key in: self startingAt: start matchTable: CaseSensitiveOrder]
 		ifFalse: [^ self findSubstring: key in: self startingAt: start matchTable: CaseInsensitiveOrder]"
-		
+
 	^caseSensitive
 		ifTrue: [
 			(self class isBytes and: [key class isBytes])
@@ -1383,36 +1530,33 @@ String >> findString: key startingAt: start caseSensitive: caseSensitive [
 
 { #category : #comparing }
 String >> findSubstring: key in: body startingAt: start matchTable: matchTable [
+
 	"Answer the index in the string body at which the substring key first occurs, at or beyond start.  The match is determined using matchTable, which can be used to effect, eg, case-insensitive matches.  If no match is found, zero will be returned."
+
 	| index c1 c2 |
 	matchTable == nil ifTrue: [
-		key size = 0 ifTrue: [^ 0].
-		start to: body size - key size + 1 do:
-			[:startIndex |
+		key size = 0 ifTrue: [ ^ 0 ].
+		start to: body size - key size + 1 do: [ :startIndex |
 			index := 1.
-				[(body at: startIndex+index-1)
-					= (key at: index)]
-					whileTrue:
-					[index = key size ifTrue: [^ startIndex].
-					index := index+1]].
-		^ 0
-	].
+			[ (body at: startIndex + index - 1) = (key at: index) ] whileTrue: [
+				index = key size ifTrue: [ ^ startIndex ].
+				index := index + 1 ] ].
+		^ 0 ].
 
-	key size = 0 ifTrue: [^ 0].
-	start to: body size - key size + 1 do:
-		[:startIndex |
+	key size = 0 ifTrue: [ ^ 0 ].
+	start to: body size - key size + 1 do: [ :startIndex |
 		index := 1.
-		[c1 := body at: startIndex+index-1.
+		[
+		c1 := body at: startIndex + index - 1.
 		c2 := key at: index.
-		((c1 leadingChar = 0 and: [ c1 asciiValue < matchTable size ]) 
-			ifTrue: [ matchTable at: c1 asciiValue + 1 ]
-			ifFalse: [ c1 asciiValue + 1 ]) = 
-			((c2 leadingChar = 0 and: [ c2 asciiValue < matchTable size ])
-				ifTrue: [ matchTable at: c2 asciiValue + 1 ]
-				ifFalse: [c2 asciiValue + 1 ]) ]
-			whileTrue:
-				[index = key size ifTrue: [^ startIndex].
-				index := index+1]].
+		(c1 asciiValue < matchTable size
+			 ifTrue: [ matchTable at: c1 asciiValue + 1 ]
+			 ifFalse: [ c1 asciiValue + 1 ])
+		= (c2 asciiValue < matchTable size
+				 ifTrue: [ matchTable at: c2 asciiValue + 1 ]
+				 ifFalse: [ c2 asciiValue + 1 ]) ] whileTrue: [
+			index = key size ifTrue: [ ^ startIndex ].
+			index := index + 1 ] ].
 	^ 0
 ]
 
@@ -1450,10 +1594,12 @@ String >> findSubstringViaPrimitive: key in: body startingAt: start matchTable: 
 String >> findTokens: delimiters [
 	"Answer the collection of tokens that result from parsing self.  Return strings between the delimiters.  Any character in the Collection delimiters marks a border.  Several delimiters in a row are considered as just one separation.  Also, allow delimiters to be a single character."
 
+		"delimiters can be any collection of characters and is often passed as a String. This is fine when the number of possible delimiters is small even though String>>includes: is an O(n) operation because n is small.  When using a large number of possible delimiters, using a CharacterSet with a lookup efficiency of O(1) will produce much better performance."
+
 	| tokens keyStart keyStop separators |
 
 	tokens := OrderedCollection new.
-	separators := delimiters isCharacter 
+	separators := delimiters isCharacter
 		ifTrue: [Array with: delimiters]
 		ifFalse: [delimiters].
 	keyStop := 1.
@@ -1466,50 +1612,50 @@ String >> findTokens: delimiters [
 ]
 
 { #category : #'finding/searching' }
-String >> findTokens: delimiters escapedBy: quoteDelimiters [ 
-	"Answer a collection of Strings separated by the delimiters, where  
-	delimiters is a Character or collection of characters. Two delimiters in a  
-	row produce an empty string (compare this to #findTokens, which  
-	treats sequential delimiters as one).  
-	 
-	The characters in quoteDelimiters are treated as quote characters, such  
-	that any delimiter within a pair of matching quoteDelimiter characters  
-	is treated literally, rather than as a delimiter.  
-	 
-	The quoteDelimiter characters may be escaped within a quoted string.  
-	Two sequential quote characters within a quoted string are treated as  
-	a single character.  
-	 
-	This method is useful for parsing comma separated variable strings for  
+String >> findTokens: delimiters escapedBy: quoteDelimiters [
+	"Answer a collection of Strings separated by the delimiters, where
+	delimiters is a Character or collection of characters. Two delimiters in a
+	row produce an empty string (compare this to #findTokens, which
+	treats sequential delimiters as one).
+
+	The characters in quoteDelimiters are treated as quote characters, such
+	that any delimiter within a pair of matching quoteDelimiter characters
+	is treated literally, rather than as a delimiter.
+
+	The quoteDelimiter characters may be escaped within a quoted string.
+	Two sequential quote characters within a quoted string are treated as
+	a single character.
+
+	This method is useful for parsing comma separated variable strings for
 	spreadsheet import and export."
 	| tokens rs activeEscapeCharacter ts char token delimiterChars quoteChars |
-	delimiterChars := (delimiters 
+	delimiterChars := (delimiters
 		ifNil: [ '' ]
 		ifNotNil: [ delimiters ]) asString.
-	quoteChars := (quoteDelimiters 
+	quoteChars := (quoteDelimiters
 		ifNil: [ '' ]
 		ifNotNil: [ quoteDelimiters ]) asString.
 	tokens := OrderedCollection new.
 	rs := self readStream.
 	activeEscapeCharacter := nil.
 	ts := String new writeStream.
-	[ rs atEnd ] whileFalse: 
+	[ rs atEnd ] whileFalse:
 		[ char := rs next.
-		activeEscapeCharacter 
-			ifNil: 
-				[ (quoteChars includes: char) 
+		activeEscapeCharacter
+			ifNil:
+				[ (quoteChars includes: char)
 					ifTrue: [ activeEscapeCharacter := char ]
-					ifFalse: 
-						[ (delimiterChars includes: char) 
-							ifTrue: 
+					ifFalse:
+						[ (delimiterChars includes: char)
+							ifTrue:
 								[ token := ts contents.
 								tokens add: token.
 								ts := String new writeStream ]
 							ifFalse: [ ts nextPut: char ] ] ]
-			ifNotNil: 
-				[ char == activeEscapeCharacter 
-					ifTrue: 
-						[ rs peek == activeEscapeCharacter 
+			ifNotNil:
+				[ char == activeEscapeCharacter
+					ifTrue:
+						[ rs peek == activeEscapeCharacter
 							ifTrue: [ ts nextPut: rs next ]
 							ifFalse: [ activeEscapeCharacter := nil ] ]
 					ifFalse: [ ts nextPut: char ] ] ].
@@ -1522,8 +1668,8 @@ String >> findTokens: delimiters escapedBy: quoteDelimiters [
 String >> findTokens: delimiters includes: substring [
 	"Divide self into pieces using delimiters.  Return the piece that includes substring anywhere in it.  Is case sensitive (say asLowercase to everything beforehand to make insensitive)."
 
-^ (self findTokens: delimiters) 
-	detect: [:str | (str includesSubstring: substring)] 
+^ (self findTokens: delimiters)
+	detect: [:str | (str includesSubstring: substring)]
 	ifNone: [nil]
 ]
 
@@ -1536,7 +1682,7 @@ String >> findTokens: delimiters keep: keepers [
 	keyStop := 1.
 	[keyStop <= self size] whileTrue:
 		[keyStart := self skipDelimiters: delimiters startingAt: keyStop.
-		keyStop to: keyStart-1 do: [:ii | 
+		keyStop to: keyStart-1 do: [:ii |
 			(keepers includes: (self at: ii)) ifTrue: [
 				tokens add: (self copyFrom: ii to: ii)]].	"Make this keeper be a token"
 		keyStop := self findDelimiters: delimiters startingAt: keyStart.
@@ -1560,12 +1706,13 @@ String >> findWordStart: key startingAt: start [
 
 { #category : #enumerating }
 String >> flattenOn: aStream [
-		aStream nextPut: self
+	"Strings are not flattend to characters"
+	aStream nextPut: self
 ]
 
 { #category : #formatting }
 String >> format: collection [
-	"Format the receiver by interpolating elements from collection, as in the following examples:" 
+	"Format the receiver by interpolating elements from collection, as in the following examples:"
 	"('Five is {1}.' format: { 1 + 4}) >>> 'Five is 5.'"
 	"('Five is {five}.' format: (Dictionary with: #five -> 5)) >>>  'Five is 5.'"
 	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
@@ -1573,7 +1720,7 @@ String >> format: collection [
 
 	^ self species
 		new: self size
-		streamContents: [ :result | 
+		streamContents: [ :result |
 			| stream |
 			stream := self readStream.
 			[ stream atEnd ]
@@ -1592,7 +1739,7 @@ String >> format: collection [
 { #category : #testing }
 String >> hasWideCharacterFrom: start to: stop [
 	"Return true if one of my character in the range does not fit in a single byte"
-	
+
 	"Implementation note: inline #anySatisfy: here for efficiency reasons"
 	^(self indexOfWideCharacterFrom: start to: stop) ~= 0
 ]
@@ -1600,37 +1747,52 @@ String >> hasWideCharacterFrom: start to: stop [
 { #category : #comparing }
 String >> hash [
 	"#hash is implemented, because #= is implemented"
-	"ar 4/10/2005: I had to change this to use ByteString hash as initial 
+	"ar 4/10/2005: I had to change this to use ByteString hash as initial
 	hash in order to avoid having to rehash everything and yet compute
 	the same hash for ByteString and WideString."
 	^ self class stringHash: self initialHash: ByteString hash
 ]
 
 { #category : #comparing }
-String >> howManyMatch: string [ 
+String >> howManyMatch: string [
 	"Count the number of characters in a substring that matches up in self and aString."
 	"('ab ab ac de' howManyMatch: 'ab') >>> 2"
 	"('abab ac de' howManyMatch: 'abab') >>> 4"
 	"('ab ab ac de' howManyMatch: 'a') >>> 1"
 	"('ab ab ac de' howManyMatch: 'z') >>> 0"
-	
+
 	| count shorterLength |
 	count := 0.
 	shorterLength := self size min: string size.
 	1 to: shorterLength do: [:index |
 		(self at: index) = (string at: index )
 			ifTrue: [ count := count + 1 ]].
-	^  count 
-	
-	
+	^  count
 ]
 
 { #category : #testing }
 String >> includesSubstring: substring [
 	"Returns whether the receiver contains the argument."
 	"('abcdefgh' includesSubstring: 'de') >>> true"
-	
+
 	^ substring isEmpty or: [ (self findString: substring startingAt: 1) > 0 ]
+]
+
+{ #category : #'finding/searching' }
+String >> includesSubstring: substring at: index [
+
+	"Answer true if the receiver contains the substring str exactly at index, false otherwise."
+
+	"('abcdefgh' includesSubstring: 'de' at: 1) >>> false"
+	"('abcdefgh' includesSubstring: 'de' at: 4) >>> true"
+
+	| pos |
+	pos := index - 1.
+
+	^ index > 0 & (self size - pos >= substring size) and: [
+		  substring allSatisfy: [ :char |
+			  pos := pos + 1.
+			  (self at: pos) = char ] ]
 ]
 
 { #category : #testing }
@@ -1640,7 +1802,7 @@ String >> includesSubstring: aString caseSensitive: caseSensitive [
 	"('abcdefgh' includesSubstring: 'DE' caseSensitive: false) >>> true"
 	"('abcDefgh' includesSubstring: 'De' caseSensitive: true) >>> true"
 	"('abcDefgh' includesSubstring: 'DE' caseSensitive: true) >>> false"
-	
+
 	^ (self findString: aString startingAt: 1 caseSensitive: caseSensitive) > 0
 ]
 
@@ -1654,22 +1816,21 @@ String >> indexOf: aCharacter [
 	"Return the index starting at 1 of the argument in the receiver, zero if not present."
 	"('abcdf' indexOf: $a) >>> 1"
 	"('abddf' indexOf: $k) >>> 0"
-	
+
 	aCharacter isCharacter ifFalse: [^ 0].
 	^ self class
 		indexOfAscii: aCharacter asciiValue
 		inString: self
-		startingAt: 1.
-
+		startingAt: 1
 ]
 
 { #category : #accessing }
 String >> indexOf: aCharacter startingAt: start [
 	"Return the index of the argument in the receiver, only elements after the start of the element are considered zero if not present."
-	
+
 	"('abcdf abcedf' indexOf: $a startingAt: 4) >>> 7"
 	"('abddf bcdef' indexOf: $a startingAt: 100 ) >>> 0"
-	
+
 	(aCharacter isCharacter) ifFalse: [^ 0].
 	^ self class indexOfAscii: aCharacter asciiValue inString: self startingAt: start
 ]
@@ -1692,14 +1853,14 @@ String >> indexOfFirstUppercaseCharacter [
 	"
 	| size |
 	size := self size.
-	1 to: size do: [:i| 
-		(self at: i) isUppercase 
+	1 to: size do: [:i|
+		(self at: i) isUppercase
 			ifTrue: [^ i ]].
 	^ 0
 ]
 
 { #category : #accessing }
-String >> indexOfSubCollection: sub [ 
+String >> indexOfSubCollection: sub [
 	""
 
 	^ self
@@ -1720,8 +1881,8 @@ String >> indexOfSubCollection: sub startingAt: start ifAbsent: exceptionBlock [
 String >> indexOfWideCharacterFrom: start to: end [
 	"Return the index of the first wide character following anIndex"
 	"Implementation note: inline #anySatisfy: here for efficiency reasons"
-	
-	start to: end do: [:ix | 
+
+	start to: end do: [:ix |
 		(self basicAt: ix) > 255 ifTrue: [ ^ix ]].
 	^ 0
 ]
@@ -1737,9 +1898,9 @@ String >> initialIntegerOrNil [
 	"'  89Ten ' initialIntegerOrNil >>> nil"
 	"'78 92' initialIntegerOrNil >>> 78"
 	"'3.1415' initialIntegerOrNil >>> 3"
-	
+
 	| firstNonDigit |
-	(self size = 0 or: [ self first isDigit not ]) 
+	(self size = 0 or: [ self first isDigit not ])
 		ifTrue: [ ^ nil ].
 	firstNonDigit := (self findFirst: [ :m | m isDigit not ]).
 	firstNonDigit = 0 ifTrue: [ firstNonDigit := self size + 1 ].
@@ -1754,7 +1915,7 @@ String >> isAllAlphaNumerics [
 	"'3123' isAllAlphaNumerics >>> true"
 	"'3,123' isAllAlphaNumerics >>> false"
 	"'a''b' isAllAlphaNumerics >>> false"
-	
+
 	self do: [:c | c isAlphaNumeric ifFalse: [^ false]].
 	^ true
 ]
@@ -1765,7 +1926,7 @@ String >> isAllDigits [
 	"'2345' isAllDigits >>> true"
 	"'0002345' isAllDigits >>> true"
 	"'2345.88' isAllDigits >>> false"
-	
+
 	self do: [:c | c isDigit ifFalse: [^ false]].
 	self ifEmpty: [^false].
 	^ true
@@ -1784,7 +1945,6 @@ String >> isAllSeparators [
 String >> isAsciiString [
 
 	^ self allSatisfy: [ :each | each asciiValue <= 127 ]
-
 ]
 
 { #category : #testing }
@@ -1801,13 +1961,13 @@ String >> isLiteral [
 
 { #category : #testing }
 String >> isLiteralSymbol [
-	"Test whether a symbol can be stored as # followed by its characters.  
-	Symbols created internally with asSymbol may not have this property, 
+	"Test whether a symbol can be stored as # followed by its characters.
+	Symbols created internally with asSymbol may not have this property,
 	e.g. '3' asSymbol."
 
 	| i ascii type next last |
 	self flag: 'reuse a parser for this'.
-	
+
 	i := self size.
 	i = 0 ifTrue: [^ false].
 
@@ -1817,18 +1977,18 @@ String >> isLiteralSymbol [
 	type == #xLetter ifTrue: [
 		next := last := nil.
 		[i > 1]
-				whileTrue: 
+				whileTrue:
 					[ascii := (self at: i) asciiValue.
 					type := self typeTable at: ascii ifAbsent: [^false].
 					(type == #xLetter or: [type == #xDigit or: [type == #xColon
 							and: [
 								next == nil
-									ifTrue: [last := #xColon. true] 
+									ifTrue: [last := #xColon. true]
 									ifFalse: [last == #xColon and: [next ~~ #xDigit and: [next ~~ #xColon]]]]]])
 						ifFalse: [^ false].
 					next := type.
 					i := i - 1].
-			^ true].	
+			^ true].
 	type == #xBinary ifTrue: [^i = 1]. "Here we could extend to
 		^(2 to: i) allSatisfy: [:j |
 			ascii := (self at: j) asciiValue.
@@ -1839,14 +1999,13 @@ String >> isLiteralSymbol [
 
 { #category : #testing }
 String >> isOctetString [
-	"Answer whether the receiver can be represented as a byte string. 
-	This is different from asking whether the receiver *is* a ByteString 
+	"Answer whether the receiver can be represented as a byte string.
+	This is different from asking whether the receiver *is* a ByteString
 	(i.e., #isByteString)"
 	1 to: self size do: [:pos |
 		(self at: pos) asInteger >= 256 ifTrue: [^ false].
 	].
-	^ true.
-
+	^ true
 ]
 
 { #category : #testing }
@@ -1864,14 +2023,14 @@ String >> isString [
 String >> isValidGlobalName [
 
 	self ifEmpty: [ ^ false ].
-	
+
 	"reserverd default names"
 	self = 'NameOfSubclass' ifTrue: [ ^ false ].
 	self = 'TNameOfTrait' ifTrue: [ ^ false ].
-	
-	^ (self first isLetter 
-				and: [self first isUppercase]) 
-				and: [ self allSatisfy: [:character | 
+
+	^ (self first isLetter
+				and: [self first isUppercase])
+				and: [ self allSatisfy: [:character |
 						character isAlphaNumeric or: [ character = $_ ]]]
 ]
 
@@ -1885,10 +2044,10 @@ String >> isWideString [
 String >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"('*' join: #('WWWWW' 'W  EW' 'zzzz')) >>> 'WWWWW*W  EW*zzzz'"
-	
-	^ self species new: (aCollection size * self size) streamContents: [:stream | 
+
+	^ self species new: (aCollection size * self size) streamContents: [:stream |
 			aCollection
-				do: [:each | stream nextPutAll: each asString] 
+				do: [:each | stream nextPutAll: each asString]
 				separatedBy: [stream nextPutAll: self]]
 ]
 
@@ -1901,7 +2060,7 @@ String >> keywords [
 		1 to: self size do:
 			[:i |
 			kwd nextPut: (char := self at: i).
-			char = $: ifTrue: 
+			char = $: ifTrue:
 					[kwds nextPut: kwd contents.
 					kwd reset]].
 		(kwd position = 0) ifFalse: [kwds nextPut: kwd contents]].
@@ -1927,7 +2086,6 @@ String >> lastSpacePosition [
 	self size to: 1 by: -1 do:
 		[:i | ((self at: i) isSeparator) ifTrue: [^ i]].
 	^ 0
-
 ]
 
 { #category : #accessing }
@@ -1956,7 +2114,7 @@ String >> lineIndicesDo: aBlock [
 	- start index of line
 	- end index of line without line delimiter
 	- end index of line including line delimiter(s) CR, LF or CRLF"
-	
+
 	| cr lf start sz nextLF nextCR |
 	start := 1.
 	sz := self size.
@@ -2001,9 +2159,9 @@ String >> lineNumber: anIndex [
 String >> lineNumberCorrespondingToIndex: anIndex [
 	"Answer a lineNumber for the line at the given character position."
 	|lineNumber|
-	
+
 	lineNumber := 0.
-	
+
 	self lineIndicesDo: [:start :endWithoutDelimiters :end |
 		lineNumber := lineNumber + 1.
 		anIndex <= end ifTrue: [^lineNumber]].
@@ -2031,7 +2189,7 @@ String >> match: text [
 	Matching ignores upper/lower case differences.
 	Where this string contains #, text may contain any character.
 	Where this string contains *, text may contain any sequence of characters."
-	
+
 	"('*' match: 'zort') >>> true"
 	"('*baz' match: 'mobaz') >>> true"
 	"('*baz' match: 'mobazo') >>>false"
@@ -2049,6 +2207,20 @@ String >> match: text [
 	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
 	^ self startingAt: 1 match: text startingAt: 1
+]
+
+{ #category : #converting }
+String >> normalizeCamelCase [
+	"
+	'TheRollingStones' normalizeCamelCase >>> 'The Rolling Stones'
+	"
+	^ self class streamContents: [ : stream |
+		self do: [ : char |
+			(char isUppercase and: [
+				(stream position > 0 and: [ stream peekLast isUppercase not ])
+					and: [ stream peekLast isSpaceSeparator not  ] ])
+						ifTrue: [ stream nextPut: Character space ].
+			stream nextPut: char ] ]
 ]
 
 { #category : #'system primitives' }
@@ -2092,16 +2264,16 @@ String >> numericSuffix [
 ]
 
 { #category : #testing }
-String >> occursInWithEmpty: prefix caseSensitive: aBoolean [ 
-	"Answer whether the receiver begins with the given prefix string. 
-	The comparison is case-sensitive." 
+String >> occursInWithEmpty: prefix caseSensitive: aBoolean [
+	"Answer whether the receiver begins with the given prefix string.
+	The comparison is case-sensitive."
 	| matchTable |
 	prefix isEmpty ifTrue: [ ^ true ].
 	self size < prefix size ifTrue: [ ^ false ].
-	matchTable := aBoolean 
+	matchTable := aBoolean
 		ifTrue: [ CaseSensitiveOrder ]
 		ifFalse: [ CaseInsensitiveOrder ].
-	^ (self 
+	^ (self
 		findSubstring: prefix
 		in: self
 		startingAt: 1
@@ -2121,7 +2293,7 @@ String >> padLeftTo: length [
 
 { #category : #copying }
 String >> padLeftTo: length with: char [
-	^ (String new: (length - self size max: 0) withAll: char) , self.
+	^ (String new: (length - self size max: 0) withAll: char) , self
 ]
 
 { #category : #copying }
@@ -2135,9 +2307,9 @@ String >> padRightTo: length with: char [
 ]
 
 { #category : #printing }
-String >> printOn: aStream [ 
+String >> printOn: aStream [
 	"Print inside string quotes, doubling inbedded quotes."
- 
+
 	self storeOn: aStream
 ]
 
@@ -2156,15 +2328,15 @@ String >> repeat: aNumber [
 	"Returns a new string concatenated by itself repeated n times"
 	"('abc' repeat: 3) >>> 'abcabcabc'"
 
-	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].	
-	^ self species 
-		new: self size * aNumber 
+	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
+	^ self species
+		new: self size * aNumber
 		streamContents: [ :stringStream |
 			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ] ]
 ]
 
 { #category : #private }
-String >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+String >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
@@ -2175,7 +2347,7 @@ String >> romanNumber [
 	| value v1 v2 |
 	value := v1 := v2 := 0.
 	self
-		reverseDo: [ :each | 
+		reverseDo: [ :each |
 			each = $-
 				ifTrue: [ ^ value negated ].
 			v1 := #(1 5 10 50 100 500 1000) at: ('IVXLCDM' indexOf: each).
@@ -2187,55 +2359,56 @@ String >> romanNumber [
 ]
 
 { #category : #comparing }
-String >> sameAs: aString [ 
-	"Answer whether the receiver sorts equal to aString. The 
+String >> sameAs: aString [
+	"Answer whether the receiver sorts equal to aString. The
 	collation sequence is ascii with case differences ignored."
 	^(self compare: aString caseSensitive: false) = 2
 ]
 
 { #category : #accessing }
-String >> skipAnySubstring: delimiters startingAt: start [ 
-	"Answer the index of the last character within the receiver, starting at start, that does NOT match one of the delimiters. delimiters is a Array of substrings (Characters also allowed).  If the receiver is all delimiters, answer size + 1."
+String >> skipAnySubstring: delimiters startingAt: start [
 
-	| any this ind ii |
-	ii := start-1.
-	[(ii := ii + 1) <= self size] whileTrue: [ "look for char that does not match"
-		any := false.
-		delimiters do: [:delim |
-			delim isCharacter 
-				ifTrue: [(self at: ii) == delim ifTrue: [any := true]]
-				ifFalse: ["a substring"
-					delim size > (self size - ii + 1) ifFalse: "Here's where the one-off error was."
-						[ind := 0.
-						this := true.
-						delim do: [:dd | 
-							dd == (self at: ii+ind) ifFalse: [this := false].
-							ind := ind + 1].
-						this ifTrue: [ii := ii + delim size - 1.  any := true]]
-							ifTrue: [any := false] "if the delim is too big, it can't match"]].
-		any ifFalse: [^ ii]].
+	"Skip any of the delimiters found in receiver, from start onwards, until no delimiter substring matches; answer the position reached. delimiters is an array of strings (characters are accepted, but skipDelimiters:startingAt: handles them better). A string coming earlier in the array is skipped with higher priority. If the end of the receiver is reached, answer size + 1."
+
+	| pos |
+	delimiters isString ifTrue: [
+		^ self skipDelimiters: delimiters startingAt: start ].
+
+	pos := start.
+	[ pos <= self size ] whileTrue: [
+		pos := delimiters
+			       detect: [ :delim |
+				       delim isCharacter
+					       ifTrue: [ (self at: pos) = delim ]
+					       ifFalse: [ self includesSubstring: delim at: pos ] ]
+			       ifFound: [ :match | pos + match asString size ]
+			       ifNone: [ ^ pos ] ].
 	^ self size + 1
 ]
 
 { #category : #accessing }
-String >> skipDelimiters: delimiters startingAt: start [ 
-	"Answer the index of the character within the receiver, starting at start, that does NOT match one of the delimiters. If the receiver does not contain any of the delimiters, answer size + 1.  Assumes the delimiters to be a non-empty string."
+String >> skipDelimiters: delimiters startingAt: start [
 
-	start to: self size do: [:i |
-		delimiters detect: [:delim | delim = (self at: i)]
-				ifNone: [^ i]].
+	"Answer the index of the first character within the receiver, starting at start, that does NOT match any element of delimiters (a collection of characters). If the end of the receiver is reached, answer size + 1."
+
+		"delimiters is any collection of characters and is often passed as a String. This is fine when the number of possible delimiters is small even though String>>includes: is an O(n) operation because n is small.  When using a large number of possible delimiters, using a CharacterSet with a lookup efficiency of O(1) will produce much better performance."
+
+
+	start to: self size do: [ :i |
+		(delimiters includes: (self at: i))
+			ifFalse: [ ^ i ] ].
 	^ self size + 1
 ]
 
 { #category : #converting }
 String >> squeezeOutNumber [
 	"Try to find a number somewhere in this string, as explained in Number>readFrom:
-	
+
 	this method returns the first number found"
-	
+
 	"'th is is29 a stRI4' squeezeOutNumber >>> 29"
 	"'th is is2 9 a stRI4' squeezeOutNumber >>> 2"
-	
+
 	^ Number squeezeNumberOutOfString: self
 ]
 
@@ -2245,17 +2418,17 @@ String >> startingAt: keyStart match: text startingAt: textStart [
 	Matching ignores upper/lower case differences.
 	Where this string contains #, text may contain any character.
 	Where this string contains *, text may contain any sequence of characters."
-	
+
 	| anyMatch matchStart matchEnd i matchStr j ii jj |
 	i := keyStart.
 	j := textStart.
-	
+
 	"Process consecutive *s and #s at the beginning."
 	anyMatch := false.
 	[ i <= self size and: [
 		(self at: i)
 			caseOf: {
-				[ $* ] -> [ 
+				[ $* ] -> [
 					anyMatch := true.
 					i := i + 1.
 					true ].
@@ -2296,7 +2469,7 @@ String >> startsWithDigit [
 	"'0abc' startsWithDigit >>> true"
 	"'1abc' startsWithDigit >>> true"
 	"'11abc' startsWithDigit >>> true"
-	
+
 	^ self size > 0 and: [self first isDigit]
 ]
 
@@ -2315,7 +2488,6 @@ String >> stemAndNumericSuffix [
 		position := position * 10.
 		stem := stem copyFrom: 1 to: stem size - 1].
 	^ Array with: stem with: suffix
-
 ]
 
 { #category : #printing }
@@ -2326,7 +2498,7 @@ String >> storeOn: aStream [
 
 	| x |
 	aStream nextPut: $'.
-	1 to: self size do: [ :i | 
+	1 to: self size do: [ :i |
 		aStream nextPut: (x := self at: i).
 		x = $' ifTrue: [ aStream nextPut: x ] ].
 	aStream nextPut: $'
@@ -2340,15 +2512,14 @@ String >> string [
 { #category : #private }
 String >> stringhash [
 
-	^ self hash.
-
+	^ self hash
 ]
 
 { #category : #converting }
 String >> substrings [
 	"Answer an array of non-empty substrings from the receiver separated by
 	one or more whitespace characters."
-	
+
 	"'let us make seperate strings' substrings >>>  #('let' 'us' 'make' 'seperate' 'strings')"
 
 	^ self substrings: CSSeparators
@@ -2361,7 +2532,7 @@ String >> substrings: separators [
 
 	| substrings substringStart |
 	substrings := (Array new: 10) writeStream.
-	1 to: self size do: [ :i | 
+	1 to: self size do: [ :i |
 		| nextChar |
 		nextChar := self at: i.
 		(separators includes: nextChar)
@@ -2381,11 +2552,11 @@ String >> surroundedBy: aString [
 	"Answer the receiver with leading and trailing aString."
 	"('hello' surroundedBy: 'abd') >>> 'abdhelloabd'"
 	"('hello' surroundedBy: ' abd ') >>> ' abd hello abd '"
-	
+
 	^ self species streamContents: [ :s|
 		s nextPutAll: aString.
 		s nextPutAll: self.
-		s nextPutAll: aString ].
+		s nextPutAll: aString ]
 ]
 
 { #category : #converting }
@@ -2394,7 +2565,7 @@ String >> surroundedBySingleQuotes [
 	"'hello' surroundedBySingleQuotes >>>  '''hello'''"
 	"'he''llo' surroundedBySingleQuotes >>> '''he''llo'''"
 	"'  hello  ' surroundedBySingleQuotes >>>  '''  hello  '''"
-	
+
 	^ self surroundedBy: ($' asString)
 ]
 
@@ -2428,14 +2599,14 @@ String >> translateWith: table [
 String >> trim [
 	"Trim separators from both sides of the receiving string."
 	"' this string will be trimmed   ' trim >>> 'this string will be trimmed'"
-	
+
 	^ self trimBoth
 ]
 
 { #category : #copying }
 String >> trimBoth [
 	"Trim separators from both sides of the receiving string."
-	
+
 	^ self trimBoth: [ :char | char isSeparator ]
 ]
 
@@ -2449,14 +2620,14 @@ String >> trimBoth: aBlock [
 { #category : #copying }
 String >> trimLeft [
 	"Trim separators from the left side of the receiving string."
-	
-	^ self trimLeft: [ :char | char isSeparator ] 
+
+	^ self trimLeft: [ :char | char isSeparator ]
 ]
 
 { #category : #copying }
 String >> trimLeft: aBlock [
 	"Trim characters satisfying the condition given in aBlock from the left side of the receiving string."
-	
+
 	^ self trimLeft: aBlock right: [ :char | false ]
 ]
 
@@ -2467,32 +2638,30 @@ String >> trimLeft: aLeftBlock right: aRightBlock [
 	| left right |
 	left := 1.
 	right := self size.
-	
+
 	[ left <= right and: [ aLeftBlock value: (self at: left) ] ]
 		whileTrue: [ left := left + 1 ].
-		
+
 	[ left <= right and: [ aRightBlock value: (self at: right) ] ]
 		whileTrue: [ right := right - 1 ].
-		
+
 	^ self copyFrom: left to: right
 ]
 
 { #category : #copying }
 String >> trimLineSpaces [
 	"Trim the spaces from the right side of each line. Useful for code"
-	
+
 	^ self species streamContents: [ :str |
-		self lines 
+		self lines
 			do: [ :line | str nextPutAll: line trimRight]
 			separatedBy: [str cr]]
-		
-
 ]
 
 { #category : #copying }
 String >> trimRight [
 	"Trim separators from the right side of the receiving string."
-	
+
 	^ self trimRight: [ :char | char isSeparator ]
 ]
 
@@ -2539,7 +2708,7 @@ String >> typeTable [
 { #category : #converting }
 String >> uncapitalized [
 	"Return a copy with the first letter downShifted (in lower case)"
-	
+
 	| answer |
 	self ifEmpty: [ ^ self copy ].
 	answer := self copy.
@@ -2551,14 +2720,15 @@ String >> uncapitalized [
 String >> unescapeCharacter: aCharacter [
 	"Unescape an escaped string. Assume the string has all occurrences of aCharacter are escaped. That is, they are in pairs.
 	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
-	
+	"See `escapeCharacter:` for the opposite"
+
 	"('''''' unescapeCharacter: $') >>> ''''"
 	"('''' unescapeCharacter: $') >>> ''"
-	
+
 	| result stream |
 	result := WriteStream with: ''.
 	stream := ReadStream on: self.
-	[ stream atEnd ] whileFalse: 
+	[ stream atEnd ] whileFalse:
 			[ result nextPutAll: (stream upTo: aCharacter).
 			  stream peek ifNotNil: [result nextPut: stream next]].
 	^result contents
@@ -2571,10 +2741,10 @@ String >> withBlanksCondensed [
 
 	| trimmed lastBlank |
 	trimmed := self trimBoth.
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 			lastBlank := false.
 			trimmed
-				do: [ :eachChar | 
+				do: [ :eachChar |
 					(eachChar isSeparator and: [ lastBlank ])
 						ifFalse: [ stream nextPut: eachChar ].
 					lastBlank := eachChar isSeparator ] ]
@@ -2588,7 +2758,7 @@ String >> withCRs [
 	'-hello
 	 -hi'"
 
-	^ self collect: [ :c | c = $\ ifTrue: [ Character cr ] ifFalse: [ c ]].
+	^ self collect: [ :c | c = $\ ifTrue: [ Character cr ] ifFalse: [ c ]]
 ]
 
 { #category : #'platform conventions' }
@@ -2601,14 +2771,14 @@ String >> withInternalLineEndings [
 { #category : #'platform conventions' }
 String >> withInternetLineEndings [
 	"change line endings from CR's and LF's to CRLF's.  This is probably in prepration for sending a string over the Internet"
-	
+
 	^self withLineEndings: String crlf
 ]
 
 { #category : #'platform conventions' }
 String >> withLineEndings: lineEndingString [
 	"Answer a new instance where all occurrences of CRLF, CR, and LF are substituted with the specified line ending string."
-	
+
 	^ self species streamContents: [ :out |
 		| in c |
 		in := self readStream.
@@ -2632,7 +2802,6 @@ String >> withLineEndings: lineEndingString [
 			]
 		]
 	]
-
 ]
 
 { #category : #converting }
@@ -2665,21 +2834,21 @@ String >> withNoLineLongerThan: aNumber [
 
 { #category : #converting }
 String >> withSeparatorsCompacted [
-    "Returns a copy of the receiver with each sequence of whitespace (separator) 
+    "Returns a copy of the receiver with each sequence of whitespace (separator)
     characters replaced by a single space character"
     "' test ' withSeparatorsCompacted >>> ' test '"
     "' test  test' withSeparatorsCompacted >>> ' test test'"
     "'test  test      ' withSeparatorsCompacted >>> 'test test '"
 
     self isEmpty ifTrue: [ ^ self ].
-    ^ self species new: self size streamContents: [:stream | 
+    ^ self species new: self size streamContents: [:stream |
         | lastBlank |
         lastBlank := false.
-        self do: [ :eachChar | 
-            lastBlank 
+        self do: [ :eachChar |
+            lastBlank
                 ifTrue: [
                     (lastBlank := eachChar isSeparator)
-                        ifFalse: [ stream nextPut: eachChar ] ] 
+                        ifFalse: [ stream nextPut: eachChar ] ]
                 ifFalse: [
                     (lastBlank := eachChar isSeparator)
                         ifTrue: [ stream nextPut: $  ]
@@ -2759,19 +2928,19 @@ String >> withoutTrailingNewlines [
 ]
 
 { #category : #accessing }
-String >> wordBefore: anIndex [ 
+String >> wordBefore: anIndex [
 	"('word before index' wordBefore: 4) >>> 'word'"
 	"('word before index' wordBefore: 16) >>> 'inde'"
-	
+
 	| sep tok |
 	tok := false.
 	sep := anIndex.
-	[ sep > 0 and: [ (self at: sep) tokenish ] ] whileTrue: 
+	[ sep > 0 and: [ (self at: sep) tokenish ] ] whileTrue:
 		[ tok := true.
-		sep := sep - 1 ]. 
-	^ tok 
-		ifTrue: 
-			[ self 
+		sep := sep - 1 ].
+	^ tok
+		ifTrue:
+			[ self
 				copyFrom: sep + 1
 				to: anIndex ]
 		ifFalse: [ String new ]

@@ -91,11 +91,15 @@ Class {
 		'editingMode',
 		'cursor',
 		'segments',
+		'embeddedMorphs',
 		'getMenuPolicy',
 		'mouseDownPoint',
 		'completionEngine',
 		'maxLength',
-		'findReplaceService'
+		'grow',
+		'findReplaceService',
+		'editing',
+		'hasDragDoubleClick'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -125,7 +129,7 @@ RubAbstractTextArea class >> backgroundColor: aColor [
 
 { #category : #settings }
 RubAbstractTextArea class >> caseSensitiveFinds [
-	^ CaseSensitiveFinds ifNil: [CaseSensitiveFinds := false] 
+	^ CaseSensitiveFinds ifNil: [CaseSensitiveFinds := false]
 ]
 
 { #category : #settings }
@@ -149,9 +153,8 @@ RubAbstractTextArea class >> defaultFindReplaceServiceClass: aClass [
 RubAbstractTextArea class >> defaultMaxExtent [
 
 	"Return default large enough size of an infinite area. SmallInteger maxVal on 32-bit systems."
-	
-	^ 16r3FFFFFFF
 
+	^ 16r3FFFFFFF
 ]
 
 { #category : #settings }
@@ -159,64 +162,84 @@ RubAbstractTextArea class >> editorFont [
 	^ StandardFonts defaultFont
 ]
 
+{ #category : #examples }
+RubAbstractTextArea class >> embeddedMorphExample [
+	"This is a simple example of how to embed morphs into a text. It is also a test to quickly see with ones eyes that the morphs are place right and behaves well under resize of window.
+The example sits in this class because this class is the one which implements the placement of morphs"
+	<example>
+	|txt|
+	txt := (1 to: 10000 by: 500)
+		inject: '' asText
+		into:[:sofar :elem|
+			sofar,
+			(String loremIpsum),
+			(((String value: 1) asText) addAttribute: (TextAnchor new anchoredMorph: CircleMorph new ))].
+
+	RubScrolledTextMorph new
+		extent: 500@321;
+		beWrapped;
+		updateTextWith: txt;
+	 	openInWindow
+]
+
 { #category : #'shortcut examples' }
 RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
 	"No Keymap here, by default, the editor rely on a builtin keymapping engine (see TextEditor and SmallEditor)
 	Here are some example on how to declare them if you want to setup different shortcuts
-	
+
 	<keymap>
 
 	(aBuilder shortcut: #accept)
 		category: #RubTextEditor
 		default: $s ctrl win | $s ctrl unix | $s command mac
-		do: [ :morph | morph acceptContents ]. 
-		
-	(aBuilder shortcut: #selectAll) 
+		do: [ :morph | morph acceptContents ].
+
+	(aBuilder shortcut: #selectAll)
 		category: #RubTextEditor
 		shortcut: $a ctrl win | $a ctrl unix | $a command mac
 		do: [ :target | target handleKeymapEdition: [:editor | editor selectAll ] ].
 
-	(aBuilder shortcut: #copySelection) 
+	(aBuilder shortcut: #copySelection)
 		category: #RubTextEditor
 		default: $c ctrl win | $c ctrl unix | $c command mac
 		do: [ :target | target editor copySelection ].
-		
-	(aBuilder shortcut: #paste) 
+
+	(aBuilder shortcut: #paste)
 		category: #RubTextEditor
 		default: $v ctrl win | $v ctrl unix | $v command mac
 		do: [ :target | target handleKeymapEdition: [:editor | editor paste]].
-		
-	(aBuilder shortcut: #cut) 
+
+	(aBuilder shortcut: #cut)
 		category: #RubTextEditor
 		default: $x ctrl win | $x ctrl unix | $x command mac
 		do: [ :target :event | target handleKeymapEdition: [:editor | editor cut]  ].
-				
-	(aBuilder shortcut: #find) 
+
+	(aBuilder shortcut: #find)
 		category: #RubTextEditor
 		default: $f ctrl win | $f ctrl unix | $f command mac
 		do: [ :target | target find ].
-		
-	(aBuilder shortcut: #findAgain) 
+
+	(aBuilder shortcut: #findAgain)
 		category: #RubTextEditor
 		default: $g ctrl win | $g ctrl unix | $g command mac
 		do: [ :target | target handleKeymapEdition: [:editor | editor findAgain ] ].
-		
-	(aBuilder shortcut: #exchange) 
+
+	(aBuilder shortcut: #exchange)
 		category: #RubTextEditor
 		default: $e ctrl win | $e ctrl unix | $e command mac
 		do: [ :target | target handleKeymapEdition: [:editor | editor exchange ] ].
-		
-	(aBuilder shortcut: #backWord)  
+
+	(aBuilder shortcut: #backWord)
 		category: #RubTextEditor
 		default: $w ctrl win | $w ctrl unix | $w command mac
 		do: [ :target |  target handleKeymapEdition: [:editor | editor backWord ] ].
-		
-	(aBuilder shortcut: #backWord) 
+
+	(aBuilder shortcut: #backWord)
 		category: #RubTextEditor
 		default: Character backspace  asShortcut win | Character backspace asShortcut unix | Character backspace asShortcut mac
 		do: [ :target :morph :event |  target handleKeymapEdition: [:editor | editor backspace: event ] ].
-		
-	(aBuilder shortcut: #(swapChars)) 
+
+	(aBuilder shortcut: #(swapChars))
 		category: #RubTextEditor
 		default: $y ctrl win | $y ctrl unix | $y command mac
 		do: [ :target |  target handleKeymapEdition: [:editor | editor swapChars ] ].
@@ -225,27 +248,27 @@ RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
 		category: #RubTextEditor
 		default: $h ctrl win | $h ctrl unix | $h command mac
 		do: [ :target | target editor setSearchString ].
-		
-	(aBuilder shortcut: #cancel) 
+
+	(aBuilder shortcut: #cancel)
 		category: #RubTextEditor
 		default: $l ctrl win | $l ctrl unix | $l command mac
 		do: [ :target | target editor cancel ].
-		
-	(aBuilder shortcut: #undo) 
+
+	(aBuilder shortcut: #undo)
 		category: #RubTextEditor
 		default: $z ctrl win | $z ctrl unix | $z command mac
 		do: [ :target | target editor undo ].
-		
-	(aBuilder shortcut: #redo) 
+
+	(aBuilder shortcut: #redo)
 		category: #RubTextEditor
 		default: $j ctrl shift win | $j ctrl shift unix | $j command shift mac
 		do: [ :target | target editor redo ].
-	
+
 	(aBuilder shortcut: #cursorHome)
 		category: #RubTextEditor
 		default: Character home ctrl win | Character home ctrl unix | Character home command mac
 		do: [ :target :morph :event | target editor cursorHome: event ].
-	
+
 	(aBuilder shortcut: #cursorEnd)
 		category: #RubTextEditor
 		default: Character end ctrl win | Character end ctrl unix | Character end command mac
@@ -255,7 +278,7 @@ RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
 		category: #RubTextEditor
 		default: Character home asShortcut win | Character home asShortcut unix | Character home asShortcut mac
 		do: [ :target :morph :event | target editor cursorHome: event ].
-	
+
 	(aBuilder shortcut: #cursorEnd)
 		category: #RubTextEditor
 		default: Character end asShortcut win | Character end asShortcut unix | Character end asShortcut mac
@@ -273,28 +296,28 @@ RubAbstractTextArea class >> examplesOfSmalltalkEditorShortcutsOn: aBuilder [
 		category: #RubSmalltalkEditor
 		default: $b command mac | $b ctrl win | $b ctrl unix
 		do: [ :morph | morph editor browseIt ].
-					
-	(aBuilder shortcut: #doIt) 
+
+	(aBuilder shortcut: #doIt)
 		category: #RubSmalltalkEditor
 		default: $d command mac | $d ctrl win | $d ctrl unix
 		do: [ :morph | morph doIt ].
-			
-	(aBuilder shortcut: #inspectIt) 
+
+	(aBuilder shortcut: #inspectIt)
 		category: #RubSmalltalkEditor
 		default: $i command mac | $i ctrl win | $i ctrl unix
 		do: [ :morph | morph inspectIt ].
-		
-	(aBuilder shortcut: #implementorsOfIt) 
+
+	(aBuilder shortcut: #implementorsOfIt)
 		category: #RubSmalltalkEditor
 		default: $m command mac | $m ctrl win | $m ctrl unix
 		do: [ :morph | morph implementorsOfIt ].
-		
+
 	(aBuilder shortcut: #sendersOfIt)
 		category: #RubSmalltalkEditor
 		default: $n command mac | $n ctrl win | $n ctrl unix
 		do: [ :morph | morph sendersOfIt ].
-		
-	(aBuilder shortcut: #printIt) 
+
+	(aBuilder shortcut: #printIt)
 		category: #RubSmalltalkEditor
 		default: $p command mac | $p ctrl win | $p ctrl unix
 		do: [ :morph | morph printIt ].
@@ -303,7 +326,7 @@ RubAbstractTextArea class >> examplesOfSmalltalkEditorShortcutsOn: aBuilder [
 
 { #category : #settings }
 RubAbstractTextArea class >> highlightMessageSend [
-	^ HighlightMessageSend ifNil: [ HighlightMessageSend := false ] 
+	^ HighlightMessageSend ifNil: [ HighlightMessageSend := false ]
 ]
 
 { #category : #settings }
@@ -313,7 +336,7 @@ RubAbstractTextArea class >> highlightMessageSend: aBoolean [
 
 { #category : #settings }
 RubAbstractTextArea class >> lineNumbersBackgroundColor [
-	^ LineNumbersBackgroundColor ifNil: [ LineNumbersBackgroundColor := self theme backgroundColor darker] 
+	^ LineNumbersBackgroundColor ifNil: [ LineNumbersBackgroundColor := self theme backgroundColor darker]
 ]
 
 { #category : #settings }
@@ -323,7 +346,7 @@ RubAbstractTextArea class >> lineNumbersBackgroundColor: aColor [
 
 { #category : #settings }
 RubAbstractTextArea class >> lineNumbersFont [
-	^ LineNumbersFont ifNil: [ LineNumbersFont := TextStyle default fontOfPointSize: 7] 
+	^ LineNumbersFont ifNil: [ LineNumbersFont := TextStyle default fontOfPointSize: 7]
 ]
 
 { #category : #settings }
@@ -385,7 +408,7 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 
 { #category : #settings }
 RubAbstractTextArea class >> textColor [
-	^ DefaultTextColor ifNil: [ DefaultTextColor := self theme textColor ]  
+	^ DefaultTextColor ifNil: [ DefaultTextColor := self theme textColor ]
 ]
 
 { #category : #settings }
@@ -395,7 +418,7 @@ RubAbstractTextArea class >> textColor: aColor [
 
 { #category : #settings }
 RubAbstractTextArea class >> walkAlongDisplayedLine [
-	^ WalkAlongDisplayedLine ifNil: [WalkAlongDisplayedLine := true] 
+	^ WalkAlongDisplayedLine ifNil: [WalkAlongDisplayedLine := true]
 ]
 
 { #category : #settings }
@@ -434,7 +457,7 @@ RubAbstractTextArea >> acceptDroppingMorph: aMorph event: evt [
 
 { #category : #'accessing - text' }
 RubAbstractTextArea >> addAttribute: anAttribute [
-	self text addAttribute: anAttribute 
+	self text addAttribute: anAttribute
 ]
 
 { #category : #'accessing - cursor' }
@@ -442,10 +465,14 @@ RubAbstractTextArea >> addCursor [
 	self cursor ifNil: [ self addMorph: (cursor := self newCursor) ]
 ]
 
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> addEmbeddedMorph: aMorph [
+	self embeddedMorphs add: aMorph
+]
+
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> addPrimarySelection [
-	self addMorph: self newPrimarySelection.
-
+	self addMorph: self newPrimarySelection
 ]
 
 { #category : #'accessing - segments' }
@@ -455,7 +482,6 @@ RubAbstractTextArea >> addSegment: aRubTextSegmentMorph [
 	self segments add: seg.
 	self addMorphBack: seg.
 	^ seg
-
 ]
 
 { #category : #'public accessing' }
@@ -464,8 +490,8 @@ RubAbstractTextArea >> allowMenu [
 ]
 
 { #category : #private }
-RubAbstractTextArea >> announce: anAnnouncement [ 
-	self announcer announce: anAnnouncement 
+RubAbstractTextArea >> announce: anAnnouncement [
+	self announcer announce: anAnnouncement
 ]
 
 { #category : #'accessing - text' }
@@ -501,7 +527,6 @@ RubAbstractTextArea >> beEditableWhile: aBlock [
 	wasEditable := self readOnly.
 	self readOnly: false.
 	aBlock ensure: [ self readOnly:  wasEditable]
-
 ]
 
 { #category : #'public accessing' }
@@ -532,7 +557,6 @@ RubAbstractTextArea >> cancelEdits [
 	Cancel the current contents and end editing.
 	This default implementation does nothing."
 	self announce: (RubCancelEditRequested morph: self)
-
 ]
 
 { #category : #settings }
@@ -548,7 +572,7 @@ RubAbstractTextArea >> classOfDecoratorNamed: aKey [
 { #category : #'event handling' }
 RubAbstractTextArea >> click: anEvent [
 	self
-		handleEdit: [ 
+		handleEdit: [
 			self editor click: anEvent.
 			self scrollSelectionIntoView: nil ]
 ]
@@ -556,22 +580,19 @@ RubAbstractTextArea >> click: anEvent [
 { #category : #'accessing - editor' }
 RubAbstractTextArea >> closingDelimiters [
 	^ self editor closingDelimiters
-
 ]
 
 { #category : #completion }
 RubAbstractTextArea >> completionEngine [
-	
-	^ completionEngine 
-	
+
+	^ completionEngine
 ]
 
 { #category : #completion }
 RubAbstractTextArea >> completionPostAction [
-	
-	self hasCompletionEngine 
-		ifTrue: [ completionEngine closeMenu ]
 
+	self hasCompletionEngine
+		ifTrue: [ completionEngine closeMenu ]
 ]
 
 { #category : #composing }
@@ -579,7 +600,7 @@ RubAbstractTextArea >> compose [
 
 	self prepareParagraphToCompose.
 	self paragraph compose.
-	self markBackgroundColors
+	self drawEmbeddedMorphs
 ]
 
 { #category : #composing }
@@ -593,7 +614,7 @@ RubAbstractTextArea >> copy [
 		text: self text copy
 		textStyle: textStyle copy
 		color: color
-		textColor: textColor 
+		textColor: textColor
 ]
 
 { #category : #'interactive error protocol' }
@@ -604,7 +625,6 @@ RubAbstractTextArea >> correctFrom: start to: stop with: aString [
 { #category : #'accessing - cursor' }
 RubAbstractTextArea >> cursor [
 	^ cursor
-
 ]
 
 { #category : #'accessing - cursor' }
@@ -614,7 +634,7 @@ RubAbstractTextArea >> cursorClass [
 
 { #category : #accessing }
 RubAbstractTextArea >> cursorWidth [
-	^ self cursorClass defaultWidth 
+	^ self cursorClass defaultWidth
 ]
 
 { #category : #'accessing - decorators' }
@@ -623,7 +643,7 @@ RubAbstractTextArea >> decoratorNamed: aKey [
 ]
 
 { #category : #defaults }
-RubAbstractTextArea >> defaultBounds [ 
+RubAbstractTextArea >> defaultBounds [
 	^ super defaultBounds topLeft corner: self minimumExtent
 ]
 
@@ -632,7 +652,6 @@ RubAbstractTextArea >> defaultColor [
 	"Answer the default color/fill style for the receiver. If the settings has been used then honor it, else returns the theme color"
 
   	^ self class backgroundColor
-
 ]
 
 { #category : #'event handling' }
@@ -680,7 +699,7 @@ RubAbstractTextArea >> defaultTextStyle [
 
 { #category : #defaults }
 RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
-	^ self defaultMenuAllowed 
+	^ self defaultMenuAllowed
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -700,15 +719,53 @@ RubAbstractTextArea >> doubleClick: anEvent [
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> dragDoubleClick: event [
+	hasDragDoubleClick := true.
+	mouseDownPoint := event cursorPoint
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> dragStart: event [
+]
+
+{ #category : #composing }
+RubAbstractTextArea >> drawEmbeddedMorphs [
+	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
+
+	"Scan through text to find spans containing submorphs (Background color and TextAnchor)"
+
+	self text runs
+		withStartStopAndValueDo: [ :start :stop :value |
+			value do: [ :v |
+					(v isKindOf: TextBackgroundColor)
+						ifTrue: [ self addSegment:
+							(RubTextBackgroundColorSegmentMorph
+								color: v color
+								from: start
+								to: stop+1) ].
+					((v isKindOf: TextAnchor) and:[v anchoredMorph isMorph ])
+						ifTrue: [ self addEmbeddedMorph: v anchoredMorph  ] ] ]
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> drawEmbeddedMorphsOn: aCanvas [
+	"draw only those embedded morphs which has been placed by RubDisplayScanner>>placeEmbeddedObject:"
+	((self embeddedMorphs)
+		select: [ :morph | morph valueOfProperty: #hasBeenPositioned ifAbsent: [false] ])
+		do: [ :morph | morph fullDrawOn: aCanvas]
+]
+
 { #category : #drawing }
 RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 	"Draw the focus here since we are using inset bounds
 	for the focus rectangle."
-
+	self resetEmbeddedMorphs.
 	super drawSubmorphsOn: aCanvas.
 	aCanvas rubParagraph: self paragraph bounds: self drawingBounds color: self textColor.
 	(scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus or: [ self hasFindReplaceFocus ] ] ])
-		ifTrue: [self drawKeyboardFocusOn: aCanvas ]
+		ifTrue: [self drawKeyboardFocusOn: aCanvas ].
+	self drawEmbeddedMorphsOn: aCanvas
 ]
 
 { #category : #drawing }
@@ -733,13 +790,19 @@ RubAbstractTextArea >> drawingBounds [
 RubAbstractTextArea >> editPrimarySelectionSeparately [
 	| view |
 	view := self primarySelection readWriteView.
-	(view embeddedInMorphicWindowLabeled: 'Selection editing') openInHand.
+	(view embeddedInMorphicWindowLabeled: 'Selection editing') openInHand
+]
+
+{ #category : #'accessing - im text input' }
+RubAbstractTextArea >> editing [
+
+	^ editing = true
 ]
 
 { #category : #'accessing - editing mode' }
 RubAbstractTextArea >> editingMode [
 	^ editingMode
-		ifNil: [ 
+		ifNil: [
 			self editingMode: RubPlainTextMode new.
 			editingMode ]
 ]
@@ -748,8 +811,7 @@ RubAbstractTextArea >> editingMode [
 RubAbstractTextArea >> editingMode: anEditingMode [
 	editingMode unplug.
 	editingMode := anEditingMode.
-	editingMode plugin: self.
- 
+	editingMode plugin: self
 ]
 
 { #category : #'accessing - editing state' }
@@ -775,16 +837,21 @@ RubAbstractTextArea >> editorClass [
 	^ RubTextEditor
 ]
 
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> embeddedMorphs [
+	"Embedded morphs are kept seperate from other submorphs, to ensure only those placed by
+	RubDisplayScanner>>placeEmbeddedObject: are drawn"
+	^ embeddedMorphs ifNil: [ embeddedMorphs := OrderedCollection new ]
+]
+
 { #category : #'accessing - editing state' }
 RubAbstractTextArea >> emphasisHere [
 	^ self editingState emphasisHere
-
 ]
 
 { #category : #'accessing - editing state' }
 RubAbstractTextArea >> emphasisHere: aListOfAttributes [
 	self editingState emphasisHere: aListOfAttributes
-
 ]
 
 { #category : #'event handling' }
@@ -793,15 +860,14 @@ RubAbstractTextArea >> escapePressed [
 	because Esc is too useful as a shortcut for other purposes
 	to be used for popping a menu"
 	"^ self yellowButtonActivity: false"
-
 ]
 
 { #category : #geometry }
 RubAbstractTextArea >> extent: aPoint [
 	self
-		handleBoundsChange: [ 
+		handleBoundsChange: [
 			self wrapped
-				ifTrue: [ 
+				ifTrue: [
 					(bounds notNil and: [ bounds width = aPoint x ])
 						ifTrue: [ ^ self ].
 					super extent: ((self paragraph withoutDecorator extentFromClientBottomRight: aPoint) max: self minimumExtent).
@@ -828,7 +894,6 @@ RubAbstractTextArea >> findNextString: aSubstring startingAt: searchIdx [
 	self
 		handleEdit: [where := self editor findNextString: aSubstring startingAt: searchIdx].
 	^ where
-
 ]
 
 { #category : #'find-replace' }
@@ -839,7 +904,7 @@ RubAbstractTextArea >> findRegex [
 { #category : #'event handling' }
 RubAbstractTextArea >> findReplaceService [
 	^ findReplaceService ifNil: [
-		findReplaceService := self defaultFindReplaceServiceClass newFor: self].
+		findReplaceService := self defaultFindReplaceServiceClass newFor: self]
 ]
 
 { #category : #'find-replace' }
@@ -848,20 +913,16 @@ RubAbstractTextArea >> findText [
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> focusChanged [ 
+RubAbstractTextArea >> focusChanged [
 	super focusChanged.
 	self editor focusChanged.
-	self changed.
-
-	
-
+	self changed
 ]
 
 { #category : #'accessing - text' }
 RubAbstractTextArea >> font [
 	"Answer the probable font"
 	^ self textStyle fonts at: self textStyle defaultFontIndex
-
 ]
 
 { #category : #'accessing - text' }
@@ -870,7 +931,6 @@ RubAbstractTextArea >> font: aFont [
 	newTextStyle := aFont textStyle copy ifNil: [ TextStyle fontArray: { aFont } ].
 	newTextStyle defaultFontIndex: (newTextStyle fontIndexOf: aFont).
 	self textStyle: newTextStyle
-
 ]
 
 { #category : #'public accessing' }
@@ -882,13 +942,13 @@ RubAbstractTextArea >> forbidMenu [
 RubAbstractTextArea >> forceCompose [
 
 	self prepareParagraphToCompose.
-	self paragraph forceCompose 
+	self paragraph forceCompose
 ]
 
 { #category : #'accessing - cursor' }
 RubAbstractTextArea >> forceCursorVisibleWhile: aBlock [
 	self cursor
-		ifNotNil: [ :cur | 
+		ifNotNil: [ :cur |
 			| prev |
 			prev := cur stayVisible.
 			cur stayVisible: true.
@@ -925,6 +985,20 @@ RubAbstractTextArea >> grabbedAllowed [
 	^ scrollPane isNil
 ]
 
+{ #category : #accessing }
+RubAbstractTextArea >> grow [
+	"Answer whether the area should grow horizontally."
+
+	^ grow
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> grow: aBool [
+	"Set whether the area should grow horizontally."
+
+	grow := aBool
+]
+
 { #category : #geometry }
 RubAbstractTextArea >> handleBoundsChange: aBlock [
 	| oldBounds |
@@ -933,10 +1007,9 @@ RubAbstractTextArea >> handleBoundsChange: aBlock [
 	oldBounds topLeft ~= self bounds topLeft
 		ifTrue: [ self announce: ((RubPositionChanged morph: self) previousBounds: oldBounds)].
 	oldBounds extent ~= self bounds extent
-		ifTrue: [ 
+		ifTrue: [
 			self scrollPane ifNotNil: [ :sp | sp textAreaExtentChanged ].
-			self announce: ((RubExtentChanged morph: self) previousBounds: oldBounds) ].
-
+			self announce: ((RubExtentChanged morph: self) previousBounds: oldBounds) ]
 ]
 
 { #category : #editing }
@@ -944,11 +1017,22 @@ RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
 
 	editBlock value.
+	"Fit to width on edit"
+	grow ifTrue: [
+		self width: (1 max: self maxLineWidth + self margins left + self margins right)
+	].
 	self selectionChanged	"Note new selection"
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> handleKeystroke: anEvent [ 
+RubAbstractTextArea >> handleKeyDown: anEvent [
+
+	editing = true ifTrue: [ ^ self ].
+	^ super handleKeyDown: anEvent
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> handleKeystroke: anEvent [
 	"System level event handling."
 
 	anEvent wasHandled
@@ -956,7 +1040,7 @@ RubAbstractTextArea >> handleKeystroke: anEvent [
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
-	anEvent wasHandled: true.
+	anEvent wasHandled: true
 ]
 
 { #category : #'event handling' }
@@ -972,7 +1056,6 @@ RubAbstractTextArea >> handleMouseMove: anEvent [
 	(anEvent anyButtonPressed and: [ anEvent hand mouseFocus == self ])
 		ifFalse: [ ^ self ].
 	super handleMouseMove: anEvent
-	
 ]
 
 { #category : #composing }
@@ -1002,7 +1085,7 @@ RubAbstractTextArea >> handleSelectionChange: aBlock [
 	aBlock value.
 
 	(prevMarkBlock ~= self markBlock or: [ prevPointBlock ~= self pointBlock ]) ifFalse: [ ^ self ].
-	
+
 	"have to invalidate the full surface because of the selection"
 	self invalidRect: (self expandFullBoundsForDropShadow: self drawingBounds).
 	self scrollPane ifNotNil: [ :sp | sp selectionChanged ].
@@ -1020,28 +1103,37 @@ RubAbstractTextArea >> handlesMouseDown: evt [
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> handlesMouseOver: evt [ 
+RubAbstractTextArea >> handlesMouseOver: evt [
 	"Do I want to receive mouseEnter: and mouseLeave: when the button is up and the hand is empty?"
 	^ self enabled
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> handlesTextEditionEvent: anEvent [
+
+	^ true
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> handlesTextInputEvent: anEvent [
+
+	^ true
+]
+
 { #category : #completion }
 RubAbstractTextArea >> hasCompletionEngine [
-	
+
 	^ completionEngine isNil not
-	
 ]
 
 { #category : #'accessing - decorators' }
 RubAbstractTextArea >> hasDecorator: aDecorator [
 	^ self paragraph hasDecorator: aDecorator
-	
 ]
 
 { #category : #'accessing - decorators' }
 RubAbstractTextArea >> hasDecoratorNamed: aKey [
 	^ self paragraph hasDecoratorNamed: aKey
-	
 ]
 
 { #category : #'find-replace' }
@@ -1056,18 +1148,17 @@ RubAbstractTextArea >> hasFocus [
 
 { #category : #'accessing - editing state' }
 RubAbstractTextArea >> hasFocus: aBoolean [
-	^ self editingState hasFocus: aBoolean 
+	^ self editingState hasFocus: aBoolean
 ]
 
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> hasSelection [
-	^ self editor hasSelection 
+	^ self editor hasSelection
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> hideOverEditableTextCursor [  
+RubAbstractTextArea >> hideOverEditableTextCursor [
 	self currentHand showTemporaryCursor: nil
-	
 ]
 
 { #category : #accessing }
@@ -1078,10 +1169,13 @@ RubAbstractTextArea >> highlightMessageSend [
 { #category : #initialization }
 RubAbstractTextArea >> initialize [
 	super initialize.
+	grow := false.
 	self compose.
 	self addCursor.
 	self plugFindReplace.
-	DefaultTextColor := self theme textColor
+	DefaultTextColor := self theme textColor.
+	editing := false.
+	hasDragDoubleClick := false
 ]
 
 { #category : #keymapping }
@@ -1090,11 +1184,6 @@ RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	because it is the one that knows more details about the goal of editing"
 	super initializeShortcuts: aKMDispatcher.
 	self editor initializeShortcuts: aKMDispatcher
-]
-
-{ #category : #accessing }
-RubAbstractTextArea >> interactive [
-	^ self editingMode interactive
 ]
 
 { #category : #testing }
@@ -1112,34 +1201,45 @@ RubAbstractTextArea >> keyDown: anEvent [
 	anEvent hand anyButtonPressed
 		ifTrue: [ ^ self ].
 	self scrollPane
-		ifNotNil: [ :sp | 
+		ifNotNil: [ :sp |
 			(sp scrollByKeyboard: anEvent)
 				ifTrue: [ ^ self ] ].
 
-	self handleEdit: [ self editor keyDown: anEvent ].
+	self handleEdit: [ self editor keyDown: anEvent ]
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
+
 	"Handle a keystroke event."
-	anEvent hand anyButtonPressed
-		ifTrue: [ ^ self ].
-	self handleEdit: [ self editor keystroke: anEvent ].
+
+	anEvent hand anyButtonPressed ifTrue: [ ^ self ].
+	self handleEdit: [
+		editing = true
+			ifTrue: [
+				editing := false.
+				self editor unselect ]
+			ifFalse: [ self editor keystroke: anEvent ] ].
 	self scrollSelectionIntoView: nil
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> keyboardFocusChange: aBoolean [
+
 	aBoolean
 		ifTrue: [
 			self hasFocus: true.
+			editing := false.
+			self requestTextEditingAt: (self cursor positionInWorld corner:
+					 (self cursor positionInWorld translateBy:
+						  0 @ (self font height + 4))) truncated.
 			self showOverEditableTextCursor ]
-		ifFalse: [ 
+		ifFalse: [
 			self hasFocus: false.
+			self requestStopTextEditing.
+			editing = true ifTrue: [ editing := false ].
 			self hideOverEditableTextCursor ].
-	super keyboardFocusChange: aBoolean.
-	self focusChanged.
-
+	super keyboardFocusChange: aBoolean
 ]
 
 { #category : #accessing }
@@ -1149,8 +1249,7 @@ RubAbstractTextArea >> lineNumbersBackgroundColor [
 
 { #category : #accessing }
 RubAbstractTextArea >> lineNumbersTextColor [
-	^ self class lineNumbersTextColor 
-
+	^ self class lineNumbersTextColor
 ]
 
 { #category : #'accessing - paragraph' }
@@ -1162,8 +1261,8 @@ RubAbstractTextArea >> lines [
 RubAbstractTextArea >> lookupMenu [
 	"default implementation of the algorithm that lookup the menu"
 
-	^ self model 
-		ifNil: [ self editingMode menu ] 
+	^ self model
+		ifNil: [ self editingMode menu ]
 		ifNotNil: [ :m | m menu ifNil: [ self editingMode menu ] ]
 ]
 
@@ -1173,8 +1272,8 @@ RubAbstractTextArea >> lookupShiftMenu [
 
 	| default |
 	default := [ self editingMode shiftMenu ].
-	^ self model 
-		ifNil: [ default value ] 
+	^ self model
+		ifNil: [ default value ]
 		ifNotNil: [ :m | m shiftMenu ifNil: [ default value ] ]
 ]
 
@@ -1196,21 +1295,6 @@ RubAbstractTextArea >> margins: aMargin [
 	margins := m
 ]
 
-{ #category : #composing }
-RubAbstractTextArea >> markBackgroundColors [
-	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
-
-	self text runs
-		withStartStopAndValueDo: [ :start :stop :value | 
-			value do: [ :v | 
-					(v isKindOf: TextBackgroundColor)
-						ifTrue: [ self addSegment: 
-							(RubTextBackgroundColorSegmentMorph
-								color: v color
-								from: start
-								to: stop+1) ] ] ] 
-]
-
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> markBlock [
 	^ self editingState markBlock
@@ -1229,7 +1313,6 @@ RubAbstractTextArea >> markBlock: markCharacterBlock pointBlock: pointCharacterB
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> markIndex [
 	^ self editingState markIndex
-
 ]
 
 { #category : #'accessing - selection' }
@@ -1241,7 +1324,7 @@ RubAbstractTextArea >> markIndex: markIndex pointIndex: pointIndex [
 RubAbstractTextArea >> maxLength [
 	"Answer the maximum number of characters that may be typed."
 
-	^ maxLength 
+	^ maxLength
 ]
 
 { #category : #accessing }
@@ -1249,6 +1332,16 @@ RubAbstractTextArea >> maxLength: anInteger [
 	"Set the maximum number of characters that may be typed."
 
 	maxLength := anInteger max: 0
+]
+
+{ #category : #measuring }
+RubAbstractTextArea >> maxLineWidth [
+	"Answers with the maximum approximate pixel width across all lines"
+	| w |
+	w := 0.
+	self string linesDo: [ :line | w := w max: (self font widthOfString: line) ].
+	"check this later, not really sure about this calculation"
+	^ w * 6 // 5
 ]
 
 { #category : #accessing }
@@ -1275,7 +1368,7 @@ RubAbstractTextArea >> minimumExtent [
 ]
 
 { #category : #accessing }
-RubAbstractTextArea >> model [ 
+RubAbstractTextArea >> model [
 	^model
 ]
 
@@ -1297,7 +1390,7 @@ RubAbstractTextArea >> modifySelection: aCharacterBlock [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseDown: evt [
-	"Make this TextMorph be the keyboard input focus, if it isn't  
+	"Make this TextMorph be the keyboard input focus, if it isn't
 	already, and repond to the text selection gesture.
 	Changed to not take keyboard focus if an owner is a
 	PluggableTextMorph that doesn't want focus."
@@ -1317,20 +1410,14 @@ RubAbstractTextArea >> mouseDown: evt [
 	evt shiftPressed
 		ifTrue: [ ^ self mouseMove: evt ].
 	mouseDownPoint := evt cursorPoint.
-	(self hasFocus or: [ self editor hasSelection not ])
-		ifTrue:
-			[ | selectors |
-			self scrollPivot: evt hand position.
-			selectors := Array
-				with: #click:
-				with: #doubleClick:
-				with: nil
-				with: nil.
-			evt hand
-				waitForClicksOrDrag: self
-				event: evt
-				selectors: selectors
-				threshold: 5 ].
+	(self hasFocus or: [ self editor hasSelection not ]) ifTrue: [
+		self scrollPivot: evt hand position.
+		(evt hand mouseClickStateFor: self event: evt)
+			threshold: 5;
+			clickSelector: #click:;
+			doubleClickSelector: #doubleClick:;
+			dragSelector: #dragStart:;
+			dragDoubleClickSelector: #dragDoubleClick: ].
 	self hasKeyboardFocus
 		ifFalse: [ self takeKeyboardFocus ]
 ]
@@ -1340,7 +1427,6 @@ RubAbstractTextArea >> mouseEnter: evt [
 	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed."
 	super mouseEnter: evt.
 	self showOverEditableTextCursor
-	
 ]
 
 { #category : #'event handling' }
@@ -1348,29 +1434,38 @@ RubAbstractTextArea >> mouseLeave: evt [
 	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed."
 	super mouseLeave: evt.
 	self hideOverEditableTextCursor
-	
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseMove: evt [
+
    self paragraph move: evt for: model controller: self editor.
 	evt redButtonPressed
 		ifFalse: [ ^ self ].
+	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
+	hasDragDoubleClick ifTrue: [
+		^ editor
+			selectWordMark: (self paragraph characterBlockAtPoint: mouseDownPoint) stringIndex
+			point: (self paragraph characterBlockAtPoint: evt cursorPoint) stringIndex ].
+
 	evt shiftPressed
 		ifTrue: [ self modifySelection: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
-		ifFalse: [ mouseDownPoint
-				ifNotNil: [ self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
-				ifNil: [ self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
-	self editor storeSelectionInText.
+		ifFalse: [mouseDownPoint
+				ifNotNil: [
+					self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
+				ifNil: [  self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
 
+	self editor storeSelectionInText
 ]
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseUp: evt [
+
 	self scrollPivot: nil.
 	(self boundsInWorld containsPoint: self currentHand position)
 		ifFalse: [ self hideOverEditableTextCursor ].
-	mouseDownPoint := nil
+	mouseDownPoint := nil.
+	hasDragDoubleClick := false
 ]
 
 { #category : #'accessing - cursor' }
@@ -1400,8 +1495,7 @@ RubAbstractTextArea >> newParagraph [
 
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> newPrimarySelection [
-	^ RubPrimarySelectionMorph inTextArea: self from: self markIndex to: self pointIndex.
-
+	^ RubPrimarySelectionMorph inTextArea: self from: self markIndex to: self pointIndex
 ]
 
 { #category : #editing }
@@ -1439,15 +1533,34 @@ RubAbstractTextArea >> offset [
 
 { #category : #'find-replace' }
 RubAbstractTextArea >> openFindDialog [
-	self sharesFindReplace 
+	self sharesFindReplace
 		ifTrue: [ self announce: RubFindReplaceWindowRequired ]
 		ifFalse: [self flash]
+]
+
+{ #category : #menu }
+RubAbstractTextArea >> openMenu [
+	"Opens the menu at the cursor position"
+	self openMenu: false and: [ :menu |
+		menu invokeAt: self cursor positionInWorld in: self currentWorld
+	]
+]
+
+{ #category : #menu }
+RubAbstractTextArea >> openMenu: shiftKeyState and: aBlock [
+	"Opens the menu at the cursor position, executing the given block afterwards"
+	(self getMenu: shiftKeyState)
+		ifNotNil: [ :menu |
+			menu privateOwner: self.
+			menu setInvokingView: self editor.
+			aBlock value: menu.
+			self changed
+		]
 ]
 
 { #category : #'accessing - editor' }
 RubAbstractTextArea >> openingDelimiters [
 	^ self editor openingDelimiters
-
 ]
 
 { #category : #private }
@@ -1459,27 +1572,26 @@ RubAbstractTextArea >> paragraph [
 			paragraph := self newParagraph.
 			self compose.
 			self selectAll].
-	^ paragraph 
+	^ paragraph
 ]
 
 { #category : #'paragraph feedbacks' }
 RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 	"A text change has taken place in my paragraph, as a result of editing and I must be updated"
 	self
-		handleBoundsChange: [ 
+		handleBoundsChange: [
 			self wrapped
 				ifTrue: [ self updateBottomFromParagraph ]
 				ifFalse: [ self updateExtentFromParagraph ] ].
 	self scrollPane ifNotNil: [ :sp | sp textChanged ].
 	self announce: (RubTextChanged from: start to: stop with: aText).
-	self markBackgroundColors .
-
+	self drawEmbeddedMorphs
 ]
 
 { #category : #'paragraph feedbacks' }
 RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 	self
-		handleBoundsChange: [ 
+		handleBoundsChange: [
 			self wrapped
 				ifTrue: [ self updateBottomFromParagraph ]
 				ifFalse: [ self updateExtentFromParagraph ] ]
@@ -1487,9 +1599,9 @@ RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 
 { #category : #initialization }
 RubAbstractTextArea >> plugFindReplace [
-	self announcer 
+	self announcer
 		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self findReplaceService;
-	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self findReplaceService;	
+	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self findReplaceService;
 		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self findReplaceService
 ]
 
@@ -1510,14 +1622,12 @@ RubAbstractTextArea >> pointIndex [
 
 { #category : #composing }
 RubAbstractTextArea >> prepareParagraphToCompose [
-	self paragraph container: self compositionRectangle.
-
+	self paragraph container: self compositionRectangle
 ]
 
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> primarySelection [
 	^ self submorphThat: [ :sm | sm isKindOf: RubPrimarySelectionMorph ] ifNone:  [ ]
-
 ]
 
 { #category : #'accessing - selection' }
@@ -1533,7 +1643,7 @@ RubAbstractTextArea >> primarySelectionColor [
 { #category : #geometry }
 RubAbstractTextArea >> privateMoveBy: delta [
 	self
-		handleBoundsChange: [ 
+		handleBoundsChange: [
 			self paragraph moveBy: delta truncated.
 			super privateMoveBy: delta truncated ]
 ]
@@ -1572,7 +1682,7 @@ RubAbstractTextArea >> privateText: stringOrText [
 	| fontNumber |
 	stringOrText isText
 		ifTrue: [ self paragraph text: stringOrText ]
-		ifFalse: [ 
+		ifFalse: [
 			fontNumber := self textStyle defaultFontIndex.
 			self paragraph text: (Text string: stringOrText asString attributes: {(TextFontChange fontNumber: fontNumber)}) ]
 ]
@@ -1595,14 +1705,14 @@ RubAbstractTextArea >> readOnly: aBoolean [
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.
-	Redetermine the selection according to the start and stop block indices; 
+	Redetermine the selection according to the start and stop block indices;
 	do not highlight."
 
 	self markIndex: self markIndex pointIndex: self pointIndex
 ]
 
 { #category : #'multi level undo' }
-RubAbstractTextArea >> redoTypeIn: aText interval: anInterval [ 
+RubAbstractTextArea >> redoTypeIn: aText interval: anInterval [
 	self handleEdit: [self editor redoTypeIn: aText interval: anInterval]
 ]
 
@@ -1614,7 +1724,7 @@ RubAbstractTextArea >> releaseCachedState [
 
 { #category : #'accessing - editing state' }
 RubAbstractTextArea >> releaseEditingState [
-	editingState ifNotNil: [ 
+	editingState ifNotNil: [
 		editingState unplug.
 		editingState := nil]
 ]
@@ -1624,7 +1734,7 @@ RubAbstractTextArea >> releaseEditor [
 	"Release the editor for my paragraph."
 
 	editor
-		ifNotNil: [ 
+		ifNotNil: [
 			editor unplug.
 			editor := nil ]
 ]
@@ -1632,16 +1742,15 @@ RubAbstractTextArea >> releaseEditor [
 { #category : #private }
 RubAbstractTextArea >> releaseParagraph [
 	paragraph
-		ifNotNil: [ 
+		ifNotNil: [
 			self withoutAnyDecorator.
 			paragraph unplug.
-			paragraph := nil ].
-
+			paragraph := nil ]
 ]
 
 { #category : #'accessing - cursor' }
 RubAbstractTextArea >> removeCursor [
-	self cursor ifNotNil: [ :c | 
+	self cursor ifNotNil: [ :c |
 		self cursor aboutToBeRemoved.
 		self removeMorph: c ].
 	cursor := nil
@@ -1650,35 +1759,38 @@ RubAbstractTextArea >> removeCursor [
 { #category : #'accessing - segments' }
 RubAbstractTextArea >> removeSegment: aRubTextSegmentMorph [
 	self announcer unsubscribe: aRubTextSegmentMorph.
-	self segments remove: aRubTextSegmentMorph ifAbsent: [].
-
+	self segments remove: aRubTextSegmentMorph ifAbsent: []
 ]
 
 { #category : #'find-replace' }
 RubAbstractTextArea >> replaceAll: aRegex with: aText [
 	self
-		handleEdit: [self editor replaceAll: aRegex with: aText].
-
+		handleEdit: [self editor replaceAll: aRegex with: aText]
 ]
 
 { #category : #'find-replace' }
 RubAbstractTextArea >> replaceAll: aRegex with: aText startingAt: startIdx [
 	self
-		handleEdit: [self editor replaceAll: aRegex with: aText startingAt: startIdx].
-
+		handleEdit: [self editor replaceAll: aRegex with: aText startingAt: startIdx]
 ]
 
 { #category : #editing }
 RubAbstractTextArea >> replaceFrom: start to: stop with: aText [
 	self
 		handleEdit: [ self editor replaceTextFrom: start to: stop with: aText ]
-
 ]
 
 { #category : #'find-replace' }
 RubAbstractTextArea >> replaceSelectionWith: aText [
 	self
 		handleEdit: [self editor replaceSelectionWith: aText]
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> resetEmbeddedMorphs [
+	"reset the #hasBeenPositioned property to false for all embeddedMorphs.
+	Those to actually be shown will be marked in RubDisplayScanner>>placeEmbeddedObject:"
+	self embeddedMorphs do: [ :morph | morph setProperty: #hasBeenPositioned toValue: false ]
 ]
 
 { #category : #'dropping/grabbing' }
@@ -1724,15 +1836,13 @@ RubAbstractTextArea >> scrollPivot: aPoint [
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> scrollSelectionIntoView: evt [ 
-	scrollPane ifNotNil: [ scrollPane scrollSelectionIntoView: evt ]	
-
+RubAbstractTextArea >> scrollSelectionIntoView: evt [
+	scrollPane ifNotNil: [ scrollPane scrollSelectionIntoView: evt ]
 ]
 
 { #category : #'accessing - segments' }
 RubAbstractTextArea >> segments [
 	^ segments ifNil: [ segments := OrderedCollection new ]
-
 ]
 
 { #category : #'accessing - segments' }
@@ -1767,22 +1877,21 @@ RubAbstractTextArea >> selection [
 
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionChanged [
-	"Invalidate all the selection rectangles. 
+	"Invalidate all the selection rectangles.
 	Make sure that any drop shadow is accounted for too."
 	paragraph ifNil: [ ^ self ].
-	self recomputeSelection.
-
+	self recomputeSelection
 ]
 
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionInterval [
-	^self editor selectionInterval 
+	^self editor selectionInterval
 ]
 
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionRects [
 	^ Array
-		streamContents: [ :strm | 
+		streamContents: [ :strm |
 			strm nextPutAll: self paragraph selectionRects.
 			self cursor ifNotNil: [ strm nextPut: self cursor bounds ] ]
 ]
@@ -1864,7 +1973,7 @@ RubAbstractTextArea >> tabWidth: anInteger [
 RubAbstractTextArea >> takeKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 	self takesKeyboardFocus ifFalse: [ ^self ].
-	^ super takeKeyboardFocus 
+	^ super takeKeyboardFocus
 ]
 
 { #category : #testing }
@@ -1881,10 +1990,9 @@ RubAbstractTextArea >> text [
 
 { #category : #private }
 RubAbstractTextArea >> text: t textStyle: s color: c textColor: tc [
-	"Private -- for use only in morphic duplication"	
+	"Private -- for use only in morphic duplication"
 	self releaseParagraph.
-	super text: t textStyle: s color: c textColor: tc.
-
+	super text: t textStyle: s color: c textColor: tc
 ]
 
 { #category : #'accessing - text' }
@@ -1896,7 +2004,20 @@ RubAbstractTextArea >> textColor [
 RubAbstractTextArea >> textColor: newColor [
 	textColor := newColor.
 	self addAttribute: (TextColor color: newColor).
-	self changed.
+	self changed
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> textEdition: aTextEditionEvent [
+
+	aTextEditionEvent text
+		ifNotEmpty: [ :editText |
+			self editor zapSelectionWith: editText.
+			editing := true ]
+		ifEmpty: [
+			editing = true ifTrue: [
+				self editor zapSelectionWith: ''.
+				editing := false ] ]
 ]
 
 { #category : #'accessing - text' }
@@ -1904,8 +2025,14 @@ RubAbstractTextArea >> textFont: aFont [
 	self addAttribute: (TextFontReference toFont: aFont).
 	self paragraph compose.
 	self recomputeSelection.
-	self  announce: (RubTextStyleChanged morph: self).
+	self  announce: (RubTextStyleChanged morph: self)
+]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> textInput: aTextInputEvent [
+	self editor zapSelectionWith: aTextInputEvent text.
+	self editor unselect.
+	editing := false
 ]
 
 { #category : #'accessing - text' }
@@ -1919,24 +2046,23 @@ RubAbstractTextArea >> textStyle: aTextStyle [
 	self addAttribute: (TextFontChange fontNumber: (textStyle defaultFontIndex)).
 	self paragraph compose.
 	self recomputeSelection.
-	self  announce: (RubTextStyleChanged morph: self).
-
+	self  announce: (RubTextStyleChanged morph: self)
 ]
 
 { #category : #updating }
 RubAbstractTextArea >> themeChanged [
-	
-	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler | 
-		styler refreshStyling 
-	].
 
+	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
+		styler refreshStyling
+	].
+	self color: self theme backgroundColor.
 	super themeChanged
 ]
 
 { #category : #structure }
 RubAbstractTextArea >> topRendererOrSelf [
 
-	^ scrollPane 
+	^ scrollPane
 		ifNil: [ super topRendererOrSelf ]
 		ifNotNil: [ scrollPane topRendererOrSelf ]
 ]
@@ -1947,7 +2073,7 @@ RubAbstractTextArea >> undoRedoExchange: aninterval with: anotherInterval [
 ]
 
 { #category : #'multi level undo' }
-RubAbstractTextArea >> undoTypeIn: aText interval: anInterval [ 
+RubAbstractTextArea >> undoTypeIn: aText interval: anInterval [
 	self handleEdit: [self editor undoTypeIn: aText interval: anInterval]
 ]
 
@@ -1958,13 +2084,11 @@ RubAbstractTextArea >> unplug [
 	self releaseParagraph.
 	self releaseEditor.
 	super unplug
-	
 ]
 
 { #category : #initialization }
 RubAbstractTextArea >> unplugFindReplace [
 	self announcer unsubscribe: self findReplaceService
-
 ]
 
 { #category : #'accessing - selection' }
@@ -1975,7 +2099,7 @@ RubAbstractTextArea >> unselect [
 { #category : #'paragraph feedbacks' }
 RubAbstractTextArea >> updateBottomFromParagraph [
 	paragraph
-		ifNotNil: [ 
+		ifNotNil: [
 			| newExtent |
 			newExtent := self paragraph extent max: self paragraph minimumExtent.
 			self forceExtentTo: self extent x @ newExtent y]
@@ -1984,7 +2108,7 @@ RubAbstractTextArea >> updateBottomFromParagraph [
 { #category : #'paragraph feedbacks' }
 RubAbstractTextArea >> updateExtentFromParagraph [
 	(paragraph notNil and: [ bounds notNil ])
-		ifTrue: [ 
+		ifTrue: [
 			| newExtent |
 			newExtent := self paragraph extent max: self minimumExtent.
 			self forceExtentTo: (newExtent x + self margins right) @ newExtent y]
@@ -1999,7 +2123,7 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 RubAbstractTextArea >> updateTextWith: aStringOrText [
 	self
 		handleEdit: [ self
-				beEditableWhile: [ 
+				beEditableWhile: [
 					| s |
 					s := self validateTextFrom: aStringOrText.
 					s = self text
@@ -2025,7 +2149,7 @@ RubAbstractTextArea >> validateTextFrom: aStringOrText [
 ]
 
 { #category : #copying }
-RubAbstractTextArea >> veryDeepInner: deepCopier [ 
+RubAbstractTextArea >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables. Some need to be not copied at all, but shared.
 	Warning!! Every instance variable defined in this class must be handled.
 	We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
@@ -2034,17 +2158,16 @@ RubAbstractTextArea >> veryDeepInner: deepCopier [
 	textStyle := textStyle veryDeepCopyWith: deepCopier.
 	paragraph := paragraph veryDeepCopyWith: deepCopier.
 	textColor := textColor veryDeepCopyWith: deepCopier.
-	editor := editor veryDeepCopyWith: deepCopier.
-
+	editor := editor veryDeepCopyWith: deepCopier
 ]
 
 { #category : #menu }
 RubAbstractTextArea >> wantsYellowButtonMenu [
-	^ self menuAllowed 
+	^ self menuAllowed
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> whenFindTextChanged: anAnnouncement [ 
+RubAbstractTextArea >> whenFindTextChanged: anAnnouncement [
 	self changed
 ]
 
@@ -2091,7 +2214,7 @@ RubAbstractTextArea >> withoutDecorator: aDecorator [
 		ifFalse: [ ^ self ].
 	n := paragraph.
 	[ n notNil and: [ n ~= aDecorator ] ]
-		whileTrue: [ 
+		whileTrue: [
 			p := n.
 			n := p next ].
 	n ifNil: [ ^ self ].
@@ -2126,7 +2249,7 @@ RubAbstractTextArea >> withoutSecondarySelection [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> wouldAcceptKeyboardFocusUponTab [
-	"Answer whether the receiver might accept keyboard focus if 
+	"Answer whether the receiver might accept keyboard focus if
 	tab were hit in some container playfield"
 	^ true
 ]
@@ -2137,18 +2260,11 @@ RubAbstractTextArea >> wrapped [
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [ 
+RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	"Invoke the text-editing menu.
 	Check if required first!"
 	self wantsYellowButtonMenu
-		ifFalse: [ ^ false ].	
-	(self getMenu: shiftKeyState)
-		ifNotNil: [ :menu|
-			menu privateOwner: self.
-			menu setInvokingView: self editor.
-			menu invokeModal. 
-			self changed.
-			^ true].
-		
+		ifFalse: [ ^ false ].
+	self openMenu: shiftKeyState and: #invokeModal.
 	^ true
 ]

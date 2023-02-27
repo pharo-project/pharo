@@ -100,12 +100,21 @@ MCPackageLoader >> basicLoadDefinitions [
 
 { #category : #private }
 MCPackageLoader >> dependencyWarning [
-	^ String streamContents:
-		[:s |
-		s nextPutAll: 'This package depends on the following classes:'; cr.
-		requirements do: [:ea | s space; space; nextPutAll: ea; cr].
-		s nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; cr.
-		unloadableDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
+	| packageName |
+	
+	packageName := (additions, methodAdditions) 
+		detect:  [ :each | each respondsTo: #category ]
+		ifFound: [ :aDefinition | aDefinition category ] 
+		ifNone: [ 'UNKNOWN' ].
+	
+	^ String streamContents: [ :stream|
+		stream 
+			nextPutAll: 'Package '; 
+			nextPutAll: packageName; 
+			nextPutAll: ' depends on the following classes:'; cr.
+		requirements do: [ :each | stream space; space; nextPutAll: each; cr].
+		stream nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; cr.
+		unloadableDefinitions do: [:ea | stream space; space; nextPutAll: ea summary; cr]] 
 ]
 
 { #category : #private }

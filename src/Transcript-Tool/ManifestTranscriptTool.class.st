@@ -6,8 +6,3 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Transcript-Tool-Manifest'
 }
-
-{ #category : #'meta-data - dependency analyser' }
-ManifestTranscriptTool class >> manuallyResolvedDependencies [
-	^ #()
-]

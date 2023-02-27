@@ -15,7 +15,7 @@ ClySwitchToFlatClassesCommand >> defaultMenuItemName [
 { #category : #execution }
 ClySwitchToFlatClassesCommand >> execute [
 
-	browser switchToFlatClasses 
+	browser switchToFlatClasses
 ]
 
 { #category : #testing }

@@ -12,28 +12,28 @@ Class {
 }
 
 { #category : #testing }
-RBNotEnvironment >> definesClass: aClass [ 
+RBNotEnvironment >> definesClass: aClass [
 	^ (environment definesClass: aClass) not
 ]
 
 { #category : #description }
 RBNotEnvironment >> description [
-	^ '(', environment shortDescription, ') not' 
+	^ '(', environment shortDescription, ') not'
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesCategory: aCategory [ 
+RBNotEnvironment >> includesCategory: aCategory [
 	^(self classNamesFor: aCategory) isNotEmpty
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesClass: aClass [ 
+RBNotEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifFalse: [^true].
 	^false
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesPackage: aRPackage [ 
+RBNotEnvironment >> includesPackage: aRPackage [
 	^ (environment includesPackage: aRPackage) not
 ]
 
@@ -57,7 +57,7 @@ RBNotEnvironment >> not [
 
 { #category : #accessing }
 RBNotEnvironment >> packages [
-	^ self rootEnvironment packages 
+	^ self rootEnvironment packages
 		select: [ :package | self includesPackage: package ]
 ]
 

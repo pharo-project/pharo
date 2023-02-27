@@ -15,5 +15,5 @@ GlyphRenderer class >> forFont: aFont [
 { #category : #'private - initialization' }
 GlyphRenderer >> initForFont: aFont [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

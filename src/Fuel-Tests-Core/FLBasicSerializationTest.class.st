@@ -10,14 +10,14 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
-{ #category : #testing }
-FLBasicSerializationTest class >> shouldInheritSelectors [ 
-	^true
+{ #category : #accessing }
+FLBasicSerializationTest class >> defaultTimeLimit [
+	^ 20 seconds
 ]
 
-{ #category : #failures }
-FLBasicSerializationTest >> expectedFailures [
-	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal testWideStringClassName)
+{ #category : #testing }
+FLBasicSerializationTest class >> isAbstract [
+	^ self == FLBasicSerializationTest
 ]
 
 { #category : #running }
@@ -38,7 +38,6 @@ FLBasicSerializationTest >> testAllRangeOfIntegers [
 	1 to: 100 do: [:shift |
 		self assertSerializationEqualityOrIdentityOf: 1 << shift.
 		self assertSerializationEqualityOrIdentityOf: 0 - (1 << shift) ]
-
 ]
 
 { #category : #'tests-collections' }
@@ -46,9 +45,6 @@ FLBasicSerializationTest >> testArray [
 	self assertSerializationEqualityOf: #(1).
 	self assertSerializationEqualityOf: #(10 20).
 	self assertSerializationEqualityOf: #(1 2 3 #('Hello' 2 3)).
-	
-
-
 ]
 
 { #category : #tests }
@@ -117,7 +113,7 @@ FLBasicSerializationTest >> testCharacter [
 		ifFalse: [
 			self assertSerializationEqualityOf: (Character value: 12345). "Japanese Hiragana 'A' " ].
 		
-	self assertSerializationEqualityOf: Character allCharacters.
+	self assertSerializationEqualityOf: Character allByteCharacters.
 	self assertSerializationEqualityOf: (Array with: $a with: (Character value: 12345)).
 ]
 
@@ -126,7 +122,6 @@ FLBasicSerializationTest >> testClassSideCompiledMethod [
 	"They should be considered as globals by default."
 	
 	self assertSerializationIdentityOf: FLGlobalSendMock class >> #newInstanceToSerialize
-
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
@@ -141,7 +136,6 @@ FLBasicSerializationTest >> testColor [
 
 	self assertSerializationEqualityOf: Color blue.
 	self assertSerializationEqualityOf: Color black.
-	
 ]
 
 { #category : #'tests-collections' }
@@ -155,45 +149,41 @@ FLBasicSerializationTest >> testCompiledMethod [
 	"They should be considered as globals by default."
 	
 	self assertSerializationIdentityOf: FLPair >> #left
-
 ]
 
 { #category : #'tests-globals' }
 FLBasicSerializationTest >> testConsiderCustomGlobal [
 	"A custom global variable is treated as global by Fuel, when we explicitly specify this."
 	
-	| aPerson globalKey |
-	
+	| aPerson globalKey |	
 	globalKey := #FLGlobalVariableForTesting.
-	self analyzer considerGlobal: globalKey.
+	self serializer lookUpInGlobals: globalKey.
 
 	aPerson := FLPerson new.
-	[ 
-		testingEnvironment at: globalKey put: aPerson.
-		self assertSerializationIdentityOf: aPerson.
-	] ensure: [ testingEnvironment removeKey: globalKey ]
-
+	self environmentOfTest
+		at: globalKey
+		put: aPerson.
+	self assertSerializationIdentityOf: aPerson
 ]
 
 { #category : #'tests-globals' }
 FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 	"The same than #testConsiderCustomGlobal but with a WideSymbol."
 	
-	| aWideSymbol aPerson |
+	| aWideSymbol aPerson |	
 	aWideSymbol := (WideString streamContents: [ :stream |
 		256 to: 280 do: [ :code | stream nextPut: code asCharacter ] ]) asSymbol.
 
-	self analyzer considerGlobal: aWideSymbol.
+	self serializer lookUpInGlobals: aWideSymbol.
 
 	aPerson := FLPerson new.	
-	[ 
-		testingEnvironment at: aWideSymbol put: aPerson.
-		self
-			shouldnt: [ self resultOfSerializeAndMaterialize: aPerson ]
-			raise: Error
-	] ensure: [ 
-		testingEnvironment removeKey: aWideSymbol ].
-
+	self environmentOfTest
+		at: aWideSymbol
+		put: aPerson.
+	
+	self
+		shouldnt: [ self resultOfSerializeAndMaterialize: aPerson ]
+		raise: FLGlobalNotFound
 ]
 
 { #category : #'tests-cycles' }
@@ -267,44 +257,37 @@ FLBasicSerializationTest >> testDate [
 	self assertSerializationEqualityOf: (Date today).
 	self assertSerializationEqualityOf: (Date year: 3050 month: 12 day: 31).
 	self assertSerializationEqualityOf: (Date year: 1600 month: 12 day: 31).
-	 
-	
-	
-	
-	
 ]
 
 { #category : #tests }
 FLBasicSerializationTest >> testDateAndTime [
-
+	
 	| initialTime initialDate |
 	initialTime := Time fromSeconds: 76020.
 	initialDate := Date fromSeconds: 3492288000.
-	self assertSerializationEqualityOf:
-		(DateAndTime date: initialDate time: initialTime).
-
-	initialTime := Time hour: 0 minute: 0 second: 0.
+	self assertSerializationEqualityOf: (DateAndTime date: initialDate time: initialTime).
+	
+	initialTime := Time hour: 1 minute: 1 second: 0.
 	initialDate := Date year: 3050 month: 12 day: 31.
-	self assertSerializationEqualityOf:
-		(DateAndTime date: initialDate time: initialTime).
-
-	initialTime := Time hour: 0 minute: 0 second: 0.
+	self assertSerializationEqualityOf: (DateAndTime date: initialDate time: initialTime).
+	
+	initialTime := Time hour: 1 minute: 1 second: 0.
 	initialDate := Date year: 1600 month: 12 day: 31.
-	self assertSerializationEqualityOf:
-		(DateAndTime date: initialDate time: initialTime)
+	self assertSerializationEqualityOf: (DateAndTime date: initialDate time: initialTime)
 ]
 
 { #category : #tests }
 FLBasicSerializationTest >> testDateAndTimeOffsetNegative [
-	| edt now |
-	edt := TimeZone timeZones last.
+	| est now |
+	est := TimeZone timeZones detect: [ :timeZone |
+		timeZone abbreviation = 'EST' ].
 	
-	DateAndTime localTimeZone: edt.
+	DateAndTime localTimeZone: est.
 	now := DateAndTime now.
-	self assert: now offset equals: -4 hours.
+	self assert: now offset equals: -5 hours.
 	self serialize: now.
 
-	self assert: self materialized offset equals: -4 hours
+	self assert: self materialized offset equals: -5 hours
 ]
 
 { #category : #tests }
@@ -326,7 +309,6 @@ FLBasicSerializationTest >> testDateOffsets [
 	self assert: object start offset equals: 0 hours.
 	materialized := self resultOfSerializeAndMaterialize: object.
 	self assert: materialized start offset equals: 0 hours
-	
 ]
 
 { #category : #tests }
@@ -346,7 +328,6 @@ FLBasicSerializationTest >> testDateOffsetsChanging [
 	object := Date fromDays: 37023.
 	self assert: object start offset equals: 0 hours.
 	self assert: self materialized start offset equals: 0 hours
-	
 ]
 
 { #category : #'tests-collections' }
@@ -363,9 +344,10 @@ FLBasicSerializationTest >> testDontConsiderCustomGlobal [
 	aPerson := FLPerson new.
 	globalName := #FLGlobalVariableForTesting.
 
-	[ testingEnvironment at: globalName put: aPerson.
-	self deny: (self resultOfSerializeAndMaterialize: aPerson) identicalTo: aPerson ]
-		ensure: [ testingEnvironment removeKey: globalName ]
+	self environmentOfTest
+		at: globalName
+		put: aPerson.
+	self deny: (self resultOfSerializeAndMaterialize: aPerson) identicalTo: aPerson
 ]
 
 { #category : #tests }
@@ -377,8 +359,6 @@ FLBasicSerializationTest >> testDuration [
 		Duration 
 			seconds: 3 
 			nanoSeconds: 35).
-	
-
 ]
 
 { #category : #'tests-collections' }
@@ -415,17 +395,15 @@ FLBasicSerializationTest >> testExceptions [
 	
 	ex := (Notification new messageText: 'sample notification').
 	self assert: (self resultOfSerializeAndMaterialize: ex) messageText equals: ex messageText.
-	
-
 ]
 
 { #category : #'tests-fuelAfterMaterialization' }
 FLBasicSerializationTest >> testExecuteAfterMaterialization [
 	| anObject result aClass |
-	aClass := self newClass
-		addInstVarNamed: 'a';
-		duringTestCompileSilently: 'fuelAfterMaterialization a := #A';
-		yourself.
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a'.
+	self classFactory
+		silentlyCompile: 'fuelAfterMaterialization a := #A'
+		in: aClass.
 	anObject := aClass new.
 
 	result := self resultOfSerializeAndMaterialize: anObject.
@@ -467,34 +445,7 @@ FLBasicSerializationTest >> testFraction [
 	self assertSerializationEqualityOf: (-4 / -3).
 	self assertSerializationEqualityOf: (4 / -3).	
 	self assertSerializationIdentityOf: (0-0 / -3).	
-	self assertSerializationEqualityOf: 0-(1001/1000).	
-
-
-
-]
-
-{ #category : #'tests-graph-modification' }
-FLBasicSerializationTest >> testFuelReplacement [
-	| object |
-	self 
-		assert: (self resultOfSerializeAndMaterialize: FLReplacementClassMock)
-		equals: nil.
-		
-	self
-		assert: (self resultOfSerializeAndMaterialize: {FLReplacementClassMock})
-		equals: { nil }.
-
-	object := FLReplacementMock new
-		ignoreMe;
-		yourself.
-	self 
-		assert: (self resultOfSerializeAndMaterialize: {object})
-		equals: { nil }.
-		
-	object dontIgnoreMe.
-	self 
-		assert: (self resultOfSerializeAndMaterialize: {object})
-		equals: { object }
+	self assertSerializationEqualityOf: 0-(1001/1000).
 ]
 
 { #category : #'tests-globals' }
@@ -502,7 +453,6 @@ FLBasicSerializationTest >> testGlobalClass [
 	"A class should be global by default."
 	
 	self assertSerializationIdentityOf: Integer.
-
 ]
 
 { #category : #'tests-globals' }
@@ -510,7 +460,6 @@ FLBasicSerializationTest >> testGlobalMetaclass [
 	"A metaclass should be global by default."
 	
 	self assertSerializationIdentityOf: Integer class.
-
 ]
 
 { #category : #'tests-not-so-basic' }
@@ -527,7 +476,6 @@ FLBasicSerializationTest >> testInterval [
 	self assertSerializationEqualityOf: (1 to: 10 by: 2).
 	self assertSerializationEqualityOf: (33333333333333331 to: 1444444444444444440 by: 2).
 	self assertSerializationEqualityOf: (0 to: 1 by: 2).
-	
 ]
 
 { #category : #'tests-numbers' }
@@ -542,7 +490,6 @@ FLBasicSerializationTest >> testLargePositiveInteger [
 
 	self assertSerializationEqualityOf: 354314316134313999999999.
 	self assertSerializationEqualityOf: 100 factorial.
-	
 ]
 
 { #category : #tests }
@@ -564,7 +511,6 @@ FLBasicSerializationTest >> testLotsOfNils [
 { #category : #'tests-collections' }
 FLBasicSerializationTest >> testMethodDictionary [
 	self resultOfSerializeAndMaterializeMethodDictionary: FLPair methodDict.
-	
 ]
 
 { #category : #'tests-collections' }
@@ -623,7 +569,6 @@ FLBasicSerializationTest >> testPoint [
 	self assertSerializationEqualityOf: -10@ -20.
 	self assertSerializationEqualityOf: 1.1@2.2.
 	self assertSerializationEqualityOf: 1.1@ -2.2.
-	
 ]
 
 { #category : #'tests-streams' }
@@ -681,7 +626,6 @@ FLBasicSerializationTest >> testRemoteString [
 FLBasicSerializationTest >> testRunArray [
 
 	self assertSerializationEqualityOf: (RunArray runs: #(1 2 1) values: #(1 2 3))
-
 ]
 
 { #category : #'tests-numbers' }
@@ -694,7 +638,6 @@ FLBasicSerializationTest >> testScaledDecimal [
 	self assertSerializationEqualityOf: (-0/9007199254740992s8).
 	self assertSerializationEqualityOf: ((13 / 11) asScaledDecimal: 6).
 	self assertSerializationEqualityOf: ((11 / 13) asFloat asScaledDecimal).
-
 ]
 
 { #category : #'tests-collections' }
@@ -751,21 +694,18 @@ FLBasicSerializationTest >> testSmallInteger [
 	self assertSerializationIdentityOf: 0.
 	self assertSerializationIdentityOf: 1111.
 	self assertSerializationIdentityOf: SmallInteger one.
-
-
 ]
 
 { #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerMaxValue [
 
 	self assertSerializationIdentityOf: SmallInteger maxVal .
-	
 ]
 
 { #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerMinValue [
 
-	self assertSerializationIdentityOf: SmallInteger minVal 
+	self assertSerializationIdentityOf: SmallInteger minVal
 ]
 
 { #category : #'tests-numbers' }
@@ -786,8 +726,6 @@ FLBasicSerializationTest >> testSmallIntegerSerializationForAllBits [
 			integer := 0 - integer.
 			integer isLarge ifFalse: [
 				self assertSerializationIdentityOf: integer ] ]
-
-
 ]
 
 { #category : #'tests-globals' }
@@ -804,8 +742,20 @@ FLBasicSerializationTest >> testString [
 	self assertSerializationEqualityOf:  'Hi, I''m String-object'.
 	self assertSerializationEqualityOf:  String new.
 	self assertSerializationEqualityOf:  (0 to: 255) asByteArray asString.
-	
+]
 
+{ #category : #tests }
+FLBasicSerializationTest >> testStringGlobalsAndClosure [
+	| materialized |
+	materialized := self
+		resultOfSerializeAndMaterialize:
+			(Array
+				with: 'a string'
+				with: Smalltalk
+				with: [ Smalltalk vm.
+					'a string' ]).
+	self assert: materialized first equals: 'a string'.
+	self assert: materialized second identicalTo: Smalltalk
 ]
 
 { #category : #'tests-strings' }
@@ -828,19 +778,12 @@ FLBasicSerializationTest >> testSystemDictionary [
 FLBasicSerializationTest >> testTime [
 
 	self assertSerializationEqualityOf: (Time fromSeconds: 84072).
-	self assertSerializationEqualityOf:
-		(Time hour: 0 minute: 0 second: 0).
-	self assertSerializationEqualityOf:
-		(Time hour: 23 minute: 59 second: 59).
-	self assertSerializationEqualityOf:
-		(Time hour: 0 minute: 0 second: 0).
+	self assertSerializationEqualityOf: (Time hour: 1 minute: 1 second: 0).
+	self assertSerializationEqualityOf: (Time hour: 23 minute: 59 second: 59).
+	self assertSerializationEqualityOf: (Time hour: 0 minute: 0 second: 0).
 	self assertSerializationEqualityOf: (Time seconds: 0 nanoSeconds: 5).
-	self assertSerializationEqualityOf:
-		(Time allInstances sort: [ :a :b | a asSeconds > b asSeconds ])
-			first.
-	self assertSerializationEqualityOf:
-		(Time allInstances sort: [ :a :b | a nanoSecond > b nanoSecond ])
-			first
+	self assertSerializationEqualityOf: (Time allInstances sort:  [:a :b | a asSeconds > b asSeconds]) first.
+	self assertSerializationEqualityOf: (Time allInstances sort:  [:a :b | a nanoSecond > b nanoSecond]) first
 ]
 
 { #category : #tests }
@@ -855,7 +798,6 @@ FLBasicSerializationTest >> testUUID [
 	self assertSerializationEqualityOf: (UUID fromString: 'a3b64357-377a-5b41-b575-1c653084a121').
 	self assertSerializationEqualityOf: UUID nilUUID.
 	self assertSerializationEqualityOf: UUID new.
-	
 ]
 
 { #category : #tests }
@@ -872,29 +814,29 @@ FLBasicSerializationTest >> testWideAndByteCharacters [
 
 { #category : #'tests-strings' }
 FLBasicSerializationTest >> testWideString [
-	self 
-		shouldnt: [
-			self assertSerializationEqualityOf: 'aString' asWideString.
-			self assertSerializationEqualityOf: (WideString
-				streamContents: [ :stream |
-					2000 timesRepeat: [
-						stream nextPut: (256 to: 1000) atRandom asCharacter ] ]) ]
-		raise: Error
+	self assertSerializationEqualityOf: 'aString' asWideString.
+	self assertSerializationEqualityOf: (WideString
+		streamContents: [ :stream |
+			2000 timesRepeat: [
+				stream nextPut: (256 to: 1000) atRandom asCharacter ] ])
 ]
 
 { #category : #'tests-strings' }
 FLBasicSerializationTest >> testWideStringClassName [
-	| class className |
+	| class className |	
 	className := 'Foox' asWideString
 		at: 4 put: (Character value: 265);
 		yourself.
-	class := Class new setName: className; yourself.
-	[
-		testingEnvironment at: class name put: class.
-		self
-			shouldnt: [ self resultOfSerializeAndMaterialize: class ]
-			raise: Error
-	] ensure:[ testingEnvironment removeKey: class name ]
+	class := self classFactory silentlyNewClass
+		setName: className;
+		yourself.
+	self environmentOfTest
+		at: class name
+		put: class.
+		
+	self
+		shouldnt: [ self resultOfSerializeAndMaterialize: class ]
+		raise: FLClassNotFound
 ]
 
 { #category : #'tests-strings' }
@@ -904,13 +846,14 @@ FLBasicSerializationTest >> testWideStringGlobal [
 		at: 4 put: (Character value: 265);
 		yourself.
 	globalValue := global , 'value'.
-	[ testingEnvironment at: global put: globalValue.
-	self analyzer considerGlobal: global.
+	self environmentOfTest
+		at: global
+		put: globalValue.
+	self serializer lookUpInGlobals: global.
 
 	self shouldnt: [ self serialize: 'bar' -> globalValue ] raise: Error.
 	self assert: self materialized class equals: Association.
-	self assert: self materialized value identicalTo: global ]
-		ensure: [ testingEnvironment removeKey: global ]
+	self assert: self materialized value identicalTo: global
 ]
 
 { #category : #'tests-collections' }

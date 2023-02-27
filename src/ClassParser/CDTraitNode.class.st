@@ -18,15 +18,15 @@ CDTraitNode >> isTraitNode [
 
 { #category : #accessing }
 CDTraitNode >> name [
-	^name 
+	^name
 ]
 
 { #category : #accessing }
-CDTraitNode >> name: aString [ 
+CDTraitNode >> name: aString [
 	name := aString
 ]
 
 { #category : #printing }
-CDTraitNode >> toString [ 
+CDTraitNode >> toString [
 	^ self name
 ]

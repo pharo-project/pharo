@@ -16,7 +16,7 @@ Class {
 { #category : #'instance creation' }
 RGObject class >> asYetUnclassifiedProtocolName [
 
-	^ Protocol unclassified 
+	^ Protocol unclassified
 ]
 
 { #category : #'instance creation' }
@@ -59,14 +59,14 @@ RGObject class >> unresolved [
 
 	^ self basicNew
 		initializeUnresolved;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
 RGObject class >> unresolvedNamed: aString withParent: anRGDefintion [
 
 	^self basicNew
-		initializeUnresolved; 
+		initializeUnresolved;
 		pvtName: aString asSymbol;
 		parent: anRGDefintion;
 		yourself
@@ -76,7 +76,7 @@ RGObject class >> unresolvedNamed: aString withParent: anRGDefintion [
 RGObject class >> unresolvedWithParent: anRGDefintion [
 
 	^self basicNew
-		initializeUnresolved; 
+		initializeUnresolved;
 		parent: anRGDefintion;
 		yourself
 ]
@@ -106,12 +106,12 @@ RGObject >> asRGDefinition [
 { #category : #accessing }
 RGObject >> ask [
 
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
 RGObject >> backend [
-	
+
 	^ self environment backend
 ]
 
@@ -124,86 +124,72 @@ RGObject >> child: aChildDefinition renamedFrom: oldName to: newName [
 { #category : #copying }
 RGObject >> copyForBehaviorDefinition [
 
-	"returns copy of the behavior model that contains only information related to the behavior 
+	"returns copy of the behavior model that contains only information related to the behavior
 	definition"
-	<ignoreForMutations> "removing of ^ can cause infinite loops"
 	^ self shallowCopy copyForBehaviorDefinitionPostCopy
 ]
 
 { #category : #copying }
 RGObject >> copyForBehaviorDefinitionPostCopy [
-
-	<ignoreForMutations>
-
-	super postCopy.
-	
-	
-	
-	
+	super postCopy
 ]
 
 { #category : #properties }
 RGObject >> copyPropertiesFrom: anRGObject [
 
-	properties := anRGObject properties copy.
+	properties := anRGObject properties copy
 ]
 
 { #category : #copying }
 RGObject >> copyWithParent: newParent [
 
 	"create copy of the definition and then assign the new parent"
-	
-	^ self copy 
+
+	^ self copy
 		parent: newParent;
-		yourself.
+		yourself
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultClassStub [
 
-	<ignoreForMutations>
 	^ RGClass unresolved
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultCommentStubIn: anRGBehavior [
 
-	<ignoreForMutations>
 	^ RGComment unresolved
 		parent: anRGBehavior;
-		yourself.
+		yourself
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultEnvironmentStub [
 
-	<ignoreForMutations>
 	^ RGEnvironment unresolved
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultFixedLayoutStub [
 
-	<ignoreForMutations>
 	^ RGFixedLayout unresolved
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultFixedLayoutStubIn: anRGBehavior [
 
-	<ignoreForMutations>
 	^ RGFixedLayout unresolved
 		parent: anRGBehavior;
-		yourself.
+		yourself
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultPackageStubIn: anRGEnvironment [
 
-	<ignoreForMutations>
 	^ RGPackage unresolved
 		parent: anRGEnvironment;
-		yourself.
+		yourself
 ]
 
 { #category : #'managing container' }
@@ -220,25 +206,22 @@ RGObject >> defaultTraitCompositionStub [
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultTraitCompositionStubIn: anRGBehavior [
-	<ignoreForMutations>
 
 	^ RGTraitComposition unresolved
 		parent: anRGBehavior;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
 RGObject >> environment [
-	
-	<ignoreForMutations>
 
-	^ self propertyNamed: #environment ifAbsent: [ self parent environment ].
+	^ self propertyNamed: #environment ifAbsent: [ self parent environment ]
 ]
 
 { #category : #copying }
 RGObject >> fullCopy [
 
-	^ self copy.
+	^ self copy
 ]
 
 { #category : #accessing }
@@ -257,32 +240,25 @@ RGObject >> hasProperties [
 RGObject >> hasProperty: propertyName [
 
 	^ self hasProperties
-		ifTrue: [ properties includesKey: propertyName ]	
-		ifFalse:[ false ].
-
+		ifTrue: [ properties includesKey: propertyName ]
+		ifFalse:[ false ]
 ]
 
 { #category : #resolving }
 RGObject >> hasResolved: propertySymbol [
 
 	^ self resolvedProperties includes: propertySymbol
-
-
-
 ]
 
 { #category : #resolving }
 RGObject >> hasResolvedAll: aCollectionOfSymbols [
 
 	^ self resolvedProperties includesAll: aCollectionOfSymbols
-
-
-
 ]
 
 { #category : #testing }
-RGObject >> hasResolvedName [		
-	
+RGObject >> hasResolvedName [
+
 	^ self hasResolved: #name
 ]
 
@@ -290,18 +266,12 @@ RGObject >> hasResolvedName [
 RGObject >> hasUnresolved: propertySymbol [
 
 	^ (self resolvedProperties includes: propertySymbol) not
-
-
-
 ]
 
 { #category : #resolving }
 RGObject >> hasUnresolvedAll: aCollectionOfSymbols [
 
 	^ (self resolvedProperties includesAll: aCollectionOfSymbols) not
-
-
-
 ]
 
 { #category : #initialization }
@@ -309,19 +279,14 @@ RGObject >> initialize [
 
 	super initialize.
 
-	name := self unresolvedValue: self unresolvedName.
-
-
+	name := self unresolvedValue: self unresolvedName
 ]
 
 { #category : #initialization }
 RGObject >> initializeUnresolved [
 
-	self propertyNamed: #resolved put: false. 
-	name := self unresolvedValue: self unresolvedName.
-	
-
-
+	self propertyNamed: #resolved put: false.
+	name := self unresolvedValue: self unresolvedName
 ]
 
 { #category : #'testing - types' }
@@ -397,11 +362,9 @@ RGObject >> isRingFullyResolved [
 ]
 
 { #category : #resolving }
-RGObject >> isRingFullyUnresolved [		
-	
-	^ self backend hasFullyUnresolved: self 		
+RGObject >> isRingFullyUnresolved [
 
-
+	^ self backend hasFullyUnresolved: self
 ]
 
 { #category : #testing }
@@ -452,32 +415,30 @@ RGObject >> isVariable [
 RGObject >> makeResolved [
 
 	self markAsRingResolved.
-	
-	name := self name markAsRingResolved.
+
+	name := self name markAsRingResolved
 ]
 
 { #category : #resolving }
 RGObject >> markAsRingResolved [
 
-	self propertyNamed: #resolved put: true.
-	
+	self propertyNamed: #resolved put: true
 ]
 
 { #category : #accessing }
 RGObject >> name [
 
-	^ (self backend nameFor: self) orDefaultForUnresolved 
+	^ (self backend nameFor: self) orDefaultForUnresolved
 ]
 
 { #category : #accessing }
 RGObject >> name: aString [
 
 	| oldName |
-	
+
 	oldName := name.
 	self backend setNameFor: self to: aString.
-	self parent child: self renamedFrom: oldName to: aString.
-
+	self parent child: self renamedFrom: oldName to: aString
 ]
 
 { #category : #accessing }
@@ -489,33 +450,29 @@ RGObject >> package [
 { #category : #accessing }
 RGObject >> parent [
 	"The parent of a class definition element: method, comment and variable is the class definition. This method retrieves the class that defines such element"
-	
-	<ignoreForMutations>
-	parent ifNil: [ 
+
+	parent ifNil: [
 		self parent: self defaultParentStub.
 		self addoptToParentStub ].
-	
-	^ parent.
+
+	^ parent
 ]
 
 { #category : #accessing }
 RGObject >> parent: anRGBehavior [
 
 	"If possible, do not use this method directly."
-	<ignoreForMutations>
 
 	parent := anRGBehavior.
 	"self addoptToParentStub."
-
-	
 ]
 
 { #category : #copying }
 RGObject >> postCopy [
 
 	super postCopy.
-	
-	properties := properties copy.
+
+	properties := properties copy
 ]
 
 { #category : #properties }
@@ -525,15 +482,15 @@ RGObject >> properties [
 ]
 
 { #category : #properties }
-RGObject >> propertyNamed: propertyName [ 
-	
+RGObject >> propertyNamed: propertyName [
+
 	^ self
 		propertyNamed: propertyName
 		ifAbsent: [ nil ]
 ]
 
 { #category : #properties }
-RGObject >> propertyNamed: annotationName ifAbsent: exceptionBlock [ 
+RGObject >> propertyNamed: annotationName ifAbsent: exceptionBlock [
 
 	^ self properties
 			at: annotationName
@@ -541,7 +498,7 @@ RGObject >> propertyNamed: annotationName ifAbsent: exceptionBlock [
 ]
 
 { #category : #properties }
-RGObject >> propertyNamed: annotationName ifAbsentPut: blockValue [ 
+RGObject >> propertyNamed: annotationName ifAbsentPut: blockValue [
 
 	^ self properties
 		at: annotationName
@@ -549,7 +506,7 @@ RGObject >> propertyNamed: annotationName ifAbsentPut: blockValue [
 ]
 
 { #category : #properties }
-RGObject >> propertyNamed: annotationName put: value [ 
+RGObject >> propertyNamed: annotationName put: value [
 
 	self properties
 		at: annotationName
@@ -558,7 +515,7 @@ RGObject >> propertyNamed: annotationName put: value [
 
 { #category : #properties }
 RGObject >> propertyNames [
-	
+
 	self hasProperties
 		ifFalse:[ ^ OrderedCollection new ].
 	^ properties keys
@@ -571,8 +528,8 @@ RGObject >> pvtFullyResolved [
 ]
 
 { #category : #'private - backend interface' }
-RGObject >> pvtFullyUnresolved [		
-		
+RGObject >> pvtFullyUnresolved [
+
 	^ (self pvtResolvableProperties collect: [:each | each value]) noneSatisfy: [:each | each isRingFullyResolved ]
 ]
 
@@ -591,13 +548,13 @@ RGObject >> pvtName: aString [
 { #category : #private }
 RGObject >> pvtParent: anRGObject [
 
-	parent := anRGObject.
+	parent := anRGObject
 ]
 
 { #category : #'private - backend interface' }
 RGObject >> pvtResolvableProperties [
 
-	^ { #name -> name }.
+	^ { #name -> name }
 ]
 
 { #category : #'private - backend interface' }
@@ -615,7 +572,7 @@ RGObject >> pvtUnresolvedProperties [
 { #category : #properties }
 RGObject >> removePropertyNamed: propertyName [
 
-	(self hasProperty: propertyName) ifTrue: [ 
+	(self hasProperty: propertyName) ifTrue: [
 		properties removeKey: propertyName ]
 ]
 
@@ -624,7 +581,7 @@ RGObject >> resolvedNameOrNil [
 
 	^ self hasResolvedName
 		ifTrue: [ self name. ]
-		ifFalse: [ nil ].		
+		ifFalse: [ nil ]
 ]
 
 { #category : #resolving }
@@ -637,7 +594,7 @@ RGObject >> resolvedProperties [
 RGObject >> unresolveName [
 
 	| oldName result |
-	
+
 	oldName := name.
 	result := self unresolvedValue: self unresolvedName.
 	self pvtName: result.
@@ -660,7 +617,7 @@ RGObject >> unresolvedProperties [
 { #category : #converting }
 RGObject >> unresolvedValue [
 
-	^ RGUnresolvedValue new.
+	^ RGUnresolvedValue new
 ]
 
 { #category : #converting }

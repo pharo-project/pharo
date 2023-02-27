@@ -21,7 +21,7 @@ ClyNavigateBrowserBackCommand >> defaultMenuIconName [
 ]
 
 { #category : #accessing }
-ClyNavigateBrowserBackCommand >> defaultMenuItemName [ 
+ClyNavigateBrowserBackCommand >> defaultMenuItemName [
 	^'go backward'
 ]
 

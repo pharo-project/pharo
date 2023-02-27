@@ -19,31 +19,37 @@ Class {
 	#category : #'Morphic-Base-Text Support'
 }
 
-{ #category : #initialization }
-TextContainer class >> initialize [    "TextContainer initialize"
+{ #category : #'class initialization' }
+TextContainer class >> initialize [
+
 	OuterMargin := 2
 ]
 
 { #category : #accessing }
 TextContainer >> avoidsOcclusions [
-	^ avoidsOcclusions ifNil: [false]
+
+	^ avoidsOcclusions ifNil: [ false ]
 ]
 
 { #category : #accessing }
 TextContainer >> avoidsOcclusions: aBoolean [
+
 	avoidsOcclusions := aBoolean.
 	self releaseCachedState
 ]
 
 { #category : #'container protocol' }
 TextContainer >> bottom [
+
 	"Note we should really check for contiguous pixels here"
-	^ (self vertProfile findLast: [:count | count >= minWidth])
-		+ shadowForm offset y
+
+	^ (self vertProfile findLast: [ :count | count >= minWidth ])
+	  + shadowForm offset y
 ]
 
 { #category : #private }
 TextContainer >> bounds [
+
 	| bounds theText |
 	self fillsOwner ifFalse: [^ textMorph textBounds].
 	theText := textMorph.
@@ -56,6 +62,7 @@ TextContainer >> bounds [
 
 { #category : #private }
 TextContainer >> computeShadow [
+
 	| canvas bounds theText |
 	bounds := self bounds.
 	theText := textMorph.
@@ -82,30 +89,34 @@ TextContainer >> computeShadow [
 
 { #category : #accessing }
 TextContainer >> fillsOwner [
-	^ fillsOwner ifNil: [true]
+
+	^ fillsOwner ifNil: [ true ]
 ]
 
 { #category : #accessing }
 TextContainer >> fillsOwner: aBoolean [
+
 	fillsOwner := aBoolean.
 	self releaseCachedState
 ]
 
 { #category : #private }
 TextContainer >> for: aTextMorph minWidth: wid [
+
 	textMorph := aTextMorph.
 	minWidth := wid.
 	fillsOwner := true.
-	avoidsOcclusions := false.
+	avoidsOcclusions := false
 ]
 
 { #category : #'container protocol' }
-TextContainer >> left [ 
+TextContainer >> left [
+
 	^ textMorph owner left
 ]
 
 { #category : #'container protocol' }
-TextContainer >> rectanglesAt: lineY height: lineHeight [ 
+TextContainer >> rectanglesAt: lineY height: lineHeight [
 	"Return a list of rectangles that are at least minWidth wide
 	in the specified horizontal strip of the shadowForm.
 	Cache the results for later retrieval if the owner does not change."
@@ -116,15 +127,15 @@ TextContainer >> rectanglesAt: lineY height: lineHeight [
 	rects ifNotNil: [^rects].
 	outerWidth := minWidth + (2 * OuterMargin).
 	self shadowForm.	"Compute the shape"
-	lineRect := 0 @ (lineY - shadowForm offset y) 
+	lineRect := 0 @ (lineY - shadowForm offset y)
 				extent: shadowForm width @ lineHeight.
 	lineForm := shadowForm copy: lineRect.
 
 	"Check for a full line -- frequent case"
-	(lineForm tallyPixelValues second) = lineRect area 
-		ifTrue: 
+	(lineForm tallyPixelValues second) = lineRect area
+		ifTrue:
 			[rects := Array with: (shadowForm offset x @ lineY extent: lineRect extent)]
-		ifFalse: 
+		ifFalse:
 			["No such luck -- scan the horizontal profile for segments of minWidth"
 
 			hProfile := lineForm xTallyPixelValue: 1 orNot: false.
@@ -132,21 +143,21 @@ TextContainer >> rectanglesAt: lineY height: lineHeight [
 			thisWidth := 0.
 			thisX := 0.
 			1 to: hProfile size
-				do: 
-					[:i | 
+				do:
+					[:i |
 					count := hProfile at: i.
-					count >= lineHeight 
+					count >= lineHeight
 						ifTrue: [thisWidth := thisWidth + 1]
-						ifFalse: 
-							[thisWidth >= outerWidth 
-								ifTrue: 
-									[rects addLast: ((thisX + shadowForm offset x) @ lineY 
+						ifFalse:
+							[thisWidth >= outerWidth
+								ifTrue:
+									[rects addLast: ((thisX + shadowForm offset x) @ lineY
 												extent: thisWidth @ lineHeight)].
 							thisWidth := 0.
 							thisX := i]].
-			thisWidth >= outerWidth 
-				ifTrue: 
-					[rects addLast: ((thisX + shadowForm offset x) @ lineY 
+			thisWidth >= outerWidth
+				ifTrue:
+					[rects addLast: ((thisX + shadowForm offset x) @ lineY
 								extent: thisWidth @ lineHeight)]].
 	rects := rects collect: [:r | r insetBy: OuterMargin @ 0].
 	rectangleCache at: pair put: rects.
@@ -158,47 +169,55 @@ TextContainer >> releaseCachedState [
 
 	shadowForm := nil.
 	vertProfile := nil.
-	rectangleCache := Dictionary new.
-
+	rectangleCache := Dictionary new
 ]
 
 { #category : #private }
 TextContainer >> shadowForm [
-	shadowForm ifNil: [self computeShadow].
+
+	shadowForm ifNil: [ self computeShadow ].
 	^ shadowForm
 ]
 
 { #category : #accessing }
 TextContainer >> textMorph [
+
 	^ textMorph
 ]
 
 { #category : #'container protocol' }
 TextContainer >> top [
 	"Note we should really check for contiguous pixels here"
+
 	| outerWidth |
-	outerWidth := minWidth + (2*OuterMargin).
-	^ (self vertProfile findFirst: [:count | count >= outerWidth]) - 1
-		+ shadowForm offset y
+	outerWidth := minWidth + (2 * OuterMargin).
+	^ (self vertProfile findFirst: [ :count | count >= outerWidth ]) - 1
+	  + shadowForm offset y
 ]
 
 { #category : #'container protocol' }
-TextContainer >> topLeft [  "for compatibility"
+TextContainer >> topLeft [
+	"for compatibility"
+
 	^ textMorph owner topLeft
 ]
 
 { #category : #'container protocol' }
 TextContainer >> translateBy: delta [
+
 	self releaseCachedState
 ]
 
 { #category : #private }
 TextContainer >> vertProfile [
-	vertProfile ifNil: [self computeShadow].
+
+	vertProfile ifNil: [ self computeShadow ].
 	^ vertProfile
 ]
 
 { #category : #'container protocol' }
-TextContainer >> width [  "for compatibility"
+TextContainer >> width [
+	"for compatibility"
+
 	^ textMorph owner width
 ]

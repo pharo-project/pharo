@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'globalSends'
 	],
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #mapping }
@@ -61,5 +61,4 @@ FLGlobalSendCluster >> serializeInstance: anObject with: anEncoder [
 	
 	self serializeGlobalAssociationKeyed: globalSend key on: anEncoder.
 	anEncoder encodeString: globalSend value.
-
 ]

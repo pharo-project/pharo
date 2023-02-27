@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'contents'
 	],
-	#category : #'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Support-Mocks'
 }
 
 { #category : #'instance creation' }
@@ -68,7 +68,7 @@ FLGlobalSendMock >> hash [
 FLGlobalSendMock >> initializeWith: aByteSymbol [
 	
 	super initialize.
-	contents := aByteSymbol 
+	contents := aByteSymbol
 ]
 
 { #category : #printing }

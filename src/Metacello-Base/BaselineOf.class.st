@@ -104,8 +104,6 @@ BaselineOf >> baseline: spec [
 			group: 'CoreTests' with: #('XXX-Core' 'XXX-Core-Tests');
 			group: 'default' with: #('Beacon-XXX' 'Beacon-XXX-Tests') ]
 	"
-	
-
 ]
 
 { #category : #accessing }

@@ -112,8 +112,8 @@ DrTestsPlugin >> pluginName [
 
 { #category : #ui }
 DrTestsPlugin >> pluginPresenterClass [
-	
-	^ DTDefaultPluginPresenter 
+
+	^ DTDefaultPluginPresenter
 ]
 
 { #category : #accessing }
@@ -139,12 +139,12 @@ DrTestsPlugin >> resultButtonHelp [
 { #category : #accessing }
 DrTestsPlugin >> resultTreeViews [
 	"Return result tree views available."
-	
+
 	| pragmas |
 	pragmas := Pragma allNamed: self pragmaForResultTrees in: self pluginResultClass.
 
 	^ ((pragmas sorted: [ :p | p argumentAt: 2 ] asSortFunction) collect: [ :pragma |
-		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ]) 
+		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ])
 ]
 
 { #category : #api }

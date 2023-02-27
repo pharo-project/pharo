@@ -4,7 +4,6 @@ Extension { #name : #String }
 String >> asFileLocatorOrReference [
 
 	^ FileLocator fromString: self ifNone: [ self asFileReference ]
-
 ]
 
 { #category : #'*Filesystem-Core-converting' }
@@ -25,7 +24,7 @@ String >> asPath [
 ]
 
 { #category : #'*Filesystem-Core-converting' }
-String >> asPathWith: anObject [ 
+String >> asPathWith: anObject [
 	^ anObject pathFromString: self
 ]
 

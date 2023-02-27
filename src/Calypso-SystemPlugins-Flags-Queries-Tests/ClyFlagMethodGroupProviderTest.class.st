@@ -11,5 +11,5 @@ ClyFlagMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyFlagMethodGroupProviderTest >> groupProviderClass [
-	^ClyFlagMethodGroupProvider 
+	^ClyFlagMethodGroupProvider
 ]

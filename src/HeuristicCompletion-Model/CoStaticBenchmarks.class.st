@@ -32,8 +32,8 @@ Class {
 }
 
 { #category : #running }
-CoStaticBenchmarks class >> runFor: aClass [ 
-	
+CoStaticBenchmarks class >> runFor: aClass [
+
 	^ self new
 		scope: aClass;
 		run
@@ -41,11 +41,11 @@ CoStaticBenchmarks class >> runFor: aClass [
 
 { #category : #inspector }
 CoStaticBenchmarks >> accuracyForCompletionIndex: completionIndexRange withPrefixSize: prefixSize [
-	
+
 	| totalEntries |
 	totalEntries := self totalEntriesPerPrefixSize: prefixSize.
 	totalEntries = 0 ifTrue: [ ^ 0 ].
-	
+
 	^ (completionIndexRange sum: [ :index |
 		(completionBenchs at: index at: prefixSize ifAbsent: [ {0} ]) first
 	]) / totalEntries
@@ -53,12 +53,12 @@ CoStaticBenchmarks >> accuracyForCompletionIndex: completionIndexRange withPrefi
 
 { #category : #benchmarks }
 CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
-	
+
 	| originalSelector |
 	originalSelector := aRBMessageNode selector.
 	2 to: (aRBMessageNode selector size min: 8) do: [ :index | | prefix completion candidates completionIndex previousResultsPerIndexPerPrefixSize |
-	
-		"The CoGlobalSorterResultSetBuilder uses the selector to pre-narrow the results"	
+
+		"The CoGlobalSorterResultSetBuilder uses the selector to pre-narrow the results"
 		prefix := originalSelector copyFrom: 1 to: index.
 		aRBMessageNode selector: prefix.
 
@@ -69,12 +69,12 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 				position: aPosition;
 				yourself);
 			buildCompletion.
-		
-		completion filterWithString: prefix.
+
+		completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: prefix).
 		candidates := completion first: 10.
 
 		completionIndex := (candidates collect: [:each | each contents]) indexOf: originalSelector.
-		
+
 		previousResultsPerIndexPerPrefixSize := completionBenchs
 			at: completionIndex
 			at: prefix size
@@ -85,18 +85,18 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 			at: prefix size
 			put: {previousResultsPerIndexPerPrefixSize first + 1 . previousResultsPerIndexPerPrefixSize second }
 	].
-	aRBMessageNode selector: originalSelector.
+	aRBMessageNode selector: originalSelector
 ]
 
 { #category : #accessing }
 CoStaticBenchmarks >> builder: aCompletionBuilder [
-	
+
 	builder := aCompletionBuilder
 ]
 
 { #category : #inspector }
 CoStaticBenchmarks >> completionIndexes [
-	
+
 	^ { 1 to: 1.
 	  2 to: 2.
 	  3 to: 3.
@@ -109,36 +109,6 @@ CoStaticBenchmarks >> completionIndexes [
 CoStaticBenchmarks >> gradeForPrefixSize: prefixSize [
 
 	^ self accuracyForCompletionIndex: (2 to: 8) withPrefixSize: prefixSize
-]
-
-{ #category : #inspector }
-CoStaticBenchmarks >> gtResultsTableIn: composite [
-	<gtInspectorPresentationOrder: 1>
-	| table |
-	table := composite table title: 'Results'.
-	"columns"
-	table
-		column: 'Prefix'
-		evaluated: [ :completionIndexRange | | label |
-			label := '% '.
-			label := label, (completionIndexRange size = 1
-				ifTrue: [ 
-					{ 'fail' . '1st' . '2nd' . '3rd' } at: completionIndexRange first + 1 ]
-				ifFalse: [ completionIndexRange first asString , '-', completionIndexRange last asString ]).
-			label ]
-		width: 70.
-	self prefixSizes do: [ :prefixSize |
-		table
-			column: prefixSize asString
-			evaluated: [ :completionIndexRange | | float | 
-				float := self accuracyForCompletionIndex: completionIndexRange withPrefixSize: prefixSize.
-				(float * 100) printShowingDecimalPlaces: 2 ]
-			width: 70 ].
-	"rows"
-	table display: [ 
-		self completionIndexes
-	].
-	^ table
 ]
 
 { #category : #initialization }
@@ -166,23 +136,23 @@ CoStaticBenchmarks >> printOn: aStream [
 
 { #category : #running }
 CoStaticBenchmarks >> run [
-	
+
 	scope methodsDo: [ :method |
 		method parseTree nodesDo: [ :node |
-			node isMessage ifTrue: [ 
+			node isMessage ifTrue: [
 				self benchCallsite: node atPosition: node keywordsIntervals first ]
 		]
 	]
 ]
 
 { #category : #accessing }
-CoStaticBenchmarks >> scope: aClass [ 
+CoStaticBenchmarks >> scope: aClass [
 	scope := aClass
 ]
 
 { #category : #scoring }
 CoStaticBenchmarks >> score [
-	
+
 	^ ((1 to: 7) sum: [ :i | (self gradeForPrefixSize: i + 1) / i ]) * 100 / ((1 to: 7) sum: [ :index | 1/index ])
 ]
 

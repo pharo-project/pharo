@@ -62,7 +62,7 @@ NetNameResolver class >> addressFromIPv6String: aString [
 	| stream headStream headBytes tailStream tailBytes hextets |
 	headStream := WriteStream on: ByteArray new.
 	tailStream := WriteStream on: ByteArray new.
-	
+
 	"Obtain a collection of the string hextets from the
 	original IPv6 string. Any instance of a double colon (::)
 	will be present in the list as an empty string."
@@ -74,14 +74,14 @@ NetNameResolver class >> addressFromIPv6String: aString [
 		tailStream nextPutAll: (ByteArray readHexFrom: hextet) ].
 	headBytes := headStream contents.
 	tailBytes := tailStream contents.
-	
+
 	"If the total number of bytes is less than 16, that means
 	we have a compressed range of 0-value hextets specified
 	using the double colon (::). We add these at the end of
 	the headBytes collection"
 	(16 - (headBytes size + tailBytes size)) timesRepeat: [
 		headBytes := headBytes,#[0] ].
-	
+
 	^ headBytes,tailBytes
 ]
 
@@ -96,7 +96,7 @@ NetNameResolver class >> addressFromString: addressString [
 	"If the address string contains a colon, then we
 	consider it an IPv6 address"
 	(addressString includes: $:) ifTrue: [ ^ self addressFromIPv6String: addressString ].
-	
+
 	"Otherwise parse as a normal IPv4 string"
 	newAddr := ByteArray new: 4.
 	s := ReadStream on: addressString.
@@ -110,7 +110,6 @@ NetNameResolver class >> addressFromString: addressString [
 			((delimiter = $.) or: [(delimiter = $,) or: [delimiter = $ ]])
 				ifFalse: [^ nil]]].
 	^ newAddr
-
 ]
 
 { #category : #private }
@@ -130,24 +129,24 @@ NetNameResolver class >> findLongestIPv6ZerosIn: aCollection [
 		current := aCollection at: cursor.
 		next := aCollection at: cursor + 1.
 		isConsecutive := (current = 0) and: [ next = 0].
-		
+
 		isConsecutive
-			ifTrue: [ 
+			ifTrue: [
 				active
 					ifFalse: [
 						"If the current values are consecutive zeros,
 						and we are not active, set active to true and update
-						the start and end values." 
+						the start and end values."
 						start := cursor.
 						end := cursor + 1.
 						active := true ]
-					ifTrue: [ 
+					ifTrue: [
 						"If the current values are consecutive zeros,
 						and we _are_ active, this means we need to just
 						update the end"
 						end := cursor + 1 ] ].
 
-			
+
 		"If we are active, but the values are _not_ consecutive,
 		it means we've reached the end of a range"
 		((active and: [ isConsecutive not ]) or: [ (active and: [ (cursor + 1) = aCollection size ])])
@@ -156,14 +155,14 @@ NetNameResolver class >> findLongestIPv6ZerosIn: aCollection [
 				ranges add: { start. end }.
 				start := 0.
 				end := 0 ].
-		
+
 		"Increment the cursor"
 		cursor := cursor + 1.
 	].
 
 	"If there are no zero ranges, return nil."
 	ranges ifEmpty: [ ^ nil ].
-	
+
 	"Otherwise, return the longest range.
 	If there are multiple ranges with the same size,
 	return the first (leftmost) encountered."
@@ -171,29 +170,27 @@ NetNameResolver class >> findLongestIPv6ZerosIn: aCollection [
 	firstLargest := 1. "index of the first instance of the largest value, in case there are multiple with same size"
 	(ranges collect: [ :range |
 		(range last - range first )]) doWithIndex: [ :rangeSize :index |
-			rangeSize > largest ifTrue: [ 
+			rangeSize > largest ifTrue: [
 				largest := rangeSize.
 				firstLargest := index ] ].
-	
+
 	^ ranges at: firstLargest
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 NetNameResolver class >> initialize [
-	"NetNameResolver initialize"
 	"Note: On the Mac, the name resolver is asynchronous, but can only handle one request at a time. On other platforms, such as Unix, the resolver is synchronous; a call to, say, the name lookup primitive will block all image processes until it returns."
 
 	"Resolver Status Values"
-	ResolverUninitialized := 0.	"network is not initialized"
-	ResolverReady := 1.			"resolver idle, last request succeeded"
-	ResolverBusy := 2.			"lookup in progress"
-	ResolverError := 3.			"resolver idle, last request failed"
+
+	ResolverUninitialized := 0. "network is not initialized"
+	ResolverReady := 1. "resolver idle, last request succeeded"
+	ResolverBusy := 2. "lookup in progress"
+	ResolverError := 3. "resolver idle, last request failed"
 
 	DefaultHostName := ''.
 	HaveNetwork := nil.
 	ResolverMutex := Mutex new
-	
-
 ]
 
 { #category : #'network initialization' }
@@ -214,7 +211,7 @@ NetNameResolver class >> initializeNetwork [
 	- Returning an incorrect result (if we return a value independent of whether the other process was successful)"
 	HaveNetwork == nil ifTrue: [HaveNetwork := sema].
 	"Then, enter critical section where other process has initialized, or we need to do it."
-	HaveNetwork critical: [ |semaIndex| 
+	HaveNetwork critical: [ |semaIndex|
 		"If other process initialized while we were blocked, retry to see if it were successful"
 		HaveNetwork ifNil: [^self initializeNetwork].
 		"If the network has previously been initialized, but now unavailable, we need to unregister semaphore"
@@ -222,10 +219,8 @@ NetNameResolver class >> initializeNetwork [
 		ResolverSemaphore := Semaphore new.
 		semaIndex := Smalltalk registerExternalObject: ResolverSemaphore.
 		successful := (self primInitializeNetwork: semaIndex) notNil.
-		HaveNetwork := nil.].	
+		HaveNetwork := nil.].
 	^successful or: [NoNetworkError signal: 'failed network initialization']
-	
-
 ]
 
 { #category : #testing }
@@ -244,16 +239,14 @@ NetNameResolver class >> localAddressString [
 	"NetNameResolver localAddressString"
 
 	^ NetNameResolver stringFromAddress: NetNameResolver localHostAddress
-
 ]
 
 { #category : #lookups }
 NetNameResolver class >> localHostAddress [
 	"Return the local address of this host."
 	"NetNameResolver localHostAddress"
-	<todo>
 	"On Mac the primitive is buggy and can return an empty IP address. Use a standard value in that case"
-		
+
 	| primAddress |
 
 	self initializeNetwork.
@@ -307,7 +300,6 @@ NetNameResolver class >> nameForAddress: hostAddress timeout: secs [
 						ifFalse: [nil]]
 				ifFalse: [nil]].
 	^result
-
 ]
 
 { #category : #primitives }
@@ -316,7 +308,6 @@ NetNameResolver class >> primAbortLookup [
 
 	<primitive: 'primitiveResolverAbortLookup' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -325,7 +316,6 @@ NetNameResolver class >> primAddressLookupResult [
 
 	<primitive: 'primitiveResolverAddressLookupResult' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -379,7 +369,7 @@ NetNameResolver class >> primGetAddressInfoType [
 
 { #category : #primitives }
 NetNameResolver class >> primGetNameInfoHostResult: aString [
- 
+
  	<primitive: 'primitiveResolverGetNameInfoHostResult' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
@@ -393,28 +383,28 @@ NetNameResolver class >> primGetNameInfoHostSize [
 
 { #category : #primitives }
 NetNameResolver class >> primGetNameInfoServiceResult: aString [
- 
+
  	<primitive: 'primitiveResolverGetNameInfoServiceResult' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
 { #category : #primitives }
 NetNameResolver class >> primGetNameInfoServiceSize [
- 
+
  	<primitive: 'primitiveResolverGetNameInfoServiceSize' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
 { #category : #primitives }
 NetNameResolver class >> primHostNameResult: aString [
- 
+
  	<primitive: 'primitiveResolverHostNameResult' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
 { #category : #primitives }
 NetNameResolver class >> primHostNameSize [
- 
+
  	<primitive: 'primitiveResolverHostNameSize' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
@@ -426,7 +416,6 @@ NetNameResolver class >> primInitializeNetwork: resolverSemaIndex [
 
 	<primitive: 'primitiveInitializeNetwork' module: 'SocketPlugin'>
 	^ nil  "return nil if primitive fails"
-
 ]
 
 { #category : #primitives }
@@ -435,7 +424,6 @@ NetNameResolver class >> primLocalAddress [
 
 	<primitive: 'primitiveResolverLocalAddress' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -444,7 +432,6 @@ NetNameResolver class >> primNameLookupResult [
 
 	<primitive: 'primitiveResolverNameLookupResult' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -453,7 +440,6 @@ NetNameResolver class >> primNameResolverError [
 
 	<primitive: 'primitiveResolverError' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -462,7 +448,6 @@ NetNameResolver class >> primNameResolverStatus [
 
 	<primitive: 'primitiveResolverStatus' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -471,7 +456,6 @@ NetNameResolver class >> primStartLookupOfAddress: hostAddr [
 
 	<primitive: 'primitiveResolverStartAddressLookup' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -480,7 +464,6 @@ NetNameResolver class >> primStartLookupOfName: hostName [
 
 	<primitive: 'primitiveResolverStartNameLookup' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #lookups }
@@ -489,7 +472,6 @@ NetNameResolver class >> promptUserForHostAddress [
 	"NetNameResolver promptUserForHostAddress"
 
 	^ NetNameResolver promptUserForHostAddressDefault: ''
-
 ]
 
 { #category : #lookups }
@@ -516,12 +498,10 @@ NetNameResolver class >> putIPv6HexIntegers: aCollection on: aWriteStream [
 	"Given a collection of Integers, convert them to
 	hex strings and join them with the ':' separator
 	on the given write stream"
-	aCollection 
+	aCollection
 		do: [ :integer |
 			aWriteStream nextPutAll: (integer printStringBase: 16) asLowercase ]
 		separatedBy: [ aWriteStream nextPut: $: ]
-	
-	
 ]
 
 { #category : #private }
@@ -532,7 +512,7 @@ JMM - 000503 fixed didn't work correctly"
 	| digitSeen value digit |
 	digitSeen := false.
 	value := 0.
-	[aStream atEnd] whileFalse: 
+	[aStream atEnd] whileFalse:
 		[digit := aStream next digitValue.
 		(digit < 0 or: [digit > 9]) ifTrue: [
 			aStream skip: -1.
@@ -542,18 +522,16 @@ JMM - 000503 fixed didn't work correctly"
 		value := (value * 10) + digit].
 	(digitSeen not or: [value > 255]) ifTrue: [^ nil].
 	^ value
-
 ]
 
 { #category : #lookups }
 NetNameResolver class >> resolverError [
 	^self primNameResolverError
-
 ]
 
 { #category : #private }
 NetNameResolver class >> resolverMutex [
-	"This must have been initialized by class initialization. 
+	"This must have been initialized by class initialization.
 	If a failure occurs due to mutex not being properly initialized, do NOT solve it by lazy initialization, or you WILLl introduce a race condition"
 	^ResolverMutex
 ]
@@ -561,7 +539,6 @@ NetNameResolver class >> resolverMutex [
 { #category : #lookups }
 NetNameResolver class >> resolverStatus [
 	^self primNameResolverStatus
-
 ]
 
 { #category : #private }
@@ -574,8 +551,8 @@ NetNameResolver class >> splitIPv6HextetsOn: aString [
 	| stream result |
 	result := OrderedCollection new.
 	stream := aString readStream.
-	[ stream atEnd ] whileFalse: [ 
-		"Pad any valid hextets so that they are each length 4, 
+	[ stream atEnd ] whileFalse: [
+		"Pad any valid hextets so that they are each length 4,
 		ie they have the leading zeros. This is so that ByteArray class >> #readFromHex:
 		will work properly -- it does not correctly parse hextets without the leading zeros."
 		| next |
@@ -586,7 +563,7 @@ NetNameResolver class >> splitIPv6HextetsOn: aString [
 				(4 - next size) timesRepeat: [
 					next := '0',next ].
 				result add: next ] ].
-	
+
 	^ result
 ]
 
@@ -595,18 +572,17 @@ NetNameResolver class >> stringFromAddress: addr [
 	"Return a string representing the given host address as four decimal bytes delimited with decimal points."
 	"NetNameResolver stringFromAddress: NetNameResolver localHostAddress"
 
-	| s |	
+	| s |
 	(addr isKindOf: SocketAddress) ifTrue: [^addr printString copyUpTo: $( ].
 	"If the incoming addr is a size 16 ByteArray, we assume it is
 	representing an IPv6 address."
 	(addr size = 16) ifTrue: [ ^ self stringFromIPv6Address: addr ].
-	
+
 	"Otherwise write out in IPv4 format"
 	s := WriteStream on: ''.
 	1 to: 3 do: [ :i | (addr at: i) printOn: s. s nextPut: $.].
 	(addr at: 4) printOn: s.
 	^ s contents
-
 ]
 
 { #category : #'address string utils' }
@@ -618,16 +594,16 @@ NetNameResolver class >> stringFromIPv6Address: aByteArray [
 	0 values can be compressed to '::'.
 	If there are two ranges of the same size, use the leftmost"
 	| readStream integerCollection indices writeStream |
-	
+
 	"If the ByteArray as an Integer is zero (ie, it's all zeros),
 	then just return the double colon"
 	aByteArray asInteger = 0 ifTrue: [ ^ '::' ].
-	
+
 	readStream := aByteArray readStream.
 	integerCollection := OrderedCollection new.
 	[ readStream atEnd ] whileFalse: [
 		integerCollection add: (readStream next: 2) asInteger ].
-	
+
 	"Find the start and end indices of the longest
 	contiguous set of zeroes, if any"
 	writeStream := WriteStream on: String new.
@@ -635,16 +611,16 @@ NetNameResolver class >> stringFromIPv6Address: aByteArray [
 	indices ifNil: [
 		self putIPv6HexIntegers: integerCollection on: writeStream.
 		^ writeStream contents ].
-	
+
 	"If the start index of the zeros is 1, then there are contiguous
 	zeros at the beginning of the string"
 	(indices first = 1) ifTrue: [
 		writeStream nextPutAll: '::'.
-		self 
+		self
 			putIPv6HexIntegers:  (integerCollection copyFrom: (indices second + 1) to: integerCollection size)
 			on: writeStream.
 		^ writeStream contents ].
-	
+
 	"If the end index of the zeros is the same as the size
 	of the collection of integers, then there are contiguous
 	zeros at the end of the string."
@@ -655,7 +631,7 @@ NetNameResolver class >> stringFromIPv6Address: aByteArray [
 				on: writeStream.
 			writeStream nextPutAll: '::'.
 			^ writeStream contents ].
-		
+
 	"Otherwise, there is a range of zeros somewhere in the middle
 	of the string that should get compressed. Write normal strings for
 	each side out of the range of the indices, then join them by the
@@ -668,9 +644,6 @@ NetNameResolver class >> stringFromIPv6Address: aByteArray [
 		putIPv6HexIntegers: (integerCollection copyFrom: (indices second + 1) to: integerCollection size)
 		on: writeStream.
 	^ writeStream contents
-	
-	
-	
 ]
 
 { #category : #private }
@@ -709,5 +682,4 @@ NetNameResolver class >> waitForResolverReadyUntil: deadline [
 	status = ResolverUninitialized ifTrue: [^ false].
 	status := self waitForResolverNonBusyUntil: deadline.
 	^ status ~= ResolverBusy
-
 ]

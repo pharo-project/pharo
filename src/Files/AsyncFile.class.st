@@ -20,29 +20,27 @@ Class {
 	#category : #'Files-Core'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 AsyncFile class >> initialize [
-	"AsyncFile initialize"
-
 	"Possible abnormal I/O completion results."
-	Busy := -1.
-	ErrorCode := -2.
 
+	Busy := -1.
+	ErrorCode := -2
 ]
 
 { #category : #'open/close' }
 AsyncFile >> close [
 
-	fileHandle ifNil: [^ self].  "already closed"
+	fileHandle ifNil: [ ^ self ]. "already closed"
 	self primClose: fileHandle.
 	Smalltalk unregisterExternalObject: semaphore.
 	semaphore := nil.
-	fileHandle := nil.
-
+	fileHandle := nil
 ]
 
 { #category : #accessing }
 AsyncFile >> fileHandle [
+
 	^ fileHandle
 ]
 
@@ -55,7 +53,9 @@ AsyncFile >> open: fullFileName forWrite: aBoolean [
 	otherwise:
 		if there is an existing file with this name, then open it read-only
 		else answer nil."
+
 	"Note: if an exisiting file is opened for writing, it is NOT truncated. If truncation is desired, the file should be deleted before being opened as an asynchronous file."
+
 	"Note: On some platforms (e.g., Mac), a file can only have one writer at a time."
 
 	| semaIndex |
@@ -63,12 +63,14 @@ AsyncFile >> open: fullFileName forWrite: aBoolean [
 	writeable := aBoolean.
 	semaphore := Semaphore new.
 	semaIndex := Smalltalk registerExternalObject: semaphore.
-	fileHandle := self primOpen: name asVmPathName forWrite: writeable semaIndex: semaIndex.
+	fileHandle := self
+		              primOpen: name asVmPathName
+		              forWrite: writeable
+		              semaIndex: semaIndex.
 	fileHandle ifNil: [
 		Smalltalk unregisterExternalObject: semaphore.
 		semaphore := nil.
-		^ nil].
-
+		^ nil ]
 ]
 
 { #category : #primitives }
@@ -76,7 +78,6 @@ AsyncFile >> primClose: fHandle [
 	"Close this file. Do nothing if primitive fails."
 
 	<primitive: 'primitiveAsyncFileClose' module: 'AsynchFilePlugin'>
-
 ]
 
 { #category : #primitives }
@@ -85,7 +86,6 @@ AsyncFile >> primOpen: fileName forWrite: openForWrite semaIndex: semaIndex [
 
 	<primitive: 'primitiveAsyncFileOpen' module: 'AsynchFilePlugin'>
 	^ nil
-
 ]
 
 { #category : #primitives }
@@ -96,7 +96,6 @@ AsyncFile >> primReadResult: fHandle intoBuffer: buffer at: startIndex count: co
 
 	<primitive: 'primitiveAsyncFileReadResult' module: 'AsynchFilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -116,8 +115,6 @@ Then save-and-quit, restart, and try to open the movie file again.  If you are u
 
 then save-and-quit, restart, and try again.
 "
-
-
 ]
 
 { #category : #primitives }
@@ -128,7 +125,6 @@ AsyncFile >> primWriteResult: fHandle [
 
 	<primitive: 'primitiveAsyncFileWriteResult' module: 'AsynchFilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -138,7 +134,6 @@ AsyncFile >> primWriteStart: fHandle fPosition: fPosition fromBuffer: buffer at:
 	<primitive: 'primitiveAsyncFileWriteStart' module: 'AsynchFilePlugin'>
 	writeable ifFalse: [^ self error: 'attempt to write a file opened read-only'].
 	self primitiveFailed
-
 ]
 
 { #category : #'write and read' }
@@ -156,8 +151,7 @@ AsyncFile >> readByteCount: byteCount fromFilePosition: fPosition onCompletionDo
 		] whileTrue.  "loop while busy in case the semaphore had excess signals"
 		n = ErrorCode ifTrue: [^ self error: 'asynchronous read operation failed'].
 		aBlock value: buffer.
-	] forkAt: Processor userInterruptPriority.
-
+	] forkAt: Processor userInterruptPriority
 ]
 
 { #category : #tests }
@@ -176,7 +170,7 @@ AsyncFile >> test: byteCount fileName: fileName [
 	semaphore wait.
 	bytesWritten := self primWriteResult: fileHandle.
 	self close.
-	
+
 	self open: fileName asFileReference fullName forWrite: false.
 	self primReadStart: fileHandle fPosition: 0 count: byteCount.
 	semaphore wait.
@@ -190,11 +184,11 @@ AsyncFile >> test: byteCount fileName: fileName [
 	buf1 = buf2 ifFalse: [self error: 'buffers do not match'].
 	^ 'wrote ', bytesWritten printString, ' bytes; ',
 	   'read ', bytesRead printString, ' bytes'
-
 ]
 
 { #category : #'write and read' }
 AsyncFile >> waitForCompletion [
+
 	semaphore wait
 ]
 
@@ -216,6 +210,5 @@ AsyncFile >> writeBuffer: buffer atFilePosition: fPosition onCompletionDo: aBloc
 		n = ErrorCode ifTrue: [^ self error: 'asynchronous write operation failed'].
 		n = buffer size ifFalse: [^ self error: 'did not write the entire buffer'].
 		aBlock value.
-	] forkAt: Processor userInterruptPriority.
-
+	] forkAt: Processor userInterruptPriority
 ]

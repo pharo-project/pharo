@@ -24,13 +24,13 @@ SycClassCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #'instance creation' }
 SycClassCommand class >> for: classes [
-	^self new 
+	^self new
 		classes: classes
 ]
 
 { #category : #testing }
 SycClassCommand class >> isAbstract [
-	^self = SycClassCommand 
+	^self = SycClassCommand
 ]
 
 { #category : #accessing }
@@ -46,7 +46,7 @@ SycClassCommand >> classes: anObject [
 { #category : #'activation - drag and drop' }
 SycClassCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
-	
+
 	classes := aToolContext selectedClasses
 ]
 

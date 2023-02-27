@@ -9,7 +9,6 @@ BaselineOfGeneralHelp >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec 
-			package: 'Announcements-Help';
 			package: 'Pharo-Help';
 			package: 'Regex-Help' ]
 ]

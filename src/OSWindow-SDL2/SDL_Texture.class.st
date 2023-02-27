@@ -20,7 +20,7 @@ SDL_Texture class >> destroyTexture: aHandle [
 SDL_Texture class >> finalizeResourceData: aHandle [
 	(aHandle isNil or: [aHandle isNull]) ifTrue: [ ^ self ].
 	self destroyTexture: aHandle.
-	aHandle beNull	
+	aHandle beNull
 ]
 
 { #category : #initialization }

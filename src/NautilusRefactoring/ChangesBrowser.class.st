@@ -3,92 +3,52 @@ A ChangesBrowser is a browser used to browse a composite change wich gather all 
 "
 Class {
 	#name : #ChangesBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
-		'textArea',
 		'changesTree',
-		'changes'
+		'selectedItems',
+		'diffView'
 	],
 	#category : #'NautilusRefactoring-Utilities'
 }
 
-{ #category : #shortcuts }
-ChangesBrowser class >> buildShortcutsOn: aBuilder [
-	<keymap>
-
-	(aBuilder shortcut: #close)
-		category: #ChangesBrowserGlobalShortcuts
-		default: PharoShortcuts current cancelShortcut
-		do: [ :target | target cancel ]
-		description: 'Close this dialog'.
-		
-	(aBuilder shortcut: #accept)
-		category: #ChangesBrowserGlobalShortcuts
-		default: PharoShortcuts current acceptShortcut
-		do: [ :target | target accept ]
-		description: 'Accept the proposed changes'.
-]
-
 { #category : #'instance creation' }
 ChangesBrowser class >> changes: aCollection [
 
-	^ self new
-		changes: aCollection;
-		yourself
-]
-
-{ #category : #specs }
-ChangesBrowser class >> defaultSpec [
-	<spec>
-	^ SpecLayout composed
-		newColumn: [ :column1 | 
-			column1
-				newColumn: [ :column2 | column2 add: #changesTree ];
-				addSplitter;
-				add: #textArea ]
-]
-
-{ #category : #specs }
-ChangesBrowser class >> title [
-
-	^ 'Changes Browser'
+	^ self on: aCollection
 ]
 
 { #category : #visiting }
 ChangesBrowser >> accept [
-	self okToChange
-		ifFalse: [ ^ self ].
-	[ self pickedChanges do: [ :change | RBRefactoryChangeManager instance performChange: change ] ] asJob
+
+	self okToChange ifFalse: [ ^ self ].
+
+	[ self pickedChanges do: [ :change |
+			RBRefactoryChangeManager instance performChange: change ] ] asJob
 		title: 'Refactoring';
-		run.
-	self window delete
+		run
 ]
 
 { #category : #private }
 ChangesBrowser >> buildDiffFor: aChange [
 
-	^ aChange
-		ifNil: [ '' ]
-		ifNotNil: [
-			TextDiffBuilder 
-				buildDisplayPatchFrom: aChange oldVersionTextToDisplay 
-				to: aChange textToDisplay ].
-]
-
-{ #category : #api }
-ChangesBrowser >> cancel [
-	self window delete
+	^ aChange ifNil: [ '' ] ifNotNil: [
+		  diffView
+			  contextClass: aChange changeClass;
+			  leftText: aChange oldVersionTextToDisplay;
+			  rightText: aChange textToDisplay ]
 ]
 
 { #category : #accessing }
 ChangesBrowser >> changes [
-	^ changes
+
+	^ self model
 ]
 
 { #category : #accessing }
 ChangesBrowser >> changes: aCollection [
-	changes := aCollection.
-	self updateChanges
+
+	self model: aCollection
 ]
 
 { #category : #accessing }
@@ -97,81 +57,69 @@ ChangesBrowser >> changesTree [
 ]
 
 { #category : #initialization }
-ChangesBrowser >> initializeChangesTree [
+ChangesBrowser >> connectPresenters [
+
+	changesTree whenActivatedDo: [ :selection | self buildDiffFor: selection selectedItem ]
+]
+
+{ #category : #layout }
+ChangesBrowser >> defaultLayout [
+
+	^ SpPanedLayout newTopToBottom
+		  add: changesTree;
+		  add: diffView;
+		  yourself
+]
+
+{ #category : #initialization }
+ChangesBrowser >> initializeDialogWindow: aWindow [
+
+	super initializeDialogWindow: aWindow.
+
+	aWindow
+		title: 'Changes Browser';
+		initialExtent: 600 @ 500;
+		okAction: [ self accept ]
+]
+
+{ #category : #initialization }
+ChangesBrowser >> initializePresenters [
+
+	changesTree := self newTreeTable.
+	diffView := self newDiff
+		            enabled: false;
+		            showOptions: true;
+		            yourself.
+
 	changesTree
-		beCheckList;
-		removeOnlyLastSelected: true;
-		autoMultiSelection: true;
-		rootNodeHolder: [ :item | 
-					TreeNodePresenter new
-						content: item;
-						hasContentToShow: true;
-						children: [ changesTree childrenFor: item ] ];
-		displayBlock: [ :item | item nameToDisplay ].
-	self whenBuiltDo: [ changesTree selectAll ]
+		children: [ :node | (node whatToDisplayIn: self) copyWithout: node ];
+		addColumn: (SpCompositeTableColumn
+				 with: ((SpCheckBoxTableColumn evaluated: [ :item | selectedItems includes: item ])
+						  onActivation: [ :item | selectedItems add: item ];
+						  onDeactivation: [ :item | selectedItems remove: item ifAbsent: [  ] ] yourself)
+				 with: (SpStringTableColumn evaluated: [ :item | item nameToDisplay ]));
+		activateOnSingleClick.
+
+	self focusOrder
+		add: changesTree;
+		add: diffView
 ]
 
-{ #category : #initialization }
-ChangesBrowser >> initializePresenter [
-	changesTree
-		whenHighlightedItemChanged:
-			[ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
-]
-
-{ #category : #initialization }
-ChangesBrowser >> initializeTextArea [
-	textArea 
-		enabled: false;
-		"make sure we can cycle over the text field"
-		bindKeyCombination: Character tab toAction: [ self giveFocusToNextFrom: textArea ];
-		bindKeyCombination: Character tab shift toAction: [ self giveFocusToPreviousFrom: textArea ].
-]
-
-{ #category : #initialization }
-ChangesBrowser >> initializeWidgets [
-
-	changesTree := self newTree.
-	textArea := self newCode.
-	
-	self initializeChangesTree.
-	self initializeTextArea.
-	self setFocus.
-	self
-		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
-		bindKeyCombination: Character escape toAction: [ self cancel ]
-]
-
-{ #category : #opening }
+{ #category : #showing }
 ChangesBrowser >> open [
-	^ self openDialogWithSpec
-		okAction: [ self accept ];
-		cancelAction: [ self cancel ];
-		yourself
+
+	self openDialog
 ]
 
 { #category : #accessing }
 ChangesBrowser >> pickedChanges [
-	| selectedItems |
-	selectedItems := changesTree selectedItems collect: [:each | each content].
+
 	^ changesTree roots select: [ :i | selectedItems includes: i ]
-]
-
-{ #category : #initialization }
-ChangesBrowser >> setFocus [
-	self focusOrder
-		add: changesTree;
-		add: textArea;
-		yourself
-]
-
-{ #category : #initialization }
-ChangesBrowser >> setShortcuts [
-	self changesTree attachKeymapCategory: #ChangesBrowserGlobalShortcuts targetting: self
 ]
 
 { #category : #accessing }
 ChangesBrowser >> textArea [
-	^ textArea
+	^ diffView
 ]
 
 { #category : #private }
@@ -179,9 +127,17 @@ ChangesBrowser >> updateChanges [
 	| aCompositeChange |
 	aCompositeChange := RBRefactoryChangeManager changeFactory
 		compositeRefactoryChange.
-	changes do: [ :each | aCompositeChange addChange: each ].
+	self changes do: [ :each | aCompositeChange addChange: each ].
 
 	"Later we could filter the shown changes depending on the selected scope"
 
-	changesTree roots: (aCompositeChange whatToDisplayIn: self)
+	changesTree roots: (aCompositeChange whatToDisplayIn: self).
+	selectedItems := Set withAll: changesTree roots
+]
+
+{ #category : #updating }
+ChangesBrowser >> updatePresenter [
+
+	self model ifNil: [ ^ self ].
+	self updateChanges
 ]

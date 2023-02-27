@@ -15,5 +15,4 @@ ClyInstantEnvironmentUpdateStrategy >> announceChangesOf: aQueryResult [
 
 { #category : #updating }
 ClyInstantEnvironmentUpdateStrategy >> publishCollectedChanges [
-
 ]

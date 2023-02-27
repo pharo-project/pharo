@@ -23,7 +23,7 @@ ChangeRecord >> <= anotherOne [
 
 	self stamp ifNil: [ ^ false ].
 	anotherOne stamp ifNil: [ ^ true ].
-	^ self timeStamp <= anotherOne timeStamp 
+	^ self timeStamp <= anotherOne timeStamp
 ]
 
 { #category : #accessing }
@@ -33,21 +33,20 @@ ChangeRecord >> category [
 
 { #category : #testing }
 ChangeRecord >> classIncludesSelector [
-	
-	| aClass | 
+
+	| aClass |
 	^ (aClass := self methodClass) notNil
 			and: [aClass includesSelector: self methodSelector]
 ]
 
 { #category : #accessing }
-ChangeRecord >> commentClass [ 
+ChangeRecord >> commentClass [
 	| commentClass |
 	type == #classComment ifFalse: [^ nil].
 	(Smalltalk includesKey: class asSymbol) ifFalse: [^ nil].
 	commentClass := Smalltalk at: class asSymbol.
 	^meta ifTrue: [commentClass class]
 		ifFalse: [commentClass]
-
 ]
 
 { #category : #initialization }
@@ -71,12 +70,12 @@ ChangeRecord >> fileIn [
 	"File the receiver in.  If I represent a method or a class-comment, file the method in and make a note of it in the recent-submissions list; if I represent a do-it, then, well, do it."
 
 	UIManager default
-		showWaitCursorWhile:			
-			[ 
+		showWaitCursorWhile:
+			[
 			| methodClass s |
 			(methodClass := self methodClass) notNil
 				ifTrue:
-					[ 
+					[
 					methodClass
 						compile: self text
 						classified: category
@@ -84,7 +83,7 @@ ChangeRecord >> fileIn [
 						notifying: nil ].
 			type == #doIt
 				ifTrue:
-					[ 
+					[
 					((s := self string) beginsWith: '----')
 						ifFalse: [ self class compiler evaluate: s ] ].
 			type == #classComment
@@ -127,7 +126,7 @@ ChangeRecord >> fileOutOn: aFileStream [
 	aFileStream cr
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 ChangeRecord >> isMetaClassChange [
 	^meta
 ]
@@ -135,7 +134,7 @@ ChangeRecord >> isMetaClassChange [
 { #category : #testing }
 ChangeRecord >> isMethodDefinedInImage [
 	"answer whether the method represented by the receiver is present in the image"
-	
+
 	^ self type = #method
 		and: [self classIncludesSelector]
 ]
@@ -144,7 +143,7 @@ ChangeRecord >> isMethodDefinedInImage [
 ChangeRecord >> isMethodNotDefinedInImage [
 	"answer whether the method represented by the receiver is not present in the image.
 	pay attention is it not just isMethodDefinedInImage not"
-	
+
 	| aClass |
 	^ self type = #method and:
 			[(aClass := self methodClass) isNil or:
@@ -154,8 +153,8 @@ ChangeRecord >> isMethodNotDefinedInImage [
 { #category : #testing }
 ChangeRecord >> isUnchangedMethod [
 
-	^ self isMethodDefinedInImage 
-		and: [self string withBlanksCondensed 
+	^ self isMethodDefinedInImage
+		and: [self string withBlanksCondensed
 				= (self methodClass sourceCodeAt: self methodSelector) asString withBlanksCondensed ]
 ]
 
@@ -194,13 +193,12 @@ ChangeRecord >> position [
 ChangeRecord >> printOn: aStream [
 
 	self type printOn: aStream.
-	self stamp ifNotNil: [ :s | s printOn: aStream ].
-	
+	self stamp ifNotNil: [ :s | s printOn: aStream ]
 ]
 
 { #category : #accessing }
 ChangeRecord >> sourceCode [
-	
+
 	self type= #preamble ifTrue: [ ^ #preamble printString ].
 	self type= #doIt ifTrue: [ ^ #preamble printString ].
 	self type= #classComment ifTrue: [ self commentClass ifNotNil: [ :comment | ^ comment comment ]].
@@ -220,7 +218,7 @@ ChangeRecord >> stamp: threePartString [
 ]
 
 { #category : #accessing }
-ChangeRecord >> string [ 
+ChangeRecord >> string [
 	| copy |
 	copy := file readOnlyCopy.
 	copy position: position.
@@ -235,8 +233,8 @@ ChangeRecord >> timeStamp [
 	| tokens |
 	tokens := self stamp findTokens: Character separators.
 	^ tokens size > 2
-		ifTrue: [ 
-			[ 
+		ifTrue: [
+			[
 			| time date |
 			date := Date fromString: (tokens at: tokens size - 1).
 			time := Time fromString: tokens last.

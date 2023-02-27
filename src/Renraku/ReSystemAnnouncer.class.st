@@ -21,7 +21,7 @@ Class {
 { #category : #'instance creation' }
 ReSystemAnnouncer class >> uniqueInstance [
 	"I'm a singleton…"
-	
+
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
@@ -29,11 +29,10 @@ ReSystemAnnouncer class >> uniqueInstance [
 ReSystemAnnouncer >> notifyCritique: aCritique descriptionViewedFor: anEntity [
 
 	self announce: (
-		ReCritiqueDescriptionViewed new 
+		ReCritiqueDescriptionViewed new
 			critique: aCritique;
 			entity: anEntity;
 			yourself)
-  
 ]
 
 { #category : #announce }
@@ -45,16 +44,14 @@ ReSystemAnnouncer >> notifyCritique: aCritique of: anEntity bannedOn: anEntityBa
 			entity: anEntity;
 			entityBanLevel: anEntityBanLevel;
 			yourself)
-
 ]
 
 { #category : #announce }
 ReSystemAnnouncer >> notifyEntity: anEntity criticizedWith: critiques [
 
 	self announce: (
-		ReEntityCriticized new 
+		ReEntityCriticized new
 			critiques: critiques;
 			entity: anEntity;
 			yourself)
-
 ]

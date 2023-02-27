@@ -13,8 +13,14 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #testing }
+RBPackageRefactoring class >> isAbstract [
+
+	^ self == RBPackageRefactoring
+]
+
 { #category : #'instance creation' }
-RBPackageRefactoring class >> model: aRBModel packageName: aName [ 
+RBPackageRefactoring class >> model: aRBModel packageName: aName [
 	^ self new
 		model: aRBModel;
 		packageName: aName;
@@ -25,6 +31,18 @@ RBPackageRefactoring class >> model: aRBModel packageName: aName [
 RBPackageRefactoring class >> packageName: aName [
 	^ self new
 		packageName: aName
+]
+
+{ #category : #accessing }
+RBPackageRefactoring >> newName [
+
+	^ newName
+]
+
+{ #category : #accessing }
+RBPackageRefactoring >> newName: anObject [
+
+	newName := anObject
 ]
 
 { #category : #accessing }
@@ -40,9 +58,9 @@ RBPackageRefactoring >> packageName: anObject [
 ]
 
 { #category : #preconditions }
-RBPackageRefactoring >> preconditions [ 
+RBPackageRefactoring >> preconditions [
 	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error 
+			on: Error
 			do: [ :e | self refactoringError: e messageText ]
 		])
 ]

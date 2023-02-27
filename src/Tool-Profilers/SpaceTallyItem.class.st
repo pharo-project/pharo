@@ -18,7 +18,6 @@ SpaceTallyItem class >> analyzedClassName: aClassName [
 
 	^ self new
 		analyzedClassName: aClassName ; yourself
-		
 ]
 
 { #category : #'instance creation' }

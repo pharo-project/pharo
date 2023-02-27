@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 WBMacWebBrowser class >> isForCurrentSystem [
 
-	^Smalltalk os isMacOS 
+	^ Smalltalk os isMacOS
 ]
 
 { #category : #private }
@@ -24,5 +24,5 @@ WBMacWebBrowser class >> openNativeWebBrowserOn: anURLString [
 { #category : #'private - uffi' }
 WBMacWebBrowser class >> system: command [
 
-	^LibC system: command 
+	^ LibC system: command
 ]

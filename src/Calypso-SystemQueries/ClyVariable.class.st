@@ -37,25 +37,25 @@ ClyVariable class >> defaultSortFunctionForCalypso [
 ]
 
 { #category : #sorting }
-ClyVariable class >> itemsSortOrderForCalypso [ 
+ClyVariable class >> itemsSortOrderForCalypso [
 	^1.2
 ]
 
 { #category : #'instance creation' }
 ClyVariable class >> named: aSymbol definedIn: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
 ClyVariable class >> on: aVariableOrSlot definedIn: aClass [
-	^self new 
+	^self new
 		actualVariable: aVariableOrSlot;
 		definingClass: aClass
 ]
 
 { #category : #'instance creation' }
 ClyVariable class >> on: aVariableOrSlot visibleFrom: aClass [
-	^self new 
+	^self new
 		actualVariable: aVariableOrSlot;
 		detectDefiningClassFrom: aClass
 ]
@@ -105,7 +105,7 @@ ClyVariable >> definingClass: anObject [
 { #category : #accessing }
 ClyVariable >> detectDefiningClassFrom: anUserClass [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -117,20 +117,20 @@ ClyVariable >> hash [
 
 { #category : #testing }
 ClyVariable >> isAccessedIn: aMethod [
-	
+
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-		
+
 	^actualVariable isAccessedIn: aMethod
 ]
 
 { #category : #testing }
 ClyVariable >> isAccessibleFrom: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyVariable >> isClassVariable [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -141,18 +141,18 @@ ClyVariable >> isLive [
 
 { #category : #testing }
 ClyVariable >> isReadIn: aMethod [
-	
+
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-	
-	^actualVariable isReadIn: aMethod 
+
+	^actualVariable isReadIn: aMethod
 ]
 
 { #category : #testing }
 ClyVariable >> isWrittenIn: aMethod [
-	
+
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-		
-	^actualVariable isWrittenIn: aMethod 
+
+	^actualVariable isWrittenIn: aMethod
 ]
 
 { #category : #accessing }
@@ -180,7 +180,7 @@ ClyVariable >> printAsConstantQueryItem [
 { #category : #printing }
 ClyVariable >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self name;
 		nextPut: $)

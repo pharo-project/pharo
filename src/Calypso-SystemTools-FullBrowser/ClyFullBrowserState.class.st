@@ -46,8 +46,8 @@ ClyFullBrowserState >> methodGroupQuery: aQuery [
 { #category : #private }
 ClyFullBrowserState >> restoreStateOf: aBrowser [
 	super restoreStateOf: aBrowser.
-	
-	aBrowser 
+
+	aBrowser
 		metaLevelScope: metaLevelScope;
 		methodGroupQuery: methodGroupQuery
 ]
@@ -55,7 +55,7 @@ ClyFullBrowserState >> restoreStateOf: aBrowser [
 { #category : #operations }
 ClyFullBrowserState >> retrieveStateFrom: aBrowser [
 	super retrieveStateFrom: aBrowser.
-	
+
 	metaLevelScope := aBrowser metaLevelScope.
 	methodGroupQuery := aBrowser methodGroupQuery
 ]

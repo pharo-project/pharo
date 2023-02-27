@@ -1,26 +1,26 @@
 Extension { #name : #RBVariableNode }
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBVariableNode >> binding [
 	^self variable
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBVariableNode >> binding: aSemVar [
 	self variable: aSemVar
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBVariableNode >> isClean [
 	^ (self isInstanceVariable | self isSelfVariable | self isSuperVariable) not
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBVariableNode >> variable [
 	^variable
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBVariableNode >> variable: aSemVar [
 	variable := aSemVar
 ]

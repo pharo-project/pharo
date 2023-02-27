@@ -13,8 +13,7 @@ Class {
 { #category : #utilities }
 GoferOperationTest >> allManagers [
 
-	^ MCWorkingCopy allManagers 
-	
+	^ MCWorkingCopy allManagers
 ]
 
 { #category : #accessing }
@@ -63,7 +62,7 @@ GoferOperationTest >> setUp [
 { #category : #running }
 GoferOperationTest >> setUpEnvironment [
 
-	environment := self class environment.
+	environment := self class environment
 ]
 
 { #category : #running }
@@ -104,7 +103,7 @@ GoferOperationTest >> testCommit [
 		package: 'GoferFoo';
 		load.
 	gofer := Gofer new.
-	gofer 
+	gofer
 		disablePackageCache;
 		repository: repository;
 		package: 'GoferFoo';
@@ -115,7 +114,7 @@ GoferOperationTest >> testCommit [
 { #category : #tests }
 GoferOperationTest >> testFetch [
 
-	gofer 
+	gofer
 		package: 'GoferFoo';
 		fetch
 ]

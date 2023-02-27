@@ -4,12 +4,20 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
+{ #category : #description }
+RGLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton."
+
+	^ #subclass:
+]
+
 { #category : #'managing container' }
 RGLayout >> addoptToParentStub [
 
 	super addoptToParentStub.
 	self environment backend createUnresolvedClassGroupFor: self parent.
-	self parent behaviorStrategy pvtLayout: self.
+	self parent behaviorStrategy pvtLayout: self
 ]
 
 { #category : #accessing }

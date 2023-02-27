@@ -15,7 +15,7 @@ Class {
 
 { #category : #import }
 ProtocolOrganizer class >> fromSpec: aSpec [
-	
+
 	^ self new
 		fromSpec: aSpec;
 		yourself
@@ -70,8 +70,8 @@ ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 
 { #category : #private }
 ProtocolOrganizer >> existsProtocolNamed: aProtocolName [
-	
-	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ] 
+
+	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ]
 ]
 
 { #category : #accessing }
@@ -82,7 +82,7 @@ ProtocolOrganizer >> extensionProtocols [
 { #category : #importing }
 ProtocolOrganizer >> fromSpec: aSpec [
 	aSpec
-		do: [ :spec | 
+		do: [ :spec |
 			| name methods |
 			name := spec first asSymbol.
 			methods := spec allButFirst asSet.
@@ -90,9 +90,9 @@ ProtocolOrganizer >> fromSpec: aSpec [
 ]
 
 { #category : #protocol }
-ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [ 
-	
-	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure 
+ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [
+
+	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure
 ]
 
 { #category : #testing }
@@ -102,7 +102,7 @@ ProtocolOrganizer >> hasProtocolNamed: aString [
 ]
 
 { #category : #testing }
-ProtocolOrganizer >> includesSelector: selector [ 
+ProtocolOrganizer >> includesSelector: selector [
 	^ protocols anySatisfy: [ :each | each includesSelector: selector ]
 ]
 
@@ -122,28 +122,28 @@ ProtocolOrganizer >> methodsInProtocolNamed: aName [
 { #category : #private }
 ProtocolOrganizer >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 	| fromProtocol toProtocol |
-	
+
 	fromProtocol := self protocolNamed: fromProtocolNamed.
 	toProtocol := self protocolNamed: toProtocolNamed.
-	
+
 	toProtocol addAllMethodsFrom: fromProtocol.
 	fromProtocol removeAllMethodSelectors.
-	
-	^ toProtocol.
+
+	^ toProtocol
 ]
 
 { #category : #accessing }
 ProtocolOrganizer >> protocolNamed: aName [
 
-	^ self 
-		protocolNamed: aName 
+	^ self
+		protocolNamed: aName
 		ifAbsent: [ Protocol empty ]
 ]
 
 { #category : #accessing }
-ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [ 
-	^  self allProtocols 
-		detect: [ :e | e name = aString ] 
+ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
+	^  self allProtocols
+		detect: [ :e | e name = aString ]
 		ifNone: aBlock
 ]
 
@@ -156,8 +156,8 @@ ProtocolOrganizer >> protocols [
 { #category : #accessing }
 ProtocolOrganizer >> protocolsNames [
 
-	^ protocols 
-		collect: #name 
+	^ protocols
+		collect: #name
 		as: Array
 ]
 
@@ -189,9 +189,9 @@ ProtocolOrganizer >> removeMethod: aSymbol [
 
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeProtocol: aProtocol [
-	
+
 	aProtocol canBeRemoved ifFalse:  [ ^ self ].
-	^ protocols 
+	^ protocols
 		remove: aProtocol
 		ifAbsent: [ ]
 ]
@@ -199,25 +199,25 @@ ProtocolOrganizer >> removeProtocol: aProtocol [
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeProtocolNamed: aName [
 	| protocolToRemove |
-	
+
 	protocolToRemove := self protocolNamed: aName.
 	^ self removeProtocol: protocolToRemove
 ]
 
 { #category : #accessing }
 ProtocolOrganizer >> renameProtocol: oldName into: newName [
-	(self existsProtocolNamed: newName) 
-		ifTrue: [ 
+	(self existsProtocolNamed: newName)
+		ifTrue: [
 			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolNamed: oldName ] 
-		ifFalse: [ 
+			self removeProtocolNamed: oldName ]
+		ifFalse: [
 			^ (self protocolNamed: oldName)
 				name: newName;
-				yourself ].
+				yourself ]
 ]
 
 { #category : #initialization }
 ProtocolOrganizer >> reset [
 	protocols := IdentitySet new.
-	allProtocol := AllProtocol protocolOrganizer: self.
+	allProtocol := AllProtocol protocolOrganizer: self
 ]

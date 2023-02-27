@@ -27,8 +27,8 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
-RBItemsSelectionPresenter class >> defaultSpec [
+{ #category : #layout }
+RBItemsSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -40,9 +40,9 @@ RBItemsSelectionPresenter class >> defaultSpec [
 
 { #category : #specs }
 RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
-	^ self new 
+	^ self new
 		label: aString withItems: items selecting: selectedItems;
-		openBlockedDialogWithSpec 
+		openBlockedDialog
 ]
 
 { #category : #actions }
@@ -65,22 +65,22 @@ RBItemsSelectionPresenter >> columnName [
 ]
 
 { #category : #attributes }
-RBItemsSelectionPresenter >> columnSelector [ 
-	self shouldBeImplemented 
+RBItemsSelectionPresenter >> columnSelector [
+	self shouldBeImplemented
 ]
 
 { #category : #accessing }
-RBItemsSelectionPresenter >> components [ 
+RBItemsSelectionPresenter >> components [
 	^ { table . label }
 ]
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> connectPresenters [
-	
-	table bindKeyCombination: Character backspace asShortcut 
+
+	table bindKeyCombination: Character backspace asShortcut
 		toAction: [ table toggleSelection ].
 	self components do: [ :each |
-	each bindKeyCombination: Character cr asKeyCombination 
+	each bindKeyCombination: Character cr asKeyCombination
 		toAction: [ :presenter | self accept: presenter] ]
 ]
 
@@ -88,28 +88,28 @@ RBItemsSelectionPresenter >> connectPresenters [
 RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Refactor' do: [ :presenter | self accept: presenter ];
-		addButton: 'Cancel' do: [ :presenter | 
+		addButton: 'Cancel' do: [ :presenter |
 			presenter
 				beCancel;
-				close ]        
+				close ]
 ]
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> initializeWidgets [
 	table := self instantiate: SpFilteringSelectableListPresenter.
 	table display: self columnSelector.
-	label := self newLabel.
+	label := self newLabel
 ]
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 	label label: aString.
-	
+
 	table items: coll1;
-		selectItems: coll2	
+		selectItems: coll2
 ]
 
 { #category : #accessing }
 RBItemsSelectionPresenter >> selectedItems [
-	^ selectedItems 
+	^ selectedItems
 ]

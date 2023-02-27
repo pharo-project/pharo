@@ -11,7 +11,7 @@ Class {
 RGTraitTransformation >> addoptToParentStub [
 
 	super addoptToParentStub.
-	self parent addTransformation: self.
+	self parent addTransformation: self
 ]
 
 { #category : #'managing container' }
@@ -26,20 +26,20 @@ RGTraitTransformation >> defaultSubject [
 	^ RGUnresolvedValue recursive
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RGTraitTransformation >> initialize [
 
 	super initialize.
-	
-	subject := self unresolvedValue: self defaultSubject.
+
+	subject := self unresolvedValue: self defaultSubject
 ]
 
 { #category : #initialize }
 RGTraitTransformation >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	subject := self unresolvedValue: self defaultSubject.
+
+	subject := self unresolvedValue: self defaultSubject
 ]
 
 { #category : #'testing - types' }
@@ -52,32 +52,29 @@ RGTraitTransformation >> isTraitTransformation [
 RGTraitTransformation >> makeResolved [
 
 	super makeResolved.
-	
-	subject := self subject markAsRingResolved.
 
+	subject := self subject markAsRingResolved
 ]
 
 { #category : #'queries - methods' }
 RGTraitTransformation >> methods [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - backend' }
 RGTraitTransformation >> name: aString [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		super name: aString ].
+	self parent parent announceDefinitionChangeDuring: [
+		super name: aString ]
 ]
 
 { #category : #'private - backend interface' }
 RGTraitTransformation >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#subject -> subject. 
+	^ super pvtResolvableProperties, {
+		#subject -> subject.
 	}
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -103,18 +100,18 @@ RGTraitTransformation >> subject [
 { #category : #'accessing - backend' }
 RGTraitTransformation >> subject: anRGTrait [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior setSubjectFor: self to: anRGTrait. ].
+	self parent parent announceDefinitionChangeDuring: [
+		self backend forBehavior setSubjectFor: self to: anRGTrait. ]
 ]
 
 { #category : #accessing }
 RGTraitTransformation >> trait [
-	
+
 	^ self subject trait
 ]
 
 { #category : #'accessing - backend' }
 RGTraitTransformation >> usedTraits [
 
-	^ IdentitySet with: subject.
+	^ IdentitySet with: subject
 ]

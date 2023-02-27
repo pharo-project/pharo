@@ -28,7 +28,6 @@ ArchiveMember class >> newFromString: aString [
 
 { #category : #initialization }
 ArchiveMember >> close [
-
 ]
 
 { #category : #accessing }

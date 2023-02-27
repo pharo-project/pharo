@@ -17,14 +17,14 @@ ClyClassWithScripts class >> initialize [
 ClyClassWithScripts class >> methodWithExample [
 	<example>
 	self inform: 'it is example string from ', self name.
-	
+
 	^'it is example string'
 ]
 
 { #category : #'methods with samples' }
 ClyClassWithScripts class >> methodWithSample [
 	<sampleInstance>
-	
+
 	^'it is string sample instance from ', self name
 ]
 
@@ -37,7 +37,6 @@ ClyClassWithScripts class >> methodWithScript [
 { #category : #'methods with scripts' }
 ClyClassWithScripts class >> methodWithScriptWithArgument [
 	<script: 'self inform: ''It is example method with script with argument from '', self name'>
-	
 ]
 
 { #category : #'methods with script' }

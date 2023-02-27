@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 EpLogBrowserOperationVisitor class >> inEnvironment: anEnvironment [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeWith: anEnvironment;
 		yourself
 ]
@@ -26,13 +26,13 @@ EpLogBrowserOperationVisitor class >> new [
 { #category : #private }
 EpLogBrowserOperationVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
-	^ (environment classOrTraitNamed: aSymbol) 
+	^ (environment classOrTraitNamed: aSymbol)
 		ifNil: [ self inform: 'Cannot find ', aSymbol ]
 		ifNotNil: presentBlock
 ]
 
 { #category : #private }
-EpLogBrowserOperationVisitor >> compiler [ 
+EpLogBrowserOperationVisitor >> compiler [
 
 	^ self class compiler
 ]
@@ -41,5 +41,5 @@ EpLogBrowserOperationVisitor >> compiler [
 EpLogBrowserOperationVisitor >> initializeWith: anEnvironment [
 
 	self initialize.
-	environment := anEnvironment 
+	environment := anEnvironment
 ]

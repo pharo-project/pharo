@@ -17,8 +17,7 @@ Class {
 DelayMillisecondTickerSimulation >> initialize [
 	super initialize.
 	vmSimTheTimerSemaphore := Semaphore new.
-	vmSimNow := 0.
-
+	vmSimNow := 0
 ]
 
 { #category : #'api-system' }
@@ -29,30 +28,24 @@ DelayMillisecondTickerSimulation >> nowTick [
 { #category : #'private - primitives' }
 DelayMillisecondTickerSimulation >> primSignal: sempahore atMilliseconds: nextTick [
 	"This is a simulation of the primitive, working hand-in-hand with #simulate_vmMilliseconds:"
-	(sempahore isKindOf: Semaphore) ifTrue: [ 
+	(sempahore isKindOf: Semaphore) ifTrue: [
 		vmSimTheTimerSemaphore := sempahore.
 		vmSimNextWakeupTick := nextTick ].
-	(sempahore = nil) ifTrue: [ 
+	(sempahore = nil) ifTrue: [
 		vmSimTheTimerSemaphore := nil.
-		vmSimNextWakeupTick := 0] 
-
-		
+		vmSimNextWakeupTick := 0]
 ]
 
 { #category : #'api-system' }
-DelayMillisecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [ 
-	
-	vmSimNextWakeupTick ~= 0 ifTrue: [ 
+DelayMillisecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [
+
+	vmSimNextWakeupTick ~= 0 ifTrue: [
 		vmSimNow := milliseconds.
-		vmSimNow >= vmSimNextWakeupTick ifTrue: [ 
-			vmSimNextWakeupTick := 0. 
+		vmSimNow >= vmSimNextWakeupTick ifTrue: [
+			vmSimNextWakeupTick := 0.
 			vmSimTheTimerSemaphore signal.
 			].
- 		].
-	
-
-
-
+ 		]
 ]
 
 { #category : #'api-system' }

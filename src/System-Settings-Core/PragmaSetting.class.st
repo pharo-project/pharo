@@ -69,7 +69,7 @@ Class {
 }
 
 { #category : #comparing }
-PragmaSetting >> = other [ 
+PragmaSetting >> = other [
 	^ self species = other species
 		and: [self name = other name]
 ]
@@ -93,7 +93,7 @@ PragmaSetting >> asString [
 PragmaSetting >> chooseFileDirectory [
 	| result |
 	result := self theme chooseDirectoryIn: self currentWorld title: 'Choose a directory' path: nil.
-	result ifNotNil: [ self realValue: result  ].
+	result ifNotNil: [ self realValue: result  ]
 ]
 
 { #category : #'user interface' }
@@ -105,24 +105,23 @@ PragmaSetting >> chooseFilePath [
 
 { #category : #'user interface' }
 PragmaSetting >> defaultIcon [
-	^ self iconNamed: #smallConfigurationIcon
+	^ self iconNamed: #smallConfiguration
 ]
 
 { #category : #accessing }
 PragmaSetting >> description [
 	"Answer the value of description"
 
-	^ description 
-		ifNil: [description := ''] 
+	^ description
+		ifNil: [description := '']
 		ifNotNil: [ description translated ]
-
 ]
 
 { #category : #accessing }
 PragmaSetting >> description: aString [
 	"Set the value of description"
 
-	description := aString 
+	description := aString
 ]
 
 { #category : #'user interface' }
@@ -142,7 +141,7 @@ PragmaSetting >> enabled [
 
 { #category : #export }
 PragmaSetting >> exportSettingAction [
-	
+
 	^ nil
 ]
 
@@ -154,22 +153,13 @@ PragmaSetting >> fontButtonLabel [
 				 at: 1 put: 'Bold' translated;
 				 at: 2 put: 'Italic' translated;
 				 at: 4 put: 'Underlined' translated;
-				 at: 8 put: 'Narrow' translated; 
+				 at: 8 put: 'Narrow' translated;
 				 at: 16 put: 'StruckOut' translated;
 				 yourself.
 	^ StringMorph contents: self realValue familyName , ' '
 			, (emphases
 					at: self realValue emphasis
 					ifAbsent: ['']) , ' ' , self realValue pointSize asString font: self realValue
-]
-
-{ #category : #'user interface' }
-PragmaSetting >> getFont [
-	^ FontChooser
-		openWithWindowTitle: 'Font for ' , self name
-		for: self
-		setSelector: #realValue:
-		getSelector: #realValue 
 ]
 
 { #category : #accessing }
@@ -189,7 +179,7 @@ PragmaSetting >> hasValue [
 
 { #category : #comparing }
 PragmaSetting >> hash [
-	^ self species hash bitXor: self name hash 
+	^ self species hash bitXor: self name hash
 ]
 
 { #category : #'user interface' }
@@ -198,14 +188,14 @@ PragmaSetting >> icon [
 ]
 
 { #category : #'user interface' }
-PragmaSetting >> icon: aForm [ 
+PragmaSetting >> icon: aForm [
 	icon := aForm
 ]
 
 { #category : #'user interface' }
-PragmaSetting >> inputMorphFor: aContainer [ 
+PragmaSetting >> inputMorphFor: aContainer [
 	^ self inputWidget
-		ifNotNil: [:iw | 
+		ifNotNil: [:iw |
 			( self theme newRowIn: self for: {iw})
 				 clipSubmorphs: true;
 				 hResizing: #shrinkWrap;
@@ -219,7 +209,7 @@ PragmaSetting >> inputWidget [
 	^ self dialog
 		ifNotNil: [:d | d numArgs = 0
 				ifTrue: [d value]
-				ifFalse: [d value: self]] 
+				ifFalse: [d value: self]]
 ]
 
 { #category : #export }
@@ -280,7 +270,7 @@ PragmaSetting >> ordering [
 
 { #category : #accessing }
 PragmaSetting >> precondition [
-	^ precondition ifNil: [precondition := [true]].
+	^ precondition ifNil: [precondition := [true]]
 ]
 
 { #category : #accessing }

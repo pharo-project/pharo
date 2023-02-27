@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyExpectedFailureMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'expected failures' priority: -2 on: aMethodQuery 
+	^ClyMethodGroup named: 'expected failures' priority: -2 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

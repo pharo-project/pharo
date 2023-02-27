@@ -17,7 +17,7 @@ ReEquivalentSuperclassMethodsRule class >> checksMethod [
 { #category : #accessing }
 ReEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'EquivalentSuperclassMethodsRule'
 ]
 
@@ -27,7 +27,7 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 
 	^ aMethod methodClass superclass
 		ifNotNil: [ :superclass | (superclass lookupSelector: aMethod selector)
-			ifNotNil: [ :overridenMethod | aMethod ast = overridenMethod ast ]
+			ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 ]

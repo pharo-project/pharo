@@ -57,12 +57,15 @@ Class {
 
 { #category : #'instance creation' }
 SignalLogger class >> for: aBeacon [
-	^ self new 
-		beacon: aBeacon
+
+	^ self new
+		beacon: aBeacon;
+		yourself
 ]
 
 { #category : #accessing }
 SignalLogger class >> instance [
+
 	^ instance ifNil: [ instance := self new ]
 ]
 
@@ -74,75 +77,92 @@ SignalLogger class >> isAbstract [
 
 { #category : #accessing }
 SignalLogger class >> named: aString [
+
 	^ (Beacon loggersOf: self)
-		detect: [ :each | each name = aString ]
-		ifNone: [ self new name: aString ]
+		  detect: [ :each | each name = aString ]
+		  ifNone: [ self new name: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 SignalLogger class >> resetAllInstances [
+	<script>
+
 	self withAllSubclassesDo: [ :each | each resetInstance ]
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 SignalLogger class >> resetInstance [
+	<script>
+
 	instance := nil
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger class >> runDuring: aBlock [
+
 	^ self instance runDuring: aBlock
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger class >> start [
+	<script>
+
 	^ self instance start
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger class >> startFor: anAnnouncementOrASetOfAnnouncements [
-	"Start listening to announcements. 
-	logger startFor: StringSignal 
-	
-	to scope the listening consider using 
-	logger runFor: StringSignal during: [ ... ]"
-	
-	^ self instance startFor: anAnnouncementOrASetOfAnnouncements 
+	"Start listening to announcements.
 
+		logger startFor: StringSignal
+
+	to scope the listening consider using
+
+		logger runFor: StringSignal during: [ ... ]"
+
+	^ self instance startFor: anAnnouncementOrASetOfAnnouncements
 ]
 
 { #category : #convenience }
 SignalLogger class >> startSingleGlobalLogger [
 	"Stop any other loggers and start a global instances of the receiver"
+	<script>
 
-	SignalLogger 
+	SignalLogger
 		stopAll;
 		resetAllInstances.
-	self start.
+	self start
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger class >> stop [
+	<script>
+
 	^ self instance stop
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger class >> stopAll [
+	<script>
+
 	self withAllSubclassesDo: #stop
 ]
 
 { #category : #accessing }
 SignalLogger >> beacon [
+
 	^ beacon
 ]
 
 { #category : #accessing }
 SignalLogger >> beacon: anAnnouncer [
+
 	beacon := anAnnouncer
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SignalLogger >> initialize [
+
 	super initialize.
 	"by default we hook to the central ==Beacon== instance"
 	beacon := Beacon instance.
@@ -151,78 +171,83 @@ SignalLogger >> initialize [
 
 { #category : #testing }
 SignalLogger >> isRunning [
-	Beacon instance announcer subscriptions 
+	Beacon instance announcer subscriptions
 		subscriptionsOf: self do: [ :x | ^ true ].
 	^ false
 ]
 
 { #category : #accessing }
 SignalLogger >> name [
+
 	^ name
 ]
 
 { #category : #accessing }
 SignalLogger >> name: aString [
+
 	name := aString
 ]
 
-{ #category : #registering }
+{ #category : #utilities }
 SignalLogger >> nextPut: aSignal [
 	"Gets a BeaconSignal into the logger"
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
-{ #category : #registering }
+{ #category : #utilities }
 SignalLogger >> nextPutAll: aCollection [
-	
+
 	aCollection do: [ :each | self nextPut: each ]
 ]
 
 { #category : #printing }
 SignalLogger >> printOn: aStream [
+
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ' named: ';
 		nextPutAll: name asString
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger >> runDuring: aBlock [
-	"make all BeaconSignals go to me during aBlock"
+	"Make all BeaconSignals go to me during aBlock"
+
 	self start.
 	[ aBlock value ]
 		ensure: [ self stop ]
-
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger >> runFor: anAnnouncementOrASetOfAnnouncements during: aBlock [
 	"Makes all provided BeaconSignals got to me during aBlock.
-	
+
 	logger runFor: StringSignal during: [ ... ]"
-	
+
 	self startFor: anAnnouncementOrASetOfAnnouncements.
-	[ aBlock value ]
-		ensure: [ self stop ]
-
+	[ aBlock value ] ensure: [ self stop ]
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger >> start [
-	self startFor: BeaconSignal 
+
+	self startFor: BeaconSignal
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger >> startFor: anAnnouncementOrASetOfAnnouncements [
 	"Make sure that when anAnnouncementOrASetOfAnnouncements is signaled, I receive them as argument of nextPut:."
+
 	self isRunning ifTrue: [ self stop ].
-	self beacon 	
+	self beacon
 		when: anAnnouncementOrASetOfAnnouncements
 		send: #nextPut:
 		to: self
 ]
 
-{ #category : #registering }
+{ #category : #registration }
 SignalLogger >> stop [
+
 	self beacon unsubscribe: self
 ]

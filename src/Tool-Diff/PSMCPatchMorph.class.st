@@ -17,7 +17,7 @@ Class {
 
 { #category : #settings }
 PSMCPatchMorph class >> defaultDiffToolsSettingOn: aBuilder [
-	<systemsettings>  
+	<systemsettings>
 	(aBuilder setting: #polymorphDiffToolsUsedByDefault)
 		label: 'Use Polymorph difference tools';
 		default: true;
@@ -31,7 +31,7 @@ PSMCPatchMorph class >> defaultDiffToolsSettingOn: aBuilder [
 PSMCPatchMorph class >> forPatch: aPatch [
 	"Answer a new instance of the receiver
 	with the given patch as the model."
-	
+
 	^ self new model: aPatch operations
 ]
 
@@ -52,7 +52,7 @@ PSMCPatchMorph class >> usedByDefault [
 { #category : #settings }
 PSMCPatchMorph class >> usedByDefault: aBoolean [
 	"Specify whether the Polymorph diff tools should be used with Monticello."
-	
+
 	UsedByDefault := aBoolean
 ]
 
@@ -85,10 +85,9 @@ PSMCPatchMorph >> browseSenders [
 PSMCPatchMorph >> browseVersions [
 	"Browse the method versions."
 
-	Smalltalk tools versionBrowser 
-			browseVersionsForClass: self selectedChangeWrapper actualClass 
+	Smalltalk tools versionBrowser
+			browseVersionsForClass: self selectedChangeWrapper actualClass
 			selector: self selectedMessageName
-			
 ]
 
 { #category : #initialization }
@@ -110,7 +109,6 @@ PSMCPatchMorph >> buildUI [
 		addPaneSplitters.
 	self updateDescriptionFillStyle: self paneColor.
 	self onAnnouncement: MorphOpened do: [ self expandChangeTree ]
-
 ]
 
 { #category : #accessing }
@@ -144,7 +142,7 @@ PSMCPatchMorph >> changeTreeKey: aCharacter [
 { #category : #accessing }
 PSMCPatchMorph >> changes [
 	"Answer the changes tree roots."
-	
+
 	^ PSMCChangesGrouper group: self model
 ]
 
@@ -155,7 +153,7 @@ PSMCPatchMorph >> changesMenu: m [
 	| menu |
 	menu := self newMenu
 		addTitle: 'Changes'
-		icon: (self iconNamed: #smallCopyIcon).
+		icon: (self iconNamed: #smallCopy).
 	menu
 		addToggle: 'Browse class...' translated
 		target: self
@@ -164,7 +162,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionHasActualClass.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallWindowIcon);
+		icon: (self iconNamed: #smallWindow);
 		keyText: 'Cmd+b'.
 	menu addLine.
 	menu
@@ -195,7 +193,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionIsMethodChange.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallDoItIcon);
+		icon: (self iconNamed: #smallDoIt);
 		keyText: 'Cmd+m'.
 	menu
 		addToggle: 'Install incoming version' translated
@@ -205,7 +203,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionIsMethodChange.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallUpdateIcon).
+		icon: (self iconNamed: #smallUpdate).
 	menu
 		addToggle: 'Revert change' translated
 		target: self
@@ -213,7 +211,7 @@ PSMCPatchMorph >> changesMenu: m [
 		getStateSelector: nil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallCancelIcon).
+		icon: (self iconNamed: #smallCancel).
 	menu
 		add: 'Expand All' translated
 		target: self model
@@ -243,15 +241,15 @@ PSMCPatchMorph >> defaultTitle [
 { #category : #updating }
 PSMCPatchMorph >> expandChangeTree [
 	self flag: #TODO. "We should only expand the nodes wich have partial changes, if a class was added or removed there is no need to show the complete tree expanded"
-	self changeTree expandAll.
+	self changeTree expandAll
 ]
 
 { #category : #menus }
 PSMCPatchMorph >> loadMethodSelection [
 	"Install the selected change"
-	
+
 	self selectedChange ifNil: [ ^self ].
-	self selectedChange definition load.
+	self selectedChange definition load
 ]
 
 { #category : #initialization }
@@ -277,7 +275,8 @@ PSMCPatchMorph >> newChangeTreeMorph [
 		list: #changes
 		selected: #selectedChangeWrapper
 		changeSelected: #selectedChangeWrapper:)
-		getMenuSelector: #changesMenu:
+		getMenuSelector: #changesMenu:;
+		keystrokeActionSelector: #changeTreeKey:
 ]
 
 { #category : #private }
@@ -306,8 +305,7 @@ PSMCPatchMorph >> revertSelectedChange [
 	change ifNil: [ ^ self ].
 	self revertChange: change.
 	self model remove: change.
-	self removeSelection.
-
+	self removeSelection
 ]
 
 { #category : #accessing }
@@ -342,7 +340,6 @@ PSMCPatchMorph >> selectedMessageName [
 
 	^self selectionIsMethodChange
 		ifTrue: [self selectedChange definition selector]
-		
 ]
 
 { #category : #private }
@@ -359,8 +356,8 @@ PSMCPatchMorph >> selectionHasActualClass [
 PSMCPatchMorph >> selectionIsMethodChange [
 	"Answer whether the currently selected change is for a method."
 
-	^self selectedChange notNil and: [ 
-		self selectedChange definition isMethodDefinition and: [ 
+	^self selectedChange notNil and: [
+		self selectedChange definition isMethodDefinition and: [
 			self selectedChange definition isLoadable ] ]
 ]
 

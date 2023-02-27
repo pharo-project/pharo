@@ -23,7 +23,7 @@ ByteString class >> compare: string1 with: string2 collated: order [
 	| len1 len2 c1 c2 |
 	len1 := string1 size.
 	len2 := string2 size.
-	1 to: (len1 min: len2) do: [ :i | 
+	1 to: (len1 min: len2) do: [ :i |
 		c1 := order at: (string1 basicAt: i) + 1.
 		c2 := order at: (string2 basicAt: i) + 1.
 		c1 = c2
@@ -38,6 +38,7 @@ ByteString class >> compare: string1 with: string2 collated: order [
 
 { #category : #primitives }
 ByteString class >> findFirstInString: aString  inSet: inclusionMap  startingAt: start [
+
 	| i stringSize |
 	<primitive: 'primitiveFindFirstInString' module: 'MiscPrimitivePlugin'>
 	<var: #aString declareC: 'unsigned char *aString'>
@@ -47,7 +48,7 @@ ByteString class >> findFirstInString: aString  inSet: inclusionMap  startingAt:
 
 	i := start.
 	stringSize := aString size.
-	[ i <= stringSize and: [ (inclusionMap at: (aString basicAt: i) + 1) = 0 ] ] whileTrue: [ 
+	[ i <= stringSize and: [ (inclusionMap at: (aString basicAt: i) + 1) = 0 ] ] whileTrue: [
 		i := i + 1 ].
 
 	i > stringSize ifTrue: [ ^0 ].
@@ -69,20 +70,20 @@ ByteString class >> indexOfAscii: anInteger inString: aString startingAt: start 
 	^ 0
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ByteString class >> initialize [
-	"ByteString initialize"
 
 	NonAsciiMap := ByteArray new: 256.
-	0 to: 255 do: [ :i | 
+	0 to: 255 do: [ :i |
 		i < 128
-			ifTrue: [ NonAsciiMap at: i + 1 put: 0	"valid ascii subset" ]
-			ifFalse: [ NonAsciiMap at: i + 1 put: 1	"extended charset" ] ]
+			ifTrue: [ NonAsciiMap at: i + 1 put: 0 "valid ASCII subset" ]
+			ifFalse: [ NonAsciiMap at: i + 1 put: 1 "extended charset" ] ]
 ]
 
-{ #category : #contants }
+{ #category : #abstract }
 ByteString class >> nonAsciiMap [
-	^NonAsciiMap
+
+	^ NonAsciiMap
 ]
 
 { #category : #primitives }
@@ -118,6 +119,7 @@ ByteString class >> translate: aString from: start  to: stop  table: table [
 
 { #category : #converting }
 ByteString >> asByteArray [
+
 	| ba sz |
 	sz := self byteSize.
 	ba := ByteArray new: sz.
@@ -128,12 +130,11 @@ ByteString >> asByteArray [
 { #category : #converting }
 ByteString >> asOctetString [
 
-	^ self.
-
+	^ self
 ]
 
 { #category : #accessing }
-ByteString >> at: index [ 
+ByteString >> at: index [
 	"Primitive. Answer the Character stored in the field of the receiver
 	indexed by the argument. Fail if the index argument is not an Integer or
 	is out of bounds. Essential. See Object documentation whatIsAPrimitive."
@@ -150,7 +151,7 @@ ByteString >> at: index put: aCharacter [
 	whatIsAPrimitive."
 
 	<primitive: 64>
-	aCharacter isCharacter 
+	aCharacter isCharacter
 		ifFalse:[^self errorImproperStore].
 	aCharacter isOctetCharacter ifFalse:[
 		"Convert to WideString"
@@ -161,32 +162,8 @@ ByteString >> at: index put: aCharacter [
 		ifTrue: [ (index between: 1 and: self size)
 				ifFalse: [ self errorSubscriptBounds: index ] ]
 		ifFalse: [self errorNonIntegerIndex].
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ].
-
-]
-
-{ #category : #comparing }
-ByteString >> beginsWith: prefix [
-	"Answer whether the receiver begins with the given prefix string.
-	The comparison is case-sensitive."
-
-	"IMPLEMENTATION NOTE:
-	following algorithm is optimized in primitive only in case self and prefix are bytes like.
-	Otherwise, if self is wide, then super outperforms,
-	Otherwise, if prefix is wide, primitive is not correct"
-	
-	"('pharo' beginsWith: '') >>> false"
-	"('pharo' beginsWith: 'pharo-project') >>> false"
-	"('pharo' beginsWith: 'phuro') >>> false"
-	"('pharo' beginsWith: 'pha') >>> true"
-	
-	prefix class isBytes ifFalse: [^super beginsWith: prefix].
-	
-	self size < prefix size ifTrue: [^ false].
-	^ (self findSubstring: prefix in: self startingAt: 1
-			matchTable: CaseSensitiveOrder) = 1
-
+	self isReadOnlyObject
+		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ]
 ]
 
 { #category : #accessing }
@@ -208,15 +185,51 @@ ByteString >> byteSize [
 ]
 
 { #category : #comparing }
+ByteString >> compareWith: anotherString [
+	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
+
+	<primitive: 158>
+	^ self compareWith: anotherString collated: AsciiOrder
+]
+
+{ #category : #comparing }
+ByteString >> compareWith: anotherString collated: order [
+	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
+
+	<primitive: 158>
+	| len1 len2 c1 c2 |
+	len1 := self size.
+	len2 := anotherString size.
+	1 to: (len1 min: len2) do: [ :i |
+		c1 := order at: (self basicAt: i) + 1.
+		c2 := order at: (anotherString basicAt: i) + 1.
+		c1 = c2 ifFalse: [
+			^ c1 < c2
+				  ifTrue: [ -1 ]
+				  ifFalse: [ 1 ] ] ].
+	len1 = len2 ifTrue: [ ^ 0 ].
+	^ len1 < len2
+		  ifTrue: [ -1 ]
+		  ifFalse: [ 1 ]
+]
+
+{ #category : #converting }
+ByteString >> createSymbol [
+
+	^(ByteSymbol basicNew: self size) string: self
+]
+
+{ #category : #comparing }
 ByteString >> findSubstring: key in: body startingAt: start matchTable: matchTable [
-	
-	^ key findIn: body startingAt: start matchTable: matchTable.
+
+	^ key findIn: body startingAt: start matchTable: matchTable
 ]
 
 { #category : #testing }
 ByteString >> hasWideCharacterFrom: start to: stop [
 	"Only WideStrings contain these characters"
-	^false
+
+	^ false
 ]
 
 { #category : #accessing }
@@ -237,36 +250,39 @@ ByteString >> indexOfAnyOf: aCollection startingAt: start ifAbsent: aBlock [
 { #category : #testing }
 ByteString >> isAsciiString [
 
-
- ^(self class findFirstInString: self inSet: NonAsciiMap startingAt: 1) = 0
+	^ (self class
+		   findFirstInString: self
+		   inSet: NonAsciiMap
+		   startingAt: 1) = 0
 ]
 
 { #category : #testing }
 ByteString >> isByteString [
 	"Answer whether the receiver is a ByteString"
+
 	"'abc' isByteString >>> true"
-	^true
+
+	^ true
 ]
 
 { #category : #testing }
 ByteString >> isOctetString [
-	"Answer whether the receiver can be represented as a byte string. 
-	This is different from asking whether the receiver *is* a ByteString 
+	"Answer whether the receiver can be represented as a byte string.
+	This is different from asking whether the receiver *is* a ByteString
 	(i.e., #isByteString)"
-	"'abc' isOctetString >>> true"
-	
-	^ true.
 
+	"'abc' isOctetString >>> true"
+
+	^ true
 ]
 
 { #category : #accessing }
-ByteString >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+ByteString >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	replacement class == WideString ifTrue: [
 		self becomeForward: (WideString from: self).
-	]. 
+	].
 
-	super replaceFrom: start to: stop with: replacement startingAt: repStart.
-
+	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]

@@ -27,7 +27,6 @@ RGVariable >> definitionString [
 		ifTrue: [ String streamContents: [ :aStream |
 			aStream nextPutAll: '#'; nextPutAll: self name]]
 		ifFalse: [self name printString]
-
 ]
 
 { #category : #testing }
@@ -72,7 +71,7 @@ RGVariable >> isReservedVariable [
 
 { #category : #testing }
 RGVariable >> isSuperVariable [
-	
+
 	^ false
 ]
 
@@ -105,9 +104,8 @@ RGVariable >> isWritable [
 { #category : #accessing }
 RGVariable >> name: aString [
 
-	self parent announceDefinitionChangeDuring: [ 
-		super name: aString ].
-
+	self parent announceDefinitionChangeDuring: [
+		super name: aString ]
 ]
 
 { #category : #testing }

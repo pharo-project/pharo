@@ -11,12 +11,20 @@ Class {
 { #category : #activation }
 CmdOpenTextLeftBarMenuCommand class >> contextClickActivation [
 	<classAnnotation>
-	
+
 	^CmdTextLeftBarClickActivation byYellowButtonFor: CmdToolContext
-	
 ]
 
 { #category : #execution }
 CmdOpenTextLeftBarMenuCommand >> activationStrategy [
-	^CmdTextLeftBarMenuActivation 
+	^CmdTextLeftBarMenuActivation
+]
+
+{ #category : #execution }
+CmdOpenTextLeftBarMenuCommand >> execute [
+
+	context selectedTextInterval ifEmpty: [
+		context showSourceNode].
+
+	super execute
 ]

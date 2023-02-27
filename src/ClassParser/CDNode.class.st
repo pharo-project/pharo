@@ -18,9 +18,15 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
+{ #category : #testing }
+CDNode class >> isAbstract [
+
+	^ self == CDNode
+]
+
 { #category : #'instance creation' }
-CDNode class >> on: aRBMessageNode [ 
-	
+CDNode class >> on: aRBMessageNode [
+
 	^ self new
 		originalNode: aRBMessageNode;
 		yourself
@@ -28,7 +34,7 @@ CDNode class >> on: aRBMessageNode [
 
 { #category : #visitor }
 CDNode >> acceptVisitor: aProgramNodeVisitor [
-	
+
 	self subclassResponsibility
 ]
 
@@ -46,13 +52,13 @@ CDNode >> ast [
 ]
 
 { #category : #selection }
-CDNode >> bestNodeFor: anInterval [ 
+CDNode >> bestNodeFor: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
 	(self containedBy: anInterval) ifTrue: [^self].
-	selectedChildren := self children 
+	selectedChildren := self children
 				select: [:each | each intersectsInterval: anInterval].
-	^selectedChildren size == 1 
+	^selectedChildren size == 1
 		ifTrue: [selectedChildren first bestNodeFor: anInterval]
 		ifFalse: [self]
 ]
@@ -69,26 +75,8 @@ CDNode >> classDefinitionNode [
 ]
 
 { #category : #selection }
-CDNode >> containedBy: anInterval [ 
+CDNode >> containedBy: anInterval [
 	^anInterval first <= self start and: [anInterval last >= self stop]
-]
-
-{ #category : #compatibility }
-CDNode >> hasBreakpoint [
-	
-	^ false
-]
-
-{ #category : #compatibility }
-CDNode >> hasExecutionCounter [
-	
-	^ false
-]
-
-{ #category : #compatibility }
-CDNode >> hasWatch [
-	
-	^ false
 ]
 
 { #category : #initialization }
@@ -99,8 +87,8 @@ CDNode >> initialize [
 ]
 
 { #category : #selection }
-CDNode >> intersectsInterval: anInterval [ 
-	^(anInterval first between: self start and: self stop) 
+CDNode >> intersectsInterval: anInterval [
+	^(anInterval first between: self start and: self stop)
 		or: [self start between: anInterval first and: anInterval last]
 ]
 
@@ -125,8 +113,7 @@ CDNode >> isVariable [
 { #category : #accessing }
 CDNode >> originalNode [
 
-	^originalNode.
-	
+	^originalNode
 ]
 
 { #category : #accessing }
@@ -138,8 +125,7 @@ CDNode >> originalNode: aNode [
 { #category : #accessing }
 CDNode >> originalNodeSource [
 
-	^originalNode source.
-	
+	^originalNode source
 ]
 
 { #category : #accessing }
@@ -159,18 +145,18 @@ CDNode >> sourceInterval [
 
 { #category : #selection }
 CDNode >> start [
-	
+
 	^ originalNode start
 ]
 
 { #category : #selection }
 CDNode >> stop [
-	
+
 	^ originalNode stop
 ]
 
 { #category : #accessing }
-CDNode >> tokens [ 
+CDNode >> tokens [
 	^ tokens
 ]
 

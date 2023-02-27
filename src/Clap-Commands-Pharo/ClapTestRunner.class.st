@@ -27,7 +27,7 @@ ClapTestRunner class >> test [
 			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			args validateAll.
-			
+
 			(self with: args) execute ]
 ]
 
@@ -54,7 +54,7 @@ ClapTestRunner >> execute [
 			ensure: [ self suite unsubscribe: TestAnnouncement ].
 		out print: result; lf
 	].
-	
+
 	self context exitSuccess
 ]
 

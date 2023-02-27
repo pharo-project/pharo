@@ -18,6 +18,12 @@ MouseButtonEvent >> blueButtonChanged [
 ]
 
 { #category : #accessing }
+MouseButtonEvent >> isSpecialGesture [
+	"This is the gesture to open the Halos"
+	^ self blueButtonPressed or: [self redButtonPressed & self altKeyPressed & self shiftPressed]
+]
+
+{ #category : #accessing }
 MouseButtonEvent >> redButtonChanged [
 	"Answer true if the red mouse button has changed. This is the first mouse button."
 
@@ -40,14 +46,14 @@ MouseButtonEvent >> setType: evtType position: evtPos which: button buttons: evt
 	source := evtHand.
 	wasHandled := false.
 	whichButton := button.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #printing }
 MouseButtonEvent >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream space.
-	whichButton storeOn: aStream.
+	whichButton storeOn: aStream
 ]
 
 { #category : #accessing }

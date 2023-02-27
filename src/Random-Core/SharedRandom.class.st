@@ -1,7 +1,7 @@
 "
 I represent a Random number generator that can be shaded between different code.
 
-I wrap the access to my parent's functionality (#next, #nextInt: and #next:into:)  through a mutex making me safe for multi threaded use.
+I wrap the access to my parent's functionality (#next, #nextInteger: and #next:into:)  through a mutex making me safe for multi threaded use.
 
 To access the default shared random number generator, do:
 
@@ -26,29 +26,29 @@ SharedRandom class >> globalGenerator [
 	^ global
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SharedRandom class >> initialize [
-	"self initialize"
-	global := self new.
+
+	global := self new
 ]
 
 { #category : #initialization }
 SharedRandom >> initialize [
 	super initialize.
-	mutex := Semaphore forMutualExclusion.
+	mutex := Semaphore forMutualExclusion
 ]
 
 { #category : #accessing }
 SharedRandom >> next [
-	^ 	mutex critical: [ super privateNextValue ].
+	^ 	mutex critical: [ super privateNextValue ]
 ]
 
 { #category : #accessing }
 SharedRandom >> next: anInteger into: anArray [
-    ^ mutex critical: [ super next: anInteger into: anArray ].
+    ^ mutex critical: [ super next: anInteger into: anArray ]
 ]
 
 { #category : #accessing }
 SharedRandom >> nextInteger: anInteger [
-    ^ mutex critical: [ super nextInteger: anInteger ].
+    ^ mutex critical: [ super nextInteger: anInteger ]
 ]

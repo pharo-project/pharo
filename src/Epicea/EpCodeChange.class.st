@@ -10,11 +10,11 @@ Class {
 { #category : #accessing }
 EpCodeChange >> affectedPackageName [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
-EpCodeChange >> doesOverride: aCodeChange [ 
+EpCodeChange >> doesOverride: aCodeChange [
 
 	^ self subclassResponsibility
 ]

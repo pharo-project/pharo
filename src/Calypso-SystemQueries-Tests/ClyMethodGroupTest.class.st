@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 ClyMethodGroupTest >> createMethodGroup [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }

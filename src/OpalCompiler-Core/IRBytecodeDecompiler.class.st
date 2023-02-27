@@ -16,7 +16,7 @@ Class {
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> blockReturnTop [
 	self popScope.
-	irBuilder blockReturnTop.
+	irBuilder blockReturnTop
 ]
 
 { #category : #private }
@@ -31,7 +31,7 @@ IRBytecodeDecompiler >> decompile: aCompiledMethod [
 	scopeStack := Stack new.
 	self pushScope: #() numArgs: aCompiledMethod numArgs.
 	irBuilder irPrimitive: aCompiledMethod irPrimitive.
-	
+
 	aCompiledMethod hasProperties ifTrue: [irBuilder properties: aCompiledMethod properties copy].
 	irBuilder numArgs: aCompiledMethod numArgs.
 	irBuilder addTemps: self scope args.
@@ -44,7 +44,7 @@ IRBytecodeDecompiler >> decompile: aCompiledMethod [
 	irBuilder additionalLiterals: aCompiledMethod literals.
 	"when compiling methods of context classes, force long form for iVar access by getting the correct context"
 	irBuilder compilationContext: aCompiledMethod methodClass compiler compilationContext.
-	^ irBuilder ir.
+	^ irBuilder ir
 ]
 
 { #category : #'instruction decoding' }
@@ -61,7 +61,7 @@ IRBytecodeDecompiler >> doPop [
 IRBytecodeDecompiler >> interpret [
 	| endPC |
 	endPC := instructionStream method endPC.
-	[instructionStream pc > endPC ] 
+	[instructionStream pc > endPC ]
 		whileFalse: [
 			self checkIfJumpTarget.
 			irBuilder mapToByteIndex: instructionStream pc.
@@ -77,7 +77,7 @@ IRBytecodeDecompiler >> jump: dist [
 		"jump forward"
 		^ irBuilder jumpAheadTo: index ].
 	"jump to the jump instuction itself"
-	dist >= -2 ifTrue: 
+	dist >= -2 ifTrue:
 		[	irBuilder jumpBackTarget: index.
 			irBuilder jumpBackTo: index.
 		^self].
@@ -94,9 +94,7 @@ IRBytecodeDecompiler >> jump: dist [
 	"if we have split the currentSequence of the irBuilder, make sure to set it
 	to the newSeq"
 	irBuilder currentSequence = seq ifTrue: [irBuilder currentSequence: newSeq].
-	irBuilder jumpBackTo: index.
-
-
+	irBuilder jumpBackTo: index
 ]
 
 { #category : #'instruction decoding' }
@@ -119,13 +117,13 @@ IRBytecodeDecompiler >> methodClass [
 { #category : #'quick methods' }
 IRBytecodeDecompiler >> methodReturnConstant: value [
 	self pushConstant: value.
-	self methodReturnTop.
+	self methodReturnTop
 ]
 
 { #category : #'quick methods' }
 IRBytecodeDecompiler >> methodReturnReceiver [
 	self pushReceiver.
-	self methodReturnTop.
+	self methodReturnTop
 ]
 
 { #category : #'instruction decoding' }
@@ -142,20 +140,19 @@ IRBytecodeDecompiler >> methodReturnTop [
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> popIntoLiteralVariable: offset [
 	self storeIntoLiteralVariable: offset.
-	self doPop.
+	self doPop
 ]
 
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> popIntoReceiverVariable: offset [
 	self storeIntoReceiverVariable: offset.
-	self doPop.
+	self doPop
 ]
 
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 	self storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex.
-	self doPop.
-	
+	self doPop
 ]
 
 { #category : #'instruction decoding' }
@@ -176,15 +173,15 @@ IRBytecodeDecompiler >> popIntoTemporaryVariable: offset [
 IRBytecodeDecompiler >> popScope [
 	| scope tempIndex |
 	scope := self scope.
-	
+
 	irBuilder addTemps: scope temps.
-	
+
 	" Remap your own temp vectors "
 	scope ownTempVectors do: [ :tempVector |
 		irBuilder
 			remapTemp: (scope -> tempVector index)
 			toRemote: tempVector ].
-	
+
 	" Remap the copied values "
 	tempIndex := scope numArgs.
 	scope copiedValues do: [ :copiedValue |
@@ -192,7 +189,7 @@ IRBytecodeDecompiler >> popScope [
 			remapTemp: (scope -> tempIndex)
 			toRemote: copiedValue.
 		tempIndex := tempIndex + 1. ].
-	
+
 	^ scopeStack pop
 ]
 
@@ -202,22 +199,8 @@ IRBytecodeDecompiler >> pushActiveContext [
 ]
 
 { #category : #'instruction decoding' }
-IRBytecodeDecompiler >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [ 
-	| closureEnd copiedValues |
-	copiedValues := irBuilder removeLast: numCopied.
-	self pushScope: copiedValues numArgs: numArgs.
-	closureEnd := instructionStream pc + blockSize.
-	
-	irBuilder
-		pushClosureCopyCopiedValues: copiedValues
-		args: self scope args
-		jumpTo: closureEnd.
-]
-
-{ #category : #'instruction decoding' }
-IRBytecodeDecompiler >> pushConsArrayWithElements: numElements [ 
+IRBytecodeDecompiler >> pushConsArrayWithElements: numElements [
 	irBuilder pushConsArray: numElements
-
 ]
 
 { #category : #'instruction decoding' }
@@ -226,8 +209,8 @@ IRBytecodeDecompiler >> pushConstant: value [
 ]
 
 { #category : #'instruction decoding' }
-IRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [ 
-	
+IRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [
+
 	| copiedValues |
 
 	copiedValues := irBuilder removeLast: numCopied.
@@ -238,7 +221,7 @@ IRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied rece
 
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> pushLiteralVariable: assoc [
-	irBuilder pushLiteralVariable: assoc.
+	irBuilder pushLiteralVariable: assoc
 ]
 
 { #category : #'instruction decoding' }
@@ -253,16 +236,15 @@ IRBytecodeDecompiler >> pushReceiver [
 
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> pushReceiverVariable: offset [
-	irBuilder pushInstVar: offset + 1.
-
+	irBuilder pushInstVar: offset + 1
 ]
 
 { #category : #'instruction decoding' }
-IRBytecodeDecompiler >> pushRemoteTemp: remoteIndex inVectorAt: tempIndex [ 
+IRBytecodeDecompiler >> pushRemoteTemp: remoteIndex inVectorAt: tempIndex [
 	|  remoteArray remoteTempName |
 	remoteArray := self scope tempAt: tempIndex.
 	remoteTempName := self scope tempAt: remoteIndex inRemote: remoteArray.
-	irBuilder pushRemoteTemp: remoteTempName inVector: remoteArray.
+	irBuilder pushRemoteTemp: remoteTempName inVector: remoteArray
 ]
 
 { #category : #scope }
@@ -270,7 +252,7 @@ IRBytecodeDecompiler >> pushScope: copiedValues numArgs: numArgs [
 	|scope |
 	scope := IRBytecodeScope new numArgs: numArgs.
 	scopeStack push: scope.
-	scope copiedValues: copiedValues.
+	scope copiedValues: copiedValues
 ]
 
 { #category : #'instruction decoding' }
@@ -283,7 +265,7 @@ IRBytecodeDecompiler >> quickMethod [
 
 	instructionStream method primitive = 256 ifTrue: [
 		^ self methodReturnReceiver
-	]. 
+	].
 	instructionStream method isReturnSpecial ifTrue: [
 		^ self methodReturnConstant: (instructionStream method encoderClass quickPrimSpecialConstants at: instructionStream method primitive - 256)
 	].
@@ -313,17 +295,15 @@ IRBytecodeDecompiler >> storeIntoLiteralVariable: value [
 
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> storeIntoReceiverVariable: offset [
-	irBuilder storeInstVar: offset + 1.
-
+	irBuilder storeInstVar: offset + 1
 ]
 
 { #category : #'instruction decoding' }
-IRBytecodeDecompiler >> storeIntoRemoteTemp: remoteIndex inVectorAt: tempIndex [ 
+IRBytecodeDecompiler >> storeIntoRemoteTemp: remoteIndex inVectorAt: tempIndex [
 	|  remoteArray remoteTempName |
 	remoteArray := self scope tempAt: tempIndex.
-	remoteTempName := self scope tempAt: remoteIndex inRemote: remoteArray.	
-	irBuilder storeRemoteTemp: remoteTempName inVector: remoteArray.
-	
+	remoteTempName := self scope tempAt: remoteIndex inRemote: remoteArray.
+	irBuilder storeRemoteTemp: remoteTempName inVector: remoteArray
 ]
 
 { #category : #'instruction decoding' }

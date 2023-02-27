@@ -27,14 +27,22 @@ Class {
 
 { #category : #private }
 ExceptionTest >> assertSuccess: anExceptionTester [
-	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded'].
+	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded']
+]
+
+{ #category : #utilities }
+ExceptionTest >> methodSignallingZeroDivide [
+
+	^ [ 1 / 0 ]
+		  on: ZeroDivide
+		  do: [ :e | e signal ]
 ]
 
 { #category : #private }
 ExceptionTest >> runCaseManaged [
 	"We should disable TestEnvironment to avoid any logic for unhandled errors from background processes.
 	Some tests fork processes to ensure clean no handlers (SUnit catches errors for example)"
-	
+
 	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
 ]
 
@@ -43,9 +51,9 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	"Executing the given block directly would go through all handlers of SUnit machinery.
 	Here we simulate the clean environment with no outer handlers for possible block errors"
 	| synchSemaphore result |
-	synchSemaphore := Semaphore new. 
+	synchSemaphore := Semaphore new.
 	[result := aBlock ensure: [synchSemaphore signal]] forkNamed: 'Test process'.
-	"we should not wait forever in case of wrong behaviour 
+	"we should not wait forever in case of wrong behaviour
 	(general test timeout is disabled in #runCaseManaged)"
 	(synchSemaphore wait: 2 seconds)
 		ifTrue: [ self error: 'Timeout for block execution' ].
@@ -58,8 +66,7 @@ ExceptionTest >> testCaptureIfSignalledWhenStepping [
 	self assert: Error captureIfSignalledWhenStepping.
 	self deny: (Error allSubclasses anySatisfy: [ :c| c  captureIfSignalledWhenStepping]).
 	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) size equals: 1.
-	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt.
-	
+	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt
 ]
 
 { #category : #tests }
@@ -70,7 +77,7 @@ ExceptionTest >> testDefaultAction [
 
 	| expected result |
 	expected := #marker.
-	self runWithNoHandlers: [ 
+	self runWithNoHandlers: [
 		[ result := MyResumableTestError signal ]
 			on: UnhandledError
 			do: [ :ex | ex resume: expected ] ].
@@ -82,8 +89,7 @@ ExceptionTest >> testDefaultDescription [
    "Tests that the description of an Exception, is the defaultDescription"
    |anException|
 	anException := Exception new.
-	self assert: anException description equals: anException defaultDescription 
-	
+	self assert: anException description equals: anException defaultDescription
 ]
 
 { #category : #tests }
@@ -98,17 +104,17 @@ ExceptionTest >> testDescription [
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleOuterPass [
-	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoublePassOuter [
-	self assertSuccess: (ExceptionTester new runTest: #doublePassOuterTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #doublePassOuterTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleResume [
-	self assertSuccess: (ExceptionTester new runTest: #doubleResumeTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #doubleResumeTest )
 ]
 
 { #category : #'tests - handling' }
@@ -116,8 +122,8 @@ ExceptionTest >> testHandlerContext [
 	"A test ensuring that when evaluating the action block the exception environment is set to the handler context."
 
 	| result |
-	result := [ 
-	[ 
+	result := [
+	[
 	[ MyResumableTestError signal ]
 		on: MyTestError
 		do: [ 'handler 2' ] ]
@@ -133,8 +139,8 @@ ExceptionTest >> testHandlerFromAction [
 	"A test ensuring that nested exceptions work as expected."
 
 	| result |
-	result := [ 
-	[ 
+	result := [
+	[
 	[ self error: 'trigger error' ]
 		on: ZeroDivide
 		do: [ :ex | 'inner' ] ]
@@ -153,14 +159,14 @@ ExceptionTest >> testHandlingExceptionSetWithExclusion [
 	wasHandled := false.
 
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error, ArithmeticError - ZeroDivide
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
-	
+
 	self deny: wasHandled
 ]
 
@@ -171,11 +177,11 @@ ExceptionTest >> testHandlingWhenThereIsSomeExclusionButDontApplies [
 
 	wasHandled := false.
 
-	result := [ 
+	result := [
 	ZeroDivide signalWithDividend: 1.
 	2 ]
 		on: Error - MessageNotUnderstood
-		do: [ :exception | 
+		do: [ :exception |
 			wasHandled := true.
 			exception return ].
 
@@ -192,14 +198,14 @@ ExceptionTest >> testHandlingWithExclusion [
 	wasHandled := false.
 
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error - ZeroDivide
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
-	
+
 	self deny: wasHandled
 ]
 
@@ -208,24 +214,24 @@ ExceptionTest >> testHandlingWithSeveralExclusions [
 	| wasHandled |
 	wasHandled := false.
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error - Warning - ZeroDivide
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
 	self deny: wasHandled.
-	
+
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error - (Warning , ZeroDivide)
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
-	self deny: wasHandled.
+	self deny: wasHandled
 ]
 
 { #category : #'tests - handling' }
@@ -235,63 +241,61 @@ ExceptionTest >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
 
 	wasHandled := false.
 
-	result := [ 
+	result := [
 	ZeroDivide signalWithDividend: 1.
 	2 ]
 		on: Error - MessageNotUnderstood - Warning
-		do: [ :exception | 
+		do: [ :exception |
 			wasHandled := true.
 			exception return ].
 
 	self
 		assert: wasHandled;
 		assert: result isNil.
-		
+
 	wasHandled := false.
 
-	result := [ 
+	result := [
 	ZeroDivide signalWithDividend: 1.
 	2 ]
 		on: Error - (MessageNotUnderstood , Warning)
-		do: [ :exception | 
+		do: [ :exception |
 			wasHandled := true.
 			exception return ].
 
 	self
 		assert: wasHandled;
-		assert: result isNil.	
+		assert: result isNil
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testNoTimeout [
-	self assertSuccess: (ExceptionTester new runTest: #simpleNoTimeoutTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleNoTimeoutTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testNonResumableFallOffTheEndHandler [
-	self assertSuccess: (ExceptionTester new runTest: #nonResumableFallOffTheEndHandler ) 
+	self assertSuccess: (ExceptionTester new runTest: #nonResumableFallOffTheEndHandler )
 ]
 
 { #category : #'tests - outer' }
 ExceptionTest >> testNonResumableOuter [
 
 	self should: [
-		[Error signal. 4] 
-			on: Error 
+		[Error signal. 4]
+			on: Error
 			do: [:ex | ex outer. ex return: 5]
 		] raise: Error
-
 ]
 
 { #category : #'tests - outer' }
 ExceptionTest >> testNonResumablePass [
 
 	self should: [
-		[Error signal. 4] 
-			on: Error 
+		[Error signal. 4]
+			on: Error
 			do: [:ex | ex pass. ex return: 5]
 		] raise: Error
-
 ]
 
 { #category : #'tests - resignal' }
@@ -318,20 +322,32 @@ ExceptionTest >> testResignalAsUnwinds [
 	self assert: answer == 5
 ]
 
+{ #category : #'tests - resignal' }
+ExceptionTest >> testResignalExceptionThatHasBeenSignaledTwice [
+
+	| shouldBe17 |
+	shouldBe17 := nil.
+
+	[ shouldBe17 := self methodSignallingZeroDivide ]
+		on: ZeroDivide
+		do: [ :e | e resume: 17 ].
+
+	self assert: shouldBe17 notNil
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testResumableFallOffTheEndHandler [
-	self assertSuccess: (ExceptionTester new runTest: #resumableFallOffTheEndHandler ) 
+	self assertSuccess: (ExceptionTester new runTest: #resumableFallOffTheEndHandler )
 ]
 
 { #category : #'tests - outer' }
 ExceptionTest >> testResumableOuter [
 
 	| result |
-	result := [Notification signal. 4] 
-		on: Notification 
+	result := [Notification signal. 4]
+		on: Notification
 		do: [:ex | ex outer. ex return: 5].
 	self assert: result equals: 5
-
 ]
 
 { #category : #'tests - outer' }
@@ -340,7 +356,7 @@ ExceptionTest >> testResumablePass [
 	result := [ Notification signal.
 	4 ]
 		on: Notification
-		do: [ :ex | 
+		do: [ :ex |
 			ex pass.
 			ex return: 5 ].
 	self assert: result equals: 4
@@ -354,7 +370,7 @@ ExceptionTest >> testResumeNonresumableUnhandledError [
 
 	| signalOccurred |
 	self
-		runWithNoHandlers: [ 
+		runWithNoHandlers: [
 			[[ MyTestError signal ]
 				on: UnhandledError
 				do: [ :ex | ex resume: nil ]]
@@ -365,18 +381,18 @@ ExceptionTest >> testResumeNonresumableUnhandledError [
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSignalFromHandlerActionTest [
-	self assertSuccess: (ExceptionTester new runTest: #signalFromHandlerActionTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #signalFromHandlerActionTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSignalWithTag [
 	| aTag |
 	aTag := Object new.
-	
-	[ 
+
+	[
 		DomainError signal: 'aMessage' withTag: aTag.
-		self fail: 'The exception was not signaled'. 
-	] on: DomainError do: [ :e | 
+		self fail: 'The exception was not signaled'.
+	] on: DomainError do: [ :e |
 		self assert: e messageText equals: 'aMessage'.
 		self assert: e tag equals: aTag.
 	]
@@ -384,57 +400,57 @@ ExceptionTest >> testSignalWithTag [
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleEnsure [
-	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleEnsureTestWithError [
-	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithError ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithError )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleEnsureTestWithNotification [
-	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithNotification ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithNotification )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleEnsureTestWithUparrow [
-	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithUparrow ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithUparrow )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleIsNested [
-	self assertSuccess: (ExceptionTester new runTest: #simpleIsNestedTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleIsNestedTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleOuter [
-	self assertSuccess: (ExceptionTester new runTest: #simpleOuterTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleOuterTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimplePass [
-	self assertSuccess: (ExceptionTester new runTest: #simplePassTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simplePassTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleResignalAs [
-	self assertSuccess: (ExceptionTester new runTest: #simpleResignalAsTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleResignalAsTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleResume [
-	self assertSuccess: (ExceptionTester new runTest: #simpleResumeTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleResumeTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleReturn [
-	self assertSuccess: (ExceptionTester new runTest: #simpleReturnTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleReturnTest )
 ]
 
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testTimeoutWithZeroDuration [
-	self assertSuccess: (ExceptionTester new runTest: #simpleTimeoutWithZeroDurationTest ) 
+	self assertSuccess: (ExceptionTester new runTest: #simpleTimeoutWithZeroDurationTest )
 ]
 
 { #category : #'tests - handling' }
@@ -442,7 +458,7 @@ ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
 	| executed |
 	executed := false.
 	self runWithNoHandlers: [
-		[ 
+		[
 			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 		] on: ZeroDivide do: [:z | z pass].
 	].
@@ -464,7 +480,7 @@ ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
 	| executed |
 	executed := false.
 	self runWithNoHandlers: [
-		[ [  
+		[ [
 				[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 			] on: ZeroDivide do: [:z | z pass]
 		] on: ZeroDivide do: [:z | z pass]
@@ -474,10 +490,10 @@ ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
-	
+
 	| error caughtException |
 	error := Error new.
-	self runWithNoHandlers: [ 
+	self runWithNoHandlers: [
 		[ error signal ] on: UnhandledException do: [ :err | caughtException := err ]
 	].
 	self assert: caughtException class equals: UnhandledError.
@@ -486,7 +502,7 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
-	
+
 	| halt caughtException |
 	halt := Halt new.
 	self runWithNoHandlers: [
@@ -497,7 +513,7 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledExceptionShouldAllowToCatchWarning [
-	
+
 	| warning caughtException |
 	warning := Warning new.
 	self runWithNoHandlers: [
@@ -509,7 +525,7 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchWarning [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledWarningShouldBeProcessedAsUnhandledError [
-	
+
 	| warning caughtException |
 	warning := Warning new.
 	self runWithNoHandlers: [

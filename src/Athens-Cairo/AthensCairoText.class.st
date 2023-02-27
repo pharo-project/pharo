@@ -105,40 +105,41 @@ AthensCairoText >> fontWeight [
 AthensCairoText >> fontWeight: anObject [
 	anObject isSymbol
 		ifTrue:[ fontWeight := self weightFrom: anObject ]
-		ifFalse:[ fontWeight :=  anObject ] 
+		ifFalse:[ fontWeight :=  anObject ]
 ]
 
 { #category : #initialization }
 AthensCairoText >> initialize [
 	super initialize.
-	
+
 	self beNormal; beSlantNormal.
-	 fontSize := 10.
+	 fontSize := 10
 ]
 
 { #category : #drawing }
 AthensCairoText >> loadOn: aCanvas [
-	fontFamily notNil ifTrue:[
+
+	fontFamily ifNotNil:[
 		self
 			primSelectFont:  fontFamily
-				slant:  fontSlant
-				weight:  fontWeight 
-				on: aCanvas] .
-	fontSize notNil ifTrue:[		
-		self primSetFontSize:  (TextStyle pointsToPixels: fontSize) on: aCanvas ]
+			slant:  fontSlant
+			weight:  fontWeight
+			on: aCanvas ].
+
+	fontSize ifNotNil: [
+		self primSetFontSize: (CairoScaledFont pointsToPixels: fontSize) on: aCanvas ]
 ]
 
 { #category : #private }
 AthensCairoText >> primSelectFont: aFontFamily
 		slant: aFontSlant
-		weight: aFontWeight 
+		weight: aFontWeight
 		on: aCanvas [
 	^ self ffiCall: #(void cairo_select_font_face (
 			cairo_t aCanvas,
    			char * aFontFamily,
       		cairo_font_slant_t aFontSlant,
         	cairo_font_weight_t aFontWeight) )
-	
 ]
 
 { #category : #private }
@@ -146,7 +147,6 @@ AthensCairoText >> primSetFontSize: aFontSize on: aCanvas [
 	^ self ffiCall: #(void cairo_set_font_size (
 			cairo_t aCanvas,
 			double aFontSize) )
-
 ]
 
 { #category : #private }
@@ -154,7 +154,6 @@ AthensCairoText >> primShowText: aString on: aCanvas [
 	^ self ffiCall: #(void cairo_show_text (
 			cairo_t aCanvas,
 			char * aString) )
-
 ]
 
 { #category : #'font description' }
@@ -162,7 +161,7 @@ AthensCairoText >> readFrom: aFontDescription [
 	self fontFamily: aFontDescription fontFamily.
 	self fontSlant: aFontDescription fontSlant.
 	self fontWeight:  aFontDescription fontWeight.
-	self fontSize: aFontDescription fontSize.
+	self fontSize: aFontDescription fontSize
 ]
 
 { #category : #drawing }
@@ -198,5 +197,4 @@ AthensCairoText >> weightFrom: aSymbol [
 	^ aSymbol caseOf: {
 		[#normal]->[ CAIRO_FONT_WEIGHT_NORMAL  ].
  		[#bold]->[    CAIRO_FONT_WEIGHT_BOLD ] }
-
 ]

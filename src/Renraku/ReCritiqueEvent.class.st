@@ -18,5 +18,5 @@ ReCritiqueEvent >> entity [
 { #category : #accessing }
 ReCritiqueEvent >> entity: anObject [
 
-	entity := anObject 
+	entity := anObject
 ]

@@ -14,10 +14,10 @@ LazyListMorph >> athensDisplay: item atRow: row on: aCanvas [
 		atRow: row
 		bounds: drawBounds
 		color: c
-		backgroundColor: backgroundColor 
+		backgroundColor: backgroundColor
 		from: self.
 	row = self mouseDownRow
-		ifTrue: [ 
+		ifTrue: [
 			(aCanvas setStrokePaint: c)
 				width: 1;
 				dashes: {1} offset: 0.
@@ -32,26 +32,25 @@ LazyListMorph >> athensDrawBackgroundForRow: row on: aCanvas color: aColor [
 ]
 
 { #category : #'*Athens-Morphic' }
-LazyListMorph >> athensDrawBackgroundForSearchedRow: row on: aCanvas [ 
+LazyListMorph >> athensDrawBackgroundForSearchedRow: row on: aCanvas [
 
 	aCanvas setPaint: listSource secondarySelectionColor.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
 { #category : #'*Athens-Morphic' }
-LazyListMorph >> athensDrawBackgroundForSelectedRow: row on: aCanvas [ 
+LazyListMorph >> athensDrawBackgroundForSelectedRow: row on: aCanvas [
 
 	aCanvas setPaint: listSource selectionColorToUse.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
 { #category : #'*Athens-Morphic' }
-LazyListMorph >> athensDrawSelectionOn: anAthensCanvas [ 
-	
+LazyListMorph >> athensDrawSelectionOn: anAthensCanvas [
+
 	selectedRow ifNil: [ ^self ].
 	selectedRow = 0 ifTrue: [ ^self ].
-	self athensDrawBackgroundForSelectedRow: selectedRow on: anAthensCanvas 
-
+	self athensDrawBackgroundForSelectedRow: selectedRow on: anAthensCanvas
 ]
 
 { #category : #'*Athens-Morphic' }
@@ -78,14 +77,14 @@ LazyListMorph >> drawOnAthensCanvas: aCanvas [
 						(listSource backgroundColorFor: row)
 							ifNotNil: [:col |
 								self athensDrawBackgroundForRow: row on: aCanvas color: col ]]].
-					
+
 			selectedRow = row ifTrue: [ self athensDrawSelectionOn: aCanvas ].
 			(listSource separatorAfterARow: row) ifTrue: [ self athensDrawSeparatorAfter: row on: aCanvas ].
 			self
 				athensDisplay: (self item: row)
 				atRow: row
 				on: aCanvas].
-		
+
 	listSource potentialDropRow > 0
 		ifTrue: [self athensHighlightPotentialDropRow: listSource potentialDropRow on: aCanvas]
 ]

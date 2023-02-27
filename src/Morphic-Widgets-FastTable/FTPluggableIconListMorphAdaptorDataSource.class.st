@@ -22,16 +22,16 @@ Class {
 FTPluggableIconListMorphAdaptorDataSource >> cellColumn: column row: rowIndex [
 	| object text icon |
 	object := self elementAt: rowIndex.
-	
-	icon := self getIconSelector ifNotNil: [ :selector | 
+
+	icon := self getIconSelector ifNotNil: [ :selector |
 		self model perform: selector with: object ].
 	text := column transform: (self elementWrapped: object).
-	
-	^ self createCellText: text icon: icon.
+
+	^ self createCellText: text icon: icon
 ]
 
 { #category : #private }
-FTPluggableIconListMorphAdaptorDataSource >> createCellText: aString icon: anIcon [ 
+FTPluggableIconListMorphAdaptorDataSource >> createCellText: aString icon: anIcon [
 	| text icon cell |
 	text := aString.
 	icon := anIcon.
@@ -57,36 +57,35 @@ FTPluggableIconListMorphAdaptorDataSource >> dragTransferType [
 { #category : #'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> dropElements: aCollection index: rowIndex [
 	self dropItemSelector ifNil: [ ^ self ].
-	self model 
-		perform: self dropItemSelector 
+	self model
+		perform: self dropItemSelector
 		with: aCollection
 		with: rowIndex
 ]
 
 { #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector [
-	^ dropItemSelector 
+	^ dropItemSelector
 ]
 
 { #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector: aSelector [
 	dropItemSelector := aSelector
-
 ]
 
 { #category : #accessing }
 FTPluggableIconListMorphAdaptorDataSource >> elementAt: rowIndex [
-	^ self getListElementSelector 
-		ifNotNil: [ 
+	^ self getListElementSelector
+		ifNotNil: [
 			self model perform: self getListElementSelector with: rowIndex ]
-		ifNil: [ 
+		ifNil: [
 			(self model perform: self getListSelector) at: rowIndex  ]
 ]
 
 { #category : #private }
 FTPluggableIconListMorphAdaptorDataSource >> elementWrapped: object [
-	^ self wrapSelector 
-		ifNotNil: [ :selector | self model perform: selector with: object ] 
+	^ self wrapSelector
+		ifNotNil: [ :selector | self model perform: selector with: object ]
 		ifNil: [ object ]
 ]
 
@@ -148,17 +147,16 @@ FTPluggableIconListMorphAdaptorDataSource >> getMenuSelector: anObject [
 { #category : #accessing }
 FTPluggableIconListMorphAdaptorDataSource >> menuColumn: column row: rowIndex [
 	| menu |
-	
+
 	self getMenuSelector ifNil: [ ^ nil ].
-	
+
 	menu := UIManager default newMenuIn: self table for: self model.
-	self getMenuSelector numArgs = 1 ifTrue: [ 
+	self getMenuSelector numArgs = 1 ifTrue: [
 		^ self model perform: self getMenuSelector with: menu ].
-	^ self model 
+	^ self model
 		perform: self getMenuSelector
 		with: menu
-		with: false 
-
+		with: false
 ]
 
 { #category : #accessing }
@@ -174,25 +172,25 @@ FTPluggableIconListMorphAdaptorDataSource >> model: anObject [
 { #category : #accessing }
 FTPluggableIconListMorphAdaptorDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements wrappedItem text newDataSource modelCopy |
-	newElements := self elements select: [ :each | 
+	newElements := self elements select: [ :each |
 		wrappedItem := self elementWrapped: each.
-		table columns anySatisfy: [ :column | 
+		table columns anySatisfy: [ :column |
 			text := column transform: wrappedItem.
 			aFTFilter matches: text]].
-	
+
 	newDataSource := self copy.
 	modelCopy := self model copy.
 	modelCopy prepareForFilteredDataSourceWith: newElements.
 	newDataSource model: modelCopy.
-	
+
 	^newDataSource
 ]
 
 { #category : #accessing }
 FTPluggableIconListMorphAdaptorDataSource >> numberOfRows [
-	^ self model 
-		ifNotNil: [ 
-			self getListSizeSelector 
+	^ self model
+		ifNotNil: [
+			self getListSizeSelector
 				ifNotNil: [ self model perform: self getListSizeSelector ]
 				ifNil: [ (self model perform: self getListSelector) size ] ]
 		ifNil: [ 0 ]
@@ -204,7 +202,7 @@ FTPluggableIconListMorphAdaptorDataSource >> searchText: aString [
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
 	result := OrderedCollection new.
 	search := aString trimBoth asLowercase.
-	1 to: self numberOfRows do: [ :rowIndex | 
+	1 to: self numberOfRows do: [ :rowIndex |
 		text := (self elementWrapped: (self elementAt: rowIndex)) contents trimBoth asLowercase.
 		(text beginsWith: search)
 			ifTrue: [ result add: rowIndex ] ].
@@ -213,15 +211,15 @@ FTPluggableIconListMorphAdaptorDataSource >> searchText: aString [
 
 { #category : #'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> transferFor: passenger from: aMorph [
-    ^(self model transferFor: passenger from: self table) buildWithSpec
+    ^(self model transferFor: passenger from: self table) build
 ]
 
 { #category : #'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> wantsDropElements: aCollection type: type index: rowIndex [
 	self dropItemSelector ifNil: [ ^ false ].
 	self wantsDropSelector ifNil: [ ^ true ].
-	^ self model 
-		perform: self wantsDropSelector 
+	^ self model
+		perform: self wantsDropSelector
 		with: aCollection
 ]
 

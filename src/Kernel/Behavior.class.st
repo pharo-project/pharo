@@ -27,7 +27,7 @@ Behavior class >> cleanUp [
 { #category : #'class initialization' }
 Behavior class >> flushObsoleteSubclasses [
 	"Behavior flushObsoleteSubclasses"
-	ObsoleteSubclasses finalizeValues.
+	ObsoleteSubclasses finalizeValues
 ]
 
 { #category : #'class initialization' }
@@ -36,14 +36,14 @@ Behavior class >> initialize [
 	"Never called for real"
 	ObsoleteSubclasses
 		ifNil: [ self initializeObsoleteSubclasses ]
-		ifNotNil: [ | newDict | 
+		ifNotNil: [ | newDict |
 			newDict := WeakKeyToCollectionDictionary newFrom: ObsoleteSubclasses.
 			newDict rehash.
 			ObsoleteSubclasses := newDict ].
-		
+
 	ClassProperties
 		ifNil: [ self initializeClassProperties ]
-		ifNotNil: [ | newDict | 
+		ifNotNil: [ | newDict |
 			newDict := WeakIdentityKeyDictionary newFrom: ClassProperties.
 			newDict rehash.
 			ClassProperties := newDict ]
@@ -51,22 +51,21 @@ Behavior class >> initialize [
 
 { #category : #'class initialization' }
 Behavior class >> initializeClassProperties [
-	ClassProperties := WeakIdentityKeyDictionary new.
+	ClassProperties := WeakIdentityKeyDictionary new
 ]
 
 { #category : #'class initialization' }
 Behavior class >> initializeObsoleteSubclasses [
-	ObsoleteSubclasses := WeakKeyToCollectionDictionary new.
+	ObsoleteSubclasses := WeakKeyToCollectionDictionary new
 ]
 
 { #category : #'accessing - method dictionary' }
-Behavior >> >> selector [ 
-	"Answer the compiled method associated with the argument, selector (a 
-	Symbol), a message selector in the receiver's method dictionary. If the 
+Behavior >> >> selector [
+	"Answer the compiled method associated with the argument, selector (a
+	Symbol), a message selector in the receiver's method dictionary. If the
 	selector is not in the dictionary, create an error notification."
 
 	^self compiledMethodAt: selector
-
 ]
 
 { #category : #'obsolete subclasses' }
@@ -78,31 +77,33 @@ Behavior >> addObsoleteSubclass: aClass [
 	(obs includes: aClass) ifTrue:[^self].
 	obs := obs copyWithout: nil.
 	obs := obs copyWith: aClass.
-	self basicObsoleteSubclasses at: self put: obs.
+	self basicObsoleteSubclasses at: self put: obs
 ]
 
-{ #category : #'adding/removing methods' }
-Behavior >> addSelector: selector withMethod: compiledMethod [ 
+{ #category : #'adding-removing methods' }
+Behavior >> addSelector: selector withMethod: compiledMethod [
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
-{ #category : #'adding/removing methods' }
-Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [ 
+{ #category : #'adding-removing methods' }
+Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
-	"Add the message selector with the corresponding compiled method to the 
+	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
-	compiledMethod selector: selector
+	compiledMethod selector: selector.
+	"We record all selectors that are used as method names"
+	Symbol recordSelector: selector
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> adoptInstance: anInstance [
 	"Change the class of anInstance to me.
 	Primitive (found in Cog and new VMs)  follows the same rules as primitiveChangeClassTo:, but returns the 	class rather than the modified instance"
@@ -122,8 +123,8 @@ Behavior >> allClassVarNames [
 
 { #category : #'accessing - instances and variables' }
 Behavior >> allInstVarNames [
-	"Answer an Array of the names of the receiver's instance variables. The 
-	Array ordering is the order in which the variables are stored and 
+	"Answer an Array of the names of the receiver's instance variables. The
+	Array ordering is the order in which the variables are stored and
 	accessed by the interpreter."
 
 	^ self superclass
@@ -179,7 +180,7 @@ Behavior >> allInstancesOrNil [
 Behavior >> allMethods [
 	"Return the collection of compiled method I and my superclasses are defining"
 	"asArray is used to not bump into a bug when comparing compiled methods."
-	
+
 	^ self allSelectors asArray collect: [ :s | self lookupSelector: s ]
 ]
 
@@ -211,10 +212,7 @@ Behavior >> allSelectors [
 { #category : #'accessing - method dictionary' }
 Behavior >> allSelectorsAbove [
 
-	^ self allSelectorsAboveUntil: ProtoObject 
-	
-
-
+	^ self allSelectorsAboveUntil: ProtoObject
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -222,28 +220,22 @@ Behavior >> allSelectorsAboveUntil: aRootClass [
 
 	| coll |
 	coll := IdentitySet new.
-	(self allSuperclassesIncluding: aRootClass) 
-		do: [:aClass | 
+	(self allSuperclassesIncluding: aRootClass)
+		do: [:aClass |
 				aClass selectorsDo: [ :sel | coll add: sel ]].
 	^ coll
-	
-
-
 ]
 
 { #category : #'accessing - method dictionary' }
-Behavior >> allSelectorsBelow: topClass [ 
+Behavior >> allSelectorsBelow: topClass [
 	| coll |
 	coll := IdentitySet new.
-	self withAllSuperclassesDo: 
-			[:aClass | 
+	self withAllSuperclassesDo:
+			[:aClass |
 			aClass = topClass
 				ifTrue: [^ coll ]
 				ifFalse: [aClass selectorsDo: [ :sel | coll add: sel ]]].
 	^ coll
-	
-
-
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -252,7 +244,7 @@ Behavior >> allSelectorsWithout: behaviors [
 
 	| selectors |
 	selectors := IdentitySet new.
-	self withAllSuperclassesDo: [ :class | 
+	self withAllSuperclassesDo: [ :class |
 			(behaviors includes: class)
 				ifFalse: [ selectors addAll: class selectors ] ].
 	^ selectors
@@ -271,7 +263,7 @@ Behavior >> allSlots [
 ]
 
 { #category : #'accessing - instances and variables' }
-Behavior >> allSubInstances [ 
+Behavior >> allSubInstances [
 	"Answer a list of all current instances of the receiver and all of its subclasses."
 	| aCollection |
 	aCollection := OrderedCollection new.
@@ -281,8 +273,8 @@ Behavior >> allSubInstances [
 ]
 
 { #category : #enumerating }
-Behavior >> allSubInstancesDo: aBlock [ 
-	"Evaluate the argument, aBlock, for each of the current instances of the 
+Behavior >> allSubInstancesDo: aBlock [
+	"Evaluate the argument, aBlock, for each of the current instances of the
 	receiver and all its subclasses."
 
 	self allInstancesDo: aBlock.
@@ -303,17 +295,17 @@ Behavior >> allSubclasses [
 ]
 
 { #category : #enumerating }
-Behavior >> allSubclassesDo: aBlock [ 
+Behavior >> allSubclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's subclasses."
 
-	self subclassesDo: 
-		[:cl | 
+	self subclassesDo:
+		[:cl |
 		aBlock value: cl.
 		cl allSubclassesDo: aBlock]
 ]
 
 { #category : #'accessing - class hierarchy' }
-Behavior >> allSubclassesWithLevelDo: classAndLevelBlock startingLevel: level [ 
+Behavior >> allSubclassesWithLevelDo: classAndLevelBlock startingLevel: level [
 	"Walk the tree of subclasses, giving the class and its level"
 	| subclassNames |
 	classAndLevelBlock value: self value: level.
@@ -329,8 +321,8 @@ Behavior >> allSubclassesWithLevelDo: classAndLevelBlock startingLevel: level [
 
 { #category : #'accessing - class hierarchy' }
 Behavior >> allSuperclasses [
-	"Answer an OrderedCollection of the receiver's and the receiver's  
-	ancestor's superclasses. The first element is the receiver's immediate  
+	"Answer an OrderedCollection of the receiver's and the receiver's
+	ancestor's superclasses. The first element is the receiver's immediate
 	superclass, followed by its superclass; the last element is Object."
 	| temp |
 	^ self superclass == nil
@@ -341,7 +333,7 @@ Behavior >> allSuperclasses [
 ]
 
 { #category : #enumerating }
-Behavior >> allSuperclassesDo: aBlock [ 
+Behavior >> allSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
 	self superclass == nil
@@ -366,7 +358,7 @@ Behavior >> allSuperclassesIncluding: aClass [
 Behavior >> basicIdentityHash [
 	"Answer a 22 bits unsigned SmallInteger, whose value is related to the receiver's identity
 	 and unique among the behaviors (i.e. 2 different Behaviors cannot have the same identityHash).
-	
+
 	 Behavior implements identityHash to allow the VM to use an object representation which
 	 does not include a direct reference to an object's class in an object.  If the VM is using
 	 this implementation then classes are held in a class table and instances contain the index
@@ -384,10 +376,10 @@ Behavior >> basicIdentityHash [
 
 { #category : #'instance creation' }
 Behavior >> basicNew [
-	"Primitive. Answer an instance of the receiver (which is a class) with no 
-	 indexable variables. Fail if the class is indexable. Essential. See Object 
+	"Primitive. Answer an instance of the receiver (which is a class) with no
+	 indexable variables. Fail if the class is indexable. Essential. See Object
 	 documentation whatIsAPrimitive.
-	
+
 	 If the primitive fails because space is low then the scavenger will run
 	 before the method is activated.  Check that space was low and retry
 	 via handleFailingBasicNew if so."
@@ -405,7 +397,7 @@ Behavior >> basicNew: sizeRequested [
 	 variables specified by the argument, sizeRequested.  Fail if this class is not
 	 indexable or if the argument is not a positive Integer, or if there is not
 	 enough memory available. Essential. See Object documentation whatIsAPrimitive.
-	
+
 	 If the primitive fails because space is low then the scavenger will run before the
 	 method is activated.  Check args and retry via handleFailingBasicNew: if they're OK."
 
@@ -419,7 +411,7 @@ Behavior >> basicNew: sizeRequested [
 
 { #category : #'obsolete subclasses' }
 Behavior >> basicObsoleteSubclasses [
-	^ObsoleteSubclasses.
+	^ObsoleteSubclasses
 ]
 
 { #category : #'accessing - class hierarchy' }
@@ -474,21 +466,21 @@ Behavior >> byteSizeOfInstanceOfSize: basicSize [
 
 { #category : #'testing - method dictionary' }
 Behavior >> canPerform: selector [
-	"Answer whether the receiver can safely perform to the message whose selector 
+	"Answer whether the receiver's instances can safely perform to the message whose selector
 	is the argument: it is not an abstract or cancelled method"
 
-	^ self classAndMethodFor: selector do: [:c :m | m isProvided] ifAbsent: [false].
+	^ self classAndMethodFor: selector do: [:c :m | m isProvided] ifAbsent: [false]
 ]
 
 { #category : #'testing - method dictionary' }
 Behavior >> canUnderstand: selector [
-	"Answer whether the receiver can respond to the message whose selector 
+	"Answer whether the receiver's instances can respond to the message whose selector
 	is the argument."
 
 	^ self
 		classAndMethodFor: selector
 		do: [ :c :m | true ]
-		ifAbsent: [ false ].
+		ifAbsent: [ false ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -497,12 +489,12 @@ Behavior >> classAndMethodFor: aSymbol do: binaryBlock ifAbsent: absentBlock [
 	with the class that defines the selector and the associated method. Otherwise
 	absentBlock is evaluated."
 
-	
+
 	self withAllSuperclassesDo: [:class | | method |
 		method := class compiledMethodAt: aSymbol ifAbsent: [nil].
 		method ifNotNil: [^ binaryBlock value: class value: method].
 	].
-	^ absentBlock value.
+	^ absentBlock value
 ]
 
 { #category : #'testing - method dictionary' }
@@ -521,9 +513,9 @@ Behavior >> classDepth [
 { #category : #accessing }
 Behavior >> classLayout [
 	^ layout
-		ifNil: [ 
+		ifNil: [
 			| superLayout scope |
-			superLayout := superclass 
+			superLayout := superclass
 				ifNil: [ FixedLayout new slotScope: LayoutEmptyScope instance] "happened in the bootrap"
 				ifNotNil: [:sl | sl classLayout].
 			scope := superLayout slotScope extend.
@@ -545,7 +537,6 @@ Behavior >> classVarNames [
 { #category : #cleanup }
 Behavior >> cleanUp [
 	"Clean out any caches and other state that should be flushed when trying to get an image into a pristine state. Subclasses may override #cleanUp: to provide different levels of cleanliness"
-
 ]
 
 { #category : #cleanup }
@@ -556,9 +547,9 @@ Behavior >> cleanUp: aggressive [
 ]
 
 { #category : #'accessing - method dictionary' }
-Behavior >> compiledMethodAt: selector [ 
-	"Answer the compiled method associated with the argument, selector (a 
-	Symbol), a message selector in the receiver's method dictionary. If the 
+Behavior >> compiledMethodAt: selector [
+	"Answer the compiled method associated with the argument, selector (a
+	Symbol), a message selector in the receiver's method dictionary. If the
 	selector is not in the dictionary, create an error notification."
 
 	^ self methodDict at: selector
@@ -608,20 +599,20 @@ Behavior >> definedVariables [
 { #category : #dependencies }
 Behavior >> dependentClasses [
 	"Return the list of classes used myself"
-	
+
 	"Morph dependentClasses"
-	| cll | 
+	| cll |
 	cll := Set new.
 	"A class depends on its superclass"
 	self superclass ifNotNil: [ cll add: self superclass ].
-	
+
 	"We unify a class and its metaclass"
-	(self methods, self classSide methods) 
-		do: [ :m | m literalsDo: [ :l | 
+	(self methods, self classSide methods)
+		do: [ :m | m literalsDo: [ :l |
 					"We also check if the method is not an extension"
-					(l isVariableBinding 
+					(l isVariableBinding
 					and: [ l isGlobalClassNameBinding
-					and: [ m category notEmpty 
+					and: [ m category notEmpty
 					and: [ m category first ~= $* ]]])  ifTrue: [ cll add: l value ] ] ] .
 	^ cll asArray
 ]
@@ -661,7 +652,6 @@ Behavior >> emptyMethodDictionary [
 { #category : #'accessing - properties' }
 Behavior >> ensureProperties [
 	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary new
-		
 ]
 
 { #category : #naming }
@@ -675,8 +665,7 @@ Behavior >> findOriginClassOf: aMethod [
 
 	"I return the origin of my given method. In a basic class is always self.
 	Enhanced classes (eg. TraitedClasses) can do something else"
-	^ self	
-
+	^ self
 ]
 
 { #category : #testing }
@@ -686,7 +675,6 @@ Behavior >> findOriginMethodOf: aMethod [
 	can do something difference"
 
 	^ aMethod
-
 ]
 
 { #category : #private }
@@ -699,7 +687,7 @@ Behavior >> flushCache [
 
 { #category : #accessing }
 Behavior >> format [
-	"Answer an Integer that encodes the kinds and numbers of variables of 
+	"Answer an Integer that encodes the kinds and numbers of variables of
 	instances of the receiver."
 
 	^format
@@ -786,7 +774,7 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 Behavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	"we do not use #anySatisfy: for speed"
-	
+
 	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
 	^false
 ]
@@ -820,7 +808,7 @@ Behavior >> hasSelectorReferringTo: literal [
 
 { #category : #'testing - class hierarchy' }
 Behavior >> includesBehavior: aClass [
-	
+
 	self isTrait ifTrue: [ ^false ].
 	^self == aClass or:[self inheritsFrom: aClass]
 ]
@@ -831,7 +819,7 @@ Behavior >> includesLocalSelector: aSymbol [
 ]
 
 { #category : #'testing - method dictionary' }
-Behavior >> includesMethod: aMethod [ 
+Behavior >> includesMethod: aMethod [
 	"Answer whether aMethod is in the method dictionary. Use identityIncludes
 	as = of CompiledMethod is too weak (ignores the selector)"
 
@@ -839,22 +827,22 @@ Behavior >> includesMethod: aMethod [
 ]
 
 { #category : #'testing - method dictionary' }
-Behavior >> includesSelector: aSymbol [ 
-	"Answer whether the message whose selector is the argument is in the 
+Behavior >> includesSelector: aSymbol [
+	"Answer whether the message whose selector is the argument is in the
 	method dictionary of the receiver's class."
 
 	^ self methodDict includesKey: aSymbol
 ]
 
 { #category : #'testing - class hierarchy' }
-Behavior >> inheritsFrom: aClass [ 
-	"Answer whether the argument, aClass, is on the receiver's superclass 
+Behavior >> inheritsFrom: aClass [
+	"Answer whether the argument, aClass, is on the receiver's superclass
 	chain."
 
 	| aSuperclass |
 	aSuperclass := self superclass.
 	[aSuperclass == nil]
-		whileFalse: 
+		whileFalse:
 			[aSuperclass == aClass ifTrue: [^true].
 			aSuperclass := aSuperclass superclass].
 	^false
@@ -867,12 +855,11 @@ Behavior >> initialize [
 	self basicSuperclass: Object.
 	"no longer sending any messages, some of them crash the VM"
 	self methodDict: self emptyMethodDictionary.
-	self setFormat: Object format.
-
+	self setFormat: Object format
 ]
 
 { #category : #initialization }
-Behavior >> initializeSlots: anObject [ 
+Behavior >> initializeSlots: anObject [
 	self classLayout initializeInstance: anObject
 ]
 
@@ -908,9 +895,9 @@ Behavior >> instSpec [
 
 { #category : #'accessing - instances and variables' }
 Behavior >> instVarNames [
-	"Answer an Array of the instance variable names. Behaviors must make 
-	up fake local instance variable names because Behaviors have instance 
-	variables for the purpose of compiling methods, but these are not named 
+	"Answer an Array of the instance variable names. Behaviors must make
+	up fake local instance variable names because Behaviors have instance
+	variables for the purpose of compiling methods, but these are not named
 	instance variables."
 
 	| mySize superSize |
@@ -918,14 +905,14 @@ Behavior >> instVarNames [
 	superSize := self superclass
 			ifNil: [0]
 			ifNotNil: [self superclass instSize].
-	mySize = superSize ifTrue: [^#()].	
+	mySize = superSize ifTrue: [^#()].
 	^(superSize + 1 to: mySize) collect: [:i | 'inst' , i printString]
 ]
 
 { #category : #'accessing - instances and variables' }
 Behavior >> instanceCount [
-	"Answer the number of instances of the receiver that are currently in 
-	use."
+	"Answer the number of instances of the receiver that are currently in use.
+	Note: we do not use #allInstances as allInstancesDo: has a fallback for low memory"
 
 	| count |
 	count := 0.
@@ -941,8 +928,9 @@ Behavior >> instanceVariables [
 
 { #category : #'memory usage' }
 Behavior >> instancesSizeInMemory [
-	"Answers the number of bytes consumed by all its instances including their object header"
-	
+	"Answers the number of bytes consumed by all its instances including their object header.
+	Note: we do not use #allInstances as allInstancesDo: has a fallback for low memory"
+
 	| bytes |
 	bytes := 0.
 	self allInstancesDo: [:each | bytes := bytes + each sizeInMemory  ].
@@ -950,10 +938,10 @@ Behavior >> instancesSizeInMemory [
 ]
 
 { #category : #testing }
-Behavior >> isAbstract [	
+Behavior >> isAbstract [
 	"By default a class is not abstract.
 	Hook to mark your own subclasses as abstract."
-	
+
 	^false
 ]
 
@@ -1160,7 +1148,7 @@ Behavior >> kindOfSubclass [
 Behavior >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
 
-	aStream nextPutAll: '<<too complex to show>>'; cr.
+	aStream nextPutAll: '<<too complex to show>>'; cr
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -1172,8 +1160,8 @@ Behavior >> lookupSelector: selector [
 	| lookupClass |
 	lookupClass := self.
 	[lookupClass == nil]
-		whileFalse: [ 
-			lookupClass methodDict 
+		whileFalse: [
+			lookupClass methodDict
 				at: selector
 				ifPresent: [ :method | ^ method ].
 			lookupClass := lookupClass superclass].
@@ -1205,7 +1193,7 @@ Behavior >> methodDictionary: aDictionary [
 
 { #category : #'accessing - method dictionary' }
 Behavior >> methods [
-	
+
 	^ self methodDict values
 ]
 
@@ -1245,7 +1233,7 @@ Behavior >> methodsWritingSlot: aSlot [
 { #category : #accessing }
 Behavior >> name [
 	"Answer a String that is the name of the receiver."
-	^'a subclass of ', self superclass name.
+	^'a subclass of ', self superclass name
 ]
 
 { #category : #'instance creation' }
@@ -1253,26 +1241,21 @@ Behavior >> new [
 	"Answer a new initialized instance of the receiver (which is a class) with no indexable variables. Fail if the class is indexable."
 
 	^ self basicNew initialize
-
 ]
 
 { #category : #'instance creation' }
-Behavior >> new: sizeRequested [ 
+Behavior >> new: sizeRequested [
 	"Answer an initialized instance of this class with the number of indexable
 	variables specified by the argument, sizeRequested."
 
-	^ (self basicNew: sizeRequested) initialize  
+	^ (self basicNew: sizeRequested) initialize
 ]
 
 { #category : #initialization }
 Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
-	| obsName |
-	obsName := self name.
-	[obsName beginsWith: 'AnObsolete']
-		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
-	^ self environment at: obsName asSymbol
+	^ self environment at: self originalName
 ]
 
 { #category : #initialization }
@@ -1286,6 +1269,16 @@ Behavior >> obsoleteSubclasses [
 	| obs |
 	obs := self basicObsoleteSubclasses at: self ifAbsent: [^ #()].
 	^ obs copyWithout: nil
+]
+
+{ #category : #initialization }
+Behavior >> originalName [
+	| obsName |
+	obsName := self name.
+	self isObsolete ifFalse: [ ^obsName asSymbol].
+ 	[obsName beginsWith: 'AnObsolete']
+ 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
+	^obsName asSymbol
 ]
 
 { #category : #copying }
@@ -1305,8 +1298,8 @@ Behavior >> pragmasDo: aBlock [
 ]
 
 { #category : #printing }
-Behavior >> printOn: aStream [ 
-	"Refer to the comment in Object|printOn:." 
+Behavior >> printOn: aStream [
+	"Refer to the comment in Object|printOn:."
 
 	aStream nextPutAll: 'a descendent of '.
 	self superclass printOn: aStream
@@ -1315,7 +1308,6 @@ Behavior >> printOn: aStream [
 { #category : #'accessing - properties' }
 Behavior >> properties [
 	^ ClassProperties at: self ifAbsent: nil
-		
 ]
 
 { #category : #'accessing - properties' }
@@ -1349,15 +1341,13 @@ Behavior >> realClass [
 { #category : #'obsolete subclasses' }
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
-	self basicObsoleteSubclasses removeKey: self ifAbsent: [].
-
+	self basicObsoleteSubclasses removeKey: self ifAbsent: []
 ]
 
 { #category : #'accessing - properties' }
 Behavior >> removePropertiesIfEmpty [
 	^ ClassProperties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ ClassProperties removeKey: self ] ]
-		
 ]
 
 { #category : #'accessing - properties' }
@@ -1385,55 +1375,54 @@ Behavior >> removeSelector: aSelector [
 	self methodDict removeKey: aSelector ifAbsent: []
 ]
 
-{ #category : #'adding/removing methods' }
-Behavior >> removeSelectorSilently: selector [ 
+{ #category : #'adding-removing methods' }
+Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector].
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector]
 ]
 
 { #category : #cleanup }
 Behavior >> restartMethods [
 	"Clean up. Long running loops or stored closures can lead to methods that are out if sync with the recompiled code. Subclasses should override this method if they need to restart methods"
-
 ]
 
 { #category : #enumerating }
-Behavior >> selectSubclasses: aBlock [ 
-	"Evaluate the argument, aBlock, with each of the receiver's (next level) 
-	subclasses as its argument. Collect into a Set only those subclasses for 
-	which aBlock evaluates to true. In addition, evaluate aBlock for the 
-	subclasses of each of these successful subclasses and collect into the set 
+Behavior >> selectSubclasses: aBlock [
+	"Evaluate the argument, aBlock, with each of the receiver's (next level)
+	subclasses as its argument. Collect into a Set only those subclasses for
+	which aBlock evaluates to true. In addition, evaluate aBlock for the
+	subclasses of each of these successful subclasses and collect into the set
 	those for which aBlock evaluates true. Answer the resulting set."
 
 	| aSet |
 	aSet := Set new.
-	self allSubclasses do: 
-		[:aSubclass | 
+	self allSubclasses do:
+		[:aSubclass |
 		(aBlock value: aSubclass) ifTrue: [aSet add: aSubclass]].
 	^aSet
 ]
 
 { #category : #enumerating }
-Behavior >> selectSuperclasses: aBlock [ 
-	"Evaluate the argument, aBlock, with the receiver's superclasses as the 
-	argument. Collect into an OrderedCollection only those superclasses for 
-	which aBlock evaluates to true. In addition, evaluate aBlock for the 
-	superclasses of each of these successful superclasses and collect into the 
-	OrderedCollection ones for which aBlock evaluates to true. Answer the 
+Behavior >> selectSuperclasses: aBlock [
+	"Evaluate the argument, aBlock, with the receiver's superclasses as the
+	argument. Collect into an OrderedCollection only those superclasses for
+	which aBlock evaluates to true. In addition, evaluate aBlock for the
+	superclasses of each of these successful superclasses and collect into the
+	OrderedCollection ones for which aBlock evaluates to true. Answer the
 	resulting OrderedCollection."
 
 	| aSet |
 	aSet := Set new.
-	self allSuperclasses do: 
-		[:aSuperclass | 
+	self allSuperclasses do:
+		[:aSuperclass |
 		(aBlock value: aSuperclass) ifTrue: [aSet add: aSuperclass]].
 	^aSet
 ]
 
 { #category : #'accessing - method dictionary' }
 Behavior >> selectors [
-	"Answer a Set of all the message selectors specified in the receiver's 
+	"Answer a Set of all the message selectors specified in the receiver's
 	method dictionary."
 
 	^ self methodDict keys
@@ -1462,19 +1451,17 @@ Behavior >> selectorsWithArgs: numberOfArgs [
 
 { #category : #private }
 Behavior >> setFormat: aFormatInstanceDescription [
-	"only use this method with extreme care since it modifies the format of the class 
+	"only use this method with extreme care since it modifies the format of the class
      ie a description of the number of instance variables and whether the class is
      compact, variable sized"
 
 	format := aFormatInstanceDescription
-
-
 ]
 
 { #category : #testing }
 Behavior >> shouldNotBeRedefined [
 	"Answer if the receiver should not be redefined.
-	 The assumption is that classes in Smalltalk specialObjects and 
+	 The assumption is that classes in Smalltalk specialObjects and
 	 instance-specific Behaviors should not be redefined"
 
 	^(Smalltalk specialObjectsArray
@@ -1485,13 +1472,12 @@ Behavior >> shouldNotBeRedefined [
 { #category : #'system startup' }
 Behavior >> shutDown [
 	"This message is sent on system shutdown to registered classes"
-
 ]
 
 { #category : #'system startup' }
 Behavior >> shutDown: quitting [
 	"This message is sent on system shutdown to registered classes"
-	^self shutDown.
+	^self shutDown
 ]
 
 { #category : #accessing }
@@ -1501,8 +1487,8 @@ Behavior >> slots [
 
 { #category : #'accessing - instances and variables' }
 Behavior >> someInstance [
-	"Primitive. Answer the first instance in the enumeration of all instances 
-	of the receiver. Fails if there are none. Essential. See Object 
+	"Primitive. Answer the first instance in the enumeration of all instances
+	of the receiver. Fails if there are none. Essential. See Object
 	documentation whatIsAPrimitive."
 
 	<primitive: 77>
@@ -1512,24 +1498,24 @@ Behavior >> someInstance [
 { #category : #'accessing - method dictionary' }
 Behavior >> sourceCodeAt: selector [
 
-	^ (self compiledMethodAt: selector) sourceCode.
+	^ (self compiledMethodAt: selector) sourceCode
 ]
 
 { #category : #'accessing - method dictionary' }
 Behavior >> sourceCodeAt: selector ifAbsent: aBlock [
 
-	^ (self compiledMethodAt: selector ifAbsent: [^ aBlock value]) sourceCode.
+	^ (self compiledMethodAt: selector ifAbsent: [^ aBlock value]) sourceCode
 ]
 
 { #category : #compiling }
 Behavior >> sourceCodeTemplate [
-	"Answer an expression to be edited and evaluated in order to define 
+	"Answer an expression to be edited and evaluated in order to define
 	methods in this class or trait."
 
 	^ 'methodSelectorAndArgumentNames
 	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"	
-			
+	"scope: class-variables  &  instance-variables"
+
 	| temporary variable names |
 	statements'
 ]
@@ -1541,7 +1527,7 @@ Behavior >> sourceMatchesBytecodeAt: selector [
 	shape changed"
 
 	"This code was copied from #recompile:from:, with few changes. Several methods would benefit from a
-	method which turned a selector and class into a CompiledMethod, without  installing it into the 
+	method which turned a selector and class into a CompiledMethod, without  installing it into the
 	methodDictionary"
 
 	| method newMethod |
@@ -1578,7 +1564,6 @@ Behavior >> spaceUsed [
 { #category : #'system startup' }
 Behavior >> startUp [
 	"This message is sent to registered classes when the system is coming up."
- 
 ]
 
 { #category : #'system startup' }
@@ -1589,7 +1574,7 @@ Behavior >> startUp: resuming [
 
 { #category : #accessing }
 Behavior >> subclassDefinerClass [
-	"Answer an evaluator class appropriate for evaluating definitions of new 
+	"Answer an evaluator class appropriate for evaluating definitions of new
 	subclasses of this class."
 
 	^Smalltalk compilerClass
@@ -1623,7 +1608,7 @@ Behavior >> superclass: aClass [
 			].	"If the class is not nil it should update the class hierarchy correctly, using the classs builder"
 	^ self classInstaller
 		update: self
-		to: [ :builder | 
+		to: [ :builder |
 			builder
 				fillFor: self;
 				superclass: aClass
@@ -1636,33 +1621,40 @@ Behavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	Must only be sent to a new instance; else we would need Object flushCache."
 	self basicSuperclass: aClass.
 	self setFormat: fmt.
-	self methodDict: mDict.
-
+	self methodDict: mDict
 ]
 
 { #category : #'testing - method dictionary' }
 Behavior >> thoroughHasSelectorReferringTo: literal [
-	"Answer true if any of my methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
+	"Answer true if any of my methods access the argument as a
+	literal. Dives into the compact literal notation, making it slow but
 	thorough "
-	
+
 	| specialIndex |
 	"for speed we check the special selectors here once per class"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
-	^self methods anySatisfy: [ :method | 
+	^self methods anySatisfy: [ :method |
 		method hasSelector: literal specialSelectorIndex: specialIndex]
-		
 ]
 
 { #category : #'testing - method dictionary' }
 Behavior >> thoroughWhichMethodsReferTo: literal [
-	"Answer methods whose methods referes to the argument as a literal. 
-	 Dives into the compact literal notation and embedded literal arrays, 
+	"Answer methods whose methods referes to the argument as a literal.
+	 Dives into the compact literal notation and embedded literal arrays,
     making it slow but thorough "
 
 	| specialIndex |
 	"for speed we check the special selectors here once per class"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
+	^ self methods select: [ :method | method hasSelector: literal specialSelectorIndex: specialIndex ]
+]
+
+{ #category : #'testing - method dictionary' }
+Behavior >> thoroughWhichMethodsReferTo: literal specialIndex: specialIndex [
+	"Answer methods whose methods referes to the argument as a literal.
+	 Dives into the compact literal notation and embedded literal arrays,
+    making it slow but thorough "
+
 	^ self methods select: [ :method | method hasSelector: literal specialSelectorIndex: specialIndex ]
 ]
 
@@ -1686,23 +1678,23 @@ Behavior >> usingMethods [
 ]
 
 { #category : #queries }
-Behavior >> whichClassDefinesClassVar: aString [ 
+Behavior >> whichClassDefinesClassVar: aString [
 	Symbol hasInterned: aString ifTrue: [ :aSymbol |
-		^self whichSuperclassSatisfies: 
-			[:aClass | 
+		^self whichSuperclassSatisfies:
+			[:aClass |
 			aClass classVarNames anySatisfy: [:each | each = aSymbol]]].
 	^#()
 ]
 
 { #category : #queries }
-Behavior >> whichClassDefinesInstVar: aString [ 
-	^self 
+Behavior >> whichClassDefinesInstVar: aString [
+	^self
 		whichSuperclassSatisfies: [:aClass | aClass instVarNames includes: aString]
 ]
 
 { #category : #'testing - method dictionary' }
-Behavior >> whichClassIncludesSelector: aSymbol [ 
-	"Answer the class on the receiver's superclass chain where the 
+Behavior >> whichClassIncludesSelector: aSymbol [
+	"Answer the class on the receiver's superclass chain where the
 	argument, aSymbol (a message selector), will be found. Answer nil if none found."
 	"Rectangle whichClassIncludesSelector: #inspect."
 	(self includesSelector: aSymbol)
@@ -1725,7 +1717,7 @@ Behavior >> whichSelectorsReferTo: literal [
 ]
 
 { #category : #queries }
-Behavior >> whichSuperclassSatisfies: aBlock [ 
+Behavior >> whichSuperclassSatisfies: aBlock [
 	(aBlock value: self) ifTrue: [^self].
 	^self superclass ifNotNil: [self superclass whichSuperclassSatisfies: aBlock]
 ]
@@ -1734,13 +1726,12 @@ Behavior >> whichSuperclassSatisfies: aBlock [
 Behavior >> withAllSubAndSuperclassesDo: aBlock [
 
 	self withAllSubclassesDo: aBlock.
-	self allSuperclassesDo: aBlock.
-
+	self allSuperclassesDo: aBlock
 ]
 
 { #category : #'accessing - class hierarchy' }
 Behavior >> withAllSubclasses [
-	"Answer a Set of the receiver, the receiver's descendent's, and the  
+	"Answer a Set of the receiver, the receiver's descendent's, and the
 	receiver's descendent's subclasses."
 
 	^ self allSubclasses add: self;
@@ -1750,7 +1741,7 @@ Behavior >> withAllSubclasses [
 { #category : #'accessing - class hierarchy' }
 Behavior >> withAllSubclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for the receiver and each of its subclasses."
-	
+
 	self withAllSubclasses do: aBlock
 ]
 
@@ -1770,18 +1761,17 @@ Behavior >> withAllSuperAndSubclassesDo: aBlock [
 
 { #category : #'accessing - class hierarchy' }
 Behavior >> withAllSuperclasses [
-	"Answer an OrderedCollection of the receiver and the receiver's superclasses. 
-	The first element is the receiver, followed by its superclass; 
+	"Answer an OrderedCollection of the receiver and the receiver's superclasses.
+	The first element is the receiver, followed by its superclass;
 	the last element is Object."
 
-	^self allSuperclasses 
-		addFirst: self; 
+	^self allSuperclasses
+		addFirst: self;
 		yourself
-
 ]
 
 { #category : #enumerating }
-Behavior >> withAllSuperclassesDo: aBlock [ 
+Behavior >> withAllSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 	aBlock value: self.
 	self superclass == nil

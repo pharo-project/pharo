@@ -14,7 +14,7 @@ Class {
 ClassTagRenamed class >> in: aPackage tag: aSymbol to: newTagName [
 
 	^(self in: aPackage tag: aSymbol)
-		newName: newTagName 
+		newName: newTagName
 ]
 
 { #category : #accessing }

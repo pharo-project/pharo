@@ -21,9 +21,9 @@ Class {
 { #category : #'instance creation' }
 ClyTestedMethodProperty class >> coveringTest: aMethodTest result: aTestResultProperty [
 
-	^self new 
+	^self new
 		coveringTest: aMethodTest;
-		testResult: aTestResultProperty 
+		testResult: aTestResultProperty
 ]
 
 { #category : #accessing }

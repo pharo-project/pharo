@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #actions }
-ReProperty >> actions [ 
+ReProperty >> actions [
 
 	^ #()
 ]
@@ -56,5 +56,5 @@ ReProperty >> sourceAnchor [
 { #category : #accessing }
 ReProperty >> title [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

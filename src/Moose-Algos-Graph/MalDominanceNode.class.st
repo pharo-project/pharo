@@ -29,7 +29,7 @@ MalDominanceNode >> flagUnique [
 { #category : #accessing }
 MalDominanceNode >> from: sourceNode [
 
-	previousNodes add: sourceNode 
+	previousNodes add: sourceNode
 ]
 
 { #category : #accessing }

@@ -8,8 +8,10 @@ Class {
 }
 
 { #category : #comparing }
-BadEqualer >> = other [ 
+BadEqualer >> = other [
+	"Tell sometimes if the giving object and the receiver are the same object"
+
 	self class = other class
 		ifFalse: [^ false].
-	^ 100 atRandom < 30 
+	^ 100 atRandom < 30
 ]

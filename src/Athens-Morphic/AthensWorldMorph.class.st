@@ -36,9 +36,8 @@ AthensWorldMorph >> restoreMorphicDisplay [
 		resizeBackgroundMorph;
 		submorphsDo: [ :each | each displayExtentChanged ];
 		fullRepaintNeeded.
-		
-	self defer: [Cursor normal show].
-		
-	self layoutChanged.
 
+	self defer: [Cursor normal show].
+
+	self layoutChanged
 ]

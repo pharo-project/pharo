@@ -1,26 +1,26 @@
 Extension { #name : #Symbol }
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 Symbol >> asMetacelloAttributeList [
     ^ {self}
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 Symbol >> asMetacelloAttributePath [
     ^ MetacelloMethodSectionPath with: {self}
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 Symbol >> setForDo: aBlock withInMetacelloConfig: aMetacelloConstructore [
     aMetacelloConstructore setFor: {self} do: aBlock
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 Symbol >> setForVersion: aString withInMetacelloConfig: aMetacelloConstructore [
     aMetacelloConstructore setFor: {self} version: aString
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 Symbol >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
     self precedence == 0
         ifTrue: [ self error: 'Invalid selector' ].
@@ -31,7 +31,7 @@ Symbol >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
                 yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 Symbol >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
     self precedence == 0
         ifTrue: [ self error: 'Invalid selector' ].

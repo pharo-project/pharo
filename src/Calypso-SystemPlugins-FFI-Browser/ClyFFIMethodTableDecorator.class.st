@@ -10,7 +10,7 @@ Class {
 { #category : #decoration }
 ClyFFIMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
+
 	anItemCellMorph definitionIcon: #recoverLostChanges
 ]
 
@@ -20,5 +20,5 @@ ClyFFIMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aData
 
 { #category : #testing }
 ClyFFIMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	^aDataSourceItem isMarkedWith: ClyFFIMethodTag 
+	^aDataSourceItem isMarkedWith: ClyFFIMethodTag
 ]

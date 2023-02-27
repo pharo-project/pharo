@@ -14,19 +14,19 @@ Class {
 }
 
 { #category : #accessing }
-ReservedVariable class >> instance [ 
+ReservedVariable class >> instance [
 	^instance ifNil: [ instance := self new ]
 ]
 
 { #category : #testing }
-ReservedVariable class >> isAbstract [ 
-	^self = ReservedVariable  
+ReservedVariable class >> isAbstract [
+	^self = ReservedVariable
 ]
 
 { #category : #compiler }
 ReservedVariable class >> lookupDictionary [
 	"create a loopup table name -> instance for Semantic Analysis"
-	^ (self subclasses collect: [ :class | 
+	^ (self subclasses collect: [ :class |
 		   class instance name -> class instance ]) asDictionary
 ]
 
@@ -94,6 +94,6 @@ ReservedVariable >> usingMethods [
 
 { #category : #debugging }
 ReservedVariable >> write: aValue inContext: aContext [
-	
+
 	self error: name, ' is reserved word and cant be modified'
 ]

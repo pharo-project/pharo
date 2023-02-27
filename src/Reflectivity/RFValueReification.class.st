@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBValueNode . RBReturnNode. RBMethodNode . Variable} 
+	^{RBValueNode . RBReturnNode. RBMethodNode . Variable}
 ]
 
 { #category : #'plugin interface' }
@@ -103,8 +103,7 @@ RFValueReification >> postamble: aNode [
 	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isCascade ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: self varName].
-	^super postamble: aNode.
-	 
+	^super postamble: aNode
 ]
 
 { #category : #preamble }
@@ -113,14 +112,14 @@ RFValueReification >> preambleForArray: aNode [
 	preamble := OrderedCollection new.
 	arguments := OrderedCollection new.
 
-	(1 to: aNode size) reverseWithIndexDo: [:each :index |  
+	(1 to: aNode size) reverseWithIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			preamble add:  (RFStorePopIntoTempNode named: name).
 	].
-	
+
 	self flag: #pharoTodo. "for #instead we do not need to build the stack up again as the array creation bytecode is missing"
-	(1 to: aNode size) withIndexDo: [:each :index |  
+	(1 to: aNode size) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).
@@ -128,8 +127,7 @@ RFValueReification >> preambleForArray: aNode [
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
-	^ preamble 
-	
+	^ preamble
 ]
 
 { #category : #preamble }

@@ -1,13 +1,13 @@
 Extension { #name : #Interval }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Interval >> fromSton: stonReader [
 	"Overwritten to get back the standard object behavior"
 	
 	stonReader parseNamedInstVarsFor: self
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Interval class >> fromSton: stonReader [
 	"Overwritten to get back the standard object behavior"
 	
@@ -16,7 +16,7 @@ Interval class >> fromSton: stonReader [
 		yourself
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Interval >> stonOn: stonWriter [
 	"Overwritten to get back the standard object behavior"
 

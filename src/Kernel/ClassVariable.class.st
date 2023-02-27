@@ -35,20 +35,23 @@ ClassVariable >> definingClass: anObject [
 ]
 
 { #category : #printing }
-ClassVariable >> definitionString [
+ClassVariable >> definitionOn: aStream [
 	"non special globals are defined by the symbol"
-	^ self needsFullDefinition
-		ifTrue: [ super definitionString ]
-		ifFalse: [ self name printString ]
+	^self needsFullDefinition
+		ifTrue: [ super definitionOn: aStream ]
+		ifFalse: [ self name printOn: aStream ]
+]
 
+{ #category : #printing }
+ClassVariable >> definitionString [
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ String streamContents: [:s | self definitionOn: s]
 ]
 
 { #category : #'code generation' }
 ClassVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeIntoLiteralVariable: self.
-
-
+	methodBuilder storeIntoLiteralVariable: self
 ]
 
 { #category : #'code generation' }
@@ -70,15 +73,12 @@ ClassVariable >> isDefinedByOwningClass [
 
 { #category : #testing }
 ClassVariable >> isPoolVariable [
-	^ self definingClass isPool 
+	^ self definingClass isPool
 ]
 
 { #category : #testing }
 ClassVariable >> isReferenced [
-	"A class variable can only be accessed in the defintionClass and its subclasses (both class and instance side)"
-
-	^ self definingClass withAllSubclasses anySatisfy: [ :behavior | 
-		  (behavior class hasMethodAccessingVariable: self) or: [ behavior hasMethodAccessingVariable: self ] ]
+	^ self possiblyUsingClasses anySatisfy: [ :behavior | behavior hasMethodAccessingVariable: self]
 ]
 
 { #category : #testing }
@@ -99,9 +99,31 @@ ClassVariable >> owningClass: anObject [
 ]
 
 { #category : #queries }
+ClassVariable >> possiblyUsingClasses [
+
+	| classes |
+	classes := self definingClass withAllSubclasses.
+
+	"For pool variables we need to add the poolUsers and it's subclasses"
+	self isPoolVariable ifTrue: [
+		classes addAll:
+			(self definingClass poolUsers flatCollect: [ :each | each withAllSubclasses ]) ].
+
+	"we can access from both the class and the metaclass"
+	classes addAll: (classes collect: [ :class | class class ]).
+	^ classes
+]
+
+{ #category : #printing }
+ClassVariable >> printOn: aStream [
+	"Every subclass that adds state must redefine either this method or #definitionString"
+	aStream
+		store: self name;
+		nextPutAll: ' => ';
+		nextPutAll: self class name
+]
+
+{ #category : #queries }
 ClassVariable >> usingMethods [
-	self definingClass isPool ifTrue: [ ^ super usingMethods ].
-	"if we are a class variable, we only need to search the sublasses and metaclasses"
-	^ self definingClass withAllSubclasses flatCollect: [ :class | 
-			(class whichMethodsReferTo: self), (class class whichMethodsReferTo: self) ]
+	^self possiblyUsingClasses flatCollect: [ :class | class whichMethodsReferTo: self ]
 ]

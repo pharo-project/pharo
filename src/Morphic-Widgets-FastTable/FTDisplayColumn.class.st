@@ -16,11 +16,10 @@ Class {
 
 { #category : #'instance creation' }
 FTDisplayColumn class >> column: aColumn width: aWidth [
-	^ self new 
+	^ self new
 		column: aColumn;
 		width: aWidth;
 		yourself
-		
 ]
 
 { #category : #accessing }

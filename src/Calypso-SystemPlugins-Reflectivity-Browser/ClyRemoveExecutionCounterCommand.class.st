@@ -7,29 +7,45 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 ClyRemoveExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasExecutionCounter 
+	^aBrowserContext isSelectedItemHasExecutionCounter
 ]
 
 { #category : #activation }
-ClyRemoveExecutionCounterCommand class >> contextMenuOrder [	
+ClyRemoveExecutionCounterCommand class >> contextMenuOrder [
 	^2
+]
+
+{ #category : #activation }
+ClyRemoveExecutionCounterCommand class >> methodContextMenuActivation [
+
+	<classAnnotation>
+	^ SycAdvancedDebuggingMenuActivation
+			byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
+ClyRemoveExecutionCounterCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+
+	^SycAdvancedDebuggingMenuActivation
+		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> createTableCellButtonWith: anIcon using: aCommandActivator [
 	| button |
 	button := super createTableCellButtonWith: anIcon using: aCommandActivator.
-	sourceNode hasExecutionCounter ifTrue: [ 
+	sourceNode hasExecutionCounter ifTrue: [
 		ClyDynamicBallonTooltip from: [self tableDescription] installInto: button].
 	^button
 ]
 
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> currentCallsCount [
-	
+
 	^sourceNode counter count
 ]
 
@@ -40,15 +56,15 @@ ClyRemoveExecutionCounterCommand >> debuggingToolClass [
 
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> defaultMenuItemName [
-	
-	^sourceNode hasExecutionCounter 
+
+	^sourceNode hasExecutionCounter
 		ifTrue: [ 'Remove counter (', self currentCallsCount asString, ')']
 	 	ifFalse: [ 'Remove counter' ]
 ]
 
 { #category : #'table decoration' }
 ClyRemoveExecutionCounterCommand >> tableCellIcon [
-	^Smalltalk ui iconNamed: #classIcon
+	^Smalltalk ui iconNamed: #class
 ]
 
 { #category : #accessing }

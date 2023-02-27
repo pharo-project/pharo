@@ -179,19 +179,18 @@ MenuRegistration class >> owner: aMenuRegistration [
 { #category : #'spec accessing' }
 MenuRegistration >> action: aMessageSendOrABlock [
 	"set the action of the menu"
-	
-	aMessageSendOrABlock isBlock 
+
+	aMessageSendOrABlock isBlock
 		ifTrue: [
 			self target: aMessageSendOrABlock.
 			self selector: #cull:.
 			self arguments: {self model}]
 		ifFalse: [
 			self selector: aMessageSendOrABlock]
-
 ]
 
 { #category : #accessing }
-MenuRegistration >> addItem: anItem [ 
+MenuRegistration >> addItem: anItem [
 	"Add a MenuRegistration"
 	self ensureItemList add: anItem
 ]
@@ -199,32 +198,32 @@ MenuRegistration >> addItem: anItem [
 { #category : #'spec accessing' }
 MenuRegistration >> arguments: anArray [
 	"set the arguments for an item with an action"
-	self spec action 
+	self spec action
 		ifNil: [self spec action: (MessageSend receiver: self itemReceiver selector: nil arguments: anArray)]
 		ifNotNil: [self spec action arguments: anArray]
 ]
 
 { #category : #accessing }
-MenuRegistration >> assignOrderWithBlock: aBlock [ 
+MenuRegistration >> assignOrderWithBlock: aBlock [
 	"Compute recursively MenuRegistration order"
-	self itemList 
+	self itemList
 		ifNotNil: [self itemList: (aBlock value: self itemList).
 				self itemList do: [:rded | rded assignOrderWithBlock: aBlock]]
 ]
 
 { #category : #accessing }
-MenuRegistration >> buildMenuSpec: aMenu [ 
+MenuRegistration >> buildMenuSpec: aMenu [
 	"recursiveley build the menu spec aMenu passed as argument"
 	self itemList
-		ifNotNil: [:l | 
+		ifNotNil: [:l |
 			| m |
-			m := isGroup 
+			m := isGroup
 				ifFalse: [PluggableMenuSpec withModel: nil]
 				ifTrue: [aMenu].
 			(l reject: [:i | i precondition value not]) do: [:i | i buildMenuSpec: m].
 			isGroup ifFalse: [self spec subMenu: m]].
 	isGroup
-		ifTrue: [self spec separator ifTrue: [self itemList ifNotNil: [self itemList last spec separator: true]]] 
+		ifTrue: [self spec separator ifTrue: [self itemList ifNotNil: [self itemList last spec separator: true]]]
 		ifFalse: [aMenu items add: self spec]
 ]
 
@@ -235,12 +234,12 @@ MenuRegistration >> builder [
 
 { #category : #accessing }
 MenuRegistration >> collectMisplacedItemsIn: aCollection [
-	"Select recursively all MenuRegistration with a parentName 
-	different from its owner name. 	This is possible since a parent name 
-	can be given in order to force a menu item placement. 
-	If my parentName is not the same as my owner name then it means 
+	"Select recursively all MenuRegistration with a parentName
+	different from its owner name. 	This is possible since a parent name
+	can be given in order to force a menu item placement.
+	If my parentName is not the same as my owner name then it means
 	that I'm not in the right place and that my placement has to be resolved"
-	
+
 	self parentName
 		ifNotNil: [owner
 				ifNil: [aCollection add: self]
@@ -254,20 +253,19 @@ MenuRegistration >> collectMisplacedItemsIn: aCollection [
 MenuRegistration >> enabled: aBooleanOrABlock [
 
 	aBooleanOrABlock == true
-		ifTrue: [ 
+		ifTrue: [
 			self spec enabled: true.
 			^ self ].
 	aBooleanOrABlock == false
-		ifTrue: [ 
+		ifTrue: [
 			self spec enabled: false.
 			^ self ].
-	self spec enabled: (aBooleanOrABlock cull: self model).
+	self spec enabled: (aBooleanOrABlock cull: self model)
 ]
 
 { #category : #'spec accessing' }
 MenuRegistration >> enabledBlock [
 	^ self spec enabledBlock
-
 ]
 
 { #category : #'spec accessing' }
@@ -314,14 +312,12 @@ MenuRegistration >> isGroup: aBoolean [
 MenuRegistration >> item: aSymbol [
 	"set my name and my label with aSymbol (the label and the name as the same by default) and register myself as a child of my owner"
 	^ (self builder newSubItem) name: aSymbol; label: aSymbol asString
-
 ]
 
 { #category : #accessing }
 MenuRegistration >> itemList [
 	"Return my children"
-	^ itemList 
-
+	^ itemList
 ]
 
 { #category : #accessing }
@@ -337,7 +333,7 @@ MenuRegistration >> itemNamed: aName [
 	| result |
 	self name = aName ifTrue: [ ^ self ].
 	result := self itemList
-		ifNotNil: [ :l | 
+		ifNotNil: [ :l |
 			l
 				detect: [ :item | (item itemNamed: aName) notNil ]
 				ifNone: [  ] ].
@@ -355,7 +351,7 @@ MenuRegistration >> keyText: aString [
 ]
 
 { #category : #'spec accessing' }
-MenuRegistration >> label [ 
+MenuRegistration >> label [
 	"return my label"
 	^ self spec label
 ]
@@ -397,7 +393,7 @@ MenuRegistration >> order [
 ]
 
 { #category : #accessing }
-MenuRegistration >> order: aNumber [ 
+MenuRegistration >> order: aNumber [
 	"Set the value of order"
 
 	order := aNumber
@@ -442,39 +438,37 @@ MenuRegistration >> precondition: aValuable [
 MenuRegistration >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		<< ' ( ';
-		print: self name; 
+		print: self name;
 		<< ' ) '
 ]
 
 { #category : #initialization }
 MenuRegistration >> release [
 	itemList := nil.
-	self releaseActionMap.
-	
+	self releaseActionMap
 ]
 
 { #category : #accessing }
 MenuRegistration >> removeItem: anItem [
 	"Remove a MenuRegistration"
-	self itemList remove: anItem 
+	self itemList remove: anItem
 ]
 
 { #category : #initialization }
 MenuRegistration >> reset [
-	itemList 
+	itemList
 		ifNotNil: [
 			itemList do: [:i | i reset].
 			itemList := nil].
 	spec := nil
-
 ]
 
 { #category : #'spec accessing' }
 MenuRegistration >> selector: aSymbol [
 	"set the selector for item with an action"
-	self spec action 
+	self spec action
 		ifNil: [self spec action: (MessageSend receiver: self itemReceiver selector: aSymbol)]
 		ifNotNil: [self spec action selector: aSymbol]
 ]
@@ -497,13 +491,12 @@ MenuRegistration >> spec [
 { #category : #'spec accessing' }
 MenuRegistration >> target [
 	^ self spec action ifNotNil: [:action | action receiver]
-
 ]
 
 { #category : #'spec accessing' }
 MenuRegistration >> target: anObject [
 	"set the target for the action"
-	self spec action 
+	self spec action
 		ifNil: [self spec action: (MessageSend receiver: (anObject ifNil: [owner itemReceiver]) selector: nil)]
 		ifNotNil: [self spec action receiver: anObject]
 ]

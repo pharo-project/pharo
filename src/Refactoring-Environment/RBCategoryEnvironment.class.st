@@ -59,9 +59,9 @@ RBCategoryEnvironment >> categories: aCollection [
 
 { #category : #'accessing - classes' }
 RBCategoryEnvironment >> classNames [
-	^ self categories 
+	^ self categories
 		inject: IdentitySet new
-		into: [ :answer :each | 
+		into: [ :answer :each |
 			answer
 				addAll: (self classNamesFor: each);
 				yourself ]
@@ -76,7 +76,7 @@ RBCategoryEnvironment >> defaultLabel [
 ]
 
 { #category : #testing }
-RBCategoryEnvironment >> definesClass: aClass [ 
+RBCategoryEnvironment >> definesClass: aClass [
 	^ (super definesClass: aClass) and: [ categories includes: aClass instanceSide category ]
 ]
 
@@ -87,7 +87,7 @@ RBCategoryEnvironment >> includesCategory: aCategory [
 ]
 
 { #category : #testing }
-RBCategoryEnvironment >> includesClass: aClass [ 
+RBCategoryEnvironment >> includesClass: aClass [
 	^ (super includesClass: aClass) and: [ categories includes: aClass instanceSide category ]
 ]
 

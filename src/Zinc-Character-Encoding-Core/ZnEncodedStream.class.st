@@ -58,6 +58,11 @@ ZnEncodedStream >> encoding: encoding [
 	encoder := encoding asZnCharacterEncoder
 ]
 
+{ #category : #accessing }
+ZnEncodedStream >> flush [
+	^ stream flush
+]
+
 { #category : #testing }
 ZnEncodedStream >> isStream [
   ^ true
@@ -94,7 +99,7 @@ ZnEncodedStream >> truncate [
 ]
 
 { #category : #accessing }
-ZnEncodedStream >> truncate: anInteger [ 
+ZnEncodedStream >> truncate: anInteger [
 	stream truncate: anInteger
 ]
 

@@ -40,53 +40,54 @@ FreeTypeCacheTest >> setUp [
 		linearAdvance: 10000;
 		yourself.
 	fullCache := FreeTypeCache new.
-	fullCache 
-		maximumSize: (10*(fullCache sizeOf: font1YGlyph))..
+	fullCache
+		maximumSize: (10*(fullCache sizeOf: font1YGlyph)).
 	1 to: 10 do:[:i |
-		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph]. 
+		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph]
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testConstants [
+
 	| constants |
-	constants := {FreeTypeCacheWidth . FreeTypeCacheGlyphMono . FreeTypeCacheGlyphLCD . FreeTypeCacheGlyph}.
-	self assert: constants asSet size equals: constants size.	"no 2 have same value"
-	self assert: (constants detect: [ :x | x isNil ] ifNone: [  ]) isNil	"no value is nil"
+	constants := { FreeTypeCacheWidth . FreeTypeCacheGlyphMono . FreeTypeCacheGlyphLCD . FreeTypeCacheGlyph }.
+
+	self assert: constants asSet size equals: constants size. "no 2 have same value"
+	self assert: (constants detect: [ :x | x isNil ] ifNone: [ ]) isNil "no value is nil"
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testEntriesRemovedFIFO [
-	| |
-	cache maximumSize: 10*(cache sizeOf: font1XGlyph).
+
+	cache maximumSize: 10 * (cache sizeOf: font1XGlyph).
 	1 to: 10 do:[:i |
-		cache 
-			atFont: font1 
-			charCode: (1000-i) 
-			type: FreeTypeCacheGlyph 
+		cache
+			atFont: font1
+			charCode: (1000-i)
+			type: FreeTypeCacheGlyph
 			put: font1XGlyph].
 	self validateCollections: cache.
-	11 to:1000 do:[:i |
-		cache 
-			atFont: font1 
-			charCode: (1000-i) 
-			type: FreeTypeCacheGlyph 
+	11 to: 1000 do:[:i |
+		cache
+			atFont: font1
+			charCode: (1000-i)
+			type: FreeTypeCacheGlyph
 			put: font1XGlyph.
 		self validateSizes: cache.
 		self validateCollections: cache.
 		"i-9 to: i do:[:i2 |
-			self 
+			self
 				shouldnt: [cache atFont: font1 charCode: 1000-i2 type: FreeTypeCacheGlyph]
 				raise: Error]."
-		self 
+		self
 			should: [cache atFont: font1 charCode: 1000-(i-10) type: FreeTypeCacheGlyph]
-			raise: Error].  
-	self validateSizes: cache.
-
-	
+			raise: Error].
+	self validateSizes: cache
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testFailedGet [
+
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
 	self assert: (cache instVarNamed: #used) equals: 0.
 	self validateSizes: cache
@@ -94,6 +95,7 @@ FreeTypeCacheTest >> testFailedGet [
 
 { #category : #tests }
 FreeTypeCacheTest >> testFreeTypeCacheEntry [
+
 	| f f2 f3 |
 	f := FreeTypeCacheEntry new.
 	f
@@ -118,20 +120,19 @@ FreeTypeCacheTest >> testFreeTypeCacheEntry [
 
 { #category : #tests }
 FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
-
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
-	"This test breaks 95% of times"	
+	"This test breaks 95% of times"
 
 	self timeLimit: 20 seconds.
-	
-	10 timesRepeat: [  
+
+	10 timesRepeat: [
 		 | sem text canvases blocky |
 
 		sem := Semaphore new.
 		text := (String loremIpsum: 25*1024).
 		FreeTypeCache current removeAll.
 		canvases := OrderedCollection new.
-			
+
 		blocky := [  | canvas |
 			canvas := FormCanvas extent: 1000@1000.
 			canvases add: canvas.
@@ -141,31 +142,28 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 					bounds: (0@0 corner: canvas form extent);
 					fullDrawOn: canvas.
 			sem signal ].
-			
+
 		blocky forkAt: 39.
 		blocky forkAt: 39.
 		blocky forkAt: 39.
-		
-		sem 
+
+		sem
 			wait;
 			wait;
-			wait.	
-			
-		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
-	].
+			wait.
 
-
+		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ])
+	]
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
-
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
-	"This test breaks 95% of times"	
+	"This test breaks 95% of times"
 
 	self timeLimit: 20 seconds.
-	
-	10 timesRepeat: [  
+
+	10 timesRepeat: [
 		 | sem text canvases blocky widthAsk |
 
 		sem := Semaphore new.
@@ -177,7 +175,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 			1 to: text size do: [ :i | StandardFonts codeFont widthOf: (text at: i). i % 50 = 0 ifTrue: [ Processor yield ]].
 			sem signal ].
 
-			
+
 		blocky := [  | canvas |
 			canvas := FormCanvas extent: 1000@1000.
 			canvases add: canvas.
@@ -187,26 +185,25 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 					bounds: (0@0 corner: canvas form extent);
 					fullDrawOn: canvas.
 			sem signal ].
-			
+
 		blocky forkAt: 39.
 		blocky forkAt: 39.
 		blocky forkAt: 39.
 		widthAsk forkAt: 39.
-		
-		sem 
-			wait;
-			wait;
-			wait;
-			wait.	
-			
-		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
-	].
 
+		sem
+			wait;
+			wait;
+			wait;
+			wait.
 
+		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ])
+	]
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testInstanceInitialization [
+
 	self assert: (cache instVarNamed: #maximumSize) equals: FreeTypeCache defaultMaximumSize.
 	self assert: (cache instVarNamed: #used) equals: 0.
 	self assert: (cache instVarNamed: #fontTable) class equals: cache dictionaryClass.
@@ -217,6 +214,7 @@ FreeTypeCacheTest >> testInstanceInitialization [
 
 { #category : #tests }
 FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
+
 	cache maximumSize: (cache sizeOf: font1XGlyph).
 	cache
 		atFont: font1
@@ -239,6 +237,7 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 
 { #category : #tests }
 FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
+
 	cache maximumSize: (cache sizeOf: font1XGlyph).
 	cache
 		atFont: font1
@@ -261,6 +260,7 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
 
 { #category : #tests }
 FreeTypeCacheTest >> testNormalGetIfAbsentPut [
+
 	| u g r |
 	cache maximumSize: nil.
 	u := cache instVarNamed: #used.
@@ -280,6 +280,7 @@ FreeTypeCacheTest >> testNormalGetIfAbsentPut [
 
 { #category : #tests }
 FreeTypeCacheTest >> testNormalGetIfAbsentPutTwice [
+
 	| u g r |
 	cache maximumSize: nil.
 	u := cache instVarNamed: #used.
@@ -304,6 +305,7 @@ FreeTypeCacheTest >> testNormalGetIfAbsentPutTwice [
 
 { #category : #tests }
 FreeTypeCacheTest >> testNormalGetIfAbsentPutTwiceIntoNonEmptyCache [
+
 	| u g r |
 	cache maximumSize: nil.
 	u := cache instVarNamed: #used.
@@ -333,6 +335,7 @@ FreeTypeCacheTest >> testNormalGetIfAbsentPutTwiceIntoNonEmptyCache [
 
 { #category : #tests }
 FreeTypeCacheTest >> testNormalPutGet [
+
 	| u g |
 	cache maximumSize: nil.
 	u := cache instVarNamed: #used.
@@ -351,6 +354,7 @@ FreeTypeCacheTest >> testNormalPutGet [
 
 { #category : #tests }
 FreeTypeCacheTest >> testNormalPutGetTwice [
+
 	| u g |
 	cache maximumSize: nil.
 	u := cache instVarNamed: #used.
@@ -370,6 +374,7 @@ FreeTypeCacheTest >> testNormalPutGetTwice [
 
 { #category : #tests }
 FreeTypeCacheTest >> testNormalPutGetWidth [
+
 	| u g |
 	cache maximumSize: nil.
 	u := cache instVarNamed: #used.
@@ -388,6 +393,7 @@ FreeTypeCacheTest >> testNormalPutGetWidth [
 
 { #category : #tests }
 FreeTypeCacheTest >> testPutSameElementTwice [
+
 	cache maximumSize: nil.
 	cache
 		atFont: font1
@@ -409,6 +415,7 @@ FreeTypeCacheTest >> testPutSameElementTwice [
 
 { #category : #tests }
 FreeTypeCacheTest >> testRemoveAll [
+
 	| m fifo fontTable |
 	m := fullCache instVarNamed: #maximumSize.
 	fifo := fullCache instVarNamed: #fifo.
@@ -424,9 +431,9 @@ FreeTypeCacheTest >> testRemoveAll [
 
 { #category : #tests }
 FreeTypeCacheTest >> testRemoveAllForFont [
-	| fifo |
 
-	fullCache maximumSize: nil.	
+	| fifo |
+	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
 		fullCache atFont: font1 charCode: i type: 1 put: font1XGlyph].
 	1 to: 100 do:[:i |
@@ -443,15 +450,14 @@ FreeTypeCacheTest >> testRemoveAllForFont [
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNil.
 	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testRemoveAllForType [
-	| fifo |
 
-	fullCache maximumSize: nil.	
+	| fifo |
+	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
 		fullCache atFont: font1 charCode: i type: 1 put: font1XGlyph].
 	1 to: 100 do:[:i |
@@ -468,12 +474,12 @@ FreeTypeCacheTest >> testRemoveAllForType [
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNil.
 	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil.
-	
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testReport [
+
 	self assert: fullCache reportCacheState equals: '100% Full (maximumSize: 400320 , used: 400320)'.
 	fullCache maximumSize: 800640.
 	self assert: fullCache reportCacheState equals: '50% Full (maximumSize: 800640 , used: 400320)'.
@@ -484,6 +490,7 @@ FreeTypeCacheTest >> testReport [
 
 { #category : #tests }
 FreeTypeCacheTest >> testSetMaximumSize [
+
 	cache maximumSize: 0.
 	self assert: (cache instVarNamed: #maximumSize) equals: 0.
 	cache maximumSize: 99999999999999999.
@@ -496,6 +503,7 @@ FreeTypeCacheTest >> testSetMaximumSize [
 
 { #category : #tests }
 FreeTypeCacheTest >> testSetMaximumSizeGrow [
+
 	| u m |
 	u := fullCache instVarNamed: #used.
 	m := fullCache instVarNamed: #maximumSize.
@@ -507,6 +515,7 @@ FreeTypeCacheTest >> testSetMaximumSizeGrow [
 
 { #category : #tests }
 FreeTypeCacheTest >> testSetMaximumSizeShrink [
+
 	| m |
 	m := fullCache instVarNamed: #maximumSize.
 	fullCache maximumSize: m // 2.	"shrink"
@@ -517,6 +526,7 @@ FreeTypeCacheTest >> testSetMaximumSizeShrink [
 
 { #category : #tests }
 FreeTypeCacheTest >> testSetMaximumSizeUnbounded [
+
 	| u |
 	u := fullCache instVarNamed: #used.
 	fullCache maximumSize: nil.	"unbounded"
@@ -527,6 +537,7 @@ FreeTypeCacheTest >> testSetMaximumSizeUnbounded [
 
 { #category : #tests }
 FreeTypeCacheTest >> testSingleton [
+
 	self assert: FreeTypeCache current class equals: FreeTypeCache.
 	self assert: FreeTypeCache current identicalTo: FreeTypeCache current
 ]

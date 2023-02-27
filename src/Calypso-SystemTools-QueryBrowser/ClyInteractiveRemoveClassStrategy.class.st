@@ -14,13 +14,13 @@ Class {
 
 { #category : #testing }
 ClyInteractiveRemoveClassStrategy class >> isAbstract [
-	^self == ClyInteractiveRemoveClassStrategy 
+	^self == ClyInteractiveRemoveClassStrategy
 ]
 
 { #category : #'instance creation' }
 ClyInteractiveRemoveClassStrategy class >> newForBrowser: aBrowser [
 
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 

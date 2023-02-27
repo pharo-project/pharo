@@ -23,11 +23,11 @@ ExecutionEnvironmentStub >> forkedProcesses: anObject [
 { #category : #initialization }
 ExecutionEnvironmentStub >> initialize [
 	super initialize.
-	
+
 	forkedProcesses := OrderedCollection new
 ]
 
 { #category : #controlling }
-ExecutionEnvironmentStub >> prepareForNewProcess: aProcess [ 
+ExecutionEnvironmentStub >> prepareForNewProcess: aProcess [
 	forkedProcesses add: aProcess
 ]

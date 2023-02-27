@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ClyBreakOnVarReadsCommand >> defaultMenuItemName [
 	sourceNode isVariable ifFalse:[^'(unvalid node)'].
-	^'Break on reads to ', sourceNode name
+	^'Break on reads to  ', sourceNode name
 ]
 
 { #category : #execution }

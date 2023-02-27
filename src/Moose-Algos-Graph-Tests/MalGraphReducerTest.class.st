@@ -15,7 +15,7 @@ MalGraphReducerTest >> assertNodes: aNodeList doesNotInclude: anotherNodeList [
 			[ :model | 
 			self 
 				deny: ((anotherNodeList collect: [:each | each model]) includes: model)
-				description: model asString , ' should not be referenced!' ] 
+				description: model asString , ' should not be referenced!' ]
 ]
 
 { #category : #helpers }
@@ -64,7 +64,6 @@ MalGraphReducerTest >> testMergedNodesNotReferencedInPreviousNodes [
 	self 
 		assertNodes: (graphReducer nodes flatCollect: #previousNodes) 
 		doesNotInclude: (self mergedNodesIn: graphReducer nodes)
-
 ]
 
 { #category : #tests }

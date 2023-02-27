@@ -197,19 +197,19 @@ MalGraphAlgorithm >> nodesFromSet: aSet [
 { #category : #private }
 MalGraphAlgorithm >> privateEdges: aCollection [
 
-	edges := aCollection 
+	edges := aCollection
 ]
 
 { #category : #private }
 MalGraphAlgorithm >> privateNodes: aCollection [
 
-	nodes := aCollection 
+	nodes := aCollection
 ]
 
 { #category : #running }
 MalGraphAlgorithm >> run [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }

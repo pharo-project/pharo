@@ -29,9 +29,7 @@ DelayTest >> testMultiProcessWaitOnSameDelay [
 	] forkAt: Processor activePriority+1.
 	p1 terminate.
 	p2 terminate.
-	self assert: wasRun.
-
-
+	self assert: wasRun
 ]
 
 { #category : #'tests - limits' }
@@ -40,6 +38,5 @@ DelayTest >> testMultiSchedule [
 	| delay |
 	delay := Delay forSeconds: 1.
 	delay schedule.
-	self should:[delay schedule] raise: Error.
-
+	self should:[delay schedule] raise: Error
 ]

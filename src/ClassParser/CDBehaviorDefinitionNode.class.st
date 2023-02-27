@@ -14,9 +14,14 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
+{ #category : #testing }
+CDBehaviorDefinitionNode class >> isAbstract [
+	^ self == CDBehaviorDefinitionNode
+]
+
 { #category : #accessing }
 CDBehaviorDefinitionNode >> addSlot: aCDSlotNode [
-	
+
 	slotNodes add: aCDSlotNode.
 	self addChild: aCDSlotNode
 ]
@@ -47,7 +52,7 @@ CDBehaviorDefinitionNode >> className: aName astNode: astNode [
 
 { #category : #accessing }
 CDBehaviorDefinitionNode >> classNameNode [
-	
+
 	^ classNameNode
 ]
 
@@ -71,7 +76,7 @@ CDBehaviorDefinitionNode >> existingClassIfAbsent: aBlock [
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> hasTraitComposition [
-	
+
 	^ traitDefinition isNotNil
 ]
 
@@ -82,61 +87,34 @@ CDBehaviorDefinitionNode >> initialize [
 ]
 
 { #category : #testing }
-CDBehaviorDefinitionNode >> isBytes [
-	
-	^ layoutClass = ByteLayout
+CDBehaviorDefinitionNode >> isClassSide [
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
-CDBehaviorDefinitionNode >> isEphemeron [
-	
-	^ layoutClass = EphemeronLayout
+CDBehaviorDefinitionNode >> isInstanceSide [
+	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isImmediate [
-	
-	^ layoutClass = ImmediateLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isNormal [
-	
-	^ layoutClass = FixedLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isVariableClass [
-	
-	^ layoutClass = VariableLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isWeak [
-	
-	^ layoutClass = WeakLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isWords [
-	
-	^ layoutClass = WordLayout
-]
-
-{ #category : #testing }
+{ #category : #accessing }
 CDBehaviorDefinitionNode >> layoutClass [
 
 	^ layoutClass
 ]
 
 { #category : #accessing }
-CDBehaviorDefinitionNode >> layoutClass: aClass [ 
+CDBehaviorDefinitionNode >> layoutClass: aClass [
 	layoutClass := aClass
 ]
 
 { #category : #accessing }
+CDBehaviorDefinitionNode >> selector [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 CDBehaviorDefinitionNode >> slotNodes [
-	
+
 	^ slotNodes
 ]
 
@@ -147,11 +125,10 @@ CDBehaviorDefinitionNode >> slots [
 ]
 
 { #category : #accessing }
-CDBehaviorDefinitionNode >> slots: aCollection [ 
-	
+CDBehaviorDefinitionNode >> slots: aCollection [
+
 	slotNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
-	
 ]
 
 { #category : #accessing }
@@ -164,5 +141,5 @@ CDBehaviorDefinitionNode >> traitDefinition [
 CDBehaviorDefinitionNode >> traitDefinition: aNode [
 
 	traitDefinition := aNode.
-	self addChild: aNode.
+	self addChild: aNode
 ]

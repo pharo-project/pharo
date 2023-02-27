@@ -13,16 +13,15 @@ Class {
 
 { #category : #'instance creation' }
 OmEntryReader class >> newForStore: aFileStore [
-	
+
 	^ self basicNew
 		initializeWithStore: aFileStore;
 		yourself
-
 ]
 
 { #category : #reading }
 OmEntryReader >> entryPositionsDo: aBlock [
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -30,13 +29,13 @@ OmEntryReader >> entryPositionsDo: aBlock [
 OmEntryReader >> initializeWithStore: aFileStore [
 
 	self initialize.
-	store := aFileStore.
+	store := aFileStore
 ]
 
 { #category : #reading }
 OmEntryReader >> nextEntry [
 	"Read next entry from the stream."
-	
+
 	^ self subclassResponsibility
 ]
 

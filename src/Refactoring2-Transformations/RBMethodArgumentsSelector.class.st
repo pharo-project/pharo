@@ -43,7 +43,7 @@ RBMethodArgumentsSelector class >> on: arguments and: values in: sourceCode [
 { #category : #'instance creation' }
 RBMethodArgumentsSelector class >> openOn: arguments and: values in: sourceCode [
 
-	^ (self 
+	^ (self
 		on: arguments
 		and: values
 		in: sourceCode) openModal
@@ -55,23 +55,22 @@ RBMethodArgumentsSelector >> addAssociation [
 	[  | argument value |
 		argument := argumentsList at: self argumentIndex.
 		value := valuesList at: self valueIndex.
-			
+
 		"replace occurrences in code"
-		tree := RBParseTreeRewriter 
+		tree := RBParseTreeRewriter
 			replace: value
 			with: argument in: tree.
-		
+
 		"add new entry"
 		argsAndValues at: argument put: value.
 		"remove from lists"
 		argumentsList removeAt: self argumentIndex.
 		valuesList removeAt: self valueIndex.
-		
+
 		sourceCodeMorph contents: self sourceCode.
-		self changed: #associations; changed: #arguments; 
+		self changed: #associations; changed: #arguments;
 				changed: #values; changed: #isOkEnabled ]
 	on: Error do: [ self inform: 'Please select one argument and one value.' ]
-	
 ]
 
 { #category : #accessing }
@@ -124,9 +123,9 @@ RBMethodArgumentsSelector >> initializeWith: aCollection and: anotherCollection 
 	arguments := aCollection.
 	values := anotherCollection.
 	tree := aTree.
-	
+
 	argsAndValues := Dictionary new.
-	
+
 	self initialize.
 	self title: 'There are extra arguments in this method. Please map a value to each extra argument.' translated
 ]
@@ -140,7 +139,7 @@ RBMethodArgumentsSelector >> isOkEnabled [
 { #category : #actions }
 RBMethodArgumentsSelector >> newContentMorph [
 
-	^ (self newColumn: { 
+	^ (self newColumn: {
 		(self newRow: {
 			"the arguments"
 			self newGroupbox: 'Arguments' for: (self newColumn: {
@@ -151,7 +150,7 @@ RBMethodArgumentsSelector >> newContentMorph [
 					help: nil)
 					hResizing: #spaceFill;
 					yourself }).
-					
+
 			"the values"
 			self newGroupbox: 'Values' for: (self newColumn: {
 				(self newListFor: self
@@ -161,20 +160,20 @@ RBMethodArgumentsSelector >> newContentMorph [
 					help: nil)
 					hResizing: #spaceFill;
 					yourself }).
-					
+
 			"add an association"
 			(self newRow: {
-				self newButtonFor: self action: #addAssociation 
+				self newButtonFor: self action: #addAssociation
 					label: 'v' help: 'Map'.})
 				hResizing: #shrinkWrap}).
-				
+
 		"source code preview"
 		(self newRow: {
 			self newGroupbox: 'Preview' for: (self newColumn: {
 				sourceCodeMorph := (self newText: tree formattedCode)
 					extent: 400@400;
 					hResizing: #rigid }) }).
-				
+
 		"associations"
 		(self newRow: {
 			self newGroupbox: 'Associations' for: (self newColumn: {
@@ -185,15 +184,14 @@ RBMethodArgumentsSelector >> newContentMorph [
 					help: nil)
 					hResizing: #spaceFill;
 					yourself. }).
-					
+
 		"remove association"
 		(self newRow: {
 			self newButtonFor: self action: #removeAssociation
 				label: '^' help: 'Unmap'.})
-			hResizing: #shrinkWrap }).		
-		
-	 }) vResizing: #shrinkWrap
+			hResizing: #shrinkWrap }).
 
+	 }) vResizing: #shrinkWrap
 ]
 
 { #category : #controls }
@@ -215,9 +213,9 @@ RBMethodArgumentsSelector >> removeAssociation [
 		association := argsAndValues associations at: self associationIndex.
 		argument := association key.
 		value := association value.
-		
+
 		"replace occurrences in code"
-		tree := RBParseTreeRewriter 
+		tree := RBParseTreeRewriter
 			replace: argument
 			with: value in: tree.
 
@@ -225,12 +223,11 @@ RBMethodArgumentsSelector >> removeAssociation [
 		argsAndValues removeKey: argument.
 		argumentsList add: argument.
 		valuesList add: value.
-		
+
 		sourceCodeMorph contents: self sourceCode.
 		self changed: #associations; changed: #arguments;
 				changed: #values; changed: #isOkEnabled ]
 	on: Error do: [ self inform: 'Please select one association to remove.' ]
-	
 ]
 
 { #category : #accessing }

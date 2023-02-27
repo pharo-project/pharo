@@ -4,61 +4,69 @@ I am a class refactoring change for removing a class. On execution, my class wil
 Class {
 	#name : #RBRemoveClassChange,
 	#superclass : #RBRefactoryClassChange,
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Classes'
 }
 
 { #category : #'instance creation' }
 RBRemoveClassChange class >> remove: aClass [
+
 	^ self new changeClass: aClass
 ]
 
 { #category : #'instance creation' }
 RBRemoveClassChange class >> removeClassName: aSymbol [
-	^ self basicNew onSystemDictionary: self environment; 
-			changeClassName: aSymbol;
-			initialize
-			
+
+	^ self basicNew
+		  onSystemDictionary: self environment;
+		  changeClassName: aSymbol;
+		  initialize
 ]
 
 { #category : #converting }
 RBRemoveClassChange >> asUndoOperation [
+
 	| classChanges |
 	classChanges := changeFactory compositeRefactoryChange.
-	self changeClass withAllSubclasses do: [ :each | 
+	self changeClass withAllSubclasses do: [ :each |
 		classChanges defineClass: each oldDefinition.
-		each class instVarNames 
+		each class instVarNames
 			do: [ :varName | classChanges addInstanceVariable: varName to: each class ].
-		each selectors 
+		each selectors
 			do: [ :selector | classChanges compile: (each sourceCodeAt: selector) in: each ].
-		each class selectors 
+		each class selectors
 			do: [ :selector | classChanges compile: (each class sourceCodeAt: selector) in: each class ] ].
 	^ classChanges
 ]
 
 { #category : #accessing }
 RBRemoveClassChange >> changeClass: aBehavior [
+
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
 { #category : #printing }
 RBRemoveClassChange >> changeString [
+
 	^ 'Remove ' , self displayClassName
 ]
 
-{ #category : #printing }
-RBRemoveClassChange >> initialize [ 
+{ #category : #initialization }
+RBRemoveClassChange >> initialize [
+
 	super initialize.
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
 { #category : #private }
 RBRemoveClassChange >> primitiveExecute [
+
 	self changeClass removeFromSystem
 ]
 
 { #category : #printing }
-RBRemoveClassChange >> printOn: aStream [ 
+RBRemoveClassChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeFromSystem';

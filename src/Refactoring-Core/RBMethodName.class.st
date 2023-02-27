@@ -25,8 +25,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBMethodName class >> selector: aSymbol arguments: stringCollection [ 
-	^ self new 
+RBMethodName class >> selector: aSymbol arguments: stringCollection [
+	^ self new
 			selector: aSymbol;
 			arguments: stringCollection;
 			yourself
@@ -38,7 +38,7 @@ RBMethodName >> arguments [
 ]
 
 { #category : #accessing }
-RBMethodName >> arguments: nameCollection [ 
+RBMethodName >> arguments: nameCollection [
 	arguments := nameCollection.
 	self changed: #arguments
 ]
@@ -46,7 +46,7 @@ RBMethodName >> arguments: nameCollection [
 { #category : #testing }
 RBMethodName >> isValid [
 	"Return whether the receiver looks like a method with a selector in sync with the arguments in a possible class"
-	
+
 	^ 	selector isString and: [ selector isValidSelector
 			and: [ selector numArgs = arguments size ]]
 ]
@@ -84,7 +84,7 @@ RBMethodName >> printOn: aStream [
 	self selector keywords keysAndValuesDo: [ :key :part |
 		key = 1 ifFalse: [ aStream space ].
 		aStream nextPutAll: part.
-		(self selector isUnary or: [ argumentStream atEnd ]) 
+		(self selector isUnary or: [ argumentStream atEnd ])
 			ifTrue: [ ^ self ].
 		aStream space; nextPutAll: argumentStream next ]
 ]
@@ -107,7 +107,7 @@ RBMethodName >> selector [
 ]
 
 { #category : #accessing }
-RBMethodName >> selector: aSymbol [ 
+RBMethodName >> selector: aSymbol [
 	selector := aSymbol asSymbol.
 	self changed: #selector
 ]

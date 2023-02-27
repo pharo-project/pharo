@@ -43,9 +43,7 @@ OSSDL2AthensRenderer >> destroy [
 		renderer := nil.
 	].
 
-	super destroy.
-
-
+	super destroy
 ]
 
 { #category : #private }
@@ -62,13 +60,13 @@ OSSDL2AthensRenderer >> drawTexturePixelsWith: aBlock [
 	] ensure: [
 		texture unlock.
 		externalForm destroySurface
-	].
+	]
 ]
 
 { #category : #initialization }
 OSSDL2AthensRenderer >> initialize [
 	super initialize.
-	mutex := Mutex new.
+	mutex := Mutex new
 ]
 
 { #category : #initialization }
@@ -78,8 +76,7 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	renderer := backendWindow sdl2Window createDefaultRenderer.
 	mutex critical: [
 		self resetResources.
-	].
-
+	]
 ]
 
 { #category : #'updating screen' }
@@ -94,7 +91,7 @@ OSSDL2AthensRenderer >> pixelExtent [
 OSSDL2AthensRenderer >> prepareForDrawing [
 	mutex critical: [
 		textureExtent ~= renderer outputExtent ifTrue: [ self resized ].
-	].
+	]
 ]
 
 { #category : #'updating screen' }
@@ -112,7 +109,6 @@ OSSDL2AthensRenderer >> present [
 OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
 	externalForm getCanvas
 		drawImage: athensSurface asForm at: rectangle origin sourceRect: rectangle
-
 ]
 
 { #category : #'updating resources' }
@@ -130,7 +126,7 @@ OSSDL2AthensRenderer >> resetResources [
 		access: SDL_TEXTUREACCESS_STREAMING
 		width: extent x
 		height: extent y.
-	textureExtent := extent.
+	textureExtent := extent
 ]
 
 { #category : #'updating screen' }

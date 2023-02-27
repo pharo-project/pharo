@@ -19,7 +19,6 @@ ThirtyTwoBitRegister class >> new [
 	"Answer a new instance whose initial contents is zero."
 
 	^ super new load: 0
-
 ]
 
 { #category : #'accumulator ops' }
@@ -29,8 +28,7 @@ ThirtyTwoBitRegister >> += aThirtTwoBitRegister [
 	| lowSum |
 	lowSum := low + aThirtTwoBitRegister low.
 	hi := (hi + aThirtTwoBitRegister hi + (lowSum bitShift: -16)) bitAnd: 16rFFFF.
-	low := lowSum bitAnd: 16rFFFF.
-
+	low := lowSum bitAnd: 16rFFFF
 ]
 
 { #category : #converting }
@@ -43,7 +41,6 @@ ThirtyTwoBitRegister >> asInteger [
 	"Answer the integer value of my current contents."
 
 	^ (hi bitShift: 16) + low
-
 ]
 
 { #category : #converting }
@@ -54,7 +51,6 @@ ThirtyTwoBitRegister >> asReverseInteger [
        ((low bitAnd: 16rFF00) bitShift: 8) +
 	  ((hi bitAnd: 16rFF) bitShift: 8) +
        (hi bitShift: -8)
-
 ]
 
 { #category : #'accumulator ops' }
@@ -62,8 +58,7 @@ ThirtyTwoBitRegister >> bitAnd: aThirtTwoBitRegister [
 	"Replace my contents with the bitwise AND of the given register and my current contents."
 
 	hi := hi bitAnd: aThirtTwoBitRegister hi.
-	low := low bitAnd: aThirtTwoBitRegister low.
-
+	low := low bitAnd: aThirtTwoBitRegister low
 ]
 
 { #category : #'accumulator ops' }
@@ -71,8 +66,7 @@ ThirtyTwoBitRegister >> bitInvert [
 	"Replace my contents with the bitwise inverse my current contents."
 
 	hi := hi bitXor: 16rFFFF.
-	low := low bitXor: 16rFFFF.
-
+	low := low bitXor: 16rFFFF
 ]
 
 { #category : #'accumulator ops' }
@@ -80,14 +74,13 @@ ThirtyTwoBitRegister >> bitOr: aThirtTwoBitRegister [
 	"Replace my contents with the bitwise OR of the given register and my current contents."
 
 	hi := hi bitOr: aThirtTwoBitRegister hi.
-	low := low bitOr: aThirtTwoBitRegister low.
-
+	low := low bitOr: aThirtTwoBitRegister low
 ]
 
 { #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> bitShift: anInteger [
 	"Replace my contents with the bitShift of anInteger."
-	self load: (self asInteger bitShift: anInteger). 
+	self load: (self asInteger bitShift: anInteger)
 ]
 
 { #category : #'accumulator ops' }
@@ -95,14 +88,13 @@ ThirtyTwoBitRegister >> bitXor: aThirtTwoBitRegister [
 	"Replace my contents with the bitwise exclusive OR of the given register and my current contents."
 
 	hi := hi bitXor: aThirtTwoBitRegister hi.
-	low := low bitXor: aThirtTwoBitRegister low.
-
+	low := low bitXor: aThirtTwoBitRegister low
 ]
 
 { #category : #accessing }
 ThirtyTwoBitRegister >> byte1: hi1 byte2: hi2 byte3: low1 byte4: low2 [
 	hi := (hi1 bitShift: 8) + hi2.
-	low := (low1 bitShift: 8) + low2.
+	low := (low1 bitShift: 8) + low2
 ]
 
 { #category : #accessing }
@@ -119,14 +111,12 @@ ThirtyTwoBitRegister >> copy [
 
 	<primitive: 148>
 	^ super copy
-
 ]
 
 { #category : #accessing }
 ThirtyTwoBitRegister >> hi [
 
 	^ hi
-
 ]
 
 { #category : #'accumulator ops' }
@@ -159,8 +149,7 @@ ThirtyTwoBitRegister >> load: anInteger [
 	low := anInteger bitAnd: 16rFFFF.
 	hi := (anInteger bitShift: -16) bitAnd: 16rFFFF.
 	self asInteger = anInteger
-		ifFalse: [self error: 'out of range: ', anInteger printString].
-
+		ifFalse: [self error: 'out of range: ', anInteger printString]
 ]
 
 { #category : #accessing }
@@ -168,8 +157,7 @@ ThirtyTwoBitRegister >> loadFrom: aByteArray at: index [
 	"Load my 32-bit value from the four bytes of the given ByteArray starting at the given index. Consider the first byte to contain the most significant bits of the word (i.e., use big-endian byte ordering)."
 
 	hi := ((aByteArray at: index) bitShift: 8) + ( aByteArray at: index + 1).
-	low := ((aByteArray at: index + 2) bitShift: 8) + ( aByteArray at: index + 3).
-
+	low := ((aByteArray at: index + 2) bitShift: 8) + ( aByteArray at: index + 3)
 ]
 
 { #category : #accessing }
@@ -183,8 +171,7 @@ ThirtyTwoBitRegister >> printOn: aStream [
 	"Print my contents in hex with a leading 'R' to show that it is a register object being printed."
 
 	aStream nextPutAll: 'R:'.
-	self asInteger storeOn: aStream base: 16.
-
+	self asInteger storeOn: aStream base: 16
 ]
 
 { #category : #accessing }
@@ -194,8 +181,7 @@ starting at the given index. Consider the first byte to contain the most
 significant bits of the word (i.e., use big-endian byte ordering)."
 
 	hi := ((aByteArray at: index + 3) bitShift: 8) + ( aByteArray at: index + 2).
-	low := ((aByteArray at: index + 1) bitShift: 8) + ( aByteArray at: index).
-
+	low := ((aByteArray at: index + 1) bitShift: 8) + ( aByteArray at: index)
 ]
 
 { #category : #accessing }

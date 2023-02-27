@@ -9,7 +9,7 @@ Class {
 
 { #category : #environmentSetUp }
 ASTClassBuilderTest >> environment [
-	^ ShSmalltalkGlobalsEnvironment new.
+	^ ShSmalltalkGlobalsEnvironment new
 ]
 
 { #category : #running }
@@ -176,22 +176,6 @@ ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 	resTest add: 'TestSharedPool' asSymbol.
 	resTest add: 'ShTestSharedPool' asSymbol.
 	self assert: class sharedPoolNames equals: resTest
-]
-
-{ #category : #tests }
-ASTClassBuilderTest >> testCreateNormalClassWithSlots [
-
-	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															slots: {
-																''cat'' => PropertySlot.
-																''env'' => PropertySlot.
-															}.'.
-	class := ShiftClassBuilder new
-		         buildEnvironment: self environment;
-		         buildFromAST: ast;
-		         build.
-	self assert: class instanceVariablesString equals: 'cat env'
 ]
 
 { #category : #tests }
@@ -362,7 +346,7 @@ ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 	self assert: class name equals: #TestSubClass.
 	self assert: class instanceVariablesString equals: ''.
 	self assert: class classVarNames equals: #( #classVar #pouet #var ).
-	self assert: class classLayout class equals: WordLayout.
+	self assert: class classLayout class equals: WordLayout
 ]
 
 { #category : #running }
@@ -406,7 +390,7 @@ ASTClassBuilderTest >> testDefaultResolve [
 	ast := self parserClass parse: 'cdfgdf subclass: #TestSubClass
 															uses: TOccurrencesTest'.
 	self
-		should: [ 
+		should: [
 			ShiftClassBuilder new
 				buildEnvironment: self environment;
 				buildFromAST: ast;
@@ -419,11 +403,11 @@ ASTClassBuilderTest >> testUseUndefinedClass [
 
 	| ast |
 	ast := self parserClass parse: 'PoPouet subclass: #TestClass'.
-	ShiftClassInstaller new make: [ :builder | 
+	ShiftClassInstaller new make: [ :builder |
 		builder
 			useUndefinedClass;
 			buildEnvironment: self environment;
 			buildFromAST: ast ].
-	self assert: [ 
+	self assert: [
 		(ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) isUndefined ]
 ]

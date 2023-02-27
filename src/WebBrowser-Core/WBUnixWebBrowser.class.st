@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 WBUnixWebBrowser class >> isForCurrentSystem [
 
-	^Smalltalk os isUnix  
+	^ Smalltalk os isUnix
 ]
 
 { #category : #private }
@@ -24,5 +24,5 @@ WBUnixWebBrowser class >> openNativeWebBrowserOn: anURLString [
 { #category : #'private - uffi' }
 WBUnixWebBrowser class >> system: command [
 
-	^LibC system: command 
+	^ LibC system: command
 ]

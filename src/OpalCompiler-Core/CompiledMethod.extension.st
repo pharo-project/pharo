@@ -1,34 +1,18 @@
 Extension { #name : #CompiledMethod }
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> decompile [
-	^Smalltalk globals 
+	^Smalltalk globals
 		at: #FBDDecompiler
-		ifPresent: [ :decompiler | decompiler new  decompile: self]  
+		ifPresent: [ :decompiler | decompiler new  decompile: self]
 		ifAbsent: [ RBParser parseMethod: self selector asMethodPreamble, '
 	self noSourceAvailable' ]
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> decompileIR [
-	
+
 	^ IRBytecodeDecompiler new decompile: self
-]
-
-{ #category : #'*opalcompiler-core' }
-CompiledMethod >> ir [
-	"We as the AST for the IR... for decompiling ir from bytecode, look at IRBytecodeDecompiler"
-	^ self ast ir
-]
-
-{ #category : #'*opalcompiler-core' }
-CompiledMethod >> irPrimitive [
-
-	| primNode n |
-	primNode := IRPrimitive new num: (n := self primitive).
-	(n = 117 or: [n = 120]) ifTrue: [
-		primNode spec: (self literalAt: 1)].
-	^ primNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -37,22 +21,22 @@ CompiledMethod >> methodNode [
 	^self parseTree
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> recompile [
 	^ self methodClass recompile: self selector
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> reformat [
-	self methodClass compile: self ast formattedCode classified:  self category.
+	self methodClass compile: self ast formattedCode classified:  self category
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> sourceNode [
 	^self ast
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> sourceNodeForPC: aPC [
 	^self sourceNode sourceNodeForPC: aPC
 ]

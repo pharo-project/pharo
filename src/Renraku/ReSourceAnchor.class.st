@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ReSourceAnchor class >> entity: anEntity [ 
+ReSourceAnchor class >> entity: anEntity [
 	^ self basicNew
 		initializeEnitity: anEntity;
 		yourself
@@ -23,8 +23,8 @@ ReSourceAnchor >> entity [
 ]
 
 { #category : #initialization }
-ReSourceAnchor >> initializeEnitity: anEntity [ 
-	
+ReSourceAnchor >> initializeEnitity: anEntity [
+
 	sourceEntity := anEntity
 ]
 

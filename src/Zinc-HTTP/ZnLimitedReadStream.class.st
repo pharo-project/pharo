@@ -4,22 +4,17 @@ but limiting reading to a fixed number of elements.
 
 I can be atEnd while my wrapped stream is not.
 
-My contentSpecies can be forced to be ByteArray (binary) or ByteString (ascii).
-
-I do byte/char conversions on the fly (support bivalent access).
-
-This implementation is really a kludge.
-
+I am binary if the stream that I wrap is binary, else I am textual.
+ 
 Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnLimitedReadStream,
-	#superclass : #Stream,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'position',
-		'limit',
-		'binary'
+		'limit'
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }
@@ -31,19 +26,9 @@ ZnLimitedReadStream class >> on: stream limit: limit [
 		yourself
 ]
 
-{ #category : #accessing }
-ZnLimitedReadStream >> ascii [
-	binary := false
-]
-
 { #category : #testing }
 ZnLimitedReadStream >> atEnd [
 	^ position >= limit or: [ stream atEnd ]
-]
-
-{ #category : #accessing }
-ZnLimitedReadStream >> binary [
-	binary := true
 ]
 
 { #category : #'initialize-release' }
@@ -53,22 +38,17 @@ ZnLimitedReadStream >> close [
 
 { #category : #accessing }
 ZnLimitedReadStream >> collectionSpecies [
-	"I can be set to binary or ascii explicitly.
-	If not set, delegate to our wrapped stream."
-	
-	^ binary notNil
-		ifTrue: [ 
-			binary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ]
-		ifFalse: [
-			(stream respondsTo: #collectionSpecies)
-				ifTrue: [ stream collectionSpecies ]  
-				ifFalse: [ stream isBinary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ] ]
+	"Delegate to our wrapped stream if possible."
+
+	^ (stream respondsTo: #collectionSpecies)
+			ifTrue: [ stream collectionSpecies ]
+			ifFalse: [ stream isBinary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ]
 ]
 
 { #category : #accessing }
 ZnLimitedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
-	
+
 	^ self upToEnd
 ]
 
@@ -79,17 +59,20 @@ ZnLimitedReadStream >> contentsOfEntireFile [
 
 { #category : #testing }
 ZnLimitedReadStream >> isBinary [
-	^ binary isNil
-		ifTrue: [ stream isBinary ]
-		ifFalse: [ binary ]
+	^ stream isBinary
+]
+
+{ #category : #testing }
+ZnLimitedReadStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
 ZnLimitedReadStream >> match: subCollection [
-	"Try to read and match the elements of subCollection. 
+	"Try to read and match the elements of subCollection.
 	If successful return true and leave the me positioned after the match.
 	If unsuccesful return false and leave me at end."
-	
+
 	| buffer pattern bufferPosition bufferLimit |
 	pattern := subCollection readStream.
 	"we have to use an internal buffer because we are not positionable"
@@ -98,8 +81,8 @@ ZnLimitedReadStream >> match: subCollection [
 	[ pattern atEnd ] whileFalse: [ | nextElement |
 		self atEnd ifTrue: [ ^ false ].
 		"get the next char to match either from the buffer or from the stream while buffering it"
-		(bufferPosition < bufferLimit) 
-			ifTrue: [ 
+		(bufferPosition < bufferLimit)
+			ifTrue: [
 				nextElement := buffer at: bufferPosition + 1 ]
 			ifFalse: [
 				nextElement := buffer at: bufferPosition + 1 put: self next.
@@ -118,27 +101,20 @@ ZnLimitedReadStream >> match: subCollection [
 
 { #category : #accessing }
 ZnLimitedReadStream >> next [
-	"We do byte/char conversions on the fly."
-	
-	^ self atEnd 
-		ifTrue: [ nil ] 
-		ifFalse: [ 
-			position := position + 1. 
-			binary isNil
-				ifTrue: [ stream next ] 
-				ifFalse: [ 
-					binary
-					 	ifTrue: [ stream next asInteger ]
-						ifFalse: [ stream next asCharacter ] ] ]
+	^ self atEnd
+		ifTrue: [ nil ]
+		ifFalse: [
+			position := position + 1.
+			stream next ]
 ]
 
 { #category : #accessing }
-ZnLimitedReadStream >> next: requestedCount [ 
+ZnLimitedReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -146,7 +122,7 @@ ZnLimitedReadStream >> next: requestedCount [
 ZnLimitedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: requestedCount
 		into: collection
@@ -157,11 +133,11 @@ ZnLimitedReadStream >> next: requestedCount into: collection [
 ZnLimitedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| readCount |
-	readCount := self 
-		readInto: collection 
-		startingAt: offset 
+	readCount := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
 	^ requestedCount = readCount
 		ifTrue: [ collection ]
@@ -172,7 +148,7 @@ ZnLimitedReadStream >> next: requestedCount into: collection startingAt: offset 
 ZnLimitedReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: collection size
 		into: collection
@@ -187,17 +163,9 @@ ZnLimitedReadStream >> on: readStream limit: integer [
 
 { #category : #accessing }
 ZnLimitedReadStream >> peek [
-	"We do byte/char conversions on the fly."
-	
-	^ self atEnd 
-		ifTrue: [ nil ] 
-		ifFalse: [ 
-			binary isNil
-				ifTrue: [ stream peek ] 
-				ifFalse: [ 
-					binary
-					 	ifTrue: [ stream peek asInteger ]
-						ifFalse: [ stream peek asCharacter ] ] ]
+	^ self atEnd
+		ifTrue: [ nil ]
+		ifFalse: [ stream peek ]
 ]
 
 { #category : #accessing }
@@ -210,23 +178,16 @@ ZnLimitedReadStream >> position [
 	^ position
 ]
 
-{ #category : #printing }
-ZnLimitedReadStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
-		nextPutAll: self class name
-]
-
 { #category : #accessing }
-ZnLimitedReadStream >> readInto: collection startingAt: offset count: count [ 
+ZnLimitedReadStream >> readInto: collection startingAt: offset count: count [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
-	
+
 	| target actual |
 	target := count min: (limit - position).
-	actual := stream 
-		readInto: collection 
-		startingAt: offset 
+	actual := stream
+		readInto: collection
+		startingAt: offset
 		count: target.
 	position := position + actual.
 	^ actual
@@ -243,11 +204,11 @@ ZnLimitedReadStream >> skip: count [
 ]
 
 { #category : #accessing }
-ZnLimitedReadStream >> upTo: anObject [ 
+ZnLimitedReadStream >> upTo: anObject [
 	"We use our own collectionSpecies."
-	
+
 	^ self collectionSpecies streamContents: [ :out | | element |
-		[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [ 
+		[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [
 			out nextPut: element ] ]
 ]
 

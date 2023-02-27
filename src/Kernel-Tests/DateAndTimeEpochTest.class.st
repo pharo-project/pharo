@@ -29,18 +29,17 @@ Class {
 
 { #category : #running }
 DateAndTimeEpochTest >> setUp [
- 	super setUp.  
+ 	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
 	aDateAndTime :=  DateAndTime localTimeZone: TimeZone default; epoch.
 	aTimeZone := TimeZone offset: (Duration minutes: 135) name: 'Epoch Test Time Zone' abbreviation: 'ETZ'.
-	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5 
+	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5
 ]
 
 { #category : #running }
 DateAndTimeEpochTest >> tearDown [
      DateAndTime localTimeZone: localTimeZoneToRestore.
      super tearDown
-
 ]
 
 { #category : #tests }
@@ -190,7 +189,6 @@ DateAndTimeEpochTest >> testHour12 [
 { #category : #tests }
 DateAndTimeEpochTest >> testIsLeapYear [
 	self deny: aDateAndTime isLeapYear
-
 ]
 
 { #category : #tests }
@@ -202,8 +200,7 @@ DateAndTimeEpochTest >> testJulianDayNumber [
 { #category : #tests }
 DateAndTimeEpochTest >> testLessThan [
 	self assert: aDateAndTime  < (aDateAndTime + '1:00:00:00').
-	self assert: aDateAndTime + -1 < aDateAndTime.
-	
+	self assert: aDateAndTime + -1 < aDateAndTime
 ]
 
 { #category : #tests }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBExtractMethodToComponentParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -12,7 +12,7 @@ RBExtractMethodToComponentParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractMethodToComponentParametrizedTest >> constructor [ 
+RBExtractMethodToComponentParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
@@ -47,7 +47,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 
 	self
-		assert: (class parseTreeFor: #openEditor)
+		assert: (class parseTreeForSelector: #openEditor)
 		equals:
 			(self
 				parseMethod:
@@ -56,7 +56,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 								rules := self failedRules.
 								^rules foo: self').
 	self
-		assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:)
+		assert: ((refactoring model classNamed: #Collection) parseTreeForSelector: #foo:)
 		equals:
 			(self
 				parseMethod:
@@ -70,7 +70,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 { #category : #tests }
 RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
-	refactoring := self createRefactoringWithArguments: { (118 to: 286) . #copyDictionary: . RBReadBeforeWrittenTester }.
+	refactoring := self createRefactoringWithArguments: { (118 to: 285) . #copyDictionary: . RBReadBeforeWrittenTester }.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Dictionary)).
@@ -78,13 +78,13 @@ RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 
-	self assert: (class parseTreeFor: #copyDictionary:) equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
+	self assert: (class parseTreeForSelector: #copyDictionary:) equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
 	self
-		assert: ((refactoring model classNamed: #Dictionary) parseTreeFor: #copyWithAssociations)
+		assert: ((refactoring model classNamed: #Dictionary) parseTreeForSelector: #copyWithAssociations)
 		equals:
 			(self
 				parseMethod:
-					'copyWithAssociations 
+					'copyWithAssociations
 							| newDictionary |
 							newDictionary := Dictionary new: self size.
 							self
@@ -95,6 +95,6 @@ RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 
 { #category : #'failure tests' }
 RBExtractMethodToComponentParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:  
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
 ]

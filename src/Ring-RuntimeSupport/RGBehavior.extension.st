@@ -8,7 +8,7 @@ RGBehavior >> >> aSymbol [
 
 { #category : #'*Ring-RuntimeSupport' }
 RGBehavior >> allSelectors [
-	
+
 	^ self allSelectorsWithout: {  }
 ]
 
@@ -18,7 +18,7 @@ RGBehavior >> allSelectorsWithout: behaviors [
 
 	| selectors |
 	selectors := IdentitySet new.
-	self withAllSuperclassesDo: [ :class | 
+	self withAllSuperclassesDo: [ :class |
 			(behaviors includes: class)
 				ifFalse: [ selectors addAll: class selectors ] ].
 	^ selectors
@@ -32,7 +32,7 @@ RGBehavior >> allSuperclasses [
 		ifTrue: [ OrderedCollection new]
 		ifFalse: [temp := self superclass allSuperclasses.
 			temp addFirst: self superclass.
-			temp] 
+			temp]
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
@@ -50,11 +50,11 @@ RGBehavior >> binding [
 { #category : #'*Ring-RuntimeSupport' }
 RGBehavior >> classPool [
 
-	^ Dictionary new.
+	^ Dictionary new
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
-RGBehavior >> compile: aString classified: aCategory [ 
+RGBehavior >> compile: aString classified: aCategory [
 
 	^ self compile: aString classified: aCategory notifying: nil
 ]
@@ -62,40 +62,38 @@ RGBehavior >> compile: aString classified: aCategory [
 { #category : #'*Ring-RuntimeSupport' }
 RGBehavior >> compile: aString classified: aCategory notifying: aController [
 
-	| parseTree ast selector newMethod | 
-	
-	parseTree := (RBParser 
+	| parseTree ast selector newMethod |
+
+	parseTree := (RBParser
 		parseMethod: aString
 		onError: [ :msg :pos | ^ nil ]) methodClass: self.
-		
-	ast :=  parseTree doSemanticAnalysisIn: self.  
-	
+
+	ast :=  parseTree doSemanticAnalysisIn: self.
+
 	selector := ast selector.
 	newMethod := self ensureLocalMethodNamed: selector.
 	newMethod sourceCode: aString.
-	aCategory ifNotNil: [ 
+	aCategory ifNotNil: [
 		newMethod tagWith: aCategory ].
-	
-	^ selector.
 
+	^ selector
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
-RGBehavior >> compile: code notifying: requestor [ 
+RGBehavior >> compile: code notifying: requestor [
 
 	| parseTree ast aMethod |
-	
-	parseTree := (RBParser 
-		parseMethod: code 
+
+	parseTree := (RBParser
+		parseMethod: code
 		onError: [ :msg :pos | "TODO:" ^ nil ]) methodClass: self.
-	
+
 	ast := parseTree doSemanticAnalysisIn: self.
 
 	aMethod := self ensureLocalMethodNamed: ast selector.
 	aMethod sourceCode: code.
-	
+
 	^ aMethod selector
-	
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
@@ -115,9 +113,9 @@ RGBehavior >> isInstanceSide [
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
-RGBehavior >> subclassesDo: aBlock [ 
+RGBehavior >> subclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-	
+
 	self subclasses do: aBlock
 ]
 
@@ -129,8 +127,8 @@ RGBehavior >> traits [
 
 { #category : #'*Ring-RuntimeSupport' }
 RGBehavior >> withAllSuperclasses [
-	"Answer an OrderedCollection of the receiver and the receiver's 
-	superclasses. The first element is the receiver, 
+	"Answer an OrderedCollection of the receiver and the receiver's
+	superclasses. The first element is the receiver,
 	followed by its superclass; the last element is Object."
 
 	| temp |
@@ -140,7 +138,7 @@ RGBehavior >> withAllSuperclasses [
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
-RGBehavior >> withAllSuperclassesDo: aBlock [ 
+RGBehavior >> withAllSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 	aBlock value: self.
 	((self superclass == nil) or: [ self superclass == self ])

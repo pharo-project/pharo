@@ -46,7 +46,7 @@ CacheWeight >> initialize [
 
 { #category : #testing }
 CacheWeight >> isBelowMaximum [
-	^ total <= maximum 
+	^ total <= maximum
 ]
 
 { #category : #accessing }

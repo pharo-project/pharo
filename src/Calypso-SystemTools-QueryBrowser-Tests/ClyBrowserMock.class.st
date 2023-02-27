@@ -11,7 +11,7 @@ Class {
 { #category : #testing }
 ClyBrowserMock >> hasSpawnedQueryBrowser [
 
-	^hasSpawned 
+	^hasSpawned
 ]
 
 { #category : #testing }

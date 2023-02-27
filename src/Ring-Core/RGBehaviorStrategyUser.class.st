@@ -11,15 +11,15 @@ Class {
 }
 
 { #category : #visiting }
-RGBehaviorStrategyUser >> acceptVisitor: aVisitor [ 
-	
+RGBehaviorStrategyUser >> acceptVisitor: aVisitor [
+
 	^ self behaviorStrategy acceptVisitor: aVisitor
 ]
 
 { #category : #strategy }
-RGBehaviorStrategyUser >> addClassVariable: anRGInstanceVariableDefinition [ 
+RGBehaviorStrategyUser >> addClassVariable: anRGInstanceVariableDefinition [
 
-	^ self behaviorStrategy addClassVariable: anRGInstanceVariableDefinition 
+	^ self behaviorStrategy addClassVariable: anRGInstanceVariableDefinition
 ]
 
 { #category : #strategy }
@@ -85,20 +85,18 @@ RGBehaviorStrategyUser >> behaviorStrategy [
 RGBehaviorStrategyUser >> behaviorStrategy: anObject [
 
 	| needsInitialization |
-	
+
 	needsInitialization := behaviorStrategy isNil.
 	behaviorStrategy := anObject.
 	behaviorStrategy owner: self.
-	needsInitialization ifTrue: [ 
-		behaviorStrategy initializeUnresolved ].
-	
+	needsInitialization ifTrue: [
+		behaviorStrategy initializeUnresolved ]
 ]
 
 { #category : #strategy }
 RGBehaviorStrategyUser >> bindingOf: varName [
 
 	^ self behaviorStrategy bindingOf: varName
-
 ]
 
 { #category : #strategy }
@@ -286,8 +284,7 @@ RGBehaviorStrategyUser >> layout: anRGLayout [
 RGBehaviorStrategyUser >> makeResolved [
 
 	self behaviorStrategy makeResolved.
-	super makeResolved.
-
+	super makeResolved
 ]
 
 { #category : #strategy }
@@ -300,7 +297,6 @@ RGBehaviorStrategyUser >> package [
 RGBehaviorStrategyUser >> package: anRGPackage [
 
 	^ self behaviorStrategy package: anRGPackage
-
 ]
 
 { #category : #strategy }
@@ -358,21 +354,27 @@ RGBehaviorStrategyUser >> sibling [
 ]
 
 { #category : #printing }
-RGBehaviorStrategyUser >> storeOn: aStream [ 
-	
+RGBehaviorStrategyUser >> storeOn: aStream [
+
 	^ self behaviorStrategy storeOn: aStream
 ]
 
 { #category : #accessing }
 RGBehaviorStrategyUser >> theMetaClass [
+	self
+		deprecated: 'Please use #classSide instead'
+		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
 
-	^ self behaviorStrategy theMetaClass
+	^ self classSide
 ]
 
 { #category : #accessing }
 RGBehaviorStrategyUser >> theNonMetaClass [
-	
-	^ self behaviorStrategy theNonMetaClass
+
+	self
+		deprecated: 'Please use #instanceSide instead'
+		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
+	^self instanceSide
 ]
 
 { #category : #variables }

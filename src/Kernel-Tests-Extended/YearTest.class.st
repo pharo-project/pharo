@@ -15,7 +15,7 @@ YearTest >> classToBeTested [
 
 { #category : #tests }
 YearTest >> testFirstThursday [
-		
+
 	1800 to: 2000 do:
 		[ :y |
 			| firstThursday |
@@ -23,7 +23,6 @@ YearTest >> testFirstThursday [
 			self assert: firstThursday dayOfWeek equals: 5.
 			self assert: firstThursday year equals: y.
 			self assert: (firstThursday - 1 week) year equals: y - 1 ]
-
 ]
 
 { #category : #tests }
@@ -54,23 +53,23 @@ YearTest >> testStart [
 
 { #category : #tests }
 YearTest >> testcurrentYear [
-		
+
 	| yyyy |
-	yyyy := Year currentYear. 
+	yyyy := Year currentYear.
 	self assert: Date today asYear equals: yyyy
 ]
 
 { #category : #tests }
 YearTest >> testcurrentYearNumber [
-		
+
 	| yyyy |
-	yyyy := Year currentYearNumber. 
+	yyyy := Year currentYearNumber.
 	self assert: Date today year equals: yyyy
 ]
 
 { #category : #tests }
 YearTest >> testdaysInMonth [
-	
+
 	self assert: ((Year year: 2018) daysInMonth:1) equals: 31. "January"
 	self assert: ((Year year: 2018) daysInMonth:2) equals: 28. "February"
 	self assert: ((Year year: 2016) daysInMonth:2) equals: 29. "February Leap Year"
@@ -84,5 +83,4 @@ YearTest >> testdaysInMonth [
 	self assert: ((Year year: 2018) daysInMonth:10) equals: 31. "October"
 	self assert: ((Year year: 2018) daysInMonth:11) equals: 30. "November"
 	self assert: ((Year year: 2018) daysInMonth:12) equals: 31. "December"
-
 ]

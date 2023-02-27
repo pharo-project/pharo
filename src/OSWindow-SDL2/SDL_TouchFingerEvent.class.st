@@ -33,8 +33,7 @@ SDL_TouchFingerEvent class >> fieldsDesc [
  	 float dx;
     float dy;
 	 float pressure;
- 	)	
-	
+ 	)
 ]
 
 { #category : #'accessing - structure variables' }

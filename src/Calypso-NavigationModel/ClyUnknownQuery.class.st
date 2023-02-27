@@ -27,7 +27,7 @@ ClyUnknownQuery class >> mergeOwnInstances: queries [
 	^queries anyOne
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClyUnknownQuery class >> reset [
 	instance := nil
 ]
@@ -52,11 +52,11 @@ ClyUnknownQuery >> defaultResult [
 ]
 
 { #category : #testing }
-ClyUnknownQuery >> executesQuery: aClass [ 
+ClyUnknownQuery >> executesQuery: aClass [
 	^false
 ]
 
 { #category : #testing }
-ClyUnknownQuery >> retrievesItemsOfType: itemTypeClass [ 
+ClyUnknownQuery >> retrievesItemsOfType: itemTypeClass [
 	^false
 ]

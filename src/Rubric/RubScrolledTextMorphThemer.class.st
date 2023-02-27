@@ -6,7 +6,7 @@ Class {
 
 { #category : #'border-styles' }
 RubScrolledTextMorphThemer >> disabledBorderStyleFor: aTextArea [
-	^ self normalBorderStyleFor: aTextArea 
+	^ self normalBorderStyleFor: aTextArea
 ]
 
 { #category : #colors }
@@ -17,14 +17,14 @@ RubScrolledTextMorphThemer >> highlightBackgroundColorFor: aTextArea [
 
 { #category : #'border-styles' }
 RubScrolledTextMorphThemer >> highlightBorderStyleFor: aTextArea [
-	^ BorderStyle inset 
+	^ BorderStyle inset
 		baseColor: Smalltalk ui theme selectionColor;
 		width: 2
 ]
 
 { #category : #'border-styles' }
 RubScrolledTextMorphThemer >> normalBorderStyleFor: aTextArea [
-	^ BorderStyle 
+	^ BorderStyle
 		width: 0
 		color: Color transparent
 ]

@@ -40,15 +40,15 @@ Class {
 { #category : #'instance creation' }
 ClyCompositeQuery class >> with: subqueries [
 	subqueries ifEmpty: [ ^ClyUnknownQuery instance ].
-	
-	^self new 
+
+	^self new
 		subqueries: subqueries
 ]
 
 { #category : #'instance creation' }
 ClyCompositeQuery class >> with: subqueries as: aQueryResult [
 	^(self with: subqueries)
-		requiredResult: aQueryResult 
+		requiredResult: aQueryResult
 ]
 
 { #category : #comparing }
@@ -88,7 +88,7 @@ ClyCompositeQuery >> executesQuery: aTypedQueryClass [
 { #category : #execution }
 ClyCompositeQuery >> fixStateBeforeExecution [
 	super fixStateBeforeExecution.
-	
+
 	subqueries do: [ :each | each fixStateBeforeExecution ]
 ]
 
@@ -102,7 +102,7 @@ ClyCompositeQuery >> hash [
 { #category : #'system changes' }
 ClyCompositeQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
-	^subqueries anySatisfy: [ :each | 
+	^subqueries anySatisfy: [ :each |
 			each isResult: aQueryResult affectedBy: aSystemAnnouncement ]
 ]
 
@@ -112,7 +112,7 @@ ClyCompositeQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	descriptions := subqueries collect: [:each | each description] as: Set.
-	descriptions do: [:each | 
+	descriptions do: [:each |
 		aStream nextPutAll: each; nextPutAll: ', '].
 	aStream skip: -2 "composite can not be empty"
 ]
@@ -131,7 +131,7 @@ ClyCompositeQuery >> retrievesItem: anObject [
 
 { #category : #testing }
 ClyCompositeQuery >> retrievesItemsOfType: itemTypeClass [
-	
+
 	^subqueries anySatisfy: [ :each | each retrievesItemsOfType: itemTypeClass ]
 ]
 
@@ -144,18 +144,18 @@ ClyCompositeQuery >> subqueries [
 ClyCompositeQuery >> subqueries: aCollection [
 	| subscopes |
 	aCollection ifEmpty: [ ^self error: 'Composite query must have at least one subquery' ].
-	
+
 	subqueries := aCollection asSet.
 	subscopes := subqueries collect: [:each | each scope].
 	scope := ClyCompositeScope on: subscopes.
-	self requiredResult: subqueries anyOne requiredResult 
+	self requiredResult: subqueries anyOne requiredResult
 ]
 
 { #category : #converting }
 ClyCompositeQuery >> withScope: aTypedScope [
 	| newSubqueries |
 	newSubqueries := subqueries collect: [ :each | each withScope: aTypedScope ].
-	^self withSubqueries: newSubqueries 
+	^self withSubqueries: newSubqueries
 ]
 
 { #category : #converting }

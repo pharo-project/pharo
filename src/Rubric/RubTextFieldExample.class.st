@@ -27,7 +27,6 @@ RubTextFieldExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -37,7 +36,6 @@ RubTextFieldExample class >> openAutoAccept [
 	st := model newScrolledTextAutoAccept.
 	model inspect.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -45,7 +43,6 @@ RubTextFieldExample class >> openWithBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithBorderOfWidth: anInteger.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -53,7 +50,6 @@ RubTextFieldExample class >> openWithScrollbar [
 	| st |
 	st := self new newScrolledTextWithScrollbar.
  	st openInWorld
-
 ]
 
 { #category : #examples }
@@ -61,7 +57,6 @@ RubTextFieldExample class >> openWithScrollbarAndBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithScrollbarAndBorderOfWidth: anInteger.
  	st openInWorld
-
 ]
 
 { #category : #accessing }
@@ -106,7 +101,7 @@ RubTextFieldExample >> newScrolledTextAutoAccept [
 
 { #category : #'user interface' }
 RubTextFieldExample >> newScrolledTextWithBorderOfWidth: anInteger [
-	^ self newScrolledText borderWidth: anInteger.
+	^ self newScrolledText borderWidth: anInteger
 ]
 
 { #category : #'user interface' }
@@ -120,7 +115,7 @@ RubTextFieldExample >> newScrolledTextWithScrollbarAndBorderOfWidth: anInteger [
 ]
 
 { #category : #'user interface' }
-RubTextFieldExample >> setText: aText from: aView [ 
+RubTextFieldExample >> setText: aText from: aView [
 	self string: aText string.
 	"return true to remove unaccepted edit adornment in tge view"
 	^ true

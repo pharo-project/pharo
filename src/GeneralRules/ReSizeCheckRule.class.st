@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReSizeCheckRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'SizeCheckRule'
 ]
 
@@ -42,7 +42,6 @@ ReSizeCheckRule >> initialize [
 	patterns addAll: (self selectors
 		collect: [ :each | '`@object size = 0 ifFalse: [`@object' , (self genericPatternForSelector: each) , '. `@.Statements2]' ]).
 	self matchesAny: patterns
-		
 ]
 
 { #category : #accessing }

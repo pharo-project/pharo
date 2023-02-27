@@ -30,7 +30,7 @@ Class {
 { #category : #'instance creation' }
 ClyFilterQuery class >> for: originalQuery filter: aClyItemFilter [
 	^(self with: {originalQuery})
-		itemFilter: aClyItemFilter 
+		itemFilter: aClyItemFilter
 ]
 
 { #category : #comparing }
@@ -44,11 +44,11 @@ ClyFilterQuery >> = anObject [
 
 { #category : #execution }
 ClyFilterQuery >> buildResult: aQueryResult [
-	
+
 	| fullResult filteredItems |
 	fullResult := self actualQuery execute.
-	filteredItems := fullResult items 
-		select: [ :each | itemFilter matches: each ] 
+	filteredItems := fullResult items
+		select: [ :each | itemFilter matches: each ]
 		thenCollect: [ :each | each adoptForNewCalypsoQuery].
 	aQueryResult items: filteredItems
 ]

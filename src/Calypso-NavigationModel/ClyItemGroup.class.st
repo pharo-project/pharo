@@ -48,7 +48,7 @@ ClyItemGroup class >> isEditableGroup [
 
 { #category : #'instance creation' }
 ClyItemGroup class >> named: aString [
-	^self new 
+	^self new
 		name: aString
 ]
 
@@ -56,7 +56,6 @@ ClyItemGroup class >> named: aString [
 ClyItemGroup class >> named: aString priority: aNumber [
 	^(self named: aString)
 			priority: aNumber
-		
 ]
 
 { #category : #accessing }

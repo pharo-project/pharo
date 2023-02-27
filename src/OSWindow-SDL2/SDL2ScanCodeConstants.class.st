@@ -8,15 +8,15 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SDL2ScanCodeConstants class >> initialize [
 
-	self initializeScanCodes 
+	self initializeScanCodes
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2ScanCodeConstants class >> initializeScanCodes [
 
 	SDL_SCANCODE_COMMA := 54.
-	SDL_SCANCODE_PERIOD := 55.
+	SDL_SCANCODE_PERIOD := 55
 ]

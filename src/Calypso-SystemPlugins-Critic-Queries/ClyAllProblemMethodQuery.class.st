@@ -23,14 +23,14 @@ Class {
 { #category : #'instance creation' }
 ClyAllProblemMethodQuery class >> from: aScope withCritiquesFrom: aCritiqueQuery [
 	^(self from: aScope)
-		critiqueQuery: aCritiqueQuery 
+		critiqueQuery: aCritiqueQuery
 ]
 
 { #category : #'instance creation' }
 ClyAllProblemMethodQuery class >> from: aScope withCritiquesFromGroup: critiqueGroupName [
-	^self 
-		from: aScope 
-		withCritiquesFrom: (ClyConcreteGroupCritiqueQuery 
+	^self
+		from: aScope
+		withCritiquesFrom: (ClyConcreteGroupCritiqueQuery
 			filter: ClyAllMethodCritiqueQuery new from: aScope byGroup: critiqueGroupName)
 ]
 
@@ -40,8 +40,8 @@ ClyAllProblemMethodQuery >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-		
-	^critiqueQuery = anObject critiqueQuery  
+
+	^critiqueQuery = anObject critiqueQuery
 ]
 
 { #category : #execution }
@@ -49,9 +49,9 @@ ClyAllProblemMethodQuery >> buildResult: aQueryResult [
 
 	| critiques methods |
 	critiques := critiqueQuery execute.
-	
+
 	methods := critiques items collect: [ :each | each sourceAnchor entity ] as: IdentitySet.
-	
+
 	aQueryResult fillWith: methods
 ]
 
@@ -92,9 +92,9 @@ ClyAllProblemMethodQuery >> initialize [
 
 { #category : #'system changes' }
 ClyAllProblemMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	aSystemAnnouncement affectsCritiques ifFalse: [ ^false ].
-	(super isResult: aQueryResult affectedBy: aSystemAnnouncement) ifTrue: [ ^true ].	
+	(super isResult: aQueryResult affectedBy: aSystemAnnouncement) ifTrue: [ ^true ].
 	"We can not compute affect on critiques by any kind system change
 	because critiques are composed by some external system
 	So without real knowledge we can only update critiqies after any system change.
@@ -114,7 +114,7 @@ ClyAllProblemMethodQuery >> loadCritiquesAsync [
 { #category : #printing }
 ClyAllProblemMethodQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
-	
+
 	aStream nextPutAll: critiqueQuery description
 ]
 
@@ -128,7 +128,7 @@ ClyAllProblemMethodQuery >> scope: aScope [
 ClyAllProblemMethodQuery >> selectsMethod: aMethod [
 	| critiques |
 	critiques := self loadCritiquesAsync.
-	
-	^critiques items 
+
+	^critiques items
 		anySatisfy: [ :each | each sourceAnchor entity == aMethod ]
 ]

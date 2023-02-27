@@ -28,7 +28,7 @@ TestSuite class >> named: aString [
 ]
 
 { #category : #composing }
-TestSuite >> , aTestSuite [ 
+TestSuite >> , aTestSuite [
 
 		^ TestSuite new
 			addTests: self tests;
@@ -40,38 +40,35 @@ TestSuite >> , aTestSuite [
 TestSuite >> addDependentToHierachy: anObject [
 	self addDependent: anObject.
 	self tests do: [ :each | each addDependentToHierachy: anObject]
-			
 ]
 
 { #category : #accessing }
 TestSuite >> addTest: aTest [
-	self tests add: aTest 
+	self tests add: aTest
 ]
 
 { #category : #accessing }
-TestSuite >> addTests: aCollection [ 
+TestSuite >> addTests: aCollection [
 	aCollection do: [:eachTest | self addTest: eachTest]
 ]
 
 { #category : #announcements }
 TestSuite >> announceTest: aTest [
-	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest).
+	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest)
 ]
 
 { #category : #running }
 TestSuite >> debug [
 	self setUp.
 	[
-		self tests do: [:each | 
+		self tests do: [:each |
 					each debug.
 					self announceTest: each.
 					self changed: each.
 		]
-	] ensure:[ 
-		self tearDown. 
-	].
-
-
+	] ensure:[
+		self tearDown.
+	]
 ]
 
 { #category : #accessing }
@@ -102,7 +99,6 @@ TestSuite >> name: aString [
 TestSuite >> removeDependentFromHierachy: anObject [
 	self removeDependent: anObject.
 	self tests do: [ :each | each removeDependentFromHierachy: anObject]
-			
 ]
 
 { #category : #running }
@@ -148,7 +144,7 @@ TestSuite >> run: aResult [
 TestSuite >> runUnmanaged: aResult [
 	self setUp.
 	[ self tests
-		do: [ :each | 
+		do: [ :each |
 			each run: aResult.
 			self announceTest: each.
 			self changed: each ] ]
@@ -158,12 +154,12 @@ TestSuite >> runUnmanaged: aResult [
 { #category : #running }
 TestSuite >> setUp [
 	self resources do: [:each |
-			each isAvailable ifFalse: [ each signalInitializationError ]].
+			each isAvailable ifFalse: [ each signalInitializationError ]]
 ]
 
 { #category : #running }
 TestSuite >> tearDown [
-	self resourceClass resetResources: self resources.
+	self resourceClass resetResources: self resources
 ]
 
 { #category : #announcements }
@@ -178,8 +174,8 @@ TestSuite >> tests [
 ]
 
 { #category : #announcements }
-TestSuite >> unsubscribe: anAnnouncementClass [ 
-	self testSuiteAnnouncer unsubscribe: anAnnouncementClass.
+TestSuite >> unsubscribe: anAnnouncementClass [
+	self testSuiteAnnouncer unsubscribe: anAnnouncementClass
 ]
 
 { #category : #announcements }

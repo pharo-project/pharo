@@ -13,23 +13,22 @@ Class {
 { #category : #decoration }
 ClyProjectTableIndentationDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
-	anItemCellMorph useFullIndentation 
+
+	anItemCellMorph useFullIndentation
 ]
 
 { #category : #decoration }
 ClyProjectTableIndentationDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }
 ClyProjectTableIndentationDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserContext
 ]
 
 { #category : #testing }
 ClyProjectTableIndentationDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	^aDataSourceItem rootParentItem isBasedOnItemType: ClyManagedProject 
+	^aDataSourceItem rootParentItem isBasedOnItemType: ClyManagedProject
 ]

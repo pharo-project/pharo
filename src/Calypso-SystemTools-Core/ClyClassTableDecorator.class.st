@@ -13,11 +13,11 @@ Class {
 { #category : #decoration }
 ClyClassTableDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #testing }
 ClyClassTableDecorator class >> isAbstract [
-	^self = ClyClassTableDecorator 
+	^self = ClyClassTableDecorator
 ]

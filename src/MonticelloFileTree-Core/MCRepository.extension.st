@@ -1,6 +1,6 @@
 Extension { #name : #MCRepository }
 
-{ #category : #'*monticellofiletree-core' }
+{ #category : #'*MonticelloFileTree-Core' }
 MCRepository >> retrieveVersionsWithPackageNames: packageNames [
     ^ self readableFileNames
         collect: [ :each | 

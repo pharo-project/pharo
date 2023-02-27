@@ -1,54 +1,54 @@
 Extension { #name : #RBLintRule }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule >> anchorFor: anEntity [
 
 	^ ReSourceAnchor
 			entity: anEntity
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule >> check: anEntity [
 
 	^ self check: anEntity ifNoCritiques: [ "do nothing" ]
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule >> check: anEntity forCritiquesDo: aCriticBlock [
 
 	(self basicCheck: anEntity)
 		ifTrue: [ aCriticBlock cull: (self critiqueFor: anEntity) ]
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternativeBlock [
 	| encounteredCritique |
-	
+
 	encounteredCritique := false.
 
 	self check: anEntity forCritiquesDo: [ :crit |
 		encounteredCritique := true.
 		aCriticBlock cull: crit ].
-	
-	encounteredCritique ifFalse: alternativeBlock
+
+	encounteredCritique ifFalse: [ alternativeBlock value ]
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule >> check: anEntity ifNoCritiques: alternativeBlock [
 	| critics |
-	
+
 	critics := OrderedCollection new.
 	self check: anEntity forCritiquesDo: [ :critic | critics add: critic ] ifNone: alternativeBlock.
 	^ critics
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule class >> checksNode [
 
 	^ false
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBLintRule >> critiqueFor: anEntity [
 
 	^ ReTrivialCritique

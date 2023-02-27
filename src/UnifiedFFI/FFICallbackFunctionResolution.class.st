@@ -30,14 +30,14 @@ Class {
 }
 
 { #category : #private }
-FFICallbackFunctionResolution class >> callbackNamed: functionName ifAbsent: aBlock [ 
-	^ self callbackRegistry 
+FFICallbackFunctionResolution class >> callbackNamed: functionName ifAbsent: aBlock [
+	^ self callbackRegistry
 		at: functionName asSymbol
 		ifAbsent: aBlock
 ]
 
 { #category : #private }
-FFICallbackFunctionResolution class >> callbackRegistry [ 
+FFICallbackFunctionResolution class >> callbackRegistry [
 	^ CallbackRegistry ifNil: [ CallbackRegistry := Dictionary new ]
 ]
 
@@ -48,21 +48,19 @@ FFICallbackFunctionResolution class >> cleanUp [
 
 { #category : #registration }
 FFICallbackFunctionResolution class >> registerCallback: aCallback as: functionName [
-	self callbackRegistry 
-		at: functionName asSymbol 
-		put: aCallback.
-
+	self callbackRegistry
+		at: functionName asSymbol
+		put: aCallback
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FFICallbackFunctionResolution class >> reset [
 	CallbackRegistry := nil
 ]
 
 { #category : #registration }
 FFICallbackFunctionResolution class >> unregister: functionName [
-	self callbackRegistry removeKey: functionName asSymbol 
-		
+	self callbackRegistry removeKey: functionName asSymbol
 ]
 
 { #category : #testing }
@@ -73,8 +71,8 @@ FFICallbackFunctionResolution >> isApplicableFor: aRequestor [
 { #category : #resolving }
 FFICallbackFunctionResolution >> resolveFunction: anExternalFunction [
 	| callback |
-	callback := self class 
+	callback := self class
 		callbackNamed: anExternalFunction name
 		ifAbsent: [ self error: 'Callback #', anExternalFunction name, ' not registered!' ].
-	^ callback thunk asExternalAddress 
+	^ callback thunk asExternalAddress
 ]

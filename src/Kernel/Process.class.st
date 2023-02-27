@@ -42,19 +42,19 @@ Class {
 { #category : #'process specific' }
 Process class >> allocatePSKey: aPSVariable [
 
-	"Add a new process-specific key. 
+	"Add a new process-specific key.
 	If an object already registered as a key, answer its index,
 	if object is not registered, first search for an empty slot for insertion and if not found, grow an array to add new object"
 
 	| index |
 	self psKeysSema critical: [
-		PSKeys 
+		PSKeys
 			ifNil: [ PSKeys := WeakArray with: aPSVariable. index := 1 ]
-			ifNotNil: [ 
+			ifNotNil: [
 				index := PSKeys indexOf: aPSVariable.
 				index = 0 ifTrue: [
 					index := PSKeys indexOf: nil.
-					index = 0 
+					index = 0
 						ifTrue: [
 							index := (PSKeys := PSKeys copyWith: aPSVariable) size ]
 						ifFalse: [
@@ -68,10 +68,10 @@ Process class >> allocatePSKey: aPSVariable [
 				]
 			].
 
-		aPSVariable isInheritable ifTrue: [ 
-			InheritablePSKeys 
+		aPSVariable isInheritable ifTrue: [
+			InheritablePSKeys
 				ifNil: [ InheritablePSKeys := Array with: index ]
-				ifNotNil: [ 
+				ifNotNil: [
 					(InheritablePSKeys includes: index) ifFalse: [ InheritablePSKeys := InheritablePSKeys copyWith: index ]]
 		]
 	].
@@ -80,8 +80,8 @@ Process class >> allocatePSKey: aPSVariable [
 ]
 
 { #category : #'instance creation' }
-Process class >> forContext: aContext priority: anInteger [ 
-	"Answer an instance of me that has suspended aContext at priority 
+Process class >> forContext: aContext priority: anInteger [
+	"Answer an instance of me that has suspended aContext at priority
 	anInteger."
 
 	| newProcess |
@@ -107,7 +107,7 @@ Process class >> updateInheritableKeys [
 	| keys |
 	keys := Set new.
 	ProcessSpecificVariable allSubclasses select: [ :each | each isInheritable ] thenDo: [ :each | keys add: each soleInstance index].
-	  
+
 	InheritablePSKeys := keys asArray ifEmpty: [ nil ]
 ]
 
@@ -126,7 +126,7 @@ Process >> browserPrintString [
 ]
 
 { #category : #printing }
-Process >> browserPrintStringWith: anObject [ 
+Process >> browserPrintStringWith: anObject [
 	| stream |
 	stream := (String new: 100) writeStream.
 	stream nextPut: $(.
@@ -167,7 +167,7 @@ Process >> complete: aContext [
 ]
 
 { #category : #'changing suspended state' }
-Process >> completeStep: aContext [ 
+Process >> completeStep: aContext [
 	"Resume self until aContext is on top, or if already on top, complete next step"
 
 	| callee |
@@ -180,7 +180,7 @@ Process >> completeStep: aContext [
 ]
 
 { #category : #'changing suspended state' }
-Process >> completeTo: aContext [ 
+Process >> completeTo: aContext [
 	"Resume self until aContext is on top"
 
 	self suspendedContext == aContext ifTrue: [^ aContext].
@@ -195,7 +195,7 @@ Process >> copyStack [
 
 { #category : #debugging }
 Process >> debug [
-	^ self debugWithTitle: 'Debug'.
+	^ self debugWithTitle: 'Debug'
 ]
 
 { #category : #debugging }
@@ -212,12 +212,18 @@ Process >> debugWithTitle: title [
 ]
 
 { #category : #private }
-Process >> doTerminationFromAnotherProcess [ 
-	"Stop this process forever from another process.  
+Process >> doTerminationFromAnotherProcess [
+
+  "Stop this process forever from another process.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is not the active process
 	and the termination is requested from another process"
-	| ctxt oldList |
+
+	| ctxt oldList outerMost unwindBlock |
+
+	self isTerminating ifTrue: [ ProcessAlreadyTerminating signal. ^self ].
+	terminating := true.
+
 	"Always suspend the process first so it doesn't accidentally get woken up"
 	oldList := self suspend.
 	suspendedContext ifNil: [^self].
@@ -226,35 +232,54 @@ Process >> doTerminationFromAnotherProcess [
 	in Semaphore>>critical:. So if waiting object is interesting on this situation we will ask it to handle it. In case of Semaphore>>critical, Semaphore will pop the suspendedContext so that we leave the ensure: block inside	Semaphore>>critical: without signaling the semaphore.
 	This methods allow to not be restricted only on Semaphore case."
 	suspendedContext := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
-	"If we are terminating a process halfways through an unwind, try to complete that unwind block first."
-	(suspendedContext findNextUnwindContextUpTo: nil) ifNotNil: [:outer |
-		(suspendedContext findContextSuchThat: [ :c | c closure == outer unwindBlock ]) ifNotNil: [ :inner |
-			"This is an unwind block currently under evaluation"
-			suspendedContext runUntilErrorOrReturnFrom: inner ] ].		
-	ctxt := self popTo: suspendedContext bottomContext.
-	[ ctxt == suspendedContext bottomContext ] whileFalse: [
-		"There was a problem during termination. Make the user aware of the problem
-		but ensure that the current process will be properly terminated."
-		| stackCopy |
-		stackCopy := ctxt copyStack.
-		[ UnwindError signalIn: stackCopy ] forkNamed: 'Unwind error during termination'.
-		ctxt terminateTo: ctxt sender.
-		ctxt := self popTo: suspendedContext bottomContext ].
-	"The suspendedContext of process that has never run will have 
-	a pc equal to the startpc. #isTerminate would thus answer false
-	even though the process is dead. To prevent that we set the pc
-	of the suspendedContext to nil (#isDead ---> true)."
-	(suspendedContext notNil and: [ suspendedContext isBottomContext ]) ifTrue: [
-		suspendedContext pc: nil ]
+
+	"If terminating a process halfways through an unwind, try to complete that unwind block first;
+	if there are multiple such nested unwind blocks, try to complete the outer-most one; the inner
+	blocks will be completed in the process."
+	ctxt := suspendedContext.
+	[(ctxt := ctxt findNextUnwindContextUpTo: nil) isNil] whileFalse:
+		"Contexts under evaluation have already set their complete (tempAt: 2) to true."
+		[ctxt unwindComplete ifNotNil: [outerMost := ctxt]].
+	outerMost ifNotNil: [
+		"This is the outer-most unwind context currently under evaluation;
+		let's find an inner context executing outerMost's argument block (tempAt: 1)"
+		(suspendedContext findContextSuchThat: [:ctx |
+			ctx closure == outerMost unwindBlock]) ifNotNil: [:inner |
+				"Let's finish the unfinished unwind context only (i.e. up to inner) and return here"
+				outerMost := (suspendedContext runUntilErrorOrReturnFrom: inner) first.
+				"Update the receiver's suspendedContext (the previous step reset its sender to nil);
+				return, if the execution stack reached its bottom (e.g. in case of non-local returns)."
+				(suspendedContext := outerMost sender) ifNil: [^self]]].
+
+	"Now all unwind blocks caught halfway through have been completed;
+	let's execute the ones still pending. Note: #findNextUnwindContextUpTo: starts
+	searching from the receiver's sender but the receiver itself may be an unwind context."
+	ctxt := suspendedContext.
+	ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
+	[ctxt isNil] whileFalse: [
+		ctxt unwindComplete ifNil: [
+			ctxt unwindComplete: true.
+			unwindBlock := ctxt unwindBlock.
+			"Create a context for the unwind block and execute it on the unwind block's stack.
+			Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
+			the unwind on the wrong stack preventing the correct execution of non-local returns."
+			suspendedContext := unwindBlock asContextWithSender: ctxt.
+			suspendedContext runUntilErrorOrReturnFrom: suspendedContext].
+		ctxt := ctxt findNextUnwindContextUpTo: nil].
+
+	"Mark the context as terminated"
+	suspendedContext terminateTo: nil.
+	suspendedContext setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
 ]
 
 { #category : #private }
-Process >> doTerminationFromYourself [ 
-	"Stop this process forever from the process itself. 
+Process >> doTerminationFromYourself [
+	"Stop this process forever from the process itself.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
-	It assumes that self is the active process. "		
+	It assumes that self is the active process. "
+	terminating := true.
 	thisContext unwindForTermination.
-	self suspend
+	^self endProcess
 ]
 
 { #category : #accessing }
@@ -264,7 +289,25 @@ Process >> effectiveProcess [
 	 correctly maintained when debugging code.  The debugger uses evaluate:onBehalfOf: to assign the
 	 debugged process as the effectiveProcess of the process executing the code, preserving process
 	 identity."
-	^effectiveProcess ifNil: [self] 
+	^effectiveProcess ifNil: [self]
+]
+
+{ #category : #accessing }
+Process >> effectiveProcess: aProcess [
+	effectiveProcess := aProcess
+]
+
+{ #category : #'changing process state' }
+Process >> endProcess [
+	"When I reach this method, I'm terminated. Suspending or terminating me is harmless."
+
+	thisContext terminateTo: nil.   "set thisContext sender to nil"
+	self suspend.
+
+	"Restart this method.
+	This will terminate and suspend again in case of sending resume to a terminated process"
+	"the following line commented out because current debugger step over tests fail with this feature"
+	"^thisContext restart"
 ]
 
 { #category : #private }
@@ -281,12 +324,12 @@ Process >> evaluate: aBlock onBehalfOf: aProcess [
 { #category : #initialization }
 Process >> initialize [
 	super initialize.
-	
+
 	terminating := false
 ]
 
 { #category : #'changing suspended state' }
-Process >> install: aContext [ 
+Process >> install: aContext [
 	"Replace the suspendedContext with aContext."
 
 	self == Processor activeProcess
@@ -303,7 +346,7 @@ Process >> installEnvIntoForked: newProcess [
 	1 to: InheritablePSKeys size do: [ :i | | varIndex varValue |
 		varIndex := InheritablePSKeys at: i.
 		(varIndex <= env size) "if new variable was installed into system existed processes env can not have room for it"
-			ifTrue: [ 
+			ifTrue: [
 				varValue := env at: varIndex.
 				varValue ifNotNil: [ (PSKeys at: varIndex) installValue: varValue intoForked: newProcess from: self ] ]]
 ]
@@ -324,18 +367,18 @@ Process >> isSuspended [
 
 { #category : #testing }
 Process >> isTerminated [
-	self isActiveProcess ifTrue: [ ^ false ].
-	
-	^ suspendedContext isNil or: [
-		"If the suspendedContext is the bottomContext it is the block in Process>>newProcess.
-		If so, and the pc is greater than the startpc, the block has already sent and returned
-		from value and there is nothing more to do."
-		suspendedContext isBottomContext and: [
-			suspendedContext isDead or: [
-				"The pc of the suspendedContext is set to nil in #terminate explicitly.
-				Leaving this line in for safety."
-  	  			suspendedContext pc > suspendedContext startpc ] ] ]
 
+	"Answer if the receiver is terminated, i.e. if the receiver is not active and
+	one of the following conditions is met:
+	(1) the receiver is a defunct process (suspendedContext = nil or pc = nil)
+	(2) the receiver is suspended in the endProcess method (We cannot use pragmas... pragmas require the compiler, it generates an evil dependency.
+	It also is not available in minimal images)"
+
+	self isActiveProcess ifTrue: [ ^ false ].
+
+	^suspendedContext isNil or: [
+		suspendedContext isDead or: [
+			(suspendedContext method == (self class >> #endProcess))]]
 ]
 
 { #category : #testing }
@@ -351,7 +394,7 @@ Process >> longPrintOn: stream [
 	stream cr.
 	ctxt := self suspendedContext.
 	[ ctxt isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			stream space.
 			ctxt printOn: stream.
 			stream cr.
@@ -360,7 +403,7 @@ Process >> longPrintOn: stream [
 
 { #category : #accessing }
 Process >> name [
- 
+
  	^name ifNil: [ self hash asString forceTo: 10 paddingStartWith: $ ]
 ]
 
@@ -372,7 +415,7 @@ Process >> name: aString [
 
 { #category : #signaling }
 Process >> on: exception do: handlerAction [
-	"This method inject new bottom context into process with exception handler. 
+	"This method inject new bottom context into process with exception handler.
 	It uses context jump tricks to achieve it"
 	| currentContext root newRoot |
 	currentContext := self isActiveProcess ifTrue: [ thisContext ] ifFalse: [self suspendedContext].
@@ -380,15 +423,15 @@ Process >> on: exception do: handlerAction [
 	newRoot := [
 			[root insertSender: thisContext.
 			currentContext jump] on: exception do: handlerAction.
-		Processor terminateActive] asContext.
+		Processor terminateRealActive] asContext.
 
-	self isActiveProcess 
+	self isActiveProcess
 		ifTrue: [ newRoot jump ]
 		ifFalse: [ self install: newRoot ]
 ]
 
 { #category : #'changing suspended state' }
-Process >> popTo: aContext [ 
+Process >> popTo: aContext [
 	"Pop self down to aContext by remote returning from aContext's callee.  Unwind blocks will be executed on the way.
 	This is done by pushing a new context on top which executes 'aContext callee return' then resuming self until aContext is reached.  This way any errors raised in an unwind block will get handled by senders in self and not by senders in the activeProcess.
 	If an unwind block raises an error that is not handled then the popping stops at the error and the signalling context is returned, othewise aContext is returned."
@@ -406,7 +449,7 @@ Process >> popTo: aContext [
 
 { #category : #'changing suspended state' }
 Process >> popTo: aContext value: aValue [
-	"Replace the suspendedContext with aContext, releasing all contexts 
+	"Replace the suspendedContext with aContext, releasing all contexts
 	 between the currently suspendedContext and it."
 
 	self == Processor activeProcess ifTrue:
@@ -422,9 +465,9 @@ Process >> popTo: aContext value: aValue [
 
 { #category : #'changing process state' }
 Process >> primitiveResume [
-	"Primitive. Allow the process that the receiver represents to continue. Put 
-	the receiver in line to become the activeProcess. Fail if the receiver is 
-	already waiting in a queue (in a Semaphore or ProcessScheduler). 
+	"Primitive. Allow the process that the receiver represents to continue. Put
+	the receiver in line to become the activeProcess. Fail if the receiver is
+	already waiting in a queue (in a Semaphore or ProcessScheduler).
 	Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 87>
@@ -448,17 +491,18 @@ Process >> priority [
 
 { #category : #accessing }
 Process >> priority: anInteger [
-	"Set the receiver's priority to anInteger."
+	"Set the receiver's priority to anInteger.
+	When changing the process priority we need to yield to make it reschedule the processor"
 
 	(anInteger between: Processor lowestPriority and: Processor highestPriority)
-		ifTrue: [ priority := anInteger ]
+		ifTrue: [ priority := anInteger. Processor interpriorityYield: self ]
 		ifFalse: [ self error: 'Invalid priority: ' , anInteger printString ]
 ]
 
 { #category : #'process specific' }
 Process >> psValueAt: index [
 	"Answer a process-specific value at given index, or nil if value at given index is not defined"
-	
+
 	"NOTE: this method are PRIVATE. Do not use it directly, instead use ProcessSpecificVariable (or its subclasses) "
 	env ifNil: [ ^ nil ].
 	^ env at: index ifAbsent: nil
@@ -472,13 +516,13 @@ Process >> psValueAt: index put: value [
 
 	env ifNil: [ env := WeakArray new: PSKeys size ].
 	env size < PSKeys size ifTrue: [ env := env grownBy: PSKeys size - env size ].
-	^ env at: index put: value.
+	^ env at: index put: value
 ]
 
 { #category : #signaling }
 Process >> pvtSignal: anException list: aList [
 	"Private. This method is used to signal an exception from another
-	process...the receiver must be the active process.  If the receiver 
+	process...the receiver must be the active process.  If the receiver
 	was previously waiting on a Semaphore, then return the process
 	to the waiting state after signaling the exception and if the Semaphore
 	has not been signaled in the interim"
@@ -493,10 +537,10 @@ Process >> pvtSignal: anException list: aList [
 	blocker := Semaphore new.
 	[self suspend.
 	suspendedContext := suspendedContext swapSender: nil.
-	aList class == Semaphore 
+	aList class == Semaphore
 		ifTrue:
 			[aList isSignaled
-				ifTrue: 
+				ifTrue:
 					[aList wait.  "Consume the signal that would have restarted the receiver"
 					self resume]
 				ifFalse:
@@ -504,10 +548,7 @@ Process >> pvtSignal: anException list: aList [
 					myList := aList.
 					aList add: self]]
 		ifFalse: [self resume]] fork.
-	blocker wait.
-
-
-
+	blocker wait
 ]
 
 { #category : #'process specific' }
@@ -515,9 +556,9 @@ Process >> resetPSValueAt: index [
 
 	"NOTE: this method are PRIVATE. "
 
-	env ifNil: [ ^ self ]. 
+	env ifNil: [ ^ self ].
 	index > env size ifTrue: [ ^ self ].
-	
+
 	env at: index put: nil
 ]
 
@@ -532,17 +573,14 @@ Process >> restartTop [
 Process >> restartTopWith: method [
 	"Rollback top context and replace with new method.  Assumes self is suspended"
 
-	method isQuick 
-		ifTrue: [ self popTo: suspendedContext sender ]
-		ifFalse: [ suspendedContext privRefreshWith: method ].
-
+	suspendedContext privRefreshWith: method
 ]
 
 { #category : #'changing process state' }
 Process >> resume [
-	"Allow the process that the receiver represents to continue. Put  
-	the receiver in line to become the activeProcess. Check for a nil 
-	suspendedContext, which indicates a previously terminated Process that 
+	"Allow the process that the receiver represents to continue. Put
+	the receiver in line to become the activeProcess. Check for a nil
+	suspendedContext, which indicates a previously terminated Process that
 	would cause a vm crash if the resume attempt were permitted"
 
 	suspendedContext ifNil: [^ self primitiveFailed].
@@ -575,7 +613,7 @@ Process >> run [
 { #category : #signaling }
 Process >> signalException: anException [
 	"Signal an exception in the receiver process...if the receiver is currently
-	suspended, the exception will get signaled when the receiver is resumed.  If 
+	suspended, the exception will get signaled when the receiver is resumed.  If
 	the receiver is blocked on a Semaphore, it will be immediately re-awakened
 	and the exception will be signaled; if the exception is resumed, then the receiver
 	will return to a blocked state unless the blocking Semaphore has excess signals"
@@ -594,13 +632,12 @@ Process >> signalException: anException [
 		method: (self class lookupSelector: #pvtSignal:list:)
 		arguments: (Array with: anException with: oldList).
 
-	"If we are on a list to run, then suspend and restart the receiver 
+	"If we are on a list to run, then suspend and restart the receiver
 	(this lets the receiver run if it is currently blocked on a semaphore).  If
 	we are not on a list to be run (i.e. this process is suspended), then when the
 	process is resumed, it will signal the exception"
 
-	oldList ifNotNil: [self resume].
-
+	oldList ifNotNil: [self resume]
 ]
 
 { #category : #'changing suspended state' }
@@ -612,7 +649,7 @@ Process >> step [
 ]
 
 { #category : #'changing suspended state' }
-Process >> step: aContext [ 
+Process >> step: aContext [
 	"Resume self until aContext is on top, or if already on top, do next step"
 
 	^Processor activeProcess
@@ -638,7 +675,7 @@ Process >> stepToCallee [
 ]
 
 { #category : #'changing suspended state' }
-Process >> stepToHome: aContext [ 
+Process >> stepToHome: aContext [
 	| ctxt pair error |
 	ctxt := suspendedContext.
 	suspendedContext := nil.
@@ -654,10 +691,10 @@ Process >> stepToHome: aContext [
 		we need to push a receiver of the signal message.
 		A suspended context should always be a top context.
 		A top context has the return value of the message in the stack.
-		As this context has been suspended while sending a message the return value should be pushed. 
-		This is maybe not the expected return value (the #signal message returns the value with the 
+		As this context has been suspended while sending a message the return value should be pushed.
+		This is maybe not the expected return value (the #signal message returns the value with the
 		one the exception is resumed).
-		But this allows the debugger to continue executing and does not crash the interpreter nor 
+		But this allows the debugger to continue executing and does not crash the interpreter nor
 		the VM
 		"
 		suspendedContext push: nil].
@@ -666,14 +703,14 @@ Process >> stepToHome: aContext [
 
 { #category : #'changing process state' }
 Process >> suspend [
-	"Primitive. Stop the process that the receiver represents in such a way 
-	that it can be restarted at a later time (by sending the receiver the 
-	message resume). If the receiver represents the activeProcess, suspend it. 
+	"Primitive. Stop the process that the receiver represents in such a way
+	that it can be restarted at a later time (by sending the receiver the
+	message resume). If the receiver represents the activeProcess, suspend it.
 	Otherwise remove the receiver from the list of waiting processes.
 	The return value of this method is the list the receiver was previously on (if any)."
 	| oldList |
 	<primitive: 88>
-	"This is fallback code for VMs which only support the old primitiveSuspend which 
+	"This is fallback code for VMs which only support the old primitiveSuspend which
 	would not accept processes that are waiting to be run."
 	myList ifNil:[^nil]. "this allows us to use suspend multiple times"
 	oldList := myList.
@@ -703,13 +740,10 @@ Process >> suspendingList [
 ]
 
 { #category : #'changing process state' }
-Process >> terminate [ 
+Process >> terminate [
 	"Stop the process that the receiver represents forever.  Unwind to execute pending ensure:/ifCurtailed: blocks before terminating."
-	terminating := self isTerminating
-		ifTrue: [ ProcessAlreadyTerminating signal. ^self ]
-		ifFalse: [ true ].
 
-	self isActiveProcess 
+	self isActiveProcess
 		ifTrue: [ self doTerminationFromYourself ]
 		ifFalse: [ self doTerminationFromAnotherProcess]
 ]

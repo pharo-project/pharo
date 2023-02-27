@@ -22,23 +22,23 @@ OSTouchStateGestureDetector >> createEventBeginning [
 
 { #category : #factory }
 OSTouchStateGestureDetector >> createEventDuringMove [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #factory }
 OSTouchStateGestureDetector >> createEventEnding [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #preconditions }
-OSTouchStateGestureDetector >> hasGoodNumberOfFingers [ 
+OSTouchStateGestureDetector >> hasGoodNumberOfFingers [
 	^ eventHandler fingerCount = self necessaryFingers
 ]
 
 { #category : #initialization }
 OSTouchStateGestureDetector >> initialize [
 	super initialize.
-	modeActivated := false.
+	modeActivated := false
 ]
 
 { #category : #preconditions }

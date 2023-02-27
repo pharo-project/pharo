@@ -15,13 +15,13 @@ EpTraitAddition class >> trait: aTrait [
 
 	^ self basicNew
 		initializeWithTrait: aTrait;
-		yourself 
+		yourself
 ]
 
 { #category : #visitor }
 EpTraitAddition >> accept: aVisitor [
 
-	^ aVisitor visitTraitAddition: self 
+	^ aVisitor visitTraitAddition: self
 ]
 
 { #category : #accessing }
@@ -39,11 +39,11 @@ EpTraitAddition >> behaviorAffectedName [
 EpTraitAddition >> initializeWithTrait: aTrait [
 
 	self initialize.
-	trait := aTrait asEpiceaRingDefinition.
+	trait := aTrait asEpiceaRingDefinition
 ]
 
 { #category : #accessing }
 EpTraitAddition >> traitAdded [
 
-	^ trait 
+	^ trait
 ]

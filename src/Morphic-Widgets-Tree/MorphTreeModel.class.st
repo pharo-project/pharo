@@ -21,7 +21,7 @@ Class {
 MorphTreeModel class >> exampleCheckList1 [
 	<sampleInstance>
 	"self exampleCheckList1"
-	Cursor wait 
+	Cursor wait
 		showWhile: [
 			^ self new
 				beCheckList;
@@ -42,23 +42,22 @@ MorphTreeModel class >> exampleCheckList2 [
 		 headerLabel: 'Plop';
 		 beCheckList.
 	^ (model openDialogWindowIn: self currentWorld title: 'All Morph methods')
-
 ]
 
 { #category : #examples }
 MorphTreeModel class >> exampleCheckList3 [
 	<sampleInstance>
 	"self exampleCheckList3"
-	Cursor wait 
+	Cursor wait
 		showWhile: [
 			^ ((self new
 				beCheckList;
 				autoMultiSelection: true;
 				rootItems: (Object allSubclasses sort: [:a :b | a name <= b name]);
 				 headerLabel: 'Sub-classes';
-				defaultTreeMorph) 
+				defaultTreeMorph)
 					buildContents;
-					embeddedInMorphicWindowLabeled: 'All Object sub-classes ready to be checked') 
+					embeddedInMorphicWindowLabeled: 'All Object sub-classes ready to be checked')
 						openInWorld]
 ]
 
@@ -103,13 +102,11 @@ MorphTreeModel >> autoMultiSelection [
 { #category : #accessing }
 MorphTreeModel >> autoMultiSelection: aBoolean [
 	autoMultiSelection := aBoolean
-
 ]
 
 { #category : #accessing }
 MorphTreeModel >> beCheckList [
 	self isCheckList: true
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -123,11 +120,11 @@ MorphTreeModel >> collapseNodePath: aNodePath [
 ]
 
 { #category : #accessing }
-MorphTreeModel >> deeplyDetect: aBlock [ 
+MorphTreeModel >> deeplyDetect: aBlock [
 	self rootNodes
 		do: [:sub | (sub deeplyDetect: aBlock)
 				ifNotNil: [:found | ^ found]].
-	^ nil 
+	^ nil
 ]
 
 { #category : #accessing }
@@ -148,25 +145,25 @@ MorphTreeModel >> defaultPageSize [
 { #category : #view }
 MorphTreeModel >> defaultTreeMorph [
 	|  col |
-	col := MorphTreeColumn new 
+	col := MorphTreeColumn new
 		rowMorphGetSelector: [:node | StringMorph contents: node item asString].
-	
+
 	self headerLabel
 		ifNotNil: [	col headerButtonLabel: self headerLabel font: nil].
-			
-	^ (self treeMorphClass on: self) 
+
+	^ (self treeMorphClass on: self)
 			columns:  (Array with: col);
 			hResizing: #spaceFill;
 			vResizing: #spaceFill;
 			resizerWidth: 0;
-			columnInset: 0; 
+			columnInset: 0;
 			rowInset: 2;
 			"preferedPaneColor: Color white;"
 			multiSelection: self multiSelection;
 			autoMultiSelection: self autoMultiSelection;
 			itemStringGetter: [:item | self wrapItem: item];
 			isCheckList: self isCheckList";
-			rowColorForEven: Color veryLightGray muchLighter odd: Color white".
+			rowColorForEven: Color veryLightGray muchLighter odd: Color white"
 ]
 
 { #category : #selecting }
@@ -180,7 +177,7 @@ MorphTreeModel >> dialogWindowIn: aWindow title: aTitle [
 ]
 
 { #category : #dialog }
-MorphTreeModel >> dialogWindowIn: aWindow title: aTitle selectedtems: aCollection [ 
+MorphTreeModel >> dialogWindowIn: aWindow title: aTitle selectedtems: aCollection [
 	| dialog dialogMorph |
 	dialog := self theme
 				newPluggableDialogWindowIn: aWindow
@@ -189,7 +186,7 @@ MorphTreeModel >> dialogWindowIn: aWindow title: aTitle selectedtems: aCollectio
 	dialogMorph buildContents; selectedItems: aCollection.
 	dialog minimumExtent: 300 @ 500.
 	dialog beResizeable.
-	^ dialog 
+	^ dialog
 ]
 
 { #category : #accessing }
@@ -210,20 +207,19 @@ MorphTreeModel >> enabled [
 { #category : #accessing }
 MorphTreeModel >> enabled: aBoolean [
 	aBoolean ~= enabled
-		ifTrue: [ 
+		ifTrue: [
 			enabled := aBoolean.
 			self  requestView: MorphTreeChangeRequest enabled]
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeModel >> expandAll [
-	self  requestView: MorphTreeChangeRequest expandAll 
+	self  requestView: MorphTreeChangeRequest expandAll
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeModel >> expandAllFromNode: aNode [
 	self  requestView: (MorphTreeChangeRequest expandAllFromNode: aNode)
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -249,7 +245,7 @@ MorphTreeModel >> headerLabel [
 
 { #category : #accessing }
 MorphTreeModel >> headerLabel: aString [
-	
+
 	headerLabel := aString
 ]
 
@@ -289,7 +285,7 @@ MorphTreeModel >> multiSelection: aBoolean [
 ]
 
 { #category : #accessing }
-MorphTreeModel >> okToDiscardEdits [ 
+MorphTreeModel >> okToDiscardEdits [
 	^ self canDiscardEdits  or: [self promptForCancel]
 ]
 
@@ -309,27 +305,25 @@ MorphTreeModel >> openDialogWindowIn: aWindow title: aTitle [
 ]
 
 { #category : #dialog }
-MorphTreeModel >> openDialogWindowIn: aWindow title: aTitle selectedtems: aCollection [ 
+MorphTreeModel >> openDialogWindowIn: aWindow title: aTitle selectedtems: aCollection [
 	| dialog |
 	dialog := self dialogWindowIn: aWindow title: aTitle selectedtems: aCollection.
 	dialog openModal.
 	^ dialog cancelled ifFalse: [self selectedItems]
-
 ]
 
 { #category : #accessing }
 MorphTreeModel >> promptForCancel [
 	"Ask if it is OK to cancel changes"
-	
+
 	^(self confirm:
 'Changes have not been saved.
 Is it OK to cancel changes?' translated)
-			
 ]
 
 { #category : #announcing }
 MorphTreeModel >> requestView: anAnnouncement [
-	^ self announcer announce: anAnnouncement 
+	^ self announcer announce: anAnnouncement
 ]
 
 { #category : #accessing }
@@ -340,8 +334,7 @@ MorphTreeModel >> rootItems [
 
 { #category : #accessing }
 MorphTreeModel >> rootItems: aCollection [
-	rootItems := aCollection.
-
+	rootItems := aCollection
 ]
 
 { #category : #accessing }
@@ -357,8 +350,7 @@ MorphTreeModel >> rootNodeFromItem: anItem [
 { #category : #accessing }
 MorphTreeModel >> rootNodes [
 	^ (self rootItems ifNil: [^nil])
-		collect: [:ci | self rootNodeFromItem: ci].
-
+		collect: [:ci | self rootNodeFromItem: ci]
 ]
 
 { #category : #selecting }
@@ -389,7 +381,7 @@ MorphTreeModel >> selectedItem [
 
 { #category : #accessing }
 MorphTreeModel >> selectedItems [
-	^ selection 
+	^ selection
 		ifNil: [OrderedCollection new]
 		ifNotNil: [selection selectedItems]
 ]
@@ -406,32 +398,28 @@ MorphTreeModel >> selectedNodePath [
 
 { #category : #selecting }
 MorphTreeModel >> selection [
-	^ selection.
-
+	^ selection
 ]
 
 { #category : #selecting }
 MorphTreeModel >> selection: aSelection [
 	self setSelection: aSelection.
 	self  requestView: MorphTreeChangeRequest updateSelectionFromModel
-
 ]
 
 { #category : #selecting }
 MorphTreeModel >> selectionChanged [
 	self requestView: (MorphTreeSelectionChanged new selection: self selection)
-
 ]
 
 { #category : #selecting }
 MorphTreeModel >> setSelection: aSelection [
-	selection := aSelection.
-
+	selection := aSelection
 ]
 
 { #category : #accessing }
 MorphTreeModel >> treeMorphClass [
-	^ MorphTreeMorph 
+	^ MorphTreeMorph
 ]
 
 { #category : #updating }
@@ -455,10 +443,10 @@ MorphTreeModel >> wrapBlockOrSelector: aBlockOrSelector [
 ]
 
 { #category : #wrapping }
-MorphTreeModel >> wrapItem: anItem [ 
+MorphTreeModel >> wrapItem: anItem [
 	"Here I return the display of my item, wrapped or not,
 	using a block or a selector which will be performed
-	directly on the item" 
+	directly on the item"
 	^ self wrapBlockOrSelector isBlock
 		ifTrue: [wrapBlockOrSelector cull: anItem]
 		ifFalse: [wrapBlockOrSelector isSymbol

@@ -16,7 +16,7 @@ RBProgramNodeVisitor class >> isAbstract [
 ]
 
 { #category : #API }
-RBProgramNodeVisitor >> visit: aRBMessageNode [ 
+RBProgramNodeVisitor >> visit: aRBMessageNode [
 	^ aRBMessageNode acceptVisitor: self
 ]
 
@@ -70,7 +70,7 @@ RBProgramNodeVisitor >> visitClassVariableNode: aNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
-	anEnglobingErrorNode content do: [ :each | self visitNode: each ].
+	anEnglobingErrorNode content do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
@@ -96,7 +96,6 @@ RBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
-	
 ]
 
 { #category : #visiting }
@@ -141,7 +140,6 @@ RBProgramNodeVisitor >> visitNode: aNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
-	
 ]
 
 { #category : #visiting }
@@ -169,7 +167,6 @@ RBProgramNodeVisitor >> visitReturnNode: aReturnNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitSelectorNode: aSelectorNode [
-	
 ]
 
 { #category : #visiting }
@@ -225,7 +222,7 @@ RBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
-	
+
 	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 

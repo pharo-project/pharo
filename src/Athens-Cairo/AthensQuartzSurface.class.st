@@ -14,8 +14,8 @@ AthensQuartzSurface class >> finalizeResourceData: data [
 	handle := data first.
 	"	id := data second.  - id is not used "
 	contextHandle := data third.
-	
-	self destroyContextHandle: contextHandle value. 
+
+	self destroyContextHandle: contextHandle value.
 	self destroySurfaceHandle: handle value
 ]
 
@@ -25,13 +25,11 @@ AthensQuartzSurface class >> primImage: aFormat width: aWidth height: aHeight [
 	^ self ffiCall: #(AthensQuartzSurface  cairo_quartz_surface_create (int aFormat,
                                                          int aWidth,
                                                          int aHeight) )
-
-
 ]
 
 { #category : #private }
 AthensQuartzSurface class >> registerSurface: quartzSurface [
 	"we cannot use SurfacePlugin for quartz surfaces"
-	
-	^ nil 
+
+	^ nil
 ]

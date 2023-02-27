@@ -15,12 +15,12 @@ TKTFutureNotFinished >> isFinished [
 
 { #category : #callbacks }
 TKTFutureNotFinished >> onFailureDo: aBlockClosure inFuture: aFuture [
-	
+
 	aFuture addFailureCallback: aBlockClosure
 ]
 
 { #category : #callbacks }
 TKTFutureNotFinished >> onSuccessDo: aBlockClosure inFuture: aFuture [
-	
+
 	aFuture addSuccessCallback: aBlockClosure
 ]

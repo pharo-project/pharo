@@ -40,10 +40,10 @@ OmStore >> entriesCount [
 ]
 
 { #category : #enumerating }
-OmStore >> entriesDo: aBlockClosure [ 
+OmStore >> entriesDo: aBlockClosure [
 	"Evaluate aBlockClosure with every entries this store contains"
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -52,15 +52,14 @@ OmStore >> entryFor: aReference [
 
 	^ self
 		entryFor: aReference
-		ifPresent: [ :anEntry | ^ anEntry ] 
+		ifPresent: [ :anEntry | ^ anEntry ]
 		ifAbsent: [ NotFound signalFor: aReference ]
-
 ]
 
 { #category : #accessing }
 OmStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 	"Look for an entry, evaluating either the first block closure if present or the second if absent."
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -95,23 +94,23 @@ OmStore >> headReference [
 { #category : #accessing }
 OmStore >> lowLevelFileStoreIfNone: aBlock [
 	"Needed by EpLostChangesDetector"
-	
+
 	^ self subclassResponsibility
 ]
 
 { #category : #writing }
 OmStore >> newEntry: anEntry [
 	"Persist a new entry"
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 OmStore >> referenceTo: anEntry [
 	"Answer a reference to an entry."
-	
-	^ anEntry tags 
-		at: self selfReferenceKey 
+
+	^ anEntry tags
+		at: self selfReferenceKey
 		ifAbsent: [ self error: 'Invalid entry: ', anEntry asString ]
 ]
 
@@ -123,7 +122,7 @@ OmStore >> referenceToLocalName: aString [
 
 { #category : #refreshing }
 OmStore >> refresh [
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -136,6 +135,6 @@ OmStore >> selfReferenceKey [
 { #category : #accessing }
 OmStore >> writingFileReference [
 	"Answer the file reference where the method #newEntry: would persist a new entry."
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]

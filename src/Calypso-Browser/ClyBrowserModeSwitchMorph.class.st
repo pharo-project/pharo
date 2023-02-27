@@ -29,17 +29,17 @@ ClyBrowserModeSwitchMorph >> addIcon: anIcon [
 { #category : #updating }
 ClyBrowserModeSwitchMorph >> beBoldIfActive [
 
-	self isModeActive 
+	self isModeActive
 		ifTrue: [ radioButton labelMorph emphasis: TextEmphasis bold emphasisCode]
 		ifFalse: [ radioButton labelMorph emphasis: TextEmphasis normal emphasisCode]
 ]
 
 { #category : #accessing }
 ClyBrowserModeSwitchMorph >> build [
-	radioButton := self theme 
+	radioButton := self theme
 		newRadioButtonIn: self
-		for: self 
-		getSelected: #isModeActive 
+		for: self
+		getSelected: #isModeActive
 		setSelected: #toggleMode:
 		getEnabled: nil
 		label: self title
@@ -55,6 +55,6 @@ ClyBrowserModeSwitchMorph >> isModeActive [
 
 { #category : #controling }
 ClyBrowserModeSwitchMorph >> toggleMode: aBool [
-	
+
 	self executeCommand
 ]

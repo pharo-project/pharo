@@ -17,7 +17,7 @@ EpEvent class >> handlesAnnouncement: anAnnouncement [
 { #category : #visitor }
 EpEvent >> accept: aVisitor [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }

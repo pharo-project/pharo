@@ -14,29 +14,26 @@ CoResultSetTest >> setUp [
 	self completionClass addInstanceVariable: 'ba'.
 	completion := CoResultSet
 		fetcher: (CoInstanceVariableFetcher new
-			completionClass: self completionClass).
-			
-	completion caseSensitive: true.
+			completionClass: self completionClass;
+			yourself)
 ]
 
 { #category : #tests }
 CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResults [
 
-	completion filterWithString: 'ba'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 	completion fetch: 1.
-	completion filterWithString: 'b'.
-	
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
+
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : #tests }
 CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResultsWhenCaseInsensitve [
 
-	completion caseSensitive: false.
-	
-	completion filterWithString: 'BA'.
+	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'BA').
 	completion fetch: 1.
-	completion filterWithString: 'B'.
+	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'B').
 
 	self
 		assertEntry: completion first
@@ -46,20 +43,18 @@ CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResultsWhen
 { #category : #tests }
 CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResults [
 
-	completion filterWithString: 'ba'.
-	completion filterWithString: 'b'.
-	
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
+
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : #tests }
 CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResultsWhenCaseInsensitive [
 
-	completion caseSensitive: false.
+	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'ba').
+	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'B').
 
-	completion filterWithString: 'ba'.
-	completion filterWithString: 'B'.
-	
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
@@ -75,7 +70,7 @@ CoResultSetTest >> testCompletionWithNoElementsToFetchShouldNotHaveMore [
 	| c |
 	c := CoResultSet fetcher: (CoInstanceVariableFetcher new
 			completionClass: self completionClass).
-	c fetchAll.	
+	c fetchAll.
 	self deny: c hasMoreElements
 ]
 
@@ -89,17 +84,17 @@ CoResultSetTest >> testEnumerateShouldFetch [
 CoResultSetTest >> testFilterCompletionAfterFetchingShouldNarrowResults [
 
 	completion fetch: 1.
-	completion filterWithString: 'b'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : #tests }
 CoResultSetTest >> testFilterTwiceWithSameCompletionShouldReturnSameResults [
-	
-	completion filterWithString: 'ba'.
+
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 	completion fetch: 2.
-	completion filterWithString: 'ba'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 
 	self assertCollectionOfEntry: (completion first: 2) equals: { NECInstVarEntry contents: 'ba' node: nil }
 ]
@@ -107,9 +102,9 @@ CoResultSetTest >> testFilterTwiceWithSameCompletionShouldReturnSameResults [
 { #category : #tests }
 CoResultSetTest >> testNarrowFilterAfterFetchCompletionShouldNarrowResults [
 
-	completion filterWithString: 'b'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 	completion fetch: 1.
-	completion filterWithString: 'ba'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'ba' node: nil)
 ]
@@ -117,8 +112,8 @@ CoResultSetTest >> testNarrowFilterAfterFetchCompletionShouldNarrowResults [
 { #category : #tests }
 CoResultSetTest >> testNarrowerFilterCompletionShouldNarrowResults [
 
-	completion filterWithString: 'b'.
-	completion filterWithString: 'ba'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'ba' node: nil)
 ]
@@ -126,7 +121,7 @@ CoResultSetTest >> testNarrowerFilterCompletionShouldNarrowResults [
 { #category : #tests }
 CoResultSetTest >> testResetFilterShouldRetrievePreviousResults [
 
-	completion filterWithString: 'b'.
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 	completion fetch: 5.
 	completion resetFilter.
 

@@ -10,19 +10,19 @@ Class {
 { #category : #activation }
 SycPushDownVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.4 for: ClySourceCodeContext
 ]
 
 { #category : #execution }
 SycPushDownVariableCommand >> asRefactorings [
 
-	^self 
+	^self
 		createRefactorings: RBPushDownInstanceVariableRefactoring
 ]
 
 { #category : #accessing }
-SycPushDownVariableCommand >> defaultMenuIconName [ 
+SycPushDownVariableCommand >> defaultMenuIconName [
 	^ #down
 ]
 
@@ -35,7 +35,7 @@ SycPushDownVariableCommand >> defaultMenuItemName [
 SycPushDownVariableCommand >> prepareFullExecutionInContext: aToolContext [
 	| noUsers |
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	noUsers := aToolContext confirmUnusedVariablesInDefiningClass: variables.
 	noUsers ifFalse: [ CmdCommandAborted signal ]
 ]

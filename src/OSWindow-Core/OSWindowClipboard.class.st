@@ -34,8 +34,7 @@ OSWindowClipboard >> noteRecentClipping: text [
 ]
 
 { #category : #accessing }
-OSWindowClipboard >> worldRenderer [ 
+OSWindowClipboard >> worldRenderer [
 
 	^ self currentWorld worldState worldRenderer
-	
 ]

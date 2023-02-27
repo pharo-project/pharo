@@ -4,6 +4,14 @@ Class {
 	#category : #'Zinc-Tests'
 }
 
+{ #category : #tests }
+ZnRequestTest >> testAcceptsEncodingGzip [
+	| request |
+	request := ZnRequest new.
+	request setAcceptEncodingGzip.
+	self assert: request acceptsEncodingGzip
+]
+
 { #category : #testing }
 ZnRequestTest >> testBasicAuthenticate [
 	| request |
@@ -22,8 +30,11 @@ ZnRequestTest >> testBasicAuthenticate [
 { #category : #testing }
 ZnRequestTest >> testCookiesParsing [
 	| input request cookies testCookie1 testCookie2 |
-	input := 'GET /foo.html HTTP/1.1' , String crlf , 'Cookie: testCookie1=123; testCookie2=321' , String crlf , 'Host: foo.com' , String crlf , 'Agent: SUnit'
-		, String crlf , String crlf.
+	input := 'GET /foo.html HTTP/1.1', String crlf,
+		'Cookie: testCookie1=123; testCookie2=321', String crlf,
+		'Host: foo.com', String crlf,
+		'Agent: SUnit', String crlf,
+		String crlf.
 	request := ZnRequest readFrom: input readStream.
 
 	cookies := request cookies.
@@ -34,7 +45,7 @@ ZnRequestTest >> testCookiesParsing [
 	self assert: testCookie1 value equals: '123'.
 
 	self assert: testCookie2 notNil.
-	self assert: testCookie2 value equals: '321'
+	self assert: testCookie2 value equals: '321'.
 ]
 
 { #category : #testing }
@@ -53,9 +64,6 @@ ZnRequestTest >> testCookiesWriting [
 	cookies := client request cookies do: [ :each | each defaultDomain: 'example.com' ].
 	self assert: (cookies includes: testCookie1).
 	self assert: (cookies includes: testCookie2)
-	
-		
-
 ]
 
 { #category : #testing }
@@ -78,7 +86,10 @@ ZnRequestTest >> testMergedFields [
 { #category : #testing }
 ZnRequestTest >> testReading [
 	| input request |
-	input := 'GET /foo.html HTTP/1.1' , String crlf , 'Host: foo.com' , String crlf , 'Agent: SUnit' , String crlf , String crlf.
+	input := 'GET /foo.html HTTP/1.1', String crlf,
+		'Host: foo.com', String crlf,
+		'Agent: SUnit', String crlf,
+		String crlf.
 	request := ZnRequest readFrom: input readStream.
 	self assert: request method equals: #GET.
 	self assert: request hasHeaders.
@@ -89,11 +100,11 @@ ZnRequestTest >> testReading [
 { #category : #testing }
 ZnRequestTest >> testReadingWithEntity [
 	| input request |
-	input := 'GET /foo.html HTTP/1.1', String crlf, 
-		'Host: foo.com', String crlf, 
-		'Content-Length: 8', String crlf, 
-		'Content-Type: text/plain', String crlf, 
-		String crlf, 
+	input := 'GET /foo.html HTTP/1.1', String crlf,
+		'Host: foo.com', String crlf,
+		'Content-Length: 8', String crlf,
+		'Content-Type: text/plain', String crlf,
+		String crlf,
 		'12345678'.
 	request := ZnRequest readFrom: input asByteArray readStream.
 	self assert: request method equals: #GET.
@@ -102,7 +113,6 @@ ZnRequestTest >> testReadingWithEntity [
 	self assert: request contentLength equals: 8.
 	self assert: request hasHeaders.
 	self assert: request entity contents equals: '12345678'
-
 ]
 
 { #category : #testing }
@@ -115,8 +125,8 @@ ZnRequestTest >> testUrl [
 	self assert: request relativeUrl equals: url asRelativeUrl.
 	self assert: request absoluteUrl equals: url.
 	url := 'http://foo.com/foo.html' asZnUrl.
-	input := 'GET /foo.html HTTP/1.1' , String crlf , 
-		'Host: foo.com' , String crlf , 
+	input := 'GET /foo.html HTTP/1.1' , String crlf ,
+		'Host: foo.com' , String crlf ,
 		String crlf.
 	request := ZnRequest readFrom: input readStream.
 	self assert: request url equals: url asRelativeUrl.

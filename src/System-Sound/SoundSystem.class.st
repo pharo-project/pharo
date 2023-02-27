@@ -30,21 +30,21 @@ Class {
 	#category : #'System-Sound'
 }
 
-{ #category : #'current ' }
+{ #category : #current }
 SoundSystem class >> current [
 
 	^ Current ifNil: [ Current := DummySoundSystem new ]
 ]
 
-{ #category : #'current ' }
+{ #category : #current }
 SoundSystem class >> current: aSoundSystem [
 
 	Current ifNotNil: [Current deactivate].
 	Current := aSoundSystem.
-	Current activate.
+	Current activate
 ]
 
-{ #category : #'current ' }
+{ #category : #current }
 SoundSystem class >> resetSoundSystem [
 	Current := nil
 ]
@@ -69,7 +69,7 @@ SoundSystem class >> soundQuickStart: aBoolean [
 	SoundQuickStart := aBoolean
 ]
 
-{ #category : #'activation hooks' }
+{ #category : #'activation - hooks' }
 SoundSystem >> activate [
 	"Hook for possible specialization when activating a sound system"
 ]
@@ -81,7 +81,7 @@ SoundSystem >> beep [
 	self subclassResponsibility
 ]
 
-{ #category : #'activation hooks' }
+{ #category : #'activation - hooks' }
 SoundSystem >> deactivate [
 	"Hook for possible specialization when activating a sound system"
 ]
@@ -122,7 +122,7 @@ SoundSystem >> sampledSoundChoices [
 	self subclassResponsibility
 ]
 
-{ #category : #'activation hooks' }
+{ #category : #'activation - hooks' }
 SoundSystem >> shutDown [
 	"by default do nothing"
 ]

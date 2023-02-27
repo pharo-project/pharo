@@ -13,10 +13,9 @@ LazyClassListExample class >> example [
 	<sampleInstance>
 
 	^LazyClassListExample new openOn: Object
-
 ]
 
 { #category : #accessing }
 LazyClassListExample >> treeMorphClass [
-	^ LazyMorphTreeMorph 
+	^ LazyMorphTreeMorph
 ]

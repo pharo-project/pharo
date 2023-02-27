@@ -17,8 +17,7 @@ Class {
 AlignmentMorph class >> columnPrototype [
 	"Answer a prototypical column"
 	"self columnPrototype openInHand"
-	<exampleWidget>
-	
+
 	| sampleMorphs aColumn |
 	sampleMorphs := #(red yellow green) collect:
 		[:aColor | Morph new extent: 130 @ 38; color: (Color perform: aColor); setNameTo: aColor asString; yourself].
@@ -35,7 +34,7 @@ AlignmentMorph class >> columnPrototype [
 AlignmentMorph class >> inAColumn: aCollectionOfMorphs [
 	"Answer a columnar AlignmentMorph holding the given collection"
 
-	^ self new inAColumn: aCollectionOfMorphs 
+	^ self new inAColumn: aCollectionOfMorphs
 ]
 
 { #category : #'instance creation' }
@@ -49,7 +48,6 @@ AlignmentMorph class >> inARow: aCollectionOfMorphs [
 AlignmentMorph class >> newColumn [
 
 	^ self new setAsColumn
-
 ]
 
 { #category : #'instance creation' }
@@ -70,15 +68,13 @@ AlignmentMorph class >> newVariableTransparentSpacer [
 	"Answer a space-filling instance of me of the given color."
 
 	^ self new setAsSpacer: Color transparent
-
 ]
 
 { #category : #examples }
 AlignmentMorph class >> rowPrototype [
 	"Answer a prototypical row"
 	"self rowPrototype openInHand"
-	<exampleWidget>
-	
+
 	| sampleMorphs aRow |
 	sampleMorphs := (1 to: (2 + 3 atRandom)) collect:
 		[:integer | EllipseMorph new extent: ((60 + (20 atRandom)) @ (80 + ((20 atRandom)))); color: Color random; setNameTo: ('egg',  integer asString); yourself].
@@ -90,8 +86,6 @@ AlignmentMorph class >> rowPrototype [
 	aRow setBalloonText: 'Things dropped into here will automatically be organized into a row. Once you have added your own items here, you will want to remove the sample colored eggs that this started with, and you will want to change this balloon help message to one of your own!'.
 	aRow color: Color veryVeryLightGray.
 	^ aRow
-
-			
 ]
 
 { #category : #adding }
@@ -134,14 +128,14 @@ AlignmentMorph >> addARowCentered: aCollectionOfMorphs cellInset: cellInsetInteg
 { #category : #initialization }
 AlignmentMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
-	
+
 	^ 0
 ]
 
 { #category : #initialization }
 AlignmentMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	
+
 	^ Color
 		r: 0.8
 		g: 1.0
@@ -159,25 +153,25 @@ AlignmentMorph >> inAColumn: aCollectionOfMorphs [
 			wrapCentering: #center;
 			cellPositioning: #topCenter.
 	aCollectionOfMorphs do: [ :each | self addMorphBack: each ].
-	^ self 
+	^ self
 ]
 
 { #category : #'visual properties' }
-AlignmentMorph >> inARightColumn: aCollectionOfMorphs [ 
-	
-	self setAsColumn 
+AlignmentMorph >> inARightColumn: aCollectionOfMorphs [
+
+	self setAsColumn
 				 vResizing: #shrinkWrap;
 				 layoutInset: 1;
 				 wrapCentering: #bottomRight;
 				 cellPositioning: #topCenter.
 	aCollectionOfMorphs
-		do: [ :each | self addMorphBack: each ].
+		do: [ :each | self addMorphBack: each ]
 ]
 
 { #category : #'visual properties' }
-AlignmentMorph >> inARow: aCollectionOfMorphs [ 
+AlignmentMorph >> inARow: aCollectionOfMorphs [
 
-	 self setAsRow 
+	 self setAsRow
 				color: Color transparent;
 				vResizing: #shrinkWrap;
 				hResizing: #shrinkWrap;
@@ -185,13 +179,12 @@ AlignmentMorph >> inARow: aCollectionOfMorphs [
 				wrapCentering: #center;
 				cellPositioning: #leftCenter.
 	aCollectionOfMorphs
-		do: [ :each | self addMorphBack: each].
-
+		do: [ :each | self addMorphBack: each]
 ]
 
 { #category : #initialization }
 AlignmentMorph >> initialize [
-	
+
 	super initialize.
 	self
 		layoutPolicy: TableLayout new;
@@ -201,33 +194,29 @@ AlignmentMorph >> initialize [
 	 	vResizing: #spaceFill;
 	 	layoutInset: 2;
 	 	rubberBandCells: true
-	
-
 ]
 
 { #category : #testing }
 AlignmentMorph >> isAlignmentMorph [
 
 	^ true
-
 ]
 
 { #category : #opening }
 AlignmentMorph >> openInWindowLabeled: aString inWorld: aWorld [
 
 	self layoutInset: 0.
-	^super openInWindowLabeled: aString inWorld: aWorld.
+	^super openInWindowLabeled: aString inWorld: aWorld
 ]
 
 { #category : #'visual properties' }
 AlignmentMorph >> setAsColumn [
 
-	self 
+	self
 		listDirection: #topToBottom;
 		hResizing: #spaceFill;
 		extent: 1@1;
 		vResizing: #spaceFill
-
 ]
 
 { #category : #'visual properties' }
@@ -238,7 +227,6 @@ AlignmentMorph >> setAsRow [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		borderWidth: 0
-
 ]
 
 { #category : #'visual properties' }
@@ -249,7 +237,7 @@ AlignmentMorph >> setAsSpacer: aColor [
 		layoutInset: 0;
 		borderWidth: 0;
 		extent: 1@1;
-		color: aColor.
+		color: aColor
 ]
 
 { #category : #'event handling' }

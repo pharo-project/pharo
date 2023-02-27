@@ -15,7 +15,6 @@ EpApplyVisitor >> visitBehaviorCategoryChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [:aClassOrTrait | aClassOrTrait category: aChange newCategory ]
-
 ]
 
 { #category : #visitor }
@@ -23,8 +22,8 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :aClass | 
-			aClass 
+		ifPresent: [ :aClass |
+			aClass
 				classComment: aChange newComment
 				stamp: aChange newStamp ]
 ]
@@ -38,6 +37,11 @@ EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 { #category : #visitor }
 EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
 	environment organization addCategory: aPackageCreated categoryName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitCategoryRegistration: aPackageCreated [
+
 ]
 
 { #category : #visitor }
@@ -55,22 +59,15 @@ EpApplyVisitor >> visitCategoryRename: aChange [
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
-	"this is a hack for the moment. Because fluid class definition return a builder and not the old syntax."
-	
-	('*<<*' match: aClassCreation classAdded definitionSource )
-		ifTrue: [ 
-			(self compiler evaluate: aClassCreation classAdded definitionSource) install.
-			(self compiler evaluate: aClassCreation classAdded classSide definitionSource) install ]
-		ifFalse: [self compiler
-			evaluate: aClassCreation classAdded definitionSource;
-			evaluate: aClassCreation classAdded classSide definitionSource ]
+	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
+	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassModification: aModifiedClassChange [
-	self compiler
-		evaluate: aModifiedClassChange newClass definitionSource;
-		evaluate: aModifiedClassChange newClass classSide definitionSource
+
+	(self compiler evaluate: aModifiedClassChange newClass definitionSource) fluidInstall.
+	(self compiler evaluate: aModifiedClassChange newClass classSide definitionSource) fluidInstall
 ]
 
 { #category : #visitor }
@@ -81,68 +78,67 @@ EpApplyVisitor >> visitClassRemoval: aClassRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitCodeChange: aChange [
 	"Default behavior for any change."
-		
+
 	^ self visitEvent: aChange
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitMethodAddition: aMethodCreated [
 
-	self 
+	self
 		behaviorNamed: aMethodCreated behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior
-				compile: aMethodCreated sourceCode 
+				compile: aMethodCreated sourceCode
 				classified: aMethodCreated protocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitMethodModification: aMethodModified [
 
-	self 
+	self
 		behaviorNamed: aMethodModified behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior
-				compile: aMethodModified newSourceCode 
+				compile: aMethodModified newSourceCode
 				classified: aMethodModified newProtocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 
-	self 
+	self
 		behaviorNamed: aMethodRemoval behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior removeSelector: aMethodRemoval selector ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
-	self 
+	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior organization addCategory: aProtocolAddition protocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolRemoval: aProtocolRemoved [
-	self 
+	self
 		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			behavior removeProtocol: aProtocolRemoved protocol ]
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitTraitAddition: aChange [
 
-	self compiler evaluate: aChange traitAdded definitionSource
+	(self compiler evaluate: aChange traitAdded definitionSource) fluidInstall
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitTraitModification: aChange [
 
-	self compiler evaluate: aChange newTrait definitionSource
-
+	(self compiler evaluate: aChange newTrait definitionSource) fluidInstall
 ]
 
 { #category : #visitor }

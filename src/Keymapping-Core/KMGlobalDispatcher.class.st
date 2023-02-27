@@ -15,7 +15,6 @@ KMGlobalDispatcher >> dispatch: anEventBuffer [
 	dispatcher
 		dispatch: anEventBuffer
 		inCategories: KMRepository default globalCategories
-
 ]
 
 { #category : #initialization }
@@ -29,6 +28,6 @@ KMGlobalDispatcher >> isGlobalDispatcher [
 ]
 
 { #category : #iterating }
-KMGlobalDispatcher >> nextForKmChain: aKMDispatchChain [ 
+KMGlobalDispatcher >> nextForKmChain: aKMDispatchChain [
 	^aKMDispatchChain target
 ]

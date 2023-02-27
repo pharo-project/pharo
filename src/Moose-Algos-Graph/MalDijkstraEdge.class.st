@@ -24,5 +24,5 @@ MalDijkstraEdge >> isVisited [
 { #category : #accessing }
 MalDijkstraEdge >> visited: aBoolean [
 
-	visited := aBoolean 
+	visited := aBoolean
 ]

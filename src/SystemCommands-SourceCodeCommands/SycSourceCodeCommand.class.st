@@ -21,12 +21,12 @@ Class {
 
 { #category : #testing }
 SycSourceCodeCommand class >> isAbstract [
-	^self = SycSourceCodeCommand 
+	^self = SycSourceCodeCommand
 ]
 
 { #category : #'instance creation' }
 SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
-	^self new 
+	^self new
 		method: aMethod;
 		sourceNode: aRBProgramNode
 ]
@@ -64,7 +64,7 @@ SycSourceCodeCommand >> method: anObject [
 { #category : #execution }
 SycSourceCodeCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
-	
+
 	method := aSourceCodeContext lastSelectedMethod.
 	sourceNode := aSourceCodeContext lastSelectedSourceNode
 ]

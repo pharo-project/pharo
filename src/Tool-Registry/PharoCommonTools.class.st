@@ -14,19 +14,19 @@ Class {
 { #category : #settings }
 PharoCommonTools class >> browsingSettingsOn: aBuilder [
 	<systemsettings>
-	
+
 	"create empty #codeBrowsing and #qualityAssistant settings groups so the tools can use it"
-	
+
 	(aBuilder group: #codeBrowsing)
 		label: 'Code Browsing';
 		description: 'All settings concerned with code browsing look''n feel'.
-	
+
 	(aBuilder group: #qualityAssistant)
 		label: 'QualityAssistant';
-		parent: #codeBrowsing.
+		parent: #codeBrowsing
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 PharoCommonTools class >> initialize [
 	SessionManager default
 		registerToolClassNamed: self name
@@ -35,14 +35,14 @@ PharoCommonTools class >> initialize [
 { #category : #settings }
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
-	
+
 	Smalltalk tools class == self
 		ifFalse: [ ^ self ].
 	(aBuilder group: #pharoTools)
 		parent: #pharoSystem;
 		label: 'Recent Tools';
 		description: 'Recently registered Tools';
-		with: [ 
+		with: [
 					(aBuilder pickOne: #browserTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -51,7 +51,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						label: 'System browser';
 						default: (self environment at: #ClyFullBrowserMorph);
 						domainValues: Smalltalk tools recentBrowserTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #inspectorTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -60,7 +60,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						default: (self environment at: #StInspector);
 						label: 'Inspector';
 						domainValues: Smalltalk tools recentInspectorTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #workspaceTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -69,20 +69,20 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						label: 'Workspace';
 						default: (self environment at: #StPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #versionBrowserTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Versionbrowser';
 						domainValues: Smalltalk tools recentVersionBrowserTools ];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #fileListTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Filelist';
 						default: (self environment at: #FileList);
 						domainValues: Smalltalk tools recentFileListTools];
-		with: [ 
+		with: [
 					(aBuilder pickOne: #changeSorterTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -97,6 +97,7 @@ PharoCommonTools class >> shutDown: aboutToQuit [
 
 { #category : #'world menu' }
 PharoCommonTools class >> worldMenuOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #'System Browser')
 		parent: #Browsing;
@@ -105,13 +106,14 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
 		iconName: #smallSystemBrowser.
-	(aBuilder item: #'Iceberg')
-		order: 1; 
-		icon: (self iconNamed: #komitterSmalltalkhubRemote);  
-		parent: #'Browsing';
+	(aBuilder item: #Iceberg)
+		order: 1;
+		icon: (self iconNamed: #komitterSmalltalkhubRemote);
+		parent: #Browsing;
 		keyText: 'o, i';
-		help: 'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
-		action: [ (Smalltalk at: #IceTipRepositoriesBrowser) new openWithSpec ]
+		help:
+			'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
+		action: [ (Smalltalk at: #IceTipRepositoriesBrowser) new open ]
 ]
 
 { #category : #'registry access' }
@@ -189,8 +191,7 @@ PharoCommonTools >> finder [
 { #category : #initialization }
 PharoCommonTools >> initialize [
 	recentTools := Dictionary new.
-	super initialize.
-	
+	super initialize
 ]
 
 { #category : #'registry access' }

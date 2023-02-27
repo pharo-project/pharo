@@ -13,18 +13,19 @@ Class {
 		'newName',
 		'oldName'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Base'
 }
 
 { #category : #'instance creation' }
 RBCompositeRefactoryChange class >> named: aString [
+
 	^ self new
-		name: aString;
-		yourself
+		  name: aString;
+		  yourself
 ]
 
 { #category : #comparing }
-RBCompositeRefactoryChange >> = aRefactoryBuilder [ 
+RBCompositeRefactoryChange >> = aRefactoryBuilder [
 	self class = aRefactoryBuilder class
 		ifFalse: [ ^ false ].
 	changes size = aRefactoryBuilder changes size
@@ -36,39 +37,62 @@ RBCompositeRefactoryChange >> = aRefactoryBuilder [
 ]
 
 { #category : #accessing }
-RBCompositeRefactoryChange >> addChange: aRefactoryChange [ 
+RBCompositeRefactoryChange >> addChange: aRefactoryChange [
+
 	changes add: aRefactoryChange.
 	^ aRefactoryChange
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> addClassVariable: variableName to: aClass [ 
-	^ self addChange: (changeFactory addClassVariable: variableName to: aClass)
+RBCompositeRefactoryChange >> addClassVariable: variableName to: aClass [
+
+	^ self addChange:
+		  (changeFactory addClassVariable: variableName to: aClass)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> addInstanceVariable: variableName to: aClass [ 
-	^ self addChange: (changeFactory addInstanceVariable: variableName to: aClass)
+RBCompositeRefactoryChange >> addInstanceVariable: variableName to: aClass [
+
+	^ self addChange:
+		  (changeFactory addInstanceVariable: variableName to: aClass)
 ]
 
 { #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> addPackageNamed: aString [
+
 	^ self addChange: (changeFactory addPackageNamed: aString)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [ 
-	^ self addChange: (changeFactory addPoolVariable: aPoolVariable to: aClass)
+RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [
+
+	^ self addChange:
+		  (changeFactory addPoolVariable: aPoolVariable to: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> addProtocolNamed: aString in: aClass [
+
+	^ self addChange:
+		  (RBAddProtocolChange addProtocolNamed: aString in: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> category: aString for: aClass [
+
+	^ self addChange: (RBClassCategoryChange category: aString for: aClass)
 ]
 
 { #category : #accessing }
 RBCompositeRefactoryChange >> changeClass [
+
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [ 
-	changes reverseDo: [ :each | 
+RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [
+
+	changes reverseDo: [ :each |
 		| change |
 		change := each changeForClass: aClassName selector: aSelector.
 		change notNil ifTrue: [ ^ change ] ].
@@ -76,8 +100,9 @@ RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [
 ]
 
 { #category : #accessing }
-RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [ 
-	changes reverseDo: [ :each | 
+RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
+
+	changes reverseDo: [ :each |
 		| change |
 		change := each changeForMetaclass: aClassName selector: aSelector.
 		change notNil ifTrue: [ ^ change ] ].
@@ -86,41 +111,53 @@ RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector
 
 { #category : #'private - inspector accessing' }
 RBCompositeRefactoryChange >> changes [
+
 	^ changes
 ]
 
 { #category : #'private - inspector accessing' }
-RBCompositeRefactoryChange >> changes: aCollection [ 
+RBCompositeRefactoryChange >> changes: aCollection [
+
 	changes := aCollection
 ]
 
 { #category : #accessing }
 RBCompositeRefactoryChange >> changesSize [
+
 	^ changes inject: 0 into: [ :sum :each | sum + each changesSize ]
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> comment: aString in: aClass [ 
+RBCompositeRefactoryChange >> comment: aString in: aClass [
+
 	^ self addChange: (changeFactory comment: aString in: aClass)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> compile: source in: class [ 
+RBCompositeRefactoryChange >> compile: source in: class [
+
 	^ self addChange: (changeFactory addMethodSource: source in: class)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> compile: source in: class classified: aProtocol [ 
-	^ self addChange: (changeFactory addMethodSource: source in: class classified: aProtocol)
+RBCompositeRefactoryChange >> compile: source in: class classified: aProtocol [
+
+	^ self addChange:
+		  (changeFactory
+			   addMethodSource: source
+			   in: class
+			   classified: aProtocol)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> defineClass: aString [ 
+RBCompositeRefactoryChange >> defineClass: aString [
+
 	^ self addChange: (changeFactory addClassDefinition: aString)
 ]
 
 { #category : #private }
-RBCompositeRefactoryChange >> executeNotifying: aBlock [ 
+RBCompositeRefactoryChange >> executeNotifying: aBlock [
+
 	| undos undo |
 	undos := changes collect: [ :each | each executeNotifying: aBlock ].
 	undo := self copy.
@@ -130,27 +167,32 @@ RBCompositeRefactoryChange >> executeNotifying: aBlock [
 
 { #category : #comparing }
 RBCompositeRefactoryChange >> hash [
+
 	^ self class hash bitXor: self changes size hash
 ]
 
 { #category : #initialization }
 RBCompositeRefactoryChange >> initialize [
+
 	super initialize.
 	changes := OrderedCollection new
 ]
 
 { #category : #accessing }
 RBCompositeRefactoryChange >> newName [
+
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 RBCompositeRefactoryChange >> oldName [
+
 	^ self subclassResponsibility
 ]
 
 { #category : #copying }
 RBCompositeRefactoryChange >> postCopy [
+
 	super postCopy.
 	changes := changes collect: [ :each | each copy ]
 ]
@@ -164,63 +206,102 @@ RBCompositeRefactoryChange >> printOn: aStream [
 
 { #category : #accessing }
 RBCompositeRefactoryChange >> problemCount [
+
 	^ self changesSize
 ]
 
 { #category : #accessing }
-RBCompositeRefactoryChange >> removeChange: aChange [ 
-	^ changes remove: aChange ifAbsent: [ nil ]
+RBCompositeRefactoryChange >> removeChange: aChange [
+
+	^ changes remove: aChange ifAbsent: [ ]
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> removeClass: aClass [ 
+RBCompositeRefactoryChange >> removeClass: aClass [
+
 	^ self addChange: (changeFactory removeClassNamed: aClass name)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> removeClassNamed: aSymbol [ 
+RBCompositeRefactoryChange >> removeClassNamed: aSymbol [
+
 	^ self addChange: (changeFactory removeClassNamed: aSymbol)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> removeClassVariable: variableName from: aClass [ 
-	^ self addChange: (changeFactory removeClassVariable: variableName from: aClass)
+RBCompositeRefactoryChange >> removeClassVariable: variableName from: aClass [
+
+	^ self addChange:
+		  (changeFactory removeClassVariable: variableName from: aClass)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> removeInstanceVariable: variableName from: aClass [ 
-	^ self addChange: (changeFactory removeInstanceVariable: variableName from: aClass)
+RBCompositeRefactoryChange >> removeInstanceVariable: variableName from: aClass [
+
+	^ self addChange:
+		  (changeFactory removeInstanceVariable: variableName from: aClass)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> removeMethod: aSelector from: aClass [ 
-	^ self addChange: (changeFactory removeMethod: aSelector from: aClass)
+RBCompositeRefactoryChange >> removeMethod: aSelector from: aClass [
+
+	^ self addChange:
+		  (changeFactory removeMethod: aSelector from: aClass)
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> removePool: aPoolVariable from: aClass [ 
-	^ self addChange: (changeFactory removePoolVariable: aPoolVariable from: aClass)
+RBCompositeRefactoryChange >> removePool: aPoolVariable from: aClass [
+
+	^ self addChange:
+		  (changeFactory removePoolVariable: aPoolVariable from: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> removeProtocolNamed: aString in: aClass [
+	self flag: #todo.
+	"This change is not made via the changefactory!!!"
+	^ self addChange: (RBRemoveProtocolChange removeProtocolNamed: aString in: aClass)
 ]
 
 { #category : #accessing }
 RBCompositeRefactoryChange >> renameChangesForClass: oldClassName to: newClassName [
+
 	^ self copy
-		changes: (self changes 
-			collect: [ :each | each renameChangesForClass: oldClassName to: newClassName ]);
-		yourself
+		  changes: (self changes collect: [ :each |
+					   each renameChangesForClass: oldClassName to: newClassName ]);
+		  yourself
 ]
 
 { #category : #'refactory - changes' }
-RBCompositeRefactoryChange >> renameClass: class to: newNameLocal [ 
+RBCompositeRefactoryChange >> renameClass: class to: newNameLocal [
+
 	^ self addChange: (changeFactory renameClass: class to: newNameLocal)
 ]
 
 { #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> renameClassVariable: oldNameLocal to: newNameLocal in: aClass [
-	^ self addChange: (changeFactory renameClassVariable: oldNameLocal to: newNameLocal in: aClass)
+
+	^ self addChange: (changeFactory
+			   renameClassVariable: oldNameLocal
+			   to: newNameLocal
+			   in: aClass)
 ]
 
 { #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> renameInstanceVariable: oldNameLocal to: newNameLocal in: aClass [
-	^ self addChange: (changeFactory renameInstanceVariable: oldNameLocal to: newNameLocal in: aClass)
+
+	^ self addChange: (changeFactory
+			   renameInstanceVariable: oldNameLocal
+			   to: newNameLocal
+			   in: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> selector: aSelector in: aClass classified: aProtocol [
+	self flag: #todo.
+	"This change is not made via the changefactory!!!"
+	^ self addChange: (RBMethodProtocolChange
+							selector: aSelector
+							in: aClass
+							classified: aProtocol)
 ]

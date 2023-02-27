@@ -42,14 +42,12 @@ ZnMimePart class >> fieldName: fieldName fileName: fileName entity: entity [
 ZnMimePart class >> fieldName: fieldName fileNamed: fileName [
 	| mimeType size fileStream entity baseName |
 	mimeType := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: fileName).
-	fileStream := ZnFileSystemUtils oldFileStreamFor: fileName.
-	mimeType isBinary ifTrue: [ fileStream binary ].
+	fileStream := ZnFileSystemUtils binaryReadStreamFor: fileName.
 	size := ZnFileSystemUtils fileSizeFor: fileName.
 	(entity := ZnStreamingEntity type: mimeType length: size)
 		stream: fileStream.
 	baseName := ZnFileSystemUtils baseNameFor: fileName.
 	^ self fieldName: fieldName fileName: baseName entity: entity
-	
 ]
 
 { #category : #'instance creation' }
@@ -87,7 +85,7 @@ ZnMimePart >> contentDisposition [
 { #category : #private }
 ZnMimePart >> contentDispositionValues [
 	| contentDisposition values start semiColonIndex |
-	(contentDisposition := self contentDisposition) isNil ifTrue: [ ^ #() ].
+	( contentDisposition := self contentDisposition ) ifNil: [ ^ #() ].
 	values := OrderedCollection new: 3.
 	start := 1.
 	semiColonIndex := contentDisposition indexOf: $; startingAt: start ifAbsent: [ 0 ].
@@ -96,7 +94,7 @@ ZnMimePart >> contentDispositionValues [
 		value := contentDisposition copyFrom: start to: semiColonIndex - 1.
 		values add: (ZnUtils trimString: value).
 		start := semiColonIndex + 1.
-		semiColonIndex := contentDisposition indexOf: $; startingAt: start ifAbsent: [ 0 ] ].
+		semiColonIndex := contentDisposition indexOf: $; startingAt: start ifAbsent: [ 0 ]].
 	values add: (ZnUtils trimString: (contentDisposition copyFrom: start to: contentDisposition size)).
 	^ values
 ]
@@ -117,12 +115,13 @@ ZnMimePart >> contentType [
 
 { #category : #accessing }
 ZnMimePart >> contents [
-	^ entity isNil ifTrue: [ nil ] ifFalse: [ entity contents ]
+
+	^ entity ifNil: [ nil ] ifNotNil: [ entity contents ]
 ]
 
 { #category : #private }
 ZnMimePart >> detectContentDispositionValue: aString [
-	self contentDispositionValues do: [ :each | 
+	self contentDispositionValues do: [ :each |
 		((each beginsWith: aString)
 			and: [ each size > (aString size + 1)
 			and: [ (each at: aString size + 1) = $= ] ]) ifTrue: [
@@ -166,9 +165,9 @@ ZnMimePart >> fieldName [
 
 { #category : #accessing }
 ZnMimePart >> fieldValue [
-	^ self hasEntity 
-		ifTrue: [ self entity contents ] 
-		ifFalse: [ nil ] 
+	^ self hasEntity
+		ifTrue: [ self entity contents ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #accessing }
@@ -204,7 +203,8 @@ ZnMimePart >> hash [
 
 { #category : #accessing }
 ZnMimePart >> headers [
-	headers isNil ifTrue: [ headers := ZnHeaders new ].
+
+	headers ifNil: [ headers := ZnHeaders new ].
 	^ headers
 ]
 
@@ -229,10 +229,9 @@ ZnMimePart >> postCopy [
 ZnMimePart >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
-	self hasEntity ifTrue: [ 
+	self hasEntity ifTrue: [
 		self entity printContentTypeAndLengthOn: stream ].
 	stream nextPut: $)
-	
 ]
 
 { #category : #'initialize-release' }
@@ -248,18 +247,17 @@ ZnMimePart >> readBinaryFrom: stream [
 ZnMimePart >> readFrom: stream [
 	self headers: (ZnHeaders readFrom: stream).
 	self entity: (self entityReaderOn: stream) readEntity
-	
 ]
 
 { #category : #accessing }
 ZnMimePart >> setContentDisposition: value [
-	^ self headers at: 'Content-Disposition' put: value 
+	^ self headers at: 'Content-Disposition' put: value
 ]
 
 { #category : #writing }
 ZnMimePart >> writeOn: stream [
 	self headers writeOn: stream.
 	stream nextPutAll: String crlf.
-	self hasEntity ifTrue: [ 
+	self hasEntity ifTrue: [
 		(self entityWriterOn: stream) writeEntity: self entity ]
 ]

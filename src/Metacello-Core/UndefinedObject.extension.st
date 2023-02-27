@@ -1,45 +1,45 @@
 Extension { #name : #UndefinedObject }
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> asMetacelloSemanticVersionNumber [
     ^ MetacelloSemanticVersionNumber fromString: ''
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: ''
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> metacelloRegistrationHash [
     ^ self hash
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> registrationsCompareEqual: aMetacelloProjectSpec [
     ^ self = aMetacelloProjectSpec
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setAuthor: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setBlessing: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setDescription: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPostLoadDoIt: 
@@ -48,7 +48,7 @@ UndefinedObject >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPreLoadDoIt: 
@@ -57,13 +57,13 @@ UndefinedObject >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setProject: aString withInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setProject: aString withString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 UndefinedObject >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setTimestamp: self

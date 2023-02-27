@@ -13,7 +13,6 @@ RubPluggableTextFieldWithFloatConverterExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
  	st openInWorld
-
 ]
 
 { #category : #accessing }
@@ -29,7 +28,6 @@ RubPluggableTextFieldWithFloatConverterExample >> getMyMenu: aMenu [
 { #category : #accessing }
 RubPluggableTextFieldWithFloatConverterExample >> myFloat [
 	^ myFloat ifNil: [ myFloat := 0.0 ]
-
 ]
 
 { #category : #accessing }

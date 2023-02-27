@@ -10,8 +10,8 @@ Class {
 { #category : #accessing }
 AColorSelectorMorph >> color: aColor [
 	"Set the gradient colors."
-	
-	super color: aColor beOpaque. 
+
+	super color: aColor beOpaque.
 	self fillStyle: self defaultFillStyle
 ]
 
@@ -34,13 +34,12 @@ AColorSelectorMorph >> drawOn: aCanvas [
 		fillRectangle: self innerBounds
 		fillStyle: (InfiniteForm with: self hatchForm).
 	super drawOn: aCanvas
-
 ]
 
 { #category : #'visual properties' }
 AColorSelectorMorph >> fillStyle: fillStyle [
 	"If it is a color then override with gradient."
-	
+
 	fillStyle isColor
 		ifTrue: [self color: fillStyle]
 		ifFalse: [super fillStyle: fillStyle]

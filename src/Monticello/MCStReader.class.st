@@ -135,13 +135,10 @@ MCStReader >> systemOrganizationFromRecords: changeRecords [
 
 { #category : #reading }
 MCStReader >> typeOfSubclass: aSymbol [
-	#(
-		(subclass: normal)
-		(named: normal)
-		(variableSubclass: variable)
-		(variableByteSubclass: bytes)
-		(variableWordSubclass: words)
-		(weakSubclass: weak)
-		) do: [:ea | ea first = aSymbol ifTrue: [^ ea second]].
-	self error: 'Unrecognized class definition'
+	| layoutClass |
+	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
+	"if we get back CompiledMethodLayout, we put ByteLayout as CompiledMethodLayout.
+	The actual class creation methods have a hack to create the right format in this case"
+	layoutClass = CompiledMethodLayout ifTrue: [ layoutClass := ByteLayout ].
+	^layoutClass mcTypeSymbol
 ]

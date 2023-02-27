@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 PackageMethodNodeExample >> browseItem [
-	Smalltalk tools browser openOnClass: self itemClass  selector: self selector 
+	Smalltalk tools browser openOnClass: self itemClass  selector: self selector
 ]
 
 { #category : #results }
@@ -23,8 +23,7 @@ PackageMethodNodeExample >> compiledMethod [
 
 { #category : #private }
 PackageMethodNodeExample >> itemClass [
-	^ self parentNode parentNode item.
-
+	^ self parentNode parentNode item
 ]
 
 { #category : #accessing }

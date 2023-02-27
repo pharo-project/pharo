@@ -15,8 +15,8 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
 
-{ #category : #specs }
-ClyMetaLinkInstallationPresenter class >> defaultSpec [
+{ #category : #layout }
+ClyMetaLinkInstallationPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		  add: #toolBar
 		  expand: false
@@ -36,12 +36,13 @@ ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: f
 
 { #category : #opening }
 ClyMetaLinkInstallationPresenter class >> openInstallerOnNode: aSourceNode [
-	(self onNode: aSourceNode forInstallation: true) openWithSpec
+
+	(self onNode: aSourceNode forInstallation: true) open
 ]
 
 { #category : #opening }
 ClyMetaLinkInstallationPresenter class >> openUninstallerOnNode: aSourceNode [
-	(self onNode: aSourceNode forInstallation: false) openWithSpec
+	(self onNode: aSourceNode forInstallation: false) open
 ]
 
 { #category : #accessing }
@@ -50,12 +51,12 @@ ClyMetaLinkInstallationPresenter >> allRelevantMetaLinks [
 	baseLinks := self isForMetaLinkInstallation
 		             ifTrue: [ "This is temporary, I should have put a comment.
 The idea would be to add an explicit option at the metalink level, so that only the ones that are ''installable through the menu'' would appear.
-But we need to think about how to do that exactly." 
+But we need to think about how to do that exactly."
 			             MetaLink allInstances ]
 		             ifFalse: [ sourceNode links ].
-	^ baseLinks reject: [ :link | 
-		  link metaObject == Break or: [ 
-			  { 
+	^ baseLinks reject: [ :link |
+		  link metaObject == Break or: [
+			  {
 				  Watch.
 				  ExecutionCounter } includes: link metaObject class ] ]
 ]
@@ -81,7 +82,7 @@ ClyMetaLinkInstallationPresenter >> initializeWindow: aWindowPresenter [
 
 { #category : #installation }
 ClyMetaLinkInstallationPresenter >> installSelectedMetalink [
-	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink | 
+	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink |
 		sourceNode link: metalink ].
 	self close
 ]
@@ -111,14 +112,14 @@ ClyMetaLinkInstallationPresenter >> toolbarButtons [
 	| buttons |
 	buttons := OrderedCollection new.
 	buttons add: (self isForMetaLinkInstallation
-			 ifTrue: [ 
+			 ifTrue: [
 				 self newToolbarButton
 					 label: 'Install';
 					 icon: (self iconNamed: #smallOk);
 					 help: 'Install the selected metalink';
 					 action: [ self installSelectedMetalink ];
 					 yourself ]
-			 ifFalse: [ 
+			 ifFalse: [
 				 self newToolbarButton
 					 label: 'Uninstall';
 					 icon: (self iconNamed: #smallOk);
@@ -137,7 +138,7 @@ ClyMetaLinkInstallationPresenter >> toolbarButtons [
 
 { #category : #installation }
 ClyMetaLinkInstallationPresenter >> uninstallSelectedMetalink [
-	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink | 
+	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink |
 		sourceNode removeLink: metalink ].
 	self close
 ]

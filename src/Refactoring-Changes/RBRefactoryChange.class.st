@@ -11,21 +11,24 @@ Class {
 		'changeFactory',
 		'onSystemDictionary'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Base'
 }
 
 { #category : #accessing }
-RBRefactoryChange >> changeForClass: aClassName selector: aSelector [ 
+RBRefactoryChange >> changeForClass: aClassName selector: aSelector [
+
 	^ nil
 ]
 
 { #category : #accessing }
-RBRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [ 
+RBRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
+
 	^ nil
 ]
 
 { #category : #accessing }
 RBRefactoryChange >> changeStamp [
+
 	^ Author changeStamp
 ]
 
@@ -36,15 +39,17 @@ RBRefactoryChange >> changeString [
 
 { #category : #accessing }
 RBRefactoryChange >> changes [
-	^Array with: self
+
+	^ Array with: self
 ]
 
 { #category : #accessing }
 RBRefactoryChange >> changesSize [
-	^1
+
+	^ 1
 ]
 
-{ #category : #printing }
+{ #category : #displaying }
 RBRefactoryChange >> displayString [
 
 	^ name ifNil: [ self changeString ] ifNotNil: [ name ]
@@ -56,12 +61,12 @@ RBRefactoryChange >> execute [
 ]
 
 { #category : #private }
-RBRefactoryChange >> executeNotifying: aBlock [ 
+RBRefactoryChange >> executeNotifying: aBlock [
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
-RBRefactoryChange >> initialize [ 
+RBRefactoryChange >> initialize [
 	super initialize.
 	onSystemDictionary := Smalltalk globals.
 	changeFactory := RBRefactoryChangeManager changeFactory
@@ -92,11 +97,13 @@ RBRefactoryChange >> oldVersionTextToDisplay [
 
 { #category : #accessing }
 RBRefactoryChange >> onSystemDictionary [
+
 	^ onSystemDictionary
 ]
 
 { #category : #accessing }
 RBRefactoryChange >> onSystemDictionary: anObject [
+
 	onSystemDictionary := anObject
 ]
 

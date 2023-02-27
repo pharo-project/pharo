@@ -25,7 +25,6 @@ MorphicEvent >> = anEvent [
 { #category : #initialize }
 MorphicEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
-
 ]
 
 { #category : #accessing }
@@ -86,6 +85,17 @@ MorphicEvent >> isMove [
 ]
 
 { #category : #testing }
+MorphicEvent >> isTextEditionEvent [
+	^false
+]
+
+{ #category : #testing }
+MorphicEvent >> isTextInputEvent [
+
+	^ false
+]
+
+{ #category : #testing }
 MorphicEvent >> isWindowEvent [
 	^false
 ]
@@ -115,7 +125,7 @@ MorphicEvent >> setHand: aHand [
 
 { #category : #private }
 MorphicEvent >> setTimeStamp: stamp [
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #accessing }
@@ -127,7 +137,6 @@ MorphicEvent >> timeStamp [
 { #category : #transforming }
 MorphicEvent >> transformedBy: aMorphicTransform [
 	"Return the receiver transformed by the given transform into a local coordinate system."
-
 ]
 
 { #category : #accessing }

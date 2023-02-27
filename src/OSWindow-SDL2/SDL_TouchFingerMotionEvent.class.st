@@ -15,7 +15,6 @@ SDL_TouchFingerMotionEvent class >> eventType [
 { #category : #visitor }
 SDL_TouchFingerMotionEvent >> accept: aVisitor [
 	^ aVisitor visitFingerMotionEvent: self
-
 ]
 
 { #category : #'accessing - structure variables' }

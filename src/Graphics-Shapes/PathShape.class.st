@@ -38,7 +38,7 @@ PathShape >> addVertex: aPoint [
 
 	self vertices add: aPoint.
 	self basicBounds ifNotNil: [
-		self bounds: (self bounds quickMergePoint: aPoint)] 
+		self bounds: (self bounds quickMergePoint: aPoint)]
 ]
 
 { #category : #accessing }

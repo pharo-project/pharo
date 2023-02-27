@@ -18,7 +18,6 @@ MorphTreeMorphMultipleSelection >> addNodePath: aPath [
 { #category : #accessing }
 MorphTreeMorphMultipleSelection >> empty [
 	self selectedNodePathList: OrderedCollection new
-
 ]
 
 { #category : #accessing }
@@ -29,7 +28,6 @@ MorphTreeMorphMultipleSelection >> lastSelectedNodePath [
 { #category : #accessing }
 MorphTreeMorphMultipleSelection >> removeNode: aNode [
 	self selectedNodePathList remove: aNode path ifAbsent: []
-
 ]
 
 { #category : #accessing }
@@ -41,7 +39,7 @@ MorphTreeMorphMultipleSelection >> selectedItemOrItemsOrNil [
 
 { #category : #accessing }
 MorphTreeMorphMultipleSelection >> selectedNodeList [
-	^ self selectedNodePathList 
+	^ self selectedNodePathList
 		ifNil: [#()]
 		ifNotNil: [:l | l collect: [:path | path last]]
 ]
@@ -59,5 +57,4 @@ MorphTreeMorphMultipleSelection >> selectedNodePathList: aCollectionOfPath [
 { #category : #accessing }
 MorphTreeMorphMultipleSelection >> selectedNodes [
 	^ OrderedCollection withAll: self selectedNodeList
-
 ]

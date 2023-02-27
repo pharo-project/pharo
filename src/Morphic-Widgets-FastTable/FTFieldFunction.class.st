@@ -58,7 +58,7 @@ FTFieldFunction >> fieldHeigh [
 
 { #category : #'widget API' }
 FTFieldFunction >> ghostText [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -100,6 +100,6 @@ FTFieldFunction >> showWidget [
 
 { #category : #updating }
 FTFieldFunction >> textUpdated: anAnnouncement [
-	
+
 	"do nothing by default"
 ]

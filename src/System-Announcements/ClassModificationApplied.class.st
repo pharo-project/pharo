@@ -15,13 +15,13 @@ Class {
 { #category : #'instance creation' }
 ClassModificationApplied class >> toClass: aClassOrTrait [
 
-	^self new 
+	^self new
 		modifiedClass: aClassOrTrait
 ]
 
 { #category : #accessing }
 ClassModificationApplied >> classAffected [
-	^modifiedClass 
+	^modifiedClass
 ]
 
 { #category : #accessing }

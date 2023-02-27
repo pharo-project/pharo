@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 EpBehaviorCategoryChange class >> oldCategory: anOldCategory newCategory: aNewCategory class: aClass [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeOldCategory: anOldCategory newCategory: aNewCategory class: aClass;
 		yourself
 ]
@@ -23,7 +23,7 @@ EpBehaviorCategoryChange class >> oldCategory: anOldCategory newCategory: aNewCa
 { #category : #visitor }
 EpBehaviorCategoryChange >> accept: aVisitor [
 
-	^ aVisitor visitBehaviorCategoryChange: self 
+	^ aVisitor visitBehaviorCategoryChange: self
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ EpBehaviorCategoryChange >> initializeOldCategory: anOldCategory newCategory: aN
 	self initialize.
 	oldCategory := anOldCategory.
 	newCategory := aNewCategory.
-	class := aClass asEpiceaRingDefinition.
+	class := aClass asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

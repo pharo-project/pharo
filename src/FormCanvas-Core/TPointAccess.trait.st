@@ -29,11 +29,10 @@ TPointAccess >> bounds [
 		min := min min: pt.
 		max := max max: pt].
 	^min corner: max
-		
 ]
 
 { #category : #accessing }
-TPointAccess >> defaultElement [ 
+TPointAccess >> defaultElement [
 
 	"Return the default element of the receiver"
 	^0@0

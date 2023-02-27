@@ -24,7 +24,7 @@ OSTouchThreeFingersSwipeDetector >> eventClassBeginGesture [
 
 { #category : #abstract }
 OSTouchThreeFingersSwipeDetector >> eventClassEndGesture [
-	^ OSTouchThreeFingersSwipeEndEvent 
+	^ OSTouchThreeFingersSwipeEndEvent
 ]
 
 { #category : #abstract }

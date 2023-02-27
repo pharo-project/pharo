@@ -56,7 +56,7 @@ SymbolicBytecode >> description: anObject [
 SymbolicBytecode >> hash [
 
 	^ ((self bytes hash bitXor: self description hash) bitXor: 
-			self method hash) bitXor: self offset hash 
+			self method hash) bitXor: self offset hash
 ]
 
 { #category : #accessing }

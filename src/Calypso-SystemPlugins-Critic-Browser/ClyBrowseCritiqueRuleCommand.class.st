@@ -25,8 +25,6 @@ ClyBrowseCritiqueRuleCommand class >> browserContextMenuActivation [
 { #category : #activation }
 ClyBrowseCritiqueRuleCommand class >> criticTableIconActivation [
 	"We do not want this command to appear in the command icons next to critiques, so we override the method."
-
-	
 ]
 
 { #category : #accessing }

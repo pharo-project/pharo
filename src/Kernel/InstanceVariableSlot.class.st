@@ -20,9 +20,9 @@ InstanceVariableSlot class >> resetIvarSlots [
 	"to be removed later when the system is in a stable state"
 
 	| block |
-	block := [ :class | 
+	block := [ :class |
 	class instVarNames
-		withIndexDo: [ :ivarName :index | 
+		withIndexDo: [ :ivarName :index |
 			class classLayout slotScope
 				at: index
 				put:
@@ -30,7 +30,7 @@ InstanceVariableSlot class >> resetIvarSlots [
 						index: index + class superclass allInstVarNames size;
 						yourself) ] ].
 	Smalltalk allClasses
-		do: [ :class | 
+		do: [ :class |
 			block value: class.
 			block value: class classSide ]
 ]
@@ -41,7 +41,6 @@ InstanceVariableSlot >> definitionOn: aStream [
 	^self needsFullDefinition
 		ifTrue: [ super definitionOn: aStream ]
 		ifFalse: [ self name printOn: aStream ]
-
 ]
 
 { #category : #'code generation' }
@@ -54,7 +53,6 @@ InstanceVariableSlot >> emitStore: methodBuilder [
 InstanceVariableSlot >> emitValue: methodBuilder [
 	"emit the bytecode to push ivar"
 	methodBuilder pushInstVar: index
-
 ]
 
 { #category : #testing }

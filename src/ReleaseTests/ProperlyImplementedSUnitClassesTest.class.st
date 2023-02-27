@@ -14,10 +14,10 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperSetupIsCalledAsFirstM
 	| violating |
 	violating := OrderedCollection new.
 	TestCase
-		allSubclassesDo: [ :each | 
+		allSubclassesDo: [ :each |
 			each
 				compiledMethodAt: #setUp
-				ifPresent: [ :method | 
+				ifPresent: [ :method |
 					(ReShouldSendSuperSetUpAsFirstMessage superSetUpNotCalledFirstIn: method)
 						ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating
@@ -30,10 +30,10 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLas
 	| violating |
 	violating := OrderedCollection new.
 	TestCase
-		allSubclassesDo: [ :each | 
+		allSubclassesDo: [ :each |
 			each
 				compiledMethodAt: #tearDown
-				ifPresent: [ :method | 
+				ifPresent: [ :method |
 					(ReShouldSendSuperTearDownAsLastMessage
 						superTearDownNotCalledLastIn: method)
 						ifTrue: [ violating add: method ] ] ].
@@ -45,7 +45,7 @@ ProperlyImplementedSUnitClassesTest >> testTestClassesShouldBeSingular [
 
 	| violations |
 	"Ensure test class names are consistent"
-	violations := Object allSubclasses select: [ :each | 
+	violations := Object allSubclasses select: [ :each |
 		              (each inheritsFrom: TestCase) and: [ each name endsWith: 'Tests' ] ].
 	self assert: violations isEmpty
 ]

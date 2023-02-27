@@ -44,7 +44,7 @@ EphemeronRegistry >> at: key put: value [
 EphemeronRegistry >> initialize [
 
 	super initialize.
-	ephemeronCollection := IdentitySet new.
+	ephemeronCollection := IdentitySet new
 ]
 
 { #category : #testing }

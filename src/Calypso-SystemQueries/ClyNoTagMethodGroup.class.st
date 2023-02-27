@@ -25,11 +25,11 @@ ClyNoTagMethodGroup class >> priority [
 { #category : #'instance creation' }
 ClyNoTagMethodGroup class >> withMethodsFrom: aMethodQuery [
 
-	^self named: self groupName on: aMethodQuery 
+	^self named: self groupName on: aMethodQuery
 ]
 
 { #category : #operations }
 ClyNoTagMethodGroup >> renameMethodTagTo: newTag [
-	
+
 	self methods do: [ :each | each tagWith: newTag]
 ]

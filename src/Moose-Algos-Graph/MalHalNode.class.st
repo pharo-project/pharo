@@ -32,13 +32,13 @@ MalHalNode >> initialize [
 { #category : #testing }
 MalHalNode >> isSink [
 
-	^ self nextNodes isEmpty 
+	^ self nextNodes isEmpty
 ]
 
 { #category : #testing }
 MalHalNode >> isSource [
 
-	^ self previousNodes isEmpty 
+	^ self previousNodes isEmpty
 ]
 
 { #category : #accessing }
@@ -51,7 +51,7 @@ MalHalNode >> label [
 MalHalNode >> markCycleWith: anInteger [
 
 	self cycleNodes do: [ :next | next hNumber: anInteger ].
-	^ self cycleNodes 
+	^ self cycleNodes
 ]
 
 { #category : #'hal-algorithm' }
@@ -78,7 +78,7 @@ MalHalNode >> previousNodes: anObject [
 MalHalNode >> removeCycleFromEdges [
 
 	self nextNodes removeAllFoundIn: self cycleNodes.
-	self previousNodes removeAllFoundIn: self cycleNodes 
+	self previousNodes removeAllFoundIn: self cycleNodes
 ]
 
 { #category : #accessing }

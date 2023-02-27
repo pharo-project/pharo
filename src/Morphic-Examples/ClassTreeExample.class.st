@@ -15,18 +15,17 @@ Class {
 ClassTreeExample class >> example [
 
 	ClassTreeExample new openOn: Object
-
 ]
 
 { #category : #accessing }
-ClassTreeExample >> keyStroke: anEvent from: aTreeMorph [ 
+ClassTreeExample >> keyStroke: anEvent from: aTreeMorph [
 	self selectedNode
 		ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph]
 ]
 
 { #category : #accessing }
-ClassTreeExample >> menu: menu shifted: b [ 
-	"Set up the menu to apply to the receiver's, 
+ClassTreeExample >> menu: menu shifted: b [
+	"Set up the menu to apply to the receiver's,
 	honoring the #shifted boolean"
 	super menu: menu shifted: b.
 	menu addLine.
@@ -43,7 +42,6 @@ ClassTreeExample >> menu: menu shifted: b [
 { #category : #'instance creation' }
 ClassTreeExample >> open [
 	^ self openOn: Object
-
 ]
 
 { #category : #'instance creation' }
@@ -52,9 +50,9 @@ ClassTreeExample >> openOn: aClass [
 	self rootClass: aClass.
 	window := StandardWindow new model: self.
 	window title: aClass name, ' hierarchy'.
-	window 
+	window
 		addMorph: self treeMorph
-		fullFrame: LayoutFrame identity.						
+		fullFrame: LayoutFrame identity.
 	window themeChanged.
 	window openInWorld.
 	^ window

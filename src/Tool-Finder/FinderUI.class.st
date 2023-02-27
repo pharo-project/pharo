@@ -15,9 +15,6 @@ Class {
 		'searchedTextList',
 		'sourceTextModel'
 	],
-	#classInstVars : [
-		'searchedTextListMaxSize'
-	],
 	#category : #'Tool-Finder-UI'
 }
 
@@ -34,12 +31,7 @@ FinderUI class >> doAllSubscriptionsOn: aFinder to: anInstance [
 
 { #category : #icons }
 FinderUI class >> icon [
-	^ self iconNamed: #smallFindIcon
-]
-
-{ #category : #'class initialization' }
-FinderUI class >> initialize [
-	searchedTextListMaxSize := 15
+	^ self iconNamed: #smallFind
 ]
 
 { #category : #explanations }
@@ -49,8 +41,8 @@ FinderUI class >> methodFinderExplanation [
 	MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3.
 		"to keep the method methodFor: from being removed from the system"
 
-	^ 'Use an example to find a method in the system.  
-	
+	^ 'Use an example to find a method in the system.
+
    ''a''. ''b''. ''ab''       will find the message #, for strings concatenation
    2. -2                will find the message #negated
    3. 6                 will find the message #factorial
@@ -60,24 +52,24 @@ It works on collections too:
 
    {2. 4. 5. 1}. 5. 3   will find the message #indexOf:
    {2. 5. 1}. 5. true   will find the message #includes:
-	
-An example is made up of the following two or more items separated by a period: 
-	
+
+An example is made up of the following two or more items separated by a period:
+
 	receiver. answer
 	receiver. argument1. answer
 	receiver. argument1. argument2. answer
 	etc...
-	
+
 For example, type: 3. 4. 7. into the search box and click <Search>
 
 Take care on separating spaces because of floating point numbers.
 
  	3.4.7      will find nothing, it is interpreted two numbers, 3.4 and. 7
 	3. 4. 7    will find you the message #+
-	
-The examples array should contain one object for the receiver, one object per expected argument and then a final object with the expected result.	
 
-In other words 
+The examples array should contain one object for the receiver, one object per expected argument and then a final object with the expected result.
+
+In other words
  - a unary method example expects an array of input objects #( receiver ) and an expected result
  - a binary method example expects an array with two input objects #( receiver argument ) and an expected result
  - a keyword method example expects an array with at least two elements  #( receiver argument1 argument2 ... ) and an expected results
@@ -87,28 +79,25 @@ Then, it will lookup in the receiver''s hierarchy the approved and forbidden met
 
 Receiver and arguments do not have to be in the right order.
 
-Alternatively, in this bottom pane or in the Playground, use #findMethodsByExampleInput:andExpectedResult: directly to find a method in the system.  Select this line of code and choose "print it" or "inspect it.  
+Alternatively, in this bottom pane or in the Playground, use #findMethodsByExampleInput:andExpectedResult: directly to find a method in the system.  Select this line of code and choose "print it" or "inspect it.
 
 	MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3.
 
 It is useful when you want to look for computed objects:
-	
-	MethodFinder new 
-		findMethodsByExampleInput: {''29 Apr 1999'' asDate} 
+
+	MethodFinder new
+		findMethodsByExampleInput: {''29 Apr 1999'' asDate}
 		andExpectedResult: ''30 Apr 1999'' asDate.
 
 This will find the message #next.
 
-	MethodFinder new 
-		findMethodsByExampleInput: {''30 Apr 1999'' asDate} 
-		andExpectedResult: ''Friday''. 
+	MethodFinder new
+		findMethodsByExampleInput: {''30 Apr 1999'' asDate}
+		andExpectedResult: ''Friday''.
 
 This will find the message #dayOfWeekName
 
-The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist. '.
-
-		
-
+The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist. '
 ]
 
 { #category : #'instance creation' }
@@ -118,13 +107,6 @@ FinderUI class >> on: aFinder [
 	instance := self new finder: aFinder.
 	self doAllSubscriptionsOn: aFinder to: instance.
 	^instance
-]
-
-{ #category : #accessing }
-FinderUI class >> searchedTextListMaxSize: anInteger [
-
-	self allInstancesDo: [:each | each searchedTextListMaxSize: anInteger].
-	searchedTextListMaxSize := anInteger
 ]
 
 { #category : #'event subscriptions' }
@@ -192,7 +174,7 @@ FinderUI class >> subscribesUpdateSourceCodeOn: aFinder to: anInstance [
 
 { #category : #icons }
 FinderUI class >> taskbarIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #'items creation' }
@@ -231,14 +213,14 @@ FinderUI >> addAllItems: aWindow [
 ]
 
 { #category : #accessing }
-FinderUI >> addToSearchedTextList: aString [ 
+FinderUI >> addToSearchedTextList: aString [
 	self searchedTextList: (self searchedTextList
 			remove: aString
 			ifAbsent: [];
 			 yourself).
 	self searchedTextList size = self searchedTextListMaxSize
 		ifTrue: [self searchedTextList removeLast].
-	self searchedTextList addFirst: aString 
+	self searchedTextList addFirst: aString
 ]
 
 { #category : #'buttons behavior' }
@@ -275,24 +257,24 @@ FinderUI >> browseButtonState [
 
 { #category : #accessing }
 FinderUI >> browsedEnvironment [
-	^ self environment 
+	^ self environment
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildAllClassesButton [
-	^ PluggableButtonMorph 
-			on: self 
-			getState: #allClassesButtonState 
-			action: #allClassesButtonAction 
+	^ PluggableButtonMorph
+			on: self
+			getState: #allClassesButtonState
+			action: #allClassesButtonAction
 			label: #allClassesButtonLabel
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildBrowseButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #browseButtonState 
-			action: #browseButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #browseButtonState
+			action: #browseButtonAction
 			label: #browseButtonLabel)
 			hResizing: #spaceFill
 ]
@@ -313,9 +295,9 @@ FinderUI >> buildBrowseToolBar: aWindow [
 { #category : #'text areas behavior' }
 FinderUI >> buildDescriptionOf: aClass [
 
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		  stream nextPutAll: aClass definitionString.
-		  aClass hasComment ifTrue: [ 
+		  aClass hasComment ifTrue: [
 			  stream
 				  cr;
 				  cr;
@@ -325,40 +307,40 @@ FinderUI >> buildDescriptionOf: aClass [
 
 { #category : #'items creation' }
 FinderUI >> buildEnvironmentButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #environmentButtonState 
-			action: #environmentButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #environmentButtonState
+			action: #environmentButtonAction
 			label: #environmentButtonLabel)
 			beSticky
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildHierarchyButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #hierarchyButtonState 
-			action: #hierarchyButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #hierarchyButtonState
+			action: #hierarchyButtonAction
 			label: #hierarchyButtonLabel)
 			hResizing: #spaceFill
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildImplementorsButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #implementorsButtonState 
-			action: #implementorsButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #implementorsButtonState
+			action: #implementorsButtonAction
 			label: #implementorsButtonLabel)
 			hResizing: #spaceFill
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildInheritanceButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #inheritanceButtonState 
-			action: #inheritanceButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #inheritanceButtonState
+			action: #inheritanceButtonAction
 			label: #inheritanceButtonLabel)
 			hResizing: #spaceFill
 ]
@@ -375,7 +357,7 @@ FinderUI >> buildRegExChooser [
 	btnHeight := StandardFonts buttonFont height + 8.
 	btnWidth := 0.
 	string do: [:c | btnWidth := btnWidth + (StandardFonts buttonFont widthOf: c)].
-	^useRegExCheckbox := (CheckboxMorph 
+	^useRegExCheckbox := (CheckboxMorph
 									on: self finder
 									selected: #useRegEx
 									changeSelected: #useRegEx:)
@@ -388,27 +370,26 @@ FinderUI >> buildRegExChooser [
 
 { #category : #'items creation' }
 FinderUI >> buildSearchButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #searchButtonState 
-			action: #searchButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #searchButtonState
+			action: #searchButtonAction
 			label: #searchButtonLabel)
 			hResizing: #shrinkWrap
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildSearchModeDropListIn: aWindow [
-	
-	^ (self theme 
+
+	^ (self theme
 		newDropListIn: aWindow
-		for:self				
+		for:self
 		list: #searchModesList
 		getSelected: #currentSearchMode
 		setSelected: #currentSearchMode:
 		getEnabled: nil
-		useIndex: false 
+		useIndex: false
 		help: self searchModeHelpText) hResizing: #rigid; width: 120; yourself
-
 ]
 
 { #category : #'items creation' }
@@ -424,27 +405,25 @@ FinderUI >> buildSearchModeToolBar: aWindow [
 
 { #category : #'items creation' }
 FinderUI >> buildSearchingTextArea [
-	^ searchingTextArea := 
+	^ searchingTextArea :=
 		(EditableDropListMorph
 				on: self
 				list: #searchedTextList
 				selected: #searchingString
 				changeSelected: #searchingAccept:
-				useIndex: false 
+				useIndex: false
 				addToList: #addToSearchedTextList:
 				class: String
-				getEnabled: nil) hResizing: #spaceFill; 
+				getEnabled: nil) hResizing: #spaceFill;
 				ghostText: 'Hit return to accept' translated
-
-	
 ]
 
 { #category : #'items creation' }
 FinderUI >> buildSendersButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #sendersButtonState 
-			action: #sendersButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #sendersButtonState
+			action: #sendersButtonAction
 			label: #sendersButtonLabel)
 			hResizing: #spaceFill
 ]
@@ -462,10 +441,10 @@ FinderUI >> buildSourceTextArea [
 
 { #category : #'items creation' }
 FinderUI >> buildVersionsButton [
-	^ (PluggableButtonMorph 
-			on: self 
-			getState: #versionsButtonState 
-			action: #versionsButtonAction 
+	^ (PluggableButtonMorph
+			on: self
+			getState: #versionsButtonState
+			action: #versionsButtonAction
 			label: #versionsButtonLabel)
 			hResizing: #spaceFill
 ]
@@ -526,10 +505,10 @@ FinderUI >> defaultExplanation [
 	- Classes : your research is done among classes names
 	- Source : your research is done among all the source code
 	- Pragmas: your research is done among pragmas
-	- Examples : your research uses the Method Finder behavior 
+	- Examples : your research uses the Method Finder behavior
 			   (for further informations, print ''FinderUI methodFinderExplanation'')
-	
-			
+
+
 In these four modes, you can also tick the ''Use RegEx'' checkbox.
 If you pick this box, your search will be done using regular expressions instead of just matching.
 
@@ -542,17 +521,17 @@ FinderUI >> defaultTreeMorph [
 	|  col |
 	col := MorphTreeColumn new
 		rowMorphGetSelector: [:node | node displayString asMorph ].
-	
+
 	self headerLabel
 		ifNotNil: [	col headerButtonLabel: self headerLabel font: nil].
-			
-	^ (self treeMorphClass on: self) 
+
+	^ (self treeMorphClass on: self)
 			columns:  (Array with: col);
 			hResizing: #spaceFill;
 			vResizing: #spaceFill;
 			resizerWidth: 0;
 			columnInset: 0;
-			rowInset: 2; 
+			rowInset: 2;
 			keyDownActionSelector: #keyDown:;
 			multiSelection: self multiSelection;
 			autoMultiSelection: self autoMultiSelection;
@@ -592,7 +571,7 @@ FinderUI >> doubleClick [
 
 { #category : #checkbox }
 FinderUI >> enableUseRegEx [
-	useRegExCheckbox 
+	useRegExCheckbox
 		enabled: true;
 		updateEnabled
 ]
@@ -650,7 +629,7 @@ FinderUI >> forceSearch [
 { #category : #private }
 FinderUI >> hierarchy [
 	self selectedClass
-		ifNotNil: [ :class | 
+		ifNotNil: [ :class |
 			self selectedMethod
 				ifNil: [ SystemNavigation new browseHierarchy: class ]
 				ifNotNil: [ :selector | SystemNavigation new browseHierarchy: class selector: selector ] ]
@@ -695,7 +674,7 @@ FinderUI >> implementorsButtonState [
 { #category : #private }
 FinderUI >> inheritance [
 	self selectedClass
-		ifNotNil: [ :class | 
+		ifNotNil: [ :class |
 			self selectedMethod
 				ifNotNil: [ :selector | SystemNavigation new methodHierarchyBrowserForClass: class selector: selector ] ]
 ]
@@ -763,14 +742,14 @@ FinderUI >> labelFont [
 ]
 
 { #category : #'t - accessing' }
-FinderUI >> menu: menu shifted: b [ 
+FinderUI >> menu: menu shifted: b [
 	self selectedNode ifNil: [ ^menu ].
-	^ self selectedNode menu: menu shifted: b 
+	^ self selectedNode menu: menu shifted: b
 ]
 
 { #category : #display }
 FinderUI >> open [
-	 
+
 	| window |
 	window := StandardWindow new model: self.
 	self addAllItems: window.
@@ -781,14 +760,14 @@ FinderUI >> open [
 
 { #category : #private }
 FinderUI >> openPackageChooser [
-	(DialogItemsChooser
-		on: self
-		unselectedItems: self constructPackagesSet
-		selectedItems: (self constructPackagesSet: self packagesSelection)
-		selectedItemsSetterSelector: #collectFromPackages: 
-		title: 'Package Chooser'
-		unselectedItemsLabel: 'Unselected Packages' translated
-		selectedItemsLabel: 'Selected Packages' translated) open
+
+	(SpChooserPresenter
+		 sourceItems: self constructPackagesSet
+		 chosenItems: (self constructPackagesSet: self packagesSelection))
+		openDialog
+		title: 'Package Chooser';
+		okAction: [ :dialog |
+			self collectFromPackages: dialog presenter chosenItems ]
 ]
 
 { #category : #private }
@@ -808,8 +787,8 @@ FinderUI >> resetEnvironment [
 ]
 
 { #category : #'tree behavior' }
-FinderUI >> resultDictionary [ 
-	^self finder resultDictionary 
+FinderUI >> resultDictionary [
+	^self finder resultDictionary
 ]
 
 { #category : #accessing }
@@ -874,12 +853,6 @@ FinderUI >> searchedTextListMaxSize [
 	^20
 ]
 
-{ #category : #accessing }
-FinderUI >> searchedTextListMaxSize: anInteger [
-	[ self searchedTextList size > anInteger ] whileTrue: [ self searchedTextList removeLast ].
-	self changed: #searchedTextList
-]
-
 { #category : #'text areas behavior' }
 FinderUI >> searchingAccept: aText [
 	self forceSearch
@@ -923,7 +896,7 @@ FinderUI >> selectedMethod [
 
 { #category : #accessing }
 FinderUI >> selection: aSelection [
-	
+
 	super selection: aSelection.
 	self finder selection: aSelection
 ]
@@ -931,7 +904,7 @@ FinderUI >> selection: aSelection [
 { #category : #private }
 FinderUI >> senders [
 	self selectedMethod
-		ifNotNil: [ :selector | 
+		ifNotNil: [ :selector |
 			SystemNavigation new
 				browseSendersOf: selector
 				name: 'Senders of ' , selector asString
@@ -965,13 +938,13 @@ FinderUI >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 { #category : #'text areas behavior' }
 FinderUI >> sourceCode [
 
-	^ self selectedClass 
+	^ self selectedClass
 		ifNil: [
 			self isExamplesSymbol
 				ifTrue: [ self class methodFinderExplanation ]
 				ifFalse: [ self defaultExplanation]]
 		ifNotNil:[
-			self selectedMethod 
+			self selectedMethod
 				ifNil: [
 					self buildDescriptionOf: self selectedClass]
 				ifNotNil:[
@@ -1004,7 +977,7 @@ FinderUI >> updateSelectedMethod [
 
 { #category : #'text areas behavior' }
 FinderUI >> updateSourceCode [
-	self sourceTextModel setText: self sourceCode 
+	self sourceTextModel setText: self sourceCode
 ]
 
 { #category : #private }
@@ -1014,8 +987,8 @@ FinderUI >> useRegEx [
 
 { #category : #'buttons behavior' }
 FinderUI >> versionsButtonAction [
-	Smalltalk tools versionBrowser 
-		browseVersionsForClass: self selectedClass 
+	Smalltalk tools versionBrowser
+		browseVersionsForClass: self selectedClass
 		selector: self selectedMethod
 ]
 
@@ -1026,7 +999,7 @@ FinderUI >> versionsButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> versionsButtonState [
-	^self selectedClass isNil | self isClassNamesSymbol.
+	^self selectedClass isNil | self isClassNamesSymbol
 ]
 
 { #category : #'events handling' }

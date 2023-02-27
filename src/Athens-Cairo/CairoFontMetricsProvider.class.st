@@ -41,7 +41,7 @@ CairoFontMetricsProvider >> cairoFont [
 { #category : #private }
 CairoFontMetricsProvider >> convertString: utf8String len: strlen ofFont: aScaledFont toGlyphs: glyphs numGlyphs: numGlyphs x: x y: y [
 "
-all of this for using 
+all of this for using
 http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font-text-to-glyphs-func-t
 
 "
@@ -70,7 +70,7 @@ CairoFontMetricsProvider >> extentsOf: aString [
 CairoFontMetricsProvider >> font: aFont [
 	font := aFont asFreetypeFont.
 	cairoFont :=	CairoScaledFont fromFreetypeFont: font.
-	extents := cairoFont extents.
+	extents := cairoFont extents
 ]
 
 { #category : #accessing }
@@ -80,7 +80,7 @@ CairoFontMetricsProvider >> fontAscent [
 
 { #category : #accessing }
 CairoFontMetricsProvider >> fontHeight [
-	^ extents height 
+	^ extents height
 ]
 
 { #category : #private }
@@ -108,35 +108,35 @@ CairoFontMetricsProvider >> glyphsOf: aString from: start to: end [
 
 	ptr := ExternalAddress new.
 	lenValue := ByteArray new: 4.
-	lenValue nbUInt32AtOffset: 0 put: len.
-		
-	error := self 
-		convertString: utfConverter buffer 
+	lenValue unsignedLongAt: 1 put: len.
+
+	error := self
+		convertString: utfConverter buffer
 		len: utf8Len
-		ofFont: cairoFont 
+		ofFont: cairoFont
 		toGlyphs: ptr
-		numGlyphs: lenValue 
-		x: 0.0 
+		numGlyphs: lenValue
+		x: 0.0
 		y: 0.0.
-		
+
 	error = CAIRO_STATUS_SUCCESS ifFalse: [  ^ CairoGlyphsArray new: 0 ].
 
-	glyphsSize := lenValue nbUInt32AtOffset: 0.
+	glyphsSize := lenValue unsignedLongAt: 1.
    cairoFont getExtentsOfGlyphs: ptr ofLength: glyphsSize into: glyphExtents.
-	
+
 	glyphs := CairoGlyphsArray new: glyphsSize.
 	LibC memCopy: ptr to: glyphs getHandle size: (glyphsSize * glyphs typeSize).
 	"Apply kerning on glyphs if font supports it"
 	font face hasKerning
 		ifTrue: [ self applyKerningOn: glyphs of: aString from: start to: end ].
 	self freeGlyphs: ptr.
-		
-	^ glyphs 
+
+	^ glyphs
 ]
 
 { #category : #initialization }
 CairoFontMetricsProvider >> initialize [
 	utfConverter := CairoUTF8Converter new.
 	glyphExtents := CairoTextExtents new.
-	cache := CairoBackendCache soleInstance.
+	cache := CairoBackendCache soleInstance
 ]

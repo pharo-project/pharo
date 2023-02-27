@@ -14,13 +14,13 @@ DoOnlyOnceIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 DoOnlyOnceIconStyler >> iconFor: aNode [
-	^ self iconNamed: #smallWarningIcon 
+	^ self iconNamed: #smallWarning
 ]
 
 { #category : #defaults }
 DoOnlyOnceIconStyler >> iconLabelBlock: aNode [
 
-	^ [Smalltalk globals 
+	^ [Smalltalk globals
 			at: #OneShotArmed
 			ifPresent: [ :val | val ifTrue: ['active' ] ifFalse: ['disabled, click to activate' ]]
 			ifAbsent: [ 'active' ]

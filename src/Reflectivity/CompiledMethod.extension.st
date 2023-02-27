@@ -28,14 +28,12 @@ CompiledMethod >> destroyTwin [
 { #category : #'*Reflectivity' }
 CompiledMethod >> hasBreakpoint [
 	^ Breakpoint isInstalledIn: self
-	
-	
 ]
 
 { #category : #'*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
-	^self reflectiveMethod hasMetaLinks. 
+	^self reflectiveMethod hasMetaLinks
 ]
 
 { #category : #'*Reflectivity' }
@@ -61,13 +59,12 @@ CompiledMethod >> instanceVariableWriteNodes [
 CompiledMethod >> invalidate [
 	| reflectiveMethod |
 	self reflectivityDisabled ifTrue: [ ^self ].
-	
+
 	reflectiveMethod := self reflectiveMethod.
 	reflectiveMethod ifNil: [^self "do nothing"].
 	(self isRealPrimitive or: (reflectiveMethod ast metaLinkOptionsFromClassAndMethod includes: #optionCompileOnLinkInstallation))
-					ifTrue: [reflectiveMethod compileAndInstallCompiledMethod ] 
+					ifTrue: [reflectiveMethod compileAndInstallCompiledMethod ]
 					ifFalse: [reflectiveMethod installReflectiveMethod]
-	
 ]
 
 { #category : #'*Reflectivity' }
@@ -121,7 +118,7 @@ CompiledMethod >> reflectivityDisabled [
 { #category : #'*Reflectivity' }
 CompiledMethod >> removeLink: aLink [
 
-	self reflectiveMethod ifNotNil: [:rm | rm removeLink: aLink].
+	self reflectiveMethod ifNotNil: [:rm | rm removeLink: aLink]
 ]
 
 { #category : #'*Reflectivity' }

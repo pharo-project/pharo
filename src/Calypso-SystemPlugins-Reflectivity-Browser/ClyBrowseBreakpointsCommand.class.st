@@ -12,7 +12,7 @@ Class {
 { #category : #'world menu' }
 ClyBrowseBreakpointsCommand class >> worldMenuOn: aBuilder [
 	<worldMenu>
-	
+
 	| command |
 	command := self new.
 	(aBuilder item: command defaultMenuItemName)
@@ -32,7 +32,7 @@ ClyBrowseBreakpointsCommand >> defaultMenuIconName [
 { #category : #accessing }
 ClyBrowseBreakpointsCommand >> defaultMenuItemName [
 
-	^'Browse breakpoints'
+	^'Browse Breakpoints'
 ]
 
 { #category : #accessing }
@@ -42,7 +42,7 @@ ClyBrowseBreakpointsCommand >> description [
 ]
 
 { #category : #execution }
-ClyBrowseBreakpointsCommand >> execute [ 
-	
+ClyBrowseBreakpointsCommand >> execute [
+
 	ClyQueryBrowserMorph browseBreakpoints
 ]

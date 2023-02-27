@@ -7,5 +7,5 @@ CompiledMethod >> selfMessages [
 
 { #category : #'*Refactoring-Critics' }
 CompiledMethod >> superMessages [
-	^self ast superMessages 
+	^self ast superMessages
 ]

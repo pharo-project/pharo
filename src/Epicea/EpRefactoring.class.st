@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #visitor }
-EpRefactoring >> accept: aChangeVisitor [ 
+EpRefactoring >> accept: aChangeVisitor [
 	^ aChangeVisitor visitRefactoring: self
 ]
 
 { #category : #converting }
 EpRefactoring >> asRBRefactoring [
 	"Answer the RBRefactoring corresponding to myself."
-	
-	^ self subclassResponsibility 
+
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }

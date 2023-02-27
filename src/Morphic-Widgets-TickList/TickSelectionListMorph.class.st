@@ -19,21 +19,21 @@ TickSelectionListMorph >> basicKeyPressed: aCharacter [
 
 	aCharacter == Character space
 		ifTrue: [ ^ self model toogleSelectionValue ].
-	
+
 	^ super basicKeyPressed: aCharacter
 ]
 
 { #category : #accessing }
 TickSelectionListMorph >> indentingItemClass [
-	
+
 	^ TickSelectionListNodeMorph
 ]
 
 { #category : #accessing }
-TickSelectionListMorph >> mouseUp: event [ 
+TickSelectionListMorph >> mouseUp: event [
 
 	self storeValue: nil.
-	super mouseUp: event 
+	super mouseUp: event
 ]
 
 { #category : #accessing }
@@ -44,6 +44,6 @@ TickSelectionListMorph >> storeValue [
 
 { #category : #accessing }
 TickSelectionListMorph >> storeValue: anObject [
-	
+
 	storeValue := anObject
 ]

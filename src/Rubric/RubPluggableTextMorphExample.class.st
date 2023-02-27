@@ -41,7 +41,7 @@ RubPluggableTextMorphExample >> autoAccept [
 
 { #category : #accessing }
 RubPluggableTextMorphExample >> behavior [
-	^ self selectedClass 
+	^ self selectedClass
 ]
 
 { #category : #'events handling' }
@@ -60,9 +60,9 @@ RubPluggableTextMorphExample >> checkMethodName [
 	conf := RubConfigurationChange new.
 	self selectedClass
 		ifNil: [ conf configurationBlock: [ :textField | textField textColor: Color red ] ]
-		ifNotNil: [ 
+		ifNotNil: [
 			conf
-				configurationBlock: [ :textField | 
+				configurationBlock: [ :textField |
 					(self selectedClass canUnderstand: self selectedMethodName getString asSymbol)
 						ifFalse: [ textField textColor: Color red ]
 						ifTrue: [ textField textColor: Color black ] ] ].
@@ -78,7 +78,6 @@ RubPluggableTextMorphExample >> classIsMeta [
 RubPluggableTextMorphExample >> classIsMeta: aBoolean [
 	classIsMeta := aBoolean.
 	self changed: #classIsMeta
-
 ]
 
 { #category : #'view creation' }
@@ -92,8 +91,8 @@ RubPluggableTextMorphExample >> classSelectorMorph [
 
 { #category : #menu }
 RubPluggableTextMorphExample >> codePaneMenu: aMenu shifted: shifted [
-	"Note that unless we override perform:orSendTo:, 
-	PluggableTextController will respond to all menu items in a 
+	"Note that unless we override perform:orSendTo:,
+	PluggableTextController will respond to all menu items in a
 	text pane"
 	"You should not use this way of getting menu. Because when you create a text area, you have a menu"
 
@@ -160,7 +159,7 @@ RubPluggableTextMorphExample >> metaSwitchMorph [
 		getSelected: #classIsMeta
 		setSelected: #classIsMeta:
 		label: 'Class'
-		help: 'Class side is used if checked' 
+		help: 'Class side is used if checked'
 ]
 
 { #category : #accessing }
@@ -209,7 +208,7 @@ RubPluggableTextMorphExample >> newScrolledTextMorph [
 RubPluggableTextMorphExample >> okToChange [
 	self canDiscardEdits
 		ifTrue: [ ^ true ].
-	^ self promptForCancel 
+	^ self promptForCancel
 ]
 
 { #category : #'view creation' }
@@ -252,9 +251,9 @@ RubPluggableTextMorphExample >> promptForCancel [
 		cancelChoice: 'Cancel' translated
 		default: nil.
 	choice
-		ifNotNil: [ 
+		ifNotNil: [
 			choice
-				ifTrue: [ 
+				ifTrue: [
 					self changed: #getText.
 					self changed: #clearUserEdits ]
 				ifFalse: [ self changed: #clearUserEdits ] ].
@@ -272,8 +271,8 @@ RubPluggableTextMorphExample >> scrollValue: aPoint [
 ]
 
 { #category : #accessing }
-RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [ 
-	scrollValue := anAnnouncement step 
+RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [
+	scrollValue := anAnnouncement step
 ]
 
 { #category : #'view creation' }
@@ -298,7 +297,7 @@ RubPluggableTextMorphExample >> selectedMethodName [
 
 { #category : #accessing }
 RubPluggableTextMorphExample >> selector [
-	^ self selectedMethodName getString asSymbol 
+	^ self selectedMethodName getString asSymbol
 ]
 
 { #category : #accessing }
@@ -316,7 +315,7 @@ RubPluggableTextMorphExample >> shoutAboutToStyle: ARubricMode [
 { #category : #'events handling' }
 RubPluggableTextMorphExample >> whenClassNameChanged: anAnnouncement [
 	self checkMethodName.
-	self checkClassName 
+	self checkClassName
 ]
 
 { #category : #'events handling' }

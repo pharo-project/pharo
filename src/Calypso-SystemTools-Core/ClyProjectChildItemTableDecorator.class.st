@@ -13,12 +13,11 @@ ClyProjectChildItemTableDecorator class >> decorateMainTableCell: anItemCellMorp
 
 { #category : #decoration }
 ClyProjectChildItemTableDecorator class >> decorateTableCell: anItemCellMorph of: groupItem [
-
 ]
 
 { #category : #decoration }
 ClyProjectChildItemTableDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyProjectChildItem asCalypsoItemContext
 ]

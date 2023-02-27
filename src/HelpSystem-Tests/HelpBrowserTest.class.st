@@ -49,8 +49,5 @@ HelpBrowserTest >> testOpen [
 	|browser|
 	browser := self defaultTestClass open.
 	self currentWorld doOneCycleNow. 
-	browser close 
-
-
-		
+	browser close
 ]

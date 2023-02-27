@@ -30,12 +30,12 @@ Class {
 { #category : #'instance creation' }
 ClyConstantMethodQuery class >> named: queryDescription with: methods [
 	^(self with: methods)
-		description: queryDescription 
+		description: queryDescription
 ]
 
 { #category : #'instance creation' }
 ClyConstantMethodQuery class >> with: methods [
-	^self new 
+	^self new
 		methods: methods
 ]
 
@@ -44,7 +44,7 @@ ClyConstantMethodQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
-	super = anObject ifFalse: [ ^ false ].	
+	super = anObject ifFalse: [ ^ false ].
 	^ methods = anObject methods
 ]
 
@@ -93,7 +93,7 @@ ClyConstantMethodQuery >> hash [
 { #category : #initialization }
 ClyConstantMethodQuery >> initialize [
 	super initialize.
-	
+
 	description := 'Methods'
 ]
 
@@ -119,20 +119,20 @@ ClyConstantMethodQuery >> scopedMethods [
 	| installedMethods scopedMethods |
 	installedMethods := self installedMethods.
 	scopedMethods := IdentitySet new.
-	
-	scope methodsDo: [ :each | 
-		(installedMethods includes: each) ifTrue: [ 
+
+	scope methodsDo: [ :each |
+		(installedMethods includes: each) ifTrue: [
 			scopedMethods add: each.
 			installedMethods remove: each.
 			installedMethods ifEmpty: [ ^scopedMethods ] ]].
-	
+
 	^scopedMethods
 ]
 
 { #category : #testing }
 ClyConstantMethodQuery >> selectsMethod: aMethod [
 
-	^methods anySatisfy: [ :each | 
+	^methods anySatisfy: [ :each |
 		each calypsoEnvironmentType checkCalypsoItem: each isEqualTo: aMethod]
 ]
 

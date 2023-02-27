@@ -35,20 +35,19 @@ EmbeddedFreeTypeFontInstallerTest >> testIsRegistred [
 EmbeddedFreeTypeFontInstallerTest >> testinstallAllFontsIn [
 
 	| provider fileInfos families |
-	provider := self currentProviderOrError 
+	provider := self currentProviderOrError
 								updateEmbeddedFreeTypeFonts;
 								yourself.
 	fileInfos := provider fileInfosByFamilyAndGroup.
 
-	self 
+	self
 		assert: fileInfos keys size > 1;
 		assert: (fileInfos includesKey: 'Source Sans Pro');
 		assert: (fileInfos includesKey: 'Source Code Pro').
 
 	families := provider families.
-	
-	self 
-		assert: (families includesKey: 'Source Sans Pro');
-		assert: (families includesKey: 'Source Code Pro').
 
+	self
+		assert: (families includesKey: 'Source Sans Pro');
+		assert: (families includesKey: 'Source Code Pro')
 ]

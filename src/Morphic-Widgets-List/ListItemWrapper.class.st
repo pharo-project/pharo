@@ -85,7 +85,7 @@ ListItemWrapper >> icon [
 { #category : #accessing }
 ListItemWrapper >> item [
 	"Answer the item. It is useful!"
-	
+
 	^item
 ]
 
@@ -97,7 +97,7 @@ ListItemWrapper >> item: newItem [
 { #category : #accessing }
 ListItemWrapper >> model [
 	"Answer the model. It is useful!"
-	
+
 	^model
 ]
 
@@ -109,10 +109,9 @@ ListItemWrapper >> preferredColor [
 { #category : #'dropping/grabbing' }
 ListItemWrapper >> sendSettingMessageTo: aModel [
 
-	aModel 
+	aModel
 		perform: (self settingSelector ifNil: [^self])
 		with: self withoutListWrapper
-
 ]
 
 { #category : #accessing }
@@ -125,7 +124,7 @@ ListItemWrapper >> setItem: anObject [
 ListItemWrapper >> setItem: anObject model: aModel [
 
 	item := anObject.
-	model := aModel.
+	model := aModel
 ]
 
 { #category : #accessing }

@@ -4,19 +4,14 @@ The purpose of my hierarchy is to map objects with clusters.
 Class {
 	#name : #FLMapper,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'next',
 		'analysis'
 	],
 	#category : #'Fuel-Core-Mappers'
 }
-
-{ #category : #accessing }
-FLMapper >> analysis: anAnalysis [
-
-	analysis := anAnalysis.
-	next ifNotNil: [ next analysis: anAnalysis ]
-]
 
 { #category : #'protected-mapping' }
 FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: clusterFactory [
@@ -29,7 +24,6 @@ FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: cl
 			clusterFactory value 
 				traceWith: analysis;
 				yourself ].
-
 ]
 
 { #category : #'protected-mapping' }
@@ -47,7 +41,6 @@ FLMapper >> clusterKeyedByClusterName: aClusterClass factory: clusterFactory [
 		clusterInstanceOf: aClusterClass
 		keyInBucket: aClusterClass name
 		factory: clusterFactory
-
 ]
 
 { #category : #'protected-mapping' }
@@ -59,9 +52,11 @@ FLMapper >> clusterKeyedByObjectClass: clusterClass class: objectClass [
 		factory: [ clusterClass newAnalyzing: objectClass ]
 ]
 
-{ #category : #hooks }
-FLMapper >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
+{ #category : #initialization }
+FLMapper >> initialize [
+	super initialize.
+	
+	analysis := self context analysis
 ]
 
 { #category : #mapping }
@@ -75,7 +70,6 @@ FLMapper >> mapAndTraceByClusterName: anObject to: aClusterClass [
 
 	(self clusterKeyedByClusterName: aClusterClass)
 		add: anObject traceWith: analysis
-
 ]
 
 { #category : #'protected-mapping' }
@@ -83,10 +77,16 @@ FLMapper >> mapAndTraceByObjectClass: anObject to: aClusterClass [
 
 	(self clusterKeyedByObjectClass: aClusterClass class: anObject class)
 		add: anObject traceWith: analysis
-
 ]
 
 { #category : #accessing }
 FLMapper >> next: anObject [
 	next := anObject
+]
+
+{ #category : #visiting }
+FLMapper >> visitSubstitution: anObject by: aSubstitute [
+	next
+		visitSubstitution: anObject
+		by: aSubstitute
 ]

@@ -30,7 +30,7 @@ RBReplaceSubtreeTransformation class >> model: aRBModel replace: oldSourceCode t
 		to: newSourceCode
 		inMethod: aSelector
 		inClass: aClass;
-		yourself 
+		yourself
 ]
 
 { #category : #api }
@@ -41,7 +41,7 @@ RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode
 		to: newSourceCode
 		inMethod: aSelector
 		inClass: aClass;
-		yourself 
+		yourself
 ]
 
 { #category : #preconditions }
@@ -59,7 +59,7 @@ RBReplaceSubtreeTransformation >> preconditions [
 								refactoringError: 'Invalid source to extract - ' , oldSourceCode ].
 					(tree isSequence and: [ tree statements isEmpty ])
 						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
-					tree := ((self definingClass parseTreeFor: selector)
+					tree := ((self definingClass parseTreeForSelector: selector)
 						extractSubtreeWith: oldSourceCode)
 						ifNil: [ self
 								refactoringError: 'Could not extract code from method ' , selector ].
@@ -76,7 +76,7 @@ RBReplaceSubtreeTransformation >> preconditions [
 { #category : #executing }
 RBReplaceSubtreeTransformation >> privateTransform [
 	| tree oldTree newTree |
-	tree := self definingClass parseTreeFor: selector.
+	tree := self definingClass parseTreeForSelector: selector.
 	tree ifNil: [ ^ self ].
 	oldTree := tree extractSubtreeWith: oldSourceCode.
 	oldTree ifNil: [ ^ self ].

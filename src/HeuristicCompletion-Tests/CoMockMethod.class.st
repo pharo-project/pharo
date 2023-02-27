@@ -15,17 +15,17 @@ CoMockMethod >> ast [
 
 { #category : #accessing }
 CoMockMethod >> methodClass [
-	
+
 	^ methodClass
 ]
 
 { #category : #accessing }
-CoMockMethod >> methodClass: aCoMockClass [ 
+CoMockMethod >> methodClass: aCoMockClass [
 	methodClass := aCoMockClass
 ]
 
 { #category : #accessing }
-CoMockMethod >> source: aString [ 
-	
-	ast := RBParser parseMethod: aString 
+CoMockMethod >> source: aString [
+
+	ast := RBParser parseMethod: aString
 ]

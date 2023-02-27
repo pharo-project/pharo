@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyUndeclaredMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'undeclared' priority: 8.4 on: aMethodQuery 
+	^ClyMethodGroup named: 'undeclared' priority: 8.4 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

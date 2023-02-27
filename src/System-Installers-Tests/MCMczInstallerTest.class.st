@@ -11,7 +11,6 @@ Class {
 { #category : #testing }
 MCMczInstallerTest class >> isAbstract [
 	^ (Smalltalk hasClassNamed: #MczInstaller) not
-		
 ]
 
 { #category : #accessing }
@@ -40,7 +39,7 @@ MCMczInstallerTest >> assertVersionInfoPresent [
 	| dict info |
 	dict := MczInstaller versionInfo at: self mockPackage name.
 	info := expected info.
-	self assertDict: dict matchesInfo: info.
+	self assertDict: dict matchesInfo: info
 ]
 
 { #category : #utilities }
@@ -57,14 +56,14 @@ MCMczInstallerTest >> fileName [
 MCMczInstallerTest >> fileStream [
 	^ self fileName asFileReference
 		ensureDelete;
-		binaryWriteStream.
+		binaryWriteStream
 ]
 
 { #category : #running }
 MCMczInstallerTest >> setUp [
 	super setUp.
 	expected := self mockVersion.
-	self change: #one toReturn: 2.
+	self change: #one toReturn: 2
 ]
 
 { #category : #running }
@@ -80,9 +79,9 @@ MCMczInstallerTest >> testInstallFromFile [
 	stream := self fileStream.
 	MCMczWriter fileOut: expected on: stream.
 	stream close.
-	
+
 	MczInstaller installFileNamed: self fileName.
-	self assertNoChange.
+	self assertNoChange
 ]
 
 { #category : #tests }
@@ -94,6 +93,5 @@ MCMczInstallerTest >> testInstallFromStream [
 	].
 	MczInstaller installStream: array readStream.
 	self assertNoChange.
-	self assertVersionInfoPresent.
-	
+	self assertVersionInfoPresent
 ]

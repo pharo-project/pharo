@@ -25,7 +25,7 @@ Class {
 }
 
 { #category : #testing }
-ReNodeMatchRule class >> isAbstract [ 
+ReNodeMatchRule class >> isAbstract [
 
 	 ^ self = ReNodeMatchRule
 ]
@@ -52,7 +52,7 @@ ReNodeMatchRule >> addMatchingMethod: aString [
 
 { #category : #running }
 ReNodeMatchRule >> check: aNode forCritiquesDo: aCriticBlock [
-	
+
 	matchers do: [ :matcher |
 		matcher
 			match: aNode
@@ -63,13 +63,12 @@ ReNodeMatchRule >> check: aNode forCritiquesDo: aCriticBlock [
 						ifTrue: [
 							aCriticBlock cull: (self critiqueFor: aNode) ] ]
 			onFailure: [  ] ]
-	
 ]
 
 { #category : #initialization }
 ReNodeMatchRule >> initialize [
 	super initialize.
-	matchers := Set new.
+	matchers := Set new
 ]
 
 { #category : #adding }

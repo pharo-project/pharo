@@ -12,5 +12,5 @@ ClyRequiredMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyRequiredMethodGroupProviderTest >> groupProviderClass [
-	^ClyRequiredMethodGroupProvider 
+	^ClyRequiredMethodGroupProvider
 ]

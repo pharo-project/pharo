@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBMetaclass class >> existingNamed: aSymbol [ 
+RBMetaclass class >> existingNamed: aSymbol [
 	^(self named: aSymbol)
 		realName: aSymbol;
 		yourself
@@ -22,12 +22,11 @@ RBMetaclass class >> existingNamed: aSymbol model: aRBNamespace [
 	^ (self named: aSymbol)
 		model: aRBNamespace;
 		realName: aSymbol;
-		yourself 
-	
+		yourself
 ]
 
 { #category : #'instance creation' }
-RBMetaclass class >> named: aSymbol [ 
+RBMetaclass class >> named: aSymbol [
 	^(self new)
 		name: aSymbol;
 		yourself
@@ -45,8 +44,8 @@ RBMetaclass >> allPoolDictionaryNames [
 
 { #category : #accessing }
 RBMetaclass >> classSide [
-	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test." 
-	
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+
 	^ self
 ]
 
@@ -57,7 +56,7 @@ RBMetaclass >> directlyDefinesClassVariable: aString [
 ]
 
 { #category : #testing }
-RBMetaclass >> directlyDefinesPoolDictionary: aString [ 
+RBMetaclass >> directlyDefinesPoolDictionary: aString [
 	^ self instanceSide directlyDefinesPoolDictionary: aString
 ]
 
@@ -73,17 +72,12 @@ RBMetaclass >> printOn: aStream [
 ]
 
 { #category : #initialization }
-RBMetaclass >> realName: aSymbol [ 
+RBMetaclass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol) classSide
 ]
 
 { #category : #printing }
-RBMetaclass >> storeOn: aStream [ 
+RBMetaclass >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'
-]
-
-{ #category : #'accessing - deprecated' }
-RBMetaclass >> theMetaClass [
-	^ self
 ]

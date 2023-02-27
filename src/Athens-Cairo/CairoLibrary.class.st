@@ -38,13 +38,12 @@ CairoLibrary >> unix64LibraryName [
 CairoLibrary >> unixLibraryName [
 	"Backward compatibility"
 	^ self unix32LibraryName
-		
 ]
 
 { #category : #versions }
 CairoLibrary >> versionString [
-	"Answer the version in a String, such as '1.16.0'. 
-	
+	"Answer the version in a String, such as '1.16.0'.
+
 	See https://www.cairographics.org/manual/cairo-Version-Information.html#cairo-version-string
 	"
 
@@ -52,7 +51,7 @@ CairoLibrary >> versionString [
 ]
 
 { #category : #'accessing - platform' }
-CairoLibrary >> win32LibraryName [ 
-	
-	^ FFIWindowsLibraryFinder findAnyLibrary: #('libcairo-2.dll')	
+CairoLibrary >> win32LibraryName [
+
+	^ FFIWindowsLibraryFinder findAnyLibrary: #('libcairo-2.dll')
 ]

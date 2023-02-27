@@ -31,7 +31,7 @@ Class {
 { #category : #'instance creation' }
 AnnouncementDeliveryCondition class >> for: anAnnouncementClass where: aBlock [
 
-	^self new 
+	^self new
 		announcementClass: anAnnouncementClass;
 		conditionBlock: aBlock
 ]
@@ -60,5 +60,5 @@ AnnouncementDeliveryCondition >> conditionBlock: anObject [
 AnnouncementDeliveryCondition >> handlesAnnouncement: anAnnouncement [
 
 	^(announcementClass handlesAnnouncement: anAnnouncement)
-		and: [conditionBlock value: anAnnouncement ] 
+		and: [conditionBlock value: anAnnouncement ]
 ]

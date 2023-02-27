@@ -15,7 +15,7 @@ Class {
 TextEditorDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #accessing }
@@ -30,7 +30,7 @@ TextEditorDialogWindow >> cancel [
 TextEditorDialogWindow >> defaultFocusMorph [
 	"Answer the morph that should have the keyboard
 	focus by default when the dialog is opened."
-	
+
 	^self textEditorMorph textMorph
 ]
 
@@ -59,14 +59,14 @@ TextEditorDialogWindow >> entryText: anObject [
 	self changed: #entryText.
 	self textEditorMorph selectAll.
 	self ok.
-	self textEditorMorph hasUnacceptedEdits: true.
+	self textEditorMorph hasUnacceptedEdits: true
 ]
 
 { #category : #'visual properties' }
 TextEditorDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #questionIcon
+	^ self iconNamed: #question
 ]
 
 { #category : #initialization }
@@ -77,7 +77,7 @@ TextEditorDialogWindow >> initialize [
 	self beResizeable.
 	entryText := ''.
 	self changed: #entryText.
-	self textEditorMorph selectAll.
+	self textEditorMorph selectAll
 ]
 
 { #category : #actions }
@@ -107,7 +107,7 @@ TextEditorDialogWindow >> newTextEditorMorph [
 		newTextEditorFor: self
 		getText: #entryText
 		setText: #entryText:
-		getEnabled: nil) 
+		getEnabled: nil)
 		selectAll
 ]
 
@@ -128,5 +128,5 @@ TextEditorDialogWindow >> textEditorMorph: anObject [
 { #category : #private }
 TextEditorDialogWindow >> textLines [
 
-	^ super textLines, entryText asString lines.
+	^ super textLines, entryText asString lines
 ]

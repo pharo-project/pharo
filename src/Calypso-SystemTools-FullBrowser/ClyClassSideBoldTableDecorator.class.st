@@ -16,26 +16,26 @@ ClyClassSideBoldTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 { #category : #decoration }
 ClyClassSideBoldTableDecorator class >> methodDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext
 ]
 
 { #category : #decoration }
 ClyClassSideBoldTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #decoration }
 ClyClassSideBoldTableDecorator class >> variableDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserVariableContext
 ]
 
 { #category : #testing }
 ClyClassSideBoldTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 
-	^aDataSourceItem browser metaLevelScope = ClyClassSideScope 
+	^aDataSourceItem browser metaLevelScope = ClyClassSideScope
 ]

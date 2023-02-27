@@ -23,9 +23,9 @@ ReTransformationCritique class >> for: anEntity by: aRule tree: newAST [
 { #category : #accessing }
 ReTransformationCritique >> change [
 	"re-add the method compiled from the new AST"
-	
-	^ (RBRefactoryChangeFactory instance) 
-		addMethodSource: newTree newSource 
+
+	^ (RBRefactoryChangeFactory instance)
+		addMethodSource: newTree newSource
 		in: self entity methodClass
 ]
 
@@ -33,11 +33,11 @@ ReTransformationCritique >> change [
 ReTransformationCritique >> initializeRule: aRule target: anEntity tree: newAST [
 
 	self initializeRule: aRule target: anEntity.
-	newTree := newAST 
+	newTree := newAST
 ]
 
 { #category : #testing }
 ReTransformationCritique >> providesChange [
-	
+
 	^ true
 ]

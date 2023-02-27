@@ -10,5 +10,5 @@ ZnUrl >> stonOn: stonWriter [
 	stonWriter 
 		writeObject: self 
 		named: STONZnUrl stonName 
-		listSingleton: self asString 
+		listSingleton: self asString
 ]

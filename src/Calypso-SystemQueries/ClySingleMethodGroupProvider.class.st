@@ -22,22 +22,22 @@ ClySingleMethodGroupProvider >> buildGroupsFrom: aClassScope [
 	| methodQuery methodGroup |
 	methodQuery := self createMethodQueryFrom: aClassScope.
 	(self shouldBuildGroupWith: methodQuery) ifFalse: [ ^#() ].
-		
+
 	methodGroup := self createMethodGroupFor: methodQuery from: aClassScope.
 	methodQuery isAsync ifTrue: [ methodGroup := methodGroup asAsyncQueryGroup ].
-	
+
 	^Array with: methodGroup
 ]
 
 { #category : #'building groups' }
 ClySingleMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
 { #category : #'building groups' }
 ClySingleMethodGroupProvider >> createMethodQueryFrom: aClassScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -55,7 +55,7 @@ ClySingleMethodGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement in
 
 { #category : #testing }
 ClySingleMethodGroupProvider >> shouldBuildGroupWith: aMethodQuery [
-	
+
 	self isStatic ifFalse: [ ^true ].
 	^aMethodQuery hasEmptyResult not
 ]

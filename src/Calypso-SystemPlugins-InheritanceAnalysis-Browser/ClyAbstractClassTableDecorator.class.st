@@ -10,13 +10,13 @@ Class {
 
 { #category : #decoration }
 ClyAbstractClassTableDecorator class >> browserPluginClass [
-	^ClyInheritanceAnalysisBrowserPlugin 
+	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
 { #category : #decoration }
 ClyAbstractClassTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
-		
+
 	nameMorph := anItemCellMorph label.
 	nameMorph emphasis: TextEmphasis italic emphasisCode.
 	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment

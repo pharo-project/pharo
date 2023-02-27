@@ -12,5 +12,5 @@ TextLineTest >> setUp [
 				start: 1
 				stop: 50
 				internalSpaces: 2
-				paddingWidth: 1) 
+				paddingWidth: 1)
 ]

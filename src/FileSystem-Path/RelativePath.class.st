@@ -32,8 +32,8 @@ RelativePath >> printOn: aStream [
 	aStream nextPutAll: 'Path '.
 	self isWorkingDirectory
 		ifTrue: [ aStream nextPutAll: 'workingDirectory' ]
-		ifFalse: 
-			[ aStream 
+		ifFalse:
+			[ aStream
 				nextPutAll: '* ''';
 				nextPutAll: (self at: 1);
 				nextPut: $'.
@@ -43,7 +43,6 @@ RelativePath >> printOn: aStream [
 					nextPutAll: ' / ''';
 					nextPutAll: (self at: i);
 					nextPut: $' ]]
-			
 ]
 
 { #category : #printing }

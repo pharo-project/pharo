@@ -26,12 +26,12 @@ RadialGradientPaint >> asAthensPaintOn: aCanvas [
 		createRadialGradient:  colorRamp
 		center: center
 		radius: radius
-		focalPoint: focalPoint 
+		focalPoint: focalPoint
 ]
 
 { #category : #accessing }
 RadialGradientPaint >> center [
-	
+
 	^ center
 ]
 
@@ -43,7 +43,7 @@ RadialGradientPaint >> center: aPoint [
 
 { #category : #accessing }
 RadialGradientPaint >> focalPoint [
-	
+
 	^ focalPoint
 ]
 
@@ -55,7 +55,7 @@ RadialGradientPaint >> focalPoint: aPoint [
 
 { #category : #accessing }
 RadialGradientPaint >> radius [
-	
+
 	^ radius
 ]
 

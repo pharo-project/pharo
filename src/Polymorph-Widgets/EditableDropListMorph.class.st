@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-EditableDropListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel useIndex: useIndex addToList: addToListSel class: aClass getEnabled: getEnabledSel [ 
+EditableDropListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel useIndex: useIndex addToList: addToListSel class: aClass getEnabled: getEnabledSel [
 	^ self
 		on: anObject
 		list: getListSel
@@ -30,7 +30,7 @@ EditableDropListMorph class >> on: anObject list: getListSel selected: getSelect
 		addToList: addToListSel
 		class: aClass
 		getEnabled: getEnabledSel
-		default: '' 
+		default: ''
 ]
 
 { #category : #'instance creation' }
@@ -55,24 +55,23 @@ EditableDropListMorph >> addToListSel: aSelector [
 { #category : #accessing }
 EditableDropListMorph >> adoptPaneColor: paneColor [
 	"Clear the fill style of the text."
-	
+
 	super adoptPaneColor: paneColor.
-	self contentMorph fillStyle: Color transparent 
+	self contentMorph fillStyle: Color transparent
 ]
 
 { #category : #'public accessing' }
-EditableDropListMorph >> beReadOnly [ 
-	self contentMorph beReadOnly 
+EditableDropListMorph >> beReadOnly [
+	self contentMorph beReadOnly
 ]
 
 { #category : #accessing }
 EditableDropListMorph >> content [
 	^ content
-
 ]
 
 { #category : #accessing }
-EditableDropListMorph >> content: anObject [ 
+EditableDropListMorph >> content: anObject [
 	content := anObject.
 	self model perform: addToListSel with: content.
 	self listSelectionIndex: (self list indexOf: content).
@@ -80,8 +79,8 @@ EditableDropListMorph >> content: anObject [
 ]
 
 { #category : #private }
-EditableDropListMorph >> convertTo: aClass [ 
-	self contentMorph convertTo: aClass 
+EditableDropListMorph >> convertTo: aClass [
+	self contentMorph convertTo: aClass
 ]
 
 { #category : #accessing }
@@ -90,18 +89,18 @@ EditableDropListMorph >> converter [
 ]
 
 { #category : #private }
-EditableDropListMorph >> default: anObject [ 
+EditableDropListMorph >> default: anObject [
 	self contentMorph default: anObject
 ]
 
 { #category : #accessing }
 EditableDropListMorph >> enabled: aBoolean [
 	"Set the value of enabled"
-	
+
 	super enabled: aBoolean.
 	self
 		contentMorph enabled: aBoolean;
-		fillStyle: Color transparent 
+		fillStyle: Color transparent
 ]
 
 { #category : #accessing }
@@ -128,14 +127,14 @@ EditableDropListMorph >> listHeight [
 { #category : #layout }
 EditableDropListMorph >> minHeight [
 	"Answer the minimum height for the drop list."
-	
-	^self theme textFont height 
+
+	^self theme textFont height
 ]
 
 { #category : #drawing }
 EditableDropListMorph >> newContentMorph [
 	"Answer a new content morph"
-	| pt | 
+	| pt |
 	pt := RubPluggableTextFieldMorph new
 		alwaysAccept: true;
 		on: self

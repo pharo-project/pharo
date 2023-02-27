@@ -5,8 +5,8 @@ InstructionStream >> addSelectorTo: set [
 	"If this instruction is a send, add its selector to set."
 
 	| selectorOrSelf |
-	(selectorOrSelf := self selectorToSendOrSelf) == self ifFalse:
-		[set add: selectorOrSelf]
+	(selectorOrSelf := self selectorToSendOrSelf) isSymbol ifTrue:
+		[ set add: selectorOrSelf ]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -63,8 +63,7 @@ InstructionStream >> interpretWithClient: aClient [
 InstructionStream >> nextPc: currentByte [
 	"Answer the pc of the next bytecode following the current one, given the current bytecode.
 	 Skips the extension bytecodes."
-	
-	^ pc + (self method encoderClass bytecodeSize: currentByte)
+	^ pc + (self method encoderClass instructionSizeAt: pc of: self method)
 ]
 
 { #category : #'*Debugging-Core' }
@@ -109,7 +108,7 @@ InstructionStream >> secondByte [
 InstructionStream >> selectorToSendOrSelf [
 	"If this instruction is a send, answer the selector, otherwise answer self."
  
-	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc 
+	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc
 ]
 
 { #category : #'*Debugging-Core' }

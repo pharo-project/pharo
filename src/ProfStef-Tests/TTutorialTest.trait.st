@@ -9,7 +9,7 @@ Trait {
 { #category : #tests }
 TTutorialTest >> testEachSelectorExists [
 	self testedTutorial tutorial do: [:aSelector|
-		self assert: (self tutorial respondsTo: aSelector) 
+		self assert: (self tutorial respondsTo: aSelector)
 	]
 ]
 
@@ -29,17 +29,16 @@ TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
 		answer := self testedTutorial lessonAt: index.
 		self assert: (answer isKindOf: Lesson)
 	]
-	
 ]
 
 { #category : #tests }
 TTutorialTest >> testNotEmpty [
-	self assert: self testedTutorial tutorial notEmpty.
+	self assert: self testedTutorial tutorial notEmpty
 ]
 
 { #category : #tests }
 TTutorialTest >> testSizeReturnsNumberOfSelectors [
-	self assert: (self testedTutorial tutorial size) equals: self testedTutorial size.
+	self assert: (self testedTutorial tutorial size) equals: self testedTutorial size
 ]
 
 { #category : #requirements }

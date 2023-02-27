@@ -94,7 +94,7 @@ EDEmergencyDebugger class >> debugAPI [
 
 { #category : #accessing }
 EDEmergencyDebugger class >> debugAPI: aDebugAPIClass [
-	DefaultDebugAPI := aDebugAPIClass 
+	DefaultDebugAPI := aDebugAPIClass
 ]
 
 { #category : #'instance creation' }
@@ -116,18 +116,18 @@ EDEmergencyDebugger class >> defaultDebugAPI [
 ]
 
 { #category : #actions }
-EDEmergencyDebugger >> availableActions [ 
+EDEmergencyDebugger >> availableActions [
 	^actions ifNil:[actions := self buildDefaultActions]
 ]
 
 { #category : #actions }
-EDEmergencyDebugger >> availableActionsDescriptions [ 
+EDEmergencyDebugger >> availableActionsDescriptions [
 	^actionsDescriptions ifNil:[actionsDescriptions := self buildDefaultActionsDescriptions]
 ]
 
 { #category : #actions }
 EDEmergencyDebugger >> availableActionsDescriptionsMap [
-	^self buildDefaultActionsDescriptionsMap 
+	^self buildDefaultActionsDescriptionsMap
 ]
 
 { #category : #initialization }
@@ -140,7 +140,7 @@ EDEmergencyDebugger >> basicDebug: aDebugSession [
 { #category : #actions }
 EDEmergencyDebugger >> buildDefaultActions [
 	|dic|
-	
+
 	dic := Dictionary new.
 	dic at: 'q!' 						put: [ debugAPI closeEmergencySession ].
 	dic at: 'q' 							put: [ debugAPI terminateSession ].
@@ -159,7 +159,7 @@ EDEmergencyDebugger >> buildDefaultActions [
 	dic at: 'debug' 					put: [ self debugDebuggerError ].
 	dic at: 'dump' 						put: [ self dumpStackAndQuit ].
 	dic at: 'inspect' 					put: [ self inspectStackAndQuit ].
-	
+
 	^ dic
 ]
 
@@ -186,7 +186,7 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptions [
 { #category : #actions }
 EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 	|dic|
-	dic := Dictionary new.	
+	dic := Dictionary new.
 	dic at: 'exit' put: 'exit/q'.
 	dic at: 'q' put: 'exit/q'.
 	dic at: 'retry' put: 'retry'.
@@ -195,11 +195,11 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 	dic at: Character arrowLeft put: '<RIGHT/LEFT> arrows'.
 	dic at: Character arrowRight put: '<RIGHT/LEFT> arrows'.
 	dic at: 'revert' put: 'revert'.
-	dic at: 'forceRevert' put: 'forceRevert'.	
+	dic at: 'forceRevert' put: 'forceRevert'.
 	dic at: 'help' put: 'help'.
 	dic at: 'terminateAll' put: 'terminateAll'.
 	dic at: 'proceed' put: 'proceed'.
-	dic at: 'showDebuggerError' put: 'showDebuggerError'.	
+	dic at: 'showDebuggerError' put: 'showDebuggerError'.
 	dic at: 'debug' put: 'debug'.
 	dic at: 'dump' put: 'dump'.
 	dic at: 'inspect' put: 'inspect'.
@@ -209,7 +209,6 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 { #category : #'text - composing' }
 EDEmergencyDebugger >> composeDisplayText [
 	^(titleText , (self composeSessionTitle), stackText, methodText, input, result )
-
 ]
 
 { #category : #'text - composing' }
@@ -227,11 +226,11 @@ EDEmergencyDebugger >> composeHelpText [
 	| str |
 	str := self newTextStream.
 	self availableActionsDescriptions
-		keysAndValuesDo: [ :cmd :desc | 
+		keysAndValuesDo: [ :cmd :desc |
 			|text|
 			text := (cmd, ': ') asText allBold, desc asText.
 			text makeAllColor: rawDisplay gray.
-			str << text.		
+			str << text.
 			str cr ].
 	^ self composeResult: str contents title: 'HELP'
 ]
@@ -242,7 +241,7 @@ EDEmergencyDebugger >> composeMethodText [
 	str := self newTextStream.
 	self writeSectionTitle: 'SOURCE' on: str.
 	method := debugAPI methodAt: stackSelectionIndex.
-	node := debugAPI nodeAt: stackSelectionIndex.	
+	node := debugAPI nodeAt: stackSelectionIndex.
 	text := method sourceCode asText.
 	text makeColor: rawDisplay red from: node start to: node stop.
 	str << method methodClass name.
@@ -255,7 +254,7 @@ EDEmergencyDebugger >> composeMethodText [
 { #category : #'text - composing' }
 EDEmergencyDebugger >> composePromptWith: aString [
 	| str  |
-	str := self newTextStream.	
+	str := self newTextStream.
 	str cr.
 	self writeSeparatorOn: str.
 	str << '> ' asText allBold.
@@ -294,7 +293,7 @@ EDEmergencyDebugger >> composeStackText [
 			'STACK (' , stackSelectionIndex printString , '/'
 				, debugAPI stackSize printString , ')'
 		on: str.
-	1 to: stack size do: [ :i | 
+	1 to: stack size do: [ :i |
 		| textStream text |
 		textStream := self newTextStream.
 		(stack at: i) printWithArgsValueOn: textStream.
@@ -321,7 +320,7 @@ EDEmergencyDebugger >> debug: aDebugSession [
 	self composeHelpText.
 	self composePromptWith: ''.
 	self updateDisplay.
-	repl readEvalPrint 
+	repl readEvalPrint
 ]
 
 { #category : #accessing }
@@ -370,7 +369,7 @@ EDEmergencyDebugger >> emergencyDebug: aDebugSession [
 
 	[ self debug: aDebugSession ]
 		on: Error
-		do: [ :err | 
+		do: [ :err |
 			DebuggerEmmergencyLogger new
 				logError: err
 				forSession: aDebugSession ]
@@ -390,7 +389,7 @@ EDEmergencyDebugger >> errorText [
 
 { #category : #accessing }
 EDEmergencyDebugger >> errorText: aText [
-	errorText := aText 
+	errorText := aText
 ]
 
 { #category : #evaluation }
@@ -404,7 +403,7 @@ EDEmergencyDebugger >> eval: command [
 { #category : #evaluation }
 EDEmergencyDebugger >> evalCommand: aString [
 	| action |
-	
+
 	action := self availableActions at: aString ifAbsent: [ ^ false ].
 	[ action value ]
 		on: Exception
@@ -442,7 +441,7 @@ EDEmergencyDebugger >> initialize [
 	rawDisplay := EDDisplayInterface new
 		whenCharacterReceivedDo: [ :aChar | repl pushChar: aChar ];
 		whenWindowClosedDo: [ self terminate ].
-	
+
 	stackSelectionIndex := 1.
 	shortStackIndex := 1.
 	methodVersionSelectionIndex := 0.
@@ -465,7 +464,7 @@ EDEmergencyDebugger >> inspectStackAndQuit [
 
 { #category : #testing }
 EDEmergencyDebugger >> isRunning [
-	^isRunning 
+	^isRunning
 ]
 
 { #category : #accessing }
@@ -558,7 +557,7 @@ EDEmergencyDebugger >> revertCurrentMethodToSelectedVersion [
 	methodVersion := (debugAPI methodVersionAt: stackSelectionIndex) at: methodVersionSelectionIndex.
 	debugAPI revert: method to: methodVersion inContext: (debugAPI contextAt: stackSelectionIndex).
 	shortStack := nil.
-	
+
 	stackSelectionIndex := 1.
 	shortStackIndex := 1.
 	self composeStackText.
@@ -581,10 +580,9 @@ EDEmergencyDebugger >> revertCurrentMethodToSelectedVersionAndQuit [
 
 { #category : #methods }
 EDEmergencyDebugger >> selectedMethodVersion [
-	|versions |	
+	|versions |
 	versions := debugAPI methodVersionAt: stackSelectionIndex.
-	^versions at: methodVersionSelectionIndex.
-	
+	^versions at: methodVersionSelectionIndex
 ]
 
 { #category : #methods }
@@ -593,7 +591,7 @@ EDEmergencyDebugger >> selectedMethodVersionsSize [
 ]
 
 { #category : #'text - helpers' }
-EDEmergencyDebugger >> separator [ 
+EDEmergencyDebugger >> separator [
 	^'--------------------' asText makeAllColor: rawDisplay gray
 ]
 
@@ -645,7 +643,7 @@ EDEmergencyDebugger >> showDebuggerError [
 			^ self updateDisplay ].
 	context := error signalerContext.
 	text := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			20
 				timesRepeat: [ context == nil
 						ifFalse: [ s
@@ -713,8 +711,7 @@ EDEmergencyDebugger >> titleText [
 { #category : #updating }
 EDEmergencyDebugger >> updateDisplay [
 	rawDisplay clear.
-	rawDisplay show: self composeDisplayText 
-
+	rawDisplay show: self composeDisplayText
 ]
 
 { #category : #updating }

@@ -12,22 +12,28 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #testing }
+RBMethodRefactoring class >> isAbstract [
+
+	^ self == RBMethodRefactoring
+]
+
 { #category : #private }
-RBMethodRefactoring >> buildSelectorString: aSelector [ 
+RBMethodRefactoring >> buildSelectorString: aSelector [
 	aSelector numArgs = 0 ifTrue: [^aSelector].
 	^self buildSelectorString: aSelector
 		withPermuteMap: (1 to: aSelector numArgs)
 ]
 
 { #category : #private }
-RBMethodRefactoring >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [ 
+RBMethodRefactoring >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [
 	| stream keywords |
 	aSelector numArgs == 0 ifTrue: [^aSelector asString].
 	stream := WriteStream on: String new.
 	keywords := aSelector keywords.
 	keywords with: anIntegerCollection
-		do: 
-			[:each :i | 
+		do:
+			[:each :i |
 			stream
 				nextPutAll: each;
 				nextPutAll: ' ``@arg';
@@ -37,6 +43,6 @@ RBMethodRefactoring >> buildSelectorString: aSelector withPermuteMap: anIntegerC
 ]
 
 { #category : #accessing }
-RBMethodRefactoring >> methodClass [ 
+RBMethodRefactoring >> methodClass [
 	^ class
 ]

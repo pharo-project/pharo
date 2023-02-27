@@ -17,7 +17,7 @@ MalDisjointSetsNextNode >> initialize [
 { #category : #accessing }
 MalDisjointSetsNextNode >> nextNodes [
 
-	^ nextNodes 
+	^ nextNodes
 ]
 
 { #category : #accessing }

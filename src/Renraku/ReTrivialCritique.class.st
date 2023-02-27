@@ -9,11 +9,11 @@ Class {
 
 { #category : #accessing }
 ReTrivialCritique >> change [
-	^ self shouldNotImplement 
+	^ self shouldNotImplement
 ]
 
 { #category : #testing }
 ReTrivialCritique >> providesChange [
-	
+
 	^ false
 ]

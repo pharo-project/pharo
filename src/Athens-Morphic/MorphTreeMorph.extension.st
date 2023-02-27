@@ -4,5 +4,4 @@ Extension { #name : #MorphTreeMorph }
 MorphTreeMorph >> drawOnAthensCanvas: anAthensCanvas [
 
 	self drawOnCanvasWrapperFor: anAthensCanvas
-	
 ]

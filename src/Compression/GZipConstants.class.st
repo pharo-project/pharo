@@ -56,9 +56,9 @@ GZipConstants class >> gzipMagic [
 	^GZipMagic
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'class initialization' }
 GZipConstants class >> initialize [
-	"GZipConstants initialize"
+
 	GZipMagic := 16r8B1F.		"GZIP magic number"
 	GZipDeflated := 8.			"Compression method"
 
@@ -68,5 +68,5 @@ GZipConstants class >> initialize [
 	GZipNameFlag := 16r08.		"Archive has original file name"
 	GZipCommentFlag := 16r10.	"Archive has comment"
 	GZipEncryptFlag := 16r20.	"Archive is encrypted"
-	GZipReservedFlags := 16rC0.	"Reserved" 
+	GZipReservedFlags := 16rC0.	"Reserved"
 ]

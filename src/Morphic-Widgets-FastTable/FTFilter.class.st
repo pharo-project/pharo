@@ -23,14 +23,14 @@ Class {
 
 { #category : #'instance creation' }
 FTFilter class >> pattern: aString [
-	^self new 
+	^self new
 		pattern: aString
 ]
 
 { #category : #matching }
 FTFilter >> matches: aString [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

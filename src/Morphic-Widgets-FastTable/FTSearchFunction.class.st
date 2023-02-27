@@ -23,9 +23,14 @@ FTSearchFunction >> ghostText [
 ]
 
 { #category : #'event handling' }
+FTSearchFunction >> keyDown: anEvent [
+	^ self keyStroke: anEvent
+]
+
+{ #category : #'event handling' }
 FTSearchFunction >> keyStroke: anEvent [
-	(anEvent keyCharacter isAlphaNumeric not)
-		ifTrue: [ ^ false ].
+
+	anEvent keyCharacter isAlphaNumeric ifFalse: [ ^ false ].
 	currentSelIndex := self table selectedIndex.
 	currentHighlightedIndexes := self table highlightedIndexes.
 	self showSearchFieldFromKeystrokeEvent: anEvent.
@@ -39,7 +44,7 @@ FTSearchFunction >> realSearch [
 
 	founds ifNotEmpty: [ self table selectIndex: founds first ].
 	self table highlightIndexes: founds.
-	
+
 	^ founds notEmpty
 ]
 
@@ -62,9 +67,9 @@ FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 	ed := RubFloatingEditorBuilder new
 		customizeEditorWith: [ :editor | editor bounds: (self table bottomLeft + (0 @ 2) corner: self table bottomRight + (0 @ (editor font height + 6))) ];
 		withEditedContentsDo:
-				[ :contents :editor | 
+				[ :contents :editor |
 			contents
-				ifEmpty: [ founds ifTrue: [self table selectIndex: currentSelIndex]. 
+				ifEmpty: [ founds ifTrue: [self table selectIndex: currentSelIndex].
 					self table highlightIndexes: currentHighlightedIndexes ]
 				ifNotEmpty:
 					[ founds := self searchFor: contents.

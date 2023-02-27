@@ -39,7 +39,7 @@ Class {
 }
 
 { #category : #'instruction decoding forward' }
-FBDDecompiler >> blockReturnConstant: value [ 
+FBDDecompiler >> blockReturnConstant: value [
 	self pushConstant: value.
 	self blockReturnTop
 ]
@@ -57,10 +57,10 @@ FBDDecompiler >> canDecompile: aCompiledMethod [
 
 { #category : #initialize }
 FBDDecompiler >> createNArgs: numArgs [
-	
+
 	| argName |
 	^ (1 to: numArgs)
-		collect: [ :i | 
+		collect: [ :i |
 			self incrArgCount.
 			argName := (method propertyAt: #argumentNames)
 				ifNil: [ 'arg' , argCount printString ]
@@ -76,26 +76,26 @@ FBDDecompiler >> createNTemps: numTemps [
 { #category : #'control flow instructions' }
 FBDDecompiler >> decodeConditionalLoop: loop nextLoops: loops [
 	| condSeq pastSequence boolean |
-	
+
 	pastSequence := currentSequence.
-	
+
 	condSeq := builder codeEmptySequence.
 	currentSequence := condSeq.
 	self interpret: loop exitCondition - 1 nextLoops: loops.
 	self doPop.
 	boolean := instructionStream willJumpIfFalse.
 	instructionStream advanceToFollowingPc. "skip the conditional jump exiting the loop"
-	
+
 	currentSequence := builder codeEmptySequence.
 	self interpret: loop backjump - 1.
 	instructionStream advanceToFollowingPc. "skip the backjump"
-	
-	simulatedStack addLast:  (builder 
+
+	simulatedStack addLast:  (builder
 		codeLoopNode: boolean
 		condition: condSeq
 		body: currentSequence).
 	currentSequence := pastSequence.
-	self doPop.
+	self doPop
 ]
 
 { #category : #'control flow instructions' }
@@ -115,16 +115,16 @@ FBDDecompiler >> decodeLoops: loops [
 { #category : #'control flow instructions' }
 FBDDecompiler >> decodeRepeatLoop: loop nextLoops: loops [
 	| pastSequence  |
-	
+
 	pastSequence := currentSequence.
-	
+
 	currentSequence := builder codeEmptySequence.
 	self interpret: loop backjump - 1 nextLoops: loops.
 	instructionStream advanceToFollowingPc. "skip backjump"
-	
+
 	simulatedStack addLast:  (builder codeRepeatNode:  currentSequence).
 	currentSequence := pastSequence.
-	self doPop.
+	self doPop
 ]
 
 { #category : #'public api' }
@@ -168,7 +168,7 @@ FBDDecompiler >> decompileAll [
 FBDDecompiler >> decompileThenRecompileClass: aClass [
 	{aClass.
 	aClass class}
-		do: [ :class | 
+		do: [ :class |
 			class localSelectors
 				do: [ :aMethod | self recompile: aMethod from: class ]
 				displayingProgress: [ :aMethod | 'Decompiling ' , class name , '>>#' , aMethod asString ] ]
@@ -179,10 +179,10 @@ FBDDecompiler >> directedSuperSend: selector numArgs: numberArguments [
 
 	| args currentClass |
 
-	currentClass := self popFromStack: 1. 
+	currentClass := self popFromStack: 1.
 	args := self popFromStack: numberArguments.
 	simulatedStack removeLast.
-	simulatedStack addLast: (builder codeMessage: selector receiver: builder codeSuper arguments: args ).
+	simulatedStack addLast: (builder codeMessage: selector receiver: builder codeSuper arguments: args )
 ]
 
 { #category : #'data flow instructions' }
@@ -194,10 +194,9 @@ FBDDecompiler >> doDup [
 	dupTemp := self newTemp.
 	currentSequence addNode: (builder codeAssignment: simulatedStack removeLast to: dupTemp).
 	currentSequence addTemporaryNamed: 'tmp' , tempCount printString.
-	simulatedStack 
+	simulatedStack
 		addLast: dupTemp;
-		addLast: dupTemp.
-		
+		addLast: dupTemp
 ]
 
 { #category : #'data flow instructions' }
@@ -209,25 +208,10 @@ FBDDecompiler >> doPop [
 FBDDecompiler >> errorCodeNameFor: cm [
 	"Assumes the method holds a primitive with error code"
 	| primitivePragma selectorParts |
-	primitivePragma := cm pragmas detect: [ :pragma | 
+	primitivePragma := cm pragmas detect: [ :pragma |
 		selectorParts := pragma selector separateKeywords splitOn: '  '.
 		selectorParts first = 'primitive:' ].
 	^ primitivePragma argumentAt: (selectorParts indexOf: 'error:')
-]
-
-{ #category : #'data flow instructions' }
-FBDDecompiler >> extractBlockWith: copied numArgs: numArgs blockSize: blockSize [
-	| startPC numTemps |
-	numTemps := instructionStream method encoderClass 
-		numLocalTempsForBlockAt: self pc 
-		in: instructionStream method.
-	self initializeStackNumArgs: numArgs copied: copied numTemps: numTemps.
-	startPC := self pc.
-	self skipTemps: numTemps.
-	self interpret: startPC + blockSize - 1.
-	^ builder 
-		codeBlock: currentSequence 
-		arguments: (simulatedStack first: numArgs)
 ]
 
 { #category : #'closure support' }
@@ -331,26 +315,25 @@ FBDDecompiler >> initializeStackNumArgs: numArgs copied: copiedVars numTemps: nu
 { #category : #private }
 FBDDecompiler >> interpret: endPC [
 	[ self pc > endPC ]
-		whileFalse: [ 
+		whileFalse: [
 			(loopsArray at: self pc)
 				ifNotNil: [ :ls | self decodeLoops: ls ]
-				ifNil: [ instructionStream interpretNextInstructionFor: self ] ].
-			
+				ifNil: [ instructionStream interpretNextInstructionFor: self ] ]
 ]
 
 { #category : #'control flow instructions' }
 FBDDecompiler >> interpret: endPC nextLoops: loops [
-	loops 
+	loops
 		ifNotEmpty: [ self decodeLoops: loops ]
 		ifEmpty: [ self pc > endPC ifFalse: [ instructionStream interpretNextInstructionFor: self ] ].
-	self interpret: endPC 
+	self interpret: endPC
 ]
 
 { #category : #'control flow instructions' }
 FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 	| hasPopped hasPopped2 jmpSz topValue stackSize |
 	"If next instruction will pop, skip it and pop the element from the stack"
-	instructionStream willJustPop ifTrue: [ 
+	instructionStream willJustPop ifTrue: [
 			topValue := simulatedStack removeLast.
 			instructionStream advanceToFollowingPc ].
 
@@ -368,7 +351,7 @@ FBDDecompiler >> interpretMethod: aCompiledMethod [
 	self maybeSkipCallPrimitiveBytecode: aCompiledMethod.
 	aCompiledMethod isQuick
 		ifTrue: [ self quickMethod ]
-		ifFalse: [ 
+		ifFalse: [
 			self initializeErrorCode: aCompiledMethod.
 			self interpret: aCompiledMethod endPC ]
 ]
@@ -377,7 +360,7 @@ FBDDecompiler >> interpretMethod: aCompiledMethod [
 FBDDecompiler >> interpretSeq: seq baseStackSize: stackSize distance: distance [
 	currentSequence := seq.
 	self interpret: self pc + distance - 1.
-	^ stackSize = simulatedStack size 
+	^ stackSize = simulatedStack size
 		ifFalse: [ self doPop. true ]
 		ifTrue: [ false ]
 ]
@@ -392,7 +375,7 @@ FBDDecompiler >> isPrimitiveNativeCall: aCompiledMethod [
 { #category : #'control flow instructions' }
 FBDDecompiler >> jump: distance [
 	distance < 0 ifTrue: [ ^ self error: 'should have been detected by the scanner and skipped' ].
-	jumpSize := distance.
+	jumpSize := distance
 ]
 
 { #category : #'control flow instructions' }
@@ -417,12 +400,12 @@ FBDDecompiler >> jump: distance if: boolean [
 FBDDecompiler >> maybeSkipCallPrimitiveBytecode: aCompiledMethod [
 	"If the method's bytecode set uses the callPrimitive bytecode, ignore it.
 	The primitive is handled specifically before bytecode interpretation."
-	instructionStream peekByte = aCompiledMethod encoderClass callPrimitiveCode 
+	instructionStream peekByte = aCompiledMethod encoderClass callPrimitiveCode
 		ifTrue: [ instructionStream advanceToFollowingPc ]
 ]
 
 { #category : #'instruction decoding forward' }
-FBDDecompiler >> methodReturnConstant: value [ 
+FBDDecompiler >> methodReturnConstant: value [
 	self pushConstant: value.
 	self methodReturnTop
 ]
@@ -439,7 +422,7 @@ FBDDecompiler >> methodReturnTop [
 ]
 
 { #category : #private }
-FBDDecompiler >> newTemp [	
+FBDDecompiler >> newTemp [
 	self incrTempCount.
 	^ builder codeTemp: 'tmp' , tempCount printString
 ]
@@ -457,46 +440,44 @@ FBDDecompiler >> popFromStack: numElements [
 { #category : #'data flow instructions' }
 FBDDecompiler >> popIntoLiteralVariable: association [
 	self storeIntoLiteralVariable: association.
-	self doPop.
-
+	self doPop
 ]
 
 { #category : #'data flow instructions' }
-FBDDecompiler >> popIntoReceiverVariable: offset [ 
+FBDDecompiler >> popIntoReceiverVariable: offset [
 	self storeIntoReceiverVariable: offset.
-	self doPop.
-
+	self doPop
 ]
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 	self storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex.
-	self doPop.
+	self doPop
 ]
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> popIntoTemporaryVariable: offset [
 	simulatedStack last class = Array
-		ifTrue: [ 
+		ifTrue: [
 			"Temp vector"
 			currentSequence removeTemporaryNamed: (simulatedStack at: offset + 1) name.
 			simulatedStack at: offset + 1 put: simulatedStack removeLast ]
-		ifFalse: [ 
+		ifFalse: [
 			simulatedStack
-				addLast: (builder codeAssignment: simulatedStack removeLast to: (simulatedStack at: offset + 1)). self doPop ]	
+				addLast: (builder codeAssignment: simulatedStack removeLast to: (simulatedStack at: offset + 1)). self doPop ]
 ]
 
 { #category : #initialize }
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
-		RBPragmaNode 
-			selector: each selector 
+		RBPragmaNode
+			selector: each selector
 			arguments: (each arguments collect: [ :arg | RBLiteralNode value: arg ]) ]
 ]
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushActiveContext [
-	simulatedStack addLast: builder codeThisContext 
+	simulatedStack addLast: builder codeThisContext
 ]
 
 { #category : #'closure support' }
@@ -511,21 +492,7 @@ FBDDecompiler >> pushCleanClosure: aCompiledBlock [
 		extractFullBlock: aCompiledBlock numCopied: 0).
 
 	simulatedStack := savedSimStack.
-	currentSequence := savedSequence.
-
-]
-
-{ #category : #'data flow instructions' }
-FBDDecompiler >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
-	| savedSimStack savedSequence |
-	savedSimStack := simulatedStack.
-	savedSequence := currentSequence.
-	savedSimStack addLast: (self
-		extractBlockWith: (self popFromStack: numCopied)
-		numArgs: numArgs
-		blockSize: blockSize).
-	simulatedStack := savedSimStack.
-	currentSequence := savedSequence.
+	currentSequence := savedSequence
 ]
 
 { #category : #'data flow instructions' }
@@ -543,7 +510,7 @@ FBDDecompiler >> pushConstant: value [
 ]
 
 { #category : #'data flow instructions' }
-FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [ 
+FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [
 
 	| savedSimStack savedSequence |
 
@@ -556,8 +523,7 @@ FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOn
 		extractFullBlock: aCompiledBlock numCopied: numCopied).
 
 	simulatedStack := savedSimStack.
-	currentSequence := savedSequence.
-
+	currentSequence := savedSequence
 ]
 
 { #category : #'data flow instructions' }
@@ -577,13 +543,12 @@ FBDDecompiler >> pushNewArrayOfSize: numElements [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushReceiver [
-	simulatedStack addLast: builder codeReceiver 
+	simulatedStack addLast: builder codeReceiver
 ]
 
 { #category : #'data flow instructions' }
-FBDDecompiler >> pushReceiverVariable: offset [ 
+FBDDecompiler >> pushReceiverVariable: offset [
 	simulatedStack addLast: (builder codeInstanceVariable: offset + 1)
-
 ]
 
 { #category : #'data flow instructions' }
@@ -601,12 +566,12 @@ FBDDecompiler >> quickMethod [
 	instructionStream method isReturnSelf
 		ifTrue: [ ^ self methodReturnReceiver ].
 	instructionStream method isReturnSpecial
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				methodReturnConstant:
 					(instructionStream method encoderClass quickPrimSpecialConstants at: instructionStream method primitive - 256) ].
 	instructionStream method isReturnField
-		ifTrue: [ 
+		ifTrue: [
 			self pushReceiverVariable: instructionStream method returnField.
 			^ self methodReturnTop ].
 	self error: 'quick method inconsistency'
@@ -623,7 +588,7 @@ FBDDecompiler >> recompile: selector from: oldClass [
 		compile.	"Assume OK after proceed from SyntaxError"
 	selector == newMethod selector
 		ifFalse: [ self error: 'selector changed!' ].
-	oldClass 	addSelector: selector withRecompiledMethod: newMethod.
+	oldClass 	addSelector: selector withRecompiledMethod: newMethod
 ]
 
 { #category : #'data flow instructions' }
@@ -635,7 +600,7 @@ FBDDecompiler >> send: selector numArgs: numberArguments [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> send: selector super: supered numArgs: numberArguments [
-	supered 
+	supered
 		ifTrue:[ self superSend: selector numArgs: numberArguments ]
 		ifFalse: [ self send: selector numArgs: numberArguments ]
 ]
@@ -656,9 +621,8 @@ FBDDecompiler >> storeIntoLiteralVariable: association [
 ]
 
 { #category : #'data flow instructions' }
-FBDDecompiler >> storeIntoReceiverVariable: offset [ 
-	simulatedStack addLast: (builder codeAssignment: simulatedStack removeLast to: (builder codeInstanceVariable: offset + 1)).
-
+FBDDecompiler >> storeIntoReceiverVariable: offset [
+	simulatedStack addLast: (builder codeAssignment: simulatedStack removeLast to: (builder codeInstanceVariable: offset + 1))
 ]
 
 { #category : #'data flow instructions' }
@@ -669,7 +633,7 @@ FBDDecompiler >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorInde
 { #category : #'data flow instructions' }
 FBDDecompiler >> storeIntoTemporaryVariable: offset [
 	| val |
-	simulatedStack addLast: (builder codeAssignment: (val := simulatedStack removeLast) to: (simulatedStack at: offset +1)).	
+	simulatedStack addLast: (builder codeAssignment: (val := simulatedStack removeLast) to: (simulatedStack at: offset +1)).
 	(loopsArray at: self pc) ifNotNil: [ self doPop. simulatedStack addLast: val ]
 ]
 
@@ -678,5 +642,5 @@ FBDDecompiler >> superSend: selector numArgs: numberArguments [
 	| args |
 	args := self popFromStack: numberArguments.
 	simulatedStack removeLast.
-	simulatedStack addLast: (builder codeMessage: selector receiver: builder codeSuper arguments: args ).
+	simulatedStack addLast: (builder codeMessage: selector receiver: builder codeSuper arguments: args )
 ]

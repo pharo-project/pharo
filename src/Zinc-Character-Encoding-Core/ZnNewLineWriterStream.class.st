@@ -1,7 +1,6 @@
 "
 I am a write stream wrapping a second stream. Whenever they ask me to write a cr, a lf, or a crlf I'll instead print a new line depending on a configured convention. By default I use the current platform convention. 
 
-| stream converter |
 stream := '' writeStream.
 converter := ZnNewLineWriterStream on: stream.
 converter cr; cr; lf; nextPut: $a.
@@ -37,9 +36,8 @@ ZnNewLineWriterStream class >> on: aStream [
 ]
 
 { #category : #'open/close' }
-ZnNewLineWriterStream >> close [ 
-
-	^stream close
+ZnNewLineWriterStream >> close [
+	stream close
 ]
 
 { #category : #flushing }
@@ -71,13 +69,13 @@ ZnNewLineWriterStream >> forPlatformLineEnding [
 	lineEnding := OSPlatform current lineEnding
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnNewLineWriterStream >> initialize [
 
 	super initialize.
 	cr := Character cr.
 	lf := Character lf.
-	self forPlatformLineEnding.
+	self forPlatformLineEnding
 ]
 
 { #category : #accessing }
@@ -92,15 +90,14 @@ ZnNewLineWriterStream >> nextPut: aCharacter [
 	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
 
 	(previous == cr and: [ aCharacter == lf ]) ifFalse: [
-		(aCharacter == cr or: [ aCharacter == lf ]) ifTrue: 
+		(aCharacter == cr or: [ aCharacter == lf ]) ifTrue:
 			[ self newLine ]
 		ifFalse:
 			[ stream nextPut: aCharacter ] ].
-	previous := aCharacter.
-
+	previous := aCharacter
 ]
 
 { #category : #accessing }
-ZnNewLineWriterStream >> stream: aWriteStream [ 
+ZnNewLineWriterStream >> stream: aWriteStream [
 	stream := aWriteStream
 ]

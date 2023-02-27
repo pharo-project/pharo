@@ -40,7 +40,7 @@ SetTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 SetTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #coverage }
@@ -58,25 +58,25 @@ SetTest >> collection [
 { #category : #coverage }
 SetTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ self classToBeTested
 ]
 
 { #category : #requirements }
 SetTest >> collectionInForIncluding [
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SetTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
-	
-	^ collection5Elements 
+
+	^ collection5Elements
 ]
 
 { #category : #requirements }
 SetTest >> collectionNotIncluded [
-	^ self classToBeTested  with: elementNotIn. 
+	^ self classToBeTested  with: elementNotIn
 ]
 
 { #category : #requirements }
@@ -92,31 +92,31 @@ SetTest >> collectionWithElement [
 
 { #category : #requirements }
 SetTest >> collectionWithElementsToRemove [
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^collectionOfFloat 
+	^collectionOfFloat
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutElement [
 	" return a collection that does not include 'element' "
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutEqualElements [
 " return a collection without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #requirements }
@@ -132,7 +132,7 @@ SetTest >> elementInForIncludesTest [
 
 { #category : #ambiguous }
 SetTest >> elementNotIn [
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #'tests - includes' }
@@ -147,7 +147,7 @@ SetTest >> elementToAdd [
 
 { #category : #'tests - empty' }
 SetTest >> empty [
-	
+
 	^ empty
 ]
 
@@ -165,31 +165,31 @@ SetTest >> expectedSizeAfterReject [
 { #category : #requirements }
 SetTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 SetTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #'tests - empty' }
 SetTest >> nonEmpty [
-	
+
 	^ full
 ]
 
 { #category : #requirements }
 SetTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 SetTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -201,14 +201,13 @@ SetTest >> result [
 { #category : #requirements }
 SetTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #'tests - iterate' }
 SetTest >> selectedNumber [
 
 	^ 2
-	
 ]
 
 { #category : #running }
@@ -218,7 +217,7 @@ SetTest >> setUp [
 	full := self classToBeTested  with: 1 with: 2 with: 3 with: 4.
 	collectionIncluded := self classToBeTested  with: 2 with: 3 .
 	collectionWith3Elements := self classToBeTested  new.
-	collectionWith3Elements add: 1; add: -2; add: 3. 
+	collectionWith3Elements add: 1; add: -2; add: 3.
 	collectResult := self classToBeTested  new add: SmallInteger ; yourself.
 	emptyButAllocatedWith20 := self classToBeTested  new: 20.
 	elementNotIn := 99.
@@ -226,7 +225,7 @@ SetTest >> setUp [
 	collectionOfNonIdentical := self classToBeTested  with: 'a' with: 'b' with: 'c'.
 	nonEmpty1element := self classToBeTested  with: 32.
 	withoutEqualElements := self classToBeTested  with: 4 with: 5 with: 2.
-	collection5Elements := self classToBeTested with: 1 with: 2 with: 3 with: 4 with: 5.
+	collection5Elements := self classToBeTested with: 1 with: 2 with: 3 with: 4 with: 5
 ]
 
 { #category : #'tests - size capacity' }
@@ -237,7 +236,7 @@ SetTest >> sizeCollection [
 
 { #category : #'tests - iterate' }
 SetTest >> speciesClass [
-	
+
 	^ Set
 ]
 
@@ -251,14 +250,14 @@ SetTest >> test0FixtureAddForUniquenessTest [
 ]
 
 { #category : #'tests - sunit original tests' }
-SetTest >> testAdd [ 
+SetTest >> testAdd [
 	empty add: 5.
-	self assert: (empty includes: 5).
+	self assert: (empty includes: 5)
 ]
 
 { #category : #'tests - growable' }
 SetTest >> testAddNonEmptyGrowsWhenNewElement [
-	
+
 	| oldSize |
 	oldSize := self nonEmpty size.
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
@@ -334,7 +333,6 @@ SetTest >> testCopy [
 
 { #category : #'tests - copy' }
 SetTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - some' }
@@ -399,21 +397,19 @@ SetTest >> testIdentityIncludes [
 { #category : #'tests - sunit original tests' }
 SetTest >> testIllegal [
 	self should: [empty at: 5] raise: self defaultTestError.
-	self should: [empty at: 5 put: #abc] raise: self defaultTestError.
-			
+	self should: [empty at: 5 put: #abc] raise: self defaultTestError
 ]
 
 { #category : #'tests - sunit original tests' }
 SetTest >> testIncludes [
 	self assert: (full includes: 4).
 	self assert: (full includes: 3).
-	self deny: (full includes: 6).
-			
+	self deny: (full includes: 6)
 ]
 
 { #category : #'tests - includes' }
 SetTest >> testIncludesElementIsNotThere [
-	
+
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -453,7 +449,7 @@ SetTest >> testIsHealthy [
 	probability of this failure. Also, the default size of a set
 	happens to have the same correct position for 3 and 0."
 	set := Set new: 50000.
-	[ 
+	[
 	a1 := 3 -> nil.
 	a2 := nil -> 3.
 	set
@@ -498,7 +494,7 @@ SetTest >> testOccurrences [
 SetTest >> testRemove [
 	full remove: 4.
 	self assert: (full includes: 3).
-	self deny: (full includes: 4).
+	self deny: (full includes: 4)
 ]
 
 { #category : #tests }
@@ -518,12 +514,9 @@ SetTest >> testRemoveAll [
 
 { #category : #'tests - some' }
 SetTest >> testRemoveIfAbsent [
-		
+
 	self assert: (full remove: 8 ifAbsent: [true]).
-	self assert: (full remove: 4 ifAbsent: [false]) isNumber.
-	
-	
-	
+	self assert: (full remove: 4 ifAbsent: [false]) isNumber
 ]
 
 { #category : #'tests - integrity' }

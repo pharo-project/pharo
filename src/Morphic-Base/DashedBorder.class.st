@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-DashedBorder class >> isDeprecated [ 
+DashedBorder class >> isDeprecated [
 	^ true
 ]

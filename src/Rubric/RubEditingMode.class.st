@@ -15,7 +15,6 @@ Class {
 { #category : #keymap }
 RubEditingMode class >> buildTabKeymapOn: aBuilder [
 	<keymap>
-	
 ]
 
 { #category : #menu }
@@ -23,7 +22,7 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 	(aBuilder item: #'extendedSearch' translated)
 		label: 'Code search...' translated;
 		withSeparatorAfter;
-		with: [ 
+		with: [
 					(aBuilder item: #'Browse full class' translated)
 						keyText: 'b';
 						selector: #browseFullClass.
@@ -56,7 +55,7 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 { #category : #menu }
 RubEditingMode class >> menuKeyword [
 	"Returns the name of the pragma to use to build the menu"
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -76,21 +75,13 @@ RubEditingMode >> editor [
 
 { #category : #accessing }
 RubEditingMode >> editorClass [
-	^ RubTextEditor 
+	^ RubTextEditor
 ]
 
 { #category : #initialization }
 RubEditingMode >> initialize [
 	super initialize.
 	acceptAllowed := true
-]
-
-{ #category : #accessing }
-RubEditingMode >> interactive [
-
-	"when returning true, it avoids that we can assign to class, i.e., Array := 55."
-	
-	^ true
 ]
 
 { #category : #testing }
@@ -104,7 +95,7 @@ RubEditingMode >> label [
 ]
 
 { #category : #menu }
-RubEditingMode >> menu [ 
+RubEditingMode >> menu [
 		"Answer the menu to be presented "
 
 	^ (PragmaMenuBuilder pragmaKeyword: self menuKeyword  model: self textArea ) menu
@@ -121,18 +112,18 @@ RubEditingMode >> model [
 ]
 
 { #category : #initialization }
-RubEditingMode >> plugin: aTextArea [ 
+RubEditingMode >> plugin: aTextArea [
 	textArea := aTextArea.
 	previousEditorClass := self textArea editorClass.
 	previousEditorClass = self editorClass
-		ifFalse: [ 
+		ifFalse: [
 			self textArea editorClass: self editorClass.
 			self textArea releaseEditor].
 	self updateTextAreaWhenPlugged
 ]
 
 { #category : #menu }
-RubEditingMode >> shiftMenu [ 
+RubEditingMode >> shiftMenu [
 		"Answer the menu to be presented with the shift key pressed"
 
 	^ self menu
@@ -156,18 +147,17 @@ RubEditingMode >> textStyle [
 { #category : #initialization }
 RubEditingMode >> unplug [
 	previousEditorClass = self textArea editor class
-		ifFalse: [ 
+		ifFalse: [
 			self textArea editorClass: previousEditorClass.
 			self textArea releaseEditor ].
 	self updateTextAreaWhenUnplugged.
-	textArea := nil.
-
+	textArea := nil
 ]
 
 { #category : #initialization }
 RubEditingMode >> updateTextAreaWhenPlugged [
 	self textArea
-		restoreSelectionIndexesAfter: [ 
+		restoreSelectionIndexesAfter: [
 			| t |
 			t := self textArea text copy.
 			self textArea updateTextWith: ''.
@@ -176,5 +166,4 @@ RubEditingMode >> updateTextAreaWhenPlugged [
 
 { #category : #initialization }
 RubEditingMode >> updateTextAreaWhenUnplugged [
-
 ]

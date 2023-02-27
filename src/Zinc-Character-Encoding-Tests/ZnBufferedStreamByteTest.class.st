@@ -72,21 +72,20 @@ ZnBufferedStreamByteTest >> integerEncodingSpec [
 ('D2029649' 1234567890 s le)
 ('2EFD69B6' -1234567890 s le)
 )
-
 ]
 
 { #category : #testing }
 ZnBufferedStreamByteTest >> testInt16Aliases [
 	| input writer |
-	writer := [ :block | 
-		ByteArray streamContents: [ :out | 
+	writer := [ :block |
+		ByteArray streamContents: [ :out |
 			ZnBufferedWriteStream on: out do: block ] ].
 	input := ByteArray readHexFrom: '04D2'.
 	self assert: (ZnBufferedReadStream on: input readStream) int16 equals: 1234.
 	self assert: (ZnBufferedReadStream on: input readStream) uint16 equals: 1234.
 	self assert: (ZnBufferedReadStream on: input readStream) nextWord equals: 1234.
 	self assert: ((ZnBufferedReadStream on: input readStream) nextNumber: 2) equals: 1234.
-	self assert: ((ZnBufferedReadStream on: input reversed readStream) nextLittleEndianNumber: 2) equals: 1234.	
+	self assert: ((ZnBufferedReadStream on: input reversed readStream) nextLittleEndianNumber: 2) equals: 1234.
 	self assert: (writer value: [ :out | out int16: 1234 ]) equals: input.
 	self assert: (writer value: [ :out | out uint16: 1234 ]) equals: input.
 	self assert: (writer value: [ :out | out nextWordPut: 1234 ]) equals: input.
@@ -100,15 +99,15 @@ ZnBufferedStreamByteTest >> testInt16Aliases [
 { #category : #testing }
 ZnBufferedStreamByteTest >> testInt32Aliases [
 	| input writer |
-	writer := [ :block | 
-		ByteArray streamContents: [ :out | 
+	writer := [ :block |
+		ByteArray streamContents: [ :out |
 			ZnBufferedWriteStream on: out do: block ] ].
 	input := ByteArray readHexFrom: '499602D2'.
 	self assert: (ZnBufferedReadStream on: input readStream) int32 equals: 1234567890.
 	self assert: (ZnBufferedReadStream on: input readStream) uint32 equals: 1234567890.
 	self assert: (ZnBufferedReadStream on: input readStream) nextInt32 equals: 1234567890.
 	self assert: ((ZnBufferedReadStream on: input readStream) nextNumber: 4) equals: 1234567890.
-	self assert: ((ZnBufferedReadStream on: input reversed readStream) nextLittleEndianNumber: 4) equals: 1234567890.	
+	self assert: ((ZnBufferedReadStream on: input reversed readStream) nextLittleEndianNumber: 4) equals: 1234567890.
 	self assert: (writer value: [ :out | out int32: 1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out uint32: 1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out nextInt32Put: 1234567890 ]) equals: input.
@@ -124,15 +123,9 @@ ZnBufferedStreamByteTest >> testInt32Aliases [
 { #category : #testing }
 ZnBufferedStreamByteTest >> testInt8 [
 	| bytes readStream |
-	bytes := ByteArray
-		streamContents: [ :out | 
-			ZnBufferedWriteStream
-				on: out
-				do: [ :bout | 
-					bout
-						int8: 123;
-						uint8: 123;
-						int8: -123 ] ].
+	bytes := ByteArray streamContents: [ :out |
+		ZnBufferedWriteStream on: out do: [ :bout |
+			bout int8: 123; uint8: 123; int8: -123 ] ].
 	readStream := ZnBufferedReadStream on: bytes readStream.
 	self assert: readStream peek equals: 123.
 	self assert: readStream int8 equals: 123.
@@ -148,9 +141,9 @@ ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 	self integerEncodingSpec do: [ :spec |
 		| input integer |
 		input := ByteArray readHexFrom: spec first.
-		integer := (ZnBufferedReadStream on: input readStream) 
-			nextIntegerOfSize: input 
-			size signed: spec third = #s 
+		integer := (ZnBufferedReadStream on: input readStream)
+			nextIntegerOfSize: input
+			size signed: spec third = #s
 			bigEndian: spec fourth = #be.
 		self assert: integer equals: spec second ]
 ]
@@ -161,11 +154,11 @@ ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndianPut [
 		| input output |
 		input := ByteArray readHexFrom: spec first.
 		output := ByteArray streamContents: [ :out |
-			ZnBufferedWriteStream on: out do: [ :bout | 
-				bout 
-					nextIntegerOfSize: input size 
-					signed: spec third = #s 
-					bigEndian: spec fourth = #be 
+			ZnBufferedWriteStream on: out do: [ :bout |
+				bout
+					nextIntegerOfSize: input size
+					signed: spec third = #s
+					bigEndian: spec fourth = #be
 					put: spec second ] ].
 		self assert: output equals: input ]
 ]

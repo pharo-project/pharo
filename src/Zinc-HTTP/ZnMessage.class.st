@@ -49,7 +49,7 @@ ZnMessage >> = other [
 
 { #category : #accessing }
 ZnMessage >> clearEntity [
-	"Set my entity to nil. 
+	"Set my entity to nil.
 	Unlike #resetEntity:, my content type and length remain unchanged."
 
 	entity ifNotNil: [
@@ -73,12 +73,13 @@ ZnMessage >> contentType [
 
 { #category : #accessing }
 ZnMessage >> contents [
-	^ entity isNil ifTrue: [ nil ] ifFalse: [ entity contents ]
+
+	^ entity ifNil: [ nil ] ifNotNil: [ entity contents ]
 ]
 
 { #category : #accessing }
 ZnMessage >> cookies [
-	self subclassResponsibility 
+	^ #()
 ]
 
 { #category : #accessing }
@@ -137,7 +138,8 @@ ZnMessage >> hash [
 
 { #category : #accessing }
 ZnMessage >> headers [
-	headers isNil ifTrue: [ headers := ZnHeaders new ].
+
+	headers ifNil: [ headers := ZnHeaders new ].
 	^ headers
 ]
 
@@ -155,14 +157,14 @@ ZnMessage >> headersDo: twoArgumentBlock [
 { #category : #testing }
 ZnMessage >> isConnectionClose [
 	| value |
-	value := self headers at: 'Connection' ifAbsent: [ ^ false ].
+	value := self headers singleAt: 'Connection' ifAbsent: [ ^ false ].
 	^ value sameAs: 'close'
 ]
 
 { #category : #testing }
 ZnMessage >> isConnectionKeepAlive [
 	| value |
-	value := self headers at: 'Connection' ifAbsent: [ ^ false ].
+	value := self headers singleAt: 'Connection' ifAbsent: [ ^ false ].
 	^ value sameAs: 'keep-alive'
 ]
 
@@ -184,20 +186,17 @@ ZnMessage >> readBinaryFrom: stream [
 { #category : #'initialize-release' }
 ZnMessage >> readEntityFrom: stream [
 	self entity: (self entityReaderOn: stream) readEntity
-	
 ]
 
 { #category : #'initialize-release' }
 ZnMessage >> readFrom: stream [
 	self readHeaderFrom: stream.
 	self readEntityFrom: stream
-	
 ]
 
 { #category : #'initialize-release' }
 ZnMessage >> readHeaderFrom: stream [
 	self headers: (ZnHeaders readFrom: stream)
-	
 ]
 
 { #category : #'initialize-release' }
@@ -207,7 +206,6 @@ ZnMessage >> readStreamingFrom: stream [
 	(entityReader := self entityReaderOn: stream)
 		streaming.
 	self entity: entityReader readEntity
-	
 ]
 
 { #category : #accessing }
@@ -216,7 +214,7 @@ ZnMessage >> resetEntity: object [
 	even if I am already describing an entity using my content type and length.
 	See also: #clearEntity"
 
-	(entity ~= object and: [ entity notNil ]) 
+	(entity ~= object and: [ entity notNil ])
 		ifTrue: [ entity close ].
 	entity := object.
 	self headers acceptEntityDescription: object
@@ -252,15 +250,16 @@ ZnMessage >> setConnectionKeepAlive [
 ZnMessage >> setContentType: mimeType [
 	"Explicitly set my Content-Type to mimeType.
 	I normally do this automatically by taking the #contentType from my entity."
-	
+
 	self headers contentType: mimeType
 ]
 
 { #category : #testing }
 ZnMessage >> wantsConnectionClose [
-	"Return if the HTTP protocol should close the connection after processing the receiver"
-	
-	^ false
+	"Return if the HTTP protocol should close the connection after processing the receiver.
+	True in case of the presense of an explicit connection close request header."
+
+	^ self isConnectionClose
 ]
 
 { #category : #writing }
@@ -269,7 +268,7 @@ ZnMessage >> writeOn: stream [
 	bivalentWriteStream := ZnBivalentWriteStream on: stream.
 	self headers writeOn: bivalentWriteStream.
 	bivalentWriteStream nextPutAll: String crlf.
-	self hasEntity ifTrue: [ 
+	self hasEntity ifTrue: [
 		(self entityWriterOn: bivalentWriteStream) writeEntity: self entity ]
 ]
 

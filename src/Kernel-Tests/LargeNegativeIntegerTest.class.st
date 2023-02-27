@@ -9,8 +9,16 @@ Class {
 
 { #category : #coverage }
 LargeNegativeIntegerTest >> classToBeTested [
-	
+
 	^ LargeNegativeInteger
+]
+
+{ #category : #'tests - arithmetic' }
+LargeNegativeIntegerTest >> testAbs [
+
+	self
+		assert: (SmallInteger minVal - 2) abs
+		equals: (SmallInteger minVal - 2) negated
 ]
 
 { #category : #tests }
@@ -21,7 +29,6 @@ LargeNegativeIntegerTest >> testByteAt [
 	1 to: 20 do: [:i | | digit |
 		digit := lni byteAt: i.
 		self assert: i equals: digit]
-
 ]
 
 { #category : #tests }
@@ -49,7 +56,6 @@ LargeNegativeIntegerTest >> testDigitAtPut [
 	lni := LargeNegativeInteger new: 20.
 	1 to: 20 do: [:i | lni byteAt: i put: i].
 	self assert: -114605103402541699037609980192546360895434064385 equals: lni
-
 ]
 
 { #category : #tests }
@@ -58,7 +64,6 @@ LargeNegativeIntegerTest >> testDigitLength [
 	| lni |
 	lni := -114605103402541699037609980192546360895434064385.
 	self assert: 20 equals: lni bytesCount
-
 ]
 
 { #category : #tests }
@@ -114,7 +119,6 @@ LargeNegativeIntegerTest >> testReplaceFromToWithStartingAt [
 		digit := lni20 byteAt: e.
 		replacementDigit := lni7 byteAt: e - 4.
 		self assert: replacementDigit equals: digit]
-
 ]
 
 { #category : #tests }
@@ -126,7 +130,7 @@ LargeNegativeIntegerTest >> testSqrt [
 LargeNegativeIntegerTest >> testStoreOn [
 	| integer |
 	integer := SmallInteger minVal - 1.
-	
+
 	"Store on adds a space before a negative number to avoid mistaking it with a - message"
 	self
 		assert: integer class equals: LargeNegativeInteger;

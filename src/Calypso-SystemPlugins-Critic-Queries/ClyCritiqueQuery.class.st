@@ -17,7 +17,7 @@ ClyCritiqueQuery class >> resultItemsType [
 
 { #category : #execution }
 ClyCritiqueQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin resolveMetadataOfCritiques: aQueryResult 
+	anEnvironmentPlugin resolveMetadataOfCritiques: aQueryResult
 ]
 
 { #category : #'system changes' }
@@ -29,7 +29,7 @@ ClyCritiqueQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	and triggering it after every system change can slow down system a lot.
 	So instead we just reset given aQueryResult silently. So users should update views manually"
 	aSystemAnnouncement affectsCritiques ifFalse: [ ^false ].
-	
-	aQueryResult forceLazyRebuild.	
+
+	aQueryResult forceLazyRebuild.
 	^false "and we return false to prevent result observers to be notified"
 ]

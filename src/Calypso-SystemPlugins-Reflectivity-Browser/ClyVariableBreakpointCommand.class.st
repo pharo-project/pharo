@@ -11,7 +11,7 @@ Class {
 
 { #category : #testing }
 ClyVariableBreakpointCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	^ self isAbstract not
+	^ (super canBeExecutedInContext: aSourceCodeContext)
 		and: [ aSourceCodeContext lastSelectedSourceNode isVariable ]
 ]
 
@@ -27,7 +27,7 @@ ClyVariableBreakpointCommand class >> isAbstract [
 
 { #category : #accessing }
 ClyVariableBreakpointCommand >> defaultMenuIconName [
-	^#smallDebug
+	^#halt
 ]
 
 { #category : #execution }
@@ -43,5 +43,5 @@ ClyVariableBreakpointCommand >> execute [
 
 { #category : #execution }
 ClyVariableBreakpointCommand >> installVariableBreakpointOn: aVariableName in: methodOrClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

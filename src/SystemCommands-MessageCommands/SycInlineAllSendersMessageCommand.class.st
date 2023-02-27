@@ -15,7 +15,7 @@ SycInlineAllSendersMessageCommand class >> canBeExecutedInContext: aToolContext 
 { #category : #execution }
 SycInlineAllSendersMessageCommand >> createRefactoring [
 	| refactoring methodOrigin |
-	
+
 	"Extract the method origin from the context.
 	The contextUser can be
 	  - a method (if selected from the method list)
@@ -24,16 +24,16 @@ SycInlineAllSendersMessageCommand >> createRefactoring [
 	methodOrigin := originalMessage contextUser method origin.
 	refactoring := RBInlineAllSendersRefactoring
 		model: model
-		sendersOf: originalMessage selector 
+		sendersOf: originalMessage selector
 		in: methodOrigin.
-	refactoring setOption: #inlineExpression toUse: [ :ref :aString | self confirm: ('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString) ] .
-	^ refactoring 
+	refactoring setOption: #inlineExpression toUse: [ :ref :aString |
+		(self confirm: ('Do you want to extract the expression ''<1s>'' into a variable in method ''<2s>''?' expandMacrosWith: aString with: ref sourceSelector)) not ] .
+	^ refactoring
 ]
 
 { #category : #accessing }
 SycInlineAllSendersMessageCommand >> defaultMenuIconName [
 	^#smallRightFlushIcon
-
 ]
 
 { #category : #accessing }

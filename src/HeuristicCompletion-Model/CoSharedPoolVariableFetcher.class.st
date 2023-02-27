@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #enumerating }
-CoSharedPoolVariableFetcher >> entriesDo: aBlock [ 
-	
+CoSharedPoolVariableFetcher >> entriesDo: aBlock [
+
 	self completionClass instanceSide sharedPools do: [ :e |
 		e allClassVarNames do: [ :name | aBlock value: (NECClassVarEntry contents: name node: astNode) ] ]
 ]

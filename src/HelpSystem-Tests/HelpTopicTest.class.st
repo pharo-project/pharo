@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 HelpTopicTest >> defaultTestClass [
-	^HelpTopic 
+	^HelpTopic
 ]
 
 { #category : #running }

@@ -1,6 +1,6 @@
 Extension { #name : #MCDictionaryRepository }
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCDictionaryRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 	| desc |
@@ -22,7 +22,7 @@ MCDictionaryRepository class >> isAvailableFor: type [
 	^ type = 'dictionary'
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCDictionaryRepository >> versionInfoFromVersionNamed: aString [
 
 	| versions |

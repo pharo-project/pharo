@@ -3,37 +3,15 @@ I am a fetcher looking for globals in an environment.
 "
 Class {
 	#name : #CoGlobalVariableFetcher,
-	#superclass : #CoFetcher,
-	#instVars : [
-		'completionEnvironment',
-		'astNode'
-	],
+	#superclass : #CoGlobalFetcher,
 	#category : #'HeuristicCompletion-Model-Fetchers'
 }
-
-{ #category : #accessing }
-CoGlobalVariableFetcher >> astNode [
-	^ astNode
-]
-
-{ #category : #accessing }
-CoGlobalVariableFetcher >> astNode: anObject [
-	astNode := anObject
-]
-
-{ #category : #accessing }
-CoGlobalVariableFetcher >> completionEnvironment [
-	^ completionEnvironment
-]
-
-{ #category : #accessing }
-CoGlobalVariableFetcher >> completionEnvironment: anObject [
-	completionEnvironment := anObject
-]
 
 { #category : #enumerating }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
-	completionEnvironment globals do: [ :e |
-		aBlock value: (NECGlobalEntry contents: e node: astNode)]
+	self systemNavigation
+		allClassNamesStartingWith: filter completionString
+		do: [ :e | aBlock value: (NECGlobalEntry contents: e node: astNode) ]
+		caseSensitive: (NECPreferences caseSensitive)
 ]

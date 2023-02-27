@@ -13,7 +13,7 @@ Class {
 
 { #category : #coverage }
 AssociationTest >> classToBeTested [
-	
+
 	^ Association
 ]
 
@@ -42,7 +42,7 @@ AssociationTest >> testEquality [
 { #category : #tests }
 AssociationTest >> testHash [
 
-	self 
+	self
 		assert: a hash equals: a copy hash;
 		assert: a hash equals: b hash
 ]
@@ -51,23 +51,22 @@ AssociationTest >> testHash [
 AssociationTest >> testIsSelfEvaluating [
 	| anotherAssociation |
 	self assert: a isSelfEvaluating.
-	
+
 	self assert: a printString equals: '1->''one'''.
-	
+
 	anotherAssociation := Object new -> Object new.
-	anotherAssociation isSelfEvaluating 
+	anotherAssociation isSelfEvaluating
 		ifTrue: [ self assert: (self class compiler evaluate: anotherAssociation printString) = anotherAssociation
 							description: 'a self evaluating should evaluate as self' ]
-
 ]
 
 { #category : #tests }
 AssociationTest >> testStoreOnNegativeInteger [
 	| association storeString |
 	association := 'a'-> -1.
-	
+
 	storeString := String streamContents: [ :s | association storeOn: s ].
-	
+
 	self assert: storeString equals: '(''a''-> -1)'
 ]
 
@@ -76,6 +75,6 @@ AssociationTest >> testStoreOnPositiveInteger [
 	| association storeString |
 	association := 'a'-> 1.
 	storeString := String streamContents: [ :s | association storeOn: s ].
-	
+
 	self assert: storeString equals: '(''a''->1)'
 ]

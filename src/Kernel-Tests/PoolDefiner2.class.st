@@ -11,10 +11,9 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 PoolDefiner2 class >> initialize [
-	"self initialize"
-	
+
 	VariableInPoolDefiner2 := 33.
-	AnAuthor := 'NotDucasse'.
+	AnAuthor := 'NotDucasse'
 ]

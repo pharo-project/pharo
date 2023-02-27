@@ -53,7 +53,6 @@ MetacelloVersionNumberTestCase >> testInvalidSpecialMatch [
 	self 
 		should: [ ((self versionClass fromString: '1.1') match: '?.?') ]
 		raise: Error.
-
 ]
 
 { #category : #'tests - matching' }
@@ -68,7 +67,6 @@ MetacelloVersionNumberTestCase >> testSpecialMatch [
 	self assert: ((self versionClass fromString: '10.1.1.1.1') match: '?').
 	self deny: ((self versionClass fromString: '1.1') match: '*.*.?').
 	self assert: ((self versionClass fromString: '1.1.1') match: '*.?').
-
 ]
 
 { #category : #'tests - matching' }
@@ -83,7 +81,6 @@ MetacelloVersionNumberTestCase >> testStandardMatch [
 	self assert: ((self versionClass fromString: '1.alpha5.0') match: '1-alpha#.0').
 	self assert: ((self versionClass fromString: '1.alpha5.0') match: '1.alpha#.0').
 	self deny: ((self versionClass fromString: '1-alpha10.0') match: '1-alpha#.0').
-
 ]
 
 { #category : #tests }
@@ -172,14 +169,12 @@ MetacelloVersionNumberTestCase >> testVersion13 [
 
 	self deny: ((self versionClass fromString: '0.8') <= (self versionClass fromString: '0.7')).
 	self deny: ((self versionClass fromString: '0.8.1.8') <= (self versionClass fromString: '0.7.0.5')).
-	
 ]
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion15 [
 
 	self assert: ((self versionClass fromString: '1.0-beta.0') < (self versionClass fromString: '1.0-beta.1')).
-
 ]
 
 { #category : #tests }
@@ -204,14 +199,12 @@ MetacelloVersionNumberTestCase >> testVersion18 [
 
 	self deny: ((self versionClass fromString: '1.0') < (self versionClass fromString: '1')).
 	self deny: ((self versionClass fromString: '1.0') < (self versionClass fromString: '1-0')).
-
 ]
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion19 [
 
 	self assert: ((self versionClass fromString: '1.0-beta.0') < (self versionClass fromString: '1')).
-
 ]
 
 { #category : #tests }

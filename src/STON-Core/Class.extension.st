@@ -1,6 +1,6 @@
 Extension { #name : #Class }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Class class >> fromSton: stonReader [
 	| theClassName theClass |
 	theClassName := stonReader parseListSingleton.
@@ -8,7 +8,7 @@ Class class >> fromSton: stonReader [
 	^ theClass
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Class >> stonOn: stonWriter [
 	stonWriter 
 		writeObject: self 

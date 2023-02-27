@@ -10,20 +10,20 @@ Class {
 
 { #category : #decoration }
 ClyAbstractMethodTableDecorator class >> browserPluginClass [
-	^ClyInheritanceAnalysisBrowserPlugin 
+	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
 { #category : #decoration }
 ClyAbstractMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
+
 	anItemCellMorph definitionIcon: #abstractIcon
 ]
 
 { #category : #decoration }
 ClyAbstractMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
-		
+
 	nameMorph := anItemCellMorph label.
 	nameMorph clyAddEmphasis: TextEmphasis italic.
 	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment

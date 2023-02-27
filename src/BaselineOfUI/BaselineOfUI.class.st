@@ -25,13 +25,10 @@ Class {
 
 { #category : #baseline }
 BaselineOfUI >> baseline: spec [ 
-    
-	<baseline>
+    <baseline>
 
 	| repository |
-	 
-	repository := self packageRepositoryURL.
-       
+	repository := self packageRepositoryURL.       
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 		
@@ -42,30 +39,19 @@ BaselineOfUI >> baseline: spec [
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
-		"old spec, to be removed"
-		spec baseline: 'Spec' with: [ spec repository: repository ].
-		"new spec (base), using external configuration"
+		"Spec 2 (base), using external configuration"
 		self specBase: spec.		
 		
-		spec baseline: 'DrTests' with: [ spec repository: repository ].
-
 		spec package: 'StartupPreferences'.		
-		
-		spec package: 'Debugger-Actions'.
-
-		spec package: 'Fonts-Chooser'.
-
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
-
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec package: 'Keymapping-Settings'.
-		spec package: 'Keymapping-Tools-Spec'.
-
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'ui' ].
 		spec package: 'WebBrowser-Core'.
-
-		spec package: 'HelpSystem-Core'.
 	].
 ]
 

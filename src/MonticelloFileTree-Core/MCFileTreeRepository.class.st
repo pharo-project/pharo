@@ -108,13 +108,12 @@ MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 			((aZnUrl host = #/) and: [ aZnUrl pathSegments isEmpty ])
 				ifTrue: [ ^ FileSystem root ].
 			aZnUrl pathSegments copyWithFirst: aZnUrl host ]
-		ifNil: [ aZnUrl pathSegments copyWithFirst: FileSystem disk delimiter asString ].
-	^ (String streamContents: 
-			[ :stream | 
-			path 
-				asStringOn: stream 
-				delimiter: FileSystem disk delimiter asString ])
-		asFileReference
+		ifNil: [ aZnUrl pathSegments].
+
+	(path ifNotEmpty: [ path first = #'.' or: [ path first = #'..' ] ])
+		ifTrue: [ ^ (RelativePath withAll: path) asFileReference ].
+
+	^ (AbsolutePath withAll: path) asFileReference 
 ]
 
 { #category : #accessing }
@@ -201,11 +200,6 @@ MCFileTreeRepository >> fileDirectoryOn: directoryPath [
 { #category : #accessing }
 MCFileTreeRepository >> fileUtils [
     ^ MCFileTreeFileUtils current
-]
-
-{ #category : #accessing }
-MCFileTreeRepository >> filterFileNames: aCollection forVersionNamed: aString [
-	^ aCollection select: [:ea | (self versionNameFromFileName: ea) = aString]
 ]
 
 { #category : #private }

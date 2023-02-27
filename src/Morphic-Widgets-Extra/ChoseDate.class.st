@@ -16,29 +16,29 @@ ChoseDate class >> of: aDate from: aCalendarChooserMorph [
 
 	^ self new
 		date: aDate;
-		calendar: aCalendarChooserMorph.
+		calendar: aCalendarChooserMorph
 ]
 
 { #category : #accessing }
 ChoseDate >> calendar [
 
-	^ calendar.
+	^ calendar
 ]
 
 { #category : #private }
-ChoseDate >> calendar: aCalendarChooserMorph [ 
+ChoseDate >> calendar: aCalendarChooserMorph [
 
-	calendar := aCalendarChooserMorph.
+	calendar := aCalendarChooserMorph
 ]
 
 { #category : #accessing }
 ChoseDate >> date [
 
-	^ date.
+	^ date
 ]
 
 { #category : #private }
-ChoseDate >> date: aDate [ 
+ChoseDate >> date: aDate [
 
-	date := aDate.
+	date := aDate
 ]

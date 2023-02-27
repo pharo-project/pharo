@@ -8,13 +8,12 @@ Class {
 }
 
 { #category : #accessing }
-SycMergeVariableCommand class >> defaultMenuIconName [ 
+SycMergeVariableCommand class >> defaultMenuIconName [
 	^ #merge
 ]
 
 { #category : #activation }
 SycMergeVariableCommand class >> fullBrowserShortcutActivation [
-	
 ]
 
 { #category : #activation }
@@ -23,7 +22,6 @@ SycMergeVariableCommand class >> sourceCodeMenuActivation [
 
 { #category : #activation }
 SycMergeVariableCommand class >> sourceCodeShortcutActivation [
-	
 ]
 
 { #category : #execution }
@@ -46,5 +44,5 @@ SycMergeVariableCommand >> newVariableName [
 SycMergeVariableCommand >> requestNewNameIn: aToolContext [
 	newName := aToolContext
 		           requestSimpleVariable: 'Select a variable'
-		           from: (Array with: variable definingClass).
+		           from: (Array with: variable definingClass)
 ]

@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : #EFFormatter,
-	#superclass : #RBProgramNodeVisitor,
+	#superclass : #RBAbstractFormatter,
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -49,7 +49,7 @@ Class {
 
 { #category : #private }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer uniqueInstance announce: EFSettingChanged 
+	SystemAnnouncer uniqueInstance announce: EFSettingChanged
 ]
 
 { #category : #private }
@@ -59,7 +59,7 @@ EFFormatter class >> defaultPrettyPrintContext [
 
 { #category : #accessing }
 EFFormatter class >> defaultPrettyPrintContext: aContext [ 
-	DefaultPrettyPrintContext := aContext 
+	DefaultPrettyPrintContext := aContext
 ]
 
 { #category : #public }
@@ -122,9 +122,8 @@ EFFormatter class >> indentsForKeywords: anInteger [
 	self announceASettingChange
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 EFFormatter class >> initialize [
-	"self initialize"
 
 	FormatAsYouReadPolicy := false.
 	DefaultPrettyPrintContext := EFContext new
@@ -276,6 +275,17 @@ EFFormatter class >> numberOfNewLinesAfterMethodSignature: anInteger [
 ]
 
 { #category : #accessing }
+EFFormatter class >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
+	^ DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignatureWithMethodComment
+]
+
+{ #category : #accessing }
+EFFormatter class >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
+	DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger.
+	self announceASettingChange
+]
+
+{ #category : #accessing }
 EFFormatter class >> numberOfNewLinesAfterTemporaries [
 	^ DefaultPrettyPrintContext numberOfNewLinesAfterTemporaries
 ]
@@ -377,6 +387,12 @@ EFFormatter class >> periodsAtEndOfBlock [
 { #category : #accessing }
 EFFormatter class >> periodsAtEndOfMethod [
 	^ DefaultPrettyPrintContext periodsAtEndOfMethod
+]
+
+{ #category : #priority }
+EFFormatter class >> priority [
+	
+	^ 10
 ]
 
 { #category : #accessing }
@@ -654,13 +670,29 @@ myMethod
 EFFormatter class >> settingsNewLinesAfterMethodSignature: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignature)
-		label: 'New lines after method signature';
+		label: 'New lines after method signature for method without a method comment';
 		default: 2;
-		description: 'To set the number of new lines directly after the method signature.
+		description: 'To set the number of new lines directly after the method signature for a method without a method comment.
 When numberOfNewLinesAfterMethodSignature is set to 2 new lines
 
 myMethod: arg
 
+	^ true
+'
+]
+
+{ #category : #settings }
+EFFormatter class >> settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder [
+
+	(aBuilder setting: #numberOfNewLinesAfterMethodSignatureWithMethodComment)
+		label: 'New lines after method signature for method with a method comment';
+		default: 1;
+		description: 'To set the number of new lines directly after the method signature for a method with a method comment.
+When numberOfNewLinesAfterMethodSignature is set to 1 new lines
+
+myMethod: arg
+	"myComment"
+	
 	^ true
 '
 ]
@@ -722,34 +754,37 @@ EFFormatter class >> settingsOn: aBuilder [
 		parent: #codeFormatters;
 		label: 'Enlumineur Pretty Printer';
 		description: 'Settings related to automatic code formatting';
-		with: [ self settingsMaxLineLength: aBuilder.
-			self settingsCommentCloseToStatement: aBuilder.
-			self settingsIndentStyle: aBuilder.
-			self settingsNumberOfSpacesInIndent: aBuilder.
-			self settingsIndentsForKeywords: aBuilder.
-			self settingsKeepBlockInMessage: aBuilder.
-			self settingsAlignBlockBrackets: aBuilder.
-			self settingsMethodSignatureOnMultipleLines: aBuilder.
-			self settingsOneLineMessages: aBuilder.
-			self settingsMultiLineMessages: aBuilder.
-			self settingsMinimumNewLinesBetweenStatements: aBuilder.
-			self settingsNewLineAfterCascade: aBuilder.
-			self settingsNewLineBeforeFirstCascade: aBuilder.
-			self settingsNewLineBeforeFirstKeyword: aBuilder.
-			self settingsNewLinesAfterMethodComment: aBuilder.
-			self settingsNewLinesAfterMethodSignature: aBuilder.
-			self settingsNewLinesAfterTemporaries: aBuilder.
-			self settingsNumberOfArgumentsForMultiLine: aBuilder.
-			self settingsPeriodsAtEndOfBlock: aBuilder.
-			self settingsPeriodsAtEndOfMethod: aBuilder.
-			self settingsRetainBlankLinesBeforeComments: aBuilder.
-			self settingsRetainBlankLinesBetweenStatements: aBuilder.
-			self settingsSelectorAndArgumentCombinedMaxSize: aBuilder.
-			self settingsSpacesAfterCaretSymbolInReturn: aBuilder.
-			self settingsSpacesInsideBlocks: aBuilder.
-			self settingsSpacesInsideParentheses: aBuilder.
-			self settingsSpacesInsideArray: aBuilder.
-			self settingsUseBasicCommentFormat: aBuilder]
+		with: [ 
+			self 
+				settingsMaxLineLength: aBuilder;
+				settingsCommentCloseToStatement: aBuilder;
+				settingsIndentStyle: aBuilder;
+				settingsNumberOfSpacesInIndent: aBuilder;
+				settingsIndentsForKeywords: aBuilder;
+				settingsKeepBlockInMessage: aBuilder;
+				settingsAlignBlockBrackets: aBuilder;
+				settingsMethodSignatureOnMultipleLines: aBuilder;
+				settingsOneLineMessages: aBuilder;
+				settingsMultiLineMessages: aBuilder;
+				settingsMinimumNewLinesBetweenStatements: aBuilder;
+				settingsNewLineAfterCascade: aBuilder;
+				settingsNewLineBeforeFirstCascade: aBuilder;
+				settingsNewLineBeforeFirstKeyword: aBuilder;
+				settingsNewLinesAfterMethodComment: aBuilder;
+				settingsNewLinesAfterMethodSignature: aBuilder;
+				settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder;
+				settingsNewLinesAfterTemporaries: aBuilder;
+				settingsNumberOfArgumentsForMultiLine: aBuilder;
+				settingsPeriodsAtEndOfBlock: aBuilder;
+				settingsPeriodsAtEndOfMethod: aBuilder;
+				settingsRetainBlankLinesBeforeComments: aBuilder;
+				settingsRetainBlankLinesBetweenStatements: aBuilder;
+				settingsSelectorAndArgumentCombinedMaxSize: aBuilder;
+				settingsSpacesAfterCaretSymbolInReturn: aBuilder;
+				settingsSpacesInsideBlocks: aBuilder;
+				settingsSpacesInsideParentheses: aBuilder;
+				settingsSpacesInsideArray: aBuilder;
+				settingsUseBasicCommentFormat: aBuilder]
 ]
 
 { #category : #settings }
@@ -951,7 +986,7 @@ EFFormatter >> addNewLinesBeforeStatementStartingAt: anInteger [
 						ifFalse: [ 0 ]).
 	newLines = 0 
 		ifTrue: [ self space ] 
-		ifFalse: [ self newLines: newLines ] 
+		ifFalse: [ self newLines: newLines ]
 ]
 
 { #category : #private }
@@ -974,7 +1009,7 @@ EFFormatter >> areArgumentsTooLong: anArray [
 EFFormatter >> basicFormatCommentFor: aComment [
 	codeStream
 		nextPut: $";
-		nextPutAll: aComment contents;
+		nextPutAll: (aComment contents escapeCharacter: $");
 		nextPut: $"
 ]
 
@@ -984,7 +1019,7 @@ EFFormatter >> bracketWith: bracketString around: aBlock [
 		ifTrue: [ ^ aBlock value ].
 	codeStream nextPut: bracketString first.
 	^ aBlock
-		ensure: [ codeStream nextPut: bracketString last ] 
+		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
 { #category : #private }
@@ -993,7 +1028,7 @@ EFFormatter >> bracketWith: bracketString around: aBlock indentExtraSpaces: anIn
 		ifTrue: [ ^ aBlock value ].
 	codeStream nextPut: bracketString first.
 	^ [ self indentExtraSpaces: anInteger  around: aBlock ]
-		ensure: [ codeStream nextPut: bracketString last ] 
+		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
 { #category : #private }
@@ -1001,6 +1036,13 @@ EFFormatter >> characterSeparatorMethodSignatureFor: aMethodNode [
 	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
 			ifTrue: [ self newLine ]
 			ifFalse: [ self space ]
+]
+
+{ #category : #private }
+EFFormatter >> cleanSpacesAtTheEnd [
+
+	[ codeStream peekLast = Character space ] whileTrue: [
+		codeStream back ]
 ]
 
 { #category : #accessing }
@@ -1112,30 +1154,28 @@ EFFormatter >> formatBlock2: aBlockNode [
 													or: [ doesFirstStatementFit ] ])
 		ifTrue: [ self newLine ]
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
-
 ]
 
 { #category : #'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
- 	" see formatBlock2: for a possible alternate and faster definition."
-	
+	" see formatBlock2: for a possible alternate and faster definition."
+
 	| isMultiline |
 	isMultiline := self willBeMultiline: aBlockNode body.
-  
+
 	codeStream nextPutAll: self spacesInsideBlocksString.
-	
+
 	self formatBlockArgumentsFor: aBlockNode.
 	self formatBlockCommentFor: aBlockNode.
-	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ]) 
-		and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ]) 
-			ifTrue: [ self newLine ].
-  
-	self visitSequenceNode: aBlockNode body.
-	
-	(self lineUpBlockBrackets and: [ isMultiline ]) 
-		ifTrue: [ self newLine ] 
-		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
+	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
+		 and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
+		ifTrue: [ self newLine ].
 
+	self visitSequenceNode: aBlockNode body.
+
+	(self lineUpBlockBrackets and: [ isMultiline ])
+		ifTrue: [ self newLine ]
+		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
 ]
 
 { #category : #'private - formatting' }
@@ -1143,20 +1183,16 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 	| onAnotherLine args |
 	args := aBlockNode arguments.
-	args isEmpty
-		ifTrue: [ ^ self ].
-	onAnotherLine := self areArgumentsTooLong: args. 
-	args
-		do: [ :each | 
-			onAnotherLine ifTrue: [self newLine ].
-			codeStream nextPut: $:.
-			self visitVariableNode: each.
-			self formatCommentCloseToStatements
-				ifTrue:
-					[ self spaceAndFormatComments: each ].
-			self space ].
-	codeStream nextPutAll: '| '.
-
+	args isEmpty ifTrue: [ ^ self ].
+	onAnotherLine := self areArgumentsTooLong: args.
+	args do: [ :each |
+		onAnotherLine ifTrue: [ self newLine ].
+		codeStream nextPut: $:.
+		self visitVariableNode: each.
+		self formatCommentCloseToStatements ifTrue: [
+			self spaceAndFormatComments: each ].
+		self space ].
+	codeStream nextPutAll: '| '
 ]
 
 { #category : #'private - formatting' }
@@ -1193,7 +1229,9 @@ EFFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround:
 			[ 
-			self newLines: self numberOfNewLinesAfterMethodSignature.
+			self newLines: (aMethodNode comments 
+									ifEmpty: [ self numberOfNewLinesAfterMethodSignature ] 
+			 						ifNotEmpty: [ self numberOfNewLinesAfterMethodSignatureWithMethodComment ]).
 			self formatMethodCommentFor: aMethodNode.
 			self formatPragmasFor: aMethodNode.
 			self visitNode: aMethodNode body ]
@@ -1396,7 +1434,7 @@ EFFormatter >> indentExtraSpaces [
 
 { #category : #accessing }
 EFFormatter >> indentExtraSpaces: anInteger [
-	context indentExtraSpaces: anInteger 
+	context indentExtraSpaces: anInteger
 ]
 
 { #category : #private }
@@ -1455,7 +1493,7 @@ EFFormatter >> initialize [
 { #category : #initialization }
 EFFormatter >> initializeCodeStream [
 
-  codeStream := WriteStream on: (String new: 256)
+  codeStream := ReadWriteStream on: (String new: 256)
 ]
 
 { #category : #initialization }
@@ -1719,9 +1757,8 @@ EFFormatter >> newLineBeforeFirstKeyword: aBoolean [
 { #category : #private }
 EFFormatter >> newLines: anInteger [
 	"Add a number of new lines and in addition store the position of the latest new lines in the stream so that latter we can compute the current line length."
-	
-	anInteger + self indentString size = 0
-		ifTrue: [ codeStream space ].
+
+	anInteger > 0 ifTrue: [ self cleanSpacesAtTheEnd ].
 	anInteger timesRepeat: [ codeStream cr ].
 	lineStart := codeStream position.
 	self indentTimesRepeat: self indent
@@ -1778,6 +1815,16 @@ EFFormatter >> numberOfNewLinesAfterMethodSignature [
 { #category : #accessing }
 EFFormatter >> numberOfNewLinesAfterMethodSignature: anInteger [
 	context numberOfNewLinesAfterMethodSignature: anInteger
+]
+
+{ #category : #accessing }
+EFFormatter >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
+	^ context numberOfNewLinesAfterMethodSignatureWithMethodComment
+]
+
+{ #category : #accessing }
+EFFormatter >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
+	context numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger
 ]
 
 { #category : #accessing }
@@ -1895,7 +1942,7 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 	codeStream nextPutAll: selectors first.
 	self space.
 	self visitNode: arguments first.
-	codeStream nextPut: Character cr.
+	self newLine.
 	self
 		with: selectors allButFirst
 		and: arguments allButFirst
@@ -1905,22 +1952,24 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 			self space.
 			self visitNode: arg ]
 		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode].
-	self newLines: 1
+	self newLine
+
 ]
 
 { #category : #utilities }
 EFFormatter >> resizeComment: aComment withFirstLineShorterOf: anIndex [
-	| cutComment firstLine currentCharPos |
+	| cutComment firstLine currentCharPos contents |
 	currentCharPos := 1.
-	firstLine := (aComment contents
+	contents := aComment contents escapeCharacter: $".
+	firstLine := (contents
 		withNoLineLongerThan: self maxLineLength - anIndex) lineNumber: 1.
 	[ currentCharPos > firstLine size ]
 		whileFalse: [ codeStream nextPut: (firstLine at: currentCharPos).
 			currentCharPos := currentCharPos + 1 ].
-	currentCharPos > aComment contents size
+	currentCharPos > contents size
 		ifTrue: [ ^ self ].
 	self newLine.
-	cutComment := aComment contents allButFirst: currentCharPos.
+	cutComment := contents allButFirst: currentCharPos.
 	self resizeStringDependingOnWindowSizeFor: cutComment
 ]
 
@@ -1929,7 +1978,7 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	codeStream nextPut: $".
 	"Hack to keep the right comment in pop up like cmd n, cmd m..."
 	self maxLineLength < 50
-		ifTrue: [ codeStream nextPutAll: aComment contents ]
+		ifTrue: [ codeStream nextPutAll: (aComment contents escapeCharacter: $") ]
 		ifFalse:
 			[ 
 			aComment contents
@@ -1944,7 +1993,7 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 { #category : #utilities }
 EFFormatter >> resizeStringDependingOnWindowSizeFor: aComment [
 	| resizedComment |
-	resizedComment := aComment contents withNoLineLongerThan: self maxLineLength.
+	resizedComment := (aComment contents escapeCharacter: $") withNoLineLongerThan: self maxLineLength.
 	resizedComment do: [ :each | 
 		codeStream nextPut: each.
 		each = Character cr
@@ -2025,7 +2074,7 @@ EFFormatter >> spacesInsideParenthesesString [
 
 { #category : #accessing }
 EFFormatter >> useBasicCommentFormat [ 
-	^ context useBasicCommentFormat 
+	^ context useBasicCommentFormat
 ]
 
 { #category : #accessing }
@@ -2054,7 +2103,6 @@ EFFormatter >> visitBlockNode: aBlockNode [
 	self
 		bracketWith: '[]'
 		around: [ self formatBlock: aBlockNode ]
-	
 ]
 
 { #category : #visiting }
@@ -2089,7 +2137,9 @@ EFFormatter >> visitEnglobingErrorNode: aNode [
 	self writeString: aNode value.
 	aNode children do: [ :e |
 		codeStream space.
-		self visitNode: e ]
+		self visitNode: e ].
+	self writeString: aNode valueAfter.
+
 ]
 
 { #category : #visiting }

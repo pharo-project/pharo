@@ -14,15 +14,14 @@ Browse a FileOut
 "
 Class {
 	#name : #ExternalBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'classes',
 		'packages',
 		'protocols',
 		'selectors',
 		'method',
-		'showClassSide',
-		'model'
+		'showClassSide'
 	],
 	#category : #'Tool-ExternalBrowser-Browsers'
 }
@@ -33,22 +32,30 @@ ExternalBrowser class >> browseStream: aStream [
 	self openOn: (RingChunkImporter fromStream: aStream)
 ]
 
-{ #category : #specs }
-ExternalBrowser class >> defaultSpec [
+{ #category : #layout }
+ExternalBrowser class >> defaultLayout [
 	<spec: #default>
-	
-	^ SpecLayout composed 
-		newColumn: [ :col | 
-			col newRow: [ :row | 
-					row newColumn: [ :subcolumn |
-						subcolumn add: #packages.
-						subcolumn add: #showClassSide height: 16  ].
-					row 
-						add: #classes;
-						add: #protocols;
-						add: #selectors ] ;
-			newRow: [ :row | 
-					row add: #method ]]; 
+
+	^ SpPanedLayout newTopToBottom
+		add: (SpBoxLayout newTopToBottom
+			add: (
+				SpPanedLayout newLeftToRight
+					add:(
+						SpPanedLayout newLeftToRight
+							add: #packages;
+							add: #classes;
+							yourself);
+					add: (
+						SpPanedLayout newLeftToRight
+							add: #protocols;
+							add: #selectors;
+							yourself);
+					yourself
+			);
+			add: #showClassSide height: self labelHeight;
+			yourself
+		);
+		add: #method;
 		yourself
 ]
 
@@ -74,7 +81,7 @@ ExternalBrowser class >> openOn: model [
 	self basicNew
 		model: model;
 		initialize;
-		openWithSpec
+		open
 ]
 
 { #category : #'System-FileRegistry' }
@@ -82,7 +89,7 @@ ExternalBrowser class >> serviceBrowseCode [
 	"Answer the service of opening a file-contents browser"
 
 	^ (SimpleServiceEntry
-		provider: self 
+		provider: self
 		label: 'Code-file browser'
 		selector: #browseStream:
 		description: 'Open a "file-contents browser" on this file, allowing you to view and selectively load its code'
@@ -94,15 +101,13 @@ ExternalBrowser class >> serviceBrowseCode [
 ExternalBrowser class >> services [
 	"Answer potential file services associated with this class"
 
-	^ {self serviceBrowseCode}.
+	^ {self serviceBrowseCode}
 ]
 
 { #category : #'System-FileRegistry' }
 ExternalBrowser class >> sourceFileSuffixes [
 
 	^#('st' 'cs')
-
-
 ]
 
 { #category : #accessing }
@@ -120,70 +125,60 @@ ExternalBrowser >> classesOfPackage: aPackage [
 		ifFalse: [ theClasses ]
 ]
 
-{ #category : #initialize }
-ExternalBrowser >> initialExtent [
+{ #category : #initialization }
+ExternalBrowser >> connectPresenters [
 
-	^ 800@600
+	packages display: [ :m | m name ].
+
+	packages whenSelectionChangedDo: [ :selection |
+		self refreshClasses: selection selectedItem ].
+
+	classes whenSelectionChangedDo: [ :selection |
+		self refreshProtocols: selection ].
+
+	protocols whenSelectionChangedDo: [ :selection |
+		self selectors resetListSelection.
+		selection selectedItem
+			ifNil: [ selectors items: #(  ) ]
+			ifNotNil: [
+			selectors items: (self selectorsOfProtocol: selection selectedItem) ] ].
+
+	selectors whenSelectionChangedDo: [ :selection |
+		selection selectedItem
+			ifNil: [
+				self method text: '' ]
+			ifNotNil: [ method text: (self methodFor: selection selectedItem) ] ].
+
+	showClassSide whenChangedDo: [
+		self refreshClasses: self packages selectedItem ]
 ]
 
-{ #category : #initialize }
-ExternalBrowser >> initializeClassList [
-	classes := self newList
-]
-
-{ #category : #initialize }
-ExternalBrowser >> initializeMethodBodyPane [
-	method := self newCode
-]
-
-{ #category : #initialize }
-ExternalBrowser >> initializePackageList [
-	packages := self newList.
-	self populatePackages.
-	packages displayBlock: [ :m | m name ]
-]
-
-{ #category : #initialize }
+{ #category : #'initialization - deprecated' }
 ExternalBrowser >> initializePresenter [
-	self wirePackages.
-	self wireClasses.
-	self wireProtocols.
-	self wireSelectors.
-	
-	showClassSide 
-		whenChangedDo: [ self refreshClasses: self packages selectedItem ].
-]
 
-{ #category : #initialize }
-ExternalBrowser >> initializeProtocolList [
-	protocols := self newList
-]
-
-{ #category : #initialize }
-ExternalBrowser >> initializeSelectorList [
-
+	packages := self newList.
+	classes := self newList.
+	protocols := self newList.
 	selectors := self newList.
-	
-]
+	method := self newCode withoutSyntaxHighlight.
 
-{ #category : #initialize }
-ExternalBrowser >> initializeWidgets [
-	self initializePackageList.
-	self initializeClassList.
-	self initializeProtocolList.
-	self initializeSelectorList.
-	self initializeMethodBodyPane.
-	
 	showClassSide := self newCheckBox.
 	showClassSide label: 'Class side'.
 	showClassSide state: false.
-	
+
 	self focusOrder
 		add: packages;
 		add: classes;
 		add: protocols;
 		add: selectors;
 		add: method
+]
+
+{ #category : #initialization }
+ExternalBrowser >> initializeWindow: aWindow [
+
+	aWindow title: 'External Package Browser'.
+	aWindow initialExtent: 800@600
 ]
 
 { #category : #accessing }
@@ -200,25 +195,12 @@ ExternalBrowser >> method: anObject [
 ExternalBrowser >> methodFor: aSelector [
 
 	^ (self classes selectedItem methodNamed: aSelector) sourceCode
-			
-]
-
-{ #category : #accessing }
-ExternalBrowser >> model: aModel [
-
-	model := aModel
 ]
 
 { #category : #accessing }
 ExternalBrowser >> packages [
 
 	^ packages
-]
-
-{ #category : #'selection operation' }
-ExternalBrowser >> populatePackages [
-
-	packages items: model packages.
 ]
 
 { #category : #accessing }
@@ -233,37 +215,23 @@ ExternalBrowser >> protocolsOfClass: aClass [
 	^ aClass protocols
 ]
 
-{ #category : #initialize }
+{ #category : #refresh }
 ExternalBrowser >> refreshClasses: pack [
-	self resetClassSelection.
-	pack 
-		ifNil: [ classes items: #() ] 
-		ifNotNil: [ classes items: (self classesOfPackage: pack)]. 
-
+	self classes resetListSelection .
+	pack
+		ifNil: [ classes items: #() ]
+		ifNotNil: [ classes items: (self classesOfPackage: pack) asOrderedCollection].
 ]
 
-{ #category : #'selection operation' }
-ExternalBrowser >> resetClassSelection [
+{ #category : #initialize }
+ExternalBrowser >> refreshProtocols: selection [
 
-	self classes resetSelection
-]
-
-{ #category : #'selection operation' }
-ExternalBrowser >> resetMethodBodyPane [
-	self method text: ''
-	
-]
-
-{ #category : #'selection operation' }
-ExternalBrowser >> resetProtocolSelection [
-
-	self protocols resetSelection
-]
-
-{ #category : #'selection operation' }
-ExternalBrowser >> resetSelectorSelection [
-
-	self selectors resetSelection
+	self protocols resetListSelection.
+	^ selection selectedItem
+		  ifNil: [ protocols items: #(  ) ]
+		  ifNotNil: [
+			  protocols items: (self protocolsOfClass: selection selectedItem) asSortedCollection.
+			  self showClassDefinition ]
 ]
 
 { #category : #accessing }
@@ -277,19 +245,21 @@ ExternalBrowser >> selectors: anObject [
 ]
 
 { #category : #'structure accessing' }
-ExternalBrowser >> selectorsOfProtocol: aProtocol [ 
-	
+ExternalBrowser >> selectorsOfProtocol: aProtocol [
+
 	| theSelectedClass |
 	theSelectedClass := self showClassSide state
 		ifFalse: [ self classes selectedItem ]
 		ifTrue: [ self classes selectedItem classSide ].
-	^ (theSelectedClass 
-		methodsInProtocol: self protocols selectedItem) collect: [:each | each selector]
+	^ (theSelectedClass
+		methodsInProtocol: self protocols selectedItem) asArray collect: [:each | each selector]
 ]
 
 { #category : #'structure accessing' }
 ExternalBrowser >> showClassDefinition [
-	method text: (self classes selectedItem definition  ifNil:[''])
+
+	method text:
+		(self classes selectedItem definition ifNil: [ '' ])
 ]
 
 { #category : #accessing }
@@ -298,46 +268,8 @@ ExternalBrowser >> showClassSide [
 	^ showClassSide
 ]
 
-{ #category : #accessing }
-ExternalBrowser >> title [ 
-	^ 'External Package Browser'
-]
+{ #category : #updating }
+ExternalBrowser >> updatePresenter [
 
-{ #category : #initialize }
-ExternalBrowser >> wireClasses [
-	classes
-		whenSelectedItemChanged: [ :class | 
-			self resetProtocolSelection.
-			class 
-				ifNil: [ protocols items: #() ] 
-				ifNotNil: [ protocols items: (self protocolsOfClass: class).
-					         self showClassDefinition ] ]
-]
-
-{ #category : #initialize }
-ExternalBrowser >> wirePackages [
-	packages whenSelectedItemChanged: [ :pack | 
-		self refreshClasses: pack ].
-
-
-	
-]
-
-{ #category : #initialize }
-ExternalBrowser >> wireProtocols [
-	protocols
-		whenSelectedItemChanged: [ :protocol | 
-			self resetSelectorSelection.
-			protocol 
-				ifNil: [ selectors items: #() ] 
-				ifNotNil: [ selectors items: (self selectorsOfProtocol: protocol) ] ]
-]
-
-{ #category : #initialize }
-ExternalBrowser >> wireSelectors [
-	selectors
-		whenSelectedItemChanged: [ :selector | 
-			selector 
-				ifNil: [ self resetMethodBodyPane ] 
-				ifNotNil: [ method text:  (self methodFor: selector) ]]
+	packages items: self model packages
 ]

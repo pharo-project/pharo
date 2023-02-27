@@ -15,24 +15,24 @@ EpBehaviorChange >> = other [
 
 { #category : #accessing }
 EpBehaviorChange >> affectedPackageName [
-	
+
 	^  self behaviorAffected package
 ]
 
 { #category : #accessing }
 EpBehaviorChange >> behaviorAffected [
-	^ self shouldBeImplemented 
+	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }
 EpBehaviorChange >> behaviorAffectedName [
-	^ self shouldBeImplemented 
+	^ self shouldBeImplemented
 ]
 
 { #category : #testing }
-EpBehaviorChange >> doesOverride: aCodeChange [ 
-	
-	^ aCodeChange class = self class and: [ 
+EpBehaviorChange >> doesOverride: aCodeChange [
+
+	^ aCodeChange class = self class and: [
 		aCodeChange behaviorAffectedName = self behaviorAffectedName ]
 ]
 
@@ -52,7 +52,7 @@ EpBehaviorChange >> printOn: aStream [
 
 	super printOn: aStream.
 
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self behaviorAffectedName;
 		nextPut: $)

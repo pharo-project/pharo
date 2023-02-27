@@ -24,7 +24,6 @@ FTTableRowMorph class >> table: aTableMorph [
 FTTableRowMorph >> handlesMouseOver: evt [
 	self table ifNotNil: [ :table | ^ table selectionModeStrategy allowsRowSelection ].
 	^ false
-
 ]
 
 { #category : #initialization }
@@ -36,9 +35,9 @@ FTTableRowMorph >> initialize [
 ]
 
 { #category : #initialization }
-FTTableRowMorph >> initializeTable: tableMorph [ 
+FTTableRowMorph >> initializeTable: tableMorph [
 	self initialize.
-	self 
+	self
 		cellInset: tableMorph intercellSpacing";
 		layoutInset: tableMorph intercellSpacing".
 	self flag: #pharoTodo. "Check if layout inset works better"

@@ -19,7 +19,7 @@ Class {
 { #category : #activation }
 ClyTestSetUpEditorToolMorph class >> browserTabActivation [
 	"This declaration specifies that in any browser when classes are selected, a test setup editor will be available in a tab."
-	
+
 	<classAnnotation>
 	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
@@ -27,12 +27,12 @@ ClyTestSetUpEditorToolMorph class >> browserTabActivation [
 { #category : #testing }
 ClyTestSetUpEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	aBrowserContext isClassSelected ifFalse: [ ^false ].
-	
+
 	(aBrowserContext lastSelectedItem hasProperty: ClyTestResultProperty) ifFalse: [ ^false ].
-	
+
 	(aBrowserContext lastSelectedClass lookupSelector: #setUp) ifNil: [ ^false ].
 	"last condition is to not show this tool if user selects #setUp method manually"
-	aBrowserContext isMethodSelected ifFalse: [ ^true ].	
+	aBrowserContext isMethodSelected ifFalse: [ ^true ].
 	^aBrowserContext browser methodSelection lastSelectedItem name ~= 'setUp'
 ]
 
@@ -54,9 +54,9 @@ ClyTestSetUpEditorToolMorph >> belongsToCurrentBrowserContext [
 { #category : #building }
 ClyTestSetUpEditorToolMorph >> buildTextMorph [
 	super buildTextMorph.
-	
-	editingMethod == (TestCase >> #setUp) ifTrue: [ 
-		self setUpDefaultTemplate ].
+
+	editingMethod == (TestCase >> #setUp) ifTrue: [
+		self setUpDefaultTemplate ]
 ]
 
 { #category : #initialization }
@@ -64,7 +64,7 @@ ClyTestSetUpEditorToolMorph >> defaultTemplateForNewSetUp [
 
 	^'setUp
 	super setUp.
-	
+
 	"Put here a common initialization logic for tests"'
 ]
 
@@ -79,6 +79,14 @@ ClyTestSetUpEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 		and: [ testClass == anotherBrowserTool testClass ]
 ]
 
+{ #category : #testing }
+ClyTestSetUpEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
+	self context class = aClyFullBrowserContext class
+		ifFalse: [ ^ false ].
+
+	^ aClyFullBrowserContext selectedClasses includes: self testClass
+]
+
 { #category : #initialization }
 ClyTestSetUpEditorToolMorph >> setUpDefaultTemplate [
 
@@ -88,7 +96,7 @@ ClyTestSetUpEditorToolMorph >> setUpDefaultTemplate [
 
 { #category : #initialization }
 ClyTestSetUpEditorToolMorph >> setUpModelFromContext [
-	
+
 	testClass := context lastSelectedClass
 ]
 

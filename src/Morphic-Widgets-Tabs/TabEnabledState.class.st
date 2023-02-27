@@ -9,7 +9,7 @@ Class {
 
 { #category : #protocol }
 TabEnabledState >> backgroundColor [
-	^ Smalltalk ui theme darkBaseColor 
+	^ Smalltalk ui theme darkBaseColor
 ]
 
 { #category : #protocol }
@@ -34,13 +34,13 @@ TabEnabledState >> isSelectedMatchingTheState: aBoolean [
 TabEnabledState >> newStateForEnabled: aBoolean [
 	"aBoolean here must be false"
 	self deny: aBoolean.
-	
+
 	^ TabDisabledState tab: self tab
 ]
 
 { #category : #protocol }
 TabEnabledState >> newStateForSelected: aBoolean [
 	self assert: aBoolean.
-	
+
 	^ TabSelectedState tab: self tab
 ]

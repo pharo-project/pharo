@@ -82,7 +82,7 @@ ClyTypedScope class >> emptyIn: aNavigationEnvironment [
 
 { #category : #'instance creation' }
 ClyTypedScope class >> of: aBasisObject [
-		
+
 	^self ofAll: {aBasisObject}
 ]
 
@@ -159,14 +159,14 @@ ClyTypedScope >> restrictedBy: aScope [
 
 { #category : #testing }
 ClyTypedScope >> supportsQuery: aQuery [
-	^aQuery isKindOf: ClyTypedQuery 
+	^aQuery isKindOf: ClyTypedQuery
 ]
 
 { #category : #converting }
 ClyTypedScope >> withExtraBasisObject: newBasisObject [
 
 	(basisObjects includes: newBasisObject) ifTrue: [ ^self ].
-	 
+
 	^self withNewBasisObjects: (basisObjects copyWith: newBasisObject)
 ]
 
@@ -175,7 +175,7 @@ ClyTypedScope >> withExtraBasisObjects: extraBasisObjects [
 
 	| newBasis |
 	newBasis := OrderedCollection withAll: basisObjects.
-	extraBasisObjects do: [ :each | 
+	extraBasisObjects do: [ :each |
 		(newBasis identityIncludes: each) ifFalse: [ newBasis add: each ] ].
 
 	^self withNewBasisObjects: newBasis
@@ -184,7 +184,7 @@ ClyTypedScope >> withExtraBasisObjects: extraBasisObjects [
 { #category : #converting }
 ClyTypedScope >> withNewBasisObjects: newBasisObjects [
 
-	^self copy 
+	^self copy
 		basisObjects: newBasisObjects;
 		bindTo: environment
 ]

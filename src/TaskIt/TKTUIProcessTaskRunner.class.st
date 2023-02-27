@@ -6,10 +6,10 @@ Class {
 
 { #category : #scheduling }
 TKTUIProcessTaskRunner >> isUIRunner [
-	^ true 
+	^ true
 ]
 
 { #category : #scheduling }
 TKTUIProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
-	WorldState addDeferredUIMessage: [ self executeTask: aTaskExecution ]
+	self currentWorld defer: [ self executeTask: aTaskExecution ]
 ]

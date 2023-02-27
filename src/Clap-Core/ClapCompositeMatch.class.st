@@ -127,7 +127,6 @@ ClapCompositeMatch >> stop [
 	^ children
 		ifEmpty: [ self start - 1 ]
 		ifNotEmpty: [ children last stop ]
-	
 ]
 
 { #category : #validation }

@@ -20,7 +20,6 @@ KeyboardEvent >> = aMorphicEvent [
 	buttons = aMorphicEvent buttons ifFalse: [^ false].
 	keyValue = aMorphicEvent keyValue ifFalse: [^ false].
 	^ true
-
 ]
 
 { #category : #keymapping }
@@ -46,14 +45,13 @@ KeyboardEvent >> hasSpecialCTRLKeyValue [
 { #category : #comparing }
 KeyboardEvent >> hash [
 	^buttons hash + keyValue hash
-
 ]
 
 { #category : #initialization }
 KeyboardEvent >> initialize [
 
 	super initialize.
-	supressNextKeyPress := false.
+	supressNextKeyPress := false
 ]
 
 { #category : #testing }
@@ -117,9 +115,9 @@ KeyboardEvent >> modifiedCharacter [
 	self flag: #hack.
 	"Hack me.  When Ctrl is pressed, the key ascii value is not right and we have to do something ugly"
 	^(self hasSpecialCTRLKeyValue and: [ (#(MacOSX Windows) includes: Smalltalk os platformFamily) ])
-    	ifTrue: [ (self keyValue + $a asciiValue - 1) asCharacter ]    
-		ifFalse: [ 
-			Smalltalk os isWindows 
+    	ifTrue: [ (self keyValue + $a asciiValue - 1) asCharacter ]
+		ifFalse: [
+			Smalltalk os isWindows
 				ifTrue: [ self keyCharacter asLowercase ]
 				ifFalse: [ self keyCharacter ] ]
 ]
@@ -141,7 +139,7 @@ KeyboardEvent >> printKeyStringOn: aStream [
 	self hasSpecialCTRLKeyValue
 			ifTrue:
 				[aStream nextPut: (keyValue + $a asciiValue - 1) asCharacter]
-			ifFalse: 
+			ifFalse:
 				[keyString := (kc caseOf: {
 					[ Character space ] -> [ ' ' ].
 					[ Character tab ] -> [ 'tab' ].
@@ -201,7 +199,7 @@ KeyboardEvent >> sentTo: anObject [
 	type == #keystroke ifTrue:[^anObject handleKeystroke: self].
 	type == #keyDown ifTrue:[^anObject handleKeyDown: self].
 	type == #keyUp ifTrue:[^anObject handleKeyUp: self].
-	^super sentTo: anObject.
+	^super sentTo: anObject
 ]
 
 { #category : #private }
@@ -213,7 +211,7 @@ KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aVa
 	charCode := anInt.
 	source := aHand.
 	wasHandled := false.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #private }
@@ -224,7 +222,7 @@ KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aVa
 	keyValue := aValue.
 	source := aHand.
 	wasHandled := false.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #printing }
@@ -244,7 +242,7 @@ KeyboardEvent >> storeOn: aStream [
 	aStream space.
 	charCode storeOn: aStream.
 	aStream space.
-	scanCode storeOn: aStream.
+	scanCode storeOn: aStream
 ]
 
 { #category : #accessing }

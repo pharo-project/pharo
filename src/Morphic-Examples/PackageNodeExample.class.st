@@ -14,10 +14,10 @@ PackageNodeExample >> asString [
 
 { #category : #accessing }
 PackageNodeExample >> childNodeClassFromItem: anItem [
-	^  PackageClassNodeExample 
+	^  PackageClassNodeExample
 ]
 
 { #category : #accessing }
 PackageNodeExample >> childrenItems [
-	^ self item classes 
+	^ self item classes
 ]

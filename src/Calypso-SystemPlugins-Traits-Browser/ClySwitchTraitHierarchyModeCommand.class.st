@@ -17,15 +17,15 @@ Class {
 
 { #category : #testing }
 ClySwitchTraitHierarchyModeCommand class >> isAbstract [
-	^self = ClySwitchTraitHierarchyModeCommand 
+	^self = ClySwitchTraitHierarchyModeCommand
 ]
 
 { #category : #execution }
 ClySwitchTraitHierarchyModeCommand >> execute [
 	| classScope |
 	classScope := browser classSelection asItemsScope: ClyClassScope.
-	
-	browser 
+
+	browser
 		switchClassViewTo: self requiredQueryResult
 		inScope: classScope, (classScope asScope: self traitScopeClass)
 ]
@@ -38,10 +38,10 @@ ClySwitchTraitHierarchyModeCommand >> isAppliedToBrowser [
 
 { #category : #execution }
 ClySwitchTraitHierarchyModeCommand >> requiredQueryResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }
 ClySwitchTraitHierarchyModeCommand >> traitScopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

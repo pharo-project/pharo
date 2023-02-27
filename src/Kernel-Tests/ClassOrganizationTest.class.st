@@ -12,51 +12,50 @@ Class {
 }
 
 { #category : #accessing }
-ClassOrganizationTest >> organization [ 
+ClassOrganizationTest >> organization [
 	^ organization
 ]
 
 { #category : #running }
-ClassOrganizationTest >> runCase [ 
-	SystemAnnouncer uniqueInstance 
+ClassOrganizationTest >> runCase [
+	SystemAnnouncer uniqueInstance
 		suspendAllWhile: [ super runCase ]
 ]
 
 { #category : #running }
-ClassOrganizationTest >> setUp [ 
+ClassOrganizationTest >> setUp [
 	super setUp.
-	
-	class := self class classInstaller make: [ :aBuilder | 
+
+	class := self class classInstaller make: [ :aBuilder |
 		aBuilder name: #ClassForTests;
 		package: 'ClassOrganizer-Tests' ].
-	
+
 	organization := ClassOrganization forClass: class.
 	organization addCategory: 'empty'.
 	organization addCategory: 'one'.
-	organization classify: #one under: 'one' suppressIfDefault: true.
-	
+	organization classify: #one under: 'one' suppressIfDefault: true
 ]
 
 { #category : #running }
 ClassOrganizationTest >> tearDown [
 	class removeFromSystem.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
 ClassOrganizationTest >> testAddCategory [
-	
+
 	self organization addCategory: 'test-protocol'.
-	
+
 	self assert: (self organization categories includes: 'test-protocol')
 ]
 
 { #category : #tests }
 ClassOrganizationTest >> testCategories [
 	| categories |
-	
+
 	categories := self organization categories.
-	self assert: categories notEmpty.
+	self assert: categories notEmpty
 ]
 
 { #category : #tests }
@@ -73,7 +72,7 @@ ClassOrganizationTest >> testListAtCategoryNamed [
 { #category : #tests }
 ClassOrganizationTest >> testRemoveCategory [
 	self assert: self organization categories size equals: 2.
-	"just ignore removing of non empty categories" 
+	"just ignore removing of non empty categories"
 	self organization removeCategory: 'one'.
 	self assert: self organization categories size equals: 2.
 	self organization removeCategory: 'empty'.

@@ -9,19 +9,18 @@ Class {
 
 { #category : #actions }
 ArchitecturalCritique >> actions [
-	^ super actions copyWith: 
+	^ super actions copyWith:
 		(RePropertyAction new
 			icon: (self iconNamed: #smallWindow);
 			description: 'Open dependency analyzer';
 			action: [ :crit :package |
 				self openDependencyAnalyzerOn: package ];
 			yourself)
-				
 ]
 
 { #category : #actions }
 ArchitecturalCritique >> openDependencyAnalyzerOn: package [
 
-	^ (DAPackageAnalyzerPackageDependenciesWindow
+	^ (DAPackageDependenciesPresenter
 			onPackagesNamed: {package packageName}) open
 ]

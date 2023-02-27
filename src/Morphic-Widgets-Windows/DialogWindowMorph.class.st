@@ -26,7 +26,7 @@ DialogWindowMorph >> acceptTextMorphs [
 DialogWindowMorph >> activate [
 	"Set the default focus for now, will want to
 	remember it at some point."
-	
+
 	super activate.
 	self world ifNil: [^self].
 	self rememberedKeyboardFocus
@@ -37,7 +37,7 @@ DialogWindowMorph >> activate [
 { #category : #theme }
 DialogWindowMorph >> activeFillStyle [
 	"Return the active fillStyle for the receiver."
-	
+
 	^self theme dialogWindowActiveFillStyleFor: self
 ]
 
@@ -124,14 +124,14 @@ DialogWindowMorph >> defaultButton [
 	^self
 		findDeepSubmorphThat: [:m |
 			(m isKindOf: PluggableButtonMorph) and: [m isDefault]]
-		ifAbsent: [] 
+		ifAbsent: []
 ]
 
 { #category : #'focus handling' }
 DialogWindowMorph >> defaultFocusMorph [
 	"Answer the morph that should have the keyboard
 	focus by default when the dialog is opened."
-	
+
 	^self defaultButton
 		ifNil: [(self respondsTo: #nextMorphWantingFocus)
 					ifTrue: [	self nextMorphWantingFocus]]
@@ -155,7 +155,7 @@ DialogWindowMorph >> defaultLabel [
 DialogWindowMorph >> doubleClick: event [
 	"Handle a double click. Maximize/restore the window.
 	Not for dialogs if not resizeable..."
-	
+
 	self isResizeable ifTrue: [super doubleClick: event]
 ]
 
@@ -169,18 +169,17 @@ DialogWindowMorph >> escapePressed [
 { #category : #'event handling' }
 DialogWindowMorph >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
-	
+
 	(super handlesKeyboard: evt) ifTrue: [^true].
 	^evt keyCharacter = Character escape or: [
 		(self defaultButton notNil and: [
 			evt keyCharacter = Character cr])]
-	
 ]
 
 { #category : #theme }
 DialogWindowMorph >> inactiveFillStyle [
 	"Return the active fillStyle for the receiver."
-	
+
 	^self theme dialogWindowInactiveFillStyleFor: self
 ]
 
@@ -214,7 +213,7 @@ DialogWindowMorph >> initialize [
 { #category : #initialization }
 DialogWindowMorph >> initializeLabelArea [
 	"Initialize the label area (titlebar) for the window."
-	
+
 	super initializeLabelArea.
 	self removeBoxes.
 	self replaceBoxes
@@ -225,9 +224,9 @@ DialogWindowMorph >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]]) 
+	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
 		ifTrue: [self returnPressed. ^true].
-	
+
 	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].
 	^false
 ]
@@ -324,7 +323,7 @@ DialogWindowMorph >> returnPressed [
 { #category : #initialization }
 DialogWindowMorph >> setFramesForLabelArea [
 	"Delegate to theme."
-	
+
 	self theme configureDialogWindowLabelAreaFrameFor: self
 ]
 
@@ -332,14 +331,14 @@ DialogWindowMorph >> setFramesForLabelArea [
 DialogWindowMorph >> setLabelWidgetAllowance [
 	"Set the extra space required, in general, apart from the label.
 	No extra needed for dialogs."
-	
+
 	^labelWidgetAllowance :=  0
 ]
 
 { #category : #controls }
 DialogWindowMorph >> title: aString [
 	"Set the window title."
-	
+
 	super title: aString.
 	label fitContents.
 	self minimumExtent: (((label width + 20 min: (Display width // 2)) max: self minimumExtent x)@ self minimumExtent y)
@@ -348,6 +347,6 @@ DialogWindowMorph >> title: aString [
 { #category : #theme }
 DialogWindowMorph >> wantsRoundedCorners [
 	"Answer whether rounded corners are wanted."
-	
+
 	^(self theme dialogWindowPreferredCornerStyleFor: self) == #rounded
 ]

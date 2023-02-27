@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyExtendedClassGroupProviderTest >> groupProviderClass [
-	^ClyExtendedClassGroupProvider 
+	^ClyExtendedClassGroupProvider
 ]
 
 { #category : #running }

@@ -16,20 +16,23 @@ Class {
 
 { #category : #transforming }
 RBAbstractInstanceVariableRefactoring >> abstractReferences [
+
+	"Precondition: createAccessors has been executed. Else the setter and getter method are not initialized."
+
 	| replacer |
-	replacer := self parseTreeRewriterClass 
-				variable: variableName
-				getter: self accessorsRefactoring getterMethod
-				setter: self accessorsRefactoring setterMethod.
-	self 
+	replacer := self parseTreeRewriterClass
+		            variable: variableName
+		            getter: self accessorsRefactoring getterMethodName
+		            setter: self accessorsRefactoring setterMethodName.
+	self
 		convertClasses: class withAllSubclasses
-		select: 
-			[:aClass | 
-			(aClass whichSelectorsReferToInstanceVariable: variableName) reject: 
-					[:each | 
-					aClass == class and: 
-							[each == self accessorsRefactoring getterMethod 
-								or: [each == self accessorsRefactoring setterMethod]]]]
+		select: [ :aClass | "remove the setter and getters from the list of methods whose instance variable accesses should be converted to
+			getter/setter."
+			(aClass whichSelectorsReferToInstanceVariable: variableName)
+				reject: [ :each |
+					aClass == class and: [
+						each == self accessorsRefactoring getterMethodName or: [
+							each == self accessorsRefactoring setterMethodName ] ] ] ]
 		using: replacer
 ]
 
@@ -37,7 +40,7 @@ RBAbstractInstanceVariableRefactoring >> abstractReferences [
 RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
-		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableRefactoring
+		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName
 				class: class
@@ -53,7 +56,7 @@ RBAbstractInstanceVariableRefactoring >> createAccessors [
 
 { #category : #preconditions }
 RBAbstractInstanceVariableRefactoring >> preconditions [
-	^RBCondition directlyDefinesInstanceVariable: variableName in: class
+	^ RBCondition directlyDefinesInstanceVariable: variableName in: class
 ]
 
 { #category : #transforming }

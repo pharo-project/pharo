@@ -12,32 +12,32 @@ Class {
 }
 
 { #category : #'meta-actions' }
-MorphHandlingMiddleButton >> blueButtonDown: anEvent [
+MorphHandlingMiddleButton >> blueButtonUp: anEvent [
 
-	receivedBlueButtonDown := true.
+	receivedBlueButtonUp := true
 ]
 
 { #category : #'meta-actions' }
-MorphHandlingMiddleButton >> blueButtonUp: anEvent [
+MorphHandlingMiddleButton >> handleSpecialGesture: anEvent [
 
-	receivedBlueButtonUp := true.
+	receivedBlueButtonDown := true
 ]
 
 { #category : #'meta-actions' }
 MorphHandlingMiddleButton >> handlerForBlueButtonDown: anEvent [
 
-	^ self.
+	^ self
 ]
 
 { #category : #initialization }
 MorphHandlingMiddleButton >> initialize [
 
 	super initialize.
-	receivedBlueButtonUp := receivedBlueButtonDown := false.
+	receivedBlueButtonUp := receivedBlueButtonDown := false
 ]
 
 { #category : #testing }
 MorphHandlingMiddleButton >> wasClickedWithMiddleButton [
 
-	^ receivedBlueButtonDown and: [ receivedBlueButtonUp ].
+	^ receivedBlueButtonDown and: [ receivedBlueButtonUp ]
 ]

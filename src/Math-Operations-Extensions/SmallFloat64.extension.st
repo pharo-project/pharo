@@ -15,7 +15,7 @@ SmallFloat64 >> arcTan [
 	theta := (self * Halfpi) / (self + 1.0).
 
 	"iterate"
-	eps := Halfpi * Epsilon.
+	eps := Halfpi * MathApproximationEpsilon.
 	step := theta.
 	[(step * step) > eps] whileTrue: [
 		sinTheta := theta sin.
@@ -44,7 +44,7 @@ SmallFloat64 >> sin [
 	sum := delta := self.
 	self2 := 0.0 - (self * self).
 	i := 2.0.
-	[delta > Epsilon] whileTrue: [
+	[delta > MathApproximationEpsilon] whileTrue: [
 		"once"
 		delta := (delta * self2) / (i * (i + 1.0)).
 		i := i + 2.0.
@@ -58,7 +58,7 @@ SmallFloat64 >> sin [
 
 { #category : #'*Math-Operations-Extensions' }
 SmallFloat64 >> sqrt [
-	"Answer the square root of the receiver. 
+	"Answer the square root of the receiver.
 	 Optional. See Object documentation whatIsAPrimitive."
 
 	<primitive: 555>
@@ -72,7 +72,7 @@ SmallFloat64 >> sqrt [
 	exp := self exponent // 2.
 	guess := self timesTwoPower: 0 - exp.
 	"get eps value"
-	eps := guess * Epsilon.
+	eps := guess * MathApproximationEpsilon.
 	eps := eps * eps.
 	delta := (self - (guess * guess)) / (guess * 2.0).
 	[ delta * delta > eps ]

@@ -12,15 +12,14 @@ ClyBrowserStateTest class >> isAbstract [
 { #category : #running }
 ClyBrowserStateTest >> snapshotState [
 
-	navigationState := browser snapshotState.
-		
+	navigationState := browser snapshotState
 ]
 
 { #category : #tests }
 ClyBrowserStateTest >> testRetrievesStateOfAllNavigationViews [
 
 	self snapshotState.
-	
+
 	self assert: navigationState viewStates size equals: browser navigationViews size
 ]
 
@@ -29,7 +28,7 @@ ClyBrowserStateTest >> testSelectedTabsAreNotBuild [
 
 	| tab |
 	self snapshotState.
-	
+
 	tab := navigationState selectedTabs first.
 	self deny: tab isBuilt
 ]
@@ -39,7 +38,7 @@ ClyBrowserStateTest >> testSelectedTabsWithoutBrowser [
 
 	| tab |
 	self snapshotState.
-	
+
 	tab := navigationState selectedTabs first.
 	self assert: tab browser isNil
 ]
@@ -49,7 +48,7 @@ ClyBrowserStateTest >> testSelectedTabsWithoutContext [
 
 	| tab |
 	self snapshotState.
-	
+
 	tab := navigationState selectedTabs first.
 	self assert: tab context isNil
 ]
@@ -59,7 +58,7 @@ ClyBrowserStateTest >> testSelectedTabsWithoutOwner [
 
 	| tab |
 	self snapshotState.
-	
+
 	tab := navigationState selectedTabs first.
 	self assert: tab owner isNil
 ]

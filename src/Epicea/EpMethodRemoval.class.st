@@ -21,7 +21,7 @@ EpMethodRemoval class >> method: aCompiledMethod [
 { #category : #visitor }
 EpMethodRemoval >> accept: aVisitor [
 
-	^ aVisitor visitMethodRemoval: self 
+	^ aVisitor visitMethodRemoval: self
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ EpMethodRemoval >> affectedPackageName [
 EpMethodRemoval >> initializeWithMethod: aCompiledMethod [
 
 	self initialize.
-	method := aCompiledMethod asEpiceaRingDefinition.
+	method := aCompiledMethod asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

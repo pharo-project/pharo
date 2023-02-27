@@ -4,13 +4,12 @@ Class {
 	#category : #'DrTests-Spec'
 }
 
-{ #category : #specs }
-DTNullPluginPresenter class >> defaultSpec [
+{ #category : #layout }
+DTNullPluginPresenter >> defaultLayout [
 
 	^ SpBoxLayout newHorizontal
 ]
 
 { #category : #updating }
 DTNullPluginPresenter >> updateUI [
-	
 ]

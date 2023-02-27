@@ -16,7 +16,6 @@ DamageRecorder >> doFullRepaint [
 	"Record that a full redisplay is needed. No further damage rectangles will be recorded until after the next reset."
 
 	^ totalRepaint := true
-
 ]
 
 { #category : #initialization }
@@ -32,8 +31,6 @@ DamageRecorder >> invalidRectsFullBounds: aRectangle [
 	^ totalRepaint
 		ifTrue: [ Array with: aRectangle]
 		ifFalse: [ invalidRects copy]
-
-
 ]
 
 { #category : #recording }
@@ -43,7 +40,7 @@ DamageRecorder >> recordInvalidRect: newRect [
 
 	| mergeRect zeroRect |
 	totalRepaint ifTrue: [^ self].  "planning full repaint; don't bother collecting damage"
-	zeroRect := 0@0 corner: 0@0. 
+	zeroRect := 0@0 corner: 0@0.
 	invalidRects do:
 		[:rect | | a |
 		((a := (rect intersect: newRect ifNone: [ zeroRect ]) area) > 40
@@ -66,10 +63,10 @@ DamageRecorder >> recordInvalidRect: newRect [
 	"add the given rectangle to the damage list"
 	"Note: We make a deep copy of all rectangles added to the damage list,
 		since rectangles in this list may be extended in place."
-	newRect hasPositiveExtent ifTrue: [ 
+	newRect hasPositiveExtent ifTrue: [
 		invalidRects addLast:
 			(newRect topLeft truncated corner: newRect bottomRight truncated).
-	].
+	]
 ]
 
 { #category : #initialization }
@@ -78,7 +75,6 @@ DamageRecorder >> reset [
 
 	invalidRects := OrderedCollection new: 15.
 	totalRepaint := false
-
 ]
 
 { #category : #testing }

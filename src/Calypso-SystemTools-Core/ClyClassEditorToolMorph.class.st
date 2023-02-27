@@ -21,13 +21,13 @@ Class {
 { #category : #activation }
 ClyClassEditorToolMorph class >> classTabActivation [
 	<classAnnotation>
-	
+
 	^ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #testing }
 ClyClassEditorToolMorph class >> isAbstract [
-	^self = ClyClassEditorToolMorph 
+	^self = ClyClassEditorToolMorph
 ]
 
 { #category : #testing }
@@ -43,7 +43,7 @@ ClyClassEditorToolMorph class >> tabOrder [
 { #category : #controlling }
 ClyClassEditorToolMorph >> attachToSystem [
 
-	browser system 
+	browser system
 		when: (ClyClassChange of: editingClass) send: #triggerUpdate to: self
 ]
 
@@ -56,7 +56,7 @@ ClyClassEditorToolMorph >> belongsToCurrentBrowserContext [
 
 { #category : #testing }
 ClyClassEditorToolMorph >> belongsToRemovedBrowserContext [
-	^editingClass isObsolete 
+	^editingClass isObsolete
 ]
 
 { #category : #controlling }
@@ -78,8 +78,20 @@ ClyClassEditorToolMorph >> editingClass: anObject [
 { #category : #testing }
 ClyClassEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 
-	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].	
+	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	^editingClass = anotherBrowserTool editingClass
+]
+
+{ #category : #testing }
+ClyClassEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
+	self context class = aClyFullBrowserContext class
+		ifFalse: [ ^ false ].
+
+	self context metaLevelScope = aClyFullBrowserContext metaLevelScope
+		ifFalse: [ ^ false ].
+
+	^ editingClass = aClyFullBrowserContext lastSelectedClass
+		or: [  editingClass = aClyFullBrowserContext lastSelectedClass instanceSide ]
 ]
 
 { #category : #printing }

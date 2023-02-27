@@ -11,5 +11,5 @@ Class {
 
 { #category : #'items type' }
 ClyAllProjectsQuery class >> resultItemsType [
-	^ClyManagedProject 
+	^ClyManagedProject
 ]

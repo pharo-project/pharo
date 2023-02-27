@@ -40,12 +40,6 @@ CursorWithMask >> asCursorForm [
 	^ form offset: offset
 ]
 
-{ #category : #primitives }
-CursorWithMask >> beCursor [
-	maskForm unhibernate.
-	^ self beCursorWithMask: maskForm
-]
-
 { #category : #mask }
 CursorWithMask >> hasMask [
 	^true

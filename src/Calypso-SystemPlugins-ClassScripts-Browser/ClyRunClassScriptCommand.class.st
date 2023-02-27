@@ -21,17 +21,16 @@ Class {
 { #category : #testing }
 ClyRunClassScriptCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
-	
-	^aBrowserContext isClassSelected 
+
+	^aBrowserContext isClassSelected
 		and: [ aBrowserContext isClassScriptSelected ]
-	
 ]
 
 { #category : #activation }
 ClyRunClassScriptCommand class >> methodTableIconActivation [
 	<classAnnotation>
-	
-	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext 
+
+	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }
@@ -41,7 +40,7 @@ ClyRunClassScriptCommand >> defaultMenuIcon [
 
 { #category : #accessing }
 ClyRunClassScriptCommand >> defaultMenuIconName [
-	^#scriptManagerIcon
+	^#scriptManager
 ]
 
 { #category : #accessing }
@@ -57,7 +56,7 @@ ClyRunClassScriptCommand >> execute [
 { #category : #execution }
 ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
-	
+
 	script := aBrowserContext selectedClassScript.
 	targetClass := aBrowserContext selectedClasses
 		detect: [ :each | script isImplementedByClass: each ]
@@ -67,6 +66,6 @@ ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
 { #category : #execution }
 ClyRunClassScriptCommand >> readParametersFromContext: aBrowserContext [
 	super readParametersFromContext: aBrowserContext.
-	
-	script := aBrowserContext selectedClassScript 
+
+	script := aBrowserContext selectedClassScript
 ]

@@ -5,8 +5,6 @@ Class {
 }
 
 { #category : #running }
-FLBinaryFileStreamBasicSerializationTest >> setUp [
-	super setUp.
-	self useBinaryFileStream
-
+FLBinaryFileStreamBasicSerializationTest >> setUpStreamStrategy [
+	streamStrategy := FLBinaryFileStreamStrategy new
 ]

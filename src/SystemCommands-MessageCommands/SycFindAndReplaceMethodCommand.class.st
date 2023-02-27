@@ -14,17 +14,17 @@ SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #accessing }
 SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
-	^#smallFindIcon
+	^#smallFind
 ]
 
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 ]
 
-{ #category : #testing }
+{ #category : #execution }
 SycFindAndReplaceMethodCommand >> createRefactoring [
 
-	^ RBFindAndReplaceRefactoring
+	^ RBFindAndReplaceTransformation
 		model: model
 		find: originalMessage selector
 		of: originalMessage contextUser origin
@@ -44,7 +44,7 @@ SycFindAndReplaceMethodCommand >> resultMessageSelector [
 { #category : #testing }
 SycFindAndReplaceMethodCommand >> searchInTheWholeHierarchy [
 
-	^ originalMessage contextUser origin subclasses 
+	^ originalMessage contextUser origin subclasses
 		ifEmpty: [ false ]
 		ifNotEmpty: [ self confirm: 'Do you want to search occurrences in the whole hierarchy?' ]
 ]

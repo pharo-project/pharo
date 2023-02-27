@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyTaggedMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyClass1FromP1Mock 
+	^ClyClass1FromP1Mock
 ]
 
 { #category : #running }
@@ -17,9 +17,9 @@ ClyTaggedMethodGroupProviderTest >> groupProviderClass [
 { #category : #tests }
 ClyTaggedMethodGroupProviderTest >> testCreateGroupsForEveryMethodTag [
 	| groups query |
-	
+
 	self buildGroupsFor: ClySubclassN1OfClass1FromP1Mock.
-	
+
 	groups := builtGroups select: [ :each | each isKindOf: ClyTaggedMethodGroup ].
 	self
 		assert: (groups collect: #tag as: Set)

@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClySwitchToInheritedTraitsCommand class >> canBeExecutedInContext: aToolContext [
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
-	
+
 	^aToolContext isSelectedClassUsesTraits
 ]
 
@@ -21,10 +21,10 @@ ClySwitchToInheritedTraitsCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClySwitchToInheritedTraitsCommand >> requiredQueryResult [
-	^ClyTraitUserHierarchy inverse asQueryResult 
+	^ClyTraitUserHierarchy inverse asQueryResult
 ]
 
 { #category : #execution }
 ClySwitchToInheritedTraitsCommand >> traitScopeClass [
-	^ClyInheritedTraitScope 
+	^ClyInheritedTraitScope
 ]

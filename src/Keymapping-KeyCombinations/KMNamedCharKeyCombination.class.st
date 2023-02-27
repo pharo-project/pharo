@@ -26,7 +26,7 @@ KMNamedCharKeyCombination class >> ifSpecialKey: aCharacter do: aBlock [
 ]
 
 { #category : #'instance creation' }
-KMNamedCharKeyCombination class >> key: aCharacter name: aString [ 
+KMNamedCharKeyCombination class >> key: aCharacter name: aString [
 	^ self new
 		key: aCharacter;
 		name: aString;
@@ -47,7 +47,6 @@ KMNamedCharKeyCombination class >> space [
 	^ self
 		key: Character space
 		name: 'Space'
-		
 ]
 
 { #category : #accessing }

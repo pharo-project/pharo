@@ -91,14 +91,11 @@ RGMethod >> addoptToParentStub [
 
 	super addoptToParentStub.
 	self environment backend createUnresolvedClassGroupFor: self parent.
-	self parent pvtAddLocalMethod: self.
-	
-	
-
+	self parent pvtAddLocalMethod: self
 ]
 
 { #category : #accessing }
-RGMethod >> argumentNames [		
+RGMethod >> argumentNames [
 
 	^ self ast argumentNames
 ]
@@ -106,10 +103,8 @@ RGMethod >> argumentNames [
 { #category : #accessing }
 RGMethod >> ast [
 	"Answer my AST with semantic analysis. See #parseTree."
-	
+
 	^ self propertyNamed: #ast ifAbsentPut: [ self parseTree doSemanticAnalysisIn: self methodClass ]
-
-
 ]
 
 { #category : #private }
@@ -140,7 +135,7 @@ RGMethod >> category [
 RGMethod >> changeProtocolDuring: aBlock [
 
 	| oldProtocol |
-	
+
 	oldProtocol := self protocol.
 	aBlock value.
 	self announce: (MethodRecategorized method: self oldProtocol: oldProtocol)
@@ -149,14 +144,14 @@ RGMethod >> changeProtocolDuring: aBlock [
 { #category : #'accessing - backend' }
 RGMethod >> cleanTags [
 
-	self changeProtocolDuring: [ 
+	self changeProtocolDuring: [
 		self cleanTagsWithoutAnnouncemnt ]
 ]
 
 { #category : #'accessing - backend' }
-RGMethod >> cleanTagsWithoutAnnouncemnt [ 
+RGMethod >> cleanTagsWithoutAnnouncemnt [
 
-	self backend forMethod cleanMethodTagsFor: self.
+	self backend forMethod cleanMethodTagsFor: self
 ]
 
 { #category : #accessing }
@@ -197,7 +192,7 @@ RGMethod >> defaultTime [
 { #category : #accessing }
 RGMethod >> fullName [
 	"Keeps a unique description for the receiver. As annotation to avoid converting each time is invoked"
-	
+
 	^ (self parent name, '>>#', self selector) asSymbol
 ]
 
@@ -216,8 +211,7 @@ RGMethod >> initialize [
 	tags := self unresolvedValue: self defaultTags.	"tags must be set before package"
 	package := self unresolvedValue: self parent package.
 	author := self unresolvedValue: self defaultAuthor.
-	time := self unresolvedValue: self defaultTime.
-	
+	time := self unresolvedValue: self defaultTime
 ]
 
 { #category : #initialization }
@@ -226,17 +220,16 @@ RGMethod >> initializeUnresolved [
 	super initializeUnresolved.
 
 	sourceCode := self unresolvedValue: self defaultSourceCode.
-	tags := self unresolvedValue: self defaultTags.	
+	tags := self unresolvedValue: self defaultTags.
 	package := self unresolvedValue: self parent package.
 	author := self unresolvedValue: self defaultAuthor.
-	time := self unresolvedValue: self defaultTime.
-	
+	time := self unresolvedValue: self defaultTime
 ]
 
 { #category : #accessing }
 RGMethod >> isExtension [
 	"The receiver is an extension when is defined in a different package to the one of its parent"
-	
+
 	^ self parent package ~= self package
 ]
 
@@ -266,19 +259,19 @@ RGMethod >> isMethod [
 { #category : #'queries - tags' }
 RGMethod >> isTaggedWith: aSymbol [
 
-	^self tags includes: aSymbol 
+	^self tags includes: aSymbol
 ]
 
 { #category : #resolving }
 RGMethod >> makeResolved [
 
 	super makeResolved.
-	
+
 	sourceCode := self sourceCode markAsRingResolved.
-	package := self package markAsRingResolved.	
-	author := self author markAsRingResolved.	
-	time := self time markAsRingResolved.	
-	tags := self tags markAsRingResolved.
+	package := self package markAsRingResolved.
+	author := self author markAsRingResolved.
+	time := self time markAsRingResolved.
+	tags := self tags markAsRingResolved
 ]
 
 { #category : #'queries - class' }
@@ -304,21 +297,19 @@ RGMethod >> package: anRGPackage [
 	self backend forMethod setMethodPackageFor: self to: anRGPackage.
 	self environment addPackage: anRGPackage.
 	(self parent package = anRGPackage)
-		ifFalse: [ self package addExtensionMethod: self ].
-
+		ifFalse: [ self package addExtensionMethod: self ]
 ]
 
 { #category : #accessing }
 RGMethod >> parseTree [
 
-	^(RBParser 
-		parseMethod: self sourceCode 
-		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass.
-
+	^(RBParser
+		parseMethod: self sourceCode
+		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass
 ]
 
 { #category : #printing }
-RGMethod >> printOn: aStream [ 
+RGMethod >> printOn: aStream [
 
 	self parent name ifNotNil: [
 		aStream nextPutAll: self parent name;
@@ -330,21 +321,18 @@ RGMethod >> printOn: aStream [
 RGMethod >> protocol [
 
 	| methodTags |
-	
+
 	methodTags := self tags.
 	^	methodTags
 		ifEmpty: [  self class asYetUnclassifiedProtocolName]
 		ifNotEmpty: [ methodTags sorted first ]
-
 ]
 
 { #category : #'accessing - backend' }
 RGMethod >> protocol: aSymbol [
 
 	self cleanTagsWithoutAnnouncemnt.
-	self tagWith: aSymbol.
-	
-	
+	self tagWith: aSymbol
 ]
 
 { #category : #'private - backend interface' }
@@ -363,10 +351,8 @@ RGMethod >> pvtAuthor: aString [
 RGMethod >> pvtCleanTags [
 
 	tags := self defaultTags.
-		
+
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -386,25 +372,23 @@ RGMethod >> pvtPackage: anRGPackageDefinition [
 { #category : #'private - backend interface' }
 RGMethod >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#sourceCode -> sourceCode. 
-		#package -> package. 
-		#author -> author. 
-		#time -> time. 
-		#tags -> tags. 
+	^ super pvtResolvableProperties, {
+		#sourceCode -> sourceCode.
+		#package -> package.
+		#author -> author.
+		#time -> time.
+		#tags -> tags.
 	}
-	
-	
 ]
 
 { #category : #private }
 RGMethod >> pvtSafeSourceCode [
 
 	| aStringOrUnresolved |
-	aStringOrUnresolved := self pvtSourceCode. 
+	aStringOrUnresolved := self pvtSourceCode.
 	^ aStringOrUnresolved isRingResolved
-		ifFalse: [ 
-			self pvtName isRingResolved 
+		ifFalse: [
+			self pvtName isRingResolved
 				ifTrue: [ self sourceCodeForNoSource ]
 				ifFalse: [ self sourceCodeForNoSelector ] ]
 		ifTrue: [ aStringOrUnresolved value ]
@@ -413,7 +397,7 @@ RGMethod >> pvtSafeSourceCode [
 { #category : #private }
 RGMethod >> pvtSourceCode [
 
-	^ sourceCode 
+	^ sourceCode
 ]
 
 { #category : #private }
@@ -424,12 +408,11 @@ RGMethod >> pvtSourceCode: anObject [
 
 { #category : #'private - backend interface' }
 RGMethod >> pvtTagWith: aSymbol [
-	
-	tags isRingResolved ifFalse: [ 
+
+	tags isRingResolved ifFalse: [
 		self pvtCleanTags  ].
-	
-	tags add: aSymbol.	
-	
+
+	tags add: aSymbol
 ]
 
 { #category : #private }
@@ -452,13 +435,11 @@ RGMethod >> pvtTime: aDateAndTime [
 
 { #category : #'private - backend interface' }
 RGMethod >> pvtUntagFrom: aSymbol [
-	
+
 	(tags value includes: aSymbol)
 		ifTrue: [ tags remove: aSymbol ].
-	
+
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #removing }
@@ -502,13 +483,12 @@ RGMethod >> sourceCodeForNoSource [
 ]
 
 { #category : #'accessing - backend' }
-RGMethod >> tagWith: aSymbol [ 
+RGMethod >> tagWith: aSymbol [
 
-	self changeProtocolDuring: [ 
+	self changeProtocolDuring: [
 		self backend forMethod tagMethod: self with: aSymbol.
 		self parent addMethodTag: aSymbol.
 	]
-
 ]
 
 { #category : #'accessing - model' }
@@ -518,7 +498,6 @@ RGMethod >> tags [
 	allTags := IdentitySet new.
 	self tagsDo: [ :each | allTags add: each].
 	^ allTags asArray
-
 ]
 
 { #category : #'accessing - backend' }

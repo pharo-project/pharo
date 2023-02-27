@@ -16,7 +16,6 @@ OSWindowTest >> testCreatingWindow [
 	window := OSWindow createWithAttributes: attributes.
 
 	self assert: (window isValid)
-
 ]
 
 { #category : #tests }
@@ -33,22 +32,21 @@ OSWindowTest >> testNewWindowDefaults [
 OSWindowTest >> testSettingUpWindow [
 
 	| window |
-	
+
 	window := OSWindow newWithNullDriver.
-	
+
 	[ window extent: 150@150.
 		self assert: window extent equals: (150@150).
 		self assert: (window isValid).
 		self assert: (window isTextInputActive not)
 	] ensure: [ window destroy ].
 
-	self deny: window isValid 
+	self deny: window isValid
 ]
 
 { #category : #tests }
 OSWindowTest >> testTraceEvents [
 	"We do not trace events by default"
 
-	self deny: (OSWindow classVarNamed: #TraceEvents) 
-	
+	self deny: (OSWindow classVarNamed: #TraceEvents)
 ]

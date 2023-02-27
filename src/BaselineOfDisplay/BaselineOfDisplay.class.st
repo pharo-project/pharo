@@ -35,8 +35,7 @@ BaselineOfDisplay >> baseline: spec [
 			package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 			package: 'Graphics-Transformations'
 		
-		 ].		
-
+		 ].
 ]
 
 { #category : #actions }
@@ -65,7 +64,6 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	display := (Smalltalk classNamed: #DisplayScreen) new.
 	display setExtent: 0@0 depth: 2.
 	Smalltalk globals at: #Display put: display.
-	display beDisplay.
 
 	Cursor webLink. "set the webLink cursor shape"
 					
@@ -87,8 +85,4 @@ BaselineOfDisplay >> preload: loader package: packageSpec [
 
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
-	
-
-	
-
 ]

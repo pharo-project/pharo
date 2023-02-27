@@ -40,7 +40,7 @@ ProcessorScheduler class >> idleProcess [
 ProcessorScheduler class >> idleTime [
 
 	"The default idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time."
-	
+
 	^ IdleTime
 ]
 
@@ -53,7 +53,7 @@ ProcessorScheduler class >> idleTime: microsecondsCount [
 { #category : #settings }
 ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder setting: #idleTime)
 		target: self;
 		parent: #pharoSystem ;
@@ -65,7 +65,7 @@ ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
 { #category : #'class initialization' }
 ProcessorScheduler class >> initialize [
 	"ProcessorScheduler initialize."
-	     
+
 	SystemRockBottomPriority := 10.
 	SystemBackgroundPriority := 20.
 	UserBackgroundPriority := 30.
@@ -78,7 +78,7 @@ ProcessorScheduler class >> initialize [
 
 	SessionManager default
 		registerSystemClassNamed: self name
-		atPriority: 30.
+		atPriority: 30
 ]
 
 { #category : #'instance creation' }
@@ -96,7 +96,6 @@ ProcessorScheduler class >> relinquishProcessorForMicroseconds: anInteger [
 
 	<primitive: 230>
 	"don't fail if primitive is not implemented, just do nothing"
-
 ]
 
 { #category : #'background process' }
@@ -109,29 +108,30 @@ ProcessorScheduler class >> startUp [
 	BackgroundProcess := [self idleProcess] newProcess.
 	BackgroundProcess priority: SystemRockBottomPriority.
 	BackgroundProcess name: 'Idle Process'.
-	BackgroundProcess resume.
-
+	BackgroundProcess resume
 ]
 
 { #category : #accessing }
 ProcessorScheduler >> activePriority [
 	"Answer the priority level of the currently running Process."
 
-	^activeProcess effectiveProcess priority
+	^self activeProcess priority
 ]
 
 { #category : #accessing }
 ProcessorScheduler >> activeProcess [
-	"Answer the currently running Process."
+	"Answers the currently running Process.
+	It can be just pretending to be the active process
+	(like during the code simulation in the debugger)"
 
 	^activeProcess effectiveProcess
 ]
 
 { #category : #private }
-ProcessorScheduler >> anyProcessesAbove: highestPriority [ 
+ProcessorScheduler >> anyProcessesAbove: highestPriority [
 	"Do any instances of Process exist with higher priorities?"
 
-	^(Process allInstances "allSubInstances" select: [:aProcess | 
+	^(Process allInstances "allSubInstances" select: [:aProcess |
 		aProcess priority > highestPriority]) isEmpty
 		"If anyone ever makes a subclass of Process, be sure to use allSubInstances."
 ]
@@ -144,8 +144,8 @@ ProcessorScheduler >> backgroundProcess [
 
 { #category : #'priority names' }
 ProcessorScheduler >> highIOPriority [
-	"Answer the priority at which the most time critical input/output 
-	processes should run. An example is the process handling input from a 
+	"Answer the priority at which the most time critical input/output
+	processes should run. An example is the process handling input from a
 	network."
 
 	^HighIOPriority
@@ -169,11 +169,28 @@ ProcessorScheduler >> highestPriority: newHighestPriority [
 			ifTrue: [self error: 'There are processes with priority higher than '
 													,newHighestPriority printString].
 	newProcessLists := Array new: newHighestPriority.
-	1 to: ((quiescentProcessLists size) min: (newProcessLists size)) do: 
+	1 to: ((quiescentProcessLists size) min: (newProcessLists size)) do:
 		[:priority | newProcessLists at: priority put: (quiescentProcessLists at: priority)].
-	quiescentProcessLists size to: newProcessLists size do: 
+	quiescentProcessLists size to: newProcessLists size do:
 		[:priority | newProcessLists at: priority put: ProcessList new].
 	quiescentProcessLists := newProcessLists
+]
+
+{ #category : #private }
+ProcessorScheduler >> interpriorityYield: modifiedProcess [
+
+	"The original yield only works within processes of the same priority.
+	The primitive does not try to resume a process in a higher priority.
+	By forcing the creation of a new process and suspending this one,
+	we force the rescheduling of processes.
+
+	This message should not be used directly.
+	The only application so far is when changing the priority of a process.
+	"
+
+	modifiedProcess isActiveProcess ifFalse: [ ^ self ].
+	[ modifiedProcess resume ] fork.
+	modifiedProcess suspend
 ]
 
 { #category : #'self evaluating' }
@@ -183,8 +200,8 @@ ProcessorScheduler >> isSelfEvaluating [
 
 { #category : #'priority names' }
 ProcessorScheduler >> lowIOPriority [
-	"Answer the priority at which most input/output processes should run. 
-	Examples are the process handling input from the user (keyboard, 
+	"Answer the priority at which most input/output processes should run.
+	Examples are the process handling input from the user (keyboard,
 	pointing device, etc.) and the process distributing input from a network."
 
 	^LowIOPriority
@@ -224,9 +241,21 @@ ProcessorScheduler >> printOn: aStream [
 	aStream nextPutAll: #Processor
 ]
 
+{ #category : #accessing }
+ProcessorScheduler >> realActiveProcess [
+	"Answers the real currently running Process (ignoring any effective process installed).
+	Method should be used carefully only in specific low level parts of the system.
+	End users should use #activeProcess instead.
+
+	This method is not debuggable because stepping over it would wrongly return an actual UI process of the debugger instead of a process under the debugger.
+	But this is the required property for the use cases like debugger requests which must work with real running process (not a simulated one)"
+
+	^activeProcess
+]
+
 { #category : #removing }
-ProcessorScheduler >> remove: aProcess ifAbsent: aBlock [ 
-	"Remove aProcess from the list on which it is waiting for the processor 
+ProcessorScheduler >> remove: aProcess ifAbsent: aBlock [
+	"Remove aProcess from the list on which it is waiting for the processor
 	and answer aProcess. If it is not waiting, evaluate aBlock."
 
 	(quiescentProcessLists at: aProcess priority)
@@ -240,15 +269,14 @@ ProcessorScheduler >> scanSchedule: aBlock startingAt: topPriority [
 
 	topPriority to: 1 by: -1 do:[:priority | | list |
 		list := quiescentProcessLists at: priority.
-		list do: [:proc | 
+		list do: [:proc |
 			aBlock value: proc
 		].
-	].
-
+	]
 ]
 
 { #category : #'process state change' }
-ProcessorScheduler >> suspendFirstAt: aPriority [ 
+ProcessorScheduler >> suspendFirstAt: aPriority [
 	"Suspend the first Process that is waiting to run with priority aPriority."
 
 	^self suspendFirstAt: aPriority
@@ -256,20 +284,20 @@ ProcessorScheduler >> suspendFirstAt: aPriority [
 ]
 
 { #category : #'process state change' }
-ProcessorScheduler >> suspendFirstAt: aPriority ifNone: noneBlock [ 
-	"Suspend the first Process that is waiting to run with priority aPriority. If 
+ProcessorScheduler >> suspendFirstAt: aPriority ifNone: noneBlock [
+	"Suspend the first Process that is waiting to run with priority aPriority. If
 	no Process is waiting, evaluate the argument, noneBlock."
 
 	| aList |
 	aList := quiescentProcessLists at: aPriority.
-	aList isEmpty
-		ifTrue: [^noneBlock value]
-		ifFalse: [^aList first suspend]
+	^ aList isEmpty
+		  ifTrue: [ noneBlock value ]
+		  ifFalse: [ aList first suspend ]
 ]
 
 { #category : #'priority names' }
 ProcessorScheduler >> systemBackgroundPriority [
-	"Answer the priority at which system background processes should run. 
+	"Answer the priority at which system background processes should run.
 	Examples are an incremental garbage collector or status checker."
 
 	^SystemBackgroundPriority
@@ -279,16 +307,15 @@ ProcessorScheduler >> systemBackgroundPriority [
 ProcessorScheduler >> tallyCPUUsageFor: seconds [
 	"Start a high-priority process that will tally the next ready process for the given
 	number of seconds. Answer a Block that will return the tally (a Bag) after the task
-	is complete" 
+	is complete"
 	^self tallyCPUUsageFor: seconds every: 10
-
 ]
 
 { #category : #'CPU usage tally' }
 ProcessorScheduler >> tallyCPUUsageFor: seconds every: msec [
 	"Start a high-priority process that will tally the next ready process for the given
 	number of seconds. Answer a Block that will return the tally (a Bag) after the task
-	is complete" 
+	is complete"
 	| tally sem delay endDelay |
 	tally := IdentityBag new: 200.
 	delay := Delay forMilliseconds: msec truncated.
@@ -310,14 +337,46 @@ ProcessorScheduler >> tallyCPUUsageFor: seconds every: msec [
 ProcessorScheduler >> terminateActive [
 	"Terminate the process that is currently running."
 
-	activeProcess effectiveProcess terminate
+	self activeProcess doTerminationFromYourself
+]
+
+{ #category : #'process state change' }
+ProcessorScheduler >> terminateRealActive [
+	"IMPORTANT: Do not step over this method in the debugger (normally you will never do it) because it will terminate the UIProcess of the debugger instead of the process under the debugger.
+	Method should not be used by users. It is only for specific low level places of the system like a normal process termination.
+
+	It terminates the active process that is really currently running despite on any effective process installed.
+	It is very critical to ignore the simulation trick of the debugger (the effective process) during the normal completion of the process. This method ensures that every process is able to complete.
+	Previously #terminateActive was used for the process completion. But #terminateActive targets the effective process which the debugger sets for the stepping over the Processor calls. Debugger resets this value at the end of stepping but there are huge amount of cases where it is impossible to do or due to the bugs in the debugger implementation.
+	The consequences of unreset effective process is inability of the process to finish the execution.
+	The following scenario happens in this case:
+	- Process completes by ```Processor terminateActive``` call (it is the end of any process).
+	- #terminateActive can't terminate the real active process because the effective one is used.
+	- Without the stop the #terminateActive continutes the execution to the nil sender (it is nil after the full unwind during Process>>terminate).
+	- The return to nil sender causes the VM fallback logic. It sends #cannotReturn: message to the context.
+	- #cannotReturn: method raises an error which requests the debugger
+	- Debugger is opened in UI process and the current process is suspended to stop the execution.
+	- To suspend the current process the debugger uses ```Processor activeProcess suspend``
+	- The active process there is not a real process due to effectiveProcess state.
+	- Suspend is executed over wrong process
+	- Really running process continues the execution after #suspend.
+	- Execution tries to return from cannotReturn: method to the nil sender.
+	- VM sends again #cannotReturn: message.
+	- Image hangs due to this infinite recursion triggering new debugger at every step.
+
+	In other words the effective process trick is very dangerous mechanizm and critical system operations must avoid it.
+	Therefore this method. It is used only as the last instruction for the process termination. See #newProcess for example:
+			[ self value, Processor terminateRealActive ]
+	"
+
+	activeProcess doTerminationFromYourself
 ]
 
 { #category : #'priority names' }
 ProcessorScheduler >> timingPriority [
-	"Answer the priority at which the system processes keeping track of real 
+	"Answer the priority at which the system processes keeping track of real
 	time should run."
-	"BEFORE USING IT: please read the 'Original word of advice' in the DelayScheduler class comment. 
+	"BEFORE USING IT: please read the 'Original word of advice' in the DelayScheduler class comment.
 	TL;DR: for top priority processes use 'Processor timingPriority - 1' except if you really know what you are doing!"
 
 	^TimingPriority
@@ -332,8 +391,8 @@ ProcessorScheduler >> userBackgroundPriority [
 
 { #category : #'priority names' }
 ProcessorScheduler >> userInterruptPriority [
-	"Answer the priority at which user processes desiring immediate service 
-	should run. Processes run at this level will preempt the window 
+	"Answer the priority at which user processes desiring immediate service
+	should run. Processes run at this level will preempt the window
 	scheduler and should, therefore, not consume the processor forever."
 
 	^UserInterruptPriority

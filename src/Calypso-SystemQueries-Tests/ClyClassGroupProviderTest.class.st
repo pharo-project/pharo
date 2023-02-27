@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyClassGroupProviderTest class >> isAbstract [
-	^self = ClyClassGroupProviderTest 
+	^self = ClyClassGroupProviderTest
 ]
 
 { #category : #running }
@@ -29,13 +29,13 @@ ClyClassGroupProviderTest >> buildGroupsForAll: packages [
 
 { #category : #running }
 ClyClassGroupProviderTest >> packageSampleWhichHasGroup [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #tests }
 ClyClassGroupProviderTest >> testBuildingGroups [
 
 	self buildGroupsFor: self packageSampleWhichHasGroup.
-	
+
 	self assert: builtGroups notEmpty
 ]

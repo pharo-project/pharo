@@ -24,6 +24,4 @@ MorphChangedWithArguments >> arguments: anObject [
 MorphChangedWithArguments >> deliverTo: aHandler [
 
 	^ aHandler update: selector with: arguments
-
-	
 ]

@@ -11,6 +11,6 @@ Class {
 TestSuiteEnded class >> result: aResult [
 
 	^ self new
-		testResult: aResult;
-		yourself
+		  testResult: aResult;
+		  yourself
 ]

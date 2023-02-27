@@ -36,48 +36,66 @@ Class {
 	#category : #'Beacon-Core-Loggers'
 }
 
-{ #category : #registering }
+{ #category : #saving }
+MemoryLogger class >> fromStonFile: aFileReference [
+
+	| logger |
+
+	logger := aFileReference asFileReference binaryReadStreamDo: [ :bstream |
+		STON fromStream: (ZnCharacterReadStream
+			on: (GZipReadStream on: bstream)
+			encoding: 'utf8') ].
+	^logger
+]
+
+{ #category : #'class initialization' }
 MemoryLogger class >> reset [
+	<script>
+
 	self instance reset
 ]
 
 { #category : #saving }
 MemoryLogger class >> startAutoSaving [
 	"Write the default instance to a file every WritePeriod"
+	<script>
 
 	WriteProcess ifNotNil: [ self error: 'Write process already running' ].
 
 	WriteProcess := [ self writeLoop ]
-		forkAt: Processor userInterruptPriority
-		named: self class name, ' auto-save'.
+		                forkAt: Processor userInterruptPriority
+		                named: self class name , ' auto-save'
 ]
 
 { #category : #saving }
 MemoryLogger class >> stopAutoSaving [
 	"Terminate writing the default instance to a file every WritePeriod"
+	<script>
 
-	WriteProcess ifNil: [ ^self ].
+	WriteProcess ifNil: [ ^ self ].
 	WriteProcess terminate.
 	100 milliSeconds wait.
-	WriteProcess isTerminated ifFalse: [ self error: 'Unable to terminate auto-save process' ].
-	WriteProcess := nil.
+	WriteProcess isTerminated ifFalse: [
+		self error: 'Unable to terminate auto-save process' ].
+	WriteProcess := nil
 ]
 
 { #category : #accessing }
 MemoryLogger class >> writeFilename [
 
-	^WriteFilename ifNil: [ WriteFilename := String streamContents: [ :stream |
-			stream 
-				<< self name;
-				<< '-';
-				print: LibC uniqueInstance currentProcessId;
-				<< '.stgz' ] ].
+	^ WriteFilename ifNil: [
+		  WriteFilename := String streamContents: [ :stream |
+			                   stream
+				                   << self name;
+				                   << '-';
+				                   print: LibC uniqueInstance currentProcessId;
+				                   << '.stgz' ] ]
 ]
 
 { #category : #accessing }
 MemoryLogger class >> writeFilename: aFilename [
 
-	WriteFilename := aFilename 
+	WriteFilename := aFilename
 ]
 
 { #category : #private }
@@ -85,13 +103,13 @@ MemoryLogger class >> writeLoop [
 	"Write the default instance out to a file every WritePeriod"
 
 	[ self instance saveStonFile: self writeFilename.
-	self writePeriod wait ] repeat.
+	self writePeriod wait ] repeat
 ]
 
 { #category : #accessing }
 MemoryLogger class >> writePeriod [
 
-	^WritePeriod ifNil: [ WritePeriod := 60 seconds ]
+	^ WritePeriod ifNil: [ WritePeriod := 60 seconds ]
 ]
 
 { #category : #accessing }
@@ -101,22 +119,21 @@ MemoryLogger class >> writePeriod: aDuration [
 ]
 
 { #category : #accessing }
-MemoryLogger >> announcer [ 
+MemoryLogger >> announcer [
 	"The announcer announces to potential watchers (typically viewers)
 	that a new signal was recorded"
 	^ announcer
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MemoryLogger >> initialize [
 	super initialize.
 	mutex := Mutex new.
 	self reset.
-	announcer := Announcer new.
-
+	announcer := Announcer new
 ]
 
-{ #category : #accessing }
+{ #category : #utilities }
 MemoryLogger >> nextPut: aSignal [
 	mutex critical: [
 		recordings add: aSignal ].
@@ -130,7 +147,7 @@ MemoryLogger >> nextPut: aSignal [
 { #category : #accessing }
 MemoryLogger >> recordings [
 	"It answers a copy of the recorded collection to not grant
-	access to the users to a shared resource that should only be 
+	access to the users to a shared resource that should only be
 	modified via the mutex"
 	^ recordings copy
 ]
@@ -141,4 +158,16 @@ MemoryLogger >> reset [
 	affecting the running status of the logger"
 	mutex critical: [
 		recordings := OrderedCollection new ]
+]
+
+{ #category : #'ston persistence' }
+MemoryLogger >> saveStonFile: aFileReference [
+
+	"Save the receiver to the supplied file name"
+
+	| stream |
+	stream := ZnCharacterWriteStream
+		          on: (GZipWriteStream on: aFileReference asFileReference nextVersion binaryWriteStream)
+		          encoding: 'utf8'.
+	[ STON put: self onStreamPretty: stream ] ensure: [ stream close ]
 ]

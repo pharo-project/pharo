@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-ObsoleteTest >> defaultTimeLimit [ 
+ObsoleteTest class >> defaultTimeLimit [
 
 	^ 30 seconds
 ]
@@ -27,20 +27,20 @@ ObsoleteTest >> tearDown [
 
 	classFactory cleanUp.
 	Smalltalk fixObsoleteReferences.
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
 ObsoleteTest >> testClassObsolete [
 	| aClass |
-	testingEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
 	aClass := classFactory newClass.
-	
+
 	self deny: aClass isObsolete.
 	self deny: aClass class isObsolete.
 	aClass removeFromSystem.
 	self assert: aClass isObsolete.
-	self assert: aClass class isObsolete
+	self assert: aClass class isObsolete.
+	self assert: (aClass originalName beginsWith: #ClassForTestToBeDeleted)
 ]
 
 { #category : #tests }
@@ -76,15 +76,11 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 { #category : #tests }
 ObsoleteTest >> testTraitObsolete [
 	| aClass aTrait |
-	testingEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
-	testingEnvironment at: #TraitForObsoleteTest ifPresent: [ :tr | tr removeFromSystem ].
-	
 	aTrait := classFactory newTrait.
 	aClass := classFactory newClassUsing: aTrait.
- 
+
 	self deny: aTrait isObsolete.
 	aTrait removeFromSystem.
 	self assert: aTrait isObsolete.
 	self deny: aClass isObsolete
-
 ]

@@ -25,5 +25,4 @@ Context >> initializeWith: aPc stackPtr: aStackPtr method: aMethod receiver: aRe
 	method := aMethod.
 	receiver := aReceiver.
 	sender := aSender.
-	
 ]

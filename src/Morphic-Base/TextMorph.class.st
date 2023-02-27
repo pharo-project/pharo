@@ -53,11 +53,11 @@ Class {
 { #category : #shortcuts }
 TextMorph class >> buildTextEditorKeymapsOn: aBuilder [
 	<keymap>
-	
+
 	(aBuilder shortcut: #accept)
 		category: #TextMorph
 		default: PharoShortcuts current acceptShortcut
-		do: [ :morph | morph acceptContents ].
+		do: [ :morph | morph acceptContents ]
 ]
 
 { #category : #editing }
@@ -112,12 +112,11 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 ]
 
 { #category : #'submorphs - add/remove' }
-TextMorph >> addMorphFront: aMorph fromWorldPosition: wp [ 
+TextMorph >> addMorphFront: aMorph fromWorldPosition: wp [
 	"Overridden for more specific re-layout and positioning"
-	aMorph textAnchorType == #document 
+	aMorph textAnchorType == #document
 		ifFalse:[^self anchorMorph: aMorph at: wp type: aMorph textAnchorType].
-	self addMorphFront: aMorph.
-
+	self addMorphFront: aMorph
 ]
 
 { #category : #'linked frames' }
@@ -169,7 +168,7 @@ TextMorph >> anchorMorph: aMorph at: aPoint type: anchorType [
 		aMorph relativeTextAnchorPosition: (relPt x - bounds left) @ (relPt y - block top ).
 		self paragraph replaceFrom: index+1 to: index with: newText displaying: false.
 	].
-	self fit.
+	self fit
 ]
 
 { #category : #drawing }
@@ -213,7 +212,7 @@ TextMorph >> autoFitOnOff [
 
 { #category : #menu }
 TextMorph >> autoFitString [
-	"Answer the string to put in a menu that will invite the user to 
+	"Answer the string to put in a menu that will invite the user to
 	switch autoFit mode"
 	^ (self isAutoFit
 		ifTrue: ['<yes>']
@@ -224,7 +223,6 @@ TextMorph >> autoFitString [
 { #category : #containment }
 TextMorph >> avoidsOcclusions [
 	^container notNil and: [ container avoidsOcclusions ]
-
 ]
 
 { #category : #accessing }
@@ -239,7 +237,7 @@ TextMorph >> backgroundColor: newColor [
 ]
 
 { #category : #'event handling' }
-TextMorph >> basicKeyStroke: evt [ 
+TextMorph >> basicKeyStroke: evt [
 	"Handle a keystroke event."
 	| action |
 
@@ -247,14 +245,14 @@ TextMorph >> basicKeyStroke: evt [
 		ifTrue: [
 			action := self crAction.
 			action
-				ifNotNil: ["Note: Code below assumes that this was some 
-					input field reacting on CR. Break the keyboard 
+				ifNotNil: ["Note: Code below assumes that this was some
+					input field reacting on CR. Break the keyboard
 					focus so that the receiver can be safely deleted."
 					evt hand newKeyboardFocus: nil.
 					^ action value]].
 	self handleInteraction: [ editor keystroke: evt ].
 	self updateFromParagraph.
-	super keyStroke: evt.
+	super keyStroke: evt
 ]
 
 { #category : #initialization }
@@ -268,26 +266,24 @@ TextMorph >> beAllFont: aFont [
 TextMorph >> blinkStart [
 	"Reset time for blink cursor after which blinking should actually start"
 	^self valueOfProperty: #blinkStart ifAbsent:[Time millisecondClockValue]
-
 ]
 
 { #category : #blinking }
 TextMorph >> blinkStart: msecs [
 	"Reset time for blink cursor after which blinking should actually start"
 	^self setProperty: #blinkStart toValue: msecs
-
 ]
 
 { #category : #'editing helpers' }
 TextMorph >> bold [
-	
+
 	self changeEmphasis: #bold
 ]
 
 { #category : #accessing }
 TextMorph >> borderWidth: newWidth [
 	super borderWidth: newWidth.
-	paragraph ifNotNil: [self composeToBounds].
+	paragraph ifNotNil: [self composeToBounds]
 ]
 
 { #category : #geometry }
@@ -298,7 +294,7 @@ TextMorph >> bounds [
 
 { #category : #testing }
 TextMorph >> canChangeText [
-	^ self enabled 
+	^ self enabled
 ]
 
 { #category : #editing }
@@ -310,14 +306,14 @@ TextMorph >> cancelEdits [
 ]
 
 { #category : #alignment }
-TextMorph >> centered [ 
+TextMorph >> centered [
 	self changeAlignment: #centered
 ]
 
 { #category : #'editing helpers' }
 TextMorph >> changeAlignment: aSymbol [
 	"Change the alignment of the receiver. Alignment can be #leftFlush #centered #rightFlush #justified "
-	
+
 	"| t |
 t := 'khkjhjkhjkhjkh
 kjhj
@@ -327,7 +323,7 @@ kjhkjh kjh jh jh jh jh kjh kjh ' asTextMorph.
 t openInWorld.
 t selectAll; changeFormatting: #rightFlush.
 t inspect"
-	
+
 	self editor applyAttribute: (TextAlignment perform: aSymbol).
 	self updateFromParagraph
 ]
@@ -335,7 +331,7 @@ t inspect"
 { #category : #'editing helpers' }
 TextMorph >> changeEmphasis: aSymbol [
 	"Change the alignment of the receiver. Alignment can be #normal, #bold,  #italic, #narrow, #underlined, or #struckOut"
-	
+
 	"| t |
 t := 'khkjhjkhjkhjkh
 kjhj
@@ -345,7 +341,7 @@ kjhkjh kjh jh jh jh jh kjh kjh ' asTextMorph.
 t openInWorld.
 t selectAll; changeEmphasis: #bold.
 t inspect"
-	
+
 	self editor applyAttribute: (TextEmphasis perform: aSymbol).
 	"this code should be moved to TextEditor but changeEmphasis: is defined there for something else
 	so it should be renamed first there."
@@ -378,7 +374,7 @@ Click when done.' hand: evt hand.
 { #category : #editing }
 TextMorph >> chooseAlignment [
 	"Interactively change alignment."
-	
+
 	self editor changeAlignment.
 	self updateFromParagraph
 ]
@@ -386,7 +382,7 @@ TextMorph >> chooseAlignment [
 { #category : #editing }
 TextMorph >> chooseEmphasis [
 	"Interactively change emphasis."
-	
+
 	self editor changeEmphasis.
 	self updateFromParagraph
 ]
@@ -400,13 +396,13 @@ TextMorph >> chooseEmphasisOrAlignment [
 { #category : #editing }
 TextMorph >> chooseFont [
 	self editor changeTextFont.
-	self updateFromParagraph.
+	self updateFromParagraph
 ]
 
 { #category : #editing }
 TextMorph >> chooseStyle [
 	self editor changeStyle.
-	self updateFromParagraph.
+	self updateFromParagraph
 ]
 
 { #category : #private }
@@ -425,9 +421,7 @@ TextMorph >> composeToBounds [
 		[self privateBounds: container bounds truncated].
 	self paragraph positionWhenComposed: self position.
 	successor ifNotNil:
-		[successor predecessorChanged].
-
-
+		[successor predecessorChanged]
 ]
 
 { #category : #private }
@@ -465,7 +459,6 @@ TextMorph >> containsPoint: aPoint [
 		^ super containsPoint: aPoint].
 	"In complex text (non-rect container), test by line bounds"
 	^ self paragraph containsPoint: aPoint
-
 ]
 
 { #category : #accessing }
@@ -508,7 +501,7 @@ TextMorph >> contentsWrapped: stringOrText [
 
 { #category : #copying }
 TextMorph >> copy [
-	^ super copy text: text copy textStyle: textStyle copy 
+	^ super copy text: text copy textStyle: textStyle copy
 		wrap: wrapFlag color: color
 		predecessor: nil successor: nil
 ]
@@ -538,7 +531,6 @@ TextMorph >> cursor [
 	loc := self valueOfProperty: #textCursorLocation  ifAbsentPut: [1].
 	loc := loc min: text string size.
 	^ loc rounded
-	
 ]
 
 { #category : #accessing }
@@ -546,8 +538,6 @@ TextMorph >> cursorWrapped: aNumber [
 	"Set the cursor as indicated"
 
 	self setProperty: #textCursorLocation toValue: (((aNumber rounded - 1) \\  text string size) + 1)
-
-	
 ]
 
 { #category : #drawing }
@@ -555,7 +545,6 @@ TextMorph >> debugDrawLineRectsOn: aCanvas [
 	"Shows where text line rectangles are"
 	self paragraph lines do:
 		[:line | aCanvas frameRectangle: line rectangle color: Color brown]
-
 ]
 
 { #category : #initialization }
@@ -603,7 +592,7 @@ TextMorph >> drawOn: aCanvas [
 		ifTrue: [self drawNullTextOn: aCanvas].
 	"Hack here:  The canvas expects bounds to carry the location of the text, but we also need to communicate clipping."
 	fauxBounds := self bounds topLeft corner: self innerBounds bottomRight.
-	aCanvas paragraph: self paragraph bounds: fauxBounds color: color.
+	aCanvas paragraph: self paragraph bounds: fauxBounds color: color
 ]
 
 { #category : #accessing }
@@ -616,7 +605,7 @@ TextMorph >> editor [
 { #category : #private }
 TextMorph >> editorClass [
 	"Answer the class used to create the receiver's editor"
-	
+
 	^TextEditor
 ]
 
@@ -624,7 +613,7 @@ TextMorph >> editorClass [
 TextMorph >> elementCount [
 	"Answer how many sub-objects are within me"
 
-	^ self text string size 
+	^ self text string size
 ]
 
 { #category : #testing }
@@ -636,10 +625,10 @@ TextMorph >> enabled [
 { #category : #accessing }
 TextMorph >> enabled: aBoolean [
 
-	aBoolean 
+	aBoolean
 		ifTrue: [ text makeAllColor: self defaultColor ]
 		ifFalse: [ text makeAllColor: self theme disabledTextColor ].
-		
+
 	self changed
 ]
 
@@ -651,7 +640,7 @@ TextMorph >> ensureCursor [
 { #category : #editing }
 TextMorph >> enterClickableRegion: evt [
 	| |
-	
+
 	evt hand hasSubmorphs ifTrue:[^self].
 	evt hand temporaryCursor ifNotNil:[^self].
 	"paragraph ifNotNil:[
@@ -661,11 +650,10 @@ TextMorph >> enterClickableRegion: evt [
 
 { #category : #'event handling' }
 TextMorph >> escapePressed [
-	
 ]
 
 { #category : #geometry }
-TextMorph >> extent: aPoint [ 
+TextMorph >> extent: aPoint [
 	| newExtent priorEditor |
 	bounds extent = aPoint ifTrue: [^ self].
 	priorEditor := editor.
@@ -681,13 +669,12 @@ TextMorph >> extent: aPoint [
 		ifFalse: [super extent: (aPoint truncated max: self minimumExtent).
 				wrapFlag ifFalse: [^ self].  "no effect on composition"
 				self composeToBounds]
-
 ]
 
 { #category : #'visual properties' }
 TextMorph >> fillStyle [
 	"Return the current fillStyle of the receiver."
-	
+
 	self assureExtension.
 	^extension fillStyle ifNil: [
 		backgroundColor
@@ -697,7 +684,7 @@ TextMorph >> fillStyle [
 { #category : #'visual properties' }
 TextMorph >> fillStyle: aFillStyle [
 	"Set the current fillStyle of the receiver."
-	
+
 	backgroundColor := aFillStyle asColor.
 	super fillStyle: aFillStyle
 ]
@@ -715,7 +702,7 @@ TextMorph >> fillsOwner [
 ]
 
 { #category : #containment }
-TextMorph >> fillsOwner: aBoolean [ 
+TextMorph >> fillsOwner: aBoolean [
 	self fillsOwner == aBoolean
 		ifTrue: [^ self].
 	self
@@ -751,27 +738,27 @@ TextMorph >> fit [
 	or if wrapFlag is true and the user attempts to change the extent."
 
 	| newExtent para cBounds lastOfLines heightOfLast |
-	self isAutoFit 
-		ifTrue: 
+	self isAutoFit
+		ifTrue:
 			[newExtent := (self paragraph extent max: 9 @ textStyle lineGrid) + (0 @ 2).
 			newExtent := newExtent + (2 * borderWidth).
 			newExtent := ((0 @ 0 extent: newExtent) expandBy: margins) extent.
-			newExtent ~= bounds extent 
-				ifTrue: 
-					[(container isNil and: [successor isNil]) 
-						ifTrue: 
+			newExtent ~= bounds extent
+				ifTrue:
+					[(container isNil and: [successor isNil])
+						ifTrue:
 							[para := paragraph.	"Save para (layoutChanged smashes it)"
 							super extent: newExtent.
 							paragraph := para]].
 			(container notNil and: [successor isNil])
-				ifTrue: 
+				ifTrue:
 					[cBounds := container bounds truncated.
 					"23 sept 2000 - try to allow vertical growth"
 					lastOfLines := self paragraph lines last.
 					heightOfLast := lastOfLines bottom - lastOfLines top.
-					(lastOfLines last < text size 
-						and: [lastOfLines bottom + heightOfLast >= self bottom]) 
-							ifTrue: 
+					(lastOfLines last < text size
+						and: [lastOfLines bottom + heightOfLast >= self bottom])
+							ifTrue:
 								[container releaseCachedState.
 								cBounds := cBounds origin corner: cBounds corner + (0 @ heightOfLast)].
 					self privateBounds: cBounds]].
@@ -788,8 +775,7 @@ TextMorph >> font [
 	"Answer the probable font"
 
 	self textStyle fonts ifEmpty: [^TextStyle defaultFont].
-	^self textStyle defaultFont.
-		
+	^self textStyle defaultFont
 ]
 
 { #category : #accessing }
@@ -838,12 +824,12 @@ TextMorph >> getCharacters [
 
 { #category : #accessing }
 TextMorph >> getFirstCharacter [
-	"obtain the first character from the receiver if it is empty, return a  
+	"obtain the first character from the receiver if it is empty, return a
 	black dot"
 	| aString |
 	^ (aString := text string) isEmpty
 		ifTrue: ['·']
-		ifFalse: [aString first asString] 
+		ifFalse: [aString first asString]
 ]
 
 { #category : #accessing }
@@ -855,7 +841,7 @@ TextMorph >> getLastCharacter [
 ]
 
 { #category : #'event handling' }
-TextMorph >> getMenu: shiftKeyState [ 
+TextMorph >> getMenu: shiftKeyState [
 	^ shiftKeyState not
 		ifTrue: [editor yellowButtonMenu]
 		ifFalse: [editor shiftedYellowButtonMenu]
@@ -902,11 +888,11 @@ TextMorph >> handleInteraction: interactionBlock [
 	].
 	self selectionChanged.  "Note new selection"
 	(oldText = paragraph text and: [ oldText runs = paragraph text runs ])
-		ifFalse:[ self updateFromParagraph ].
+		ifFalse:[ self updateFromParagraph ]
 ]
 
 { #category : #'event handling' }
-TextMorph >> handleKeystroke: anEvent [ 
+TextMorph >> handleKeystroke: anEvent [
 	"System level event handling."
 
 	anEvent wasHandled
@@ -918,7 +904,7 @@ TextMorph >> handleKeystroke: anEvent [
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
-	anEvent wasHandled: true.
+	anEvent wasHandled: true
 ]
 
 { #category : #'events-processing' }
@@ -931,11 +917,10 @@ TextMorph >> handleMouseMove: anEvent [
 	(anEvent anyButtonPressed and:[anEvent hand mouseFocus == self]) ifFalse:[^self].
 	(self handlesMouseStillDown: anEvent) ifTrue:[
 		"Step at the new location"
-		self startStepping: #handleMouseStillDown: 
+		self startStepping: #handleMouseStillDown:
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
-			stepTime: 1].
-
+			stepTime: 1]
 ]
 
 { #category : #'event handling' }
@@ -949,7 +934,7 @@ TextMorph >> handlesMouseDown: evt [
 ]
 
 { #category : #'event handling' }
-TextMorph >> handlesMouseOver: evt [ 
+TextMorph >> handlesMouseOver: evt [
 	"Do I want to receive mouseEnter: and mouseLeave: when the button is up and the hand is empty?"
 	^ self enabled
 ]
@@ -962,13 +947,11 @@ TextMorph >> hasFocus [
 { #category : #editing }
 TextMorph >> hasUnacceptedEdits: aBoolean [
 	"Ignored here, but noted in TextMorphForEditView"
-
 ]
 
 { #category : #'event handling' }
-TextMorph >> hideOverEditableTextCursor [  
+TextMorph >> hideOverEditableTextCursor [
 	self currentHand showTemporaryCursor: nil
-	
 ]
 
 { #category : #initialization }
@@ -978,8 +961,8 @@ TextMorph >> initialize [
 	textStyle := TextStyle default copy.
 	wrapFlag := true.
 	margins := Margin left: 0 right: 0 top: 0 bottom: 0.
-	
-	self attachKeymapCategory: #TextMorph.
+
+	self attachKeymapCategory: #TextMorph
 ]
 
 { #category : #'scripting access' }
@@ -989,7 +972,7 @@ TextMorph >> insertCharacters: aSource [
 	| aLoc |
 	aLoc := self cursor max: 1.
 	paragraph replaceFrom: aLoc to: (aLoc - 1) with: aSource asText displaying: true.
-	self updateFromParagraph  
+	self updateFromParagraph
 ]
 
 { #category : #private }
@@ -1006,10 +989,10 @@ TextMorph >> installEditorToReplace: priorEditor [
 	^ editor
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isAutoFit [
-	^ self valueOfProperty: #autoFitContents ifAbsent: [true]
 
+	^ self valueOfProperty: #autoFitContents ifAbsent: [ true ]
 ]
 
 { #category : #'linked frames' }
@@ -1024,32 +1007,32 @@ TextMorph >> isTextMorph [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isTranslucentButNotTransparent [
 	"Overridden from BorderedMorph to test backgroundColor instead of (text) color."
 
 	backgroundColor ifNil: [ ^ true ].
-	(backgroundColor isColor and: [ backgroundColor isTranslucentButNotTransparent ])
-		ifTrue: [ ^ true ].
-	(borderColor isColor and: [ borderColor isTranslucentButNotTransparent ])
-		ifTrue: [ ^ true ].
+	(backgroundColor isColor and: [
+		 backgroundColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
+	(borderColor isColor and: [
+		 borderColor isTranslucentButNotTransparent ]) ifTrue: [ ^ true ].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TextMorph >> isWrapped [
-	
-	^wrapFlag
+
+	^ wrapFlag
 ]
 
 { #category : #'editing helpers' }
 TextMorph >> italic [
-	
+
 	self changeEmphasis: #italic
 ]
 
 { #category : #alignment }
-TextMorph >> justified [ 
+TextMorph >> justified [
 	self changeAlignment: #justified
 ]
 
@@ -1060,8 +1043,8 @@ TextMorph >> keyDown: evt [
 		ifTrue: [ | action |
 			action := self crAction.
 			action ifNotNil: [
-				"Note: Code below assumes that this was some 
-				input field reacting on CR. Break the keyboard 
+				"Note: Code below assumes that this was some
+				input field reacting on CR. Break the keyboard
 				focus so that the receiver can be safely deleted."
 				evt hand newKeyboardFocus: nil.
 				^ action value]].
@@ -1088,9 +1071,9 @@ TextMorph >> keyboardFocusChange: aBoolean [
 			]
 		ifFalse: [ "A hand has clicked elsewhere..."
 			self world
-				ifNotNil: [ :w | 
+				ifNotNil: [ :w |
 					w
-						handsDo: [ :h | 
+						handsDo: [ :h |
 							h keyboardFocus == self
 								ifTrue: [ ^ self ]
 							].	"Release control unless some hand is still holding on"
@@ -1108,10 +1091,9 @@ TextMorph >> lastCharacterIndex [
 ]
 
 { #category : #alignment }
-TextMorph >> leftFlush [ 
+TextMorph >> leftFlush [
 
 	self changeAlignment: #leftFlush
-
 ]
 
 { #category : #blinking }
@@ -1120,7 +1102,7 @@ TextMorph >> manageCursor [
 		ifTrue: [^ self
 				resetBlinkCursor;
 				stopBlinking].
-	TextEditor blinkingCursor 
+	TextEditor blinkingCursor
 		ifTrue: [self startBlinking]
 		ifFalse: [self ensureCursor]
 ]
@@ -1151,13 +1133,13 @@ TextMorph >> minimumExtent [
 ]
 
 { #category : #'event handling' }
-TextMorph >> mouseDown: evt [ 
-	"Make this TextMorph be the keyboard input focus, if it isn't  
+TextMorph >> mouseDown: evt [
+	"Make this TextMorph be the keyboard input focus, if it isn't
 	already, and repond to the text selection gesture"
-	
+
 	evt yellowButtonPressed
 		ifTrue: ["First check for option (menu) click"
-			(self yellowButtonActivity: evt shiftPressed) 
+			(self yellowButtonActivity: evt shiftPressed)
 				ifTrue: [ ^ self ]].
 	self handleInteraction: [editor mouseDown: evt].
 	self hasKeyboardFocus
@@ -1170,7 +1152,6 @@ TextMorph >> mouseEnter: evt [
 	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed."
 	super mouseEnter: evt.
 	self showOverEditableTextCursor
-	
 ]
 
 { #category : #'event handling' }
@@ -1178,7 +1159,6 @@ TextMorph >> mouseLeave: evt [
 	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed."
 	super mouseLeave: evt.
 	self hideOverEditableTextCursor
-	
 ]
 
 { #category : #'event handling' }
@@ -1197,46 +1177,50 @@ TextMorph >> mouseUp: evt [
 
 { #category : #'editing helpers' }
 TextMorph >> narrow [
-	
+
 	self changeEmphasis: #narrow
 ]
 
 { #category : #accessing }
-TextMorph >> newContents: stringOrText [ 
+TextMorph >> newContents: stringOrText [
+
 	"Accept new text contents."
+
 	| newText embeddedMorphs |
 	"If my text is all the same font, use the font for my new contents"
-	newText := stringOrText isString ifTrue: [ | textSize |
-		(text notNil
-		  and: [ (textSize := text size) > 0
-		    and: [ (text runLengthFor: 1) = textSize ]]) ifTrue: [ | attribs |
-			attribs := text attributesAt: 1 forStyle: textStyle.
-			Text string: stringOrText copy attributes: attribs.
-		]
-		ifFalse: [ Text fromString: stringOrText copy ]
-	]
-	ifFalse: [ stringOrText copy asText.	"should be veryDeepCopy?" ].
+	newText := stringOrText isString
+		           ifTrue: [
+			           | textSize |
+			           (text notNil and: [
+				            (textSize := text size) > 0 and: [
+					            (text runLengthFor: 1) = textSize ] ])
+				           ifTrue: [
+					           | attribs |
+					           attribs := text attributesAt: 1 forStyle: textStyle.
+					           Text string: stringOrText copy attributes: attribs ]
+				           ifFalse: [ Text fromString: stringOrText copy ] ]
+		           ifFalse: [
+		           stringOrText copy asText "should be veryDeepCopy?" ].
 
-	(text = newText and: [text runs = newText runs]) ifTrue: [^ self].	"No substantive change"
-	text ifNotNil: [(embeddedMorphs := text embeddedMorphs)
-			ifNotNil: 
-				[self removeAllMorphsIn: embeddedMorphs.
-				embeddedMorphs do: [:m | m delete]]].
+	(text = newText and: [ text runs = newText runs ]) ifTrue: [ ^ self ]. "No substantive change"
+	text ifNotNil: [
+		(embeddedMorphs := text embeddedMorphs) ifNotNil: [
+			self removeAllMorphsIn: embeddedMorphs.
+			embeddedMorphs do: [ :m | m delete ] ] ].
 
 	text := newText.
 
-	"add all morphs off the visible region; they'll be moved into the right 
-	place when they become visible. (this can make the scrollable area too 
+	"add all morphs off the visible region; they'll be moved into the right
+	place when they become visible. (this can make the scrollable area too
 	large, though)"
-	newText embeddedMorphs do: 
-		[:m | 
+	newText embeddedMorphs do: [ :m |
 		self addMorph: m.
-		m position: -1000 @ 0].
+		m position: -1000 @ 0 ].
 	self releaseParagraph.
 	"update the paragraph cache"
 	self paragraph.
 	"re-instantiate to set bounds"
-	self world ifNotNil: [self world startSteppingSubmorphsOf: self]
+	self world ifNotNil: [ self startSteppingSubmorphs ]
 ]
 
 { #category : #'interactive error protocol' }
@@ -1246,7 +1230,7 @@ TextMorph >> nextTokenFrom: start direction: dir [
 
 { #category : #'editing helpers' }
 TextMorph >> normal [
-	
+
 	self changeEmphasis: #normal
 ]
 
@@ -1277,7 +1261,7 @@ TextMorph >> onBlinkCursor [
 		^para showCaret: para focused.
 	].
 	para showCaret: para showCaret not.
-	para caretRect ifNotNil:[:r| self invalidRect: r].
+	para caretRect ifNotNil:[:r| self invalidRect: r]
 ]
 
 { #category : #'find-replace' }
@@ -1318,7 +1302,7 @@ TextMorph >> paragraph [
 
 	"...Code here to recreate the paragraph..."
 	newParagraph  := (Paragraph new textOwner: self owner).
-	
+
 	newParagraph wantsColumnBreaks: successor notNil.
 	newParagraph
 		compose: text
@@ -1352,8 +1336,7 @@ TextMorph >> predecessor [
 TextMorph >> predecessor: pred successor: succ [
 	"Private -- for use only in morphic duplication"
 	predecessor := pred.
-	successor := succ.
-
+	successor := succ
 ]
 
 { #category : #private }
@@ -1382,14 +1365,14 @@ TextMorph >> preferredKeyboardPosition [
 	paragraph ifNil: [^ default].
 	rects := paragraph selectionRects.
 	rects size = 0 ifTrue: [^ default].
-	^ rects first topLeft.
+	^ rects first topLeft
 ]
 
 { #category : #geometry }
-TextMorph >> privateMoveBy: delta [ 
+TextMorph >> privateMoveBy: delta [
 	super privateMoveBy: delta.
 	editor ifNil: [paragraph ifNotNil: [paragraph moveBy: delta]]
-		ifNotNil: 
+		ifNotNil:
 			["When moving text with an active editor, save and restore all state."
 
 			paragraph moveBy: delta.
@@ -1416,37 +1399,35 @@ TextMorph >> recomposeChain [
 
 { #category : #caching }
 TextMorph >> releaseCachedState [
- 
+
 	super releaseCachedState.
 	self releaseParagraph
-
 ]
 
 { #category : #private }
-TextMorph >> releaseEditor [ 
+TextMorph >> releaseEditor [
 	"Release the editor for my paragraph.  This morph no longer 'hasFocus'."
 	editor ifNotNil:
 		[self selectionChanged.
 		self paragraph selectionStart: nil selectionStop: nil.
-		editor := nil].
+		editor := nil]
 ]
 
 { #category : #private }
 TextMorph >> releaseParagraph [
 
-	"a slight kludge so subclasses can have a bit more control over whether the paragraph really 
-	gets released. important for GeeMail since the selection needs to be accessible even if the 
+	"a slight kludge so subclasses can have a bit more control over whether the paragraph really
+	gets released. important for GeeMail since the selection needs to be accessible even if the
 	hand is outside me"
 
-	self releaseParagraphReally.
-
+	self releaseParagraphReally
 ]
 
 { #category : #private }
 TextMorph >> releaseParagraphReally [
 
-	"a slight kludge so subclasses can have a bit more control over whether the paragraph really 
-	gets released. important for GeeMail since the selection needs to be accessible even if the 
+	"a slight kludge so subclasses can have a bit more control over whether the paragraph really
+	gets released. important for GeeMail since the selection needs to be accessible even if the
 	hand is outside me"
 
 	"Paragraph instantiation is lazy -- it will be created only when needed"
@@ -1467,7 +1448,7 @@ TextMorph >> removedMorph: aMorph [
 		self fit].
 	aMorph textAnchorType: nil.
 	aMorph relativeTextAnchorPosition: nil.
-	super removedMorph: aMorph.
+	super removedMorph: aMorph
 ]
 
 { #category : #blinking }
@@ -1479,15 +1460,13 @@ TextMorph >> resetBlinkCursor [
 	para showCaret = para focused ifFalse:[
 		para caretRect ifNotNil:[:r| self invalidRect: r].
 		para showCaret: para focused.
-	].
-
+	]
 ]
 
 { #category : #alignment }
-TextMorph >> rightFlush [ 
-	
-	self changeAlignment: #rightFlush
+TextMorph >> rightFlush [
 
+	self changeAlignment: #rightFlush
 ]
 
 { #category : #accessing }
@@ -1517,7 +1496,7 @@ TextMorph >> selection [
 
 { #category : #private }
 TextMorph >> selectionChanged [
-	"Invalidate all the selection rectangles. 
+	"Invalidate all the selection rectangles.
 	Make sure that any drop shadow is accounted for too."
 	self paragraph selectionRects
 		do: [:r | | intr |
@@ -1558,7 +1537,7 @@ TextMorph >> setCurveBaseline: evt [
 		container baseline: (newPoint - origin) y negated asInteger // 5.
 		self paragraph composeAll].
 	evt hand attachMorph: handle.
-	handle startStepping	
+	handle startStepping
 ]
 
 { #category : #private }
@@ -1573,7 +1552,7 @@ TextMorph >> setDefaultContentsIfNil [
 ]
 
 { #category : #accessing }
-TextMorph >> setFirstCharacter: source [ 
+TextMorph >> setFirstCharacter: source [
 	"Set the first character of the receiver as indicated"
 	| aChar chars |
 	aChar := source asCharacter.
@@ -1583,10 +1562,10 @@ TextMorph >> setFirstCharacter: source [
 		ifFalse: [chars first = aChar
 				ifFalse: [self
 						newContents: (String
-								streamContents: [:aStream | 
+								streamContents: [:aStream |
 									aStream nextPut: aChar.
 									aStream
-										nextPutAll: (chars copyFrom: 2 to: chars size)])]] 
+										nextPutAll: (chars copyFrom: 2 to: chars size)])]]
 ]
 
 { #category : #accessing }
@@ -1595,7 +1574,7 @@ TextMorph >> setLastCharacter: source [
 
 	| aChar chars |
 	aChar := source asCharacter.
-	(chars := self getCharacters) size > 0 
+	(chars := self getCharacters) size > 0
 		ifFalse:
 			[self newContents: (String with: aChar)]
 		ifTrue:
@@ -1615,8 +1594,7 @@ TextMorph >> setPredecessor: newPredecessor [
 TextMorph >> setSuccessor: newSuccessor [
 
 	successor := newSuccessor.
-	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor notNil].
-
+	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor notNil]
 ]
 
 { #category : #initialization }
@@ -1636,8 +1614,7 @@ TextMorph >> shiftedYellowButtonActivity [
 	"Supply the normal 'code pane' menu to use its text editing commands from a menu."
 
 	self editor pluggableYellowButtonActivity: true.
-	self changed.
-
+	self changed
 ]
 
 { #category : #'event handling' }
@@ -1655,11 +1632,10 @@ TextMorph >> showOverEditableTextCursor [
 
 { #category : #blinking }
 TextMorph >> startBlinking [
-	self startStepping: #onBlinkCursor 
-		at: Time millisecondClockValue 
+	self startStepping: #onBlinkCursor
+		at: Time millisecondClockValue
 		arguments: nil stepTime: 500.
-	self resetBlinkCursor.
-
+	self resetBlinkCursor
 ]
 
 { #category : #'linked frames' }
@@ -1671,8 +1647,7 @@ TextMorph >> startingIndex [
 
 { #category : #blinking }
 TextMorph >> stopBlinking [
-	self stopSteppingSelector: #onBlinkCursor.
-
+	self stopSteppingSelector: #onBlinkCursor
 ]
 
 { #category : #initialization }
@@ -1692,7 +1667,7 @@ TextMorph >> string: aString fontName: aName size: aSize wrap: shouldWrap [
 
 { #category : #'editing helpers' }
 TextMorph >> struckOut [
-	
+
 	self changeEmphasis: #struckOut
 ]
 
@@ -1757,8 +1732,7 @@ TextMorph >> textColor: aColor [
 	color = aColor ifTrue: [^ self].
 	color := aColor.
 	text addAttribute: (TextColor color: aColor).
-	self changed.
-
+	self changed
 ]
 
 { #category : #accessing }
@@ -1768,7 +1742,7 @@ TextMorph >> textStyle [
 
 { #category : #'editing helpers' }
 TextMorph >> underlined [
-	
+
 	self changeEmphasis: #underlined
 ]
 
@@ -1779,14 +1753,14 @@ TextMorph >> updateFromParagraph [
 	| newStyle sel oldLast oldEditor back |
 	paragraph ifNil: [^self].
 	wrapFlag ifNil: [wrapFlag := true].
-	editor ifNotNil: 
+	editor ifNotNil:
 			[oldEditor := editor.
 			sel := editor selectionInterval.
 			editor storeSelectionInParagraph].
 	text := paragraph text.
-	paragraph textStyle = textStyle 
+	paragraph textStyle = textStyle
 		ifTrue: [self fit]
-		ifFalse: 
+		ifFalse:
 			["Broadcast style changes to all morphs"
 
 			newStyle := paragraph textStyle.
@@ -1796,40 +1770,39 @@ TextMorph >> updateFromParagraph [
 	sel ifNil: [^self].
 
 	"If selection is in top line, then recompose predecessor for possible ripple-back"
-	predecessor ifNotNil: 
-			[sel first <= (self paragraph lines first last + 1) 
-				ifTrue: 
+	predecessor ifNotNil:
+			[sel first <= (self paragraph lines first last + 1)
+				ifTrue:
 					[oldLast := predecessor lastCharacterIndex.
-					predecessor paragraph 
+					predecessor paragraph
 						recomposeFrom: oldLast
 						to: text size
 						delta: 0.
-					oldLast = predecessor lastCharacterIndex 
-						ifFalse: 
+					oldLast = predecessor lastCharacterIndex
+						ifFalse:
 							[predecessor changed.	"really only last line"
 							self predecessorChanged]]].
-	((back := predecessor notNil 
-				and: [sel first <= self paragraph firstCharacterIndex]) or: 
-				[successor notNil 
-					and: [sel first > (self paragraph lastCharacterIndex + 1)]]) 
-		ifTrue: 
+	((back := predecessor notNil
+				and: [sel first <= self paragraph firstCharacterIndex]) or:
+				[successor notNil
+					and: [sel first > (self paragraph lastCharacterIndex + 1)]])
+		ifTrue:
 			["The selection is no longer inside this paragraph.
 		Pass focus to the paragraph that should be in control."
 
 			back ifTrue: [predecessor recomposeChain] ifFalse: [self recomposeChain].
-			self firstInChain withSuccessorsDo: 
-					[:m | 
-					(sel first between: m firstCharacterIndex and: m lastCharacterIndex + 1) 
-						ifTrue: 
+			self firstInChain withSuccessorsDo:
+					[:m |
+					(sel first between: m firstCharacterIndex and: m lastCharacterIndex + 1)
+						ifTrue:
 							[m installEditorToReplace: oldEditor.
 							^self passKeyboardFocusTo: m]].
 			self error: 'Inconsistency in text editor'	"Must be somewhere in the successor chain"].
-	editor ifNil: 
+	editor ifNil:
 			["Reinstate selection after, eg, style change"
 
 			self installEditorToReplace: oldEditor].
 	"self setCompositionWindow."
-
 ]
 
 { #category : #accessing }
@@ -1840,9 +1813,9 @@ TextMorph >> userString [
 ]
 
 { #category : #copying }
-TextMorph >> veryDeepFixupWith: deepCopier [ 
-	"If target and arguments fields were weakly copied, fix them here.  If 
-	they were in the tree being copied, fix them up, otherwise point to the 
+TextMorph >> veryDeepFixupWith: deepCopier [
+	"If target and arguments fields were weakly copied, fix them here.  If
+	they were in the tree being copied, fix them up, otherwise point to the
 	originals!"
 
 	super veryDeepFixupWith: deepCopier.
@@ -1852,7 +1825,7 @@ TextMorph >> veryDeepFixupWith: deepCopier [
 ]
 
 { #category : #copying }
-TextMorph >> veryDeepInner: deepCopier [ 
+TextMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables. Some need to be not copied at all, but shared.
 	Warning!! Every instance variable defined in this class must be handled.
 	We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
@@ -1867,32 +1840,30 @@ TextMorph >> veryDeepInner: deepCopier [
 	predecessor := predecessor.
 	successor := successor.
 	backgroundColor := backgroundColor veryDeepCopyWith: deepCopier.
-	margins := margins veryDeepCopyWith: deepCopier.
-
+	margins := margins veryDeepCopyWith: deepCopier
 ]
 
 { #category : #'linked frames' }
-TextMorph >> withSuccessorsDo: aBlock [ 
+TextMorph >> withSuccessorsDo: aBlock [
 	"Evaluate aBlock for each morph in my successor chain"
 
 	| each |
 	each := self.
-	[each isNil] whileFalse: 
+	[each isNil] whileFalse:
 			[aBlock value: each.
 			each := each successor]
 ]
 
 { #category : #'event handling' }
 TextMorph >> wouldAcceptKeyboardFocusUponTab [
-	"Answer whether the receiver might accept keyboard focus if 
+	"Answer whether the receiver might accept keyboard focus if
 	tab were hit in some container playfield"
 	^ true
 ]
 
 { #category : #accessing }
 TextMorph >> wrapFlag [
-	^ wrapFlag 
-	
+	^ wrapFlag
 ]
 
 { #category : #accessing }
@@ -1911,7 +1882,7 @@ TextMorph >> wrapOnOff [
 
 { #category : #menu }
 TextMorph >> wrapString [
-	"Answer the string to put in a menu that will invite the user to 
+	"Answer the string to put in a menu that will invite the user to
 	switch autoFit mode"
 	^ (wrapFlag
 		ifTrue: ['<yes>']
@@ -1921,24 +1892,24 @@ TextMorph >> wrapString [
 
 { #category : #'event handling' }
 TextMorph >> yellowButtonActivity [
-	"Supply the normal 'code pane' menu to use its text editing 
+	"Supply the normal 'code pane' menu to use its text editing
 	commands from a menu."
 	^ self yellowButtonActivity:false
 ]
 
 { #category : #'event handling' }
-TextMorph >> yellowButtonActivity: shiftKeyState [ 
+TextMorph >> yellowButtonActivity: shiftKeyState [
 	"Invoke the text-editing menu.
 	Check if required first!"
-	
+
 	self wantsYellowButtonMenu
 		ifFalse: [ ^ false ].
-		
+
 	(self getMenu: shiftKeyState)
 		ifNotNil: [ :menu|
 			menu setInvokingView: self editor.
 			menu invokeModal. self changed.
 			^ true].
-		
+
 	^ true
 ]

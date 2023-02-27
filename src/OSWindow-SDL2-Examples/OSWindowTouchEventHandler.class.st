@@ -17,7 +17,7 @@ OSWindowTouchEventHandler >> touchExample:	renderer [
 
 { #category : #visiting }
 OSWindowTouchEventHandler >> visitTouchPointerDownEvent: anEvent [
-	touchExample beginMove: anEvent fingerId at: anEvent position.
+	touchExample beginMove: anEvent fingerId at: anEvent position
 ]
 
 { #category : #visiting }

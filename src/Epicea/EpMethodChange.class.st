@@ -17,7 +17,7 @@ EpMethodChange >> behaviorAffectedName [
 EpMethodChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpMethodChange and: [
-		aCodeChange behaviorAffectedName = self behaviorAffectedName and: [ 
+		aCodeChange behaviorAffectedName = self behaviorAffectedName and: [
 		aCodeChange methodAffectedSelector = self methodAffectedSelector ] ]
 ]
 
@@ -29,8 +29,8 @@ EpMethodChange >> isEpMethodChange [
 
 { #category : #accessing }
 EpMethodChange >> methodAffected [
-	
-	^ self subclassResponsibility 
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -56,7 +56,7 @@ EpMethodChange >> printOn: aStream [
 
 	super printOn: aStream.
 
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self behaviorAffectedName;
 		nextPutAll: '>>';

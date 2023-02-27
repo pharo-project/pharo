@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [ 
-	
+ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
+
 	^ self basicNew
 		initializeEnitity: anEntity
 		interval: anInterval;
@@ -20,16 +20,16 @@ ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
 ]
 
 { #category : #initialization }
-ReIntervalSourceAnchor >> initializeEnitity: anEntiy interval: anInterval [ 
-	
+ReIntervalSourceAnchor >> initializeEnitity: anEntiy interval: anInterval [
+
 	self initializeEnitity: anEntiy.
-	interval := anInterval 
+	interval := anInterval
 ]
 
 { #category : #accessing }
 ReIntervalSourceAnchor >> interval [
 
-	^ interval 
+	^ interval
 ]
 
 { #category : #testing }

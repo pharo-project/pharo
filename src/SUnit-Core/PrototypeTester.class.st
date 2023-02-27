@@ -14,35 +14,40 @@ Class {
 { #category : #default }
 PrototypeTester class >> defaultRuns [
 	"Returns the default number of times to test"
+
 	^ 50
 ]
 
 { #category : #'instance creation' }
 PrototypeTester class >> with: aPrototype [
-	^ self new prototype:aPrototype
+
+	^ self new prototype: aPrototype
 ]
 
 { #category : #accessing }
 PrototypeTester >> prototype [
 	"Get a prototype"
-	^ prototype copy 
+
+	^ prototype copy
 ]
 
 { #category : #accessing }
-PrototypeTester >> prototype: aPrototype [ 
+PrototypeTester >> prototype: aPrototype [
 	"Set my prototype"
-	prototype := aPrototype copy 
+
+	prototype := aPrototype copy
 ]
 
 { #category : #operation }
 PrototypeTester >> result [
 	"Perform the test the default number of times"
-	^ self resultFor: self class defaultRuns 
+
+	^ self resultFor: self class defaultRuns
 ]
 
 { #category : #operation }
-PrototypeTester >> resultFor: runs [ 
+PrototypeTester >> resultFor: runs [
 	"Test that equality is the same over runs and answer the result"
-	
+
 	self subclassResponsibility
 ]

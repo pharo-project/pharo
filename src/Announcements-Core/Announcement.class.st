@@ -19,7 +19,7 @@ Announcement class >> , anAnnouncementClass [
 
 { #category : #public }
 Announcement class >> - anotherAnnouncement [
-	"Create an announcement set containing the receiver 
+	"Create an announcement set containing the receiver
 	and anotherAnnouncement as exclusion."
 
 	^ AnnouncementSetWithExclusions new
@@ -43,7 +43,7 @@ Announcement class >> handlesAnnouncement: anAnnouncement [
 { #category : #converting }
 Announcement class >> where: instancesFilterBlock [
 
-	^AnnouncementDeliveryCondition for: self where: instancesFilterBlock 
+	^AnnouncementDeliveryCondition for: self where: instancesFilterBlock
 ]
 
 { #category : #converting }
@@ -55,6 +55,6 @@ Announcement >> asAnnouncement [
 Announcement >> prepareForDelivery [
 	"This method will be executed once before subscriptions delivery.
 	If nobody subscribed on me this method will not be called.
-	It allows to put some heavy initialization logic here. It will be executed only 
+	It allows to put some heavy initialization logic here. It will be executed only
 	if there is interest on me"
 ]

@@ -16,14 +16,14 @@ WebBrowser class >> example [
 { #category : #testing }
 WebBrowser class >> isForCurrentSystem [
 
-	^self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
 WebBrowser class >> isUsed [
-	"all my subclasses are used by me"
-	
-	^self name = #WebBrowser
+	"All my subclasses are used by me"
+
+	^ self name = #WebBrowser
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
 ]
@@ -37,16 +37,15 @@ WebBrowser class >> openNativeWebBrowserOn: aURLString [
 { #category : #'instance creation' }
 WebBrowser class >> openOn: anURLOrString [
 	"Open the webbrowser on the given URL or String"
-	
-	^self webbrowserClassForPlatform 
-				openNativeWebBrowserOn: anURLOrString asString
 
+	^self webbrowserClassForPlatform
+				openNativeWebBrowserOn: anURLOrString asString
 ]
 
 { #category : #'private - accessing' }
 WebBrowser class >> webbrowserClassForPlatform [
 
-  ^ self allSubclasses 
-				detect: #isForCurrentSystem 
-				ifNone: [ self error: 'No web browser subclass for platform provided' ]
+  ^ self allSubclasses
+				detect: #isForCurrentSystem
+				ifNone: [ self error: 'No web browser subclass for OS platform provided yet' ]
 ]

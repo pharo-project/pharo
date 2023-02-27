@@ -12,7 +12,7 @@ ClyAsyncQueryTest >> createQuery [
 
 { #category : #running }
 ClyAsyncQueryTest >> queryClass [
-	^ClyAsyncQuery 
+	^ClyAsyncQuery
 ]
 
 { #category : #tests }

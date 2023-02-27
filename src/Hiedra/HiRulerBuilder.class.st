@@ -25,17 +25,16 @@ HiRulerBuilder class >> newRulerValues: aCollection linksBlock: aBlockClosure [
 
 { #category : #building }
 HiRulerBuilder >> build [
-	
+
 	ruler := HiRuler withValues: values.
 
-	values do: [ :each | 
+	values do: [ :each |
 		ruler
 			nodeAtValue: each
 			ifAbsent: [
 				ruler addNodeFor: each.
 				self buildLinksStartingAt: each ].
-		].
-
+		]
 ]
 
 { #category : #private }
@@ -53,16 +52,15 @@ HiRulerBuilder >> buildLinksStartingAt: aValue [
 		aNode := ruler nodeAtValue: next key.
 		anotherNode := ruler
 			nodeAtValue: next value
-			ifAbsent: [ 
+			ifAbsent: [
 				self stackLinksFrom: next value in: pending.
 				ruler addNodeFor: next value ].
 
-		(aNode hasLinkTo: anotherNode) ifFalse: [ 
+		(aNode hasLinkTo: anotherNode) ifFalse: [
 			ruler addLinkFrom: aNode to: anotherNode.
 		].
 
-	].
-
+	]
 ]
 
 { #category : #initialization }
@@ -70,7 +68,7 @@ HiRulerBuilder >> initialize [
 
 	super initialize.
 	linksBlock := [ :value | #() ].
-	values := #().
+	values := #()
 ]
 
 { #category : #accessing }
@@ -94,8 +92,7 @@ HiRulerBuilder >> stackLinksFrom: aValue in: pending [
 
 	| linkedValues |
 	linkedValues := linksBlock value: aValue.
-	linkedValues reverseDo: [:each | pending push: (aValue -> each) ].
-
+	linkedValues reverseDo: [:each | pending push: (aValue -> each) ]
 ]
 
 { #category : #accessing }
@@ -104,6 +101,6 @@ HiRulerBuilder >> values [
 ]
 
 { #category : #accessing }
-HiRulerBuilder >> values: aCollection [ 
+HiRulerBuilder >> values: aCollection [
 	values := aCollection
 ]

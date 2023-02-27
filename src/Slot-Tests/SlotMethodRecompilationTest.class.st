@@ -20,7 +20,7 @@ SlotMethodRecompilationTest >> methodBinding [
 { #category : #tests }
 SlotMethodRecompilationTest >> reshapeClass [
 	^ class := self
-		make: [ :builder | 
+		make: [ :builder |
 			builder fillFor: class.
 			builder slots: #(#iv) ]
 ]
@@ -31,7 +31,6 @@ SlotMethodRecompilationTest >> setUp [
 	class := self make: [ :builder |
 		builder traitComposition: TOne ].
 	class compile: 'm1'
-	
 ]
 
 { #category : #tests }

@@ -14,7 +14,7 @@ Class {
 Announcer >> announce: anAnnouncement [
 
 	| announcement |
-	announcement := anAnnouncement asAnnouncement.	
+	announcement := anAnnouncement asAnnouncement.
 	registry ifNotNil: [
 		registry deliver: announcement
 		].
@@ -28,7 +28,7 @@ Announcer >> basicSubscribe: subscription [
 
 { #category : #testing }
 Announcer >> handleSubscriberClass: eventClass [
-	^ self subscriptions 
+	^ self subscriptions
 		ifNil: [ false ]
 		ifNotNil: [:subscriptions | subscriptions handleSubscriberClass: eventClass]
 ]
@@ -43,27 +43,24 @@ Announcer >> hasSubscriber: anObject [
 { #category : #initialization }
 Announcer >> initialize [
 	super initialize.
-	registry := SubscriptionRegistry new.
+	registry := SubscriptionRegistry new
 ]
 
 { #category : #statistics }
 Announcer >> numberOfSubscriptions [
 	^ registry numberOfSubscriptions
-
 ]
 
 { #category : #subscription }
 Announcer >> removeSubscription: subscription [
 	"Remove the given subscription from the receiver"
-	
-	^ registry remove: subscription
 
+	^ registry remove: subscription
 ]
 
 { #category : #private }
 Announcer >> replace: subscription with: newOne [
 	^ registry replace: subscription with: newOne
-
 ]
 
 { #category : #accessing }
@@ -81,7 +78,7 @@ Announcer >> subscriptionsForClass: subscriberClass [
 { #category : #subscription }
 Announcer >> unsubscribe: anObject [
 	"Unsubscribe all subscriptions of anObject from the receiver"
-	
+
 	registry removeSubscriber: anObject
 ]
 
@@ -94,19 +91,18 @@ Announcer >> weak [
 { #category : #'registration api' }
 Announcer >> when: anAnnouncementClass do: aValuable [
 	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that such method as well as #when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
-	
+
 	^ registry add: (
-		AnnouncementSubscription new 
+		AnnouncementSubscription new
 			announcer: self;
 			announcementClass: anAnnouncementClass;
 			valuable: aValuable)
-	
 ]
 
 { #category : #subscription }
 Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
 	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber."
-	
+
     ^ (self when: anAnnouncementClass do: aValuable) subscriber: aSubscriber; yourself
 ]
 
@@ -114,7 +110,7 @@ Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
 Announcer >> when: anAnnouncementClass send: aSelector to: anObject [
 	"Declare that when anAnnouncementClass is raised, anObject should receive the message aSelector.
     When the message expects one argument (eg #fooAnnouncement:) the announcement is passed as argument.
-    When the message expects two arguments (eg #fooAnnouncement:announcer:) both the announcement and 
+    When the message expects two arguments (eg #fooAnnouncement:announcer:) both the announcement and
     the announcer are passed as argument"
 
 	^ self

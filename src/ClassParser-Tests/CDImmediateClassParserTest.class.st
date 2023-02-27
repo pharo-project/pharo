@@ -11,7 +11,7 @@ CDImmediateClassParserTest >> classDefinitionString [
 		instanceVariableNames: ''{instvar1} {instvar2}''
 		classVariableNames: ''{classvar1} {classvar2}''
 		package: #MyPackage'
-			format: { 
+			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
 				'instvar1' -> self firstInstanceVariableName.
@@ -23,5 +23,5 @@ CDImmediateClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDImmediateClassParserTest >> testImmediateClassIsImmediate [
 
-	self assert: classDefinition isImmediate
+	self assert: classDefinition layoutClass equals: ImmediateLayout
 ]

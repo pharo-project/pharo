@@ -1,19 +1,13 @@
 "
-This class defines the attributes of the ASCII character set.  It's here to be used while boostrapping the image; eventually, it will be replaced by the Unicode character set.
+This class defines the attributes of the ASCII character set. It's here to be used while bootstrapping the image.
 
-Character objects delegate behaviour to one of the  character sets AsciiCharSet, Latin1, or Unicode. 
+Character objects delegate behaviour to one of the  character sets AsciiCharSet or Unicode. 
 "
 Class {
 	#name : #AsciiCharset,
 	#superclass : #Object,
 	#category : #'Kernel-BasicObjects'
 }
-
-{ #category : #testing }
-AsciiCharset class >> canBeGlobalVarInitial: aCharacter [ 
-	
-	^ self isUppercase: aCharacter
-]
 
 { #category : #'character classification' }
 AsciiCharset class >> isCasedLetter: char [
@@ -34,7 +28,7 @@ AsciiCharset class >> isConnectorPunctuation: char [
 { #category : #'character classification' }
 AsciiCharset class >> isControlOther: char [
 	char charCode <= 16r1F ifTrue: [ ^ true ].
-	^ char = Character delete 
+	^ char = Character delete
 ]
 
 { #category : #'character classification' }
@@ -68,7 +62,7 @@ AsciiCharset class >> isFinalQuote: char [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isFormatOther: char [ 
+AsciiCharset class >> isFormatOther: char [
 	^ false
 ]
 
@@ -84,7 +78,7 @@ AsciiCharset class >> isLetter: aCharacter [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isLetterModifier: char [ 
+AsciiCharset class >> isLetterModifier: char [
 	^ false
 ]
 
@@ -124,7 +118,7 @@ AsciiCharset class >> isOpenPunctuation: char [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isOtherLetter: char [ 
+AsciiCharset class >> isOtherLetter: char [
 	^ false
 ]
 
@@ -164,12 +158,12 @@ AsciiCharset class >> isSpacingCombiningMark: char [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isSurrogateOther: char [ 
+AsciiCharset class >> isSurrogateOther: char [
 	^ false
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isTitlecaseLetter: char [ 
+AsciiCharset class >> isTitlecaseLetter: char [
 	^ false
 ]
 
@@ -187,9 +181,9 @@ AsciiCharset class >> maxValue [
 
 { #category : #casing }
 AsciiCharset class >> toLowercase: aCharacter [
-	"(AsciiCharset toLowercase: $A) >>> $a.
-	 (AsciiCharset  toLowercase: $a) >>> $a.
-	 (AsciiCharset  toLowercase: $!) >>> $!"
+	"(AsciiCharset toLowercase: $A) >>> $a."
+	"(AsciiCharset  toLowercase: $a) >>> $a."
+	"(AsciiCharset  toLowercase: $!) >>> $!"
 
 	(aCharacter between: $A and: $Z)
 		ifFalse: [ ^ aCharacter ].
@@ -199,9 +193,9 @@ AsciiCharset class >> toLowercase: aCharacter [
 
 { #category : #casing }
 AsciiCharset class >> toUppercase: aCharacter [
-	"(AsciiCharset toUppercase: $a) >>> $A.
-	(AsciiCharset toUppercase: $A) >>> $A.
-	(AsciiCharset toUppercase: $!) >>> $!"
+	"(AsciiCharset toUppercase: $a) >>> $A."
+	"(AsciiCharset toUppercase: $A) >>> $A."
+	"(AsciiCharset toUppercase: $!) >>> $!"
 
 	(aCharacter between: $a and: $z)
 		ifFalse: [ ^ aCharacter ].

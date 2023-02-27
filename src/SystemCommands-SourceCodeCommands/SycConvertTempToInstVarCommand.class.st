@@ -9,21 +9,19 @@ Class {
 
 { #category : #testing }
 SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isTempVariableSelected  
+	^(super canBeExecutedInContext: aSourceCodeContext) and: [aSourceCodeContext isTempVariableSelected]
 ]
 
 { #category : #execution }
-SycConvertTempToInstVarCommand >> asRefactorings [ 
-	^ { RBTemporaryToInstanceVariableRefactoring 
+SycConvertTempToInstVarCommand >> asRefactorings [
+	^ { RBTemporaryToInstanceVariableRefactoring
 		class: method origin
 		selector: method selector
 		variable: sourceNode name }
 ]
 
 { #category : #execution }
-SycConvertTempToInstVarCommand >> defaultMenuIconName [ 
+SycConvertTempToInstVarCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 

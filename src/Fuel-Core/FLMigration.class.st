@@ -27,11 +27,10 @@ FLMigration class >> fromClassNamed: aSymbol toClass: aClass variables: anArray 
 { #category : #evaluating }
 FLMigration >> applyTo: aVariablesMapping [ 
 	
-	variables do: [:link |
+	variables associationsDo: [:link |
 		aVariablesMapping 
 			map: link key 
 			to: link value ]
-	
 ]
 
 { #category : #initializing }

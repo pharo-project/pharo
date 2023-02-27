@@ -17,10 +17,9 @@ ClapParameterizedTest >> testAddPositional [
 		canonicalName: 'ARG';
 		yourself.
 	subject add: pos.
-	
-	self assert: (subject at: #myPositional) identicalTo: pos.
-	self assert: (subject positionals includes: pos).
 
+	self assert: (subject at: #myPositional) identicalTo: pos.
+	self assert: (subject positionals includes: pos)
 ]
 
 { #category : #tests }
@@ -34,5 +33,4 @@ ClapParameterizedTest >> testIdentifierConflict [
 	self
 		should: [ subject add: second ]
 		raise: Error
-
 ]

@@ -4,6 +4,8 @@ I am an abstraction used by the serialization algorithm to encode the graph in a
 Class {
 	#name : #FLEncoder,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'stream',
 		'objectsIndexes',
@@ -15,28 +17,10 @@ Class {
 	#category : #'Fuel-Core-Base'
 }
 
-{ #category : #'instance creation' }
-FLEncoder class >> on: aStream globalEnvironment: aDictionary [
-	
-	^self basicNew
-		initializeOn: aStream
-		globalEnvironment: aDictionary;
-		yourself.
-]
-
-{ #category : #'instance creation' }
-FLEncoder class >> on: aStream globalEnvironment: aDictionary do: aBlock [
-	
-	| anEncoder |
-	anEncoder := self on: aStream globalEnvironment: aDictionary.
-	^ [ aBlock value: anEncoder ] ensure: [ anEncoder flush ]
-]
-
 { #category : #encoding }
 FLEncoder >> encodeBitmap: aBitmap [ 
 	"Append to the receiver an Integer as the next two bytes."
 	aBitmap writeOn: stream.
-
 ]
 
 { #category : #encoding }
@@ -46,7 +30,7 @@ FLEncoder >> encodeByte: aSmallInteger [
 
 { #category : #encoding }
 FLEncoder >> encodeBytes: aBytesObject [
-	stream nextBytesPutAll: aBytesObject 
+	stream nextBytesPutAll: aBytesObject
 ]
 
 { #category : #encoding }
@@ -111,6 +95,11 @@ FLEncoder >> encodeReferenceToClusterObjectClass: aClass [
 ]
 
 { #category : #encoding }
+FLEncoder >> encodeSignature [
+	self encodeBytes: self configuration signature asByteArray
+]
+
+{ #category : #encoding }
 FLEncoder >> encodeString: aString [
 	| length |
 	(length := aString size) < 192
@@ -137,8 +126,6 @@ FLEncoder >> encodeUint24: aSmallInteger [
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
-
-
 ]
 
 { #category : #encoding }
@@ -149,7 +136,6 @@ FLEncoder >> encodeUint32: aSmallInteger [
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
-
 ]
 
 { #category : #encoding }
@@ -164,7 +150,6 @@ FLEncoder >> encodeUint64: aSmallInteger [
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
-
 ]
 
 { #category : #encoding }
@@ -174,11 +159,20 @@ FLEncoder >> encodeUint8: aSmallInteger [
 ]
 
 { #category : #encoding }
+FLEncoder >> encodeVersion [
+	| version |
+	version := self configuration version.
+	self
+		encodeByte: version major;
+		encodeByte: version minor;
+		encodeByte: version patch
+]
+
+{ #category : #encoding }
 FLEncoder >> encodeWeakReferenceTo: anObject [
 
 	indexStream 
-		nextIndexPut: (objectsIndexes at: anObject ifAbsent: [objectsIndexes at: nil]) 
-
+		nextIndexPut: (objectsIndexes at: anObject ifAbsent: [objectsIndexes at: nil])
 ]
 
 { #category : #encoding }
@@ -199,11 +193,6 @@ FLEncoder >> flush [
 	^ stream flush.
 ]
 
-{ #category : #hooks }
-FLEncoder >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
-]
-
 { #category : #accessing }
 FLEncoder >> globalEnvironment [
 	"Answer a dictionary where the look up for global symbols will be done during serialization."
@@ -211,12 +200,13 @@ FLEncoder >> globalEnvironment [
 	^ globalEnvironment
 ]
 
-{ #category : #'initialize-release' }
-FLEncoder >> initializeOn: aStream globalEnvironment: aDictionary [
+{ #category : #initialization }
+FLEncoder >> initialize [
+	super initialize.
 	
-	self initialize.
-	stream := FLBufferedWriteStream on: aStream.
-	globalEnvironment := aDictionary.
+	stream := FLBufferedWriteStream on: self context stream.
+	globalEnvironment := self configuration environment.
+	self context registerFinalizer: [ self flush ]
 ]
 
 { #category : #accessing }

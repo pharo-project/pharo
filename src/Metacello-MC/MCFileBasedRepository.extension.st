@@ -1,6 +1,6 @@
 Extension { #name : #MCFileBasedRepository }
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCFileBasedRepository >> versionInfoFromVersionNamed: aString [
 
 	| versions |

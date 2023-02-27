@@ -11,7 +11,7 @@ CDVariableByteClassParserTest >> classDefinitionString [
 		instanceVariableNames: ''{instvar1} {instvar2}''
 		classVariableNames: ''{classvar1} {classvar2}''
 		package: #MyPackage'
-			format: { 
+			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
 				'instvar1' -> self firstInstanceVariableName.
@@ -23,5 +23,5 @@ CDVariableByteClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDVariableByteClassParserTest >> testVariableByteClassIsBytes [
 
-	self assert: (classDefinition isBytes)
+	self assert: classDefinition layoutClass equals: ByteLayout
 ]

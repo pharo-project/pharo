@@ -13,7 +13,7 @@ Class {
 { #category : #matching }
 ClapWordMatch >> completeMatchOn: aStream [
 	word := aStream next.
-	startIndex := aStream position.
+	startIndex := aStream position
 ]
 
 { #category : #accessing }

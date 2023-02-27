@@ -36,9 +36,8 @@ Class {
 	#category : #'Morphic-Base-Menus'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MenuItemMorph class >> initialize [
-	"MenuItemMorph initialize"
 
 	| f |
 	f := Form
@@ -49,8 +48,7 @@ MenuItemMorph class >> initialize [
 	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
 	BottomArrow := SubMenuMarker rotateBy: 90.
 	LeftArrow := SubMenuMarker rotateBy: 180.
-	UpArrow := SubMenuMarker rotateBy: 270.
-
+	UpArrow := SubMenuMarker rotateBy: 270
 ]
 
 { #category : #grabbing }
@@ -78,14 +76,14 @@ MenuItemMorph >> activateOwnerMenu: evt [
 	| popUpOwner |
 	(owner isNil or: [ owner isMenuMorph not ]) ifTrue: [ ^ false ].
 	(owner fullContainsPoint: evt position)
-		ifTrue: [ 
+		ifTrue: [
 			owner activate: evt.
 			^ true ].
 	popUpOwner := owner popUpOwner.
 	[ popUpOwner ]
-		whileNotNil: [ 
+		whileNotNil: [
 			(popUpOwner owner fullContainsPoint: evt position)
-				ifTrue: [ 
+				ifTrue: [
 					popUpOwner owner activate: evt.
 					^ true ]
 				ifFalse: [ popUpOwner := popUpOwner owner popUpOwner ] ].
@@ -126,14 +124,12 @@ MenuItemMorph >> allWordingsNotInSubMenus: verbotenSubmenuContentsList [
 MenuItemMorph >> arguments [
 
 	^ arguments
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> arguments: aCollection [
 
-	arguments := aCollection.
-
+	arguments := aCollection
 ]
 
 { #category : #private }
@@ -148,7 +144,7 @@ MenuItemMorph >> contentString [
 ]
 
 { #category : #accessing }
-MenuItemMorph >> contentString: aString [ 
+MenuItemMorph >> contentString: aString [
 	aString ifNil: [self removeProperty: #contentString]
 		ifNotNil: [self setProperty: #contentString toValue: aString]
 ]
@@ -164,7 +160,7 @@ MenuItemMorph >> contents: aString withMarkers: aBool [
 ]
 
 { #category : #accessing }
-MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [ 
+MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 	"Set the menu item entry. If aBool is true, parse aString for embedded markers."
 
 	| markerIndex marker |
@@ -174,20 +170,20 @@ MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 	self hasIcon ifTrue: [ self icon: nil ].
 	self flag: #pharoFixMe.
 	(aString isKindOf: Association)
-		ifTrue: [ super contents: aString value. 
-				marker := aString key   
+		ifTrue: [ super contents: aString value.
+				marker := aString key
 					ifTrue: [self onImage]
 					ifFalse: [self offImage]]
 		ifFalse: [
-		(aString notEmpty and: [aString first = $<]) 
+		(aString notEmpty and: [aString first = $<])
 			ifFalse: [^super contents: aString].
 		markerIndex := aString indexOf: $>.
 		markerIndex = 0 ifTrue: [^super contents: aString].
 	marker := (aString copyFrom: 1 to: markerIndex) asLowercase.
-	(#('<on>' '<off>' '<yes>' '<no>') includes: marker) 
+	(#('<on>' '<off>' '<yes>' '<no>') includes: marker)
 		ifFalse: [^super contents: aString].
 	self contentString: aString.	"remember actual string"
-	marker := (marker = '<on>' or: [marker = '<yes>']) ~= inverse 
+	marker := (marker = '<on>' or: [marker = '<yes>']) ~= inverse
 				ifTrue: [self onImage]
 				ifFalse: [self offImage].
 	super contents:  (aString copyFrom: markerIndex + 1 to: aString size)].
@@ -206,7 +202,7 @@ MenuItemMorph >> defaultBounds [
 { #category : #initialization }
 MenuItemMorph >> deleteIfPopUp: evt [
 	"Recurse up for nested pop ups"
-	owner ifNotNil:[owner deleteIfPopUp: evt].
+	owner ifNotNil:[owner deleteIfPopUp: evt]
 ]
 
 { #category : #selecting }
@@ -214,7 +210,7 @@ MenuItemMorph >> deselect: evt [
 	self isSelected: false.
 	subMenu ifNotNil: [
 		owner ifNotNil:[owner activeSubmenu: nil].
-		self removeAlarm: #deselectTimeOut:].
+		self removeAlarm: #deselectTimeOut:]
 ]
 
 { #category : #'meta actions' }
@@ -224,8 +220,7 @@ MenuItemMorph >> deselectItem [
 	subMenu ifNotNil: [subMenu deleteIfPopUp].
 	(owner isMenuMorph) ifTrue:
 		[item := owner popUpOwner.
-		(item isMenuItemMorph) ifTrue: [item deselectItem]].
-
+		(item isMenuItemMorph) ifTrue: [item deselectItem]]
 ]
 
 { #category : #events }
@@ -233,7 +228,7 @@ MenuItemMorph >> deselectTimeOut: evt [
 	"Deselect timout. Now really deselect"
 
 	owner selectedItem == self
-		ifTrue: [ 
+		ifTrue: [
 			evt hand newMouseFocus: owner.
 			owner selectItem: nil event: evt ]
 ]
@@ -249,7 +244,7 @@ MenuItemMorph >> doButtonAction [
 MenuItemMorph >> drawIconOn: aCanvas [
 	| iconForm |
 	self hasIcon ifFalse: [ ^ self ].
-	
+
 	iconForm := self iconForm.
 	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
 ]
@@ -315,14 +310,13 @@ MenuItemMorph >> handleMouseUp: anEvent [
 	anEvent wasHandled: true.
 	anEvent blueButtonChanged
 		ifTrue:[self blueButtonUp: anEvent]
-		ifFalse:[self mouseUp: anEvent].
+		ifFalse:[self mouseUp: anEvent]
 ]
 
 { #category : #events }
 MenuItemMorph >> handlesMouseDown: evt [
 
 	^ true
-
 ]
 
 { #category : #events }
@@ -350,7 +344,7 @@ MenuItemMorph >> hasIconOrMarker [
 { #category : #accessing }
 MenuItemMorph >> hasMarker [
 	"Answer whether the receiver has a marker morph."
-	^self hasSubmorphs 
+	^self hasSubmorphs
 ]
 
 { #category : #accessing }
@@ -373,10 +367,9 @@ MenuItemMorph >> icon [
 ]
 
 { #category : #accessing }
-MenuItemMorph >> icon: aForm [ 
+MenuItemMorph >> icon: aForm [
 	"change the the receiver's icon"
-	icon := aForm.
-	
+	icon := aForm
 ]
 
 { #category : #private }
@@ -426,14 +419,13 @@ MenuItemMorph >> invokeWithEvent: evt [
 					ifTrue: [target perform: selector withArguments: arguments]
 					ifFalse: [target perform: selector withArguments: (arguments copyWith: evt)]].
 		self showShortcut.
-		self changed].
+		self changed]
 ]
 
 { #category : #accessing }
 MenuItemMorph >> isEnabled [
 
 	^ isEnabled
-
 ]
 
 { #category : #testing }
@@ -441,8 +433,7 @@ MenuItemMorph >> isEnabled: aBoolean [
 
 	isEnabled = aBoolean ifTrue: [^ self].
 	isEnabled := aBoolean.
-	self color: (aBoolean ifTrue: [Color black] ifFalse: [Color gray]).
-
+	self color: (aBoolean ifTrue: [Color black] ifFalse: [Color gray])
 ]
 
 { #category : #testing }
@@ -452,15 +443,14 @@ MenuItemMorph >> isMenuItemMorph [
 
 { #category : #selecting }
 MenuItemMorph >> isSelected [
-	^ isSelected 
+	^ isSelected
 ]
 
 { #category : #selecting }
 MenuItemMorph >> isSelected: aBoolean [
 
 	isSelected := aBoolean.
-	self changed.
-
+	self changed
 ]
 
 { #category : #accessing }
@@ -496,7 +486,7 @@ MenuItemMorph >> menuStringBounds [
 	self hasIcon ifTrue: [ | iconForm |
 		iconForm := self iconForm.
 		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
-	self hasMarker ifTrue: [ 
+	self hasMarker ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
 ]
@@ -507,7 +497,7 @@ MenuItemMorph >> minHeight [
 	iconHeight := self hasIcon
 				ifTrue: [self icon height + 2]
 				ifFalse: [0].
-	^ self fontToUse height max: iconHeight 
+	^ self fontToUse height max: iconHeight
 ]
 
 { #category : #layout }
@@ -533,15 +523,14 @@ MenuItemMorph >> mouseDown: evt [
 	(evt shiftPressed and: [ self isEditable ])
 		ifTrue: [^ super mouseDown: evt].  "enable label editing"
 	evt hand newMouseFocus: owner. "Redirect to menu for valid transitions"
-	owner selectItem: self event: evt. 
-
+	owner selectItem: self event: evt
 ]
 
 { #category : #events }
 MenuItemMorph >> mouseEnter: evt [
 	"The mouse entered the receiver"
 
-	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]].
+	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]]
 ]
 
 { #category : #events }
@@ -579,8 +568,7 @@ MenuItemMorph >> mouseUp: evt [
 		self refreshWorld.
 		(Delay forMilliseconds: 200) wait].
 	self deselect: evt.
-	self invokeWithEvent: evt.		
-
+	self invokeWithEvent: evt
 ]
 
 { #category : #private }
@@ -589,7 +577,7 @@ MenuItemMorph >> offImage [
 	| form |
 	form := Form extent: (self fontToUse ascent-2) asPoint depth: 16.
 	(form getCanvas)
-		frameAndFillRectangle: form boundingBox fillColor: (Color gray: 0.9) 
+		frameAndFillRectangle: form boundingBox fillColor: (Color gray: 0.9)
 			borderWidth: 1 borderColor: Color black.
 	^form
 ]
@@ -600,7 +588,7 @@ MenuItemMorph >> onImage [
 	| form |
 	form := Form extent: (self fontToUse ascent-2) asPoint depth: 16.
 	(form getCanvas)
-		frameAndFillRectangle: form boundingBox fillColor: (Color gray: 0.8) 
+		frameAndFillRectangle: form boundingBox fillColor: (Color gray: 0.8)
 			borderWidth: 1 borderColor: Color black;
 		fillRectangle: (form boundingBox insetBy: 2) fillStyle: Color black.
 	^form
@@ -622,12 +610,12 @@ MenuItemMorph >> select: evt [
 			popUpAdjacentTo: self adjacentTo
 			forHand: evt hand
 			from: self.
-		subMenu selectItem: nil event: evt].
+		subMenu selectItem: nil event: evt]
 ]
 
 { #category : #private }
 MenuItemMorph >> selectionFillStyle [
-	"answer the fill style to use with the receiver is the selected  
+	"answer the fill style to use with the receiver is the selected
 	element"
 
 	Display depth <= 2 ifTrue: [ ^ Color gray ].
@@ -643,14 +631,12 @@ MenuItemMorph >> selectionTextColor [
 MenuItemMorph >> selector [
 
 	^ selector
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> selector: aSymbol [
 
-	selector := aSymbol.
-
+	selector := aSymbol
 ]
 
 { #category : #testing }
@@ -662,24 +648,19 @@ MenuItemMorph >> shouldBeHighlighted [
 MenuItemMorph >> showShortcut [
 
 	ShortcutReminder showShortcut: self
-
-	
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> subMenu [
 
 	^ subMenu
-
 ]
 
 { #category : #accessing }
 MenuItemMorph >> subMenu: aMenuMorph [
 
 	subMenu := aMenuMorph.
-	self changed.
-
+	self changed
 ]
 
 { #category : #private }
@@ -697,8 +678,7 @@ MenuItemMorph >> target [
 { #category : #accessing }
 MenuItemMorph >> target: anObject [
 
-	target := anObject.
-
+	target := anObject
 ]
 
 { #category : #events }
@@ -727,10 +707,10 @@ MenuItemMorph >> veryDeepFixupWith: deepCopier [
 ]
 
 { #category : #copying }
-MenuItemMorph >> veryDeepInner: deepCopier [ 
-	"Copy all of my instance variables. Some need to be not copied  
-	at all, but shared. Warning!! Every instance variable defined in  
-	this class must be handled. We must also implement  
+MenuItemMorph >> veryDeepInner: deepCopier [
+	"Copy all of my instance variables. Some need to be not copied
+	at all, but shared. Warning!! Every instance variable defined in
+	this class must be handled. We must also implement
 	veryDeepFixupWith:. See DeepCopier class comment."
 	super veryDeepInner: deepCopier.
 	isEnabled := isEnabled veryDeepCopyWith: deepCopier.

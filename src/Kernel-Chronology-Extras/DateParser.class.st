@@ -38,10 +38,8 @@ DateParser class >> readingFrom: anInputStream pattern: aPattern [
 
 	"See class comment for pattern description
 	self comment"
-	
+
 	^self new initializeReadingFrom: anInputStream pattern: aPattern
-
-
 ]
 
 { #category : #'private - parsing' }
@@ -72,8 +70,7 @@ DateParser >> initializeParsing [
 DateParser >> initializeReadingFrom: anInputStream pattern: aPattern [
 
 	inputStream := anInputStream.
-	pattern := aPattern.
-	
+	pattern := aPattern
 ]
 
 { #category : #'private - parsing day' }
@@ -151,7 +148,7 @@ DateParser >> parse: timeUnitName expectedSize: anInteger [
 	| extractedString result |
 	extractedString := inputStream next: anInteger.
 	result := extractedString asInteger.
-	(result isNil or: [ extractedString size ~= anInteger ]) 
+	(result isNil or: [ extractedString size ~= anInteger ])
 		ifTrue: [ DateError signal: ' Expect a two digit ', timeUnitName, ', got ', extractedString ].
 	^ result
 ]
@@ -179,14 +176,14 @@ DateParser >> parseFourDigitYear [
 DateParser >> parseIfError: aBlock [
 	"Parse the date according to the given pattern"
 	self initializeParsing.
-	
+
 	[ self isDoneParsing ] whileFalse: [ self parseNextPattern ].
 
-	self isInvalidPattern ifTrue: aBlock.
+	self isInvalidPattern ifTrue: [ aBlock value ].
 	self convertTwoDigitsYear.
-	
+
 	(inputStream atEnd and: [ patternStream atEnd ]) ifFalse: [ DateError signal: 'Input doesn''t match given pattern.' ].
-	
+
 	^ self createDate
 ]
 
@@ -194,7 +191,7 @@ DateParser >> parseIfError: aBlock [
 DateParser >> parseMonth [
 
 	self isTwoDigitMonthPattern ifTrue: [ ^self parseTwoDigitMonth ].
-	self parseVariableDigitMonth 
+	self parseVariableDigitMonth
 ]
 
 { #category : #'private - parsing' }
@@ -206,7 +203,7 @@ DateParser >> parseNextPattern [
 	self isYearPattern ifTrue: [ ^ self parseYear ].
 	self isMonthPattern ifTrue: [ ^ self parseMonth ].
 	self isDayPattern ifTrue: [ ^ self parseDay ].
-	
+
 	self parseSameChar
 ]
 

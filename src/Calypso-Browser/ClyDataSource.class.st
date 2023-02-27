@@ -82,7 +82,7 @@ ClyDataSource class >> empty [
 
 { #category : #'instance creation' }
 ClyDataSource class >> on: aQuery [
-	^self new 
+	^self new
 		query: aQuery
 ]
 
@@ -90,14 +90,14 @@ ClyDataSource class >> on: aQuery [
 ClyDataSource class >> scheduleUpdateOf: aDataSource [
 
 	UpdateScheduler ifNil: [ UpdateScheduler := ClyDataSourceUpdateScheduler new ].
-	
+
 	UpdateScheduler register: aDataSource
 ]
 
 { #category : #accessing }
 ClyDataSource >> allElements [
-	^(1 to: self numberOfRows) collect: [ :i | 
-		self elementAt: i] 
+	^(1 to: self numberOfRows) collect: [ :i |
+		self elementAt: i]
 ]
 
 { #category : #accessing }
@@ -105,20 +105,20 @@ ClyDataSource >> cellColumn: column row: rowIndex [
 
 	| item |
 	item := self elementAt: rowIndex.
-	^column createCellFor: item in: queryView 
+	^column createCellFor: item in: queryView
 ]
 
 { #category : #controlling }
 ClyDataSource >> close [
-	lastFilteredDataSource ifNotNil: [ 
+	lastFilteredDataSource ifNotNil: [
 		lastFilteredDataSource close].
-	
+
 	itemCursor := itemCursor close
 ]
 
 { #category : #controlling }
 ClyDataSource >> collapse: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #copying }
@@ -131,20 +131,20 @@ ClyDataSource >> copyForBrowserStateSnapshot [
 
 { #category : #accessing }
 ClyDataSource >> countChildrenOf: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
 ClyDataSource >> createElementWith: anEnvironmentItem [
 
-	^self 
-		findCachedElementWith: anEnvironmentItem 
+	^self
+		findCachedElementWith: anEnvironmentItem
 		ifAbsent: [ ClyDataSourceItem of: self value: anEnvironmentItem]
 ]
 
 { #category : #testing }
 ClyDataSource >> definesChildren [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -159,7 +159,7 @@ ClyDataSource >> depth: anObject [
 
 { #category : #testing }
 ClyDataSource >> doesItemHaveChildren: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'drag and drop' }
@@ -171,13 +171,13 @@ ClyDataSource >> dragTransferType [
 ClyDataSource >> dropElements: aPassenger index: rowIndex [
 	| dropTargetItem |
 	dropTargetItem := self elementAt: rowIndex.
-	
+
 	^queryView dropPassenger: aPassenger at: dropTargetItem
 ]
 
 { #category : #controlling }
 ClyDataSource >> expand: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #controlling }
@@ -189,22 +189,21 @@ ClyDataSource >> expansionChanged [
 
 { #category : #private }
 ClyDataSource >> findCachedElementWith: anEnvironmentItem ifAbsent: absentBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 ClyDataSource >> findDataSourceSameAs: aDataSource ifNone: noneBlock [
-	^(self isSameAs: aDataSource) 
-		ifTrue: [ ^self ]
-		ifFalse: noneBlock
-
+	^(self isSameAs: aDataSource)
+		ifTrue: [ self ]
+		ifFalse: [ noneBlock value ]
 ]
 
 { #category : #queries }
 ClyDataSource >> findItemsSimilarTo: dataSourceItems [
 
 	| foundItems relatedItems |
-	relatedItems := dataSourceItems 
+	relatedItems := dataSourceItems
 		select: [ :each | self isBasedOnQueryOf: each type ]
 		thenCollect: [ :each | each browserItem ].
 	foundItems := self itemCursor findItemsSimilarTo: relatedItems.
@@ -226,7 +225,7 @@ ClyDataSource >> findItemsWith: actualObjects [
 	| foundItems |
 	foundItems := self itemCursor findItemsWith: actualObjects.
 
-	^foundItems select: #notNil thenCollect: [:each | 
+	^foundItems select: #notNil thenCollect: [:each |
 		self createElementWith: each ]
 ]
 
@@ -243,7 +242,7 @@ ClyDataSource >> getMetaProperty: aPropertyClass [
 
 { #category : #accessing }
 ClyDataSource >> globalPositionOf: childDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -264,10 +263,10 @@ ClyDataSource >> initialize [
 { #category : #copying }
 ClyDataSource >> initializeForBrowserStateSpanshot [
 	table := nil.
-	queryView := nil.	
-	itemCursor := ClyClosedBrowserCursor instance.	
+	queryView := nil.
+	itemCursor := ClyClosedBrowserCursor instance.
 	lastFilteredDataSource := nil.
-	dirty := false.
+	dirty := false
 ]
 
 { #category : #testing }
@@ -299,14 +298,13 @@ ClyDataSource >> isEmpty [
 
 { #category : #testing }
 ClyDataSource >> isExpanded: aDataSourceItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyDataSource >> isInSameStateAs: anotherDataSource [
 
 	^self isSameAs: anotherDataSource
-	 
 ]
 
 { #category : #testing }
@@ -335,28 +333,28 @@ ClyDataSource >> isRoot [
 ClyDataSource >> isSameAs: anotherDataSource [
 
 	self class == anotherDataSource class ifFalse: [ ^false ].
-	
+
 	^self isBasedOn: anotherDataSource query
 ]
 
 { #category : #accessing }
 ClyDataSource >> itemCursor [
 	dirty ifTrue: [ self runUpdate ].
-	^itemCursor 
+	^itemCursor
 ]
 
 { #category : #controlling }
 ClyDataSource >> itemsChanged [
 	"Method is called when underlying query result was changed.
-	In that case we implement lazy updating 
-	when we only mark data source as dirty 
+	In that case we implement lazy updating
+	when we only mark data source as dirty
 	and defer actual update for future processing by next UI iteration.
 	It allows to ensure only update of UI despite of multiple system changes
 	when they are happen during single UI command.
 	At the and it optimizes UI reaction on system changes and makes UI smooth.
-	Notice that update (#runUpdate) can be forced by user 
+	Notice that update (#runUpdate) can be forced by user
 	when he manually requests operations with data source.
-	In that case deferred update is skipped 
+	In that case deferred update is skipped
 	because dirty flag is reset during processing (look at #runUpdate)"
 	dirty ifTrue: [ ^self ].
 	dirty := true.
@@ -365,7 +363,7 @@ ClyDataSource >> itemsChanged [
 
 { #category : #'context menu' }
 ClyDataSource >> menuColumn: column row: rowIndex [
-	
+
 	^queryView menuColumn: column row: rowIndex
 ]
 
@@ -374,16 +372,16 @@ ClyDataSource >> newDataSourceMatching: anItemFilter [
 	"IMPORTANT: DO NOT CALL IT FROM THE UI PROCESS"
 	"Any data source instance should be closed after usage.
 	Problem that filtered data sources are managed out of the application, internally inside FastTable.
-	So this method is supposed to be called by fast table to create filtered data source 
+	So this method is supposed to be called by fast table to create filtered data source
 	which will be not shared to any other users.
 	And to close retrieved data source together with original one (self) it will keep reference to it.
 	And every new filter request will close existing filtered data source"
 	lastFilteredDataSource ifNotNil: [lastFilteredDataSource close].
 	self isClosed ifTrue: [
 		"This is hackish solution to the current fast table problem with filter process.
-		Filter process is not managed by anybody 
+		Filter process is not managed by anybody
 		and will continue work after table is removed from the world"
-		(Processor activeProcess == UIManager default uiProcess) ifTrue: [ 
+		(Processor activeProcess == UIManager default uiProcess) ifTrue: [
 			self error: 'Should not happens'].
 		^Processor terminateActive].
 	lastFilteredDataSource := self class on: (query filteredBy: anItemFilter).
@@ -393,15 +391,15 @@ ClyDataSource >> newDataSourceMatching: anItemFilter [
 
 { #category : #accessing }
 ClyDataSource >> newSelectionWith: dataSourceItems [
-	^ClyDataSourceSelection fromRoot: self items: dataSourceItems 
+	^ClyDataSourceSelection fromRoot: self items: dataSourceItems
 ]
 
 { #category : #controlling }
 ClyDataSource >> openOn: aQueryView [
-	
+
 	self isClosed ifFalse: [ self close ].
 
-	queryView := aQueryView.	
+	queryView := aQueryView.
 	table := aQueryView table.
 	itemCursor := query openBrowserCursorFor: self.
 	dirty := false
@@ -462,7 +460,7 @@ ClyDataSource >> realElementAt: anIndex [
 ClyDataSource >> runUpdate [
 	self isClosed ifTrue: [^self].
 	dirty ifFalse: [ ^self ].
-	
+
 	dirty := false.
 	itemCursor updateItemCache.
 	self updateExpandingItems.
@@ -480,9 +478,9 @@ ClyDataSource >> scheduleUpdate [
 ClyDataSource >> searchText: aString [
 	"we search only original elements"
 	| found |
-	found := self itemCursor moveToItemWhich: [ :each | 
+	found := self itemCursor moveToItemWhich: [ :each |
 		each name asLowercase beginsWith: aString asLowercase ].
-	
+
 	^found ifFalse: [ #() ] ifTrue: [ {self itemCursor position}]
 ]
 
@@ -495,17 +493,17 @@ ClyDataSource >> toString: anItem [
 { #category : #'drag and drop' }
 ClyDataSource >> transferFor: dataSourceItems from: aMorph [
 	| selection passenger |
-	selection := dataSourceItems first rootDataSource 
+	selection := dataSourceItems first rootDataSource
 		newSelectionWith: dataSourceItems. "to get selection bound to last selected item. In FastTable last selected item is first in the list"
 
 	passenger := queryView createDragPassengerFor: selection.
-	
+
 	^super transferFor: passenger from: aMorph
 ]
 
 { #category : #private }
 ClyDataSource >> updateExpandingItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -514,19 +512,15 @@ ClyDataSource >> updateItems: dataSourceItems [
 	Then users should correctly process updated items"
 	| updatedItems |
 	updatedItems := itemCursor findItemsWith: (dataSourceItems collect: [:each | each actualObject]).
-	dataSourceItems with: updatedItems do: [ :myItem :updatedBrowserItem | 
+	dataSourceItems with: updatedItems do: [ :myItem :updatedBrowserItem |
 		myItem updateItemWith: updatedBrowserItem  ]
 ]
 
 { #category : #'drag and drop' }
-ClyDataSource >> wantsDropElements: aPassanger type: type index: rowIndex [
-	| dropTargetItem result |
+ClyDataSource >> wantsDropElements: aPassenger type: type index: rowIndex [
+	| dropTargetItem |
 	rowIndex = 0 | (rowIndex > self numberOfRows) ifTrue: [ ^false ].
 	self dragTransferType == type ifFalse: [ ^false ].
-	dropTargetItem := self elementAt: rowIndex.		
-	result := queryView wantsDropPassenger: aPassanger at: dropTargetItem.
-	
-	result & dropTargetItem hasChildren ifTrue: [ dropTargetItem expand ].
-	
-	^result
+	dropTargetItem := self elementAt: rowIndex.
+	^ queryView wantsDropPassenger: aPassenger at: dropTargetItem
 ]

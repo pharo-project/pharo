@@ -32,7 +32,7 @@ ZipDirectoryMember >> desiredCompressionMethod: aNumber [
 ZipDirectoryMember >> initialize [
 	super initialize.
 	externalFileAttributes := self mapPermissionsFromUnix: DefaultDirectoryPermissions.
-	super desiredCompressionMethod: CompressionStored.
+	super desiredCompressionMethod: CompressionStored
 ]
 
 { #category : #testing }

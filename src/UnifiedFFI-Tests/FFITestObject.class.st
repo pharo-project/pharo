@@ -30,7 +30,7 @@ FFITestObject >> c [
 ]
 
 { #category : #'library path' }
-FFITestObject >> ffiLibraryName [ 
-	
+FFITestObject >> ffiLibraryName [
+
 	^ 'testLibrary'
 ]

@@ -22,7 +22,6 @@ MorphicTransform class >> identity [
 MorphicTransform class >> new [
 
 	^ self offset: 0@0
-
 ]
 
 { #category : #'instance creation' }
@@ -74,7 +73,7 @@ MorphicTransform >> composedWithLocal: aTransform [
 		^aTransform withOffset: aTransform offset + self offset].
 	aTransform isPureTranslation ifTrue:[
 		^self withOffset: (self localPointToGlobal: aTransform offset negated) negated].
-	^super composedWithLocal: aTransform.
+	^super composedWithLocal: aTransform
 ]
 
 { #category : #'transforming points' }
@@ -93,7 +92,7 @@ MorphicTransform >> inverseTransformation [
 ]
 
 { #category : #transformations }
-MorphicTransform >> invert: aPoint [ 
+MorphicTransform >> invert: aPoint [
 	"Transform the given point from local to global coordinates."
 	| p3 p2 |
 	self isPureTranslation ifTrue: [ ^ aPoint - offset ].
@@ -129,7 +128,6 @@ MorphicTransform >> isIdentity [
 	"Return true if the receiver is the identity transform; that is, if applying to a point returns the point itself."
 
 	^ self isPureTranslation and: [offset = (0@0)]
-
 ]
 
 { #category : #testing }
@@ -142,7 +140,6 @@ MorphicTransform >> isPureTranslation [
 	"Return true if the receiver specifies no rotation or scaling."
 
 	^ angle = 0.0 and: [scale = 1.0]
-
 ]
 
 { #category : #'transforming points' }
@@ -154,7 +151,6 @@ MorphicTransform >> localPointToGlobal: aPoint [
 { #category : #accessing }
 MorphicTransform >> offset [
 	^ offset
-
 ]
 
 { #category : #printing }
@@ -164,7 +160,7 @@ MorphicTransform >> printOn: aStream [
 		nextPutAll:'angle = '; print: angle;
 		nextPutAll:'; scale = '; print: scale;
 		nextPutAll:'; offset = '; print: offset;
-		nextPut:$).
+		nextPut:$)
 ]
 
 { #category : #accessing }
@@ -185,7 +181,7 @@ MorphicTransform >> setIdentiy [
 ]
 
 { #category : #private }
-MorphicTransform >> setOffset: aPoint [ 
+MorphicTransform >> setOffset: aPoint [
 	offset := aPoint
 ]
 
@@ -197,12 +193,12 @@ MorphicTransform >> setOffset: aPoint angle: radians scale: aNumberOrPoint [
 ]
 
 { #category : #private }
-MorphicTransform >> setScale: aNumberOrPoint [ 
+MorphicTransform >> setScale: aNumberOrPoint [
 	scale := aNumberOrPoint
 ]
 
 { #category : #transformations }
-MorphicTransform >> transform: aPoint [ 
+MorphicTransform >> transform: aPoint [
 	"Transform the given point from global to local coordinates."
 	| p2 p3 |
 	self isPureTranslation ifTrue: [ ^ aPoint + offset ].

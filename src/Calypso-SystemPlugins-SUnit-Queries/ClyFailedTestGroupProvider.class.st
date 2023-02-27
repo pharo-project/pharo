@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyFailedTestGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'failed tests' priority: -1 on: aMethodQuery 
+	^ClyMethodGroup named: 'failed tests' priority: -1 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

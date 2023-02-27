@@ -21,8 +21,6 @@ FTNilFunction >> beExplicit [
 { #category : #protocol }
 FTNilFunction >> disable [
 	"Do nothing"
-
-	
 ]
 
 { #category : #testing }

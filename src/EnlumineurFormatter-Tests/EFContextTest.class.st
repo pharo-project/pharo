@@ -19,7 +19,6 @@ EFContextTest >> testOneLineMessage [
 	context := EFContext new. 
 	self assert: (context oneLineMessages includes: #to:).
 	self assert: (context oneLineMessages includes: #to:do:).
-	
 ]
 
 { #category : #tests }
@@ -27,5 +26,4 @@ EFContextTest >> testOneLineMessageClassSide [
 
 	self assert: (EFFormatter oneLineMessages includes: #to:).  
 	self assert: (EFFormatter oneLineMessages includes: #to:do:).
-	
 ]

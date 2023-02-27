@@ -7,24 +7,30 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not and: [ aSourceCodeContext isMessageSelected ]
+
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
+		  aSourceCodeContext isMethodSelected not and: [
+			  aSourceCodeContext isMessageSelected ] ]
 ]
 
 { #category : #execution }
 SycInlineMethodCommand >> asRefactorings [
 
-	^ {RBInlineMethodRefactoring
-		  inline: sourceNode sourceInterval
-		  inMethod: method selector
-		  forClass: method origin}
+	^ { ((RBInlineMethodRefactoring
+		    inline: sourceNode sourceInterval
+		    inMethod: method selector
+		    forClass: method origin)
+		   setOption: #inlineExpression toUse: [ :ref :aString |
+			   (self confirm:
+					('Do you want to extract the expression ''<1s>'' into a variable in the current method?'
+					 	expandMacrosWith: aString)) not ];
+		   yourself) }
 ]
 
 { #category : #accessing }
-SycInlineMethodCommand >> defaultMenuIconName [ 
+SycInlineMethodCommand >> defaultMenuIconName [
 	^ #smallRightFlushIcon
 ]
 

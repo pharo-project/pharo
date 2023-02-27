@@ -7,19 +7,19 @@ Class {
 	#category : #'SUnit-Core-Extensions'
 }
 
-{ #category : #'exception handling' }
+{ #category : #handling }
 TestSkipped >> defaultAction [
-	"nothing to do.
-	If I am not handled I might trigger an Assertion failure later on."
+	"Nothing to do. If I am not handled I might trigger an Assertion failure later on."
 ]
 
-{ #category : #'exception handling' }
+{ #category : #handling }
 TestSkipped >> manageTestProcessBy: aProcessMonitorTestService [
-	"it is special exception which do not represent the actual test failure.
-	So we just ignoring it"
+	"It is special exception which do not represent the actual test failure.
+	 So we just ignoring it"
 ]
 
-{ #category : #'exception handling' }
+{ #category : #handling }
 TestSkipped >> sunitAnnounce: aTestCase toResult: aTestResult [
-	aTestResult addSkip: aTestCase.
+
+	aTestResult addSkip: aTestCase
 ]

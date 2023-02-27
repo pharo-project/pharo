@@ -58,14 +58,14 @@ DrTestsTestRunnerTest >> testReRunResultIsDTTestRunnerResult [
 DrTestsTestRunnerTest >> testRunResultBuildTreeForUI [
 	self
 		assert: (plugin runForConfiguration: conf) buildTreeForUI class
-		equals: DTTreeNode 
+		equals: DTTreeNode
 ]
 
 { #category : #tests }
 DrTestsTestRunnerTest >> testRunResultIsDTTestRunnerResult [
 	self
 		assert: (plugin runForConfiguration: conf) class
-		equals: DTTestsRunnerResult 
+		equals: DTTestsRunnerResult
 ]
 
 { #category : #tests }

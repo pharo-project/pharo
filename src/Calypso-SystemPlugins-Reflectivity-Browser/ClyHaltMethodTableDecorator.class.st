@@ -9,17 +9,16 @@ Class {
 
 { #category : #decoration }
 ClyHaltMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
-	
+
 	| icon |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
+
 	icon := anItemCellMorph definitionIcon: #halt.
 	icon setBalloonText: 'halt call inside method'
 ]
 
 { #category : #decoration }
 ClyHaltMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }
@@ -29,6 +28,6 @@ ClyHaltMethodTableDecorator class >> priority [
 
 { #category : #testing }
 ClyHaltMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	^ (aDataSourceItem isMarkedWith: ClyMethodWithHaltTag) 
+	^ (aDataSourceItem isMarkedWith: ClyMethodWithHaltTag)
 			and: [ (aDataSourceItem isMarkedWith: ClyMethodWithBreakpointTag) not ]
 ]

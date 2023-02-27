@@ -36,10 +36,9 @@ OmFileStore class >> defaultWritingDeferDuration [
 OmFileStore class >> existsStoreNamed: aGlobalName inDirectory: aFileReference [
 
 	^ aFileReference exists and: [
-		(self 
-			fileReferenceForStoreNamed: aGlobalName 
+		(self
+			fileReferenceForStoreNamed: aGlobalName
 			inDirectory: aFileReference) exists ]
-
 ]
 
 { #category : #accessing }
@@ -51,7 +50,7 @@ OmFileStore class >> fileReferenceForStoreNamed: aGlobalName inDirectory: baseDi
 { #category : #'instance creation' }
 OmFileStore class >> fromFile: aFileReference [
 
-	^ self 
+	^ self
 		named: aFileReference basenameWithoutExtension
 		inFile: aFileReference
 ]
@@ -78,7 +77,7 @@ OmFileStore class >> named: aGlobalName inDirectory: baseDirectoryFileReference 
 { #category : #'instance creation' }
 OmFileStore class >> named: aName inFile: aFileReference [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeWithGlobalName: aName
 		fileReference: aFileReference;
 		yourself
@@ -114,7 +113,7 @@ OmFileStore >> critical: aBlock [
 { #category : #accessing }
 OmFileStore >> ensureDeleteFile [
 	"After execution of this method, the .ombu file this instance represents will not exist."
-	
+
 	^ self fileReference ensureDelete
 ]
 
@@ -123,16 +122,16 @@ OmFileStore >> entriesCount [
 	"Answer the number of entries that this store contains"
 
 	self checkIfMustRefresh.
-	
+
 	^ entryCount
 ]
 
 { #category : #enumerating }
-OmFileStore >> entriesDo: aBlockClosure [ 
+OmFileStore >> entriesDo: aBlockClosure [
 	"Evaluate the closure on each entry"
 
 	self fileReference ifExists: [
-		self readEntriesWith: [:readStream | 
+		self readEntriesWith: [:readStream |
 			| reader |
 			reader := self newEntryReader.
 			reader stream: readStream.
@@ -140,9 +139,8 @@ OmFileStore >> entriesDo: aBlockClosure [
 				aBlockClosure value: reader nextEntry ] ] ].
 
 	"Finally, the entries still not written"
-	self entryBufferDo: [:entryAndLocalName | 
-		aBlockClosure value: entryAndLocalName key ].
-
+	self entryBufferDo: [:entryAndLocalName |
+		aBlockClosure value: entryAndLocalName key ]
 ]
 
 { #category : #private }
@@ -180,23 +178,22 @@ OmFileStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: abs
 				readEntryForLocalName: aReference localName
 				ifPresent: [ :entry |
 					self entryByLocalName at: aReference localName put: entry.
-					presentBlockClosure value: entry ] 
+					presentBlockClosure value: entry ]
 				ifAbsent: absentBlockClosure ]
-
 ]
 
 { #category : #private }
 OmFileStore >> entryPositionsByLocalName [
-	
+
 	self checkIfMustRefresh.
-	
+
 	^ entryPositionsByLocalName
 ]
 
 { #category : #accessing }
 OmFileStore >> entryReferences [
 	"Optimized implementation for potentially large files"
-	
+
 	^ (1 to: self entriesCount) collect: [:index |
 			self referenceToLocalName: index asString ]
 ]
@@ -210,8 +207,8 @@ OmFileStore >> fileReference [
 { #category : #accessing }
 OmFileStore >> firstEntryIfAbsent: absentBlock [
 
-	^ [ super firstEntryIfAbsent: absentBlock ] 
-			on: Error 
+	^ [ super firstEntryIfAbsent: absentBlock ]
+			on: Error
 			do: absentBlock
 ]
 
@@ -227,15 +224,15 @@ OmFileStore >> flushEntryBuffer [
 	self critical: [
 		| initialPosition initialLocalName fileStream |
 		self entryBuffer isEmpty ifTrue: [ ^self ].
-				
+
 		[ fileStream := ZnCharacterWriteStream on: fileReference binaryWriteStream encoding: #utf8. ] on: ReadOnlyFileException do: [ :anException |
 			fileStream ifNotNil: #close.
 			^ self
-		 ].	
-	
+		 ].
+
 		[ | anEntryWriter |
 			fileStream setToEnd.
-			
+
 			initialPosition := fileStream position.
 			initialLocalName := self entryBuffer first value.
 			anEntryWriter := self newEntryWriter.
@@ -253,12 +250,11 @@ OmFileStore >> flushEntryBuffer [
 
 			"In Linux it was necessary to explicitly flush the file stream"
 			fileStream flush.
-			
+
 			lastStreamPosition := fileStream position.
 			] ensure: [ fileStream close ].
-	
-		self refreshEntryPositionsByLocalNameStartingAt: initialPosition since: initialLocalName ].
 
+		self refreshEntryPositionsByLocalNameStartingAt: initialPosition since: initialLocalName ]
 ]
 
 { #category : #accessing }
@@ -279,21 +275,20 @@ OmFileStore >> headReference [
 OmFileStore >> initialize [
 
 	super initialize.
-	
+
 	entryCount := 0.
 	entryPositionsByLocalName := Dictionary new.
-	headReference := OmNullReference uniqueInstance.
+	headReference := OmNullReference uniqueInstance
 ]
 
 { #category : #initialization }
 OmFileStore >> initializeWithGlobalName: aName fileReference: aFileReference [
 
 	self initialize.
-	
+
 	globalName := aName.
 	fileReference := aFileReference.
 	mustRefresh := fileReference exists. "Late file read"
-
 ]
 
 { #category : #testing }
@@ -306,8 +301,14 @@ OmFileStore >> isOutdated [
 { #category : #accessing }
 OmFileStore >> lowLevelFileStoreIfNone: aBlock [
 	"Needed by EpLostChangesDetector"
-	
+
 	^ self
+]
+
+{ #category : #accessing }
+OmFileStore >> mustRefresh [
+
+	^ mustRefresh
 ]
 
 { #category : #writing }
@@ -336,7 +337,7 @@ OmFileStore >> newEntry: anEntry [
 
 { #category : #private }
 OmFileStore >> newEntryReader [
-	
+
 	^ OmSTONEntryReader newForStore: self
 ]
 
@@ -358,8 +359,8 @@ OmFileStore >> nextEntryFromPosition: aFilePosition [
 OmFileStore >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPut: $(;
 		nextPutAll: self globalName;
 		nextPut: $)
@@ -372,7 +373,7 @@ OmFileStore >> readEntriesWith: aBlockClosure [
 		^ aBlockClosure value: readStream ]
 			on: Error
 			do: [ :error |
-				(OmFileStoreReadingError 
+				(OmFileStoreReadingError
 					readingError: error
 					on: self fileReference
 					position: readStream position) signal ] ]
@@ -381,12 +382,11 @@ OmFileStore >> readEntriesWith: aBlockClosure [
 { #category : #accessing }
 OmFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
-	^ self entryPositionsByLocalName 
+	^ self entryPositionsByLocalName
 		at: aString
 		ifPresent: [ :position |
 			presentBlockClosure value: (self nextEntryFromPosition: position) ]
 		ifAbsent: absentBlockClosure
-
 ]
 
 { #category : #refreshing }
@@ -398,10 +398,10 @@ OmFileStore >> refresh [
 			self initialize.
 			self fileReference ifAbsent: [ ^ self ].
 			self
-				readEntriesWith: [ :readStream | 
+				readEntriesWith: [ :readStream |
 					[ self newEntryReader
 						stream: readStream;
-						entryPositionsDo: [ :entryPosition | 
+						entryPositionsDo: [ :entryPosition |
 							entryCount := entryCount + 1.
 							entryPositionsByLocalName at: entryCount asString put: entryPosition ] ]
 						ensure: [ headReference := self referenceToLocalName: entryCount asString ] ] ]
@@ -409,7 +409,7 @@ OmFileStore >> refresh [
 
 { #category : #private }
 OmFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition since: initialLocalName [
-	"Workaround needed because can't get real file stream position from ZnBufferedWriteStream. 
+	"Workaround needed because can't get real file stream position from ZnBufferedWriteStream.
 	(+ would need special care of WideStrings)"
 
 	| localNameAsInteger |
@@ -422,7 +422,7 @@ OmFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition s
 			entryPositionsDo: [ :entryPosition |
 				entryPositionsByLocalName at: localNameAsInteger asString put: entryPosition.
 				localNameAsInteger := localNameAsInteger + 1 ].
-		].
+		]
 ]
 
 { #category : #accessing }
@@ -441,14 +441,14 @@ OmFileStore >> writingDeferDuration: aDuration [
 OmFileStore >> writingDeferrer [
 
 	^ writingDeferrer ifNil: [
-		writingDeferrer := OmDeferrer 
-			send: #flushEntryBuffer 
+		writingDeferrer := OmDeferrer
+			send: #flushEntryBuffer
 			to: self
 			after: self class defaultWritingDeferDuration ]
 ]
 
 { #category : #accessing }
 OmFileStore >> writingFileReference [
-	
+
 	^ fileReference
 ]

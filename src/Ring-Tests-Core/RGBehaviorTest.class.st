@@ -13,7 +13,7 @@ RGBehaviorTest >> behaviorClass [
 { #category : #tests }
 RGBehaviorTest >> testBadInstantiation [
 
-	self should: [ RGBehavior named: #SomeBehavior ] raise: RGBadInstantiationError 
+	self should: [ RGBehavior named: #SomeBehavior ] raise: RGBadInstantiationError
 ]
 
 { #category : #tests }
@@ -77,49 +77,46 @@ RGBehaviorTest >> testResolvingConsistency [
 
 { #category : #tests }
 RGBehaviorTest >> testSiblings [
+
 	| newBehavior |
-	
 	newBehavior := RGClass named: #SomeBehaivor.
 	self assert: newBehavior sibling equals: newBehavior metaclass.
 	self assert: newBehavior baseBehavior equals: newBehavior.
 	self assert: newBehavior instanceSide equals: newBehavior.
-	self assert: newBehavior theNonMetaClass equals: newBehavior.
-	
+	self assert: newBehavior instanceSide equals: newBehavior.
+
 	newBehavior := RGMetaclass named: #SomeBehaivor.
 	self assert: newBehavior sibling equals: newBehavior baseClass.
 	self assert: newBehavior baseBehavior equals: newBehavior baseClass.
 	self assert: newBehavior instanceSide equals: newBehavior baseClass.
-	self assert: newBehavior theNonMetaClass equals: newBehavior baseClass.
+	self assert: newBehavior instanceSide equals: newBehavior baseClass.
 
 	newBehavior := RGTrait named: #SomeBehaivor.
 	self assert: newBehavior sibling equals: newBehavior classTrait.
 	self assert: newBehavior baseBehavior equals: newBehavior.
 	self assert: newBehavior instanceSide equals: newBehavior.
-	self assert: newBehavior theNonMetaClass equals: newBehavior.
+	self assert: newBehavior instanceSide equals: newBehavior.
 
 	newBehavior := RGMetaclassTrait named: #SomeBehaivor.
 	self assert: newBehavior sibling equals: newBehavior baseTrait.
 	self assert: newBehavior baseBehavior equals: newBehavior baseTrait.
 	self assert: newBehavior instanceSide equals: newBehavior baseTrait.
-	self assert: newBehavior theNonMetaClass equals: newBehavior baseTrait.
-
-
+	self assert: newBehavior instanceSide equals: newBehavior baseTrait
 ]
 
 { #category : #tests }
 RGBehaviorTest >> testUnresolveSuperclass [
 	| env class1 class2 |
-	
+
 	env := RGEnvironment new.
 	class1 := env ensureClassNamed: #Superclass.
 	class2 := env ensureClassNamed: #Subclass.
-	
-	self deny: class2 hasResolvedSuperclass. 
-	class2 superclass: class1.
-	self assert: class2 hasResolvedSuperclass. 
-	class2 unresolveSuperclass.
-	self deny: class2 hasResolvedSuperclass. 
-	
-	self assert: class1 subclasses isEmpty.
 
+	self deny: class2 hasResolvedSuperclass.
+	class2 superclass: class1.
+	self assert: class2 hasResolvedSuperclass.
+	class2 unresolveSuperclass.
+	self deny: class2 hasResolvedSuperclass.
+
+	self assert: class1 subclasses isEmpty
 ]

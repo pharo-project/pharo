@@ -30,7 +30,7 @@ OSWindowRenderThreadOperation >> blocking [
 
 { #category : #execute }
 OSWindowRenderThreadOperation >> execute [
-	[ 
+	[
 		[
 			failed := false.
 			operation value
@@ -50,9 +50,7 @@ OSWindowRenderThreadOperation >> failed [
 { #category : #initialize }
 OSWindowRenderThreadOperation >> initWithOperation: anOperation [
 	semaphore := Semaphore new.
-	operation := anOperation.
-	
-	
+	operation := anOperation
 ]
 
 { #category : #initialize }
@@ -60,8 +58,6 @@ OSWindowRenderThreadOperation >> initWithOperation: anOperation blocking: isBloc
 	semaphore := Semaphore new.
 	operation := anOperation.
 	blocking := isBlocking
-	
-	
 ]
 
 { #category : #waiting }

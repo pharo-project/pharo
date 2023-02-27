@@ -81,8 +81,21 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingByteArrayAsStringArgument [
 	[	stringToMarshall := 'áèïô å∫'.
 		byteArray := stringToMarshall utf8Encoded.
 		cString := self stringToPointer: byteArray.
-		self assert: cString readStringUTF8 equals: stringToMarshall.
+		self assert: cString utf8StringFromCString equals: stringToMarshall.
 	] ensure: [ cString free ]
+]
+
+{ #category : #tests }
+TFUFFIDerivedTypeMarshallingTest >> testMarshallingByteArrayWillPinTheObject [
+	| aByteArray |
+
+	aByteArray := ByteArray new: 10.
+
+	self fillByteArray: aByteArray size: aByteArray size.
+
+	self assert: aByteArray equals: #[1 2 3 4 5 6 7 8 9 10].
+
+	self assert: aByteArray isPinnedInMemory
 ]
 
 { #category : #tests }
@@ -102,12 +115,12 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingOOP [
 	| aByteArray |
 	aByteArray := ByteArray new: 10.
 	aByteArray pinInMemory.
-	
+
 	self fillByteArray: aByteArray size: aByteArray size.
-	
+
 	self assert: aByteArray equals: #[1 2 3 4 5 6 7 8 9 10].
-	
-	aByteArray unpinInMemory.
+
+	aByteArray unpinInMemory
 ]
 
 { #category : #tests }
@@ -115,12 +128,12 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingOOPIsSameObject [
 	| aByteArray otherByteArray |
 	aByteArray := ByteArray new: 2300000.
 	aByteArray pinInMemory.
-	
+
 	otherByteArray := self returnSameByteArray: aByteArray.
-	
+
 	self assert: aByteArray == otherByteArray.
-	
-	aByteArray unpinInMemory.
+
+	aByteArray unpinInMemory
 ]
 
 { #category : #tests }
@@ -136,8 +149,7 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingSmalltalkStringReturnValueWit
 
 	originalString := 'áèïô å∫'.
 	returnedString := self pointerToStringWithAlias: originalString.
-	self assert: returnedString equals: originalString.
-
+	self assert: returnedString equals: originalString
 ]
 
 { #category : #tests }
@@ -147,7 +159,7 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingStringArgument [
 	[
 	stringToMarshall := 'áèïô å∫'.
 	cString := self stringToPointer: stringToMarshall.
-	self assert: cString readStringUTF8 equals: stringToMarshall.
+	self assert: cString utf8StringFromCString equals: stringToMarshall.
 	] ensure: [ cString free ]
 ]
 

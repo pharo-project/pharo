@@ -49,13 +49,12 @@ TIncludesTest >> test0FixtureIncludeTest [
 { #category : #'tests - includes' }
 TIncludesTest >> testIdentityIncludesNonSpecificComportement [
 	"Test the same comportement than #includes:"
-	
-	| collection |	
+
+	| collection |
 	collection := self nonEmpty.
-	
+
 	self deny: (collection identityIncludes: self elementNotIn).
 	self assert: (collection identityIncludes: collection anyOne)
-
 ]
 
 { #category : #'tests - includes' }
@@ -70,19 +69,19 @@ TIncludesTest >> testIncludesAnyAllThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
 	self assert: (self nonEmpty includesAny: { self nonEmpty anyOne }).
-	self assert: (self nonEmpty includesAny: self nonEmpty).
+	self assert: (self nonEmpty includesAny: self nonEmpty)
 ]
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesAnyNoneThere [
-	
+
 	self deny: (self nonEmpty includesAny: self empty).
 	self deny: (self nonEmpty includesAny: { self elementNotIn. self anotherElementNotIn })
 ]
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesElementIsNotThere [
-	
+
 	self deny: (self nonEmpty includes: self elementNotIn).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotIn)
@@ -90,6 +89,6 @@ TIncludesTest >> testIncludesElementIsNotThere [
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesElementIsThere [
-	
-	self assert: (self nonEmpty includes: self nonEmpty anyOne).
+
+	self assert: (self nonEmpty includes: self nonEmpty anyOne)
 ]

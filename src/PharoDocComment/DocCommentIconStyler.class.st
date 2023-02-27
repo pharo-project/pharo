@@ -11,7 +11,7 @@ Class {
 DocCommentIconStyler >> exampleIsFaulty: aNode [
 	^ aNode comments
 		anySatisfy: [ :commentNode | commentNode pharoDocCommentNodes anySatisfy: [ :node |
-				node expression expressionCode isFaulty ]]
+				node expression isFaulty ]]
 ]
 
 { #category : #defaults }
@@ -43,11 +43,12 @@ DocCommentIconStyler >> iconLabel: aNode [
 { #category : #private }
 DocCommentIconStyler >> notifySourceError: aNode [
 	"If a code in an example is faulty notify the user"
-	
+
 	^ [ | examples faultyExample |
 		examples := aNode pharoDocCommentNodes.
-		faultyExample := examples detect: [ :example | example expression expressionCode isFaulty ].
-		RBParser parseExpression: faultyExample expression expression ]
+		faultyExample := examples detect: [ :example | example expression isFaulty ].
+		"FIXME: The parser do not show errors related to specific doccomments rules."
+		RBParser parseExpression: faultyExample expression source ]
 ]
 
 { #category : #private }
@@ -55,18 +56,18 @@ DocCommentIconStyler >> runExampleBlock: aNode [
 	^ [ | examples |
 		examples := aNode pharoDocCommentNodes.
 		(examples
-			collect: [ :example | 
-			{ example expression expressionCode formattedCode . example expression evaluate . example result expressionCode formattedCode}]) inspect]
+			collect: [ :example |
+			{ example expression expressionNode formattedCode . example expression evaluate}]) inspect]
 ]
 
 { #category : #testing }
 DocCommentIconStyler >> shouldStyleNode: aNode [
 	^ self stylingEnabled
 		and: [ aNode isMethod
-				and: [ aNode comments anySatisfy: [ :commentNode | commentNode hasDocComment ] ] ] 
+				and: [ aNode comments anySatisfy: [ :commentNode | commentNode hasDocComment ] ] ]
 ]
 
 { #category : #private }
 DocCommentIconStyler >> stylingEnabled [
-	^ PharoDocCommentNode docCommentEnabled 
+	^ PharoDocCommentNode docCommentEnabled
 ]

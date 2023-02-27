@@ -23,7 +23,7 @@ EpMethodModification class >> oldMethod: anOldMethod newMethod: aNewMethod [
 { #category : #visitor }
 EpMethodModification >> accept: aVisitor [
 
-	^ aVisitor visitMethodModification: self 
+	^ aVisitor visitMethodModification: self
 ]
 
 { #category : #accessing }
@@ -37,12 +37,12 @@ EpMethodModification >> initializeWithOldMethod: anOldMethod newMethod: aNewMeth
 
 	self initialize.
 	oldMethod := anOldMethod asEpiceaRingDefinition.
-	newMethod := aNewMethod asEpiceaRingDefinition.
+	newMethod := aNewMethod asEpiceaRingDefinition
 ]
 
 { #category : #accessing }
 EpMethodModification >> methodAffected [
-	
+
 	^ newMethod
 ]
 

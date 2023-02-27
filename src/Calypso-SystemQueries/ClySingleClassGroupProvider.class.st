@@ -17,20 +17,20 @@ Class {
 
 { #category : #'building groups' }
 ClySingleClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
-	
+
 	| classQuery |
 	classQuery := self createClassQueryFrom: aPackageScope.
 	classQuery hasEmptyResult ifTrue: [ ^self ].
-	
+
 	aBlock value: (self createClassGroupFor: classQuery from: aPackageScope)
 ]
 
 { #category : #'building groups' }
 ClySingleClassGroupProvider >> createClassGroupFor: aClassQuery from: aPackageScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'building groups' }
 ClySingleClassGroupProvider >> createClassQueryFrom: aPackageScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

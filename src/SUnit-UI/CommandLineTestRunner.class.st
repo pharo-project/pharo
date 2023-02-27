@@ -25,24 +25,23 @@ CommandLineTestRunner >> createStdout [
 
 { #category : #running }
 CommandLineTestRunner >> done [
-	
 ]
 
 { #category : #helper }
 CommandLineTestRunner >> increaseTestCount [
-	currentTest := currentTest + 1.
+	currentTest := currentTest + 1
 ]
 
 { #category : #helper }
-CommandLineTestRunner >> print: longErrorMessage short: shortErrorMessage of: aTestCase [ 
+CommandLineTestRunner >> print: longErrorMessage short: shortErrorMessage of: aTestCase [
 	| cr |
 
 	cr := OSPlatform current lineEnding.
-	self stdout 
+	self stdout
 		<< (shortErrorMessage trimBoth padRightTo: 10)
 		<< aTestCase printString
 		<< cr.
-	longErrorMessage isEmptyOrNil 
+	longErrorMessage isEmptyOrNil
 		ifFalse: [ self stdout << longErrorMessage << cr ]
 ]
 
@@ -50,10 +49,10 @@ CommandLineTestRunner >> print: longErrorMessage short: shortErrorMessage of: aT
 CommandLineTestRunner >> printReport [
 	| cr |
 	cr := OSPlatform current lineEnding.
-	
+
 	self stderr
 		<< cr
-		<< 'Finished running ' << maxTest asString  
+		<< 'Finished running ' << maxTest asString
 		<< ' Test' << (maxTest = 1 ifTrue: [''] ifFalse: ['s'])
 		<< cr
 ]
@@ -66,15 +65,15 @@ CommandLineTestRunner >> printTestCase: aTestCase [
 CommandLineTestRunner >> recordPassOf: aTestCase [
 	self
 		print: nil
-		short: ' [OK]' 
-		of: aTestCase 
+		short: ' [OK]'
+		of: aTestCase
 ]
 
 { #category : #helper }
-CommandLineTestRunner >> recordSkip: aTestSkip duringTest: aTestCase [ 
-	self 
+CommandLineTestRunner >> recordSkip: aTestSkip duringTest: aTestCase [
+	self
 		print: nil
-		short: ' [SKIPPED]' 
+		short: ' [SKIPPED]'
 		of: aTestCase
 ]
 
@@ -82,20 +81,20 @@ CommandLineTestRunner >> recordSkip: aTestSkip duringTest: aTestCase [
 CommandLineTestRunner >> reportTestCase: aTestCase runBlock: aBlock [
 
 	self increaseTestCount.
-	self printTestCase: aTestCase.	
+	self printTestCase: aTestCase.
 	aBlock value
 ]
 
 { #category : #running }
 CommandLineTestRunner >> setUp [
-	
+
 	currentTest := 0.
-	maxTest := suite tests size.
+	maxTest := suite tests size
 ]
 
 { #category : #helper }
 CommandLineTestRunner >> shortStackDescriptionFor: anError [
-	^ (String streamContents: [ :s| 
+	^ (String streamContents: [ :s|
 			s << anError printString; cr.
 			anError signalerContext shortDebugStackOn: s ])
 		copyReplaceAll: String cr
@@ -106,14 +105,14 @@ CommandLineTestRunner >> shortStackDescriptionFor: anError [
 CommandLineTestRunner >> stderr [
 	(stderr isNil or: [ stderr closed ])
 		ifTrue: [ stderr := self createStderr ].
-	^ stderr 
+	^ stderr
 ]
 
 { #category : #accessing }
 CommandLineTestRunner >> stdout [
 	(stdout isNil or: [ stdout closed ])
 		ifTrue: [ stdout := self createStdout ].
-		
+
 	^ stdout
 ]
 
@@ -123,17 +122,17 @@ CommandLineTestRunner >> tearDown [
 ]
 
 { #category : #helper }
-CommandLineTestRunner >> writeError: anError of: aTestCase [ 
+CommandLineTestRunner >> writeError: anError of: aTestCase [
 	self
 		print: (self shortStackDescriptionFor: anError)
-		short: ' [ERROR]' 
-		of: aTestCase 
+		short: ' [ERROR]'
+		of: aTestCase
 ]
 
 { #category : #helper }
-CommandLineTestRunner >> writeFailure: anError of: aTestCase [ 
+CommandLineTestRunner >> writeFailure: anError of: aTestCase [
 	self
 		print: (self shortStackDescriptionFor: anError)
-		short: ' [FAIL]' 
-		of: aTestCase 
+		short: ' [FAIL]'
+		of: aTestCase
 ]

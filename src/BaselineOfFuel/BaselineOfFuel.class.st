@@ -32,18 +32,17 @@ BaselineOfFuel >> baseline: spec [
 		spec
 			package: 'Fuel-Core' with: [ spec requires: 'FuelPlatform' ];
 			package: 'Fuel-Debug' with: [ spec requires: 'Core' ];
-			package: 'Fuel-ProgressUpdate' with: [ spec requires: #('Core') ];
 			package: 'Fuel-Benchmarks' with: [ spec requires: #('Core' 'SMark-Jenkins') ];
 			
 			package: 'Fuel-Tests-Core' with: [ spec requires: 'Core' ];
 			package: 'Fuel-Tests-Debug' with: [ spec requires: #('Fuel-Debug' 'Tests') ];
-			package: 'Fuel-Tests-ProgressUpdate' with: [ spec requires: #('Fuel-ProgressUpdate' 'Tests') ];
 			package: 'Fuel-Tests-Benchmarks' with: [ spec requires: #('Fuel-Benchmarks' 'Tests') ].
 					
 		spec
 			group: 'default' with: #('Core');
 			group: 'Core' with: #('Fuel-Core');
-			group: 'Tests' with: #('Core' 'Fuel-Tests-Core') ].
+			group: 'Tests' with: #('Core' 'Fuel-Tests-Core');
+			group: 'Debug' with: #('Core' 'Fuel-Debug') ].
 
 	self
 		groupsForPharoCommon: spec;
@@ -54,53 +53,36 @@ BaselineOfFuel >> baseline: spec [
 BaselineOfFuel >> fuelPlatform: spec [		
 	spec 
 		baseline: 'FuelPlatform' 
-		with: [ 
+		with: [
+			| branch |
+			branch := Smalltalk globals
+				at: #SmalltalkCI
+				ifPresent: [ :class |
+					(class
+						perform: #getEnv:
+						withArguments: #(FL_USE_PLATFORM_MASTER))
+							ifNotNil: [ 'master' ]
+							ifNil: [ 'v5' ] ]
+				ifAbsent: [ 'v5' ].
 			spec
-				repository: 'github://theseion/FuelPlatform:stable/repository';
+				repository: 'github://theseion/FuelPlatform:', branch, '/repository';
   				loads: 'default' ]
 ]
 
 { #category : #'baselines-helpers' }
 BaselineOfFuel >> groupsForPharoCommon: spec [
-	spec for: #pharo do: [              
+	spec for: #pharo do: [
 		spec
-			package: 'Fuel-Preview' with: [ spec requires: #('Fuel-Debug' 'Roassal') ];
-			package: 'Fuel-Metalevel' with: [ spec requires: 'Core' ];
-			
-			package: 'Fuel-Tests-Metalevel' with: [ spec requires: #('Fuel-Metalevel' 'Tests' ) ].
-		
-		self roassal: spec.
-
-		spec
-			group: 'CoreWithExtras' with: #('Core' 'Fuel-Metalevel' 'Fuel-ProgressUpdate');
-			group: 'DevelopmentGroup' with: #(
-				'CoreWithExtras'
-				'Fuel-Debug'
-				'Tests'
-				'Fuel-Tests-Metalevel'
-				'Fuel-Tests-ProgressUpdate'
-				'Fuel-Tests-Debug');
-			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks');
-			group: 'BenchmarksTests' with: #('Benchmarks' 'Fuel-Tests-Benchmarks') ]
+			group: 'DevelopmentGroup' with: #('Debug' 'Tests' 'Fuel-Tests-Debug');
+			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks' 'Fuel-Tests-Benchmarks') ]
 ]
 
 { #category : #'baselines-helpers' }
 BaselineOfFuel >> groupsForSqueakCommon: spec [
 	spec for: #squeak do: [
 		spec
-			group: 'CoreWithExtras' with: #('Core' 'Fuel-ProgressUpdate');
-			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks') ]
-]
-
-{ #category : #'baselines-helpers' }
-BaselineOfFuel >> roassal: spec [		
-	spec
-		project: 'Roassal' with: [
-			spec
-				className: 'ConfigurationOfRoassal';
-				loads: #('default');
-				file: 'ConfigurationOfRoassal';
-				repository: 'http://www.squeaksource.com/Roassal' ]
+			group: 'Benchmarks'
+			with: #('Core' 'Fuel-Benchmarks') ]
 ]
 
 { #category : #'baselines-helpers' }

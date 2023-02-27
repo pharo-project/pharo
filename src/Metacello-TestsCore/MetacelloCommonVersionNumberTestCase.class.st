@@ -24,28 +24,24 @@ MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion1 [
 	
 	| x y |
 	self assert: ((x := self versionClass fromString: '2.9.0') < (y := self versionClass fromString: '2.10.0')).
-
 ]
 
 { #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion2 [
 
 	self assert: ((self versionClass fromString: '2.9.0-alpha.2') < (self versionClass fromString: '2.9.0-alpha.3')).
-
 ]
 
 { #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion3 [
 
 	self assert: ((self versionClass fromString: '2.9.9-alpha.2') < (self versionClass fromString: '2.9.10')).
-
 ]
 
 { #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion4 [
 
 	self assert: ((self versionClass fromString: '2.9.9-alpha.2') < (self versionClass fromString: '2.9.9')).
-
 ]
 
 { #category : #'tests - version increment/decrement' }
@@ -96,7 +92,6 @@ MetacelloCommonVersionNumberTestCase >> testVersion04 [
 MetacelloCommonVersionNumberTestCase >> testVersion14 [
 
 	self assert: ((self versionClass fromString: '2.9.0-alpha02') < (self versionClass fromString: '2.9.0-alpha03')).
-
 ]
 
 { #category : #tests }
@@ -121,7 +116,6 @@ MetacelloCommonVersionNumberTestCase >> testVersion23 [
 MetacelloCommonVersionNumberTestCase >> testVersion25 [
 
 	self assert: ((MetacelloVersionNumber fromString: '1.0-beta.24.0.1') < (MetacelloVersionNumber fromString: '1.0-beta.28')).
-
 ]
 
 { #category : #private }

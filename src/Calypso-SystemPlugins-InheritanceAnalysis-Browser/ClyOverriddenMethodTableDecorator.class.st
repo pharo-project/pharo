@@ -12,13 +12,13 @@ Class {
 
 { #category : #decoration }
 ClyOverriddenMethodTableDecorator class >> browserPluginClass [
-	^ClyInheritanceAnalysisBrowserPlugin 
+	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
 { #category : #decoration }
 ClyOverriddenMethodTableDecorator class >> createMultiIconMorph [
 
-	^Morph new 
+	^Morph new
 		changeTableLayout;
 		listDirection: #topToBottom;
 		listCentering: #center;
@@ -28,15 +28,15 @@ ClyOverriddenMethodTableDecorator class >> createMultiIconMorph [
 ]
 
 { #category : #decoration }
-ClyOverriddenMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [ 
-	
+ClyOverriddenMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
+
 	| commands |
 	commands := OrderedCollection new: 2.
-	(itemContext lastSelectedItem isMarkedWith: ClyOverriddenMethodTag) ifTrue: [ 
+	(itemContext lastSelectedItem isMarkedWith: ClyOverriddenMethodTag) ifTrue: [
 		commands add: ClyShowOverridingMethodsCommand new].
-	(itemContext lastSelectedItem isMarkedWith: ClyOverridingMethodTag) ifTrue: [ 
+	(itemContext lastSelectedItem isMarkedWith: ClyOverridingMethodTag) ifTrue: [
 		commands add: ClyShowOverriddenMethodsCommand new].
-	
+
 	self decorateTableCell: anItemCellMorph withCommands: commands inContext: itemContext
 ]
 
@@ -49,16 +49,15 @@ ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph wi
 
 	| panel activator button |
 	panel := self createMultiIconMorph.
-	commands do: [ :each | 
-		activator := CmdCommandActivator new 
-			command: each; 
+	commands do: [ :each |
+		activator := CmdCommandActivator new
+			command: each;
 			context: itemContext.
 		button := each createTableCellButtonUsing: activator.
 		button hResizing: #spaceFill.
 		button vResizing: #spaceFill.
 		panel addMorph: button].
 	anItemCellMorph definitionMorph: panel
-
 ]
 
 { #category : #decoration }

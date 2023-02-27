@@ -8,7 +8,7 @@ Class {
 		'left',
 		'right'
 	],
-	#category : #'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Support-Mocks'
 }
 
 { #category : #comparing }
@@ -43,13 +43,11 @@ FLPair >> left: anObject [
 FLPair >> method1 [
 	self name.
 	self printString.
-	
 ]
 
 { #category : #accessing }
 FLPair >> method2 [
 	self name.
-	
 ]
 
 { #category : #accessing }

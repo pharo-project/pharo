@@ -20,11 +20,6 @@ Class {
 }
 
 { #category : #accessing }
-MetacelloCypressBaselineProject class >> singletonVersionName [
-    ^ 'baseline'
-]
-
-{ #category : #accessing }
 MetacelloCypressBaselineProject class >> useCypressPackagesForAllBaselines [
   UseCypressPackagesForAllBaselines ifNil: [ ^ false ].
   ^ UseCypressPackagesForAllBaselines
@@ -35,11 +30,6 @@ MetacelloCypressBaselineProject class >> useCypressPackagesForAllBaselines: aBoo
 	"self useCypressPackagesForAllBaselines: true"
 
 	UseCypressPackagesForAllBaselines := aBool
-]
-
-{ #category : #accessing }
-MetacelloCypressBaselineProject class >> versionConstructorClass [
-    ^ MetacelloBaselineConstructor
 ]
 
 { #category : #'spec classes' }

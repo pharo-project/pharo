@@ -38,7 +38,7 @@ ClyTestedClassMock >> one [
 
 { #category : #accessing }
 ClyTestedClassMock >> one: anObject [
-	one := anObject 
+	one := anObject
 ]
 
 { #category : #accessing }
@@ -55,7 +55,7 @@ ClyTestedClassMock >> oneTwo: anObject [
 
 { #category : #accessing }
 ClyTestedClassMock >> two [
-	^ two 
+	^ two
 ]
 
 { #category : #accessing }

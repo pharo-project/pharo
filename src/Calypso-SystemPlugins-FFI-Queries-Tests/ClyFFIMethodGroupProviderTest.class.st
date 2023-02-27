@@ -6,10 +6,10 @@ Class {
 
 { #category : #running }
 ClyFFIMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyClassWithFFIMethods 
+	^ClyClassWithFFIMethods
 ]
 
 { #category : #running }
 ClyFFIMethodGroupProviderTest >> groupProviderClass [
-	^ClyFFIMethodGroupProvider 
+	^ClyFFIMethodGroupProvider
 ]

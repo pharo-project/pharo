@@ -70,7 +70,7 @@ WidgetExample class >> exampleBasicControls [
 	|dialog builder radioModel treeModel|
 	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
-	radioModel := ExampleRadioButtonModel new.
+	radioModel := RadioButtonModelExample new.
 	treeModel := Array with:(MorphWithSubmorphsWrapper with: self currentWorld).
 	dialog contentMorph: ((dialog newRow: {
 		dialog newLabelGroup: {
@@ -111,27 +111,27 @@ WidgetExample class >> exampleBasicControls [
 							getValue: #value setValue: #value: help: 'This is a disabled slider') disable}.
 			dialog newVerticalSeparator.
 			dialog newLabelGroup: {
-			'Drop List'->(dialog newDropListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'))
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex: help: 'This is a drop list').
-			'Disabled Drop List'->(dialog newDropListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
+			'Drop List'->(dialog newDropListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'))
+							list: #items getSelected: nil setSelected: #selectIndex: help: 'This is a drop list').
+			'Disabled Drop List'->(dialog newDropListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
+							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a disabled drop list') disable.
-			'Editable Drop List'->(dialog newEditableDropListFor: (ListPresenter new items: SortedCollection new)
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
+			'Editable Drop List'->(dialog newEditableDropListFor: (SpListPresenter new items: SortedCollection new)
+							list: #items getSelected: nil setSelected: #selectIndex:
 							addToList: #add: ghostText: 'Enter new items' getEnabled: nil help: 'This is an editable drop list').
-			'Morph Drop List'->(dialog newMorphDropListFor: (ListPresenter new items: ((Color red wheel: 20)
+			'Morph Drop List'->(dialog newMorphDropListFor: (SpListPresenter new items: ((Color red wheel: 20)
 									collect: [:c | Morph new extent: 120@12; color: c]))
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
+							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a morph drop list').
-			'Normal List'->((dialog newListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
-							list: #getList selected: #selectedIndex changeSelected: #setSelectedIndex:
+			'Normal List'->((dialog newListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
+							list: #items selected: nil changeSelected: #selectIndex:
 							help: 'This is a list') minWidth: 120).
-			'Disabled List'->(dialog newListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
-							list: #getList selected: #selectedIndex changeSelected: #setSelectedIndex:
+			'Disabled List'->(dialog newListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
+							list: #items selected: nil changeSelected: #selectIndex:
 							help: 'This is a disabled list') disable.
-			'Morph List'->(dialog newMorphListFor: (ListPresenter new items: ((Color red wheel: 20)
+			'Morph List'->(dialog newMorphListFor: (SpListPresenter new items: ((Color red wheel: 20)
 									collect: [:c | Morph new extent: 80@12; color: c]))
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
+							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a morph list').
 			'Tree'->((dialog newTreeFor: treeModel list: #value selected: nil changeSelected: nil) minHeight: 100)}.
 			dialog newVerticalSeparator.
@@ -179,7 +179,7 @@ WidgetExample class >> exampleDialogs [
 	"Open an example of each services dialog"
 	"self exampleDialogs"
 	<script>
-	
+
 	self builder
 		chooseFont: TextStyle default defaultFont;
 		chooseColor: (Color r: 0.529 g: 0.611 b: 0.004);
@@ -329,15 +329,15 @@ WidgetExample class >> exampleOtherControls [
 			(dialog newColumn: {
 				(dialog newExpander: 'An Expander' forAll: {
 					dialog newLabel: 'Expanded!'.
-					builder newMorphListFor: (ListPresenter new items: ((Color red wheel: 15)
+					builder newMorphListFor: (SpListPresenter new items: ((Color red wheel: 15)
 									collect: [:c | Morph new extent: 80@12; color: c]))
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
+							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a morph drop list'}) minWidth: 100.
 				dialog newExpander: 'Another' forAll: {
 					dialog newLabel: 'Expanded!'.
-					builder newMorphDropListFor: (ListPresenter new items: ((Color red wheel: 8)
+					builder newMorphDropListFor: (SpListPresenter new items: ((Color red wheel: 8)
 									collect: [:c | Morph new extent: 80@12; color: c]))
-							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
+							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a morph drop list'}})
 				cellInset: 0;
 				borderStyle: (BorderStyle inset baseColor: dialog paneColor; width: 1))});
@@ -347,19 +347,16 @@ WidgetExample class >> exampleOtherControls [
 
 { #category : #examples }
 WidgetExample class >> exampleTextEntryWithCompletionDialog [
-	"self exampleTextEntryWithCompletionDialog"
-	<script>
+
 	| applicants entryCompletion |
-	applicants := (Array
-				streamContents: [:strm | Symbol
-						allSymbolTablesDo: [:each | (each notEmpty
-									and: [each first canBeGlobalVarInitial
-											and: [Smalltalk globals includesKey: each]])
-								ifTrue: [strm nextPut: each]]]) sort.
+	applicants := Smalltalk globals classNames sorted.
+
 	entryCompletion := EntryCompletion new
-				dataSourceBlock: [:currText | applicants];		
-				filterBlock: [:currApplicant :currText | currText size > 3
-						and: [currApplicant asUppercase includesSubstring: currText asString asUppercase]].
+		                   dataSourceBlock: [ :currText | applicants ];
+		                   filterBlock: [ :currApplicant :currText |
+			                   currText size > 3 and: [
+					                   currApplicant asUppercase includesSubstring:
+							                   currText asString asUppercase ] ].
 	UIManager default
 		request: 'Enter a class name fragment (at least 4 characters)'
 		initialAnswer: ''
@@ -372,14 +369,14 @@ WidgetExample class >> exampleWindowWithToolbars [
 	"Open an example window with toolbars."
 	"self exampleWindowWithToolbars"
 	<script>
-	
+
 	| win fileMenu tools dock text holder |
 	win := StandardWindow new.
 	fileMenu := win newMenu.
 	fileMenu addToggle: 'Open' translated target: nil selector: #openFile.	"would be model"
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallOpenIcon);
+		icon: (self iconNamed: #smallOpen);
 		keyText: 'Ctrl+O'.
 	fileMenu
 		addToggle: 'Save' translated
@@ -389,7 +386,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		enablementSelector: nil.
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallSaveIcon);
+		icon: (self iconNamed: #smallSave);
 		keyText: 'Ctrl+S'.
 	fileMenu
 		addToggle: 'Print...' translated
@@ -397,7 +394,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		selector: #print.
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallPrintIcon);
+		icon: (self iconNamed: #smallPrint);
 		keyText: 'Ctrl+P'.
 	tools := win
 		newToolbar:
@@ -407,7 +404,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #openFile
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallOpenIcon)
+				labelForm: (self iconNamed: #smallOpen)
 				help: 'Open file' translated).	"if we had a model it would go here"
 			(win
 				newButtonFor: nil
@@ -415,7 +412,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #saveFile
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallSaveIcon)
+				labelForm: (self iconNamed: #smallSave)
 				help: 'Save file' translated).
 			(win
 				newButtonFor: nil
@@ -423,7 +420,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #print
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallPrintIcon)
+				labelForm: (self iconNamed: #smallPrint)
 				help: 'Print' translated)}.
 	holder := NewValueHolder new.
 	text := win
@@ -434,7 +431,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 	dock
 		add: 'File' translated
 			font: win theme menuBarFont
-			icon: (self iconNamed: #smallOpenIcon)
+			icon: (self iconNamed: #smallOpen)
 			help: 'File operations' translated
 			subMenu: fileMenu;
 		addMorphBack: tools.

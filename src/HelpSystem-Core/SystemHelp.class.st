@@ -43,5 +43,4 @@ SystemHelp class >> asHelpTopic [
 SystemHelp class >> pragmaKeyword [
 
 	^#systemHelp
-
 ]

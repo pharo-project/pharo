@@ -9,8 +9,8 @@ Class {
 
 { #category : #coverage }
 WeakMessageSendTest >> classToBeTested [
-	
-	^ WeakMessageSend 
+
+	^ WeakMessageSend
 ]
 
 { #category : #tests }
@@ -18,24 +18,24 @@ WeakMessageSendTest >> testCollectArguments [
 
 	"Fogbugz issue 18127"
 	"Test is passed if no primitive fails"
-	
+
 	| msg rcvr c|
-	
+
 	rcvr := OrderedCollection new.
 	c := Color green.
 	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { Color black }.
-	
+
 	msg valueWithArguments: {}.
-	
+
 	self assertCollection: rcvr asArray equals: { Color black }.
-	
+
 	msg valueWithArguments: { #a . WeakArray with: c }.
-	
+
 	self assertCollection: rcvr asArray equals: { Color black . #a }.
-	
+
 	msg valueWithArguments: (WeakArray with: c).
-	
-	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }.
+
+	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }
 ]
 
 { #category : #tests }
@@ -45,8 +45,7 @@ WeakMessageSendTest >> testNoArguments [
 	m := WeakMessageSend
 			receiver: true
 			selector: #yourself.
-	self assert: (m value).
-
+	self assert: (m value)
 ]
 
 { #category : #tests }
@@ -59,7 +58,6 @@ WeakMessageSendTest >> testOneArgument [
 		argument: 1.
 	Smalltalk garbageCollectMost.
 	self assert: m value equals: { 1 }
-
 ]
 
 { #category : #tests }
@@ -82,7 +80,7 @@ WeakMessageSendTest >> testReceiverWithGC [
 		receiver: Object new
 		selector: #isNil.
 	Smalltalk garbageCollectMost.
-	self assert: (m value isNil).
+	self assert: (m value isNil)
 ]
 
 { #category : #tests }

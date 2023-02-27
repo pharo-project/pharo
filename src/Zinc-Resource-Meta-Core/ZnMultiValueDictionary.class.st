@@ -13,7 +13,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnMultiValueDictionary,
-	#superclass : #Dictionary,
+	#superclass : #OrderedDictionary,
 	#instVars : [
 		'limit'
 	],
@@ -23,10 +23,10 @@ Class {
 { #category : #accessing }
 ZnMultiValueDictionary class >> defaultLimit [
 	"Return the maximum number dictionary entries to accept.
-	Used by ZnMultiValueDictionary and thus for reading headers, 
+	Used by ZnMultiValueDictionary and thus for reading headers,
 	url query and application form url encoded entity fields.
 	This helps to protect us from malicious content."
-	
+
 	^ ZnMaximumNumberOfDictionaryEntries value
 ]
 
@@ -40,25 +40,30 @@ ZnMultiValueDictionary >> add: anAssociation [
 ZnMultiValueDictionary >> addAllMulti: keyedCollection [
 	"Note that we use #at:add:"
 
-	keyedCollection keysAndValuesDo: [ :key :value | 
+	keyedCollection keysAndValuesDo: [ :key :value |
 		self at: key add: value ]
 ]
 
 { #category : #accessing }
 ZnMultiValueDictionary >> at: key add: value [
 	"Store value under key. If key already exists, store multiple values as Array"
-	
+
 	| existingValue newValue |
+
 	existingValue := self at: key ifAbsent: [ nil ].
-	newValue := existingValue isNil
-		ifTrue: [ value ] 
-		ifFalse: [
-			existingValue isArray 
-				ifTrue: [ existingValue copyWith: value ]
-				ifFalse: [ Array with: existingValue with: value ] ].
-	^ self at: key put: newValue 
-
-
+	newValue := existingValue
+		ifNil: [ value ]
+		ifNotNil: [ existingValue isArray
+				ifTrue: [ ( existingValue includes: value )
+						ifTrue: [ ^ value ].
+					existingValue copyWith: value
+					]
+				ifFalse: [ existingValue = value
+						ifTrue: [ ^ value ].
+					Array with: existingValue with: value
+					]
+			].
+	^ self at: key put: newValue
 ]
 
 { #category : #accessing }
@@ -70,10 +75,9 @@ ZnMultiValueDictionary >> at: key put: anObject [
 { #category : #private }
 ZnMultiValueDictionary >> checkLimitForKey: aKey [
 	"Signal an exception when the limit, if present, is exceeded."
-	
-	(self limit notNil and: [ self size >= self limit and: [ (self includesKey: aKey) not ]])
-		ifTrue: [ (ZnTooManyDictionaryEntries limit: self limit) signal ].
 
+	(self limit notNil and: [ self size >= self limit and: [ (self includesKey: aKey) not ]])
+		ifTrue: [ (ZnTooManyDictionaryEntries limit: self limit) signal ]
 ]
 
 { #category : #'initialize-release' }
@@ -89,8 +93,8 @@ ZnMultiValueDictionary >> keysAndValuesDo: block [
 
 	super keysAndValuesDo: [ :key :value |
 		value isArray
-			ifTrue: [ 
-				value do: [ :each | 
+			ifTrue: [
+				value do: [ :each |
 					block value: key value: each ] ]
 			ifFalse: [
 				block value: key value: value ] ]
@@ -103,7 +107,7 @@ ZnMultiValueDictionary >> limit [
 
 { #category : #'initialize-release' }
 ZnMultiValueDictionary >> limit: numberOfEntries [
-	limit := numberOfEntries 
+	limit := numberOfEntries
 ]
 
 { #category : #'initialize-release' }

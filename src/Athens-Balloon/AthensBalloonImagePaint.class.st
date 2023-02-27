@@ -29,13 +29,12 @@ AthensBalloonImagePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 	|rotation normal|
 	rotation := anAthensCanvas surface paintTransform transform: direction.
 	normal := anAthensCanvas surface paintTransform transform:self normal.
-	
+
 
 	anAthensCanvas surface engine reset
 		prepareForRendering;
 		registerFormFill: form origin: origin direction: rotation normal: normal tileFlag: tileFlag;
 		fillRectangle: aRect
-
 ]
 
 { #category : #accessing }

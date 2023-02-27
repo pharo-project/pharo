@@ -30,10 +30,10 @@ ClySubclassN2OfClass1FromP1Mock >> subclassSameVar [
 
 { #category : #accessing }
 ClySubclassN2OfClass1FromP1Mock >> superclassVar1ReaderMethod [
-	^instanceSideVar1 
+	^instanceSideVar1
 ]
 
 { #category : #accessing }
 ClySubclassN2OfClass1FromP1Mock >> superclassVar1WriterMethod [
-	instanceSideVar1 := #subclassVar1Value 
+	instanceSideVar1 := #subclassVar1Value
 ]

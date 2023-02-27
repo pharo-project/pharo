@@ -11,7 +11,7 @@ CDNormalClassParserTest >> classDefinitionString [
 		instanceVariableNames: ''{instvar1} {instvar2}''
 		classVariableNames: ''{classvar1} {classvar2}''
 		package: #MyPackage'
-			format: { 
+			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
 				'instvar1' -> self firstInstanceVariableName.
@@ -21,8 +21,7 @@ CDNormalClassParserTest >> classDefinitionString [
 ]
 
 { #category : #helpers }
-CDNormalClassParserTest >> testNormalClassIsNormal [
+CDNormalClassParserTest >> testNormalClassHasFixedLayout [
 
-	self assert: (classDefinition isNormal).
-
+	self assert: classDefinition layoutClass equals: FixedLayout
 ]

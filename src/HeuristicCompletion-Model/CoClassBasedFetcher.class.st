@@ -45,7 +45,7 @@ CoClassBasedFetcher >> completionClass: anObject [
 
 { #category : #'hierarchy-fetching' }
 CoClassBasedFetcher >> forHierarchy [
-	
+
 	^ CoHierarchyFetcher new
 		decoree: self;
 		yourself
@@ -53,7 +53,7 @@ CoClassBasedFetcher >> forHierarchy [
 
 { #category : #'hierarchy-fetching' }
 CoClassBasedFetcher >> onSuperclass [
-	
+
 	completionClass superclass
 		ifNil: [ ^ CoEmptyFetcher new ].
 

@@ -15,6 +15,4 @@ ClyClassWithFlags >> methodWithFlag [
 
 { #category : #'methods with flags' }
 ClyClassWithFlags >> methodWithoutFlag [
-
-
 ]

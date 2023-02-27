@@ -37,8 +37,8 @@ Class {
 { #category : #'instance creation' }
 ClyCompositeScope class >> on: subscopes [
 	subscopes size = 1 ifTrue: [ ^subscopes anyOne ].
-	
-	^self new 
+
+	^self new
 		subscopes: subscopes
 ]
 
@@ -56,7 +56,7 @@ ClyCompositeScope class >> on: subscopes in: aNavigationEnvironment named: aStri
 
 { #category : #composition }
 ClyCompositeScope >> , anotherTypedScope [
-	(anotherTypedScope isKindOf: ClyTypedScope) ifFalse: [ 
+	(anotherTypedScope isKindOf: ClyTypedScope) ifFalse: [
 		^self error: 'Complex composition is not supported' ].
 	^ClyCompositeScope on: (subscopes copyWith: anotherTypedScope)
 ]
@@ -73,7 +73,7 @@ ClyCompositeScope >> adoptQuery: aQuery [
 { #category : #accessing }
 ClyCompositeScope >> bindTo: aNavigationEnvironment [
 	super bindTo: aNavigationEnvironment.
-	
+
 	subscopes do: [ :each | each bindTo: aNavigationEnvironment]
 ]
 
@@ -89,8 +89,8 @@ ClyCompositeScope >> printBasisObject: anObject on: aStream [
 ClyCompositeScope >> printDescriptionOn: aStream [
 
 	name ifNotNil: [ ^super printDescriptionOn: aStream ].
-	
-	subscopes do: [ :each | 
+
+	subscopes do: [ :each |
 		each printDescriptionOn: aStream.
 		aStream nextPutAll: ', ' ].
 	aStream skip: -2 "composite scope must include at least on subscope"
@@ -109,7 +109,7 @@ ClyCompositeScope >> subscopes [
 { #category : #accessing }
 ClyCompositeScope >> subscopes: aCollection [
 	aCollection ifEmpty: [ ^self error: 'ClyCompositeScope should include at least one subscope' ].
-	
+
 	subscopes := aCollection.
 	environment := subscopes anyOne environment.
 	self basisObjects: (subscopes flatCollect: [ :each | each basisObjects ])

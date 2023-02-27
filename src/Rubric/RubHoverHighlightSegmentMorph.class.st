@@ -12,7 +12,6 @@ Class {
 { #category : #initialization }
 RubHoverHighlightSegmentMorph >> defaultBorderColor [
 	^ self defaultColor muchDarker
-
 ]
 
 { #category : #initialization }
@@ -30,5 +29,5 @@ RubHoverHighlightSegmentMorph >> initialize [
 { #category : #'event handling' }
 RubHoverHighlightSegmentMorph >> mouseLeave: anEvent [
 	super mouseLeave: anEvent.
-	self delete.
+	self delete
 ]

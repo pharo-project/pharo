@@ -16,25 +16,24 @@ Class {
 { #category : #decoration }
 ClyGroupItemTableDecorator class >> classGroupDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyClassGroup asCalypsoItemContext
 ]
 
 { #category : #decoration }
 ClyGroupItemTableDecorator class >> decorateMainTableCell: anItemCellMorph of: groupItem [
 	super decorateMainTableCell: anItemCellMorph of: groupItem.
-	
+
 	groupItem actualObject decorateTableCell: anItemCellMorph of: groupItem
 ]
 
 { #category : #decoration }
 ClyGroupItemTableDecorator class >> decorateTableCell: anItemCellMorph of: groupItem [
-
 ]
 
 { #category : #decoration }
 ClyGroupItemTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyMethodGroup asCalypsoItemContext
 ]

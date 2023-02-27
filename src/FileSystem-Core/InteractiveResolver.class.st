@@ -23,14 +23,12 @@ InteractiveResolver >> initialize [
 { #category : #resolving }
 InteractiveResolver >> resolve: origin [
 	^ cache at: origin ifAbsent: [self unknownOrigin: origin]
-	
-
 ]
 
 { #category : #resolving }
 InteractiveResolver >> unknownOrigin: origin [
 	| reference |
-	^ (next ifNotNil: [next resolve: origin]) ifNil: 
+	^ (next ifNotNil: [next resolve: origin]) ifNil:
 			[reference := ResolutionRequest for: origin.
 			reference ifNotNil: [cache at: origin put: reference]]
 ]

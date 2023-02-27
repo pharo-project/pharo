@@ -10,14 +10,14 @@ Class {
 
 { #category : #testing }
 ClyBrowserQueryResultTest class >> isAbstract [
-	^self == ClyBrowserQueryResultTest 
+	^self == ClyBrowserQueryResultTest
 ]
 
 { #category : #helpers }
 ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray [
 
-	self 
-		assertItems: itemValueWithDepthArray 
+	self
+		assertItems: itemValueWithDepthArray
 		withValue: [:item | self meaningfullObjectToAssert: item]
 ]
 
@@ -42,11 +42,11 @@ ClyBrowserQueryResultTest >> meaningfullObjectToAssert: resultItem [
 
 { #category : #tests }
 ClyBrowserQueryResultTest >> testOpeningBrowserCursor [
-	
+
 	| itemObserver |
 	itemObserver := ClyItemObserverExample new.
 	cursor := queryResult openBrowserCursorFor: itemObserver.
-	
+
 	self assert: cursor class equals: ClyBrowserQueryCursor.
 	self assert: cursor queryResult equals: queryResult.
 	self assert: cursor itemObserver equals: itemObserver.

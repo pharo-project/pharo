@@ -24,13 +24,13 @@ SycMethodCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #'instance creation' }
 SycMethodCommand class >> for: methods [
-	^self new 
+	^self new
 		methods: methods
 ]
 
 { #category : #testing }
 SycMethodCommand class >> isAbstract [
-	^self = SycMethodCommand 
+	^self = SycMethodCommand
 ]
 
 { #category : #accessing }
@@ -52,7 +52,7 @@ SycMethodCommand >> newTagFor: aMethod [
 { #category : #'activation - drag and drop' }
 SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
-	
+
 	methods := aToolContext selectedMethods
 ]
 

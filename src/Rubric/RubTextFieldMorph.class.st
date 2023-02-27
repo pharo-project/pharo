@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 RubTextFieldMorph >> acceptOnCR [
-	^ acceptOnCR 
+	^ acceptOnCR
 ]
 
 { #category : #accessing }
@@ -30,11 +30,10 @@ RubTextFieldMorph >> acceptTextInModel [
 	Answer true if the model accepted ok, something else otherwise (sic)"
 	| result |
 	result := super acceptTextInModel.
-	"Yes, we check here with == instead of with #ifTrue:. 
+	"Yes, we check here with == instead of with #ifTrue:.
 	That's bad but  some models don't return true of false"
 	result == true ifTrue: [ self closeChooser ].
 	^ result
-
 ]
 
 { #category : #drawing }
@@ -50,14 +49,14 @@ RubTextFieldMorph >> adornmentColor [
 RubTextFieldMorph >> beDecrypted [
 
 	encrypted := false.
-	self textMorph font: TextStyle defaultFont.
+	self textMorph font: TextStyle defaultFont
 ]
 
 { #category : #encryption }
 RubTextFieldMorph >> beEncrypted [
-	
+
 	encrypted := true.
-	self textMorph font: (StrikeFont passwordFontSize: self theme textFont pointSize).
+	self textMorph font: (StrikeFont passwordFontSize: self theme textFont pointSize)
 ]
 
 { #category : #testing }
@@ -71,7 +70,7 @@ RubTextFieldMorph >> chooserIsOpened [
 ]
 
 { #category : #accessing }
-RubTextFieldMorph >> closeChooser [	
+RubTextFieldMorph >> closeChooser [
 	entryCompletion
 		ifNotNil: [entryCompletion closeChooser]
 ]
@@ -83,22 +82,22 @@ RubTextFieldMorph >> configureGhostText: aTextArea [
 
 	super configureGhostText: aTextArea.
 	aTextArea center: self scrollBounds center.
-	aTextArea left: self scrollBounds left 
+	aTextArea left: self scrollBounds left
 ]
 
 { #category : #compatibility }
-RubTextFieldMorph >> cursorEnd: aKeyboardEvent [ 
-	^ self textMorph editor cursorEnd: aKeyboardEvent 
+RubTextFieldMorph >> cursorEnd: aKeyboardEvent [
+	^ self textMorph editor cursorEnd: aKeyboardEvent
 ]
 
 { #category : #defaults }
 RubTextFieldMorph >> defaultGhostTextMorph [
-	^ super defaultGhostTextMorph beNotWrapped 
+	^ super defaultGhostTextMorph beNotWrapped
 ]
 
 { #category : #protocol }
 RubTextFieldMorph >> disable [
-	self beReadOnly 
+	self beReadOnly
 ]
 
 { #category : #accessing }
@@ -110,8 +109,8 @@ RubTextFieldMorph >> encrypted: aBoolean [
 ]
 
 { #category : #accessing }
-RubTextFieldMorph >> entryCompletion [ 
-	^ entryCompletion 
+RubTextFieldMorph >> entryCompletion [
+	^ entryCompletion
 ]
 
 { #category : #accessing }
@@ -123,7 +122,7 @@ RubTextFieldMorph >> entryCompletion: anEntryCompletion [
 		ifNotNil: [ self withDropListButton.
 			entryCompletion chooseBlock
 				ifNil: [ entryCompletion
-						chooseBlock: [ :v | 
+						chooseBlock: [ :v |
 							self setText: v.
 							self acceptTextInModel
 							]
@@ -132,7 +131,7 @@ RubTextFieldMorph >> entryCompletion: anEntryCompletion [
 
 					blk := entryCompletion chooseBlock.
 					entryCompletion
-						chooseBlock: [ :v | 
+						chooseBlock: [ :v |
 							self setText: v.
 							self acceptTextInModel.
 							blk value: v
@@ -151,15 +150,14 @@ RubTextFieldMorph >> focusChanged [
 	(self hasFocus or: [self chooserHasFocus])
 		ifFalse: [self closeChooser].
 	super focusChanged
-
 ]
 
 { #category : #'accessing - text area' }
 RubTextFieldMorph >> font: aNewFont [
-	
+
 	"As the text field is using a font full of * to show the password.
 	Changing the font should preserve it"
-	encrypted ifTrue: [ 
+	encrypted ifTrue: [
 		^ super font: (StrikeFont passwordFontSize: aNewFont pointSize). ].
 
 	super font: aNewFont
@@ -190,19 +188,18 @@ RubTextFieldMorph >> initialize [
 { #category : #focus }
 RubTextFieldMorph >> keyboardFocusChange: aBoolean [
 	self closeChooser.
-	super keyboardFocusChange: aBoolean.
-
+	super keyboardFocusChange: aBoolean
 ]
 
 { #category : #defaults }
 RubTextFieldMorph >> manageLayoutInBounds: aRectangle [
 	super manageLayoutInBounds: aRectangle.
-	self closeChooser 
+	self closeChooser
 ]
 
 { #category : #accessing }
 RubTextFieldMorph >> maxLength [
-	
+
 	"Returns the max length of this text field.
 	0 meaning unlimited"
 	^ maxLength
@@ -214,7 +211,7 @@ RubTextFieldMorph >> maxLength: anInteger [
 	0 means unlimited"
 	maxLength := anInteger.
 	maxLength = 0 ifTrue: [ ^ self ].
-	
+
 	"If the contents of this textfield exceed the max length, contents are truncated"
 	self getText size > maxLength
 		ifTrue: [ self setText: (self getText first: maxLength) ]
@@ -246,7 +243,7 @@ RubTextFieldMorph >> on: anObject text: getTextSel accept: setTextSel readSelect
 ]
 
 { #category : #accessing }
-RubTextFieldMorph >> openChooser [	
+RubTextFieldMorph >> openChooser [
 	entryCompletion
 		ifNotNil: [
 			entryCompletion openChooserWith: self textArea text string from: self]
@@ -272,8 +269,7 @@ RubTextFieldMorph >> textAreaClass [
 { #category : #'event handling' }
 RubTextFieldMorph >> textChanged [
 	super textChanged.
-	self updateChooser.
-
+	self updateChooser
 ]
 
 { #category : #geometry }
@@ -288,7 +284,7 @@ RubTextFieldMorph >> textFieldHeight [
 { #category : #'event handling' }
 RubTextFieldMorph >> updateChooser [
 	entryCompletion
-		ifNotNil: [  self openChooser ] 
+		ifNotNil: [  self openChooser ]
 ]
 
 { #category : #accessing }

@@ -12,9 +12,6 @@ SharedPool class >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver"
 
 	^ (self localBindingOf: varName) ifNil: [ self superclass bindingOf: varName ]
- 
-	
-
 ]
 
 { #category : #'name lookup' }
@@ -55,7 +52,7 @@ SharedPool class >> localBindingOf: varName [
 	binding ifNotNil:[^binding].
 
 	"Next look in shared pools."
-	self sharedPools do:[:pool | 
+	self sharedPools do:[:pool |
 		binding := pool bindingOf: aSymbol.
 		binding ifNotNil:[^binding].
 	].

@@ -49,16 +49,15 @@ RubCharacterScanner class >> initialize [
 	a at: Character tab asciiValue + 1 put: #tab.
 	a at: Character cr asciiValue + 1 put: #cr.
 	a at: Character lf asciiValue + 1 put: #cr.
-	
+
 	NilCondition := a copy.
 	DefaultStopConditions := a copy.
 
 	PaddedSpaceCondition := a copy.
 	PaddedSpaceCondition at: Character space asciiValue + 1 put: #paddedSpace.
-	
-	SpaceCondition := a copy.
-	SpaceCondition at: Character space asciiValue + 1 put: #space.
 
+	SpaceCondition := a copy.
+	SpaceCondition at: Character space asciiValue + 1 put: #space
 ]
 
 { #category : #private }
@@ -80,15 +79,15 @@ RubCharacterScanner >> backgroundColor: ignored [
 
 { #category : #scanning }
 RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
-	"Primitive. This is the inner loop of text display--but see 
-	scanCharactersFrom: to:rightX: which would get the string, 
-	stopConditions and displaying from the instance. March through source 
-	String from startIndex to stopIndex. If any character is flagged with a 
-	non-nil entry in stops, then return the corresponding value. Determine 
-	width of each character from xTable, indexed by map. 
-	If dextX would exceed rightX, then return stops at: 258. 
+	"Primitive. This is the inner loop of text display--but see
+	scanCharactersFrom: to:rightX: which would get the string,
+	stopConditions and displaying from the instance. March through source
+	String from startIndex to stopIndex. If any character is flagged with a
+	non-nil entry in stops, then return the corresponding value. Determine
+	width of each character from xTable, indexed by map.
+	If dextX would exceed rightX, then return stops at: 258.
 	Advance destX by the width of the character. If stopIndex has been
-	reached, then return stops at: 257. Optional. 
+	reached, then return stops at: 257. Optional.
 	See Object documentation whatIsAPrimitive."
 	| ascii nextDestX char floatDestX widthAndKernedWidth nextChar atEndOfRun |
 	<primitive: 103>
@@ -100,30 +99,34 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 		whileTrue: [
 			char := (sourceString at: lastIndex).
 			ascii := char asciiValue.
-			
+
 			(ascii < stops size and: [(stops at: ascii + 1) notNil]) ifTrue: [^ stops at: ascii + 1].
 			"Note: The following is querying the font about the width
 			since the primitive may have failed due to a non-trivial
 			mapping of characters to glyphs or a non-existing xTable."
-			nextChar := (lastIndex + 1 <= stopIndex) 
+
+			(self isBreakableAt: lastIndex in: text)
+				ifTrue: [ self registerBreakableIndex ].
+
+			nextChar := (lastIndex + 1 <= stopIndex)
 				ifTrue:[sourceString at: lastIndex + 1]
 				ifFalse:[
 					atEndOfRun := true.
-					"if there is a next char in sourceString, then get the kern 
+					"if there is a next char in sourceString, then get the kern
 					and store it in pendingKernX"
 					lastIndex + 1 <= sourceString size
 						ifTrue:[sourceString at: lastIndex + 1]
 						ifFalse:[	nil]].
-			font 
-				widthAndKernedWidthOfLeft: char 
+			font
+				widthAndKernedWidthOfLeft: char
 				right: nextChar
 				into: widthAndKernedWidth.
 			nextDestX := floatDestX + (widthAndKernedWidth at: 1).
 			"note crossing of right component side, unless we would end up on the first position
 			again (endless loop, if line is to narrow to hold this current character)"
-			nextDestX > rightX ifTrue: [firstDestX ~= destX ifTrue:[ ^stops crossedX]].			
+			nextDestX > rightX ifTrue: [firstDestX ~= destX ifTrue:[ ^stops crossedX]].
 			floatDestX := floatDestX + kernDelta + (widthAndKernedWidth at: 2).
-			atEndOfRun 
+			atEndOfRun
 				ifTrue:[
 					pendingKernX := (widthAndKernedWidth at: 2) - (widthAndKernedWidth at: 1).
 					floatDestX := floatDestX - pendingKernX].
@@ -135,8 +138,6 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 
 { #category : #'scanner methods' }
 RubCharacterScanner >> combinableChar: char for: prevEntity [
-
-
 ]
 
 { #category : #scanning }
@@ -145,11 +146,11 @@ RubCharacterScanner >> embeddedObject [
 	savedIndex := lastIndex.
 	text
 		attributesAt: lastIndex
-		do: [ :attr | 
+		do: [ :attr |
 			attr anchoredMorph
-				ifNotNil: [ 
+				ifNotNil: [
 					"Following may look strange but logic gets reversed.
-			If the morph fits on this line we're not done (return false for true) 
+			If the morph fits on this line we're not done (return false for true)
 			and if the morph won't fit we're done (return true for false)"
 					(self placeEmbeddedObject: attr anchoredMorph)
 						ifFalse: [ ^ true ] ] ].
@@ -178,14 +179,19 @@ RubCharacterScanner >> indentationLevel: anInteger [
 { #category : #initialization }
 RubCharacterScanner >> initialize [
 	super initialize.
-	destX := destY := leftMargin := 0.
+	destX := destY := leftMargin := 0
 ]
 
 { #category : #'scanner methods' }
-RubCharacterScanner >> isBreakableAt: index in: sourceString in: encodingClass [
+RubCharacterScanner >> isBreakableAt: index in: sourceString [
 
-	^ encodingClass isBreakableAt: index in: sourceString.
+	| char |
 
+	char := sourceString at: index.
+	char = Character space ifTrue: [^ true].
+	char = Character cr ifTrue: [^ true].
+
+	^ false
 ]
 
 { #category : #'text constants' }
@@ -214,7 +220,7 @@ RubCharacterScanner >> measureString: aString inFont: aFont from: startIndex to:
 
 { #category : #scanning }
 RubCharacterScanner >> nextTabXFrom: anX [
-	"Tab stops are distances from the left margin. Set the distance into the 
+	"Tab stops are distances from the left margin. Set the distance into the
 	argument, anX, normalized for the paragraph's left margin."
 
 	| normalizedX tabX mx |
@@ -224,7 +230,7 @@ RubCharacterScanner >> nextTabXFrom: anX [
 	[ tabX <= normalizedX and: [ tabX < mx ] ] whileTrue: [ tabX := tabX + self tabWidth ].
 	^ tabX < mx
 		ifTrue: [ leftMargin + tabX min: rightMargin ]
-		ifFalse: [ rightMargin ] 
+		ifFalse: [ rightMargin ]
 ]
 
 { #category : #scanning }
@@ -239,7 +245,7 @@ RubCharacterScanner >> placeEmbeddedObject: anchoredMorph [
 		ifTrue: ["Won't fit, but would on next line"
 				^ false].
 	lastIndex := lastIndex + 1.
-	
+
 	^ true
 ]
 
@@ -250,28 +256,37 @@ RubCharacterScanner >> plainTab [
 	destX := (alignment = self justified and: [self leadingTab not])
 		ifTrue:		"embedded tabs in justified text are weird"
 			[destX + (self tabWidth - (line justifiedTabDeltaFor: spaceCount)) max: destX]
-		ifFalse: 
+		ifFalse:
 			[self nextTabXFrom: destX].
 	pendingKernX := 0.
-	firstDestX  := destX.
+	firstDestX  := destX
+]
+
+{ #category : #scanning }
+RubCharacterScanner >> registerBreakableIndex [
+
+	"Record left x and character index of the line-wrappable point.
+	The default implementation here does nothing."
+
+	^ false
 ]
 
 { #category : #scanning }
 RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 
 	sourceString isByteString
-		ifTrue: [ ^ self 
-					basicScanCharactersFrom: startIndex 
-					to: stopIndex 
-					in: sourceString 
-					rightX: rightX 
-					stopConditions: stops 
+		ifTrue: [ ^ self
+					basicScanCharactersFrom: startIndex
+					to: stopIndex
+					in: sourceString
+					rightX: rightX
+					stopConditions: stops
 					kern: kernDelta ].
 
 	sourceString isWideString ifFalse: [ ^ stops endOfRun ].
-		
-	startIndex > stopIndex 
-		ifTrue: [ 
+
+	startIndex > stopIndex
+		ifTrue: [
 			lastIndex := stopIndex.
 			^ stops endOfRun ].
 
@@ -281,10 +296,7 @@ RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceSt
 		in: sourceString
 		rightX: rightX
 		stopConditions: stops
-		kern: kernDelta.
-
-	
-
+		kern: kernDelta
 ]
 
 { #category : #scanning }
@@ -311,23 +323,27 @@ RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sou
 		ascii > maxAscii ifTrue: [ascii := maxAscii].
 		(ascii < stops size and: [(stops at: ascii + 1) ~~ nil])
 			ifTrue: [^ stops at: ascii + 1].
-		nextChar := (lastIndex + 1 <= stopIndex) 
+
+		(self isBreakableAt: lastIndex in: sourceString) ifTrue: [
+			self registerBreakableIndex ].
+
+		nextChar := (lastIndex + 1 <= stopIndex)
 			ifTrue:[sourceString at: lastIndex + 1]
 			ifFalse:[
 				atEndOfRun := true.
-				"if there is a next char in sourceString, then get the kern 
+				"if there is a next char in sourceString, then get the kern
 				and store it in pendingKernX"
 				lastIndex + 1 <= sourceString size
 					ifTrue:[sourceString at: lastIndex + 1]
 					ifFalse:[	nil]].
-		font 
-			widthAndKernedWidthOfLeft: (sourceString at: lastIndex) 
+		font
+			widthAndKernedWidthOfLeft: (sourceString at: lastIndex)
 			right: nextChar
 			into: widthAndKernedWidth.
 		nextDestX := floatDestX + (widthAndKernedWidth at: 1).
 		nextDestX > rightX ifTrue: [destX ~= firstDestX ifTrue: [^stops crossedX]].
 		floatDestX := floatDestX + kernDelta + (widthAndKernedWidth at: 2).
-		atEndOfRun 
+		atEndOfRun
 			ifTrue:[
 				pendingKernX := (widthAndKernedWidth at: 2) - (widthAndKernedWidth at: 1).
 				floatDestX := floatDestX - pendingKernX].
@@ -347,8 +363,7 @@ RubCharacterScanner >> setActualFont: aFont [
 
 { #category : #private }
 RubCharacterScanner >> setAlignment: style [
-	alignment := style.
-	
+	alignment := style
 ]
 
 { #category : #private }
@@ -357,8 +372,7 @@ RubCharacterScanner >> setConditionArray: aSymbol [
 	aSymbol == #paddedSpace ifTrue: [^stopConditions := PaddedSpaceCondition "copy"].
 	"aSymbol == #space ifTrue: [^stopConditions := SpaceCondition copy]."
 	aSymbol == nil ifTrue: [^stopConditions := NilCondition "copy"].
-	self error: 'undefined stopcondition for space character'.
-
+	self error: 'undefined stopcondition for space character'
 ]
 
 { #category : #private }
@@ -367,7 +381,7 @@ RubCharacterScanner >> setFont [
 	"Set the font and other emphasis."
 	priorFont := font.
 	text == nil
-		ifFalse: [ 
+		ifFalse: [
 			emphasisCode := 0.
 			kern := 0.
 			indentationLevel := 0.
@@ -378,9 +392,9 @@ RubCharacterScanner >> setFont [
 		ifTrue: [ self setFont: textStyle defaultFontIndex ].
 	font := font emphasized: emphasisCode.
 	priorFont
-		ifNotNil: [ 
+		ifNotNil: [
 			font = priorFont
-				ifTrue: [ 
+				ifTrue: [
 					"font is the same, perhaps the color has changed?
 					We still want kerning between chars of the same
 					font, but of different color. So add any pending kern to destX"
@@ -407,7 +421,7 @@ RubCharacterScanner >> tabWidth [
 ]
 
 { #category : #private }
-RubCharacterScanner >> text: t textStyle: ts [ 
+RubCharacterScanner >> text: t textStyle: ts [
 	text := t.
 	textStyle := ts
 ]

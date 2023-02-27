@@ -26,7 +26,6 @@ RubEditingArea >> beForPlainText [
 { #category : #initialization }
 RubEditingArea >> beForSmalltalkCode [
 	self editingMode: RubSmalltalkCodeMode new
-
 ]
 
 { #category : #initialization }
@@ -99,16 +98,16 @@ RubEditingArea >> editorClass: aClass [
 
 { #category : #highlighting }
 RubEditingArea >> ensureAndGetNewHighlightSegmentFrom: startIndex to: stopIndex [
-	
-	^ self 
+
+	^ self
 		removeHighlightSegment;
 		addSegment: (RubHighlightSegmentMorph from: startIndex to: stopIndex)
 ]
 
 { #category : #highlighting }
 RubEditingArea >> ensureAndGetNewHoverHighlightSegmentFrom: startIndex to: stopIndex [
-	
-	^ self 
+
+	^ self
 		removeHoverHighlightSegment;
 		addSegment: (RubHoverHighlightSegmentMorph from: startIndex to: stopIndex)
 ]
@@ -163,14 +162,14 @@ RubEditingArea >> newParagraph [
 RubEditingArea >> removeHighlightSegment [
 
 	(self getHighlightSegment)
-		ifNotNil: [ :aSegment | aSegment delete ].
+		ifNotNil: [ :aSegment | aSegment delete ]
 ]
 
 { #category : #highlighting }
 RubEditingArea >> removeHoverHighlightSegment [
 
 	(self getHoverHighlightSegment)
-		ifNotNil: [ :aSegment | aSegment delete ].
+		ifNotNil: [ :aSegment | aSegment delete ]
 ]
 
 { #category : #styler }
@@ -222,7 +221,7 @@ RubEditingArea >> withoutShoutStyler [
 
 { #category : #accessing }
 RubEditingArea >> wrapped [
-	^ wrapped ifNil: [ wrapped := false ] 
+	^ wrapped ifNil: [ wrapped := false ]
 ]
 
 { #category : #accessing }

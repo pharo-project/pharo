@@ -19,8 +19,7 @@ PackageClassNodeExample >> childNodeClassFromItem: anItem [
 
 { #category : #menu }
 PackageClassNodeExample >> childrenItems [
-	^ self item organization categories 
-
+	^ self item organization categories
 ]
 
 { #category : #menu }

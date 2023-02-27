@@ -72,8 +72,8 @@ Class {
 }
 
 { #category : #'resource management' }
-FFIExternalResourceManager class >> addResource: anObject [ 
-	self uniqueInstance addResource: anObject 
+FFIExternalResourceManager class >> addResource: anObject [
+	self uniqueInstance addResource: anObject
 ]
 
 { #category : #'resource management' }
@@ -86,27 +86,26 @@ FFIExternalResourceManager class >> addResource: anObject executor: anExecutor [
 	self uniqueInstance addResource: anObject executor: anExecutor
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FFIExternalResourceManager class >> reset [
 	uniqueInstance := nil
 ]
 
 { #category : #accessing }
-FFIExternalResourceManager class >> uniqueInstance [ 
+FFIExternalResourceManager class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance  := super new ]
 ]
 
 { #category : #'external resource management' }
 FFIExternalResourceManager >> addResource: anObject [
 	^ self addResource: anObject data: anObject resourceData
-
 ]
 
 { #category : #'external resource management' }
 FFIExternalResourceManager >> addResource: anObject data: resourceData [
-	registry 
-		add: anObject 
-		executor: (FFIExternalResourceExecutor new 
+	registry
+		add: anObject
+		executor: (FFIExternalResourceExecutor new
 			resourceClass: anObject class
 			data: resourceData)
 ]
@@ -117,6 +116,6 @@ FFIExternalResourceManager >> addResource: anObject executor: anExecutor [
 ]
 
 { #category : #initialization }
-FFIExternalResourceManager >> initialize [ 
+FFIExternalResourceManager >> initialize [
 	registry := WeakRegistry new
 ]

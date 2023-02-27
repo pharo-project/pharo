@@ -94,24 +94,10 @@ RGMetaclassDefinition >> realClass [
 
 { #category : #printing }
 RGMetaclassDefinition >> storeOn: aStream [
-	
-	aStream nextPut: $(. 
+
+	aStream nextPut: $(.
 	super storeOn: aStream.
 	aStream nextPutAll: ' baseClass:'.
 	self instanceSide storeOn: aStream.
-	aStream nextPut: $).
-	
-
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGMetaclassDefinition >> theMetaClass [
-
-	^self
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGMetaclassDefinition >> theNonMetaClass [
-
-	^baseClass
+	aStream nextPut: $)
 ]

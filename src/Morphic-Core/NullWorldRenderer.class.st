@@ -10,21 +10,14 @@ Class {
 
 { #category : #accessing }
 NullWorldRenderer class >> isApplicableFor: aWorld [
-
 	"This worldRenderer is always applicable"
+
 	^ true
-]
-
-{ #category : #accessing }
-NullWorldRenderer class >> priority [ 
-
-	^ 0
 ]
 
 { #category : #operations }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
-
-	"We don't activate nothing"
+	"Nothing to activate here"
 ]
 
 { #category : #accessing }
@@ -35,20 +28,19 @@ NullWorldRenderer >> actualScreenSize [
 
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
-
 ]
 
-{ #category : #initialization }
+{ #category : #utilities }
 NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
 	^ aPosition
 ]
 
-{ #category : #activation }
+{ #category : #private }
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : #activation }
+{ #category : #private }
 NullWorldRenderer >> doActivate [
 ]
 
@@ -64,23 +56,34 @@ NullWorldRenderer >> drawDuring: aBlock [
 NullWorldRenderer >> forceDamageToScreen: allDamage [
 
 	"Do Nothing"
-	
-]
-
-{ #category : #operations }
-NullWorldRenderer >> forceDisplayUpdate [
-
-	" Do Nothing "
 ]
 
 { #category : #accessing }
-NullWorldRenderer >> icon: aForm [ 
+NullWorldRenderer >> icon: aForm [
 
 	"Do nothing, a null world rendered has no window, so no icon either"
+]
+
+{ #category : #events }
+NullWorldRenderer >> requestStopTextEditing [
+]
+
+{ #category : #events }
+NullWorldRenderer >> requestTextEditingAt: aRectangle [
 ]
 
 { #category : #rendering }
 NullWorldRenderer >> updateDamage: rectangles [
 
 	"Do nothing"
+]
+
+{ #category : #events }
+NullWorldRenderer >> updateToNewResolution [
+]
+
+{ #category : #accessing }
+NullWorldRenderer >> windowTitle: aString [
+
+	"I am a dummy implementation"
 ]

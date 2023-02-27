@@ -19,7 +19,7 @@ Class {
 { #category : #callbacks }
 GLMOSWindowWorldMorph >> actOnWindowRequest: ann [
 
-	ann action value: self	
+	ann action value: self
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -31,10 +31,9 @@ GLMOSWindowWorldMorph >> delete [
 { #category : #initialization }
 GLMOSWindowWorldMorph >> initialize [
 	super initialize.
-	
-	self layoutPolicy: ProportionalLayout new.
-	self clipSubmorphs: true.
 
+	self layoutPolicy: ProportionalLayout new.
+	self clipSubmorphs: true
 ]
 
 { #category : #accessing }
@@ -43,6 +42,6 @@ GLMOSWindowWorldMorph >> toolbarBox: anObject [
 ]
 
 { #category : #announcing }
-GLMOSWindowWorldMorph >> when: anAnnouncement do: aBlock [ 
+GLMOSWindowWorldMorph >> when: anAnnouncement do: aBlock [
 	^ self announcer when: anAnnouncement do: aBlock
 ]

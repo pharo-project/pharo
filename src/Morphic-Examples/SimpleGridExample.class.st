@@ -56,5 +56,5 @@ SimpleGridExample >> treeMorph [
 		rowInset: 1;
 		preferedPaneColor: Color white;
 		rowColorForEven:  Color veryLightGray muchLighter odd: Color white .
-	^ treeMorph 
+	^ treeMorph
 ]

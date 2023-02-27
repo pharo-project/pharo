@@ -27,7 +27,7 @@ RangeSettingDeclaration >> inputWidget [
 	^ (self theme
 			newRowIn: self
 			for: {
-				(self theme 
+				(self theme
 					newTextEntryIn: self
 					for: self
 					get: #realValue
@@ -38,7 +38,7 @@ RangeSettingDeclaration >> inputWidget [
 						hResizing: #rigid;
 						width: 80;
 						wantsFrameAdornments: true;
-						yourself. 
+						yourself.
 				(PluggableSliderMorph new max: self range last;
 					 min: self range first;
 					 quantum: self range increment;
@@ -48,14 +48,14 @@ RangeSettingDeclaration >> inputWidget [
 					 vResizing: #spaceFIll;
 					 setBalloonText: self description;
 					 minWidth: 300; height: 20;
-					 yourself}) 
+					 yourself})
 		cellInset: 10;
 		yourself
 ]
 
 { #category : #accessing }
 RangeSettingDeclaration >> range [
-	^ range 
+	^ range
 ]
 
 { #category : #accessing }
@@ -70,5 +70,4 @@ RangeSettingDeclaration >> realValue: aValue [
 		ifNotNil: [self settingReceiver perform: self setSelector with: ((aValue max: self range first) min: self range last)].
 	self triggerEvent: self privateChangeEvent with: self.
 	^ true
-	
 ]

@@ -69,27 +69,25 @@ Cursor class >> blank [
 Cursor class >> bottomLeft [
 	"Cursor bottomLeft showWhile: [Sensor waitButton]"
 	^BottomLeftCursor
-
 ]
 
 { #category : #constants }
 Cursor class >> bottomRight [
 	"Cursor bottomRight showWhile: [Sensor waitButton]"
 	^BottomRightCursor
-
 ]
 
 { #category : #constants }
 Cursor class >> corner [
-	"Answer the instance of me that is the shape of the bottom right corner 
+	"Answer the instance of me that is the shape of the bottom right corner
 	of a rectangle."
 
 	^CornerCursor
 ]
 
-{ #category : #'initialize-release' }
-Cursor class >> createStandardCursors [ 
-	self 
+{ #category : #'class initialization' }
+Cursor class >> createStandardCursors [
+	self
 		initOrigin;
 		initRightArrow;
 		initMenu;
@@ -98,7 +96,7 @@ Cursor class >> createStandardCursors [
 		initWrite;
 		initWait.
 	BlankCursor := Cursor new.
-	self 
+	self
 		initXeq;
 		initSquare;
 		initNormalWithMask;
@@ -117,7 +115,7 @@ Cursor class >> createStandardCursors [
 		initTopRight;
 		initTarget;
 		initOverEditableText;
-		makeCursorsWithMask.
+		makeCursorsWithMask
 ]
 
 { #category : #constants }
@@ -129,7 +127,7 @@ Cursor class >> crossHair [
 
 { #category : #constants }
 Cursor class >> down [
-	"Answer the instance of me that is the shape of an arrow facing 
+	"Answer the instance of me that is the shape of an arrow facing
 	downward."
 
 	^DownCursor
@@ -137,21 +135,21 @@ Cursor class >> down [
 
 { #category : #constants }
 Cursor class >> execute [
-	"Answer the instance of me that is the shape of an arrow slanted left 
+	"Answer the instance of me that is the shape of an arrow slanted left
 	with a star next to it."
 
 	^XeqCursor
 ]
 
 { #category : #'instance creation' }
-Cursor class >> extent: extentPoint fromArray: anArray offset: offsetPoint [ 
+Cursor class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 	"Answer a new instance of me with width and height specified by
 	extentPoint, offset by offsetPoint, and bits from anArray.
 	NOTE: This has been kluged to take an array of 16-bit constants,
 	and shift them over so they are left-justified in a 32-bit bitmap"
 
 	extentPoint = (16 @ 16)
-		ifTrue: 
+		ifTrue:
 			[^ super
 				extent: extentPoint
 				fromArray: (anArray collect: [:bits | bits bitShift: 16])
@@ -162,7 +160,7 @@ Cursor class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 { #category : #'initialization - private' }
 Cursor class >> initBottomLeft [
 
-	BottomLeftCursor := 
+	BottomLeftCursor :=
 		(Cursor extent: 16 @ 16
 			fromArray: #(
 		2r1100000000000000
@@ -181,14 +179,13 @@ Cursor class >> initBottomLeft [
 		2r1100000000000000
 		2r1111111111111111
 		2r1111111111111111)
-			offset: 0 @ -16).
-
+			offset: 0 @ -16)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initBottomRight [
 
-	BottomRightCursor := 
+	BottomRightCursor :=
 		(Cursor extent: 16 @ 16
 			fromArray: #(
 		2r0000000000000011
@@ -207,15 +204,14 @@ Cursor class >> initBottomRight [
 		2r0000000000000011
 		2r1111111111111111
 		2r1111111111111111)
-			offset: -16 @ -16).
-
+			offset: -16 @ -16)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initCorner [
 
-	CornerCursor := 
-		(Cursor 
+	CornerCursor :=
+		(Cursor
 			extent: 16 @ 16
 			fromArray: #(
 		2r0000000000000011
@@ -234,14 +230,13 @@ Cursor class >> initCorner [
 		2r0000000000000011
 		2r1111111111111111
 		2r1111111111111111)
-			offset: -16 @ -16).
-
+			offset: -16 @ -16)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initCrossHair [
 
-	CrossHairCursor :=   
+	CrossHairCursor :=
 		(Cursor
 			extent: 16 @ 16
 			fromArray: #(
@@ -261,9 +256,7 @@ Cursor class >> initCrossHair [
 		2r0000000100000000
 		2r0000000000000000
 		2r0)
-			offset: -7 @ -7).
-	
-	
+			offset: -7 @ -7)
 ]
 
 { #category : #'initialization - private' }
@@ -289,14 +282,13 @@ Cursor class >> initDown [
 		2r0
 		2r0
 		2r0)
-	offset: 0@0).
-
+	offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initMarker [
 
-	MarkerCursor := 
+	MarkerCursor :=
 		Cursor
 			extent: 16@16
 			fromArray: #(
@@ -316,12 +308,11 @@ Cursor class >> initMarker [
 		2r0
 		2r0
 		2r0)
-			offset: 0@0.
-
+			offset: 0@0
 ]
 
 { #category : #'initialization - private' }
-Cursor class >> initMenu [ 
+Cursor class >> initMenu [
 
 	MenuCursor  :=
 		        (Cursor
@@ -342,15 +333,14 @@ Cursor class >> initMenu [
 		2r1000000000100000
 		2r1111111111100000
 		0)
-	offset: 0@0).
-
+	offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initMove [
 
-	MoveCursor := 
-		Cursor 
+	MoveCursor :=
+		Cursor
 			extent: 16@16
 			fromArray: #(
 		2r1111111111111100
@@ -368,14 +358,13 @@ Cursor class >> initMove [
 		2r1111111111111100
 		2r1111111111111100
           0)
-			offset: 0@0.
-
+			offset: 0@0
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initNormal [
 
-	NormalCursor :=   
+	NormalCursor :=
 		(Cursor
 			extent: 16@16
 			fromArray: #(
@@ -395,10 +384,7 @@ Cursor class >> initNormal [
 		2r0000011000000000
 		2r0000001100000000
 		2r0000001100000000)
-	offset: 0@0).
-
-	
-	
+	offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
@@ -419,13 +405,13 @@ Cursor class >> initNormalWithMask [    "Cursor initNormalWithMask.  Cursor norm
 				4227858432 4261412864 4278190080 4286578688
 				4278190080 4261412864 4261412864 3472883712
 				251658240 125829120 125829120 50331648)
-			offset: 0 @ 0).
+			offset: 0 @ 0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initOrigin [
 
-	OriginCursor :=   
+	OriginCursor :=
 		(Cursor
 			extent: 16@16
 			fromArray: #(
@@ -445,8 +431,7 @@ Cursor class >> initOrigin [
 		2r1100000000000000
 		2r1100000000000000
 		2r1100000000000000)
-			offset: 0@0).
-
+			offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
@@ -468,15 +453,13 @@ Cursor class >> initOverEditableText [
 	               2r000000100000000
 	               2r000111011100000
 				2r0)
-	       offset: (-7@ -8)) 
-
-
+	       offset: (-7@ -8))
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initRead [
 
-	ReadCursor :=  
+	ReadCursor :=
 		(Cursor
 			extent: 16@16
 			fromArray: #(
@@ -496,8 +479,7 @@ Cursor class >> initRead [
 		2r0
 		2r0
 		2r0)
-	offset: 0@0).
-
+	offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
@@ -596,7 +578,7 @@ Cursor class >> initResizeTopRight [
 ]
 
 { #category : #'initialization - private' }
-Cursor class >> initRightArrow [ 
+Cursor class >> initRightArrow [
 
 	RightArrowCursor  :=
 		      (Cursor
@@ -619,14 +601,14 @@ Cursor class >> initRightArrow [
 		2r0
 		2r0)
 	offset: 0@0).
-	
+
 	"Cursor initRightArrow"
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initSquare [
 
-	SquareCursor := 
+	SquareCursor :=
 		(Cursor
 			extent: 16 @ 16
 			fromArray: #(
@@ -646,9 +628,7 @@ Cursor class >> initSquare [
 		2r0
 		2r0
 		2r0)
-	offset: -8 @ -8).
-
-	
+	offset: -8 @ -8)
 ]
 
 { #category : #'initialization - private' }
@@ -661,7 +641,7 @@ Cursor class >> initTarget [
 
 { #category : #'initialization - private' }
 Cursor class >> initTopLeft [
-	TopLeftCursor := 
+	TopLeftCursor :=
 		(Cursor extent: 16@16
 			fromArray: #(
 		2r1111111111111111
@@ -680,13 +660,12 @@ Cursor class >> initTopLeft [
 		2r1100000000000000
 		2r1100000000000000
 		2r1100000000000000)
-			offset: 0@0).
-
+			offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initTopRight [
-	TopRightCursor := 
+	TopRightCursor :=
 		(Cursor extent: 16@16
 			fromArray: #(
 		2r1111111111111111
@@ -705,14 +684,13 @@ Cursor class >> initTopRight [
 		2r0000000000000011
 		2r0000000000000011
 		2r0000000000000011)
-			offset: -16@0).
-
+			offset: -16@0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initUp [
 
-	UpCursor := 
+	UpCursor :=
 		    (Cursor
 	extent: 16@16
 	fromArray: #(
@@ -732,14 +710,13 @@ Cursor class >> initUp [
 		2r0
 		2r0
 		2r0)
-	offset: 0@0).
-
+	offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initWait [
 
-	WaitCursor := 
+	WaitCursor :=
 		  (Cursor
 			extent: 16@16
 			fromArray: #(
@@ -758,8 +735,7 @@ Cursor class >> initWait [
 		2r1000111111110100
 		2r1111111111111100
 		0)
-			offset: 0@0).
-
+			offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
@@ -784,14 +760,13 @@ Cursor class >> initWrite [
 		2r0111111100000000
 		2r0
 		2r0)
-	offset: 0@0).
-
+	offset: 0@0)
 ]
 
 { #category : #'initialization - private' }
 Cursor class >> initXeq [
 
-	XeqCursor := 
+	XeqCursor :=
 		(Cursor
 			extent: 16@16
 			fromArray: #(
@@ -811,14 +786,14 @@ Cursor class >> initXeq [
 		2r0000011000000000
 		2r0000001100000000
 		2r0000001100000000)
-	offset: 0@0).
-
+	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Cursor class >> initialize [
+
 	self createStandardCursors.
-	SessionManager default registerGuiClassNamed: self name.
+	SessionManager default registerGuiClassNamed: self name
 ]
 
 { #category : #'initialization - private' }
@@ -827,7 +802,7 @@ Cursor class >> makeCursorsWithMask [
 
 	self classPool associationsDo: [:var |
 		var value hasMask
-			ifFalse: [var value: var value withMask]] 
+			ifFalse: [var value: var value withMask]]
 ]
 
 { #category : #constants }
@@ -838,7 +813,7 @@ Cursor class >> marker [
 ]
 
 { #category : #constants }
-Cursor class >> menu [ 
+Cursor class >> menu [
 	"Answer the instance of me that is the shape of a menu."
 
 	^MenuCursor
@@ -857,7 +832,6 @@ Cursor class >> new [
 	^ self extent: 16 @ 16
 		fromArray: (Array new: 16 withAll: 0)
 		offset: 0 @ 0
-
 ]
 
 { #category : #constants }
@@ -869,7 +843,7 @@ Cursor class >> normal [
 
 { #category : #constants }
 Cursor class >> origin [
-	"Answer the instance of me that is the shape of the top left corner of a 
+	"Answer the instance of me that is the shape of the top left corner of a
 	rectangle."
 
 	^OriginCursor
@@ -877,7 +851,7 @@ Cursor class >> origin [
 
 { #category : #constants }
 Cursor class >> overEditableText [
-	^ OverEditableText 
+	^ OverEditableText
 ]
 
 { #category : #constants }
@@ -907,9 +881,17 @@ Cursor class >> resizeBottomRight [
 
 { #category : #'instance creation' }
 Cursor class >> resizeForEdge: aSymbol [
-	"Cursor resizeForEdge: #top"
-	"Cursor resizeForEdge: #bottomLeft"
-	^self perform: ('resize', aSymbol first asString asUppercase, (aSymbol copyFrom: 2 to: aSymbol size)) asSymbol.
+	"Most common cases hard coded to avoid perform: and asSymbol. It is 55 times faster."
+
+	aSymbol == #right ifTrue: [ ^ self resizeRight ].
+	aSymbol == #left ifTrue: [ ^ self resizeLeft ].
+	aSymbol == #top ifTrue: [ ^ self resizeTop ].
+	aSymbol == #bottom ifTrue: [ ^ self resizeBottom ].
+	aSymbol == #bottomLeft ifTrue: [ ^ self resizeBottomLeft ].
+	aSymbol == #bottomRight ifTrue: [ ^ self resizeBottomRight ].
+	aSymbol == #topRight ifTrue: [ ^ self resizeTopRight ].
+	aSymbol == #topLeft ifTrue: [ ^ self resizeTopLeft ].
+	^self perform: ('resize', aSymbol asString capitalized) asSymbol
 ]
 
 { #category : #constants }
@@ -943,7 +925,7 @@ Cursor class >> resizeTopRight [
 ]
 
 { #category : #constants }
-Cursor class >> rightArrow [ 
+Cursor class >> rightArrow [
 	"Answer the instance of me that is the shape of an arrow pointing to the right."
 
 	^RightArrowCursor
@@ -984,7 +966,7 @@ Cursor class >> up [
 
 { #category : #constants }
 Cursor class >> wait [
-	"Answer the instance of me that is the shape of an Hourglass (was in the 
+	"Answer the instance of me that is the shape of an Hourglass (was in the
 	shape of three small balls)."
 
 	^WaitCursor
@@ -998,9 +980,9 @@ Cursor class >> webLink [
 		WebLinkCursor :=  (CursorWithMask extent: 16@16
 			fromArray: #(3072 4608 4608 4608 4608 5046 4681 29257 37449 37449 32769 32769 49155 16386 24582 16380 )
 			offset: -5@0) setMaskForm:
-		(Form extent: 16@16 
+		(Form extent: 16@16
 			fromArray: (#(3072 7680 7680 7680 7680 8118 8191 32767 65535 65535 65535 65535 65535 32766 32766 16380 )  collect: [:bits | bits bitShift: 16])
-			offset: 0@0)].
+			offset: 0@0)]
 ]
 
 { #category : #constants }
@@ -1012,7 +994,8 @@ Cursor class >> write [
 
 { #category : #primitives }
 Cursor >> activateInCursorOwner: aCursorOwner [
-	^ self beCursor
+
+	^ self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -1023,21 +1006,11 @@ Cursor >> asCursorForm [
 	^ form offset: offset
 ]
 
-{ #category : #primitives }
-Cursor >> beCursor [
-	self primitiveBeCursor
-]
-
-{ #category : #primitives }
-Cursor >> beCursorWithMask: maskForm [
-	self primitiveBeCursorWithMask: maskForm
-]
-
 { #category : #updating }
 Cursor >> changed: aParameter [
 	"overriden to reinstall the cursor if it is the active cursor, in case the appearance has changed.  (Is this used anywhere?  Do cursors really change in place these days?)"
 	self flag: 'FIXME: Please, check on whether is this really needed'.
-	
+
 	"Removed for Morphic World specific cursor."
 	"self == CurrentCursor ifTrue: [self beCursor]."
 	super changed: aParameter
@@ -1046,31 +1019,6 @@ Cursor >> changed: aParameter [
 { #category : #testing }
 Cursor >> hasMask [
 	^false
-]
-
-{ #category : #primitives }
-Cursor >> primitiveBeCursor [
-	"Primitive. Tell the interpreter to use the receiver as the current cursor 
-	image. Fail if the receiver does not match the size expected by the 
-	hardware. Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
-]
-
-{ #category : #primitives }
-Cursor >> primitiveBeCursorWithMask: maskForm [
-	"Primitive. Tell the interpreter to use the receiver as the current cursor image with the given mask Form. Both the receiver and the mask should have extent 16@16 and a depth of one. The mask and cursor bits are combined as follow:
-			mask	cursor	effect
-			 0		  0		transparent (underlying pixel shows through)
-			 1		  1		opaque black
-			 1		  0		opaque white
-			 0		  1		invert the underlying pixel"
-"Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
-
 ]
 
 { #category : #printing }
@@ -1097,13 +1045,12 @@ Cursor >> show [
 ]
 
 { #category : #displaying }
-Cursor >> showWhile: aBlock [ 
+Cursor >> showWhile: aBlock [
 	"While evaluating the argument, aBlock, make the receiver be the cursor shape."
 	| oldcursor |
 	oldcursor := self currentWorld currentCursor.
 	self show.
 	^aBlock ensure: [oldcursor show]
-
 ]
 
 { #category : #converting }

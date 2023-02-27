@@ -9,7 +9,7 @@ String >> heightToDisplayInTree: aTree [
 { #category : #'*Polymorph-Widgets-Themes' }
 String class >> systemIconName [
 
-	^ #stringIcon
+	^ #string
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -17,7 +17,7 @@ String >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont 
 
 	aCanvas
 		drawString: self
-		in: drawBounds 
+		in: drawBounds
 		font: aMorph font
 		color: drawColor
 ]

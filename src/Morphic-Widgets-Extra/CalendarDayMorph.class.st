@@ -39,8 +39,7 @@ CalendarDayMorph class >> on: aDate for: aCalendarChooserMorph [
 	^self new
 		date: aDate;
 		owner: aCalendarChooserMorph;
-		yourself.
-
+		yourself
 ]
 
 { #category : #accessing }
@@ -64,8 +63,7 @@ CalendarDayMorph >> date [
 { #category : #accessing }
 CalendarDayMorph >> date: aDate [
 
-	date := aDate.
-
+	date := aDate
 ]
 
 { #category : #printing }
@@ -109,7 +107,7 @@ CalendarDayMorph >> drawOn: aCanvas offset: origin [
 		drawString: dayString
 		at: textTopLeft + origin
 		font: owner weekdayFont
-		color: textColor.
+		color: textColor
 ]
 
 { #category : #accessing }

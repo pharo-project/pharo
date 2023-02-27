@@ -19,24 +19,23 @@ ClyProjectContentQuery >> buildResult: aQueryResult [
 
 	| allItems |
 	allItems := OrderedCollection new.
-	
-	scope projectsDo: [ :each | 
+
+	scope projectsDo: [ :each |
 		allItems addAll: each items  ].
-	
+
 	aQueryResult fillWith: allItems
 ]
 
 { #category : #execution }
 ClyProjectContentQuery >> checkEmptyResult [
-	
-	scope projectsDo: [ :each | 
+
+	scope projectsDo: [ :each |
 		each items ifNotEmpty: [ ^false ]  ].
 	^true
 ]
 
 { #category : #execution }
 ClyProjectContentQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-
 ]
 
 { #category : #'system changes' }

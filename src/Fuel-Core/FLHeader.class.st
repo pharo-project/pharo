@@ -7,31 +7,54 @@ An instance of FLHeader is serialized together with the orignal object graph to 
 Class {
 	#name : #FLHeader,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'preMaterializationActions',
 		'additionalObjects',
-		'postMaterializationActions',
-		'materialization'
+		'postMaterializationActions'
 	],
 	#category : #'Fuel-Core-Base'
 }
 
+{ #category : #'instance creation' }
+FLHeader class >> forMaterialization [
+	^ self basicNew
+		initializeForMaterialization;
+		initialize;
+		yourself
+]
+
+{ #category : #'instance creation' }
+FLHeader class >> forSerialization [
+	^ self basicNew
+		initializeForSerialization;
+		initialize;
+		yourself
+]
+
 { #category : #accessing }
 FLHeader >> addPostMaterializationAction: aCleanBlockClosure [
-	"The closure may (or not) have one parameter and it will be the materialization."
+	"The closure receives the header, materialization and the global environment as optional arguments"
 	aCleanBlockClosure isClean ifFalse: [ self error: 'Post materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean' ].
-	postMaterializationActions add: aCleanBlockClosure 
+	postMaterializationActions add: aCleanBlockClosure
 ]
 
 { #category : #accessing }
 FLHeader >> addPreMaterializationAction: aCleanBlockClosure [
+	"The closure receives the header and the global environment as optional arguments"
 	aCleanBlockClosure isClean ifFalse: [ self error: 'Pre materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean' ].
-	preMaterializationActions add: aCleanBlockClosure 
+	preMaterializationActions add: aCleanBlockClosure
 ]
 
 { #category : #accessing }
 FLHeader >> additionalObjectAt: key [
 	^ additionalObjects at: key
+]
+
+{ #category : #accessing }
+FLHeader >> additionalObjects: aCollection [
+	additionalObjects := aCollection
 ]
 
 { #category : #accessing }
@@ -42,19 +65,47 @@ FLHeader >> at: key putAdditionalObject: anObject [
 
 { #category : #executing }
 FLHeader >> executePostMaterializationActions [
-	postMaterializationActions do: [:each | each cull: materialization]
+	postMaterializationActions ifNil: [ ^ self ].
+	
+	postMaterializationActions do: [ :each |
+		each
+			cull: self context materializedObjects
+			cull: self configuration environment ]
 ]
 
 { #category : #executing }
 FLHeader >> executePreMaterializationActions [
-	preMaterializationActions do: [:each | each value]
+	preMaterializationActions ifNil: [ ^ self ].
+
+	preMaterializationActions do: [ :each |
+		each
+			cull: self context materializedObjects
+			cull: self configuration environment ]
+]
+
+{ #category : #hooks }
+FLHeader >> fuelAccept: aGeneralMapper [
+	"The header is actually being serialized. Override the trait"
+	self isEmpty
+		ifFalse: [ super fuelAccept: aGeneralMapper ]
+		ifTrue: [
+			aGeneralMapper
+				visitSubstitution: self
+				by: nil ]
 ]
 
 { #category : #initialization }
-FLHeader >> initialize [
-	additionalObjects := IdentityDictionary new.
-	preMaterializationActions := OrderedCollection new.
-	postMaterializationActions := OrderedCollection new.
+FLHeader >> initializeForMaterialization [
+	additionalObjects := Dictionary new.
+	preMaterializationActions := #().
+	postMaterializationActions := #()
+]
+
+{ #category : #initialization }
+FLHeader >> initializeForSerialization [
+	additionalObjects := self configuration additionalObjects.
+	preMaterializationActions := self configuration preMaterializationActions.
+	postMaterializationActions := self configuration postMaterializationActions
 ]
 
 { #category : #testing }
@@ -65,19 +116,11 @@ FLHeader >> isEmpty [
 ]
 
 { #category : #accessing }
-FLHeader >> materialization: aMaterialization [
-	"This is just set once the materialization had happened"
-	materialization := aMaterialization 
-]
-
-{ #category : #accessing }
 FLHeader >> postMaterializationActions: listOfPostMaterializationActions [
 	postMaterializationActions := listOfPostMaterializationActions.
-	
 ]
 
 { #category : #accessing }
 FLHeader >> preMaterializationActions: listOfPreMaterializationActions [
 	preMaterializationActions := listOfPreMaterializationActions.
-	
 ]

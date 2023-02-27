@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : #'api - queries' }
-ClyProjectManager >> projectQueryFor: aClySystemEnvironmentScope [ 
-	
+ClyProjectManager >> projectQueryFor: aClySystemEnvironmentScope [
+
 	^ ClyUnknownQuery instance
 ]
 
 { #category : #'api - queries' }
 ClyProjectManager >> queryClass [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

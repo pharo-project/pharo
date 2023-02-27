@@ -10,38 +10,38 @@ Class {
 { #category : #'selection strategy' }
 ClyQueryBrowserContext class >> selectionStrategy [
 	<classAnnotation>
-	
+
 	^ClyContextSelectionStrategyAnnotation for: ClyQueryBrowserMorph
 ]
 
 { #category : #'selection-classes' }
 ClyQueryBrowserContext >> isClassSelected [
 	"here we extract selected classes from selected items"
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #'selection-methods' }
 ClyQueryBrowserContext >> isMethodSelected [
 	"optimized version without extra collection copy"
-	
+
 	^selectedItems anySatisfy: [ :each | each isBasedOnItemType: ClyMethod  ]
 ]
 
 { #category : #'selection-packages' }
 ClyQueryBrowserContext >> isPackageSelected [
 	"here we extract selected packages from selected items"
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #'selection-classes' }
 ClyQueryBrowserContext >> lastSelectedClass [
-	
+
 	^self lastSelectedItem systemDefinition definingClass
 ]
 
 { #category : #'selection-packages' }
 ClyQueryBrowserContext >> lastSelectedPackage [
-	
+
 	^self lastSelectedItem systemDefinition definingPackage
 ]
 
@@ -53,13 +53,13 @@ ClyQueryBrowserContext >> restoreBrowserState [
 
 { #category : #'selection-classes' }
 ClyQueryBrowserContext >> selectedClassItems [
-	
+
 	| unique classItem |
 	unique := OrderedCollection new.
-	selectedItems do: [ :each | 
+	selectedItems do: [ :each |
 		classItem := each systemDefinition definingClassItem.
-		unique 
-			detect: [:existing | existing actualObject == classItem actualObject] 
+		unique
+			detect: [:existing | existing actualObject == classItem actualObject]
 			ifNone: [unique add: classItem]].
 	^unique
 ]
@@ -76,13 +76,13 @@ ClyQueryBrowserContext >> selectedMethodItems [
 
 { #category : #'selection-packages' }
 ClyQueryBrowserContext >> selectedPackageItems [
-	
+
 	| unique packageItem |
 	unique := OrderedCollection new.
-	selectedItems do: [ :each | 
+	selectedItems do: [ :each |
 		packageItem := each systemDefinition definingPackageItem.
-		unique 
-			detect: [:existing | existing actualObject == packageItem actualObject] 
+		unique
+			detect: [:existing | existing actualObject == packageItem actualObject]
 			ifNone: [unique add: packageItem]].
 	^unique
 ]

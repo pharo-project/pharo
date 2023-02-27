@@ -14,7 +14,7 @@ Class {
 
 { #category : #cleanup }
 FLCompiledMethodCluster class >> cleanUp [
-	self initialize 
+	self initialize
 ]
 
 { #category : #'class initialization' }
@@ -64,8 +64,8 @@ FLCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 	bytecodesPlusTrailerSize := aDecoder nextEncodedUint16.
 
 	compiledMethod := CompiledMethod
-			newMethod: bytecodesPlusTrailerSize
-			header: header.
+		newMethod: bytecodesPlusTrailerSize
+		header: header.
 
 	compiledMethod initialPC
 		to: compiledMethod size

@@ -1,7 +1,7 @@
 Extension { #name : #PasteUpMorph }
 
 { #category : #'*Athens-Morphic' }
-PasteUpMorph >> drawOnAthensCanvas: aCanvas [ 
+PasteUpMorph >> drawOnAthensCanvas: aCanvas [
 	"Draw in order:
 	- background color
 	- background sketch, if any
@@ -15,6 +15,5 @@ PasteUpMorph >> drawOnAthensCanvas: aCanvas [
 	backgroundMorph ifNotNil: [
 		aCanvas clipBy: self clippingBounds
 			during: [ aCanvas fullDrawMorph: backgroundMorph ]
-	]				
-
+	]
 ]

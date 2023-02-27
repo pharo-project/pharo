@@ -12,6 +12,6 @@ Path >> asFileReference [
 ]
 
 { #category : #'*FileSystem-Core' }
-Path >> relativeToReference: aReference [ 
+Path >> relativeToReference: aReference [
 	^ self relativeToPath: aReference path
 ]

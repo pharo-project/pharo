@@ -17,63 +17,86 @@ Class {
 { #category : #accessing }
 OSWorldRenderer class >> isApplicableFor: aWorld [
 
-	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive'  ]
+	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive' ]
 ]
 
 { #category : #accessing }
-OSWorldRenderer class >> priority [ 
+OSWorldRenderer class >> priority [
 
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
-	osWindow ifNotNil: [ osWindow setMouseCursor: aCursor mask: maskForm andScale: world worldState worldRenderer screenScaleFactor ]
+	osWindow ifNotNil: [
+		osWindow
+			setMouseCursor: aCursor
+			mask: maskForm
+			andScale: world worldState worldRenderer screenScaleFactor ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> actualScreenSize [
 	^ (self windowExtent / self screenScaleFactor) ceiling max: 1@1
 ]
 
-{ #category : #initialization }
+{ #category : #events }
 OSWorldRenderer >> checkForNewScreenSize [
+	| windowRenderer |
 
-	(display isNil or: [display extent = self actualScreenSize]) 
+	"Under certain circunstances, it may happen that renderer is still being
+	 created when the UI process call this method. In that case, we need to
+	 skip the check. "
+	windowRenderer := self osWindowRenderer.
+	windowRenderer ifNil: [ ^ self ].
+
+	(display isNil or: [ display extent = self actualScreenSize ])
 		ifTrue: [ ^ self ].
 
 	display := Form extent: self actualScreenSize depth: 32.
-	self osWindowRenderer form: display.
+	windowRenderer form: display.
 
 	world worldState realWindowExtent: self actualScreenSize.
 
-	world restoreMorphicDisplay.
-
+	world restoreMorphicDisplay
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> clipboardText [
 	^ osWindow clipboardText
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> clipboardText: aString [
 	osWindow clipboardText: aString asString
 ]
 
-{ #category : #initialization }
+{ #category : #utilities }
 OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
 	^ (aPosition / self screenScaleFactor) rounded
 ]
 
-{ #category : #initialization }
+{ #category : #screenshot }
+OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
+
+	aForm
+		copyBits: (aRectangle origin extent: aForm extent)
+		from: display
+		at: 0 @ 0
+		clippingBox: aForm boundingBox
+		rule: Form over
+		fillColor: nil.
+
+	^ aForm
+]
+
+{ #category : #private }
 OSWorldRenderer >> deactivate [
 
 	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
-	display := nil.
-	
+	display := nil
 ]
 
 { #category : #operations }
@@ -82,11 +105,10 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 	self osWindowRenderer ifNotNil: [:renderer | renderer deferUpdatesWhile: aBlock ]
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 OSWorldRenderer >> doActivate [
-
 	| attributes initialExtent |
-	
+
 	initialExtent := world worldState realWindowExtent ifNil: [976@665].
 
 	attributes := OSWindowAttributes new.
@@ -102,15 +124,17 @@ OSWorldRenderer >> doActivate [
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
-	
+
+	driver afterMainPharoWindowCreated: osWindow.
 	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
-		
-	osWindow focus. 
-	
+	driver startUp: true.
+
+	osWindow focus.
+
 	world worldState doFullRepaint.
 	world displayWorld.
-	
-	OSWindowClipboard new beDefault.
+
+	OSWindowClipboard new beDefault
 ]
 
 { #category : #operations }
@@ -119,7 +143,7 @@ OSWorldRenderer >> drawDuring: aBlock [
 	self isProfilingRenderingTime ifTrue: [ ^ self drawWhileProfilingRenderingTimeDuring: aBlock ].
 	self osWindowRenderer deferUpdatesWhile: [
 		self osWindowRenderer drawDuring: aBlock
-	].
+	]
 ]
 
 { #category : #profiling }
@@ -130,7 +154,7 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 			self osWindowRenderer drawDuring: [ :canvas |
 				| frameCanvasRenderingTime displayRectangle |
 				frameCanvasRenderingTime := [ aBlock value: canvas ] timeToRunWithoutGC.
-					
+
 				measurements := {
 					'Content' -> frameCanvasRenderingTime
 				}.
@@ -139,7 +163,7 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 						'Previous frame' -> previousFrameRenderingTime.
 					}
 				].
-				
+
 				displayRectangle := (0@0 extent: 250@40).
 				canvas
 					fillRectangle: displayRectangle color: Color white.
@@ -148,17 +172,16 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 					line := self formatRenderingTimeMeasurement: each.
 					canvas drawString: line at: 10@(10*index) font: nil color: Color black.
 				].
-				
+
 				self osWindowRenderer updateRectangle: displayRectangle.
 			]
 		]
 	] timeToRunWithoutGC.
-	
-	self logRenderingTimeMeasurements: measurements
 
+	self logRenderingTimeMeasurements: measurements
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> driver [
 
 	^ driver
@@ -168,7 +191,7 @@ OSWorldRenderer >> driver [
 OSWorldRenderer >> fullscreenMode: aValue [
 
 	osWindow fullscreen: aValue.
-	self checkForNewScreenSize.
+	self checkForNewScreenSize
 ]
 
 { #category : #events }
@@ -177,44 +200,79 @@ OSWorldRenderer >> handleOSWindowCloseEvent: event [
 ]
 
 { #category : #accessing }
-OSWorldRenderer >> icon: aForm [ 
+OSWorldRenderer >> icon: aForm [
 
 	osWindow icon: aForm
 ]
 
-{ #category : #activation }
+{ #category : #initialization }
 OSWorldRenderer >> initialize [
+
 	super initialize.
-	windowCloseAction := [ self currentWorld defer: [WorldState quitSession] ].
+	windowCloseAction := [ self currentWorld defer: [ WorldState quitSession ] ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> osWindowRenderer [
+
 	osWindow ifNil: [ ^ nil ].
 	^ osWindow renderer ifNil: [
-		osWindow newFormRenderer: display.
-		osWindow renderer
-	].
-	
+		  osWindow newFormRenderer: display.
+		  osWindow renderer ]
 ]
 
-{ #category : #initialization }
-OSWorldRenderer >> pickMostSuitableWindowDriver [	
+{ #category : #private }
+OSWorldRenderer >> pickMostSuitableWindowDriver [
+
 	driver := OSWindowDriver current.
-	
 	^ driver
 ]
 
-{ #category : #initialization }
+{ #category : #events }
+OSWorldRenderer >> requestStopTextEditing [
+
+	osWindow stopTextInput
+]
+
+{ #category : #events }
+OSWorldRenderer >> requestTextEditingAt: aRectangle [
+
+	osWindow startTextInputAtRectangle: aRectangle
+]
+
+{ #category : #accessing }
 OSWorldRenderer >> screenScaleFactor [
+
 	^ world scaleFactor * self windowScaleFactor
+]
+
+{ #category : #'system startup' }
+OSWorldRenderer >> shutDown: quitting [
+
+	super shutDown: quitting.
+	driver ifNotNil: [
+		driver shutDown: quitting ]
+]
+
+{ #category : #'system startup' }
+OSWorldRenderer >> startUp: resuming [
+
+	super startUp: resuming.
+	driver ifNotNil: [
+		driver startUp: resuming ]
 ]
 
 { #category : #operations }
 OSWorldRenderer >> updateDamage: allDamage [
 
 	"quickly copy altered rects of canvas to Display:"
-	self osWindowRenderer updateAreas: allDamage immediate: false.
+	self osWindowRenderer updateAreas: allDamage immediate: false
+]
+
+{ #category : #events }
+OSWorldRenderer >> updateToNewResolution [
+
+	self window updateToNewResolution
 ]
 
 { #category : #activation }
@@ -228,8 +286,8 @@ OSWorldRenderer >> updateWindowTitle [
 
 { #category : #accessing }
 OSWorldRenderer >> window [
-	
-	^ osWindow 
+
+	^ osWindow
 ]
 
 { #category : #accessing }
@@ -242,7 +300,7 @@ OSWorldRenderer >> windowCloseAction: anObject [
 	windowCloseAction := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 OSWorldRenderer >> windowExtent [
 
 	^ osWindow ifNil: [ 240@120 ] ifNotNil: [ osWindow extent ]
@@ -253,7 +311,13 @@ OSWorldRenderer >> windowScaleFactor [
 	^ osWindow ifNil: [ 1 ] ifNotNil: [ osWindow screenScaleFactor max: 1 ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
+OSWorldRenderer >> windowTitle: aString [
+
+	osWindow title: aString
+]
+
+{ #category : #accessing }
 OSWorldRenderer >> world: aWorld [
 
 	world := aWorld

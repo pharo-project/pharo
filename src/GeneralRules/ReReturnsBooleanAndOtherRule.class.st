@@ -15,7 +15,7 @@ ReReturnsBooleanAndOtherRule class >> checksMethod [
 { #category : #accessing }
 ReReturnsBooleanAndOtherRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ReturnsBooleanAndOtherRule'
 ]
 
@@ -25,12 +25,12 @@ ReReturnsBooleanAndOtherRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	returnsBool := false.
 	"no return in the end? -> returns self"
 	returnsNonBool := aMethod ast lastIsReturn not.
-	
-	aMethod ast nodesDo: [ :node | 
+
+	aMethod ast nodesDo: [ :node |
 		node isReturn ifTrue: [
 			| returnedNode |
 			returnedNode := node value.
-			
+
 			returnsBool :=
 				returnsBool or:
 				[ self checkIfNodeIsBool: returnedNode ].

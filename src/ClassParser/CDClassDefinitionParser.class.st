@@ -13,26 +13,17 @@ Class {
 }
 
 { #category : #parsing }
-CDClassDefinitionParser class >> fromASTNode: aNode [ 
-	
-	^ self new parseRootNode: aNode
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
-	| layout |
-	
+	| layoutClass |
 	self handleClassName: aNode.
-	layout := FixedLayout.
-	aSymbol = #variableWordSubclass: ifTrue: [ layout := WordLayout ].
-	aSymbol = #ephemeronSubclass: ifTrue: [ layout := EphemeronLayout ].
-	aSymbol = #weakSubclass: ifTrue: [ layout := WeakLayout ].
-	aSymbol = #variableByteSubclass: ifTrue: [ layout := ByteLayout  ].
-	aSymbol = #variableSubclass: ifTrue: [ layout := VariableLayout ].
-	aSymbol = #immediateSubclass: ifTrue: [ layout := ImmediateLayout ].
-	aSymbol = #subclass: ifTrue: [ layout := FixedLayout ].
-	
-	classDefinition layoutClass: layout
+	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
+
+	"if we get back CompiledMethodLayout or ByteLayout, we need to check the class name"
+	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [
+		layoutClass := (classDefinition className = 'CompiledMethod')
+					ifTrue:  [  CompiledMethodLayout ]
+					ifFalse: [  ByteLayout ]].
+	classDefinition layoutClass: (layoutClass)
 ]
 
 { #category : #parsing }
@@ -41,7 +32,7 @@ CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	sharedPoolString := aNode value.
 	shareds := sharedPoolString substrings.
 	sharedPoolNodes := shareds
-		collect: [ :slotName | 
+		collect: [ :slotName |
 			| start |
 			start := aNode start + (sharedPoolString findString: slotName).
 			self sharedPoolNodeClass
@@ -68,10 +59,10 @@ CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
-	
+
 	| traitComposition |
-	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
-	classDefinition traitDefinition: traitComposition.
+	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.
+	classDefinition traitDefinition: traitComposition
 ]
 
 { #category : #testing }
@@ -81,36 +72,46 @@ CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
-	
+CDClassDefinitionParser >> parseRootNode: expressionTree [
+	self setAdequateClassDefinitionFrom: expressionTree.
+	classDefinition originalNode: expressionTree.
+	expressionTree acceptVisitor: self.
+	^ classDefinition
+]
+
+{ #category : #parsing }
+CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
+
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
-	
-	(#(variableWordSubclass: ephemeronSubclass: weakSubclass: variableByteSubclass: variableSubclass: immediateSubclass: #subclass:) includes: aString)
+
+	(ObjectLayout allSubclassDefiningSymbols includes: aString)
 		ifTrue: [ ^ self handleClassName: aNode withType: aString  ].
 	aString =	 #instanceVariableNames:
 		ifTrue: [ ^ self handleInstanceVariablesFromNode: aNode ].
-	aString =	 #slots:
-		ifTrue: [ ^ self handleSlotsNodesFromArrayNode: aNode ].
-	self flag: #todo. 
-	"there is no such definition anymore in a non fluid definition
-	So we should clean also the test CDSlotParserArgumenting. They should use 
-	the fluid parser. Period."
 	aString =	 #classVariableNames:
 		ifTrue: [ ^ self handleSharedVariableNames: aNode ].
 	aString =	 #category:
-		ifTrue: [ ^ self handlePackage: aNode ].	
+		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #package:
 		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #uses:
 		ifTrue: [ ^ self handleTraitDefinitionFromNode: aNode ].
 	aString =	 #poolDictionaries:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
-	
+
 	CDUnrecognizedClassPart new
-		classDefinition: self; 
+		classDefinition: self;
 		unrecognizedPart: aString;
 		signal
+]
+
+{ #category : #internal }
+CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
+	"set a class or metaclass class definition as class definition object."
+	(self isInstanceSideDefinition: expressionTree)
+		ifTrue: [ self beClassDefinition ]
+		ifFalse: [ self beMetaclassDefinition ]
 ]
 
 { #category : #parsing }
@@ -119,7 +120,7 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	(self isInstanceSideDefinition: aRBMessageNode)
 		ifTrue: [ self handleSuperclassNode: aRBMessageNode receiver ]
 		ifFalse: [ self handleClassName: aRBMessageNode receiver receiver ].
-	
+
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments
 		do: [ :selectorPart :argument |

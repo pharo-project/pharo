@@ -21,13 +21,13 @@ OSMouseEvent >> buttons [
 
 { #category : #accessing }
 OSMouseEvent >> delta [
-	
+
 	^ delta
 ]
 
 { #category : #accessing }
 OSMouseEvent >> delta: anObject [
-	
+
 	delta := anObject
 ]
 
@@ -39,17 +39,17 @@ OSMouseEvent >> initialize [
 
 { #category : #accessing }
 OSMouseEvent >> modifiers [
-	^ modifiers 
+	^ modifiers
 ]
 
 { #category : #accessing }
 OSMouseEvent >> position [
-	
+
 	^ position
 ]
 
 { #category : #accessing }
 OSMouseEvent >> position: anObject [
-	
+
 	position := anObject
 ]

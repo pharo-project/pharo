@@ -87,35 +87,32 @@ MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: vers
   ^ projectPath , ':::' , versionString
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCGitBasedNetworkRepository class >> flushDownloadCache [
-  "self flushDownloadCache"
 
-  repoDownloadCache := nil
+	repoDownloadCache := nil
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCGitBasedNetworkRepository class >> flushProjectEntry: projectPath version: versionString [
     self downloadCache removeKey: (self downloadCacheKey: projectPath version: versionString) ifAbsent: [  ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCGitBasedNetworkRepository class >> initialize [
-  "self initialize"
 
 	(Smalltalk classNamed: #SessionManager)
 		ifNotNil: [ :c | c default perform: #registerNetworkClassNamed: with: self name ]
 		ifNil:[ Smalltalk addToStartUpList: self ].
   self flushDownloadCache.
   self resetCacheDirectoryIfInvalid
-
 ]
 
 { #category : #accessing }
 MCGitBasedNetworkRepository class >> isAbstract [
     "abstract as far as creating new repositories interactively? yes"
 
-    ^ true
+    ^ self == MCGitBasedNetworkRepository
 ]
 
 { #category : #testing }
@@ -212,7 +209,7 @@ MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: 
     value: (desc copyFrom: repoDelim + 1 to: desc size)
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: versionString [
 	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath pid |
 	downloadCacheKey := self

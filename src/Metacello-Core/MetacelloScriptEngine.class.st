@@ -16,7 +16,7 @@ Class {
 	#category : #'Metacello-Core-Scripts'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloScriptEngine class >> baseNameOf: className [
   ^ (className beginsWith: 'BaselineOf')
     ifTrue: [ className copyFrom: 'BaselineOf' size + 1 to: className size ]
@@ -26,7 +26,7 @@ MetacelloScriptEngine class >> baseNameOf: className [
         ifFalse: [ className ] ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloScriptEngine class >> baselineNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -35,7 +35,7 @@ MetacelloScriptEngine class >> baselineNameFrom: baseName [
         ifFalse: [ 'BaselineOf' , baseName ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloScriptEngine class >> configurationNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -398,27 +398,15 @@ MetacelloScriptEngine >> lock [
 
 { #category : #'project lookup' }
 MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
-  "if there is no conflict, choose new spec"
-
-  | registration |
-  registration := MetacelloProjectRegistration
-    registrationForProjectSpec: aProjectSpec
-    ifAbsent: [ :new | new ]
-    ifPresent: [ :existing :new | 
-      (existing hasLoadConflicts: new)
-        ifTrue: [ 
-          ((existing canUpgradeTo: new)
-            ifTrue: [ MetacelloAllowProjectUpgrade new ]
-            ifFalse: [ 
-              (existing canDowngradeTo: new)
-                ifTrue: [ MetacelloAllowProjectDowngrade new ]
-                ifFalse: [ MetacelloAllowConflictingProjectUpgrade new ] ])
-            existingProjectRegistration: existing;
-            newProjectRegistration: new;
-            signal ]
-        ifFalse: [ new ] ].
-  ^ registration projectSpec
-
+	"if there is no conflict, choose new spec"
+	| registration |
+	
+	registration := MetacelloProjectRegistration
+		registrationForProjectSpec: aProjectSpec
+		ifAbsent: [ :new | new ]
+		ifPresent: [ :existing :new | self resolvePresentProject: existing new: new ].
+  
+	^ registration projectSpec
 ]
 
 { #category : #accessing }
@@ -478,6 +466,26 @@ MetacelloScriptEngine >> repositories [
 MetacelloScriptEngine >> repositoryOverrides [
     ^ (self options at: #'repositoryOverrides' ifAbsent: [ ^ nil ])
         collect: [ :description | (MetacelloMCProject new repositorySpec description: description) createRepository ]
+]
+
+{ #category : #private }
+MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newRegistration [
+
+	existingRegistration locked 
+		ifTrue: [ ^ existingRegistration ].
+
+	^ (existingRegistration hasLoadConflicts: newRegistration)
+		ifTrue: [
+			((existingRegistration canUpgradeTo: newRegistration)
+				ifTrue: [ MetacelloAllowProjectUpgrade new ]
+				ifFalse: [
+					(existingRegistration canDowngradeTo: newRegistration)
+						ifTrue: [ MetacelloAllowProjectDowngrade new ]
+						ifFalse: [ MetacelloAllowConflictingProjectUpgrade new ] ])
+			existingProjectRegistration: existingRegistration;
+			newProjectRegistration: newRegistration;
+			signal ]
+		ifFalse: [ newRegistration ]
 ]
 
 { #category : #accessing }

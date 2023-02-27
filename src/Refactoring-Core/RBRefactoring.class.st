@@ -39,53 +39,80 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #displaying }
+RBRefactoring class >> basicMenuItemString [
+
+	^ self subclassResponsibility
+]
+
 { #category : #cleaning }
 RBRefactoring class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them so the block references the current method"
-	self initializeRefactoringOptions.
+	self initializeRefactoringOptions
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RBRefactoring class >> initialize [
 	self initializeRefactoringOptions
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RBRefactoring class >> initializeRefactoringOptions [
 	RefactoringOptions := IdentityDictionary new.
 	RefactoringOptions
 		at: #implementorToInline
 		put: [ :ref :imps | self error: #implementorToInline ];
-		
+
 		at: #methodName
-		put: [ :methodName | self error: #methodName ];
-		
+		put: [ :methodName :ref | self error: #methodName ];
+
 		at: #selfArgumentName
 		put: [ :ref | self error: #selfArgumentName ];
-		
+
 		at: #selectVariableToMoveTo
-		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];	
-			
+		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];
+
 		at: #variableTypes
 		put: [ :ref :types :selected | self error: #variableTypes ];
-		
+
 		at: #extractAssignment
 		put: [ :ref :varName | self error: #extractAssignment ];
-		
+
 		at: #inlineExpression
 		put: [ :ref :string | self error: #inlineExpression ];
-		
+
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
-		
+
 		at: #useExistingMethod
 		put: [ :ref :selector |  self error: #useExistingMethod ];
-		
+
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ];
-		
+
 		at: #searchInWholeHierarchy
 		put: [ self error: #searchInWholeHierarchy ]
+]
+
+{ #category : #testing }
+RBRefactoring class >> isAbstract [
+
+	^ self == RBRefactoring
+]
+
+{ #category : #accessing }
+RBRefactoring class >> isTransformation [
+	"Tells if this refactoring is a refactoring or a transformation."
+
+	^ false
+]
+
+{ #category : #displaying }
+RBRefactoring class >> menuItemString [
+
+	^ (self isTransformation
+		   ifTrue: [ '(T) ' ]
+		   ifFalse: [ '' ]) , self basicMenuItemString
 ]
 
 { #category : #'accessing signal' }
@@ -99,7 +126,7 @@ RBRefactoring class >> refactoringOptions [
 ]
 
 { #category : #accessing }
-RBRefactoring class >> setDefaultOption: aSymbol to: aBlock [ 
+RBRefactoring class >> setDefaultOption: aSymbol to: aBlock [
 	self refactoringOptions at: aSymbol put: aBlock
 ]
 
@@ -111,13 +138,13 @@ RBRefactoring >> asRefactoring [
 { #category : #utilities }
 RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [
 	"Return the class variable association of class aClass"
-	 
+
 	^aClass realClass classPool associationAt: aName asSymbol
 		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]
 ]
 
 { #category : #testing }
-RBRefactoring >> canReferenceVariable: aString in: aClass [ 
+RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
@@ -129,47 +156,52 @@ RBRefactoring >> changes [
 ]
 
 { #category : #support }
-RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
+RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	| parseTree |
-	parseTree := aRBClass parseTreeFor: aSelector.
+	parseTree := aRBClass parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
 ]
 
 { #category : #preconditions }
 RBRefactoring >> checkPreconditions [
+
 	| conditions block |
 	conditions := self preconditions.
-	conditions check
-		ifFalse: [ block := conditions errorBlock.
-			block
-				ifNotNil: [ self refactoringError: conditions errorString with: block ]
-				ifNil: [ self refactoringError: conditions errorString ] ]
+	conditions check ifTrue: [ ^ self ].
+	block := conditions errorBlock.
+	block
+		ifNotNil: [
+		self refactoringError: conditions errorString with: block ]
+		ifNil: [ self refactoringError: conditions errorString ]
 ]
 
 { #category : #private }
-RBRefactoring >> classObjectFor: anObject [ 
-	(anObject isBehavior or: [anObject isTrait]) ifTrue: [^self model classFor: anObject].
-	anObject isSymbol ifTrue: [^self model classNamed: anObject].
-	^anObject
+RBRefactoring >> classObjectFor: anObject [
+
+	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [
+		^ self model classFor: anObject ].
+	anObject isString ifTrue: [
+		^ self model classNamed: anObject asSymbol ].
+	^ anObject
 ]
 
 { #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [ 
+RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
-		do: 
-			[:method | 
-			self 
+		do:
+			[:method |
+			self
 				convertMethod: method selector
 				for: method modelClass
 				using: searchReplacer]
 ]
 
 { #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [ 
+RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
 	|aBlock|
-	aBlock := [:method | 
-			self 
+	aBlock := [:method |
+			self
 				convertMethod: method selector
 				for: method modelClass
 				using: searchReplacer].
@@ -177,23 +209,23 @@ RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
 ]
 
 { #category : #support }
-RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [ 
+RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
-		do: 
-			[:method | 
-			self 
+		do:
+			[:method |
+			self
 				convertMethod: method selector
 				for: method modelClass
 				using: searchReplacer]
 ]
 
 { #category : #support }
-RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [ 
-	classSet do: 
-			[:aClass | 
-			(aBlock value: aClass) do: 
-					[:selector | 
-					self 
+RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
+	classSet do:
+			[:aClass |
+			(aBlock value: aClass) do:
+					[:selector |
+					self
 						convertMethod: selector
 						for: aClass
 						using: searchReplacer]]
@@ -207,23 +239,23 @@ RBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [
 
 	| parseTree |
 
-	parseTree := aClass parseTreeFor: selector.
+	parseTree := aClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
 		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
 { #category : #accessing }
-RBRefactoring >> copyOptionsFrom: aDictionary [ 
+RBRefactoring >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
-	dict == self class refactoringOptions 
+	dict == self class refactoringOptions
 		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo: 
-			[:key :value | 
-			value == (self class refactoringOptions at: key ifAbsent: [nil]) 
+	dict keysAndValuesDo:
+			[:key :value |
+			value == (self class refactoringOptions at: key ifAbsent: [nil])
 				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
-	(aDictionary keys difference: dict keys) do: 
+	(aDictionary keys difference: dict keys) do:
 		[ :e | dict at: e put: (aDictionary at: e) ].
 	self options: dict
 ]
@@ -235,10 +267,9 @@ RBRefactoring >> defaultEnvironment [
 
 { #category : #transforming }
 RBRefactoring >> execute [
+
 	self primitiveExecute.
-	RBRefactoryChangeManager instance 
-		performChange: self changes; 
-		addUndoPointer: (RBRefactoryChangeManager nextCounter)
+	self performChanges
 ]
 
 { #category : #transforming }
@@ -253,21 +284,21 @@ RBRefactoring >> model [
 ]
 
 { #category : #initialization }
-RBRefactoring >> model: aRBNamespace [ 
+RBRefactoring >> model: aRBNamespace [
 	model := aRBNamespace
 ]
 
 { #category : #private }
-RBRefactoring >> onError: aBlock do: errorBlock [ 
+RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
-		do: 
-			[:ex | 
+		do:
+			[:ex |
 			errorBlock value.
 			ex return: nil]
 ]
 
 { #category : #requests }
-RBRefactoring >> openBrowserOn: anEnvironment [ 
+RBRefactoring >> openBrowserOn: anEnvironment [
 	^(self options at: #openBrowser) value: self value: anEnvironment
 ]
 
@@ -278,39 +309,45 @@ RBRefactoring >> options [
 ]
 
 { #category : #accessing }
-RBRefactoring >> options: aDictionary [ 
+RBRefactoring >> options: aDictionary [
 	options := aDictionary
 ]
 
 { #category : #transforming }
-RBRefactoring >> performCompositeRefactoring: aRefactoring [ 
+RBRefactoring >> performChanges [
+
+	RBRefactoryChangeManager instance
+		performChange: self changes;
+		addUndoPointer: RBRefactoryChangeManager nextCounter
+]
+
+{ #category : #transforming }
+RBRefactoring >> performCompositeRefactoring: aRefactoring [
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute
 ]
 
 { #category : #transforming }
-RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [ 
+RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
 	[ aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute ]
 	on: RBRefactoringError do: [ :ex | ex resume ]
-
-	
 ]
 
 { #category : #utilities }
-RBRefactoring >> poolVariableNamesFor: aClass [ 
+RBRefactoring >> poolVariableNamesFor: aClass [
 	| pools |
 	pools := Set new.
-	aClass withAllSuperclasses do: 
-			[:each | 
-			each allPoolDictionaryNames do: 
+	aClass withAllSuperclasses do:
+			[:each |
+			each allPoolDictionaryNames do:
 					[:pool |
 					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
 	^pools
 ]
 
 { #category : #transforming }
-RBRefactoring >> poolVariableNamesIn: poolName [ 
+RBRefactoring >> poolVariableNamesIn: poolName [
 	^(model classNamed: poolName) classPool keys
 ]
 
@@ -330,20 +367,20 @@ RBRefactoring >> removeReturnsOf: parseTree [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
 	rewriter replace: '^``@object' with: '``@object'.
-	(rewriter executeTree: parseTree) 
+	(rewriter executeTree: parseTree)
 		ifTrue: [ ^ rewriter tree].
 	^ parseTree
 ]
 
 { #category : #requests }
-RBRefactoring >> requestImplementorToInline: implementorsCollection [ 
+RBRefactoring >> requestImplementorToInline: implementorsCollection [
 	^(self options at: #implementorToInline) value: self
 		value: implementorsCollection
 ]
 
 { #category : #requests }
-RBRefactoring >> requestMethodNameFor: aMethodName [ 
-	^(self options at: #methodName) value: aMethodName
+RBRefactoring >> requestMethodNameFor: aMethodName [
+	^(self options at: #methodName) cull: aMethodName cull: self
 ]
 
 { #category : #requests }
@@ -352,7 +389,7 @@ RBRefactoring >> requestSelfArgumentName [
 ]
 
 { #category : #utilities }
-RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [ 
+RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |
@@ -360,14 +397,15 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	baseString at: 1 put: baseString first asLowercase.
 	newString := baseString.
 	hasParam := newString last = $:.
-	hasParam 
-		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
+	hasParam ifTrue: [
+		baseString := newString copyFrom: 1 to: newString size - 1 ].
 	i := 0.
-	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue: 
-			[i := i + 1.
-			newString := baseString , i printString 
-						, (hasParam ifTrue: [':'] ifFalse: [''])].
-	^newString asSymbol
+	[ aClass hierarchyDefinesMethod: newString asSymbol ] whileTrue: [
+		i := i + 1.
+		newString := baseString , i printString , (hasParam
+			              ifTrue: [ ':' ]
+			              ifFalse: [ '' ]) ].
+	^ newString asSymbol
 ]
 
 { #category : #private }
@@ -375,32 +413,31 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 	| baseString i newString |
 	newString := baseString := aString.
 	i := 0.
-	[ (allTempVars includes: newString) or: [ aClass definesInstanceVariable: newString ] ] 
-		whileTrue: [ 
+	[ (allTempVars includes: newString) or: [ aClass definesInstanceVariable: newString ] ]
+		whileTrue: [
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
 ]
 
 { #category : #requests }
-RBRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [ 
-	^(self options at: #selectVariableToMoveTo) 
+RBRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
+	^(self options at: #selectVariableToMoveTo)
 		value: self
 		value: aClass
 		value: aSelector
 ]
 
 { #category : #requests }
-RBRefactoring >> selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection [ 
-	^ (self options at: #variableTypes) 
+RBRefactoring >> selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection [
+	^ (self options at: #variableTypes)
 		value: self
 		value: initialTypeCollection
 		value: selectedTypeCollection
-
 ]
 
 { #category : #accessing }
-RBRefactoring >> setOption: aSymbol toUse: aBlock [ 
+RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	| dict |
 	dict := self options.
 	dict == self class refactoringOptions ifTrue: [dict := dict copy].
@@ -409,25 +446,25 @@ RBRefactoring >> setOption: aSymbol toUse: aBlock [
 ]
 
 { #category : #requests }
-RBRefactoring >> shouldExtractAssignmentTo: aString [ 
+RBRefactoring >> shouldExtractAssignmentTo: aString [
 	^(self options at: #extractAssignment) value: self value: aString
 ]
 
 { #category : #requests }
-RBRefactoring >> shouldInlineExpression: aString [ 
+RBRefactoring >> shouldInlineExpression: aString [
 	^(self options at: #inlineExpression) value: self value: aString
 ]
 
 { #category : #requests }
-RBRefactoring >> shouldOverride: aSelector in: aClass [ 
-	^(self options at: #alreadyDefined) 
+RBRefactoring >> shouldOverride: aSelector in: aClass [
+	^(self options at: #alreadyDefined)
 		value: self
 		value: aClass
 		value: aSelector
 ]
 
 { #category : #requests }
-RBRefactoring >> shouldUseExistingMethod: aSelector [ 
+RBRefactoring >> shouldUseExistingMethod: aSelector [
 	^(self options at: #useExistingMethod) value: self value: aSelector
 ]
 
@@ -437,15 +474,15 @@ RBRefactoring >> transform [
 ]
 
 { #category : #private }
-RBRefactoring >> uniqueMethodNameFor: anInteger [ 
+RBRefactoring >> uniqueMethodNameFor: anInteger [
 	| before after index name |
 	before := 'a'.
 	after := ''.
 	anInteger timesRepeat: [after := after , 'z:'].
 	index := 0.
-	
+
 	[name := before , index printString , after.
-	(Symbol findInterned: name) notNil] 
+	(Symbol findInterned: name) notNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
 ]
@@ -454,7 +491,7 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
 	matcher := self parseTreeSearcher.
-	block := [ :aNode :answer | 
+	block := [ :aNode :answer |
 	(aNode intersectsInterval: anInterval)
 		ifTrue: [ aNode ]
 		ifFalse: [ answer ] ].

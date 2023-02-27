@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'message'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -54,7 +54,6 @@ RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector 
 	self className: aClassName.
 	selector := aSelector.
 	message := aMessageSend
-	
 ]
 
 { #category : #preconditions }
@@ -71,7 +70,7 @@ RBAddMessageSendTransformation >> preconditions [
 				withBlock: [ | messageNode |
 					messageNode := self parserClass parseExpression: message.
 					messageNode allVariables
-						allSatisfy: [ :e | 
+						allSatisfy: [ :e |
 							(self definingMethod hasArgumentNamed: e name)
 								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
 				errorString:

@@ -16,11 +16,11 @@ GoferUnload >> defaultModel [
 { #category : #running }
 GoferUnload >> execute [
 
-	self workingCopies 
+	self workingCopies
 		do: [ :copy | self unload: copy ].
 	self model load.
 	self gofer cleanup.
-	self workingCopies 
+	self workingCopies
 		do: [ :copy | self unregister: copy ]
 ]
 
@@ -29,14 +29,13 @@ GoferUnload >> unload: aWorkingCopy [
 
 	self unloadClasses: aWorkingCopy.
 	self unloadPackage: aWorkingCopy
-
 ]
 
 { #category : #unloading }
 GoferUnload >> unloadClasses: aWorkingCopy [
 
 	aWorkingCopy packageSet methods do: [ :each |
-		(each methodClass isClassSide and: [ each selector = #unload ])
+		(each isClassSide and: [ each selector = #unload ])
 			ifTrue: [ each methodClass instanceSide unload ] ]
 ]
 
@@ -49,7 +48,7 @@ GoferUnload >> unloadPackage: aWorkingCopy [
 { #category : #unregistering }
 GoferUnload >> unregister: aWorkingCopy [
 
-	self 
+	self
 		unregisterWorkingCopy: aWorkingCopy;
 		unregisterRepositories: aWorkingCopy;
 		unregisterPackageSet: aWorkingCopy;

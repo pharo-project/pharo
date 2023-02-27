@@ -22,15 +22,14 @@ SettingRegexpFilter >> keepSettingDeclaration: aSettingDeclaration [
 	^ ({aSettingDeclaration name. aSettingDeclaration label. aSettingDeclaration description}
 				collect: [:e | e ifNil: ['']])
 				anySatisfy: [:token | token  matchesRegexIgnoringCase: self regexp]
-
 ]
 
 { #category : #filtering }
-SettingRegexpFilter >> keepSettingTreeNode: aSettingNode [ 
+SettingRegexpFilter >> keepSettingTreeNode: aSettingNode [
 	^ (({aSettingNode methodClass name. aSettingNode selector}
 			collect: [:e | e ifNil: ['']])
 			anySatisfy: [:token | token substrings anySatisfy: [:sub | sub matchesRegexIgnoringCase: self regexp]])
-		or: [self keepSettingDeclaration: aSettingNode settingDeclaration] 
+		or: [self keepSettingDeclaration: aSettingNode settingDeclaration]
 ]
 
 { #category : #accessing }

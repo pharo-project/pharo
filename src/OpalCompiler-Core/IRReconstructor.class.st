@@ -29,7 +29,7 @@ IRReconstructor >> createTempVectorNamed: name withVars: anArray [
 
 { #category : #accessing }
 IRReconstructor >> currentSequence [
-	^currentSequence 
+	^currentSequence
 ]
 
 { #category : #accessing }
@@ -45,8 +45,7 @@ IRReconstructor >> fixPushNilsForTemps [
 
 	| blocksequence |
 	blocksequence := self currentScope blockSequence sequence.
-	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]. 
-	
+	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]
 ]
 
 { #category : #initialization }
@@ -55,7 +54,7 @@ IRReconstructor >> initialize [
 	remoteTemps := Dictionary new.
 	closureCopiedValues := Dictionary new.
 	sourceMapByteIndex := 0.
-	super initialize.
+	super initialize
 ]
 
 { #category : #testing }
@@ -63,15 +62,6 @@ IRReconstructor >> isLastClosureInstruction [
 	| nextJumps |
 	nextJumps := jumpAheadStacks at: sourceMapByteIndex + 1 ifAbsent: [ ^ false ].
 	^ nextJumps anySatisfy: [ :anOrigin | anOrigin = self currentScope ]
-]
-
-{ #category : #instructions }
-IRReconstructor >> pushClosureCopyCopiedValues: copiedValuesNames args: args jumpTo: aJumpLabel [
-	| anInstruction |
-	anInstruction := super pushClosureCopyCopiedValues: copiedValuesNames args: args jumpTo: aJumpLabel.
-	"remove pushed nils of local temps"
-	anInstruction copiedValues withIndexDo: [ :aValue :index |
-		self rememberReference: anInstruction -> index to: aValue in: closureCopiedValues ]
 ]
 
 { #category : #instructions }
@@ -87,14 +77,14 @@ IRReconstructor >> pushFullClosureCompiledBlock: compiledBlock copiedValues: cop
 IRReconstructor >> pushRemoteTemp: name inVector: nameOfVector [
 	| anInstruction |
 	anInstruction := super pushRemoteTemp: name inVector: nameOfVector.
-	self rememberReference: anInstruction to: nameOfVector in: remoteTemps.
+	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
 ]
 
 { #category : #instructions }
 IRReconstructor >> pushTemp: aSelector [
 	| anInstruction |
 	anInstruction := super pushTemp: aSelector.
-	self rememberReference: anInstruction to: aSelector in: temps.
+	self rememberReference: anInstruction to: aSelector in: temps
 ]
 
 { #category : #remapping }
@@ -103,7 +93,7 @@ IRReconstructor >> remapTemp: aTemp toRemote: aRemote [
 		do: [ :tempAccess |
 			tempAccess name: aRemote.
 			self rememberReference: tempAccess to: aRemote in: temps ].
-		
+
 	(remoteTemps removeKey: aTemp ifAbsent: [ #() ])
 		do: [ :tempAccess |
 			tempAccess tempVectorName: aRemote.
@@ -114,7 +104,7 @@ IRReconstructor >> remapTemp: aTemp toRemote: aRemote [
 			closure := aClosureAndIndex key.
 			index := aClosureAndIndex value.
 			closure remapCopiedValueAt: index oldOne: aTemp newOne: aRemote.
-			self rememberReference: aClosureAndIndex to: aRemote in: closureCopiedValues. ].
+			self rememberReference: aClosureAndIndex to: aRemote in: closureCopiedValues. ]
 ]
 
 { #category : #remapping }
@@ -136,12 +126,12 @@ IRReconstructor >> removeLast: n [
 IRReconstructor >> storeRemoteTemp: name inVector: nameOfVector [
 	| anInstruction |
 	anInstruction := super storeRemoteTemp: name inVector: nameOfVector.
-	self rememberReference: anInstruction to: nameOfVector in: remoteTemps.
+	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
 ]
 
 { #category : #instructions }
 IRReconstructor >> storeTemp: aSelector [
 	| anInstruction |
 	anInstruction := super storeTemp: aSelector.
-	self rememberReference: anInstruction to: aSelector in: temps.
+	self rememberReference: anInstruction to: aSelector in: temps
 ]

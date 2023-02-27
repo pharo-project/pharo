@@ -15,14 +15,13 @@ Class {
 { #category : #accessing }
 ReLiteralArrayContainsSuspiciousTrueFalseOrNilRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'LiteralArrayContainsSuspiciousTrueFalseOrNilRule'
 ]
 
 { #category : #running }
 ReLiteralArrayContainsSuspiciousTrueFalseOrNilRule >> basicCheck: aNode [
 	^ aNode isLiteralArray and: [ #(#true #false #nil) anySatisfy: [ :each | aNode value identityIncludes: each]]
-
 ]
 
 { #category : #accessing }

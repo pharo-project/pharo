@@ -20,7 +20,13 @@ PointerUtils class >> oopForObject: anObject [
 	^ ExternalAddress new
 		fromInteger: (self primOopForObject: anObject);
 		yourself
-		 
+]
+
+{ #category : #private }
+PointerUtils class >> oopForObjectForcePinInMemory: anObject [
+
+	anObject pinInMemory.
+	^ self oopForObject: anObject
 ]
 
 { #category : #private }
@@ -30,7 +36,7 @@ PointerUtils class >> primObjectForOop: anObject [
 
 	<primitive: 'primitiveGetObjectFromAddress'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #private }
@@ -42,5 +48,5 @@ PointerUtils class >> primOopForObject: anObject [
 
 	anObject isPinned ifFalse: [ self error: 'Objects passed by reference should be pinned' ].
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]

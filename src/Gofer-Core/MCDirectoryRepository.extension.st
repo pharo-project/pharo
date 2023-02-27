@@ -1,6 +1,6 @@
 Extension { #name : #MCDirectoryRepository }
 
-{ #category : #'*gofer-core-accessing' }
+{ #category : #'*Gofer-Core' }
 MCDirectoryRepository >> goferPriority [
 	^ 5
 ]

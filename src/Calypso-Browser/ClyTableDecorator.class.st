@@ -55,23 +55,23 @@ Class {
 
 { #category : #decoration }
 ClyTableDecorator class >> browserPluginClass [
-	^ClyStandardBrowserPlugin 
+	^ClyStandardBrowserPlugin
 ]
 
 { #category : #decoration }
-ClyTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [ 
+ClyTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	self decorateMainTableCell: anItemCellMorph of: itemContext lastSelectedItem
 ]
 
 { #category : #decoration }
-ClyTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [ 
+ClyTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 
 	self decorateTableCell: anItemCellMorph of: aDataSourceItem
 ]
 
 { #category : #decoration }
-ClyTableDecorator class >> decorateTableCell: anItemCellMorph inContext: itemContext [ 
+ClyTableDecorator class >> decorateTableCell: anItemCellMorph inContext: itemContext [
 
 	self decorateTableCell: anItemCellMorph of: itemContext lastSelectedItem
 ]
@@ -83,13 +83,13 @@ ClyTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceIte
 
 { #category : #testing }
 ClyTableDecorator class >> isAbstract [
-	^self = ClyTableDecorator 
+	^self = ClyTableDecorator
 ]
 
 { #category : #decoration }
 ClyTableDecorator class >> priority [
-	"Decorators can override table cell properties. Priorities allow manage these overrides. 
-	So developers can specify what decoration is more important. 
+	"Decorators can override table cell properties. Priorities allow manage these overrides.
+	So developers can specify what decoration is more important.
 	Larger value increases level of importance"
 	<classAnnotationDependency>
 	^0

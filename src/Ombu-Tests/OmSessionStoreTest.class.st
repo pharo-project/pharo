@@ -11,19 +11,19 @@ OmSessionStoreTest >> setUpOtherStore [
 ]
 
 { #category : #resources }
-OmSessionStoreTest >> setUpStore [	
+OmSessionStoreTest >> setUpStore [
 
 	^ OmSessionStore newWithBaseLocator: (self directoryForTests / 'test-sessions-main') ensureCreateDirectory
 ]
 
 { #category : #running }
 OmSessionStoreTest >> tearDown [
-	
-	store flush. "Store needs to be flushed already to be able to delete"	
+
+	store flush. "Store needs to be flushed already to be able to delete"
 
 	(self directoryForTests / 'test-sessions-main') ensureDeleteAll.
 	(self directoryForTests / 'test-sessions-other') ensureDeleteAll.
-	super tearDown. 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -83,22 +83,21 @@ OmSessionStoreTest >> testResetWithStoreNamedDoesAnnounce [
 	store announcer
 		when: OmSessionStoreUpdated
 		do: [ :announcement | wasAnnounced := true ].
-	
-	[ store resetWithStoreNamed: 'new' ] 
+
+	[ store resetWithStoreNamed: 'new' ]
 		ensure: [ store announcer unsubscribe: self ].
 
 	self assert: wasAnnounced
-	
 ]
 
 { #category : #tests }
 OmSessionStoreTest >> testResetWithStoreNamedSignalsErrorIfFileAlreadyExists [
-	
+
 	store resetWithStoreNamed: 'pepe'.
 	store newEntry: (OmEntry content: 42).
 	store flush.
-	
-	self 
+
+	self
 		should: [ store resetWithStoreNamed: 'pepe' ]
 		raise: FileExists
 ]

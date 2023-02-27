@@ -85,10 +85,18 @@ MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: 
 MetacelloProjectSpecForLoad >> performLoad [
   | displayString spec |
   spec := self projectSpec.
-  displayString := 'Project: ' , spec name.
+
+displayString := 'Project: ' , spec name.
+	
   spec versionString ~~ nil
     ifTrue: [ displayString := displayString , ' ' , spec versionString ].
-  MetacelloNotification signal: displayString.
+  	MetacelloNotification signal: displayString.
+
+	spec isLocked ifTrue: [ 
+		MetacelloNotification signal: 'Project is locked, skipping.'.
+		^ self ].
+
+
   self hasOverride
     ifTrue: [ 
       | override |

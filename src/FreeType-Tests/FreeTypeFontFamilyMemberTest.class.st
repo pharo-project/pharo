@@ -10,16 +10,15 @@ Class {
 { #category : #tests }
 FreeTypeFontFamilyMemberTest >> testBeSimulatedStyle [
 
-	|member|
+	| member |
 	member := FreeTypeFontFamilyMember new.
 	self deny: member isSimulatedStyle.
 	member beSimulatedStyle.
-	self assert: member isSimulatedStyle.
-	
+	self assert: member isSimulatedStyle
 ]
 
 { #category : #tests }
 FreeTypeFontFamilyMemberTest >> testIsNotSimulatedStyleByDefault [
 
-	self deny: FreeTypeFontFamilyMember new isSimulatedStyle 
+	self deny: FreeTypeFontFamilyMember new isSimulatedStyle
 ]

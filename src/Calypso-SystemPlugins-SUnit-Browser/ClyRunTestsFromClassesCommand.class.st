@@ -9,12 +9,12 @@ Class {
 
 { #category : #activation }
 ClyRunTestsFromClassesCommand class >> contextClass [
-	^ClyClass asCalypsoItemContext 
+	^ClyClass asCalypsoItemContext
 ]
 
 { #category : #execution }
 ClyRunTestsFromClassesCommand >> execute [
-	
+
 	testItems do: [ :each | self runTestCase: each actualObject]
 ]
 
@@ -23,12 +23,12 @@ ClyRunTestsFromClassesCommand >> runTestCase: testCase [
 
 	| testResult |
 	testResult := testCase classForTestResult new.
-	
+
 	self runTestCase: testCase results: testResult.
-	
+
 	testResult updateResultsInHistory.
-	
-	self  
-		notifyUserAboutResults: testResult 
+
+	self
+		notifyUserAboutResults: testResult
 		with: testCase name
 ]

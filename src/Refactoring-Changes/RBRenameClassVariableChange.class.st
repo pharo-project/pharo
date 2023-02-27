@@ -5,7 +5,7 @@ the concrete ""classvariable"" renaming.
 Class {
 	#name : #RBRenameClassVariableChange,
 	#superclass : #RBRenameVariableChange,
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Variables'
 }
 
 { #category : #private }
@@ -16,21 +16,24 @@ RBRenameClassVariableChange >> addNewVariable [
 
 { #category : #private }
 RBRenameClassVariableChange >> copyOldValuesToNewVariable [
+
 	| oldValue |
 	oldValue := self changeClass classPool at: oldName ifAbsent: [ nil ].
 	self changeClass classPool at: newName asSymbol put: oldValue
 ]
 
 { #category : #printing }
-RBRenameClassVariableChange >> printOn: aStream [ 
+RBRenameClassVariableChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeClassVarName: ';
 		print: self oldName;
-		nextPut: $!; cr.
+		nextPut: $!;
+		cr.
 	aStream
-		nextPutAll: self displayClassName; 
-		nextPutAll: ' addClassVarName: '; 
+		nextPutAll: self displayClassName;
+		nextPutAll: ' addClassVarName: ';
 		print: self newName;
 		nextPut: $!
 ]

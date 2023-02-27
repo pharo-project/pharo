@@ -30,11 +30,13 @@ Class {
 
 { #category : #accessing }
 BeaconSignal >> asBeaconSignal [
+
 	^ self
 ]
 
 { #category : #initialization }
 BeaconSignal >> initialize [
+
 	super initialize.
 	timestamp := DateAndTime now.
 	processId := Processor activeProcess name.
@@ -43,45 +45,53 @@ BeaconSignal >> initialize [
 
 { #category : #accessing }
 BeaconSignal >> name [
+
 	^ self class name
 ]
 
 { #category : #printing }
 BeaconSignal >> printOn: stream [
+
 	self printOneLineOn: stream
 ]
 
 { #category : #printing }
 BeaconSignal >> printOneLineContentsOn: stream [
-	"hook to be overriden by subclasses"
+	"Hook to be overriden by subclasses"
 ]
 
 { #category : #printing }
 BeaconSignal >> printOneLineOn: stream [
-	stream 
+
+	stream
 		nextPutAll: self timestamp asString;
 		space;
 		nextPutAll: self class name;
 		space.
+
 	self printOneLineContentsOn: stream
 ]
 
 { #category : #printing }
 BeaconSignal >> printOneLineString [
-	^ String streamContents: [:stream | self printOneLineOn: stream]
+
+	^ String streamContents: [ :stream | self printOneLineOn: stream ]
 ]
 
 { #category : #accessing }
 BeaconSignal >> processId [
+
 	^ processId
 ]
 
 { #category : #accessing }
 BeaconSignal >> properties [
+
 	^ properties
 ]
 
 { #category : #accessing }
 BeaconSignal >> timestamp [
+
 	^ timestamp
 ]

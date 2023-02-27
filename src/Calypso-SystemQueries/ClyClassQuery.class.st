@@ -39,38 +39,38 @@ ClyClassQuery class >> resultItemsType [
 ClyClassQuery >> buildResult: aQueryResult [
 	| filteredClasses |
 	filteredClasses := Set new.
-	
-	scope classesDo: [ :each | 
+
+	scope classesDo: [ :each |
 		(self selectsClass: each) ifTrue: [filteredClasses add: each]].
-	
+
 	aQueryResult fillWith: filteredClasses
 ]
 
 { #category : #execution }
 ClyClassQuery >> checkEmptyResult [
 
-	scope classesDo: [ :each | 
+	scope classesDo: [ :each |
 		(self selectsClass: each) ifTrue: [^false]].
-	
+
 	^true
 ]
 
 { #category : #execution }
 ClyClassQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin collectMetadataOfClasses: aQueryResult 
+	anEnvironmentPlugin collectMetadataOfClasses: aQueryResult
 ]
 
 { #category : #'system changes' }
 ClyClassQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	(scope includesClassesAffectedBy: aSystemAnnouncement) ifTrue: [ ^true ].
-	
-	(scope canDetectAffectOnClassesBy: aSystemAnnouncement) ifTrue: [ ^false ].	
+
+	(scope canDetectAffectOnClassesBy: aSystemAnnouncement) ifTrue: [ ^false ].
 	"In some scopes we should check every class that it was affected by event
-	For example class hierarchy scope could not track that removed class was in hierarchy using only events. 
-	It should be improved in system but right now it is like that"					
+	For example class hierarchy scope could not track that removed class was in hierarchy using only events.
+	It should be improved in system but right now it is like that"
 	aQueryResult rawItemsDo: [ :each |
-		(aSystemAnnouncement affectsClass: each) ifTrue: [^true]].	
+		(aSystemAnnouncement affectsClass: each) ifTrue: [^true]].
 	^false
 ]
 
@@ -81,5 +81,5 @@ ClyClassQuery >> retrievesItem: aClass [
 
 { #category : #testing }
 ClyClassQuery >> selectsClass: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

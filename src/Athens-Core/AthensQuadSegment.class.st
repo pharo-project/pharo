@@ -35,13 +35,12 @@ AthensQuadSegment >> endPoint [
 AthensQuadSegment >> from: pt0 via: pt1 to: p [
 
 	via := pt1.
-	to := p.
+	to := p
 ]
 
 { #category : #visitor }
 AthensQuadSegment >> sendCommandTo: aBuilder [
-	^ aBuilder curveVia: via to: to 
-	
+	^ aBuilder curveVia: via to: to
 ]
 
 { #category : #accessing }

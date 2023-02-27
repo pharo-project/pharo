@@ -23,13 +23,13 @@ SycVariableCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 SycVariableCommand class >> isAbstract [
-	^self = SycVariableCommand 
+	^self = SycVariableCommand
 ]
 
 { #category : #execution }
 SycVariableCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	variables := aToolContext selectedVariables
 ]
 

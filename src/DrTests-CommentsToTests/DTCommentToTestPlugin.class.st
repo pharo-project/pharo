@@ -27,7 +27,7 @@ DTCommentToTestPlugin class >> weight [
 
 { #category : #'configuration building' }
 DTCommentToTestPlugin >> buildConfigurationFrom: aDrTests [
-	^ DTCommentTestConfiguration items: aDrTests selectedItems packages: aDrTests packagesSelected 
+	^ DTCommentTestConfiguration items: aDrTests selectedItems packages: aDrTests packagesSelected
 ]
 
 { #category : #api }
@@ -38,8 +38,11 @@ DTCommentToTestPlugin >> firstListLabel [
 { #category : #api }
 DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
-	^ packagesSelected flatCollect: [ :package | 
-		  package definedClasses select: [ :class | class hasDocComment ] ]
+	"note `asSet` is used to avoid duplication if a class is defined/extended in more than one package"
+
+	^ packagesSelected asSet flatCollect: [ :package |
+		  package definedOrExtendedClasses select: [ :class |
+			  class hasDocComment or: [ class class hasDocComment ] ] ]
 ]
 
 { #category : #api }
@@ -69,7 +72,7 @@ DTCommentToTestPlugin >> runForConfiguration: aDTpluginConfiguration [
 DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
-		do: [ :testAnnouncement | 
+		do: [ :testAnnouncement |
 			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ].
 	[ aTestSuite run: aResult ]
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
@@ -93,7 +96,7 @@ DTCommentToTestPlugin >> secondListLabel [
 
 { #category : #api }
 DTCommentToTestPlugin >> startButtonHelp [
-	^ 'Run selected tests.' 
+	^ 'Run selected tests.'
 ]
 
 { #category : #api }

@@ -28,7 +28,7 @@ RGPackage >> addDefinedBehavior: anRGBehavior [
 ]
 
 { #category : #'accessing - backend' }
-RGPackage >> addExtensionMethod: anRGMethod [ 
+RGPackage >> addExtensionMethod: anRGMethod [
 
 	self backend forPackage addExtensionMethod: anRGMethod to: self
 ]
@@ -37,23 +37,22 @@ RGPackage >> addExtensionMethod: anRGMethod [
 RGPackage >> addoptToParentStub [
 
 	self isRingResolved ifFalse: [ ^ self ].
-	
+
 	super addoptToParentStub.
 
-	^ self parent addPackage: self.
+	^ self parent addPackage: self
 ]
 
 { #category : #accessing }
 RGPackage >> categories [
-	
-	^ self definedBehaviors collect: #category as: Set
 
+	^ self definedBehaviors collect: #category as: Set
 ]
 
 { #category : #accessing }
 RGPackage >> categoryName [
 
-	^ self name 
+	^ self name
 ]
 
 { #category : #accessing }
@@ -65,8 +64,8 @@ RGPackage >> classNames [
 { #category : #accessing }
 RGPackage >> classes [
 	"Retrieves a collection of classes defined in the receiver and classes holding extension methods"
-		
-	^self definedClassesOnly, self extendedClasses 
+
+	^self definedClassesOnly, self extendedClasses
 ]
 
 { #category : #'accessing - model' }
@@ -109,7 +108,7 @@ RGPackage >> defaultExtensionMethods [
 RGPackage >> defaultParentStub [
 
 	^ RGEnvironment new
-		yourself.
+		yourself
 ]
 
 { #category : #'default model values' }
@@ -125,7 +124,6 @@ RGPackage >> definedBehaviors [
 	allDefinedBehaviors := IdentitySet new.
 	self definedBehaviorsDo: [ :each | allDefinedBehaviors add: each].
 	^ allDefinedBehaviors asArray
-	
 ]
 
 { #category : #'accessing - backend' }
@@ -137,7 +135,7 @@ RGPackage >> definedBehaviorsDo: aBlock [
 { #category : #accessing }
 RGPackage >> definedClassNames [
 
-	^ self definedClassesOnly collect: [ :each | each name ] 
+	^ self definedClassesOnly collect: [ :each | each name ]
 ]
 
 { #category : #accessing }
@@ -161,35 +159,35 @@ RGPackage >> definedTraits [
 
 { #category : #accessing }
 RGPackage >> extendedBehaviors [
-	
+
 	^ ((self extensionMethods collect: [:each | each parent]) collect: [:behavior |
-		behavior isClass 
+		behavior isClass
 			ifTrue: [behavior ]
 			ifFalse: [ behavior baseClass]] as: IdentitySet) asArray
 ]
 
 { #category : #accessing }
 RGPackage >> extendedClasses [
-	
+
 	^ self extendedBehaviors
 ]
 
 { #category : #accessing }
 RGPackage >> extendedClassesAndTraits [
-	
+
 	^ self extendedBehaviors
 ]
 
 { #category : #accessing }
 RGPackage >> extendedSelectors [
 	"Retrieves the names of the methods"
-	
+
 	^ self extensionMethods collect: [ :each | each selector ]
 ]
 
 { #category : #accessing }
 RGPackage >> extendedTraits [
-	
+
 	^ (self extensionMethods collect: [:each | each parent]) select: [:each | each isTrait]
 ]
 
@@ -200,7 +198,6 @@ RGPackage >> extensionMethods [
 	allMethods := IdentitySet new.
 	self extensionMethodsDo: [ :each | allMethods add: each].
 	^ allMethods asArray
-
 ]
 
 { #category : #'accessing - backend' }
@@ -216,8 +213,7 @@ RGPackage >> initialize [
 
 	extensionMethods := self unresolvedValue: self defaultExtensionMethods.
 	definedBehaviors := self unresolvedValue: self defaultDefinedBehaviors.
-	tagsForClasses := self unresolvedValue: self defaultTagsForClasses.
-
+	tagsForClasses := self unresolvedValue: self defaultTagsForClasses
 ]
 
 { #category : #initialization }
@@ -227,8 +223,7 @@ RGPackage >> initializeUnresolved [
 
 	extensionMethods := self unresolvedValue: self defaultDefinedBehaviors.
 	definedBehaviors := self unresolvedValue: self defaultExtensionMethods.
-	tagsForClasses := self unresolvedValue: self defaultTagsForClasses.
-
+	tagsForClasses := self unresolvedValue: self defaultTagsForClasses
 ]
 
 { #category : #testing }
@@ -241,32 +236,31 @@ RGPackage >> isPackage [
 RGPackage >> makeResolved [
 
 	super makeResolved.
-	
+
 	definedBehaviors := self definedBehaviors markAsRingResolved.
 	extensionMethods := self extensionMethods markAsRingResolved.
-	tagsForClasses := self tagsForClasses markAsRingResolved.
-
+	tagsForClasses := self tagsForClasses markAsRingResolved
 ]
 
 { #category : #accessing }
 RGPackage >> methods [
-	"Retrieves all the methods defined in the receiver. 
+	"Retrieves all the methods defined in the receiver.
 	#methods holds the methods of defined classes"
-	
-	^ (self definedBehaviors flatCollect: #methods), self extensionMethods 
+
+	^ (self definedBehaviors flatCollect: #methods), self extensionMethods
 ]
 
 { #category : #accessing }
 RGPackage >> name: aString [
 
 	| oldName |
-	
+
 	oldName := self name.
 	super name: aString.
-	
-	self announce: (RPackageRenamed 
-			to: self 
-			oldName: oldName 
+
+	self announce: (RPackageRenamed
+			to: self
+			oldName: oldName
 			newName: aString)
 ]
 
@@ -287,69 +281,59 @@ RGPackage >> printOn: aStream [
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtAddClassTag: aSymbol [
-	
-	tagsForClasses isRingResolved ifFalse: [ 
+
+	tagsForClasses isRingResolved ifFalse: [
 		self pvtCleanTagsForClasses  ].
-	
-	tagsForClasses add: aSymbol.	
-	
+
+	tagsForClasses add: aSymbol
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtAddDefinedBehavior: anRGBehavior [
 
 	self environment verifyOwnership: anRGBehavior.
-	
-	definedBehaviors isRingResolved ifFalse: [ 
+
+	definedBehaviors isRingResolved ifFalse: [
 		self pvtCleanDefinedBehaviors  ].
-	
-	definedBehaviors add: anRGBehavior.	
-	
+
+	definedBehaviors add: anRGBehavior
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtAddExtensionMethod: aMethodDefinition [
 
 	self environment verifyOwnership: aMethodDefinition.
-	
-	extensionMethods isRingResolved ifFalse: [ 
+
+	extensionMethods isRingResolved ifFalse: [
 		self pvtCleanExtensionMethods  ].
-	
+
 	extensionMethods add: aMethodDefinition.
-	
+
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtCleanDefinedBehaviors [
 
 	definedBehaviors := self defaultDefinedBehaviors.
-		
+
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtCleanExtensionMethods [
 
 	extensionMethods := self defaultExtensionMethods.
-		
+
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtCleanTagsForClasses [
 
 	tagsForClasses := self defaultTagsForClasses.
-		
+
 	"TODO:Announce if not empty"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -366,48 +350,40 @@ RGPackage >> pvtExtensionMethodsDo: aBlock [
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtRemoveClassTag: aSymbol [
-	
+
 	tagsForClasses remove: aSymbol.
-	
+
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtRemoveDefinedBehavior: anRGBehavior [
 
 	self environment verifyOwnership: anRGBehavior.
-	
+
 	definedBehaviors remove: anRGBehavior.
-	
+
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtRemoveExtensionMethod: anRGMethod [
 
 	self environment verifyOwnership: anRGMethod.
-	
+
 	extensionMethods remove: anRGMethod.
-	
+
 	"TODO:Announce"
-	
-	
 ]
 
 { #category : #'private - backend interface' }
 RGPackage >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#definedBehaviors -> definedBehaviors. 
-		#extensionMethods -> extensionMethods. 
+	^ super pvtResolvableProperties, {
+		#definedBehaviors -> definedBehaviors.
+		#extensionMethods -> extensionMethods.
 		#tagsForClasses -> tagsForClasses
 	}
-	
-	
 ]
 
 { #category : #'private - backend interface' }
@@ -429,7 +405,7 @@ RGPackage >> removeDefinedBehavior: anRGBehavior [
 ]
 
 { #category : #'accessing - backend' }
-RGPackage >> removeExtensionMethod: anRGMethod [ 
+RGPackage >> removeExtensionMethod: anRGMethod [
 
 	self backend forPackage removeExtensionMethod: anRGMethod from: self
 ]
@@ -442,7 +418,6 @@ RGPackage >> tagsForClasses [
 	allTags := IdentitySet new.
 	self tagsForClassesDo: [ :each | allTags add: each].
 	^ allTags asArray
-
 ]
 
 { #category : #'accessing - backend' }
@@ -454,6 +429,6 @@ RGPackage >> tagsForClassesDo: aBlock [
 { #category : #accessing }
 RGPackage >> traits [
 	"Retrieves a collection of classes defined in the receiver and classes holding extension methods"
-		
+
 	^self definedTraits, self extendedTraits
 ]

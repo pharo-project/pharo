@@ -9,9 +9,6 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SycDeprecateMessageCommand,
 	#superclass : #SycChangeMessageSignatureCommand,
-	#instVars : [
-		'newSelector'
-	],
 	#category : #'SystemCommands-MessageCommands'
 }
 
@@ -26,29 +23,28 @@ SycDeprecateMessageCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : #execution }
-SycDeprecateMessageCommand >> createRefactoring [
-
-	^ RBDeprecateMethodRefactoring
-		model: model 
-		deprecateMethod: originalMessage selector  
-		in: originalMessage contextUser origin
-		using: newSelector
+SycDeprecateMessageCommand >> applyResultInContext: aContext [
 ]
 
 { #category : #accessing }
 SycDeprecateMessageCommand >> defaultMenuItemName [
-	^'Deprecate'
+
+	^ 'Deprecate'
 ]
 
 { #category : #execution }
-SycDeprecateMessageCommand >> prepareFullExecutionInContext: aToolContext [
-	| oldSelector |
-	super prepareFullExecutionInContext: aToolContext.
-	
-	oldSelector := originalMessage selector.
-	newSelector := UIManager default 
-		request: 'Method to replace ', oldSelector  
-		initialAnswer: oldSelector
-		title: 'New selector'.
-	newSelector isEmptyOrNil | (newSelector = oldSelector) ifTrue: [ CmdCommandAborted signal ]
+SycDeprecateMessageCommand >> execute [
+
+	(RBDeprecateMethodDriver
+		 deprecateMethod: originalMessage selector
+		 in: originalMessage methodClass
+		 scopes: refactoringScopes) execute
+]
+
+{ #category : #testing }
+SycDeprecateMessageCommand >> isComplexRefactoring [
+	"We need to override this to prevent `RBRefactoringPreviewPresenter` from opening (See `CmdCommand >> execute` for details.)
+	We want this command to call the appropriate Driver that will execute refactoring."
+
+	^ false
 ]

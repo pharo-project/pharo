@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 ClySingleClassRelationScope class >> classesRelatedTo: aClass do: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #queries }

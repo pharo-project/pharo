@@ -21,7 +21,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyTableFilterFactory class >> of: anItemStringFilterClass [
-	^self new 
+	^self new
 		itemFilterClass: anItemStringFilterClass
 ]
 
@@ -34,7 +34,7 @@ ClyTableFilterFactory class >> of: anItemStringFilterClass using: aStringPattern
 { #category : #initialization }
 ClyTableFilterFactory >> initialize [
 	super initialize.
-	
+
 	stringPattern := ClySubstringPattern with: '' caseSensitive: false
 ]
 
@@ -54,7 +54,7 @@ ClyTableFilterFactory >> pattern: aString [
 	| newPattern |
 	newPattern := stringPattern copy.
 	newPattern value: aString.
-	^itemFilterClass pattern: newPattern 
+	^itemFilterClass pattern: newPattern
 ]
 
 { #category : #accessing }

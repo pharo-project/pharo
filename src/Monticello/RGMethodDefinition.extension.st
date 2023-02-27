@@ -44,7 +44,7 @@ RGMethodDefinition >> basicAsMCMethodDefinition [
 		ifTrue: [ self asMCMethodDefinitionFromActiveDefinition ]
 		ifFalse: [
 		   ^ MCMethodDefinition
-				className: self theNonMetaParentName
+				className: self instanceSideParentName
 		 	   	classIsMeta: self isMetaSide
 				selector: self selector
 				category: self protocol

@@ -6,8 +6,3 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Graphics-Primitives-Manifest'
 }
-
-{ #category : #'meta-data - dependency analyser' }
-ManifestGraphicsPrimitives class >> manuallyResolvedDependencies [
-	^ #()
-]

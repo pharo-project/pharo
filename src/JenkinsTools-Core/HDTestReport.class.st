@@ -68,6 +68,11 @@ HDTestReport >> calculateNodeName [
 
 	name := Smalltalk os family , bitString , '.'.
 
+	"The Stage name has kernel in the name when running the tests in the small image.
+	We need to keep record of that"
+	(self stageName includesSubstring: 'Kernel')
+		ifTrue: [name := name , '.Kernel' ].
+
 	" If the environment class is not available, because it needs FFI, I use the node name,
 	because for sure I am in the Bootstrap process."
 	environmentClass := Smalltalk at: #OSEnvironment ifAbsent: [ ^ name ].
@@ -108,12 +113,13 @@ HDTestReport >> hasFailuresOrErrors [
 HDTestReport >> initialize [
 
 	super initialize.
-	shouldSerializeError := false.
+	shouldSerializeError := true.
 	suiteTime := 0 asDuration.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
+	stageName := self class currentStageName.
 	nodeName := self calculateNodeName.
-	stageName := self class currentStageName
+	
 ]
 
 { #category : #initialization }
@@ -129,7 +135,6 @@ HDTestReport >> newLogDuring: aBlock [
 	stream := tempStream := String new writeStream.
 	aBlock ensure: [ stream := currentStream ].
 	^tempStream contents
-	 
 ]
 
 { #category : #initialization }
@@ -178,8 +183,7 @@ HDTestReport >> recordPassOf: aTestCase [
 ]
 
 { #category : #running }
-HDTestReport >> recordSkip: aTestSkip duringTest: aTestCase [ 
-
+HDTestReport >> recordSkip: aTestSkip duringTest: aTestCase [
 ]
 
 { #category : #running }
@@ -269,41 +273,50 @@ HDTestReport >> serializeError: error of: aTestCase [
 
 	"We got an error from a test, let's serialize it so we can properly debug it later on..."
 
+	| fuelFileName |
+	
 	self shouldSerializeError ifFalse: [ ^ self ].
+	
 	self class environment
-		at: #FuelOutStackDebugAction
+		at: #FLDebuggerStackSerializer
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
 			context := error signalerContext.
-			testCaseMethodContext := context findContextSuchThat: [ :ctx | 
+			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
-					                         ctx methodSelector == #performTest ] ].
+					                         ctx selector == #performTest ] ].
 			context := context copyTo: testCaseMethodContext.
 
-			[ fuelOutStackDebugAction serializeStackFromContext: context sender ]
+			fuelFileName := self suiteFileNameWithoutExtension , ('-' , aTestCase class name asString , '-',  aTestCase selector asString , '.fuel').
+
+			[ fuelOutStackDebugAction 
+					serializeStackFromContext: context sender 
+					toFileNamed: fuelFileName ]
 				on: Error
-				do: [ :err | "simply continue..." ] ]
+				do: [ :err | Stdio stderr << err messageText; crlf; flush ] ]
 ]
 
 { #category : #running }
 HDTestReport >> setUp [
 
-	| aFile fileName |
+	| aFile |
 	self openProgressStream.
 	progressStream nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
 
-	fileName := stageName isEmpty ifTrue: [ '' ] ifFalse: [ stageName , '-' ].
-	fileName := fileName , suite name , '-Test.xml'.
-	aFile := File named: fileName .
+	aFile := File named: self suiteFileNameWithoutExtension , '.xml' .
 	aFile delete.
 	stream := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
 			encoding: 'utf8'.	
 		
 	stream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; lf.
-	stream nextPutAll: '<testsuite name="'; nextPutAll: (self encode: suite name); 
-		nextPutAll: '" tests="'; print: suite tests size; nextPutAll: '">'.
+	stream
+		nextPutAll: '<testsuite ';
+		nextPutAll: 'name="'; nextPutAll: (self encode: suite name); nextPutAll: '" ';
+		nextPutAll: 'tests="'; print: suite tests size; nextPutAll: '" ';
+		nextPutAll: 'timestamp="'; print: Time now; nextPutAll: '" ';
+		nextPutAll: '>'.
 	
 	"Now this is ugly. We want to update the time and the number of failures and errors, but still at the same time stream a valid XML. So remember this position and add some whitespace, that we can fill later."
 	suitePosition := stream wrappedStream position - 1.
@@ -349,6 +362,16 @@ HDTestReport >> suiteErrors [
 { #category : #accessing }
 HDTestReport >> suiteFailures [
 	^ suiteFailures
+]
+
+{ #category : #accessing }
+HDTestReport >> suiteFileNameWithoutExtension [
+
+	| fileName |
+	fileName := stageName isEmpty
+		            ifTrue: [ '' ]
+		            ifFalse: [ stageName , '-' ].
+	^ fileName , suite name , '-Test'
 ]
 
 { #category : #accessing }
@@ -423,7 +446,7 @@ HDTestReport >> writeException: anException of: aTestCase asNode: errorNodeName 
 HDTestReport >> writeExceptionStack: anException of: aTestCase [
 	| context |
 	context := anException signalerContext.
-	[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ]]]
+	[ context isNil or: [ context receiver == aTestCase and: [ context selector == #runCase ]]]
 		whileFalse: [
 			[ stream nextPutAll: (self encode: context printString); lf ] 
 				onErrorDo: [ stream nextPutAll: 'PRINTING ERROR'; lf].

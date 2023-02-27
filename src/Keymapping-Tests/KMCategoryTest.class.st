@@ -27,7 +27,7 @@ KMCategoryTest >> testAddKeymapToCategory [
 KMCategoryTest >> testCreateExistentCategoryFails [
 	| categoryToAdd |
 	categoryToAdd := KMCategory named: #TestCategory.
-	
+
 	self assert: self categoryContainer categories size equals: 0.
 	self categoryContainer addCategory: categoryToAdd.
 	self assert: self categoryContainer categories size equals: 1.
@@ -38,7 +38,7 @@ KMCategoryTest >> testCreateExistentCategoryFails [
 KMCategoryTest >> testCreateUnexistentCategory [
 	| categoryToAdd |
 	categoryToAdd := KMCategory named: #TestCategory.
-	
+
 	self assert: self categoryContainer categories size equals: 0.
 	self categoryContainer addCategory: categoryToAdd.
 	self assert: self categoryContainer categories size equals: 1.

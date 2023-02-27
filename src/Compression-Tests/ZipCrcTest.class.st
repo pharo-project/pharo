@@ -26,8 +26,7 @@ ZipCrcTest >> testInvalidGZipCrc [
 	self should:[reader contents] raise: CRCError.
 
 	reader := GZipReadStream on: bytes.
-	self should:[reader next: 100] raise: CRCError.
-
+	self should:[reader next: 100] raise: CRCError
 ]
 
 { #category : #tests }
@@ -49,8 +48,7 @@ ZipCrcTest >> testInvalidZLibCrc [
 	self should:[reader contents] raise: CRCError.
 
 	reader := ZLibReadStream on: bytes.
-	self should:[reader next: 100] raise: CRCError.
-
+	self should:[reader next: 100] raise: CRCError
 ]
 
 { #category : #tests }
@@ -73,8 +71,7 @@ ZipCrcTest >> testInvalidZipCrc [
 
 	reader := ZipReadStream on: bytes.
 	reader expectedCrc: writer crc - 1.
-	self should:[reader next: 100] raise: CRCError.
-
+	self should:[reader next: 100] raise: CRCError
 ]
 
 { #category : #tests }
@@ -95,8 +92,7 @@ ZipCrcTest >> testMissingGZipCrc [
 	self should:[reader contents] raise: CRCError.
 
 	reader := GZipReadStream on: bytes.
-	self should:[reader next: 100] raise: CRCError.
-
+	self should:[reader next: 100] raise: CRCError
 ]
 
 { #category : #tests }
@@ -117,8 +113,7 @@ ZipCrcTest >> testMissingZLibCrc [
 	self should:[reader contents] raise: CRCError.
 
 	reader := ZLibReadStream on: bytes.
-	self should:[reader next: 100] raise: CRCError.
-
+	self should:[reader next: 100] raise: CRCError
 ]
 
 { #category : #tests }
@@ -148,7 +143,7 @@ ZipCrcTest >> testValidGZipCrc [
 
 	bytes := writer encodedStream contents.
 	reader := GZipReadStream on: bytes.
-	self assert: reader upToEnd equals: 'Hello World'.
+	self assert: reader upToEnd equals: 'Hello World'
 ]
 
 { #category : #tests }
@@ -161,10 +156,10 @@ ZipCrcTest >> testValidZLibCrc [
 	bytes := writer encodedStream contents.
 	reader := ZLibReadStream on: bytes.
 	self assert: reader upToEnd equals: 'Hello World'.
-	
+
 	bytes := writer encodedStream contents.
 	reader := ZLibReadStream on: bytes.
-	self assert: (reader next: 100) equals: 'Hello World'.
+	self assert: (reader next: 100) equals: 'Hello World'
 ]
 
 { #category : #tests }

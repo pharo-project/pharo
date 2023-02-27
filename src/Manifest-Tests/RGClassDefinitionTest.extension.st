@@ -17,5 +17,5 @@ RGClassDefinitionTest >> testManifestReadOn [
 
  	self
 		assert: (RGClassDefinition manifestReadOn: { class name asSymbol })
-		equals: class asRingDefinition 
+		equals: class asRingDefinition
 ]

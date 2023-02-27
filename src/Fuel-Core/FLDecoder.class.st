@@ -4,36 +4,43 @@ I am an abstraction used by the materialization algorithm to decode the graph fr
 Class {
 	#name : #FLDecoder,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'stream',
 		'objects',
 		'isBigEndian',
 		'indexStream',
-		'migrations',
 		'objectsWriteStream',
-		'globalEnvironment'
+		'globalEnvironment',
+		'migrationsBySource',
+		'migrationsByTarget'
 	],
 	#category : #'Fuel-Core-Base'
 }
 
-{ #category : #'instance creation' }
-FLDecoder class >> on: aStream migrations: aCollection globalEnvironment: aDictionary [
-	
-	^self basicNew
-		initializeOn: aStream 
-		migrations: aCollection 
-		globalEnvironment: aDictionary;
-		yourself.
+{ #category : #accessing }
+FLDecoder >> classNamed: className [
+	^ migrationsBySource
+		at: className
+		ifPresent: [ :migration | migration targetClass ]
+		ifAbsent: [ self globalClassNamed: className ]
 ]
 
-{ #category : #accessing }
-FLDecoder >> classNamed: className [ 
+{ #category : #decoding }
+FLDecoder >> decodeSignature [
+	| streamSignature |
+	streamSignature := ByteArray new: self configuration signature size.
+	self nextEncodedBytesInto: streamSignature.
+	^ streamSignature
+]
 
-	^ (migrations
-		detect: [:m | m sourceClassName = className ]
-		ifNone: [ ^ self globalClassNamed: className ])
-		targetClass.
-		
+{ #category : #decoding }
+FLDecoder >> decodeVersion [
+	^ FLVersion
+		newWithMajor: self nextEncodedByte
+		minor: self nextEncodedByte
+		patch: self nextEncodedByte
 ]
 
 { #category : #decoding }
@@ -63,13 +70,27 @@ FLDecoder >> globalEnvironment [
 	^ globalEnvironment
 ]
 
-{ #category : #initializing }
-FLDecoder >> initializeOn: aStream migrations: aCollection globalEnvironment: aDictionary [ 
+{ #category : #initialization }
+FLDecoder >> initialize [
+	super initialize.
+	
+	stream := self context stream.
+	globalEnvironment := self configuration environment.
+	self initializeMigrations
+]
 
-	self initialize.
-	stream := aStream.
-	migrations := aCollection.
-	globalEnvironment := aDictionary.
+{ #category : #initializing }
+FLDecoder >> initializeMigrations [
+	migrationsBySource := IdentityDictionary new.
+	migrationsByTarget := IdentityDictionary new.
+	self configuration migrations do: [ :migration |
+		migrationsBySource
+			at: migration sourceClassName 
+			put: migration.
+		(migrationsByTarget
+			at: migration targetClass
+			ifAbsentPut: [ OrderedCollection new ])
+				add: migration ]
 ]
 
 { #category : #accessing }
@@ -90,13 +111,18 @@ FLDecoder >> nextEncodedByte [
 
 { #category : #decoding }
 FLDecoder >> nextEncodedBytesInto: aBytesObject [
-	stream next: aBytesObject basicSize into: aBytesObject 
+	stream next: aBytesObject basicSize into: aBytesObject
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedClusterClass [
-
-	^ self class environment at: self nextEncodedString asSymbol
+	"Cluster classes should always be found, fall back to system globals"
+	| className |
+	className := self nextEncodedString asSymbol.
+	^ globalEnvironment
+		at: className
+		ifAbsent: [
+			self class environment at: className ]
 ]
 
 { #category : #decoding }
@@ -169,14 +195,12 @@ FLDecoder >> nextEncodedString [
 
 	stream nextInto: aByteArray.
 	^aByteArray asString.
-
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedUint16 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 	^ (stream next bitShift: 8) + (stream next).
-	
 ]
 
 { #category : #decoding }
@@ -187,7 +211,6 @@ FLDecoder >> nextEncodedUint24 [
 	n := stream next.
 	n := (n bitShift: 8) + stream next.
 	^ (n bitShift: 8) + stream next
-
 ]
 
 { #category : #decoding }
@@ -199,7 +222,6 @@ FLDecoder >> nextEncodedUint32 [
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	^ (n bitShift: 8) + stream next
-
 ]
 
 { #category : #decoding }
@@ -215,20 +237,17 @@ FLDecoder >> nextEncodedUint64 [
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	^ (n bitShift: 8) + stream next
-
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedUint8 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 	^ stream next
-	
-
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedWordsInto: aWordsObject [ 
-	stream fuelNextWordsInto: aWordsObject 
+	stream fuelNextWordsInto: aWordsObject
 ]
 
 { #category : #accessing }
@@ -244,14 +263,17 @@ FLDecoder >> registerAll: someObjects [
 
 { #category : #accessing }
 FLDecoder >> variablesMappingFor: aClass [
-
 	| variables |
-	variables := FLVariablesMapping materializing: aClass from: self.
+	variables := FLVariablesMapping
+		materializing: aClass
+		from: self.
 	
-	migrations 
-		select: [ :m | (m targetClass == aClass) or: [ aClass inheritsFrom: m targetClass ] ]
-		thenDo: [ :m | m applyTo: variables ].
+	aClass withAllSuperclassesDo: [ :class |
+		migrationsByTarget
+			at: class
+			ifPresent: [ :migrations |
+				migrations do: [ :migration |
+					migration applyTo: variables ] ] ].
 		
 	^ variables
-	
 ]

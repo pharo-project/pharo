@@ -19,7 +19,7 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForNotUIProcess [
 	| exception nonUIProcess |
 	nonUIProcess := [  1+1 ] newProcess.
 	[ Exception signal ] on: Exception do: [ :e | exception := e ].
-	^ (OupsDummyDebugRequest newForException: exception) process: nonUIProcess; yourself.
+	^ (OupsDummyDebugRequest newForException: exception) process: nonUIProcess; yourself
 ]
 
 { #category : #tests }
@@ -37,16 +37,15 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForUIProcess [
 { #category : #running }
 OupsDebuggerSystemTest >> setUp [
 	super setUp.
-	
+
 	"Put here a common initialization logic for tests"
-	debuggerSystem := OupsDummyDebuggerSystem new.
+	debuggerSystem := OupsDummyDebuggerSystem new
 ]
 
 { #category : #tests }
 OupsDebuggerSystemTest >> testAvailableDebuggers [
 	"Tests that DebuggerSystem>>#availableDebuggers returns a list"
 	self assert: debuggerSystem availableDebuggers isSequenceable
-	
 ]
 
 { #category : #tests }
@@ -56,7 +55,7 @@ OupsDebuggerSystemTest >> testEnsureExceptionIn [
 	OupsDebuggerSystem basicNew ensureExceptionIn: session.
 	self assert: session exception notNil.
 	self assert: session exception class equals: OupsNullException.
-	
+
 	session := DebugSession new exception: #tag.
 	OupsDebuggerSystem basicNew ensureExceptionIn: session.
 	self assert: session exception equals: #tag
@@ -66,26 +65,22 @@ OupsDebuggerSystemTest >> testEnsureExceptionIn [
 OupsDebuggerSystemTest >> testHandleDebugRequest [
 	"Tests that a DebuggerSystem tasked to handle a DebugRequest calls the #handleDebugRequest: of its uiManager with that DebugRequest"
 	| debugRequest |
-	debuggerSystem customUIManager: OupsDummyUIManager new.
-	debugRequest := OupsDebugRequest basicNew.
-	self assert: debuggerSystem defaultUIManager callsToHandleDebugRequest equals: 0.
+	debugRequest := self createDummyDebugRequest.
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 0.
 	debuggerSystem handleDebugRequest: debugRequest.
-	self assert: debuggerSystem defaultUIManager callsToHandleDebugRequest equals: 1.
-	self assert: debuggerSystem defaultUIManager debugRequestSentToHandleDebugRequest identicalTo: debugRequest
-	
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
+	self assert: debuggerSystem debugRequestSentToHandleDebugRequest identicalTo: debugRequest
 ]
 
 { #category : #tests }
 OupsDebuggerSystemTest >> testHandleWarningDebugRequest [
 	"Tests that a DebuggerSystem tasked to handle a WarningDebugRequest calls the #handleWarningDebugRequest: of its uiManager with that DebugRequest"
 	| debugRequest |
-	debuggerSystem customUIManager: OupsDummyUIManager new.
-	debugRequest := OupsDebugRequest basicNew.
-	self assert: debuggerSystem defaultUIManager callsToHandleWarningDebugRequest equals: 0.
+	debugRequest := self createDummyDebugRequest.
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 0.
 	debuggerSystem handleWarningDebugRequest: debugRequest.
-	self assert: debuggerSystem defaultUIManager callsToHandleWarningDebugRequest equals: 1.
-	self assert: debuggerSystem defaultUIManager debugRequestSentToHandleWarningDebugRequest identicalTo: debugRequest
-	
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
+	self assert: debuggerSystem debugRequestSentToHandleDebugRequest identicalTo: debugRequest
 ]
 
 { #category : #tests }
@@ -93,7 +88,6 @@ OupsDebuggerSystemTest >> testNonUIProcessIsRecognised [
 	"Tests that a DebuggerSystem opening a DebugRequest that is NOT on the ui process does NOT spawn a new UI process"
 	debuggerSystem openDebuggerOnRequest: self createDummyDebugRequestForNotUIProcess.
 	self assert: debuggerSystem newUIProcessSpawned not
-	
 ]
 
 { #category : #tests }
@@ -104,7 +98,6 @@ OupsDebuggerSystemTest >> testPreDebugActionExecuted [
 	self assert: debugRequest dummyPreDebugActionExecutedCount equals: 0.
 	debuggerSystem openDebuggerOnRequest: debugRequest.
 	self assert: debugRequest dummyPreDebugActionExecutedCount equals: 1
-	
 ]
 
 { #category : #tests }
@@ -115,6 +108,6 @@ OupsDebuggerSystemTest >> testUIProcessIsRecognised [
 	request := self createDummyDebugRequestForUIProcess.
 	request debugSession errorWasInUIProcess: true.
 	debuggerSystem spawnNewUIProcessIfNecessary: request.
-		
+
 	self assert: debuggerSystem newUIProcessSpawned
 ]

@@ -78,7 +78,6 @@ SDL_Version >> printAsSemanticVersioningOn: aStream [
 		print: self minor;
 		nextPut: $.;
 		print: self patch
-
 ]
 
 { #category : #printing }

@@ -18,12 +18,12 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 	code := 'testEmbeddingSourceCode
 
 	| trailer newTrailer code |
-	
+
 	trailer := CompiledMethodTrailer new.
-	
+
 	trailer sourceCode: code.
 	newTrailer := trailer testEncoding.
-	
+
 	self assert: newTrailer sourceCode equals: code.'.
 
 	trailer compressSourceCode: code.
@@ -36,29 +36,40 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-CompiledMethodTrailerTest >> testEmbeddingSourceCode [
-	
-	self testEmbeddingSourceCode: 'testEmbeddingSourceCode
-
-	| trailer newTrailer code |
-	
+CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCodeWithQCompress [
+	| trailer code |
 	trailer := CompiledMethodTrailer new.
-	
-	trailer sourceCode: code.
-	newTrailer := trailer testEncoding.
-	
-	self assert: newTrailer sourceCode equals: code.'.
-	
-	"Test a big string"
-	self testEmbeddingSourceCode: (String loremIpsum: 30000).
-	
-	""
+
+	code := 'foo'.
+	trailer compressSourceCode: code.
+
+	self assert: (trailer instVarNamed: #encodedData) equals: #[207 102 2 24]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeBig [	
+CompiledMethodTrailerTest >> testEmbeddingSourceCode [
+
+	self testEmbeddingSourceCode: 'testEmbeddingSourceCode
+
+	| trailer newTrailer code |
+
+	trailer := CompiledMethodTrailer new.
+
+	trailer sourceCode: code.
+	newTrailer := trailer testEncoding.
+
+	self assert: newTrailer sourceCode equals: code.'.
+
 	"Test a big string"
-	
+	self testEmbeddingSourceCode: (String loremIpsum: 30000).
+
+	"Test an empty DoIt"
+	self testEmbeddingSourceCode: ''
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+CompiledMethodTrailerTest >> testEmbeddingSourceCodeBig [
+	"Test a big string"
+
 	self testEmbeddingSourceCode: (String loremIpsum: 30000)
-	
 ]

@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 MalNodeWithPreviousAndNext >> from: sourceNode [
-	self previousNodes add: sourceNode 
+	self previousNodes add: sourceNode
 ]
 
 { #category : #initialization }

@@ -14,15 +14,14 @@ Class {
 SystemOrganizer class >> cleanUp: agressive [
 	"Remove empty categories when cleaning aggressively"
 
-	agressive ifTrue: [SystemOrganization removeEmptyCategories].
-
+	agressive ifTrue: [SystemOrganization removeEmptyCategories]
 ]
 
 { #category : #'instance creation' }
 SystemOrganizer class >> default [
-	"look in the environment that the receiver organizes for the associated organization" 
-	
-	^ self environment organization.
+	"look in the environment that the receiver organizes for the associated organization"
+
+	^ self environment organization
 ]
 
 { #category : #accessing }
@@ -31,20 +30,20 @@ SystemOrganizer >> addCategory: newCategory [
 
 	super addCategory: newCategory.
 
-	SystemAnnouncer uniqueInstance classCategoryAdded: newCategory.
+	SystemAnnouncer uniqueInstance classCategoryAdded: newCategory
 ]
 
 { #category : #queries }
 SystemOrganizer >> categoriesMatching: matchString [
 	"Return all matching categories"
-	
+
 	self categories ifNil: [ ^#() ].
 	^ self categories select: [:c | matchString match: c]
 ]
 
 { #category : #queries }
 SystemOrganizer >> classesInCategory: category [
-	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ] 
+	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
 ]
 
 { #category : #accessing }
@@ -54,15 +53,14 @@ SystemOrganizer >> environment [
 
 { #category : #accessing }
 SystemOrganizer >> environment: aSystemDictionary [
-	 environment := aSystemDictionary.
-
+	 environment := aSystemDictionary
 ]
 
 { #category : #testing }
 SystemOrganizer >> includesCategory: aString [
 	"Tests if a category is already included."
-	
-	^ self categories 
+
+	^ self categories
 		ifNil: [ false ]
 		ifNotNil: [ :categories | categories includes: aString ]
 ]
@@ -77,9 +75,9 @@ SystemOrganizer >> initialize [
 
 { #category : #queries }
 SystemOrganizer >> orderedTraitsIn: category [
-	"Answer an OrderedCollection containing references to the traits in the 
-	category whose name is the argument, category (a string). The traits 
-	are ordered so they can be filed in." 
+	"Answer an OrderedCollection containing references to the traits in the
+	category whose name is the argument, category (a string). The traits
+	are ordered so they can be filed in."
 
 	| behaviors traits |
 	behaviors := (self listAtCategoryNamed: category asSymbol) collect: [ :title | self environment at: title ].
@@ -100,7 +98,7 @@ SystemOrganizer >> removeCategoriesMatching: matchString [
 SystemOrganizer >> removeCategory: category [
 	| r |
 	r := super removeCategory: category.
-	
+
 	"If the category we try to remove is the default one, due to cleansing, we don't have to announce it since it is not a valid category for a Class"
 	category = Default ifFalse: [
 		SystemAnnouncer uniqueInstance classCategoryRemoved: category.
@@ -116,27 +114,26 @@ SystemOrganizer >> removeSystemCategory: category [
 	 (self orderedTraitsIn: category) , (self superclassOrder: category)
 		reverseDo: [:each | each removeFromSystem].
 
-	self removeCategory: category.
-
+	self removeCategory: category
 ]
 
 { #category : #accessing }
 SystemOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	| r |
 	r := super renameCategory: oldCatString toBe: newCatString.
-	SystemAnnouncer uniqueInstance 
+	SystemAnnouncer uniqueInstance
 		classCategoryRenamedFrom: oldCatString to: newCatString.
 	^ r
 ]
 
 { #category : #queries }
 SystemOrganizer >> superclassOrder: category [
-	"Answer an OrderedCollection containing references to the classes in the 
-	category whose name is the argument, category (a string). The classes 
+	"Answer an OrderedCollection containing references to the classes in the
+	category whose name is the argument, category (a string). The classes
 	are ordered with superclasses first so they can be filed in."
 
 	| behaviors classes |
 	behaviors := (self listAtCategoryNamed: category asSymbol) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
-	^ Class superclassOrder: classes 
+	^ Class superclassOrder: classes
 ]

@@ -38,16 +38,16 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
 	newMethodNode := RBParser parseMethod: theTextString.
-	
+
 	"We check if there is a declaration of temporary variables"
-	tempsMark :=  newMethodNode body  rightBar ifNil: [ self methodNode body start ].	
-	
+	tempsMark :=  newMethodNode body  rightBar ifNil: [ self methodNode body start ].
+
 	characterBeforeMark := theTextString at: tempsMark-1 ifAbsent: [$ ].
 
 	(theTextString at: tempsMark) = $| ifTrue:  [
   		"Paste it before the second vertical bar"
 		insertion := name, ' '.
-		
+
 		characterBeforeMark isSeparator ifFalse: [insertion := ' ', insertion].
 		delta := 0.
 	] ifFalse: [
@@ -77,9 +77,9 @@ OCUndeclaredVariableWarning >> declareUndefined [
 OCUndeclaredVariableWarning >> defaultAction [
 	| className selector |
  	className := self methodClass name.
-	selector := self methodNode selector. 
+	selector := self methodNode selector.
 
-	NewUndeclaredWarning signal: node name in: (selector 
+	NewUndeclaredWarning signal: node name in: (selector
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
@@ -87,45 +87,46 @@ OCUndeclaredVariableWarning >> defaultAction [
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> defineClass: className [ 
+OCUndeclaredVariableWarning >> defineClass: className [
 	"Prompts the user to define a new class."
-	
-	| classSymbol systemCategory classDefinition classBinding |
+
+	| classSymbol systemCategory classDefinition classBinding result |
 	classSymbol := className asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
-	classDefinition := 'Object subclass: #' , classSymbol , '
-		instanceVariableNames: '''' 
-		classVariableNames: ''''
-		category: ''' , systemCategory , ''''.
-	classDefinition := UIManager default 
+	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: systemCategory forClass: classSymbol.
+	classDefinition := UIManager default
 		multiLineRequest: 'Edit class definition:'
 		initialAnswer: classDefinition
-		answerHeight: 150.
+		answerHeight: 200.
 	(classDefinition isNil or: [ classDefinition isEmpty ])
 		ifTrue: [ ^ Abort signal ].
-	self class compiler
+	result := self class compiler
 		source: classDefinition;
 		logged: true;
 		evaluate.
+	"Because some class definition syntax the (fuild one) does not evaluate to a
+	class but a class builder, we must call `fluidInstall`.
+	(that is a noop on real classes)."
+	result fluidInstall.
 	classBinding := node owningScope lookupVar: className.
 	"make sure to recompile all methods referencing this class"
 	classBinding usingMethods do: [:method | method recompile].
-	^classBinding 
+	^classBinding
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> defineTrait: traitName [ 
+OCUndeclaredVariableWarning >> defineTrait: traitName [
 	"Prompts the user to define a new trait."
-	
+
 	| traitSymbol systemCategory traitDefinition |
 	traitSymbol := traitName asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
 	traitDefinition := 'Trait named: #' , traitSymbol , '
-		uses:{} 
+		uses:{}
 		package: ''' , systemCategory , ''''.
-	traitDefinition := UIManager default 
+	traitDefinition := UIManager default
 		multiLineRequest: 'Edit trait definition:'
 		initialAnswer: traitDefinition
 		answerHeight: 150.
@@ -143,21 +144,20 @@ OCUndeclaredVariableWarning >> defineTrait: traitName [
 OCUndeclaredVariableWarning >> node: aVariableNode [
 
 	super node: aVariableNode.
-	messageText := 'Undeclared temp: ', aVariableNode name.
-
+	messageText := 'Undeclared temp: ', aVariableNode name
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 	| alternatives labels actions lines caption choice name interval requestor |
-	
+
 	"Turn off suggestions when in RubSmalltalkCommentMode
  	This is a workaround, the plan is to not do this as part of the exception"
  	requestor := compilationContext requestor.
  	((requestor class name = #RubEditingArea) and: [
  		requestor editingMode class name = #RubSmalltalkCommentMode])
  					ifTrue: [ ^UndeclaredVariable named: node name ].
-	
+
 	interval := node sourceInterval.
 	name := node name.
 	alternatives := self possibleVariablesFor: name.
@@ -165,40 +165,39 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 	actions := OrderedCollection new.
 	lines := OrderedCollection new.
 	name first isLowercase
-		ifTrue: [ 
+		ifTrue: [
 			labels add: 'Declare new temporary variable'.
 			actions add: [ self declareTempAndPaste: name ].
 			labels add: 'Declare new instance variable'.
 			actions add: [ self declareInstVar: name ] ]
-		ifFalse: [ 
+		ifFalse: [
 			labels add: 'Leave variable undeclared'.
 			actions add: [ self declareUndefined ].
 			lines add: labels size.
 			labels add: 'Define new class'.
 			actions
-				add: [ 
+				add: [
 					[ self defineClass: name ]
 						on: Abort
 						do: [ self openMenuIn: aBlock ] ].
 			labels add: 'Declare new global'.
 			actions add: [ self declareGlobal ].
-			compilationContext requestor isForScripting ifFalse: 
+			compilationContext requestor isScripting ifFalse:
 				[labels add: 'Declare new class variable'.
 				actions add: [ self declareClassVar ]].
 			labels add: 'Define new trait'.
 			actions
-				add: [ 
+				add: [
 					[ self defineTrait: name ]
 						on: Abort
-						do: [ self openMenuIn: aBlock ] ] ].	
+						do: [ self openMenuIn: aBlock ] ] ].
 	lines add: labels size.
 	alternatives
-		do: [ :each | 
+		do: [ :each |
 			labels add: each.
 			actions
-				add: [ 
-					self substituteVariable: each atInterval: interval.
-					(ReparseAfterSourceEditing new newSource: self requestor text) signal ] ].
+				add: [
+					^self substituteVariable: each atInterval: interval ] ].
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
@@ -207,28 +206,29 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> possibleVariablesFor: proposedVariable [ 
+OCUndeclaredVariableWarning >> possibleVariablesFor: proposedVariable [
 	| results class |
 	class := node methodNode methodClass .
-	
-	results := proposedVariable correctAgainst: node methodOrBlockNode scope allTempNames 
+
+	results := proposedVariable correctAgainst: node methodOrBlockNode scope allTempNames
 								continuedFrom: nil.
-	proposedVariable first canBeGlobalVarInitial ifTrue:
+	proposedVariable isValidGlobalName ifTrue:
 		[ results := class possibleVariablesFor: proposedVariable
 						continuedFrom: results ].
 	^ proposedVariable correctAgainst: nil continuedFrom: results
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterval [ 
-	self 
+OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterval [
+	self
 		substituteWord: varName
 		wordInterval: anInterval
 		offset: 0.
 	self methodNode source: self requestor text.
 	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
 	^ (node owningScope lookupVar: varName)
-		ifNil: [self error: 'should be found'].
+		ifNil: [self error: 'should be found']
 ]
 
 { #category : #correcting }

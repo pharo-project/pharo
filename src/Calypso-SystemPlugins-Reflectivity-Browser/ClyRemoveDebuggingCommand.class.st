@@ -16,19 +16,19 @@ Class {
 
 { #category : #testing }
 ClyRemoveDebuggingCommand class >> isAbstract [
-	^self = ClyRemoveDebuggingCommand 
+	^self = ClyRemoveDebuggingCommand
 ]
 
 { #category : #activation }
 ClyRemoveDebuggingCommand class >> methodBrowserTableIconActivation [
 	<classAnnotation>
-	
+
 	^ClyTableIconCommandActivation priority: 900 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }
 ClyRemoveDebuggingCommand >> debuggingToolClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -37,13 +37,13 @@ ClyRemoveDebuggingCommand >> defaultMenuIconName [
 ]
 
 { #category : #accessing }
-ClyRemoveDebuggingCommand >> defaultMenuItemName [ 
+ClyRemoveDebuggingCommand >> defaultMenuItemName [
 	^'Remove ', self debuggingToolClass name asLowercase
 ]
 
 { #category : #execution }
 ClyRemoveDebuggingCommand >> execute [
-	
-	sourceNode nodesWithLinks do: [:each | 
+
+	sourceNode nodesWithLinks do: [:each |
 		self debuggingToolClass removeFrom: each]
 ]

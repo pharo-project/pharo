@@ -56,7 +56,6 @@ SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: message
 	smtpClient mailFrom: fromAddress to: recipientList text: messageText.
 	smtpClient quit]
 		ensure: [smtpClient close]
-
 ]
 
 { #category : #examples }
@@ -93,7 +92,7 @@ SMTPClient >> data: messageData [
 	"send the data of a message"
 	"DATA <CRLF>"
 
-	
+
 
 	"inform the server we are sending the message data"
 	self sendCommand: 'DATA'.
@@ -102,18 +101,18 @@ SMTPClient >> data: messageData [
 	"process the data one line at a time"
 	messageData linesDo:  [ :messageLine | | cookedLine |
 		cookedLine := messageLine.
-		(cookedLine beginsWith: '.') ifTrue: [ 
+		(cookedLine beginsWith: '.') ifTrue: [
 			"lines beginning with a dot must have the dot doubled"
 			cookedLine := '.', cookedLine ].
 		self sendCommand: cookedLine ].
 
 	"inform the server the entire message text has arrived"
 	self sendCommand: '.'.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #utilities }
-SMTPClient >> encodeString: aString [ 
+SMTPClient >> encodeString: aString [
 	^ (aString encodeWith: #null) base64Encoded
 ]
 
@@ -122,15 +121,14 @@ SMTPClient >> initiateSession [
 	"EHLO <SP> <domain> <CRLF>"
 
 	self sendCommand: (self useHelo ifTrue:['HELO '] ifFalse: ['EHLO ']) , NetNameResolver localHostName.
-	self checkResponse.
-
+	self checkResponse
 ]
 
 { #category : #'public protocol' }
 SMTPClient >> localHostName [
 	"The local host name for purposes of identifying the the server.
  	If nil, NetNameResolver localHostName will be used."
- 
+
  	^self connectionInfo at: #localHostName ifAbsent: [NetNameResolver localHostName]
 ]
 
@@ -138,7 +136,7 @@ SMTPClient >> localHostName [
 SMTPClient >> localHostName: aString [
 	"The local host name for purposes of identifying the the server.
  	If nil, NetNameResolver localHostName will be used."
- 
+
  	^self connectionInfo at: #localHostName put: aString
 ]
 
@@ -161,8 +159,7 @@ SMTPClient >> mailFrom: sender to: recipientList text: messageText [
 	self mailFrom: sender.
 	recipientList do: [ :recipient |
 		self recipient: recipient ].
-	self data: messageText.
-
+	self data: messageText
 ]
 
 { #category : #'private - protocol' }
@@ -171,7 +168,7 @@ SMTPClient >> quit [
 	"QUIT <CRLF>"
 
 	self sendCommand: 'QUIT'.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #'private - protocol' }
@@ -180,7 +177,7 @@ SMTPClient >> recipient: aRecipient [
 	"RCPT <SP> TO:<forward-path> <CRLF>"
 
 	self sendCommand: 'RCPT TO: <', aRecipient, '>'.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #'public protocol' }

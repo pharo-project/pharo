@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-ReRewriteWrapper class >> isAbstract [ 
+ReRewriteWrapper class >> isAbstract [
 
 	 ^ self = ReRewriteWrapper
 ]
@@ -16,5 +16,5 @@ ReRewriteWrapper class >> isAbstract [
 { #category : #actions }
 ReRewriteWrapper >> rewriten: aNode with: aMap [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

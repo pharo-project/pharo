@@ -15,13 +15,12 @@ MalCircuitSpanningEdges >> doUnvisitedEdges: aBlock [
 			aBlock value: e
 		]
 	]
-
 ]
 
 { #category : #configuration }
 MalCircuitSpanningEdges >> edgeClass [
 
-	^ MalCseEdge 
+	^ MalCseEdge
 ]
 
 { #category : #running }
@@ -64,7 +63,6 @@ MalCircuitSpanningEdges >> initialize [
 	super initialize.
 	circuits := OrderedCollection new. "use that instead of Set"
 	dijkstra := MalDijkstra new.
-
 ]
 
 { #category : #configuration }

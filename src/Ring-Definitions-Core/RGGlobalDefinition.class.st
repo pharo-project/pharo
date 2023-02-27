@@ -8,6 +8,12 @@ Class {
 	#category : #'Ring-Definitions-Core-Base'
 }
 
+{ #category : #testing }
+RGGlobalDefinition class >> isAbstract [
+
+	^ self == RGGlobalDefinition
+]
+
 { #category : #comparing }
 RGGlobalDefinition >> = aRGGlobalDefinition [
 	"This method look for equality of the properties of the receiver"
@@ -20,13 +26,13 @@ RGGlobalDefinition >> = aRGGlobalDefinition [
 { #category : #comparing }
 RGGlobalDefinition >> hash [
 	"Hash is re-implemented because #= is re-implemented"
-	
+
 	^self class hash bitXor: (self name hash)
 ]
 
 { #category : #accessing }
 RGGlobalDefinition >> parent [
 	"Retrieves the namespace in which the receiver is known"
-	
+
 	^self environment
 ]

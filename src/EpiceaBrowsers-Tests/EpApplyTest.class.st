@@ -12,7 +12,6 @@ EpApplyTest >> applyInputEntry [
 		entries: { inputEntry };
 		errorHandlerBlock: [:error | error signal ];
 		applyCodeChanges
-
 ]
 
 { #category : #tests }
@@ -29,7 +28,7 @@ EpApplyTest >> testBehaviorNameChange [
 
 	self assert: aClass name equals: oldName.
 	self applyInputEntry.
-	self assert: aClass name equals: newName.
+	self assert: aClass name equals: newName
 ]
 
 { #category : #tests }
@@ -45,8 +44,7 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 	self assert: inputEntry content class equals: EpCategoryAddition.
 	self deny: (organization includesCategory: aCategory).
 	self applyInputEntry.
-	self assert: (organization includesCategory: aCategory).
-
+	self assert: (organization includesCategory: aCategory)
 ]
 
 { #category : #tests }
@@ -63,8 +61,7 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 	self assert: inputEntry content class equals: EpCategoryRemoval.
 	self assert: (organization includesCategory: aCategory).
 	self applyInputEntry.
-	self deny: (organization includesCategory: aCategory).
-
+	self deny: (organization includesCategory: aCategory)
 ]
 
 { #category : #tests }
@@ -84,8 +81,7 @@ EpApplyTest >> testCategoryRename [
 	self deny: (organization includesCategory: anotherCategory).
 	self applyInputEntry.
 	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory).
-
+	self assert: (organization includesCategory: anotherCategory)
 ]
 
 { #category : #tests }
@@ -98,7 +94,7 @@ EpApplyTest >> testClassAdditionWithCategoryChanged [
 	aCategory := aClass category.
 	anotherCategory := aCategory, '2'.
 	aClass category: anotherCategory.
-	
+
 	self assert: aClass category equals: anotherCategory.
 	self applyInputEntry.
 	self assert: aClass category equals: aCategory
@@ -111,13 +107,12 @@ EpApplyTest >> testClassAdditionWithClassRemoved [
 	aClass := classFactory newClass.
 	className := aClass name.
 	self setHeadAsInputEntry.
-	
+
 	aClass removeFromSystem.
-	
+
 	self deny: (self class environment hasClassNamed: className).
 	self applyInputEntry.
-	self assert: (self class environment hasClassNamed: className).
-
+	self assert: (self class environment hasClassNamed: className)
 ]
 
 { #category : #tests }
@@ -126,9 +121,9 @@ EpApplyTest >> testClassAdditionWithInstanceVariablesChanged [
 	| aClass |
 	aClass := classFactory newClass.
 	self setHeadAsInputEntry.
-	
+
 	aClass addInstVarNamed: #x.
-	
+
 	self assert: aClass instVarNames equals: #(x).
 	self applyInputEntry.
 	self assert: aClass instVarNames equals: #()
@@ -140,9 +135,9 @@ EpApplyTest >> testClassAdditionWithMetaclassInstanceVariablesChanged [
 	| aClass |
 	aClass := classFactory newClass.
 	self setHeadAsInputEntry.
-	
+
 	aClass classSide instanceVariableNames: 'x'.
-	
+
 	self assert: aClass classSide instVarNames equals: #(x).
 	self applyInputEntry.
 	self assert: aClass classSide instVarNames equals: #()
@@ -154,9 +149,9 @@ EpApplyTest >> testClassAdditionWithSuperclassChanged [
 	| aClass |
 	aClass := classFactory newClass.
 	self setHeadAsInputEntry.
-	
+
 	aClass superclass: Array.
-	
+
 	self assert: aClass superclass equals: Array.
 	self applyInputEntry.
 	self assert: aClass superclass equals: Object
@@ -170,15 +165,14 @@ EpApplyTest >> testClassModificationWithClassRemoved [
 	className := aClass name.
 	aClass addInstVarNamed: #x.
 	self setHeadAsInputEntry.
-	
+
 	aClass removeFromSystem.
-	
+
 	self assert: (inputEntry content isKindOf: EpClassModification).
 	self deny: (self class environment hasClassNamed: className).
 	self applyInputEntry.
 	self assert: (self class environment hasClassNamed: className).
-	self assert: aClass instVarNames equals: #(x).
-
+	self assert: aClass instVarNames equals: #(x)
 ]
 
 { #category : #tests }
@@ -196,8 +190,7 @@ EpApplyTest >> testClassRemovalWithClassAdded [
 	self assert: (inputEntry content isKindOf: EpClassRemoval).
 	self assert: (self class environment hasClassNamed: className).
 	self applyInputEntry.
-	self deny: (self class environment hasClassNamed: className).
-
+	self deny: (self class environment hasClassNamed: className)
 ]
 
 { #category : #tests }
@@ -209,13 +202,12 @@ EpApplyTest >> testMethodAdditionWithMethodRemoved [
 	self setHeadAsInputEntry.
 
 	aClass removeSelector: #fortyTwo.
-	
+
 	self assert: (inputEntry content isKindOf: EpMethodAddition).
 	self deny: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'.
-
+	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
 ]
 
 { #category : #tests }
@@ -227,11 +219,10 @@ EpApplyTest >> testMethodAdditionWithProtocolChanged [
 	self setHeadAsInputEntry.
 
 	(aClass>>#fortyTwo) protocol: 'none'.
-	
+
 	self assert: (aClass>>#fortyTwo) protocol equals: 'none'.
 	self applyInputEntry.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'.
-
+	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
 ]
 
 { #category : #tests }
@@ -243,11 +234,10 @@ EpApplyTest >> testMethodAdditionWithSourceCodeChanged [
 	self setHeadAsInputEntry.
 
 	aClass compile: 'fortyTwo ^nil'.
-	
+
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^nil'.
 	self applyInputEntry.
-	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-
+	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'
 ]
 
 { #category : #tests }
@@ -265,8 +255,7 @@ EpApplyTest >> testMethodModificationWithMethodRemoved [
 	self deny: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'.
-
+	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
 ]
 
 { #category : #tests }
@@ -283,8 +272,7 @@ EpApplyTest >> testMethodRemovalWithMethodAdded [
 	self assert: (inputEntry content isKindOf: EpMethodRemoval).
 	self assert: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
-	self deny: (aClass includesSelector: #fortyTwo).
-
+	self deny: (aClass includesSelector: #fortyTwo)
 ]
 
 { #category : #tests }
@@ -299,8 +287,7 @@ EpApplyTest >> testProtocolAddition [
 	self assert: inputEntry content class equals: EpProtocolAddition.
 	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
 	self applyInputEntry.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
-
+	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
 ]
 
 { #category : #tests }
@@ -316,8 +303,7 @@ EpApplyTest >> testProtocolRemoval [
 	self assert: inputEntry content class equals: EpProtocolRemoval.
 	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
 	self applyInputEntry.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
-
+	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
 ]
 
 { #category : #tests }
@@ -327,13 +313,12 @@ EpApplyTest >> testTraitAdditionWithTraitRemoved [
 	aTrait := classFactory newTrait.
 	traitName := aTrait name.
 	self setHeadAsInputEntry.
-	
+
 	aTrait removeFromSystem.
 
 	self deny: (self class environment includesKey: traitName).
 	self applyInputEntry.
-	self assert: (self class environment includesKey: traitName).
-
+	self assert: (self class environment includesKey: traitName)
 ]
 
 { #category : #tests }
@@ -351,8 +336,7 @@ EpApplyTest >> testTraitModification [
 
 	self assert: inputEntry content class equals: EpTraitModification.
 	self applyInputEntry.
-	self assert: (self class environment includesKey: traitName).
-
+	self assert: (self class environment includesKey: traitName)
 ]
 
 { #category : #tests }
@@ -370,6 +354,5 @@ EpApplyTest >> testTraitRemovalWithTraitAdded [
 	self assert: (inputEntry content isKindOf: EpTraitRemoval).
 	self assert: (self class environment includesKey: traitName).
 	self applyInputEntry.
-	self deny: (self class environment includesKey: traitName).
-
+	self deny: (self class environment includesKey: traitName)
 ]

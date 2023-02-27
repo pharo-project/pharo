@@ -24,7 +24,7 @@ DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollection
 	^ self new
 		items: aCollectionOfClasses;
 		packagesSelected: aCollectionOfPackages;
-		yourself.
+		yourself
 ]
 
 { #category : #converting }
@@ -39,7 +39,7 @@ DTPluginConfiguration >> asTestSuite [
 
 { #category : #'result handling' }
 DTPluginConfiguration >> handleResults: aPluginResult for: aPlugin [
-	^ aPluginResult 
+	^ aPluginResult
 ]
 
 { #category : #accessing }

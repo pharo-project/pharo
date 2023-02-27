@@ -19,5 +19,5 @@ Exception >> recordResultOf: aTestCase inHDTestReport: aHDTestReport [
 
 	This default logic is in SUnit for a long time 
 	but in past it was in senders of this method which handles a predefined set of known exceptions"	
-	self pass 
+	self pass
 ]

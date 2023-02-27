@@ -51,5 +51,4 @@ CollectionCombinator >> forArrays: anArray processWith: aBlock [
   resultProcessingBlock := aBlock.
   buffer := Array new: anArray size.
   self combineFromIdx: 1
-   
 ]

@@ -13,19 +13,17 @@ EpAnnouncementsTest >> assertMonitorAnnouncesUpdateWhen: aBlock [
 	monitor announcer
 		when: EpMonitorStateUpdated
 		do: [ :announcement | wasAnnounced := true ].
-	
+
 	aBlock
 		ensure: [ monitor announcer unsubscribe: self ].
 
 	self assert: wasAnnounced
-	
 ]
 
 { #category : #tests }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenDisabled [
 
-	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ].
-
+	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ]
 ]
 
 { #category : #tests }
@@ -38,14 +36,12 @@ EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenEnabled [
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenRedundantlyDisabled [
 
 	monitor disable.
-	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ].
-
+	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ]
 ]
 
 { #category : #tests }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenRedundantlyEnabled [
 
 	monitor enable.
-	self assertMonitorAnnouncesUpdateWhen: [ monitor enable ].
-
+	self assertMonitorAnnouncesUpdateWhen: [ monitor enable ]
 ]

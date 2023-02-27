@@ -1,6 +1,6 @@
 Extension { #name : #Metaclass }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Metaclass class >> fromSton: stonReader [
 	| theClassName theClass theMetaclass |
 	theClassName := stonReader parseListSingleton.
@@ -9,12 +9,12 @@ Metaclass class >> fromSton: stonReader [
 	^ theMetaclass
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Metaclass >> stonName [
 	^ #Class
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Metaclass >> stonOn: stonWriter [
 	stonWriter
 		writeObject: self 

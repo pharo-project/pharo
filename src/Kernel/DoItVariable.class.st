@@ -45,15 +45,15 @@ Class {
 { #category : #'instance creation' }
 DoItVariable class >> fromContext: aContext variable: aVariable [
 
-	^self new 
+	^self new
 		doItContext: aContext;
 		actualVariable: aVariable
 ]
 
 { #category : #'instance creation' }
-DoItVariable class >> named: aString fromContext: aContext [ 
-	^self 
-		fromContext: aContext 
+DoItVariable class >> named: aString fromContext: aContext [
+	^self
+		fromContext: aContext
 		variable: (aContext lookupVar: aString)
 ]
 
@@ -66,6 +66,11 @@ DoItVariable >> actualVariable [
 DoItVariable >> actualVariable: aVariable [
 	actualVariable := aVariable.
 	name := actualVariable name
+]
+
+{ #category : #testing }
+DoItVariable >> allowsShadowing [
+	^true
 ]
 
 { #category : #accessing }
@@ -82,7 +87,7 @@ DoItVariable >> doItContext: anObject [
 DoItVariable >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := '0slotTempForStackManipulation'.  
+	tempName := '0slotTempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -106,17 +111,17 @@ DoItVariable >> isArgumentVariable [
 
 { #category : #testing }
 DoItVariable >> isClassVariable [
-	^actualVariable isClassVariable 
+	^actualVariable isClassVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isGlobalVariable [
-	^actualVariable isGlobalVariable 
+	^actualVariable isGlobalVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isInstanceVariable [
-	^actualVariable isInstanceVariable 
+	^actualVariable isInstanceVariable
 ]
 
 { #category : #testing }
@@ -126,58 +131,58 @@ DoItVariable >> isLiteralVariable [
 
 { #category : #testing }
 DoItVariable >> isLocalVariable [
-	^actualVariable isLocalVariable 
+	^actualVariable isLocalVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isReservedVariable [
-	^actualVariable isReservedVariable 
+	^actualVariable isReservedVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isSelfVariable [
-	^actualVariable isSelfVariable 
+	^actualVariable isSelfVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isSuperVariable [
-	^actualVariable isSuperVariable 
+	^actualVariable isSuperVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isTempVariable [
-	^actualVariable isTempVariable 
+	^actualVariable isTempVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isThisContextVariable [
-	^actualVariable isThisContextVariable 
+	^actualVariable isThisContextVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isUndeclaredVariable [
-	^actualVariable isUndeclaredVariable 
+	^actualVariable isUndeclaredVariable
 ]
 
 { #category : #testing }
 DoItVariable >> isUninitialized [
-	^actualVariable isUninitialized 
+	^actualVariable isUninitialized
 ]
 
 { #category : #testing }
 DoItVariable >> isWorkspaceVariable [
-	^actualVariable isWorkspaceVariable 
+	^actualVariable isWorkspaceVariable
 ]
 
 { #category : #accessing }
-DoItVariable >> key [ 
+DoItVariable >> key [
 	^self name
 ]
 
 { #category : #printing }
-DoItVariable >> printOn: aStream [ 
+DoItVariable >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	actualVariable printOn: aStream.
 	aStream nextPut: $)
@@ -185,7 +190,7 @@ DoItVariable >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 DoItVariable >> read [
-	^actualVariable readInContext: doItContext 
+	^actualVariable readInContext: doItContext
 ]
 
 { #category : #debugging }
@@ -194,7 +199,7 @@ DoItVariable >> readInContext: aContext [
 ]
 
 { #category : #accessing }
-DoItVariable >> scope [ 
+DoItVariable >> scope [
 	^ actualVariable scope
 ]
 
@@ -205,7 +210,7 @@ DoItVariable >> usingMethods [
 
 { #category : #'meta-object-protocol' }
 DoItVariable >> write: aValue [
-	^actualVariable write: aValue inContext: doItContext 
+	^actualVariable write: aValue inContext: doItContext
 ]
 
 { #category : #debugging }

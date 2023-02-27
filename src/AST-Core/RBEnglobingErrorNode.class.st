@@ -9,29 +9,32 @@ RBParser parseFaultyMethod:
 
 Accessing to the parsed nodes contained inside the node is the method 'content'.
 
+`valueAfter` is used to store the optional raw content (source string) that appears after the content.
+
 
 "
 Class {
 	#name : #RBEnglobingErrorNode,
 	#superclass : #RBParseErrorNode,
 	#instVars : [
-		'content'
+		'content',
+		'valueAfter'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
 { #category : #'instance creation' }
 RBEnglobingErrorNode class >> content: aCollection start: aStart stop: aStop errorMessage: message [
-	^self new 
-		content: aCollection; 
-		start: aStart; 
-		stop: aStop; 
+	^self new
+		content: aCollection;
+		start: aStart;
+		stop: aStop;
 		errorMessage: message
 ]
 
 { #category : #construction }
 RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
-	"Realise a selection between the different englobing error node classes possible according to the 
+	"Realise a selection between the different englobing error node classes possible according to the
 	 received token. If the value of the token is not recognised, we create an undetermined one."
 	('()' includes: aToken value)
 		ifTrue: [ ^RBParenthesesErrorNode error: aToken withNodes: aCollection ].
@@ -54,7 +57,6 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitEnglobingErrorNode: self
-
 ]
 
 { #category : #accessing }
@@ -64,7 +66,7 @@ RBEnglobingErrorNode >> children [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> content [
-	^content 
+	^content
 ]
 
 { #category : #accessing }
@@ -74,10 +76,11 @@ RBEnglobingErrorNode >> content: aCollection [
 ]
 
 { #category : #initialization }
-RBEnglobingErrorNode >> initialize [ 
+RBEnglobingErrorNode >> initialize [
 	super initialize.
 	content := OrderedCollection new.
 	value := ''.
+	valueAfter := ''.
 ]
 
 { #category : #testing }
@@ -87,5 +90,17 @@ RBEnglobingErrorNode >> isEnglobingError [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> stop: anInterger [
-	stop := anInterger.
+	stop := anInterger
+]
+
+{ #category : #accessing }
+RBEnglobingErrorNode >> valueAfter [
+
+	^ valueAfter
+]
+
+{ #category : #accessing }
+RBEnglobingErrorNode >> valueAfter: anObject [
+
+	valueAfter := anObject
 ]

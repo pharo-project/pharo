@@ -19,19 +19,18 @@ Class {
 SubscriptionRegistry >> add: subscription [
 	^ self protected: [
 		subscriptions add: subscription  ]
-
 ]
 
 { #category : #announcing }
 SubscriptionRegistry >> deliver: anAnnouncement [
 	|  interestedSubscriptions |
 	"using a copy, so subscribers can unsubscribe from announcer "
-	
+
 	subscriptions isEmpty ifTrue: [ ^ self ].
-	self protected: [ 
+	self protected: [
 		interestedSubscriptions := self subscriptionsHandling: anAnnouncement ].
 	interestedSubscriptions isEmpty ifTrue: [ ^self ].
-	
+
 	anAnnouncement prepareForDelivery.
 	self deliver: anAnnouncement to: interestedSubscriptions
 ]
@@ -43,10 +42,10 @@ SubscriptionRegistry >> deliver: anAnnouncement to: subs [
 
 { #category : #private }
 SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex [
-	
+
 	startIndex to: subs size do: [ :index| | subscription |
 		subscription := subs at: index.
-		[ subscription deliver: anAnnouncement ] 
+		[ subscription deliver: anAnnouncement ]
 			"Ensure delivery to remaining announcements"
 			ifCurtailed: [
 				self deliver: anAnnouncement to: subs startingAt: index + 1 ]]
@@ -55,8 +54,8 @@ SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex 
 { #category : #testing }
 SubscriptionRegistry >> handleSubscriberClass: eventClass [
 	"Return true if the receiver has a callback subscripbed for the event class"
-	^ subscriptions anySatisfy: [ :sub | 
-		(sub subscriber class == eventClass) or: 
+	^ subscriptions anySatisfy: [ :sub |
+		(sub subscriber class == eventClass) or:
 			[ sub subscriber class includesBehavior: eventClass ] ]
 ]
 
@@ -64,7 +63,6 @@ SubscriptionRegistry >> handleSubscriberClass: eventClass [
 SubscriptionRegistry >> initialize [
 	monitor := Semaphore forMutualExclusion.
 	self reset
-
 ]
 
 { #category : #accessing }
@@ -81,17 +79,13 @@ SubscriptionRegistry >> protected: aBlock [
 SubscriptionRegistry >> remove: subscription [
 	^ self protected: [
 		subscriptions remove: subscription ifAbsent: nil ]
-
-
 ]
 
 { #category : #'add/remove' }
 SubscriptionRegistry >> removeSubscriber: subscriber [
-	
+
 	^ self protected: [
 		subscriptions removeAllSuchThat: [:subscription | subscription subscriber == subscriber ]]
-
-
 ]
 
 { #category : #'add/remove' }
@@ -100,7 +94,7 @@ SubscriptionRegistry >> replace: subscription with: newOne [
 	" Note that it will signal an error if subscription is not there "
 	self protected: [
 		subscriptions remove: subscription.
-		subscriptions add: newOne 
+		subscriptions add: newOne
 	].
 	^ newOne
 ]
@@ -108,12 +102,8 @@ SubscriptionRegistry >> replace: subscription with: newOne [
 { #category : #initialization }
 SubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
-	
+
 	subscriptions := IdentitySet new
-	
-
-
-
 ]
 
 { #category : #accessing }
@@ -125,8 +115,8 @@ SubscriptionRegistry >> subscriptions [
 SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 	"Return the list of subscription for a given class"
 	^ Array streamContents: [ :s|
-			subscriptions do: [:each| 
-				(each subscriber class == subscriberClass 
+			subscriptions do: [:each|
+				(each subscriber class == subscriberClass
 				 or: [each subscriber class includesBehavior: subscriberClass])
 					ifTrue: [ s nextPut: each subscriber ]]]
 ]
@@ -134,7 +124,7 @@ SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 { #category : #accessing }
 SubscriptionRegistry >> subscriptionsHandling: anAnnouncement [
 	^ Array streamContents: [ :s|
-			subscriptions do: [:each| 
+			subscriptions do: [:each|
 				(each handlesAnnouncement: anAnnouncement)
 					ifTrue: [ s nextPut: each ]]]
 ]
@@ -142,12 +132,11 @@ SubscriptionRegistry >> subscriptionsHandling: anAnnouncement [
 { #category : #iterating }
 SubscriptionRegistry >> subscriptionsOf: aSubscriber do: aBlock [
 	| copy |
-	
-	self protected: [ copy := subscriptions copy ].
-	
-	copy do: 
-		[:subscription | 
-			subscription subscriber == aSubscriber 
-				ifTrue: [ aBlock value: subscription ]	]
 
+	self protected: [ copy := subscriptions copy ].
+
+	copy do:
+		[:subscription |
+			subscription subscriber == aSubscriber
+				ifTrue: [ aBlock value: subscription ]	]
 ]

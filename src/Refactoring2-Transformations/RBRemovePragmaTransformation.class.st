@@ -4,7 +4,7 @@ I am responsible for removing a pragma definition in a method. In this implement
 Usage:
 | transformation |
 transformation := (RBRemovePragmaTransformation
-				pragma: '<gtInspectorPresentationOrder: 34>'
+				pragma: '<pragmaForTesting: 34>'
 				inMethod: #methodBefore
 				inClass: #RBRemovePragmaTransformationTest)
 				transform.
@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -53,7 +53,7 @@ RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector in
 
 	self className: aClassName.
 	selector := aSelector.
-	pragma := aPragmaDefinition.
+	pragma := aPragmaDefinition
 ]
 
 { #category : #preconditions }
@@ -90,7 +90,7 @@ RBRemovePragmaTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBRemovePragmaTransformation >> storeOn: aStream [ 
+RBRemovePragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

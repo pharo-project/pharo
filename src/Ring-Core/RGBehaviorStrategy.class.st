@@ -16,11 +16,11 @@ RGBehaviorStrategy class >> unresolved [
 { #category : #visiting }
 RGBehaviorStrategy >> acceptVisitor: aVisitor [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'private - backend access' }
-RGBehaviorStrategy >> addClassVariable: anRGInstanceVariableDefinition [ 
+RGBehaviorStrategy >> addClassVariable: anRGInstanceVariableDefinition [
 
 	self incompatibleBehaviorType
 ]
@@ -34,7 +34,7 @@ RGBehaviorStrategy >> addSharedPool: anRGPoolVariable [
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> allClassVarNames [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'private - backend access' }
@@ -102,7 +102,7 @@ RGBehaviorStrategy >> bindingOf: varName [
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> category [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'private - backend access' }
@@ -192,14 +192,13 @@ RGBehaviorStrategy >> comment: anRGComment [
 { #category : #copying }
 RGBehaviorStrategy >> copyForBehaviorDefinitionPostCopy [
 
-	super postCopy.
-
+	super postCopy
 ]
 
 { #category : #copying }
 RGBehaviorStrategy >> copyForBehaviorDefinitionWithOwner: aNewOwner [
 
-	^ self shallowCopy 
+	^ self shallowCopy
 		owner: aNewOwner;
 		copyForBehaviorDefinitionPostCopy
 ]
@@ -277,7 +276,7 @@ RGBehaviorStrategy >> isMeta [
 
 { #category : #testing }
 RGBehaviorStrategy >> isMetaclass [
-	
+
 	^ false
 ]
 
@@ -289,7 +288,7 @@ RGBehaviorStrategy >> isMetaclassStrategy [
 
 { #category : #testing }
 RGBehaviorStrategy >> isMetaclassTrait [
-	
+
 	^ false
 ]
 
@@ -297,12 +296,6 @@ RGBehaviorStrategy >> isMetaclassTrait [
 RGBehaviorStrategy >> isMetaclassTraitStrategy [
 
 	^ false
-]
-
-{ #category : #testing }
-RGBehaviorStrategy >> isTrait [
-
-	^false
 ]
 
 { #category : #testing }
@@ -315,14 +308,27 @@ RGBehaviorStrategy >> isTraitStrategy [
 RGBehaviorStrategy >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
-	self incompatibleBehaviorType
+
+	^ ' ', self layout class subclassDefiningSymbol, ' '
+]
+
+{ #category : #accessing }
+RGBehaviorStrategy >> layout [
+
+	^ self backend forBehavior layoutFor: self owner
+]
+
+{ #category : #accessing }
+RGBehaviorStrategy >> layout: anRGLayout [
+
+	self owner announceDefinitionChangeDuring: [
+		self backend forBehavior setLayoutFor: self owner to: anRGLayout ]
 ]
 
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> makeResolved [
 
 	"do nothing"
-
 ]
 
 { #category : #accessing }
@@ -392,25 +398,35 @@ RGBehaviorStrategy >> sharedPoolsDo: aBlock [
 { #category : #utilities }
 RGBehaviorStrategy >> sibling [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #utilities }
 RGBehaviorStrategy >> storeName [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorStrategy >> theMetaClass [
+	"This method is deprecated so consider to migrate."
 
-	^ self owner
+	self
+		deprecated: 'Please use #classSide instead'
+		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
+
+	^ self classSide
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorStrategy >> theNonMetaClass [
+	"This method is deprecated so consider to migrate."
 
-	^ self owner
+	self
+		deprecated: 'Please use #instanceSide instead'
+		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
+
+	^ self instanceSide
 ]
 
 { #category : #variables }

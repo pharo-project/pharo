@@ -22,7 +22,7 @@ MagnitudeTest >> testBeBetweenAnd [
 	self assert: (1 beBetween: 20 and: 5) equals: 5.
 	"above"
 	self assert: (30 beBetween: 5 and: 20) equals: 20.
-	self assert: (30 beBetween: 20 and: 5) equals: 20.
+	self assert: (30 beBetween: 20 and: 5) equals: 20
 ]
 
 { #category : #tests }
@@ -37,7 +37,7 @@ MagnitudeTest >> testCompareWithIfLesserIfEqualIfGreater [
 
 	self assert: ($b compareWith: $a ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 3.
 	self assert: ($a compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 1.
-	self assert: ($b compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 2.
+	self assert: ($b compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 2
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ MagnitudeTest >> testMinMax [
 	self assert: (100  min: 20 max: 12) equals: 20.
 	self assert: (42 min: 50 max: 40) equals: 42.
 	self assert: (42 min: 50 max: 45) equals: 45.
-	self assert: (42 min: 40 max: 30) equals: 40	
+	self assert: (42 min: 40 max: 30) equals: 40
 ]
 
 { #category : #tests }
@@ -78,5 +78,5 @@ MagnitudeTest >> testThreeWayCompareTo [
 
 	self assert: ($b threeWayCompareTo: $a) equals: 1.
 	self assert: ($a threeWayCompareTo: $b) equals: -1.
-	self assert: ($b threeWayCompareTo: $b ) equals: 0.
+	self assert: ($b threeWayCompareTo: $b ) equals: 0
 ]

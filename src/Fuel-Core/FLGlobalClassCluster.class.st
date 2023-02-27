@@ -4,13 +4,13 @@ I am a cluster for classes that should be present when materializing. In other w
 Class {
 	#name : #FLGlobalClassCluster,
 	#superclass : #FLGlobalCluster,
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #'serialize/materialize' }
 FLGlobalClassCluster >> materializeInstanceWith: aDecoder [
 
-	^self materializeGlobalClassFrom: aDecoder 
+	^self materializeGlobalClassFrom: aDecoder
 ]
 
 { #category : #'serialize/materialize' }

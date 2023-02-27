@@ -34,9 +34,8 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 		yourself.
 
 	morph addMorph: subMorph.
-	
-	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds.
-		
+
+	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds
 ]
 
 { #category : #'testing - geometry' }
@@ -56,6 +55,22 @@ MorphTest >> testExtent [
 	b2 := m2 bounds.
 
 	self assert: b2 equals: b1
+]
+
+{ #category : #'testing - testing' }
+MorphTest >> testForTiltedStickyness [
+
+	| m |
+	m := Morph new openCenteredInWorld.
+	self assert: m topRendererOrSelf isSticky not.
+	m beSticky.
+	self assert: m topRendererOrSelf isSticky.
+	m addFlexShell.
+	m topRendererOrSelf rotationDegrees: 45.0.
+	self assert: m topRendererOrSelf isSticky.
+	m beUnsticky.
+	self assert: m topRendererOrSelf isSticky not.
+	m topRendererOrSelf delete
 ]
 
 { #category : #'testing - halo' }
@@ -197,7 +212,7 @@ MorphTest >> testIntoWorldTransferToNewGuy [
 
 { #category : #'testing - classification' }
 MorphTest >> testIsMorph [
-	self assert: (morph isMorph).
+	self assert: (morph isMorph)
 ]
 
 { #category : #'testing - initialization' }

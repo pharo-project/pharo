@@ -12,24 +12,23 @@ Class {
 
 { #category : #'instance creation' }
 OmEntryWriter class >> newForStore: aFileStore [
-	
+
 	^ self basicNew
 		initializeWithStore: aFileStore;
 		yourself
-
 ]
 
 { #category : #initialization }
 OmEntryWriter >> initializeWithStore: aFileStore [
 
 	self initialize.
-	store := aFileStore.
+	store := aFileStore
 ]
 
 { #category : #writing }
-OmEntryWriter >> on: aStream nextEntryPut: anEntry [ 
+OmEntryWriter >> on: aStream nextEntryPut: anEntry [
 	"Write the entry on the stream."
-	
+
 	^ self subclassResponsibility
 ]
 

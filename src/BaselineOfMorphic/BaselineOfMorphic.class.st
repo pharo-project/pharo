@@ -52,17 +52,20 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
-		spec package: 'FreeType'.
-		spec package: 'FreeType-Morphic'.
+		spec baseline: 'FreeType' with: [ 
+			spec 
+				repository: repository; 
+				loads: 'ui' ].
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec package: 'Keymapping-Core'.
-		spec package: 'Keymapping-KeyCombinations'.
-		spec package: 'Keymapping-Pragmas'.
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'core' ].
 
 		spec package: 'Transcript-Core'.
 
@@ -89,7 +92,7 @@ BaselineOfMorphic >> baseline: spec [
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
 		
-		spec package: 'NewValueHolder-Core'.
+		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
 		
@@ -112,8 +115,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
-		spec package: 'Unicode-Initialization'.
-
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
@@ -125,7 +126,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Tool-Base'.
 
 	].
-
 ]
 
 { #category : #actions }
@@ -146,10 +146,9 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Smalltalk globals flushClassNameCache.
 	ScrollBarMorph initializeImagesCache.
 
-	3 timesRepeat: [ 
-		Smalltalk garbageCollect.
-	 	Symbol compactSymbolTable ].
-	 	HashedCollection rehashAll.
+	Smalltalk garbageCollect.
+	HashedCollection rehashAll.
+	Symbol rehash.
 	  
 	  "Remove empty categories, which are not in MC packages, because MC does
 	  not do this (this script does not make packages dirty)"
@@ -197,7 +196,6 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 			fontCopy setGlyphs: fileName.
 
 			STON put: fontCopy onStream: (fileName, '.ston') asFileReference writeStream ]].
-
 ]
 
 { #category : #fonts }
@@ -211,7 +209,6 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
 	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejaVu.
 	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
-
 ]
 
 { #category : #fonts }
@@ -271,7 +268,6 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 
 	codePro := self loadBitmapFontFamily: 'Bitmap Source Code Pro' sizes: #(9 10 11 12 14 18 24).
 	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
-
 ]
 
 { #category : #actions }
@@ -389,5 +385,4 @@ BaselineOfMorphic >> project [
 	aProject := super project.
 	aProject loadType: #atomic.
 	^ aProject.
-	
 ]

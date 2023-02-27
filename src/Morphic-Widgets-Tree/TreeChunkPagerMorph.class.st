@@ -20,9 +20,8 @@ TreeChunkPagerMorph >> atBottom [
 
 { #category : #accessing }
 TreeChunkPagerMorph >> atBottom: aBoolean [
-	atBottom ~= aBoolean 
+	atBottom ~= aBoolean
 		ifTrue: [atBottom := aBoolean]
-
 ]
 
 { #category : #'initialize - release' }
@@ -83,10 +82,10 @@ TreeChunkPagerMorph >> chunkSizeFromString: aString [
 	input ifEmpty: [treeMorph flash.
 		^ false].
 	newPageSize := Integer readFromString: input.
-	newPageSize > 0 
+	newPageSize > 0
 		ifTrue: [self changePageSize: newPageSize.
 			self nextPage.
-			pageSizeEditor 
+			pageSizeEditor
 				ifNotNil: [pageSizeEditor takeKeyboardFocus]]
 		ifFalse: [treeMorph flash.
 			^ false].
@@ -94,8 +93,8 @@ TreeChunkPagerMorph >> chunkSizeFromString: aString [
 ]
 
 { #category : #accessing }
-TreeChunkPagerMorph >> computedHeight [ 
-	^ self nodeList size > self lastIndex 
+TreeChunkPagerMorph >> computedHeight [
+	^ self nodeList size > self lastIndex
 		ifTrue: [super computedHeight ]
 		ifFalse:[0]
 ]
@@ -106,7 +105,6 @@ TreeChunkPagerMorph >> computedHeightFromContents [
 	h := 0.
 	self submorphsDo: [:sm | h := h max: sm height].
 	^ h max: (self preferedFont height + 8)
-
 ]
 
 { #category : #accessing }
@@ -154,7 +152,7 @@ TreeChunkPagerMorph >> nextPage [
 					b1 := last boundsInWorld bottom.
 					treeMorph scrollBy: 0 @ (b2 - b1)].
 			self buildPanel]
-				ensure: [nextPageAllowed := true]] 
+				ensure: [nextPageAllowed := true]]
 ]
 
 { #category : #navigation }
@@ -163,7 +161,7 @@ TreeChunkPagerMorph >> nextPage: newLast [
 	newLast > self lastIndex
 		ifFalse: [ ^ self ].
 	self lastIndex < self nodeList size
-		ifTrue: [ 
+		ifTrue: [
 			addedNodeList := self nodeList copyFrom: 1 to: newLast.
 			self lastIndex: newLast.
 			treeMorph scroller removeAllMorphs.
@@ -182,7 +180,7 @@ TreeChunkPagerMorph >> onLastPage [
 
 { #category : #'initialize - release' }
 TreeChunkPagerMorph >> updateContents [
-	treeMorph vIsScrollable 
+	treeMorph vIsScrollable
 		ifFalse: [self atBottom: true].
 	super updateContents
 ]

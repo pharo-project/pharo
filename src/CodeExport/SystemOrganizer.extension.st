@@ -1,7 +1,7 @@
 Extension { #name : #SystemOrganizer }
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOut [  
+SystemOrganizer >> fileOut [
 	"SystemOrganization fileOut"
 
 	| internalStream |
@@ -10,34 +10,33 @@ SystemOrganizer >> fileOut [
 		print: SystemOrganization;  "ends with a cr"
 		nextPutAll: ')!'; cr.
 
-	CodeExporter 
-		writeSourceCodeFrom: internalStream 
-		baseName: 'SystemOrganization.st' asFileReference nextVersion basenameWithoutExtension 
+	CodeExporter
+		writeSourceCodeFrom: internalStream
+		baseName: 'SystemOrganization.st' asFileReference nextVersion basenameWithoutExtension
 		isSt: true
-
 ]
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOutCategory: category [ 
-	"Store on the file named category (a string) concatenated with '.st' all the 
+SystemOrganizer >> fileOutCategory: category [
+	"Store on the file named category (a string) concatenated with '.st' all the
 	classes associated with the category."
-	
+
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutCategory: category on: internalStream.
-	^ CodeExporter writeSourceCodeFrom: internalStream baseName: category isSt: true 
+	^ CodeExporter writeSourceCodeFrom: internalStream baseName: category isSt: true
 ]
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOutCategory: category on: aFileStream [ 
-	"Store on the file associated with aFileStream, all the classes associated 
+SystemOrganizer >> fileOutCategory: category on: aFileStream [
+	"Store on the file associated with aFileStream, all the classes associated
 	with the category and any requested shared pools."
 	^self fileOutCategory: category on: aFileStream initializing: true
 ]
 
 { #category : #'*CodeExport' }
 SystemOrganizer >> fileOutCategory: category on: aFileStream initializing: aBool [
-	"Store on the file associated with aFileStream, all the traits and classes associated 
+	"Store on the file associated with aFileStream, all the traits and classes associated
 	with the category and any requested shared pools in the right order."
 
 	| poolSet tempClass classes traits |
@@ -52,10 +51,10 @@ SystemOrganizer >> fileOutCategory: category on: aFileStream initializing: aBool
 				tempClass shouldFileOutPool: (self environment keyAtIdentityValue: aPool)].
 			poolSet do: [:aPool | tempClass fileOutPool: aPool onFileStream: aFileStream]]].
 	traits, classes
-		do: [:each | 
+		do: [:each |
 			each
 				fileOutOn: aFileStream
 				initializing: false ]
 		separatedBy: [ aFileStream cr; nextPut: Character newPage; cr ].
-	aBool ifTrue: [classes do: [:cls | cls fileOutInitializerOn: aFileStream]].
+	aBool ifTrue: [classes do: [:cls | cls fileOutInitializerOn: aFileStream]]
 ]

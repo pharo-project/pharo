@@ -107,8 +107,8 @@ Paragraph class >> insertionPointColor: aColor [
 
 { #category : #refreshing }
 Paragraph class >> refreshAllCompositions [
-	"This method will re-compose all paragraphs in system. 
-	 This is potentially an expensive operation (and is used just in one case: when you change the 
+	"This method will re-compose all paragraphs in system.
+	 This is potentially an expensive operation (and is used just in one case: when you change the
 	 hinitng of a font through settings. See FreeTypeSettings>>hintingSymbol:"
 
 	self allSubInstances do: [ :each | each composeAll ].
@@ -121,7 +121,7 @@ Paragraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 	startBlock := self characterBlockAtPoint: aClickPoint.
 	(text attributesAt: startBlock stringIndex forStyle: textStyle)
 		select: [ :attribute | attribute mayActOnEvent: anEvent ]
-		thenDo: [ :attribute | 
+		thenDo: [ :attribute |
 			| range boxes |
 			"find the boxes for the current attribute range"
 			range := text rangeOf: attribute startingAt: startBlock stringIndex.
@@ -133,32 +133,35 @@ Paragraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 
 { #category : #private }
 Paragraph >> adjustBottomY [
-	| heights  bottomY verticalSize |
-	heights := lines collect:[:each| each lineHeight ].
+
+	| heights bottomY verticalSize |
+	heights := lines collect: [ :each | each lineHeight ].
 	verticalSize := heights sum.
 	bottomY := container top + verticalSize.
-	container := container withBottom: bottomY.
+	container := container withBottom: bottomY
 ]
 
 { #category : #private }
 Paragraph >> adjustLineIndicesBy: delta [
-	firstCharacterIndex := firstCharacterIndex + delta.
-	lines do: [:line | line slide: delta].
 
+	firstCharacterIndex := firstCharacterIndex + delta.
+	lines do: [ :line | line slide: delta ]
 ]
 
 { #category : #private }
 Paragraph >> adjustRightX [
+
 	| shrink |
 	shrink := container right - maxRightX.
-	lines do: [:line | line paddingWidth: (line paddingWidth - shrink)].
+	lines do: [ :line | line paddingWidth: line paddingWidth - shrink ].
 	container := container withRight: maxRightX
 ]
 
 { #category : #accessing }
 Paragraph >> adjustedFirstCharacterIndex [
 	"Return the index in the text where this paragraph WOULD begin if nothing had changed, except the size of the text -- ie if there have only been an insertion of deletion in the preceding morphs"
-	offsetToEnd ifNil: [^ -1].
+
+	offsetToEnd ifNil: [ ^ -1 ].
 	^ text size - offsetToEnd
 ]
 
@@ -183,14 +186,14 @@ Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 		ifTrue: [ self text removeAttribute: TextSelectionColor findReplaceSelection ].
 	findReplaceIntervals := #().
 	extraSelectionBlocks := Array
-		streamContents: [ :strm | 
+		streamContents: [ :strm |
 			findReplaceSelectionRegex
-				ifNotNil: [ 
+				ifNotNil: [
 					findReplaceIntervals := findReplaceSelectionRegex matchingRangesIn: viewedString.
 					findReplaceIntervals := (findReplaceIntervals collect: [ :r | r + topLeftBlk stringIndex - 1 ])
 						reject: [ :r | primary size > 0 and: [ (r includes: primary first) or: [ primary includes: r first ] ] ].
 					findReplaceIntervals
-						do: [ :r | 
+						do: [ :r |
 							self theme currentSettings haveFindReplaceSelectionTextColor
 								ifTrue: [ self text addAttribute: TextSelectionColor findReplaceSelection from: r first to: r last ].
 							strm
@@ -200,12 +203,12 @@ Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 										last: (self characterBlockForIndex: r last + 1)
 										color: self findReplaceSelectionColor) ] ].
 			secondarySelection
-				ifNotNil: [ 
+				ifNotNil: [
 					secondarySelectionIntervals := (secondarySelection
 						reject: [ :i | (findReplaceIntervals includes: i) or: [ i = primary or: [ i first > self text size ] ] ])
 						collect: [ :i | i first to: (i last min: self text size) ].
 					secondarySelectionIntervals
-						do: [ :r | 
+						do: [ :r |
 							self theme currentSettings haveSecondarySelectionTextColor
 								ifTrue: [ self text addAttribute: TextSelectionColor secondarySelection from: r first to: r last ].
 							strm
@@ -222,23 +225,25 @@ Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 Paragraph >> caretRect [
 	"The rectangle in which the caret was last drawn,
 	 or nil if the last drawing drew a range-selection rather than insertion point."
+
 	^ caretRect
 ]
 
 { #category : #accessing }
 Paragraph >> caretWidth [
-	^ TextEditor dumbbellCursor		
-			ifTrue: [ 2 ]		
-			ifFalse: [ 0 ]
+
+	^ TextEditor dumbbellCursor
+		  ifTrue: [ 2 ]
+		  ifFalse: [ 0 ]
 ]
 
 { #category : #alignment }
-Paragraph >> centered [ 
+Paragraph >> centered [
 	textStyle centered
 ]
 
 { #category : #selection }
-Paragraph >> characterBlockAtPoint: aPoint [ 
+Paragraph >> characterBlockAtPoint: aPoint [
 	"Answer a CharacterBlock for the character in the text at aPoint."
 	| line |
 	line := lines at: (self lineIndexForPoint: aPoint).
@@ -248,7 +253,7 @@ Paragraph >> characterBlockAtPoint: aPoint [
 ]
 
 { #category : #selection }
-Paragraph >> characterBlockForIndex: index [ 
+Paragraph >> characterBlockForIndex: index [
 	"Answer a CharacterBlock for the character in text at index."
 	| line |
 	line := lines at: (self lineIndexForCharacter: index).
@@ -260,20 +265,20 @@ Paragraph >> characterBlockForIndex: index [
 { #category : #editing }
 Paragraph >> click: anEvent for: model controller: editor [
 	"Give sensitive text a chance to fire.  Display flash: (100@100 extent: 100@100)."
-	
+
 	| action clickPoint |
-	
+
 	clickPoint := anEvent cursorPoint.
 	action := false.
 	self actionAttributesUnder: clickPoint event: anEvent do: [ :attribute| |target|
 		"evaluate the attribute action"
 		target := (model ifNil: [editor morph]).
-		(attribute actOnClick: anEvent for: target in: self editor: editor) == true 	
+		(attribute actOnClick: anEvent for: target in: self editor: editor) == true
 			ifTrue: [ ^ true ]].
-	
-	(action and: [ self currentWorld currentCursor == Cursor webLink]) 
+
+	(action and: [ self currentWorld currentCursor == Cursor webLink])
 		ifTrue:[ Cursor normal show ].
-	
+
 	^ action
 ]
 
@@ -295,7 +300,7 @@ Paragraph >> composeAll [
 		delta: 0
 		into: OrderedCollection new
 		priorLines: Array new
-		atY: container top 
+		atY: container top
 ]
 
 { #category : #composition }
@@ -313,19 +318,18 @@ Paragraph >> composeLinesFrom: start to: stop delta: delta into: lineColl priorL
 	| newResult |
 
 	newResult := self composer
-		composeLinesFrom: start 
-		to: stop 
-		delta: delta 
-		into: lineColl 
+		composeLinesFrom: start
+		to: stop
+		delta: delta
+		into: lineColl
 		priorLines: priorLines
 		atY: startingY
-		textStyle: textStyle 
-		text: text 
+		textStyle: textStyle
+		text: text
 		container: container
 		wantsColumnBreaks: wantsColumnBreaks == true.
 	lines := newResult first asArray.
-	^ maxRightX := newResult second.
-
+	^ maxRightX := newResult second
 ]
 
 { #category : #accessing }
@@ -363,12 +367,12 @@ Paragraph >> defaultCharacterBlock [
 ]
 
 { #category : #display }
-Paragraph >> displayExtraSelectionOn: aCanvas [ 
+Paragraph >> displayExtraSelectionOn: aCanvas [
 	"Send all visible lines to the displayScanner for display"
 
 	| visibleRectangle line |
 	visibleRectangle := aCanvas clipRect.
-	refreshExtraSelection = true 
+	refreshExtraSelection = true
 		ifTrue: [self buildSelectionBlocksFrom: visibleRectangle topLeft to: visibleRectangle bottomRight.
 			refreshExtraSelection := false].
 	extraSelectionBlocks ifNotNil: [
@@ -391,12 +395,11 @@ Paragraph >> displayOn: aCanvas using: displayScanner at: somePosition [
 		do: [:i | line := lines at: i.
 			self displaySelectionInLine: line on: aCanvas.
 			line first <= line last ifTrue:
-				[leftInRun := displayScanner displayLine: line offset: offset leftInRun: leftInRun]].
-
+				[leftInRun := displayScanner displayLine: line offset: offset leftInRun: leftInRun]]
 ]
 
 { #category : #display }
-Paragraph >> displaySelectionBarOn: aCanvas [ 
+Paragraph >> displaySelectionBarOn: aCanvas [
 	| visibleRectangle line |
 	selectionStart ifNil: [^ self].
 	selectionStop ifNil: [^ self].
@@ -407,9 +410,9 @@ Paragraph >> displaySelectionBarOn: aCanvas [
 ]
 
 { #category : #display }
-Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [ 
+Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [
 	"Display a SelectionBlock if it does not overlap vith the regular selection"
-	
+
 	(selectionStart notNil and: [selectionStop notNil and: [selectionStart ~= selectionStop]])
 		ifTrue: [	| startIdx stopIdx selSartIdx selStopIdx selBlockRange selRange |
 			startIdx := aSelBlock first stringIndex.
@@ -418,61 +421,60 @@ Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [
 			selStopIdx := selectionStop stringIndex.
 			selBlockRange := (startIdx) to: (stopIdx).
 			selRange := (selSartIdx) to: (selStopIdx).
-			((selBlockRange rangeIncludes: selSartIdx + 1) or: [(selBlockRange rangeIncludes: selStopIdx - 1) 
+			((selBlockRange rangeIncludes: selSartIdx + 1) or: [(selBlockRange rangeIncludes: selStopIdx - 1)
 				or: [(selRange rangeIncludes: startIdx + 1) or: [selRange rangeIncludes: stopIdx - 1]]])
 				ifTrue: [^ self]]. "regular selection and this selection block overlap"
 	aSelBlock displayInLine: line on: aCanvas
-
 ]
 
 { #category : #display }
-Paragraph >> displaySelectionInLine: line on: aCanvas [ 
+Paragraph >> displaySelectionInLine: line on: aCanvas [
 	| leftX rightX w caretColor |
 	selectionStart ifNil: [^self].	"No selection"
 	aCanvas isShadowDrawing ifTrue: [ ^self ].	"don't draw selection with shadow"
-	selectionStart = selectionStop 
-		ifTrue: 
+	selectionStart = selectionStop
+		ifTrue:
 			["Only show caret on line where clicked"
 
 			selectionStart textLine ~= line ifTrue: [^self]]
-		ifFalse: 
+		ifFalse:
 			["Test entire selection before or after here"
 
-			(selectionStop stringIndex < line first 
+			(selectionStop stringIndex < line first
 				or: [selectionStart stringIndex > (line last + 1)]) ifTrue: [^self].	"No selection on this line"
-			(selectionStop stringIndex = line first 
+			(selectionStop stringIndex = line first
 				and: [selectionStop textLine ~= line]) ifTrue: [^self].	"Selection ends on line above"
-			(selectionStart stringIndex = (line last + 1) 
+			(selectionStart stringIndex = (line last + 1)
 				and: [selectionStop textLine ~= line]) ifTrue: [^self]].	"Selection begins on line below"
-	leftX := (selectionStart stringIndex < line first 
+	leftX := (selectionStart stringIndex < line first
 				ifTrue: [line ]
 				ifFalse: [selectionStart ])left.
-	rightX := (selectionStop stringIndex > (line last + 1) or: 
-					[selectionStop stringIndex = (line last + 1) 
-						and: [selectionStop textLine ~= line]]) 
+	rightX := (selectionStop stringIndex > (line last + 1) or:
+					[selectionStop stringIndex = (line last + 1)
+						and: [selectionStop textLine ~= line]])
 				ifTrue: [line right]
 				ifFalse: [selectionStop left].
-	selectionStart = selectionStop 
-		ifTrue: 
+	selectionStart = selectionStop
+		ifTrue:
 			[rightX := rightX + 1.
 			w := self caretWidth.
 			caretRect := (leftX-w) @ line top corner: (rightX+w)@ line bottom.
 			self showCaret ifFalse:[^self].
 			caretColor := self insertionPointColor.
 			1 to: w
-				do: 
-					[:i | 
+				do:
+					[:i |
 					"Draw caret triangles at top and bottom"
 
-					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line top + i - 1) 
+					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line top + i - 1)
 								extent: ((w - i) * 2 + 3) @ 1)
 						color: caretColor.
-					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line bottom - i) 
+					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line bottom - i)
 								extent: ((w - i) * 2 + 3) @ 1)
 						color: caretColor].
 			aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom)
 				color: caretColor]
-		ifFalse: 
+		ifFalse:
 			[caretRect := nil.
 			aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom)
 				color: self selectionColor]
@@ -492,10 +494,9 @@ Paragraph >> extraSelectionChanged [
 Paragraph >> extraSelectionRects [
 	"Return an array of rectangles representing the findReplace and the secondary selection regions."
 	^ Array streamContents: [:strm |
-		extraSelectionBlocks 
-			ifNotNil: [:blocks | 
+		extraSelectionBlocks
+			ifNotNil: [:blocks |
 				blocks do: [:selBlock | strm nextPutAll: (self selectionRectsFrom: selBlock first to: selBlock last)]]]
-
 ]
 
 { #category : #private }
@@ -510,7 +511,7 @@ Paragraph >> fastFindFirstLineSuchThat: lineBlock [
 	high := lines size.
 	[index := high + low // 2.
 	low > high]
-		whileFalse: 
+		whileFalse:
 			[(lineBlock value: (lines at: index))
 				ifTrue: [high := index - 1]
 				ifFalse: [low := index + 1]].
@@ -520,13 +521,11 @@ Paragraph >> fastFindFirstLineSuchThat: lineBlock [
 { #category : #selection }
 Paragraph >> findReplaceSelectionColor [
 	^  self theme currentSettings findReplaceSelectionColor
-
 ]
 
 { #category : #selection }
 Paragraph >> findReplaceSelectionRegex: aRegex [
-	findReplaceSelectionRegex := aRegex.
-
+	findReplaceSelectionRegex := aRegex
 ]
 
 { #category : #accessing }
@@ -537,7 +536,6 @@ Paragraph >> firstCharacterIndex [
 { #category : #accessing }
 Paragraph >> focused [
 	^ focused ifNil: [focused := false]
-
 ]
 
 { #category : #accessing }
@@ -549,7 +547,6 @@ Paragraph >> focused: aBoolean [
 Paragraph >> hasExtraSelection [
 	"Return true if I've some findReplace or secondary selection"
 	^ extraSelectionBlocks isEmptyOrNil not
-
 ]
 
 { #category : #private }
@@ -565,9 +562,8 @@ Paragraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	 first > 1 and: [crlf includes: (text string at: first - 1)]] whileTrue: "word wrap"
 		[arrayIndex := arrayIndex - 1].
 	last := (lines at: arrayIndex) last.
-	
-	^(text string copyFrom: first to: last) indentationIfBlank: aBlock.
 
+	^(text string copyFrom: first to: last) indentationIfBlank: aBlock
 ]
 
 { #category : #initialization }
@@ -585,7 +581,7 @@ Paragraph >> insertionPointColor [
 ]
 
 { #category : #alignment }
-Paragraph >> justified [ 
+Paragraph >> justified [
 	textStyle justified
 ]
 
@@ -595,7 +591,7 @@ Paragraph >> lastCharacterIndex [
 ]
 
 { #category : #alignment }
-Paragraph >> leftFlush [ 
+Paragraph >> leftFlush [
 	textStyle leftFlush
 ]
 
@@ -622,12 +618,11 @@ Paragraph >> lineIndexForPoint: aPoint [
 ]
 
 { #category : #private }
-Paragraph >> lineIndexOfCharacterIndex: characterIndex [ 
+Paragraph >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	"apparently the selector changed with NewParagraph"
 
-	^self lineIndexForCharacter: characterIndex 
-
+	^self lineIndexForCharacter: characterIndex
 ]
 
 { #category : #private }
@@ -643,21 +638,21 @@ Paragraph >> maxRightX [
 { #category : #editing }
 Paragraph >> move: anEvent for: model controller: editor [
 	"Give sensitive text a chance to fire.  Display flash: (100@100 extent: 100@100)."
-	
+
 	| action clickPoint |
-	
+
 	clickPoint := anEvent cursorPoint.
 	action := false.
-	
+
 	self actionAttributesUnder: clickPoint event: anEvent do: [ :attribute| |target|
 		"evaluate the attribute action"
 		target := (model ifNil: [editor morph]).
-		(attribute actOnMove: anEvent for: target in: self editor: editor) == true 	
+		(attribute actOnMove: anEvent for: target in: self editor: editor) == true
 			ifTrue: [ ^ true ]].
-	
-	(action and: [ self currentWorld currentCursor == Cursor webLink]) 
+
+	(action and: [ self currentWorld currentCursor == Cursor webLink])
 		ifTrue:[ Cursor normal show ].
-	
+
 	^ action
 ]
 
@@ -670,7 +665,7 @@ Paragraph >> moveBy: delta [
 ]
 
 { #category : #composition }
-Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl priorLines: priorLines atY: startingY [ 
+Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl priorLines: priorLines atY: startingY [
 	"While the section from start to stop has changed, composition may
 	ripple all the way to the end of the text. However in a rectangular
 	container, if we ever find a line beginning with the same character as
@@ -691,9 +686,7 @@ Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl p
 				wantsColumnBreaks: wantsColumnBreaks == true.
 	lines := newResult first asArray.
 	"maxRightX printString displayAt: 0@0."
-	^ maxRightX := newResult second.
-
-
+	^ maxRightX := newResult second
 ]
 
 { #category : #accessing }
@@ -708,7 +701,7 @@ Paragraph >> positionWhenComposed: pos [
 ]
 
 { #category : #composition }
-Paragraph >> recomposeFrom: start to: stop delta: delta [ 
+Paragraph >> recomposeFrom: start to: stop delta: delta [
 	"Recompose this paragraph. The altered portion is between start and
 	stop. Recomposition may continue to the end of the text, due to a
 	ripple effect.
@@ -743,20 +736,20 @@ Paragraph >> recomposeFrom: start to: stop delta: delta [
 
 { #category : #editing }
 Paragraph >> replaceFrom: start to: stop with: aText [
-	"Edit the text, and then recompose the lines." 
+	"Edit the text, and then recompose the lines."
 	text replaceFrom: start to: stop with: aText.
 	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop-start+1)
 ]
 
 { #category : #editing }
-Paragraph >> replaceFrom: start to: stop with: aText displaying: displayBoolean [ 
-	"Edit the text, and then recompose the lines." 
+Paragraph >> replaceFrom: start to: stop with: aText displaying: displayBoolean [
+	"Edit the text, and then recompose the lines."
 	text replaceFrom: start to: stop with: aText.
 	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop-start+1)
 ]
 
 { #category : #alignment }
-Paragraph >> rightFlush [ 
+Paragraph >> rightFlush [
 	textStyle rightFlush
 ]
 
@@ -767,14 +760,12 @@ Paragraph >> secondarySelection [
 
 { #category : #selection }
 Paragraph >> secondarySelection: aSubstring [
-	secondarySelection := aSubstring.
-
+	secondarySelection := aSubstring
 ]
 
 { #category : #selection }
 Paragraph >> secondarySelectionColor [
 	^  self theme secondarySelectionColor
-
 ]
 
 { #category : #selection }
@@ -784,14 +775,13 @@ Paragraph >> selectionBarColor [
 
 { #category : #selection }
 Paragraph >> selectionColor [
-	^ self focused 
+	^ self focused
 		ifTrue: [ self theme selectionColor]
-		ifFalse: [ self theme unfocusedSelectionColor ].
-
+		ifFalse: [ self theme unfocusedSelectionColor ]
 ]
 
 { #category : #selection }
-Paragraph >> selectionColor: aColor [ 
+Paragraph >> selectionColor: aColor [
 	"ignored"
 ]
 
@@ -809,7 +799,7 @@ Paragraph >> selectionRects [
 ]
 
 { #category : #selection }
-Paragraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [ 
+Paragraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	"Return an array of rectangles representing the area between the two character blocks given as arguments."
 	| line1 line2 rects cb1 cb2 w |
 	characterBlock1 <= characterBlock2
@@ -842,19 +832,17 @@ Paragraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 { #category : #selection }
 Paragraph >> selectionStart: startBlock selectionStop: stopBlock [
 	selectionStart := startBlock.
-	selectionStop := stopBlock.
+	selectionStop := stopBlock
 ]
 
 { #category : #accessing }
 Paragraph >> showCaret [
 	^showCaret ifNil:[true]
-
 ]
 
 { #category : #accessing }
 Paragraph >> showCaret: aBool [
 	showCaret := aBool
-
 ]
 
 { #category : #accessing }
@@ -877,7 +865,7 @@ Paragraph >> textStyle [
 ]
 
 { #category : #accessing }
-Paragraph >> textStyle: aTextStyle [ 
+Paragraph >> textStyle: aTextStyle [
 	"Set the style by which the receiver should display its text."
 	textStyle := aTextStyle
 ]
@@ -887,7 +875,7 @@ Paragraph >> textStyle: ts lines: l text: t [
 	"Private -- just a service for deepCopy"
 	textStyle := ts.
 	lines := l.
-	text := t.
+	text := t
 ]
 
 { #category : #accessing }

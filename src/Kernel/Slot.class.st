@@ -40,16 +40,15 @@ Slot class >> asSlot [
 { #category : #validating }
 Slot class >> checkValidName: aSymbol [
 
-	aSymbol startsWithDigit ifTrue: [ 
+	aSymbol startsWithDigit ifTrue: [
 		^ InvalidSlotName signalFor: aSymbol ].
 
-	(self isPseudovariableName: aSymbol) ifTrue: [ 
+	(self isPseudovariableName: aSymbol) ifTrue: [
 		^ InvalidSlotName signalFor: aSymbol ].
-	
 
-	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
+
+	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [
 		^ InvalidSlotName signalFor: aSymbol ]
-
 ]
 
 { #category : #testing }
@@ -65,7 +64,7 @@ Slot class >> isUsed [
 { #category : #testing }
 Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
-	^self environment allBehaviors 
+	^self environment allBehaviors
 		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
@@ -103,12 +102,6 @@ Slot >> definingClass: aClass [
 ]
 
 { #category : #printing }
-Slot >> definitionOn: aStream [
-	"Every subclass that adds state must redefine either this method or #printOn:"
-	^ self printOn: aStream
-]
-
-{ #category : #printing }
 Slot >> definitionString [
 	"Every subclass that adds state must redefine either this method or #printOn:"
 	^ String streamContents: [:s | self definitionOn: s]
@@ -118,7 +111,7 @@ Slot >> definitionString [
 Slot >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := '0slotTempForStackManipulation'.  
+	tempName := '0slotTempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -159,7 +152,7 @@ Slot >> ensureSlotInitializationFor: aClass [
 
 	source := (aClass >> #initialize) sourceCode allButFirst: 10.
 	source := 'initialize
-	
+
 	self class initializeSlots: self.' , source.
 
 	Author useAuthor: 'Generated' during: [ aClass compile: source classified: 'initialization' ]
@@ -172,8 +165,6 @@ Slot >> hasSameDefinitionAs: otherSlot [
 	(e.g. the index in IndexSlot).
 	This method then is overriden to not take that state into account"
 	^self = otherSlot
-	
-
 ]
 
 { #category : #initialization }
@@ -184,7 +175,7 @@ Slot >> initialize: instance [
 { #category : #'class building' }
 Slot >> installingIn: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
-	self wantsInitialization ifTrue: [ self ensureSlotInitializationFor: aClass ].
+	self wantsInitialization ifTrue: [ self ensureSlotInitializationFor: aClass ]
 ]
 
 { #category : #testing }
@@ -212,9 +203,9 @@ Slot >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 Slot >> isReferenced [
-	^ self owningClass 
-		ifNil: [ false ] 
-		ifNotNil: [ :class | 
+	^ self owningClass
+		ifNil: [ false ]
+		ifNotNil: [ :class |
 		  class withAllSubclasses anySatisfy: [ :subclass | subclass hasMethodAccessingVariable: self ] ]
 ]
 
@@ -260,7 +251,7 @@ Slot >> owningClass: aClass [
 { #category : #printing }
 Slot >> printOn: aStream [
 	"Every subclass that adds state must redefine either this method or #definitionString"
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name
@@ -306,7 +297,7 @@ Slot >> sendsInitializeSlots: aClass [
 
 { #category : #accessing }
 Slot >> size [
-	"normally a slot takes one ivar. Virtual slots do not take space. 
+	"normally a slot takes one ivar. Virtual slots do not take space.
 	 We could even have Slots that map to multiple ivars"
 	^self isVirtual ifTrue: [0] ifFalse: [1]
 ]
@@ -319,9 +310,9 @@ Slot >> storeOn: aStream [
 { #category : #queries }
 Slot >> usingMethods [
 	"All methods that read or write the slot"
-	^self owningClass 
+	^self owningClass
 		ifNil: [ #() ]
-		ifNotNil: [:class | class allMethodsAccessingSlot: self].
+		ifNotNil: [:class | class allMethodsAccessingSlot: self]
 ]
 
 { #category : #'meta-object-protocol' }

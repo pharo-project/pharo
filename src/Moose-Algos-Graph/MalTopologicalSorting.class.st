@@ -49,7 +49,7 @@ MalTopologicalSorting >> removeVerticeWithNoIncomingEdge [
 	
 	vertice := verticesWithNoIncomingEdge anyOne.
 	verticesWithNoIncomingEdge remove: vertice.
-	^ vertice	
+	^ vertice
 ]
 
 { #category : #running }

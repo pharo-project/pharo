@@ -13,22 +13,22 @@ Class {
 
 { #category : #iterating }
 HandleMorph >> forEachPointDo: aBlock [
+
 	pointBlock := aBlock
 ]
 
 { #category : #iterating }
 HandleMorph >> forEachPointDo: aBlock lastPointDo: otherBlock [
+
 	pointBlock := aBlock.
 	lastPointBlock := otherBlock
 ]
 
 { #category : #initialization }
 HandleMorph >> initialize [
-	"initialize the state of the receiver"
-	
+
 	super initialize.
 	self extent: 8 @ 8
-	
 ]
 
 { #category : #'dropping/grabbing' }
@@ -64,13 +64,13 @@ HandleMorph >> keyDown: evt [
 
 { #category : #stepping }
 HandleMorph >> step [
+
 	pointBlock value: self center
 ]
 
 { #category : #stepping }
 HandleMorph >> stepTime [
 	"Update every hundredth of a second."
-	
-	^ 10
 
+	^ 10
 ]

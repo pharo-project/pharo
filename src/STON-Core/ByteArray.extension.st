@@ -1,18 +1,18 @@
 Extension { #name : #ByteArray }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 ByteArray class >> fromSton: stonReader [
 	"Use a hex representation"
 	
 	^ self readHexFrom: stonReader parseListSingleton
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 ByteArray >> stonContainSubObjects [ 
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 ByteArray >> stonOn: stonWriter [
 	"Use a hex representation"
 	

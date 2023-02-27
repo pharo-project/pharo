@@ -12,12 +12,12 @@ IndentingListItemMorph >> changed [
 { #category : #'*Polymorph-Widgets' }
 IndentingListItemMorph >> drawMouseDownHighlightOn: aCanvas [
 	"Draw with a dotted border."
-	
+
 	|frame|
 	self highlightedForMouseDown ifTrue: [
 		container ifNil: [^super drawMouseDownHighlightOn: aCanvas].
 		frame := self selectionFrame.
-		aCanvas 
+		aCanvas
 			frameRectangle: frame
 			width: 1
 			colors: {container mouseDownHighlightColor. Color transparent}
@@ -51,7 +51,7 @@ IndentingListItemMorph >> measureContents [
 IndentingListItemMorph >> openItemPath: anArray [
 	"Open a path based on wrapper item equivalence. Generally more specific
 	than #openPath: (string based)."
-	
+
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container setSelectedMorph: nil].
@@ -77,7 +77,7 @@ IndentingListItemMorph >> openItemPath: anArray [
 { #category : #'*Polymorph-Widgets' }
 IndentingListItemMorph >> outerBounds [
 	"Return the 'outer' bounds of the receiver, e.g., the bounds that need to be invalidated when the receiver changes."
-	
+
 	|box|
 	box := super outerBounds.
 	container ifNil: [^box].

@@ -18,9 +18,9 @@ Class {
 
 { #category : #'field definition' }
 TFLongTestStruct class >> fieldsDesc [
-	
+
 	"self rebuildFieldAccessors"
-	
+
 	^ #(
 	Char100 a;
 	float b;
@@ -31,7 +31,7 @@ TFLongTestStruct class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'field definition' }
+{ #category : #'class initialization' }
 TFLongTestStruct class >> initialize [
 	Char100 := FFITypeArray ofType: 'char' size: 100
 ]

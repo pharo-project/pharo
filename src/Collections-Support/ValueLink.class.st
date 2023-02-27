@@ -21,8 +21,8 @@ ValueLink class >> value:	 aValue [
 
 { #category : #comparing }
 ValueLink >> = anotherObject [
-	^self species == anotherObject species 
-		and: [self value = anotherObject value 
+	^self species == anotherObject species
+		and: [self value = anotherObject value
 				and: [self nextLink == anotherObject nextLink]]
 ]
 
@@ -36,8 +36,7 @@ ValueLink >> asLinkPrepend: anObject [
 
 { #category : #comparing }
 ValueLink >> hash [
-	^self value hash bitXor: nextLink identityHash 
-
+	^self value hash bitXor: nextLink identityHash
 ]
 
 { #category : #printing }
@@ -45,12 +44,11 @@ ValueLink >> printOn: aStream [
 	aStream nextPutAll: 'ValueLink('.
 	value printOn: aStream.
 	aStream nextPut: $)
-
 ]
 
 { #category : #evaluating }
 ValueLink >> value [
-	^value 
+	^value
 ]
 
 { #category : #accessing }

@@ -36,7 +36,7 @@ Class {
 
 { #category : #'builder api' }
 IRBuilder class >> buildIR: aBlock [
-	^(aBlock value: self new) ir.
+	^(aBlock value: self new) ir
 ]
 
 { #category : #'builder api' }
@@ -46,7 +46,7 @@ IRBuilder class >> buildMethod: aBlock [
 
 { #category : #private }
 IRBuilder >> add: instr [
-	
+
 	"Associate instr with current parse node or byte range"
 	instr sourceNode: self sourceNode.
 	instr bytecodeIndex: self sourceByteIndex.
@@ -55,17 +55,17 @@ IRBuilder >> add: instr [
 
 { #category : #instructions }
 IRBuilder >> addBlockReturnTopIfRequired [
-	"If the current sequence is empty this means that there was a returntop before 
+	"If the current sequence is empty this means that there was a returntop before
 	then since there is no more stmts we do not need a blockreturntop"
-	
+
 	"cant we optimize this away later? Then the frontend can always just add a return...."
-	
+
 	| predecessors |
 	self flag: 'cant we do this automatically.... frontend always adds return, we ignore it if there is a ret method before?'.
-	
+
 	predecessors := ir predecessorsOf: currentSequence.
-	(currentSequence isEmpty and: [(predecessors isEmpty) or: [((ir predecessorsOf: currentSequence) 
-								anySatisfy: [:each | (each last isBlockReturnTop not) and: [(each last isReturn) 
+	(currentSequence isEmpty and: [(predecessors isEmpty) or: [((ir predecessorsOf: currentSequence)
+								anySatisfy: [:each | (each last isBlockReturnTop not) and: [(each last isReturn)
 												or: [(each size > 1) and: [(each at: each size -1) isReturn] ]]])] ])
 							ifTrue: [self popScope]
 							ifFalse: [self blockReturnTop ]
@@ -82,7 +82,7 @@ IRBuilder >> addJumpBackTarget: label to: sequence [
 IRBuilder >> addLiteral: aLiteral [
 	"Add this literal at the end of the literal array if there is space left"
 	aLiteral ifNil: [ ^ self ].
-	ir addAdditionalLiteral: aLiteral.
+	ir addAdditionalLiteral: aLiteral
 ]
 
 { #category : #initialize }
@@ -92,53 +92,52 @@ IRBuilder >> addPragma: aPragma [
 
 { #category : #initialize }
 IRBuilder >> addTemp: tempKey [
-	
+
 	| tempMap |
 	tempMap := self currentScope tempMap.
-	
+
 	"adding the same var multiple times reuses the same offset"
 	(tempMap includesKey: tempKey) ifTrue: [ ^ 	self cacheIndex: tempKey ].
-	
+
 	tempMap at: tempKey put: tempMap size + 1.
-	self cacheIndex: tempKey.
+	self cacheIndex: tempKey
 ]
 
 { #category : #initialize }
 IRBuilder >> addTemps: newKeys [
 	newKeys do: [ :key | self addTemp: key ]
-
 ]
 
 { #category : #initialize }
 IRBuilder >> additionalLiterals:  literals [
 	"Add this literal at the end of the literal array if there is space left"
-	ir addAdditionalLiterals: literals.
+	ir addAdditionalLiterals: literals
 ]
 
 { #category : #instructions }
 IRBuilder >> blockReturnTop [
 	| retInst |
-	
+
 	retInst := IRInstruction blockReturnTop.
 	self add: retInst.
 	self startNewSequence.
 	retInst  successor: currentSequence.
-	self popScope.
+	self popScope
 ]
 
 { #category : #initialize }
 IRBuilder >> cacheIndex: tempKey [
 	"if we have the ast, we can store the temp offset"
-	self sourceNode ifNotNil: [ :sourceNode | 
+	self sourceNode ifNotNil: [ :sourceNode |
 		| var |
 		var := sourceNode scope lookupVar: tempKey.
 		"some vars (e.g. limits in loops) do not exist on the AST level"
-		var ifNotNil: [ var index: (self currentScope tempMap at: tempKey) ] ].
+		var ifNotNil: [ var index: (self currentScope tempMap at: tempKey) ] ]
 ]
 
 { #category : #accessing }
 IRBuilder >> compilationContext [
-	^ir compilationContext 
+	^ir compilationContext
 ]
 
 { #category : #initialize }
@@ -148,10 +147,10 @@ IRBuilder >> compilationContext: aCompilationContext [
 
 { #category : #initialize }
 IRBuilder >> createTempVectorNamed: name withVars: anArray [
-	
+
 	self addTemp: name.
 	self add: (IRInstruction createTempVectorNamed: name withVars: anArray).
-	
+
 	"if we have the ast, we can store the temp offsets"
 	self sourceNode ifNotNil: [ :sourceNode |
 		anArray doWithIndex: [ :varName :i|
@@ -159,7 +158,7 @@ IRBuilder >> createTempVectorNamed: name withVars: anArray [
 ]
 
 { #category : #scopes }
-IRBuilder >> currentScope [ 
+IRBuilder >> currentScope [
 	^currentScope top
 ]
 
@@ -171,7 +170,7 @@ IRBuilder >> initialize [
 	sourceMapNodes := OrderedCollection new.	"stack"
 	currentScope := Stack new.
 	self pushScope: ir.
-	
+
 	"Leave an empty sequence up front (guaranteed not to be in loop)"
 	ir startSequence: ((IRSequence orderNumber: 0) method:ir).
 	currentSequence := (IRSequence orderNumber: 1) method:ir.
@@ -179,8 +178,7 @@ IRBuilder >> initialize [
 		(IRJump new
 			destination: currentSequence;
 			bytecodeIndex: sourceMapByteIndex;
-			yourself).
-
+			yourself)
 ]
 
 { #category : #results }
@@ -203,8 +201,7 @@ IRBuilder >> jumpAheadTarget: labelSymbol [
 	self startNewSequence.
 	jumpInstr := (jumpAheadStacks at: labelSymbol ifAbsent: [
 			self error: 'Missing jumpAheadTo: ', labelSymbol printString]) removeLast.
-	jumpInstr destination: currentSequence.
-
+	jumpInstr destination: currentSequence
 ]
 
 { #category : #instructions }
@@ -215,8 +212,7 @@ IRBuilder >> jumpAheadTo: labelSymbol [
 
 	(jumpAheadStacks at: labelSymbol ifAbsentPut: [OrderedCollection new])
 		addLast: (self add: IRJump new).
-	self startNewSequence.
-
+	self startNewSequence
 ]
 
 { #category : #instructions }
@@ -228,8 +224,7 @@ IRBuilder >> jumpAheadTo: labelSymbol if: boolean [
 	(jumpAheadStacks at: labelSymbol ifAbsentPut: [OrderedCollection new])
 		addLast: (instr := self add: (IRJumpIf new boolean: boolean)).
 	self startNewSequence.
-	instr otherwise: currentSequence.
-
+	instr otherwise: currentSequence
 ]
 
 { #category : #instructions }
@@ -238,8 +233,7 @@ IRBuilder >> jumpBackTarget: labelSymbol [
 
 	self startNewSequence.
 	(jumpBackTargetStacks at: labelSymbol ifAbsentPut: [OrderedCollection new])
-		addLast: currentSequence.
-
+		addLast: currentSequence
 ]
 
 { #category : #instructions }
@@ -251,8 +245,7 @@ IRBuilder >> jumpBackTo: labelSymbol [
 	jump := IRJump new destination: sequence.
 	self add: jump.
 	self startNewSequence.
-	jump successor: currentSequence.
-	
+	jump successor: currentSequence
 ]
 
 { #category : #mapping }
@@ -272,7 +265,7 @@ IRBuilder >> mapToNode: object [
 { #category : #initialize }
 IRBuilder >> numArgs: anInteger [
 	ir numArgs: anInteger.
-	ir sourceNode: self sourceNode.
+	ir sourceNode: self sourceNode
 ]
 
 { #category : #mapping }
@@ -283,7 +276,7 @@ IRBuilder >> popMap [
 
 { #category : #scopes }
 IRBuilder >> popScope [
-	currentScope pop.
+	currentScope pop
 ]
 
 { #category : #instructions }
@@ -295,24 +288,6 @@ IRBuilder >> popTop [
 { #category : #accessing }
 IRBuilder >> properties: aDict [
 	ir properties: aDict
-]
-
-{ #category : #instructions }
-IRBuilder >> pushClosureCopyCopiedValues: copiedValuesNames args: args jumpTo: aJumpLabel [
-	
-	|  irInstruction |
-	
-	irInstruction := IRInstruction pushClosureCopyCopiedValues: copiedValuesNames args: args.
-	self add: irInstruction.
-	(jumpAheadStacks at: aJumpLabel ifAbsentPut: [OrderedCollection new]) addLast: irInstruction.
-	self startNewSequence.
-	irInstruction blockSequence: currentSequence.
-	self pushScope: irInstruction.
-	self addTemps: args.
-	self addTemps: copiedValuesNames.
-
-
-	^irInstruction
 ]
 
 { #category : #instructions }
@@ -334,9 +309,15 @@ IRBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedVal
 ]
 
 { #category : #instructions }
+IRBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean [
+
+	^ self add: (IRInstruction pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean)
+]
+
+{ #category : #instructions }
 IRBuilder >> pushInstVar: index [
 
-	self add: (IRInstruction pushInstVar: index).
+	self add: (IRInstruction pushInstVar: index)
 ]
 
 { #category : #instructions }
@@ -397,8 +378,7 @@ IRBuilder >> pushThisProcess [
 IRBuilder >> returnTop [
 
 	self add: IRInstruction returnTop.
-	self startNewSequence.
-
+	self startNewSequence
 ]
 
 { #category : #instructions }
@@ -430,26 +410,25 @@ IRBuilder >> sourceNode [
 IRBuilder >> startNewSequence [
 	"End current instruction sequence and start a new sequence to add instructions to.  If ending block just falls through to new block then add an explicit jump to it so they stay linked"
 
-	| newSequence | 
+	| newSequence |
 	currentSequence ifEmpty: [^ self].	"block is still empty, continue using it"
 	newSequence := IRSequence orderNumber: currentSequence orderNumber + 1.
 	newSequence method: ir.
 
 	currentSequence last transitionsToNextSequence
 		ifFalse: [ self add: (IRJump new destination: newSequence)].
-	currentSequence := newSequence.
-
+	currentSequence := newSequence
 ]
 
 { #category : #instructions }
 IRBuilder >> storeInstVar: name [
 
-	^self add: (IRInstruction storeInstVar: name).
+	^self add: (IRInstruction storeInstVar: name)
 ]
 
 { #category : #instructions }
 IRBuilder >> storeIntoLiteralVariable: name [
-	
+
 	^self add: (IRInstruction storeIntoLiteralVariable: name)
 ]
 

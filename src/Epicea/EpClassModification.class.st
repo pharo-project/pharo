@@ -18,7 +18,6 @@ EpClassModification class >> oldClass: anOldClass newClass: aNewClass [
 		initializeOldClass: anOldClass
 		newClass: aNewClass;
 		yourself
-
 ]
 
 { #category : #visitor }
@@ -39,7 +38,7 @@ EpClassModification >> behaviorAffectedName [
 
 { #category : #testing }
 EpClassModification >> hasChanges [
-	^ oldClass definitionSource ~= newClass definitionSource or: [ 
+	^ oldClass definitionSource ~= newClass definitionSource or: [
 		oldClass classSide definitionSource ~= newClass classSide definitionSource ]
 ]
 
@@ -64,7 +63,7 @@ EpClassModification >> initializeOldClass: anOldClass newClass: aNewClass [
 
 	self initialize.
 	oldClass := anOldClass asEpiceaRingDefinition instanceSide.
-	newClass := aNewClass asEpiceaRingDefinition instanceSide.
+	newClass := aNewClass asEpiceaRingDefinition instanceSide
 ]
 
 { #category : #accessing }

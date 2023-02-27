@@ -9,25 +9,16 @@ Class {
 }
 
 { #category : #execution }
-SycOpenMethodMenuCommand >> activationStrategy [ 
+SycOpenMethodMenuCommand >> activationStrategy [
 	^ SycMethodMenuActivation
 ]
 
 { #category : #'context menu' }
-SycOpenMethodMenuCommand >> cmCommandClass [ 
+SycOpenMethodMenuCommand >> cmCommandClass [
 	^ SycMethodCmCommand
 ]
 
 { #category : #accessing }
 SycOpenMethodMenuCommand >> defaultMenuItemName [
 	^'Refactorings'
-]
-
-{ #category : #execution }
-SycOpenMethodMenuCommand >> execute [
-
-	context selectedTextInterval ifEmpty: [ 
-		context showSourceNode].
-	
-	super execute
 ]

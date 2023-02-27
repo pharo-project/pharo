@@ -33,7 +33,7 @@ CoPackageImplementedMessagesFetcher >> completionPackage: anObject [
 
 { #category : #enumerating }
 CoPackageImplementedMessagesFetcher >> entriesDo: aBlock [
-	
+
 	SystemNavigation new allSentMessagesInPackage: completionPackage do: [ :e |
 		aBlock value: (NECSelectorEntry contents: e node: astNode)]
 ]

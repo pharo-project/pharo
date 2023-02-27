@@ -30,7 +30,7 @@ ReadStream >> next [
 ]
 
 { #category : #accessing }
-ReadStream >> next: anInteger [ 
+ReadStream >> next: anInteger [
 	"Answer the next anInteger elements of my collection.  overriden for efficiency"
 
 	| ans endPosition |
@@ -39,7 +39,6 @@ ReadStream >> next: anInteger [
 	ans := collection copyFrom: position+1 to: endPosition.
 	position := endPosition.
 	^ans
-
 ]
 
 { #category : #accessing }
@@ -62,13 +61,13 @@ ReadStream >> on: aCollection from: firstIndex to: lastIndex [
 
 { #category : #accessing }
 ReadStream >> readInto: aCollection startingAt: startIndex count: n [
-	"Read n objects into the given collection. 
+	"Read n objects into the given collection.
 	Return number of elements that have been read."
-	
+
 	| max |
 	max := (readLimit - position) min: n.
-	aCollection 
-		replaceFrom: startIndex 
+	aCollection
+		replaceFrom: startIndex
 		to: startIndex + max - 1
 		with: collection
 		startingAt: position + 1.
@@ -95,7 +94,7 @@ ReadStream >> skipTo: anObject [
 	| end |
 	end := collection indexOf: anObject startingAt: position+1 ifAbsent: [ 0 ].
 
-	^(end = 0 or: [end > readLimit]) 
+	^(end = 0 or: [end > readLimit])
 		ifTrue: [ self setToEnd. false ]
 		ifFalse: [ position := end. true]
 ]
@@ -108,7 +107,7 @@ ReadStream >> upTo: anObject [
 	start := position+1.
 	end := collection indexOf: anObject startingAt: start ifAbsent: [ 0 ].
 
-	"not present--return rest of the collection"	
+	"not present--return rest of the collection"
 	(end = 0 or: [end > readLimit]) ifTrue: [ ^self upToEnd ].
 
 	"skip to the end and return the data passed over"

@@ -24,22 +24,21 @@ Class {
 MorphTreeNodeMorph >> acceptDroppingMorph: toDrop event: evt [
 	complexContents acceptDroppingObject: toDrop complexContents.
 	toDrop delete.
-	self highlightForDrop: false.
+	self highlightForDrop: false
 ]
 
 { #category : #updating }
 MorphTreeNodeMorph >> addChildrenForList: hostList addingTo: morphList withExpandedItems: expandedItems [
-	firstChild 
+	firstChild
 		ifNotNil: [
 			firstChild withSiblingsDo: [ :aNode | aNode delete].
 			firstChild := nil].
 	complexContents hasContents ifFalse: [^self].
-	firstChild := hostList 
+	firstChild := hostList
 		addMorphsTo: morphList
 		from: complexContents contents
 		withExpandedItems: expandedItems
-		atLevel: indentLevel + 1.
-
+		atLevel: indentLevel + 1
 ]
 
 { #category : #updating }
@@ -50,8 +49,8 @@ MorphTreeNodeMorph >> adoptPaneColor: aColor [
 MorphTreeNodeMorph >> announceDeleted [
 
 	complexContents ifNotNil: [ complexContents removeDependent: self ].
-	
-	super announceDeleted.
+
+	super announceDeleted
 ]
 
 { #category : #accessing }
@@ -72,7 +71,7 @@ MorphTreeNodeMorph >> boundsForBalloon [
 MorphTreeNodeMorph >> buildRowMorph [
 	| rowControls colAndControls |
 	controls := OrderedCollection new.
-	colAndControls := container columns 
+	colAndControls := container columns
 		collect: [:col | | v |
 			v := col rowMorphFor: complexContents.
 			controls add: v.
@@ -83,22 +82,20 @@ MorphTreeNodeMorph >> buildRowMorph [
 			col := ctrl key.
 			morph := ctrl value.
 			morph clipSubmorphs: true.
-			morph vResizing: #shrinkWrap.  
+			morph vResizing: #shrinkWrap.
 			rowControls add: morph.
 			(morph = controls last and: [container lastColumnUnbounded]) ifFalse: [morph hResizing: #rigid].
 			(col resizable not and: [col shrinkWrap])
-				ifTrue: [col currentWidth < morph width 
+				ifTrue: [col currentWidth < morph width
 						ifTrue: [col forceWidthTo: morph width]]].
 
 	self addAllMorphs: rowControls.
 	self layoutChanged
-	
-
 ]
 
 { #category : #testing }
 MorphTreeNodeMorph >> canExpand [
-	^complexContents 
+	^complexContents
 		ifNotNil: [ complexContents hasContents ]
 		ifNil: [ false ]
 ]
@@ -107,17 +104,17 @@ MorphTreeNodeMorph >> canExpand [
 MorphTreeNodeMorph >> changed [
 	"Need to invalidate the selection frame."
 	container
-		ifNil: [super changed] 
+		ifNil: [super changed]
 		ifNotNil: [container invalidRect: self selectionFrame]
 ]
 
 { #category : #'mouse events' }
 MorphTreeNodeMorph >> checkClickableZone [
 	| topLeft icon |
-	
+
 	topLeft := self computeCheckTopLeft.
 	icon := self retrieveCheckIcon.
-	
+
 	^ topLeft corner: icon extent + topLeft
 ]
 
@@ -130,10 +127,9 @@ MorphTreeNodeMorph >> checkGap [
 MorphTreeNodeMorph >> checkRectangle [
 	| tr |
 	tr := self toggleRectangle translateBy: (3 @ 0).
-	^ self mustTakeIntoAccountToggleSpace 
+	^ self mustTakeIntoAccountToggleSpace
 		ifTrue: [(tr topRight + (self checkGap @ 0)) corner:  tr bottomRight + ((self checkGap + self checkWidth) @ 0)]
 		ifFalse: [tr]
-
 ]
 
 { #category : #accessing }
@@ -160,7 +156,7 @@ MorphTreeNodeMorph >> childrenDo: aBlock [
 { #category : #updating }
 MorphTreeNodeMorph >> closeItemPath: anArray [
 	"Close a path based on wrapper item equivalence."
-	
+
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container listManager setSelectedMorph: nil].
@@ -185,7 +181,7 @@ MorphTreeNodeMorph >> closeItemPath: anArray [
 { #category : #'expanding-collapsing' }
 MorphTreeNodeMorph >> collapseNodePath: anArray [
 	"Close a path based on node."
-	
+
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container setSelectedMorph: nil].
@@ -214,7 +210,7 @@ MorphTreeNodeMorph >> color [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> columnMorphAt: anIndex [
-	^ controls at: anIndex 
+	^ controls at: anIndex
 ]
 
 { #category : #accessing }
@@ -226,7 +222,7 @@ MorphTreeNodeMorph >> complexContents [
 { #category : #private }
 MorphTreeNodeMorph >> computeCheckTopLeft [
 	| center offset |
-	
+
 	center := self checkRectangle center.
 	offset := (self checkWidth / 2.0) truncated.
 	^ (center x - offset) @ (center y - offset - 1)
@@ -235,7 +231,7 @@ MorphTreeNodeMorph >> computeCheckTopLeft [
 { #category : #accessing }
 MorphTreeNodeMorph >> contentBounds [
 	"return bounds of drawn content, i.e. fullBounds except the gap"
-	^ self fullBounds insetOriginBy: (self indentGap)@0 cornerBy: 0@0.
+	^ self fullBounds insetOriginBy: (self indentGap)@0 cornerBy: 0@0
 ]
 
 { #category : #accessing }
@@ -252,17 +248,16 @@ MorphTreeNodeMorph >> delete [
 	container := nil.
 	nextSibling := nil.
 	controls := nil.
-	super delete.
-
+	super delete
 ]
 
 { #category : #drawing }
 MorphTreeNodeMorph >> drawCheckOn: aCanvas [
 	| topLeft icon |
-	
+
 	topLeft := self computeCheckTopLeft.
 	icon := self retrieveCheckIcon.
-	
+
 	aCanvas
 		drawImage: icon
 		at: topLeft
@@ -293,7 +288,7 @@ MorphTreeNodeMorph >> drawLineToggleToTextOn: aCanvas hasToggle: hasToggle [
 ]
 
 { #category : #drawing }
-MorphTreeNodeMorph >> drawLinesOn: aCanvas [ 
+MorphTreeNodeMorph >> drawLinesOn: aCanvas [
 	| hasToggle |
 	hasToggle := self hasToggle.
 	"Draw line from toggle to text"
@@ -333,7 +328,7 @@ MorphTreeNodeMorph >> drawLinesToFirstChildOn: aCanvas [
 { #category : #drawing }
 MorphTreeNodeMorph >> drawLinesToNextSiblingOn: aCanvas hasToggle: hasToggle [
 	"Draw line from me to next sibling"
-	
+
 	| myBounds nextSibBounds vLineX myCenter vLineTop vLineBottom myTheme ldelta gap |
 	myBounds := self toggleRectangle.
 	nextSibBounds := self nextSibling toggleRectangle.
@@ -355,11 +350,11 @@ MorphTreeNodeMorph >> drawLinesToNextSiblingOn: aCanvas hasToggle: hasToggle [
 { #category : #drawing }
 MorphTreeNodeMorph >> drawMouseDownHighlightOn: aCanvas [
 	"Draw with a dotted border."
-	
-	self highlightedForMouseDown 
+
+	self highlightedForMouseDown
 		ifTrue: [
 			container ifNil: [^super drawMouseDownHighlightOn: aCanvas].
-			aCanvas 
+			aCanvas
 				frameRectangle: self bounds
 				width: 1
 				colors: {container mouseDownHighlightColor. Color transparent}
@@ -368,30 +363,21 @@ MorphTreeNodeMorph >> drawMouseDownHighlightOn: aCanvas [
 
 { #category : #drawing }
 MorphTreeNodeMorph >> drawOn: aCanvas [
-	"Note that selection is rendered from the container transformMorph (see MorphTreeTransformMorph)" 
-	
-	container withHLines 
+	"Note that selection is rendered from the container transformMorph (see MorphTreeTransformMorph)"
+
+	container withHLines
 		ifTrue: [
-			aCanvas 
+			aCanvas
 				frameRectangle: self selectionFrame
 				width: 1
 				colors: {Color veryLightGray. Color transparent}
 				 dashes: #(1 2)].
 
-	self hasToggle 
-		ifTrue: [self drawToggleOn: aCanvas in: self toggleRectangle]. 
-		
+	self hasToggle
+		ifTrue: [self drawToggleOn: aCanvas in: self toggleRectangle].
+
 	container listManager isCheckList
-		ifTrue: [self drawCheckOn: aCanvas ].
-	
-
-		
-		
-		
-		
-		
-		
-
+		ifTrue: [self drawCheckOn: aCanvas ]
 ]
 
 { #category : #drawing }
@@ -400,10 +386,9 @@ MorphTreeNodeMorph >> drawToggleOn: aCanvas in: aRectangle [
 	| aForm centeringOffset |
 	aForm := self toggleImageForm.
 	centeringOffset := ((aRectangle height - aForm extent y) / 2.0) truncated.
-	^aCanvas 
-		translucentImage: aForm 
-		at: (aRectangle topLeft translateBy: 0 @ centeringOffset).
-
+	^aCanvas
+		translucentImage: aForm
+		at: (aRectangle topLeft translateBy: 0 @ centeringOffset)
 ]
 
 { #category : #updating }
@@ -414,15 +399,12 @@ MorphTreeNodeMorph >> expand [
 	newChildren := container addMorphsAfter: self fromCollection: c.
 	firstChild := newChildren first.
 	self updateChildren
-
-	
-
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeNodeMorph >> expandItemPath: anArray [
 	"Open a path."
-	
+
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container listManager setSelectedMorph: nil].
@@ -467,7 +449,7 @@ MorphTreeNodeMorph >> firstChild [
 { #category : #layout }
 MorphTreeNodeMorph >> fullBounds [
 	fullBounds ifNotNil: [^ fullBounds].
-	^ submorphs 
+	^ submorphs
 		ifEmpty: [bounds]
 		ifNotEmpty: [
 			self doLayoutIn: self layoutBounds.
@@ -475,9 +457,9 @@ MorphTreeNodeMorph >> fullBounds [
 ]
 
 { #category : #'mouse events' }
-MorphTreeNodeMorph >> handleMouseUp: anEvent [ 
+MorphTreeNodeMorph >> handleMouseUp: anEvent [
 	container enabled ifFalse: [ ^ false ].
-	(container commandOrCrontrolKeyPressed: anEvent) 
+	(container commandOrCrontrolKeyPressed: anEvent)
 		ifTrue: [^ container listManager mouseUp: anEvent on: self].
 	^ super handleMouseUp: anEvent
 ]
@@ -505,7 +487,7 @@ MorphTreeNodeMorph >> highlight [
 		allMorphsDo: [:m | (m isKindOf: StringMorph)
 				ifTrue: [m setProperty: #originalColor toValue: m color.
 					m color: self theme selectionTextColor]].
-	complexContents highlightingColor 
+	complexContents highlightingColor
 		ifNotNil: [:c |
 			self setProperty: #originalColor toValue: color.
 			self color: c]
@@ -513,7 +495,7 @@ MorphTreeNodeMorph >> highlight [
 
 { #category : #updating }
 MorphTreeNodeMorph >> highlightForMouseDown: aBoolean [
-	aBoolean 
+	aBoolean
 		ifTrue: [self setProperty: #highlightedForMouseDown toValue: aBoolean]
 		ifFalse: [self removeProperty: #highlightedForMouseDown].
 	self changed
@@ -522,9 +504,8 @@ MorphTreeNodeMorph >> highlightForMouseDown: aBoolean [
 { #category : #accessing }
 MorphTreeNodeMorph >> icon [
 	"answer the receiver's icon"
-	
-	^ container iconBlock value: self complexContents.
-	
+
+	^ container iconBlock value: self complexContents
 ]
 
 { #category : #testing }
@@ -546,7 +527,7 @@ MorphTreeNodeMorph >> indentLevel [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> index [
-	^ index 
+	^ index
 ]
 
 { #category : #accessing }
@@ -558,7 +539,6 @@ MorphTreeNodeMorph >> index: anInteger [
 MorphTreeNodeMorph >> initRow [
 	self buildRowMorph.
 	self layoutChanged
-
 ]
 
 { #category : #initialization }
@@ -567,7 +547,7 @@ MorphTreeNodeMorph >> initWithContents: anObject prior: priorMorph forList: host
 
 	container := hostList.
 	self cellInset: container resizerWidth @ 0.
-	
+
 	complexContents := anObject.
 	complexContents addDependent: self.
 
@@ -592,15 +572,11 @@ MorphTreeNodeMorph >> initialize [
 		cellSpacing: #none;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		color: Color transparent.
-
-
-
+		color: Color transparent
 ]
 
 { #category : #'change reporting' }
 MorphTreeNodeMorph >> invalidRect: aRectangle [
-	
 ]
 
 { #category : #testing }
@@ -623,7 +599,7 @@ MorphTreeNodeMorph >> isFirstItem [
 
 { #category : #testing }
 MorphTreeNodeMorph >> isPartialMatch [
-	
+
 	^ self complexContents isPartialMatch
 ]
 
@@ -653,27 +629,24 @@ MorphTreeNodeMorph >> layoutBounds [
 	"Return the bounds for laying out children of the receiver"
 
 	| lb left right |
-	
+
 	lb := super layoutBounds.
 	container ifNil: [ ^ lb ].
 	left := (lb left + self spacerWidth).
 	right := (lb right max: left + self spacerWidth).
 	"Make sure that left and right have changed simultaneously, avoiding creating degenerate rectangle"
 	^ Rectangle left: left right: right top: lb top bottom: lb bottom
-
 ]
 
 { #category : #accessing }
 MorphTreeNodeMorph >> lineColor [
 	"Answer a good color to use for drawing the lines that connect members of the hierarchy view.
-	Used the cached color, or derive it if necessary by finding the receiver or 
+	Used the cached color, or derive it if necessary by finding the receiver or
 	the first owner (up to my root) that is not transparent, then picking a contrasting color.
 	Fall back to black if all my owners are transparent."
 
-	^ lineColor 
+	^ lineColor
 		ifNil: [lineColor := container lineColorForNode: self complexContents]
-	
-
 ]
 
 { #category : #testing }
@@ -693,7 +666,7 @@ MorphTreeNodeMorph >> minWidth [
 	"Fixed to work such that guessed width is unnecessary in
 	#adjustSubmorphPositions."
 	| gap |
-	
+
 	gap := container ifNil: [ 0 ] ifNotNil: [ self indentGap ].
 	^ gap  max: super minWidth
 ]
@@ -730,7 +703,7 @@ MorphTreeNodeMorph >> nextSibling: anotherMorph [
 MorphTreeNodeMorph >> openItemPath: anArray [
 	"Open a path based on wrapper item equivalence. Generally more specific
 	than #openPath: (string based)."
-	
+
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container listManager setSelectedMorph: nil].
@@ -753,7 +726,7 @@ MorphTreeNodeMorph >> openItemPath: anArray [
 ]
 
 { #category : #'expanding-collapsing' }
-MorphTreeNodeMorph >> openNodePath: anArray [ 
+MorphTreeNodeMorph >> openNodePath: anArray [
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container listManager setSelectedMorph: nil].
@@ -777,7 +750,7 @@ MorphTreeNodeMorph >> openNodePath: anArray [
 ]
 
 { #category : #updating }
-MorphTreeNodeMorph >> openPath: anArray [ 
+MorphTreeNodeMorph >> openPath: anArray [
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container listManager setSelectedMorph: nil].
@@ -809,7 +782,7 @@ MorphTreeNodeMorph >> openPath: anArray [
 { #category : #accessing }
 MorphTreeNodeMorph >> outerBounds [
 	"Return the 'outer' bounds of the receiver, e.g., the bounds that need to be invalidated when the receiver changes."
-	
+
 	^ self bounds
 ]
 
@@ -825,7 +798,7 @@ MorphTreeNodeMorph >> parent: aNodeMorph [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> path [
-	^ parent 
+	^ parent
 		ifNil: [OrderedCollection with: self]
 		ifNotNil: [(parent path) add: self; yourself]
 ]
@@ -841,9 +814,7 @@ MorphTreeNodeMorph >> printOn: aStream [
 MorphTreeNodeMorph >> recursiveAddTo: aCollection [
 
 	firstChild ifNotNil: [firstChild withSiblingsDo: [ :aNode | aNode recursiveAddTo: aCollection]].
-	aCollection add: self.
-
-	
+	aCollection add: self
 ]
 
 { #category : #updating }
@@ -853,7 +824,6 @@ MorphTreeNodeMorph >> recursiveDelete [
 		firstChild withSiblingsDo: [ :aNode | aNode recursiveDelete].
 	].
 	self delete
-	
 ]
 
 { #category : #private }
@@ -881,7 +851,7 @@ MorphTreeNodeMorph >> selectNodePath: anArray [
 	anArray isEmpty
 		ifTrue: [ ^ self ].
 	self
-		withSiblingsDo: [ :each | 
+		withSiblingsDo: [ :each |
 			found
 				ifNil: [ ( each complexContents = anArray first or: [ anArray first isNil ] )
 						ifTrue: [ found := each ]
@@ -906,7 +876,7 @@ MorphTreeNodeMorph >> selected: aBoolean [
 	container ifNil: [^ self].
 	aBoolean
 		ifTrue: [container selectedMorphList add: self]
-		ifFalse: [selected 
+		ifFalse: [selected
 			ifNotNil: [container selectedMorphList remove: self]].
 	selected := aBoolean.
 
@@ -916,11 +886,11 @@ MorphTreeNodeMorph >> selected: aBoolean [
 { #category : #private }
 MorphTreeNodeMorph >> selectedWithoutNotifyingComplexContents: aBoolean [
 	"Only called at creation"
-	
+
 	aBoolean ifFalse: [ ^ self ].
-	
+
 	container listManager silentlySetSelectedMorph: self.
-	selected := aBoolean.
+	selected := aBoolean
 ]
 
 { #category : #accessing }
@@ -937,7 +907,7 @@ MorphTreeNodeMorph >> sensitiveToggleRectangle [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> setSelectedSilently: aBoolean [
-	
+
 	selected := aBoolean.
 	self complexContents selected: aBoolean
 ]
@@ -964,9 +934,9 @@ MorphTreeNodeMorph >> takeHighlight [
 
 { #category : #updating }
 MorphTreeNodeMorph >> themeChanged [
- 
+
 	self allMorphsDo: [ :m | (m isKindOf: StringMorph) ifTrue: [ m color: self theme textColor ] ].
-	
+
 	super themeChanged
 ]
 
@@ -984,12 +954,9 @@ MorphTreeNodeMorph >> toggleExpandedState [
 
 { #category : #accessing }
 MorphTreeNodeMorph >> toggleImageForm [
-	^ isExpanded 
+	^ isExpanded
 			ifTrue: [container expandedFormForMorph: self]
-			ifFalse: [container notExpandedFormForMorph: self] 
-				
-		
-
+			ifFalse: [container notExpandedFormForMorph: self]
 ]
 
 { #category : #accessing }
@@ -1010,11 +977,10 @@ MorphTreeNodeMorph >> unhighlight [
 				ifNotNil: [:c | self color: c]].
 	self
 		allMorphsDo: [:m | (m isKindOf: StringMorph)
-				ifTrue: [m 
+				ifTrue: [m
 						color: (m
 								valueOfProperty: #originalColor
-								ifAbsent: [ self theme textColor ])]].
-
+								ifAbsent: [ self theme textColor ])]]
 ]
 
 { #category : #updating }
@@ -1022,10 +988,10 @@ MorphTreeNodeMorph >> update: aSymbol [
 
 	aSymbol = #select
 		ifTrue: [ ^ self selected: true ].
-		
+
 	aSymbol = #deselect
 		ifTrue: [ ^ self selected: false ].
-		
+
 	aSymbol = #takeHighlight
 		ifTrue: [ ^ self takeHighlight ].
 
@@ -1035,17 +1001,13 @@ MorphTreeNodeMorph >> update: aSymbol [
 { #category : #updating }
 MorphTreeNodeMorph >> updateChildren [
 	self childrenDo: [:child | child parent: self]
-	
-
 ]
 
 { #category : #updating }
 MorphTreeNodeMorph >> updateChildrenRecursively [
-	self childrenDo: [:child | 
-		child parent: self. 
+	self childrenDo: [:child |
+		child parent: self.
 		child updateChildrenRecursively]
-	
-
 ]
 
 { #category : #updating }
@@ -1053,11 +1015,10 @@ MorphTreeNodeMorph >> updateColumnMorphsWidthWith: aListOfWidths [
 	| sw |
 	(container columns isEmpty or: [self hasSubmorphs not]) ifTrue: [^ self].
 	sw := self spacerWidth.
-	1 to: aListOfWidths size - 1 
-		do: [:idx | | w | 
+	1 to: aListOfWidths size - 1
+		do: [:idx | | w |
 			w := aListOfWidths at: idx.
-			(controls at: idx) width: (w - (idx = 1 ifTrue: [sw] ifFalse: [0]))].
-
+			(controls at: idx) width: (w - (idx = 1 ifTrue: [sw] ifFalse: [0]))]
 ]
 
 { #category : #updating }
@@ -1065,10 +1026,10 @@ MorphTreeNodeMorph >> withSiblingsDo: aBlock [
 
 	| node |
 	node := self.
-	[node isNil] 
+	[node isNil]
 		whileFalse: [
 			aBlock value: node.
-			node := node nextSibling].
+			node := node nextSibling]
 ]
 
 { #category : #accessing }

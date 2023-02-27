@@ -11,7 +11,7 @@ Class {
 
 { #category : #testing }
 ClyNotRemoveAndShowSubclassesClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
-	^hasSubclasses 
+	^hasSubclasses
 ]
 
 { #category : #execution }

@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyWrapQueryTest class >> isAbstract [
-	^self = ClyWrapQueryTest 
+	^self = ClyWrapQueryTest
 ]
 
 { #category : #tests }

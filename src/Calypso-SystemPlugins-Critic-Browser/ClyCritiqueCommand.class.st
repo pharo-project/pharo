@@ -21,7 +21,7 @@ Class {
 
 { #category : #testing }
 ClyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
-	
+
 	^aCriticContext hasSelectedItems and: [
 		(aCriticContext lastSelectedItem isMarkedWith: ClyBackgroundProcessingTag) not]
 ]
@@ -29,13 +29,13 @@ ClyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 { #category : #activation }
 ClyCritiqueCommand class >> criticTableIconActivation [
 	<classAnnotation>
-	
-	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext 
+
+	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext
 ]
 
 { #category : #testing }
 ClyCritiqueCommand class >> isAbstract [
-	^self = ClyCritiqueCommand 
+	^self = ClyCritiqueCommand
 ]
 
 { #category : #accessing }
@@ -73,7 +73,7 @@ ClyCritiqueCommand >> description [
 { #category : #execution }
 ClyCritiqueCommand >> readParametersFromContext: aCriticContext [
 	super readParametersFromContext: aCriticContext.
-	
+
 	critique := aCriticContext selectedCritique.
 	analyzedObject := aCriticContext analyzedObject
 ]

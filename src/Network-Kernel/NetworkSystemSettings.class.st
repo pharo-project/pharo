@@ -46,27 +46,26 @@ NetworkSystemSettings class >> httpProxyExceptions [
 ]
 
 { #category : #settings }
-NetworkSystemSettings class >> httpProxyPort [  
+NetworkSystemSettings class >> httpProxyPort [
 	"Return the HTTP proxy port to use, an Integer"
-	
+
 	^ HTTPProxyPort ifNil: [ HTTPProxyPort := 80 ]
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> httpProxyPort: aPortNumber [
 	"Set the HTTP Proxy port to use to aPortNumber, use nil to reset"
-	
+
 	aPortNumber = HTTPProxyPort ifTrue: [ ^ self ].
 	LastHTTPProxyPort := HTTPProxyPort.
 	HTTPProxyPort := aPortNumber
-
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> httpProxyServer [
 	"Return the hostname of the HTTP proxy server to use, a String.
 	Can be empty, when no HTTP proxy should be used."
-	
+
 	^ HTTPProxyServer ifNil: [ '' ]
 ]
 
@@ -78,7 +77,6 @@ NetworkSystemSettings class >> httpProxyServer: aServerName [
 	aServerName = HTTPProxyServer ifTrue: [ ^ self ].
 	LastHTTPProxyServer := HTTPProxyServer.
 	HTTPProxyServer := aServerName ifNotNil: [ aServerName trimBoth ]
-
 ]
 
 { #category : #settings }
@@ -98,19 +96,16 @@ NetworkSystemSettings class >> isHttpProxyException: serverName [
 { #category : #private }
 NetworkSystemSettings class >> lastHTTPProxyPort [
 	^ LastHTTPProxyPort ifNil: [ LastHTTPProxyPort := HTTPProxyPort ]
-
 ]
 
 { #category : #private }
 NetworkSystemSettings class >> lastHTTPProxyServer [
 	^ LastHTTPProxyServer ifNil: [ LastHTTPProxyServer := HTTPProxyServer ]
-
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> manageHttpProxyExceptions [
-	^ LastHTTPProxyExceptions ifNil:[ LastHTTPProxyExceptions := ''].
-
+	^ LastHTTPProxyExceptions ifNil:[ LastHTTPProxyExceptions := '']
 ]
 
 { #category : #settings }
@@ -122,22 +117,21 @@ NetworkSystemSettings class >> manageHttpProxyExceptions: aStringWithExceptions 
 
 	LastHTTPProxyExceptions := aStringWithExceptions.
 	( ';' split: aStringWithExceptions) do: [
-		:domain  | 
+		:domain  |
 		self addHttpProxyException: domain
-	].
-
+	]
 ]
 
 { #category : #settings }
-NetworkSystemSettings class >> networkSettingsOn: aBuilder [ 
-	<systemsettings> 
-	(aBuilder group: #network) 
+NetworkSystemSettings class >> networkSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #network)
 		label: 'Network';
 		description: 'All network related settings';
 		noOrdering;
-		with: [ 
-			(aBuilder setting: #useHTTPProxy)      
-				label: 'Use HTTP proxy' ;   
+		with: [
+			(aBuilder setting: #useHTTPProxy)
+				label: 'Use HTTP proxy' ;
 				noOrdering;
 				default: false;
 		 		description: 'If checked then the you will be able to set a port number and a server name. If unchecked, then no http proxy is used.';
@@ -156,7 +150,7 @@ NetworkSystemSettings class >> networkSettingsOn: aBuilder [
 						default: '';
 						description: 'Domains to avoid to proxy (separated by ;)'
 				].
-			(aBuilder setting: #useNetworkAuthentification) 
+			(aBuilder setting: #useNetworkAuthentification)
 				label: 'Proxy authentication' ;
 				noOrdering;
 				default: false;
@@ -182,7 +176,7 @@ NetworkSystemSettings class >> networkSettingsOn: aBuilder [
 NetworkSystemSettings class >> proxyPassword [
 	"Return the HTTP proxy password to use, if any. Can be empty."
 
-	^ ProxyPassword 
+	^ ProxyPassword
 		ifNil: [ '' ]
 		ifNotNil: [ ProxyPassword base64Decoded utf8Decoded ]
 ]
@@ -190,9 +184,8 @@ NetworkSystemSettings class >> proxyPassword [
 { #category : #settings }
 NetworkSystemSettings class >> proxyPassword: aPassword [
 	"Set the HTTP proxy password. Can be empty or nil to reset"
-	
-	ProxyPassword := aPassword ifNotNil: [ aPassword utf8Encoded base64Encoded ]
 
+	ProxyPassword := aPassword ifNotNil: [ aPassword utf8Encoded base64Encoded ]
 ]
 
 { #category : #settings }
@@ -207,15 +200,13 @@ NetworkSystemSettings class >> proxyUser [
 { #category : #settings }
 NetworkSystemSettings class >> proxyUser: aUser [
 	"Set the HTTP proxy user. Can be empty or nil to reset"
-	
+
 	ProxyUser := aUser ifNotNil: [ aUser utf8Encoded base64Encoded ]
-
-
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> removeAllHttpProxyExceptions [
-	self httpProxyExceptions removeAll.
+	self httpProxyExceptions removeAll
 ]
 
 { #category : #settings }

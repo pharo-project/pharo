@@ -50,9 +50,8 @@ ProgressBarMorph class >> defaultHeight: aNumber [
 
 { #category : #defaults }
 ProgressBarMorph class >> defaultWidth: aNumber [
-	
-	DefaultWidth := aNumber.
 
+	DefaultWidth := aNumber
 ]
 
 { #category : #'instance creation' }
@@ -60,14 +59,14 @@ ProgressBarMorph class >> from: startNumber to: endNumber [
 
 	^ self new
 		startAt: startNumber;
-		endAt: endNumber.
+		endAt: endNumber
 ]
 
 { #category : #'class initialization' }
 ProgressBarMorph class >> initialize [
-	
+
 	self defaultWidth: 120.
-	self defaultHeight: 10 
+	self defaultHeight: 10
 ]
 
 { #category : #private }
@@ -75,8 +74,8 @@ ProgressBarMorph >> barFillStyle [
 	"Answer the fillStyle for the bar if present or
 	the theme menuTitleColor otherwise."
 
-	^ self 
-		valueOfProperty: #barFillStyle 
+	^ self
+		valueOfProperty: #barFillStyle
 		ifAbsent: [ self theme menuTitleColor ]
 ]
 
@@ -94,13 +93,13 @@ ProgressBarMorph >> completedWidth [
 	range := end - start.
 	progress := value - start.
 	fraction := progress / range.
-	^ (fraction * self totalBarWidth) truncated.
+	^ (fraction * self totalBarWidth) truncated
 ]
 
 { #category : #accessing }
 ProgressBarMorph >> decrement [
 
-	self value: self value - 1.
+	self value: self value - 1
 ]
 
 { #category : #drawing }
@@ -111,7 +110,7 @@ ProgressBarMorph >> drawOn: aCanvas [
 	area := self innerBounds.
 	aCanvas fillRectangle: area fillStyle: self fillStyle.
 	value > 0
-		ifTrue: [ 
+		ifTrue: [
 			cachedWidth := self completedWidth.
 			area := area origin extent: cachedWidth @ area height.
 			aCanvas fillRectangle: area fillStyle: self barFillStyle ].
@@ -119,15 +118,15 @@ ProgressBarMorph >> drawOn: aCanvas [
 ]
 
 { #category : #private }
-ProgressBarMorph >> endAt: aNumber [ 
+ProgressBarMorph >> endAt: aNumber [
 
-	end := aNumber.
+	end := aNumber
 ]
 
 { #category : #geometry }
 ProgressBarMorph >> extent: aPoint [
 	"Update the bar fillStyle if appropriate."
-	
+
 	super extent: aPoint.
 	self fillStyle isOrientedFill ifTrue: [
 		self fillStyle: (self theme progressBarFillStyleFor: self)].
@@ -138,13 +137,13 @@ ProgressBarMorph >> extent: aPoint [
 { #category : #accessing }
 ProgressBarMorph >> increment [
 
-	self value: self value + 1.
+	self value: self value + 1
 ]
 
 { #category : #initialization }
 ProgressBarMorph >> initialize [
 	"Initialize the receiver from the current theme."
-	
+
 	super initialize.
 	value := 0.
 	start := 0.
@@ -152,17 +151,17 @@ ProgressBarMorph >> initialize [
 	height := DefaultHeight.
 	width := DefaultWidth.
 	cachedWidth := 0.
-	self 
+	self
 		fillStyle: (self theme progressBarFillStyleFor: self);
 		borderStyle: (self theme progressBarBorderStyleFor: self);
 		barFillStyle: (self theme progressBarProgressFillStyleFor: self);
-		extent: width@height  + (2 * self borderWidth).
+		extent: width@height  + (2 * self borderWidth)
 ]
 
 { #category : #private }
-ProgressBarMorph >> privateMoveBy: delta [ 
+ProgressBarMorph >> privateMoveBy: delta [
 	"Update the bar fillStyle if appropriate."
-	
+
 	| fill |
 	super privateMoveBy: delta.
 	fill := self barFillStyle.
@@ -170,21 +169,21 @@ ProgressBarMorph >> privateMoveBy: delta [
 ]
 
 { #category : #private }
-ProgressBarMorph >> startAt: aNumber [ 
+ProgressBarMorph >> startAt: aNumber [
 
-	value := start := aNumber.
+	value := start := aNumber
 ]
 
 { #category : #private }
 ProgressBarMorph >> totalBarWidth [
 
-	^ self width - (2 * self borderWidth).
+	^ self width - (2 * self borderWidth)
 ]
 
 { #category : #accessing }
 ProgressBarMorph >> value [
-	
-	^ value.
+
+	^ value
 ]
 
 { #category : #accessing }
@@ -192,7 +191,7 @@ ProgressBarMorph >> value: aNumber [
 	|testWidth|
 	value := aNumber.
 	testWidth := self completedWidth.
-	testWidth ~= cachedWidth ifTrue: [  
+	testWidth ~= cachedWidth ifTrue: [
 		cachedWidth := testWidth.
 		self changed]
 ]

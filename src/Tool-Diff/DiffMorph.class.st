@@ -24,7 +24,13 @@ Class {
 		'destTextModel',
 		'leftCaption',
 		'rightCaption',
-		'beWrapped'
+		'beWrapped',
+		'buttonTop',
+		'buttonPrev',
+		'buttonNext',
+		'allDifferences',
+		'selected',
+		'beNavigable'
 	],
 	#category : #'Tool-Diff-Morphs'
 }
@@ -51,28 +57,28 @@ DiffMorph class >> from: old to: new contextClass: aClass [
 ]
 
 { #category : #initialization }
-DiffMorph >> addMainMorphsWith: initialOffset [ 
+DiffMorph >> addMainMorphsWith: initialOffset [
 	| halfWidth leftFraction leftOffset rightFraction rightOffset topOffset |
 
 	topOffset := self addTitlePanel: initialOffset.
-	
+
 	halfWidth := self joinMorph width / 2.
 	leftFraction := showOnlyDestination
 		ifTrue: [ 0 ]
 		ifFalse: [ 0.5 ].
-		
+
 	leftOffset := showOnlyDestination
 		ifTrue: [ 0 ]
 		ifFalse: [ halfWidth ].
-		
+
 	rightFraction := showOnlySource
 		ifTrue: [ 1 ]
 		ifFalse: [ 0.5 ].
-		
+
 	rightOffset := showOnlySource
 		ifTrue: [ 0 ]
 		ifFalse: [ halfWidth negated ].
-		 
+
 	showOnlyDestination ifFalse: [
 		self
 			addMorph: self srcMorph
@@ -81,7 +87,7 @@ DiffMorph >> addMainMorphsWith: initialOffset [
 				topOffset: topOffset;
 				rightOffset: rightOffset).
 	showOnlySource ifFalse: [
-		self		
+		self
 			addMorph: self joinMorph
 			fullFrame: (LayoutFrame identity
 				leftFraction: 0.5;
@@ -98,21 +104,20 @@ DiffMorph >> addMainMorphsWith: initialOffset [
 				topOffset: topOffset;
 				leftOffset: leftOffset;
 				rightOffset: (self scrollbarMorph width + self mapMorph width) negated) ].
-				
-	self				
+
+	self
 		addMorph: self scrollbarMorph
 		fullFrame: (LayoutFrame identity
 			leftFraction: 1;
 			leftOffset: self scrollbarMorph width negated - self mapMorph width;
 			rightOffset: self mapMorph width negated;
 			topOffset: topOffset).
-	self					
+	self
 		addMorph: self mapMorph
 		fullFrame: (LayoutFrame identity
 			leftFraction: 1;
 			leftOffset: self mapMorph width negated;
-			topOffset: topOffset).
-
+			topOffset: topOffset)
 ]
 
 { #category : #initialization }
@@ -120,11 +125,11 @@ DiffMorph >> addMorphsWithOptions [
 
 	self createOptionsPanel.
 
-	self 
+	self
 		addMainMorphsWith: optionsPanel height.
 
 	self
-		addMorph: optionsPanel 
+		addMorph: optionsPanel
 		fullFrame: (LayoutFrame identity
 			bottomFraction: 0;
 			bottomOffset: optionsPanel height)
@@ -148,50 +153,49 @@ DiffMorph >> addTitlePanel: initialOffset [
 
 	"Add the title panel and returns the top offset for the rest of the window."
 
-	| titlePanel titleRow rightLabel |
-	(leftCaption isNotNil and: [ rightCaption isNotNil ]) ifFalse: [ ^ initialOffset ].
-	
 	"If we are showing only one panel there is no need for title"
+
+	| titlePanel titleRow |
 	showOnlyDestination ifTrue: [ ^ initialOffset ].
 	showOnlySource ifTrue: [ ^ initialOffset ].
-	
-	titlePanel := self newPanel. 	
-	
+	titlePanel := self newPanel.
 	titleRow := self newPanel.
-	
 	titleRow changeProportionalLayout.
 	titleRow hResizing: #spaceFill.
-	titleRow vResizing: #shrinkWrap.	
-	
-	rightLabel := (self newRow: { self newLabel: rightCaption }) listCentering: #bottomRight; yourself.
-	titleRow addMorph: rightLabel fullFrame: (LayoutFrame identity leftFraction: 0.5; rightOffset: mapMorph width negated - 5). 
-	titleRow addMorph: (self newLabel: leftCaption) fullFrame: (LayoutFrame identity leftFraction: 0; rightFraction: 0.5; leftOffset: 10). 
-
-		
+	titleRow vResizing: #shrinkWrap.
+	self instanciateButtons.
+	self updateButtons.
+	titleRow addMorph: self rightLabel fullFrame: (LayoutFrame identity
+			 topOffset: 3;
+			 leftFraction: 0.5;
+			 rightOffset: -10).
+	self beNavigable ifTrue: [
+		titleRow addMorph: self buttons fullFrame: (LayoutFrame identity
+				 leftFraction: 0.5;
+				 rightOffset: -150) ].
+	titleRow addMorph: self leftLabel fullFrame: (LayoutFrame identity
+			 topOffset: 3;
+			 leftFraction: 0;
+			 rightFraction: 0.5;
+			 leftOffset: 10).
 	titlePanel addMorph: titleRow.
 	titleRow extent: titlePanel minExtent.
-
+	titlePanel layoutInset: 0.
 	titlePanel vResizing: #shrinkWrap.
 	titlePanel hResizing: #spaceFill.
-				
-	self addMorph: titlePanel
-		fullFrame:(LayoutFrame identity
-			topOffset: initialOffset;
-			bottomFraction: 0;
-			bottomOffset: titlePanel height + initialOffset).
-
-	titlePanel extent: titlePanel minExtent.	
-				
-	^ initialOffset + titlePanel height.
-				
-
+	self addMorph: titlePanel fullFrame: (LayoutFrame identity
+			 topOffset: initialOffset;
+			 bottomFraction: 0;
+			 bottomOffset: titlePanel height + initialOffset).
+	titlePanel extent: titlePanel minExtent.
+	^ initialOffset + titlePanel height
 ]
 
 { #category : #'accessing - colors' }
 DiffMorph >> additionColor [
 	"Answer the color used to show additions."
 
-	^ self theme diffAdditionalLineBackgroundColor 
+	^ self theme diffAdditionalLineBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
@@ -203,10 +207,17 @@ DiffMorph >> additionHighlightColor [
 { #category : #accessing }
 DiffMorph >> adoptPaneColor: paneColor [
 	"Change our border color too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self borderStyle baseColor: paneColor
+]
+
+{ #category : #accessing }
+DiffMorph >> allDifferences [
+
+	^ allDifferences ifNil: [
+		  allDifferences := self calculateAllDifferences ]
 ]
 
 { #category : #actions }
@@ -236,11 +247,25 @@ DiffMorph >> applyPrettyPrinter [
 	"Apply pretty printer if check box is on"
 
 	(self prettyPrint and: [ self contextClass notNil ])
-		ifTrue: [ 
+		ifTrue: [
 			self sourceTextModel getString isEmpty
 				ifFalse: [ self sourceTextModel formatSourceCodeInView ].
 			self destTextModel getString isEmpty
 				ifFalse: [ self destTextModel formatSourceCodeInView ] ]
+]
+
+{ #category : #accessing }
+DiffMorph >> beNavigable [
+
+	^ beNavigable
+]
+
+{ #category : #accessing }
+DiffMorph >> beNavigable: aBoolean [
+
+	beNavigable = aBoolean ifTrue: [ ^ self ].
+	beNavigable := aBoolean.
+	self updateMorphs
 ]
 
 { #category : #accessing }
@@ -257,6 +282,68 @@ DiffMorph >> beWrapped: aBoolean [
 	aBoolean
 		ifTrue: [ self dstMorph beWrapped. self srcMorph beWrapped ]
 		ifFalse: [ self dstMorph beNotWrapped. self srcMorph beNotWrapped ]
+]
+
+{ #category : #'user interface' }
+DiffMorph >> buttonNext [
+
+	^ self
+		  newButtonFor: self
+		  action: #selectNext
+		  label: 'Next'
+		  help: 'Go to next difference'
+]
+
+{ #category : #'user interface' }
+DiffMorph >> buttonPrev [
+
+	^ self
+		  newButtonFor: self
+		  action: #selectPrev
+		  label: 'Prev'
+		  help: 'Go to previous difference'
+]
+
+{ #category : #'user interface' }
+DiffMorph >> buttonTop [
+
+	^ self
+		  newButtonFor: self
+		  action: #selectTop
+		  label: 'Top'
+		  help: 'Go to the top'
+]
+
+{ #category : #accessing }
+DiffMorph >> buttons [
+
+	^ (self newRow:
+			   (Array with: buttonTop with: buttonPrev with: buttonNext))
+		  listCentering: #bottomRight;
+		  yourself
+]
+
+{ #category : #actions }
+DiffMorph >> calculateAllDifferences [
+
+	| differences srcDiffStart dstDiffStart |
+	srcDiffStart := 1.
+	dstDiffStart := 1.
+	differences := OrderedCollection new.
+	self joinMappings do: [ :join |
+		join type = #match ifFalse: [
+			join type = #modification
+				ifTrue: [
+					differences addAll: (self
+							 differencesStartingOnSrcAt: srcDiffStart
+							 onDstAt: dstDiffStart
+							 patchSequence: (self patchSequenceFromJoinMapping: join)) ]
+				ifFalse: [
+					differences add: (srcDiffStart to: srcDiffStart + join src text size - 1)
+						-> (dstDiffStart to: dstDiffStart + join dst text size - 1) ] ].
+		srcDiffStart := srcDiffStart + join src text size.
+		dstDiffStart := dstDiffStart + join dst text size ].
+	^ differences
 ]
 
 { #category : #actions }
@@ -286,17 +373,17 @@ DiffMorph >> calculatedJoinMappings [
 	joins := OrderedCollection new.
 	destinationRunStart := destinationRunEnd := sourceRunStart := sourceRunEnd := matchSourceStart := matchDestinationStart := 0.
 	self difference
-		do: [ :p | 
+		do: [ :p |
 			p key = #match
-				ifTrue: [ 
+				ifTrue: [
 					sourceLine := sourceLine + 1.
 					destinationLine := destinationLine + 1.
 					matchSourceStart = 0
-						ifTrue: [ 
+						ifTrue: [
 							matchSourceStart := sourceLine.
 							matchDestinationStart := destinationLine ].
 					(destinationRunStart > 0 or: [ sourceRunStart > 0 ])
-						ifTrue: [ 
+						ifTrue: [
 							sourceRunStart = 0
 								ifTrue: [ sourceRunStart := sourceLine ].
 							destinationRunStart = 0
@@ -310,9 +397,9 @@ DiffMorph >> calculatedJoinMappings [
 									(self newJoinSectionFrom: (sourceRunStart to: sourceRunEnd) to: (destinationRunStart to: destinationRunEnd)).
 							destinationRunStart := destinationRunEnd := sourceRunStart := sourceRunEnd := 0 ] ].
 			p key = #remove
-				ifTrue: [ 
+				ifTrue: [
 					matchSourceStart > 0
-						ifTrue: [ 
+						ifTrue: [
 							joins
 								add:
 									(self newMatchJoinSectionFrom: (matchSourceStart to: sourceLine) to: (matchDestinationStart to: destinationLine)).
@@ -322,16 +409,16 @@ DiffMorph >> calculatedJoinMappings [
 						ifTrue: [ sourceRunStart := sourceLine ].
 					sourceRunEnd := sourceLine ].
 			p key = #insert
-				ifTrue: [ 
+				ifTrue: [
 					matchSourceStart > 0
-						ifTrue: [ 
+						ifTrue: [
 							joins
 								add:
 									(self newMatchJoinSectionFrom: (matchSourceStart to: sourceLine) to: (matchDestinationStart to: destinationLine)).
 							matchSourceStart := matchDestinationStart := 0 ].
 					destinationLine := destinationLine + 1.
 					sourceRunStart > 0
-						ifTrue: [ 
+						ifTrue: [
 							sourceRunEnd = 0
 								ifTrue: [ sourceRunEnd := sourceRunStart ].
 							destinationRunEnd = 0
@@ -346,7 +433,7 @@ DiffMorph >> calculatedJoinMappings [
 	sourceLine := sourceLine + 1.
 	destinationLine := destinationLine + 1.
 	(destinationRunStart > 0 or: [ sourceRunStart > 0 ])
-		ifTrue: [ 
+		ifTrue: [
 			sourceRunStart = 0
 				ifTrue: [ sourceRunStart := sourceLine ].
 			destinationRunStart = 0
@@ -358,7 +445,7 @@ DiffMorph >> calculatedJoinMappings [
 			joins
 				add: (self newJoinSectionFrom: (sourceRunStart to: sourceRunEnd) to: (destinationRunStart to: destinationRunEnd)) ].
 	matchSourceStart > 0
-		ifTrue: [ 
+		ifTrue: [
 			joins
 				add:
 					(self newMatchJoinSectionFrom: (matchSourceStart to: sourceLine - 1) to: (matchDestinationStart to: destinationLine - 1)) ].
@@ -376,7 +463,7 @@ DiffMorph >> calibrateScrollbar [
 	delta := 91.	"self dstMorph textMorph defaultLineHeight"
 	range := maxY - innerH max: 0.
 	range = 0
-		ifTrue: [ 
+		ifTrue: [
 			^ self scrollbarMorph
 				scrollDelta: 0.02 pageDelta: 0.2;
 				interval: 1.0;
@@ -401,7 +488,7 @@ DiffMorph >> colorForType: type [
 DiffMorph >> contextClass [
 	"Answer the value of contextClass"
 
-	^ contextClass 
+	^ contextClass
 ]
 
 { #category : #accessing }
@@ -420,10 +507,9 @@ DiffMorph >> createOptionsPanel [
 	optionsPanel := self newPanel
 		addMorph: ((self newRow: {ppCheckbox}) listCentering: #bottomRight);
 		color: self defaultColor.
-		
-	optionsPanel vResizing: #shrinkWrap.
-	optionsPanel extent: optionsPanel minExtent.
 
+	optionsPanel vResizing: #shrinkWrap.
+	optionsPanel extent: optionsPanel minExtent
 ]
 
 { #category : #accessing }
@@ -435,7 +521,7 @@ DiffMorph >> defaultTitle [
 
 { #category : #'instance creation' }
 DiffMorph >> destTextModel [
-	^ destTextModel ifNil: [ destTextModel := RubScrolledTextModel new interactionModel: self ].
+	^ destTextModel ifNil: [ destTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
 { #category : #'accessing - colors' }
@@ -456,6 +542,37 @@ DiffMorph >> difference: anObject [
 	"Set the value of difference"
 
 	difference := anObject
+]
+
+{ #category : #actions }
+DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitialDiffStart patchSequence: patchSequence [
+
+	| patchSequenceGroupedByMatch srcDiffStart dstDiffStart differences |
+	srcDiffStart := srcInitialDiffStart.
+	dstDiffStart := dstInitialDiffStart.
+	differences := OrderedCollection new.
+	patchSequenceGroupedByMatch := patchSequence groupByRuns: [ :e |
+		                               e key = #match ].
+	patchSequenceGroupedByMatch do: [ :patches |
+		patches first key = #match
+			ifTrue: [
+				| increment |
+				increment := patches sum: [ :eachAssociation |
+					             eachAssociation value size ].
+				srcDiffStart := srcDiffStart + increment.
+				dstDiffStart := dstDiffStart + increment ]
+			ifFalse: [
+				| srck dstk |
+				srck := srcDiffStart.
+				dstk := dstDiffStart.
+				patches do: [ :association |
+					| string |
+					string := association value.
+					association key = #remove
+						ifTrue: [ srcDiffStart := srcDiffStart + string size ]
+						ifFalse: [ dstDiffStart := dstDiffStart + string size ] ].
+				differences add: (srck to: srcDiffStart - 1) -> (dstk to: dstDiffStart - 1) ] ].
+	^ differences
 ]
 
 { #category : #accessing }
@@ -522,10 +639,21 @@ DiffMorph >> from: old to: new contextClass: aClass [
 		applyMap
 ]
 
+{ #category : #testing }
+DiffMorph >> hasNext [
+
+	^ self selected < self allDifferences size
+]
+
+{ #category : #testing }
+DiffMorph >> hasPrev [
+
+	^ self selected > 1
+]
+
 { #category : #private }
 DiffMorph >> hideOrShowScrollBar [
 	"Do nothing"
-	
 ]
 
 { #category : #'event handling' }
@@ -554,6 +682,7 @@ DiffMorph >> initialize [
 	showOnlySource := false.
 	showOptions := true.
 	beWrapped := false.
+	beNavigable := false.
 	self
 		srcMorph: self newSrcMorph;
 		joinMorph: self newJoinMorph;
@@ -563,15 +692,23 @@ DiffMorph >> initialize [
 		changeProportionalLayout.
 	self prettyPrint: TextDiffBuilder diffsWithPrettyPrint.
 	self addMorphsWithOptions.
-	self srcMorph scrollPane announcer 
+	self srcMorph scrollPane announcer
 		when: RubVerticalScrolled send: #verticalScroll: to: self;
 		when: RubHorizontalScrolled send: #horizontalSourceScroll: to: self.
-	self dstMorph scrollPane announcer 
+	self dstMorph scrollPane announcer
 		when: RubVerticalScrolled send: #verticalScroll: to: self;
 		when: RubHorizontalScrolled send: #horizontalDestScroll: to: self.
 	self
 		linkSubmorphsToSplitters;
 		extent: self initialExtent
+]
+
+{ #category : #initialization }
+DiffMorph >> instanciateButtons [
+
+	buttonTop := self buttonTop.
+	buttonPrev := self buttonPrev.
+	buttonNext := self buttonNext
 ]
 
 { #category : #actions }
@@ -602,7 +739,8 @@ DiffMorph >> joinMappings [
 DiffMorph >> joinMappings: aCollection [
 	"Set the join parameters between src and dst."
 
-	joinMappings := aCollection
+	joinMappings := aCollection.
+	allDifferences := nil
 ]
 
 { #category : #accessing }
@@ -626,12 +764,18 @@ DiffMorph >> joinSectionClass [
 	^JoinSection
 ]
 
+{ #category : #'user interface' }
+DiffMorph >> leftLabel [
+
+	^ self newLabel: (leftCaption ifNil: [ '' ])
+]
+
 { #category : #accessing }
 DiffMorph >> leftLabel: aLeftLabel rightLabel: aRigthLabel [
 
 	leftCaption := aLeftLabel.
 	rightCaption := aRigthLabel.
-	
+
 	self updateMorphs
 ]
 
@@ -854,6 +998,14 @@ DiffMorph >> on: aModel [
 	aModel addDependent: self
 ]
 
+{ #category : #actions }
+DiffMorph >> patchSequenceFromJoinMapping: joinMapping [
+
+	^ (InlineTextDiffBuilder
+		   from: joinMapping src text
+		   to: joinMapping dst text) buildPatchSequence
+]
+
 { #category : #accessing }
 DiffMorph >> prettyPrint [
 	"Answer the value of prettyPrint"
@@ -868,7 +1020,6 @@ DiffMorph >> prettyPrint: aBoolean [
 	prettyPrint == aBoolean ifTrue: [^self].
 	prettyPrint := aBoolean.
 	self updateText
-	
 ]
 
 { #category : #'accessing - colors' }
@@ -891,6 +1042,15 @@ DiffMorph >> removeOptionsPanel [
 	self addMorphsWithoutOptions
 ]
 
+{ #category : #'user interface' }
+DiffMorph >> rightLabel [
+
+	^ (self newRow:
+			   (Array with: (self newLabel: (rightCaption ifNil: [ '' ]))))
+		  listCentering: #bottomRight;
+		  yourself
+]
+
 { #category : #accessing }
 DiffMorph >> scrollbarMorph [
 	"Answer the value of scrollbarMorph"
@@ -905,22 +1065,64 @@ DiffMorph >> scrollbarMorph: anObject [
 	scrollbarMorph := anObject
 ]
 
+{ #category : #actions }
+DiffMorph >> selectDiff: aDiff [
+
+	srcMorph selectFrom: aDiff key first to: aDiff key stop.
+	dstMorph selectFrom: aDiff value first to: aDiff value stop
+]
+
+{ #category : #actions }
+DiffMorph >> selectNext [
+
+	self selected: self selected + 1.
+	self selectDiff: (self allDifferences at: self selected)
+]
+
+{ #category : #actions }
+DiffMorph >> selectPrev [
+
+	self selected: self selected - 1.
+	self selectDiff: (self allDifferences at: self selected)
+]
+
+{ #category : #actions }
+DiffMorph >> selectTop [
+
+	srcMorph selectFrom: 1 to: 0.
+	dstMorph selectFrom: 1 to: 0.
+	self selected: 0
+]
+
+{ #category : #accessing }
+DiffMorph >> selected [
+
+	^ selected ifNil: [ selected := 0 ]
+]
+
+{ #category : #accessing }
+DiffMorph >> selected: aInteger [
+
+	selected := aInteger.
+	self updateButtons
+]
+
 { #category : #accessing }
 DiffMorph >> selectedClassOrMetaClass [
-	^ self contextClass 
+	^ self contextClass
 ]
 
 { #category : #private }
 DiffMorph >> setOptionsPanel: aBoolean [
 	"This is a private method. The implementation is based on the fact the options are set by default"
-	
+
 	aBoolean ifFalse: [ self removeOptionsPanel ]
 ]
 
 { #category : #'user interface' }
 DiffMorph >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	aPluggableShoutMorphOrView classOrMetaClass: self contextClass.
-	^ self contextClass notNil 
+	^ self contextClass notNil
 ]
 
 { #category : #accessing }
@@ -928,7 +1130,7 @@ DiffMorph >> showBoth [
 
 	showOnlyDestination ifTrue: [ showOnlyDestination := false ].
 	showOnlySource ifTrue: [ showOnlySource := false ].
-	
+
 	self updateMorphs
 ]
 
@@ -980,7 +1182,7 @@ DiffMorph >> showOptions: aBoolean [
 
 { #category : #'instance creation' }
 DiffMorph >> sourceTextModel [
-	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
+	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
 { #category : #accessing }
@@ -1014,9 +1216,9 @@ DiffMorph >> update: aSymbol [
 
 	aSymbol == #addOptions
 		ifTrue: [ ^ self addOptionsPanel ].
-	aSymbol == #removeOptions	
+	aSymbol == #removeOptions
 		ifTrue: [ ^ self removeOptionsPanel ].
-		
+
 	^ super update: aSymbol
 ]
 
@@ -1025,10 +1227,17 @@ DiffMorph >> update: aSymbol with: aValue [
 
 	aSymbol == #showOnlyDestination
 		ifTrue: [ ^ self showOnlyDestination: aValue ].
-	aSymbol == #showOptions	
+	aSymbol == #showOptions
 		ifTrue: [ ^ self showOptions: aValue ].
-		
+
 	^ super update: aSymbol with: aValue
+]
+
+{ #category : #updating }
+DiffMorph >> updateButtons [
+
+	buttonNext enabled: self hasNext.
+	buttonPrev enabled: self hasPrev
 ]
 
 { #category : #updating }
@@ -1046,7 +1255,7 @@ DiffMorph >> updateJoinOffsets [
 DiffMorph >> updateMorphs [
 
 	self removeAllMorphs.
-	
+
 	showOptions
 		ifTrue: [ self addMorphsWithOptions ]
 		ifFalse: [ self addMorphsWithoutOptions ]

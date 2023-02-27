@@ -67,7 +67,7 @@ FTBasicItem class >> unexpandedForm [
 { #category : #accessing }
 FTBasicItem >> calculateChildren [
 	^ self getChildren
-		collect: [ :elem | 
+		collect: [ :elem |
 			(self class data: elem from: dataSource)
 				depth: self depth + 1;
 				yourself ]
@@ -82,17 +82,17 @@ FTBasicItem >> children [
 
 { #category : #'expanding-collapsing' }
 FTBasicItem >> collapse [
-	"I do not refresh the table. Use collapseAndRefresh for that. I also do not 
+	"I do not refresh the table. Use collapseAndRefresh for that. I also do not
 	ensure that any selected element is visible after collapsing the element.
 	If any selected elements are within the childrens of the collapsed element,
 	I select the collapsed element."
 
 	self isExpanded ifFalse: [ ^ self ].
-	
+
 	recentlyChanged := true.
 	self dataSource
 		updateSelectionWithCollectBlock:
-			[ :indexOfCurrentSelection :indexOfCollapsedElement | 
+			[ :indexOfCurrentSelection :indexOfCollapsedElement |
 			| changedBy |
 			changedBy := self numberOfVisibleChildren.
 			(indexOfCurrentSelection between: indexOfCollapsedElement and: indexOfCollapsedElement + changedBy)
@@ -111,8 +111,10 @@ FTBasicItem >> collapseAll [
 
 { #category : #'expanding-collapsing' }
 FTBasicItem >> collapseAndRefresh [
-	self collapse.
-	self refreshTable
+
+	self dataSource preservingScrollbarPositionDo: [
+		self collapse.
+		self refreshTable ]
 ]
 
 { #category : #button }
@@ -149,14 +151,14 @@ FTBasicItem >> depth: anObject [
 
 { #category : #'expanding-collapsing' }
 FTBasicItem >> expand [
-	"I do not refresh the table. Use expandAndRefresh for that. I also do not 
+	"I do not refresh the table. Use expandAndRefresh for that. I also do not
 	ensure that any selected element is visible after expanding the element."
 
 	isExpanded := true.
 	recentlyChanged := true.
 	self dataSource
 		updateSelectionWithCollectBlock: [ :indexOfCurrentSelection :indexOfCollapsedElement |
-			indexOfCurrentSelection <= indexOfCollapsedElement 
+			indexOfCurrentSelection <= indexOfCollapsedElement
 				ifTrue: [ indexOfCurrentSelection ]
 				ifFalse: [ indexOfCurrentSelection + self numberOfVisibleChildren ] ]
 ]
@@ -176,8 +178,10 @@ FTBasicItem >> expandAllTo: aDepth [
 
 { #category : #'expanding-collapsing' }
 FTBasicItem >> expandAndRefresh [
-	self expand.
-	self refreshTable
+
+	self dataSource preservingScrollbarPositionDo: [
+		self expand.
+		self refreshTable ]
 ]
 
 { #category : #private }

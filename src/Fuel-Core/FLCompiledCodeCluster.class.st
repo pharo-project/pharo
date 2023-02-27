@@ -21,10 +21,9 @@ FLCompiledCodeCluster >> decodeHeaderWith: aDecoder [
 	signBit := aDecoder nextEncodedByte.
 	header := aDecoder nextEncodedInt32.
 
-	^ signBit = 1
+	^ signBit = true asBit
 		ifTrue: [ header + SmallInteger minVal ]
 		ifFalse: [ header ]
-
 ]
 
 { #category : #protected }
@@ -33,9 +32,7 @@ FLCompiledCodeCluster >> encodeHeader: aSmallInteger with: anEncoder [
 	high bit will be truncated.
 	See #encodeInt32:."
 	anEncoder
-		encodeByte: (aSmallInteger < 0
-			ifTrue: [ 1 ]
-			ifFalse: [ 0 ]);
+		encodeByte: (aSmallInteger < 0) asBit;
 		encodeInt32: aSmallInteger
 ]
 

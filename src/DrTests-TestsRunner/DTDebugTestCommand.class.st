@@ -19,9 +19,9 @@ DTDebugTestCommand >> execute [
 
 { #category : #initialization }
 DTDebugTestCommand >> initialize [
+
 	super initialize.
 	self
-		name: 'Debug';
-		description:
-			'Re-run the test selected and opens a debugger when an assertion fails.'
+		name: 'Debug test';
+		description: 'Re-run the test selected and opens a debugger when an assertion fails.'
 ]

@@ -13,7 +13,7 @@ ClyBrowserButtonMorph >> build [
 	label := self theme newLabelIn: self label: self title.
 	label on: #click send: #executeCommand to: self.
 	label emphasis: TextEmphasis underlined emphasisCode.
-	
+
 	self addMorph: label
 ]
 
@@ -31,20 +31,18 @@ ClyBrowserButtonMorph >> handlesMouseOver: evt [
 { #category : #initialization }
 ClyBrowserButtonMorph >> initialize [
 	super initialize.
-	self 
+	self
 		layoutInset: 4@0
 ]
 
 { #category : #installing }
 ClyBrowserButtonMorph >> mouseEnter: evt [
 	super mouseEnter: evt.
-	self currentHand showTemporaryCursor: Cursor webLink.
-
+	self currentHand showTemporaryCursor: Cursor webLink
 ]
 
 { #category : #installing }
 ClyBrowserButtonMorph >> mouseLeave: evt [
 	super mouseLeave: evt.
 	self currentHand showTemporaryCursor: nil
-
 ]

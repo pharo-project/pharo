@@ -28,12 +28,12 @@ ZnLineReader class >> on: stream [
 { #category : #private }
 ZnLineReader >> growBuffer [
 	| newBuffer |
-	buffer size >= limit 
+	buffer size >= limit
 		ifTrue: [
 			(ZnLineTooLong limit: limit) signal ].
 	newBuffer := String new: buffer size * 2.
 	newBuffer replaceFrom: 1 to: buffer size with: buffer.
-	buffer := newBuffer 
+	buffer := newBuffer
 ]
 
 { #category : #accessing }
@@ -45,15 +45,15 @@ ZnLineReader >> limit: size [
 ZnLineReader >> nextLine [
 	self reset.
 	[ self processNext isNil ] whileFalse.
-	^ buffer copyFrom: 1 to: position 
+	^ buffer copyFrom: 1 to: position
 ]
 
 { #category : #'initialize-release' }
 ZnLineReader >> on: readStream [
 	stream := readStream.
 	buffer := String new: 64.
-	self 
-		limit: ZnConstants maximumLineLength; 
+	self
+		limit: ZnConstants maximumLineLength;
 		reset
 ]
 
@@ -71,11 +71,9 @@ ZnLineReader >> processNext [
 					^ nil ] ].
 	self store: item.
 	^ item
-			
-	
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 ZnLineReader >> reset [
 	position := 0
 ]
@@ -84,6 +82,5 @@ ZnLineReader >> reset [
 ZnLineReader >> store: item [
 	position >= buffer size ifTrue: [ self growBuffer ].
 	position := position + 1.
-	buffer at: position put: item		
-	
+	buffer at: position put: item
 ]

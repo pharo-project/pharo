@@ -68,7 +68,7 @@ ClySystemBrowserContext >> executeCommand: aCommand by: aCommandActivator [
 
 	aCommand isComplexRefactoring ifTrue: [
 		aCommand confirmRefactoringInContext: self by: aCommandActivator].
-	
+
 	aCommand execute
 ]
 
@@ -86,7 +86,7 @@ ClySystemBrowserContext >> isClassSelected [
 ClySystemBrowserContext >> isClassSideMethodSelected [
 
 	self isMethodSelected ifFalse: [ ^false].
-	
+
 	^self selectedMethodItems anySatisfy: [ :each |
 		each systemDefinition isInstanceSide not]
 ]
@@ -95,7 +95,7 @@ ClySystemBrowserContext >> isClassSideMethodSelected [
 ClySystemBrowserContext >> isExtensionMethodSelected [
 
 	self isMethodSelected ifFalse: [ ^false].
-	
+
 	^self selectedMethodItems anySatisfy: [ :each |
 		each systemDefinition isExtension]
 ]
@@ -104,14 +104,14 @@ ClySystemBrowserContext >> isExtensionMethodSelected [
 ClySystemBrowserContext >> isInstanceSideMethodSelected [
 
 	self isMethodSelected ifFalse: [ ^false].
-	
+
 	^self selectedMethodItems anySatisfy: [ :each |
 		each systemDefinition isInstanceSide ]
 ]
 
 { #category : #'selection-messages' }
 ClySystemBrowserContext >> isMessageSelected [
-	^self isMethodSelected 
+	^self isMethodSelected
 ]
 
 { #category : #'selection-methods' }
@@ -157,6 +157,12 @@ ClySystemBrowserContext >> lastSelectedSourceNode [
 	^self lastSelectedMethod astForStylingInCalypso
 ]
 
+{ #category : #accessing }
+ClySystemBrowserContext >> metaLevelScope [
+
+	^ nil
+]
+
 { #category : #'refactoring support' }
 ClySystemBrowserContext >> refactoringScopes [
 	"It returns default browser scope as first one which makes it default for users"
@@ -169,16 +175,16 @@ ClySystemBrowserContext >> refactoringScopes [
 { #category : #'user requests' }
 ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
 
-	^ tool searchDialog 
-		requestMultipleObjects: queryTitle 
+	^ tool searchDialog
+		requestMultipleObjects: queryTitle
 		from: ClyAllPackagesQuery sorted
 ]
 
 { #category : #'user requests' }
 ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
 
-	^tool searchDialog 
-		requestMultipleObjects: queryTitle 
+	^tool searchDialog
+		requestMultipleObjects: queryTitle
 		from: ClyAllInstanceVariablesQuery sorted
 		inScope: (ClyClassScope ofAll: classes) withInheritedScope
 ]
@@ -196,8 +202,8 @@ ClySystemBrowserContext >> requestRemoveMethodStrategyFor: methods [
 { #category : #'user requests' }
 ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
 
-	^tool searchDialog 
-		requestSingleObject: queryTitle 
+	^tool searchDialog
+		requestSingleObject: queryTitle
 		from: ClyAllInstanceVariablesQuery sorted
 		inScope: (ClyClassScope ofAll: classes) withInheritedScope
 ]
@@ -210,9 +216,9 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
 { #category : #'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection [
-	^tool searchDialog 
+	^tool searchDialog
 		requestSingleObject: queryTitle
-		from: ClyAllClassesQuery hierarchical 
+		from: ClyAllClassesQuery hierarchical
 		inScope: (ClyClassScope ofAll: classCollection)
 ]
 
@@ -223,12 +229,12 @@ ClySystemBrowserContext >> requestSinglePackage: queryTitle [
 
 { #category : #'selection-classes' }
 ClySystemBrowserContext >> selectedClassItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-classes' }
 ClySystemBrowserContext >> selectedClasses [
-	^self actualSelectionFrom: self selectedClassItems 
+	^self actualSelectionFrom: self selectedClassItems
 ]
 
 { #category : #'selection-messages' }
@@ -238,7 +244,7 @@ ClySystemBrowserContext >> selectedMessages [
 
 { #category : #'selection-methods' }
 ClySystemBrowserContext >> selectedMethodItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-methods' }
@@ -248,7 +254,7 @@ ClySystemBrowserContext >> selectedMethods [
 
 { #category : #'selection-packages' }
 ClySystemBrowserContext >> selectedPackageItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-packages' }

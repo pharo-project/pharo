@@ -19,5 +19,4 @@ BaselineOfMenuRegistration >> baseline: spec [
 		spec package: 'MenuRegistration'.
 		
 	].
-
 ]

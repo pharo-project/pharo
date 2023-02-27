@@ -8,12 +8,12 @@ Class {
 	#instVars : [
 		'instVar1'
 	],
-	#category : #'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Support-Mocks'
 }
 
 { #category : #accessing }
 FLWeakClassMock >> instVar1 [
-	^ instVar1 
+	^ instVar1
 ]
 
 { #category : #accessing }

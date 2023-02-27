@@ -21,7 +21,6 @@ IRTempVector >> accept: aVisitor [
 { #category : #accessing }
 IRTempVector >> indexForVarNamed: aName [
 	^vars indexOf: aName
-
 ]
 
 { #category : #testing }
@@ -46,5 +45,5 @@ IRTempVector >> vars [
 
 { #category : #accessing }
 IRTempVector >> vars: anObject [
-	vars := anObject.
+	vars := anObject
 ]

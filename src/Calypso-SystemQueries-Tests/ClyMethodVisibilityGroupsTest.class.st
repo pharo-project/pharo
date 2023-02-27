@@ -6,13 +6,13 @@ Class {
 
 { #category : #running }
 ClyMethodVisibilityGroupsTest >> createQuery [
-	^super createQuery 
+	^super createQuery
 		scope: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
 { #category : #running }
 ClyMethodVisibilityGroupsTest >> createQueryResult [
-	^ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy new 
+	^ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy new
 ]
 
 { #category : #running }
@@ -63,7 +63,7 @@ ClyMethodVisibilityGroupsTest >> testFillingWithSingleClasses [
 ClyMethodVisibilityGroupsTest >> testFillingWithThreeClasses [
 
 	queryResult fillWith: {ClyClass2FromP1Mock. ClySubclassN1OfClass1FromP1Mock. ClyClass1FromP1Mock}.
-	
+
 	self assertItems: { ClyClass1FromP1Mock. 0. ClySubclassN1OfClass1FromP1Mock. 1.
 		ClyClass2FromP1Mock. 0}
 ]

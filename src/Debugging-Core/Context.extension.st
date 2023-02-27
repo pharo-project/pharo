@@ -33,7 +33,6 @@ Context >> findSecondToOldestSimilarSender [
 		context := lastContext.
 	].
 	^ secondContext
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -73,7 +72,7 @@ Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."
 
-	^self return: value from: self methodReturnContext
+	^self return: value from: self home
 ]
 
 { #category : #'*Debugging-Core' }
@@ -105,8 +104,6 @@ Context >> respondsToUnknownBytecode [
 	| unknownBytecode |
 	unknownBytecode := self compiledCode at: self pc.
 	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
-	
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -128,7 +125,6 @@ Context >> restart [
 	
 	thisContext terminateTo: self.
 	self jump.
-
 ]
 
 { #category : #'*Debugging-Core' }
@@ -179,7 +175,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	prior to each instruction executed. Answer the simulated value of aBlock."
 	| current returnContext exception |
 	
-	aBlock hasMethodReturn
+	aBlock hasNonLocalReturn
 		ifTrue: [ self error: 'simulation of blocks with ^ can run loose' ].
 		
 	current := [ aBlock
@@ -203,7 +199,6 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	exception class == SimulationExceptionWrapper
 		ifTrue: [ ^ exception exception signal ].
 	^ exception
-	
 ]
 
 { #category : #'*Debugging-Core' }
@@ -314,7 +309,7 @@ Context >> stepToHome: aContext [
 				  error } ].
 
 		home == ctxt home ] whileFalse: [ 
-			home isDead ifTrue: [ 
+			(home isDead or: [ ctxt isDead ]) ifTrue: [ 
 				^ { 
 					  ctxt.
 					  nil } ] ].
@@ -343,14 +338,12 @@ Context >> stepToSendOrReturn [
 
 { #category : #'*Debugging-Core' }
 Context class >> tallyInstructions: aBlock [
-	"
-	Count the occurrences of each bytecode during the execution of aBlock.
+	"Count the occurrences of each bytecode during the execution of aBlock.
 	Return a Array of associations using the byte as key and the occurrences as values sorted by the instruction opcode numeric values.
 	
-	This method uses the in-image bytecode interpreter to evaluate and count the instructions.
+	This method uses the in-image bytecode interpreter to evaluate and count the instructions."
 	
-	(Context tallyInstructions: [3.14159 printString]) size >>> 122
-	"
+	"(Context tallyInstructions: [3.14159 printString]) size >>> 122"
 	
 	| tallies |
 	tallies := Bag new.
@@ -413,13 +406,11 @@ Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
 	^self lookupTempVar: aName
-
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> temporaryVariables [
-	^self sourceNode temporaries collect: [ :each | each binding ] 
-
+	^self sourceNode temporaries collect: [ :each | each binding ]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -450,7 +441,7 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 
 { #category : #'*Debugging-Core' }
 Context >> unusedBytecode [
-	^ self respondsToUnknownBytecode 
+	^ self respondsToUnknownBytecode
 ]
 
 { #category : #'*Debugging-Core' }

@@ -1,6 +1,6 @@
 Extension { #name : #RBPatternPragmaNode }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBPatternPragmaNode >> pattern [
 
 	^ self selector

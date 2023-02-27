@@ -42,7 +42,7 @@ HiAbstractRenderer >> formWidth [
 { #category : #API }
 HiAbstractRenderer >> newForm [
 	"Answer a new form, rendered with the current ruler and rowInterval."
-	
+
 	self subclassResponsibility
 ]
 
@@ -77,5 +77,4 @@ HiAbstractRenderer >> ruler [
 { #category : #accessing }
 HiAbstractRenderer >> ruler: aHiRuler [
 	ruler := aHiRuler
-
 ]

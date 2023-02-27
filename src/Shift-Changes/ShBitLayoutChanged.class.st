@@ -10,10 +10,10 @@ Class {
 
 { #category : #propagating }
 ShBitLayoutChanged >> hasChangeInstanceSideShape [
-	^ true.
+	^ true
 ]
 
 { #category : #propagating }
 ShBitLayoutChanged >> propagateToSubclasses: anotherBuilder [
-	anotherBuilder layoutDefinition layoutClass: builder layoutDefinition layoutClass 
+	anotherBuilder layoutDefinition layoutClass: builder layoutDefinition layoutClass
 ]

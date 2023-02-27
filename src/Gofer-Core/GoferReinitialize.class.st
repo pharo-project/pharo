@@ -18,6 +18,6 @@ GoferReinitialize >> execute [
 GoferReinitialize >> execute: aWorkingCopy [
 
 	aWorkingCopy packageSet methods do: [ :each |
-		(each methodClass isClassSide and: [ each selector = #initialize ])
+		(each isClassSide and: [ each selector = #initialize ])
 			ifTrue: [ each methodClass instanceSide initialize ] ]
 ]

@@ -37,7 +37,7 @@ OSWindowGestureHandler >> fingersFromDevice: id [
 { #category : #events }
 OSWindowGestureHandler >> handleGestureEvent: anEvent [
 	self handleEvent: anEvent.
-	
+
 	"Notifying gestures"
 	self sendEventToGestures: anEvent
 ]
@@ -47,7 +47,7 @@ OSWindowGestureHandler >> initialize [
 	registeredGestures := OrderedCollection new.
 	devicesFingers := Dictionary new.
 	fingers := Dictionary new.
-	fingerCount := 0.
+	fingerCount := 0
 ]
 
 { #category : #accessing }
@@ -56,8 +56,8 @@ OSWindowGestureHandler >> lastUpdateTimestamp [
 ]
 
 { #category : #accessing }
-OSWindowGestureHandler >> lastUpdateTimestamp: anObject [ 
-	lastUpdateTimestamp := anObject 
+OSWindowGestureHandler >> lastUpdateTimestamp: anObject [
+	lastUpdateTimestamp := anObject
 ]
 
 { #category : #'detector registering' }
@@ -77,17 +77,17 @@ OSWindowGestureHandler >> trackFinger: anEvent [
 	| newFingerTracker |
 	"Creating a new finger tracker"
 	newFingerTracker := OSTouchFingerTracker for: anEvent.
-	
+
 	"Registering it in the right places"
 	fingers at: anEvent fingerId put: newFingerTracker.
 	(devicesFingers at: anEvent deviceId ifAbsentPut: [ OrderedCollection new ]) add: newFingerTracker.
-	
+
 	^ newFingerTracker
 ]
 
 { #category : #'detector registering' }
 OSWindowGestureHandler >> unregisterGesture: anOSTouchGesture [
-	registeredGestures remove: anOSTouchGesture 
+	registeredGestures remove: anOSTouchGesture
 ]
 
 { #category : #'handling fingers' }
@@ -95,7 +95,7 @@ OSWindowGestureHandler >> untrackFinger: anEvent [
 	| removedTracker |
 	fingerCount := fingerCount - 1.
 	removedTracker := fingers removeKey: anEvent fingerId ifAbsent: [ ^ self ].
-	(devicesFingers at: anEvent deviceId) remove: removedTracker.
+	(devicesFingers at: anEvent deviceId) remove: removedTracker
 ]
 
 { #category : #'handling fingers' }
@@ -106,15 +106,15 @@ OSWindowGestureHandler >> updateGesturesActiveFingers [
 { #category : #visiting }
 OSWindowGestureHandler >> visitTouchPointerDownEvent: anEvent [
 	self trackFinger: anEvent.
-	
+
 	"Updating informations"
 	fingerCount := fingerCount + 1 .
 	lastUpdateTimestamp := anEvent timestamp.
-	
+
 	self updateGesturesActiveFingers.
-	
+
 	self sendEventToGestures: anEvent.
-	
+
 	self visitTouchActionPointerDownEvent: anEvent
 ]
 
@@ -125,7 +125,7 @@ OSWindowGestureHandler >> visitTouchPointerMoveEvent: anEvent [
 
 	fingerTracker updateWithEvent: anEvent.
 	lastUpdateTimestamp := anEvent timestamp.
-	
+
 	self sendEventToGestures: anEvent.
 
 	self visitTouchActionPointerMoveEvent: anEvent

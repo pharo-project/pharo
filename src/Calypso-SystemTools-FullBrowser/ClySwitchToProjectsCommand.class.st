@@ -14,7 +14,7 @@ Class {
 { #category : #testing }
 ClySwitchToProjectsCommand class >> canBeExecutedInContext: aContext [
 
-	^ ClySystemEnvironment currentImage projectManager projectManagers notEmpty 
+	^ ClySystemEnvironment currentImage projectManager projectManagers notEmpty
 ]
 
 { #category : #accessing }

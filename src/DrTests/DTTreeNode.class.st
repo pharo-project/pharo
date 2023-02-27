@@ -10,7 +10,9 @@ Class {
 		'subResults',
 		'contextMenuBlock',
 		'subResultsAggregator',
-		'browseBlock'
+		'browseBlock',
+		'shouldStartExpanded',
+		'displayColor'
 	],
 	#category : #'DrTests-Model'
 }
@@ -39,6 +41,7 @@ DTTreeNode >> browseBlock: anObject [
 
 { #category : #testing }
 DTTreeNode >> canBeBrowsed [
+
 	^ self browseBlock isNotNil
 ]
 
@@ -57,13 +60,34 @@ DTTreeNode >> contextMenuBlock: anObject [
 	contextMenuBlock := anObject
 ]
 
+{ #category : #accessing }
+DTTreeNode >> displayColor [
+
+	^ displayColor value
+]
+
+{ #category : #accessing }
+DTTreeNode >> displayColor: aValuableOrColor [
+
+	displayColor := aValuableOrColor
+]
+
+{ #category : #accessing }
+DTTreeNode >> displayColorIfNotEmpty: aColor [
+
+	self displayColor: [
+		self subResults
+			ifNotEmpty: [ aColor ]
+			ifEmpty: [ nil ] ]
+]
+
 { #category : #actions }
 DTTreeNode >> drTestsBrowse [
 	"Browse the tree node according to what is specified by my #browseBlock.
 	 If my #browseBlock is nil, does nothing."
 	self canBeBrowsed
 		ifFalse: [ ^ self ].
-	
+
 	self browseBlock cull: self
 ]
 
@@ -74,20 +98,22 @@ DTTreeNode >> drTestsBuildContextMenu: menu [
 
 { #category : #accessing }
 DTTreeNode >> drTestsName [
+
 	^ String streamContents: [ :s |
 		s
 			<< self name;
-			<< $(;
+			<< ' (';
 			<< (self subResultsAggregator value: self subResults) asString;
-			<< $) ]
+			<< ')' ]
 ]
 
 { #category : #initialization }
 DTTreeNode >> initialize [
+
 	super initialize.
-	self
-		contextMenuBlock: [ :menu | ]. "Does nothing by default."
+	self contextMenuBlock: [ :menu | ]. "Does nothing by default."
 	self subResultsAggregator: [ :subRes | (DTLeavesCollector collectLeavesOf: self) size ].
+	shouldStartExpanded := false
 ]
 
 { #category : #accessing }
@@ -98,6 +124,24 @@ DTTreeNode >> name [
 { #category : #accessing }
 DTTreeNode >> name: anObject [
 	name := anObject
+]
+
+{ #category : #testing }
+DTTreeNode >> shouldStartExpanded [
+
+	^ shouldStartExpanded
+]
+
+{ #category : #accessing }
+DTTreeNode >> startContracted [
+
+	shouldStartExpanded := false
+]
+
+{ #category : #accessing }
+DTTreeNode >> startExpanded [
+
+	shouldStartExpanded := true
 ]
 
 { #category : #accessing }

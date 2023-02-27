@@ -10,17 +10,17 @@ Class {
 
 { #category : #testing }
 ClyItemGroupProviderTest class >> isAbstract [
-	^self == ClyItemGroupProviderTest 
+	^self == ClyItemGroupProviderTest
 ]
 
 { #category : #running }
 ClyItemGroupProviderTest >> groupProviderClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
 ClyItemGroupProviderTest >> setUp [
 	super setUp.
 	groupProvider := self groupProviderClass new.
-	builtGroups := OrderedCollection new.
+	builtGroups := OrderedCollection new
 ]

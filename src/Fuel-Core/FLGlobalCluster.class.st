@@ -4,13 +4,13 @@ I am a cluster for objects that are reachables from Smalltalk global dictionary.
 Class {
 	#name : #FLGlobalCluster,
 	#superclass : #FLPrimitiveCluster,
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #analyzing }
 FLGlobalCluster class >> clusterBucketIn: aClusterization [
 
-	^aClusterization globalsBucket 
+	^aClusterization globalsBucket
 ]
 
 { #category : #'serialize/materialize' }
@@ -21,7 +21,6 @@ FLGlobalCluster >> materializeGlobalAssociationFrom: aDecoder [
 	^ aDecoder globalEnvironment
 		associationAt: globalName
 		ifAbsent: [ FLGlobalNotFound signalWithName: globalName ]
-
 ]
 
 { #category : #'serialize/materialize' }
@@ -40,7 +39,5 @@ FLGlobalCluster >> serializeGlobalAssociationKeyed: aSymbol on: anEncoder [
 
 { #category : #'serialize/materialize' }
 FLGlobalCluster >> serializeGlobalClass: aClass on: anEncoder [
-	
-	aClass isObsolete ifTrue: [ FLObsolete signalWithName: aClass name ].
-	anEncoder encodeString: aClass name 
+	anEncoder encodeString: aClass name
 ]

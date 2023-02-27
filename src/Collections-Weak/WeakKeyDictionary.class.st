@@ -24,26 +24,26 @@ WeakKeyDictionary >> add: anAssociation [
 ]
 
 { #category : #enumerating }
-WeakKeyDictionary >> allAssociationsDo: aBlock [ 
-	"Evaluate aBlock for each of the receiver's elements (key/value 
+WeakKeyDictionary >> allAssociationsDo: aBlock [
+	"Evaluate aBlock for each of the receiver's elements (key/value
 	associations). This includes associations with nil keys, except for
 	the expired ones."
 
-	super associationsDo: [:association | 
-		association expired ifFalse:[aBlock value: association]].
+	super associationsDo: [:association |
+		association expired ifFalse:[aBlock value: association]]
 ]
 
 { #category : #enumerating }
-WeakKeyDictionary >> associationsDo: aBlock [ 
-	"Evaluate aBlock for each of the receiver's elements (key/value 
+WeakKeyDictionary >> associationsDo: aBlock [
+	"Evaluate aBlock for each of the receiver's elements (key/value
 	associations)."
 
-	
 
-	super associationsDo: [:association | | key | 
+
+	super associationsDo: [:association | | key |
 		"Hold onto the key so it won't be collected while the block is evaluated."
 		key := association key.
-		key ifNotNil:[aBlock value: association]].
+		key ifNotNil:[aBlock value: association]]
 ]
 
 { #category : #accessing }
@@ -82,7 +82,7 @@ WeakKeyDictionary >> expiredValuesDo: aBlock [
 	1 to: array size do:[:i | | assoc |
 		assoc := array at: i.
 		(assoc notNil and: [ assoc key isNil and: [assoc expired not ]])
-		ifTrue: [ 
+		ifTrue: [
 			aBlock value: assoc value.
 			assoc expire.
 			expired := expired + 1.
@@ -92,7 +92,7 @@ WeakKeyDictionary >> expiredValuesDo: aBlock [
 { #category : #finalization }
 WeakKeyDictionary >> finalizeValues [
 	"Clear all associations with nil keys.
-	Avoid using block closures, so it won't produce many garbage 
+	Avoid using block closures, so it won't produce many garbage
 	(since pushing closure as argument requires creating its preinitialized copy)"
 	1 to: array size do:[:i | | assoc |
 		assoc := array at: i.
@@ -102,8 +102,7 @@ WeakKeyDictionary >> finalizeValues [
 				tally := tally - 1.
 			].
 		].
-	].
-
+	]
 ]
 
 { #category : #finalization }
@@ -115,14 +114,13 @@ WeakKeyDictionary >> finalizeValues: finiObjects [
 			expired := expired + 1.
 			tally := tally - 1.
 		].
-	].
-
+	]
 ]
 
 { #category : #private }
 WeakKeyDictionary >> fixCollisionsFrom: oldIndex [
 	"This is an internal method that should not be needed in WeakKeyDictionary"
-	self shouldNotImplement.
+	self shouldNotImplement
 ]
 
 { #category : #private }
@@ -132,14 +130,14 @@ WeakKeyDictionary >> fullCheck [
 	array size - tally < (array size // 4 max: 1)
 		ifTrue: [self grow].
 	"Make sure we never have so many expired entries that adding might fail"
-	4 * expired + 4 > array size 
-		ifTrue: [self rehash].
+	4 * expired + 4 > array size
+		ifTrue: [self rehash]
 ]
 
 { #category : #private }
 WeakKeyDictionary >> grow [
 	super grow.
-	expired := 0.
+	expired := 0
 ]
 
 { #category : #initialization }
@@ -152,7 +150,7 @@ WeakKeyDictionary >> initialize: n [
 WeakKeyDictionary >> isHealthy [
 	"Test that object hashes match their positions stored in the receiver,
 	answer true if everything ok, false otherwise
-	
+
 	WeakKeyDictionary allInstances select: [:dict |
 		dict isHealthy not ]
 	Dictionary allSubInstances select: [:dict |
@@ -169,9 +167,9 @@ WeakKeyDictionary >> isHealthy [
 { #category : #private }
 WeakKeyDictionary >> noCheckAdd: anAssociation [
 	"Add anAssociation to the receiver. Discard expired associations. Put nil keys at the beginning."
-	
+
 	| key |
-	
+
 	key := anAssociation key. "Hold on to the key during this method"
 
 	anAssociation expired ifFalse:[
@@ -180,14 +178,14 @@ WeakKeyDictionary >> noCheckAdd: anAssociation [
 		] ifNil: [
 			1 to: array size do:[:n|
 				(array at: n) ifNil:[
-					array at: n put: anAssociation. 
+					array at: n put: anAssociation.
 					tally := tally + 1.
 					^self
 				].
 			].
 			self error: 'could not find an empty slot.'
 		].
-	].
+	]
 ]
 
 { #category : #private }
@@ -202,7 +200,7 @@ WeakKeyDictionary >> noCheckNoGrowFillFrom: anArray [
 	tally := 0.
 	1 to: anArray size do: [ :index |
 		(anArray at: index) ifNotNil: [ :association |
-			association key 
+			association key
 				ifNil: [ finalizer ifNotNil: [ finalizer value: association value ] ]
 				ifNotNil: [ :key | "Don't let the key go away"
 					array
@@ -243,7 +241,7 @@ WeakKeyDictionary >> postCopy [
 original and the copy"
 
 	array := array
-		collect: [ :assoc | 
+		collect: [ :assoc |
 			assoc
 				ifNotNil: [ assoc expired
 						ifTrue: [ WeakKeyAssociation expired ]
@@ -254,13 +252,13 @@ original and the copy"
 WeakKeyDictionary >> rehash [
 	"Rehash the receiver."
 	super rehash.
-	expired := 0.
+	expired := 0
 ]
 
 { #category : #removing }
 WeakKeyDictionary >> removeKey: key ifAbsent: aBlock [
-	"Remove key (and its associated value) from the receiver. If key is not in 
-	the receiver, answer the result of evaluating aBlock. Otherwise, answer 
+	"Remove key (and its associated value) from the receiver. If key is not in
+	the receiver, answer the result of evaluating aBlock. Otherwise, answer
 	the value externally named by key."
 
 	| index result assoc |
@@ -282,7 +280,7 @@ WeakKeyDictionary >> scanFor: anObject [
 	| element start finish |
 	finish := array size.
 	start := self startIndexFor: anObject.
-	
+
 	"Search from (hash mod size) to the end."
 	start to: finish do:
 		[:index | ((element := array at: index) == nil or: [self compare: element key to: anObject])
@@ -303,36 +301,36 @@ WeakKeyDictionary >> scanForEmpty: anObject [
 	finish := array size.
 	start := self startIndexFor: anObject.
 	firstNil := nil.
-	
+
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := array at: index) == nil 
+		[:index | ((element := array at: index) == nil
 						or: [self compare: element key to: anObject])
 			ifTrue: [
 				"If we found no match, and have an expired slot, use that one."
 				(element isNil and: [firstNil notNil]) ifTrue:[^firstNil].
-				^ index 
+				^ index
 			].
 			"If this slot is expired, and we haven't seen an earlier expired slot, record it"
-			(element notNil 
-				and: [element expired 
+			(element notNil
+				and: [element expired
 						and: [firstNil isNil]]) ifTrue: [firstNil := index].
 		].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := array at: index) == nil 
+		[:index | ((element := array at: index) == nil
 					or: [self compare: element key to: anObject])
 			ifTrue: [
 				(element isNil and: [firstNil notNil]) ifTrue:[^firstNil].
-				^ index 
+				^ index
 			].
-			(element notNil 
-				and: [element expired 
+			(element notNil
+				and: [element expired
 						and: [firstNil isNil]]) ifTrue: [firstNil := index].
 		].
 
-	"If there is no empty slot, but an expired one, return it."	
+	"If there is no empty slot, but an expired one, return it."
 	firstNil notNil ifTrue:[^firstNil].
 
 	^ 0  "No match AND no empty slot"
@@ -341,11 +339,11 @@ WeakKeyDictionary >> scanForEmpty: anObject [
 { #category : #private }
 WeakKeyDictionary >> scanForKeyOrNil: anObject [
 	"Same as scanFor: , but treats association with key == nil as empty slot"
-	
+
 	| element start finish |
 	finish := array size.
 	start := self startIndexFor: anObject.
-	
+
 	"Search from (hash mod size) to the end."
 	start to: finish do:
 		[:index | ((element := array at: index) == nil or: [ element key isNil or: [self compare: element key to: anObject]])
@@ -377,13 +375,13 @@ WeakKeyDictionary >> slowSize [
 { #category : #private }
 WeakKeyDictionary >> startIndexFor: anObject [
 	"Return the index at which the scan for anObject should start."
-	
+
 	^(anObject hash \\ array size) + 1
 ]
 
 { #category : #private }
-WeakKeyDictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary [ 
-	self shouldNotImplement.
+WeakKeyDictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary [
+	self shouldNotImplement
 ]
 
 { #category : #enumerating }
@@ -391,8 +389,8 @@ WeakKeyDictionary >> valuesDo: aBlock [
 	"See comments in Dictionary>>valuesDo:"
 
 	tally = 0 ifTrue: [ ^ self ].
-	1 to: array size do: [ :eachIndex | 
-		(array at: eachIndex) ifNotNil: [ :eachAssociation | 
+	1 to: array size do: [ :eachIndex |
+		(array at: eachIndex) ifNotNil: [ :eachAssociation |
 			| eachKey |
 			"The code keeps the key so it's not collected during the evaluation of aBlock"
 			eachKey := eachAssociation key.

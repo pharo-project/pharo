@@ -1,11 +1,11 @@
 Extension { #name : #String }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 String >> stonContainSubObjects [ 
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 String >> stonOn: stonWriter [
 	stonWriter writeString: self
 ]

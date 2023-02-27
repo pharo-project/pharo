@@ -11,20 +11,23 @@ Class {
 	#name : #RBReturnNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'return',
-		'value'
+		'value',
+		'start'
 	],
 	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
-RBReturnNode class >> return: returnInteger value: aValueNode [ 
-	^self new return: returnInteger value: aValueNode
+RBReturnNode class >> start: returnInteger value: aValueNode [
+	^self new
+		start: returnInteger;
+		value: aValueNode
 ]
 
 { #category : #'instance creation' }
 RBReturnNode class >> value: aNode [
-	^self return: 0 value: aNode
+	^self new
+		value: aNode
 ]
 
 { #category : #comparing }
@@ -52,15 +55,15 @@ RBReturnNode >> containsReturn [
 ]
 
 { #category : #matching }
-RBReturnNode >> copyInContext: aDictionary [ 
+RBReturnNode >> copyInContext: aDictionary [
 	^ self class new
 		value: (self value copyInContext: aDictionary);
 		yourself
 ]
 
 { #category : #comparing }
-RBReturnNode >> equalTo: anObject withMapping: aDictionary [ 
-	^self class = anObject class 
+RBReturnNode >> equalTo: anObject withMapping: aDictionary [
+	^self class = anObject class
 		and: [self value equalTo: anObject value withMapping: aDictionary]
 ]
 
@@ -73,7 +76,7 @@ RBReturnNode >> hash [
 RBReturnNode >> initialize [
 	super initialize.
 
-	return := 0
+	start := 0
 ]
 
 { #category : #testing }
@@ -87,7 +90,7 @@ RBReturnNode >> isReturn [
 ]
 
 { #category : #matching }
-RBReturnNode >> match: aNode inContext: aDictionary [ 
+RBReturnNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^value match: aNode value inContext: aDictionary
 ]
@@ -98,36 +101,25 @@ RBReturnNode >> postCopy [
 	self value: self value copy
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RBReturnNode >> removeNode: aNode [
 
 	self parent removeNode: self
 ]
 
 { #category : #replacing }
-RBReturnNode >> replaceNode: aNode withNode: anotherNode [ 
+RBReturnNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [ self value: anotherNode ]
-]
-
-{ #category : #'accessing - token' }
-RBReturnNode >> return [
-	^ return
-]
-
-{ #category : #'accessing - token' }
-RBReturnNode >> return: anInteger [
-	return := anInteger
-]
-
-{ #category : #initialization }
-RBReturnNode >> return: returnInteger value: anExpression [ 
-	return := returnInteger.
-	self value: anExpression
 ]
 
 { #category : #accessing }
 RBReturnNode >> start [
-	^ return
+	^ start
+]
+
+{ #category : #'accessing - token' }
+RBReturnNode >> start: anInteger [
+	start := anInteger
 ]
 
 { #category : #accessing }
@@ -147,7 +139,7 @@ RBReturnNode >> value [
 ]
 
 { #category : #accessing }
-RBReturnNode >> value: anExpression [ 
+RBReturnNode >> value: anExpression [
 	value := anExpression.
 	value parent: self
 ]

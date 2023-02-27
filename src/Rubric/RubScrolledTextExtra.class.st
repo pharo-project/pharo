@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #querying }
-RubScrolledTextExtra class >> classOfRulerNamed: aKey [ 
+RubScrolledTextExtra class >> classOfRulerNamed: aKey [
 	^ self allSubclasses detect: [ :cls | cls key = aKey ] ifNone: [  ]
 ]
 
@@ -44,17 +44,17 @@ RubScrolledTextExtra >> computedPositionFrom: aRectangle [
 
 { #category : #accessing }
 RubScrolledTextExtra >> computedWidthFrom: aRectangle [
-	^ aRectangle width 
+	^ aRectangle width
 ]
 
 { #category : #defaults }
-RubScrolledTextExtra >> defaultBackgroundColor [ 
+RubScrolledTextExtra >> defaultBackgroundColor [
 	^ Color transparent
 ]
 
 { #category : #defaults }
 RubScrolledTextExtra >> defaultColor [
-	^ self defaultBackgroundColor 
+	^ self defaultBackgroundColor
 ]
 
 { #category : #initialization }
@@ -105,7 +105,6 @@ RubScrolledTextExtra >> lines [
 
 { #category : #geometry }
 RubScrolledTextExtra >> manageLayoutInBounds: aRectangle [
-
 ]
 
 { #category : #accessing }
@@ -125,8 +124,8 @@ RubScrolledTextExtra >> paragraph [
 
 { #category : #accessing }
 RubScrolledTextExtra >> paragraphProvider [
-	
-	^ self ownerThatIsA: RubScrolledTextMorph 
+
+	^ self ownerThatIsA: RubScrolledTextMorph
 ]
 
 { #category : #accessing }
@@ -165,7 +164,7 @@ RubScrolledTextExtra >> selectionStop [
 ]
 
 { #category : #accessing }
-RubScrolledTextExtra >> text [ 
+RubScrolledTextExtra >> text [
 	^ self textArea text
 ]
 
@@ -187,8 +186,7 @@ RubScrolledTextExtra >> textChanged [
 { #category : #accessing }
 RubScrolledTextExtra >> textStyle [
 
-	^ self textArea textStyle.
-
+	^ self textArea textStyle
 ]
 
 { #category : #structure }
@@ -199,8 +197,8 @@ RubScrolledTextExtra >> topRendererOrSelf [
 { #category : #initialization }
 RubScrolledTextExtra >> unplug [
 	self paragraphProvider
-		ifNotNil: [ 
+		ifNotNil: [
 			self scrollPane ifNotNil: [:sp | sp announcer unsubscribe: self].
 			self textArea ifNotNil: [:ts | ts announcer unsubscribe: self ] ].
-	super unplug 
+	super unplug
 ]

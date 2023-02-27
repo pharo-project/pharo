@@ -41,7 +41,7 @@ TabExample >> blueMorphTab [
 		actions:
 			{(TabAction
 				action: [ tab morph color: Color random ]
-				icon: (self iconNamed: #smallConfigurationIcon)
+				icon: (self iconNamed: #smallConfiguration)
 				label: 'Randomize color')}.
 	tab
 		closeable: false;
@@ -64,11 +64,11 @@ TabExample >> freshListTab [
 		retrievingBlock: [ 1 second asDelay wait.
 			SpListPresenter new
 				items: (1 to: 50) asOrderedCollection;
-				buildWithSpec ]
+				build ]
 		actions:
 		{(TabAction
 				action: [ self halt ]
-				icon: (self iconNamed: #smallConfigurationIcon)
+				icon: (self iconNamed: #smallConfiguration)
 				label: 'Halt!')})
 		menu: [ :menu | menu add: 'Fubu' target: self selector: #halt ];
 		yourself
@@ -111,13 +111,13 @@ TabExample >> redMorphTab [
 TabExample >> storedListTab [
 	^ TabMorph
 		label: 'Stored List Model'
-		icon: (self iconNamed: #smallHelpIcon)
-		retrievingBlock: [ listModel buildWithSpec ]
+		icon: (self iconNamed: #smallHelp)
+		retrievingBlock: [ listModel build ]
 ]
 
 { #category : #private }
 TabExample >> tabs [
-	
+
 	^ OrderedCollection new
 		add: self storedListTab;
 		add: self freshListTab;

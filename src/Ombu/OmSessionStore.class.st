@@ -25,25 +25,21 @@ Class {
 { #category : #accessing }
 OmSessionStore class >> defaultBaseLocator [
 
-	^ defaultBaseLocator ifNil: [ 
+	^ defaultBaseLocator ifNil: [
 		defaultBaseLocator := FileLocator localDirectory / 'ombu-sessions' ]
 ]
 
 { #category : #accessing }
-OmSessionStore class >> defaultBaseLocator: aFileLocator [ 
+OmSessionStore class >> defaultBaseLocator: aFileLocator [
 
 	defaultBaseLocator := aFileLocator
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OmSessionStore class >> initialize [
-	"
-	self initialize
-	"
+
 	registry := WeakSet new: 5.
-	SessionManager default registerUserClassNamed: self name.
-
-
+	SessionManager default registerUserClassNamed: self name
 ]
 
 { #category : #'instance creation' }
@@ -63,11 +59,11 @@ OmSessionStore class >> newWithBaseLocator: aBaseDirectory [
 { #category : #initialization }
 OmSessionStore class >> register: aSessionStore [
 
-	registry add: aSessionStore 
+	registry add: aSessionStore
 ]
 
 { #category : #initialization }
-OmSessionStore class >> startUp [ 
+OmSessionStore class >> startUp [
 
 	registry do: [ :each | each store ]
 ]
@@ -75,8 +71,8 @@ OmSessionStore class >> startUp [
 { #category : #accessing }
 OmSessionStore class >> storeNameStrategy [
 
-	^ storeNameStrategy ifNil: [ 
-		storeNameStrategy := OmRandomSuffixStrategy new ]
+	^ storeNameStrategy ifNil: [
+		storeNameStrategy := OmTimeStampSuffixStrategy new ]
 ]
 
 { #category : #accessing }
@@ -88,7 +84,7 @@ OmSessionStore class >> storeNameStrategy: aStoreNameStrategy [
 { #category : #accessing }
 OmSessionStore >> announcer [
 
-	^ announcer ifNil: [ 
+	^ announcer ifNil: [
 		announcer := Announcer new ]
 ]
 
@@ -115,9 +111,9 @@ OmSessionStore >> entriesDo: aBlockClosure [
 OmSessionStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 	"Look for an entry, evaluating either the first block closure if present or the second if absent."
 
-	^ self store 
-		entryFor: aReference 
-		ifPresent: presentBlockClosure 
+	^ self store
+		entryFor: aReference
+		ifPresent: presentBlockClosure
 		ifAbsent: absentBlockClosure
 ]
 
@@ -125,13 +121,12 @@ OmSessionStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: 
 OmSessionStore >> existsStoreNamed: aName [
 
 	^ OmFileStore existsStoreNamed: aName inDirectory: self directory
-
 ]
 
 { #category : #refreshing }
 OmSessionStore >> flush [
 	"Flush any buffered state"
-	
+
 	self store flush
 ]
 
@@ -160,19 +155,18 @@ OmSessionStore >> imagePathString [
 OmSessionStore >> initializeWithBaseLocator: aDirectoryFileLocator [
 
 	self initialize.
-	
+
 	baseLocator := aDirectoryFileLocator.
 	self store. "Force initialization"
 	headReference := self store headReference.
-	
-	self class register: self.
 
+	self class register: self
 ]
 
 { #category : #accessing }
 OmSessionStore >> lowLevelFileStoreIfNone: aBlock [
 	"Needed by EpLostChangesDetector"
-	
+
 	^ currentStore ifNil: aBlock
 ]
 
@@ -188,21 +182,20 @@ OmSessionStore >> newEntry: anEntry [
 	"Persist a new entry"
 
 	self store newEntry: anEntry.
-	headReference := self store headReference.
+	headReference := self store headReference
 ]
 
 { #category : #accessing }
 OmSessionStore >> nextStoreName [
 
 	| name |
-	name := currentStore 
+	name := currentStore
 		ifNil: [ "First store name"
 			Smalltalk imageFile basenameWithoutExtension, '.1' ]
 		ifNotNil: [ "There is already a name"
 			currentStore globalName ].
-		
-	^ self storeNameStrategy nextTo: name in: self directory
 
+	^ self storeNameStrategy nextTo: name in: self directory
 ]
 
 { #category : #refreshing }
@@ -240,9 +233,9 @@ OmSessionStore >> resetWithStoreNamed: newName [
 OmSessionStore >> store [
 	"Answer the store I wrap"
 
-	(currentStore isNil or: [ self needsReset ]) 
+	(currentStore isNil or: [ self needsReset ])
 		ifTrue: [ self resetWithNextStoreName ].
-	
+
 	^ currentStore
 ]
 
@@ -268,7 +261,7 @@ OmSessionStore >> writingDeferDuration [
 OmSessionStore >> writingDeferDuration: aDuration [
 
 	writingDeferDuration := aDuration.
-	self store writingDeferDuration: aDuration.
+	self store writingDeferDuration: aDuration
 ]
 
 { #category : #accessing }

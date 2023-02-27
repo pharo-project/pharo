@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyWatchMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'watchpoints' priority: 8.4 on: aMethodQuery 
+	^ClyMethodGroup named: 'watchpoints' priority: 8.4 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

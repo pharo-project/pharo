@@ -22,13 +22,13 @@ Class {
 
 { #category : #'instance creation' }
 ClyStatusBarItemMorph class >> for: aBrowserTool [
-	^self new 
-		ownerTool: aBrowserTool 
+	^self new
+		ownerTool: aBrowserTool
 ]
 
 { #category : #building }
 ClyStatusBarItemMorph >> build [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -38,8 +38,8 @@ ClyStatusBarItemMorph >> defaultColor [
 
 { #category : #initialization }
 ClyStatusBarItemMorph >> initialize [
-	super initialize.	
-	self 
+	super initialize.
+	self
 		changeTableLayout;
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;

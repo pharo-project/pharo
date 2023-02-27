@@ -18,7 +18,7 @@ Class {
 
 { #category : #visitor }
 AthensPathSegment >> accept: aVisitor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #visitor }
@@ -30,9 +30,9 @@ AthensPathSegment >> convertWith: anObject [
 AthensPathSegment >> do: aBlock [
 	| segment |
 	segment := self.
-	
-	[ aBlock value: segment. 
-	  segment := segment next. 
+
+	[ aBlock value: segment.
+	  segment := segment next.
 	  segment notNil ] whileTrue
 ]
 
@@ -69,7 +69,7 @@ AthensPathSegment >> sendCommandsTo: aBuilder [
 { #category : #accessing }
 AthensPathSegment >> size [
 	"Answer 1 + the number of segments next to receiver"
-	
+
 	| segment count |
 	segment := self.
 	count := 0.

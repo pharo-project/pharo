@@ -5,16 +5,15 @@ RBProgramNode >> completionEntries: offset [
 	"for now we give all selectors and gloabls as a fallback"
 	| selectors globals |
 	self methodNode sourceCode ifNil: [ ^#() ].
-	selectors := Symbol selectorTable 
-		select: [ :each | each beginsWith: (self completionToken: offset)] 
+	selectors := Symbol selectorTable
+		select: [ :each | each beginsWith: (self completionToken: offset)]
 		thenCollect: [ :each | NECSymbolEntry contents: each node: self ].
-		
-	globals := Smalltalk globals keys 
+
+	globals := Smalltalk globals keys
 			select: [ :each | each beginsWith: (self completionToken: offset)]
 			thenCollect: [ :each | NECGlobalEntry contents: each  node: self ].
-			
-	^ selectors , globals
 
+	^ selectors , globals
 ]
 
 { #category : #'*NECompletion' }

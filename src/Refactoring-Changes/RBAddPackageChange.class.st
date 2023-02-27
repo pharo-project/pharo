@@ -7,11 +7,12 @@ Class {
 	#instVars : [
 		'packageName'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Packages'
 }
 
 { #category : #adding }
 RBAddPackageChange class >> addPackageNamed: aString [
+
 	^ self new addPackageNamed: aString
 ]
 
@@ -31,7 +32,7 @@ RBAddPackageChange >> primitiveExecute [
 ]
 
 { #category : #printing }
-RBAddPackageChange >> printOn: aStream [ 
+RBAddPackageChange >> printOn: aStream [
 	aStream
 		nextPutAll: 'RPackageOrganizer default ';
 		nextPutAll: #createPackageNamed:;

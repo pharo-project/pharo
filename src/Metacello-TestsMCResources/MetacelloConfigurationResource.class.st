@@ -45,7 +45,6 @@ MetacelloConfigurationResource >> baseline10B: spec [
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			package: 'GoferBeau' with: 'GoferBeau-dkh.53';
 			yourself ].
-
 ]
 
 { #category : #'Issue 77' }
@@ -67,23 +66,18 @@ MetacelloConfigurationResource >> baseline10D: spec [
 					file:'GoferBar-lr.1' ];
 			group: 'default' with: #('GoferBar');
 			yourself ].
-
 ]
 
 { #category : #'Issue 77' }
 MetacelloConfigurationResource >> baseline10MethodSourceB [
 
 	^(self class sourceCodeAt: #baseline10B:) asString
-
-
 ]
 
 { #category : #'Issue 77' }
 MetacelloConfigurationResource >> baseline10MethodSourceD [
 
 	^(self class sourceCodeAt: #baseline10D:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFum }
@@ -121,15 +115,12 @@ MetacelloConfigurationResource >> baseline12C: spec [
 			package: 'GoferFoo' with: 'GoferFoo-lr.1';
 			package: 'GeauxBeau' with: 'GeauxBeau-dkh.55';
 			yourself. ].
-
 ]
 
 { #category : #'Issue 77' }
 MetacelloConfigurationResource >> baseline12MethodSourceC [
 
 	^(self class sourceCodeAt: #baseline12C:) asString
-
-
 ]
 
 { #category : #'Issue 77' }
@@ -143,15 +134,12 @@ MetacelloConfigurationResource >> baseline13C: spec [
 			package: 'GoferFoo' with: 'GoferFoo-lr.4';
 			package: 'GeauxBeau' with: 'GeauxBeau-dkh.56';
 			yourself ].
-
 ]
 
 { #category : #'Issue 77' }
 MetacelloConfigurationResource >> baseline13MethodSourceC [
 
 	^(self class sourceCodeAt: #baseline13C:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFie }
@@ -194,7 +182,6 @@ MetacelloConfigurationResource >> baseline20Fan: spec [
 					file: 'MetacelloTestConfigurationOfFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -210,23 +197,18 @@ MetacelloConfigurationResource >> baseline20Foo: spec [
 			package: 'GoferFaux' with: 'GoferFaux-tg.30';
 			package: 'GoferBeau' with: 'GoferBeau-dkh.25';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFan }
 MetacelloConfigurationResource >> baseline20MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline20Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> baseline20MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline20Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFie }
@@ -262,7 +244,6 @@ MetacelloConfigurationResource >> baseline30Fan: spec [
 					file: 'MetacelloTestConfigurationOfFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -281,23 +262,18 @@ MetacelloConfigurationResource >> baseline30Foo: spec [
 			package: 'GoferFaux' with: 'GoferFaux-tg.30';
 			package: 'GoferBeau' with: 'GoferBeau-dkh.53';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFan }
 MetacelloConfigurationResource >> baseline30MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline30Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> baseline30MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline30Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFan }
@@ -316,7 +292,6 @@ MetacelloConfigurationResource >> baseline35Fan: spec [
 					file: 'MetacelloTestConfigurationOfFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -344,16 +319,12 @@ MetacelloConfigurationResource >> baseline35Foo: spec [
 MetacelloConfigurationResource >> baseline35MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline35Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> baseline35MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline35Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFie }
@@ -377,7 +348,6 @@ MetacelloConfigurationResource >> baseline35ProjectFie: spec [
 					file: 'MetacelloTestConfigurationOfFeaux';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself. ].
-
 ]
 
 { #category : #ConfigurationOfFan }
@@ -396,7 +366,6 @@ MetacelloConfigurationResource >> baseline40Fan: spec [
 					file: 'MetacelloTestConfigurationOfFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFeaux }
@@ -410,7 +379,6 @@ MetacelloConfigurationResource >> baseline40Feaux: spec [
 			package: 'GeauxFoo' with:'GeauxFoo-lr.1';
 			package: 'GeauxBar' with: 'GeauxBar.branch-lr.2';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -438,72 +406,54 @@ MetacelloConfigurationResource >> baseline40Foo: spec [
 MetacelloConfigurationResource >> baseline40MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline40Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFeaux }
 MetacelloConfigurationResource >> baseline40MethodSourceFeaux [
 
 	^(self class sourceCodeAt: #baseline40Feaux:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> baseline40MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline40Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFee }
 MetacelloConfigurationResource >> baseline40MethodSourceProjectFee [
 
 	^(self class sourceCodeAt: #baseline40ProjectFee:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFoe }
 MetacelloConfigurationResource >> baseline40MethodSourceProjectFoe [
 
 	^(self class sourceCodeAt: #baseline40ProjectFoe:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFum }
 MetacelloConfigurationResource >> baseline40MethodSourceProjectFum [
 
 	^(self class sourceCodeAt: #baseline40ProjectFum:) asString
-
-
 ]
 
 { #category : #'Issue 95' }
 MetacelloConfigurationResource >> baseline40MethodSourceProjectInfinite [
 
 	^(self class sourceCodeAt: #baseline40ProjectInfinite:) asString
-
-
 ]
 
 { #category : #'Issue 95' }
 MetacelloConfigurationResource >> baseline40MethodSourceProjectIssue95 [
 
 	^(self class sourceCodeAt: #baseline40ProjectIssue95:) asString
-
-
 ]
 
 { #category : #'Issue 95' }
 MetacelloConfigurationResource >> baseline40MethodSourceProjectLoop [
 
 	^(self class sourceCodeAt: #baseline40ProjectLoop:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectFee }
@@ -526,7 +476,6 @@ MetacelloConfigurationResource >> baseline40ProjectFee: spec [
 			package: 'GeauxFaux' with: 'GeauxFaux-tg.32';
 			package: 'GeauxBeau' with: 'GeauxBeau-dkh.55';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfProjectFie }
@@ -550,7 +499,6 @@ MetacelloConfigurationResource >> baseline40ProjectFie: spec [
 					file: 'MetacelloTestConfigurationOfFeaux';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself. ].
-
 ]
 
 { #category : #ConfigurationOfProjectFoe }
@@ -570,7 +518,6 @@ MetacelloConfigurationResource >> baseline40ProjectFoe: spec [
 					file: 'MetacelloTestConfigurationOfFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFum }
@@ -607,7 +554,6 @@ MetacelloConfigurationResource >> baseline40ProjectFum: spec [
 					file: 'MetacelloTestConfigurationOfProjectFee';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #'Issue 95' }
@@ -682,7 +628,6 @@ MetacelloConfigurationResource >> baseline40ProjectLoop: spec [
 					file: 'GeauxBeau-dkh.55';
 					yourself ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFan }
@@ -701,7 +646,6 @@ MetacelloConfigurationResource >> baseline50Fan: spec [
 					file: 'MetacelloTestConfigurationOfFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -721,23 +665,18 @@ MetacelloConfigurationResource >> baseline50Foo: spec [
 			group: '1' with: #('GoferFoo' 'GoferBar');
 			group: '2' with: #('GoferFoo' 'GoferFaux');
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfFan }
 MetacelloConfigurationResource >> baseline50MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline50Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> baseline50MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline50Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFix }
@@ -752,15 +691,12 @@ MetacelloConfigurationResource >> baseline60Fix: spec [
 			package: 'GoferBar' with: 'GoferBar-lr.1';
 			package: 'GoferFaux' with: 'GoferFaux-tg.35';
 			yourself. ].
-
 ]
 
 { #category : #ConfigurationOfFix }
 MetacelloConfigurationResource >> baseline60MethodSourceFix [
 
 	^(self class sourceCodeAt: #baseline60Fix:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFix }
@@ -776,15 +712,12 @@ MetacelloConfigurationResource >> baseline61Fix: spec [
 			package: 'GoferBeau' with: 'GoferBeau-dkh.53';
 			package: 'GoferFaux' with: 'GoferFaux-tg.31';
 			yourself. ].
-
 ]
 
 { #category : #ConfigurationOfFix }
 MetacelloConfigurationResource >> baseline61MethodSourceFix [
 
 	^(self class sourceCodeAt: #baseline61Fix:) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -894,7 +827,6 @@ MetacelloConfigurationResource >> baselineVersion10Issue136: spec [
 		spec repository: 'dictionary://Metacello_Gofer_Test_Repository'.
 		spec 
 			package: 'GoferBeau'. ].
-
 ]
 
 { #category : #'Issue 154' }
@@ -936,7 +868,6 @@ MetacelloConfigurationResource >> baselineVersion113ProjectToolBox: spec [
 		spec 
 			package: 'Example-Core';
 			package: 'Example-Test'. ].
-
 ]
 
 { #category : #'Issue 154' }
@@ -969,7 +900,6 @@ MetacelloConfigurationResource >> baselineVersion124ProjectToolBox: spec [
 
 	spec for: #'common' do: [
 		spec repository: 'http://www.example.com/ab'. ].
-
 ]
 
 { #category : #'Issue 154' }
@@ -1211,8 +1141,6 @@ MetacelloConfigurationResource >> preloadDoIt [
 MetacelloConfigurationResource >> preloadDoItMethodSource [
 
 	^(self class sourceCodeAt: #preloadDoIt) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -1231,23 +1159,18 @@ MetacelloConfigurationResource >> project [
 			yourself).
 	project loadType: #linear.
 	^project
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> projectClassMethodSource [
 
 	^(self class class sourceCodeAt: #project) asString
-
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> projectMethodSource [
 
 	^(self class sourceCodeAt: #project) asString
-
-
 ]
 
 { #category : #'issue 283' }
@@ -1378,8 +1301,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFan [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfFeaux }
@@ -1423,8 +1345,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFeaux [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfFix }
@@ -1474,8 +1395,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFix [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -1606,8 +1526,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFum [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #'Issue 154' }
@@ -1764,8 +1683,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFee [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfProjectFie }
@@ -1877,8 +1795,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFoe [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfProjectFum }
@@ -1972,8 +1889,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectInfinite [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #'Issue 115' }
@@ -1983,7 +1899,6 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue115 [
 	| versionInfo |
 	versionInfo := self setUpConfigurationOfProjectIssue115dkh1.
 	versionInfo := self setUpConfigurationOfProjectIssue115dkh2: {versionInfo}.
-	
 ]
 
 { #category : #'Issue 115' }
@@ -2092,7 +2007,6 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue115dkh2: ances
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
 		dependencies: #()).
 	^versionInfo
-
 ]
 
 { #category : #'Issue 119' }
@@ -2669,7 +2583,6 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue136 [
 	| versionInfo |
 	versionInfo := self setUpConfigurationOfProjectIssue136dkh1.
 	versionInfo := self setUpConfigurationOfProjectIssue136dkh2: {versionInfo}.
-	
 ]
 
 { #category : #'Issue 136' }
@@ -2778,7 +2691,6 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue136dkh2: ances
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
 		dependencies: #()).
 	^versionInfo
-
 ]
 
 { #category : #'Issue 154' }
@@ -3185,8 +3097,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue95 [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #'Issue 95' }
@@ -3230,8 +3141,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectLoop [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -3588,8 +3498,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfSymbolic [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #ConfigurationOfFoo }
@@ -3809,7 +3718,6 @@ MetacelloConfigurationResource >> setUpIssue77 [
 		setUpIssue77B;
 		setUpIssue77C;
 		setUpIssue77D
-		
 ]
 
 { #category : #'Issue 77' }
@@ -3853,8 +3761,7 @@ MetacelloConfigurationResource >> setUpIssue77B [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #'Issue 77' }
@@ -3904,8 +3811,7 @@ MetacelloConfigurationResource >> setUpIssue77C [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #'Issue 77' }
@@ -3949,8 +3855,7 @@ MetacelloConfigurationResource >> setUpIssue77D [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: definitionArray)
-		dependencies: #()) 
-
+		dependencies: #())
 ]
 
 { #category : #'Issue 95' }
@@ -3961,7 +3866,7 @@ MetacelloConfigurationResource >> setUpIssue95 [
 		setUpConfigurationOfProjectInfinite;
 		setUpConfigurationOfProjectLoop;
 		setUpConfigurationOfProjectIssue95;
-		yourself		
+		yourself
 ]
 
 { #category : #running }
@@ -3970,7 +3875,6 @@ MetacelloConfigurationResource >> setUpMonticelloRepository [
 	"self reset"
 
 	monticelloRepository := MCDictionaryRepository new.
-
 ]
 
 { #category : #'issue 283' }
@@ -3999,7 +3903,6 @@ MetacelloConfigurationResource >> stableVersionC: spec [
 	spec for: #'platformVersion1.0.x' do: [ spec version: '4.1'].
 	spec for: #'platformVersion1.1.x' do: [ spec version: '4.2'].
 	spec for: #'platformVersion1.2.x' do: [ spec version: '4.3'].
-
 ]
 
 { #category : #ConfigurationOfSymbolic }
@@ -4012,15 +3915,12 @@ MetacelloConfigurationResource >> stableVersionD: spec [
 	spec for: #'platformVersion1.0.x' version: '4.1'.
 	spec for: #'platformVersion1.1.x' version: '4.2'.
 	spec for: #'platformVersion1.2.x' version: '4.3'.
-
 ]
 
 { #category : #ConfigurationOfSymbolic }
 MetacelloConfigurationResource >> stableVersionDMethodSourceSymbolic [
 
 	^(self class sourceCodeAt: #stableVersionD:) asString
-
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4047,7 +3947,6 @@ MetacelloConfigurationResource >> version100ProjectToolBox: spec [
 				spec requires: #('Example-Core' ). ];
 			package: 'Example-Tests' with: [
 				spec requires: #('Example-AddOn' ). ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4056,7 +3955,6 @@ MetacelloConfigurationResource >> version101ProjectToolBox: spec [
 
 	spec for: #'common' do: [
 		spec blessing: #'testBlessing'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4073,7 +3971,6 @@ MetacelloConfigurationResource >> version102ProjectToolBox: spec [
 				spec requires: #('Example-Core' ). ];
 			package: 'Example-Tests' with: [
 				spec requires: #('Example-AddOn' ). ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4082,7 +3979,6 @@ MetacelloConfigurationResource >> version103ProjectToolBox: spec [
 
 	spec for: #'common' do: [
 		spec preLoadDoIt: #'alternatePreloadForCore'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4091,7 +3987,6 @@ MetacelloConfigurationResource >> version104ProjectToolBox: spec [
 
 	spec for: #'common' do: [
 		spec preLoadDoIt: nil. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4101,7 +3996,6 @@ MetacelloConfigurationResource >> version105ProjectToolBox: spec [
 	spec for: #'common' do: [
 		spec package: 'Example-Core' with: [
 				spec repository: 'http://www.example.com/ob'. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4114,7 +4008,6 @@ MetacelloConfigurationResource >> version106ProjectToolBox: spec [
 						spec
 							repository: 'http://www.example.com/ob';
 							repository: 'http://www.example.com/or' ]. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4130,7 +4023,6 @@ MetacelloConfigurationResource >> version107ProjectToolBox: spec [
 					postLoadDoIt: #'postloadForSupplyingAnswers'. ];
 			package: 'Example-Tests' with: [
 				spec supplyingAnswers: #( #( 'string' 'preload answer' ) #( 'symbol' #'abc def' ) #( 'integer' 1 ) #( 'boolean' true ) #( 'another boolean' false ) #( 'character' $a ) ). ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4142,7 +4034,6 @@ MetacelloConfigurationResource >> version108ProjectToolBox: spec [
 			package: 'Example-Core';
 			package: 'Example-Tests' with: [
 				spec requires: #('Example-Core' ). ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4154,7 +4045,6 @@ MetacelloConfigurationResource >> version109ProjectToolBox: spec [
 			package: 'Example-Core';
 			package: 'Example-Tests' with: [
 				spec includes: #('Example-Core' ). ]. ].
-
 ]
 
 { #category : #'Issue 115' }
@@ -4165,7 +4055,6 @@ MetacelloConfigurationResource >> version10Issue115: spec [
 		spec blessing: #development.
 		spec  project: 'Foo' .
 		spec package: 'GeauxFoo' with: 'GeauxFoo-lr.1'. ].
-
 ]
 
 { #category : #'Issue 119' }
@@ -4186,7 +4075,6 @@ MetacelloConfigurationResource >> version10Issue136: spec [
 	spec for: #'common' do: [
 		spec blessing: #development.
 		spec package: 'GoferBeau' with: 'GoferBeau-dkh.15'. ].
-
 ]
 
 { #category : #'Issue 115' }
@@ -4242,7 +4130,6 @@ MetacelloConfigurationResource >> version110ProjectToolBox: spec [
 					requires: #('Example-Base' );
 					includes: #('Example-Core' );
 					supplyingAnswers: #( #( 'captionMatch' 'answer' ) ). ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4257,7 +4144,6 @@ MetacelloConfigurationResource >> version111ProjectToolBox: spec [
 
 	spec for: #'extra' do: [
 		spec package: 'Example-Test'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4274,7 +4160,6 @@ MetacelloConfigurationResource >> version112ProjectToolBox: spec [
 
 	spec for: #'extra' do: [
 		spec package: 'Example-Test'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4291,7 +4176,6 @@ MetacelloConfigurationResource >> version113ProjectToolBox: spec [
 
 	spec for: #'extra' do: [
 		spec package: 'Example-Core' with: 'Example-Core-dkh.3'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4306,7 +4190,6 @@ MetacelloConfigurationResource >> version114ProjectToolBox: spec [
 					preLoadDoIt: #'preloadForProject';
 					postLoadDoIt: #'postloadForProject';
 					repository: 'http://www.example.com/ob' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4317,7 +4200,6 @@ MetacelloConfigurationResource >> version115ProjectToolBox: spec [
 		spec project: 'Example Project' with: [
 				spec
 					preLoadDoIt: #'alternatePreloadForCore' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4328,7 +4210,6 @@ MetacelloConfigurationResource >> version116ProjectToolBox: spec [
 		spec project: 'Example Project' with: [
 				spec
 					preLoadDoIt: #'alternatePreloadForCore' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4338,7 +4219,6 @@ MetacelloConfigurationResource >> version117ProjectToolBox: spec [
 	spec for: #'common' do: [
 		spec package: 'Example-Core' overrides: [
 				spec preLoadDoIt: #'alternatePreloadForCore'. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4348,7 +4228,6 @@ MetacelloConfigurationResource >> version118ProjectToolBox: spec [
 	spec for: #'common' do: [
 		spec package: 'Example-Core' with: [
 				spec preLoadDoIt: #'alternatePreloadForCore'. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4362,7 +4241,6 @@ MetacelloConfigurationResource >> version119ProjectToolBox: spec [
 					versionString: '1.0-baseline';
 					preLoadDoIt: #'alternatePreloadForCore';
 					repository: 'http://www.example.com/ob' ]. ].
-
 ]
 
 { #category : #'Issue 115' }
@@ -4373,7 +4251,6 @@ MetacelloConfigurationResource >> version11Issue115: spec [
 		spec blessing: #development.
 		spec  project: 'Foo' with: ''.
 		spec package: 'GeauxFoo' with: 'GeauxFoo-lr.1'. ].
-
 ]
 
 { #category : #'Issue 136' }
@@ -4383,7 +4260,6 @@ MetacelloConfigurationResource >> version11Issue136: spec [
 	spec for: #'common' do: [
 		spec blessing: #development.
 		spec package: 'GoferBeau' with: 'GoferBeau-dkh.25'. ].
-
 ]
 
 { #category : #'Issue 115' }
@@ -4408,7 +4284,6 @@ MetacelloConfigurationResource >> version120ProjectToolBox: spec [
 		spec project: 'Copied Example' copyFrom: 'Example Project' with: [
 				spec
 					preLoadDoIt: #'alternatePreloadForCore' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4430,7 +4305,6 @@ MetacelloConfigurationResource >> version121ProjectToolBox: spec [
 				spec requires: #('Example-Core' ). ];
 			package: 'Example-Tests' with: [
 				spec requires: #('Example-AddOn' ). ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4442,7 +4316,6 @@ MetacelloConfigurationResource >> version122ProjectToolBox: spec [
 				spec
 					className: 'MetacelloExampleProjectConfig';
 					repository: 'http://www.example.com/ob' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4455,7 +4328,6 @@ MetacelloConfigurationResource >> version123ProjectToolBox: spec [
 					className: 'MetacelloExampleProjectConfig';
 					repository: 'http://www.example.com/ob';
 					repository: 'http://www.example.com/or' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4464,7 +4336,6 @@ MetacelloConfigurationResource >> version124ProjectToolBox: spec [
 
 	spec for: #'common' do: [
 		spec repository: 'http://www.example.com/ac'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4476,7 +4347,6 @@ MetacelloConfigurationResource >> version125ProjectToolBox: spec [
 				spec 
 					preLoadDoIt: #'preloadDoIt';
 					postLoadDoIt: #'postloadDoIt'. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4488,7 +4358,6 @@ MetacelloConfigurationResource >> version126ProjectToolBox: spec [
 				spec 
 					preLoadDoIt: nil;
 					postLoadDoIt: nil. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4503,7 +4372,6 @@ MetacelloConfigurationResource >> version127ProjectToolBox: spec [
 					preLoadDoIt: #'preloadDoIt';
 					postLoadDoIt: #'postloadDoIt';
 					repository: 'http://www.example.com/ob' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4515,7 +4383,6 @@ MetacelloConfigurationResource >> version128ProjectToolBox: spec [
 				spec
 					preLoadDoIt: nil;
 					postLoadDoIt: nil ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4535,7 +4402,6 @@ MetacelloConfigurationResource >> version129ProjectToolBox: spec [
 				spec
 					preLoadDoIt: nil;
 					postLoadDoIt: nil ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4553,7 +4419,6 @@ MetacelloConfigurationResource >> version130ProjectToolBox: spec [
 					repository: 'http://www.example.com/ob' ];
 			project: 'Copy Project' copyFrom: 'Example Project' with: [
 				spec repository: 'http://www.example.com/or' ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4587,7 +4452,6 @@ MetacelloConfigurationResource >> version131ProjectToolBox: spec [
 			spec for: #'level3_2' do: [
 				spec package: 'Example-Core' with: [
 						spec repository: 'http://www.example.com/7'. ]. ]. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4612,7 +4476,6 @@ MetacelloConfigurationResource >> version132ProjectToolBox: spec [
 
 			spec for: #'level3_2' do: [
 				spec package: 'GoferBeau' with: 'GoferBeau-dkh.55'. ]. ]. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4640,7 +4503,6 @@ MetacelloConfigurationResource >> version133ProjectToolBox: spec [
 
 	spec for: #'pharo' do: [
 		spec repository: 'dictionary://Metacello_Gofer_Test_Repository'. ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4649,7 +4511,6 @@ MetacelloConfigurationResource >> version134ProjectToolBox: spec [
 
 	spec for: #'common' do: [
  ].
-
 ]
 
 { #category : #ConfigurationOfProjectToolBox }
@@ -4661,7 +4522,6 @@ MetacelloConfigurationResource >> version135ProjectToolBox: spec [
 			spec
 				repository: 'http://www.example.com/ab';
 				repository: 'http://www.example.com/ac' ]. ].
-
 ]
 
 { #category : #'Issue 119' }
@@ -4817,15 +4677,12 @@ MetacelloConfigurationResource >> version40Symbolic: spec [
 			package: 'GoferBeau' with: 'GoferBeau-dkh.15';
 			package: 'GoferFaux' with:'GoferFaux-tg.30';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfSymbolic }
 MetacelloConfigurationResource >> version40SymbolicMethodSourceSymbolic [
 
 	^(self class sourceCodeAt: #version40Symbolic:) asString
-
-
 ]
 
 { #category : #'Issue 119' }
@@ -4851,15 +4708,12 @@ MetacelloConfigurationResource >> version41Symbolic: spec [
 			package: 'GoferBeau' with: 'GoferBeau-dkh.25';
 			package: 'GoferFaux' with:'GoferFaux-tg.31';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfSymbolic }
 MetacelloConfigurationResource >> version41SymbolicMethodSourceSymbolic [
 
 	^(self class sourceCodeAt: #version41Symbolic:) asString
-
-
 ]
 
 { #category : #'Issue 119' }
@@ -4885,15 +4739,12 @@ MetacelloConfigurationResource >> version42Symbolic: spec [
 			package: 'GoferBeau' with: 'GoferBeau-dkh.53';
 			package: 'GoferFaux' with:'GoferFaux-tg.32';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfSymbolic }
 MetacelloConfigurationResource >> version42SymbolicMethodSourceSymbolic [
 
 	^(self class sourceCodeAt: #version42Symbolic:) asString
-
-
 ]
 
 { #category : #'Issue 119' }
@@ -4919,15 +4770,12 @@ MetacelloConfigurationResource >> version43Symbolic: spec [
 			package: 'GoferBeau' with: 'GoferBeau-dkh.54';
 			package: 'GoferFaux' with:'GoferFaux-tg.33';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfSymbolic }
 MetacelloConfigurationResource >> version43SymbolicMethodSourceSymbolic [
 
 	^(self class sourceCodeAt: #version43Symbolic:) asString
-
-
 ]
 
 { #category : #'Issue 119' }

@@ -29,7 +29,6 @@ WeakRegistry class >> new [
 	registry := super new.
 	WeakArray addWeakDependent: registry.
 	^registry
-
 ]
 
 { #category : #'instance creation' }
@@ -40,7 +39,7 @@ WeakRegistry class >> new: n [
 { #category : #adding }
 WeakRegistry >> add: anObject [
 	"Add anObject to the receiver. Store the object as well as the associated executor."
-	
+
 	^self add: anObject executor: anObject executor
 ]
 
@@ -52,12 +51,11 @@ WeakRegistry >> add: anObject executor: anExecutor [
 			WeakFinalizationList hasNewFinalization ifTrue: [
 				valueDictionary overridingAt: anObject put: (WeakFinalizerItem new list: list object: anObject) ]
 			ifFalse: [
-				valueDictionary at: anObject put: (WeakFinalizerItem new list: list object: anObject) 
+				valueDictionary at: anObject put: (WeakFinalizerItem new list: list object: anObject)
 				]
 		].
 		finItem add: anExecutor ].
 	^ anObject
-
 ]
 
 { #category : #enumerating }
@@ -65,19 +63,18 @@ WeakRegistry >> do: aBlock [
 	^self protected: [
 		valueDictionary keysDo: aBlock
 	]
-
 ]
 
 { #category : #finalization }
 WeakRegistry >> finalizeValues [
 	"Finalize any values, which happen to stocked in our list, due to some weak references become garbage"
-	
+
 	| finalizer |
 
 	"Do the old way, if VM don't supports us"
 	WeakFinalizationList hasNewFinalization ifFalse: [ | finalizers |
 		finalizers := OrderedCollection new.
-		self protected: [ 
+		self protected: [
 			valueDictionary expiredValuesDo: [:finItem |
 				finalizers add: finItem
 				].
@@ -88,10 +85,10 @@ WeakRegistry >> finalizeValues [
 	self protected: [ finalizer := list swapWithNil ].
 
 	"We don't need to protect a following loop from concurrent access,
-	because at the moment we're finalizing values, 
+	because at the moment we're finalizing values,
 	only we can access this list of finalizers, because valueDictionary already see them
 	as an unused slots, because they're associated with key == nil"
-	
+
 	[ finalizer notNil ] whileTrue: [
 		| next |
 		next := finalizer next.
@@ -120,7 +117,6 @@ WeakRegistry >> installFinalizer [
 WeakRegistry >> keys [
 
 	^self protected: [ valueDictionary keys ]
-
 ]
 
 { #category : #copying }
@@ -132,7 +128,7 @@ WeakRegistry >> postCopy [
 		list := WeakFinalizationList new.
 		valueDictionary := WeakIdentityKeyDictionary new.
 		self installFinalizer.
-	
+
 		oldDict keysAndValuesDo: [:key :value |
 			valueDictionary at: key put: (value copyWithList: list)
 		].
@@ -157,7 +153,7 @@ WeakRegistry >> protected: aBlock [
 { #category : #printing }
 WeakRegistry >> remove: oldObject ifAbsent: exceptionBlock [
 	"Remove oldObject as one of the receiver's elements."
-	
+
 	oldObject ifNil: [ ^nil ].
 	^(self protected: [ valueDictionary removeKey: oldObject ifAbsent: nil ])
 		ifNil: [ exceptionBlock value ]
@@ -166,7 +162,7 @@ WeakRegistry >> remove: oldObject ifAbsent: exceptionBlock [
 { #category : #printing }
 WeakRegistry >> removeAll [
 	"See super"
-	
+
 	self protected:[
 		valueDictionary removeAll.
 		list swapWithNil. "prune finalization list as well"

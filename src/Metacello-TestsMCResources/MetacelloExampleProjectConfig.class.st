@@ -15,5 +15,4 @@ MetacelloExampleProjectConfig >> baseline10: spec [
 			package: 'Example-Tests' with: [ spec requires: #('Example-AddOn' ) ];
 			package: 'Example-TestsUI' with: [ spec requires: #('Example-UI' 'Example-Tests' ) ];
 			package: 'Example-UI' with: [ spec requires: #('Example-AddOn' ) ]].
-
 ]

@@ -18,5 +18,4 @@ AthensCairoSVGSurface class >> createExportingTo: fileName width: width height: 
 				String fileName,
 				double width,
 				double height) )
-
 ]

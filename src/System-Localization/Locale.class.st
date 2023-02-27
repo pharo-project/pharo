@@ -49,7 +49,7 @@ Locale class >> current [
 ]
 
 { #category : #accessing }
-Locale class >> currentPlatform: locale during: aBlock [ 
+Locale class >> currentPlatform: locale during: aBlock [
 	"Alter current locale during a block"
 	| savedLocale |
 	savedLocale := self current.
@@ -59,7 +59,7 @@ Locale class >> currentPlatform: locale during: aBlock [
 ]
 
 { #category : #'platform specific' }
-Locale class >> defaultEncodingName: languageSymbol [ 
+Locale class >> defaultEncodingName: languageSymbol [
 	| encodings platformName osVersion |
 	platformName := Smalltalk os platformName.
 	osVersion := Smalltalk os version.
@@ -73,9 +73,9 @@ Locale class >> defaultEncodingName: languageSymbol [
 
 { #category : #private }
 Locale class >> defaultLocales [
-	
+
 	"return IDs of default locales"
-	
+
 	^ #(de en ja 'ja-kids' nl no sv)
 ]
 
@@ -99,9 +99,10 @@ Locale class >> initKnownLocales [
 	^locales
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Locale class >> initialize [
-	SessionManager default 
+
+	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
@@ -122,7 +123,7 @@ Locale class >> initializePlatformEncodings [
 		at: 'default' put: 'shift-jis';
 		at: 'unix' put: 'euc-jp';
 		at: 'Win32 CE' put: 'utf-8'.
-		
+
 	platform := PlatformEncodings at: 'ko' ifAbsentPut: Dictionary new.
 	platform
 		at: 'default' put: 'euc-kr';
@@ -132,8 +133,7 @@ Locale class >> initializePlatformEncodings [
 	platform
 		at: 'default' put: 'gb2312';
 		at: 'unix' put: 'euc-cn';
-		at: 'Win32 CE' put: 'utf-8'.
-
+		at: 'Win32 CE' put: 'utf-8'
 ]
 
 { #category : #accessing }
@@ -178,7 +178,6 @@ Locale class >> localeID: id [
 Locale class >> platformEncodings [
 	PlatformEncodings isEmptyOrNil ifTrue: [ self initializePlatformEncodings ].
 	^PlatformEncodings
-
 ]
 
 { #category : #'system startup' }
@@ -194,8 +193,8 @@ Locale class >> startUp: resuming [
 ]
 
 { #category : #accessing }
-Locale class >> stringForLanguageNameIs: localeID [ 
-	"Answer a string for a menu determining whether the given  
+Locale class >> stringForLanguageNameIs: localeID [
+	"Answer a string for a menu determining whether the given
 	symbol is the project's natural language"
 	^ (self current localeID = localeID
 		ifTrue: ['<yes>']
@@ -339,7 +338,6 @@ Locale >> primLongDateFormat [
 	mmmm month name"
 	<primitive:'primitiveLongDateFormat' module: 'LocalePlugin'>
 	^'dddd, mmmm d, yyyy'
-
 ]
 
 { #category : #'system primitives' }
@@ -347,7 +345,6 @@ Locale >> primMeasurement [
 	"Returns boolean denoting metric(true) or imperial(false)."
 	<primitive:'primitiveMeasurementMetric' module: 'LocalePlugin'>
 	^true
-
 ]
 
 { #category : #'system primitives' }
@@ -359,18 +356,16 @@ Locale >> primShortDateFormat [
 	mmmm month name"
 	<primitive:'primitiveShortDateFormat' module: 'LocalePlugin'>
 	^'m/d/yy'
-
 ]
 
 { #category : #'system primitives' }
 Locale >> primTimeFormat [
 	"Returns string time format
-	Format is made up of 
+	Format is made up of
 	h hour (h 12, H 24), m minute, s seconds, x (am/pm String)
 	double symbol is null padded, single not padded (h=6, hh=06)"
 	<primitive:'primitiveTimeFormat' module: 'LocalePlugin'>
 	^'h:mmx'
-
 ]
 
 { #category : #'system primitives' }
@@ -391,7 +386,7 @@ Locale >> primVMOffsetToUTC [
 ]
 
 { #category : #printing }
-Locale >> printOn: aStream [ 
+Locale >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll:  '(' ; print: id ; nextPutAll:  ')'
 ]

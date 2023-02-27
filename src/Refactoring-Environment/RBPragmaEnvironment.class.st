@@ -40,7 +40,7 @@ RBPragmaEnvironment >> addKeyword: aSymbol [
 
 { #category : #accessing }
 RBPragmaEnvironment >> basisObjects [
-	^ keywords 
+	^ keywords
 ]
 
 { #category : #initialization }
@@ -54,11 +54,6 @@ RBPragmaEnvironment >> defaultLabel [
 	stream := String new writeStream.
 	keywords do: [ :each | stream nextPut: $<; nextPutAll: each; nextPut: $>; nextPut: $ ].
 	^ stream contents
-]
-
-{ #category : #testing }
-RBPragmaEnvironment >> definesClass: aClass [
-	^ environment definesClass: aClass
 ]
 
 { #category : #testing }

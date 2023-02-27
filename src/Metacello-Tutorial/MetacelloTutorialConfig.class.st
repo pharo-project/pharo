@@ -78,7 +78,6 @@ MetacelloTutorialConfig >> baseline07: spec [
 			package: 'Example-Core';
 			package: 'Example-Tests' with: [ spec requires: 'Example-Core' ];
 			package: 'Example-AddOn' with: [ spec requires: 'Example-Core' ] ].
-
 ]
 
 { #category : #baselines }
@@ -98,7 +97,6 @@ MetacelloTutorialConfig >> baseline10: spec [
 		spec 
 			group: 'default' with: #('Example-Core' 'Example-AddOn' );
 			group: 'Tests' with: #('Example-Tests' 'Example-AddOnTests' ) ].
-
 ]
 
 { #category : #baselines }
@@ -563,7 +561,6 @@ MetacelloTutorialConfig >> version01: spec [
 				spec 
 					file: 'Example-Core-anon.8';
 					repository: 'http://www.example.com/Example' ] ].
-
 ]
 
 { #category : #versions }
@@ -576,7 +573,6 @@ MetacelloTutorialConfig >> version02: spec [
 				spec 
 					file: 'Example-Core-anon.9';
 					repository: 'http://www.example.com/Example' ] ].
-
 ]
 
 { #category : #versions }
@@ -593,7 +589,6 @@ MetacelloTutorialConfig >> version03: spec [
 				spec 
 					file: 'Example-Tests-anon.3';
 					repository: 'http://www.example.com/Example' ]].
-
 ]
 
 { #category : #versions }
@@ -605,7 +600,6 @@ MetacelloTutorialConfig >> version04: spec [
 		spec 
 			package: 'Example-Core' with: 'Example-Core-anon.10';
 			package: 'Example-Tests' with: 'Example-Tests-anon.3' ].
-
 ]
 
 { #category : #versions }
@@ -618,7 +612,6 @@ MetacelloTutorialConfig >> version05: spec [
 			package: 'Example-Core' with: 'Example-Core-anon.11';
 			package: 'Example-Tests' with: 'Example-Tests-anon.3';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1' ].
-
 ]
 
 { #category : #versions }
@@ -637,7 +630,6 @@ MetacelloTutorialConfig >> version06: spec [
 				spec 
 					file: 'Example-AddOn-anon.1';
 					requires: 'Example-Core' ]].
-
 ]
 
 { #category : #versions }
@@ -649,7 +641,6 @@ MetacelloTutorialConfig >> version07: spec [
 			package: 'Example-Core' with: 'Example-Core-anon.12';
 			package: 'Example-Tests' with: 'Example-Tests-anon.3';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1' ].
-
 ]
 
 { #category : #versions }
@@ -661,7 +652,6 @@ MetacelloTutorialConfig >> version08: spec [
 			package: 'Example-Core' with: 'Example-Core-anon.15';
 			package: 'Example-Tests' with: 'Example-Tests-anon.6';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.2' ].
-
 ]
 
 { #category : #versions }
@@ -674,7 +664,6 @@ MetacelloTutorialConfig >> version10: spec [
 			package: 'Example-Tests' with: 'Example-Tests-anon.3';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1';
 			package: 'Example-AddOnTests' with: 'Example-AddOnTests-anon.1' ].
-
 ]
 
 { #category : #versions }
@@ -691,7 +680,6 @@ MetacelloTutorialConfig >> version11: spec [
 			package: 'Example-Tests' with: 'Example-Tests-anon.4';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1';
 			package: 'Example-AddOnTests' with: 'Example-AddOnTests-anon.1' ].
-
 ]
 
 { #category : #versions }
@@ -712,7 +700,6 @@ MetacelloTutorialConfig >> version12: spec [
 			package: 'Example-Tests' with: 'Example-Tests-anon.5';
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1';
 			package: 'Example-AddOnTests' with: 'Example-AddOnTests-anon.1' ].
-
 ]
 
 { #category : #versions }

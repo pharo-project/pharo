@@ -19,7 +19,7 @@ ObjectsAsMethodsTest >> tearDown [
 		self class removeSelector: #add:with:.
 		self class removeSelector: #answer42.
 		self class removeSelector: #foo ].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #testing }
@@ -34,7 +34,7 @@ ObjectsAsMethodsTest >> testAnswer42 [
 ]
 
 { #category : #testing }
-ObjectsAsMethodsTest >> testDNU [ 
+ObjectsAsMethodsTest >> testDNU [
 
 	self should: [self foo] raise: MessageNotUnderstood
 ]

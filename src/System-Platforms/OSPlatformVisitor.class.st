@@ -8,14 +8,13 @@ Class {
 }
 
 { #category : #visiting }
-OSPlatformVisitor >> visit [ 
+OSPlatformVisitor >> visit [
 
 	^ OSPlatform current accept: self
 ]
 
 { #category : #visiting }
 OSPlatformVisitor >> visitGeneric: aPlatform [
-	
 ]
 
 { #category : #visiting }
@@ -49,19 +48,19 @@ OSPlatformVisitor >> visitUnix: aPlatform [
 ]
 
 { #category : #visiting }
-OSPlatformVisitor >> visitWindows32: aPlatform [ 
+OSPlatformVisitor >> visitWindows32: aPlatform [
 
 	^ self visitWindows: aPlatform
 ]
 
 { #category : #visiting }
-OSPlatformVisitor >> visitWindows64: aPlatform [ 
+OSPlatformVisitor >> visitWindows64: aPlatform [
 
 	^ self visitWindows: aPlatform
 ]
 
 { #category : #visiting }
-OSPlatformVisitor >> visitWindows: aPlatform [ 
+OSPlatformVisitor >> visitWindows: aPlatform [
 
 	^ self visitGeneric: aPlatform
 ]

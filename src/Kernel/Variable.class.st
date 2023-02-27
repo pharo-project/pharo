@@ -34,8 +34,7 @@ Class {
 }
 
 { #category : #validating }
-Variable class >> checkValidName: aString [ 
-
+Variable class >> checkValidName: aString [
 ]
 
 { #category : #'class initialization' }
@@ -46,8 +45,8 @@ Variable class >> initialize [
 ]
 
 { #category : #testing }
-Variable class >> isAbstract [ 
-	^self = Variable 
+Variable class >> isAbstract [
+	^self = Variable
 ]
 
 { #category : #'instance creation' }
@@ -63,7 +62,7 @@ Variable >> = other [
 	"Every subclass that adds state must redefine this method"
 	self == other
 		ifTrue: [ ^ true ].
-	^ (self species == other species) 
+	^ (self species == other species)
 			and: [ name = other name ]
 ]
 
@@ -92,6 +91,12 @@ Variable >> definingNode [
 	^ nil
 ]
 
+{ #category : #printing }
+Variable >> definitionOn: aStream [
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printOn: aStream
+]
+
 { #category : #'code generation' }
 Variable >> emitStore: methodBuilder [
 
@@ -112,7 +117,7 @@ Variable >> ensureProperties [
 { #category : #properties }
 Variable >> hasProperty: aKey [
 	"Test if the property aKey is present."
-	^self properties 
+	^self properties
 		ifNil: [false]
 		ifNotNil: [:prop | prop includesKey: aKey]
 ]
@@ -142,7 +147,6 @@ Variable >> isClassVariable [
 Variable >> isDefinedByBlock [
 	"true if a variable node is defined by a block"
 	^false
-
 ]
 
 { #category : #testing }
@@ -158,7 +162,7 @@ Variable >> isInstanceVariable [
 
 { #category : #testing }
 Variable >> isLiteralVariable [
-	"returns true for Global Variables, Class Variables and some others 
+	"returns true for Global Variables, Class Variables and some others
 	(e.g. Workspace bindings and Undeclared variables, see subclasses)"
 	^false
 ]
@@ -235,7 +239,7 @@ Variable >> isUninitialized [
 ]
 
 { #category : #testing }
-Variable >> isUsed [ 
+Variable >> isUsed [
 	^ self isReferenced
 ]
 
@@ -274,7 +278,6 @@ Variable >> needsFullDefinition [
 { #category : #properties }
 Variable >> properties [
 	^ Properties at: self ifAbsent: nil
-		
 ]
 
 { #category : #properties }
@@ -282,7 +285,6 @@ Variable >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
-		
 ]
 
 { #category : #properties }
@@ -291,13 +293,12 @@ Variable >> propertyAt: propName ifAbsent: aBlock [
 	^ self properties
 		at: propName
 		ifAbsent: aBlock
-		
 ]
 
 { #category : #properties }
 Variable >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
+
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
 ]
 
@@ -310,7 +311,7 @@ Variable >> propertyAt: propName put: propValue [
 
 { #category : #debugging }
 Variable >> readInContext: aContext [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #properties }
@@ -351,5 +352,5 @@ Variable >> usingMethods [
 Variable >> write: aValue inContext: aContext [
 	"write the value in aContext. All #write:inContext: methods need to return the assigned value,
 	as this is the reflective version of assignment which has the assigned value as a value"
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]

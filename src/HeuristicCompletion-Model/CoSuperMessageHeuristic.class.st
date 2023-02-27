@@ -16,18 +16,21 @@ CoSuperMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 	^ (aNode isMessage
 		and: [ aNode receiver isSuperVariable ])
 			or: [ aNode isMethod
-				and: [ 
+				and: [
 					"This heuristic is not valid for traits and nil subclasses"
-					aContext completionClass notNil 
+					aContext completionClass notNil
 					and: [ aContext completionClass superclass notNil ] ] ]
 ]
 
 { #category : #requests }
 CoSuperMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 	| completionClass |
-	
+
 	"When in the playground, the completion class is not available.
 	But self is bound to nil"
 	completionClass := completionContext completionClass ifNil: [ nil class ].
+	"In Traits, superclass is nil"
+	completionClass superclass
+		ifNil: [ ^ CoEmptyFetcher new ].
 	^ self newMessageInHierarchyFetcherForClass: completionClass superclass inASTNode: aNode
 ]

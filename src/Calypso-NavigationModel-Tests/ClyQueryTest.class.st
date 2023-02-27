@@ -16,7 +16,7 @@ ClyQueryTest class >> isAbstract [
 
 { #category : #running }
 ClyQueryTest >> createQuery [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -29,7 +29,7 @@ ClyQueryTest >> executeQuery [
 { #category : #running }
 ClyQueryTest >> setUp [
 	super setUp.
-	
+
 	query := self createQuery
 ]
 
@@ -44,8 +44,8 @@ ClyQueryTest >> testComparisonOfSameQueries [
 
 	| query2 |
 	self assert: query equals: query.
-	
-	query2 := self createQuery.		
+
+	query2 := self createQuery.
 	self assert: query equals: query2.
 	self assert: query hash equals: query2 hash
 ]
@@ -99,7 +99,7 @@ ClyQueryTest >> testConvertingWithNewRequiredResult [
 ClyQueryTest >> testFixingStateBeforeExecution [
 
 	query fixStateBeforeExecution.
-	
+
 	self assert: query isReadOnlyObject.
 	self assert: query scope isReadOnlyObject
 ]
@@ -133,14 +133,14 @@ ClyQueryTest >> testHasUnknownScopeByDefault [
 ClyQueryTest >> testIsBoundToEnvironmentWhenScopeIs [
 
 	self assert: query scope isBoundToEnvironment.
-	self assert: query isBoundToEnvironment 
+	self assert: query isBoundToEnvironment
 ]
 
 { #category : #tests }
 ClyQueryTest >> testNotBoundToEnvironmentByDefault [
 
 	query := query class new.
-	self deny: query isBoundToEnvironment 
+	self deny: query isBoundToEnvironment
 ]
 
 { #category : #tests }

@@ -48,15 +48,15 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserState class >> of: aBrowser [
-	^self new 
+	^self new
 		retrieveStateFrom: aBrowser
 ]
 
 { #category : #operations }
 ClyBrowserState >> applyTo: aBrowser [
 
-	aBrowser changeStateBy: [ 
-		self restoreStateOf: aBrowser.	
+	aBrowser changeStateBy: [
+		self restoreStateOf: aBrowser.
 		self restoreNavigationStateOf: aBrowser.
 		aBrowser tabManager restoreBrowserState: self ]
 ]
@@ -68,30 +68,30 @@ ClyBrowserState >> applyTo: aBrowser byUndo: undoExecuting [
 
 { #category : #private }
 ClyBrowserState >> createBrowser [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyBrowserState >> isCurrentStateOf: aBrowser [
 
-	aBrowser navigationViews with: viewStates do: [:view :state | 
+	aBrowser navigationViews with: viewStates do: [:view :state |
 		(state isCurrentStateOf: view) ifFalse: [ ^false]].
-	
+
 	^aBrowser tabManager selectsTools: selectedTabs
 ]
 
 { #category : #testing }
 ClyBrowserState >> representsConcreteQuery [
 	"this method allows to detect that browser is in state when it not shows any concrete content at any of panels. It is happens when browser was not requested to show anything yet"
-	
+
 	^(viewStates allSatisfy: [ :each | each representsConcreteQuery not ]) not
 ]
 
 { #category : #operations }
 ClyBrowserState >> restoreNavigationStateOf: aBrowser [
-	
+
 	aBrowser navigationViews with: viewStates do: [:view :state |
-		view ignoreNavigationDuring: [ 
+		view ignoreNavigationDuring: [
 			state applyTo: view]]
 ]
 
@@ -106,9 +106,8 @@ ClyBrowserState >> retrieveStateFrom: aBrowser [
 
 	systemScope :=  aBrowser systemScope.
 	viewStates := aBrowser navigationViews collect: [ :each | each snapshotState ].
-	selectedTabs := aBrowser tabManager selectedTools 
-		collect: [ :each | each copyForBrowserStateSnapshot ].
-	
+	selectedTabs := aBrowser tabManager selectedTools
+		collect: [ :each | each copyForBrowserStateSnapshot ]
 ]
 
 { #category : #accessing }

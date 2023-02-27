@@ -56,7 +56,6 @@ ProtocolClient class >> openOnHostNamed: hostName port: portNumber [
 	| serverIP |
 	serverIP := NetNameResolver addressForName: hostName timeout: 20.
 	^self openOnHost: serverIP port: portNumber
-
 ]
 
 { #category : #'private - protocol' }
@@ -91,8 +90,7 @@ ProtocolClient >> checkResponse: aResponse onError: errorBlock onWarning: warnin
 	self responseIsError
 		ifTrue: [errorBlock value: aResponse].
 	self responseIsWarning
-		ifTrue: [warningBlock value: aResponse].
-
+		ifTrue: [warningBlock value: aResponse]
 ]
 
 { #category : #'private - protocol' }
@@ -169,8 +167,7 @@ ProtocolClient >> lastResponse [
 
 { #category : #private }
 ProtocolClient >> lastResponse: aString [
-	lastResponse := aString.
-
+	lastResponse := aString
 ]
 
 { #category : #private }
@@ -180,8 +177,7 @@ ProtocolClient >> logFlag [
 
 { #category : #private }
 ProtocolClient >> logProgress: aString [
-	self progressObservers do: [:each | each show: aString].
-
+	self progressObservers do: [:each | each show: aString]
 ]
 
 { #category : #accessing }
@@ -275,8 +271,7 @@ ProtocolClient >> responseIsWarning [
 
 { #category : #'private - protocol' }
 ProtocolClient >> sendCommand: aString [
-	self stream sendCommand: aString.
-
+	self stream sendCommand: aString
 ]
 
 { #category : #'private - protocol' }

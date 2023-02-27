@@ -34,7 +34,7 @@ ClassAnnouncement >> affectsPackages [
 
 { #category : #accessing }
 ClassAnnouncement >> classAffected [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

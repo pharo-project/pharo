@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #signalling }
-RBRefactoringError class >> signal: aString with: aBlock [ 
+RBRefactoringError class >> signal: aString with: aBlock [
 	^ self new
 		actionBlock: aBlock;
 		signal: aString
@@ -20,15 +20,15 @@ RBRefactoringError class >> signal: aString with: aBlock [
 { #category : #accessing }
 RBRefactoringError >> actionBlock [
 	^ actionBlock
-	
 ]
 
 { #category : #accessing }
-RBRefactoringError >> actionBlock: aBlock [ 
+RBRefactoringError >> actionBlock: aBlock [
 	actionBlock := aBlock
 ]
 
 { #category : #testing }
 RBRefactoringError >> isResumable [
+
 	^ true
 ]

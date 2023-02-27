@@ -12,6 +12,4 @@ MetacelloOldSemanticVersionNumber class >> integerFromString: aString [
 { #category : #private }
 MetacelloOldSemanticVersionNumber class >> validateVersionNumber: svn against: aString [
   "no validation"
-
-
 ]

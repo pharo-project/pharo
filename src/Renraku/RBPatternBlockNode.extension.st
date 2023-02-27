@@ -1,6 +1,6 @@
 Extension { #name : #RBPatternBlockNode }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBPatternBlockNode >> pattern [
 
 	^ self source

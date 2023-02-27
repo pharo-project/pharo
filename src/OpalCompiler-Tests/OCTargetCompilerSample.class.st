@@ -16,12 +16,10 @@ OCTargetCompilerSample class >> returnExpected [
 		self new returnExpected
 	"
 	^ #dontReturnThis
-
 ]
 
 { #category : #examples }
 OCTargetCompilerSample >> returnExpected [
 	" the target compiler will ignore the code and force this to return #expectedReturn "
 	^ #dontReturnThis
-	
 ]

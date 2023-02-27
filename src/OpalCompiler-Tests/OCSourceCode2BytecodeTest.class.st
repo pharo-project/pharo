@@ -17,17 +17,15 @@ Class {
 OCSourceCode2BytecodeTest class >> classVar [
 
 	 ^ClassVar
-
 ]
 
 { #category : #compiling }
-OCSourceCode2BytecodeTest >> compile2method: sourceStream [ 
+OCSourceCode2BytecodeTest >> compile2method: sourceStream [
 			"Compile code without logging the source in the changes file"
 			^OpalCompiler new
 						source: sourceStream;
-						class: self class;			
-						compile.
-		
+						class: self class;
+						compile
 ]
 
 { #category : #accessing }

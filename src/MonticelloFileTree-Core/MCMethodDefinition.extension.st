@@ -1,6 +1,6 @@
 Extension { #name : #MCMethodDefinition }
 
-{ #category : #'*monticellofiletree-core' }
+{ #category : #'*MonticelloFileTree-Core' }
 MCMethodDefinition >> setTimeStamp: aString [
     ^ timeStamp := aString
 ]

@@ -24,7 +24,7 @@ OupsDebugRequestTest >> testDebugSession [
 	ds := dr debugSession.
 	self assert: ds interruptedContext identicalTo: error signalerContext.
 	self assert: ds interruptedProcess identicalTo: dr process.
-	self assert: ds exception identicalTo: error.
+	self assert: ds exception identicalTo: error
 ]
 
 { #category : #tests }
@@ -32,7 +32,6 @@ OupsDebugRequestTest >> testDefaultProcess [
 	| dr |
 	dr := OupsDebugRequest basicNew.
 	self assert: dr process identicalTo: Processor activeProcess
-	
 ]
 
 { #category : #tests }
@@ -54,7 +53,7 @@ OupsDebugRequestTest >> testNullExceptionForNamed [
 	name := 'testName'.
 	nullException := OupsDebugRequest basicNew nullExceptionFor: context named: name.
 	self assert: nullException signalerContext identicalTo: context.
-	self assert: nullException messageText equals: name.
+	self assert: nullException messageText equals: name
 ]
 
 { #category : #tests }

@@ -19,5 +19,5 @@ DummyBreakpointObserver >> tag [
 
 { #category : #updating }
 DummyBreakpointObserver >> update: anAspect [
-	tag := anAspect 
+	tag := anAspect
 ]

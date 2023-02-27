@@ -18,12 +18,11 @@ ClassTreeNodeExample >> browseItem [
 { #category : #menu }
 ClassTreeNodeExample >> childrenItems [
 	^ (self item subclasses asArray sort: [:a :b | a name < b name]) asOrderedCollection
-
 ]
 
 { #category : #menu }
 ClassTreeNodeExample >> classButton [
-	^ (self theme 
+	^ (self theme
 			newButtonIn: self
 			for: self
 			getState: nil
@@ -66,7 +65,7 @@ ClassTreeNodeExample >> inspectItem [
 ]
 
 { #category : #accessing }
-ClassTreeNodeExample >> keyStroke: anEvent from: aTreeMorph [ 
+ClassTreeNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	| c  |
 	c := anEvent keyCharacter.
 	c = $b
@@ -76,11 +75,10 @@ ClassTreeNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	c = $I
 		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #accessing }
-ClassTreeNodeExample >> menu: menu shifted: b [ 
+ClassTreeNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'
 		target: self
@@ -92,6 +90,5 @@ ClassTreeNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Explore (I)'
 		target: self
-		selector: #exploreItem.
-
+		selector: #exploreItem
 ]

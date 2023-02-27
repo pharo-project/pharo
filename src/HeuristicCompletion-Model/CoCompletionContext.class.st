@@ -28,7 +28,7 @@ CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aSt
 		yourself
 ]
 
-{ #category : #activating }
+{ #category : #activation }
 CoCompletionContext >> activateEntryAt: anIndex [
 
 	(self entries at: anIndex) activateOn: self
@@ -38,9 +38,11 @@ CoCompletionContext >> activateEntryAt: anIndex [
 CoCompletionContext >> completion [
 
 	completion ifNotNil: [ ^ completion ].
-	^ completion := self completionBuilder
+	completion := self completionBuilder
 		completionContext: self;
-		buildCompletion
+		buildCompletion.
+	completion filter: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: self completionToken).
+	^ completion
 ]
 
 { #category : #accessing }
@@ -51,9 +53,9 @@ CoCompletionContext >> completion: anObject [
 { #category : #accessing }
 CoCompletionContext >> completionAt: aNumber [
 	| entry |
-	
+
 	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECEntry spaceAfterCompletion 
+	^ NECEntry spaceAfterCompletion
 		ifTrue: [ entry, ' ' ]
 		ifFalse: [ entry ]
 ]
@@ -64,26 +66,20 @@ CoCompletionContext >> completionBuilder [
 ]
 
 { #category : #accessing }
-CoCompletionContext >> completionBuilder: anUndefinedObject [ 
+CoCompletionContext >> completionBuilder: anUndefinedObject [
 	completionBuilder := anUndefinedObject
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionClass [
-	
+
 	^ completionClass
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionClass: aClass [
-	
-	^ completionClass := aClass
-]
 
-{ #category : #accessing }
-CoCompletionContext >> completionEnvironment [
-	
-	^ CoSystemEnvironment new
+	^ completionClass := aClass
 ]
 
 { #category : #accessing }
@@ -126,9 +122,9 @@ CoCompletionContext >> entryCount [
 ]
 
 { #category : #accessing }
-CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [ 
-	
-	^ self completionEnvironment environmentAt: aString ifPresent: aBlockClosure
+CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [
+
+	^ self systemNavigation environmentAt: aString ifPresent: aBlockClosure
 ]
 
 { #category : #testing }
@@ -139,7 +135,7 @@ CoCompletionContext >> hasEntries [
 
 { #category : #menu }
 CoCompletionContext >> hasMessage [
-	
+
 	^ false
 ]
 
@@ -151,15 +147,15 @@ CoCompletionContext >> initialize [
 ]
 
 { #category : #testing }
-CoCompletionContext >> isWorkspace [
-	
+CoCompletionContext >> isScripting [
+
 	^ engine notNil and: [ engine isScripting ]
 ]
 
 { #category : #narrowing }
-CoCompletionContext >> narrowWith: aString [ 
+CoCompletionContext >> narrowWith: aString [
 
-	self completion filterWithString: aString
+	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
 ]
 
 { #category : #accessing }
@@ -174,7 +170,7 @@ CoCompletionContext >> position: anObject [
 
 { #category : #replacing }
 CoCompletionContext >> replaceTokenInEditorWith: aString [
-	
+
 	engine replaceTokenInEditorWith: aString
 ]
 
@@ -186,6 +182,12 @@ CoCompletionContext >> source [
 { #category : #accessing }
 CoCompletionContext >> source: anObject [
 	source := anObject
+]
+
+{ #category : #accessing }
+CoCompletionContext >> systemNavigation [
+
+	^ CoSystemEnvironment new
 ]
 
 { #category : #accessing }

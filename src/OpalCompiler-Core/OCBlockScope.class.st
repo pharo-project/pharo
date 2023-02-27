@@ -27,6 +27,12 @@ OCBlockScope >> isInsideOptimizedLoop [
 	^ self outerScope isInsideOptimizedLoop
 ]
 
+{ #category : #testing }
+OCBlockScope >> isOptimized [
+
+	^ false
+]
+
 { #category : #lookup }
 OCBlockScope >> nextOuterScopeContextOf: aContext [
 

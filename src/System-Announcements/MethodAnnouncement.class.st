@@ -50,7 +50,7 @@ MethodAnnouncement >> affectsMethodsTaggedWith: tagName [
 { #category : #testing }
 MethodAnnouncement >> affectsPackages [
 	"any method makes package dirty"
-	 
+
 	^true
 ]
 
@@ -63,7 +63,6 @@ MethodAnnouncement >> classAffected [
 MethodAnnouncement >> isProvidedByATrait [
 
 	^ self methodOrigin ~= self methodClass
-
 ]
 
 { #category : #testing }
@@ -73,7 +72,7 @@ MethodAnnouncement >> isProvidedByExtension [
 
 { #category : #accessing }
 MethodAnnouncement >> method [
-	
+
 	^ method
 ]
 
@@ -110,7 +109,7 @@ MethodAnnouncement >> packagesAffected [
 
 { #category : #accessing }
 MethodAnnouncement >> protocol [
-	
+
 	^ method protocol
 ]
 
@@ -121,6 +120,6 @@ MethodAnnouncement >> protocolsAffected [
 
 { #category : #accessing }
 MethodAnnouncement >> selector [
-	
+
 	^ method selector
 ]

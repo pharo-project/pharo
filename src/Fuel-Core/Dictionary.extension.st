@@ -7,8 +7,7 @@ Dictionary >> fuelAccept: aGeneralMapper [
 	class := self class.
 	^ (((class == Dictionary) or: [class == IdentityDictionary ])) 
 		ifTrue: [ aGeneralMapper visitDictionary: self ]
-		ifFalse: [ super fuelAccept: aGeneralMapper ] 
-	
+		ifFalse: [ super fuelAccept: aGeneralMapper ]
 ]
 
 { #category : #'*Fuel-Core' }
@@ -19,4 +18,14 @@ Dictionary >> fuelAfterMaterialization [
 	^ (((class == Dictionary) or: [ class == IdentityDictionary ]) ) 
 		ifFalse: [ self rehash ] 
 		ifTrue: [ self ]
+]
+
+{ #category : #'*Fuel-Core' }
+Dictionary >> keyAtIdentityValue: anObject ifPresent: presentBlock ifAbsent: absentBlock [
+	| value |
+	value := self
+		keyAtIdentityValue: anObject
+		ifAbsent: [ ^ absentBlock value ].
+	
+	^ presentBlock cull: value
 ]

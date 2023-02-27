@@ -4,13 +4,13 @@ I have shared behavior of some optional clusters.
 Class {
 	#name : #FLOptimizedObjectCluster,
 	#superclass : #FLIteratingCluster,
-	#category : #'Fuel-Core-Clusters-Optionals'
+	#category : #'Fuel-Core-Clusters-Optimized'
 }
 
 { #category : #analyzing }
 FLOptimizedObjectCluster class >> clusterBucketIn: aClusterization [
 
-	^aClusterization baselevelBucket 
+	^aClusterization baselevelBucket
 ]
 
 { #category : #'serialize/materialize' }
@@ -29,7 +29,6 @@ FLOptimizedObjectCluster >> materializeReferencesStepWith: aDecoder [
 { #category : #'serialize/materialize' }
 FLOptimizedObjectCluster >> serializeInstancesStepWith: anEncoder [
 	"Do nothing. I know my objects have nothing to serialize in this step."
-
 ]
 
 { #category : #'serialize/materialize' }

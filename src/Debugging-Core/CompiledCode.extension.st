@@ -9,20 +9,6 @@ CompiledCode >> abstractBytecodeMessageAt: pc [
 ]
 
 { #category : #'*Debugging-Core' }
-CompiledCode >> abstractBytecodeMessagesDo: aBlock [
-	"Evaluate aBlock with the sequence of abstract bytecodes in the receiver"
-	self abstractBytecodeMessagesFrom: self initialPC
-		to: self endPC
-		do: aBlock
-
-	"| msgs |
-	 msgs := OrderedCollection new.
-	 CompiledMethod >> #abstractBytecodeMessagesFrom:to: abstractBytecodeMessagesDo:
-		[:msg| msgs add: msg selector].
-	 msgs"
-]
-
-{ #category : #'*Debugging-Core' }
 CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 	"Evaluate aBlock with the sequence of abstract bytecodes from startpc through endpc in the receiver"
 	| scanner |
@@ -81,7 +67,7 @@ CompiledCode >> messages [
 	| aSet |
 	aSet := self localMessages.
 	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
-	^ aSet 
+	^ aSet
 ]
 
 { #category : #'*Debugging-Core' }

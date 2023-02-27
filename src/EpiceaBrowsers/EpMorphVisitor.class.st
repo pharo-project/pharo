@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #private }
-EpMorphVisitor >> displayBehavior: aString [ 
+EpMorphVisitor >> displayBehavior: aString [
 
 	^ { self morphFactory emphasizedStringFor: aString }
 ]
@@ -43,14 +43,13 @@ EpMorphVisitor >> displayCategory: aCategoryName [
 EpMorphVisitor >> displayClass: aClassName protocol: aProtocolName [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: 'protocol'), (self displayString: aProtocolName)
-
 ]
 
 { #category : #private }
-EpMorphVisitor >> displayOperation: aString [ 
+EpMorphVisitor >> displayOperation: aString [
 
-	^ self 
-		displayString: aString 
+	^ self
+		displayString: aString
 		color: self morphFactory softerTextColor
 ]
 
@@ -76,10 +75,10 @@ EpMorphVisitor >> morphFactory [
 EpMorphVisitor >> visitBehaviorCategoryChange: aClassRecategorizationChange [
 
 	^	(self displayOperation: 'Move'),
-		(self displayBehavior: aClassRecategorizationChange behaviorAffectedName), 
+		(self displayBehavior: aClassRecategorizationChange behaviorAffectedName),
 		(self displayOperation: 'from tag'),
-		(self displayString: aClassRecategorizationChange oldCategory), 
-		(self displayOperation: 'to'), 
+		(self displayString: aClassRecategorizationChange oldCategory),
+		(self displayOperation: 'to'),
 		(self displayString: aClassRecategorizationChange newCategory)
 ]
 
@@ -98,14 +97,20 @@ EpMorphVisitor >> visitBehaviorCopy: aClassCopy [
 { #category : #visitor }
 EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 
-	^	(self displayOperation: 'Rename'), 
-		(self displayBehavior: aClassRenamedChange oldName), 
-		(self displayOperation: 'as'), 
+	^	(self displayOperation: 'Rename'),
+		(self displayBehavior: aClassRenamedChange oldName),
+		(self displayOperation: 'as'),
 		(self displayString: aClassRenamedChange newName)
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
+
+	^ self displayCategory: aCategoryChange categoryName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitCategoryRegistration: aCategoryChange [
 
 	^ self displayCategory: aCategoryChange categoryName
 ]
@@ -141,12 +146,12 @@ EpMorphVisitor >> visitEvent: anEvent [
 EpMorphVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 
 	^ (self displayOperation: 'DoIt:'), (self displayString:
-		(anExpressionEvaluation expression printStringLimitedTo: 50) 
+		(anExpressionEvaluation expression printStringLimitedTo: 50)
 			withSeparatorsCompacted)
 ]
 
 { #category : #visitor }
-EpMorphVisitor >> visitLogCommentModification: aLogCommentModification [ 
+EpMorphVisitor >> visitLogCommentModification: aLogCommentModification [
 
 	^ self displayString: aLogCommentModification comment printString
 ]
@@ -154,7 +159,7 @@ EpMorphVisitor >> visitLogCommentModification: aLogCommentModification [
 { #category : #visitor }
 EpMorphVisitor >> visitMethodAddition: aMethodCreatedChange [
 
-	^ self 
+	^ self
 		displayBehavior: aMethodCreatedChange behaviorAffectedName
 		method: aMethodCreatedChange methodAdded selector
 ]
@@ -162,7 +167,7 @@ EpMorphVisitor >> visitMethodAddition: aMethodCreatedChange [
 { #category : #visitor }
 EpMorphVisitor >> visitMethodModification: aMethodModified [
 
-	^ self 
+	^ self
 		displayBehavior: aMethodModified behaviorAffectedName
 		method: aMethodModified oldMethod selector
 ]
@@ -170,7 +175,7 @@ EpMorphVisitor >> visitMethodModification: aMethodModified [
 { #category : #visitor }
 EpMorphVisitor >> visitMethodRemoval: aMethodRemoved [
 
-	^ self 
+	^ self
 		displayBehavior: aMethodRemoved behaviorAffectedName
 		method: aMethodRemoved methodRemoved selector
 ]
@@ -178,23 +183,23 @@ EpMorphVisitor >> visitMethodRemoval: aMethodRemoved [
 { #category : #visitor }
 EpMorphVisitor >> visitMonticelloVersionSave: aChange [
 
-	^	(self displayOperation: 'MC save'), 
-		(self displayString: aChange versionName asString), 
-		(self displayOperation: 'on'), 
+	^	(self displayOperation: 'MC save'),
+		(self displayString: aChange versionName asString),
+		(self displayOperation: 'on'),
 		(self displayString: aChange repositoryDescription asString)
 ]
 
 { #category : #visitor }
-EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [ 
+EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 
-	^	(self displayOperation: 'MC load'), 
+	^	(self displayOperation: 'MC load'),
 		(self displayString: aMonticelloVersionLoaded versionNames asCommaStringAnd)
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitProtocolAddition: aProtocolChange [
 
-	^ self 
+	^ self
 		displayClass: aProtocolChange behaviorAffectedName
 		protocol: aProtocolChange protocol asString
 ]
@@ -202,7 +207,7 @@ EpMorphVisitor >> visitProtocolAddition: aProtocolChange [
 { #category : #visitor }
 EpMorphVisitor >> visitProtocolRemoval: aProtocolChange [
 
-	^ self 
+	^ self
 		displayClass: aProtocolChange behaviorAffectedName
 		protocol: aProtocolChange protocol asString
 ]
@@ -214,31 +219,31 @@ EpMorphVisitor >> visitRedo: aRedoEvent [
 ]
 
 { #category : #visitor }
-EpMorphVisitor >> visitRefactoring: aRefactoring [ 
+EpMorphVisitor >> visitRefactoring: aRefactoring [
 
-	^  (self displayOperation: 'Refactoring: '), 
-		(self displayString: (String streamContents: [ :aStream | 
+	^  (self displayOperation: 'Refactoring: '),
+		(self displayString: (String streamContents: [ :aStream |
 			aRefactoring summaryOn: aStream ]))
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitSessionEnd: anEvent [
 
-	^ (self displayOperation: 'End:'), 
+	^ (self displayOperation: 'End:'),
 		(self displayString: anEvent imageName)
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitSessionSnapshot: anEvent [
 
-	^ (self displayOperation: 'Snapshot:'), 
+	^ (self displayOperation: 'Snapshot:'),
 		(self displayString: anEvent imageName)
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitSessionStart: anEvent [
 
-	^ (self displayOperation: 'Start:'), 
+	^ (self displayOperation: 'Start:'),
 		(self displayString: anEvent imageName)
 ]
 

@@ -32,8 +32,8 @@ ClyConcreteGroupCritiqueQuery >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-		
-	^groupName = anObject groupName 
+
+	^groupName = anObject groupName
 ]
 
 { #category : #printing }

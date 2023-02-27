@@ -45,6 +45,7 @@ MetacelloGenericProjectSpec >> hasRepository [
 
 { #category : #loading }
 MetacelloGenericProjectSpec >> load [
+
     (MetacelloLookupProjectSpecForLoad new
         projectSpec: self;
         yourself) signal performLoad

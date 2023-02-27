@@ -32,7 +32,7 @@ Class {
 	#category : #'ThreadedFFI-Base'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TFAbiTypes class >> initialize [
 
 	"The default ABI is marked with a nil. The primitive will use the correct ABI depending on the platform"
@@ -64,7 +64,5 @@ TFAbiTypes class >> initialize [
 	UNIX_X86_32_STDCALL   := 5.
 	UNIX_X86_32_PASCAL    := 6.
 	UNIX_X86_32_REGISTER  := 7.
-	UNIX_X86_32_MS_CDECL  := 8.
-	
-
+	UNIX_X86_32_MS_CDECL  := 8
 ]

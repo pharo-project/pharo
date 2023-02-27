@@ -13,7 +13,7 @@ DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
 	method := self content.
 	aMenuGroup
 		addMenuItem:
-			(MenuItemPresenter new
+			(SpMenuItemPresenter new
 				name: 'Select this package as the right dependency';
 				action:
 					[(TheManifestBuilder of: self packageUnderAnalysis packageManifest)
@@ -23,7 +23,7 @@ DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
 
 { #category : #accessing }
 DAMethodImplementationNode >> icon [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #displaying }

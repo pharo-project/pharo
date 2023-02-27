@@ -18,8 +18,9 @@ GoferRepositoryError class >> signal: aString repository: aRepository [
 		  signal: aString
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 GoferRepositoryError >> isResumable [
+
 	^ true
 ]
 

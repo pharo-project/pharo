@@ -15,9 +15,9 @@ RBCombinatorVisitor >> combinations [
 	^ combinations
 ]
 
-{ #category : #visiting }
+{ #category : #initialization }
 RBCombinatorVisitor >> initialize [
-	combinations := OrderedCollection new.
+	combinations := OrderedCollection new
 ]
 
 { #category : #visiting }
@@ -28,6 +28,4 @@ RBCombinatorVisitor >> visitSequenceNode: aSequenceNode [
 	starts do: [ :start | ends do: [ :end | start < end ifTrue: [
 		combinations add: (Array with: start with: end) ] ] ].
 	super visitSequenceNode: aSequenceNode
-	
-	
 ]

@@ -4,7 +4,7 @@ I am responsible for adding a pragma inside a method. In this implementation, al
 Usage:
 | transformation |
 transformation := (RBAddPragmaTransformation
-				pragma: '<gtInspectorPresentationOrder: 213>'
+				pragma: '<pragaForTesting: 213>'
 				inMethod: #methodBefore
 				inClass: #RBAddPragmaTransformationTest)
 				transform.
@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -50,7 +50,7 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 
 	self className: aClassName.
 	selector := aSelector.
-	pragma := aString.
+	pragma := aString
 ]
 
 { #category : #preconditions }
@@ -87,7 +87,7 @@ RBAddPragmaTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddPragmaTransformation >> storeOn: aStream [ 
+RBAddPragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

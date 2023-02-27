@@ -23,20 +23,19 @@ Class {
 { #category : #testing }
 ClyRenameClassTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassTagSelected
-
 ]
 
 { #category : #activation }
 ClyRenameClassTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext 
+
+	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #activation }
 ClyRenameClassTagCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
 ]
 
@@ -90,12 +89,12 @@ ClyRenameClassTagCommand >> package: anObject [
 { #category : #execution }
 ClyRenameClassTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	package := aToolContext lastSelectedPackage.
 	classGroup := aToolContext lastSelectedClassGroup.
-	newName := UIManager default 
-		request: 'New name of the class tag' 
-		initialAnswer: classGroup name 
+	newName := UIManager default
+		request: 'New name of the class tag'
+		initialAnswer: classGroup name
 		title: 'Rename a class tag'.
 	newName isEmptyOrNil | (newName = classGroup name) ifTrue: [ CmdCommandAborted signal]
 ]

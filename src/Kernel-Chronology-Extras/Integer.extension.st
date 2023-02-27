@@ -3,12 +3,12 @@ Extension { #name : #Integer }
 { #category : #'*Kernel-Chronology-Extras' }
 Integer >> asYear [
 
- 	^ Year year: self  
+ 	^ Year year: self
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Integer >> tinyBenchmarks [
-	
+
 	| t1 t2 r n1 n2 |
 	n1 := 1.
 	[t1 := Time millisecondsToRun: [n1 benchmark].

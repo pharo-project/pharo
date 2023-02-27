@@ -18,11 +18,10 @@ AthensCairoGradientPaint class >> createLinearGradient: aColorRamp start: aStart
 		y0: aStartPoint y asFloat
 		x1: aStopPoint x asFloat
 		y1: aStopPoint y asFloat.
-	
+
 	"note, we do #initialize here because instance was created by primitive"
 	paint initialize; populateRamp: aColorRamp.
 	^ paint
-
 ]
 
 { #category : #primitives }
@@ -32,7 +31,6 @@ AthensCairoGradientPaint class >> primCreateLinearX0: x0 y0: y0 x1: x1 y1: y1 [
 		double y0,
 		double x1,
 		double y1 ) )
-
 ]
 
 { #category : #primitives }
@@ -44,7 +42,6 @@ AthensCairoGradientPaint class >> primCreateRadialXo: xo yo: yo radiuso: radiuso
 		double x1,
 		double y1,
 		double radius1 ) )
-
 ]
 
 { #category : #private }
@@ -56,11 +53,11 @@ AthensCairoGradientPaint class >> radialBetween: origin
 	| paint |
 
 	paint := self
-		primCreateRadialXo: origin x 
-		yo: origin y 
-		radiuso: innerRadius 
+		primCreateRadialXo: origin x
+		yo: origin y
+		radiuso: innerRadius
 		x1: outerOrigin x
-		y1: outerOrigin y 
+		y1: outerOrigin y
 		radius1: outerRadius.
 	paint
 		initializeRadialBetween: origin
@@ -68,7 +65,7 @@ AthensCairoGradientPaint class >> radialBetween: origin
 			and: outerOrigin
 			extending: outerRadius
 			withColorRamp: colorRamp.
-	^ paint.
+	^ paint
 ]
 
 { #category : #private }
@@ -95,13 +92,12 @@ AthensCairoGradientPaint >> initializeRadialBetween: origin
 			and: outerOrigin
 			extending: outerRadius
 			withColorRamp: aRamp [
-			
-	self initialize.		
+
+	self initialize.
 	aRamp do:[:each|
 		self
 			addColorStopAt: each key
 			colored: each value ]
-	
 ]
 
 { #category : #private }
@@ -110,16 +106,14 @@ AthensCairoGradientPaint >> populateRamp: aRamp [
 		self
 			addColorStopAt: each key
 			colored: each value ]
-	
 ]
 
 { #category : #primitives }
-AthensCairoGradientPaint >> primAddColorStopOffset: offset R: red G: green B: blue A: alpha [ 
+AthensCairoGradientPaint >> primAddColorStopOffset: offset R: red G: green B: blue A: alpha [
 	^ self ffiCall:#( void cairo_pattern_add_color_stop_rgba ( cairo_pattern_t  self,
 					double offset,
 					double red,
 					double green,
 					double blue,
 					double alpha ))
-		
 ]

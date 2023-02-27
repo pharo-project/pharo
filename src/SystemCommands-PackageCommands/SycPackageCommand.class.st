@@ -22,7 +22,7 @@ SycPackageCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 SycPackageCommand class >> isAbstract [
-	^self = SycPackageCommand 
+	^self = SycPackageCommand
 ]
 
 { #category : #accessing }
@@ -38,6 +38,6 @@ SycPackageCommand >> packages: anObject [
 { #category : #execution }
 SycPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	packages := aToolContext selectedPackages
 ]

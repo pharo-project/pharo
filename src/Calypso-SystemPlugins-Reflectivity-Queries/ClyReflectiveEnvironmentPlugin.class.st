@@ -21,11 +21,11 @@ ClyReflectiveEnvironmentPlugin >> collectMethodGroupProviders [
 ClyReflectiveEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	aMethod containsHalt ifTrue: [ anItem markWith: ClyMethodWithHaltTag ].
-	aMethod hasBreakpoint ifTrue: [ anItem markWith: ClyMethodWithBreakpointTag ].	
+	aMethod hasBreakpoint ifTrue: [ anItem markWith: ClyMethodWithBreakpointTag ].
 
-	(self doesMethodHasExecutionCounter: aMethod) 
+	(self doesMethodHasExecutionCounter: aMethod)
 		ifTrue: [ anItem markWith: ClyMethodWithExecutionCounterTag ].
-	(self doesMethodHasWatch: aMethod) 
+	(self doesMethodHasWatch: aMethod)
 		ifTrue: [ anItem markWith: ClyMethodWithWatchTag ]
 ]
 
@@ -56,6 +56,6 @@ ClyReflectiveEnvironmentPlugin >> doesNodeOf: aMetalinkManager belongsTo: aMetho
 	methodNode selector == aMethod selector ifFalse: [ ^false ].
 	methodNode methodClass == aMethod methodClass ifFalse: [ ^false ].
 	methodNode == aMethod ast ifFalse: [ ^false ].
-	
+
 	^true
 ]

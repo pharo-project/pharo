@@ -18,19 +18,19 @@ ReThemeAccessRule class >> initialize [
 ]
 
 { #category : #running }
-ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [ 
+ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemThemes |
-	((aMethod methodClass inheritsFrom: Morph) 
+	((aMethod methodClass inheritsFrom: Morph)
 		or: [aMethod methodClass inheritsFrom: Model]) ifFalse: [ ^ self ].
-		
-	problemThemes := 
-		(aMethod sendNodes select: [ :msgSend | msgSend selector = #theme 
+
+	problemThemes :=
+		(aMethod sendNodes select: [ :msgSend | msgSend selector = #theme
 				and: [msgSend receiver sourceCode withSeparatorsCompacted = 'Smalltalk ui'] ]).
-	
+
 	problemThemes do: [ :msgSend |
-			aCriticBlock cull: (self 
-				createTrivialCritiqueOn: aMethod 
-				intervalOf: msgSend 
+			aCriticBlock cull: (self
+				createTrivialCritiqueOn: aMethod
+				intervalOf: msgSend
 				hint: msgSend selector asString) ]
 ]
 

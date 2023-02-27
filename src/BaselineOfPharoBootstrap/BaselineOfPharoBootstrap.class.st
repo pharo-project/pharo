@@ -50,7 +50,6 @@ BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].		
 	^ packages , (groups flatCollect: [ :aInnerGroupName | self packagesRecursiveIn: aInnerGroupName ]).
-
 ]
 
 { #category : #accessing }
@@ -231,5 +230,4 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'JenkinsTools-Core'}.
 
 	]
-
 ]

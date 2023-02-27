@@ -37,9 +37,9 @@ Class {
 }
 
 { #category : #'instance variables' }
-ClyVariableReferencesQuery class >> from: aScope toVariablesFrom: aVariableQuery [ 
+ClyVariableReferencesQuery class >> from: aScope toVariablesFrom: aVariableQuery [
 	^(self from: aScope)
-		variableQuery: aVariableQuery 
+		variableQuery: aVariableQuery
 ]
 
 { #category : #'instance variables' }
@@ -64,9 +64,9 @@ ClyVariableReferencesQuery class >> ofAny: variables from: aScope [
 ]
 
 { #category : #'instance variables' }
-ClyVariableReferencesQuery class >> toVariablesFrom: aVariableQuery [ 
+ClyVariableReferencesQuery class >> toVariablesFrom: aVariableQuery [
 	^self new
-		variableQuery: aVariableQuery 
+		variableQuery: aVariableQuery
 ]
 
 { #category : #comparing }
@@ -83,22 +83,22 @@ ClyVariableReferencesQuery >> buildResult: aQueryResult [
 	| filteredMethods vars |
 	vars := variableQuery execute items.
 	filteredMethods := OrderedCollection new.
-	
-	scope methodsDo: [ :each | 
+
+	scope methodsDo: [ :each |
 		(self doesMethod: each useAnyOf: vars) ifTrue: [filteredMethods add: each]].
-	
+
 	aQueryResult fillWith: filteredMethods
 ]
 
 { #category : #printing }
 ClyVariableReferencesQuery >> description [
 
-	^'references to ', self printVariables 
+	^'references to ', self printVariables
 ]
 
 { #category : #testing }
 ClyVariableReferencesQuery >> doesMethod: aMethod useAnyOf: vars [
-	
+
 	^vars anySatisfy: [ :each |
 		self doesMethod: aMethod useVar: each]
 ]
@@ -120,23 +120,23 @@ ClyVariableReferencesQuery >> hash [
 ClyVariableReferencesQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
-	aStream nextPutAll: self printVariables 
+	aStream nextPutAll: self printVariables
 ]
 
 { #category : #printing }
 ClyVariableReferencesQuery >> printVariables [
 
-	^variableQuery scope == scope 
+	^variableQuery scope == scope
 		ifTrue: [variableQuery description]
 		ifFalse: [ variableQuery fullDescription ]
 ]
 
 { #category : #testing }
 ClyVariableReferencesQuery >> selectsMethod: aMethod [
-	
+
 	| vars |
 	vars := variableQuery execute.
-	
+
 	^self doesMethod: aMethod useAnyOf: vars items
 ]
 
@@ -147,5 +147,5 @@ ClyVariableReferencesQuery >> variableQuery [
 
 { #category : #accessing }
 ClyVariableReferencesQuery >> variableQuery: aVariableQuery [
-	variableQuery := aVariableQuery 
+	variableQuery := aVariableQuery
 ]

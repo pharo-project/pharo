@@ -19,7 +19,6 @@ DirectoryEntryTest >> testCreationTimeIsADateAndTimeInstance [
 	| creation |
 	creation := self entry creation.
 	self assert: creation class equals: DateAndTime
-	
 ]
 
 { #category : #tests }
@@ -92,7 +91,6 @@ DirectoryEntryTest >> testModificationTimeIsADateAndTimeInstance [
 	| modification |
 	modification := self entry modification.
 	self assert: modification class equals: DateAndTime
-	
 ]
 
 { #category : #tests }
@@ -117,8 +115,7 @@ DirectoryEntryTest >> testRootEntry [
 	self assert: rootEntry size equals: 0.
 	self assert: rootEntry isReadable.
 	self assert: rootEntry isExecutable.
-	self deny: rootEntry isWritable.
-
+	self deny: rootEntry isWritable
 ]
 
 { #category : #tests }

@@ -31,5 +31,5 @@ RBCompositeEnvironment >> otherEnvironment [
 
 { #category : #accessing }
 RBCompositeEnvironment >> shortDescription [
-	^ self description 
+	^ self description
 ]

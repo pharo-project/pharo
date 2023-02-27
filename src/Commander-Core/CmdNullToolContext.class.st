@@ -16,15 +16,12 @@ CmdNullToolContext >> allowsExecutionOf: aCommandClass [
 
 { #category : #'command execution' }
 CmdNullToolContext >> applyResultOf: aCommand [
-
 ]
 
 { #category : #'command execution' }
 CmdNullToolContext >> prepareFullExecutionOf: aCommand [
-
 ]
 
 { #category : #'command execution' }
 CmdNullToolContext >> prepareNewCommand: aCommand [
-
 ]

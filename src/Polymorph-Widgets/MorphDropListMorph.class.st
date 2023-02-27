@@ -48,7 +48,6 @@ MorphDropListMorph >> newContentMorph [
 { #category : #updating }
 MorphDropListMorph >> updateContentColor: paneColor [
 	"Change the content text color."
-	
 ]
 
 { #category : #testing }

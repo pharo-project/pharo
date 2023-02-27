@@ -6,6 +6,6 @@ Class {
 
 { #category : #testing }
 ClyEmptyClassSelectionContext >> describes: aBrowserContext [
-	^(aBrowserContext isKindOf: ClyFullBrowserContext) 
+	^(aBrowserContext isKindOf: ClyFullBrowserContext)
 		and: [aBrowserContext isClassSelected not]
 ]

@@ -19,7 +19,7 @@ Class {
 		'afterNodes',
 		'ancestorNode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
@@ -32,7 +32,7 @@ RBSplitCascadeRefactoring class >> model: aNamespace split: anInterval from: aSe
 
 { #category : #'instance creation' }
 RBSplitCascadeRefactoring class >> split: anInterval from: aSelector in: aClass [
-	^ self new 
+	^ self new
 		split: anInterval from: aSelector in: aClass;
 		yourself
 ]
@@ -42,19 +42,18 @@ RBSplitCascadeRefactoring >> extractReceiver [
 	| name |
 	(cascadeNode receiver isLiteralNode or: [ cascadeNode receiver isVariable ])
 		ifTrue: [ ^ self ].
-	name := self 
-		safeVariableNameFor: class 
-		temporaries: self parseTree allDefinedVariables 
+	name := self
+		safeVariableNameFor: class
+		temporaries: self parseTree allDefinedVariables
 		basedOn: 'receiver'.
 	ancestorNode parent
 		addTemporaryNamed: name;
-		addNode: (RBAssignmentNode 
+		addNode: (RBAssignmentNode
 			variable: (RBVariableNode named: name)
 			value: cascadeNode receiver)
 		before: ancestorNode.
 	cascadeNode messages
 		do: [ :each | each receiver: (RBVariableNode named: name) ]
-		
 ]
 
 { #category : #preconditions }
@@ -100,7 +99,7 @@ RBSplitCascadeRefactoring >> findMessageNodes [
 RBSplitCascadeRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
+		ifNil: [ parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
 			].
 	^ parseTree
@@ -108,8 +107,8 @@ RBSplitCascadeRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBSplitCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [ 
-		self findCascadeNode; findAncestorNode; findMessageNodes. 
+	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
+		self findCascadeNode; findAncestorNode; findMessageNodes.
 		true ])
 ]
 
@@ -134,7 +133,7 @@ RBSplitCascadeRefactoring >> splitCascade [
 ]
 
 { #category : #printing }
-RBSplitCascadeRefactoring >> storeOn: aStream [ 
+RBSplitCascadeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' split: '.

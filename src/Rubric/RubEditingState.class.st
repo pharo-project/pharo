@@ -69,7 +69,6 @@ RubEditingState >> markBlock: markCharacterBlock pointBlock: pointCharacterBlock
 { #category : #accessing }
 RubEditingState >> markIndex [
 	^ self markBlock ifNotNil: [:m | m stringIndex] ifNil: [ 1 ]
-
 ]
 
 { #category : #accessing }
@@ -107,18 +106,17 @@ RubEditingState >> previousInterval [
 { #category : #accessing }
 RubEditingState >> previousInterval: anInterval [
 
-	previousInterval := anInterval.
-
+	previousInterval := anInterval
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> redo [
-	^ self undoManager redo 
+	^ self undoManager redo
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> redoArray: doArray undoArray: undoArray [
-	self undoManager isPlugged 
+	self undoManager isPlugged
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
 ]
 
@@ -134,12 +132,14 @@ RubEditingState >> scrollPivot: aPoint [
 
 { #category : #accessing }
 RubEditingState >> selectionStart [
-	^ self pointBlock ifNotNil: [:pb | pb min: self markBlock]
+
+	^ self pointBlock ifNotNil: [ :pb | pb min: self markBlock ]
 ]
 
 { #category : #accessing }
 RubEditingState >> selectionStop [
-	^ self pointBlock ifNotNil: [:pb | pb max: self markBlock]
+
+	^ self pointBlock ifNotNil: [ :pb | pb max: self markBlock ]
 ]
 
 { #category : #accessing }
@@ -154,37 +154,34 @@ RubEditingState >> startOfTyping: anIntegerIndex [
 
 { #category : #accessing }
 RubEditingState >> textArea: aTextArea [
-	textArea := aTextArea.
-
+	textArea := aTextArea
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> undo [
-	^ self undoManager undo 
+	^ self undoManager undo
 ]
 
 { #category : #accessing }
 RubEditingState >> undoManager [
 
-	^ undoManager ifNil: [ undoManager := HistoryIterator new].
-
+	^ undoManager ifNil: [ undoManager := HistoryIterator new]
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> undoRedoTransaction: aBlock [
 	self undoManager openRecordGroup.
-	aBlock ensure: [  self undoManager closeRecordGroup ].
-
+	aBlock ensure: [  self undoManager closeRecordGroup ]
 ]
 
 { #category : #private }
 RubEditingState >> unplug [
 	super unplug.
 	undoManager
-		ifNotNil: [ 
+		ifNotNil: [
 			undoManager reset.
 			undoManager := nil ].
-	 pointBlock := markBlock := startOfTyping := previousInterval := nil.
+	 pointBlock := markBlock := startOfTyping := previousInterval := nil
 ]
 
 { #category : #accessing }

@@ -1,6 +1,6 @@
 Extension { #name : #MCVersionLoader }
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCVersionLoader >> versions [
 
 	^versions

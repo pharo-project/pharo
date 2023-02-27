@@ -1,3 +1,6 @@
+"
+I am a specialized cluster for ExternalAddress (FFI).
+"
 Class {
 	#name : #FLExternalAddressCluster,
 	#superclass : #FLByteObjectCluster,
@@ -11,7 +14,6 @@ FLExternalAddressCluster >> materializeInstanceWith: aDecoder [
 	^ (theClass basicNew: size)
 		beNull;
 		yourself
-
 ]
 
 { #category : #'serialize/materialize' }

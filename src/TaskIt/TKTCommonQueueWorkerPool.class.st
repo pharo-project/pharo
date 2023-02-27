@@ -30,7 +30,7 @@ TKTCommonQueueWorkerPool >> cleanUpImageToStart [
 	self stop.
 	taskQueue removeAll.
 	failedTasks removeAll.
-	self start.
+	self start
 ]
 
 { #category : #public }
@@ -46,7 +46,7 @@ TKTCommonQueueWorkerPool >> ensureIsWorking [
 					((self workers reject: #isRunning thenCollect: #currentTaskExecution)
 						reject: #isNil).
 			(workers reject: #isRunning)
-				do: [ :w | 
+				do: [ :w |
 					[ w stop ]
 						on: Error
 						do: [  ].
@@ -67,8 +67,7 @@ TKTCommonQueueWorkerPool >> initialize [
 	failedTasks := OrderedCollection new.
 	taskQueue := AtomicSharedQueue new.
 	mutex := Mutex new.
-	self name: 'Worker' , self identityHash asString.
-	
+	self name: 'Worker' , self identityHash asString
 ]
 
 { #category : #configuration }
@@ -149,8 +148,7 @@ TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 		ifTrue: [ ^ self ].
 	removing := free anyOne.
 	workers remove: removing.
-	removing stop.
-	
+	removing stop
 ]
 
 { #category : #'public - mutexed' }

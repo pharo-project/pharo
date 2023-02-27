@@ -16,30 +16,35 @@ Class {
 
 { #category : #actions }
 HaloSpec >> addHandleSelector [
+
 	^ addHandleSelector
 ]
 
 { #category : #accessing }
 HaloSpec >> color [
+
 	^ color
 ]
 
 { #category : #accessing }
 HaloSpec >> horizontalPlacement [
+
 	^ horizontalPlacement
 ]
 
 { #category : #setter }
 HaloSpec >> horizontalPlacement: hp verticalPlacement: vp color: col iconSymbol: is addHandleSelector: sel [
+
 	horizontalPlacement := hp.
 	verticalPlacement := vp.
-	color:= col.
+	color := col.
 	iconSymbol := is asSymbol.
 	addHandleSelector := sel
 ]
 
 { #category : #accessing }
 HaloSpec >> iconSymbol [
+
 	^ iconSymbol
 ]
 
@@ -47,7 +52,7 @@ HaloSpec >> iconSymbol [
 HaloSpec >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ' (';
 		print: addHandleSelector;
  		space;
@@ -57,5 +62,6 @@ HaloSpec >> printOn: aStream [
 
 { #category : #accessing }
 HaloSpec >> verticalPlacement [
+
 	^ verticalPlacement
 ]

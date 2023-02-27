@@ -22,7 +22,7 @@ OSEvent class >> for: aWindow [
 
 { #category : #visitor }
 OSEvent >> accept: aVisitor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'default actions' }
@@ -33,7 +33,7 @@ OSEvent >> defaultAction [
 { #category : #dispatching }
 OSEvent >> deliver [
 	"deliver an event to its handler(s)"
-	
+
 	^ window deliverEvent: self
 ]
 
@@ -49,17 +49,16 @@ OSEvent >> performDefaultAction [
 
 { #category : #printing }
 OSEvent >> printOn: aStream [
-	super printOn: aStream. 
-	window ifNotNil: [ 
-		aStream 
-			nextPutAll:  ' (WindowId='; 
-			print: window windowId;  
+	super printOn: aStream.
+	window ifNotNil: [
+		aStream
+			nextPutAll:  ' (WindowId=';
+			print: window windowId;
 			nextPut:  $) ]
-
 ]
 
 { #category : #'default actions' }
-OSEvent >> suppressDefaultAction [ 
+OSEvent >> suppressDefaultAction [
 	suppressDefaultAction  := true
 ]
 
@@ -69,6 +68,6 @@ OSEvent >> window [
 ]
 
 { #category : #accessing }
-OSEvent >> window: anOSWindow [ 
+OSEvent >> window: anOSWindow [
 	window := anOSWindow
 ]

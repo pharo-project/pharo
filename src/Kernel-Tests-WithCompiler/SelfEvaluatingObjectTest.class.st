@@ -37,7 +37,7 @@ SelfEvaluatingObjectTest >> testObjects [
 
 	self assert: Object isSelfEvaluating.
 	self assert: Object new isSelfEvaluating not.
-	
+
 	self assert: {Float infinity . Float nan. Float infinity negated} isSelfEvaluating.
 
 	self assert: (Array with: 10) isSelfEvaluating.
@@ -50,6 +50,5 @@ SelfEvaluatingObjectTest >> testObjects [
 
 	self assert: (1 to: 10) isSelfEvaluating.
 	self assert: (1->2) isSelfEvaluating.
-	self assert: Color red isSelfEvaluating.
-
+	self assert: Color red isSelfEvaluating
 ]

@@ -16,24 +16,22 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : #testing }
 SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	super canBeExecutedInContext: aSourceCodeContext.
-	
-	^aSourceCodeContext isMethodSelected not 
+		^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : #execution }
 SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
-	
+
 	aSourceCodeContext showVariableNamed: tempName
 ]
 
 { #category : #execution }
 SycExtractTempCommand >> asRefactorings [
 
-	^ {RBExtractToTemporaryRefactoring
+	^ {RBExtractToTemporaryTransformation
 		  extract: sourceNode sourceInterval
 		  to: tempName
 		  from: method selector
@@ -41,8 +39,8 @@ SycExtractTempCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycExtractTempCommand >> defaultMenuIconName [ 
-	^ ##smallUpdateIcon
+SycExtractTempCommand >> defaultMenuIconName [
+	^ ##smallUpdate
 ]
 
 { #category : #accessing }
@@ -53,9 +51,9 @@ SycExtractTempCommand >> defaultMenuItemName [
 { #category : #execution }
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
-	
-	tempName := UIManager default 
-		request: 'New temp name' 
+
+	tempName := UIManager default
+		request: 'New temp name'
 		initialAnswer: ''
 		title: 'Extract code to temp variable'.
 	tempName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]

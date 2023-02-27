@@ -20,7 +20,7 @@ Class {
 		'sourceCode',
 		'protocols'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -49,7 +49,7 @@ RBAddMethodTransformation >> preconditions [
 	| rbMethod |
 	rbMethod := self parserClass
 		parseMethod: sourceCode
-		onError: [ :string :position | 
+		onError: [ :string :position |
 			^ RBCondition
 				withBlock: [ self
 						refactoringError: 'The content of this method cannot be parsed.' ] ].
@@ -77,7 +77,7 @@ RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocols: s
 ]
 
 { #category : #printing }
-RBAddMethodTransformation >> storeOn: aStream [ 
+RBAddMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

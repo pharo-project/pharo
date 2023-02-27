@@ -20,11 +20,9 @@ HiExamplesTest class >> isAbstract [
 { #category : #tests }
 HiExamplesTest class >> testSelectors [
 
-	^ self classWithExamplesToTest classSide methods 
+	^ self classWithExamplesToTest classSide methods
 			select: [ :each |  (each selector beginsWith: 'example') and: [ each numArgs = 0 ] ]
 			thenCollect: [ :each | each selector ]
-	
-
 ]
 
 { #category : #tests }
@@ -38,8 +36,8 @@ HiExamplesTest >> performTest [
 ]
 
 { #category : #running }
-HiExamplesTest >> tearDown [ 
-	
+HiExamplesTest >> tearDown [
+
 	example ifNotNil: [ example close ].
 	super tearDown
 ]

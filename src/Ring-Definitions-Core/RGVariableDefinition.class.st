@@ -7,6 +7,12 @@ Class {
 	#category : #'Ring-Definitions-Core-Base'
 }
 
+{ #category : #testing }
+RGVariableDefinition class >> isAbstract [
+
+	^ self == RGVariableDefinition
+]
+
 { #category : #comparing }
 RGVariableDefinition >> = aRGVariableDefinition [
 	"This variable look for equality of the key properties of the receiver"
@@ -18,13 +24,13 @@ RGVariableDefinition >> = aRGVariableDefinition [
 { #category : #accessing }
 RGVariableDefinition >> environment [
 
-	^ self parent environment 
+	^ self parent environment
 ]
 
 { #category : #accessing }
 RGVariableDefinition >> fullName [
 	"Keeps a unique description for the receiver. As annotation to avoid converting each time is invoked"
-	
+
 	^self annotationNamed: self class fullNameKey
 		ifAbsentPut:[ (self parentName, '->', self name) asSymbol ]
 ]

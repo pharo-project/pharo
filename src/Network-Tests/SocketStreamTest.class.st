@@ -13,8 +13,8 @@ Class {
 
 { #category : #coverage }
 SocketStreamTest >> classToBeTested [
-	
-	^ SocketStream 
+
+	^ SocketStream
 ]
 
 { #category : #running }
@@ -34,15 +34,14 @@ SocketStreamTest >> setUp [
 	] ensure:[listener destroy].
 
 	clientStream := SocketStream on: clientSocket.
-	serverStream := SocketStream on: serverSocket.
-
+	serverStream := SocketStream on: serverSocket
 ]
 
 { #category : #running }
 SocketStreamTest >> tearDown [
 	clientStream ifNotNil:[clientStream destroy].
 	serverStream ifNotNil:[serverStream destroy].
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'stream protocol' }
@@ -52,9 +51,8 @@ SocketStreamTest >> testNextIntoClose [
 	clientStream nextPutAll:'A line of text'; flush.
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
-	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1) 
+	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1)
 		equals: 'A line of text'
-
 ]
 
 { #category : #'stream protocol' }
@@ -67,7 +65,6 @@ SocketStreamTest >> testNextIntoCloseNonSignaling [
 	clientStream close] fork.
 	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1)
 		equals: 'A line of text'
-
 ]
 
 { #category : #'stream protocol' }
@@ -100,7 +97,6 @@ SocketStreamTest >> testUpToAfterCloseSignaling [
 	clientStream nextPutAll:'A line of text'.
 	clientStream close.
 	self should: [serverStream upTo: Character cr] raise: ConnectionClosed
-
 ]
 
 { #category : #'stream protocol' }
@@ -112,7 +108,6 @@ SocketStreamTest >> testUpToAll [
 	[(Delay forSeconds: 1) wait.
 	clientStream nextPutAll: String crlf; flush] fork.
 	self assert: (serverStream upToAll: String crlf) equals: 'with more text'
-
 ]
 
 { #category : #'stream protocol' }
@@ -134,7 +129,6 @@ SocketStreamTest >> testUpToAllAfterCloseSignaling [
 	clientStream nextPutAll:'A line of text'.
 	clientStream close.
 	self should: [serverStream upToAll: String crlf] raise: ConnectionClosed
-
 ]
 
 { #category : #'stream protocol' }
@@ -152,7 +146,6 @@ SocketStreamTest >> testUpToAllTimeout [
 	clientStream nextPutAll: 'A line of text'.
 	serverStream timeout: 1.
 	self should: [ serverStream upToAll: String crlf ] raise: ConnectionTimedOut
-
 ]
 
 { #category : #'stream protocol' }
@@ -162,9 +155,8 @@ SocketStreamTest >> testUpToEndClose [
 	clientStream nextPutAll:'A line of text'; flush.
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
-	self assert: (serverStream upToEnd) 
+	self assert: (serverStream upToEnd)
 		equals: 'A line of text'
-
 ]
 
 { #category : #'stream protocol' }
@@ -177,7 +169,6 @@ SocketStreamTest >> testUpToEndCloseNonSignaling [
 	clientStream close] fork.
 	self assert: (serverStream upToEnd)
 		equals: 'A line of text'
-
 ]
 
 { #category : #'stream protocol' }
@@ -213,7 +204,7 @@ SocketStreamTest >> testUpToWithByteArray [
 	"Tests correct behavior of #upTo:"
 
 	|byteArray|
-	
+
 	byteArray := ('A line of text', String cr, 'with more text') asByteArray.
 	clientStream binary.
 	serverStream binary.

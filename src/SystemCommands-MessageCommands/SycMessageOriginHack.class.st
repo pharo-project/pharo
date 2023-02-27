@@ -17,8 +17,8 @@ Class {
 { #category : #'instance creation' }
 SycMessageOriginHack class >> of: aMessageDescription [
 
-	^self new 
-		message: aMessageDescription 
+	^self new
+		message: aMessageDescription
 ]
 
 { #category : #'hacked methods' }
@@ -42,7 +42,17 @@ SycMessageOriginHack >> name [
 ]
 
 { #category : #'hacked methods' }
-SycMessageOriginHack >> parseTreeFor: aSelector [
+SycMessageOriginHack >> parseTreeFor: aSymbol [
+
+	self
+		deprecated: 'Use parseTreeForSelector: instead'
+		transformWith: '`@receiver parseTreeFor: `@argument'
+			-> '`@receiver parseTreeForSelector: `@argument'.
+	^ self parseTreeForSelector: aSymbol
+]
+
+{ #category : #'hacked methods' }
+SycMessageOriginHack >> parseTreeForSelector: aSelector [
 	^message
 ]
 

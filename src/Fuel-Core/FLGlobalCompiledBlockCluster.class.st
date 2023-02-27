@@ -9,7 +9,7 @@ See FLBlockClosureSerializationTest>>testBlockClosureChangeDifferentBytecodes an
 Class {
 	#name : #FLGlobalCompiledBlockCluster,
 	#superclass : #FLGlobalCompiledCodeCluster,
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #'serialize/materialize' }
@@ -46,5 +46,4 @@ FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncode
 	anEncoder
 		encodeString: method selector;
 		encodeUint8: literalIndex
-
 ]

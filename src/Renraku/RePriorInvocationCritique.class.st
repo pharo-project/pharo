@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 RePriorInvocationCritique >> description [
 
-	^ 'In order for #', targetMethodName, ' to work you have to call ', condition beforeDescriptionString, ' before' 
+	^ 'In order for #', targetMethodName, ' to work you have to call ', condition beforeDescriptionString, ' before'
 ]
 
 { #category : #accessing }

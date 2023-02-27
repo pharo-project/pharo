@@ -10,7 +10,7 @@ Class {
 { #category : #analyzing }
 FLPrimitiveCluster class >> clusterBucketIn: aClusterization [
 
-	^aClusterization primitivesBucket 
+	^aClusterization primitivesBucket
 ]
 
 { #category : #analyzing }

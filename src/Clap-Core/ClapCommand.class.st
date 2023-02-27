@@ -52,7 +52,6 @@ ClapCommand class >> forHelp [
 			topic
 				ifNil: [ match context exitFailure: 'Unknown subcommand: ' , query word ]
 				ifNotNil: [ doc explain: topic ] ]
-
 ]
 
 { #category : #adding }
@@ -84,7 +83,7 @@ ClapCommand >> flags [
 ClapCommand >> initialize [
 	super initialize.
 	subcommands := OrderedCollection new.
-	flags := OrderedCollection new.
+	flags := OrderedCollection new
 ]
 
 { #category : #enumerating }

@@ -17,19 +17,17 @@ FTHeaderColumnCellMorph >> column [
 
 { #category : #accessing }
 FTHeaderColumnCellMorph >> column: aColumn [
-	column  := aColumn 
+	column  := aColumn
 ]
 
 { #category : #'event handling' }
 FTHeaderColumnCellMorph >> handlesMouseDown: event [
 	^ true
-
 ]
 
 { #category : #'event handling' }
 FTHeaderColumnCellMorph >> handlesMouseOver: event [
 	^ false
-
 ]
 
 { #category : #'event handling' }

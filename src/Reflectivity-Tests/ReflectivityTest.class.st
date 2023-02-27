@@ -13,14 +13,14 @@ Class {
 
 { #category : #tagging }
 ReflectivityTest >> increase [
-	count := count + 1.
+	count := count + 1
 ]
 
 { #category : #running }
 ReflectivityTest >> setUp [
 	super setUp.
 	count := 0.
-	cache := ASTCache default.
+	cache := ASTCache default
 ]
 
 { #category : #tagging }
@@ -41,7 +41,7 @@ ReflectivityTest >> tearDown [
 	count := 0.
 	(ReflectivityExamples>>#exampleWithArg:) recompile.
 	ASTCache default: cache.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -57,7 +57,7 @@ ReflectivityTest >> testDisableLink [
 	self assert: count equals: 1.
 	link disable.
 	self assert: (instance exampleWithArg: 3) equals: 5.
-	self assert: count equals: 1.
+	self assert: count equals: 1
 ]
 
 { #category : #tests }
@@ -78,8 +78,7 @@ ReflectivityTest >> testDisableThenCleanASTCacheThenEnableLink [
 	ASTCache default reset.
 	link enable.
 	self assert: (instance exampleWithArg: 3) equals: 5.
-	self assert: count equals: 2.
-
+	self assert: count equals: 2
 ]
 
 { #category : #tests }
@@ -99,8 +98,7 @@ ReflectivityTest >> testDisableThenEnableLink [
 	link enable.
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 2.
-	self assert: link condition isNil.
-
+	self assert: link condition isNil
 ]
 
 { #category : #tests }
@@ -122,7 +120,6 @@ ReflectivityTest >> testDisableThenEnableLinkWithCondition [
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 0.
 	self assert: link condition equals: false
-
 ]
 
 { #category : #tests }

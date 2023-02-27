@@ -21,5 +21,5 @@ ClySwitchToFlatQueryResultCommand >> execute [
 
 { #category : #testing }
 ClySwitchToFlatQueryResultCommand >> isAppliedToBrowser [
-	^browser showsFlatResult 
+	^browser showsFlatResult
 ]

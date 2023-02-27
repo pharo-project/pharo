@@ -11,19 +11,19 @@ Trait {
 { #category : #requirements }
 TAsStringCommaAndDelimiterSequenceableTest >> empty [
 
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #requirements }
 TAsStringCommaAndDelimiterSequenceableTest >> nonEmpty [
 
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #requirements }
 TAsStringCommaAndDelimiterSequenceableTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ self explicitRequirement 
+	^ self explicitRequirement
 ]
 
 { #category : #'tests - fixture' }
@@ -41,8 +41,6 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringEmpty [
 
 	self assert: self empty asCommaString = ''.
 	self assert: self empty asCommaStringAnd = ''
-	
-
 ]
 
 { #category : #'tests - comma and delimiter' }
@@ -54,7 +52,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringMore [
 	| result resultAnd index allElementsAsString |
 	result:= self nonEmpty asCommaString .
 	resultAnd:= self nonEmpty asCommaStringAnd .
- 
+
 	index := 1.
 	(result findBetweenSubstrings: ',' )do:
 		[:each |
@@ -63,11 +61,11 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringMore [
 			ifFalse: [self assert: each= (' ',(self nonEmpty at:index) asString)].
 		index:=index+1
 		].
-	
+
 	"verifying esultAnd :"
 	allElementsAsString:=(resultAnd findBetweenSubstrings: ',' ).
 	1 to: allElementsAsString size do:
-		[:i | 
+		[:i |
 		i<(allElementsAsString size )
 			ifTrue: [
 			i = 1
@@ -75,25 +73,24 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringMore [
 				ifFalse:[self assert: (allElementsAsString at:i)=(' ',(self nonEmpty at:i) asString)]
 				].
 		i=(allElementsAsString size)
-			ifTrue:[ 
+			ifTrue:[
 			i = 1
 				ifTrue:[self assert: (allElementsAsString at:i)=( (self nonEmpty at:i ) asString ,' and ', (self nonEmpty at: ( i + 1) ) asString )]
 				ifFalse:[self assert: (allElementsAsString at:i)=( ' ' , (self nonEmpty at:i ) asString ,' and ', (self nonEmpty at: ( i + 1) ) asString )]
 				].
-		
-		
-			].
+
+
+			]
 ]
 
 { #category : #'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringOne [
-	
+
 	"self assert: self oneItemCol asCommaString = '1'.
 	self assert: self oneItemCol asCommaStringAnd = '1'."
 
 	self assert: self nonEmpty1Element asCommaString = (self nonEmpty1Element first asString).
 	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
-	
 ]
 
 { #category : #'tests - as string comma delimiter sequenceable' }
@@ -112,7 +109,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastEmpty [
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastMore [
 
 	| delim multiItemStream result last allElementsAsString |
-	
+
 	delim := ', '.
 	last := ' and '.
 	result:=''.
@@ -121,28 +118,24 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastMore [
 	result := multiItemStream contents.
 	allElementsAsString:=(result findBetweenSubstrings: delim ).
 	1 to: allElementsAsString size do:
-		[:i | 
+		[:i |
 		i<(allElementsAsString size-1 )
 			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
 		i=(allElementsAsString size-1)
 			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
 		i=(allElementsAsString size)
 			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
-
 ]
 
 { #category : #'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastOne [
 
-	| delim oneItemStream result |	
+	| delim oneItemStream result |
 	delim := ', '.
 	result:=''.
 	oneItemStream := ReadWriteStream on: result.
 	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
 	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
-	
-
-	
 ]
 
 { #category : #'tests - comma and delimiter' }
@@ -170,7 +163,4 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterOne [
 	oneItemStream := ReadWriteStream on: result.
 	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
 	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
-	
-
-	
 ]

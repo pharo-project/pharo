@@ -10,10 +10,9 @@ Class {
 { #category : #running }
 RGMethodDefinitionTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ 
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		Author useAuthor: self class name asString during: [ super runCase ]
 	]
-
 ]
 
 { #category : #running }
@@ -21,7 +20,7 @@ RGMethodDefinitionTest >> tearDown [
 
 	self class removeSelectorSilently: #foo.
 	self class removeProtocol: 'test'.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #'test - accessing source' }
@@ -31,7 +30,7 @@ RGMethodDefinitionTest >> testASTExistingMethod [
 	| method |
 	method := (RGMethodDefinition class >> #class:selector:) asRingDefinition.
 	self assert: method isActive.
-	self assert: method ast equals: method compiledMethod ast.
+	self assert: method ast equals: method compiledMethod ast
 ]
 
 { #category : #'test - accessing source' }
@@ -42,7 +41,7 @@ RGMethodDefinitionTest >> testASTNonExistingMethodWithNoSource [
 	newClass := RGClassDefinition named: #RGMethodDefinition.
 	newMethod := (RGMethodDefinition named: #foo) parent: newClass.
 	self assert: newMethod isPassive.
-	self assert: newMethod ast isNil.
+	self assert: newMethod ast isNil
 ]
 
 { #category : #'test - accessing source' }
@@ -57,7 +56,6 @@ RGMethodDefinitionTest >> testASTNonExistingMethodWithSource [
 	newMethod sourceCode: source.
 	self assert: newMethod isPassive.
 	self assert: newMethod ast equals: (RBParser parseMethod: source)
-
 ]
 
 { #category : #'test - accessing source' }
@@ -67,7 +65,7 @@ RGMethodDefinitionTest >> testArgumentNamesExistingMethod [
 	| method |
 	method := (RGMethodDefinition class >> #class:selector:) asRingDefinition.
 	self assert: method isActive.
-	self assertCollection: method argumentNames  hasSameElements: #(#aRGBehaviorDefinition #aString) 
+	self assertCollection: method argumentNames  hasSameElements: #(#aRGBehaviorDefinition #aString)
 ]
 
 { #category : #'test - accessing source' }
@@ -78,8 +76,7 @@ RGMethodDefinitionTest >> testArgumentNamesNonExistingMethodWithNoSource [
 	newClass := RGClassDefinition named: #RGMethodDefinition.
 	newMethod := (RGMethodDefinition named: #foo:) parent: newClass.
 	self assert: newMethod isPassive.
-	self assert: newMethod argumentNames isNil.
-
+	self assert: newMethod argumentNames isNil
 ]
 
 { #category : #'test - accessing source' }
@@ -93,8 +90,7 @@ RGMethodDefinitionTest >> testArgumentNamesNonExistingMethodWithSource [
 	newMethod := (RGMethodDefinition named: #class:selector:) parent: newClass.
 	newMethod sourceCode: source.
 	self assert: newMethod isPassive.
-	self assertCollection: newMethod argumentNames hasSameElements: #( #aClass #aSelector).
-
+	self assertCollection: newMethod argumentNames hasSameElements: #( #aClass #aSelector)
 ]
 
 { #category : #testing }
@@ -309,18 +305,18 @@ RGMethodDefinitionTest >> testExtensionMethod [
 	self assert: (newMethod protocol isNil).
 	self assert: (newMethod isExtension).
 
-	newMethod:= (Collection >> #+) asRingDefinition.	
-	self assert: (newMethod isMethod).  
+	newMethod:= (Collection >> #+) asRingDefinition.
+	self assert: (newMethod isMethod).
 	self assert: newMethod protocol equals: '*Collections-arithmetic'.
 	self assert: (newMethod isExtension).
-	
+
 	newPackage := RGPackageDefinition named: #Package.
 	newPackageExt := RGPackageDefinition named:  #PackageExtensions.
 	newClass := RGClassDefinition named: #Class.
 	newMethod := (RGMethodDefinition named: #foo) parent: newClass.
 	newPackage addClass: newClass.
 	newMethod package: newPackageExt.
-	self assert: (newMethod isExtension).
+	self assert: (newMethod isExtension)
 ]
 
 { #category : #'test - accessing source' }
@@ -330,7 +326,7 @@ RGMethodDefinitionTest >> testIsAbstractExistingMethod [
 	| method |
 	method := (RGMethodDefinition class >> #class:selector:) asRingDefinition.
 	self assert: method isActive.
-	self deny: method isAbstract.
+	self deny: method isAbstract
 ]
 
 { #category : #'test - accessing source' }
@@ -341,8 +337,7 @@ RGMethodDefinitionTest >> testIsAbstractNonExistingMethod [
 	newClass := RGClassDefinition named: #RGMethodDefinition.
 	newMethod := (RGMethodDefinition named: #foo:) parent: newClass.
 	self assert: newMethod isPassive.
-	self deny: newMethod isAbstract.
-
+	self deny: newMethod isAbstract
 ]
 
 { #category : #'test - accessing source' }
@@ -352,7 +347,7 @@ RGMethodDefinitionTest >> testMessagesExistingMethod [
 	| method |
 	method := (RGMethodDefinition class >> #class:selector:) asRingDefinition.
 	self assert: method isActive.
-	self assert: method messages equals: method compiledMethod messages.
+	self assert: method messages equals: method compiledMethod messages
 ]
 
 { #category : #'test - accessing source' }
@@ -364,7 +359,6 @@ RGMethodDefinitionTest >> testMessagesNonExistingMethodWithNoSource [
 	newMethod := (RGMethodDefinition named: #class:selector:) parent: newClass.
 	self assert: newMethod isPassive.
 	self assert: newMethod messages equals: #()
-
 ]
 
 { #category : #'test - accessing source' }
@@ -378,8 +372,7 @@ RGMethodDefinitionTest >> testMessagesNonExistingMethodWithSource [
 	newMethod := (RGMethodDefinition named: #class:selector:) parent: newClass.
 	newMethod sourceCode: source.
 	self assert: newMethod isPassive.
-	self assertCollection: newMethod messages hasSameElements: #( #new #yourself).
-
+	self assertCollection: newMethod messages hasSameElements: #( #new #yourself)
 ]
 
 { #category : #testing }
@@ -448,8 +441,7 @@ RGMethodDefinitionTest >> testSorting [
 	rgMethod1 := RGMethodDefinition realClass: RGInstanceVariableDefinition selector: #isInstanceVariable.
 	rgMethod2 := RGMethodDefinition realClass: RGElementDefinition selector: #isMetaSide.
 	self assert: rgMethod2 <= rgMethod1.
-	
+
 	rgMethod1 := RGMethodDefinition realClass: RGElementDefinition selector: #parentName.
-	self assert: rgMethod2 <= rgMethod1. 
-	
+	self assert: rgMethod2 <= rgMethod1
 ]

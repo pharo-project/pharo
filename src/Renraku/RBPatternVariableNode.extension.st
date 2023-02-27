@@ -1,6 +1,6 @@
 Extension { #name : #RBPatternVariableNode }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBPatternVariableNode >> pattern [
 
 	^ self name

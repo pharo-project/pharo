@@ -17,12 +17,12 @@ Class {
 
 { #category : #'building groups' }
 ClyClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'system changes' }
 ClyClassGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aPackageScope [
-	aPackageScope packagesDo: [ :each | 
+	aPackageScope packagesDo: [ :each |
 		(aSystemAnnouncement affectsPackage: each) ifTrue: [^true]].
 	^false
 ]

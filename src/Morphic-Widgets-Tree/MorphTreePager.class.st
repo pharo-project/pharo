@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-MorphTreePager class >> isDeprecated [ 	
+MorphTreePager class >> isDeprecated [
 	^ true
 ]

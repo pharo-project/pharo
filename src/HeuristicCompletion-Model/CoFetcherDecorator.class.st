@@ -20,13 +20,20 @@ CoFetcherDecorator class >> isAbstract [
 
 { #category : #accessing }
 CoFetcherDecorator >> decoree: anotherFetcher [
-	
+
 	decoree := anotherFetcher
+]
+
+{ #category : #accessing }
+CoFetcherDecorator >> filter: aFilter [
+
+	super filter: aFilter.
+	decoree filter: aFilter
 ]
 
 { #category : #resetting }
 CoFetcherDecorator >> reset [
 
 	super reset.
-	decoree reset.
+	decoree reset
 ]

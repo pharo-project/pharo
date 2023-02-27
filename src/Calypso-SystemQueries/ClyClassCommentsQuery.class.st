@@ -27,7 +27,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyClassCommentsQuery class >> filteredBy: aStringPattern [
-	^self new 
+	^self new
 		pattern: aStringPattern
 ]
 
@@ -57,9 +57,9 @@ ClyClassCommentsQuery class >> withString: aString caseSensitive: aBool [
 { #category : #'instance creation' }
 ClyClassCommentsQuery class >> withString: aString caseSensitive: aBool from: aScope [
 
-	^self 
+	^self
 		filteredBy: (ClySubstringPattern with: aString caseSensitive: aBool)
-		from: aScope 
+		from: aScope
 ]
 
 { #category : #'instance creation' }
@@ -80,11 +80,11 @@ ClyClassCommentsQuery >> = anObject [
 ClyClassCommentsQuery >> buildResult: aQueryResult [
 	| classComments |
 	classComments := OrderedCollection new.
-	
-	scope classesDo: [ :each | 
+
+	scope classesDo: [ :each |
 		(self selectsClass: each) ifTrue: [
 			classComments add: (ClyClassComment of: each)]].
-	
+
 	aQueryResult fillWith: classComments
 ]
 

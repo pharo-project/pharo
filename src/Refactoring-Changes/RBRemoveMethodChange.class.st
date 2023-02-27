@@ -8,11 +8,12 @@ Class {
 	#instVars : [
 		'selector'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Methods'
 }
 
 { #category : #'instance creation' }
 RBRemoveMethodChange class >> remove: aSymbol from: aClass [
+
 	^ self new
 		changeClass: aClass;
 		selector: aSymbol;
@@ -21,6 +22,7 @@ RBRemoveMethodChange class >> remove: aSymbol from: aClass [
 
 { #category : #comparing }
 RBRemoveMethodChange >> = aRemoveMethodChange [
+
 	super = aRemoveMethodChange
 		ifFalse: [ ^ false ].
 	^ selector = aRemoveMethodChange selector
@@ -28,11 +30,15 @@ RBRemoveMethodChange >> = aRemoveMethodChange [
 
 { #category : #converting }
 RBRemoveMethodChange >> asUndoOperation [
-	^ changeFactory addMethodSource: (self methodSourceFor: selector) in: self changeClass
+
+	^ changeFactory
+		  addMethodSource: (self methodSourceFor: selector)
+		  in: self changeClass
 ]
 
 { #category : #printing }
 RBRemoveMethodChange >> changeString [
+
 	^ 'Remove <1s>>>#<2s>'
 		expandMacrosWith: self displayClassName
 		with: selector
@@ -40,16 +46,19 @@ RBRemoveMethodChange >> changeString [
 
 { #category : #comparing }
 RBRemoveMethodChange >> hash [
+
 	^ selector hash
 ]
 
 { #category : #private }
 RBRemoveMethodChange >> primitiveExecute [
+
 	^ self changeClass removeSelector: selector
 ]
 
 { #category : #printing }
-RBRemoveMethodChange >> printOn: aStream [ 
+RBRemoveMethodChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeSelector: ';
@@ -59,10 +68,12 @@ RBRemoveMethodChange >> printOn: aStream [
 
 { #category : #private }
 RBRemoveMethodChange >> selector [
+
 	^ selector
 ]
 
 { #category : #initialization }
 RBRemoveMethodChange >> selector: aSymbol [
+
 	selector := aSymbol
 ]

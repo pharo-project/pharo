@@ -24,7 +24,7 @@ Class {
 		'variableName',
 		'value'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -83,7 +83,7 @@ RBRemoveAssignmentTransformation >> privateTransform [
 		ifTrue: [ assignments first ]
 		ifFalse: [ valueNode := self parserClass parseExpression: value.
 			assignments
-				detectMax: [ :node | 
+				detectMax: [ :node |
 					((node allChildren collect: [:each | each class])
 						intersection: (valueNode allChildren collect: [:each | each class])) size ] ].
 	nodeToRemove parent removeNode: nodeToRemove.
@@ -91,7 +91,7 @@ RBRemoveAssignmentTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBRemoveAssignmentTransformation >> storeOn: aStream [ 
+RBRemoveAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

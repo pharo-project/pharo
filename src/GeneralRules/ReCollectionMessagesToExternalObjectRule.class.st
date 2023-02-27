@@ -10,18 +10,20 @@ Class {
 { #category : #accessing }
 ReCollectionMessagesToExternalObjectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'CollectionMessagesToExternalObjectRule'
 ]
 
 { #category : #hooks }
 ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingDict [
-	| collectionOwner |
-	((mappingDict at: '`@collectionGetter:') beginsWith: 'as') ifTrue: [ ^ false ].
+	| collectionGetter collectionOwner |
+	collectionGetter := mappingDict at: '`@collectionGetter:'.
+	"Check selectors that assumes unowned result"
+	collectionGetter = 'copy' ifTrue: [ ^ false ].
+	(collectionGetter beginsWith: 'as') ifTrue: [ ^ false ].
 	collectionOwner := mappingDict at: (RBPatternVariableNode named: '`@collectionOwner').
 	 collectionOwner isVariable ifFalse: [ ^ true ].
-	^ self isNotSpecialVariable: collectionOwner.
-	
+	^ self isNotSpecialVariable: collectionOwner
 ]
 
 { #category : #accessing }
@@ -43,10 +45,9 @@ ReCollectionMessagesToExternalObjectRule >> initialize [
 { #category : #helpers }
 ReCollectionMessagesToExternalObjectRule >> isNotSpecialVariable: variableNode [
 
-	variableNode isReservedVariable ifTrue: [ ^false ]. 
+	variableNode isReservedVariable ifTrue: [ ^false ].
 	(Smalltalk globals includesKey: variableNode name asSymbol) ifTrue: [ ^ false ].
 	^ true
-	
 ]
 
 { #category : #accessing }

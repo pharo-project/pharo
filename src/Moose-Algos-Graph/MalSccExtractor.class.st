@@ -26,5 +26,4 @@ MalSccExtractor >> initialize [
 
 	super initialize.
 	circuits := Set new.
-
 ]

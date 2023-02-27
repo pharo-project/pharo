@@ -4,7 +4,6 @@ I am an strategy to implement different backends for FFI.
 Class {
 	#name : #FFIBackend,
 	#superclass : #Object,
-	#type : #bytes,
 	#classVars : [
 		'Current'
 	],
@@ -25,7 +24,7 @@ FFIBackend class >> detectFFIBackend [
 		ifNone: [ ^ NullFFIBackend ]) new
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFIBackend class >> initialize [
 
 	SessionManager default
@@ -39,18 +38,18 @@ FFIBackend class >> isAvailable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFIBackend class >> reset [
 
-	Current := nil.
+	Current := nil
 ]
 
-{ #category : #accessing }
+{ #category : #'system startup' }
 FFIBackend class >> startUp: isImageStarting [
-	
+
 	isImageStarting ifFalse: [ ^ self ].
-	
-	Current := nil.
+
+	Current := nil
 ]
 
 { #category : #'instance creation' }
@@ -78,7 +77,7 @@ FFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: aBoo
 ]
 
 { #category : #'instance creation' }
-FFIBackend >> loadSymbol: moduleSymbol module: module [ 
+FFIBackend >> loadSymbol: moduleSymbol module: module [
 
 	^ self subclassResponsibility
 ]

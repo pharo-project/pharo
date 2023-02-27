@@ -27,8 +27,13 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
+{ #category : #testing }
+SycAddMessageArgumentCommand >> canEditName [
+	^ false
+]
+
 { #category : #requesting }
-SycAddMessageArgumentCommand >> canRemoveArgs [ 
+SycAddMessageArgumentCommand >> canRemoveArgs [
 	^ false
 ]
 
@@ -48,7 +53,6 @@ SycAddMessageArgumentCommand >> createRefactoring [
 { #category : #accessing }
 SycAddMessageArgumentCommand >> defaultMenuIconName [
 	^#smallAdd
-
 ]
 
 { #category : #accessing }
@@ -69,8 +73,8 @@ SycAddMessageArgumentCommand >> newSelector: anObject [
 { #category : #execution }
 SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	newSelector := self requestNewMessageIn: aToolContext.
+
+	newSelector := self requestNewMessageIn: aToolContext
 ]
 
 { #category : #execution }

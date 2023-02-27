@@ -33,9 +33,8 @@ OSPlatform class >> currentVersion [
 { #category : #private }
 OSPlatform class >> determineActivePlatform [
 	"Look for the matching platform class"
-	^ self allSubclasses 
-		detect: [ :any | any isActivePlatform ].
-
+	^ self allSubclasses
+		detect: [ :any | any isActivePlatform ]
 ]
 
 { #category : #examples }
@@ -50,8 +49,8 @@ OSPlatform class >> initialize [
 
 	SessionManager default
 		registerSystemClassNamed: self name
-		atPriority: 50.	
-	self startUp: true.
+		atPriority: 50.
+	self startUp: true
 ]
 
 { #category : #testing }
@@ -63,16 +62,15 @@ OSPlatform class >> isActivePlatform [
 { #category : #'system startup' }
 OSPlatform class >> shutDown: isImageQuitting [
 	"The system is going down"
-	Current ifNotNil: [ Current shutDown: isImageQuitting ].
-
+	Current ifNotNil: [ Current shutDown: isImageQuitting ]
 ]
 
 { #category : #'system startup' }
 OSPlatform class >> startUp: isImageStarting [
 	"Determine the current platform."
-	
+
 	isImageStarting ifFalse: [  ^ self ].
-	
+
 	Current := self determineActivePlatform new.
 	Current startUp: isImageStarting
 ]
@@ -80,7 +78,7 @@ OSPlatform class >> startUp: isImageStarting [
 { #category : #visiting }
 OSPlatform >> accept: aVisitor [
 
-	self subclassResponsibility	
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -97,8 +95,8 @@ OSPlatform >> currentWorkingDirectoryPath [
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteArray [
 	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
-	
-	^ self primitiveFailed 
+
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
@@ -110,11 +108,10 @@ OSPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryRawPath [
-	"This method calls the method getPwdViaFFI with argument of a buffer size. 
+	"This method calls the method getPwdViaFFI with argument of a buffer size.
 	By default it uses the defaultMaximumPathLength of each subclass as the buffer size.
 	We return a raw byte array that should be decoded with the proper encoding."
 	^ (self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength) asByteArray
-
 ]
 
 { #category : #accessing }
@@ -126,8 +123,7 @@ OSPlatform >> defaultEncoding [
 { #category : #accessing }
 OSPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation"
-	 ^self subclassResponsibility 
-
+	 ^self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -216,16 +212,14 @@ OSPlatform >> platformName [
 	^ self name
 ]
 
-{ #category : #initialize }
+{ #category : #'system startup' }
 OSPlatform >> shutDown: quitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
-
 ]
 
-{ #category : #initialize }
+{ #category : #'system startup' }
 OSPlatform >> startUp: resuming [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
-
 ]
 
 { #category : #accessing }
@@ -249,7 +243,7 @@ OSPlatform >> virtualKey: virtualKeyCode [
 ]
 
 { #category : #accessing }
-OSPlatform >> windowSystemName [			
+OSPlatform >> windowSystemName [
 	"Return the name of the window system currently being used for display."
 
 	^ Smalltalk vm getSystemAttribute: 1005

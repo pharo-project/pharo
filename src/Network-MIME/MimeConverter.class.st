@@ -15,11 +15,10 @@ Class {
 MimeConverter class >> forEncoding: encodingString [
 	"Answer a converter class for the given encoding or nil if unknown"
 	encodingString ifNil: [^nil].
-	^ encodingString asLowercase caseOf: 
+	^ encodingString asLowercase caseOf:
 		{ ['base64'] -> [Base64MimeConverter].
 		  ['quoted-printable'] -> [QuotedPrintableMimeConverter]}
-		otherwise: [].
-
+		otherwise: []
 ]
 
 { #category : #convenience }
@@ -29,9 +28,9 @@ MimeConverter class >> mimeDecode: aStringOrStream as: contentsClass [
 ]
 
 { #category : #convenience }
-MimeConverter class >> mimeDecode: aStringOrStream to: outStream [ 
+MimeConverter class >> mimeDecode: aStringOrStream to: outStream [
 	self new
-		mimeStream: (aStringOrStream isStream 
+		mimeStream: (aStringOrStream isStream
 				ifTrue: [ aStringOrStream ]
 				ifFalse: [ aStringOrStream readStream ]);
 		dataStream: outStream;
@@ -45,9 +44,9 @@ MimeConverter class >> mimeEncode: aCollectionOrStream [
 ]
 
 { #category : #convenience }
-MimeConverter class >> mimeEncode: aCollectionOrStream to: outStream [ 
+MimeConverter class >> mimeEncode: aCollectionOrStream to: outStream [
 	self new
-		dataStream: (aCollectionOrStream isStream 
+		dataStream: (aCollectionOrStream isStream
 				ifTrue: [ aCollectionOrStream ]
 				ifFalse: [ aCollectionOrStream readStream ]);
 		mimeStream: outStream;
@@ -64,14 +63,14 @@ MimeConverter >> dataStream: anObject [
 	dataStream := anObject
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 MimeConverter >> mimeDecode [
 	"Do conversion reading from mimeStream writing to dataStream"
 
 	self subclassResponsibility
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 MimeConverter >> mimeEncode [
 	"Do conversion reading from dataStream writing to mimeStream"
 

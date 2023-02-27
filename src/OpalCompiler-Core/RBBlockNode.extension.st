@@ -6,15 +6,22 @@ RBBlockNode >> bcToASTCache [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBBlockNode >> ir [
+RBBlockNode >> firstPcForNode: aNode [
 
-	^ self propertyAt: #ir ifAbsent: [ self parent methodOrBlockNode ir ]
+	^ self bcToASTCache firstBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> ir [
+	"if the ir is not yet set, generate the IR for the whole method, it fills the property here"
+	self propertyAt: #ir ifAbsent: [ self methodNode generateIR  ].
+	^self propertyAt: #ir
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir: aIRMethodNode [
 
-	^ self propertyAt: #ir put: aIRMethodNode.
+	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -22,17 +29,15 @@ RBBlockNode >> irInstruction [
 	^ self parent methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isClean [
 	"a block is clean if it has no escaping vars, has no non local return and its children are clean"
-	self isInlined ifTrue: [ ^ false ].
 	self scope hasEscapingVars ifTrue: [ ^ false ].
 	self hasBlockReturn ifTrue: [ ^ false ].
 	^ super isClean
-	
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isInlined [
 	parent isMessage ifFalse: [ ^ false ].
 	parent isInlineAndOr ifTrue: [^ true].
@@ -41,7 +46,7 @@ RBBlockNode >> isInlined [
 	^ self isInlinedLoop
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isInlinedLoop [
 
 	parent isMessage ifFalse: [ ^ false ].
@@ -54,16 +59,31 @@ RBBlockNode >> isInlinedLoop [
 	^ false
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> lastPcForNode: aNode [
+
+	^ self bcToASTCache lastBcOffsetForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> owningScope [
 
 	^ self scope ifNil: ["inlined" ^ parent owningScope]
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBBlockNode >> sourceNodeForPC: anInteger [ 
-	self methodNode ir.
-	(self hasProperty: #ir) ifTrue: [ "FullBlockClosure"
-		^ self bcToASTCache nodeForPC: anInteger].
-	^ self methodNode sourceNodeForPC: anInteger
+RBBlockNode >> pcsForNode: aNode [
+
+	^ self bcToASTCache pcsForNode: aNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> resetBcToASTCache [
+
+	bcToASTCache := nil
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBBlockNode >> sourceNodeForPC: anInteger [
+	^ self bcToASTCache nodeForPC: anInteger
 ]

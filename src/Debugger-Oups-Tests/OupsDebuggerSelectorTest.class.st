@@ -26,7 +26,7 @@ OupsDebuggerSelectorTest >> setUp [
 { #category : #running }
 OupsDebuggerSelectorTest >> tearDown [
 	debuggers
-		do: [ :dbg | 
+		do: [ :dbg |
 			(dbg tag isKindOf: DebugSession)
 				ifTrue: [ dbg tag terminate ] ].
 	super tearDown
@@ -41,15 +41,13 @@ OupsDebuggerSelectorTest >> testDebuggers [
 
 { #category : #'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testFirstUsableDebuggerForSession [
-	
+
 	debuggerSelector debuggers first beUnusable.
 	debuggerSelector debuggers second beUnusable.
 
 	self
 		assert: (debuggerSelector nextDebuggerForSession: self session)
 		identicalTo: debuggers third
-	
-	
 ]
 
 { #category : #'tests - debugging' }
@@ -77,32 +75,27 @@ OupsDebuggerSelectorTest >> testNextDebuggerForDebuggerFailure [
 	self
 		assert: (debuggerSelector nextDebuggerForSession: session)
 		identicalTo: debuggers second
-
-	
 ]
 
 { #category : #'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testNextDebuggerForSession [
 	"Upon a debugger failure, we call the nextDebuggerForSession: interface to get the next debugger"
-	
+
 	self
 		assert: (debuggerSelector nextDebuggerForSession: self session)
 		identicalTo: debuggers first.
-	
+
 	self
 		assert: (debuggerSelector nextDebuggerForSession: self session)
 		identicalTo: debuggers second.
-		
+
 	self
 		assert: (debuggerSelector nextDebuggerForSession: self session)
 		identicalTo: debuggers last.
-		
+
 	self
 		should: [ debuggerSelector nextDebuggerForSession: self session]
 		raise: CollectionIsEmpty
-		
-		
-
 ]
 
 { #category : #'tests -  algorithm' }
@@ -129,12 +122,12 @@ OupsDebuggerSelectorTest >> testOpenDebuggerError [
 	session exception: (OupsDebuggerFailure of: debuggers first on: session exception).
 	debuggers first beError.
 	debuggers second beError.
-	
+
 	"Because we are debugging a debugger error, we cannot raise another DebuggerFailure:
 	we want to find a debugger to debug the failing debugger."
-	debuggerSelector handlesDebuggerErrors: true.	
-	self shouldnt: [debuggerSelector openDebuggerForSession: session] raise: OupsDebuggerFailure.	
-		
+	debuggerSelector handlesDebuggerErrors: true.
+	self shouldnt: [debuggerSelector openDebuggerForSession: session] raise: OupsDebuggerFailure.
+
 	"Because the first debugger originated the debugger failure,
 	it is not considered in the algorithm anymore."
 	self assert: debuggers first tag equals: nil.
@@ -157,11 +150,11 @@ OupsDebuggerSelectorTest >> testOpenDebuggerWithErrorForSession [
 	| session |
 	session := self session.
 	debuggers first beError.
-	debuggers second beError.			
+	debuggers second beError.
 	debuggerSelector handlesDebuggerErrors: false.
 	debuggerSelector openDebuggerForSession: session.
 	self assert: debuggers first tag class identicalTo: Error.
-	self assert: debuggers second tag class identicalTo: Error.	
+	self assert: debuggers second tag class identicalTo: Error.
 	self assert: debuggers third tag identicalTo: session.
 	self assert: debuggerSelector handled.
 	self assert: debuggerSelector hasErrors.
@@ -185,11 +178,11 @@ OupsDebuggerSelectorTest >> testTryOpenWithSignalsError [
 	session := self session.
 	debuggers first beError.
 	debuggers second beError.
-	
+
 	self
 		shouldnt: [ debuggerSelector tryOpen: session with: debuggers first ]
 		raise: OupsDebuggerFailure.
-	self deny: debuggerSelector handled.	
+	self deny: debuggerSelector handled.
 
 	debuggerSelector handlesDebuggerErrors: true.
 	self

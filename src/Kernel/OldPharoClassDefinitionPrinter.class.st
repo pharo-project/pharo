@@ -1,3 +1,9 @@
+"
+This prints the class definition as it was till Pharo9: ST80 style, but with extensions/changes:
+- package: instead of category:
+- if no pool is imported, the pool import is not printed
+- support for traits
+"
 Class {
 	#name : #OldPharoClassDefinitionPrinter,
 	#superclass : #ClassDefinitionPrinter,
@@ -22,7 +28,7 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	self classVariablesOn: stream.
 	self poolOn: stream.
 	self packageOn: stream.
-	forClass superclass ifNil: [ 
+	forClass superclass ifNil: [
 		stream
 			nextPutAll: '.';
 			cr.
@@ -38,7 +44,7 @@ OldPharoClassDefinitionPrinter >> basicMetaclassDefinitionString [
 
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
 
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		  stream print: forClass.
 		  self instanceVariablesOn: stream ]
 ]
@@ -48,10 +54,10 @@ OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
 
-	forClass instanceSide name == #Trait ifTrue: [ 
+	forClass instanceSide name == #Trait ifTrue: [
 		^ self classDefinitionString ].
 
-	^ String streamContents: [ :s | 
+	^ String streamContents: [ :s |
 		  s
 			  nextPutAll: 'Trait named: ';
 			  nextPutAll: forClass name printString.
@@ -61,7 +67,7 @@ OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 ]
 
 { #category : #internal }
-OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [ 
+OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [
 
 	^ String streamContents: [:strm |
 			strm print: forClass.
@@ -72,17 +78,17 @@ OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [
 { #category : #'public API' }
 OldPharoClassDefinitionPrinter >> classDefinitionString [
 
-	^ forClass needsSlotClassDefinition 
+	^ forClass needsSlotClassDefinition
 		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
 		ifFalse: [ self basicClassDefinitionString ]
 ]
 
 { #category : #template }
-OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
+OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Object subclass: #MyClass' ; crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
+			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
+			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
 			s nextPutAll: 'classVariableNames: '''''; crtab.
 			s nextPutAll: 'package: ''', aString, '''' ]
 ]
@@ -110,10 +116,11 @@ OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aStri
 	^ self traitDefinitionTemplateInPackage: aString
 ]
 
-{ #category : #'public API' }
+{ #category : #'expanded double dispatch API' }
 OldPharoClassDefinitionPrinter >> expandedDefinitionString [
 	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
-	^ self definitionString 
+
+	^ self definitionString
 ]
 
 { #category : #'low-level elements' }
@@ -127,9 +134,9 @@ OldPharoClassDefinitionPrinter >> instanceVariablesOn: stream [
 ]
 
 { #category : #'public API' }
-OldPharoClassDefinitionPrinter >> metaclassDefinitionString [ 
+OldPharoClassDefinitionPrinter >> metaclassDefinitionString [
 
-	^ forClass needsSlotClassDefinition 
+	^ forClass needsSlotClassDefinition
 		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) metaclassDefinitionString ]
 		ifFalse: [ self basicMetaclassDefinitionString ]
 ]
@@ -148,7 +155,7 @@ OldPharoClassDefinitionPrinter >> poolOn: stream [
 
 	| poolString |
 	poolString := forClass sharedPoolsString.
-	poolString = '' ifFalse: [ 
+	poolString = '' ifFalse: [
 		stream
 			crtab;
 			nextPutAll: 'poolDictionaries: ';
@@ -160,7 +167,7 @@ OldPharoClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString 
 
 	^ String streamContents: [ :s |
 			s nextPutAll: 'TestCase subclass: #MyTest' ; crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
+			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
 			s nextPutAll: 'classVariableNames: '''''; crtab.
 			s nextPutAll: 'package: ''', aString, '''' ]
 ]
@@ -168,7 +175,7 @@ OldPharoClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString 
 { #category : #'low-level elements' }
 OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
 
-	forClass hasTraitComposition ifTrue: [ 
+	forClass hasTraitComposition ifTrue: [
 		stream
 			crtab;
 			nextPutAll: 'uses: ';
@@ -176,9 +183,9 @@ OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
 ]
 
 { #category : #'public API' }
-OldPharoClassDefinitionPrinter >> traitDefinitionString [ 
+OldPharoClassDefinitionPrinter >> traitDefinitionString [
 
-	^ forClass needsSlotClassDefinition 
+	^ forClass needsSlotClassDefinition
 		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitDefinitionString ]
 		ifFalse: [ self basicTraitDefinitionString ]
 ]
@@ -191,13 +198,12 @@ OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
 	 uses: {}
 	 package: '''.
 			s nextPutAll: aString; nextPut: $' ]
- 
 ]
 
 { #category : #'public API' }
-OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [ 
+OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 
-	^ forClass needsSlotClassDefinition 
+	^ forClass needsSlotClassDefinition
 		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitedMetaclassDefinitionString ]
 		ifFalse: [ self basicTraitedMetaclassDefinitionString ]
 ]

@@ -61,7 +61,7 @@ Morph >> isWindowActive: aSystemWindow [
 	"Answer whether the given window is active.
 	Implement in morphs that are designed to embed system windows.
 	Delegate to owner."
-	
+
 	^self owner ifNil: [true] ifNotNil: [:o | o isWindowActive: aSystemWindow]
 ]
 
@@ -94,14 +94,12 @@ Morph >> nextMorphWantingFocus [
 		whileFalse: [m := m nextMorphInWindow].
 	^m wantsKeyboardFocusNavigation
 		ifTrue: [m]
-	
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
 Morph >> openInWindow [
 
 	^self openInWindowLabeled: self defaultLabel
-
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
@@ -140,7 +138,12 @@ Morph >> previousMorphWantingFocus [
 		whileFalse: [m := m previousMorphInWindow ifNil: [^nil]].
 	^m wantsKeyboardFocusNavigation
 		ifTrue: [m]
-	
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
+Morph >> selection [
+
+	^ nil
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
@@ -166,12 +169,12 @@ Morph >> wrappedInWindow [
 
 	| window extent |
 	window := SystemWindow new.
-	window 
+	window
 		addMorph: self frame: (0@0 extent: 1@1);
 		updatePaneColors.
 	" calculate extent after adding in case any size related attributes were changed.  Use
 	fullBounds in order to trigger re-layout of layout morphs"
-	extent := self fullBounds extent + 
+	extent := self fullBounds extent +
 			(window borderWidth@window labelHeight) + window borderWidth +
 			(window class borderWidth * 2 @ (window class borderWidth + 1)). "include inset margin"
 	window extent: extent.

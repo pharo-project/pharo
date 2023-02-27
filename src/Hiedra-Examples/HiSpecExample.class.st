@@ -12,20 +12,12 @@ Class {
 	#category : #'Hiedra-Examples-Spec2'
 }
 
-{ #category : #specs }
-HiSpecExample class >> defaultSpec [
-	^ SpBoxLayout newTopToBottom
-		add: #table;
-		add: #actionBar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
-		yourself
-]
-
-{ #category : #specs }
+{ #category : #examples }
 HiSpecExample class >> example60RandomCommits [
 	^ self openExample: #randomlyGenerated
 ]
 
-{ #category : #specs }
+{ #category : #examples }
 HiSpecExample class >> openExample: selector [
 
 	| commits |
@@ -33,42 +25,49 @@ HiSpecExample class >> openExample: selector [
 
 	^ self new
 		commits: commits;
-		openWithSpec;
+		open;
 		withWindowDo: [ :window |
 			window
 				extent: 600 @ 800;
 				title: ('Hiedra in Spec2 with Roassal3 - {1} - {2} elements' format: {selector. commits size}) ];
-		yourself.
-
+		yourself
 ]
 
 { #category : #windows }
 HiSpecExample >> close [
-	
+
 	self window close
 ]
 
 { #category : #accessing }
-HiSpecExample >> commits: commits [ 
+HiSpecExample >> commits: commits [
 
 	table items: commits.
 
-	hiedraColumnController ruler: (HiRulerBuilder 
+	hiedraColumnController ruler: (HiRulerBuilder
 		newRulerValues: commits
 		linksBlock: [:aCommit |
-			aCommit parentIds collect: [:id | 
+			aCommit parentIds collect: [:id |
 				commits detect: [:each | each id = id ] ] ]).
 
 	hiedraColumnController reset.
-	
+
 	"After #reset, we know the desired width for the column."
-	table columns first width: hiedraColumnController rulerWidth.
+	table columns first width: hiedraColumnController rulerWidth
+]
+
+{ #category : #layout }
+HiSpecExample >> defaultLayout [
+	^ SpBoxLayout newTopToBottom
+		add: #table;
+		add: #actionBar expand: false;
+		yourself
 ]
 
 { #category : #initialization }
 HiSpecExample >> forceRefreshHiedra [
 	hiedraColumnController reset.
-	table withAdapterDo: #refreshList.
+	table withAdapterDo: #refreshList
 ]
 
 { #category : #initialization }
@@ -81,7 +80,7 @@ HiSpecExample >> initializeActionBar [
 		action: [ UIManager default defer: [ self forceRefreshHiedra ] ];
 		yourself.
 	inspectButton := self newButton
-		label: 'Renderer'; 
+		label: 'Renderer';
 		help: ('Inspect the Hiedra renderer, that has the rendering parameters. Press on {1} button to see the effect of any change on the renderer.' format: { refreshButton label });
 		action: [ UIManager default defer: [ hiedraColumnController renderer inspect ] ];
 		yourself.
@@ -89,14 +88,13 @@ HiSpecExample >> initializeActionBar [
 	actionBar := self newActionBar
 		add: inspectButton;
 		add: refreshButton;
-		yourself.
-
+		yourself
 ]
 
 { #category : #initialization }
 HiSpecExample >> initializePresenters [
 	self initializeTable.
-	self initializeActionBar.
+	self initializeActionBar
 ]
 
 { #category : #initialization }

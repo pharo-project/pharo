@@ -30,7 +30,7 @@ ClySortFunction class >> ascending [
 { #category : #'instance creation' }
 ClySortFunction class >> descending [
 
-	^self new 
+	^self new
 		direction: -1
 ]
 
@@ -47,7 +47,7 @@ ClySortFunction >> = anObject [
 
 { #category : #evaluating }
 ClySortFunction >> collate: anObject1 with: anObject2 [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

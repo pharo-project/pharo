@@ -21,12 +21,16 @@ ShDefaultBuilderEnhancer >> afterMethodsCompiled: builder [
 
 { #category : #migrating }
 ShDefaultBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
+]
 
+{ #category : #accessing }
+ShDefaultBuilderEnhancer >> allSlotsForBuilder: aBuilder [
+
+	^ aBuilder layoutDefinition allSlots
 ]
 
 { #category : #migrating }
 ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
-
 ]
 
 { #category : #events }
@@ -35,7 +39,7 @@ ShDefaultBuilderEnhancer >> classCreated: builder [
 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> compileMethodsFor: aBuilder [
-	aBuilder compileMethods 
+	aBuilder compileMethods
 ]
 
 { #category : #'class modifications' }
@@ -49,7 +53,7 @@ ShDefaultBuilderEnhancer >> configureMetaclass: newMetaclass superclass: supercl
 ]
 
 { #category : #initialization }
-ShDefaultBuilderEnhancer >> fillBuilder: aBuilder from: aClass [ 
+ShDefaultBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 ]
 
 { #category : #migrating }
@@ -68,7 +72,6 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShClassSlotChangeDetector.
 	aBuilder addChangeComparer: ShSuperclassChangedDetector.
 	aBuilder addChangeComparer: ShMetaclassChangeDetector
-
 ]
 
 { #category : #events }
@@ -76,13 +79,13 @@ ShDefaultBuilderEnhancer >> metaclassCreated: builder [
 ]
 
 { #category : #events }
-ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [
 
 	aShiftClassInstaller migrateInstancesTo: aClass
 ]
 
 { #category : #events }
-ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [ 
+ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [
 
 	aShiftClassInstaller migrateClassTo: aClass
 ]
@@ -101,9 +104,8 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
-	
-	newClass subclasses do: [ :e | installer remake: e ]
 
+	newClass subclasses do: [ :e | installer remake: e ]
 ]
 
 { #category : #'class modifications' }

@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 AbstractEnvironmentTestCase class >> isAbstract [
 
-	^self = AbstractEnvironmentTestCase 
+	^self = AbstractEnvironmentTestCase
 ]
 
 { #category : #accessing }
@@ -21,7 +21,7 @@ AbstractEnvironmentTestCase >> environmentOfTest [
 { #category : #running }
 AbstractEnvironmentTestCase >> setUp [
 	super setUp.
-	testingEnvironment := Smalltalk globals.
+	testingEnvironment := Smalltalk globals
 ]
 
 { #category : #accessing }

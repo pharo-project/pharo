@@ -11,7 +11,6 @@ Class {
 FloatReferencesRule >> basicCheck: node [
 	node isGlobalVariable ifFalse: [ ^ false ].
 	^(self systemClassNames includes: node name)
-	
 ]
 
 { #category : #accessing }

@@ -28,13 +28,13 @@ Class {
 
 { #category : #'instance creation' }
 ClyTestResultProperty class >> ofMethod: aMethod [
-	^ClyCompositeTestResultProperty new 
+	^ClyCompositeTestResultProperty new
 		accumulateTestMethod: aMethod
 ]
 
 { #category : #'instance creation' }
 ClyTestResultProperty class >> ofTestCase: aTestCaseClass [
-	^self new 
+	^self new
 		accumulateTestCase: aTestCaseClass
 ]
 
@@ -82,21 +82,21 @@ ClyTestResultProperty >> allCount: anObject [
 
 { #category : #accessing }
 ClyTestResultProperty >> brokenCount [
-	^failureCount + errorCount 
+	^failureCount + errorCount
 ]
 
 { #category : #presentation }
 ClyTestResultProperty >> createIcon [
 
-	allCount = 0 ifTrue: [ ^ self iconNamed: #testNotRunIcon ].
+	allCount = 0 ifTrue: [ ^ self iconNamed: #testNotRun ].
 	allCount = successCount
-		ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+		ifTrue: [ ^ self iconNamed: #testGreen ].
 	errorCount = 0 & (failureCount > 0)
-		ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+		ifTrue: [ ^ self iconNamed: #testYellow ].
 	errorCount > 0
-		ifTrue: [ ^ self iconNamed: #testRedIcon ].
-		
-	^ self iconNamed: #testNotRunIcon
+		ifTrue: [ ^ self iconNamed: #testRed].
+
+	^ self iconNamed: #testNotRun
 ]
 
 { #category : #accessing }

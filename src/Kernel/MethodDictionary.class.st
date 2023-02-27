@@ -40,7 +40,7 @@ MethodDictionary class >> compactAllInstances [
 			self allInstances do: [ :each |
 				| newInstance |
 				newInstance := each compactWithoutBecome.
-				newInstance capacity = each capacity 
+				newInstance capacity = each capacity
 					ifTrue: [ each copyFrom: newInstance ]
 					ifFalse: [
 						oldStream nextPut: each.
@@ -51,30 +51,29 @@ MethodDictionary class >> compactAllInstances [
 { #category : #'instance creation' }
 MethodDictionary class >> new [
 	"Create a new instance with 32 slots, which can hold at most 24 methods before growing is necessary."
-	
+
 	^self newForCapacity: 32
 ]
 
 { #category : #'instance creation' }
 MethodDictionary class >> new: numberOfElements [
 	"Create an instance large enough to hold numberOfElements methods without growing."
-	
+
 	^self newForCapacity: (self sizeFor: numberOfElements)
 ]
 
 { #category : #'instance creation' }
 MethodDictionary class >> newForCapacity: capacity [
 	"Create an instance with the given capacity which must be a power of two."
-	
-	^(self basicNew: capacity) initialize: capacity
 
+	^(self basicNew: capacity) initialize: capacity
 ]
 
 { #category : #sizing }
 MethodDictionary class >> sizeFor: numberOfElements [
     "Return the minimum capacity of a dictionary that can hold numberOfElements elements. At least 25% of the array must be empty and the return value must be a nonnegative power of 2. Notice that the max: 1 is because a MethodDictionaries can never be entirely empty, as the #grow method requires it not to be (since it does self basicSize * 2)"
 
-	^(numberOfElements * 4 // 3 max: 1) asLargerPowerOfTwo 
+	^(numberOfElements * 4 // 3 max: 1) asLargerPowerOfTwo
 ]
 
 { #category : #accessing }
@@ -94,7 +93,7 @@ MethodDictionary >> associationAt: key ifAbsent: aBlock [
 ]
 
 { #category : #enumeration }
-MethodDictionary >> associationsDo: aBlock [ 
+MethodDictionary >> associationsDo: aBlock [
 
 	tally = 0 ifTrue: [^ self].
 	1 to: self basicSize do:
@@ -123,8 +122,8 @@ MethodDictionary >> at: key put: value [
 	"Set the value at key to be value."
 	| index |
 	index := self findElementOrNil: key.
-	(self basicAt: index) 
-		ifNil: 
+	(self basicAt: index)
+		ifNil:
 			[tally := tally + 1.
 			self basicAt: index put: key].
 	array at: index put: value.
@@ -137,7 +136,7 @@ MethodDictionary >> at: key put: value [
 { #category : #private }
 MethodDictionary >> compact [
 	"Make sure that I have the highest possible load factor (between 37.5% and 75%)."
-	
+
 	| newInstance |
 	newInstance := self compactWithoutBecome.
 	newInstance capacity = self capacity
@@ -148,10 +147,10 @@ MethodDictionary >> compact [
 { #category : #private }
 MethodDictionary >> compactWithoutBecome [
 	"Return a copy of self which has the highest possible load factor (between 37.5% and 75%)."
-	
+
 	| newInstance |
 	newInstance := self species new: self size.
-	1 to: self basicSize do: [ :index | 
+	1 to: self basicSize do: [ :index |
 		(self basicAt: index) ifNotNil: [ :key |
 			newInstance at: key put: (array at: index) ] ].
 	^newInstance
@@ -172,7 +171,7 @@ MethodDictionary >> fixCollisionsFrom: start [
 ]
 
 { #category : #private }
-MethodDictionary >> grow [ 
+MethodDictionary >> grow [
 	| newSelf |
 	newSelf := self species newForCapacity: self basicSize * 2.
 	1 to: self basicSize do:
@@ -184,7 +183,7 @@ MethodDictionary >> grow [
 MethodDictionary >> isHealthy [
 	"Test that selector hashes match their positions stored in dictionary,
 	answer true if everything ok, false otherwise
-	
+
 	MethodDictionary allInstances select: [:dict |
 		dict isHealthy not ]
 
@@ -221,7 +220,7 @@ MethodDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
 ]
 
 { #category : #enumeration }
-MethodDictionary >> keysAndValuesDo: aBlock [ 
+MethodDictionary >> keysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values passed to the block"
 	tally = 0 ifTrue: [^ self].
 	1 to: self basicSize do:
@@ -231,7 +230,7 @@ MethodDictionary >> keysAndValuesDo: aBlock [
 ]
 
 { #category : #enumeration }
-MethodDictionary >> keysDo: aBlock [ 
+MethodDictionary >> keysDo: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: self basicSize do:
 		[:i | (self basicAt: i) ifNotNil: [ :key | aBlock value: key]]
@@ -243,11 +242,11 @@ MethodDictionary >> postCopy [
 ]
 
 { #category : #private }
-MethodDictionary >> rehash [ 
+MethodDictionary >> rehash [
 
 	| newInstance |
 	newInstance := self species newForCapacity: self basicSize.
-	1 to: self basicSize do: [ :index | 
+	1 to: self basicSize do: [ :index |
 		(self basicAt: index) ifNotNil: [ :key |
 			newInstance at: key put: (array at: index) ] ].
 	self copyFrom: newInstance
@@ -256,7 +255,7 @@ MethodDictionary >> rehash [
 { #category : #removing }
 MethodDictionary >> removeAll [
 	"Remove all elements from this collection. Preserve the capacity"
-	
+
 	| newSelf |
 	tally = 0 ifTrue: [^self].
 	newSelf := self species newForCapacity: self basicSize.
@@ -283,11 +282,11 @@ MethodDictionary >> removeDangerouslyKey: key ifAbsent: aBlock [
 ]
 
 { #category : #removing }
-MethodDictionary >> removeKey: key ifAbsent: errorBlock [ 
+MethodDictionary >> removeKey: key ifAbsent: errorBlock [
 	"The interpreter might be using this MethodDictionary while
 	this method is running! Therefore we perform the removal
 	in a copy, and then atomically copy that copy"
-	
+
 	| copy removedValue |
 	copy := self copy.
 	removedValue := copy removeDangerouslyKey: key ifAbsent: [^ errorBlock value].
@@ -305,12 +304,12 @@ MethodDictionary >> scanFor: anObject [
 
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := self basicAt: index) isNil or: [element == anObject])
+		[:index | ((element := self basicAt: index) == nil or: [element == anObject])
 			ifTrue: [^ index ]].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := self basicAt: index) isNil or: [element == anObject])
+		[:index | ((element := self basicAt: index) == nil or: [element == anObject])
 			ifTrue: [^ index ]].
 
 	^ 0  "No match AND no empty slot"
@@ -324,11 +323,10 @@ MethodDictionary >> swap: oneIndex with: otherIndex [
 	self basicAt: oneIndex put: (self basicAt: otherIndex).
 	self basicAt: otherIndex put: element.
 	array swap: oneIndex with: otherIndex
-
 ]
 
 { #category : #enumeration }
-MethodDictionary >> valuesDo: aBlock [ 
+MethodDictionary >> valuesDo: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: self basicSize do:
 		[:i | (array at: i) ifNotNil: [ :value | aBlock value: value]]

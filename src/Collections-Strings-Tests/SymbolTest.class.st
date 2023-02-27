@@ -25,7 +25,7 @@ Class {
 
 { #category : #requirements }
 SymbolTest >> anotherElementNotIn [
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
@@ -37,89 +37,89 @@ SymbolTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 SymbolTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #coverage }
 SymbolTest >> classToBeTested [
-	
+
 	^ Symbol
 ]
 
 { #category : #requirements }
 SymbolTest >> collection [
 
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #'tests - set arithmetic' }
 SymbolTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Symbol
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWith2TimeSubcollection [
 " return a collection including 'oldSubCollection'  two or many time "
-	^ with2timeSubcollection 
+	^ with2timeSubcollection
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ subcollection3ElementsSorted  
+	^ subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWithEqualElements [
 " return a collecition including atLeast two elements equal"
 
-^ sameAtEndAndBegining .
+^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWithSameAtEndAndBegining [
 	" return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
-	^ nonEmptySymbol5ElementsNoDuplicates .
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWithoutEqualElements [
 
 " return a collection not including equal elements "
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^nonEmptySymbol5ElementsNoDuplicates 
+	^nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
@@ -131,31 +131,31 @@ SymbolTest >> elementInForElementAccessing [
 { #category : #requirements }
 SymbolTest >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
-	^ self collectionMoreThan1NoDuplicates anyOne.
+	^ self collectionMoreThan1NoDuplicates anyOne
 ]
 
 { #category : #requirements }
 SymbolTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
 SymbolTest >> elementNotInForElementAccessing [
 " return an element not included in 'moreThan4Elements' "
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
 SymbolTest >> elementNotInForIndexAccessing [
 " return an element not included in 'collectionMoreThan1NoDuplicates' "
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
 SymbolTest >> elementNotInForOccurrences [
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #'tests - copying' }
@@ -171,12 +171,12 @@ SymbolTest >> elementTwiceInForOccurrences [
 
 { #category : #requirements }
 SymbolTest >> empty [
-	^ emptySymbol 
+	^ emptySymbol
 ]
 
 { #category : #accessing }
 SymbolTest >> expectedBehavior [
-	^ { 
+	^ {
 		  ([ Symbol readFromString: '#''abc''' ] -> #abc).
 		  ([ Symbol readFromString: '#ab-C' ] -> #ab).
 		  ([ Symbol readFromString: '#abC' ] -> #abC).
@@ -186,7 +186,7 @@ SymbolTest >> expectedBehavior [
 { #category : #requirements }
 SymbolTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
@@ -205,50 +205,50 @@ SymbolTest >> indexInNonEmpty [
 { #category : #requirements }
 SymbolTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> nonEmpty [
-	^ nonEmptySymbol5ElementsNoDuplicates 
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^collection1Element 
+	^collection1Element
 ]
 
 { #category : #requirements }
 SymbolTest >> nonEmptyMoreThan1Element [
-" return a collection that don't includes equal elements'" 
-	^nonEmptySymbol5ElementsNoDuplicates 
+" return a collection that don't includes equal elements'"
+	^nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 SymbolTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
-	^ subcollection3ElementsSorted  
+	^ subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
 SymbolTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
-	^ collection1Element 
+" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
+	^ collection1Element
 ]
 
 { #category : #requirements }
 SymbolTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionSize4 
+	^ collectionSize4
 ]
 
 { #category : #running }
@@ -262,26 +262,25 @@ SymbolTest >> setUp [
 	nonEmptySymbol5ElementsNoDuplicates := #abcde.
 	sameAtEndAndBegining := #abcda.
 	notIn := $z.
-	collectionNotIncluded := #zz.
+	collectionNotIncluded := #zz
 ]
 
 { #category : #requirements }
 SymbolTest >> sizeCollection [
 	"Answers a collection whose #size is 4"
-	^ collectionSize4 
+	^ collectionSize4
 ]
 
 { #category : #requirements }
 SymbolTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ collectionSize4
-	
 ]
 
 { #category : #requirements }
 SymbolTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'moreThan4Elements' "
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #tests }
@@ -327,7 +326,6 @@ SymbolTest >> testConcatenationIsSymbol [
 
 { #category : #'tests - copy' }
 SymbolTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - copy' }
@@ -349,12 +347,12 @@ SymbolTest >> testDisplayString [
 
 { #category : #'tests - testing' }
 SymbolTest >> testEndsWithAColon [
-	 
+
 	self assert: #fred: endsWithAColon.
 
 	self deny: #'fred' endsWithAColon.
 
-	self deny: #fred endsWithAColon. 
+	self deny: #fred endsWithAColon
 ]
 
 { #category : #tests }
@@ -362,15 +360,21 @@ SymbolTest >> testIsLiteralSymbol [
 
 	self assert: ('*+-/\~=<>&@%,|' allSatisfy: [:char | (Symbol with: char) isLiteralSymbol])
 		description: 'single letter binary symbols can be printed without string quotes'.
-		
+
 	self assert: (#('x' 'x:' 'x:y:' 'from:to:by:' 'yourself') allSatisfy: [:str | str asSymbol isLiteralSymbol])
-		description: 'valid ascii selector symbols can be printed without string quotes'.
+		description: 'valid ascii selector symbols can be printed without string quotes'
+]
+
+{ #category : #'tests - selectors' }
+SymbolTest >> testIsSelectorSymbol [
+	self deny: #'no selector exist with spaces' isSelectorSymbol.
+	self assert: #assert:equals: isSelectorSymbol
 ]
 
 { #category : #requirements }
 SymbolTest >> testNew [
-	
-	self should: [Symbol new: 5 ] raise: self defaultTestError. 
+
+	self should: [Symbol new: 5 ] raise: self defaultTestError
 ]
 
 { #category : #tests }
@@ -488,6 +492,18 @@ SymbolTest >> testNumArgsUnary [
 ]
 
 { #category : #tests }
+SymbolTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each | each asString ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self assert: printed equals: $# asString , ('' join: allElementsAsString)
+]
+
+{ #category : #tests }
 SymbolTest >> testReadFrom [
 	self expectedBehavior do: [ :association | self assert: association key value identicalTo: association value ]
 ]
@@ -510,5 +526,5 @@ SymbolTest >> unsortedCollection [
 { #category : #requirements }
 SymbolTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]

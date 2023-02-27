@@ -50,7 +50,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-Date class >> fromDays: dayCount [ 
+Date class >> fromDays: dayCount [
 	"Days since 1 January 1901"
 
 	^ self julianDayNumber: SqueakEpoch + dayCount
@@ -67,7 +67,6 @@ Date class >> fromSeconds: seconds [
 Date class >> starting: aDateAndTime [
 
 	^ super starting: (aDateAndTime midnight) duration: (Duration days: 1)
-
 ]
 
 { #category : #'instance creation' }
@@ -84,7 +83,7 @@ Date >> asDate [
 ]
 
 { #category : #accessing }
-Date >> dayMonthYearDo: aBlock [ 
+Date >> dayMonthYearDo: aBlock [
 	"Supply integers for day, month and year to aBlock and return the result"
 
 	^ start dayMonthYearDo: aBlock
@@ -102,7 +101,7 @@ Date >> equals: aDate [
 ]
 
 { #category : #printing }
-Date >> printFormat: formatArray [ 
+Date >> printFormat: formatArray [
 	"Answer a String describing the receiver using the argument formatArray."
 
 	^ String new: 16 streamContents: [ :aStream |
@@ -111,13 +110,13 @@ Date >> printFormat: formatArray [
 
 { #category : #printing }
 Date >> printOn: aStream [
- 
+
  	self printOn: aStream format: #(1 2 3 $  3 1 )
 ]
 
 { #category : #printing }
-Date >> printOn: aStream format: formatArray [ 
-	
+Date >> printOn: aStream format: formatArray [
+
 	BasicDatePrinter default printDate: self format: formatArray on: aStream
 ]
 

@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #filtering }
-SettingPackageFilter >> keepSettingTreeNode: aSettingNode [ 
+SettingPackageFilter >> keepSettingTreeNode: aSettingNode [
 	| rp |
 	^ (rp := aSettingNode receiverPackage) notNil and: [self packages includes: rp]
 ]
@@ -34,5 +34,4 @@ SettingPackageFilter >> packages: aCollectionOfPackageInfo [
 	"Set the value of packages"
 
 	packages := aCollectionOfPackageInfo
-
 ]

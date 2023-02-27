@@ -11,7 +11,6 @@ Class {
 EpOldStateVisitor >> visitBehaviorCategoryChange: aRecategorizationChange [
 
 	^ aRecategorizationChange oldCategory
-	    
 ]
 
 { #category : #visitor }
@@ -24,7 +23,6 @@ EpOldStateVisitor >> visitBehaviorCommentChange: aChange [
 EpOldStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 
 	^ aClassRenameChange oldName
-	    
 ]
 
 { #category : #visitor }
@@ -49,7 +47,6 @@ EpOldStateVisitor >> visitClassModification: aModificationClassChange [
 EpOldStateVisitor >> visitClassRemoval: aClassRemovalChange [
 
 	^ self stringForBehavior: aClassRemovalChange classRemoved
-	    
 ]
 
 { #category : #visitor }
@@ -61,15 +58,15 @@ EpOldStateVisitor >> visitLogCommentModification: anEvent [
 { #category : #visitor }
 EpOldStateVisitor >> visitMethodModification: aMethodModification [
 
-	^ self 
-		printProtocol: aMethodModification oldProtocol  
+	^ self
+		printProtocol: aMethodModification oldProtocol
 		sourceCode: aMethodModification oldSourceCode
 ]
 
 { #category : #visitor }
 EpOldStateVisitor >> visitMethodRemoval: aMethodRemoval [
 
-	^ self 
+	^ self
 		printProtocol: aMethodRemoval protocol
 		sourceCode: aMethodRemoval sourceCode
 ]
@@ -84,7 +81,6 @@ EpOldStateVisitor >> visitProtocolRemoval: aProtocolRemoval [
 EpOldStateVisitor >> visitTraitModification: aTraitModificationChange [
 
 	^ self stringForBehavior: aTraitModificationChange oldTrait
-	    
 ]
 
 { #category : #visitor }

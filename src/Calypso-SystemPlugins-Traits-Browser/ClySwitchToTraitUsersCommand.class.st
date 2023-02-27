@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClySwitchToTraitUsersCommand class >> canBeExecutedInContext: aToolContext [
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
-	
+
 	^aToolContext isTraitSelected
 ]
 
@@ -21,10 +21,10 @@ ClySwitchToTraitUsersCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClySwitchToTraitUsersCommand >> requiredQueryResult [
-	^ClyTraitUserHierarchy new asQueryResult 
+	^ClyTraitUserHierarchy new asQueryResult
 ]
 
 { #category : #execution }
 ClySwitchToTraitUsersCommand >> traitScopeClass [
-	^ClyTraitUserScope 
+	^ClyTraitUserScope
 ]

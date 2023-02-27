@@ -20,7 +20,6 @@ MCGitHubRepository class >> cacheDirectory [
 
   self resetCacheDirectoryIfInvalid.
   ^ CacheDirectory ifNil: [ self defaultCacheDirectory ].
- 
 ]
 
 { #category : #private }
@@ -28,13 +27,6 @@ MCGitHubRepository class >> cacheDirectory: aDirectory [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
   CacheDirectory := aDirectory
-]
-
-{ #category : #accessing }
-MCGitHubRepository class >> cacheDirectoryPath [
-  <preference: 'GitHub Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
 ]
 
 { #category : #'instance creation' }

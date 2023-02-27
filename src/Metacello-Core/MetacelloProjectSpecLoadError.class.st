@@ -16,13 +16,6 @@ MetacelloProjectSpecLoadError class >> projectSpec: aMetacelloMCProjectSpec [
 		yourself
 ]
 
-{ #category : #private }
-MetacelloProjectSpecLoadError >> isResumable [
-	"Determine whether an exception is resumable."
-
-	^ false
-]
-
 { #category : #accessing }
 MetacelloProjectSpecLoadError >> possibleVersions [
     ^ self versionDoesNotExistException possibleVersions

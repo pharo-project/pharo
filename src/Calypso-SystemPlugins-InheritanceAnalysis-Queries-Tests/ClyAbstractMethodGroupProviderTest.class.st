@@ -12,5 +12,5 @@ ClyAbstractMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyAbstractMethodGroupProviderTest >> groupProviderClass [
-	^ClyAbstractMethodGroupProvider 
+	^ClyAbstractMethodGroupProvider
 ]

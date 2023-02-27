@@ -37,7 +37,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyMergedHierarchy class >> merge: hierarchies [
-	^self new 
+	^self new
 		mergedParts: hierarchies
 ]
 
@@ -47,17 +47,17 @@ ClyMergedHierarchy >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-	^ mergedParts = anObject mergedParts 
+	^ mergedParts = anObject mergedParts
 ]
 
 { #category : #building }
 ClyMergedHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 
-	mergedParts do: [ :each | 
+	mergedParts do: [ :each |
 		aHierarchyMap hierarchy: each.
 		each buildParentMap: aHierarchyMap for: aClass ].
-	
-	aHierarchyMap hierarchy: self.
+
+	aHierarchyMap hierarchy: self
 ]
 
 { #category : #comparing }

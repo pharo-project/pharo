@@ -13,5 +13,4 @@ TextMorph >> drawOnAthensCanvas: anAthensCanvas [
 
 	fauxBounds := self bounds topLeft corner: self innerBounds bottomRight.	"self paragraph drawOnAthensCanvas: aCanvas bounds: fauxBounds."
 	self paragraph drawOnAthensCanvas: anAthensCanvas bounds: fauxBounds color: color
-
 ]

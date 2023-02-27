@@ -25,7 +25,7 @@ Trait {
 
 { #category : #accessing }
 TDebugger classSide >> availableAutomatically [
-	^ availableAutomatically ifNil: [ 
+	^ availableAutomatically ifNil: [
 		  availableAutomatically := DebuggerSettings defaultAvailability ]
 ]
 
@@ -51,8 +51,9 @@ TDebugger classSide >> defaultDebuggerRank [
 ]
 
 { #category : #debugging }
-TDebugger classSide >> handlesContext: aContext [
-	^true
+TDebugger classSide >> handlesDebugSession: aDebugSession [
+
+	^ true
 ]
 
 { #category : #accessing }

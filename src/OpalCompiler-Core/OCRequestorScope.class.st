@@ -33,16 +33,16 @@ OCRequestorScope >> compilationContext: anObject [
 { #category : #lookup }
 OCRequestorScope >> lookupVar: name declare: aBoolean [
 
-	"the system normally allows any object as the name, but the requestor uses some 
+	"the system normally allows any object as the name, but the requestor uses some
 	heuristics based on names of variables"
-	
+
 	name isString ifFalse: [ ^ outerScope lookupVar: name declare: aBoolean ].
 	name isEmpty ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
 
 	"reserved Variables are defined by the global scope, thus we look up in the outer scope"
-	(ReservedVariable nameIsReserved: name) ifTrue: [ 
+	(ReservedVariable nameIsReserved: name) ifTrue: [
 		^ outerScope lookupVar: name declare: aBoolean ].
-	
+
 	"generated temps (e.g. for limits in to:do: should not create bindings"
 	name first = $0 ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
 	"We do not want to auto define bindings for unknown Globals"

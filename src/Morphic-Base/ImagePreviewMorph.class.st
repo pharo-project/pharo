@@ -32,7 +32,7 @@ ImagePreviewMorph >> defaultImageFormOfSize: aPoint [
 { #category : #accessing }
 ImagePreviewMorph >> image: form size: imageSize [
 	"Set the image and update the description."
-	
+
 	form
 		ifNil: [self imageMorph
 				image: (self defaultImageFormOfSize: imageSize).
@@ -44,7 +44,6 @@ ImagePreviewMorph >> image: form size: imageSize [
 			self textMorph
 				contents: ('{1} x {2} pixels' translated
 							format: {form width asString. form height asString})]
-	
 ]
 
 { #category : #accessing }

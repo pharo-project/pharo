@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 EpClassAddition class >> class: aClass [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeClass: aClass;
 		yourself
 ]
@@ -39,7 +39,7 @@ EpClassAddition >> behaviorAffectedName [
 { #category : #accessing }
 EpClassAddition >> classAdded [
 
-	^ class 
+	^ class
 ]
 
 { #category : #initialization }

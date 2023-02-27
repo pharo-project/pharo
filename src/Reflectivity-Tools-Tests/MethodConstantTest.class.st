@@ -7,15 +7,13 @@ Class {
 { #category : #tests }
 MethodConstantTest >> constFromBlock: aBlock [
 
-	^aBlock asMethodConstant 
-
+	^aBlock asMethodConstant
 ]
 
 { #category : #tests }
 MethodConstantTest >> constFromReceiverExpression [
 
-	^DateAndTime now asMethodConstant 
-
+	^DateAndTime now asMethodConstant
 ]
 
 { #category : #tests }
@@ -46,10 +44,10 @@ MethodConstantTest >> testAPIFromMessageSendReceiver [
 MethodConstantTest >> testConstPlaceInTransformedMethod [
 
 	| transformedMethod const |
-	const := self constFromReceiverExpression. 
-		
-	transformedMethod := self class >> #constFromReceiverExpression. 
-	
+	const := self constFromReceiverExpression.
+
+	transformedMethod := self class >> #constFromReceiverExpression.
+
 	self assert: (transformedMethod literals anySatisfy:  [ :each | each == const ])
 ]
 
@@ -60,7 +58,7 @@ MethodConstantTest >> testTwoConstsInSameMethod [
 	result1 := self sumOfTwoConsts: [ 1 ] and: [ 2 ].
 	result2 := self sumOfTwoConsts: nil and: nil.
 	self assert: result1 equals: 3.
-	self assert: result2 equals: 3.
+	self assert: result2 equals: 3
 ]
 
 { #category : #tests }

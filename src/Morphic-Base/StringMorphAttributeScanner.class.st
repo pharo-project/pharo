@@ -34,6 +34,7 @@ StringMorphAttributeScanner >> addEmphasis: anInteger [
 { #category : #scanning }
 StringMorphAttributeScanner >> addKern: kernDelta [
 	"Set the current kern amount."
+
 	kern := kern + kernDelta
 ]
 
@@ -94,10 +95,9 @@ StringMorphAttributeScanner >> initializeFromStringMorph: aStringMorph [
 
 	fontNumber := 1.
 	self setActualFont: (aStringMorph font ifNil: [ TextStyle defaultFont ]).
-	
-	emphasis := actualFont emphasis.
-	textColor := aStringMorph color.
 
+	emphasis := actualFont emphasis.
+	textColor := aStringMorph color
 ]
 
 { #category : #accessing }
@@ -145,5 +145,6 @@ StringMorphAttributeScanner >> textColor: anObject [
 
 { #category : #accessing }
 StringMorphAttributeScanner >> textStyle [
-	^self actualFont textStyle ifNil: [ TextStyle default ]
+
+	^ self actualFont textStyle ifNil: [ TextStyle default ]
 ]

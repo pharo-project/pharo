@@ -14,7 +14,7 @@ ClyClass1FromP1Mock class >> classSideMethodFromClass1 [
 
 { #category : #'var accessors' }
 ClyClass1FromP1Mock >> instanceSideVar1ReaderMethod [
-	^instanceSideVar1 
+	^instanceSideVar1
 ]
 
 { #category : #'var accessors' }

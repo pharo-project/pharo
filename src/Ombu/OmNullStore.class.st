@@ -10,7 +10,6 @@ Class {
 { #category : #enumerating }
 OmNullStore >> entriesDo: aBlockClosure [
 	"Evaluate aBlockClosure with every entries this store contains"
-
 ]
 
 { #category : #accessing }
@@ -30,12 +29,11 @@ OmNullStore >> headReference [
 { #category : #writing }
 OmNullStore >> newEntry: anEntry [
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #refreshing }
 OmNullStore >> refresh [
-
 ]
 
 { #category : #accessing }

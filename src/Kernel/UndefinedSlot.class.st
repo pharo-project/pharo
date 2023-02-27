@@ -35,7 +35,7 @@ UndefinedSlot >> checkClassRebuild [
 	"we rebuild the class, this triggers instance migration"
 	(self definingClass compiler evaluate: self definingClass definitionString) install.
 	"recompile all methods that access me to generat code for the loaded definition"
-	self usingMethods do: [:each | each recompile].
+	self usingMethods do: [:each | each recompile]
 ]
 
 { #category : #printing }
@@ -53,7 +53,7 @@ UndefinedSlot >> read: anObject [
 
 { #category : #accessing }
 UndefinedSlot >> slotClassName [
-	^ast arguments first variable name 
+	^ast arguments first variable name
 ]
 
 { #category : #'meta-object-protocol' }

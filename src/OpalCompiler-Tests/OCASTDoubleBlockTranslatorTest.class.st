@@ -47,14 +47,14 @@ OCASTDoubleBlockTranslatorTest >> testComposedExample: template withTemps: prede
 	| temps declaration argument1 argument2 source |
 	temps := OrderedCollection new.
 	temps addAll: predefinedTemps.
-	self extractBlockInTemp ifTrue: [ 
+	self extractBlockInTemp ifTrue: [
 			temps add: 'block1'.
 			declaration := 'block1 := ', firstBlockCode, '.'.
 			argument1 := 'block1' ]
 		ifFalse: [
 			declaration := ''.
 			argument1 := firstBlockCode ].
-	self extractBlock2InTemp ifTrue: [ 
+	self extractBlock2InTemp ifTrue: [
 			temps add: 'block2'.
 			declaration := declaration , 'block2 := ', secondBlockCode, '.'.
 			argument2 := 'block2' ]
@@ -68,9 +68,9 @@ OCASTDoubleBlockTranslatorTest >> testComposedExample: template withTemps: prede
 		stream nextPutAll: declaration.
 	].
 
-	source := template format: { 
+	source := template format: {
 		'definition' -> declaration.
 		'argument1' -> argument1.
 		'argument2' -> argument2 } asDictionary.
-	^ self testSource: source.
+	^ self testSource: source
 ]

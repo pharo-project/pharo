@@ -38,12 +38,12 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 
 { #category : #accessing }
 VirtualMachine >> architectureName [
-	
+
 	^ Smalltalk vm getSystemAttribute: 1003
 ]
 
 { #category : #accessing }
-VirtualMachine >> buildDate [			
+VirtualMachine >> buildDate [
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"
 
@@ -61,11 +61,11 @@ VirtualMachine >> command [
 	"return a bash-like launch command for the vm including all arguments up to the image name "
 	^ String streamContents: [ :s|
 		s nextPutAll: (self optionAt: 0).
-		Smalltalk commandLine options 
+		Smalltalk commandLine options
 			do: [ :argument|
 				(argument endsWith: '.image')
 					ifTrue: [ ^ s contents ].
-				
+
 				s space; nextPutAll: argument]]
 ]
 
@@ -73,19 +73,17 @@ VirtualMachine >> command [
 VirtualMachine >> compiledBlocksCount [
 
 	^ self parameterAt: 77
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> compiledMethodsCount [
 
 	^ self parameterAt: 75
-
 ]
 
 { #category : #accessing }
 VirtualMachine >> directory [
-	
+
 	^ self primVmPath asByteArray utf8Decoded
 ]
 
@@ -99,11 +97,11 @@ VirtualMachine >> disableModuleLoading [
 ]
 
 { #category : #attributes }
-VirtualMachine >> doGetSystemAttribute: attributeID [ 
-	"Optional. Answer the string for the system attribute with the given 
-	integer ID. Answer nil if the given attribute is not defined on this 
-	platform. On platforms that support invoking programs from command 
-	lines (e.g., Unix), this mechanism can be used to pass command line 
+VirtualMachine >> doGetSystemAttribute: attributeID [
+	"Optional. Answer the string for the system attribute with the given
+	integer ID. Answer nil if the given attribute is not defined on this
+	platform. On platforms that support invoking programs from command
+	lines (e.g., Unix), this mechanism can be used to pass command line
 	arguments to programs written in Pharo.
 
 	By convention, the first command line argument that is not a VM
@@ -111,7 +109,7 @@ VirtualMachine >> doGetSystemAttribute: attributeID [
 	document can add methods and classes, can contain a serialized object,
 	can include code to be executed, or any combination of these.
 
-	Currently defined attributes include: 
+	Currently defined attributes include:
 	-1000   1000th command line argument that specify VM options
    	...
 	-1              first command line argument that specify VM options
@@ -155,9 +153,8 @@ VirtualMachine >> documentPath [
 { #category : #gc }
 VirtualMachine >> edenSpaceSize [
 	"for spur, size of eden, in bytes"
-		
-	^ self parameterAt: 44
 
+	^ self parameterAt: 44
 ]
 
 { #category : #attributes }
@@ -165,7 +162,6 @@ VirtualMachine >> extraVMMemory [
 	"Answer the current setting of the 'extraVMMemory' VM parameter. See the comment in extraVMMemory: for details."
 
 	^ self parameterAt: 23
-
 ]
 
 { #category : #attributes }
@@ -175,7 +171,6 @@ VirtualMachine >> extraVMMemory: extraBytesToReserve [
 	extraBytesToReserve < 0
 		ifTrue: [self error: 'VM memory reservation must be non-negative'].
 	^ self parameterAt: 23 put: extraBytesToReserve
-
 ]
 
 { #category : #accessing }
@@ -186,7 +181,7 @@ VirtualMachine >> fileName [
 { #category : #attributes }
 VirtualMachine >> flagInterpretedMethods: aBoolean [
 	"The Cog VM can be instructed to set the flag bit of CompiledMethods that it executes but will only interpret.  This can be used e.g. to profile startup. See CompiledMethod>>#flag & CompiledMethod>>#clearFlag. This flag persists across snapshots, stored in the image header."
-	
+
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 2) + (aBoolean ifTrue: [2] ifFalse: [0])
 ]
 
@@ -211,15 +206,14 @@ VirtualMachine >> forgetModule: aString [
 { #category : #gc }
 VirtualMachine >> freeOldSpaceSize [
 	"for spur, total size of free old space, otherwise nil"
-		
-	^ self parameterAt: 54
 
+	^ self parameterAt: 54
 ]
 
 { #category : #gc }
 VirtualMachine >> freeSize [
 	"Return the amount of free memory of the heap in bytes."
-		
+
 	^ self freeOldSpaceSize + self edenSpaceSize - self youngSpaceSize
 ]
 
@@ -228,7 +222,6 @@ VirtualMachine >> fullGCCount [
 	"Answer the total number of full GCs since startup (read-only)."
 
 	^ self parameterAt: 7
-
 ]
 
 { #category : #accessing }
@@ -243,29 +236,29 @@ VirtualMachine >> fullPath [
 { #category : #gc }
 VirtualMachine >> gcBiasToGrowLimit: arg [
 	"Tell the VM the grow limit if the GC logic has bias to grow."
-	
+
 	<primitive: 'primitiveSetGCBiasToGrowGCLimit'>
 	^self primitiveFailed
 ]
 
 { #category : #parameters }
-VirtualMachine >> getParameters [	
+VirtualMachine >> getParameters [
 	"Answer an Array containing the current values of the VM's internal
 	parameter/metric registers.  Each value is stored in the array at the
 	index corresponding to its VM register.  (See #vmParameterAt: and
 	#vmParameterAt:put:.)"
 	"Smalltalk vm getParameters"
-	
+
 	<primitive: 254>
 	self primitiveFailed
 ]
 
 { #category : #attributes }
-VirtualMachine >> getSystemAttribute: attributeID [ 
-	"Optional. Answer the string for the system attribute with the given 
-	integer ID. Answer nil if the given attribute is not defined on this 
-	platform. On platforms that support invoking programs from command 
-	lines (e.g., Unix), this mechanism can be used to pass command line 
+VirtualMachine >> getSystemAttribute: attributeID [
+	"Optional. Answer the string for the system attribute with the given
+	integer ID. Answer nil if the given attribute is not defined on this
+	platform. On platforms that support invoking programs from command
+	lines (e.g., Unix), this mechanism can be used to pass command line
 	arguments to programs written in Pharo.
 
 	By convention, the first command line argument that is not a VM
@@ -273,7 +266,7 @@ VirtualMachine >> getSystemAttribute: attributeID [
 	document can add methods and classes, can contain a serialized object,
 	can include code to be executed, or any combination of these.
 
-	Currently defined attributes include: 
+	Currently defined attributes include:
 	-1000   1000th command line argument that specify VM options
    	...
 	-1              first command line argument that specify VM options
@@ -331,7 +324,7 @@ VirtualMachine >> imagePath [
 { #category : #parameters }
 VirtualMachine >> imageVersionNumber [
 	"Image version number (6505 means the Squeak V3 format with BlockClosure support (but _without_ BlockContext support)"
-		
+
 	^ self parameterAt: 41
 ]
 
@@ -340,7 +333,6 @@ VirtualMachine >> incrementalGCCount [
 	"Answer the total number of incremental GCs since startup (read-only)."
 
 	^ self parameterAt: 9
-
 ]
 
 { #category : #accessing }
@@ -352,26 +344,26 @@ VirtualMachine >> interpreterClass [
 { #category : #accessing }
 VirtualMachine >> interpreterSourceDate [
 	"Return the date of changes given by `self interpreterSourceVersion`"
-	| dateString parts | 
-	
+	| dateString parts |
+
 	dateString := (self interpreterSourceVersion splitOn: 'Date: ') second.
-	
+
 	dateString first isDigit
-		ifTrue: [ 
-			"most probably the date is in ISO 8601 Format" 
+		ifTrue: [
+			"most probably the date is in ISO 8601 Format"
 			^ dateString asDateAndTime ].
-		
+
 	"Otherwise assume the old format: DDD MMM DD HH:MM:SS YYYY +TTTT ..."
 	parts := dateString substrings first: 6.
 	"create a more reasonable string.."
 	dateString := String streamContents: [ :s |
-		s 
+		s
 			nextPutAll: (parts at: 5 ); space; "year"
 			nextPutAll: (parts at: 2 ); space; "month name"
 			nextPutAll: (parts at: 3 ); space; "day of month"
 			nextPutAll: (parts at: 4 ); space; "time"
 			nextPutAll: (parts last); space    "timezone"].
-	^ dateString asDateAndTime 
+	^ dateString asDateAndTime
 ]
 
 { #category : #accessing }
@@ -405,7 +397,7 @@ VirtualMachine >> is64bit [
 
 { #category : #testing }
 VirtualMachine >> isAIOInterrupt [
-	"Answer true, if the vm is capable of being interrupted until there is an AIO event. 
+	"Answer true, if the vm is capable of being interrupted until there is an AIO event.
 	 (This means we are going idle until we have something real to process)"
 
 	^ (self getSystemAttribute: 1010) = 'AIO'
@@ -415,15 +407,15 @@ VirtualMachine >> isAIOInterrupt [
 VirtualMachine >> isPharoVM [
 	"Answers if this VM is a valid PharoVM (made with our sources)"
 	| version |
-	
+
 	self flag: #pharoTodo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
 	version := self version.
 	^ (version beginsWith: 'PharoVM')
-		or: [ 
+		or: [
 			(version includesSubstring: 'NBCoInterpreter')
 				or: [
-					(version includesSubstring: 'Commit: ') 
-						and: [ 
+					(version includesSubstring: 'Commit: ')
+						and: [
 							| pos |
 							pos := (version findString: 'Commit: ') + 8.
 							(version copyFrom: pos to: pos + 39) allSatisfy: [ :each | (($a to: $f), ($0 to: $9)) includes: each ] ] ] ]
@@ -453,7 +445,7 @@ VirtualMachine >> isRunningInWorkerThread [
 ]
 
 { #category : #testing }
-VirtualMachine >> isSpur [ 
+VirtualMachine >> isSpur [
 	"this value is always true but is here for backward compatibility (non Spur images should return false)"
 	^ true
 ]
@@ -470,16 +462,16 @@ VirtualMachine >> listBuiltinModule: index [
 VirtualMachine >> listBuiltinModules [
 	"Smalltalk vm listBuiltinModules"
 
-	"Return a list of all builtin modules (e.g., plugins). Builtin plugins are those that are 
-	compiled with the VM directly, as opposed to plugins residing in an external shared library. 	
-	The list will include all builtin plugins regardless of whether they are currently loaded 
+	"Return a list of all builtin modules (e.g., plugins). Builtin plugins are those that are
+	compiled with the VM directly, as opposed to plugins residing in an external shared library.
+	The list will include all builtin plugins regardless of whether they are currently loaded
 	or not. Note that the list returned is not sorted!"
 
 	| modules index tname |
 	modules := Array new writeStream.
 	index := 1.
 	[ true ]
-		whileTrue: [ 
+		whileTrue: [
 			tname := self listBuiltinModule: index.
 			tname ifNil: [ ^ modules contents ].
 			modules nextPut: tname.
@@ -506,7 +498,7 @@ VirtualMachine >> listLoadedModules [
 		tname ifNil:[^modules contents].
 		modules nextPut: tname.
 		index := index + 1.
-	].
+	]
 ]
 
 { #category : #attributes }
@@ -529,26 +521,26 @@ VirtualMachine >> maxExternalSemaphores: aSize [
     unhandled interrupts."
 
 	self maxExternalSemaphores ifNil: [ ^ 0 ].
-	
+
 	[ self maxExternalSemaphoresSilently: aSize.
 	SystemNotification signal: ('WARNING: Had to increase size of semaphore signal handling table due to many external objects concurrently in use', String cr,
 		'You should increase this size at startup using #maxExternalSemaphoresSilently:', String cr,
 		'Current table size: ' , self maxExternalSemaphores printString) ] forkAt: Processor userBackgroundPriority.
-	
+
 	self error: 'Not enough space for external objects, set a larger size at startup!'.
 	^ self maxExternalSemaphores
 ]
 
 { #category : #attributes }
-VirtualMachine >> maxExternalSemaphoresSilently: aSize [ 
+VirtualMachine >> maxExternalSemaphoresSilently: aSize [
 	"Changes the size of array where external signals for semaphores in
-	externalObjects are handled.. 
+	externalObjects are handled..
 	The size can only grow, and will always be the next power of two
 	larger than the parameter.
-	
+
 	The intended use is to set the table size to some adequate
 	maximum as part of a non-resuming image startUp.
-	
+
 	Setting this at any time other than start-up can potentially result in
 	lost signals during reallocation.
 	i.e. Requests handled during copying og signals from old to new array
@@ -557,7 +549,7 @@ VirtualMachine >> maxExternalSemaphoresSilently: aSize [
 	self maxExternalSemaphores
 		ifNil: [^ 0].
 	"The vm-header field where the size is stored is a short, maximum
-	64k entries. 
+	64k entries.
 	Well, on most platforms anyways"
 	(aSize < 0
 			or: [aSize > 65535])
@@ -593,52 +585,48 @@ VirtualMachine >> maxOldSpaceSize: aValue [
 VirtualMachine >> maximumPauseTimeDueToSegmentAllocation [
 
 	^ self parameterAt: 74
-
 ]
 
 { #category : #gc }
 VirtualMachine >> memoryEnd [
 	"end of memory"
-		
-	^ self parameterAt: 3
 
+	^ self parameterAt: 3
 ]
 
 { #category : #gc }
 VirtualMachine >> memorySize [
 	"Return the memory size of the heap in bytes."
-		
+
 	^ self parameterAt: 3 "Readonly parameter for spur"
 ]
 
 { #category : #gc }
 VirtualMachine >> oldSpace [
 	"for spur, sizeof old-space (0-based, read-only)"
-		
+
 
 	^ self parameterAt: 1
-
 ]
 
 { #category : #gc }
 VirtualMachine >> oldSpaceEnd [
 	"end of old-space (0-based, read-only)"
-		
+
 
 	^ self parameterAt: 1
-
 ]
 
 { #category : #accessing }
 VirtualMachine >> operatingSystemName [
-	
+
 	^ Smalltalk vm getSystemAttribute: 1001
 ]
 
 { #category : #accessing }
 VirtualMachine >> optionAt: i [
 	"Answer the i-th option of the command line, or nil if not so many options."
-	
+
 	^self getSystemAttribute: i negated
 ]
 
@@ -654,11 +642,11 @@ VirtualMachine >> optionDash [
 VirtualMachine >> options [
 	"return an array with all the options passed to the VM (up to the image) "
 	^ Array streamContents: [ :s|
-		Smalltalk commandLine options 
+		Smalltalk commandLine options
 			do: [ :argument|
 				(argument endsWith: '.image')
 					ifTrue: [ ^ s contents ].
-				
+
 				s nextPut: argument ]]
 ]
 
@@ -668,7 +656,7 @@ VirtualMachine >> parameter46Documentation [
 "
 46      size of machine code zone, in bytes
 
-To speed-up execution, the cog uses internally a JIT compiler which translates to machine code frequently used bytecoded method and run the machine code to execute them instead of using the interpreter. The machine code zone is an executable memory zone containing all the machine code versions of methods. 
+To speed-up execution, the cog uses internally a JIT compiler which translates to machine code frequently used bytecoded method and run the machine code to execute them instead of using the interpreter. The machine code zone is an executable memory zone containing all the machine code versions of methods.
 
 The default size should be between 1Mb and 2Mb for standard applications. If memory is a constraint, it can be lowered down to 750kb, under that you should use the stack VM else the performance starts to drastically decrease.
 
@@ -689,82 +677,7 @@ VirtualMachine >> parameterAt: parameterIndex [
 	parameter/metric registers.  Answer with the current value of that register.
 	Fail if parameterIndex has no corresponding register.
 
-	VM parameters are numbered as follows:
-
-		1	end (v3)/size(Spur) of old-space (0-based, read-only)
-		2	end (v3)/size(Spur) of young/new-space (read-only)
-		3	end (v3)/size(Spur) of heap (read-only)
-		4	nil (was allocationCount (read-only))
-		5	nil (was allocations between GCs (read-write)
-		6	survivor count tenuring threshold (read-write)
-		7	full GCs since startup (read-only)
-		8	total milliseconds in full GCs since startup (read-only)
-		9	incremental GCs (SqueakV3) or scavenges (Spur) since startup (read-only)
-		10	total milliseconds in incremental GCs (SqueakV3) or scavenges (Spur) since startup (read-only)
-		11	tenures of surving objects since startup or reset (read-write)
-		12-20 were specific to ikp's JITTER VM, now 12-15 are open for use
-		16	total microseconds at idle since start-up (if non-zero)
-		17	fraction of the code zone to use (Sista only; used to control code zone use to preserve sendAndBranchData on counter tripped callback)
-		18	total milliseconds in compaction phase of full GC since start-up (Spur only)
-		19	scavenge threshold, the effective size of eden.  When eden fills to the threshold a scavenge is scheduled. Newer Spur VMs only.
-		20	utc microseconds at VM start-up (actually at time initialization, which precedes image load).
-		21	root/remembered table size (occupancy) (read-only)
-		22	root table overflows since startup (read-only)
-		23	bytes of extra memory to reserve for VM buffers, plugins, etc (stored in image file header).
-		24	memory threshold above which shrinking object memory (rw)
-		25	memory headroom when growing object memory (rw)
-		26	interruptChecksEveryNms - force an ioProcessEvents every N milliseconds (rw)
-		27	number of times mark loop iterated for current IGC/FGC (read-only) includes ALL marking
-		28	number of times sweep loop iterated for current IGC/FGC (read-only)
-		29	number of times make forward loop iterated for current IGC/FGC (read-only)
-		30	number of times compact move loop iterated for current IGC/FGC (read-only)
-		31	number of grow memory requests (read-only)
-		32	number of shrink memory requests (read-only)
-		33	number of root table entries used for current IGC/FGC (read-only)
-		34	Spur: bytes allocated in total since start-up or reset (read-write) (Used to be number of allocations done before current IGC/FGC (read-only))
-		35	number of survivor objects after current IGC/FGC (read-only)
-		36	millisecond clock when current IGC/FGC completed (read-only)
-		37	number of marked objects for Roots of the world, not including Root Table entries for current IGC/FGC (read-only)
-		38	milliseconds taken by current IGC (read-only)
-		39	Number of finalization signals for Weak Objects pending when current IGC/FGC completed (read-only)
-		40	BytesPerOop for this image
-		41	imageFormatVersion for the VM
-		42	number of stack pages in use
-		43	desired number of stack pages (stored in image file header, max 65535)
-		44	size of eden, in bytes
-		45	desired size of eden, in bytes (stored in image file header)
-		46	machine code zone size, in bytes (Cog only; otherwise nil)
-		47	desired machine code zone size (stored in image file header; Cog only; otherwise nil)
-		48	various header flags.  See getCogVMFlags.
-		49	max size the image promises to grow the external semaphore table to (0 sets to default, which is 256 as of writing)
-		50-51 nil; reserved for VM parameters that persist in the image (such as eden above)
-		52	root/remembered table capacity
-		53	number of segments (Spur only; otherwise nil)
-		54	total size of free old space (Spur only, otherwise nil)
-		55	ratio of growth and image size at or above which a GC will be performed post scavenge
-		56	number of process switches since startup (read-only)
-		57	number of ioProcessEvents calls since startup (read-only)
-		58	number of ForceInterruptCheck calls since startup (read-only)
-		59	number of check event calls since startup (read-only)
-		60	number of stack page overflows since startup (read-only)
-		61	number of stack page divorces since startup (read-only)
-		62	compiled code compactions since startup (read-only; Cog only; otherwise nil)
-		63	total milliseconds in compiled code compactions since startup (read-only; Cog only; otherwise nil)
-		64	the number of methods that currently have jitted machine-code
-		65	whether the VM supports a certain feature, MULTIPLE_BYTECODE_SETS is bit 0, IMMUTABILITY is bit 1
-		66	the byte size of a stack page
-		67	the max allowed size of old space (Spur only; nil otherwise; 0 implies no limit except that of the underlying platform)
-		68	the average number of live stack pages when scanned by GC (at scavenge/gc/become et al) (read-write)
-		69	the maximum number of live stack pages when scanned by GC (at scavenge/gc/become et al) (read-write)
-		70	the vmProxyMajorVersion (the interpreterProxy VM_MAJOR_VERSION)
-		71	the vmProxyMinorVersion (the interpreterProxy VM_MINOR_VERSION)
-		72 total milliseconds in full GCs Mark phase since startup (read-only)
-		73 total milliseconds in full GCs Sweep phase since startup (read-only, can be 0 depending on compactors)
-		74 maximum pause time due to segment allocation
-		75 number of JIT compiled methods since startup (read-only)
-		76 total milliseconds spent on JIT compiled methods since startup (read-only)
-		77 number of JIT compiled block since startup (read-only)
-		78 total milliseconds spent on JIT compiled block since startup (read-only)"
+	See `parameterLabels` for the numbering of the parameters."
 
 	<primitive: 254>
 	self primitiveFailed
@@ -780,6 +693,92 @@ VirtualMachine >> parameterAt: parameterIndex put: newValue [
 
 	<primitive: 254>
 	self primitiveFailed
+]
+
+{ #category : #parameters }
+VirtualMachine >> parameterLabels [
+
+	"The indices and label of each VM parameter.
+
+	 Only one single (machine-processable) list to maintain in the Image side, marvelous!"
+
+	^ #(
+		1 'size of old-space (0-based, read-only)'
+		2 'size of young/new-space (read-only)'
+		3 'size of heap (read-only)'
+		4 'nil (was allocationCount (read-only))'
+		5 'nil (was allocations between GCs (read-write)'
+		6 'survivor count tenuring threshold (read-write)'
+		7 'full GCs since startup (read-only)'
+		8 'total milliseconds in full GCs since startup (read-only)'
+		9 'scavenges since startup (read-only)'
+		10 'total milliseconds in scavenges since startup (read-only)'
+		11 'tenures of surving objects since startup (read-only)'
+		12 '12-20 were specific to ikp''s JITTER VM, now 12-15 are open for use'
+		16 'total microseconds at idle since start-up (if non-zero, read-only)'
+		17 'fraction of the code zone to use (Sista only, read-only)'
+		18 'total milliseconds in compaction phase of full GC since start-up (read-only)'
+		19 'scavenge threshold, the effective size of eden.  When eden fills to the threshold a scavenge is scheduled (read-only)'
+		20	'utc microseconds at VM start-up (actually at time initialization, which precedes image load, read-only).'
+		21	'root table size (read-only)'
+		22	'root table overflows since startup (read-only)'
+		23	'bytes of extra memory to reserve for VM buffers, plugins, etc (stored in image file header, read-write)'
+		24	'memory threshold above which shrinking object memory (read-write)'
+		25	'memory headroom when growing object memory (read-write)'
+		26	'interruptChecksEveryNms - force an ioProcessEvents every N milliseconds (read-write)'
+		27 'number of times mark loop iterated for current IGC/FGC (read-only)	includes ALL marking'
+		28	'number of times sweep loop iterated for current IGC/FGC (read-only)'
+		29	'number of times make forward loop iterated for current IGC/FGC (read-only)'
+		30	'number of times compact move loop iterated for current IGC/FGC (read-only)'
+		31	'number of grow memory requests (read-only)'
+		32	'number of shrink memory requests (read-only)'
+		33	'number of root table entries used for current IGC/FGC (read-only)'
+		34	'bytes allocated in total since start-up or reset (read-write)'
+		35	'number of survivor objects after current IGC/FGC (read-only)'
+		36	'millisecond clock when current IGC/FGC completed (read-only)'
+		37	'number of marked objects for Roots of the world, not including Root Table entries for current IGC/FGC (read-only)'
+		38	'milliseconds taken by current IGC (read-only)'
+		39	'Number of finalization signals for Weak Objects pending when current IGC/FGC completed (read-only)'
+		40	'BytesPerOop for this image (read-only)'
+		41	'imageFormatVersion for the VM (read-only)'
+		42	'number of stack pages in use (read-only)'
+		43	'desired number of stack pages (stored in image file header, max 65535, read-write)'
+		44	'size of eden, in bytes (read-only)'
+		45	'desired size of eden, in bytes (stored in image file header, read-write)'
+		46	'machine code zone size, in bytes (Cog only; otherwise nil, read-only)'
+		47	'desired machine code zone size (stored in image file header; Cog only; otherwise nil, read-write)'
+		48	'various header flags. See getCogVMFlags (read-write)'
+		49	'max size the image promises to grow the external semaphore table to (0 sets to default, which is 256 as of writing, read-write)'
+		50	'nil; reserved for VM parameters that persist in the image (such as eden above)' "What does that mean?"
+		51 	'nil; reserved for VM parameters that persist in the image (such as eden above)'
+		52	'root table capacity (read-only)'
+		53	'number of segments (read-only)'
+		54	'total size of free old space (read-only)'
+		55	'ratio of growth and image size at or above which a GC will be performed post scavenge (read-write)'
+		56	'number of process switches since startup (read-only)'
+		57	'number of ioProcessEvents calls since startup (read-only)'
+		58	'number of ForceInterruptCheck calls since startup (read-only)'
+		59	'number of check event calls since startup (read-only)'
+		60	'number of stack page overflows since startup (read-only)'
+		61	'number of stack page divorces since startup (read-only)'
+		62	'compiled code compactions since startup (read-only; Cog only; otherwise nil)'
+		63	'total milliseconds in compiled code compactions since startup (read-only; Cog only; otherwise nil)'
+		64	'the number of methods that currently have jitted machine-code (read-only)'
+		65	'whether the VM supports a certain feature, MULTIPLE_BYTECODE_SETS is bit 0, IMMUTABILITY is bit 1, HEARTBEAT is bit 2 (read-only)'
+		66	'the byte size of a stack page (read-only)'
+		67	'the max allowed size of old space (0 implies no limit except that of the underlying platform, read-write)'
+		68	'the average number of live stack pages when scanned by GC (at scavenge/gc/become et al, read-write)'
+		69	'the maximum number of live stack pages when scanned by GC (at scavenge/gc/become et al, read-write)'
+		70	'the vmProxyMajorVersion (the interpreterProxy VM_MAJOR_VERSION, read-only)'
+		71	'the vmProxyMinorVersion (the interpreterProxy VM_MINOR_VERSION, read-only)'
+		72 'total milliseconds in full GCs Mark phase since startup (read-only)'
+		73 'total milliseconds in full GCs Sweep phase since startup (read-only, can be 0 depending on compactors)'
+		74 'maximum pause time due to segment allocation (read-write)'
+		75 'number of JIT compiled methods since startup (read-only)'
+		76 'total milliseconds spent on JIT compiled methods since startup (read-only)'
+		77 'number of JIT compiled block since startup (read-only)'
+		78 'total milliseconds spent on JIT compiled block since startup (read-only)'
+		)
 ]
 
 { #category : #accessing }
@@ -814,8 +813,6 @@ VirtualMachine >> processHasThreadIdInstVar: aBoolean [
 	 This flag persists across snapshots, stored in the image header."
 	aBoolean ifTrue: [self assert: (Process instVarNames at: 4) ='threadId'].
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 1) + (aBoolean asBit)
-	
-
 ]
 
 { #category : #testing }
@@ -830,7 +827,7 @@ VirtualMachine >> processPreemptionYields [
 { #category : #attributes }
 VirtualMachine >> processPreemptionYields: aBoolean [
 	"The Cog VM can be instructed not to yield on process preemption, i.e. not to put a preempted process at the back of its run queue.  By default preempting a process causes it to yield (Blue Book semantics) which can have unfortunate effects. This flag persists across snapshots, stored in the image header."
-	
+
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 4) + (aBoolean ifTrue: [0] ifFalse: [2r100])
 ]
 
@@ -896,7 +893,7 @@ VirtualMachine >> statisticsReport [
 	fullGCTime			:= self totalFullGCTime.
 	incrGCs				:= self incrementalGCCount.
 	incrGCTime			:= self totalIncrementalGCTime.
- 
+
 	upTime := Time millisecondClockValue.
 	str := (String new: 1000) writeStream.
 	str	<< 'uptime			';
@@ -928,8 +925,8 @@ VirtualMachine >> statisticsReport [
 	(fullGCs + incrGCs) printWithCommasOn: str.
 	fullGCs + incrGCs > 0 ifTrue: [
 		str
-			<< ' ('; 
-			print: ((upTime / (fullGCs + incrGCs)) roundTo: 1); 
+			<< ' (';
+			print: ((upTime / (fullGCs + incrGCs)) roundTo: 1);
 			<< 'ms between GCs)'
 	].
 	str cr.
@@ -967,8 +964,8 @@ ifNotNil: [
 	(fullGCs2 + incrGCs2) printWithCommasOn: str.
 	fullGCs2 + incrGCs2 > 0 ifTrue: [
 		str
-			<< ' ('; 
-			print: ((upTime2 / (fullGCs2 + incrGCs2)) roundTo: 1); 
+			<< ' (';
+			print: ((upTime2 / (fullGCs2 + incrGCs2)) roundTo: 1);
 			<< 'ms between GCs)'.
 	].
 	str cr.
@@ -1006,7 +1003,6 @@ ifNotNil: [
 	LastStats at: 6 put: tenureCount.
 
 	^ str contents
-
 ]
 
 { #category : #testing }
@@ -1041,7 +1037,6 @@ VirtualMachine >> tenureCount [
 	"tenures of surving objects since startup (read-only)."
 
 	^ self parameterAt: 11
-
 ]
 
 { #category : #gc }
@@ -1054,7 +1049,7 @@ VirtualMachine >> tenuringThreshold [
 VirtualMachine >> tenuringThreshold: anInteger [
 	"survivor count tenuring threshold (read-write).
 	tenure when more than this many objects survive the GC"
-	
+
 	^ self parameterAt: 6 put: anInteger
 ]
 
@@ -1063,21 +1058,18 @@ VirtualMachine >> totalFullGCTime [
 	"Answer the total time in milliseconds spent in full GCs since startup (read-only)."
 
 	^ self parameterAt: 8
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalGCMarkPhaseTime [
 
 	^ self parameterAt: 72
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalGCSweepPhaseTime [
 
 	^ self parameterAt: 73
-
 ]
 
 { #category : #statistics }
@@ -1090,26 +1082,23 @@ VirtualMachine >> totalIncrementalGCTime [
 	"Answer the total time in milliseconds spent in incremental GCs since startup (read-only)."
 
 	^ self parameterAt: 10
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalJITCompileBlocksTime [
 
 	^ self parameterAt: 78
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalJITCompileMethodsTime [
 
 	^ self parameterAt: 76
-
 ]
 
 { #category : #statistics }
 VirtualMachine >> totalJITCompileTime [
-	
+
 	^ self totalJITCompileMethodsTime + self totalJITCompileBlocksTime
 ]
 
@@ -1133,7 +1122,7 @@ VirtualMachine >> version [
 	^ String streamContents: [ :s |
 			s nextPutAll: self interpreterClass; cr.
 			self isRunningCogit ifTrue: [ s nextPutAll: self cogitClass; cr ].
-			s nextPutAll: self interpreterSourceVersion; cr ].
+			s nextPutAll: self interpreterSourceVersion; cr ]
 ]
 
 { #category : #accessing }
@@ -1145,7 +1134,7 @@ VirtualMachine >> versionLabel [
 	and various plugins) that is translated to C by a CCodeGenerator,  in
 	addition to the external platform source code, typically written in C and
 	managed separately for each platform.
-	
+
 	This invokes an optional primitive that may not be available on all virtual
 	machines. See also vmVersion, which answers a string identifying the image
 	from which virtual machine sources were generated."
@@ -1180,15 +1169,13 @@ VirtualMachine >> wordSize [
 { #category : #gc }
 VirtualMachine >> youngSpaceEnd [
 	"end of young-space"
-		
-	^ self parameterAt: 2
 
+	^ self parameterAt: 2
 ]
 
 { #category : #gc }
 VirtualMachine >> youngSpaceSize [
 	"for spur, size of young/new-space (read-only)"
-		
-	^ self parameterAt: 2
 
+	^ self parameterAt: 2
 ]

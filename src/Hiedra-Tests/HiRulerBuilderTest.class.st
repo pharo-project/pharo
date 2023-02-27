@@ -10,7 +10,7 @@ Class {
 	#category : #'Hiedra-Tests-Model'
 }
 
-{ #category : #'initialize - event' }
+{ #category : #'class initialization' }
 HiRulerBuilderTest class >> initialize [
 	DebugShowingRulerInWindow := false
 ]
@@ -34,7 +34,6 @@ HiRulerBuilderTest >> assertRulerHasLinks: expectedLinksAndRulerPointsAsAssociat
 			assert: actualRulerPoints = rulerPoints asArray
 			description: [ '{1}: Found {2} instead of {3}.' format: { actualLink. actualRulerPoints. rulerPoints } ].
 	]
-
 ]
 
 { #category : #running }
@@ -58,8 +57,7 @@ HiRulerBuilderTest >> assertRulerHasNodes: expectedNodesAndRulerPointsAsAssociat
 	self
 		assert: failures isEmpty
 		description: [ 'Nodes found at unexpected points: {1}'
-			format: { failures printString } ].
-
+			format: { failures printString } ]
 ]
 
 { #category : #running }
@@ -70,14 +68,14 @@ HiRulerBuilderTest >> buildRulerWith: valuesAndParentsAsAssociations [
 	"This dictionary keeps order, we need it."
 	valuesAndParentsAsDictionary := valuesAndParentsAsAssociations as: SmallDictionary.
 	values := valuesAndParentsAsDictionary keys.
-	
-	ruler := HiRulerBuilder new 
+
+	ruler := HiRulerBuilder new
 		values: values;
 		linksBlock: [ :key | valuesAndParentsAsDictionary at: key ];
 		build;
 		ruler.
 
-	self debugShowingRulerInPresenter: valuesAndParentsAsDictionary.
+	self debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 ]
 
 { #category : #running }
@@ -112,7 +110,7 @@ HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 		addColumn: (SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ]);
 		items: values;
 		title: testSelector asString;
-		openWithSpec
+		open
 ]
 
 { #category : #tests }
@@ -133,11 +131,11 @@ HiRulerBuilderTest >> testCycle [
 		#b -> (1@1).
 		#a -> (1@2).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#b->#a) -> {1@1. 1@2}.
 		(#a->#b) -> {1@2. 1@1}.
-	}.
+	}
 ]
 
 { #category : #tests }
@@ -153,16 +151,16 @@ HiRulerBuilderTest >> testFourMergedForks [
 	"
 	d
 	|\ \
-	| | | 
-	| c | 
-	| |\| 
+	| | |
+	| c |
+	| |\|
 	| |/\
 	| b |
-	| | | 
+	| | |
 	|/ /
 	a
 	"
-	
+
 	self buildRulerWith: {
 		#d -> #(a c b).
 		#c -> #(b a).
@@ -176,7 +174,7 @@ HiRulerBuilderTest >> testFourMergedForks [
 		#b -> (2@3).
 		#a -> (1@4).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#d->#a) -> {1@1. 1@2. 1@3. 1@4}.
 
@@ -187,8 +185,7 @@ HiRulerBuilderTest >> testFourMergedForks [
 		(#c->#a) -> {2@2. 3@3. 1@4}.
 
 		(#d->#b) -> {1@1. 3@2. 2@3}.
-	}.
-
+	}
 ]
 
 { #category : #tests }
@@ -204,25 +201,25 @@ HiRulerBuilderTest >> testOneNode [
 	self assertRulerHasNodes: {
 		#a -> (1@1).
 	}.
-	
-	self assertEmpty: ruler links.
+
+	self assertEmpty: ruler links
 ]
 
 { #category : #tests }
 HiRulerBuilderTest >> testThreeMergedForks [
 	"
 	d
-	|\ 
-	| | 
-	c | 
-	|\| 
+	|\
+	| |
+	c |
+	|\|
 	|/\
 	b |
-	| | 
-	|/ 
+	| |
+	|/
 	a
 	"
-	
+
 	self buildRulerWith: {
 		#d -> #(c b).
 		#c -> #(b a).
@@ -236,7 +233,7 @@ HiRulerBuilderTest >> testThreeMergedForks [
 		#b -> (1@3).
 		#a -> (1@4).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#d->#c) -> {1@1. 1@2}.
 		(#c->#b) -> {1@2. 1@3}.
@@ -245,25 +242,24 @@ HiRulerBuilderTest >> testThreeMergedForks [
 		(#c->#a) -> {1@2. 2@3. 1@4}.
 
 		(#d->#b) -> {1@1. 2@2. 1@3}.
-	}.
-
+	}
 ]
 
 { #category : #tests }
 HiRulerBuilderTest >> testThreeMergedForks2 [
 	"
 	d
-	|\ 
-	| | 
-	| c 
-	| | 
-	|/| 
+	|\
+	| |
+	| c
+	| |
+	|/|
 	b |
-	| | 
-	|/ 
+	| |
+	|/
 	a
 	"
-	
+
 	self buildRulerWith: {
 		#d -> #(b c).
 		#c -> #(b a).
@@ -277,7 +273,7 @@ HiRulerBuilderTest >> testThreeMergedForks2 [
 		#b -> (1@3).
 		#a -> (1@4).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#d->#b) -> {1@1. 1@2. 1@3}.
 		(#b->#a) -> {1@3. 1@4}.
@@ -286,25 +282,24 @@ HiRulerBuilderTest >> testThreeMergedForks2 [
 		(#c->#b) -> {2@2. 1@3}.
 
 		(#c->#a) -> {2@2. 2@3. 1@4}.
-	}.
-
+	}
 ]
 
 { #category : #tests }
 HiRulerBuilderTest >> testThreeMergedForks3 [
 	"
 	d
-	|\ 
-	| | 
-	| c 
-	| | 
-	|/| 
+	|\
+	| |
+	| c
+	| |
+	|/|
 	b |
-	| | 
-	|/ 
+	| |
+	|/
 	a
 	"
-	
+
 	self buildRulerWith: {
 		#d -> #(b c).
 		#c -> #(a b).
@@ -318,7 +313,7 @@ HiRulerBuilderTest >> testThreeMergedForks3 [
 		#b -> (1@3).
 		#a -> (1@4).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#d->#b) -> {1@1. 1@2. 1@3}.
 		(#b->#a) -> {1@3. 1@4}.
@@ -327,8 +322,7 @@ HiRulerBuilderTest >> testThreeMergedForks3 [
 		(#c->#a) -> {2@2. 2@3. 1@4}.
 
 		(#c->#b) -> {2@2. 1@3}.
-	}.
-
+	}
 ]
 
 { #category : #tests }
@@ -348,24 +342,24 @@ HiRulerBuilderTest >> testTwoConnectedNodes [
 		#b -> (1@1).
 		#a -> (1@2).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#b->#a) -> {1@1. 1@2}.
-	}.
+	}
 ]
 
 { #category : #tests }
 HiRulerBuilderTest >> testTwoMergedForks [
 	"
 	c
-	|\ 
-	| | 
-	| b 
-	| | 
-	|/ 
-	a 
+	|\
+	| |
+	| b
+	| |
+	|/
+	a
 	"
-	
+
 	self buildRulerWith: {
 		#c -> #(a b) copy.
 		#b -> #(a) copy.
@@ -377,28 +371,27 @@ HiRulerBuilderTest >> testTwoMergedForks [
 		#b -> (2@2).
 		#a -> (1@3).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#c->#a) -> {1@1. 1@2. 1@3}.
 
 		(#c->#b) -> {1@1. 2@2}.
 		(#b->#a) -> {2@2. 1@3}.
-	}.
-
+	}
 ]
 
 { #category : #tests }
 HiRulerBuilderTest >> testTwoMergedForks2 [
 	"
 	c
-	|\ 
-	| | 
-	b | 
-	| | 
-	|/ 
-	a 
+	|\
+	| |
+	b |
+	| |
+	|/
+	a
 	"
-	
+
 	self buildRulerWith: {
 		#c -> #(b a).
 		#b -> #(a).
@@ -410,14 +403,13 @@ HiRulerBuilderTest >> testTwoMergedForks2 [
 		#b -> (1@2).
 		#a -> (1@3).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#c->#b) -> {1@1. 1@2}.
 		(#b->#a) -> {1@2. 1@3}.
 
 		(#c->#a) -> {1@1. 2@2. 1@3}.
-	}.
-
+	}
 ]
 
 { #category : #tests }
@@ -425,7 +417,7 @@ HiRulerBuilderTest >> testTwoUnconnectedNodes [
 	"
 	b
 
-	a	 	
+	a
 	"
 
 	self buildRulerWith: {
@@ -437,10 +429,9 @@ HiRulerBuilderTest >> testTwoUnconnectedNodes [
 		#b -> (1@1).
 		#a -> (1@2).
 	}.
-	
-	self assertRulerHasLinks: {
-	}.
 
+	self assertRulerHasLinks: {
+	}
 ]
 
 { #category : #tests }
@@ -468,12 +459,11 @@ HiRulerBuilderTest >> testTwoUnmergedForks [
 		#a -> (1@4).
 		#c -> (2@2).
 	}.
-	
+
 	self assertRulerHasLinks: {
 		(#d->#b) -> {1@1. 1@2. 1@3}.
 		(#b->#a) -> {1@3. 1@4}.
 
 		(#c->#a) -> {2@2. 2@3. 1@4}.
-	}.
-
+	}
 ]

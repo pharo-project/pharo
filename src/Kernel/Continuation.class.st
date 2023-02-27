@@ -42,7 +42,7 @@ Continuation class >> fromContext: aStack [
 Continuation class >> try: tryBlock or: orBlock or: orrBlock otherwise: elseBlock [
 	^ self
 		try: tryBlock
-		otherwise: [ :res | 
+		otherwise: [ :res |
 			self
 				try: [ :cont | orBlock cull: cont cull: res ]
 				or: orrBlock
@@ -52,7 +52,7 @@ Continuation class >> try: tryBlock or: orBlock or: orrBlock otherwise: elseBloc
 { #category : #'instance creation' }
 Continuation class >> try: tryBlock or: orBlock otherwise: elseBlock [
 	"	^ self
-		currentDo: [ :success | 
+		currentDo: [ :success |
 			| localResult localResult1 |
 			localResult := self
 				currentDo: [ :local | success value: (tryBlock value: local) ].
@@ -62,7 +62,7 @@ Continuation class >> try: tryBlock or: orBlock otherwise: elseBlock [
 
 	^ self
 		try: tryBlock
-		otherwise: [ :res | 
+		otherwise: [ :res |
 			self
 				try: [ :cont | orBlock cull: cont cull: res ]
 				otherwise: [ :lastRes | elseBlock cull: lastRes cull: res ] ]
@@ -71,7 +71,7 @@ Continuation class >> try: tryBlock or: orBlock otherwise: elseBlock [
 { #category : #'instance creation' }
 Continuation class >> try: tryBlock otherwise: elseBlock [
 	^ self
-		currentDo: [ :success | 
+		currentDo: [ :success |
 			| localResult |
 			localResult := self
 				currentDo: [ :local | success value: (tryBlock value: local) ].

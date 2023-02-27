@@ -71,7 +71,7 @@ RBLintRule class >> uniqueIdentifierNumber [
 { #category : #running }
 RBLintRule >> basicCheck: anEntity [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -82,8 +82,6 @@ RBLintRule >> changes [
 { #category : #running }
 RBLintRule >> checkClass: aClass [
 	"Is a hook to specify a check that is performed at the class level"
-	
-
 ]
 
 { #category : #running }
@@ -94,8 +92,6 @@ RBLintRule >> checkMethod: aMethod [
 { #category : #running }
 RBLintRule >> checkPackage: aPackage [
 	"Is a hook to specify a check that is performed at the pacakge level"
-	
-
 ]
 
 { #category : #private }
@@ -119,7 +115,7 @@ RBLintRule >> hasConflicts [
 
 { #category : #testing }
 RBLintRule >> isArchitecturalRule [
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -135,11 +131,11 @@ RBLintRule >> isEmpty [
 { #category : #testing }
 RBLintRule >> isTransformationRule [
 
-	^ false 
+	^ false
 ]
 
 { #category : #accessing }
-RBLintRule >> leaves [ 
+RBLintRule >> leaves [
 	^ {self}
 ]
 
@@ -188,7 +184,7 @@ RBLintRule >> run [
 ]
 
 { #category : #running }
-RBLintRule >> runOnEnvironment: anEnvironment [ 
+RBLintRule >> runOnEnvironment: anEnvironment [
 	^ RBSmalllintChecker runRule: self onEnvironment: anEnvironment
 ]
 

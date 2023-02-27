@@ -10,7 +10,7 @@ Class {
 { #category : #'serialize/materialize' }
 FLNegative64SmallIntegerCluster >> materializeInstanceWith: aDecoder [
 	
-	^ aDecoder nextEncodedUint64 negated 
+	^ aDecoder nextEncodedUint64 negated
 ]
 
 { #category : #'serialize/materialize' }

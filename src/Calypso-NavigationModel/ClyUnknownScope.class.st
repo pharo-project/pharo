@@ -20,13 +20,13 @@ ClyUnknownScope class >> instance [
 	^instance ifNil: [ instance := ClyUnknownScope new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClyUnknownScope class >> reset [
 	instance := nil
 ]
 
 { #category : #queries }
-ClyUnknownScope >> adoptQuery: aQuery [ 
+ClyUnknownScope >> adoptQuery: aQuery [
 	^aQuery
 ]
 
@@ -44,7 +44,7 @@ ClyUnknownScope >> asUnifiedInstance [
 { #category : #initialization }
 ClyUnknownScope >> initialize [
 	super initialize.
-	
+
 	basisObjects := #()
 ]
 
@@ -64,6 +64,6 @@ ClyUnknownScope >> supportsQuery: aQuery [
 ]
 
 { #category : #converting }
-ClyUnknownScope >> withNewBasisObjects: aCollection [ 
+ClyUnknownScope >> withNewBasisObjects: aCollection [
 	^self
 ]

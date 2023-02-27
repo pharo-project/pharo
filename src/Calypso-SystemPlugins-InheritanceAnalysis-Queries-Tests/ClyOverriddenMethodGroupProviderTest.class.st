@@ -12,12 +12,12 @@ ClyOverriddenMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyOverriddenMethodGroupProviderTest >> groupProviderClass [
-	^ClyOverriddenMethodGroupProvider 
+	^ClyOverriddenMethodGroupProvider
 ]
 
 { #category : #running }
 ClyOverriddenMethodGroupProviderTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
+
 	environment addPlugin: ClyInheritanceAnalysisEnvironmentPlugin new
 ]

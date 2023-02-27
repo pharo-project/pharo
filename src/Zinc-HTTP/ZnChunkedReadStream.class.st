@@ -9,7 +9,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnChunkedReadStream,
-	#superclass : #Stream,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'chunk',
@@ -22,11 +22,6 @@ Class {
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }
-
-{ #category : #'instance creation' }
-ZnChunkedReadStream class >> new [
-	^ super new initialize
-]
 
 { #category : #'instance creation' }
 ZnChunkedReadStream class >> on: stream [
@@ -52,33 +47,35 @@ ZnChunkedReadStream >> chunkCount [
 	^ chunkCount
 ]
 
+{ #category : #'initialize-release' }
+ZnChunkedReadStream >> close [
+	stream ifNotNil: [ stream close. stream := nil ]
+]
+
 { #category : #accessing }
 ZnChunkedReadStream >> collectionSpecies [
 	^ self isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]
-	
 ]
 
 { #category : #accessing }
 ZnChunkedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
-	
+
 	^ self upToEnd
 ]
 
 { #category : #private }
 ZnChunkedReadStream >> ensureChunkBufferOfSize: size [
-	(chunk notNil and: [ size <= chunk size ]) ifTrue: [ ^ self ].  
-	chunk := self collectionSpecies new: size.
-
+	(chunk notNil and: [ size <= chunk size ]) ifTrue: [ ^ self ].
+	chunk := self collectionSpecies new: size
 ]
 
 { #category : #private }
 ZnChunkedReadStream >> ensureChunkOrAtEnd [
-	atEnd 
+	atEnd
 		ifTrue: [ ^ self ].
-	(chunk isNil or: [ position >= limit ]) 
+	(chunk isNil or: [ position >= limit ])
 		ifTrue: [ self getNextChunk ]
-
 ]
 
 { #category : #accessing }
@@ -102,7 +99,7 @@ ZnChunkedReadStream >> getNextChunk [
 		ifFalse: [
 			totalSize := totalSize + size.
 			chunkCount := chunkCount + 1.
-			self ensureChunkBufferOfSize: size.  
+			self ensureChunkBufferOfSize: size.
 			stream next: size into: chunk.
 			stream next: 2. "consume CRLF"
 			limit := size.
@@ -126,15 +123,19 @@ ZnChunkedReadStream >> initialize [
 { #category : #testing }
 ZnChunkedReadStream >> isBinary [
 	^ stream isBinary
+]
 
+{ #category : #testing }
+ZnChunkedReadStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
 ZnChunkedReadStream >> match: subCollection [
-	"Try to read and match the elements of subCollection. 
+	"Try to read and match the elements of subCollection.
 	If successful return true and leave the me positioned after the match.
 	If unsuccesful return false and leave me at end."
-	
+
 	| buffer pattern bufferPosition bufferLimit |
 	pattern := subCollection readStream.
 	"we have to use an internal buffer because we are not positionable"
@@ -143,8 +144,8 @@ ZnChunkedReadStream >> match: subCollection [
 	[ pattern atEnd ] whileFalse: [ | nextElement |
 		self atEnd ifTrue: [ ^ false ].
 		"get the next char to match either from the buffer or from the stream while buffering it"
-		(bufferPosition < bufferLimit) 
-			ifTrue: [ 
+		(bufferPosition < bufferLimit)
+			ifTrue: [
 				nextElement := buffer at: bufferPosition + 1 ]
 			ifFalse: [
 				nextElement := buffer at: bufferPosition + 1 put: self next.
@@ -169,12 +170,12 @@ ZnChunkedReadStream >> next [
 ]
 
 { #category : #accessing }
-ZnChunkedReadStream >> next: requestedCount [ 
+ZnChunkedReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -182,7 +183,7 @@ ZnChunkedReadStream >> next: requestedCount [
 ZnChunkedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: requestedCount
 		into: collection
@@ -193,11 +194,11 @@ ZnChunkedReadStream >> next: requestedCount into: collection [
 ZnChunkedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| readCount |
-	readCount := self 
-		readInto: collection 
-		startingAt: offset 
+	readCount := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
 	^ requestedCount = readCount
 		ifTrue: [ collection ]
@@ -218,16 +219,9 @@ ZnChunkedReadStream >> peek [
 
 { #category : #accessing }
 ZnChunkedReadStream >> position [
-	^ self atEnd 
+	^ self atEnd
 		ifTrue: [ totalSize ]
 		ifFalse: [ totalSize - chunk size + position ]
-]
-
-{ #category : #printing }
-ZnChunkedReadStream >> printOn: aStream [
-	aStream 
-		nextPutAll: 'a '; 
-		nextPutAll: self class name
 ]
 
 { #category : #accessing }
@@ -239,10 +233,10 @@ ZnChunkedReadStream >> readInto: collection startingAt: offset count: requestedC
 	read := 0.
 	[ read < requestedCount and: [ self atEnd not] ] whileTrue: [
 		toRead := (limit - position) min: (requestedCount - read).
-		collection 
-			replaceFrom: offset + read 
-			to: offset + read + toRead - 1 
-			with: chunk 
+		collection
+			replaceFrom: offset + read
+			to: offset + read + toRead - 1
+			with: chunk
 			startingAt: position + 1.
 		read := read + toRead.
 		position := position + toRead ].
@@ -265,9 +259,9 @@ ZnChunkedReadStream >> totalSize [
 ]
 
 { #category : #accessing }
-ZnChunkedReadStream >> upTo: anObject [ 
+ZnChunkedReadStream >> upTo: anObject [
 	"We use our own collectionSpecies."
-	
+
 	^ self collectionSpecies streamContents: [ :out | | element |
 		[ self atEnd or: [ (element := self next) = anObject ] ]
 			whileFalse: [ out nextPut: element ] ]
@@ -278,7 +272,7 @@ ZnChunkedReadStream >> upToEnd [
 	"We use our own collectionSpecies and read by chunk"
 
 	^ self collectionSpecies streamContents: [ :out |
-		[ self atEnd ] whileFalse: [ 
+		[ self atEnd ] whileFalse: [
 			out next: limit putAll: chunk.
 			position := limit ] ]
 ]

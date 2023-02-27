@@ -29,22 +29,22 @@ GroupWindowMorph >> addWindow: aSystemWindow [
 
 	aSystemWindow isTopWindow
 		ifTrue: [SystemWindow passivateTopWindow].
-		
+
 	self tabGroup
 		addPage: aSystemWindow configureForEmbedding
 		label: (self tabLabelFor: aSystemWindow);
 		selectedPageIndex: self tabGroup pages size.
-		
+
 	self isActive ifFalse: [self tabGroup selectedTab passivate].
-	
+
 	self tabGroup selectedTab
 		on: #startDrag
 		send: #dragTab:event:in:
 		to: self
 		withValue: aSystemWindow.
-		
+
 	aSystemWindow announcer
-		when: WindowLabelled 
+		when: WindowLabelled
 		send: #onWindowLabelChanged:
 		to: self
 ]
@@ -55,7 +55,7 @@ GroupWindowMorph >> changePropotionalLayout [
 	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
-	self layoutChanged.
+	self layoutChanged
 ]
 
 { #category : #initialize }
@@ -66,7 +66,7 @@ GroupWindowMorph >> defaultColor [
 { #category : #'dropping/grabbing' }
 GroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	"Drag a tab. Remove the window from the organiser and place in hand."
-	
+
 	self removeWindow: aSystemWindow.
 	aSystemWindow position: anEvent targetPoint.
 	anEvent hand grabMorph: aSystemWindow
@@ -90,7 +90,7 @@ GroupWindowMorph >> grabWindow [
 { #category : #'events-processing' }
 GroupWindowMorph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
-	
+
 	| aMorph |
 	aMorph := anEvent contents.
 	"Ignore whether the dropping morph wants to be dropped, just whether the receiver wants it"
@@ -99,7 +99,6 @@ GroupWindowMorph >> handleDropMorph: anEvent [
 	anEvent wasHandled: true.
 	self acceptDroppingMorph: aMorph event: anEvent.
 	aMorph justDroppedInto: self event: anEvent
-
 ]
 
 { #category : #initialization }
@@ -113,8 +112,7 @@ GroupWindowMorph >> initialize [
 	self
 		dropEnabled: true;
 		addMorph: self tabGroup fullFrame: LayoutFrame identity.
-	self tabGroup color: Color transparent.
-	
+	self tabGroup color: Color transparent
 ]
 
 { #category : #testing }
@@ -127,7 +125,7 @@ GroupWindowMorph >> isWindowActive: aSystemWindow [
 	"Answer whether the given window is active.
 	True if the receiver is active and the window is the
 	current page."
-	
+
 	^ self tabGroup page == aSystemWindow and: [aSystemWindow isTopWindow ]
 ]
 
@@ -148,7 +146,7 @@ GroupWindowMorph >> offerWindowMenu [
 	aMenu
 		addLine;
 		add: 'Grab window...' target: self selector: #grabWindow.
-	aMenu lastItem icon: (self iconNamed: #smallWindowIcon).
+	aMenu lastItem icon: (self iconNamed: #smallWindow).
 	self tabGroup page
 		ifNotNil: [ :page | page model addModelItemsToWindowMenu: aMenu ].
 	aMenu popUpEvent: self currentEvent in: self world
@@ -162,7 +160,7 @@ GroupWindowMorph >> okToChange [
 
 { #category : #windows }
 GroupWindowMorph >> onWindowLabelChanged: ann [
-	self tabGroup relabelPage: ann window with: (self tabLabelFor: ann window)  
+	self tabGroup relabelPage: ann window with: (self tabLabelFor: ann window)
 ]
 
 { #category : #windows }
@@ -230,11 +228,11 @@ GroupWindowMorph >> update: aSymbol with: anObject [
 { #category : #'dropping/grabbing' }
 GroupWindowMorph >> wantsDroppedMorph: aMorph event: evt [
   "Accept if a SystemWindow."
-  
+
   self visible ifFalse: [^ false].
   self dropEnabled ifFalse: [^ false].
-  
+
   (self tabGroup tabSelectorMorph bounds containsPoint: evt position) ifFalse: [^ false].
-  
+
   ^aMorph isSystemWindow
 ]

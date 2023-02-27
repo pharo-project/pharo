@@ -40,33 +40,30 @@ FastDraggingFrameMorph class >> forDragging: aWindow clickedAt: aPoint [
 { #category : #'instance creation' }
 FastDraggingFrameMorph class >> forResizing: aWindow fromLocation: aSideOrCorner [
 	| b  |
-	b := self new.	
+	b := self new.
 	b target: aWindow.
 	b location: aSideOrCorner.
-	^ b 
+	^ b
 ]
 
 { #category : #initialization }
-FastDraggingFrameMorph >> defaultBorderColor [ 
-	^ Color gray 
+FastDraggingFrameMorph >> defaultBorderColor [
+	^ Color gray
 ]
 
 { #category : #initialization }
 FastDraggingFrameMorph >> defaultBorderWidth [
-	^ 2.
-	
+	^ 2
 ]
 
 { #category : #initialization }
-FastDraggingFrameMorph >> defaultColor [ 
-	^ Color gray alpha: 0.15.
-	
+FastDraggingFrameMorph >> defaultColor [
+	^ Color gray alpha: 0.15
 ]
 
 { #category : #'event handling' }
 FastDraggingFrameMorph >> draggedTo: aPoint [
 	self position: aPoint + startGap
-
 ]
 
 { #category : #'event handling' }
@@ -88,19 +85,18 @@ FastDraggingFrameMorph >> location: aSymbol [
 { #category : #'event handling' }
 FastDraggingFrameMorph >> mouseDown: evt [
 	"Normally, should not be possible"
-	self delete 
+	self delete
 ]
 
 { #category : #'event handling' }
 FastDraggingFrameMorph >> mouseMove: evt [
-	self isForDragging 
+	self isForDragging
 		ifTrue: [self draggedTo: evt position]
 		ifFalse: [self reframedTo: evt position]
-
 ]
 
 { #category : #'event handling' }
-FastDraggingFrameMorph >> mouseUp: evt [ 
+FastDraggingFrameMorph >> mouseUp: evt [
 	target
 		ifNotNil: [Display
 				deferUpdatesIn: Display boundingBox
@@ -109,14 +105,14 @@ FastDraggingFrameMorph >> mouseUp: evt [
 ]
 
 { #category : #'event handling' }
-FastDraggingFrameMorph >> reframedTo: aPoint [ 
+FastDraggingFrameMorph >> reframedTo: aPoint [
 	self
 		bounds: (self bounds withSideOrCorner: location setToPoint: aPoint)
 ]
 
 { #category : #accessing }
 FastDraggingFrameMorph >> startGap: aPoint [
-	"APoint is the distance between the window position and the first click position" 
+	"APoint is the distance between the window position and the first click position"
 	startGap := aPoint
 ]
 
@@ -126,7 +122,7 @@ FastDraggingFrameMorph >> target [
 ]
 
 { #category : #accessing }
-FastDraggingFrameMorph >> target: aSystemWindow [ 
+FastDraggingFrameMorph >> target: aSystemWindow [
 	target := aSystemWindow.
 	self color: (target paneColor alpha: 0.35).
 	self bounds: aSystemWindow bounds.
@@ -135,7 +131,7 @@ FastDraggingFrameMorph >> target: aSystemWindow [
 
 { #category : #accessing }
 FastDraggingFrameMorph >> wantsToBeTopmost [
-	"Answer if the receiver want to be one of the topmost objects in 
+	"Answer if the receiver want to be one of the topmost objects in
 	its owner"
 	^ true
 ]

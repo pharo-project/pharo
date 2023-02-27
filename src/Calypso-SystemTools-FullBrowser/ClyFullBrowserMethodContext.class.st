@@ -10,7 +10,7 @@ Class {
 { #category : #'selection strategy' }
 ClyFullBrowserMethodContext class >> selectionStrategy [
 	<classAnnotation>
-	
+
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethod
 ]
 
@@ -22,5 +22,5 @@ ClyFullBrowserMethodContext >> restoreBrowserState [
 
 { #category : #'selection-methods' }
 ClyFullBrowserMethodContext >> selectedMethodItems [
-	^selectedItems 
+	^selectedItems
 ]

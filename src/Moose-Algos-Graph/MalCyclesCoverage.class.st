@@ -27,7 +27,7 @@ MalCyclesCoverage >> directCircuit: aCollection [
 MalCyclesCoverage >> initialize [
 
 	super initialize.
-	self useNodeDecomposition 
+	self useNodeDecomposition
 ]
 
 { #category : #accessing }
@@ -58,17 +58,17 @@ MalCyclesCoverage >> run [
 { #category : #running }
 MalCyclesCoverage >> useCircuitSpan [
 
-	sccExtractorClass := MalCircuitSpanningEdges  
+	sccExtractorClass := MalCircuitSpanningEdges
 ]
 
 { #category : #running }
 MalCyclesCoverage >> useEdgeDecomposition [
 
-	sccExtractorClass := MalSccEdgeDecomposition 
+	sccExtractorClass := MalSccEdgeDecomposition
 ]
 
 { #category : #running }
 MalCyclesCoverage >> useNodeDecomposition [
 
-	sccExtractorClass := MalSccNodeDecomposition 
+	sccExtractorClass := MalSccNodeDecomposition
 ]

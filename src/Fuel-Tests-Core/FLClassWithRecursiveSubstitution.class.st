@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Support-Mocks'
 }
 
 { #category : #serialization }
@@ -30,5 +30,5 @@ FLClassWithRecursiveSubstitution >> index [
 
 { #category : #accessing }
 FLClassWithRecursiveSubstitution >> index: anObject [
-	index := anObject 
+	index := anObject
 ]

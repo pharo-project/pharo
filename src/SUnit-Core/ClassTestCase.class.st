@@ -25,7 +25,6 @@ ClassTestCase class >> isAbstract [
 	TestCase instances built from it"
 
 	^self name = #ClassTestCase
-			
 ]
 
 { #category : #testing }
@@ -37,104 +36,112 @@ ClassTestCase class >> mustTestCoverage [
 { #category : #private }
 ClassTestCase >> categoriesForClass: aClass [
 
- ^ aClass organization allMethodSelectors collect: 
-			[:each |  aClass organization categoryOfElement: each].
-
+	^ aClass organization allMethodSelectors collect: [ :each |
+		  aClass organization categoryOfElement: each ]
 ]
 
 { #category : #coverage }
 ClassTestCase >> classToBeTested [
-	
+
 	^ self subclassResponsibility
 ]
 
 { #category : #utilities }
 ClassTestCase >> differentMethodsWithSameSelectorBetween: firstClass and: secondClass [
+
 	| repeatedSelectors differentMethodsWithSameSelector |
-	
 	repeatedSelectors := firstClass localSelectors intersection: secondClass localSelectors.
-	
-	differentMethodsWithSameSelector := repeatedSelectors select: [ :selector | | m1 m2| 
-										 m1 := firstClass>>selector. 
+
+	differentMethodsWithSameSelector := repeatedSelectors select: [ :selector | | m1 m2|
+										 m1 := firstClass>>selector.
 										 m2 := secondClass>>selector.
 										 m1 sourceCode ~= m2 sourceCode].
-									
-	^differentMethodsWithSameSelector.
+
+	^ differentMethodsWithSameSelector
 ]
 
 { #category : #utilities }
 ClassTestCase >> repeatedMethodsThatDoNotAccessInstanceVariablesBetween: firstClass and: secondClass [
+
 	| repeatedSelectors repeatedMethodsThatDoNotAccessInstanceVariables |
-	
 	repeatedSelectors := firstClass localSelectors intersection: secondClass localSelectors.
-	
-	repeatedMethodsThatDoNotAccessInstanceVariables := repeatedSelectors select: [ :selector | | m1 m2| 
-										 m1 := firstClass>>selector. 
+
+	repeatedMethodsThatDoNotAccessInstanceVariables := repeatedSelectors select: [ :selector | | m1 m2|
+										 m1 := firstClass>>selector.
 										 m2 := secondClass>>selector.
 										((m1 sourceCode = m2 sourceCode) and: [ m1 hasInstVarRef not ]) and: [ m2 hasInstVarRef not ]].
-									
-	^repeatedMethodsThatDoNotAccessInstanceVariables.
+
+	^ repeatedMethodsThatDoNotAccessInstanceVariables
 ]
 
 { #category : #coverage }
 ClassTestCase >> selectorsNotTested [
 
-	^ self selectorsToBeTested difference: self selectorsTested.
-
+	^ self selectorsToBeTested difference: self selectorsTested
 ]
 
 { #category : #coverage }
 ClassTestCase >> selectorsTested [
+
 	| literals |
 	literals := Set new.
-	self class
-		selectorsAndMethodsDo: [ :s :m | (s beginsWith: 'test')
-			ifTrue: [ literals addAll: (m messages)] ].
+	self class selectorsAndMethodsDo: [ :s :m |
+		(s beginsWith: 'test') ifTrue: [ literals addAll: m messages ] ].
 	^ literals asArray sort
 ]
 
 { #category : #coverage }
 ClassTestCase >> selectorsToBeIgnored [
-	^ #()
+
+	^ #(  )
 ]
 
 { #category : #coverage }
 ClassTestCase >> selectorsToBeTested [
 
-	^ ( { self classToBeTested. self classToBeTested class } flatCollect: [:c | c selectors]) 
-			difference: self selectorsToBeIgnored
+	^ ({
+		   self classToBeTested.
+		   self classToBeTested class } flatCollect: [ :c | c selectors ])
+		  difference: self selectorsToBeIgnored
 ]
 
 { #category : #private }
 ClassTestCase >> targetClass [
+
 	[ ^ self classToBeTested ]
 		on: Error
-		do: [ 
+		do: [
 			| className |
-			className := self class name asString copyFrom: 1 to: self class name size - 4.
+			className := self class name asString
+				             copyFrom: 1
+				             to: self class name size - 4.
 			^ testingEnvironment at: className asString asSymbol ]
 ]
 
 { #category : #tests }
 ClassTestCase >> testCoverage [
 
-	| untested | 
-	self class mustTestCoverage ifTrue:
-		[ untested := self selectorsNotTested.
-		self assert: untested isEmpty 
-		description: untested size asString, ' selectors are not covered' ]
+	| untested |
+	self class mustTestCoverage ifTrue: [
+		untested := self selectorsNotTested.
+		self
+			assert: untested isEmpty
+			description: untested size asString , ' selectors are not covered' ]
 ]
 
 { #category : #tests }
 ClassTestCase >> testNew [
+
 	self targetClass new
 ]
 
 { #category : #tests }
 ClassTestCase >> testUnCategorizedMethods [
-	| uncategorizedMethods  |
-	uncategorizedMethods := self targetClass selectorsInProtocol: Protocol unclassified.
-	self 
+
+	| uncategorizedMethods |
+	uncategorizedMethods := self targetClass selectorsInProtocol:
+		                        Protocol unclassified.
+	self
 		assert: uncategorizedMethods isEmpty
-		description: uncategorizedMethods asString	
+		description: uncategorizedMethods asString
 ]

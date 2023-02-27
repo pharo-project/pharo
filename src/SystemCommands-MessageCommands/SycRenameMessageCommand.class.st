@@ -17,12 +17,12 @@ Class {
 }
 
 { #category : #requesting }
-SycRenameMessageCommand >> canAddArgs [ 
+SycRenameMessageCommand >> canAddArgs [
 	^false
 ]
 
 { #category : #requesting }
-SycRenameMessageCommand >> canRemoveArgs [ 
+SycRenameMessageCommand >> canRemoveArgs [
 	^ false
 ]
 
@@ -31,17 +31,16 @@ SycRenameMessageCommand >> createRefactoring [
 
 	^ (RBRenameMethodRefactoring
 		model: model
-		renameMethod: originalMessage selector 
+		renameMethod: originalMessage selector
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
-		to: newSignature selector 
+		to: newSignature selector
 		permutation: newSignature permutation)
-		renameMap: newSignature renameMap
+			renameMap: newSignature renameMap
 ]
 
 { #category : #accessing }
 SycRenameMessageCommand >> defaultMenuIconName [
 	^#edit
-
 ]
 
 { #category : #accessing }
@@ -64,8 +63,6 @@ SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	newSignature := self requestNewMessageIn: aToolContext
-	
-
 ]
 
 { #category : #execution }

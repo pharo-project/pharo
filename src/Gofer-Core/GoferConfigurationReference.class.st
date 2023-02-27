@@ -28,7 +28,7 @@ GoferConfigurationReference >> isConfigurationReference [
 { #category : #accessing }
 GoferConfigurationReference >> name [
 
-	^ self configurationName 
+	^ self configurationName
 ]
 
 { #category : #accessing }

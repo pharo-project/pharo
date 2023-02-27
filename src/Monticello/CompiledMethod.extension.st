@@ -26,7 +26,7 @@ CompiledMethod >> basicAsMCMethodDefinition [
 
 	^ MCMethodDefinition
 		  className: self methodClass instanceSide name
-		  classIsMeta: self methodClass isClassSide
+		  classIsMeta: self isClassSide
 		  selector: self selector
 		  category: self protocol
 		  timeStamp: self stamp
@@ -35,15 +35,11 @@ CompiledMethod >> basicAsMCMethodDefinition [
 
 { #category : #'*Monticello' }
 CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
-	^ anMCMethodDefinition selector = self selector
-		and:
-			[ 
-			anMCMethodDefinition className = self className
-				and:
-					[ 
-					anMCMethodDefinition classIsMeta = self methodClass isClassSide
-						and:
-							[ 
-							anMCMethodDefinition category = self protocol
-								and: [ anMCMethodDefinition source = self sourceCode ] ] ] ]
+
+	^ anMCMethodDefinition selector = self selector and: [ 
+		  anMCMethodDefinition className = self className and: [ 
+			  anMCMethodDefinition classIsMeta = self isClassSide 
+				  and: [ 
+					  anMCMethodDefinition category = self protocol and: [ 
+						  anMCMethodDefinition source = self sourceCode ] ] ] ]
 ]

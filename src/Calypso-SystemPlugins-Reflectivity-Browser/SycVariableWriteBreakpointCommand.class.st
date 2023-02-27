@@ -23,5 +23,5 @@ SycVariableWriteBreakpointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycVariableWriteBreakpointCommand >> installVariableBreakpointInTargetClass [
-	VariableBreakpoint watchVariablesWritesInClass: targetClass 
+	VariableBreakpoint watchVariablesWritesInClass: targetClass
 ]

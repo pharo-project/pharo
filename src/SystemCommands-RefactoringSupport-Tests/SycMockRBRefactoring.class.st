@@ -1,17 +1,24 @@
+"
+I am a mock to emulate a RBRefactoring
+"
 Class {
 	#name : #SycMockRBRefactoring,
 	#superclass : #Object,
+	#instVars : [
+		'environment'
+	],
 	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }
 SycMockRBRefactoring >> environment [
-	^ self
+	^ environment
 ]
 
 { #category : #accessing }
 SycMockRBRefactoring >> environment: anEnvironement [
-	^ self
+
+	environment := anEnvironement
 ]
 
 { #category : #accessing }
@@ -20,16 +27,16 @@ SycMockRBRefactoring >> model [
 ]
 
 { #category : #accessing }
-SycMockRBRefactoring >> model: aRBNamespace [ 
-	^ self 	
+SycMockRBRefactoring >> model: aRBNamespace [
+	^ self
 ]
 
 { #category : #accessing }
-SycMockRBRefactoring >> primitiveExecute [ 
-	^self 
+SycMockRBRefactoring >> primitiveExecute [
+	^self
 ]
 
 { #category : #accessing }
-SycMockRBRefactoring >> whatToDisplayIn: aBrowser [ 
+SycMockRBRefactoring >> whatToDisplayIn: aBrowser [
 	^ aBrowser scopeDropList selectedItem content
 ]

@@ -30,16 +30,16 @@ RBSmalllintContext >> buildParseTree [
 
 	| tree |
 
-	tree := self selectedClass parseTreeFor: self selector.
+	tree := self selectedClass parseTreeForSelector: self selector.
 	tree ifNil: [ ^ RBParser parseMethod: 'method' ].
 	^ tree
 ]
 
 { #category : #private }
-RBSmalllintContext >> checkLiteral: aLiteral [ 
+RBSmalllintContext >> checkLiteral: aLiteral [
 	(aLiteral isSymbol or: [aLiteral isVariableBinding])
 		ifTrue: [literals add: aLiteral]
-		ifFalse: 
+		ifFalse:
 			[aLiteral class == Array
 				ifTrue: [aLiteral do: [:each | self checkLiteral: each]]]
 ]
@@ -58,9 +58,9 @@ RBSmalllintContext >> computeLiterals [
 ]
 
 { #category : #private }
-RBSmalllintContext >> computeLiteralsForClass: aClass [ 
-	(selectors addAll: aClass selectors) do: 
-			[:sel | 
+RBSmalllintContext >> computeLiteralsForClass: aClass [
+	(selectors addAll: aClass selectors) do:
+			[:sel |
 			self computeLiteralsForSelector: sel in: aClass.
 			Processor yield]
 ]
@@ -76,7 +76,7 @@ RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
 ]
 
 { #category : #testing }
-RBSmalllintContext >> implements: aSelector [ 
+RBSmalllintContext >> implements: aSelector [
 	^self selectors includes: aSelector
 ]
 
@@ -102,8 +102,8 @@ RBSmalllintContext >> instVarNames [
 ]
 
 { #category : #testing }
-RBSmalllintContext >> isAbstract: aClass [ 
-	^(aClass isMeta or: 
+RBSmalllintContext >> isAbstract: aClass [
+	^(aClass isMeta or:
 			[(self literals includes: aClass name)
 				or: [self literals includes: (Smalltalk globals associationAt: aClass name)]])
 		not
@@ -185,7 +185,7 @@ RBSmalllintContext >> selectedClass [
 ]
 
 { #category : #accessing }
-RBSmalllintContext >> selectedClass: anObject [ 
+RBSmalllintContext >> selectedClass: anObject [
 	class := anObject.
 	self selector: nil
 ]
@@ -196,7 +196,7 @@ RBSmalllintContext >> selector [
 ]
 
 { #category : #accessing }
-RBSmalllintContext >> selector: anObject [ 
+RBSmalllintContext >> selector: anObject [
 	selector := anObject.
 	parseTree := compiledMethod := nil
 ]
@@ -217,7 +217,6 @@ RBSmalllintContext >> selectors [
 { #category : #accessing }
 RBSmalllintContext >> selfMessages [
     ^self parseTree selfMessages
-
 ]
 
 { #category : #private }
@@ -229,7 +228,7 @@ RBSmalllintContext >> signalProcesses: aSemaphore [
 
 { #category : #accessing }
 RBSmalllintContext >> sourceCode [
-	^self selectedClass sourceCodeAt: self selector ifAbsent: [ '' ].
+	^self selectedClass sourceCodeAt: self selector ifAbsent: [ '' ]
 ]
 
 { #category : #private }
@@ -238,16 +237,15 @@ RBSmalllintContext >> specialSelectors [
 	answer := IdentityDictionary new.
 	(Smalltalk specialSelectors select: [:sel | sel isSymbol]) do:
 		[:sel | answer at: sel put: nil.].
-	^answer.
+	^answer
 ]
 
 { #category : #accessing }
 RBSmalllintContext >> superMessages [
     ^self parseTree superMessages
-
 ]
 
 { #category : #testing }
-RBSmalllintContext >> uses: anObject [ 
+RBSmalllintContext >> uses: anObject [
 	^self literals includes: anObject
 ]

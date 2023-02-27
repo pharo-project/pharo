@@ -42,21 +42,33 @@ CairoScaledFont class >> fromFreetypeFont: aFont cairoFace: face [
 
 	| options fontMatrix deviceMatrix font |
 
-	options := CairoBackendCache soleInstance 
+	options := CairoBackendCache soleInstance
 		at: #AAOptions ifAbsentPut: [ CairoFontOptions new ].
 	fontMatrix := AthensCairoMatrix new.
 	deviceMatrix := AthensCairoMatrix new.
 
-	fontMatrix scaleBy: (TextStyle pointsToPixels: aFont pointSize).
-	
-	font := self primCreate: face fontMatrix: fontMatrix  userToDeviceMatrix: deviceMatrix options: options. 
-	
+	fontMatrix scaleBy: (self pointsToPixels: aFont pointSize).
+
+	font := self primCreate: face fontMatrix: fontMatrix  userToDeviceMatrix: deviceMatrix options: options.
+
 	"to keep a reference to cairo face in instance"
 	^ (font initWithFace: face)
 			freeTypeFont: aFont;
-			yourself.
-	
+			yourself
+]
 
+{ #category : #private }
+CairoScaledFont class >> pixelsPerInch [
+
+	self flag: #TODO. "Hardcoded, but it need to come from the right place (which varies depending on
+	the graphics backend)"
+	^ 96.0
+]
+
+{ #category : #accessing }
+CairoScaledFont class >> pointsToPixels: points [
+
+	^ points * self pixelsPerInch / 72.0
 ]
 
 { #category : #private }
@@ -85,13 +97,12 @@ options :
 Returns :
 	a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
 "
-	^ self ffiCall: #( 
+	^ self ffiCall: #(
 		CairoScaledFont cairo_scaled_font_create (
 			CairoFontFace face,
 			AthensCairoMatrix * fontMatrix,
 			AthensCairoMatrix * ctm,
 			CairoFontOptions  options ) )
- 
 ]
 
 { #category : #accessing }
@@ -100,13 +111,13 @@ CairoScaledFont >> extents [
 	extents := CairoFontExtents new.
 
 	self getExtents: extents.
-	
+
 	^ extents
 ]
 
 { #category : #accessing }
-CairoScaledFont >> freeTypeFont: aFreeTypeFont [ 
-	
+CairoScaledFont >> freeTypeFont: aFreeTypeFont [
+
 	freeTypeFont := aFreeTypeFont
 ]
 
@@ -116,11 +127,10 @@ CairoScaledFont >> getExtents: cairoFontExtents [
                                                          cairo_font_extents_t *extents);
 	"
 	^ self ffiCall: #(int cairo_scaled_font_extents (self, CairoFontExtents * cairoFontExtents ))
-		
 ]
 
 { #category : #accessing }
-CairoScaledFont >> getExtentsOf: utf8String into: extentObj [ 
+CairoScaledFont >> getExtentsOf: utf8String into: extentObj [
 	"void                cairo_scaled_font_extents           (cairo_scaled_font_t *scaled_font,
                                                          cairo_font_extents_t *extents);
 	"
@@ -128,11 +138,10 @@ CairoScaledFont >> getExtentsOf: utf8String into: extentObj [
 		void cairo_scaled_font_text_extents (self,
 			void *utf8String,
 			cairo_text_extents_t * extentObj))
-		
 ]
 
 { #category : #accessing }
-CairoScaledFont >> getExtentsOfGlyphs: glyphs ofLength: num into: extents [ 
+CairoScaledFont >> getExtentsOfGlyphs: glyphs ofLength: num into: extents [
 	"void
 	cairo_scaled_font_glyph_extents (cairo_scaled_font_t *scaled_font,
                                  const cairo_glyph_t *glyphs,
@@ -143,7 +152,6 @@ CairoScaledFont >> getExtentsOfGlyphs: glyphs ofLength: num into: extents [
                                             void *glyphs,
                                             int num,
                                             cairo_text_extents_t *extents))
-		
 ]
 
 { #category : #accessing }
@@ -166,14 +174,14 @@ CairoScaledFont >> getFontScaleMatrixInto: cairoFontMatrix [
 CairoScaledFont >> initWithFace: cairo_face [
 
 	face := cairo_face.
-	
-	self autoRelease.
+
+	self autoRelease
 ]
 
 { #category : #initialization }
-CairoScaledFont >> initialize [ 
+CairoScaledFont >> initialize [
 	super initialize.
-	self status ~= CAIRO_STATUS_SUCCESS 
+	self status ~= CAIRO_STATUS_SUCCESS
 		ifTrue: [ self error: 'Something is wrong!' ].
 	self autoRelease
 ]
@@ -185,12 +193,12 @@ CairoScaledFont >> lock [
 FT_Face             cairo_ft_scaled_font_lock_face      (cairo_scaled_font_t *scaled_font);
 
 "
-	^ self ffiCall: #( 
-		void cairo_ft_scaled_font_lock_face (self)) 
+	^ self ffiCall: #(
+		void cairo_ft_scaled_font_lock_face (self))
 ]
 
 { #category : #'external resource management' }
-CairoScaledFont >> resourceData [ 
+CairoScaledFont >> resourceData [
 	^ handle value
 ]
 
@@ -198,7 +206,6 @@ CairoScaledFont >> resourceData [
 CairoScaledFont >> status [
 "cairo_status_t      cairo_scaled_font_status            (cairo_scaled_font_t *scaled_font);"
 	^ self ffiCall: #(int cairo_scaled_font_status (self))
-		
 ]
 
 { #category : #locking }
@@ -208,6 +215,6 @@ CairoScaledFont >> unlock [
 FT_Face             cairo_ft_scaled_font_lock_face      (cairo_scaled_font_t *scaled_font);
 
 "
-	^ self ffiCall: #( 
-		void cairo_ft_scaled_font_unlock_face  (self)) 
+	^ self ffiCall: #(
+		void cairo_ft_scaled_font_unlock_face  (self))
 ]

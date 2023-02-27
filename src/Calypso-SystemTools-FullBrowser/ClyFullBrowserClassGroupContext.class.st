@@ -10,22 +10,22 @@ Class {
 { #category : #'selection strategy' }
 ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	<classAnnotation>
-	
+
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClassGroup
 ]
 
 { #category : #testing }
 ClyFullBrowserClassGroupContext >> isClassGroupSelected [
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #testing }
 ClyFullBrowserClassGroupContext >> isClassTagSelected [
 	| classGroupClass |
 	self isClassGroupSelected ifFalse: [ ^false ].
-	
+
 	classGroupClass := self lastSelectedItem type.
-	
+
 	^classGroupClass isBasedOnClassTag
 ]
 
@@ -41,8 +41,8 @@ ClyFullBrowserClassGroupContext >> lastSelectedClassGroup [
 
 { #category : #'selection-class groups' }
 ClyFullBrowserClassGroupContext >> lastSelectedClassTag [
-	
-	^self lastSelectedObjectIn: self selectedClassTags 
+
+	^self lastSelectedObjectIn: self selectedClassTags
 ]
 
 { #category : #'selection-class groups' }
@@ -52,8 +52,8 @@ ClyFullBrowserClassGroupContext >> selectedClassGroups [
 
 { #category : #'selection-class groups' }
 ClyFullBrowserClassGroupContext >> selectedClassTags [
-	
-	^selectedItems 
-		select: [ :each | each type isBasedOnClassTag ] 
+
+	^selectedItems
+		select: [ :each | each type isBasedOnClassTag ]
 		thenCollect: [ :each | each name ]
 ]

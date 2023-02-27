@@ -145,7 +145,6 @@ AthensCairoDefinitions class >> init_cairo_subpixel_order_t [
     CAIRO_SUBPIXEL_ORDER_VRGB := 3.
     CAIRO_SUBPIXEL_ORDER_VBGR := 4.
 "} cairo_subpixel_order_t;"
-
 ]
 
 { #category : #'class initialization' }
@@ -156,7 +155,7 @@ AthensCairoDefinitions class >> initialize [
 	"
 
 	self
-		initialize_types; 
+		initialize_types;
 		initialize_cairo_format_t;
 		initialize_cairo_font_slant_t;
 		initialize_cairo_font_weight_t;
@@ -170,9 +169,7 @@ AthensCairoDefinitions class >> initialize [
 		initialize_cairo_antialias_t;
 		init_cairo_subpixel_order_t;
 		initialize_cairo_hint_metrics_t;
-		initialize_cairo_fill_rule_t.
-		
-
+		initialize_cairo_fill_rule_t
 ]
 
 { #category : #'private - initialization' }
@@ -191,7 +188,6 @@ AthensCairoDefinitions class >> initialize_cairo_antialias_t [
     CAIRO_ANTIALIAS_GOOD := 5.
     CAIRO_ANTIALIAS_BEST := 6.
 "} cairo_antialias_t; "
-
 ]
 
 { #category : #'private - initialization' }
@@ -202,17 +198,13 @@ AthensCairoDefinitions class >> initialize_cairo_extend_t [
     CAIRO_EXTEND_REFLECT :=2.
     CAIRO_EXTEND_PAD := 3.
 "} cairo_extend_t"
-
 ]
 
 { #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_fill_rule_t [
 "	typedef enum _cairo_status {"
    CAIRO_FILL_RULE_WINDING := 0.
-	CAIRO_FILL_RULE_EVEN_ODD := 1.
-
-    
-
+	CAIRO_FILL_RULE_EVEN_ODD := 1
 ]
 
 { #category : #'private - initialization' }
@@ -222,19 +214,16 @@ AthensCairoDefinitions class >> initialize_cairo_font_slant_t [
     CAIRO_FONT_SLANT_NORMAL := 0.
     CAIRO_FONT_SLANT_ITALIC := 1.
     CAIRO_FONT_SLANT_OBLIQUE := 2
-
-
 ]
 
 { #category : #'private - initialization' }
-AthensCairoDefinitions class >> initialize_cairo_font_type_t [ 
+AthensCairoDefinitions class >> initialize_cairo_font_type_t [
 	"typedef enum _cairo_font_type {"
     CAIRO_FONT_TYPE_TOY := 0.
     CAIRO_FONT_TYPE_FT := 1.
     CAIRO_FONT_TYPE_WIN32 := 2.
     CAIRO_FONT_TYPE_QUARTZ := 3.
-    CAIRO_FONT_TYPE_USER := 4.
-	
+    CAIRO_FONT_TYPE_USER := 4
 ]
 
 { #category : #'private - initialization' }
@@ -242,8 +231,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_weight_t [
 
 	"typedef enum _cairo_font_weight {"
     CAIRO_FONT_WEIGHT_NORMAL := 0.
-    CAIRO_FONT_WEIGHT_BOLD := 1.
-
+    CAIRO_FONT_WEIGHT_BOLD := 1
 ]
 
 { #category : #'private - initialization' }
@@ -263,8 +251,7 @@ AthensCairoDefinitions class >> initialize_cairo_hint_metrics_t [
 "typedef enum {"
     CAIRO_HINT_METRICS_DEFAULT := 0.
     CAIRO_HINT_METRICS_OFF := 1.
-    CAIRO_HINT_METRICS_ON := 2.
-
+    CAIRO_HINT_METRICS_ON := 2
 ]
 
 { #category : #'private - initialization' }
@@ -277,17 +264,14 @@ AthensCairoDefinitions class >> initialize_cairo_hint_style_t [
     CAIRO_HINT_STYLE_MEDIUM := 3.
     CAIRO_HINT_STYLE_FULL := 4.
 "} cairo_hint_style_t; "
-
-
 ]
 
 { #category : #'private - initialization' }
-AthensCairoDefinitions class >> initialize_cairo_line_cap_t [ 
+AthensCairoDefinitions class >> initialize_cairo_line_cap_t [
 	"typedef enum _cairo_line_cap { "
     CAIRO_LINE_CAP_BUTT := 0.
     CAIRO_LINE_CAP_ROUND := 1.
-    CAIRO_LINE_CAP_SQUARE := 2.
-
+    CAIRO_LINE_CAP_SQUARE := 2
 ]
 
 { #category : #'private - initialization' }
@@ -295,13 +279,11 @@ AthensCairoDefinitions class >> initialize_cairo_line_join_t [
 "	typedef enum _cairo_line_join {"
     CAIRO_LINE_JOIN_MITER := 0.
     CAIRO_LINE_JOIN_ROUND := 1.
-    CAIRO_LINE_JOIN_BEVEL := 2.
-
-
+    CAIRO_LINE_JOIN_BEVEL := 2
 ]
 
 { #category : #'private - initialization' }
-AthensCairoDefinitions class >> initialize_cairo_operator_t [ 
+AthensCairoDefinitions class >> initialize_cairo_operator_t [
 "	typedef enum _cairo_operator {"
     CAIRO_OPERATOR_CLEAR := 0.
 
@@ -378,21 +360,18 @@ AthensCairoDefinitions class >> initialize_cairo_status_t [
     CAIRO_STATUS_INVALID_SIZE:=32.
     CAIRO_STATUS_USER_FONT_NOT_IMPLEMENTED:=33.
     CAIRO_STATUS_DEVICE_TYPE_MISMATCH:=34.
-    CAIRO_STATUS_DEVICE_ERROR:=35.
-
-    
-
+    CAIRO_STATUS_DEVICE_ERROR:=35
 ]
 
 { #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_types [
-	
+
 	cairo_status_t := cairo_font_type_t :=  cairo_line_join_t  := cairo_line_cap_t := cairo_status_t := cairo_font_slant_t := cairo_font_weight_t := cairo_operator_t  := cairo_fill_rule_t := #int.
-	
+
 	cairo_pattern_t := #AthensCairoPatternPaint.
-	
+
 	cairo_t := #AthensCairoCanvas.
-	
+
 	cairo_surface_t := #AthensCairoSurface .
-	cairo_text_extents_t := #CairoTextExtents.
+	cairo_text_extents_t := #CairoTextExtents
 ]

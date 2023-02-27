@@ -85,34 +85,34 @@ ClyEnvironmentPlugin class >> enable [
 	isAutoActivated := true
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClyEnvironmentPlugin class >> initialize [
 	self isAbstract ifTrue: [ ^self ].
-	
+
 	ClyNavigationEnvironment installNewPlugin: self
 ]
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isAbstract [
-	^self = ClyEnvironmentPlugin 
+	^self = ClyEnvironmentPlugin
 ]
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isAutoActivated [
-	^isAutoActivated ifNil: [ true ] 
+	^isAutoActivated ifNil: [ true ]
 ]
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isAutoActivatedOn: aNavigationEnvironment [
-	^self isAbstract not & self isAutoActivated 
+	^self isAbstract not & self isAutoActivated
 		and: [ self isRelatedTo: aNavigationEnvironment system ]
 ]
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isRelatedTo: aSystem [
 	"My subclasses should decide what kind of system they are related to"
-	
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
 { #category : #controlling }

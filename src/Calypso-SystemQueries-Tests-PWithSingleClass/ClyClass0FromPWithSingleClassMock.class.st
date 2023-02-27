@@ -6,10 +6,10 @@ Class {
 
 { #category : #protocol }
 ClyClass0FromPWithSingleClassMock >> abstractMethod1 [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #protocol }
 ClyClass0FromPWithSingleClassMock >> abstractMethod2 [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

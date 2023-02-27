@@ -11,16 +11,17 @@ Class {
 SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 
 	| refactorings |
-	refactorings := classes flatCollect: [:eachClass |
-		eachClass	 slots collect: [:var | 
-			var createRefactoring: RBCreateAccessorsForVariableRefactoring for: eachClass]].
-	refactorings do: [ :each | 
-		each classVariable: false].
+	refactorings := classes flatCollect: [ :eachClass |
+		eachClass	 slots collect: [:var |
+				|accesorRefactoring|
+			accesorRefactoring :=  RBAddVariableAccessorTransformation instanceVariable: var name class:  eachClass .
+			accesorRefactoring asRefactoring
+			]].
 	^refactorings
 ]
 
 { #category : #accessing }
-SycGenerateAllInstVarAccessorsCommand >> defaultMenuIconName [ 
+SycGenerateAllInstVarAccessorsCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 

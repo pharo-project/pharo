@@ -19,17 +19,17 @@ RFArgumentsReification class >> key [
 
 { #category : #generate }
 RFArgumentsReification >> genForRBMessageNode [
-	^RBVariableNode named: self varName.
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
 RFArgumentsReification >> genForRBMethodNode [
-	^RBVariableNode named: self varName.
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
 RFArgumentsReification >> genForRBSequenceNode [
-	^RBVariableNode named: self varName.
+	^RBVariableNode named: self varName
 ]
 
 { #category : #preamble }
@@ -38,13 +38,13 @@ RFArgumentsReification >> preambleForMessage: aNode [
 	preamble := OrderedCollection new.
 	arguments := OrderedCollection new.
 
-	(1 to: aNode numArgs) reverseWithIndexDo: [:each :index |  
+	(1 to: aNode numArgs) reverseWithIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			preamble add:  (RFStorePopIntoTempNode named: name).
 	].
-	
-	(1 to: aNode numArgs) withIndexDo: [:each :index |  
+
+	(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).
@@ -52,7 +52,7 @@ RFArgumentsReification >> preambleForMessage: aNode [
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
-	^ preamble 
+	^ preamble
 ]
 
 { #category : #preamble }
@@ -62,7 +62,7 @@ RFArgumentsReification >> preambleForMethod: aNode [
 	arguments := aNode argumentNames collect: [ :name | RBVariableNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
-	^ preamble 
+	^ preamble
 ]
 
 { #category : #preamble }
@@ -72,7 +72,7 @@ RFArgumentsReification >> preambleSequence: aNode [
 	arguments := aNode parent argumentNames collect: [ :name | RBVariableNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
-	^ preamble 
+	^ preamble
 ]
 
 { #category : #generate }

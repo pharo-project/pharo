@@ -15,13 +15,13 @@ Class {
 
 { #category : #adding }
 CoFetcherSequence >> add: aCompletion [
-	
+
 	subcompletions add: aCompletion
 ]
 
 { #category : #resetting }
 CoFetcherSequence >> context: anObject [
-	
+
 	super context: anObject.
 	subcompletions do: [ :each | each context: anObject ]
 ]
@@ -29,6 +29,13 @@ CoFetcherSequence >> context: anObject [
 { #category : #enumerating }
 CoFetcherSequence >> entriesDo: aBlock [
 	subcompletions do: [ :completion | completion entriesDo: aBlock ]
+]
+
+{ #category : #enumerating }
+CoFetcherSequence >> filter: aFilter [
+
+	super filter: aFilter.
+	subcompletions do: [ :completion | completion filter: aFilter ]
 ]
 
 { #category : #initialization }
@@ -40,7 +47,7 @@ CoFetcherSequence >> initialize [
 
 { #category : #resetting }
 CoFetcherSequence >> reset [
-	
+
 	super reset.
-	subcompletions do: [ :each | each reset ].
+	subcompletions do: [ :each | each reset ]
 ]

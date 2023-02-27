@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 CDTraitCompositionSequenceNode >> isTraitSequenceNode [
-	
+
 	^ true
 ]
 
@@ -22,16 +22,15 @@ CDTraitCompositionSequenceNode >> sequence [
 ]
 
 { #category : #accessing }
-CDTraitCompositionSequenceNode >> sequence: aCollection [ 
+CDTraitCompositionSequenceNode >> sequence: aCollection [
 	sequence := aCollection
 ]
 
 { #category : #printing }
-CDTraitCompositionSequenceNode >> toString [ 
+CDTraitCompositionSequenceNode >> toString [
 	| res |
 	res := (self sequence at: 1) toString, ' + ', (self sequence at: 2) toString.
-	^ res	
-	
+	^ res
 ]
 
 { #category : #precedence }
@@ -41,6 +40,4 @@ CDTraitCompositionSequenceNode >> withPrecedenceOf: aCDTraitNode [
 			sequence: sequence;
 			preferedTrait: aCDTraitNode;
 			yourself
-
-
 ]

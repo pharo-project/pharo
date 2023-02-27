@@ -24,8 +24,7 @@ RubTextSegmentIconBox >> handlesMouseMove: evt [
 
 { #category : #'event handling' }
 RubTextSegmentIconBox >> mouseEnter: anEvent [
-	self color: (Color lightGray alpha: 0.04).
-
+	self color: (Color lightGray alpha: 0.04)
 ]
 
 { #category : #'event handling' }
@@ -33,22 +32,21 @@ RubTextSegmentIconBox >> mouseEnter: anEvent in: aSegment [
 	previouslyIn = aSegment
 		ifTrue: [ ^ self ].
 	previouslyIn := aSegment.
-	aSegment showMouseHasEntered 
+	aSegment showMouseHasEntered
 ]
 
 { #category : #'event handling' }
 RubTextSegmentIconBox >> mouseLeave: anEvent [
 	self color: self defaultBackgroundColor.
 	previouslyIn
-		ifNotNil: [ 
+		ifNotNil: [
 			previouslyIn showMouseHasLeaved.
 			previouslyIn := nil ]
 ]
 
 { #category : #accessing }
 RubTextSegmentIconBox >> textColor [
-	^ self textArea lineNumbersTextColor 
-
+	^ self textArea lineNumbersTextColor
 ]
 
 { #category : #accessing }

@@ -1,0 +1,18 @@
+"
+I am a fetcher that gets all message selectors. 
+I use the SystemNavigation to get all selectors and then filtering them.
+See the #entriesDo:
+"
+Class {
+	#name : #CoGlobalSelectorFetcher,
+	#superclass : #CoGlobalFetcher,
+	#category : #'HeuristicCompletion-Model-Fetchers'
+}
+
+{ #category : #enumerating }
+CoGlobalSelectorFetcher >> entriesDo: aBlock [
+
+	self systemNavigation
+		allSelectorsStartingWith: filter completionString
+		do: [ :e | aBlock value: (NECSelectorEntry contents: e node: astNode) ]
+]

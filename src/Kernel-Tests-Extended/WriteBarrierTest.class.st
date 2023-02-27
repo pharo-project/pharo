@@ -14,9 +14,9 @@ Class {
 	#category : #'Kernel-Tests-Extended-WriteBarrier'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 WriteBarrierTest class >> initialize [
-	
+
 	ContextInstance := Context sender: nil receiver: self new method: self >> #alwaysWritableObjects arguments: #()
 ]
 
@@ -34,8 +34,8 @@ WriteBarrierTest >> alwaysReadOnlyObjects [
 { #category : #'guinea pigs' }
 WriteBarrierTest >> alwaysWritableObjects [
 	"Objects that currently can't be immutable"
-	^ { ContextInstance . 
-		Processor . 
+	^ { ContextInstance .
+		Processor .
 		Processor activeProcess }
 ]
 
@@ -74,14 +74,14 @@ WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 	| guineaPig |
 	guineaPig := ByteArray new: 5.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig byteAt: 1 put: 12  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig byteAt: 1 put: 12 ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig byteAt: 1 put: 12 ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -91,18 +91,18 @@ WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
-	<expectedFailure>
 	| guineaPig |
+	<expectedFailure>
 	guineaPig := ByteArray new: 8.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig doubleAt: 1 put: (2 raisedTo: 65) asFloat ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig doubleAt: 1 put: (2 raisedTo: 65) asFloat ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig doubleAt: 1 put: (2 raisedTo: 65) asFloat ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -116,14 +116,14 @@ WriteBarrierTest >> testMutateByteArrayUsingFloatAtPut [
 	| guineaPig |
 	guineaPig := ByteArray new: 5.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig floatAt: 1 put: 1.0  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig floatAt: 1 put: 1.0 ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig floatAt: 1 put: 1.0 ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -136,14 +136,14 @@ WriteBarrierTest >> testMutateByteStringyUsingAtPut [
 	| guineaPig |
 	guineaPig := ByteString new: 5.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig at: 1 put: $h  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig at: 1 put: $h ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig at: 1 put: $h ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -156,14 +156,14 @@ WriteBarrierTest >> testMutateByteStringyUsingByteAtPut [
 	| guineaPig |
 	guineaPig := ByteString new: 5.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig byteAt: 1 put: 100  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig byteAt: 1 put: 100 ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig byteAt: 1 put: 100 ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -174,15 +174,12 @@ WriteBarrierTest >> testMutateByteStringyUsingByteAtPut [
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteSymbolUsingPrivateAtPut [
 	| guineaPig |
-	[ guineaPig := #hello.
-	guineaPig beReadOnlyObject.
-	
-	self 
+	guineaPig := #hello.
+	"symbol literals are read-only already, no need to call #beReadOnlyObject"
+	self
 		should: [ guineaPig privateAt: 1 put: $q  ]
-		raise: ModificationForbidden ]
-	ensure: [  
-		guineaPig beWritableObject ].
-	
+		raise: ModificationForbidden.
+
 	self assert: guineaPig first equals: $h
 ]
 
@@ -211,18 +208,18 @@ WriteBarrierTest >> testMutateObjectClass [
 	| guineaPig |
 	guineaPig := WriteBarrierStub new.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig primitiveChangeClassTo: WriteBarrierAnotherStub  new ]
 		raise: ModificationForbidden.
-		
+
 	[ guineaPig primitiveChangeClassTo: WriteBarrierAnotherStub  new ]
-		on: ModificationForbidden 
+		on: ModificationForbidden
 		do: [ :modification |
 			modification object beWritableObject.
 			modification retryModification  ].
-	
-	self assert: guineaPig class equals: WriteBarrierAnotherStub 
+
+	self assert: guineaPig class equals: WriteBarrierAnotherStub
 ]
 
 { #category : #'tests - object' }
@@ -254,14 +251,14 @@ WriteBarrierTest >> testMutateObjectInstVarUsingAtPut [
 	| guineaPig |
 	guineaPig := Array new: 5.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig at: 1 put: #test  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig at: 1 put: #test ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig at: 1 put: #test ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -274,14 +271,14 @@ WriteBarrierTest >> testMutateObjectInstVarUsingBasicAtPut [
 	| guineaPig |
 	guineaPig := Array new: 5.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig basicAt: 1 put: #test  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig at: 1 put: #test ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig at: 1 put: #test ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -294,14 +291,14 @@ WriteBarrierTest >> testMutateObjectInstVarUsingInstVarAtPut [
 	| guineaPig |
 	guineaPig := WriteBarrierStub new.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig instVarAt: 1 put: #test  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig instVarAt: 1 put: #test ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig instVarAt: 1 put: #test ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -322,9 +319,9 @@ WriteBarrierTest >> testMutateObjectLastInstVarWithManyVars [
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateVariableObject [
 	| guineaPigs |
-	guineaPigs := {#[1 2 3] . #(1 2 3)}.
+	guineaPigs := {#[1 2 3] copy . #(1 2 3) copy}.
 	guineaPigs
-		do: [ :guineaPig | 
+		do: [ :guineaPig |
 			guineaPig beReadOnlyObject.
 			[ guineaPig at: 1 put: 4 ]
 				on: ModificationForbidden
@@ -346,14 +343,14 @@ WriteBarrierTest >> testMutateWideStringUsingAtPut [
 	| guineaPig |
 	guineaPig := 'hello' asWideString.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig at: 1 put: $q  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig at: 1 put: $q ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig at: 1 put: $q ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -366,14 +363,14 @@ WriteBarrierTest >> testMutateWideStringUsingWordAtPut [
 	| guineaPig |
 	guineaPig := 'hello' asWideString.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig wordAt: 1 put: 65536  ]
 		raise: ModificationForbidden.
-		
-	[ guineaPig wordAt: 1 put: 65536 ] 
-		on: ModificationForbidden 
-		do: [:modification | 
+
+	[ guineaPig wordAt: 1 put: 65536 ]
+		on: ModificationForbidden
+		do: [:modification |
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
@@ -386,8 +383,8 @@ WriteBarrierTest >> testMutateWideSymbolUsingPrivateAtPut [
 	| guineaPig |
 	[ guineaPig := ('hello', (Character codePoint: 8002) asString) asSymbol.
 	guineaPig beReadOnlyObject.
-	
-	self 
+
+	self
 		should: [ guineaPig privateAt: 1 put: 65  ]
 		raise: ModificationForbidden ]
 		ensure: [ guineaPig beWritableObject ].
@@ -397,10 +394,10 @@ WriteBarrierTest >> testMutateWideSymbolUsingPrivateAtPut [
 
 { #category : #'tests - helper' }
 WriteBarrierTest >> testObject: object initialState: initialState tuples: tuples [
-	self 
-		testObject: object 
-		initialState: initialState 
-		tuples: tuples 
+	self
+		testObject: object
+		initialState: initialState
+		tuples: tuples
 		setReadOnlyBlock: [ :value | object setIsReadOnlyObject: value ]
 ]
 
@@ -413,18 +410,18 @@ WriteBarrierTest >> testObject: object initialState: initialState tuples: tuples
 		expectedResult := tuple second.
 		expectedNewState := tuple last.
 		[self assert: (setImmutabilityBlock value: stateToSet) equals: expectedResult ]
-				on: PrimitiveFailed 
+				on: PrimitiveFailed
 				do: [ self assert: (self alwaysReadOnlyObjects , self alwaysWritableObjects includes: object) ].
 		self assert: object isReadOnlyObject equals: expectedNewState ]
 ]
 
 { #category : #'tests - helper' }
 WriteBarrierTest >> testProxyObject: object initialState: initialState tuples: tuples [
-	self 
-		testObject: object 
-		initialState: initialState 
-		tuples: tuples 
-		setReadOnlyBlock: [ :value | 
+	self
+		testObject: object
+		initialState: initialState
+		tuples: tuples
+		setReadOnlyBlock: [ :value |
 			MirrorPrimitives makeObject: object readOnly: value ]
 ]
 
@@ -433,7 +430,7 @@ WriteBarrierTest >> testReadOnlyImmediate [
 	"immediate objects like SmallIntegers are read only"
 	self assert: 1 isReadOnlyObject.
 	"we can call beReadOnlyObject on an immediate object"
-	self assert: 1 beReadOnlyObject.
+	self assert: 1 beReadOnlyObject
 ]
 
 { #category : #'tests - object' }
@@ -442,7 +439,7 @@ WriteBarrierTest >> testRetryingInstVarModification [
 	guineaPig := MessageSend new.
 	guineaPig beReadOnlyObject.
 
-	[ guineaPig receiver: 1 ] on: ModificationForbidden do: [:err | 
+	[ guineaPig receiver: 1 ] on: ModificationForbidden do: [:err |
 		guineaPig beWritableObject.
 		err retryModification ].
 
@@ -452,59 +449,53 @@ WriteBarrierTest >> testRetryingInstVarModification [
 { #category : #'tests - object' }
 WriteBarrierTest >> testSetIsReadOnlyFailure [
 	self alwaysWritableObjects do: [ :each |
-		self 
-			testObject: each 
-			initialState: false 
+		self
+			testObject: each
+			initialState: false
 			tuples: #( (true false false) (false false false) ) ]
-	
 ]
 
 { #category : #'tests - proxy' }
 WriteBarrierTest >> testSetIsReadOnlyFailureProxy [
 	self alwaysWritableObjects do: [ :each |
-		self 
-			testProxyObject: each 
-			initialState: false 
+		self
+			testProxyObject: each
+			initialState: false
 			tuples: #( (true false false) (false false false) ) ]
-	
 ]
 
 { #category : #'tests - object' }
 WriteBarrierTest >> testSetIsReadOnlyImmediate [
 	self alwaysReadOnlyObjects do: [ :each |
-		self 
-			testObject: each 
-			initialState: true 
+		self
+			testObject: each
+			initialState: true
 			tuples: #( (true true true) (false true true) ) ]
-	
 ]
 
 { #category : #'tests - proxy' }
 WriteBarrierTest >> testSetIsReadOnlyImmediateProxy [
 	self alwaysReadOnlyObjects do: [ :each |
-		self 
-			testProxyObject: each 
-			initialState: true 
+		self
+			testProxyObject: each
+			initialState: true
 			tuples: #( (true true true) (false true true) ) ]
-	
 ]
 
 { #category : #'tests - object' }
 WriteBarrierTest >> testSetIsReadOnlySuccess [
 	self maybeReadOnlyObjects do: [ :each |
-		self 
-			testObject: each 
-			initialState: false 
+		self
+			testObject: each
+			initialState: false
 			tuples: #( (true false true) (false true false) ) ]
-	
 ]
 
 { #category : #'tests - proxy' }
 WriteBarrierTest >> testSetIsReadOnlySuccessProxy [
 	self maybeReadOnlyObjects do: [ :each |
-		self 
-			testProxyObject: each 
-			initialState: false 
+		self
+			testProxyObject: each
+			initialState: false
 			tuples: #( (true false true) (false true false) ) ]
-	
 ]

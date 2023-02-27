@@ -14,22 +14,20 @@ Class {
 AthensGradientPaint >> athensFillPath: aPath on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
-	
+
 	| fill |
 	fill := self convertGradientToPaintOn: canvas.
 	fill athensFillPath: aPath on: canvas
-
 ]
 
 { #category : #rendering }
 AthensGradientPaint >> athensFillRectangle: aRect on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
-	
+
 	| fill |
 	fill := self convertGradientToPaintOn: canvas.
 	fill athensFillRectangle: aRect on: canvas
-
 ]
 
 { #category : #private }
@@ -39,13 +37,13 @@ AthensGradientPaint >> convertGradientToPaintOn: aCanvas [
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
 
 	^ gradient radial
-		  ifTrue: [ 
+		  ifTrue: [
 			  aCanvas surface
 				  createRadialGradient: gradient colorRamp
 				  center:
 				  (aCanvas pathTransform inverseTransform: gradient origin)
 				  radius: gradient direction y ]
-		  ifFalse: [ 
+		  ifFalse: [
 			  aCanvas surface
 				  createLinearGradient: gradient colorRamp
 				  start: (aCanvas pathTransform inverseTransform: gradient origin)

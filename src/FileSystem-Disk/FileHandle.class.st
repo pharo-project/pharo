@@ -24,45 +24,42 @@ FileHandle class >> register: aFileHandle [
 { #category : #registry }
 FileHandle class >> registry [
 	^Registry ifNil: [Registry := WeakRegistry new]
-
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 FileHandle class >> startUp: resuming [
 	"This functionality is disabled for now, to avoid doing a lot of processing at
 	image start up. To reenable, add this class to the start up list."
-	
+
 	resuming ifTrue: [self allInstancesDo: [:ea | ea startUp]]
 ]
 
 { #category : #public }
 FileHandle >> assureOpen [
 	"Compatibility method to make the FileHandle Tests pass"
-	self isOpen ifFalse: [ id := self basicOpen ].
+	self isOpen ifFalse: [ id := self basicOpen ]
 ]
 
 { #category : #public }
 FileHandle >> at: index read: buffer startingAt: start count: count [
-	
+
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
-	
-	^ File 
+
+	^ File
 		setPosition: id to: index - 1;
 		read: id into: buffer startingAt: start count: count
-
 ]
 
 { #category : #public }
 FileHandle >> at: index write: buffer startingAt: start count: count [
-	
+
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
-	
-	File 
+
+	File
 		setPosition: id to: index - 1;
 		write: id from: buffer startingAt: start count: count
-
 ]
 
 { #category : #public }
@@ -88,10 +85,10 @@ FileHandle >> finalize [
 
 { #category : #public }
 FileHandle >> flush [
-	
+
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
-	
+
 	File flush: id
 ]
 
@@ -117,10 +114,10 @@ FileHandle >> register [
 
 { #category : #public }
 FileHandle >> size [
-	
+
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
-	
+
 	^ File sizeOf: id
 ]
 
@@ -128,11 +125,11 @@ FileHandle >> size [
 FileHandle >> startUp [
 	"This functionality is disabled for now, to avoid doing lots of processing
 	on start up."
-	
+
 	"We're starting up in a new OS process, so the file id will be invalid.
 	Try to reopen the file, but fail silently: just leave the id as nil. #isOpen will
 	answer false, and we'll raise an error if anyone tries to do IO."
-	
+
 	self basicOpen
 ]
 
@@ -145,10 +142,10 @@ FileHandle >> streamError [
 
 { #category : #public }
 FileHandle >> sync [
-	
+
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
-	
+
 	File sync: id
 ]
 

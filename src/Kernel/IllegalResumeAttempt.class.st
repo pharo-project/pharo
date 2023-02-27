@@ -7,9 +7,9 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #comment }
+{ #category : #testing }
 IllegalResumeAttempt >> isResumable [
-	
+
 	^ false
 ]
 

@@ -96,7 +96,7 @@ ZnServerTest >> runningOnWindows [
 { #category : #testing }
 ZnServerTest >> testAuthorizationFailed [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response |
 			server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
 			response := ZnEasy
@@ -113,7 +113,7 @@ ZnServerTest >> testAuthorizationFailed [
 { #category : #testing }
 ZnServerTest >> testAuthorizationSuccessful [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response |
 			server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
 			response := ZnEasy
@@ -133,7 +133,7 @@ ZnServerTest >> testAuthorizationSuccessful [
 ZnServerTest >> testCustomDefaultDelegate [
 	self withServerDo: [ :server | | customDelegate client |
 		customDelegate := ZnDefaultServerDelegate empty.
-		customDelegate 
+		customDelegate
 			map: 'ok' to: [ :request | ZnResponse ok: (ZnEntity text: 'OK') ];
 			map: '/' to: 'ok';
 			map: 'OK' to: [ :request | ZnResponse redirect: '/ok' ].
@@ -143,6 +143,16 @@ ZnServerTest >> testCustomDefaultDelegate [
 		client addPath: 'OK'.
 		self assert: client get equals: 'OK'.
 		client close	 ]
+]
+
+{ #category : #testing }
+ZnServerTest >> testCustomServerString [
+	self withServerDo: [ :server | | client |
+		server localOptions at: #serverString put: 'foobar server'.
+		(client := ZnClient new)
+			get: server localUrl;
+			close.
+		self assert: (client response headers at: 'Server') equals: 'foobar server' ]
 ]
 
 { #category : #testing }
@@ -175,7 +185,7 @@ ZnServerTest >> testDefault [
 { #category : #testing }
 ZnServerTest >> testEcho [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response |
 			response := ZnEasy
 				get:
@@ -192,7 +202,7 @@ ZnServerTest >> testEcho [
 { #category : #testing }
 ZnServerTest >> testEchoBinary [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response entityIn entityOut |
 			server reader: [ :stream | ZnRequest readBinaryFrom: stream ].
 			entityIn := ZnEntity with: 'ABC' type: 'text/plain'.
@@ -228,8 +238,8 @@ ZnServerTest >> testEchoLocalInterface [
 
 { #category : #testing }
 ZnServerTest >> testEntityTooLarge [
-	self usingClassicSocketStreamsOnWindowsDo: [ 
-		self withServerDo: [ :server | 
+	self usingClassicSocketStreamsOnWindowsDo: [
+		self withServerDo: [ :server |
 			server maximumEntitySize: self entitySizeLimit.
 			self deny: server debugMode.
 			self assertEntityTooLarge: server localUrl ] ]
@@ -292,9 +302,9 @@ ZnServerTest >> testFormTest3 [
 			url: server localUrl;
 			addPathSegment: 'form-test-3'.
 		inputs do: [ :each  |
-			part := ZnMimePart 
-				fieldName: 'file' 
-				fileName: each first 
+			part := ZnMimePart
+				fieldName: 'file'
+				fileName: each first
 				entity: (ZnEntity with: each second).
 			client
 				resetEntity;
@@ -307,9 +317,9 @@ ZnServerTest >> testFormTest3 [
 
 { #category : #testing }
 ZnServerTest >> testFormTest3Unspecified [
-	"Simulate what most browsers seem to do: upload text files utf-8 encoded 
+	"Simulate what most browsers seem to do: upload text files utf-8 encoded
 	without specifying the charset in the mime type of the mime part"
-	
+
 	| inputs client part entity |
 	inputs := #( ('foo.txt' 'this is foo!') ('français.txt' 'Je te dis: élèves français') ('Ελλάδα.txt' 'Ελλάδα is it!') ).
 	self withServerDo: [ :server |
@@ -318,8 +328,8 @@ ZnServerTest >> testFormTest3Unspecified [
 			url: server localUrl;
 			addPathSegment: 'form-test-3'.
 		inputs do: [ :each  |
-			entity := ZnEntity 
-				with: each second utf8Encoded 
+			entity := ZnEntity
+				with: each second utf8Encoded
 				type: ZnMimeType textPlain clearCharSet.
 			part := ZnMimePart fieldName: 'file' fileName: each first entity: entity.
 			client
@@ -329,6 +339,21 @@ ZnServerTest >> testFormTest3Unspecified [
 			self assert: client isSuccess.
 			self assert: (client contents includesSubstring: each first).
 			self assert: (client contents includesSubstring: each second) ] ]
+]
+
+{ #category : #testing }
+ZnServerTest >> testGetConflictingConnectionHeader [
+	self withServerDo: [ :server | | client |
+		client := ZnClient new.
+		client url: server localUrl; addPathSegment: #echo.
+		"There are not supposed to be 2 Connection headers, the last one should win"
+		client headerAt: 'Connection' add: 'keep-alive'.
+		client headerAt: 'Connection' add: 'close'.
+		client get.
+		self assert: client isSuccess.
+		self assert: (client contents includesSubstring: 'echo').
+		self assert: client response isConnectionClose.
+		client close ]
 ]
 
 { #category : #testing }
@@ -347,7 +372,7 @@ ZnServerTest >> testGetConnectionClose [
 { #category : #testing }
 ZnServerTest >> testGetUnicodeUtf8 [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response html |
 			response := ZnEasy
 				get:
@@ -388,7 +413,7 @@ ZnServerTest >> testHeaderLineTooLong [
 
 { #category : #testing }
 ZnServerTest >> testLocalUrl [
-	self withServerDo: [ :server | 
+	self withServerDo: [ :server |
 		self assert: server localUrl scheme equals: #http.
 		self assert: server localUrl host equals: NetNameResolver loopBackName.
 		self assert: server localUrl port equals: server port ]
@@ -409,20 +434,6 @@ ZnServerTest >> testOSAssignedPort [
 	self assert: (response entity contents includesSubstring: 'foo').
 	self assert: (response entity contents includesSubstring: server printString) ]
 		ensure: [ server stop ]
-]
-
-{ #category : #testing }
-ZnServerTest >> testReadEvalPrint [
-	self withServerDo: [ :server | | x y result |
-		server delegate: ZnReadEvalPrintDelegate new.
-		x := 100 atRandom.
-		y := 100 atRandom.
-		result := ZnClient new
-			url: server localUrl;
-			addPathSegment: #repl;
-			contents: ('{1}+{2}' format: { x. y });
-			post.
-		self assert: result asInteger equals: x + y ]
 ]
 
 { #category : #testing }
@@ -450,7 +461,7 @@ ZnServerTest >> testRespond [
 { #category : #testing }
 ZnServerTest >> testSession [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| client sessionId |
 			client := ZnClient new
 				url: (server localUrl addPathSegment: #session);
@@ -471,7 +482,7 @@ ZnServerTest >> testSession [
 { #category : #testing }
 ZnServerTest >> testSessionExpired [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| client sessionId |
 			client := ZnClient new
 				url: (server localUrl addPathSegment: #session);
@@ -494,7 +505,7 @@ ZnServerTest >> testSessionExpired [
 { #category : #testing }
 ZnServerTest >> testSessionRoute [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| client sessionId |
 			server route: 'r1'.
 			self assert: server route equals: 'r1'.
@@ -517,7 +528,7 @@ ZnServerTest >> testSessionRoute [
 
 { #category : #testing }
 ZnServerTest >> testSmall [
-	self withServerDo: [ :server | 
+	self withServerDo: [ :server |
 		| client |
 		client := ZnClient new
 			url: (server localUrl addPathSegment: #small);
@@ -531,6 +542,34 @@ ZnServerTest >> testSmall [
 ]
 
 { #category : #testing }
+ZnServerTest >> testTooManyConcurrentConnections [
+	self usingClassicSocketStreamsOnWindowsDo: [
+		self withServerDo: [ :server | | client clients |
+			self deny: server debugMode.
+			server maximumNumberOfConcurrentConnections: 4.
+			clients := (1 to: 4) collect: [ :each |
+				ZnClient new
+					url: server localUrl;
+					addPathSegment: #random;
+					clientId: ('client-{1}' format: { each });
+					enforceHttpSuccess;
+					get;
+					yourself ].
+			client := ZnClient new
+					url: server localUrl;
+					addPathSegment: #random;
+					clientId: 'client-5';
+					get;
+					yourself.
+			self assert: client response code equals: 503.
+			clients do: [ :each |
+				each get; close ].
+			client get.
+			self assert: client isSuccess.
+			client close ] ]
+]
+
+{ #category : #testing }
 ZnServerTest >> testTooManyHeaders [
 	self usingClassicSocketStreamsOnWindowsDo: [
 		self withServerDo: [ :server |
@@ -540,7 +579,7 @@ ZnServerTest >> testTooManyHeaders [
 
 { #category : #testing }
 ZnServerTest >> testUrl [
-	self withServerDo: [ :server | 
+	self withServerDo: [ :server |
 		self assert: server url equals: server localUrl.
 		server serverUrl:
 					(ZnUrl new
@@ -558,7 +597,7 @@ ZnServerTest >> testUrl [
 
 { #category : #testing }
 ZnServerTest >> testZeroContentLength [
-	self withServerDo: [ :server | 
+	self withServerDo: [ :server |
 		| client |
 		client := ZnClient new
 			url: server localUrl / #echo;
@@ -582,14 +621,5 @@ ZnServerTest >> usingClassicSocketStreamsOnWindowsDo: block [
 
 { #category : #private }
 ZnServerTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: self port.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		block cull: server 
-	]
-		ensure: [ server stop ]
+	ZnServer withOSAssignedPortDo: block
 ]

@@ -14,5 +14,5 @@ Class {
 
 { #category : #tests }
 DelayMutexSchedulerMillisecondTickerTest >> classForTicker [
-	^DelayMillisecondTickerSimulation 
+	^DelayMillisecondTickerSimulation
 ]

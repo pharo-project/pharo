@@ -32,7 +32,6 @@ HelpTopicListItemWrapper >> contents [
 	^(item subtopics) collect: [ :each | 
 		HelpTopicListItemWrapper with: each
 	].
-
 ]
 
 { #category : #accessing }
@@ -42,6 +41,6 @@ HelpTopicListItemWrapper >> icon [
 	item icon notNil
 		ifTrue: [ ^ item icon ].
 	^ item hasSubtopics
-		ifTrue: [ self iconNamed: #bookIcon ]
+		ifTrue: [ self iconNamed: #book ]
 		ifFalse: [ self iconNamed: #pageIcon ]
 ]

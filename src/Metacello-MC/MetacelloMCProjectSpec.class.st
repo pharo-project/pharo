@@ -164,7 +164,6 @@ MetacelloMCProjectSpec >> determineCurrentVersionForLoad [
                 , cvs asString , ') and specified version ' , version printString
                 , '. Press resume to continue with load anyway'.
     ^ nil
-
 ]
 
 { #category : #loading }
@@ -199,45 +198,35 @@ MetacelloMCProjectSpec >> ensureLoadUsing: aLoader [
 { #category : #loading }
 MetacelloMCProjectSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
   "for #development projects, always need latest version of package when contemplating a load"
-
   | ensured |
-  ensured := mcLoader ensuredMap at: self name ifAbsent: [ nil ].
-  self projectClass ~~ nil
-    ifTrue: [ 
-      | vrsn |
-      vrsn := self versionOrNil.
-      vrsn ~~ nil
-        ifTrue: [ 
-          (self ensureConfigurationLoaded: vrsn ensured: ensured)
-            ifTrue: [ 
-              mcLoader ensureForDevelopment
-                ifTrue: [ 
-                  | pc |
-                  (pc := self projectClass) ~~ nil
-                    ifTrue: [ 
-                      MetacelloClearStackCacheNotification
-                        signal:
-                          #(#'currentVersion' #'currentVersionAgainst:' #'currentVersionInfo' #'versionConstructor' #'loadableSpecNames')
-                            , {pc} ].
-                  self ensureLoadUsing: mcLoader ]
-                ifFalse: [ self projectPackage fetchUsing: mcLoader ].
-              mcLoader ensuredMap at: self name put: #'latest' ].
-          ^ self ] ].
-  ensured == nil
-    ifTrue: [ 
-      "projectClass == nil or version == nil"
-      mcLoader ensureForDevelopment
-        ifTrue: [ 
-          | pc |
-          (pc := self projectClass) ~~ nil
-            ifTrue: [ 
-              MetacelloClearStackCacheNotification
-                signal:
-                  #(#'currentVersion' #'currentVersionAgainst:' #'currentVersionInfo' #'versionConstructor' #'loadableSpecNames')
-                    , {pc} ].
-          self ensureLoadUsing: mcLoader ]
-        ifFalse: [ self fetchUsing: mcLoader ].
-      mcLoader ensuredMap at: self name put: #'present' ]
+
+	self isLocked ifTrue: [ 
+		mcLoader ensuredMap at: self name put: #'present'.
+		^ self ].
+
+	ensured := mcLoader ensuredMap at: self name ifAbsent: [ nil ].	
+	self projectClass ifNotNil: [
+		self ensureProjectLoaded: mcLoader ensured: ensured.
+		^ self ].
+
+  ensured ifNil: [ 
+	self ensureProjectFetch: mcLoader ]
+]
+
+{ #category : #'private - loading' }
+MetacelloMCProjectSpec >> ensureProjectFetch: mcLoader [
+
+	"projectClass == nil or version == nil"
+	mcLoader ensureForDevelopment 
+		ifTrue: [ 
+			self notifyCleanStackCache.
+			self ensureLoadUsing: mcLoader ]
+		ifFalse: [ 
+			self fetchUsing: mcLoader ].
+		
+	mcLoader ensuredMap 
+		at: self name 
+		put: #'present'
 ]
 
 { #category : #loading }
@@ -262,6 +251,23 @@ MetacelloMCProjectSpec >> ensureProjectLoaded [
       self projectPackage ifNil: [ ^ true ].
       self ensureLoadUsing: self loader ].
   ^ self projectClass ~~ nil
+]
+
+{ #category : #'private - loading' }
+MetacelloMCProjectSpec >> ensureProjectLoaded: mcLoader ensured: ensured [
+	| version |
+
+	version := self versionOrNil.
+	version ifNil: [ ^ self ].
+	(self ensureConfigurationLoaded: version ensured: ensured)  ifFalse: [ ^ self ].
+	
+	mcLoader ensureForDevelopment
+		ifTrue: [ 
+			self notifyCleanStackCache.
+			self ensureLoadUsing: mcLoader ]
+		ifFalse: [ 
+			self projectPackage fetchUsing: mcLoader ].
+	mcLoader ensuredMap at: self name put: #'latest'
 ]
 
 { #category : #loading }
@@ -364,6 +370,15 @@ MetacelloMCProjectSpec >> loadPackageList [
 	^pkgs
 ]
 
+{ #category : #'private - loading' }
+MetacelloMCProjectSpec >> loadProjectIsLocked: version [
+	"Just inform is already loaded"
+
+	MetacelloProjectSpecLoadedNotification new
+		projectSpec: (self copy versionString: version versionString);
+		signal
+]
+
 { #category : #loading }
 MetacelloMCProjectSpec >> loadVersion: aVersionOrNil [
 	"Load the correct version of the project"
@@ -429,6 +444,21 @@ MetacelloMCProjectSpec >> metacelloRegistrationHash [
     "file"
 
     ^ String stringHash: self file initialHash: super metacelloRegistrationHash
+]
+
+{ #category : #'private - loading' }
+MetacelloMCProjectSpec >> notifyCleanStackCache [
+	| pc |
+
+	(pc := self projectClass) ~~ nil
+		ifTrue: [ 
+ 			MetacelloClearStackCacheNotification signal: #(
+				#'currentVersion' 
+				#'currentVersionAgainst:' 
+				#'currentVersionInfo' 
+				#'versionConstructor' 
+				#'loadableSpecNames'), 
+				{ pc } ]
 ]
 
 { #category : #accessing }

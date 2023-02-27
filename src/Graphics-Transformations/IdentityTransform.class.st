@@ -10,9 +10,9 @@ Class {
 	#category : #'Graphics-Transformations'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 IdentityTransform class >> initialize [
-	"IdentityTransform initialize"
+
 	Default := self basicNew
 ]
 
@@ -79,7 +79,6 @@ IdentityTransform >> invertBoundsRect: aRectangle [
 	no transformation is made."
 
 	^aRectangle
-
 ]
 
 { #category : #testing }

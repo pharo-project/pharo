@@ -22,7 +22,7 @@ BitsLayout >> bytesPerSlot [
 BitsLayout >> extend [
 	"Answer a default extension of me."
 
-	^ self species new 
+	^ self species new
 ]
 
 { #category : #extending }
@@ -50,7 +50,7 @@ BitsLayout >> extendDoubleWord [
 ]
 
 { #category : #extending }
-BitsLayout >> extendWeak: aLayoutClassScope [ 
+BitsLayout >> extendWeak: aLayoutClassScope [
 	IncompatibleLayoutConflict new
 		layout: self;
 		subType: #weak;

@@ -35,10 +35,10 @@ CoMockASTResultSetBuilder >> visitBlockNode: aNode [
 ]
 
 { #category : #accessing }
-CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [ 
+CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 
 	heuristic := #cascade.
-	^ super visitCascadeNode: aRBCascadeNode 
+	^ super visitCascadeNode: aRBCascadeNode
 ]
 
 { #category : #accessing }
@@ -77,7 +77,7 @@ CoMockASTResultSetBuilder >> visitParseErrorNode: aNode [
 ]
 
 { #category : #visiting }
-CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [ 
+CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
 
 	heuristic := #pragma.
 	^ super visitPragmaNode: aRBPragmaNode

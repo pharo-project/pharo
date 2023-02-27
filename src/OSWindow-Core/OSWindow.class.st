@@ -76,11 +76,11 @@ OSWindow class >> createWithAttributes: attributes eventHandler: eventHandler [
 
 { #category : #finalization }
 OSWindow class >> finalizeResourceData: windowHandle [
-	windowHandle destroy.
+	windowHandle destroy
 ]
 
-{ #category : #initialization }
-OSWindow class >> initialize [ 
+{ #category : #'class initialization' }
+OSWindow class >> initialize [
 
 	self traceEvents: false
 ]
@@ -133,7 +133,7 @@ OSWindow >> captureMouse [
 { #category : #private }
 OSWindow >> checkIsValid [
 
-	(backendWindow isNil or: [ backendWindow isValid not ]) ifTrue: [ self invalidHandle ].
+	(backendWindow isNil or: [ backendWindow isValid not ]) ifTrue: [ self invalidHandle ]
 ]
 
 { #category : #'clipboard handling' }
@@ -149,10 +149,10 @@ OSWindow >> clipboardText: aString [
 { #category : #private }
 OSWindow >> createWindow [
 	backendWindow ifNotNil: [ self error: 'The window is already created.' ].
-	
+
 	backendWindow := initialAttributes createWindowHandleFor: self.
-	backendWindow isValid ifTrue: [ 
-		"Handle here points to an OSWindowHandle, its #handle message has the real 
+	backendWindow isValid ifTrue: [
+		"Handle here points to an OSWindowHandle, its #handle message has the real
 		 external resource. This is a bit confusing, but is better like this :)"
 		backendWindow prepareExternalResourceForAutoRelease ]
 ]
@@ -163,7 +163,7 @@ OSWindow >> deliverEvent: anEvent [
 
 	TraceEvents
 		ifTrue: [ self traceCr: anEvent ].
-	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
+	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ]
 ]
 
 { #category : #'dispatching events' }
@@ -179,7 +179,7 @@ OSWindow >> deliverGlobalEvent: aGlobalEvent [
 OSWindow >> destroy [
 	self validHandle destroy.
 	backendWindow := nil.
-	eventHandler := nil.
+	eventHandler := nil
 ]
 
 { #category : #accessing }
@@ -189,13 +189,13 @@ OSWindow >> diagonalDPI [
 
 { #category : #accessing }
 OSWindow >> eventHandler [
-	
+
 	^ eventHandler
 ]
 
 { #category : #accessing }
 OSWindow >> eventHandler: anObject [
-	
+
 	eventHandler := anObject
 ]
 
@@ -212,7 +212,7 @@ OSWindow >> extent: newExtent [
 { #category : #'window management' }
 OSWindow >> focus [
 
-	self validHandle raise.
+	self validHandle raise
 ]
 
 { #category : #accessing }
@@ -247,7 +247,6 @@ OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	eventHandler := anEventHandle.
 	self createWindow.
 	self initialize
-
 ]
 
 { #category : #private }
@@ -275,13 +274,13 @@ OSWindow >> isVisible [
 { #category : #'window management' }
 OSWindow >> maximize [
 
-	self validHandle maximize.
+	self validHandle maximize
 ]
 
 { #category : #'window management' }
 OSWindow >> minimize [
 
-	self validHandle minimize.
+	self validHandle minimize
 ]
 
 { #category : #'instance creation' }
@@ -352,7 +351,7 @@ OSWindow >> resizable: aBoolean [
 { #category : #'window management' }
 OSWindow >> restore [
 
-	self validHandle restore.
+	self validHandle restore
 ]
 
 { #category : #accessing }
@@ -368,7 +367,7 @@ OSWindow >> screenScaleFactorBaseDPI [
 { #category : #'window management' }
 OSWindow >> setDraggableArea: aRectangle [
 
-	^self validHandle setDraggableArea: aRectangle.
+	^self validHandle setDraggableArea: aRectangle
 ]
 
 { #category : #private }
@@ -415,6 +414,17 @@ OSWindow >> startTextInput [
 ]
 
 { #category : #'text input' }
+OSWindow >> startTextInputAtRectangle: aRectangle [
+
+	"Start accepting Unicode text input events.
+	I will start accepting Unicode text input events in the focused window, and start emitting text input and text editing events.
+	Please use me in pair with stopTextInput.
+	On some platforms I may activate the screen keyboard."
+
+	self validHandle startTextInputAtRectangle: aRectangle
+]
+
+{ #category : #'text input' }
 OSWindow >> stopTextInput [
 	"Stop receiving any text input events"
 
@@ -434,13 +444,19 @@ OSWindow >> title: aString [
 { #category : #'window management' }
 OSWindow >> toggleBorderOff [
 
-	self validHandle toggleBorderOff.
+	self validHandle toggleBorderOff
 ]
 
 { #category : #'window management' }
 OSWindow >> toggleBorderOn [
 
-	self validHandle toggleBorderOn.
+	self validHandle toggleBorderOn
+]
+
+{ #category : #events }
+OSWindow >> updateToNewResolution [
+
+	self backendWindow updateToNewResolution
 ]
 
 { #category : #private }

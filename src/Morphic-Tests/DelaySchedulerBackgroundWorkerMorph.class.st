@@ -30,7 +30,7 @@ Class {
 { #category : #action }
 DelaySchedulerBackgroundWorkerMorph >> delete [
     morphDeleted := true.
-    super delete.
+    super delete
 ]
 
 { #category : #initialization }
@@ -43,7 +43,7 @@ DelaySchedulerBackgroundWorkerMorph >> initialize [
     self addMorphBack:  (stringMorph := StringMorph new).
     morphDeleted := false.      "see #delete"
 
-    workerProcess :=  
+    workerProcess :=
     [     work := 0.
         [    10 milliSeconds asDelay wait.
             work := work + 1.
@@ -60,12 +60,12 @@ DelaySchedulerBackgroundWorkerMorph >> initialize [
         ] whileFalse.
     ] newProcess name: 'Controller'.
 
-    controllerProcess resume.
+    controllerProcess resume
 ]
 
 { #category : #stepping }
 DelaySchedulerBackgroundWorkerMorph >> step [
-    stringMorph contents: work printString 
+    stringMorph contents: work printString
 ]
 
 { #category : #stepping }

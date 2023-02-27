@@ -75,20 +75,20 @@ ZnRequest >> = other [
 
 { #category : #accessing }
 ZnRequest >> absoluteUrl [
-	^ self host 
+	^ self host
 		ifNil: [ self url ]
 		ifNotNil: [ :hostUrl | self url inContextOf: hostUrl ]
 ]
 
 { #category : #accessing }
 ZnRequest >> accept [
-	^ self headers at: 'Accept'
+	^ self headers singleAt: 'Accept' ifAbsent: [ '*/*' ]
 ]
 
 { #category : #testing }
 ZnRequest >> acceptsEncodingGzip [
 	| value |
-	value := self headers at: 'Accept-Encoding' ifAbsent: [ ^ false ].
+	value := self headers singleAt: 'Accept-Encoding' ifAbsent: [ ^ false ].
 	^ value includesSubstring: 'gzip'
 ]
 
@@ -104,8 +104,8 @@ ZnRequest >> basicAuthentication [
 	(authorization size = 2 and: [ authorization first = 'Basic' ])
 		ifFalse: [ ^ NotFound signal: 'Incomplete Basic Authentication' ].
 	authorization := ZnUtils decodeBase64: authorization second.
-	separator := authorization 
-		indexOf: $: 
+	separator := authorization
+		indexOf: $:
 		ifAbsent: [ ^ NotFound signal: 'Incomplete Basic Authentication' ].
 	^ { authorization first: separator - 1. authorization allButFirst: separator }
 ]
@@ -135,7 +135,7 @@ ZnRequest >> host [
 
 { #category : #testing }
 ZnRequest >> isHttp10 [
-	^ self requestLine isHttp10 
+	^ self requestLine isHttp10
 ]
 
 { #category : #testing }
@@ -160,7 +160,7 @@ ZnRequest >> mergedFields [
 
 { #category : #accessing }
 ZnRequest >> method [
-	^ self requestLine method 
+	^ self requestLine method
 ]
 
 { #category : #'initialize-release' }
@@ -186,17 +186,16 @@ ZnRequest >> printOn: stream [
 ZnRequest >> readHeaderFrom: stream [
 	self requestLine: (ZnRequestLine readFrom: stream).
 	super readHeaderFrom: stream
-	
 ]
 
 { #category : #accessing }
 ZnRequest >> relativeUrl [
-	^ self url asRelativeUrl 
+	^ self url asRelativeUrl
 ]
 
 { #category : #accessing }
 ZnRequest >> requestLine [
-	^ requestLine 
+	^ requestLine
 ]
 
 { #category : #accessing }
@@ -211,7 +210,7 @@ ZnRequest >> session [
 	This only returns a value during #handleRequest:"
 
 	^ super session
-		ifNil: [ 
+		ifNil: [
 			| session |
 			session := self server sessionFor: self.
 			ZnCurrentServerSession value: session.
@@ -240,13 +239,19 @@ ZnRequest >> setBasicAuthenticationUsername: username password: password [
 			self headers removeKey: 'Authorization' ifAbsent: []]
 		ifFalse: [
 			self setAuthorization: 'Basic ', (ZnUtils encodeBase64: (username, ':', password)) ]
+]
 
+{ #category : #accessing }
+ZnRequest >> setBearerAuthentication: token [
+
+	token
+		ifNil: [ self headers removeKey: 'Authorization' ifAbsent: [  ] ]
+		ifNotNil: [ self setAuthorization: 'Bearer ' , token ]
 ]
 
 { #category : #accessing }
 ZnRequest >> setCookie: cookie [
 	self headers at: 'Cookie' put: cookie
-
 ]
 
 { #category : #accessing }
@@ -256,12 +261,12 @@ ZnRequest >> setIfModifiedSince: reference [
 
 { #category : #accessing }
 ZnRequest >> uri [
-	^ self requestLine uri 
+	^ self requestLine uri
 ]
 
 { #category : #accessing }
 ZnRequest >> url [
-	^ self uri 
+	^ self uri
 ]
 
 { #category : #'initialize-release' }
@@ -276,7 +281,7 @@ ZnRequest >> wantsConnectionClose [
 	Overwritten to return true in case of the presense of an explicit connection close request header
 	or the absense of a keep alive header when using the old HTTP 1.0 protocol."
 
-	^ self isConnectionClose 
+	^ self isConnectionClose
 		or: [ self isHttp10 and: [ self isConnectionKeepAlive not ] ]
 ]
 

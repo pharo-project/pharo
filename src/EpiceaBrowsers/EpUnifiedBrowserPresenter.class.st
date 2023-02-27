@@ -18,17 +18,18 @@ Class {
 
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
+
 	<script>
 	^ self new
-		refresh;
-		openWithSpec;
-		yourself
+		  refresh;
+		  open;
+		  yourself
 ]
 
 { #category : #accessing }
 EpUnifiedBrowserPresenter class >> taskbarIconName [
 
-	^ #recoverLostChangesIcon
+	^ #recoverLostChanges
 ]
 
 { #category : #accessing }
@@ -37,8 +38,8 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 
 	(aBuilder item: 'Code Changes')
 		parent: #Changes;
-		action: [ self open ]; 
-		icon: self taskbarIcon;
+		action: [ self open ];
+		icon: (aBuilder iconNamed: self taskbarIconName);
 		help: 'Browse recorded change logs during from Pharo coding sessions and replay changes.';
 		order: 1
 ]
@@ -47,13 +48,11 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 	^ selection selectedItems
 		ifEmpty: [ EpLog newNull ]
-		ifNotEmpty: [ :items | 
+		ifNotEmpty: [ :items |
 			| entries |
 			"Needed to reverse the selected logs to have the expected order (as user)."
 			entries := items reversed flatCollect: [:each | each log entries ].
-			EpLog newWithEntries: entries ].
-
-
+			EpLog newWithEntries: entries ]
 ]
 
 { #category : #initialization }
@@ -75,7 +74,7 @@ EpUnifiedBrowserPresenter >> initializePresenters [
 			add: (logPresenter := self instantiate: EpLogBrowserPresenter);
 			yourself);
 		yourself).
-		
+
 	logNodesPresenter whenSelectionChangedDo: [ :selection |
 		self refreshWithLogSelection: selection ].
 
@@ -91,21 +90,21 @@ EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
 
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializeToolbar [
-	
-	toolbarPresenter 
-		add: (self newToolbarButton 
+
+	toolbarPresenter
+		add: (self newToolbarButton
 			icon: (self application iconNamed: #refresh);
 			label: 'Refresh';
 			help: 'Refresh logs from this directory';
 			action: [ self refreshLogs ];
 			yourself);
-		add: (self newToolbarButton 
-			icon: (self application iconNamed: #openIcon);
+		add: (self newToolbarButton
+			icon: (self application iconNamed: #open);
 			label: 'Directory';
 			help: 'Select directory to browse logs (i.e. files with ombu extension)';
 			action: [ self selectDirectory ];
-			yourself);			
-		add: (self newToolbarButton 
+			yourself);
+		add: (self newToolbarButton
 			icon: (self application iconNamed: #config);
 			label: 'Dashboard';
 			help: 'Open epicea dashboard';
@@ -140,7 +139,7 @@ EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
 { #category : #actions }
 EpUnifiedBrowserPresenter >> openDashboard [
 
-	(EpDashboardPresenter newApplication: self application) openWithSpec
+	(EpDashboardPresenter newApplication: self application) open
 ]
 
 { #category : #refreshing }

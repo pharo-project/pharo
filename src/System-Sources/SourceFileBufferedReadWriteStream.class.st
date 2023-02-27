@@ -38,16 +38,16 @@ SourceFileBufferedReadWriteStream class >> on: readStream do: block [
 
 { #category : #testing }
 SourceFileBufferedReadWriteStream >> atEnd [
-	
+
 	^ self atEnd: nextPosition
 ]
 
 { #category : #private }
-SourceFileBufferedReadWriteStream >> atEnd: anInteger [ 
-	
+SourceFileBufferedReadWriteStream >> atEnd: anInteger [
+
 	anInteger < streamSize ifTrue: [ ^ false ].
 	anInteger <= (bufferOffset + bufferLength)  ifTrue: [ ^ false ].
-	
+
 	^ true
 ]
 
@@ -55,8 +55,6 @@ SourceFileBufferedReadWriteStream >> atEnd: anInteger [
 SourceFileBufferedReadWriteStream >> bufferAt: aPosition [
 
 	^ buffer at:  (aPosition - bufferOffset)
-	
-	
 ]
 
 { #category : #private }
@@ -66,7 +64,6 @@ SourceFileBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
 
 	bufferLength := (aPosition - bufferOffset) max: bufferLength.
 	buffer at: (aPosition - bufferOffset) put: anElement
-	
 ]
 
 { #category : #private }
@@ -78,7 +75,7 @@ SourceFileBufferedReadWriteStream >> checkBufferFor: aPosition [
 
 { #category : #closing }
 SourceFileBufferedReadWriteStream >> close [
-	
+
 	self flush.
 	innerStream close
 ]
@@ -98,7 +95,7 @@ SourceFileBufferedReadWriteStream >> collectionSpecies [
 
 { #category : #initialization }
 SourceFileBufferedReadWriteStream >> defaultBufferSize [
-	
+
 	^ 2 raisedToInteger: 16
 ]
 
@@ -119,23 +116,23 @@ SourceFileBufferedReadWriteStream >> ensureWrittenPosition: aPosition [
 
 { #category : #writing }
 SourceFileBufferedReadWriteStream >> flush [
-	
-	isDirty ifFalse: [ ^ self ]. 
-		
+
+	isDirty ifFalse: [ ^ self ].
+
 	innerStream position: bufferOffset.
 	innerStream next: bufferLength putAll: buffer startingAt: 1.
-	
+
 	innerStream flush.
-	
+
 	streamSize := innerStream size.
-	
+
 	isDirty := false
 ]
 
 { #category : #testing }
 SourceFileBufferedReadWriteStream >> isBinary [
-	
-	^ innerStream isBinary 
+
+	^ innerStream isBinary
 ]
 
 { #category : #private }
@@ -146,7 +143,7 @@ SourceFileBufferedReadWriteStream >> isPositionInBuffer: aPosition [
 
 { #category : #testing }
 SourceFileBufferedReadWriteStream >> isReadOnly [
-	
+
 	^ false
 ]
 
@@ -157,16 +154,16 @@ SourceFileBufferedReadWriteStream >> isStream [
 ]
 
 { #category : #reading }
-SourceFileBufferedReadWriteStream >> next [ 
+SourceFileBufferedReadWriteStream >> next [
 	| value |
 
-	self atEnd 
-		ifTrue: [^ nil].	
-		
+	self atEnd
+		ifTrue: [^ nil].
+
 	self checkBufferFor:nextPosition.
-		
+
 	value := self bufferAt: nextPosition.
-	
+
 	nextPosition := nextPosition + 1.
 
 	^ value
@@ -177,40 +174,40 @@ SourceFileBufferedReadWriteStream >> next: aQuantity [
 
 	| read collection |
 
-	collection := self collectionSpecies new: aQuantity.	
+	collection := self collectionSpecies new: aQuantity.
 
-	read := self 
-		readInto: collection 
-		startingAt: 1 
+	read := self
+		readInto: collection
+		startingAt: 1
 		count: aQuantity.
 
-	^ read = aQuantity 
+	^ read = aQuantity
 		ifTrue: [ collection ]
-		ifFalse: [ collection copyFrom: 1 to: read - 1 ]     
+		ifFalse: [ collection copyFrom: 1 to: read - 1 ]
 ]
 
 { #category : #writing }
 SourceFileBufferedReadWriteStream >> next: aQuantity putAll: aCollection startingAt: startingAt [
 
-	aCollection readStreamDo: [ :s | 
+	aCollection readStreamDo: [ :s |
 		s skip: startingAt - 1.
-		self nextPutAll:  (s next: aQuantity)].
+		self nextPutAll:  (s next: aQuantity)]
 ]
 
 { #category : #writing }
-SourceFileBufferedReadWriteStream >> nextPut: anElement [ 
-	
+SourceFileBufferedReadWriteStream >> nextPut: anElement [
+
 	self checkBufferFor: nextPosition.
-		
+
 	self bufferAt: nextPosition put: anElement.
-	
+
 	isDirty := true.
 	nextPosition := nextPosition + 1
 ]
 
 { #category : #writing }
 SourceFileBufferedReadWriteStream >> nextPutAll: aCollection [
-	
+
 	aCollection do: [ :each | self nextPut: each ]
 ]
 
@@ -220,40 +217,35 @@ SourceFileBufferedReadWriteStream >> on: aStream [
 	innerStream := aStream.
 	nextPosition := aStream position + 1.
 	streamSize := aStream size.
-	
+
 	bufferOffset := -1.
 	bufferLength := 0.
 	isDirty := false.
-	
-	self sizeBuffer: self defaultBufferSize.
-	
 
+	self sizeBuffer: self defaultBufferSize
 ]
 
 { #category : #reading }
 SourceFileBufferedReadWriteStream >> peek [
-	
+
 	| value |
 	value := self next.
 	"If I have read correctly I reset the position"
 	value ifNotNil: [ nextPosition := nextPosition - 1  ].
-	
+
 	^ value
-	
 ]
 
 { #category : #querying }
 SourceFileBufferedReadWriteStream >> position [
 
-	^ nextPosition - 1 
-
+	^ nextPosition - 1
 ]
 
 { #category : #querying }
 SourceFileBufferedReadWriteStream >> position: aNewPosition [
 
 	^ nextPosition := aNewPosition + 1
-
 ]
 
 { #category : #reading }
@@ -263,25 +255,25 @@ SourceFileBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt co
 
 	remainingCount := count.
 	read := 0.
-	
+
 	[ remainingCount > 0  and: [ self atEnd not ]]
-		whileTrue: [  
+		whileTrue: [
 			self checkBufferFor: nextPosition.
-			
+
 			maxPositionInBuffer := bufferOffset + bufferLength.
-			countToRead := ( maxPositionInBuffer - (nextPosition - 1) ) min: remainingCount. 
+			countToRead := ( maxPositionInBuffer - (nextPosition - 1) ) min: remainingCount.
 			aBuffer
 				replaceFrom: startingAt + read
 				to: startingAt + read + countToRead - 1
 				with: buffer
 				startingAt: (nextPosition - bufferOffset).
-				
+
 			nextPosition := nextPosition + countToRead.
 			remainingCount := remainingCount - countToRead.
 			read := read + countToRead
 		].
-	
-	^ read.
+
+	^ read
 ]
 
 { #category : #private }
@@ -295,17 +287,17 @@ SourceFileBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 	self flush.
 
 	"If the position is outside the real stream I will only flush the buffer if I have to empty it."
-	(nextBufferPosition >= streamSize) 
+	(nextBufferPosition >= streamSize)
 		ifTrue: [
 			bufferOffset := nextBufferPosition.
-			bufferLength := 0.	
+			bufferLength := 0.
 			^ self	].
-		 
-	(nextBufferPosition = (bufferOffset + bufferLength)) 
+
+	(nextBufferPosition = (bufferOffset + bufferLength))
 		ifFalse: [ innerStream position: nextBufferPosition ].
 
 	bufferLength := innerStream readInto: buffer startingAt: 1 count: buffer size.
-	bufferOffset := nextBufferPosition.
+	bufferOffset := nextBufferPosition
 ]
 
 { #category : #reading }
@@ -315,7 +307,7 @@ SourceFileBufferedReadWriteStream >> setToEnd [
 ]
 
 { #category : #querying }
-SourceFileBufferedReadWriteStream >> size [ 
+SourceFileBufferedReadWriteStream >> size [
 
 	^ streamSize max: (bufferOffset + bufferLength)
 ]
@@ -336,14 +328,14 @@ SourceFileBufferedReadWriteStream >> skip: aQuantity [
 ]
 
 { #category : #reading }
-SourceFileBufferedReadWriteStream >> upTo: value [ 
+SourceFileBufferedReadWriteStream >> upTo: value [
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream.
 	This could be further optimzed."
-	
-	^ self collectionSpecies 
+
+	^ self collectionSpecies
 		streamContents: [ :writeStream | | element |
-			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [ 
+			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [
 				writeStream nextPut: element ] ]
 ]
 
@@ -354,5 +346,5 @@ SourceFileBufferedReadWriteStream >> upToEnd [
 	| toRead |
 
 	toRead := (streamSize - (nextPosition - 1)) max: 0.
-	^ self next: toRead.
+	^ self next: toRead
 ]

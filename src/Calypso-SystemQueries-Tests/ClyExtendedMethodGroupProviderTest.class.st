@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyExtendedMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClySubclassLOfClass0FromPExtendedByP1Mock 
+	^ClySubclassLOfClass0FromPExtendedByP1Mock
 ]
 
 { #category : #running }

@@ -53,7 +53,6 @@ NumberParsingTest >> testFloatFromStreamAsNumber [
 	aFloat := Number readFrom: rs.
 	self assert: 12.3456 equals: aFloat.
 	self assert: rs upToEnd equals: 'z2'
-
 ]
 
 { #category : #'tests - Float' }
@@ -109,7 +108,6 @@ NumberParsingTest >> testFloatFromStringAsNumber [
 	self assert: -1234.56 equals: aFloat.
 	aFloat := '12.3456q2' asNumber.
 	self assert: 1234.56 equals: aFloat
-
 ]
 
 { #category : #'tests - Float' }
@@ -156,7 +154,6 @@ NumberParsingTest >> testIntegerFromString [
 	self assert: '123This is not to be read' asNumber equals: 123.
 	self assert: '123s could be confused with a ScaledDecimal' asNumber equals: 123.
 	self assert: '123e could be confused with a Float' asNumber equals: 123
-
 ]
 
 { #category : #'tests - Integer' }
@@ -201,7 +198,6 @@ NumberParsingTest >> testIntegerReadWithRadix [
 	rs := '2r1e26eee' readStream.
 	self assert: (Number readFrom: rs) equals: 67108864.
 	self assert: rs upToEnd equals: 'eee'
-
 ]
 
 { #category : #'tests - Integer' }
@@ -212,8 +208,8 @@ NumberParsingTest >> testNegativeZero [
       negativeZero := Number readFrom: '-0.0' readStream.
 
       "If it is a negative zero, it must behave like a negative zero... IEEE 754 tells how it should behave"
-      self deny: (negativeZero at: 1) = 0 description: 'In IEEE 754, a negative zero has its sign bit set to 1'. 
-      self assert: negativeZero = 0 description: 'In IEEE 754, a negative zero cannot be distinguished from zero' 
+      self deny: (negativeZero at: 1) = 0 description: 'In IEEE 754, a negative zero has its sign bit set to 1'.
+      self assert: negativeZero = 0 description: 'In IEEE 754, a negative zero cannot be distinguished from zero'
 ]
 
 { #category : #'tests - Float' }
@@ -221,22 +217,22 @@ NumberParsingTest >> testNumberReadExactlyError [
 	"This covers parsing in Number>>readExactlyFrom:"
 
 	| rs |
-	
+
 	rs := '' readStream.
 	self should: [Number readFrom: rs] raise: Error.
-	
+
 	rs := 'foo' readStream.
 	self should: [Number readFrom: rs] raise: Error.
 
 	rs := 'radix' readStream.
 	self should: [Number readFrom: rs] raise: Error.
-	
+
 	rs := '.e0' readStream.
 	self should: [Number readFrom: rs] raise: Error.
-	
+
 	rs := '-.e0' readStream.
 	self should: [Number readFrom: rs] raise: Error.
-	
+
 	rs := '--1' readStream.
 	self should: [Number readFrom: rs] raise: Error
 ]
@@ -250,7 +246,7 @@ NumberParsingTest >> testNumberReadOnlyDigit [
 	num := Number readFrom: rs.
 	self assert: 1 equals: num.
 	self assert: rs upToEnd equals: 'e'.
-	
+
 	rs := '1s' readStream.
 	num := Number readFrom: rs.
 	self assert: 1 equals: num.
@@ -266,17 +262,17 @@ NumberParsingTest >> testNumberReadOnlyDigit [
 { #category : #'tests - ScaledDecimal' }
 NumberParsingTest >> testScaledDecimalWithTrailingZeroes [
 	"This is a non regression tests for http://bugs.squeak.org/view.php?id=7169"
-	
+
 	self assert: (Number readFrom: '0.50s2') equals: 1/2.
 	self assert: (Number readFrom: '0.500s3') equals: 1/2.
-	self assert: (Number readFrom: '0.050s3') equals: 1/20 
+	self assert: (Number readFrom: '0.050s3') equals: 1/20
 ]
 
 { #category : #'tests - ScaledDecimal' }
 NumberParsingTest >> testScaledDecimalWithoutScaleSpecification [
 	self assert: (Number readFrom: '0.050s') equals: 1/20.
 	self assert: (Number readFrom: '0.050s') scale equals: 3.
-	
+
 	self assert: (ScaledDecimal readFrom: '0.050') equals: 1/20.
 	self assert: (ScaledDecimal readFrom: '0.050') scale equals: 3
 ]

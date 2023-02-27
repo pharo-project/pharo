@@ -13,7 +13,7 @@ Class {
 { #category : #testing }
 ClyBrowseCoveringTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
-	
+
 	^ aBrowserContext lastSelectedItem hasProperty: ClyTestedClassProperty
 ]
 
@@ -22,7 +22,7 @@ ClyBrowseCoveringTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
 		byItemOf: ClyQueryMenuGroup
-		for: ClyClass asCalypsoItemContext 
+		for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ ClyBrowseCoveringTestCaseCommand >> defaultMenuItemName [
 ClyBrowseCoveringTestCaseCommand >> execute [
 	| testCase |
 	testCase := (selectedClassItem getProperty: ClyTestedClassProperty) coveringTestCase.
-	
+
 	browser spawnBrowser: ClyFullBrowserMorph withState: [ :b |
 		b selectClass: testCase]
 ]
@@ -42,6 +42,6 @@ ClyBrowseCoveringTestCaseCommand >> execute [
 { #category : #execution }
 ClyBrowseCoveringTestCaseCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	selectedClassItem := aToolContext lastSelectedItem
 ]

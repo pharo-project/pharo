@@ -10,13 +10,13 @@ Class {
 
 { #category : #converting }
 ClySuperclassScope class >> asInterestingClassScope [
-	^ClyInterestingSuperclassScope 
+	^ClyInterestingSuperclassScope
 ]
 
 { #category : #accessing }
 ClySuperclassScope class >> classesRelatedTo: aClass do: aBlock [
 	aClass isRootInEnvironment ifTrue: [ ^self ].
-	
+
 	aBlock value: aClass superclass
 ]
 
@@ -38,11 +38,11 @@ ClySuperclassScope class >> defaultName [
 { #category : #'inherited scope' }
 ClySuperclassScope class >> inheritedScopeProvider [
 	<classAnnotation>
-	
+
 	^ClyInheritedScopeProviderAnnotation new
 ]
 
 { #category : #converting }
 ClySuperclassScope >> asInterestingClassScope [
-	^self asScope: ClyInterestingSuperclassScope 
+	^self asScope: ClyInterestingSuperclassScope
 ]

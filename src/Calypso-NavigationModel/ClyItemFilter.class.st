@@ -15,11 +15,11 @@ Class {
 
 { #category : #testing }
 ClyItemFilter >> matches: anEnvironmentItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #printing }
 ClyItemFilter >> printCriteria [
 
-	^self printString 
+	^self printString
 ]

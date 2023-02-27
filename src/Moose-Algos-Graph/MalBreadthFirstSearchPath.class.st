@@ -15,7 +15,7 @@ Class {
 { #category : #configuration }
 MalBreadthFirstSearchPath >> edgeClass [
 
-	^ MalGraphEdge 
+	^ MalGraphEdge
 ]
 
 { #category : #private }
@@ -31,7 +31,7 @@ MalBreadthFirstSearchPath >> end: aDijsktraNode [
 { #category : #configuration }
 MalBreadthFirstSearchPath >> nodeClass [
 
-	^ MalBfsNode 
+	^ MalBfsNode
 ]
 
 { #category : #running }
@@ -83,5 +83,4 @@ MalBreadthFirstSearchPath >> start [
 { #category : #private }
 MalBreadthFirstSearchPath >> start: aDijsktraNode [
 	start := aDijsktraNode.
-
 ]
