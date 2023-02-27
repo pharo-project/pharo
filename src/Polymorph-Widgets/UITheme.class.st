@@ -60,7 +60,7 @@ UITheme class >> builder [
 UITheme class >> cleanUp [
 
 	"avoid old references to morphs that should be garbage-collected"
-	self current focusIndicator: nil.
+	self current focusIndicator: nil
 ]
 
 { #category : #configuration }
@@ -314,7 +314,7 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> borderColor [ 
+UITheme >> borderColor [
 
 	^ colorPalette borderColor
 ]
@@ -330,7 +330,7 @@ UITheme >> builder [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> buttonColor [ 
+UITheme >> buttonColor [
 
 	^ colorPalette buttonColor
 ]
@@ -1513,7 +1513,7 @@ UITheme >> diffRemovedLinesBackgroundColor [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> disabledColor [ 
+UITheme >> disabledColor [
 
 	^ colorPalette disabledColor
 ]
@@ -1533,7 +1533,7 @@ UITheme >> disabledLabelColor [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> disabledTextColor [ 
+UITheme >> disabledTextColor [
 
 	^ colorPalette disabledTextColor
 ]
@@ -1765,7 +1765,7 @@ UITheme >> dropListNormalBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
-	
+
 	^ colorPalette dropListNormalFillStyleFor: aDropList
 ]
 
@@ -1781,7 +1781,7 @@ UITheme >> dropListNormalListBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
-	
+
 	^ colorPalette dropListNormalListFillStyleFor: aDropList
 ]
 
@@ -1951,10 +1951,10 @@ UITheme >> initialize [
 		colorConfigurator: self class colorConfiguratorClass new;
 		yourself.
 	self initializeForms.
-	
+
 	self initializeDefaultSettings.
 	colorPalette themeSettings: settings.
-	
+
 	self windowActiveDropShadowStyle: #diffuse
 ]
 
@@ -2053,7 +2053,7 @@ UITheme >> lessConspicuousColorFrom: aColor [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lightBackgroundColor [ 
+UITheme >> lightBackgroundColor [
 
 	^ colorPalette lightBackgroundColor
 ]
@@ -2083,8 +2083,8 @@ UITheme >> lightSelectionColorFor: aMorph [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lineNumberColor [ 
-	
+UITheme >> lineNumberColor [
+
 	^ colorPalette lineNumberColor
 ]
 
@@ -4604,7 +4604,7 @@ UITheme >> scrollbarNormalButtonFillStyleFor: aScrollbar [
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalFillStyleFor: aScrollbar [
-	
+
 	^ colorPalette scrollbarNormalFillStyleFor: aScrollbar
 ]
 
@@ -4846,7 +4846,7 @@ UITheme >> splitterPressedFillStyleFor: aSplitter [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> spotlightWindowColor [ 
+UITheme >> spotlightWindowColor [
 
 	^ colorPalette spotlightWindowColor
 ]
@@ -5128,7 +5128,7 @@ UITheme >> taskbarThumbnailNormalBorderStyleFor: aWindow [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> textColor [ 
+UITheme >> textColor [
 
 	^ colorPalette textColor
 ]
@@ -5218,7 +5218,7 @@ UITheme >> textEntryIn: aThemedMorph text: aStringOrText title: aString entryTex
 
 { #category : #'fill-styles' }
 UITheme >> textFieldNormalFillStyleFor: aTextField [
-	
+
 	^ colorPalette textFieldNormalFillStyleFor: aTextField
 ]
 
@@ -5505,7 +5505,7 @@ UITheme >> windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow [
 
 { #category : #'fill-styles' }
 UITheme >> windowEdgeNormalFillStyleFor: anEdgeGrip [
-	
+
 	^ colorPalette windowEdgeNormalFillStyleFor: anEdgeGrip
 ]
 
