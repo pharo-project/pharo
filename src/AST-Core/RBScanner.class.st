@@ -467,7 +467,7 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ (self scanError: 'Expecting a literal type') value: '#'
+	^ (self scanError: 'Literal expected') value: '#'
 ]
 
 { #category : #'private - scanning' }
@@ -494,7 +494,7 @@ RBScanner >> scanLiteralCharacter [
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
 	| token |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ (self scanError:'A Character was expected') value: '$'].
+	currentCharacter ifNil:[ ^ (self scanError:'Character expected') value: '$'].
 	token := RBLiteralToken
 				value: currentCharacter
 				start: tokenStart

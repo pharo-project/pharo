@@ -1526,7 +1526,7 @@ RBScannerTest >> testNextWithAWrongSymbolGetError [
 	source := '#^'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
-	self verifyErrorToken: scannedToken message: 'Expecting a literal type' translated valueExpected: '#'
+	self verifyErrorToken: scannedToken message: 'Literal expected' translated valueExpected: '#'
 ]
 
 { #category : #tests }
