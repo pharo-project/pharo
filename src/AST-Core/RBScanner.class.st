@@ -302,14 +302,6 @@ RBScanner >> on: aStream [
 	comments := OrderedCollection new
 ]
 
-{ #category : #'error handling' }
-RBScanner >> parseErrorNode: aMessageString [
-	| sourceString |
-	sourceString := stream contents copyFrom: self errorPosition to: stream contents size.
-	^ RBParseErrorNode
-		errorMessage: aMessageString value: sourceString at: self errorPosition
-]
-
 { #category : #private }
 RBScanner >> previousStepPosition [
 	^characterType = #eof

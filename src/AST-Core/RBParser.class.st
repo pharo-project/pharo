@@ -292,15 +292,6 @@ RBParser >> nextToken [
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseArgs [
-	"Return a collection of variable node."
-	| args |
-	args := OrderedCollection new.
-	[currentToken isIdentifier] whileTrue: [args add: self parseVariableNode].
-	^args
-]
-
-{ #category : #'private - parsing' }
 RBParser >> parseArray [
 	"Although an array node represents an array, it is not an Array-like object."
 	| startToken node |
@@ -599,7 +590,7 @@ RBParser >> parseIncompleteExpression: priorStatementsNode [
 	self step.
 	priorStatementsNode statements: statements.
 	^self atEnd ifTrue: [ priorStatementsNode ]
-				  ifFalse: [ self parseStatementList: false into: priorStatementsNode until: [ false "No extra condition, just until the end of the stream" ].
+				  ifFalse: [ self parseStatementList: false into: priorStatementsNode untilAnyCloserOf: '' "No extra condition, just until the end of the stream".
 								self atEnd ifFalse: [ self parseIncompleteExpression: priorStatementsNode ]
 											  ifTrue: [ priorStatementsNode ] ]
 ]
@@ -801,21 +792,6 @@ RBParser >> parseMethodBodyInto: aMethodNode [
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseNumberLiteral [
-	"Creates a literal value node from a number literal token."
-	| token |
-	"self deprecated: 'Unnecessary method because it is the same as parsePrimitiveValueLiteral, both called only by parsePrimitiveLiteral' transformWith: self parsePrimitiveLiteral."
-	token := currentToken.
-	self step.
-
-	^self literalValueNodeClass
-		value: token value
-		start: token start
-		stop: token stop
-		source: token source
-]
-
-{ #category : #'private - parsing' }
 RBParser >> parseParenthesizedExpression [
 	| node startToken |
 	startToken := currentToken.
@@ -893,9 +869,17 @@ RBParser >> parsePrimitiveKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parsePrimitiveLiteral [
-	^ currentToken isNumberLiteralToken
-		ifTrue: [ self parseNumberLiteral ]
-		ifFalse: [ self parsePrimitiveValueLiteral ]
+	"Creates a literal value node from a literal token."
+	| token |
+
+	token := currentToken.
+	self step.
+
+	^self literalValueNodeClass
+		value: token value
+		start: token start
+		stop: token stop
+		source: token source
 ]
 
 { #category : #'private - parsing' }
@@ -916,21 +900,6 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = ${ ifTrue: [^self parseArray]].
 	errorNode := self parserError: 'Variable or expression expected'.
 	^errorNode
-]
-
-{ #category : #'private - parsing' }
-RBParser >> parsePrimitiveValueLiteral [
-	"Creates a literal value node from a literal token."
-	| token |
-	"self deprecated: 'Unnecessary method because it is the same as parseNumberLiteral, both called only by parsePrimitiveLiteral' transformWith: self parsePrimitiveLiteral."
-	token := currentToken.
-	self step.
-
-	^self literalValueNodeClass
-		value: token value
-		start: token start
-		stop: token stop
-		source: token source
 ]
 
 { #category : #'private - parsing' }
@@ -1089,37 +1058,6 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseStatementList: pragmaBoolean into: sequenceNode until: aBlock [
-
-	"Parse a list of statements and set those statetements to a sequence node.
-	Stop parsing when we finish the current scope.
-	Different scopes such as blocks or methods can decide different stop conditions."
-
-	| statements return periods |
-	return := false.
-	statements := sequenceNode statements.
-	periods := OrderedCollection new.
-
-	self addCommentsTo: sequenceNode.
-
-	pragmaBoolean ifTrue: [ self parsePragmas ].
-
-	[ currentToken isSpecial: $. ]
-		whileTrue: [
-			periods add: currentToken start.
-			self step ].
-
-	[  self atEnd or: [ aBlock value ] ] whileFalse: [
-		self parseStatementInto: statements periodList: periods ].
-
-	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
-	sequenceNode
-		statements: statements;
-		periods: periods.
-	^ sequenceNode
-]
-
-{ #category : #'private - parsing' }
 RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserOf: aCollectionOfClosers [
 
 	"Parse a list of statements and set those statetements to a sequence node.
@@ -1155,17 +1093,6 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserO
 		statements: statements;
 		periods: periods.
 	^ sequenceNode
-]
-
-{ #category : #'private - parsing' }
-RBParser >> parseStatements: pragmaBoolean into: aSequenceNode until: aBlock [
-
-	self parseTemporariesInto: aSequenceNode.
-
-	^self
-		parseStatementList: pragmaBoolean
-		into: aSequenceNode
-		until: aBlock
 ]
 
 { #category : #'private - parsing' }
