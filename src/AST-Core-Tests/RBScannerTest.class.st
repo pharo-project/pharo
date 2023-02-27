@@ -26,11 +26,11 @@ RBScannerTest >> testCommentTokenHasTheRightValue [
 
 	scanner := self buildScannerForText: String tab, ' """nested at beggining"" comment" firstToken'.
 	token := scanner next comments first.
-	self assert: token value equals: '""nested at beggining"" comment'.
+	self assert: token value equals: '"nested at beggining" comment'.
 
 	scanner := self buildScannerForText: String tab, ' "comment ""nested at end""" firstToken'.
 	token := scanner next comments first.
-	self assert: token value equals: 'comment ""nested at end""'
+	self assert: token value equals: 'comment "nested at end"'
 ]
 
 { #category : #'tests - Comment' }
@@ -1577,7 +1577,7 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
 	self
 		shouldnt: [ token := (self buildScannerForText: source) next ]
 		raise: SyntaxErrorNotification.
-	self assert: token comments first value equals: 'only the"" opening'
+	self assert: token comments first value equals: 'only the" opening'
 ]
 
 { #category : #tests }

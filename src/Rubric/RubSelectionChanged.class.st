@@ -12,12 +12,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-RubSelectionChanged class >> from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock [ 
+RubSelectionChanged class >> from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock [
 	^ self new from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock
 ]
 
 { #category : #accessing }
-RubSelectionChanged >> from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock [ 
+RubSelectionChanged >> from: aTextArea previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock [
 	self morph: aTextArea.
 	previousMarkBlock := prevMarkBlock.
 	previousPointBlock := prevPointBlock

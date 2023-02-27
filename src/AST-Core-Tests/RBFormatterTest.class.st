@@ -97,6 +97,26 @@ RBFormatterTest >> testParseError [
 		'#['.
 		'{'.
 
+		"Compounds with an unexped thing inside"
+		'(1]2)' -> '  ( 1].<r> 2)'.
+		'(1}2)' -> '  ( 1}.<r> 2)'.
+		'(1. 2)' -> '( 1.<r> 2)'.
+		'[1)2]' -> '[<r>  1).<r>2 ]'.
+		'[1}2]' -> '[<r>  1}.<r>2 ]'.
+		'#(1]2}3)' -> { #isok->true. #format->'#( 1 #'']'' 2 #''}'' 3 )' }. "`#(` can eat almost anything"
+		'#[ 1 ) 2]'.
+		'#[ 1 } 2]'.
+		'#[ 1 a 2]'.
+		'#[ 1 -1 2]'.
+		'#[ 1 1.0 2]'.
+		'#[ 1 256 2]'.
+		'{1)2}' -> '{<r><t>  1).<r><t>2 }'.
+		'{1]2}' -> '{<r><t>  1].<r><t>2 }'.
+
+		"...or without expected thing"
+		"Note: all compounds `[]` `#()` `#[]` `{}` are legal empty, except one"
+		'()' -> ''. "Errr... I understand but I do not like it"
+
 		"Bad sequence. The first expression is considered unfinished."
 		'1 2' -> ' 1.<r>2'.
 		'1 foo 2' -> ' 1 foo.<r>2'.
@@ -141,19 +161,25 @@ RBFormatterTest >> testParseError [
 		' goodby: 2 my: 3'.
 
 		"Bad assignments"
-		"FIXME, `:=` without variable is badly parsed."
 		'a := '.
-		':='.
-		':=2' -> ' :=.<r>2'.
-		'1:=2' -> ' 1.<r> :=.<r>2'.
+		':= '.
+		':= 2'.
+		'1:=2' -> ' 1.<r>:= 2'.
+		'1 foo := 2' -> ' 1 foo.<r>:= 2'.
+		'(1:=2)' -> ' ( 1.<r> := 2)'.
 
 		"Bad cascades"
-		"FIXME: the formater is currently broken on some cases (message send to nil)"
-		"';'"
-		"'1;'."
+		';' -> '<r><t>;<r><t>'.
+		'1;foo' -> '1<r><t>;<r><t>foo'.
+		'1;' -> '1<r><t>;<r><t>'.
 		'1 foo;' -> '1<r><t>foo;<r><t>'.
-		'1 foo;2' -> '1<r><t>foo;<r><t>'. "FIXME"
-		"';;'."
+		'1 foo:;bar' -> '1<r><t>foo: ;<r><t>bar'. "The cascade is correct here. It's a simple error of a missing argument"
+		'1 foo;2' -> ' 1<r><t>foo;<r><t>.<r>2'.
+		'(1 foo: 2);bar' -> '(1 foo: 2)<r><t>;<r><t>bar'.
+		'(1 foo);bar' -> '1 foo<r><t>;<r><t>bar'. "BUT the parentheses are lost, but is changes the meaning"
+		"Longer cascade"
+		';;' -> '<r><t>;<r><t>;<r><t>'.
+		'1 foo;;bar' -> '1<r><t>foo;<r><t>;<r><t>bar'.
 
 		"Bad returns"
 		'^ '.
@@ -163,7 +189,7 @@ RBFormatterTest >> testParseError [
 		'^^1' -> ' ^ .<r>^ 1' "FIXME, same spirit".
 		'{ ^ 1 }' -> {#isok->true}. "I did not expect this one to be legal"
 		'#(^1)' -> {#isok->true. #format->'#( #''^'' 1 )'}. "Obviously..."
-		'#[^1]' -> '#[  1 ]' "FIXME, where '^' went?".
+		'#[ ^ 1]'.
 
 		"Bad string literal"
 		"Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"

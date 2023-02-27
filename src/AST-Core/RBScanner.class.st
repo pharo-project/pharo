@@ -302,14 +302,6 @@ RBScanner >> on: aStream [
 	comments := OrderedCollection new
 ]
 
-{ #category : #'error handling' }
-RBScanner >> parseErrorNode: aMessageString [
-	| sourceString |
-	sourceString := stream contents copyFrom: self errorPosition to: stream contents size.
-	^ RBParseErrorNode
-		errorMessage: aMessageString value: sourceString at: self errorPosition
-]
-
 { #category : #private }
 RBScanner >> previousStepPosition [
 	^characterType = #eof
@@ -365,7 +357,7 @@ RBScanner >> scanComment [
 	self step.
 	self atEnd
 		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
-	[ currentCharacter = $" and: [ buffer nextPut: currentCharacter. self step ~= $" ] ]
+	[ currentCharacter = $" and: [ self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 			buffer nextPut: currentCharacter.
@@ -373,7 +365,7 @@ RBScanner >> scanComment [
 	stop := self atEnd
 		ifTrue: [ stream position ]
 		ifFalse: [ stream position - 1 ].
-	comments add: (RBCommentToken value: (buffer contents copyFrom: 1 to: buffer contents size -1) start: start stop: stop)
+	comments add: (RBCommentToken value: buffer contents start: start stop: stop)
 ]
 
 { #category : #'private - scanning' }
