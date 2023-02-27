@@ -1146,7 +1146,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 { #category : #private }
 SHRBTextStyler >> styleTempBars: aSequenceNode [
 	| tempBarAttribute |
-	tempBarAttribute := aSequenceNode scope isMethodScope
+	tempBarAttribute := (aSequenceNode scope isNil or: [ aSequenceNode scope isMethodScope ])
 		ifTrue: [ #methodTempBar ]
 		ifFalse: [ #blockTempBar ].
 	aSequenceNode leftBar
