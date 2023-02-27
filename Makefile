@@ -143,7 +143,7 @@ $(BUILD_DIR)/step-10-bootstrap-metacello/bootstrap.image: $(BUILD_DIR)/step-09-b
 	@# TODO cp $(BUILD_DIR)/step-07-bootstrap-core/PharoV60.sources $(dir $@)PharoV60.sources
 
 	$(target_vm_image_exec) st ./bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-	$(target_vm_image_exec) eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.16';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
+	$(target_vm_image_exec) eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.19';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
 
 
 $(BUILD_DIR)/step-11-patch-display-size/bootstrap.image: $(BUILD_DIR)/step-10-bootstrap-metacello/bootstrap.image $(target_vm_components) # TODO add deps on hermes files
