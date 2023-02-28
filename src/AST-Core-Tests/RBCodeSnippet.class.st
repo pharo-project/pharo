@@ -478,20 +478,15 @@ RBCodeSnippet class >> styleAllWithError [
 	| bigtext |
 	bigtext := Text new.
 	self allSnippets do: [ :each |
-		| text ast stop |
+		| text ast |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 
 		"Get the original styled text"
 		text := each styledText.
 		bigtext append: text.
 
-		"Try to compile it"
-		[
-		OpalCompiler new
-			noPattern: each isMethod not;
-			compile: each source ]
-			on: SyntaxErrorNotification
-			do: [ :exception |
+		"Try to compile it and collect error messages"
+		each compileOnError: [ :exception |
 				"In case of error, insert error message (like an old-school smalltalk compiler)"
 				text
 					replaceFrom: exception location
@@ -500,33 +495,33 @@ RBCodeSnippet class >> styleAllWithError [
 							 (TextBackgroundColor color: Color lightBlue)).
 				bigtext append: String cr.
 				bigtext append: String tab.
-				bigtext append: text. ].
+				bigtext append: text.
+				bigtext append: '   '.
+				bigtext append: ('SyntaxErrorNotification' asText makeAllColor: Color gray).
+				].
 
-		"Then the fun part. Add line for each error node"
-		ast := each parse.
+		"Then the fun part. Add line for each node with error or warning"
+		ast := each doSemanticAnalysis. 
 		ast nodesPostorderDo: [ :node |
-			node isParseError ifTrue: [
-				text := each styledText.
-				stop := node stop min: text size.
-				"Highlight the error node background"
-				text
-					addAttribute: (TextBackgroundColor color: Color cyan)
-					from: node start
-					to: stop.
-				"Insert the message after the stop so that:
-				 1. we can see where are zero-width errors
-				 2. we have the same output than the compiler error (above)"
-				text
-					replaceFrom: stop + 1
-					to: stop
-					with: (node errorMessage asText addAttribute:
-							 (TextBackgroundColor color: Color lightBlue)).
+			node propertyAt: #semanticWarning ifPresent: [ :message |
+				text := each textWithNode: node message: message.
 				bigtext append: String cr.
 				bigtext append: String tab.
 				bigtext append: text.
 				bigtext append: '   '.
 				bigtext append: (node class name asText makeAllColor: Color gray).
-		] ] ].
+				bigtext append: (' (semanticWarning)' asText makeAllColor: Color gray).
+			].
+			node isError ifTrue: [
+				text := each textWithNode: node message: node errorMessage.
+				bigtext append: String cr.
+				bigtext append: String tab.
+				bigtext append: text.
+				bigtext append: '   '.
+				bigtext append: (node class name asText makeAllColor: Color gray).
+				bigtext append: (' (error)' asText makeAllColor: Color gray).
+			].
+		] ].
 	bigtext inspect
 ]
 
@@ -690,6 +685,28 @@ RBCodeSnippet >> source [
 RBCodeSnippet >> source: anObject [
 
 	source := anObject
+]
+
+{ #category : #inspecting }
+RBCodeSnippet >> textWithNode: aNode message: aString [
+
+	| text stop |
+	text := self styledText.
+	stop := aNode stop min: text size.
+	"Highlight the error node background"
+	text
+		addAttribute: (TextBackgroundColor color: Color cyan)
+		from: aNode start
+		to: stop.
+	"Insert the message after the stop so that:
+	 1. we can see where are zero-width errors
+	 2. we have the same output than the compiler error (above)"
+	text
+		replaceFrom: stop + 1
+		to: stop
+		with: (aString asText addAttribute:
+				 (TextBackgroundColor color: Color lightBlue)).
+	^ text
 ]
 
 { #category : #accessing }
