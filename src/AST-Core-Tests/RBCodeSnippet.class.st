@@ -274,7 +274,7 @@ RBCodeSnippet class >> styleAll [
 	<script>
 	| bigtext |
 	bigtext := Text new.
-	self badExpressions do: [ :each |
+	self allSnippets do: [ :each |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 		bigtext append: each styledText ].
 	bigtext inspect
