@@ -11,24 +11,27 @@ RBCodeSnippetTest >> testCompile [
 { #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testExecute [
 
-	| method runBlock |
+	| method runBlock phonyArgs |
 	self skipIf: #testExecute.
 	method := snippet compile.
 	self assert: method isCompiledMethod.
 
+	phonyArgs := (1 to: method numArgs) asArray.
+
 	"Executing a lone block will just return a block, we have to call value to have something more interesting"
 	snippet parse isBlock
 		ifTrue: [
-			| block |
-			block := nil executeMethod: method.
-			runBlock := [ block cull: 1 cull: 2 ] ]
-		ifFalse: [ runBlock := [ nil executeMethod: method ] ].
+			| block phonyBlockArgs |
+			block := nil withArgs: phonyArgs executeMethod: method.
+			phonyBlockArgs := (1 to: block numArgs) asArray.
+			runBlock := [ block valueWithArguments: phonyBlockArgs ] ]
+		ifFalse: [ runBlock := [ nil withArgs: phonyArgs executeMethod: method ] ].
 
 	snippet messageNotUnderstood ifNotNil: [ :mnu |
 		runBlock onDNU: mnu do: [ ^ self ].
 		self signalFailure: 'Should have raised MNU ' , mnu ].
 
-	snippet isFaulty
-		ifTrue: [ self should: runBlock raise: RuntimeSyntaxError ]
-		ifFalse: [ self assert: runBlock value equals: snippet value ]
+	snippet hasValue
+		ifFalse: [ self should: runBlock raise: RuntimeSyntaxError ]
+		ifTrue: [ self assert: runBlock value equals: snippet value ]
 ]
