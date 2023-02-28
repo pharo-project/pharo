@@ -301,7 +301,7 @@ RBParser >> parseArray [
 	node left: startToken start.
 	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
 	(currentToken isSpecial: $})
-		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
+		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: '''}'' expected'].
 	node right: currentToken start.
 	self step.
 	^ node
@@ -314,11 +314,11 @@ RBParser >> parseAssignment [
 
 	| node position |
 	currentToken isAssignment ifTrue: [
-		self parserError: 'identifier expected in assigment'.
+		self parserError: 'Variable expected'.
 		position := currentToken start.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side".
-		node := RBAssignmentErrorNode content: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
+		node := RBAssignmentErrorNode contents: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
 		node value: ':='.
 		^ node
 	].
@@ -443,7 +443,7 @@ RBParser >> parseBlockArgsInto: node [
 					self stepBar]
 				ifFalse:
 					[(currentToken isSpecial: $])
-						ifFalse: [ args add:(self parserError: '''|'' expected')]]].
+						ifFalse: [ args add:(self parserError: '''|'' or parameter expected')]]].
 	node
 		arguments: args;
 		colons: colons.
@@ -475,9 +475,9 @@ RBParser >> parseCascadeMessage [
 		"Cut parsing with an error.
 		If in faulty mode, continue the execution and generate a faulty cascade node.
 		Note that this bad cascade node will be added to the list of messages."
-		self parserError: 'cascaded message not allowed'.
+		self parserError: 'Message expected'.
 		node := RBInvalidCascadeErrorNode
-			content: { node }
+			contents: { node }
 			start: node start
 			stop: currentToken stop
 			errorMessage: 'Message expected'.
@@ -540,9 +540,9 @@ RBParser >> parseDoIt [
 RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
 	| firstParse |
 	firstParse := self parserError: anErrorMessage.
-	^[firstParse isParseError
+	^firstParse isParseError
 		ifTrue: [ (self englobingErrorNodeClass error: aToken withNodes: aCollection) value: aToken value asString ]
-		ifFalse: [ firstParse ]] on: Error do: [ firstParse ]
+		ifFalse: [ firstParse ]
 ]
 
 { #category : #'error handling' }
@@ -734,7 +734,7 @@ RBParser >> parseLiteralByteArrayObject [
 			[currentToken value isInteger and: [currentToken value between: 0 and: 255]])
 		ifFalse: [
 			| errorNode |
-			errorNode := self parserError: 'Expecting 8-bit integer'.
+			errorNode := self parserError: '8-bit integer expected'.
 			"Error recovery: consume the token as classic literal array object"
 			errorNode value: self parseLiteralArrayObject value asString.
 			^ errorNode ].
@@ -1008,7 +1008,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 			whileTrue: [
 				self parserError: 'Missing opener for closer: ', currentToken value asString.
 				node := RBUnfinishedStatementErrorNode
-					content: { node }
+					contents: { node }
 					start: node start
 					stop: currentToken stop
 					errorMessage: 'Missing opener for closer: ', currentToken value asString.
@@ -1018,14 +1018,16 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"Next we should have the end of the statement
 	  - a dot or
 	  - an accepted scope closer e.g., )]} or
-	  - or the end of the stream.
-	If it is neither, we should mark our statement as unfinished statement."
+	  - the end of the stream.
+	If it is neither, we should mark our statement as unfinished statement.
+	And we do not stack unfinished statements."
 	(currentToken value ~= $.
 		and: [ (aCollectionOfClosers includes: currentToken value) not
-			and: [ currentToken isEOF not ] ] ) ifTrue: [
+			and: [ currentToken isEOF not
+				and: [ node isUnfinishedStatement not ] ] ] ) ifTrue: [
 		self parserError: 'End of statement expected'.
 		node := RBUnfinishedStatementErrorNode
-			content: { node }
+			contents: { node }
 			start: node start
 			stop: node stop
 			errorMessage: 'End of statement expected'
@@ -1047,7 +1049,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
 		self parserError: 'Unreachable code'.
 		node := RBUnreachableStatementErrorNode
-			content: { node }
+			contents: { node }
 			start: node start
 			stop: node stop
 			errorMessage: 'Unreachable code' ].
@@ -1119,7 +1121,7 @@ RBParser >> parseTemporariesInto: aSequenceNode [
 					self stepBar. "Consume one | only"
 					temps := self parseTemps.
 					(currentToken isBinary and: [currentToken value first = $|])
-						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' expected'.
+						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' or variable expected'.
 									 aSequenceNode addFaultyNode: errorNode.
 									 temps := OrderedCollection new.
 									 leftBar := nil.

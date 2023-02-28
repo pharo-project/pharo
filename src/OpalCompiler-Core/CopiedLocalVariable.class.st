@@ -3,7 +3,7 @@ A copied variable is an arg or temp var that is copied into a block that later r
 "
 Class {
 	#name : #CopiedLocalVariable,
-	#superclass : #LocalVariable,
+	#superclass : #TemporaryVariable,
 	#instVars : [
 		'originalVar'
 	],

@@ -302,6 +302,18 @@ RBScanner >> on: aStream [
 	comments := OrderedCollection new
 ]
 
+{ #category : #parsing }
+RBScanner >> parseErrorNode: aMessageString [
+	"This method might be called indirectly by errorBlocks.
+	especially by `RBParser class>>#errorNodeBlock` since the parser share its
+	error blocks with the scanner."
+
+	| sourceString |
+	sourceString := stream contents copyFrom: self errorPosition to: stream contents size.
+	^ RBParseErrorNode
+		errorMessage: aMessageString value: sourceString at: self errorPosition
+]
+
 { #category : #private }
 RBScanner >> previousStepPosition [
 	^characterType = #eof
@@ -467,7 +479,7 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ (self scanError: 'Expecting a literal type') value: '#'
+	^ (self scanError: 'Literal expected') value: '#'
 ]
 
 { #category : #'private - scanning' }
@@ -494,7 +506,7 @@ RBScanner >> scanLiteralCharacter [
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
 	| token |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ (self scanError:'A Character was expected') value: '$'].
+	currentCharacter ifNil:[ ^ (self scanError:'Character expected') value: '$'].
 	token := RBLiteralToken
 				value: currentCharacter
 				start: tokenStart

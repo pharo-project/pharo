@@ -1678,7 +1678,7 @@ EFFormatter >> needsParenthesisFor: aNode [
 	aNode isValue
 		ifFalse: [ ^ false ].
 	aNode isParseError
-		ifTrue: [ ^ false ].
+		ifTrue: [ ^ aNode hasParentheses ].
 	parent := aNode parent ifNil: [ ^ false ].
 	(aNode isMessage
 		and: [ parent isMessage

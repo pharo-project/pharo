@@ -5,7 +5,7 @@ I am responsible for keeping track of `selectedChanges` (which changes to apply)
 
 "
 Class {
-	#name : #RBRefactoringPreviewPresenter,
+	#name : #StRefactoringPreviewPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'changes',
@@ -20,11 +20,11 @@ Class {
 		'buttonOk',
 		'buttonCancel'
 	],
-	#category : #'Refactoring-Core-UI'
+	#category : #'Refactoring-UI'
 }
 
 { #category : #'instance creation' }
-RBRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes [
+StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes [
 
 	^ self new
 		  changesFrom: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes;
@@ -32,12 +32,12 @@ RBRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironm
 ]
 
 { #category : #specs }
-RBRefactoringPreviewPresenter class >> title [
+StRefactoringPreviewPresenter class >> title [
 	^ 'Refactoring changes'
 ]
 
 { #category : #action }
-RBRefactoringPreviewPresenter >> accept [
+StRefactoringPreviewPresenter >> accept [
 
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
 		UIManager default inform: 'No changes to apply.'.
@@ -53,7 +53,7 @@ RBRefactoringPreviewPresenter >> accept [
 ]
 
 { #category : #private }
-RBRefactoringPreviewPresenter >> buildDiffFor: aChange [
+StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 
 	^ diffPresenter
 		  leftText: aChange oldVersionTextToDisplay;
@@ -61,7 +61,7 @@ RBRefactoringPreviewPresenter >> buildDiffFor: aChange [
 ]
 
 { #category : #initialization }
-RBRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: anEnvironment scopes: aCollection [
+StRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: anEnvironment scopes: aCollection [
 
 	changes := aCompositeChange whatToDisplayIn: self.
 	scopes := aCollection.
@@ -71,13 +71,13 @@ RBRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: an
 ]
 
 { #category : #action }
-RBRefactoringPreviewPresenter >> closeWindow [
+StRefactoringPreviewPresenter >> closeWindow [
 
 	self window close
 ]
 
 { #category : #initialization }
-RBRefactoringPreviewPresenter >> columns [
+StRefactoringPreviewPresenter >> columns [
 
 	^ { (SpCompositeTableColumn new
 		   addColumn:
@@ -90,9 +90,8 @@ RBRefactoringPreviewPresenter >> columns [
 ]
 
 { #category : #initialization }
-RBRefactoringPreviewPresenter >> connectPresenters [
+StRefactoringPreviewPresenter >> connectPresenters [
 
-	super connectPresenters.
 	table whenSelectionChangedDo: [ :selection |
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
@@ -103,8 +102,8 @@ RBRefactoringPreviewPresenter >> connectPresenters [
 	buttonOk action: [ self accept ]
 ]
 
-{ #category : #initialization }
-RBRefactoringPreviewPresenter >> initializeLayout [
+{ #category : #layout }
+StRefactoringPreviewPresenter >> defaultLayout [
 
 	| scopesLayout actionsLayout |
 	scopesLayout := SpBoxLayout newLeftToRight
@@ -114,30 +113,25 @@ RBRefactoringPreviewPresenter >> initializeLayout [
 		                add: scopeDropList;
 		                yourself.
 	actionsLayout := SpBoxLayout newLeftToRight
-		                 addLast: buttonOk
-		                 expand: false
-		                 fill: true
-		                 padding: 5;
-		                 addLast: buttonCancel
-		                 expand: false
-		                 fill: true
-		                 padding: 5;
+		                 spacing: 5;
+		                 addLast: buttonOk expand: false fill: true;
+		                 addLast: buttonCancel expand: false fill: true;
 		                 yourself.
 
-	self layout: (SpBoxLayout newTopToBottom
-			 add: (SpBoxLayout newTopToBottom
-					  add: scopesLayout
-					  withConstraints:
-						  [ :constraints | constraints height: 30 ] yourself;
-					  add: table;
-					  add: diffPresenter;
-					  yourself);
-			 add: actionsLayout expand: false;
-			 yourself)
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newTopToBottom
+				   add: scopesLayout
+				   withConstraints:
+					   [ :constraints | constraints height: 30 ] yourself;
+				   add: table;
+				   add: diffPresenter;
+				   yourself);
+		  add: actionsLayout expand: false;
+		  yourself
 ]
 
 { #category : #initialization }
-RBRefactoringPreviewPresenter >> initializePresenters [
+StRefactoringPreviewPresenter >> initializePresenters [
 
 	diffPresenter := self newDiff.
 	diffPresenter disable.
@@ -160,12 +154,11 @@ RBRefactoringPreviewPresenter >> initializePresenters [
 		                icon: (self iconNamed: #smallCancel).
 	self focusOrder
 		add: buttonOk;
-		add: buttonCancel.
-	self initializeLayout
+		add: buttonCancel
 ]
 
 { #category : #initialization }
-RBRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
+StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
 		title: self title;
@@ -173,13 +166,13 @@ RBRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #update }
-RBRefactoringPreviewPresenter >> updateActiveScope [
+StRefactoringPreviewPresenter >> updateActiveScope [
 
 	activeScope := scopeDropList selectedItem asRBEnvironment
 ]
 
 { #category : #update }
-RBRefactoringPreviewPresenter >> updateChanges [
+StRefactoringPreviewPresenter >> updateChanges [
 
 	changesInScope := changes select: [ :change |
 		                  activeScope includesClass: change changeClass ].
@@ -187,13 +180,13 @@ RBRefactoringPreviewPresenter >> updateChanges [
 ]
 
 { #category : #update }
-RBRefactoringPreviewPresenter >> updateScopeList [
+StRefactoringPreviewPresenter >> updateScopeList [
 
 	scopeDropList items: scopes
 ]
 
 { #category : #update }
-RBRefactoringPreviewPresenter >> updateTablePresenter [
+StRefactoringPreviewPresenter >> updateTablePresenter [
 
 	table items: changesInScope.
 	table items ifNotEmpty: [ table selectIndex: 1 ]
