@@ -301,7 +301,7 @@ RBParser >> parseArray [
 	node left: startToken start.
 	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
 	(currentToken isSpecial: $})
-		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
+		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: '''}'' expected'].
 	node right: currentToken start.
 	self step.
 	^ node
@@ -314,7 +314,7 @@ RBParser >> parseAssignment [
 
 	| node position |
 	currentToken isAssignment ifTrue: [
-		self parserError: 'identifier expected in assigment'.
+		self parserError: 'Variable expected'.
 		position := currentToken start.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side".
@@ -445,10 +445,10 @@ RBParser >> parseBlockArgsInto: node [
 									currentToken
 										value: #|;
 										start: currentToken start + 1]
-								ifFalse: [ args add:(self parserError: '''|'' expected')]]]
+								ifFalse: [ args add:(self parserError: '''|'' or parameter expected')]]]
 				ifFalse:
 					[(currentToken isSpecial: $])
-						ifFalse: [ args add:(self parserError: '''|'' expected')]]].
+						ifFalse: [ args add:(self parserError: '''|'' or parameter expected')]]].
 	node
 		arguments: args;
 		colons: colons.
@@ -480,7 +480,7 @@ RBParser >> parseCascadeMessage [
 		"Cut parsing with an error.
 		If in faulty mode, continue the execution and generate a faulty cascade node.
 		Note that this bad cascade node will be added to the list of messages."
-		self parserError: 'cascaded message not allowed'.
+		self parserError: 'Message expected'.
 		node := RBInvalidCascadeErrorNode
 			contents: { node }
 			start: node start
@@ -739,7 +739,7 @@ RBParser >> parseLiteralByteArrayObject [
 			[currentToken value isInteger and: [currentToken value between: 0 and: 255]])
 		ifFalse: [
 			| errorNode |
-			errorNode := self parserError: 'Expecting 8-bit integer'.
+			errorNode := self parserError: '8-bit integer expected'.
 			"Error recovery: consume the token as classic literal array object"
 			errorNode value: self parseLiteralArrayObject value asString.
 			^ errorNode ].
@@ -1122,7 +1122,7 @@ RBParser >> parseTemporariesInto: aSequenceNode [
 					self step.
 					temps := self parseTemps.
 					(currentToken isBinary and: [currentToken value = #|])
-						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' expected'.
+						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' or variable expected'.
 									 aSequenceNode addFaultyNode: errorNode.
 									 temps := OrderedCollection new.
 									 leftBar := nil.
