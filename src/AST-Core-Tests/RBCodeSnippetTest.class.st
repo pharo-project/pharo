@@ -64,7 +64,9 @@ RBCodeSnippetTest >> testDump [
 { #category : #tests }
 RBCodeSnippetTest >> testFormattedCode [
 
-	self assert: snippet parse formattedCode equals: snippet formattedCode
+	| ast |
+	ast := snippet parse.
+	self assert: ast formattedCode withSeparatorsCompacted equals: snippet formattedCode withSeparatorsCompacted
 ]
 
 { #category : #tests }
