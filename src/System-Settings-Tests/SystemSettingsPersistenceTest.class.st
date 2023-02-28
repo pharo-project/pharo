@@ -221,14 +221,15 @@ SystemSettingsPersistenceTest >> testStoreSettingNodeTwice [
 
 { #category : #'tests - storing' }
 SystemSettingsPersistenceTest >> testStoreSettingNodes [
+
 	self deny: preferencesFile exists.
 	self testRealValueModification.
 	systemSettings storeSettingNodes: {
-		MockSettings booleanSettingNode.
-		MockSettings rangeSettingNode }.
+			MockSettings booleanSettingNode.
+			MockSettings rangeSettingNode }.
 	self assert: preferencesFile exists.
 	self assert: preferencesFile size > 0.
-	self assert: preferencesFile contents equals: MockSettings twoStoredSettingsSTONString
+	self assert: preferencesFile contents equals: (OSPlatform current lineEnding join: MockSettings twoStoredSettingsSTONString lines)
 ]
 
 { #category : #'tests - storing' }
