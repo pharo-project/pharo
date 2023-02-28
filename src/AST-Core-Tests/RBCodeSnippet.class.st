@@ -575,5 +575,6 @@ RBCodeSnippet >> value [
 { #category : #accessing }
 RBCodeSnippet >> value: anObject [
 
-	value := anObject
+	value := anObject.
+	hasValue := true
 ]
