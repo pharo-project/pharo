@@ -35,7 +35,7 @@ Class {
 { #category : #accessing }
 RBCodeSnippet class >> allSnippets [
 
-	^ self badExpressions
+	^ self badExpressions, self badMethods
 ]
 
 { #category : #accessing }
@@ -270,6 +270,68 @@ RBCodeSnippet class >> badExpressions [
 		each formattedCode
 			ifNil: [ each formattedCode: each source ]
 			ifNotNil: [ each formattedCode: each formattedCode expandMacros ].
+	].
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badMethods [
+
+	| list |
+	list := {
+		"Emptyness"
+		self new source: ' '.
+
+		"Wrong token for pattern"
+		"An empty pattern will be set, and the first statement will be a error node."
+		self new source: '5'; formattedCode: ' . 5'.
+		self new source: '''hello'''; formattedCode: ' . ''hello'''.
+		self new source: '#hello'; formattedCode: ' . #hello'.
+		self new source: ':'; formattedCode: ' . :'.
+		self new source: '#(foo bar)'; formattedCode: ' . #( foo bar )'.
+
+		"Random bad token"
+		"Tought: is complainng about the bad token really better than complaining about the bad pattern?"
+		self new source: ' $'.
+		self new source: ' ''hello'.
+		self new source: ' 2r3'; formattedCode: ' 2r. 3'.
+
+		"Bad aruments"
+		"The missing argument will be an error, the remainer starts the body"
+		self new source: '+ '; hasValue: true.
+		self new source: '+ 1'; hasValue: true.
+		self new source: '+ foo: '.
+		self new source: 'foo: '; hasValue: true.
+		self new source: 'foo: 1'; hasValue: true.
+		self new source: 'foo: + '.
+		self new source: 'foo: bar: '; hasValue: true.
+		self new source: 'foo:bar:'; formattedCode: ' . foo:bar:'. "`foo:bar:` is a single token, and is unexpected"
+
+		"Bad pragma message"
+		self new source: 'foo < '; hasValue: true.
+		self new source: 'foo <> '.
+		self new source: 'foo < 4'; hasValue: true.
+		self new source: 'foo < bar '; hasValue: true.
+		self new source: 'foo < bar: '; hasValue: true.
+		self new source: 'foo < bar: 1 1 > '.
+		self new source: 'foo < bar ; baz > '; formattedCode: 'foo < bar ; baz. > '.
+
+		"Bad pragma value"
+		self new source: 'foo <bar: > '; hasValue: true.
+		self new source: 'foo <bar:(1)>'; formattedCode: 'foo < bar: 1 > '. "FIXME. dont eat parentheses"
+		self new source: 'foo < bar: baz > '.
+		self new source: 'foo < bar: 1 + 1 > '.
+		self new source: 'foo < bar: [ 1 ] > '.
+		self new source: 'foo < bar: { 1 } > '.
+		self new source: 'foo <bar: #[ -1]> '; hasValue: true. "Literal bytes arrays are acceptable, but this one is faulty"
+		self new source: 'foo < + 1> '; isFaulty: false. "Binary message is legal pragma"
+		self new source: 'foo < + > '; hasValue: true.
+		}.
+	"Setup default values"
+	list do: [ :each |
+		each isMethod: true.
+		each isFaulty ifNil: [ each isFaulty: true ].
+		each formattedCode ifNil: [ each formattedCode: each source ].
 	].
 	^ list
 ]
