@@ -50,6 +50,13 @@ BalloonEngine class >> debug: aBoolean [
 	Debug := aBoolean
 ]
 
+{ #category : #accessing }
+BalloonEngine class >> defaultBitmapWidth [
+	"Return default bitmap width"
+
+	^ 2048
+]
+
 { #category : #profiling }
 BalloonEngine class >> doProfileStats: aBool [
 	"Note: On Macintosh systems turning on profiling can significantly
@@ -251,8 +258,8 @@ BalloonEngine >> bitBlt: aBitBlt [
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt
-		sourceForm: (Form extent: span size @ 1 depth: 32 bits: span);
-		sourceRect: (0@0 extent: 1@span size);
+		sourceForm: (Form extent: self span size @ 1 depth: 32 bits: self span);
+		sourceRect: (0@0 extent: 1@self span size);
 		colorMap: (Color colorMapIfNeededFrom: 32 to: bitBlt destForm depth);
 		combinationRule: (bitBlt destForm depth >= 8 ifTrue:[34] ifFalse:[Form paint])
 ]
