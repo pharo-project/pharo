@@ -7,7 +7,13 @@ Class {
 	#category : #'FormCanvas-Core-Tests-BalloonEngine'
 }
 
-{ #category : #test }
+{ #category : #tests }
+BalloonEngineTest >> testDefaultBitmapWidth [
+
+	self assert: BalloonEngine defaultBitmapWidth equals: 2048
+]
+
+{ #category : #tests }
 BalloonEngineTest >> testSpan [
 
 	| engine |
@@ -15,5 +21,5 @@ BalloonEngineTest >> testSpan [
 
 	Display width > 0
 		ifTrue: [ self assert: engine span size equals: Display width ]
-		ifFalse: [ self assert: engine span size equals: 2048 ]
+		ifFalse: [ self assert: engine span size equals: BalloonEngine defaultBitmapWidth ]
 ]

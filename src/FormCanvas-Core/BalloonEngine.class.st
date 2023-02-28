@@ -431,22 +431,29 @@ BalloonEngine >> flush [
 
 { #category : #initialization }
 BalloonEngine >> initialize [
-	| w |
+
 	super initialize.
-	
-	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a standard value as 2048"
-	w := Display width.
-	w <= 0 ifTrue:[w := 2048].
-	
+
+	self initializeSpan.
 	externals := OrderedCollection new: 100.
-	span := Bitmap new: w.
-	self
-		bitBlt:
-			((BitBlt toForm: Display)
-				destRect: Display boundingBox;
-				yourself).
+
+	self bitBlt: ((BitBlt toForm: Display)
+			destRect: Display boundingBox;
+			yourself).
+
 	forms := #().
 	deferred := false
+]
+
+{ #category : #initialization }
+BalloonEngine >> initializeSpan [
+	| width |
+
+	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a default width"
+	width := Display width.
+	width <= 0 ifTrue:[ width := self class defaultBitmapWidth ].
+
+	span := Bitmap new: width
 ]
 
 { #category : #initialize }
