@@ -139,10 +139,10 @@ RBCodeSnippet class >> badExpressions [
 		"Bad block parameters"
 		"A bad parameter cause a error object to be added as the last element of the block parameter.
 		On formating, a double space can be seen."
-		self new source: '[:a b]'; formattedCode: '[ :a : | b ]'; skip: #testExecute.
-		self new source: '[:a 1]'; formattedCode: '[ :a : | 1 ]'; skip: #testExecute.
-		self new source: '[:a :]'; formattedCode: '[ :a : |  ]'; skip: #testExecute.
-		self new source: '[:a ::b]'; formattedCode: '[ :a : :b |  ]'; skip: #testExecute.
+		self new source: '[:a b]'; formattedCode: '[ :a : | b ]'; hasValue: true. "FIXME"
+		self new source: '[:a 1]'; formattedCode: '[ :a : | 1 ]'; hasValue: true; value: 1. "FIXME"
+		self new source: '[:a :]'; formattedCode: '[ :a : |  ]'; hasValue: true. "FIXME"
+		self new source: '[:a ::b]'; formattedCode: '[ :a : :b |  ]'; hasValue: true. "FIXME"
 		self new source: '[:a :b]'; formattedCode: '[ :a :b |  ]'; isFaulty: false. "no pipe (and no body) is legal"
 		self new source: '[: a : b]'; formattedCode: '[ :a :b |  ]'; isFaulty: false. "spaces are also legal"
 		self new source: '[:a:b]'; formattedCode: '[ : : |  a: b ]'. "FIXME"
