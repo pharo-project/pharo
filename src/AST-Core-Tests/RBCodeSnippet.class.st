@@ -9,6 +9,7 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * isFaulty <Boolean> is the parser expected to produce a faulty AST 
 * value <Object> the expected value when executed
 * hasValue <Boolean> is the compiled method produce a value
+* raise <Exception class> the exception that should be raised at runtime
 * messageNotUnderstood <Symbol> the expected MNU error when executed
 * numberOfCritique <Integer> how many critiques are expected
 * skippedTests <Collection> list of test to not execute (that should be fixed)
@@ -28,6 +29,7 @@ Class {
 		'hasValue',
 		'formattedCode',
 		'skippedTests',
+		'raise',
 		'messageNotUnderstood',
 		'numberOfCritiques'
 	],
@@ -508,6 +510,18 @@ RBCodeSnippet >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: source;
 		nextPut: $)
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> raise [
+
+	^ raise
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> raise: anObject [
+
+	raise := anObject
 ]
 
 { #category : #accessing }

@@ -31,6 +31,8 @@ RBCodeSnippetTest >> testExecute [
 		runBlock onDNU: mnu do: [ ^ self ].
 		self signalFailure: 'Should have raised MNU ' , mnu ].
 
+	snippet raise ifNotNil: [ :class | ^ self should: runBlock raise: class ].
+
 	snippet hasValue
 		ifFalse: [ self should: runBlock raise: RuntimeSyntaxError ]
 		ifTrue: [ self assert: runBlock value equals: snippet value ]
