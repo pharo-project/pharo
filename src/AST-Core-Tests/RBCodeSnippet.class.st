@@ -288,8 +288,8 @@ RBCodeSnippet class >> styleAllWithError [
 	<script>
 	| bigtext |
 	bigtext := Text new.
-	self badExpressions do: [ :each |
-		| text ast |
+	self allSnippets do: [ :each |
+		| text ast stop |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 
 		"Get the original styled text"
@@ -315,21 +315,29 @@ RBCodeSnippet class >> styleAllWithError [
 
 		"Then the fun part. Add line for each error node"
 		ast := each parse.
-		ast nodesDo: [ :node |
+		ast nodesPostorderDo: [ :node |
 			node isParseError ifTrue: [
 				text := each styledText.
+				stop := node stop min: text size.
+				"Highlight the error node background"
 				text
 					addAttribute: (TextBackgroundColor color: Color cyan)
 					from: node start
-					to: (node stop min: text size).
-				text append: '    '.
-				text append: node errorMessage.
-				text append: '  ('.
-				text append: node class name.
-				text append: ')'.
+					to: stop.
+				"Insert the message after the stop so that:
+				 1. we can see where are zero-width errors
+				 2. we have the same output than the compiler error (above)"
+				text
+					replaceFrom: stop + 1
+					to: stop
+					with: (node errorMessage asText addAttribute:
+							 (TextBackgroundColor color: Color lightBlue)).
 				bigtext append: String cr.
 				bigtext append: String tab.
-				bigtext append: text ] ] ].
+				bigtext append: text.
+				bigtext append: '   '.
+				bigtext append: (node class name asText makeAllColor: Color gray).
+		] ] ].
 	bigtext inspect
 ]
 
