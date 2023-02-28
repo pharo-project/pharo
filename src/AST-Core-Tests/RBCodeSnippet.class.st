@@ -272,14 +272,75 @@ RBCodeSnippet class >> badExpressions [
 { #category : #script }
 RBCodeSnippet class >> styleAll [
 	"Display all snippets in a big styled text.
-	Each sniped is styled independently."
+	Each snipped is styled independently."
 
 	<script>
 	| bigtext |
 	bigtext := Text new.
-	self badExpressions do: [ :each |
+	self allSnippets do: [ :each |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 		bigtext append: each styledText ].
+	bigtext inspect
+]
+
+{ #category : #script }
+RBCodeSnippet class >> styleAllWithError [
+	"Display all snippets in a big styled text with compilation error messages and error nodes.
+	Each compilation error message and each error node is displayed indenpendently."
+
+	<script>
+	| bigtext |
+	bigtext := Text new.
+	self allSnippets do: [ :each |
+		| text ast stop |
+		bigtext ifNotEmpty: [ bigtext append: String cr ].
+
+		"Get the original styled text"
+		text := each styledText.
+		bigtext append: text.
+
+		"Try to compile it"
+		[
+		OpalCompiler new
+			noPattern: true;
+			compile: each source ]
+			on: SyntaxErrorNotification
+			do: [ :exception |
+				"In case of error, insert error message (like an old-school smalltalk compiler)"
+				text
+					replaceFrom: exception location
+					to: exception location - 1
+					with: (exception errorMessage asText addAttribute:
+							 (TextBackgroundColor color: Color lightBlue)).
+				bigtext append: String cr.
+				bigtext append: String tab.
+				bigtext append: text. ].
+
+		"Then the fun part. Add line for each error node"
+		ast := each parse.
+		ast nodesPostorderDo: [ :node |
+			node isParseError ifTrue: [
+				text := each styledText.
+				stop := node stop min: text size.
+				"Highlight the error node background"
+				text
+					addAttribute: (TextBackgroundColor color: Color cyan)
+					from: node start
+					to: stop.
+				"Insert the message after the stop so that:
+				 1. we can see where are zero-width errors
+				 2. we have the same output than the compiler error (above)"
+				text
+					replaceFrom: stop + 1
+					to: stop
+					with: (node errorMessage asText addAttribute:
+							 (TextBackgroundColor color: Color lightBlue)).
+				bigtext append: String cr.
+				bigtext append: String tab.
+				bigtext append: text.
+				bigtext append: '   '.
+				bigtext append: (node class name asText makeAllColor: Color gray).
+		] ] ].
 	bigtext inspect
 ]
 
