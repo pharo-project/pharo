@@ -366,7 +366,7 @@ RBParser >> parseBinaryPattern [
 	currentToken isBinary
 		ifFalse: [
 		^ self methodNodeClass
-			selector: #faulty
+			selector: #''
 			arguments: #()
 			body: (self sequenceNodeClass statements: (OrderedCollection with: (self parserError: 'Message pattern expected')))].
 
