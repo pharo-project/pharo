@@ -475,58 +475,71 @@ String class >> with: aCharacter [
 String >> < aString [
 	"Answer whether the receiver sorts before aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'abc' < 'def' >>> true"
+
 	" 'abc' < 'abc' >>> false"
+
 	" 'def' < 'abc' >>> false"
 
-
-	^ (self compare: self with: aString collated: AsciiOrder) = 1
+	^ (self compare: self with: aString collated: AsciiOrder) < 0
 ]
 
 { #category : #comparing }
 String >> <= aString [
 	"Answer whether the receiver sorts before or equal to aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'abc' <= 'def' >>> true"
+
 	" 'abc' <= 'abc' >>> true"
+
 	" 'def' <= 'abc' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) <= 2
+	^ (self compare: self with: aString collated: AsciiOrder) <= 0
 ]
 
 { #category : #comparing }
 String >> = aString [
 	"Answer whether the receiver sorts equally as aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'abc' = 'def' >>> false"
+
 	" 'abc' = 'abc' >>> true"
+
 	" 'def' = 'abc' >>> false"
 
-	(aString isString and: [self size = aString size]) ifFalse: [^false].
-	^ (self compare: self with: aString collated: AsciiOrder) = 2
+	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
+	^ (self compare: self with: aString collated: AsciiOrder) = 0
 ]
 
 { #category : #comparing }
 String >> > aString [
 	"Answer whether the receiver sorts after aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'def' > 'abc' >>> true"
+
 	" 'def' > 'def' >>> false"
+
 	" 'abc' > 'def' >>> false"
 
-
-	^ (self compare: self with: aString collated: AsciiOrder) = 3
+	^ (self compare: self with: aString collated: AsciiOrder) > 0
 ]
 
 { #category : #comparing }
 String >> >= aString [
 	"Answer whether the receiver sorts after or equal to aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'def' >= 'abc' >>> true"
+
 	" 'def' >= 'def' >>> true"
+
 	" 'abc' >= 'def' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) >= 2
+	^ (self compare: self with: aString collated: AsciiOrder) >= 0
 ]
 
 { #category : #comparing }
@@ -956,27 +969,36 @@ String >> compare: aString caseSensitive: aBool [
 		2 - equal
 		3 - after.
 	"
+
 	| map |
-	map := aBool ifTrue:[CaseSensitiveOrder] ifFalse:[CaseInsensitiveOrder].
-	^self compare: self with: aString collated: map
+	map := aBool
+		       ifTrue: [ CaseSensitiveOrder ]
+		       ifFalse: [ CaseInsensitiveOrder ].
+	^ (self compare: self with: aString collated: map) sign + 2
 ]
 
 { #category : #comparing }
 String >> compare: string1 with: string2 collated: order [
-
 	"'abc' = 'abc' asWideString >>> true"
+
 	"'abc' asWideString = 'abc' >>> true"
+
 	"(ByteArray with: 97 with: 0 with: 0 with: 0) asString ~= 'a000' asWideString >>> true"
+
 	"('abc' sameAs: 'aBc' asWideString) >>> true"
+
 	"('aBc' asWideString sameAs: 'abc') >>> true"
+
 	"('a000' asWideString ~= (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> true"
+
 	"((ByteArray with: 97 with: 0 with: 0 with: 0) asString sameAs: 'Abcd' asWideString) >>> false"
+
 	"('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> false"
 
-	(string1 isByteString and: [string2 isByteString]) ifTrue: [ ^ (string1 compareWith: string2 collated: order) sign + 2 ].
+	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [ ^ string1 compareWith: string2 collated: order ].
 
 	"Primitive does not fail properly right now"
-	^ String compare: string1 with: string2 collated: order
+	^ (String compare: string1 with: string2 collated: order) - 2
 ]
 
 { #category : #converting }
