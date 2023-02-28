@@ -10,6 +10,7 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * value <Object> the expected value when executed
 * hasValue <Boolean> is the compiled method produce a value
 * messageNotUnderstood <Symbol> the expected MNU error when executed
+* numberOfCritique <Integer> how many critiques are expected
 * skippedTests <Collection> list of test to not execute (that should be fixed)
 
 Tests are executed by the parametrized matrix class `RBCodeSnippetTest`
@@ -27,7 +28,8 @@ Class {
 		'hasValue',
 		'formattedCode',
 		'skippedTests',
-		'messageNotUnderstood'
+		'messageNotUnderstood',
+		'numberOfCritiques'
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }
@@ -477,6 +479,18 @@ RBCodeSnippet >> messageNotUnderstood [
 RBCodeSnippet >> messageNotUnderstood: anObject [
 
 	messageNotUnderstood := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> numberOfCritiques [
+
+	^ numberOfCritiques
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> numberOfCritiques: anObject [
+
+	numberOfCritiques := anObject
 ]
 
 { #category : #parsing }
