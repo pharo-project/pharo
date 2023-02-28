@@ -412,7 +412,11 @@ RBParser >> parseBlock [
 		untilAnyCloserOf: ']'.
 
 	(currentToken isSpecial: $])
-		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected'].
+		ifFalse: [
+			^ (self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected')
+				arguments: node arguments;
+				yourself
+		].
 	node right: currentToken start.
 	self step.
 	^node
@@ -420,7 +424,7 @@ RBParser >> parseBlock [
 
 { #category : #'private - parsing' }
 RBParser >> parseBlockArgsInto: node [
-	| verticalBar args colons |
+	| verticalBar args arg colons |
 	args := OrderedCollection new: 2.
 	colons := OrderedCollection new: 2.
 	verticalBar := false.
@@ -428,24 +432,15 @@ RBParser >> parseBlockArgsInto: node [
 			[colons add: currentToken start.
 			self step.	":"
 			verticalBar := true.
-			args add: self parseVariableNode].
+			args add: (arg := self parseVariableNode).
+			"In case of error, preserve the lone : to ditinguish from error witout even a :"
+			arg isParseError ifTrue: [ arg value: ':', arg value ]].
 	verticalBar
 		ifTrue:
-			[currentToken isBinary
+			[(currentToken isBinary and: [currentToken value first = $|])
 				ifTrue:
 					[node bar: currentToken start.
-					currentToken value = #|
-						ifTrue: [self step]
-						ifFalse:
-							[currentToken value = #'||'
-								ifTrue:
-									["Hack the current token to be the start
-									of temps bar"
-
-									currentToken
-										value: #|;
-										start: currentToken start + 1]
-								ifFalse: [ args add:(self parserError: '''|'' or parameter expected')]]]
+					self stepBar]
 				ifFalse:
 					[(currentToken isSpecial: $])
 						ifFalse: [ args add:(self parserError: '''|'' or parameter expected')]]].
@@ -898,6 +893,10 @@ RBParser >> parsePrimitiveObject [
 			[currentToken value = $[ ifTrue: [^self saveCommentsDuring:[self parseBlock]].
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
+
+	": is only acceptable at the begin of a block. So just consume them as bad expression"
+	(currentToken isSpecial: $:) ifTrue: [ ^self parseVariableNode ].
+
 	errorNode := self parserError: 'Variable or expression expected'.
 	^errorNode
 ]
@@ -1115,25 +1114,21 @@ RBParser >> parseTemporariesInto: aSequenceNode [
 	leftBar := rightBar := nil.
 	currentToken isBinary
 		ifTrue:
-			[currentToken value = #|
+			[currentToken value first = $|
 				ifTrue:
 					[ startToken := currentToken.
 					leftBar := currentToken start.
-					self step.
+					self stepBar. "Consume one | only"
 					temps := self parseTemps.
-					(currentToken isBinary and: [currentToken value = #|])
+					(currentToken isBinary and: [currentToken value first = $|])
 						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' or variable expected'.
 									 aSequenceNode addFaultyNode: errorNode.
 									 temps := OrderedCollection new.
 									 leftBar := nil.
 								    ]
-						ifTrue: [ rightBar := currentToken start ].
-					self step]
-				ifFalse:
-					[currentToken value = #'||'
-						ifTrue:
-							[rightBar := (leftBar := currentToken start) + 1.
-							self step]]].
+						ifTrue: [
+							rightBar := currentToken start.
+							self stepBar "Consume one | only" ]]].
 
 	aSequenceNode leftBar: leftBar temporaries: temps rightBar: rightBar
 ]
@@ -1195,9 +1190,24 @@ RBParser >> parseUnaryPragma [
 RBParser >> parseVariableNode [
 	"If called without having an Identifier Token : sends an error.
 	 Return a variable node with current token value, start position and comments."
-	currentToken isIdentifier
-		ifFalse: [ ^ self parserError: 'Variable name expected' ].
-	^self parsePrimitiveIdentifier
+
+	| errorNode |
+	currentToken isIdentifier ifTrue: [ ^ self parsePrimitiveIdentifier ].
+
+	errorNode := self parserError: 'Variable name expected'.
+
+	"Consume : and optional identifier that follows as an error"
+	(currentToken isSpecial: $:) ifTrue: [
+		[ currentToken isSpecial: $: ] whileTrue: [
+			self step. "consume : while present"
+			errorNode stop: currentToken stop.
+			errorNode value: errorNode value , ':' ].
+		currentToken isIdentifier ifTrue: [ "Also consume the identifier"
+			errorNode stop: currentToken stop.
+			errorNode value: errorNode value , currentToken source.
+			self step ] ].
+
+	^ errorNode
 ]
 
 { #category : #'error handling' }
@@ -1361,6 +1371,20 @@ RBParser >> step [
 			[currentToken := nextToken.
 			nextToken := nil]
 		ifNil: [currentToken := self scannerNext]
+]
+
+{ #category : #private }
+RBParser >> stepBar [
+	"When possible, only consume the first bar (`|`) of the current binary token"
+
+	"All of this because | can be a separator (block args), a type of brackets (temps) and a valid first character of binary operators."
+
+	| value |
+	value := currentToken value.
+	(value size < 2 or: [ value first ~= $| ]) ifTrue: [ ^ self step ].
+
+	currentToken value: value allButFirst.
+	currentToken start: currentToken start + 1
 ]
 
 { #category : #'private - classes' }

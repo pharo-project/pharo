@@ -1187,8 +1187,8 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 	onAnotherLine := self areArgumentsTooLong: args.
 	args do: [ :each |
 		onAnotherLine ifTrue: [ self newLine ].
-		codeStream nextPut: $:.
-		self visitVariableNode: each.
+		each isParseError ifFalse: [ codeStream nextPut: $: ].
+		each acceptVisitor: self.
 		self formatCommentCloseToStatements ifTrue: [
 			self spaceAndFormatComments: each ].
 		self space ].
@@ -2134,12 +2134,13 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 
 { #category : #visiting }
 EFFormatter >> visitEnglobingErrorNode: aNode [
+
 	self writeString: aNode value.
+	self formatBlockArgumentsFor: aNode.
 	aNode children do: [ :e |
 		codeStream space.
 		self visitNode: e ].
-	self writeString: aNode valueAfter.
-
+	self writeString: aNode valueAfter
 ]
 
 { #category : #visiting }
