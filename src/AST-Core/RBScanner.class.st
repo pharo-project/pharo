@@ -302,6 +302,18 @@ RBScanner >> on: aStream [
 	comments := OrderedCollection new
 ]
 
+{ #category : #parsing }
+RBScanner >> parseErrorNode: aMessageString [
+	"This method might be called indirectly by errorBlocks.
+	especially by `RBParser class>>#errorNodeBlock` since the parser share its
+	error blocks with the scanner."
+
+	| sourceString |
+	sourceString := stream contents copyFrom: self errorPosition to: stream contents size.
+	^ RBParseErrorNode
+		errorMessage: aMessageString value: sourceString at: self errorPosition
+]
+
 { #category : #private }
 RBScanner >> previousStepPosition [
 	^characterType = #eof
