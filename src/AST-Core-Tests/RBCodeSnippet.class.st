@@ -369,7 +369,7 @@ RBCodeSnippet class >> styleAllWithError [
 		"Try to compile it"
 		[
 		OpalCompiler new
-			noPattern: true;
+			noPattern: each isMethod not;
 			compile: each source ]
 			on: SyntaxErrorNotification
 			do: [ :exception |
