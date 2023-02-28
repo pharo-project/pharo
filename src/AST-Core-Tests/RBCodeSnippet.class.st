@@ -62,12 +62,15 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '#['.
 		self new source: '{'.
 
+		self new source: '{ [ ( '.
+		self new source: '  )]}'.
+
 		"Compounds with an unexped thing inside"
-		self new source: '(1]2)'; formattedCode: '  ( 1].<r> 2)'.
-		self new source: '(1}2)'; formattedCode: '  ( 1}.<r> 2)'.
+		self new source: '(1]2)'; formattedCode: ' ( 1].<r> 2)'.
+		self new source: '(1}2)'; formattedCode: ' ( 1}.<r> 2)'.
 		self new source: '(1. 2)'; formattedCode: '( 1.<r> 2)'.
-		self new source: '[1)2]'; formattedCode: '[<r>  1).<r>2 ]'.
-		self new source: '[1}2]'; formattedCode: '[<r>  1}.<r>2 ]'.
+		self new source: '[1)2]'; formattedCode: '[<r> 1).<r>2 ]'.
+		self new source: '[1}2]'; formattedCode: '[<r> 1}.<r>2 ]'.
 		self new source: '#(1]2}3)'; formattedCode:'#( 1 #'']'' 2 #''}'' 3 )'; isFaulty: false; value: #(1]2}3). "`#(` can eat almost anything"
 		self new source: '#[ 1 ) 2]'.
 		self new source: '#[ 1 } 2]'.
@@ -75,8 +78,8 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '#[ 1 -1 2]'.
 		self new source: '#[ 1 1.0 2]'.
 		self new source: '#[ 1 256 2]'.
-		self new source: '{1)2}'; formattedCode: '{<r><t>  1).<r><t>2 }'.
-		self new source: '{1]2}'; formattedCode: '{<r><t>  1].<r><t>2 }'.
+		self new source: '{1)2}'; formattedCode: '{<r><t> 1).<r><t>2 }'.
+		self new source: '{1]2}'; formattedCode: '{<r><t> 1].<r><t>2 }'.
 
 		"...or without expected thing"
 		"Note: all compounds `[]` `#()` `#[]` `{}` are legal empty, except one"
