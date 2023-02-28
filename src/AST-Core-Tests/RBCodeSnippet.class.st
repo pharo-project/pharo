@@ -7,6 +7,7 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * formatedCode <String> the expected reformated code
 * isFaulty <Boolean> is the parser expected to produce a faulty AST 
 * value <Object> the expected value when executed
+* hasValue <Boolean> is the compiled method produce a value
 * messageNotUnderstood <Symbol> the expected MNU error when executed
 * skippedTests <Collection> list of test to not execute (that should be fixed)
 
@@ -21,6 +22,7 @@ Class {
 		'source',
 		'isFaulty',
 		'value',
+		'hasValue',
 		'formattedCode',
 		'skippedTests',
 		'messageNotUnderstood'
@@ -354,6 +356,18 @@ RBCodeSnippet >> formattedCode [
 RBCodeSnippet >> formattedCode: anObject [
 
 	formattedCode := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> hasValue [
+
+	^ hasValue ifNil: [ value isNotNil | isFaulty not ]
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> hasValue: anObject [
+
+	hasValue := anObject
 ]
 
 { #category : #asserting }
