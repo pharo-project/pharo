@@ -17,10 +17,9 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'refactorings',
-		'methods',
-		'model'
+		'methods'
 	],
-	#category : #'Refactoring-Core-UI'
+	#category : #'Refactoring-UI'
 }
 
 { #category : #'instance creation' }

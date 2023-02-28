@@ -14,7 +14,8 @@ Class {
 		'font',
 		'isForWorkspace',
 		'pixelHeight',
-		'workspace'
+		'workspace',
+		'plugins'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -838,6 +839,12 @@ SHRBTextStyler class >> vintageStyleTable [
 			(module 								(cyan muchDarker) bold))
 ]
 
+{ #category : #private }
+SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
+
+	self plugins add: aPlugin
+]
+
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
 	self
@@ -867,6 +874,12 @@ SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aT
 					to: stop ]].
 
 	^ aText
+]
+
+{ #category : #accessing }
+SHRBTextStyler >> addPlugin: aPlugin [
+
+	self plugins add: aPlugin
 ]
 
 { #category : #formatting }
@@ -1015,16 +1028,27 @@ SHRBTextStyler >> pixelHeight [
 ]
 
 { #category : #private }
+SHRBTextStyler >> plugins [
+
+	^ plugins ifNil: [ plugins := OrderedCollection new ]
+]
+
+{ #category : #private }
 SHRBTextStyler >> privateStyle: aText [
-	| ast |
+	| compiler |
+
 	aText ifEmpty: [ ^ self ].
-	ast := classOrMetaClass compiler
+	compiler := classOrMetaClass compiler
 		source: aText asString;
 		noPattern: self isForWorkspace ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: workspace;
-		parse.
-	^ self style: aText ast: ast
+		requestor: workspace.
+
+	self plugins do: [ :each | compiler addParsePlugin: each ].
+
+	^ self
+		style: aText
+		ast: compiler parse
 ]
 
 { #category : #private }
@@ -1122,7 +1146,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 { #category : #private }
 SHRBTextStyler >> styleTempBars: aSequenceNode [
 	| tempBarAttribute |
-	tempBarAttribute := aSequenceNode scope isMethodScope
+	tempBarAttribute := (aSequenceNode scope isNil or: [ aSequenceNode scope isMethodScope ])
 		ifTrue: [ #methodTempBar ]
 		ifFalse: [ #blockTempBar ].
 	aSequenceNode leftBar
@@ -1183,7 +1207,7 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
-	anEnglobingErrorNode content do: [:each | self visitNode: each ]
+	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
 { #category : #visiting }

@@ -12,8 +12,8 @@ RBErrorNodeParserTest >> testFaultyAssigment [
 
 	self assert: node isFaulty.
 	self assert: node isParseError.
-	self   deny: node content first isFaulty.
-	self assert: node content first value equals: 1.
+	self   deny: node contents first isFaulty.
+	self assert: node contents first value equals: 1.
 	self assert: node sourceInterval equals: (1 to: 3).
 	self assert: node errorMessage equals: 'identifier expected in assigment'.
 	self assert: node formattedCode equals: ':= 1'
@@ -375,17 +375,17 @@ RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 	self assert: node isFaulty.
 	self assert: node isLiteralByteArrayError.
 
-	self deny: node content first isFaulty.
-	self assert: node content first value equals: 1.
+	self deny: node contents first isFaulty.
+	self assert: node contents first value equals: 1.
 
-	self assert: node content second isFaulty.
-	self assert: node content second value equals: 'hello'.
-	self assert: node content second sourceInterval equals: (6 to: 10).
-	self assert: node content second errorMessage equals: 'Expecting 8-bit integer'.
-	self assert: node content second formattedCode equals: 'hello'.
+	self assert: node contents second isFaulty.
+	self assert: node contents second value equals: 'hello'.
+	self assert: node contents second sourceInterval equals: (6 to: 10).
+	self assert: node contents second errorMessage equals: 'Expecting 8-bit integer'.
+	self assert: node contents second formattedCode equals: 'hello'.
 
-	self deny: node content third isFaulty.
-	self assert: node content third value equals: 3.
+	self deny: node contents third isFaulty.
+	self assert: node contents third value equals: 3.
 
 	self assert: node sourceInterval equals: (1 to: 13).
 	self assert: node formattedCode equals: source
