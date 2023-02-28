@@ -220,6 +220,7 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '1 foo: ^2'; formattedCode: ' 1 foo: .<r>^ 2'.
 		self new source: '(^1)'; formattedCode: ' ( .<r> ^ 1)'. "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
 		self new source: '^^1'; formattedCode: ' ^ .<r>^ 1' "Same spirit".
+		self new source: '[ ^ 1 ]'; isFaulty: false; raise: BlockCannotReturn. "when the block is evaluated, the method is already gone."
 		self new source: '{ ^ 1 }'; isFaulty: false; value: 1. "I did not expect this one to be legal"
 		self new source: '#(^1)'; formattedCode: '#( #''^'' 1 )'; isFaulty: false; value: #(^1). "Obviously..."
 		self new source: '#[ ^ 1]'.
