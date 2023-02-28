@@ -808,13 +808,23 @@ RBParser >> parseParenthesizedExpression [
 { #category : #'private - parsing' }
 RBParser >> parsePragma [
 	"Method called by parsePragmas which already verified that current token is the special character <"
+
 	| startToken pragma |
 	startToken := currentToken.
 	self step.
 	pragma := self basicParsePragma.
-	(currentToken isBinary and: [ currentToken value == #> ])
-		ifFalse: [  ^self addPragma: ( self parseEnglobingError: (OrderedCollection with: pragma) with: startToken errorMessage: '''>'' expected')].
-	pragma left: startToken start; right: currentToken start.
+	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+		pragma := self
+			          parseEnglobingError: (OrderedCollection with: pragma)
+			          with: startToken
+			          errorMessage: '''>'' expected'.
+		pragma stop: currentToken stop.
+		^ self addPragma: pragma ].
+
+	pragma
+		left: startToken start;
+		right: currentToken start.
+	self step.
 	self addPragma: pragma
 ]
 
@@ -833,9 +843,9 @@ RBParser >> parsePragmaLiteral [
 
 { #category : #'private - parsing' }
 RBParser >> parsePragmas [
-	[ currentToken isBinary and: [ currentToken value = #< ] ] whileTrue: [
-		self parsePragma.
-		self step ]
+
+	[ currentToken isBinary and: [ currentToken value = #< ] ]
+		whileTrue: [ self parsePragma ]
 ]
 
 { #category : #'private - parsing' }
