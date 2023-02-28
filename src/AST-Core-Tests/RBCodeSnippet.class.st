@@ -83,7 +83,7 @@ RBCodeSnippet class >> badExpressions [
 
 		"...or without expected thing"
 		"Note: all compounds `[]` `#()` `#[]` `{}` are legal empty, except one"
-		self new source: '()'; formattedCode: ''. "Errr... I understand but I do not like it"
+		self new source: '()'.
 
 		"Bad sequence. The first expression is considered unfinished."
 		self new source: '1 2'; formattedCode: ' 1.<r>2'.
