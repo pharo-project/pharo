@@ -4,6 +4,7 @@ Small pieces of source code used used to test various AST based tools.
 See `RBCodeSnippet allSnippets` for a various collection of instances.
 
 * source <String> the source code of the snippet
+* isMethod <Boolean> the source is for a full method (with pattern and maybe pragmas)
 * formatedCode <String> the expected reformated code
 * isFaulty <Boolean> is the parser expected to produce a faulty AST 
 * value <Object> the expected value when executed
@@ -20,6 +21,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
+		'isMethod',
 		'isFaulty',
 		'value',
 		'hasValue',
@@ -263,6 +265,7 @@ RBCodeSnippet class >> badExpressions [
 		}.
 	"Setup default values"
 	list do: [ :each |
+		each isMethod: false.
 		each isFaulty ifNil: [ each isFaulty: true ].
 		each formattedCode
 			ifNil: [ each formattedCode: each source ]
@@ -391,6 +394,18 @@ RBCodeSnippet >> isFaulty: anObject [
 ]
 
 { #category : #accessing }
+RBCodeSnippet >> isMethod [
+
+	^ isMethod
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isMethod: anObject [
+
+	isMethod := anObject
+]
+
+{ #category : #accessing }
 RBCodeSnippet >> messageNotUnderstood [
 
 	^ messageNotUnderstood
@@ -404,7 +419,9 @@ RBCodeSnippet >> messageNotUnderstood: anObject [
 
 { #category : #parsing }
 RBCodeSnippet >> parse [
-	^ RBParser parseFaultyExpression: self source
+	^ isMethod
+		ifTrue: [ RBParser parseFaultyMethod: self source ]
+		ifFalse: [ RBParser parseFaultyExpression: self source ]
 ]
 
 { #category : #printing }
