@@ -78,14 +78,16 @@ RBCodeSnippetTest >> testParse [
 { #category : #tests }
 RBCodeSnippetTest >> testParseOnError [
 
+	| error |
+	error := nil.
+
+	[snippet isMethod
+			ifTrue: [ RBParser parseMethod: snippet source ]
+			ifFalse: [ RBParser parseExpression: snippet source ] ]
+		on: SyntaxErrorNotification
+		do: [ :e | error := e errorMessage ].
+
 	snippet isFaulty
-		ifTrue: [
-			RBParser
-				parseExpression: snippet source
-				onError: [ :message :parser :position | ^ self ].
-			self signalFailure: 'An error is expected' ]
-		ifFalse: [
-			RBParser
-				parseExpression: snippet source
-				onError: [ :message | ^ self signalFailure: 'Error unexpected: ', message ] ]
+		ifTrue: [ self deny: error equals: nil ]
+		ifFalse: [ self assert: error equals: nil ]
 ]
