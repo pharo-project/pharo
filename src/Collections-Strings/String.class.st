@@ -108,23 +108,23 @@ Class {
 
 { #category : #primitives }
 String class >> compare: string1 with: string2 collated: order [
-	"Return 1, 2 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
+	"Return -1, 0 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
 
 	| len1 len2 c1 c2 |
-	order
-		ifNil: [ len1 := string1 size.
-			len2 := string2 size.
-			1 to: (len1 min: len2) do: [ :i |
-				c1 := string1 basicAt: i.
-				c2 := string2 basicAt: i.
-				c1 = c2
-					ifFalse: [ ^ c1 < c2
-							ifTrue: [ 1 ]
-							ifFalse: [ 3 ] ] ].
-			len1 = len2 ifTrue: [ ^ 2 ].
-			^ len1 < len2
-				ifTrue: [ 1 ]
-				ifFalse: [ 3 ] ].
+	order ifNil: [
+		len1 := string1 size.
+		len2 := string2 size.
+		1 to: (len1 min: len2) do: [ :i |
+			c1 := string1 basicAt: i.
+			c2 := string2 basicAt: i.
+			c1 = c2 ifFalse: [
+				^ c1 < c2
+					  ifTrue: [ -1 ]
+					  ifFalse: [ 1 ] ] ].
+		len1 = len2 ifTrue: [ ^ 0 ].
+		^ len1 < len2
+			  ifTrue: [ -1 ]
+			  ifFalse: [ 1 ] ].
 	len1 := string1 size.
 	len2 := string2 size.
 	1 to: (len1 min: len2) do: [ :i |
@@ -132,14 +132,14 @@ String class >> compare: string1 with: string2 collated: order [
 		c2 := string2 basicAt: i.
 		c1 < 256 ifTrue: [ c1 := order at: c1 + 1 ].
 		c2 < 256 ifTrue: [ c2 := order at: c2 + 1 ].
-		c1 = c2
-			ifFalse: [ ^ c1 < c2
-					ifTrue: [ 1 ]
-					ifFalse: [ 3 ] ] ].
-	len1 = len2 ifTrue: [ ^ 2 ].
+		c1 = c2 ifFalse: [
+			^ c1 < c2
+				  ifTrue: [ -1 ]
+				  ifFalse: [ 1 ] ] ].
+	len1 = len2 ifTrue: [ ^ 0 ].
 	^ len1 < len2
-		ifTrue: [ 1 ]
-		ifFalse: [ 3 ]
+		  ifTrue: [ -1 ]
+		  ifFalse: [ 1 ]
 ]
 
 { #category : #'instance creation' }
@@ -998,7 +998,7 @@ String >> compare: string1 with: string2 collated: order [
 	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [ ^ string1 compareWith: string2 collated: order ].
 
 	"Primitive does not fail properly right now"
-	^ (String compare: string1 with: string2 collated: order) - 2
+	^ String compare: string1 with: string2 collated: order
 ]
 
 { #category : #converting }
