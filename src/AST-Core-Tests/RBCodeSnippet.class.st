@@ -225,6 +225,16 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '#(^1)'; formattedCode: '#( #''^'' 1 )'; isFaulty: false; value: #(^1). "Obviously..."
 		self new source: '#[ ^ 1]'.
 
+		"Unreachable code"
+		"Unreachable analysis is very simple and targets statement that dirrecty follows a return statement."
+		"Note that faulty code can still be executed without a RuntimeSyntaxError"
+		self new source: '^ 1. 2. ^ 3'; value: 1.
+		self new source: '[ ^ 1. 2. ^ 3 ]'; raise: BlockCannotReturn. "like [^1]"
+		self new source: '{ ^ 1. 2. ^ 3 }'; value: 1.
+		self new source: '[ ^ 1 ]. 2. ^ 3'; isFaulty: false; value: 3.
+		self new source: '{ ^ 1 }. 2. ^ 3'; isFaulty: false; value: 1. "This one could have been..."
+		self new source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3'; isFaulty: false; value: 1. "Not *syntactic* enough"
+
 		"Bad string literal"
 		"Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
 		self new source: '''hello'.
