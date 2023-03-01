@@ -12,9 +12,6 @@ Class {
 		'valueDictionary',
 		'sema'
 	],
-	#classVars : [
-		'Default'
-	],
 	#category : #'Collections-Weak-Registration'
 }
 
