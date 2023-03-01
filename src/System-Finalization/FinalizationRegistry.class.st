@@ -166,3 +166,9 @@ FinalizationRegistry >> removeEphemeron: anEphemeron [
 
 	self protected: [ ephemeronCollection remove: anEphemeron ]
 ]
+
+{ #category : #accessing }
+FinalizationRegistry >> size [
+
+	^ ephemeronCollection size
+]

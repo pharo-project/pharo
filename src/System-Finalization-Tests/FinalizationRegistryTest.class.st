@@ -24,34 +24,34 @@ FinalizationRegistryTest >> handleErrorsDuring: aBlock [
 		do: [ :e | failed := true ]
 ]
 
-{ #category : #tests }
+{ #category : #running }
 FinalizationRegistryTest >> setUp [
 
 	super setUp.
 	waitSemaphore := Semaphore new.
-	
+
 	finalizationRegistry := FinalizationRegistry new.
 	finalizationRegistry errorHandler: self.
-	
+
 	finalizationCount := 0.
-	finalizerThatCounts := ObjectFinalizer receiver: [ 
+	finalizerThatCounts := ObjectFinalizer receiver: [
 		finalizationCount := finalizationCount + 1.
 		waitSemaphore signal ] selector: #value.
 
 	failed := false.
-	finalizerThatRaisesError := ObjectFinalizer receiver: [ 
+	finalizerThatRaisesError := ObjectFinalizer receiver: [
 		waitSemaphore signal.
 		Error signal ] selector: #value.
-	
+
 	"By default, we use the finalizer as the object to be finalize.
 	Could be redefined per test"
 	finalizer := finalizerThatCounts.
-	finalizedObject := finalizerThatCounts.
+	finalizedObject := finalizerThatCounts
 ]
 
 { #category : #tests }
 FinalizationRegistryTest >> testFinalization [
-	
+
 	finalizationRegistry add: finalizer.
 	self triggerFinalization.
 
@@ -60,7 +60,7 @@ FinalizationRegistryTest >> testFinalization [
 
 { #category : #tests }
 FinalizationRegistryTest >> testFinalizationRemovesEntryFromRegistry [
-	
+
 	finalizationRegistry add: finalizer.
 	self triggerFinalization.
 
@@ -71,7 +71,7 @@ FinalizationRegistryTest >> testFinalizationRemovesEntryFromRegistry [
 FinalizationRegistryTest >> testFinalizationWithMultipleFinalizersPerObject [
 
 	finalizedObject := Object new.
-	5 timesRepeat: [ 
+	5 timesRepeat: [
 		finalizationRegistry
 			add: finalizedObject
 			finalizer: finalizer ].
@@ -138,7 +138,7 @@ FinalizationRegistryTest >> triggerFinalizationTimes: timesToWaitForFinalization
 	finalizedObject := finalizer := nil.
 	finalizerThatCounts := finalizerThatRaisesError := nil.
 
-	timesToWaitForFinalization timesRepeat: [ 
+	timesToWaitForFinalization timesRepeat: [
 		Smalltalk garbageCollectMost.
 		waitSemaphore wait ]
 ]
