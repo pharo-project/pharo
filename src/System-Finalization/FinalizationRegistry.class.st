@@ -66,7 +66,7 @@ FinalizationRegistry class >> default [
 { #category : #adding }
 FinalizationRegistry >> add: anObject [
 
-	^ self add: anObject finalizer: anObject
+	^ self add: anObject finalizer: anObject finalizer
 ]
 
 { #category : #adding }
