@@ -7,6 +7,18 @@ Class {
 	#category : #'PharoDocComment-Tests-Base'
 }
 
+{ #category : #helpers }
+PharoDocCommentTest class >> stringWithDoubleDoubleQuotes [
+
+	^ 'This is ""exagerated"" at least'
+]
+
+{ #category : #helpers }
+PharoDocCommentTest class >> stringWithDoubleQuotes [
+
+	^ 'This is "exagerated" at least'
+]
+
 { #category : #tests }
 PharoDocCommentTest >> testAssociation [
 
@@ -85,6 +97,30 @@ PharoDocCommentTest >> testExpressionSyntaxError [
 	self assert: node expression isFaulty.
 	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
 	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testExpressionWithEscapes [
+	"PharoDocCommentTest stringWithDoubleQuotes >>> 'This is ""exagerated"" at least'"
+
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression source equals: 'PharoDocCommentTest stringWithDoubleQuotes >>> ''This is "exagerated" at least'''.
+	self deny: node expression isFaulty.
+	self assert: node expression evaluate equals: 'This is "exagerated" at least' -> 'This is "exagerated" at least'.
+	(CommentTestCase for: node) testIt
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testExpressionWithEscapes2 [
+	"PharoDocCommentTest stringWithDoubleDoubleQuotes >>> 'This is """"exagerated"""" at least'"
+
+	| node |
+	node := thisContext method ast pharoDocCommentNodes first.
+	self assert: node expression source equals: 'PharoDocCommentTest stringWithDoubleDoubleQuotes >>> ''This is ""exagerated"" at least'''.
+	self deny: node expression isFaulty.
+	self assert: node expression evaluate equals: 'This is ""exagerated"" at least' -> 'This is ""exagerated"" at least'.
+	(CommentTestCase for: node) testIt
 ]
 
 { #category : #tests }
