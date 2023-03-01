@@ -1258,8 +1258,10 @@ EFFormatter >> formatMethodPatternFor: aMethodNode [
 
 { #category : #'private - formatting' }
 EFFormatter >> formatPragmasFor: aMethodNode [
-	
-	aMethodNode pragmas do: [ :each | self visitPragmaNode: each; newLine ]
+
+	aMethodNode pragmas do: [ :each |
+		each acceptVisitor: self.
+		self newLine ]
 ]
 
 { #category : #'private - formatting' }
@@ -2228,15 +2230,20 @@ EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 
 { #category : #visiting }
 EFFormatter >> visitPragmaNode: aPragmaNode [
-	codeStream nextPut: $<.
-	self 
-		formatSelectorAndArguments: aPragmaNode 
-		firstSeparator: [ 
+
+	| hackNoBrackets |
+	"If the parent is an error, the '<' and '>' are already taken care of."
+	hackNoBrackets := aPragmaNode parent isNotNil and: [ aPragmaNode parent isEnglobingError ].
+
+	hackNoBrackets ifFalse: [ codeStream nextPut: $< ].
+	self
+		formatSelectorAndArguments: aPragmaNode
+		firstSeparator: [
 			aPragmaNode selector isInfix
 				ifTrue: [ self space ] ]
 		restSeparator: [ self space ].
 	self addSpaceIfNeededForLastArgument: aPragmaNode.
-	codeStream nextPut: $>
+	hackNoBrackets ifFalse: [ codeStream nextPut: $> ]
 ]
 
 { #category : #visiting }

@@ -461,7 +461,7 @@ RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContin
 	node := self parserClass parseFaultyMethod: '1 between: 2 and: 3'.
 
 	self assert: node isMethod.
-	self assert: node selector equals: #faulty.
+	self assert: node selector equals: #''.
 
 	self assert: node body statements first isParseError.
 

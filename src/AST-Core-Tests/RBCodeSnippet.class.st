@@ -4,9 +4,11 @@ Small pieces of source code used used to test various AST based tools.
 See `RBCodeSnippet allSnippets` for a various collection of instances.
 
 * source <String> the source code of the snippet
+* isMethod <Boolean> the source is for a full method (with pattern and maybe pragmas)
 * formatedCode <String> the expected reformated code
 * isFaulty <Boolean> is the parser expected to produce a faulty AST 
 * value <Object> the expected value when executed
+* hasValue <Boolean> is the compiled method produce a value
 * messageNotUnderstood <Symbol> the expected MNU error when executed
 * skippedTests <Collection> list of test to not execute (that should be fixed)
 
@@ -19,8 +21,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
+		'isMethod',
 		'isFaulty',
 		'value',
+		'hasValue',
 		'formattedCode',
 		'skippedTests',
 		'messageNotUnderstood'
@@ -31,7 +35,7 @@ Class {
 { #category : #accessing }
 RBCodeSnippet class >> allSnippets [
 
-	^ self badExpressions
+	^ self badExpressions, self badMethods
 ]
 
 { #category : #accessing }
@@ -137,10 +141,10 @@ RBCodeSnippet class >> badExpressions [
 		"Bad block parameters"
 		"A bad parameter cause a error object to be added as the last element of the block parameter.
 		On formating, a double space can be seen."
-		self new source: '[:a b]'; formattedCode: '[ :a  | b ]'; skip: #testExecute.
-		self new source: '[:a 1]'; formattedCode: '[ :a  | 1 ]'; skip: #testExecute.
-		self new source: '[:a :]'; formattedCode: '[ :a : |  ]'; skip: #testExecute.
-		self new source: '[:a ::b]'; formattedCode: '[ :a ::b |  ]'; skip: #testExecute.
+		self new source: '[:a b]'; formattedCode: '[ :a | b ]'; hasValue: true. "FIXME"
+		self new source: '[:a 1]'; formattedCode: '[ :a | 1 ]'; hasValue: true; value: 1. "FIXME"
+		self new source: '[:a :]'; formattedCode: '[ :a : |  ]'; hasValue: true. "FIXME"
+		self new source: '[:a ::b]'; formattedCode: '[ :a ::b |  ]'; hasValue: true. "FIXME"
 		self new source: '[:a :b]'; formattedCode: '[ :a :b |  ]'; isFaulty: false. "no pipe (and no body) is legal"
 		self new source: '[: a : b]'; formattedCode: '[ :a :b |  ]'; isFaulty: false. "spaces are also legal"
 		self new source: '[:a:b]'; formattedCode: '[ :  |  a: b ]'. "FIXME?"
@@ -261,10 +265,73 @@ RBCodeSnippet class >> badExpressions [
 		}.
 	"Setup default values"
 	list do: [ :each |
+		each isMethod: false.
 		each isFaulty ifNil: [ each isFaulty: true ].
 		each formattedCode
 			ifNil: [ each formattedCode: each source ]
 			ifNotNil: [ each formattedCode: each formattedCode expandMacros ].
+	].
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badMethods [
+
+	| list |
+	list := {
+		"Emptyness"
+		self new source: ' '.
+
+		"Wrong token for pattern"
+		"An empty pattern will be set, and the first statement will be a error node."
+		self new source: '5'; formattedCode: ' . 5'.
+		self new source: '''hello'''; formattedCode: ' . ''hello'''.
+		self new source: '#hello'; formattedCode: ' . #hello'.
+		self new source: ':'; formattedCode: ' . :'.
+		self new source: '#(foo bar)'; formattedCode: ' . #( foo bar )'.
+
+		"Random bad token"
+		"Tought: is complainng about the bad token really better than complaining about the bad pattern?"
+		self new source: ' $'.
+		self new source: ' ''hello'.
+		self new source: ' 2r3'; formattedCode: ' 2r. 3'.
+
+		"Bad aruments"
+		"The missing argument will be an error, the remainer starts the body"
+		self new source: '+ '; hasValue: true.
+		self new source: '+ 1'; hasValue: true.
+		self new source: '+ foo: '.
+		self new source: 'foo: '; hasValue: true.
+		self new source: 'foo: 1'; hasValue: true.
+		self new source: 'foo: + '.
+		self new source: 'foo: bar: '; hasValue: true.
+		self new source: 'foo:bar:'; formattedCode: ' . foo:bar:'. "`foo:bar:` is a single token, and is unexpected"
+
+		"Bad pragma message"
+		self new source: 'foo < '; hasValue: true.
+		self new source: 'foo <> '.
+		self new source: 'foo < 4'; hasValue: true.
+		self new source: 'foo < bar '; hasValue: true.
+		self new source: 'foo < bar: '; hasValue: true.
+		self new source: 'foo < bar: 1 1 > '.
+		self new source: 'foo < bar ; baz > '; formattedCode: 'foo < bar ; baz. > '.
+
+		"Bad pragma value"
+		self new source: 'foo <bar: > '; hasValue: true.
+		self new source: 'foo <bar:(1)>'; formattedCode: 'foo < bar: 1 > '. "FIXME. dont eat parentheses"
+		self new source: 'foo < bar: baz > '.
+		self new source: 'foo < bar: 1 + 1 > '.
+		self new source: 'foo < bar: [ 1 ] > '.
+		self new source: 'foo < bar: { 1 } > '.
+		self new source: 'foo <bar: #[ -1]> '; hasValue: true. "Literal bytes arrays are acceptable, but this one is faulty"
+		self new source: 'foo < + 1> '; isFaulty: false. "Binary message is legal pragma"
+		self new source: 'foo < + > '; hasValue: true.
+		}.
+	"Setup default values"
+	list do: [ :each |
+		each isMethod: true.
+		each isFaulty ifNil: [ each isFaulty: true ].
+		each formattedCode ifNil: [ each formattedCode: each source ].
 	].
 	^ list
 ]
@@ -302,7 +369,7 @@ RBCodeSnippet class >> styleAllWithError [
 		"Try to compile it"
 		[
 		OpalCompiler new
-			noPattern: true;
+			noPattern: each isMethod not;
 			compile: each source ]
 			on: SyntaxErrorNotification
 			do: [ :exception |
@@ -356,6 +423,18 @@ RBCodeSnippet >> formattedCode: anObject [
 	formattedCode := anObject
 ]
 
+{ #category : #accessing }
+RBCodeSnippet >> hasValue [
+
+	^ hasValue ifNil: [ value isNotNil | isFaulty not ]
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> hasValue: anObject [
+
+	hasValue := anObject
+]
+
 { #category : #asserting }
 RBCodeSnippet >> ifSkip: aTestName then: aBlock [
 
@@ -377,6 +456,18 @@ RBCodeSnippet >> isFaulty: anObject [
 ]
 
 { #category : #accessing }
+RBCodeSnippet >> isMethod [
+
+	^ isMethod
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isMethod: anObject [
+
+	isMethod := anObject
+]
+
+{ #category : #accessing }
 RBCodeSnippet >> messageNotUnderstood [
 
 	^ messageNotUnderstood
@@ -390,7 +481,9 @@ RBCodeSnippet >> messageNotUnderstood: anObject [
 
 { #category : #parsing }
 RBCodeSnippet >> parse [
-	^ RBParser parseFaultyExpression: self source
+	^ isMethod
+		ifTrue: [ RBParser parseFaultyMethod: self source ]
+		ifFalse: [ RBParser parseFaultyExpression: self source ]
 ]
 
 { #category : #printing }
