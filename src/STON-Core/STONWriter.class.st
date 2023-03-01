@@ -53,7 +53,7 @@ Class {
 { #category : #'class initialization' }
 STONWriter class >> initialize [
 	"Modification timestamp 20170131"
-	
+
 	self initializeSTONCharacters.
 	self initializeSTONSimpleSymbolCharacters
 ]
@@ -62,11 +62,11 @@ STONWriter class >> initialize [
 STONWriter class >> initializeSTONCharacters [
 	| escapes |
 	STONCharacters := Array new: 127.
-	32 to: 126 do: [ :each | 
+	32 to: 126 do: [ :each |
 		STONCharacters at: each + 1 put: #pass ].
 	"This is the minimal STON set of named escapes"
 	escapes := #( 8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r' 39 '\''' 92 '\\' ).
-	escapes pairsDo: [ :code :escape | 
+	escapes pairsDo: [ :code :escape |
 		STONCharacters at: code + 1 put: escape ]
 ]
 
@@ -74,12 +74,12 @@ STONWriter class >> initializeSTONCharacters [
 STONWriter class >> initializeSTONSimpleSymbolCharacters [
 	"STONSimpleSymbolCharacters asArray collectWithIndex: [ :each :index |
 		each isZero ifTrue: [ (index - 1) asCharacter ] ]."
-		
+
 	STONSimpleSymbolCharacters := ByteArray new: 256 withAll: 1.
 	1 to: 256 do: [ :each | | char |
 		char := (each - 1) asCharacter.
 		(self isSimpleSymbolChar: char)
-			ifTrue: [ 
+			ifTrue: [
 				STONSimpleSymbolCharacters at: each put: 0 ] ]
 ]
 
@@ -110,15 +110,15 @@ STONWriter >> close [
 { #category : #private }
 STONWriter >> encodeCharacter: char [
 	| code encoding |
-	"STONCharacters contains for the lower 127 characters (codes 0 to 126) either nil (unknown), 
+	"STONCharacters contains for the lower 127 characters (codes 0 to 126) either nil (unknown),
 	#pass (output as is, clean ASCII characters) or a full escape string"
 	((code := char codePoint) < 127 and: [ (encoding := self stonCharacters at: code + 1) notNil ])
-		ifTrue: [ 
+		ifTrue: [
 			(encoding = #pass or: [ jsonMode and: [ char = $' ] ])
 				ifTrue: [ writeStream nextPut: char ]
 				ifFalse: [ writeStream nextPutAll: encoding ] ]
 		ifFalse: [
-			"always escape Latin1 C1 controls, or when asciiOnly is true" 
+			"always escape Latin1 C1 controls, or when asciiOnly is true"
 			(code > 16r9F and: [ asciiOnly not ])
 				ifTrue: [ writeStream nextPut: char ]
 				ifFalse: [ self escapeUnicode: code ] ]
@@ -144,7 +144,7 @@ STONWriter >> encodeList: elements [
 		ifFalse: [
 			self indentedDo: [
 				self newlineIndent.
-				elements 
+				elements
 					do: [ :each | self nextPut: each ]
 					separatedBy: [ self listElementSeparator ] ].
 			self newlineIndent ].
@@ -163,8 +163,8 @@ STONWriter >> encodeMap: pairs [
 			self indentedDo: [
 				self newlineIndent.
 				pairs keysAndValuesDo: [ :key :value |
-					first 
-						ifTrue: [ first := false ] 
+					first
+						ifTrue: [ first := false ]
 						ifFalse: [ self mapElementSeparator ].
 					self encodeKey: key value: value ] ].
 			self newlineIndent ].
@@ -175,9 +175,9 @@ STONWriter >> encodeMap: pairs [
 STONWriter >> encodeString: string [
 	writeStream nextPut: (jsonMode ifTrue: [ $" ] ifFalse: [ $' ]).
 	keepNewLines
-		ifTrue: [ 
+		ifTrue: [
 			self encodeStringKeepingNewLines: string ]
-		ifFalse: [ 
+		ifFalse: [
 			string do: [ :each | self encodeCharacter: each ] ].
 	writeStream nextPut: (jsonMode ifTrue: [ $" ] ifFalse: [ $' ])
 ]
@@ -187,13 +187,13 @@ STONWriter >> encodeStringKeepingNewLines: string [
 	| input char |
 	input := string readStream.
 	[ input atEnd ]
-		whileFalse: [ 
+		whileFalse: [
 			char := input next.
 			char = Character lf
 				ifTrue: [ writeStream nextPutAll: newLine ]
-				ifFalse: [ 
+				ifFalse: [
 					char = Character cr
-						ifTrue: [ 
+						ifTrue: [
 							input peekFor: Character lf.
 							writeStream nextPutAll: newLine ]
 						ifFalse: [ self encodeCharacter: char ] ] ]
@@ -207,9 +207,9 @@ STONWriter >> error: aString [
 { #category : #private }
 STONWriter >> escape: char with: anObject [
 	"Instruct me to escape char with object, either a replacement string or #pass"
-	
+
 	"self escape: $/ with: '\/'."
-	
+
 	self assert: (anObject isString | (anObject == #pass)).
 	self assert: char isOctetCharacter.
 	self writeableStonCharacters at: char codePoint + 1 put: anObject
@@ -225,7 +225,7 @@ STONWriter >> escapeUnicode4: codePoint [
 STONWriter >> escapeUnicode: codePoint [
 	codePoint <= 16rFFFF
 		ifTrue: [ self escapeUnicode4: codePoint ]
-		ifFalse: [ 
+		ifFalse: [
 			codePoint <= 16r10FFFF
 				ifTrue: [ | leadSurrogate trailSurrogate shifted |
 					"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
@@ -250,7 +250,7 @@ STONWriter >> initialize [
 	super initialize.
 	stonCharacters := STONCharacters.
 	prettyPrint := false.
-	newLine := String cr.
+	newLine := OSPlatform current lineEnding.
 	level := 0.
 	referencePolicy := #normal.
 	jsonMode := keepNewLines := asciiOnly := false.
@@ -259,11 +259,11 @@ STONWriter >> initialize [
 
 { #category : #private }
 STONWriter >> isSimpleSymbol: symbol [
-	(symbol isEmpty or: [ symbol isWideString ]) 
+	(symbol isEmpty or: [ symbol isWideString ])
 		ifTrue: [ ^ false ].
-	^ (symbol class 
-		findFirstInString: symbol 
-		inSet: STONSimpleSymbolCharacters 
+	^ (symbol class
+		findFirstInString: symbol
+		inSet: STONSimpleSymbolCharacters
 		startingAt: 1) = 0
 ]
 
@@ -276,11 +276,11 @@ STONWriter >> jsonMode [
 { #category : #initialization }
 STONWriter >> jsonMode: boolean [
 	(jsonMode := boolean)
-		ifTrue: [ 
+		ifTrue: [
 			self
 				escape: $' with: #pass;
 				escape: $" with: '\"' ]
-		ifFalse: [ 
+		ifFalse: [
 			self
 				escape: $" with: #pass;
 				escape: $' with: '\''' ]
@@ -291,7 +291,7 @@ STONWriter >> keepNewLines: boolean [
 	"If true, any newline CR, LF or CRLF inside strings or symbols will not be escaped
 	but will instead be converted to the newline convention chosen, see #newLine:
 	The default is false, where CR, LF or CRLF will be enscaped unchanged."
-	
+
 	keepNewLines := boolean
 ]
 
@@ -310,13 +310,13 @@ STONWriter >> mapElementSeparator [
 { #category : #initialization }
 STONWriter >> newLine: string [
 	"The sequence to use when ending a line, either CR, LF or CRLF"
-	
+
 	newLine := string
 ]
 
 { #category : #private }
 STONWriter >> newlineIndent [
-	prettyPrint ifTrue: [ 
+	prettyPrint ifTrue: [
 		writeStream nextPutAll: newLine.
 		level timesRepeat: [ writeStream tab ] ]
 ]
@@ -335,7 +335,7 @@ STONWriter >> on: aWriteStream [
 STONWriter >> optimizeForLargeStructures [
 	self class environment
 		at: #FLLargeIdentityDictionary
-		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ].
+		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ]
 ]
 
 { #category : #initialization }
@@ -373,7 +373,7 @@ STONWriter >> stonCharacters [
 { #category : #private }
 STONWriter >> with: object do: block [
 	| index |
-	referencePolicy = #ignore 
+	referencePolicy = #ignore
 		ifTrue: [ ^ block value ].
 	(index := objects at: object ifAbsent: [ nil ]) notNil
 		ifTrue: [
@@ -390,8 +390,8 @@ STONWriter >> with: object do: block [
 STONWriter >> writeAssociation: association [
 	jsonMode
 		ifTrue: [ self error: 'wrong object class for JSON mode' ].
-	self 
-		encodeKey: association key 
+	self
+		encodeKey: association key
 		value: association value
 ]
 
@@ -402,7 +402,16 @@ STONWriter >> writeBoolean: boolean [
 
 { #category : #writing }
 STONWriter >> writeFloat: float [
-	writeStream print: float
+	float isFinite
+		ifTrue: [ writeStream print: float ]
+		ifFalse: [ | argument |
+			argument := float isNaN
+				ifTrue: [ #nan ]
+				ifFalse: [
+					float negative
+						ifTrue: [ #negativeInfinity ]
+						ifFalse: [ #infinity ] ].
+			self writeObject: float named: #Float listSingleton: argument ]
 ]
 
 { #category : #writing }
@@ -422,13 +431,13 @@ STONWriter >> writeInteger: integer [
 
 { #category : #writing }
 STONWriter >> writeList: collection [
-	self with: collection do: [ 
+	self with: collection do: [
 		self encodeList: collection ]
 ]
 
 { #category : #writing }
 STONWriter >> writeMap: hashedCollection [
-	self with: hashedCollection do: [ 
+	self with: hashedCollection do: [
 		self encodeMap: hashedCollection ]
 ]
 
@@ -443,16 +452,16 @@ STONWriter >> writeNull [
 STONWriter >> writeObject: anObject [
 	| instanceVariableNames |
 	(instanceVariableNames := anObject class stonAllInstVarNames) isEmpty
-		ifTrue: [ 
+		ifTrue: [
 			self writeObject: anObject do: [ self encodeMap: #() ] ]
-		ifFalse: [ 
-			self writeObject: anObject streamMap: [ :dictionary | 
-				instanceVariableNames do: [ :each | 
+		ifFalse: [
+			self writeObject: anObject streamMap: [ :dictionary |
+				instanceVariableNames do: [ :each |
 					(anObject instVarNamed: each)
-						ifNotNil: [ :value | 
+						ifNotNil: [ :value |
 							dictionary at: each asSymbol put: value ]
-						ifNil: [ 
-							anObject stonShouldWriteNilInstVars 
+						ifNil: [
+							anObject stonShouldWriteNilInstVars
 								ifTrue: [ dictionary at: each asSymbol put: nil ] ] ] ] ]
 ]
 
@@ -472,7 +481,7 @@ STONWriter >> writeObject: anObject do: block [
 STONWriter >> writeObject: object listSingleton: element [
 	self writeObject: object do: [
 		writeStream nextPut: $[.
-		self 
+		self
 			prettyPrintSpace;
 			nextPut: element;
 			prettyPrintSpace.
@@ -493,7 +502,7 @@ STONWriter >> writeObject: anObject named: stonName do: block [
 STONWriter >> writeObject: object named: stonName listSingleton: element [
 	self writeObject: object named: stonName do: [
 		writeStream nextPut: $[.
-		self 
+		self
 			prettyPrintSpace;
 			nextPut: element;
 			prettyPrintSpace.

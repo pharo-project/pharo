@@ -11,7 +11,7 @@ Class {
 
 { #category : #ston }
 STONFileReference class >> fromSton: stonReader [
-	^ stonReader parseListSingleton asFileReference.
+	^ stonReader parseListSingleton asFileReference
 ]
 
 { #category : #ston }
