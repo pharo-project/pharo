@@ -139,6 +139,6 @@ FinalizationRegistryTest >> triggerFinalizationTimes: timesToWaitForFinalization
 	finalizerThatCounts := finalizerThatRaisesError := nil.
 
 	timesToWaitForFinalization timesRepeat: [
-		Smalltalk garbageCollectMost.
+		Smalltalk garbageCollect.
 		waitSemaphore wait ]
 ]
