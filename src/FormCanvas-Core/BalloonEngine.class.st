@@ -52,7 +52,6 @@ BalloonEngine class >> debug: aBoolean [
 
 { #category : #accessing }
 BalloonEngine class >> defaultBitmapWidth [
-	"Return default bitmap width"
 
 	^ 2048
 ]
