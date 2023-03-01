@@ -302,8 +302,12 @@ RBScanner >> on: aStream [
 	comments := OrderedCollection new
 ]
 
-{ #category : #'error handling' }
+{ #category : #parsing }
 RBScanner >> parseErrorNode: aMessageString [
+	"This method might be called indirectly by errorBlocks.
+	especially by `RBParser class>>#errorNodeBlock` since the parser share its
+	error blocks with the scanner."
+
 	| sourceString |
 	sourceString := stream contents copyFrom: self errorPosition to: stream contents size.
 	^ RBParseErrorNode
@@ -365,7 +369,7 @@ RBScanner >> scanComment [
 	self step.
 	self atEnd
 		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
-	[ currentCharacter = $" and: [ buffer nextPut: currentCharacter. self step ~= $" ] ]
+	[ currentCharacter = $" and: [ self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 			buffer nextPut: currentCharacter.
@@ -373,7 +377,7 @@ RBScanner >> scanComment [
 	stop := self atEnd
 		ifTrue: [ stream position ]
 		ifFalse: [ stream position - 1 ].
-	comments add: (RBCommentToken value: (buffer contents copyFrom: 1 to: buffer contents size -1) start: start stop: stop)
+	comments add: (RBCommentToken value: buffer contents start: start stop: stop)
 ]
 
 { #category : #'private - scanning' }
@@ -475,7 +479,7 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ (self scanError: 'Expecting a literal type') value: '#'
+	^ (self scanError: 'Literal expected') value: '#'
 ]
 
 { #category : #'private - scanning' }
@@ -502,7 +506,7 @@ RBScanner >> scanLiteralCharacter [
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
 	| token |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ (self scanError:'A Character was expected') value: '$'].
+	currentCharacter ifNil:[ ^ (self scanError:'Character expected') value: '$'].
 	token := RBLiteralToken
 				value: currentCharacter
 				start: tokenStart

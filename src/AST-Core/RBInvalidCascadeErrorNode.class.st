@@ -22,5 +22,5 @@ RBInvalidCascadeErrorNode >> isCascadeError [
 
 { #category : #accessing }
 RBInvalidCascadeErrorNode >> receiver [
-	^ content first
+	^ contents first
 ]

@@ -46,7 +46,7 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 		r borderColor: self borderColor ].
 	textModel announce: conf.
 
-	anEnglobingNode content do: [ :each | self visitNode: each ]
+	anEnglobingNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }

@@ -775,6 +775,24 @@ ArrayTest >> testPremultiply [
 ]
 
 { #category : #tests }
+ArrayTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each |
+		                       String streamContents: [ :stream |
+			                       each printOn: stream ] ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self
+		assert: printed
+		equals:
+		$# asString , '(' asString , (' ' join: allElementsAsString)
+		, ')' asString
+]
+
+{ #category : #tests }
 ArrayTest >> testPrinting [
 
 	self assert: literalArray printString equals: '#(1 true 3 #four)'.
