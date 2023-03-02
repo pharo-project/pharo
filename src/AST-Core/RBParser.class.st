@@ -1035,7 +1035,10 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		and: [ (aCollectionOfClosers includes: currentToken value) not
 			and: [ currentToken isEOF not
 				and: [ node isUnfinishedStatement not ] ] ] ) ifTrue: [
-		self parserError: 'End of statement expected'.
+		"I do not like the following guard. If currentToken is an unrelated error,
+		 then parserError will unfortunately consume and lose it.
+		 A better design is needed."
+		node isParseError ifFalse: [ self parserError: 'End of statement expected' ].
 		node := RBUnfinishedStatementErrorNode
 			contents: { node }
 			start: node start
