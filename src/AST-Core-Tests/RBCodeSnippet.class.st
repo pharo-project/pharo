@@ -229,6 +229,7 @@ RBCodeSnippet class >> badExpressions [
 
 		"Bad symbol literal"
 		self new source: '#1'; formattedCode: ' #.<r>1'. "Become a bad sequence"
+		self new source: '#1r0'; formattedCode: ' #. 1 r0'. "Two bad sequences"
 		self new source: '##'; formattedCode: '#'. "errr. ok?"
 		"Note: if quotes, same thing than strings"
 		self new source: '#''hello'.
