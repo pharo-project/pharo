@@ -9,7 +9,9 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * isFaulty <Boolean> is the parser expected to produce a faulty AST 
 * value <Object> the expected value when executed
 * hasValue <Boolean> is the compiled method produce a value
+* raise <Exception class> the exception that should be raised at runtime
 * messageNotUnderstood <Symbol> the expected MNU error when executed
+* numberOfCritique <Integer> how many critiques are expected
 * skippedTests <Collection> list of test to not execute (that should be fixed)
 
 Tests are executed by the parametrized matrix class `RBCodeSnippetTest`
@@ -27,7 +29,9 @@ Class {
 		'hasValue',
 		'formattedCode',
 		'skippedTests',
-		'messageNotUnderstood'
+		'raise',
+		'messageNotUnderstood',
+		'numberOfCritiques'
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }
@@ -216,9 +220,20 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '1 foo: ^2'; formattedCode: ' 1 foo: .<r>^ 2'.
 		self new source: '(^1)'; formattedCode: ' ( .<r> ^ 1)'. "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
 		self new source: '^^1'; formattedCode: ' ^ .<r>^ 1' "Same spirit".
+		self new source: '[ ^ 1 ]'; isFaulty: false; raise: BlockCannotReturn. "when the block is evaluated, the method is already gone."
 		self new source: '{ ^ 1 }'; isFaulty: false; value: 1. "I did not expect this one to be legal"
 		self new source: '#(^1)'; formattedCode: '#( #''^'' 1 )'; isFaulty: false; value: #(^1). "Obviously..."
 		self new source: '#[ ^ 1]'.
+
+		"Unreachable code"
+		"Unreachable analysis is very simple and targets statement that dirrecty follows a return statement."
+		"Note that faulty code can still be executed without a RuntimeSyntaxError"
+		self new source: '^ 1. 2. ^ 3'; value: 1.
+		self new source: '[ ^ 1. 2. ^ 3 ]'; raise: BlockCannotReturn. "like [^1]"
+		self new source: '{ ^ 1. 2. ^ 3 }'; value: 1.
+		self new source: '[ ^ 1 ]. 2. ^ 3'; isFaulty: false; value: 3.
+		self new source: '{ ^ 1 }. 2. ^ 3'; isFaulty: false; value: 1. "This one could have been..."
+		self new source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3'; isFaulty: false; value: 1. "Not *syntactic* enough"
 
 		"Bad string literal"
 		"Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
@@ -479,6 +494,18 @@ RBCodeSnippet >> messageNotUnderstood: anObject [
 	messageNotUnderstood := anObject
 ]
 
+{ #category : #accessing }
+RBCodeSnippet >> numberOfCritiques [
+
+	^ numberOfCritiques
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> numberOfCritiques: anObject [
+
+	numberOfCritiques := anObject
+]
+
 { #category : #parsing }
 RBCodeSnippet >> parse [
 	^ isMethod
@@ -494,6 +521,18 @@ RBCodeSnippet >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: source;
 		nextPut: $)
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> raise [
+
+	^ raise
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> raise: anObject [
+
+	raise := anObject
 ]
 
 { #category : #accessing }
@@ -536,5 +575,6 @@ RBCodeSnippet >> value [
 { #category : #accessing }
 RBCodeSnippet >> value: anObject [
 
-	value := anObject
+	value := anObject.
+	hasValue := true
 ]
