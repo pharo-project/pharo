@@ -1541,16 +1541,22 @@ RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
-	| source |
+	| source token |
 	source := 'self "'.
-	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
+	token := (self buildScannerForText: source) next; next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: '"'
 ]
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnOpeningCommentGetError [
-	| source |
+	| source token |
 	source := '"only the opening'.
-	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
+	token := (self buildScannerForText: source) next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: source
 ]
 
 { #category : #tests }
@@ -1582,18 +1588,23 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
 
 { #category : #tests }
 RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
-	| source |
+	| source token |
 	source := '"only the"" opening'.
-	self
-		should: [ (self buildScannerForText: source) next ]
-		raise: SyntaxErrorNotification
+	token := (self buildScannerForText: source) next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: source
 ]
 
 { #category : #'tests - Error' }
 RBScannerTest >> testNextWithUnFinishedCommentGivesAnError [
-	| scanner |
-	scanner := self buildScannerForText: 'firstToken "unfinished comment secondToken'.
-	self should: [scanner next] raise: SyntaxErrorNotification
+
+	| source token |
+	source := 'firstToken "unfinished comment secondToken'.
+	token := (self buildScannerForText: source) next; next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: '"unfinished comment secondToken'
 ]
 
 { #category : #'tests - Creation api' }
