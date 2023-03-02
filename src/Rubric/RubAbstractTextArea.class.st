@@ -1440,8 +1440,8 @@ RubAbstractTextArea >> mouseLeave: evt [
 RubAbstractTextArea >> mouseMove: evt [
 
    self paragraph move: evt for: model controller: self editor.
-	evt redButtonPressed
-		ifFalse: [ ^ self ].
+	evt redButtonPressed ifFalse: [ ^ self ].
+	
 	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
 	hasDragDoubleClick ifTrue: [
 		^ editor
