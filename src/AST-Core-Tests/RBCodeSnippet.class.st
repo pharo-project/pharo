@@ -264,6 +264,31 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '10r89abcd'; formattedCode: '10r89 abcd'; isFaulty: false; messageNotUnderstood: #abcd.
 		self new source: '12r89abcd'; formattedCode: '12r89ab cd'; isFaulty: false; messageNotUnderstood: #cd.
 		self new source: '36r1halt'; isFaulty: false; value: 2486513. "ahah"
+
+		"Bad characters"
+		"Pharo is Unicode aware."
+		"$Δ isLetter >>> true" "$Δ asInteger >>> 16r0394" "Greek Capital Letter Delta"
+		"$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
+		self new source: 'Δə'; isFaulty: false. "valid identifier"
+		self new source: '| Δə | Δə := 1. Δə + 1'; isFaulty: false; value: 2.
+
+		"$± isSpecial >>> true" "$± asInteger >>> 16r00B1" "Plus Minus Sign" "Only a few unicode characters are isSpecial in Pharo"
+		self new source: '1 ± 1'; isFaulty: false; messageNotUnderstood: #'±'. "Valid binary operator, but not implemented"
+		"$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
+		self new source: '→'. "Unknown character. Not isSpecial"
+		"$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
+		self new source: '٠'. "Unknown character. Not a valid number (basic ASCII only for numbers!)"
+		"Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
+		"Character nbsp isSeparator >>> false" "Even the standard nbsp"
+		self new source: Character nbsp asString. "Unknown character. Not isSeparator"
+
+		self new source: '$→'; isFaulty: false; value: $→.
+		self new source: '''Δ→ə'''; isFaulty: false; value: 'Δ→ə'.
+		self new source: '"Δ→ə" '; isFaulty: false.
+		self new source: '#''Δ→ə'''; isFaulty: false; value: #'Δ→ə'.
+		self new source: '#Δə'; formattedCode: '#''Δə''' ; isFaulty: false; value: #'Δə'.
+		self new source: '#(Δ→ə)'; formattedCode: '#( Δ → ə)'. "This one is faulty because → is a parse error"
+		self new source: '#→'; formattedCode: ' #. →'. "Two independent errors"
 		}.
 	"Setup default values"
 	list do: [ :each |
