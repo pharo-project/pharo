@@ -6,6 +6,7 @@ Instance Variables:
 	characterType	<ByteSymbol>	The type of the next character. (e.g. #alphabetic, etc.)
 	classificationTable	<Array of: Symbol>	Mapping from Character values to their characterType.
 	comments	<Collection of: Interval>	Source intervals of scanned comments that must be attached to the next token.
+	nextToken <RBToken>	The ""free"" `next` token, used to store bad comment so no backtracking is needed
 	currentCharacter	<Character>	The character currently being processed.
 	errorBlock	<BlockClosure>	The block to execute on lexical errors.
 	extendedLiterals	<Boolean>	True if IBM-type literals are allowed. In VW, this is false.
@@ -32,7 +33,8 @@ Class {
 		'characterType',
 		'classificationTable',
 		'comments',
-		'errorBlock'
+		'errorBlock',
+		'nextToken'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -163,7 +165,7 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 
 { #category : #testing }
 RBScanner >> atEnd [
-	^characterType = #eof
+	^characterType = #eof and: [ nextToken isNil ]
 ]
 
 { #category : #private }
@@ -275,6 +277,11 @@ Binary --> [*] : eof
 { #category : #accessing }
 RBScanner >> next [
 	| token |
+	"Consume the one remembered (likely a bad comment)"
+	nextToken ifNotNil: [ :t |
+		nextToken := nil.
+		^t ].
+
 	buffer reset.
 	tokenStart := stream position.
 	token := characterType = #eof
@@ -702,9 +709,8 @@ RBScanner >> stripSeparators [
 		| comment |
 		comment := self scanComment.
 		comment isError ifTrue: [
-			"Reset the position and stop here. The token will be consumed later by scanToken"
-			stream position: comment start - 1.
-			self step.
+			"Remember to use the error as the next token"
+			nextToken := comment.
 			^ self ].
 		comments add: comment ]
 ]
