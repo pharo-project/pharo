@@ -661,16 +661,24 @@ RBParser >> parseKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parseLiteralArray [
-	| literals startToken stop |
+	| literals startToken stop isFaulty value |
 	startToken := currentToken.
 	literals := (OrderedCollection new: 5).
+	isFaulty := false.
 	self step.
 	[self atEnd or: [currentToken isSpecial: $)]]
-		whileFalse: [literals add: self parseLiteralArrayObject].
+		whileFalse: [
+			literals add: (value := self parseLiteralArrayObject).
+			value isParseError ifTrue: [ isFaulty := true ] ].
 	stop := currentToken stop.
 	(currentToken isSpecial: $))
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
+	isFaulty ifTrue: [
+		^ (self parseEnglobingError: literals with: startToken errorMessage: nil)
+			valueAfter: ')';
+			stop: stop;
+			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
 		contents: literals
@@ -1035,7 +1043,10 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		and: [ (aCollectionOfClosers includes: currentToken value) not
 			and: [ currentToken isEOF not
 				and: [ node isUnfinishedStatement not ] ] ] ) ifTrue: [
-		self parserError: 'End of statement expected'.
+		"I do not like the following guard. If currentToken is an unrelated error,
+		 then parserError will unfortunately consume and lose it.
+		 A better design is needed."
+		node isParseError ifFalse: [ self parserError: 'End of statement expected' ].
 		node := RBUnfinishedStatementErrorNode
 			contents: { node }
 			start: node start
