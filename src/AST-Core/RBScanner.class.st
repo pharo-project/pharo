@@ -399,6 +399,24 @@ RBScanner >> scanError: theCause [
 ]
 
 { #category : #'private - scanning' }
+RBScanner >> scanError: theCause from: aPosition [
+	"An error token accepts every character given, recognised or not."
+	"The value of the error token is the verbatim text from aPosition to the current position (both included)."
+	| location |
+	"error location is the next not parseable character. Or current stream position + 1 if
+	an expected character is missing."
+	location := stream position.
+	currentCharacter
+		ifNotNil: [ :char | buffer nextPut: char ]
+		ifNil: [ location := stream position + 1 ].
+	^ RBErrorToken
+		value: (self scanBackFrom: aPosition)
+		start: aPosition
+		cause: theCause
+		location: location
+]
+
+{ #category : #'private - scanning' }
 RBScanner >> scanIdentifierOrKeyword [
 	"!! Attention !! There are 3 case of Literal Tokens : true, false and nil."
 	"This scan accepts keywords only containing a colon."
