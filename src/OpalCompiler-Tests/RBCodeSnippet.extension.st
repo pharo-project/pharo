@@ -5,6 +5,6 @@ RBCodeSnippet >> compile [
 
 	^ OpalCompiler new
 		  options: #( #optionParseErrors );
-		  noPattern: true;
+		  noPattern: isMethod not;
 		  compile: self source
 ]

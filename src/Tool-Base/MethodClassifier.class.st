@@ -43,8 +43,6 @@ MethodClassifier class >> buildKeywordSuffixMapping [
 MethodClassifier class >> buildPragmaMapping [
 	pragmaMapping := Dictionary new
 		at: 'example' put: 'examples';
-		at: 'spec' put: 'specs';
-		at: 'spec:' put: 'specs';
 		at: 'symbolicVersion:' put: 'symbolic versions';
 		yourself
 ]
@@ -106,6 +104,11 @@ MethodClassifier class >> classify: aMethod [
 ]
 
 { #category : #classification }
+MethodClassifier class >> classify: aMethod fallbackProtocol: fallbackProtocol [
+	^ self new classify: aMethod fallbackProtocol: fallbackProtocol
+]
+
+{ #category : #classification }
 MethodClassifier class >> classifyAll: aCollectionOfMethods [
 	^ self new classifyAll: aCollectionOfMethods
 ]
@@ -151,8 +154,18 @@ MethodClassifier class >> suggestProtocolFor: aMethod [
 { #category : #classification }
 MethodClassifier >> classify: aMethod [
 
+	self classify: aMethod fallbackProtocol: nil
+]
+
+{ #category : #classification }
+MethodClassifier >> classify: aMethod fallbackProtocol: fallbackProtocol [
+	"fallback protocol is the protocol that was selected at method creation.
+	It will only be used if standard rules do not find a protocol for this method.
+	It allows to have consistency for well known method names / prefixes."
+
 	self suggestProtocolFor: aMethod.
-	protocol ifNotNil: [ aMethod protocol: protocol ]
+	protocol ifNotNil: [ ^ aMethod protocol: protocol ].
+	fallbackProtocol ifNotNil: [ aMethod protocol: fallbackProtocol ]
 ]
 
 { #category : #classification }

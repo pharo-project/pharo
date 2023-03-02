@@ -25,3 +25,8 @@ RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
 RBPragmaErrorNode >> isPragmaError [
 	^true
 ]
+
+{ #category : #testing }
+RBPragmaErrorNode >> isPrimitive [
+	^false
+]
