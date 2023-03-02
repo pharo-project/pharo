@@ -661,16 +661,24 @@ RBParser >> parseKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parseLiteralArray [
-	| literals startToken stop |
+	| literals startToken stop isFaulty value |
 	startToken := currentToken.
 	literals := (OrderedCollection new: 5).
+	isFaulty := false.
 	self step.
 	[self atEnd or: [currentToken isSpecial: $)]]
-		whileFalse: [literals add: self parseLiteralArrayObject].
+		whileFalse: [
+			literals add: (value := self parseLiteralArrayObject).
+			value isParseError ifTrue: [ isFaulty := true ] ].
 	stop := currentToken stop.
 	(currentToken isSpecial: $))
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
+	isFaulty ifTrue: [
+		^ (self parseEnglobingError: literals with: startToken errorMessage: nil)
+			valueAfter: ')';
+			stop: stop;
+			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
 		contents: literals
