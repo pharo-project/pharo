@@ -368,16 +368,16 @@ RBScanner >> scanComment [
 	buffer reset.
 	self step.
 	self atEnd
-		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
+		ifTrue: [ ^ self scanError: 'Unmatched " in comment.' from: start ].
 	[ currentCharacter = $" and: [ self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
-				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
+				ifTrue: [ ^ self scanError: 'Unmatched " in comment.' from: start ].
 			buffer nextPut: currentCharacter.
 			self step ].
 	stop := self atEnd
 		ifTrue: [ stream position ]
 		ifFalse: [ stream position - 1 ].
-	comments add: (RBCommentToken value: buffer contents start: start stop: stop)
+	^ RBCommentToken value: buffer contents start: start stop: stop
 ]
 
 { #category : #'private - scanning' }
@@ -658,6 +658,7 @@ RBScanner >> scanToken [
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
 	currentCharacter = $$ ifTrue: [^self scanLiteralCharacter].
+	currentCharacter = $" ifTrue: [^self scanComment]. "Assume a bad comment (as they are usually stripped)"
 	^self scanUnknownCharacter
 ]
 
@@ -696,7 +697,14 @@ RBScanner >> step [
 { #category : #'private - scanning' }
 RBScanner >> stripSeparators [
 
-	[[characterType = #separator] whileTrue: [self step].
-	currentCharacter = $"]
-			whileTrue: [self scanComment]
+	[[ characterType = #separator ] whileTrue: [ self step ].
+	currentCharacter = $" ] whileTrue: [
+		| comment |
+		comment := self scanComment.
+		comment isError ifTrue: [
+			"Reset the position and stop here. The token will be consumed later by scanToken"
+			stream position: comment start - 1.
+			self step.
+			^ self ].
+		comments add: comment ]
 ]
