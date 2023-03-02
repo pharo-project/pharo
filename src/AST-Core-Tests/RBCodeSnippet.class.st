@@ -76,6 +76,7 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '[1)2]'; formattedCode: '[<r> 1).<r>2 ]'.
 		self new source: '[1}2]'; formattedCode: '[<r> 1}.<r>2 ]'.
 		self new source: '#(1]2}3)'; formattedCode:'#( 1 #'']'' 2 #''}'' 3 )'; isFaulty: false; value: #(1]2}3). "`#(` can eat almost anything"
+		self new source: '#( 0 1r2 4 )'; formattedCode: '#( 0 1 r2 4)'. "Almost anything..."
 		self new source: '#[ 1 ) 2]'.
 		self new source: '#[ 1 } 2]'.
 		self new source: '#[ 1 a 2]'.
