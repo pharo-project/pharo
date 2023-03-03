@@ -36,9 +36,9 @@ PharoDocCommentTest >> testExpressionNoAssociation [
 	"(3 + 4 >>> 7) value"
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
-	self assert: node expression isFaulty.
-	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
-	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
+	self deny: node expression isWellFormed.
+	self should: [ node expression evaluate ] raise: Error.
+	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
 { #category : #tests }
@@ -82,9 +82,12 @@ PharoDocCommentTest >> testExpressionSyntaxError [
 	"3 + 4) >>> 7"
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
+	"We get a syntax error"
 	self assert: node expression isFaulty.
-	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
-	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
+	"but the structure of the >>> looks ok"
+	self assert: node expression isWellFormed.
+	self should: [ node expression evaluate ] raise: SyntaxErrorNotification.
+	self should: [ (CommentTestCase for: node) testIt ] raise: SyntaxErrorNotification
 ]
 
 { #category : #tests }
@@ -96,8 +99,8 @@ PharoDocCommentTest >> testExpressionZero [
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
 	self assert: node expression isFaulty.
-	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
-	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
+	self should: [ node expression evaluate ] raise: Error.
+	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
 { #category : #tests }
@@ -118,8 +121,8 @@ PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
 	| node |
 	node := thisContext method ast pharoDocCommentNodes first.
 	self assert: node expression isFaulty.
-	self should: [ node expression evaluate ] raise: RuntimeSyntaxError.
-	self should: [ (CommentTestCase for: node) testIt ] raise: RuntimeSyntaxError
+	self should: [ node expression evaluate ] raise: Error.
+	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
 { #category : #tests }
