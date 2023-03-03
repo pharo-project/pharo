@@ -6,6 +6,7 @@ Instance Variables:
 	characterType	<ByteSymbol>	The type of the next character. (e.g. #alphabetic, etc.)
 	classificationTable	<Array of: Symbol>	Mapping from Character values to their characterType.
 	comments	<Collection of: Interval>	Source intervals of scanned comments that must be attached to the next token.
+	nextToken <RBToken>	The ""free"" `next` token, used to store bad comment so no backtracking is needed
 	currentCharacter	<Character>	The character currently being processed.
 	errorBlock	<BlockClosure>	The block to execute on lexical errors.
 	extendedLiterals	<Boolean>	True if IBM-type literals are allowed. In VW, this is false.
@@ -32,7 +33,8 @@ Class {
 		'characterType',
 		'classificationTable',
 		'comments',
-		'errorBlock'
+		'errorBlock',
+		'nextToken'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -163,7 +165,7 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 
 { #category : #testing }
 RBScanner >> atEnd [
-	^characterType = #eof
+	^characterType = #eof and: [ nextToken isNil ]
 ]
 
 { #category : #private }
@@ -275,6 +277,11 @@ Binary --> [*] : eof
 { #category : #accessing }
 RBScanner >> next [
 	| token |
+	"Consume the one remembered (likely a bad comment)"
+	nextToken ifNotNil: [ :t |
+		nextToken := nil.
+		^t ].
+
 	buffer reset.
 	tokenStart := stream position.
 	token := characterType = #eof
@@ -368,16 +375,16 @@ RBScanner >> scanComment [
 	buffer reset.
 	self step.
 	self atEnd
-		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
+		ifTrue: [ ^ self scanError: 'Unmatched " in comment.' from: start ].
 	[ currentCharacter = $" and: [ self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
-				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
+				ifTrue: [ ^ self scanError: 'Unmatched " in comment.' from: start ].
 			buffer nextPut: currentCharacter.
 			self step ].
 	stop := self atEnd
 		ifTrue: [ stream position ]
 		ifFalse: [ stream position - 1 ].
-	comments add: (RBCommentToken value: buffer contents start: start stop: stop)
+	^ RBCommentToken value: buffer contents start: start stop: stop
 ]
 
 { #category : #'private - scanning' }
@@ -394,6 +401,24 @@ RBScanner >> scanError: theCause [
 	^ RBErrorToken
 		value: buffer contents asString
 		start: tokenStart
+		cause: theCause
+		location: location
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanError: theCause from: aPosition [
+	"An error token accepts every character given, recognised or not."
+	"The value of the error token is the verbatim text from aPosition to the current position (both included)."
+	| location |
+	"error location is the next not parseable character. Or current stream position + 1 if
+	an expected character is missing."
+	location := stream position.
+	currentCharacter
+		ifNotNil: [ :char | buffer nextPut: char ]
+		ifNil: [ location := stream position + 1 ].
+	^ RBErrorToken
+		value: (self scanBackFrom: aPosition)
+		start: aPosition
 		cause: theCause
 		location: location
 ]
@@ -640,6 +665,7 @@ RBScanner >> scanToken [
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
 	currentCharacter = $$ ifTrue: [^self scanLiteralCharacter].
+	currentCharacter = $" ifTrue: [^self scanComment]. "Assume a bad comment (as they are usually stripped)"
 	^self scanUnknownCharacter
 ]
 
@@ -678,7 +704,13 @@ RBScanner >> step [
 { #category : #'private - scanning' }
 RBScanner >> stripSeparators [
 
-	[[characterType = #separator] whileTrue: [self step].
-	currentCharacter = $"]
-			whileTrue: [self scanComment]
+	[[ characterType = #separator ] whileTrue: [ self step ].
+	currentCharacter = $" ] whileTrue: [
+		| comment |
+		comment := self scanComment.
+		comment isError ifTrue: [
+			"Remember to use the error as the next token"
+			nextToken := comment.
+			^ self ].
+		comments add: comment ]
 ]

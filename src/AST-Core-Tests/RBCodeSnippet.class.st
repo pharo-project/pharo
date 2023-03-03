@@ -53,6 +53,18 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '#'.
 		self new source: '$'.
 		self new source: ':'.
+		self new source: ''; isFaulty: false. "emptyness is ok"
+		
+		"Comments"
+		"EFFormater is not the best here :("
+		self new source: '"" '; isFaulty: false.
+		self new source: '"nothing" '; isFaulty: false.
+		self new source: '"com"1"ment"'; formattedCode: '1'; isFaulty: false; value: 1. "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
+		self new source: '"a" 1 "b". "c" 2 "d"'; formattedCode: '1. "a" "b" "c" 2 "d"'; isFaulty: false; value: 2. "a and b moved around. Formatter issue. FIXME?"
+		self new source: '"unfinished'.
+		self new source: '"also unfinished""'.
+		self new source: '"'.
+		self new source: '"""'.
 
 		"Bad compound"
 		self new source: '( 1 + 2'.
