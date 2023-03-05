@@ -118,7 +118,7 @@ RBSimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 		ifTrue: [ ^ self ].
 	aBlockNode arguments
 		do: [ :each |
-			   codeStream nextPut: $:.
+				each isParseError ifFalse: [ codeStream nextPut: $: ].
 			   self
 					visitNode: each;
 			   		formatCommentsFor: each;
@@ -304,7 +304,7 @@ RBSimpleFormatter >> needsParenthesisFor: aNode [
 	aNode isValue
 		ifFalse: [ ^ false ].
 	aNode isParseError
-		ifTrue: [ ^false ].
+		ifTrue: [ ^ aNode hasParentheses ].
 	parent := aNode parent ifNil: [ ^ false ].
 	aNode precedence < parent precedence
 		ifTrue: [ ^ false ].
@@ -422,6 +422,17 @@ RBSimpleFormatter >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+RBSimpleFormatter >> visitEnglobingErrorNode: aNode [
+
+	self writeString: aNode value.
+	self formatBlockArgumentsFor: aNode.
+	aNode contents do: [ :each | self visitNode: each ] separatedBy: [
+		codeStream nextPutAll: ' '.
+		self newLine ].
+	self writeString: aNode valueAfter
+]
+
+{ #category : #visiting }
 RBSimpleFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 	| brackets |
 	codeStream nextPut: $#.
@@ -494,7 +505,12 @@ RBSimpleFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 
 { #category : #visiting }
 RBSimpleFormatter >> visitPragmaNode: aPragmaNode [
-	codeStream nextPut: $<.
+
+	| hackNoBrackets |
+	"If the parent is an error, the '<' and '>' are already taken care of."
+	hackNoBrackets := aPragmaNode parent isNotNil and: [ aPragmaNode parent isEnglobingError ].
+
+	hackNoBrackets ifFalse: [ codeStream nextPut: $< ].
 	self
 		formatSelectorAndArguments: aPragmaNode
 		firstSeparator: [
@@ -502,7 +518,7 @@ RBSimpleFormatter >> visitPragmaNode: aPragmaNode [
 				ifTrue: [ self space ] ]
 		restSeparator: [ self space ].
 	self addSpaceIfNeededForLastArgument: aPragmaNode.
-	codeStream nextPut: $>
+	hackNoBrackets ifFalse: [ codeStream nextPut: $> ]
 ]
 
 { #category : #visiting }
