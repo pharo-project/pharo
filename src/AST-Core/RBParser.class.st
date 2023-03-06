@@ -43,8 +43,10 @@ RBParser class >> newFaulty [
 { #category : #'instance creation' }
 RBParser class >> newWithErrorBlock: aBlock [
 
+	self deprecated: 'RBParser takes no more an error block'.
+
 	^ self new
-		errorBlock: aBlock;
+		beFaulty;
 		yourself
 ]
 
@@ -233,8 +235,8 @@ RBParser >> errorBlock [
 
 { #category : #accessing }
 RBParser >> errorBlock: aBlock [
-	errorBlock := aBlock.
-	scanner ifNotNil: [scanner errorBlock: aBlock]
+
+	self deprecated: 'RBParser accepts no more an error block. Either use the faulty mode or catch the SyntaxErrorNotification (various `onError:` methods can do that four you)'
 ]
 
 { #category : #'error handling' }
