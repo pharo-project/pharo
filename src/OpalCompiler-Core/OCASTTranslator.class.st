@@ -516,6 +516,8 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	valueTranslator visitNode: anAssignmentNode value.
+	"Even in faulty mode, do not baspass the isWritable semantic to avoid very bad consequences on the image"
+	anAssignmentNode variable variable isWritable ifFalse: [ ^ self emitRuntimeError: anAssignmentNode variable ].
 	anAssignmentNode variable variable emitStore: methodBuilder
 ]
 
