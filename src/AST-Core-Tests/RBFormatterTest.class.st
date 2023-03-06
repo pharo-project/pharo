@@ -19,8 +19,7 @@ RBFormatterTest >> formatClass: aClass selector: aSymbol [
 	source := aClass sourceCodeAt: aSymbol.
 	tree1 := self parserClass parseMethod: source.
 	tree2 := self parserClass
-		parseMethod: (self formatterClass new format: tree1)
-		onError: [ :err :pos | self assert: false ].
+		parseFaultyMethod: (self formatterClass new format: tree1).
 	self assert: tree1 equals: tree2
 ]
 

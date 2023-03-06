@@ -113,7 +113,7 @@ RBParser class >> parseMethod: aString onError: aBlock [
 { #category : #parsing }
 RBParser class >> parseMethodPattern: aString [
 	^ (self new
-		   errorBlock: [ :error :position | ^ nil ];
+			beFaulty;
 		   initializeParserWith: aString;
 		   parseMessagePattern) selector
 ]
