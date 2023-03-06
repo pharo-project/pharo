@@ -627,6 +627,16 @@ RBCodeSnippet >> parse [
 		ifFalse: [ RBParser parseFaultyExpression: self source ]
 ]
 
+{ #category : #parsing }
+RBCodeSnippet >> parseOnError: aBlock [
+
+	^ [ isMethod
+			  ifTrue: [ RBParser parseMethod: self source ]
+			  ifFalse: [ RBParser parseExpression: self source ] ]
+		  on: SyntaxErrorNotification
+		  do: [ :e | aBlock value: e ]
+]
+
 { #category : #printing }
 RBCodeSnippet >> printOn: aStream [
 
