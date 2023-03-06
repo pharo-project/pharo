@@ -280,6 +280,16 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	self isValueTranslator ifTrue: [ methodBuilder pushLiteral: nil ]
 ]
 
+{ #category : #errors }
+OCASTTranslator >> emitRuntimeError: aNode [
+	"Runtime errors should only be emited on faulty code"
+
+	methodBuilder
+		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteral: aNode;
+		send: #signalSyntaxError:
+]
+
 { #category : #'inline messages' }
 OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	| limit block limitEmit |
@@ -666,10 +676,8 @@ OCASTTranslator >> visitNode: aNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [
-	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: anErrorNode;
-		send: #signalSyntaxError:
+
+	self emitRuntimeError: anErrorNode
 ]
 
 { #category : #'visitor - double dispatching' }
