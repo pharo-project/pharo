@@ -908,6 +908,13 @@ RBProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
 ]
 
+{ #category : #accessing }
+RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock [
+	"Evaluate aPresentBlock with the the property value associated with aKey. Return nil if aKey is not found."
+
+	^ properties ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: [ nil ] ]
+]
+
 { #category : #properties }
 RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	"Answer the property value associated with aKey or, if aKey is found, answer the result of evaluating aPresentBlock, else evaluates anAbsentBlock."
