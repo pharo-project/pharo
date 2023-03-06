@@ -9,6 +9,19 @@ RBCodeSnippetTest >> testCompile [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileOnError [
+
+	| method error |
+	error := nil.
+	method := snippet compileOnError: [ :e | error := e errorMessage ].
+	snippet isFaulty
+		ifTrue: [ self assert: error isNotNil ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDecompile [
 
 	| method ast |
@@ -29,11 +42,38 @@ RBCodeSnippetTest >> testDecompileIR [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDoSemanticAnalysis [
+	"We should test more than that"
+
+	| ast |
+	ast := snippet doSemanticAnalysis.
+	self assert: ast isMethod.
+	self assert: ast isFaulty equals: snippet isFaulty
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
+	"We should test more than that"
+
+	| ast error |
+	error := nil.
+
+	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
+
+	snippet isFaulty
+		ifTrue: [ self assert: error isNotNil ]
+		ifFalse: [
+			self deny: ast isFaulty.
+			self assert: error isNil ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testExecute [
 
 	| method runBlock phonyArgs |
 	self skipIf: #testExecute.
 	method := snippet compile.
+	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.

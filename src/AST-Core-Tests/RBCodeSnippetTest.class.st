@@ -40,15 +40,6 @@ RBCodeSnippetTest >> snippet: anObject [
 ]
 
 { #category : #tests }
-RBCodeSnippetTest >> testDoSemanticAnalysis [
-	"We should test more than that"
-
-	| ast |
-	ast := snippet parse.
-	ast doSemanticAnalysis
-]
-
-{ #category : #tests }
 RBCodeSnippetTest >> testDump [
 
 	| ast dump ast2 dump2 |

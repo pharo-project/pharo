@@ -4,7 +4,39 @@ Extension { #name : #RBCodeSnippet }
 RBCodeSnippet >> compile [
 
 	^ OpalCompiler new
-		  options: #( #optionParseErrors );
+		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
 		  noPattern: isMethod not;
 		  compile: self source
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippet >> compileOnError: aBlock [
+
+	^ [ OpalCompiler new
+		  noPattern: isMethod not;
+		  compile: self source ] on: SyntaxErrorNotification do: [ :e | aBlock value: e ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippet >> doSemanticAnalysis [
+
+	"Do the semantic analysis as with the compiler and return the AST of the whole method (possibly a DoIt method)"
+
+	"The responsability of scope and context is far from clear.
+	* using `RBMethodNode>>#doSemanticAnalysis` we cannot configure it.
+	* using `OCASTSemanticAnalyzer` just fails on uninitialised internal thing.
+	So just ask the compiler."
+
+	^ OpalCompiler new
+		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
+		  noPattern: isMethod not;
+		  parse: self source "Note: `parse:` also does the semantic analysis and return the AST"
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippet >> doSemanticAnalysisOnError: aBlock [
+
+	^ [ OpalCompiler new
+		  noPattern: isMethod not;
+		  parse: self source ] on: SyntaxErrorNotification do: [ :e | aBlock value: e ]
 ]
