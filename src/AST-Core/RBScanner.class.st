@@ -194,6 +194,12 @@ RBScanner >> contents [
 ]
 
 { #category : #accessing }
+RBScanner >> errorBlock: aBlock [
+	"No-op as errorBlock is removed. But kept here for old clients"
+	"TODO remove once clients are migrated"
+]
+
+{ #category : #accessing }
 RBScanner >> getComments [
 	| oldComments |
 	comments isEmpty ifTrue: [^nil].
