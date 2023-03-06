@@ -91,3 +91,13 @@ RBCodeSnippetTest >> testParseOnError [
 		ifTrue: [ self deny: error equals: nil ]
 		ifFalse: [ self assert: error equals: nil ]
 ]
+
+{ #category : #tests }
+RBCodeSnippetTest >> testSimpleFormattedCode [
+
+	| ast fast east |
+	ast := snippet parse.
+	fast := (RBSimpleFormatter format: ast) reject: #isSeparator.
+	east := snippet formattedCode reject: #isSeparator.
+	self assert: fast  equals: east
+]
