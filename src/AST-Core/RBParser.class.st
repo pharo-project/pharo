@@ -20,7 +20,6 @@ Class {
 		'scanner',
 		'currentToken',
 		'nextToken',
-		'errorBlock',
 		'source',
 		'comments',
 		'pragmas',
@@ -28,11 +27,6 @@ Class {
 	],
 	#category : #'AST-Core-Parser'
 }
-
-{ #category : #accessing }
-RBParser class >> errorNodeBlock [
-	^ [ :aString :position :parser| parser parseErrorNode: aString ]
-]
 
 { #category : #'instance creation' }
 RBParser class >> newFaulty [
@@ -200,7 +194,6 @@ RBParser >> basicParsePragma [
 { #category : #initialization }
 RBParser >> beFaulty [
 	isFaulty := true.
-	errorBlock := self class errorNodeBlock
 ]
 
 { #category : #'private - classes' }
@@ -226,11 +219,6 @@ RBParser >> doItMethodNodeClass [
 { #category : #'private - classes' }
 RBParser >> englobingErrorNodeClass [
 	^RBEnglobingErrorNode
-]
-
-{ #category : #'error handling' }
-RBParser >> errorBlock [
-	^errorBlock ifNil: [[:message :position | ]] ifNotNil: [errorBlock]
 ]
 
 { #category : #accessing }
@@ -1251,11 +1239,9 @@ RBParser >> parseVariableNode [
 { #category : #'error handling' }
 RBParser >> parserError: aString [
 	"Let the errorBlock try to recover from the error. Answer a ParseNode (possibly an RBParseErrorNode) or signal there is new source"
-	| errorNode errorMessage errorPosition |
+	| errorMessage errorPosition |
 	isFaulty ifTrue: [ ^ self parseErrorNode: aString ].
 
-	errorNode := self errorBlock cull: aString cull: self errorPosition cull: self.
-	errorNode ifNotNil: [ ^ errorNode ].
 	currentToken isError
 		ifTrue: [ errorMessage := currentToken cause. errorPosition := currentToken location ]
 		ifFalse: [errorMessage := aString. errorPosition := currentToken start].
