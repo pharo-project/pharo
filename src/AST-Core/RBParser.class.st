@@ -258,7 +258,7 @@ RBParser >> initialize [
 { #category : #accessing }
 RBParser >> initializeParserWith: aString [
 	source := aString.
-	self scanner: (self scannerClass on: (ReadStream on: aString) errorBlock: self errorBlock)
+	self scanner: (self scannerClass on: (ReadStream on: aString))
 ]
 
 { #category : #'private - classes' }
@@ -1358,7 +1358,6 @@ RBParser >> saveCommentsDuring: aBlock [
 RBParser >> scanner: aScanner [
 	scanner := aScanner.
 	pragmas := nil.
-	aScanner errorBlock: self errorBlock.
 	self initialize.
 	self step
 ]

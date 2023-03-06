@@ -8,7 +8,6 @@ Instance Variables:
 	comments	<Collection of: Interval>	Source intervals of scanned comments that must be attached to the next token.
 	nextToken <RBToken>	The ""free"" `next` token, used to store bad comment so no backtracking is needed
 	currentCharacter	<Character>	The character currently being processed.
-	errorBlock	<BlockClosure>	The block to execute on lexical errors.
 	extendedLiterals	<Boolean>	True if IBM-type literals are allowed. In VW, this is false.
 	nameSpaceCharacter	<Character>	The character used to separate namespaces.
 	numberType	<ByteSymbol>	The method to perform: to scan a number. 
@@ -33,7 +32,6 @@ Class {
 		'characterType',
 		'classificationTable',
 		'comments',
-		'errorBlock',
 		'nextToken'
 	],
 	#classVars : [
@@ -140,13 +138,11 @@ RBScanner class >> on: aStream [
 
 { #category : #'instance creation' }
 RBScanner class >> on: aStream errorBlock: aBlock [
-	| str |
-	str := self new on: aStream.
-	str
-		errorBlock: aBlock;
-		step;
-		stripSeparators.
-	^str
+
+	self
+		deprecated: 'The scanner no more signals errors or execute error blocks, it just silently produces error tokens'
+		transformWith: '`@receiver on: `@arg1 errorBlock: `@arg2' -> '`@receiver on: `@arg1'.
+	^ self on: aStream
 ]
 
 { #category : #accessing }
@@ -197,19 +193,9 @@ RBScanner >> contents [
 	^ contentsStream contents
 ]
 
-{ #category : #'error handling' }
-RBScanner >> errorBlock [
-	^errorBlock ifNil: [[:message :position | ]] ifNotNil: [errorBlock]
-]
-
 { #category : #accessing }
 RBScanner >> errorBlock: aBlock [
-	errorBlock := aBlock
-]
-
-{ #category : #'error handling' }
-RBScanner >> errorPosition [
-	^stream position
+	self deprecated: 'No-op as errorBlock is removed'
 ]
 
 { #category : #accessing }
@@ -307,18 +293,6 @@ RBScanner >> on: aStream [
 	stream := aStream.
 	classificationTable := self class classificationTable.
 	comments := OrderedCollection new
-]
-
-{ #category : #parsing }
-RBScanner >> parseErrorNode: aMessageString [
-	"This method might be called indirectly by errorBlocks.
-	especially by `RBParser class>>#errorNodeBlock` since the parser share its
-	error blocks with the scanner."
-
-	| sourceString |
-	sourceString := stream contents copyFrom: self errorPosition to: stream contents size.
-	^ RBParseErrorNode
-		errorMessage: aMessageString value: sourceString at: self errorPosition
 ]
 
 { #category : #private }
@@ -676,18 +650,6 @@ RBScanner >> scanUnknownCharacter [
 	"advance"
 	self step.
 	^ errorToken
-]
-
-{ #category : #'error handling' }
-RBScanner >> scannerError: aString [
-	(self errorBlock cull: aString cull: self errorPosition cull: self) ifNil: [
-		^ SyntaxErrorNotification
-					inClass: Object
-					withCode: stream contents
-					doitFlag: false
-					errorMessage: aString
-					location: stream position + 1
-	]
 ]
 
 { #category : #private }
