@@ -155,9 +155,7 @@ RBExtractMethodRefactoring >> extractMethod [
 	extractCode := self getExtractedSource.
 	extractedParseTree := self parserClass
 		parseExpression: extractCode
-		onError: [ :string :pos :parser |
-			errorMessage := string.
-			parser parseErrorNode: string ].
+		onError: [ :string :pos :parser | errorMessage := string ].
 	extractedParseTree
 		ifNil: [ self refactoringFailure: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
