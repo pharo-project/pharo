@@ -9,6 +9,6 @@ CommandLineUIManager >> syntaxErrorNotificationDefaultAction: aSyntaxErrorNotifi
 
 	STCommandLineHandler printCompilerWarning: aSyntaxErrorNotification.
 
-	"in noninteractive mode simply quit"
-	^ self exitFailure
+	"in noninteractive mode simply return"
+	^ aSyntaxErrorNotification return
 ]

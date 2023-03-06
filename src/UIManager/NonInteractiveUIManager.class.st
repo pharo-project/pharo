@@ -197,6 +197,6 @@ NonInteractiveUIManager >> syntaxErrorNotificationDefaultAction: aSyntaxErrorNot
 	"display and log the syntax error"
 	super syntaxErrorNotificationDefaultAction: aSyntaxErrorNotification.
 
-	"in noninteractive mode simply quit"
-	^ self exitFailure
+	"in noninteractive mode simply return"
+	^ aSyntaxErrorNotification return
 ]
