@@ -568,10 +568,11 @@ RBProgramNode >> isEvaluatedFirst [
 	^parent isNil or: [parent isSequence or: [parent evaluatedFirst: self]]
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBProgramNode >> isFaulty [
-	"return true if the AST contains a RBParseErrorNode"
-	^false
+
+	"return true if the AST is or contains a isError node."
+	^ self isError
 ]
 
 { #category : #testing }

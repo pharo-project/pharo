@@ -81,7 +81,7 @@ RBParseErrorNode >> isError [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBParseErrorNode >> isFaulty [
 	^true
 ]
