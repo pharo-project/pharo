@@ -6,7 +6,8 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * source <String> the source code of the snippet
 * isMethod <Boolean> the source is for a full method (with pattern and maybe pragmas)
 * formatedCode <String> the expected reformated code
-* isFaulty <Boolean> is the parser expected to produce a faulty AST 
+* isParseFaulty <Boolean> is the parser expected to produce a faulty AST (only syntactic errors)
+* isFaulty <Boolean> is the compiler expected to produce a faulty AST (syntactic and semantic errors)
 * value <Object> the expected value when executed
 * hasValue <Boolean> is the compiled method produce a value
 * raise <Exception class> the exception that should be raised at runtime
@@ -24,6 +25,7 @@ Class {
 	#instVars : [
 		'source',
 		'isMethod',
+		'isParseFaulty',
 		'isFaulty',
 		'value',
 		'hasValue',
@@ -580,6 +582,18 @@ RBCodeSnippet >> isMethod [
 RBCodeSnippet >> isMethod: anObject [
 
 	isMethod := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isParseFaulty [
+
+	^ isParseFaulty
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isParseFaulty: anObject [
+
+	isParseFaulty := anObject
 ]
 
 { #category : #accessing }

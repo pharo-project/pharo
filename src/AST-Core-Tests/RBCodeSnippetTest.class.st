@@ -72,7 +72,7 @@ RBCodeSnippetTest >> testFormattedCode [
 { #category : #tests }
 RBCodeSnippetTest >> testParse [
 
-	self assert: snippet parse isFaulty equals: snippet isFaulty
+	self assert: snippet parse isFaulty equals: (snippet isParseFaulty ifNil: [snippet isFaulty])
 ]
 
 { #category : #tests }
@@ -87,7 +87,7 @@ RBCodeSnippetTest >> testParseOnError [
 		on: SyntaxErrorNotification
 		do: [ :e | error := e errorMessage ].
 
-	snippet isFaulty
+	(snippet isParseFaulty ifNil: [snippet isFaulty])
 		ifTrue: [ self deny: error equals: nil ]
 		ifFalse: [ self assert: error equals: nil ]
 ]
