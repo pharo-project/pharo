@@ -3,10 +3,17 @@ Extension { #name : #RBCodeSnippet }
 { #category : #'*OpalCompiler-Tests' }
 RBCodeSnippet >> compile [
 
-	^ OpalCompiler new
+	^ [ OpalCompiler new
 		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
 		  noPattern: isMethod not;
-		  compile: self source
+		  compile: self source ]
+	on: SyntaxErrorNotification do: [ :e |
+		"Compilation should success, because its the *faulty* mode".
+		"If this is expected, then just return nil"
+		self ifSkip: #compile then: [^ nil ].
+		"Otherwise, signal the error bypassing the emergency syntax error UI"
+		e unhandledException.
+		^ nil ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
