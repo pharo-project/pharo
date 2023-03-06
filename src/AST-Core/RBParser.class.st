@@ -23,7 +23,8 @@ Class {
 		'errorBlock',
 		'source',
 		'comments',
-		'pragmas'
+		'pragmas',
+		'isFaulty'
 	],
 	#category : #'AST-Core-Parser'
 }
@@ -184,6 +185,7 @@ RBParser >> basicParsePragma [
 
 { #category : #initialization }
 RBParser >> beFaulty [
+	isFaulty := true.
 	errorBlock := self class errorNodeBlock
 ]
 
@@ -252,7 +254,8 @@ RBParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 
 { #category : #initialization }
 RBParser >> initialize [
-	comments := OrderedCollection new
+	comments := OrderedCollection new.
+	isFaulty := false. "Default is to raise ~~hell~~ syntax errors"
 ]
 
 { #category : #accessing }
@@ -1235,6 +1238,8 @@ RBParser >> parseVariableNode [
 RBParser >> parserError: aString [
 	"Let the errorBlock try to recover from the error. Answer a ParseNode (possibly an RBParseErrorNode) or signal there is new source"
 	| errorNode errorMessage errorPosition newSource |
+	isFaulty ifTrue: [ ^ self parseErrorNode: aString ].
+
 	errorNode := self errorBlock cull: aString cull: self errorPosition cull: self.
 	errorNode ifNotNil: [ ^ errorNode ].
 	currentToken isError
