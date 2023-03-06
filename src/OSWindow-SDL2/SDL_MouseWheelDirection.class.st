@@ -47,7 +47,7 @@ SDL_MouseWheelDirection class >> enumDecl [
 	)
 ]
 
-{ #category : #'accessing enum' }
+{ #category : #'class initialization' }
 SDL_MouseWheelDirection class >> initialize [
 
 	self initializeEnumeration.
