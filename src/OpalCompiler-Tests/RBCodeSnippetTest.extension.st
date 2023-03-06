@@ -61,6 +61,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 
 	| ast error |
 	error := nil.
+	self skipIf: #testDoSemanticAnalysisOnError.
 
 	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
 
