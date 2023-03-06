@@ -50,16 +50,20 @@ RBParser class >> newWithErrorBlock: aBlock [
 
 { #category : #parsing }
 RBParser class >> parseExpression: aString [
-	^self parseExpression: aString onError: nil
+
+	^ self new
+		  initializeParserWith: aString;
+		  parseExpression
 ]
 
 { #category : #parsing }
 RBParser class >> parseExpression: aString onError: aBlock [
 
-	^self new
-        errorBlock: aBlock;
-        initializeParserWith: aString;
-        parseExpression
+	| parser |
+	^ [ parser := self new initializeParserWith: aString.
+		 parser parseExpression ]
+		on: SyntaxErrorNotification
+		do: [ :e | aBlock cull: e errorMessage cull: e location cull: parser ]
 ]
 
 { #category : #parsing }
@@ -91,16 +95,19 @@ RBParser class >> parseLiterals: aString [
 
 { #category : #parsing }
 RBParser class >> parseMethod: aString [
-	^self parseMethod: aString onError: nil
+	^ self new
+		initializeParserWith: aString;
+		parseMethod
 ]
 
 { #category : #parsing }
 RBParser class >> parseMethod: aString onError: aBlock [
+
 	| parser |
-	parser := self new
-		errorBlock: aBlock;
-		initializeParserWith: aString.
-	^ parser parseMethod
+	^ [ parser := self new initializeParserWith: aString.
+		 parser parseMethod ]
+		on: SyntaxErrorNotification
+		do: [ :e | aBlock cull: e errorMessage cull: e location cull: parser ]
 ]
 
 { #category : #parsing }
