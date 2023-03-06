@@ -54,17 +54,6 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
-{ #category : #errors }
-OCASTTranslator >> backendError: aMessage forNode: aNode [
-
-	SyntaxErrorNotification
-		inClass: Object
-		withCode: aNode methodNode source
-		doitFlag: false
-		errorMessage: aMessage
-		location: aNode startWithoutParentheses
-]
-
 { #category : #initialization }
 OCASTTranslator >> classForEffect [
 	^OCASTTranslatorForEffect
@@ -524,7 +513,7 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
-	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	aBlockNode isError ifTrue: [ ^ self emitRuntimeError: aBlockNode ].
 
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
@@ -650,7 +639,7 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 
-	aMethodNode arguments size > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
+	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
 	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.

@@ -42,6 +42,19 @@ OCASTSemanticAnalyzer >> analyzeLocalVariableWrite: aLocalVariable [
 					ifFalse: [ aLocalVariable markWrite ]
 ]
 
+{ #category : #errors }
+OCASTSemanticAnalyzer >> backendError: aMessage forNode: aNode [
+	aNode addError: aMessage.
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
+
+	SyntaxErrorNotification
+		inClass: Object
+		withCode: aNode methodNode source
+		doitFlag: false
+		errorMessage: aMessage
+		location: aNode startWithoutParentheses
+]
+
 { #category : #accessing }
 OCASTSemanticAnalyzer >> blockCounter [
 	^blockCounter ifNil: [0]
@@ -158,6 +171,8 @@ OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
+	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+
 	blockCounter := self blockCounter + 1.
 
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
@@ -182,6 +197,8 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
+
+	aMethodNode arguments size > 15 ifTrue: [ self backendError: 'Too many arguments' forNode: aMethodNode ].
 
 	scope := OCMethodScope new outerScope: compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
