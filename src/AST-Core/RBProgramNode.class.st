@@ -68,6 +68,14 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 ]
 
+{ #category : #errors }
+RBProgramNode >> addError: anErrorMessage [
+
+	"Add an error information to the node. Node with error information are considered faulty.
+	Semantic passes that check the validity of AST are the targetted clients of this method."
+	self propertyAt: #error put: anErrorMessage
+]
+
 { #category : #replacing }
 RBProgramNode >> addReplacement: aStringReplacement [
 	parent ifNil: [^self].
@@ -543,6 +551,14 @@ RBProgramNode >> isDynamicArray [
 { #category : #testing }
 RBProgramNode >> isEnglobingError [
 	^false
+]
+
+{ #category : #errors }
+RBProgramNode >> isError [
+	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for semantic errors).
+	see `addError:`"
+
+	^ self propertyAt: #error ifPresent: [ true ] ifAbsent: [ false ]
 ]
 
 { #category : #testing }
