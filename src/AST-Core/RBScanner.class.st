@@ -136,6 +136,15 @@ RBScanner class >> on: aStream [
 	^scanner
 ]
 
+{ #category : #'instance creation' }
+RBScanner class >> on: aStream errorBlock: aBlock [
+
+	self
+		deprecated: 'The scanner no more signals errors or execute error blocks, it just silently produces error tokens'
+		transformWith: '`@receiver on: `@arg` errorBlock: `@arg2' -> '`@receiver on: `@arg1'.
+	^ self on: aStream
+]
+
 { #category : #accessing }
 RBScanner class >> patternVariableCharacter [
 	^ PatternVariableCharacter
