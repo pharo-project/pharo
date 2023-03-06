@@ -409,6 +409,13 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self
 ]
 
+{ #category : #printing }
+RGBehavior >> definitionString [
+	"Answer a <String> with the receiver's definition accordingly to its strategy"
+
+	^ self behaviorStrategy definitionString
+]
+
 { #category : #fileout }
 RGBehavior >> definitionStringFor: aConfiguredPrinter [
 
@@ -492,11 +499,11 @@ RGBehavior >> inheritsFrom: aClass [
 
 	| aSuperclass |
 	aSuperclass := self superclass.
-	[aSuperclass == nil]
-		whileFalse:
-			[aSuperclass == aClass ifTrue: [^true].
-			aSuperclass := aSuperclass superclass].
-	^false
+	[ aSuperclass isNil ] whileFalse: [
+		aSuperclass == aClass ifTrue: [ ^ true ].
+		aSuperclass hasResolvedName ifFalse: [ ^ false ].
+		aSuperclass := aSuperclass superclass ].
+	^ false
 ]
 
 { #category : #initialization }
@@ -744,6 +751,12 @@ RGBehavior >> name: aString [
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
 		self announcer behaviorModificationAppliedTo: assoc key.
 		self announcer behaviorParentRenamed: assoc key from: oldName ]
+]
+
+{ #category : #testing }
+RGBehavior >> needsSlotClassDefinition [
+
+	^ false
 ]
 
 { #category : #fileout }
