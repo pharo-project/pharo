@@ -1349,6 +1349,7 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitSuperNode: aSuperNode [
+
 	self addStyle: #super forNode: aSuperNode
 ]
 
