@@ -39,7 +39,10 @@ Class {
 { #category : #accessing }
 RBCodeSnippet class >> allSnippets [
 
-	^ self badExpressions, self badMethods
+	^ {
+		  self badExpressions.
+		  self badMethods.
+		  self badSemantic } flattened
 ]
 
 { #category : #accessing }
@@ -386,6 +389,64 @@ RBCodeSnippet class >> badMethods [
 		each isMethod: true.
 		each isFaulty ifNil: [ each isFaulty: true ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
+	].
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badSemantic [
+
+	"List of varions semantic and backend errors."
+	| list |
+	list := {
+		"Undefined variable"
+		"For some reason, this is just a warning in non-faulty mode, not an error."
+		self new source: 'a := 10. ^ a'; isFaulty: false; value: nil. "Weird, I expected to be 10"
+		self new source: '^ a'; isFaulty: false; value: nil.
+
+		"Uninitialized variable"
+		self new source: '| a | ^ a'; value: nil.
+		self new source: '| a | [ a := 10 ]. ^ a'; value: nil.
+		self new source: '| a | [ ^ a ]. a := 10'; value: 10.
+
+		"Duplicated variable definition (same scope)"
+		self new source: 'foo: a bar: a ^ a'; value: 1; isMethod: true.
+		self new source: '| a a | a := 10. ^ a'; value: 10.
+		self new source: '[ | a a | a := 10. a ]'; value: 10.
+		self new source: '[ :a :a | a ]'; value: 1.
+
+		"Shadowed variables"
+		self new source: 'foo: a ^ [ | a | a := 10. a ] value + a'; isMethod: true; value: 11.
+		self new source: 'foo | a | a := 1. ^ [ | a | a := 10. a ] value + a'; isMethod: true; value: 11.
+		self new source: 'foo ^ [ | a | a := 1. [ | a | a := 10. a ] value + a ] value'; isMethod: true; value: 11.
+		self new source: 'foo ^ [ :a | [ | a | a := 10. a ] value + a ] value: 1'; isMethod: true; value: 11.
+		self new source: 'foo: a ^ [ :a | a ] value: 10 + a'; isMethod: true; value: 11.
+		self new source: 'foo | a | a := 1. ^ [ :a | a ] value: 10 + a'; isMethod: true; value: 11.
+		self new source: 'foo ^ [ | a | a := 1. [ :a | a ] value: 10 + a ] value'; isMethod: true; value: 11.
+		self new source: 'foo ^ [ :a | [ :a | a ] value: 10 + a ] value: 1'; isMethod: true; value: 11. "phonyArgs"
+
+		"Write on readonly or reserved"
+		self new source: 'foo: a a := 10. ^ a'; isMethod: true; isFaulty: true.
+		self new source: '[ :a | a := 10. a ]'; isFaulty: true.
+		"The following assignment are explicitely no-op, to minimize the impact if, for some broken reasons, they are really executed"
+		self new source: 'nil := nil'; isFaulty: true; isParseFaulty: true; formattedCode: ' nil. := nil'. "it is a literal, not an identifier"
+		self new source: 'true := true'; isFaulty: true; isParseFaulty: true; formattedCode: ' true. := true'. "it is a literal, not an identifier"
+		self new source: 'false := false'; isFaulty: true; isParseFaulty: true; formattedCode: ' false. := false'. "it is a literal, not an identifier"
+		self new source: 'self := self'; isFaulty: true; numberOfCritiques: 1.
+		self new source: 'super := super'; isFaulty: true; numberOfCritiques: 1.
+		self new source: 'thisContext := thisContext'; isFaulty: true; numberOfCritiques: 1.
+		self new source: 'Object := Object'; isFaulty: true; numberOfCritiques: 1.
+
+		"Backend errors"
+		self new source: 'foo ^ [ :a1 :a2 :a3 :a4 :a5 :a6 :a7 :a8 :a9 :a10 :a11 :a12 :a13 :a14 :a15 :a16 | a1 ]'; isMethod: true; isFaulty: true. "Too many arguments"
+		self new source: 'a1: a1 a2: a2 a3: a3 a4: a4 a5: a5 a6: a6 a7: a7 a8: a8 a9: a9 a10: a10 a11: a11 a12: a12 a13: a13 a14: a14 a15: a15 a16: a16 ^ a1'; isMethod: true; isFaulty: true. "Too many arguments"
+		}.
+	"Setup default values"
+	list do: [ :each |
+		each isMethod ifNil: [ each isMethod: false ].
+		each isFaulty ifNil: [ each isFaulty: false ].
+		each isParseFaulty ifNil: [ each isParseFaulty: false ].
+		each formattedCode ifNil: [ each formattedCode: each source ]
 	].
 	^ list
 ]
