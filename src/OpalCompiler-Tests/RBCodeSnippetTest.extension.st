@@ -9,6 +9,26 @@ RBCodeSnippetTest >> testCompile [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDecompile [
+
+	| method ast |
+	method := snippet compile.
+	ast := method decompile.
+	self assert: ast isMethod.
+	"Decompilation lose many information. Not sure how to test more"
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDecompileIR [
+
+	| method ir |
+	method := snippet compile.
+	ir := method decompileIR.
+	self assert: ir class equals: IRMethod.
+	"Decompilation lose information. Not sure how to test more"
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testExecute [
 
 	| method runBlock phonyArgs |
