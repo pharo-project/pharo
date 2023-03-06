@@ -141,7 +141,7 @@ RBScanner class >> on: aStream errorBlock: aBlock [
 
 	self
 		deprecated: 'The scanner no more signals errors or execute error blocks, it just silently produces error tokens'
-		transformWith: '`@receiver on: `@arg` errorBlock: `@arg2' -> '`@receiver on: `@arg1'.
+		transformWith: '`@receiver on: `@arg1 errorBlock: `@arg2' -> '`@receiver on: `@arg1'.
 	^ self on: aStream
 ]
 
@@ -195,8 +195,7 @@ RBScanner >> contents [
 
 { #category : #accessing }
 RBScanner >> errorBlock: aBlock [
-	"No-op as errorBlock is removed. But kept here for old clients"
-	"TODO remove once clients are migrated"
+	self deprecated: 'No-op as errorBlock is removed'
 ]
 
 { #category : #accessing }
