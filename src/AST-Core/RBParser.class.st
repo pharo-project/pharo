@@ -1372,7 +1372,7 @@ RBParser >> saveCommentsDuring: aBlock [
 RBParser >> scanner: aScanner [
 	scanner := aScanner.
 	pragmas := nil.
-	self initialize.
+	comments := OrderedCollection new.
 	self step
 ]
 
