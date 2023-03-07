@@ -34,7 +34,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(default 								black)
 			(invalid 									red)
 			(comment 								(gray darker))
-			(unfinishedComment 					(red muchDarker))
 			(#'$' 									(red muchDarker))
 			(character 								(red muchDarker))
 			(integer 								(red muchDarker))

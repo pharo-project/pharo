@@ -72,7 +72,6 @@ SHRBTextStyler class >> blueStyleTable [
 			(invalid 									red)
 
 			(comment 								(gray darker))
-			(unfinishedComment 					(red muchDarker))
 
 			(#'$' 									(red muchDarker))
 			(character 								(red muchDarker))
@@ -204,7 +203,6 @@ SHRBTextStyler class >> darkStyleTable [
 			(invalid 								'FF8A80')
 
 			(comment 								'7D8C93')
-			(unfinishedComment 				'FF8A80')
 
 			(#'$' 									('E38C1E' lighter))
 			(character 							('E38C1E' lighter))
@@ -423,7 +421,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(invalid 									red)
 
 			(comment 								'586E75')
-			(unfinishedComment 					(red muchDarker))
 
 			(#'$' 									('268BD2' lighter))
 			(character 								('268BD2' lighter))
@@ -571,7 +568,6 @@ SHRBTextStyler class >> tangoStyleTable [
 			(invalid 									red)
 
 			(comment 								'888a85')
-			(unfinishedComment 					(red muchDarker))
 
 			(#'$' 									'ce5c00')
 			(character 								'ce5c00')
@@ -714,7 +710,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(invalid 									red)
 
 			(comment 								'006400')
-			(unfinishedComment 					(red muchDarker))
 
 			(#'$' 									('801f91' lighter))
 			(character 								('801f91' lighter))
