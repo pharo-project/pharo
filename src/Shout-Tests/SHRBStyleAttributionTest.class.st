@@ -537,7 +537,8 @@ SHRBStyleAttributionTest >> testUnaryStyle [
 SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 
 	| aText |
-	aText := 'm ^ style' asText.
+	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	aText := 'm ^ toto' asText.
 	self style: aText.
 
 	self
@@ -545,6 +546,21 @@ SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 		between: 5
 		and: 9
 		shouldBe: #undefinedIdentifier
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testUndefinedKeywordStyle [
+
+	| aText |
+	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	aText := 'm ^ self toto' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 10
+		and: 13
+		shouldBe: #undefinedKeyword
 ]
 
 { #category : #tests }
