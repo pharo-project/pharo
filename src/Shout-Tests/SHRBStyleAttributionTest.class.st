@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'styler'
 	],
+	#classVars : [
+		'Test'
+	],
 	#pools : [
 		'SHRBMockSharedPoolStyler'
 	],
@@ -159,15 +162,14 @@ SHRBStyleAttributionTest >> testCharacterStyle [
 SHRBStyleAttributionTest >> testClassVarStyle [
 
 	| aText |
-	aText := 'm ^ SHRBStyleAttributionTest' asText.
+	aText := 'm ^ Test' asText.
 	self style: aText.
 
-	"For this one I think it should return #classVar"
 	self
 		assertStyleOf: aText
 		between: 5
-		and: 28
-		shouldBe: #globalVar
+		and: 9
+		shouldBe: #classVar
 ]
 
 { #category : #tests }

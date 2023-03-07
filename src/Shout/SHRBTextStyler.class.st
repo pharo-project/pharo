@@ -979,7 +979,7 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	"here we should add support for #classVar"
 	aVariableNode isClassVariable ifTrue: [
 		aVariableNode variable isPoolVariable ifTrue: [ ^ #poolConstant ].
-		^ #globalVar ].
+		^ #classVar ].
 	aVariableNode isInstanceVariable ifTrue: [ ^ #instVar ].
 	"for now we use temp variable here, we could now color them with their own color"
 	aVariableNode isWorkspaceVariable ifTrue: [ ^ #tempVar ].
