@@ -78,9 +78,6 @@ SHRBTextStyler class >> blueStyleTable [
 			(symbol 								(magenta muchDarker))
 			(string 									(magenta muchDarker) normal)
 
-			(assignment 							nil)
-			(ansiAssignment 						nil)
-
 			(literal 									nil italic)
 			(keyword 								(black))
 			(binary 									(black))
@@ -202,9 +199,6 @@ SHRBTextStyler class >> darkStyleTable [
 			(number 								('FFE54B'))
 			(symbol 								('E38C1E'))
 			(string 								('E38C1E'))
-
-			(assignment 							nil bold)
-			(ansiAssignment 					nil bold)
 
 			(literal 								nil italic)
 
@@ -415,8 +409,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(symbol 								('268BD2'))
 			(string 									('268BD2'))
 
-			(assignment 							nil bold)
-			(ansiAssignment 						nil bold)
 
 			(literal 									nil italic)
 
@@ -556,8 +548,6 @@ SHRBTextStyler class >> tangoStyleTable [
 			(symbol 								'c4a000')
 			(string 									'ce5c00')
 
-			(assignment 							nil)
-			(ansiAssignment 						nil)
 
 			(literal 									'8F5902')
 
@@ -692,8 +682,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(symbol 								('801f91'))
 			(string 									('801f91'))
 
-			(assignment 							nil bold)
-			(ansiAssignment 						nil bold)
 
 			(literal 									nil italic)
 

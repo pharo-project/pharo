@@ -36,6 +36,25 @@ SHRBStyleAttributionTest >> style: aText [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testAssignmentStyle [
+
+	| aText |
+	aText := 'm ^ styler := 2' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 10
+		shouldBe: #instVar.
+	self
+		assertStyleOf: aText
+		between: 15
+		and: 15
+		shouldBe: #number
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCharacterStyle [
 
 	| aText |
