@@ -119,7 +119,7 @@ OCASTSemanticAnalyzer >> shadowingVariable: aNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
-	variableNode addError: 'Cannot store into'.
+	variableNode addError: 'Assignment to read-only variable'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 
 	^ OCStoreIntoReadOnlyVariableError new
@@ -131,7 +131,7 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
-	variableNode addError: 'Cannot store into'.
+	variableNode addError: 'Assigment to reserved variable'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
