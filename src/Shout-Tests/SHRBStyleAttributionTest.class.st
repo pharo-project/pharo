@@ -15,6 +15,16 @@ Class {
 }
 
 { #category : #asserting }
+SHRBStyleAttributionTest >> assertStyleOf: aText at: index shouldBe: aStyleSymbol [
+
+	self
+		assertStyleOf: aText
+		between: index
+		and: index
+		shouldBe: aStyleSymbol
+]
+
+{ #category : #asserting }
 SHRBStyleAttributionTest >> assertStyleOf: aText between: min and: max shouldBe: aStyleSymbol [
 
 	min to: max do: [ :index | self assert: (aText attributesAt: index) anyOne name equals: aStyleSymbol ]
@@ -76,11 +86,7 @@ SHRBStyleAttributionTest >> testAssignmentStyle [
 		between: 5
 		and: 10
 		shouldBe: #instVar.
-	self
-		assertStyleOf: aText
-		between: 15
-		and: 15
-		shouldBe: #number
+	self assertStyleOf: aText at: 15 shouldBe: #number
 ]
 
 { #category : #tests }
@@ -90,11 +96,17 @@ SHRBStyleAttributionTest >> testBinaryStyle [
 	aText := 'm self / 3' asText.
 	self style: aText.
 
-	self
-		assertStyleOf: aText
-		between: 8
-		and: 8
-		shouldBe: #keyword
+	self assertStyleOf: aText at: 8 shouldBe: #keyword
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testBlockArgColonStyle [
+
+	| aText |
+	aText := 'm ^ [ :arg | arg ]' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 7 shouldBe: #blockArgColon
 ]
 
 { #category : #tests }
@@ -137,6 +149,31 @@ SHRBStyleAttributionTest >> testBlockPatternTempVarStyle [
 		between: 9
 		and: 11
 		shouldBe: #blockPatternTempVar
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testBlockStyle [
+
+	| aText |
+	aText := 'm ^ [ self a and: [ self b and: [ self c and: [ self d and: [ self e and: [ self f and: [ self h and: [ self i ]]]]]]]]' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 5 shouldBe: #blockStart.
+	self assertStyleOf: aText at: 19 shouldBe: #blockStart1.
+	self assertStyleOf: aText at: 33 shouldBe: #blockStart2.
+	self assertStyleOf: aText at: 47 shouldBe: #blockStart3.
+	self assertStyleOf: aText at: 61 shouldBe: #blockStart4.
+	self assertStyleOf: aText at: 75 shouldBe: #blockStart5.
+	self assertStyleOf: aText at: 89 shouldBe: #blockStart6.
+	self assertStyleOf: aText at: 103 shouldBe: #blockStart7.
+	self assertStyleOf: aText at: 112 shouldBe: #blockEnd7.
+	self assertStyleOf: aText at: 113 shouldBe: #blockEnd6.
+	self assertStyleOf: aText at: 114 shouldBe: #blockEnd5.
+	self assertStyleOf: aText at: 115 shouldBe: #blockEnd4.
+	self assertStyleOf: aText at: 116 shouldBe: #blockEnd3.
+	self assertStyleOf: aText at: 117 shouldBe: #blockEnd2.
+	self assertStyleOf: aText at: 118 shouldBe: #blockEnd1.
+	self assertStyleOf: aText at: 119 shouldBe: #blockEnd
 ]
 
 { #category : #tests }
@@ -202,11 +239,7 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 	aText := 'm thisContext senders' asText.
 	self style: aText.
 
-	self
-		assertStyleOf: aText
-		between: 2
-		and: 2
-		shouldBe: #default
+	self assertStyleOf: aText at: 2 shouldBe: #default
 ]
 
 { #category : #tests }
@@ -288,11 +321,7 @@ SHRBStyleAttributionTest >> testInvalidStyle [
 	aText := 'm ^ #(' asText.
 	self style: aText.
 
-	self
-		assertStyleOf: aText
-		between: 6
-		and: 6
-		shouldBe: #invalid
+	self assertStyleOf: aText at: 6 shouldBe: #invalid
 ]
 
 { #category : #tests }
@@ -352,6 +381,31 @@ SHRBStyleAttributionTest >> testNumberStyle2 [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testParenthesisStyle [
+
+	| aText |
+	aText := 'm ^ (1 + (2 + (3 + (4 + (5 + (6 + (7 + (8 + (9 +1))))))))' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 10 shouldBe: #leftParenthesis.
+	self assertStyleOf: aText at: 15 shouldBe: #leftParenthesis1.
+	self assertStyleOf: aText at: 20 shouldBe: #leftParenthesis2.
+	self assertStyleOf: aText at: 25 shouldBe: #leftParenthesis3.
+	self assertStyleOf: aText at: 30 shouldBe: #leftParenthesis4.
+	self assertStyleOf: aText at: 35 shouldBe: #leftParenthesis5.
+	self assertStyleOf: aText at: 40 shouldBe: #leftParenthesis6.
+	self assertStyleOf: aText at: 45 shouldBe: #leftParenthesis7.
+	self assertStyleOf: aText at: 50 shouldBe: #rightParenthesis7.
+	self assertStyleOf: aText at: 51 shouldBe: #rightParenthesis6.
+	self assertStyleOf: aText at: 52 shouldBe: #rightParenthesis5.
+	self assertStyleOf: aText at: 53 shouldBe: #rightParenthesis4.
+	self assertStyleOf: aText at: 54 shouldBe: #rightParenthesis3.
+	self assertStyleOf: aText at: 55 shouldBe: #rightParenthesis2.
+	self assertStyleOf: aText at: 56 shouldBe: #rightParenthesis1.
+	self assertStyleOf: aText at: 57 shouldBe: #rightParenthesis
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testPatternArgStyle [
 
 	| aText |
@@ -392,11 +446,7 @@ SHRBStyleAttributionTest >> testPatternTempVarStyle [
 	aText := 'm | a | ^ a' asText.
 	self style: aText.
 
-	self
-		assertStyleOf: aText
-		between: 5
-		and: 5
-		shouldBe: #patternTempVar
+	self assertStyleOf: aText at: 5 shouldBe: #patternTempVar
 ]
 
 { #category : #tests }
@@ -408,8 +458,7 @@ SHRBStyleAttributionTest >> testReturnStyle [
 
 	self
 		assertStyleOf: aText
-		between: 3
-		and: 3
+		at: 3
 		shouldBe: #return
 ]
 
@@ -504,11 +553,7 @@ SHRBStyleAttributionTest >> testTempVarStyle [
 	aText := 'm | a | ^ a' asText.
 	self style: aText.
 
-	self
-		assertStyleOf: aText
-		between: 11
-		and: 11
-		shouldBe: #tempVar
+	self assertStyleOf: aText at: 11 shouldBe: #tempVar
 ]
 
 { #category : #tests }
