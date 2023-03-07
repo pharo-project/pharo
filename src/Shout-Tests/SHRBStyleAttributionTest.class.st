@@ -149,6 +149,20 @@ SHRBStyleAttributionTest >> testNumberStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testNumberStyle2 [
+
+	| aText |
+	aText := 'm ^ -12' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 7
+		shouldBe: #number
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testSelfStyle [
 
 	| aText |

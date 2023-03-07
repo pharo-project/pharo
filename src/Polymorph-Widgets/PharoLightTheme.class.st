@@ -36,7 +36,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(comment 								(gray darker))
 			(character 								(red muchDarker))
 			(number 								(red muchDarker))
-			(#- 										(red muchDarker))
 			(symbol 								(magenta muchDarker))
 			(stringSymbol 							(magenta muchDarker))
 			(literalArray 							(magenta muchDarker))
