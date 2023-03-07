@@ -925,10 +925,11 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
-
-	^ anArgumentNode isDefinition
-		  ifTrue: [ #blockPatternArg ]
-		  ifFalse: [ #blockArg ]
+	^ anArgumentNode isDefinedByBlock
+		ifTrue: [ anArgumentNode isDefinition
+				ifTrue: [ #blockPatternArg ]
+				ifFalse: [ #blockArg ] ]
+		ifFalse: [ #argument ]
 ]
 
 { #category : #private }
@@ -1090,16 +1091,9 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitArgumentNode: anArgumentNode [
-	| blockOrMethodArgStyle |
-	blockOrMethodArgStyle := self methodOrBlockArgStyleFor: anArgumentNode.
-	self addStyle: blockOrMethodArgStyle forNode: anArgumentNode
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitArgumentVariableNode: anArgumentNode [
 
-	^ self addStyle: #argument forNode: anArgumentNode
+	^ self addStyle: (self methodOrBlockArgStyleFor: anArgumentNode) forNode: anArgumentNode
 ]
 
 { #category : #visiting }

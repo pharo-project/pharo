@@ -83,6 +83,34 @@ SHRBStyleAttributionTest >> testBinaryStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testBlockArgStyle [
+
+	| aText |
+	aText := 'm ^ [ :arg | arg ]' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 14
+		and: 16
+		shouldBe: #blockArg
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testBlockPatternArgStyle [
+
+	| aText |
+	aText := 'm ^ [ :arg | arg ]' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 8
+		and: 10
+		shouldBe: #blockPatternArg
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCharacterStyle [
 
 	| aText |
