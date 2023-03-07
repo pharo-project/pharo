@@ -398,6 +398,13 @@ RBProgramNode >> equalTo: aNode withMapping: aDictionary [
 	^self = aNode
 ]
 
+{ #category : #accessing }
+RBProgramNode >> errorMessage [
+
+	"Return the associated error message, if any"
+	^ self propertyAt: #error ifAbsent: [ nil ]
+]
+
 { #category : #testing }
 RBProgramNode >> evaluatedFirst: aNode [
 	self children do:
