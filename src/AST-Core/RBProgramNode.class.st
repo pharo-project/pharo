@@ -82,6 +82,14 @@ RBProgramNode >> addReplacement: aStringReplacement [
 	parent addReplacement: aStringReplacement
 ]
 
+{ #category : #adding }
+RBProgramNode >> addWarning: aMessage [
+
+	"Add a warning information to the node.
+	Semantic passes that check the validity of AST are the targetted clients of this method."
+	self propertyAt: #semanticWarning put: aMessage
+]
+
 { #category : #accessing }
 RBProgramNode >> allArgumentVariables [
 	| children |
