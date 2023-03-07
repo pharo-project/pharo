@@ -402,8 +402,13 @@ RBCodeSnippet class >> badSemantic [
 	| list |
 	list := {
 		"Undefined variable"
-		"For some reason, this is just a warning in non-faulty mode, not an error."
-		self new source: 'a := 10. ^ a'; isFaulty: false; value: nil. "Weird, I expected to be 10"
+		"In non-faulty mode, undeclared variables are shared at the method level like implicit temporaries.
+		 However, specific context/requestors can change the deal."
+		self new source: 'a := 10. ^ a'; isFaulty: false; value: 10.
+		self new source: '[ a := 10 ]. ^ a'; isFaulty: false; value: nil.
+		self new source: '[ a := 10 ] value. ^ a'; isFaulty: false; value: 10.
+		self new source: 'b := [ a ]. a := 10. ^ b value + 1'; isFaulty: false; value: 11.
+		self new source: 'b := [ ^ a ]. a := 10. ^ b value + 1'; isFaulty: false; value: 10.
 		self new source: '^ a'; isFaulty: false; value: nil.
 
 		"Uninitialized variable"
