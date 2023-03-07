@@ -96,7 +96,7 @@ SHRBStyleAttributionTest >> testBinaryStyle [
 	aText := 'm self / 3' asText.
 	self style: aText.
 
-	self assertStyleOf: aText at: 8 shouldBe: #keyword
+	self assertStyleOf: aText at: 8 shouldBe: #selector
 ]
 
 { #category : #tests }
@@ -328,7 +328,7 @@ SHRBStyleAttributionTest >> testIncompleteKeywordStyle [
 		assertStyleOf: aText
 		between: 10
 		and: 13
-		shouldBe: #incompleteKeyword
+		shouldBe: #incompleteSelector
 ]
 
 { #category : #tests }
@@ -366,7 +366,7 @@ SHRBStyleAttributionTest >> testKeywordStyle [
 		assertStyleOf: aText
 		between: 8
 		and: 13
-		shouldBe: #keyword
+		shouldBe: #selector
 ]
 
 { #category : #tests }
@@ -473,12 +473,12 @@ SHRBStyleAttributionTest >> testPatternKeywordStyle [
 		assertStyleOf: aText
 		between: 1
 		and: 5
-		shouldBe: #patternKeyword.
+		shouldBe: #patternSelector.
 	self
 		assertStyleOf: aText
 		between: 12
 		and: 16
-		shouldBe: #patternKeyword
+		shouldBe: #patternSelector
 ]
 
 { #category : #tests }
@@ -502,7 +502,7 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 		assertStyleOf: aText
 		between: 4
 		and: 8
-		shouldBe: #pragmaKeyword
+		shouldBe: #pragma
 ]
 
 { #category : #tests }
@@ -661,7 +661,7 @@ SHRBStyleAttributionTest >> testUnaryStyle [
 		assertStyleOf: aText
 		between: 8
 		and: 23
-		shouldBe: #keyword
+		shouldBe: #selector
 ]
 
 { #category : #tests }
@@ -691,7 +691,7 @@ SHRBStyleAttributionTest >> testUndefinedKeywordStyle [
 		assertStyleOf: aText
 		between: 10
 		and: 13
-		shouldBe: #undefinedKeyword
+		shouldBe: #undefinedSelector
 ]
 
 { #category : #tests }

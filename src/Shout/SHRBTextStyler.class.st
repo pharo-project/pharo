@@ -78,7 +78,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(symbol 								(magenta muchDarker))
 			(string 									(magenta muchDarker) normal)
 
-			(keyword 								(black))
+			(selector 								(black))
 
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
@@ -102,12 +102,12 @@ SHRBTextStyler class >> blueStyleTable [
 			(globalVar 								(blue muchDarker))
 
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					nil  italic)
+			(incompleteSelector 					nil  italic)
 
 			(undefinedIdentifier 					red)
-			(undefinedKeyword 					red)
+			(undefinedSelector 					red)
 
-			(patternKeyword 						nil bold)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -149,7 +149,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(blockTempBar 						(black))
 			(blockArgsBar 							(black))
 
-			(pragmaKeyword 						(green muchDarker)))
+			(pragma 						(green muchDarker)))
 ]
 
 { #category : #styles }
@@ -176,7 +176,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(symbol 								('E38C1E'))
 			(string 								('E38C1E'))
 
-			(keyword 								white)
+			(selector 								white)
 
 			(#true 								('00CC6E' darker))
 			(#false 								('00CC6E' darker))
@@ -205,12 +205,12 @@ SHRBTextStyler class >> darkStyleTable [
 
 
 			(incompleteIdentifier 			'E8E2B7' italic)
-			(incompleteKeyword 				'E8E2B7' italic)
+			(incompleteSelector 				'E8E2B7' italic)
 
 			(undefinedIdentifier 				'FF8A80')
-			(undefinedKeyword 					'FF8A80')
+			(undefinedSelector 					'FF8A80')
 
-			(patternKeyword 					nil bold)
+			(patternSelector 					nil bold)
 			(blockArgColon 						white)
 			(leftParenthesis 					white)
 			(rightParenthesis 					white)
@@ -252,7 +252,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(blockTempBar 						white)
 			(blockArgsBar 						white)
 
-			(pragmaKeyword 									'B4DD6E'))
+			(pragma 									'B4DD6E'))
 ]
 
 { #category : #styles }
@@ -361,7 +361,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(string 									('268BD2'))
 
 
-			(keyword 								nil)
+			(selector 								nil)
 
 			(#true 									('CB4B16' darker))
 			(#false 									('CB4B16' darker))
@@ -390,9 +390,9 @@ SHRBTextStyler class >> solarizedStyleTable [
 
 			(undefinedIdentifier 					red)
 			(incompleteIdentifier 					'D33682' italic)
-			(incompleteKeyword 					nil  italic)
-			(undefinedKeyword 					red)
-			(patternKeyword 						'657A81' bold)
+			(incompleteSelector 					nil  italic)
+			(undefinedSelector 					red)
+			(patternSelector 						'657A81' bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -434,7 +434,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(pragmaKeyword 						(cyan muchDarker)))
+			(pragma 						(cyan muchDarker)))
 ]
 
 { #category : #accessing }
@@ -475,7 +475,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(string 									'ce5c00')
 
 
-			(keyword 								(black))
+			(selector 								(black))
 
 			(#true 									'8F5902')
 			(#false 									'8F5902')
@@ -504,11 +504,11 @@ SHRBTextStyler class >> tangoStyleTable [
 
 
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					blue italic)
+			(incompleteSelector 					blue italic)
 
 			(undefinedIdentifier 					red)
-			(undefinedKeyword 					red)
-			(patternKeyword 						nil bold)
+			(undefinedSelector 					red)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -550,7 +550,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(pragmaKeyword 						(green muchDarker)))
+			(pragma 						(green muchDarker)))
 ]
 
 { #category : #attributes }
@@ -584,7 +584,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(string 									('801f91'))
 
 
-			(keyword 								black)
+			(selector 								black)
 
 			(#true 									('A31515' darker))
 			(#false 									('A31515' darker))
@@ -613,12 +613,12 @@ SHRBTextStyler class >> vintageStyleTable [
 
 
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					blue italic)
+			(incompleteSelector 					blue italic)
 
 			(undefinedIdentifier 					red)
-			(undefinedKeyword 					red)
+			(undefinedSelector 					red)
 
-			(patternKeyword 						nil bold)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
 			(leftParenthesis 						black)
 			(rightParenthesis 						black)
@@ -660,7 +660,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(pragmaKeyword 						(cyan muchDarker)))
+			(pragma 						(cyan muchDarker)))
 ]
 
 { #category : #private }
@@ -781,8 +781,8 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 		and: [ (Symbol
 						selectorThatStartsCaseSensitive: aMessageNode selector asString
 						skipping: nil) isNotNil ])
-			ifTrue: [ #incompleteKeyword ]
-			ifFalse: [ #undefinedKeyword ]
+			ifTrue: [ #incompleteSelector ]
+			ifFalse: [ #undefinedSelector ]
 ]
 
 { #category : #initialization }
@@ -1075,7 +1075,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 
 	style := aMessageNode selector isSelectorSymbol
-		ifTrue: [ #keyword ]
+		ifTrue: [ #selector ]
 		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
@@ -1108,7 +1108,7 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 		do:
 			[ :keyword :position |
 			self
-				addStyle: #patternKeyword
+				addStyle: #patternSelector
 				attribute: link
 				from: position
 				to: position + keyword size - 1 ].
@@ -1138,7 +1138,7 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword : position|
 	self
-		addStyle: #pragmaKeyword
+		addStyle: #pragma
 		from: position
 		to: position + keyword size ].
 
