@@ -280,6 +280,16 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	self isValueTranslator ifTrue: [ methodBuilder pushLiteral: nil ]
 ]
 
+{ #category : #errors }
+OCASTTranslator >> emitRuntimeError: aNode [
+	"Runtime errors should only be emited on faulty code"
+
+	methodBuilder
+		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteral: aNode;
+		send: #signalSyntaxError:
+]
+
 { #category : #'inline messages' }
 OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	| limit block limitEmit |
@@ -506,6 +516,8 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	valueTranslator visitNode: anAssignmentNode value.
+	"Even in faulty mode, do not baspass the isWritable semantic to avoid very bad consequences on the image"
+	anAssignmentNode variable variable isWritable ifFalse: [ ^ self emitRuntimeError: anAssignmentNode variable ].
 	anAssignmentNode variable variable emitStore: methodBuilder
 ]
 
@@ -666,10 +678,8 @@ OCASTTranslator >> visitNode: aNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [
-	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: anErrorNode;
-		send: #signalSyntaxError:
+
+	self emitRuntimeError: anErrorNode
 ]
 
 { #category : #'visitor - double dispatching' }
