@@ -429,22 +429,22 @@ SHRBStyleAttributionTest >> testParenthesisStyle [
 	aText := 'm ^ (1 + (2 + (3 + (4 + (5 + (6 + (7 + (8 + (9 +1))))))))' asText.
 	self style: aText.
 
-	self assertStyleOf: aText at: 10 shouldBe: #leftParenthesis.
-	self assertStyleOf: aText at: 15 shouldBe: #leftParenthesis1.
-	self assertStyleOf: aText at: 20 shouldBe: #leftParenthesis2.
-	self assertStyleOf: aText at: 25 shouldBe: #leftParenthesis3.
-	self assertStyleOf: aText at: 30 shouldBe: #leftParenthesis4.
-	self assertStyleOf: aText at: 35 shouldBe: #leftParenthesis5.
-	self assertStyleOf: aText at: 40 shouldBe: #leftParenthesis6.
-	self assertStyleOf: aText at: 45 shouldBe: #leftParenthesis7.
-	self assertStyleOf: aText at: 50 shouldBe: #rightParenthesis7.
-	self assertStyleOf: aText at: 51 shouldBe: #rightParenthesis6.
-	self assertStyleOf: aText at: 52 shouldBe: #rightParenthesis5.
-	self assertStyleOf: aText at: 53 shouldBe: #rightParenthesis4.
-	self assertStyleOf: aText at: 54 shouldBe: #rightParenthesis3.
-	self assertStyleOf: aText at: 55 shouldBe: #rightParenthesis2.
-	self assertStyleOf: aText at: 56 shouldBe: #rightParenthesis1.
-	self assertStyleOf: aText at: 57 shouldBe: #rightParenthesis
+	self assertStyleOf: aText at: 10 shouldBe: #parenthesis.
+	self assertStyleOf: aText at: 15 shouldBe: #parenthesis1.
+	self assertStyleOf: aText at: 20 shouldBe: #parenthesis2.
+	self assertStyleOf: aText at: 25 shouldBe: #parenthesis3.
+	self assertStyleOf: aText at: 30 shouldBe: #parenthesis4.
+	self assertStyleOf: aText at: 35 shouldBe: #parenthesis5.
+	self assertStyleOf: aText at: 40 shouldBe: #parenthesis6.
+	self assertStyleOf: aText at: 45 shouldBe: #parenthesis7.
+	self assertStyleOf: aText at: 50 shouldBe: #parenthesis7.
+	self assertStyleOf: aText at: 51 shouldBe: #parenthesis6.
+	self assertStyleOf: aText at: 52 shouldBe: #parenthesis5.
+	self assertStyleOf: aText at: 53 shouldBe: #parenthesis4.
+	self assertStyleOf: aText at: 54 shouldBe: #parenthesis3.
+	self assertStyleOf: aText at: 55 shouldBe: #parenthesis2.
+	self assertStyleOf: aText at: 56 shouldBe: #parenthesis1.
+	self assertStyleOf: aText at: 57 shouldBe: #parenthesis
 ]
 
 { #category : #tests }

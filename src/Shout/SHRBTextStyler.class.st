@@ -109,22 +109,14 @@ SHRBTextStyler class >> blueStyleTable [
 
 			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
 			(blockStart 								black)
 			(blockEnd 								black)
 			(blockStart1 							(green muchDarker))
@@ -212,22 +204,14 @@ SHRBTextStyler class >> darkStyleTable [
 
 			(patternSelector 					nil bold)
 			(blockArgColon 						white)
-			(leftParenthesis 					white)
-			(rightParenthesis 					white)
-			(leftParenthesis1 					(green muchLighter))
-			(rightParenthesis1 				(green muchLighter))
-			(leftParenthesis2 					(magenta muchLighter))
-			(rightParenthesis2 				(magenta muchLighter))
-			(leftParenthesis3 					('FF8A80' muchLighter))
-			(rightParenthesis3 				('FF8A80' muchLighter))
-			(leftParenthesis4 					(green lighter))
-			(rightParenthesis4 				(green lighter))
-			(leftParenthesis5 					(orange lighter))
-			(rightParenthesis5 				(orange lighter))
-			(leftParenthesis6 					(magenta lighter))
-			(rightParenthesis6 				(magenta lighter))
-			(leftParenthesis7 					blue)
-			(rightParenthesis7 				blue)
+			(parenthesis 					white)
+			(parenthesis1 					(green muchLighter))
+			(parenthesis2 					(magenta muchLighter))
+			(parenthesis3 					('FF8A80' muchLighter))
+			(parenthesis4 					(green lighter))
+			(parenthesis5 					(orange lighter))
+			(parenthesis6 					(magenta lighter))
+			(parenthesis7 					blue)
 			(blockStart 							white)
 			(blockEnd 							white)
 			(blockStart1 						(green muchLighter))
@@ -394,22 +378,14 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(undefinedSelector 					red)
 			(patternSelector 						'657A81' bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
 			(blockStart 								black)
 			(blockEnd 								black)
 			(blockStart1 							(green muchDarker))
@@ -510,22 +486,14 @@ SHRBTextStyler class >> tangoStyleTable [
 			(undefinedSelector 					red)
 			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
 			(blockStart 								black)
 			(blockEnd 								black)
 			(blockStart1 							(green muchDarker))
@@ -620,22 +588,14 @@ SHRBTextStyler class >> vintageStyleTable [
 
 			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
 			(blockStart 								black)
 			(blockEnd 								black)
 			(blockStart1 							(green muchDarker))
@@ -753,21 +713,9 @@ SHRBTextStyler >> currentClosedBracketStyleName [
 ]
 
 { #category : #private }
-SHRBTextStyler >> currentClosedParenthesisStyleName [
-	parentheseLevel isZero ifTrue: [ ^ #rightParenthesis ].
-	^ (#rightParenthesis asString , parentheseLevel asString) asSymbol
-]
-
-{ #category : #private }
 SHRBTextStyler >> currentOpenedBracketStyleName [
 	bracketLevel isZero ifTrue: [ ^ #blockStart ].
 	^ (#blockStart asString , bracketLevel asString) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentOpenedParenthesisStyleName [
-	parentheseLevel isZero ifTrue: [ ^ #leftParenthesis ].
-	^ (#leftParenthesis asString , parentheseLevel asString) asSymbol
 ]
 
 { #category : #accessing }
@@ -844,6 +792,12 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aVariableNode [
 			  aVariableNode isDefinition
 				  ifTrue: [ #patternTempVar ]
 				  ifFalse: [ #tempVar ] ]
+]
+
+{ #category : #private }
+SHRBTextStyler >> parenthesisStyleName [
+	parentheseLevel isZero ifTrue: [ ^ #parenthesis ].
+	^ (#parenthesis asString , parentheseLevel asString) asSymbol
 ]
 
 { #category : #private }
@@ -943,7 +897,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
-					self addStyle: self currentClosedParenthesisStyleName from: pos to: pos ]]
+					self addStyle: self parenthesisStyleName from: pos to: pos ]]
 ]
 
 { #category : #private }
@@ -964,7 +918,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 				do: [ :interval |
 					| pos |
 					pos := interval first.
-					self addStyle:  self currentOpenedParenthesisStyleName from: pos to: pos.
+					self addStyle:  self parenthesisStyleName from: pos to: pos.
 					parentheseLevel := parentheseLevel + 1 ]]
 ]
 
