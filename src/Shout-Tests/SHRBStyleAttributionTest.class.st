@@ -177,6 +177,20 @@ SHRBStyleAttributionTest >> testSelfStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testStringSymbolStyle [
+
+	| aText |
+	aText := 'm ^ #''ab''' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 9
+		shouldBe: #symbol
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testSuperStyle [
 
 	| aText |
@@ -188,6 +202,20 @@ SHRBStyleAttributionTest >> testSuperStyle [
 		between: 3
 		and: 7
 		shouldBe: #super
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testSymbolStyle [
+
+	| aText |
+	aText := 'm ^ #ab' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 7
+		shouldBe: #symbol
 ]
 
 { #category : #tests }
