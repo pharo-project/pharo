@@ -8,7 +8,8 @@ Class {
 	#instVars : [
 		'scope',
 		'compilationContext',
-		'blockCounter'
+		'blockCounter',
+		'undeclaredVariables'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -126,12 +127,23 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
-	compilationContext optionSkipSemanticWarnings
-		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
+
+	| var |
+	var := self undeclaredVariables
+		       at: variableNode name asSymbol
+		       ifAbsentPut: [ UndeclaredVariable named: variableNode name asSymbol ].
+
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ var ].
 	^ OCUndeclaredVariableWarning new
-		node: variableNode;
-		compilationContext: compilationContext;
-		signal
+		  node: variableNode;
+		  compilationContext: compilationContext;
+		  signal
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> undeclaredVariables [
+
+	^ undeclaredVariables ifNil: [ undeclaredVariables := Dictionary new ]
 ]
 
 { #category : #'error handling' }
