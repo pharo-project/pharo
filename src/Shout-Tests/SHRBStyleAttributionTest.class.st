@@ -2,7 +2,8 @@ Class {
 	#name : #SHRBStyleAttributionTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'styler'
+		'styler',
+		'oldSetting'
 	],
 	#classVars : [
 		'Test'
@@ -24,6 +25,7 @@ SHRBStyleAttributionTest >> setUp [
 
 	super setUp.
 	styler := SHRBMockTextStyler new.
+	oldSetting := SHRBMockTextStyler instVarNamed: #formatIncompleteIdentifiers
 ]
 
 { #category : #accessing }
@@ -39,6 +41,13 @@ SHRBStyleAttributionTest >> style: aText [
 	styler style: aText ast: ast.
 
 	^ ast
+]
+
+{ #category : #running }
+SHRBStyleAttributionTest >> tearDown [
+
+	SHRBMockTextStyler formatIncompleteIdentifiers: oldSetting.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -226,6 +235,36 @@ SHRBStyleAttributionTest >> testGlobalVarStyle [
 		between: 5
 		and: 11
 		shouldBe: #globalVar
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testIncompleteIdentifierStyle [
+
+	| aText |
+	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	aText := 'm ^ style' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 9
+		shouldBe: #incompleteIdentifier
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testIncompleteKeywordStyle [
+
+	| aText |
+	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	aText := 'm ^ self setU' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 10
+		and: 13
+		shouldBe: #incompleteKeyword
 ]
 
 { #category : #tests }
@@ -498,8 +537,7 @@ SHRBStyleAttributionTest >> testUnaryStyle [
 SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 
 	| aText |
-	thisContext.
-	aText := 'm ^ toto' asText.
+	aText := 'm ^ style' asText.
 	self style: aText.
 
 	self

@@ -103,8 +103,6 @@ SHRBTextStyler class >> blueStyleTable [
 
 			(incompleteIdentifier 					blue italic)
 			(incompleteKeyword 					nil  italic)
-			(incompleteBinary 						nil  italic)
-			(incompleteUnary 						nil  italic)
 
 			(undefinedIdentifier 					red)
 			(undefinedKeyword 					red)
@@ -225,8 +223,6 @@ SHRBTextStyler class >> darkStyleTable [
 
 			(incompleteIdentifier 			'E8E2B7' italic)
 			(incompleteKeyword 				'E8E2B7' italic)
-			(incompleteBinary 					'E8E2B7' italic)
-			(incompleteUnary 					'E8E2B7' italic)
 
 			(undefinedIdentifier 				'FF8A80')
 			(undefinedKeyword 					'FF8A80')
@@ -429,8 +425,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(undefinedIdentifier 					red)
 			(incompleteIdentifier 					'D33682' italic)
 			(incompleteKeyword 					nil  italic)
-			(incompleteBinary 						nil  italic)
-			(incompleteUnary 						nil  italic)
 			(undefinedKeyword 					red)
 			(undefinedBinary 						red)
 			(undefinedUnary 						red)
@@ -562,8 +556,6 @@ SHRBTextStyler class >> tangoStyleTable [
 
 			(incompleteIdentifier 					blue italic)
 			(incompleteKeyword 					blue italic)
-			(incompleteBinary 						blue italic)
-			(incompleteUnary 						blue italic)
 
 			(undefinedIdentifier 					red)
 			(undefinedKeyword 					red)
@@ -690,8 +682,6 @@ SHRBTextStyler class >> vintageStyleTable [
 
 			(incompleteIdentifier 					blue italic)
 			(incompleteKeyword 					blue italic)
-			(incompleteBinary 						blue italic)
-			(incompleteUnary 						blue italic)
 
 			(undefinedIdentifier 					red)
 			(undefinedKeyword 					red)

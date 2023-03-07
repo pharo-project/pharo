@@ -40,8 +40,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(string 									(magenta muchDarker) normal)
 			(keyword 								(black))
 			(incompleteKeyword 					red)
-			(incompleteBinary 						red)
-			(incompleteUnary 						red )
 			(undefinedKeyword 					red)
 			(undefinedBinary 						red)
 			(undefinedUnary 						red)
