@@ -36,6 +36,20 @@ SHRBStyleAttributionTest >> style: aText [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testArgumentStyle [
+
+	| aText |
+	aText := 'm: arg ^ arg' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 10
+		and: 12
+		shouldBe: #argument
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testAssignmentStyle [
 
 	| aText |
@@ -235,6 +249,20 @@ SHRBStyleAttributionTest >> testNumberStyle2 [
 		between: 5
 		and: 7
 		shouldBe: #number
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testPatternArgStyle [
+
+	| aText |
+	aText := 'm: arg ^ arg' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 4
+		and: 6
+		shouldBe: #patternArg
 ]
 
 { #category : #tests }

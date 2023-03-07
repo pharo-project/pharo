@@ -1104,6 +1104,12 @@ SHRBTextStyler >> visitArgumentNode: anArgumentNode [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitArgumentVariableNode: anArgumentNode [
+
+	^ self addStyle: #argument forNode: anArgumentNode
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode variable.
 	self visitNode: anAssignmentNode value.

@@ -56,23 +56,6 @@ SHRBTextStylerTest >> testArgumentStylingBlock [
 ]
 
 { #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingMethod [
-
-	| aText index1 index2 attribute |
-
-	aText := 'm1: arg self do: [:each | arg ]' asText.
-	self style: aText.
-
-	index1 := 5. "first each"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #methodArg pixelHeight: 10).
-
-	index2 := 27. "second each"
-	attribute := aText attributesAt: index2.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #tempVar pixelHeight: 10)
-]
-
-{ #category : #tests }
 SHRBTextStylerTest >> testClassAfterMessageToASymbolLowercaseShouldBeColored [
 
 	| aText index attributes |
