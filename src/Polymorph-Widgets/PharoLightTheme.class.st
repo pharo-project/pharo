@@ -38,7 +38,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(number 								(red muchDarker))
 			(symbol 								(magenta muchDarker))
 			(string 									(magenta muchDarker) normal)
-			(unfinishedString 						red normal)
 			(assignment 							nil)
 			(ansiAssignment 						nil)
 			(literal 									nil italic)
