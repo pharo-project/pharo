@@ -76,7 +76,6 @@ SHRBTextStyler class >> blueStyleTable [
 			(character 								(red muchDarker))
 			(number 								(red muchDarker))
 			(symbol 								(magenta muchDarker))
-			(literalArray 							(magenta muchDarker))
 			(string 									(magenta muchDarker) normal)
 			(unfinishedString 						red normal)
 
@@ -203,7 +202,6 @@ SHRBTextStyler class >> darkStyleTable [
 			(character 							('E38C1E' lighter))
 			(number 								('FFE54B'))
 			(symbol 								('E38C1E'))
-			(literalArray 						white)
 			(string 								('E38C1E'))
 
 			(unfinishedString 					'FF8A80' normal)
@@ -417,7 +415,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(character 								('268BD2' lighter))
 			(number 								('2AA198'))
 			(symbol 								('268BD2'))
-			(literalArray 							black)
 			(string 									('268BD2'))
 
 			(unfinishedString 						red normal)
@@ -560,7 +557,6 @@ SHRBTextStyler class >> tangoStyleTable [
 			(character 								'ce5c00')
 			(number 								'8f5902')
 			(symbol 								'c4a000')
-			(literalArray 							black)
 			(string 									'ce5c00')
 
 			(unfinishedString 						red normal)
@@ -698,7 +694,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(character 								('801f91' lighter))
 			(number 								('801f91'))
 			(symbol 								('801f91'))
-			(literalArray 							black)
 			(string 									('801f91'))
 
 			(unfinishedString 						red normal)
