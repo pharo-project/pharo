@@ -151,13 +151,13 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode propertyAt: #semanticWarning put: #unitialized
+	variableNode addWarning: 'unitialized variable'
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
-	variableNode propertyAt: #semanticWarning put: 'unused variable'
+	variableNode addWarning: 'unused variable'
 ]
 
 { #category : #visiting }
