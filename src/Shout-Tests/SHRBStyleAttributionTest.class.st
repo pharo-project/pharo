@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'styler'
 	],
+	#pools : [
+		'SHRBMockSharedPoolStyler'
+	],
 	#category : #'Shout-Tests-Styling'
 }
 
@@ -361,6 +364,20 @@ SHRBStyleAttributionTest >> testSelfStyle [
 		between: 3
 		and: 7
 		shouldBe: #self
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testSharedPoolVarStyle [
+
+	| aText |
+	aText := 'm ^ PoolVar' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 11
+		shouldBe: #poolConstant
 ]
 
 { #category : #tests }

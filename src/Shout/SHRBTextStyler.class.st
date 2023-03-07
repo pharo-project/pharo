@@ -972,21 +972,23 @@ SHRBTextStyler >> privateStyle: aText [
 
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
-	aVariableNode binding ifNil: [^#default].
-	aVariableNode isTempVariable ifTrue: [ ^#tempVar].
-	aVariableNode isGlobalVariable ifTrue: [ ^#globalVar].
+
+	aVariableNode binding ifNil: [ ^ #default ].
+	aVariableNode isTempVariable ifTrue: [ ^ #tempVar ].
+	aVariableNode isGlobalVariable ifTrue: [ ^ #globalVar ].
 	"here we should add support for #classVar"
-	aVariableNode isClassVariable ifTrue: [ ^#globalVar].
-	aVariableNode isInstanceVariable ifTrue: [ ^#instVar].
+	aVariableNode isClassVariable ifTrue: [
+		aVariableNode variable isPoolVariable ifTrue: [ ^ #poolConstant ].
+		^ #globalVar ].
+	aVariableNode isInstanceVariable ifTrue: [ ^ #instVar ].
 	"for now we use temp variable here, we could now color them with their own color"
-	aVariableNode isWorkspaceVariable ifTrue: [ ^#tempVar].
+	aVariableNode isWorkspaceVariable ifTrue: [ ^ #tempVar ].
 
-	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ])
-		ifTrue:[ ^#incompleteIdentifier] .
+	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) ifTrue: [ ^ #incompleteIdentifier ].
 	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
-	aVariableNode isUndeclaredVariable ifTrue: [ ^#undefinedIdentifier ].
+	aVariableNode isUndeclaredVariable ifTrue: [ ^ #undefinedIdentifier ].
 
-	^#invalid
+	^ #invalid
 ]
 
 { #category : #private }
