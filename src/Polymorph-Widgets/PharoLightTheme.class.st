@@ -33,7 +33,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
 			(comment 								(gray darker))
 			(unfinishedComment 					(red muchDarker))
 			(#'$' 									(red muchDarker))

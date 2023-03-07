@@ -70,7 +70,6 @@ SHRBTextStyler class >> blueStyleTable [
  ^ #(
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
 
 			(comment 								(gray darker))
 			(unfinishedComment 					(red muchDarker))
@@ -203,7 +202,6 @@ SHRBTextStyler class >> darkStyleTable [
  ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
-			(excessCode 							'FF8A80')
 
 			(comment 								'7D8C93')
 			(unfinishedComment 				'FF8A80')
@@ -423,7 +421,6 @@ SHRBTextStyler class >> solarizedStyleTable [
  ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
-			(excessCode 							red)
 
 			(comment 								'586E75')
 			(unfinishedComment 					(red muchDarker))
@@ -572,7 +569,6 @@ SHRBTextStyler class >> tangoStyleTable [
  ^ #(
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
 
 			(comment 								'888a85')
 			(unfinishedComment 					(red muchDarker))
@@ -716,7 +712,6 @@ SHRBTextStyler class >> vintageStyleTable [
  ^ #(
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
 
 			(comment 								'006400')
 			(unfinishedComment 					(red muchDarker))
