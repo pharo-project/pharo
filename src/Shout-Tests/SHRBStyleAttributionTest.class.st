@@ -135,6 +135,20 @@ SHRBStyleAttributionTest >> testInvalidStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testNumberStyle [
+
+	| aText |
+	aText := 'm ^ 12' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 6
+		shouldBe: #number
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testSelfStyle [
 
 	| aText |
