@@ -51,6 +51,20 @@ SHRBStyleAttributionTest >> testClassVarStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCommentStyle [
+
+	| aText |
+	aText := 'm "return class" ^ SHRBStyleAttributionTest' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 16
+		shouldBe: #comment
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testDefaultStyle [
 
 	| aText |
@@ -175,4 +189,18 @@ SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 		between: 5
 		and: 9
 		shouldBe: #undefinedIdentifier
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testUnfinishedCommentStyle [
+
+	| aText |
+	aText := 'm "return class ^ SHRBStyleAttributionTest' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 42
+		shouldBe: #invalid
 ]
