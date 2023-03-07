@@ -492,6 +492,20 @@ SHRBStyleAttributionTest >> testPatternTempVarStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testPragmaStyle [
+
+	| aText |
+	aText := 'm <test> ^ a' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 4
+		and: 8
+		shouldBe: #pragmaKeyword
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testReturnStyle [
 
 	| aText |

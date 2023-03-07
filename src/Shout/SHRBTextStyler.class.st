@@ -149,16 +149,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(blockTempBar 						(black))
 			(blockArgsBar 							(black))
 
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(green muchDarker))
-			(pragmaKeyword 						(green muchDarker))
-			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker))
-			(externalFunctionCallingConvention 	(green muchDarker) bold)
-			(module 								(green muchDarker) bold))
+			(pragmaKeyword 						(green muchDarker)))
 ]
 
 { #category : #styles }
@@ -261,16 +252,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(blockTempBar 						white)
 			(blockArgsBar 						white)
 
-			(externalCallType 								white)
-			(externalCallTypePointerIndicator 		white)
-			(primitiveOrExternalCallStart 				white bold)
-			(primitiveOrExternalCallEnd 				white bold)
-			(primitive 										'B4DD6E')
-			(pragmaKeyword 									'B4DD6E')
-			(pragmaUnary 									'B4DD6E')
-			(pragmaBinary 									'B4DD6E')
-			(externalFunctionCallingConvention 		'B4DD6E' bold)
-			(module 											'B4DD6E' bold))
+			(pragmaKeyword 									'B4DD6E'))
 ]
 
 { #category : #styles }
@@ -452,16 +434,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(cyan muchDarker))
-			(pragmaKeyword 						(cyan muchDarker))
-			(pragmaUnary 							(cyan muchDarker))
-			(pragmaBinary 							(cyan muchDarker))
-			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
-			(module 								(cyan muchDarker) bold))
+			(pragmaKeyword 						(cyan muchDarker)))
 ]
 
 { #category : #accessing }
@@ -577,16 +550,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(green muchDarker))
-			(pragmaKeyword 						(green muchDarker))
-			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker))
-			(externalFunctionCallingConvention 	(green muchDarker) bold)
-			(module 								(green muchDarker) bold))
+			(pragmaKeyword 						(green muchDarker)))
 ]
 
 { #category : #attributes }
@@ -696,16 +660,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(cyan muchDarker))
-			(pragmaKeyword 						(cyan muchDarker))
-			(pragmaUnary 							(cyan muchDarker))
-			(pragmaBinary 							(cyan muchDarker))
-			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
-			(module 								(cyan muchDarker) bold))
+			(pragmaKeyword 						(cyan muchDarker)))
 ]
 
 { #category : #private }
