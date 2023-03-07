@@ -42,8 +42,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(incompleteKeyword 					red)
 			(undefinedKeyword 					red)
 			(patternKeyword 						nil bold)
-			(patternBinary 							nil bold)
-			(patternUnary 							nil bold)
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
 			(#true 									(red muchDarker))

@@ -366,6 +366,26 @@ SHRBStyleAttributionTest >> testPatternArgStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testPatternKeywordStyle [
+
+	| aText |
+	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	aText := 'test: arg1 with: arg2  ^ arg1 > arg2' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 1
+		and: 5
+		shouldBe: #patternKeyword.
+	self
+		assertStyleOf: aText
+		between: 12
+		and: 16
+		shouldBe: #patternKeyword
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testPatternTempVarStyle [
 
 	| aText |
