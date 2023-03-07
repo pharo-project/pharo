@@ -126,6 +126,20 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testFalseStyle [
+
+	| aText |
+	aText := 'm false' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 7
+		shouldBe: #false
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testGlobalVarStyle [
 
 	| aText |
@@ -182,6 +196,20 @@ SHRBStyleAttributionTest >> testKeywordStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testNilStyle [
+
+	| aText |
+	aText := 'm nil' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 6
+		shouldBe: #nil
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testNumberStyle [
 
 	| aText |
@@ -210,16 +238,30 @@ SHRBStyleAttributionTest >> testNumberStyle2 [
 ]
 
 { #category : #tests }
-SHRBStyleAttributionTest >> testSelfStyle [
+SHRBStyleAttributionTest >> testReturnStyle [
 
 	| aText |
-	aText := 'm self initialize' asText.
+	aText := 'm ^ 3' asText.
 	self style: aText.
 
 	self
 		assertStyleOf: aText
 		between: 3
-		and: 6
+		and: 3
+		shouldBe: #return
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testSelfStyle [
+
+	| aText |
+	aText := 'm self' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 7
 		shouldBe: #self
 ]
 
@@ -305,6 +347,20 @@ SHRBStyleAttributionTest >> testThisContextStyle [
 		between: 3
 		and: 12
 		shouldBe: #thisContext
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testTrueStyle [
+
+	| aText |
+	aText := 'm true' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 6
+		shouldBe: #true
 ]
 
 { #category : #tests }
