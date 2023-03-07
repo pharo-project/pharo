@@ -168,22 +168,22 @@ SHRBStyleAttributionTest >> testBlockStyle [
 	aText := 'm ^ [ self a and: [ self b and: [ self c and: [ self d and: [ self e and: [ self f and: [ self h and: [ self i ]]]]]]]]' asText.
 	self style: aText.
 
-	self assertStyleOf: aText at: 5 shouldBe: #blockStart.
-	self assertStyleOf: aText at: 19 shouldBe: #blockStart1.
-	self assertStyleOf: aText at: 33 shouldBe: #blockStart2.
-	self assertStyleOf: aText at: 47 shouldBe: #blockStart3.
-	self assertStyleOf: aText at: 61 shouldBe: #blockStart4.
-	self assertStyleOf: aText at: 75 shouldBe: #blockStart5.
-	self assertStyleOf: aText at: 89 shouldBe: #blockStart6.
-	self assertStyleOf: aText at: 103 shouldBe: #blockStart7.
-	self assertStyleOf: aText at: 112 shouldBe: #blockEnd7.
-	self assertStyleOf: aText at: 113 shouldBe: #blockEnd6.
-	self assertStyleOf: aText at: 114 shouldBe: #blockEnd5.
-	self assertStyleOf: aText at: 115 shouldBe: #blockEnd4.
-	self assertStyleOf: aText at: 116 shouldBe: #blockEnd3.
-	self assertStyleOf: aText at: 117 shouldBe: #blockEnd2.
-	self assertStyleOf: aText at: 118 shouldBe: #blockEnd1.
-	self assertStyleOf: aText at: 119 shouldBe: #blockEnd
+	self assertStyleOf: aText at: 5 shouldBe: #block.
+	self assertStyleOf: aText at: 19 shouldBe: #block1.
+	self assertStyleOf: aText at: 33 shouldBe: #block2.
+	self assertStyleOf: aText at: 47 shouldBe: #block3.
+	self assertStyleOf: aText at: 61 shouldBe: #block4.
+	self assertStyleOf: aText at: 75 shouldBe: #block5.
+	self assertStyleOf: aText at: 89 shouldBe: #block6.
+	self assertStyleOf: aText at: 103 shouldBe: #block7.
+	self assertStyleOf: aText at: 112 shouldBe: #block7.
+	self assertStyleOf: aText at: 113 shouldBe: #block6.
+	self assertStyleOf: aText at: 114 shouldBe: #block5.
+	self assertStyleOf: aText at: 115 shouldBe: #block4.
+	self assertStyleOf: aText at: 116 shouldBe: #block3.
+	self assertStyleOf: aText at: 117 shouldBe: #block2.
+	self assertStyleOf: aText at: 118 shouldBe: #block1.
+	self assertStyleOf: aText at: 119 shouldBe: #block
 ]
 
 { #category : #tests }

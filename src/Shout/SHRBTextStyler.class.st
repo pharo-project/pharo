@@ -117,22 +117,14 @@ SHRBTextStyler class >> blueStyleTable [
 			(parenthesis5 						(orange darker))
 			(parenthesis6 						(magenta darker))
 			(parenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
 			(leftBrace 								black)
 			(rightBrace 								black)
 			(cascadeSeparator 					black)
@@ -212,22 +204,14 @@ SHRBTextStyler class >> darkStyleTable [
 			(parenthesis5 					(orange lighter))
 			(parenthesis6 					(magenta lighter))
 			(parenthesis7 					blue)
-			(blockStart 							white)
-			(blockEnd 							white)
-			(blockStart1 						(green muchLighter))
-			(blockEnd1 							(green muchLighter))
-			(blockStart2 						(magenta muchLighter))
-			(blockEnd2 							(magenta muchLighter))
-			(blockStart3 						(red muchLighter))
-			(blockEnd3 							(red muchLighter))
-			(blockStart4 						(green lighter))
-			(blockEnd4 							(green lighter))
-			(blockStart5 						(orange lighter))
-			(blockEnd5 							(orange lighter))
-			(blockStart6 						(magenta lighter))
-			(blockEnd6 							(magenta lighter))
-			(blockStart7 						blue)
-			(blockEnd7 							blue)
+			(block 							white)
+			(block1 						(green muchLighter))
+			(block2 						(magenta muchLighter))
+			(block3 						(red muchLighter))
+			(block4 						(green lighter))
+			(block5 						(orange lighter))
+			(block6 						(magenta lighter))
+			(block7 						blue)
 			(leftBrace 							white)
 			(rightBrace 							white)
 			(cascadeSeparator 					white bold)
@@ -386,22 +370,14 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(parenthesis5 						(orange darker))
 			(parenthesis6 						(magenta darker))
 			(parenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
 			(leftBrace 								black)
 			(rightBrace 								black)
 			(cascadeSeparator 					black bold)
@@ -494,22 +470,14 @@ SHRBTextStyler class >> tangoStyleTable [
 			(parenthesis5 						(orange darker))
 			(parenthesis6 						(magenta darker))
 			(parenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
 			(leftBrace 								black)
 			(rightBrace 								black)
 			(cascadeSeparator 					black)
@@ -596,22 +564,14 @@ SHRBTextStyler class >> vintageStyleTable [
 			(parenthesis5 						(orange darker))
 			(parenthesis6 						(magenta darker))
 			(parenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
 			(leftBrace 								black)
 			(rightBrace 								black)
 			(cascadeSeparator 					black bold)
@@ -701,21 +661,15 @@ SHRBTextStyler >> attributesFor: aSymbol [
 	^ self class attributesFor: aSymbol pixelHeight: self pixelHeight
 ]
 
+{ #category : #private }
+SHRBTextStyler >> bracketStyleName [
+	bracketLevel isZero ifTrue: [ ^ #block ].
+	^ (#block asString , bracketLevel asString) asSymbol
+]
+
 { #category : #accessing }
 SHRBTextStyler >> classOrMetaClass: aBehavior [
 	classOrMetaClass := aBehavior
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentClosedBracketStyleName [
-	bracketLevel isZero ifTrue: [ ^ #blockEnd ].
-	^ (#blockEnd asString , bracketLevel asString) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentOpenedBracketStyleName [
-	bracketLevel isZero ifTrue: [ ^ #blockStart ].
-	^ (#blockStart asString , bracketLevel asString) asSymbol
 ]
 
 { #category : #accessing }
@@ -885,7 +839,7 @@ SHRBTextStyler >> style: aText ast: ast [
 SHRBTextStyler >> styleCloseBracket: aBlockNode [
 	bracketLevel := bracketLevel - 1.
 	(aBlockNode right isZero or: [ aBlockNode value isNil ]) ifTrue:[ ^self ].
-	self addStyle: self currentClosedBracketStyleName from: aBlockNode right to: aBlockNode right
+	self addStyle: self bracketStyleName from: aBlockNode right to: aBlockNode right
 ]
 
 { #category : #private }
@@ -905,7 +859,7 @@ SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
 	style := aBlockNode isFaulty
 		ifTrue: [ #invalid ]
-		ifFalse: [ self currentOpenedBracketStyleName ].
+		ifFalse: [ self bracketStyleName ].
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
