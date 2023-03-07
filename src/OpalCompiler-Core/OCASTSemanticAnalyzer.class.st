@@ -109,6 +109,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowingVariable: aNode [
+	aNode addWarning: 'Name already defined'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aNode ].
 	^ OCShadowVariableWarning new
 		node: aNode;
@@ -141,6 +142,7 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
+	variableNode addWarning: 'Undeclared variable'.
 	compilationContext optionSkipSemanticWarnings
 		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
 	^ OCUndeclaredVariableWarning new
