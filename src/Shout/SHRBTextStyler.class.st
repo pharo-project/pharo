@@ -94,7 +94,6 @@ SHRBTextStyler class >> blueStyleTable [
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
 			(instVar 								(blue muchDarker))
-			(workspaceVar 							(blue muchDarker))
 
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
@@ -215,7 +214,6 @@ SHRBTextStyler class >> darkStyleTable [
 			(blockPatternTempVar 				'A7E2ED')
 
 			(instVar 								'A7E2ED')
-			(workspaceVar 						'A7E2ED' bold)
 
 			(tempVar 								'A7E2ED')
 			(patternTempVar 					'A7E2ED')
@@ -420,7 +418,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(blockPatternTempVar 					('D33682'))
 
 			(instVar 								('D33682'))
-			(workspaceVar 							('D33682') bold)
 
 			(tempVar 								('D33682'))
 			(patternTempVar 						('D33682'))
@@ -554,7 +551,6 @@ SHRBTextStyler class >> tangoStyleTable [
 			(blockPatternTempVar 					'888a85' italic)
 
 			(instVar 								'204a87')
-			(workspaceVar 							'204a87')
 
 			(tempVar 								'555753' italic)
 			(patternTempVar 						'888a85' italic)
@@ -683,7 +679,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(blockPatternTempVar 					(blue muchDarker))
 
 			(instVar 								(blue muchDarker))
-			(workspaceVar 							(blue muchDarker) bold)
 
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))

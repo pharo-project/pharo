@@ -116,7 +116,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
 			(instVar 								(blue muchDarker))
-			(workspaceVar 							(blue muchDarker))
 			(undefinedIdentifier 					red)
 			(incompleteIdentifier 					red)
 			(tempVar 								(blue muchDarker))
