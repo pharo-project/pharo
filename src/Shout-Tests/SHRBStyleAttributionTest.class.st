@@ -55,6 +55,20 @@ SHRBStyleAttributionTest >> testAssignmentStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testBinaryStyle [
+
+	| aText |
+	aText := 'm self / 3' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 8
+		and: 8
+		shouldBe: #keyword
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCharacterStyle [
 
 	| aText |
@@ -151,6 +165,20 @@ SHRBStyleAttributionTest >> testInvalidStyle [
 		between: 6
 		and: 6
 		shouldBe: #invalid
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testKeywordStyle [
+
+	| aText |
+	aText := 'm self style: ''test''' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 8
+		and: 13
+		shouldBe: #keyword
 ]
 
 { #category : #tests }
@@ -277,6 +305,20 @@ SHRBStyleAttributionTest >> testThisContextStyle [
 		between: 3
 		and: 12
 		shouldBe: #thisContext
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testUnaryStyle [
+
+	| aText |
+	aText := 'm self testKeywordStyle' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 8
+		and: 23
+		shouldBe: #keyword
 ]
 
 { #category : #tests }

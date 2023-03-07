@@ -79,8 +79,6 @@ SHRBTextStyler class >> blueStyleTable [
 			(string 									(magenta muchDarker) normal)
 
 			(keyword 								(black))
-			(binary 									(black))
-			(unary 									(black))
 
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
@@ -200,8 +198,6 @@ SHRBTextStyler class >> darkStyleTable [
 			(string 								('E38C1E'))
 
 			(keyword 								white)
-			(binary 								white)
-			(unary 								white)
 
 			(#true 								('00CC6E' darker))
 			(#false 								('00CC6E' darker))
@@ -408,8 +404,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 
 
 			(keyword 								nil)
-			(binary 									nil)
-			(unary 									nil)
 
 			(#true 									('CB4B16' darker))
 			(#false 									('CB4B16' darker))
@@ -545,8 +539,6 @@ SHRBTextStyler class >> tangoStyleTable [
 
 
 			(keyword 								(black))
-			(binary 									(black))
-			(unary 									(black))
 
 			(#true 									'8F5902')
 			(#false 									'8F5902')
@@ -677,8 +669,6 @@ SHRBTextStyler class >> vintageStyleTable [
 
 
 			(keyword 								black)
-			(binary 									black)
-			(unary 									black)
 
 			(#true 									('A31515' darker))
 			(#false 									('A31515' darker))
