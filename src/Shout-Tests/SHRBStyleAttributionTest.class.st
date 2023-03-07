@@ -124,6 +124,16 @@ SHRBStyleAttributionTest >> testBlockArgStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testBlockArgsBarStyle [
+
+	| aText |
+	aText := 'm [ :a | ^ a ]' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 8 shouldBe: #blockArgsBar
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testBlockPatternArgStyle [
 
 	| aText |
@@ -177,6 +187,17 @@ SHRBStyleAttributionTest >> testBlockStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testBlockTempBarStyle [
+
+	| aText |
+	aText := 'm [ | a | ^ a ]' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 5 shouldBe: #blockTempBar.
+	self assertStyleOf: aText at: 9 shouldBe: #blockTempBar
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testBlockTempVarStyle [
 
 	| aText |
@@ -188,6 +209,16 @@ SHRBStyleAttributionTest >> testBlockTempVarStyle [
 		between: 15
 		and: 17
 		shouldBe: #blockTempVar
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCascadeSeparatorStyle [
+
+	| aText |
+	aText := 'm self a; b' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 9 shouldBe: #cascadeSeparator
 ]
 
 { #category : #tests }
@@ -336,6 +367,17 @@ SHRBStyleAttributionTest >> testKeywordStyle [
 		between: 8
 		and: 13
 		shouldBe: #keyword
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testMethodTempBarStyle [
+
+	| aText |
+	aText := 'm | a | ^ a' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 3 shouldBe: #methodTempBar.
+	self assertStyleOf: aText at: 7 shouldBe: #methodTempBar
 ]
 
 { #category : #tests }
@@ -488,6 +530,16 @@ SHRBStyleAttributionTest >> testSharedPoolVarStyle [
 		between: 5
 		and: 11
 		shouldBe: #poolConstant
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testStatementSeparatorStyle [
+
+	| aText |
+	aText := 'm self a. self b' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 9 shouldBe: #statementSeparator
 ]
 
 { #category : #tests }
