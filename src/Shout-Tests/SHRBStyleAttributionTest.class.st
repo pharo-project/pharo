@@ -111,6 +111,34 @@ SHRBStyleAttributionTest >> testBlockPatternArgStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testBlockPatternTempVarStyle [
+
+	| aText |
+	aText := 'm ^ [ | arg | arg ]' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 9
+		and: 11
+		shouldBe: #blockPatternTempVar
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testBlockTempVarStyle [
+
+	| aText |
+	aText := 'm ^ [ | arg | arg ]' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 15
+		and: 17
+		shouldBe: #blockTempVar
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCharacterStyle [
 
 	| aText |

@@ -933,17 +933,17 @@ SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
 ]
 
 { #category : #private }
-SHRBTextStyler >> methodOrBlockTempDeclStyleFor: aSequenceNode [
-	^ aSequenceNode scope isBlockScope
-		ifTrue: [ #blockPatternTempVar ]
-		ifFalse: [ #patternTempVar ]
-]
+SHRBTextStyler >> methodOrBlockTempStyleFor: aVariableNode [
 
-{ #category : #private }
-SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
-	^ aTemporaryNode isDefinedByBlock
-		ifTrue: [ #blockTempVar ]
-		ifFalse: [ #tempVar ]
+	^ aVariableNode isDefinedByBlock
+		  ifTrue: [
+			  aVariableNode isDefinition
+				  ifTrue: [ #blockPatternTempVar ]
+				  ifFalse: [ #blockTempVar ] ]
+		  ifFalse: [
+			  aVariableNode isDefinition
+				  ifTrue: [ #patternTempVar ]
+				  ifFalse: [ #tempVar ] ]
 ]
 
 { #category : #private }
@@ -1276,18 +1276,9 @@ SHRBTextStyler >> visitSuperNode: aSuperNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
-	| patternTempStyle |
-	patternTempStyle := self
-		methodOrBlockTempDeclStyleFor: aTemporaryDeclarationNode parent.
-	self addStyle: patternTempStyle forNode: aTemporaryDeclarationNode
-]
+SHRBTextStyler >> visitTemporaryVariableNode: aNode [
 
-{ #category : #visiting }
-SHRBTextStyler >> visitTemporaryNode: aTemporaryNode [
-	| methodOrBlockTempStyle |
-	methodOrBlockTempStyle := self methodOrBlockTempStyleFor: aTemporaryNode.
-	self addStyle: methodOrBlockTempStyle forNode: aTemporaryNode
+	self addStyle: (self methodOrBlockTempStyleFor: aNode) forNode: aNode
 ]
 
 { #category : #visiting }
