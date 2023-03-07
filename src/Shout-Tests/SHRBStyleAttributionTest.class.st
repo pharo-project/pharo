@@ -36,6 +36,20 @@ SHRBStyleAttributionTest >> style: aText [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCharacterStyle [
+
+	| aText |
+	aText := 'm ^ $1' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 6
+		shouldBe: #character
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testClassVarStyle [
 
 	| aText |
