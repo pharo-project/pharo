@@ -56,7 +56,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(#thisContext 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
 			(patternArg 							(blue muchDarker))
-			(methodArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
 			(argument 								(blue muchDarker))

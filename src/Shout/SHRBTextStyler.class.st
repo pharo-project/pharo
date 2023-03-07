@@ -88,7 +88,6 @@ SHRBTextStyler class >> blueStyleTable [
 			(#thisContext 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
 			(patternArg 							(blue muchDarker))
-			(methodArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
 			(argument 								(blue muchDarker))
@@ -209,7 +208,6 @@ SHRBTextStyler class >> darkStyleTable [
 			(#return 								'00CC6E' bold)
 
 			(patternArg 							'A7E2ED')
-			(methodArg 							'A7E2ED')
 			(blockPatternArg 					'A7E2ED' italic)
 			(blockArg 							'A7E2ED' italic)
 			(argument 							'A7E2ED')
@@ -415,7 +413,6 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(#return 								'B58900' bold)
 
 			(patternArg 							('D33682'))
-			(methodArg 							('D33682'))
 			(blockPatternArg 						('D33682'))
 			(blockArg 								('D33682'))
 			(argument 								('D33682'))
@@ -550,7 +547,6 @@ SHRBTextStyler class >> tangoStyleTable [
 			(#return 								black bold)
 
 			(patternArg 							'2e3426' italic)
-			(methodArg 							'555753' italic)
 			(blockPatternArg 						'888a85' bold)
 			(blockArg 								'555753' italic)
 			(argument 								'555753' italic)
@@ -680,7 +676,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(#return 								'A31515' bold)
 
 			(patternArg 							(blue muchDarker))
-			(methodArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
 			(argument 								(blue muchDarker))
@@ -930,11 +925,10 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
-	^ anArgumentNode isDefinedByBlock
-		ifTrue: [ anArgumentNode isDefinition
-				ifTrue: [ #blockPatternArg ]
-				ifFalse: [ #blockArg ] ]
-		ifFalse: [ #methodArg ]
+
+	^ anArgumentNode isDefinition
+		  ifTrue: [ #blockPatternArg ]
+		  ifFalse: [ #blockArg ]
 ]
 
 { #category : #private }
@@ -983,7 +977,6 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode binding ifNil: [^#default].
-	aVariableNode isArgumentVariable ifTrue: [ ^#methodArg].
 	aVariableNode isTempVariable ifTrue: [ ^#tempVar].
 	aVariableNode isGlobalVariable ifTrue: [ ^#globalVar].
 	"here we should add support for #classVar"
