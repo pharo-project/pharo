@@ -98,6 +98,11 @@ ChunkFileFormatParser >> doItChunkClass [
 	^ DoItChunk
 ]
 
+{ #category : #'as yet unclassified' }
+ChunkFileFormatParser >> fluidClassChunkClass [
+	^ FluidClassChunk
+]
+
 { #category : #initialization }
 ChunkFileFormatParser >> initialize [
 	super initialize.
@@ -236,7 +241,12 @@ ChunkFileFormatParser >> parseNextDeclaration [
 	isMetadata := readStream isNextChunkMetaData.
 	nextChunk := readStream next.
 	isMetadata
-		ifFalse: [ self addDeclaration: (self doItChunkClass contents: nextChunk) ]
+		ifFalse: [
+			| isFluid |
+				isFluid := (nextChunk splitOn: Character space) second = '<<'.
+				isFluid 
+					ifFalse: [ self addDeclaration: (self doItChunkClass contents: nextChunk) ]
+					ifTrue: [ self addDeclaration: (self fluidClassChunkClass contents: nextChunk) ] ]
 		ifTrue:
 			[
 			| substrings |
