@@ -68,6 +68,14 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 ]
 
+{ #category : #errors }
+RBProgramNode >> addError: anErrorMessage [
+
+	"Add an error information to the node. Node with error information are considered faulty.
+	Semantic passes that check the validity of AST are the targetted clients of this method."
+	self propertyAt: #error put: anErrorMessage
+]
+
 { #category : #replacing }
 RBProgramNode >> addReplacement: aStringReplacement [
 	parent ifNil: [^self].
@@ -545,6 +553,14 @@ RBProgramNode >> isEnglobingError [
 	^false
 ]
 
+{ #category : #errors }
+RBProgramNode >> isError [
+	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for semantic errors).
+	see `addError:`"
+
+	^ self propertyAt: #error ifPresent: [ true ] ifAbsent: [ false ]
+]
+
 { #category : #testing }
 RBProgramNode >> isEvaluatedFirst [
 	"Return true if we are the first thing evaluated in this statement."
@@ -552,10 +568,11 @@ RBProgramNode >> isEvaluatedFirst [
 	^parent isNil or: [parent isSequence or: [parent evaluatedFirst: self]]
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBProgramNode >> isFaulty [
-	"return true if the AST contains a RBParseErrorNode"
-	^false
+
+	"return true if the AST is or contains a isError node."
+	^ self isError
 ]
 
 { #category : #testing }
@@ -906,6 +923,13 @@ RBProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
 
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
+]
+
+{ #category : #accessing }
+RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock [
+	"Evaluate aPresentBlock with the the property value associated with aKey. Return nil if aKey is not found."
+
+	^ properties ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: [ nil ] ]
 ]
 
 { #category : #properties }

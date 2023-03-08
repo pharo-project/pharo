@@ -52,7 +52,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysis [
 	| ast |
 	ast := snippet doSemanticAnalysis.
 	self assert: ast isMethod.
-	"self assert: ast isFaulty equals: snippet isFaulty" self flag: #FIXME
+	self assert: ast isFaulty equals: snippet isFaulty
 ]
 
 { #category : #'*OpalCompiler-Tests' }
