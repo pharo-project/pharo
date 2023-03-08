@@ -31,94 +31,11 @@ SHRBTextStylerTest >> style: aText [
 	^ ast
 ]
 
-{ #category : #'private - utilities' }
-SHRBTextStylerTest >> styleExpression: aText [
-
-	| ast |
-
-	ast := self class compiler
-		source: aText asString;
-		noPattern: true ;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse.
-	styler style: aText ast: ast.
-
-	^ ast
-]
-
 { #category : #running }
 SHRBTextStylerTest >> tearDown [
 
 	SHRBTextStyler formatIncompleteIdentifiers: oldSetting.
 	super tearDown
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingBlock [
-
-	| aText index1 index2 attribute |
-
-	aText := 'm1 self do: [:each | each ]' asText.
-	self style: aText.
-
-	index1 := 15. "fixrst each"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #blockPatternArg pixelHeight: 10).
-
-	index2 := 22. "second each"
-	attribute := aText attributesAt: index2.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #blockArg pixelHeight: 10)
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingExpressionWithComment [
-
-	| aText index1 index2 attribute |
-
-	aText := '"comment"3+4.' asText.
-	self styleExpression: aText.
-
-	index1 := 5. "inside comment"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #comment pixelHeight: 10).
-
-	index2 := 11. "outside the +"
-	attribute := (aText attributesAt: index2) first.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #unary pixelHeight: 10) first
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingExpressionWithComment2 [
-
-	| aText index1 index2 attribute |
-
-	aText := '"comment"3.' asText.
-	self styleExpression: aText.
-
-	index1 := 5. "inside comment"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #comment pixelHeight: 10).
-
-	index2 := 10. "outside the 3"
-	attribute := (aText attributesAt: index2) first.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #integer pixelHeight: 10) first
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingMethod [
-
-	| aText index1 index2 attribute |
-
-	aText := 'm1: arg self do: [:each | arg ]' asText.
-	self style: aText.
-
-	index1 := 5. "first each"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #methodArg pixelHeight: 10).
-
-	index2 := 27. "second each"
-	attribute := aText attributesAt: index2.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #tempVar pixelHeight: 10)
 ]
 
 { #category : #tests }
