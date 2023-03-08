@@ -4,8 +4,23 @@ Extension { #name : #RBCodeSnippetTest }
 RBCodeSnippetTest >> testCompile [
 
 	| method |
+
+	self skipIf: #compile.
 	method := snippet compile.
 	self assert: method isCompiledMethod
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileOnError [
+
+	| method error |
+	error := nil.
+	method := snippet compileOnError: [ :e | error := e errorMessage ].
+	snippet isFaulty
+		ifTrue: [ self assert: error isNotNil ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -13,6 +28,7 @@ RBCodeSnippetTest >> testDecompile [
 
 	| method ast |
 	method := snippet compile.
+	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ast := method decompile.
 	self assert: ast isMethod.
 	"Decompilation lose many information. Not sure how to test more"
@@ -23,9 +39,37 @@ RBCodeSnippetTest >> testDecompileIR [
 
 	| method ir |
 	method := snippet compile.
+	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ir := method decompileIR.
 	self assert: ir class equals: IRMethod.
 	"Decompilation lose information. Not sure how to test more"
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDoSemanticAnalysis [
+	"We should test more than that"
+
+	| ast |
+	ast := snippet doSemanticAnalysis.
+	self assert: ast isMethod.
+	self assert: ast isFaulty equals: snippet isFaulty
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
+	"We should test more than that"
+
+	| ast error |
+	error := nil.
+	self skipIf: #testDoSemanticAnalysisOnError.
+
+	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
+
+	snippet isFaulty
+		ifTrue: [ self assert: error isNotNil ]
+		ifFalse: [
+			self deny: ast isFaulty.
+			self assert: error isNil ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -34,6 +78,7 @@ RBCodeSnippetTest >> testExecute [
 	| method runBlock phonyArgs |
 	self skipIf: #testExecute.
 	method := snippet compile.
+	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.

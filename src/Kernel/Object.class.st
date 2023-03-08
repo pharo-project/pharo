@@ -360,13 +360,6 @@ Object >> asLinkPrepend: anObject [
 ]
 
 { #category : #converting }
-Object >> asOrderedCollection [
-	"Answer an OrderedCollection with the receiver as its only element."
-
-	^ OrderedCollection with: self
-]
-
-{ #category : #converting }
 Object >> asString [
 	"Answer a string that represents the receiver."
 

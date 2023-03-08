@@ -660,6 +660,13 @@ RBProgramNodeTest >> testPropertyAtIfAbsentPut [
 	self assert: (self node propertyAt: #foo ifAbsentPut: [ false ])
 ]
 
+{ #category : #tests }
+RBProgramNodeTest >> testPropertyAtIfPresent [
+	self assert: (self node propertyAt: #foo ifPresent:[ :p | #bad ]) equals: nil.
+	self node propertyAt: #foo put: true.
+	self assert: (self node propertyAt: #foo ifPresent:[ :p | p ]).
+]
+
 { #category : #'tests - properties' }
 RBProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
 	self assert: (self node propertyAt: #foo ifPresent:[ false ] ifAbsent: [ true ]) equals: true.
