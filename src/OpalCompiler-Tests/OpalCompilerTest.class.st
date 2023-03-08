@@ -147,3 +147,39 @@ OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
 ]
+
+{ #category : #tests }
+OpalCompilerTest >> testUndefinedVariableLowercase [
+
+	self
+		assert: {
+				OpalCompiler new
+					evaluate: 'undefinedName123 := 1. undefinedName123'.
+				OpalCompiler new
+					evaluate: 'undefinedName123'.
+				OpalCompiler new
+					options: #( + optionSkipSemanticWarnings );
+					evaluate: 'undefinedName123 := 2. undefinedName123'.
+				OpalCompiler new
+					options: #( + optionSkipSemanticWarnings );
+					evaluate: 'undefinedName123' }
+		equals: { 1. nil. 2. nil }
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testUndefinedVariableUppercase [
+
+	self
+		assert: {
+				OpalCompiler new
+					evaluate: 'UndefinedName123 := 1. UndefinedName123'.
+				OpalCompiler new
+					evaluate: 'UndefinedName123'.
+				OpalCompiler new
+					options: #( + optionSkipSemanticWarnings );
+					evaluate: 'UndefinedName123 := 2. UndefinedName123'.
+				OpalCompiler new
+					options: #( + optionSkipSemanticWarnings );
+					evaluate: 'UndefinedName123' }
+		equals: { 1. 1. 2. 2 }
+]
