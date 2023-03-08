@@ -82,6 +82,14 @@ RBProgramNode >> addReplacement: aStringReplacement [
 	parent addReplacement: aStringReplacement
 ]
 
+{ #category : #adding }
+RBProgramNode >> addWarning: aMessage [
+
+	"Add a warning information to the node.
+	Semantic passes that check the validity of AST are the targetted clients of this method."
+	self propertyAt: #semanticWarning put: aMessage
+]
+
 { #category : #accessing }
 RBProgramNode >> allArgumentVariables [
 	| children |
@@ -396,6 +404,13 @@ RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
 { #category : #comparing }
 RBProgramNode >> equalTo: aNode withMapping: aDictionary [
 	^self = aNode
+]
+
+{ #category : #accessing }
+RBProgramNode >> errorMessage [
+
+	"Return the associated error message, if any"
+	^ self propertyAt: #error ifAbsent: [ nil ]
 ]
 
 { #category : #testing }

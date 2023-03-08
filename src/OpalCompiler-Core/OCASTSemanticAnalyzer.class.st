@@ -109,6 +109,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowingVariable: aNode [
+	aNode addWarning: 'Name already defined'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aNode ].
 	^ OCShadowVariableWarning new
 		node: aNode;
@@ -118,7 +119,7 @@ OCASTSemanticAnalyzer >> shadowingVariable: aNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
-	variableNode addError: 'Cannot store into'.
+	variableNode addError: 'Assignment to read-only variable'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 
 	^ OCStoreIntoReadOnlyVariableError new
@@ -130,7 +131,7 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
-	variableNode addError: 'Cannot store into'.
+	variableNode addError: 'Assigment to reserved variable'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
@@ -141,6 +142,7 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
+	variableNode addWarning: 'Undeclared variable'.
 	compilationContext optionSkipSemanticWarnings
 		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
 	^ OCUndeclaredVariableWarning new
@@ -151,13 +153,13 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode propertyAt: #semanticWarning put: #unitialized
+	variableNode addWarning: 'unitialized variable'
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
-	variableNode propertyAt: #semanticWarning put: 'unused variable'
+	variableNode addWarning: 'unused variable'
 ]
 
 { #category : #visiting }
