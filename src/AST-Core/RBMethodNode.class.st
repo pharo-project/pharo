@@ -391,8 +391,9 @@ RBMethodNode >> isDoIt [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBMethodNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	(self arguments anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
 	(self pragmas anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
 	^self body isFaulty
