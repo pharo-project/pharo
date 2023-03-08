@@ -622,14 +622,6 @@ SHRBTextStyler >> addPlugin: aPlugin [
 ]
 
 { #category : #formatting }
-SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute forNode: anRBNode [
-	self
-		addStyle:styleSymbol
-		attributes: { additionalAttribute }
-		forNode: anRBNode
-]
-
-{ #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: start to: end [
 	self addAttributes: (self attributesFor: styleSymbol), {additionalAttribute} from: start to: end
 ]
@@ -674,12 +666,10 @@ SHRBTextStyler >> font: aFont [
 
 { #category : #visiting }
 SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
-	^ (self class formatIncompleteIdentifiers
-		and: [ (Symbol
-						selectorThatStartsCaseSensitive: aMessageNode selector asString
-						skipping: nil) isNotNil ])
-			ifTrue: [ #incompleteSelector ]
-			ifFalse: [ #undefinedSelector ]
+
+	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil) isNotNil ])
+		  ifTrue: [ #incompleteSelector ]
+		  ifFalse: [ #undefinedSelector ]
 ]
 
 { #category : #initialization }
@@ -701,7 +691,7 @@ SHRBTextStyler >> isForWorkspace: aBoolean [
 	isForWorkspace := aBoolean
 ]
 
-{ #category : #formatting }
+{ #category : #private }
 SHRBTextStyler >> literalStyleSymbol: aValue [
 
 	aValue isSymbol
@@ -781,22 +771,10 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
 
-	aVariableNode binding ifNil: [ ^ #default ].
-	aVariableNode isTempVariable ifTrue: [ ^ #tempVar ].
-	aVariableNode isGlobalVariable ifTrue: [ ^ #globalVar ].
-	"here we should add support for #classVar"
-	aVariableNode isClassVariable ifTrue: [
-		aVariableNode variable isPoolVariable ifTrue: [ ^ #poolConstant ].
-		^ #classVar ].
-	aVariableNode isInstanceVariable ifTrue: [ ^ #instVar ].
-	"for now we use temp variable here, we could now color them with their own color"
-	aVariableNode isWorkspaceVariable ifTrue: [ ^ #tempVar ].
-
-	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) ifTrue: [ ^ #incompleteIdentifier ].
-	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
-	aVariableNode isUndeclaredVariable ifTrue: [ ^ #undefinedIdentifier ].
-
-	^ #invalid
+	| style |
+	style := aVariableNode styleName.
+	style = #incompleteIdentifier & self class formatIncompleteIdentifiers not ifTrue: [ ^ #undefinedIdentifier ].
+	^ style
 ]
 
 { #category : #private }
@@ -955,6 +933,7 @@ at once, but for ordinary literal arrays, style every node"
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
+
 	| value link |
 	value := aLiteralValueNode value.
 
@@ -964,13 +943,13 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
 	link := value isSymbol
-		ifTrue: [
-			self class environment
-				at: value
-				ifPresent: [ :aGlobal | TextClassLink className: value ]
-				ifAbsent: [ TextMethodLink selector: value ] ]
-		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
+		        ifTrue: [
+			        self class environment
+				        at: value
+				        ifPresent: [ :aGlobal | TextClassLink className: value ]
+				        ifAbsent: [ TextMethodLink selector: value ] ]
+		        ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attributes: { link } forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1059,13 +1038,6 @@ SHRBTextStyler >> visitReturnNode: aReturnNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitSelfNode: aSelfNode [
-	self
-		addStyle: #self
-		forNode: aSelfNode
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 	self styleTempBars: aSequenceNode.
 	aSequenceNode temporaries do: [ :each | self visitNode: each ].
@@ -1075,20 +1047,9 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitSuperNode: aSuperNode [
-
-	self addStyle: #super forNode: aSuperNode
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitTemporaryVariableNode: aNode [
 
 	self addStyle: (self methodOrBlockTempStyleFor: aNode) forNode: aNode
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitThisContextNode: aThisContextNode [
-	self addStyle: #thisContext forNode: aThisContextNode
 ]
 
 { #category : #visiting }
