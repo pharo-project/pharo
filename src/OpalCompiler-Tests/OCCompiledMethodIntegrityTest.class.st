@@ -100,28 +100,28 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 	newCompiledMethod := OpalCompiler new
 		source:
 			'methodWithUndeclaredVar
-											^ undeclaredTestVar';
+											^ UndeclaredTestVar';
 		class: OCMockCompilationClass;
 		compile.
 
-	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
+	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #UndeclaredTestVar ].
 	self assert: undeclaredBinding class equals: UndeclaredVariable.
-	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #undeclaredTestVar).
+	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #UndeclaredTestVar).
 	undeclaredBinding unregister
 ]
 
 { #category : #tests }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered [
 	| newCompiledMethod undeclaredBinding var |
-	var := UndeclaredVariable registeredWithName: #undeclaredTestVar.
+	var := UndeclaredVariable registeredWithName: #UndeclaredTestVar.
 	newCompiledMethod := OpalCompiler new
 		source:
 			'methodWithUndeclaredVar
-											^ undeclaredTestVar';
+											^ UndeclaredTestVar';
 		class: OCMockCompilationClass;
 		compile.
 
-	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
+	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #UndeclaredTestVar ].
 	self assert: undeclaredBinding identicalTo: var.
 	undeclaredBinding unregister
 ]
@@ -134,16 +134,16 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 	The bootstrap will be updated at some point. But now this case needs to be supported:
 		- declaring undefined var should update registered variable when its type is not undeclared var"
 	| newCompiledMethod undeclaredBinding |
-	Undeclared add: #undeclaredTestVar -> nil.
+	Undeclared add: #UndeclaredTestVar -> nil.
 	newCompiledMethod := OpalCompiler new
 		source:
 			'methodWithUndeclaredVar
-											^ undeclaredTestVar';
+											^ UndeclaredTestVar';
 		class: OCMockCompilationClass;
 		compile.
 
-	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
+	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #UndeclaredTestVar ].
 	self assert: undeclaredBinding class equals: UndeclaredVariable.
-	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #undeclaredTestVar).
+	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #UndeclaredTestVar).
 	undeclaredBinding unregister
 ]
