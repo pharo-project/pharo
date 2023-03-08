@@ -212,22 +212,22 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 	| method block |
 	method := self class compiler compile: 'method
 		<pragma: #pragma>
-		test := 1+2.
+		Test := 1+2.
 		Class.
 		self doIt: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
+		Test := 1 - 2.
+		Test := #(arrayInBlock).
 		Object.
 		self name ].
 		^#(#array) '.
 	block := (self class compiler evaluate: '[
-		test := 1 - 2.
-		test := #(arrayInBlock).
+		Test := 1 - 2.
+		Test := #(arrayInBlock).
 		Object.
 		self name ]') compiledBlock.
 	self assertCollection: method literals equals: {
 			2.
-			(UndeclaredVariable key: #test value: nil).
+			(UndeclaredVariable key: #Test value: nil).
 			block.
 			#doIt:.
 			#( #array ).
