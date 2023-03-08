@@ -711,29 +711,6 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 ]
 
 { #category : #private }
-SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
-	^ anArgumentNode isDefinedByBlock
-		ifTrue: [ anArgumentNode isDefinition
-				ifTrue: [ #blockPatternArg ]
-				ifFalse: [ #blockArg ] ]
-		ifFalse: [ #argument ]
-]
-
-{ #category : #private }
-SHRBTextStyler >> methodOrBlockTempStyleFor: aVariableNode [
-
-	^ aVariableNode isDefinedByBlock
-		  ifTrue: [
-			  aVariableNode isDefinition
-				  ifTrue: [ #blockPatternTempVar ]
-				  ifFalse: [ #blockTempVar ] ]
-		  ifFalse: [
-			  aVariableNode isDefinition
-				  ifTrue: [ #patternTempVar ]
-				  ifFalse: [ #tempVar ] ]
-]
-
-{ #category : #private }
 SHRBTextStyler >> parenthesisStyleName [
 	parentheseLevel isZero ifTrue: [ ^ #parenthesis ].
 	^ (#parenthesis asString , parentheseLevel asString) asSymbol
@@ -871,12 +848,6 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 		satisfying: [ :each| each isKindOf: TextAction ]
 		to: answer.
 	^ answer
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitArgumentVariableNode: anArgumentNode [
-
-	^ self addStyle: (self methodOrBlockArgStyleFor: anArgumentNode) forNode: anArgumentNode
 ]
 
 { #category : #visiting }
@@ -1044,12 +1015,6 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 	aSequenceNode statements do: [ :each | self visitNode: each ].
 	aSequenceNode periods
 		do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitTemporaryVariableNode: aNode [
-
-	self addStyle: (self methodOrBlockTempStyleFor: aNode) forNode: aNode
 ]
 
 { #category : #visiting }
