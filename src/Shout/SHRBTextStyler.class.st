@@ -15,7 +15,8 @@ Class {
 		'isForWorkspace',
 		'pixelHeight',
 		'workspace',
-		'plugins'
+		'plugins',
+		'braceLevel'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -126,6 +127,13 @@ SHRBTextStyler class >> blueStyleTable [
 			(block6 							(magenta darker))
 			(block7 							blue)
 			(brace 								black)
+			(brace1								black)
+			(brace2 								black)
+			(brace3 								black)
+			(brace4 								black)
+			(brace5 								black)
+			(brace6 								black)
+			(brace7 								black)
 			(cascadeSeparator 					black)
 			(statementSeparator 					black)
 			(methodTempBar 						(black))
@@ -212,6 +220,13 @@ SHRBTextStyler class >> darkStyleTable [
 			(block6 						(magenta lighter))
 			(block7 						blue)
 			(brace 							white)
+			(brace1 							white)
+			(brace2 							white)
+			(brace3 							white)
+			(brace4 							white)
+			(brace5 							white)
+			(brace6 							white)
+			(brace7 							white)
 			(cascadeSeparator 					white bold)
 			(statementSeparator 				white bold)
 			(methodTempBar 						white)
@@ -377,6 +392,13 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(block6 							(magenta darker))
 			(block7 							blue)
 			(brace 								black)
+			(brace1								black)
+			(brace2 								black)
+			(brace3 								black)
+			(brace4 								black)
+			(brace5 								black)
+			(brace6 								black)
+			(brace7 								black)
 			(cascadeSeparator 					black bold)
 			(statementSeparator 					black bold)
 			(methodTempBar 						black)
@@ -657,6 +679,13 @@ SHRBTextStyler >> attributesFor: aSymbol [
 ]
 
 { #category : #private }
+SHRBTextStyler >> braceStyleName [
+
+	braceLevel isZero ifTrue: [ ^ #brace ].
+	^ (#brace asString , braceLevel asString) asSymbol
+]
+
+{ #category : #private }
 SHRBTextStyler >> bracketStyleName [
 	bracketLevel isZero ifTrue: [ ^ #block ].
 	^ (#block asString , bracketLevel asString) asSymbol
@@ -821,13 +850,23 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
+
 	aText ifEmpty: [ ^ self ].
 	text := aText.
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
-	parentheseLevel:=0.
+	parentheseLevel := 0.
+	braceLevel := 0.
 	self visitNode: ast.
-	^aText runs: (RunArray newFrom: charAttr)
+	^ aText runs: (RunArray newFrom: charAttr)
+]
+
+{ #category : #private }
+SHRBTextStyler >> styleCloseBrace: anArrayNode [
+
+	braceLevel := braceLevel - 1.
+	(anArrayNode right isZero or: [ anArrayNode value isNil ]) ifTrue: [ ^ self ].
+	self addStyle: self braceStyleName from: anArrayNode right to: anArrayNode right
 ]
 
 { #category : #private }
@@ -847,6 +886,17 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
 					self addStyle: self parenthesisStyleName from: pos to: pos ]]
+]
+
+{ #category : #private }
+SHRBTextStyler >> styleOpenBrace: anArrayNode [
+
+	| style |
+	style := anArrayNode isFaulty
+		         ifTrue: [ #invalid ]
+		         ifFalse: [ self braceStyleName ].
+	self addStyle: style from: anArrayNode left to: anArrayNode left.
+	braceLevel := braceLevel + 1
 ]
 
 { #category : #private }
@@ -896,9 +946,12 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitArgumentVariableNode: anArgumentNode [
+SHRBTextStyler >> visitArrayNode: anArrayNode [
 
-	^ self addStyle: (self methodOrBlockArgStyleFor: anArgumentNode) forNode: anArgumentNode
+	anArrayNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
+	self styleOpenBrace: anArrayNode.
+	anArrayNode children do: [ :each | self visitNode: each ].
+	self styleCloseBrace: anArrayNode
 ]
 
 { #category : #visiting }
@@ -1021,39 +1074,30 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitNode: aNode [
-	aNode comments do: [:comment|
-		self
-			addStyle: #comment
-			from: comment start
-			to: comment stop ].
 
-	^aNode acceptVisitor: self
+	aNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
+
+	^ aNode acceptVisitor: self
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
-	self
-		addStyle: #invalid
-		forNode: anErrorNode
+
+	self addStyle: #invalid forNode: anErrorNode
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
-	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword : position|
-	self
-		addStyle: #pragma
-		from: position
-		to: position + keyword size ].
+
+	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword :position | self addStyle: #pragma from: position to: position + keyword size ].
 
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitReturnNode: aReturnNode [
-	self
-		addStyle: #return
-		from: aReturnNode start
-		to: aReturnNode stop.
+
+	self addStyle: #return from: aReturnNode start to: aReturnNode stop.
 
 	self visitNode: aReturnNode value
 ]
@@ -1067,11 +1111,11 @@ SHRBTextStyler >> visitSelfNode: aSelfNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
+
 	self styleTempBars: aSequenceNode.
 	aSequenceNode temporaries do: [ :each | self visitNode: each ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
-	aSequenceNode periods
-		do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
+	aSequenceNode periods do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
 ]
 
 { #category : #visiting }

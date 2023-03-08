@@ -212,6 +212,31 @@ SHRBStyleAttributionTest >> testBlockTempVarStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testBracesStyle [
+
+	| aText |
+	aText := 'm ^ {1 . {2 . {3 . {4 . {5 . {6 . {7 . {8 . {9 .1}}}}}}}}' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 10 shouldBe: #brace.
+	self assertStyleOf: aText at: 15 shouldBe: #brace1.
+	self assertStyleOf: aText at: 20 shouldBe: #brace2.
+	self assertStyleOf: aText at: 25 shouldBe: #brace3.
+	self assertStyleOf: aText at: 30 shouldBe: #brace4.
+	self assertStyleOf: aText at: 35 shouldBe: #brace5.
+	self assertStyleOf: aText at: 40 shouldBe: #brace6.
+	self assertStyleOf: aText at: 45 shouldBe: #brace7.
+	self assertStyleOf: aText at: 50 shouldBe: #brace7.
+	self assertStyleOf: aText at: 51 shouldBe: #brace6.
+	self assertStyleOf: aText at: 52 shouldBe: #brace5.
+	self assertStyleOf: aText at: 53 shouldBe: #brace4.
+	self assertStyleOf: aText at: 54 shouldBe: #brace3.
+	self assertStyleOf: aText at: 55 shouldBe: #brace2.
+	self assertStyleOf: aText at: 56 shouldBe: #brace1.
+	self assertStyleOf: aText at: 57 shouldBe: #brace
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCascadeSeparatorStyle [
 
 	| aText |

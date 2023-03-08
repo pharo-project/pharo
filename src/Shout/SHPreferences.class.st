@@ -101,7 +101,7 @@ SHPreferences class >> initialize [
 { #category : #'private - initialization' }
 SHPreferences class >> initializeGroups [
 	Groups := Dictionary new.
-	#(#default #(#default ) #reservedWords #(#self #super #true #false #nil #thisContext ) #primitiveTypes #(#character #number #symbol #string ) #selectorPatterns #(#patternSelector) #messageSends #(selector #incompleteSelector ) #args #(#patternArg #blockPatternArg #blockArg #argument ) #variable #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier ) #instanceVar #(#instVar #classVar ) #globalVar #(#globalVar #poolConstant ) #comment #(#comment ) #error #(#invalid #undefinedSelector #undefinedIdentifier ) #syntax #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar ) )
+	#(#default #(#default ) #reservedWords #(#self #super #true #false #nil #thisContext ) #primitiveTypes #(#character #number #symbol #string ) #selectorPatterns #(#patternSelector) #messageSends #(selector #incompleteSelector ) #args #(#patternArg #blockPatternArg #blockArg #argument ) #variable #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier ) #instanceVar #(#instVar #classVar ) #globalVar #(#globalVar #poolConstant ) #comment #(#comment ) #error #(#invalid #undefinedSelector #undefinedIdentifier ) #syntax #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar ) )
 		pairsDo: [:gname :tokens | Groups
 				at: gname
 				put: (SHStyleElement withTokens: tokens)]
@@ -225,7 +225,7 @@ SHPreferences class >> settingsOn: aBuilder [
 				description: 'Reserved words of the Smalltalk language' .
 			(aBuilder setting: #syntaxStyle)
 				label: 'Syntax';
-				default: (SHStyleElement tokens: #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar));
+				default: (SHStyleElement tokens: #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar));
 				description: 'Any other syntactic element' .
 			(aBuilder setting: #variableStyle)
 				label: 'Variable';
