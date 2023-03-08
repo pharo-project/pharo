@@ -128,10 +128,11 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
-	| var |
+	| var name |
+	name := variableNode name asSymbol.
 	var := self undeclaredVariables
-		       at: variableNode name asSymbol
-		       ifAbsentPut: [ UndeclaredVariable named: variableNode name asSymbol ].
+		       at: name
+		       ifAbsentPut: [ UndeclaredVariable getWithName: name ].
 
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ var ].
 	^ OCUndeclaredVariableWarning new

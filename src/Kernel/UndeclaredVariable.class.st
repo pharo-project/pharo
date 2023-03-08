@@ -12,6 +12,21 @@ Class {
 }
 
 { #category : #'instance creation' }
+UndeclaredVariable class >> getWithName: aString [
+	"Undeclared variable from faulty code use the following rule:
+
+	If the name starts with a uppercase, the undeclared variable is registered, and if one already exists it is reused.
+	It means that the undeclared variable is shared (implicit global) and that future global variable (like a class) with the same name will replace it.
+
+	If the name starts with a lowercase, a new unregistered undeclared variable is returned.
+	"
+
+	^ aString first isUppercase
+		  ifTrue: [ self registeredWithName: aString ]
+		  ifFalse: [ self named: aString ]
+]
+
+{ #category : #'instance creation' }
 UndeclaredVariable class >> registeredWithName: aString [
 	| varName |
 	varName := aString asSymbol.
