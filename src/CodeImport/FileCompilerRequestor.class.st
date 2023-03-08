@@ -13,6 +13,12 @@ Class {
 	#category : #'CodeImport-Utilities'
 }
 
+{ #category : #binding }
+FileCompilerRequestor >> bindingOf: aString [
+
+	^ nil
+]
+
 { #category : #accessing }
 FileCompilerRequestor >> contents [
 	^ contents
@@ -36,6 +42,12 @@ FileCompilerRequestor >> fileReference [
 { #category : #accessing }
 FileCompilerRequestor >> fileReference: anObject [
 	fileReference := anObject
+]
+
+{ #category : #binding }
+FileCompilerRequestor >> hasBindingOf: aString [
+
+	^ false
 ]
 
 { #category : #initialization }

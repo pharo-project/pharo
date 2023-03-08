@@ -220,6 +220,12 @@ RubScrolledTextMorph >> beWrapped [
 	self scrollPane beWrapped
 ]
 
+{ #category : #binding }
+RubScrolledTextMorph >> bindingOf: aString [
+
+	^ nil
+]
+
 { #category : #accessing }
 RubScrolledTextMorph >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
@@ -618,6 +624,12 @@ RubScrolledTextMorph >> handlesTextInputEvent: anEvent [
 	^ self scrollPane
 		  ifNotNil: [ :pane | pane handlesTextInputEvent: anEvent ]
 		  ifNil: [ super handlesTextInputEvent: anEvent ]
+]
+
+{ #category : #binding }
+RubScrolledTextMorph >> hasBindingOf: aString [
+
+	^ false
 ]
 
 { #category : #'model protocol' }
