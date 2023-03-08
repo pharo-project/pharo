@@ -129,7 +129,9 @@ OSWorldRenderer >> doActivate [
 	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
 	driver startUp: true.
 
-	osWindow focus.
+	"SDL2 on MacOS required to postpone focus.
+	See: https://github.com/pharo-project/pharo/issues/10981"
+	[ osWindow focus ] fork.
 
 	world worldState doFullRepaint.
 	world displayWorld.
