@@ -245,9 +245,8 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 { #category : #actions }
 RBPullUpMethodRefactoring >> generateChanges [
 
-	self preconditions check.
+	self primitiveExecute.
 
-	self transform.
 	^ self changes
 ]
 
