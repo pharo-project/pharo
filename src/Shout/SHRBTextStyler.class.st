@@ -67,7 +67,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(symbol 								(magenta muchDarker))
 			(string 									(magenta muchDarker) normal)
 
-			(keyword 								(black))
+			(selector 								(black))
 
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
@@ -91,54 +91,37 @@ SHRBTextStyler class >> blueStyleTable [
 			(globalVar 								(blue muchDarker))
 
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					nil  italic)
+			(incompleteSelector 					nil  italic)
 
 			(undefinedIdentifier 					red)
-			(undefinedKeyword 					red)
+			(undefinedSelector 					red)
 
-			(patternKeyword 						nil bold)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
 			(cascadeSeparator 					black)
 			(statementSeparator 					black)
 			(methodTempBar 						(black))
 			(blockTempBar 						(black))
 			(blockArgsBar 							(black))
 
-			(pragmaKeyword 						(green muchDarker)))
+			(pragma 						(green muchDarker)))
 ]
 
 { #category : #styles }
@@ -165,7 +148,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(symbol 								('E38C1E'))
 			(string 								('E38C1E'))
 
-			(keyword 								white)
+			(selector 								white)
 
 			(#true 								('00CC6E' darker))
 			(#false 								('00CC6E' darker))
@@ -194,54 +177,37 @@ SHRBTextStyler class >> darkStyleTable [
 
 
 			(incompleteIdentifier 			'E8E2B7' italic)
-			(incompleteKeyword 				'E8E2B7' italic)
+			(incompleteSelector 				'E8E2B7' italic)
 
 			(undefinedIdentifier 				'FF8A80')
-			(undefinedKeyword 					'FF8A80')
+			(undefinedSelector 					'FF8A80')
 
-			(patternKeyword 					nil bold)
+			(patternSelector 					nil bold)
 			(blockArgColon 						white)
-			(leftParenthesis 					white)
-			(rightParenthesis 					white)
-			(leftParenthesis1 					(green muchLighter))
-			(rightParenthesis1 				(green muchLighter))
-			(leftParenthesis2 					(magenta muchLighter))
-			(rightParenthesis2 				(magenta muchLighter))
-			(leftParenthesis3 					('FF8A80' muchLighter))
-			(rightParenthesis3 				('FF8A80' muchLighter))
-			(leftParenthesis4 					(green lighter))
-			(rightParenthesis4 				(green lighter))
-			(leftParenthesis5 					(orange lighter))
-			(rightParenthesis5 				(orange lighter))
-			(leftParenthesis6 					(magenta lighter))
-			(rightParenthesis6 				(magenta lighter))
-			(leftParenthesis7 					blue)
-			(rightParenthesis7 				blue)
-			(blockStart 							white)
-			(blockEnd 							white)
-			(blockStart1 						(green muchLighter))
-			(blockEnd1 							(green muchLighter))
-			(blockStart2 						(magenta muchLighter))
-			(blockEnd2 							(magenta muchLighter))
-			(blockStart3 						(red muchLighter))
-			(blockEnd3 							(red muchLighter))
-			(blockStart4 						(green lighter))
-			(blockEnd4 							(green lighter))
-			(blockStart5 						(orange lighter))
-			(blockEnd5 							(orange lighter))
-			(blockStart6 						(magenta lighter))
-			(blockEnd6 							(magenta lighter))
-			(blockStart7 						blue)
-			(blockEnd7 							blue)
-			(leftBrace 							white)
-			(rightBrace 							white)
+			(parenthesis 					white)
+			(parenthesis1 					(green muchLighter))
+			(parenthesis2 					(magenta muchLighter))
+			(parenthesis3 					('FF8A80' muchLighter))
+			(parenthesis4 					(green lighter))
+			(parenthesis5 					(orange lighter))
+			(parenthesis6 					(magenta lighter))
+			(parenthesis7 					blue)
+			(block 							white)
+			(block1 						(green muchLighter))
+			(block2 						(magenta muchLighter))
+			(block3 						(red muchLighter))
+			(block4 						(green lighter))
+			(block5 						(orange lighter))
+			(block6 						(magenta lighter))
+			(block7 						blue)
+			(brace 							white)
 			(cascadeSeparator 					white bold)
 			(statementSeparator 				white bold)
 			(methodTempBar 						white)
 			(blockTempBar 						white)
 			(blockArgsBar 						white)
 
-			(pragmaKeyword 									'B4DD6E'))
+			(pragma 									'B4DD6E'))
 ]
 
 { #category : #styles }
@@ -336,7 +302,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(string 									('268BD2'))
 
 
-			(keyword 								nil)
+			(selector 								nil)
 
 			(#true 									('CB4B16' darker))
 			(#false 									('CB4B16' darker))
@@ -365,51 +331,34 @@ SHRBTextStyler class >> solarizedStyleTable [
 
 			(undefinedIdentifier 					red)
 			(incompleteIdentifier 					'D33682' italic)
-			(incompleteKeyword 					nil  italic)
-			(undefinedKeyword 					red)
-			(patternKeyword 						'657A81' bold)
+			(incompleteSelector 					nil  italic)
+			(undefinedSelector 					red)
+			(patternSelector 						'657A81' bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
 			(cascadeSeparator 					black bold)
 			(statementSeparator 					black bold)
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(pragmaKeyword 						(cyan muchDarker)))
+			(pragma 						(cyan muchDarker)))
 ]
 
 { #category : #accessing }
@@ -451,7 +400,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(string 									'ce5c00')
 
 
-			(keyword 								(black))
+			(selector 								(black))
 
 			(#true 									'8F5902')
 			(#false 									'8F5902')
@@ -480,53 +429,36 @@ SHRBTextStyler class >> tangoStyleTable [
 
 
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					blue italic)
+			(incompleteSelector 					blue italic)
 
 			(undefinedIdentifier 					red)
-			(undefinedKeyword 					red)
-			(patternKeyword 						nil bold)
+			(undefinedSelector 					red)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
 			(cascadeSeparator 					black)
 			(statementSeparator 					black)
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(pragmaKeyword 						(green muchDarker)))
+			(pragma 						(green muchDarker)))
 ]
 
 { #category : #accessing }
@@ -560,7 +492,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(string 									('801f91'))
 
 
-			(keyword 								black)
+			(selector 								black)
 
 			(#true 									('A31515' darker))
 			(#false 									('A31515' darker))
@@ -589,54 +521,37 @@ SHRBTextStyler class >> vintageStyleTable [
 
 
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					blue italic)
+			(incompleteSelector 					blue italic)
 
 			(undefinedIdentifier 					red)
-			(undefinedKeyword 					red)
+			(undefinedSelector 					red)
 
-			(patternKeyword 						nil bold)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
 			(cascadeSeparator 					black bold)
 			(statementSeparator 					black bold)
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
 
-			(pragmaKeyword 						(cyan muchDarker)))
+			(pragma 						(cyan muchDarker)))
 ]
 
 { #category : #private }
@@ -683,14 +598,6 @@ SHRBTextStyler >> addPlugin: aPlugin [
 ]
 
 { #category : #formatting }
-SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute forNode: anRBNode [
-	self
-		addStyle:styleSymbol
-		attributes: { additionalAttribute }
-		forNode: anRBNode
-]
-
-{ #category : #formatting }
 SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: start to: end [
 	self addAttributes: (self attributesFor: styleSymbol), {additionalAttribute} from: start to: end
 ]
@@ -718,43 +625,23 @@ SHRBTextStyler >> attributesFor: aSymbol [
 	^ self class attributesFor: aSymbol
 ]
 
+{ #category : #private }
+SHRBTextStyler >> bracketStyleName [
+	bracketLevel isZero ifTrue: [ ^ #block ].
+	^ (#block asString , bracketLevel asString) asSymbol
+]
+
 { #category : #accessing }
 SHRBTextStyler >> classOrMetaClass: aBehavior [
 	classOrMetaClass := aBehavior
 ]
 
-{ #category : #private }
-SHRBTextStyler >> currentClosedBracketStyleName [
-	bracketLevel isZero ifTrue: [ ^ #blockEnd ].
-	^ (#blockEnd asString , bracketLevel asString) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentClosedParenthesisStyleName [
-	parentheseLevel isZero ifTrue: [ ^ #rightParenthesis ].
-	^ (#rightParenthesis asString , parentheseLevel asString) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentOpenedBracketStyleName [
-	bracketLevel isZero ifTrue: [ ^ #blockStart ].
-	^ (#blockStart asString , bracketLevel asString) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentOpenedParenthesisStyleName [
-	parentheseLevel isZero ifTrue: [ ^ #leftParenthesis ].
-	^ (#leftParenthesis asString , parentheseLevel asString) asSymbol
-]
-
 { #category : #visiting }
 SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
-	^ (self class formatIncompleteIdentifiers
-		and: [ (Symbol
-						selectorThatStartsCaseSensitive: aMessageNode selector asString
-						skipping: nil) isNotNil ])
-			ifTrue: [ #incompleteKeyword ]
-			ifFalse: [ #undefinedKeyword ]
+
+	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil) isNotNil ])
+		  ifTrue: [ #incompleteSelector ]
+		  ifFalse: [ #undefinedSelector ]
 ]
 
 { #category : #initialization }
@@ -776,7 +663,7 @@ SHRBTextStyler >> isForWorkspace: aBoolean [
 	isForWorkspace := aBoolean
 ]
 
-{ #category : #formatting }
+{ #category : #private }
 SHRBTextStyler >> literalStyleSymbol: aValue [
 
 	aValue isSymbol
@@ -796,26 +683,9 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 ]
 
 { #category : #private }
-SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
-	^ anArgumentNode isDefinedByBlock
-		ifTrue: [ anArgumentNode isDefinition
-				ifTrue: [ #blockPatternArg ]
-				ifFalse: [ #blockArg ] ]
-		ifFalse: [ #argument ]
-]
-
-{ #category : #private }
-SHRBTextStyler >> methodOrBlockTempStyleFor: aVariableNode [
-
-	^ aVariableNode isDefinedByBlock
-		  ifTrue: [
-			  aVariableNode isDefinition
-				  ifTrue: [ #blockPatternTempVar ]
-				  ifFalse: [ #blockTempVar ] ]
-		  ifFalse: [
-			  aVariableNode isDefinition
-				  ifTrue: [ #patternTempVar ]
-				  ifFalse: [ #tempVar ] ]
+SHRBTextStyler >> parenthesisStyleName [
+	parentheseLevel isZero ifTrue: [ ^ #parenthesis ].
+	^ (#parenthesis asString , parentheseLevel asString) asSymbol
 ]
 
 { #category : #private }
@@ -845,22 +715,10 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
 
-	aVariableNode binding ifNil: [ ^ #default ].
-	aVariableNode isTempVariable ifTrue: [ ^ #tempVar ].
-	aVariableNode isGlobalVariable ifTrue: [ ^ #globalVar ].
-	"here we should add support for #classVar"
-	aVariableNode isClassVariable ifTrue: [
-		aVariableNode variable isPoolVariable ifTrue: [ ^ #poolConstant ].
-		^ #classVar ].
-	aVariableNode isInstanceVariable ifTrue: [ ^ #instVar ].
-	"for now we use temp variable here, we could now color them with their own color"
-	aVariableNode isWorkspaceVariable ifTrue: [ ^ #tempVar ].
-
-	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) ifTrue: [ ^ #incompleteIdentifier ].
-	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
-	aVariableNode isUndeclaredVariable ifTrue: [ ^ #undefinedIdentifier ].
-
-	^ #invalid
+	| style |
+	style := aVariableNode styleName.
+	style = #incompleteIdentifier & self class formatIncompleteIdentifiers not ifTrue: [ ^ #undefinedIdentifier ].
+	^ style
 ]
 
 { #category : #private }
@@ -898,7 +756,7 @@ SHRBTextStyler >> style: aText ast: ast [
 SHRBTextStyler >> styleCloseBracket: aBlockNode [
 	bracketLevel := bracketLevel - 1.
 	(aBlockNode right isZero or: [ aBlockNode value isNil ]) ifTrue:[ ^self ].
-	self addStyle: self currentClosedBracketStyleName from: aBlockNode right to: aBlockNode right
+	self addStyle: self bracketStyleName from: aBlockNode right to: aBlockNode right
 ]
 
 { #category : #private }
@@ -910,7 +768,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
-					self addStyle: self currentClosedParenthesisStyleName from: pos to: pos ]]
+					self addStyle: self parenthesisStyleName from: pos to: pos ]]
 ]
 
 { #category : #private }
@@ -918,7 +776,7 @@ SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
 	style := aBlockNode isFaulty
 		ifTrue: [ #invalid ]
-		ifFalse: [ self currentOpenedBracketStyleName ].
+		ifFalse: [ self bracketStyleName ].
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
@@ -931,7 +789,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 				do: [ :interval |
 					| pos |
 					pos := interval first.
-					self addStyle:  self currentOpenedParenthesisStyleName from: pos to: pos.
+					self addStyle:  self parenthesisStyleName from: pos to: pos.
 					parentheseLevel := parentheseLevel + 1 ]]
 ]
 
@@ -957,12 +815,6 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 		satisfying: [ :each| each isKindOf: TextAction ]
 		to: answer.
 	^ answer
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitArgumentVariableNode: anArgumentNode [
-
-	^ self addStyle: (self methodOrBlockArgStyleFor: anArgumentNode) forNode: anArgumentNode
 ]
 
 { #category : #visiting }
@@ -1019,6 +871,7 @@ at once, but for ordinary literal arrays, style every node"
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
+
 	| value link |
 	value := aLiteralValueNode value.
 
@@ -1028,13 +881,13 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
 	link := value isSymbol
-		ifTrue: [
-			self class environment
-				at: value
-				ifPresent: [ :aGlobal | TextClassLink className: value ]
-				ifAbsent: [ TextMethodLink selector: value ] ]
-		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
+		        ifTrue: [
+			        self class environment
+				        at: value
+				        ifPresent: [ :aGlobal | TextClassLink className: value ]
+				        ifAbsent: [ TextMethodLink selector: value ] ]
+		        ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attributes: { link } forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1042,7 +895,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 
 	style := aMessageNode selector isSelectorSymbol
-		ifTrue: [ #keyword ]
+		ifTrue: [ #selector ]
 		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
@@ -1075,7 +928,7 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 		do:
 			[ :keyword :position |
 			self
-				addStyle: #patternKeyword
+				addStyle: #patternSelector
 				attribute: link
 				from: position
 				to: position + keyword size - 1 ].
@@ -1105,7 +958,7 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword : position|
 	self
-		addStyle: #pragmaKeyword
+		addStyle: #pragma
 		from: position
 		to: position + keyword size ].
 
@@ -1123,36 +976,12 @@ SHRBTextStyler >> visitReturnNode: aReturnNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitSelfNode: aSelfNode [
-	self
-		addStyle: #self
-		forNode: aSelfNode
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 	self styleTempBars: aSequenceNode.
 	aSequenceNode temporaries do: [ :each | self visitNode: each ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
 	aSequenceNode periods
 		do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitSuperNode: aSuperNode [
-
-	self addStyle: #super forNode: aSuperNode
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitTemporaryVariableNode: aNode [
-
-	self addStyle: (self methodOrBlockTempStyleFor: aNode) forNode: aNode
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitThisContextNode: aThisContextNode [
-	self addStyle: #thisContext forNode: aThisContextNode
 ]
 
 { #category : #visiting }

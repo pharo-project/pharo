@@ -200,6 +200,20 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingTrueReturnValue [
 ]
 
 { #category : #tests }
+TFUFFIDerivedTypeMarshallingTest >> testStringArgumentsAreReleasedIfNeeded [
+
+	| stringToMarshall cString initialSize |
+	[
+		initialSize := TFDerivedType string allocatedStrings size.
+
+		stringToMarshall := 'áèïô å∫'.
+		cString := self stringToPointer: stringToMarshall.
+
+		self assert: TFDerivedType string allocatedStrings size equals: initialSize
+	] ensure: [ cString free ]
+]
+
+{ #category : #tests }
 TFUFFIDerivedTypeMarshallingTest >> testSumSignedLongLong [
 
 	| return |
