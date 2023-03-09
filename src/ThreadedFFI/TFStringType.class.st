@@ -66,16 +66,23 @@ TFStringType >> emitMarshallToPrimitive: anIRBuilder [
 
 ]
 
-{ #category : #writing }
+{ #category : #freeing }
 TFStringType >> freeValueIfNeeded: aCHeapValueHolder [
 	| pointer |
 
-	aCHeapValueHolder isNull ifTrue: [ ^ self ].
-	pointer := aCHeapValueHolder pointerAt: 1.
-	(self allocatedStrings includes: pointer) ifFalse: [ ^ self ].
+	aCHeapValueHolder isNull
+		ifTrue: [ ^ self ].
+
+	pointer := aCHeapValueHolder.
+
+	"If the pointer is a pointer to the string, and not the string directly"
+	(self allocatedStrings includes: pointer) ifFalse: [
+		pointer := aCHeapValueHolder pointerAt: 1.
+		(self allocatedStrings includes: pointer)
+			ifFalse: [ ^ self ]].
+
 	self allocatedStrings remove: pointer.
-	pointer isNull ifFalse: [ 
-		pointer free ]
+	pointer isNull ifFalse: [ pointer free ]
 ]
 
 { #category : #marshalling }
