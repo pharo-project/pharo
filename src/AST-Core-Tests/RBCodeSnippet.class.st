@@ -439,6 +439,20 @@ RBCodeSnippet class >> badSemantic [
 		self new source: 'thisContext := thisContext'; isFaulty: true; numberOfCritiques: 1.
 		self new source: 'Object := Object'; isFaulty: true; numberOfCritiques: 1.
 
+		"Shadowed reserved or global"
+		self new source: '| self | self := 1. ^ self'; value: 1.
+		self new source: '| super | super := 1. ^ super'; value: 1.
+		self new source: '| thisContext | thisContext := 1. ^ thisContext'; value: 1.
+		self new source: '| Object | Object := 1. ^ Object'; value: 1.
+		self new source: 'foo: self ^ self + 1'; isMethod: true; value: 2.
+		self new source: 'foo: super ^ super + 1'; isMethod: true; value: 2.
+		self new source: 'foo: thisContext ^ thisContext + 1'; isMethod: true; value: 2.
+		self new source: 'foo: Object ^ Object + 1'; isMethod: true; value: 2.
+		self new source: '[ :self | self + 1 ]'; value: 2.
+		self new source: '[ :super | super + 1 ]'; value: 2.
+		self new source: '[ :thisContext | thisContext + 1 ]'; value: 2.
+		self new source: '[ :Object | Object + 1 ]'; value: 2.
+
 		"Backend errors"
 		"FIXME: syntax error are thrown by the compiler even in *faulty* mode.
 		 FIXME: semantic analysis does not catch the error (backend issue)"
