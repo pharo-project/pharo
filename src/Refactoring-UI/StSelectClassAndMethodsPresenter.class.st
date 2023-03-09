@@ -1,11 +1,11 @@
 Class {
-	#name : #RBSelectClassAndMethodsPresenter,
-	#superclass : #RBAbstractSelectionPresenter,
-	#category : #'SystemCommands-RefactoringSupport'
+	#name : #StSelectClassAndMethodsPresenter,
+	#superclass : #StAbstractSelectionPresenter,
+	#category : #'Refactoring-UI'
 }
 
 { #category : #examples }
-RBSelectClassAndMethodsPresenter class >> example [
+StSelectClassAndMethodsPresenter class >> example [
 	<script>
 	^ (self label: 'example ...'
 		dropLabel: 'Pull up methods'
@@ -16,16 +16,16 @@ RBSelectClassAndMethodsPresenter class >> example [
 ]
 
 { #category : #specs }
-RBSelectClassAndMethodsPresenter class >> title [
+StSelectClassAndMethodsPresenter class >> title [
 	^ 'Methods'
 ]
 
 { #category : #attributes }
-RBSelectClassAndMethodsPresenter >> columnName [
+StSelectClassAndMethodsPresenter >> columnName [
 	^ 'Methods'
 ]
 
 { #category : #attributes }
-RBSelectClassAndMethodsPresenter >> columnSelector [
+StSelectClassAndMethodsPresenter >> columnSelector [
 	^ #selector
 ]

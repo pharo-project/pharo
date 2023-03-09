@@ -82,19 +82,18 @@ RBPushUpMethodDriver >> refactoring [
 { #category : #'initialization - data' }
 RBPushUpMethodDriver >> selectMethodsAndSuperclass [
 
-	| dialog classes |
+	| classes |
 	classes := class allSuperclasses removeAllSuchThat: [ :each |
 		           each == Object or: [ each == ProtoObject ] ].
-	dialog := RBSelectClassAndMethodsPresenter
-		          label: 'Methods to be pull up'
-		          dropLabel: 'Pull up methods of ' , class name , ' to:'
-		          withItems:
-			          (class methods sort: [ :a :b | a asString < b asString ])
-				          asOrderedCollection
-		          selecting: methods asOrderedCollection
-		          dropItems: classes
-		          acceptBlock: [ :item :items |
-			          superclass := item.
-			          methods := items ].
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ]
+	StSelectClassAndMethodsPresenter
+		label: 'Methods to be pull up'
+		dropLabel: 'Pull up methods of ' , class name , ' to:'
+		withItems:
+			(class methods sort: [ :a :b | a asString < b asString ])
+				asOrderedCollection
+		selecting: methods asOrderedCollection
+		dropItems: classes
+		acceptBlock: [ :item :items |
+			superclass := item.
+			methods := items ]
 ]

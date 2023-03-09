@@ -44,13 +44,13 @@ SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolCon
 SycPushDownMethodInSomeClassesCommand >> selectMethodsAndClasses [
 	| dialog class|
 	class := methods first origin.
-	dialog := RBMethodsSelectionPresenter
+	dialog := StMethodsSelectionPresenter
 		   label: 'Push down methods from ', class name
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
 			selecting: methods asOrderedCollection.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 	methods := dialog presenter selectedItems.
-	dialog := RBVariablesSelectionPresenter
+	dialog := StVariablesSelectionPresenter
 		   label: 'Push down in classes: '
 			withItems: (class subclasses sort: [ :a :b | a name < b name ]) asOrderedCollection
 			selecting: class subclasses.

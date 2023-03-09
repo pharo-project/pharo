@@ -1,16 +1,16 @@
 Class {
-	#name : #RBAbstractSelectionPresenter,
-	#superclass : #RBItemsSelectionPresenter,
+	#name : #StAbstractSelectionPresenter,
+	#superclass : #StItemsSelectionPresenter,
 	#instVars : [
 		'dropList',
 		'dropLabel',
 		'acceptBlock'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : #'Refactoring-UI'
 }
 
 { #category : #layout }
-RBAbstractSelectionPresenter class >> defaultLayout [
+StAbstractSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #dropLabel withConstraints: [ :c | c height: self labelHeight ];
 		add:
@@ -26,7 +26,7 @@ RBAbstractSelectionPresenter class >> defaultLayout [
 ]
 
 { #category : #specs }
-RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withItems: items selecting: selectedItems dropItems: dropItems acceptBlock: aBlock [
+StAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withItems: items selecting: selectedItems dropItems: dropItems acceptBlock: aBlock [
 	^ self new
 		label: aString
 		dropLabel: aString2
@@ -38,17 +38,17 @@ RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 ]
 
 { #category : #actions }
-RBAbstractSelectionPresenter >> accept [
+StAbstractSelectionPresenter >> accept [
 	acceptBlock value: self selectedItem value: table selectedItems
 ]
 
 { #category : #accessing }
-RBAbstractSelectionPresenter >> components [
+StAbstractSelectionPresenter >> components [
 	^ super components , { dropList . dropLabel }
 ]
 
 { #category : #initialization }
-RBAbstractSelectionPresenter >> initializeDropList [
+StAbstractSelectionPresenter >> initializeDropList [
 
 	dropList := self newDropList.
 	dropList
@@ -57,14 +57,7 @@ RBAbstractSelectionPresenter >> initializeDropList [
 ]
 
 { #category : #initialization }
-RBAbstractSelectionPresenter >> initializeWidgets [
-	super initializeWidgets .
-	dropLabel := self newLabel.
-	self initializeDropList
-]
-
-{ #category : #initialization }
-RBAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: items selecting: selItems dropItems: dropItems acceptBlock: aBlock [
+StAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: items selecting: selItems dropItems: dropItems acceptBlock: aBlock [
 	self label: aString withItems: items selecting: selItems.
 	dropLabel label: dropString.
 	dropList items: dropItems.
@@ -72,6 +65,6 @@ RBAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: 
 ]
 
 { #category : #accessing }
-RBAbstractSelectionPresenter >> selectedItem [
+StAbstractSelectionPresenter >> selectedItem [
 	^ dropList selectedItem
 ]
