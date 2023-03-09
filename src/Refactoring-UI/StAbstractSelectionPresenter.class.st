@@ -56,6 +56,13 @@ StAbstractSelectionPresenter >> initializeDropList [
 		displayIcon: [ :each | (self iconNamed: each systemIconName) ]
 ]
 
+{ #category : #'initialization - deprecated' }
+StAbstractSelectionPresenter >> initializeWidgets [
+	super initializeWidgets .
+	dropLabel := self newLabel.
+	self initializeDropList
+]
+
 { #category : #initialization }
 StAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: items selecting: selItems dropItems: dropItems acceptBlock: aBlock [
 	self label: aString withItems: items selecting: selItems.
