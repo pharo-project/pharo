@@ -216,6 +216,15 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 	selectors do: [:each | self copyDownMethod: each]
 ]
 
+{ #category : #actions }
+RBPullUpMethodRefactoring >> generateChanges [
+
+	self preconditions check.
+
+	self transform.
+	^ self changes
+]
+
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> preconditions [
 	self requestSuperClass.
