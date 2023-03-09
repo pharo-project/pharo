@@ -969,10 +969,10 @@ ClassDescription >> removeProtocol: aString [
 	"Remove each of the messages categorized under aString in the method
 	dictionary of the receiver. Then remove the protocol aString."
 
-	| categoryName |
-	categoryName := aString asSymbol.
-	(self organization listAtCategoryNamed: categoryName) do: [ :sel | self removeSelector: sel ].
-	self organization removeCategory: categoryName
+	| protocol |
+	protocol := aString asSymbol.
+	(self organization listAtCategoryNamed: protocol) do: [ :sel | self removeSelector: sel ].
+	self organization removeCategory: protocol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -1005,21 +1005,16 @@ ClassDescription >> reorganize [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInCategory: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
+ClassDescription >> selectorsInCategory: aProtocol [
 
-	| aColl |
-	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
-	^ aColl asArray sort
+	^ self selectorsInProtocol: aProtocol
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInProtocol: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
+ClassDescription >> selectorsInProtocol: aProtocol [
+	"Answer a list of the selectors of the receiver that are in aProtocol"
 
-	| aColl |
-	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
-	^ aColl asArray sort
+	^ (Set withAll: (self organization listAtCategoryNamed: aProtocol)) asArray sort
 ]
 
 { #category : #'pool variable' }
@@ -1248,10 +1243,10 @@ ClassDescription >> wantsChangeSetLogging [
 
 { #category : #organization }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [
-	"Answer the category of the argument, aSelector, in the organization of
+	"Answer the protcol of the argument, aSelector, in the organization of
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	^self organization categoryOfElement: aSelector
+	^ self organization categoryOfElement: aSelector
 ]
 
 { #category : #queries }

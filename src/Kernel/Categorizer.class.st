@@ -45,9 +45,9 @@ Class {
 
 { #category : #'class initialization' }
 Categorizer class >> allCategory [
-	"Return a symbol that represents the virtual all methods category."
+	"Return a symbol that represents the virtual all methods protocol."
 
-	^#'-- all --'
+	^ #'-- all --'
 ]
 
 { #category : #'class initialization' }
@@ -97,36 +97,25 @@ Categorizer class >> sortAllCategories [
 ]
 
 { #category : #operations }
-Categorizer >> addCategory: newCategory [
-	^ self addCategory: newCategory before: nil
+Categorizer >> addCategory: aProtocol [
+	^ self addCategory: aProtocol before: nil
 ]
 
 { #category : #operations }
-Categorizer >> addCategory: catString before: nextCategory [
-	"Add a new category named heading.
-	If default category exists and is empty, remove it.
-	If nextCategory is nil, then add the new one at the end,
-	otherwise, insert it before nextCategory."
-	| index newCategory |
-	newCategory := catString asSymbol.
-	(categoryArray indexOf: newCategory) > 0
-		ifTrue: [^self].	"heading already exists, so done"
-	index := categoryArray indexOf: nextCategory
-		ifAbsent: [categoryArray size + 1].
-	categoryArray := categoryArray
-		copyReplaceFrom: index
-		to: index-1
-		with: (Array with: newCategory).
-	categoryStops := categoryStops
-		copyReplaceFrom: index
-		to: index-1
-		with: (Array with: (index = 1
-				ifTrue: [0]
-				ifFalse: [categoryStops at: index-1])).
+Categorizer >> addCategory: aProtocol before: nextProtocol [
+	"Add a new protocol named heading. If default protocol exists and is empty, remove it.
+	If nextProtocol is nil, then add the new one at the end, otherwise, insert it before nextProtocol."
+
+	| index newProtocol |
+	newProtocol := aProtocol asSymbol.
+	(categoryArray indexOf: newProtocol) > 0 ifTrue: [ ^ self ]. "heading already exists, so done"
+	index := categoryArray indexOf: nextProtocol ifAbsent: [ categoryArray size + 1 ].
+	categoryArray := categoryArray copyReplaceFrom: index to: index - 1 with: (Array with: newProtocol).
+	categoryStops := categoryStops copyReplaceFrom: index to: index - 1 with: (Array with: (index = 1
+				                   ifTrue: [ 0 ]
+				                   ifFalse: [ categoryStops at: index - 1 ])).
 	"remove empty default category"
-	(newCategory ~= Default
-			and: [(self listAtCategoryNamed: Default) isEmpty])
-		ifTrue: [self removeCategory: Default]
+	(newProtocol ~= Default and: [ (self listAtCategoryNamed: Default) isEmpty ]) ifTrue: [ self removeCategory: Default ]
 ]
 
 { #category : #accessing }
@@ -143,100 +132,92 @@ Categorizer >> assertInvariant [
 
 { #category : #private }
 Categorizer >> basicRemoveElement: element [
-	"Remove the selector, element, from all categories."
-	| categoryIndex elementIndex nextStop newElements |
-	categoryIndex := 1.
+	"Remove the selector, element, from all protocols."
+
+	| protocolIndex elementIndex nextStop newElements |
+	protocolIndex := 1.
 	elementIndex := 0.
 	nextStop := 0.
 	"nextStop keeps track of the stops in the new element array"
 	newElements := (Array new: elementArray size) writeStream.
-	[(elementIndex := elementIndex + 1) <= elementArray size]
-		whileTrue:
-			[[elementIndex > (categoryStops at: categoryIndex)]
-				whileTrue:
-					[categoryStops at: categoryIndex put: nextStop.
-					categoryIndex := categoryIndex + 1].
-			(elementArray at: elementIndex) = element
-				ifFalse:
-					[nextStop := nextStop + 1.
-					newElements nextPut: (elementArray at: elementIndex)]].
-	[categoryIndex <= categoryStops size]
-		whileTrue:
-			[categoryStops at: categoryIndex put: nextStop.
-			categoryIndex := categoryIndex + 1].
+	[ (elementIndex := elementIndex + 1) <= elementArray size ] whileTrue: [
+		[ elementIndex > (categoryStops at: protocolIndex) ] whileTrue: [
+			categoryStops at: protocolIndex put: nextStop.
+			protocolIndex := protocolIndex + 1 ].
+		(elementArray at: elementIndex) = element ifFalse: [
+			nextStop := nextStop + 1.
+			newElements nextPut: (elementArray at: elementIndex) ] ].
+	[ protocolIndex <= categoryStops size ] whileTrue: [
+		categoryStops at: protocolIndex put: nextStop.
+		protocolIndex := protocolIndex + 1 ].
 	elementArray := newElements contents.
 	self assertInvariant
 ]
 
 { #category : #accessing }
 Categorizer >> categories [
-	"Answer an Array of categories (names)."
-	categoryArray ifNil: [^ nil].
-	(categoryArray size = 1
-		and: [categoryArray first = Default & (elementArray isEmpty)])
-		ifTrue: [^Array with: NullCategory].
-	^categoryArray
+	"Answer an Array of protocols (names)."
+
+	categoryArray ifNil: [ ^ nil ].
+	(categoryArray size = 1 and: [ categoryArray first = Default & elementArray isEmpty ]) ifTrue: [ ^ Array with: NullCategory ].
+	^ categoryArray
 ]
 
 { #category : #accessing }
 Categorizer >> categories: anArray [
-	"Reorder my categories to be in order of the argument, anArray. If the
+	"Reorder my protocols to be in order of the argument, anArray. If the
 	resulting organization does not include all elements, then give an error."
 
-	| newCategories newStops newElements newElementsSet catName list runningTotal |
-
+	| newProtocols newStops newElements newElementsSet protocol list runningTotal |
 	anArray size < 2 ifTrue: [ ^ self ].
 
-	newCategories := Array new: anArray size.
+	newProtocols := Array new: anArray size.
 	newStops := Array new: anArray size.
 	newElements := OrderedCollection new: anArray size.
 	runningTotal := 0.
-	1 to: anArray size do:
-		[:i |
-		catName := (anArray at: i) asSymbol.
-		list := self listAtCategoryNamed: catName.
+	1 to: anArray size do: [ :index |
+		protocol := (anArray at: index) asSymbol.
+		list := self listAtCategoryNamed: protocol.
 		newElements addAllLast: list.
-		newCategories at: i put: catName.
-		newStops at: i put: (runningTotal := runningTotal + list size)].
+		newProtocols at: index put: protocol.
+		newStops at: index put: (runningTotal := runningTotal + list size) ].
 	newElements := newElements asArray.
 	"create a temporary set for super-fast includes check"
 	newElementsSet := newElements asSet.
-	elementArray do:
-		[:element | "check to be sure all elements are included"
-		(newElementsSet includes: element)
-			ifFalse: [^self error: 'New categories must match old ones']].
+	elementArray do: [ :element | "check to be sure all elements are included"
+		(newElementsSet includes: element) ifFalse: [ ^ self error: 'New categories must match old ones' ] ].
 	"Everything is good, now update my three arrays."
-	categoryArray := newCategories.
+	categoryArray := newProtocols.
 	categoryStops := newStops.
 	elementArray := newElements
 ]
 
 { #category : #queries }
 Categorizer >> categoryOfElement: element [
-	"Answer the category associated with the argument, element."
+	"Answer the protocol associated with the argument, element."
 
 	| index |
 	index := self numberOfCategoryOfElement: element.
 	^ index = 0
-		ifTrue: [ nil]
-		ifFalse: [ categoryArray at: index ]
+		  ifTrue: [ nil ]
+		  ifFalse: [ categoryArray at: index ]
 ]
 
 { #category : #operations }
-Categorizer >> changeFromCategorySpecs: categorySpecs [
+Categorizer >> changeFromCategorySpecs: protocolSpecs [
 	"Tokens is an array of categorySpecs as scanned from a browser 'reorganize' pane, or built up by some other process, such as a scan of an environment."
 
-	| newCategories newStops temp cc currentStop oldElements newElements |
+	| newProtocol newStops temp cc currentStop oldElements newElements |
 	oldElements := elementArray asSet.
-	newCategories := Array new: categorySpecs size.
-	newStops := Array new: categorySpecs size.
+	newProtocol := Array new: protocolSpecs size.
+	newStops := Array new: protocolSpecs size.
 	currentStop := 0.
 	newElements := (Array new: 16) writeStream.
-	1 to: categorySpecs size do: [ :i |
-		| selectors catSpec |
-		catSpec := categorySpecs at: i.
-		newCategories at: i put: catSpec first asSymbol.
-		selectors := catSpec allButFirst
+	1 to: protocolSpecs size do: [ :i |
+		| selectors protocolSpec |
+		protocolSpec := protocolSpecs at: i.
+		newProtocol at: i put: protocolSpec first asSymbol.
+		selectors := protocolSpec allButFirst
 			collect: [ :each |
 				each isSymbol
 					ifTrue: [ each ]
@@ -250,7 +231,7 @@ Categorizer >> changeFromCategorySpecs: categorySpecs [
 		newStops at: i put: currentStop ].	"Ignore extra elements but don't lose any existing elements!"
 	oldElements := oldElements collect: [ :elem | Array with: (self categoryOfElement: elem) with: elem ].
 	newElements := newElements contents.
-	categoryArray := newCategories.
+	categoryArray := newProtocol.
 	(cc := categoryArray asSet) size = categoryArray size
 		ifFalse: [
 			"has duplicate element"

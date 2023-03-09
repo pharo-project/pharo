@@ -4,11 +4,11 @@ Extension { #name : #Categorizer }
 Categorizer >> changeFromString: aString [
 	"Parse the argument, aString, and make this be the receiver's structure."
 
-	| categorySpecs |
-	categorySpecs := aString parseLiterals.
+	| protocolSpecs |
+	protocolSpecs := aString parseLiterals.
 	"If nothing was scanned and I had no elements before, then default me"
-	(categorySpecs isEmpty and: [elementArray isEmpty])
+	(protocolSpecs isEmpty and: [elementArray isEmpty])
 		ifTrue: [^ self setDefaultList: Array new].
 
-	^ self changeFromCategorySpecs: categorySpecs
+	^ self changeFromCategorySpecs: protocolSpecs
 ]
