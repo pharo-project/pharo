@@ -54,17 +54,6 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
-{ #category : #errors }
-OCASTTranslator >> backendError: aMessage forNode: aNode [
-
-	SyntaxErrorNotification
-		inClass: Object
-		withCode: aNode methodNode source
-		doitFlag: false
-		errorMessage: aMessage
-		location: aNode startWithoutParentheses
-]
-
 { #category : #initialization }
 OCASTTranslator >> classForEffect [
 	^OCASTTranslatorForEffect
@@ -278,6 +267,16 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	effectTranslator visitInlinedBlockNode: block.
 	methodBuilder jumpBackTo: #start.
 	self isValueTranslator ifTrue: [ methodBuilder pushLiteral: nil ]
+]
+
+{ #category : #errors }
+OCASTTranslator >> emitRuntimeError: aNode [
+	"Runtime errors should only be emited on faulty code"
+
+	methodBuilder
+		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteral: aNode;
+		send: #signalSyntaxError:
 ]
 
 { #category : #'inline messages' }
@@ -506,13 +505,15 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	valueTranslator visitNode: anAssignmentNode value.
+	"Even in faulty mode, do not baspass the isWritable semantic to avoid very bad consequences on the image"
+	anAssignmentNode variable variable isWritable ifFalse: [ ^ self emitRuntimeError: anAssignmentNode variable ].
 	anAssignmentNode variable variable emitStore: methodBuilder
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
-	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	aBlockNode isError ifTrue: [ ^ self emitRuntimeError: aBlockNode ].
 
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
@@ -638,7 +639,7 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 
-	aMethodNode arguments size > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
+	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
 	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
@@ -666,10 +667,8 @@ OCASTTranslator >> visitNode: aNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [
-	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: anErrorNode;
-		send: #signalSyntaxError:
+
+	self emitRuntimeError: anErrorNode
 ]
 
 { #category : #'visitor - double dispatching' }

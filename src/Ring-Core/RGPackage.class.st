@@ -158,6 +158,13 @@ RGPackage >> definedTraits [
 ]
 
 { #category : #accessing }
+RGPackage >> definitionFor: aRGClassStrategy [
+	"Answer a <String>. Use aRGBehaviourStrategy to access the definition <String> for the receiver"
+
+	^ aRGClassStrategy definitionStringFor: self
+]
+
+{ #category : #accessing }
 RGPackage >> extendedBehaviors [
 
 	^ ((self extensionMethods collect: [:each | each parent]) collect: [:behavior |

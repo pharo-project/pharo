@@ -1593,15 +1593,20 @@ RubTextEditor >> nextCharacterIfAbsent: aBlock [
 
 { #category : #private }
 RubTextEditor >> nextWord: position [
-	| string index  initialIsAlphaNumeric |
-	string := self string.
-	index := position.
-	position >= string size ifTrue: [ ^ position ].
-	initialIsAlphaNumeric := self isWordCharacterAt: index -1 in: string.
+	| string index initialIsAlphaNumeric size |
 
-	[(index <= string size)
+	position <= 1 ifTrue:[ ^ 1 ].	
+	string := self string.
+	size := string size.
+	position >= size ifTrue: [ ^ size ].
+
+	index := position.
+	initialIsAlphaNumeric := self isWordCharacterAt: (index - 1) in: string.
+
+	[(index < size) 
 		and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]]
 			whileTrue: [index := index + 1].
+
 	^ index
 ]
 
@@ -1740,13 +1745,18 @@ RubTextEditor >> previousCharacterIfAbsent: aBlock [
 
 { #category : #private }
 RubTextEditor >> previousWord: position [
-	| string index  initialIsAlphaNumeric |
+	| string index initialIsAlphaNumeric size |
+	position <= 1 ifTrue: [ ^ 1 ].	
 	string := self string.
+	size := string size.
+	position > size ifTrue: [ ^ size ].
+	
 	index := position.
-	position <= 1 ifTrue: [ ^ position ].
 	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
+
 	[index := index - 1] doWhileTrue:
 		[(index > 0) and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]].
+
 	^ index + 1
 ]
 
@@ -2118,18 +2128,20 @@ RubTextEditor >> selectWord: aKeyboardEvent [
 ]
 
 { #category : #'new selection' }
-RubTextEditor >> selectWordMark: mark point: point [
-	| mark2 point2 |
-	"this method is used my mouse double click and drag.
+RubTextEditor >> selectWordMark: marker point: selectionPoint [
+	| marker2 selectionPoint2 |
+	"This method is used my mouse drag.
 	It selects the correct words between the original point and the selection cursor point"
-	mark < point ifTrue: [
-		mark2 := self previousWord: mark.
-		point2 := (self nextWord: point) - 1 ]
-	ifFalse: [
+	marker <= selectionPoint ifTrue: [
+		marker2 := self previousWord: marker.
+		selectionPoint2 := self nextWord: selectionPoint.
+	] ifFalse: [
 		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
-		mark2 := self nextWord: (mark>0 ifTrue:[mark] ifFalse:[1]).
-		point2 := (self previousWord: point)- 1  ].
-	self selectMark: mark2 point: point2
+		marker2 := self nextWord: (marker > 0 ifTrue:[ marker ] ifFalse:[ 1 ]).
+		selectionPoint2 := (self previousWord: selectionPoint) - 1.
+	].
+
+	self selectMark: marker2 point: selectionPoint2
 ]
 
 { #category : #'accessing - selection' }

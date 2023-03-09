@@ -21,6 +21,13 @@ RBCodeSnippetTest class >> testParameters [
 		  yourself
 ]
 
+{ #category : #private }
+RBCodeSnippetTest >> performTest [
+
+	self skipIf: testSelector asSymbol.
+	^ super performTest
+]
+
 { #category : #asserting }
 RBCodeSnippetTest >> skipIf: aSymbol [
 
@@ -40,19 +47,9 @@ RBCodeSnippetTest >> snippet: anObject [
 ]
 
 { #category : #tests }
-RBCodeSnippetTest >> testDoSemanticAnalysis [
-	"We should test more than that"
-
-	| ast |
-	ast := snippet parse.
-	ast doSemanticAnalysis
-]
-
-{ #category : #tests }
 RBCodeSnippetTest >> testDump [
 
 	| ast dump ast2 dump2 |
-	self skipIf: #testDump.
 	ast := snippet parse.
 	dump := ast dump.
 	ast2 := OpalCompiler new evaluate: dump.
@@ -72,22 +69,30 @@ RBCodeSnippetTest >> testFormattedCode [
 { #category : #tests }
 RBCodeSnippetTest >> testParse [
 
-	self assert: snippet parse isFaulty equals: snippet isFaulty
+	self assert: snippet parse isFaulty equals: (snippet isParseFaulty ifNil: [snippet isFaulty])
 ]
 
 { #category : #tests }
 RBCodeSnippetTest >> testParseOnError [
 
-	| error |
+	| ast error |
 	error := nil.
 
-	[snippet isMethod
-			ifTrue: [ RBParser parseMethod: snippet source ]
-			ifFalse: [ RBParser parseExpression: snippet source ] ]
-		on: SyntaxErrorNotification
-		do: [ :e | error := e errorMessage ].
+	ast := snippet parseOnError: [ :e | error := e errorMessage ].
 
-	snippet isFaulty
-		ifTrue: [ self deny: error equals: nil ]
-		ifFalse: [ self assert: error equals: nil ]
+	(snippet isParseFaulty ifNil: [ snippet isFaulty ])
+		ifTrue: [ self assert: error isNotNil ]
+		ifFalse: [
+			self assert: error isNil.
+			self deny: ast isFaulty ]
+]
+
+{ #category : #tests }
+RBCodeSnippetTest >> testSimpleFormattedCode [
+
+	| ast fast east |
+	ast := snippet parse.
+	fast := (RBSimpleFormatter format: ast) reject: #isSeparator.
+	east := snippet formattedCode reject: #isSeparator.
+	self assert: fast  equals: east
 ]

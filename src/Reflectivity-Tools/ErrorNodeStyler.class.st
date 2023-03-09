@@ -27,7 +27,7 @@ ErrorNodeStyler >> segmentMorphClass [
 
 { #category : #visiting }
 ErrorNodeStyler >> shouldStyleNode: aNode [
-	^ aNode isParseError
+	^ aNode isError
 ]
 
 { #category : #visiting }

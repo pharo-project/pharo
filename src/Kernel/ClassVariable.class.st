@@ -61,6 +61,12 @@ ClassVariable >> emitValue: methodBuilder [
 ]
 
 { #category : #testing }
+ClassVariable >> isAccessedBy: aBehavior [
+
+	^ (aBehavior hasMethodAccessingVariable: self) or: [ aBehavior class hasMethodAccessingVariable: self ]
+]
+
+{ #category : #testing }
 ClassVariable >> isClassVariable [
 	^ true
 ]
@@ -78,7 +84,14 @@ ClassVariable >> isPoolVariable [
 
 { #category : #testing }
 ClassVariable >> isReferenced [
-	^ self possiblyUsingClasses anySatisfy: [ :behavior | behavior hasMethodAccessingVariable: self]
+
+	(self definingClass withAllSubclasses anySatisfy: [ :behavior | self isAccessedBy: behavior ]) ifTrue: [ ^ true ].
+
+	"For pool variables we need to add the poolUsers and it's subclasses"
+	self isPoolVariable ifTrue: [
+		((self definingClass poolUsers flatCollect: [ :each | each withAllSubclasses ]) anySatisfy: [ :behavior | self isAccessedBy: behavior ]) ifTrue: [ ^ true ] ].
+
+	^ false
 ]
 
 { #category : #testing }
