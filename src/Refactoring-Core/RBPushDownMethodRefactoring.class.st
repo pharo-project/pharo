@@ -56,6 +56,15 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 	]
 ]
 
+{ #category : #actions }
+RBPushDownMethodRefactoring >> generateChanges [
+
+	self preconditions check.
+
+	self transform.
+	^ self changes
+]
+
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> preconditions [
 
