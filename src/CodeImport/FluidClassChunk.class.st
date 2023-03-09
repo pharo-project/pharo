@@ -6,9 +6,7 @@ Class {
 
 { #category : #visiting }
 FluidClassChunk >> accept: aVisitor [
-	self halt. 
-	self flag: #todo. 
-	"we should check the logic of the visitCodeChunk and adapt it to the fluid class."
+
 	^ aVisitor visitFluidClassChunk: self
 ]
 
