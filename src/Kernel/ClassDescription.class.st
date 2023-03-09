@@ -27,41 +27,33 @@ ClassDescription >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
-	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
+ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 
-	priorMethodOrNil := self
-		compiledMethodAt: selector
-		ifAbsent: [ nil ].
+	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
+	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	oldProtocol := self organization categoryOfElement: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self organization
-			classify: selector
-			under: (category = Protocol unclassified
-				ifTrue: [ oldProtocol ]
-				ifFalse: [ category ]) ].
+		self organization classify: selector under: (aProtocol = Protocol unclassified
+				 ifTrue: [ oldProtocol ]
+				 ifFalse: [ aProtocol ]) ].
 	newProtocol := self organization categoryOfElement: selector.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethodOrNil isNil or: [ priorOriginOrNil ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifFalse: [
-			"If protocol changed and someone is from different package, I need to throw a method recategorized"
+		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			self
 				notifyRepackage: selector
 				method: compiledMethod
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance
-				methodChangedFrom: priorMethodOrNil
-				to: compiledMethod
-				oldProtocol: oldProtocol ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #organization }
@@ -381,62 +373,57 @@ ClassDescription >> compile: code classified: heading [
 	object that converts to a string or a PositionableStream on an object that
 	converts to a string."
 
-	^self
-		compile: code
-		classified: heading
-		notifying: nil
+	^ self compile: code classified: heading notifying: nil
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: text classified: category notifying: requestor [
+ClassDescription >> compile: text classified: aProtocol notifying: requestor [
+
 	| stamp |
 	stamp := self acceptsLoggingOfCompilation
-		ifTrue: [ Author changeStamp ]
-		ifFalse: [ nil ].
+		         ifTrue: [ Author changeStamp ]
+		         ifFalse: [ nil ].
 	^ self
-		compile: text
-		classified: category
-		withStamp: stamp
-		notifying: requestor
+		  compile: text
+		  classified: aProtocol
+		  withStamp: stamp
+		  notifying: requestor
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: text classified: category withStamp: changeStamp notifying: requestor [
+ClassDescription >> compile: text classified: aProtocol withStamp: changeStamp notifying: requestor [
+
 	^ self
-		compile: text
-		classified: category
-		withStamp: changeStamp
-		notifying: requestor
-		logSource: self acceptsLoggingOfCompilation
+		  compile: text
+		  classified: aProtocol
+		  withStamp: changeStamp
+		  notifying: requestor
+		  logSource: self acceptsLoggingOfCompilation
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: text classified: category withStamp: changeStamp notifying: requestor logSource: logSource [
+ClassDescription >> compile: text classified: aProtocol withStamp: changeStamp notifying: requestor logSource: logSource [
 
 	| method selector |
-
 	method := self compiler
-		source: text;
-		requestor: requestor;
-		failBlock:  [ ^nil ];
-		compile.
+		          source: text;
+		          requestor: requestor;
+		          failBlock: [ ^ nil ];
+		          compile.
 
 	selector := method selector.
 	logSource ifTrue: [
 		self
-			logMethodSource: (requestor ifNotNil: [ :r | r text ] ifNil: [ text ]) "the requestor text might have been changed by the compiler and may be different thant text argument"
+			logMethodSource: (requestor
+					 ifNotNil: [ :r | r text ]
+					 ifNil: [ text ])
 			forMethod: method
-			inCategory: category
-			withStamp: changeStamp].
+			inCategory: aProtocol
+			withStamp: changeStamp "the requestor text might have been changed by the compiler and may be different thant text argument" ].
 
-	self
-		addAndClassifySelector: selector
-		withMethod: method
-		inProtocol: category.
+	self addAndClassifySelector: selector withMethod: method inProtocol: aProtocol.
 
-	self instanceSide
-		noteCompilationOfMethod: method
-		meta: self isClassSide.
+	self instanceSide noteCompilationOfMethod: method meta: self isClassSide.
 
 	^ selector
 ]
@@ -445,24 +432,21 @@ ClassDescription >> compile: text classified: category withStamp: changeStamp no
 ClassDescription >> compile: code notifying: requestor [
 	"Refer to the comment in Behavior|compile:notifying:."
 
-	^self compile: code
-		 classified: Protocol unclassified
-		 notifying: requestor
+	^ self compile: code classified: Protocol unclassified notifying: requestor
 ]
 
 { #category : #compiling }
-ClassDescription >> compileSilently: code classified: category [
-	"Compile the code and classify the resulting method in the given category, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+ClassDescription >> compileSilently: code classified: aProtocol [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
 
-	^ self compileSilently: code classified: category notifying: nil
+	^ self compileSilently: code classified: aProtocol notifying: nil
 ]
 
 { #category : #compiling }
-ClassDescription >> compileSilently: code classified: category notifying: requestor [
-	"Compile the code and classify the resulting method in the given category, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+ClassDescription >> compileSilently: code classified: aProtocol notifying: requestor [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
 
-	^ SystemAnnouncer uniqueInstance
-		suspendAllWhile: [self compile: code classified: category notifying: requestor]
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: code classified: aProtocol notifying: requestor ]
 ]
 
 { #category : #copying }
@@ -478,50 +462,38 @@ ClassDescription >> copy: sel from: class [
 ]
 
 { #category : #copying }
-ClassDescription >> copy: sel from: class classified: cat [
-	"Install the method associated with the first arugment, sel, a message
+ClassDescription >> copy: aSelector from: class classified: aProtocol [
+	"Install the method associated with the first arugment, aSelector, a message
 	selector, found in the method dictionary of the second argument, class,
 	as one of the receiver's methods. Classify the message under the third
-	argument, cat."
+	argument, aProtocol."
 
-	| code category |
+	| code protocol |
 	"Useful when modifying an existing class"
-	code := class sourceCodeAt: sel.
-	code ifNotNil:
-			[cat
-				ifNil: [category := class organization categoryOfElement: sel]
-				ifNotNil: [category := cat].
-			(self includesLocalSelector: sel)
-				ifTrue: [code asString = (self sourceCodeAt: sel) asString
-							ifFalse: [self error: self name
-										, ' '
-										, sel
-										, ' will be redefined if you proceed.']].
-			self compile: code classified: category]
+	code := class sourceCodeAt: aSelector.
+	code ifNotNil: [
+		protocol := aProtocol ifNil: [ class organization categoryOfElement: aSelector ].
+		(self includesLocalSelector: aSelector) ifTrue: [
+			code asString = (self sourceCodeAt: aSelector) asString ifFalse: [ self error: self name , ' ' , aSelector , ' will be redefined if you proceed.' ] ].
+		self compile: code classified: protocol ]
 ]
 
 { #category : #copying }
-ClassDescription >> copyAll: selArray from: class [
+ClassDescription >> copyAll: arrayOfSelectors from: class [
 	"Install all the methods found in the method dictionary of the second
 	argument, class, as the receiver's methods. Classify the messages under
 	-As yet not classified-."
 
-	self copyAll: selArray
-		from: class
-		classified: nil
+	self copyAll: arrayOfSelectors from: class classified: nil
 ]
 
 { #category : #copying }
-ClassDescription >> copyAll: selArray from: class classified: cat [
+ClassDescription >> copyAll: arrayOfSelectors from: class classified: aProtocol [
 	"Install all the methods found in the method dictionary of the second
 	argument, class, as the receiver's methods. Classify the messages under
-	the third argument, cat."
+	the third argument, aProtocol."
 
-	selArray do: [:s |
-		(class includesLocalSelector: s) ifTrue: [
-			self copy: s
-				from: class
-				classified: cat ] ]
+	arrayOfSelectors do: [ :selector | (class includesLocalSelector: selector) ifTrue: [ self copy: selector from: class classified: aProtocol ] ]
 ]
 
 { #category : #copying }
@@ -531,28 +503,24 @@ ClassDescription >> copyAllCategoriesFrom: aClass [
 	these categories into the method dictionary of the receiver, classified
 	under the appropriate categories."
 
-	aClass organization categories do: [:cat | self copyCategory: cat from: aClass]
+	aClass organization categories do: [ :protocol | self copyCategory: protocol from: aClass ]
 ]
 
 { #category : #copying }
-ClassDescription >> copyCategory: cat from: class [
-	"Specify that one of the categories of messages for the receiver is cat, as
+ClassDescription >> copyCategory: aProtocol from: class [
+	"Specify that one of the categories of messages for the receiver is aProtocol, as
 	found in the class, class. Copy each message found in this category."
 
-	self copyCategory: cat
-		from: class
-		classified: cat
+	self copyCategory: aProtocol from: class classified: aProtocol
 ]
 
 { #category : #copying }
-ClassDescription >> copyCategory: cat from: aClass classified: newCat [
+ClassDescription >> copyCategory: aProtocol from: aClass classified: newProtocol [
 	"Specify that one of the categories of messages for the receiver is the
-	third argument, newCat. Copy each message found in the category cat in
-	class aClass into this new category."
+	third argument, newProtocol. Copy each message found in the protocol cat in
+	class aClass into this new protocol."
 
-	self copyAll: (aClass organization listAtCategoryNamed: cat)
-		from: aClass
-		classified: newCat
+	self copyAll: (aClass organization listAtCategoryNamed: aProtocol) from: aClass classified: newProtocol
 ]
 
 { #category : #slots }
@@ -883,14 +851,11 @@ ClassDescription >> noteCompilationOfMethod: aCompiledMethod meta: isMeta [
 ]
 
 { #category : #'organization updating' }
-ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
-	(self compiledMethodAt: selector ifAbsent: [ nil ])
-		ifNotNil: [ :method |
-			SystemAnnouncer uniqueInstance
-				methodRecategorized: method
-				oldProtocol: oldCategory ]
+
+	(self compiledMethodAt: selector ifAbsent: [ nil ]) ifNotNil: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
 ]
 
 { #category : #private }
@@ -1002,11 +967,11 @@ ClassDescription >> removeMethodTag: aSymbol [
 { #category : #'accessing - method dictionary' }
 ClassDescription >> removeProtocol: aString [
 	"Remove each of the messages categorized under aString in the method
-	dictionary of the receiver. Then remove the category aString."
+	dictionary of the receiver. Then remove the protocol aString."
+
 	| categoryName |
 	categoryName := aString asSymbol.
-	(self organization listAtCategoryNamed: categoryName) do:
-		[:sel | self removeSelector: sel].
+	(self organization listAtCategoryNamed: categoryName) do: [ :sel | self removeSelector: sel ].
 	self organization removeCategory: categoryName
 ]
 
@@ -1068,8 +1033,7 @@ ClassDescription >> sharedPoolOfVarNamed: aString [
 ClassDescription >> sharedPoolString [
 	"Answer a string of my shared pools separated by spaces."
 
-	^String streamContents: [ :stream |
-		self sharedPoolStringOn: stream ]
+	^ String streamContents: [ :stream | self sharedPoolStringOn: stream ]
 ]
 
 { #category : #printing }
