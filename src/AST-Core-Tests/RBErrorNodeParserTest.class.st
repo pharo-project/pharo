@@ -155,7 +155,7 @@ RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
 	self assert: node isEnglobingError.
 	self assert: node isUnfinishedStatement.
 	self assert: node errorMessage equals: 'Missing opener for closer: ]'.
-	self assert: node formattedCode equals: ' 1 + 2]'
+	self assert: node formattedCode equals: '1 + 2 ]'
 ]
 
 { #category : #tests }
@@ -265,7 +265,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
-	self assert: node messages first formattedCode equals: ' '.
+	self assert: node messages first formattedCode equals: ''.
 
 	self assert: node messages second isFaulty. "Faulty because there is no receiver!"
 	self assert: node messages second selector equals: #foo.
@@ -290,7 +290,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
-	self assert: node messages first formattedCode equals: ' '.
+	self assert: node messages first formattedCode equals: ''.
 
 	self assert: node messages second isParseError.
 	self assert: node messages second sourceInterval equals: (2 to: 1).
@@ -322,7 +322,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
-	self assert: node messages first formattedCode equals: ' 1 foo'.
+	self assert: node messages first formattedCode equals: '1 foo'.
 
 	self deny: node messages first receiver isFaulty.
 	self assert: node messages first receiver isMessage.
@@ -351,7 +351,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
-	self assert: node messages first formattedCode equals: ' 1'.
+	self assert: node messages first formattedCode equals: '1'.
 
 	self deny: node messages first receiver isFaulty.
 	self assert: node messages first receiver value equals: 1.
@@ -369,7 +369,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 
 	| source node |
-	source := '#[ 1 hello 3]'.
+	source := '#[ 1 hello 3 ]'.
 	node := self parserClass parseFaultyExpression: source.
 
 	self assert: node isFaulty.
@@ -387,7 +387,7 @@ RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 	self deny: node contents third isFaulty.
 	self assert: node contents third value equals: 3.
 
-	self assert: node sourceInterval equals: (1 to: 13).
+	self assert: node sourceInterval equals: (1 to: 14).
 	self assert: node formattedCode equals: source
 ]
 

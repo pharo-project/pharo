@@ -21,6 +21,13 @@ RBCodeSnippetTest class >> testParameters [
 		  yourself
 ]
 
+{ #category : #private }
+RBCodeSnippetTest >> performTest [
+
+	self skipIf: testSelector asSymbol.
+	^ super performTest
+]
+
 { #category : #asserting }
 RBCodeSnippetTest >> skipIf: aSymbol [
 
@@ -43,7 +50,6 @@ RBCodeSnippetTest >> snippet: anObject [
 RBCodeSnippetTest >> testDump [
 
 	| ast dump ast2 dump2 |
-	self skipIf: #testDump.
 	ast := snippet parse.
 	dump := ast dump.
 	ast2 := OpalCompiler new evaluate: dump.

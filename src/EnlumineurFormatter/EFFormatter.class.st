@@ -2137,12 +2137,16 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 EFFormatter >> visitEnglobingErrorNode: aNode [
 
-	self writeString: aNode value.
+	aNode value = '' ifFalse: [
+		self writeString: aNode value.
+		codeStream space ].
 	self formatBlockArgumentsFor: aNode.
-	aNode children do: [ :e |
+	aNode children
+		do: [ :e | self visitNode: e ]
+		separatedBy: [ codeStream space ].
+	aNode valueAfter = '' ifFalse: [
 		codeStream space.
-		self visitNode: e ].
-	self writeString: aNode valueAfter
+		self writeString: aNode valueAfter ]
 ]
 
 { #category : #visiting }
