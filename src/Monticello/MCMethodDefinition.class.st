@@ -18,11 +18,11 @@ Class {
 	#instVars : [
 		'classIsMeta',
 		'source',
-		'category',
 		'selector',
 		'className',
 		'timeStamp',
-		'sortKey'
+		'sortKey',
+		'protocol'
 	],
 	#classVars : [
 		'Definitions',
@@ -101,9 +101,8 @@ MCMethodDefinition class >> shutDown [
 
 { #category : #comparing }
 MCMethodDefinition >> = aDefinition [
-	^ super = aDefinition
-		and: [ aDefinition category = self category
-		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
+
+	^ super = aDefinition and: [ aDefinition protocol = self protocol and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
 { #category : #visiting }
@@ -123,24 +122,24 @@ MCMethodDefinition >> actualClass [
 
 { #category : #installing }
 MCMethodDefinition >> addMethodAdditionTo: aCollection [
+
 	| methodAddition |
 	methodAddition := MethodAddition new
-		compile: source
-		classified: category
-		withStamp: timeStamp
-		notifying: nil
-		logSource: true
-		inClass: self actualClass.
+		                  compile: source
+		                  classified: protocol
+		                  withStamp: timeStamp
+		                  notifying: nil
+		                  logSource: true
+		                  inClass: self actualClass.
 	"This might raise an exception and never return"
 	methodAddition createCompiledMethod.
-	aCollection add: methodAddition.
-
+	aCollection add: methodAddition
 ]
 
 { #category : #'accessing - backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
-	^ category
+	^ protocol
 ]
 
 { #category : #accessing }
@@ -150,21 +149,21 @@ MCMethodDefinition >> classIsMeta [
 
 { #category : #accessing }
 MCMethodDefinition >> className [
-	^className
+
+	^ className
 ]
 
 { #category : #printing }
 MCMethodDefinition >> description [
-	^ Array	
-		with: className
-		with: selector
-		with: classIsMeta
+
+	^ Array with: className with: selector with: classIsMeta
 ]
 
 { #category : #accessing }
 MCMethodDefinition >> diffSource [
-	^'"protocol: ', self protocol,'"
-', self source.
+
+	^ '"protocol: ' , self protocol , '"
+' , self source
 ]
 
 { #category : #printing }
@@ -189,23 +188,19 @@ MCMethodDefinition >> hash [
 	| hash |
 	hash := String stringHash: classIsMeta asString initialHash: 0.
 	hash := String stringHash: source initialHash: hash.
-	hash := String stringHash: category initialHash: hash.
+	hash := String stringHash: protocol initialHash: hash.
 	hash := String stringHash: className initialHash: hash.
 	^ hash
 ]
 
 { #category : #serializing }
-MCMethodDefinition >> initializeWithClassName: classString
-classIsMeta: metaBoolean
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
+MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBoolean selector: selectorString category: aProtocol timeStamp: timeString source: sourceString [
+
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := catString
-		ifNil: [ #'as yet unclassified']
-		ifNotNil: [ (catString asSymbol) ifEmpty: [#'as yet unclassified']].
+	protocol := aProtocol
+		            ifNil: [ #'as yet unclassified' ]
+		            ifNotNil: [ aProtocol asSymbol ifEmpty: [ #'as yet unclassified' ] ].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings
@@ -218,7 +213,7 @@ MCMethodDefinition >> isCodeDefinition [
 
 { #category : #installing }
 MCMethodDefinition >> isExtensionMethod [
-	^ category beginsWith: '*'
+	^ protocol beginsWith: '*'
 ]
 
 { #category : #installing }
@@ -253,14 +248,14 @@ MCMethodDefinition >> isMethodDefinition [
 { #category : #installing }
 MCMethodDefinition >> isOverrideMethod [
 	"this oughta check the package"
-	^ self isExtensionMethod and: [category endsWith: '-override']
+	^ self isExtensionMethod and: [protocol endsWith: '-override']
 ]
 
 { #category : #accessing }
 MCMethodDefinition >> load [
 	self actualClass
 		compile: source
-		classified: category
+		classified: protocol
 		withStamp: timeStamp
 		notifying: nil
 ]
@@ -272,15 +267,11 @@ MCMethodDefinition >> overridenMethodOrNil [
 	Preconditions: 
 	  - self actualClass is installed in the System Dictionary.
 	  - self isOverrideMethod is true."
-	
+
 	| realMethod |
-	realMethod := self actualClass
-		compiledMethodAt: self selector
-		ifAbsent: [ ^ nil ].
-		
-	^ SourceFiles
-		changeRecordsFor: realMethod asRingDefinition
-		detect: [ :protocol | protocol ~= category ]
+	realMethod := self actualClass compiledMethodAt: self selector ifAbsent: [ ^ nil ].
+
+	^ SourceFiles changeRecordsFor: realMethod asRingDefinition detect: [ :p | p ~= protocol ]
 ]
 
 { #category : #installing }
@@ -299,49 +290,49 @@ MCMethodDefinition >> postloadOver: aDefinition [
 { #category : #annotations }
 MCMethodDefinition >> printAnnotations: requests on: aStream [
 	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
-	
-	requests do: [ :aRequest |
-		aRequest == #timeStamp ifTrue: [ aStream nextPutAll: self timeStamp ].
-		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self category ].
-		aRequest == #requirements ifTrue: [
-			self requirements do: [ :req |
-				aStream nextPutAll: req ] separatedBy: [ aStream space ]].
-	] separatedBy: [ aStream space ].
+
+	requests
+		do: [ :aRequest |
+			aRequest == #timeStamp ifTrue: [ aStream nextPutAll: self timeStamp ].
+			aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self protocol ].
+			aRequest == #requirements ifTrue: [ self requirements do: [ :req | aStream nextPutAll: req ] separatedBy: [ aStream space ] ] ]
+		separatedBy: [ aStream space ]
 ]
 
 { #category : #accessing }
 MCMethodDefinition >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
-	^ category
+	^ protocol
 ]
 
 { #category : #installing }
 MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 	"Safely remove the given selector from the target class.
 	Be careful not to remove the selector when it has wandered
-	to another package, but remove the category if it is empty."
+	to another package, but remove the protocol if it is empty."
 
 	| newProtocol |
 	newProtocol := aClass organization categoryOfElement: aSelector.
 	newProtocol
 		ifNotNil: [ 
 			"If moved to and fro extension, ignore removal"
-			(category beginsWith: '*') = (newProtocol beginsWith: '*')
+			(protocol beginsWith: '*') = (newProtocol beginsWith: '*')
 				ifFalse: [ ^ self ].	"Check if moved between different extension categories"
-			((category beginsWith: '*') and: [ category ~= newProtocol ])
+			((protocol beginsWith: '*') and: [ protocol ~= newProtocol ])
 				ifTrue: [ ^ self ] ].
 	aClass removeSelector: aSelector.
-	aClass organization removeProtocolIfEmpty: category
+	aClass organization removeProtocolIfEmpty: protocol
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 MCMethodDefinition >> requirements [
 	^ Array with: className
 ]
 
 { #category : #accessing }
 MCMethodDefinition >> selector [
-	^selector
+
+	^ selector
 ]
 
 { #category : #printing }

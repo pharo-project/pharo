@@ -17,7 +17,7 @@ MCMethodDefinition >> asRGDefinition [
 MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
-		| def classDef metaclassDef parent protocol |
+		| def classDef metaclassDef parent aProtocol |
 		classDef := anRGEnvironment ensureClassNamed: self className asSymbol.
 
 		classDef isTrait
@@ -41,9 +41,9 @@ MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		def author: (self authorForStamp: self timeStamp).
 		def time: (self timeForStamp: self timeStamp).
 
-		protocol := parent ensureProtocolNamed: self category asSymbol.
-		parent addProtocol: protocol.
-		def protocol: protocol.
+		aProtocol := parent ensureProtocolNamed: self category asSymbol.
+		parent addProtocol: aProtocol.
+		def protocol: aProtocol.
 		def
 	]
 ]
