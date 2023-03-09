@@ -482,7 +482,7 @@ String >> < aString [
 
 	" 'def' < 'abc' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) < 0
+	^ (self compare: self with: aString) < 0
 ]
 
 { #category : #comparing }
@@ -496,7 +496,7 @@ String >> <= aString [
 
 	" 'def' <= 'abc' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) <= 0
+	^ (self compare: self with: aString) <= 0
 ]
 
 { #category : #comparing }
@@ -511,7 +511,7 @@ String >> = aString [
 	" 'def' = 'abc' >>> false"
 
 	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
-	^ (self compare: self with: aString collated: AsciiOrder) = 0
+	^ (self compare: self with: aString) = 0
 ]
 
 { #category : #comparing }
@@ -525,7 +525,7 @@ String >> > aString [
 
 	" 'abc' > 'def' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) > 0
+	^ (self compare: self with: aString) > 0
 ]
 
 { #category : #comparing }
@@ -539,7 +539,7 @@ String >> >= aString [
 
 	" 'abc' >= 'def' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) >= 0
+	^ (self compare: self with: aString) >= 0
 ]
 
 { #category : #comparing }
@@ -975,6 +975,16 @@ String >> compare: aString caseSensitive: aBool [
 		       ifTrue: [ CaseSensitiveOrder ]
 		       ifFalse: [ CaseInsensitiveOrder ].
 	^ (self compare: self with: aString collated: map) sign + 2
+]
+
+{ #category : #verification }
+String >> compare: string1 with: string2 [
+
+	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [
+		^ string1 compareWith: string2 "Not giving the order allows to use the jitted version of the primitive" ].
+
+	"Primitive does not fail properly right now"
+	^ String compare: string1 with: string2 collated: AsciiOrder
 ]
 
 { #category : #comparing }
