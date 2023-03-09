@@ -12,6 +12,12 @@ Class {
 	#category : #'CodeImport-Utilities'
 }
 
+{ #category : #binding }
+MethodChunkCompilerRequestor >> bindingOf: aString [
+
+	^ nil
+]
+
 { #category : #accessing }
 MethodChunkCompilerRequestor >> fileCompileRequestor [
 	^ fileCompileRequestor
@@ -20,6 +26,12 @@ MethodChunkCompilerRequestor >> fileCompileRequestor [
 { #category : #accessing }
 MethodChunkCompilerRequestor >> fileCompileRequestor: anObject [
 	fileCompileRequestor := anObject
+]
+
+{ #category : #binding }
+MethodChunkCompilerRequestor >> hasBindingOf: aString [
+
+	^ false
 ]
 
 { #category : #accessing }

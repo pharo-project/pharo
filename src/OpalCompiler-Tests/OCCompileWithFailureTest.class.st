@@ -11,6 +11,18 @@ Class {
 	#category : #'OpalCompiler-Tests-Source'
 }
 
+{ #category : #binding }
+OCCompileWithFailureTest >> bindingOf: aString [
+
+	^ nil
+]
+
+{ #category : #binding }
+OCCompileWithFailureTest >> hasBindingOf: aString [
+
+	^ false
+]
+
 { #category : #'interactive error protocol' }
 OCCompileWithFailureTest >> notify: aMessage at: positon in: object [
 	"ingnore, for testEmptyBlockArg"
