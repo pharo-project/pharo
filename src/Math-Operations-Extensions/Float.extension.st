@@ -177,13 +177,6 @@ Float class >> fmax [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Float class >> fmaxLn [
-	"Answer the logarithm of the maximum finite floating point value representable."
-
-	^ MaxValLn
-]
-
-{ #category : #'*Math-Operations-Extensions' }
 Float class >> fmin [
 	"Answer minimum positive representable value."
 
@@ -230,6 +223,13 @@ Float class >> machineEpsilon [
 	Compute it as the difference between 1.0 and previous representable value"
 
 	^1.0 timesTwoPower: 1 - self precision
+]
+
+{ #category : #'*Math-Operations-Extensions' }
+Float class >> maxLog [
+	"Answer maximum log value representable"
+
+	^ MaxValLn
 ]
 
 { #category : #'*Math-Operations-Extensions' }
