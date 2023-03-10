@@ -3,7 +3,7 @@ A copied variable is an arg or temp var that is copied into a block that later r
 "
 Class {
 	#name : #CopiedLocalVariable,
-	#superclass : #TemporaryVariable,
+	#superclass : #LocalVariable,
 	#instVars : [
 		'originalVar'
 	],
@@ -34,6 +34,11 @@ CopiedLocalVariable >> isArgumentVariable [
 { #category : #testing }
 CopiedLocalVariable >> isCopying [
 	^true
+]
+
+{ #category : #testing }
+CopiedLocalVariable >> isTempVariable [
+	^ originalVar isTempVariable
 ]
 
 { #category : #'read/write usage' }
