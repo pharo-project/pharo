@@ -8,7 +8,7 @@ Class {
 StMethodsSelectionPresenter class >> example [
 	<script>
 	^ (self label: 'example ...'
-		withItems: SycExtractMethodCommand methods
+		withItems: self class methods
 		selecting: {} )
 ]
 

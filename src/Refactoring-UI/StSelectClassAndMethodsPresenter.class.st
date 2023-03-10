@@ -9,9 +9,9 @@ StSelectClassAndMethodsPresenter class >> example [
 	<script>
 	^ (self label: 'example ...'
 		dropLabel: 'Pull up methods'
-		withItems: SycExtractMethodCommand methods
+		withItems: self class methods
 		selecting: OrderedCollection new
-		dropItems: SycExtractMethodCommand allSuperclasses
+		dropItems: self class allSubclasses
 		acceptBlock: [ :item :items |  ] )
 ]
 
