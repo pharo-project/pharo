@@ -177,6 +177,13 @@ Float class >> fmax [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
+Float class >> fmaxLn [
+	"Answer the logarithm of the maximum finite floating point value representable."
+
+	^ MaxValLn
+]
+
+{ #category : #'*Math-Operations-Extensions' }
 Float class >> fmin [
 	"Answer minimum positive representable value."
 
