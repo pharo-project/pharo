@@ -20,12 +20,9 @@ Class {
 }
 
 { #category : #'accessing - method dictionary' }
-TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
+TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aCategory.
+	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
 	self propagateChangeOf: selector
 ]
@@ -80,17 +77,14 @@ TraitedClass class >> traitUsers [
 ]
 
 { #category : #'accessing - method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
-
+TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
+
 	self localMethodDict at: selector put: compiledMethod.
 
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aCategory.
+	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
-	TraitChange addSelector: selector on: self.
+	TraitChange addSelector: selector on: self
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -257,22 +251,20 @@ TraitedClass >> rebuildMethodDictionary [
 ]
 
 { #category : #categories }
-TraitedClass >> recategorizeSelector: selector from: oldCategory to: newCategory [
+TraitedClass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
+
 	| original |
-
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
-
 	original := self organization categoryOfElement: selector ifAbsent: [ ^ self ].
 
 	"If it is nil is because it is a removal. It will removed when the method is removed."
-	newCategory ifNil: [ ^ self ].
+	newProtocol ifNil: [ ^ self ].
 
-	original = oldCategory
-		ifTrue: [ self organization classify: selector under: newCategory suppressIfDefault: true ].
+	original = oldProtocol ifTrue: [ self organization classify: selector under: newProtocol suppressIfDefault: true ].
 
 	(self traitComposition reverseAlias: selector) do: [ :e |
-		self recategorizeSelector: e from: oldCategory to: newCategory.
-		self notifyOfRecategorizedSelector: e from: oldCategory to: newCategory ].
+		self recategorizeSelector: e from: oldProtocol to: newProtocol.
+		self notifyOfRecategorizedSelector: e from: oldProtocol to: newProtocol ].
 
 	self organization removeEmptyCategories
 ]

@@ -1,15 +1,14 @@
 Extension { #name : #TraitedClass }
 
 { #category : #'*CodeExport-Traits' }
-TraitedClass >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
+TraitedClass >> fileOutLocalMethodsInCategory: aProtocol on: aFileStream [
+
 	| selectors |
-
 	aFileStream cr.
-	selectors := self selectorsToFileOutCategory: aSymbol.
+	selectors := self selectorsToFileOutCategory: aProtocol.
 
-	selectors do: [:sel |
-		((self isLocalSelector: sel) or: [ (self traitComposition selectors includes: sel) not]) ifTrue: [
-		self printMethodChunk: sel on: aFileStream ]].
+	selectors do: [ :selector |
+		((self isLocalSelector: selector) or: [ (self traitComposition selectors includes: selector) not ]) ifTrue: [ self printMethodChunk: selector on: aFileStream ] ].
 
 	^ self
 ]

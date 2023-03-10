@@ -94,15 +94,15 @@ MCMethodDefinitionTest >> testLoadAndUnload [
 MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsYetUnclassified [
 
 	| methodDef |
-	methodDef := (MCMethodDefinition
-			className: #Object
-			classIsMeta: false
-			selector: #name
-			category: '' 
-			timeStamp: nil
-			source: 'name
-	^ self printString').
-	self assert: methodDef category equals: #'as yet unclassified'.
+	methodDef := MCMethodDefinition
+		             className: #Object
+		             classIsMeta: false
+		             selector: #name
+		             category: ''
+		             timeStamp: nil
+		             source: 'name
+	^ self printString'.
+	self assert: methodDef protocol equals: #'as yet unclassified'
 ]
 
 { #category : #testing }
