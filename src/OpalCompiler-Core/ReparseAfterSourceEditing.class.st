@@ -18,6 +18,19 @@ ReparseAfterSourceEditing class >> signalWithNewSource: aSourceCode [
 		signal
 ]
 
+{ #category : #handling }
+ReparseAfterSourceEditing >> defaultAction [
+	"Senders do not expect the exception to be resumed"
+
+	self unhandledErrorAction
+]
+
+{ #category : #testing }
+ReparseAfterSourceEditing >> isResumable [
+
+	^false
+]
+
 { #category : #accessing }
 ReparseAfterSourceEditing >> newSource [
 
