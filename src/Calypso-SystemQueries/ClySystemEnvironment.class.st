@@ -200,8 +200,7 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 	(newClass isKindOf: FluidClassBuilder) ifTrue: [ newClass := newClass install ]
 	]
 		on: OCUndeclaredVariableWarning
-		do: [ :ex | "we are only interested in class definitions"
-			ex compilationContext noPattern ifFalse: [ ex pass ].
+		do: [ :ex |
 			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
 			self inform: 'Undeclared Variable in Class Definition'.
 			^ nil ].
