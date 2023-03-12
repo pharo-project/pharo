@@ -23,11 +23,6 @@ OCShadowVariableWarning >> node: aVariableNode [
 ]
 
 { #category : #correcting }
-OCShadowVariableWarning >> openMenuIn: aBlock [
-	self error: 'should not be called'
-]
-
-{ #category : #correcting }
 OCShadowVariableWarning >> raiseSemanticError [
 
 	^OCSemanticError new
