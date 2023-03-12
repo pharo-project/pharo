@@ -216,8 +216,7 @@ OCUndeclaredVariableWarning >> possibleVariablesFor: proposedVariable [
 OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterval [
 	self
 		substituteWord: varName
-		wordInterval: anInterval
-		offset: 0.
+		wordInterval: anInterval.
 	self methodNode source: self requestor text.
 	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
 	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
