@@ -33,8 +33,8 @@ OCUndeclaredVariableWarning >> declareInstVar: name [
 OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 	| insertion delta theTextString characterBeforeMark tempsMark newMethodNode |
 
-	"Below we are getting the text that is actually seen in the morph. This is monstrously ugly. Maybe there is a better way to do this."
-	theTextString := self requestor textMorph editor paragraph text.
+	"Note: asking the requestor the source code curently compiled is rather ugly"
+	theTextString := self requestor text.
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
 	newMethodNode := RBParser parseMethod: theTextString.
