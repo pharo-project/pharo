@@ -13,15 +13,11 @@ Class {
 { #category : #operations }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
-	| newClass oldText |
-	oldText := self pendingText copy.
+	| newClass |
 	newClass := browser
 		            compileANewClassFrom: self pendingText asString
 		            notifying: textMorph
 		            startingFrom: editingClass.
-
-	"This was indeed a class, however, there is a syntax error somewhere"
-	textMorph text = oldText ifFalse: [ ^ true ].
 
 	newClass ifNil: [ ^ false ].
 
