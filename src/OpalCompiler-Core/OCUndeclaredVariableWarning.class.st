@@ -83,7 +83,8 @@ OCUndeclaredVariableWarning >> defaultAction [
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
-	^super defaultAction ifNil: [ self declareUndefined ]
+	compilationContext interactive ifFalse: [ ^ self declareUndefined ].
+	^self openMenu
 ]
 
 { #category : #correcting }
@@ -147,8 +148,8 @@ OCUndeclaredVariableWarning >> node: aVariableNode [
 	messageText := 'Undeclared temp: ', aVariableNode name
 ]
 
-{ #category : #correcting }
-OCUndeclaredVariableWarning >> openMenuIn: aBlock [
+{ #category : #'menu morph' }
+OCUndeclaredVariableWarning >> openMenu [
 	| alternatives labels actions lines caption choice name interval requestor |
 
 	"Turn off suggestions when in RubSmalltalkCommentMode
@@ -179,7 +180,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 				add: [
 					[ self defineClass: name ]
 						on: Abort
-						do: [ self openMenuIn: aBlock ] ].
+						do: [ self openMenu ] ].
 			labels add: 'Declare new global'.
 			actions add: [ self declareGlobal ].
 			compilationContext requestor isScripting ifFalse:
@@ -190,7 +191,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 				add: [
 					[ self defineTrait: name ]
 						on: Abort
-						do: [ self openMenuIn: aBlock ] ] ].
+						do: [ self openMenu ] ] ].
 	lines add: labels size.
 	alternatives
 		do: [ :each |
@@ -201,7 +202,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
-	choice := aBlock value: labels value: lines value: caption.
+	choice := UIManager default chooseFrom: labels lines: lines title: caption.
 	^choice ifNotNil: [ self resume: (actions at: choice ifAbsent: [ compilationContext failBlock value ]) value ]
 ]
 
