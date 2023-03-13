@@ -27,7 +27,7 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 	# Downloads a SPUR vm for the configured architecture
 	mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
 	cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
-	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 100 vm $BOOTSTRAP_ARCH
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 110 vm $BOOTSTRAP_ARCH
 	cd -
 	echo "Target VM: $(${VM} --version)"
 fi
