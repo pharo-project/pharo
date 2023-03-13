@@ -1,7 +1,7 @@
 Extension { #name : #String }
 
 { #category : #'*STON-Core' }
-String >> stonContainSubObjects [ 
+String >> stonContainSubObjects [
 	^ false
 ]
 

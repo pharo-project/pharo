@@ -8,7 +8,7 @@ Class {
 RGTraitStrategyTest >> testClassVariablesString [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
 
 	self assert: anRGBehavior classVariablesString equals: ''
@@ -18,38 +18,38 @@ RGTraitStrategyTest >> testClassVariablesString [
 RGTraitStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
-	self assert: (anRGBehavior isBehavior).	
-	self assert: (anRGBehavior behaviorStrategy isTraitStrategy).
+	self assert: (anRGBehavior isBehavior).
+	self assert: (anRGBehavior behaviorStrategy isTraitStrategy)
 ]
 
 { #category : #tests }
 RGTraitStrategyTest >> testIncompatibleBehavior [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
-	
-	self checkIncompatible: [ 
+
+	self checkIncompatible: [
 		anRGBehavior instanceVariables: Array new ].
-	self checkIncompatible: [ 
+	self checkIncompatible: [
 		anRGBehavior kindOfSubclass].
-	self checkIncompatible: [ 
+	self checkIncompatible: [
 		anRGBehavior removeClassVariable: (RGClassVariable named: #ClassVar parent: anRGBehavior)].
-	self checkIncompatible: [ 
+	self checkIncompatible: [
 		anRGBehavior removeSharedPool: (anRGBehavior environment ensureClassNamed: #SomeClass)].
-	self checkIncompatible: [ 
+	self checkIncompatible: [
 		anRGBehavior sharedPoolsDo: [ :sharedPool | ] ].
-	self checkIncompatible: [ 
-		anRGBehavior defaultMetaClass ].
+	self checkIncompatible: [
+		anRGBehavior defaultMetaClass ]
 ]
 
 { #category : #tests }
 RGTraitStrategyTest >> testInstSize [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
 	self assert: anRGBehavior instSize equals: 0
 ]
@@ -58,7 +58,7 @@ RGTraitStrategyTest >> testInstSize [
 RGTraitStrategyTest >> testInstanceVariablesString [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
 	self assert: anRGBehavior instanceVariablesString equals: ''
 ]
@@ -67,12 +67,12 @@ RGTraitStrategyTest >> testInstanceVariablesString [
 RGTraitStrategyTest >> testKind [
 
 	| strategy |
-	
+
 	strategy := RGBehavior newTrait behaviorStrategy.
 	self deny: strategy isClassStrategy.
 	self deny: strategy isMetaclassStrategy.
 	self assert: strategy isTraitStrategy.
-	self deny: strategy isMetaclassTraitStrategy.
+	self deny: strategy isMetaclassTraitStrategy
 ]
 
 { #category : #tests }
@@ -87,25 +87,25 @@ RGTraitStrategyTest >> testResolvingConsistency [
 RGTraitStrategyTest >> testSharedPoolNames [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
-	self assert: (anRGBehavior sharedPoolNames isEmpty).
+	self assert: (anRGBehavior sharedPoolNames isEmpty)
 ]
 
 { #category : #tests }
 RGTraitStrategyTest >> testSharedPools [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
-	self assert: (anRGBehavior sharedPools isEmpty).
+	self assert: (anRGBehavior sharedPools isEmpty)
 ]
 
 { #category : #tests }
 RGTraitStrategyTest >> testTrait [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newTrait.
 	self assert: anRGBehavior trait equals: anRGBehavior
 ]

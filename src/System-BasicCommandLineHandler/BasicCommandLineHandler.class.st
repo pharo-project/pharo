@@ -55,8 +55,8 @@ BasicCommandLineHandler class >> description [
 ]
 
 { #category : #'class initialization' }
-BasicCommandLineHandler class >> initialize [ 
-	SessionManager default 
+BasicCommandLineHandler class >> initialize [
+	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
@@ -67,7 +67,7 @@ BasicCommandLineHandler class >> isResponsibleFor: aCommandLine [
 ]
 
 { #category : #accessing }
-BasicCommandLineHandler class >> priority [ 
+BasicCommandLineHandler class >> priority [
 	"Lowest priority"
 	^ Float infinity negated
 ]
@@ -77,19 +77,19 @@ BasicCommandLineHandler class >> startUp: isImageStarting [
 	"only handle when launching a new image"
 	isImageStarting ifFalse: [ ^ self ].
 
-	Smalltalk session 
+	Smalltalk session
 		addDeferredStartupAction: [ self new activate ]
 ]
 
 { #category : #activation }
 BasicCommandLineHandler >> activate [
 
-	commandLine := commandLine class withArguments: (commandLine arguments 
-					reject: [ :each | each = '--interactive' ]).	
+	commandLine := commandLine class withArguments: (commandLine arguments
+					reject: [ :each | each = '--interactive' ]).
 
 	[ [ self handleArgument: self firstArgument ]
 		on: Exit
-		do: [ :exit | 
+		do: [ :exit |
 			"If the command line is protected by password, we just exit the image because in non-headless mode the handleExit will let the image open. If the password protection is enabled, it is to avoid to let the access to the image."
 			self class commandLinePasswordManager hasPasswordSet
 				ifTrue: [ Smalltalk snapshot: false andQuit: true ].
@@ -121,15 +121,15 @@ BasicCommandLineHandler >> copySubcommand [
 
 { #category : #commands }
 BasicCommandLineHandler >> copyright [
-	self stdout 
+	self stdout
 		nextPutAll: Smalltalk licenseString; cr.
-	self quit.
+	self quit
 ]
 
 { #category : #commands }
 BasicCommandLineHandler >> default [
 
-	^ self 
+	^ self
 		help;
 		exitSuccess
 ]
@@ -148,13 +148,13 @@ BasicCommandLineHandler >> error [
 				ifTrue:  [ self << 'Invalid option: ']
 				ifFalse: [ self << 'Invalid sub command: ']]
 		ifFalse: [ self << 'Invalid arguments: "'].
-		
-	(self << (' ' join: self arguments)) 
+
+	(self << (' ' join: self arguments))
 		nextPutAll: '"'; cr.
-		
+
 	self printHelp.
-	
-	self exitFailure.
+
+	self exitFailure
 ]
 
 { #category : #activation }
@@ -173,21 +173,21 @@ BasicCommandLineHandler >> handleArgument: aString [
 		ifFalse: [ ^ self ].
 
 	"check for default options"
-	(aString isEmpty and: [ Smalltalk isInteractiveGraphic not]) 
+	(aString isEmpty and: [ Smalltalk isInteractiveGraphic not])
 			ifTrue: [ ^ self default ].
-	
+
 	aString = '--version'
 		ifTrue: [ ^ self version ].
-		
+
 	aString = '--help'
 		ifTrue: [ ^ self help ].
-		
+
 	aString = '--list'
 		ifTrue: [ ^ self list ].
-		
+
 	aString = '--copyright'
 		ifTrue: [ ^ self copyright ].
-		
+
 	aString = '--no-quit'
 		ifTrue: [ ^ self noQuit ].
 
@@ -202,21 +202,21 @@ BasicCommandLineHandler >> handleArgument: aString [
 
 	Smalltalk isInteractiveGraphic
 		ifTrue: [ ^ self noQuit ].
-	
+
 	"none of the previous options matched hence we output an error message"
-	self error.
+	self error
 ]
 
 { #category : #activation }
 BasicCommandLineHandler >> handleEmptyArguments [
 	Smalltalk isHeadless
 		ifFalse: [ ^ self ].
-	
-	self help.
+
+	self help
 ]
 
 { #category : #activation }
-BasicCommandLineHandler >> handleExit: exit [ 
+BasicCommandLineHandler >> handleExit: exit [
 	^ self handleExit: exit  for: self
 ]
 
@@ -225,21 +225,21 @@ BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 
 	(Smalltalk isInteractive or: [ Smalltalk isInteractiveGraphic ])
 		ifFalse: [ ^ exit pass ].
-		
-	exit isSuccess 
+
+	exit isSuccess
 		ifFalse: [ ^ Error signal: exit messageText ].
-	
+
 	self inform: aCommandLinehandler name, ' successfully finished'.
-		
+
 	"for failing subcommands return self which is used to check if the subcommand failed"
-	exit isSuccess 
-		ifTrue: [ ^ aCommandLinehandler ].
+	exit isSuccess
+		ifTrue: [ ^ aCommandLinehandler ]
 ]
 
 { #category : #password }
 BasicCommandLineHandler >> handlePassword: password [
 	(self class commandLinePasswordManager isMatchingPassword: password) ifTrue: [ ^ self ].
-	
+
 	self stderr << 'ERROR: Wrong password.'.
 	Smalltalk snapshot: false andQuit: true
 ]
@@ -253,10 +253,10 @@ BasicCommandLineHandler >> handleSubcommand [
 
 	"If there is no handler, use myself"
 	handlers ifEmpty: [ ^ self ].
-	
+
 	(self requirePasswordFor: handlers first)
 		ifTrue: [ self checkPassword ].
-		
+
 	^ self activateSubCommand: handlers first
 ]
 
@@ -269,19 +269,19 @@ BasicCommandLineHandler >> initialize [
 { #category : #commands }
 BasicCommandLineHandler >> list [
 	| handlers shortNames maxShortNameSize |
-	self stdout 
+	self stdout
 		nextPutAll: 'Currently installed Command Line Handlers:'; lf.
-	handlers := self allHandlers reject: [ :cls | 
+	handlers := self allHandlers reject: [ :cls |
 			cls includesBehavior: BasicCommandLineHandler ].
 	shortNames := handlers collect: [ :each | each commandName ].
 	maxShortNameSize := (shortNames detectMax: [ :name|  name size ]) size.
 	handlers do: [ :handler|
-		self stdout 
+		self stdout
 			nextPutAll: '    ';
-			nextPutAll: (handler commandName padRightTo: maxShortNameSize); 
+			nextPutAll: (handler commandName padRightTo: maxShortNameSize);
 			nextPutAll: '    ';
 			nextPutAll: (handler description ifNil: [ '--']); lf].
-	self quit.
+	self quit
 ]
 
 { #category : #commands }
@@ -319,8 +319,8 @@ BasicCommandLineHandler >> selectHandlers [
 
 { #category : #private }
 BasicCommandLineHandler >> selectedHandler [
-	^ self selectHandlers 
-		ifEmpty: [ nil ] 
+	^ self selectHandlers
+		ifEmpty: [ nil ]
 		ifNotEmpty: [ :handlers | handlers first ]
 ]
 
@@ -331,10 +331,10 @@ BasicCommandLineHandler >> subCommandsRoot [
 
 { #category : #commands }
 BasicCommandLineHandler >> version [
-	self stdout 
+	self stdout
 		nextPutAll: 'Image: '; print: SystemVersion current; cr;
 		nextPutAll: 'VM:    '; nextPutAll: Smalltalk vm version; cr.
-	self quit.
+	self quit
 ]
 
 { #category : #commands }

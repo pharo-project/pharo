@@ -13,14 +13,14 @@ STCommandLineHandlerTest >> classToBeTested [
 { #category : #tests }
 STCommandLineHandlerTest >> testCommandLineHandlerCondition [
 	| commandLine reference |
-	
-	commandLine := CommandLineArguments withArguments: {'/non/existing/file.st'}. 
+
+	commandLine := CommandLineArguments withArguments: {'/non/existing/file.st'}.
 	"the responsibility is transferred to the BasicCodeLoader as soon as there is a .st file in the arguments"
 	self assert: (STCommandLineHandler isResponsibleFor: commandLine).
-		
+
 	[ reference := FileSystem disk workingDirectory / 'codeLoad1.st'.
 	  reference writeStreamDo: [ :stream | stream nextPutAll: '42' ].
-	  commandLine := CommandLineArguments withArguments: {reference fullName}. 
+	  commandLine := CommandLineArguments withArguments: {reference fullName}.
 	  self assert: (STCommandLineHandler isResponsibleFor: commandLine) ]
 	ensure: [ reference delete ]
 ]
@@ -28,11 +28,11 @@ STCommandLineHandlerTest >> testCommandLineHandlerCondition [
 { #category : #tests }
 STCommandLineHandlerTest >> testInstallSourceFilesFail [
 	| codeLoader |
-	
+
 	codeLoader := STCommandLineHandler new.
 	codeLoader loadSourceFiles: {'codeLoad1.st'}.
 	"Ensure file is not there"
-	(FileSystem disk workingDirectory / 'codeLoad1.st') asFileReference ensureDelete. 
+	(FileSystem disk workingDirectory / 'codeLoad1.st') asFileReference ensureDelete.
 	"Trying non existing file"
 	self should: [ codeLoader installSourceFiles ] raise: Error
 ]
@@ -40,13 +40,13 @@ STCommandLineHandlerTest >> testInstallSourceFilesFail [
 { #category : #tests }
 STCommandLineHandlerTest >> testLoadSourceFiles [
 	| codeLoader |
-	
+
 	codeLoader := STCommandLineHandler new.
-	
+
 	codeLoader loadSourceFiles: {
-		'/not/existing/codeLoad1.st'. 
+		'/not/existing/codeLoad1.st'.
 		'/not/existing/codeLoad2.st'}.
-	
+
 	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') size equals: 2.
 	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: File ])
@@ -56,7 +56,7 @@ STCommandLineHandlerTest >> testLoadSourceFiles [
 STCommandLineHandlerTest >> testSelectSourceFiles [
 	| codeLoader commandLine |
 
-	commandLine := CommandLineArguments withArguments: {'does-not-exist.st'. '--host=localhost'}.	
+	commandLine := CommandLineArguments withArguments: {'does-not-exist.st'. '--host=localhost'}.
 	codeLoader := STCommandLineHandler new
 		commandLine: commandLine;
 		yourself.

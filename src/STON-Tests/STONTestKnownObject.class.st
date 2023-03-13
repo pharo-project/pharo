@@ -34,11 +34,11 @@ STONTestKnownObject class >> addKnownObject: object [
 { #category : #'instance creation' }
 STONTestKnownObject class >> fromId: idString [
 	"Given id, return a matching instance of me, either by returning an existing known instance or by creating a new one (that is automatically added to the known instances)"
-	
+
 	| uuid |
 	uuid := UUID fromString: idString.
-	^ self knownObjects 
-		detect: [ :each | each id = uuid ] 
+	^ self knownObjects
+		detect: [ :each | each id = uuid ]
 		ifNone: [ self new id: uuid ]
 ]
 
@@ -68,7 +68,7 @@ STONTestKnownObject >> description [
 	^ description
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 STONTestKnownObject >> description: string [
 	description := string
 ]
@@ -83,7 +83,7 @@ STONTestKnownObject >> id [
 	^ id
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 STONTestKnownObject >> id: uuid [
 	id := uuid.
 	self description: 'I am a complex object known under the ID ', id asString, ' - I was created @ ', DateAndTime now asString
@@ -105,6 +105,6 @@ STONTestKnownObject >> printOn: stream [
 { #category : #'ston-core' }
 STONTestKnownObject >> stonOn: stonWriter [
 	"We only write out our id"
-	
+
 	stonWriter writeObject: self listSingleton: self id asString
 ]

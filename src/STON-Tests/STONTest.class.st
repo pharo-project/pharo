@@ -11,7 +11,7 @@ Class {
 { #category : #utilities }
 STONTest class >> fastReadFromFileNamed: path [
 	^ path asFileReference
-		readStreamDo: [ :stream | 
+		readStreamDo: [ :stream |
 			STON reader
 				on: (ZnBufferedReadStream on: stream);
 				optimizeForLargeStructures;
@@ -21,10 +21,10 @@ STONTest class >> fastReadFromFileNamed: path [
 { #category : #utilities }
 STONTest class >> fastWrite: object toFileNamed: path [
 	^ path asFileReference
-		writeStreamDo: [ :fileStream | 
+		writeStreamDo: [ :fileStream |
 			ZnBufferedWriteStream
 				on: fileStream
-				do: [ :stream | 
+				do: [ :stream |
 					STON writer
 						on: stream;
 						optimizeForLargeStructures;
@@ -34,7 +34,7 @@ STONTest class >> fastWrite: object toFileNamed: path [
 { #category : #utilities }
 STONTest class >> readFromFileNamed: path [
 	^ path asFileReference
-		readStreamDo: [ :stream | 
+		readStreamDo: [ :stream |
 			STON reader
 				on: stream;
 				next ]
@@ -43,10 +43,25 @@ STONTest class >> readFromFileNamed: path [
 { #category : #utilities }
 STONTest class >> write: object toFileNamed: path [
 	^ path asFileReference
-		writeStreamDo: [ :stream | 
+		writeStreamDo: [ :stream |
 			STON writer
 				on: stream;
 				nextPut: object ]
+]
+
+{ #category : #tests }
+STONTest >> testAssociationClass [
+	self assert: (STON fromString: '#foo : 100') class equals: STON associationClass
+]
+
+{ #category : #tests }
+STONTest >> testClassNameKey [
+	self
+		assert: ((STON reader
+							acceptUnknownClasses: true;
+							on: 'FooBarBaz { #foo : 100 }' readStream;
+							next) at: STON classNameKey)
+		equals: #FooBarBaz
 ]
 
 { #category : #tests }
@@ -60,9 +75,19 @@ STONTest >> testFromString [
 STONTest >> testFromStringWithComments [
 	| object |
 	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
-	self 
+	self
 		assert: (STON fromStringWithComments: '// comment\[1, /* comment */ 0, -1, true, false, nil] // comment' withCRs)
 		equals: object
+]
+
+{ #category : #tests }
+STONTest >> testListClass [
+	self assert: (STON fromString: '[1 , 2 , 3]') class equals: STON listClass
+]
+
+{ #category : #tests }
+STONTest >> testMapClass [
+	self assert: (STON fromString: '{ #foo : 1 , #bar : 2 }') class equals: STON mapClass
 ]
 
 { #category : #tests }

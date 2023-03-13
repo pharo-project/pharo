@@ -36,6 +36,11 @@ CopiedLocalVariable >> isCopying [
 	^true
 ]
 
+{ #category : #testing }
+CopiedLocalVariable >> isTempVariable [
+	^ originalVar isTempVariable
+]
+
 { #category : #'read/write usage' }
 CopiedLocalVariable >> isUninitialized [
 	^originalVar isUninitialized

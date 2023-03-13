@@ -15,17 +15,19 @@ NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
-	| variables classes validExceptions remaining |
 
+	| variables classes validExceptions remaining |
 	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each classVariables ].
 	variables := variables reject: [ :each | each isReferenced ].
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
-	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest).
+	validExceptions := #( OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
+	                      RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest
+	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler ).
 
-	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
-	self assert: remaining isEmpty description: ('the following classes have unused class variables and should be cleaned: ', remaining asString)
+	remaining := classes asOrderedCollection reject: [ :each | validExceptions includes: each name ].
+	self assert: remaining isEmpty description: 'the following classes have unused class variables and should be cleaned: ' , remaining asString
 ]
 
 { #category : #testing }

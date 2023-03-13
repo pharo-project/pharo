@@ -25,7 +25,7 @@ STONStreamWriter >> initialize [
 	first := true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONStreamWriter >> on: stonWriter [
 	writer := stonWriter
 ]
