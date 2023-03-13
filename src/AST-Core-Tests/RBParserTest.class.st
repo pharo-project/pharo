@@ -1191,6 +1191,18 @@ RBParserTest >> testParseFaultyLiteral [
 	self assert: node contents first errorMessage equals: 'Unknown character'
 ]
 
+{ #category : #'tests - parsing' }
+RBParserTest >> testParseFaultyLiteralArray [
+	"Regression test for https://github.com/pharo-project/pharo/issues/12886"
+
+	| node |
+	node := RBParser
+		        parseMethod: ('#(1 2 3@4 5)' copyReplaceAll: '@' with: 8239 asCharacter asString)
+		        onError: [ :aString | RBParser parseFaultyExpression: aString ].
+	self assert: node isFaulty.
+	self assert: node isMethod
+]
+
 { #category : #'tests - parsing faulty' }
 RBParserTest >> testParseFaultyMethod [
 	| node strangeExpressions |

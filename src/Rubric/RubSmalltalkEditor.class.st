@@ -192,15 +192,14 @@ RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
 
 	| node start stop |
-
 	start := self textArea startIndex.
 	stop := self textArea stopIndex.
 
-	[node := RBParser parseMethod: self textArea string onError: [
-		RBParser parseFaultyExpression: self textArea string]
-	] on: Error do: [^nil].
+	[ node := RBParser parseMethod: self textArea string onError: [ :aString | RBParser parseFaultyExpression: aString ] ]
+		on: Error
+		do: [ ^ nil ].
 
-	^node bestNodeFor: (start to: stop)
+	^ node bestNodeFor: (start to: stop)
 ]
 
 { #category : #'source navigation' }
