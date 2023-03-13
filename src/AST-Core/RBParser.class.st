@@ -689,14 +689,16 @@ RBParser >> parseLiteralArray [
 { #category : #'private - parsing' }
 RBParser >> parseLiteralArrayObject [
 
-	currentToken isSpecial ifTrue: [
-		currentToken value = $( ifTrue: [ ^ self parseLiteralArray ]
-		"currentToken value == $[ ifTrue: [^self parseLiteralByteArray]" ].
+	currentToken isSpecial ifTrue: [ currentToken value = $( ifTrue: [ "currentToken value == $[ ifTrue: [^self parseLiteralByteArray]" ^ self parseLiteralArray ] ].
 	currentToken isLiteralArrayToken ifTrue: [
 		^ currentToken isForByteArray
 			  ifTrue: [ self parseLiteralByteArray ]
 			  ifFalse: [ self parseLiteralArray ] ].
-	currentToken isError ifTrue: [ ^ self parserError: currentToken cause ].
+	currentToken isError ifTrue: [
+		| errorNode |
+		errorNode := self parserError: currentToken cause.
+		self step.
+		^ errorNode ].
 	currentToken isLiteralToken ifFalse: [ self patchLiteralArrayToken ].
 	^ self parsePrimitiveLiteral
 ]
@@ -1232,26 +1234,19 @@ RBParser >> parseVariableNode [
 { #category : #'error handling' }
 RBParser >> parserError: aString [
 	"Let the errorBlock try to recover from the error. Answer a ParseNode (possibly an RBParseErrorNode) or signal there is new source"
-
-	| errorNode errorMessage errorPosition newSource token |
-	token := currentToken.
-	self step.
+	| errorNode errorMessage errorPosition newSource |
 	errorNode := self errorBlock cull: aString cull: self errorPosition cull: self.
 	errorNode ifNotNil: [ ^ errorNode ].
-	token isError
-		ifTrue: [
-			errorMessage := token cause.
-			errorPosition := token location ]
-		ifFalse: [
-			errorMessage := aString.
-			errorPosition := token start ].
+	currentToken isError
+		ifTrue: [ errorMessage := currentToken cause. errorPosition := currentToken location ]
+		ifFalse: [errorMessage := aString. errorPosition := currentToken start].
 
 	newSource := SyntaxErrorNotification
-		             inClass: Object
-		             withCode: source
-		             doitFlag: false
-		             errorMessage: errorMessage
-		             location: errorPosition.
+						inClass: Object
+						withCode: source
+						doitFlag: false
+						errorMessage: errorMessage
+						location: errorPosition.
 
 	"If the syntax error notification is resumed, then the source was corrected and we have to announce that parsing can restart."
 	ReparseAfterSourceEditing signalWithNewSource: newSource
