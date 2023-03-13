@@ -202,7 +202,11 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 		on: OCUndeclaredVariableWarning
 		do: [ :ex |
 			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
-			self inform: 'Undeclared Variable in Class Definition'.
+			"Note: this currently prevents legitimate(?) reparations on the superclass name"
+
+			"Note: I hate inserted `->` error messages, but the presentation of errors is the responsibility of `aController`.
+			 and because consistency is a virtue, we should not hack an ad hoc error reporting here"
+			aController notify: ex errorMessage , '->' at: ex location in: newClassDefinitionString.
 			^ nil ].
 
 	^ newClass isBehavior
