@@ -30,13 +30,6 @@ Class {
 	#category : #'System-Support-Image'
 }
 
-{ #category : #cleanup }
-SystemOrganizer class >> cleanUp: agressive [
-	"Remove empty categories when cleaning aggressively"
-
-	agressive ifTrue: [SystemOrganization removeEmptyCategories]
-]
-
 { #category : #'instance creation' }
 SystemOrganizer class >> default [
 	"look in the environment that the receiver organizes for the associated organization"
@@ -203,13 +196,6 @@ SystemOrganizer >> removeCategory: category [
 { #category : #operations }
 SystemOrganizer >> removeElement: element [
 	^ self basicRemoveElement: element
-]
-
-{ #category : #operations }
-SystemOrganizer >> removeEmptyCategories [
-	"Remove empty categories."
-
-	(categoryMap select: [ :classes | classes isEmpty ]) keys do: [ :category | self removeCategory: category ]
 ]
 
 { #category : #removing }
