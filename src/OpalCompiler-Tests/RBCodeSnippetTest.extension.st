@@ -96,6 +96,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 RBCodeSnippetTest >> testExecute [
 
 	| method runBlock phonyArgs |
+	self skipIf: #exec.
 	method := snippet compile.
 	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
 	self assert: method isCompiledMethod.

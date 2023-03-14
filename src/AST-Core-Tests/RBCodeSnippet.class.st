@@ -401,7 +401,7 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		"Undefined variable"
 		"For some reason, this is just a warning in non-faulty mode, not an error."
-		self new source: 'a := 10. ^ a'; isFaulty: false; value: nil. "Weird, I expected to be 10"
+		self new source: 'a := 10. ^ a'; isFaulty: false; value: nil; skip: #exec. "a is bound to an undefined variable, and according to some compilation option is could be registerer of not registered. This is very bad as regitred one act like globals thus ploute other tests. So disable the execution for now."
 		self new source: '^ a'; isFaulty: false; value: nil.
 
 		"Uninitialized variable"
