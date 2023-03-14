@@ -29,19 +29,21 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 	| requestor method |
 	requestor := OCMockRequestor new.
 	requestor interactive: false.
-	requestor isScripting: snippet isMethod not. "Not sure how this lead to different information than `noPattern:` or it is just a redundant redundancy"
+	requestor isScripting: nil.
+	requestor text: nil.
 	method := OpalCompiler new
 		          noPattern: snippet isMethod not;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
-			          self assert: snippet isFaulty.
 			          self assert: requestor notifyList isNotEmpty.
+			          self assert: snippet isFaulty.
 			          ^ self ];
 		          compile: snippet source.
 
 	"Still alive? (failBlock never called)"
 	self deny: snippet isFaulty.
-	self assert: requestor notifyList isEmpty
+	self assert: requestor notifyList isEmpty.
+	self assert: method isCompiledMethod
 ]
 
 { #category : #'*OpalCompiler-Tests' }
