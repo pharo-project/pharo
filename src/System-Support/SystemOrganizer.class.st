@@ -93,26 +93,24 @@ SystemOrganizer >> classesInCategory: category [
 SystemOrganizer >> classify: element under: categoryName [
 	"Store the argument, element, in the category named heading."
 
-	| catName realHeading |
 	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
-	realHeading := categoryName asSymbol.
 
 	categoryMap
-		at: realHeading
+		at: categoryName
 		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
-		ifAbsent: [ self addCategory: realHeading ].
+		ifAbsent: [ self addCategory: categoryName ].
 
-	(catName := self categoryOfElement: element) = realHeading ifTrue: [ ^ self ]. "done if already under that category"
+	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
+		oldCategory = categoryName ifTrue: [ ^ self ].
+		self basicRemoveElement: element ].
 
-	catName ifNotNil: [ self basicRemoveElement: element ]. "remove if in another category"
-
-	(categoryMap at: realHeading) add: element
+	(categoryMap at: categoryName) add: element
 ]
 
 { #category : #operations }
-SystemOrganizer >> classifyAll: aCollection under: heading [
+SystemOrganizer >> classifyAll: aCollection under: categoryName [
 
-	aCollection do: [ :element | self classify: element under: heading ]
+	aCollection do: [ :element | self classify: element under: categoryName ]
 ]
 
 { #category : #accessing }
@@ -164,10 +162,9 @@ SystemOrganizer >> orderedTraitsIn: category [
 	are ordered so they can be filed in."
 
 	| behaviors traits |
-	behaviors := (self listAtCategoryNamed: category asSymbol) collect: [ :title | self environment at: title ].
+	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
 	traits := behaviors select: [ :each | each isTrait ].
-	traits := traits
-		asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
+	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
 	^ traits asArray
 ]
 
@@ -230,7 +227,7 @@ SystemOrganizer >> superclassOrder: category [
 	are ordered with superclasses first so they can be filed in."
 
 	| behaviors classes |
-	behaviors := (self listAtCategoryNamed: category asSymbol) collect: [ :title | self environment at: title ].
+	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes
 ]
