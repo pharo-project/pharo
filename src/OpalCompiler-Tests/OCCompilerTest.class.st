@@ -435,6 +435,53 @@ OCCompilerTest >> testTraitTempShadowing [
 	self assert: warningCount equals: 3
 ]
 
+{ #category : #tests }
+OCCompilerTest >> testUndefinedVariable [
+	"This test shows that undefined variables behave as globals (for now) and is independent of the compilation mode"
+
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
+	self
+		assert: {
+			OpalCompiler new evaluate: 'undefinedName123'.
+			OpalCompiler new evaluate: 'undefinedName123 := 1. undefinedName123'.
+			OpalCompiler new evaluate: 'undefinedName123'.
+			}
+		equals: { nil. 1. 1. }.
+
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
+	self
+		assert: {
+			OpalCompiler new
+				options: #( + optionSkipSemanticWarnings );
+				evaluate: 'undefinedName123'.
+			OpalCompiler new
+				options: #( + optionSkipSemanticWarnings );
+				evaluate: 'undefinedName123 := 2. undefinedName123'.
+			OpalCompiler new
+				options: #( + optionSkipSemanticWarnings );
+				evaluate: 'undefinedName123' }
+		equals: { nil. 2. 2. }.
+
+	"Cleanup"
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]
+]
+
+{ #category : #tests }
+OCCompilerTest >> testUndefinedVariableFrontend [
+	"This test shows that undefined variables are registered only on backend"
+
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
+	OpalCompiler new parse: 'foo ^undefinedName123'.
+	self deny: (Undeclared includesKey: #undefinedName123).
+	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: SyntaxErrorNotification.
+	self deny: (Undeclared includesKey: #undefinedName123).
+	OpalCompiler new compile: 'foo ^undefinedName123'.
+	self assert: (Undeclared includesKey: #undefinedName123).
+
+	"Cleanup"
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]
+]
+
 { #category : #mocking }
 OCCompilerTest >> text [
 	^ text
