@@ -80,7 +80,7 @@ OCCompilerTest >> testAssignmentOfClassNameBinding [
 	text := 'temp | | MockForCompilation := nil'.
 
 	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Cannot store into ->'.
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Assignment to read-only variable ->'.
 			self assert: errorLocation equals: 10.
 			self assert: errorSource contents equals: 'temp | | MockForCompilation := nil'.
 			^ nil ].
