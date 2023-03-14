@@ -143,8 +143,14 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	variableNode addWarning: 'Undeclared variable'.
-	compilationContext optionSkipSemanticWarnings
-		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
+
+	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
+	"It will be registered only at backend when a CompiledMethod is produced.
+	Or never if compilation is aborted or if only frontend is requested."
+	compilationContext optionSkipSemanticWarnings ifTrue: [
+		^ UndeclaredVariable possiblyRegisteredWithName:
+			variableNode name asSymbol ].
+
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;

@@ -70,7 +70,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareUndefined [
 
-	^UndeclaredVariable registeredWithName: node name
+	^ UndeclaredVariable possiblyRegisteredWithName: node name
 ]
 
 { #category : #correcting }
