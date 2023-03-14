@@ -7,7 +7,8 @@ RBCodeSnippetTest >> testCompile [
 
 	self skipIf: #compile.
 	method := snippet compile.
-	self assert: method isCompiledMethod
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -20,7 +21,8 @@ RBCodeSnippetTest >> testCompileOnError [
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
 			self assert: error isNil.
-			self assert: method isCompiledMethod ]
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -43,7 +45,8 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 	"Still alive? (failBlock never called)"
 	self deny: snippet isFaulty.
 	self assert: requestor notifyList isEmpty.
-	self assert: method isCompiledMethod
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -95,12 +98,10 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testExecute [
+RBCodeSnippetTest >> testExecute: method [
 
-	| method runBlock phonyArgs |
+	| runBlock phonyArgs |
 	self skipIf: #exec.
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.
