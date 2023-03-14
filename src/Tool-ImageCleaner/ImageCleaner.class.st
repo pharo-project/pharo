@@ -101,8 +101,6 @@ ImageCleaner >> cleanUpForRelease [
 		removeEmptyCategories;
 		removeEmptyPackages.
 
-	Smalltalk organization sortCategories.
-
 	Smalltalk
 		garbageCollect;
 		cleanOutUndeclared;
