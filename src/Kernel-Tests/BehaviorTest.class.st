@@ -268,7 +268,7 @@ BehaviorTest >> testallMethodsReadingSlot [
 	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
 
 	methods := LookupKey allMethodsReadingSlot: (LookupKey slotNamed: #key).
-	self assert: (methods includes: (Ephemeron >>#mourn))
+	self assert: (methods includes: (LookupKey >>#=))
 ]
 
 { #category : #'tests - queries' }
