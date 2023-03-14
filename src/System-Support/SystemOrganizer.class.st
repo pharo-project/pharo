@@ -24,9 +24,6 @@ Class {
 	#name : #SystemOrganizer,
 	#superclass : #Object,
 	#instVars : [
-		'categoryArray',
-		'categoryStops',
-		'elementArray',
 		'environment',
 		'categoryMap'
 	],
@@ -146,10 +143,8 @@ SystemOrganizer >> includesCategory: aString [
 
 { #category : #initialization }
 SystemOrganizer >> initialize [
+
 	super initialize.
-	categoryArray := Array new.
-	categoryStops := Array new.
-	elementArray := Array new.
 	categoryMap := Dictionary new
 ]
 
