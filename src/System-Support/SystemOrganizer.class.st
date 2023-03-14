@@ -93,7 +93,7 @@ SystemOrganizer >> classesInCategory: category [
 SystemOrganizer >> classify: element under: categoryName [
 	"Store the argument, element, in the category named heading."
 
-	| catName catIndex elemIndex realHeading |
+	| catName realHeading |
 	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
 	realHeading := categoryName asSymbol.
 
