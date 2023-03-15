@@ -103,16 +103,13 @@ FFIExternalResourceManager >> addResource: anObject [
 
 { #category : #'external resource management' }
 FFIExternalResourceManager >> addResource: anObject data: resourceData [
-	registry
-		add: anObject
-		executor: (FFIExternalResourceExecutor new
-			resourceClass: anObject class
-			data: resourceData)
+  registry add: anObject finalizer: (FFIExternalResourceExecutor new resourceClass: anObject class data: resourceData)
 ]
 
 { #category : #'external resource management' }
 FFIExternalResourceManager >> addResource: anObject executor: anExecutor [
-	registry add: anObject executor: anExecutor
+
+	registry add: anObject finalizer: anExecutor
 ]
 
 { #category : #initialization }

@@ -19,86 +19,20 @@ BaselineOfFuel >> addPostloadHacks [
 
 { #category : #baselines }
 BaselineOfFuel >> baseline: spec [
-  <baseline>
-  spec
-	for: #common
-	do: [
+
+	<baseline>
+	| repository |
+	repository := self packageRepositoryURL.
+	spec for: #common do: [
 		spec postLoadDoIt: #addPostloadHacks.
 
-		self   
-			fuelPlatform: spec;
-			smark: spec.
+		spec baseline: 'FuelPlatform' with: [ spec repository: repository ].
 
 		spec
 			package: 'Fuel-Core' with: [ spec requires: 'FuelPlatform' ];
-			package: 'Fuel-Debug' with: [ spec requires: 'Core' ];
-			package: 'Fuel-Benchmarks' with: [ spec requires: #('Core' 'SMark-Jenkins') ];
-			
-			package: 'Fuel-Tests-Core' with: [ spec requires: 'Core' ];
-			package: 'Fuel-Tests-Debug' with: [ spec requires: #('Fuel-Debug' 'Tests') ];
-			package: 'Fuel-Tests-Benchmarks' with: [ spec requires: #('Fuel-Benchmarks' 'Tests') ].
-					
+			package: 'Fuel-Tests-Core' with: [ spec requires: 'Core' ].
+
 		spec
-			group: 'default' with: #('Core');
-			group: 'Core' with: #('Fuel-Core');
-			group: 'Tests' with: #('Core' 'Fuel-Tests-Core');
-			group: 'Debug' with: #('Core' 'Fuel-Debug') ].
-
-	self
-		groupsForPharoCommon: spec;
-		groupsForSqueakCommon: spec
-]
-
-{ #category : #'baselines-helpers' }
-BaselineOfFuel >> fuelPlatform: spec [		
-	spec 
-		baseline: 'FuelPlatform' 
-		with: [
-			| branch |
-			branch := Smalltalk globals
-				at: #SmalltalkCI
-				ifPresent: [ :class |
-					(class
-						perform: #getEnv:
-						withArguments: #(FL_USE_PLATFORM_MASTER))
-							ifNotNil: [ 'master' ]
-							ifNil: [ 'v5' ] ]
-				ifAbsent: [ 'v5' ].
-			spec
-				repository: 'github://theseion/FuelPlatform:', branch, '/repository';
-  				loads: 'default' ]
-]
-
-{ #category : #'baselines-helpers' }
-BaselineOfFuel >> groupsForPharoCommon: spec [
-	spec for: #pharo do: [
-		spec
-			group: 'DevelopmentGroup' with: #('Debug' 'Tests' 'Fuel-Tests-Debug');
-			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks' 'Fuel-Tests-Benchmarks') ]
-]
-
-{ #category : #'baselines-helpers' }
-BaselineOfFuel >> groupsForSqueakCommon: spec [
-	spec for: #squeak do: [
-		spec
-			group: 'Benchmarks'
-			with: #('Core' 'Fuel-Benchmarks') ]
-]
-
-{ #category : #'baselines-helpers' }
-BaselineOfFuel >> smark: spec [		
-	spec
-		project: 'SMark' with: [
-			spec
-				className: 'ConfigurationOfSMark';
-				versionString: #development;
-				file: 'ConfigurationOfSMark';
-				repository: 'http://smalltalkhub.com/mc/StefanMarr/SMark/main' ].
-
-	spec
-		package: 'SMark-Jenkins' with: [ 
-			spec 
-				repository: 'http://smalltalkhub.com/mc/ClementBera/classic-bench/main';
-				requires: 'SMark' ]
-
+			group: 'Core' with: #( 'Fuel-Core' );
+			group: 'Tests' with: #( 'Core' 'Fuel-Tests-Core' ) ]
 ]
