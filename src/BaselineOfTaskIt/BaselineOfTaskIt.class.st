@@ -91,13 +91,14 @@ BaselineOfTaskIt class >> loadDevelopment [
 
 { #category : #baselines }
 BaselineOfTaskIt >> baseline: spec [
+
 	<baseline>
+	spec for: #'pharo6.1.x' do: [ self baselineForPharo6: spec ].
 	spec for: #'pharo7.x' do: [ self baselineForPharo7: spec ].
-	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
-	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
-	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
-	spec for: #'pharo11.x' do: [ self baselineForPharo11: spec ].
-	spec for: #'pharo6.1.x' do: [ self baselineForPharo6: spec ]
+
+	spec for: (self pharoVersionsFrom: 8) do: [
+		spec package: #TaskIt.
+		self baselineForCommon: spec ]
 ]
 
 { #category : #baselines }
@@ -133,20 +134,6 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 			'TaskItProcesses-Tests' 
 			'TaskItDebugger-Tests');
 		group: 'development' with: #('default' 'debug' 'tests')
-]
-
-{ #category : #baselines }
-BaselineOfTaskIt >> baselineForPharo10: spec [
-
-	spec package: #TaskIt.
-	self baselineForCommon: spec
-]
-
-{ #category : #baselines }
-BaselineOfTaskIt >> baselineForPharo11: spec [
-
-	spec package: #TaskIt.
-	self baselineForCommon: spec
 ]
 
 { #category : #baselines }
@@ -187,19 +174,5 @@ BaselineOfTaskIt >> baselineForPharo7: spec [
 		baseline: 'ParametrizedTests'
 		with: [ spec repository: 'github://tesonep/ParametrizedTests/src' ].
 	spec package: #TaskIt with: [ spec requires: #('ParametrizedTests') ].
-	self baselineForCommon: spec
-]
-
-{ #category : #baselines }
-BaselineOfTaskIt >> baselineForPharo8: spec [
-
-	spec package: #TaskIt.
-	self baselineForCommon: spec
-]
-
-{ #category : #baselines }
-BaselineOfTaskIt >> baselineForPharo9: spec [
-
-	spec package: #TaskIt.
 	self baselineForCommon: spec
 ]
