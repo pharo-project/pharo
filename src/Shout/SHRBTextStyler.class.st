@@ -1077,7 +1077,7 @@ SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 	We want to highlight the `<`, the `test:`, the `test2:` and the `>` but we do not want to highlight the arguments."
 
 	self addStyle: #pragma from: aPragmaNode left to: aPragmaNode left.
-	aPragmaNode keywordsIntervals do: [ :i | self addStyle: #pragma from: i start to: i stop ].
+	aPragmaNode keywordsIntervals do: [ :i | self addStyle: #pragma from: i first to: i last ].
 	self addStyle: #pragma from: aPragmaNode right to: aPragmaNode right.
 
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
