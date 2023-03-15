@@ -808,11 +808,7 @@ SHRBTextStyler >> privateStyle: aText [
 
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
-
-	| style |
-	style := aVariableNode styleName.
-	style = #incompleteIdentifier & self class formatIncompleteIdentifiers not ifTrue: [ ^ #undefinedIdentifier ].
-	^ style
+	^ aVariableNode styleName
 ]
 
 { #category : #private }
