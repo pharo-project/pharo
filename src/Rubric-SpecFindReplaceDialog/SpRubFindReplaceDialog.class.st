@@ -105,7 +105,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 			self replace ].
 	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter |
 			self replaceAll ].
-	cancelButton := aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
+	cancelButton := aDialogWindowPresenter addButton: 'Close' do: [ :presenter |
 			presenter triggerCancelAction.
 			presenter close ].
 
