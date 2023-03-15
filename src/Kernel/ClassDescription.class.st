@@ -64,12 +64,6 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol ]
 ]
 
-{ #category : #organization }
-ClassDescription >> addCategory: newName before: aCategory [
-
-	^ self organization addCategory: newName before: aCategory
-]
-
 { #category : #'instance variables' }
 ClassDescription >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
@@ -81,7 +75,8 @@ ClassDescription >> addInstVarNamed: aString [
 ClassDescription >> addMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods"
-	self organization addCategory: aSymbol
+
+	self organization addProtocolNamed: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }

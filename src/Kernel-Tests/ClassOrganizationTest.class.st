@@ -24,15 +24,17 @@ ClassOrganizationTest >> runCase [
 
 { #category : #running }
 ClassOrganizationTest >> setUp [
+
 	super setUp.
 
 	class := self class classInstaller make: [ :aBuilder |
-		aBuilder name: #ClassForTests;
-		package: 'ClassOrganizer-Tests' ].
+		         aBuilder
+			         name: #ClassForTests;
+			         package: 'ClassOrganizer-Tests' ].
 
 	organization := ClassOrganization forClass: class.
-	organization addCategory: 'empty'.
-	organization addCategory: 'one'.
+	organization addProtocolNamed: 'empty'.
+	organization addProtocolNamed: 'one'.
 	organization classify: #one under: 'one' suppressIfDefault: true
 ]
 
@@ -43,9 +45,9 @@ ClassOrganizationTest >> tearDown [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testAddCategory [
+ClassOrganizationTest >> testAddProtocolNamed [
 
-	self organization addCategory: 'test-protocol'.
+	self organization addProtocolNamed: 'test-protocol'.
 
 	self assert: (self organization protocolsNames includes: 'test-protocol')
 ]

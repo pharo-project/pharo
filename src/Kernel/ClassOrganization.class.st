@@ -20,20 +20,15 @@ ClassOrganization class >> forClass: aClass [
 ]
 
 { #category : #accessing }
-ClassOrganization >> addCategory: aString [
+ClassOrganization >> addProtocolNamed: protocolName [
 
-	| oldCategories |
-	(self protocolOrganizer hasProtocolNamed: aString) ifTrue: [ ^ self ].
+	| oldProtocols |
+	(self protocolOrganizer hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
-	oldCategories := self protocolsNames copy.
-	self protocolOrganizer addProtocolNamed: aString.
-	self notifyOfAddedCategory: aString.
-	self notifyOfChangedCategoriesFrom: oldCategories to: self protocolsNames
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> addCategory: aProtocolName before: aUselessArgument [
-	self addCategory: aProtocolName
+	oldProtocols := self protocolsNames copy.
+	self protocolOrganizer addProtocolNamed: protocolName.
+	self notifyOfAddedCategory: protocolName.
+	self notifyOfChangedCategoriesFrom: oldProtocols to: self protocolsNames
 ]
 
 { #category : #'backward compatibility' }
