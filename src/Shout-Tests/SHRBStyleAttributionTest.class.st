@@ -539,7 +539,7 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 
 	self
 		assertStyleOf: aText
-		between: 4
+		between: 3
 		and: 8
 		shouldBe: #pragma
 ]

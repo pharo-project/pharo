@@ -1077,7 +1077,9 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 { #category : #visiting }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 
-	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword :position | self addStyle: #pragma from: position to: position + keyword size ].
+	aPragmaNode selectorParts
+		with: aPragmaNode keywordsPositions
+		do: [ :keyword :position | self addStyle: #pragma from: position - 1 to: position + keyword size ].
 
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
