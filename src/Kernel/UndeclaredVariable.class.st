@@ -56,6 +56,12 @@ UndeclaredVariable >> isUndeclaredVariable [
 	^ true
 ]
 
+{ #category : #testing }
+UndeclaredVariable >> isWritable [
+
+	^false
+]
+
 { #category : #registry }
 UndeclaredVariable >> register [
 	Undeclared add: self
