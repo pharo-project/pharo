@@ -1,3 +1,4 @@
+| mcPackages |
 mcPackages := #(
  'Network-Kernel'
  'Network-MIME'
