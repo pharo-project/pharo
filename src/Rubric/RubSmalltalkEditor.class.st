@@ -191,16 +191,10 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
 
-	| node start stop |
-
-	start := self textArea startIndex.
-	stop := self textArea stopIndex.
-
-	[node := RBParser parseMethod: self textArea string onError: [
-		RBParser parseFaultyExpression: self textArea string]
-	] on: Error do: [^nil].
-
-	^node bestNodeFor: (start to: stop)
+	"We build the AST (which can be faulty when we are scripting) then ask the best node for the interval."
+	^ (self isScripting
+		   ifTrue: [ RBParser parseFaultyExpression: self textArea string ]
+		   ifFalse: [ RBParser parseMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
 ]
 
 { #category : #'source navigation' }
