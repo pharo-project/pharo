@@ -305,11 +305,9 @@ RPackage >> basicImportClass: aClass [
 
 	| protocols |
 	self addClassDefinition: aClass.
-	aClass organization categories
-		do: [ :each |
-			(self isYourClassExtension: each)
-				ifTrue: [ aClass organization renameCategory: each toBe: Protocol defaultName ] ].
-	protocols := aClass organization categories reject: [ :each | each first = $* ].
+	aClass organization protocolsNames do: [ :each |
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameCategory: each toBe: Protocol defaultName ] ].
+	protocols := aClass organization protocolsNames reject: [ :each | each first = $* ].
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
 
@@ -654,9 +652,9 @@ RPackage >> extendsClass: aClass [
 
 { #category : #'system compatibility' }
 RPackage >> extensionCategoriesForClass: aClass [
+
 	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass organization categories
-		select: [ :cat | self isYourClassExtension: cat ]
+	^ aClass organization protocolsNames select: [ :cat | self isYourClassExtension: cat ]
 ]
 
 { #category : #accessing }

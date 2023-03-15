@@ -113,7 +113,8 @@ RPackageSet >> extendedClasses [
 
 { #category : #'system compatibility' }
 RPackageSet >> extensionCategoriesForClass: aClass [
-	^ aClass organization categories select: [:cat | self isYourClassExtension: cat]
+
+	^ aClass organization protocolsNames select: [ :cat | self isYourClassExtension: cat ]
 ]
 
 { #category : #accessing }

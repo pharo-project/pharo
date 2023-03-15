@@ -90,8 +90,8 @@ GoferOperationTest >> testCleanup [
 	class class organization addCategory: #empty.
 	gofer cleanup.
 	self deny: (Smalltalk organization categories includes: #'GoferFoo-Empty').
-	self deny: (class organization categories includes: #'GoferFoo-Empty').
-	self deny: (class class organization categories includes: #'GoferFoo-Empty')
+	self deny: (class organization protocolsNames includes: #'GoferFoo-Empty').
+	self deny: (class class organization protocolsNames includes: #'GoferFoo-Empty')
 ]
 
 { #category : #tests }

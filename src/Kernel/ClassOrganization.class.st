@@ -21,17 +21,14 @@ ClassOrganization class >> forClass: aClass [
 
 { #category : #accessing }
 ClassOrganization >> addCategory: aString [
+
 	| oldCategories |
+	(self protocolOrganizer hasProtocolNamed: aString) ifTrue: [ ^ self ].
 
-	(self protocolOrganizer hasProtocolNamed: aString)
-		ifTrue: [ ^self ].
-
-	oldCategories := self categories copy.
+	oldCategories := self protocolsNames copy.
 	self protocolOrganizer addProtocolNamed: aString.
 	self notifyOfAddedCategory: aString.
-	self
-		notifyOfChangedCategoriesFrom: oldCategories
-		to: self categories
+	self notifyOfChangedCategoriesFrom: oldCategories to: self protocolsNames
 ]
 
 { #category : #'backward compatibility' }
@@ -53,11 +50,6 @@ ClassOrganization >> allProtocols [
 ClassOrganization >> allProtocolsNames [
 
 	^ self protocolOrganizer allProtocolsNames
-]
-
-{ #category : #accessing }
-ClassOrganization >> categories [
-	^ self protocolOrganizer protocolsNames
 ]
 
 { #category : #accessing }
@@ -291,6 +283,11 @@ ClassOrganization >> protocolOrganizer [
 { #category : #accessing }
 ClassOrganization >> protocols [
 	^ self protocolOrganizer protocols
+]
+
+{ #category : #accessing }
+ClassOrganization >> protocolsNames [
+	^ self protocolOrganizer protocolsNames
 ]
 
 { #category : #accessing }

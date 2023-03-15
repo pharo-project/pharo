@@ -47,15 +47,7 @@ ClassOrganizationTest >> testAddCategory [
 
 	self organization addCategory: 'test-protocol'.
 
-	self assert: (self organization categories includes: 'test-protocol')
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testCategories [
-	| categories |
-
-	categories := self organization categories.
-	self assert: categories notEmpty
+	self assert: (self organization protocolsNames includes: 'test-protocol')
 ]
 
 { #category : #tests }
@@ -70,14 +62,21 @@ ClassOrganizationTest >> testListAtCategoryNamed [
 ]
 
 { #category : #tests }
+ClassOrganizationTest >> testProtocolsNames [
+
+	self assertCollection: self organization protocolsNames hasSameElements: #( #empty #one )
+]
+
+{ #category : #tests }
 ClassOrganizationTest >> testRemoveCategory [
-	self assert: self organization categories size equals: 2.
+
+	self assert: self organization protocolsNames size equals: 2.
 	"just ignore removing of non empty categories"
 	self organization removeCategory: 'one'.
-	self assert: self organization categories size equals: 2.
+	self assert: self organization protocolsNames size equals: 2.
 	self organization removeCategory: 'empty'.
-	self assert: self organization categories size equals: 1.
-	self assert: self organization categories first equals: 'one'
+	self assert: self organization protocolsNames size equals: 1.
+	self assert: self organization protocolsNames first equals: 'one'
 ]
 
 { #category : #tests }

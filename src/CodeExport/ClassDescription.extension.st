@@ -29,7 +29,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
 	| org |
-	(org := self organization) categories
+	(org := self organization) protocolsNames
 		do: [ :cat |
 			| sels |
 			sels := (org listAtCategoryNamed: cat) select: [ :sel | aSet includes: sel ].
@@ -72,10 +72,10 @@ ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
 
 	"we for now file out old style class definitions"
+
 	aFileStream nextChunkPut: self oldPharoDefinition.
 	self organization putCommentOnFile: aFileStream forClass: self.
-	self organization categories
-		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]
+	self organization protocolsNames do: [ :protocolName | self fileOutLocalMethodsInCategory: protocolName on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }

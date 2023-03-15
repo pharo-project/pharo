@@ -1053,13 +1053,11 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
-	| clazz classOrganization |
 
+	| clazz classOrganization |
 	clazz := ann classReorganized.
 	classOrganization := clazz organization.
-	classOrganization categories do: [ :each |
-		(each beginsWith: '*')
-			ifTrue:  [ self checkPackageExistsOrRegister: each allButFirst ] ]
+	classOrganization protocolsNames do: [ :each | (each beginsWith: '*') ifTrue: [ self checkPackageExistsOrRegister: each allButFirst ] ]
 ]
 
 { #category : #'system integration' }
