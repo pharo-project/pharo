@@ -101,7 +101,7 @@ SHPreferences class >> initialize [
 { #category : #'private - initialization' }
 SHPreferences class >> initializeGroups [
 	Groups := Dictionary new.
-	#(#default #(#default ) #reservedWords #(#self #super #true #false #nil #thisContext ) #primitiveTypes #(#character #number #symbol #string ) #selectorPatterns #(#patternKeyword) #messageSends #(#keyword #incompleteKeyword ) #args #(#patternArg #blockPatternArg #blockArg #argument ) #variable #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier ) #instanceVar #(#instVar #classVar ) #globalVar #(#globalVar #poolConstant ) #comment #(#comment ) #error #(#invalid #undefinedKeyword #undefinedIdentifier ) #syntax #(#return #blockArgColon #leftParenthesis #rightParenthesis #leftParenthesis1 #rightParenthesis1 #leftParenthesis2 #rightParenthesis2 #leftParenthesis3 #rightParenthesis3 #leftParenthesis4 #rightParenthesis4 #leftParenthesis5 #rightParenthesis5 #leftParenthesis6 #rightParenthesis6 #leftParenthesis7 #rightParenthesis7 #blockStart #blockEnd #blockStart1 #blockEnd1 #blockStart2 #blockEnd2 #blockStart3 #blockEnd3 #blockStart4 #blockEnd4 #blockStart5 #blockEnd5 #blockStart6 #blockEnd6 #blockStart7 #blockEnd7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #leftBrace #rightBrace #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar ) )
+	#(#default #(#default ) #reservedWords #(#self #super #true #false #nil #thisContext ) #primitiveTypes #(#character #number #symbol #string ) #selectorPatterns #(#patternSelector) #messageSends #(selector #incompleteSelector ) #args #(#patternArg #blockPatternArg #blockArg #argument ) #variable #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier ) #instanceVar #(#instVar #classVar ) #globalVar #(#globalVar #poolConstant ) #comment #(#comment ) #error #(#invalid #undefinedSelector #undefinedIdentifier ) #syntax #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar ) )
 		pairsDo: [:gname :tokens | Groups
 				at: gname
 				put: (SHStyleElement withTokens: tokens)]
@@ -185,10 +185,10 @@ SHPreferences class >> settingsOn: aBuilder [
 		with: [
 			(aBuilder setting: #selectorPatternsStyle)
 				label: 'Selector Patterns';
-				default: (SHStyleElement emphasis: #bold tokens: #(#patternKeyword));
+				default: (SHStyleElement emphasis: #bold tokens: #(#patternSelector));
 				description: 'Selector patterns in method pane'.
 			(aBuilder setting: #errorStyle)
-				default: (SHStyleElement color: Color red tokens: #(#invalid #undefinedKeyword #undefinedIdentifier));
+				default: (SHStyleElement color: Color red tokens: #(#invalid #undefinedSelector #undefinedIdentifier));
 				label: 'Syntactic error';
 				description: 'Invalid and undefined code' .
 			(aBuilder setting: #argsStyle)
@@ -212,7 +212,7 @@ SHPreferences class >> settingsOn: aBuilder [
 				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#instVar #classVar));
 				description: 'References to instance and class variables' .
 			(aBuilder setting: #messageSendsStyle)
-				default: (SHStyleElement color: Color black tokens: #(#keyword #incompleteKeyword));
+				default: (SHStyleElement color: Color black tokens: #(selector #incompleteSelector));
 				label: 'Message sends' ;
 				description: 'Message sends' .
 			(aBuilder setting: #primitiveTypesStyle)
@@ -225,7 +225,7 @@ SHPreferences class >> settingsOn: aBuilder [
 				description: 'Reserved words of the Smalltalk language' .
 			(aBuilder setting: #syntaxStyle)
 				label: 'Syntax';
-				default: (SHStyleElement tokens: #(#return #blockArgColon #leftParenthesis #rightParenthesis #leftParenthesis1 #rightParenthesis1 #leftParenthesis2 #rightParenthesis2 #leftParenthesis3 #rightParenthesis3 #leftParenthesis4 #rightParenthesis4 #leftParenthesis5 #rightParenthesis5 #leftParenthesis6 #rightParenthesis6 #leftParenthesis7 #rightParenthesis7 #blockStart #blockEnd #blockStart1 #blockEnd1 #blockStart2 #blockEnd2 #blockStart3 #blockEnd3 #blockStart4 #blockEnd4 #blockStart5 #blockEnd5 #blockStart6 #blockEnd6 #blockStart7 #blockEnd7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #leftBrace #rightBrace #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar));
+				default: (SHStyleElement tokens: #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar));
 				description: 'Any other syntactic element' .
 			(aBuilder setting: #variableStyle)
 				label: 'Variable';

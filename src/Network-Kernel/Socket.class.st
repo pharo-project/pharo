@@ -302,7 +302,8 @@ Socket class >> register: anObject [
 
 { #category : #registry }
 Socket class >> registry [
-	^Registry ifNil: [Registry := WeakRegistry new]
+
+	^ Registry ifNil: [ Registry := FinalizationRegistry new ]
 ]
 
 { #category : #tests }
