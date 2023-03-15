@@ -789,6 +789,7 @@ VirtualMachine >> parameterLabels [
 		76 'total milliseconds spent on JIT compiled methods since startup (read-only)'
 		77 'number of JIT compiled block since startup (read-only)'
 		78 'total milliseconds spent on JIT compiled block since startup (read-only)'
+		79 'Image version stored in the header of the image file'
 		)
 ]
 
