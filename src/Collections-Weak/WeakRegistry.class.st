@@ -12,23 +12,13 @@ Class {
 		'valueDictionary',
 		'sema'
 	],
-	#classVars : [
-		'Default'
-	],
 	#category : #'Collections-Weak-Registration'
 }
 
 { #category : #accessing }
 WeakRegistry class >> default [
-	^Default ifNil: [ Default := self new ]
-]
 
-{ #category : #'instance creation' }
-WeakRegistry class >> new [
-	| registry |
-	registry := super new.
-	WeakArray addWeakDependent: registry.
-	^registry
+	^ FinalizationRegistry default
 ]
 
 { #category : #'instance creation' }

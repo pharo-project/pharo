@@ -90,6 +90,20 @@ SHRBStyleAttributionTest >> testAssignmentStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testAttributeInBlockHasRightStyle [
+
+	| aText |
+	aText := 'm: arg self do: [ :each | arg ]' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 27
+		and: 29
+		shouldBe: #argument
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testBinaryStyle [
 
 	| aText |
