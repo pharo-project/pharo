@@ -31,10 +31,10 @@ OCUndeclaredVariableWarning >> declareInstVar: name [
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareTempAndPaste: name [
-	| insertion delta theTextString characterBeforeMark tempsMark newMethodNode |
+	| insertion theTextString characterBeforeMark tempsMark newMethodNode |
 
-	"Below we are getting the text that is actually seen in the morph. This is rather ugly. Maybe there is a better way to do this."
-	theTextString := self requestor textMorph editor paragraph text.
+	"Note: asking the requestor the source code curently compiled is rather ugly"
+	theTextString := self requestor text.
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
 	newMethodNode := RBParser parseMethod: theTextString.
@@ -49,19 +49,13 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 		insertion := name, ' '.
 
 		characterBeforeMark isSeparator ifFalse: [insertion := ' ', insertion].
-		delta := 0.
 	] ifFalse: [
 		"No bars - insert some with CR, tab"
 		insertion := '| ' , name , ' |',String cr.
-		delta := 2.	"the bar and CR"
-		characterBeforeMark = Character tab ifTrue: [
-			insertion := insertion , String tab.
-			delta := delta + 1.	"the tab" ]
-		].
-	tempsMark := tempsMark +
-		(self substituteWord: insertion
-			wordInterval: (tempsMark to: tempsMark-1)
-			offset: 0) - delta.
+		characterBeforeMark = Character tab ifTrue: [ insertion := insertion , String tab ] ].
+
+	self substituteWord: insertion wordInterval: (tempsMark to: tempsMark-1).
+
 	" we can not guess at this point where the tempvar should be stored,
 	tempvars vs. tempvector therefore -> reparse"
 	(ReparseAfterSourceEditing new newSource: self requestor text) signal
@@ -222,8 +216,7 @@ OCUndeclaredVariableWarning >> possibleVariablesFor: proposedVariable [
 OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterval [
 	self
 		substituteWord: varName
-		wordInterval: anInterval
-		offset: 0.
+		wordInterval: anInterval.
 	self methodNode source: self requestor text.
 	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
 	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
@@ -232,12 +225,10 @@ OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterva
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> substituteWord: correctWord wordInterval: spot offset: o [
+OCUndeclaredVariableWarning >> substituteWord: correctWord wordInterval: spot [
 	"Substitute the correctSelector into the (presuamed interactive) receiver."
 
-	self requestor correctFrom: (spot first + o)
-					to: (spot last + o)
-					with: correctWord.
-
-	^ o + correctWord size - spot size
+	self requestor correctFrom: (spot first)
+					to: (spot last)
+					with: correctWord
 ]
