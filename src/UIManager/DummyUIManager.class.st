@@ -152,15 +152,6 @@ DummyUIManager >> restoreDisplayAfter: aBlock [
 ]
 
 { #category : #'default actions' }
-DummyUIManager >> syntaxErrorNotificationDefaultAction: anException [
-	self traceCr: '*** SYNTAX ERROR ***'.
-	self traceCr: anException.
-	self
-		traceCr: (thisContext stack first: (20 min: thisContext stack size)).
-	anException return
-]
-
-{ #category : #'default actions' }
 DummyUIManager >> traceCr: aString [
 
 	Smalltalk logStdOutDuring: [:logger |
