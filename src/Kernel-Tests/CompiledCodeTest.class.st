@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'var'
 	],
+	#classVars : [
+		'test'
+	],
 	#category : #'Kernel-Tests-Classes'
 }
 
@@ -220,14 +223,14 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 		Object.
 		self name ].
 		^#(#array) '.
-	block := (self class compiler evaluate: '[
+	block := (self class compiler receiver: self; evaluate: '[
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		Object.
 		self name ]') compiledBlock.
 	self assertCollection: method literals equals: {
 			2.
-			(UndeclaredVariable key: #test value: nil).
+			(ClassVariable key: #test value: nil).
 			block.
 			#doIt:.
 			#( #array ).
@@ -269,9 +272,9 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: {
 				2.
-				(UndeclaredVariable key: #test value: nil).
+				(ClassVariable key: #test value: nil).
 				2.
-				(UndeclaredVariable key: #test value: nil).
+				(ClassVariable key: #test value: nil).
 				#( #arrayInBlock ).
 				#name.
 				(GlobalVariable key: #Object value: Object).
