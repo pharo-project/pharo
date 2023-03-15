@@ -4,9 +4,6 @@ We use a separate baseline to make it simpler to manage the platform classes. Us
 Class {
 	#name : #BaselineOfFuelPlatform,
 	#superclass : #BaselineOf,
-	#instVars : [
-		'customProjectAttributes'
-	],
 	#category : #BaselineOfFuelPlatform
 }
 
