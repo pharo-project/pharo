@@ -545,6 +545,27 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testPragmaStyleWithCrazyPragma [
+
+	| aText |
+	aText := 'm 	<  test: #toto test2: 2 > ^ a' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 4 shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 7
+		and: 11
+		shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 19
+		and: 24
+		shouldBe: #pragma.
+	self assertStyleOf: aText at: 28 shouldBe: #pragma
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testReturnStyle [
 
 	| aText |

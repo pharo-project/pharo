@@ -1076,10 +1076,15 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
+	"Lets imagin this pragma: `<  test: #toto test2: 2 >`
 
+	We want to highlight the `<`, the `test:`, the `test2:` and the `>` but we do not want to highlight the arguments."
+
+	self addStyle: #pragma from: aPragmaNode left to: aPragmaNode left.
 	aPragmaNode selectorParts
 		with: aPragmaNode keywordsPositions
-		do: [ :keyword :position | self addStyle: #pragma from: position - 1 to: position + keyword size ].
+		do: [ :keyword :position | self addStyle: #pragma from: position to: position + keyword size - 1 ].
+	self addStyle: #pragma from: aPragmaNode right to: aPragmaNode right.
 
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
