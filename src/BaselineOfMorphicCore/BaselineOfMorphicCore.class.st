@@ -105,3 +105,12 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	Initialized := true.
 ]
+
+{ #category : #actions }
+BaselineOfMorphicCore >> preload: loader package: packageSpec [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
+	Smalltalk globals at: ActiveWorld ifAbsentPut: nil
+]
