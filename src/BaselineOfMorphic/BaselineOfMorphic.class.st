@@ -370,6 +370,7 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	SystemNotification signal: 'Starting preload action'.
+	Smalltalk globals at: #ActiveWorld ifAbsentPut: nil.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
