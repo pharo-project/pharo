@@ -39,11 +39,6 @@ ClassOrganization >> addCategory: aProtocolName before: aUselessArgument [
 	self addCategory: aProtocolName
 ]
 
-{ #category : #accessing }
-ClassOrganization >> allCategories [
-	^ self protocolOrganizer allProtocolsNames
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
 	^ protocolOrganizer allMethodSelectors
@@ -56,7 +51,8 @@ ClassOrganization >> allProtocols [
 
 { #category : #accessing }
 ClassOrganization >> allProtocolsNames [
-	^ self allProtocols collect: [:each |each name]
+
+	^ self protocolOrganizer allProtocolsNames
 ]
 
 { #category : #accessing }
