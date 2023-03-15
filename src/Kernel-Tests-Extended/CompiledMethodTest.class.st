@@ -801,7 +801,7 @@ CompiledMethodTest >> testUsesUndeclareds [
 	self deny: method usesUndeclareds.
 	method := self class compiler compile: 'z ^z'.
 	self assert: method usesUndeclareds.
-	method := self class compiler compile: 'msg self in: [ :anObject | var1 := 1 ]'.
+	method := self class compiler compile: 'msg self in: [ :anObject | ^ var1 ]'.
 	self assert: method usesUndeclareds
 ]
 
