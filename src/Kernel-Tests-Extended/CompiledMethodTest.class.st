@@ -794,6 +794,150 @@ CompiledMethodTest >> testSendsSelector [
 	self deny: ((CompiledCode >> #sendsSelector:) sendsSelector: #doBreakfastForMe)
 ]
 
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithClass [
+
+	| method c c2 |
+
+	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
+	Undeclared removeKey: #TestUndeclaredVariable ifAbsent: []. "Because obsolete may remain"
+
+	method := self class compiler compile: 'x ^TestUndeclaredVariable'.
+	self assert: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: nil.
+
+	"Adding a class DOES repair"
+	c := Object subclass: #TestUndeclaredVariable.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: c.
+
+	"Removal of class DOES undeclare users"
+	c removeFromSystem.
+	self assert: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: c.
+
+	"Thus, adding back repair DOES repair again"
+	c2 := Object subclass: #TestUndeclaredVariable.
+	self deny: c equals: c2.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: c2.
+
+	"cleanup"
+	Smalltalk globals removeKey: #TestUndeclaredVariable
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithGlobal [
+
+	| method |
+
+	Smalltalk globals removeKey: #testUndeclaredVariable ifAbsent: [].
+
+	method := self class compiler compile: 'x ^testUndeclaredVariable'.
+	self assert: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: nil.
+
+	"Adding a global DOES repair"
+	Smalltalk globals at: #testUndeclaredVariable put: 42.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"Removal of globals DOES NOT undeclare users"
+	Smalltalk globals removeKey: #testUndeclaredVariable.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"Thus, adding back DOES NOT repair"
+	Smalltalk globals at: #testUndeclaredVariable put: 421.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"cleanup"
+	Smalltalk globals removeKey: #testUndeclaredVariable
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
+
+	| method method2 method3 method4 class receiver |
+
+	Smalltalk globals at: #TestUndeclaredVariableClass ifPresent: [ :c | c removeFromSystem ].
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 0.
+	receiver := class new.
+
+	"Note: unlike related tests, we need here a reveiver (see above) and to install the method in the class"
+	method := class >> (class compile: 'x ^TestUndeclaredVariable').
+	self assert: method usesUndeclareds.
+	self assert: (receiver executeMethod: method) equals: nil.
+
+	"Update the class (same identity, not a new class)"
+	self assert: (Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: '') equals: class.
+	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 1.
+	receiver instVarAt: 1 put: 42.
+
+	"Adding ivars DOES not repair the CompiledMethod"
+	self assert: method usesUndeclareds.
+	"But recompile and install a NEW method"
+	self deny: method equals: (method2 := class>>#x). "It is a new method"
+	self deny: method2 usesUndeclareds.
+	self assert: (receiver executeMethod: method2) equals: 42.
+
+	"Removal of ivar DOES recompile a new new one"
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	self deny: method2 equals: (method3 := class>>#x). "It is a new method"
+	self assert: method3 usesUndeclareds.
+	self assert: (receiver executeMethod: method3) equals: nil.
+
+	"Thus adding back DOES recompile again"
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: ''.
+	receiver instVarAt: 1 put: 421.
+	self deny: method3 equals: (method4 := class>>#x). "It is a new method"
+	self deny: method4 usesUndeclareds.
+	self assert: (receiver executeMethod: method4) equals: 421.
+
+	"cleanup"
+	class removeFromSystem
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithShared [
+
+	| method class |
+
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
+
+	method := class compiler compile: 'x ^TestUndeclaredVariable'.
+	self assert: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: nil.
+
+	"Add and initialize a shared"
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
+	(class bindingOf: #TestUndeclaredVariable) value: 42.
+
+	"Method is repaired"
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"Remove shared from class"
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
+
+	"Removal of shared DOES NOT undeclare users"
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"Thus, adding back DOES NOT repair"
+	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
+	(class bindingOf: #TestUndeclaredVariable) value: 421.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"cleanup"
+	class removeFromSystem
+]
+
 { #category : #'tests - testing' }
 CompiledMethodTest >> testUsesUndeclareds [
 	| method |
