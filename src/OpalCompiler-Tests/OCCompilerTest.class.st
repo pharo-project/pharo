@@ -8,7 +8,8 @@ Class {
 		'errorMessage',
 		'errorLocation',
 		'errorSource',
-		'text'
+		'text',
+		'interactive'
 	],
 	#category : #'OpalCompiler-Tests-FromOld'
 }
@@ -33,6 +34,12 @@ OCCompilerTest >> initializeErrorMessage [
 	errorMessage := nil.
 	errorLocation := nil.
 	errorSource := nil
+]
+
+{ #category : #accessing }
+OCCompilerTest >> interactive [
+
+	^ interactive ifNil: [ true ]
 ]
 
 { #category : #mocking }
@@ -73,7 +80,7 @@ OCCompilerTest >> testAssignmentOfClassNameBinding [
 	text := 'temp | | MockForCompilation := nil'.
 
 	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Cannot store into ->'.
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Assignment to read-only variable ->'.
 			self assert: errorLocation equals: 10.
 			self assert: errorSource contents equals: 'temp | | MockForCompilation := nil'.
 			^ nil ].
@@ -184,7 +191,7 @@ OCCompilerTest >> testNoShadowing [
 OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 
 	self initializeErrorMessage.
-
+	interactive := false.
 	self
 		should: [
 			OpalCompiler new
@@ -204,6 +211,7 @@ OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
 
 	self initializeErrorMessage.
+	interactive := false.
 	self
 		should: [
 			OpalCompiler new
@@ -224,6 +232,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
 OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 
 	self initializeErrorMessage.
+	interactive := false.
 	self
 		should: [
 			OpalCompiler new
@@ -245,6 +254,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 
 	self initializeErrorMessage.
+	interactive := false.
 	self
 		should: [
 			OpalCompiler new
@@ -266,7 +276,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 OCCompilerTest >> testNotInteractiveNoShadowing [
 
 	self initializeErrorMessage.
-
+	interactive := false.
 	self shouldnt: [
 		OpalCompiler new
 			source: 'temp |var2|';
@@ -281,6 +291,7 @@ OCCompilerTest >> testNotInteractiveNoShadowing [
 OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 
 	self initializeErrorMessage.
+	interactive := false.
 	self
 		should: [
 			OpalCompiler new
@@ -301,6 +312,7 @@ OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 
 	self initializeErrorMessage.
+	interactive := false.
 	self
 		should: [
 			OpalCompiler new
@@ -320,8 +332,9 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 
 { #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
-	self initializeErrorMessage.
 
+	self initializeErrorMessage.
+	interactive := false.
 	self shouldnt: [
 		OpalCompiler new
 			source: 'temp [:temp | ]. [:temp | ]';
