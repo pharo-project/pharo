@@ -21,15 +21,6 @@ OCSemanticWarning >> compilationContext: anObject [
 	compilationContext := anObject
 ]
 
-{ #category : #correcting }
-OCSemanticWarning >> defaultAction [
-
-	compilationContext interactive ifFalse: [ ^nil ].
-	^self openMenuIn:
-		[:labels :lines :caption |
-		UIManager default chooseFrom: labels lines: lines title: caption]
-]
-
 { #category : #'accessing - compatibility' }
 OCSemanticWarning >> errorCode [
 	self requestor ifNil: [
@@ -65,11 +56,6 @@ OCSemanticWarning >> node [
 { #category : #accessing }
 OCSemanticWarning >> node: anObject [
 	node := anObject
-]
-
-{ #category : #correcting }
-OCSemanticWarning >> openMenuIn: aBlock [
-	self subclassResponsibility
 ]
 
 { #category : #accessing }

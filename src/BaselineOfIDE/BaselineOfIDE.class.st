@@ -40,7 +40,6 @@ BaselineOfIDE >> additionalInitialization [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: SyntaxErrorDebugger as: #syntaxErrorDebugger.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
 	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
