@@ -642,7 +642,7 @@ RBCodeSnippet >> parseOnError: aBlock [
 	^ [ isMethod
 			  ifTrue: [ RBParser parseMethod: self source ]
 			  ifFalse: [ RBParser parseExpression: self source ] ]
-		  on: SyntaxErrorNotification
+		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]
 

@@ -97,7 +97,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	snippet raise ifNotNil: [ :r | ^ self should: runBlock raise: r ].
 
-	self shouldnt: runBlock raise: SyntaxErrorNotification.
+	self shouldnt: runBlock raise: CodeError.
 	self assert: value equals: snippet value
 ]
 
