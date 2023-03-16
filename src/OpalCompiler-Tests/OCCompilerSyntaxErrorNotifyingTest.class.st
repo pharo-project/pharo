@@ -24,7 +24,7 @@ OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 	This can be compared to expected error notification."
 	1 to: self numberOfSelections do: [:n |
 		| result |
-		result := [self evaluateSelectionNumber: n] on: SyntaxErrorNotification do: [:exc |
+		result := [self evaluateSelectionNumber: n] on: CodeError do: [:exc |
 			| expectedNotification expectedNotificationLocation |
 			expectedNotification := (expectedErrors at: n) allButFirst allButLast: 3.
 			expectedNotificationLocation := (expectedErrorPositions at: n) - (morph editor startIndex - 1).

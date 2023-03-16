@@ -68,7 +68,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	"Importer should fail when faulty"
 	snippet isFaulty ifTrue: [
-		self should: [ importer evaluate ] raise: SyntaxErrorNotification.
+		self should: [ importer evaluate ] raise: CodeError.
 		snippet isMethod ifTrue: [ class removeFromSystem ].
 		^ self ].
 
