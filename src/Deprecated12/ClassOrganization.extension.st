@@ -22,6 +22,13 @@ ClassOrganization >> categories [
 ]
 
 { #category : #'*Deprecated12' }
+ClassOrganization >> categoryOfElement: aSelector [
+
+	self deprecated: 'Use #protocolNameOfElement: instead.' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv protocolNameOfElement: `@arg'.
+	^ self protocolNameOfElement: aSelector
+]
+
+{ #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self

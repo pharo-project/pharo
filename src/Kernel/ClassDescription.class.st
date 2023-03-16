@@ -28,40 +28,32 @@ ClassDescription >> acceptsLoggingOfCompilation [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
-	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 
-	priorMethodOrNil := self
-		compiledMethodAt: selector
-		ifAbsent: [ nil ].
+	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
+	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
-	oldProtocol := self organization categoryOfElement: selector.
+	oldProtocol := self organization protocolNameOfElement: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self organization
-			classify: selector
-			under: (category = Protocol unclassified
-				ifTrue: [ oldProtocol ]
-				ifFalse: [ category ]) ].
-	newProtocol := self organization categoryOfElement: selector.
+		self organization classify: selector under: (category = Protocol unclassified
+				 ifTrue: [ oldProtocol ]
+				 ifFalse: [ category ]) ].
+	newProtocol := self organization protocolNameOfElement: selector.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethodOrNil isNil or: [ priorOriginOrNil ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifFalse: [
-			"If protocol changed and someone is from different package, I need to throw a method recategorized"
+		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			self
 				notifyRepackage: selector
 				method: compiledMethod
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance
-				methodChangedFrom: priorMethodOrNil
-				to: compiledMethod
-				oldProtocol: oldProtocol ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -484,7 +476,7 @@ ClassDescription >> copy: sel from: class classified: cat [
 	code := class sourceCodeAt: sel.
 	code ifNotNil:
 			[cat
-				ifNil: [category := class organization categoryOfElement: sel]
+				ifNil: [category := class organization protocolNameOfElement: sel]
 				ifNotNil: [category := cat].
 			(self includesLocalSelector: sel)
 				ifTrue: [code asString = (self sourceCodeAt: sel) asString
@@ -1282,7 +1274,7 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 	"Answer the category of the argument, aSelector, in the organization of
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	^self organization categoryOfElement: aSelector
+	^ self organization protocolNameOfElement: aSelector
 ]
 
 { #category : #queries }

@@ -48,12 +48,6 @@ ClassOrganization >> allProtocolsNames [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> categoryOfElement: aSelector [
-
-	^ self protocolNameOfElement: aSelector ifAbsent: nil
-]
-
-{ #category : #'backward compatibility' }
 ClassOrganization >> classComment [
 
 	^ self comment
@@ -76,19 +70,14 @@ ClassOrganization >> classify: aSymbol under: aProtocolName [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: aBoolean [
+
 	| oldCategory forceNotify oldProtocols |
 	forceNotify := (self protocolOrganizer includesSelector: selector) not.
-	oldCategory := self categoryOfElement: selector.
-	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ])
-		ifFalse: [ ^ self ].
+	oldCategory := self protocolNameOfElement: selector.
+	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolOrganizer protocolsOfSelector: selector.
-	self protocolOrganizer
-		classify: selector
-		inProtocolNamed: aProtocolName.
-	aBoolean ifTrue: [
-		(oldProtocols
-			select: #canBeRemoved)
-			do: [:e | self  removeProtocol: e ] ].
+	self protocolOrganizer classify: selector inProtocolNamed: aProtocolName.
+	aBoolean ifTrue: [ (oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ] ].
 	oldCategory ifNotNil: [ self notifyOfChangedSelector: selector from: oldCategory to: aProtocolName ]
 ]
 
@@ -246,6 +235,12 @@ ClassOrganization >> ownCategories [
 ]
 
 { #category : #'backward compatibility' }
+ClassOrganization >> protocolNameOfElement: aSelector [
+
+	^ self protocolNameOfElement: aSelector ifAbsent: nil
+]
+
+{ #category : #'backward compatibility' }
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
 	^ (self protocolOrganizer protocolsOfSelector: aSelector)
@@ -289,11 +284,11 @@ ClassOrganization >> removeCategory: protocolName [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> removeElement: aSymbol [
-	| oldProtocol |
 
-	oldProtocol := self categoryOfElement: aSymbol.
+	| oldProtocol |
+	oldProtocol := self protocolNameOfElement: aSymbol.
 	self protocolOrganizer removeMethod: aSymbol.
-	self notifyOfChangedSelector: aSymbol from: oldProtocol to: (self categoryOfElement: aSymbol)
+	self notifyOfChangedSelector: aSymbol from: oldProtocol to: (self protocolNameOfElement: aSymbol)
 ]
 
 { #category : #'backward compatibility' }

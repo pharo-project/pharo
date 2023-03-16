@@ -111,7 +111,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	"Copy the source code for the method associated with selector onto the fileStream."
 
 	| preamble method |
-	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
+	preamble := self name, ' methodsFor: ', (self organization protocolNameOfElement: selector) asString printString.
 	method := self methodDict
 		at: selector
 		ifAbsent: [
