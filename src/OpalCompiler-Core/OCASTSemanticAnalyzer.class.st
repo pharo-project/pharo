@@ -85,12 +85,11 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 	aNode addError: aMessage.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 
-	SyntaxErrorNotification
-		inClass: Object
-		withCode: aNode methodNode source
-		doitFlag: false
-		errorMessage: aMessage
-		location: aNode startWithoutParentheses
+	OCSemanticError new
+		node: aNode;
+		messageText: aMessage;
+		location: aNode startWithoutParentheses;
+		signal
 ]
 
 { #category : #variables }
