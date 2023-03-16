@@ -133,7 +133,7 @@ RBCodeSnippetTest >> testParseOnError [
 	| ast error |
 	error := nil.
 
-	ast := snippet parseOnError: [ :e | error := e errorMessage ].
+	ast := snippet parseOnError: [ :e | error := e messageText ].
 
 	(snippet isParseFaulty ifNil: [ snippet isFaulty ])
 		ifTrue: [ self assert: error isNotNil ]
