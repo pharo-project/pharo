@@ -13,10 +13,9 @@ Class {
 
 { #category : #exceptionInstantiator }
 SyntaxErrorNotification class >> inClass: aClass withCode: codeString doitFlag: doitFlag errorMessage: errorString location: location [
-	^ (self new
-		setClass: aClass
-		code: codeString
-		doitFlag: doitFlag
-		errorMessage: errorString
-		location: location) signal
+	self new
+		sourceCode: codeString;
+		messageText: errorString;
+		location: location;
+		signal
 ]
