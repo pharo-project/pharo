@@ -152,7 +152,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	  
 	  "Remove empty categories, which are not in MC packages, because MC does
 	  not do this (this script does not make packages dirty)"
-	  Smalltalk organization removeEmptyCategories.
 	  Smalltalk
 	    allClassesAndTraitsDo: [ :class |
 	      [ :each |
@@ -161,7 +160,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	          sortCategories ]
 	            value: class organization;
 	            value: class class organization ].
-	Smalltalk organization sortCategories.
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Smalltalk garbageCollect.
