@@ -14,10 +14,10 @@ ClyClassWithUndeclares class >> withFloatReturn [
 
 { #category : #'with undeclares' }
 ClyClassWithUndeclares >> method1WithUndeclares [
-	^undeclaredStubInstVar1 printString
+	^ UndeclaredStubInstVar1
 ]
 
 { #category : #'with undeclares' }
 ClyClassWithUndeclares >> method2WithUndeclares [
-	undeclaredStubInstVar2 := 100
+	^ UndeclaredStubInstVar2
 ]
