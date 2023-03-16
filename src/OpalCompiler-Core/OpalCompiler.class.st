@@ -253,7 +253,8 @@ OpalCompiler >> compile [
 	^[
 		self parse.
 		self semanticScope compileMethodFromASTBy: self
-	] on: SyntaxErrorNotification do: [ :exception |
+	] on: CodeError do: [ :exception |
+			exception sourceCode: source contents.
 			self compilationContext requestor
                 ifNotNil: [
 						self compilationContext requestor
@@ -331,9 +332,7 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^[ast doSemanticAnalysis]
-		on: OCSemanticError
-		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
+	^ ast doSemanticAnalysis
 ]
 
 { #category : #plugins }
