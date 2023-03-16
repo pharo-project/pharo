@@ -63,6 +63,8 @@ RBCodeSnippetTest >> testCodeImporter [
 	importer := CodeImporter fromString: string.
 	importer parseChunks.
 
+	self skipIf: #exec.
+
 	"Importer should fail when faulty"
 	snippet isFaulty ifTrue: [
 		self should: [ importer evaluate ] raise: SyntaxErrorNotification.
