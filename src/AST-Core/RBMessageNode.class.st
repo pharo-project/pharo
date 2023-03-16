@@ -166,8 +166,9 @@ RBMessageNode >> isContainmentReplacement: aNode [
 		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBMessageNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self receiver isFaulty or: [self arguments anySatisfy: [:each | each isFaulty]]
 ]
 

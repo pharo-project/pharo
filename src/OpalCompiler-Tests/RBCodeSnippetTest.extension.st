@@ -7,7 +7,8 @@ RBCodeSnippetTest >> testCompile [
 
 	self skipIf: #compile.
 	method := snippet compile.
-	self assert: method isCompiledMethod
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -20,7 +21,32 @@ RBCodeSnippetTest >> testCompileOnError [
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
 			self assert: error isNil.
-			self assert: method isCompiledMethod ]
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileWithRequestor [
+
+	| requestor method |
+	requestor := OCMockRequestor new.
+	requestor interactive: false.
+	requestor isScripting: nil.
+	requestor text: nil.
+	method := OpalCompiler new
+		          noPattern: snippet isMethod not;
+		          requestor: requestor;
+		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
+			          self assert: requestor notifyList isNotEmpty.
+			          self assert: snippet isFaulty.
+			          ^ self ];
+		          compile: snippet source.
+
+	"Still alive? (failBlock never called)"
+	self deny: snippet isFaulty.
+	self assert: requestor notifyList isEmpty.
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -52,7 +78,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysis [
 	| ast |
 	ast := snippet doSemanticAnalysis.
 	self assert: ast isMethod.
-	"self assert: ast isFaulty equals: snippet isFaulty" self flag: #FIXME
+	self assert: ast isFaulty equals: snippet isFaulty
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -61,7 +87,6 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 
 	| ast error |
 	error := nil.
-	self skipIf: #testDoSemanticAnalysisOnError.
 
 	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
 
@@ -73,12 +98,10 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testExecute [
+RBCodeSnippetTest >> testExecute: method [
 
-	| method runBlock phonyArgs |
-	self skipIf: #testExecute.
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
+	| runBlock phonyArgs |
+	self skipIf: #exec.
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.

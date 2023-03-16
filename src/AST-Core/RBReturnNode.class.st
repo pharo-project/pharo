@@ -79,8 +79,9 @@ RBReturnNode >> initialize [
 	start := 0
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBReturnNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self value isFaulty
 ]
 

@@ -80,6 +80,19 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	^ var
 ]
 
+{ #category : #errors }
+OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
+	aNode addError: aMessage.
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
+
+	SyntaxErrorNotification
+		inClass: Object
+		withCode: aNode methodNode source
+		doitFlag: false
+		errorMessage: aMessage
+		location: aNode startWithoutParentheses
+]
+
 { #category : #variables }
 OCASTSemanticAnalyzer >> resolveVariableNode: aVariableNode [
 	| var |
@@ -96,6 +109,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowingVariable: aNode [
+	aNode addWarning: 'Name already defined'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aNode ].
 	^ OCShadowVariableWarning new
 		node: aNode;
@@ -105,27 +119,30 @@ OCASTSemanticAnalyzer >> shadowingVariable: aNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
+	variableNode addError: 'Assignment to read-only variable'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 
 	^ OCStoreIntoReadOnlyVariableError new
 		node: variableNode;
 		compilationContext: compilationContext;
-		messageText: 'Cannot store into';
+		messageText: 'Assignment to read-only variable';
 		signal
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
+	variableNode addError: 'Assigment to reserved variable'.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
 		compilationContext: compilationContext;
-		messageText: 'Cannot store into';
+		messageText: 'Assigment to reserved variable';
 		signal
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
+	variableNode addWarning: 'Undeclared variable'.
 	compilationContext optionSkipSemanticWarnings
 		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
 	^ OCUndeclaredVariableWarning new
@@ -136,13 +153,13 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode propertyAt: #semanticWarning put: #unitialized
+	variableNode addWarning: 'unitialized variable'
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
-	variableNode propertyAt: #semanticWarning put: 'unused variable'
+	variableNode addWarning: 'unused variable'
 ]
 
 { #category : #visiting }
@@ -156,6 +173,8 @@ OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
+	aBlockNode arguments size >15 ifTrue: [self error: 'Too many arguments' forNode: aBlockNode ].
+
 	blockCounter := self blockCounter + 1.
 
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
@@ -180,6 +199,8 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
+
+	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
 	scope := OCMethodScope new outerScope: compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
