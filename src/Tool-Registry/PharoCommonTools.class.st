@@ -289,12 +289,6 @@ PharoCommonTools >> register: anTool as: aNameSelector [
 ]
 
 { #category : #'registry access' }
-PharoCommonTools >> syntaxErrorDebugger [
-
-	^ self toolNamed: #syntaxErrorDebugger
-]
-
-{ #category : #'registry access' }
 PharoCommonTools >> testRunner [
 
 	^ self toolNamed: #testRunner

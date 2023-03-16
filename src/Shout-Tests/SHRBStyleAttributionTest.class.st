@@ -90,6 +90,20 @@ SHRBStyleAttributionTest >> testAssignmentStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testAttributeInBlockHasRightStyle [
+
+	| aText |
+	aText := 'm: arg self do: [ :each | arg ]' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 27
+		and: 29
+		shouldBe: #argument
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testBinaryStyle [
 
 	| aText |
@@ -209,6 +223,31 @@ SHRBStyleAttributionTest >> testBlockTempVarStyle [
 		between: 15
 		and: 17
 		shouldBe: #blockTempVar
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testBracesStyle [
+
+	| aText |
+	aText := 'm ^ {1 . {2 . {3 . {4 . {5 . {6 . {7 . {8 . {9 .1}}}}}}}}' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 10 shouldBe: #brace.
+	self assertStyleOf: aText at: 15 shouldBe: #brace1.
+	self assertStyleOf: aText at: 20 shouldBe: #brace2.
+	self assertStyleOf: aText at: 25 shouldBe: #brace3.
+	self assertStyleOf: aText at: 30 shouldBe: #brace4.
+	self assertStyleOf: aText at: 35 shouldBe: #brace5.
+	self assertStyleOf: aText at: 40 shouldBe: #brace6.
+	self assertStyleOf: aText at: 45 shouldBe: #brace7.
+	self assertStyleOf: aText at: 50 shouldBe: #brace7.
+	self assertStyleOf: aText at: 51 shouldBe: #brace6.
+	self assertStyleOf: aText at: 52 shouldBe: #brace5.
+	self assertStyleOf: aText at: 53 shouldBe: #brace4.
+	self assertStyleOf: aText at: 54 shouldBe: #brace3.
+	self assertStyleOf: aText at: 55 shouldBe: #brace2.
+	self assertStyleOf: aText at: 56 shouldBe: #brace1.
+	self assertStyleOf: aText at: 57 shouldBe: #brace
 ]
 
 { #category : #tests }
@@ -500,9 +539,30 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 
 	self
 		assertStyleOf: aText
-		between: 4
+		between: 3
 		and: 8
 		shouldBe: #pragma
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testPragmaStyleWithCrazyPragma [
+
+	| aText |
+	aText := 'm 	<  test: #toto test2: 2 > ^ a' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 4 shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 7
+		and: 11
+		shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 19
+		and: 24
+		shouldBe: #pragma.
+	self assertStyleOf: aText at: 28 shouldBe: #pragma
 ]
 
 { #category : #tests }

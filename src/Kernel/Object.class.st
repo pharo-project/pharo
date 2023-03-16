@@ -878,7 +878,11 @@ Object >> errorSubscriptBounds: index [
 Object >> executor [
 	"Return an object which can act as executor for finalization of the receiver"
 
-	^ self shallowCopy actAsExecutor
+	self
+		deprecated: 'Please use #finalizer instead. See Phep0003'
+		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
+
+	^ self finalizer
 ]
 
 { #category : #'error handling' }
@@ -911,13 +915,20 @@ Object >> explicitRequirement [
 { #category : #finalization }
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
-
-	^ WeakRegistry default
+	
+	^ FinalizationRegistry default
 ]
 
 { #category : #finalization }
 Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
+]
+
+{ #category : #finalization }
+Object >> finalizer [
+	"Return an object which can act as finalizer of the receiver"
+
+	^ self
 ]
 
 { #category : #enumerating }

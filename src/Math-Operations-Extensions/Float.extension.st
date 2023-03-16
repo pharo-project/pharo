@@ -226,6 +226,13 @@ Float class >> machineEpsilon [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
+Float class >> maxLog [
+	"Answer maximum log value representable"
+
+	^ MaxValLn
+]
+
+{ #category : #'*Math-Operations-Extensions' }
 Float >> nthRoot: aPositiveInteger [
 	"Answer the nth root of the receiver."
 	aPositiveInteger = 2 ifTrue: [

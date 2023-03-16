@@ -30,7 +30,9 @@ SyntaxErrorNotification class >> inClass: aClass withCode: codeString doitFlag: 
 { #category : #exceptiondescription }
 SyntaxErrorNotification >> defaultAction [
 
-	^ UIManager default syntaxErrorNotificationDefaultAction: self
+	"Notification are silently ignored by default.
+	Because SyntaxErrors are special (and not really resumable) it's better to force an error"
+	^ self unhandledErrorAction
 ]
 
 { #category : #accessing }

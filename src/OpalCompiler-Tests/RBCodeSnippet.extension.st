@@ -21,7 +21,7 @@ RBCodeSnippet >> compileOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  noPattern: isMethod not;
-		  compile: self source ] on: SyntaxErrorNotification do: [ :e | aBlock value: e ]
+		  compile: self source ] on: SyntaxErrorNotification do: [ :e | aBlock cull: e ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
