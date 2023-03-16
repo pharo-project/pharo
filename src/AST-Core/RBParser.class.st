@@ -92,9 +92,7 @@ RBParser class >> parseMethod: aString onError: aBlock [
 	parser := self new
 		errorBlock: aBlock;
 		initializeParserWith: aString.
-	^ [ parser parseMethod ]
-		on: ReparseAfterSourceEditing
-		do: [ :exception | self parseMethod: exception newSource onError: aBlock ]
+	^ parser parseMethod
 ]
 
 { #category : #parsing }
