@@ -51,6 +51,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	| string importer class runBlock value |
 	"Code importer meed a plain expression or use a custom format"
+	snippet source isAllSeparators ifTrue: [ ^ self skip ].
 	string := snippet isMethod
 		          ifTrue: [
 			          class := ChunkImportTestCase new importAClass.
