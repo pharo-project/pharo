@@ -16,7 +16,7 @@ RBCodeSnippetTest >> testCompileOnError [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e | error := e errorMessage ].
+	method := snippet compileOnError: [ :e | error := e messageText ].
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
@@ -88,7 +88,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 	| ast error |
 	error := nil.
 
-	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
+	ast := snippet doSemanticAnalysisOnError: [ :e | error := e messageText ].
 
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]

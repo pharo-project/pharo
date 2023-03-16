@@ -17,7 +17,9 @@ Class {
 { #category : #accessing }
 CodeError >> errorCode [
 
-	self deprecated: 'use errorCode'.
+	self
+		deprecated: 'errorCode is so misleading'
+		transformWith: '`@receiver errorCode' -> '`@receiver sourceCode'.
 
 	^ self sourceCode
 ]
@@ -25,7 +27,9 @@ CodeError >> errorCode [
 { #category : #accessing }
 CodeError >> errorMessage [
 
-	self deprecated: 'use messageText'.
+	self
+		deprecated: 'As with exceptions, prefer messageText'
+		transformWith: '`@receiver errorMessage' -> '`@receiver messageText'.
 
 	^ messageText
 ]

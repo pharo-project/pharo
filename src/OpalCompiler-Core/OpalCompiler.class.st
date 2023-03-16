@@ -258,9 +258,9 @@ OpalCompiler >> compile [
 			self compilationContext requestor
                 ifNotNil: [
 						self compilationContext requestor
-							notify: exception errorMessage , ' ->'
+							notify: exception messageText , ' ->'
 							at: exception location
-							in: exception errorCode.
+							in: exception sourceCode.
                     ^ self compilationContext failBlock value ]
                 ifNil: [ exception pass ]]
 ]

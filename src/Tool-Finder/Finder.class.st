@@ -87,7 +87,7 @@ Finder >> computeWithMethodFinder: aString [
 	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
 		on: SyntaxErrorNotification, RuntimeSyntaxError
 		do: [ :e |
-			self inform: 'Syntax Error: ' , e errorMessage.
+			self inform: 'Syntax Error: ' , e messageText.
 			^ #() ].	"#( data1 data2 result )"
 
 	dataObjects size < 2

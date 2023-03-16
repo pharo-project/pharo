@@ -503,7 +503,7 @@ RBCodeSnippet class >> styleAllWithError [
 				text
 					replaceFrom: exception location
 					to: exception location - 1
-					with: (exception errorMessage asText addAttribute:
+					with: (exception messageText asText addAttribute:
 							 (TextBackgroundColor color: Color lightBlue)).
 				bigtext append: String cr.
 				bigtext append: String tab.

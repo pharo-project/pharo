@@ -124,7 +124,6 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 	^ OCStoreIntoReadOnlyVariableError new
 		node: variableNode;
-		compilationContext: compilationContext;
 		messageText: 'Assignment to read-only variable';
 		signal
 ]
@@ -135,7 +134,6 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
-		compilationContext: compilationContext;
 		messageText: 'Assigment to reserved variable';
 		signal
 ]
