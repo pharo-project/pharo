@@ -1080,6 +1080,19 @@ RubSmalltalkEditor >> selectedSymbol [
 	^ nil
 ]
 
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> selectedText [
+	"Answer the text contained in selection interval"
+
+	| selectionInterval |
+	selectionInterval := self selectionInterval.
+	selectionInterval ifEmpty: [ ^ '' ].
+
+	^ self textArea string
+		  copyFrom: selectionInterval first
+		  to: selectionInterval last
+]
+
 { #category : #'do-its' }
 RubSmalltalkEditor >> selectionForDoitAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently
