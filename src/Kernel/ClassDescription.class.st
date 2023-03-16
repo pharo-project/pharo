@@ -139,8 +139,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^self withAllSuperclasses
-		flatCollectAsSet: [ :class | class organization listAtCategoryNamed: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodsInProtocolNamed: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -537,9 +536,7 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 	third argument, newCat. Copy each message found in the category cat in
 	class aClass into this new category."
 
-	self copyAll: (aClass organization listAtCategoryNamed: cat)
-		from: aClass
-		classified: newCat
+	self copyAll: (aClass organization methodsInProtocolNamed: cat) from: aClass classified: newCat
 ]
 
 { #category : #slots }
@@ -788,8 +785,7 @@ ClassDescription >> localSlots [
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self organization listAtCategoryNamed: aString)
-			collect: [ :each | (self compiledMethodAt: each) ]
+	^ (self organization methodsInProtocolNamed: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -990,10 +986,10 @@ ClassDescription >> removeMethodTag: aSymbol [
 ClassDescription >> removeProtocol: aString [
 	"Remove each of the messages categorized under aString in the method
 	dictionary of the receiver. Then remove the category aString."
+
 	| categoryName |
 	categoryName := aString asSymbol.
-	(self organization listAtCategoryNamed: categoryName) do:
-		[:sel | self removeSelector: sel].
+	(self organization methodsInProtocolNamed: categoryName) do: [ :sel | self removeSelector: sel ].
 	self organization removeCategory: categoryName
 ]
 
@@ -1030,18 +1026,14 @@ ClassDescription >> reorganize [
 ClassDescription >> selectorsInCategory: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	| aColl |
-	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
-	^ aColl asArray sort
+	^ (self organization methodsInProtocolNamed: aName) asSet asArray sort
 ]
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInProtocol: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	| aColl |
-	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
-	^ aColl asArray sort
+	^ (self organization methodsInProtocolNamed: aName) asSet asArray sort
 ]
 
 { #category : #'pool variable' }

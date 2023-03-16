@@ -53,12 +53,13 @@ ClassOrganizationTest >> testAddProtocolNamed [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testListAtCategoryNamed [
+ClassOrganizationTest >> testMethodsInProtocolNamed [
+
 	| methods |
-	methods := self organization listAtCategoryNamed: 'empty'.
+	methods := self organization methodsInProtocolNamed: 'empty'.
 	self assertEmpty: methods.
 
-	methods := self organization listAtCategoryNamed: 'one'.
+	methods := self organization methodsInProtocolNamed: 'one'.
 	self assert: methods size equals: 1.
 	self assert: methods first equals: #one
 ]

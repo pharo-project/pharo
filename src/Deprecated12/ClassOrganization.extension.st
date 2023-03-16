@@ -36,3 +36,10 @@ ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '`@rcv protocolNameOfElement: `@arg1 ifAbsent: `@arg2'.
 	^ self protocolNameOfElement: aSelector ifAbsent: aBlock
 ]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> listAtCategoryNamed: aName [
+
+	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodsInProtocolNamed: `@arg'.
+	^ self methodsInProtocolNamed: aName
+]

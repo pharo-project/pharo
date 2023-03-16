@@ -29,11 +29,10 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
 	| org |
-	(org := self organization) protocolsNames
-		do: [ :cat |
-			| sels |
-			sels := (org listAtCategoryNamed: cat) select: [ :sel | aSet includes: sel ].
-			sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
+	(org := self organization) protocolsNames do: [ :cat |
+		| sels |
+		sels := (org methodsInProtocolNamed: cat) select: [ :sel | aSet includes: sel ].
+		sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
 ]
 
 { #category : #'*CodeExport' }

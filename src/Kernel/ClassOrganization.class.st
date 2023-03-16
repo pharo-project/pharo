@@ -82,10 +82,10 @@ ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: 
 ]
 
 { #category : #cleanup }
-ClassOrganization >> cleanUpCategoriesForClass: aClass [
+ClassOrganization >> cleanUpProtocolsForClass: aClass [
 	"remove all entries that have no methods"
-	 self allMethodSelectors do: [:each |
-		(aClass includesSelector: each) ifFalse: [self removeElement: each ]]
+
+	self allMethodSelectors do: [ :each | (aClass includesSelector: each) ifFalse: [ self removeElement: each ] ]
 ]
 
 { #category : #accessing }
@@ -119,8 +119,9 @@ ClassOrganization >> commentStamp [
 
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
-	commentSourcePointer  := otherOrganization commentSourcePointer.
-	otherOrganization protocols do: [ :p | p methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: p name ] ]
+
+	commentSourcePointer := otherOrganization commentSourcePointer.
+	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: protocol name ] ]
 ]
 
 { #category : #accessing }
@@ -153,13 +154,9 @@ ClassOrganization >> initializeClass: aClass [
 		self classify: each under: Protocol unclassified ]
 ]
 
-{ #category : #testing }
-ClassOrganization >> isEmptyCategoryNamed: categoryName [
-	^ (self protocolOrganizer protocolNamed: categoryName) isEmpty
-]
-
 { #category : #accessing }
-ClassOrganization >> listAtCategoryNamed: aName [
+ClassOrganization >> methodsInProtocolNamed: aName [
+
 	^ (self protocolOrganizer methodsInProtocolNamed: aName) asArray
 ]
 

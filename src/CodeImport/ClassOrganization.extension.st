@@ -1,29 +1,22 @@
 Extension { #name : #ClassOrganization }
 
 { #category : #'*CodeImport' }
-ClassOrganization >> changeFromCategorySpecs: categorySpecs [
-
-	"notification"
-	self internalChangeFromString: categorySpecs
-]
-
-{ #category : #'*CodeImport' }
 ClassOrganization >> changeFromString: aString [
 	"Parse the argument, aString, and make this be the receiver's structure."
 
-	| categorySpecs |
-	categorySpecs := aString parseLiterals.
+	| protocolSpecs |
+	protocolSpecs := aString parseLiterals.
 
 	"If nothing was scanned and I had no elements before, then default me"
-	(categorySpecs isEmpty and: [ self protocolOrganizer protocols isEmpty ])
+	(protocolSpecs isEmpty and: [ self protocolOrganizer protocols isEmpty ])
 		ifTrue: [ ^ self protocolOrganizer reset ].
 
-	^ self changeFromCategorySpecs: categorySpecs
+	^ self internalChangeFromString: protocolSpecs
 ]
 
 { #category : #'*CodeImport' }
-ClassOrganization >> internalChangeFromString: categorySpecs [
+ClassOrganization >> internalChangeFromString: protocolSpecs [
 	"Parse the argument, aString, and make this be the receiver's structure."
 
-	protocolOrganizer := ProtocolOrganizer fromSpec: categorySpecs
+	protocolOrganizer := ProtocolOrganizer fromSpec: protocolSpecs
 ]
