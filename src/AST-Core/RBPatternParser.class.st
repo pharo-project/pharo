@@ -50,7 +50,7 @@ RBPatternParser >> parsePatternBlock: aClass [
 	self
 		parseStatements: false
 		into: node body
-		until: [ currentToken isSpecial: $} ].
+		untilAnyCloserOf: '}'.
 
 	(currentToken isSpecial: $})
 		ifFalse: [ self addParserError: '''}'' expected' to: node body.

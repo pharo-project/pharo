@@ -1187,8 +1187,7 @@ RBParserTest >> testParseFaultyLiteral [
 	self assert: node isParseError.
 	self assert: node errorMessage equals: 'Unknown character'.
 	node := self parseFaultyExpression: faultyLiteralArray.
-	self assert: node isFaulty.
-	self assert: node isLiteralArray.
+	self assert: node isParseError.
 	self assert: node contents first errorMessage equals: 'Unknown character'
 ]
 

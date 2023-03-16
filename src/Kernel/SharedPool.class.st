@@ -71,7 +71,7 @@ SharedPool class >> methodsAccessingPoolVariables [
 SharedPool class >> poolUsers [
 	"Answer all classes that uses the shared pool"
 
-	^self environment allClasses select:  [:class | class includesSharedPoolNamed: self name]
+	^ self environment allClasses select: [ :class | class includesSharedPoolNamed: self name ]
 ]
 
 { #category : #queries }

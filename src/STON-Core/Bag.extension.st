@@ -3,7 +3,7 @@ Extension { #name : #Bag }
 { #category : #'*STON-Core' }
 Bag class >> fromSton: stonReader [
 	"Read a map representation containing element/occurrences pairs"
-	
+
 	| bag |
 	bag := self new.
 	stonReader parseMapDo: [ :key :value |
@@ -15,7 +15,7 @@ Bag class >> fromSton: stonReader [
 Bag >> stonOn: stonWriter [
 	"Use a map with element-occurrences pairs as representation"
 
-	stonWriter 
-		writeObject: self 
+	stonWriter
+		writeObject: self
 		do: [ stonWriter encodeMap: contents ]
 ]

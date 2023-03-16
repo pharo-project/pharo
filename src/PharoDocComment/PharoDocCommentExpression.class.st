@@ -16,14 +16,13 @@ Class {
 PharoDocCommentExpression >> evaluate [
 
 	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
-
-	self isFaulty ifTrue: [ RuntimeSyntaxError signal ].
+	self isWellFormed ifFalse: [ self error: 'Doc comment is not well formed' ].
+	"we do not check for isFaulty here, as in the case of syntax errors, we want the evaluate to give us better error messages"
 
 	^ self methodClass compiler
 		  source: self source;
 		  noPattern: true;
 		  receiver: self methodClass;
-		  options: #( + optionParseErrors );
 		  evaluate
 ]
 
@@ -54,8 +53,15 @@ PharoDocCommentExpression >> isFaulty [
 
 	"Check is the ast is OK and follows the 2 specific doccomments rules"
 
+	^ self isNotWellFormed or: [ self expressionNode isFaulty ]
+]
+
+{ #category : #testing }
+PharoDocCommentExpression >> isNotWellFormed [
+
+	"Check is the ast follows the 2 specific doccomments rules"
+
 	| cpt |
-	self expressionNode isFaulty ifTrue: [ ^ true ].
 
 	"There should be exactly only one triple > message send"
 	cpt := 0.
@@ -67,6 +73,12 @@ PharoDocCommentExpression >> isFaulty [
 	self expressionNode body statements last value selector ~= #>>> ifTrue: [ ^ true ].
 
 	^false
+]
+
+{ #category : #testing }
+PharoDocCommentExpression >> isWellFormed [
+
+	^self isNotWellFormed not
 ]
 
 { #category : #operation }

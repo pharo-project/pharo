@@ -740,7 +740,7 @@ VirtualMachine >> parameterLabels [
 		42	'number of stack pages in use (read-only)'
 		43	'desired number of stack pages (stored in image file header, max 65535, read-write)'
 		44	'size of eden, in bytes (read-only)'
-		45	'desired size of eden, in bytes (stored in image file header, read-write)'
+		45	'desired size of new space (new space is 5/7 eden and 2/7 survivor space), in bytes (stored in image file header, read-write)'
 		46	'machine code zone size, in bytes (Cog only; otherwise nil, read-only)'
 		47	'desired machine code zone size (stored in image file header; Cog only; otherwise nil, read-write)'
 		48	'various header flags. See getCogVMFlags (read-write)'

@@ -157,7 +157,7 @@ OCCompilerNotifyingTest >> testInvalidExternalFunctionDeclaration [
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testInvalidLiteralCharacter [
-	self setUpForErrorsIn: '^ #yourself , #` Expecting a literal type ->`) , #end'.
+	self setUpForErrorsIn: '^ #yourself , #` Literal expected ->`) , #end'.
 	self enumerateAllSelections
 ]
 
@@ -239,14 +239,14 @@ OCCompilerNotifyingTest >> testMissingPeriodSeparatorBetweenStatements [
 { #category : #tests }
 OCCompilerNotifyingTest >> testMissingSeparatorBetweenBlockArgumentAndStatements [
 
-	self setUpForErrorsIn: '[ :x ` ''|'' expected ->`x + 1 ]'.
+	self setUpForErrorsIn: '[ :x ` ''|'' or parameter expected ->`x + 1 ]'.
 	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testTooLargeAnIntegerInALiteralByteArray [
 
-	self setUpForErrorsIn: '#[ 1 2 ` Expecting 8-bit integer ->`256 4 5]'.
+	self setUpForErrorsIn: '#[ 1 2 ` 8-bit integer expected ->`256 4 5]'.
 	self enumerateAllSelections
 ]
 
@@ -273,9 +273,9 @@ OCCompilerNotifyingTest >> testUnmatchedBlockBracket [
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedBraceArray [
-	self setUpForErrorsIn: '{ 1. 2` expected } ->`'.
+	self setUpForErrorsIn: '{ 1. 2` ''}'' expected ->`'.
 	self enumerateAllSelections.
-	self setUpForErrorsIn: '{ 1. 2 ` expected } ->`'.
+	self setUpForErrorsIn: '{ 1. 2 ` ''}'' expected ->`'.
 	self enumerateAllSelections
 ]
 
@@ -312,14 +312,14 @@ OCCompilerNotifyingTest >> testUnmatchedLiteralParenthesis [
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLocalTempDeclaration [
 
-	self setUpForErrorsIn: '| x y ` ''|'' expected ->`'.
+	self setUpForErrorsIn: '| x y ` ''|'' or variable expected ->`'.
 	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLocalTempDeclarationInABlock [
 
-	self setUpForErrorsIn: '[:z | | x y ` ''|'' expected ->`]'.
+	self setUpForErrorsIn: '[:z | | x y ` ''|'' or variable expected ->`]'.
 	self enumerateAllSelections
 ]
 

@@ -269,8 +269,9 @@ RBBlockNode >> isConstant [
 		ifNotEmpty: [:statements | statements first isLiteralNode ]
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBBlockNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^(self arguments anySatisfy: [:each | each isFaulty] ) or: [ self body isFaulty]
 ]
 
