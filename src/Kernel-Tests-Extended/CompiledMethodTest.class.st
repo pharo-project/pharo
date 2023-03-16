@@ -802,7 +802,7 @@ CompiledMethodTest >> testUndeclaredReparationWithClass [
 	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
 	Undeclared removeKey: #TestUndeclaredVariable ifAbsent: []. "Because obsolete may remain"
 
-	method := self class compiler compile: 'x ^TestUndeclaredVariable'.
+	method := self class compiler compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: nil.
 
@@ -831,29 +831,29 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 
 	| method |
 
-	Smalltalk globals removeKey: #testUndeclaredVariable ifAbsent: [].
+	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
 
-	method := self class compiler compile: 'x ^testUndeclaredVariable'.
+	method := self class compiler compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: nil.
 
 	"Adding a global DOES repair"
-	Smalltalk globals at: #testUndeclaredVariable put: 42.
+	Smalltalk globals at: #TestUndeclaredVariable put: 42.
 	self deny: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: 42.
 
 	"Removal of globals DOES NOT undeclare users"
-	Smalltalk globals removeKey: #testUndeclaredVariable.
+	Smalltalk globals removeKey: #TestUndeclaredVariable.
 	self deny: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: 42.
 
 	"Thus, adding back DOES NOT repair"
-	Smalltalk globals at: #testUndeclaredVariable put: 421.
+	Smalltalk globals at: #TestUndeclaredVariable put: 421.
 	self deny: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: 42.
 
 	"cleanup"
-	Smalltalk globals removeKey: #testUndeclaredVariable
+	Smalltalk globals removeKey: #TestUndeclaredVariable
 ]
 
 { #category : #'tests - literals' }
@@ -867,7 +867,7 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	receiver := class new.
 
 	"Note: unlike related tests, we need here a reveiver (see above) and to install the method in the class"
-	method := class >> (class compile: 'x ^TestUndeclaredVariable').
+	method := class >> (class compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]').
 	self assert: method usesUndeclareds.
 	self assert: (receiver executeMethod: method) equals: nil.
 
@@ -908,7 +908,7 @@ CompiledMethodTest >> testUndeclaredReparationWithShared [
 	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
 	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
 
-	method := class compiler compile: 'x ^TestUndeclaredVariable'.
+	method := class compiler compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: nil.
 
