@@ -47,27 +47,10 @@ ClassOrganization >> allProtocolsNames [
 	^ self protocolOrganizer allProtocolsNames
 ]
 
-{ #category : #accessing }
-ClassOrganization >> categoriesSorted [
-
-	^ self protocolOrganizer protocolsSorted
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> categoryOfElement: aSelector [
 
-	^ self categoryOfElement: aSelector ifAbsent: nil
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
-
-	^ (self protocolOrganizer protocolsOfSelector: aSelector)
-		ifEmpty: [
-			(organizedClass includesSelector: aSelector)
-				ifTrue: [ Protocol unclassified ]
-				ifFalse: [ aBlock value ]]
-		ifNotEmpty: [:col | col first name ]
+	^ self protocolNameOfElement: aSelector ifAbsent: nil
 ]
 
 { #category : #'backward compatibility' }
@@ -260,6 +243,17 @@ ClassOrganization >> ownCategories [
                         set ].
         ^ ((self protocolOrganizer protocols collect: [:each | each name])
                 copyWithoutAll: (traitsCategories collect: [:each | each name])) asArray
+]
+
+{ #category : #'backward compatibility' }
+ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
+
+	^ (self protocolOrganizer protocolsOfSelector: aSelector)
+		  ifEmpty: [
+			  (organizedClass includesSelector: aSelector)
+				  ifTrue: [ Protocol unclassified ]
+				  ifFalse: [ aBlock value ] ]
+		  ifNotEmpty: [ :col | col first name ]
 ]
 
 { #category : #accessing }

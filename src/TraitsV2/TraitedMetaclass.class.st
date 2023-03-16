@@ -279,7 +279,7 @@ TraitedMetaclass >> recategorizeSelector: selector from: oldCategory to: newCate
 
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
 
-	original := self organization categoryOfElement: selector ifAbsent: [ ^ self ].
+	original := self organization protocolNameOfElement: selector ifAbsent: [ ^ self ].
 
 	"If it is nil is because it is a removal. It will removed when the method is removed."
 	newCategory ifNil: [ ^ self ].
