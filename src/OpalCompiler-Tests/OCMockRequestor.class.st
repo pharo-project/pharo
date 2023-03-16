@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'notifyList',
 		'interactive',
-		'isScripting'
+		'isScripting',
+		'text'
 	],
 	#category : #'OpalCompiler-Tests-Misc'
 }
@@ -74,7 +75,13 @@ OCMockRequestor >> notifyList [
 { #category : #accessing }
 OCMockRequestor >> text [
 
-	^ 'I do not really care'
+	^ text
+]
+
+{ #category : #accessing }
+OCMockRequestor >> text: aString [
+
+	text := aString
 ]
 
 { #category : #accessing }

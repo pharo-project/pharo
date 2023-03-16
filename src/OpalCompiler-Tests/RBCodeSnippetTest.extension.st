@@ -7,7 +7,8 @@ RBCodeSnippetTest >> testCompile [
 
 	self skipIf: #compile.
 	method := snippet compile.
-	self assert: method isCompiledMethod
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -20,7 +21,8 @@ RBCodeSnippetTest >> testCompileOnError [
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
 			self assert: error isNil.
-			self assert: method isCompiledMethod ]
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -29,19 +31,22 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 	| requestor method |
 	requestor := OCMockRequestor new.
 	requestor interactive: false.
-	requestor isScripting: snippet isMethod not. "Not sure how this lead to different information than `noPattern:` or it is just a redundant redundancy"
+	requestor isScripting: nil.
+	requestor text: nil.
 	method := OpalCompiler new
 		          noPattern: snippet isMethod not;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
-			          self assert: snippet isFaulty.
 			          self assert: requestor notifyList isNotEmpty.
+			          self assert: snippet isFaulty.
 			          ^ self ];
 		          compile: snippet source.
 
 	"Still alive? (failBlock never called)"
 	self deny: snippet isFaulty.
-	self assert: requestor notifyList isEmpty
+	self assert: requestor notifyList isEmpty.
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -93,11 +98,10 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testExecute [
+RBCodeSnippetTest >> testExecute: method [
 
-	| method runBlock phonyArgs |
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
+	| runBlock phonyArgs |
+	self skipIf: #exec.
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.
