@@ -4,6 +4,9 @@ I get signalled when a temporary variable is used that is not defined.  My defau
 Class {
 	#name : #OCUndeclaredVariableWarning,
 	#superclass : #OCSemanticWarning,
+	#instVars : [
+		'variable'
+	],
 	#category : #'OpalCompiler-Core-Exception'
 }
 
@@ -70,7 +73,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareUndefined [
 
-	^ UndeclaredVariable possiblyRegisteredWithName: node name
+	^ variable
 ]
 
 { #category : #correcting }
@@ -240,4 +243,16 @@ OCUndeclaredVariableWarning >> substituteWord: correctWord wordInterval: spot of
 					with: correctWord.
 
 	^ o + correctWord size - spot size
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> variable [
+
+	^ variable
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> variable: anObject [
+
+	variable := anObject
 ]
