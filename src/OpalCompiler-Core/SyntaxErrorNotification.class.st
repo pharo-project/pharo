@@ -7,13 +7,7 @@ TODO: unify with the OCSemanticWarning hierarchy
 "
 Class {
 	#name : #SyntaxErrorNotification,
-	#superclass : #Notification,
-	#instVars : [
-		'inClass',
-		'code',
-		'doitFlag',
-		'location'
-	],
+	#superclass : #CodeError,
 	#category : #'OpalCompiler-Core-Exception'
 }
 
@@ -25,52 +19,4 @@ SyntaxErrorNotification class >> inClass: aClass withCode: codeString doitFlag: 
 		doitFlag: doitFlag
 		errorMessage: errorString
 		location: location) signal
-]
-
-{ #category : #exceptiondescription }
-SyntaxErrorNotification >> defaultAction [
-
-	"Notification are silently ignored by default.
-	Because SyntaxErrors are special (and not really resumable) it's better to force an error"
-	^ self unhandledErrorAction
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> doitFlag [
-	^doitFlag
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> errorClass [
-	^inClass
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> errorCode [
-	^code
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> errorMessage [
-	^messageText
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> location [
-	^location
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> messageText [
-	^ super messageText
-		ifNil: [messageText := code]
-]
-
-{ #category : #accessing }
-SyntaxErrorNotification >> setClass: aClass code: codeString doitFlag: aBoolean errorMessage: errorString location: anInteger [
-	inClass := aClass.
-	code := codeString.
-	doitFlag := aBoolean.
-	messageText := errorString.
-	location := anInteger
 ]
