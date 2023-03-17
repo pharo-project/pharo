@@ -218,8 +218,7 @@ RBParser >> errorBlock [
 
 { #category : #accessing }
 RBParser >> errorBlock: aBlock [
-	errorBlock := aBlock.
-	scanner ifNotNil: [scanner errorBlock: aBlock]
+	errorBlock := aBlock
 ]
 
 { #category : #'error handling' }
