@@ -26,6 +26,17 @@ RBCodeSnippetTest >> testCompileOnError [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileOnErrorResume [
+
+	| method error |
+	error := nil.
+	method := snippet compileOnError: [ :e | error := e messageText. e resume ].
+	self assert: snippet isFaulty equals: error isNotNil.
+	self assert: method isCompiledMethod.
+	self testExecute: method
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileWithRequestor [
 
 	| requestor method |
@@ -56,6 +67,8 @@ RBCodeSnippetTest >> testDecompile [
 	method := snippet compile.
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ast := method decompile.
+	self assert: ast isMethod.
+	ast := method parseTree.
 	self assert: ast isMethod.
 	"Decompilation lose many information. Not sure how to test more"
 ]
