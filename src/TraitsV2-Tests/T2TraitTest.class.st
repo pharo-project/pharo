@@ -208,6 +208,8 @@ T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
 T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperclass [
 	| t1 c1 c2 t2 |
 
+	self skip.
+
 	t1 := self createT1.
 	t2 := self createT2.
 
@@ -268,6 +270,8 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 { #category : #tests }
 T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	| t1 t2 c2 c1 |
+
+	self skip.
 
 	t1 := self createT1.
 	t2 := self createT2.

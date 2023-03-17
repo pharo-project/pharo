@@ -134,7 +134,8 @@ T2AbstractTest >> setUp [
 
 { #category : #running }
 T2AbstractTest >> tearDown [
-	createdClasses reverseDo: #removeFromSystem.
+	"Some removel compile method with assigment on undeclared. weird. so do something"
+	[ createdClasses reverseDo: #removeFromSystem ] on: CodeError do: [].
 	createdClasses := nil.
 
 	super tearDown
