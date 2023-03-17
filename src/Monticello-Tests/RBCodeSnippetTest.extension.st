@@ -3,12 +3,13 @@ Extension { #name : #RBCodeSnippetTest }
 { #category : #'*Monticello-Tests' }
 RBCodeSnippetTest >> testMonticello [
 
-	| extensionPackage definition |
+	| definition |
 
-	"Force non method to inside a method"
-	snippet isMethod ifFalse: [ snippet := snippet copy. snippet source: 'foo ' , snippet source ].
+	"Force non method to be inside a method"
+	snippet isMethod ifFalse: [
+		snippet := snippet copy.
+		snippet source: 'foo ' , snippet source ].
 
-	extensionPackage := (MCWorkingCopy forPackage: (MCPackage named: 'FooBarBaz')).
 	definition := MCMethodDefinition
 		className: #MCMockClassE
 		classIsMeta: false
@@ -29,7 +30,7 @@ RBCodeSnippetTest >> testMonticello [
 	[ definition load ] on: Warning do: [ :e | e resume ]. "Ignore Selector missmatches"
 	self assert: MCMockClassE methods size equals: 1.
 
-	"forced methods cannot be executed, because no syntetic return (pharo language is weird)"
+	"forced methods cannot be executed, because no return (pharo language is weird)"
 	snippet isMethod ifTrue: [ self testExecute: MCMockClassE >> definition selector ].
 
 	definition unload.
