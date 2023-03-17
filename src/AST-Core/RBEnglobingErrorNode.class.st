@@ -53,6 +53,19 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 	^self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
 ]
 
+{ #category : #'instance creation' }
+RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
+	"Transform a simple error node into a englobing one while preserving most information"
+
+	^ self new
+		start: (aParseErrorNode start min: (anArrayOfNodes min: #start));
+		stop: (aParseErrorNode stop max: (anArrayOfNodes min: #stop));
+		errorPosition: aParseErrorNode errorPosition;
+		errorMessage: aParseErrorNode errorMessage;
+		valueAfter: aParseErrorNode value;
+		contents: anArrayOfNodes
+]
+
 { #category : #visiting }
 RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
