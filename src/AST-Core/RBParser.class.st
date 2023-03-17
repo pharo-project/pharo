@@ -557,7 +557,7 @@ RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorM
 		ifFalse: [ firstParse ]
 ]
 
-{ #category : #'error handling' }
+{ #category : #'private - parsing' }
 RBParser >> parseErrorNode: aMessageString [
 	| errorPosition|
 	currentToken isError
@@ -1245,22 +1245,20 @@ RBParser >> parseVariableNode [
 
 { #category : #'error handling' }
 RBParser >> parserError: aString [
-	"Let the errorBlock try to recover from the error. Answer a ParseNode (possibly an RBParseErrorNode) or signal there is new source"
-	| errorNode errorMessage errorPosition newSource |
-	errorNode := self errorBlock cull: aString cull: self errorPosition cull: self.
-	errorNode ifNotNil: [ ^ errorNode ].
-	currentToken isError
-		ifTrue: [ errorMessage := currentToken cause. errorPosition := currentToken location ]
-		ifFalse: [errorMessage := aString. errorPosition := currentToken start].
 
-	newSource := SyntaxErrorNotification new
-						sourceCode: source;
-						messageText: errorMessage;
-						location: errorPosition;
-						signal.
+	| errorNode |
+	errorNode := self parseErrorNode: aString.
+	errorBlock ifNotNil: [ errorBlock cull: errorNode errorMessage cull: errorNode start cull: self ].
+	isFaulty ifTrue: [ ^ errorNode ].
 
-	"If resumed, produce an error node"
-	^ self parseErrorNode: errorMessage
+	SyntaxErrorNotification new
+		sourceCode: source;
+		messageText: errorNode errorMessage;
+		location: errorNode start;
+		signal.
+
+	"If resumed, return with the error node"
+	^ errorNode
 ]
 
 { #category : #private }
