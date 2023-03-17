@@ -35,7 +35,7 @@ AbstractStoredSetting class >> stonAllInstVarNames [
 
 { #category : #comparing }
 AbstractStoredSetting >> = aStoredSetting [
-	^ self class = aStoredSetting class and: [ 
+	^ self class = aStoredSetting class and: [
 		self settingNodeIdentifier = aStoredSetting settingNodeIdentifier ]
 ]
 
@@ -45,8 +45,8 @@ AbstractStoredSetting >> hasDefaultValue [
 ]
 
 { #category : #accessing }
-AbstractStoredSetting >> hasDefaultValue: aBoolean [ 
-	
+AbstractStoredSetting >> hasDefaultValue: aBoolean [
+
 	hasDefaultValue := aBoolean
 ]
 
@@ -56,7 +56,7 @@ AbstractStoredSetting >> hash [
 ]
 
 { #category : #testing }
-AbstractStoredSetting >> isForSettingNode: aSettingNode [ 
+AbstractStoredSetting >> isForSettingNode: aSettingNode [
 	^ self settingNodeIdentifier = aSettingNode settingNodeIdentifier
 ]
 
@@ -85,9 +85,9 @@ AbstractStoredSetting >> settingNodeIdentifier: aString [
 ]
 
 { #category : #loading }
-AbstractStoredSetting >> updateSettingNode: aSettingNode [ 
+AbstractStoredSetting >> updateSettingNode: aSettingNode [
 	| value |
-	[ value := self realValue ] on: Error do: [ :exception | "ignore and leave" 
+	[ value := self realValue ] on: Error do: [ :exception | "ignore and leave"
 		self inform: 'Cannot read stored value of ', self settingNodeIdentifier, '. Exception: ', exception printString.
 		^ self ].
 	[ aSettingNode realValue: value ] on: Error do: [ :exception | "inform and ignore"

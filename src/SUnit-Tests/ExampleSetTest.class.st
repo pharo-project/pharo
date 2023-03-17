@@ -32,11 +32,11 @@ ExampleSetTest >> testGrow [
 
 { #category : #testing }
 ExampleSetTest >> testIllegal [
-	self 
-		should: [empty at: 5] 
+	self
+		should: [empty at: 5]
 		raise: self defaultTestError.
-	self 
-		should: [empty at: 5 put: #abc] 
+	self
+		should: [empty at: 5 put: #abc]
 		raise: self defaultTestError
 ]
 

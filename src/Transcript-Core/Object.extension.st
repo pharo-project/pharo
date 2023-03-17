@@ -8,7 +8,7 @@ Object >> crTrace [
 { #category : #'*Transcript-Core' }
 Object >> crTrace: aString [
 	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
-	
+
 	Transcript cr.
 	self trace: aString
 ]
@@ -36,7 +36,7 @@ Object >> trace [
 { #category : #'*Transcript-Core' }
 Object >> trace: anObject [
 	"Log the argument. Use self trace: instead of Transcript show: "
-	
+
 	Transcript show: anObject asString
 ]
 
@@ -48,7 +48,7 @@ Object >> traceCr [
 { #category : #'*Transcript-Core' }
 Object >> traceCr: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
+
 	self trace: anObject.
 	Transcript cr
 ]
@@ -56,7 +56,7 @@ Object >> traceCr: anObject [
 { #category : #'*Transcript-Core' }
 Object >> traceCrTab: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
+
 	self trace: anObject.
 	Transcript cr ; tab
 ]

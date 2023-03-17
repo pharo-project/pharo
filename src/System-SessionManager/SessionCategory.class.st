@@ -26,7 +26,7 @@ SessionCategory >> initialize [
 ]
 
 { #category : #private }
-SessionCategory >> listAtPriority: anInteger [ 
+SessionCategory >> listAtPriority: anInteger [
 	^ priorityLists
 		at: anInteger
 		ifAbsentPut: [ OrderedCollection new ]
@@ -38,12 +38,12 @@ SessionCategory >> name [
 ]
 
 { #category : #accessing }
-SessionCategory >> name: aString [ 
+SessionCategory >> name: aString [
 	name := aString
 ]
 
 { #category : #printing }
-SessionCategory >> printOn: aStream [ 
+SessionCategory >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(;
 		nextPutAll: self name;
@@ -52,36 +52,36 @@ SessionCategory >> printOn: aStream [
 
 { #category : #accessing }
 SessionCategory >> prioritizedList [
-	^ priorityLists keys sorted 
+	^ priorityLists keys sorted
 		flatCollect: [ :index | priorityLists at: index ]
 ]
 
 { #category : #registration }
-SessionCategory >> register: anObject [ 
+SessionCategory >> register: anObject [
 	self
 		register: anObject
 		atPriority: self defaultPriority
 ]
 
 { #category : #registration }
-SessionCategory >> register: anObject atPriority: anInteger [ 
+SessionCategory >> register: anObject atPriority: anInteger [
 	(self listAtPriority: anInteger)
 		addLast: anObject
 ]
 
 { #category : #private }
 SessionCategory >> renamedClass: aClass from: oldName to: newName [
-	
+
 	priorityLists do: [ :handlers |
-		handlers 
+		handlers
 			detect: [ :handler | handler handledId = oldName ]
 			ifFound: [ :handler | handler registeredClassName: newName ] ]
 ]
 
 { #category : #registration }
-SessionCategory >> unregisterHandler: anHandlerId [ 
+SessionCategory >> unregisterHandler: anHandlerId [
 	priorityLists valuesDo: [ :handlers |
-				handlers 
+				handlers
 					detect: [ :handler | handler handledId = anHandlerId ]
 					ifFound: [ :handler | handlers remove: handler ] ]
 ]

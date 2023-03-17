@@ -2,12 +2,14 @@ Extension { #name : #UITheme }
 
 { #category : #'*Growl' }
 UITheme >> growlBorderColorFor: aGrowlMorph [
-	^ Color gray
+
+	^ colorPalette growlBorderColorFor: aGrowlMorph
 ]
 
 { #category : #'*Growl' }
 UITheme >> growlContentsColorFor: aGrowlMorph [
-	^ Color white
+
+	^ colorPalette growlContentsColorFor: aGrowlMorph
 ]
 
 { #category : #'*Growl' }
@@ -22,10 +24,12 @@ UITheme >> growlDismissHandleFor: aGrowlMorph [
 
 { #category : #'*Growl' }
 UITheme >> growlFillColorFor: aGrowlMorph [
-	^ Color darkGray alpha: 0.5
+
+	^ colorPalette growlFillColorFor: aGrowlMorph
 ]
 
 { #category : #'*Growl' }
 UITheme >> growlLabelColorFor: aGrowlMorph [
-	^ Color white twiceDarker
+
+	^ colorPalette growlLabelColorFor: aGrowlMorph
 ]

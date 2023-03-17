@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #testing }
-SycSourceCodeRefactoringCommand class >> isAbstract [ 
+SycSourceCodeRefactoringCommand class >> isAbstract [
 
 	^ self == SycSourceCodeRefactoringCommand
 ]

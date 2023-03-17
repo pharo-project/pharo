@@ -45,19 +45,19 @@ RGDefinition class >> timeStampKey [
 ]
 
 { #category : #annotations }
-RGDefinition >> annotationNamed: annotationName [ 
-	"Answer the value of the annotation named <annotationName>, or 
+RGDefinition >> annotationNamed: annotationName [
+	"Answer the value of the annotation named <annotationName>, or
 	nil if the annotation is not defined for the receiver."
-	
+
 	^ self
 		annotationNamed: annotationName
 		ifAbsent: [ nil ]
 ]
 
 { #category : #annotations }
-RGDefinition >> annotationNamed: annotationName ifAbsent: exceptionBlock [ 
-	"Answer the value of the annotation named <annotationName>. If the 
-	annotation is not defined for the receiver, answer the result of 
+RGDefinition >> annotationNamed: annotationName ifAbsent: exceptionBlock [
+	"Answer the value of the annotation named <annotationName>. If the
+	annotation is not defined for the receiver, answer the result of
 	evaluating the <exceptionBlock>."
 
 	self hasAnnotations
@@ -69,7 +69,7 @@ RGDefinition >> annotationNamed: annotationName ifAbsent: exceptionBlock [
 ]
 
 { #category : #annotations }
-RGDefinition >> annotationNamed: annotationName ifAbsentPut: blockValue [ 
+RGDefinition >> annotationNamed: annotationName ifAbsentPut: blockValue [
 
 	^self annotations
 		at: annotationName
@@ -77,7 +77,7 @@ RGDefinition >> annotationNamed: annotationName ifAbsentPut: blockValue [
 ]
 
 { #category : #annotations }
-RGDefinition >> annotationNamed: annotationName put: value [ 
+RGDefinition >> annotationNamed: annotationName put: value [
 
 	self annotations
 		at: annotationName
@@ -86,7 +86,7 @@ RGDefinition >> annotationNamed: annotationName put: value [
 
 { #category : #annotations }
 RGDefinition >> annotationNames [
-	
+
 	self hasAnnotations
 		ifFalse:[ ^OrderedCollection new ].
 	^annotations keys
@@ -127,8 +127,8 @@ RGDefinition >> fullName [
 { #category : #annotations }
 RGDefinition >> hasAnnotationNamed: annotationName [
 	"Answer <true> if the receiver contains the annotation named <annotationName>. "
-	
-	self hasAnnotations	
+
+	self hasAnnotations
 		ifFalse:[ ^false ].
 	^annotations includesKey: annotationName
 ]
@@ -140,7 +140,7 @@ RGDefinition >> hasAnnotations [
 ]
 
 { #category : #'testing - types' }
-RGDefinition >> isAccess [ 
+RGDefinition >> isAccess [
 
 	^false
 ]
@@ -182,7 +182,7 @@ RGDefinition >> isNamespace [
 ]
 
 { #category : #'testing - types' }
-RGDefinition >> isOrganization [ 
+RGDefinition >> isOrganization [
 
 	^false
 ]
@@ -200,7 +200,7 @@ RGDefinition >> isPool [
 ]
 
 { #category : #'testing - types' }
-RGDefinition >> isReference [ 
+RGDefinition >> isReference [
 
 	^false
 ]
@@ -232,15 +232,15 @@ RGDefinition >> name [
 { #category : #accessing }
 RGDefinition >> name: anObject [
 	"a symbol or a string should be expected"
-	
+
 	name:= anObject
 ]
 
 { #category : #annotations }
-RGDefinition >> removeAnnotationNamed: annotationName [ 
-	"Remove the annotation named <annotationName>. Fails quietly if there 
+RGDefinition >> removeAnnotationNamed: annotationName [
+	"Remove the annotation named <annotationName>. Fails quietly if there
 	is no annotation with the given name."
-	
+
 	(self hasAnnotationNamed: annotationName)
 		ifTrue:[ annotations removeKey: annotationName ]
 ]
@@ -250,7 +250,7 @@ RGDefinition >> rootEnvironment [
 	"Retrieves the runtime environment of an RGObject"
 	"If the receiver is defined in an RGContainer the runtime environment is the one associated to its container"
 	| parent |
-	
+
 	parent:= self environment.
 	[ parent isRingObject ]
 		whileTrue:[ parent:= parent environment ].

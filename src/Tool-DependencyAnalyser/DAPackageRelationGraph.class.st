@@ -35,7 +35,7 @@ DAPackageRelationGraph class >> onPackagesNamed: packageNames [
 ]
 
 { #category : #adding }
-DAPackageRelationGraph >> addExtensionDependencies: aPDPackage [	
+DAPackageRelationGraph >> addExtensionDependencies: aPDPackage [
 	aPDPackage rPackageSet extensionMethods
 		do: [ :method | | packageOfExtendedClass |
 			packageOfExtendedClass := self packageForBehavior: method methodClass.
@@ -53,8 +53,8 @@ DAPackageRelationGraph >> addExtensionDependencies: aPDPackage [
 DAPackageRelationGraph >> addInheritanceDependencies: aPackage [
 	| package |
 	self package: aPackage
-		classesDo: [ :class | 
-			class superclass ifNotNil: [ 
+		classesDo: [ :class |
+			class superclass ifNotNil: [
 					package := self packageForBehavior: class superclass.
 					aPackage
 						add:
@@ -84,7 +84,7 @@ DAPackageRelationGraph >> addMessageSendDependencies: aPackage [
 { #category : #adding }
 DAPackageRelationGraph >> addPackage: aPDPackage [
 	aPDPackage beIncluded.
-	packages 
+	packages
 		at: aPDPackage packageName
 		put: aPDPackage
 ]
@@ -102,7 +102,7 @@ DAPackageRelationGraph >> addPoolDictionaryDependencies: aPackage [
 	Add a pool dictionary dependency for each pool dictionary used in the package."
 
 	self package: aPackage
-		classesDo: [ :class | 
+		classesDo: [ :class |
 			class sharedPoolsDo: [ :each | | targetPackage |
 				targetPackage := self packageForBehavior: each.
 				aPackage
@@ -114,7 +114,7 @@ DAPackageRelationGraph >> addPoolDictionaryDependencies: aPackage [
 
 { #category : #adding }
 DAPackageRelationGraph >> addReferenceDependencies: aPackage [
-	(self methodsFor: aPackage) 
+	(self methodsFor: aPackage)
 		do: [ :method | self findReferencesIn: method for: aPackage ]
 ]
 
@@ -122,7 +122,7 @@ DAPackageRelationGraph >> addReferenceDependencies: aPackage [
 DAPackageRelationGraph >> addTraitDependencies: aPackage [
 	| package |
 	self package: aPackage
-		classesDo: [ :class | 
+		classesDo: [ :class |
 			class traits
 				do: [ :trait |
 					package := self packageForBehavior: trait.
@@ -140,16 +140,15 @@ DAPackageRelationGraph >> allDependentPackagesFromSeenPackages [
 	aSet := Set new.
 	self seenPackages do: [ :seenPackage |
 		aSet addAll: (seenPackage dependentPackages) ].
-	
-	^ aSet	
 
+	^ aSet
 ]
 
 { #category : #computing }
 DAPackageRelationGraph >> allExtensionDependencies [
 	| aCollectionOfExtensionDependency |
 	aCollectionOfExtensionDependency := OrderedCollection new.
-	
+
 	self seenPackages do: [ :each |
 		each dependencies do: [ :dependency |
 			aCollectionOfExtensionDependency addAll: dependency extensionDependencies.
@@ -162,7 +161,7 @@ DAPackageRelationGraph >> allExtensionDependencies [
 DAPackageRelationGraph >> allReferenceDependencies [
 	| aCollectionOfReferenceDependency |
 	aCollectionOfReferenceDependency := OrderedCollection new.
-	
+
 	self seenPackages do: [ :each |
 		each dependencies do: [ :dependency |
 			aCollectionOfReferenceDependency addAll: dependency referenceDependencies.
@@ -173,14 +172,14 @@ DAPackageRelationGraph >> allReferenceDependencies [
 
 { #category : #testing }
 DAPackageRelationGraph >> allSeen [
-	
-	^ self packages allSatisfy: [ :each | each isSeen ].
+
+	^ self packages allSatisfy: [ :each | each isSeen ]
 ]
 
 { #category : #building }
 DAPackageRelationGraph >> build [
 	"build the dependency graph"
-	self 
+	self
 		computeStaticDependencies;
 		removeInternalDependencies;
 		combineDependencies
@@ -213,9 +212,9 @@ DAPackageRelationGraph >> combineDependencies: aPackage [
 	grouped := aPackage dependencies
 		groupedBy: [ :each | each target ]
 		having: [ :each | true ].
-	
+
 	aPackage clearDependencies.
-	
+
 	grouped keysAndValuesDo: [ :target :dependencies |
 		composite := DACompositeDependency from: aPackage to: target.
 		dependencies do: [ :each | composite add: each ].
@@ -225,16 +224,16 @@ DAPackageRelationGraph >> combineDependencies: aPackage [
 { #category : #adding }
 DAPackageRelationGraph >> computeStaticDependencies [
 	self packages
-		do: [ :each | 
+		do: [ :each |
 			each isSeen
-				ifFalse: [ 
+				ifFalse: [
 					self computeStaticDependencies: each.
-					each beSeen ] ] 
+					each beSeen ] ]
 ]
 
 { #category : #adding }
 DAPackageRelationGraph >> computeStaticDependencies: aPackage [
-	
+
 	self addInheritanceDependencies: aPackage.
 	self addExtensionDependencies: aPackage.
 	self addReferenceDependencies: aPackage.
@@ -261,13 +260,13 @@ DAPackageRelationGraph >> findReferencesIn: aMethod for: aPackage [
 
 	compiledMethod := aMethod compiledMethod.
 	compiledMethod ifNil: [ ^ self ].
-	
-	allCompiledCode := compiledMethod withAllBlocks.	
-	
-	allCompiledCode do: [ :aCompiledCode | 
-			aCompiledCode literals do: [ :literal | 
+
+	allCompiledCode := compiledMethod withAllBlocks.
+
+	allCompiledCode do: [ :aCompiledCode |
+			aCompiledCode literals do: [ :literal |
 					(self isReference: literal)
-						ifTrue: [ 
+						ifTrue: [
 							package := self packageForBehavior: literal value.
 							self addPackage: package.
 							aPackage
@@ -277,7 +276,7 @@ DAPackageRelationGraph >> findReferencesIn: aMethod for: aPackage [
 										selector: aMethod method selector asSymbol;
 										reference: literal value;
 										method: aMethod;
-										yourself) ] ] ].
+										yourself) ] ] ]
 ]
 
 { #category : #accessing }
@@ -288,7 +287,7 @@ DAPackageRelationGraph >> includedPackages [
 ]
 
 { #category : #accessing }
-DAPackageRelationGraph >> includesSeenPackage: aPackage [	
+DAPackageRelationGraph >> includesSeenPackage: aPackage [
 	^ self seenPackages includes: aPackage
 ]
 
@@ -324,16 +323,16 @@ DAPackageRelationGraph >> outgoing [
 ]
 
 { #category : #enumerating }
-DAPackageRelationGraph >> package: aPackage classesDo: aBlock [ 
+DAPackageRelationGraph >> package: aPackage classesDo: aBlock [
 	aPackage rPackageSet classes do: aBlock
 ]
 
 { #category : #accessing }
 DAPackageRelationGraph >> packageAt: aPackageName [
 	"answer a DAPackage"
-	
-	^ (packages keys includes: aPackageName) 
-		ifTrue: [ packages at: aPackageName ]	
+
+	^ (packages keys includes: aPackageName)
+		ifTrue: [ packages at: aPackageName ]
 		ifFalse: [ nil ]
 ]
 
@@ -343,7 +342,7 @@ DAPackageRelationGraph >> packageForBehavior: aClass [
 
 	^ classMapping
 		at: aClass
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			self packages
 				detect: [ :each | each rPackageSet includesClass: aClass ]
 				ifNone: [ self systemPackageContaining: aClass ] ]
@@ -378,9 +377,9 @@ DAPackageRelationGraph >> predecessors: aPackage [
 	| aCollection |
 	aCollection := OrderedCollection new.
 	self packages
-		do: [ :package | 
+		do: [ :package |
 			package dependencies
-				do: [ :dependency | 
+				do: [ :dependency |
 					dependency target = aPackage
 						ifTrue: [ aCollection add: package ] ] ].
 	^ aCollection
@@ -389,7 +388,7 @@ DAPackageRelationGraph >> predecessors: aPackage [
 { #category : #updating }
 DAPackageRelationGraph >> refreshGraph [
 	| packageNames |
-	
+
 	packageNames := self seenPackagesName.
 	self initializeWithPackages: (packageNames collect: [ :packageName | self daPackageWith: packageName]).
 	self build
@@ -401,8 +400,7 @@ DAPackageRelationGraph >> refreshPackageDependencies: aPackage [
 	self computeStaticDependencies: aPackage.
 	self combineDependencies: aPackage.
 	aPackage removeAllInternal.
-	aPackage beSeen.
-	
+	aPackage beSeen
 ]
 
 { #category : #actions }
@@ -414,7 +412,7 @@ DAPackageRelationGraph >> removeInternalDependencies [
 { #category : #actions }
 DAPackageRelationGraph >> removeOutgoingDependencies [
 	"Remove all dependencies to packages not included in this relation"
-	
+
 	self includedPackages
 		do: [ :each | self removeOutgoingDependencies: each ]
 		displayingProgress: 'Removing outgoing Dependencies'
@@ -434,7 +432,7 @@ DAPackageRelationGraph >> removePackage: packageName [
 
 { #category : #actions }
 DAPackageRelationGraph >> seenPackages [
-	^ self packages 
+	^ self packages
 		select: [ :each | each isSeen ]
 ]
 
@@ -447,8 +445,8 @@ DAPackageRelationGraph >> seenPackagesName [
 
 { #category : #actions }
 DAPackageRelationGraph >> seenPackagesWithFilter: aFilter [
-	^ self packages 
-		select: [ :each | each isSeen and: [ aFilter match: each packageName ] ].
+	^ self packages
+		select: [ :each | each isSeen and: [ aFilter match: each packageName ] ]
 ]
 
 { #category : #actions }
@@ -463,7 +461,7 @@ DAPackageRelationGraph >> successors: aPackage [
 	| aCollection |
 	aCollection := OrderedCollection new.
 	(packages at: aPackage packageName) dependencies
-		do: [ :dependency | 
+		do: [ :dependency |
 			(self packagesName includes: dependency target packageName)
 				ifTrue: [ aCollection add: dependency target ] ].
 	^ aCollection
@@ -483,7 +481,7 @@ DAPackageRelationGraph >> usersOf: aPackage [
 	| users |
 	users := OrderedCollection new.
 	self seenPackages
-		do: [ :package | 
+		do: [ :package |
 			(package dependentPackages includes: aPackage)
 				ifTrue: [ users add: package ] ].
 	^ users

@@ -30,7 +30,7 @@ ZnUTF16Encoder >> back16BitWordOnStream: stream [
 	| firstByte secondByte |
 	firstByte := stream back.
 	secondByte := stream back.
-	^ self isBigEndian 
+	^ self isBigEndian
 		ifTrue: [ secondByte + (firstByte << 8) ]
 		ifFalse: [ firstByte + (secondByte << 8) ]
 ]
@@ -42,7 +42,7 @@ ZnUTF16Encoder >> backOnStream: stream [
 	| word |
 	word := self back16BitWordOnStream: stream.
 	(word < 16rD800 or: [ word > 16rDBFF ])
-		ifFalse: [ 
+		ifFalse: [
 			self back16BitWordOnStream: stream ]
 ]
 
@@ -76,7 +76,7 @@ ZnUTF16Encoder >> nextCodePointFromStream: stream [
 	^ (word < 16rD800 or: [ word > 16rDBFF ])
 		ifTrue: [
 			word ]
-		ifFalse: [ 
+		ifFalse: [
 			leadSurrogate := word.
 			trailSurrogate := self read16BitWordFromStream: stream.
 			code := (leadSurrogate - 16rD800) * 16r400 + (trailSurrogate - 16rDC00).
@@ -90,7 +90,7 @@ ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	| leadSurrogate trailSurrogate shifted |
 	(self isSurrogateCodePoint: codePoint) ifTrue: [ self errorOutsideRange ].
 	codePoint <= 65535
-		ifTrue: [ 
+		ifTrue: [
 			^ self write16BitWord: codePoint toStream: stream ].
 	codePoint <= self maximumUTFCode
 		ifTrue: [
@@ -106,7 +106,7 @@ ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 { #category : #private }
 ZnUTF16Encoder >> processByteOrderMark: word [
 	^ (word = 16rFEFF or: [ word = 16rFFFE ])
-		ifTrue: [ 
+		ifTrue: [
 			word = 16rFFFE
 				ifTrue: [ self swapEndianness ].
 			true ]
@@ -120,20 +120,19 @@ ZnUTF16Encoder >> read16BitWordFromStream: stream [
 	secondByte := stream next.
 	(firstByte isNil or: [ secondByte isNil ])
 		ifTrue: [ ^ self errorIncomplete ].
-	^ self isBigEndian 
+	^ self isBigEndian
 		ifTrue: [ secondByte + (firstByte << 8) ]
 		ifFalse: [ firstByte + (secondByte << 8) ]
-	
 ]
 
 { #category : #private }
 ZnUTF16Encoder >> write16BitWord: word toStream: stream [
 	self isBigEndian
-		ifTrue: [ 
+		ifTrue: [
 			stream
 				nextPut: (word byteAt: 2);
 				nextPut: (word byteAt: 1) ]
-		ifFalse: [ 
+		ifFalse: [
 			stream
 				nextPut: (word byteAt: 1);
 				nextPut: (word byteAt: 2) ]

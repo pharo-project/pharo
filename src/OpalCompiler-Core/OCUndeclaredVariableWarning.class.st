@@ -4,6 +4,9 @@ I get signalled when a temporary variable is used that is not defined.  My defau
 Class {
 	#name : #OCUndeclaredVariableWarning,
 	#superclass : #OCSemanticWarning,
+	#instVars : [
+		'variable'
+	],
 	#category : #'OpalCompiler-Core-Exception'
 }
 
@@ -31,10 +34,10 @@ OCUndeclaredVariableWarning >> declareInstVar: name [
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareTempAndPaste: name [
-	| insertion delta theTextString characterBeforeMark tempsMark newMethodNode |
+	| insertion theTextString characterBeforeMark tempsMark newMethodNode |
 
-	"Below we are getting the text that is actually seen in the morph. This is rather ugly. Maybe there is a better way to do this."
-	theTextString := self requestor textMorph editor paragraph text.
+	"Note: asking the requestor the source code curently compiled is rather ugly"
+	theTextString := self requestor text.
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
 	newMethodNode := RBParser parseMethod: theTextString.
@@ -49,19 +52,13 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 		insertion := name, ' '.
 
 		characterBeforeMark isSeparator ifFalse: [insertion := ' ', insertion].
-		delta := 0.
 	] ifFalse: [
 		"No bars - insert some with CR, tab"
 		insertion := '| ' , name , ' |',String cr.
-		delta := 2.	"the bar and CR"
-		characterBeforeMark = Character tab ifTrue: [
-			insertion := insertion , String tab.
-			delta := delta + 1.	"the tab" ]
-		].
-	tempsMark := tempsMark +
-		(self substituteWord: insertion
-			wordInterval: (tempsMark to: tempsMark-1)
-			offset: 0) - delta.
+		characterBeforeMark = Character tab ifTrue: [ insertion := insertion , String tab ] ].
+
+	self substituteWord: insertion wordInterval: (tempsMark to: tempsMark-1).
+
 	" we can not guess at this point where the tempvar should be stored,
 	tempvars vs. tempvector therefore -> reparse"
 	(ReparseAfterSourceEditing new newSource: self requestor text) signal
@@ -70,7 +67,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareUndefined [
 
-	^UndeclaredVariable registeredWithName: node name
+	^ variable
 ]
 
 { #category : #correcting }
@@ -83,7 +80,8 @@ OCUndeclaredVariableWarning >> defaultAction [
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
-	^super defaultAction ifNil: [ self declareUndefined ]
+	compilationContext interactive ifFalse: [ ^ self declareUndefined ].
+	^self openMenu
 ]
 
 { #category : #correcting }
@@ -147,16 +145,9 @@ OCUndeclaredVariableWarning >> node: aVariableNode [
 	messageText := 'Undeclared temp: ', aVariableNode name
 ]
 
-{ #category : #correcting }
-OCUndeclaredVariableWarning >> openMenuIn: aBlock [
-	| alternatives labels actions lines caption choice name interval requestor |
-
-	"Turn off suggestions when in RubSmalltalkCommentMode
- 	This is a workaround, the plan is to not do this as part of the exception"
- 	requestor := compilationContext requestor.
- 	((requestor class name = #RubEditingArea) and: [
- 		requestor editingMode class name = #RubSmalltalkCommentMode])
- 					ifTrue: [ ^UndeclaredVariable named: node name ].
+{ #category : #'menu morph' }
+OCUndeclaredVariableWarning >> openMenu [
+	| alternatives labels actions lines caption choice name interval |
 
 	interval := node sourceInterval.
 	name := node name.
@@ -179,7 +170,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 				add: [
 					[ self defineClass: name ]
 						on: Abort
-						do: [ self openMenuIn: aBlock ] ].
+						do: [ self openMenu ] ].
 			labels add: 'Declare new global'.
 			actions add: [ self declareGlobal ].
 			compilationContext requestor isScripting ifFalse:
@@ -190,7 +181,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 				add: [
 					[ self defineTrait: name ]
 						on: Abort
-						do: [ self openMenuIn: aBlock ] ] ].
+						do: [ self openMenu ] ] ].
 	lines add: labels size.
 	alternatives
 		do: [ :each |
@@ -201,7 +192,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
-	choice := aBlock value: labels value: lines value: caption.
+	choice := UIManager default chooseFrom: labels lines: lines title: caption.
 	^choice ifNotNil: [ self resume: (actions at: choice ifAbsent: [ compilationContext failBlock value ]) value ]
 ]
 
@@ -222,8 +213,7 @@ OCUndeclaredVariableWarning >> possibleVariablesFor: proposedVariable [
 OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterval [
 	self
 		substituteWord: varName
-		wordInterval: anInterval
-		offset: 0.
+		wordInterval: anInterval.
 	self methodNode source: self requestor text.
 	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
 	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
@@ -232,12 +222,22 @@ OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterva
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> substituteWord: correctWord wordInterval: spot offset: o [
+OCUndeclaredVariableWarning >> substituteWord: correctWord wordInterval: spot [
 	"Substitute the correctSelector into the (presuamed interactive) receiver."
 
-	self requestor correctFrom: (spot first + o)
-					to: (spot last + o)
-					with: correctWord.
+	self requestor correctFrom: (spot first)
+					to: (spot last)
+					with: correctWord
+]
 
-	^ o + correctWord size - spot size
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> variable [
+
+	^ variable
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> variable: anObject [
+
+	variable := anObject
 ]

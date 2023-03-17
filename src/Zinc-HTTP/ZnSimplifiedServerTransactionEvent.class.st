@@ -41,7 +41,7 @@ ZnSimplifiedServerTransactionEvent >> printContentsOn: stream [
 	stream space.
 	url printPathQueryFragmentOn: stream.
 	stream space; print: response.
-	size ifNotNil: [ 
+	size ifNotNil: [
 		stream space; print: size; nextPut: $B ].
 	stream space; print: duration; nextPutAll: 'ms'
 ]
@@ -71,7 +71,7 @@ ZnSimplifiedServerTransactionEvent >> size [
 
 { #category : #initialize }
 ZnSimplifiedServerTransactionEvent >> timing: timing [
-	duration := timing totalDuration 
+	duration := timing totalDuration
 ]
 
 { #category : #accessing }

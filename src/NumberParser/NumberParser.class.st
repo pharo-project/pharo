@@ -12,7 +12,6 @@ exponent <Integer> the exponent used in scientific notation if any
 scale <Integer> the scale used in case of ScaledDecimal number if any
 nDigits <Integer> number of digits read to form an Integer
 lasNonZero <Integer> position of last non zero digit, starting at 1 from left, 0 if all digits are zero
-requestor <?> could eventually be used to insert an error message in a text editor
 failBlock <BlockClosure> Block to execute whenever an error occurs
 "
 Class {
@@ -28,7 +27,6 @@ Class {
 		'scale',
 		'nDigits',
 		'lastNonZero',
-		'requestor',
 		'failBlock'
 	],
 	#category : #'NumberParser-Base'
@@ -112,11 +110,15 @@ NumberParser >> allowPlusSignInExponent [
 { #category : #error }
 NumberParser >> expected: aString [
 
+	"This method handle errors on bad syntactically formated numbers.
+
+	Most of the time, the longest valid numeric is parsed and returned.
+	Therefore format errors on numbers are rare (arbitrary) occurences (see callers).
+	If the first character of a stream is a digit (or a minus followed by a digit), these occurences are even more rare."
+
 	| errorString |
 
 	errorString := aString , ' expected'.
-	requestor
-		ifNotNil: [ requestor notify: errorString at: sourceStream position + 1 in: sourceStream ].
 	failBlock ifNotNil: [ ^ failBlock cull: errorString cull: sourceStream position + 1 ].
 	self error: 'Reading a number failed: ' , errorString
 ]
@@ -292,7 +294,7 @@ NumberParser >> nextLargeIntegerBase: aRadix nPackets: nPackets [
 NumberParser >> nextNumber [
 	"Main method for reading a number.
 	 This one can read Float Integer and ScaledDecimal"
-
+	
 	| numberOfTrailingZeroInIntegerPart |
 	base := 10.
 	neg := self peekSignIsMinus.
@@ -306,7 +308,7 @@ NumberParser >> nextNumber [
 		ifTrue: ["<base>r<integer>"
 			(base := integerPart) < 2
 				ifTrue: [
-					sourceStream skip: -1.
+					sourceStream skip: -1. "Note, the faulty $r is not consumed and is not part or the invalid number."
 					^ self expected: 'an integer greater than 1 as valid radix'].
 			self peekSignIsMinus
 				ifTrue: [neg := neg not].
@@ -430,7 +432,7 @@ NumberParser >> on: aStringOrStream [
 	base := 10.
 	neg := false.
 	integerPart := fractionPart := exponent := scale := 0.
-	requestor := failBlock := nil
+	failBlock := nil
 ]
 
 { #category : #'private - parsing' }
@@ -542,9 +544,4 @@ NumberParser >> readScaleWithDefaultNumberOfDigits: anInteger [
 					false ]
 				ifFalse: [ true ] ].
 	^ true
-]
-
-{ #category : #accessing }
-NumberParser >> requestor: anObjectOrNil [
-	requestor := anObjectOrNil
 ]

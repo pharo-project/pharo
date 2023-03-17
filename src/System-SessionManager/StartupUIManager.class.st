@@ -23,21 +23,21 @@ StartupUIManager >> handleError: anError log: shouldLog [
 	"We should log only the first time that the error is handled. Then, the deferred startup action never asks to log: either we never were asked to log (shouldLog=true) or we logged in the super send."
 
 	self flag: #pharoTodo. "Maybe we should only catch Errors and not Exceptions in WorkingSession>>#runList:do:"
-	
+
 	super handleError: anError log: shouldLog.
-	(anError isKindOf: Notification) 
-		ifTrue:  [ anError resume ] 
+	(anError isKindOf: Notification)
+		ifTrue:  [ anError resume ]
 		ifFalse: [ anError freeze.
 						self sessionManager
-						addDeferredStartupAction: [ self uiManager handleError: anError log: false ]].
+						addDeferredStartupAction: [ self uiManager handleError: anError log: false ]]
 ]
 
 { #category : #'ui requests' }
 StartupUIManager >> inform: aString [
-	(ProvideAnswerNotification signal: aString) 
+	(ProvideAnswerNotification signal: aString)
 		ifNotNil: [:answer | ^true].
-	self sessionManager 
-		addDeferredStartupAction: [ UIManager default inform: aString ].
+	self sessionManager
+		addDeferredStartupAction: [ UIManager default inform: aString ]
 ]
 
 { #category : #'error handling' }

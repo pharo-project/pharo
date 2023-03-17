@@ -60,6 +60,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 			RBParseErrorNode
 				RBEnglobingErrorNode
 					RBArrayErrorNode
+					RBAssignmentErrorNode
 					RBBlockErrorNode
 					RBInvalidCascadeErrorNode
 					RBLiteralArrayErrorNode

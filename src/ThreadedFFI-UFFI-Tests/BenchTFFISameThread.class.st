@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-BenchTFFISameThread >> calloutAPIClass [ 
+BenchTFFISameThread >> calloutAPIClass [
 
 	^ TFCalloutAPI
 ]
@@ -28,7 +28,7 @@ BenchTFFISameThread >> ffiLibrary [
 { #category : #running }
 BenchTFFISameThread >> runCall [
 	<script: 'self new runCall'>
-	| return | 
+	| return |
 
 	^ [ return := self doCallWith: 1.0 another: 2.0.
 		 self assert: return = 3.0 ] bench

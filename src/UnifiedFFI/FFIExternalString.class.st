@@ -45,8 +45,8 @@ FFIExternalString >> externalTypeSize [
 ]
 
 { #category : #callbacks }
-FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [ 
-	
+FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [
+
 	aFFICallbackArgumentReader extractExternalString: self
 ]
 

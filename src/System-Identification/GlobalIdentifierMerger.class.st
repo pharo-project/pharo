@@ -38,13 +38,13 @@ Class {
 { #category : #actions }
 GlobalIdentifierMerger >> convertValues [
 	existing
-		at: #computerUUID 
+		at: #computerUUID
 		ifPresent: [ :aValue | existing at: #computerUUID put: aValue asString ]
 		ifAbsent: [ "ignore" ].
 	existing
 		at: #secretUUID
 		ifPresent: [ :aValue | existing at: #secretUUID put: aValue asString ]
-		ifAbsent: [ "ignore" ].
+		ifAbsent: [ "ignore" ]
 ]
 
 { #category : #accessing }
@@ -61,7 +61,7 @@ GlobalIdentifierMerger >> existing: anObject [
 GlobalIdentifierMerger >> merge [
 	"If UUIDs are different, it is likely different user and we should use
 	localy stored settings. If the UUIDs are same, we keep settings of the image.
-	
+
 	It returns true if existing dictionary is changed."
 	^ ((existing at: #computerUUID ifAbsent: nil) = (stored at: #computerUUID ifAbsent: nil)
 		or: [ (stored includesKey: #computerUUID) not ])
@@ -83,7 +83,7 @@ GlobalIdentifierMerger >> mergeSameComputer [
 	"It add into existing dictionary keys that are included in the stored dictionary,
 	but are missing in the existing dictionary. Useful when a new version
 	adds new configuration values that should be saved too.
-	
+
 	It returns true if existing dictionary is changed."
 	| difference |
 	difference := stored keys difference: existing keys.

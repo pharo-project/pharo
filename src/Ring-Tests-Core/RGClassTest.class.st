@@ -22,7 +22,7 @@ RGClassTest >> testClassSide [
 
 { #category : #tests }
 RGClassTest >> testClassVariablesCollection [
-	
+
 	| class env classVariable1 classVariable2 classVariable3 |
 
 	class := RGClass unnamed.
@@ -30,7 +30,7 @@ RGClassTest >> testClassVariablesCollection [
 
 	self assert: class classVariables isEmpty.
 	self assert: (class hasUnresolved: #classVariables).
-	
+
 	classVariable1 := RGClassVariable named: #ClassVariable1 parent: class.
 	class addClassVariable: classVariable1.
 	self assert: class classVariables size equals: 1.
@@ -38,13 +38,13 @@ RGClassTest >> testClassVariablesCollection [
 	self assert: class allClassVarNames equals: #(ClassVariable1).
 
 	self assert: (class hasResolved: #classVariables).
-	
+
 	classVariable2 := RGClassVariable named: #ClassVariable2 parent: class.
 	class addClassVariable: classVariable2.
 	self assert: class classVariables size equals: 2.
 	self assert: class allClassVariables size equals: 2.
 	self assert: class allClassVarNames equals: #(ClassVariable1 ClassVariable2).
-	
+
 	classVariable3 := RGClassVariable named: #ClassVariable3 parent: class.
 	class addClassVariable: classVariable3.
 	self assert: class classVariables size equals: 3.
@@ -58,24 +58,24 @@ RGClassTest >> testClassVariablesCollection [
 
 	class cleanClassVariables.
 	self assert: class classVariables isEmpty.
-	self assert: (class hasResolved: #classVariables).
+	self assert: (class hasResolved: #classVariables)
 ]
 
 { #category : #tests }
 RGClassTest >> testConversionToTrait [
 
-	| env behavior trait | 
-	
+	| env behavior trait |
+
 	"TODO: more complete test"
-	
+
 	env := RGEnvironment new.
 	behavior := env ensureClassNamed: #SomeTrait.
 	self deny: behavior isTrait.
 	self assert: behavior isClass.
-	
+
 	trait := env ensureTraitNamed: #SomeTrait.
 	self deny: behavior isClass.
-	self assert: behavior isTrait.
+	self assert: behavior isTrait
 ]
 
 { #category : #tests }
@@ -131,21 +131,21 @@ RGClassTest >> testDefinition [
 RGClassTest >> testEnsureProtocol [
 
 	| behavior |
-	
+
 	behavior := self behaviorClass named: #SomeClass.
 	behavior ensureProtocolNamed: #SomeProtocol.
 	self assert: behavior protocols size equals: 1.
-	self assert: behavior protocols first equals: #SomeProtocol.
+	self assert: behavior protocols first equals: #SomeProtocol
 ]
 
 { #category : #tests }
 RGClassTest >> testEnvironmentStubs [
 
 	| package env |
-	
+
 	package := RGClass named: 'SomeClass'.
 	env := package environment.
-"	self assert: (env ask behaviors size = (2)). 
+"	self assert: (env ask behaviors size = (2)).
 	self assert: (env ask packages size = (1+2)).
 	self assert: (env ask packages anySatisfy: [ :each | each unresolvedProperties includes: #name]).
 "
@@ -154,15 +154,15 @@ RGClassTest >> testEnvironmentStubs [
 { #category : #tests }
 RGClassTest >> testPrinting [
 	| aClass |
-	
+
 	aClass := RGClass named: 'Object'.
-	
-	self assert: aClass printString equals: #Object.
+
+	self assert: aClass printString equals: #Object
 ]
 
 { #category : #tests }
 RGClassTest >> testSharedPoolsCollection [
-	
+
 	| class env sharedPool1 sharedPool2 sharedPool3 |
 
 	class := RGClass unnamed.
@@ -170,19 +170,19 @@ RGClassTest >> testSharedPoolsCollection [
 
 	self assert: class sharedPools isEmpty.
 	self assert: (class hasUnresolved: #sharedPools).
-	
+
 	sharedPool1 := RGPoolVariable named: #SharedPool1 parent: class.
 	class addSharedPool: sharedPool1.
 	self assert: class sharedPools size equals: 1.
 	self deny: sharedPool1 isClassVariable.
 	self assert: sharedPool1 isPoolVariable.
-	
+
 	self assert: (class hasResolved: #sharedPools).
-	
+
 	sharedPool2 := RGPoolVariable named: #SharedPool2 parent: class.
 	class addSharedPool: sharedPool2.
 	self assert: class sharedPools size equals: 2.
-	
+
 	sharedPool3 := RGPoolVariable named: #SharedPool3 parent: class.
 	class addSharedPool: sharedPool3.
 	self assert: class sharedPools size equals: 3.
@@ -192,12 +192,12 @@ RGClassTest >> testSharedPoolsCollection [
 
 	class cleanSharedPools.
 	self assert: class sharedPools isEmpty.
-	self assert: (class hasResolved: #sharedPools).
+	self assert: (class hasResolved: #sharedPools)
 ]
 
 { #category : #tests }
 RGClassTest >> testTagsCollection [
-	
+
 	| class env tag1 tag2 tag3 |
 
 	class := RGClass unnamed.
@@ -205,17 +205,17 @@ RGClassTest >> testTagsCollection [
 
 	self assert: class tags isEmpty.
 	self assert: (class hasUnresolved: #tags).
-	
+
 	tag1 := #tag1.
 	class tagWith: #tag1.
 	self assert: class tags size equals: 1.
 
 	self assert: (class hasResolved: #tags).
-	
+
 	tag2 := #tag2.
 	class tagWith: tag2.
 	self assert: class tags size equals: 2.
-	
+
 	tag3 := #tag3.
 	class tagWith: tag3.
 	self assert: class tags size equals: 3.
@@ -225,14 +225,14 @@ RGClassTest >> testTagsCollection [
 
 	class cleanTags.
 	self assert: class tags isEmpty.
-	self assert: (class hasResolved: #tags).
+	self assert: (class hasResolved: #tags)
 ]
 
 { #category : #tests }
 RGClassTest >> testTagsForAllMethods [
-	
+
 	| env class1 trait1 trait2 composition method1 method2 method3 method4 |
-	
+
 	env := RGEnvironment new.
 	class1 := env ensureClassNamed: #Class1.
 	composition :=  RGTraitComposition parent: class1.
@@ -241,8 +241,8 @@ RGClassTest >> testTagsForAllMethods [
 	trait2 := env ensureTraitNamed: #Trait2.
 	composition addTransformation: trait1.
 	composition addTransformation: trait2.
-	
-	method1 := class1 ensureLocalMethodNamed: #method1.	
+
+	method1 := class1 ensureLocalMethodNamed: #method1.
 	method1 tagWith: #tag1.
 	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1).
 
@@ -253,60 +253,60 @@ RGClassTest >> testTagsForAllMethods [
 	method3 := trait1 ensureLocalMethodNamed: #method3.
 	method3 tagWith: #tag2.
 	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1 tag2).
-	
+
 	method4 := trait1 ensureLocalMethodNamed: #method4.
 	method4 tagWith: #tag3.
-	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1 tag2 tag3).
+	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1 tag2 tag3)
 ]
 
 { #category : #tests }
 RGClassTest >> testTagsForAllMethodsForClassWithoutTraits [
-	
+
 	| class method1 method2 |
 
 	class := RGClass unnamed.
-	
+
 	self assert: class tagsForAllMethods isEmpty.
-	
+
 	method1 := class ensureLocalMethodNamed: #method1.
 	method2 := class ensureLocalMethodNamed: #method2.
-	
+
 	self assert: class tagsForMethods isEmpty.
-	
+
 	method1 tagWith: #tag1.
 	self assertCollection: class tagsForAllMethods hasSameElements: #(#tag1).
-	
+
 	method2 tagWith: #tag1.
 	self assertCollection: class tagsForAllMethods hasSameElements: #(#tag1).
 
 	method1 tagWith: #tag2.
 	self assertCollection: method1 tags sorted hasSameElements: #(#tag1 #tag2).
-	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2).
+	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2)
 ]
 
 { #category : #tests }
 RGClassTest >> testTagsForMethods [
-	
+
 	| class method1 method2 |
 
 	class := RGClass unnamed.
-	
+
 	self assert: class tagsForMethods isEmpty.
 	self assert: (class hasUnresolved: #tagsForMethods).
-	
+
 	method1 := class ensureLocalMethodNamed: #method1.
 	method2 := class ensureLocalMethodNamed: #method2.
-	
+
 	self assert: class tagsForMethods isEmpty.
 	self assert: (class hasResolved: #tagsForMethods).
 
 	self assert: (class methodsTaggedWith: #tag1) isEmpty.
-	
+
 	method1 tagWith: #tag1.
 	self assert: method1 tags equals: #(#tag1).
 	self assert: class tagsForMethods equals: #(#tag1).
 	self assert: (class methodsTaggedWith: #tag1) equals: {method1}.
-	
+
 	method2 tagWith: #tag1.
 	self assert: method2 tags equals: #(#tag1).
 	self assert: class tagsForMethods equals: #(#tag1).
@@ -315,7 +315,7 @@ RGClassTest >> testTagsForMethods [
 	method1 tagWith: #tag2.
 	self assert: method1 tags sorted equals: #(#tag1 #tag2).
 	self assert: class tagsForMethods sorted equals: #(#tag1 #tag2).
-	
+
 	method1 untagFrom: #tag1.
 	self assert: method1 tags equals: #(#tag2).
 	self assert: class tagsForMethods sorted equals: #(#tag1 #tag2).
@@ -332,12 +332,12 @@ RGClassTest >> testTagsForMethods [
 
 	self assert: (class methodsTaggedWith: #tag1) isEmpty.
 	self assert: (class methodsTaggedWith: #tag2) isEmpty.
-	self assert: (class methodsTaggedWith: #tag3) isEmpty.
+	self assert: (class methodsTaggedWith: #tag3) isEmpty
 ]
 
 { #category : #tests }
 RGClassTest >> testTagsForMethodsCollection [
-	
+
 	| class env tag1 tag2 tag3 |
 
 	class := RGClass unnamed.
@@ -345,17 +345,17 @@ RGClassTest >> testTagsForMethodsCollection [
 
 	self assert: class tagsForMethods isEmpty.
 	self assert: (class hasUnresolved: #tagsForMethods).
-	
+
 	tag1 := #tag1.
 	class addMethodTag: #tag1.
 	self assert: class tagsForMethods size equals: 1.
 
 	self assert: (class hasResolved: #tagsForMethods).
-	
+
 	tag2 := #tag2.
 	class addMethodTag: tag2.
 	self assert: class tagsForMethods size equals: 2.
-	
+
 	tag3 := #tag3.
 	class addMethodTag: tag3.
 	self assert: class tagsForMethods size equals: 3.
@@ -365,41 +365,41 @@ RGClassTest >> testTagsForMethodsCollection [
 
 	class cleanTagsForMethods.
 	self assert: class tagsForMethods isEmpty.
-	self assert: (class hasResolved: #tagsForMethods).
+	self assert: (class hasResolved: #tagsForMethods)
 ]
 
 { #category : #tests }
 RGClassTest >> testTagsForMethodsRemoval [
-	
+
 	| class method1 method2 |
 
 	class := RGClass unnamed.
-	
+
 	self assert: class tagsForMethods isEmpty.
 	self assert: (class hasUnresolved: #tagsForMethods).
-	
+
 	method1 := class ensureLocalMethodNamed: #method1.
 	method2 := class ensureLocalMethodNamed: #method2.
-	
+
 	self assert: class tagsForMethods isEmpty.
 	self assert: (class hasResolved: #tagsForMethods).
 
 	method1 tagWith: #tag1.
 	self assert: method1 tags equals: #(#tag1).
 	self assert: class tagsForMethods equals: #(#tag1).
-	
+
 	class removeMethodTag: #tag1.
 	self assert: method1 tags isEmpty.
-	self assert: class tagsForMethods isEmpty.
+	self assert: class tagsForMethods isEmpty
 ]
 
 { #category : #tests }
 RGClassTest >> testTesting [
 
-	| env behavior | 
-	
+	| env behavior |
+
 	"TODO: more complete test"
-	
+
 	env := RGEnvironment new.
 	behavior := env ensureClassNamed: #SomeTrait.
 	self deny: behavior isBits.
@@ -408,5 +408,5 @@ RGClassTest >> testTesting [
 	self deny: behavior isEphemeron.
 	self deny: behavior isWeak.
 	self deny: behavior isWords.
-	self assert: behavior isPointers.
+	self assert: behavior isPointers
 ]

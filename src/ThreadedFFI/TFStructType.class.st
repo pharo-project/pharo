@@ -20,13 +20,13 @@ TFStructType class >> finalizeResourceData: handle [
 
 	(self fromHandle: handle)
 		free.
-		
-	handle beNull.
+
+	handle beNull
 ]
 
 { #category : #'instance creation' }
 TFStructType class >> forClass: aClass withMembers: aCollectionOfMembers [
-	
+
 	^ self new
 		members: aCollectionOfMembers asArray;
 		targetClass: aClass;
@@ -41,8 +41,8 @@ TFStructType >> basicType [
 ]
 
 { #category : #size }
-TFStructType >> byteSize [ 
-	
+TFStructType >> byteSize [
+
 	self validate.
 	^ byteSize ifNil: [ self primitiveByteSize ]
 ]
@@ -50,7 +50,7 @@ TFStructType >> byteSize [
 { #category : #reading }
 TFStructType >> callbackReadValue: anExternalAddress [
 
-	^ targetClass fromHandle: anExternalAddress.
+	^ targetClass fromHandle: anExternalAddress
 ]
 
 { #category : #writing }
@@ -60,32 +60,30 @@ TFStructType >> callbackWrite: aNumber into: anExternalAddress [
 ]
 
 { #category : #utilities }
-TFStructType >> copyFrom: from to: to size: size [ 
+TFStructType >> copyFrom: from to: to size: size [
 	"Copy from the from an externalAdress or a ByteArray or to a ByteArray or an External Address"
 
 	<primitive: 'primitiveCopyFromTo'>
-	self primitiveFail 
+	self primitiveFail
 ]
 
 { #category : #marshalling }
-TFStructType >> emitFreeIfNeededOfIndex: anInteger argumentsArrayTempName: aString withBuilder: anIRBuilder [ 
-
+TFStructType >> emitFreeIfNeededOfIndex: anInteger argumentsArrayTempName: aString withBuilder: anIRBuilder [
 ]
 
 { #category : #marshalling }
-TFStructType >> emitMarshallFromPrimitive: anIRBuilder [ 
-	
+TFStructType >> emitMarshallFromPrimitive: anIRBuilder [
+
 	anIRBuilder addTemp: #__structHandler.
 	anIRBuilder storeTemp: #__structHandler.
 	anIRBuilder popTop.
 	anIRBuilder pushLiteral: targetClass.
 	anIRBuilder pushTemp: #__structHandler.
 	anIRBuilder send: #fromHandle:
-	
 ]
 
 { #category : #marshalling }
-TFStructType >> emitMarshallToPrimitive: anIRBuilder [ 
+TFStructType >> emitMarshallToPrimitive: anIRBuilder [
 
 	anIRBuilder send: #getHandle
 ]
@@ -94,12 +92,12 @@ TFStructType >> emitMarshallToPrimitive: anIRBuilder [
 TFStructType >> free [
 	<primitive: 'primitiveFreeStruct'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #utilities }
-TFStructType >> freeValueIfNeeded: anExternalAddress [ 
-	
+TFStructType >> freeValueIfNeeded: anExternalAddress [
+
 	"Nothing to free"
 ]
 
@@ -110,15 +108,15 @@ TFStructType >> isVoid [
 
 { #category : #marshalling }
 TFStructType >> marshallFromPrimitive: aValue [
-	
-	(aValue isKindOf: targetClass) 
+
+	(aValue isKindOf: targetClass)
 		ifTrue: [ ^ aValue ].
 
 	^ targetClass fromHandle: aValue
 ]
 
 { #category : #marshalling }
-TFStructType >> marshallToPrimitive: aValue [ 
+TFStructType >> marshallToPrimitive: aValue [
 
 	^ aValue getHandle
 ]
@@ -136,7 +134,7 @@ TFStructType >> members: anObject [
 { #category : #accessing }
 TFStructType >> offsets [
 	self validate.
-	
+
 	^ offsets
 ]
 
@@ -144,19 +142,19 @@ TFStructType >> offsets [
 TFStructType >> primitiveByteSize [
 	<primitive: 'primitiveStructByteSize'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #primitives }
 TFStructType >> primitiveInitializeStructType [
 	<primitive: 'primitiveInitializeStructType'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #reading }
 TFStructType >> readReturnValue: anExternalAddress [
-	
+
 	| newHandle |
 	newHandle := ByteArray new: self byteSize.
 	self copyFrom: anExternalAddress to: newHandle size: self byteSize.
@@ -164,12 +162,12 @@ TFStructType >> readReturnValue: anExternalAddress [
 ]
 
 { #category : #reading }
-TFStructType >> readValue: anExternalAddress offset: offset [ 
+TFStructType >> readValue: anExternalAddress offset: offset [
 
 	| address |
 
 	address := anExternalAddress pointerAt: offset.
-	^ targetClass fromHandle: address.
+	^ targetClass fromHandle: address
 ]
 
 { #category : #accessing }
@@ -189,10 +187,10 @@ TFStructType >> validate [
 
 	members do: [ :m | m validate ].
 	offsets := Array new: members size.
-	
+
 	self primitiveInitializeStructType.
-	
-	byteSize := self primitiveByteSize	
+
+	byteSize := self primitiveByteSize
 ]
 
 { #category : #writing }

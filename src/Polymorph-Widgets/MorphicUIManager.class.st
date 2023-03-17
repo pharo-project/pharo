@@ -648,19 +648,11 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 { #category : #'ui process' }
 MorphicUIManager >> spawnNewProcess [
 
-	UIProcess := [
-		MorphicRenderLoop new doOneCycleWhile: [ true ]
-	] newProcess priority: Processor userSchedulingPriority.
-	UIProcess name: 'Morphic UI Process'.
-	UIProcess resume
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> syntaxErrorNotificationDefaultAction: anException [
-	"Handle a syntax error.
-	Note, if there is no #syntaxErrorDebugger registered, it will be silently ignored"
-	^Smalltalk tools using: #syntaxErrorDebugger do: [:tool |
-			tool open: (tool syntaxError: anException)]
+	UIProcess := [ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess priority:
+		             Processor userSchedulingPriority.
+	UIProcess
+		name: 'Morphic UI Process';
+		resume
 ]
 
 { #category : #'ui requests' }

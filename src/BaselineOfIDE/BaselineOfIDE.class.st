@@ -40,7 +40,6 @@ BaselineOfIDE >> additionalInitialization [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: SyntaxErrorDebugger as: #syntaxErrorDebugger.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
 	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
@@ -139,8 +138,9 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-				
-				
+
+
+		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
@@ -174,6 +174,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Keymapping' with: [ spec repository: repository; loads: 'tests' ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec baseline: 'Equals' with: [ spec repository: repository ].
 		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'tests' ].
 		spec package: 'STON-Extensions'. 
 		

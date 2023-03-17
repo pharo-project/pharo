@@ -72,20 +72,11 @@ RBFormatterTest >> testLiteralDynamicArray [
 
 { #category : #tests }
 RBFormatterTest >> testParseError [
-	| inputSource errorNode |
-	"parse error nodes should have the faulty code"
-	inputSource := ')'.
-   errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
-]
 
-{ #category : #tests }
-RBFormatterTest >> testParseError2 [
-	| inputSource errorNode |
-	"parse error nodes should have the faulty code"
-	inputSource := '( 1 + 2'.
-   errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
+	| source node |
+	source := ' +  foo:  )'.
+	node := self parseFaultyExpression: source.
+	self assert: node formattedCode equals: source
 ]
 
 { #category : #tests }

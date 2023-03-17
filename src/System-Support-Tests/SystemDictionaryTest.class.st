@@ -16,7 +16,7 @@ SystemDictionaryTest class >> shouldInheritSelectors [
 { #category : #requirements }
 SystemDictionaryTest >> canBeUnhealthy [
 	"uses GlobalVariables instead of associations"
-	
+
 	^ false
 ]
 
@@ -42,8 +42,8 @@ SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
 
 { #category : #tests }
 SystemDictionaryTest >> testEnvironmentOfOrganization [
-	
-	| aDictionary |	
+
+	| aDictionary |
 	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
 	self assert: aDictionary organization environment equals: aDictionary
 ]
@@ -81,6 +81,23 @@ SystemDictionaryTest >> testOtherInstancesOfSystemDictionaryPrintString [
 SystemDictionaryTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
 
 	self deny: SystemDictionary new isSelfEvaluating
+]
+
+{ #category : #tests }
+SystemDictionaryTest >> testPrintOn [
+
+	| printed splittedString |
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	splittedString := printed findBetweenSubstrings: { ' '. '('. ')' }.
+
+	self assertCollection: splittedString hasSameElements: {
+			self prefix.
+			self nonEmpty class name.
+			'lots'.
+			'of'.
+			'globals' }
 ]
 
 { #category : #tests }

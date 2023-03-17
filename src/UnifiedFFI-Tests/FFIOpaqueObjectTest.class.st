@@ -18,7 +18,7 @@ FFIOpaqueObjectTest >> ffiInstVarArgument: argName generator: generator [
 ]
 
 { #category : #tests }
-FFIOpaqueObjectTest >> newParser [ 
+FFIOpaqueObjectTest >> newParser [
 	^ FFIFunctionParser new
 		requestor: (FFICallout new
 			requestor: self;
@@ -29,31 +29,29 @@ FFIOpaqueObjectTest >> newParser [
 { #category : #tests }
 FFIOpaqueObjectTest >> testDereferencedExternalObjectError [
 	| fnSpec |
-	self 
-		should: [ 
+	self
+		should: [
 			fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject arg ) ).
 			fnSpec resolveUsing: self newParser requestor. ]
 		raise: FFIDereferencedOpaqueObjectError.
-	self 
-		should: [ 
+	self
+		should: [
 			fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject function ( ) ).
 			fnSpec resolveUsing: self newParser requestor. ]
 		raise: FFIDereferencedOpaqueObjectError
-		
-
 ]
 
 { #category : #tests }
 FFIOpaqueObjectTest >> testParseAsBigArityPointer [
 	 | fnSpec arg returnType |
-	
-	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject **arg ) ). 
+
+	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject **arg ) ).
 	fnSpec resolveUsing: self newParser requestor.
 	arg := fnSpec arguments first.
 	self assert: arg resolvedType class equals: FFIOpaqueObjectType.
 	self assert: arg resolvedType pointerArity equals: 2.
-	
-	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject **function ( ) ). 
+
+	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject **function ( ) ).
 	fnSpec resolveUsing: self newParser requestor.
 	returnType := fnSpec returnType.
 	self assert: returnType resolvedType class equals: FFIOpaqueObjectType.
@@ -63,14 +61,14 @@ FFIOpaqueObjectTest >> testParseAsBigArityPointer [
 { #category : #tests }
 FFIOpaqueObjectTest >> testParseAsPointer [
 	 | fnSpec arg returnType |
-	
-	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject *arg ) ). 
+
+	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject *arg ) ).
 	fnSpec resolveUsing: self newParser requestor.
 	arg := fnSpec arguments first.
 	self assert: arg resolvedType class equals: FFIOpaqueObjectType.
 	self assert: arg resolvedType pointerArity equals: 1.
-	
-	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject *function ( ) ). 
+
+	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject *function ( ) ).
 	fnSpec resolveUsing: self newParser requestor.
 	returnType := fnSpec returnType.
 	self assert: returnType resolvedType class equals: FFIOpaqueObjectType.

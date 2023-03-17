@@ -30,24 +30,24 @@ ClassFactoryWithOrganization >> deletePackage [
 ]
 
 { #category : #creating }
-ClassFactoryWithOrganization >> newClassNamed: aString 
-	subclassOf: aClass 
-	instanceVariableNames: ivNamesString 
-	classVariableNames:  classVarsString [ 
-	
-	^ self 
+ClassFactoryWithOrganization >> newClassNamed: aString
+	subclassOf: aClass
+	instanceVariableNames: ivNamesString
+	classVariableNames:  classVarsString [
+
+	^ self
 		newClassNamed: aString
-		subclassOf: aClass 
-		instanceVariableNames: ivNamesString 
-		classVariableNames: classVarsString 
-		category:  (self packageName, '-', self defaultTagPostfix) asSymbol.
+		subclassOf: aClass
+		instanceVariableNames: ivNamesString
+		classVariableNames: classVarsString
+		category:  (self packageName, '-', self defaultTagPostfix) asSymbol
 ]
 
 { #category : #creating }
 ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 
 	| newClass |
-	newClass := aClass classInstaller make: [ :builder | 
+	newClass := aClass classInstaller make: [ :builder |
 		            builder
 			            superclass: aClass;
 			            name: aString;
@@ -76,7 +76,7 @@ ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivN
 ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 
 	| newClass |
-	newClass := aClass classInstaller make: [ :builder | 
+	newClass := aClass classInstaller make: [ :builder |
 		            builder
 			            superclass: aClass;
 			            name: self newClassName;

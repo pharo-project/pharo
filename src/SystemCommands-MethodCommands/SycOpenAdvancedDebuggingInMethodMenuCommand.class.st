@@ -11,14 +11,14 @@ Class {
 { #category : #activation }
 SycOpenAdvancedDebuggingInMethodMenuCommand class >> methodContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 SycOpenAdvancedDebuggingInMethodMenuCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $h meta shift for: ClyMethod asCalypsoItemContext
 ]
 

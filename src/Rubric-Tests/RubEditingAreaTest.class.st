@@ -27,7 +27,7 @@ RubEditingAreaTest >> sendDoubleClickAt: index withShift: aBoolean [
 	position := (area paragraph characterBlockForIndex: index) surface leftCenter.
 	buttons := (aBoolean ifTrue: [8] ifFalse: [0]).
 	buttons := buttons bitOr: MouseButtonEvent redButton.
-	event := MouseButtonEvent basicNew 
+	event := MouseButtonEvent basicNew
 					setType: #mouseDown
 					position: position
 					which: MouseButtonEvent redButton
@@ -43,7 +43,7 @@ RubEditingAreaTest >> sendMouseClickAt: index withShift: aBoolean [
 	position := (area paragraph characterBlockForIndex: index) surface leftCenter.
 	buttons := (aBoolean ifTrue: [8] ifFalse: [0]).
 	buttons := buttons bitOr: MouseButtonEvent redButton.
-	area simulateClickWith: buttons position: position.
+	area simulateClickWith: buttons position: position
 ]
 
 { #category : #convenience }
@@ -74,7 +74,7 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
 	self assert: circle owner isNil.
 	self assert: circle position equals: 0@0.
 	"add the circle to a text string"
-	text := ('aaaaa',(String value: 1),'bbbbbbb') asText 
+	text := ('aaaaa',(String value: 1),'bbbbbbb') asText
 			addAttribute: (TextAnchor new anchoredMorph: circle).
 	"render the text in a RubEditingArea to place the circle in a layout"
 	area updateTextWith: text.
@@ -89,8 +89,8 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	| circle longTextWithCircleAtEnd canvas|
 	self skip. "The test fails in CI"
 	circle := CircleMorphCounter new extent: 50 @ 50;color: Color blue.
-	longTextWithCircleAtEnd := ((String loremIpsum: 10000), 
-		(String value: 1)) asText 
+	longTextWithCircleAtEnd := ((String loremIpsum: 10000),
+		(String value: 1)) asText
 			addAttribute: (TextAnchor new anchoredMorph: circle).
 
 	self assert: circle owner isNil.
@@ -100,7 +100,7 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	canvas := FormCanvas extent: 500@500.
 	canvas fullDrawMorph: area.
 
-	self assert: circle counter equals: 1.	
+	self assert: circle counter equals: 1.
 	self assert: circle position y > 500
 ]
 
@@ -116,7 +116,7 @@ RubEditingAreaTest >> testModifySelection [
 	self testMarkBlockPointBlock.
 	area modifySelection: (self newCharacterBlockIndex: 8 text: area text).
 	self assert: area markBlock stringIndex equals: 3.
-	self assert: area pointBlock stringIndex equals: 8.
+	self assert: area pointBlock stringIndex equals: 8
 ]
 
 { #category : #'tests - accessing selection' }
@@ -133,5 +133,5 @@ RubEditingAreaTest >> testMouseMoveAfterDoubleClick [
 	self sendDoubleClickAt: 11 withShift: false.
 	self sendMouseClickAt: 17 withShift: true.
 	self assert: area markBlock stringIndex equals: 9.
-	self assert: area pointBlock stringIndex equals: 17.
+	self assert: area pointBlock stringIndex equals: 17
 ]

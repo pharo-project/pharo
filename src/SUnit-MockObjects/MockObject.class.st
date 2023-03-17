@@ -81,14 +81,14 @@ MockObject >> initialize [
 { #category : #teaching }
 MockObject >> on: aSelector [
 	"Teach to return self on a message whose selector is aSelector"
-	
+
 	self on: aSelector respond: self
 ]
 
 { #category : #teaching }
 MockObject >> on: aSelector respond: anObject [
 	"Teach to return self on a message whose selector is aSelector"
-	
+
 	self on: aSelector withArguments: nil respond: anObject
 ]
 
@@ -102,7 +102,7 @@ MockObject >> on: aSelector verify: aBlock [
 MockObject >> on: aSelector with: anObject [
 	"Teach to return self on a message whose selector is aSelector and argument is anObject.
 	The test will fail if the message argument does not correspond to anObject."
-	
+
 	self on: aSelector withArguments: { anObject } respond: self
 ]
 
@@ -110,7 +110,7 @@ MockObject >> on: aSelector with: anObject [
 MockObject >> on: aSelector with: anObject respond: anotherObject [
 	"Teach to return anotherObject on a message whose selector is aSelector and argument is anObject.
 	The test will fail if the message argument does not correspond to anObject."
-	
+
 	self
 		on: aSelector
 		withArguments: { anObject }
@@ -126,10 +126,10 @@ MockObject >> on: aSymbol with: anObject verify: aBlock [
 { #category : #teaching }
 MockObject >> on: aSelector with: anObject with: anotherObject [
 	"Teach to return self on a message whose selector is aSelector and arguments are anObject and anotherObject"
-	
+
 	self
 		on: aSelector
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject }
 		respond: self
@@ -139,10 +139,10 @@ MockObject >> on: aSelector with: anObject with: anotherObject [
 MockObject >> on: aSelector with: anObject with: anotherObject respond: aResponseObject [
 	"Teach to return anotherObject on a message whose selector is aSelector and arguments are is anObject and anotherObject.
 	The test will fail if the message arguments do not correspond to anObject and anotherObject."
-	
+
 	self
 		on: aSelector
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject }
 		verify: [ aResponseObject ]
@@ -153,7 +153,7 @@ MockObject >> on: aSymbol with: anObject with: anotherObject verify: aBlock [
 
 	self
 		on: aSymbol
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject }
 		verify: aBlock
@@ -164,7 +164,7 @@ MockObject >> on: aSymbol with: anObject with: anotherObject with: aThirdObject 
 
 	self
 		on: aSymbol
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject.
 				aThirdObject }
@@ -176,7 +176,7 @@ MockObject >> on: aSelector with: anObject with: anotherObject with: aThirdObjec
 
 	self
 		on: aSelector
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject.
 				aThirdObject }
@@ -188,7 +188,7 @@ MockObject >> on: aSymbol with: anObject with: anotherObject with: aThirdObject 
 
 	self
 		on: aSymbol
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject.
 				aThirdObject }
@@ -199,7 +199,7 @@ MockObject >> on: aSymbol with: anObject with: anotherObject with: aThirdObject 
 MockObject >> on: aSelector withArguments: aCollection [
 	"Teach to return self on a message whose selector is aSelector and arguments are held in aCollection.
 	The test will fail if the message arguments do not correspond to the ones in aCollection."
-	
+
 	self on: aSelector withArguments: aCollection respond: self
 ]
 
@@ -213,7 +213,7 @@ MockObject >> on: aSelector withArguments: anArray respond: anObject [
 
 { #category : #'teaching - verifying' }
 MockObject >> on: aSymbol withArguments: anArray verify: aBlock [
-	
+
 	messages add: (MockMessageSend on: aSymbol with: anArray do: aBlock).
 	failed := false
 ]

@@ -90,7 +90,7 @@ RGElementDefinition class >> basicParseAuthorAliasFrom: aString [
 
 	| tokens dateStartIndex unknown |
 	"The following timestamp strings are supported:
-		<authorname><date><time>. 
+		<authorname><date><time>.
 		<authorname><date>
 		<date><time>
 		<date><time><authorname>
@@ -104,14 +104,14 @@ RGElementDefinition class >> basicParseAuthorAliasFrom: aString [
 	dateStartIndex := (aString indexOf: $/) - 1.	"If there is no / character in the timestamp, no author alias/name exists"
 	dateStartIndex = -1
 		ifTrue: [ ^ unknown ].
-	^ [ 
+	^ [
 	"Go the start of the date string (there can be 1 or 2 digits and a space separator can be missing at the front!!)"
 	(dateStartIndex >= 2 and: [ (aString at: dateStartIndex - 1) isDigit ])
 		ifTrue: [ dateStartIndex := dateStartIndex - 1 ].	"Extract only those tokens that do not possible represent date or time - meaning that authorname may be at the end"
 	tokens := (aString copyFrom: dateStartIndex to: aString size) substrings
 		reject: [ :token | (token occurrencesOf: $/) = 2 or: [ (token occurrencesOf: $:) = 1 ] ].	"only one token should be left if author name/alias exists"
 	^ tokens isEmpty
-		ifTrue: [ 
+		ifTrue: [
 			"if dateStartIndex is not 1 then the authorname may be at the beginning"
 			dateStartIndex > 1
 				ifTrue: [ (aString copyFrom: 1 to: dateStartIndex - 1) trimBoth ]
@@ -151,13 +151,13 @@ RGElementDefinition class >> isMetaSideKey [
 { #category : #'parsing stamp' }
 RGElementDefinition class >> parseAuthorAliasFrom: aString [
 	"Allows other applications  to treat a different empty alias by overriding this method"
-	
+
 	^self basicParseAuthorAliasFrom: aString
 ]
 
 { #category : #'parsing stamp' }
 RGElementDefinition class >> parseTimestampFrom: aString [
-	
+
 	^self parseTimestampFrom: aString default: nil
 ]
 
@@ -167,7 +167,7 @@ RGElementDefinition class >> parseTimestampFrom: aString default: anObject [
 
 	| tokens dateStartIndex unknown |
 	"The following timestamp strings are supported:
-		<authorname><date><time>. 
+		<authorname><date><time>.
 		<authorname><date>
 		<date><time>
 		<date><time><authorname>
@@ -180,7 +180,7 @@ RGElementDefinition class >> parseTimestampFrom: aString default: anObject [
 	dateStartIndex := (aString indexOf: $/) - 1.	"If there is no / character in the timestamp, we cannot parse a date and return the epoch"
 	dateStartIndex = -1
 		ifTrue: [ ^ unknown ].
-	^ [ 
+	^ [
 	"Go the start of the date string (there can be 1 or 2 digits and a space separator can be missing at the front!!)"
 	(dateStartIndex >= 2 and: [ (aString at: dateStartIndex - 1) isDigit ])
 		ifTrue: [ dateStartIndex := dateStartIndex - 1 ].	"Extract only those tokens that possibly represent date or time"
@@ -204,7 +204,7 @@ RGElementDefinition class >> realClass: aClass [
 ]
 
 { #category : #'elements-annotations' }
-RGElementDefinition class >> sourcePointerKey [ 
+RGElementDefinition class >> sourcePointerKey [
 
 	^#sourcePointer
 ]
@@ -221,26 +221,26 @@ RGElementDefinition >> = aRGElementDefinition [
 	"Verifies the class and the parentName of the receiver"
 
 	^self class = aRGElementDefinition class
-		and:[ self parentName == aRGElementDefinition parentName 
+		and:[ self parentName == aRGElementDefinition parentName
 			and:[ self isMetaSide = aRGElementDefinition isMetaSide ] ]
 ]
 
 { #category : #'backward compatibility' }
 RGElementDefinition >> actualClass [
 	"returns the Smalltalk class of the receiver"
-	
+
 	^ self realClass
 ]
 
 { #category : #'class element specific api' }
 RGElementDefinition >> className [
-	
+
 	^ self parentName
 ]
 
 { #category : #'class element specific api' }
 RGElementDefinition >> className: aName [
-	
+
 	^ self parentName: aName
 ]
 
@@ -253,7 +253,7 @@ RGElementDefinition >> fullName: aString [
 { #category : #comparing }
 RGElementDefinition >> hash [
 	"Hash is re-implemented because #= is re-implemented"
-	
+
 	^self class hash bitXor: (self parentName hash bitXor: self isMetaSide hash)
 ]
 
@@ -266,7 +266,7 @@ RGElementDefinition >> instanceSideParentName [
 				startingAt: 1
 				ifAbsent: [ ^self parentName ].
 
-	^(self parentName 
+	^(self parentName
 		copyFrom: 1
 		to: index - 1) asSymbol
 ]
@@ -310,7 +310,7 @@ RGElementDefinition >> package [
 { #category : #'generic parent api' }
 RGElementDefinition >> parent [
 	"The parent of a class definition element: method, comment and variable is the class definition. This method retrieves the class that defines such element"
-	
+
 	^ parent
 ]
 
@@ -319,7 +319,7 @@ RGElementDefinition >> parent: aRGBehaviorDefinition [
 	"Set the class associated to the receiver"
 
 	parent := aRGBehaviorDefinition.
-	self setParentInfo: aRGBehaviorDefinition.
+	self setParentInfo: aRGBehaviorDefinition
 ]
 
 { #category : #'generic parent api' }
@@ -338,14 +338,14 @@ RGElementDefinition >> parentName: aString [
 { #category : #'class element specific api' }
 RGElementDefinition >> realClass [
 	"Retrieves the Class/Trait/.. object in the System corresponding to the class of the this element."
-	
+
 	^ self realParent
 ]
 
 { #category : #'generic parent api' }
 RGElementDefinition >> realParent [
 	"Retrieves the Class/Trait/.. object in the System corresponding to the class of the this element."
-	
+
 	^self parent notNil
 		ifTrue: [ self parent realClass ]
 		ifFalse: [ self rootEnvironment classNamed: self parentName ]
@@ -354,7 +354,7 @@ RGElementDefinition >> realParent [
 { #category : #'class element specific api' }
 RGElementDefinition >> ringClass [
 	"Return the ring definition of the class containing the receiver."
-	
+
 	^ self parent
 ]
 
@@ -362,6 +362,6 @@ RGElementDefinition >> ringClass [
 RGElementDefinition >> setParentInfo: anObject [
 	"anObject is aRGBehaviorDefinition or aClass/aTrait"
 
-	self parentName: anObject name. 
+	self parentName: anObject name.
 	self isMetaSide: anObject isMeta
 ]

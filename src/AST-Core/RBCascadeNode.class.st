@@ -96,9 +96,10 @@ RBCascadeNode >> isCascade [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBCascadeNode >> isFaulty [
-	^self messages anySatisfy: [:each | each isFaulty]
+	self isError ifTrue: [ ^ true ].
+	^self messages anySatisfy: [:each | each isFaulty ]
 ]
 
 { #category : #accessing }

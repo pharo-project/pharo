@@ -13,10 +13,8 @@ TKTBasicTaskTest >> testFutureExecutes [
 	[ done := true.
 	sema signal ] future.
 	sema wait.
-	
+
 	self assert: done
-	
-	
 ]
 
 { #category : #tests }
@@ -59,7 +57,7 @@ TKTBasicTaskTest >> testFutureWithFutureInsideSchedulesOk [
 
 	future := [ [TKTConfiguration runner] schedule ] future.
 
-	self shouldnt: (future synchronizeTimeout: 1 second) raise: UnhandledError.
+	self shouldnt: (future synchronizeTimeout: 1 second) raise: UnhandledError
 ]
 
 { #category : #tests }

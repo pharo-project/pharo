@@ -20,9 +20,9 @@ Class {
 { #category : #'instance creation' }
 ZnBivalentWriteStream class >> on: writeStream [
 	"Wrap writeStream as a ZnBivalentWriteStream, unless it is already one"
-	
+
 	(writeStream isKindOf: self) ifTrue: [ ^ writeStream ].
-	
+
 	^ self basicNew
 		on: writeStream;
 		yourself
@@ -55,16 +55,16 @@ ZnBivalentWriteStream >> isStream [
 ZnBivalentWriteStream >> next: count putAll: collection startingAt: offset [
 	| buffer |
 	self isBinary
-		ifTrue: [ 
+		ifTrue: [
 			(collection isKindOf: ByteArray)
 				ifTrue: [ stream next: count putAll: collection startingAt: offset ]
-				ifFalse: [ 
+				ifFalse: [
 					buffer := ByteArray new: count.
 					buffer replaceFrom: 1 to: count with: collection startingAt: offset.
 					stream nextPutAll: buffer ] ]
-		ifFalse: [ 
+		ifFalse: [
 			(collection isKindOf: ByteArray)
-				ifTrue: [ 
+				ifTrue: [
 					buffer := String new: count.
 					buffer replaceFrom: 1 to: count with: collection startingAt: offset.
 					stream nextPutAll: buffer ]

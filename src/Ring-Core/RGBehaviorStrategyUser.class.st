@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #visiting }
-RGBehaviorStrategyUser >> acceptVisitor: aVisitor [ 
-	
+RGBehaviorStrategyUser >> acceptVisitor: aVisitor [
+
 	^ self behaviorStrategy acceptVisitor: aVisitor
 ]
 
 { #category : #strategy }
-RGBehaviorStrategyUser >> addClassVariable: anRGInstanceVariableDefinition [ 
+RGBehaviorStrategyUser >> addClassVariable: anRGInstanceVariableDefinition [
 
 	^ self behaviorStrategy addClassVariable: anRGInstanceVariableDefinition
 ]
@@ -85,12 +85,12 @@ RGBehaviorStrategyUser >> behaviorStrategy [
 RGBehaviorStrategyUser >> behaviorStrategy: anObject [
 
 	| needsInitialization |
-	
+
 	needsInitialization := behaviorStrategy isNil.
 	behaviorStrategy := anObject.
 	behaviorStrategy owner: self.
-	needsInitialization ifTrue: [ 
-		behaviorStrategy initializeUnresolved ].
+	needsInitialization ifTrue: [
+		behaviorStrategy initializeUnresolved ]
 ]
 
 { #category : #strategy }
@@ -284,7 +284,7 @@ RGBehaviorStrategyUser >> layout: anRGLayout [
 RGBehaviorStrategyUser >> makeResolved [
 
 	self behaviorStrategy makeResolved.
-	super makeResolved.
+	super makeResolved
 ]
 
 { #category : #strategy }
@@ -354,8 +354,8 @@ RGBehaviorStrategyUser >> sibling [
 ]
 
 { #category : #printing }
-RGBehaviorStrategyUser >> storeOn: aStream [ 
-	
+RGBehaviorStrategyUser >> storeOn: aStream [
+
 	^ self behaviorStrategy storeOn: aStream
 ]
 
@@ -364,7 +364,7 @@ RGBehaviorStrategyUser >> theMetaClass [
 	self
 		deprecated: 'Please use #classSide instead'
 		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-	
+
 	^ self classSide
 ]
 

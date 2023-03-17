@@ -1,16 +1,6 @@
 Extension { #name : #WeakArray }
 
 { #category : #'*System-Finalization' }
-WeakArray class >> doOldFinalization [
-	"Process the weak registries, in the old finalization style.  Hopefully this will
-	 eventually go away when all clients have adopted the new finalization scheme."
-	FinalizationLock critical: [
-			FinalizationDependents do: 	[:weakDependent |
-				weakDependent ifNotNil: [
-					[ weakDependent finalizeValues ] on: Exception fork: [:ex | ex pass ] ]]].
-]
-
-{ #category : #'*System-Finalization' }
 WeakArray class >> finalizationProcess [
 	"The finalization process arranges to send mourn to each element of the VM's finalization queue,
 	 which is accessed via primitiveFetchMourner.  The VM signals FinalizationSemaphore whenever
@@ -25,7 +15,6 @@ WeakArray class >> finalizationProcess [
 	throttle := Semaphore new.
 	[true] whileTrue: [FinalizationSemaphore wait; initSignals.
 	 "Support the old scheme until things have changed over..."
-	 self doOldFinalization.
 	 [firstMourner := self primitiveFetchMourner.
 	  firstMourner notNil] whileTrue:
 		[[throttle signal.
@@ -42,7 +31,8 @@ WeakArray class >> mournLoopWith: firstMourner [
 	 individual cases."
 	| mourner |
 	mourner := firstMourner.
-	[mourner mourn.
+	[
+	mourner mourn.
 	 (mourner := self primitiveFetchMourner) notNil] whileTrue
 ]
 
@@ -67,16 +57,13 @@ WeakArray class >> restartFinalizationProcess [
 			FinalizationProcess := nil].
 
 	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42.
-	FinalizationDependents ifNil: [FinalizationDependents := WeakArray new: 10].
-	FinalizationLock := Semaphore forMutualExclusion.
-	
 	FinalizationProcess := [self finalizationProcess]
 		forkAt: Processor userInterruptPriority.
-	FinalizationProcess name: 'WeakArray Finalization Process'.
+	FinalizationProcess name: 'WeakArray Finalization Process'
 ]
 
 { #category : #'*System-Finalization' }
 WeakArray class >> startUp: resuming [
 	resuming ifFalse: [ ^self ].
-	self restartFinalizationProcess.
+	self restartFinalizationProcess
 ]

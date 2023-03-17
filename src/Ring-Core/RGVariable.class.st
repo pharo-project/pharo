@@ -71,7 +71,7 @@ RGVariable >> isReservedVariable [
 
 { #category : #testing }
 RGVariable >> isSuperVariable [
-	
+
 	^ false
 ]
 
@@ -104,8 +104,8 @@ RGVariable >> isWritable [
 { #category : #accessing }
 RGVariable >> name: aString [
 
-	self parent announceDefinitionChangeDuring: [ 
-		super name: aString ].
+	self parent announceDefinitionChangeDuring: [
+		super name: aString ]
 ]
 
 { #category : #testing }

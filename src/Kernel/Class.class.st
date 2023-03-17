@@ -798,11 +798,9 @@ Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 	results := misspelled correctAgainstDictionary: self classPool continuedFrom: oldResults.
 	self sharedPools do: [:pool |
 		results := misspelled correctAgainstDictionary: pool classPool continuedFrom: results ].
-	self superclass == nil
-		ifTrue:
-			[ ^ misspelled correctAgainstDictionary: self environment continuedFrom: results ]
-		ifFalse:
-			[ ^ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
+	^ self superclass
+		ifNil: [ misspelled correctAgainstDictionary: self environment continuedFrom: results ]
+		ifNotNil: [ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
 ]
 
 { #category : #'class variables' }
@@ -997,7 +995,7 @@ Class >> sharedPools [
 	"Answer an orderedCollection of the shared pools declared in the receiver.
 	Note: To save memory, the variable is initialized by #addSharedPool:"
 
-	^ sharedPools ifNil: [ super sharedPools ]
+	^ sharedPools ifNil: [ sharedPools := super sharedPools ]
 ]
 
 { #category : #'pool variables' }

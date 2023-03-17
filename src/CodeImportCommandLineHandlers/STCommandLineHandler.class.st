@@ -50,7 +50,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 
 	"format the error"
 	position := aSyntaxErrorNotification location.
-	contents := aSyntaxErrorNotification errorCode.
+	contents := aSyntaxErrorNotification sourceCode.
 	errorLine := contents lineNumberCorrespondingToIndex: position.
 	stderr := VTermOutputDriver stderr.
 
@@ -58,7 +58,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	errorMessage := String streamContents: [ :s|
 		s nextPutAll: 'Syntax Error on line ';
 			print: errorLine; nextPutAll: ': ';
-			print: aSyntaxErrorNotification errorMessage].
+			print: aSyntaxErrorNotification messageText].
 
 	 stderr red;
 		nextPutAll: errorMessage; lf;
