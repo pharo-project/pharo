@@ -113,7 +113,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'RPackage-Core-Base'
+	#category : 'RPackage-Core-Base'
 }
 
 { #category : #singleton }
@@ -940,19 +940,19 @@ RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	| rPackage categoryName categoryNameSymbol managers |
 	categoryName := ann categoryName.
 	categoryNameSymbol := categoryName asSymbol.
-	self flag: #hack.	"for decoupling MC"
+	self flag: #hack. "for decoupling MC"
 	managers := (self respondsTo: #allManagers)
-		ifTrue: [ self perform: #allManagers ]
-		ifFalse: [ #() ].
+		            ifTrue: [ self perform: #allManagers ]
+		            ifFalse: [ #(  ) ].
 	"Reverse the test. First check that this is the root category of a RPackage. If yes, unregister the RPackage and the corresponding MCWorkingCopy."
 	rPackage := packages at: categoryNameSymbol ifAbsent: [ ^ self ].
 	"Consider that a rPackage with extension selectors or tags is not empty and shouldn't be removed."
-	(rPackage extensionSelectors notEmpty
-		or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) notEmpty ])
-		ifTrue: [ ^ self ].
+	(rPackage extensionSelectors notEmpty or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) notEmpty ]) ifTrue: [ ^ self ].
+	categoryName = RPackage defaultPackageName ifTrue: [ ^ self ]. "We want to keep this default package."
 	self basicUnregisterPackageNamed: categoryNameSymbol.
-	(managers detect: [ :each | each packageName = categoryName ] ifNone: [  ])
-		ifNotNil: [ :mcWorkingCopy | mcWorkingCopy unregister ]
+	(managers
+		 detect: [ :each | each packageName = categoryName ]
+		 ifNone: [  ]) ifNotNil: [ :mcWorkingCopy | mcWorkingCopy unregister ]
 ]
 
 { #category : #'system integration' }
