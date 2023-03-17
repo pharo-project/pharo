@@ -68,6 +68,8 @@ RBCodeSnippetTest >> testDecompile [
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ast := method decompile.
 	self assert: ast isMethod.
+	ast := method parseTree.
+	self assert: ast isMethod.
 	"Decompilation lose many information. Not sure how to test more"
 ]
 
