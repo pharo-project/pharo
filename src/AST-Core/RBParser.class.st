@@ -29,15 +29,10 @@ Class {
 	#category : #'AST-Core-Parser'
 }
 
-{ #category : #accessing }
-RBParser class >> errorNodeBlock [
-	^ [ :aString :position :parser| parser parseErrorNode: aString ]
-]
-
 { #category : #'instance creation' }
 RBParser class >> newFaulty [
 
-	^ self newWithErrorBlock: self errorNodeBlock
+	^ self new beFaulty
 ]
 
 { #category : #'instance creation' }
@@ -65,14 +60,19 @@ RBParser class >> parseExpression: aString onError: aBlock [
 { #category : #parsing }
 RBParser class >> parseFaultyExpression: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
-	^self parseExpression: aString onError: self errorNodeBlock
+	^ self new
+		beFaulty;
+		initializeParserWith: aString;
+		parseExpression
 ]
 
 { #category : #parsing }
 RBParser class >> parseFaultyMethod: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
-
-	^ self parseMethod: aString onError: self errorNodeBlock
+	^ self new
+		beFaulty;
+		initializeParserWith: aString;
+		parseMethod
 ]
 
 { #category : #parsing }
@@ -213,7 +213,7 @@ RBParser >> englobingErrorNodeClass [
 
 { #category : #'error handling' }
 RBParser >> errorBlock [
-	^errorBlock ifNil: [[:message :position | ]] ifNotNil: [errorBlock]
+	^errorBlock
 ]
 
 { #category : #accessing }
