@@ -1155,6 +1155,10 @@ RBParserTest >> testParents [
 { #category : #tests }
 RBParserTest >> testParseExpressionDontFreeze [
 
+	"This test is here to chark that CI does not freeze or crash on code error."
+	"The test sould just 'fail' gracefully."
+	<expectedFailure>
+
 	"Force a parse error (from a simple tool class).
 	The image (and CI) should not freeze :)"
 	self parserClass parseExpression: '#'
