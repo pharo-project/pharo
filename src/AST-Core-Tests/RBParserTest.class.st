@@ -1441,8 +1441,13 @@ RBParserTest >> testParserErrorsWithErrorBlock [
 
 	#(#('self foo. + 3' 1) #('self 0' 1) #('self asdf;;asfd' 1))
 		do: [:each | |ast errorCount|
-			    ast := self parseError: each first onError:
-					[:msg :pos :parser | parser parseErrorNode: msg].
+				errorCount := 0.
+			    ast := self parserClass new
+					beFaulty;
+					errorBlock: [ errorCount := errorCount + 1 ];
+					initializeParserWith: each first;
+					parseExpression.
+				self assert: errorCount equals: each last.
 
 				errorCount := 0.
 				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
