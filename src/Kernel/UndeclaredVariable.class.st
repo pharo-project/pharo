@@ -12,7 +12,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-UndeclaredVariable class >> registeredWithName: aString [
+UndeclaredVariable class >> possiblyRegisteredWithName: aString [
+
+	"Get a registered undeclared variable if any, or a new unregistered undeclared variable"
+
 	| varName |
 	varName := aString asSymbol.
 
@@ -23,9 +26,16 @@ UndeclaredVariable class >> registeredWithName: aString [
 			found becomeForward: (self named: varName)].
 		^found	].
 
-	^(self named: varName)
-		register;
-		yourself
+	^self named: varName
+]
+
+{ #category : #'instance creation' }
+UndeclaredVariable class >> registeredWithName: aString [
+
+	| var |
+	var := self possiblyRegisteredWithName: aString.
+	(var isUndeclaredVariable and: [ var isRegistered not ]) ifTrue: [ var register ].
+	^ var
 ]
 
 { #category : #queries }

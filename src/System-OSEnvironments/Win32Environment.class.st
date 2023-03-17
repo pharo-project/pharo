@@ -83,7 +83,7 @@ Win32Environment >> doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: 
 
 { #category : #private }
 Win32Environment >> environmentStrings [
-	 ^ self ffiCall: #( void * GetEnvironmentStrings () )
+	 ^ self ffiCall: #( void * GetEnvironmentStringsW () )
 ]
 
 { #category : #private }
@@ -104,15 +104,16 @@ Win32Environment >> keysAndValuesDo: aBlock [
 
 	"Lines starting with an equal sign are invalid per
 	  http://stackoverflow.com/questions/10431689/what-are-these-strange-environment-variables"
-	| environmentStrings nextString |
+	| environmentStrings nextString win32WideString |
 
 	environmentStrings := self environmentStrings.
 	[
-	nextString := environmentStrings utf8StringFromCString.
+	win32WideString := Win32WideString fromHandle: environmentStrings.
+	nextString := win32WideString asString.
 	nextString ifEmpty: [ ^ self ].
 	nextString first = $=
 		ifFalse: [ self keysAndValuesDo: aBlock withAssociationString: nextString ].
-	environmentStrings := environmentStrings + nextString size + 1 ] repeat
+	environmentStrings := environmentStrings + win32WideString byteSize ] repeat
 ]
 
 { #category : #private }

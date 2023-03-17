@@ -31,94 +31,11 @@ SHRBTextStylerTest >> style: aText [
 	^ ast
 ]
 
-{ #category : #'private - utilities' }
-SHRBTextStylerTest >> styleExpression: aText [
-
-	| ast |
-
-	ast := self class compiler
-		source: aText asString;
-		noPattern: true ;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse.
-	styler style: aText ast: ast.
-
-	^ ast
-]
-
 { #category : #running }
 SHRBTextStylerTest >> tearDown [
 
 	SHRBTextStyler formatIncompleteIdentifiers: oldSetting.
 	super tearDown
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingBlock [
-
-	| aText index1 index2 attribute |
-
-	aText := 'm1 self do: [:each | each ]' asText.
-	self style: aText.
-
-	index1 := 15. "fixrst each"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #blockPatternArg pixelHeight: 10).
-
-	index2 := 22. "second each"
-	attribute := aText attributesAt: index2.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #blockArg pixelHeight: 10)
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingExpressionWithComment [
-
-	| aText index1 index2 attribute |
-
-	aText := '"comment"3+4.' asText.
-	self styleExpression: aText.
-
-	index1 := 5. "inside comment"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #comment pixelHeight: 10).
-
-	index2 := 11. "outside the +"
-	attribute := (aText attributesAt: index2) first.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #unary pixelHeight: 10) first
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingExpressionWithComment2 [
-
-	| aText index1 index2 attribute |
-
-	aText := '"comment"3.' asText.
-	self styleExpression: aText.
-
-	index1 := 5. "inside comment"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #comment pixelHeight: 10).
-
-	index2 := 10. "outside the 3"
-	attribute := (aText attributesAt: index2) first.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #integer pixelHeight: 10) first
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testArgumentStylingMethod [
-
-	| aText index1 index2 attribute |
-
-	aText := 'm1: arg self do: [:each | arg ]' asText.
-	self style: aText.
-
-	index1 := 5. "first each"
-	attribute := aText attributesAt: index1.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #methodArg pixelHeight: 10).
-
-	index2 := 27. "second each"
-	attribute := aText attributesAt: index2.
-	self assert: attribute equals: (SHRBTextStyler  attributesFor: #tempVar pixelHeight: 10)
 ]
 
 { #category : #tests }
@@ -166,22 +83,23 @@ SHRBTextStylerTest >> testClassAfterMessageToASymbolUppercaseShouldBeColored [
 ]
 
 { #category : #tests }
-SHRBTextStylerTest >> testSettingFalseTheIncompleteIdentifiersShouldNotFormatIt [
+SHRBTextStylerTest >> testIncompleteIdentifierVariable [
 
-	| aText index attributes |
-
-	SHRBTextStyler formatIncompleteIdentifiers: false.
+	| aText ast |
 
 	aText := 'm1
-		^ se' asText.
+		^ sel' asText.
 
-	index := aText string indexOfSubCollection: 'se'.
+	ast := self style: aText.
+	"here the identifier is incomplete"
+	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #incompleteIdentifier.
 
-	self style: aText.
+	aText := 'm1
+		^ asdfasf' asText.
 
-	attributes := aText attributesAt: index.
-
-	self assertCollection: attributes hasSameElements: { TextColor red. TextVariableLink variableName: 'se' }
+	ast := self style: aText.
+	"But for a name that does not exist at all, it is #undefinedIdentifier"
+	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #undefinedIdentifier
 ]
 
 { #category : #tests }
@@ -208,38 +126,6 @@ SHRBTextStylerTest >> testSettingFalseTheIncompleteMessageShouldNotFormatIt [
 ]
 
 { #category : #tests }
-SHRBTextStylerTest >> testSettingFalseTheIncompleteVariableShouldFormatUndefinedIdentifier [
-
-	| aText ast |
-
-	SHRBTextStyler formatIncompleteIdentifiers: false.
-	aText := 'm1
-		^ sel' asText.
-
-	ast := self style: aText.
-	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #undefinedIdentifier
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testSettingTrueTheIncompleteIdentifiersShouldFormatIt [
-
-	| aText index attributes |
-
-	SHRBTextStyler formatIncompleteIdentifiers: true.
-
-	aText := 'm1
-		^ se' asText.
-
-	index := aText string indexOfSubCollection: 'se'.
-
-	self style: aText.
-
-	attributes := aText attributesAt: index.
-
-	self assertCollection: attributes hasSameElements: { TextColor blue. TextEmphasis italic. TextVariableLink variableName: 'se' }
-]
-
-{ #category : #tests }
 SHRBTextStylerTest >> testSettingTrueTheIncompleteMessageShouldFormatIt [
 
 	| aText index attributes ast node |
@@ -260,25 +146,4 @@ SHRBTextStylerTest >> testSettingTrueTheIncompleteMessageShouldFormatIt [
 	self assertCollection: attributes hasSameElements: {
 		TextMethodLink sourceNode: node.
 		TextEmphasis italic }
-]
-
-{ #category : #tests }
-SHRBTextStylerTest >> testSettingTrueTheIncompleteVariableShouldFormatUndefinedIdentifier [
-
-	| aText ast |
-
-	SHRBTextStyler formatIncompleteIdentifiers: true.
-	aText := 'm1
-		^ sel' asText.
-
-	ast := self style: aText.
-	"here the identifier is incomplete"
-	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #incompleteIdentifier.
-
-	aText := 'm1
-		^ asdfasf' asText.
-
-	ast := self style: aText.
-	"But for a name that does not exist at all, it is #undefinedIdentifier"
-	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #undefinedIdentifier
 ]

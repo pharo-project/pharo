@@ -5,10 +5,11 @@ Trait {
 
 { #category : #starting }
 TFinalizable >> noteDoesNotNeedToBeFinalized [
-	WeakRegistry default remove: self ifAbsent: [  ]
+
+	FinalizationRegistry default remove: self ifAbsent: [  ]
 ]
 
 { #category : #starting }
 TFinalizable >> noteNeedsToBeFinalized [
-	WeakRegistry default add: self
+	FinalizationRegistry default add: self
 ]

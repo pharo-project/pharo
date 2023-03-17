@@ -92,9 +92,7 @@ RBParser class >> parseMethod: aString onError: aBlock [
 	parser := self new
 		errorBlock: aBlock;
 		initializeParserWith: aString.
-	^ [ parser parseMethod ]
-		on: ReparseAfterSourceEditing
-		do: [ :exception | self parseMethod: exception newSource onError: aBlock ]
+	^ parser parseMethod
 ]
 
 { #category : #parsing }
@@ -1241,15 +1239,11 @@ RBParser >> parserError: aString [
 		ifTrue: [ errorMessage := currentToken cause. errorPosition := currentToken location ]
 		ifFalse: [errorMessage := aString. errorPosition := currentToken start].
 
-	newSource := SyntaxErrorNotification
-						inClass: Object
-						withCode: source
-						doitFlag: false
-						errorMessage: errorMessage
-						location: errorPosition.
-
-	"If the syntax error notification is resumed, then the source was corrected and we have to announce that parsing can restart."
-	ReparseAfterSourceEditing signalWithNewSource: newSource
+	newSource := SyntaxErrorNotification new
+						sourceCode: source;
+						messageText: errorMessage;
+						location: errorPosition;
+						signal
 ]
 
 { #category : #private }
