@@ -22,15 +22,27 @@ OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 	"This method intercepts the SyntaxErrorNotification and prevent the SyntaxError morph to open.
 	The notification errorCode hold the source of evaluated sub-selection with inserted error message.
 	This can be compared to expected error notification."
-	1 to: self numberOfSelections do: [:n |
+
+	1 to: self numberOfSelections do: [ :n |
 		| result |
-		result := [self evaluateSelectionNumber: n] on: SyntaxErrorNotification do: [:exc |
-			| expectedNotification expectedNotificationLocation |
-			expectedNotification := (expectedErrors at: n) allButFirst allButLast: 3.
-			expectedNotificationLocation := (expectedErrorPositions at: n) - (morph editor startIndex - 1).
-			self assert: exc location equals: expectedNotificationLocation.
-			self assert: exc errorMessage asString equals: expectedNotification.
-			exc return: nil]]
+		result := [ self evaluateSelectionNumber: n ]
+			          on: CodeError
+			          do: [ :exc |
+				          | expectedNotification expectedNotificationLocation |
+				          expectedNotification := (expectedErrors at: n)
+					                                  allButFirst allButLast: 3.
+				          expectedNotificationLocation := (expectedErrorPositions
+					                                           at: n)
+				                                          -
+				                                          (morph editor startIndex
+				                                           - 1).
+				          self
+					          assert: exc location
+					          equals: expectedNotificationLocation.
+				          self
+					          assert: exc messageText asString
+					          equals: expectedNotification.
+				          exc return: nil ] ]
 ]
 
 { #category : #private }

@@ -85,12 +85,11 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 	aNode addError: aMessage.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 
-	SyntaxErrorNotification
-		inClass: Object
-		withCode: aNode methodNode source
-		doitFlag: false
-		errorMessage: aMessage
-		location: aNode startWithoutParentheses
+	OCSemanticError new
+		node: aNode;
+		messageText: aMessage;
+		location: aNode startWithoutParentheses;
+		signal
 ]
 
 { #category : #variables }
@@ -124,7 +123,6 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 	^ OCStoreIntoReadOnlyVariableError new
 		node: variableNode;
-		compilationContext: compilationContext;
 		messageText: 'Assignment to read-only variable';
 		signal
 ]
@@ -135,7 +133,6 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
-		compilationContext: compilationContext;
 		messageText: 'Assigment to reserved variable';
 		signal
 ]

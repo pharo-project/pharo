@@ -503,7 +503,7 @@ RBCodeSnippet class >> styleAllWithError [
 				text
 					replaceFrom: exception location
 					to: exception location - 1
-					with: (exception errorMessage asText addAttribute:
+					with: (exception messageText asText addAttribute:
 							 (TextBackgroundColor color: Color lightBlue)).
 				bigtext append: String cr.
 				bigtext append: String tab.
@@ -642,7 +642,7 @@ RBCodeSnippet >> parseOnError: aBlock [
 	^ [ isMethod
 			  ifTrue: [ RBParser parseMethod: self source ]
 			  ifFalse: [ RBParser parseExpression: self source ] ]
-		  on: SyntaxErrorNotification
+		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]
 

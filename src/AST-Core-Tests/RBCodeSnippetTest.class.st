@@ -68,7 +68,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	"Importer should fail when faulty"
 	snippet isFaulty ifTrue: [
-		self should: [ importer evaluate ] raise: SyntaxErrorNotification.
+		self should: [ importer evaluate ] raise: CodeError.
 		snippet isMethod ifTrue: [ class removeFromSystem ].
 		^ self ].
 
@@ -97,7 +97,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	snippet raise ifNotNil: [ :r | ^ self should: runBlock raise: r ].
 
-	self shouldnt: runBlock raise: SyntaxErrorNotification.
+	self shouldnt: runBlock raise: CodeError.
 	self assert: value equals: snippet value
 ]
 
@@ -133,7 +133,7 @@ RBCodeSnippetTest >> testParseOnError [
 	| ast error |
 	error := nil.
 
-	ast := snippet parseOnError: [ :e | error := e errorMessage ].
+	ast := snippet parseOnError: [ :e | error := e messageText ].
 
 	(snippet isParseFaulty ifNil: [ snippet isFaulty ])
 		ifTrue: [ self assert: error isNotNil ]
