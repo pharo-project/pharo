@@ -206,7 +206,7 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 
 			"Note: I hate inserted `->` error messages, but the presentation of errors is the responsibility of `aController`.
 			 and because consistency is a virtue, we should not hack an ad hoc error reporting here"
-			aController notify: ex errorMessage , '->' at: ex location in: newClassDefinitionString.
+			aController notify: ex messageText , '->' at: ex location in: newClassDefinitionString.
 			^ nil ].
 
 	^ newClass isBehavior

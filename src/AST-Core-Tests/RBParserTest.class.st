@@ -1152,6 +1152,18 @@ RBParserTest >> testParents [
 											self assert: each methodNode identicalTo: root ] ] ] ] ]
 ]
 
+{ #category : #tests }
+RBParserTest >> testParseExpressionDontFreeze [
+
+	"This test is here to chark that CI does not freeze or crash on code error."
+	"The test sould just 'fail' gracefully."
+	<expectedFailure>
+
+	"Force a parse error (from a simple tool class).
+	The image (and CI) should not freeze :)"
+	self parserClass parseExpression: '#'
+]
+
 { #category : #'tests - parsing' }
 RBParserTest >> testParseExpressionGivesTheWriteAmountOfStatements [
 	"Testing with a list of triplets.
@@ -1441,9 +1453,8 @@ RBParserTest >> testParserErrorsWithErrorBlock [
 
 	#(#('self foo. + 3' 1) #('self 0' 1) #('self asdf;;asfd' 1))
 		do: [:each | |ast errorCount|
-			   [ ast := self parseError: each first onError:
-					[:msg :pos :parser | parser parseErrorNode: msg]]
-						on: ReparseAfterSourceEditing do: [].
+			    ast := self parseError: each first onError:
+					[:msg :pos :parser | parser parseErrorNode: msg].
 
 				errorCount := 0.
 				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].

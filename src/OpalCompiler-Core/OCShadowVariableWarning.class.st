@@ -27,7 +27,6 @@ OCShadowVariableWarning >> raiseSemanticError [
 
 	^OCSemanticError new
 		node: node;
-		compilationContext: compilationContext;
 		messageText: self stringMessage;
 		signal
 ]
