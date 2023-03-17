@@ -34,6 +34,13 @@ CodeError >> errorMessage [
 	^ messageText
 ]
 
+{ #category : #'private - testing' }
+CodeError >> isResumable [
+
+	"When resumed, faulty AST are produced"
+	^true
+]
+
 { #category : #accessing }
 CodeError >> location [
 

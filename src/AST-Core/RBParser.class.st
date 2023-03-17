@@ -1243,7 +1243,10 @@ RBParser >> parserError: aString [
 						sourceCode: source;
 						messageText: errorMessage;
 						location: errorPosition;
-						signal
+						signal.
+
+	"If resumed, produce an error node"
+	^ self parseErrorNode: errorMessage
 ]
 
 { #category : #private }
