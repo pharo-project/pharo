@@ -23,7 +23,8 @@ Class {
 		'errorBlock',
 		'source',
 		'comments',
-		'pragmas'
+		'pragmas',
+		'isFaulty'
 	],
 	#category : #'AST-Core-Parser'
 }
@@ -182,7 +183,7 @@ RBParser >> basicParsePragma [
 
 { #category : #initialization }
 RBParser >> beFaulty [
-	errorBlock := self class errorNodeBlock
+	isFaulty := true
 ]
 
 { #category : #'private - classes' }
@@ -250,13 +251,26 @@ RBParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 
 { #category : #initialization }
 RBParser >> initialize [
-	comments := OrderedCollection new
+	comments := OrderedCollection new.
+	isFaulty := false
 ]
 
 { #category : #accessing }
 RBParser >> initializeParserWith: aString [
 	source := aString.
 	self scanner: (self scannerClass on: (ReadStream on: aString))
+]
+
+{ #category : #accessing }
+RBParser >> isFaulty [
+
+	^ isFaulty
+]
+
+{ #category : #accessing }
+RBParser >> isFaulty: anObject [
+
+	isFaulty := anObject
 ]
 
 { #category : #'private - classes' }
@@ -1355,7 +1369,7 @@ RBParser >> saveCommentsDuring: aBlock [
 RBParser >> scanner: aScanner [
 	scanner := aScanner.
 	pragmas := nil.
-	self initialize.
+	comments := OrderedCollection new.
 	self step
 ]
 
