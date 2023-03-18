@@ -46,7 +46,7 @@ RBCodeSnippetTest >> snippet: anObject [
 	snippet := anObject
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBCodeSnippetTest >> testCodeImporter [
 
 	| string importer class runBlock value |
