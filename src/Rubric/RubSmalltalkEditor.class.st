@@ -322,7 +322,7 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	^ self compile: self selectionAsStream for: anObject in: evalContext
+	^ self compile: self selection for: anObject in: evalContext
 ]
 
 { #category : #'completion engine' }
@@ -488,7 +488,7 @@ RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 
 	self lineSelectAndEmptyCheck: [^self].
-	self debug: self selectionAsStream
+	self debug: self selection
 ]
 
 { #category : #'do-its' }
@@ -544,7 +544,7 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 
 	self lineSelectAndEmptyCheck: [^ ''].
 	^ self
-		evaluate: self selectionForDoitAsStream
+		evaluate: self selection
 		andDo: aBlock
 ]
 
@@ -1177,7 +1177,7 @@ RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
 	self lineSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selectionAsStream
+	self tally: self selection
 ]
 
 { #category : #'completion engine' }

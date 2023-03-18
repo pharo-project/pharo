@@ -2151,15 +2151,6 @@ RubTextEditor >> selection [
 ]
 
 { #category : #'accessing - selection' }
-RubTextEditor >> selectionAsStream [
-	"Answer a ReadStream on the text in the paragraph that is currently
-	selected."
-
-	^ReadStream
-		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
-]
-
-{ #category : #'accessing - selection' }
 RubTextEditor >> selectionInterval [
 	"Answer the interval that is currently selected."
 

@@ -1493,7 +1493,7 @@ TextEditor >> evaluateSelectionAndDo: aBlock [
 				ctxt := model doItContext]
 		ifFalse: [rcvr := ctxt := nil].
 	result := rcvr class compiler
-			source: self selectionAsStream;
+			source: self selection;
 			context: ctxt;
 			receiver: rcvr;
 			requestor: self;
@@ -2755,15 +2755,6 @@ TextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 
 	^self text copyFrom: self startIndex to: self stopIndex - 1
-]
-
-{ #category : #'accessing - selection' }
-TextEditor >> selectionAsStream [
-	"Answer a ReadStream on the text in the paragraph that is currently
-	selected."
-
-	^ReadStream
-		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
 { #category : #'accessing - selection' }
