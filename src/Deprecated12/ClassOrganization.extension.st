@@ -48,7 +48,6 @@ ClassOrganization >> listAtCategoryNamed: aName [
 ClassOrganization >> notifyOfAddedCategory: protocolName [
 
 	self deprecated: 'Use #notifyOfAddedProtocol: instead.' transformWith: '`@rcv notifyOfAddedCategory: `@arg' -> '`@rcv notifyOfAddedProtocol: `@arg'.
-
 	self notifyOfAddedProtocol: protocolName
 ]
 
@@ -68,4 +67,13 @@ ClassOrganization >> notifyOfChangedCategoryFrom: oldNameOrNil to: newNameOrNil 
 		deprecated: 'Use #notifyOfChangedProtocolNameFrom: instead.'
 		transformWith: '`@rcv notifyOfChangedCategoryFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNameFrom: `@arg1 to: `@arg2'.
 	self notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> notifyOfRemovedCategory: protocolName [
+
+	self
+		deprecated: 'Use #notifyOfRemovedProtocolNamed: instead.'
+		transformWith: '`@rcv notifyOfRemovedCategory: `@arg' -> '`@rcv notifyOfRemovedProtocolNamed: `@arg'.
+	self notifyOfRemovedProtocolNamed: protocolName
 ]

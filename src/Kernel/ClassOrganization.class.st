@@ -183,23 +183,17 @@ ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProto
 ]
 
 { #category : #notifications }
-ClassOrganization >> notifyOfChangedSelector: element from: oldCategory to: newCategory [
-	(self hasSubject and: [(oldCategory ~= newCategory)])
-		ifTrue: [
-			self subject
-				notifyOfRecategorizedSelector: element
-				from: oldCategory
-				to: newCategory ]
+ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: newProtocolName [
+
+	(self hasSubject and: [ oldProtocolName ~= newProtocolName ]) ifTrue: [ self subject notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
 ]
 
 { #category : #notifications }
-ClassOrganization >> notifyOfRemovedCategory: protocolName [
+ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
 
 	self hasSubject ifFalse: [ ^ self ].
 
-	SystemAnnouncer uniqueInstance
-		protocolRemoved: protocolName
-		inClass: self subject
+	SystemAnnouncer uniqueInstance protocolRemoved: protocolName inClass: self subject
 ]
 
 { #category : #accessing }
@@ -285,12 +279,12 @@ ClassOrganization >> removeElement: aSymbol [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> removeEmptyCategories [
-	| oldCategories removedProtocols |
 
+	| oldCategories removedProtocols |
 	oldCategories := self protocolOrganizer allProtocolsNames copy.
 
 	removedProtocols := self protocolOrganizer removeEmptyProtocols.
-	removedProtocols do: [ :each |  self notifyOfRemovedCategory: each name ].
+	removedProtocols do: [ :each | self notifyOfRemovedProtocolNamed: each name ].
 
 	self notifyOfChangedProtocolNamesFrom: oldCategories to: self protocolOrganizer allProtocolsNames
 ]
@@ -298,11 +292,11 @@ ClassOrganization >> removeEmptyCategories [
 { #category : #accessing }
 ClassOrganization >> removeProtocol: aProtocol [
 
-	| oldCategories |
-	oldCategories := self protocolOrganizer allProtocolsNames copy.
+	| oldProtocolNames |
+	oldProtocolNames := self protocolOrganizer allProtocolsNames copy.
 	self protocolOrganizer removeProtocol: aProtocol.
-	self notifyOfRemovedCategory: aProtocol name.
-	self notifyOfChangedProtocolNamesFrom: oldCategories to: self protocolOrganizer allProtocolsNames
+	self notifyOfRemovedProtocolNamed: aProtocol name.
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolOrganizer allProtocolsNames
 ]
 
 { #category : #accessing }
