@@ -455,6 +455,7 @@ OpalCompiler >> parseForRequestor [
 	^ [ [ self parse ]
 	on: OCUndeclaredVariableWarning
 	do: [ :notification |
+		self isInteractive ifFalse: [ notification pass ].
 		notification openMenu.
 		self source: requestor text.
 		notification retry ] ]
