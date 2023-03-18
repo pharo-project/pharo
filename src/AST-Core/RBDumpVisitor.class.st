@@ -101,7 +101,7 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 		print: anEnglobingErrorNode start;
 		nextPutAll: '; stop: ';
 		print: anEnglobingErrorNode stop;
-		nextPutAll: '; errorPosition ';
+		nextPutAll: '; errorPosition: ';
 		print: anEnglobingErrorNode errorPosition;
 		nextPutAll: '; errorMessage: ';
 		print: anEnglobingErrorNode errorMessage;
