@@ -443,12 +443,14 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #'public access' }
 OpalCompiler >> parseForRequestor [
-
 	"For compatibility, this method manages the requestor needs.
 	The original design is more than questionable, but at least it is all done in a single place."
 
+	| requestor |
+	requestor := self compilationContext requestor.
+
 	"No requestor, easy path"
-	self compilationContext requestor ifNil: [ ^ self parse ].
+	requestor ifNil: [ ^ self parse ].
 
 	^ [ [ self parse ]
 	on: ReparseAfterSourceEditing
@@ -457,15 +459,12 @@ OpalCompiler >> parseForRequestor [
 		notification retry ] ]
 	on: CodeError
 	do: [ :exception |
-			exception sourceCode: source contents.
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor
-							notify: exception messageText , ' ->'
-							at: exception location
-							in: exception sourceCode.
-                    ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ] ]
+		exception sourceCode: source contents.
+		requestor
+			notify: exception messageText , ' ->'
+			at: exception location
+			in: exception sourceCode.
+		^ self compilationContext failBlock value ]
 ]
 
 { #category : #'public access' }
