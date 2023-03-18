@@ -1329,6 +1329,12 @@ RBParser >> sequenceNodeClass [
 	^ RBSequenceNode
 ]
 
+{ #category : #accessing }
+RBParser >> source: aString [
+
+	self initializeParserWith: aString
+]
+
 { #category : #private }
 RBParser >> step [
 	(currentToken notNil and: [currentToken comments notNil])
