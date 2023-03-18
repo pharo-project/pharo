@@ -1179,15 +1179,19 @@ RBParser >> parseVariableNode [
 { #category : #'error handling' }
 RBParser >> parserError: aString [
 
-	| errorNode |
+	| errorNode errorMessage errorPosition |
+	currentToken isError
+		ifTrue: [ errorMessage := currentToken cause. errorPosition := currentToken location ]
+		ifFalse: [ errorMessage := aString. errorPosition := currentToken start ].
+
 	errorNode := self parseErrorNode: aString.
-	errorBlock ifNotNil: [ errorBlock cull: errorNode errorMessage cull: errorNode start cull: self ].
+	errorBlock ifNotNil: [ errorBlock cull: errorMessage cull: errorPosition cull: self ].
 	isFaulty ifTrue: [ ^ errorNode ].
 
 	SyntaxErrorNotification new
 		sourceCode: source;
-		messageText: errorNode errorMessage;
-		location: errorNode start;
+		messageText: errorMessage;
+		location: errorPosition;
 		signal.
 
 	"If resumed, return with the error node"
