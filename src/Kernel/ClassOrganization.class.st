@@ -169,14 +169,11 @@ ClassOrganization >> notifyOfAddedProtocol: protocolName [
 ]
 
 { #category : #notifications }
-ClassOrganization >> notifyOfChangedCategoryFrom: oldNameOrNil to: newNameOrNil [
-	(self hasSubject and: [oldNameOrNil ~= newNameOrNil])
-		ifTrue: [
-			SystemAnnouncer uniqueInstance
-				protocolRenamedFrom: oldNameOrNil
-				to: newNameOrNil
-				inClass: self subject.
-			SystemAnnouncer uniqueInstance classReorganized: self subject]
+ClassOrganization >> notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil [
+
+	(self hasSubject and: [ oldNameOrNil ~= newNameOrNil ]) ifTrue: [
+		SystemAnnouncer uniqueInstance protocolRenamedFrom: oldNameOrNil to: newNameOrNil inClass: self subject.
+		SystemAnnouncer uniqueInstance classReorganized: self subject ]
 ]
 
 { #category : #notifications }
@@ -321,14 +318,11 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 { #category : #'backward compatibility' }
 ClassOrganization >> renameCategory: oldName toBe: newName [
 
-	self
-		silentlyRenameCategory: oldName
-		toBe: newName.
+	self silentlyRenameCategory: oldName toBe: newName.
 
-	self notifyOfChangedCategoryFrom: oldName to: newName.
+	self notifyOfChangedProtocolNameFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolOrganizer protocolNamed: newName) methodSelectors
-		do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+	(self protocolOrganizer protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
 ]
 
 { #category : #'backward compatibility' }

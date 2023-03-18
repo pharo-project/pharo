@@ -60,3 +60,12 @@ ClassOrganization >> notifyOfChangedCategoriesFrom: oldProtocolName to: newProto
 		transformWith: '`@rcv notifyOfChangedCategoriesFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNamesFrom: `@arg1 to: `@arg2'.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolName to: newProtocolName
 ]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> notifyOfChangedCategoryFrom: oldNameOrNil to: newNameOrNil [
+
+	self
+		deprecated: 'Use #notifyOfChangedProtocolNameFrom: instead.'
+		transformWith: '`@rcv notifyOfChangedCategoryFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNameFrom: `@arg1 to: `@arg2'.
+	self notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil
+]
