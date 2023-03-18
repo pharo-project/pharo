@@ -38,6 +38,7 @@ ClassOrganization >> allMethodSelectors [
 
 { #category : #accessing }
 ClassOrganization >> allProtocols [
+
 	^ self protocolOrganizer allProtocols
 ]
 
@@ -91,7 +92,9 @@ ClassOrganization >> cleanUpProtocolsForClass: aClass [
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	^ commentSourcePointer ifNil: [''] ifNotNil: [:ptr | SourceFiles sourceCodeAt: ptr ]
+	^ commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
 ]
 
 { #category : #accessing }
@@ -134,10 +137,10 @@ ClassOrganization >> hasComment [
 	^ commentSourcePointer isNotNil
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> hasSubject [
+{ #category : #testing }
+ClassOrganization >> hasOrganizedClass [
 
-	^ organizedClass notNil
+	^ organizedClass isNotNil
 ]
 
 { #category : #initialization }
@@ -148,10 +151,10 @@ ClassOrganization >> initialize [
 
 { #category : #initialization }
 ClassOrganization >> initializeClass: aClass [
+
 	self initialize.
 	organizedClass := aClass.
-	organizedClass selectors do: [ :each |
-		self classify: each under: Protocol unclassified ]
+	organizedClass selectors do: [ :each | self classify: each under: Protocol unclassified ]
 ]
 
 { #category : #accessing }
@@ -163,51 +166,52 @@ ClassOrganization >> methodsInProtocolNamed: aName [
 { #category : #notifications }
 ClassOrganization >> notifyOfAddedProtocol: protocolName [
 
-	self hasSubject ifFalse: [ ^ self ].
+	self hasOrganizedClass ifFalse: [ ^ self ].
 
-	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self subject
+	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil [
 
-	(self hasSubject and: [ oldNameOrNil ~= newNameOrNil ]) ifTrue: [
-		SystemAnnouncer uniqueInstance protocolRenamedFrom: oldNameOrNil to: newNameOrNil inClass: self subject.
-		SystemAnnouncer uniqueInstance classReorganized: self subject ]
+	(self hasOrganizedClass and: [ oldNameOrNil ~= newNameOrNil ]) ifFalse: [ ^ self ].
+	SystemAnnouncer uniqueInstance protocolRenamedFrom: oldNameOrNil to: newNameOrNil inClass: self organizedClass.
+	SystemAnnouncer uniqueInstance classReorganized: self organizedClass
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
 
-	(self hasSubject and: [ oldProtocols ~= newProtocols ]) ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self subject ]
+	(self hasOrganizedClass and: [ oldProtocols ~= newProtocols ]) ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self organizedClass ]
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: newProtocolName [
 
-	(self hasSubject and: [ oldProtocolName ~= newProtocolName ]) ifTrue: [ self subject notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
+	(self hasOrganizedClass and: [ oldProtocolName ~= newProtocolName ]) ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
 
-	self hasSubject ifFalse: [ ^ self ].
+	self hasOrganizedClass ifFalse: [ ^ self ].
 
-	SystemAnnouncer uniqueInstance protocolRemoved: protocolName inClass: self subject
+	SystemAnnouncer uniqueInstance protocolRemoved: protocolName inClass: self organizedClass
 ]
 
 { #category : #accessing }
 ClassOrganization >> organizedClass [
+
 	^ organizedClass
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector [
 
 	^ self protocolNameOfElement: aSelector ifAbsent: nil
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
 	^ (self protocolOrganizer protocolsOfSelector: aSelector)
@@ -220,9 +224,8 @@ ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString [
-	^ self protocolOrganizer
-		protocolNamed: aString
-		ifAbsent: [ nil ]
+
+	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ nil ]
 ]
 
 { #category : #private }
@@ -250,7 +253,7 @@ ClassOrganization >> removeElement: aSymbol [
 	self notifyOfChangedSelector: aSymbol from: oldProtocol to: (self protocolNameOfElement: aSymbol)
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #removing }
 ClassOrganization >> removeEmptyProtocols [
 
 	| oldProtocolNames removedProtocols |
@@ -290,7 +293,7 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 	self removeProtocol: (self protocolNamed: protocolName)
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
@@ -313,12 +316,8 @@ ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> sortCategories [
-	"Do nothing"
-]
-
-{ #category : #'backward compatibility' }
 ClassOrganization >> subject [
 
-	^organizedClass
+	self deprecated: 'Use #organizedClass instead.' transformWith: '`@rcv subject' -> '`@rcv organizedClass'.
+	^ self organizedClass
 ]

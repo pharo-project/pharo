@@ -208,18 +208,14 @@ ImageCleaner >> packagesForCleanUpInProduction [
 
 { #category : #cleaning }
 ImageCleaner >> removeEmptyCategories [
-
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
+
 	Smalltalk organization removeEmptyCategories.
-	Smalltalk
-		allClassesAndTraitsDo: [ :class |
-			[ :each |
-				each
-					removeEmptyProtocols;
-					sortCategories ]
-						value: class organization;
-						value: class class organization ]
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		[ :each | each removeEmptyProtocols ]
+			value: class organization;
+			value: class class organization ]
 ]
 
 { #category : #cleaning }
