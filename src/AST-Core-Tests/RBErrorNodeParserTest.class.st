@@ -15,7 +15,7 @@ RBErrorNodeParserTest >> testFaultyAssigment [
 	self   deny: node contents first isFaulty.
 	self assert: node contents first value equals: 1.
 	self assert: node sourceInterval equals: (1 to: 3).
-	self assert: node errorMessage equals: 'identifier expected in assigment'.
+	self assert: node errorMessage equals: 'variable expected in assigment'.
 	self assert: node formattedCode equals: ':= 1'
 ]
 
@@ -261,7 +261,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 1).
+	self assert: node messages first sourceInterval equals: (1 to: 0).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -286,7 +286,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 1).
+	self assert: node messages first sourceInterval equals: (1 to: 0).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -318,7 +318,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 8).
+	self assert: node messages first sourceInterval equals: (1 to: 7).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -347,7 +347,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 2).
+	self assert: node messages first sourceInterval equals: (1 to: 1).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
