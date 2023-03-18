@@ -357,7 +357,6 @@ OpalCompiler >> evaluate [
 
 	| value doItMethod |
 	self noPattern: true.
-	self getSourceFromRequestorSelection.
 	doItMethod := self compile.
 	doItMethod ifNotNil: [
 			value := self semanticScope evaluateDoIt: doItMethod ].
@@ -389,17 +388,6 @@ OpalCompiler >> format: textOrString [
 	^self
 		source: textOrString;
 		format
-]
-
-{ #category : #private }
-OpalCompiler >> getSourceFromRequestorSelection [
-    | selection |
-    "if the requestor can provide a selection, we use that as the source"
-     (self compilationContext requestor respondsTo: #selection) ifFalse: [ ^self ].
-
-    selection := self compilationContext requestor selection .
-    selection isEmptyOrNil ifTrue: [ ^self ].
-    self source: selection asString
 ]
 
 { #category : #testing }
