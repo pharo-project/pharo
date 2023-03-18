@@ -403,6 +403,12 @@ OpalCompiler >> getSourceFromRequestorSelection [
 ]
 
 { #category : #testing }
+OpalCompiler >> isFaulty: aBoolean [
+
+	self compilationContext isFaulty: aBoolean
+]
+
+{ #category : #testing }
 OpalCompiler >> isInteractive [
 	^ compilationContext interactive
 ]

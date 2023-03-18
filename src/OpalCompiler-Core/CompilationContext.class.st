@@ -34,7 +34,8 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope'
+		'semanticScope',
+		'isFaulty'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -499,7 +500,8 @@ CompilationContext >> initialize [
 	options := Set new.
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
 	astParseTransformPlugins := OrderedCollection withAll: self class defaultParseTransformationPlugins.
-	semanticScope := OCMethodSemanticScope targetingClass: nil class
+	semanticScope := OCMethodSemanticScope targetingClass: nil class.
+	isFaulty := false
 ]
 
 { #category : #accessing }
@@ -511,6 +513,18 @@ CompilationContext >> interactive [
 	^ (requestor respondsTo: #interactive)
 		  ifTrue: [ requestor interactive ]
 		  ifFalse: [ true ]
+]
+
+{ #category : #accessing }
+CompilationContext >> isFaulty [
+
+	^ isFaulty
+]
+
+{ #category : #accessing }
+CompilationContext >> isFaulty: anObject [
+
+	isFaulty := anObject
 ]
 
 { #category : #accessing }
@@ -639,6 +653,10 @@ CompilationContext >> optionSkipSemanticWarnings [
 
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
+
+	(optionsArray includesAny: #( #optionParseErrorsNonInteractiveOnly
+		    #optionParseErrors #optionSkipSemanticWarnings )) ifTrue: [ isFaulty := true ].
+
 	options parseOptions: optionsArray
 ]
 
