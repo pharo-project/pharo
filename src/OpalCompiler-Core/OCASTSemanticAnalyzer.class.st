@@ -8,7 +8,8 @@ Class {
 	#instVars : [
 		'scope',
 		'compilationContext',
-		'blockCounter'
+		'blockCounter',
+		'undeclared'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -85,12 +86,11 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 	aNode addError: aMessage.
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 
-	SyntaxErrorNotification
-		inClass: Object
-		withCode: aNode methodNode source
-		doitFlag: false
-		errorMessage: aMessage
-		location: aNode startWithoutParentheses
+	OCSemanticError new
+		node: aNode;
+		messageText: aMessage;
+		location: aNode startWithoutParentheses;
+		signal
 ]
 
 { #category : #variables }
@@ -124,7 +124,6 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 	^ OCStoreIntoReadOnlyVariableError new
 		node: variableNode;
-		compilationContext: compilationContext;
 		messageText: 'Assignment to read-only variable';
 		signal
 ]
@@ -135,19 +134,32 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
-		compilationContext: compilationContext;
 		messageText: 'Assigment to reserved variable';
 		signal
 ]
 
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> undeclared [
+
+	^ undeclared ifNil: [ undeclared := Dictionary new ]
+]
+
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
+	| varName var |
 	variableNode addWarning: 'Undeclared variable'.
-	compilationContext optionSkipSemanticWarnings
-		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
+
+	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
+	"It will be registered only at backend when a CompiledMethod is produced.
+	Or never if compilation is aborted or if only frontend is requested."
+	varName := variableNode name asSymbol.
+	var := self undeclared at: varName ifAbsentPut: [ UndeclaredVariable possiblyRegisteredWithName: varName ].
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ var ].
+
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;
+		variable: var;
 		signal
 ]
 

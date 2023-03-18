@@ -16,13 +16,24 @@ RBCodeSnippetTest >> testCompileOnError [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e | error := e errorMessage ].
+	method := snippet compileOnError: [ :e | error := e messageText ].
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
 			self assert: error isNil.
 			self assert: method isCompiledMethod.
 			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileOnErrorResume [
+
+	| method error |
+	error := nil.
+	method := snippet compileOnError: [ :e | error := e messageText. e resume ].
+	self assert: snippet isFaulty equals: error isNotNil.
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -57,6 +68,8 @@ RBCodeSnippetTest >> testDecompile [
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ast := method decompile.
 	self assert: ast isMethod.
+	ast := method parseTree.
+	self assert: ast isMethod.
 	"Decompilation lose many information. Not sure how to test more"
 ]
 
@@ -88,7 +101,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 	| ast error |
 	error := nil.
 
-	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
+	ast := snippet doSemanticAnalysisOnError: [ :e | error := e messageText ].
 
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]

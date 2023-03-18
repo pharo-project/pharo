@@ -7,7 +7,7 @@ RBCodeSnippet >> compile [
 		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
 		  noPattern: isMethod not;
 		  compile: self source ]
-	on: SyntaxErrorNotification do: [ :e |
+	on: CodeError do: [ :e |
 		"Compilation should success, because its the *faulty* mode".
 		"If this is expected, then just return nil"
 		self ifSkip: #compile then: [^ nil ].
@@ -21,7 +21,7 @@ RBCodeSnippet >> compileOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  noPattern: isMethod not;
-		  compile: self source ] on: SyntaxErrorNotification do: [ :e | aBlock cull: e ]
+		  compile: self source ] on: CodeError do: [ :e | aBlock cull: e ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -45,5 +45,5 @@ RBCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  noPattern: isMethod not;
-		  parse: self source ] on: SyntaxErrorNotification do: [ :e | aBlock value: e ]
+		  parse: self source ] on: CodeError do: [ :e | aBlock value: e ]
 ]
