@@ -556,19 +556,21 @@ RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorM
 
 { #category : #'private - parsing' }
 RBParser >> parseErrorNode: aMessageString [
-	| errorPosition|
+	| errorNode |
 	currentToken isError
-		ifTrue: [ | errorNode|
-					 "The current token is an error, consume it and use its content for the error node."
-				    errorNode := RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: currentToken start.
-					 errorNode stop: currentToken location.
-					 self step.
-					 ^errorNode].
+		ifTrue: [
+			"The current token is an error, consume it and use its content for the error node."
+			errorNode := RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: self errorPosition.
+			errorNode stop: currentToken location.
+			errorNode errorPosition: currentToken location.
+			self step.
+			^ errorNode].
 	"The current token is not an error but is unexpected. Maybe something is missing?
 	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
-	errorPosition := self errorPosition.
-	(errorPosition = 0) ifTrue: [ errorPosition := self errorPosition].
-	^ RBParseErrorNode errorMessage: aMessageString value: '' asString at: errorPosition
+	errorNode := RBParseErrorNode errorMessage: aMessageString value: '' asString at: self errorPosition.
+	errorNode stop: self errorPosition - 1.
+	errorNode errorPosition: self errorPosition.
+	^errorNode
 ]
 
 { #category : #parsing }
@@ -1169,19 +1171,15 @@ RBParser >> parseVariableNode [
 { #category : #'error handling' }
 RBParser >> parserError: aString [
 
-	| errorNode errorMessage errorPosition |
-	currentToken isError
-		ifTrue: [ errorMessage := currentToken cause. errorPosition := currentToken location ]
-		ifFalse: [ errorMessage := aString. errorPosition := currentToken start ].
-
+	| errorNode |
 	errorNode := self parseErrorNode: aString.
-	errorBlock ifNotNil: [ errorBlock cull: errorMessage cull: errorPosition cull: self ].
+	errorBlock ifNotNil: [ errorBlock cull: errorNode errorMessage cull: errorNode errorPosition cull: self ].
 	isFaulty ifTrue: [ ^ errorNode ].
 
 	SyntaxErrorNotification new
 		sourceCode: source;
-		messageText: errorMessage;
-		location: errorPosition;
+		messageText: errorNode errorMessage;
+		location: errorNode errorPosition;
 		signal.
 
 	"If resumed, return with the error node"
