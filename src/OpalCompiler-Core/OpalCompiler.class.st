@@ -453,9 +453,10 @@ OpalCompiler >> parseForRequestor [
 	requestor ifNil: [ ^ self parse ].
 
 	^ [ [ self parse ]
-	on: ReparseAfterSourceEditing
-	do: [:notification |
-		self source: notification newSource.
+	on: OCUndeclaredVariableWarning
+	do: [ :notification |
+		notification openMenu.
+		self source: requestor text.
 		notification retry ] ]
 	on: CodeError
 	do: [ :exception |
@@ -464,7 +465,7 @@ OpalCompiler >> parseForRequestor [
 			notify: exception messageText , ' ->'
 			at: exception location
 			in: exception sourceCode.
-		^ self compilationContext failBlock value ]
+		self compilationContext failBlock value ]
 ]
 
 { #category : #'public access' }

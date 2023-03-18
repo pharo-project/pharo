@@ -80,8 +80,7 @@ OCUndeclaredVariableWarning >> defaultAction [
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
-	compilationContext interactive ifFalse: [ ^ self declareUndefined ].
-	^self openMenu
+	^ variable
 ]
 
 { #category : #correcting }
@@ -193,7 +192,7 @@ OCUndeclaredVariableWarning >> openMenu [
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
 	choice := UIManager default chooseFrom: labels lines: lines title: caption.
-	^choice ifNotNil: [ self resume: (actions at: choice ifAbsent: [ compilationContext failBlock value ]) value ]
+	^ (actions at: choice ifAbsent: [ compilationContext failBlock value ]) value
 ]
 
 { #category : #correcting }
