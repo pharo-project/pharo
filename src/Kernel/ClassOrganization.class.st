@@ -293,7 +293,7 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 { #category : #'backward compatibility' }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
-	self silentlyRenameCategory: oldName toBe: newName.
+	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
 	self notifyOfChangedProtocolNameFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
@@ -307,11 +307,9 @@ ClassOrganization >> setSubject: anObject [
 ]
 
 { #category : #private }
-ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
+ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
 
-	self protocolOrganizer
-		renameProtocol: oldName
-		into: newName
+	self protocolOrganizer renameProtocol: oldName into: newName
 ]
 
 { #category : #'backward compatibility' }

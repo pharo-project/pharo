@@ -869,28 +869,20 @@ RPackageOrganizer >> removePackageNameFromCache: aPackageName [
 
 { #category : #'system integration' }
 RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
-	| classesAndProtocolsToRename |
 
+	| classesAndProtocolsToRename |
 	rPackage name: newName.
 
 	"we update the organizer"
 	self removePackageNameFromCache: oldName.
 	self addPackageNameToCache: newName.
 
-	packages
-		at: newName
-		put: rPackage.
-	packages
-		removeKey: oldName
-		ifAbsent: [ self reportBogusBehaviorOf:   #systemCategoryRenamedActionFrom: ].
+	packages at: newName put: rPackage.
+	packages removeKey: oldName ifAbsent: [ self reportBogusBehaviorOf: #systemCategoryRenamedActionFrom: ].
 
 	"we also rename all the extension protocols in the system with the new name"
 	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
-	classesAndProtocolsToRename
-		do: [:method |
-			method methodClass organization
-				silentlyRenameCategory: method category
-				toBe: '*', newName ]
+	classesAndProtocolsToRename do: [ :method | method methodClass organization silentlyRenameProtocolNamed: method category toBe: '*' , newName ]
 ]
 
 { #category : #private }
