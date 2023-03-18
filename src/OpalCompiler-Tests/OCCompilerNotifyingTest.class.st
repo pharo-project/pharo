@@ -52,7 +52,7 @@ OCCompilerNotifyingTest >> enumerateAllSelections [
 { #category : #private }
 OCCompilerNotifyingTest >> evaluateSelection [
 	^ OpalCompiler new
-		source: morph editor selectionAsStream;
+		source: morph editor selection;
 		requestor: morph editor;
 		failBlock: [^failure];
 		evaluate
