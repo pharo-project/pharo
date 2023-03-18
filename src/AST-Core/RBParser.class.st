@@ -750,10 +750,12 @@ RBParser >> parseLiteralByteArrayObject [
 	(currentToken isLiteralToken and:
 			[currentToken value isInteger and: [currentToken value between: 0 and: 255]])
 		ifFalse: [
-			| errorNode |
+			| errorNode lost |
 			errorNode := self parserError: '8-bit integer expected'.
 			"Error recovery: consume the token as classic literal array object"
-			errorNode value: self parseLiteralArrayObject value asString.
+			lost := self parseLiteralArrayObject.
+			errorNode value: lost value asString.
+			errorNode stop: lost stop.
 			^ errorNode ].
 	^self parsePrimitiveLiteral
 ]
