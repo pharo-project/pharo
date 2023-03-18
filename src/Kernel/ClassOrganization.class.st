@@ -291,7 +291,7 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> renameCategory: oldName toBe: newName [
+ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
 	self silentlyRenameCategory: oldName toBe: newName.
 

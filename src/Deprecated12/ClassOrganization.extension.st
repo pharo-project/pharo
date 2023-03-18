@@ -91,3 +91,12 @@ ClassOrganization >> removeEmptyCategories [
 	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
 	self removeEmptyProtocols
 ]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> renameCategory: oldName toBe: newName [
+
+	self
+		deprecated: 'Use #renameProtocolNamed:toBe: instead.'
+		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
+	self renameProtocolNamed: oldName toBe: newName
+]
