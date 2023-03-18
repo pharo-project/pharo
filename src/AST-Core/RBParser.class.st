@@ -672,20 +672,20 @@ RBParser >> parseKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parseLiteralArray [
-	| literals startToken stop isFaulty value |
+	| literals startToken stop faulty value |
 	startToken := currentToken.
 	literals := (OrderedCollection new: 5).
-	isFaulty := false.
+	faulty := false.
 	self step.
 	[self atEnd or: [currentToken isSpecial: $)]]
 		whileFalse: [
 			literals add: (value := self parseLiteralArrayObject).
-			value isParseError ifTrue: [ isFaulty := true ] ].
+			value isParseError ifTrue: [ faulty := true ] ].
 	stop := currentToken stop.
 	(currentToken isSpecial: $))
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
-	isFaulty ifTrue: [
+	faulty ifTrue: [
 		^ (self parseEnglobingError: literals with: startToken errorMessage: nil)
 			valueAfter: ')';
 			stop: stop;
@@ -718,22 +718,22 @@ RBParser >> parseLiteralArrayObject [
 RBParser >> parseLiteralByteArray [
 	"Current token is litteral array token #[ which means following tokens are part of the array
 	 until the encounter of the special character ] ."
-	| stream startToken value stop isFaulty |
+	| stream startToken value stop faulty |
 	startToken := currentToken.
 	stream := (Array new: 5) writeStream.
 	self step.
-	isFaulty := false.
+	faulty := false.
 	[self atEnd or: [currentToken isSpecial: $]]]
 		"Put literal value nodes corresponding to the bytes in the stream."
 		whileFalse: [
 			stream nextPut: (value := self parseLiteralByteArrayObject).
 			"In case of unexpected element, continue until the closing bracket, but an error node will sill be produced."
-			value isParseError ifTrue: [ isFaulty := true ]].
+			value isParseError ifTrue: [ faulty := true ]].
 	(currentToken isSpecial: $])
 		ifFalse: [ ^ self parseEnglobingError: stream contents with: startToken errorMessage: ''']'' expected'].
 	stop := currentToken stop.
 	self step.
-	isFaulty ifTrue: [
+	faulty ifTrue: [
 		^ (self parseEnglobingError: stream contents with: startToken errorMessage: nil)
 			valueAfter: ']';
 			stop: stop;
