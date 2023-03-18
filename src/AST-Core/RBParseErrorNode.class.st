@@ -75,7 +75,7 @@ RBParseErrorNode >> errorMessage: anObject [
 { #category : #accessing }
 RBParseErrorNode >> errorPosition [
 
-	^ errorPosition ifNil: [ self stop ]
+	^ errorPosition
 ]
 
 { #category : #accessing }
