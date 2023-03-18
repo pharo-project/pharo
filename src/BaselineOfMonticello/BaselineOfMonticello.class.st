@@ -40,7 +40,11 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Network-Protocols';
 			package: 'MonticelloRemoteRepositories';
 			package: 'Zinc-HTTP';
-			package: 'Zodiac-Core'.
+			package: 'Zodiac-Core';
+
+			package: 'Monticello-Tests' with: [
+				spec requires: #(#'AST-Core-Tests' )].
+
 		spec 
 			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zodiac-Core' );
