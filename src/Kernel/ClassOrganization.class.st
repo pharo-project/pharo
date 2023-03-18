@@ -251,15 +251,15 @@ ClassOrganization >> removeElement: aSymbol [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> removeEmptyCategories [
+ClassOrganization >> removeEmptyProtocols [
 
-	| oldCategories removedProtocols |
-	oldCategories := self protocolOrganizer allProtocolsNames copy.
+	| oldProtocolNames removedProtocols |
+	oldProtocolNames := self protocolOrganizer allProtocolsNames copy.
 
 	removedProtocols := self protocolOrganizer removeEmptyProtocols.
 	removedProtocols do: [ :each | self notifyOfRemovedProtocolNamed: each name ].
 
-	self notifyOfChangedProtocolNamesFrom: oldCategories to: self protocolOrganizer allProtocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolOrganizer allProtocolsNames
 ]
 
 { #category : #accessing }

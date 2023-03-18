@@ -216,7 +216,7 @@ ImageCleaner >> removeEmptyCategories [
 		allClassesAndTraitsDo: [ :class |
 			[ :each |
 				each
-					removeEmptyCategories;
+					removeEmptyProtocols;
 					sortCategories ]
 						value: class organization;
 						value: class class organization ]

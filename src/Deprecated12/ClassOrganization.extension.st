@@ -84,3 +84,10 @@ ClassOrganization >> removeCategory: protocolName [
 	self deprecated: 'Use #removeProtocolNamed: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolNamed: `@arg'.
 	self removeProtocolNamed: protocolName
 ]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> removeEmptyCategories [
+
+	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
+	self removeEmptyProtocols
+]

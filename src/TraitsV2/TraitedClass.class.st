@@ -274,7 +274,7 @@ TraitedClass >> recategorizeSelector: selector from: oldCategory to: newCategory
 		self recategorizeSelector: e from: oldCategory to: newCategory.
 		self notifyOfRecategorizedSelector: e from: oldCategory to: newCategory ].
 
-	self organization removeEmptyCategories
+	self organization removeEmptyProtocols
 ]
 
 { #category : #recompilation }

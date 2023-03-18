@@ -1530,7 +1530,7 @@ SmalltalkImage >> removeClassNamed: aName [
 SmalltalkImage >> removeEmptyMessageCategories [
 	"Smalltalk removeEmptyMessageCategories"
 	self garbageCollect.
-	ClassOrganization allInstancesDo: [ :org | org removeEmptyCategories ].
+	ClassOrganization allInstancesDo: [ :org | org removeEmptyProtocols ].
 	SystemOrganization removeEmptyCategories
 ]
 
