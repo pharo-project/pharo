@@ -23,15 +23,6 @@ Class {
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'instance creation' }
-RBEnglobingErrorNode class >> contents: aCollection start: aStart stop: aStop errorMessage: message [
-	^self new
-		contents: aCollection;
-		start: aStart;
-		stop: aStop;
-		errorMessage: message
-]
-
 { #category : #construction }
 RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 
