@@ -23,7 +23,7 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	result := UndefinedObject compiler
     source: '^[ :]';
     noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+    isFaulty: true;
     requestor: self;
     parse.
 	self assert: result isDoIt.
@@ -51,7 +51,7 @@ OCCompileWithFailureTest >> testParenthesis [
 	result := UndefinedObject compiler
     source: 'self assert: pragma( numArgs equals: 0.';
     noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+    isFaulty: true;
     requestor: self;
     parse.
 	self assert: result isDoIt.

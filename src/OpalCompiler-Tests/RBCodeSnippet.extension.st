@@ -4,7 +4,7 @@ Extension { #name : #RBCodeSnippet }
 RBCodeSnippet >> compile [
 
 	^ [ OpalCompiler new
-		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
+		  isFaulty: true;
 		  noPattern: isMethod not;
 		  compile: self source ]
 	on: CodeError do: [ :e |
@@ -34,7 +34,7 @@ RBCodeSnippet >> doSemanticAnalysis [
 	So just ask the compiler."
 
 	^ OpalCompiler new
-		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
+		  isFaulty: true;
 		  noPattern: isMethod not;
 		  parse: self source "Note: `parse:` also does the semantic analysis and return the AST"
 ]

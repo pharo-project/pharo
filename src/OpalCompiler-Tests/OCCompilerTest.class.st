@@ -465,13 +465,13 @@ OCCompilerTest >> testUndefinedVariable [
 	self
 		assert: {
 			OpalCompiler new
-				options: #( + optionSkipSemanticWarnings );
+				isFaulty: true;
 				evaluate: 'undefinedName123'.
 			OpalCompiler new
-				options: #( + optionSkipSemanticWarnings );
+				isFaulty: true;
 				evaluate: 'undefinedName123 := 2. undefinedName123'.
 			OpalCompiler new
-				options: #( + optionSkipSemanticWarnings );
+				isFaulty: true;
 				evaluate: 'undefinedName123' }
 		equals: { nil. 2. 2. }.
 

@@ -796,7 +796,7 @@ SHRBTextStyler >> privateStyle: aText [
 	compiler := classOrMetaClass compiler
 		source: aText asString;
 		noPattern: self isForWorkspace ;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		isFaulty: true;
 		requestor: workspace.
 
 	self plugins do: [ :each | compiler addParsePlugin: each ].
