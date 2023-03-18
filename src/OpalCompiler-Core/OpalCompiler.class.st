@@ -314,8 +314,7 @@ OpalCompiler >> createParser [
 
 	| parser |
 	parser := self parserClass new.
-	(self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
-		ifTrue: [ parser beFaulty ].
+	parser isFaulty: self compilationContext isFaulty.
 	parser	 initializeParserWith: source contents.
 	^parser
 ]

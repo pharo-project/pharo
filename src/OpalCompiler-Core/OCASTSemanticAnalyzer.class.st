@@ -84,7 +84,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 { #category : #errors }
 OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 	aNode addError: aMessage.
-	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
+	compilationContext isFaulty ifTrue: [ ^ self ].
 
 	OCSemanticError new
 		node: aNode;
@@ -110,7 +110,8 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowingVariable: aNode [
 	aNode addWarning: 'Name already defined'.
-	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aNode ].
+	compilationContext isFaulty ifTrue: [ ^aNode ].
+
 	^ OCShadowVariableWarning new
 		node: aNode;
 		compilationContext: compilationContext;
@@ -120,7 +121,7 @@ OCASTSemanticAnalyzer >> shadowingVariable: aNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 	variableNode addError: 'Assignment to read-only variable'.
-	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
+	compilationContext isFaulty ifTrue: [ ^ self ].
 
 	^ OCStoreIntoReadOnlyVariableError new
 		node: variableNode;
@@ -131,7 +132,8 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	variableNode addError: 'Assigment to reserved variable'.
-	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
+	compilationContext isFaulty ifTrue: [ ^ self ].
+
 	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
 		messageText: 'Assigment to reserved variable';
@@ -154,7 +156,7 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	Or never if compilation is aborted or if only frontend is requested."
 	varName := variableNode name asSymbol.
 	var := self undeclared at: varName ifAbsentPut: [ UndeclaredVariable possiblyRegisteredWithName: varName ].
-	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ var ].
+	compilationContext isFaulty ifTrue: [ ^ var ].
 
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
