@@ -282,31 +282,20 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 ]
 
 { #category : #'private - registration' }
-RPackageOrganizer >> basicUnregisterPackage: aPackage [
-	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
-
-	packages
-		removeKey: aPackage name asSymbol
-		ifAbsent: [ self reportExtraRemovalOf: aPackage ].
-
-	"unregister also mc package"
-	self flag: #hack. "for decoupling MC"
-	self class environment at: #MCWorkingCopy ifPresent: [
-		aPackage mcPackage
-			ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ]].
-
-	self removePackageNameFromCache: aPackage name asSymbol
-]
-
-{ #category : #'private - registration' }
-RPackageOrganizer >> basicUnregisterPackageNamed: aSymbolName [
+RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
 	"Unregister the specified package from the list of registered packages. Raise the RPackageUnregistered announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	packages
-		removeKey: aSymbolName asSymbol
-		ifAbsent: [ ].
+	| package |
+	package := packages removeKey: aPackageName ifAbsent: [
+		           self reportExtraRemovalOf: aPackageName.
+		           nil ].
 
-	self removePackageNameFromCache: aSymbolName asSymbol
+
+	package ifNotNil: [ "unregister also mc package"
+		self flag: #hack. "for decoupling MC"
+		self class environment at: #MCWorkingCopy ifPresent: [ package mcPackage ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ] ] ].
+
+	self removePackageNameFromCache: aPackageName
 ]
 
 { #category : #'system compatibility' }
@@ -900,9 +889,9 @@ RPackageOrganizer >> reportBogusBehaviorOf: aSelector [
 ]
 
 { #category : #private }
-RPackageOrganizer >> reportExtraRemovalOf: aClass [
+RPackageOrganizer >> reportExtraRemovalOf: aPackageOrClass [
 
-	self traceCr: 'The class ', aClass name printString , ' is removed twice'
+	self traceCr: 'The class ' , aPackageOrClass printString , ' is removed twice'
 ]
 
 { #category : #registration }
@@ -1242,7 +1231,7 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 RPackageOrganizer >> unregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered."
 
-	self basicUnregisterPackage: aPackage.
+	self basicUnregisterPackageNamed: aPackage name.
 	aPackage extendedClasses
 		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
 	aPackage definedClasses
@@ -1258,7 +1247,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 
 	^classPackageMapping
 		removeKey: aClass instanceSide name
-		ifAbsent: [ self reportExtraRemovalOf: aClass ]
+		ifAbsent: [ self reportExtraRemovalOf: aClass name ]
 ]
 
 { #category : #'private - registration' }

@@ -358,7 +358,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self packageOrganizer basicRegisterPackage: p2.
 	self packageOrganizer basicRegisterPackage: p3.
 	self assert: self packageOrganizer packageNames size equals: 4.
-	self packageOrganizer basicUnregisterPackage: p3.
+	self packageOrganizer basicUnregisterPackageNamed: p3 name.
 	self assert: self packageOrganizer packageNames size equals: 3
 ]
 
