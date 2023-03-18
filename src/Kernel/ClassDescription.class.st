@@ -979,18 +979,16 @@ ClassDescription >> removeMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods.
 	Here we could remove what we not need"
-	self organization removeCategory: aSymbol
+	self organization removeProtocolNamed: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> removeProtocol: aString [
+ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
 	dictionary of the receiver. Then remove the category aString."
 
-	| categoryName |
-	categoryName := aString asSymbol.
-	(self organization methodsInProtocolNamed: categoryName) do: [ :sel | self removeSelector: sel ].
-	self organization removeCategory: categoryName
+	(self organization methodsInProtocolNamed: protocolName) do: [ :sel | self removeSelector: sel ].
+	self organization removeProtocolNamed: protocolName
 ]
 
 { #category : #'accessing - method dictionary' }

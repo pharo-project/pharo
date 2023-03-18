@@ -71,14 +71,14 @@ ClassOrganization >> classify: aSymbol under: aProtocolName [
 { #category : #'backward compatibility' }
 ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: aBoolean [
 
-	| oldCategory forceNotify oldProtocols |
+	| oldProtocolName forceNotify oldProtocols |
 	forceNotify := (self protocolOrganizer includesSelector: selector) not.
-	oldCategory := self protocolNameOfElement: selector.
-	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ]) ifFalse: [ ^ self ].
+	oldProtocolName := self protocolNameOfElement: selector.
+	(forceNotify or: [ oldProtocolName ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolOrganizer protocolsOfSelector: selector.
 	self protocolOrganizer classify: selector inProtocolNamed: aProtocolName.
 	aBoolean ifTrue: [ (oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ] ].
-	oldCategory ifNotNil: [ self notifyOfChangedSelector: selector from: oldCategory to: aProtocolName ]
+	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: aProtocolName ]
 ]
 
 { #category : #cleanup }
@@ -202,25 +202,6 @@ ClassOrganization >> organizedClass [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> ownCategories [
-        "get all categories that are not obtained from traits. Order is random"
-
-        | traitsCategories |
-
-        traitsCategories := self subject traits
-                inject: Set new
-                into: [:set :trait |
-                        set addAll: (trait organization protocolOrganizer protocols
-                                reject: [ :eachProtocol |
-                                        self subject methods anySatisfy: [ :eachMethod |
-                                                eachMethod origin = self subject
-                                                                and: [ eachMethod protocol = eachProtocol name ] ] ]).
-                        set ].
-        ^ ((self protocolOrganizer protocols collect: [:each | each name])
-                copyWithoutAll: (traitsCategories collect: [:each | each name])) asArray
-]
-
-{ #category : #'backward compatibility' }
 ClassOrganization >> protocolNameOfElement: aSelector [
 
 	^ self protocolNameOfElement: aSelector ifAbsent: nil
@@ -258,14 +239,6 @@ ClassOrganization >> protocols [
 { #category : #accessing }
 ClassOrganization >> protocolsNames [
 	^ self protocolOrganizer protocolsNames
-]
-
-{ #category : #accessing }
-ClassOrganization >> removeCategory: protocolName [
-	(self protocolOrganizer hasProtocolNamed: protocolName)
-		ifFalse: [ ^ self ].
-
-	self removeProtocol: (self protocolNamed: protocolName)
 ]
 
 { #category : #'backward compatibility' }
@@ -307,6 +280,14 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 		ifNotNil: [ :protocol |
 			(protocol isEmpty and: [ protocol canBeRemoved ])
 				ifTrue: [ self removeProtocol: protocol ] ]
+]
+
+{ #category : #accessing }
+ClassOrganization >> removeProtocolNamed: protocolName [
+
+	(self protocolOrganizer hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
+
+	self removeProtocol: (self protocolNamed: protocolName)
 ]
 
 { #category : #'backward compatibility' }

@@ -71,18 +71,19 @@ ClassOrganizationTest >> testProtocolsNames [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testRemoveCategory [
+ClassOrganizationTest >> testRemoveNonExistingProtocol [
 
-	self assert: self organization protocolsNames size equals: 2.
-	"just ignore removing of non empty categories"
-	self organization removeCategory: 'one'.
-	self assert: self organization protocolsNames size equals: 2.
-	self organization removeCategory: 'empty'.
-	self assert: self organization protocolsNames size equals: 1.
-	self assert: self organization protocolsNames first equals: 'one'
+	self organization removeProtocolNamed: 'non-existent'
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testRemoveNonExistingProtocol [
-	self organization removeCategory: 'non-existent'
+ClassOrganizationTest >> testRemoveProtocolNamed [
+
+	self assert: self organization protocolsNames size equals: 2.
+	"just ignore removing of non empty categories"
+	self organization removeProtocolNamed: 'one'.
+	self assert: self organization protocolsNames size equals: 2.
+	self organization removeProtocolNamed: 'empty'.
+	self assert: self organization protocolsNames size equals: 1.
+	self assert: self organization protocolsNames first equals: 'one'
 ]

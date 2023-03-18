@@ -77,3 +77,10 @@ ClassOrganization >> notifyOfRemovedCategory: protocolName [
 		transformWith: '`@rcv notifyOfRemovedCategory: `@arg' -> '`@rcv notifyOfRemovedProtocolNamed: `@arg'.
 	self notifyOfRemovedProtocolNamed: protocolName
 ]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> removeCategory: protocolName [
+
+	self deprecated: 'Use #removeProtocolNamed: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolNamed: `@arg'.
+	self removeProtocolNamed: protocolName
+]
