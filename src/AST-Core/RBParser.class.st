@@ -323,13 +323,12 @@ RBParser >> parseAssignment [
 	"Need one token lookahead to see if we have a ':='. This method could
 	make it possible to assign the literals true, false and nil."
 
-	| node position |
+	| node position err |
 	currentToken isAssignment ifTrue: [
-		self parserError: 'Variable expected'.
-		position := currentToken start.
+		err := self parserError: 'variable expected in assigment'.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side".
-		node := RBAssignmentErrorNode contents: { node } start: position stop: node stop errorMessage: 'identifier expected in assigment'.
+		node := RBAssignmentErrorNode from: err contents: { node }.
 		node value: ':='.
 		^ node
 	].
@@ -463,7 +462,7 @@ RBParser >> parseBlockArgsInto: node [
 
 { #category : #'private - parsing' }
 RBParser >> parseCascadeMessage [
-	| node receiver messages semicolons |
+	| node receiver messages semicolons err |
 	"Parse of the first message. It can be either unary, binary or keyword."
 	node := self parseKeywordMessage.
 
@@ -486,12 +485,8 @@ RBParser >> parseCascadeMessage [
 		"Cut parsing with an error.
 		If in faulty mode, continue the execution and generate a faulty cascade node.
 		Note that this bad cascade node will be added to the list of messages."
-		self parserError: 'Message expected'.
-		node := RBInvalidCascadeErrorNode
-			contents: { node }
-			start: node start
-			stop: currentToken stop
-			errorMessage: 'Message expected'.
+		err := self parserError: 'Message expected'.
+		node := RBInvalidCascadeErrorNode from: err contents: { node }
 	].
 	receiver := node receiver.
  	messages add: node.
@@ -552,7 +547,10 @@ RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorM
 	| firstParse |
 	firstParse := self parserError: anErrorMessage.
 	^firstParse isParseError
-		ifTrue: [ (self englobingErrorNodeClass error: aToken withNodes: aCollection) value: aToken value asString ]
+		ifTrue: [
+			(self englobingErrorNodeClass error: aToken withNodes: aCollection)
+				value: aToken value asString;
+				errorPosition: firstParse errorPosition ]
 		ifFalse: [ firstParse ]
 ]
 
@@ -939,7 +937,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 
 	Put any period found at the end of this statement int the periods collection.
 	"
-	| returnPosition node startOfStatementToken |
+	| returnPosition node startOfStatementToken err |
 
 	"Record the token found at the beginning of the statement.
 	If at the end we did not consume it, consume it and mark it as a bad statement for now"
@@ -969,13 +967,10 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	[(')]}' includes: currentToken value)
 		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
 			whileTrue: [
-				self parserError: 'Missing opener for closer: ', currentToken value asString.
-				node := RBUnfinishedStatementErrorNode
-					contents: { node }
-					start: node start
-					stop: currentToken stop
-					errorMessage: 'Missing opener for closer: ', currentToken value asString.
-				node valueAfter: currentToken value asString.
+				err := self parserError: 'Missing opener for closer: ', currentToken value asString.
+				node := (RBUnfinishedStatementErrorNode from: err contents: { node })
+					valueAfter: currentToken value asString;
+					stop: currentToken stop.
 				self step ].
 
 	"Next we should have the end of the statement
@@ -991,12 +986,9 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		"I do not like the following guard. If currentToken is an unrelated error,
 		 then parserError will unfortunately consume and lose it.
 		 A better design is needed."
-		node isParseError ifFalse: [ self parserError: 'End of statement expected' ].
-		node := RBUnfinishedStatementErrorNode
-			contents: { node }
-			start: node start
-			stop: node stop
-			errorMessage: 'End of statement expected'
+		node isParseError ifFalse: [ 
+			err := self parserError: 'End of statement expected'.
+			node := RBUnfinishedStatementErrorNode from: err contents: { node } ]
 	].
 
 	"Then consume all dots and comments coming after this well formed statement, if there was any"
@@ -1013,12 +1005,8 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"If the previous node in the statement list is a return node, mark this node as unreachable"
 
 	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
-		self parserError: 'Unreachable code'.
-		node := RBUnreachableStatementErrorNode
-			contents: { node }
-			start: node start
-			stop: node stop
-			errorMessage: 'Unreachable code' ].
+		err := self parserError: 'Unreachable code'.
+		node := RBUnreachableStatementErrorNode from: err contents: { node } ].
 
 	"Commit the statement to the statements list"
 	statementList add: node

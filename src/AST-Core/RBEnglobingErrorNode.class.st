@@ -34,6 +34,7 @@ RBEnglobingErrorNode class >> contents: aCollection start: aStart stop: aStop er
 
 { #category : #construction }
 RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
+
 	"Realise a selection between the different englobing error node classes possible according to the
 	 received token. If the value of the token is not recognised, we create an undetermined one."
 	('()' includes: aToken value)
@@ -50,7 +51,11 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 		ifTrue: [ ^RBTemporariesErrorNode error: aToken withNodes: aCollection ].
 	('<' = aToken value asString)
 		ifTrue: [ ^RBPragmaErrorNode error: aToken withNodes: aCollection ].
-	^self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
+	^self new
+		contents: aCollection;
+		start: aCollection first start;
+		stop: aToken stop;
+		errorMessage: 'complementary of''',aToken value,''' expected'
 ]
 
 { #category : #'instance creation' }
