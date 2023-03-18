@@ -88,27 +88,28 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 
 { #category : #visiting }
 RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+
 	stream
 		nextPutAll: '(';
 		nextPutAll: anEnglobingErrorNode class name;
-		nextPutAll: ' contents: {'.
-	anEnglobingErrorNode contents
-		do: [ :each |
-			each acceptVisitor: self.
-			stream nextPutAll: '. ' ].
-	stream nextPut: $}.
-	stream nextPutAll: ' start: '.
-	anEnglobingErrorNode start printOn: stream.
-	stream nextPutAll: ' stop: '.
-	anEnglobingErrorNode stop printOn: stream.
-	stream nextPutAll: ' errorMessage: '.
-	anEnglobingErrorNode errorMessage printOn: stream.
+		nextPutAll: ' new contents: {'.
+	anEnglobingErrorNode contents do: [ :each |
+		each acceptVisitor: self.
+		stream nextPutAll: '. ' ].
 	stream
-		nextPutAll: ') value: ';
-		nextPutAll: anEnglobingErrorNode value printString;
+		nextPutAll: '}; start: ';
+		print: anEnglobingErrorNode start;
+		nextPutAll: '; stop: ';
+		print: anEnglobingErrorNode stop;
+		nextPutAll: '; errorPosition ';
+		print: anEnglobingErrorNode errorPosition;
+		nextPutAll: '; errorMessage: ';
+		print: anEnglobingErrorNode errorMessage;
+		nextPutAll: '; value: ';
+		print: anEnglobingErrorNode value;
 		nextPutAll: '; valueAfter: ';
-		nextPutAll: anEnglobingErrorNode valueAfter printString;
-		nextPutAll: '; yourself'
+		print: anEnglobingErrorNode valueAfter;
+		nextPutAll: '; yourself)'
 ]
 
 { #category : #visiting }
