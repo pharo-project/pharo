@@ -27,7 +27,7 @@ ClassOrganization >> addProtocolNamed: protocolName [
 
 	oldProtocols := self protocolsNames copy.
 	self protocolOrganizer addProtocolNamed: protocolName.
-	self notifyOfAddedCategory: protocolName.
+	self notifyOfAddedProtocol: protocolName.
 	self notifyOfChangedCategoriesFrom: oldProtocols to: self protocolsNames
 ]
 
@@ -161,13 +161,11 @@ ClassOrganization >> methodsInProtocolNamed: aName [
 ]
 
 { #category : #notifications }
-ClassOrganization >> notifyOfAddedCategory: protocolName [
+ClassOrganization >> notifyOfAddedProtocol: protocolName [
 
 	self hasSubject ifFalse: [ ^ self ].
 
-	SystemAnnouncer uniqueInstance
-		protocolAdded: protocolName
-		inClass: self subject
+	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self subject
 ]
 
 { #category : #notifications }

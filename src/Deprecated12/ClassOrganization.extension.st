@@ -43,3 +43,11 @@ ClassOrganization >> listAtCategoryNamed: aName [
 	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodsInProtocolNamed: `@arg'.
 	^ self methodsInProtocolNamed: aName
 ]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> notifyOfAddedCategory: protocolName [
+
+	self deprecated: 'Use #notifyOfAddedProtocol: instead.' transformWith: '`@rcv notifyOfAddedCategory: `@arg' -> '`@rcv notifyOfAddedProtocol: `@arg'.
+
+	self notifyOfAddedProtocol: protocolName
+]
