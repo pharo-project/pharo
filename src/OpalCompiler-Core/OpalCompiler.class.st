@@ -250,19 +250,11 @@ OpalCompiler >> compilationContextClass: aClass [
 
 { #category : #'public access' }
 OpalCompiler >> compile [
-	^[
-		self parse.
-		self semanticScope compileMethodFromASTBy: self
-	] on: CodeError do: [ :exception |
-			exception sourceCode: source contents.
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor
-							notify: exception messageText , ' ->'
-							at: exception location
-							in: exception sourceCode.
-                    ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ]]
+
+	| result |
+	result := self parseForRequestor.
+	ast ifNil: [ ^ result ]. "some failBlock"
+	^ self semanticScope compileMethodFromASTBy: self
 ]
 
 { #category : #'public access' }
@@ -429,17 +421,14 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	| parser |
-	[
-		parser := self createParser.
-		ast := self semanticScope parseASTBy: parser.
 
-		ast methodNode compilationContext: self compilationContext.
-		self callParsePlugins.
-		self doSemanticAnalysis ]
-	on: ReparseAfterSourceEditing do: [:notification |
-			self source: notification newSource.
-			notification retry ].
+	| parser |
+	parser := self createParser.
+	ast := self semanticScope parseASTBy: parser.
+
+	ast methodNode compilationContext: self compilationContext.
+	self callParsePlugins.
+	self doSemanticAnalysis.
 
 	^ ast
 ]
@@ -450,6 +439,33 @@ OpalCompiler >> parse: textOrString [
 	^self
 		source: textOrString;
 		parse
+]
+
+{ #category : #'public access' }
+OpalCompiler >> parseForRequestor [
+
+	"For compatibility, this method manages the requestor needs.
+	The original design is more than questionable, but at least it is all done in a single place."
+
+	"No requestor, easy path"
+	self compilationContext requestor ifNil: [ ^ self parse ].
+
+	^ [ [ self parse ]
+	on: ReparseAfterSourceEditing
+	do: [:notification |
+		self source: notification newSource.
+		notification retry ] ]
+	on: CodeError
+	do: [ :exception |
+			exception sourceCode: source contents.
+			self compilationContext requestor
+                ifNotNil: [
+						self compilationContext requestor
+							notify: exception messageText , ' ->'
+							at: exception location
+							in: exception sourceCode.
+                    ^ self compilationContext failBlock value ]
+                ifNil: [ exception pass ] ]
 ]
 
 { #category : #'public access' }
