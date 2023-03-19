@@ -19,7 +19,7 @@ SemanticWarningIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 SemanticWarningIconStyler >> iconLabel: aNode [
-	^'Semantic warning: ', (aNode propertyAt: #semanticWarning) asString
+	^ (aNode propertyAt: #semanticWarning) asString
 ]
 
 { #category : #testing }
