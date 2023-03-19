@@ -1009,8 +1009,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"If the previous node in the statement list is a return node, mark this node as unreachable"
 
 	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
-		err := self parserError: 'Unreachable code'.
-		node := RBUnreachableStatementErrorNode from: err contents: { node } ].
+		node addWarning: 'Unreachable code' ].
 
 	"Commit the statement to the statements list"
 	statementList add: node
