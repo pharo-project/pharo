@@ -189,7 +189,7 @@ SystemOrganizer >> removeElement: element [
 SystemOrganizer >> removeEmptyPackages [
 	"Remove empty packages."
 
-	(categoryMap collect: [ :classes | classes isEmpty ])
+	(categoryMap select: [ :classes | classes isEmpty ]) keys
 		ifNotEmpty: [ :emptyPackages |
 			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
 ]
