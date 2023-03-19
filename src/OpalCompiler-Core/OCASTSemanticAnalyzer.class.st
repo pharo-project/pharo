@@ -156,11 +156,12 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	var := self undeclared at: varName ifAbsentPut: [ UndeclaredVariable possiblyRegisteredWithName: varName ].
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ var ].
 
-	^ OCUndeclaredVariableWarning new
+	OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;
-		variable: var;
-		signal
+		signal.
+	
+	^ var
 ]
 
 { #category : #'error handling' }
