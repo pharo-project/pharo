@@ -35,7 +35,7 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	| ast cm |
 	ast := OpalCompiler new
 				source: 'method 3+';
-				options: #(+ optionParseErrors);
+				isFaulty: true;
 				parse.
 
 	self assert: ast isMethod.
