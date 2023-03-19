@@ -1,25 +1,11 @@
 Class {
-	#name : #OCCompilerExceptionsTest,
+	#name : #OCCodeReparatorTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #tests }
-OCCompilerExceptionsTest >> testUndeclaredVariable [
-
-	| requestor |
-	requestor := OCMockRequestor new.
-	requestor text: 'griffle ^ goo'.
-	self
-		should: [
-			OpalCompiler new
-				requestor: requestor;
-				compile: requestor text ]
-		raise: OCUndeclaredVariableWarning
-]
-
-{ #category : #tests }
-OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithGlobal [
+OCCodeReparatorTest >> testDeclareGlobal [
 
 	| requestor method |
 	requestor := OCMockRequestor new.
@@ -30,7 +16,7 @@ OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithGlobal [
 	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e declareGlobal.
+			e reparator declareGlobal.
 			e retry ].
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
@@ -42,7 +28,7 @@ OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithGlobal [
 ]
 
 { #category : #tests }
-OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithTemp [
+OCCodeReparatorTest >> testDeclareTempAndPaste [
 
 	| requestor method |
 	requestor := OCMockRequestor new.
@@ -51,7 +37,9 @@ OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithTemp [
 	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e declareTempAndPaste: 'goo'.
+			e reparator
+				requestor: requestor;
+				declareTempAndPaste: 'goo'.
 			e retry ].
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | goo | ^ goo'.
@@ -60,7 +48,7 @@ OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithTemp [
 ]
 
 { #category : #tests }
-OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithTemp2 [
+OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 
 	| requestor method |
 	requestor := OCMockRequestor new.
@@ -69,10 +57,32 @@ OCCompilerExceptionsTest >> testUndeclaredVariableRepairWithTemp2 [
 	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e substituteVariable: 'foo' atInterval: e node sourceInterval.
+			e reparator
+				requestor: requestor;
+				substituteVariable: 'foo' atInterval: e node sourceInterval.
 			e retry ].
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | foo | ^ foo'.
 	self assert: method isCompiledMethod.
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testUndeclaredVariable [
+
+	| requestor method flag |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle ^ goo'.
+
+	flag := false.
+	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+		on: OCUndeclaredVariableWarning
+		do: [ :e |
+			flag := true.
+			e pass "do nothing" ].
+
+	self assert: flag.
+	self assert: method isCompiledMethod.
+	self assert: method literals first isUndeclaredVariable.
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle ^ goo'
 ]
