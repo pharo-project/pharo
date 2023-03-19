@@ -713,9 +713,12 @@ RBCodeSnippet >> textWithNode: aNode message: aString [
 	"Insert the message after the stop so that:
 	 1. we can see where are zero-width errors
 	 2. we have the same output than the compiler error (above)"
+	stop := aNode isParseError
+		ifTrue: [ aNode errorPosition ]
+		ifFalse: [ aNode stop + 1 "after" ].
 	text
-		replaceFrom: stop + 1
-		to: stop
+		replaceFrom: stop
+		to: stop - 1
 		with: (aString asText addAttribute:
 				 (TextBackgroundColor color: Color lightBlue)).
 	^ text
