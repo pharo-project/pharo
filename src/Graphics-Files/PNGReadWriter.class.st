@@ -751,7 +751,7 @@ PNGReadWriter >> nextImage [
 	transparentPixelValue := nil.
 	unknownChunks := Set new.
 	stream skip: 8.
-	[ stream atEnd or: [ self processNextChunk = #IEND ] ] whileFalse.
+	[ stream atEnd ] whileFalse: [ self processNextChunk ].
 	"Set up our form"
 	palette
 		ifNotNil: [ "Dump the palette if it's the same as our standard palette"
@@ -765,13 +765,15 @@ PNGReadWriter >> nextImage [
 	idatChunkStream
 		ifNil: [ self error: 'image data is missing' ]
 		ifNotNil: [ self processIDATChunk ].
+	unknownChunks isEmpty
+		ifFalse:
+			[ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
 	self debugging
-		ifTrue: [
-			unknownChunks isEmpty ifFalse: [ self crTrace: 'unknownChunks = ' , unknownChunks sorted asArray printString ].
-			self crTrace: 'form = ' , form printString.
+		ifTrue: [ self crTrace: 'form = ' , form printString.
 			self crTrace: 'colorType = ' , colorType printString.
 			self crTrace: 'interlaceMethod = ' , interlaceMethod printString.
-			self crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
+			self
+				crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
 	^ form
 ]
 
@@ -994,13 +996,22 @@ PNGReadWriter >> processNextChunk [
  	(chunk isNil or: [ chunk size ~= length ])
  		ifTrue: [ chunk := self next: length ]
  		ifFalse: [ stream next: length into: chunk startingAt: 1 ].
-	chunkCrc := self nextLong bitXor: 16rFFFFFFFF.
-	crc := self updateCrc: 16rFFFFFFFF from: 1 to: 4 in: chunkType.
-	crc := self updateCrc: crc from: 1 to: length in: chunk.
+	chunkCrc := self nextLong bitXor: 4294967295.
+	crc := self
+		updateCrc: 4294967295
+		from: 1
+		to: 4
+		in: chunkType.
+	crc := self
+		updateCrc: crc
+		from: 1
+		to: length
+		in: chunk.
 	crc = chunkCrc ifFalse: [ self error: 'PNGReadWriter crc error in chunk ' , chunkType ].
-	chunkType = 'IEND' ifTrue: [ ^ #IEND "*should* be the last chunk" ].
-	chunkType = 'sBIT' ifTrue: [ ^ self processSBITChunk "could indicate unusual sample depth in original" ].
-	chunkType = 'gAMA' ifTrue: [ ^ self "indicates gamma correction value" ].
+	chunkType = 'IEND' ifTrue: [ ^ self	"*should* be the last chunk" ].
+	chunkType = 'sBIT' ifTrue:
+		[ ^ self processSBITChunk	"could indicate unusual sample depth in original" ].
+	chunkType = 'gAMA' ifTrue: [ ^ self	"indicates gamma correction value" ].
 	chunkType = 'bKGD' ifTrue: [ ^ self processBackgroundChunk ].
 	chunkType = 'pHYs' ifTrue: [ ^ self processPhysicalPixelChunk ].
 	chunkType = 'tRNS' ifTrue: [ ^ self processTransparencyChunk ].
