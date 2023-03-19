@@ -1215,7 +1215,6 @@ RBParserTest >> testParseFaultyMethod [
 		add: 'method: asd  [  ] ,';"binary message without second argument"
 		add: 'method:  ^^'; "returning twice"
 		add: 'method: asd  ['; "opening a block"
-		add: 'method: asd  ^ asd. n'; "invalid expresion after return"
 		add: 'method: asd  ^ {'; "Only Open a literal array"
 		add: 'selector ''';
 		add: 'selector ''part1''''part2'; "string with escaped ' does not end"
@@ -1239,9 +1238,9 @@ RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	node := self parseFaultyMethod: strangeExpression.
 
 	self assert: node isMethod.
-	self assert: node isFaulty.
+	self deny: node isFaulty.
 	self assert: node statements size equals: 2.
-	self assert: node statements last isFaulty
+	self assert: (node statements last propertyAt: #semanticWarning) equals: 'Unreachable statement'
 ]
 
 { #category : #'tests - parsing faulty' }
