@@ -24,7 +24,9 @@ ClassFactoryWithOrganization >> deletePackage [
 
 	| categoriesMatchString |
 	categoriesMatchString := self packageName , '-*'.
-	self organization removeCategoriesMatching: categoriesMatchString
+	self organization
+		removeCategoriesMatching: categoriesMatchString;
+		removeEmptyPackages
 ]
 
 { #category : #creating }

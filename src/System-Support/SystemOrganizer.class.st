@@ -10,8 +10,15 @@ Class {
 		'environment',
 		'categoryMap'
 	],
-	#category : #'System-Support-Image'
+	#category : 'System-Support-Image'
 }
+
+{ #category : #cleanup }
+SystemOrganizer class >> cleanUp: agressive [
+	"Remove empty categories when cleaning aggressively"
+
+	agressive ifTrue: [ SystemOrganization removeEmptyPackages ]
+]
 
 { #category : #'instance creation' }
 SystemOrganizer class >> default [
@@ -176,6 +183,15 @@ SystemOrganizer >> removeCategory: category [
 { #category : #operations }
 SystemOrganizer >> removeElement: element [
 	^ self basicRemoveElement: element
+]
+
+{ #category : #removing }
+SystemOrganizer >> removeEmptyPackages [
+	"Remove empty packages."
+
+	(categoryMap collect: [ :classes | classes isEmpty ])
+		ifNotEmpty: [ :emptyPackages |
+			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
 ]
 
 { #category : #removing }

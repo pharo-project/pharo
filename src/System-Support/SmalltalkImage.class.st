@@ -40,7 +40,7 @@ Class {
 		'SpecialSelectors',
 		'Tools'
 	],
-	#category : #'System-Support-Image'
+	#category : 'System-Support-Image'
 }
 
 { #category : #cleanup }
@@ -1531,7 +1531,8 @@ SmalltalkImage >> removeEmptyMessageCategories [
 	"Smalltalk removeEmptyMessageCategories"
 
 	self garbageCollect.
-	ClassOrganization allInstancesDo: [ :org | org removeEmptyCategories ]
+	ClassOrganization allInstancesDo: [ :org | org removeEmptyCategories ].
+	SystemOrganizer removeEmptyPackages
 ]
 
 { #category : #shrinking }
