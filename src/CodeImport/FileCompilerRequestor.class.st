@@ -65,8 +65,7 @@ FileCompilerRequestor >> notify: message at: location in: code [
 		errorMessage: message
 		location: location.
 
-	"If the syntax error notification is resumed, then the source was corrected and we have to announce that parsing can restart."
-	ReparseAfterSourceEditing signalWithNewSource: newSource
+	self error: 'FIXME: this should not happen'
 ]
 
 { #category : #accessing }
