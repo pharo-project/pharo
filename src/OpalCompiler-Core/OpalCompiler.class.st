@@ -477,6 +477,18 @@ OpalCompiler >> parserClass [
 	^self compilationContext parserClass
 ]
 
+{ #category : #'public access' }
+OpalCompiler >> permitFaulty [
+
+	^ self compilationContext permitFaulty
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitFaulty: aBoolean [
+
+	self compilationContext permitFaulty: aBoolean
+]
+
 { #category : #accessing }
 OpalCompiler >> productionEnvironment: anObject [
 	compilationContext productionEnvironment: anObject
