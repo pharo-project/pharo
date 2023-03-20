@@ -19,11 +19,11 @@ ClassOrganization class >> forClass: aClass [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'protocol - adding' }
 ClassOrganization >> addProtocolNamed: protocolName [
 
 	| oldProtocols |
-	(self protocolOrganizer hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
+	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
 	oldProtocols := self protocolNames copy.
 	self protocolOrganizer addProtocolNamed: protocolName.
@@ -33,7 +33,8 @@ ClassOrganization >> addProtocolNamed: protocolName [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
-	^ protocolOrganizer allMethodSelectors
+
+	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
 { #category : #accessing }
@@ -45,7 +46,7 @@ ClassOrganization >> allProtocols [
 { #category : #accessing }
 ClassOrganization >> allProtocolsNames [
 
-	^ self protocolOrganizer allProtocolsNames
+	^ self allProtocols collect: [ :each | each name ]
 ]
 
 { #category : #'backward compatibility' }
@@ -129,7 +130,8 @@ ClassOrganization >> copyFrom: otherOrganization [
 
 { #category : #accessing }
 ClassOrganization >> extensionProtocols [
-	^ self protocolOrganizer extensionProtocols
+
+	^ self protocols select: #isExtensionProtocol
 ]
 
 { #category : #testing }
@@ -141,6 +143,12 @@ ClassOrganization >> hasComment [
 ClassOrganization >> hasOrganizedClass [
 
 	^ organizedClass isNotNil
+]
+
+{ #category : #testing }
+ClassOrganization >> hasProtocolNamed: aString [
+
+	^ self allProtocols anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #initialization }
@@ -214,18 +222,20 @@ ClassOrganization >> protocolNameOfElement: aSelector [
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
-	^ (self protocolOrganizer protocolsOfSelector: aSelector)
+	^ (self protocolsOfSelector: aSelector)
 		  ifEmpty: [
 			  (organizedClass includesSelector: aSelector)
 				  ifTrue: [ Protocol unclassified ]
 				  ifFalse: [ aBlock value ] ]
-		  ifNotEmpty: [ :col | col first name ]
+		  ifNotEmpty: [ :protocols | protocols first name ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString [
 
-	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ nil ]
+	^ self allProtocols
+		  detect: [ :e | e name = aString ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -244,6 +254,12 @@ ClassOrganization >> protocols [
 	^ self protocolOrganizer protocols
 ]
 
+{ #category : #accessing }
+ClassOrganization >> protocolsOfSelector: aSelector [
+
+	^ self protocols select: [ :each | each includesSelector: aSelector ]
+]
+
 { #category : #'backward compatibility' }
 ClassOrganization >> removeElement: aSymbol [
 
@@ -257,7 +273,7 @@ ClassOrganization >> removeElement: aSymbol [
 ClassOrganization >> removeEmptyProtocols [
 
 	| oldProtocolNames removedProtocols |
-	oldProtocolNames := self protocolOrganizer allProtocolsNames copy.
+	oldProtocolNames := self allProtocolsNames copy.
 
 	removedProtocols := self protocolOrganizer removeEmptyProtocols.
 	removedProtocols do: [ :each | self notifyOfRemovedProtocolNamed: each name ].
@@ -269,10 +285,10 @@ ClassOrganization >> removeEmptyProtocols [
 ClassOrganization >> removeProtocol: aProtocol [
 
 	| oldProtocolNames |
-	oldProtocolNames := self protocolOrganizer allProtocolsNames copy.
+	oldProtocolNames := self allProtocolsNames copy.
 	self protocolOrganizer removeProtocol: aProtocol.
 	self notifyOfRemovedProtocolNamed: aProtocol name.
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolOrganizer allProtocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self allProtocolsNames
 ]
 
 { #category : #accessing }
@@ -288,7 +304,7 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 { #category : #accessing }
 ClassOrganization >> removeProtocolNamed: protocolName [
 
-	(self protocolOrganizer hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
+	(self hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
 
 	self removeProtocol: (self protocolNamed: protocolName)
 ]

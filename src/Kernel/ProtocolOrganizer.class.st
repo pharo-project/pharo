@@ -49,12 +49,6 @@ ProtocolOrganizer >> allProtocols [
 	^ { allProtocol }, protocols asArray
 ]
 
-{ #category : #accessing }
-ProtocolOrganizer >> allProtocolsNames [
-
-	^ self allProtocols collect: [:each | each name]
-]
-
 { #category : #'protocol - adding' }
 ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 	| name protocol |
@@ -74,11 +68,6 @@ ProtocolOrganizer >> existsProtocolNamed: aProtocolName [
 	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ]
 ]
 
-{ #category : #accessing }
-ProtocolOrganizer >> extensionProtocols [
-	^ self protocols select: #isExtensionProtocol
-]
-
 { #category : #importing }
 ProtocolOrganizer >> fromSpec: aSpec [
 	aSpec
@@ -93,12 +82,6 @@ ProtocolOrganizer >> fromSpec: aSpec [
 ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [
 
 	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure
-]
-
-{ #category : #testing }
-ProtocolOrganizer >> hasProtocolNamed: aString [
-
-	^ self allProtocols anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #testing }
@@ -135,16 +118,9 @@ ProtocolOrganizer >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 { #category : #accessing }
 ProtocolOrganizer >> protocolNamed: aName [
 
-	^ self
-		protocolNamed: aName
-		ifAbsent: [ Protocol empty ]
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
-	^  self allProtocols
-		detect: [ :e | e name = aString ]
-		ifNone: aBlock
+	^ self allProtocols
+		  detect: [ :e | e name = aName ]
+		  ifNone: [ Protocol empty ]
 ]
 
 { #category : #accessing }
