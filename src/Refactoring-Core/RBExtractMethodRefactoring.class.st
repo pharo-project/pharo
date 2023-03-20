@@ -151,7 +151,7 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> extractMethod [
-	| parseTree isSequence extractCode subtree newCode errorMessage |
+	| parseTree isSequence extractCode subtree newCode |
 	extractCode := self getExtractedSource.
 	extractedParseTree := self parserClass new
 		source: extractCode;
