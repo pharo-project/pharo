@@ -139,6 +139,16 @@ RBProgramNode >> allDefinedVariables [
 ]
 
 { #category : #notice }
+RBProgramNode >> allErrorNotices [
+	"Include also error notices of all children"
+
+	| result |
+	result := OrderedCollection new.
+	self nodesPostorderDo: [ :node | result addAll: node errorNotices ].
+	^ result
+]
+
+{ #category : #notice }
 RBProgramNode >> allNotices [
 	"Include also notices of all children"
 
