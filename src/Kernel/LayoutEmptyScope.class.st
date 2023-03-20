@@ -30,8 +30,10 @@ LayoutEmptyScope >> fieldSize [
 ]
 
 { #category : #flattening }
-LayoutEmptyScope >> flatten [
-	^ OrderedCollection new
+LayoutEmptyScope >> flattenIn: aCollection [
+	"Nothing to add"
+
+	^ aCollection
 ]
 
 { #category : #testing }

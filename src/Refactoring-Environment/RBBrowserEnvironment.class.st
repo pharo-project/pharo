@@ -551,11 +551,14 @@ RBBrowserEnvironment >> methods [
 RBBrowserEnvironment >> methodsDo: aBlock [
 
 	self classesDo: [ :aClass |
+		self methodsForClass: aClass do: [ :method | aBlock value: method ].
+		self methodsForClass: aClass class do: [ :method | aBlock value: method ] ]
+]
 
-		self selectorsForClass: aClass do: [ :selector |
-			aBlock value: (aClass >> selector) ].
-		self selectorsForClass: aClass class do: [ :selector |
-			aBlock value: (aClass class >> selector) ] ]
+{ #category : #accessing }
+RBBrowserEnvironment >> methodsForClass: aClass do: aBlock [
+
+	aClass selectorsAndMethodsDo: [ :each :meth | (self includesSelector: each in: aClass) ifTrue: [ aBlock value: meth ] ]
 ]
 
 { #category : #environments }
