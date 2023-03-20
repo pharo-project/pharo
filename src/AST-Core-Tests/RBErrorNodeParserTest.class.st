@@ -437,7 +437,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCo
 RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
 
 	| parser |
-	parser := self parserClass newFaulty.
+	parser := self parserClass new.
 	parser initializeParserWith: 'ret ^ 1 ^ 2'.
 	parser parseMethod.
 

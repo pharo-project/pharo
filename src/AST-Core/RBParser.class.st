@@ -29,20 +29,6 @@ Class {
 	#category : #'AST-Core-Parser'
 }
 
-{ #category : #'instance creation' }
-RBParser class >> newFaulty [
-
-	^ self new beFaulty
-]
-
-{ #category : #'instance creation' }
-RBParser class >> newWithErrorBlock: aBlock [
-
-	^ self new
-		errorBlock: aBlock;
-		yourself
-]
-
 { #category : #parsing }
 RBParser class >> parseExpression: aString [
 	^self parseExpression: aString onError: nil
