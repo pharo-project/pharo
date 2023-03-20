@@ -4,7 +4,7 @@ Extension { #name : #RBCodeSnippet }
 RBCodeSnippet >> compile [
 
 	^ [ OpalCompiler new
-		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
+		  permitFaulty: true;
 		  noPattern: isMethod not;
 		  compile: self source ]
 	on: CodeError do: [ :e |
