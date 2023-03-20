@@ -19,10 +19,12 @@ SemanticWarningIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 SemanticWarningIconStyler >> iconLabel: aNode [
-	^ (aNode propertyAt: #semanticWarning) asString
+
+	self flag: 'What if more than one warning?'.
+	^ aNode warningNotices first messageText
 ]
 
 { #category : #testing }
 SemanticWarningIconStyler >> shouldStyleNode: aNode [
-	^aNode hasProperty: #semanticWarning
+	^aNode warningNotices isNotEmpty
 ]

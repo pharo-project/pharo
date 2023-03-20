@@ -1240,7 +1240,7 @@ RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	self assert: node isMethod.
 	self deny: node isFaulty.
 	self assert: node statements size equals: 2.
-	self assert: (node statements last propertyAt: #semanticWarning) equals: 'Unreachable statement'
+	self assert: (node statements last warningNotices last messageText) equals: 'Unreachable statement'
 ]
 
 { #category : #'tests - parsing faulty' }

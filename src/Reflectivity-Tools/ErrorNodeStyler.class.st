@@ -16,7 +16,9 @@ ErrorNodeStyler >> iconFor: aNode [
 
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
-	^ aNode errorMessage
+
+	self flag: 'What if more than one error?'.
+	^ aNode errorNotices first messageText
 ]
 
 { #category : #hooks }
