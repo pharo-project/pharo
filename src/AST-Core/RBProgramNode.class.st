@@ -144,8 +144,7 @@ RBProgramNode >> allNotices [
 
 	| result |
 	result := OrderedCollection new.
-	result addAll: self notices.
-	self nodesDo: [ :node | result addAll: node notices ].
+	self nodesPostorderDo: [ :node | result addAll: node notices ].
 	^ result
 ]
 
