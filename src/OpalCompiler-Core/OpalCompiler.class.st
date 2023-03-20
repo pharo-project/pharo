@@ -451,6 +451,7 @@ OpalCompiler >> parseForRequestor [
 		notification retry ] ]
 	on: CodeError
 	do: [ :exception |
+		ast := nil. "Invalidate the AST to avoid compilation if failBlock do return"
 		exception sourceCode: source contents.
 		requestor
 			notify: exception messageText , ' ->'
