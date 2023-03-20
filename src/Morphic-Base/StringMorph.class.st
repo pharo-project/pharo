@@ -85,14 +85,14 @@ StringMorph class >> exampleFullEmphaisedString [
 { #category : #examples }
 StringMorph class >> exampleManyStringMorphs [
 	"Return a morph with lots of strings for testing display speed."
-	<sampleInstance>
 
+	<sampleInstance>
 	| c |
 	c := AlignmentMorph newColumn.
-	self class environment organization categories do:
-		[:cat | c addMorph: (StringMorph new contents: cat)].
-	^ c position: 100@50;
-			openInWorld
+	self class environment organization packageNames do: [ :packageName | c addMorph: (StringMorph new contents: packageName) ].
+	^ c
+		  position: 100 @ 50;
+		  openInWorld
 ]
 
 { #category : #editing }

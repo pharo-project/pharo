@@ -607,16 +607,13 @@ TestRunner >> findClassesForPackages: aCollection [
 
 { #category : #utilities }
 TestRunner >> findPackages [
+
 	| visible |
 	visible := Set new.
-	self baseClass withAllSubclassesDo: [ :each |
-		each category ifNotNil: [ :category |
-			visible add: category ] ].
+	self baseClass withAllSubclassesDo: [ :each | each category ifNotNil: [ :category | visible add: category ] ].
 	^ Array streamContents: [ :stream |
-		Smalltalk organization categories do: [ :each |
-			((visible includes: each)
-					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isNotEmpty]])
-				ifTrue: [ stream nextPut: each ] ] ]
+		  Smalltalk organization packageNames do: [ :packageName |
+			  ((visible includes: packageName) and: [ packagePattern isNil or: [ (packagePattern matchesIn: packageName) isNotEmpty ] ]) ifTrue: [ stream nextPut: packageName ] ] ]
 ]
 
 { #category : #actions }

@@ -56,27 +56,26 @@ ClassFactoryForTestCaseTest >> testClassFastCreationInDifferentCategories [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
-	| createdClassNames allClasses allTraits |
 
+	| createdClassNames allClasses allTraits |
 	3 timesRepeat: [
 		factory newClass.
-		factory newTrait].
+		factory newTrait ].
 
 	createdClassNames := factory createdClassNames.
 
 	factory cleanUp.
 
-	self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]).
-	self assert: (factory createdTraits allSatisfy: [:trait| trait isObsolete]).
+	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
+	self assert: (factory createdTraits allSatisfy: [ :trait | trait isObsolete ]).
 
 	allClasses := SystemNavigation new allClasses.
 	allTraits := testingEnvironment allTraits.
 
-	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
-	self assert: (factory createdTraits noneSatisfy: [:trait| allTraits includes: trait]).
-	self deny: (SystemOrganization categories includes: factory defaultCategory).
-	self class environment at: #ChangeSet ifPresent: [:changeSet |
-		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
+	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
+	self assert: (factory createdTraits noneSatisfy: [ :trait | allTraits includes: trait ]).
+	self deny: (SystemOrganization packageNames includes: factory defaultCategory).
+	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
 { #category : #testing }

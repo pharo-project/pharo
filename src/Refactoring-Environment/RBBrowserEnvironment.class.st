@@ -193,7 +193,8 @@ RBBrowserEnvironment >> cachedResultOf: aQuery [
 
 { #category : #accessing }
 RBBrowserEnvironment >> categories [
-	^ self systemDictionary organization categories select: [ :each | self includesCategory: each ]
+
+	^ self systemDictionary organization packageNames select: [ :each | self includesCategory: each ]
 ]
 
 { #category : #'accessing - classes' }

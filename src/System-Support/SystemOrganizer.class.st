@@ -35,18 +35,12 @@ SystemOrganizer >> addPackageNamed: packageName [
 	SystemAnnouncer uniqueInstance classCategoryAdded: packageName
 ]
 
-{ #category : #accessing }
-SystemOrganizer >> categories [
-
-	^ packagesMap keys
-]
-
 { #category : #queries }
 SystemOrganizer >> categoriesMatching: matchString [
 	"Return all matching categories"
 
-	self categories ifNil: [ ^ #(  ) ].
-	^ self categories select: [ :packageName | matchString match: packageName ]
+	self packageNames ifNil: [ ^ #(  ) ].
+	^ self packageNames select: [ :packageName | matchString match: packageName ]
 ]
 
 { #category : #queries }
@@ -101,7 +95,7 @@ SystemOrganizer >> environment: aSystemDictionary [
 { #category : #testing }
 SystemOrganizer >> includesCategory: packageName [
 
-	^ self categories includes: packageName
+	^ self packageNames includes: packageName
 ]
 
 { #category : #initialization }
@@ -138,6 +132,12 @@ SystemOrganizer >> orderedTraitsIn: packageName [
 	traits := behaviors select: [ :each | each isTrait ].
 	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
 	^ traits asArray
+]
+
+{ #category : #accessing }
+SystemOrganizer >> packageNames [
+
+	^ packagesMap keys
 ]
 
 { #category : #removing }

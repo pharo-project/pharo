@@ -1442,7 +1442,7 @@ RPackage >> selectorsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> systemCategories [
 
-	^ self systemOrganization categories select: [:cat | self includesSystemCategory: cat]
+	^ self systemOrganization packageNames select: [ :cat | self includesSystemCategory: cat ]
 ]
 
 { #category : #'system compatibility' }
