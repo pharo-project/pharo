@@ -274,22 +274,20 @@ TraitedMetaclass >> rebuildMethodDictionary [
 ]
 
 { #category : #categories }
-TraitedMetaclass >> recategorizeSelector: selector from: oldCategory to: newCategory [
+TraitedMetaclass >> recategorizeSelector: selector from: oldProtocolName to: newProtocolName [
+
 	| original |
-
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
-
 	original := self organization protocolNameOfElement: selector ifAbsent: [ ^ self ].
 
 	"If it is nil is because it is a removal. It will removed when the method is removed."
-	newCategory ifNil: [ ^ self ].
+	newProtocolName ifNil: [ ^ self ].
 
-	original = oldCategory
-		ifTrue: [ self organization classify: selector under: newCategory suppressIfDefault: true ].
+	original = oldProtocolName ifTrue: [ self organization classify: selector under: newProtocolName ].
 
 	(self traitComposition reverseAlias: selector) do: [ :e |
-		self recategorizeSelector: e from: oldCategory to: newCategory.
-		self notifyOfRecategorizedSelector: e from: oldCategory to: newCategory ].
+		self recategorizeSelector: e from: oldProtocolName to: newProtocolName.
+		self notifyOfRecategorizedSelector: e from: oldProtocolName to: newProtocolName ].
 
 	self organization removeEmptyProtocols
 ]

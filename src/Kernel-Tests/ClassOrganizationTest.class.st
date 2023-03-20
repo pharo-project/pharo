@@ -35,7 +35,7 @@ ClassOrganizationTest >> setUp [
 	organization := ClassOrganization forClass: class.
 	organization addProtocolNamed: 'empty'.
 	organization addProtocolNamed: 'one'.
-	organization classify: #one under: 'one' suppressIfDefault: true
+	organization classify: #one under: 'one'
 ]
 
 { #category : #running }
