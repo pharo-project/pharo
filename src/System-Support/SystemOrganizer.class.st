@@ -185,7 +185,7 @@ SystemOrganizer >> removeSystemCategory: packageName [
 ]
 
 { #category : #accessing }
-SystemOrganizer >> renameCategory: oldPackageName toBe: newPackageName [
+SystemOrganizer >> renamePackageNamed: oldPackageName to: newPackageName [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
 	packagesMap at: newPackageName ifPresent: [ "new name exists, so no action" ^ self ].

@@ -95,7 +95,7 @@ EpRevertTest >> testCategoryRename [
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory , '2'.
 	organization addPackageNamed: aCategory.
-	organization renameCategory: aCategory toBe: anotherCategory.
+	organization renamePackageNamed: aCategory to: anotherCategory.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpCategoryRename.

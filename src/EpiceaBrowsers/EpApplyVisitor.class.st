@@ -53,9 +53,7 @@ EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
 { #category : #visitor }
 EpApplyVisitor >> visitCategoryRename: aChange [
 
-	environment organization
-		renameCategory: aChange oldCategoryName
-		toBe: aChange newCategoryName
+	environment organization renamePackageNamed: aChange oldCategoryName to: aChange newCategoryName
 ]
 
 { #category : #visitor }

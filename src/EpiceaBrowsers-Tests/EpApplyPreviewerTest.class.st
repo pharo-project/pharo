@@ -143,9 +143,9 @@ EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory , '2'.
 	organization addPackageNamed: aCategory.
-	organization renameCategory: aCategory toBe: anotherCategory.
+	organization renamePackageNamed: aCategory to: anotherCategory.
 	self setHeadAsInputEntry.
-	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
+	organization renamePackageNamed: anotherCategory to: aCategory. "Rollback"
 
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryRename.
@@ -467,7 +467,7 @@ EpApplyPreviewerTest >> testRedundantCategoryRenameWithAbsentCategory [
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory , '2'.
 	organization addPackageNamed: aCategory.
-	organization renameCategory: aCategory toBe: anotherCategory.
+	organization renamePackageNamed: aCategory to: anotherCategory.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog

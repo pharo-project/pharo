@@ -34,3 +34,12 @@ SystemOrganizer >> classesInCategory: packageName [
 	self deprecated: 'Use #classesInPackageNamed: instead' transformWith: '`@rcv classesInCategory: `@arg' -> '`@rcv classesInPackageNamed: `@arg'.
 	^ self classesInPackageNamed: packageName
 ]
+
+{ #category : #'*Deprecated12' }
+SystemOrganizer >> renameCategory: oldPackageName toBe: newPackageName [
+
+	self
+		deprecated: 'Use #renamePackageNamed:to: instead'
+		transformWith: '`@rcv renameCategory: `@arg toBe: `@arg2' -> '`@rcv renamePackageNamed: `@arg to: `@arg2'.
+	^ self renamePackageNamed: oldPackageName to: newPackageName
+]
