@@ -34,7 +34,6 @@ RBCodeSnippet >> doSemanticAnalysis [
 	So just ask the compiler."
 
 	^ OpalCompiler new
-		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
 		  noPattern: isMethod not;
 		  parse: self source "Note: `parse:` also does the semantic analysis and return the AST"
 ]

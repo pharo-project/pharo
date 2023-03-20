@@ -607,7 +607,6 @@ CompiledMethod >> isFaulty [
 	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
 	ast := self methodClass compiler
 				source: self sourceCode;
-				options: #(+ optionParseErrors);
 				parse.
 	^ ast isFaulty
 ]
