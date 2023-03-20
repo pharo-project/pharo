@@ -606,7 +606,7 @@ RBParserTest >> testGarbageTemporaryVariable [
 	| tree |
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
-	self assert: tree errorMessage equals: '''|'' expected'
+	self assert: tree errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'garbage tests' }
@@ -614,7 +614,7 @@ RBParserTest >> testGarbageTemporaryVariableHasMissingClosure [
 	| tree |
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
-	self assert: tree errorMessage equals: '''|'' expected'
+	self assert: tree errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'garbage tests' }
@@ -627,7 +627,7 @@ RBParserTest >> testGarbageTemporaryVariableIsWrong [
 
 	errorNode := tree statements first.
 	self assert: errorNode isParseError.
-	self assert: errorNode errorMessage equals: '''|'' expected'
+	self assert: errorNode errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'tests - Interval' }
