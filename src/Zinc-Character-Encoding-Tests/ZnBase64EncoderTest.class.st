@@ -54,7 +54,7 @@ ZnBase64EncoderTest class >> benchmarks [
 		 collect: [ :each | each -> (self perform: each) ]) asDictionary
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testCustomAlphabetFullSpectrum [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
@@ -68,7 +68,7 @@ ZnBase64EncoderTest >> testCustomAlphabetFullSpectrum [
 	self assert: (encoder decode: output) equals: input
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testCustomLineBreaking [
 	| encoder input output charCount |
 	encoder := ZnBase64Encoder new.
@@ -80,7 +80,7 @@ ZnBase64EncoderTest >> testCustomLineBreaking [
 	self assert: output size equals: (charCount + (charCount // 16 * String crlf size))
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testDecodingErrors [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -99,7 +99,7 @@ ZnBase64EncoderTest >> testDecodingErrors [
 	self should: [ encoder decode: '****' ] raise: ZnCharacterEncodingError
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testEmpty [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -111,7 +111,7 @@ ZnBase64EncoderTest >> testEmpty [
 		equals: #[]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testFullAlphabet [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
@@ -123,7 +123,7 @@ ZnBase64EncoderTest >> testFullAlphabet [
 	self assert: (encoder encode: output) equals: input
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testFullSpectrum [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
@@ -135,7 +135,7 @@ ZnBase64EncoderTest >> testFullSpectrum [
 	self assert: (encoder decode: output) equals: input
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testPadding [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -150,7 +150,7 @@ ZnBase64EncoderTest >> testPadding [
 	self assert: (encoder decode: 'TWE') equals: 'Ma' asByteArray
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testQuote [
 	| input output encoder break |
 	encoder := ZnBase64Encoder new lineEndConvention: #cr; breakLines; yourself.
@@ -169,7 +169,7 @@ ZnBase64EncoderTest >> testQuote [
 		equals: input asByteArray
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testSimple [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -181,7 +181,7 @@ ZnBase64EncoderTest >> testSimple [
 		equals: 'Man' asByteArray
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBase64EncoderTest >> testWhitespaceAtEnd [
 	| encoder |
 	encoder := ZnBase64Encoder new.
