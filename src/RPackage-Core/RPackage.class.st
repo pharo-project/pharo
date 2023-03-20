@@ -82,7 +82,7 @@ Class {
 		'PackageGlobalOrganizer',
 		'Properties'
 	],
-	#category : #'RPackage-Core-Base'
+	#category : 'RPackage-Core-Base'
 }
 
 { #category : #constants }
@@ -777,7 +777,7 @@ RPackage >> includesClass: aClass [
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ classes includes: aSymbol asSymbol
+	^ classes includes: aSymbol
 ]
 
 { #category : #testing }
@@ -1008,10 +1008,7 @@ RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
-	SystemAnnouncer uniqueInstance
-		classRepackaged: aClass
-		from: oldPackage
-		to: self
+	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
 ]
 
 { #category : #private }
