@@ -540,7 +540,7 @@ TimeProfiler >> selectedMethodCode: aString notifying: aController [
 			class := currNode methodClass.
 			oldSelector := currNode selector.
 			class ifNil: [ ^ false ].	"Normal method accept"
-			category := class organization categoryOfElement: oldSelector.
+			category := class organization protocolNameOfElement: oldSelector.
 			newSelector := class compile: aString classified: category notifying: aController.
 			newSelector ifNil: [ ^ false ].
 			self changed: #selectedMethodCode.

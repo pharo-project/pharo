@@ -280,7 +280,7 @@ EpApplyTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocolNamed: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
@@ -295,10 +295,10 @@ EpApplyTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocolNamed: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocolNamed: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
 	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').

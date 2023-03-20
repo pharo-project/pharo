@@ -36,8 +36,7 @@ ClassTestCase class >> mustTestCoverage [
 { #category : #private }
 ClassTestCase >> categoriesForClass: aClass [
 
-	^ aClass organization allMethodSelectors collect: [ :each |
-		  aClass organization categoryOfElement: each ]
+	^ aClass organization allMethodSelectors collect: [ :each | aClass organization protocolNameOfElement: each ]
 ]
 
 { #category : #coverage }

@@ -82,7 +82,7 @@ Class {
 		'PackageGlobalOrganizer',
 		'Properties'
 	],
-	#category : 'RPackage-Core-Base'
+	#category : #'RPackage-Core-Base'
 }
 
 { #category : #constants }
@@ -305,11 +305,9 @@ RPackage >> basicImportClass: aClass [
 
 	| protocols |
 	self addClassDefinition: aClass.
-	aClass organization categories
-		do: [ :each |
-			(self isYourClassExtension: each)
-				ifTrue: [ aClass organization renameCategory: each toBe: Protocol defaultName ] ].
-	protocols := aClass organization categories reject: [ :each | each first = $* ].
+	aClass organization protocolNames do: [ :each |
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol defaultName ] ].
+	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
 
@@ -654,9 +652,9 @@ RPackage >> extendsClass: aClass [
 
 { #category : #'system compatibility' }
 RPackage >> extensionCategoriesForClass: aClass [
+
 	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass organization categories
-		select: [ :cat | self isYourClassExtension: cat ]
+	^ aClass organization protocolNames select: [ :cat | self isYourClassExtension: cat ]
 ]
 
 { #category : #accessing }
@@ -760,10 +758,8 @@ RPackage >> importPackage: anRPackage [
 RPackage >> importProtocol: aProtocol forClass: aClass [
 	"import all the methods of a protocol as defined in the receiver."
 
-	(aClass organization listAtCategoryNamed: aProtocol) do: [ :each |
-		aClass
-			compiledMethodAt: each
-			ifPresent: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ] ]
+	(aClass organization methodsInProtocolNamed: aProtocol) do: [ :each |
+		aClass compiledMethodAt: each ifPresent: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ] ]
 ]
 
 { #category : #testing }
@@ -1142,12 +1138,10 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
-	aClass organization categories
-		do: [ :each |
-			(self isYourClassExtension: each)
-				ifTrue: [ aClass organization renameCategory: each toBe: Protocol defaultName ] ].
+	aClass organization protocolNames do: [ :each |
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol defaultName ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-		"we also have also have to remove methods from class side"
+	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	self removeClassDefinitionWithoutCheckingMethods: aClass.
 	self removeClassTagsForClassNamed: aClass name

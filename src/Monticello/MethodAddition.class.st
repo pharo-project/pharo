@@ -43,15 +43,16 @@ MethodAddition >> compile: aString classified: aString1 withStamp: aString2 noti
 
 { #category : #operations }
 MethodAddition >> createCompiledMethod [
-	compiledMethod := myClass compiler 
-		source: text asString;
-		requestor: requestor;
-		failBlock: [ ^nil ];
-		compile.
+
+	compiledMethod := myClass compiler
+		                  source: text asString;
+		                  requestor: requestor;
+		                  failBlock: [ ^ nil ];
+		                  compile.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorCategoryOrNil := myClass organization categoryOfElement: selector
+	priorCategoryOrNil := myClass organization protocolNameOfElement: selector
 ]
 
 { #category : #operations }

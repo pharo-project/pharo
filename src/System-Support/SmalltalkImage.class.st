@@ -1531,7 +1531,7 @@ SmalltalkImage >> removeEmptyMessageCategories [
 	"Smalltalk removeEmptyMessageCategories"
 
 	self garbageCollect.
-	ClassOrganization allInstancesDo: [ :org | org removeEmptyCategories ].
+	ClassOrganization allInstancesDo: [ :org | org removeEmptyProtocols ].
 	SystemOrganizer removeEmptyPackages
 ]
 

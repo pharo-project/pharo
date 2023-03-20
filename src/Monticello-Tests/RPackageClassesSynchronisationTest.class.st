@@ -434,15 +434,15 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtocol [
 	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
-	
-	|class| 
+
+	| class |
 	self addXCategory.
-	 
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.  
-	class organization addCategory: '*yyyyy' before: nil.
-	
-	self assert: (self organizer includesPackageNamed: #Yyyyy).
+	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
+	class organization addProtocolNamed: '*yyyyy'.
+
+	self assert: (self organizer includesPackageNamed: #Yyyyy)
 ]
 
 { #category : #'tests - operations on protocols' }
@@ -454,7 +454,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoes
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
-	class organization addCategory: 'accessing' before: nil.
+	class organization addProtocolNamed: 'accessing'.
 
 	self assert: (XPackage includesClass: class).
 	self assert: (XPackage includesDefinedSelector: #newMethod ofClass: class).

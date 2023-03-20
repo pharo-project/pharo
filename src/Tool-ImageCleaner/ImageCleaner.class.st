@@ -211,12 +211,8 @@ ImageCleaner >> removeEmptyCategories [
 
 	Smalltalk organization removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
-		[ :each |
-		each
-			removeEmptyCategories;
-			sortCategories ]
-			value: class organization;
-			value: class class organization ]
+		class organization removeEmptyProtocols.
+		class class organization removeEmptyProtocols ]
 ]
 
 { #category : #cleaning }
