@@ -28,17 +28,16 @@ SystemOrganizer class >> default [
 ]
 
 { #category : #accessing }
-SystemOrganizer >> addCategory: catString [
-	"Add a new category named catString"
+SystemOrganizer >> addCategory: packageName [
 
-	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
+	categoryMap at: packageName asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	SystemAnnouncer uniqueInstance classCategoryAdded: packageName
 ]
 
 { #category : #private }
 SystemOrganizer >> basicRemoveElement: element [
-	"Remove the element from all categories."
+	"Remove the element from all packages."
 
 	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
 ]
@@ -54,51 +53,51 @@ SystemOrganizer >> categoriesMatching: matchString [
 	"Return all matching categories"
 
 	self categories ifNil: [ ^ #(  ) ].
-	^ self categories select: [ :c | matchString match: c ]
+	^ self categories select: [ :packageName | matchString match: packageName ]
 ]
 
 { #category : #queries }
 SystemOrganizer >> categoryOfElement: element [
 	"Answer the category associated with the argument, element."
 
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ ^ category ] ].
+	categoryMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ ^ packageName ] ].
 
 	^ nil
 ]
 
 { #category : #queries }
-SystemOrganizer >> classesInCategory: category [
+SystemOrganizer >> classesInCategory: packageName [
 
-	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
+	^ (self listAtCategoryNamed: packageName) collect: [ :className | self environment at: className ]
 ]
 
 { #category : #operations }
-SystemOrganizer >> classify: element under: categoryName [
-	"Store the argument, element, in the category named heading."
+SystemOrganizer >> classify: element under: packageName [
 
-	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
+	packageName ifNil: [ self error: 'Category cannot be nil.' ].
 
 	categoryMap
-		at: categoryName
+		at: packageName
 		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
-		ifAbsent: [ self addCategory: categoryName ].
+		ifAbsent: [ self addCategory: packageName ].
 
 	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
-		oldCategory = categoryName ifTrue: [ ^ self ].
+		oldCategory = packageName ifTrue: [ ^ self ].
 		self basicRemoveElement: element ].
 
-	(categoryMap at: categoryName) add: element
+	(categoryMap at: packageName) add: element
 ]
 
 { #category : #operations }
-SystemOrganizer >> classifyAll: aCollection under: categoryName [
+SystemOrganizer >> classifyAll: aCollection under: packageName [
 
-	aCollection do: [ :element | self classify: element under: categoryName ]
+	aCollection do: [ :element | self classify: element under: packageName ]
 ]
 
 { #category : #accessing }
 SystemOrganizer >> environment [
-	 ^ environment ifNil: [ environment := Smalltalk globals]
+
+	^ environment ifNil: [ environment := Smalltalk globals ]
 ]
 
 { #category : #accessing }
@@ -107,12 +106,9 @@ SystemOrganizer >> environment: aSystemDictionary [
 ]
 
 { #category : #testing }
-SystemOrganizer >> includesCategory: aString [
-	"Tests if a category is already included."
+SystemOrganizer >> includesCategory: packageName [
 
-	^ self categories
-		  ifNil: [ false ]
-		  ifNotNil: [ :categories | categories includes: aString ]
+	^ self categories includes: packageName
 ]
 
 { #category : #initialization }
@@ -123,29 +119,29 @@ SystemOrganizer >> initialize [
 ]
 
 { #category : #testing }
-SystemOrganizer >> isEmptyCategoryNamed: categoryName [
+SystemOrganizer >> isEmptyCategoryNamed: packageName [
 
 	^ categoryMap
-		  at: categoryName
+		  at: packageName
 		  ifPresent: [ :classes | classes isEmpty ]
 		  ifAbsent: [ false ]
 ]
 
 { #category : #queries }
-SystemOrganizer >> listAtCategoryNamed: categoryName [
-	"Answer the array of elements associated with the name, categoryName."
+SystemOrganizer >> listAtCategoryNamed: packageName [
+	"Answer classes names into packageName."
 
-	^ (categoryMap at: categoryName ifAbsent: [ Array new ]) asArray
+	^ (categoryMap at: packageName ifAbsent: [ Array new ]) asArray
 ]
 
 { #category : #queries }
-SystemOrganizer >> orderedTraitsIn: category [
+SystemOrganizer >> orderedTraitsIn: packageName [
 	"Answer an OrderedCollection containing references to the traits in the
 	category whose name is the argument, category (a string). The traits
 	are ordered so they can be filed in."
 
 	| behaviors traits |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
+	behaviors := (self listAtCategoryNamed: packageName) collect: [ :title | self environment at: title ].
 	traits := behaviors select: [ :each | each isTrait ].
 	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
 	^ traits asArray
@@ -153,24 +149,23 @@ SystemOrganizer >> orderedTraitsIn: category [
 
 { #category : #removing }
 SystemOrganizer >> removeCategoriesMatching: matchString [
-	"Remove all matching categories with their classes"
+	"Remove all matching package names with their classes"
 
 	(self categoriesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
 ]
 
 { #category : #accessing }
-SystemOrganizer >> removeCategory: category [
-	"Remove the category named, cat. Create an error notificiation if the
-	category has any elements in it."
+SystemOrganizer >> removeCategory: packageName [
+	"Remove packageName. Create an error notificiation if the package has any elements in it."
 
 	categoryMap
-		at: category
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , category ] ]
+		at: packageName
+		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , packageName ] ]
 		ifAbsent: [ ^ self ].
 
-	categoryMap removeKey: category.
+	categoryMap removeKey: packageName.
 
-	SystemAnnouncer uniqueInstance classCategoryRemoved: category
+	SystemAnnouncer uniqueInstance classCategoryRemoved: packageName
 ]
 
 { #category : #operations }
@@ -188,38 +183,38 @@ SystemOrganizer >> removeEmptyPackages [
 ]
 
 { #category : #removing }
-SystemOrganizer >> removeSystemCategory: category [
-	"remove all the classes and traits associated with the category"
+SystemOrganizer >> removeSystemCategory: packageName [
+	"remove all the classes and traits associated with the packageName"
 
-	(self orderedTraitsIn: category) , (self superclassOrder: category) reverseDo: [ :each | each removeFromSystem ].
+	(self orderedTraitsIn: packageName) , (self superclassOrder: packageName) reverseDo: [ :each | each removeFromSystem ].
 
-	self removeCategory: category
+	self removeCategory: packageName
 ]
 
 { #category : #accessing }
-SystemOrganizer >> renameCategory: oldCatString toBe: newCatString [
+SystemOrganizer >> renameCategory: oldPackageName toBe: newPackageName [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	categoryMap at: newCatString ifPresent: [ "new name exists, so no action" ^ self ].
+	categoryMap at: newPackageName ifPresent: [ "new name exists, so no action" ^ self ].
 
 	categoryMap
-		at: oldCatString
+		at: oldPackageName
 		ifPresent: [ :classes |
-			categoryMap at: newCatString put: classes.
-			categoryMap removeKey: oldCatString ]
+			categoryMap at: newPackageName put: classes.
+			categoryMap removeKey: oldPackageName ]
 		ifAbsent: [ "old name not found, so no action" ^ self ].
 
-	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString
+	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldPackageName to: newPackageName
 ]
 
 { #category : #queries }
-SystemOrganizer >> superclassOrder: category [
+SystemOrganizer >> superclassOrder: packageName [
 	"Answer an OrderedCollection containing references to the classes in the
 	category whose name is the argument, category (a string). The classes
 	are ordered with superclasses first so they can be filed in."
 
 	| behaviors classes |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
+	behaviors := (self listAtCategoryNamed: packageName) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes
 ]

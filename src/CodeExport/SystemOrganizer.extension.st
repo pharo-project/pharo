@@ -17,31 +17,31 @@ SystemOrganizer >> fileOut [
 ]
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOutCategory: category [
+SystemOrganizer >> fileOutCategory: packageName [
 	"Store on the file named category (a string) concatenated with '.st' all the
 	classes associated with the category."
 
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
-	self fileOutCategory: category on: internalStream.
-	^ CodeExporter writeSourceCodeFrom: internalStream baseName: category isSt: true
+	self fileOutCategory: packageName on: internalStream.
+	^ CodeExporter writeSourceCodeFrom: internalStream baseName: packageName isSt: true
 ]
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOutCategory: category on: aFileStream [
+SystemOrganizer >> fileOutCategory: packageName on: aFileStream [
 	"Store on the file associated with aFileStream, all the classes associated
 	with the category and any requested shared pools."
-	^self fileOutCategory: category on: aFileStream initializing: true
+	^self fileOutCategory: packageName on: aFileStream initializing: true
 ]
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOutCategory: category on: aFileStream initializing: aBool [
+SystemOrganizer >> fileOutCategory: packageName on: aFileStream initializing: aBool [
 	"Store on the file associated with aFileStream, all the traits and classes associated
 	with the category and any requested shared pools in the right order."
 
 	| poolSet tempClass classes traits |
-	traits := self orderedTraitsIn: category.
-	classes := self superclassOrder: category.
+	traits := self orderedTraitsIn: packageName.
+	classes := self superclassOrder: packageName.
 	poolSet := Set new.
 	classes do:  [:class | class sharedPools do: [:eachPool | poolSet add: eachPool]].
 	poolSet notEmpty ifTrue: [
