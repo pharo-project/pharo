@@ -10,7 +10,7 @@ Class {
 		'environment',
 		'categoryMap'
 	],
-	#category : 'System-Support-Image'
+	#category : #'System-Support-Image'
 }
 
 { #category : #cleanup }
@@ -31,7 +31,7 @@ SystemOrganizer class >> default [
 SystemOrganizer >> addCategory: catString [
 	"Add a new category named catString"
 
-	categoryMap at: catString ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
+	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
 	SystemAnnouncer uniqueInstance classCategoryAdded: catString
 ]

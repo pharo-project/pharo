@@ -40,7 +40,7 @@ Class {
 		'SpecialSelectors',
 		'Tools'
 	],
-	#category : 'System-Support-Image'
+	#category : #'System-Support-Image'
 }
 
 { #category : #cleanup }
