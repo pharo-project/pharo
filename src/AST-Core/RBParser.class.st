@@ -36,11 +36,7 @@ RBParser class >> parseExpression: aString [
 
 { #category : #parsing }
 RBParser class >> parseExpression: aString onError: aBlock [
-
-	^self new
-        errorBlock: aBlock;
-        initializeParserWith: aString;
-        parseExpression
+	^ (self parseFaultyExpression: aString) checkFaulty: aBlock
 ]
 
 { #category : #parsing }
@@ -75,11 +71,7 @@ RBParser class >> parseMethod: aString [
 
 { #category : #parsing }
 RBParser class >> parseMethod: aString onError: aBlock [
-	| parser |
-	parser := self new
-		errorBlock: aBlock;
-		initializeParserWith: aString.
-	^ parser parseMethod
+	^ (self parseFaultyMethod: aString) checkFaulty: aBlock
 ]
 
 { #category : #parsing }
