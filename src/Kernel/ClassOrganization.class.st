@@ -25,10 +25,10 @@ ClassOrganization >> addProtocolNamed: protocolName [
 	| oldProtocols |
 	(self protocolOrganizer hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
-	oldProtocols := self protocolsNames copy.
+	oldProtocols := self protocolNames copy.
 	self protocolOrganizer addProtocolNamed: protocolName.
 	self notifyOfAddedProtocol: protocolName.
-	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames
 ]
 
 { #category : #'backward compatibility' }
@@ -228,6 +228,11 @@ ClassOrganization >> protocolNamed: aString [
 	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ nil ]
 ]
 
+{ #category : #accessing }
+ClassOrganization >> protocolNames [
+	^ self protocolOrganizer protocolNames
+]
+
 { #category : #private }
 ClassOrganization >> protocolOrganizer [
 
@@ -237,11 +242,6 @@ ClassOrganization >> protocolOrganizer [
 { #category : #accessing }
 ClassOrganization >> protocols [
 	^ self protocolOrganizer protocols
-]
-
-{ #category : #accessing }
-ClassOrganization >> protocolsNames [
-	^ self protocolOrganizer protocolsNames
 ]
 
 { #category : #'backward compatibility' }

@@ -9,5 +9,5 @@ Behavior >> methodNamed: aSelector [
 { #category : #'*Ring-Definitions-Core' }
 Behavior >> protocols [
 
-	^ self organization protocolsNames copy
+	^ self organization protocolNames copy
 ]

@@ -17,8 +17,8 @@ ClassOrganization >> allCategories [
 { #category : #'*Deprecated12' }
 ClassOrganization >> categories [
 
-	self deprecated: 'Use #protocolsNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolsNames'.
-	^ self protocolsNames
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
+	^ self protocolNames
 ]
 
 { #category : #'*Deprecated12' }

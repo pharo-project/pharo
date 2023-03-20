@@ -126,9 +126,9 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 	lowercaseSortBlock  := [ :a :b | a asLowercase <= b asLowercase ].
 
 	(self allSuperclassesIncluding: mostGenericClass) do: [ :aClass |
-		 otherClassCategories addAll: aClass organization protocolsNames ].
+		 otherClassCategories addAll: aClass organization protocolNames ].
 	otherClassCategories remove: 'no messages' ifAbsent: [  ].
-	thisClassCategories := self organization protocolsNames sorted: lowercaseSortBlock.
+	thisClassCategories := self organization protocolNames sorted: lowercaseSortBlock.
 
 	^ thisClassCategories , ((otherClassCategories asSet removeAllSuchThat: [ :each |
 								thisClassCategories includes: each ]) sorted: lowercaseSortBlock)
@@ -491,7 +491,7 @@ ClassDescription >> copyAllCategoriesFrom: aClass [
 	these protocols into the method dictionary of the receiver, classified
 	under the appropriate protocol."
 
-	aClass organization protocolsNames do: [ :protocolName | self copyCategory: protocolName from: aClass ]
+	aClass organization protocolNames do: [ :protocolName | self copyCategory: protocolName from: aClass ]
 ]
 
 { #category : #copying }

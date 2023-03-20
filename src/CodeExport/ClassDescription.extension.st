@@ -29,7 +29,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
 	| org |
-	(org := self organization) protocolsNames do: [ :cat |
+	(org := self organization) protocolNames do: [ :cat |
 		| sels |
 		sels := (org methodsInProtocolNamed: cat) select: [ :sel | aSet includes: sel ].
 		sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
@@ -74,7 +74,7 @@ ClassDescription >> fileOutOn: aFileStream [
 
 	aFileStream nextChunkPut: self oldPharoDefinition.
 	self organization putCommentOnFile: aFileStream forClass: self.
-	self organization protocolsNames do: [ :protocolName | self fileOutLocalMethodsInCategory: protocolName on: aFileStream ]
+	self organization protocolNames do: [ :protocolName | self fileOutLocalMethodsInCategory: protocolName on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }

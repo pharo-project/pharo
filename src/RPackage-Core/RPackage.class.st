@@ -82,7 +82,7 @@ Class {
 		'PackageGlobalOrganizer',
 		'Properties'
 	],
-	#category : 'RPackage-Core-Base'
+	#category : #'RPackage-Core-Base'
 }
 
 { #category : #constants }
@@ -305,9 +305,9 @@ RPackage >> basicImportClass: aClass [
 
 	| protocols |
 	self addClassDefinition: aClass.
-	aClass organization protocolsNames do: [ :each |
+	aClass organization protocolNames do: [ :each |
 		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol defaultName ] ].
-	protocols := aClass organization protocolsNames reject: [ :each | each first = $* ].
+	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
 
@@ -654,7 +654,7 @@ RPackage >> extendsClass: aClass [
 RPackage >> extensionCategoriesForClass: aClass [
 
 	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass organization protocolsNames select: [ :cat | self isYourClassExtension: cat ]
+	^ aClass organization protocolNames select: [ :cat | self isYourClassExtension: cat ]
 ]
 
 { #category : #accessing }
@@ -1138,7 +1138,7 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
-	aClass organization protocolsNames do: [ :each |
+	aClass organization protocolNames do: [ :each |
 		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol defaultName ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"

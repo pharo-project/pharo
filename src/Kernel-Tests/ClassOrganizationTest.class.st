@@ -49,7 +49,7 @@ ClassOrganizationTest >> testAddProtocolNamed [
 
 	self organization addProtocolNamed: 'test-protocol'.
 
-	self assert: (self organization protocolsNames includes: 'test-protocol')
+	self assert: (self organization protocolNames includes: 'test-protocol')
 ]
 
 { #category : #tests }
@@ -65,9 +65,9 @@ ClassOrganizationTest >> testMethodsInProtocolNamed [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testProtocolsNames [
+ClassOrganizationTest >> testProtocolNames [
 
-	self assertCollection: self organization protocolsNames hasSameElements: #( #empty #one )
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one )
 ]
 
 { #category : #tests }
@@ -79,11 +79,11 @@ ClassOrganizationTest >> testRemoveNonExistingProtocol [
 { #category : #tests }
 ClassOrganizationTest >> testRemoveProtocolNamed [
 
-	self assert: self organization protocolsNames size equals: 2.
+	self assert: self organization protocolNames size equals: 2.
 	"just ignore removing of non empty categories"
 	self organization removeProtocolNamed: 'one'.
-	self assert: self organization protocolsNames size equals: 2.
+	self assert: self organization protocolNames size equals: 2.
 	self organization removeProtocolNamed: 'empty'.
-	self assert: self organization protocolsNames size equals: 1.
-	self assert: self organization protocolsNames first equals: 'one'
+	self assert: self organization protocolNames size equals: 1.
+	self assert: self organization protocolNames first equals: 'one'
 ]

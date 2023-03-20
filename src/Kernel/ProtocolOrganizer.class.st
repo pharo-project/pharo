@@ -148,17 +148,17 @@ ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
 ]
 
 { #category : #accessing }
-ProtocolOrganizer >> protocols [
-
-	^ protocols asArray
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> protocolsNames [
+ProtocolOrganizer >> protocolNames [
 
 	^ protocols
 		collect: #name
 		as: Array
+]
+
+{ #category : #accessing }
+ProtocolOrganizer >> protocols [
+
+	^ protocols asArray
 ]
 
 { #category : #protocol }

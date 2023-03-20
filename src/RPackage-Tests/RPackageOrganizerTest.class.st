@@ -378,12 +378,12 @@ RPackageOrganizerTest >> testSilentlyRenameProtocolNamedToBe [
 	| class |
 	class := self createNewClassNamed: #ClassForTestAboutSilentRecategorization inCategory: 'RPackage-Tests'.
 	class organization addProtocolNamed: #foo.
-	self assert: (class organization protocolsNames includes: #foo).
-	self deny: (class organization protocolsNames includes: #bar).
+	self assert: (class organization protocolNames includes: #foo).
+	self deny: (class organization protocolNames includes: #bar).
 	class organization silentlyRenameProtocolNamed: #foo toBe: #bar.
 
-	self assert: (class organization protocolsNames includes: #bar).
-	self deny: (class organization protocolsNames includes: #foo)
+	self assert: (class organization protocolNames includes: #bar).
+	self deny: (class organization protocolNames includes: #foo)
 ]
 
 { #category : #tests }

@@ -113,7 +113,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : 'RPackage-Core-Base'
+	#category : #'RPackage-Core-Base'
 }
 
 { #category : #singleton }
@@ -1032,10 +1032,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
-	| clazz classOrganization |
-	clazz := ann classReorganized.
-	classOrganization := clazz organization.
-	classOrganization protocolsNames do: [ :each | (each beginsWith: '*') ifTrue: [ self checkPackageExistsOrRegister: each allButFirst ] ]
+	ann classReorganized organization protocolNames do: [ :each | (each beginsWith: '*') ifTrue: [ self checkPackageExistsOrRegister: each allButFirst ] ]
 ]
 
 { #category : #'system integration' }

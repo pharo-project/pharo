@@ -9,5 +9,5 @@ RPackageSet >> classesAndMetaClasses [
 { #category : #'*Gofer-Core' }
 RPackageSet >> coreCategoriesForClass: aClass [
 
-	^ self packages flatCollect: [ :p | aClass organization protocolsNames reject: [ :cat | p isForeignClassExtension: cat ] ]
+	^ self packages flatCollect: [ :p | aClass organization protocolNames reject: [ :cat | p isForeignClassExtension: cat ] ]
 ]
