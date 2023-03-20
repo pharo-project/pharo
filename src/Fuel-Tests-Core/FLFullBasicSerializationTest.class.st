@@ -102,7 +102,7 @@ FLFullBasicSerializationTest >> testMethodDictionaries [
 	"Tests correct serialization of all the method dictionaries in the System package."
 
 	(SystemOrganization packageNamesMatching: 'System*') do: [ :category |
-		(SystemOrganization classesInCategory: category) do: [ :class | self resultOfSerializeAndMaterializeMethodDictionary: class methodDictionary ] ]
+		(SystemOrganization classesInPackageNamed: category) do: [ :class | self resultOfSerializeAndMaterializeMethodDictionary: class methodDictionary ] ]
 ]
 
 { #category : #tests }

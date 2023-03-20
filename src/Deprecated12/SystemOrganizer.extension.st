@@ -27,3 +27,10 @@ SystemOrganizer >> categoryOfElement: element [
 	self deprecated: 'Use #packageNameOfElement: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv packageNameOfElement: `@arg'.
 	^ self packageNameOfElement: element
 ]
+
+{ #category : #'*Deprecated12' }
+SystemOrganizer >> classesInCategory: packageName [
+
+	self deprecated: 'Use #classesInPackageNamed: instead' transformWith: '`@rcv classesInCategory: `@arg' -> '`@rcv classesInPackageNamed: `@arg'.
+	^ self classesInPackageNamed: packageName
+]

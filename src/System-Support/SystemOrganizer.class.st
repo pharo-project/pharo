@@ -36,7 +36,7 @@ SystemOrganizer >> addPackageNamed: packageName [
 ]
 
 { #category : #queries }
-SystemOrganizer >> classesInCategory: packageName [
+SystemOrganizer >> classesInPackageNamed: packageName [
 
 	^ (self listAtCategoryNamed: packageName) collect: [ :className | self environment at: className ]
 ]
