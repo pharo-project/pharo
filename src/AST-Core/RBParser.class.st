@@ -23,8 +23,7 @@ Class {
 		'errorBlock',
 		'source',
 		'comments',
-		'pragmas',
-		'isFaulty'
+		'pragmas'
 	],
 	#category : #'AST-Core-Parser'
 }
@@ -156,11 +155,6 @@ RBParser >> basicParsePragma [
 				ifFalse: [ self parseBinaryPragma ] ]
 ]
 
-{ #category : #initialization }
-RBParser >> beFaulty [
-	isFaulty := true
-]
-
 { #category : #'private - classes' }
 RBParser >> blockNodeClass [
 	^ RBBlockNode
@@ -232,18 +226,6 @@ RBParser >> initialize [
 RBParser >> initializeParserWith: aString [
 	source := aString.
 	self scanner: (self scannerClass on: (ReadStream on: aString))
-]
-
-{ #category : #accessing }
-RBParser >> isFaulty [
-
-	^ isFaulty
-]
-
-{ #category : #accessing }
-RBParser >> isFaulty: anObject [
-
-	isFaulty := anObject
 ]
 
 { #category : #'private - classes' }
