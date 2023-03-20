@@ -156,18 +156,32 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 
 { #category : #tests }
 OmFileStoreTest >> testLoadFromFile [
+
 	| loadedStore |
 	store newEntry: (OmEntry content: 42).
 	store flush.
 
-	loadedStore :=
-		(OmFileStore
-			named: store globalName
-			inDirectory: self directoryForTests)
-			refresh;
-			yourself.
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests)
+		               refresh;
+		               yourself.
 
-	self
-		assert: (loadedStore entries collect: #content as: Array)
-		equals: #(42)
+	self assert: store entriesCount equals: 1.
+
+	self assert: (loadedStore entries collect: #content as: Array) equals: #( 42 )
+]
+
+{ #category : #tests }
+OmFileStoreTest >> testLoadFromFileTrickyCase [
+
+	| loadedStore |
+	store newEntry: (OmEntry content: 'OmEntry {').
+	store flush.
+
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests)
+		               refresh;
+		               yourself.
+
+	self assert: store entriesCount equals: 1.
+
+	self assert: (loadedStore entries collect: #content as: Array) equals: #( 'OmEntry {' )
 ]
