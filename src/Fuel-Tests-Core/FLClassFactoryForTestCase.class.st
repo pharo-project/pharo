@@ -153,9 +153,8 @@ FLClassFactoryForTestCase >> deleteClasses [
 
 { #category : #'private-cleaning' }
 FLClassFactoryForTestCase >> deletePackage [
-	| categoriesMatchString |
-	categoriesMatchString := self defaultPackageName, '-*'.
-	SystemOrganization removeCategoriesMatching: categoriesMatchString
+
+	SystemOrganization removePackageNamesMatching: self defaultPackageName , '-*'
 ]
 
 { #category : #'private-cleaning' }

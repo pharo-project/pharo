@@ -128,9 +128,7 @@ ClassFactoryForTestCase >> deleteClasses [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	| categoriesMatchString |
-	categoriesMatchString := self packageName , '-*'.
-	SystemOrganization removeCategoriesMatching: categoriesMatchString
+	SystemOrganization removePackageNamesMatching: self packageName , '-*'
 ]
 
 { #category : #cleaning }

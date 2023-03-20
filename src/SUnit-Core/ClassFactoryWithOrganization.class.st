@@ -22,10 +22,8 @@ ClassFactoryWithOrganization class >> newWithOrganization: aSystemOrganizer [
 { #category : #cleaning }
 ClassFactoryWithOrganization >> deletePackage [
 
-	| categoriesMatchString |
-	categoriesMatchString := self packageName , '-*'.
 	self organization
-		removeCategoriesMatching: categoriesMatchString;
+		removePackageNamesMatching: self packageName , '-*';
 		removeEmptyPackages
 ]
 

@@ -138,13 +138,6 @@ SystemOrganizer >> packageNamesMatching: matchString [
 	^ self packageNames select: [ :packageName | matchString match: packageName ]
 ]
 
-{ #category : #removing }
-SystemOrganizer >> removeCategoriesMatching: matchString [
-	"Remove all matching package names with their classes"
-
-	(self packageNamesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
-]
-
 { #category : #operations }
 SystemOrganizer >> removeElement: element [
 	"Remove the element from all packages."
@@ -173,6 +166,13 @@ SystemOrganizer >> removePackageNamed: packageName [
 	packagesMap removeKey: packageName.
 
 	SystemAnnouncer uniqueInstance classCategoryRemoved: packageName
+]
+
+{ #category : #removing }
+SystemOrganizer >> removePackageNamesMatching: matchString [
+	"Remove all matching package names with their classes"
+
+	(self packageNamesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
 ]
 
 { #category : #removing }
