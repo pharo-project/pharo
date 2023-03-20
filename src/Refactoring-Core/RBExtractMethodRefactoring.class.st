@@ -155,7 +155,6 @@ RBExtractMethodRefactoring >> extractMethod [
 	extractCode := self getExtractedSource.
 	extractedParseTree := self parserClass new
 		errorBlock: [ :string :pos :parser | errorMessage := string. ];
-		beFaulty;
 		source: extractCode;
 		parseExpression.
 	extractedParseTree
