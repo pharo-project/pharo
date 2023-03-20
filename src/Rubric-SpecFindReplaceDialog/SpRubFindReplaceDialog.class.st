@@ -15,7 +15,7 @@ Class {
 		'entireCheckBox',
 		'replaceButton',
 		'replaceAllButton',
-		'cancelButton',
+		'closeButton',
 		'replaceTextInput',
 		'replaceLabel'
 	],
@@ -105,7 +105,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 			self replace ].
 	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter |
 			self replaceAll ].
-	cancelButton := aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
+	closeButton := aDialogWindowPresenter addButton: 'Close' do: [ :presenter |
 			presenter triggerCancelAction.
 			presenter close ].
 
@@ -113,7 +113,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 		add: findButton;
 		add: replaceButton;
 		add: replaceAllButton;
-		add: cancelButton.
+		add: closeButton.
 
 	aDialogWindowPresenter
 		title: self title;
