@@ -181,6 +181,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 
 { #category : #tests }
 ReleaseTest >> testLayoutIntegrity [
+
 	SystemNavigation default allClassesDo: [ :class |
 		class instanceSide classLayout checkIntegrity.
 		class classSide classLayout checkIntegrity ]
