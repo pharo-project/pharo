@@ -40,14 +40,7 @@ SystemOrganizer >> addCategory: catString [
 SystemOrganizer >> basicRemoveElement: element [
 	"Remove the element from all categories."
 
-	| impactedCategories |
-	impactedCategories := OrderedCollection new.
-	categoryMap keysAndValuesDo: [ :category :classes |
-		(classes includes: element) ifTrue: [
-			classes remove: element.
-			impactedCategories add: category ] ].
-
-	impactedCategories do: [ :category | (categoryMap at: category) ifEmpty: [ self removeCategory: category ] ]
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
 ]
 
 { #category : #accessing }
