@@ -301,17 +301,6 @@ OpalCompiler >> context: aContext [
 	self semanticScope: (self semanticScope asDoItScopeForContext: aContext)
 ]
 
-{ #category : #private }
-OpalCompiler >> createParser [
-
-	| parser |
-	parser := self parserClass new.
-	(self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
-		ifTrue: [ parser beFaulty ].
-	parser	 initializeParserWith: source contents.
-	^parser
-]
-
 { #category : #'public access' }
 OpalCompiler >> decompileMethod: aCompiledMethod [
 	^ Smalltalk globals
@@ -410,9 +399,12 @@ OpalCompiler >> options: anOptionsArray [
 { #category : #'public access' }
 OpalCompiler >> parse [
 
-	| parser |
-	parser := self createParser.
+	| parser permitFaulty |
+	parser := self parserClass new.
+	parser initializeParserWith: source contents.
 	ast := self semanticScope parseASTBy: parser.
+	permitFaulty := (self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ]).
+	permitFaulty ifFalse: [ ast checkFaulty: nil ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self callParsePlugins.
