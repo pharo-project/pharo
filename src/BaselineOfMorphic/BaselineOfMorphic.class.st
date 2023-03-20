@@ -149,8 +149,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	HashedCollection rehashAll.
 	Symbol rehash.
 
-	"Remove empty categories, which are not in MC packages, because MC does
-	  not do this (this script does not make packages dirty)"
+	"Remove empty packages and protocols"
 	Smalltalk organization removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
 		class organization removeEmptyProtocols.
