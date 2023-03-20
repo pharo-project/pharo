@@ -79,7 +79,7 @@ EpRevertTest >> testCategoryRemovalWithCategoryAdded [
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
 	organization addPackageNamed: aCategory.
-	organization removeCategory: aCategory.
+	organization removePackageNamed: aCategory.
 	self setHeadAsInputEntry.
 
 	self deny: (organization includesCategory: aCategory).

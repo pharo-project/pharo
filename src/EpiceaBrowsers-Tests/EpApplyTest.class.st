@@ -39,7 +39,7 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 	aCategory := classFactory defaultCategory.
 	organization addPackageNamed: aCategory.
 	self setHeadAsInputEntry.
-	organization removeCategory: aCategory.
+	organization removePackageNamed: aCategory.
 
 	self assert: inputEntry content class equals: EpCategoryAddition.
 	self deny: (organization includesCategory: aCategory).
@@ -54,7 +54,7 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
 	organization addPackageNamed: aCategory.
-	organization removeCategory: aCategory.
+	organization removePackageNamed: aCategory.
 	self setHeadAsInputEntry.
 	organization addPackageNamed: aCategory.
 

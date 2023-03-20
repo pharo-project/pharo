@@ -36,6 +36,13 @@ SystemOrganizer >> classesInCategory: packageName [
 ]
 
 { #category : #'*Deprecated12' }
+SystemOrganizer >> removeCategory: packageName [
+
+	self deprecated: 'Use #removePackageNamed: instead' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removePackageNamed: `@arg'.
+	^ self removePackageNamed: packageName
+]
+
+{ #category : #'*Deprecated12' }
 SystemOrganizer >> renameCategory: oldPackageName toBe: newPackageName [
 
 	self

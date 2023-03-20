@@ -114,7 +114,7 @@ EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
 
 	self class environment organization addPackageNamed: classFactory defaultCategory.
 	self setHeadAsInputEntry.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self class environment organization removePackageNamed: classFactory defaultCategory.
 
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryAddition.
@@ -125,7 +125,7 @@ EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
 EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
 
 	self class environment organization addPackageNamed: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self class environment organization removePackageNamed: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
 	self class environment organization addPackageNamed: classFactory defaultCategory.
@@ -453,7 +453,7 @@ EpApplyPreviewerTest >> testRedundantCategoryAddition [
 EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 
 	self class environment organization addPackageNamed: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self class environment organization removePackageNamed: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog

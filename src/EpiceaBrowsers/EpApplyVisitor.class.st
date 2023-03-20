@@ -47,7 +47,8 @@ EpApplyVisitor >> visitCategoryRegistration: aPackageCreated [
 
 { #category : #visitor }
 EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
-	environment organization removeCategory: aPackageRemoved categoryName
+
+	environment organization removePackageNamed: aPackageRemoved categoryName
 ]
 
 { #category : #visitor }

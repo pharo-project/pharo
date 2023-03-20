@@ -145,20 +145,6 @@ SystemOrganizer >> removeCategoriesMatching: matchString [
 	(self packageNamesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
 ]
 
-{ #category : #accessing }
-SystemOrganizer >> removeCategory: packageName [
-	"Remove packageName. Create an error notificiation if the package has any elements in it."
-
-	packagesMap
-		at: packageName
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , packageName ] ]
-		ifAbsent: [ ^ self ].
-
-	packagesMap removeKey: packageName.
-
-	SystemAnnouncer uniqueInstance classCategoryRemoved: packageName
-]
-
 { #category : #operations }
 SystemOrganizer >> removeElement: element [
 	"Remove the element from all packages."
@@ -175,13 +161,27 @@ SystemOrganizer >> removeEmptyPackages [
 			emptyPackages do: [ :emptyPackage | packagesMap removeKey: emptyPackage ] ]
 ]
 
+{ #category : #accessing }
+SystemOrganizer >> removePackageNamed: packageName [
+	"Create an error notificiation if the package has any elements in it."
+
+	packagesMap
+		at: packageName
+		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , packageName ] ]
+		ifAbsent: [ ^ self ].
+
+	packagesMap removeKey: packageName.
+
+	SystemAnnouncer uniqueInstance classCategoryRemoved: packageName
+]
+
 { #category : #removing }
 SystemOrganizer >> removeSystemCategory: packageName [
 	"remove all the classes and traits associated with the packageName"
 
 	(self orderedTraitsIn: packageName) , (self superclassOrder: packageName) reverseDo: [ :each | each removeFromSystem ].
 
-	self removeCategory: packageName
+	self removePackageNamed: packageName
 ]
 
 { #category : #accessing }

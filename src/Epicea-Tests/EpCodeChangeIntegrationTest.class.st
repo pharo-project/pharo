@@ -16,7 +16,7 @@ EpCodeChangeIntegrationTest >> categoryNameForTesting [
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	self class environment organization removeCategory: self categoryNameForTesting.
+	self class environment organization removePackageNamed: self categoryNameForTesting.
 	super tearDown
 ]
 
@@ -47,7 +47,7 @@ EpCodeChangeIntegrationTest >> testCategoryRemoval [
 	self class environment organization addPackageNamed: self categoryNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
 
-	self class environment organization removeCategory: self categoryNameForTesting.
+	self class environment organization removePackageNamed: self categoryNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
 	self assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName equals: self categoryNameForTesting
 ]

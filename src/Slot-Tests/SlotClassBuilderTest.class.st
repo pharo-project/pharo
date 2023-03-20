@@ -93,10 +93,11 @@ SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each |
-			testingEnvironment
-				at: each
-				ifPresent: [ :class | class removeFromSystem ]]].
+		{
+			self aClassName.
+			self anotherClassName.
+			self yetAnotherClassName.
+			self yetYetAnotherClassName } do: [ :each | testingEnvironment at: each ifPresent: [ :class | class removeFromSystem ] ] ].
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 
@@ -104,11 +105,8 @@ SlotClassBuilderTest >> tearDown [
 		cleanUpTrait: TOne;
 		cleanUpTrait: TTwo.
 
-	Smalltalk organization removeCategory: self aCategory.
-	(RPackageOrganizer default
-		packageNamed: self aCategory
-		ifAbsent: [ ^ self ])
-		unregister.
+	Smalltalk organization removePackageNamed: self aCategory.
+	(RPackageOrganizer default packageNamed: self aCategory ifAbsent: [ ^ self ]) unregister.
 
 	super tearDown
 ]
