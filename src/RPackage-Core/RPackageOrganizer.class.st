@@ -977,23 +977,20 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> systemClassRecategorizedActionFrom: ann [
-	| class newRPackage newRPackageTag oldRPackage newCategoryName oldCategoryName|
+RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	class := ann classAffected.
+	| class newRPackage newRPackageTag oldRPackage newPackageName oldPackageName |
+	class := announcement classAffected.
 
-	newCategoryName := ann newCategory asSymbol.
-	oldCategoryName := ann oldCategory asSymbol.
-	oldRPackage := self packageMatchingExtensionName: oldCategoryName includingClass: class.
-	newRPackage := (self packageMatchingExtensionName: newCategoryName)
-		ifNil: [ self registerPackage: (self packageClass named: newCategoryName) ].
+	newPackageName := announcement newCategory.
+	oldPackageName := announcement oldCategory.
+	newPackageName = oldPackageName ifTrue: [ ^ self ].
+	oldRPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
+	newRPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self registerPackage: (self packageClass named: newPackageName) ].
 
-	newRPackageTag := newRPackage addClassTag: newCategoryName.
+	newRPackageTag := newRPackage addClassTag: newPackageName.
 
-	newRPackage
-		moveClass: class
-		fromPackage: oldRPackage
-		toTag: newRPackageTag
+	newRPackage moveClass: class fromPackage: oldRPackage toTag: newRPackageTag
 ]
 
 { #category : #'system integration' }
