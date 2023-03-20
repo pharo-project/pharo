@@ -32,7 +32,7 @@ GoferCleanup >> cleanupProtocols: aWorkingCopy [
 
 	aWorkingCopy packageSet classesAndMetaClasses do: [ :class |
 		(aWorkingCopy packageSet coreCategoriesForClass: class) do: [ :category |
-			(class organization listAtCategoryNamed: category) isEmpty ifTrue: [ class organization removeProtocolNamed: category ] ] ]
+			(class organization methodsInProtocolNamed: category) isEmpty ifTrue: [ class organization removeProtocolNamed: category ] ] ]
 ]
 
 { #category : #running }

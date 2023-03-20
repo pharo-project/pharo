@@ -36,7 +36,8 @@ EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 
 { #category : #visitor }
 EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
-	environment organization addCategory: aPackageCreated categoryName
+
+	environment organization addPackageNamed: aPackageCreated categoryName
 ]
 
 { #category : #visitor }

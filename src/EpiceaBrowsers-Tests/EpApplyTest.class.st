@@ -37,7 +37,7 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 	| organization aCategory |
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	organization addPackageNamed: aCategory.
 	self setHeadAsInputEntry.
 	organization removeCategory: aCategory.
 
@@ -53,10 +53,10 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 	| organization aCategory |
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	organization addPackageNamed: aCategory.
 	organization removeCategory: aCategory.
 	self setHeadAsInputEntry.
-	organization addCategory: aCategory.
+	organization addPackageNamed: aCategory.
 
 	self assert: inputEntry content class equals: EpCategoryRemoval.
 	self assert: (organization includesCategory: aCategory).
@@ -70,8 +70,8 @@ EpApplyTest >> testCategoryRename [
 	| organization aCategory anotherCategory |
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+	organization addPackageNamed: aCategory.
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"

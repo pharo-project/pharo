@@ -64,7 +64,7 @@ EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
 	| organization aCategory |
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	organization addPackageNamed: aCategory.
 	self setHeadAsInputEntry.
 
 	self assert: (organization includesCategory: aCategory).
@@ -78,7 +78,7 @@ EpRevertTest >> testCategoryRemovalWithCategoryAdded [
 	| organization aCategory |
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	organization addPackageNamed: aCategory.
 	organization removeCategory: aCategory.
 	self setHeadAsInputEntry.
 
@@ -93,8 +93,8 @@ EpRevertTest >> testCategoryRename [
 	| organization aCategory anotherCategory |
 	organization := self class environment organization.
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+	organization addPackageNamed: aCategory.
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 

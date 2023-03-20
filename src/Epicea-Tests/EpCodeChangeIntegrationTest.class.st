@@ -35,25 +35,21 @@ EpCodeChangeIntegrationTest >> testCategoryAddition [
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 0.
 
-	self class environment organization addCategory: self categoryNameForTesting.
+	self class environment organization addPackageNamed: self categoryNameForTesting.
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryAddition) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryAddition) first affectedPackageName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testCategoryRemoval [
 
-	self class environment organization addCategory: self categoryNameForTesting.
+	self class environment organization addPackageNamed: self categoryNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
 
 	self class environment organization removeCategory: self categoryNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }

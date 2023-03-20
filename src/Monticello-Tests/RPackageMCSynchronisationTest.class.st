@@ -19,12 +19,14 @@ Class {
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXCategory [
-	testingEnvironment organization addCategory: 'XXXXX'.
+
+	testingEnvironment organization addPackageNamed: 'XXXXX'
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXMatchCategory [
-	testingEnvironment organization addCategory: 'XXXXX-YYYY'.
+
+	testingEnvironment organization addPackageNamed: 'XXXXX-YYYY'
 ]
 
 { #category : #utilities }
@@ -47,15 +49,13 @@ RPackageMCSynchronisationTest >> addXYZCategory [
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addYCategory [
 
-	testingEnvironment organization addCategory: 'YYYYY'.
-			
+	testingEnvironment organization addPackageNamed: 'YYYYY'
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addZCategory [
 
-	testingEnvironment organization addCategory: 'ZZZZZ'.
-			
+	testingEnvironment organization addPackageNamed: 'ZZZZZ'
 ]
 
 { #category : #setup }

@@ -28,7 +28,7 @@ SystemOrganizer class >> default [
 ]
 
 { #category : #accessing }
-SystemOrganizer >> addCategory: packageName [
+SystemOrganizer >> addPackageNamed: packageName [
 
 	packagesMap at: packageName asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
@@ -72,7 +72,7 @@ SystemOrganizer >> classify: element under: packageName [
 	packagesMap
 		at: packageName
 		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
-		ifAbsent: [ self addCategory: packageName ].
+		ifAbsent: [ self addPackageNamed: packageName ].
 
 	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
 		oldCategory = packageName ifTrue: [ ^ self ].

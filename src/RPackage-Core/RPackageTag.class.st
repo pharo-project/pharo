@@ -74,7 +74,8 @@ RPackageTag >> classes [
 
 { #category : #accessing }
 RPackageTag >> ensureSystemCategory [
-	SystemOrganization addCategory: self categoryName
+
+	SystemOrganization addPackageNamed: self categoryName
 ]
 
 { #category : #accessing }
