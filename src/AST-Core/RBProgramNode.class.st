@@ -297,6 +297,28 @@ RBProgramNode >> cascadeListCharacter [
 	^$;
 ]
 
+{ #category : #notice }
+RBProgramNode >> checkFaulty: aBlock [
+	"Helper method to evaluate errorBlock and/or signal SyntaxErrorNotification in case of a faulty AST"
+
+	| errorNotice |
+	"Fast noop case"
+	self isFaulty ifFalse: [ ^ self ].
+
+	"Search for the first error, to signal"
+	errorNotice := self allErrorNotices first.
+
+	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice node errorPosition cull: self ].
+
+	SyntaxErrorNotification new
+		sourceCode: self methodNode sourceCode;
+		messageText: errorNotice messageText;
+		location: errorNotice node errorPosition;
+		signal.
+
+	"If resumed, just return"
+]
+
 { #category : #accessing }
 RBProgramNode >> children [
 	^#()
