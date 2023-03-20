@@ -44,5 +44,6 @@ RBCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  noPattern: isMethod not;
+		  permitFaulty: false;
 		  parse: self source ] on: CodeError do: [ :e | aBlock value: e ]
 ]
