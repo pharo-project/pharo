@@ -83,6 +83,17 @@ TKTWorker >> executor [
 		yourself
 ]
 
+{ #category : #finalization }
+TKTWorker >> finalizer [
+
+	"The finalization scheme runs in another object (the executor) that does not have
+	all the state, if it has all the state a loop is generated and never GCed"
+
+	^ TKTWorkerExecutor new
+		processToKill: process;
+		yourself
+]
+
 { #category : #initialization }
 TKTWorker >> initialize [
 	super initialize.

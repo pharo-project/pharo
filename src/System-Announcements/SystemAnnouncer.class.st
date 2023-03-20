@@ -24,14 +24,9 @@ SystemAnnouncer class >> announcer: anAnnouncer [
 
 { #category : #'class initialization' }
 SystemAnnouncer class >> reset [
-
 	"unregister all current weak subscriptions because it can cause a memory leak"
-	announcer subscriptions subscriptions
- 		select: [:each | each isKindOf: WeakAnnouncementSubscription]
-		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []].
-	Smalltalk garbageCollect.
 
-	self announcer: nil
+	self announcer: nil.
 ]
 
 { #category : #initialization }
