@@ -873,7 +873,8 @@ RBBrowserEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 
 { #category : #accessing }
 RBBrowserEnvironment >> whichCategoryIncludes: aClassName [
-	^ self systemDictionary organization categoryOfElement: aClassName
+
+	^ self systemDictionary organization packageNameOfElement: aClassName
 ]
 
 { #category : #accessing }

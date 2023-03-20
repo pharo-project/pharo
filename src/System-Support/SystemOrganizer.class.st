@@ -36,15 +36,6 @@ SystemOrganizer >> addPackageNamed: packageName [
 ]
 
 { #category : #queries }
-SystemOrganizer >> categoryOfElement: element [
-	"Answer the category associated with the argument, element."
-
-	packagesMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ ^ packageName ] ].
-
-	^ nil
-]
-
-{ #category : #queries }
 SystemOrganizer >> classesInCategory: packageName [
 
 	^ (self listAtCategoryNamed: packageName) collect: [ :className | self environment at: className ]
@@ -59,8 +50,7 @@ SystemOrganizer >> classify: element under: packageName [
 		at: packageName
 		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addPackageNamed: packageName ].
-
-	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
+	(self packageNameOfElement: element) ifNotNil: [ :oldCategory |
 		oldCategory = packageName ifTrue: [ ^ self ].
 		self removeElement: element ].
 
@@ -124,6 +114,15 @@ SystemOrganizer >> orderedTraitsIn: packageName [
 	traits := behaviors select: [ :each | each isTrait ].
 	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
 	^ traits asArray
+]
+
+{ #category : #queries }
+SystemOrganizer >> packageNameOfElement: element [
+	"Answer the category associated with the argument, element."
+
+	packagesMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ ^ packageName ] ].
+
+	^ nil
 ]
 
 { #category : #accessing }

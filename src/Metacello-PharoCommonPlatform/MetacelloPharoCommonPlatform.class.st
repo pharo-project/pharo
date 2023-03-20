@@ -48,7 +48,7 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition
-		copyReplaceAll: 'category: ' , (SystemOrganization categoryOfElement: oldClass name) asString printString
+		copyReplaceAll: 'category: ' , (SystemOrganization packageNameOfElement: oldClass name) asString printString
 		with: 'category: ' , newCategoryName printString.
 	class := self compiler logged: true; evaluate: newDefinition.
 	class class instanceVariableNames: oldClass class instanceVariablesString.

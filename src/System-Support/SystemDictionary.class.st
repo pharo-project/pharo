@@ -390,7 +390,7 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
-	category := self organization categoryOfElement: oldName.
+	category := self organization packageNameOfElement: oldName.
 	self organization classify: newName under: category.
 	self organization removeElement: oldName.
 	oldref := self associationAt: oldName.

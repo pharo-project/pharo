@@ -1140,7 +1140,7 @@ ChangeSet >> methodsWithoutClassifications [
 		[:aClass |
 		(self methodChangesAtClass: aClass name) associationsDo:
 				[:mAssoc | | aSelector | (aClass includesSelector:  (aSelector := mAssoc key)) ifTrue:
-						[(notClassified includes: (aClass organization categoryOfElement: aSelector))
+						[(notClassified includes: (aClass organization protocolNameOfElement: aSelector))
 								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
 	^ slips
 ]

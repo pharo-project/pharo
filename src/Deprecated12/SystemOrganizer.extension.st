@@ -20,3 +20,10 @@ SystemOrganizer >> categoriesMatching: matchString [
 	self deprecated: 'Use #packageNamesMatching: instead' transformWith: '`@rcv categoriesMatching: `@arg' -> '`@rcv packageNamesMatching: `@arg'.
 	^ self packageNamesMatching: matchString
 ]
+
+{ #category : #'*Deprecated12' }
+SystemOrganizer >> categoryOfElement: element [
+
+	self deprecated: 'Use #packageNameOfElement: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv packageNameOfElement: `@arg'.
+	^ self packageNameOfElement: element
+]
