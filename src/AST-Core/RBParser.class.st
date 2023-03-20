@@ -20,7 +20,6 @@ Class {
 		'scanner',
 		'currentToken',
 		'nextToken',
-		'errorBlock',
 		'source',
 		'comments',
 		'pragmas'
@@ -182,12 +181,14 @@ RBParser >> englobingErrorNodeClass [
 
 { #category : #'error handling' }
 RBParser >> errorBlock [
-	^errorBlock
+
+	self deprecated: 'see errorBlock:'
 ]
 
 { #category : #accessing }
 RBParser >> errorBlock: aBlock [
-	errorBlock := aBlock
+
+	self deprecated: 'RBParser instances offer no more errorBlock facility. Use helpers methods on the class side, or `checkFaulty: aBlock` on a parsed AST'
 ]
 
 { #category : #'error handling' }
