@@ -14,22 +14,18 @@ Class {
 OCUndeclaredVariableWarning >> declareClassVar [
 
 	self methodClass instanceSide
-		addClassVarNamed: node name asSymbol.
-	(ReparseAfterSourceEditing new newSource: self requestor text) signal
+		addClassVarNamed: node name asSymbol
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareGlobal [
-	Smalltalk globals at: node name asSymbol put: nil.
-	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
-	^Smalltalk globals bindingOf: node name asSymbol
+	Smalltalk globals at: node name asSymbol put: nil
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareInstVar: name [
 	"Declare an instance variable."
-	self methodClass addInstVarNamed: name.
-	(ReparseAfterSourceEditing new newSource: self requestor text) signal
+	self methodClass addInstVarNamed: name
 ]
 
 { #category : #correcting }
@@ -57,11 +53,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 		insertion := '| ' , name , ' |',String cr.
 		characterBeforeMark = Character tab ifTrue: [ insertion := insertion , String tab ] ].
 
-	self substituteWord: insertion wordInterval: (tempsMark to: tempsMark-1).
-
-	" we can not guess at this point where the tempvar should be stored,
-	tempvars vs. tempvector therefore -> reparse"
-	(ReparseAfterSourceEditing new newSource: self requestor text) signal
+	self substituteWord: insertion wordInterval: (tempsMark to: tempsMark-1)
 ]
 
 { #category : #correcting }
@@ -80,8 +72,7 @@ OCUndeclaredVariableWarning >> defaultAction [
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
-	compilationContext interactive ifFalse: [ ^ self declareUndefined ].
-	^self openMenu
+	^ variable
 ]
 
 { #category : #correcting }
@@ -193,7 +184,7 @@ OCUndeclaredVariableWarning >> openMenu [
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
 	choice := UIManager default chooseFrom: labels lines: lines title: caption.
-	^choice ifNotNil: [ self resume: (actions at: choice ifAbsent: [ compilationContext failBlock value ]) value ]
+	^ (actions at: choice ifAbsent: [ compilationContext failBlock value ]) value
 ]
 
 { #category : #correcting }
@@ -215,10 +206,7 @@ OCUndeclaredVariableWarning >> substituteVariable: varName atInterval: anInterva
 		substituteWord: varName
 		wordInterval: anInterval.
 	self methodNode source: self requestor text.
-	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName)).
-	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
-	^ (node owningScope lookupVar: varName)
-		ifNil: [self error: 'should be found']
+	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName))
 ]
 
 { #category : #correcting }

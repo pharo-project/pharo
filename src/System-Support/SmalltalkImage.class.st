@@ -1529,9 +1529,10 @@ SmalltalkImage >> removeClassNamed: aName [
 { #category : #housekeeping }
 SmalltalkImage >> removeEmptyMessageCategories [
 	"Smalltalk removeEmptyMessageCategories"
+
 	self garbageCollect.
 	ClassOrganization allInstancesDo: [ :org | org removeEmptyProtocols ].
-	SystemOrganization removeEmptyCategories
+	SystemOrganizer removeEmptyPackages
 ]
 
 { #category : #shrinking }

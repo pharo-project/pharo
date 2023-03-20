@@ -243,12 +243,12 @@ RBCodeSnippet class >> badExpressions [
 		self new source: '#(^1)'; formattedCode: '#( #''^'' 1 )'; isFaulty: false; value: #(^1). "Obviously..."
 		self new source: '#[ ^ 1 ]'.
 
-		"Unreachable code"
-		"Unreachable analysis is very simple and targets statement that dirrecty follows a return statement."
+		"Unreachable code (warnings)"
+		"Unreachable analysis is very simple and targets statement that directly follows a return statement."
 		"Note that faulty code can still be executed without a RuntimeSyntaxError"
-		self new source: '^ 1. 2. ^ 3'; value: 1.
-		self new source: '[ ^ 1. 2. ^ 3 ]'; raise: BlockCannotReturn. "like [^1]"
-		self new source: '{ ^ 1. 2. ^ 3 }'; value: 1.
+		self new source: '^ 1. 2. ^ 3'; isFaulty: false; value: 1.
+		self new source: '[ ^ 1. 2. ^ 3 ]'; isFaulty: false; raise: BlockCannotReturn. "like [^1]"
+		self new source: '{ ^ 1. 2. ^ 3 }'; isFaulty: false; value: 1.
 		self new source: '[ ^ 1 ]. 2. ^ 3'; isFaulty: false; value: 3.
 		self new source: '{ ^ 1 }. 2. ^ 3'; isFaulty: false; value: 1. "This one could have been..."
 		self new source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3'; isFaulty: false; value: 1. "Not *syntactic* enough"
@@ -713,9 +713,12 @@ RBCodeSnippet >> textWithNode: aNode message: aString [
 	"Insert the message after the stop so that:
 	 1. we can see where are zero-width errors
 	 2. we have the same output than the compiler error (above)"
+	stop := aNode isParseError
+		ifTrue: [ aNode errorPosition ]
+		ifFalse: [ aNode stop + 1 "after" ].
 	text
-		replaceFrom: stop + 1
-		to: stop
+		replaceFrom: stop
+		to: stop - 1
 		with: (aString asText addAttribute:
 				 (TextBackgroundColor color: Color lightBlue)).
 	^ text

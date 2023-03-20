@@ -256,13 +256,19 @@ MCMethodDefinition >> isOverrideMethod [
 	^ self isExtensionMethod and: [category endsWith: '-override']
 ]
 
-{ #category : #accessing }
+{ #category : #installing }
 MCMethodDefinition >> load [
-	self actualClass
+	| sel |
+	sel := self actualClass
 		compile: source
 		classified: category
 		withStamp: timeStamp
-		notifying: nil
+		notifying: nil.
+	sel = selector ifTrue: [ ^ self ].
+	Warning signal: (
+		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
+		format: { sel. selector. self actualClass name }).
+	selector := sel
 ]
 
 { #category : #installing }

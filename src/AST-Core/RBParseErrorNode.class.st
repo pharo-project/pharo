@@ -17,7 +17,8 @@ Class {
 		'errorMessage',
 		'value',
 		'start',
-		'stop'
+		'stop',
+		'errorPosition'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
@@ -69,6 +70,18 @@ RBParseErrorNode >> errorMessage [
 { #category : #accessing }
 RBParseErrorNode >> errorMessage: anObject [
 	errorMessage := anObject
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> errorPosition [
+
+	^ errorPosition
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> errorPosition: anObject [
+
+	errorPosition := anObject
 ]
 
 { #category : #comparing }

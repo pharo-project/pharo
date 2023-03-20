@@ -1215,7 +1215,6 @@ RBParserTest >> testParseFaultyMethod [
 		add: 'method: asd  [  ] ,';"binary message without second argument"
 		add: 'method:  ^^'; "returning twice"
 		add: 'method: asd  ['; "opening a block"
-		add: 'method: asd  ^ asd. n'; "invalid expresion after return"
 		add: 'method: asd  ^ {'; "Only Open a literal array"
 		add: 'selector ''';
 		add: 'selector ''part1''''part2'; "string with escaped ' does not end"
@@ -1232,19 +1231,6 @@ RBParserTest >> testParseFaultyMethod [
 ]
 
 { #category : #'tests - parsing faulty' }
-RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
-	| node strangeExpression |
-
-	strangeExpression := 'method: asd  ^ asd. n'.
-	node := self parseFaultyMethod: strangeExpression.
-
-	self assert: node isMethod.
-	self assert: node isFaulty.
-	self assert: node statements size equals: 2.
-	self assert: node statements last isFaulty
-]
-
-{ #category : #'tests - parsing faulty' }
 RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	| node strangeExpression |
 
@@ -1252,9 +1238,9 @@ RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	node := self parseFaultyMethod: strangeExpression.
 
 	self assert: node isMethod.
-	self assert: node isFaulty.
+	self deny: node isFaulty.
 	self assert: node statements size equals: 2.
-	self assert: node statements last isFaulty
+	self assert: (node statements last propertyAt: #semanticWarning) equals: 'Unreachable statement'
 ]
 
 { #category : #'tests - parsing faulty' }
@@ -1453,8 +1439,13 @@ RBParserTest >> testParserErrorsWithErrorBlock [
 
 	#(#('self foo. + 3' 1) #('self 0' 1) #('self asdf;;asfd' 1))
 		do: [:each | |ast errorCount|
-			    ast := self parseError: each first onError:
-					[:msg :pos :parser | parser parseErrorNode: msg].
+				errorCount := 0.
+			    ast := self parserClass new
+					beFaulty;
+					errorBlock: [ errorCount := errorCount + 1 ];
+					initializeParserWith: each first;
+					parseExpression.
+				self assert: errorCount equals: each last.
 
 				errorCount := 0.
 				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].

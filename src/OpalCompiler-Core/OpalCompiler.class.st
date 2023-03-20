@@ -250,19 +250,11 @@ OpalCompiler >> compilationContextClass: aClass [
 
 { #category : #'public access' }
 OpalCompiler >> compile [
-	^[
-		self parse.
-		self semanticScope compileMethodFromASTBy: self
-	] on: CodeError do: [ :exception |
-			exception sourceCode: source contents.
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor
-							notify: exception messageText , ' ->'
-							at: exception location
-							in: exception sourceCode.
-                    ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ]]
+
+	| result |
+	result := self parseForRequestor.
+	ast ifNil: [ ^ result ]. "some failBlock"
+	^ self semanticScope compileMethodFromASTBy: self
 ]
 
 { #category : #'public access' }
@@ -357,7 +349,6 @@ OpalCompiler >> evaluate [
 
 	| value doItMethod |
 	self noPattern: true.
-	self getSourceFromRequestorSelection.
 	doItMethod := self compile.
 	doItMethod ifNotNil: [
 			value := self semanticScope evaluateDoIt: doItMethod ].
@@ -391,17 +382,6 @@ OpalCompiler >> format: textOrString [
 		format
 ]
 
-{ #category : #private }
-OpalCompiler >> getSourceFromRequestorSelection [
-    | selection |
-    "if the requestor can provide a selection, we use that as the source"
-     (self compilationContext requestor respondsTo: #selection) ifFalse: [ ^self ].
-
-    selection := self compilationContext requestor selection .
-    selection isEmptyOrNil ifTrue: [ ^self ].
-    self source: selection asString
-]
-
 { #category : #testing }
 OpalCompiler >> isInteractive [
 	^ compilationContext interactive
@@ -429,17 +409,14 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	| parser |
-	[
-		parser := self createParser.
-		ast := self semanticScope parseASTBy: parser.
 
-		ast methodNode compilationContext: self compilationContext.
-		self callParsePlugins.
-		self doSemanticAnalysis ]
-	on: ReparseAfterSourceEditing do: [:notification |
-			self source: notification newSource.
-			notification retry ].
+	| parser |
+	parser := self createParser.
+	ast := self semanticScope parseASTBy: parser.
+
+	ast methodNode compilationContext: self compilationContext.
+	self callParsePlugins.
+	self doSemanticAnalysis.
 
 	^ ast
 ]
@@ -450,6 +427,34 @@ OpalCompiler >> parse: textOrString [
 	^self
 		source: textOrString;
 		parse
+]
+
+{ #category : #'public access' }
+OpalCompiler >> parseForRequestor [
+	"For compatibility, this method manages the requestor needs.
+	The original design is more than questionable, but at least it is all done in a single place."
+
+	| requestor |
+	requestor := self compilationContext requestor.
+
+	"No requestor, easy path"
+	requestor ifNil: [ ^ self parse ].
+
+	^ [ [ self parse ]
+	on: OCUndeclaredVariableWarning
+	do: [ :notification |
+		self isInteractive ifFalse: [ notification pass ].
+		notification openMenu.
+		self source: requestor text.
+		notification retry ] ]
+	on: CodeError
+	do: [ :exception |
+		exception sourceCode: source contents.
+		requestor
+			notify: exception messageText , ' ->'
+			at: exception location
+			in: exception sourceCode.
+		self compilationContext failBlock value ]
 ]
 
 { #category : #'public access' }

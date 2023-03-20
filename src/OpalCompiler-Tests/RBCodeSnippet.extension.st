@@ -11,9 +11,8 @@ RBCodeSnippet >> compile [
 		"Compilation should success, because its the *faulty* mode".
 		"If this is expected, then just return nil"
 		self ifSkip: #compile then: [^ nil ].
-		"Otherwise, signal the error bypassing the emergency syntax error UI"
-		e unhandledException.
-		^ nil ]
+		"Otherwise, pass the error"
+		e pass ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }

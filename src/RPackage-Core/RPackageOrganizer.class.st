@@ -113,7 +113,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'RPackage-Core-Base'
+	#category : 'RPackage-Core-Base'
 }
 
 { #category : #singleton }
@@ -282,31 +282,20 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 ]
 
 { #category : #'private - registration' }
-RPackageOrganizer >> basicUnregisterPackage: aPackage [
-	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
-
-	packages
-		removeKey: aPackage name asSymbol
-		ifAbsent: [ self reportExtraRemovalOf: aPackage ].
-
-	"unregister also mc package"
-	self flag: #hack. "for decoupling MC"
-	self class environment at: #MCWorkingCopy ifPresent: [
-		aPackage mcPackage
-			ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ]].
-
-	self removePackageNameFromCache: aPackage name asSymbol
-]
-
-{ #category : #'private - registration' }
-RPackageOrganizer >> basicUnregisterPackageNamed: aSymbolName [
+RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
 	"Unregister the specified package from the list of registered packages. Raise the RPackageUnregistered announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	packages
-		removeKey: aSymbolName asSymbol
-		ifAbsent: [ ].
+	| package |
+	package := packages removeKey: aPackageName ifAbsent: [
+		           self reportExtraRemovalOf: aPackageName.
+		           nil ].
 
-	self removePackageNameFromCache: aSymbolName asSymbol
+
+	package ifNotNil: [ "unregister also mc package"
+		self flag: #hack. "for decoupling MC"
+		self class environment at: #MCWorkingCopy ifPresent: [ package mcPackage ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ] ] ].
+
+	self removePackageNameFromCache: aPackageName
 ]
 
 { #category : #'system compatibility' }
@@ -892,9 +881,9 @@ RPackageOrganizer >> reportBogusBehaviorOf: aSelector [
 ]
 
 { #category : #private }
-RPackageOrganizer >> reportExtraRemovalOf: aClass [
+RPackageOrganizer >> reportExtraRemovalOf: aPackageOrClass [
 
-	self traceCr: 'The class ', aClass name printString , ' is removed twice'
+	self traceCr: 'The class ' , aPackageOrClass printString , ' is removed twice'
 ]
 
 { #category : #registration }
@@ -932,19 +921,19 @@ RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	| rPackage categoryName categoryNameSymbol managers |
 	categoryName := ann categoryName.
 	categoryNameSymbol := categoryName asSymbol.
-	self flag: #hack.	"for decoupling MC"
+	self flag: #hack. "for decoupling MC"
 	managers := (self respondsTo: #allManagers)
-		ifTrue: [ self perform: #allManagers ]
-		ifFalse: [ #() ].
+		            ifTrue: [ self perform: #allManagers ]
+		            ifFalse: [ #(  ) ].
 	"Reverse the test. First check that this is the root category of a RPackage. If yes, unregister the RPackage and the corresponding MCWorkingCopy."
 	rPackage := packages at: categoryNameSymbol ifAbsent: [ ^ self ].
 	"Consider that a rPackage with extension selectors or tags is not empty and shouldn't be removed."
-	(rPackage extensionSelectors notEmpty
-		or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) notEmpty ])
-		ifTrue: [ ^ self ].
+	(rPackage extensionSelectors notEmpty or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) notEmpty ]) ifTrue: [ ^ self ].
+	categoryName = RPackage defaultPackageName ifTrue: [ ^ self ]. "We want to keep this default package."
 	self basicUnregisterPackageNamed: categoryNameSymbol.
-	(managers detect: [ :each | each packageName = categoryName ] ifNone: [  ])
-		ifNotNil: [ :mcWorkingCopy | mcWorkingCopy unregister ]
+	(managers
+		 detect: [ :each | each packageName = categoryName ]
+		 ifNone: [  ]) ifNotNil: [ :mcWorkingCopy | mcWorkingCopy unregister ]
 ]
 
 { #category : #'system integration' }
@@ -980,23 +969,20 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> systemClassRecategorizedActionFrom: ann [
-	| class newRPackage newRPackageTag oldRPackage newCategoryName oldCategoryName|
+RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	class := ann classAffected.
+	| class newRPackage newRPackageTag oldRPackage newPackageName oldPackageName |
+	class := announcement classAffected.
 
-	newCategoryName := ann newCategory asSymbol.
-	oldCategoryName := ann oldCategory asSymbol.
-	oldRPackage := self packageMatchingExtensionName: oldCategoryName includingClass: class.
-	newRPackage := (self packageMatchingExtensionName: newCategoryName)
-		ifNil: [ self registerPackage: (self packageClass named: newCategoryName) ].
+	newPackageName := announcement newCategory.
+	oldPackageName := announcement oldCategory.
+	newPackageName = oldPackageName ifTrue: [ ^ self ].
+	oldRPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
+	newRPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self registerPackage: (self packageClass named: newPackageName) ].
 
-	newRPackageTag := newRPackage addClassTag: newCategoryName.
+	newRPackageTag := newRPackage addClassTag: newPackageName.
 
-	newRPackage
-		moveClass: class
-		fromPackage: oldRPackage
-		toTag: newRPackageTag
+	newRPackage moveClass: class fromPackage: oldRPackage toTag: newRPackageTag
 ]
 
 { #category : #'system integration' }
@@ -1232,7 +1218,7 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 RPackageOrganizer >> unregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered."
 
-	self basicUnregisterPackage: aPackage.
+	self basicUnregisterPackageNamed: aPackage name.
 	aPackage extendedClasses
 		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
 	aPackage definedClasses
@@ -1248,7 +1234,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 
 	^classPackageMapping
 		removeKey: aClass instanceSide name
-		ifAbsent: [ self reportExtraRemovalOf: aClass ]
+		ifAbsent: [ self reportExtraRemovalOf: aClass name ]
 ]
 
 { #category : #'private - registration' }

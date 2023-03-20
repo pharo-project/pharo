@@ -101,8 +101,6 @@ ImageCleaner >> cleanUpForRelease [
 		removeEmptyCategories;
 		removeEmptyPackages.
 
-	Smalltalk organization sortCategories.
-
 	Smalltalk
 		garbageCollect;
 		cleanOutUndeclared;
@@ -211,11 +209,10 @@ ImageCleaner >> removeEmptyCategories [
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
 
-	Smalltalk organization removeEmptyCategories.
+	Smalltalk organization removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
-		[ :each | each removeEmptyProtocols ]
-			value: class organization;
-			value: class class organization ]
+		class organization removeEmptyProtocols.
+		class class organization removeEmptyProtocols ]
 ]
 
 { #category : #cleaning }

@@ -69,7 +69,6 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 					RBPragmaErrorNode
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
-					RBUnreachableStatementErrorNode
 			RBSelectorNode
 			RBVariableNode
 	RBSlotInitializationNode
