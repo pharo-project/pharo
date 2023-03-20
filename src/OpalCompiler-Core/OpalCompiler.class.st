@@ -443,8 +443,18 @@ OpalCompiler >> parseForRequestor [
 	^ [ [ self parse ]
 	on: OCUndeclaredVariableWarning
 	do: [ :notification |
+		| res |
 		self isInteractive ifFalse: [ notification pass ].
-		notification openMenu.
+		"I do not like the API that much.
+		 reparator can have 3 outcomes:
+		  * reparation done, reparse. true
+		  * reparation unneded, pass. nil
+		  * operation cancelled, fail. false"
+		res := notification reparator
+			requestor: requestor;
+			openMenu.
+		res ifNil: [ notification pass ].
+		res ifFalse: [ ^ self compilationContext failBlock value ].
 		self source: requestor text.
 		notification retry ] ]
 	on: CodeError
