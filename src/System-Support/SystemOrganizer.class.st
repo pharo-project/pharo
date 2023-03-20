@@ -8,7 +8,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'environment',
-		'categoryMap'
+		'packagesMap'
 	],
 	#category : #'System-Support-Image'
 }
@@ -30,7 +30,7 @@ SystemOrganizer class >> default [
 { #category : #accessing }
 SystemOrganizer >> addCategory: packageName [
 
-	categoryMap at: packageName asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
+	packagesMap at: packageName asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
 	SystemAnnouncer uniqueInstance classCategoryAdded: packageName
 ]
@@ -38,7 +38,7 @@ SystemOrganizer >> addCategory: packageName [
 { #category : #accessing }
 SystemOrganizer >> categories [
 
-	^ categoryMap keys
+	^ packagesMap keys
 ]
 
 { #category : #queries }
@@ -53,7 +53,7 @@ SystemOrganizer >> categoriesMatching: matchString [
 SystemOrganizer >> categoryOfElement: element [
 	"Answer the category associated with the argument, element."
 
-	categoryMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ ^ packageName ] ].
+	packagesMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ ^ packageName ] ].
 
 	^ nil
 ]
@@ -69,7 +69,7 @@ SystemOrganizer >> classify: element under: packageName [
 
 	packageName ifNil: [ self error: 'Category cannot be nil.' ].
 
-	categoryMap
+	packagesMap
 		at: packageName
 		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addCategory: packageName ].
@@ -78,7 +78,7 @@ SystemOrganizer >> classify: element under: packageName [
 		oldCategory = packageName ifTrue: [ ^ self ].
 		self removeElement: element ].
 
-	(categoryMap at: packageName) add: element
+	(packagesMap at: packageName) add: element
 ]
 
 { #category : #operations }
@@ -108,13 +108,13 @@ SystemOrganizer >> includesCategory: packageName [
 SystemOrganizer >> initialize [
 
 	super initialize.
-	categoryMap := Dictionary new
+	packagesMap := Dictionary new
 ]
 
 { #category : #testing }
 SystemOrganizer >> isEmptyCategoryNamed: packageName [
 
-	^ categoryMap
+	^ packagesMap
 		  at: packageName
 		  ifPresent: [ :classes | classes isEmpty ]
 		  ifAbsent: [ false ]
@@ -124,7 +124,7 @@ SystemOrganizer >> isEmptyCategoryNamed: packageName [
 SystemOrganizer >> listAtCategoryNamed: packageName [
 	"Answer classes names into packageName."
 
-	^ (categoryMap at: packageName ifAbsent: [ Array new ]) asArray
+	^ (packagesMap at: packageName ifAbsent: [ Array new ]) asArray
 ]
 
 { #category : #queries }
@@ -151,12 +151,12 @@ SystemOrganizer >> removeCategoriesMatching: matchString [
 SystemOrganizer >> removeCategory: packageName [
 	"Remove packageName. Create an error notificiation if the package has any elements in it."
 
-	categoryMap
+	packagesMap
 		at: packageName
 		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , packageName ] ]
 		ifAbsent: [ ^ self ].
 
-	categoryMap removeKey: packageName.
+	packagesMap removeKey: packageName.
 
 	SystemAnnouncer uniqueInstance classCategoryRemoved: packageName
 ]
@@ -165,16 +165,16 @@ SystemOrganizer >> removeCategory: packageName [
 SystemOrganizer >> removeElement: element [
 	"Remove the element from all packages."
 
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
+	packagesMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
 ]
 
 { #category : #removing }
 SystemOrganizer >> removeEmptyPackages [
 	"Remove empty packages."
 
-	(categoryMap select: [ :classes | classes isEmpty ]) keys
+	(packagesMap select: [ :classes | classes isEmpty ]) keys
 		ifNotEmpty: [ :emptyPackages |
-			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
+			emptyPackages do: [ :emptyPackage | packagesMap removeKey: emptyPackage ] ]
 ]
 
 { #category : #removing }
@@ -190,13 +190,13 @@ SystemOrganizer >> removeSystemCategory: packageName [
 SystemOrganizer >> renameCategory: oldPackageName toBe: newPackageName [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	categoryMap at: newPackageName ifPresent: [ "new name exists, so no action" ^ self ].
+	packagesMap at: newPackageName ifPresent: [ "new name exists, so no action" ^ self ].
 
-	categoryMap
+	packagesMap
 		at: oldPackageName
 		ifPresent: [ :classes |
-			categoryMap at: newPackageName put: classes.
-			categoryMap removeKey: oldPackageName ]
+			packagesMap at: newPackageName put: classes.
+			packagesMap removeKey: oldPackageName ]
 		ifAbsent: [ "old name not found, so no action" ^ self ].
 
 	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldPackageName to: newPackageName
