@@ -199,13 +199,13 @@ RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplac
 
 { #category : #support }
 RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
-	|aBlock|
-	aBlock := [:method |
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer].
-	self model allReferencesTo: aSymbol do: aBlock
+
+	(self model allReferencesTo: aSymbol)
+		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
+			rbMethod method
+				ifNil: [ false ]
+				ifNotNil: #isFromTrait ]
+		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
 ]
 
 { #category : #support }
