@@ -89,6 +89,14 @@ RBParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
 ]
 
+{ #category : #initialization }
+RBParseErrorNode >> initialize [
+
+	super initialize.
+	"Add its own notice"
+	self addNotice: (RBErrorNodeNotice new)
+]
+
 { #category : #errors }
 RBParseErrorNode >> isError [
 	^true

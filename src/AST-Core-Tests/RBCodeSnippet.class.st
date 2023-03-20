@@ -515,25 +515,15 @@ RBCodeSnippet class >> styleAllWithError [
 		"Then the fun part. Add line for each node with error or warning"
 		ast := each doSemanticAnalysis. 
 		ast nodesPostorderDo: [ :node |
-			node propertyAt: #semanticWarning ifPresent: [ :message |
-				text := each textWithNode: node message: message.
+			node notices do: [ :notice |
+				text := each textWithNode: node message: notice messageText.
 				bigtext append: String cr.
 				bigtext append: String tab.
 				bigtext append: text.
 				bigtext append: '   '.
 				bigtext append: (node class name asText makeAllColor: Color gray).
 				bigtext append: (' (semanticWarning)' asText makeAllColor: Color gray).
-			].
-			node isError ifTrue: [
-				text := each textWithNode: node message: node errorMessage.
-				bigtext append: String cr.
-				bigtext append: String tab.
-				bigtext append: text.
-				bigtext append: '   '.
-				bigtext append: (node class name asText makeAllColor: Color gray).
-				bigtext append: (' (error)' asText makeAllColor: Color gray).
-			].
-		] ].
+			] ] ].
 	bigtext inspect
 ]
 
@@ -714,7 +704,7 @@ RBCodeSnippet >> textWithNode: aNode message: aString [
 	 1. we can see where are zero-width errors
 	 2. we have the same output than the compiler error (above)"
 	stop := aNode isParseError
-		ifTrue: [ aNode errorPosition ]
+		ifTrue: [ aNode errorPosition ifNil: [ aNode stop + 1 ] ]
 		ifFalse: [ aNode stop + 1 "after" ].
 	text
 		replaceFrom: stop
