@@ -13,3 +13,10 @@ SystemOrganizer >> categories [
 	self deprecated: 'Use #packageNames instead' transformWith: '`@rcv categories' -> '`@rcv packageNames'.
 	^ self packageNames
 ]
+
+{ #category : #'*Deprecated12' }
+SystemOrganizer >> categoriesMatching: matchString [
+
+	self deprecated: 'Use #packageNamesMatching: instead' transformWith: '`@rcv categoriesMatching: `@arg' -> '`@rcv packageNamesMatching: `@arg'.
+	^ self packageNamesMatching: matchString
+]

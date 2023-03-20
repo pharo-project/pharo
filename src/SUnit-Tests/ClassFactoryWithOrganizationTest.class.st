@@ -78,6 +78,7 @@ ClassFactoryWithOrganizationTest >> testMultipleClassCreation [
 
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> testPackageCleanUp [
+
 	| createdClassNames allClasses |
 	3 timesRepeat: [ factory newClassInCategory: #One ].
 	2 timesRepeat: [ factory newClassInCategory: #Two ].
@@ -86,7 +87,7 @@ ClassFactoryWithOrganizationTest >> testPackageCleanUp [
 	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
 	allClasses := self testedEnvironment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
-	self assertEmpty: (self testedOrganization categoriesMatching: factory packageName , '*').
+	self assertEmpty: (self testedOrganization packageNamesMatching: factory packageName , '*').
 	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 

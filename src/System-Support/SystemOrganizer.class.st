@@ -36,14 +36,6 @@ SystemOrganizer >> addPackageNamed: packageName [
 ]
 
 { #category : #queries }
-SystemOrganizer >> categoriesMatching: matchString [
-	"Return all matching categories"
-
-	self packageNames ifNil: [ ^ #(  ) ].
-	^ self packageNames select: [ :packageName | matchString match: packageName ]
-]
-
-{ #category : #queries }
 SystemOrganizer >> categoryOfElement: element [
 	"Answer the category associated with the argument, element."
 
@@ -140,11 +132,18 @@ SystemOrganizer >> packageNames [
 	^ packagesMap keys
 ]
 
+{ #category : #queries }
+SystemOrganizer >> packageNamesMatching: matchString [
+	"Return all matching package names"
+
+	^ self packageNames select: [ :packageName | matchString match: packageName ]
+]
+
 { #category : #removing }
 SystemOrganizer >> removeCategoriesMatching: matchString [
 	"Remove all matching package names with their classes"
 
-	(self categoriesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
+	(self packageNamesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
 ]
 
 { #category : #accessing }
