@@ -65,7 +65,7 @@ TraitFileOutTest >> testFileOutCategory [
 	file them in again."
 
 	self timeLimit: 30 seconds.
-	self class environment organization fileOutCategory: self categoryName.
+	self class environment organization fileOutPackageNamed: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
 	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
 

@@ -2,13 +2,11 @@ Extension { #name : #RPackageTag }
 
 { #category : #'*CodeExport' }
 RPackageTag >> fileOut [
-	| internalStream |
 
+	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 
-	SystemOrganization
-		fileOutCategory: self categoryName
-		on: internalStream.
+	SystemOrganization fileOutPackageNamed: self categoryName on: internalStream.
 
 	^ CodeExporter writeSourceCodeFrom: internalStream baseName: self name isSt: true
 ]

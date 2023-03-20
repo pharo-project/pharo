@@ -17,13 +17,11 @@ Class {
 
 { #category : #examples }
 RingChunkImporter class >> example [
+
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
-	SystemOrganization
-		fileOutCategory: 'Ring-Deprecated-ChunkImporter-Base'
-		on: internalStream.
-	(RingChunkImporter fromStream: internalStream contents readStream)
-		inspect
+	SystemOrganization fileOutPackageNamed: 'Ring-Deprecated-ChunkImporter-Base' on: internalStream.
+	(RingChunkImporter fromStream: internalStream contents readStream) inspect
 ]
 
 { #category : #'instance creation' }
