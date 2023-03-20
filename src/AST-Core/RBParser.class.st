@@ -43,7 +43,6 @@ RBParser class >> parseExpression: aString onError: aBlock [
 RBParser class >> parseFaultyExpression: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
 	^ self new
-		beFaulty;
 		initializeParserWith: aString;
 		parseExpression
 ]
@@ -52,7 +51,6 @@ RBParser class >> parseFaultyExpression: aString [
 RBParser class >> parseFaultyMethod: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
 	^ self new
-		beFaulty;
 		initializeParserWith: aString;
 		parseMethod
 ]
@@ -77,7 +75,6 @@ RBParser class >> parseMethod: aString onError: aBlock [
 { #category : #parsing }
 RBParser class >> parseMethodPattern: aString [
 	^ (self new
-		   errorBlock: [ :error :position | ^ nil ];
 		   initializeParserWith: aString;
 		   parseMessagePattern) selector
 ]
@@ -228,8 +225,7 @@ RBParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 
 { #category : #initialization }
 RBParser >> initialize [
-	comments := OrderedCollection new.
-	isFaulty := false
+	comments := OrderedCollection new
 ]
 
 { #category : #accessing }
