@@ -35,13 +35,6 @@ SystemOrganizer >> addCategory: packageName [
 	SystemAnnouncer uniqueInstance classCategoryAdded: packageName
 ]
 
-{ #category : #private }
-SystemOrganizer >> basicRemoveElement: element [
-	"Remove the element from all packages."
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
-]
-
 { #category : #accessing }
 SystemOrganizer >> categories [
 
@@ -83,7 +76,7 @@ SystemOrganizer >> classify: element under: packageName [
 
 	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
 		oldCategory = packageName ifTrue: [ ^ self ].
-		self basicRemoveElement: element ].
+		self removeElement: element ].
 
 	(categoryMap at: packageName) add: element
 ]
@@ -170,7 +163,9 @@ SystemOrganizer >> removeCategory: packageName [
 
 { #category : #operations }
 SystemOrganizer >> removeElement: element [
-	^ self basicRemoveElement: element
+	"Remove the element from all packages."
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
 ]
 
 { #category : #removing }
