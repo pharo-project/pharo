@@ -104,10 +104,7 @@ MCOrganizationDefinition >> isOrganizationDefinition [
 
 { #category : #installing }
 MCOrganizationDefinition >> postloadOver: oldDefinition [
-	SystemOrganization categories:
-		(self
-			reorderCategories: SystemOrganization categories
-			original: (oldDefinition ifNil: [#()] ifNotNil: [oldDefinition categories]))
+	"Nothing to do"
 ]
 
 { #category : #private }

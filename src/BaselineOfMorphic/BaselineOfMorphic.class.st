@@ -138,7 +138,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
 	Behavior flushObsoleteSubclasses.
 	World cleanseOtherworldlySteppers.
-	Smalltalk organization removeEmptyCategories.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
@@ -149,23 +148,20 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Smalltalk garbageCollect.
 	HashedCollection rehashAll.
 	Symbol rehash.
-	  
-	  "Remove empty categories, which are not in MC packages, because MC does
-	  not do this (this script does not make packages dirty)"
-	  Smalltalk organization removeEmptyCategories.
-	  Smalltalk
-	    allClassesAndTraitsDo: [ :class |
-	      [ :each |
-	        each
-	          removeEmptyCategories;
-	          sortCategories ]
-	            value: class organization;
-	            value: class class organization ].
-	Smalltalk organization sortCategories.
+
+	"Remove empty packages and protocols"
+	Smalltalk organization removeEmptyPackages.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		[ :each |
+		each
+			removeEmptyCategories;
+			sortCategories ]
+			value: class organization;
+			value: class class organization ].
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Smalltalk garbageCollect.
-	Author reset.
+	Author reset
 ]
 
 { #category : #fonts }
