@@ -64,14 +64,14 @@ ZnUTF8Encoder class >> newForEncoding: string [
 	^ self new
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF8Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
 	[ (stream back bitAnd: 2r11000000) == 2r10000000 ] whileTrue
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF8Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
@@ -81,6 +81,17 @@ ZnUTF8Encoder >> encodedByteCountForCodePoint: codePoint [
 	codePoint <= self maximumUTFCode ifTrue: [ ^ 4 ].
 	self errorOutsideRange.
 	^ 0
+]
+
+{ #category : #'encoding - decoding' }
+ZnUTF8Encoder >> ensureAtBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further backwards. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Back up until we are not longer on a continuation byte but on a leading byte"
+
+	[ (stream peek bitAnd: 2r11000000) == 2r10000000 ] whileTrue: [ stream back ]
 ]
 
 { #category : #'error handling' }
@@ -117,6 +128,13 @@ ZnUTF8Encoder >> findFirstNonASCIIIn: string startingAt: offset [
 { #category : #accessing }
 ZnUTF8Encoder >> identifier [
 	^ #utf8
+]
+
+{ #category : #testing }
+ZnUTF8Encoder >> isFixedLength [
+	"Return true when I am a fixed length encoding"
+
+	^ false
 ]
 
 { #category : #convenience }
@@ -160,7 +178,7 @@ ZnUTF8Encoder >> next: count putAllByteString: string startingAt: offset toStrea
 			self next: offset + count - lastIndex putAllASCII: string startingAt: lastIndex toStream: stream ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF8Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
@@ -201,7 +219,7 @@ ZnUTF8Encoder >> nextCodePointFromStream: stream [
 	^ self errorIllegalLeadingByte
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for Integer code point to stream"
 
@@ -241,4 +259,15 @@ ZnUTF8Encoder >> readInto: string startingAt: offset count: requestedCount fromS
 			ifTrue: [ stringBuffer := ZnByteStringBecameWideString convert: stringBuffer ].
 		stringBuffer at: index put: (Character value: codePoint) ].
 	^ requestedCount
+]
+
+{ #category : #'encoding - decoding' }
+ZnUTF8Encoder >> skipToBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further forward. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Read bytes up until we are not longer on a continuation byte but on a leading byte"
+
+	[ (stream peek bitAnd: 2r11000000) == 2r10000000 ] whileTrue: [ stream next ]
 ]

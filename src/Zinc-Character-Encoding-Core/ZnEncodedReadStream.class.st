@@ -18,6 +18,15 @@ ZnEncodedReadStream >> atEnd [
 ]
 
 { #category : #accessing }
+ZnEncodedReadStream >> back [
+	self encoder backOnStream: stream.
+	peeked ifNotNil: [
+		self encoder backOnStream: stream.
+		peeked := nil ].
+	^ nil
+]
+
+{ #category : #accessing }
 ZnEncodedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
 
@@ -120,8 +129,24 @@ ZnEncodedReadStream >> position [
 ]
 
 { #category : #accessing }
-ZnEncodedReadStream >> position: anInteger [
-	super position: anInteger.
+ZnEncodedReadStream >> position: aPosition [
+	"Set the byte position in the underlying/wrapped binary stream to aPosition.
+	This is not a character based position! Positions are zero based.
+	I will move further backward if aPosition is not at the beginning of a code point."
+
+	super position: aPosition.
+	self encoder ensureAtBeginOfCodePointOnStream: stream.
+	peeked := nil
+]
+
+{ #category : #accessing }
+ZnEncodedReadStream >> positionForward: aPosition [
+	"Set the byte position in the underlying/wrapped binary stream to aPosition.
+	This is not a character based position! Positions are zero based.
+	I will move further forward if aPosition is not at the beginning of a code point."
+
+	super position: aPosition.
+	self encoder skipToBeginOfCodePointOnStream: stream.
 	peeked := nil
 ]
 
