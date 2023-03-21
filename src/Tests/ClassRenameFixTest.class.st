@@ -39,18 +39,20 @@ ClassRenameFixTest >> removeEverythingInSetFromSystem: aChangeSet [
 
 { #category : #tests }
 ClassRenameFixTest >> renameClassUsing: aBlock [
+
 	| createdClass foundClasses |
 	originalName := self newUniqueClassName.
 
 	createdClass := self class classInstaller make: [ :aBuilder |
-		aBuilder name: originalName;
-		package: 'ClassRenameFix-GeneradClass' ].
+		                aBuilder
+			                name: originalName;
+			                package: 'ClassRenameFix-GeneradClass' ].
 
 	newClassName := self newUniqueClassName.
 	aBlock value: createdClass value: newClassName.
 	self assert: (testingEnvironment classNamed: originalName) isNil.
 	self assert: (testingEnvironment classNamed: newClassName) notNil.
-	foundClasses := testingEnvironment organization listAtCategoryNamed: 'ClassRenameFix-GeneradClass'.
+	foundClasses := testingEnvironment organization classNamesInPackageNamed: 'ClassRenameFix-GeneradClass'.
 	self assert: foundClasses notEmpty.
 	self assert: (foundClasses includes: newClassName).
 	self assert: createdClass name equals: newClassName

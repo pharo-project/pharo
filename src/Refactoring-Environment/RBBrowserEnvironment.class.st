@@ -206,13 +206,12 @@ RBBrowserEnvironment >> classNames [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> classNamesFor: aCategoryName [
-	^ (self systemDictionary organization listAtCategoryNamed: aCategoryName) select: [ :each |
-		| class |
-		class := self systemDictionary at: each ifAbsent: [ nil ].
-		class notNil
-			and: [ (self includesClass: class)
-			or: [ self includesClass: class class ] ] ]
+RBBrowserEnvironment >> classNamesFor: packageName [
+
+	^ (self systemDictionary organization classNamesInPackageNamed: packageName) select: [ :className |
+		  | class |
+		  class := self systemDictionary at: className ifAbsent: [ nil ].
+		  class isNotNil and: [ (self includesClass: class) or: [ self includesClass: class class ] ] ]
 ]
 
 { #category : #environments }

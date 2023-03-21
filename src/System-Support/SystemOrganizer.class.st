@@ -45,7 +45,7 @@ SystemOrganizer >> classNamesInPackageNamed: packageName [
 { #category : #queries }
 SystemOrganizer >> classesInPackageNamed: packageName [
 
-	^ (self listAtCategoryNamed: packageName) collect: [ :className | self environment at: className ]
+	^ (self classNamesInPackageNamed: packageName) collect: [ :className | self environment at: className ]
 ]
 
 { #category : #operations }

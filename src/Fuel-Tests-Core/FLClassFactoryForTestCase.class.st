@@ -71,10 +71,8 @@ FLClassFactoryForTestCase >> cleanUpSystemOrganization [
 	SystemOrganization is global and ClassFactoryForTestCase interacts with it to clean out
 	categories."
 
-	| categoriesMatchString categories |
-	categoriesMatchString := self defaultPackageName , '-*'.
-	categories := SystemOrganization packageNamesMatching: categoriesMatchString.
-	categories do: [ :category | (SystemOrganization listAtCategoryNamed: category) do: [ :behavior | SystemOrganization removeElement: behavior ] ]
+	(SystemOrganization packageNamesMatching: self defaultPackageName , '-*') do: [ :packageName |
+		(SystemOrganization classNamesInPackageNamed: packageName) do: [ :behavior | SystemOrganization removeElement: behavior ] ]
 ]
 
 { #category : #accessing }

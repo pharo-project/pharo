@@ -594,15 +594,12 @@ TestRunner >> filterPackages [
 
 { #category : #utilities }
 TestRunner >> findClassesForPackages: aCollection [
-	| items |
-	aCollection isEmpty
-		ifTrue: [ ^ self baseClass withAllSubclasses asSet ].
-	items := aCollection
-		flatCollect: [ :category |
-			((Smalltalk organization listAtCategoryNamed: category)
-				collect: [ :each | Smalltalk globals at: each ])
-				select: [ :each | each includesBehavior: self baseClass ] ].
-	^ items asSet
+
+	aCollection ifEmpty: [ ^ self baseClass withAllSubclasses asSet ].
+
+	^ aCollection flatCollectAsSet: [ :packageName |
+		  ((Smalltalk organization classNamesInPackageNamed: packageName) collect: [ :each | Smalltalk globals at: each ]) select: [ :each |
+			  each includesBehavior: self baseClass ] ]
 ]
 
 { #category : #utilities }
