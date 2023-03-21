@@ -11,6 +11,12 @@ Class {
 	#category : #'AST-Core-Notice'
 }
 
+{ #category : #'error handling' }
+RBNotice >> errorPosition [
+
+	^ node start
+]
+
 { #category : #testing }
 RBNotice >> isError [
 

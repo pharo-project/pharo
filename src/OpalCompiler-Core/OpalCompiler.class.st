@@ -393,12 +393,15 @@ OpalCompiler >> options: anOptionsArray [
 { #category : #'public access' }
 OpalCompiler >> parse [
 
-	| parser permitFaulty |
+	| parser |
+	"Policy: simple parsing is faulty by default"
+	self permitFaulty ifNil: [ self permitFaulty: true ].
+
 	parser := self parserClass new.
 	parser initializeParserWith: source contents.
 	ast := self semanticScope parseASTBy: parser.
-	permitFaulty := (self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ]).
-	permitFaulty ifFalse: [ ast checkFaulty: nil ].
+
+	self permitFaulty ifFalse: [ ast checkFaulty: nil ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self callParsePlugins.
@@ -423,10 +426,13 @@ OpalCompiler >> parseForRequestor [
 	| requestor |
 	requestor := self compilationContext requestor.
 
+	"Policy: compiling and requestor is non-faulty by default"
+	self permitFaulty ifNil: [ self permitFaulty: false ].
+
 	"No requestor, easy path"
 	requestor ifNil: [ ^ self parse ].
 
-	^ [ [ self parse ]
+	^ [ [ 	self parse ]
 	on: OCUndeclaredVariableWarning
 	do: [ :notification |
 		| res |
@@ -469,6 +475,18 @@ OpalCompiler >> parseSelector: aString [
 { #category : #plugins }
 OpalCompiler >> parserClass [
 	^self compilationContext parserClass
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitFaulty [
+
+	^ self compilationContext permitFaulty
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitFaulty: aBoolean [
+
+	self compilationContext permitFaulty: aBoolean
 ]
 
 { #category : #accessing }

@@ -24,7 +24,6 @@ SHRBTextStylerTest >> style: aText [
 	ast := self class compiler
 		source: aText asString;
 		noPattern: false ;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	styler style: aText ast: ast.
 

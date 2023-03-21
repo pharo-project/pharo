@@ -476,7 +476,8 @@ CompiledMethodTest >> testIsFaulty [
 	|  cm |
 	cm := OpalCompiler new
 				source: 'method 3+';
-				options: #(+ optionParseErrors +optionEmbeddSources);
+				permitFaulty: true;
+				options: #(+ #optionEmbeddSources );
 				compile.
 	self assert: cm isFaulty.
 	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty

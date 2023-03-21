@@ -44,7 +44,6 @@ PharoDocCommentExpression >> expressionNodeReal [
 		  source: self source;
 		  noPattern: true;
 		  receiver: self methodClass;
-		  options: #( + optionParseErrors );
 		  parse
 ]
 

@@ -91,7 +91,6 @@ ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
 		  source: self pendingText;
-		  options: #( + optionParseErrors + optionSkipSemanticWarnings );
 		  parse
 ]
 

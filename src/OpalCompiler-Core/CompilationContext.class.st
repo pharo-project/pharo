@@ -34,7 +34,8 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope'
+		'semanticScope',
+		'permitFaulty'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -639,6 +640,9 @@ CompilationContext >> optionSkipSemanticWarnings [
 
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
+
+	(optionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
+
 	options parseOptions: optionsArray
 ]
 
@@ -650,6 +654,18 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> permitFaulty [
+
+	^ permitFaulty
+]
+
+{ #category : #accessing }
+CompilationContext >> permitFaulty: anObject [
+
+	permitFaulty := anObject
 ]
 
 { #category : #accessing }

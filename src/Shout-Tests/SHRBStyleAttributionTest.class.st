@@ -46,7 +46,6 @@ SHRBStyleAttributionTest >> style: aText [
 		       source: aText asString;
 		       noPattern: false;
 		       class: self class;
-		       options: #( + optionParseErrors + optionSkipSemanticWarnings );
 		       parse.
 	styler style: aText ast: ast.
 

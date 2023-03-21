@@ -613,7 +613,6 @@ CompiledMethod >> isFaulty [
 		"Warning, the following does not work for doit methods because this assumes `noPrefix:false` "
 		ast := self methodClass compiler
 				source: self sourceCode;
-				options: #(+ optionParseErrors );
 				parse ].
 	^ ast isFaulty
 ]
