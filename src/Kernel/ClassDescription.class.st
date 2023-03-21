@@ -731,7 +731,10 @@ ClassDescription >> isMeta [
 
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
-	^self tags includes: aSymbol
+
+	^ self packageTag
+		  ifNil: [ false ]
+		  ifNotNil: [ :tag | tag = aSymbol ]
 ]
 
 { #category : #private }
@@ -1147,14 +1150,15 @@ ClassDescription >> tagWith: aSymbol [
 
 { #category : #'accessing - tags' }
 ClassDescription >> tags [
+
 	| packageTag |
 	"Any class or trait could be tagged by multiple symbols for user purpose.
 	For now we only define API to manage them on top of RPackageTag"
 	packageTag := self package classTagForClass: self.
-	packageTag ifNil: [ ^#() ].
-	packageTag isRoot ifTrue: [ ^#() ].
+	packageTag ifNil: [ ^ #(  ) ].
+	packageTag isRoot ifTrue: [ ^ #(  ) ].
 
-	^{packageTag name}
+	^ { packageTag name }
 ]
 
 { #category : #'accessing - tags' }

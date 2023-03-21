@@ -476,12 +476,10 @@ RPackage >> definedClassNames [
 
 { #category : #accessing }
 RPackage >> definedClasses [
+
 	| definedClasses |
-	definedClasses := Set new.
-	classes do: [:each |
-		Smalltalk globals
-			at: each
-			ifPresent: [:aClass| definedClasses add: aClass ]].
+	definedClasses := Set new: classes size.
+	classes do: [ :each | Smalltalk globals at: each ifPresent: [ :aClass | definedClasses add: aClass ] ].
 	^ definedClasses
 ]
 
@@ -1466,9 +1464,10 @@ RPackage >> tagsForClasses [
 
 { #category : #private }
 RPackage >> toTagName: aSymbol [
-	^ (aSymbol beginsWith: self name asString, '-')
-		ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
-		ifFalse: [ aSymbol ]
+
+	^ (aSymbol beginsWith: self name asString , '-')
+		  ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
+		  ifFalse: [ aSymbol ]
 ]
 
 { #category : #register }
