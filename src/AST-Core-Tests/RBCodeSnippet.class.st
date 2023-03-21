@@ -513,16 +513,14 @@ RBCodeSnippet class >> styleAllWithError [
 				].
 
 		"Then the fun part. Add line for each node with error or warning"
-		ast := each doSemanticAnalysis. 
+		ast := each doSemanticAnalysis.
 		ast nodesPostorderDo: [ :node |
 			node notices do: [ :notice |
-				text := each textWithNode: node message: notice messageText.
+				text := each textWithNode: node message: notice messageText at: notice position.
 				bigtext append: String cr.
 				bigtext append: String tab.
 				bigtext append: text.
-				bigtext append: '   '.
-				bigtext append: (node class name asText makeAllColor: Color gray).
-				bigtext append: (' (semanticWarning)' asText makeAllColor: Color gray).
+				bigtext append: (('   {1} ({2})' format: {node class name. notice class name}) asText makeAllColor: Color gray)
 			] ] ].
 	bigtext inspect
 ]
@@ -690,25 +688,18 @@ RBCodeSnippet >> source: anObject [
 ]
 
 { #category : #inspecting }
-RBCodeSnippet >> textWithNode: aNode message: aString [
+RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 
-	| text stop |
+	| text |
 	text := self styledText.
-	stop := aNode stop min: text size.
 	"Highlight the error node background"
 	text
 		addAttribute: (TextBackgroundColor color: Color cyan)
 		from: aNode start
-		to: stop.
-	"Insert the message after the stop so that:
-	 1. we can see where are zero-width errors
-	 2. we have the same output than the compiler error (above)"
-	stop := aNode isParseError
-		ifTrue: [ aNode errorPosition ifNil: [ aNode stop + 1 ] ]
-		ifFalse: [ aNode stop + 1 "after" ].
+		to: aNode stop.
 	text
-		replaceFrom: stop
-		to: stop - 1
+		replaceFrom: aPosition
+		to: aPosition - 1
 		with: (aString asText addAttribute:
 				 (TextBackgroundColor color: Color lightBlue)).
 	^ text
