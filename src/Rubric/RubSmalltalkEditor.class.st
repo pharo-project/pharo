@@ -393,11 +393,6 @@ RubSmalltalkEditor >> computeSelectionIntervalForCurrentLine [
 ]
 
 { #category : #private }
-RubSmalltalkEditor >> computeSelectionIntervalFromCodeIn: aString at: anInterval [
-	^ (RBParser parseExpression: (aString copyFrom: anInterval first to: anInterval last)) sourceInterval
-]
-
-{ #category : #private }
 RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInterval [
 	| comment commentInterval |
 	comment := (RBScanner on: (aString copyFrom: anInterval first to: anInterval last) readStream) getComments.
