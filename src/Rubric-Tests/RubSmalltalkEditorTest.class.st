@@ -99,6 +99,15 @@ RubSmalltalkEditorTest >> assertNodeError [
 ]
 
 { #category : #assertions }
+RubSmalltalkEditorTest >> assertNodeReturn [
+	| node |
+
+	node := self executeBestNodeFor: '^'.
+
+	self assert: node isReturn
+]
+
+{ #category : #assertions }
 RubSmalltalkEditorTest >> assertNodeSelector: aSelector [
 	| node |
 
@@ -464,7 +473,7 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPostionOnMethodPeriodEnd [
 
 	self
 		positionAfter: '9.';
-		assertNodeValue: 9
+		assertNodeReturn
 ]
 
 { #category : #'tests - bestNodeIn' }
@@ -487,7 +496,7 @@ RubSmalltalkEditorTest >> testBestNodeWithValidPostionOnStatementPeriodEnd [
 
 	self
 		positionAfter: '3.';
-		assertNodeValue: 3
+		assertNodeSelector: #/
 ]
 
 { #category : #'tests - bestNodeIn' }
