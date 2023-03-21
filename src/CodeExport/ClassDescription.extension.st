@@ -144,6 +144,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> selectorsToFileOutCategory: aSymbol [
-	^ self organization listAtCategoryNamed: aSymbol
+ClassDescription >> selectorsToFileOutCategory: protocolName [
+
+	^ self organization methodsInProtocolNamed: protocolName
 ]

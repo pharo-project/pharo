@@ -43,6 +43,13 @@ SystemOrganizer >> includesCategory: packageName [
 ]
 
 { #category : #'*Deprecated12' }
+SystemOrganizer >> listAtCategoryNamed: packageName [
+
+	self deprecated: 'Use #classNamesInPackageNamed: instead' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv classNamesInPackageNamed: `@arg'.
+	^ self classNamesInPackageNamed: packageName
+]
+
+{ #category : #'*Deprecated12' }
 SystemOrganizer >> removeCategoriesMatching: matchString [
 
 	self deprecated: 'Use #removePackageNamesMatching: instead' transformWith: '`@rcv removeCategoriesMatching: `@arg' -> '`@rcv removePackageNamesMatching: `@arg'.

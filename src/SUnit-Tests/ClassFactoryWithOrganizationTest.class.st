@@ -69,10 +69,11 @@ ClassFactoryWithOrganizationTest >> testDefaultCategoryCleanUp [
 
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> testMultipleClassCreation [
+
 	5 timesRepeat: [ factory newClass ].
 	self assert: (self testedEnvironment allClasses includesAll: factory createdClasses).
 	self assert: factory createdClassNames asSet size equals: 5.
-	self assert: (self testedOrganization listAtCategoryNamed: factory defaultCategory) asSet equals: factory createdClassNames asSet.
+	self assert: (self testedOrganization classNamesInPackageNamed: factory defaultCategory) asSet equals: factory createdClassNames asSet.
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]
 
@@ -93,24 +94,26 @@ ClassFactoryWithOrganizationTest >> testPackageCleanUp [
 
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> testSingleClassCreation [
+
 	| class elementsInCategoryForTest |
 	class := factory newSubclassOf: Object instanceVariableNames: 'a b c' classVariableNames: 'X Y'.
 	self assert: (self testedEnvironment allClasses includes: class).
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ].
-	elementsInCategoryForTest := self testedOrganization listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: {class name}.
-	self assert: class instVarNames equals: #(a b c).
-	self assert: class classPool keys asSet equals: #(X Y) asSet
+	elementsInCategoryForTest := self testedOrganization classNamesInPackageNamed: factory defaultCategory.
+	self assert: elementsInCategoryForTest equals: { class name }.
+	self assert: class instVarNames equals: #( a b c ).
+	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]
 
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> testSingleClassFastCreation [
+
 	| class elementsInCategoryForTest |
 	class := factory newClass.
 	self assert: (self testedEnvironment allClasses includes: class).
-	elementsInCategoryForTest := self testedOrganization listAtCategoryNamed: factory defaultCategory.
+	elementsInCategoryForTest := self testedOrganization classNamesInPackageNamed: factory defaultCategory.
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ].
-	self assert: elementsInCategoryForTest equals: {class name}.
+	self assert: elementsInCategoryForTest equals: { class name }.
 	self assertEmpty: class instVarNames.
 	self assertEmpty: class classPool
 ]

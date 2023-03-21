@@ -36,6 +36,13 @@ SystemOrganizer >> addPackageNamed: packageName [
 ]
 
 { #category : #queries }
+SystemOrganizer >> classNamesInPackageNamed: packageName [
+	"Answer classes names into packageName."
+
+	^ (packagesMap at: packageName ifAbsent: [ Array new ]) asArray
+]
+
+{ #category : #queries }
 SystemOrganizer >> classesInPackageNamed: packageName [
 
 	^ (self listAtCategoryNamed: packageName) collect: [ :className | self environment at: className ]
@@ -88,20 +95,13 @@ SystemOrganizer >> initialize [
 ]
 
 { #category : #queries }
-SystemOrganizer >> listAtCategoryNamed: packageName [
-	"Answer classes names into packageName."
-
-	^ (packagesMap at: packageName ifAbsent: [ Array new ]) asArray
-]
-
-{ #category : #queries }
 SystemOrganizer >> orderedTraitsIn: packageName [
 	"Answer an OrderedCollection containing references to the traits in the
 	category whose name is the argument, category (a string). The traits
 	are ordered so they can be filed in."
 
 	| behaviors traits |
-	behaviors := (self listAtCategoryNamed: packageName) collect: [ :title | self environment at: title ].
+	behaviors := (self classNamesInPackageNamed: packageName) collect: [ :title | self environment at: title ].
 	traits := behaviors select: [ :each | each isTrait ].
 	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
 	^ traits asArray
@@ -198,7 +198,7 @@ SystemOrganizer >> superclassOrder: packageName [
 	are ordered with superclasses first so they can be filed in."
 
 	| behaviors classes |
-	behaviors := (self listAtCategoryNamed: packageName) collect: [ :title | self environment at: title ].
+	behaviors := (self classNamesInPackageNamed: packageName) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes
 ]

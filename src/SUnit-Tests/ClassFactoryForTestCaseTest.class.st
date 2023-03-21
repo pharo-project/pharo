@@ -93,10 +93,11 @@ ClassFactoryForTestCaseTest >> testDuplicateClassWithNewName [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testMultipleClassCreation [
+
 	5 timesRepeat: [ factory newClass ].
 	self assert: (SystemNavigation new allClasses includesAll: factory createdClasses).
 	self assert: factory createdClassNames asSet size equals: 5.
-	self assert: (SystemOrganization listAtCategoryNamed: factory defaultCategory) asSet equals: factory createdClassNames asSet
+	self assert: (SystemOrganization classNamesInPackageNamed: factory defaultCategory) asSet equals: factory createdClassNames asSet
 ]
 
 { #category : #testing }
@@ -116,22 +117,24 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testSingleClassCreation [
+
 	| class elementsInCategoryForTest |
 	class := factory newSubclassOf: Object instanceVariableNames: 'a b c' classVariableNames: 'X Y'.
 	self assert: (SystemNavigation new allClasses includes: class).
-	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: {class name}.
-	self assert: class instVarNames equals: #(a b c).
-	self assert: class classPool keys asSet equals: #(X Y) asSet
+	elementsInCategoryForTest := SystemOrganization classNamesInPackageNamed: factory defaultCategory.
+	self assert: elementsInCategoryForTest equals: { class name }.
+	self assert: class instVarNames equals: #( a b c ).
+	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testSingleClassFastCreation [
+
 	| class elementsInCategoryForTest |
 	class := factory newClass.
 	self assert: (SystemNavigation new allClasses includes: class).
-	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: {class name}.
+	elementsInCategoryForTest := SystemOrganization classNamesInPackageNamed: factory defaultCategory.
+	self assert: elementsInCategoryForTest equals: { class name }.
 	self assertEmpty: class instVarNames.
 	self assertEmpty: class classPool
 ]

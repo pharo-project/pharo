@@ -281,12 +281,10 @@ Class >> category [
 	(latter is much more expensive)"
 
 	| result |
-	self basicCategory ifNotNil: [ :symbol |
-		((self environment organization listAtCategoryNamed: symbol) includes: self name)
-			ifTrue: [ ^symbol ] ].
-	result := (self environment organization categoryOfElement: self name)
-		ifNil: [ #Unclassified ]
-		ifNotNil: [:value | value].
+	self basicCategory ifNotNil: [ :symbol | ((self environment organization classNamesInPackageNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
+	result := (self environment organization packageNameOfElement: self name)
+		          ifNil: [ #Unclassified ]
+		          ifNotNil: [ :value | value ].
 	self basicCategory: result.
 
 	^ result
