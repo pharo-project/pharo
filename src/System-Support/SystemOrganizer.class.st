@@ -15,7 +15,7 @@ Class {
 
 { #category : #cleanup }
 SystemOrganizer class >> cleanUp: agressive [
-	"Remove empty categories when cleaning aggressively"
+	"Remove empty packages when cleaning aggressively"
 
 	agressive ifTrue: [ SystemOrganization removeEmptyPackages ]
 ]
@@ -75,7 +75,7 @@ SystemOrganizer >> environment: aSystemDictionary [
 ]
 
 { #category : #testing }
-SystemOrganizer >> includesCategory: packageName [
+SystemOrganizer >> includesPackageNamed: packageName [
 
 	^ self packageNames includes: packageName
 ]

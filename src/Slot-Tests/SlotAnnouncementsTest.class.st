@@ -171,11 +171,11 @@ SlotAnnouncementsTest >> testClassAddedToNewCategoryShouldAnnounceCategoryAdded 
 
 	self subscribeOn: CategoryAdded.
 
-	self deny: (self class environment organization includesCategory: self aCategory).
+	self deny: (self class environment organization includesPackageNamed: self aCategory).
 
 	self createClass.
 
-	self assert: (self class environment organization includesCategory: self aCategory).
+	self assert: (self class environment organization includesPackageNamed: self aCategory).
 
 	self assert: self collectedAnnouncements size equals: 1
 ]

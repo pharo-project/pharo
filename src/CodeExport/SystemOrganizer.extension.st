@@ -2,8 +2,8 @@ Extension { #name : #SystemOrganizer }
 
 { #category : #'*CodeExport' }
 SystemOrganizer >> fileOutPackageNamed: packageName [
-	"Store on the file named category (a string) concatenated with '.st' all the
-	classes associated with the category."
+	"Store on the file named packageName (a string) concatenated with '.st' all the
+	classes associated with the package name."
 
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.

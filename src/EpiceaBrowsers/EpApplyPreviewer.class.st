@@ -34,7 +34,7 @@ EpApplyPreviewer >> environment: anObject [
 { #category : #private }
 EpApplyPreviewer >> includesCategory: aString [
 
-	^ self environment organization includesCategory: aString
+	^ self environment organization includesPackageNamed: aString
 ]
 
 { #category : #visitor }

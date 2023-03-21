@@ -42,9 +42,9 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 	organization removePackageNamed: aCategory.
 
 	self assert: inputEntry content class equals: EpCategoryAddition.
-	self deny: (organization includesCategory: aCategory).
+	self deny: (organization includesPackageNamed: aCategory).
 	self applyInputEntry.
-	self assert: (organization includesCategory: aCategory)
+	self assert: (organization includesPackageNamed: aCategory)
 ]
 
 { #category : #tests }
@@ -59,9 +59,9 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 	organization addPackageNamed: aCategory.
 
 	self assert: inputEntry content class equals: EpCategoryRemoval.
-	self assert: (organization includesCategory: aCategory).
+	self assert: (organization includesPackageNamed: aCategory).
 	self applyInputEntry.
-	self deny: (organization includesCategory: aCategory)
+	self deny: (organization includesPackageNamed: aCategory)
 ]
 
 { #category : #tests }
@@ -77,11 +77,11 @@ EpApplyTest >> testCategoryRename [
 	organization renamePackageNamed: anotherCategory to: aCategory. "Rollback"
 
 	self assert: inputEntry content class equals: EpCategoryRename.
-	self assert: (organization includesCategory: aCategory).
-	self deny: (organization includesCategory: anotherCategory).
+	self assert: (organization includesPackageNamed: aCategory).
+	self deny: (organization includesPackageNamed: anotherCategory).
 	self applyInputEntry.
-	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory)
+	self deny: (organization includesPackageNamed: aCategory).
+	self assert: (organization includesPackageNamed: anotherCategory)
 ]
 
 { #category : #tests }

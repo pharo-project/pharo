@@ -11,7 +11,7 @@ MCOrganizationTest >> testLoadAndUnload [
 	category := 'TestPackageToUnload'.
 	SystemOrganization addPackageNamed: category.
 	(MCOrganizationDefinition categories: { category }) unload.
-	self deny: (SystemOrganization includesCategory: category)
+	self deny: (SystemOrganization includesPackageNamed: category)
 ]
 
 { #category : #tests }

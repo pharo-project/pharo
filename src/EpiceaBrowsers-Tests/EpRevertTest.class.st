@@ -67,9 +67,9 @@ EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
 	organization addPackageNamed: aCategory.
 	self setHeadAsInputEntry.
 
-	self assert: (organization includesCategory: aCategory).
+	self assert: (organization includesPackageNamed: aCategory).
 	self revertInputEntry.
-	self deny: (organization includesCategory: aCategory)
+	self deny: (organization includesPackageNamed: aCategory)
 ]
 
 { #category : #tests }
@@ -82,9 +82,9 @@ EpRevertTest >> testCategoryRemovalWithCategoryAdded [
 	organization removePackageNamed: aCategory.
 	self setHeadAsInputEntry.
 
-	self deny: (organization includesCategory: aCategory).
+	self deny: (organization includesPackageNamed: aCategory).
 	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory)
+	self assert: (organization includesPackageNamed: aCategory)
 ]
 
 { #category : #tests }
@@ -99,11 +99,11 @@ EpRevertTest >> testCategoryRename [
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpCategoryRename.
-	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory).
+	self deny: (organization includesPackageNamed: aCategory).
+	self assert: (organization includesPackageNamed: anotherCategory).
 	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory).
-	self deny: (organization includesCategory: anotherCategory)
+	self assert: (organization includesPackageNamed: aCategory).
+	self deny: (organization includesPackageNamed: anotherCategory)
 ]
 
 { #category : #tests }
