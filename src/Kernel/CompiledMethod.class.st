@@ -340,7 +340,8 @@ CompiledMethod >> cachePragmas [
 { #category : #'accessing - backward compatible' }
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
-	^ self methodClass organization categoryOfElement: self selector
+
+	^ self methodClass organization protocolNameOfElement: self selector
 ]
 
 { #category : #accessing }
@@ -604,10 +605,15 @@ CompiledMethod >> isFaulty [
 	| ast |
 	"fast pre-check: all methods with syntax errors reference this symbol"
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
-	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
-	ast := self methodClass compiler
+
+	"Check the ast in cache, if any"
+	ast := self propertyAt: #ast ifAbsent: [].
+
+	ast ifNil: [
+		"Warning, the following does not work for doit methods because this assumes `noPrefix:false` "
+		ast := self methodClass compiler
 				source: self sourceCode;
-				parse.
+				parse ].
 	^ ast isFaulty
 ]
 

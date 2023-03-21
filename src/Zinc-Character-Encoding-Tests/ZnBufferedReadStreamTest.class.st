@@ -7,7 +7,7 @@ Class {
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedReadStreamTest >> testBuffering [
 	| stream |
 	stream := ZnBufferedReadStream on: '01234567890123456789' readStream.
@@ -19,7 +19,7 @@ ZnBufferedReadStreamTest >> testBuffering [
 	self assert: stream atEnd
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedReadStreamTest >> testPeek [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -33,7 +33,7 @@ ZnBufferedReadStreamTest >> testPeek [
 	self assert: stream next isNil
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedReadStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -49,7 +49,7 @@ ZnBufferedReadStreamTest >> testReadInto [
 	self assert: buffer equals: '789123'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedReadStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -60,7 +60,7 @@ ZnBufferedReadStreamTest >> testReadIntoLarger [
 	self assert: buffer equals: '0123456789'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedReadStreamTest >> testReadUpTo [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -70,7 +70,7 @@ ZnBufferedReadStreamTest >> testReadUpTo [
 	self assert: stream atEnd
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedReadStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.

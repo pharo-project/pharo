@@ -35,37 +35,25 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
-	oldProtocol := self organization categoryOfElement: selector.
+	oldProtocol := self organization protocolNameOfElement: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self organization
-			classify: selector
-			under: (protocol = Protocol unclassified
-				ifTrue: [ oldProtocol ]
-				ifFalse: [ protocol ]) ].
-	newProtocol := self organization categoryOfElement: selector.
+		self organization classify: selector under: (protocol = Protocol unclassified
+				 ifTrue: [ oldProtocol ]
+				 ifFalse: [ protocol ]) ].
+	newProtocol := self organization protocolNameOfElement: selector.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethodOrNil isNil or: [ priorOriginOrNil ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifFalse: [
-			"If protocol changed and someone is from different package, I need to throw a method recategorized"
+		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			self
 				notifyRepackage: selector
 				method: compiledMethod
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance
-				methodChangedFrom: priorMethodOrNil
-				to: compiledMethod
-				oldProtocol: oldProtocol ]
-]
-
-{ #category : #organization }
-ClassDescription >> addCategory: newName before: aCategory [
-
-	^ self organization addCategory: newName before: aCategory
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -79,7 +67,8 @@ ClassDescription >> addInstVarNamed: aString [
 ClassDescription >> addMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods"
-	self organization addCategory: aSymbol
+
+	self organization addProtocolNamed: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -137,9 +126,9 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 	lowercaseSortBlock  := [ :a :b | a asLowercase <= b asLowercase ].
 
 	(self allSuperclassesIncluding: mostGenericClass) do: [ :aClass |
-		 otherClassCategories addAll: aClass organization categories ].
+		 otherClassCategories addAll: aClass organization protocolNames ].
 	otherClassCategories remove: 'no messages' ifAbsent: [  ].
-	thisClassCategories := self organization categories sorted: lowercaseSortBlock.
+	thisClassCategories := self organization protocolNames sorted: lowercaseSortBlock.
 
 	^ thisClassCategories , ((otherClassCategories asSet removeAllSuchThat: [ :each |
 								thisClassCategories includes: each ]) sorted: lowercaseSortBlock)
@@ -150,8 +139,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^self withAllSuperclasses
-		flatCollectAsSet: [ :class | class organization listAtCategoryNamed: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodsInProtocolNamed: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -471,7 +459,7 @@ ClassDescription >> copy: selector from: class classified: protocolName [
 	sourceCode := class sourceCodeAt: selector.
 	sourceCode ifNotNil: [
 		protocol := protocolName
-			            ifNil: [ class organization categoryOfElement: selector ]
+			            ifNil: [ class organization protocolNameOfElement: selector ]
 			            ifNotNil: [ protocolName ].
 		(self includesLocalSelector: selector) ifTrue: [
 			sourceCode asString = (self sourceCodeAt: selector) asString ifFalse: [ self error: self name , ' ' , selector , ' will be redefined if you proceed.' ] ].
@@ -503,7 +491,7 @@ ClassDescription >> copyAllCategoriesFrom: aClass [
 	these protocols into the method dictionary of the receiver, classified
 	under the appropriate protocol."
 
-	aClass organization categories do: [ :protocolName | self copyCategory: protocolName from: aClass ]
+	aClass organization protocolNames do: [ :protocolName | self copyCategory: protocolName from: aClass ]
 ]
 
 { #category : #copying }
@@ -518,7 +506,7 @@ ClassDescription >> copyCategory: protocolName from: class [
 ClassDescription >> copyCategory: protocolName from: aClass classified: newProtocolName [
 	"Move all methods in the protocol 'protocolName' of aClass into a protocol named 'newProtocolName'"
 
-	self copyAll: (aClass organization listAtCategoryNamed: protocolName) from: aClass classified: newProtocolName
+	self copyAll: (aClass organization methodsInProtocolNamed: protocolName) from: aClass classified: newProtocolName
 ]
 
 { #category : #slots }
@@ -767,8 +755,7 @@ ClassDescription >> localSlots [
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self organization listAtCategoryNamed: aString)
-			collect: [ :each | (self compiledMethodAt: each) ]
+	^ (self organization methodsInProtocolNamed: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -958,18 +945,16 @@ ClassDescription >> removeMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods.
 	Here we could remove what we not need"
-	self organization removeCategory: aSymbol
+	self organization removeProtocolNamed: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> removeProtocol: aString [
+ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
 	dictionary of the receiver. Then remove the category aString."
-	| categoryName |
-	categoryName := aString asSymbol.
-	(self organization listAtCategoryNamed: categoryName) do:
-		[:sel | self removeSelector: sel].
-	self organization removeCategory: categoryName
+
+	(self organization methodsInProtocolNamed: protocolName) do: [ :sel | self removeSelector: sel ].
+	self organization removeProtocolNamed: protocolName
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -1005,18 +990,14 @@ ClassDescription >> reorganize [
 ClassDescription >> selectorsInCategory: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	| aColl |
-	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
-	^ aColl asArray sort
+	^ (self organization methodsInProtocolNamed: aName) asSet asArray sort
 ]
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInProtocol: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	| aColl |
-	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
-	^ aColl asArray sort
+	^ (self organization methodsInProtocolNamed: aName) asSet asArray sort
 ]
 
 { #category : #'pool variable' }
@@ -1249,7 +1230,7 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 	"Answer the category of the argument, aSelector, in the organization of
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	^self organization categoryOfElement: aSelector
+	^ self organization protocolNameOfElement: aSelector
 ]
 
 { #category : #queries }

@@ -29,11 +29,10 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
 	| org |
-	(org := self organization) categories
-		do: [ :cat |
-			| sels |
-			sels := (org listAtCategoryNamed: cat) select: [ :sel | aSet includes: sel ].
-			sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
+	(org := self organization) protocolNames do: [ :cat |
+		| sels |
+		sels := (org methodsInProtocolNamed: cat) select: [ :sel | aSet includes: sel ].
+		sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
 ]
 
 { #category : #'*CodeExport' }
@@ -72,10 +71,10 @@ ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
 
 	"we for now file out old style class definitions"
+
 	aFileStream nextChunkPut: self oldPharoDefinition.
 	self organization putCommentOnFile: aFileStream forClass: self.
-	self organization categories
-		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]
+	self organization protocolNames do: [ :protocolName | self fileOutLocalMethodsInCategory: protocolName on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
@@ -111,7 +110,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	"Copy the source code for the method associated with selector onto the fileStream."
 
 	| preamble method |
-	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
+	preamble := self name, ' methodsFor: ', (self organization protocolNameOfElement: selector) asString printString.
 	method := self methodDict
 		at: selector
 		ifAbsent: [

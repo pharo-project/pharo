@@ -647,8 +647,8 @@ RBBrowserEnvironment >> problemCount [
 
 { #category : #accessing }
 RBBrowserEnvironment >> protocolsFor: aClass [
-	^aClass organization categories
-		select: [ :each | self includesProtocol: each in: aClass ]
+
+	^ aClass organization protocolNames select: [ :each | self includesProtocol: each in: aClass ]
 ]
 
 { #category : #queries }
@@ -773,8 +773,8 @@ RBBrowserEnvironment >> selectorsDo: aBlock [
 
 { #category : #accessing }
 RBBrowserEnvironment >> selectorsFor: aProtocol in: aClass [
-	^(aClass organization listAtCategoryNamed: aProtocol)
-		select: [:each | self includesSelector: each in: aClass]
+
+	^ (aClass organization methodsInProtocolNamed: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
 ]
 
 { #category : #accessing }
@@ -877,7 +877,8 @@ RBBrowserEnvironment >> whichCategoryIncludes: aClassName [
 
 { #category : #accessing }
 RBBrowserEnvironment >> whichProtocolIncludes: aSelector in: aClass [
-	^aClass organization categoryOfElement: aSelector ifAbsent: [ Protocol unclassified ]
+
+	^ aClass organization protocolNameOfElement: aSelector ifAbsent: [ Protocol unclassified ]
 ]
 
 { #category : #environments }

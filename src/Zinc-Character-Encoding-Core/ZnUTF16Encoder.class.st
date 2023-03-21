@@ -35,24 +35,42 @@ ZnUTF16Encoder >> back16BitWordOnStream: stream [
 		ifFalse: [ firstByte + (secondByte << 8) ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF16Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
 	| word |
 	word := self back16BitWordOnStream: stream.
-	(word < 16rD800 or: [ word > 16rDBFF ])
-		ifFalse: [
+	(self isSurrogateCodePoint: word)
+		ifTrue: [
 			self back16BitWordOnStream: stream ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF16Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
 	codePoint <= 65535 ifTrue: [ ^ 2 ].
 	codePoint <= self maximumUTFCode ifTrue: [ ^ 4 ].
 	self errorOutsideRange
+]
+
+{ #category : #'encoding - decoding' }
+ZnUTF16Encoder >> ensureAtBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further backwards. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	| word |
+	"Each code point is encoded using words of 2 bytes, move backwards until our position is divisible by 2"
+	[ stream position \\ 2 = 0 ] whileFalse: [ stream back ].
+	"Now read the next word and back up"
+	word := self read16BitWordFromStream: stream.
+	self back16BitWordOnStream: stream.
+	"If it is a low or trailing surrogate, move another word backwards until the high or leading surrogate"
+	(word between: 16rDC00 and: 16rDFFF)
+		ifTrue: [
+			self back16BitWordOnStream: stream ]
 ]
 
 { #category : #'error handling' }
@@ -65,7 +83,14 @@ ZnUTF16Encoder >> identifier [
 	^ #utf16
 ]
 
-{ #category : #converting }
+{ #category : #testing }
+ZnUTF16Encoder >> isFixedLength [
+	"Return true when I am a fixed length encoding"
+
+	^ false
+]
+
+{ #category : #'encoding - decoding' }
 ZnUTF16Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
@@ -83,7 +108,7 @@ ZnUTF16Encoder >> nextCodePointFromStream: stream [
 			16r10000 + code ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
@@ -123,6 +148,24 @@ ZnUTF16Encoder >> read16BitWordFromStream: stream [
 	^ self isBigEndian
 		ifTrue: [ secondByte + (firstByte << 8) ]
 		ifFalse: [ firstByte + (secondByte << 8) ]
+]
+
+{ #category : #'encoding - decoding' }
+ZnUTF16Encoder >> skipToBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further forward. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	| word |
+	"Each code point is encoded using words of 2 bytes, move forward until our position is divisible by 2"
+	[ stream position \\ 2 = 0 ] whileFalse: [ stream next ].
+	"Now read the next word and back up"
+	word := self read16BitWordFromStream: stream.
+	self back16BitWordOnStream: stream.
+	"If it is a low or trailing surrogate, move another word forward until the high or leading surrogate"
+	(word between: 16rDC00 and: 16rDFFF)
+		ifTrue: [
+			self read16BitWordFromStream: stream ]
 ]
 
 { #category : #private }

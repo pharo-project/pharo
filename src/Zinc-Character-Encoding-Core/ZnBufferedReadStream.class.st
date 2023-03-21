@@ -41,6 +41,20 @@ ZnBufferedReadStream >> atEnd [
 	^ position > limit and: [ stream atEnd ]
 ]
 
+{ #category : #accessing }
+ZnBufferedReadStream >> back [
+	"Move backwards one element and return it"
+
+	^ position > limit
+		ifTrue: [
+			stream back ]
+		ifFalse: [ | char |
+			position = 1 ifTrue: [ self error: 'Cannot move back from beginning' ].
+			char := buffer at: position.
+			position := position - 1.
+			char ]
+]
+
 { #category : #'initialize-release' }
 ZnBufferedReadStream >> close [
 	stream close

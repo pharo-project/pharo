@@ -37,12 +37,12 @@ ZnEndianSensitiveUTFEncoder >> = anObject [
 	^ super = anObject and: [ self endianness == anObject endianness ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnEndianSensitiveUTFEncoder >> beBigEndian [
 	endianness := #big
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnEndianSensitiveUTFEncoder >> beLittleEndian [
 	endianness := #little
 ]

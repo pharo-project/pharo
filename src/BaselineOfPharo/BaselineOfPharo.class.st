@@ -16,14 +16,21 @@ BaselineOfPharo class >> beautifulCommentsRepository [
 { #category : #'external projects' }
 BaselineOfPharo class >> declareExternalProjects [
 
-	^ { 
+	^ {
 	PharoExternalProject newName: 'Iceberg' owner: 'pharo-vcs' project: 'iceberg' version: 'dev-2.0' sourceDir: nil.
 	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'Pharo11'.
-	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo11'.	
-	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.	
-	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.	
+	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo11'.
+	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'integration'.
+	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'integration'.
+	PharoExternalProject newName: 'DocumentBrowser' owner: 'pharo-spec' project: 'NewTools-DocumentBrowser' version: 'integration'.
 	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9m' 
 	 }
+]
+
+{ #category : #'repository urls' }
+BaselineOfPharo class >> documentBrowserRepository [
+
+	^ (self externalProjectNamed: 'DocumentBrowser') repository
 ]
 
 { #category : #'external projects' }
@@ -85,6 +92,7 @@ BaselineOfPharo >> baseline: spec [
 			spec repository: repository; loads: #('IcebergSupport'). ].
 		
 		spec package: 'Deprecated11'.
+		spec package: 'Deprecated12'.
 		
 		spec package: 'FluidClassBuilder'.
 		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].

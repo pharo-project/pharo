@@ -251,10 +251,18 @@ OpalCompiler >> compilationContextClass: aClass [
 { #category : #'public access' }
 OpalCompiler >> compile [
 
-	| result |
+	| result keep method |
 	result := self parseForRequestor.
 	ast ifNil: [ ^ result ]. "some failBlock"
-	^ self semanticScope compileMethodFromASTBy: self
+
+	"We need to keep information (source and ast) on doit method and faulty code,
+	 because decompilation is not reliable and those will likely not be installed in a class."
+	keep := compilationContext noPattern or: [ ast isFaulty ].
+	keep ifTrue: [ compilationContext parseOptions: #( + #optionEmbeddSources ) ].
+	self callPlugins.
+	method := ast generateMethod.
+	keep ifTrue: [ method propertyAt: #ast put: ast ].
+	^ method
 ]
 
 { #category : #'public access' }
@@ -263,20 +271,6 @@ OpalCompiler >> compile: textOrString [
 	^self
 		source: textOrString;
 		compile
-]
-
-{ #category : #private }
-OpalCompiler >> compileDoItFromAST [
-	| method |
-	method := self compileMethodFromAST.
-	method propertyAt: #ast put: ast.
-	^method
-]
-
-{ #category : #private }
-OpalCompiler >> compileMethodFromAST [
-	self callPlugins.
-	^ast generateMethod
 ]
 
 { #category : #accessing }

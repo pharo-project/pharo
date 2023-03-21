@@ -225,7 +225,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 		classify: aSelector
 		inProtocolNamed: aCompiledMethod category asSymbol.
 
-	aClass organization removeEmptyCategories.
+	aClass organization removeEmptyProtocols.
 
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
 

@@ -176,7 +176,7 @@ DebugContext >> selectedClass [
 DebugContext >> selectedMessageCategoryName [
 	"Answer the name of the message category of the message of the current context."
 
-	^ self selectedClass organization categoryOfElement: self selectedMessageName
+	^ self selectedClass organization protocolNameOfElement: self selectedMessageName
 ]
 
 { #category : #accessing }
