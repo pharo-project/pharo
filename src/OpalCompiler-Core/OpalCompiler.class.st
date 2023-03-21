@@ -273,20 +273,6 @@ OpalCompiler >> compile: textOrString [
 		compile
 ]
 
-{ #category : #private }
-OpalCompiler >> compileDoItFromAST [
-	| method |
-	method := self compileMethodFromAST.
-	method propertyAt: #ast put: ast.
-	^method
-]
-
-{ #category : #private }
-OpalCompiler >> compileMethodFromAST [
-	self callPlugins.
-	^ast generateMethod
-]
-
 { #category : #accessing }
 OpalCompiler >> compiledMethodClass: aClass [
 
