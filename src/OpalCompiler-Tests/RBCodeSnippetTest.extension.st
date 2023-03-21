@@ -8,6 +8,19 @@ RBCodeSnippetTest >> testCompile [
 	self skipIf: #compile.
 	method := snippet compile.
 	self assert: method isCompiledMethod.
+
+	snippet isFaulty
+		ifTrue: [
+			| ast |
+			self assert: method hasSourceCode.
+			self assert: method sourceCode equals: snippet source.
+			ast := method propertyAt: #ast.
+			self assert: ast isFaulty.
+
+			"Some faulty AST can produce non faulty method where no `signalSyntaxError:` is present"
+			self assert: method isFaulty equals: snippet hasValue not]
+		ifFalse: [
+			self deny: method isFaulty ].
 	self testExecute: method
 ]
 
