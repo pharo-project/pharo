@@ -87,15 +87,6 @@ SystemOrganizer >> initialize [
 	packagesMap := Dictionary new
 ]
 
-{ #category : #testing }
-SystemOrganizer >> isEmptyCategoryNamed: packageName [
-
-	^ packagesMap
-		  at: packageName
-		  ifPresent: [ :classes | classes isEmpty ]
-		  ifAbsent: [ false ]
-]
-
 { #category : #queries }
 SystemOrganizer >> listAtCategoryNamed: packageName [
 	"Answer classes names into packageName."

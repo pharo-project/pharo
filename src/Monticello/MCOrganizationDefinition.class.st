@@ -147,5 +147,5 @@ MCOrganizationDefinition >> summary [
 { #category : #unloading }
 MCOrganizationDefinition >> unload [
 
-	categories do: [ :pacakgeName | (SystemOrganization isEmptyCategoryNamed: pacakgeName) ifTrue: [ SystemOrganization removePackageNamed: pacakgeName ] ]
+	categories do: [ :pacakgeName | (SystemOrganization listAtCategoryNamed: pacakgeName) ifEmpty: [ SystemOrganization removePackageNamed: pacakgeName ] ]
 ]
