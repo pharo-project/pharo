@@ -604,11 +604,16 @@ CompiledMethod >> isFaulty [
 	| ast |
 	"fast pre-check: all methods with syntax errors reference this symbol"
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
-	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
-	ast := self methodClass compiler
+
+	"Check the ast in cache, if any"
+	ast := self propertyAt: #ast ifAbsent: [].
+
+	ast ifNil: [
+		"Warning, the following does not work for doit methods because this assumes `noPrefix:false` "
+		ast := self methodClass compiler
 				source: self sourceCode;
-				options: #(+ optionParseErrors);
-				parse.
+				options: #(+ optionParseErrors );
+				parse ].
 	^ ast isFaulty
 ]
 
