@@ -116,8 +116,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: '2';
 		selector: #widenSelectionOfIt;
 		help: nil;
-		iconName: #smallFullscreen;
-		withSeparatorAfter.
+		iconName: #smallFullscreen.
 	(aBuilder item: #'Compare selection to clipboard' translated)
 		keyText: 'C';
 		selector: #compareToClipboard;
