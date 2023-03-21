@@ -111,7 +111,18 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
-		iconName: #smallCopy;
+		iconName: #smallCopy.
+	(aBuilder item: #'Widen selection' translated)
+		keyText: '2';
+		selector: #widenSelectionOfIt;
+		help: nil;
+		iconName: #smallFullscreen;
+		withSeparatorAfter.
+	(aBuilder item: #'Compare selection to clipboard' translated)
+		keyText: 'C';
+		selector: #compareToClipboard;
+		help: nil;
+		iconName: #diff;
 		withSeparatorAfter.
 	aBuilder model
 		ifNotNil: [ :mod |
