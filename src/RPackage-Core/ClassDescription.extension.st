@@ -53,6 +53,19 @@ ClassDescription >> packageOrganizer [
 ]
 
 { #category : #'*RPackage-Core' }
+ClassDescription >> packageTag [
+
+	| packageTag |
+	"Any class or trait could be tagged by a symbol for user purpose.
+	For now we only define API to manage them on top of RPackageTag"
+	packageTag := self package classTagForClass: self.
+	packageTag ifNil: [ ^ nil ].
+	packageTag isRoot ifTrue: [ ^ nil ].
+
+	^ packageTag name
+]
+
+{ #category : #'*RPackage-Core' }
 ClassDescription >> packages [
 	"the extending packages of a class are the packages that extend it."
 
