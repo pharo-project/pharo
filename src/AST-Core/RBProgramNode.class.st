@@ -308,12 +308,12 @@ RBProgramNode >> checkFaulty: aBlock [
 	"Search for the first error, to signal"
 	errorNotice := self allErrorNotices first.
 
-	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice errorPosition cull: self ].
+	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice position cull: self ].
 
 	SyntaxErrorNotification new
 		sourceCode: self methodNode sourceCode;
 		messageText: errorNotice messageText;
-		location: errorNotice errorPosition;
+		location: errorNotice position;
 		signal.
 
 	"If resumed, just return"
