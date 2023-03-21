@@ -19,13 +19,6 @@ ClassOrganization class >> forClass: aClass [
 		yourself
 ]
 
-{ #category : #deprecated }
-ClassOrganization >> addCategory: aString [
-
-	self deprecated: 'Use #addProtocolNamed: instead.' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addProtocolNamed: `@arg'.
-	self addProtocolNamed: aString
-]
-
 { #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 

@@ -27,6 +27,13 @@ SystemOrganizer class >> default [
 	^ self environment organization
 ]
 
+{ #category : #deprecated }
+SystemOrganizer >> addCategory: packageName [
+
+	self deprecated: 'Use #addPackageNamed: instead' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addPackageNamed: `@arg'.
+	^ self addPackageNamed: packageName
+]
+
 { #category : #accessing }
 SystemOrganizer >> addPackageNamed: packageName [
 
