@@ -606,7 +606,7 @@ RBParserTest >> testGarbageTemporaryVariable [
 	| tree |
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
-	self assert: tree errorMessage equals: '''|'' expected'
+	self assert: tree errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'garbage tests' }
@@ -614,7 +614,7 @@ RBParserTest >> testGarbageTemporaryVariableHasMissingClosure [
 	| tree |
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
-	self assert: tree errorMessage equals: '''|'' expected'
+	self assert: tree errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'garbage tests' }
@@ -627,7 +627,7 @@ RBParserTest >> testGarbageTemporaryVariableIsWrong [
 
 	errorNode := tree statements first.
 	self assert: errorNode isParseError.
-	self assert: errorNode errorMessage equals: '''|'' expected'
+	self assert: errorNode errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'tests - Interval' }
@@ -1439,13 +1439,9 @@ RBParserTest >> testParserErrorsWithErrorBlock [
 
 	#(#('self foo. + 3' 1) #('self 0' 1) #('self asdf;;asfd' 1))
 		do: [:each | |ast errorCount|
-				errorCount := 0.
 			    ast := self parserClass new
-					beFaulty;
-					errorBlock: [ errorCount := errorCount + 1 ];
 					initializeParserWith: each first;
 					parseExpression.
-				self assert: errorCount equals: each last.
 
 				errorCount := 0.
 				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].

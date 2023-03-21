@@ -146,7 +146,7 @@ RBCodeSnippetTest >> testMonticello [
 	self assert: MCMockClassE methods size equals: 0.
 
 	snippet isFaulty ifTrue: [
-			self should: [ definition load ] raise: CodeError.
+			self should: [ 	[ definition load ] on: Warning do: [ :e | e resume ]. "Ignore Selector missmatches" ] raise: CodeError.
 			self assert: MCMockClassE methods size equals: 0.
 			^ self ].
 

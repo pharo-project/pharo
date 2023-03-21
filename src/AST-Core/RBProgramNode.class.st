@@ -139,13 +139,22 @@ RBProgramNode >> allDefinedVariables [
 ]
 
 { #category : #notice }
+RBProgramNode >> allErrorNotices [
+	"Include also error notices of all children"
+
+	| result |
+	result := OrderedCollection new.
+	self nodesPostorderDo: [ :node | result addAll: node errorNotices ].
+	^ result
+]
+
+{ #category : #notice }
 RBProgramNode >> allNotices [
 	"Include also notices of all children"
 
 	| result |
 	result := OrderedCollection new.
-	result addAll: self notices.
-	self nodesDo: [ :node | result addAll: node notices ].
+	self nodesPostorderDo: [ :node | result addAll: node notices ].
 	^ result
 ]
 
@@ -286,6 +295,28 @@ RBProgramNode >> canMatchMethod: aCompiledMethod [
 { #category : #'accessing - meta variable' }
 RBProgramNode >> cascadeListCharacter [
 	^$;
+]
+
+{ #category : #notice }
+RBProgramNode >> checkFaulty: aBlock [
+	"Helper method to evaluate errorBlock and/or signal SyntaxErrorNotification in case of a faulty AST"
+
+	| errorNotice |
+	"Fast noop case"
+	self isFaulty ifFalse: [ ^ self ].
+
+	"Search for the first error, to signal"
+	errorNotice := self allErrorNotices first.
+
+	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice node errorPosition cull: self ].
+
+	SyntaxErrorNotification new
+		sourceCode: self methodNode sourceCode;
+		messageText: errorNotice messageText;
+		location: errorNotice node errorPosition;
+		signal.
+
+	"If resumed, just return"
 ]
 
 { #category : #accessing }
