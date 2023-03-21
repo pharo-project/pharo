@@ -518,7 +518,7 @@ RBParser >> parseErrorNode: aMessageString [
 		ifTrue: [
 			"The current token is an error, consume it and use its content for the error node."
 			errorNode := RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: self errorPosition.
-			errorNode stop: currentToken location.
+			errorNode stop: currentToken location-1.
 			errorNode errorPosition: currentToken location.
 			self step.
 			^ errorNode].
