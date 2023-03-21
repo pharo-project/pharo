@@ -95,9 +95,10 @@ MCStWriter >> visitTraitDefinition: definition [
 ]
 
 { #category : #writing }
-MCStWriter >> writeCategory: categoryName [
+MCStWriter >> writeCategory: packageName [
+
 	stream
-		nextChunkPut: 'SystemOrganization addCategory: ', categoryName printString;
+		nextChunkPut: 'SystemOrganization addPackageNamed: ' , packageName printString;
 		cr
 ]
 
