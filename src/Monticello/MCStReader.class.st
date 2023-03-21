@@ -126,11 +126,10 @@ MCStReader >> readStream [
 
 { #category : #reading }
 MCStReader >> systemOrganizationFromRecords: changeRecords [
-	| categories |
-	categories := changeRecords
-					select: [:ea | 'SystemOrganization*' match: ea string]
-					thenCollect: [:ea | (self categoryFromDoIt: ea string)].
-	^ categories isEmpty ifFalse: [MCOrganizationDefinition categories: categories asArray]
+
+	^ (changeRecords
+		   select: [ :ea | 'SystemOrganization*' match: ea string ]
+		   thenCollect: [ :ea | self categoryFromDoIt: ea string ]) ifNotEmpty: [ :packageNames | MCOrganizationDefinition categories: packageNames asArray ]
 ]
 
 { #category : #reading }

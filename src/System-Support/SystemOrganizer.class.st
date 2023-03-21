@@ -57,8 +57,8 @@ SystemOrganizer >> classify: element under: packageName [
 		at: packageName
 		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addPackageNamed: packageName ].
-	(self packageNameOfElement: element) ifNotNil: [ :oldCategory |
-		oldCategory = packageName ifTrue: [ ^ self ].
+	(self packageNameOfElement: element) ifNotNil: [ :oldPackageName |
+		oldPackageName = packageName ifTrue: [ ^ self ].
 		self removeElement: element ].
 
 	(packagesMap at: packageName) add: element
@@ -96,9 +96,8 @@ SystemOrganizer >> initialize [
 
 { #category : #queries }
 SystemOrganizer >> orderedTraitsIn: packageName [
-	"Answer an OrderedCollection containing references to the traits in the
-	category whose name is the argument, category (a string). The traits
-	are ordered so they can be filed in."
+	"Answer an OrderedCollection containing references to the traits in the package.
+	The traits are ordered so they can be filed in."
 
 	| behaviors traits |
 	behaviors := (self classNamesInPackageNamed: packageName) collect: [ :title | self environment at: title ].
@@ -109,7 +108,7 @@ SystemOrganizer >> orderedTraitsIn: packageName [
 
 { #category : #queries }
 SystemOrganizer >> packageNameOfElement: element [
-	"Answer the category associated with the argument, element."
+	"Answer the package name associated with the argument, element."
 
 	packagesMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ ^ packageName ] ].
 
@@ -133,7 +132,7 @@ SystemOrganizer >> packageNamesMatching: matchString [
 SystemOrganizer >> removeElement: element [
 	"Remove the element from all packages."
 
-	packagesMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
+	packagesMap keysAndValuesDo: [ :packageName :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
 ]
 
 { #category : #removing }
@@ -160,7 +159,7 @@ SystemOrganizer >> removePackageNamed: packageName [
 
 	packagesMap
 		at: packageName
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , packageName ] ]
+		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty package named: ' , packageName ] ]
 		ifAbsent: [ ^ self ].
 
 	packagesMap removeKey: packageName.
@@ -177,7 +176,7 @@ SystemOrganizer >> removePackageNamesMatching: matchString [
 
 { #category : #accessing }
 SystemOrganizer >> renamePackageNamed: oldPackageName to: newPackageName [
-	"Rename a category. No action if new name already exists, or if old name does not exist."
+	"No action if new name already exists, or if old name does not exist."
 
 	packagesMap at: newPackageName ifPresent: [ "new name exists, so no action" ^ self ].
 
@@ -193,9 +192,8 @@ SystemOrganizer >> renamePackageNamed: oldPackageName to: newPackageName [
 
 { #category : #queries }
 SystemOrganizer >> superclassOrder: packageName [
-	"Answer an OrderedCollection containing references to the classes in the
-	category whose name is the argument, category (a string). The classes
-	are ordered with superclasses first so they can be filed in."
+	"Answer an OrderedCollection containing references to the classes in the package.
+	The classes are ordered with superclasses first so they can be filed in."
 
 	| behaviors classes |
 	behaviors := (self classNamesInPackageNamed: packageName) collect: [ :title | self environment at: title ].

@@ -67,9 +67,8 @@ FLClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 
 { #category : #'private-cleaning' }
 FLClassFactoryForTestCase >> cleanUpSystemOrganization [
-	"This method is necessary because we create classes in a non-default environment. The
-	SystemOrganization is global and ClassFactoryForTestCase interacts with it to clean out
-	categories."
+	"This method is necessary because we create classes in a non-default environment.
+	The SystemOrganization is global and ClassFactoryForTestCase interacts with it to clean out the packages."
 
 	(SystemOrganization packageNamesMatching: self defaultPackageName , '-*') do: [ :packageName |
 		(SystemOrganization classNamesInPackageNamed: packageName) do: [ :behavior | SystemOrganization removeElement: behavior ] ]
