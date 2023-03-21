@@ -17,18 +17,18 @@ items:                   <OrderedCollection> A list to select
 selectedItems:           <OrderedCollection> A list with selected items
 "
 Class {
-	#name : #RBItemsSelectionPresenter,
+	#name : #StItemsSelectionPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'table',
 		'label',
 		'selectedItems'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : #'Refactoring-UI'
 }
 
 { #category : #layout }
-RBItemsSelectionPresenter class >> defaultLayout [
+StItemsSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -39,20 +39,20 @@ RBItemsSelectionPresenter class >> defaultLayout [
 ]
 
 { #category : #specs }
-RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
+StItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new
 		label: aString withItems: items selecting: selectedItems;
 		openBlockedDialog
 ]
 
 { #category : #actions }
-RBItemsSelectionPresenter >> accept [
+StItemsSelectionPresenter >> accept [
 
 	selectedItems := table selectedItems
 ]
 
 { #category : #actions }
-RBItemsSelectionPresenter >> accept: presenter [
+StItemsSelectionPresenter >> accept: presenter [
 	self accept.
 	presenter
 				beOk;
@@ -60,22 +60,22 @@ RBItemsSelectionPresenter >> accept: presenter [
 ]
 
 { #category : #attributes }
-RBItemsSelectionPresenter >> columnName [
+StItemsSelectionPresenter >> columnName [
 	self shouldBeImplemented
 ]
 
 { #category : #attributes }
-RBItemsSelectionPresenter >> columnSelector [
+StItemsSelectionPresenter >> columnSelector [
 	self shouldBeImplemented
 ]
 
 { #category : #accessing }
-RBItemsSelectionPresenter >> components [
+StItemsSelectionPresenter >> components [
 	^ { table . label }
 ]
 
 { #category : #initialization }
-RBItemsSelectionPresenter >> connectPresenters [
+StItemsSelectionPresenter >> connectPresenters [
 
 	table bindKeyCombination: Character backspace asShortcut
 		toAction: [ table toggleSelection ].
@@ -85,7 +85,7 @@ RBItemsSelectionPresenter >> connectPresenters [
 ]
 
 { #category : #initialization }
-RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
+StItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Refactor' do: [ :presenter | self accept: presenter ];
 		addButton: 'Cancel' do: [ :presenter |
@@ -94,15 +94,15 @@ RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 				close ]
 ]
 
-{ #category : #initialization }
-RBItemsSelectionPresenter >> initializeWidgets [
+{ #category : #'initialization - deprecated' }
+StItemsSelectionPresenter >> initializeWidgets [
 	table := self instantiate: SpFilteringSelectableListPresenter.
 	table display: self columnSelector.
 	label := self newLabel
 ]
 
 { #category : #initialization }
-RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
+StItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 	label label: aString.
 
 	table items: coll1;
@@ -110,6 +110,6 @@ RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 ]
 
 { #category : #accessing }
-RBItemsSelectionPresenter >> selectedItems [
+StItemsSelectionPresenter >> selectedItems [
 	^ selectedItems
 ]

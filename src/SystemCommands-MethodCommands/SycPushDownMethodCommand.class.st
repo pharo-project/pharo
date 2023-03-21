@@ -38,7 +38,7 @@ SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 SycPushDownMethodCommand >> selectMethods [
 	| dialog class|
 	class := methods first origin.
-	dialog := RBMethodsSelectionPresenter
+	dialog := StMethodsSelectionPresenter
 		   label: 'Push down methods from ', class name
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
 			selecting: methods asOrderedCollection.
