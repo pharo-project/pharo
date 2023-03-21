@@ -784,20 +784,24 @@ RBParser >> parsePragma [
 
 	| startToken pragma |
 	startToken := currentToken.
-	self step.
+	self step. "<"
 	pragma := self basicParsePragma.
 	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+		pragma isPragma ifTrue: [
+			pragma
+				left: startToken start;
+				right: currentToken start-1 ].
 		pragma := self
 			          parseEnglobingError: (OrderedCollection with: pragma)
 			          with: startToken
 			          errorMessage: '''>'' expected'.
-		pragma stop: currentToken stop.
 		^ self addPragma: pragma ].
 
 	pragma
 		left: startToken start;
-		right: currentToken start.
-	self step.
+		right: currentToken stop.
+
+	self step. ">"
 	self addPragma: pragma
 ]
 
