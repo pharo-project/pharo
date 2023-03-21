@@ -72,7 +72,7 @@ RBPushDownMethodDriver >> refactoring [
 RBPushDownMethodDriver >> selectMethods [
 
 	| dialog |
-	dialog := RBMethodsSelectionPresenter
+	dialog := StMethodsSelectionPresenter
 		          label: 'Push down methods from ' , class name
 		          withItems:
 			          (class methods sort: [ :a :b | a asString < b asString ])
