@@ -28,7 +28,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $b meta
 		do: [ :target | target editor browseFullClass ]
-		description: 'Browse'.
+		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
 		category: RubSmalltalkEditor name

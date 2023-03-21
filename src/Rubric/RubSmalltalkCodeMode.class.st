@@ -52,6 +52,11 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
+	(aBuilder item: #'Do & browse its class' translated)
+		keyText: 'b';
+		selector: #browseFullClass;
+		help: nil;
+		iconName: #nautilus.
 	(aBuilder item: #'Do & basic inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
