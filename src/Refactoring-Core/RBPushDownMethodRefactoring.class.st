@@ -67,7 +67,8 @@ RBPushDownMethodRefactoring >> generateChanges [
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> preconditions [
 	"Check that all selectors are defined in `class` and that none of the subclasses of `class`
-	refer to any of the selectors that will be pushed down."
+	refer to any of the selectors that will be pushed down.
+	Also, to ensure this is in fact refactoring we should only push down methods from abstract class."
 
 	| condition |
 	condition := selectors
