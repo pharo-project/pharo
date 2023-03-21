@@ -42,17 +42,17 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #doIt;
 		help: nil;
 		iconName: #smallDoIt.
-	(aBuilder item: #'Print it' translated)
+	(aBuilder item: #'Do & print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
 		iconName: #smallPrintIt.
-	(aBuilder item: #'Inspect it' translated)
+	(aBuilder item: #'Do & inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
-	(aBuilder item: #'Basic Inspect it' translated)
+	(aBuilder item: #'Do & basic inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
