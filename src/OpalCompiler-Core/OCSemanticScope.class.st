@@ -62,11 +62,6 @@ OCSemanticScope >> asDoItScopeForReceiver: anObject [
 	^OCReceiverDoItSemanticScope targetingReceiver: anObject
 ]
 
-{ #category : #'code compilation' }
-OCSemanticScope >> compileMethodFromASTBy: aCompiler [
-	self subclassResponsibility
-]
-
 { #category : #testing }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
 
