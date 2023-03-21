@@ -145,6 +145,15 @@ SystemOrganizer >> removeEmptyPackages [
 			emptyPackages do: [ :emptyPackage | packagesMap removeKey: emptyPackage ] ]
 ]
 
+{ #category : #removing }
+SystemOrganizer >> removeFromSystemPackageName: packageName [
+	"remove all the classes and traits associated with the packageName"
+
+	(self orderedTraitsIn: packageName) , (self superclassOrder: packageName) reverseDo: [ :each | each removeFromSystem ].
+
+	self removePackageNamed: packageName
+]
+
 { #category : #accessing }
 SystemOrganizer >> removePackageNamed: packageName [
 	"Create an error notificiation if the package has any elements in it."
@@ -163,16 +172,7 @@ SystemOrganizer >> removePackageNamed: packageName [
 SystemOrganizer >> removePackageNamesMatching: matchString [
 	"Remove all matching package names with their classes"
 
-	(self packageNamesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
-]
-
-{ #category : #removing }
-SystemOrganizer >> removeSystemCategory: packageName [
-	"remove all the classes and traits associated with the packageName"
-
-	(self orderedTraitsIn: packageName) , (self superclassOrder: packageName) reverseDo: [ :each | each removeFromSystem ].
-
-	self removePackageNamed: packageName
+	(self packageNamesMatching: matchString) do: [ :packageName | self removeFromSystemPackageName: packageName ]
 ]
 
 { #category : #accessing }

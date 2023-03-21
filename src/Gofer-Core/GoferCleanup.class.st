@@ -19,7 +19,7 @@ GoferCleanup >> cleanup: aWorkingCopy [
 GoferCleanup >> cleanupCategories: aWorkingCopy [
 
 	aWorkingCopy packageSet systemCategories do: [ :packageName |
-		(Smalltalk organization classesInPackageNamed: packageName) isEmpty ifTrue: [ Smalltalk organization removeSystemCategory: packageName ] ]
+		(Smalltalk organization classesInPackageNamed: packageName) ifEmpty: [ Smalltalk organization removeFromSystemPackageName: packageName ] ]
 ]
 
 { #category : #cleaning }

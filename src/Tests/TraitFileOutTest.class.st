@@ -48,12 +48,12 @@ TraitFileOutTest >> setUp [
 
 { #category : #running }
 TraitFileOutTest >> tearDown [
+
 	| dir |
 	dir := FileSystem workingDirectory.
-	self createdClassesAndTraits, self resourceClassesAndTraits  do: [:each |
-		(dir / each asString,'st') ensureDelete ] .
-	(dir / self categoryName,'st') ensureDelete.
-	self class environment organization removeSystemCategory: self categoryName.
+	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
+	(dir / self categoryName , 'st') ensureDelete.
+	self class environment organization removeFromSystemPackageName: self categoryName.
 	"Ensure cleaning of obsoletes refs"
 	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
@@ -66,19 +66,19 @@ TraitFileOutTest >> testFileOutCategory [
 
 	self timeLimit: 30 seconds.
 	self class environment organization fileOutPackageNamed: self categoryName.
-	self class environment organization removeSystemCategory: self categoryName.
-	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
+	self class environment organization removeFromSystemPackageName: self categoryName.
+	self deny: (testingEnvironment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
 
-	CodeImporter evaluateFileNamed: (self categoryName , '.st').
-	self assertCollection: testingEnvironment keys asSet includesAll: #(#CA #CB #TA #TB #TC #TD).
+	CodeImporter evaluateFileNamed: self categoryName , '.st'.
+	self assertCollection: testingEnvironment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
 	ta := testingEnvironment at: #TA.
-	self assert: ta traitComposition asString equals:  '((TB + TC) @ {#cc->#c}) - {#c}'.
-	self assertCollection: ta selectors asSet includesAll: #(#a #b #cc).
+	self assert: ta traitComposition asString equals: '((TB + TC) @ {#cc->#c}) - {#c}'.
+	self assertCollection: ta selectors asSet includesAll: #( #a #b #cc ).
 	cb := testingEnvironment at: #CB.
 	self assert: cb traitComposition asString equals: 'TA'.
-	self assertCollection: cb selectors asSet includesAll: #(#cb #a #b #cc).	"test classSide traitComposition of CB"
+	self assertCollection: cb selectors asSet includesAll: #( #cb #a #b #cc ). "test classSide traitComposition of CB"
 	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC'.
-	self assertCollection: cb classSide selectors asSet includesAll: #(#d #c)
+	self assertCollection: cb classSide selectors asSet includesAll: #( #d #c )
 ]
 
 { #category : #tests }
