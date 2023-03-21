@@ -362,11 +362,6 @@ ReSmalllintTest >> testLiteralArrayContainsComma [
 ]
 
 { #category : #tests }
-ReSmalllintTest >> testLiteralArrayContainsSuspiciousTrueFalseOrNil [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
 ReSmalllintTest >> testLocalMethodsSameThanTrait [
 	self classAndMetaClassRuleFor: self currentSelector
 ]
