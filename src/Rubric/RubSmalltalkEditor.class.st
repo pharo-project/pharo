@@ -158,7 +158,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 		(selectionInterval isEmpty and: [ isFavouringExpressions and: [
 			(source at: (stop + 1 min: source size)) isAlphaNumeric not ]]) ifTrue: [
 				"If there is white space or statement terminator, try to backup to find a better node"
-				[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
+				[stop > 0 and: [(source at: stop) isSeparator ]]
 					whileTrue: [ start := stop := stop - 1 ].
 				start := stop].
 		node := ast bestNodeFor: (start to: stop).
