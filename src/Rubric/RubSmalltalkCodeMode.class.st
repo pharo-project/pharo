@@ -56,7 +56,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'b';
 		selector: #browseFullClass;
 		help: nil;
-		iconName: #nautilus.
+		iconName: #smallSystemBrowser.
 	(aBuilder item: #'Do & basic inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
@@ -69,7 +69,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		iconName: #smallDebug.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		iconName: #smallDebug;
+		iconName: #smallProfile;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
