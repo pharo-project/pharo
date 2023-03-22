@@ -27,6 +27,7 @@ Class {
 		'isMethod',
 		'isParseFaulty',
 		'isFaulty',
+		'notices',
 		'value',
 		'hasValue',
 		'formattedCode',
@@ -993,6 +994,13 @@ RBCodeSnippet >> group: aString [
 	group := aString
 ]
 
+{ #category : #testing }
+RBCodeSnippet >> hasNotice: aString at: anInteger [
+
+	^ self notices anySatisfy: [ :each |
+		  each third = anInteger and: [ each fourth = aString ] ]
+]
+
 { #category : #accessing }
 RBCodeSnippet >> hasValue [
 
@@ -1059,6 +1067,16 @@ RBCodeSnippet >> messageNotUnderstood [
 RBCodeSnippet >> messageNotUnderstood: anObject [
 
 	messageNotUnderstood := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> notices [
+	^ notices
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> notices: aCollection [
+	notices := aCollection
 ]
 
 { #category : #accessing }
