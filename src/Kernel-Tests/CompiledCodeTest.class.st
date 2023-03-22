@@ -228,10 +228,10 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 	self assertCollection: method literals equals: {
 			2.
 			(UndeclaredVariable key: #test value: nil).
+			(GlobalVariable key: #Class value: Class).
 			block.
 			#doIt:.
-			#( #array ).
-			(GlobalVariable key: #Class value: Class) }
+			#( #array )}
 ]
 
 { #category : #'tests - literals' }
@@ -270,14 +270,14 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		equals: {
 				2.
 				(UndeclaredVariable key: #test value: nil).
+				(GlobalVariable key: #Class value: Class).
 				2.
 				(UndeclaredVariable key: #test value: nil).
 				#( #arrayInBlock ).
-				#name.
 				(GlobalVariable key: #Object value: Object).
+				#name.
 				#doIt:.
-				#( #array ).
-				(GlobalVariable key: #Class value: Class) }
+				#( #array ). }
 ]
 
 { #category : #'tests - literals' }
