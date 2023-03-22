@@ -33,7 +33,9 @@ Class {
 		'skippedTests',
 		'raise',
 		'messageNotUnderstood',
-		'numberOfCritiques'
+		'numberOfCritiques',
+		'group',
+		'default'
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }
@@ -601,12 +603,12 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#→';
 			         formattedCode: '#. →') "Two independent errors" }.
-	"Random alone special character (lone opening or closing characters are managed in others sections)"
 	"Setup default values"
-	list do: [ :each |
-		each isMethod: false.
-		each isFaulty ifNil: [ each isFaulty: true ].
-		each formattedCode ifNil: [ each formattedCode: each source ] ].
+	self new
+		group: #badExpressions;
+		isMethod: false;
+		isFaulty: true;
+		applyDefaultTo: list.
 	^ list
 ]
 
@@ -705,12 +707,12 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo < + > ';
 			         hasValue: true) }.
-	"Emptyness"
 	"Setup default values"
-	list do: [ :each |
-		each isMethod: true.
-		each isFaulty ifNil: [ each isFaulty: true ].
-		each formattedCode ifNil: [ each formattedCode: each source ] ].
+	self new
+		group: #badMethods;
+		isMethod: true;
+		isFaulty: true;
+		applyDefaultTo: list.
 	^ list
 ]
 
@@ -719,6 +721,8 @@ RBCodeSnippet class >> badSemantic [
 	"List of varions semantic and backend errors."
 
 	| list |
+	"Undefined variable
+	For some reason, this is just a warning in non-faulty mode, not an error."
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
@@ -890,14 +894,13 @@ RBCodeSnippet class >> badSemantic [
 				         'a1: a1 a2: a2 a3: a3 a4: a4 a5: a5 a6: a6 a7: a7 a8: a8 a9: a9 a10: a10 a11: a11 a12: a12 a13: a13 a14: a14 a15: a15 a16: a16 ^ a1';
 			         isMethod: true;
 			         isFaulty: true) "Too many arguments" }.
-	"Undefined variable"
-	"For some reason, this is just a warning in non-faulty mode, not an error."
 	"Setup default values"
-	list do: [ :each |
-		each isMethod ifNil: [ each isMethod: false ].
-		each isFaulty ifNil: [ each isFaulty: false ].
-		each isParseFaulty ifNil: [ each isParseFaulty: false ].
-		each formattedCode ifNil: [ each formattedCode: each source ] ].
+	self new
+		group: #badSemantic;
+		isMethod: false;
+		isFaulty: false;
+		isParseFaulty: false;
+		applyDefaultTo: list.
 	^ list
 ]
 
@@ -960,6 +963,24 @@ RBCodeSnippet class >> styleAllWithError [
 ]
 
 { #category : #accessing }
+RBCodeSnippet >> applyDefaultTo: aCollection [
+
+	aCollection do: [ :each |
+		each default: self.
+		each isMethod ifNil: [ each isMethod: self isMethod ].
+		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
+		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
+		each formattedCode ifNil: [ each formattedCode: each source ].
+	]
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> default: aRBCodeSnippet [
+
+	default := aRBCodeSnippet
+]
+
+{ #category : #accessing }
 RBCodeSnippet >> formattedCode [
 
 	^ formattedCode
@@ -969,6 +990,16 @@ RBCodeSnippet >> formattedCode [
 RBCodeSnippet >> formattedCode: anObject [
 
 	formattedCode := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> group [
+	^ group
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> group: aString [
+	group := aString
 ]
 
 { #category : #accessing }
