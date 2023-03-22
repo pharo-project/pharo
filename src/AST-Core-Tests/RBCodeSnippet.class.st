@@ -945,7 +945,9 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
 		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
 		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
-		        (self new source: Character nbsp asString). "Unknown character. Not isSeparator"
+		        (self new
+			         source: Character nbsp asString;
+			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
 
 		        (self new
 			         source: '$→';
