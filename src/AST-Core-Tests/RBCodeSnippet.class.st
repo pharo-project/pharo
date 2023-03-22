@@ -1505,7 +1505,20 @@ RBCodeSnippet >> group: aString [
 ]
 
 { #category : #testing }
+RBCodeSnippet >> hasAllNotices: someNotices [
+
+	(self notices ifNil: [0] ifNotNil: [self notices size]) = someNotices size ifFalse: [ ^ false ].
+	^ someNotices allSatisfy: [ :each |
+		  self notices anySatisfy: [ :each2 |
+			  each node start = each2 first & (each node stop = each2 second)
+			  & (each position = each2 third)
+			  & (each messageText = each2 fourth) ] ]
+]
+
+{ #category : #testing }
 RBCodeSnippet >> hasNotice: aString at: anInteger [
+
+	self notices ifNil: [ ^ false ].
 
 	^ self notices anySatisfy: [ :each |
 		  each third = anInteger and: [ each fourth = aString ] ]
