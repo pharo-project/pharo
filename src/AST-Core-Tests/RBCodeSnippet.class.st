@@ -1094,10 +1094,11 @@ RBCodeSnippet >> parseOnError: aBlock [
 RBCodeSnippet >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream
-		nextPut: $(;
-		nextPutAll: source;
-		nextPut: $)
+	source ifNotNil: [
+		aStream
+			nextPut: $(;
+			nextPutAll: source;
+			nextPut: $) ]
 ]
 
 { #category : #accessing }
