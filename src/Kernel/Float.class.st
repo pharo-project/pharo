@@ -215,8 +215,7 @@ Float class >> initialize [
 
 { #category : #constants }
 Float class >> machineEpsilon [
-	"Answer the machine epsilon or macheps, defined by wikipedia asCalypsoItemContext
-	https://en.wikipedia.org/wiki/Machine_epsilon
+	"Answer the machine epsilon or macheps, defined by wikipedia (https://en.wikipedia.org/wiki/Machine_epsilon) as:
 
 	*an upper bound on the relative approximation error due to rounding in floating point arithmetic*
 
