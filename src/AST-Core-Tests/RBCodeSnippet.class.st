@@ -260,20 +260,19 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a b]';
 			         formattedCode: '[ :a | b ]';
-			         hasValue: true). "FIXME"
+			         value: nil). "FIXME"
 		        (self new
 			         source: '[:a 1]';
 			         formattedCode: '[ :a | 1 ]';
-			         hasValue: true;
 			         value: 1). "FIXME"
 		        (self new
 			         source: '[:a :]';
 			         formattedCode: '[ :a : | ]';
-			         hasValue: true). "FIXME"
+			         value: nil). "FIXME"
 		        (self new
 			         source: '[:a ::b]';
 			         formattedCode: '[ :a ::b | ]';
-			         hasValue: true). "FIXME"
+			         value: nil). "FIXME"
 		        (self new
 			         source: '[:a :b]';
 			         formattedCode: '[ :a :b | ]';
@@ -649,21 +648,21 @@ RBCodeSnippet class >> badMethods [
 		        "The missing argument will be an error, the remainer starts the body"
 		        (self new
 			         source: '+ ';
-			         hasValue: true).
+			         value: nil).
 		        (self new
 			         source: '+ 1';
-			         hasValue: true).
+			         value: nil).
 		        (self new source: '+ foo: ').
 		        (self new
 			         source: 'foo: ';
-			         hasValue: true).
+			         value: nil).
 		        (self new
 			         source: 'foo: 1';
-			         hasValue: true).
+			         value: nil).
 		        (self new source: 'foo: + ').
 		        (self new
 			         source: 'foo: bar: ';
-			         hasValue: true).
+			         value: nil).
 		        (self new
 			         source: 'foo:bar:';
 			         formattedCode: ' . foo:bar:'). "`foo:bar:` is a single token, and is unexpected"
@@ -671,17 +670,17 @@ RBCodeSnippet class >> badMethods [
 		        "Bad pragma message"
 		        (self new
 			         source: 'foo < ';
-			         hasValue: true).
+			         value: nil).
 		        (self new source: 'foo <> ').
 		        (self new
 			         source: 'foo < 4';
-			         hasValue: true).
+			         value: nil).
 		        (self new
 			         source: 'foo < bar ';
-			         hasValue: true).
+			         value: nil).
 		        (self new
 			         source: 'foo < bar: ';
-			         hasValue: true).
+			         value: nil).
 		        (self new source: 'foo < bar: 1 1 > ').
 		        (self new
 			         source: 'foo < bar ; baz > ';
@@ -690,7 +689,7 @@ RBCodeSnippet class >> badMethods [
 		        "Bad pragma value"
 		        (self new
 			         source: 'foo <bar: > ';
-			         hasValue: true).
+			         value: nil).
 		        (self new
 			         source: 'foo <bar:(1)>';
 			         formattedCode: 'foo < bar: 1 > '). "FIXME. dont eat parentheses"
@@ -700,13 +699,13 @@ RBCodeSnippet class >> badMethods [
 		        (self new source: 'foo < bar: { 1 } > ').
 		        (self new
 			         source: 'foo <bar: #[ -1 ]> ';
-			         hasValue: true). "Literal bytes arrays are acceptable, but this one is faulty"
+			         value: nil). "Literal bytes arrays are acceptable, but this one is faulty"
 		        (self new
 			         source: 'foo < + 1> ';
 			         isFaulty: false). "Binary message is legal pragma"
 		        (self new
 			         source: 'foo < + > ';
-			         hasValue: true) }.
+			         value: nil) }.
 	"Setup default values"
 	self new
 		group: #badMethods;
@@ -726,21 +725,13 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
-			         isFaulty: false;
-			         value: nil;
+			         value: 10;
 			         skip: #exec). "a is bound to an undefined variable, and according to some compilation options it could be registerer or not registered. This is very bad as regitred ones act like globals thus polute other tests. So disable the execution for now."
-		        (self new
-			         source: '^ a';
-			         isFaulty: false;
-			         value: nil).
+		        (self new source: '^ a').
 
 		        "Uninitialized variable"
-		        (self new
-			         source: '| a | ^ a';
-			         value: nil).
-		        (self new
-			         source: '| a | [ a := 10 ]. ^ a';
-			         value: nil).
+		        (self new source: '| a | ^ a').
+		        (self new source: '| a | [ a := 10 ]. ^ a').
 		        (self new
 			         source: '| a | [ ^ a ]. a := 10';
 			         value: 10).
@@ -748,8 +739,8 @@ RBCodeSnippet class >> badSemantic [
 		        "Duplicated variable definition (same scope)"
 		        (self new
 			         source: 'foo: a bar: a ^ a';
-			         value: 1;
-			         isMethod: true).
+			         isMethod: true;
+			         value: 1).
 		        (self new
 			         source: '| a a | a := 10. ^ a';
 			         value: 10).
@@ -809,19 +800,19 @@ RBCodeSnippet class >> badSemantic [
 		        "The following assignment are explicitely no-op, to minimize the impact if, for some broken reasons, they are really executed"
 		        (self new
 			         source: 'nil := nil';
+			         formattedCode: 'nil. := nil';
 			         isFaulty: true;
-			         isParseFaulty: true;
-			         formattedCode: 'nil. := nil'). "it is a literal, not an identifier"
+			         isParseFaulty: true). "it is a literal, not an identifier"
 		        (self new
 			         source: 'true := true';
+			         formattedCode: 'true. := true';
 			         isFaulty: true;
-			         isParseFaulty: true;
-			         formattedCode: 'true. := true'). "it is a literal, not an identifier"
+			         isParseFaulty: true). "it is a literal, not an identifier"
 		        (self new
 			         source: 'false := false';
+			         formattedCode: 'false. := false';
 			         isFaulty: true;
-			         isParseFaulty: true;
-			         formattedCode: 'false. := false'). "it is a literal, not an identifier"
+			         isParseFaulty: true). "it is a literal, not an identifier"
 		        (self new
 			         source: 'self := self';
 			         isFaulty: true;
