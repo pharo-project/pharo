@@ -194,12 +194,16 @@ RBDumpVisitor >> visitMethodNode: aMethodNode [
 RBDumpVisitor >> visitParseErrorNode: aParseErrorNode [
 	stream
 		nextPutAll: aParseErrorNode class name;
-		nextPutAll: ' errorMessage: '.
-	aParseErrorNode errorMessage printOn: stream.
-	stream nextPutAll: ' value: '.
-	aParseErrorNode value printOn: stream.
-	stream nextPutAll: ' at: '.
-	aParseErrorNode start printOn: stream
+		nextPutAll: ' new errorMessage: ';
+		print: aParseErrorNode errorMessage;
+		nextPutAll: '; value: ';
+		print: aParseErrorNode value;
+		nextPutAll: '; start: ';
+		print: aParseErrorNode start;
+		nextPutAll: '; stop: ';
+		print: aParseErrorNode stop;
+		nextPutAll: '; errorPosition: ';
+		print: aParseErrorNode errorPosition
 ]
 
 { #category : #visiting }

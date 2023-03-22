@@ -163,7 +163,32 @@ RBCodeSnippetTest >> testMonticello [
 { #category : #tests }
 RBCodeSnippetTest >> testParse [
 
-	self assert: snippet parse isFaulty equals: (snippet isParseFaulty ifNil: [snippet isFaulty])
+	| ast |
+	ast := snippet parse.
+
+	self
+		assert: ast isFaulty
+		equals: (snippet isParseFaulty ifNil: [ snippet isFaulty ]).
+
+	"Smoke test on the method node"
+	self assert: ast methodNode reformatSource isString.
+
+	"Smoke test on each AST node (in alphabetic order of selectors)"
+	ast nodesDo: [ :node |
+		self assert: ((node allParents includes: ast) or: [node = ast]).
+		node start to: node stop do: [ :i | self assert: ((node bestNodeFor: (i to: i)) isKindOf: RBProgramNode) ].
+		node start+1 to: node stop do: [ :i | self assert: ((node bestNodeForPosition: i) isKindOf: RBProgramNode) ].
+		self assert: node displaySourceCode isString.
+		self assert: node dump equals: node dump.
+		node hasMultipleReturns.
+		node hasNonLocalReturn.
+		self assert: node sourceCode isString.
+		node start to: node stop do: [ :i | self assert: ((node nodeForOffset: i) isKindOf: RBProgramNode) ].
+		self assert: node printString isString.
+		self assert: node selfMessages isCollection.
+		self assert: node methodNode = ast equals: snippet isMethod.
+		self assert: (node methodOrBlockNode isKindOf: RBProgramNode).
+	]
 ]
 
 { #category : #tests }

@@ -7,14 +7,14 @@ Class {
 	#category : #'AST-Core-Notice'
 }
 
-{ #category : #'error handling' }
-RBErrorNodeNotice >> errorPosition [
-
-	^ node errorPosition
-]
-
 { #category : #accessing }
 RBErrorNodeNotice >> messageText [
 
 	^ node errorMessage
+]
+
+{ #category : #'error handling' }
+RBErrorNodeNotice >> position [
+
+	^ node errorPosition
 ]

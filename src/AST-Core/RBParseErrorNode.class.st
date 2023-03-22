@@ -23,16 +23,6 @@ Class {
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'instance creation' }
-RBParseErrorNode class >> errorMessage: aString value: aValue at: aPosition [
-
-	^ self new
-		errorMessage: aString;
-		value: aValue;
-		start: aPosition;
-		yourself
-]
-
 { #category : #comparing }
 RBParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
