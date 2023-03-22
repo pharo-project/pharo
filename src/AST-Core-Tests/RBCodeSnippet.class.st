@@ -150,11 +150,24 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 6 7 ''']'' expected' )
 				            #( 1 6 7 '''}'' expected' ) )).
 		        (self new
-			         source: ') ] }';
-			         notices:
-				         #( #( 1 1 1 'unexpected token' )
-				            #( 1 3 3 'Missing opener for closer: ]' )
-				            #( 1 5 5 'Missing opener for closer: }' ) )).
+			         source: ' )';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 2 2 2 'Missing opener for closer: )' ) )).
+		        (self new
+			         source: ' ]';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 2 2 2 'Missing opener for closer: ]' ) );
+			         skip: #testCodeImporter). "FIXME. code importer do not like rogue starting `]`"
+		        (self new
+			         source: ' }';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 2 2 2 'Missing opener for closer: }' ) )).
+		        (self new
+			         source: ' ) ] }';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 2 2 2 'Missing opener for closer: )' )
+				            #( 2 4 4 'Missing opener for closer: ]' )
+				            #( 2 6 6 'Missing opener for closer: }' ) )).
 
 		        "Compounds with an unexped thing inside"
 		        (self new
