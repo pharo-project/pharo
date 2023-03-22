@@ -115,7 +115,8 @@ FreeTypeFont >> characterWidthCache [
 
 { #category : #accessing }
 FreeTypeFont >> clearCachedMetrics [
-	widthAndKernedWidthCache := cachedHeight := cachedAscent := cachedDescent := subPixelPositioned := nil
+
+	widthAndKernedWidthCache := characterWidthCache := cachedHeight := cachedAscent := cachedDescent := subPixelPositioned := nil
 ]
 
 { #category : #accessing }
