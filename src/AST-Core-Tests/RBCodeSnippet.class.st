@@ -66,7 +66,7 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 1 2 'Character expected' ) )).
 		        (self new
 			         source: ':';
-			         notices: #( #( 1 1 1 'Variable name expected' ) )).
+			         notices: #( #( 1 1 1 'Unexpected token' ) )).
 		        (self new
 			         source: '';
 			         isFaulty: false). "emptyness is ok"
@@ -359,33 +359,43 @@ RBCodeSnippet class >> badExpressions [
 		        "Nevertheless, the parser will try to catch unexpected :a together"
 		        (self new
 			         source: ':a';
-			         notices: #( #( 1 2 1 'Variable name expected' ) )).
+			         notices: #( #( 1 2 1 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '::a';
-			         notices: #( #( 1 3 1 'Variable name expected' ) )).
+			         formattedCode: ':. :a';
+			         notices:
+				         #( #( 1 1 1 'Unexpected token' )
+				            #( 2 3 2 'Unexpected block parameter' ) )).
 		        (self new
 			         source: ':::a';
-			         notices: #( #( 1 4 1 'Variable name expected' ) )).
+			         formattedCode: ':. :. :a';
+			         notices:
+				         #( #( 1 1 1 'Unexpected token' )
+				            #( 2 2 2 'Unexpected token' )
+				            #( 3 4 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '::';
-			         notices: #( #( 1 2 1 'Variable name expected' ) )).
+			         formattedCode: ':. :';
+			         notices:
+				         #( #( 1 1 1 'Unexpected token' )
+				            #( 2 2 2 'Unexpected token' ) )).
 		        (self new
 			         source: ':a foo';
-			         notices: #( #( 1 2 1 'Variable name expected' ) )).
+			         notices: #( #( 1 2 1 'Unexpected block parameter' ) )).
 		        (self new
 			         source: 'a :foo';
 			         formattedCode: 'a. :foo';
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 1 2 3 'End of statement expected' )
-				            #( 3 6 3 'Variable name expected' ) )).
+				            #( 3 6 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: 'a : foo';
 			         formattedCode: 'a. :foo';
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 1 2 3 'End of statement expected' )
-				            #( 3 7 3 'Variable name expected' ) )).
+				            #( 3 7 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: 'a:';
 			         formattedCode: ' a: ';
@@ -393,7 +403,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 2 3 'Variable or expression expected' ) )). "keyword message with a missing receiver and argument"
 		        (self new
 			         source: 'a::';
-			         notices: #( #( 1 3 1 'unexpected token' ) )). "just a bad token"
+			         notices: #( #( 1 3 1 'Unexpected token' ) )). "just a bad token"
 		        (self new
 			         source: 'a:foo';
 			         formattedCode: ' a: foo';
@@ -403,29 +413,32 @@ RBCodeSnippet class >> badExpressions [
 			         source: 'a::foo';
 			         formattedCode: 'a::. foo';
 			         notices:
-				         #( #( 1 3 1 'unexpected token' )
+				         #( #( 1 3 1 'Unexpected token' )
 				            #( 4 6 4 'Undeclared variable' ) )).
 		        (self new
 			         source: ':a:foo';
-			         formattedCode: ': a: foo';
-			         notices: #( #( 1 3 1 'Variable name expected' )
+			         formattedCode: ':. a: foo';
+			         notices:
+				         #( #( 1 1 1 'Unexpected token' )
+				            #( 2 1 2 'Variable or expression expected' )
 				            #( 4 6 4 'Undeclared variable' ) )).
 		        (self new
 			         source: '|:a|';
 			         formattedCode: '| . :a | ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
-				            #( 2 3 2 'Variable name expected' )
+				            #( 2 3 2 'Unexpected block parameter' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: '|:a';
 			         formattedCode: '| . :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
-				            #( 2 3 2 'Variable name expected' ) )).
+				            #( 2 3 2 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '|::a';
-			         formattedCode: '| . ::a';
+			         formattedCode: '| . :. :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
-				            #( 2 4 2 'Variable name expected' ) )).
+				            #( 2 2 2 'Unexpected token' )
+				            #( 3 4 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '|a:|';
 			         formattedCode: '| . a: | ';
@@ -1030,7 +1043,7 @@ RBCodeSnippet class >> badMethods [
 			         source: ':';
 			         formattedCode: ' . :';
 			         notices: #( #( 1 0 1 'Message pattern expected' )
-				            #( 1 1 1 'Variable name expected' ) )).
+				            #( 1 1 1 'Unexpected token' ) )).
 		        (self new
 			         source: '#(foo bar)';
 			         formattedCode: ' . #( foo bar )';
@@ -1088,7 +1101,7 @@ RBCodeSnippet class >> badMethods [
 			         source: 'foo:bar:';
 			         formattedCode: ' . foo:bar:';
 			         notices: #( #( 1 0 1 'Message pattern expected' )
-				            #( 1 8 1 'unexpected token' ) )). "`foo:bar:` is a single token, and is unexpected"
+				            #( 1 8 1 'Unexpected token' ) )). "`foo:bar:` is a single token, and is unexpected"
 
 		        "Bad pragma message"
 		        (self new
