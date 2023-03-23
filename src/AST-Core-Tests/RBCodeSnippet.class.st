@@ -1719,6 +1719,27 @@ RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 	^ text
 ]
 
+{ #category : #updating }
+RBCodeSnippet >> updateExpectations [
+	"Update the value of expectations according what tools produce.
+	Do not blindly trust it, as a tool cannot jusge itself."
+
+	| ast |
+	ast := self parse.
+	self formattedCode: self formattedCode.
+	self isParseFaulty: ast isFaulty.
+	ast := self doSemanticAnalysis.
+	self isFaulty: ast isFaulty.
+	self notices: (ast allNotices
+			 collect: [ :each |
+				 {
+					 each node start.
+					 each node stop.
+					 each position.
+					 each messageText } ]
+			 as: Array)
+]
+
 { #category : #accessing }
 RBCodeSnippet >> value [
 
