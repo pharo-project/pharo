@@ -1627,6 +1627,13 @@ RBCodeSnippet >> ifSkip: aTestName then: aBlock [
 	^ aBlock value
 ]
 
+{ #category : #inspecting }
+RBCodeSnippet >> inspectionSource [
+	<inspectorPresentationOrder: 35 title: 'Source'>
+
+	^ self searchDefinition inspectionSource
+]
+
 { #category : #accessing }
 RBCodeSnippet >> isFaulty [
 
