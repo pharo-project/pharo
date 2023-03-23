@@ -67,9 +67,15 @@ SymbolTrieNode >> includes: aString [
 ]
 
 { #category : #testing }
+SymbolTrieNode >> initialize: aSize [
+	super initialize: aSize.
+	symbol := WeakArray new: 1.
+]
+
+{ #category : #testing }
 SymbolTrieNode >> isSymbol [
 
-	^ symbol isNotNil
+	^ self symbol isNotNil
 ]
 
 { #category : #accessing }
@@ -87,13 +93,13 @@ SymbolTrieNode >> parent: anObject [
 { #category : #accessing }
 SymbolTrieNode >> symbol [
 
-	^ symbol
+	^ symbol at: 1
 ]
 
 { #category : #accessing }
 SymbolTrieNode >> symbol: anObject [
 
-	symbol := anObject
+	symbol at: 1 put: anObject
 ]
 
 { #category : #enumerating }
