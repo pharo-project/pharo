@@ -1485,8 +1485,9 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 	aCollection do: [ :each |
 		each default: self.
 		each isMethod ifNil: [ each isMethod: self isMethod ].
-		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
+		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
+		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
 	]
 ]
