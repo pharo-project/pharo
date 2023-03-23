@@ -28,7 +28,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $b meta
 		do: [ :target | target editor browseFullClass ]
-		description: 'Browse'.
+		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
 		category: RubSmalltalkEditor name
@@ -40,13 +40,13 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $i meta
 		do: [ :target | target editor inspectIt: nil ]
-		description: 'Inspect it'.
+		description: 'Do & inspect it'.
 
 	(aBuilder shortcut: #basicInspectIt)
 		category: RubSmalltalkEditor name
 		default: $i meta shift
 		do: [ :target | target editor basicInspectIt ]
-		description: 'Basic Inspect it'.
+		description: 'Do & basic inspect it'.
 
 	(aBuilder shortcut: #implementorsOfIt)
 		category: RubSmalltalkEditor name
@@ -64,7 +64,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $p meta
 		do: [ :target | target editor printIt ]
-		description: 'Print it'.
+		description: 'Do & print it'.
 
 	(aBuilder shortcut: #debugIt)
 		category: RubSmalltalkEditor name
