@@ -84,9 +84,8 @@ RBTransformation class >> refactoringOptions [
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
-	^ self
-		checksPreconditions;
-		yourself
+	self preconditionChecking: true.
+	^ self yourself
 ]
 
 { #category : #private }
