@@ -891,8 +891,20 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
 
-	": is only acceptable at the begin of a block. So just consume them as bad expression"
-	(currentToken isSpecial: $:) ifTrue: [ ^self parseVariableNode ].
+	":id is only acceptable at the begin of a block. So just consume them as unexpected"
+	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
+		ifTrue: [
+			| start |
+			start := currentToken start.
+			self step. ":"
+			errorNode := RBParseErrorNode new
+				             errorMessage: 'Unexpected block parameter';
+				             start: start;
+				             errorPosition: start;
+				             stop: currentToken stop;
+				             value: ':' , currentToken value.
+			self step. "identifier"
+			^ errorNode ].
 
 	errorNode := self parseErrorNode: 'Variable or expression expected'.
 	^errorNode
