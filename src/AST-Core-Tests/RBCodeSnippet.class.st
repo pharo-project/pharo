@@ -1875,7 +1875,7 @@ RBCodeSnippet >> updateExpectations [
 
 	| ast |
 	ast := self parse.
-	self formattedCode: self formattedCode.
+	self formattedCode: ast formattedCode withSeparatorsCompacted.
 	self isParseFaulty: ast isFaulty.
 	ast := self doSemanticAnalysis.
 	self isFaulty: ast isFaulty.
