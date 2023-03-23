@@ -1737,6 +1737,29 @@ RBCodeSnippet >> raise: anObject [
 	raise := anObject
 ]
 
+{ #category : #updating }
+RBCodeSnippet >> searchDefinition [
+	"Get the AST node defining self in the class side method.
+	The source code is used as a key to distinguishes other snippets.
+	Assume the AST of the class side method respect the format."
+
+	| ast candidate |
+	candidate := OrderedCollection new.
+	ast := (self class class >> default group) ast.
+	ast nodesDo: [ :node |
+		| parent |
+		(node isLiteralNode and: [
+			 parent := node parent.
+			 node value = self source and: [
+				 parent isMessage and: [ parent selector = #source: ] ] ])
+			ifTrue: [
+				parent isCascaded ifTrue: [ parent := parent parent ].
+				candidate add: parent ] ].
+	^ candidate size = 1
+		  ifTrue: [ candidate first ]
+		  ifFalse: [ nil ]
+]
+
 { #category : #accessing }
 RBCodeSnippet >> skip: aSymbol [
 
