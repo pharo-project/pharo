@@ -952,7 +952,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
 		"Solution to recover. Consume the token to create the statement."
 		node := RBParseErrorNode new
-			errorMessage: 'unexpected token';
+			errorMessage: 'Unexpected token';
 			value: currentToken value asString;
 			start: currentToken start;
 			stop: currentToken stop;
