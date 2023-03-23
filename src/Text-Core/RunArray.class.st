@@ -153,17 +153,18 @@ RunArray >> , aRunArray [
 	"Answer a new RunArray that is a concatenation of the receiver and
 	aRunArray."
 
-	| new newRuns |
+	| newRuns |
 	aRunArray class = self class ifFalse: [
+		| new |
 		new := self copy.
 		"attempt to be sociable"
-		aRunArray do: [ :each | new addLast: each ].
+		new addAll: aRunArray.
 		^ new ].
-	runs size = 0 ifTrue: [ ^ aRunArray copy ].
-	aRunArray runs size = 0 ifTrue: [ ^ self copy ].
-	(values at: values size) ~= (aRunArray values at: 1) ifTrue: [ ^ self class runs: runs , aRunArray runs values: values , aRunArray values ].
+	runs ifEmpty: [ ^ aRunArray copy ].
+	aRunArray runs ifEmpty: [ ^ self copy ].
+	values last ~= aRunArray values first ifTrue: [ ^ self class runs: runs , aRunArray runs values: values , aRunArray values ].
 	newRuns := runs copyReplaceFrom: runs size to: runs size with: aRunArray runs.
-	newRuns at: runs size put: (runs at: runs size) + (aRunArray runs at: 1).
+	newRuns at: runs size put: runs last + aRunArray runs first.
 	^ self class runs: newRuns values: (values copyReplaceFrom: values size to: values size with: aRunArray values)
 ]
 
@@ -172,8 +173,8 @@ RunArray >> = otherArray [
 	"Test if all my elements are equal to those of otherArray"
 
 	self == otherArray ifTrue: [ ^ true ].
-	self species == otherArray species ifFalse: [ ^ false ].
 	otherArray class = self class ifFalse: [ ^ self hasEqualElements: otherArray ].
+	self species == otherArray species ifFalse: [ ^ false ].
 
 	"Faster test between two RunArrays"
 	^ (runs hasEqualElements: otherArray runs) and: [ values hasEqualElements: otherArray values ]
@@ -184,7 +185,7 @@ RunArray >> add: value [
 	"Add value as the last element of the receiver."
 
 	lastIndex := nil. "flush access cache"
-	(runs size = 0 or: [ values last ~= value ])
+	(runs isEmpty or: [ values last ~= value ])
 		ifTrue: [
 			runs := runs copyWith: 1.
 			values := values copyWith: value ]
@@ -195,14 +196,14 @@ RunArray >> add: value [
 { #category : #adding }
 RunArray >> add: newObject withOccurrences: anInteger [
 	"Add value as the last element of the receiver, the given number of times"
-	anInteger <= 0 ifTrue: [ ^self ].
+
+	anInteger <= 0 ifTrue: [ ^ self ].
 	lastIndex := nil. "flush access cache"
-	(runs size=0 or: [values last ~= newObject])
-		ifTrue:
-			[runs := runs copyWith: anInteger.
-			values := values copyWith: newObject]
-		ifFalse:
-			[runs at: runs size put: runs last + anInteger]
+	(runs isEmpty or: [ values last ~= newObject ])
+		ifTrue: [
+			runs := runs copyWith: anInteger.
+			values := values copyWith: newObject ]
+		ifFalse: [ runs at: runs size put: runs last + anInteger ]
 ]
 
 { #category : #enumerating }
@@ -275,32 +276,28 @@ RunArray >> at: index put: aValue [
 { #category : #private }
 RunArray >> at: index setRunOffsetAndValue: aBlock [
 	"Supply all run information to aBlock."
+
 	"Tolerates index=0 and index=size+1 for copyReplace: "
+
 	| run limit offset |
 	limit := runs size.
-	(lastIndex == nil or: [index < lastIndex])
-		ifTrue: "cache not loaded, or beyond index - start over"
-			[run := 1.
-			offset := index-1]
-		ifFalse: "cache loaded and before index - start at cache"
-			[run := lastRun.
-			offset := lastOffset + (index-lastIndex)].
-	[run <= limit and: [offset >= (runs at: run)]]
-		whileTrue:
-			[offset := offset - (runs at: run).
-			run := run + 1].
+	(lastIndex isNil or: [ index < lastIndex ])
+		ifTrue: [ "cache not loaded, or beyond index - start over"
+			run := 1.
+			offset := index - 1 ]
+		ifFalse: [ "cache loaded and before index - start at cache"
+			run := lastRun.
+			offset := lastOffset + (index - lastIndex) ].
+	[ run <= limit and: [ offset >= (runs at: run) ] ] whileTrue: [
+		offset := offset - (runs at: run).
+		run := run + 1 ].
 	lastIndex := index. "Load cache for next access"
 	lastRun := run.
 	lastOffset := offset.
-	run > limit
-		ifTrue:
-			["adjustment for size+1"
-			run := run - 1.
-			offset := offset + (runs at: run)].
-	^aBlock
-		value: run "an index into runs and values"
-		value: offset "zero-based offset from beginning of this run"
-		value: (values at: run) "value for this run"
+	run > limit ifTrue: [ "adjustment for size+1"
+		run := run - 1.
+		offset := offset + (runs at: run) ].
+	^ aBlock value: run value: offset value: (values at: run) "an index into runs and values" "zero-based offset from beginning of this run" "value for this run"
 ]
 
 { #category : #adding }
@@ -422,12 +419,10 @@ RunArray >> detectMin: aBlock [
 RunArray >> do: aBlock [
 	"This is refined for speed"
 
-	1 to: runs size do: [:i |
-		| r v |
-		v := values at: i.
-		r := runs at: i.
-		[( r := r - 1) >= 0]
-			whileTrue: [aBlock value: v]]
+	runs doWithIndex: [ :run :index |
+		| v |
+		v := values at: index.
+		[ aBlock value: v ] timesRepeat: run ]
 ]
 
 { #category : #private }
@@ -480,7 +475,8 @@ RunArray >> findLast: aBlock [
 
 { #category : #accessing }
 RunArray >> first [
-	^values at: 1
+
+	^ values first
 ]
 
 { #category : #testing }
@@ -508,7 +504,8 @@ RunArray >> isSortedBy: aBlock [
 
 { #category : #accessing }
 RunArray >> last [
-	^values at: values size
+
+	^ values last
 ]
 
 { #category : #private }
@@ -683,18 +680,17 @@ RunArray >> setRuns: newRuns setValues: newValues [
 
 { #category : #accessing }
 RunArray >> size [
-	| size |
-	size := 0.
-	1 to: runs size do: [:i | size := size + (runs at: i)].
-	^size
+
+	^ runs sumNumbers
 ]
 
 { #category : #printing }
 RunArray >> storeOn: aStream [
 
-	aStream nextPut: $(.
-	aStream nextPutAll: self class name.
-	aStream nextPutAll: ' runs: '.
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' runs: '.
 	runs storeOn: aStream.
 	aStream nextPutAll: ' values: '.
 	values storeOn: aStream.
@@ -733,8 +729,8 @@ RunArray >> withStartStopAndValueDo: aBlock [
 RunArray >> writeOn: aStream [
 
 	aStream nextWordPut: runs size.
-	1 to: runs size do:
-		[:x |
-		aStream nextWordPut: (runs at: x).
-		aStream nextWordPut: (values at: x)]
+	runs doWithIndex: [ :run :index |
+		aStream
+			nextWordPut: run;
+			nextWordPut: (values at: index) ]
 ]
