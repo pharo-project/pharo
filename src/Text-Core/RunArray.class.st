@@ -180,11 +180,16 @@ RunArray >> = otherArray [
 ]
 
 { #category : #adding }
-RunArray >> add: newObject [
-	"Include newObject as one of the receiver's elements. Answer newObject.
-	ArrayedCollections cannot respond to this message."
+RunArray >> add: value [
+	"Add value as the last element of the receiver."
 
-	^ self addLast: newObject
+	lastIndex := nil. "flush access cache"
+	(runs size = 0 or: [ values last ~= value ])
+		ifTrue: [
+			runs := runs copyWith: 1.
+			values := values copyWith: value ]
+		ifFalse: [ runs at: runs size put: runs last + 1 ].
+	^ value
 ]
 
 { #category : #adding }
@@ -198,31 +203,6 @@ RunArray >> add: newObject withOccurrences: anInteger [
 			values := values copyWith: newObject]
 		ifFalse:
 			[runs at: runs size put: runs last + anInteger]
-]
-
-{ #category : #adding }
-RunArray >> addFirst: value [
-	"Add value as the first element of the receiver."
-	lastIndex := nil. "flush access cache"
-	(runs size=0 or: [values first ~= value])
-		ifTrue:
-			[runs := {1}, runs.
-			values := {value}, values]
-		ifFalse:
-			[runs at: 1 put: runs first+1]
-]
-
-{ #category : #adding }
-RunArray >> addLast: value [
-	"Add value as the last element of the receiver."
-	lastIndex := nil. "flush access cache"
-	(runs size=0 or: [values last ~= value])
-		ifTrue:
-			[runs := runs copyWith: 1.
-			values := values copyWith: value]
-		ifFalse:
-			[runs at: runs size put: runs last+1].
-	^value
 ]
 
 { #category : #enumerating }
@@ -614,31 +594,6 @@ RunArray >> remove: anObject ifAbsent: exceptionBlock [
 RunArray >> removeAll [
 	runs := Array new.
 	values := Array new
-]
-
-{ #category : #adding }
-RunArray >> repeatLast: times ifEmpty: defaultBlock [
-	"add the last value back again, the given number of times. If we are empty, add (defaultBlock value)"
-	times = 0 ifTrue: [^self ].
-	lastIndex := nil. "flush access cache"
-	(runs size=0)
-		ifTrue:
-			[runs := runs copyWith: times.
-			values := values copyWith: defaultBlock value]
-		ifFalse:
-			[runs at: runs size put: runs last+times]
-]
-
-{ #category : #adding }
-RunArray >> repeatLastIfEmpty: defaultBlock [
-	"add the last value back again. If we are empty, add (defaultBlock value)"
-	lastIndex := nil. "flush access cache"
-	(runs size=0)
-		ifTrue:[
-			runs := runs copyWith: 1.
-			values := values copyWith: defaultBlock value]
-		ifFalse:
-			[runs at: runs size put: runs last+1]
 ]
 
 { #category : #enumerating }
