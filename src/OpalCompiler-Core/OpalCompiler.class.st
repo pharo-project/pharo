@@ -437,6 +437,13 @@ OpalCompiler >> parseForRequestor [
 	do: [ :notification |
 		| res |
 		self isInteractive ifFalse: [ notification pass ].
+		"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just signal as an error (on: block bellow)"
+		self compilationContext noPattern ifTrue: [
+			CodeError new
+				node: notification node;
+				messageText: notification messageText;
+				signal.
+			].
 		"I do not like the API that much.
 		 reparator can have 3 outcomes:
 		  * reparation done, reparse. true
