@@ -270,10 +270,7 @@ RBScanner >> next [
 
 	buffer reset.
 	tokenStart := stream position.
-	token := characterType = #eof
-				ifTrue:
-					[RBEOFToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
-				ifFalse: [self scanToken].
+	token := self scanToken.
 	self stripSeparators.
 	token comments: self getComments.
 	^token
@@ -630,6 +627,7 @@ RBScanner >> scanToken [
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
+	characterType = #eof ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
 	characterType = #alphabetic ifTrue: [^self scanIdentifierOrKeyword].
 	(characterType = #digit
 		or: [currentCharacter = $- and: [(self classify: stream peek) = #digit]])
