@@ -925,6 +925,16 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 				        value: self parseAssignment ]
 		ifFalse: [ node := self parseAssignment ].
 
+	"If what follows is a closer that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
+	[(')]}' includes: currentToken value)
+		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
+			whileTrue: [
+				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
+				node := (RBUnfinishedStatementErrorNode from: err contents: { node })
+					valueAfter: currentToken value asString;
+					stop: currentToken stop.
+				self step ].
+
 	"If the parsing failed because it did not match anything, consume the current token and continue parsing."
 	startOfStatementToken = currentToken ifTrue: [
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
@@ -935,19 +945,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 			start: currentToken start;
 			stop: currentToken stop;
 			errorPosition: currentToken start.
-
 		self step ].
-
-	"At this point we have parsed a full statement."
-	"If the statement is followed by closers that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
-	[(')]}' includes: currentToken value)
-		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
-			whileTrue: [
-				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
-				node := (RBUnfinishedStatementErrorNode from: err contents: { node })
-					valueAfter: currentToken value asString;
-					stop: currentToken stop.
-				self step ].
 
 	"Next we should have the end of the statement
 	  - a dot or
