@@ -30,7 +30,6 @@ Class {
 	#name : #Symbol,
 	#superclass : #String,
 	#classVars : [
-		'NewSymbols',
 		'SelectorTable',
 		'SymbolTable'
 	],
@@ -40,24 +39,20 @@ Class {
 { #category : #'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock [
 
-	NewSymbols do: aBlock.
 	SymbolTable do: aBlock
 ]
 
 { #category : #'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
 
-	NewSymbols do: aBlock after: aSymbol.
 	SymbolTable do: aBlock after: aSymbol
 ]
 
 { #category : #accessing }
 Symbol class >> allSymbols [
 	"Answer all interned symbols"
-	^Array streamContents:[:s|
-		s nextPutAll: NewSymbols.
-		s nextPutAll: SymbolTable.
-	]
+
+	^ SymbolTable copy
 ]
 
 { #category : #cleanup }
@@ -67,37 +62,17 @@ Symbol class >> cleanUp [
 	self rehash
 ]
 
-{ #category : #cleanup }
-Symbol class >> compactSymbolTable [
-	"this used to create a set with just 25% empty space, but that reduces lookup performance"
-		self
-		deprecated: 'Use #rehash instead'
-		transformWith: '`@receiver compactSymbolTable' -> '`@receiver rehash'.
-	self rehash
-]
-
 { #category : #'symbol table' }
 Symbol class >> findInterned: aStringOrSymbol [
 
-	^(SymbolTable like: aStringOrSymbol) ifNil: [
-		NewSymbols like: aStringOrSymbol
-	]
-]
-
-{ #category : #'selector table' }
-Symbol class >> findInternedSelector: aString [
-	"return a selector if the argument is used as a selector, nil if not"
-	self deprecated: 'use #isSelectorSymbol instead'.
-	^ (self findInterned: aString) ifNotNil: [ :symbol |
-		  (self selectorTable like: symbol) ifNotNil: [ :selectorSymbol |
-			  selectorSymbol ] ]
+	^ SymbolTable like: aStringOrSymbol
 ]
 
 { #category : #'symbol table' }
 Symbol class >> hasInterned: aStringOrSymbol [
 	"Answer with false if aString hasnt been interned (into a Symbol)"
 
-	^(SymbolTable includes: aStringOrSymbol) or: [ NewSymbols includes: aStringOrSymbol ]
+	^ SymbolTable includes: aStringOrSymbol
 ]
 
 { #category : #'symbol table' }
@@ -123,8 +98,7 @@ Symbol class >> initialize [
 { #category : #'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	^ (self findInterned: aStringOrSymbol) ifNil: [
-		  NewSymbols add: aStringOrSymbol createSymbol ]
+	^ (self findInterned: aStringOrSymbol) ifNil: [ SymbolTable add: aStringOrSymbol createSymbol ]
 ]
 
 { #category : #'symbol table' }
@@ -210,11 +184,10 @@ Symbol class >> recordSelector: aSymbol [
 
 { #category : #cleanup }
 Symbol class >> rehash [
-   "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
 
+	<script>
 	SymbolTable := WeakSet withAll: self allSubInstances.
-	NewSymbols := WeakSet new.
 	self resetSelectorTable
 ]
 
@@ -248,13 +221,6 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 		] after: skipSym.
 
 	^nil
-]
-
-{ #category : #'system startup' }
-Symbol class >> shutDown: aboutToQuit [
-
-	SymbolTable addAll: NewSymbols.
-	NewSymbols := WeakSet new
 ]
 
 { #category : #accessing }
