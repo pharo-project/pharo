@@ -1498,6 +1498,73 @@ RBCodeSnippet >> default: aRBCodeSnippet [
 	default := aRBCodeSnippet
 ]
 
+{ #category : #updating }
+RBCodeSnippet >> dumpDefinition [
+	"The definition of the snippet (according to the current values)
+	as it should appears in the class side methods."
+
+	^ String streamContents: [ :aStream |
+		  aStream
+			  nextPutAll: '(self new';
+			  nextPutAll: ' source: ';
+			  print: self source.
+		  self formattedCode = self source ifFalse: [
+			  aStream
+				  nextPutAll: '; formattedCode: ';
+				  print: self formattedCode ].
+		  self isMethod = default isMethod ifFalse: [
+			  aStream
+				  nextPutAll: '; isMethod: ';
+				  print: self isMethod ].
+		  self isFaulty = default isFaulty ifFalse: [
+			  aStream
+				  nextPutAll: '; isFaulty: ';
+				  print: self isFaulty ].
+		  (default isParseFaulty
+			   ifNotNil: [ self isParseFaulty ~= default isParseFaulty ]
+			   ifNil: [ self isParseFaulty ~= self isFaulty ]) ifTrue: [
+			  aStream
+				  nextPutAll: '; isParseFaulty: ';
+				  print: self isParseFaulty ].
+		  self dumpDefinitionValue: aStream.
+		  self numberOfCritiques ifNotNil: [
+			  aStream
+				  nextPutAll: '; numberOfCritiques: ';
+				  print: self numberOfCritiques ].
+		  self notices isEmptyOrNil ifFalse: [
+			  aStream
+				  nextPutAll: '; notices: ';
+				  print: self notices ].
+		  self skippedTests ifNotNil: [
+			  self skippedTests do: [ :each |
+				  aStream
+					  nextPutAll: '; skip: ';
+					  print: each ] ].
+		  aStream nextPut: $) ]
+]
+
+{ #category : #updating }
+RBCodeSnippet >> dumpDefinitionValue: aStream [
+
+	self messageNotUnderstood ifNotNil: [ :val |
+		aStream
+			nextPutAll: '; messageNotUnderstood: ';
+			print: val.
+		^ self ].
+
+	self raise ifNotNil: [ :val |
+		aStream
+			nextPutAll: '; raise: ';
+			print: val.
+		^ self ].
+
+	(self value isNotNil or: [ self isFaulty and: [ self hasValue ] ])
+		ifTrue: [
+			aStream
+				nextPutAll: '; value: ';
+				print: self value ]
+]
+
 { #category : #accessing }
 RBCodeSnippet >> formattedCode [
 
