@@ -44,7 +44,7 @@ ClyTextEditor >> notify: aString at: anInteger in: aStream [
 	"Note: error reporting can still be improved, but this need more work"
 
 	| pos message |
-	message := (aString endsWith: '->')
+	message := (aString endsWith: ' ->')
 		ifTrue: [ aString allButLast: 3 ]
 		ifFalse: [ aString ].
 
