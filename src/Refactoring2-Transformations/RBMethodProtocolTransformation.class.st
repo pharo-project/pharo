@@ -22,6 +22,12 @@ Class {
 	#category : #'Refactoring2-Transformations-Model'
 }
 
+{ #category : #testing }
+RBMethodProtocolTransformation class >> isTransformation [
+
+	^ true
+]
+
 { #category : #api }
 RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMethod: aSelector inClass: aClassName [
 
