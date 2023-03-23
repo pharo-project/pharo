@@ -29,7 +29,11 @@ RBCodeSnippetTest >> testCompileOnError [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e | error := e messageText ].
+	method := snippet compileOnError: [ :e |
+		          self assert:
+			          (snippet hasNotice: e messageText at: e location).
+		          self assert: error isNil. "single invocation"
+		          error := e ].
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
@@ -43,7 +47,11 @@ RBCodeSnippetTest >> testCompileOnErrorResume [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e | error := e messageText. e resume ].
+	method := snippet compileOnError: [ :e |
+		          self assert:
+			          (snippet hasNotice: e messageText at: e location).
+		          error := e.
+		          e resume ].
 	self assert: snippet isFaulty equals: error isNotNil.
 	self assert: method isCompiledMethod.
 	self testExecute: method
@@ -61,7 +69,10 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 		          noPattern: snippet isMethod not;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
-			          self assert: requestor notifyList isNotEmpty.
+			| n |
+			          self assert: requestor notifyList size equals: 1.
+			n := requestor notifyList first.
+						self assert: (snippet hasNotice: (n first allButLast: 3) at: n second).
 			          self assert: snippet isFaulty.
 			          ^ self ];
 		          compile: snippet source.
@@ -104,7 +115,9 @@ RBCodeSnippetTest >> testDoSemanticAnalysis [
 	| ast |
 	ast := snippet doSemanticAnalysis.
 	self assert: ast isMethod.
-	self assert: ast isFaulty equals: snippet isFaulty
+	self assert: ast isFaulty equals: snippet isFaulty.
+
+	self assert: (snippet hasAllNotices: ast allNotices)
 ]
 
 { #category : #'*OpalCompiler-Tests' }
