@@ -422,7 +422,7 @@ RunArray >> do: aBlock [
 	runs doWithIndex: [ :run :index |
 		| v |
 		v := values at: index.
-		[ aBlock value: v ] timesRepeat: run ]
+		run timesRepeat:[ aBlock value: v ] ]
 ]
 
 { #category : #private }
