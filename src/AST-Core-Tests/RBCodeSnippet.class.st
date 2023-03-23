@@ -1479,6 +1479,24 @@ RBCodeSnippet class >> styleAllWithError [
 	bigtext inspect
 ]
 
+{ #category : #updating }
+RBCodeSnippet class >> updateAllSnippets [
+	"This script will update all definitions of all snippets.
+	Beware of code loss and double check the generated definitions."
+
+	"I did not manage to update all in a single transformation (with a preview!)
+	So do them one by one with a progress bar :("
+
+	<script>
+	self allSnippets
+		do: [ :snippet |
+			snippet definitionRefactoring ifNotNil: [ :refactoring |
+				refactoring
+					transform;
+					execute ] ]
+		displayingProgress: 'Updating snippets...'
+]
+
 { #category : #accessing }
 RBCodeSnippet >> applyDefaultTo: aCollection [
 
@@ -1496,6 +1514,29 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 RBCodeSnippet >> default: aRBCodeSnippet [
 
 	default := aRBCodeSnippet
+]
+
+{ #category : #updating }
+RBCodeSnippet >> definitionRefactoring [
+	"A transformation to update the definition of self in the correct class side method"
+
+	| node old new newast |
+	node := self searchDefinition.
+	node ifNil: [ ^ nil ].
+	self updateExpectations.
+
+	"Check if the new code is different from the old one"
+	old := node sourceCode.
+	new := self dumpDefinition.
+	newast := RBParser parseFaultyExpression: new.
+	newast parent: node parent. "Force same context, so formattedCode is reliable"
+	node formattedCode = newast formattedCode ifTrue: [ ^ nil ].
+
+	^ RBReplaceSubtreeTransformation
+		  replace: old
+		  to: new
+		  inMethod: node methodNode selector
+		  inClass: node methodNode methodClass
 ]
 
 { #category : #updating }
@@ -1814,6 +1855,17 @@ RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 		with: (aString asText addAttribute:
 				 (TextBackgroundColor color: Color lightBlue)).
 	^ text
+]
+
+{ #category : #updating }
+RBCodeSnippet >> updateDefinition [
+	"Do the update of the definition of self in the "
+
+	<script: 'RBCodeSnippet badExpressions first updateDefinition'>
+	self definitionRefactoring ifNotNil: [ :transformation |
+		transformation
+			transform;
+			execute ]
 ]
 
 { #category : #updating }
