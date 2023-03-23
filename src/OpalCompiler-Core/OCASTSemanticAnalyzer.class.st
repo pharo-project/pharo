@@ -163,6 +163,7 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;
+		messageText: 'Undeclared variable';
 		signal.
 
 	^ var
