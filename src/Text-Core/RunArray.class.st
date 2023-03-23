@@ -154,43 +154,29 @@ RunArray >> , aRunArray [
 	aRunArray."
 
 	| new newRuns |
-	(aRunArray isMemberOf: RunArray)
-		ifFalse:
-			[new := self copy.
-			"attempt to be sociable"
-			aRunArray do: [:each | new addLast: each].
-			^new].
-	runs size = 0 ifTrue: [^aRunArray copy].
-	aRunArray runs size = 0 ifTrue: [^self copy].
-	(values at: values size) ~= (aRunArray values at: 1)
-		ifTrue: [^RunArray
-					runs: runs , aRunArray runs
-					values: values , aRunArray values].
-	newRuns := runs
-			copyReplaceFrom: runs size
-			to: runs size
-			with: aRunArray runs.
+	aRunArray class = self class ifFalse: [
+		new := self copy.
+		"attempt to be sociable"
+		aRunArray do: [ :each | new addLast: each ].
+		^ new ].
+	runs size = 0 ifTrue: [ ^ aRunArray copy ].
+	aRunArray runs size = 0 ifTrue: [ ^ self copy ].
+	(values at: values size) ~= (aRunArray values at: 1) ifTrue: [ ^ self class runs: runs , aRunArray runs values: values , aRunArray values ].
+	newRuns := runs copyReplaceFrom: runs size to: runs size with: aRunArray runs.
 	newRuns at: runs size put: (runs at: runs size) + (aRunArray runs at: 1).
-	^RunArray
-		runs: newRuns
-		values:
-			(values
-				copyReplaceFrom: values size
-				to: values size
-				with: aRunArray values)
+	^ self class runs: newRuns values: (values copyReplaceFrom: values size to: values size with: aRunArray values)
 ]
 
 { #category : #comparing }
 RunArray >> = otherArray [
 	"Test if all my elements are equal to those of otherArray"
 
-	self == otherArray ifTrue: [^true].
-	self species == otherArray species ifFalse: [^ false].
-	(otherArray isMemberOf: RunArray) ifFalse: [^ self hasEqualElements: otherArray].
+	self == otherArray ifTrue: [ ^ true ].
+	self species == otherArray species ifFalse: [ ^ false ].
+	otherArray class = self class ifFalse: [ ^ self hasEqualElements: otherArray ].
 
 	"Faster test between two RunArrays"
-	^ (runs hasEqualElements: otherArray runs)
-		and: [values hasEqualElements: otherArray values]
+	^ (runs hasEqualElements: otherArray runs) and: [ values hasEqualElements: otherArray values ]
 ]
 
 { #category : #adding }
@@ -360,26 +346,30 @@ RunArray >> collect: aBlock [
 
 { #category : #copying }
 RunArray >> copyFrom: start to: stop [
+
 	| newRuns run1 run2 offset1 offset2 |
-	stop < start ifTrue: [^RunArray new].
-	self at: start setRunOffsetAndValue: [:r :o :value1 | run1 := r. offset1 := o. value1].
-	self at: stop setRunOffsetAndValue: [:r :o :value2 | run2 := r. offset2 := o. value2].
+	stop < start ifTrue: [ ^ self class new ].
+	self at: start setRunOffsetAndValue: [ :r :o :value1 |
+		run1 := r.
+		offset1 := o.
+		value1 ].
+	self at: stop setRunOffsetAndValue: [ :r :o :value2 |
+		run2 := r.
+		offset2 := o.
+		value2 ].
 	run1 = run2
-		ifTrue:
-			[newRuns := Array with: offset2 - offset1 + 1]
-		ifFalse:
-			[newRuns := runs copyFrom: run1 to: run2.
+		ifTrue: [ newRuns := Array with: offset2 - offset1 + 1 ]
+		ifFalse: [
+			newRuns := runs copyFrom: run1 to: run2.
 			newRuns at: 1 put: (newRuns at: 1) - offset1.
-			newRuns at: newRuns size put: offset2 + 1].
-	^RunArray runs: newRuns values: (values copyFrom: run1 to: run2)
+			newRuns at: newRuns size put: offset2 + 1 ].
+	^ self class runs: newRuns values: (values copyFrom: run1 to: run2)
 ]
 
 { #category : #copying }
 RunArray >> copyReplaceFrom: start to: stop with: replacement [
 
-	^(self copyFrom: 1 to: start - 1)
-		, replacement
-		, (self copyFrom: stop + 1 to: self size)
+	^ (self copyFrom: 1 to: start - 1) , replacement , (self copyFrom: stop + 1 to: self size)
 ]
 
 { #category : #copying }
@@ -522,7 +512,8 @@ RunArray >> includes: anObject [
 
 { #category : #'self evaluating' }
 RunArray >> isSelfEvaluating [
-	^ self class == RunArray and: [values isSelfEvaluating]
+
+	^ values isSelfEvaluating
 ]
 
 { #category : #testing }
