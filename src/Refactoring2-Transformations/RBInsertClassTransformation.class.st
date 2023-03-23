@@ -72,6 +72,8 @@ RBInsertClassTransformation >> addClass: aName superclass: superclassName subcla
 
 { #category : #preconditions }
 RBInsertClassTransformation >> preconditions [
+	"Superclass and subclasses shouldn't be metaclasses.
+	Each subclass should be immediate subclass of superclass."
 
 	| cond |
 	cond := ((RBCondition isMetaclass:

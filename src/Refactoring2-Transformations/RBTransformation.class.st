@@ -26,6 +26,12 @@ Class {
 	#category : #'Refactoring2-Transformations-Model'
 }
 
+{ #category : #displaying }
+RBTransformation class >> basicMenuItemString [
+
+	^ self subclassResponsibility
+]
+
 { #category : #cleanup }
 RBTransformation class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them
@@ -73,6 +79,20 @@ RBTransformation class >> initializeRefactoringOptions [
 
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ]
+]
+
+{ #category : #testing }
+RBTransformation class >> isTransformation [
+
+	^ false
+]
+
+{ #category : #displaying }
+RBTransformation class >> menuItemString [
+
+	^ (self isTransformation
+		   ifTrue: [ '(T) ' ]
+		   ifFalse: [ '' ]) , self basicMenuItemString
 ]
 
 { #category : #accessing }
