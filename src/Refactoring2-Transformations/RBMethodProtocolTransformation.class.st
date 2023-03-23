@@ -50,6 +50,7 @@ RBMethodProtocolTransformation >> preconditions [
 			withBlock: [ self definingClass isNotNil ]
 			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
 		& (RBCondition definesSelector: selector in: self definingClass)
+		& (RBCondition withBlock: [ protocol isNotNil ] errorString: ('Protocol of <1s> should not be nil' expandMacrosWith: className ))
 ]
 
 { #category : #executing }
@@ -58,17 +59,7 @@ RBMethodProtocolTransformation >> privateTransform [
 	self model
 		selector: self definingMethod selector
 		in: self definingClass
-		classified: self protocol
-]
-
-{ #category : #executing }
-RBMethodProtocolTransformation >> protocol [
-
-	^ protocol ifNil: [
-		self uiManager
-			chooseOrRequestFrom: self definingClass protocols
-			title: 'Class name was not defined to perform ', self class baseClass name,
-					 '. Please select a class to resume this transformation.'  ]
+		classified: protocol
 ]
 
 { #category : #api }
