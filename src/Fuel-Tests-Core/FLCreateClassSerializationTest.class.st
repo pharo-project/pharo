@@ -69,10 +69,10 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: class.
 	
 	"This is the test environment, so we have to cheat"
-	self
-		assertCollection: environment associations
-		hasSameElements: materializedClassOrTrait environment associations.
-		"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
+	self assert: environment associations size equals: materializedClassOrTrait environment associations size.
+	self assert: environment associations asSet equals: materializedClassOrTrait environment associations asSet.
+	
+	"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
 	self assert: category equals: materializedClassOrTrait basicCategory.
 	self assert: name equals: materializedClassOrTrait name.
 	"Notice that the metaclass is serialized by Fuel and a new one will be created."
@@ -86,17 +86,17 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithClassSideVariable [
 	"Tests materialization a class not defined in the image, with a class-side instance variable."
-	
-	| aClass materializedClass |	
+
+	| aClass materializedClass |
 	aClass := self classFactory silentlyNewClass.
 	aClass class addInstVarNamed: 'a'.
 	aClass instVarNamed: 'a' put: #test.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
-	self assert: 1 = materializedClass class instVarNames size.
+	self assert: materializedClass class instVarNames size equals: 1.
 	self assert: (materializedClass class instVarNames includes: 'a').
-	self assert: #test = (materializedClass instVarNamed: 'a').
+	self assert: #test equals: (materializedClass instVarNamed: 'a')
 ]
 
 { #category : #tests }

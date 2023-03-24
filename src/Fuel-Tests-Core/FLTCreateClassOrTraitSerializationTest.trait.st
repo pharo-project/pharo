@@ -83,9 +83,9 @@ FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 
 	self deny: aClassOrTrait identicalTo: materializedClassOrTrait.
 	"This is the test environment wrapper, so we need to cheat"
-	self
-		assertCollection: environment associations
-		hasSameElements: materializedClassOrTrait environment associations.
+	self assert: environment associations size equals: materializedClassOrTrait environment associations size.
+	self assert: environment associations asSet equals: materializedClassOrTrait environment associations asSet.
+	
 	"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
 	self assert: category equals: materializedClassOrTrait basicCategory.
 	self assert: name equals: materializedClassOrTrait name.
