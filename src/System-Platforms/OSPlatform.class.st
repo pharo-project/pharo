@@ -212,17 +212,6 @@ OSPlatform >> platformName [
 	^ self name
 ]
 
-{ #category : #accessing }
-OSPlatform >> processorArchitecture [
-	"returns the current processor real architecture.
-	Common values are:
-		i386    32-bit intel
-		x86_64  64-bit intel
-		arm64   64-bit arm"
-
-	^ LibC resultOfCommand: 'uname -m'
-]
-
 { #category : #'system startup' }
 OSPlatform >> shutDown: quitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
