@@ -48,6 +48,12 @@ ProperMethodCategorizationTest >> explanationFrom: violations [
 ]
 
 { #category : #'tests - instance creation' }
+ProperMethodCategorizationTest >> testBaselineProtocol [
+
+	self assureAll: #baseline: areCategorizedIn: #baselines whenSubclassOf: BaselineOf
+]
+
+{ #category : #'tests - instance creation' }
 ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationProtocol [
 	"The #basicNew methods should be in method protocol 'instance creation'"
 
