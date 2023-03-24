@@ -86,9 +86,8 @@ OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable [
 	| name var shadowing |
 	name := aVariableNode name.
-	var := scope lookupVarForDeclaration: name.
 	"check if another variable with same name is visible"
-	var ifNotNil: [ shadowing := var].
+	shadowing := scope lookupVarForDeclaration: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
 	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowingVariable: aVariableNode].
