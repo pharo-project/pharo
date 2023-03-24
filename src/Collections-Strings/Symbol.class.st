@@ -31,7 +31,8 @@ Class {
 	#superclass : #String,
 	#classVars : [
 		'SelectorTable',
-		'SymbolTable'
+		'SymbolTable',
+		'Trie'
 	],
 	#category : #'Collections-Strings-Base'
 }
