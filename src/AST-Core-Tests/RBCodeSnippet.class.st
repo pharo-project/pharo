@@ -340,18 +340,14 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
 				            #( 7 7 7 'Undeclared variable' ) )). "this one is a empty temps and a binary operator || with a mising receiver"
 		        (self new
-			         source: '| a | | b';
-			         notices:
-				         #( #( 3 3 3 'Unused variable' )
-				            #( 7 6 7 'Variable or expression expected' )
-				            #( 9 9 9 'Undeclared variable' ) )). "A valid temporary followed by a binary operator with a missing receiver"
+			         source: '| a | | a';
+			         notices: #( #( 7 6 7 'Variable or expression expected' )
+				            #( 9 9 9 'Unitialized variable' ) )). "A valid temporary followed by a binary operator with a missing receiver"
 		        (self new
-			         source: '| a ||b';
-			         formattedCode: '| a | | b';
-			         notices:
-				         #( #( 3 3 3 'Unused variable' )
-				            #( 6 5 6 'Variable or expression expected' )
-				            #( 7 7 7 'Undeclared variable' ) )). "same"
+			         source: '| a ||a';
+			         formattedCode: '| a | | a';
+			         notices: #( #( 6 5 6 'Variable or expression expected' )
+				            #( 7 7 7 'Unitialized variable' ) )). "same"
 
 		        "Unexpected parameters (or columns)"
 		        "Note that `:a` is not a token but a special `:` followed by an identifier, whereas `a:` is a single token."
@@ -492,38 +488,37 @@ RBCodeSnippet class >> badExpressions [
 			         formattedCode: '[ | b | ]';
 			         notices: #( #( 3 5 7 '''|'' or variable expected' ) )).
 		        (self new
-			         source: '[ :a | | b ]';
-			         formattedCode: '[ :a | | b | ]';
-			         notices: #( #( 8 10 12 '''|'' or variable expected' ) )).
+			         source: '[ :a | | a b ]';
+			         formattedCode: '[ :a | | a b | ]';
+			         notices: #( #( 8 12 14 '''|'' or variable expected' ) )).
 		        (self new
-			         source: '[ :a || b ]';
-			         formattedCode: '[ :a | | b | ]';
-			         notices: #( #( 7 9 11 '''|'' or variable expected' ) )).
+			         source: '[ :a || a b ]';
+			         formattedCode: '[ :a | | a b | ]';
+			         notices: #( #( 7 11 13 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
 			         isFaulty: false;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
-			         source: '[:a| ||b]';
-			         formattedCode: '[ :a | b ]';
+			         source: '[:a| ||a]';
+			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
-			         notices: #( #( 8 8 8 'Undeclared variable' ) )). "Same but mess with the Scanner"
+			         value: 1). "Same but mess with the Scanner"
 		        (self new
-			         source: '[:a|| |b]';
-			         formattedCode: '[ :a | b ]';
+			         source: '[:a|| |a]';
+			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
-			         notices: #( #( 8 8 8 'Undeclared variable' ) )). "Same"
+			         value: 1). "Same"
 		        (self new
-			         source: '[:a|||b]';
-			         formattedCode: '[ :a | b ]';
+			         source: '[:a|||a]';
+			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
-			         notices: #( #( 7 7 7 'Undeclared variable' ) )). "Same"
+			         value: 1). "Same"
 		        (self new
-			         source: '[:a||||b]';
-			         formattedCode: '[ :a | | b ]';
-			         notices: #( #( 7 6 7 'Variable or expression expected' )
-				            #( 8 8 8 'Undeclared variable' ) )). "same + binary | without receiver"
+			         source: '[:a||||a]';
+			         formattedCode: '[ :a | | a ]';
+			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "same + binary | without receiver"
 
 		        "Unclosed blocks"
 		        (self new
@@ -541,6 +536,10 @@ RBCodeSnippet class >> badExpressions [
 			         formattedCode: '[ :a :b | ';
 			         notices: #( #( 1 1 8 ''']'' expected' ) )).
 		        (self new
+			         source: '[ :a a';
+			         formattedCode: '[ :a | a';
+			         notices: #( #( 1 6 7 ''']'' expected' ) )).
+		        (self new
 			         source: '[ :a b';
 			         formattedCode: '[ :a | b';
 			         notices:
@@ -549,6 +548,9 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[ :a | ';
 			         notices: #( #( 1 1 8 ''']'' expected' ) )).
+		        (self new
+			         source: '[ :a | a';
+			         notices: #( #( 1 8 9 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | b';
 			         notices:
@@ -565,10 +567,10 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 5 6 ''']'' expected' ) )).
 		        (self new
-			         source: '[ | a';
-			         formattedCode: '[ | a | ';
-			         notices: #( #( 3 5 6 '''|'' or variable expected' )
-				            #( 1 5 6 ''']'' expected' ) )).
+			         source: '[ | a b';
+			         formattedCode: '[ | a b | ';
+			         notices: #( #( 3 7 8 '''|'' or variable expected' )
+				            #( 1 7 8 ''']'' expected' ) )).
 
 		        "Missing receiver or argument in message sends.
 		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
