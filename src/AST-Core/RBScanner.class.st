@@ -307,7 +307,7 @@ RBScanner >> scanBackFrom: start [
 
 	| len string stop current |
 	current := stream position.
-	stop := currentCharacter ifNil: [ current ] ifNotNil: [ current - 1 ].
+	stop := self previousStepPosition.
 	len := stop - start + 1.
 	stream position: start - 1.
 	string := stream next: len.
@@ -361,37 +361,21 @@ RBScanner >> scanComment [
 
 { #category : #'private - scanning' }
 RBScanner >> scanError: theCause [
-	"An error token accepts every character given, recognised or not."
-	"The value of an error token is one character maximum : the current character."
-	| location |
-	"error location is the next not parseable character. Or current stream position + 1 if
-	an expected character is missing."
-	location := stream position.
-	currentCharacter
-		ifNotNil: [ :char | buffer nextPut: char ]
-		ifNil: [ location := stream position + 1 ].
-	^ RBErrorToken
-		value: buffer contents asString
-		start: tokenStart
-		cause: theCause
-		location: location
+
+	^ self scanError: theCause from: tokenStart
 ]
 
 { #category : #'private - scanning' }
 RBScanner >> scanError: theCause from: aPosition [
-	"An error token accepts every character given, recognised or not."
 	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included)."
-	| location |
-	"error location is current stream position. Or current stream position + 1 if eof."
-	location := stream position.
-	currentCharacter
-		ifNotNil: [ :char | buffer nextPut: char ]
-		ifNil: [ location := stream position + 1 ].
+
+	"The error location is current stream position. Or current stream position + 1 if eof."
+
 	^ RBErrorToken
-		value: (self scanBackFrom: aPosition)
-		start: aPosition
-		cause: theCause
-		location: location
+		  value: (self scanBackFrom: aPosition)
+		  start: aPosition
+		  cause: theCause
+		  location: self previousStepPosition + 1
 ]
 
 { #category : #'private - scanning' }
@@ -475,7 +459,7 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ self scanError: 'Literal expected' from: tokenStart
+	^ self scanError: 'Literal expected'
 ]
 
 { #category : #'private - scanning' }
@@ -502,7 +486,7 @@ RBScanner >> scanLiteralCharacter [
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
 	| token |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ (self scanError:'Character expected') value: '$'].
+	currentCharacter ifNil:[ ^ self scanError: 'Character expected' ].
 	token := RBLiteralToken
 				value: currentCharacter
 				start: tokenStart
@@ -644,9 +628,10 @@ RBScanner >> scanToken [
 { #category : #'private - scanning' }
 RBScanner >> scanUnknownCharacter [
 	| errorToken |
-	errorToken := self scanError: 'Unknown character'.
-	"advance"
+	"consume unexpected character"
 	self step.
+	errorToken := self scanError: 'Unknown character'.
+	errorToken location: tokenStart. "Error location is before the character"
 	^ errorToken
 ]
 
