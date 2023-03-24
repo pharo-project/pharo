@@ -84,11 +84,17 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor methodStringsContainingIt: nil ]
 		description: 'Method strings containing it'.
 
+	(aBuilder shortcut: #methodStringsContainingItCaseSensitive)
+		category: RubSmalltalkEditor name
+		default: $u meta shift
+		do: [ :target | target editor methodCaseSensitiveStringsContainingIt ]
+		description: 'Method strings containing it (case sensitive)'.
+
+
 	(aBuilder shortcut: #format)
 		category: RubSmalltalkEditor name
 		default: PharoShortcuts current formatCodeShortcut
 		do: [ :target | target formatMethodCode ].
-
 
 	(aBuilder shortcut: #jumpToNextKeywordOfIt)
 		category: RubSmalltalkEditor name
@@ -832,7 +838,7 @@ RubSmalltalkEditor >> keystroke: aKeyboardEvent [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> methodCaseSensitiveStringsContainingit [
+RubSmalltalkEditor >> methodCaseSensitiveStringsContainingIt [
 	"Open a browser on methods which contain the current selection as part of a string constant."
 
 	self lineSelectAndEmptyCheck: [^ self].

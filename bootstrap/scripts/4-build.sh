@@ -201,16 +201,6 @@ zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 echo $(date -u) "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save "${PHARO_IMAGE_NAME}"
 
-# fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
-# in older versions we must use octal representation
-printf "\231\002\320\003" > displaySize.bin
-if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
-  SEEK=24
-else
-  SEEK=40
-fi
-dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
-
 #Terrible HACK!!!! 
 #I am increasing the size of the eden space.
 #This allows to load the big baselines.
@@ -221,6 +211,9 @@ env 2>&1 > env.log
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MCCacheRepository uniqueInstance disable"
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${BOOTSTRAP_REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
+
+#Storing the image version into the image header
+${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm saveImageVersionInImageHeader"
 
 #Extending the default number of stack pages.
 #The VM is divorcing all frames to free a stackPage if there is not a free one.
