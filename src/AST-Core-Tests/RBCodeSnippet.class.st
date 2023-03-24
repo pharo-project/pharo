@@ -806,8 +806,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
 		        (self new
 			         source: '##';
-			         formattedCode: '#';
-			         notices: #( #( 1 2 3 'Literal expected' ) )). "errr. ok?"
+			         notices: #( #( 1 2 3 'Literal expected' ) )).
 		        "Note: if quotes, same thing than strings"
 		        (self new
 			         source: '#''hello';
@@ -951,16 +950,16 @@ RBCodeSnippet class >> badExpressions [
 		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
 		        (self new
 			         source: '→';
-			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
 		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
 		        (self new
 			         source: '٠';
-			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
 		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
 		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
 		        (self new
 			         source: Character nbsp asString;
-			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
 
 		        (self new
 			         source: '$→';
@@ -986,14 +985,14 @@ RBCodeSnippet class >> badExpressions [
 			         source: '#(Δ→ə)';
 			         formattedCode: '#( Δ → ə )';
 			         notices:
-				         #( #( 4 3 4 'Unknown character' )
+				         #( #( 4 4 4 'Unknown character' )
 				            #( 1 6 7 ''')'' expected' ) )). "This one is faulty because → is a parse error"
 		        (self new
 			         source: '#→';
 			         formattedCode: '#. →';
 			         notices:
 				         #( #( 1 1 2 'Literal expected' )
-				            #( 2 1 2 'Unknown character' ) )) "Two independent errors" }.
+				            #( 2 2 2 'Unknown character' ) )) "Two independent errors" }.
 	"Setup default values"
 	self new
 		group: #badExpressions;
