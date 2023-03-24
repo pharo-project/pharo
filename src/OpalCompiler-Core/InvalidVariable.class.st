@@ -6,12 +6,17 @@ Once the AST is fixed I will be no more be present, so ignore me.
 "
 Class {
 	#name : #InvalidVariable,
-	#superclass : #LocalVariable,
+	#superclass : #Variable,
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #testing }
 InvalidVariable >> allowsShadowing [
+	^true
+]
+
+{ #category : #testing }
+InvalidVariable >> isInvalidVariable [
 	^true
 ]
 

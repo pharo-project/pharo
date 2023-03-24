@@ -76,7 +76,6 @@ OCASTSemanticAnalyzer >> declareInvalidVariableNode: aVariableNode [
 		       ifAbsentPut: [ InvalidVariable named: aVariableNode name ].
 
 	"Do not use `declareVariableNode:as:` as we dont care about shadowing"
-	scope addTemp: var.
 	aVariableNode binding: var
 ]
 
