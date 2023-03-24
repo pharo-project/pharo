@@ -145,20 +145,14 @@ TraitsResource >> c9: anObject [
 	^c9 := anObject
 ]
 
-{ #category : #accessing }
-TraitsResource >> categoryName [
-	^self class category
-]
-
 { #category : #utilities }
 TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
 	| class |
-
 	class := self class classInstaller make: [ :aBuilder |
 		aBuilder name: aSymbol;
 			superclass: aClass;
 			traitComposition: aTraitComposition asTraitComposition;
-			package: self categoryName ].
+			package: self packageName ].
 
 	self createdClassesAndTraits add: class.
 	^class
@@ -170,7 +164,7 @@ TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 	trait := Trait
 		named: aSymbol
 		uses: aTraitComposition
-		package: self categoryName.
+		package: self packageName.
 	self createdClassesAndTraits add: trait.
 	^trait
 ]
@@ -180,6 +174,11 @@ TraitsResource >> createdClassesAndTraits [
 	createdClassesAndTraits ifNil: [
 		createdClassesAndTraits := OrderedCollection new].
 	^createdClassesAndTraits
+]
+
+{ #category : #accessing }
+TraitsResource >> packageName [
+	^self class category
 ]
 
 { #category : #running }
