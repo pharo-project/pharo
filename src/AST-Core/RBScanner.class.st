@@ -294,14 +294,16 @@ RBScanner >> on: aStream [
 
 { #category : #private }
 RBScanner >> previousStepPosition [
+	"The index of the previous character (that was consumed)"
+
 	^characterType = #eof
-		ifTrue: [stream position]
-		ifFalse: [stream position - 1]
+		ifTrue: [stream position] "it's the index of the last character"
+		ifFalse: [stream position - 1] "-1 to cancel the lookahead"
 ]
 
 { #category : #'private - scanning' }
 RBScanner >> scanBackFrom: start [
-	"Return the verbatim content from the `start` position until the current position.
+	"Return the verbatim content from the `start` position until the current character.
 	 The starting character is included, the current character is not included.
 	 The stream status (inclutiong its position) is preserved"
 
@@ -367,9 +369,8 @@ RBScanner >> scanError: theCause [
 
 { #category : #'private - scanning' }
 RBScanner >> scanError: theCause from: aPosition [
-	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included)."
-
-	"The error location is current stream position. Or current stream position + 1 if eof."
+	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included).
+	The error location is index of the current (problematic) character. Or index of the last character + 1 if eof."
 
 	^ RBErrorToken
 		  value: (self scanBackFrom: aPosition)
@@ -631,7 +632,7 @@ RBScanner >> scanUnknownCharacter [
 	"consume unexpected character"
 	self step.
 	errorToken := self scanError: 'Unknown character'.
-	errorToken location: tokenStart. "Error location is before the character"
+	errorToken location: tokenStart. "Unlike other scanner errors, error location is here before the bad token"
 	^ errorToken
 ]
 
