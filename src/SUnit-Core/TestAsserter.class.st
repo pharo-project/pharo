@@ -164,7 +164,9 @@ TestAsserter >> assertCollection: actualCollection equals: expectedCollection [
 
 { #category : #asserting }
 TestAsserter >> assertCollection: actual hasSameElements: expected [
-	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
+	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements.
+
+	For performance reasons we check first that they are not equals because difference computation takes long on collections that are not really small."
 
 	[ self assert: actual equals: expected ]
 		on: AssertionFailure
