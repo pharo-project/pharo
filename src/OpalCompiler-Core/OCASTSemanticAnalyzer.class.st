@@ -74,7 +74,10 @@ OCASTSemanticAnalyzer >> declareInvalidVariableNode: aVariableNode [
 	var := self invalidVariables
 		       at: aVariableNode name
 		       ifAbsentPut: [ InvalidVariable named: aVariableNode name ].
-	self declareVariableNode: aVariableNode as: var
+
+	"Do not use `declareVariableNode:as:` as we dont care about shadowing"
+	scope addTemp: var.
+	aVariableNode binding: var
 ]
 
 { #category : #variables }
@@ -165,14 +168,21 @@ OCASTSemanticAnalyzer >> undeclared [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
-	| varName var |
-	variableNode addWarning: 'Undeclared variable'.
 
+	| varName var |
+	varName := variableNode name asSymbol.
+
+	"If a invalid variable exists, we use it witout warning"
+	self invalidVariables at: varName ifPresent: [ :v | ^ v ].
+
+	variableNode addWarning: 'Undeclared variable'.
 	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
 	"It will be registered only at backend when a CompiledMethod is produced.
 	Or never if compilation is aborted or if only frontend is requested."
-	varName := variableNode name asSymbol.
-	var := self undeclared at: varName ifAbsentPut: [ UndeclaredVariable possiblyRegisteredWithName: varName ].
+	var := self undeclared
+		       at: varName
+		       ifAbsentPut: [
+		       UndeclaredVariable possiblyRegisteredWithName: varName ].
 	compilationContext permitFaulty ifTrue: [ ^ var ].
 
 	OCUndeclaredVariableWarning new
