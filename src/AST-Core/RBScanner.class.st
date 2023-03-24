@@ -475,7 +475,7 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ (self scanError: 'Literal expected') value: '#'
+	^ self scanError: 'Literal expected' from: tokenStart
 ]
 
 { #category : #'private - scanning' }
