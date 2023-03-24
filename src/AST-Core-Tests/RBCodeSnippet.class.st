@@ -306,6 +306,11 @@ RBCodeSnippet class >> badExpressions [
 				            #( 5 5 5 'Undeclared variable' )
 				            #( 1 5 6 '''|'' or variable expected' ) )).
 		        (self new
+			         source: '|- 1';
+			         formattedCode: '| . - 1';
+			         notices: #( #( 1 1 2 '''|'' or variable expected' )
+				            #( 2 1 2 'Variable or expression expected' ) )). "Here |- is scanned as a single operator token, so parser must work more"
+		        (self new
 			         source: '| 1';
 			         formattedCode: '| . 1';
 			         notices: #( #( 1 1 3 '''|'' or variable expected' ) )).
