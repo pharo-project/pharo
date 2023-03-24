@@ -227,8 +227,8 @@ RBSimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 
 { #category : #private }
 RBSimpleFormatter >> formatTemporariesFor: aSequenceNode [
-	aSequenceNode temporaries isEmpty
-		ifTrue: [ ^ self ].
+	aSequenceNode hasTemporaries
+		ifFalse: [ ^ self ].
 	self
 		bracketWith: '|'
 		around: [
