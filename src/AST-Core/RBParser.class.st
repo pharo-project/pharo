@@ -521,7 +521,7 @@ RBParser >> parseErrorNode: aMessageString [
 				errorMessage: currentToken cause;
 				value: currentToken value;
 				start: self errorPosition;
-				stop: currentToken location-1;
+				stop: currentToken stop;
 				errorPosition: currentToken location.
 			self step.
 			^ errorNode].
