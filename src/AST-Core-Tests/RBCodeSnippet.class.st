@@ -47,7 +47,8 @@ RBCodeSnippet class >> allSnippets [
 	^ {
 		  self badExpressions.
 		  self badMethods.
-		  self badSemantic } flattened
+		  self badSemantic.
+		  self badVariableAndScopes } flattened
 ]
 
 { #category : #accessing }
@@ -1417,6 +1418,138 @@ RBCodeSnippet class >> badSemantic [
 		isMethod: false;
 		isFaulty: false;
 		isParseFaulty: false;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badVariableAndScopes [
+	"Test various combinaisons of error and warnings on variables and scope nesting"
+
+	| list |
+	list := {
+		        (self new
+			         source: 'a := a. { [ :a }. a := a';
+			         formattedCode: 'a := a. { [ :a | } a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 16 15 16 'Variable or expression expected' )
+				            #( 16 16 16 'Missing opener for closer: }' )
+				            #( 11 24 25 ''']'' expected' )
+				            #( 9 24 25 '''}'' expected' ) )). "OK, but maybe the `}` could close the `{` and consider the `[` unfinished?"
+		        (self new
+			         source: 'a := a. [ :a [ :a. a := a';
+			         formattedCode: 'a := a. [ :a | [ :a | a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 14 25 26 ''']'' expected' )
+				            #( 9 25 26 ''']'' expected' ) )).
+		        (self new
+			         source: 'a := a. [ :a [ :a ]. a := a';
+			         formattedCode: 'a := a. [ :a | [ :a | ] a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 9 27 28 ''']'' expected' ) )).
+		        (self new
+			         source: 'a := a. { [ :a | }. a := a';
+			         formattedCode: 'a := a. { [ :a | } a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 18 17 18 'Variable or expression expected' )
+				            #( 18 18 18 'Missing opener for closer: }' )
+				            #( 11 26 27 ''']'' expected' )
+				            #( 9 26 27 '''}'' expected' ) )).
+		        (self new
+			         source: 'a := a. { [ :a | a := a }. a := a';
+			         formattedCode: 'a := a. { [ :a | a := a } a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 18 25 25 'Missing opener for closer: }' )
+				            #( 11 33 34 ''']'' expected' )
+				            #( 9 33 34 '''}'' expected' ) )).
+		        (self new
+			         source: 'a := a. [ | a a := a ]. a := a';
+			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 11 15 17 '''|'' or variable expected' )
+				            #( 17 20 17 'variable expected in assigment' ) )).
+		        (self new
+			         source: 'a := a. [ :a a ]. a := a';
+			         formattedCode: 'a := a. [ :a | a ]. a := a';
+			         value: nil;
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 14 13 14 '''|'' or parameter expected' )
+				            #( 24 24 24 'Undeclared variable' )
+				            #( 19 19 19 'Undeclared variable' ) )).
+		        (self new
+			         source: 'a := a. [ :a | | a a := a ]. a := a';
+			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 16 20 22 '''|'' or variable expected' )
+				            #( 22 25 22 'variable expected in assigment' ) )).
+
+		        "Chains of shadowing"
+		        (self new
+			         source: '[:a :a :b | | a a b | a + a + b ]';
+			         formattedCode: '[ :a :a :b | | a a b | a + a + b ]';
+			         isFaulty: false;
+			         value: 4;
+			         notices:
+				         #( #( 6 6 6 'Name already defined' )
+				            #( 15 15 15 'Name already defined' )
+				            #( 15 15 15 'Unused variable' )
+				            #( 17 17 17 'Name already defined' )
+				            #( 19 19 19 'Name already defined' )
+				            #( 23 23 23 'Unitialized variable' )
+				            #( 27 27 27 'Unitialized variable' )
+				            #( 31 31 31 'Unitialized variable' ) )).
+		        (self new
+			         source:
+				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b ]';
+			         isMethod: true;
+			         value: nil;
+			         notices: #( #( 11 10 11 'Variable name expected' )
+				            #( 14 13 14 'Variable name expected' )
+				            #( 14 13 14 'Name already defined' )
+				            #( 22 22 22 'Name already defined' )
+				            #( 25 25 25 'Name already defined' )
+				            #( 28 28 28 'Name already defined' )
+				            #( 34 34 34 'Name already defined' )
+				            #( 34 34 34 'Unused variable' )
+				            #( 36 36 36 'Name already defined' )
+				            #( 38 38 38 'Name already defined' )
+				            #( 42 42 42 'Unitialized variable' )
+				            #( 46 46 46 'Unitialized variable' )
+				            #( 50 50 50 'Unitialized variable' ) )).
+		        (self new
+			         source: '[:a :a :b | | a a b | a + a + b';
+			         formattedCode: '[ :a :a :b | a + a + b';
+			         notices: #( #( 1 31 32 ''']'' expected' ) )). "FIXME where temps?"
+		        (self new
+			         source:
+				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b';
+			         formattedCode: 'foo: a x: a: y: b [ :a :a :b | a + a + b';
+			         isMethod: true;
+			         notices: #( #( 11 10 11 'Variable name expected' )
+				            #( 14 13 14 'Variable name expected' )
+				            #( 14 13 14 'Name already defined' )
+				            #( 19 50 51 ''']'' expected' ) )) "FIXME where temps?" }.
+	"Setup default values"
+	self new
+		group: #badVariableAndScopes;
+		isMethod: false;
+		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
 ]
