@@ -110,9 +110,6 @@ OCASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslatorForEffect >> visitVariableNode: aVariableNode [
-	"when visiting a variable for effect, we could push it and then pop it, but we do nothing"
-	| variable |
-	variable := aVariableNode variable.
-	(variable isLiteralVariable or: [ variable isUndeclaredVariable ])
-		ifTrue: [ methodBuilder addLiteral: variable ]
+	super visitVariableNode: aVariableNode.
+	methodBuilder popTop
 ]
