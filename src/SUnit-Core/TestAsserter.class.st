@@ -163,28 +163,27 @@ TestAsserter >> assertCollection: actualCollection equals: expectedCollection [
 ]
 
 { #category : #asserting }
-TestAsserter >> assertCollection: actualCollection hasSameElements: expected [
+TestAsserter >> assertCollection: actual hasSameElements: expected [
 	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
 
-	| missingElements additionalElements |
-	additionalElements := actualCollection difference: expected.
-	missingElements := expected difference: (actualCollection intersection: expected).
-	self
-		assert: (additionalElements isEmpty and: [ missingElements isEmpty ])
-		description:
-			(String
-				streamContents: [ :stream |
-					stream
-						nextPutAll: 'Given Collections do not match!';
-						lf;
-						tab;
-						nextPutAll: 'additions : ';
-						print: additionalElements asArray;
-						lf;
-						tab;
-						nextPutAll: 'missing: ';
-						print: missingElements asArray;
-						lf ])
+	[ self assert: actual equals: expected ]
+		on: AssertionFailure
+		do: [
+			| missingElements additionalElements |
+			additionalElements := actual difference: expected.
+			missingElements := expected difference: (actual intersection: expected).
+			self assert: (additionalElements isEmpty and: [ missingElements isEmpty ]) description: (String streamContents: [ :stream |
+					 stream
+						 nextPutAll: 'Given Collections do not match!';
+						 lf;
+						 tab;
+						 nextPutAll: 'additions : ';
+						 print: additionalElements asArray;
+						 lf;
+						 tab;
+						 nextPutAll: 'missing: ';
+						 print: missingElements asArray;
+						 lf ]) ]
 ]
 
 { #category : #asserting }
