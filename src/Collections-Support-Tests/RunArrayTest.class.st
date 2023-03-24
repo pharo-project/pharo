@@ -7,8 +7,7 @@ Class {
 	#traits : 'TSequenceableTruncatedToSize',
 	#classTraits : 'TSequenceableTruncatedToSize classTrait',
 	#instVars : [
-		'collectionWith5Elements',
-		'array'
+		'collectionWith5Elements'
 	],
 	#category : #'Collections-Support-Tests'
 }
@@ -34,32 +33,35 @@ RunArrayTest >> testANewRunArrayIsEmpty [
 { #category : #'tests - adding' }
 RunArrayTest >> testAdd [
 
-	array := RunArray new.
-	self assertEmpty: array.
+	| run |
+	run := RunArray new.
+	self assert: run size equals: 0.
 
-	array add: $A.
-	self assert: array size equals: 1.
-	array add: $A.
-	self assert: array size equals: 2.
-	array add: $B.
-	self assert: array size equals: 3
+	run add: $A.
+	self assert: run size equals: 1.
+	run add: $A.
+	self assert: run size equals: 2.
+	run add: $B.
+	self assert: run size equals: 3
 ]
 
 { #category : #'tests - adding' }
 RunArrayTest >> testAddAddsAsLastElement [
 
-	array := RunArray new.
-	self assertEmpty: array.
+	| run |
+	run := RunArray new.
+	self assert: run size equals: 0.
 
-	array add: $A.
-	array add: $A.
-	array add: $B.
-	self assert: (array at: 3) equals: $B
+	run add: $A.
+	run add: $A.
+	run add: $B.
+	self assert: (run at: 3) equals: $B
 ]
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testAt [
 
+	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: (array at: 3) equals: 2.
 
@@ -70,6 +72,7 @@ RunArrayTest >> testAt [
 { #category : #'tests - accessing' }
 RunArrayTest >> testAtPut [
 
+	| array |
 	array := RunArray new: 5 withAll: 2.
 
 	array at: 3 put: 5.
@@ -82,6 +85,7 @@ RunArrayTest >> testAtPut [
 { #category : #'tests - accessing' }
 RunArrayTest >> testAtPut2 [
 
+	| array |
 	array := RunArray new: 5 withAll: 2.
 
 	self should: [array at: 0 put: 5] raise: Error.
@@ -99,6 +103,7 @@ RunArrayTest >> testFindLast [
 { #category : #'tests - accessing' }
 RunArrayTest >> testFirst [
 
+	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array first equals: 2.
 
@@ -108,7 +113,7 @@ RunArrayTest >> testFirst [
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testIsSelfEvaluating [
-	| array2 |
+	| array array2 |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array isSelfEvaluating.
 	array2 := RunArray new: 5 withAll: Object new.
@@ -120,6 +125,7 @@ RunArrayTest >> testIsSelfEvaluating [
 { #category : #'tests - accessing' }
 RunArrayTest >> testLast [
 
+	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array last equals: 2.
 
@@ -130,13 +136,15 @@ RunArrayTest >> testLast [
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNew [
 
+	| array |
 	array := RunArray new.
-	self assertEmpty: array
+	self assert: array size equals: 0
 ]
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNewFromArray [
 
+	| array |
 	array := RunArray newFrom: #($a $b $b $b $b $c $c $a).
 	self assert: array size equals: 8.
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
@@ -145,6 +153,7 @@ RunArrayTest >> testNewFromArray [
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNewFromString [
 
+	| array |
 	array := RunArray newFrom: 'abbbbcca'.
 	self assert: array size equals: 8.
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
@@ -153,6 +162,7 @@ RunArrayTest >> testNewFromString [
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNewWithAll [
 
+	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array size equals: 5.
 	self assert: array asArray equals: #(2 2 2 2 2)
@@ -160,7 +170,7 @@ RunArrayTest >> testNewWithAll [
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNewWithSize [
-
+	|array|
 	array := RunArray new: 5.
 	self assert: array size equals: 5.
 	1 to: 5 do: [:index | self assert: (array at: index) isNil]
@@ -170,12 +180,13 @@ RunArrayTest >> testNewWithSize [
 RunArrayTest >> testRunArrayAdjacentMerge [
 	"This demonstrates that adjancent runs with equal attributes are merged."
 
-	array := RunArray new.
-	array
+	| runArray |
+	runArray := RunArray new.
+	runArray
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
 		add: $b withOccurrences: 5.
-	self assert: array runs size equals: 2
+	self assert: runArray runs size equals: 2
 ]
 
 { #category : #tests }
@@ -185,18 +196,19 @@ RunArrayTest >> testRunArrayInvariant [
 	 variables for which no accessors are defined. The same method is used by the debuggers
 	 and by various inspectors. The assertion itself explains the meaning of the cached values."
 
-	array := RunArray new.
-	array
+	| runArray |
+	runArray := RunArray new.
+	runArray
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
 		add: $a withOccurrences: 5.
-	self assert: ((1 to: array size) allSatisfy: [ :idx |
+	self assert: ((1 to: runArray size) allSatisfy: [ :idx |
 			 | lastIndex lastOffset lastRun lengthOfPreviousRuns |
-			 array at: idx. " updates the cached values "
-			 lastIndex := array instVarNamed: 'lastIndex'.
-			 lastRun := array instVarNamed: 'lastRun'.
-			 lastOffset := array instVarNamed: 'lastOffset'.
-			 lengthOfPreviousRuns := (1 to: lastRun - 1) inject: 0 into: [ :sum :idx2 | sum + (array runs at: idx2) ].
+			 runArray at: idx. " updates the cached values "
+			 lastIndex := runArray instVarNamed: 'lastIndex'.
+			 lastRun := runArray instVarNamed: 'lastRun'.
+			 lastOffset := runArray instVarNamed: 'lastOffset'.
+			 lengthOfPreviousRuns := (1 to: lastRun - 1) inject: 0 into: [ :sum :idx2 | sum + (runArray runs at: idx2) ].
 			 lastIndex = (lastOffset + lengthOfPreviousRuns + 1) ])
 ]
 
@@ -204,41 +216,45 @@ RunArrayTest >> testRunArrayInvariant [
 RunArrayTest >> testRunArrayReversal [
 	"This tests the reversal of a RunArray."
 
-	array := RunArray new.
-	array
+	| runArray |
+	runArray := RunArray new.
+	runArray
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
 		add: $a withOccurrences: 5.
-	self assert: array reversed runs size equals: 3
+	self assert: runArray reversed runs size equals: 3
 ]
 
 { #category : #tests }
 RunArrayTest >> testRunArrayRunsAreNotMerged [
 	"This demonstrates that different runs are not merged."
 
-	array := RunArray new.
-	array
+	| runArray |
+	runArray := RunArray new.
+	runArray
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
 		add: $a withOccurrences: 5.
-	self assert: array runs size equals: 3
+	self assert: runArray runs size equals: 3
 ]
 
 { #category : #tests }
 RunArrayTest >> testRunArrayRunsSize [
 	"This demonstrates that the size of a run array is the sum of the sizes of its runs."
 
-	array := RunArray new.
-	array
+	| runArray |
+	runArray := RunArray new.
+	runArray
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
 		add: $a withOccurrences: 5.
-	self assert: array size equals: 15
+	self assert: runArray size equals: 15
 ]
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testRunLengthAt [
 
+	| array |
 	array := #($a $b $b $c $c $c $d $d) as: RunArray.
 	self assert: (array runLengthAt: 1) equals: 1.
 	self assert: (array runLengthAt: 2) equals: 2.
@@ -253,6 +269,7 @@ RunArrayTest >> testRunLengthAt [
 { #category : #'tests - instance creation' }
 RunArrayTest >> testRunsValues [
 
+	| array |
 	array := RunArray runs: #(1 4 2 1) values: #($a $b $c $a).
 	self assert: array size equals: 8.
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
@@ -261,7 +278,7 @@ RunArrayTest >> testRunsValues [
 { #category : #'tests - accessing' }
 RunArrayTest >> testWithStartStopAndValueDo [
 
-	| elements startStops |
+	| array elements startStops |
 	array := #($a $b $b $c $c $c $d $d) as: RunArray.
 	elements := OrderedCollection new.
 	startStops := OrderedCollection new.
