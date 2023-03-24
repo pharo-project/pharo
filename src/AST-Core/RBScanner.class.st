@@ -302,15 +302,16 @@ RBScanner >> previousStepPosition [
 { #category : #'private - scanning' }
 RBScanner >> scanBackFrom: start [
 	"Return the verbatim content from the `start` position until the current position.
-	 The starting and current character are both included.
+	 The starting character is included, the current character is not included.
 	 The stream status (inclutiong its position) is preserved"
 
-	| len string stop |
-	stop := stream position.
+	| len string stop current |
+	current := stream position.
+	stop := currentCharacter ifNil: [ current ] ifNotNil: [ current - 1 ].
 	len := stop - start + 1.
 	stream position: start - 1.
 	string := stream next: len.
-	stream position: stop.
+	stream position: current.
 	^ string
 ]
 
@@ -379,10 +380,9 @@ RBScanner >> scanError: theCause [
 { #category : #'private - scanning' }
 RBScanner >> scanError: theCause from: aPosition [
 	"An error token accepts every character given, recognised or not."
-	"The value of the error token is the verbatim text from aPosition to the current position (both included)."
+	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included)."
 	| location |
-	"error location is the next not parseable character. Or current stream position + 1 if
-	an expected character is missing."
+	"error location is current stream position. Or current stream position + 1 if eof."
 	location := stream position.
 	currentCharacter
 		ifNotNil: [ :char | buffer nextPut: char ]
@@ -521,8 +521,8 @@ RBScanner >> scanLiteralString [
 	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
 		"the peek logic here is because #upTo: does not tell if given char was found.
 		So if the stream did not move of if the last char is not a quote, then we have a problem."
-		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		self step. "to handle eof"
+		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		^ RBErrorToken
 			value: string
 			start: tokenStart
@@ -560,8 +560,8 @@ RBScanner >> scanNumber [
 	gotError := nil.
 	number := NumberParser parse: stream onError: [ :message | gotError := message ].
 	stop := stream position.
-	string := self scanBackFrom: start.
 	self step.
+	string := self scanBackFrom: start.
 	gotError ifNotNil: [
 	^ RBErrorToken
 		value: string
