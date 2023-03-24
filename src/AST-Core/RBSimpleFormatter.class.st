@@ -424,6 +424,8 @@ RBSimpleFormatter >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 RBSimpleFormatter >> visitEnglobingErrorNode: aNode [
 
+	aNode isTemporariesError ifTrue: [
+		^ self formatTemporariesFor: aNode ].
 	self writeString: aNode value.
 	self formatBlockArgumentsFor: aNode.
 	aNode contents do: [ :each | self visitNode: each ] separatedBy: [
