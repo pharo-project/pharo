@@ -34,13 +34,11 @@ SymbolTrieNode >> addAllSymbolsTo: aCollection [
 { #category : #adding }
 SymbolTrieNode >> addIn: aString symbol: symbolToAdd [
 
-	| node |
-	node := self at: aString first ifAbsentPut: [ self class parent: self ].
-	^ aString size = 1
-		  ifTrue: [
-			  node symbol: symbolToAdd.
-			  symbolToAdd ]
-		  ifFalse: [ node addIn: aString allButFirst symbol: symbolToAdd ]
+	aString size = 1 ifTrue: [
+		self symbol: symbolToAdd.
+		^ symbolToAdd ].
+
+	(self at: aString first ifAbsentPut: [ self class parent: self ]) addIn: aString allButFirst symbol: symbolToAdd
 ]
 
 { #category : #accessing }
@@ -53,6 +51,20 @@ SymbolTrieNode >> children [
 SymbolTrieNode >> children: anObject [
 
 	children := anObject
+]
+
+{ #category : #adding }
+SymbolTrieNode >> getSymbol: aString [
+
+	aString size = 1 ifTrue: [
+		^ self isSymbol
+			  ifTrue: [ self symbol ]
+			  ifFalse: [ nil ] ].
+
+	^ self
+		  at: aString first
+		  ifPresent: [ :node | node getSymbol: aString allButFirst ]
+		  ifAbsent: [ nil ]
 ]
 
 { #category : #testing }

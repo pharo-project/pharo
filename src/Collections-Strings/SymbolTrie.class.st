@@ -32,6 +32,12 @@ SymbolTrie >> do: aBlock [
 	self roots symbolsDo: aBlock
 ]
 
+{ #category : #accessing }
+SymbolTrie >> getSymbol: aString [
+
+	^ self roots getSymbol: aString
+]
+
 { #category : #testing }
 SymbolTrie >> includes: aString [
 
