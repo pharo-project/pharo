@@ -23,13 +23,18 @@ RunArrayTest >> collectionWith5Elements [
 RunArrayTest >> setUp [
 
 	super setUp.
-	collectionWith5Elements := RunArray newFrom: #(10 20 30 40 50).
-	array := RunArray new
+	collectionWith5Elements := RunArray newFrom: #(10 20 30 40 50)
+]
+
+{ #category : #'tests - instance creation' }
+RunArrayTest >> testANewRunArrayIsEmpty [
+	self assertEmpty: RunArray new
 ]
 
 { #category : #'tests - adding' }
 RunArrayTest >> testAdd [
 
+	array := RunArray new.
 	self assertEmpty: array.
 
 	array add: $A.
@@ -43,6 +48,7 @@ RunArrayTest >> testAdd [
 { #category : #'tests - adding' }
 RunArrayTest >> testAddAddsAsLastElement [
 
+	array := RunArray new.
 	self assertEmpty: array.
 
 	array add: $A.
@@ -124,6 +130,7 @@ RunArrayTest >> testLast [
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNew [
 
+	array := RunArray new.
 	self assertEmpty: array
 ]
 
@@ -163,6 +170,7 @@ RunArrayTest >> testNewWithSize [
 RunArrayTest >> testRunArrayAdjacentMerge [
 	"This demonstrates that adjancent runs with equal attributes are merged."
 
+	array := RunArray new.
 	array
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
@@ -177,6 +185,7 @@ RunArrayTest >> testRunArrayInvariant [
 	 variables for which no accessors are defined. The same method is used by the debuggers
 	 and by various inspectors. The assertion itself explains the meaning of the cached values."
 
+	array := RunArray new.
 	array
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
@@ -195,6 +204,7 @@ RunArrayTest >> testRunArrayInvariant [
 RunArrayTest >> testRunArrayReversal [
 	"This tests the reversal of a RunArray."
 
+	array := RunArray new.
 	array
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
@@ -206,6 +216,7 @@ RunArrayTest >> testRunArrayReversal [
 RunArrayTest >> testRunArrayRunsAreNotMerged [
 	"This demonstrates that different runs are not merged."
 
+	array := RunArray new.
 	array
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
@@ -217,6 +228,7 @@ RunArrayTest >> testRunArrayRunsAreNotMerged [
 RunArrayTest >> testRunArrayRunsSize [
 	"This demonstrates that the size of a run array is the sum of the sizes of its runs."
 
+	array := RunArray new.
 	array
 		add: $a withOccurrences: 5;
 		add: $b withOccurrences: 5;
