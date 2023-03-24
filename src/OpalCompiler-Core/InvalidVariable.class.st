@@ -1,0 +1,16 @@
+"
+I'm a variable (or maybe not?) declared in a AST node syntactic errors.
+
+I exists only to track information on bad variables in a degraded mode, and avoid noisy and useless errors and warnings.
+Once the AST is fixed I will be no more be present, so ignore me.
+"
+Class {
+	#name : #InvalidVariable,
+	#superclass : #LocalVariable,
+	#category : #'OpalCompiler-Core-Semantics'
+}
+
+{ #category : #testing }
+InvalidVariable >> allowsShadowing [
+	^true
+]

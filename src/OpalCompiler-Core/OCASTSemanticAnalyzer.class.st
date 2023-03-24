@@ -9,7 +9,8 @@ Class {
 		'scope',
 		'compilationContext',
 		'blockCounter',
-		'undeclared'
+		'undeclared',
+		'invalidVariables'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -67,6 +68,16 @@ OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
 ]
 
 { #category : #variables }
+OCASTSemanticAnalyzer >> declareInvalidVariableNode: aVariableNode [
+
+	| var |
+	var := self invalidVariables
+		       at: aVariableNode name
+		       ifAbsentPut: [ InvalidVariable named: aVariableNode name ].
+	self declareVariableNode: aVariableNode as: var
+]
+
+{ #category : #variables }
 OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 	^self declareVariableNode: aVariableNode as: (TemporaryVariable named: aVariableNode name)
 ]
@@ -94,6 +105,11 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 		messageText: aMessage;
 		location: aNode startWithoutParentheses;
 		signal
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> invalidVariables [
+	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
 ]
 
 { #category : #variables }
@@ -202,6 +218,18 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	aBlockNode arguments do: [:node | self declareArgumentNode: node ].
 	self visitNode: aBlockNode body.
 	scope := scope popScope
+]
+
+{ #category : #visiting }
+OCASTSemanticAnalyzer >> visitEnglobingErrorNode: aNode [
+	"There is bad arguments or variable, just invalidate them to avoid noisy useless errors/warnings.
+	Because, AST is very wrong with possible missing or superfluous [ or ], we should not believe in scope.
+	The only thing that seems reasonable is that for now, we invalid any unexpected future variable with the same name"
+
+	aNode arguments do: [ :node | self declareInvalidVariableNode: node ].
+	aNode temporaries do: [ :node | self declareInvalidVariableNode: node ].
+
+	^ super visitEnglobingErrorNode: aNode
 ]
 
 { #category : #visiting }
