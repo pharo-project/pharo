@@ -22,7 +22,7 @@ Class {
 	#category : #BaselineOfDisplay
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfDisplay >> baseline: spec [
 	<baseline>
 

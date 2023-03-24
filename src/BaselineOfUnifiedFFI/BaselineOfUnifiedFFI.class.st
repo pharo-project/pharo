@@ -10,7 +10,7 @@ Class {
 	#category : #BaselineOfUnifiedFFI
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfUnifiedFFI >> baseline: spec [
 	<baseline>
 	

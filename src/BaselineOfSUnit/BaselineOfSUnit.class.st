@@ -22,7 +22,7 @@ BaselineOfSUnit class >> defaultPackageNames [
 	^ self packagesOfGroupNamed: #default
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfSUnit >> baseline: spec [
 	<baseline>
 	spec for: #common

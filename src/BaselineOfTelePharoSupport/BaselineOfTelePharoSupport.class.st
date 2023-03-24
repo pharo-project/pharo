@@ -18,7 +18,7 @@ Class {
 	#category : #BaselineOfTelePharoSupport
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfTelePharoSupport >> baseline: spec [ 
     
 	<baseline>

@@ -4,7 +4,7 @@ Class {
 	#category : #BaselineOfShift
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfShift >> baseline: spec [
 	<baseline>
 	spec

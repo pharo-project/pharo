@@ -10,7 +10,7 @@ BaselineOfThreadedFFI class >> corePackageNames [
 	^ self packagesOfGroupNamed: #Core
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfThreadedFFI >> baseline: spec [
 	<baseline>
 

@@ -64,7 +64,7 @@ BaselineOfPharoBootstrap class >> sUnitPackageNames [
 	^ self packagesOfGroupNamed: #SUnitGroup
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfPharoBootstrap >> baseline: spec [
 	<baseline>
 

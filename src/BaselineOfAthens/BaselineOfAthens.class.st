@@ -10,7 +10,7 @@ Class {
 	#category : #'BaselineOfAthens-Baseline'
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfAthens >> baseline: spec [
 	<baseline>
 	spec

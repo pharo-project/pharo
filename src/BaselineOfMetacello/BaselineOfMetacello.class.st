@@ -4,7 +4,7 @@ Class {
 	#category : #BaselineOfMetacello
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfMetacello >> baseline: spec [
 	<baseline>
 

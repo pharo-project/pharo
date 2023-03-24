@@ -10,7 +10,7 @@ Class {
 	#category : #BaselineOfMenuRegistration
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfMenuRegistration >> baseline: spec [ 
 	<baseline>
 	

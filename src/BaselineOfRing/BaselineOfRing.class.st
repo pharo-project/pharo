@@ -4,7 +4,7 @@ Class {
 	#category : #BaselineOfRing
 }
 
-{ #category : #accessing }
+{ #category : #baselines }
 BaselineOfRing >> baseline: spec [
 	<baseline>
 	spec for: #common

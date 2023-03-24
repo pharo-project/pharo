@@ -10,7 +10,7 @@ Class {
 	#category : #BaselineOfFlashback
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfFlashback >> baseline: spec [
 	<baseline>
 	spec

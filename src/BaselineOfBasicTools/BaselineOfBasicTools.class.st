@@ -28,7 +28,7 @@ Class {
 	#category : #BaselineOfBasicTools
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfBasicTools >> baseline: spec [
 	<baseline>
 	| repository |

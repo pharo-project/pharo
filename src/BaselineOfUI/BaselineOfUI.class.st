@@ -23,7 +23,7 @@ Class {
 	#category : #BaselineOfUI
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfUI >> baseline: spec [ 
     <baseline>
 

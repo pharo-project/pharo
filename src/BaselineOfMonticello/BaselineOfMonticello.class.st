@@ -19,7 +19,7 @@ BaselineOfMonticello class >> remoteRepositoriesPackageNames [
 	^ self packagesOfGroupNamed: #RemoteRepositories
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfMonticello >> baseline: spec [
 	<baseline>
 

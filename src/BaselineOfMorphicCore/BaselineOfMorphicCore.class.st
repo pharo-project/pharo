@@ -19,7 +19,7 @@ Class {
 	#category : #BaselineOfMorphicCore
 }
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfMorphicCore >> baseline: spec [ 
     
 	<baseline>
