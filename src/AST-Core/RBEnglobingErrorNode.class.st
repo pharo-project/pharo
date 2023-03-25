@@ -55,7 +55,7 @@ RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
 
 	^ self new
 		start: (aParseErrorNode start min: (anArrayOfNodes min: #start));
-		stop: (aParseErrorNode stop max: (anArrayOfNodes min: #stop));
+		stop: (aParseErrorNode stop max: (anArrayOfNodes max: #stop));
 		errorPosition: aParseErrorNode errorPosition;
 		errorMessage: aParseErrorNode errorMessage;
 		valueAfter: aParseErrorNode value;
