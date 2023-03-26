@@ -404,6 +404,13 @@ OpalCompiler >> install [
 	^ method
 ]
 
+{ #category : #actions }
+OpalCompiler >> install: aSource [
+
+	self source: aSource.
+	^ self install
+]
+
 { #category : #testing }
 OpalCompiler >> isInteractive [
 	^ compilationContext interactive

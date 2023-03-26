@@ -179,10 +179,7 @@ OpalCompilerTest >> testInstallException [
 	"Precond"
 	self deny: (MockForCompilation includesSelector: #foo).
 
-	[
-	method := MockForCompilation compiler
-		          source: 'foo ^¿';
-		          install ]
+	[ method := MockForCompilation compiler install: 'foo ^¿' ]
 		on: CodeError
 		do: [ :error | message := error messageText , ' :(' ].
 
