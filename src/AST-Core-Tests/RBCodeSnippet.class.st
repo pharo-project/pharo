@@ -436,7 +436,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 2 3 2 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '|::a';
-			         formattedCode: '| . :. :a';
+			         formattedCode: '| | . :. :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 2 2 'Unexpected token' )
 				            #( 3 4 3 'Unexpected block parameter' ) )).
