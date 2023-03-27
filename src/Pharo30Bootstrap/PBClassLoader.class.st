@@ -13,7 +13,7 @@ Class {
 		'definitionMirrorMap',
 		'mirrorDefinitionMap'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : #Pharo30Bootstrap
 }
 
 { #category : #accessing }
@@ -92,25 +92,22 @@ PBClassLoader >> createBehaviorFromDefinition: aRFiDefinition [
 
 	| newBehavior |
 	(self isFullyLoadedClassNamed: aRFiDefinition name) ifTrue: [ ^ self ].
-	
-	aRFiDefinition isBehavior ifTrue: [
-		"We ensure a class with that name already exists"
-		environment at: aRFiDefinition name ifAbsent: [ self createStubForClassNamed: aRFiDefinition name ]].
-	
+
+	self ensureAllSlotsAreInstanceVariableSlotsIn: aRFiDefinition.
+
+	aRFiDefinition isBehavior ifTrue: [ "We ensure a class with that name already exists"
+		environment at: aRFiDefinition name ifAbsent: [ self createStubForClassNamed: aRFiDefinition name ] ].
+
 	newBehavior := self executeDefinitionFor: aRFiDefinition.
-	
+
 	"Once the class is created we set a new method dictionary with a size that will make it grow less afterwards"
-	builder bootstrapInterpreter 
-		evaluateCode: 'theBehavior methodDictionary: (MethodDictionary new: capacity)'
-		withTemps: { 
-			'capacity' -> (aRFiDefinition methods size asLiteralInObjectSpace: builder objectSpace).
-			'theBehavior' -> newBehavior }.
-	
-	aRFiDefinition isBehavior ifTrue: [ 
-		self registerClass: newBehavior asClassMirror named: aRFiDefinition name fullyLoaded: true.
-	] ifFalse: [
-		self registerTrait: newBehavior asTraitMirror named: aRFiDefinition name fullyLoaded: true.
-	]
+	builder bootstrapInterpreter evaluateCode: 'theBehavior methodDictionary: (MethodDictionary new: capacity)' withTemps: {
+			('capacity' -> (aRFiDefinition methods size asLiteralInObjectSpace: builder objectSpace)).
+			('theBehavior' -> newBehavior) }.
+
+	aRFiDefinition isBehavior
+		ifTrue: [ self registerClass: newBehavior asClassMirror named: aRFiDefinition name fullyLoaded: true ]
+		ifFalse: [ self registerTrait: newBehavior asTraitMirror named: aRFiDefinition name fullyLoaded: true ]
 ]
 
 { #category : #stubs }
@@ -151,6 +148,17 @@ PBClassLoader >> createTraitFromDefinition: aTrait [
 	newTrait := builder objectSpace interpreter evaluateCode: aTrait definition.
 	self registerTrait: newTrait named: aTrait name.
 	^ newTrait
+]
+
+{ #category : #'class-loading' }
+PBClassLoader >> ensureAllSlotsAreInstanceVariableSlotsIn: aRFiDefinition [
+
+	aRFiDefinition slots
+		detect: [ :slot | slot isValidForBootstrap not ]
+		ifFound: [ :slot |
+			self error:
+				'Cannot use special slots in Bootstrap. The slot #' , slot name , ' in ' , aRFiDefinition name , ' should be an InstanceVariableSlot instead of: '
+				, slot expression ]
 ]
 
 { #category : #accessing }
