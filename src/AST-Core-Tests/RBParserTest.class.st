@@ -576,7 +576,7 @@ RBParserTest >> testFormatter [
 { #category : #'garbage tests' }
 RBParserTest >> testGarbageForgottenDotAfterAssignement [
 	| tree child error |
-	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: SyntaxErrorNotification.
+	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: CodeError.
 
 	tree := self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'.
 	self assert: tree isSequence.
