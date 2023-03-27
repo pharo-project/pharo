@@ -7,6 +7,7 @@ Class {
 	#name : #CodeError,
 	#superclass : #Error,
 	#instVars : [
+		'notice',
 		'node',
 		'location',
 		'sourceCode'
@@ -73,6 +74,18 @@ CodeError >> node [
 { #category : #accessing }
 CodeError >> node: aNode [
 	node := aNode
+]
+
+{ #category : #accessing }
+CodeError >> notice [
+
+	^ notice
+]
+
+{ #category : #accessing }
+CodeError >> notice: anObject [
+
+	notice := anObject
 ]
 
 { #category : #accessing }

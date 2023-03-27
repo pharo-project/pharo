@@ -440,6 +440,7 @@ OpalCompiler >> parseForRequestor [
 		"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just signal as an error (on: block bellow)"
 		self compilationContext noPattern ifTrue: [
 			CodeError new
+				notice: notification node notices first; "Ugly temporary hack"
 				node: notification node;
 				messageText: notification messageText;
 				signal.
