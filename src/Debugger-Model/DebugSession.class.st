@@ -32,8 +32,29 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
+	#classInstVars : [
+		'contextModelClass'
+	],
 	#category : #'Debugger-Model-Core'
 }
+
+{ #category : #accessing }
+DebugSession class >> contextModelClass [
+
+	^ contextModelClass ifNil: [ self defaultContextModelClass ]
+]
+
+{ #category : #accessing }
+DebugSession class >> contextModelClass: anObject [
+
+	contextModelClass := anObject
+]
+
+{ #category : #accessing }
+DebugSession class >> defaultContextModelClass [
+
+	^ DebugContext
+]
 
 { #category : #settings }
 DebugSession class >> logDebuggerStackToFile [
@@ -77,7 +98,7 @@ DebugSession >> contextChanged [
 { #category : #accessing }
 DebugSession >> createModelForContext: aContext [
 
-	^ (DebugContext forContext: aContext) topContext: interruptedContext
+	^ (self class contextModelClass forContext: aContext) topContext: interruptedContext
 ]
 
 { #category : #initialization }
