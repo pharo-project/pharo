@@ -1363,16 +1363,19 @@ RBCodeSnippet class >> badSemantic [
 		        "Shadowed reserved or global"
 		        (self new
 			         source: '| self | self := 1. ^ self';
+			         isFaulty: true;
 			         value: 1;
-			         notices: #( #( 3 6 3 'Name already defined' ) )).
+			         notices: #( #( 3 6 3 'Reserved variable name' ) )).
 		        (self new
 			         source: '| super | super := 1. ^ super';
+			         isFaulty: true;
 			         value: 1;
-			         notices: #( #( 3 7 3 'Name already defined' ) )).
+			         notices: #( #( 3 7 3 'Reserved variable name' ) )).
 		        (self new
 			         source: '| thisContext | thisContext := 1. ^ thisContext';
+			         isFaulty: true;
 			         value: 1;
-			         notices: #( #( 3 13 3 'Name already defined' ) )).
+			         notices: #( #( 3 13 3 'Reserved variable name' ) )).
 		        (self new
 			         source: '| Object | Object := 1. ^ Object';
 			         value: 1;
@@ -1380,18 +1383,21 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: self ^ self + 1';
 			         isMethod: true;
+			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 6 9 6 'Name already defined' ) )).
+			         notices: #( #( 6 9 6 'Reserved variable name' ) )).
 		        (self new
 			         source: 'foo: super ^ super + 1';
 			         isMethod: true;
+			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 6 10 6 'Name already defined' ) )).
+			         notices: #( #( 6 10 6 'Reserved variable name' ) )).
 		        (self new
 			         source: 'foo: thisContext ^ thisContext + 1';
 			         isMethod: true;
+			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 6 16 6 'Name already defined' ) )).
+			         notices: #( #( 6 16 6 'Reserved variable name' ) )).
 		        (self new
 			         source: 'foo: Object ^ Object + 1';
 			         isMethod: true;
@@ -1399,16 +1405,19 @@ RBCodeSnippet class >> badSemantic [
 			         notices: #( #( 6 11 6 'Name already defined' ) )).
 		        (self new
 			         source: '[ :self | self + 1 ]';
+			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 4 7 4 'Name already defined' ) )).
+			         notices: #( #( 4 7 4 'Reserved variable name' ) )).
 		        (self new
 			         source: '[ :super | super + 1 ]';
+			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 4 8 4 'Name already defined' ) )).
+			         notices: #( #( 4 8 4 'Reserved variable name' ) )).
 		        (self new
 			         source: '[ :thisContext | thisContext + 1 ]';
+			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 4 14 4 'Name already defined' ) )).
+			         notices: #( #( 4 14 4 'Reserved variable name' ) )).
 		        (self new
 			         source: '[ :Object | Object + 1 ]';
 			         value: 2;

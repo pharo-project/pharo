@@ -80,7 +80,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	var ifNotNil: [ shadowing := var].
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
-	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowingVariable: aVariableNode].
+	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
 	^ var
 ]
 
@@ -111,13 +111,11 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 ]
 
 { #category : #'error handling' }
-OCASTSemanticAnalyzer >> shadowingVariable: aNode [
-	aNode addWarning: 'Name already defined'.
-	compilationContext permitFaulty ifTrue: [ ^aNode ].
-	^ OCShadowVariableWarning new
-		node: aNode;
-		compilationContext: compilationContext;
-		signal
+OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
+
+	var isReservedVariable
+		ifTrue: [ self error: 'Reserved variable name' forNode: aNode ]
+		ifFalse: [ aNode addWarning: 'Name already defined' ]
 ]
 
 { #category : #'error handling' }
