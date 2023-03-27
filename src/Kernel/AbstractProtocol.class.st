@@ -25,7 +25,7 @@ AbstractProtocol class >> isAbstract [
 ]
 
 { #category : #accessing }
-AbstractProtocol class >> nullCategory [
+AbstractProtocol class >> nullProtocolName [
 
 	^ #'no messages'
 ]
