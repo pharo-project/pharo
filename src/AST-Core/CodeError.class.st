@@ -45,9 +45,7 @@ CodeError >> isResumable [
 { #category : #accessing }
 CodeError >> location [
 
-	location ifNotNil: [ ^ location  ].
-	node ifNotNil: [ ^ node start ].
-	^ nil
+	^ self position
 ]
 
 { #category : #accessing }
@@ -58,17 +56,17 @@ CodeError >> location: anInteger [
 
 { #category : #accessing }
 CodeError >> methodClass [
-	^self methodNode methodClass
+	^ self methodNode methodClass
 ]
 
 { #category : #accessing }
 CodeError >> methodNode [
-	^node methodNode
+	^ self node methodNode
 ]
 
 { #category : #accessing }
 CodeError >> node [
-	^ node
+	^ self notice node
 ]
 
 { #category : #accessing }
@@ -89,11 +87,15 @@ CodeError >> notice: anObject [
 ]
 
 { #category : #accessing }
+CodeError >> position [
+
+	^ self notice position
+]
+
+{ #category : #accessing }
 CodeError >> sourceCode [
 
-	sourceCode ifNotNil: [  ^ sourceCode ].
-	node ifNotNil: [  ^ node sourceCode ].
-	^ nil
+	^ self methodNode sourceCode
 ]
 
 { #category : #accessing }
