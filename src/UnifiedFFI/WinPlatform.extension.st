@@ -45,5 +45,5 @@ WinPlatform >> processorArchitecture [
 
 	^ (architecture asLowercase = 'x86' and: [ self isTranslated ])
 		ifTrue: [ (self environment at: 'PROCESSOR_ARCHITEW6432') trimBoth ]
-		ifFalse: [ architecture trimBoth ]
+		ifFalse: [ architecture ]
 ]
