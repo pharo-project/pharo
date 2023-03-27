@@ -137,7 +137,7 @@ STCommandLineHandler >> handleError: error reference: aReference [
 { #category : #installing }
 STCommandLineHandler >> handleErrorsDuring: aBlock reference: aReference [
 	aBlock
-		on: Error, OCSemanticWarning, OCSemanticError
+		on: Error, OCSemanticWarning
 		do: [ :e | self handleError: e reference: aReference ]
 ]
 
