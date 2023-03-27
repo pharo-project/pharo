@@ -1482,8 +1482,8 @@ RBCodeSnippet class >> styleAllWithError [
 		each compileOnError: [ :exception |
 				"In case of error, insert error message (like an old-school smalltalk compiler)"
 				text
-					replaceFrom: exception location
-					to: exception location - 1
+					replaceFrom: exception position
+					to: exception position - 1
 					with: (exception messageText asText addAttribute:
 							 (TextBackgroundColor color: Color lightBlue)).
 				bigtext append: String cr.
