@@ -441,8 +441,6 @@ OpalCompiler >> parseForRequestor [
 		self compilationContext noPattern ifTrue: [
 			CodeError new
 				notice: notification node notices first; "Ugly temporary hack"
-				node: notification node;
-				messageText: notification messageText;
 				signal.
 			].
 		"I do not like the API that much.

@@ -93,9 +93,6 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 
 	OCSemanticError new
 		notice: notice;
-		node: aNode;
-		messageText: aMessage;
-		location: aNode startWithoutParentheses;
 		signal
 ]
 
@@ -130,8 +127,6 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 	^ OCStoreIntoReadOnlyVariableError new
 		  notice: notice;
-		  node: variableNode;
-		  messageText: 'Assignment to read-only variable';
 		  signal
 ]
 
@@ -144,8 +139,6 @@ OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 
 	^ OCStoreIntoReservedVariableError new
 		  notice: notice;
-		  node: variableNode;
-		  messageText: 'Assigment to reserved variable';
 		  signal
 ]
 

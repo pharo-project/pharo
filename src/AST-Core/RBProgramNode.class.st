@@ -315,9 +315,6 @@ RBProgramNode >> checkFaulty: aBlock [
 
 	SyntaxErrorNotification new
 		notice: errorNotice;
-		sourceCode: self methodNode sourceCode;
-		messageText: errorNotice messageText;
-		location: errorNotice position;
 		signal.
 
 	"If resumed, just return"
