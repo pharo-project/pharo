@@ -310,7 +310,7 @@ RBProgramNode >> checkFaulty: aBlock [
 
 	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice position cull: self ].
 
-	SyntaxErrorNotification new
+	CodeError new
 		sourceCode: self methodNode sourceCode;
 		messageText: errorNotice messageText;
 		location: errorNotice position;
