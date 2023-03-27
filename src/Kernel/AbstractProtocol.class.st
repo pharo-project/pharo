@@ -31,12 +31,6 @@ AbstractProtocol class >> nullProtocolName [
 ]
 
 { #category : #accessing }
-AbstractProtocol class >> nullProtocolName [
-
-	^ #'no messages'
-]
-
-{ #category : #accessing }
 AbstractProtocol class >> unclassified [
 	^ #'as yet unclassified'
 ]
