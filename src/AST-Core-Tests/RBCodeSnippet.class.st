@@ -128,6 +128,7 @@ RBCodeSnippet class >> badExpressions [
 		"Note: bad temporaries will be stored as error statements"
 		self new source: '| '.
 		self new source: '| a b'.
+		self new source: '|-'; formattedCode: '| . - '. "Here |- is scanned as a single operator token, so parser must work more"
 		self new source: '| 1'; formattedCode: '| . 1'.
 		"Note that the | character is also a binary operator, so a missing opening | become a binary call with a missing argument (see bellow)"
 		self new source: 'a | '.
