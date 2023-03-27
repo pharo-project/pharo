@@ -7,10 +7,7 @@ Class {
 	#name : #CodeError,
 	#superclass : #Error,
 	#instVars : [
-		'notice',
-		'node',
-		'location',
-		'sourceCode'
+		'notice'
 	],
 	#category : #'AST-Core-Exception'
 }
@@ -49,12 +46,6 @@ CodeError >> location [
 ]
 
 { #category : #accessing }
-CodeError >> location: anInteger [
-
-	location := anInteger
-]
-
-{ #category : #accessing }
 CodeError >> messageText [
 
 	^ self notice messageText
@@ -73,11 +64,6 @@ CodeError >> methodNode [
 { #category : #accessing }
 CodeError >> node [
 	^ self notice node
-]
-
-{ #category : #accessing }
-CodeError >> node: aNode [
-	node := aNode
 ]
 
 { #category : #accessing }
@@ -102,10 +88,4 @@ CodeError >> position [
 CodeError >> sourceCode [
 
 	^ self methodNode sourceCode
-]
-
-{ #category : #accessing }
-CodeError >> sourceCode: aString [
-
-	sourceCode := aString
 ]
