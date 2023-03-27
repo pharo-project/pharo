@@ -438,75 +438,17 @@ ClassDescription >> compileSilently: sourceCode classified: protocolName notifyi
 ]
 
 { #category : #copying }
-ClassDescription >> copy: selector from: class [
-	"Install the method associated with the first argument, selector, a message
-	selector, found in the method dictionary of the second argument, class,
-	as one of the receiver's methods. Classify the message under -As yet not
-	classified-."
+ClassDescription >> copyAllMethodsFrom: originClass [
+	"Install a copy of each methods of originClass in myself under the same protocol."
 
-	self copy: selector from: class classified: nil
-]
+	originClass methods do: [ :aMethod |
+		(self includesLocalSelector: aMethod selector) ifTrue: [
+			aMethod sourceCode asString = (self sourceCodeAt: aMethod selector) asString ifFalse: [
+				self error: ('{1}>>{2} will be redefined if you proceed.' format: {
+							 self name.
+							 aMethod selector }) ] ].
 
-{ #category : #copying }
-ClassDescription >> copy: selector from: class classified: protocolName [
-	"Install the method associated with the first arugment, selector, a message
-	selector, found in the method dictionary of the second argument, class,
-	as one of the receiver's methods. Classify the message under the third
-	argument, protocolName."
-
-	| sourceCode protocol |
-	"Useful when modifying an existing class"
-	sourceCode := class sourceCodeAt: selector.
-	sourceCode ifNotNil: [
-		protocol := protocolName
-			            ifNil: [ class organization protocolNameOfElement: selector ]
-			            ifNotNil: [ protocolName ].
-		(self includesLocalSelector: selector) ifTrue: [
-			sourceCode asString = (self sourceCodeAt: selector) asString ifFalse: [ self error: self name , ' ' , selector , ' will be redefined if you proceed.' ] ].
-		self compile: sourceCode classified: protocol ]
-]
-
-{ #category : #copying }
-ClassDescription >> copyAll: selectors from: class [
-	"Install all the methods found in the method dictionary of the second
-	argument, class, as the receiver's methods. Classify the messages under
-	-As yet not classified-."
-
-	self copyAll: selectors from: class classified: nil
-]
-
-{ #category : #copying }
-ClassDescription >> copyAll: selectors from: class classified: protocolName [
-	"Install all the methods found in the method dictionary of the second
-	argument, class, as the receiver's methods. Classify the messages under
-	the third argument, protocolName."
-
-	selectors do: [ :selector | (class includesLocalSelector: selector) ifTrue: [ self copy: selector from: class classified: protocolName ] ]
-]
-
-{ #category : #copying }
-ClassDescription >> copyAllCategoriesFrom: aClass [
-	"Specify that the protocole of messages for the receiver include all of
-	those found in the class, aClass. Install each of the messages found in
-	these protocols into the method dictionary of the receiver, classified
-	under the appropriate protocol."
-
-	aClass organization protocolNames do: [ :protocolName | self copyCategory: protocolName from: aClass ]
-]
-
-{ #category : #copying }
-ClassDescription >> copyCategory: protocolName from: class [
-	"Specify that one of the protocol of messages for the receiver is protocolName, as
-	found in the class, class. Copy each message found in this protocol."
-
-	self copyCategory: protocolName from: class classified: protocolName
-]
-
-{ #category : #copying }
-ClassDescription >> copyCategory: protocolName from: aClass classified: newProtocolName [
-	"Move all methods in the protocol 'protocolName' of aClass into a protocol named 'newProtocolName'"
-
-	self copyAll: (aClass organization methodsInProtocolNamed: protocolName) from: aClass classified: newProtocolName
+		self compile: aMethod sourceCode classified: aMethod protocol ]
 ]
 
 { #category : #slots }
