@@ -407,6 +407,8 @@ OpalCompiler >> parse [
 	self callParsePlugins.
 	self doSemanticAnalysis.
 
+	self permitFaulty ifFalse: [ ast checkFaulty: nil ].
+
 	^ ast
 ]
 
