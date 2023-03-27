@@ -114,7 +114,7 @@ STCommandLineHandler >> end [
 STCommandLineHandler >> handleError: error [
 
 	"for syntax errors we can used the default action"	"otherwise resignal it"
-	(error isKindOf: SyntaxErrorNotification)
+	(error isKindOf: CodeError)
 		ifTrue: [ error defaultAction ]
 		ifFalse: [ error pass ]
 ]
@@ -131,16 +131,6 @@ STCommandLineHandler >> handleError: error reference: aReference [
 	Smalltalk isHeadless
 		ifTrue: [ self inform: 'Errors in script loaded from ', aReference name ].
 
-	"for syntax errors we can use the default action"
-	(error isKindOf: SyntaxErrorNotification)
-		ifTrue: [ ^ error defaultAction ].
-
-	(error isKindOf: OCSemanticError)
-		ifTrue: [
-			self class printCompilerWarning: error.
-			^ error resume: error defaultAction ].
-
-	"otherwise resignal it"
 	error pass
 ]
 
