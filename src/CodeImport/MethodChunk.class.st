@@ -68,7 +68,7 @@ MethodChunk >> importFor: requestor logSource: logSource [
 		compile: contents
 		classified: categoryName
 		withStamp: stamp
-		notifying: (self methodCompileRequestorFor: requestor)
+		notifying: nil
 		logSource: logSource
 ]
 
@@ -76,15 +76,6 @@ MethodChunk >> importFor: requestor logSource: logSource [
 MethodChunk >> isMethodDeclaration [
 
 	^ true
-]
-
-{ #category : #importing }
-MethodChunk >> methodCompileRequestorFor: aRequestor [
-	aRequestor ifNotNil: [ aRequestor contents ifNil: [ aRequestor contents: contents ] ].
-	^ MethodChunkCompilerRequestor new
-		methodChunk: self;
-		fileCompileRequestor: aRequestor;
-		yourself
 ]
 
 { #category : #accessing }
