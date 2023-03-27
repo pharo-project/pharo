@@ -72,6 +72,17 @@ MethodMapTest >> testBlockWithTempsSourceNode [
 	self assert: sourceNode equals: (self parseExpression: '[ | t1 t2 | ]')
 ]
 
+{ #category : #'tests - ast mapping' }
+MethodMapTest >> testCompiledBlockSourceNode [
+
+	| method block |
+	"if we compile a method, but to not install it, make sure that we can map the block to the AST"
+
+	method := OpalCompiler new compile: 'foo Object. [ self ]. ^ #bar'.
+	block := method literals detect: #isCompiledBlock.
+	self assert: block sourceNode equals: (self parseExpression: '[ self ]')
+]
+
 { #category : #'tests - temp access' }
 MethodMapTest >> testCopiedVarFromDeadContext [
 	self assert:  (self compileAndRunExample:  #exampleCopiedVarFromDeadContext) equals: 2

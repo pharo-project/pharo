@@ -116,6 +116,12 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 	aBlock	 on: Error fork: [ :e | e pass ]
 ]
 
+{ #category : #testing }
+FinalizationRegistry >> includes: anObject [
+
+    ^ ephemeronCollection anySatisfy: [ :entry | entry key == anObject ]
+]
+
 { #category : #initialization }
 FinalizationRegistry >> initialize [
 
