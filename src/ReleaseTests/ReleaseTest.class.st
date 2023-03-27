@@ -521,6 +521,17 @@ ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 ]
 
 { #category : #tests }
+ReleaseTest >> testVersionInImageHeaderIsCorrect [
+
+	| currentVersion |
+	currentVersion := SystemVersion current.
+
+	self
+		assert: Smalltalk vm imageVersionInImageHeader
+		equals: currentVersion major * 10 + currentVersion minor
+]
+
+{ #category : #tests }
 ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"In this test we check that at least every terminal menu entry of the world menu has an help."
 
