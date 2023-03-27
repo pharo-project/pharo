@@ -68,7 +68,7 @@ MethodChunk >> importFor: requestor logSource: logSource [
 		compile: contents
 		classified: categoryName
 		withStamp: stamp
-		notifying: (self methodCompileRequestorFor: requestor)
+		notifying: nil
 		logSource: logSource
 ]
 
