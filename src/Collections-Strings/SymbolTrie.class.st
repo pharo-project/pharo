@@ -7,10 +7,17 @@ Class {
 	#category : #'Collections-Strings-Base'
 }
 
+{ #category : #'instance creation' }
+SymbolTrie class >> withAll: aCollectionOfSymbols [
+
+	^ self new
+		  addAll: aCollectionOfSymbols;
+		  yourself
+]
+
 { #category : #adding }
 SymbolTrie >> add: aString [
 
-	aString ifEmpty: [ ^ self ].
 	^ self roots add: aString
 ]
 
@@ -40,8 +47,6 @@ SymbolTrie >> getSymbol: aString [
 
 { #category : #testing }
 SymbolTrie >> includes: aString [
-
-	aString ifEmpty: [ self error: 'Cannot contain empty string' ].
 
 	^ self roots includes: aString
 ]

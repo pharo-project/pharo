@@ -99,7 +99,11 @@ Symbol class >> initialize [
 { #category : #'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	^ (self findInterned: aStringOrSymbol) ifNil: [ SymbolTable add: aStringOrSymbol createSymbol ]
+	^ (self findInterned: aStringOrSymbol) ifNil: [
+		  | symbol |
+		  symbol := SymbolTable add: aStringOrSymbol createSymbol.
+		  Trie add: symbol.
+		  symbol ]
 ]
 
 { #category : #'symbol table' }
@@ -189,6 +193,7 @@ Symbol class >> rehash [
 
 	<script>
 	SymbolTable := WeakSet withAll: self allSubInstances.
+	Trie := SymbolTrie withAll: SymbolTable.
 	self resetSelectorTable
 ]
 

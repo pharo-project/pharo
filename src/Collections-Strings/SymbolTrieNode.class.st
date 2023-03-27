@@ -34,7 +34,7 @@ SymbolTrieNode >> addAllSymbolsTo: aCollection [
 { #category : #adding }
 SymbolTrieNode >> addIn: aString symbol: symbolToAdd [
 
-	aString size = 1 ifTrue: [
+	aString size = 0 ifTrue: [
 		self symbol: symbolToAdd.
 		^ symbolToAdd ].
 
@@ -109,9 +109,9 @@ SymbolTrieNode >> symbol [
 ]
 
 { #category : #accessing }
-SymbolTrieNode >> symbol: anObject [
+SymbolTrieNode >> symbol: aSymbol [
 
-	symbol at: 1 put: anObject
+	symbol at: 1 put: aSymbol
 ]
 
 { #category : #enumerating }
