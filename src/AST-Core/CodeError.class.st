@@ -55,6 +55,12 @@ CodeError >> location: anInteger [
 ]
 
 { #category : #accessing }
+CodeError >> messageText [
+
+	^ self notice messageText
+]
+
+{ #category : #accessing }
 CodeError >> methodClass [
 	^ self methodNode methodClass
 ]
