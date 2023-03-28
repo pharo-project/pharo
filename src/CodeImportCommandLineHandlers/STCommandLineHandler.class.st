@@ -112,11 +112,12 @@ STCommandLineHandler >> end [
 
 { #category : #private }
 STCommandLineHandler >> handleError: error [
+	"for syntax errors we print more detailed error informations"
 
-	"for syntax errors we can used the default action"	"otherwise resignal it"
-	(error isKindOf: CodeError)
-		ifTrue: [ error defaultAction ]
-		ifFalse: [ error pass ]
+	(error isKindOf: CodeError) ifTrue: [
+		self class printCodeError: error ].
+
+	error pass
 ]
 
 { #category : #private }
