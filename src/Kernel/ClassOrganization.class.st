@@ -222,7 +222,7 @@ ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString [
 
-	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ nil ]
+	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
 ]
 
 { #category : #accessing }

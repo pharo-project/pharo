@@ -1342,13 +1342,11 @@ RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #private }
 RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
+
 	| protocols |
+	protocols := self extensionMethods collect: [ :each | each origin organization protocolNamed: each protocol ] as: Set.
 
-	protocols := self extensionMethods
-		collect: [ :each | each origin organization protocolNamed:  each protocol ]
-		as: Set.
-
-	protocols do: [ :each | each rename: '*', newName, (each name allButFirst: oldName size + 1) ]
+	protocols do: [ :each | each rename: '*' , newName , (each name allButFirst: oldName size + 1) ]
 ]
 
 { #category : #private }
