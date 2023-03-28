@@ -278,7 +278,7 @@ OCCompilerTest >> testUndefinedVariableFrontend [
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	OpalCompiler new parse: 'foo ^undefinedName123'.
 	self deny: (Undeclared includesKey: #undefinedName123).
-	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: SyntaxErrorNotification.
+	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: CodeError.
 	self deny: (Undeclared includesKey: #undefinedName123).
 	OpalCompiler new compile: 'foo ^undefinedName123'.
 	self assert: (Undeclared includesKey: #undefinedName123).
