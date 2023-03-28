@@ -57,12 +57,6 @@ ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 	protocol addMethodSelector: aSymbol
 ]
 
-{ #category : #private }
-ProtocolOrganizer >> existsProtocolNamed: aProtocolName [
-
-	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ]
-]
-
 { #category : #accessing }
 ProtocolOrganizer >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
@@ -126,12 +120,6 @@ ProtocolOrganizer >> protocolsOfSelector: aSelector [
 	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
 ]
 
-{ #category : #protocol }
-ProtocolOrganizer >> protocolsSorted [
-	^ (self protocols collect: #name as: Array) sort
-		copyWithFirst: allProtocol name
-]
-
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeEmptyProtocols [
 	| removedProtocols |
@@ -159,21 +147,6 @@ ProtocolOrganizer >> removeProtocol: aProtocol [
 ProtocolOrganizer >> removeProtocolNamed: aName [
 
 	^ self removeProtocol: (self protocolNamed: aName ifAbsent: [ ^ self ])
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> renameProtocol: oldName into: newName [
-
-	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
-
-	(self existsProtocolNamed: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolNamed: oldName ]
-		ifFalse: [
-			^ (self protocolNamed: oldName)
-				  name: newName;
-				  yourself ]
 ]
 
 { #category : #initialization }

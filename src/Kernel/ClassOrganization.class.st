@@ -297,7 +297,7 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 { #category : #accessing }
 ClassOrganization >> removeProtocolNamed: protocolName [
 
-	self removeProtocol: (self protocolNamed: protocolName ifAbsent: [ ^ self ])
+	^ self removeProtocol: (self protocolNamed: protocolName ifAbsent: [ ^ self ])
 ]
 
 { #category : #removing }
@@ -321,7 +321,16 @@ ClassOrganization >> setSubject: anObject [
 { #category : #private }
 ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
 
-	self protocolOrganizer renameProtocol: oldName into: newName
+	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+
+	(self hasProtocolNamed: newName)
+		ifTrue: [
+			self protocolOrganizer moveMethodsFrom: oldName to: newName.
+			self removeProtocolNamed: oldName ]
+		ifFalse: [
+			^ (self protocolNamed: oldName)
+				  name: newName;
+				  yourself ]
 ]
 
 { #category : #'backward compatibility' }
