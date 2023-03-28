@@ -128,6 +128,10 @@ STCommandLineHandler >> handleError: error reference: aReference [
 	(error isKindOf: OCSemanticWarning)
 		ifTrue: [ ^ error pass ].
 
+	"Display CodeError nicely"
+	(error isKindOf: CodeError)
+		ifTrue: [ self class printCodeError: error ].
+
 	"spit out a warning if in headless mode, otherwise a debugger will popup"
 	Smalltalk isHeadless
 		ifTrue: [ self inform: 'Errors in script loaded from ', aReference name ].
