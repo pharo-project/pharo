@@ -99,13 +99,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 { #category : #errors }
 OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 
-	| notice |
-	notice := aNode addError: aMessage.
-	compilationContext permitFaulty ifTrue: [ ^ self ].
-
-	OCSemanticError new
-		notice: notice;
-		signal
+	aNode addError: aMessage
 ]
 
 { #category : #accessing }
@@ -138,25 +132,13 @@ OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
-	| notice |
-	notice := variableNode addError: 'Assignment to read-only variable'.
-	compilationContext permitFaulty ifTrue: [ ^ self ].
-
-	^ OCStoreIntoReadOnlyVariableError new
-		  notice: notice;
-		  signal
+	variableNode addError: 'Assignment to read-only variable'
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 
-	| notice |
-	notice := variableNode addError: 'Assigment to reserved variable'.
-	compilationContext permitFaulty ifTrue: [ ^ self ].
-
-	^ OCStoreIntoReservedVariableError new
-		  notice: notice;
-		  signal
+	variableNode addError: 'Assigment to reserved variable'
 ]
 
 { #category : #accessing }
