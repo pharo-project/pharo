@@ -64,12 +64,13 @@ MethodChunk >> handleMissingBehavior [
 MethodChunk >> importFor: requestor logSource: logSource [
 	self existsBehavior
 		ifFalse: [ self handleMissingBehavior ].
-	^ self targetClass
-		compile: contents
-		classified: categoryName
-		withStamp: stamp
-		notifying: nil
-		logSource: logSource
+	^ self targetClass compiler
+		source: contents;
+		protocolName: categoryName;
+		changeStamp: stamp;
+		logSource: logSource;
+		permitFaulty: true;
+		install
 ]
 
 { #category : #testing }
