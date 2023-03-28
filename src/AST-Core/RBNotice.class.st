@@ -11,6 +11,26 @@ Class {
 	#category : #'AST-Core-Notice'
 }
 
+{ #category : #accessing }
+RBNotice >> description [
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: self class name;
+			  nextPutAll: ' ';
+			  nextPutAll: (node methodNode methodClass
+					   ifNotNil: [ :class | class name ]
+					   ifNil: [ '???' ]);
+			  nextPutAll: '>>#';
+			  nextPutAll: node methodNode selector;
+			  nextPutAll: ' ';
+			  print: self position;
+			  nextPutAll: ':';
+			  nextPutAll: self messageText;
+			  nextPutAll: '->';
+			  nextPutAll: node displaySourceCode ]
+]
+
 { #category : #testing }
 RBNotice >> isError [
 
