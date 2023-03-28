@@ -13,14 +13,6 @@ Class {
 	#category : #'Kernel-Protocols'
 }
 
-{ #category : #import }
-ProtocolOrganizer class >> fromSpec: aSpec [
-
-	^ self new
-		fromSpec: aSpec;
-		yourself
-]
-
 { #category : #'protocol - adding' }
 ProtocolOrganizer >> addProtocol: aProtocol [
 
@@ -29,11 +21,13 @@ ProtocolOrganizer >> addProtocol: aProtocol [
 
 { #category : #'protocol - adding' }
 ProtocolOrganizer >> addProtocolNamed: aName [
-	^ protocols add: (Protocol name: aName)
+
+	^ self addProtocol: (Protocol name: aName)
 ]
 
 { #category : #accessing }
 ProtocolOrganizer >> allMethodSelectors [
+
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
@@ -47,12 +41,6 @@ ProtocolOrganizer >> allProtocol [
 ProtocolOrganizer >> allProtocols [
 
 	^ { allProtocol }, protocols asArray
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> allProtocolsNames [
-
-	^ self allProtocols collect: [:each | each name]
 ]
 
 { #category : #'protocol - adding' }
@@ -79,26 +67,10 @@ ProtocolOrganizer >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
 ]
 
-{ #category : #importing }
-ProtocolOrganizer >> fromSpec: aSpec [
-	aSpec
-		do: [ :spec |
-			| name methods |
-			name := spec first asSymbol.
-			methods := spec allButFirst asSet.
-			self addProtocol: (Protocol name: name methodSelectors: methods) ]
-]
-
 { #category : #protocol }
 ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [
 
 	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure
-]
-
-{ #category : #testing }
-ProtocolOrganizer >> hasProtocolNamed: aString [
-
-	^ self allProtocols anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #testing }
@@ -145,14 +117,6 @@ ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
 	^  self allProtocols
 		detect: [ :e | e name = aString ]
 		ifNone: aBlock
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> protocolNames [
-
-	^ protocols
-		collect: #name
-		as: Array
 ]
 
 { #category : #accessing }
