@@ -226,6 +226,12 @@ ClassOrganization >> protocolNamed: aString [
 ]
 
 { #category : #accessing }
+ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
+
+	self protocolOrganizer protocolNamed: aString ifAbsent: aBlock
+]
+
+{ #category : #accessing }
 ClassOrganization >> protocolNames [
 
 	^ self protocols collect: #name
@@ -277,18 +283,15 @@ ClassOrganization >> removeProtocol: aProtocol [
 ClassOrganization >> removeProtocolIfEmpty: protocolName [
 	"The protocol may already have been removed, be non empty or a special protocol which can't be removed, such as 'all'."
 
-	(self protocolNamed: protocolName)
-		ifNotNil: [ :protocol |
-			(protocol isEmpty and: [ protocol canBeRemoved ])
-				ifTrue: [ self removeProtocol: protocol ] ]
+	| protocol |
+	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
+	(protocol isEmpty and: [ protocol canBeRemoved ]) ifTrue: [ self removeProtocol: protocol ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> removeProtocolNamed: protocolName [
 
-	(self hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
-
-	self removeProtocol: (self protocolNamed: protocolName)
+	self removeProtocol: (self protocolNamed: protocolName ifAbsent: [ ^ self ])
 ]
 
 { #category : #removing }
