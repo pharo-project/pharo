@@ -1506,14 +1506,33 @@ RBCodeSnippet class >> styleAllWithError [
 	bigtext inspect
 ]
 
+{ #category : #updating }
+RBCodeSnippet class >> updateAllSnippets [
+	"This script will update all definitions of all snippets.
+	Beware of code loss and double check the generated definitions."
+
+	"I did not manage to update all in a single transformation (with a preview!)
+	So do them one by one with a progress bar :("
+
+	<script>
+	self allSnippets
+		do: [ :snippet |
+			snippet definitionRefactoring ifNotNil: [ :refactoring |
+				refactoring
+					transform;
+					execute ] ]
+		displayingProgress: 'Updating snippets...'
+]
+
 { #category : #accessing }
 RBCodeSnippet >> applyDefaultTo: aCollection [
 
 	aCollection do: [ :each |
 		each default: self.
 		each isMethod ifNil: [ each isMethod: self isMethod ].
-		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
+		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
+		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
 	]
 ]
@@ -1522,6 +1541,96 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 RBCodeSnippet >> default: aRBCodeSnippet [
 
 	default := aRBCodeSnippet
+]
+
+{ #category : #updating }
+RBCodeSnippet >> definitionRefactoring [
+	"A transformation to update the definition of self in the correct class side method"
+
+	| node old new newast |
+	node := self searchDefinition.
+	node ifNil: [ ^ nil ].
+	self updateExpectations.
+
+	"Check if the new code is different from the old one"
+	old := node sourceCode.
+	new := self dumpDefinition.
+	newast := RBParser parseFaultyExpression: new.
+	newast parent: node parent. "Force same context, so formattedCode is reliable"
+	node formattedCode = newast formattedCode ifTrue: [ ^ nil ].
+
+	^ RBReplaceSubtreeTransformation
+		  replace: old
+		  to: new
+		  inMethod: node methodNode selector
+		  inClass: node methodNode methodClass
+]
+
+{ #category : #updating }
+RBCodeSnippet >> dumpDefinition [
+	"The definition of the snippet (according to the current values)
+	as it should appears in the class side methods."
+
+	^ String streamContents: [ :aStream |
+		  aStream
+			  nextPutAll: '(self new';
+			  nextPutAll: ' source: ';
+			  print: self source.
+		  self formattedCode = self source ifFalse: [
+			  aStream
+				  nextPutAll: '; formattedCode: ';
+				  print: self formattedCode ].
+		  self isMethod = default isMethod ifFalse: [
+			  aStream
+				  nextPutAll: '; isMethod: ';
+				  print: self isMethod ].
+		  self isFaulty = default isFaulty ifFalse: [
+			  aStream
+				  nextPutAll: '; isFaulty: ';
+				  print: self isFaulty ].
+		  (default isParseFaulty
+			   ifNotNil: [ self isParseFaulty ~= default isParseFaulty ]
+			   ifNil: [ self isParseFaulty ~= self isFaulty ]) ifTrue: [
+			  aStream
+				  nextPutAll: '; isParseFaulty: ';
+				  print: self isParseFaulty ].
+		  self dumpDefinitionValue: aStream.
+		  self numberOfCritiques ifNotNil: [
+			  aStream
+				  nextPutAll: '; numberOfCritiques: ';
+				  print: self numberOfCritiques ].
+		  self notices isEmptyOrNil ifFalse: [
+			  aStream
+				  nextPutAll: '; notices: ';
+				  print: self notices ].
+		  self skippedTests ifNotNil: [
+			  self skippedTests do: [ :each |
+				  aStream
+					  nextPutAll: '; skip: ';
+					  print: each ] ].
+		  aStream nextPut: $) ]
+]
+
+{ #category : #updating }
+RBCodeSnippet >> dumpDefinitionValue: aStream [
+
+	self messageNotUnderstood ifNotNil: [ :val |
+		aStream
+			nextPutAll: '; messageNotUnderstood: ';
+			print: val.
+		^ self ].
+
+	self raise ifNotNil: [ :val |
+		aStream
+			nextPutAll: '; raise: ';
+			print: val.
+		^ self ].
+
+	(self value isNotNil or: [ self isFaulty and: [ self hasValue ] ])
+		ifTrue: [
+			aStream
+				nextPutAll: '; value: ';
+				print: self value ]
 ]
 
 { #category : #accessing }
@@ -1584,6 +1693,13 @@ RBCodeSnippet >> ifSkip: aTestName then: aBlock [
 	skippedTests ifNil: [ ^ self ].
 	(skippedTests includes: aTestName) ifFalse: [ ^ self ].
 	^ aBlock value
+]
+
+{ #category : #inspecting }
+RBCodeSnippet >> inspectionSource [
+	<inspectorPresentationOrder: 35 title: 'Source'>
+
+	^ self searchDefinition inspectionSource
 ]
 
 { #category : #accessing }
@@ -1696,6 +1812,29 @@ RBCodeSnippet >> raise: anObject [
 	raise := anObject
 ]
 
+{ #category : #updating }
+RBCodeSnippet >> searchDefinition [
+	"Get the AST node defining self in the class side method.
+	The source code is used as a key to distinguishes other snippets.
+	Assume the AST of the class side method respect the format."
+
+	| ast candidate |
+	candidate := OrderedCollection new.
+	ast := (self class class >> default group) ast.
+	ast nodesDo: [ :node |
+		| parent |
+		(node isLiteralNode and: [
+			 parent := node parent.
+			 node value = self source and: [
+				 parent isMessage and: [ parent selector = #source: ] ] ])
+			ifTrue: [
+				parent isCascaded ifTrue: [ parent := parent parent ].
+				candidate add: parent ] ].
+	^ candidate size = 1
+		  ifTrue: [ candidate first ]
+		  ifFalse: [ nil ]
+]
+
 { #category : #accessing }
 RBCodeSnippet >> skip: aSymbol [
 
@@ -1743,6 +1882,37 @@ RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 		with: (aString asText addAttribute:
 				 (TextBackgroundColor color: Color lightBlue)).
 	^ text
+]
+
+{ #category : #updating }
+RBCodeSnippet >> updateDefinition [
+	"Do the update of the definition of self in the method (class-side) that defines it"
+
+	self definitionRefactoring ifNotNil: [ :transformation |
+		transformation
+			transform;
+			execute ]
+]
+
+{ #category : #updating }
+RBCodeSnippet >> updateExpectations [
+	"Update the value of expectations according what tools produce.
+	Do not blindly trust it, as a tool cannot judge itself."
+
+	| ast |
+	ast := self parse.
+	self formattedCode: ast formattedCode withSeparatorsCompacted.
+	self isParseFaulty: ast isFaulty.
+	ast := self doSemanticAnalysis.
+	self isFaulty: ast isFaulty.
+	self notices: (ast allNotices
+			 collect: [ :each |
+				 {
+					 each node start.
+					 each node stop.
+					 each position.
+					 each messageText } ]
+			 as: Array)
 ]
 
 { #category : #accessing }
