@@ -52,3 +52,15 @@ RBNotice >> position [
 
 	^ node start
 ]
+
+{ #category : #printing }
+RBNotice >> printOn: aStream [
+
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: '(';
+		print: self position;
+		nextPutAll: ':';
+		nextPutAll: self messageText;
+		nextPutAll: ')'
+]
