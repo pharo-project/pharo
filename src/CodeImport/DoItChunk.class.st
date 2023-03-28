@@ -37,6 +37,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 		source: contents;
 		requestor: requestor;
 		logged: logSource;
+		permitFaulty: true;
 		evaluate
 ]
 
