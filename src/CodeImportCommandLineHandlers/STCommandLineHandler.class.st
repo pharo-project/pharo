@@ -45,12 +45,12 @@ STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 ]
 
 { #category : #printing }
-STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
+STCommandLineHandler class >> printCodeError: aCodeError [
 	| stderr position contents errorLine errorMessage maxLineNumberSize lineNumber |
 
 	"format the error"
-	position := aSyntaxErrorNotification position.
-	contents := aSyntaxErrorNotification sourceCode.
+	position := aCodeError position.
+	contents := aCodeError sourceCode.
 	errorLine := contents lineNumberCorrespondingToIndex: position.
 	stderr := VTermOutputDriver stderr.
 
@@ -58,7 +58,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	errorMessage := String streamContents: [ :s|
 		s nextPutAll: 'Syntax Error on line ';
 			print: errorLine; nextPutAll: ': ';
-			print: aSyntaxErrorNotification messageText].
+			print: aCodeError messageText].
 
 	 stderr red;
 		nextPutAll: errorMessage; lf;
