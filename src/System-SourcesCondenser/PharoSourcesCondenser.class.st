@@ -89,10 +89,9 @@ PharoSourcesCondenser >> updateQuitPosition [
 { #category : #writing }
 PharoSourcesCondenser >> writeClassComment: aClass [
 
-	| organizer commentRemoteString stamp |
+	| commentRemoteString stamp |
 
-	organizer := aClass organization.
-	commentRemoteString := self commentRemoteStringFor: organizer.
+	commentRemoteString := self commentRemoteStringFor: aClass.
 
 	commentRemoteString ifNil: [ ^ self ].
 
@@ -101,9 +100,9 @@ PharoSourcesCondenser >> writeClassComment: aClass [
 			strm
 				nextPutAll: aClass name;
 				nextPutAll: ' commentStamp: '.
-			stamp := organizer commentStamp ifNil: [ '<historical>' ].
+			stamp := aClass commentStamp ifNil: [ '<historical>' ].
 			stamp storeOn: strm
 			].
 
-	self writeRemoteString: organizer classComment for: aClass
+	self writeRemoteString: aClass comment for: aClass
 ]

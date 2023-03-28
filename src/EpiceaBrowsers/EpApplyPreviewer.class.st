@@ -63,13 +63,13 @@ EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aBehavior |
-			(aBehavior organization classComment = aChange newComment) ifFalse: [
+			(aBehavior comment = aChange newComment) ifFalse: [
 				^ {
 					EpBehaviorCommentChange
 						newWithBehavior: aBehavior
-						oldComment: aBehavior organization classComment
+						oldComment: aBehavior comment
 						newComment: aChange newComment
-						oldStamp: aBehavior organization commentStamp
+						oldStamp: aBehavior commentStamp
 						newStamp: aChange newStamp
 				} ] ].
 

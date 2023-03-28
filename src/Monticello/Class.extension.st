@@ -21,8 +21,8 @@ Class >> asClassDefinition [
 						poolDictionaryNames: self sharedPoolNames
 						classInstVarNames: (self class localSlots collect: [:each | each definitionString])
 						type: self mcType
-						comment: self organization classComment	asString
-						commentStamp: self organization commentStamp ]
+						comment: self comment
+						commentStamp: self commentStamp ]
 	
 		ifFalse: [  
 				 MCClassDefinition
@@ -36,8 +36,8 @@ Class >> asClassDefinition [
 						poolDictionaryNames: self sharedPoolNames
 						classInstVarNames: (self class localSlots collect: [ :each | each name ])
 						type: self mcType
-						comment: self organization classComment	asString
-						commentStamp: self organization commentStamp ]
+						comment: self comment
+						commentStamp: self commentStamp ]
 	
 
 

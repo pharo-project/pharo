@@ -12,7 +12,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 		each selectorsDo: [:sel |
 			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive)
 					ifTrue: [ addMethod value: each value: sel ]].
-			(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
+			(each comment includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
 	^ list
 ]
 
@@ -149,7 +149,7 @@ SystemNavigation >> browseClassCommentsWithString: aString matchCase: caseSensit
 	list := Set new.
 	Cursor wait showWhile: [
 		self environment allClassesDo: [:class |
-			(class organization classComment asString
+			(class comment
 							includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [
 								list add: (RGCommentDefinition realClass: class)
 							]
