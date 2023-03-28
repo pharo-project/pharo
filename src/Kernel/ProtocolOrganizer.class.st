@@ -74,6 +74,12 @@ ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [
 ]
 
 { #category : #testing }
+ProtocolOrganizer >> hasProtocolNamed: aString [
+
+	^ self allProtocols anySatisfy: [ :each | each name = aString ]
+]
+
+{ #category : #testing }
 ProtocolOrganizer >> includesSelector: selector [
 	^ protocols anySatisfy: [ :each | each includesSelector: selector ]
 ]
@@ -86,15 +92,16 @@ ProtocolOrganizer >> initialize [
 
 { #category : #'backward compatibility' }
 ProtocolOrganizer >> methodsInProtocolNamed: aName [
+
 	aName = AllProtocol defaultName ifTrue: [ ^ self allMethodSelectors ].
 
-	^ (self protocolNamed: aName) methodSelectors
+	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors
 ]
 
 { #category : #private }
 ProtocolOrganizer >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
-	| fromProtocol toProtocol |
 
+	| fromProtocol toProtocol |
 	fromProtocol := self protocolNamed: fromProtocolNamed.
 	toProtocol := self protocolNamed: toProtocolNamed.
 
@@ -107,9 +114,7 @@ ProtocolOrganizer >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 { #category : #accessing }
 ProtocolOrganizer >> protocolNamed: aName [
 
-	^ self
-		protocolNamed: aName
-		ifAbsent: [ Protocol empty ]
+	^ self protocolNamed: aName ifAbsent: [ NotFound signalFor: aName ]
 ]
 
 { #category : #accessing }
@@ -162,22 +167,23 @@ ProtocolOrganizer >> removeProtocol: aProtocol [
 
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeProtocolNamed: aName [
-	| protocolToRemove |
 
-	protocolToRemove := self protocolNamed: aName.
-	^ self removeProtocol: protocolToRemove
+	^ self removeProtocol: (self protocolNamed: aName ifAbsent: [ ^ self ])
 ]
 
 { #category : #accessing }
 ProtocolOrganizer >> renameProtocol: oldName into: newName [
+
+	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+
 	(self existsProtocolNamed: newName)
 		ifTrue: [
 			self moveMethodsFrom: oldName to: newName.
 			self removeProtocolNamed: oldName ]
 		ifFalse: [
 			^ (self protocolNamed: oldName)
-				name: newName;
-				yourself ]
+				  name: newName;
+				  yourself ]
 ]
 
 { #category : #initialization }

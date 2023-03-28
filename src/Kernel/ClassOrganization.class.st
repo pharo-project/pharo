@@ -222,7 +222,7 @@ ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString [
 
-	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
+	^ self protocolOrganizer protocolNamed: aString
 ]
 
 { #category : #accessing }
@@ -297,11 +297,13 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
+	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
 	self notifyOfChangedProtocolNameFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolOrganizer protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
 ]
 
 { #category : #'backward compatibility' }
