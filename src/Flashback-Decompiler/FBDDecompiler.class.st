@@ -584,8 +584,9 @@ FBDDecompiler >> recompile: selector from: oldClass [
 		source: (self decompile: oldClass >> selector) formattedCode;
 		class: oldClass;
 		failBlock: [ ^ self ];
+		permitFaulty: true; "Do not signal existing problems"		
 		compiledMethodTrailer: CompiledMethodTrailer empty;
-		compile.	"Assume OK after proceed from SyntaxError"
+		compile.
 	selector == newMethod selector
 		ifFalse: [ self error: 'selector changed!' ].
 	oldClass 	addSelector: selector withRecompiledMethod: newMethod

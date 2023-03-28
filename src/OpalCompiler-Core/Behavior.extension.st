@@ -115,9 +115,9 @@ Behavior >> recompile: selector from: oldClass [
 				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				failBlock: [^ self];
-				permitFaulty: true;
+				permitFaulty: true; "Do not signal existing problems"
 				compiledMethodTrailer: method trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
+				compile.
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	self addSelector: selector withRecompiledMethod: newMethod
 ]
