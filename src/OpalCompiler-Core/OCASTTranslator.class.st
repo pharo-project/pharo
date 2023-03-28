@@ -510,6 +510,9 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 	"Even in faulty mode, do not baspass the isWritable semantic to avoid very bad consequences on the image"
 	var isWritable ifFalse: [ ^ self emitRuntimeError: anAssignmentNode variable ].
 
+	"Invalid variable should fail"
+	var isInvalidVariable ifTrue: [ ^ self emitRuntimeError: anAssignmentNode ].
+
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
 	var isUndeclaredVariable ifTrue: [ var register ].
 
@@ -706,6 +709,9 @@ OCASTTranslator >> visitSequenceNode: aSequenceNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitVariableNode: aVariableNode [
+
+	"Invalid variable should fail"
+	aVariableNode variable isInvalidVariable ifTrue: [ ^ self emitRuntimeError: aVariableNode  ].
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
 	aVariableNode variable isUndeclaredVariable ifTrue: [ aVariableNode variable register ].
