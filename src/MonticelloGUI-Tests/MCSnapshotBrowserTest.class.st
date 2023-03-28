@@ -88,7 +88,7 @@ MCSnapshotBrowserTest >> classAClassProtocols [
 
 { #category : #private }
 MCSnapshotBrowserTest >> classAComment [
-	^ self mockClassA organization classComment.
+	^ self mockClassA comment.
 ]
 
 { #category : #private }

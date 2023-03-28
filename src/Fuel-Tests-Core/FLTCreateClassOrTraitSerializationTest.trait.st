@@ -146,7 +146,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
 	self assert: 'test comment' = materializedClassOrTrait comment asString.
-	self assert: 'test stamp' = materializedClassOrTrait organization commentStamp.
+	self assert: 'test stamp' = materializedClassOrTrait commentStamp.
 ]
 
 { #category : #tests }

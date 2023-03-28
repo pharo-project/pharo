@@ -197,12 +197,12 @@ ClassDescription >> classComment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
 	| pointer header oldComment oldStamp preamble |
-	oldComment := self organization classComment.
-	oldStamp := self organization commentStamp.
+	oldComment := self comment.
+	oldStamp := self commentStamp.
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	pointer := self organization commentSourcePointer ifNil: [0].
+	pointer := self commentSourcePointer ifNil: [0].
 
 
 	preamble := String streamContents: [ :file |
@@ -219,8 +219,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		writeSource: aString
 		preamble: preamble
 		onSuccess: [ :newSourcePointer |
-			self organization
-				commentSourcePointer: newSourcePointer]
+			self commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 
 	SystemAnnouncer uniqueInstance
@@ -334,8 +333,7 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing - comment' }
 ClassDescription >> comment [
-    "Answer the receiver's comment. (If missing, supply a template) "
-    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
+    ^self instanceSide organization classComment
 ]
 
 { #category : #'accessing - comment' }
@@ -352,10 +350,29 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	self instanceSide classComment: aStringOrText stamp: aStamp
 ]
 
+{ #category : #'accessing - comment' }
+ClassDescription >> commentSourcePointer [
+	"for now get it from the organization"
+	^self instanceSide organization commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+ClassDescription >> commentSourcePointer: anObject [
+	self instanceSide organization commentSourcePointer: anObject
+]
+
+{ #category : #'accessing - comment' }
+ClassDescription >> commentStamp [
+
+	^ commentSourcePointer
+		  ifNil: [ self instanceSide organization commentStamp ]
+		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
+]
+
 { #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
 	"update the changeStamp"
-	self comment: self organization comment stamp: changeStamp
+	self comment: self instanceSide organization comment stamp: changeStamp
 ]
 
 { #category : #compiling }

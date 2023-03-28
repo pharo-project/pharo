@@ -41,7 +41,7 @@ EpRevertTest >> testBehaviorCommentChange [
 
 	self revertInputEntry.
 
-	self assert: aClass organization classComment equals: 'before'
+	self assert: aClass comment equals: 'before'
 ]
 
 { #category : #tests }

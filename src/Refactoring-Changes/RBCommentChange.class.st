@@ -25,7 +25,7 @@ RBCommentChange class >> comment: aString in: aClass [
 RBCommentChange >> asUndoOperation [
 
 	^ self copy
-		  comment: self changeClass organization classComment;
+		  comment: self changeClass comment;
 		  yourself
 ]
 
