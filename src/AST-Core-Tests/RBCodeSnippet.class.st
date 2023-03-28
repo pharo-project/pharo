@@ -1859,9 +1859,8 @@ RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 
 { #category : #updating }
 RBCodeSnippet >> updateDefinition [
-	"Do the update of the definition of self in the "
+	"Do the update of the definition of self in the method (class-side) that defines it"
 
-	<script: 'RBCodeSnippet badExpressions first updateDefinition'>
 	self definitionRefactoring ifNotNil: [ :transformation |
 		transformation
 			transform;
@@ -1871,7 +1870,7 @@ RBCodeSnippet >> updateDefinition [
 { #category : #updating }
 RBCodeSnippet >> updateExpectations [
 	"Update the value of expectations according what tools produce.
-	Do not blindly trust it, as a tool cannot jusge itself."
+	Do not blindly trust it, as a tool cannot judge itself."
 
 	| ast |
 	ast := self parse.
