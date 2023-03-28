@@ -48,6 +48,7 @@ MethodAddition >> createCompiledMethod [
 		                  source: text asString;
 		                  requestor: requestor;
 		                  failBlock: [ ^ nil ];
+								permitFaulty: true;
 		                  compile.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
