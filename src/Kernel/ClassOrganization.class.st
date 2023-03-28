@@ -63,7 +63,7 @@ ClassOrganization >> classComment: aString [
 ClassOrganization >> classify: selector under: aProtocolName [
 
 	| oldProtocolName forceNotify oldProtocols |
-	forceNotify := (self protocolOrganizer includesSelector: selector) not.
+	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= aProtocolName or: [ aProtocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolOrganizer protocolsOfSelector: selector.
@@ -132,6 +132,12 @@ ClassOrganization >> hasOrganizedClass [
 ClassOrganization >> hasProtocolNamed: aString [
 
 	^ self allProtocols anySatisfy: [ :each | each name = aString ]
+]
+
+{ #category : #testing }
+ClassOrganization >> includesSelector: selector [
+
+	^ self protocols anySatisfy: [ :each | each includesSelector: selector ]
 ]
 
 { #category : #initialization }

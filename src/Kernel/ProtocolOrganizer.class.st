@@ -73,11 +73,6 @@ ProtocolOrganizer >> hasProtocolNamed: aString [
 	^ self allProtocols anySatisfy: [ :each | each name = aString ]
 ]
 
-{ #category : #testing }
-ProtocolOrganizer >> includesSelector: selector [
-	^ protocols anySatisfy: [ :each | each includesSelector: selector ]
-]
-
 { #category : #initialization }
 ProtocolOrganizer >> initialize [
 	super initialize.
