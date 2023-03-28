@@ -117,24 +117,6 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> allProtocolsUpTo: mostGenericClass [
-	"Answer a list of all the method protocols of the receiver and all its superclasses, up through mostGenericClass"
-
-	| otherClassCategories thisClassCategories lowercaseSortBlock  |
-
-	otherClassCategories := OrderedCollection new.
-	lowercaseSortBlock  := [ :a :b | a asLowercase <= b asLowercase ].
-
-	(self allSuperclassesIncluding: mostGenericClass) do: [ :aClass |
-		 otherClassCategories addAll: aClass organization protocolNames ].
-	otherClassCategories remove: 'no messages' ifAbsent: [  ].
-	thisClassCategories := self organization protocolNames sorted: lowercaseSortBlock.
-
-	^ thisClassCategories , ((otherClassCategories asSet removeAllSuchThat: [ :each |
-								thisClassCategories includes: each ]) sorted: lowercaseSortBlock)
-]
-
-{ #category : #'accessing - method dictionary' }
 ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
