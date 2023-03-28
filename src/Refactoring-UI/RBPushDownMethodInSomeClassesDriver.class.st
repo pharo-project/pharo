@@ -13,11 +13,8 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : #RBPushDownMethodInSomeClassesDriver,
-	#superclass : #RBDriver,
+	#superclass : #RBPushDownMethodDriver,
 	#instVars : [
-		'methods',
-		'scopes',
-		'class',
 		'classes'
 	],
 	#category : #'Refactoring-UI'
@@ -55,15 +52,6 @@ RBPushDownMethodInSomeClassesDriver >> execute [
 		 scopes: scopes) open
 ]
 
-{ #category : #initialization }
-RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
-
-	model := aRBNamespace.
-	scopes := refactoringScopes.
-	methods := methodsList.
-	class := methods first origin
-]
-
 { #category : #resources }
 RBPushDownMethodInSomeClassesDriver >> refactoring [
 
@@ -86,18 +74,4 @@ RBPushDownMethodInSomeClassesDriver >> selectClasses [
 		          selecting: class subclasses.
 	dialog cancelled ifTrue: [ ^ nil ].
 	^ dialog presenter selectedItems collect: [ :each | each name ]
-]
-
-{ #category : #execution }
-RBPushDownMethodInSomeClassesDriver >> selectMethods [
-
-	| dialog |
-	dialog := StMethodsSelectionPresenter
-		          label: 'Push down methods from ' , class name
-		          withItems:
-			          (class methods sort: [ :a :b | a asString < b asString ])
-				          asOrderedCollection
-		          selecting: methods asOrderedCollection.
-	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog presenter selectedItems
 ]
