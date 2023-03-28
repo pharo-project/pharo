@@ -7,9 +7,7 @@ Class {
 	#name : #CodeError,
 	#superclass : #Error,
 	#instVars : [
-		'node',
-		'location',
-		'sourceCode'
+		'notice'
 	],
 	#category : #'AST-Core-Exception'
 }
@@ -44,47 +42,50 @@ CodeError >> isResumable [
 { #category : #accessing }
 CodeError >> location [
 
-	location ifNotNil: [ ^ location  ].
-	node ifNotNil: [ ^ node start ].
-	^ nil
+	^ self position
 ]
 
 { #category : #accessing }
-CodeError >> location: anInteger [
+CodeError >> messageText [
 
-	location := anInteger
+	^ self notice messageText
 ]
 
 { #category : #accessing }
 CodeError >> methodClass [
-	^self methodNode methodClass
+	^ self methodNode methodClass
 ]
 
 { #category : #accessing }
 CodeError >> methodNode [
-	^node methodNode
+	^ self node methodNode
 ]
 
 { #category : #accessing }
 CodeError >> node [
-	^ node
+	^ self notice node
 ]
 
 { #category : #accessing }
-CodeError >> node: aNode [
-	node := aNode
+CodeError >> notice [
+
+	^ notice
+]
+
+{ #category : #accessing }
+CodeError >> notice: anObject [
+
+	notice := anObject
+]
+
+{ #category : #accessing }
+CodeError >> position [
+
+	^ self notice position
 ]
 
 { #category : #accessing }
 CodeError >> sourceCode [
 
-	sourceCode ifNotNil: [  ^ sourceCode ].
-	node ifNotNil: [  ^ node sourceCode ].
-	^ nil
-]
-
-{ #category : #accessing }
-CodeError >> sourceCode: aString [
-
-	sourceCode := aString
+	^ self methodNode sourceCode
 ]

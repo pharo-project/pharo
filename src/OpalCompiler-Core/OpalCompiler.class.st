@@ -440,8 +440,7 @@ OpalCompiler >> parseForRequestor [
 		"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just signal as an error (on: block bellow)"
 		self compilationContext noPattern ifTrue: [
 			CodeError new
-				node: notification node;
-				messageText: notification messageText;
+				notice: notification node notices first; "Ugly temporary hack"
 				signal.
 			].
 		"I do not like the API that much.
@@ -459,10 +458,9 @@ OpalCompiler >> parseForRequestor [
 	on: CodeError
 	do: [ :exception |
 		ast := nil. "Invalidate the AST to avoid compilation if failBlock do return"
-		exception sourceCode: source contents.
 		requestor
 			notify: exception messageText , ' ->'
-			at: exception location
+			at: exception position
 			in: exception sourceCode.
 		self compilationContext failBlock value ]
 ]
