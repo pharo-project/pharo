@@ -68,7 +68,7 @@ MethodChunk >> importFor: requestor logSource: logSource [
 		source: contents;
 		protocolName: categoryName;
 		changeStamp: stamp;
-		logSource: logSource;
+		logged: logSource;
 		permitFaulty: true;
 		install
 ]
