@@ -86,7 +86,7 @@ RPackageTest >> testAllUnsentMessages [
 	class2
 		compile: 'nonexistingMethodName1 42';
 		compile: 'nonexistingMethodName3 42';
-		compile: 'nonexistingMethodName4 class1 new nonexistingMethodName2'.
+		compile: 'nonexistingMethodName4 TestClass new nonexistingMethodName2'.
 
 	self assert: package allUnsentMessages size equals: 3.
 
