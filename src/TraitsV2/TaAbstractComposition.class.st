@@ -149,6 +149,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 				source: sourceCode;
 				class: aClass ;
 				failBlock: [^ false];
+				permitFaulty: true;
 				compiledMethodTrailer: trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 
