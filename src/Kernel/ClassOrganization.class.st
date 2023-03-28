@@ -228,7 +228,7 @@ ClassOrganization >> protocolNamed: aString [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 
-	self protocolOrganizer protocolNamed: aString ifAbsent: aBlock
+	^ self protocolOrganizer protocolNamed: aString ifAbsent: aBlock
 ]
 
 { #category : #accessing }
