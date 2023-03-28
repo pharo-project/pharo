@@ -51,7 +51,7 @@ ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 
 	"maybe here we should check if this method already belong to another protocol"
 	(self protocolsOfSelector: aSymbol) do: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self getProtocolNamed: name ifNone: [ self addProtocolNamed: name ].
+	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
 
 	protocol addMethodSelector: aSymbol
 ]
@@ -65,12 +65,6 @@ ProtocolOrganizer >> existsProtocolNamed: aProtocolName [
 { #category : #accessing }
 ProtocolOrganizer >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
-]
-
-{ #category : #protocol }
-ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [
-
-	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure
 ]
 
 { #category : #testing }
