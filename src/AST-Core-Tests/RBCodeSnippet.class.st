@@ -328,12 +328,14 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '| | a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
@@ -517,7 +519,8 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
@@ -954,7 +957,8 @@ RBCodeSnippet class >> badExpressions [
 		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
 		        (self new
 			         source: 'Δə';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
@@ -1213,6 +1217,7 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
+			         isFaulty: true;
 			         value: 10;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
@@ -1220,6 +1225,8 @@ RBCodeSnippet class >> badSemantic [
 			         skip: #exec). "a is bound to an undefined variable, and according to some compilation options it could be registerer or not registered. This is very bad as regitred ones act like globals thus polute other tests. So disable the execution for now."
 		        (self new
 			         source: '^ a';
+			         isFaulty: true;
+			         value: nil;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
 		        "Uninitialized variable"
