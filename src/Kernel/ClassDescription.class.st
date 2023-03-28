@@ -352,13 +352,16 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 
 { #category : #'accessing - comment' }
 ClassDescription >> commentSourcePointer [
-	"for now get it from the organization"
-	^self instanceSide organization commentSourcePointer
+	"if not set, for now get it from the organization"
+	^ commentSourcePointer
+		  ifNil: [ self instanceSide organization commentSourcePointer ]
 ]
 
 { #category : #'accessing - comment' }
 ClassDescription >> commentSourcePointer: anObject [
-	self instanceSide organization commentSourcePointer: anObject
+	"until it is removed, we set in on the organization, too"
+	self instanceSide organization commentSourcePointer: anObject.
+	commentSourcePointer := anObject.
 ]
 
 { #category : #'accessing - comment' }
@@ -551,7 +554,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing - comment' }
 ClassDescription >> hasComment [
 	"Return whether this class truly has a comment other than the default"
-	^self instanceSide organization hasComment
+	^ self commentSourcePointer isNotNil
 ]
 
 { #category : #'instance variables' }
