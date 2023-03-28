@@ -334,7 +334,7 @@ ReleaseTest >> testNoSentNotImplementedSelectors [
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
-	found := SystemNavigation default allMethodsSelect: [ :m |
+	found := SystemNavigation default methods select: [ :m |
 		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
 	"Make sure to not waste memory with all the ASTs"
 	ASTCache reset.
