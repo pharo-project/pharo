@@ -52,8 +52,8 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 		with: 'category: ' , newCategoryName printString.
 	class := self compiler logged: true; evaluate: newDefinition.
 	class class instanceVariableNames: oldClass class instanceVariablesString.
-	class copyAllCategoriesFrom: oldClass.
-	class class copyAllCategoriesFrom: oldClass class.
+	class copyAllMethodsFrom: oldClass.
+	class class copyAllMethodsFrom: oldClass class.
 	class category: newCategoryName.
 	^ class
 ]
