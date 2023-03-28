@@ -23,7 +23,7 @@ ClassOrganization class >> forClass: aClass [
 ClassOrganization >> addProtocolNamed: protocolName [
 
 	| oldProtocols |
-	(self protocolOrganizer hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
+	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
 	oldProtocols := self protocolNames copy.
 	self protocolOrganizer addProtocolNamed: protocolName.
@@ -45,7 +45,7 @@ ClassOrganization >> allProtocols [
 { #category : #accessing }
 ClassOrganization >> allProtocolsNames [
 
-	^ self protocolOrganizer allProtocolsNames
+	^ self allProtocols collect: [ :each | each name ]
 ]
 
 { #category : #'backward compatibility' }
@@ -132,6 +132,12 @@ ClassOrganization >> hasComment [
 ClassOrganization >> hasOrganizedClass [
 
 	^ organizedClass isNotNil
+]
+
+{ #category : #testing }
+ClassOrganization >> hasProtocolNamed: aString [
+
+	^ self allProtocols anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #initialization }
@@ -221,7 +227,8 @@ ClassOrganization >> protocolNamed: aString [
 
 { #category : #accessing }
 ClassOrganization >> protocolNames [
-	^ self protocolOrganizer protocolNames
+
+	^ self protocols collect: #name
 ]
 
 { #category : #private }
@@ -248,22 +255,22 @@ ClassOrganization >> removeElement: aSymbol [
 ClassOrganization >> removeEmptyProtocols [
 
 	| oldProtocolNames removedProtocols |
-	oldProtocolNames := self protocolOrganizer allProtocolsNames copy.
+	oldProtocolNames := self allProtocolsNames copy.
 
 	removedProtocols := self protocolOrganizer removeEmptyProtocols.
 	removedProtocols do: [ :each | self notifyOfRemovedProtocolNamed: each name ].
 
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolOrganizer allProtocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self allProtocolsNames
 ]
 
 { #category : #accessing }
 ClassOrganization >> removeProtocol: aProtocol [
 
 	| oldProtocolNames |
-	oldProtocolNames := self protocolOrganizer allProtocolsNames copy.
+	oldProtocolNames := self allProtocolsNames copy.
 	self protocolOrganizer removeProtocol: aProtocol.
 	self notifyOfRemovedProtocolNamed: aProtocol name.
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolOrganizer allProtocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self allProtocolsNames
 ]
 
 { #category : #accessing }
@@ -279,7 +286,7 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 { #category : #accessing }
 ClassOrganization >> removeProtocolNamed: protocolName [
 
-	(self protocolOrganizer hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
+	(self hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
 
 	self removeProtocol: (self protocolNamed: protocolName)
 ]

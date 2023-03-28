@@ -202,27 +202,23 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitProtocolAddition: aChange [
 
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^(behavior organization protocolOrganizer hasProtocolNamed: aChange protocol)
-				ifTrue: [ #() ]
-				ifFalse: [ { EpProtocolAddition behavior: behavior protocol: aChange protocol } ] ].
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		^ (behavior organization hasProtocolNamed: aChange protocol)
+			  ifTrue: [ #(  ) ]
+			  ifFalse: [ { (EpProtocolAddition behavior: behavior protocol: aChange protocol) } ] ].
 
-	^ #()
+	^ #(  )
 ]
 
 { #category : #visitor }
 EpApplyPreviewer >> visitProtocolRemoval: aChange [
 
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^(behavior organization protocolOrganizer hasProtocolNamed: aChange protocol)
-				ifTrue: [ { EpProtocolRemoval behavior: behavior protocol: aChange protocol } ]
-				ifFalse: [ #() ] ].
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		^ (behavior organization hasProtocolNamed: aChange protocol)
+			  ifTrue: [ { (EpProtocolRemoval behavior: behavior protocol: aChange protocol) } ]
+			  ifFalse: [ #(  ) ] ].
 
-	^ #()
+	^ #(  )
 ]
 
 { #category : #visitor }
