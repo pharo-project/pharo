@@ -32,10 +32,10 @@ RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pu
 RBPushDownMethodDriver >> execute [
 
 	| changes refactoring |
-	refactoring := self refactoring.
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
 
+	refactoring := self refactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
@@ -80,5 +80,6 @@ RBPushDownMethodDriver >> selectMethods [
 			          (class methods sort: [ :a :b | a asString < b asString ])
 				          asOrderedCollection
 		          selecting: methods asOrderedCollection.
+	dialog cancelled ifTrue: [ ^ nil ].
 	^ dialog presenter selectedItems
 ]
