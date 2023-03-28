@@ -47,7 +47,7 @@ AllProtocol >> methodSelectors [
 { #category : #accessing }
 AllProtocol >> name [
 	^ (self isEmpty and: [ protocolOrganizer protocols isEmpty ])
-		ifTrue: [ self class nullCategory ]
+		ifTrue: [ self class nullProtocolName ]
 		ifFalse: [  self class defaultName ]
 ]
 

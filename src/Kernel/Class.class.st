@@ -514,8 +514,8 @@ Class >> duplicateClassWithNewName: aSymbol [
 			builder
 				fillFor: self;
 				name: copysName ].
-	class copyAllCategoriesFrom: self.
-	class class copyAllCategoriesFrom: self class.
+	class copyAllMethodsFrom: self.
+	class class copyAllMethodsFrom: self class.
 	^ class
 ]
 

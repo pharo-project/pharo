@@ -74,6 +74,12 @@ RBParseErrorNode >> errorPosition: anObject [
 	errorPosition := anObject
 ]
 
+{ #category : #testing }
+RBParseErrorNode >> hasTemporaries [
+
+	^ false
+]
+
 { #category : #comparing }
 RBParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
@@ -167,6 +173,12 @@ RBParseErrorNode >> stop: aStopPosition [
 { #category : #accessing }
 RBParseErrorNode >> stopWithoutParentheses [
 	^ self stop
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> temporaries [
+
+	^ #()
 ]
 
 { #category : #evaluating }

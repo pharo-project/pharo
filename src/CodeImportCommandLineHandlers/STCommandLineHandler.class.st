@@ -49,7 +49,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	| stderr position contents errorLine errorMessage maxLineNumberSize lineNumber |
 
 	"format the error"
-	position := aSyntaxErrorNotification location.
+	position := aSyntaxErrorNotification position.
 	contents := aSyntaxErrorNotification sourceCode.
 	errorLine := contents lineNumberCorrespondingToIndex: position.
 	stderr := VTermOutputDriver stderr.

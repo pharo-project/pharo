@@ -1935,7 +1935,7 @@ RBParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '| faulty temporaries'.
 	self assert: tree isEnglobingError.
-	self assert: tree formattedCode equals: '| faulty temporaries'
+	self assert: tree formattedCode equals: '| faulty temporaries |', String cr
 ]
 
 { #category : #'error testing' }

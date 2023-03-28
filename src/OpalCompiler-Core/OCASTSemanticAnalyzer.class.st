@@ -9,7 +9,8 @@ Class {
 		'scope',
 		'compilationContext',
 		'blockCounter',
-		'undeclared'
+		'undeclared',
+		'invalidVariables'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -67,6 +68,18 @@ OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
 ]
 
 { #category : #variables }
+OCASTSemanticAnalyzer >> declareInvalidVariableNode: aVariableNode [
+
+	| var |
+	var := self invalidVariables
+		       at: aVariableNode name
+		       ifAbsentPut: [ InvalidVariable named: aVariableNode name ].
+
+	"Do not use `declareVariableNode:as:` as we dont care about shadowing"
+	aVariableNode binding: var
+]
+
+{ #category : #variables }
 OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 	^self declareVariableNode: aVariableNode as: (TemporaryVariable named: aVariableNode name)
 ]
@@ -75,9 +88,8 @@ OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable [
 	| name var shadowing |
 	name := aVariableNode name.
-	var := scope lookupVarForDeclaration: name.
 	"check if another variable with same name is visible"
-	var ifNotNil: [ shadowing := var].
+	shadowing := scope lookupVarForDeclaration: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
 	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
@@ -86,14 +98,19 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 
 { #category : #errors }
 OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
-	aNode addError: aMessage.
+
+	| notice |
+	notice := aNode addError: aMessage.
 	compilationContext permitFaulty ifTrue: [ ^ self ].
 
 	OCSemanticError new
-		node: aNode;
-		messageText: aMessage;
-		location: aNode startWithoutParentheses;
+		notice: notice;
 		signal
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> invalidVariables [
+	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
 ]
 
 { #category : #variables }
@@ -120,24 +137,26 @@ OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
-	variableNode addError: 'Assignment to read-only variable'.
+
+	| notice |
+	notice := variableNode addError: 'Assignment to read-only variable'.
 	compilationContext permitFaulty ifTrue: [ ^ self ].
 
 	^ OCStoreIntoReadOnlyVariableError new
-		node: variableNode;
-		messageText: 'Assignment to read-only variable';
-		signal
+		  notice: notice;
+		  signal
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
-	variableNode addError: 'Assigment to reserved variable'.
+
+	| notice |
+	notice := variableNode addError: 'Assigment to reserved variable'.
 	compilationContext permitFaulty ifTrue: [ ^ self ].
 
 	^ OCStoreIntoReservedVariableError new
-		node: variableNode;
-		messageText: 'Assigment to reserved variable';
-		signal
+		  notice: notice;
+		  signal
 ]
 
 { #category : #accessing }
@@ -148,14 +167,21 @@ OCASTSemanticAnalyzer >> undeclared [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
-	| varName var |
-	variableNode addWarning: 'Undeclared variable'.
 
+	| varName var |
+	varName := variableNode name asSymbol.
+
+	"If a invalid variable exists, we use it witout warning"
+	self invalidVariables at: varName ifPresent: [ :v | ^ v ].
+
+	variableNode addWarning: 'Undeclared variable'.
 	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
 	"It will be registered only at backend when a CompiledMethod is produced.
 	Or never if compilation is aborted or if only frontend is requested."
-	varName := variableNode name asSymbol.
-	var := self undeclared at: varName ifAbsentPut: [ UndeclaredVariable possiblyRegisteredWithName: varName ].
+	var := self undeclared
+		       at: varName
+		       ifAbsentPut: [
+		       UndeclaredVariable possiblyRegisteredWithName: varName ].
 	compilationContext permitFaulty ifTrue: [ ^ var ].
 
 	OCUndeclaredVariableWarning new
@@ -169,13 +195,13 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode addWarning: 'unitialized variable'
+	variableNode addWarning: 'Unitialized variable'
 ]
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
-	variableNode addWarning: 'unused variable'
+	variableNode addWarning: 'Unused variable'
 ]
 
 { #category : #visiting }
@@ -200,6 +226,18 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	aBlockNode arguments do: [:node | self declareArgumentNode: node ].
 	self visitNode: aBlockNode body.
 	scope := scope popScope
+]
+
+{ #category : #visiting }
+OCASTSemanticAnalyzer >> visitEnglobingErrorNode: aNode [
+	"There is bad arguments or variable, just invalidate them to avoid noisy useless errors/warnings.
+	Because, AST is very wrong with possible missing or superfluous [ or ], we should not believe in scope.
+	The only thing that seems reasonable is that for now, we invalid any unexpected future variable with the same name"
+
+	aNode arguments do: [ :node | self declareInvalidVariableNode: node ].
+	aNode temporaries do: [ :node | self declareInvalidVariableNode: node ].
+
+	^ super visitEnglobingErrorNode: aNode
 ]
 
 { #category : #visiting }
