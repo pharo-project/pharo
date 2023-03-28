@@ -37,3 +37,31 @@ RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringSc
 	methods := methodsList.
 	class := methods first origin
 ]
+
+{ #category : #execution }
+RBPushDownMethodInSomeClassesDriver >> selectClasses [
+
+	| dialog |
+	dialog := StVariablesSelectionPresenter
+		          label: 'Push down in classes: '
+		          withItems:
+			          (class subclasses sort: [ :a :b | a name < b name ])
+				          asOrderedCollection
+		          selecting: class subclasses.
+	dialog cancelled ifTrue: [ ^ nil ].
+	^ dialog presenter selectedItems collect: [ :each | each name ]
+]
+
+{ #category : #execution }
+RBPushDownMethodInSomeClassesDriver >> selectMethods [
+
+	| dialog |
+	dialog := StMethodsSelectionPresenter
+		          label: 'Push down methods from ' , class name
+		          withItems:
+			          (class methods sort: [ :a :b | a asString < b asString ])
+				          asOrderedCollection
+		          selecting: methods asOrderedCollection.
+	dialog cancelled ifTrue: [ ^ nil ].
+	^ dialog presenter selectedItems
+]

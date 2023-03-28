@@ -1,8 +1,13 @@
+"
+I am a command that pushes down methods in some classes.
+
+I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDriver`.
+"
 Class {
 	#name : #SycPushDownMethodInSomeClassesCommand,
 	#superclass : #SysRefactoringMethodCommand,
 	#instVars : [
-		'classes'
+		'refactoringScopes'
 	],
 	#category : #'SystemCommands-MethodCommands'
 }
@@ -38,22 +43,4 @@ SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
 SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self selectMethodsAndClasses
-]
-
-{ #category : #execution }
-SycPushDownMethodInSomeClassesCommand >> selectMethodsAndClasses [
-	| dialog class|
-	class := methods first origin.
-	dialog := StMethodsSelectionPresenter
-		   label: 'Push down methods from ', class name
-			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: methods asOrderedCollection.
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	methods := dialog presenter selectedItems.
-	dialog := StVariablesSelectionPresenter
-		   label: 'Push down in classes: '
-			withItems: (class subclasses sort: [ :a :b | a name < b name ]) asOrderedCollection
-			selecting: class subclasses.
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	classes := (dialog presenter selectedItems) collect: [ :each | each name ]
 ]
