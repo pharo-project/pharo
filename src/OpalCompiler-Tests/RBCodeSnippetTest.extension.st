@@ -31,7 +31,7 @@ RBCodeSnippetTest >> testCompileOnError [
 	error := nil.
 	method := snippet compileOnError: [ :e |
 		          self assert:
-			          (snippet hasNotice: e messageText at: e location).
+			          (snippet hasNotice: e messageText at: e position).
 		          self assert: error isNil. "single invocation"
 		          error := e ].
 	snippet isFaulty
@@ -49,7 +49,7 @@ RBCodeSnippetTest >> testCompileOnErrorResume [
 	error := nil.
 	method := snippet compileOnError: [ :e |
 		          self assert:
-			          (snippet hasNotice: e messageText at: e location).
+			          (snippet hasNotice: e messageText at: e position).
 		          error := e.
 		          e resume ].
 	self assert: snippet isFaulty equals: error isNotNil.

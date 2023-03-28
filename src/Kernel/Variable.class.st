@@ -161,6 +161,11 @@ Variable >> isInstanceVariable [
 ]
 
 { #category : #testing }
+Variable >> isInvalidVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isLiteralVariable [
 	"returns true for Global Variables, Class Variables and some others
 	(e.g. Workspace bindings and Undeclared variables, see subclasses)"

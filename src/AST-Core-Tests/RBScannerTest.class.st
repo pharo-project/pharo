@@ -1582,7 +1582,7 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
 	source := '"only the"" opening"'.
 	self
 		shouldnt: [ token := (self buildScannerForText: source) next ]
-		raise: SyntaxErrorNotification.
+		raise: CodeError.
 	self assert: token comments first value equals: 'only the" opening'
 ]
 

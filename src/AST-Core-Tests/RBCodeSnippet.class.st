@@ -47,7 +47,8 @@ RBCodeSnippet class >> allSnippets [
 	^ {
 		  self badExpressions.
 		  self badMethods.
-		  self badSemantic } flattened
+		  self badSemantic.
+		  self badVariableAndScopes } flattened
 ]
 
 { #category : #accessing }
@@ -298,21 +299,20 @@ RBCodeSnippet class >> badExpressions [
 		        "Note: bad temporaries will be stored as error statements"
 		        (self new
 			         source: '| ';
+			         formattedCode: '| | ';
 			         notices: #( #( 1 1 3 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '| a b';
-			         notices:
-				         #( #( 3 3 3 'Undeclared variable' )
-				            #( 5 5 5 'Undeclared variable' )
-				            #( 1 5 6 '''|'' or variable expected' ) )).
+			         formattedCode: '| a b | ';
+			         notices: #( #( 1 5 6 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '|- 1';
-			         formattedCode: '| . - 1';
+			         formattedCode: '| | . - 1';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 1 2 'Variable or expression expected' ) )). "Here |- is scanned as a single operator token, so parser must work more"
 		        (self new
 			         source: '| 1';
-			         formattedCode: '| . 1';
+			         formattedCode: '| | . 1';
 			         notices: #( #( 1 1 3 '''|'' or variable expected' ) )).
 		        "Note that the | character is also a binary operator, so a missing opening | become a binary call with a missing argument (see bellow)"
 		        (self new
@@ -346,18 +346,14 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
 				            #( 7 7 7 'Undeclared variable' ) )). "this one is a empty temps and a binary operator || with a mising receiver"
 		        (self new
-			         source: '| a | | b';
-			         notices:
-				         #( #( 3 3 3 'unused variable' )
-				            #( 7 6 7 'Variable or expression expected' )
-				            #( 9 9 9 'Undeclared variable' ) )). "A valid temporary followed by a binary operator with a missing receiver"
+			         source: '| a | | a';
+			         notices: #( #( 7 6 7 'Variable or expression expected' )
+				            #( 9 9 9 'Unitialized variable' ) )). "A valid temporary followed by a binary operator with a missing receiver"
 		        (self new
-			         source: '| a ||b';
-			         formattedCode: '| a | | b';
-			         notices:
-				         #( #( 3 3 3 'unused variable' )
-				            #( 6 5 6 'Variable or expression expected' )
-				            #( 7 7 7 'Undeclared variable' ) )). "same"
+			         source: '| a ||a';
+			         formattedCode: '| a | | a';
+			         notices: #( #( 6 5 6 'Variable or expression expected' )
+				            #( 7 7 7 'Unitialized variable' ) )). "same"
 
 		        "Unexpected parameters (or columns)"
 		        "Note that `:a` is not a token but a special `:` followed by an identifier, whereas `a:` is a single token."
@@ -429,31 +425,31 @@ RBCodeSnippet class >> badExpressions [
 				            #( 4 6 4 'Undeclared variable' ) )).
 		        (self new
 			         source: '|:a|';
-			         formattedCode: '| . :a | ';
+			         formattedCode: '| | . :a | ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 3 2 'Unexpected block parameter' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: '|:a';
-			         formattedCode: '| . :a';
+			         formattedCode: '| | . :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 3 2 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '|::a';
-			         formattedCode: '| . :. :a';
+			         formattedCode: '| | . :. :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 2 2 'Unexpected token' )
 				            #( 3 4 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '|a:|';
-			         formattedCode: '| . a: | ';
+			         formattedCode: '| | . a: | ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 1 2 'Variable or expression expected' )
 				            #( 4 3 4 'Variable or expression expected' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: '|a:';
-			         formattedCode: '| . a: ';
+			         formattedCode: '| | . a: ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 1 2 'Variable or expression expected' )
 				            #( 4 3 4 'Variable or expression expected' ) )).
@@ -504,47 +500,44 @@ RBCodeSnippet class >> badExpressions [
 				            #( 6 5 6 'Variable or expression expected' ) )). "no parameters, a keyword message send witout receiver nor arguments"
 		        (self new
 			         source: '[ | ]';
+			         formattedCode: '[ | | ]';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[ | b ]';
-			         notices:
-				         #( #( 5 5 5 'Undeclared variable' )
-				            #( 3 5 7 '''|'' or variable expected' ) )).
+			         formattedCode: '[ | b | ]';
+			         notices: #( #( 3 5 7 '''|'' or variable expected' ) )).
 		        (self new
-			         source: '[ :a | | b ]';
-			         notices: #( #( 10 10 10 'Undeclared variable' )
-				            #( 8 10 12 '''|'' or variable expected' ) )).
+			         source: '[ :a | | a b ]';
+			         formattedCode: '[ :a | | a b | ]';
+			         notices: #( #( 8 12 14 '''|'' or variable expected' ) )).
 		        (self new
-			         source: '[ :a || b ]';
-			         formattedCode: '[ :a | | b ]';
-			         notices:
-				         #( #( 9 9 9 'Undeclared variable' )
-				            #( 7 9 11 '''|'' or variable expected' ) )).
+			         source: '[ :a || a b ]';
+			         formattedCode: '[ :a | | a b | ]';
+			         notices: #( #( 7 11 13 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
 			         isFaulty: false;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
-			         source: '[:a| ||b]';
-			         formattedCode: '[ :a | b ]';
+			         source: '[:a| ||a]';
+			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
-			         notices: #( #( 8 8 8 'Undeclared variable' ) )). "Same but mess with the Scanner"
+			         value: 1). "Same but mess with the Scanner"
 		        (self new
-			         source: '[:a|| |b]';
-			         formattedCode: '[ :a | b ]';
+			         source: '[:a|| |a]';
+			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
-			         notices: #( #( 8 8 8 'Undeclared variable' ) )). "Same"
+			         value: 1). "Same"
 		        (self new
-			         source: '[:a|||b]';
-			         formattedCode: '[ :a | b ]';
+			         source: '[:a|||a]';
+			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
-			         notices: #( #( 7 7 7 'Undeclared variable' ) )). "Same"
+			         value: 1). "Same"
 		        (self new
-			         source: '[:a||||b]';
-			         formattedCode: '[ :a | | b ]';
-			         notices: #( #( 7 6 7 'Variable or expression expected' )
-				            #( 8 8 8 'Undeclared variable' ) )). "same + binary | without receiver"
+			         source: '[:a||||a]';
+			         formattedCode: '[ :a | | a ]';
+			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "same + binary | without receiver"
 
 		        "Unclosed blocks"
 		        (self new
@@ -562,6 +555,10 @@ RBCodeSnippet class >> badExpressions [
 			         formattedCode: '[ :a :b | ';
 			         notices: #( #( 1 1 8 ''']'' expected' ) )).
 		        (self new
+			         source: '[ :a a';
+			         formattedCode: '[ :a | a';
+			         notices: #( #( 1 6 7 ''']'' expected' ) )).
+		        (self new
 			         source: '[ :a b';
 			         formattedCode: '[ :a | b';
 			         notices:
@@ -571,24 +568,28 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[ :a | ';
 			         notices: #( #( 1 1 8 ''']'' expected' ) )).
 		        (self new
+			         source: '[ :a | a';
+			         notices: #( #( 1 8 9 ''']'' expected' ) )).
+		        (self new
 			         source: '[ :a | b';
 			         notices:
 				         #( #( 8 8 8 'Undeclared variable' )
 				            #( 1 8 9 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | ';
+			         formattedCode: '[ | | ';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 3 5 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | 1';
+			         formattedCode: '[ | | 1';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 5 6 ''']'' expected' ) )).
 		        (self new
-			         source: '[ | a';
-			         notices:
-				         #( #( 5 5 5 'Undeclared variable' )
-				            #( 3 5 6 '''|'' or variable expected' )
-				            #( 1 5 6 ''']'' expected' ) )).
+			         source: '[ | a b';
+			         formattedCode: '[ | a b | ';
+			         notices: #( #( 3 7 8 '''|'' or variable expected' )
+				            #( 1 7 8 ''']'' expected' ) )).
 
 		        "Missing receiver or argument in message sends.
 		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
@@ -824,8 +825,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
 		        (self new
 			         source: '##';
-			         formattedCode: '#';
-			         notices: #( #( 1 2 3 'Literal expected' ) )). "errr. ok?"
+			         notices: #( #( 1 2 3 'Literal expected' ) )).
 		        "Note: if quotes, same thing than strings"
 		        (self new
 			         source: '#''hello';
@@ -969,16 +969,16 @@ RBCodeSnippet class >> badExpressions [
 		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
 		        (self new
 			         source: '→';
-			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
 		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
 		        (self new
 			         source: '٠';
-			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
 		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
 		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
 		        (self new
 			         source: Character nbsp asString;
-			         notices: #( #( 1 0 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
 
 		        (self new
 			         source: '$→';
@@ -1004,14 +1004,14 @@ RBCodeSnippet class >> badExpressions [
 			         source: '#(Δ→ə)';
 			         formattedCode: '#( Δ → ə )';
 			         notices:
-				         #( #( 4 3 4 'Unknown character' )
+				         #( #( 4 4 4 'Unknown character' )
 				            #( 1 6 7 ''')'' expected' ) )). "This one is faulty because → is a parse error"
 		        (self new
 			         source: '#→';
 			         formattedCode: '#. →';
 			         notices:
 				         #( #( 1 1 2 'Literal expected' )
-				            #( 2 1 2 'Unknown character' ) )) "Two independent errors" }.
+				            #( 2 2 2 'Unknown character' ) )) "Two independent errors" }.
 	"Setup default values"
 	self new
 		group: #badExpressions;
@@ -1225,12 +1225,12 @@ RBCodeSnippet class >> badSemantic [
 		        "Uninitialized variable"
 		        (self new
 			         source: '| a | ^ a';
-			         notices: #( #( 9 9 9 'unitialized variable' ) )).
+			         notices: #( #( 9 9 9 'Unitialized variable' ) )).
 		        (self new source: '| a | [ a := 10 ]. ^ a').
 		        (self new
 			         source: '| a | [ ^ a ]. a := 10';
 			         value: 10;
-			         notices: #( #( 11 11 11 'unitialized variable' ) )).
+			         notices: #( #( 11 11 11 'Unitialized variable' ) )).
 
 		        "Duplicated variable definition (same scope)"
 		        (self new
@@ -1242,13 +1242,13 @@ RBCodeSnippet class >> badSemantic [
 			         source: '| a a | a := 10. ^ a';
 			         value: 10;
 			         notices:
-				         #( #( 3 3 3 'unused variable' )
+				         #( #( 3 3 3 'Unused variable' )
 				            #( 5 5 5 'Name already defined' ) )).
 		        (self new
 			         source: '[ | a a | a := 10. a ]';
 			         value: 10;
 			         notices:
-				         #( #( 5 5 5 'unused variable' )
+				         #( #( 5 5 5 'Unused variable' )
 				            #( 7 7 7 'Name already defined' ) )).
 		        (self new
 			         source: '[ :a :a | a ]';
@@ -1448,6 +1448,138 @@ RBCodeSnippet class >> badSemantic [
 	^ list
 ]
 
+{ #category : #accessing }
+RBCodeSnippet class >> badVariableAndScopes [
+	"Test various combinaisons of error and warnings on variables and scope nesting"
+
+	| list |
+	list := {
+		        (self new
+			         source: 'a := a. { [ :a }. a := a';
+			         formattedCode: 'a := a. { [ :a | } a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 16 15 16 'Variable or expression expected' )
+				            #( 16 16 16 'Missing opener for closer: }' )
+				            #( 11 24 25 ''']'' expected' )
+				            #( 9 24 25 '''}'' expected' ) )). "OK, but maybe the `}` could close the `{` and consider the `[` unfinished?"
+		        (self new
+			         source: 'a := a. [ :a [ :a. a := a';
+			         formattedCode: 'a := a. [ :a | [ :a | a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 14 25 26 ''']'' expected' )
+				            #( 9 25 26 ''']'' expected' ) )).
+		        (self new
+			         source: 'a := a. [ :a [ :a ]. a := a';
+			         formattedCode: 'a := a. [ :a | [ :a | ] a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 9 27 28 ''']'' expected' ) )).
+		        (self new
+			         source: 'a := a. { [ :a | }. a := a';
+			         formattedCode: 'a := a. { [ :a | } a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 18 17 18 'Variable or expression expected' )
+				            #( 18 18 18 'Missing opener for closer: }' )
+				            #( 11 26 27 ''']'' expected' )
+				            #( 9 26 27 '''}'' expected' ) )).
+		        (self new
+			         source: 'a := a. { [ :a | a := a }. a := a';
+			         formattedCode: 'a := a. { [ :a | a := a } a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 18 25 25 'Missing opener for closer: }' )
+				            #( 11 33 34 ''']'' expected' )
+				            #( 9 33 34 '''}'' expected' ) )).
+		        (self new
+			         source: 'a := a. [ | a a := a ]. a := a';
+			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 11 15 17 '''|'' or variable expected' )
+				            #( 17 20 17 'variable expected in assigment' ) )).
+		        (self new
+			         source: 'a := a. [ :a a ]. a := a';
+			         formattedCode: 'a := a. [ :a | a ]. a := a';
+			         value: nil;
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 14 13 14 '''|'' or parameter expected' )
+				            #( 24 24 24 'Undeclared variable' )
+				            #( 19 19 19 'Undeclared variable' ) )).
+		        (self new
+			         source: 'a := a. [ :a | | a a := a ]. a := a';
+			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' )
+				            #( 16 20 22 '''|'' or variable expected' )
+				            #( 22 25 22 'variable expected in assigment' ) )).
+
+		        "Chains of shadowing"
+		        (self new
+			         source: '[:a :a :b | | a a b | a + a + b ]';
+			         formattedCode: '[ :a :a :b | | a a b | a + a + b ]';
+			         isFaulty: false;
+			         value: 4;
+			         notices:
+				         #( #( 6 6 6 'Name already defined' )
+				            #( 15 15 15 'Name already defined' )
+				            #( 15 15 15 'Unused variable' )
+				            #( 17 17 17 'Name already defined' )
+				            #( 19 19 19 'Name already defined' )
+				            #( 23 23 23 'Unitialized variable' )
+				            #( 27 27 27 'Unitialized variable' )
+				            #( 31 31 31 'Unitialized variable' ) )).
+		        (self new
+			         source:
+				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b ]';
+			         isMethod: true;
+			         value: nil;
+			         notices: #( #( 11 10 11 'Variable name expected' )
+				            #( 14 13 14 'Variable name expected' )
+				            #( 14 13 14 'Name already defined' )
+				            #( 22 22 22 'Name already defined' )
+				            #( 25 25 25 'Name already defined' )
+				            #( 28 28 28 'Name already defined' )
+				            #( 34 34 34 'Name already defined' )
+				            #( 34 34 34 'Unused variable' )
+				            #( 36 36 36 'Name already defined' )
+				            #( 38 38 38 'Name already defined' )
+				            #( 42 42 42 'Unitialized variable' )
+				            #( 46 46 46 'Unitialized variable' )
+				            #( 50 50 50 'Unitialized variable' ) )).
+		        (self new
+			         source: '[:a :a :b | | a a b | a + a + b';
+			         formattedCode: '[ :a :a :b | a + a + b';
+			         notices: #( #( 1 31 32 ''']'' expected' ) )). "FIXME where temps?"
+		        (self new
+			         source:
+				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b';
+			         formattedCode: 'foo: a x: a: y: b [ :a :a :b | a + a + b';
+			         isMethod: true;
+			         notices: #( #( 11 10 11 'Variable name expected' )
+				            #( 14 13 14 'Variable name expected' )
+				            #( 14 13 14 'Name already defined' )
+				            #( 19 50 51 ''']'' expected' ) )) "FIXME where temps?" }.
+	"Setup default values"
+	self new
+		group: #badVariableAndScopes;
+		isMethod: false;
+		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
+]
+
 { #category : #script }
 RBCodeSnippet class >> styleAll [
 	"Display all snippets in a big styled text.
@@ -1482,8 +1614,8 @@ RBCodeSnippet class >> styleAllWithError [
 		each compileOnError: [ :exception |
 				"In case of error, insert error message (like an old-school smalltalk compiler)"
 				text
-					replaceFrom: exception location
-					to: exception location - 1
+					replaceFrom: exception position
+					to: exception position - 1
 					with: (exception messageText asText addAttribute:
 							 (TextBackgroundColor color: Color lightBlue)).
 				bigtext append: String cr.
@@ -1506,14 +1638,33 @@ RBCodeSnippet class >> styleAllWithError [
 	bigtext inspect
 ]
 
+{ #category : #updating }
+RBCodeSnippet class >> updateAllSnippets [
+	"This script will update all definitions of all snippets.
+	Beware of code loss and double check the generated definitions."
+
+	"I did not manage to update all in a single transformation (with a preview!)
+	So do them one by one with a progress bar :("
+
+	<script>
+	self allSnippets
+		do: [ :snippet |
+			snippet definitionRefactoring ifNotNil: [ :refactoring |
+				refactoring
+					transform;
+					execute ] ]
+		displayingProgress: 'Updating snippets...'
+]
+
 { #category : #accessing }
 RBCodeSnippet >> applyDefaultTo: aCollection [
 
 	aCollection do: [ :each |
 		each default: self.
 		each isMethod ifNil: [ each isMethod: self isMethod ].
-		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
+		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
+		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
 	]
 ]
@@ -1522,6 +1673,96 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 RBCodeSnippet >> default: aRBCodeSnippet [
 
 	default := aRBCodeSnippet
+]
+
+{ #category : #updating }
+RBCodeSnippet >> definitionRefactoring [
+	"A transformation to update the definition of self in the correct class side method"
+
+	| node old new newast |
+	node := self searchDefinition.
+	node ifNil: [ ^ nil ].
+	self updateExpectations.
+
+	"Check if the new code is different from the old one"
+	old := node sourceCode.
+	new := self dumpDefinition.
+	newast := RBParser parseFaultyExpression: new.
+	newast parent: node parent. "Force same context, so formattedCode is reliable"
+	node formattedCode = newast formattedCode ifTrue: [ ^ nil ].
+
+	^ RBReplaceSubtreeTransformation
+		  replace: old
+		  to: new
+		  inMethod: node methodNode selector
+		  inClass: node methodNode methodClass
+]
+
+{ #category : #updating }
+RBCodeSnippet >> dumpDefinition [
+	"The definition of the snippet (according to the current values)
+	as it should appears in the class side methods."
+
+	^ String streamContents: [ :aStream |
+		  aStream
+			  nextPutAll: '(self new';
+			  nextPutAll: ' source: ';
+			  print: self source.
+		  self formattedCode = self source ifFalse: [
+			  aStream
+				  nextPutAll: '; formattedCode: ';
+				  print: self formattedCode ].
+		  self isMethod = default isMethod ifFalse: [
+			  aStream
+				  nextPutAll: '; isMethod: ';
+				  print: self isMethod ].
+		  self isFaulty = default isFaulty ifFalse: [
+			  aStream
+				  nextPutAll: '; isFaulty: ';
+				  print: self isFaulty ].
+		  (default isParseFaulty
+			   ifNotNil: [ self isParseFaulty ~= default isParseFaulty ]
+			   ifNil: [ self isParseFaulty ~= self isFaulty ]) ifTrue: [
+			  aStream
+				  nextPutAll: '; isParseFaulty: ';
+				  print: self isParseFaulty ].
+		  self dumpDefinitionValue: aStream.
+		  self numberOfCritiques ifNotNil: [
+			  aStream
+				  nextPutAll: '; numberOfCritiques: ';
+				  print: self numberOfCritiques ].
+		  self notices isEmptyOrNil ifFalse: [
+			  aStream
+				  nextPutAll: '; notices: ';
+				  print: self notices ].
+		  self skippedTests ifNotNil: [
+			  self skippedTests do: [ :each |
+				  aStream
+					  nextPutAll: '; skip: ';
+					  print: each ] ].
+		  aStream nextPut: $) ]
+]
+
+{ #category : #updating }
+RBCodeSnippet >> dumpDefinitionValue: aStream [
+
+	self messageNotUnderstood ifNotNil: [ :val |
+		aStream
+			nextPutAll: '; messageNotUnderstood: ';
+			print: val.
+		^ self ].
+
+	self raise ifNotNil: [ :val |
+		aStream
+			nextPutAll: '; raise: ';
+			print: val.
+		^ self ].
+
+	(self value isNotNil or: [ self isFaulty and: [ self hasValue ] ])
+		ifTrue: [
+			aStream
+				nextPutAll: '; value: ';
+				print: self value ]
 ]
 
 { #category : #accessing }
@@ -1584,6 +1825,13 @@ RBCodeSnippet >> ifSkip: aTestName then: aBlock [
 	skippedTests ifNil: [ ^ self ].
 	(skippedTests includes: aTestName) ifFalse: [ ^ self ].
 	^ aBlock value
+]
+
+{ #category : #inspecting }
+RBCodeSnippet >> inspectionSource [
+	<inspectorPresentationOrder: 35 title: 'Source'>
+
+	^ self searchDefinition inspectionSource
 ]
 
 { #category : #accessing }
@@ -1696,6 +1944,29 @@ RBCodeSnippet >> raise: anObject [
 	raise := anObject
 ]
 
+{ #category : #updating }
+RBCodeSnippet >> searchDefinition [
+	"Get the AST node defining self in the class side method.
+	The source code is used as a key to distinguishes other snippets.
+	Assume the AST of the class side method respect the format."
+
+	| ast candidate |
+	candidate := OrderedCollection new.
+	ast := (self class class >> default group) ast.
+	ast nodesDo: [ :node |
+		| parent |
+		(node isLiteralNode and: [
+			 parent := node parent.
+			 node value = self source and: [
+				 parent isMessage and: [ parent selector = #source: ] ] ])
+			ifTrue: [
+				parent isCascaded ifTrue: [ parent := parent parent ].
+				candidate add: parent ] ].
+	^ candidate size = 1
+		  ifTrue: [ candidate first ]
+		  ifFalse: [ nil ]
+]
+
 { #category : #accessing }
 RBCodeSnippet >> skip: aSymbol [
 
@@ -1743,6 +2014,37 @@ RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 		with: (aString asText addAttribute:
 				 (TextBackgroundColor color: Color lightBlue)).
 	^ text
+]
+
+{ #category : #updating }
+RBCodeSnippet >> updateDefinition [
+	"Do the update of the definition of self in the method (class-side) that defines it"
+
+	self definitionRefactoring ifNotNil: [ :transformation |
+		transformation
+			transform;
+			execute ]
+]
+
+{ #category : #updating }
+RBCodeSnippet >> updateExpectations [
+	"Update the value of expectations according what tools produce.
+	Do not blindly trust it, as a tool cannot judge itself."
+
+	| ast |
+	ast := self parse.
+	self formattedCode: ast formattedCode withSeparatorsCompacted.
+	self isParseFaulty: ast isFaulty.
+	ast := self doSemanticAnalysis.
+	self isFaulty: ast isFaulty.
+	self notices: (ast allNotices
+			 collect: [ :each |
+				 {
+					 each node start.
+					 each node stop.
+					 each position.
+					 each messageText } ]
+			 as: Array)
 ]
 
 { #category : #accessing }

@@ -227,8 +227,8 @@ RBSimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 
 { #category : #private }
 RBSimpleFormatter >> formatTemporariesFor: aSequenceNode [
-	aSequenceNode temporaries isEmpty
-		ifTrue: [ ^ self ].
+	aSequenceNode hasTemporaries
+		ifFalse: [ ^ self ].
 	self
 		bracketWith: '|'
 		around: [
@@ -424,6 +424,8 @@ RBSimpleFormatter >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 RBSimpleFormatter >> visitEnglobingErrorNode: aNode [
 
+	aNode isTemporariesError ifTrue: [
+		^ self formatTemporariesFor: aNode ].
 	self writeString: aNode value.
 	self formatBlockArgumentsFor: aNode.
 	aNode contents do: [ :each | self visitNode: each ] separatedBy: [

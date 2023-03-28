@@ -2137,6 +2137,8 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 EFFormatter >> visitEnglobingErrorNode: aNode [
 
+	aNode isTemporariesError ifTrue: [
+		^ self formatTemporariesFor: aNode ].
 	aNode value = '' ifFalse: [
 		self writeString: aNode value.
 		codeStream space ].

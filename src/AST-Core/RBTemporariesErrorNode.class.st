@@ -22,6 +22,18 @@ RBTemporariesErrorNode class >> error: aToken withNodes: aCollection [
 ]
 
 { #category : #testing }
+RBTemporariesErrorNode >> hasTemporaries [
+	^true
+]
+
+{ #category : #testing }
 RBTemporariesErrorNode >> isTemporariesError [
 	^true
+]
+
+{ #category : #accessing }
+RBTemporariesErrorNode >> temporaries [
+	"Consider the content to act as bad temporaries variables"
+
+	^ contents
 ]

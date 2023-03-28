@@ -70,10 +70,13 @@ RBProgramNode class >> resetFormatter [
 
 { #category : #notice }
 RBProgramNode >> addError: anErrorMessage [
-
 	"Add an error information to the node. Node with error information are considered faulty.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
-	self addNotice: (RBErrorNotice new messageText: anErrorMessage)
+
+	| notice |
+	notice := RBErrorNotice new messageText: anErrorMessage.
+	self addNotice: notice.
+	^ notice
 ]
 
 { #category : #adding }
@@ -310,10 +313,8 @@ RBProgramNode >> checkFaulty: aBlock [
 
 	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice position cull: self ].
 
-	SyntaxErrorNotification new
-		sourceCode: self methodNode sourceCode;
-		messageText: errorNotice messageText;
-		location: errorNotice position;
+	CodeError new
+		notice: errorNotice;
 		signal.
 
 	"If resumed, just return"
