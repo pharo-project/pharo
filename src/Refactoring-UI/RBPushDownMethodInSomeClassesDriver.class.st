@@ -29,6 +29,32 @@ RBPushDownMethodInSomeClassesDriver class >> model: aRBNamespace scopes: refacto
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
 ]
 
+{ #category : #execution }
+RBPushDownMethodInSomeClassesDriver >> execute [
+
+	| changes refactoring |
+	methods := self selectMethods.
+	methods ifNil: [ ^ self ].
+	classes := self selectClasses.
+	classes ifNil: [ ^ self ].
+	
+	refactoring := self refactoring.
+	changes := [
+	           [ refactoring generateChanges ]
+		           on: RBApplicabilityChecksFailedError
+		           do: [ :err |
+		           ^ RBRefactoringFailure signal: err messageText ] ]
+		           on: RBBreakingChangeChecksFailedWarning
+		           do: [ :err |
+			           RBRefactoringWarning signal: err messageText.
+			           "If user answers no, error is being propagated."
+			           err resume ].
+	(StRefactoringPreviewPresenter
+		 changes: changes
+		 inEnvironment: model
+		 scopes: scopes) open
+]
+
 { #category : #initialization }
 RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
 
@@ -36,6 +62,16 @@ RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringSc
 	scopes := refactoringScopes.
 	methods := methodsList.
 	class := methods first origin
+]
+
+{ #category : #resources }
+RBPushDownMethodInSomeClassesDriver >> refactoring [
+
+	^ RBPushDownMethodRefactoring
+		model: model
+		pushDown: (methods collect: [ :each | each selector ])
+		from: class
+		in: classes.
 ]
 
 { #category : #execution }
