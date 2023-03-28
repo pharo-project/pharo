@@ -410,18 +410,10 @@ ClassDescription >> compile: sourceCode classified: protocolName withStamp: chan
 		source: sourceCode;
 		requestor: requestor;
 		failBlock:  [ ^ nil ];
-		compile.
-
-	logSource ifTrue: [
-		self
-			logMethodSource: (requestor ifNotNil: [ :r | r text ] ifNil: [ sourceCode ]) "the requestor text might have been changed by the compiler and may be different thant text argument"
-			forMethod: method
-			inCategory: protocolName
-			withStamp: changeStamp ].
-
-	self addAndClassifySelector: method selector withMethod: method inProtocol: protocolName.
-
-	self instanceSide noteCompilationOf: method meta: self isClassSide.
+		protocolName: protocolName;
+		changeStamp: changeStamp;
+		logged: logSource;
+		install.
 
 	^ method selector
 ]
