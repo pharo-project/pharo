@@ -14,19 +14,8 @@ Class {
 
 { #category : #converting }
 SycPushDownMethodInSomeClassesCommand >> asRefactorings [
-	"Return push down method refactoring using method"
-	| refactoring |
-	refactoring := RBPushDownMethodRefactoring
-		model: model
-		pushDown: (methods collect: [ :each | each selector ])
-		from: methods first origin
-		in: self classes.
-	^ OrderedCollection with: refactoring
-]
 
-{ #category : #converting }
-SycPushDownMethodInSomeClassesCommand >> classes [
-	^ classes ifNil: [ classes := #() ]
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
@@ -40,7 +29,23 @@ SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
+SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
+
+	(RBPushDownMethodInSomeClassesDriver
+		model: model
+		scopes: refactoringScopes
+		pushDown: methods) execute
+]
+
+{ #category : #testing }
+SycPushDownMethodInSomeClassesCommand >> isComplexRefactoring [ 
+
+	^ false
+]
+
+{ #category : #execution }
 SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	self selectMethodsAndClasses
+	refactoringScopes := aToolContext refactoringScopes
+
 ]
