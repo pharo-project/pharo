@@ -247,9 +247,9 @@ OCCompilerTest >> testUndefinedVariable [
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	self
 		assert: {
-			OpalCompiler new evaluate: 'undefinedName123'.
-			OpalCompiler new evaluate: 'undefinedName123 := 1. undefinedName123'.
-			OpalCompiler new evaluate: 'undefinedName123'.
+			OpalCompiler new permitFaulty: true; evaluate: 'undefinedName123'.
+			OpalCompiler new permitFaulty: true; evaluate: 'undefinedName123 := 1. undefinedName123'.
+			OpalCompiler new permitFaulty: true; evaluate: 'undefinedName123'.
 			}
 		equals: { nil. 1. 1. }.
 
@@ -280,7 +280,7 @@ OCCompilerTest >> testUndefinedVariableFrontend [
 	self deny: (Undeclared includesKey: #undefinedName123).
 	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: CodeError.
 	self deny: (Undeclared includesKey: #undefinedName123).
-	OpalCompiler new compile: 'foo ^undefinedName123'.
+	OpalCompiler new permitFaulty: true; compile: 'foo ^undefinedName123'.
 	self assert: (Undeclared includesKey: #undefinedName123).
 
 	"Cleanup"

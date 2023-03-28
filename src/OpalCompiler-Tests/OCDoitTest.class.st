@@ -139,7 +139,7 @@ OCDoitTest >> testDoitContextCheckClass [
 
 	| ast method |
 	method := OpalCompiler new
-		source: 'tempForTesting';
+		source: '|temp| temp';
 		noPattern: true;
 		context: thisContext;
 		compile.
