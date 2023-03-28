@@ -67,10 +67,10 @@ RBCodeSnippetTest >> testCodeImporter [
 	self skipIf: #exec.
 
 	"Importer should fail when faulty"
-	snippet isFaulty ifTrue: [
+"	snippet isFaulty ifTrue: [
 		self should: [ importer evaluate ] raise: CodeError.
 		snippet isMethod ifTrue: [ class removeFromSystem ].
-		^ self ].
+		^ self ]."
 
 	"When not faulty, it's more complicated..."
 	runBlock := [
@@ -89,7 +89,8 @@ RBCodeSnippetTest >> testCodeImporter [
 	            value isBlock ifTrue: [
 		            | phonyBlockArgs |
 		            phonyBlockArgs := (1 to: value numArgs) asArray.
-		            value := value valueWithArguments: phonyBlockArgs ] ].
+		            value := value valueWithArguments: phonyBlockArgs ].
+					value ].
 
 	snippet messageNotUnderstood ifNotNil: [ :mnu |
 		runBlock onDNU: mnu do: [ ^ self ].
@@ -97,8 +98,9 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	snippet raise ifNotNil: [ :r | ^ self should: runBlock raise: r ].
 
-	self shouldnt: runBlock raise: CodeError.
-	self assert: value equals: snippet value
+	snippet hasValue
+		ifFalse: [ self should: runBlock raise: RuntimeSyntaxError ]
+		ifTrue: [ self assert: runBlock value equals: snippet value ]
 ]
 
 { #category : #tests }
