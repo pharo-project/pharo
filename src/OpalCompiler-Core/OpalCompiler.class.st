@@ -479,37 +479,33 @@ OpalCompiler >> parseForRequestor [
 	"No requestor, easy path"
 	requestor ifNil: [ ^ self parse ].
 
-	^ [ [ 	self parse ]
-	on: OCUndeclaredVariableWarning
-	do: [ :notification |
-		| res |
-		self isInteractive ifFalse: [ notification pass ].
-		"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just signal as an error (on: block bellow)"
-		self compilationContext noPattern ifTrue: [
-			CodeError new
-				notice: notification node notices first; "Ugly temporary hack"
-				signal.
-			].
-		"I do not like the API that much.
-		 reparator can have 3 outcomes:
-		  * reparation done, reparse. true
-		  * reparation unneded, pass. nil
-		  * operation cancelled, fail. false"
-		res := notification reparator
-			requestor: requestor;
-			openMenu.
-		res ifNil: [ notification pass ].
-		res ifFalse: [ ^ self compilationContext failBlock value ].
-		self source: requestor text.
-		notification retry ] ]
-	on: CodeError
-	do: [ :exception |
-		ast := nil. "Invalidate the AST to avoid compilation if failBlock do return"
-		requestor
-			notify: exception messageText , ' ->'
-			at: exception position
-			in: exception sourceCode.
-		self compilationContext failBlock value ]
+	^ [ self parse ]
+		  on: OCUndeclaredVariableWarning , CodeError
+		  do: [ :exception |
+			  exception class = OCUndeclaredVariableWarning ifTrue: [
+				  self isInteractive ifFalse: [ exception pass ].
+				  "The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just continue as an error"
+				  self compilationContext noPattern ifFalse: [
+					  | res |
+					  "I do not like the API that much.
+					 reparator can have 3 outcomes:
+					  * reparation done, reparse. true
+					  * reparation unneded, pass. nil
+					  * operation cancelled, fail. false"
+					  res := exception reparator
+						         requestor: requestor;
+						         openMenu.
+					  res ifNil: [ exception pass ].
+					  res ifFalse: [ ^ self compilationContext failBlock value ].
+					  self source: requestor text.
+					  exception retry ] ].
+
+			  ast := nil. "Invalidate the AST to avoid compilation if failBlock do return"
+			  requestor
+				  notify: exception messageText , ' ->'
+				  at: exception position
+				  in: exception sourceCode.
+			  self compilationContext failBlock value ]
 ]
 
 { #category : #'public access' }
