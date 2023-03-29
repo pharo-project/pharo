@@ -10,14 +10,11 @@ Note, that list and next must be first instance variables.
 "
 Class {
 	#name : #WeakAnnouncementSubscription,
-	#superclass : #Object,
+	#superclass : #AbstractAnnouncementSubscription,
 	#type : #weak,
 	#instVars : [
 		'list',
-		'next',
-		'announcer',
-		'announcementClass',
-		'action'
+		'next'
 	],
 	#classVars : [
 		'FinalizationList'

@@ -6,12 +6,9 @@ I know how to make myself weak or strong, only use this capability if it can't b
 "
 Class {
 	#name : #AnnouncementSubscription,
-	#superclass : #Object,
+	#superclass : #AbstractAnnouncementSubscription,
 	#instVars : [
-		'announcer',
-		'announcementClass',
-		'subscriber',
-		'action'
+		'subscriber'
 	],
 	#category : #'Announcements-Core-Subscription'
 }
