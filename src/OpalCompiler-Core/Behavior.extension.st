@@ -109,6 +109,16 @@ Behavior >> recompile: selector [
 Behavior >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
+	| newMethod |
+	newMethod := self recompileBasic: selector from: oldClass.
+	self addSelector: selector withRecompiledMethod: newMethod
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> recompileBasic: selector from: oldClass [
+	"Compile the method associated with selector in the receiver's context.
+	The resulting compiled method is not installed."
+
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
 	newMethod := oldClass compiler
@@ -118,7 +128,7 @@ Behavior >> recompile: selector from: oldClass [
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	self addSelector: selector withRecompiledMethod: newMethod
+	^ newMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
