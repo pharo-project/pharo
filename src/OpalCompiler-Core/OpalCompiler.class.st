@@ -391,7 +391,7 @@ OpalCompiler >> install [
 		class
 			logMethodSource: source
 			forMethod: method
-			inCategory: protocolName
+			inProtocolNamed: protocolName
 			withStamp: changeStamp ].
 
 	class

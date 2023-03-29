@@ -1,16 +1,15 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*System-Sources' }
-CompiledMethod >> putSource: sourceStr class: class category: catName withStamp: changeStamp priorMethod: priorMethod [
-	^ self
-		putSource: sourceStr
-		withPreamble: [ :file |
-			class
-				printCategoryChunk: catName
-				on: file
-				withStamp: changeStamp
-				priorMethod: priorMethod.
-			file cr ]
+CompiledMethod >> putSource: sourceStr class: class protocol: protocolName withStamp: changeStamp priorMethod: priorMethod [
+
+	^ self putSource: sourceStr withPreamble: [ :file |
+		  class
+			  printProtocolChunk: protocolName
+			  on: file
+			  withStamp: changeStamp
+			  priorMethod: priorMethod.
+		  file cr ]
 ]
 
 { #category : #'*System-Sources' }
