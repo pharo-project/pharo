@@ -28,14 +28,15 @@ ClassOrganization >> addProtocol: aProtocol [
 { #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 
-	| oldProtocols |
+	| oldProtocols protocol |
 	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
 	oldProtocols := self protocolNames copy.
 
-	self addProtocol: (Protocol name: protocolName).
+	protocol := self addProtocol: (Protocol name: protocolName).
 	self notifyOfAddedProtocol: protocolName.
-	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
+	^ protocol
 ]
 
 { #category : #'backward compatibility' }
@@ -145,7 +146,7 @@ ClassOrganization >> commentStamp [
 ClassOrganization >> copyFrom: otherOrganization [
 
 	commentSourcePointer := otherOrganization commentSourcePointer.
-	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: protocol name ] ]
+	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocolNamed: protocol name ] ]
 ]
 
 { #category : #accessing }

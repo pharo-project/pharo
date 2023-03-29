@@ -8,7 +8,7 @@ ClassOrganization >> changeFromString: aString [
 	protocolSpecs := aString parseLiterals.
 
 	"If nothing was scanned and I had no elements before, then default me"
-	(protocolSpecs isEmpty and: [ self protocolOrganizer protocols isEmpty ])
+	(protocolSpecs isEmpty and: [ self protocols isEmpty ])
 		ifTrue: [ ^ self protocolOrganizer reset ].
 
 	^ self internalChangeFromString: protocolSpecs
