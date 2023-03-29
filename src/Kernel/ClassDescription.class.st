@@ -186,13 +186,13 @@ ClassDescription >> basicOrganization: aClassOrg [
 	organization := aClassOrg
 ]
 
-{ #category : #'file in/out' }
+{ #category : #'accessing - comment' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
 	^ self classComment: aString stamp: '<historical>'
 ]
 
-{ #category : #'file in/out' }
+{ #category : #'accessing - comment' }
 ClassDescription >> classComment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
@@ -333,7 +333,9 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing - comment' }
 ClassDescription >> comment [
-    ^self instanceSide organization classComment
+    ^ commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
 ]
 
 { #category : #'accessing - comment' }
@@ -352,23 +354,19 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 
 { #category : #'accessing - comment' }
 ClassDescription >> commentSourcePointer [
-	"if not set, for now get it from the organization"
 	^ commentSourcePointer
-		  ifNil: [ self instanceSide organization commentSourcePointer ]
 ]
 
 { #category : #'accessing - comment' }
 ClassDescription >> commentSourcePointer: anObject [
-	"until it is removed, we set in on the organization, too"
-	self instanceSide organization commentSourcePointer: anObject.
-	commentSourcePointer := anObject.
+	commentSourcePointer := anObject
 ]
 
 { #category : #'accessing - comment' }
 ClassDescription >> commentStamp [
 
 	^ commentSourcePointer
-		  ifNil: [ self instanceSide organization commentStamp ]
+		  ifNil: [ '' ]
 		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
