@@ -316,9 +316,7 @@ RBProgramNode >> checkFaulty: aBlock [
 
 	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice position cull: self ].
 
-	CodeError new
-		notice: errorNotice;
-		signal.
+	errorNotice signalError.
 
 	"If resumed, just return"
 ]
