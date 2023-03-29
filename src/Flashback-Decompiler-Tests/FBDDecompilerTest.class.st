@@ -57,7 +57,7 @@ FBDDecompilerTest >> decompileThenRecompile: originalMethod [
 	| methodNode |
 	methodNode := FBDDecompiler new decompile: originalMethod.
 	methodNode ifNil: [ ^ nil ].
-	^ self exampleClass compiler compile: methodNode formattedCode
+	^ self exampleClass compiler permitFaulty: true; compile: methodNode formattedCode
 ]
 
 { #category : #accessing }
