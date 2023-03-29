@@ -86,6 +86,19 @@ AnnouncementSubscription >> makeWeak [
 			announcementClass: announcementClass)
 ]
 
+{ #category : #printing }
+AnnouncementSubscription >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream
+		nextPutAll: ' (';
+		print: self subscriber;
+		nextPutAll: ' subscribes to ';
+		print: self announcementClass;
+		nextPut: $)
+]
+
 { #category : #accessing }
 AnnouncementSubscription >> subscriber [
 	^ subscriber
