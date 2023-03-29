@@ -8,7 +8,8 @@ Class {
 		'protocolOrganizer',
 		'organizedClass',
 		'commentSourcePointer',
-		'protocols'
+		'protocols',
+		'allProtocol'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -49,13 +50,13 @@ ClassOrganization >> allMethodSelectors [
 { #category : #accessing }
 ClassOrganization >> allProtocol [
 
-	^ self protocolOrganizer allProtocol
+	^ allProtocol
 ]
 
 { #category : #accessing }
 ClassOrganization >> allProtocols [
 
-	^ { self protocolOrganizer allProtocol } , self protocols
+	^ { self allProtocol } , self protocols
 ]
 
 { #category : #accessing }
@@ -182,10 +183,7 @@ ClassOrganization >> includesSelector: selector [
 ClassOrganization >> initialize [
 
 	super initialize.
-	self reset.
-	protocolOrganizer := ProtocolOrganizer new
-		                     organization: self;
-		                     yourself
+	self reset
 ]
 
 { #category : #initialization }
@@ -383,7 +381,8 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 { #category : #initialization }
 ClassOrganization >> reset [
 
-	protocols := IdentitySet new
+	protocols := IdentitySet new.
+	allProtocol := AllProtocol classOrganization: self
 ]
 
 { #category : #'backward compatibility' }

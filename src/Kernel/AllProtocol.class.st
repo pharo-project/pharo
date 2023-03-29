@@ -5,7 +5,6 @@ Class {
 	#name : #AllProtocol,
 	#superclass : #AbstractProtocol,
 	#instVars : [
-		'protocolOrganizer',
 		'classOrganization'
 	],
 	#category : #'Kernel-Protocols'
@@ -23,14 +22,6 @@ AllProtocol class >> classOrganization: classOrganization [
 AllProtocol class >> defaultName [
 
 	^ #'-- all --'
-]
-
-{ #category : #'instance creation' }
-AllProtocol class >> protocolOrganizer: protocolOrganizer [
-
-	^ self new
-		protocolOrganizer: protocolOrganizer;
-		yourself
 ]
 
 { #category : #private }
@@ -63,13 +54,13 @@ AllProtocol >> isVirtualProtocol [
 { #category : #accessing }
 AllProtocol >> methodSelectors [
 
-	^ (self protocolOrganizer ifNil: [ self classOrganization ]) allMethodSelectors
+	^ self classOrganization allMethodSelectors
 ]
 
 { #category : #accessing }
 AllProtocol >> name [
 
-	^ (self isEmpty and: [ (self protocolOrganizer ifNil: [ self classOrganization ]) protocols isEmpty ])
+	^ (self isEmpty and: [ self classOrganization protocols isEmpty ])
 		  ifTrue: [ self class nullProtocolName ]
 		  ifFalse: [ self class defaultName ]
 ]
@@ -77,16 +68,4 @@ AllProtocol >> name [
 { #category : #accessing }
 AllProtocol >> name: aString [
 	self error: 'You cannot change my name'
-]
-
-{ #category : #accessing }
-AllProtocol >> protocolOrganizer [
-
-	^ protocolOrganizer
-]
-
-{ #category : #accessing }
-AllProtocol >> protocolOrganizer: anObject [
-
-	protocolOrganizer := anObject
 ]
