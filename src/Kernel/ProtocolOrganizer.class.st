@@ -19,6 +19,12 @@ ProtocolOrganizer >> addProtocol: aProtocol [
 	^ protocols add: aProtocol
 ]
 
+{ #category : #'protocol - adding' }
+ProtocolOrganizer >> addProtocolNamed: protocolName [
+
+	^ self addProtocol: (Protocol name: protocolName).
+]
+
 { #category : #accessing }
 ProtocolOrganizer >> allMethodSelectors [
 
