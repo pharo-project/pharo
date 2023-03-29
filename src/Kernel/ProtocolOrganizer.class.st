@@ -8,7 +8,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'allProtocol',
-		'protocols'
+		'protocols',
+		'organization'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -28,7 +29,7 @@ ProtocolOrganizer >> addProtocolNamed: protocolName [
 { #category : #accessing }
 ProtocolOrganizer >> allMethodSelectors [
 
-	^ self protocols flatCollect: [ :p | p methodSelectors ]
+	^ self organization allMethodSelectors
 ]
 
 { #category : #accessing }
@@ -40,7 +41,7 @@ ProtocolOrganizer >> allProtocol [
 { #category : #accessing }
 ProtocolOrganizer >> allProtocols [
 
-	^ { self allProtocol } , self protocols
+	^ self organization allProtocols
 ]
 
 { #category : #'protocol - adding' }
@@ -59,12 +60,6 @@ ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 	protocol addMethodSelector: aSymbol
 ]
 
-{ #category : #testing }
-ProtocolOrganizer >> hasProtocolNamed: aString [
-
-	^ self allProtocols anySatisfy: [ :each | each name = aString ]
-]
-
 { #category : #initialization }
 ProtocolOrganizer >> initialize [
 	super initialize.
@@ -72,10 +67,21 @@ ProtocolOrganizer >> initialize [
 ]
 
 { #category : #accessing }
+ProtocolOrganizer >> organization [
+
+	^ organization
+]
+
+{ #category : #accessing }
+ProtocolOrganizer >> organization: anObject [
+
+	organization := anObject
+]
+
+{ #category : #accessing }
 ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
-	^  self allProtocols
-		detect: [ :e | e name = aString ]
-		ifNone: aBlock
+
+	^ self organization protocolNamed: aString ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -99,12 +105,6 @@ ProtocolOrganizer >> removeProtocol: aProtocol [
 	^ protocols
 		remove: aProtocol
 		ifAbsent: [ ]
-]
-
-{ #category : #'protocol - removing' }
-ProtocolOrganizer >> removeProtocolNamed: aName [
-
-	^ self removeProtocol: (self protocolNamed: aName ifAbsent: [ ^ self ])
 ]
 
 { #category : #initialization }

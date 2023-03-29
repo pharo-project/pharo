@@ -19,6 +19,12 @@ ClassOrganization class >> forClass: aClass [
 		yourself
 ]
 
+{ #category : #adding }
+ClassOrganization >> addProtocol: aProtocol [
+
+	^ self protocolOrganizer addProtocol: aProtocol
+]
+
 { #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 
@@ -27,7 +33,7 @@ ClassOrganization >> addProtocolNamed: protocolName [
 
 	oldProtocols := self protocolNames copy.
 
-	self protocolOrganizer addProtocol: (Protocol name: protocolName).
+	self addProtocol: (Protocol name: protocolName).
 	self notifyOfAddedProtocol: protocolName.
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames
 ]
@@ -41,7 +47,7 @@ ClassOrganization >> allMethodSelectors [
 { #category : #accessing }
 ClassOrganization >> allProtocols [
 
-	^ self protocolOrganizer allProtocols
+	^ { self protocolOrganizer allProtocol } , self protocols
 ]
 
 { #category : #accessing }
@@ -150,8 +156,11 @@ ClassOrganization >> includesSelector: selector [
 
 { #category : #initialization }
 ClassOrganization >> initialize [
+
 	super initialize.
 	protocolOrganizer := ProtocolOrganizer new
+		                     organization: self;
+		                     yourself
 ]
 
 { #category : #initialization }
@@ -251,7 +260,9 @@ ClassOrganization >> protocolNamed: aString [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 
-	^ self protocolOrganizer protocolNamed: aString ifAbsent: aBlock
+	^ self allProtocols
+		  detect: [ :e | e name = aString ]
+		  ifNone: aBlock
 ]
 
 { #category : #accessing }
