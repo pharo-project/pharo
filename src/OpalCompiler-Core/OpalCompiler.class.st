@@ -32,7 +32,9 @@ Class {
 		'ast',
 		'source',
 		'compilationContext',
-		'compilationContextClass'
+		'compilationContextClass',
+		'protocolName',
+		'changeStamp'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -224,6 +226,11 @@ OpalCompiler >> callPlugins [
 ]
 
 { #category : #accessing }
+OpalCompiler >> changeStamp: aString [ 
+	changeStamp := aString
+]
+
+{ #category : #accessing }
 OpalCompiler >> class: aClass [
 	self compilationContext class: aClass
 ]
@@ -365,6 +372,45 @@ OpalCompiler >> format: textOrString [
 		format
 ]
 
+{ #category : #actions }
+OpalCompiler >> install [
+	"Compile and install a method in a class"
+
+	| class method logSource |
+	class := self semanticScope targetClass.
+	self assert: class isNotNil.
+
+	method := self compile.
+	method ifNil: [ ^ method ].
+
+	protocolName ifNil: [ protocolName := Protocol unclassified ].
+	changeStamp ifNil: [ changeStamp := Author changeStamp ].
+	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
+
+	logSource ifTrue: [
+		class
+			logMethodSource: source contents
+			forMethod: method
+			inCategory: protocolName
+			withStamp: changeStamp ].
+
+	class
+		addAndClassifySelector: method selector
+		withMethod: method
+		inProtocol: protocolName.
+
+	class instanceSide noteCompilationOf: method meta: class isClassSide.
+
+	^ method
+]
+
+{ #category : #actions }
+OpalCompiler >> install: aSource [
+
+	self source: aSource.
+	^ self install
+]
+
 { #category : #testing }
 OpalCompiler >> isInteractive [
 	^ compilationContext interactive
@@ -499,6 +545,11 @@ OpalCompiler >> permitFaulty: aBoolean [
 { #category : #accessing }
 OpalCompiler >> productionEnvironment: anObject [
 	compilationContext productionEnvironment: anObject
+]
+
+{ #category : #accessing }
+OpalCompiler >> protocolName: aString [ 
+	protocolName := aString
 ]
 
 { #category : #accessing }
