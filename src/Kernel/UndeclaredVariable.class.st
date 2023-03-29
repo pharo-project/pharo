@@ -47,12 +47,13 @@ UndeclaredVariable >> definingClass [
 { #category : #'code generation' }
 UndeclaredVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeIntoLiteralVariable: self
+	super emitStore: methodBuilder
 ]
 
 { #category : #'code generation' }
 UndeclaredVariable >> emitValue: methodBuilder [
-	methodBuilder pushLiteralVariable: self
+	
+super emitValue: methodBuilder
 ]
 
 { #category : #registry }
@@ -66,6 +67,13 @@ UndeclaredVariable >> isUndeclaredVariable [
 	^ true
 ]
 
+{ #category : #'meta-object-protocol' }
+UndeclaredVariable >> read [
+
+	<debuggerCompleteToSender>
+	self error: 'Cannot read undeclared variable ' , self name
+]
+
 { #category : #registry }
 UndeclaredVariable >> register [
 	Undeclared add: self
@@ -74,4 +82,11 @@ UndeclaredVariable >> register [
 { #category : #registry }
 UndeclaredVariable >> unregister [
 	Undeclared removeKey: name ifAbsent: [ ]
+]
+
+{ #category : #'meta-object-protocol' }
+UndeclaredVariable >> write: aValue [
+
+	<debuggerCompleteToSender>
+	self error: 'Cannot write undeclared variable ' , self name
 ]
