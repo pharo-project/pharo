@@ -124,10 +124,6 @@ STCommandLineHandler >> handleError: error [
 STCommandLineHandler >> handleError: error reference: aReference [
 	"Print a header before failing on an errro / syntax notification from the the script loaded by the given request"
 
-	"We ignore warnings for now"
-	(error isKindOf: OCSemanticWarning)
-		ifTrue: [ ^ error pass ].
-
 	"Display CodeError nicely"
 	(error isKindOf: CodeError)
 		ifTrue: [ self class printCodeError: error ].
@@ -142,7 +138,7 @@ STCommandLineHandler >> handleError: error reference: aReference [
 { #category : #installing }
 STCommandLineHandler >> handleErrorsDuring: aBlock reference: aReference [
 	aBlock
-		on: Error, OCSemanticWarning
+		on: Error
 		do: [ :e | self handleError: e reference: aReference ]
 ]
 
