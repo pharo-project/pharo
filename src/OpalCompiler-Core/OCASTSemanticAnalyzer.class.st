@@ -150,13 +150,13 @@ OCASTSemanticAnalyzer >> undeclared [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
-	| varName var |
+	| varName var notice |
 	varName := variableNode name asSymbol.
 
 	"If a invalid variable exists, we use it witout warning"
 	self invalidVariables at: varName ifPresent: [ :v | ^ v ].
 
-	variableNode addWarning: 'Undeclared variable'.
+	notice := variableNode addWarning: 'Undeclared variable'.
 	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
 	"It will be registered only at backend when a CompiledMethod is produced.
 	Or never if compilation is aborted or if only frontend is requested."
@@ -167,9 +167,7 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	compilationContext permitFaulty ifTrue: [ ^ var ].
 
 	OCUndeclaredVariableWarning new
-		node: variableNode;
-		compilationContext: compilationContext;
-		messageText: 'Undeclared variable';
+		notice: notice;
 		signal.
 
 	^ var
