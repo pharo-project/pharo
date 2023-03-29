@@ -22,7 +22,7 @@ ClassOrganization class >> forClass: aClass [
 { #category : #adding }
 ClassOrganization >> addProtocol: aProtocol [
 
-	^ self protocolOrganizer addProtocol: aProtocol
+	^ self privateProtocols add: aProtocol
 ]
 
 { #category : #accessing }
@@ -234,6 +234,12 @@ ClassOrganization >> organizedClass [
 	^ organizedClass
 ]
 
+{ #category : #private }
+ClassOrganization >> privateProtocols [
+
+	^ self protocolOrganizer privateProtocols
+]
+
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector [
 
@@ -305,8 +311,12 @@ ClassOrganization >> removeEmptyProtocols [
 	| oldProtocolNames removedProtocols |
 	oldProtocolNames := self allProtocolsNames copy.
 
-	removedProtocols := self protocolOrganizer removeEmptyProtocols.
-	removedProtocols do: [ :each | self notifyOfRemovedProtocolNamed: each name ].
+
+	removedProtocols := self privateProtocols
+		                    select: [ :protocol | protocol canBeRemoved ]
+		                    thenDo: [ :protocol |
+			                    self removeProtocol: protocol.
+			                    self notifyOfRemovedProtocolNamed: protocol name ].
 
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self allProtocolsNames
 ]
@@ -315,8 +325,10 @@ ClassOrganization >> removeEmptyProtocols [
 ClassOrganization >> removeProtocol: aProtocol [
 
 	| oldProtocolNames |
+	aProtocol canBeRemoved ifFalse: [ ^ self ].
+
 	oldProtocolNames := self allProtocolsNames copy.
-	self protocolOrganizer removeProtocol: aProtocol.
+	self privateProtocols remove: aProtocol ifAbsent: [  ].
 	self notifyOfRemovedProtocolNamed: aProtocol name.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self allProtocolsNames
 ]

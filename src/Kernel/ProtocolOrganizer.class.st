@@ -15,15 +15,9 @@ Class {
 }
 
 { #category : #'protocol - adding' }
-ProtocolOrganizer >> addProtocol: aProtocol [
-
-	^ protocols add: aProtocol
-]
-
-{ #category : #'protocol - adding' }
 ProtocolOrganizer >> addProtocolNamed: protocolName [
 
-	^ self addProtocol: (Protocol name: protocolName).
+	^ self organization addProtocol: (Protocol name: protocolName)
 ]
 
 { #category : #accessing }
@@ -36,12 +30,6 @@ ProtocolOrganizer >> allMethodSelectors [
 ProtocolOrganizer >> allProtocol [
 
 	^ allProtocol
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> allProtocols [
-
-	^ self organization allProtocols
 ]
 
 { #category : #'protocol - adding' }
@@ -79,6 +67,12 @@ ProtocolOrganizer >> organization: anObject [
 ]
 
 { #category : #accessing }
+ProtocolOrganizer >> privateProtocols [
+
+	^ protocols
+]
+
+{ #category : #accessing }
 ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
 
 	^ self organization protocolNamed: aString ifAbsent: aBlock
@@ -87,24 +81,7 @@ ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
 { #category : #accessing }
 ProtocolOrganizer >> protocols [
 
-	^ protocols asArray
-]
-
-{ #category : #'protocol - removing' }
-ProtocolOrganizer >> removeEmptyProtocols [
-	| removedProtocols |
-	removedProtocols := protocols select: [:e | e isEmpty and: [ e canBeRemoved ] ].
-	removedProtocols do: [:each | self removeProtocol: each].
-	^removedProtocols
-]
-
-{ #category : #'protocol - removing' }
-ProtocolOrganizer >> removeProtocol: aProtocol [
-
-	aProtocol canBeRemoved ifFalse:  [ ^ self ].
-	^ protocols
-		remove: aProtocol
-		ifAbsent: [ ]
+	^ self privateProtocols asArray
 ]
 
 { #category : #initialization }
