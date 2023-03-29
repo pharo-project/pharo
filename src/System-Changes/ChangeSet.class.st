@@ -447,7 +447,7 @@ ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: s
 	file skipStyleChunk.
 	method notEmpty] whileTrue:[
 		items add: (ChangeRecord new file: file position: itemPosition type: #method
-							class: class category: cat meta: meta stamp: stamp)].
+							class: class protocol: cat meta: meta stamp: stamp)].
 	^ items
 ]
 
