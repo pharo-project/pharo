@@ -90,7 +90,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
-		  source: self pendingText;
+		  source: self pendingText asString;
 		  parse
 ]
 
