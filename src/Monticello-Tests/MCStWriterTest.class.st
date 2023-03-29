@@ -17,7 +17,7 @@ MCStWriterTest >> assertAllChunksAreWellFormed [
 { #category : #asserting }
 MCStWriterTest >> assertChunkIsWellFormed: chunk [
 	self class compiler
-		source:  chunk readStream ;
+		source: chunk;
 		class: UndefinedObject;
 		noPattern: true;
 		failBlock:  [self assert: false];
@@ -35,7 +35,7 @@ MCStWriterTest >> assertContentsOf: strm match: expected [
 { #category : #asserting }
 MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 	self class compiler
-		source: chunk readStream;
+		source: chunk;
 		class: UndefinedObject;
 		failBlock: [self assert: false];
 		compile.
