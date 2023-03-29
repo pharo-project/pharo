@@ -5,7 +5,6 @@ Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'protocolOrganizer',
 		'organizedClass',
 		'protocols',
 		'allProtocol'
