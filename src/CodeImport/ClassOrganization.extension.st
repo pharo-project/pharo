@@ -9,7 +9,7 @@ ClassOrganization >> changeFromString: aString [
 
 	"If nothing was scanned and I had no elements before, then default me"
 	(protocolSpecs isEmpty and: [ self protocols isEmpty ])
-		ifTrue: [ ^ self protocolOrganizer reset ].
+		ifTrue: [ self reset. ^ self protocolOrganizer reset ].
 
 	^ self internalChangeFromString: protocolSpecs
 ]

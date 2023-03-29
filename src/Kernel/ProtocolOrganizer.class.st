@@ -38,20 +38,8 @@ ProtocolOrganizer >> organization: anObject [
 	organization := anObject
 ]
 
-{ #category : #accessing }
-ProtocolOrganizer >> privateProtocols [
-
-	^ protocols
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> protocols [
-
-	^ self privateProtocols asArray
-]
-
 { #category : #initialization }
 ProtocolOrganizer >> reset [
-	protocols := IdentitySet new.
+
 	allProtocol := AllProtocol protocolOrganizer: self
 ]

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'protocolOrganizer',
 		'organizedClass',
-		'commentSourcePointer'
+		'commentSourcePointer',
+		'protocols'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -22,7 +23,7 @@ ClassOrganization class >> forClass: aClass [
 { #category : #adding }
 ClassOrganization >> addProtocol: aProtocol [
 
-	^ self privateProtocols add: aProtocol
+	^ protocols add: aProtocol
 ]
 
 { #category : #accessing }
@@ -181,6 +182,7 @@ ClassOrganization >> includesSelector: selector [
 ClassOrganization >> initialize [
 
 	super initialize.
+	self reset.
 	protocolOrganizer := ProtocolOrganizer new
 		                     organization: self;
 		                     yourself
@@ -257,12 +259,6 @@ ClassOrganization >> organizedClass [
 	^ organizedClass
 ]
 
-{ #category : #private }
-ClassOrganization >> privateProtocols [
-
-	^ self protocolOrganizer privateProtocols
-]
-
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector [
 
@@ -309,7 +305,7 @@ ClassOrganization >> protocolOrganizer [
 { #category : #accessing }
 ClassOrganization >> protocols [
 
-	^ self privateProtocols asArray
+	^ protocols asArray
 ]
 
 { #category : #protocol }
@@ -336,7 +332,7 @@ ClassOrganization >> removeEmptyProtocols [
 	oldProtocolNames := self allProtocolsNames copy.
 
 
-	removedProtocols := self privateProtocols
+	removedProtocols := protocols
 		                    select: [ :protocol | protocol canBeRemoved ]
 		                    thenDo: [ :protocol |
 			                    self removeProtocol: protocol.
@@ -352,7 +348,7 @@ ClassOrganization >> removeProtocol: aProtocol [
 	aProtocol canBeRemoved ifFalse: [ ^ self ].
 
 	oldProtocolNames := self allProtocolsNames copy.
-	self privateProtocols remove: aProtocol ifAbsent: [  ].
+	protocols remove: aProtocol ifAbsent: [  ].
 	self notifyOfRemovedProtocolNamed: aProtocol name.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self allProtocolsNames
 ]
@@ -382,6 +378,12 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 	self notifyOfChangedProtocolNameFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
 	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+]
+
+{ #category : #initialization }
+ClassOrganization >> reset [
+
+	protocols := IdentitySet new
 ]
 
 { #category : #'backward compatibility' }
