@@ -145,8 +145,10 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
-	self assert: 'test comment' = materializedClassOrTrait comment asString.
-	self assert: 'test stamp' = materializedClassOrTrait commentStamp.
+	"we do not store the commentSourePointer, as is would be invalid in anther image.
+	see https://github.com/theseion/Fuel/issues/270"
+	self assert: '' = materializedClassOrTrait comment.
+	self assert: '' = materializedClassOrTrait commentStamp.
 ]
 
 { #category : #tests }
