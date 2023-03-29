@@ -18,5 +18,11 @@ ClassOrganization >> changeFromString: aString [
 ClassOrganization >> internalChangeFromString: protocolSpecs [
 	"Parse the argument, aString, and make this be the receiver's structure."
 
-	protocolOrganizer := ProtocolOrganizer fromSpec: protocolSpecs
+	protocolOrganizer := ProtocolOrganizer new.
+
+	protocolSpecs do: [ :spec |
+		| name methods |
+		name := spec first asSymbol.
+		methods := spec allButFirst asSet.
+		self protocolOrganizer addProtocol: (Protocol name: name methodSelectors: methods) ]
 ]
