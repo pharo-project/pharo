@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #accessing }
+CodeError >> description [
+
+	^ self class name , ':' , self notice description
+]
+
+{ #category : #accessing }
 CodeError >> errorCode [
 
 	self

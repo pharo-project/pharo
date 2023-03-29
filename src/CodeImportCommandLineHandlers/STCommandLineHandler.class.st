@@ -45,12 +45,12 @@ STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 ]
 
 { #category : #printing }
-STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
+STCommandLineHandler class >> printCodeError: aCodeError [
 	| stderr position contents errorLine errorMessage maxLineNumberSize lineNumber |
 
 	"format the error"
-	position := aSyntaxErrorNotification position.
-	contents := aSyntaxErrorNotification sourceCode.
+	position := aCodeError position.
+	contents := aCodeError sourceCode.
 	errorLine := contents lineNumberCorrespondingToIndex: position.
 	stderr := VTermOutputDriver stderr.
 
@@ -58,7 +58,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	errorMessage := String streamContents: [ :s|
 		s nextPutAll: 'Syntax Error on line ';
 			print: errorLine; nextPutAll: ': ';
-			print: aSyntaxErrorNotification messageText].
+			print: aCodeError messageText].
 
 	 stderr red;
 		nextPutAll: errorMessage; lf;
@@ -112,11 +112,12 @@ STCommandLineHandler >> end [
 
 { #category : #private }
 STCommandLineHandler >> handleError: error [
+	"for syntax errors we print more detailed error informations"
 
-	"for syntax errors we can used the default action"	"otherwise resignal it"
-	(error isKindOf: CodeError)
-		ifTrue: [ error defaultAction ]
-		ifFalse: [ error pass ]
+	(error isKindOf: CodeError) ifTrue: [
+		self class printCodeError: error ].
+
+	error pass
 ]
 
 { #category : #private }
@@ -126,6 +127,10 @@ STCommandLineHandler >> handleError: error reference: aReference [
 	"We ignore warnings for now"
 	(error isKindOf: OCSemanticWarning)
 		ifTrue: [ ^ error pass ].
+
+	"Display CodeError nicely"
+	(error isKindOf: CodeError)
+		ifTrue: [ self class printCodeError: error ].
 
 	"spit out a warning if in headless mode, otherwise a debugger will popup"
 	Smalltalk isHeadless

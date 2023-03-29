@@ -142,13 +142,15 @@ WeakAnnouncementSubscription >> next [
 ]
 
 { #category : #printing }
-WeakAnnouncementSubscription >> printOn: stream [
+WeakAnnouncementSubscription >> printOn: aStream [
 
-	super printOn: stream.
+	super printOn: aStream.
 
-	stream
-		nextPut: $(;
-		print: action;
+	aStream
+		nextPutAll: ' (';
+		print: self subscriber;
+		nextPutAll: ' subscribes to ';
+		print: self announcementClass;
 		nextPut: $)
 ]
 
