@@ -95,9 +95,12 @@ RBProgramNode >> addReplacement: aStringReplacement [
 { #category : #notice }
 RBProgramNode >> addWarning: aMessage [
 
+	| notice |
 	"Add a warning information to the node.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
-	self addNotice: (RBWarningNotice new messageText: aMessage)
+	notice := RBWarningNotice new messageText: aMessage.
+	self addNotice: notice.
+	^ notice
 ]
 
 { #category : #accessing }
