@@ -389,7 +389,7 @@ OpalCompiler >> install [
 
 	logSource ifTrue: [
 		class
-			logMethodSource: source contents
+			logMethodSource: source
 			forMethod: method
 			inCategory: protocolName
 			withStamp: changeStamp ].
@@ -418,7 +418,7 @@ OpalCompiler >> isInteractive [
 
 { #category : #private }
 OpalCompiler >> logDoIt [
-	self compilationContext logDoItEvaluation: source contents
+	self compilationContext logDoItEvaluation: source
 ]
 
 { #category : #accessing }
@@ -444,7 +444,7 @@ OpalCompiler >> parse [
 	self permitFaulty ifNil: [ self permitFaulty: true ].
 
 	parser := self parserClass new.
-	parser initializeParserWith: source contents.
+	parser initializeParserWith: source.
 	ast := self semanticScope parseASTBy: parser.
 
 	self permitFaulty ifFalse: [ ast checkFaulty: nil ].
@@ -580,5 +580,7 @@ OpalCompiler >> semanticScope: anObject [
 
 { #category : #accessing }
 OpalCompiler >> source: aString [
-	source := aString readStream
+
+	"source should be a string, but call contents for old clients that send streams"
+	source := aString contents
 ]

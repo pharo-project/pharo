@@ -77,7 +77,7 @@ ChangeRecord >> fileIn [
 				ifTrue:
 					[
 					methodClass
-						compile: self text
+						compile: self string
 						classified: category
 						withStamp: stamp
 						notifying: nil ].
@@ -88,7 +88,7 @@ ChangeRecord >> fileIn [
 						ifFalse: [ self class compiler evaluate: s ] ].
 			type == #classComment
 				ifTrue:
-					[ (Smalltalk globals at: class asSymbol) comment: self text stamp: stamp ] ]
+					[ (Smalltalk globals at: class asSymbol) comment: self string stamp: stamp ] ]
 ]
 
 { #category : #accessing }
