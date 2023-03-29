@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'protocolOrganizer',
 		'organizedClass',
-		'commentSourcePointer',
 		'protocols',
 		'allProtocol'
 	],
@@ -116,9 +115,7 @@ ClassOrganization >> cleanUpProtocolsForClass: aClass [
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	^ commentSourcePointer
-		  ifNil: [ '' ]
-		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+	^ organizedClass comment
 ]
 
 { #category : #accessing }
@@ -128,26 +125,23 @@ ClassOrganization >> comment: aString [
 
 { #category : #accessing }
 ClassOrganization >> commentSourcePointer [
-	^ commentSourcePointer
+	^ organizedClass commentSourcePointer
 ]
 
 { #category : #accessing }
 ClassOrganization >> commentSourcePointer: anObject [
-	commentSourcePointer := anObject
+	organizedClass commentSourcePointer: anObject
 ]
 
 { #category : #accessing }
 ClassOrganization >> commentStamp [
 
-	^ commentSourcePointer
-		  ifNil: [ '' ]
-		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
+	^ organizedClass commentStamp
 ]
 
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	commentSourcePointer := otherOrganization commentSourcePointer.
 	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocolNamed: protocol name ] ]
 ]
 
@@ -158,7 +152,7 @@ ClassOrganization >> extensionProtocols [
 
 { #category : #testing }
 ClassOrganization >> hasComment [
-	^ commentSourcePointer isNotNil
+	^ organizedClass hasComment
 ]
 
 { #category : #testing }
