@@ -45,6 +45,12 @@ ClassOrganization >> allMethodSelectors [
 ]
 
 { #category : #accessing }
+ClassOrganization >> allProtocol [
+
+	^ self protocolOrganizer allProtocol
+]
+
+{ #category : #accessing }
 ClassOrganization >> allProtocols [
 
 	^ { self protocolOrganizer allProtocol } , self protocols
@@ -68,6 +74,22 @@ ClassOrganization >> classComment: aString [
 	self comment: aString
 ]
 
+{ #category : #'protocol - adding' }
+ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
+
+	| name protocol |
+	name := aProtocolName.
+	name = self allProtocol name ifTrue: [ name := Protocol unclassified ].
+
+	"maybe here we should check if this method already belong to another protocol"
+	self protocols
+		select: [ :p | p includesSelector: aSymbol ]
+		thenDo: [ :p | p removeMethodSelector: aSymbol ].
+	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
+
+	protocol addMethodSelector: aSymbol
+]
+
 { #category : #'backward compatibility' }
 ClassOrganization >> classify: selector under: aProtocolName [
 
@@ -76,7 +98,7 @@ ClassOrganization >> classify: selector under: aProtocolName [
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= aProtocolName or: [ aProtocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
-	self protocolOrganizer classify: selector inProtocolNamed: aProtocolName.
+	self classify: selector inProtocolNamed: aProtocolName.
 	(oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: aProtocolName ]
 ]
@@ -285,7 +307,8 @@ ClassOrganization >> protocolOrganizer [
 
 { #category : #accessing }
 ClassOrganization >> protocols [
-	^ self protocolOrganizer protocols
+
+	^ self privateProtocols asArray
 ]
 
 { #category : #protocol }

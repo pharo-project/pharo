@@ -14,38 +14,10 @@ Class {
 	#category : #'Kernel-Protocols'
 }
 
-{ #category : #'protocol - adding' }
-ProtocolOrganizer >> addProtocolNamed: protocolName [
-
-	^ self organization addProtocol: (Protocol name: protocolName)
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> allMethodSelectors [
-
-	^ self organization allMethodSelectors
-]
-
 { #category : #accessing }
 ProtocolOrganizer >> allProtocol [
 
 	^ allProtocol
-]
-
-{ #category : #'protocol - adding' }
-ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
-
-	| name protocol |
-	name := aProtocolName.
-	name = allProtocol name ifTrue: [ name := Protocol unclassified ].
-
-	"maybe here we should check if this method already belong to another protocol"
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
-
-	protocol addMethodSelector: aSymbol
 ]
 
 { #category : #initialization }
@@ -70,12 +42,6 @@ ProtocolOrganizer >> organization: anObject [
 ProtocolOrganizer >> privateProtocols [
 
 	^ protocols
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
-
-	^ self organization protocolNamed: aString ifAbsent: aBlock
 ]
 
 { #category : #accessing }
