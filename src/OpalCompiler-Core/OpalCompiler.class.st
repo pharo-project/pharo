@@ -447,13 +447,12 @@ OpalCompiler >> parse [
 	parser initializeParserWith: source contents.
 	ast := self semanticScope parseASTBy: parser.
 
-	self permitFaulty ifFalse: [ ast checkFaulty: nil ].
-
 	ast methodNode compilationContext: self compilationContext.
 	self callParsePlugins.
 	self doSemanticAnalysis.
 
-	self permitFaulty ifFalse: [ ast checkFaulty: nil ].
+	self permitFaulty ifFalse: [
+		ast allNotices do: [ :n | n isWarning ifFalse: [ n signalError ] ] ].
 
 	^ ast
 ]
