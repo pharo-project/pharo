@@ -24,6 +24,12 @@ OCUndeclaredVariableWarning >> defaultAction [
 ]
 
 { #category : #accessing }
+OCUndeclaredVariableWarning >> description [
+
+	^ self class name , ':' , self notice description
+]
+
+{ #category : #accessing }
 OCUndeclaredVariableWarning >> methodClass [
 	^ self methodNode methodClass
 ]
@@ -50,8 +56,20 @@ OCUndeclaredVariableWarning >> notice: anObject [
 	notice := anObject
 ]
 
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> position [
+
+	^ self notice position
+]
+
 { #category : #correcting }
 OCUndeclaredVariableWarning >> reparator [
 
 	^ OCCodeReparator new node: self node
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> sourceCode [
+
+	^ self methodNode sourceCode
 ]
