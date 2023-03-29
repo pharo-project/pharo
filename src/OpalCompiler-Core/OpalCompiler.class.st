@@ -581,7 +581,6 @@ OpalCompiler >> semanticScope: anObject [
 { #category : #accessing }
 OpalCompiler >> source: aString [
 
-	self flag: 'source should be a string, but call contents for old clients that send streams'.
-	aString isString ifFalse: [ self error: 'Need string!' ]. "To remove"
+	"source should be a string, but call contents for old clients that send streams"
 	source := aString contents
 ]
