@@ -313,11 +313,9 @@ FFIStructure class >> rebuildFieldAccessors [
 
 { #category : #private }
 FFIStructure class >> removeAllMethodsInProtocol: protocolName [
+
 	| protocol |
-
-	protocol := self organization protocolNamed: protocolName.
-	protocol ifNil: [ ^ self ].
-
+	protocol := self organization protocolNamed: protocolName ifAbsent: [ ^ self ].
 	protocol methods do: [ :each | self removeSelector: each ]
 ]
 

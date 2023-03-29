@@ -13,11 +13,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> empty [
-	 ^ self name: #''
-]
-
-{ #category : #'instance creation' }
 Protocol class >> name: nm [
 
 	^ self new

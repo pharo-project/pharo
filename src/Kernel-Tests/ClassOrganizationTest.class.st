@@ -65,6 +65,13 @@ ClassOrganizationTest >> testMethodsInProtocolNamed [
 ]
 
 { #category : #tests }
+ClassOrganizationTest >> testProtocolNamed [
+
+	self assert: (self organization protocolNamed: 'empty') name equals: 'empty'.
+	self should: [ self organization protocolNamed: 'non existing' ] raise: NotFound
+]
+
+{ #category : #tests }
 ClassOrganizationTest >> testProtocolNames [
 
 	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one )

@@ -222,7 +222,13 @@ ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString [
 
-	^ self protocolOrganizer protocolNamed: aString ifAbsent: [ nil ]
+	^ self protocolOrganizer protocolNamed: aString
+]
+
+{ #category : #accessing }
+ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
+
+	^ self protocolOrganizer protocolNamed: aString ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -277,28 +283,27 @@ ClassOrganization >> removeProtocol: aProtocol [
 ClassOrganization >> removeProtocolIfEmpty: protocolName [
 	"The protocol may already have been removed, be non empty or a special protocol which can't be removed, such as 'all'."
 
-	(self protocolNamed: protocolName)
-		ifNotNil: [ :protocol |
-			(protocol isEmpty and: [ protocol canBeRemoved ])
-				ifTrue: [ self removeProtocol: protocol ] ]
+	| protocol |
+	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
+	(protocol isEmpty and: [ protocol canBeRemoved ]) ifTrue: [ self removeProtocol: protocol ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> removeProtocolNamed: protocolName [
 
-	(self hasProtocolNamed: protocolName) ifFalse: [ ^ self ].
-
-	self removeProtocol: (self protocolNamed: protocolName)
+	self removeProtocol: (self protocolNamed: protocolName ifAbsent: [ ^ self ])
 ]
 
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
+	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
 	self notifyOfChangedProtocolNameFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolOrganizer protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
 ]
 
 { #category : #'backward compatibility' }
