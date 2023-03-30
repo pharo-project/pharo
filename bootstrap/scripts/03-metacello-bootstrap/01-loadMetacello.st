@@ -1,3 +1,4 @@
+| mcPackages |
 mcPackages := #(
  'ScriptingExtensions'
  'System-FileRegistry'
