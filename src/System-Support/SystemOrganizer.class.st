@@ -149,6 +149,18 @@ SystemOrganizer >> orderedTraitsIn: category [
 	^ traits asArray
 ]
 
+{ #category : #operations }
+SystemOrganizer >> removeBehavior: behavior [
+	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
+
+	| behaviorName |
+	behaviorName := behavior isBehavior
+		                ifTrue: [ behavior name ]
+		                ifFalse: [ behavior ].
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
+]
+
 { #category : #removing }
 SystemOrganizer >> removeCategoriesMatching: matchString [
 	"Remove all matching categories with their classes"
@@ -169,13 +181,6 @@ SystemOrganizer >> removeCategory: category [
 	categoryMap removeKey: category.
 
 	SystemAnnouncer uniqueInstance classCategoryRemoved: category
-]
-
-{ #category : #operations }
-SystemOrganizer >> removeElement: behaviorName [
-	"Remove the element from all categories."
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
 ]
 
 { #category : #removing }
