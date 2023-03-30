@@ -247,25 +247,25 @@ OCCompilerTest >> testUndefinedVariable [
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	self
 		assert: {
-			OpalCompiler new evaluate: 'undefinedName123'.
-			OpalCompiler new evaluate: 'undefinedName123 := 1. undefinedName123'.
-			OpalCompiler new evaluate: 'undefinedName123'.
+			[ OpalCompiler new evaluate: 'undefinedName123' ] on: UndeclaredVariableAccess do: [ UndeclaredVariableAccess ].
+			[ OpalCompiler new evaluate: 'undefinedName123 := 1. undefinedName123' ] on: UndeclaredVariableAccess do: [ UndeclaredVariableAccess ].
+			[ OpalCompiler new evaluate: 'undefinedName123' ] on: UndeclaredVariableAccess do: [ UndeclaredVariableAccess ].
 			}
-		equals: { nil. 1. 1. }.
+		equals: { UndeclaredVariableAccess. UndeclaredVariableAccess. UndeclaredVariableAccess. }.
 
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	self
 		assert: {
-			OpalCompiler new
+			[ OpalCompiler new
 				permitFaulty: true;
-				evaluate: 'undefinedName123'.
-			OpalCompiler new
+				evaluate: 'undefinedName123' ] on: UndeclaredVariableAccess do: [ UndeclaredVariableAccess ].
+			[ OpalCompiler new
 				permitFaulty: true;
-				evaluate: 'undefinedName123 := 2. undefinedName123'.
-			OpalCompiler new
+				evaluate: 'undefinedName123 := 2. undefinedName123' ] on: UndeclaredVariableAccess do: [ UndeclaredVariableAccess ].
+			[ OpalCompiler new
 				permitFaulty: true;
-				evaluate: 'undefinedName123' }
-		equals: { nil. 2. 2. }.
+				evaluate: 'undefinedName123' ] on: UndeclaredVariableAccess do: [ UndeclaredVariableAccess ]. }
+		equals: { UndeclaredVariableAccess. UndeclaredVariableAccess. UndeclaredVariableAccess. }.
 
 	"Cleanup"
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]

@@ -27,8 +27,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 					environment: environment;
 					class: (environment at: #MyClass);
 					compile: 'tt ^Object'.
-	return := method valueWithReceiver: nil arguments: #().
-	self assert: return equals: nil
+	self should: [ method valueWithReceiver: nil arguments: #() ] raise: UndeclaredVariableAccess
 ]
 
 { #category : #'test - production - environment' }
