@@ -29,7 +29,7 @@ ChangeRecord >> createMethodDefinition [
 		parentName: self methodClassName;
 		isMetaSide: meta;
 		sourceCode: self string;
-		protocol: category;
+		protocol: protocol;
 		stamp: stamp;
 		yourself
 ]
