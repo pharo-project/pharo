@@ -1220,11 +1220,10 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
-			         value: 10;
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
-				            #( 12 12 12 'Undeclared variable' ) );
-			         skip: #exec). "a is bound to an undefined variable, and according to some compilation options it could be registerer or not registered. This is very bad as regitred ones act like globals thus polute other tests. So disable the execution for now."
+				            #( 12 12 12 'Undeclared variable' ) )).
 		        (self new
 			         source: '^ a';
 			         raise: UndeclaredVariableAccess;
