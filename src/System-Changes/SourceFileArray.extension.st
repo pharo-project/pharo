@@ -117,7 +117,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 									position: filePosition
 									type: #classComment
 									class: theNonMetaClassName
-									category: nil
+									protocol: nil
 									meta: classIsMeta
 									stamp: stamp) ]
 					ifFalse: [
@@ -129,7 +129,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 									position: filePosition
 									type: #method
 									class: theNonMetaClassName
-									category: protocol
+									protocol: protocol
 									meta: classIsMeta
 									stamp: stamp) ].
 

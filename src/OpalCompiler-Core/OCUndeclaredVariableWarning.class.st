@@ -3,7 +3,10 @@ I get signalled when a temporary variable is used that is not defined.  My defau
 "
 Class {
 	#name : #OCUndeclaredVariableWarning,
-	#superclass : #OCSemanticWarning,
+	#superclass : #Notification,
+	#instVars : [
+		'notice'
+	],
 	#category : #'OpalCompiler-Core-Exception'
 }
 
@@ -13,15 +16,60 @@ OCUndeclaredVariableWarning >> defaultAction [
  	className := self methodClass name.
 	selector := self methodNode selector.
 
-	NewUndeclaredWarning signal: node name in: (selector
+	NewUndeclaredWarning signal: self node name in: (selector
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
 	^ super defaultAction
 ]
 
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> description [
+
+	^ self class name , ':' , self notice description
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> methodClass [
+	^ self methodNode methodClass
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> methodNode [
+	^ self node methodNode
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> node [
+	^ self notice node
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> notice [
+
+	^ notice
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> notice: anObject [
+
+	notice := anObject
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> position [
+
+	^ self notice position
+]
+
 { #category : #correcting }
 OCUndeclaredVariableWarning >> reparator [
 
-	^ OCCodeReparator new node: node
+	^ OCCodeReparator new node: self node
+]
+
+{ #category : #accessing }
+OCUndeclaredVariableWarning >> sourceCode [
+
+	^ self methodNode sourceCode
 ]
