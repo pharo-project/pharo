@@ -58,10 +58,7 @@ RBParseTreeSearcher class >> whichMethodIn: aCollection matches: subtree [
 
 	| isGetterBlock searchTree |
 	isGetterBlock := self new
-		matchesAnyMethodOf: #(
-			'`method ^ `@aValue`{ :aNode |
-				(aNode isKindOf: RBInstanceVariableNode)
-				or: [ aNode isKindOf: RBLiteralValueNode ] }' )
+		matchesAnyMethodOf: #( '`method ^ `@aValue`{ :aNode | aNode isKindOf: RBLiteralValueNode }' )
 		do: [ :node :answer | true ].
 	searchTree := self matchingTreeForSubtree: subtree.
 
