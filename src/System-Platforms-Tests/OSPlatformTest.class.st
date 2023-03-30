@@ -1,7 +1,7 @@
 Class {
 	#name : #OSPlatformTest,
 	#superclass : #TestCase,
-	#category : #'Tests-System'
+	#category : #'System-Platforms-Tests-Base'
 }
 
 { #category : #tests }
@@ -55,6 +55,6 @@ OSPlatformTest >> testStartUpList [
 	"This test documents issue http://code.google.com/p/pharo/issues/detail?id=838"
 
 	| startupList |
-	startupList := (SessionManager default startupList collect: [:each | each handledId]).
-	self should: [ (startupList indexOf: #Delay) < (startupList indexOf: #GlobalIdentifier) ]
+	startupList := SessionManager default startupList collect: [ :each | each handledId ].
+	self assert: (startupList indexOf: #Delay) < (startupList indexOf: #GlobalIdentifier)
 ]
