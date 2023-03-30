@@ -18,24 +18,25 @@ TraitMethodDescriptionTest >> testArgumentNames [
 
 { #category : #tests }
 TraitMethodDescriptionTest >> testCategories [
-	self assert: (self t4 organization categoryOfElement: #m21) equals: #cat1.
-	self assert: (self t4 organization categoryOfElement: #m22) equals: #cat2.
-	self assert: (self t4 organization categoryOfElement: #m11) equals: #catX.
-	self assert: (self t4 organization categoryOfElement: #m12) equals: #cat2.
-	self assert: (self t4 organization categoryOfElement: #m13) equals: #cat3.
-	self assert: (self t6 organization categoryOfElement: #m22Alias) equals: #cat2.
+
+	self assert: (self t4 organization protocolNameOfElement: #m21) equals: #cat1.
+	self assert: (self t4 organization protocolNameOfElement: #m22) equals: #cat2.
+	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
+	self assert: (self t4 organization protocolNameOfElement: #m12) equals: #cat2.
+	self assert: (self t4 organization protocolNameOfElement: #m13) equals: #cat3.
+	self assert: (self t6 organization protocolNameOfElement: #m22Alias) equals: #cat2.
 	self t2 organization classify: #m22 under: #catX.
-	self assert: (self t4 organization categoryOfElement: #m22) equals: #catX.
-	self assert: (self t6 organization categoryOfElement: #m22Alias) equals: #catX.
+	self assert: (self t4 organization protocolNameOfElement: #m22) equals: #catX.
+	self assert: (self t6 organization protocolNameOfElement: #m22Alias) equals: #catX.
 	self t6 organization classify: #m22 under: #catY.
 	self t6 organization classify: #m22Alias under: #catY.
 	self t2 organization classify: #m22 under: #catZ.
-	self assert: (self t6 organization categoryOfElement: #m22) equals: #catY.
-	self assert: (self t6 organization categoryOfElement: #m22Alias) equals: #catY.
+	self assert: (self t6 organization protocolNameOfElement: #m22) equals: #catY.
+	self assert: (self t6 organization protocolNameOfElement: #m22Alias) equals: #catY.
 	self t1 compile: 'mA' classified: #catA.
-	self assert: (self t4 organization categoryOfElement: #mA) equals: #catA.
+	self assert: (self t4 organization protocolNameOfElement: #mA) equals: #catA.
 	self t1 organization classify: #mA under: #cat1.
-	self assert: (self t4 organization categories includes: #catA) not
+	self assert: (self t4 organization protocolNames includes: #catA) not
 ]
 
 { #category : #tests }
@@ -78,23 +79,23 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 
 { #category : #tests }
 TraitMethodDescriptionTest >> testConflictingCategories [
+
 	| t7 t8 |
 	self t2 compile: 'm11' classified: #catY.
-	self assert: (self t4 organization categoryOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization categoryOfElement: #m11) equals: Protocol ambiguous.
+	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
+	self assert: (self t5 organization protocolNameOfElement: #m11) equals: Protocol ambiguous.
 	t7 := self createTraitNamed: #T7 uses: self t1 + self t2.
-	self assert: (t7 organization categoryOfElement: #m11)
-				equals: Protocol ambiguous.
+	self assert: (t7 organization protocolNameOfElement: #m11) equals: Protocol ambiguous.
 	self t1 removeSelector: #m11.
-	self assert: (self t4 organization categoryOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization categoryOfElement: #m11) equals: #catY.
-	self assert: (t7 organization categoryOfElement: #m11) equals: #catY.
-	self assert: (t7 organization categories includes: Protocol ambiguous) not.
+	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
+	self assert: (self t5 organization protocolNameOfElement: #m11) equals: #catY.
+	self assert: (t7 organization protocolNameOfElement: #m11) equals: #catY.
+	self assert: (t7 organization protocolNames includes: Protocol ambiguous) not.
 	self t1 compile: 'm11' classified: #cat1.
 	t8 := self createTraitNamed: #T8 uses: self t1 + self t2.
 	t8 organization classify: #m11 under: #cat1.
 	self t1 organization classify: #m11 under: #catZ.
-	self assert: (self t4 organization categoryOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization categoryOfElement: #m11) equals: Protocol ambiguous.
-	self assert: (t8 organization categoryOfElement: #m11) equals: #catZ
+	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
+	self assert: (self t5 organization protocolNameOfElement: #m11) equals: Protocol ambiguous.
+	self assert: (t8 organization protocolNameOfElement: #m11) equals: #catZ
 ]
