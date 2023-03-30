@@ -36,13 +36,6 @@ SystemOrganizer >> addCategory: catString [
 	SystemAnnouncer uniqueInstance classCategoryAdded: catString
 ]
 
-{ #category : #private }
-SystemOrganizer >> basicRemoveElement: element [
-	"Remove the element from all categories."
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
-]
-
 { #category : #accessing }
 SystemOrganizer >> categories [
 
@@ -85,7 +78,7 @@ SystemOrganizer >> classify: element under: categoryName [
 
 	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
 		oldCategory = categoryName ifTrue: [ ^ self ].
-		self basicRemoveElement: element ].
+		self removeElement: element ].
 
 	(categoryMap at: categoryName) add: element
 ]
@@ -175,7 +168,9 @@ SystemOrganizer >> removeCategory: category [
 
 { #category : #operations }
 SystemOrganizer >> removeElement: element [
-	^ self basicRemoveElement: element
+	"Remove the element from all categories."
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
 ]
 
 { #category : #removing }
