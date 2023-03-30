@@ -45,21 +45,16 @@ ProtocolOrganizer >> allProtocols [
 
 { #category : #'protocol - adding' }
 ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
+
 	| name protocol |
 	name := aProtocolName.
 	name = allProtocol name ifTrue: [ name := Protocol unclassified ].
 
 	"maybe here we should check if this method already belong to another protocol"
-	(self protocolsOfSelector: aSymbol) do: [ :p | p removeMethodSelector: aSymbol ].
+	self removeMethod: aSymbol.
 	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
 
 	protocol addMethodSelector: aSymbol
-]
-
-{ #category : #private }
-ProtocolOrganizer >> existsProtocolNamed: aProtocolName [
-
-	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ]
 ]
 
 { #category : #accessing }
@@ -71,11 +66,6 @@ ProtocolOrganizer >> extensionProtocols [
 ProtocolOrganizer >> hasProtocolNamed: aString [
 
 	^ self allProtocols anySatisfy: [ :each | each name = aString ]
-]
-
-{ #category : #testing }
-ProtocolOrganizer >> includesSelector: selector [
-	^ protocols anySatisfy: [ :each | each includesSelector: selector ]
 ]
 
 { #category : #initialization }
@@ -130,12 +120,6 @@ ProtocolOrganizer >> protocolsOfSelector: aSelector [
 	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
 ]
 
-{ #category : #protocol }
-ProtocolOrganizer >> protocolsSorted [
-	^ (self protocols collect: #name as: Array) sort
-		copyWithFirst: allProtocol name
-]
-
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeEmptyProtocols [
 	| removedProtocols |
@@ -163,21 +147,6 @@ ProtocolOrganizer >> removeProtocol: aProtocol [
 ProtocolOrganizer >> removeProtocolNamed: aName [
 
 	^ self removeProtocol: (self protocolNamed: aName ifAbsent: [ ^ self ])
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> renameProtocol: oldName into: newName [
-
-	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
-
-	(self existsProtocolNamed: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolNamed: oldName ]
-		ifFalse: [
-			^ (self protocolNamed: oldName)
-				  name: newName;
-				  yourself ]
 ]
 
 { #category : #initialization }
