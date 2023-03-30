@@ -51,10 +51,10 @@ SystemOrganizer >> categoriesMatching: matchString [
 ]
 
 { #category : #queries }
-SystemOrganizer >> categoryOfElement: element [
+SystemOrganizer >> categoryOfElement: behaviorName [
 	"Answer the category associated with the argument, element."
 
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ ^ category ] ].
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
 
 	^ nil
 ]
@@ -66,21 +66,21 @@ SystemOrganizer >> classesInCategory: category [
 ]
 
 { #category : #operations }
-SystemOrganizer >> classify: element under: categoryName [
+SystemOrganizer >> classify: behaviorName under: categoryName [
 	"Store the argument, element, in the category named heading."
 
 	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
 
 	categoryMap
 		at: categoryName
-		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
+		ifPresent: [ :classes | (classes includes: behaviorName) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addCategory: categoryName ].
 
-	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
+	(self categoryOfElement: behaviorName) ifNotNil: [ :oldCategory |
 		oldCategory = categoryName ifTrue: [ ^ self ].
-		self removeElement: element ].
+		self removeElement: behaviorName ].
 
-	(categoryMap at: categoryName) add: element
+	(categoryMap at: categoryName) add: behaviorName
 ]
 
 { #category : #operations }
@@ -167,10 +167,10 @@ SystemOrganizer >> removeCategory: category [
 ]
 
 { #category : #operations }
-SystemOrganizer >> removeElement: element [
+SystemOrganizer >> removeElement: behaviorName [
 	"Remove the element from all categories."
 
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
 ]
 
 { #category : #removing }
