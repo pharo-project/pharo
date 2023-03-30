@@ -40,17 +40,18 @@ MetacelloPharoCommonPlatform >> compiler [
 
 { #category : #reflection }
 MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName [
+
 	| copysName class newDefinition |
 	copysName := newName asSymbol.
-	copysName = oldClass name
-		ifTrue: [ ^ oldClass ].
-	(Smalltalk globals includesKey: copysName)
-		ifTrue: [ ^ self error: copysName , ' already exists' ].
+	copysName = oldClass name ifTrue: [ ^ oldClass ].
+	(Smalltalk globals includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition
-		copyReplaceAll: 'category: ' , (SystemOrganization categoryOfElement: oldClass name) asString printString
-		with: 'category: ' , newCategoryName printString.
-	class := self compiler logged: true; evaluate: newDefinition.
+		                 copyReplaceAll: 'category: ' , (SystemOrganization categoryOfBehavior: oldClass) asString printString
+		                 with: 'category: ' , newCategoryName printString.
+	class := self compiler
+		         logged: true;
+		         evaluate: newDefinition.
 	class class instanceVariableNames: oldClass class instanceVariablesString.
 	class copyAllMethodsFrom: oldClass.
 	class class copyAllMethodsFrom: oldClass class.

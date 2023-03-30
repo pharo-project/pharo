@@ -51,8 +51,13 @@ SystemOrganizer >> categoriesMatching: matchString [
 ]
 
 { #category : #queries }
-SystemOrganizer >> categoryOfElement: behaviorName [
-	"Answer the category associated with the argument, element."
+SystemOrganizer >> categoryOfBehavior: behavior [
+	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
+
+	| behaviorName |
+	behaviorName := behavior isBehavior
+		                ifTrue: [ behavior name ]
+		                ifFalse: [ behavior ].
 
 	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
 
@@ -76,7 +81,7 @@ SystemOrganizer >> classify: behaviorName under: categoryName [
 		ifPresent: [ :classes | (classes includes: behaviorName) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addCategory: categoryName ].
 
-	(self categoryOfElement: behaviorName) ifNotNil: [ :oldCategory |
+	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
 		oldCategory = categoryName ifTrue: [ ^ self ].
 		self removeElement: behaviorName ].
 

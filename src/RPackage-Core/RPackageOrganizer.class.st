@@ -148,7 +148,7 @@ RPackageOrganizer class >> methodAdded: anEvent [
 	(methodCategory isEmptyOrNil or:[ methodCategory first ~= $* ])
 		ifFalse: [
 			(self isPackageDefinedForClass: anEvent methodClass)
-					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfElement: anEvent methodClass instanceSide asSymbol) ].
+					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfBehavior: anEvent methodClass instanceSide) ].
 		]
 ]
 
