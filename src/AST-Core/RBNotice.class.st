@@ -84,3 +84,11 @@ RBNotice >> printOn: aStream [
 		nextPutAll: self messageText;
 		nextPutAll: ')'
 ]
+
+{ #category : #signalling }
+RBNotice >> signalError [
+
+	CodeError new
+		notice: self;
+		signal
+]
