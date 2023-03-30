@@ -71,7 +71,10 @@ UndeclaredVariable >> isUndeclaredVariable [
 UndeclaredVariable >> read [
 
 	<debuggerCompleteToSender>
-	self error: 'Cannot read undeclared variable ' , self name
+	UndeclaredVariableAccess new
+		messageText: 'Cannot read undeclared variable ' , self name;
+		variable: self;
+		signal
 ]
 
 { #category : #registry }
@@ -88,5 +91,8 @@ UndeclaredVariable >> unregister [
 UndeclaredVariable >> write: aValue [
 
 	<debuggerCompleteToSender>
-	self error: 'Cannot write undeclared variable ' , self name
+	UndeclaredVariableAccess new
+		messageText: 'Cannot write undeclared variable ' , self name;
+		variable: self;
+		signal
 ]
