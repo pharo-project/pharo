@@ -317,11 +317,13 @@ RBCodeSnippet class >> badExpressions [
 		        "Note that the | character is also a binary operator, so a missing opening | become a binary call with a missing argument (see bellow)"
 		        (self new
 			         source: 'a | ';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'a || ';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 6 5 6 'Variable or expression expected' ) )).
@@ -329,11 +331,13 @@ RBCodeSnippet class >> badExpressions [
 			         source: '| | a';
 			         formattedCode: 'a';
 			         isFaulty: false;
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
 			         isFaulty: false;
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
@@ -460,7 +464,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a b]';
 			         formattedCode: '[ :a | b ]';
-			         value: nil;
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' )
 				            #( 5 5 5 'Undeclared variable' ) )). "FIXME"
 		        (self new
@@ -518,6 +522,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
 			         isFaulty: false;
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
@@ -955,6 +960,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: 'Δə';
 			         isFaulty: false;
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
@@ -1162,6 +1168,7 @@ RBCodeSnippet class >> badMethods [
 				            #( 14 13 14 'Variable or expression expected' ) )). "FIXME. dont eat parentheses"
 		        (self new
 			         source: 'foo < bar: baz > ';
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
 				            #( 12 14 12 'Undeclared variable' )
@@ -1220,6 +1227,7 @@ RBCodeSnippet class >> badSemantic [
 			         skip: #exec). "a is bound to an undefined variable, and according to some compilation options it could be registerer or not registered. This is very bad as regitred ones act like globals thus polute other tests. So disable the execution for now."
 		        (self new
 			         source: '^ a';
+			         raise: UndeclaredVariableAccess;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
 		        "Uninitialized variable"
@@ -1457,6 +1465,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
 			         formattedCode: 'a := a. { [ :a | } a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1467,6 +1476,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1475,6 +1485,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | ] a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1482,6 +1493,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
 			         formattedCode: 'a := a. { [ :a | } a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1492,6 +1504,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
 			         formattedCode: 'a := a. { [ :a | a := a } a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1501,6 +1514,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1509,7 +1523,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a a ]. a := a';
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
-			         value: nil;
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1519,6 +1533,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
+			         raise: UndeclaredVariableAccess;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
