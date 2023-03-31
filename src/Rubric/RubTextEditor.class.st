@@ -1175,7 +1175,7 @@ RubTextEditor >> forwardDelete: aKeyboardEvent [
 			| idx1 idx2 |
 			idx1 := self startIndex min: self stopIndex.
 			idx2 := self stopIndex max: self startIndex.
-			aKeyboardEvent controlKeyPressed
+			aKeyboardEvent controlKeyPressed | aKeyboardEvent commandKeyPressed
 				ifTrue: [ idx2 := self nextWord: idx1 + 1 ]
 				ifFalse: [ idx2 := idx2 + 1 ].
 			self selectInvisiblyFrom: idx1 to: idx2 - 1 ].
@@ -1593,19 +1593,22 @@ RubTextEditor >> nextCharacterIfAbsent: aBlock [
 
 { #category : #private }
 RubTextEditor >> nextWord: position [
-	| string index initialIsAlphaNumeric size |
 
-	position <= 1 ifTrue:[ ^ 1 ].	
+	| string index initialIsAlphaNumeric size |
+	"Positions go from 1 to size + 1
+	Position N + 1 is after the Nth character"
+	position < 1 ifTrue: [ ^ 1 ].
 	string := self string.
-	size := string size.
+	size := string size + 1.
 	position >= size ifTrue: [ ^ size ].
 
 	index := position.
-	initialIsAlphaNumeric := self isWordCharacterAt: (index - 1) in: string.
+	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
 
-	[(index < size) 
-		and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]]
-			whileTrue: [index := index + 1].
+	[
+	index < size and: [
+		(self isWordCharacterAt: index in: string) = initialIsAlphaNumeric ] ]
+		whileTrue: [ index := index + 1 ].
 
 	^ index
 ]

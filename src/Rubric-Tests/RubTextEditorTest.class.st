@@ -5,7 +5,8 @@ Class {
 	#name : #RubTextEditorTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'editor'
+		'editor',
+		'string'
 	],
 	#category : #'Rubric-Tests-Editing-Core'
 }
@@ -16,26 +17,38 @@ RubTextEditorTest >> setUp [
 	super setUp.
 	editor := RubTextEditor forTextArea: RubTextFieldArea new.
 	"Add text with a paragraph"
-	editor addString: 'Lorem ipsum dolor sit amet'.
+	string := 'Lorem ipsum '.
+	editor addString: string
 ]
 
 { #category : #tests }
 RubTextEditorTest >> testNextWord [
 
 	| textSize |
-	textSize := 'Lorem ipsum dolor sit amet' size.
+	textSize := string size.
 	self assert: (editor nextWord: -999) equals: 1. "Out of range"
 	self assert: (editor nextWord: 0) equals: 1. "Out of range"
-	self assert: (editor nextWord: 1) equals: 1. "L|orem ipsum >> L|orem ipsum"
-	self assert: (editor nextWord: 2) equals: 6. "Lo|rem ipsum >> Lorem |ipsum"
-	self assert: (editor nextWord: 4) equals: 6. "Lore|m ipsum >> Lorem |ipsum"
-	self assert: (editor nextWord: 11) equals: 12. "Lorem ipsum| dolor >> Lorem ipsum |dolor"
-	self assert: (editor nextWord: 18) equals: 18. "Lorem ipsum dolor |sit amet >> Lorem ipsum dolor |sit amet"
-	self assert: (editor nextWord: (textSize - 2)) equals: textSize. "Lorem ipsum dolor sit am|et >> Lorem ipsum dolor sit amet|"
-	self assert: (editor nextWord: (textSize - 1)) equals: textSize. "Lorem ipsum dolor sit ame|t >> Lorem ipsum dolor sit amet|"
-	self assert: (editor nextWord: (textSize)) equals: textSize. "Lorem ipsum dolor sit amet| >> Lorem ipsum dolor sit amet|"
-	self assert: (editor nextWord: (textSize + 1)) equals: textSize. "Out of range"
-	self assert: (editor nextWord: 999) equals: textSize. "Out of range"
+
+	1 to: 5 do: [ :i |
+		"From:   |Lorem ipsum
+		 To:     Lore|m ipsum
+		 Should be: Lorem| ipsum"
+		self assert: (editor nextWord: i) equals: 6 ].
+
+	"Lorem| ipsum >> Lorem |ipsum"
+	self assert: (editor nextWord: 6) equals: 7.
+
+	7 to: 11 do: [ :i |
+		"From:   Lorem |ipsum
+		 To:     Lorem ipsu|m
+		 Should be: Lorem ipsum|"
+		self assert: (editor nextWord: i) equals: 12 ].
+
+	"There is a space after ipsum:"
+	"Lorem ipsum| >> Lorem ipsum |"
+	self assert: (editor nextWord: 12) equals: 13.
+
+	self assert: (editor nextWord: 999) equals: textSize + 1. "Out of range"
 ]
 
 { #category : #tests }
