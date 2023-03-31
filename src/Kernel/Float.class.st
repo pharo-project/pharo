@@ -730,8 +730,8 @@ Float >> asMinimalDecimalFraction [
 	shead := s bitShift: slowbit.
 	[d := (r bitShift: slowbit) // shead.
 	r := r - (d * s).
-	(tc1 := (r > mMinus) not and: [roundingIncludesLimits or: [r < mMinus]]) |
-	(tc2 := (r + mPlus < s) not and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
+	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]]) |
+	(tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
 		[numerator := 10 * numerator + d.
 		denominator := 10 * denominator.
 		r := r * 10.
