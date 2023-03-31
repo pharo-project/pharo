@@ -21,20 +21,21 @@ ClassOrganization class >> forClass: aClass [
 { #category : #accessing }
 ClassOrganization >> addProtocol: aProtocol [
 
-	^ self addProtocol: aProtocol
+	^ self protocolOrganizer addProtocol: aProtocol
 ]
 
 { #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 
-	| oldProtocols |
+	| oldProtocols protocol |
 	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
 	oldProtocols := self protocolNames copy.
 
-	self addProtocol: (Protocol name: protocolName).
+	protocol := self addProtocol: (Protocol name: protocolName).
 	self notifyOfAddedProtocol: protocolName.
-	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
+	^ protocol
 ]
 
 { #category : #'backward compatibility' }
