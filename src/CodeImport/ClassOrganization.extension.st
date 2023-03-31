@@ -24,5 +24,5 @@ ClassOrganization >> internalChangeFromString: protocolSpecs [
 		| name methods |
 		name := spec first asSymbol.
 		methods := spec allButFirst asSet.
-		self protocolOrganizer addProtocol: (Protocol name: name methodSelectors: methods) ]
+		self addProtocol: (Protocol name: name methodSelectors: methods) ]
 ]

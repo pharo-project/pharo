@@ -19,16 +19,23 @@ ClassOrganization class >> forClass: aClass [
 ]
 
 { #category : #accessing }
+ClassOrganization >> addProtocol: aProtocol [
+
+	^ self protocolOrganizer addProtocol: aProtocol
+]
+
+{ #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 
-	| oldProtocols |
+	| oldProtocols protocol |
 	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
 
 	oldProtocols := self protocolNames copy.
 
-	self protocolOrganizer addProtocol: (Protocol name: protocolName).
+	protocol := self addProtocol: (Protocol name: protocolName).
 	self notifyOfAddedProtocol: protocolName.
-	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
+	^ protocol
 ]
 
 { #category : #'backward compatibility' }
@@ -38,9 +45,15 @@ ClassOrganization >> allMethodSelectors [
 ]
 
 { #category : #accessing }
+ClassOrganization >> allProtocol [
+
+	^ self protocolOrganizer allProtocol
+]
+
+{ #category : #accessing }
 ClassOrganization >> allProtocols [
 
-	^ self protocolOrganizer allProtocols
+	^ { self allProtocol } , self protocols
 ]
 
 { #category : #accessing }
