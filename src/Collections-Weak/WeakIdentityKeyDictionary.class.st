@@ -1,50 +1,21 @@
 "
-This class represents an identity dictionary with weak keys.
+I am an identity dictionary holding only weakly on my keys.
+When one of my keys is garbage collected, the key->value association is removed from the dictionary.
+
+Internally I use WeakKeyAssociation objects that know myself as their container.
+WeakKeyAssociation are implemented as ephemerons and get mourned when their key is only known from itself.
+On mourn, the association asks the container to remove itself.
 "
 Class {
 	#name : #WeakIdentityKeyDictionary,
-	#superclass : #WeakKeyDictionary,
+	#superclass : #IdentityDictionary,
+	#traits : 'TWeakKeyedDictionary',
+	#classTraits : 'TWeakKeyedDictionary classTrait',
 	#category : #'Collections-Weak-Dictionaries'
 }
 
-{ #category : #private }
-WeakIdentityKeyDictionary >> compare: object1 to: object2 [
-	^ object1 == object2
-]
+{ #category : #copying }
+WeakIdentityKeyDictionary >> array: anArray [
 
-{ #category : #private }
-WeakIdentityKeyDictionary >> scanForEmptySlotFor: aKey [
-	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
-
-	| index start |
-	index := start := aKey identityHash \\ array size + 1.
-	[
-		(array at: index) ifNil: [ ^index ].
-		(index := index \\ array size + 1) = start ] whileFalse.
-	self errorNoFreeSpace
-]
-
-{ #category : #private }
-WeakIdentityKeyDictionary >> startIndexFor: anObject [
-	"Return the index at which the scan for anObject should start."
-
-	^(anObject identityHash \\ array size) + 1
-]
-
-{ #category : #enumeration }
-WeakIdentityKeyDictionary >> valuesDo: aBlock [
-	"See comments in Dictionary>>valuesDo:.  The code keeps the key so it's
-	not collected during the evaluation of aBlock"
-
-	tally = 0 ifTrue: [ ^self ].
-	1 to: array size do:
-		[ :eachIndex |
-			| eachAssociation eachKey |
-			eachAssociation := array at: eachIndex.
-			nil == eachAssociation ifFalse:
-				[
-					eachKey := eachAssociation key.
-					nil == eachKey ifFalse: [ aBlock value: eachAssociation value ]
-				]
-		]
+	array := anArray
 ]

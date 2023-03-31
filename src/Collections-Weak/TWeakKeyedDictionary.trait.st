@@ -13,12 +13,6 @@ TWeakKeyedDictionary >> add: anAssociation [
 ]
 
 { #category : #copying }
-TWeakKeyedDictionary >> array [
-
-	self explicitRequirement
-]
-
-{ #category : #copying }
 TWeakKeyedDictionary >> array: anArray [
 
 	self explicitRequirement
@@ -33,7 +27,7 @@ TWeakKeyedDictionary >> at: key put: anObject [
 	index := self findElementOrNil: key.
 	assoc := self array at: index.
 	assoc
-		ifNil: [self atNewIndex: index put: ((WeakKeyAssociation2 key: key value: anObject) container: self)]
+		ifNil: [self atNewIndex: index put: ((WeakKeyAssociation key: key value: anObject) container: self)]
 		ifNotNil: [assoc value: anObject].
 	^ anObject
 ]
