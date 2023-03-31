@@ -401,9 +401,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 
 { #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeClass [
-	<skip>
 	| change |
-	self skip.
 	change := changes
 		defineClass:
 			self class name , ' << #' , self changeMock name
