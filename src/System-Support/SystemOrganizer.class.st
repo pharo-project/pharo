@@ -36,13 +36,6 @@ SystemOrganizer >> addCategory: catString [
 	SystemAnnouncer uniqueInstance classCategoryAdded: catString
 ]
 
-{ #category : #private }
-SystemOrganizer >> basicRemoveElement: element [
-	"Remove the element from all categories."
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ classes remove: element ] ]
-]
-
 { #category : #accessing }
 SystemOrganizer >> categories [
 
@@ -58,10 +51,15 @@ SystemOrganizer >> categoriesMatching: matchString [
 ]
 
 { #category : #queries }
-SystemOrganizer >> categoryOfElement: element [
-	"Answer the category associated with the argument, element."
+SystemOrganizer >> categoryOfBehavior: behavior [
+	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
 
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: element) ifTrue: [ ^ category ] ].
+	| behaviorName |
+	behaviorName := behavior isBehavior
+		                ifTrue: [ behavior name ]
+		                ifFalse: [ behavior ].
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
 
 	^ nil
 ]
@@ -73,21 +71,21 @@ SystemOrganizer >> classesInCategory: category [
 ]
 
 { #category : #operations }
-SystemOrganizer >> classify: element under: categoryName [
+SystemOrganizer >> classify: behaviorName under: categoryName [
 	"Store the argument, element, in the category named heading."
 
 	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
 
 	categoryMap
 		at: categoryName
-		ifPresent: [ :classes | (classes includes: element) ifTrue: [ ^ self ] ]
+		ifPresent: [ :classes | (classes includes: behaviorName) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addCategory: categoryName ].
 
-	(self categoryOfElement: element) ifNotNil: [ :oldCategory |
+	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
 		oldCategory = categoryName ifTrue: [ ^ self ].
-		self basicRemoveElement: element ].
+		self removeElement: behaviorName ].
 
-	(categoryMap at: categoryName) add: element
+	(categoryMap at: categoryName) add: behaviorName
 ]
 
 { #category : #operations }
@@ -151,6 +149,18 @@ SystemOrganizer >> orderedTraitsIn: category [
 	^ traits asArray
 ]
 
+{ #category : #operations }
+SystemOrganizer >> removeBehavior: behavior [
+	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
+
+	| behaviorName |
+	behaviorName := behavior isBehavior
+		                ifTrue: [ behavior name ]
+		                ifFalse: [ behavior ].
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
+]
+
 { #category : #removing }
 SystemOrganizer >> removeCategoriesMatching: matchString [
 	"Remove all matching categories with their classes"
@@ -171,11 +181,6 @@ SystemOrganizer >> removeCategory: category [
 	categoryMap removeKey: category.
 
 	SystemAnnouncer uniqueInstance classCategoryRemoved: category
-]
-
-{ #category : #operations }
-SystemOrganizer >> removeElement: element [
-	^ self basicRemoveElement: element
 ]
 
 { #category : #removing }

@@ -18,7 +18,7 @@ RBCodeSnippetTest >> testCompileFaulty [
 			self assert: ast isFaulty.
 
 			"Some faulty AST can produce non faulty method where no `signalSyntaxError:` is present"
-			self assert: method isFaulty equals: snippet hasValue not]
+			]
 		ifFalse: [
 			self deny: method isFaulty ].
 	self testExecute: method

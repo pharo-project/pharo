@@ -1385,7 +1385,6 @@ Context >> printDebugStackOn: aStream [
 
 { #category : #printing }
 Context >> printDetails: stream [
-
 	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
 
 	| errorMessage string |
@@ -1395,18 +1394,18 @@ Context >> printDetails: stream [
 		tab;
 		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll:
-		([ receiver printStringLimitedTo: 90 ] on: Exception do: [ errorMessage ]).
+	stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
+			 on: Exception
+			 do: [ errorMessage ]).
 
 	stream
 		cr;
 		tab;
 		nextPutAll: 'Arguments and temporary variables: ';
 		cr.
-	string := [
-	          (self tempsAndValuesLimitedTo: 80 indent: 2)
-		          padRightTo: 1
-		          with: $x ] on: Exception do:  [ errorMessage ].
+	string := [ (self tempsAndValuesLimitedTo: 80 indent: 2) padRightTo: 1 with: $x ]
+		          on: Exception
+		          do: [ errorMessage ].
 	stream nextPutAll: string.
 
 	stream
@@ -1414,13 +1413,15 @@ Context >> printDetails: stream [
 		tab;
 		nextPutAll: 'Receiver''s instance variables: ';
 		cr.
-	receiver class allInstVarNames isEmpty
-		ifTrue: [
-			stream nextPutAll:
-				([ receiver printStringLimitedTo: 90 ] on: Exception do:  [ errorMessage ]) ]
-		ifFalse: [
+	receiver class allInstVarNames
+		ifEmpty: [
+			stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
+					 on: Exception
+					 do: [ errorMessage ]) ]
+		ifNotEmpty: [
 			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ]
-				on: Exception do:  [ stream nextPutAll: errorMessage ] ].
+				on: Exception
+				do: [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 

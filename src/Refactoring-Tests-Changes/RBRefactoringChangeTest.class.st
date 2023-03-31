@@ -428,14 +428,12 @@ RBRefactoringChangeTest >> testPerformChangeComment [
 
 { #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeMetaclass [
-	<skip>
 	| change |
-	self skip.
 	change := changes
 		defineClass:
 			self changeMock name
 				,
-					' class '.
+					' class instanceVariableNames: '''''.
 	self perform: change do: [ self assertEmpty: change changeClass class instVarNames ].
 	self denyEmpty: change changeClass class instVarNames.
 	self assert: change definedClass equals: self changeMock class

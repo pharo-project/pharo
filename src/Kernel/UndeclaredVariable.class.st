@@ -45,9 +45,17 @@ UndeclaredVariable >> definingClass [
 ]
 
 { #category : #'code generation' }
-UndeclaredVariable >> emitStore: methodBuilder [
-
-	methodBuilder storeIntoLiteralVariable: self
+UndeclaredVariable >> emitStore: aMethodBuilder [
+	| tempName |
+	"Swap implementation comes from the superclass"
+	tempName := '0TempForStackManipulation'.
+	aMethodBuilder
+		addTemp: tempName;
+		storeTemp: tempName;
+		popTop;
+		pushLiteral: self;
+		pushTemp: tempName;
+		send: #runtimeUndeclaredWrite:
 ]
 
 { #category : #'code generation' }
@@ -69,6 +77,16 @@ UndeclaredVariable >> isUndeclaredVariable [
 { #category : #registry }
 UndeclaredVariable >> register [
 	Undeclared add: self
+]
+
+{ #category : #'code generation' }
+UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
+
+	<debuggerCompleteToSender>
+	UndeclaredVariableWrite new
+		messageText: 'Attempt to write to undeclared variable ' , self name;
+		variable: self;
+		signal
 ]
 
 { #category : #registry }

@@ -215,22 +215,24 @@ ProcessorScheduler >> lowestPriority [
 
 { #category : #'CPU usage tally' }
 ProcessorScheduler >> nextReadyProcess [
+
 	quiescentProcessLists reverseDo: [ :list |
-		list isEmpty ifFalse: [ | proc |
+		list ifNotEmpty: [
+			| proc |
 			proc := list first.
-			proc suspendedContext ifNotNil: [ ^proc ]]].
-	^nil
+			proc suspendedContext ifNotNil: [ ^ proc ] ] ].
+	^ nil
 ]
 
 { #category : #accessing }
 ProcessorScheduler >> preemptedProcess [
 	"Return the process that the currently active process just preempted."
+
 	| list |
-	activeProcess priority to: 1 by: -1 do:[:priority|
+	activeProcess priority to: 1 by: -1 do: [ :priority |
 		list := quiescentProcessLists at: priority.
-		list isEmpty ifFalse:[^list last].
-	].
-	^nil
+		list ifNotEmpty: [ ^ list last ] ].
+	^ nil
 
 	"Processor preemptedProcess"
 ]
@@ -288,11 +290,9 @@ ProcessorScheduler >> suspendFirstAt: aPriority ifNone: noneBlock [
 	"Suspend the first Process that is waiting to run with priority aPriority. If
 	no Process is waiting, evaluate the argument, noneBlock."
 
-	| aList |
-	aList := quiescentProcessLists at: aPriority.
-	^ aList isEmpty
-		  ifTrue: [ noneBlock value ]
-		  ifFalse: [ aList first suspend ]
+	^ (quiescentProcessLists at: aPriority)
+			ifEmpty: [ noneBlock value ]
+			ifNotEmpty: [ :aList | aList first suspend ]
 ]
 
 { #category : #'priority names' }

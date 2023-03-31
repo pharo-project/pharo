@@ -103,24 +103,26 @@ ProcessList >> add: aLinkOrObject beforeLink: otherLink [
 { #category : #adding }
 ProcessList >> addFirst: aLinkOrObject [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
-	|aLink|
+
+	| aLink |
 	aLink := aLinkOrObject asLink.
-	self isEmpty ifTrue: [lastLink := aLink].
+	self ifEmpty: [ lastLink := aLink ].
 	aLink nextLink: firstLink.
 	firstLink := aLink.
-	^aLink
+	^ aLink
 ]
 
 { #category : #adding }
 ProcessList >> addLast: aLinkOrObject [
 	"Add aLink to the end of the receiver's list. Answer aLink."
-	|aLink|
+
+	| aLink |
 	aLink := aLinkOrObject asLink.
-	self isEmpty
-		ifTrue: [firstLink := aLink]
-		ifFalse: [lastLink nextLink: aLink].
+	self 
+		ifEmpty: [ firstLink := aLink ]
+		ifNotEmpty: [ lastLink nextLink: aLink ].
 	lastLink := aLink.
-	^aLink
+	^ aLink
 ]
 
 { #category : #accessing }

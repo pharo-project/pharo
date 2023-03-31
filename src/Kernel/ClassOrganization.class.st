@@ -26,6 +26,12 @@ ClassOrganization >> addProtocol: aProtocol [
 ]
 
 { #category : #accessing }
+ClassOrganization >> addProtocol: aProtocol [
+
+	^ self protocolOrganizer addProtocol: aProtocol
+]
+
+{ #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 
 	| oldProtocols protocol |
