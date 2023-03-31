@@ -59,8 +59,10 @@ UndeclaredVariable >> emitStore: aMethodBuilder [
 ]
 
 { #category : #'code generation' }
-UndeclaredVariable >> emitValue: methodBuilder [
-	methodBuilder pushLiteralVariable: self
+UndeclaredVariable >> emitValue: aMethodBuilder [
+	aMethodBuilder
+		pushLiteral: self;
+		send: #runtimeUndeclaredRead
 ]
 
 { #category : #registry }
@@ -77,6 +79,16 @@ UndeclaredVariable >> isUndeclaredVariable [
 { #category : #registry }
 UndeclaredVariable >> register [
 	Undeclared add: self
+]
+
+{ #category : #'code generation' }
+UndeclaredVariable >> runtimeUndeclaredRead [
+
+	<debuggerCompleteToSender>
+	UndeclaredVariableRead new
+		messageText: 'Attempt to read undeclared variable ' , self name;
+		variable: self;
+		signal
 ]
 
 { #category : #'code generation' }
