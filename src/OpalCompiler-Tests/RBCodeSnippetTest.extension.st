@@ -144,21 +144,31 @@ RBCodeSnippetTest >> testExecute: method [
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.
+	runBlock := [ nil withArgs: phonyArgs executeMethod: method ].
 
-	"Executing a lone block will just return a block, we have to call value to have something more interesting"
-	snippet parse isBlock
-		ifTrue: [
-			| block phonyBlockArgs |
-			block := nil withArgs: phonyArgs executeMethod: method.
-			phonyBlockArgs := (1 to: block numArgs) asArray.
-			runBlock := [ block valueWithArguments: phonyBlockArgs ] ]
-		ifFalse: [ runBlock := [ nil withArgs: phonyArgs executeMethod: method ] ].
+	self testExecuteBlock: runBlock
+]
 
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testExecuteBlock: aRunBlock [
+
+	| runBlock |
+	"a block that apply value on aRunBlock until it's no more a block"
+	runBlock := [
+	            | value block phonyBlockArgs |
+	            block := aRunBlock.
+	            [  phonyBlockArgs := (1 to: block numArgs) asArray.
+	               value := block valueWithArguments: phonyBlockArgs.
+	               value isBlock ] whileTrue: [ block := value ].
+	            value ].
+
+	"Now we can evaluate and check the various possible expectations"
 	snippet messageNotUnderstood ifNotNil: [ :mnu |
 		runBlock onDNU: mnu do: [ ^ self ].
 		self signalFailure: 'Should have raised MNU ' , mnu ].
 
-	snippet raise ifNotNil: [ :class | ^ self should: runBlock raise: class ].
+	snippet raise ifNotNil: [ :class |
+		^ self should: runBlock raise: class ].
 
 	snippet hasValue
 		ifFalse: [ self should: runBlock raise: RuntimeSyntaxError ]
