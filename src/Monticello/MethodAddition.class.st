@@ -95,7 +95,7 @@ MethodAddition >> priorCategoryOrNil: anObject [
 MethodAddition >> writeSourceToLog [
 	logSource ifTrue: [
 		myClass logMethodSource: text forMethod: compiledMethod
-			inCategory: category withStamp: changeStamp
+			inProtocolNamed: category withStamp: changeStamp
 	].
 
 ]

@@ -163,15 +163,14 @@ ReSmalllintChecker >> manifestBuilderOfClass: aClass [
 
 { #category : #accessing }
 ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
-	| key cl |
-	cl := aMethod methodClass.
-	key := cl name , aMethod category asString.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [
-			(self builderManifestClass hasManifestFor: aMethod)
-				ifTrue: [ self builderManifestClass of: aMethod ]
-				ifFalse: [ nil ] ]
+
+	| key class |
+	class := aMethod methodClass.
+	key := class name , aMethod protocol asString.
+	^ manifestClassCache at: key ifAbsentPut: [
+		  (self builderManifestClass hasManifestFor: aMethod)
+			  ifTrue: [ self builderManifestClass of: aMethod ]
+			  ifFalse: [ nil ] ]
 ]
 
 { #category : #accessing }

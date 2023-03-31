@@ -1791,11 +1791,18 @@ RBCodeSnippet >> group: aString [
 RBCodeSnippet >> hasAllNotices: someNotices [
 
 	(self notices ifNil: [0] ifNotNil: [self notices size]) = someNotices size ifFalse: [ ^ false ].
-	^ someNotices allSatisfy: [ :each |
-		  self notices anySatisfy: [ :each2 |
-			  each node start = each2 first & (each node stop = each2 second)
-			  & (each position = each2 third)
-			  & (each messageText = each2 fourth) ] ]
+	^ someNotices allSatisfy: [ :each | self hasNotice: each ]
+]
+
+{ #category : #testing }
+RBCodeSnippet >> hasNotice: aNotice [
+
+	self notices ifNil: [ ^ false ].
+	^ self notices anySatisfy: [ :each |
+		aNotice node start = each first
+		& (aNotice node stop = each second)
+		& (aNotice position = each third)
+		& (aNotice messageText = each fourth) ]
 ]
 
 { #category : #testing }
@@ -1805,6 +1812,13 @@ RBCodeSnippet >> hasNotice: aString at: anInteger [
 
 	^ self notices anySatisfy: [ :each |
 		  each third = anInteger and: [ each fourth = aString ] ]
+]
+
+{ #category : #testing }
+RBCodeSnippet >> hasUndeclared [
+
+	self notices ifNil: [ ^ false ].
+	^ self notices anySatisfy: [ :n | n fourth = 'Undeclared variable' ]
 ]
 
 { #category : #accessing }

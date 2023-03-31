@@ -1,50 +1,25 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutCategory: catName [
-
-	self organization fileOutCategory: catName
-]
-
-{ #category : #'*CodeExport' }
-ClassDescription >> fileOutCategory: aSymbol on: aFileStream [
-	"File a description of the receiver's category, aString, onto aFileStream. If
-	moveSource, is true, then set the method source pointer to the new file position.
-	Note when this method is called with moveSource=true, it is condensing the
-	.sources file, and should only write one preamble per method category."
-
-	| selectors |
-	aFileStream cr.
-	selectors := self selectorsToFileOutCategory: aSymbol.
-
-	"Overridden to preserve author stamps in sources file regardless"
-	selectors do: [:sel |
-		self printMethodChunk: sel on: aFileStream ].
-	^ self
-]
-
-{ #category : #'*CodeExport' }
 ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	"File a description of the messages of this class that have been
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
 	| org |
-	(org := self organization) protocolNames do: [ :cat |
-		| sels |
-		sels := (org methodsInProtocolNamed: cat) select: [ :sel | aSet includes: sel ].
-		sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
+	(org := self organization) protocolNames do: [ :protocolName |
+		(org methodsInProtocolNamed: protocolName)
+			select: [ :selector | aSet includes: selector ]
+			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
-	"File out methods for this category."
+ClassDescription >> fileOutLocalMethodsInProtocolNamed: protocolName on: aFileStream [
+	"File out methods for this protocol."
 
-	| selectors |
 	aFileStream cr.
-	selectors := self selectorsToFileOutCategory: aSymbol.
 
-	selectors do: [:sel | self printMethodChunk: sel on: aFileStream ].
-	^ self
+	(self selectorsInProtocolNamed: protocolName)
+		do: [ :selector | self printMethodChunk: selector on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
@@ -60,9 +35,11 @@ ClassDescription >> fileOutMethod: selector [
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutMethod: selector on: aStream [
 
-	(selector == #Comment) ifTrue: [^ self inform: 'Sorry, cannot file out class comment in isolation.'].
-	(self includesSelector: selector) ifFalse: [^ self error: 'Selector ', selector asString, ' not found'].
-	aStream header; timeStamp.
+	selector == #Comment ifTrue: [ ^ self inform: 'Sorry, cannot file out class comment in isolation.' ].
+	(self includesSelector: selector) ifFalse: [ ^ self error: 'Selector ' , selector asString , ' not found' ].
+	aStream
+		header;
+		timeStamp.
 	self printMethodChunk: selector on: aStream
 ]
 
@@ -74,35 +51,20 @@ ClassDescription >> fileOutOn: aFileStream [
 
 	aFileStream nextChunkPut: self oldPharoDefinition.
 	self organization putCommentOnFile: aFileStream forClass: self.
-	self organization protocolNames do: [ :protocolName | self fileOutLocalMethodsInCategory: protocolName on: aFileStream ]
+	self organization protocolNames do: [ :protocolName | self fileOutLocalMethodsInProtocolNamed: protocolName on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutOrganizationOn: aFileStream [
 	"File a description of the receiver's organization on aFileStream."
 
-	aFileStream cr; nextPut: $!.
-	aFileStream nextChunkPut: self name, ' reorganize'; cr.
-	aFileStream nextChunkPut: self organization stringForFileOut ; cr
-]
-
-{ #category : #'*CodeExport' }
-ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
-	"Print a method category preamble.  This must have a category name.
-	It may have an author/date stamp, and it may have a prior source link.
-	If it has a prior source link, it MUST have a stamp, even if it is empty."
-
-"The current design is that changeStamps and prior source links are preserved in the changes file.  All fileOuts include changeStamps.  Condensing sources, however, eliminates all stamps (and links, natch)."
-
-	aFileStream cr; nextPut: $!.
-	aFileStream nextChunkPut: (String streamContents:
-		[:strm |
-		strm nextPutAll: self name; nextPutAll: ' methodsFor: '; print: category asString.
-		(changeStamp ~~ nil and:
-			[changeStamp size > 0 or: [priorMethod ~~ nil]]) ifTrue:
-			[strm nextPutAll: ' stamp: '; print: changeStamp].
-		priorMethod ~~ nil ifTrue:
-			[strm nextPutAll: ' prior: '; print: priorMethod sourcePointer]])
+	aFileStream
+		cr;
+		nextPut: $!;
+		nextChunkPut: self name , ' reorganize';
+		cr;
+		nextChunkPut: self organization stringForFileOut;
+		cr
 ]
 
 { #category : #'*CodeExport' }
@@ -144,6 +106,33 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> selectorsToFileOutCategory: aSymbol [
-	^ self organization listAtCategoryNamed: aSymbol
+ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
+	"Print a method preamble.  This must have a protocol name.
+	It may have an author/date stamp, and it may have a prior source link.
+	If it has a prior source link, it MUST have a stamp, even if it is empty."
+
+	"The current design is that changeStamps and prior source links are preserved in the changes file.  All fileOuts include changeStamps.  Condensing sources, however, eliminates all stamps (and links, natch)."
+
+	aFileStream
+		cr;
+		nextPut: $!.
+	aFileStream nextChunkPut: (String streamContents: [ :strm |
+			 strm
+				 nextPutAll: self name;
+				 nextPutAll: ' methodsFor: ';
+				 print: protocolName asString.
+			 (changeStamp isNotNil and: [ changeStamp size > 0 or: [ priorMethod isNotNil ] ]) ifTrue: [
+				 strm
+					 nextPutAll: ' stamp: ';
+					 print: changeStamp ].
+			 priorMethod ifNotNil: [
+				 strm
+					 nextPutAll: ' prior: ';
+					 print: priorMethod sourcePointer ] ])
+]
+
+{ #category : #'*CodeExport' }
+ClassDescription >> selectorsInProtocolNamed: aSymbol [
+
+	^ self organization methodsInProtocolNamed: aSymbol
 ]

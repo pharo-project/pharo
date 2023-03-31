@@ -22,7 +22,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
-	validExceptions := #( OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
+	validExceptions := #( OSKeySymbols SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
 	                      RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest
 	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler ).
 
