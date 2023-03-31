@@ -49,7 +49,7 @@ RBCodeSnippetTest >> snippet: anObject [
 { #category : #tests }
 RBCodeSnippetTest >> testCodeImporter [
 
-	| string importer class runBlock value |
+	| string importer class runBlock |
 	"Code importer meed a plain expression or use a custom format"
 	snippet source isAllSeparators ifTrue: [ ^ self skip ].
 	string := snippet isMethod
@@ -74,6 +74,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	"When not faulty, it's more complicated..."
 	runBlock := [
+	            | value |
 	            value := importer evaluate.
 
 	            snippet isMethod ifTrue: [
@@ -85,20 +86,9 @@ RBCodeSnippetTest >> testCodeImporter [
 		            phonyArgs := (1 to: method numArgs) asArray.
 		            value := nil withArgs: phonyArgs executeMethod: method ].
 
-	            "Need to execute the block (see testExecute for rationale)"
-	            value isBlock ifTrue: [
-		            | phonyBlockArgs |
-		            phonyBlockArgs := (1 to: value numArgs) asArray.
-		            value := value valueWithArguments: phonyBlockArgs ] ].
+	            value ].
 
-	snippet messageNotUnderstood ifNotNil: [ :mnu |
-		runBlock onDNU: mnu do: [ ^ self ].
-		^ self signalFailure: 'Should have raised MNU ' , mnu ].
-
-	snippet raise ifNotNil: [ :r | ^ self should: runBlock raise: r ].
-
-	self shouldnt: runBlock raise: CodeError.
-	self assert: value equals: snippet value
+	self testExecuteBlock: runBlock
 ]
 
 { #category : #tests }
