@@ -10,7 +10,7 @@ Class {
 		'oldChangeSet',
 		'newChangeSetName'
 	],
-	#category : #'Tests-System'
+	#category : #'System-Changes-Tests-Base'
 }
 
 { #category : #support }

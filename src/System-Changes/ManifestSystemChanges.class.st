@@ -9,7 +9,8 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemChanges class >> manuallyResolvedDependencies [
-	^ #(#CodeExport #'OpalCompiler-Core' #'FileSystem-Disk' #'Collections-Abstract')
+
+	^ #( #'OpalCompiler-Core' #'FileSystem-Disk' #'Collections-Abstract' )
 ]
 
 { #category : #'code-critics' }
