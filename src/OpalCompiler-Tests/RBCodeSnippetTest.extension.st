@@ -1,7 +1,7 @@
 Extension { #name : #RBCodeSnippetTest }
 
 { #category : #'*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompile [
+RBCodeSnippetTest >> testCompileFaulty [
 
 	| method |
 
