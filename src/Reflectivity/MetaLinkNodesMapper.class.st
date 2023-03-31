@@ -34,8 +34,8 @@ MetaLinkNodesMapper >> findNodesForObject: anObject [
 
 { #category : #initialization }
 MetaLinkNodesMapper >> initialize [
-	objectsForNodes := WeakIdentityKeyDictionary new.
-	nodesForObjects := WeakIdentityKeyDictionary new
+	objectsForNodes := WeakIdentityKeyDictionary2 new.
+	nodesForObjects := WeakIdentityKeyDictionary2 new
 ]
 
 { #category : #mapping }

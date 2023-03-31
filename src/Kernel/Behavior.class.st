@@ -44,14 +44,14 @@ Behavior class >> initialize [
 	ClassProperties
 		ifNil: [ self initializeClassProperties ]
 		ifNotNil: [ | newDict |
-			newDict := WeakIdentityKeyDictionary newFrom: ClassProperties.
+			newDict := WeakIdentityKeyDictionary2 newFrom: ClassProperties.
 			newDict rehash.
 			ClassProperties := newDict ]
 ]
 
 { #category : #'class initialization' }
 Behavior class >> initializeClassProperties [
-	ClassProperties := WeakIdentityKeyDictionary new
+	ClassProperties := WeakIdentityKeyDictionary2 new
 ]
 
 { #category : #'class initialization' }
@@ -651,7 +651,7 @@ Behavior >> emptyMethodDictionary [
 
 { #category : #'accessing - properties' }
 Behavior >> ensureProperties [
-	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary new
+	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary2 new
 ]
 
 { #category : #naming }

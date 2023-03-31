@@ -211,7 +211,7 @@ OSSDL2GenericRenderer >> present [
 
 { #category : #private }
 OSSDL2GenericRenderer >> renderTargetTextureCache [
-	^ renderTargetTextureCache ifNil: [ renderTargetTextureCache := WeakKeyDictionary new ]
+	^ renderTargetTextureCache ifNil: [ renderTargetTextureCache := WeakKeyDictionary2 new ]
 ]
 
 { #category : #rendering }
@@ -230,7 +230,7 @@ OSSDL2GenericRenderer >> setupTextureBlendingState: texture [
 
 { #category : #private }
 OSSDL2GenericRenderer >> staticTextureCache [
-	^ staticTextureCache ifNil: [ staticTextureCache := WeakKeyDictionary new ]
+	^ staticTextureCache ifNil: [ staticTextureCache := WeakKeyDictionary2 new ]
 ]
 
 { #category : #'blending mode' }
@@ -254,7 +254,7 @@ OSSDL2GenericRenderer >> supportsRenderTargets [
 
 { #category : #private }
 OSSDL2GenericRenderer >> textureForObjectCache [
-	^ textureForObjectCache ifNil: [ textureForObjectCache := WeakKeyDictionary new ]
+	^ textureForObjectCache ifNil: [ textureForObjectCache := WeakKeyDictionary2 new ]
 ]
 
 { #category : #rendering }

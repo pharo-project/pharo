@@ -264,8 +264,8 @@ DictionaryTest >> otherCollection [
 DictionaryTest >> otherDictionaryClasses [
 	"(DictionaryTest withAllSubclasses collect: [:each | each new classToBeTested]) asArray"
 	^ {SmallDictionary. IdentityDictionary. PluggableDictionary.
-		WeakValueDictionary. SystemDictionary. WeakKeyDictionary. SmallIdentityDictionary.
-		WeakIdentityKeyDictionary. WeakKeyToCollectionDictionary. Dictionary}
+		WeakValueDictionary. SystemDictionary. WeakKeyDictionary2. SmallIdentityDictionary.
+		WeakIdentityKeyDictionary2. WeakKeyToCollectionDictionary. Dictionary}
 			reject: [:each | each new species == self classToBeTested new species]
 ]
 

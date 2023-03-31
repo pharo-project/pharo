@@ -84,7 +84,7 @@ MCDataStream class >> initializeTypeMap [
 
 	"MCDataStream initialize"
 
-	TypeMap := WeakKeyDictionary new: 80.	"sparse for fast hashing"
+	TypeMap := WeakKeyDictionary2 new: 80.	"sparse for fast hashing"
 	ReadSelectors := WeakValueDictionary new: 80.
 	WriteSelectors := WeakValueDictionary new: 80.
 

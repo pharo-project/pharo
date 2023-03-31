@@ -77,7 +77,7 @@ SettingDeclaration class >> smallCautionForm [
 
 { #category : #'cache accessing' }
 SettingDeclaration class >> valueListCache [
-	^ ValueListCache ifNil: [ValueListCache := WeakKeyDictionary new]
+	^ ValueListCache ifNil: [ValueListCache := WeakKeyDictionary2 new]
 ]
 
 { #category : #'cache accessing' }

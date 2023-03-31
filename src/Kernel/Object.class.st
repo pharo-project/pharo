@@ -129,7 +129,7 @@ Object class >> initialize [
 Object class >> initializeDependentsFields [
 	<script: 'Object initialize'>
 
-	DependentsFields := WeakIdentityKeyDictionary new
+	DependentsFields := WeakIdentityKeyDictionary2 new
 ]
 
 { #category : #'instance creation' }
@@ -158,7 +158,7 @@ Object class >> reInitializeDependentsFields [
 
 	| oldFields |
 	oldFields := DependentsFields.
-	DependentsFields := WeakIdentityKeyDictionary new.
+	DependentsFields := WeakIdentityKeyDictionary2 new.
 	oldFields
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]

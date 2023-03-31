@@ -97,14 +97,14 @@ RPackage class >> initialize [
 	Properties
 		ifNil: [ self initializeProperties ]
 		ifNotNil: [ | newDict |
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
+			newDict := WeakIdentityKeyDictionary2 newFrom: Properties.
 			newDict rehash.
 			Properties := newDict ]
 ]
 
 { #category : #'class initialization' }
 RPackage class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new
+	Properties := WeakIdentityKeyDictionary2 new
 ]
 
 { #category : #'instance creation' }
@@ -586,7 +586,7 @@ RPackage >> demoteToTagInPackageNamed: aString [
 
 { #category : #properties }
 RPackage >> ensureProperties [
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
+	^ Properties at: self ifAbsentPut: WeakKeyDictionary2 new
 ]
 
 { #category : #accessing }

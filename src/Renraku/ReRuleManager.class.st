@@ -82,7 +82,7 @@ ReRuleManager class >> managerFor: aCodeEntity [
 
 { #category : #accessing }
 ReRuleManager class >> managers [
-	^ managers ifNil: [ managers := WeakKeyDictionary new ]
+	^ managers ifNil: [ managers := WeakKeyDictionary2 new ]
 ]
 
 { #category : #'instance creation' }

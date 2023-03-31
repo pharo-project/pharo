@@ -40,8 +40,8 @@ Variable class >> checkValidName: aString [
 { #category : #'class initialization' }
 Variable class >> initialize [
 	Properties := Properties
-		ifNil: [ WeakIdentityKeyDictionary new. ]
-		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
+		ifNil: [ WeakIdentityKeyDictionary2 new. ]
+		ifNotNil: [ (WeakIdentityKeyDictionary2 newFrom: Properties) rehash]
 ]
 
 { #category : #testing }
@@ -111,7 +111,7 @@ Variable >> emitValue: methodBuilder [
 
 { #category : #properties }
 Variable >> ensureProperties [
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
+	^ Properties at: self ifAbsentPut: WeakKeyDictionary2 new
 ]
 
 { #category : #properties }

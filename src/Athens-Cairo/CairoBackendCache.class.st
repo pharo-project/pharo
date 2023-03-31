@@ -61,7 +61,7 @@ CairoBackendCache >> at: anObject ifAbsentPut: aBlock [
 { #category : #accessing }
 CairoBackendCache >> flush [
 
-	cache := WeakIdentityKeyDictionary new
+	cache := WeakIdentityKeyDictionary2 new
 ]
 
 { #category : #accessing }
@@ -70,7 +70,7 @@ CairoBackendCache >> for: anObject at: key ifAbsentPut: aBlock [
 	| subCache |
 	subCache := cache
 		at: anObject
-		ifAbsentPut: [ WeakIdentityKeyDictionary new ].
+		ifAbsentPut: [ WeakIdentityKeyDictionary2 new ].
 
 	^ subCache at: key ifAbsentPut: aBlock
 ]

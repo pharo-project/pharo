@@ -23,7 +23,7 @@ Class {
 
 { #category : #accessing }
 Watch class >> allWatches [
-	^ Watches ifNil: [ Watches := WeakKeyDictionary new ]
+	^ Watches ifNil: [ Watches := WeakKeyDictionary2 new ]
 ]
 
 { #category : #cleanup }

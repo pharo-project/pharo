@@ -28,7 +28,7 @@ EventManager class >> actionMapFor: anObject [
 { #category : #accessing }
 EventManager class >> actionMaps [
 
-	^ActionMaps ifNil: [ActionMaps := WeakIdentityKeyDictionary new]
+	^ActionMaps ifNil: [ActionMaps := WeakIdentityKeyDictionary2 new]
 ]
 
 { #category : #cleanup }
