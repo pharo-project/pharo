@@ -28,8 +28,8 @@ ClassDescription >> acceptsLoggingOfCompilation [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
-	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 
+	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
@@ -37,7 +37,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	oldProtocol := self organization protocolNameOfElement: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self organization classify: selector under: (protocol asSymbol = Protocol unclassified
+		self organization classify: selector under: (protocol isUnclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.
@@ -1107,7 +1107,7 @@ ClassDescription >> tagsForMethods [
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
 	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	allProtocols := self organization protocols reject: [ :protocol | protocol isUnclassified | protocol isExtensionProtocol ].
 
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]

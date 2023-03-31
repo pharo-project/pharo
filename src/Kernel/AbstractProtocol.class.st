@@ -62,6 +62,11 @@ AbstractProtocol >> isExtensionProtocol [
 ]
 
 { #category : #testing }
+AbstractProtocol >> isUnclassified [
+	^ false
+]
+
+{ #category : #testing }
 AbstractProtocol >> isVirtualProtocol [
 	"A virtual protocol is a calculated one (it does not have any methods by it self)"
 	^ false

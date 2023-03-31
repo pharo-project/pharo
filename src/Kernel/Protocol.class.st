@@ -54,6 +54,12 @@ Protocol >> initialize [
 	name := self class defaultName
 ]
 
+{ #category : #testing }
+Protocol >> isUnclassified [
+
+	^ self name isUnclassified
+]
+
 { #category : #accessing }
 Protocol >> methodSelectors [
 	^ methodSelectors

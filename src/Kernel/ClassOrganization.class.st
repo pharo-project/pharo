@@ -81,7 +81,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	newProtocolName := aProtocol asSymbol.
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
-	(forceNotify or: [ oldProtocolName ~= newProtocolName or: [ newProtocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
+	(forceNotify or: [ oldProtocolName ~= newProtocolName or: [ aProtocol isUnclassified not ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
 	self protocolOrganizer classify: selector inProtocolNamed: newProtocolName.
 	(oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ].
