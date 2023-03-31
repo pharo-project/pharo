@@ -1,3 +1,4 @@
+| mcPackages |
 mcPackages := #(
  'ScriptingExtensions'
  'System-FileRegistry'
@@ -40,8 +41,6 @@ RxsPredicate initialize.
 
 MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
-MCMockASubclass initialize.
-MCMockClassA initialize.
 
 MetacelloPlatform initialize.
 MetacelloPharoPlatform initialize.
