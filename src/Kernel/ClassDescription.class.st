@@ -392,7 +392,7 @@ ClassDescription >> compile: sourceCode classified: protocolName withStamp: chan
 	method := self compiler
 		source: sourceCode;
 		requestor: requestor;
-		failBlock:  [ ^ nil ];
+		failBlock: (requestor ifNil: nil ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
 		protocolName: protocolName;
 		changeStamp: changeStamp;
 		logged: logSource;
