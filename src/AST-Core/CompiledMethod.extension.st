@@ -26,7 +26,6 @@ CompiledMethod >> parseTree [
 	| ast |
 	ast := self methodClass compiler
 		source: self sourceCode;
-		failBlock: [^ self decompile ];
 		class: self methodClass;
 		parse.
 	ast compilationContext compiledMethod: self.
