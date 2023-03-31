@@ -133,9 +133,6 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		osWindow setJustCreatedHandle: aBackendWindow.
 	].
 
-	"Workaround to https://github.com/pharo-project/pharo/issues/10981"
-	20 milliSeconds wait.
-
 	^ aBackendWindow
 ]
 
