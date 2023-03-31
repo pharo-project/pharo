@@ -9,7 +9,11 @@ TWeakKeyedDictionary >> add: anAssociation [
 	"Installs a copy of the association in myself.
 	I cannot add the association because they are not shareable between weak key dictionaries, it needs myself as container.
 	Moreover, I can only contain weak key associations, and not any association."
-	self at: anAssociation key put: anAssociation value
+	self at: anAssociation key put: anAssociation value.
+
+	"Return a copy of the association.
+	This is not the real association in the weak dictionary"
+	^ anAssociation
 ]
 
 { #category : #copying }

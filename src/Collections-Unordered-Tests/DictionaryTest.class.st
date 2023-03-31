@@ -752,8 +752,9 @@ DictionaryTest >> testStoreOnWithNegativeInteger [
 
 { #category : #requirements }
 DictionaryTest >> valueNotIn [
-" return a value not included in nonEmpty "
-^valueNotIn
+	" return a value not included in nonEmpty "
+
+	^ valueNotIn
 ]
 
 { #category : #requirements }
