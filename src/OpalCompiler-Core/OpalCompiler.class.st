@@ -530,7 +530,7 @@ OpalCompiler >> productionEnvironment: anObject [
 ]
 
 { #category : #accessing }
-OpalCompiler >> protocolName: aString [ 
+OpalCompiler >> protocol: aString [ 
 	protocol := aString
 ]
 

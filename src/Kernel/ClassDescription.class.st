@@ -396,7 +396,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		source: sourceCode;
 		requestor: requestor;
 		failBlock:  [ ^ nil ];
-		protocolName: protocol;
+		protocol: protocol;
 		changeStamp: changeStamp;
 		logged: logSource;
 		install.
