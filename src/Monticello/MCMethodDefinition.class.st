@@ -128,7 +128,6 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 		compile: source
 		classified: category
 		withStamp: timeStamp
-		notifying: nil
 		logSource: true
 		inClass: self actualClass.
 	"This might raise an exception and never return"
