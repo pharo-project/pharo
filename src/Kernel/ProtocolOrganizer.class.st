@@ -20,9 +20,9 @@ ProtocolOrganizer >> addProtocol: aProtocol [
 ]
 
 { #category : #'protocol - adding' }
-ProtocolOrganizer >> addProtocolNamed: aName [
+ProtocolOrganizer >> addProtocolNamed: protocolName [
 
-	^ self addProtocol: (Protocol name: aName)
+	^ self addProtocol: (Protocol name: protocolName).
 ]
 
 { #category : #accessing }
@@ -40,7 +40,7 @@ ProtocolOrganizer >> allProtocol [
 { #category : #accessing }
 ProtocolOrganizer >> allProtocols [
 
-	^ { allProtocol }, protocols asArray
+	^ { self allProtocol } , self protocols
 ]
 
 { #category : #'protocol - adding' }
@@ -51,15 +51,12 @@ ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 	name = allProtocol name ifTrue: [ name := Protocol unclassified ].
 
 	"maybe here we should check if this method already belong to another protocol"
-	self removeMethod: aSymbol.
+	self protocols
+		select: [ :p | p includesSelector: aSymbol ]
+		thenDo: [ :p | p removeMethodSelector: aSymbol ].
 	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
 
 	protocol addMethodSelector: aSymbol
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> extensionProtocols [
-	^ self protocols select: #isExtensionProtocol
 ]
 
 { #category : #testing }
@@ -72,33 +69,6 @@ ProtocolOrganizer >> hasProtocolNamed: aString [
 ProtocolOrganizer >> initialize [
 	super initialize.
 	self reset
-]
-
-{ #category : #'backward compatibility' }
-ProtocolOrganizer >> methodsInProtocolNamed: aName [
-
-	aName = AllProtocol defaultName ifTrue: [ ^ self allMethodSelectors ].
-
-	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors
-]
-
-{ #category : #private }
-ProtocolOrganizer >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
-
-	| fromProtocol toProtocol |
-	fromProtocol := self protocolNamed: fromProtocolNamed.
-	toProtocol := self protocolNamed: toProtocolNamed.
-
-	toProtocol addAllMethodsFrom: fromProtocol.
-	fromProtocol removeAllMethodSelectors.
-
-	^ toProtocol
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> protocolNamed: aName [
-
-	^ self protocolNamed: aName ifAbsent: [ NotFound signalFor: aName ]
 ]
 
 { #category : #accessing }
@@ -114,24 +84,12 @@ ProtocolOrganizer >> protocols [
 	^ protocols asArray
 ]
 
-{ #category : #protocol }
-ProtocolOrganizer >> protocolsOfSelector: aSelector [
-
-	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
-]
-
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeEmptyProtocols [
 	| removedProtocols |
 	removedProtocols := protocols select: [:e | e isEmpty and: [ e canBeRemoved ] ].
 	removedProtocols do: [:each | self removeProtocol: each].
 	^removedProtocols
-]
-
-{ #category : #accessing }
-ProtocolOrganizer >> removeMethod: aSymbol [
-
-	(self protocolsOfSelector: aSymbol) do: [ :p | p removeMethodSelector: aSymbol ]
 ]
 
 { #category : #'protocol - removing' }
