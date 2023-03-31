@@ -13,16 +13,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-TestSessionHandler class >> onShutdown: aBlockClosure [ 
-	
+TestSessionHandler class >> onShutdown: aBlockClosure [
+
 	^ self new
 		shutdownHandler: aBlockClosure;
 		yourself
 ]
 
 { #category : #'instance creation' }
-TestSessionHandler class >> onStartup: aBlockClosure [ 
-	
+TestSessionHandler class >> onStartup: aBlockClosure [
+
 	^ self new
 		startupHandler: aBlockClosure;
 		yourself
@@ -35,7 +35,7 @@ TestSessionHandler >> handledId [
 
 { #category : #printing }
 TestSessionHandler >> printOn: aStream [
-	"Append to the argument, aStream, a sequence of characters that  
+	"Append to the argument, aStream, a sequence of characters that
 	identifies the receiver."
 
 	| title |

@@ -51,13 +51,13 @@ TFRunner >> ensureInitialized [
 { #category : #errors }
 TFRunner >> exceptionHandler [
 
-	^ exceptionHandler ifNil: [ 
+	^ exceptionHandler ifNil: [
 		exceptionHandler := TFForkCallbackExceptionHandler new ]
 ]
 
 { #category : #errors }
-TFRunner >> exceptionHandler: anExceptionHandler [ 
-	
+TFRunner >> exceptionHandler: anExceptionHandler [
+
 	exceptionHandler := anExceptionHandler
 ]
 
@@ -67,18 +67,17 @@ TFRunner >> executeCallback: aCallbackInvocation [
 	Runs the callback in a separate green thread and stack it.
 	The stack gives information about the order in which callbacks should return.
 	If a callback does not return in the right order, an exception is thrown.
-	
+
 	To guarantee the stack is not modified while this method runs, this method should be called from a high priority process.
 	  => no callbacks should finish while this method runs."
 
 	stackProtect critical: [ callbackInvocationStack push: aCallbackInvocation ].
-	aCallbackInvocation callback runStrategy executeCallback: aCallbackInvocation on: self.
-
+	aCallbackInvocation callback runStrategy executeCallback: aCallbackInvocation on: self
 ]
 
 { #category : #accessing }
 TFRunner >> forCallback [
-	
+
 	^ self
 ]
 
@@ -89,8 +88,8 @@ TFRunner >> handleExceptionDuring: aBlock [
 ]
 
 { #category : #executing }
-TFRunner >> invokeFunction: aTFExternalFunction [ 
-	
+TFRunner >> invokeFunction: aTFExternalFunction [
+
 	^ self invokeFunction: aTFExternalFunction withArguments: #()
 ]
 
@@ -106,7 +105,7 @@ TFRunner >> invokeFunction: aTFExternalFunction withArguments: aCollection [
 TFRunner >> newSemaphorePool [
 
 	^ TFPool
-		newProvider: (MessageSend receiver: TFExternalSemaphore selector: #new) 
+		newProvider: (MessageSend receiver: TFExternalSemaphore selector: #new)
 		size: self semaphorePoolSize
 		releaseBlock: #release "This is ugly... but do not change it to a block, if you change it to a block it will have a reference to self. Creating a loop in the references and leaking memory"
 ]
@@ -116,17 +115,17 @@ TFRunner >> primitivePerformWorkerCall: aTFExternalFunction
 		withArguments: argumentHolder
 		withReturnHolder: aReturnHolder
 		usingSemaphore: anInteger [
-		
+
 	^ self subclassResponsibility
 ]
 
 { #category : #executing }
-TFRunner >> release [ 
-	
-	semaphorePool ifNotNil: [ 
+TFRunner >> release [
+
+	semaphorePool ifNotNil: [
 		semaphorePool release.
 		semaphorePool := nil ].
-	
+
 	handle beNull.
 	"If the stack is not initialized it means this worker was never used for callbacks"
 	stackProtect ifNil: [ ^ self ].
@@ -142,21 +141,21 @@ TFRunner >> returnCallback: aCallbackInvocation [
 	Otherwise, throw an exception as returning means a bug in your application.
 	The user must guarantee callbacks return in the correct order"
 
-	callbackReturnSemaphore ifNil: [ 
+	callbackReturnSemaphore ifNil: [
 		callbackReturnSemaphore := Semaphore new ].
 
-	aCallbackInvocation isNull 
+	aCallbackInvocation isNull
 		ifTrue: [ ^ self ].
 
-	callbackInvocationStack isEmptyOrNil ifTrue: [ 
+	callbackInvocationStack isEmptyOrNil ifTrue: [
 		^ self cannotReturnCallbackFromOldSession: aCallbackInvocation].
 
 	stackProtect critical: [
-		(callbackInvocationStack top == aCallbackInvocation) 
+		(callbackInvocationStack top == aCallbackInvocation)
 			ifTrue: [
 				aCallbackInvocation returnExecution
 					ifTrue: [
-						"If we are starting a session and an execution was executed, it 
+						"If we are starting a session and an execution was executed, it
 						 may happen that the stack is empty."
 						callbackInvocationStack ifEmpty: [ ^ self ].
 						callbackInvocationStack pop.
@@ -169,7 +168,7 @@ TFRunner >> returnCallback: aCallbackInvocation [
 
 { #category : #accessing }
 TFRunner >> semaphorePool [
-	
+
 	self ensureInitialized.
 	^ semaphorePool
 ]

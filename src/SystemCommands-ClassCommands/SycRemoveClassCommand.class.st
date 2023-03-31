@@ -26,10 +26,10 @@ SycRemoveClassCommand >> confirmRefactoringInContext: aToolContext by: aCommandA
 	"All refactoring errors here are related to existance of removed class users.
 	All these cases are handled on the level of #confirmUnusedClasses
 	and here we need to ignore RB signals.
-	Notice that existing logic of RB engine for class removal 
-	does not allow correctly handle class users like show them in browser 
+	Notice that existing logic of RB engine for class removal
+	does not allow correctly handle class users like show them in browser
 	because there is no information about kind of users in #openBrowser option"
-	
+
 	[super confirmRefactoringInContext: aToolContext by: aCommandActivator ]
 		on: RBRefactoringError do: [ :err | err resume: true ]
 ]
@@ -47,7 +47,7 @@ SycRemoveClassCommand >> defaultMenuItemName [
 { #category : #execution }
 SycRemoveClassCommand >> execute [
 
-	removeStrategy execute: self.
+	removeStrategy execute: self
 ]
 
 { #category : #execution }
@@ -65,6 +65,6 @@ SycRemoveClassCommand >> isComplexRefactoring [
 SycRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	
-	removeStrategy := aToolContext requestRemoveClassStrategyFor: classes.
+
+	removeStrategy := aToolContext requestRemoveClassStrategyFor: classes
 ]

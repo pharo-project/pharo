@@ -13,15 +13,15 @@ Class {
 { #category : #running }
 SycRemoveClassStrategyTest >> setUp [
 	super setUp.
-	
-	factory := ClassFactoryForTestCase new.
+
+	factory := ClassFactoryForTestCase new
 ]
 
 { #category : #running }
 SycRemoveClassStrategyTest >> tearDown [
 
 	factory cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -34,7 +34,7 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForParentClass [
 		              classes: { ClyBrowserMorph }.
 	self
 		assert: strategies size > 2;
-		assert: (strategies anySatisfy: [ :each | 
+		assert: (strategies anySatisfy: [ :each |
 					 each userRequestString
 					 =
 						 ClyNotRemoveAndShowSubclassesClassStrategy new
@@ -87,7 +87,7 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForUsedTrait [
 		              classes: { TRBProgramNodeVisitor }.
 	self
 		assert: strategies size > 2;
-		assert: (strategies anySatisfy: [ :each | 
+		assert: (strategies anySatisfy: [ :each |
 					 each userRequestString
 					 = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
 		assert: strategies last userRequestString

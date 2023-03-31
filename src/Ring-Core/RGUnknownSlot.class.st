@@ -29,32 +29,32 @@ RGUnknownSlot >> expression [
 { #category : #'accessing - backend' }
 RGUnknownSlot >> expression: aString [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior setExpressionFor: self to: aString ].
+	self parent parent announceDefinitionChangeDuring: [
+		self backend forBehavior setExpressionFor: self to: aString ]
 ]
 
 { #category : #initialization }
 RGUnknownSlot >> initialize [
 
 	super initialize.
-	
-	expression := self unresolvedValue: self defaultExpression.
+
+	expression := self unresolvedValue: self defaultExpression
 ]
 
 { #category : #initialization }
 RGUnknownSlot >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	expression := self unresolvedValue: self defaultExpression.
+
+	expression := self unresolvedValue: self defaultExpression
 ]
 
 { #category : #resolving }
 RGUnknownSlot >> makeResolved [
 
 	super makeResolved.
-	
-	expression := self expression markAsRingResolved.
+
+	expression := self expression markAsRingResolved
 ]
 
 { #category : #'private - backend interface' }
@@ -72,7 +72,7 @@ RGUnknownSlot >> pvtExpression: aString [
 { #category : #'private - backend interface' }
 RGUnknownSlot >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#expression -> expression. 
+	^ super pvtResolvableProperties, {
+		#expression -> expression.
 	}
 ]

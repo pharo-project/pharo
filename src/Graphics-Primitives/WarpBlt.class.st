@@ -171,12 +171,8 @@ WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 
 { #category : #smoothing }
 WarpBlt >> rgbMap: sourcePixel from: nBitsIn to: nBitsOut [
-	"NOTE: This code is copied verbatim from BitBltSimulation so that it
-	may be removed from the system"
-
 	"Convert the given pixel value with nBitsIn bits for each color component to a pixel value with nBitsOut bits for each color component. Typical values for nBitsIn/nBitsOut are 3, 5, or 8."
 
-	<inline: true>
 	| mask d srcPix destPix |
 	^ (d := nBitsOut - nBitsIn) > 0
 		ifTrue: [ "Expand to more bits by zero-fill"

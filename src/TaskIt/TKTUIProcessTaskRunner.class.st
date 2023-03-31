@@ -6,7 +6,7 @@ Class {
 
 { #category : #scheduling }
 TKTUIProcessTaskRunner >> isUIRunner [
-	^ true 
+	^ true
 ]
 
 { #category : #scheduling }

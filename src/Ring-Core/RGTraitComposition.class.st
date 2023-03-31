@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'accessing - backend' }
-RGTraitComposition >> addTransformation: anRGTraitTransformation [ 
+RGTraitComposition >> addTransformation: anRGTraitTransformation [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior addTransformation: anRGTraitTransformation to: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior addTransformation: anRGTraitTransformation to: self ]
 ]
 
 { #category : #'managing container' }
@@ -25,8 +25,8 @@ RGTraitComposition >> addoptToParentStub [
 { #category : #'accessing - backend' }
 RGTraitComposition >> cleanTransformations [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior cleanTransformationsFor: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior cleanTransformationsFor: self ]
 ]
 
 { #category : #'managing container' }
@@ -45,16 +45,16 @@ RGTraitComposition >> defaultTransformations [
 RGTraitComposition >> initialize [
 
 	super initialize.
-	
-	transformations := self unresolvedValue: self defaultTransformations.
+
+	transformations := self unresolvedValue: self defaultTransformations
 ]
 
 { #category : #initialization }
 RGTraitComposition >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	transformations := self unresolvedValue: self defaultTransformations.
+
+	transformations := self unresolvedValue: self defaultTransformations
 ]
 
 { #category : #'testing - types' }
@@ -67,14 +67,14 @@ RGTraitComposition >> isTraitComposition [
 RGTraitComposition >> makeResolved [
 
 	super makeResolved.
-	
-	transformations := self transformations markAsRingResolved.
+
+	transformations := self transformations markAsRingResolved
 ]
 
 { #category : #'queries - methods' }
 RGTraitComposition >> methods [
 
-	^ Array streamContents: [ :stream | 
+	^ Array streamContents: [ :stream |
 		self transformationsDo: [ :transformation | stream nextPutAll: transformation methods ]]
 ]
 
@@ -82,32 +82,32 @@ RGTraitComposition >> methods [
 RGTraitComposition >> pvtAddTransformation: anRGTraitTransformation [
 
 	self environment verifyOwnership: anRGTraitTransformation.
-	
-	transformations isRingResolved ifFalse: [ 
+
+	transformations isRingResolved ifFalse: [
 		self pvtCleanTransformations  ].
-	
-	transformations add: anRGTraitTransformation.
+
+	transformations add: anRGTraitTransformation
 ]
 
 { #category : #'private - backend access' }
 RGTraitComposition >> pvtCleanTransformations [
 
-	transformations := self defaultTransformations.
+	transformations := self defaultTransformations
 ]
 
 { #category : #'private - backend access' }
 RGTraitComposition >> pvtRemoveTransformation: anRGTraitTransformation [
 
 	self environment verifyOwnership: anRGTraitTransformation.
-	
-	transformations remove: anRGTraitTransformation.
+
+	transformations remove: anRGTraitTransformation
 ]
 
 { #category : #'private - backend access' }
 RGTraitComposition >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#transformations -> transformations. 
+	^ super pvtResolvableProperties, {
+		#transformations -> transformations.
 	}
 ]
 
@@ -121,7 +121,7 @@ RGTraitComposition >> pvtTransformationsDo: aBlock [
 RGTraitComposition >> referencedBehaviors [
 
 	^ self transformations collect: [ :each |
-		each isTrait 
+		each isTrait
 			ifTrue: [ each ]
 			ifFalse: [ each subject ] ]
 ]
@@ -129,17 +129,17 @@ RGTraitComposition >> referencedBehaviors [
 { #category : #'accessing - backend' }
 RGTraitComposition >> removeTransformation: anRGTraitTransformation [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior removeTransformation: anRGTraitTransformation from: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior removeTransformation: anRGTraitTransformation from: self ]
 ]
 
 { #category : #accessing }
 RGTraitComposition >> traitCompositionString [
 
 	self transformations isEmpty ifTrue: [ ^ '{}' ].
-	
-	^String streamContents: [ :stream | 
-		self transformations 
+
+	^String streamContents: [ :stream |
+		self transformations
 			do: [ :each | stream nextPutAll: each traitTransformationString ]
 			separatedBy: [ stream nextPutAll: ' + ' ] ]
 ]
@@ -168,8 +168,8 @@ RGTraitComposition >> transformationsDo: aBlock [
 { #category : #accessing }
 RGTraitComposition >> usedTraits [
 
-	^ self transformations flatCollect: [ :each | 
-		each isTrait 
+	^ self transformations flatCollect: [ :each |
+		each isTrait
 			ifTrue: [ {each} ]
 			ifFalse: [ each usedTraits ].
 		 ] as: IdentitySet

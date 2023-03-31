@@ -35,6 +35,17 @@ OSPlatform >> ffiPointerAlignment [
 ]
 
 { #category : #'*UnifiedFFI' }
+OSPlatform >> processorArchitecture [
+	"returns the current processor real architecture.
+	Common values are:
+		i386    32-bit intel
+		x86_64  64-bit intel
+		arm64   64-bit arm"
+
+	^ (LibC resultOfCommand: 'uname -m') trimBoth
+]
+
+{ #category : #'*UnifiedFFI' }
 OSPlatform >> resultOfCommand: aCommand [
 	"Run the given operating system command and return the piped command line result."
 

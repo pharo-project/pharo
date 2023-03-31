@@ -38,7 +38,7 @@ SettingsStonWriter >> addSettings: aCollectionOfStoredSettings [
 { #category : #initialization }
 SettingsStonWriter >> initialize [
 	super initialize.
-	storedSettings := OrderedCollection new.
+	storedSettings := OrderedCollection new
 ]
 
 { #category : #actions }
@@ -47,9 +47,9 @@ SettingsStonWriter >> store [
 
 	| filteredStoredSettings |
 	stream ifNil: [ ^ self ].
-	
+
 	"The settings with default values are not stored"
-	filteredStoredSettings := storedSettings reject: [ :aStoredSetting | aStoredSetting hasDefaultValue ]. 
+	filteredStoredSettings := storedSettings reject: [ :aStoredSetting | aStoredSetting hasDefaultValue ].
 
 	STON writer
 		on: stream;
@@ -60,12 +60,12 @@ SettingsStonWriter >> store [
 
 { #category : #accessing }
 SettingsStonWriter >> stream [
-	"Return the stream on which storedSettings are written in. 
+	"Return the stream on which storedSettings are written in.
 	This method is useful for testing"
 	^ stream
 ]
 
 { #category : #accessing }
-SettingsStonWriter >> stream: aWriteStream [ 
+SettingsStonWriter >> stream: aWriteStream [
 	stream := aWriteStream
 ]

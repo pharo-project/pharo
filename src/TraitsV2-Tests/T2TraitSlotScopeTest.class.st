@@ -201,14 +201,14 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 		with: #(otherSlot)
 		uses: t2.
 
-	x1 := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	x1 := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #X1;
 			superclass: SharedPool ].
 
 
-	c1 := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	c1 := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #C1;
 			traitComposition: t1 asTraitComposition;
 			sharedPools: 'X1';

@@ -25,7 +25,7 @@ MethodFinderBottomClass class >> forbiddenSelectorsForMethodFinder [
 { #category : #comparing }
 MethodFinderBottomClass >> = other [
 
-	^ instanceVariable = other instanceVariable.
+	^ instanceVariable = other instanceVariable
 ]
 
 { #category : #accessing }
@@ -37,14 +37,14 @@ MethodFinderBottomClass >> InApprovedAndInForbiddenSetMethod [
 { #category : #accessing }
 MethodFinderBottomClass >> instanceVariable [
 
-	^ instanceVariable.
+	^ instanceVariable
 ]
 
 { #category : #accessing }
 MethodFinderBottomClass >> modifyMethod: x [
 
 	instanceVariable := x.
-	^ x.
+	^ x
 ]
 
 { #category : #accessing }

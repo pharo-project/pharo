@@ -86,6 +86,7 @@ ClyClassDefinitionEditorToolMorph >> defaultIconName [
 
 { #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> editingText [
+	"Answer a <String> with the receivers class definition"
 
 	^ editingClass definitionString
 ]

@@ -6,106 +6,103 @@ Trait {
 	#category : #'Collections-Abstract-Tests-Traits'
 }
 
+{ #category : #'tests - printing' }
+TPrintTest >> elements [
+
+	^ self nonEmpty isDictionary
+		  ifTrue: [ self nonEmpty associations ]
+		  ifFalse: [ self nonEmpty asOrderedCollection ]
+]
+
 { #category : #requirements }
 TPrintTest >> nonEmpty [
  self explicitRequirement
 ]
 
+{ #category : #'tests - printing' }
+TPrintTest >> prefix [
+
+	^ self nonEmpty class name first isVowel
+		  ifTrue: [ 'an' ]
+		  ifFalse: [ 'a' ]
+]
+
 { #category : #'tests - fixture' }
 TPrintTest >> test0FixturePrintTest [
-	self nonEmpty.
+
 	self denyEmpty: self nonEmpty
 ]
 
 { #category : #'tests - printing' }
 TPrintTest >> testPrintElementsOn [
 
-	| aStream result allElementsAsString tmp |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
-	tmp:= OrderedCollection new.
-	self nonEmpty do: [:each | tmp add: each asString].
+	| printed printedElements allPrintedElementsAsString allElementsAsString |
+	allElementsAsString := self elements collect: [ :each |
+		                       String streamContents: [ :stream |
+			                       each printOn: stream ] ].
 
-	self nonEmpty printElementsOn: aStream .
-	allElementsAsString:=(result findBetweenSubstrings: ' ' ).
-	1 to: allElementsAsString size do:
-		[:i |
-		self assert: (tmp occurrencesOf:(allElementsAsString at:i))=(allElementsAsString  occurrencesOf:(allElementsAsString at:i)).
-			]
+	printed := String streamContents: [ :stream |
+		           self elements printElementsOn: stream ].
+	printedElements := printed trimBoth: [ :char | char isPunctuation ].
+	allPrintedElementsAsString := printedElements findBetweenSubstrings: ' '.
+
+	self
+		assertCollection: allElementsAsString
+		hasSameElements: allPrintedElementsAsString
 ]
 
 { #category : #'tests - printing' }
 TPrintTest >> testPrintNameOn [
 
-	| aStream result |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
-	self nonEmpty printNameOn: aStream.
-	self nonEmpty class name first isVowel
-		ifTrue:[ self assert: aStream contents =('an ',self nonEmpty class name ) ]
-		ifFalse:[self assert: aStream contents =('a ',self nonEmpty class name)]
+	| printed prefix expected |
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printNameOn: stream ].
+	prefix := self prefix.
+	expected := prefix , ' ' , self nonEmpty class name.
+
+	self assert: printed equals: expected
 ]
 
 { #category : #'tests - printing' }
 TPrintTest >> testPrintOn [
-	| aStream result allElementsAsString tmp |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
-	tmp:= OrderedCollection new.
-	self nonEmpty do: [:each | tmp add: each asString].
 
-	self nonEmpty printOn: aStream .
-	allElementsAsString:=(result findBetweenSubstrings: ' ' ).
-	1 to: allElementsAsString size do:
-		[:i |
-		i=1
-			ifTrue:[
-			self accessCollection class name first isVowel
-				ifTrue:[self assert: (allElementsAsString at:i)='an' ]
-				ifFalse:[self assert: (allElementsAsString at:i)='a'].].
-		i=2
-			ifTrue:[self assert: (allElementsAsString at:i)=self accessCollection class name].
-		i>2
-			ifTrue:[self assert: (tmp occurrencesOf:(allElementsAsString at:i))=(allElementsAsString  occurrencesOf:(allElementsAsString at:i)).].
-			]
+	| printed allElementsAsString splittedString |
+	allElementsAsString := self elements collect: [ :each |
+		                       String streamContents: [ :stream |
+			                       each printOn: stream ] ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	splittedString := printed findBetweenSubstrings: { ' '. '('. ')' }.
+	self assertCollection: splittedString hasSameElements: {
+			self prefix.
+			self nonEmpty class name } , allElementsAsString
 ]
 
 { #category : #'tests - printing' }
 TPrintTest >> testPrintOnDelimiter [
 
-	| result allElementsAsString tmp |
-
+	| result allElementsAsString expectedelements |
 	result := String streamContents: [ :aStream |
-		tmp := OrderedCollection new.
-		self nonEmpty do: [:each | tmp add: each asString].
-		self nonEmpty printOn: aStream delimiter: ', ' ].
+		          self nonEmpty printOn: aStream delimiter: ', ' ].
 
-	allElementsAsString := (result findBetweenSubstrings: ', ').
-
-	1 to: allElementsAsString size do:
-		[:i |
-		self assert: (tmp occurrencesOf:(allElementsAsString at:i)) equals: (allElementsAsString  occurrencesOf:(allElementsAsString at:i)) ]
+	allElementsAsString := result findBetweenSubstrings: ', '.
+	expectedelements := self nonEmpty
+		                    collect: [ :e |
+		                    String streamContents: [ :aStream |
+			                    e printOn: aStream ] ]
+		                    as: OrderedCollection.
+		
+	self assert: allElementsAsString equals: expectedelements
 ]
 
 { #category : #'tests - printing' }
 TPrintTest >> testPrintOnDelimiterLast [
 
-	| aStream result allElementsAsString tmp |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
-	tmp:= OrderedCollection new.
-	self nonEmpty do: [:each | tmp add: each asString].
+	| result |
+	result := String streamContents: [ :aStream |
+		          self nonEmpty printOn: aStream delimiter: ', ' last: ' and ' ].
 
-	self nonEmpty printOn: aStream delimiter: ', ' last: 'and'.
-
-	allElementsAsString:=(result findBetweenSubstrings: ', ' ).
-	1 to: allElementsAsString size do:
-		[:i |
-		i<(allElementsAsString size-1 )
-			ifTrue: [self assert: (tmp occurrencesOf: (allElementsAsString at:i))=(allElementsAsString  occurrencesOf: (allElementsAsString at:i))].
-		i=(allElementsAsString size-1)
-			ifTrue:[ self deny: (allElementsAsString at:i)=('and')asString].
-		i=(allElementsAsString size)
-			ifTrue: [self assert: (tmp occurrencesOf: (allElementsAsString at:i))=(allElementsAsString  occurrencesOf: (allElementsAsString at:i))].
-			]
+	self assert: (result occurrencesOf: $,) equals: self elements size - 2
 ]

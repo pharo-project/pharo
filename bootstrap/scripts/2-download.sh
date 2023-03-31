@@ -27,8 +27,14 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 	# Downloads a SPUR vm for the configured architecture
 	mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
 	cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
-	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 100 vm $BOOTSTRAP_ARCH
-	cd -
+	# Extract the VM version from the image file version, avoiding going to git to extract the tags
+
+	#Odd PR builds use the the latest VM, else use the stable VM
+	set_version_variables
+	TEST_VM_KIND="vmLatest"
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT_VERSION} ${TEST_VM_KIND} $BOOTSTRAP_ARCH
+
+  cd -
 	echo "Target VM: $(${VM} --version)"
 fi
 

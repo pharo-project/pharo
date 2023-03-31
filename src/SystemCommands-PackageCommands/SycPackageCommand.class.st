@@ -38,6 +38,6 @@ SycPackageCommand >> packages: anObject [
 { #category : #execution }
 SycPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	packages := aToolContext selectedPackages
 ]

@@ -1,6 +1,16 @@
 Extension { #name : #Object }
 
 { #category : #'*Deprecated11' }
+Object >> asOrderedCollection [
+
+	self
+		deprecated:
+		'The usage of this method is not recommended. We want to have a smaller Object api. We will remove this method in the next Pharo version.'
+		transformWith: '`@receiver asOrderedCollection' -> 'OrderedCollection with: `@receiver'.
+	^ OrderedCollection with: self
+]
+
+{ #category : #'*Deprecated11' }
 Object >> stepAt: millisecondClockValue in: aWindow [
 
 	self deprecated: 'This method should be called on Model classes and not on any object.'.
@@ -26,15 +36,6 @@ Object >> stepTimeIn: aSystemWindow [
 
 	self deprecated: 'This method should be called on Model classes and not on any object.'.
 	^ self stepTime
-]
-
-{ #category : #'*Deprecated11' }
-Object >> wantsSteps [
-	"Overridden by morphic classes whose instances want to be stepped,
-	or by model classes who want their morphic views to be stepped."
-
-	self deprecated: 'This method should be called on Model or Morph classes and not on any object.'.
-	^ false
 ]
 
 { #category : #'*Deprecated11' }

@@ -59,7 +59,7 @@ TextEmphasis class >> underlined [
 ]
 
 { #category : #comparing }
-TextEmphasis >> = other [ 
+TextEmphasis >> = other [
 	^ other value = self value
 ]
 
@@ -102,7 +102,6 @@ TextEmphasis >> emphasisCode: int [
 TextEmphasis >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^emphasisCode hash
-
 ]
 
 { #category : #printing }
@@ -114,7 +113,7 @@ TextEmphasis >> printOn: strm [
 { #category : #combining }
 TextEmphasis >> remove: anotherCodeOrEmphasis [
 	"remove anotherCodeOrEmphasis from me"
-	emphasisCode := emphasisCode bitAnd: 
+	emphasisCode := emphasisCode bitAnd:
 		((anotherCodeOrEmphasis value bitInvert) bitAnd: (self allBits))
 ]
 
@@ -131,6 +130,6 @@ TextEmphasis >> turnOff [
 { #category : #accessing }
 TextEmphasis >> value [
 	"a synonym for empahasisCode, to make me polymorphic with Numbers"
-	
+
 	^ emphasisCode
 ]

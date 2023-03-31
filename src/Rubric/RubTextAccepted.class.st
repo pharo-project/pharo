@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-RubTextAccepted >> text [ 
+RubTextAccepted >> text [
 	^ morph textArea text
 ]

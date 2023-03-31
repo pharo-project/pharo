@@ -26,11 +26,11 @@ RBScannerTest >> testCommentTokenHasTheRightValue [
 
 	scanner := self buildScannerForText: String tab, ' """nested at beggining"" comment" firstToken'.
 	token := scanner next comments first.
-	self assert: token value equals: '""nested at beggining"" comment'.
+	self assert: token value equals: '"nested at beggining" comment'.
 
 	scanner := self buildScannerForText: String tab, ' "comment ""nested at end""" firstToken'.
 	token := scanner next comments first.
-	self assert: token value equals: 'comment ""nested at end""'
+	self assert: token value equals: 'comment "nested at end"'
 ]
 
 { #category : #'tests - Comment' }
@@ -205,9 +205,11 @@ RBScannerTest >> testNextAssignementStopAtEqual [
 { #category : #'tests - Error' }
 RBScannerTest >> testNextBaseOfRadixNumbersCanNotBeOne [
 
-	| scanner |
+	| scanner token |
 	scanner := self buildScannerForText: '1r1a'.
-	self should: [scanner next] raise: SyntaxErrorNotification
+	token := scanner next.
+	self assert: token isError.
+	self assert: token start equals: 1
 ]
 
 { #category : #'tests - NumberLiteral' }
@@ -356,7 +358,7 @@ RBScannerTest >> testNextDollarSignExpectedACharacter [
 	| scanner token |
 	scanner := self buildScannerForText: '$'.
 	token := scanner next.
-	self assert: token cause equals: 'A Character was expected'
+	self assert: token cause equals: 'Character expected'
 ]
 
 { #category : #'tests - Error' }
@@ -789,7 +791,7 @@ RBScannerTest >> testNextLiteralBeginningWithApostropheThrowsError [
 	scanner := self buildScannerForText: '#'''.
 	token := scanner next.
 	self assert: token isError.
-	self assert: token value equals: #''.
+	self assert: token value equals: #'#'''.
 	self assert: token cause equals: 'Unmatched '' in string literal.'
 ]
 
@@ -800,7 +802,7 @@ RBScannerTest >> testNextLiteralBeginningWithDigitThrowsError [
 	token := scanner next.
 	self assert: token isError.
 	self assert: token value equals: '#'.
-	self assert: token cause equals: 'Expecting a literal type'
+	self assert: token cause equals: 'Literal expected'
 ]
 
 { #category : #'tests - Error' }
@@ -810,7 +812,7 @@ RBScannerTest >> testNextLiteralBeginningWithSpecialThrowsError [
 	token := scanner next.
 	self assert: token isError.
 	self assert: token value equals: '#'.
-	self assert: token cause equals: 'Expecting a literal type'
+	self assert: token cause equals: 'Literal expected'
 ]
 
 { #category : #'tests - Error' }
@@ -820,7 +822,7 @@ RBScannerTest >> testNextLiteralBeginningWithUnknownThrowsError [
 	token := scanner next.
 	self assert: token isError.
 	self assert: token value equals: '#'.
-	self assert: token cause equals: 'Expecting a literal type'
+	self assert: token cause equals: 'Literal expected'
 ]
 
 { #category : #'tests - Literal' }
@@ -953,7 +955,7 @@ RBScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	source := '$'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
-	self verifyErrorToken: scannedToken message: 'A Character was expected' translated valueExpected: '$'
+	self verifyErrorToken: scannedToken message: 'Character expected' translated valueExpected: '$'
 ]
 
 { #category : #'tests - Start' }
@@ -1524,7 +1526,7 @@ RBScannerTest >> testNextWithAWrongSymbolGetError [
 	source := '#^'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
-	self verifyErrorToken: scannedToken message: 'Expecting a literal type' translated valueExpected: '#'
+	self verifyErrorToken: scannedToken message: 'Literal expected' translated valueExpected: '#'
 ]
 
 { #category : #tests }
@@ -1539,16 +1541,22 @@ RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
-	| source |
+	| source token |
 	source := 'self "'.
-	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
+	token := (self buildScannerForText: source) next; next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: '"'
 ]
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnOpeningCommentGetError [
-	| source |
+	| source token |
 	source := '"only the opening'.
-	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
+	token := (self buildScannerForText: source) next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: source
 ]
 
 { #category : #tests }
@@ -1556,7 +1564,7 @@ RBScannerTest >> testNextWithAnOpeningStringsGetError [
 	| source scannedToken |
 	source := '''only the opening'.
 	scannedToken := (self buildScannerForText: source) next.
-	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.' translated valueExpected: 'only the opening'
+	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.' translated valueExpected: source
 ]
 
 { #category : #tests }
@@ -1575,23 +1583,28 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
 	self
 		shouldnt: [ token := (self buildScannerForText: source) next ]
 		raise: SyntaxErrorNotification.
-	self assert: token comments first value equals: 'only the"" opening'
+	self assert: token comments first value equals: 'only the" opening'
 ]
 
 { #category : #tests }
 RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
-	| source |
+	| source token |
 	source := '"only the"" opening'.
-	self
-		should: [ (self buildScannerForText: source) next ]
-		raise: SyntaxErrorNotification
+	token := (self buildScannerForText: source) next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: source
 ]
 
 { #category : #'tests - Error' }
 RBScannerTest >> testNextWithUnFinishedCommentGivesAnError [
-	| scanner |
-	scanner := self buildScannerForText: 'firstToken "unfinished comment secondToken'.
-	self should: [scanner next] raise: SyntaxErrorNotification
+
+	| source token |
+	source := 'firstToken "unfinished comment secondToken'.
+	token := (self buildScannerForText: source) next; next.
+	self assert: token isError.
+	self assert: token cause equals: 'Unmatched " in comment.'.
+	self assert: token value equals: '"unfinished comment secondToken'
 ]
 
 { #category : #'tests - Creation api' }
@@ -1609,7 +1622,7 @@ RBScannerTest >> testScanTokenObjects2 [
 	| inp exp |
 	inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
-	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
+	exp := {'classVariableNames:' . '' . 'package:' . '''UndefinedClasses-Experiment'}.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 

@@ -75,6 +75,13 @@ ClyClassEditorToolMorph >> editingClass: anObject [
 	editingClass := anObject
 ]
 
+{ #category : #formatting }
+ClyClassEditorToolMorph >> formatSourceCode [
+	"Do nothing. MAybe in the future we could format the fluid class definition but for now we don't want errors"
+
+	
+]
+
 { #category : #testing }
 ClyClassEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 

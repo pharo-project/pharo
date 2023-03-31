@@ -9,21 +9,24 @@ RBParser parseFaultyMethod:
 
 Accessing to the parsed nodes contained inside the node is the method 'content'.
 
+`valueAfter` is used to store the optional raw content (source string) that appears after the content.
+
 
 "
 Class {
 	#name : #RBEnglobingErrorNode,
 	#superclass : #RBParseErrorNode,
 	#instVars : [
-		'content'
+		'valueAfter',
+		'contents'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
 { #category : #'instance creation' }
-RBEnglobingErrorNode class >> content: aCollection start: aStart stop: aStop errorMessage: message [
+RBEnglobingErrorNode class >> contents: aCollection start: aStart stop: aStop errorMessage: message [
 	^self new
-		content: aCollection;
+		contents: aCollection;
 		start: aStart;
 		stop: aStop;
 		errorMessage: message
@@ -47,7 +50,7 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 		ifTrue: [ ^RBTemporariesErrorNode error: aToken withNodes: aCollection ].
 	('<' = aToken value asString)
 		ifTrue: [ ^RBPragmaErrorNode error: aToken withNodes: aCollection ].
-	^self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
+	^self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
 ]
 
 { #category : #visiting }
@@ -58,25 +61,27 @@ RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> children [
-	^ content
+	^ contents
 ]
 
 { #category : #accessing }
-RBEnglobingErrorNode >> content [
-	^content
+RBEnglobingErrorNode >> contents [
+	^contents
 ]
 
 { #category : #accessing }
-RBEnglobingErrorNode >> content: aCollection [
-	content := aCollection.
+RBEnglobingErrorNode >> contents: aCollection [
+	contents := aCollection.
 	aCollection do: [:each | each parent: self ]
 ]
 
 { #category : #initialization }
 RBEnglobingErrorNode >> initialize [
+
 	super initialize.
-	content := OrderedCollection new.
-	value := ''
+	contents := OrderedCollection new.
+	value := ''.
+	valueAfter := ''
 ]
 
 { #category : #testing }
@@ -87,4 +92,16 @@ RBEnglobingErrorNode >> isEnglobingError [
 { #category : #accessing }
 RBEnglobingErrorNode >> stop: anInterger [
 	stop := anInterger
+]
+
+{ #category : #accessing }
+RBEnglobingErrorNode >> valueAfter [
+
+	^ valueAfter
+]
+
+{ #category : #accessing }
+RBEnglobingErrorNode >> valueAfter: anObject [
+
+	valueAfter := anObject
 ]

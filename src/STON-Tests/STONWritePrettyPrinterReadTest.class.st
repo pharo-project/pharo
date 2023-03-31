@@ -10,8 +10,8 @@ Class {
 { #category : #private }
 STONWritePrettyPrinterReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream; 
+		STON writer
+			on: stream;
 			prettyPrint: true;
 			nextPut: anObject ]
 ]
@@ -19,8 +19,8 @@ STONWritePrettyPrinterReadTest >> serialize: anObject [
 { #category : #private }
 STONWritePrettyPrinterReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
-		STON jsonWriter 
-			on: stream; 
+		STON jsonWriter
+			on: stream;
 			prettyPrint: true;
 			nextPut: anObject ]
 ]

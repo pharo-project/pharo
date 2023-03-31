@@ -31,15 +31,14 @@ ComputedSlot >> emitValue: methodBuilder [
 	methodBuilder
 		pushLiteral: block;
 		pushReceiver;
-		send: #cull:.
+		send: #cull:
 ]
 
 { #category : #comparing }
 ComputedSlot >> hasSameDefinitionAs: otherSlot [
 	"other then #=, we use string comparision for the blocks here"
-	^ (super hasSameDefinitionAs: otherSlot) 
+	^ (super hasSameDefinitionAs: otherSlot)
 		and: [ block printString = otherSlot block printString ]
-
 ]
 
 { #category : #comparing }
@@ -49,19 +48,18 @@ ComputedSlot >> hash [
 
 { #category : #printing }
 ComputedSlot >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
 		nextPutAll: ' with: ';
-		print: block 
+		print: block
 ]
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
 	"we use #cull: to support both 0-arg and 1-arg blocks"
 	^block cull: anObject
-	
 ]
 
 { #category : #'instance creation' }
