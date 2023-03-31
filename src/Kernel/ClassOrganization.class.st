@@ -19,6 +19,12 @@ ClassOrganization class >> forClass: aClass [
 ]
 
 { #category : #accessing }
+ClassOrganization >> addProtocol: aProtocol [
+
+	^ self addProtocol: aProtocol
+]
+
+{ #category : #accessing }
 ClassOrganization >> addProtocolNamed: protocolName [
 
 	| oldProtocols |
@@ -26,7 +32,7 @@ ClassOrganization >> addProtocolNamed: protocolName [
 
 	oldProtocols := self protocolNames copy.
 
-	self protocolOrganizer addProtocol: (Protocol name: protocolName).
+	self addProtocol: (Protocol name: protocolName).
 	self notifyOfAddedProtocol: protocolName.
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames
 ]
