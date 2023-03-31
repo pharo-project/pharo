@@ -39,10 +39,16 @@ ClassOrganization >> addProtocolNamed: protocolName [
 
 	oldProtocols := self protocolNames copy.
 
-	protocol := self addProtocol: (Protocol name: protocolName).
+	protocol := self addSilentlyProtocolNamed: protocolName.
 	self notifyOfAddedProtocol: protocolName.
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
+]
+
+{ #category : #accessing }
+ClassOrganization >> addSilentlyProtocolNamed: protocolName [
+	
+	^ self addProtocol: (Protocol name: protocolName)
 ]
 
 { #category : #'backward compatibility' }
@@ -92,7 +98,7 @@ ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 	self protocols
 		select: [ :p | p includesSelector: aSymbol ]
 		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
+	protocol := self protocolNamed: name ifAbsent: [ self addSilentlyProtocolNamed: name ].
 
 	protocol addMethodSelector: aSymbol
 ]
