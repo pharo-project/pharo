@@ -20,12 +20,9 @@ Class {
 }
 
 { #category : #'accessing - method dictionary' }
-TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
+TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aCategory.
+	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
 	self propagateChangeOf: selector
 ]
@@ -80,17 +77,14 @@ TraitedClass class >> traitUsers [
 ]
 
 { #category : #'accessing - method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
-
+TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
+
 	self localMethodDict at: selector put: compiledMethod.
 
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aCategory.
+	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
-	TraitChange addSelector: selector on: self.
+	TraitChange addSelector: selector on: self
 ]
 
 { #category : #'accessing - method dictionary' }

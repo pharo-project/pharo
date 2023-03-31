@@ -75,16 +75,17 @@ ClassOrganization >> classComment: aString [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: selector under: aProtocolName [
+ClassOrganization >> classify: selector under: aProtocol [
 
-	| oldProtocolName forceNotify oldProtocols |
+	| oldProtocolName forceNotify oldProtocols newProtocolName |
+	newProtocolName := aProtocol asSymbol.
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
-	(forceNotify or: [ oldProtocolName ~= aProtocolName or: [ aProtocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
+	(forceNotify or: [ oldProtocolName ~= newProtocolName or: [ newProtocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
-	self protocolOrganizer classify: selector inProtocolNamed: aProtocolName.
+	self protocolOrganizer classify: selector inProtocolNamed: newProtocolName.
 	(oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ].
-	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: aProtocolName ]
+	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: newProtocolName ]
 ]
 
 { #category : #cleanup }

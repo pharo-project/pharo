@@ -37,7 +37,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	oldProtocol := self organization protocolNameOfElement: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self organization classify: selector under: (protocol = Protocol unclassified
+		self organization classify: selector under: (protocol asSymbol = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.

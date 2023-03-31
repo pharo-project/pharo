@@ -106,8 +106,8 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
-	"Print a method preamble.  This must have a protocol name.
+ClassDescription >> printProtocolChunk: protocol on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
+	"Print a method preamble.  This must have a protocol.
 	It may have an author/date stamp, and it may have a prior source link.
 	If it has a prior source link, it MUST have a stamp, even if it is empty."
 
@@ -120,7 +120,7 @@ ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: 
 			 strm
 				 nextPutAll: self name;
 				 nextPutAll: ' methodsFor: ';
-				 print: protocolName asString.
+				 print: protocol asSymbol.
 			 (changeStamp isNotNil and: [ changeStamp size > 0 or: [ priorMethod isNotNil ] ]) ifTrue: [
 				 strm
 					 nextPutAll: ' stamp: ';
