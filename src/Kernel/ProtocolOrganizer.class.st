@@ -43,22 +43,6 @@ ProtocolOrganizer >> allProtocols [
 	^ { self allProtocol } , self protocols
 ]
 
-{ #category : #'protocol - adding' }
-ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
-
-	| name protocol |
-	name := aProtocolName.
-	name = allProtocol name ifTrue: [ name := Protocol unclassified ].
-
-	"maybe here we should check if this method already belong to another protocol"
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: name ifAbsent: [ self addProtocolNamed: name ].
-
-	protocol addMethodSelector: aSymbol
-]
-
 { #category : #testing }
 ProtocolOrganizer >> hasProtocolNamed: aString [
 
