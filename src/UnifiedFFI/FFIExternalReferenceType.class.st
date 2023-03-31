@@ -70,6 +70,38 @@ FFIExternalReferenceType >> defaultReturnOnError [
 ]
 
 { #category : #'emitting code' }
+FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
+	aBuilder
+		addTemp: #tmpResult;
+		"keep invoke result into the tmpResult var"
+		storeTemp: resultVar;
+		popTop;
+		"return := self objectClass basicNew"
+		pushLiteralVariable: self objectClass binding;
+		send: #basicNew;
+		storeTemp: #tmpResult;
+		popTop;
+		"return instVarAt: (index of argName) put: result"
+		pushTemp: #tmpResult;
+		pushLiteral: (self objectClass
+			instVarIndexFor: self instanceVariableName
+			ifAbsent: [ self error: 'No handle instVar' ]);
+		pushTemp: resultVar;
+		send: #instVarAt:put:;
+		popTop.
+
+	aCallout shouldAutoReleaseReturnedValue ifTrue: [
+		aBuilder
+			pushTemp: #tmpResult;
+			send: #autoRelease;
+			popTop ].
+
+	^ aBuilder
+		pushTemp: #tmpResult;
+		returnTop
+]
+
+{ #category : #'emitting code' }
 FFIExternalReferenceType >> emitReturnArgument: builder context: aContext [
 	self loader
 		emitPointerArityUnpack: builder
