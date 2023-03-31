@@ -362,33 +362,33 @@ ClassDescription >> commentStamp: changeStamp [
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protocolName [
-	"Compile the argument, code, as source code in the context of the receiver and install the result in the receiver's method dictionary under the protocol, protocolName.
+ClassDescription >> compile: sourceCode classified: protocol [
+	"Compile the argument, code, as source code in the context of the receiver and install the result in the receiver's method dictionary under the protocol as parameter.
 	nil is to be notified if an error occurs.
 	The argument code is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
 
-	^ self compile: sourceCode classified: protocolName notifying: nil
+	^ self compile: sourceCode classified: protocol notifying: nil
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protcolName notifying: requestor [
+ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
-	^ self compile: sourceCode classified: protcolName withStamp: Author changeStamp notifying: requestor
+	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protocolName withStamp: changeStamp notifying: requestor [
+ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
 
 	^ self
 		  compile: sourceCode
-		  classified: protocolName
+		  classified: protocol
 		  withStamp: changeStamp
 		  notifying: requestor
 		  logSource: self acceptsLoggingOfCompilation
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protocolName withStamp: changeStamp notifying: requestor logSource: logSource [
+ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
 
 	| method |
 
@@ -396,7 +396,7 @@ ClassDescription >> compile: sourceCode classified: protocolName withStamp: chan
 		source: sourceCode;
 		requestor: requestor;
 		failBlock:  [ ^ nil ];
-		protocolName: protocolName;
+		protocolName: protocol;
 		changeStamp: changeStamp;
 		logged: logSource;
 		install.
@@ -419,17 +419,17 @@ ClassDescription >> compileSilently: sourceCode [
 ]
 
 { #category : #compiling }
-ClassDescription >> compileSilently: sourceCode classified: protocolName [
+ClassDescription >> compileSilently: sourceCode classified: protocol [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
 
-	^ self compileSilently: sourceCode classified: protocolName notifying: nil
+	^ self compileSilently: sourceCode classified: protocol notifying: nil
 ]
 
 { #category : #compiling }
-ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
+ClassDescription >> compileSilently: sourceCode classified: protocol notifying: requestor [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocol notifying: requestor ]
 ]
 
 { #category : #copying }

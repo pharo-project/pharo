@@ -38,6 +38,13 @@ Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
 ]
 
+{ #category : #converting }
+Protocol >> asSymbol [
+	"This method is here to allow compiler To compile with a Protocol"
+
+	^ self name asSymbol
+]
+
 { #category : #initialization }
 Protocol >> initialize [
 
