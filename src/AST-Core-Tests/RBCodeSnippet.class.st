@@ -1814,6 +1814,13 @@ RBCodeSnippet >> hasNotice: aString at: anInteger [
 		  each third = anInteger and: [ each fourth = aString ] ]
 ]
 
+{ #category : #testing }
+RBCodeSnippet >> hasUndeclared [
+
+	self notices ifNil: [ ^ false ].
+	^ self notices anySatisfy: [ :n | n fourth = 'Undeclared variable' ]
+]
+
 { #category : #accessing }
 RBCodeSnippet >> hasValue [
 
