@@ -340,8 +340,8 @@ OpalCompiler >> evaluate [
 	| value doItMethod |
 	self noPattern: true.
 	doItMethod := self compile.
-	doItMethod ifNotNil: [
-			value := self semanticScope evaluateDoIt: doItMethod ].
+	ast ifNil: [ ^ doItMethod ].
+	value := self semanticScope evaluateDoIt: doItMethod.
 	self logDoIt.
 	^ value
 ]
@@ -452,7 +452,17 @@ OpalCompiler >> parse [
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
-		ast allNotices do: [ :n | n isWarning ifFalse: [ n signalError ] ] ].
+		| block |
+		"Call failBlock here in non requestor (non-quirks) mode"
+		block := self compilationContext requestor
+			         ifNotNil: [ nil ]
+			         ifNil: [ self compilationContext failBlock ].
+		ast allNotices do: [ :n |
+			n isWarning ifFalse: [
+				block ifNotNil: [
+					ast := nil.
+					^ block cull: n ].
+				n signalError ] ] ].
 
 	^ ast
 ]
