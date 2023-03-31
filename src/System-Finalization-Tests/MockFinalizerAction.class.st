@@ -20,8 +20,3 @@ MockFinalizerAction >> finalizationAction: aValuable [
 MockFinalizerAction >> finalize [
 	finalizationAction value
 ]
-
-{ #category : #finalization }
-MockFinalizerAction >> finalizeValues [
-	finalizationAction value
-]
