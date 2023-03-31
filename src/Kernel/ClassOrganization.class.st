@@ -45,9 +45,15 @@ ClassOrganization >> allMethodSelectors [
 ]
 
 { #category : #accessing }
+ClassOrganization >> allProtocol [
+
+	^ self protocolOrganizer allProtocol
+]
+
+{ #category : #accessing }
 ClassOrganization >> allProtocols [
 
-	^ self protocolOrganizer allProtocols
+	^ { self allProtocol } , self protocols
 ]
 
 { #category : #accessing }
