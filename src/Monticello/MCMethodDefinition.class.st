@@ -34,7 +34,7 @@ Class {
 { #category : #initialization }
 MCMethodDefinition class >> cachedDefinitions [
 	^ Definitions 
-		ifNil: [ Definitions := WeakIdentityKeyDictionary2 new ]
+		ifNil: [ Definitions := WeakIdentityKeyDictionary new ]
 ]
 
 { #category : #'instance creation' }

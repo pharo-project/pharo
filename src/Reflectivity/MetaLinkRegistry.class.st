@@ -66,10 +66,10 @@ MetaLinkRegistry >> hasPermaLinks: aLink [
 
 { #category : #initialization }
 MetaLinkRegistry >> initialize [
-	links := WeakKeyDictionary2 new.
-	permalinks := WeakKeyDictionary2 new.
-	slotSources := WeakKeyDictionary2 new.
-	permanentTargets := WeakKeyDictionary2 new
+	links := WeakKeyDictionary new.
+	permalinks := WeakKeyDictionary new.
+	slotSources := WeakKeyDictionary new.
+	permanentTargets := WeakKeyDictionary new
 ]
 
 { #category : #'registry access' }

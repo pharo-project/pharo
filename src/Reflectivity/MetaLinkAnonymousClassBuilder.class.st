@@ -92,7 +92,7 @@ MetaLinkAnonymousClassBuilder >> compiledMethodsOfSelector: selector inClasses: 
 { #category : #initialization }
 MetaLinkAnonymousClassBuilder >> initialize [
 	classes := Dictionary new.
-	migratedObjects := WeakIdentityKeyDictionary2 new
+	migratedObjects := WeakIdentityKeyDictionary new
 ]
 
 { #category : #migration }

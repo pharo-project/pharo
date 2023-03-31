@@ -26,7 +26,7 @@ WeakKeyDictionaryTest class >> timingLarge [
 
 	keys := (1 to: size) collect:[:n| 'foo',n asString].
 	Smalltalk garbageCollect.
-	dict := WeakKeyDictionary2 new.
+	dict := WeakKeyDictionary new.
 	keys do:[:k| dict at: k put: k].
 	Smalltalk garbageCollect.
 	^Time millisecondsToRun: [
@@ -49,7 +49,7 @@ WeakKeyDictionaryTest class >> timingMany [
 
 	dicts := OrderedCollection new.
 	count timesRepeat:[ | dict |
-		dict := WeakKeyDictionary2 new.
+		dict := WeakKeyDictionary new.
 		keys do:[:k| dict at: k put: k].
 		dicts add: dict.
 	].
@@ -63,14 +63,14 @@ WeakKeyDictionaryTest class >> timingMany [
 { #category : #coverage }
 WeakKeyDictionaryTest >> classToBeTested [
 
-	^ WeakKeyDictionary2
+	^ WeakKeyDictionary
 ]
 
 { #category : #running }
 WeakKeyDictionaryTest >> setUp [
 	super setUp.
 	keys := (1 to: 1000) collect:[:n| 'key', n asString].
-	dict := WeakKeyDictionary2 new.
+	dict := WeakKeyDictionary new.
 	keys do:[:n| dict at: n put: n,n].
 	super setUp
 ]

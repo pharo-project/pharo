@@ -24,24 +24,24 @@ Behavior class >> initialize [
 	ObsoleteSubclasses
 		ifNil: [ self initializeObsoleteSubclasses ]
 		ifNotNil: [ | newDict |
-			newDict := WeakIdentityKeyDictionary2 newFrom: ObsoleteSubclasses.
+			newDict := WeakIdentityKeyDictionary newFrom: ObsoleteSubclasses.
 			ObsoleteSubclasses := newDict ].
 
 	ClassProperties
 		ifNil: [ self initializeClassProperties ]
 		ifNotNil: [ | newDict |
-			newDict := WeakIdentityKeyDictionary2 newFrom: ClassProperties.
+			newDict := WeakIdentityKeyDictionary newFrom: ClassProperties.
 			ClassProperties := newDict ]
 ]
 
 { #category : #'class initialization' }
 Behavior class >> initializeClassProperties [
-	ClassProperties := WeakIdentityKeyDictionary2 new
+	ClassProperties := WeakIdentityKeyDictionary new
 ]
 
 { #category : #'class initialization' }
 Behavior class >> initializeObsoleteSubclasses [
-	ObsoleteSubclasses := WeakIdentityKeyDictionary2 new
+	ObsoleteSubclasses := WeakIdentityKeyDictionary new
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -635,7 +635,7 @@ Behavior >> emptyMethodDictionary [
 
 { #category : #'accessing - properties' }
 Behavior >> ensureProperties [
-	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary2 new
+	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary new
 ]
 
 { #category : #naming }

@@ -22,7 +22,7 @@ Class {
 
 { #category : #accessing }
 ExecutionCounter class >> allCounters [
-	^ Counters ifNil: [ Counters := WeakKeyDictionary2 new ]
+	^ Counters ifNil: [ Counters := WeakKeyDictionary new ]
 ]
 
 { #category : #all }

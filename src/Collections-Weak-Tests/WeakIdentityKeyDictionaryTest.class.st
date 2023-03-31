@@ -15,7 +15,7 @@ WeakIdentityKeyDictionaryTest >> canBeUnhealthy [
 { #category : #coverage }
 WeakIdentityKeyDictionaryTest >> classToBeTested [
 
-	^ WeakIdentityKeyDictionary2
+	^ WeakIdentityKeyDictionary
 ]
 
 { #category : #tests }
@@ -50,7 +50,7 @@ WeakIdentityKeyDictionaryTest >> testFinalizeValuesWhenLastChainContinuesAtFront
 { #category : #tests }
 WeakIdentityKeyDictionaryTest >> testNoNils [
 	| d |
-	d := WeakIdentityKeyDictionary2 new
+	d := WeakIdentityKeyDictionary new
 	at: 'hello' copy put: 'world';
 		yourself.
 	Smalltalk garbageCollect.
