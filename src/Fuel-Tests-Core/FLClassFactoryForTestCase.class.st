@@ -74,8 +74,8 @@ FLClassFactoryForTestCase >> cleanUpSystemOrganization [
 	categoriesMatchString := self defaultPackageName, '-*'.
 	categories := SystemOrganization categoriesMatching: categoriesMatchString.
 	categories do: [ :category |
-		(SystemOrganization listAtCategoryNamed: category) do: [ :behavior |
-			SystemOrganization removeElement: behavior ] ]
+		(SystemOrganization listAtCategoryNamed: category) do: [ :behaviorName |
+			SystemOrganization removeBehavior: behaviorName ] ]
 ]
 
 { #category : #accessing }
