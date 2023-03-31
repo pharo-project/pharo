@@ -229,18 +229,18 @@ CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheEndOfWordWithFollow
 	"If the caret is at the end of a word, replace the entire word"
 
 	| text |
-	text := 'mEthOdThatDoesNotExist:'.
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
 
 	self
 		setEditorText: text;
-		selectAt: text size + 1.
+		selectAt: 'self mEthOdThatDoesNotExist' size + 1.
 
 	editor textArea openInWorld.
 	controller openMenu.
 
-	controller context replaceTokenInEditorWith: 'toto'.
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
 
-	self assert: editor text asString equals: 'toto'
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
 ]
 
 { #category : #'tests - interaction' }
