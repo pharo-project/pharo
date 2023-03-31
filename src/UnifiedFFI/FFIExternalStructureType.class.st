@@ -53,6 +53,17 @@ FFIExternalStructureType >> emitFlatStructureLayoutFieldInto: flatStructureLayou
 	objectClass emitFlatStructureLayoutFieldInto: flatStructureLayout
 ]
 
+{ #category : #'emitting code' }
+FFIExternalStructureType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
+
+	aCallout shouldAutoReleaseReturnedValue ifTrue: [
+		aBuilder
+			pushDup;
+			send: #autoRelease;
+			popTop ].
+	^ aBuilder returnTop
+]
+
 { #category : #accessing }
 FFIExternalStructureType >> externalType [
 	^ ExternalType structTypeNamed: self objectClass name

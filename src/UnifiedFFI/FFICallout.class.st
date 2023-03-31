@@ -394,6 +394,12 @@ FFICallout >> sender: aSenderContext [
 	self assert: (methodArgs size = nArgs)
 ]
 
+{ #category : #asserting }
+FFICallout >> shouldAutoReleaseReturnedValue [
+
+	^ self optionAt: #optAutoReleaseReturnedValue
+]
+
 { #category : #configuration }
 FFICallout >> stringEncodingStrategy [
 

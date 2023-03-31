@@ -115,6 +115,12 @@ FFIExternalResourceManager >> addResource: anObject executor: anExecutor [
 	registry add: anObject executor: anExecutor
 ]
 
+{ #category : #testing }
+FFIExternalResourceManager >> includes: anObject [
+
+	^ registry includes: anObject
+]
+
 { #category : #initialization }
 FFIExternalResourceManager >> initialize [
 	registry := WeakRegistry new
