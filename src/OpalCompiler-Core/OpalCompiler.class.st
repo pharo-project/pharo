@@ -230,6 +230,56 @@ OpalCompiler >> changeStamp: aString [
 	changeStamp := aString
 ]
 
+{ #category : #private }
+OpalCompiler >> checkNotice: aNotice quitBlock: quitBlock [
+	"This method handles all the logic of error handling.
+	
+	Error handing in the compiler is only performed at one place, after the parsing/semantic analysis/other parse plugins.
+	Each RBNotice in the AST is then checked with this method.
+
+	There is only two outcomes:
+	* If this method returns, then the work of the compiler can continue.
+	  Next notice is then processed.
+	  Or, if this that was the last notice, compilation and cie can be performed.
+	* If quitBlock is evaluated, then the compilation is cancelled.
+	  The value argument used with quitBlock will be the result given to the user.
+	
+	Errors that may happen later in the backend are consireded internal errors and should not occur (bugs).
+	
+	This method is a little long because it handles the requestor (quirks) mode.
+	"
+
+	| requestor fBlock |
+	aNotice isWarning ifTrue: [ ^ self ].
+
+	requestor := self compilationContext requestor.
+	fBlock := self compilationContext failBlock.
+
+	requestor ifNotNil: [ "A requestor is available. We are in quirks mode and are expected to do UI things."
+		aNotice class = OCUndeclaredVariableNotice ifTrue: [
+			self isInteractive ifFalse: [ ^ aNotice signalError ].
+
+			"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just continue as an error"
+			self compilationContext noPattern ifFalse: [
+				| res |
+				"I do not like the API that much. Reparator can have 3 outcomes"
+				res := OCCodeReparator new
+					       node: aNotice node;
+					       requestor: requestor;
+					       openMenu.
+				res ifNil: [ ^ self "reparation unneded, let AST as is" ].
+				res ifFalse: [ ^ quitBlock value: fBlock value "operation cancelled, fail" ].
+				^ self parse: requestor text "reparation done, reparse" ] ].
+
+		requestor
+			notify: aNotice messageText , ' ->'
+			at: aNotice position
+			in: aNotice node source.
+		^ quitBlock value: fBlock value ].
+
+	aNotice signalError
+]
+
 { #category : #accessing }
 OpalCompiler >> class: aClass [
 	self compilationContext class: aClass
@@ -259,7 +309,11 @@ OpalCompiler >> compilationContextClass: aClass [
 OpalCompiler >> compile [
 
 	| result keep method |
-	result := self parseForRequestor.
+	
+	"Policy: compiling is non-faulty by default"
+	self permitFaulty ifNil: [ self permitFaulty: false ].
+
+	result := self parse.
 	ast ifNil: [ ^ result ]. "some failBlock"
 
 	"We need to keep information (source and ast) on doit method and faulty code,
@@ -340,8 +394,8 @@ OpalCompiler >> evaluate [
 	| value doItMethod |
 	self noPattern: true.
 	doItMethod := self compile.
-	doItMethod ifNotNil: [
-			value := self semanticScope evaluateDoIt: doItMethod ].
+	ast ifNil: [ ^ doItMethod ].
+	value := self semanticScope evaluateDoIt: doItMethod.
 	self logDoIt.
 	^ value
 ]
@@ -452,7 +506,10 @@ OpalCompiler >> parse [
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
-		ast allNotices do: [ :n | n isWarning ifFalse: [ n signalError ] ] ].
+		ast allNotices do: [ :n |
+			self checkNotice: n quitBlock: [ :v |
+				ast := nil.
+				^ v ] ] ].
 
 	^ ast
 ]
@@ -463,49 +520,6 @@ OpalCompiler >> parse: textOrString [
 	^self
 		source: textOrString;
 		parse
-]
-
-{ #category : #'public access' }
-OpalCompiler >> parseForRequestor [
-	"For compatibility, this method manages the requestor needs.
-	The original design is more than questionable, but at least it is all done in a single place."
-
-	| requestor |
-	requestor := self compilationContext requestor.
-
-	"Policy: compiling and requestor is non-faulty by default"
-	self permitFaulty ifNil: [ self permitFaulty: false ].
-
-	"No requestor, easy path"
-	requestor ifNil: [ ^ self parse ].
-
-	^ [ self parse ]
-		  on: OCUndeclaredVariableWarning , CodeError
-		  do: [ :exception |
-			  exception class = OCUndeclaredVariableWarning ifTrue: [
-				  self isInteractive ifFalse: [ exception pass ].
-				  "The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just continue as an error"
-				  self compilationContext noPattern ifFalse: [
-					  | res |
-					  "I do not like the API that much.
-					 reparator can have 3 outcomes:
-					  * reparation done, reparse. true
-					  * reparation unneded, pass. nil
-					  * operation cancelled, fail. false"
-					  res := exception reparator
-						         requestor: requestor;
-						         openMenu.
-					  res ifNil: [ exception pass ].
-					  res ifFalse: [ ^ self compilationContext failBlock value ].
-					  self source: requestor text.
-					  exception retry ] ].
-
-			  ast := nil. "Invalidate the AST to avoid compilation if failBlock do return"
-			  requestor
-				  notify: exception messageText , ' ->'
-				  at: exception position
-				  in: exception sourceCode.
-			  self compilationContext failBlock value ]
 ]
 
 { #category : #'public access' }
