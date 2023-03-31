@@ -1474,9 +1474,10 @@ Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #printing }
@@ -1484,9 +1485,10 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0 ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #dependencies }
@@ -1804,8 +1806,8 @@ Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
 	| dependents |
-	dependents := self dependents reject: [:each | each == anObject].
-	self myDependents: (dependents isEmpty ifFalse: [dependents]).
+	dependents := self dependents reject: [ :each | each == anObject ].
+	self myDependents: dependents.
 	^ anObject
 ]
 

@@ -215,6 +215,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 { #category : #'accessing - comment' }
 ClassDescription >> classCommentBlank [
 	"Classes can override this method to show another template."
+
 	"There are two use cases: a class hierarchy can give information about what kind of comment is
 	useful (see 'PackageManifest class'). If in addition, '#hasComment ^true' can be implemented in
 	cases where the class does not need a dedicated comment. See 'TestCase class'for an example"
@@ -238,19 +239,27 @@ Public API and Key Messages
    One simple example is simply gorgeous.
 
 Internal Representation and Key Implementation Points.'.
-
-	(self instanceVariables isNotEmpty)
-		 ifTrue: [stream cr; cr; nextPutAll: '    Instance Variables'.  ].
-
-	self instVarNames sorted do: [:each |
+	self instanceVariables ifNotEmpty: [
 		stream
-			cr; tab; nextPutAll: each;
+			cr;
+			cr;
+			nextPutAll: '    Instance Variables' ].
+
+	self instVarNames sorted do: [ :each |
+		stream
+			cr;
+			tab;
+			nextPutAll: each;
 			nextPut: $:;
-			tab; tab;
-			nextPutAll: '<Object>'].
+			tab;
+			tab;
+			nextPutAll: '<Object>' ].
 	stream cr.
-	stream cr; cr; nextPutAll: '    Implementation Points'.
-	^stream contents
+	stream
+		cr;
+		cr;
+		nextPutAll: '    Implementation Points'.
+	^ stream contents
 ]
 
 { #category : #'accessing - parallel hierarchy' }
@@ -300,17 +309,11 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 	| found remaining |
 	found := OrderedCollection new.
-	selectorSet do:
-		[:sel | (self includesSelector: sel) ifTrue: [found add: sel]].
-	found isEmpty
-		ifTrue: [^ self subclasses inject: Array new
-						into: [:subsThatDo :sub |
-							subsThatDo , (sub classesThatImplementAllOf: selectorSet)]]
-		ifFalse: [remaining := selectorSet copyWithoutAll: found.
-				remaining isEmpty ifTrue: [^ Array with: self].
-				^ self subclasses inject: Array new
-						into: [:subsThatDo :sub |
-							subsThatDo , (sub classesThatImplementAllOf: remaining)]]
+	selectorSet do: [ :sel | (self includesSelector: sel) ifTrue: [ found add: sel ] ].
+	found ifEmpty: [ ^ self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: selectorSet) ] ] ifNotEmpty: [
+		remaining := selectorSet copyWithoutAll: found.
+		remaining isEmpty ifTrue: [ ^ Array with: self ].
+		^ self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: remaining) ] ]
 ]
 
 { #category : #'accessing - comment' }
