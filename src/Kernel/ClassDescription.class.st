@@ -490,9 +490,13 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 ]
 
 { #category : #'queries - protocols' }
-ClassDescription >> ensureProtocolNamed: aProtocolName [
+ClassDescription >> ensureProtocol: aProtocol [
+	"I can take a Protocol or a protocol name as paramater.
+	
+	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
+	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
 
-	^ self organization ensureProtocolNamed: aProtocolName
+	^ self organization ensureProtocol: aProtocol
 ]
 
 { #category : #private }

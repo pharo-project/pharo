@@ -94,6 +94,6 @@ MethodAddition >> writeSourceToLog [
 		myClass
 			logMethodSource: text
 			forMethod: compiledMethod
-			inProtocol: (myClass ensureProtocolNamed: category)
+			inProtocol: (myClass ensureProtocol: category)
 			withStamp: changeStamp ]
 ]

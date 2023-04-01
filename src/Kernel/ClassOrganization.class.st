@@ -128,7 +128,7 @@ ClassOrganization >> copyFrom: otherOrganization [
 ]
 
 { #category : #'queries - protocols' }
-ClassOrganization >> ensureProtocolNamed: aProtocolName [
+ClassOrganization >> ensureProtocol: aProtocolName [
 
 	^ self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ]
 ]
