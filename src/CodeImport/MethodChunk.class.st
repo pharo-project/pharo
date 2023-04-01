@@ -62,14 +62,17 @@ MethodChunk >> handleMissingBehavior [
 
 { #category : #importing }
 MethodChunk >> importFor: requestor logSource: logSource [
+	| method |
 	self existsBehavior
 		ifFalse: [ self handleMissingBehavior ].
-	^ self targetClass
-		compile: contents
-		classified: categoryName
-		withStamp: stamp
-		notifying: nil
-		logSource: logSource
+	method := self targetClass compiler
+		protocolName: categoryName;
+		changeStamp: stamp;
+		logged: logSource;
+		permitFaulty: true; "Because method definitions may come before refecenced classes are declared"
+		install: contents.
+	^ method selector
+
 ]
 
 { #category : #testing }
