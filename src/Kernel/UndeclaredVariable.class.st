@@ -95,7 +95,7 @@ UndeclaredVariable >> runtimeUndeclaredRead [
 UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 
 	<debuggerCompleteToSender>
-	UndeclaredVariableWrite new
+	^ UndeclaredVariableWrite new
 		messageText: 'Attempt to write to undeclared variable ' , self name;
 		variable: self;
 		signal
