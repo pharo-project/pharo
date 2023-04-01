@@ -1,5 +1,5 @@
 "
-I represent the addition of a method to a class.  I can produce the CompiledMethod, install it, and then notify the system that the method has been added.  This allows Monticello to implement atomic addition.  A loader can compile all classes and methods first and then install all methods only after they have been all compiled, and in a way that executes little code.ß
+I represent the addition of a method to a class.  I can produce the CompiledMethod, install it, and then notify the system that the method has been added.  This allows Monticello to implement atomic addition.  A loader can compile all classes and methods first and then install all methods only after they have been all compiled, and in a way that executes little code.
 "
 Class {
 	#name : #MethodAddition,
@@ -8,7 +8,6 @@ Class {
 		'text',
 		'category',
 		'changeStamp',
-		'requestor',
 		'logSource',
 		'myClass',
 		'selector',
@@ -31,12 +30,11 @@ MethodAddition >> compile [
 ]
 
 { #category : #compilation }
-MethodAddition >> compile: aString classified: aString1 withStamp: aString2 notifying: aRequestor logSource: aBoolean inClass: aClass [
+MethodAddition >> compile: aString classified: aString1 withStamp: aString2 logSource: aBoolean inClass: aClass [
 
 	text := aString.
 	category := aString1.
 	changeStamp := aString2.
-	requestor := aRequestor.
 	logSource := aBoolean.
 	myClass := aClass
 ]
@@ -44,11 +42,7 @@ MethodAddition >> compile: aString classified: aString1 withStamp: aString2 noti
 { #category : #operations }
 MethodAddition >> createCompiledMethod [
 
-	compiledMethod := myClass compiler
-		                  source: text asString;
-		                  requestor: requestor;
-		                  failBlock: [ ^ nil ];
-		                  compile.
+	compiledMethod := myClass compiler compile: text asString.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].

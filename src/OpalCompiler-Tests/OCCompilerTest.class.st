@@ -236,7 +236,6 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
-		failBlock: [self fail. ^ nil ];
 		compile
 ]
 

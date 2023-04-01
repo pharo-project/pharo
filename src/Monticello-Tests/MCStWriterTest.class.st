@@ -20,7 +20,6 @@ MCStWriterTest >> assertChunkIsWellFormed: chunk [
 		source: chunk;
 		class: UndefinedObject;
 		noPattern: true;
-		failBlock:  [self assert: false];
 		compile
 ]
 
@@ -37,7 +36,6 @@ MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 	self class compiler
 		source: chunk;
 		class: UndefinedObject;
-		failBlock: [self assert: false];
 		compile.
 	
 ]
