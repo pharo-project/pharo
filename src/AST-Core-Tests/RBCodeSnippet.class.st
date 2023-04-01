@@ -1215,18 +1215,6 @@ RBCodeSnippet class >> badSemantic [
 	"Undefined variable
 	For some reason, this is just a warning in non-faulty mode, not an error."
 	list := {
-		        (self new
-			         source: 'a := 10. ^ a';
-			         value: 10;
-			         raise: UndeclaredVariableWrite;
-			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
-				            #( 12 12 12 'Undeclared variable' ) )).
-		        (self new
-			         source: '^ a';
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
-
 		        "Uninitialized variable"
 		        (self new
 			         source: '| a | ^ a';
@@ -1459,6 +1447,62 @@ RBCodeSnippet class >> badVariableAndScopes [
 
 	| list |
 	list := {
+		        (self new
+			         source: 'a';
+			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
+			         notices: #( #( 1 1 1 'Undeclared variable' ) )).
+		        (self new
+			         source: 'a := 1';
+			         isFaulty: false;
+			         raise: UndeclaredVariableWrite;
+			         notices: #( #( 1 1 1 'Undeclared variable' ) )).
+		        (self new
+			         source: 'a := 1. a';
+			         isFaulty: false;
+			         raise: UndeclaredVariableWrite;
+			         notices:
+				         #( #( 1 1 1 'Undeclared variable' )
+				            #( 9 9 9 'Undeclared variable' ) )).
+		        (self new
+			         source: 'a := a';
+			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
+			         numberOfCritiques: 1;
+			         notices:
+				         #( #( 6 6 6 'Undeclared variable' )
+				            #( 1 1 1 'Undeclared variable' ) )).
+		        (self new
+			         source: '^ a';
+			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
+			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+		        (self new
+			         source: '{ a }';
+			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
+			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+		        (self new
+			         source: 'a + 1';
+			         isFaulty: false;
+			         raise: VariableNotDeclared;
+			         notices: #( #( 1 1 1 'Undeclared variable' ) )). "Different exception to keep compatibility with the current debugger"
+		        (self new
+			         source: 'a isNil';
+			         isFaulty: false;
+			         value: true;
+			         notices: #( #( 1 1 1 'Undeclared variable' ) )). "But makes defined methods of nil available"
+		        (self new
+			         source: '1 + a';
+			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
+			         notices: #( #( 5 5 5 'Undeclared variable' ) )).
+		        (self new
+			         source: '[ a ]';
+			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
+			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
 			         formattedCode: 'a := a. { [ :a | } a := a';
