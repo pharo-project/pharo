@@ -85,7 +85,7 @@ UndeclaredVariable >> register [
 UndeclaredVariable >> runtimeUndeclaredRead [
 
 	<debuggerCompleteToSender>
-	UndeclaredVariableRead new
+	^ UndeclaredVariableRead new
 		messageText: 'Attempt to read undeclared variable ' , self name;
 		variable: self;
 		signal
