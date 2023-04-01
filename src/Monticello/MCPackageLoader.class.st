@@ -87,15 +87,14 @@ MCPackageLoader >> basicLoadDefinitions [
 
 	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
 	additions do: [ :each | self tryToLoad: each           ] displayingProgress: 'Compiling methods...'.
-	removals  do: [ :each | each unload                    ] displayingProgress: 'Cleaning up...'.
-	
+		
 	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
 	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
 	
 	methodAdditions do: [ :each | each installMethod ].
 	methodAdditions do: [ :each | each notifyObservers ].
 	additions       do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
-	
+	removals        do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
 ]
 
 { #category : #private }
