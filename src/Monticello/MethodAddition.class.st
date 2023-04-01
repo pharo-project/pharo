@@ -42,7 +42,7 @@ MethodAddition >> compile: aString classified: aString1 withStamp: aString2 logS
 { #category : #operations }
 MethodAddition >> createCompiledMethod [
 
-	compiledMethod := myClass compiler compile: text asString.
+	compiledMethod := myClass compiler permitFaulty: true; compile: text asString.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].
