@@ -430,7 +430,7 @@ OpalCompiler >> format: textOrString [
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
-	| class method logSource |
+	| class method logSource actualProtocol |
 	class := self semanticScope targetClass.
 	self assert: class isNotNil.
 
@@ -438,6 +438,9 @@ OpalCompiler >> install [
 	method ifNil: [ ^ method ].
 
 	protocolName ifNil: [ protocolName := Protocol unclassified ].
+	actualProtocol := protocolName isProtocol
+		                  ifTrue: [ protocolName ]
+		                  ifFalse: [ class ensureProtocolNamed: protocolName ].
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
 
@@ -445,13 +448,10 @@ OpalCompiler >> install [
 		class
 			logMethodSource: source
 			forMethod: method
-			inProtocolNamed: protocolName
+			inProtocol: actualProtocol
 			withStamp: changeStamp ].
 
-	class
-		addAndClassifySelector: method selector
-		withMethod: method
-		inProtocol: protocolName.
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocolName.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 

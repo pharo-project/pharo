@@ -489,6 +489,12 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'queries - protocols' }
+ClassDescription >> ensureProtocolNamed: aProtocolName [
+
+	^ self organization ensureProtocolNamed: aProtocolName
+]
+
 { #category : #private }
 ClassDescription >> errorCategoryName [
 	self error: 'Category name must be a String'

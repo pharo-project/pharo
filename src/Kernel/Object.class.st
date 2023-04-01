@@ -1346,7 +1346,7 @@ Object >> isPoint [
 { #category : #testing }
 Object >> isProtocol [
 
-	^ true
+	^ false
 ]
 
 { #category : #'write barrier' }

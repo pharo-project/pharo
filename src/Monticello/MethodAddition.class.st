@@ -41,7 +41,9 @@ MethodAddition >> compile: aString classified: aString1 withStamp: aString2 logS
 
 { #category : #operations }
 MethodAddition >> createCompiledMethod [
-
+	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
+	
+	Can't we just call #compile:classfied: here?"
 	compiledMethod := myClass compiler compile: text asString.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
@@ -87,9 +89,11 @@ MethodAddition >> priorCategoryOrNil: anObject [
 
 { #category : #operations }
 MethodAddition >> writeSourceToLog [
-	logSource ifTrue: [
-		myClass logMethodSource: text forMethod: compiledMethod
-			inProtocolNamed: category withStamp: changeStamp
-	].
 
+	logSource ifTrue: [
+		myClass
+			logMethodSource: text
+			forMethod: compiledMethod
+			inProtocol: (myClass ensureProtocolNamed: category)
+			withStamp: changeStamp ]
 ]
