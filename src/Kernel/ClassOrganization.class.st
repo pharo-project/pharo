@@ -127,6 +127,12 @@ ClassOrganization >> copyFrom: otherOrganization [
 	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: protocol name ] ]
 ]
 
+{ #category : #'queries - protocols' }
+ClassOrganization >> ensureProtocolNamed: aProtocolName [
+
+	^ self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ]
+]
+
 { #category : #accessing }
 ClassOrganization >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
