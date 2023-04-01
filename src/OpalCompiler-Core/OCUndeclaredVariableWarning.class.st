@@ -3,10 +3,7 @@ I get signalled when a temporary variable is used that is not defined.  My defau
 "
 Class {
 	#name : #OCUndeclaredVariableWarning,
-	#superclass : #Notification,
-	#instVars : [
-		'notice'
-	],
+	#superclass : #CodeError,
 	#category : #'OpalCompiler-Core-Exception'
 }
 
