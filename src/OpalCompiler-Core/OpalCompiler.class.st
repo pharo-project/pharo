@@ -439,7 +439,11 @@ OpalCompiler >> install [
 
 	protocolName ifNil: [ protocolName := Protocol unclassified ].
 	actualProtocol := protocolName isProtocol
-		                  ifTrue: [ protocolName ]
+		                  ifTrue: [
+			                  | p |
+			                  p := protocolName.
+			                  protocolName := p name.
+			                  p ]
 		                  ifFalse: [ class ensureProtocolNamed: protocolName ].
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
