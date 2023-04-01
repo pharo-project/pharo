@@ -149,7 +149,8 @@ TaAbstractComposition >> compile: selector into: aClass [
 				source: sourceCode;
 				class: aClass ;
 				compiledMethodTrailer: trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
+				permitFaulty: true; "Accept any original error, and permit missing shared (so as undeclared)"
+				compile.
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 
