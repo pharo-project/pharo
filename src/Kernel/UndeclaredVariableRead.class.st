@@ -10,6 +10,13 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #testing }
+UndeclaredVariableRead >> isResumable [
+	"The undeclared variable read give the resumed value (nil by default)"
+
+	^ true
+]
+
 { #category : #accessing }
 UndeclaredVariableRead >> variable [
 
