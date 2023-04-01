@@ -23,11 +23,6 @@ FTSearchFunction >> ghostText [
 ]
 
 { #category : #'event handling' }
-FTSearchFunction >> keyDown: anEvent [
-	^ self keyStroke: anEvent
-]
-
-{ #category : #'event handling' }
 FTSearchFunction >> keyStroke: anEvent [
 
 	anEvent keyCharacter isAlphaNumeric ifFalse: [ ^ false ].
