@@ -1,30 +1,3 @@
-"
-I provide the API of the whole Compiler Package for the case that the input is sourcecode.
-(if there is already and AST, call #generate (to compile) or #evaluate directly on the node)
-
-a pre-configures compiler instance can be requested with: 
- - Smalltalk compiler
- - a Class compiler 
-
-The compiler instance (actually: the compilation context) needs to be setup. See #class: #source: #noPattern: #requestor: for the most important accessors (more are in the accessing protocol). 
-
-See the class comment of CompilationContext for more information.
-
-The final step is one of three actions:
-
--> parsing: parse source and return an AST.
--> compile: parse and compile, return a CompiledMethod 
--> evaluate: parse, compile, evaluate and return result
-
-Example:
-
-Smalltalk compiler
-	source: 'test 1+2';
-	class: Object;
-	compile.
-
-This returns a CompiledMethod.
-"
 Class {
 	#name : #OpalCompiler,
 	#superclass : #Object,
@@ -33,8 +6,8 @@ Class {
 		'source',
 		'compilationContext',
 		'compilationContextClass',
-		'protocolName',
-		'changeStamp'
+		'changeStamp',
+		'protocol'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -430,16 +403,15 @@ OpalCompiler >> format: textOrString [
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
-	| class method logSource actualProtocol |
+	| class method logSource |
 	class := self semanticScope targetClass.
 	self assert: class isNotNil.
 
 	method := self compile.
 	method ifNil: [ ^ method ].
 
-	protocolName ifNil: [ protocolName := Protocol unclassified ].
-	actualProtocol := class ensureProtocol: protocolName.
-	protocolName := actualProtocol name.
+	protocol ifNil: [ protocol := Protocol unclassified ].
+	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
 
@@ -447,10 +419,10 @@ OpalCompiler >> install [
 		class
 			logMethodSource: source
 			forMethod: method
-			inProtocol: actualProtocol
+			inProtocol: protocol
 			withStamp: changeStamp ].
 
-	class addAndClassifySelector: method selector withMethod: method inProtocol: protocolName.
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 
@@ -555,9 +527,9 @@ OpalCompiler >> productionEnvironment: anObject [
 	compilationContext productionEnvironment: anObject
 ]
 
-{ #category : #accessing }
-OpalCompiler >> protocolName: aString [ 
-	protocolName := aString
+{ #category : #'as yet unclassified' }
+OpalCompiler >> protocol: aProtocol [ 
+	protocol := aProtocol
 ]
 
 { #category : #accessing }

@@ -393,7 +393,7 @@ ClassDescription >> compile: sourceCode classified: protocolName withStamp: chan
 		source: sourceCode;
 		requestor: requestor;
 		failBlock: (requestor ifNil: nil ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
-		protocolName: protocolName;
+		protocol: protocolName;
 		changeStamp: changeStamp;
 		logged: logSource;
 		install.

@@ -161,7 +161,7 @@ OpalCompilerTest >> testInstall [
 	method := MockForCompilation compiler
 		          source: 'foo ^42';
 		          changeStamp: 'JP 4/01/2023 01:23';
-		          protocolName: 'hitching';
+		          protocol: 'hitching';
 		          install.
 
 	self assert: method equals: MockForCompilation >> #foo.
@@ -203,7 +203,7 @@ OpalCompilerTest >> testInstallRequestor [
 		          requestor: requestor;
 		          failBlock: [  ];
 		          changeStamp: 'JP 3/24/2023 18:39';
-		          protocolName: 'hitching';
+		          protocol: 'hitching';
 		          install ]
 		on: CodeError
 		do: [  ].

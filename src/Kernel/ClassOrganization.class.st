@@ -75,16 +75,22 @@ ClassOrganization >> classComment: aString [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: selector under: aProtocolName [
+ClassOrganization >> classify: selector under: protocol [
 
-	| oldProtocolName forceNotify oldProtocols |
+	| oldProtocolName forceNotify oldProtocols protocolName |
+	"The next section deserve more cleanings.
+	
+	Some code was added to make it possible to classify giving a real protocol.
+	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
+	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
+	protocolName := protocol isProtocol ifTrue: [ protocol name ] ifFalse: [ protocol ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
-	(forceNotify or: [ oldProtocolName ~= aProtocolName or: [ aProtocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
+	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
-	self protocolOrganizer classify: selector inProtocolNamed: aProtocolName.
+	self protocolOrganizer classify: selector inProtocolNamed: protocolName.
 	(oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ].
-	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: aProtocolName ]
+	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
 { #category : #cleanup }
@@ -128,9 +134,17 @@ ClassOrganization >> copyFrom: otherOrganization [
 ]
 
 { #category : #'queries - protocols' }
-ClassOrganization >> ensureProtocol: aProtocolName [
+ClassOrganization >> ensureProtocol: aProtocol [
+	"I can take a Protocol or a protocol name as paramater.
+	
+	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
+	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
 
-	^ self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ]
+	aProtocol isProtocol ifTrue: [
+		(self protocols includes: aProtocol)
+			ifTrue: [ ^ aProtocol ]
+			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
+	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocolNamed: aProtocol ]
 ]
 
 { #category : #accessing }

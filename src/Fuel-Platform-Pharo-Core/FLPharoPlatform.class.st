@@ -40,9 +40,9 @@ FLPharoPlatform >> absolutePathOf: aString [
 ]
 
 { #category : #'accessing-compiler' }
-FLPharoPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
+FLPharoPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aProtocolName [
 
-	aClass addAndClassifySelector: aSymbol withMethod: aCompiledMethod inProtocol: aString
+	aClass addAndClassifySelector: aSymbol withMethod: aCompiledMethod inProtocol: aProtocolName
 ]
 
 { #category : #testing }
