@@ -28,7 +28,7 @@ RBNotice >> description [
 			  nextPutAll: ':';
 			  nextPutAll: self messageText;
 			  nextPutAll: '->';
-			  nextPutAll: node displaySourceCode ]
+			  nextPutAll: (node sourceCode asString withBlanksCondensed truncateWithElipsisTo: 60) ]
 ]
 
 { #category : #testing }
