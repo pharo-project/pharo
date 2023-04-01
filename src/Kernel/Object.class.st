@@ -1343,6 +1343,12 @@ Object >> isPoint [
 	^ false
 ]
 
+{ #category : #testing }
+Object >> isProtocol [
+
+	^ true
+]
+
 { #category : #'write barrier' }
 Object >> isReadOnlyObject [
 	"Answer if the receiver is read-only.

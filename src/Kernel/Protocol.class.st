@@ -47,6 +47,12 @@ Protocol >> initialize [
 	name := self class defaultName
 ]
 
+{ #category : #testing }
+Protocol >> isProtocol [
+
+	^ true
+]
+
 { #category : #accessing }
 Protocol >> methodSelectors [
 	^ methodSelectors
