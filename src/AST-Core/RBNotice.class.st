@@ -31,6 +31,13 @@ RBNotice >> description [
 			  nextPutAll: node displaySourceCode ]
 ]
 
+{ #category : #inspecting }
+RBNotice >> inspectionSource [
+
+	<inspectorPresentationOrder: 30 title: 'Source'>
+	^ node inspectionSource
+]
+
 { #category : #testing }
 RBNotice >> isError [
 
