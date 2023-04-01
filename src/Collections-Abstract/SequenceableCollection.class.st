@@ -2255,6 +2255,12 @@ SequenceableCollection >> swap: oneIndex with: anotherIndex [
 	self at: anotherIndex put: element
 ]
 
+{ #category : #'as yet unclassified' }
+SequenceableCollection >> takeFirst: anInteger [
+
+	^ self first: (self size min: anInteger)
+]
+
 { #category : #accessing }
 SequenceableCollection >> third [
 	"Answer the third element of the receiver.
