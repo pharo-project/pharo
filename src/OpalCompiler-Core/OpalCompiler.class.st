@@ -1,3 +1,30 @@
+"
+I provide the API of the whole Compiler Package for the case that the input is sourcecode.
+(if there is already and AST, call #generate (to compile) or #evaluate directly on the node)
+
+a pre-configures compiler instance can be requested with: 
+ - Smalltalk compiler
+ - a Class compiler 
+
+The compiler instance (actually: the compilation context) needs to be setup. See #class: #source: #noPattern: #requestor: for the most important accessors (more are in the accessing protocol). 
+
+See the class comment of CompilationContext for more information.
+
+The final step is one of three actions:
+
+-> parsing: parse source and return an AST.
+-> compile: parse and compile, return a CompiledMethod 
+-> evaluate: parse, compile, evaluate and return result
+
+Example:
+
+Smalltalk compiler
+	source: 'test 1+2';
+	class: Object;
+	compile.
+
+This returns a CompiledMethod.
+"
 Class {
 	#name : #OpalCompiler,
 	#superclass : #Object,
