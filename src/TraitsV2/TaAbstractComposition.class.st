@@ -147,7 +147,6 @@ TaAbstractComposition >> compile: selector into: aClass [
 	newMethod := aClass compiler
 		             source: sourceCode;
 		             class: aClass;
-		             failBlock: [ ^ false ];
 		             compiledMethodTrailer: trailer;
 		             compile. "Assume OK after proceed from SyntaxError"
 
