@@ -497,7 +497,7 @@ OpalCompiler >> parse [
 	"Policy: simple parsing is faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: true ].
 
-	self compilationContext requestor ifNotNil: [  self haltIfTest  ].
+	self compilationContext requestor ifNotNil: [  self error: 'no!'  ].
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
