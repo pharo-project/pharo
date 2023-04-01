@@ -204,7 +204,7 @@ LiteralVariable >> readInContext: aContext [
 	^self value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'code generation' }
 LiteralVariable >> runtimeUndeclaredRead [
 	"This method is used internally to compile polymorphic read on undeclared variables.
 	Do not call it youself to not polute senders."
