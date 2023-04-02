@@ -87,11 +87,10 @@ Class {
 		'RightMarginTab',
 		'Space',
 		'Tab',
-		'TextSharedInformation'
 	],
 	#category : #'Text-Core-Base'
 }
-
+"TextSharedInformation"
 { #category : #accessing }
 TextConstants class >> BS [
 	^BS
@@ -502,10 +501,10 @@ TextConstants class >> Tab [
 	^Tab
 ]
 
-{ #category : #accessing }
+"{ #category : #accessing }
 TextConstants class >> TextSharedInformation [
 	^TextSharedInformation
-]
+]"
 
 { #category : #'backward compatibility' }
 TextConstants class >> at: aSymbol [
@@ -516,7 +515,7 @@ TextConstants class >> at: aSymbol [
 { #category : #'class initialization' }
 TextConstants class >> initialize [
 
-	TextSharedInformation ifNil: [ TextSharedInformation := Dictionary new].
+	"TextSharedInformation ifNil: [ TextSharedInformation := Dictionary new]."
 	Ctrll := Character value: 153.
 	Ctrld := Character value: 132.
 	ESC := Character value: 160.
@@ -600,3 +599,4 @@ TextConstants class >> initialize [
 	Ctrlp := Character value: 138.
 	DefaultBaseline := 12
 ]
+"Assuming that fonts do indeed refer to the styles of text such as bold and italic, Having a separate SharedPool to hold the fonts looks more appropriate for upcoming changes."
