@@ -41,8 +41,8 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		self organization classify: selector under: ((protocol isProtocol
 				  ifTrue: [ protocol name ]
 				  ifFalse: [ protocol ]) = Protocol unclassified
-				 ifTrue: [ protocol ]
-				 ifFalse: [ Protocol unclassified ]) ].
+				 ifTrue: [ oldProtocol ]
+				 ifFalse: [ protocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.
 
 	self isAnonymous ifTrue: [ ^ self ].
