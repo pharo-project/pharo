@@ -714,7 +714,21 @@ OCASTTranslator >> visitVariableNode: aVariableNode [
 	aVariableNode variable isInvalidVariable ifTrue: [ ^ self emitRuntimeError: aVariableNode  ].
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
-	aVariableNode variable isUndeclaredVariable ifTrue: [ aVariableNode variable register ].
+	aVariableNode variable isUndeclaredVariable ifTrue: [
+		aVariableNode variable register.
+
+		(aVariableNode parent isMessage and: [ aVariableNode parent receiver == aVariableNode ]) ifTrue: [ 
+			"Let's try to hack a hack!
+			StDebugger expects some `VariableNotDeclared` (badly named class) when a message
+			is send to a `nil` that comes from an undeclared variable (awful fragile heuristics are used).
+			To be compatible, we can either emulate the hack (that seems to be very ugly and complex),
+			or we can just compile the undelared variable used as a receiver as a literal read.
+			Therefore, if the variable become declared, the emmited code is compatible, and if
+			the variable is still undeclared at runtime, then `nil` from an undeclared is used and
+			the debugger is fooled.
+			Once the debugger learn to deal with `UndeclaredVariableRead`, this hack can be removed."
+			methodBuilder pushLiteralVariable: aVariableNode variable.
+			^ self ] ].
 
 	aVariableNode variable emitValue: methodBuilder
 ]

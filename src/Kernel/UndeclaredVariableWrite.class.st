@@ -10,6 +10,13 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #testing }
+UndeclaredVariableWrite >> isResumable [
+	"The undeclared variable write become a no-op"
+
+	^ true
+]
+
 { #category : #accessing }
 UndeclaredVariableWrite >> variable [
 

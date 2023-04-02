@@ -805,7 +805,7 @@ CompiledMethodTest >> testUndeclaredReparationWithClass [
 
 	method := self class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: nil.
+	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Adding a class DOES repair"
 	c := Object subclass: #TestUndeclaredVariable.
@@ -836,7 +836,7 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 
 	method := self class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: nil.
+	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Adding a global DOES repair"
 	Smalltalk globals at: #TestUndeclaredVariable put: 42.
@@ -870,7 +870,7 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	"Note: unlike related tests, we need here a reveiver (see above) and to install the method in the class"
 	method := class compiler permitFaulty: true; install: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
-	self assert: (receiver executeMethod: method) equals: nil.
+	self should: [ receiver executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Update the class (same identity, not a new class)"
 	self assert: (Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: '') equals: class.
@@ -888,7 +888,7 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
 	self deny: method2 equals: (method3 := class>>#x). "It is a new method"
 	self assert: method3 usesUndeclareds.
-	self assert: (receiver executeMethod: method3) equals: nil.
+	self should: [ receiver executeMethod: method3 ] raise: UndeclaredVariableRead.
 
 	"Thus adding back DOES recompile again"
 	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: ''.
@@ -911,7 +911,7 @@ CompiledMethodTest >> testUndeclaredReparationWithShared [
 
 	method := class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: nil.
+	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Add and initialize a shared"
 	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
