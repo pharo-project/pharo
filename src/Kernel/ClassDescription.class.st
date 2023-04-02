@@ -26,7 +26,7 @@ ClassDescription >> acceptsLoggingOfCompilation [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
 	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
