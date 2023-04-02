@@ -31,6 +31,13 @@ RBNotice >> description [
 			  nextPutAll: node displaySourceCode ]
 ]
 
+{ #category : #inspecting }
+RBNotice >> inspectionSource [
+
+	<inspectorPresentationOrder: 30 title: 'Source'>
+	^ node inspectionSource
+]
+
 { #category : #testing }
 RBNotice >> isError [
 
@@ -87,6 +94,15 @@ RBNotice >> printOn: aStream [
 
 { #category : #signalling }
 RBNotice >> signalError [
+	"If a debugger is opened here, it means that a code error (syntax error or semantic error)
+	was uncaught while compiling some code.
+	Inspect `self` to get a view of the problematic source code.
+
+	Resuming the error (proceed) will continue the compilation anyway, but might produce an
+	executable code that will signal runtime errors at runtime.
+	However, it allows you to repair and recompile the code at your own time.
+
+	If you close the debugger, then we will all forgot this ever happen."
 
 	CodeError new
 		notice: self;
