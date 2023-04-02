@@ -2,19 +2,19 @@
 I am the implicit notice of a RBParseErrorNode
 "
 Class {
-	#name : #RBErrorNodeNotice,
+	#name : #RBSyntaxErrorNotice,
 	#superclass : #RBErrorNotice,
 	#category : #'AST-Core-Notice'
 }
 
 { #category : #accessing }
-RBErrorNodeNotice >> messageText [
+RBSyntaxErrorNotice >> messageText [
 
 	^ node errorMessage
 ]
 
 { #category : #'error handling' }
-RBErrorNodeNotice >> position [
+RBSyntaxErrorNotice >> position [
 
 	^ node errorPosition
 ]
