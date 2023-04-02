@@ -328,13 +328,13 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '| | a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
@@ -519,7 +519,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
@@ -957,7 +957,7 @@ RBCodeSnippet class >> badExpressions [
 		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
 		        (self new
 			         source: 'Δə';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
@@ -1449,24 +1449,24 @@ RBCodeSnippet class >> badVariableAndScopes [
 	list := {
 		        (self new
 			         source: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 1 1 1 'Undeclared variable' ) )).
 		        (self new
 			         source: 'a := 1';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableWrite;
 			         notices: #( #( 1 1 1 'Undeclared variable' ) )).
 		        (self new
 			         source: 'a := 1. a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 9 9 9 'Undeclared variable' ) )).
 		        (self new
 			         source: 'a := a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         numberOfCritiques: 1;
 			         notices:
@@ -1474,32 +1474,32 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 1 1 1 'Undeclared variable' ) )).
 		        (self new
 			         source: '^ a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 		        (self new
 			         source: '{ a }';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 		        (self new
 			         source: 'a + 1';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: VariableNotDeclared;
 			         notices: #( #( 1 1 1 'Undeclared variable' ) )). "Different exception to keep compatibility with the current debugger"
 		        (self new
 			         source: 'a isNil';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         value: true;
 			         notices: #( #( 1 1 1 'Undeclared variable' ) )). "But makes defined methods of nil available"
 		        (self new
 			         source: '1 + a';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )).
 		        (self new
 			         source: '[ a ]';
-			         isFaulty: false;
+			         isParseFaulty: false;
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
