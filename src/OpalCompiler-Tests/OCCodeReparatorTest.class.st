@@ -146,7 +146,7 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			flag := true.
-			e pass "do nothing" ].
+			e resume "continue" ].
 
 	self assert: flag.
 	self assert: method isCompiledMethod.
