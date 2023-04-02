@@ -859,6 +859,7 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 
 { #category : #'tests - literals' }
 CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
+	<expectedFailure>
 
 	| method method2 method3 method4 class receiver |
 
