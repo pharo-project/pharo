@@ -102,6 +102,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 			'methodWithUndeclaredVar
 											^ undeclaredTestVar';
 		class: OCMockCompilationClass;
+		permitFaulty: true;
 		compile.
 
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
@@ -119,6 +120,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 			'methodWithUndeclaredVar
 											^ undeclaredTestVar';
 		class: OCMockCompilationClass;
+		permitFaulty: true;
 		compile.
 
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
@@ -140,6 +142,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 			'methodWithUndeclaredVar
 											^ undeclaredTestVar';
 		class: OCMockCompilationClass;
+		permitFaulty: true;
 		compile.
 
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
