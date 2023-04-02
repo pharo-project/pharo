@@ -293,12 +293,6 @@ ClassOrganization >> protocolNames [
 	^ self protocols collect: #name
 ]
 
-{ #category : #private }
-ClassOrganization >> protocolOrganizer [
-
-	^ protocolOrganizer
-]
-
 { #category : #accessing }
 ClassOrganization >> protocols [
 
