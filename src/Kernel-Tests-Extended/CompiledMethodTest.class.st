@@ -803,7 +803,7 @@ CompiledMethodTest >> testUndeclaredReparationWithClass [
 	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
 	Undeclared removeKey: #TestUndeclaredVariable ifAbsent: []. "Because obsolete may remain"
 
-	method := self class compiler compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	method := self class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: nil.
 
@@ -834,7 +834,7 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 
 	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
 
-	method := self class compiler compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	method := self class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: nil.
 
@@ -868,7 +868,7 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	receiver := class new.
 
 	"Note: unlike related tests, we need here a reveiver (see above) and to install the method in the class"
-	method := class >> (class compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]').
+	method := class compiler permitFaulty: true; install: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (receiver executeMethod: method) equals: nil.
 
@@ -909,7 +909,7 @@ CompiledMethodTest >> testUndeclaredReparationWithShared [
 	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
 	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
 
-	method := class compiler compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	method := class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self assert: (nil executeMethod: method) equals: nil.
 
@@ -944,9 +944,9 @@ CompiledMethodTest >> testUsesUndeclareds [
 	| method |
 	method := self class compiler compile: 'x ^x'.
 	self deny: method usesUndeclareds.
-	method := self class compiler compile: 'z ^z'.
+	method := self class compiler permitFaulty: true; compile: 'z ^z'.
 	self assert: method usesUndeclareds.
-	method := self class compiler compile: 'msg self in: [ :anObject | var1 := 1 ]'.
+	method := self class compiler permitFaulty: true; compile: 'msg self in: [ :anObject | var1 := 1 ]'.
 	self assert: method usesUndeclareds
 ]
 
