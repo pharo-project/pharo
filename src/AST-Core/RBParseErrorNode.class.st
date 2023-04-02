@@ -90,7 +90,7 @@ RBParseErrorNode >> initialize [
 
 	super initialize.
 	"Add its own notice"
-	self addNotice: (RBErrorNodeNotice new)
+	self addNotice: (RBSyntaxErrorNotice new)
 ]
 
 { #category : #errors }
