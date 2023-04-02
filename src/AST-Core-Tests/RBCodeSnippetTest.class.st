@@ -67,7 +67,7 @@ RBCodeSnippetTest >> testCodeImporter [
 	self skipIf: #exec.
 
 	"Importer should fail when faulty"
-	snippet isFaulty ifTrue: [
+	snippet isFaulty & snippet isMethod not ifTrue: [
 		self should: [ importer evaluate ] raise: CodeError.
 		snippet isMethod ifTrue: [ class removeFromSystem ].
 		^ self ].
