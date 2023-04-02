@@ -26,6 +26,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 	method := OpalCompiler new
 					environment: environment;
 					class: (environment at: #MyClass);
+					permitFaulty: true;
 					compile: 'tt ^Object'.
 	self should: [ method valueWithReceiver: nil arguments: #() ] raise: UndeclaredVariableRead
 ]
