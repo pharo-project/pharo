@@ -256,9 +256,7 @@ OpalCompiler >> checkNotice: aNotice quitBlock: quitBlock [
 	fBlock := self compilationContext failBlock.
 
 	requestor ifNotNil: [ "A requestor is available. We are in quirks mode and are expected to do UI things."
-		aNotice class = OCUndeclaredVariableNotice ifTrue: [
-			self isInteractive ifFalse: [ ^ aNotice signalError ].
-
+		(aNotice class = OCUndeclaredVariableNotice and: [ self isInteractive ]) ifTrue: [
 			"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just continue as an error"
 			self compilationContext noPattern ifFalse: [
 				| res |
