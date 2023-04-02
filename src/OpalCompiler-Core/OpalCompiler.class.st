@@ -554,7 +554,7 @@ OpalCompiler >> productionEnvironment: anObject [
 	compilationContext productionEnvironment: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 OpalCompiler >> protocol: aProtocol [ 
 	protocol := aProtocol
 ]
