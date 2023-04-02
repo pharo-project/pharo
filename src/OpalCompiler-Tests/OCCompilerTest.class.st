@@ -249,7 +249,7 @@ OCCompilerTest >> testUndefinedVariable [
 			OpalCompiler new evaluate: 'undefinedName123'.
 			OpalCompiler new evaluate: 'undefinedName123 := 1'.
 			OpalCompiler new evaluate: 'undefinedName123'.
-			} ] on: UndeclaredVariableWrite, UndeclaredVariableRead do: [ :e | e resume: e class ])
+			} ] on: UndeclaredVariableWrite, UndeclaredVariableRead, CodeError do: [ :e | e resume: e class ])
 		equals: { UndeclaredVariableRead. UndeclaredVariableWrite. UndeclaredVariableRead. }.
 
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
