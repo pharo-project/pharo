@@ -26,7 +26,7 @@ ClassDescription >> acceptsLoggingOfCompilation [
 	^ true
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : #'as yet unclassified' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
 	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
@@ -36,7 +36,10 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	oldProtocol := self organization protocolNameOfElement: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: protocol ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		self organization classify: selector under: (protocol name ~= Protocol unclassified
+				 ifTrue: [ protocol ]
+				 ifFalse: [ oldProtocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.
 
 	self isAnonymous ifTrue: [ ^ self ].
