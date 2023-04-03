@@ -1437,7 +1437,19 @@ RBCodeSnippet class >> badSemantic [
 				         'a1: a1 a2: a2 a3: a3 a4: a4 a5: a5 a6: a6 a7: a7 a8: a8 a9: a9 a10: a10 a11: a11 a12: a12 a13: a13 a14: a14 a15: a15 a16: a16 ^ a1';
 			         isMethod: true;
 			         isFaulty: true;
-			         notices: #( #( 1 130 1 'Too many arguments' ) )) "Too many arguments" }.
+			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
+
+		        (self new
+			         source: 'CodeError signal: ''false error''';
+			         raise: CodeError;
+			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
+		        (self new
+			         source:
+				         'OCUndeclaredVariableWarning signal: ''false error''';
+			         raise: OCUndeclaredVariableWarning). "same, but warning are silently ignored"
+		        (self new
+			         source: 'RuntimeSyntaxError signal: ''false error''';
+			         raise: RuntimeSyntaxError) "runtime errors are not special" }.
 	"Setup default values"
 	self new
 		group: #badSemantic;
