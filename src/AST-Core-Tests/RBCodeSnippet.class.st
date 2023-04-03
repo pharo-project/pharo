@@ -46,6 +46,7 @@ RBCodeSnippet class >> allSnippets [
 
 	^ {
 		  self badExpressions.
+		  self badTokens.
 		  self badMethods.
 		  self badSemantic.
 		  self badVariableAndScopes } flattened
@@ -60,51 +61,6 @@ RBCodeSnippet class >> badExpressions [
 	<script: 'self styleWithError: self badExpressions'>
 	| list |
 	list := {
-		        (self new
-			         source: '#';
-			         notices: #( #( 1 1 2 'Literal expected' ) )).
-		        (self new
-			         source: '$';
-			         notices: #( #( 1 1 2 'Character expected' ) )).
-		        (self new
-			         source: ':';
-			         notices: #( #( 1 1 1 'Unexpected token' ) )).
-		        (self new
-			         source: '';
-			         isFaulty: false). "emptyness is ok"
-
-		        "Comments"
-		        "EFFormater is not the best here :("
-		        (self new
-			         source: '"" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"nothing" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"com"1"ment"';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
-		        (self new
-			         source: '"a" 1 "b". "c" 2 "d"';
-			         formattedCode: '1. "a" "b" "c" 2 "d"';
-			         isFaulty: false;
-			         value: 2). "a and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: '"unfinished';
-			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"also unfinished""';
-			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"';
-			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"""';
-			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
-
-		        "Bad compound"
 		        (self new
 			         source: '( 1 + 2';
 			         notices: #( #( 1 7 8 ''')'' expected' ) )).
@@ -795,224 +751,8 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3';
 			         isFaulty: false;
-			         value: 1). "Not *syntactic* enough"
+			         value: 1) "Not *syntactic* enough" }.
 
-		        "Bad string literal"
-		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
-		        (self new
-			         source: '''hello';
-			         notices: #( #( 1 6 7 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '''hello''''world';
-			         notices:
-				         #( #( 1 13 14 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '''';
-			         notices: #( #( 1 1 2 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '''hello''''';
-			         notices: #( #( 1 8 9 'Unmatched '' in string literal.' ) )). "unclosed string that ends with an escaped quote"
-
-		        "Bad symbol literal"
-		        (self new
-			         source: '#1';
-			         formattedCode: '#. 1';
-			         notices: #( #( 1 1 2 'Literal expected' ) )). "Become a bad sequence"
-		        (self new
-			         source: '#1r0';
-			         formattedCode: '#. 1 r0';
-			         notices:
-				         #( #( 1 1 2 'Literal expected' )
-				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
-		        (self new
-			         source: '##';
-			         notices: #( #( 1 2 3 'Literal expected' ) )).
-		        "Note: if quotes, same thing than strings"
-		        (self new
-			         source: '#''hello';
-			         notices: #( #( 1 7 8 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '#''hello''''world';
-			         notices:
-				         #( #( 1 14 15 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '#''';
-			         notices: #( #( 1 2 3 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '#''hello''''';
-			         notices:
-				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''hello';
-			         notices:
-				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''hello''''world';
-			         notices:
-				         #( #( 1 16 17 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''';
-			         notices: #( #( 1 4 5 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''hello''''';
-			         notices:
-				         #( #( 1 11 12 'Unmatched '' in string literal.' ) )).
-
-		        "Bad numeric literal"
-		        "Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
-		        (self new
-			         source: '2r';
-			         notices:
-				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )).
-		        (self new
-			         source: '2rx';
-			         formattedCode: '2r x';
-			         notices:
-				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a unary message send"
-		        (self new
-			         source: '2r3';
-			         formattedCode: '2r. 3';
-			         notices:
-				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a number, causing a case of unfinished sequence"
-		        (self new
-			         source: '0r';
-			         formattedCode: '0 r';
-			         notices:
-				         #( #( 1 1 2 'an integer greater than 1 as valid radix expected' ) )).
-		        (self new
-			         source: '000rx';
-			         formattedCode: '000 rx';
-			         notices:
-				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
-		        (self new
-			         source: '000r1';
-			         formattedCode: '000 r1';
-			         notices:
-				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
-		        (self new
-			         source: '3r12345';
-			         formattedCode: '3r12. 345';
-			         notices: #( #( 1 4 5 'End of statement expected' ) )).
-
-		        "These ones are correct, the number parser is very prermisive (except for radix, see above)"
-		        (self new
-			         source: '1.';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1).
-		        (self new
-			         source: '1.1.1';
-			         formattedCode: '1.1. 1';
-			         isFaulty: false;
-			         value: 1).
-		        (self new
-			         source: '1a';
-			         formattedCode: '1 a';
-			         isFaulty: false;
-			         messageNotUnderstood: #a).
-		        (self new
-			         source: '1a1a1';
-			         formattedCode: '1 a1a1';
-			         isFaulty: false;
-			         messageNotUnderstood: #a1a1).
-		        (self new
-			         source: '1e';
-			         formattedCode: '1 e';
-			         isFaulty: false;
-			         messageNotUnderstood: #e).
-		        (self new
-			         source: '1e1e1';
-			         formattedCode: '1e1 e1';
-			         isFaulty: false;
-			         messageNotUnderstood: #e1).
-		        (self new
-			         source: '1s';
-			         isFaulty: false;
-			         value: 1s0). "ScaledDecimal is a thing (!) that have literals (!!) inconsistent with '1e' (!!!)"
-		        (self new
-			         source: '1s1s1';
-			         formattedCode: '1s1 s1';
-			         isFaulty: false;
-			         messageNotUnderstood: #s1).
-		        (self new
-			         source: '10r89abcd';
-			         formattedCode: '10r89 abcd';
-			         isFaulty: false;
-			         messageNotUnderstood: #abcd).
-		        (self new
-			         source: '12r89abcd';
-			         formattedCode: '12r89ab cd';
-			         isFaulty: false;
-			         messageNotUnderstood: #cd).
-		        (self new
-			         source: '36r1halt';
-			         isFaulty: false;
-			         value: 2486513). "ahah"
-
-		        "Bad characters"
-		        "Pharo is Unicode aware."
-		        "$Δ isLetter >>> true" "$Δ asInteger >>> 16r0394" "Greek Capital Letter Delta"
-		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
-		        (self new
-			         source: 'Δə';
-			         isFaulty: false;
-			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
-		        (self new
-			         source: '| Δə | Δə := 1. Δə + 1';
-			         isFaulty: false;
-			         value: 2).
-
-		        "$± isSpecial >>> true" "$± asInteger >>> 16r00B1" "Plus Minus Sign" "Only a few unicode characters are isSpecial in Pharo"
-		        (self new
-			         source: '1 ± 1';
-			         isFaulty: false;
-			         messageNotUnderstood: #±). "Valid binary operator, but not implemented"
-		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
-		        (self new
-			         source: '→';
-			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
-		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
-		        (self new
-			         source: '٠';
-			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
-		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
-		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
-		        (self new
-			         source: Character nbsp asString;
-			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
-
-		        (self new
-			         source: '$→';
-			         isFaulty: false;
-			         value: $→).
-		        (self new
-			         source: '''Δ→ə''';
-			         isFaulty: false;
-			         value: 'Δ→ə').
-		        (self new
-			         source: '"Δ→ə" ';
-			         isFaulty: false).
-		        (self new
-			         source: '#''Δ→ə''';
-			         isFaulty: false;
-			         value: #'Δ→ə').
-		        (self new
-			         source: '#Δə';
-			         formattedCode: '#''Δə''';
-			         isFaulty: false;
-			         value: #'Δə').
-		        (self new
-			         source: '#(Δ→ə)';
-			         formattedCode: '#( Δ → ə )';
-			         notices:
-				         #( #( 4 4 4 'Unknown character' )
-				            #( 1 6 7 ''')'' expected' ) )). "This one is faulty because → is a parse error"
-		        (self new
-			         source: '#→';
-			         formattedCode: '#. →';
-			         notices:
-				         #( #( 1 1 2 'Literal expected' )
-				            #( 2 2 2 'Unknown character' ) )) "Two independent errors" }.
 	"Setup default values"
 	self new
 		group: #badExpressions;
@@ -1447,6 +1187,285 @@ RBCodeSnippet class >> badSemantic [
 		isMethod: false;
 		isFaulty: false;
 		isParseFaulty: false;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badTokens [
+	"This list focuses on bad literal, malformed tokens, unexpected character and other scanner related issue.
+	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
+	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
+	
+	<script: 'self styleWithError: self badTokens'>
+	| list |
+	list := {
+		        (self new
+			         source: '#';
+			         notices: #( #( 1 1 2 'Literal expected' ) )).
+		        (self new
+			         source: '$';
+			         notices: #( #( 1 1 2 'Character expected' ) )).
+		        (self new
+			         source: ':';
+			         notices: #( #( 1 1 1 'Unexpected token' ) )).
+		        (self new
+			         source: '';
+			         isFaulty: false). "emptyness is ok"
+
+		        "Comments"
+		        "EFFormater is not the best here :("
+		        (self new
+			         source: '"" ';
+			         isFaulty: false).
+		        (self new
+			         source: '"nothing" ';
+			         isFaulty: false).
+		        (self new
+			         source: '"com"1"ment"';
+			         formattedCode: '1';
+			         isFaulty: false;
+			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
+		        (self new
+			         source: '"a" 1 "b". "c" 2 "d"';
+			         formattedCode: '1. "a" "b" "c" 2 "d"';
+			         isFaulty: false;
+			         value: 2). "a and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: '"unfinished';
+			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"also unfinished""';
+			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"';
+			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"""';
+			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
+
+
+		        "Bad string literal"
+		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
+		        (self new
+			         source: '''hello';
+			         notices: #( #( 1 6 7 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '''hello''''world';
+			         notices:
+				         #( #( 1 13 14 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '''';
+			         notices: #( #( 1 1 2 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '''hello''''';
+			         notices: #( #( 1 8 9 'Unmatched '' in string literal.' ) )). "unclosed string that ends with an escaped quote"
+
+		        "Bad symbol literal"
+		        (self new
+			         source: '#1';
+			         formattedCode: '#. 1';
+			         notices: #( #( 1 1 2 'Literal expected' ) )). "Become a bad sequence"
+		        (self new
+			         source: '#1r0';
+			         formattedCode: '#. 1 r0';
+			         notices:
+				         #( #( 1 1 2 'Literal expected' )
+				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
+		        (self new
+			         source: '##';
+			         notices: #( #( 1 2 3 'Literal expected' ) )).
+		        "Note: if quotes, same thing than strings"
+		        (self new
+			         source: '#''hello';
+			         notices: #( #( 1 7 8 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '#''hello''''world';
+			         notices:
+				         #( #( 1 14 15 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '#''';
+			         notices: #( #( 1 2 3 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '#''hello''''';
+			         notices:
+				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''hello';
+			         notices:
+				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''hello''''world';
+			         notices:
+				         #( #( 1 16 17 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''';
+			         notices: #( #( 1 4 5 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''hello''''';
+			         notices:
+				         #( #( 1 11 12 'Unmatched '' in string literal.' ) )).
+
+		        "Bad numeric literal"
+		        "Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
+		        (self new
+			         source: '2r';
+			         notices:
+				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )).
+		        (self new
+			         source: '2rx';
+			         formattedCode: '2r x';
+			         notices:
+				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a unary message send"
+		        (self new
+			         source: '2r3';
+			         formattedCode: '2r. 3';
+			         notices:
+				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a number, causing a case of unfinished sequence"
+		        (self new
+			         source: '0r';
+			         formattedCode: '0 r';
+			         notices:
+				         #( #( 1 1 2 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '000rx';
+			         formattedCode: '000 rx';
+			         notices:
+				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '000r1';
+			         formattedCode: '000 r1';
+			         notices:
+				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '3r12345';
+			         formattedCode: '3r12. 345';
+			         notices: #( #( 1 4 5 'End of statement expected' ) )).
+
+		        "These ones are correct, the number parser is very prermisive (except for radix, see above)"
+		        (self new
+			         source: '1.';
+			         formattedCode: '1';
+			         isFaulty: false;
+			         value: 1).
+		        (self new
+			         source: '1.1.1';
+			         formattedCode: '1.1. 1';
+			         isFaulty: false;
+			         value: 1).
+		        (self new
+			         source: '1a';
+			         formattedCode: '1 a';
+			         isFaulty: false;
+			         messageNotUnderstood: #a).
+		        (self new
+			         source: '1a1a1';
+			         formattedCode: '1 a1a1';
+			         isFaulty: false;
+			         messageNotUnderstood: #a1a1).
+		        (self new
+			         source: '1e';
+			         formattedCode: '1 e';
+			         isFaulty: false;
+			         messageNotUnderstood: #e).
+		        (self new
+			         source: '1e1e1';
+			         formattedCode: '1e1 e1';
+			         isFaulty: false;
+			         messageNotUnderstood: #e1).
+		        (self new
+			         source: '1s';
+			         isFaulty: false;
+			         value: 1s0). "ScaledDecimal is a thing (!) that have literals (!!) inconsistent with '1e' (!!!)"
+		        (self new
+			         source: '1s1s1';
+			         formattedCode: '1s1 s1';
+			         isFaulty: false;
+			         messageNotUnderstood: #s1).
+		        (self new
+			         source: '10r89abcd';
+			         formattedCode: '10r89 abcd';
+			         isFaulty: false;
+			         messageNotUnderstood: #abcd).
+		        (self new
+			         source: '12r89abcd';
+			         formattedCode: '12r89ab cd';
+			         isFaulty: false;
+			         messageNotUnderstood: #cd).
+		        (self new
+			         source: '36r1halt';
+			         isFaulty: false;
+			         value: 2486513). "ahah"
+
+		        "Bad characters"
+		        "Pharo is Unicode aware."
+		        "$Δ isLetter >>> true" "$Δ asInteger >>> 16r0394" "Greek Capital Letter Delta"
+		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
+		        (self new
+			         source: 'Δə';
+			         isFaulty: false;
+			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
+		        (self new
+			         source: '| Δə | Δə := 1. Δə + 1';
+			         isFaulty: false;
+			         value: 2).
+
+		        "$± isSpecial >>> true" "$± asInteger >>> 16r00B1" "Plus Minus Sign" "Only a few unicode characters are isSpecial in Pharo"
+		        (self new
+			         source: '1 ± 1';
+			         isFaulty: false;
+			         messageNotUnderstood: #±). "Valid binary operator, but not implemented"
+		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
+		        (self new
+			         source: '→';
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
+		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
+		        (self new
+			         source: '٠';
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
+		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
+		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
+		        (self new
+			         source: Character nbsp asString;
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
+
+		        (self new
+			         source: '$→';
+			         isFaulty: false;
+			         value: $→).
+		        (self new
+			         source: '''Δ→ə''';
+			         isFaulty: false;
+			         value: 'Δ→ə').
+		        (self new
+			         source: '"Δ→ə" ';
+			         isFaulty: false).
+		        (self new
+			         source: '#''Δ→ə''';
+			         isFaulty: false;
+			         value: #'Δ→ə').
+		        (self new
+			         source: '#Δə';
+			         formattedCode: '#''Δə''';
+			         isFaulty: false;
+			         value: #'Δə').
+		        (self new
+			         source: '#(Δ→ə)';
+			         formattedCode: '#( Δ → ə )';
+			         notices:
+				         #( #( 4 4 4 'Unknown character' )
+				            #( 1 6 7 ''')'' expected' ) )). "This one is faulty because → is a parse error"
+		        (self new
+			         source: '#→';
+			         formattedCode: '#. →';
+			         notices:
+				         #( #( 1 1 2 'Literal expected' )
+				            #( 2 2 2 'Unknown character' ) )) "Two independent errors" }.
+	"Setup default values"
+	self new
+		group: #badTokens;
+		isMethod: false;
+		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
 ]
