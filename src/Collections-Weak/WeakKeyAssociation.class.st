@@ -30,5 +30,6 @@ WeakKeyAssociation >> container: anObject [
 { #category : #finalization }
 WeakKeyAssociation >> mourn [
 
-	container removeKey: key
+	container removeKey: key ifAbsent: [
+		"Do Nothing. Probably somebody removed the key while I was in the mourn queue" ]
 ]
