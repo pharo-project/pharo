@@ -106,7 +106,7 @@ ClassOrganization >> classify: selector under: protocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := protocol isProtocol ifTrue: [ protocol name ] ifFalse: [ protocol ].
+	protocolName := protocol isString ifTrue: [ protocol ] ifFalse: [ protocol name ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
@@ -164,7 +164,7 @@ ClassOrganization >> ensureProtocol: aProtocol [
 	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
 	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
 
-	aProtocol isProtocol ifTrue: [
+	aProtocol isString ifFalse: [
 		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].

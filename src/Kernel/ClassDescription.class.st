@@ -36,11 +36,10 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	oldProtocol := self organization protocolNameOfElement: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		"The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-		self organization classify: selector under: ((protocol isProtocol
-				  ifTrue: [ protocol name ]
-				  ifFalse: [ protocol ]) = Protocol unclassified
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
+		self organization classify: selector under: ((protocol isString
+				  ifTrue: [ protocol ]
+				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.
