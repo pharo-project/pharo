@@ -756,8 +756,7 @@ RPackage >> importPackage: anRPackage [
 RPackage >> importProtocol: aProtocol forClass: aClass [
 	"import all the methods of a protocol as defined in the receiver."
 
-	(aClass organization methodsInProtocolNamed: aProtocol) do: [ :each |
-		aClass compiledMethodAt: each ifPresent: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ] ]
+	(aClass methodsInProtocol: aProtocol) do: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ]
 ]
 
 { #category : #testing }

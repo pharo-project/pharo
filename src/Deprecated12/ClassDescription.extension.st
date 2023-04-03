@@ -80,5 +80,5 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 
-	self copyAll: (aClass organization methodsInProtocolNamed: protocolName) from: aClass classified: newProtocolName
+	self copyAll: (aClass organization methodSelectorsInProtocolNamed: protocolName) from: aClass classified: newProtocolName
 ]

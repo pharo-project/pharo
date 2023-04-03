@@ -49,7 +49,7 @@ MethodPragmaTest >> pragma: aSymbol selector: aSelector times: anInteger [
 { #category : #running }
 MethodPragmaTest >> tearDown [
 
-	(self class organization methodsInProtocolNamed: self methodCategory) do: [ :each | self class removeSelectorSilently: each ].
+	(self class organization methodSelectorsInProtocolNamed: self methodCategory) do: [ :each | self class removeSelectorSilently: each ].
 	self class organization removeProtocolNamed: self methodCategory.
 	super tearDown
 ]

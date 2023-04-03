@@ -40,8 +40,8 @@ ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 { #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
-	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodsInProtocolNamed: `@arg'.
-	^ self methodsInProtocolNamed: aName
+	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodSelectorsInProtocolNamed: `@arg'.
+	^ self methodSelectorsInProtocolNamed: aName
 ]
 
 { #category : #'*Deprecated12' }
