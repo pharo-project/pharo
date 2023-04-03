@@ -63,12 +63,6 @@ ClassOrganization >> allProtocols [
 	^ { self allProtocol } , self protocols
 ]
 
-{ #category : #accessing }
-ClassOrganization >> allProtocolsNames [
-
-	^ self allProtocols collect: [ :each | each name ]
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> classComment [
 

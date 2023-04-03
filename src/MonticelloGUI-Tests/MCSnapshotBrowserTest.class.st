@@ -185,7 +185,7 @@ MCSnapshotBrowserTest >> morphsOfClass: aMorphClass [
 { #category : #private }
 MCSnapshotBrowserTest >> protocolsForClass: aClass [
 
-	^ aClass organization allProtocolsNames
+	^ aClass organization protocolsNames
 ]
 
 { #category : #selecting }
