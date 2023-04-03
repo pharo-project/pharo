@@ -1,35 +1,16 @@
-"
-Adds a class in the image, optionally inside an hierarchy (with superclass or subclasses).
-
-Usage:
-| transformation |
-transformation := (RBInsertClassTransformation
-	addClass: #InsertedClass
-	superclass: #RBTransformationTest
-	subclasses: (Array with: RBInsertClassTransformationTest)
-	category: #'Refactoring2-Transformations-Tests')
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
-
-Preconditions:
-- superclass must be an existing class
-- each subclass also must be an existing class
-- name of the class to be added must be non-existent in the system
-- name of the category must be a valid one
-"
 Class {
-	#name : #RBInsertClassTransformation,
+	#name : #RBInsertNewClassTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
 		'superclass',
 		'subclasses',
 		'category'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #'instance creation' }
-RBInsertClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertNewClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
 	^ self new
 		addClass: aName
@@ -40,7 +21,7 @@ RBInsertClassTransformation class >> addClass: aName superclass: aClass subclass
 ]
 
 { #category : #'instance creation' }
-RBInsertClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertNewClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
 	^ self new
 		model: aRBSmalltalk;
@@ -52,7 +33,7 @@ RBInsertClassTransformation class >> model: aRBSmalltalk addClass: aName supercl
 ]
 
 { #category : #api }
-RBInsertClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
+RBInsertNewClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
 
 	self
 		addClass: aName
@@ -62,7 +43,7 @@ RBInsertClassTransformation >> addClass: aName superclass: aClass category: aSym
 ]
 
 { #category : #api }
-RBInsertClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
+RBInsertNewClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
 
 	self className: aName.
 	superclass := superclassName asSymbol.
@@ -71,7 +52,7 @@ RBInsertClassTransformation >> addClass: aName superclass: superclassName subcla
 ]
 
 { #category : #preconditions }
-RBInsertClassTransformation >> preconditions [
+RBInsertNewClassTransformation >> preconditions [
 	"Superclass and subclasses shouldn't be metaclasses.
 	Each subclass should be immediate subclass of superclass."
 
@@ -96,7 +77,7 @@ RBInsertClassTransformation >> preconditions [
 ]
 
 { #category : #executing }
-RBInsertClassTransformation >> privateTransform [
+RBInsertNewClassTransformation >> privateTransform [
 
 	self model
 		defineClass: ('<1p> %<%< #<2s> package: <3p>'
@@ -108,7 +89,7 @@ RBInsertClassTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBInsertClassTransformation >> storeOn: aStream [
+RBInsertNewClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
