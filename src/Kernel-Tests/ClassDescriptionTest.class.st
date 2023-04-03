@@ -43,7 +43,7 @@ ClassDescriptionTest >> testAllSlots [
 	self assert: Context allSlots size equals: 6
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - compilation' }
 ClassDescriptionTest >> testCompileClassified [
 
 	| class method |
