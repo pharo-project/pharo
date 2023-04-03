@@ -39,13 +39,10 @@ AnnouncerTest >> testAccessingSubscribers [
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
 
-	"we do not use constant blocks here, instead use a clean block.
-
-	Using Constant blocks with announcements makes no senese, as they do nothing.
-
-   For Clean Blocks, we have to the Announcments API as they  require to access the receiver of the home context, for clean blocks this has to be fixed, see https://github.com/pharo-project/pharo/issues/11220"
-	announcer when: AnnouncementMockA do: [ nil yourself ]."1"
-	announcer when: AnnouncementMockB do: [ nil yourself ]."2"
+	"We do not use constant blocks here, instead use a clean block.
+	Using Constant blocks with announcements makes no senese, as they do nothing."
+	announcer when: AnnouncementMockA do: [ nil yourself ] for: self.
+	announcer when: AnnouncementMockB do: [ nil yourself ] for: self.
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 2.
 
@@ -101,12 +98,10 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 { #category : #'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
-	"we do not use constant blocks here, instead use a clean block.
+	"We do not use constant blocks here, instead use a clean block.
+	Using Constant blocks with announcements makes no senese, as they do nothing."
+	announcer when: AnnouncementMockA do: [ nil yourself ] for: self.
 
-	Using Constant blocks with announcements makes no senese, as they do nothing.
-
-   For Clean Blocks, we have to the Announcments API as they  require to access the receiver of the home context, for clean blocks this has to be fixed, see https://github.com/pharo-project/pharo/issues/11220"
-	announcer when: AnnouncementMockA do: [ nil yourself ].
 	self assert: (announcer handleSubscriberClass: self class).
 	self deny: (announcer handleSubscriberClass: AnnouncementMockA)
 ]
@@ -310,8 +305,8 @@ AnnouncerTest >> testSubscribersForClass [
 
 	self assert: announcer numberOfSubscriptions > 0.
 	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockA.
-	self assert: subscribers size equals: 2.
 	"AnnouncerSubscriberMockB inherits AnnouncerSubscriberMockA"
+	self assert: subscribers size equals: 2.
 	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockB.
 	self assert: subscribers size equals: 1.
 	subscribers := announcer subscriptionsForClass: self class.
@@ -348,7 +343,7 @@ AnnouncerTest >> testTwoArgBlock [
 { #category : #'tests - unsubscribing' }
 AnnouncerTest >> testUnsubscribeBlock [
 	| announcement |
-	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ].
+	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ] for: self.
 	announcer unsubscribe: self.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
@@ -371,7 +366,8 @@ AnnouncerTest >> testUnsubscribeSet [
 	| announcement |
 	announcer
 		when: AnnouncementMockA , AnnouncementMockB
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcer unsubscribe: self.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
