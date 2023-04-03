@@ -250,7 +250,7 @@ Model >> whenChangedDo: aBlock [
 		cull: announcement oldValue
 		cull: announcement
 		cull: ann ].
-	self announcer when: ValueChanged do: block
+	self announcer when: ValueChanged do: block for: self
 ]
 
 { #category : #announcing }

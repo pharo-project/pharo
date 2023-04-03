@@ -333,12 +333,12 @@ CollectionValueHolder >> valueRemoved: oldValue [
 CollectionValueHolder >> whenAddedDo: aBlock [
 	"Culled block [ :newValue :announcement | ]"
 
-	self announcer when: ValueAdded do: [ :ann | aBlock cull: ann newValue cull: ann ]
+	self announcer when: ValueAdded do: [ :ann | aBlock cull: ann newValue cull: ann ] for: self
 ]
 
 { #category : #announcements }
 CollectionValueHolder >> whenRemovedDo: aBlock [
 	"Culled block [ :oldValue :announcement | ]"
 
-	self announcer when: ValueRemoved do: [ :ann | aBlock cull: ann oldValue cull: ann ]
+	self announcer when: ValueRemoved do: [ :ann | aBlock cull: ann oldValue cull: ann ] for: self
 ]

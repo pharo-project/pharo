@@ -725,7 +725,7 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 			selectedColor: aColor.
 	d extent: d initialExtent.
 	d announcer when: ColorChanged do: [:ann |
-		aBlock value: ann newColor].
+		aBlock value: ann newColor]  for: self.
 	d openModal.
 
 	newColor := d  cancelled
