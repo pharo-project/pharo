@@ -380,8 +380,9 @@ RBParser >> parseBlock [
 
 	(currentToken isSpecial: $])
 		ifFalse: [
-			^ (self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected')
+			^ (self parseEnglobingError: { node body } with: startToken errorMessage: ''']'' expected')
 				arguments: node arguments;
+				stop: currentToken start - 1;
 				yourself
 		].
 	node right: currentToken start.
