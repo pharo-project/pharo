@@ -767,7 +767,6 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
-			         value: 10;
 			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
