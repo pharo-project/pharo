@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBInsertClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBInsertClassRefactoring };
+		addCase: { #rbClass -> RBInsertNewClassRefactoring };
 		addCase: { #rbClass -> RBInsertClassTransformation };
 		yourself
 ]
