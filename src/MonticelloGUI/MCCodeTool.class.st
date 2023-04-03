@@ -167,12 +167,6 @@ MCCodeTool >> selectedClass [
 ]
 
 { #category : #subclassresponsibility }
-MCCodeTool >> selectedClassOrMetaClass [
-	"Answer the class that is selected, or nil"
-	self subclassResponsibility
-]
-
-{ #category : #subclassresponsibility }
 MCCodeTool >> selectedMessageCategoryName [
 	"Answer the method category of the method that is selected, or nil"
 	self subclassResponsibility

@@ -42,7 +42,7 @@ OSPlatform >> processorArchitecture [
 		x86_64  64-bit intel
 		arm64   64-bit arm"
 
-	^ LibC resultOfCommand: 'uname -m'
+	^ (LibC resultOfCommand: 'uname -m') trimBoth
 ]
 
 { #category : #'*UnifiedFFI' }
