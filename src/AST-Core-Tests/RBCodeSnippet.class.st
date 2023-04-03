@@ -211,16 +211,16 @@ RBCodeSnippet class >> badExpressions [
 			         isFaulty: false).
 		        (self new
 			         source: '#( )';
-			         value: #(  );
-			         isFaulty: false).
+			         isFaulty: false;
+			         value: #(  )).
 		        (self new
 			         source: '#[ ]';
-			         value: #[  ];
-			         isFaulty: false).
+			         isFaulty: false;
+			         value: #[  ]).
 		        (self new
 			         source: '{ }';
-			         value: #(  );
-			         isFaulty: false).
+			         isFaulty: false;
+			         value: #(  )).
 
 		        "Bad sequence. The first expression is considered unfinished."
 		        (self new
