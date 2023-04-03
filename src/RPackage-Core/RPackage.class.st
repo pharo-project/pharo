@@ -1386,7 +1386,7 @@ RPackage >> renameTo: aSymbol [
 				do:
 					[ :each | each category: newName , (each category allButFirst: oldName size) ].
 			oldCategoryNames
-				do: [ :each | SystemOrganizer default removeCategory: each ] ].
+				do: [ :each | self systemOrganization removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
 	self organizer
@@ -1448,7 +1448,7 @@ RPackage >> systemCategoryPrefix [
 { #category : #'system compatibility' }
 RPackage >> systemOrganization [
 
-	^ Smalltalk globals organization
+	^ self organizer systemOrganizer
 ]
 
 { #category : #queries }

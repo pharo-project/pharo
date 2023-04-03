@@ -69,7 +69,7 @@ SystemClassReorganizedAnnouncement
 	=> when an extension is removed, all methods inside are removed. Therefore, the MethodRemovedAnnounecement will do the job. Not sur this one still usefull
 
 SystemProtocolAddedAnnouncement
-    => I don't see anything to do for this annoucement
+    => I don’t see anything to do for this annoucement
 
 SystemProtocolRemovedAnnoucement
     => If the category is an extension from a package, I would move all the methods concerned, from the extending RPackage to the class RPackage
@@ -108,7 +108,8 @@ Class {
 		'packages',
 		'classExtendingPackagesMapping',
 		'debuggingName',
-		'packageNames'
+		'packageNames',
+		'systemOrganizer'
 	],
 	#classInstVars : [
 		'default'
@@ -121,7 +122,10 @@ RPackageOrganizer class >> default [
 	"WARNING: Since this component can be changed (i.e. for testing) you should NOT use it directly.
 	  Use RPackage class>>#organizer instead"
 
-	^ default ifNil: [  default := self new ]
+	^ default ifNil: [
+		  default := self new
+			             systemOrganizer: Smalltalk globals organization;
+			             yourself ]
 ]
 
 { #category : #'class initialization' }
@@ -482,6 +486,7 @@ RPackageOrganizer >> initialize [
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
 	debuggingName := ''.
+	systemOrganizer := SystemOrganizer new.
 
 	self defineUnpackagedClassesPackage
 ]
@@ -1152,6 +1157,18 @@ RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 			methodPackage ifNotNil: [
 				methodPackage removeSelector: ann selector ofMetaclassName: ann methodClass instanceSide originalName].
 		]
+]
+
+{ #category : #accessing }
+RPackageOrganizer >> systemOrganizer [
+
+	^ systemOrganizer
+]
+
+{ #category : #accessing }
+RPackageOrganizer >> systemOrganizer: anObject [
+
+	systemOrganizer := anObject
 ]
 
 { #category : #'system integration' }
