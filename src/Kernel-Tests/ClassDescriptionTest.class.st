@@ -56,6 +56,20 @@ ClassDescriptionTest >> testCompileClassified [
 	self assert: method protocol equals: #protocol
 ]
 
+{ #category : #'as yet unclassified' }
+ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
+
+	| class method protocol |
+	class := self createTestClass.
+
+	protocol := class organization ensureProtocol: #protocol.
+	class compile: 'foo ^3' classified: protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocol equals: protocol name
+]
+
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testDefinesSlotNamed [
 	self assert: (Point definesSlotNamed: #x).
