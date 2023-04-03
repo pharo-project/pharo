@@ -45,6 +45,7 @@ Class {
 RBCodeSnippet class >> allSnippets [
 
 	^ {
+		  self badSimpleExpressions.
 		  self badExpressions.
 		  self badTokens.
 		  self badMethods.
@@ -54,9 +55,9 @@ RBCodeSnippet class >> allSnippets [
 
 { #category : #accessing }
 RBCodeSnippet class >> badExpressions [
-	"This list contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure)."
-
-	"Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
+	"This list focuses on composed expressions and sequences of statements.
+	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
+	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
 
 	<script: 'self styleWithError: self badExpressions'>
 	| list |
@@ -546,212 +547,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[ | a b';
 			         formattedCode: '[ | a b | ';
 			         notices: #( #( 3 7 8 '''|'' or variable expected' )
-				            #( 1 7 8 ''']'' expected' ) )).
-
-		        "Missing receiver or argument in message sends.
-		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
-		        "binary"
-		        (self new
-			         source: ' + ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 4 3 4 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 + ';
-			         notices: #( #( 5 4 5 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' + 2';
-			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
-		        "keywords"
-		        (self new
-			         source: ' hello: ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 9 8 9 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 hello: ';
-			         notices:
-				         #( #( 10 9 10 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' hello: 2';
-			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: my: ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 10 9 10 'Variable or expression expected' )
-				            #( 14 13 14 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 goodby: my: ';
-			         notices:
-				         #( #( 11 10 11 'Variable or expression expected' )
-				            #( 15 14 15 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 goodby: 2 my: ';
-			         notices:
-				         #( #( 17 16 17 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: 2 my: ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 16 15 16 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: my: 3';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 10 9 10 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 goodby: my: 3';
-			         notices:
-				         #( #( 11 10 11 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: 2 my: 3';
-			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
-		        "Combinaisons"
-		        (self new
-			         source: ' + foo: - ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 4 3 4 'Variable or expression expected' )
-				            #( 9 8 9 'Variable or expression expected' )
-				            #( 11 10 11 'Variable or expression expected' ) )).
-
-		        "Bad assignments"
-		        (self new
-			         source: 'a := ';
-			         notices: #( #( 6 5 6 'Variable or expression expected' )
-				            #( 1 1 1 'Undeclared variable' ) )).
-		        (self new
-			         source: ':= ';
-			         notices: #( #( 4 3 4 'Variable or expression expected' )
-				            #( 1 3 1 'variable expected in assigment' ) )).
-		        (self new
-			         source: ':= 2';
-			         notices: #( #( 1 4 1 'variable expected in assigment' ) )).
-		        (self new
-			         source: '1:=2';
-			         formattedCode: '1. := 2';
-			         notices: #( #( 1 1 2 'End of statement expected' )
-				            #( 2 4 2 'variable expected in assigment' ) )).
-
-		        "Bad cascades"
-		        (self new
-			         source: ';';
-			         formattedCode: ' ; ';
-			         notices: #( #( 1 0 1 'Variable or expression expected' )
-				            #( 1 0 1 'Message expected' )
-				            #( 2 1 2 'Cascade message expected' ) )).
-		        (self new
-			         source: '1;foo';
-			         formattedCode: '1 ; foo';
-			         notices: #( #( 1 1 2 'Message expected' ) )).
-		        (self new
-			         source: '1;';
-			         formattedCode: '1 ; ';
-			         notices:
-				         #( #( 1 1 2 'Message expected' )
-				            #( 3 2 3 'Cascade message expected' ) )).
-		        (self new
-			         source: '1 sign;';
-			         formattedCode: '1 sign; ';
-			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
-		        (self new
-			         source: '1 foo:;bar';
-			         formattedCode: '1 foo: ; bar';
-			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "The cascade is correct here. It's a simple error of a missing argument"
-		        (self new
-			         source: '1 foo;2';
-			         formattedCode: '1 foo; . 2';
-			         notices: #( #( 7 6 7 'Cascade message expected' )
-				            #( 1 6 7 'End of statement expected' ) )).
-		        (self new
-			         source: '(1 sign: 2);bar';
-			         formattedCode: '(1 sign: 2) ; bar';
-			         notices: #( #( 1 11 12 'Message expected' ) )).
-		        (self new
-			         source: '(1 sign);bar';
-			         formattedCode: '1 sign ; bar';
-			         notices: #( #( 1 8 9 'Message expected' ) )). "FIXME the parentheses are lost, and this changes the meaning"
-		        "Longer cascade"
-		        (self new
-			         source: ';;';
-			         formattedCode: ' ; ; ';
-			         notices: #( #( 1 0 1 'Variable or expression expected' )
-				            #( 1 0 1 'Message expected' )
-				            #( 2 1 2 'Cascade message expected' )
-				            #( 3 2 3 'Cascade message expected' ) )).
-		        (self new
-			         source: '1 sign;;bar';
-			         formattedCode: '1 sign; ; bar';
-			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
-
-		        "Bad returns"
-		        (self new
-			         source: '^ ';
-			         notices: #( #( 3 2 3 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1+^2';
-			         formattedCode: '1 + . ^ 2';
-			         notices: #( #( 3 2 3 'Variable or expression expected' )
-				            #( 1 2 3 'End of statement expected' ) )).
-		        (self new
-			         source: '1 foo: ^2';
-			         formattedCode: '1 foo: . ^ 2';
-			         notices: #( #( 8 7 8 'Variable or expression expected' )
-				            #( 1 7 8 'End of statement expected' ) )).
-		        (self new
-			         source: '(^1)';
-			         formattedCode: '( . ^ 1 )';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 1 1 2 ''')'' expected' )
-				            #( 2 4 4 'Missing opener for closer: )' ) )). "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
-		        (self new
-			         source: '^^1';
-			         formattedCode: '^ . ^ 1';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 1 1 2 'End of statement expected' ) )). "Same spirit"
-		        (self new
-			         source: '[ ^ 1 ]';
-			         isFaulty: false;
-			         raise: BlockCannotReturn). "when the block is evaluated, the method is already gone."
-		        (self new
-			         source: '{ ^ 1 }';
-			         isFaulty: false;
-			         value: 1). "I did not expect this one to be legal"
-		        (self new
-			         source: '#(^1)';
-			         formattedCode: '#( #''^'' 1 )';
-			         isFaulty: false;
-			         value: #( #'^' 1 )). "Obviously..."
-		        (self new
-			         source: '#[ ^ 1 ]';
-			         notices: #( #( 4 4 4 '8-bit integer expected' )
-				            #( 1 8 9 ''']'' expected' ) )).
-
-		        "Unreachable code (warnings)"
-		        "Unreachable analysis is very simple and targets statement that directly follows a return statement."
-		        "Note that faulty code can still be executed without a RuntimeSyntaxError"
-		        (self new
-			         source: '^ 1. 2. ^ 3';
-			         isFaulty: false;
-			         value: 1;
-			         notices: #( #( 6 6 6 'Unreachable statement' ) )).
-		        (self new
-			         source: '[ ^ 1. 2. ^ 3 ]';
-			         isFaulty: false;
-			         raise: BlockCannotReturn;
-			         notices: #( #( 8 8 8 'Unreachable statement' ) )). "like [^1]"
-		        (self new
-			         source: '{ ^ 1. 2. ^ 3 }';
-			         isFaulty: false;
-			         value: 1;
-			         notices: #( #( 8 8 8 'Unreachable statement' ) )).
-		        (self new
-			         source: '[ ^ 1 ]. 2. ^ 3';
-			         isFaulty: false;
-			         value: 3).
-		        (self new
-			         source: '{ ^ 1 }. 2. ^ 3';
-			         isFaulty: false;
-			         value: 1). "This one could have been..."
-		        (self new
-			         source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3';
-			         isFaulty: false;
-			         value: 1) "Not *syntactic* enough" }.
+				            #( 1 7 8 ''']'' expected' ) )) }.
 
 	"Setup default values"
 	self new
@@ -1187,6 +983,242 @@ RBCodeSnippet class >> badSemantic [
 		isMethod: false;
 		isFaulty: false;
 		isParseFaulty: false;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badSimpleExpressions [
+	"This list focuses simple expressions like message sends, assigments and return.
+	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
+	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
+
+	<script: 'self styleWithError: self badSimpleExpressions'>
+	| list |
+	list := {
+		        (self new
+			         source: '1 abs';
+			         isFaulty: false;
+			         value: 1).
+		        (self new
+			         source: '1 + 2';
+			         isFaulty: false;
+			         value: 3).
+		        (self new
+			         source: '1 max: 2';
+			         isFaulty: false;
+			         value: 2).
+
+		        "Missing receiver or argument in message sends.
+		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
+		        "binary"
+		        (self new
+			         source: ' + ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 4 3 4 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 + ';
+			         notices: #( #( 5 4 5 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' + 2';
+			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        "keywords"
+		        (self new
+			         source: ' hello: ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 9 8 9 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 hello: ';
+			         notices:
+				         #( #( 10 9 10 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' hello: 2';
+			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: my: ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 10 9 10 'Variable or expression expected' )
+				            #( 14 13 14 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 goodby: my: ';
+			         notices:
+				         #( #( 11 10 11 'Variable or expression expected' )
+				            #( 15 14 15 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 goodby: 2 my: ';
+			         notices:
+				         #( #( 17 16 17 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: 2 my: ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 16 15 16 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: my: 3';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 10 9 10 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 goodby: my: 3';
+			         notices:
+				         #( #( 11 10 11 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: 2 my: 3';
+			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        "Combinaisons"
+		        (self new
+			         source: ' + foo: - ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 4 3 4 'Variable or expression expected' )
+				            #( 9 8 9 'Variable or expression expected' )
+				            #( 11 10 11 'Variable or expression expected' ) )).
+
+		        "Bad assignments"
+		        (self new
+			         source: 'a := ';
+			         notices: #( #( 6 5 6 'Variable or expression expected' )
+				            #( 1 1 1 'Undeclared variable' ) )).
+		        (self new
+			         source: ':= ';
+			         notices: #( #( 4 3 4 'Variable or expression expected' )
+				            #( 1 3 1 'variable expected in assigment' ) )).
+		        (self new
+			         source: ':= 2';
+			         notices: #( #( 1 4 1 'variable expected in assigment' ) )).
+		        (self new
+			         source: '1:=2';
+			         formattedCode: '1. := 2';
+			         notices: #( #( 1 1 2 'End of statement expected' )
+				            #( 2 4 2 'variable expected in assigment' ) )).
+
+		        "Bad cascades"
+		        (self new
+			         source: ';';
+			         formattedCode: ' ; ';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 1 0 1 'Message expected' )
+				            #( 2 1 2 'Cascade message expected' ) )).
+		        (self new
+			         source: '1;foo';
+			         formattedCode: '1 ; foo';
+			         notices: #( #( 1 1 2 'Message expected' ) )).
+		        (self new
+			         source: '1;';
+			         formattedCode: '1 ; ';
+			         notices:
+				         #( #( 1 1 2 'Message expected' )
+				            #( 3 2 3 'Cascade message expected' ) )).
+		        (self new
+			         source: '1 sign;';
+			         formattedCode: '1 sign; ';
+			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
+		        (self new
+			         source: '1 foo:;bar';
+			         formattedCode: '1 foo: ; bar';
+			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "The cascade is correct here. It's a simple error of a missing argument"
+		        (self new
+			         source: '1 foo;2';
+			         formattedCode: '1 foo; . 2';
+			         notices: #( #( 7 6 7 'Cascade message expected' )
+				            #( 1 6 7 'End of statement expected' ) )).
+		        (self new
+			         source: '(1 sign: 2);bar';
+			         formattedCode: '(1 sign: 2) ; bar';
+			         notices: #( #( 1 11 12 'Message expected' ) )).
+		        (self new
+			         source: '(1 sign);bar';
+			         formattedCode: '1 sign ; bar';
+			         notices: #( #( 1 8 9 'Message expected' ) )). "FIXME the parentheses are lost, and this changes the meaning"
+		        "Longer cascade"
+		        (self new
+			         source: ';;';
+			         formattedCode: ' ; ; ';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 1 0 1 'Message expected' )
+				            #( 2 1 2 'Cascade message expected' )
+				            #( 3 2 3 'Cascade message expected' ) )).
+		        (self new
+			         source: '1 sign;;bar';
+			         formattedCode: '1 sign; ; bar';
+			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
+
+		        "Bad returns"
+		        (self new
+			         source: '^ ';
+			         notices: #( #( 3 2 3 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1+^2';
+			         formattedCode: '1 + . ^ 2';
+			         notices: #( #( 3 2 3 'Variable or expression expected' )
+				            #( 1 2 3 'End of statement expected' ) )).
+		        (self new
+			         source: '1 foo: ^2';
+			         formattedCode: '1 foo: . ^ 2';
+			         notices: #( #( 8 7 8 'Variable or expression expected' )
+				            #( 1 7 8 'End of statement expected' ) )).
+		        (self new
+			         source: '(^1)';
+			         formattedCode: '( . ^ 1 )';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 1 1 2 ''')'' expected' )
+				            #( 2 4 4 'Missing opener for closer: )' ) )). "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
+		        (self new
+			         source: '^^1';
+			         formattedCode: '^ . ^ 1';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 1 1 2 'End of statement expected' ) )). "Same spirit"
+		        (self new
+			         source: '[ ^ 1 ]';
+			         isFaulty: false;
+			         raise: BlockCannotReturn). "when the block is evaluated, the method is already gone."
+		        (self new
+			         source: '{ ^ 1 }';
+			         isFaulty: false;
+			         value: 1). "I did not expect this one to be legal"
+		        (self new
+			         source: '#(^1)';
+			         formattedCode: '#( #''^'' 1 )';
+			         isFaulty: false;
+			         value: #( #'^' 1 )). "Obviously..."
+		        (self new
+			         source: '#[ ^ 1 ]';
+			         notices: #( #( 4 4 4 '8-bit integer expected' )
+				            #( 1 8 9 ''']'' expected' ) )).
+
+		        "Unreachable code (warnings)"
+		        "Unreachable analysis is very simple and targets statement that directly follows a return statement."
+		        "Note that faulty code can still be executed without a RuntimeSyntaxError"
+		        (self new
+			         source: '^ 1. 2. ^ 3';
+			         isFaulty: false;
+			         value: 1;
+			         notices: #( #( 6 6 6 'Unreachable statement' ) )).
+		        (self new
+			         source: '[ ^ 1. 2. ^ 3 ]';
+			         isFaulty: false;
+			         raise: BlockCannotReturn;
+			         notices: #( #( 8 8 8 'Unreachable statement' ) )). "like [^1]"
+		        (self new
+			         source: '{ ^ 1. 2. ^ 3 }';
+			         isFaulty: false;
+			         value: 1;
+			         notices: #( #( 8 8 8 'Unreachable statement' ) )).
+		        (self new
+			         source: '[ ^ 1 ]. 2. ^ 3';
+			         isFaulty: false;
+			         value: 3).
+		        (self new
+			         source: '{ ^ 1 }. 2. ^ 3';
+			         isFaulty: false;
+			         value: 1). "This one could have been..."
+		        (self new
+			         source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3';
+			         isFaulty: false;
+			         value: 1) "Not *syntactic* enough" }.
+
+	"Setup default values"
+	self new
+		group: #badSimpleExpressions;
+		isMethod: false;
+		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
 ]
