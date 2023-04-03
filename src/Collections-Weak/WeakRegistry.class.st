@@ -7,11 +7,6 @@ In contrast to old implementation, it doesn't spending linear time , checking wh
 Class {
 	#name : #WeakRegistry,
 	#superclass : #Collection,
-	#instVars : [
-		'list',
-		'valueDictionary',
-		'sema'
-	],
 	#category : #'Collections-Weak-Registration'
 }
 
