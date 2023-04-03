@@ -177,10 +177,3 @@ WeakAnnouncementSubscription >> unregister [
 
 	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
 ]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> valuable: aValuable [
-	"Used when subscriber should be extracted from valuable object"
-	self action:  aValuable.
-	self subscriber: aValuable receiver
-]

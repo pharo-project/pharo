@@ -46,15 +46,6 @@ Announcer >> initialize [
 	registry := SubscriptionRegistry new
 ]
 
-{ #category : #'registration api' }
-Announcer >> internalWhen: anAnnouncementClass do: aValuable [
-
-	^ registry add: (AnnouncementSubscription new
-			   announcer: self;
-			   announcementClass: anAnnouncementClass;
-			   action: aValuable)
-]
-
 { #category : #statistics }
 Announcer >> numberOfSubscriptions [
 	^ registry numberOfSubscriptions
@@ -97,28 +88,16 @@ Announcer >> weak [
 	^ WeakSubscriptionBuilder on: self
 ]
 
-{ #category : #'registration api' }
-Announcer >> when: anAnnouncementClass do: aValuable [
-	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that such method as well as #when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
-
-	('Using #when:do: ' , aValuable asString) traceCr.
-	aValuable receiver class traceCr.
-
-	^ self when: anAnnouncementClass do: aValuable for: nil.
-	
-
-"	^ registry add: (
-		AnnouncementSubscription new
-			announcer: self;
-			announcementClass: anAnnouncementClass;
-			valuable: aValuable)"
-]
-
 { #category : #subscription }
 Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
 	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber."
 
-    ^ (self internalWhen: anAnnouncementClass do: aValuable) subscriber: aSubscriber; yourself
+	^ registry add: (AnnouncementSubscription new
+			   announcer: self;
+			   announcementClass: anAnnouncementClass;
+			   action: aValuable;
+			   subscriber: aSubscriber;
+			   yourself)
 ]
 
 { #category : #'registration api' }

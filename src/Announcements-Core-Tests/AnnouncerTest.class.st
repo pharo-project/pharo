@@ -68,7 +68,7 @@ AnnouncerTest >> testAnnounceInstance [
 AnnouncerTest >> testAnnounceWorkWithinExceptionHandlerBlocks [
 	|  found |
 
-	announcer when: Announcement do: [ found := true ].
+	announcer when: Announcement do: [ found := true ] for: self.
 
 	[ NotFound signal ]
 		on: NotFound
@@ -90,7 +90,7 @@ AnnouncerTest >> testAnnouncingReentrant [
 			bool := true.
 		announcer announce:  Announcement new. ]
 		ifTrue: [ ok := true ]
-	].
+	] for: self.
 
 	self should: [ announcer announce: Announcement new. ] notTakeMoreThan: 1 second.
 	self assert: ok
@@ -112,7 +112,7 @@ AnnouncerTest >> testNoArgBlock [
 
 	| counter |
 	counter := nil.
-	announcer when: AnnouncementMockA do: [ counter := 1 ].
+	announcer when: AnnouncementMockA do: [ counter := 1 ] for: self.
 	announcer announce: AnnouncementMockA new.
 	self assert: counter equals: 1
 ]
@@ -147,7 +147,7 @@ AnnouncerTest >> testPreparationAnnouncementDeliveryWhenNoSubscriptions [
 { #category : #'tests - subscribing' }
 AnnouncerTest >> testSubscribeBlock [
 	| announcement instance |
-	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ].
+	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ] for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -161,7 +161,8 @@ AnnouncerTest >> testSubscribeClassWithExclusion [
 	| announcement instance |
 	announcer
 		when: AnnouncementMockB - AnnouncementMockC
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: instance.
@@ -175,7 +176,8 @@ AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 	| announcement instance |
 	announcer
 		when: (AnnouncementMockB where: [ :ann | ann parameter = #expectedParam ])
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: nil.
@@ -214,7 +216,8 @@ AnnouncerTest >> testSubscribeSet [
 	| announcement instance |
 	announcer
 		when: AnnouncementMockA , AnnouncementMockC
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -231,7 +234,8 @@ AnnouncerTest >> testSubscribeSetWithExclusion [
 	| announcement instance |
 	announcer
 		when: (AnnouncementMockA , AnnouncementMockB) - AnnouncementMockC
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -250,7 +254,8 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 		when:
 			(AnnouncementMockA , AnnouncementMockB) - AnnouncementMockC
 				- AnnouncementMockA
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
@@ -267,7 +272,8 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 	| announcement instance |
 	announcer
 		when: (AnnouncementMockA , AnnouncementMockC) - AnnouncementMockA
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
@@ -279,7 +285,7 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 { #category : #'tests - subscribing' }
 AnnouncerTest >> testSubscribeSubclass [
 	| announcement instance |
-	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ].
+	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ] for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
@@ -335,7 +341,8 @@ AnnouncerTest >> testTwoArgBlock [
 	flag := false.
 	announcer
 		when: AnnouncementMockA
-		do: [ :ann :announcer2 | flag := announcer2 == announcer ].
+		do: [ :ann :announcer2 | flag := announcer2 == announcer ]
+		for: self.
 	announcer announce: AnnouncementMockA new.
 	self assert: flag
 ]
