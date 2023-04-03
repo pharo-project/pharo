@@ -41,9 +41,9 @@ WinPlatform >> processorArchitecture [
     X86 - 32 bit
 	"
 	| architecture |
-	architecture := self environment at: 'PROCESSOR_ARCHITECTURE'.
+	architecture := (self environment at: 'PROCESSOR_ARCHITECTURE') trimBoth.
 
 	^ (architecture asLowercase = 'x86' and: [ self isTranslated ])
-		ifTrue: [ self environment at: 'PROCESSOR_ARCHITEW6432' ]
+		ifTrue: [ (self environment at: 'PROCESSOR_ARCHITEW6432') trimBoth ]
 		ifFalse: [ architecture ]
 ]

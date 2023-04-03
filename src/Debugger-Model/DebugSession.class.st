@@ -98,7 +98,7 @@ DebugSession >> contextChanged [
 { #category : #accessing }
 DebugSession >> createModelForContext: aContext [
 
-	^ (self class contextModelClass forContext: aContext) topContext: interruptedContext
+	^ (self class contextModelClass forContext: aContext)
 ]
 
 { #category : #initialization }
