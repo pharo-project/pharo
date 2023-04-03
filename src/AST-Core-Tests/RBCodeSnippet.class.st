@@ -1549,35 +1549,31 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 31 31 31 'Unitialized variable' ) )).
 		        (self new
 			         source:
-				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b ]';
+				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b ]';
 			         isMethod: true;
-			         value: nil;
-			         notices: #( #( 11 10 11 'Variable name expected' )
-				            #( 14 13 14 'Variable name expected' )
-				            #( 14 13 14 'Name already defined' )
-				            #( 22 22 22 'Name already defined' )
-				            #( 25 25 25 'Name already defined' )
-				            #( 28 28 28 'Name already defined' )
-				            #( 34 34 34 'Name already defined' )
-				            #( 34 34 34 'Unused variable' )
-				            #( 36 36 36 'Name already defined' )
-				            #( 38 38 38 'Name already defined' )
-				            #( 42 42 42 'Unitialized variable' )
-				            #( 46 46 46 'Unitialized variable' )
-				            #( 50 50 50 'Unitialized variable' ) )).
+			         isFaulty: false;
+			         notices: #( #( 11 11 11 'Name already defined' )
+				            #( 21 21 21 'Name already defined' )
+				            #( 24 24 24 'Name already defined' )
+				            #( 27 27 27 'Name already defined' )
+				            #( 33 33 33 'Name already defined' )
+				            #( 33 33 33 'Unused variable' )
+				            #( 35 35 35 'Name already defined' )
+				            #( 37 37 37 'Name already defined' )
+				            #( 41 41 41 'Unitialized variable' )
+				            #( 45 45 45 'Unitialized variable' )
+				            #( 49 49 49 'Unitialized variable' ) )).
 		        (self new
 			         source: '[:a :a :b | | a a b | a + a + b';
 			         formattedCode: '[ :a :a :b | a + a + b';
 			         notices: #( #( 1 31 32 ''']'' expected' ) )). "FIXME where temps?"
 		        (self new
 			         source:
-				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b';
-			         formattedCode: 'foo: a x: a: y: b [ :a :a :b | a + a + b';
+				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b';
+			         formattedCode: 'foo: a x: a y: b [ :a :a :b | a + a + b';
 			         isMethod: true;
-			         notices: #( #( 11 10 11 'Variable name expected' )
-				            #( 14 13 14 'Variable name expected' )
-				            #( 14 13 14 'Name already defined' )
-				            #( 19 50 51 ''']'' expected' ) )) "FIXME where temps?" }.
+			         notices: #( #( 11 11 11 'Name already defined' )
+				            #( 18 49 50 ''']'' expected' ) )) "FIXME where temps?" }.
 	"Setup default values"
 	self new
 		group: #badVariableAndScopes;
