@@ -380,7 +380,7 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 
