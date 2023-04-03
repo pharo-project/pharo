@@ -206,6 +206,21 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '()';
 			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        (self new
+			         source: '[ ]';
+			         isFaulty: false).
+		        (self new
+			         source: '#( )';
+			         value: #(  );
+			         isFaulty: false).
+		        (self new
+			         source: '#[ ]';
+			         value: #[  ];
+			         isFaulty: false).
+		        (self new
+			         source: '{ }';
+			         value: #(  );
+			         isFaulty: false).
 
 		        "Bad sequence. The first expression is considered unfinished."
 		        (self new
