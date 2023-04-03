@@ -523,7 +523,7 @@ OpalCompiler >> parse [
 			check ifNil: [ ^ ast ].
 			check ifFalse: [
 				ast := nil.
-				^ self compilationContext failBlock ifNotNil: [ :block | block value ] ifNil: [ nil ].
+				^ self compilationContext failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
 				] ] ].
 
 	^ ast
