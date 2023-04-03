@@ -56,7 +56,7 @@ ClassDescriptionTest >> testCompileClassified [
 	self assert: method protocol equals: #protocol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - compilation' }
 ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 
 	| class method protocol |
