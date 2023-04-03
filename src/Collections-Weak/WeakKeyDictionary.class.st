@@ -26,12 +26,6 @@ WeakKeyDictionary >> add: anAssociation [
 ]
 
 { #category : #accessing }
-WeakKeyDictionary >> array: anArray [
-
-	array := anArray
-]
-
-{ #category : #accessing }
 WeakKeyDictionary >> at: key put: anObject [
 	"Set the value at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
@@ -49,9 +43,9 @@ WeakKeyDictionary >> at: key put: anObject [
 WeakKeyDictionary >> postCopy [
 	"Must copy the associations and tell them I (the copy) am their new container"
 
-	self array: (self array collect: [ :assoc |
-			 assoc ifNotNil: [
-				 assoc copy
-					 container: self;
-					 yourself ] ])
+	array := self array collect: [ :assoc |
+		         assoc ifNotNil: [
+			         assoc copy
+				         container: self;
+				         yourself ] ]
 ]
