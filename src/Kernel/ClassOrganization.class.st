@@ -194,7 +194,7 @@ ClassOrganization >> initializeClass: aClass [
 ]
 
 { #category : #accessing }
-ClassOrganization >> methodSelectorsInProtocolNamed: aName [
+ClassOrganization >> methodSelectorsInProtocol: aName [
 
 	aName = AllProtocol defaultName ifTrue: [ ^ self allMethodSelectors ].
 
