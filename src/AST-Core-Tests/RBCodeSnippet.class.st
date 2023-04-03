@@ -137,7 +137,7 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 2 4 ''')'' expected' ) )).
 		        (self new
 			         source: '[ ';
-			         notices: #( #( 1 1 3 ''']'' expected' ) )).
+			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '#[ ';
 			         notices: #( #( 1 2 4 ''']'' expected' ) )).
@@ -542,18 +542,18 @@ RBCodeSnippet class >> badExpressions [
 		        "Unclosed blocks"
 		        (self new
 			         source: '[ : | ';
-			         notices: #( #( 1 1 7 ''']'' expected' ) )).
+			         notices: #( #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[:';
 			         formattedCode: '[ : | ';
-			         notices: #( #( 1 1 3 ''']'' expected' ) )).
+			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a :b | ';
-			         notices: #( #( 1 1 11 ''']'' expected' ) )).
+			         notices: #( #( 1 10 11 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a :b';
 			         formattedCode: '[ :a :b | ';
-			         notices: #( #( 1 1 8 ''']'' expected' ) )).
+			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a a';
 			         formattedCode: '[ :a | a';
@@ -566,7 +566,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | ';
-			         notices: #( #( 1 1 8 ''']'' expected' ) )).
+			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | a';
 			         notices: #( #( 1 8 9 ''']'' expected' ) )).
@@ -579,10 +579,10 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[ | ';
 			         formattedCode: '[ | | ';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
-				            #( 1 3 5 ''']'' expected' ) )).
+				            #( 1 4 5 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | 1';
-			         formattedCode: '[ | | 1';
+			         formattedCode: '[ | | . 1';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 5 6 ''']'' expected' ) )).
 		        (self new
@@ -1456,8 +1456,8 @@ RBCodeSnippet class >> badVariableAndScopes [
 	list := {
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
-			         formattedCode: 'a := a. { [ :a | } a := a';
-						raise: UndeclaredVariableWrite;
+			         formattedCode: 'a := a. { [ :a | }. a := a';
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1476,16 +1476,15 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 9 25 26 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
-			         formattedCode: 'a := a. [ :a | [ :a | ] a := a';
-						raise: UndeclaredVariableWrite;
+			         formattedCode: 'a := a. [ :a | [ :a | ]. a := a';
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
 				            #( 9 27 28 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
-			         formattedCode: 'a := a. { [ :a | } a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1495,8 +1494,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 9 26 27 '''}'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
-			         formattedCode: 'a := a. { [ :a | a := a } a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1534,19 +1532,18 @@ RBCodeSnippet class >> badVariableAndScopes [
 
 		        "Chains of shadowing"
 		        (self new
-			         source: '[:a :a :b | | a a b | a + a + b ]';
-			         formattedCode: '[ :a :a :b | | a a b | a + a + b ]';
+			         source: '[ :a :a :b | | a a b | a + a + b ]';
 			         isFaulty: false;
 			         value: 4;
 			         notices:
-				         #( #( 6 6 6 'Name already defined' )
-				            #( 15 15 15 'Name already defined' )
-				            #( 15 15 15 'Unused variable' )
-				            #( 17 17 17 'Name already defined' )
-				            #( 19 19 19 'Name already defined' )
-				            #( 23 23 23 'Unitialized variable' )
-				            #( 27 27 27 'Unitialized variable' )
-				            #( 31 31 31 'Unitialized variable' ) )).
+				         #( #( 7 7 7 'Name already defined' )
+				            #( 16 16 16 'Name already defined' )
+				            #( 16 16 16 'Unused variable' )
+				            #( 18 18 18 'Name already defined' )
+				            #( 20 20 20 'Name already defined' )
+				            #( 24 24 24 'Unitialized variable' )
+				            #( 28 28 28 'Unitialized variable' )
+				            #( 32 32 32 'Unitialized variable' ) )).
 		        (self new
 			         source:
 				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b ]';
@@ -1564,16 +1561,27 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 45 45 45 'Unitialized variable' )
 				            #( 49 49 49 'Unitialized variable' ) )).
 		        (self new
-			         source: '[:a :a :b | | a a b | a + a + b';
-			         formattedCode: '[ :a :a :b | a + a + b';
-			         notices: #( #( 1 31 32 ''']'' expected' ) )). "FIXME where temps?"
+			         source: '[ :a :a :b | | a a b | a + a + b';
+			         notices:
+				         #( #( 16 16 16 'Unused variable' )
+				            #( 18 18 18 'Name already defined' )
+				            #( 24 24 24 'Unitialized variable' )
+				            #( 28 28 28 'Unitialized variable' )
+				            #( 32 32 32 'Unitialized variable' )
+				            #( 1 32 33 ''']'' expected' ) )).
 		        (self new
 			         source:
 				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b';
-			         formattedCode: 'foo: a x: a y: b [ :a :a :b | a + a + b';
 			         isMethod: true;
 			         notices: #( #( 11 11 11 'Name already defined' )
-				            #( 18 49 50 ''']'' expected' ) )) "FIXME where temps?" }.
+				            #( 33 33 33 'Name already defined' )
+				            #( 33 33 33 'Unused variable' )
+				            #( 35 35 35 'Name already defined' )
+				            #( 37 37 37 'Name already defined' )
+				            #( 41 41 41 'Unitialized variable' )
+				            #( 45 45 45 'Unitialized variable' )
+				            #( 49 49 49 'Unitialized variable' )
+				            #( 18 49 50 ''']'' expected' ) )) }.
 	"Setup default values"
 	self new
 		group: #badVariableAndScopes;
