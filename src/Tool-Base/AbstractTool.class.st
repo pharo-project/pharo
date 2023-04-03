@@ -11,7 +11,7 @@ Class {
 AbstractTool class >> protocolSuggestionsFor: aClass [
 
 	| classProtocols reject allExistingProtocols interestingProtocols |
-	classProtocols := aClass organization protocolsNames.
+	classProtocols := aClass organization protocolNames.
 	reject := Set new.
 	reject
 		add: Protocol nullProtocolName;

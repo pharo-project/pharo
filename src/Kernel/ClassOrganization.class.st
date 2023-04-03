@@ -284,19 +284,13 @@ ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 { #category : #accessing }
 ClassOrganization >> protocolNames [
 
-	^ self protocols collect: #name
+	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> protocols [
 
 	^ protocols asArray
-]
-
-{ #category : #accessing }
-ClassOrganization >> protocolsNames [
-
-	^ self allProtocols collect: [ :each | each name ]
 ]
 
 { #category : #protocol }
@@ -320,7 +314,7 @@ ClassOrganization >> removeElement: aSymbol [
 ClassOrganization >> removeEmptyProtocols [
 
 	| oldProtocolNames removedProtocols |
-	oldProtocolNames := self protocolsNames copy.
+	oldProtocolNames := self protocolNames copy.
 
 	removedProtocols := protocols
 		                    select: [ :protocol | protocol canBeRemoved ]
@@ -328,7 +322,7 @@ ClassOrganization >> removeEmptyProtocols [
 			                    self removeProtocol: protocol.
 			                    self notifyOfRemovedProtocolNamed: protocol name ].
 
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
 
 { #category : #accessing }
@@ -337,10 +331,10 @@ ClassOrganization >> removeProtocol: aProtocol [
 	| oldProtocolNames |
 	aProtocol canBeRemoved ifFalse: [ ^ self ].
 
-	oldProtocolNames := self protocolsNames copy.
+	oldProtocolNames := self protocolNames copy.
 	protocols remove: aProtocol ifAbsent: [  ].
 	self notifyOfRemovedProtocolNamed: aProtocol name.
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolsNames
+	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
 
 { #category : #accessing }
