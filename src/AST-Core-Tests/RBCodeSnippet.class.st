@@ -57,6 +57,7 @@ RBCodeSnippet class >> badExpressions [
 
 	"Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
 
+	<script: 'self styleWithError: self badExpressions'>
 	| list |
 	list := {
 		        (self new
@@ -1024,6 +1025,7 @@ RBCodeSnippet class >> badExpressions [
 { #category : #accessing }
 RBCodeSnippet class >> badMethods [
 
+	<script: 'self styleWithError: self badMethods'>
 	| list |
 	list := {
 		        (self new
@@ -1207,6 +1209,7 @@ RBCodeSnippet class >> badMethods [
 RBCodeSnippet class >> badSemantic [
 	"List of varions semantic and backend errors."
 
+	<script: 'self styleWithError: self badSemantic'>
 	| list |
 	"Undefined variable
 	For some reason, this is just a warning in non-faulty mode, not an error."
@@ -1452,12 +1455,13 @@ RBCodeSnippet class >> badSemantic [
 RBCodeSnippet class >> badVariableAndScopes [
 	"Test various combinaisons of error and warnings on variables and scope nesting"
 
+	<script: 'self styleWithError: self badVariableAndScopes'>
 	| list |
 	list := {
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
 			         formattedCode: 'a := a. { [ :a | } a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1468,7 +1472,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1477,7 +1481,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | ] a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1485,7 +1489,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
 			         formattedCode: 'a := a. { [ :a | } a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1496,7 +1500,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
 			         formattedCode: 'a := a. { [ :a | a := a } a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1506,7 +1510,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1515,7 +1519,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a a ]. a := a';
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1525,7 +1529,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
-						raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1602,14 +1606,15 @@ RBCodeSnippet class >> styleAll [
 ]
 
 { #category : #script }
-RBCodeSnippet class >> styleAllWithError [
+RBCodeSnippet class >> styleWithError: snippets [
 	"Display all snippets in a big styled text with compilation error messages and error nodes.
 	Each compilation error message and each error node is displayed indenpendently."
 
-	<script>
+	<script: 'self styleWithError: self allSnippets'>
+
 	| bigtext |
 	bigtext := Text new.
-	self allSnippets do: [ :each |
+	snippets do: [ :each |
 		| text ast |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 
