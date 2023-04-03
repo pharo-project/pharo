@@ -282,6 +282,10 @@ OpalCompiler >> checkNotice: aNotice [
 			in: aNotice node source.
 		^ false ].
 
+	"If a failBlock is provided in non-requestor mode,
+	we honor it and do not signal exceptions"
+	self compilationContext failBlock ifNotNil: [ ^ false ].
+
 	aNotice signalError.
 
 	^ true "Error was resumed, so we consider it's OK to continue"
