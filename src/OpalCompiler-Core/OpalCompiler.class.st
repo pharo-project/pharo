@@ -437,7 +437,6 @@ OpalCompiler >> install [
 	method := self compile.
 	method ifNil: [ ^ method ].
 
-	protocol ifNil: [ protocol := Protocol unclassified ].
 	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
