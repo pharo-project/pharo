@@ -10,8 +10,8 @@ ClassOrganization >> addCategory: aString [
 { #category : #'*Deprecated12' }
 ClassOrganization >> allCategories [
 
-	self deprecated: 'Use #protocolsNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolsNames'.
-	^ self protocolsNames
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolNames'.
+	^ self protocolNames
 ]
 
 { #category : #'*Deprecated12' }
