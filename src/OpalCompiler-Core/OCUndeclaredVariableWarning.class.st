@@ -65,7 +65,7 @@ OCUndeclaredVariableWarning >> position [
 { #category : #correcting }
 OCUndeclaredVariableWarning >> reparator [
 
-	^ OCCodeReparator new node: self node
+	^ notice reparator
 ]
 
 { #category : #accessing }
