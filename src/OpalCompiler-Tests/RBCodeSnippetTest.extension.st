@@ -14,7 +14,7 @@ RBCodeSnippetTest >> testCompileFailBlock [
 			          #tag ];
 		          compile: snippet source.
 
-	snippet isFaulty | snippet hasUndeclared
+	snippet isFaulty
 		ifTrue: [
 			self assert: error isNotNil.
 			self assert: method equals: #tag ]
@@ -100,7 +100,7 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 					          (snippet
 						           hasNotice: (n first allButLast: 3)
 						           at: n second).
-			          self assert: snippet isFaulty | snippet hasUndeclared.
+			          self assert: snippet isFaulty.
 			          ^ self ];
 		          compile: snippet source.
 

@@ -12,7 +12,7 @@ RBCodeSnippetScriptingTest >> testEvaluateFailBlock [
 			failBlock: [ :e | error := e. #tag ];
 			evaluate: snippet source ].
 
-	snippet isFaulty | snippet hasUndeclared
+	snippet isFaulty
 		ifTrue: [
 			self assert: runBlock value equals: #tag.
 			self assert: (snippet hasNotice: error) ]
