@@ -150,8 +150,7 @@ ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	| violating |
 	violating := Dictionary new.
 	ProtoObject withAllSubclasses do: [ :cls |
-		(cls organization protocols select: [ :protocol | protocol canBeRemoved ]) ifNotEmpty: [ :protocolsWithoutMethods |
-			violating at: cls put: protocolsWithoutMethods ] ].
+		(cls organization protocols select: [ :protocol | protocol isEmpty ]) ifNotEmpty: [ :emptyProtocols | violating at: cls put: emptyProtocols ] ].
 
 	self assertEmpty: violating
 ]
