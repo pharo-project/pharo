@@ -1,5 +1,5 @@
 "
-A Protocol is a cetagorization of methods in Pharo. 
+A Protocol is a categorization of methods in Pharo. 
 
 A class has methods, and the methods are classified into protocols.
 
@@ -18,6 +18,7 @@ Class {
 
 { #category : #'instance creation' }
 Protocol class >> ambiguous [
+
 	^ #ambiguous
 ]
 
@@ -45,6 +46,7 @@ Protocol class >> name: nm methodSelectors: methods [
 
 { #category : #accessing }
 Protocol class >> nullProtocolName [
+	"Do not use me. I am a remanent from the past and I'll be removed soon."
 
 	^ #'no messages'
 ]
@@ -62,11 +64,6 @@ Protocol >> addAllMethodsFrom: aProtocol [
 { #category : #'adding-removing' }
 Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
-]
-
-{ #category : #private }
-Protocol >> canBeRemoved [
-	^ self isEmpty
 ]
 
 { #category : #testing }
@@ -91,6 +88,10 @@ Protocol >> isEmpty [
 
 { #category : #testing }
 Protocol >> isExtensionProtocol [
+	"For now, extension methods are managed via protocols. 
+	
+	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
+
 	^ self name first = $*
 ]
 
