@@ -53,9 +53,16 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
 	"Transform a simple error node into a englobing one while preserving most information"
 
+	| start stop |
+	start := aParseErrorNode start.
+	stop := aParseErrorNode stop.
+	anArrayOfNodes ifNotEmpty: [
+		start := start min: (anArrayOfNodes min: #start).
+		stop := stop max: (anArrayOfNodes max: #stop) ].
+
 	^ self new
-		start: (aParseErrorNode start min: (anArrayOfNodes min: #start));
-		stop: (aParseErrorNode stop max: (anArrayOfNodes max: #stop));
+		start: start;
+		stop: stop;
 		errorPosition: aParseErrorNode errorPosition;
 		errorMessage: aParseErrorNode errorMessage;
 		valueAfter: aParseErrorNode value;

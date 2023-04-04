@@ -110,21 +110,17 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 6 7 '''}'' expected' ) )).
 		        (self new
 			         source: ' )';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: )' ) )).
+			         notices: #( #( 2 2 2 'Missing opener for closer: )' ) )).
 		        (self new
 			         source: ' ]';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: ]' ) );
+			         notices: #( #( 2 2 2 'Missing opener for closer: ]' ) );
 			         skip: #testCodeImporter). "FIXME. code importer do not like rogue starting `]`"
 		        (self new
 			         source: ' }';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: }' ) )).
+			         notices: #( #( 2 2 2 'Missing opener for closer: }' ) )).
 		        (self new
 			         source: ' ) ] }';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: )' )
+			         notices: #( #( 2 2 2 'Missing opener for closer: )' )
 				            #( 2 4 4 'Missing opener for closer: ]' )
 				            #( 2 6 6 'Missing opener for closer: }' ) )).
 
@@ -1530,7 +1526,6 @@ RBCodeSnippet class >> badVariableAndScopes [
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
-				            #( 16 15 16 'Variable or expression expected' )
 				            #( 16 16 16 'Missing opener for closer: }' )
 				            #( 11 24 25 ''']'' expected' )
 				            #( 9 24 25 '''}'' expected' ) )). "OK, but maybe the `}` could close the `{` and consider the `[` unfinished?"
@@ -1558,7 +1553,6 @@ RBCodeSnippet class >> badVariableAndScopes [
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
-				            #( 18 17 18 'Variable or expression expected' )
 				            #( 18 18 18 'Missing opener for closer: }' )
 				            #( 11 26 27 ''']'' expected' )
 				            #( 9 26 27 '''}'' expected' ) )).
