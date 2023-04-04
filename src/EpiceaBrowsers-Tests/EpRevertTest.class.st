@@ -35,8 +35,8 @@ EpRevertTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
 	self setHeadAsInputEntry.
 
 	self revertInputEntry.
