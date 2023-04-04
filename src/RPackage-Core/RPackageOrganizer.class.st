@@ -199,6 +199,12 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> addCategory: catString [
+
+	^ self systemOrganizer addCategory: catString
+]
+
 { #category : #private }
 RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
@@ -302,6 +308,18 @@ RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
 	self removePackageNameFromCache: aPackageName
 ]
 
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> categories [
+
+	^ self systemOrganizer categories
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> categoriesMatching: matchString [
+
+	^ self systemOrganizer categoriesMatching: matchString
+]
+
 { #category : #'system compatibility' }
 RPackageOrganizer >> category: categoryName matches: prefix [
 	| prefixSize catSize |
@@ -315,11 +333,35 @@ RPackageOrganizer >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> categoryOfBehavior: behavior [
+
+	^ self systemOrganizer categoryOfBehavior: behavior
+]
+
 { #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 	(self packages
 		anySatisfy: [ :each | self category: packageName matches: each packageName ])
 		ifFalse: [ (self packageClass named: packageName capitalized) register ]
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> classesInCategory: category [
+
+	^ self systemOrganizer classesInCategory: category
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> classify: behaviorName under: categoryName [
+
+	^ self systemOrganizer classify: behaviorName under: categoryName
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> classifyAll: aCollection under: categoryName [
+
+	^ self systemOrganizer classifyAll: aCollection under: categoryName
 ]
 
 { #category : #registration }
@@ -371,6 +413,18 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	SystemAnnouncer uniqueInstance announce: (RPackageRegistered to: package).
 
 	^ package
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> environment [
+
+	^ self systemOrganizer environment
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> environment: aSystemDictionary [
+
+	^ self systemOrganizer environment: aSystemDictionary
 ]
 
 { #category : #'package - access from class' }
@@ -460,6 +514,12 @@ RPackageOrganizer >> hasRegistered [
 	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
 ]
 
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> includesCategory: aString [
+
+	^ self systemOrganizer includesCategory: aString
+]
+
 { #category : #testing }
 RPackageOrganizer >> includesPackage: aPackage [
 	"Answer whether the receiver get a package as registered."
@@ -541,6 +601,24 @@ RPackageOrganizer >> initializeMethodsFor: aBehavior [
 			 (eachProtocol methodSelectors
 				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
 				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
+
+	^ self systemOrganizer isEmptyCategoryNamed: categoryName
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> listAtCategoryNamed: categoryName [
+
+	^ self systemOrganizer listAtCategoryNamed: categoryName
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> orderedTraitsIn: category [
+
+	^ self systemOrganizer orderedTraitsIn: category
 ]
 
 { #category : #accessing }
@@ -854,11 +932,47 @@ RPackageOrganizer >> registerPackageNamed: aString [
 		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
 ]
 
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> removeBehavior: behavior [
+
+	^ self systemOrganizer removeBehavior: behavior
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> removeCategoriesMatching: matchString [
+
+	^ self systemOrganizer removeCategoriesMatching: matchString
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> removeCategory: category [
+
+	^ self systemOrganizer removeCategory: category
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> removeEmptyPackages [
+
+	^ self systemOrganizer removeEmptyPackages
+]
+
 { #category : #'package - names-cache' }
 RPackageOrganizer >> removePackageNameFromCache: aPackageName [
 
 	packageNames ifNil: [ ^ self ].
 	packageNames remove: aPackageName ifAbsent: [  ]
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> removeSystemCategory: category [
+
+	^ self systemOrganizer removeSystemCategory: category
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
+
+	^ self systemOrganizer renameCategory: oldCatString toBe: newCatString
 ]
 
 { #category : #'system integration' }
@@ -907,6 +1021,12 @@ RPackageOrganizer >> stopNotification [
 
 	self class environment at: #MCWorkingCopy ifPresent: [:wc |
 		wc removeDependent: self]
+]
+
+{ #category : #'system organizer facade' }
+RPackageOrganizer >> superclassOrder: category [
+
+	^ self systemOrganizer superclassOrder: category
 ]
 
 { #category : #'system integration' }
