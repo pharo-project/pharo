@@ -124,7 +124,7 @@ RPackageOrganizer class >> default [
 
 	^ default ifNil: [
 		  default := self new
-			             systemOrganizer: Smalltalk globals organization;
+			             systemOrganizer: Smalltalk organization;
 			             yourself ]
 ]
 
