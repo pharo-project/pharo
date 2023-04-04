@@ -96,7 +96,7 @@ RBExtractToTemporaryTransformation >> nodeContainedBy: anInterval [
 	| node |
 	node := self parseTree whichNodeIsContainedBy: anInterval.
 	(node notNil and: [ node isValue ])
-		ifFalse: [ self refactoringFailure: 'Cannot assign to non-value nodes' ].
+		ifFalse: [ self refactoringError: 'Cannot assign to non-value nodes' ].
 	^ node
 ]
 
@@ -106,7 +106,7 @@ RBExtractToTemporaryTransformation >> parseTree [
 	parseTree
 		ifNil: [
 			parseTree := class parseTreeForSelector: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 		].
 	^ parseTree
 ]
@@ -134,10 +134,10 @@ RBExtractToTemporaryTransformation >> selectedSource [
 	| source |
 
 	source := class sourceCodeFor: selector.
-	source ifNil: [ self refactoringFailure: 'Couldn''t find sources' ].
+	source ifNil: [ self refactoringError: 'Couldn''t find sources' ].
 	( ( sourceInterval first between: 1 and: source size )
 		and: [ sourceInterval last between: 1 and: source size ] )
-		ifFalse: [ self refactoringFailure: 'Invalid interval' ].
+		ifFalse: [ self refactoringError: 'Invalid interval' ].
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
@@ -163,7 +163,7 @@ RBExtractToTemporaryTransformation >> verifySelectedInterval [
 	selectedSources := self selectedSource.
 	selectedParseTree := self parserClass
 		parseExpression: selectedSources
-		onError: [ :message :position | self refactoringFailure: 'Invalid selection' ].
+		onError: [ :message :position | self refactoringError: 'Invalid selection' ].
 	selectedParseTree isSequence
-		ifTrue: [ self refactoringFailure: 'Cannot assign temp to multiple statements' ]
+		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ]
 ]

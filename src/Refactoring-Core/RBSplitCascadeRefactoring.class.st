@@ -66,7 +66,7 @@ RBSplitCascadeRefactoring >> findAncestorNode [
 	[ ancestorNode parent isSequence not and: [ ancestorNode parent isReturn ] ]
 		whileTrue: [ ancestorNode := ancestorNode parent ].
 	ancestorNode parent isSequence
-		ifFalse: [ self refactoringFailure: 'To split this cascade, you must extract it to a temporary first' ]
+		ifFalse: [ self refactoringError: 'To split this cascade, you must extract it to a temporary first' ]
 ]
 
 { #category : #preconditions }
@@ -78,7 +78,7 @@ RBSplitCascadeRefactoring >> findCascadeNode [
 	[ cascadeNode isNil or: [ cascadeNode isCascade ] ]
 		whileFalse: [ cascadeNode := cascadeNode parent ].
 	cascadeNode
-		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be within a cascade' ]
+		ifNil: [ self refactoringError: 'The selection doesn''t appear to be within a cascade' ]
 ]
 
 { #category : #preconditions }
@@ -90,9 +90,9 @@ RBSplitCascadeRefactoring >> findMessageNodes [
 	afterNodes := cascadeNode messages
 		select: [ :each | selectedInterval last <= each keywordsPositions first].
 	(beforeNodes isEmpty or: [ afterNodes isEmpty ])
-		ifTrue: [ self refactoringFailure: 'Splitting a cascade into the whole cascade and an empty one is pointless' ].
+		ifTrue: [ self refactoringError: 'Splitting a cascade into the whole cascade and an empty one is pointless' ].
 	(beforeNodes size + afterNodes size = cascadeNode messages size)
-		ifFalse: [ self refactoringFailure: 'To set the split boundary place the cursor inbetween two cascaded messages' ]
+		ifFalse: [ self refactoringError: 'To set the split boundary place the cursor inbetween two cascaded messages' ]
 ]
 
 { #category : #accessing }
@@ -100,7 +100,7 @@ RBSplitCascadeRefactoring >> parseTree [
 
 	parseTree
 		ifNil: [ parseTree := class parseTreeForSelector: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
+			parseTree ifNil: [ self refactoringError: 'Could not parse sources' ]
 			].
 	^ parseTree
 ]

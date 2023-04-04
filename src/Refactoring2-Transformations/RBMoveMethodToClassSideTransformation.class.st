@@ -80,7 +80,7 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 
 	parseTree
 		ifNil: [ parseTree := class parseTreeForSelector: method selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
 	^ parseTree
 ]
