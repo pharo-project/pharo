@@ -94,14 +94,10 @@ ShiftClassBuilder >> build [
 	self oldClass ifNotNil: [
 			self newClass basicCategory: self oldClass basicCategory.
 			self copyOrganization.
+			self newClass commentSourcePointer: self oldClass commentSourcePointer.
 			self builderEnhancer compileMethodsFor: self. ].
-	
-	self newClass commentSourcePointer: self oldClass commentSourcePointer.
-	
+
 	self builderEnhancer afterMethodsCompiled: self.
-
-
-
 	^ newClass
 ]
 
