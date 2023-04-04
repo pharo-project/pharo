@@ -299,12 +299,14 @@ RBCodeSnippet class >> badExpressions [
 			         source: '| | a';
 			         formattedCode: 'a';
 			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
 			         value: nil;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
 			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
 			         value: nil;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
@@ -490,6 +492,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
 			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
 			         value: nil;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
@@ -768,6 +771,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'a := 10. ^ a';
 			         isFaulty: true;
+			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
@@ -775,6 +779,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '^ a';
 			         isFaulty: true;
+			         isFaultyMinusUndeclared: false;
 			         value: nil;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
@@ -994,7 +999,6 @@ RBCodeSnippet class >> badSemantic [
 			         isMethod: true;
 			         isFaulty: true;
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
-
 		        (self new
 			         source: 'CodeError signal: ''false error''';
 			         raise: CodeError;
@@ -1465,6 +1469,7 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: 'Δə';
 			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
 			         value: nil;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
@@ -1490,7 +1495,6 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: Character nbsp asString;
 			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
-
 		        (self new
 			         source: '$→';
 			         isFaulty: false;
