@@ -12,6 +12,20 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 ]
 
 { #category : #'*Deprecated12' }
+ClassDescription >> classesThatImplementAllOf: selectorSet [
+	"Return an array of any classes that implement all the messages in selectorSet."
+
+	| found remaining |
+	self deprecated: 'This method will be removed in the next version of Pharo.'.
+	found := OrderedCollection new.
+	selectorSet do: [ :sel | (self includesSelector: sel) ifTrue: [ found add: sel ] ].
+	found ifEmpty: [ ^ self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: selectorSet) ] ] ifNotEmpty: [
+		remaining := selectorSet copyWithoutAll: found.
+		remaining isEmpty ifTrue: [ ^ Array with: self ].
+		^ self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: remaining) ] ]
+]
+
+{ #category : #'*Deprecated12' }
 ClassDescription >> copy: selector from: originClass [
 	"Install a copy of originClass>>selector in myself as un unclassified method."
 
