@@ -346,7 +346,7 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 
 	| protocol |
 	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
-	(protocol isEmpty and: [ protocol canBeRemoved ]) ifTrue: [ self removeProtocol: protocol ]
+	protocol canBeRemoved ifTrue: [ self removeProtocol: protocol ]
 ]
 
 { #category : #accessing }

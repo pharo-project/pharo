@@ -70,11 +70,6 @@ Protocol >> canBeRemoved [
 ]
 
 { #category : #testing }
-Protocol >> canBeRenamed [
-	^ true
-]
-
-{ #category : #testing }
 Protocol >> includesSelector: selector [
 
 	^ self methodSelectors includes: selector
