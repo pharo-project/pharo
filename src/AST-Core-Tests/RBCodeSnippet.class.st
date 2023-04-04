@@ -1760,6 +1760,7 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
+		each isFaultyMinusUndeclared ifNil: [ each isFaultyMinusUndeclared: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
 	]
 ]
@@ -1821,6 +1822,10 @@ RBCodeSnippet >> dumpDefinition [
 			  aStream
 				  nextPutAll: '; isParseFaulty: ';
 				  print: self isParseFaulty ].
+		  self isFaultyMinusUndeclared ~= self isFaulty ifTrue: [
+			  aStream
+				  nextPutAll: '; isFaultyMinusUndeclared: ';
+				  print: self isFaultyMinusUndeclared ].
 		  self dumpDefinitionValue: aStream.
 		  self numberOfCritiques ifNotNil: [
 			  aStream
@@ -2158,6 +2163,7 @@ RBCodeSnippet >> updateExpectations [
 	self isParseFaulty: ast isFaulty.
 	ast := self doSemanticAnalysis.
 	self isFaulty: ast isFaulty.
+	self isFaultyMinusUndeclared: self isFaulty & (ast allErrorNotices allSatisfy: #isUndeclaredNotice) not.
 	self notices: (ast allNotices
 			 collect: [ :each |
 				 {
