@@ -942,8 +942,11 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	[(')]}' includes: currentToken value)
 		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
 			whileTrue: [
+				| contents |
 				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
-				node := (RBUnfinishedStatementErrorNode from: err contents: { node })
+				"If the parsing failed because it did not match anything, there was nothing before the unexpected closer"
+				contents := startOfStatementToken = currentToken ifTrue: [ #() ] ifFalse: [ { node } ].
+				node := (RBUnfinishedStatementErrorNode from: err contents: contents)
 					valueAfter: currentToken value asString;
 					stop: currentToken stop.
 				self step ].

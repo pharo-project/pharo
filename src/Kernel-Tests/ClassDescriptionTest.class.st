@@ -16,9 +16,58 @@ ClassDescriptionTest >> classToBeTested [
 	^ ClassDescription
 ]
 
+{ #category : #helpers }
+ClassDescriptionTest >> compilationTestPackageName [
+	^ 'Kernel-TemporaryTestPackageForTest'
+]
+
+{ #category : #helpers }
+ClassDescriptionTest >> createTestClass [
+
+	^ ((Object << #TemporaryMockClass)
+		   slots: {  };
+		   package: self compilationTestPackageName) build
+]
+
+{ #category : #running }
+ClassDescriptionTest >> tearDown [
+
+	(RPackageOrganizer default packageNamed: self compilationTestPackageName ifAbsent: [ nil ])
+		ifNotNil: [ :package | package removeFromSystem ].
+
+	super tearDown
+]
+
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testAllSlots [
 	self assert: Context allSlots size equals: 6
+]
+
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testCompileClassified [
+
+	| class method |
+	class := self createTestClass.
+
+	class compile: 'foo ^3' classified: #protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocol equals: #protocol
+]
+
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
+
+	| class method protocol |
+	class := self createTestClass.
+
+	protocol := class organization ensureProtocol: #protocol.
+	class compile: 'foo ^3' classified: protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocol equals: protocol name
 ]
 
 { #category : #'tests - slots' }
