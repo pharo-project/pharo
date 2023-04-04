@@ -4,6 +4,12 @@ Class {
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
 
+{ #category : #testing }
+OCUndeclaredVariableNotice >> isUndeclaredNotice [
+
+	^ true
+]
+
 { #category : #correcting }
 OCUndeclaredVariableNotice >> reparator [
 
