@@ -560,6 +560,18 @@ OpalCompiler >> permitFaulty: aBoolean [
 	self compilationContext permitFaulty: aBoolean
 ]
 
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared [
+
+	^ self compilationContext permitUndeclared
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared: aBoolean [
+
+	self compilationContext permitUndeclared: aBoolean
+]
+
 { #category : #accessing }
 OpalCompiler >> productionEnvironment: anObject [
 	compilationContext productionEnvironment: anObject
