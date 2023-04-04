@@ -231,6 +231,12 @@ CompletionEngine >> hasCompletionContext [
 	^ context notNil
 ]
 
+{ #category : #'menu morph' }
+CompletionEngine >> hasDetail [
+
+	^ self isMenuOpen and: [ menuMorph hasDetail ]
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds
