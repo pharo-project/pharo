@@ -62,12 +62,6 @@ OCUndeclaredVariableWarning >> position [
 	^ self notice position
 ]
 
-{ #category : #correcting }
-OCUndeclaredVariableWarning >> reparator [
-
-	^ notice reparator
-]
-
 { #category : #accessing }
 OCUndeclaredVariableWarning >> sourceCode [
 
