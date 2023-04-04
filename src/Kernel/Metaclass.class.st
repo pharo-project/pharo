@@ -120,6 +120,16 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
+{ #category : #'accessing - comment' }
+Metaclass >> commentSourcePointer [
+	^ self instanceSide commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentSourcePointer: anObject [
+	^ self instanceSide commentSourcePointer: anObject
+]
+
 { #category : #fileout }
 Metaclass >> definitionStringFor: aConfiguredPrinter [
 

@@ -79,9 +79,9 @@ EpApplyPreviewerTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
-	aClass classComment: 'after'.
+	aClass comment: 'after'.
 
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpBehaviorCommentChange.
@@ -423,9 +423,9 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -436,7 +436,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
