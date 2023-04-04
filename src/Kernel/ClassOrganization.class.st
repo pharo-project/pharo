@@ -1,3 +1,6 @@
+"
+This class manages the class comment and a protocol organizer
+"
 Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
