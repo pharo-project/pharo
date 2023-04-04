@@ -47,9 +47,11 @@ ClapTestRunner >> execute [
 	self outputStreamDo: [ :out |
 		self suite
 			when: TestAnnouncement
-			do: [ :ann | out nextPutAll: ann test name; lf ];
+			do: [ :ann | out nextPutAll: ann test name; lf ]
+			for: self;
 			when: TestCaseAnnouncement
-			do: [ :ann | out space; space; nextPutAll: ann testSelector; lf ].
+			do: [ :ann | out space; space; nextPutAll: ann testSelector; lf ]
+			for: self.
 		result := [ self suite run ]
 			ensure: [ self suite unsubscribe: TestAnnouncement ].
 		out print: result; lf

@@ -40,10 +40,3 @@ GLMOSWindowWorldMorph >> initialize [
 GLMOSWindowWorldMorph >> toolbarBox: anObject [
 	toolbarBox := anObject
 ]
-
-{ #category : #announcing }
-GLMOSWindowWorldMorph >> when: anAnnouncement do: aBlock [
-
-	self flag: #TOCHECK. "Use self or get receiver by param?"
-	^ self announcer when: anAnnouncement do: aBlock for: self
-]

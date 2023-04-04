@@ -179,8 +179,7 @@ TestSuite >> unsubscribe: anAnnouncementClass [
 ]
 
 { #category : #announcements }
-TestSuite >> when: aAnnouncement do: aBlock [
+TestSuite >> when: aAnnouncement do: aBlock for: aSubscriber [
 
-	self flag: #TOCHECK. "Use self or get receiver by param?"
-	self testSuiteAnnouncer when: aAnnouncement do: aBlock for: self
+	self testSuiteAnnouncer when: aAnnouncement do: aBlock for: aSubscriber
 ]
