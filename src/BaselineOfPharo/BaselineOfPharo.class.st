@@ -195,5 +195,16 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 
 	"Load the WelcomeBrowser as last step"
 	(self class environment classNamed: #StWelcomeBrowser)
-		ifNotNil: [ :aClass | aClass openForRelease ]
+		ifNotNil: [ :aClass | aClass openForRelease ].
+
+	"Here we will do something for the release announce"
+
+	"If we added a github token for the build, we remove it."
+	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
+		| credential |
+		credential := (Smalltalk classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
+
+		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
+
+		'Removing credential.' traceCr ]
 ]
