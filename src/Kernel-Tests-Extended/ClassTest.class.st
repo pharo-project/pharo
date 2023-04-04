@@ -232,8 +232,10 @@ ClassTest >> testComment [
 
 { #category : #'tests - accessing - comments' }
 ClassTest >> testCommentSourcePointer [
-	self assert: Object commentSourcePointer isNotNil.
-	self assert: Object class commentSourcePointer isNil.
+
+	self
+		assert: Object class commentSourcePointer
+		identicalTo: Object commentSourcePointer isNotNil
 ]
 
 { #category : #'tests - accessing - comments' }
