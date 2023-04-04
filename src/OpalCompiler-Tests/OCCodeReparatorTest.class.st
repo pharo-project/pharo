@@ -14,7 +14,7 @@ OCCodeReparatorTest >> testDeclareClassVar [
 	goo := MockForCompilation classVariableNamed: #goo ifAbsent: [ nil ].
 	goo ifNotNil: [ MockForCompilation removeClassVariable: goo ].
 
-	method := [ OpalCompiler new requestor: requestor; class: MockForCompilation ; compile: requestor text ]
+	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			e reparator declareClassVar.
@@ -62,7 +62,7 @@ OCCodeReparatorTest >> testDeclareGlobal [
 
 	Smalltalk globals removeKey: #goo ifAbsent: [].
 
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			e reparator declareGlobal.
@@ -112,7 +112,7 @@ OCCodeReparatorTest >> testDeclareInstVar [
 
 	self deny: (MockForCompilation hasInstVarNamed: #goo).
 
-	method := [ OpalCompiler new requestor: requestor; class: MockForCompilation ; compile: requestor text ]
+	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			e reparator declareInstVar: #goo.
@@ -158,7 +158,7 @@ OCCodeReparatorTest >> testDeclareTempAndPaste [
 	requestor := OCMockRequestor new.
 	requestor text: 'griffle ^ goo'.
 
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			e reparator
@@ -199,7 +199,7 @@ OCCodeReparatorTest >> testPossibleVariablesFor [
 	requestor := OCMockRequestor new.
 	requestor text: 'griffle | foo | ^ goo'.
 
-	names := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	names := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			e reparator
@@ -233,7 +233,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 	requestor := OCMockRequestor new.
 	requestor text: 'griffle | foo | ^ goo'.
 
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			e reparator
@@ -275,7 +275,7 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 	requestor text: 'griffle ^ goo'.
 
 	flag := false.
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			flag := true.
