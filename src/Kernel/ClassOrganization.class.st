@@ -1,13 +1,9 @@
-"
-This class manages the class comment and a protocol organizer
-"
 Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
 		'organizedClass',
-		'protocols',
-		'allProtocol'
+		'protocols'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -51,18 +47,6 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> allProtocol [
-
-	^ allProtocol
-]
-
-{ #category : #accessing }
-ClassOrganization >> allProtocols [
-
-	^ { self allProtocol } , self protocols
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> classComment [
 
@@ -78,17 +62,11 @@ ClassOrganization >> classComment: aString [
 { #category : #'protocol - adding' }
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
-	| name protocol |
-	name := aProtocolName.
-	name = self allProtocol name ifTrue: [ name := Protocol unclassified ].
-
-	"maybe here we should check if this method already belong to another protocol"
 	self protocols
 		select: [ :p | p includesSelector: aSymbol ]
 		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: name ifAbsent: [ self addSilentlyProtocolNamed: name ].
 
-	protocol addMethodSelector: aSymbol
+	(self protocolNamed: aProtocolName ifAbsent: [ self addSilentlyProtocolNamed: aProtocolName ]) addMethodSelector: aSymbol
 ]
 
 { #category : #'backward compatibility' }
@@ -187,7 +165,7 @@ ClassOrganization >> hasOrganizedClass [
 { #category : #testing }
 ClassOrganization >> hasProtocolNamed: aString [
 
-	^ self allProtocols anySatisfy: [ :each | each name = aString ]
+	^ self protocols anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #testing }
@@ -200,7 +178,7 @@ ClassOrganization >> includesSelector: selector [
 ClassOrganization >> initialize [
 
 	super initialize.
-	self reset
+	protocols := IdentitySet new
 ]
 
 { #category : #initialization }
@@ -213,8 +191,6 @@ ClassOrganization >> initializeClass: aClass [
 
 { #category : #accessing }
 ClassOrganization >> methodSelectorsInProtocol: aName [
-
-	aName = AllProtocol defaultName ifTrue: [ ^ self allMethodSelectors ].
 
 	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
 ]
@@ -300,7 +276,7 @@ ClassOrganization >> protocolNamed: aString [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 
-	^ self allProtocols
+	^ self protocols
 		  detect: [ :e | e name = aString ]
 		  ifNone: aBlock
 ]
@@ -386,13 +362,6 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 	self notifyOfChangedProtocolNameFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
 	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
-]
-
-{ #category : #initialization }
-ClassOrganization >> reset [
-
-	protocols := IdentitySet new.
-	allProtocol := AllProtocol classOrganization: self
 ]
 
 { #category : #'backward compatibility' }

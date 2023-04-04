@@ -8,8 +8,7 @@ ClassOrganization >> changeFromString: aString [
 	protocolSpecs := aString parseLiterals.
 
 	"If nothing was scanned and I had no elements before, then default me"
-	(protocolSpecs isEmpty and: [ self protocols isEmpty ])
-		ifTrue: [ ^ self reset ].
+	(protocolSpecs isEmpty and: [ self protocols isEmpty ]) ifTrue: [ ^ self initialize ].
 
 	^ self internalChangeFromString: protocolSpecs
 ]
@@ -18,7 +17,7 @@ ClassOrganization >> changeFromString: aString [
 ClassOrganization >> internalChangeFromString: protocolSpecs [
 	"Parse the argument, aString, and make this be the receiver's structure."
 
-	self reset.
+	self initialize.
 	protocolSpecs do: [ :spec |
 		| name methods |
 		name := spec first asSymbol.
