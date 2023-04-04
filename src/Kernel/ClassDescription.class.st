@@ -339,7 +339,7 @@ ClassDescription >> commentSourcePointer: anObject [
 { #category : #'accessing - comment' }
 ClassDescription >> commentStamp [
 
-	^ commentSourcePointer
+	^ self instanceSide commentSourcePointer
 		  ifNil: [ '' ]
 		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
