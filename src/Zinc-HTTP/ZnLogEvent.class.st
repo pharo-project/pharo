@@ -38,7 +38,7 @@ ZnLogEvent class >> initialize [
 { #category : #convenience }
 ZnLogEvent class >> logToTranscript [
 	self stopLoggingToTranscript.
-	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ]
+	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ] for: self
 ]
 
 { #category : #accessing }

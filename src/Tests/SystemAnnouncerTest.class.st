@@ -36,7 +36,8 @@ SystemAnnouncerTest >> testProtocolAdded [
 		when: ProtocolAdded do: [ :ann |
 			pass := true.
 			classReorganized := ann classReorganized.
-			protocolAdded := ann protocol ].
+			protocolAdded := ann protocol ]
+		for: self.
 
 	class := factory newClass.
 	class organization addCategory: 'shiny-new-category'.
@@ -56,7 +57,8 @@ SystemAnnouncerTest >> testProtocolRemoved [
 		when: ProtocolRemoved do: [ :ann |
 			pass := true.
 			classRemoved := ann classReorganized.
-			protocolRemoved := ann protocol ].
+			protocolRemoved := ann protocol ]
+		for: self.
 
 	class := factory newClass.
 	class organization addCategory: 'shiny-new-category'.
@@ -76,7 +78,7 @@ SystemAnnouncerTest >> testSuspendAllWhile [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		SystemAnnouncer uniqueInstance
-			when: ClassAdded do: [ value := value + 1 ];
+			when: ClassAdded do: [ value := value + 1 ] for: self;
 			announce: ClassAdded ].
 
 	self assert: value equals: 42. "The answer is always 42 :)"

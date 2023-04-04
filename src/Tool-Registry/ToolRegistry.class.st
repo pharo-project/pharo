@@ -231,11 +231,13 @@ ToolRegistry >> using: aToolName do: aBlock [
 { #category : #announcer }
 ToolRegistry >> whenToolRegistered: aBlock [
 
-	self announcer weak when: ToolRegistryToolRegistered do: aBlock
+	self flag: #TOCHECK. "Use self or get receiver by param?"
+	self announcer weak when: ToolRegistryToolRegistered do: aBlock for: self
 ]
 
 { #category : #announcer }
 ToolRegistry >> whenToolUnregistered: aBlock [
 
-	self announcer weak when: ToolRegistryToolUnregistered do: aBlock
+	self flag: #TOCHECK. "Use self or get receiver by param?"
+	self announcer weak when: ToolRegistryToolUnregistered do: aBlock for: self
 ]

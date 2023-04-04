@@ -58,7 +58,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRaisesClassRepackaged
 	SystemAnnouncer uniqueInstance
 		when: ClassRepackaged do: [ :a |
 			ann := a.
-		].
+		] for: self.
 	
 	self addXCategory.
 	self addYCategory.

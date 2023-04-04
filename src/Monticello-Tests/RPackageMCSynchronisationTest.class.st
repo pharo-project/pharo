@@ -221,7 +221,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 	
 	ann := nil.
 	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ].
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
 	
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
@@ -244,7 +244,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 	
 	ann := nil.
 	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ].
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
 	
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
@@ -267,7 +267,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	
 	ann := nil.
 	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ].
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
 	
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
@@ -295,7 +295,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	
 	ann := nil.
 	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ].
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
 	
 	self addXYZCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
@@ -320,7 +320,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	
 	ann := nil.
 	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ].
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
 	
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
