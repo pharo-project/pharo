@@ -6,8 +6,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'organizedClass',
-		'protocols',
-		'allProtocol'
+		'protocols'
 	],
 	#category : #'Kernel-Protocols'
 }
