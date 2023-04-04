@@ -80,7 +80,7 @@ ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
 
 	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
 	self assert: (factory createdTraits noneSatisfy: [:trait| allTraits includes: trait]).
-	self deny: (Smalltalk organization categories includes: factory defaultCategory).
+	self deny: (self packageOrganizer categories includes: factory defaultCategory).
 	self class environment at: #ChangeSet ifPresent: [:changeSet |
 		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
