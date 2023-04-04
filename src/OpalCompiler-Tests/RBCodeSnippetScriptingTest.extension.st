@@ -1,6 +1,27 @@
 Extension { #name : #RBCodeSnippetScriptingTest }
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetScriptingTest >> testEvaluateFailBlock [
+
+	| runBlock error |
+	self skipIf: #exec.
+
+	error := nil.
+	runBlock := [
+		OpalCompiler new
+			failBlock: [ :e | error := e. #tag ];
+			evaluate: snippet source ].
+
+	snippet isFaulty | snippet hasUndeclared
+		ifTrue: [
+			self assert: runBlock value equals: #tag.
+			self assert: (snippet hasNotice: error) ]
+		ifFalse: [
+			self assert: error isNil.
+			self testExecuteBlock: runBlock ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetScriptingTest >> testEvaluateFaulty [
 
 	| runBlock |

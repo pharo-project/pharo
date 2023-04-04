@@ -1,6 +1,30 @@
 Extension { #name : #RBCodeSnippetTest }
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileFailBlock [
+
+	| method error |
+	error := nil.
+	method := OpalCompiler new
+		          noPattern: snippet isMethod not;
+		          failBlock: [ :e |
+			          self assert: (snippet hasNotice: e).
+			          self assert: error isNil. "single invocation"
+			          error := e.
+			          #tag ];
+		          compile: snippet source.
+
+	snippet isFaulty | snippet hasUndeclared
+		ifTrue: [
+			self assert: error isNotNil.
+			self assert: method equals: #tag ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileFaulty [
 
 	| method |
