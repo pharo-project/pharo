@@ -27,6 +27,7 @@ Class {
 		'isMethod',
 		'isParseFaulty',
 		'isFaulty',
+		'isFaultyMinusUndeclared',
 		'notices',
 		'value',
 		'hasValue',
@@ -1952,6 +1953,18 @@ RBCodeSnippet >> isFaulty [
 RBCodeSnippet >> isFaulty: anObject [
 
 	isFaulty := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isFaultyMinusUndeclared [
+
+	^ isFaultyMinusUndeclared
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
+
+	isFaultyMinusUndeclared := anObject
 ]
 
 { #category : #accessing }
