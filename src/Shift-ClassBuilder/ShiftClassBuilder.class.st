@@ -95,7 +95,9 @@ ShiftClassBuilder >> build [
 			self newClass basicCategory: self oldClass basicCategory.
 			self copyOrganization.
 			self builderEnhancer compileMethodsFor: self. ].
-
+	
+	self newClass commentSourcePointer: self oldClass commentSourcePointer.
+	
 	self builderEnhancer afterMethodsCompiled: self.
 
 

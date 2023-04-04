@@ -186,7 +186,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	pointer := self commentSourcePointer ifNil: [0].
+	pointer := self instanceSide commentSourcePointer ifNil: [0].
 
 
 	preamble := String streamContents: [ :file |
@@ -203,7 +203,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		writeSource: aString
 		preamble: preamble
 		onSuccess: [ :newSourcePointer |
-			self commentSourcePointer: newSourcePointer]
+			self instanceSide commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 
 	SystemAnnouncer uniqueInstance
