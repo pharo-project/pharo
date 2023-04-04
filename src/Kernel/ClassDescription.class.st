@@ -28,16 +28,18 @@ ClassDescription >> acceptsLoggingOfCompilation [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
-	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 
+	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	oldProtocol := self organization protocolNameOfElement: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self organization classify: selector under: (protocol = Protocol unclassified
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
+		self organization classify: selector under: ((protocol isString
+				  ifTrue: [ protocol ]
+				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.
@@ -349,41 +351,41 @@ ClassDescription >> commentStamp: changeStamp [
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protocolName [
-	"Compile the argument, code, as source code in the context of the receiver and install the result in the receiver's method dictionary under the protocol, protocolName.
-	nil is to be notified if an error occurs.
-	The argument code is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
+ClassDescription >> compile: sourceCode classified: protocol [
+	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
+	
+	The argument sourceCode is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
 
-	^ self compile: sourceCode classified: protocolName notifying: nil
+	^ self compile: sourceCode classified: protocol notifying: nil
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protcolName notifying: requestor [
+ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
-	^ self compile: sourceCode classified: protcolName withStamp: Author changeStamp notifying: requestor
+	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protocolName withStamp: changeStamp notifying: requestor [
+ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
 
 	^ self
 		  compile: sourceCode
-		  classified: protocolName
+		  classified: protocol
 		  withStamp: changeStamp
 		  notifying: requestor
 		  logSource: self acceptsLoggingOfCompilation
 ]
 
 { #category : #compiling }
-ClassDescription >> compile: sourceCode classified: protocolName withStamp: changeStamp notifying: requestor logSource: logSource [
+ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
 
 	| method |
 
 	method := self compiler
 		source: sourceCode;
 		requestor: requestor;
-		failBlock: (requestor ifNil: nil ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
-		protocolName: protocolName;
+		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
+		protocol: protocol;
 		changeStamp: changeStamp;
 		logged: logSource;
 		install.
@@ -474,6 +476,16 @@ ClassDescription >> definitionString [
 ClassDescription >> definitionStringFor: aConfiguredPrinter [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #'queries - protocols' }
+ClassDescription >> ensureProtocol: aProtocol [
+	"I can take a Protocol or a protocol name as paramater.
+	
+	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
+	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
+
+	^ self organization ensureProtocol: aProtocol
 ]
 
 { #category : #private }

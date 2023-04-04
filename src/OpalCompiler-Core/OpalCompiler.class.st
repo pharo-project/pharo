@@ -33,8 +33,8 @@ Class {
 		'source',
 		'compilationContext',
 		'compilationContextClass',
-		'protocolName',
-		'changeStamp'
+		'changeStamp',
+		'protocol'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -437,7 +437,7 @@ OpalCompiler >> install [
 	method := self compile.
 	method ifNil: [ ^ method ].
 
-	protocolName ifNil: [ protocolName := Protocol unclassified ].
+	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
 
@@ -445,13 +445,10 @@ OpalCompiler >> install [
 		class
 			logMethodSource: source
 			forMethod: method
-			inProtocolNamed: protocolName
+			inProtocol: protocol
 			withStamp: changeStamp ].
 
-	class
-		addAndClassifySelector: method selector
-		withMethod: method
-		inProtocol: protocolName.
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 
@@ -557,8 +554,8 @@ OpalCompiler >> productionEnvironment: anObject [
 ]
 
 { #category : #accessing }
-OpalCompiler >> protocolName: aString [ 
-	protocolName := aString
+OpalCompiler >> protocol: aProtocol [ 
+	protocol := aProtocol
 ]
 
 { #category : #accessing }
