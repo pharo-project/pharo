@@ -15,7 +15,7 @@ OCCodeReparatorTest >> testDeclareClassVar [
 	goo ifNotNil: [ MockForCompilation removeClassVariable: goo ].
 
 	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			e notice reparator declareClassVar.
 			e retry ].
@@ -63,7 +63,7 @@ OCCodeReparatorTest >> testDeclareGlobal [
 	Smalltalk globals removeKey: #goo ifAbsent: [].
 
 	method := [ OpalCompiler new compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			e notice reparator declareGlobal.
 			e retry ].
@@ -113,7 +113,7 @@ OCCodeReparatorTest >> testDeclareInstVar [
 	self deny: (MockForCompilation hasInstVarNamed: #goo).
 
 	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			e notice reparator declareInstVar: #goo.
 			e retry ].
@@ -159,7 +159,7 @@ OCCodeReparatorTest >> testDeclareTempAndPaste [
 	requestor text: 'griffle ^ goo'.
 
 	method := [ OpalCompiler new compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			e notice reparator
 				requestor: requestor;
@@ -200,7 +200,7 @@ OCCodeReparatorTest >> testPossibleVariablesFor [
 	requestor text: 'griffle | foo | ^ goo'.
 
 	names := [ OpalCompiler new compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			e notice reparator
 				requestor: requestor;
@@ -234,7 +234,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 	requestor text: 'griffle | foo | ^ goo'.
 
 	method := [ OpalCompiler new compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			e notice reparator
 				requestor: requestor;
@@ -276,7 +276,7 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 
 	flag := false.
 	method := [ OpalCompiler new compile: requestor text ]
-		on: OCUndeclaredVariableWarning
+		on: OCUndeclaredVariableWarning , CodeError
 		do: [ :e |
 			flag := true.
 			e resume "continue" ].
