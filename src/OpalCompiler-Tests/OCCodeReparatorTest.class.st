@@ -17,7 +17,7 @@ OCCodeReparatorTest >> testDeclareClassVar [
 	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator declareClassVar.
+			e notice reparator declareClassVar.
 			e retry ].
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
@@ -65,7 +65,7 @@ OCCodeReparatorTest >> testDeclareGlobal [
 	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator declareGlobal.
+			e notice reparator declareGlobal.
 			e retry ].
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
@@ -115,7 +115,7 @@ OCCodeReparatorTest >> testDeclareInstVar [
 	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator declareInstVar: #goo.
+			e notice reparator declareInstVar: #goo.
 			e retry ].
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
@@ -161,7 +161,7 @@ OCCodeReparatorTest >> testDeclareTempAndPaste [
 	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator
+			e notice reparator
 				requestor: requestor;
 				declareTempAndPaste: 'goo'.
 			e retry ].
@@ -202,7 +202,7 @@ OCCodeReparatorTest >> testPossibleVariablesFor [
 	names := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator
+			e notice reparator
 				requestor: requestor;
 				possibleVariablesFor: #goo.
 			].
@@ -236,7 +236,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator
+			e notice reparator
 				requestor: requestor;
 				substituteVariable: 'foo' atInterval: e node sourceInterval.
 			e retry ].
