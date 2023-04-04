@@ -251,35 +251,32 @@ OpalCompiler >> checkNotice: aNotice [
 	This method is a little long because it handles the requestor (quirks) mode.
 	"
 
-	| requestor |
 	aNotice isWarning ifTrue: [ ^ true ].
 
-	requestor := self compilationContext requestor.
-
-	requestor ifNotNil: [ "A requestor is available. We are in quirks mode and are expected to do UI things."
-		aNotice class = OCUndeclaredVariableNotice ifTrue: [
-			self isInteractive ifFalse: [ "For compatibility, we signal the notification and continue.
-				Note that non-interactive requestors are only used in unit tests, so we might change the policy"
-				aNotice signalError.
-				^ true ].
-
-			"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just continue as an error"
-			self compilationContext noPattern ifFalse: [
+	self compilationContext requestor ifNotNil: [ :requestor |
+		"A requestor is available. We are in quirks mode and are expected to do UI things."
+		"Reparation menu in quirks mode:
+		* require a requestor (because quirks mode, and also some reparations expect a requestor)
+		* require interactive mode (because GUI)
+		* require method definition becase some reparation assume it's a method body"
+		(self isInteractive and: [self compilationContext noPattern not]) ifTrue: [
+			aNotice reparator ifNotNil: [ :reparator |
 				| res |
-				"I do not like the API that much. Reparator can have 3 outcomes"
-				res := OCCodeReparator new
-					       node: aNotice node;
-					       requestor: requestor;
-					       openMenu.
+				res := reparator
+					requestor: requestor;
+					openMenu.
 				res ifNil: [ ^ true "reparation unneded, let AST as is" ].
 				res ifFalse: [ ^ false "operation cancelled, fail" ].
 				self parse: requestor text. "some reparation was done, reparse"
 				^ nil ] ].
 
+		"Quirks mode: otherwise, push the error message to the requestor"
 		requestor
 			notify: aNotice messageText , ' ->'
 			at: aNotice position
 			in: aNotice node source.
+		
+		"Quirks mode: Then leave"
 		^ false ].
 
 	"If a failBlock is provided in non-requestor mode,
