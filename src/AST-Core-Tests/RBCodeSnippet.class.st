@@ -297,12 +297,14 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '| | a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
@@ -486,7 +488,8 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
@@ -763,12 +766,15 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
+			         isFaulty: true;
 			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 12 12 12 'Undeclared variable' ) )).
 		        (self new
 			         source: '^ a';
+			         isFaulty: true;
+			         value: nil;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
 		        "Uninitialized variable"
@@ -1250,7 +1256,7 @@ RBCodeSnippet class >> badTokens [
 	"This list focuses on bad literal, malformed tokens, unexpected character and other scanner related issue.
 	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
 	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
-	
+
 	<script: 'self styleWithError: self badTokens'>
 	| list |
 	list := {
@@ -1457,7 +1463,8 @@ RBCodeSnippet class >> badTokens [
 		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
 		        (self new
 			         source: 'Δə';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         value: nil;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
