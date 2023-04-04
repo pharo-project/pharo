@@ -1,9 +1,13 @@
+"
+This class manages the class comment and a protocol organizer
+"
 Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
 		'organizedClass',
-		'protocols'
+		'protocols',
+		'allProtocol'
 	],
 	#category : #'Kernel-Protocols'
 }
