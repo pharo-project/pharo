@@ -173,7 +173,7 @@ ClassDescription >> basicOrganization: aClassOrg [
 { #category : #'accessing - comment' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
-	^ self classComment: aString stamp: '<historical>'
+	^ self comment: aString stamp: '<historical>'
 ]
 
 { #category : #'accessing - comment' }
@@ -307,7 +307,7 @@ ClassDescription >> classVariablesString [
 
 { #category : #'accessing - comment' }
 ClassDescription >> comment [
-    ^ commentSourcePointer
+    ^ self instanceSide commentSourcePointer
 		  ifNil: [ '' ]
 		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
 ]
@@ -528,7 +528,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing - comment' }
 ClassDescription >> hasComment [
 	"Return whether this class truly has a comment other than the default"
-	^ self commentSourcePointer isNotNil
+	^ self instanceSide commentSourcePointer isNotNil
 ]
 
 { #category : #'instance variables' }
