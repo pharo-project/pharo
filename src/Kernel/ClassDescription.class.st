@@ -121,7 +121,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodsInProtocolNamed: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodSelectorsInProtocol: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -695,7 +695,7 @@ ClassDescription >> localSlots [
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self organization methodsInProtocolNamed: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self organization methodSelectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -893,7 +893,7 @@ ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
 	dictionary of the receiver. Then remove the category aString."
 
-	(self organization methodsInProtocolNamed: protocolName) do: [ :sel | self removeSelector: sel ].
+	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
 	self organization removeProtocolNamed: protocolName
 ]
 
@@ -930,14 +930,14 @@ ClassDescription >> reorganize [
 ClassDescription >> selectorsInCategory: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self organization methodsInProtocolNamed: aName) asSet asArray sort
+	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
 ]
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInProtocol: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self organization methodsInProtocolNamed: aName) asSet asArray sort
+	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
 ]
 
 { #category : #'pool variable' }

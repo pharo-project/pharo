@@ -7,7 +7,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 
 	| org |
 	(org := self organization) protocolNames do: [ :protocolName |
-		(org methodsInProtocolNamed: protocolName)
+		(org methodSelectorsInProtocol: protocolName)
 			select: [ :selector | aSet includes: selector ]
 			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
 ]
@@ -134,5 +134,5 @@ ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: 
 { #category : #'*CodeExport' }
 ClassDescription >> selectorsInProtocolNamed: aSymbol [
 
-	^ self organization methodsInProtocolNamed: aSymbol
+	^ self organization methodSelectorsInProtocol: aSymbol
 ]
