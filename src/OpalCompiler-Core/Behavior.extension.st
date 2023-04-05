@@ -131,9 +131,3 @@ Behavior >> recompileBasic: selector from: oldClass [
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod
 ]
-
-{ #category : #'*OpalCompiler-Core' }
-Behavior >> scopeLevel [
-	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
-	^ 0
-]
