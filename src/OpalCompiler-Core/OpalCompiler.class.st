@@ -366,7 +366,7 @@ OpalCompiler >> context: aContext [
 		The nil context here means to do nothing in such scenarious. So no need to touch the scope here"
 		^self ].
 
-	self semanticScope: (self semanticScope asDoItScopeForContext: aContext)
+	self semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext)
 ]
 
 { #category : #'public access' }
@@ -591,7 +591,7 @@ OpalCompiler >> protocol: aProtocol [
 
 { #category : #accessing }
 OpalCompiler >> receiver: anObject [
-	self semanticScope: (self semanticScope asDoItScopeForReceiver: anObject)
+	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
 ]
 
 { #category : #accessing }

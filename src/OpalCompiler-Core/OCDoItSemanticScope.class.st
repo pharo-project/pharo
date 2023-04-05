@@ -20,11 +20,6 @@ OCDoItSemanticScope class >> isAbstract [
 	^self = OCDoItSemanticScope
 ]
 
-{ #category : #converting }
-OCDoItSemanticScope >> asDoItScope [
-	^self
-]
-
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 

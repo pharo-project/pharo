@@ -47,21 +47,6 @@ OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 	aSystemAnnouncer evaluated: aSourceString context: nil
 ]
 
-{ #category : #converting }
-OCSemanticScope >> asDoItScope [
-	self subclassResponsibility
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForContext: aContext [
-	^OCContextualDoItSemanticScope targetingContext: aContext
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForReceiver: anObject [
-	^OCReceiverDoItSemanticScope targetingReceiver: anObject
-]
-
 { #category : #testing }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
 
