@@ -27,7 +27,7 @@ Behavior >> compile: code notifying: requestor [
 	method  := self compiler
 		source: code;
 		requestor: requestor;
-		failBlock: (requestor ifNil: nil ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
+		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
 		compile.
 
 	method putSource: code
