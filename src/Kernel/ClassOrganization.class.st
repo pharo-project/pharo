@@ -198,8 +198,6 @@ ClassOrganization >> initializeClass: aClass [
 { #category : #accessing }
 ClassOrganization >> methodSelectorsInProtocol: aName [
 
-	aName = AllProtocol defaultName ifTrue: [ ^ self allMethodSelectors ].
-
 	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
 ]
 
