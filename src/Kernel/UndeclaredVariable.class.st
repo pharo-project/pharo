@@ -86,6 +86,7 @@ UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 	^ UndeclaredVariableWrite new
 		messageText: 'Attempt to write to undeclared variable ' , self name;
 		variable: self;
+		value: anObject;
 		signal
 ]
 
