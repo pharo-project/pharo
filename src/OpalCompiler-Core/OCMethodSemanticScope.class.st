@@ -22,12 +22,6 @@ OCMethodSemanticScope class >> targetingClass: aClass [
 		targetClass: aClass
 ]
 
-{ #category : #'code compilation' }
-OCMethodSemanticScope >> parseASTBy: aParser [
-
-	^aParser parseMethod
-]
-
 { #category : #accessing }
 OCMethodSemanticScope >> targetClass [
 

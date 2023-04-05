@@ -68,11 +68,6 @@ OCSemanticScope >> lookupVar: name declare: aBoolean [
 	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
 ]
 
-{ #category : #'code compilation' }
-OCSemanticScope >> parseASTBy: aParser [
-	self subclassResponsibility
-]
-
 { #category : #printing }
 OCSemanticScope >> scopeLevel [
 	^0

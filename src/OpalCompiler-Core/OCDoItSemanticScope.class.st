@@ -31,12 +31,6 @@ OCDoItSemanticScope >> isDoItScope [
 	^true
 ]
 
-{ #category : #parsing }
-OCDoItSemanticScope >> parseASTBy: aParser [
-
-	^aParser parseDoIt
-]
-
 { #category : #accessing }
 OCDoItSemanticScope >> receiver [
 	^ self subclassResponsibility
