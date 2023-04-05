@@ -44,13 +44,6 @@ Symbol class >> allSymbolTablesDo: aBlock [
 	SymbolTable do: aBlock
 ]
 
-{ #category : #'symbol table' }
-Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
-
-	NewSymbols do: aBlock after: aSymbol.
-	SymbolTable do: aBlock after: aSymbol
-]
-
 { #category : #accessing }
 Symbol class >> allSymbols [
 	"Answer all interned symbols"
@@ -229,25 +222,21 @@ Symbol class >> selectorTable [
 ]
 
 { #category : #'selector table' }
-Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: skipSym [
-	"Same as thatStartsCaseSensitive:skipping: but on the SelectorTable only"
+Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters [
+
 	| size firstMatch key |
-
 	size := leadingCharacters size.
-	size = 0 ifTrue: [^skipSym ifNil: [#''] ifNotNil: [nil]].
+	size = 0 ifTrue: [ ^ #'' ].
 	firstMatch := leadingCharacters at: 1.
-	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
-	self selectorTable do: [:each |
-			(each notNil and: [each size >= size]) ifTrue:
-				[
-					((each at: 1) == firstMatch and:
-						[key == nil or:
-							[(each findString: key startingAt: 2 caseSensitive: true) = 2]])
-								ifTrue: [^each]
-				]
-		] after: skipSym.
+	size > 1 ifTrue: [ key := leadingCharacters copyFrom: 2 to: size ].
+	self selectorTable do: [ :each |
+		(each notNil and: [ each size >= size ]) ifTrue: [
+			((each at: 1) == firstMatch and: [
+				 key == nil or: [
+					 (each findString: key startingAt: 2 caseSensitive: true) = 2 ] ])
+				ifTrue: [ ^ each ] ] ].
 
-	^nil
+	^ nil
 ]
 
 { #category : #'system startup' }
@@ -260,62 +249,6 @@ Symbol class >> shutDown: aboutToQuit [
 { #category : #accessing }
 Symbol class >> streamSpecies [
 	^ String
-]
-
-{ #category : #'symbol table' }
-Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
-	"Answer a selector symbol that starts with leadingCharacters.
-	Symbols beginning with a lower-case letter handled directly here.
-	Ignore case after first char.
-	If skipSym is not nil, it is a previous answer; start searching after it.
-	If no symbols are found, answer nil.
-	Used by Alt-q (Command-q) routines"
-
-	| size firstMatch key |
-
-	size := leadingCharacters size.
-	size = 0 ifTrue: [^skipSym ifNil: [#''] ifNotNil: [nil]].
-
-	firstMatch := leadingCharacters at: 1.
-	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
-
-	self allSymbolTablesDo: [:each |
-			each size >= size ifTrue:
-				[
-					((each at: 1) == firstMatch and:
-						[key == nil or:
-							[(each findString: key startingAt: 2 caseSensitive: false) = 2]])
-								ifTrue: [^each]
-				]
-		] after: skipSym.
-
-	^nil
-
-"Symbol thatStarts: 'sf' skipping: nil"
-"Symbol thatStarts: 'sf' skipping: #sfpGetFile:with:with:with:with:with:with:with:with:"
-"Symbol thatStarts: 'candidate' skipping: nil"
-]
-
-{ #category : #'symbol table' }
-Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
-	"Same as thatStarts:skipping: but caseSensitive"
-	| size firstMatch key |
-
-	size := leadingCharacters size.
-	size = 0 ifTrue: [^skipSym ifNil: [#''] ifNotNil: [nil]].
-	firstMatch := leadingCharacters at: 1.
-	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
-	self allSymbolTablesDo: [:each |
-			each size >= size ifTrue:
-				[
-					((each at: 1) == firstMatch and:
-						[key == nil or:
-							[(each findString: key startingAt: 2 caseSensitive: true) = 2]])
-								ifTrue: [^each]
-				]
-		] after: skipSym.
-
-	^nil
 ]
 
 { #category : #'instance creation' }
