@@ -6,8 +6,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'organizedClass',
-		'protocols',
-		'allProtocol'
+		'protocols'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -51,18 +50,6 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> allProtocol [
-
-	^ allProtocol
-]
-
-{ #category : #accessing }
-ClassOrganization >> allProtocols [
-
-	^ { self allProtocol } , self protocols
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> classComment [
 
@@ -78,15 +65,12 @@ ClassOrganization >> classComment: aString [
 { #category : #'protocol - adding' }
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
-	| name protocol |
-	name := aProtocolName.
-	name = self allProtocol name ifTrue: [ name := Protocol unclassified ].
-
+	| protocol |
 	"maybe here we should check if this method already belong to another protocol"
 	self protocols
 		select: [ :p | p includesSelector: aSymbol ]
 		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: name ifAbsent: [ self addSilentlyProtocolNamed: name ].
+	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addSilentlyProtocolNamed: aProtocolName ].
 
 	protocol addMethodSelector: aSymbol
 ]
@@ -187,7 +171,7 @@ ClassOrganization >> hasOrganizedClass [
 { #category : #testing }
 ClassOrganization >> hasProtocolNamed: aString [
 
-	^ self allProtocols anySatisfy: [ :each | each name = aString ]
+	^ self protocols anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #testing }
@@ -300,7 +284,7 @@ ClassOrganization >> protocolNamed: aString [
 { #category : #accessing }
 ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 
-	^ self allProtocols
+	^ self protocols
 		  detect: [ :e | e name = aString ]
 		  ifNone: aBlock
 ]
@@ -391,8 +375,7 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 { #category : #initialization }
 ClassOrganization >> reset [
 
-	protocols := IdentitySet new.
-	allProtocol := AllProtocol classOrganization: self
+	protocols := IdentitySet new
 ]
 
 { #category : #'backward compatibility' }
