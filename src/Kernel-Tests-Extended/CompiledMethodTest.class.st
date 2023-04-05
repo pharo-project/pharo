@@ -1003,6 +1003,38 @@ CompiledMethodTest >> testWritesSlot [
 	self assert: ((Point>>#setX:setY:) writesSlot: (Point slotNamed: #x))
 ]
 
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testWritesUndeclared [
+	| method |
+	
+	"x is an ivar"
+	method := self class compiler compile: 'x ^ x := 0'.
+	self deny: method usesUndeclareds.
+	self assert: (self executeMethod: method) equals: 0.
+
+	"undeclaredxyz is not declared"
+	method := self class compiler permitFaulty: true; compile: 'z ^ undeclaredxyz := 1'.
+	self assert: method usesUndeclareds.
+	self should: [ self executeMethod: method ] raise: UndeclaredVariableWrite.
+	self
+		assert:
+			([ self executeMethod: method ]
+				on: UndeclaredVariableWrite
+				do: [:e | e resume])
+		equals: 1.
+
+	"check same behavior in blocks"
+	method := self class compiler permitFaulty: true; compile: 'msg ^ self in: [ :anObject | undeclaredxyz := 2 ]'.
+	self assert: method usesUndeclareds.
+	self should: [ self executeMethod: method ] raise: UndeclaredVariableWrite.
+	self
+		assert:
+			([ self executeMethod: method ]
+				on: UndeclaredVariableWrite
+				do: [:e | e resume])
+		equals: 2
+]
+
 { #category : #examples }
 CompiledMethodTest >> writeX [
 
