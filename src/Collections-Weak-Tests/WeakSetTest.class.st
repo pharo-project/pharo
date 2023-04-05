@@ -51,9 +51,6 @@ WeakSetTest >> testAddIncludesSizeReclaim [
 	self assert: (ws includes: o2).
 	self assert: (ws includes: o3).
 
-	"inclusion test does use equality, not identity"
-	self assert: (ws includes: o3 copy) description: 'WeakSet are not WeakIdentitySet'.
-
 	"only one copy is added"
 	ws add: o3 copy.
 	self assert: ws size equals: 2.
@@ -64,9 +61,7 @@ WeakSetTest >> testAddIncludesSizeReclaim [
 	self deny: (ws includes: 1 / 2).
 	self deny: (ws includes: '123' copy).
 
-	"fast #size is not updated automatically by dead object reclamation
-	But there is a slowSize trying to tell the truth"
-	self assert: ws slowSize equals: 0
+	self assert: ws size equals: 0
 ]
 
 { #category : #tests }
@@ -75,16 +70,6 @@ WeakSetTest >> testAddNil [
 	ws := self classToBeTested new.
 	ws add: nil.
 	self assert: (ws includes: nil)
-]
-
-{ #category : #tests }
-WeakSetTest >> testAnyOneWhenAllContentsWasGarbaged [
-	| ws o |
-	o := Object new.
-	ws := self classToBeTested with: o.
-	o := nil.
-	Smalltalk garbageCollect.
-	self assert: ws anyOne equals: nil
 ]
 
 { #category : #tests }
@@ -103,6 +88,16 @@ WeakSetTest >> testAsArray [
 	Smalltalk garbageCollect.
 
 	self assert: set asArray equals: #()
+]
+
+{ #category : #tests }
+WeakSetTest >> testCollectAllContentMakesSetEmpty [
+	| ws o |
+	o := Object new.
+	ws := self classToBeTested with: o.
+	o := nil.
+	Smalltalk garbageCollect.
+	self assert: ws isEmpty
 ]
 
 { #category : #tests }
@@ -153,19 +148,6 @@ WeakSetTest >> testCollisions [
 	ws add: 1/on second.
 	ws add: 1/o5 second.
 	remember do: [:m | self assert: (ws includes: m)]
-]
-
-{ #category : #tests }
-WeakSetTest >> testDoAfter [
-	| input weakSet array |
-	input := (1 to: 11) collect: [ :each | each asString asSymbol ].	"Some symbols might be garbage collected without this variable"
-	weakSet := self classToBeTested withAll: input.
-	array := weakSet asArray.	"Assume that the elements will have the same order as the internal array of the weakset"
-	0 to: array size do: [ :index |
-		| element result |
-		element := array at: index ifAbsent: nil.
-		result := Array new: weakSet size - index streamContents: [ :stream | weakSet do: [ :each | stream nextPut: each ] after: element ].
-		self assert: result sort equals: (array allButFirst: index) sort ]
 ]
 
 { #category : #tests }
@@ -263,4 +245,20 @@ WeakSetTest >> testIncludesNil [
 	ws add: 1/3.
 	Smalltalk garbageCollect.
 	self deny: (ws includes: nil)
+]
+
+{ #category : #tests }
+WeakSetTest >> testIncludesOfDuplicate [
+	| ws o2 o3 |
+	o2 := 1 / 2.
+	o3 := '123' copy.
+	ws := self classToBeTested new.
+	ws add: o2.
+	ws add: o3.
+	self assert: ws size equals: 2.
+	self assert: (ws includes: o2).
+	self assert: (ws includes: o3).
+
+	"inclusion test does use equality, not identity"
+	self assert: (ws includes: o3 copy)
 ]
