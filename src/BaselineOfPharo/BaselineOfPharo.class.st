@@ -91,7 +91,6 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
 		
-		spec package: 'Deprecated11'.
 		spec package: 'Deprecated12'.
 		
 		spec package: 'FluidClassBuilder'.
@@ -101,6 +100,14 @@ BaselineOfPharo >> baseline: spec [
 
 { #category : #baseline }
 BaselineOfPharo >> postload: loader package: packageSpec [
-
 	"Here we will do something for the release announce"
+
+	"If we added a github token for the build, we remove it."
+	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
+		| credential |
+		credential := (Smalltalk classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
+
+		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
+
+		'Removing credential.' traceCr ]
 ]
