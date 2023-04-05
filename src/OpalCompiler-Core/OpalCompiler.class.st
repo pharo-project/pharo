@@ -196,11 +196,6 @@ OpalCompiler >> addPlugin: aClass [
 	compilationContext addASTTransformationPlugin: aClass
 ]
 
-{ #category : #private }
-OpalCompiler >> allowParseErrorsNonInteractive [
-	^self compilationContext optionParseErrorsNonInteractiveOnly and: [ self isInteractive not ]
-]
-
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
