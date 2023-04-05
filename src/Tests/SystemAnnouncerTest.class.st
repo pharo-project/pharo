@@ -28,18 +28,17 @@ SystemAnnouncerTest >> tearDown [
 
 { #category : #tests }
 SystemAnnouncerTest >> testProtocolAdded [
-	| pass class classReorganized protocolAdded |
 
+	| pass class classReorganized protocolAdded |
 	pass := false.
 
-	SystemAnnouncer uniqueInstance
-		when: ProtocolAdded do: [ :ann |
-			pass := true.
-			classReorganized := ann classReorganized.
-			protocolAdded := ann protocol ].
+	SystemAnnouncer uniqueInstance when: ProtocolAdded do: [ :ann |
+		pass := true.
+		classReorganized := ann classReorganized.
+		protocolAdded := ann protocol ].
 
 	class := factory newClass.
-	class organization addCategory: 'shiny-new-category'.
+	class organization addProtocolNamed: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classReorganized equals: class.
@@ -48,20 +47,19 @@ SystemAnnouncerTest >> testProtocolAdded [
 
 { #category : #tests }
 SystemAnnouncerTest >> testProtocolRemoved [
-	| pass class classRemoved protocolRemoved |
 
+	| pass class classRemoved protocolRemoved |
 	pass := false.
 
-	SystemAnnouncer uniqueInstance
-		when: ProtocolRemoved do: [ :ann |
-			pass := true.
-			classRemoved := ann classReorganized.
-			protocolRemoved := ann protocol ].
+	SystemAnnouncer uniqueInstance when: ProtocolRemoved do: [ :ann |
+		pass := true.
+		classRemoved := ann classReorganized.
+		protocolRemoved := ann protocol ].
 
 	class := factory newClass.
-	class organization addCategory: 'shiny-new-category'.
+	class organization addProtocolNamed: 'shiny-new-category'.
 
-	class organization removeCategory: 'shiny-new-category'.
+	class organization removeProtocolNamed: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classRemoved equals: class.

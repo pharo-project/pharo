@@ -121,12 +121,13 @@ MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 
 { #category : #testing }
 MCMethodDefinitionTest >> testRevertOldMethod [
+
 	| definition changeRecord |
 	Object compile: 'yourself ^ self' classified: '*MonticelloMocks'.
-	definition := (Object>>#yourself) asMCMethodDefinition.
+	definition := (Object >> #yourself) asMCMethodDefinition.
 	changeRecord := definition overridenMethodOrNil.
 	self assert: changeRecord notNil.
-	self assert: changeRecord category equals: 'accessing'.
+	self assert: changeRecord protocol equals: 'accessing'.
 	changeRecord fileIn
 ]
 
