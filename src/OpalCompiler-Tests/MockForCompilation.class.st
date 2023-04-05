@@ -1,3 +1,6 @@
+"
+A simple mock with an ivar used by tests to check compilation, instance variable shadowing and other
+"
 Class {
 	#name : #MockForCompilation,
 	#superclass : #Object,
