@@ -593,6 +593,16 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies
 ]
 
+{ #category : #tests }
+SystemDependenciesTest >> testFilesShouldNotDependOnRandom [
+	"In the past Files was depending on Random-Core only to print a random number in a file name.
+	Now, there is no dependency between Files and Random-Core and if possible we would like to keep it this way in order to extract Random-Core from the KernelGroup of the Bootstrap (and maybe of the bootstrap in itself generally)"
+
+	| dependencies |
+	dependencies := self externalDependendiesOf: #( 'Files' ).
+	self deny: (dependencies includes: 'Random-Core')
+]
+
 { #category : #accessing }
 SystemDependenciesTest >> tonelCorePackageNames [
 
