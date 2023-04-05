@@ -4,10 +4,14 @@ Class {
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
 
-{ #category : #signalling }
-OCUndeclaredVariableNotice >> signalError [
+{ #category : #testing }
+OCUndeclaredVariableNotice >> isUndeclaredNotice [
 
-	OCUndeclaredVariableWarning new
-		notice: self;
-		signal
+	^ true
+]
+
+{ #category : #correcting }
+OCUndeclaredVariableNotice >> reparator [
+
+	^ OCCodeReparator new node: self node
 ]

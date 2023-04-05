@@ -231,53 +231,66 @@ OpalCompiler >> changeStamp: aString [
 ]
 
 { #category : #private }
-OpalCompiler >> checkNotice: aNotice quitBlock: quitBlock [
+OpalCompiler >> checkNotice: aNotice [
 	"This method handles all the logic of error handling.
 	
 	Error handing in the compiler is only performed at one place, after the parsing/semantic analysis/other parse plugins.
 	Each RBNotice in the AST is then checked with this method.
 
-	There is only two outcomes:
-	* If this method returns, then the work of the compiler can continue.
+	There is only three outcomes:
+	* If this method returns true (OK), then the work of the compiler can continue.
 	  Next notice is then processed.
 	  Or, if this that was the last notice, compilation and cie can be performed.
-	* If quitBlock is evaluated, then the compilation is cancelled.
-	  The value argument used with quitBlock will be the result given to the user.
-	
+	* If this method returns false (not OK), then the compilation is cancelled.
+	  The failBlock will be invoked.
+	* If this method returns nil (stop checking), then skip the rest of the notice checks.
+	  This one is used in case of reparation, where a new (checked) AST is produced.
+
 	Errors that may happen later in the backend are consireded internal errors and should not occur (bugs).
-	
+
 	This method is a little long because it handles the requestor (quirks) mode.
 	"
 
-	| requestor fBlock |
-	aNotice isWarning ifTrue: [ ^ self ].
+	aNotice isWarning ifTrue: [ ^ true ].
+	(aNotice isUndeclaredNotice and: [ self permitUndeclared ]) ifTrue: [
+		OCUndeclaredVariableWarning new
+			notice: aNotice;
+			signal.
+		^ true ].
 
-	requestor := self compilationContext requestor.
-	fBlock := self compilationContext failBlock.
-
-	requestor ifNotNil: [ "A requestor is available. We are in quirks mode and are expected to do UI things."
-		aNotice class = OCUndeclaredVariableNotice ifTrue: [
-			self isInteractive ifFalse: [ ^ aNotice signalError ].
-
-			"The menu is in fact broken on 'noPattern' mode (expression/script/doit) because some reparation assume it's a method body, so just continue as an error"
-			self compilationContext noPattern ifFalse: [
+	self compilationContext requestor ifNotNil: [ :requestor |
+		"A requestor is available. We are in quirks mode and are expected to do UI things."
+		"Reparation menu in quirks mode:
+		* require a requestor (because quirks mode, and also some reparations expect a requestor)
+		* require interactive mode (because GUI)
+		* require method definition becase some reparation assume it's a method body"
+		(self isInteractive and: [self compilationContext noPattern not]) ifTrue: [
+			aNotice reparator ifNotNil: [ :reparator |
 				| res |
-				"I do not like the API that much. Reparator can have 3 outcomes"
-				res := OCCodeReparator new
-					       node: aNotice node;
-					       requestor: requestor;
-					       openMenu.
-				res ifNil: [ ^ self "reparation unneded, let AST as is" ].
-				res ifFalse: [ ^ quitBlock value: fBlock value "operation cancelled, fail" ].
-				^ self parse: requestor text "reparation done, reparse" ] ].
+				res := reparator
+					requestor: requestor;
+					openMenu.
+				res ifNil: [ ^ true "reparation unneded, let AST as is" ].
+				res ifFalse: [ ^ false "operation cancelled, fail" ].
+				self parse: requestor text. "some reparation was done, reparse"
+				^ nil ] ].
 
+		"Quirks mode: otherwise, push the error message to the requestor"
 		requestor
 			notify: aNotice messageText , ' ->'
 			at: aNotice position
 			in: aNotice node source.
-		^ quitBlock value: fBlock value ].
+		
+		"Quirks mode: Then leave"
+		^ false ].
 
-	aNotice signalError
+	"If a failBlock is provided in non-requestor mode,
+	we honor it and do not signal exceptions"
+	self compilationContext failBlock ifNotNil: [ ^ false ].
+
+	aNotice signalError.
+
+	^ true "Error was resumed, so we consider it's OK to continue"
 ]
 
 { #category : #accessing }
@@ -493,6 +506,8 @@ OpalCompiler >> parse [
 	| parser |
 	"Policy: simple parsing is faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: true ].
+	"Compatible policy: undeclared if failBlock present"
+	self permitUndeclared ifNil: [ self permitUndeclared: self compilationContext failBlock isNil ].
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
@@ -504,9 +519,13 @@ OpalCompiler >> parse [
 
 	self permitFaulty ifFalse: [
 		ast allNotices do: [ :n |
-			self checkNotice: n quitBlock: [ :v |
+			| check |
+			check := self checkNotice: n.
+			check ifNil: [ ^ ast ].
+			check ifFalse: [
 				ast := nil.
-				^ v ] ] ].
+				^ self compilationContext failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
+				] ] ].
 
 	^ ast
 ]
@@ -546,6 +565,18 @@ OpalCompiler >> permitFaulty [
 OpalCompiler >> permitFaulty: aBoolean [
 
 	self compilationContext permitFaulty: aBoolean
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared [
+
+	^ self compilationContext permitUndeclared
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared: aBoolean [
+
+	self compilationContext permitUndeclared: aBoolean
 ]
 
 { #category : #accessing }

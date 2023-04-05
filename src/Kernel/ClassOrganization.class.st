@@ -140,7 +140,7 @@ ClassOrganization >> ensureProtocol: aProtocol [
 	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error.
 	If I receive nil, I return the unclassified protocol"
 
-	aProtocol ifNil: [ self ensureProtocol: Protocol unclassified ].
+	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
 
 	aProtocol isString ifFalse: [
 		(self protocols includes: aProtocol)
