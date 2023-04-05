@@ -252,6 +252,11 @@ OpalCompiler >> checkNotice: aNotice [
 	"
 
 	aNotice isWarning ifTrue: [ ^ true ].
+	(aNotice isUndeclaredNotice and: [ self permitUndeclared ]) ifTrue: [
+		OCUndeclaredVariableWarning new
+			notice: aNotice;
+			signal.
+		^ true ].
 
 	self compilationContext requestor ifNotNil: [ :requestor |
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
@@ -501,6 +506,8 @@ OpalCompiler >> parse [
 	| parser |
 	"Policy: simple parsing is faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: true ].
+	"Compatible policy: undeclared if failBlock present"
+	self permitUndeclared ifNil: [ self permitUndeclared: self compilationContext failBlock isNil ].
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
@@ -558,6 +565,18 @@ OpalCompiler >> permitFaulty [
 OpalCompiler >> permitFaulty: aBoolean [
 
 	self compilationContext permitFaulty: aBoolean
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared [
+
+	^ self compilationContext permitUndeclared
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared: aBoolean [
+
+	self compilationContext permitUndeclared: aBoolean
 ]
 
 { #category : #accessing }

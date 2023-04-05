@@ -35,7 +35,8 @@ Class {
 		'bindings',
 		'compiledMethodClass',
 		'semanticScope',
-		'permitFaulty'
+		'permitFaulty',
+		'permitUndeclared'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -666,6 +667,18 @@ CompilationContext >> permitFaulty [
 CompilationContext >> permitFaulty: anObject [
 
 	permitFaulty := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> permitUndeclared [
+
+	^ permitUndeclared
+]
+
+{ #category : #accessing }
+CompilationContext >> permitUndeclared: anObject [
+
+	permitUndeclared := anObject
 ]
 
 { #category : #accessing }
