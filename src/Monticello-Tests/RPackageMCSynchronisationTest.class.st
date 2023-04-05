@@ -160,16 +160,30 @@ RPackageMCSynchronisationTest >> emptyOrganizer [
 
 { #category : #'announcer handling' }
 RPackageMCSynchronisationTest >> initializeAnnouncers [
-	super initializeAnnouncers.
-	
+
 	oldAnnouncer := MCWorkingCopy announcer.
-	MCWorkingCopy announcer: announcerForTest.
+	MCWorkingCopy announcer: SystemAnnouncer uniqueInstance
 ]
 
 { #category : #'announcer handling' }
 RPackageMCSynchronisationTest >> restoreAnnouncers [
-	super restoreAnnouncers.
-	MCWorkingCopy announcer: oldAnnouncer.
+
+	MCWorkingCopy announcer: oldAnnouncer
+]
+
+{ #category : #running }
+RPackageMCSynchronisationTest >> runCase [
+
+	[
+	self initializeAnnouncers.
+
+	^ self packageClass withOrganizer: self setupOrganizer do: [
+		  self resources do: [ :each | each availableFor: self ].
+		  self setUp.
+		  self performTest ] ] ensure: [
+		self tearDown.
+		self restoreAnnouncers.
+		self cleanUpInstanceVariables ]
 ]
 
 { #category : #running }
