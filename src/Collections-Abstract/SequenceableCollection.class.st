@@ -2255,7 +2255,7 @@ SequenceableCollection >> swap: oneIndex with: anotherIndex [
 	self at: anotherIndex put: element
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SequenceableCollection >> takeFirst: anInteger [
 
 	^ self first: (self size min: anInteger)
