@@ -499,6 +499,11 @@ OpalCompiler >> install: aSource [
 ]
 
 { #category : #accessing }
+OpalCompiler >> isScripting: aBoolean [
+	self compilationContext noPattern: aBoolean
+]
+
+{ #category : #accessing }
 OpalCompiler >> logged [
 	^ logged
 ]
@@ -563,6 +568,13 @@ OpalCompiler >> parse: textOrString [
 { #category : #'public access' }
 OpalCompiler >> parseLiterals: aString [
 	^self parserClass parseLiterals: aString
+]
+
+{ #category : #'public access' }
+OpalCompiler >> parseScript: aString [
+
+	self isScripting: true.
+	^ self parse: aString
 ]
 
 { #category : #'public access' }
