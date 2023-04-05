@@ -93,11 +93,14 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 		          noPattern: snippet isMethod not;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
-			| n |
+			          | n |
 			          self assert: requestor notifyList size equals: 1.
-			n := requestor notifyList first.
-						self assert: (snippet hasNotice: (n first allButLast: 3) at: n second).
-			          self assert: snippet isFaulty.
+			          n := requestor notifyList first.
+			          self assert:
+					          (snippet
+						           hasNotice: (n first allButLast: 3)
+						           at: n second).
+			          self assert: snippet isFaulty | snippet hasUndeclared.
 			          ^ self ];
 		          compile: snippet source.
 
