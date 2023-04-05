@@ -78,12 +78,13 @@ SystemOrganizer >> classify: behaviorName under: categoryName [
 
 	categoryMap
 		at: categoryName
-		ifPresent: [ :classes | (classes includes: behaviorName) ifTrue: [ ^ self ] ]
+		ifPresent: [ :classes |
+		(classes includes: behaviorName) ifTrue: [ ^ self ] ]
 		ifAbsent: [ self addCategory: categoryName ].
 
 	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
 		oldCategory = categoryName ifTrue: [ ^ self ].
-		self removeElement: behaviorName ].
+		self removeBehavior: behaviorName ].
 
 	(categoryMap at: categoryName) add: behaviorName
 ]
