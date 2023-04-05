@@ -67,6 +67,7 @@ Behavior >> compilerClass [
 
 { #category : #'*OpalCompiler-Core' }
 Behavior >> evaluate: aString [
+	self deprecated: 'You should not even use it as `self` does not impact the result'.
 	^self compiler evaluate: aString
 ]
 
