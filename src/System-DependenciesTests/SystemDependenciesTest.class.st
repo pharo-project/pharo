@@ -185,6 +185,16 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 ]
 
 { #category : #tests }
+SystemDependenciesTest >> testCollectionsShouldNotDependOnRandom [
+	"In the past Random-Core was depending on Collection-Abstract and Collections-Sequenceable but both those packages also depended on Random-Core.
+	This dependency has been removed and this test is here to ensure it does not get added back in the future."
+
+	| dependencies |
+	dependencies := self externalDependendiesOf: #( 'Collections-Abstract' 'Collections-Sequenceable' ).
+	self deny: (dependencies includes: 'Random-Core')
+]
+
+{ #category : #tests }
 SystemDependenciesTest >> testExternalBasicToolsDependencies [
 
 	| dependencies |
