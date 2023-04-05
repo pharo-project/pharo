@@ -17,7 +17,7 @@ Class {
 SystemOrganizer class >> cleanUp: agressive [
 	"Remove empty categories when cleaning aggressively"
 
-	agressive ifTrue: [ SystemOrganization removeEmptyPackages ]
+	agressive ifTrue: [ Smalltalk organization removeEmptyPackages ]
 ]
 
 { #category : #'instance creation' }
