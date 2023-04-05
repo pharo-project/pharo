@@ -507,10 +507,10 @@ TextConstants class >> TextSharedInformation [
 ]"
 
 { #category : #'backward compatibility' }
-TextConstants class >> at: aSymbol [
+"TextConstants class >> at: aSymbol [
 
 	^ self classPool at: aSymbol ifAbsent: [self TextSharedInformation at: aSymbol]
-]
+]"
 
 { #category : #'class initialization' }
 TextConstants class >> initialize [
