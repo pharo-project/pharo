@@ -50,18 +50,6 @@ SystemOrganizer >> categoriesMatching: matchString [
 	^ self categories select: [ :c | matchString match: c ]
 ]
 
-{ #category : #accessing }
-SystemOrganizer >> categoryMap [
-
-	^ categoryMap
-]
-
-{ #category : #accessing }
-SystemOrganizer >> categoryMap: anObject [
-
-	categoryMap := anObject
-]
-
 { #category : #queries }
 SystemOrganizer >> categoryOfBehavior: behavior [
 	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
@@ -228,19 +216,6 @@ SystemOrganizer >> renameCategory: oldCatString toBe: newCatString [
 		ifAbsent: [ "old name not found, so no action" ^ self ].
 
 	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString
-]
-
-{ #category : #printing }
-SystemOrganizer >> storeOn: aStream [
-	"This is a hack to not store the environment that would end up in an infinit loop.
-	SystemOrganizer should be removed in the future so it should not be too much of a problem to have this hack."
-
-	aStream
-		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new categoryMap: ';
-		store: categoryMap;
-		nextPutAll: '; yourself)'
 ]
 
 { #category : #queries }
