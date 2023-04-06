@@ -266,7 +266,7 @@ ReSmalllintTest >> testClassNotReferenced [
 
 { #category : #tests }
 ReSmalllintTest >> testCodeCruftLeftInMethods [
-	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned debbuggingMessageSent)
+	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned #debuggingMessageSent)
 ]
 
 { #category : #tests }
