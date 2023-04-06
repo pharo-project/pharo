@@ -88,11 +88,6 @@ OCSemanticScope >> parseASTBy: aParser [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
-OCSemanticScope >> scopeLevel [
-	^0
-]
-
 { #category : #accessing }
 OCSemanticScope >> targetClass [
 	self subclassResponsibility

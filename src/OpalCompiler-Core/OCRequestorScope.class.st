@@ -68,8 +68,3 @@ OCRequestorScope >> requestor [
 OCRequestorScope >> requestor: anObject [
 	requestor := anObject
 ]
-
-{ #category : #accessing }
-OCRequestorScope >> scopeLevel [
-	^ 0
-]
