@@ -14,11 +14,36 @@ OCCodeReparatorTest >> testDeclareClassVar [
 	goo := MockForCompilation classVariableNamed: #goo ifAbsent: [ nil ].
 	goo ifNotNil: [ MockForCompilation removeClassVariable: goo ].
 
-	method := [ OpalCompiler new requestor: requestor; class: MockForCompilation ; compile: requestor text ]
+	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator declareClassVar.
+			e notice reparator declareClassVar.
 			e retry ].
+
+	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
+	self assert: method isCompiledMethod.
+	goo := MockForCompilation classVariableNamed: #goo.
+	self assert: method literals first equals: goo.
+
+	MockForCompilation removeClassVariable: goo
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testDeclareClassVarBlock [
+
+	| compiler requestor method goo |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle ^ goo'.
+
+	goo := MockForCompilation classVariableNamed: #goo ifAbsent: [ nil ].
+	goo ifNotNil: [ MockForCompilation removeClassVariable: goo ].
+
+	method := (compiler := OpalCompiler new)
+		class: MockForCompilation;
+		failBlock: [ :notice |
+			notice reparator declareClassVar.
+			compiler compile ];
+		compile: requestor text.
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
 	self assert: method isCompiledMethod.
@@ -37,11 +62,35 @@ OCCodeReparatorTest >> testDeclareGlobal [
 
 	Smalltalk globals removeKey: #goo ifAbsent: [].
 
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator declareGlobal.
+			e notice reparator declareGlobal.
 			e retry ].
+
+	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
+	self assert: method isCompiledMethod.
+	self assert: method literals first equals: (Smalltalk globals associationAt: #goo).
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle ^ goo'.
+
+	Smalltalk globals removeKey: #goo ifAbsent: []
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testDeclareGlobalBlock [
+
+	| compiler requestor method |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle ^ goo'.
+
+	Smalltalk globals removeKey: #goo ifAbsent: [].
+
+	method := (compiler := OpalCompiler new)
+		class: MockForCompilation;
+		failBlock: [ :notice |
+			notice reparator declareGlobal.
+			compiler compile ];
+		compile: requestor text.
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
 	self assert: method isCompiledMethod.
@@ -63,11 +112,37 @@ OCCodeReparatorTest >> testDeclareInstVar [
 
 	self deny: (MockForCompilation hasInstVarNamed: #goo).
 
-	method := [ OpalCompiler new requestor: requestor; class: MockForCompilation ; compile: requestor text ]
+	method := [ OpalCompiler new class: MockForCompilation ; compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator declareInstVar: #goo.
+			e notice reparator declareInstVar: #goo.
 			e retry ].
+
+	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
+	self assert: method isCompiledMethod.
+	self assert: (MockForCompilation hasInstVarNamed: #goo).
+
+	MockForCompilation removeInstVarNamed: #goo
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testDeclareInstVarBlock [
+
+	| compiler requestor method |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle ^ goo'.
+
+	(MockForCompilation hasInstVarNamed: #goo) ifTrue: [
+		MockForCompilation removeInstVarNamed: #goo ].
+
+	self deny: (MockForCompilation hasInstVarNamed: #goo).
+
+	method := (compiler := OpalCompiler new)
+		class: MockForCompilation;
+		failBlock: [ :notice |
+			notice reparator declareInstVar: #goo.
+			compiler compile ];
+		compile: requestor text.
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle ^ goo'.
 	self assert: method isCompiledMethod.
@@ -83,13 +158,34 @@ OCCodeReparatorTest >> testDeclareTempAndPaste [
 	requestor := OCMockRequestor new.
 	requestor text: 'griffle ^ goo'.
 
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator
+			e notice reparator
 				requestor: requestor;
 				declareTempAndPaste: 'goo'.
 			e retry ].
+
+	self assert: requestor text withSeparatorsCompacted equals: 'griffle | goo | ^ goo'.
+	self assert: method isCompiledMethod.
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testDeclareTempAndPasteBlock [
+
+	| compiler requestor method |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle ^ goo'.
+
+	method := (compiler := OpalCompiler new)
+		class: MockForCompilation;
+		failBlock: [ :notice |
+			notice reparator
+				requestor: requestor;
+				declareTempAndPaste: 'goo'.
+			compiler compile: requestor text ];
+		compile: requestor text.
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | goo | ^ goo'.
 	self assert: method isCompiledMethod.
@@ -103,13 +199,29 @@ OCCodeReparatorTest >> testPossibleVariablesFor [
 	requestor := OCMockRequestor new.
 	requestor text: 'griffle | foo | ^ goo'.
 
-	names := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	names := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator
+			e notice reparator
 				requestor: requestor;
 				possibleVariablesFor: #goo.
 			].
+
+	self assert: (names includes: #foo)
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testPossibleVariablesForBlock [
+
+	| compiler requestor names |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle | foo | ^ goo'.
+
+	names := (compiler := OpalCompiler new)
+		class: MockForCompilation;
+		failBlock: [ :notice |
+			notice reparator possibleVariablesFor: #goo ];
+		compile: requestor text.
 
 	self assert: (names includes: #foo)
 ]
@@ -121,13 +233,34 @@ OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 	requestor := OCMockRequestor new.
 	requestor text: 'griffle | foo | ^ goo'.
 
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
-			e reparator
+			e notice reparator
 				requestor: requestor;
 				substituteVariable: 'foo' atInterval: e node sourceInterval.
 			e retry ].
+
+	self assert: requestor text withSeparatorsCompacted equals: 'griffle | foo | ^ foo'.
+	self assert: method isCompiledMethod.
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testSubstituteVariableAtIntervalBlock [
+
+	| compiler requestor method |
+	requestor := OCMockRequestor new.
+	requestor text: 'griffle | foo | ^ goo'.
+
+	method := (compiler := OpalCompiler new)
+		class: MockForCompilation;
+		failBlock: [ :notice |
+			notice reparator
+				requestor: requestor;
+				substituteVariable: 'foo' atInterval: notice node sourceInterval.
+			compiler compile: requestor text ];
+		compile: requestor text.
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | foo | ^ foo'.
 	self assert: method isCompiledMethod.
@@ -142,11 +275,11 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 	requestor text: 'griffle ^ goo'.
 
 	flag := false.
-	method := [ OpalCompiler new requestor: requestor; compile: requestor text ]
+	method := [ OpalCompiler new compile: requestor text ]
 		on: OCUndeclaredVariableWarning
 		do: [ :e |
 			flag := true.
-			e pass "do nothing" ].
+			e resume "continue" ].
 
 	self assert: flag.
 	self assert: method isCompiledMethod.

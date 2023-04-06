@@ -101,9 +101,8 @@ FLFullBasicSerializationTest >> testCreateClassWithChangedSuperclassFormat [
 FLFullBasicSerializationTest >> testMethodDictionaries [
 	"Tests correct serialization of all the method dictionaries in the System package."
 
-	(SystemOrganization categoriesMatching: 'System*') do: [ :category |
-		(SystemOrganization classesInCategory: category) do: [ :class |
-			self resultOfSerializeAndMaterializeMethodDictionary: class methodDictionary ] ]
+	(Smalltalk organization categoriesMatching: 'System*') do: [ :category |
+		(Smalltalk organization classesInCategory: category) do: [ :class | self resultOfSerializeAndMaterializeMethodDictionary: class methodDictionary ] ]
 ]
 
 { #category : #tests }

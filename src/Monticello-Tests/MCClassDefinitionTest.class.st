@@ -21,7 +21,7 @@ MCClassDefinitionTest class >> restoreClassAComment [
 	
 	self environment
 		at: #MCMockClassA
-		ifPresent: [ :a | a classComment: self classAComment stamp: self classACommentStamp ]
+		ifPresent: [ :a | a comment: self classAComment stamp: self classACommentStamp ]
 ]
 
 { #category : #private }

@@ -41,14 +41,12 @@ MCSnapshotBrowserTest >> assertAListIncludes: anArrayOfStrings [
 
 { #category : #asserting }
 MCSnapshotBrowserTest >> assertAListMatches: strings [
+
 	| lists |
-	lists := self listMorphs collect: [:each | each getList].
+	lists := self listMorphs collect: [ :each | each getList ].
 	lists
-		detect: [ :list|
-			(list size = strings size) and: [list includesAll: strings]]
-		ifNone: [ 
-			self fail: 'Could not find all "', strings asArray asString, '" ', 
-						'in any of "', (lists collect: #asArray) asArray asString, '"'  ].
+		detect: [ :list | list size = strings size and: [ list includesAll: strings ] ]
+		ifNone: [ self fail: 'Could not find all "' , strings asArray asString , '" ' , 'in any of "' , (lists collect: #asArray) asArray asString , '"' ]
 ]
 
 { #category : #asserting }
@@ -83,7 +81,8 @@ MCSnapshotBrowserTest >> classABooleanMethods [
 
 { #category : #private }
 MCSnapshotBrowserTest >> classAClassProtocols [
-	^ self protocolsForClass: self mockClassA class.
+
+	^ self protocolsForClass: self mockClassA class
 ]
 
 { #category : #private }
@@ -185,7 +184,7 @@ MCSnapshotBrowserTest >> morphsOfClass: aMorphClass [
 { #category : #private }
 MCSnapshotBrowserTest >> protocolsForClass: aClass [
 
-	^ aClass organization allProtocolsNames
+	^ aClass organization protocolNames
 ]
 
 { #category : #selecting }
@@ -277,7 +276,7 @@ MCSnapshotBrowserTest >> testMethodIsCleared [
 	self clickOnListItem: 'MCMockClassA'.
 	self clickOnListItem: 'boolean'.
 	self clickOnListItem: 'falsehood'.
-	self clickOnListItem: AllProtocol defaultName.
+	self clickOnListItem: 'numeric'.
 	
 	self denyAListHasSelection: 'falsehood'.
 ]

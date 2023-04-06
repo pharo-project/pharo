@@ -236,7 +236,6 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
-		failBlock: [self fail. ^ nil ];
 		compile
 ]
 
@@ -281,7 +280,7 @@ OCCompilerTest >> testUndefinedVariableFrontend [
 	self deny: (Undeclared includesKey: #undefinedName123).
 	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: CodeError.
 	self deny: (Undeclared includesKey: #undefinedName123).
-	OpalCompiler new compile: 'foo ^undefinedName123'.
+	OpalCompiler new permitFaulty: true; compile: 'foo ^undefinedName123'.
 	self assert: (Undeclared includesKey: #undefinedName123).
 
 	"Cleanup"

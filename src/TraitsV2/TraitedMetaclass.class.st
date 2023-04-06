@@ -25,14 +25,11 @@ TraitedMetaclass class >> traitedClassTrait [
 ]
 
 { #category : #'accessing - method dictionary' }
-TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
+TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 
 	self localMethodDict at: selector put: compiledMethod.
 
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aCategory.
+	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
 	TraitChange addSelector: selector on: self
 ]

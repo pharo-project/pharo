@@ -1532,7 +1532,7 @@ SmalltalkImage >> removeEmptyMessageCategories [
 
 	self garbageCollect.
 	ClassOrganization allInstancesDo: [ :org | org removeEmptyProtocols ].
-	SystemOrganizer removeEmptyPackages
+	Smalltalk organization removeEmptyPackages
 ]
 
 { #category : #shrinking }

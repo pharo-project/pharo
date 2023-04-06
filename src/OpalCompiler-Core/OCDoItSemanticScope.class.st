@@ -20,11 +20,6 @@ OCDoItSemanticScope class >> isAbstract [
 	^self = OCDoItSemanticScope
 ]
 
-{ #category : #converting }
-OCDoItSemanticScope >> asDoItScope [
-	^self
-]
-
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 
@@ -34,12 +29,6 @@ OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 { #category : #testing }
 OCDoItSemanticScope >> isDoItScope [
 	^true
-]
-
-{ #category : #parsing }
-OCDoItSemanticScope >> parseASTBy: aParser [
-
-	^aParser parseDoIt
 ]
 
 { #category : #accessing }

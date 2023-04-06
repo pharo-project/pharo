@@ -7,7 +7,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 
 	| org |
 	(org := self organization) protocolNames do: [ :protocolName |
-		(org methodsInProtocolNamed: protocolName)
+		(org methodSelectorsInProtocol: protocolName)
 			select: [ :selector | aSet includes: selector ]
 			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
 ]
@@ -106,7 +106,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
+ClassDescription >> printProtocolChunk: protocol on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
 	"Print a method preamble.  This must have a protocol name.
 	It may have an author/date stamp, and it may have a prior source link.
 	If it has a prior source link, it MUST have a stamp, even if it is empty."
@@ -120,7 +120,9 @@ ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: 
 			 strm
 				 nextPutAll: self name;
 				 nextPutAll: ' methodsFor: ';
-				 print: protocolName asString.
+				 print: (protocol isString
+						  ifTrue: [ protocol asString ]
+						  ifFalse: [ protocol name ]).
 			 (changeStamp isNotNil and: [ changeStamp size > 0 or: [ priorMethod isNotNil ] ]) ifTrue: [
 				 strm
 					 nextPutAll: ' stamp: ';
@@ -134,5 +136,5 @@ ClassDescription >> printProtocolChunk: protocolName on: aFileStream withStamp: 
 { #category : #'*CodeExport' }
 ClassDescription >> selectorsInProtocolNamed: aSymbol [
 
-	^ self organization methodsInProtocolNamed: aSymbol
+	^ self organization methodSelectorsInProtocol: aSymbol
 ]

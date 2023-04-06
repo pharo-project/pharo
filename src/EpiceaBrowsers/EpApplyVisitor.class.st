@@ -24,7 +24,7 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
 			aClass
-				classComment: aChange newComment
+				comment: aChange newComment
 				stamp: aChange newStamp ]
 ]
 

@@ -380,8 +380,9 @@ RBParser >> parseBlock [
 
 	(currentToken isSpecial: $])
 		ifFalse: [
-			^ (self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected')
+			^ (self parseEnglobingError: { node body } with: startToken errorMessage: ''']'' expected')
 				arguments: node arguments;
+				stop: currentToken start - 1;
 				yourself
 		].
 	node right: currentToken start.
@@ -648,9 +649,13 @@ RBParser >> parseLiteralArray [
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
 	faulty ifTrue: [
-		^ (self parseEnglobingError: literals with: startToken errorMessage: nil)
+		^ RBLiteralArrayErrorNode new
+			value: '#(';
+		 	start: startToken start;
+			contents: literals;
 			valueAfter: ')';
 			stop: stop;
+			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
@@ -696,9 +701,13 @@ RBParser >> parseLiteralByteArray [
 	stop := currentToken stop.
 	self step.
 	faulty ifTrue: [
-		^ (self parseEnglobingError: stream contents with: startToken errorMessage: nil)
+		^ RBLiteralByteArrayErrorNode new
+			value: '#[';
+		 	start: startToken start;
+			contents: stream contents;
 			valueAfter: ']';
 			stop: stop;
+			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
@@ -941,8 +950,11 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	[(')]}' includes: currentToken value)
 		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
 			whileTrue: [
+				| contents |
 				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
-				node := (RBUnfinishedStatementErrorNode from: err contents: { node })
+				"If the parsing failed because it did not match anything, there was nothing before the unexpected closer"
+				contents := startOfStatementToken = currentToken ifTrue: [ #() ] ifFalse: [ { node } ].
+				node := (RBUnfinishedStatementErrorNode from: err contents: contents)
 					valueAfter: currentToken value asString;
 					stop: currentToken stop.
 				self step ].

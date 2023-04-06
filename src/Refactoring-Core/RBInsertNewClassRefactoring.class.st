@@ -9,7 +9,7 @@ My preconditions verify that I use a valid class name, that does not yet exists 
 and the subclasses (if any) were direct subclasses of the superclass.
 "
 Class {
-	#name : #RBInsertClassRefactoring,
+	#name : #RBInsertNewClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'category',
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBInsertClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertNewClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	^ self new
 		addClass: aName
 		superclass: aClass
@@ -30,7 +30,7 @@ RBInsertClassRefactoring class >> addClass: aName superclass: aClass subclasses:
 ]
 
 { #category : #'instance creation' }
-RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	^ self new
 		model: aRBSmalltalk;
 		addClass: aName
@@ -41,7 +41,7 @@ RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass
 ]
 
 { #category : #'instance creation' }
-RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
+RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
 	^ self new
 		model: aRBSmalltalk;
 		addClass: aName
@@ -53,15 +53,13 @@ RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass
 ]
 
 { #category : #initialization }
-RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-	self className: aName.
-	superclass := self classObjectFor: aClass.
-	subclasses := aCollection collect: [:each | self classObjectFor: each].
-	category := aSymbol
+RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
+	self addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: ''
+	
 ]
 
 { #category : #initialization }
-RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
+RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
 	self className: aName.
 	superclass := self classObjectFor: aClass.
 	subclasses := aCollection collect: [:each | self classObjectFor: each].
@@ -70,7 +68,7 @@ RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aColl
 ]
 
 { #category : #preconditions }
-RBInsertClassRefactoring >> preconditions [
+RBInsertNewClassRefactoring >> preconditions [
 	| cond |
 	cond := ((RBCondition isMetaclass: superclass)
 				errorMacro: 'Superclass must not be a metaclass') not.
@@ -89,7 +87,7 @@ RBInsertClassRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBInsertClassRefactoring >> storeOn: aStream [
+RBInsertNewClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -105,7 +103,7 @@ RBInsertClassRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBInsertClassRefactoring >> transform [
+RBInsertNewClassRefactoring >> transform [
 
 	| classDefinitionString |
 	classDefinitionString := '<1p> %<%< #<2s> package: <3p>'

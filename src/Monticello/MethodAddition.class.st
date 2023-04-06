@@ -1,5 +1,5 @@
 "
-I represent the addition of a method to a class.  I can produce the CompiledMethod, install it, and then notify the system that the method has been added.  This allows Monticello to implement atomic addition.  A loader can compile all classes and methods first and then install all methods only after they have been all compiled, and in a way that executes little code.ß
+I represent the addition of a method to a class.  I can produce the CompiledMethod, install it, and then notify the system that the method has been added.  This allows Monticello to implement atomic addition.  A loader can compile all classes and methods first and then install all methods only after they have been all compiled, and in a way that executes little code.
 "
 Class {
 	#name : #MethodAddition,
@@ -8,7 +8,6 @@ Class {
 		'text',
 		'category',
 		'changeStamp',
-		'requestor',
 		'logSource',
 		'myClass',
 		'selector',
@@ -31,24 +30,21 @@ MethodAddition >> compile [
 ]
 
 { #category : #compilation }
-MethodAddition >> compile: aString classified: aString1 withStamp: aString2 notifying: aRequestor logSource: aBoolean inClass: aClass [
+MethodAddition >> compile: aString classified: aString1 withStamp: aString2 logSource: aBoolean inClass: aClass [
 
 	text := aString.
 	category := aString1.
 	changeStamp := aString2.
-	requestor := aRequestor.
 	logSource := aBoolean.
 	myClass := aClass
 ]
 
 { #category : #operations }
 MethodAddition >> createCompiledMethod [
-
-	compiledMethod := myClass compiler
-		                  source: text asString;
-		                  requestor: requestor;
-		                  failBlock: [ ^ nil ];
-		                  compile.
+	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
+	
+	Can't we just call #compile:classfied: here?"
+	compiledMethod := myClass compiler compile: text asString.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].
@@ -93,9 +89,11 @@ MethodAddition >> priorCategoryOrNil: anObject [
 
 { #category : #operations }
 MethodAddition >> writeSourceToLog [
-	logSource ifTrue: [
-		myClass logMethodSource: text forMethod: compiledMethod
-			inProtocolNamed: category withStamp: changeStamp
-	].
 
+	logSource ifTrue: [
+		myClass
+			logMethodSource: text
+			forMethod: compiledMethod
+			inProtocol: (myClass ensureProtocol: category)
+			withStamp: changeStamp ]
 ]

@@ -31,7 +31,7 @@ mcPackages := #(
 MCMethodDefinition initializersEnabled: false.
 
 (MonticelloBootstrap inDirectory: (MCCacheRepository uniqueInstance directory))
-  loadPackagesNamed: mcPackages.
+  loadPackagesNamed: mcPackages!
 
 MCMethodDefinition initializersEnabled: true.
 

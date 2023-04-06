@@ -45,7 +45,9 @@ Class {
 RBCodeSnippet class >> allSnippets [
 
 	^ {
+		  self badSimpleExpressions.
 		  self badExpressions.
+		  self badTokens.
 		  self badMethods.
 		  self badSemantic.
 		  self badVariableAndScopes } flattened
@@ -53,57 +55,13 @@ RBCodeSnippet class >> allSnippets [
 
 { #category : #accessing }
 RBCodeSnippet class >> badExpressions [
-	"This list contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure)."
+	"This list focuses on composed expressions and sequences of statements.
+	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
+	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
 
-	"Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
-
+	<script: 'self styleWithError: self badExpressions'>
 	| list |
 	list := {
-		        (self new
-			         source: '#';
-			         notices: #( #( 1 1 2 'Literal expected' ) )).
-		        (self new
-			         source: '$';
-			         notices: #( #( 1 1 2 'Character expected' ) )).
-		        (self new
-			         source: ':';
-			         notices: #( #( 1 1 1 'Unexpected token' ) )).
-		        (self new
-			         source: '';
-			         isFaulty: false). "emptyness is ok"
-
-		        "Comments"
-		        "EFFormater is not the best here :("
-		        (self new
-			         source: '"" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"nothing" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"com"1"ment"';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
-		        (self new
-			         source: '"a" 1 "b". "c" 2 "d"';
-			         formattedCode: '1. "a" "b" "c" 2 "d"';
-			         isFaulty: false;
-			         value: 2). "a and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: '"unfinished';
-			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"also unfinished""';
-			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"';
-			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"""';
-			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
-
-		        "Bad compound"
 		        (self new
 			         source: '( 1 + 2';
 			         notices: #( #( 1 7 8 ''')'' expected' ) )).
@@ -137,7 +95,7 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 2 4 ''')'' expected' ) )).
 		        (self new
 			         source: '[ ';
-			         notices: #( #( 1 1 3 ''']'' expected' ) )).
+			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '#[ ';
 			         notices: #( #( 1 2 4 ''']'' expected' ) )).
@@ -152,21 +110,17 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 6 7 '''}'' expected' ) )).
 		        (self new
 			         source: ' )';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: )' ) )).
+			         notices: #( #( 2 2 2 'Missing opener for closer: )' ) )).
 		        (self new
 			         source: ' ]';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: ]' ) );
+			         notices: #( #( 2 2 2 'Missing opener for closer: ]' ) );
 			         skip: #testCodeImporter). "FIXME. code importer do not like rogue starting `]`"
 		        (self new
 			         source: ' }';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: }' ) )).
+			         notices: #( #( 2 2 2 'Missing opener for closer: }' ) )).
 		        (self new
 			         source: ' ) ] }';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 2 2 2 'Missing opener for closer: )' )
+			         notices: #( #( 2 2 2 'Missing opener for closer: )' )
 				            #( 2 4 4 'Missing opener for closer: ]' )
 				            #( 2 6 6 'Missing opener for closer: }' ) )).
 
@@ -208,32 +162,25 @@ RBCodeSnippet class >> badExpressions [
 			         source: '#( 0 1r2 4 )';
 			         formattedCode: '#( 0 1 r2 4 )';
 			         notices:
-				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' )
-				            #( 1 12 13 ''')'' expected' ) )). "Almost anything..."
+				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' ) )). "Almost anything..."
 		        (self new
 			         source: '#[ 1 ) 2 ]';
-			         notices: #( #( 6 6 6 '8-bit integer expected' )
-				            #( 1 10 11 ''']'' expected' ) )).
+			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 } 2 ]';
-			         notices: #( #( 6 6 6 '8-bit integer expected' )
-				            #( 1 10 11 ''']'' expected' ) )).
+			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 a 2 ]';
-			         notices: #( #( 6 6 6 '8-bit integer expected' )
-				            #( 1 10 11 ''']'' expected' ) )).
+			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 -1 2 ]';
-			         notices: #( #( 6 7 6 '8-bit integer expected' )
-				            #( 1 11 12 ''']'' expected' ) )).
+			         notices: #( #( 6 7 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 1.0 2 ]';
-			         notices: #( #( 6 8 6 '8-bit integer expected' )
-				            #( 1 12 13 ''']'' expected' ) )).
+			         notices: #( #( 6 8 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 256 2 ]';
-			         notices: #( #( 6 8 6 '8-bit integer expected' )
-				            #( 1 12 13 ''']'' expected' ) )).
+			         notices: #( #( 6 8 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '{1)2}';
 			         formattedCode: '{ 1 ). 2 }';
@@ -248,6 +195,21 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '()';
 			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        (self new
+			         source: '[ ]';
+			         isFaulty: false).
+		        (self new
+			         source: '#( )';
+			         isFaulty: false;
+			         value: #(  )).
+		        (self new
+			         source: '#[ ]';
+			         isFaulty: false;
+			         value: #[  ]).
+		        (self new
+			         source: '{ }';
+			         isFaulty: false;
+			         value: #(  )).
 
 		        "Bad sequence. The first expression is considered unfinished."
 		        (self new
@@ -329,13 +291,11 @@ RBCodeSnippet class >> badExpressions [
 			         source: '| | a';
 			         formattedCode: 'a';
 			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
 			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
@@ -462,7 +422,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a b]';
 			         formattedCode: '[ :a | b ]';
-			         raise: UndeclaredVariableRead;
+			         value: nil;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' )
 				            #( 5 5 5 'Undeclared variable' ) )). "FIXME"
 		        (self new
@@ -520,7 +480,6 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
 			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
@@ -545,18 +504,18 @@ RBCodeSnippet class >> badExpressions [
 		        "Unclosed blocks"
 		        (self new
 			         source: '[ : | ';
-			         notices: #( #( 1 1 7 ''']'' expected' ) )).
+			         notices: #( #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[:';
 			         formattedCode: '[ : | ';
-			         notices: #( #( 1 1 3 ''']'' expected' ) )).
+			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a :b | ';
-			         notices: #( #( 1 1 11 ''']'' expected' ) )).
+			         notices: #( #( 1 10 11 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a :b';
 			         formattedCode: '[ :a :b | ';
-			         notices: #( #( 1 1 8 ''']'' expected' ) )).
+			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a a';
 			         formattedCode: '[ :a | a';
@@ -569,7 +528,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | ';
-			         notices: #( #( 1 1 8 ''']'' expected' ) )).
+			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | a';
 			         notices: #( #( 1 8 9 ''']'' expected' ) )).
@@ -582,440 +541,18 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[ | ';
 			         formattedCode: '[ | | ';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
-				            #( 1 3 5 ''']'' expected' ) )).
+				            #( 1 4 5 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | 1';
-			         formattedCode: '[ | | 1';
+			         formattedCode: '[ | | . 1';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 5 6 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | a b';
 			         formattedCode: '[ | a b | ';
 			         notices: #( #( 3 7 8 '''|'' or variable expected' )
-				            #( 1 7 8 ''']'' expected' ) )).
+				            #( 1 7 8 ''']'' expected' ) )) }.
 
-		        "Missing receiver or argument in message sends.
-		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
-		        "binary"
-		        (self new
-			         source: ' + ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 4 3 4 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 + ';
-			         notices: #( #( 5 4 5 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' + 2';
-			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
-		        "keywords"
-		        (self new
-			         source: ' hello: ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 9 8 9 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 hello: ';
-			         notices:
-				         #( #( 10 9 10 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' hello: 2';
-			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: my: ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 10 9 10 'Variable or expression expected' )
-				            #( 14 13 14 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 goodby: my: ';
-			         notices:
-				         #( #( 11 10 11 'Variable or expression expected' )
-				            #( 15 14 15 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 goodby: 2 my: ';
-			         notices:
-				         #( #( 17 16 17 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: 2 my: ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 16 15 16 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: my: 3';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 10 9 10 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1 goodby: my: 3';
-			         notices:
-				         #( #( 11 10 11 'Variable or expression expected' ) )).
-		        (self new
-			         source: ' goodby: 2 my: 3';
-			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
-		        "Combinaisons"
-		        (self new
-			         source: ' + foo: - ';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 4 3 4 'Variable or expression expected' )
-				            #( 9 8 9 'Variable or expression expected' )
-				            #( 11 10 11 'Variable or expression expected' ) )).
-
-		        "Bad assignments"
-		        (self new
-			         source: 'a := ';
-			         notices: #( #( 6 5 6 'Variable or expression expected' )
-				            #( 1 1 1 'Undeclared variable' ) )).
-		        (self new
-			         source: ':= ';
-			         notices: #( #( 4 3 4 'Variable or expression expected' )
-				            #( 1 3 1 'variable expected in assigment' ) )).
-		        (self new
-			         source: ':= 2';
-			         notices: #( #( 1 4 1 'variable expected in assigment' ) )).
-		        (self new
-			         source: '1:=2';
-			         formattedCode: '1. := 2';
-			         notices: #( #( 1 1 2 'End of statement expected' )
-				            #( 2 4 2 'variable expected in assigment' ) )).
-
-		        "Bad cascades"
-		        (self new
-			         source: ';';
-			         formattedCode: ' ; ';
-			         notices: #( #( 1 0 1 'Variable or expression expected' )
-				            #( 1 0 1 'Message expected' )
-				            #( 2 1 2 'Cascade message expected' ) )).
-		        (self new
-			         source: '1;foo';
-			         formattedCode: '1 ; foo';
-			         notices: #( #( 1 1 2 'Message expected' ) )).
-		        (self new
-			         source: '1;';
-			         formattedCode: '1 ; ';
-			         notices:
-				         #( #( 1 1 2 'Message expected' )
-				            #( 3 2 3 'Cascade message expected' ) )).
-		        (self new
-			         source: '1 sign;';
-			         formattedCode: '1 sign; ';
-			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
-		        (self new
-			         source: '1 foo:;bar';
-			         formattedCode: '1 foo: ; bar';
-			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "The cascade is correct here. It's a simple error of a missing argument"
-		        (self new
-			         source: '1 foo;2';
-			         formattedCode: '1 foo; . 2';
-			         notices: #( #( 7 6 7 'Cascade message expected' )
-				            #( 1 6 7 'End of statement expected' ) )).
-		        (self new
-			         source: '(1 sign: 2);bar';
-			         formattedCode: '(1 sign: 2) ; bar';
-			         notices: #( #( 1 11 12 'Message expected' ) )).
-		        (self new
-			         source: '(1 sign);bar';
-			         formattedCode: '1 sign ; bar';
-			         notices: #( #( 1 8 9 'Message expected' ) )). "FIXME the parentheses are lost, and this changes the meaning"
-		        "Longer cascade"
-		        (self new
-			         source: ';;';
-			         formattedCode: ' ; ; ';
-			         notices: #( #( 1 0 1 'Variable or expression expected' )
-				            #( 1 0 1 'Message expected' )
-				            #( 2 1 2 'Cascade message expected' )
-				            #( 3 2 3 'Cascade message expected' ) )).
-		        (self new
-			         source: '1 sign;;bar';
-			         formattedCode: '1 sign; ; bar';
-			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
-
-		        "Bad returns"
-		        (self new
-			         source: '^ ';
-			         notices: #( #( 3 2 3 'Variable or expression expected' ) )).
-		        (self new
-			         source: '1+^2';
-			         formattedCode: '1 + . ^ 2';
-			         notices: #( #( 3 2 3 'Variable or expression expected' )
-				            #( 1 2 3 'End of statement expected' ) )).
-		        (self new
-			         source: '1 foo: ^2';
-			         formattedCode: '1 foo: . ^ 2';
-			         notices: #( #( 8 7 8 'Variable or expression expected' )
-				            #( 1 7 8 'End of statement expected' ) )).
-		        (self new
-			         source: '(^1)';
-			         formattedCode: '( . ^ 1 )';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 1 1 2 ''')'' expected' )
-				            #( 2 4 4 'Missing opener for closer: )' ) )). "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
-		        (self new
-			         source: '^^1';
-			         formattedCode: '^ . ^ 1';
-			         notices: #( #( 2 1 2 'Variable or expression expected' )
-				            #( 1 1 2 'End of statement expected' ) )). "Same spirit"
-		        (self new
-			         source: '[ ^ 1 ]';
-			         isFaulty: false;
-			         raise: BlockCannotReturn). "when the block is evaluated, the method is already gone."
-		        (self new
-			         source: '{ ^ 1 }';
-			         isFaulty: false;
-			         value: 1). "I did not expect this one to be legal"
-		        (self new
-			         source: '#(^1)';
-			         formattedCode: '#( #''^'' 1 )';
-			         isFaulty: false;
-			         value: #( #'^' 1 )). "Obviously..."
-		        (self new
-			         source: '#[ ^ 1 ]';
-			         notices: #( #( 4 4 4 '8-bit integer expected' )
-				            #( 1 8 9 ''']'' expected' ) )).
-
-		        "Unreachable code (warnings)"
-		        "Unreachable analysis is very simple and targets statement that directly follows a return statement."
-		        "Note that faulty code can still be executed without a RuntimeSyntaxError"
-		        (self new
-			         source: '^ 1. 2. ^ 3';
-			         isFaulty: false;
-			         value: 1;
-			         notices: #( #( 6 6 6 'Unreachable statement' ) )).
-		        (self new
-			         source: '[ ^ 1. 2. ^ 3 ]';
-			         isFaulty: false;
-			         raise: BlockCannotReturn;
-			         notices: #( #( 8 8 8 'Unreachable statement' ) )). "like [^1]"
-		        (self new
-			         source: '{ ^ 1. 2. ^ 3 }';
-			         isFaulty: false;
-			         value: 1;
-			         notices: #( #( 8 8 8 'Unreachable statement' ) )).
-		        (self new
-			         source: '[ ^ 1 ]. 2. ^ 3';
-			         isFaulty: false;
-			         value: 3).
-		        (self new
-			         source: '{ ^ 1 }. 2. ^ 3';
-			         isFaulty: false;
-			         value: 1). "This one could have been..."
-		        (self new
-			         source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3';
-			         isFaulty: false;
-			         value: 1). "Not *syntactic* enough"
-
-		        "Bad string literal"
-		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
-		        (self new
-			         source: '''hello';
-			         notices: #( #( 1 6 7 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '''hello''''world';
-			         notices:
-				         #( #( 1 13 14 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '''';
-			         notices: #( #( 1 1 2 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '''hello''''';
-			         notices: #( #( 1 8 9 'Unmatched '' in string literal.' ) )). "unclosed string that ends with an escaped quote"
-
-		        "Bad symbol literal"
-		        (self new
-			         source: '#1';
-			         formattedCode: '#. 1';
-			         notices: #( #( 1 1 2 'Literal expected' ) )). "Become a bad sequence"
-		        (self new
-			         source: '#1r0';
-			         formattedCode: '#. 1 r0';
-			         notices:
-				         #( #( 1 1 2 'Literal expected' )
-				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
-		        (self new
-			         source: '##';
-			         notices: #( #( 1 2 3 'Literal expected' ) )).
-		        "Note: if quotes, same thing than strings"
-		        (self new
-			         source: '#''hello';
-			         notices: #( #( 1 7 8 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '#''hello''''world';
-			         notices:
-				         #( #( 1 14 15 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '#''';
-			         notices: #( #( 1 2 3 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '#''hello''''';
-			         notices:
-				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''hello';
-			         notices:
-				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''hello''''world';
-			         notices:
-				         #( #( 1 16 17 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''';
-			         notices: #( #( 1 4 5 'Unmatched '' in string literal.' ) )).
-		        (self new
-			         source: '###''hello''''';
-			         notices:
-				         #( #( 1 11 12 'Unmatched '' in string literal.' ) )).
-
-		        "Bad numeric literal"
-		        "Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
-		        (self new
-			         source: '2r';
-			         notices:
-				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )).
-		        (self new
-			         source: '2rx';
-			         formattedCode: '2r x';
-			         notices:
-				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a unary message send"
-		        (self new
-			         source: '2r3';
-			         formattedCode: '2r. 3';
-			         notices:
-				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a number, causing a case of unfinished sequence"
-		        (self new
-			         source: '0r';
-			         formattedCode: '0 r';
-			         notices:
-				         #( #( 1 1 2 'an integer greater than 1 as valid radix expected' ) )).
-		        (self new
-			         source: '000rx';
-			         formattedCode: '000 rx';
-			         notices:
-				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
-		        (self new
-			         source: '000r1';
-			         formattedCode: '000 r1';
-			         notices:
-				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
-		        (self new
-			         source: '3r12345';
-			         formattedCode: '3r12. 345';
-			         notices: #( #( 1 4 5 'End of statement expected' ) )).
-
-		        "These ones are correct, the number parser is very prermisive (except for radix, see above)"
-		        (self new
-			         source: '1.';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1).
-		        (self new
-			         source: '1.1.1';
-			         formattedCode: '1.1. 1';
-			         isFaulty: false;
-			         value: 1).
-		        (self new
-			         source: '1a';
-			         formattedCode: '1 a';
-			         isFaulty: false;
-			         messageNotUnderstood: #a).
-		        (self new
-			         source: '1a1a1';
-			         formattedCode: '1 a1a1';
-			         isFaulty: false;
-			         messageNotUnderstood: #a1a1).
-		        (self new
-			         source: '1e';
-			         formattedCode: '1 e';
-			         isFaulty: false;
-			         messageNotUnderstood: #e).
-		        (self new
-			         source: '1e1e1';
-			         formattedCode: '1e1 e1';
-			         isFaulty: false;
-			         messageNotUnderstood: #e1).
-		        (self new
-			         source: '1s';
-			         isFaulty: false;
-			         value: 1s0). "ScaledDecimal is a thing (!) that have literals (!!) inconsistent with '1e' (!!!)"
-		        (self new
-			         source: '1s1s1';
-			         formattedCode: '1s1 s1';
-			         isFaulty: false;
-			         messageNotUnderstood: #s1).
-		        (self new
-			         source: '10r89abcd';
-			         formattedCode: '10r89 abcd';
-			         isFaulty: false;
-			         messageNotUnderstood: #abcd).
-		        (self new
-			         source: '12r89abcd';
-			         formattedCode: '12r89ab cd';
-			         isFaulty: false;
-			         messageNotUnderstood: #cd).
-		        (self new
-			         source: '36r1halt';
-			         isFaulty: false;
-			         value: 2486513). "ahah"
-
-		        "Bad characters"
-		        "Pharo is Unicode aware."
-		        "$Δ isLetter >>> true" "$Δ asInteger >>> 16r0394" "Greek Capital Letter Delta"
-		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
-		        (self new
-			         source: 'Δə';
-			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
-		        (self new
-			         source: '| Δə | Δə := 1. Δə + 1';
-			         isFaulty: false;
-			         value: 2).
-
-		        "$± isSpecial >>> true" "$± asInteger >>> 16r00B1" "Plus Minus Sign" "Only a few unicode characters are isSpecial in Pharo"
-		        (self new
-			         source: '1 ± 1';
-			         isFaulty: false;
-			         messageNotUnderstood: #±). "Valid binary operator, but not implemented"
-		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
-		        (self new
-			         source: '→';
-			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
-		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
-		        (self new
-			         source: '٠';
-			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
-		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
-		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
-		        (self new
-			         source: Character nbsp asString;
-			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
-
-		        (self new
-			         source: '$→';
-			         isFaulty: false;
-			         value: $→).
-		        (self new
-			         source: '''Δ→ə''';
-			         isFaulty: false;
-			         value: 'Δ→ə').
-		        (self new
-			         source: '"Δ→ə" ';
-			         isFaulty: false).
-		        (self new
-			         source: '#''Δ→ə''';
-			         isFaulty: false;
-			         value: #'Δ→ə').
-		        (self new
-			         source: '#Δə';
-			         formattedCode: '#''Δə''';
-			         isFaulty: false;
-			         value: #'Δə').
-		        (self new
-			         source: '#(Δ→ə)';
-			         formattedCode: '#( Δ → ə )';
-			         notices:
-				         #( #( 4 4 4 'Unknown character' )
-				            #( 1 6 7 ''')'' expected' ) )). "This one is faulty because → is a parse error"
-		        (self new
-			         source: '#→';
-			         formattedCode: '#. →';
-			         notices:
-				         #( #( 1 1 2 'Literal expected' )
-				            #( 2 2 2 'Unknown character' ) )) "Two independent errors" }.
 	"Setup default values"
 	self new
 		group: #badExpressions;
@@ -1028,6 +565,7 @@ RBCodeSnippet class >> badExpressions [
 { #category : #accessing }
 RBCodeSnippet class >> badMethods [
 
+	<script: 'self styleWithError: self badMethods'>
 	| list |
 	list := {
 		        (self new
@@ -1189,8 +727,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo <bar: #[ -1 ]> ';
 			         value: nil;
-			         notices: #( #( 14 15 14 '8-bit integer expected' )
-				            #( 11 17 18 ''']'' expected' ) )). "Literal bytes arrays are acceptable, but this one is faulty"
+			         notices: #( #( 14 15 14 '8-bit integer expected' ) )). "Literal bytes arrays are acceptable, but this one is faulty"
 		        (self new
 			         source: 'foo < + 1> ';
 			         isFaulty: false). "Binary message is legal pragma"
@@ -1211,10 +748,21 @@ RBCodeSnippet class >> badMethods [
 RBCodeSnippet class >> badSemantic [
 	"List of varions semantic and backend errors."
 
+	<script: 'self styleWithError: self badSemantic'>
 	| list |
 	"Undefined variable
 	For some reason, this is just a warning in non-faulty mode, not an error."
 	list := {
+		        (self new
+			         source: 'a := 10. ^ a';
+			         raise: UndeclaredVariableWrite;
+			         notices:
+				         #( #( 1 1 1 'Undeclared variable' )
+				            #( 12 12 12 'Undeclared variable' ) )).
+		        (self new
+			         source: '^ a';
+			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+
 		        "Uninitialized variable"
 		        (self new
 			         source: '| a | ^ a';
@@ -1430,7 +978,19 @@ RBCodeSnippet class >> badSemantic [
 				         'a1: a1 a2: a2 a3: a3 a4: a4 a5: a5 a6: a6 a7: a7 a8: a8 a9: a9 a10: a10 a11: a11 a12: a12 a13: a13 a14: a14 a15: a15 a16: a16 ^ a1';
 			         isMethod: true;
 			         isFaulty: true;
-			         notices: #( #( 1 130 1 'Too many arguments' ) )) "Too many arguments" }.
+			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
+
+		        (self new
+			         source: 'CodeError signal: ''false error''';
+			         raise: CodeError;
+			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
+		        (self new
+			         source:
+				         'OCUndeclaredVariableWarning signal: ''false error''';
+			         raise: OCUndeclaredVariableWarning). "same, but warning are silently ignored"
+		        (self new
+			         source: 'RuntimeSyntaxError signal: ''false error''';
+			         raise: RuntimeSyntaxError) "runtime errors are not special" }.
 	"Setup default values"
 	self new
 		group: #badSemantic;
@@ -1442,82 +1002,538 @@ RBCodeSnippet class >> badSemantic [
 ]
 
 { #category : #accessing }
-RBCodeSnippet class >> badVariableAndScopes [
-	"Test various combinaisons of error and warnings on variables and scope nesting"
+RBCodeSnippet class >> badSimpleExpressions [
+	"This list focuses simple expressions like message sends, assigments and return.
+	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
+	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
 
+	<script: 'self styleWithError: self badSimpleExpressions'>
 	| list |
 	list := {
 		        (self new
-			         source: 'a';
+			         source: '1 abs';
 			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 1 1 1 'Undeclared variable' ) )).
+			         value: 1).
 		        (self new
-			         source: 'a := 1';
+			         source: '1 + 2';
 			         isFaulty: false;
-			         raise: UndeclaredVariableWrite;
-			         notices: #( #( 1 1 1 'Undeclared variable' ) )).
+			         value: 3).
 		        (self new
-			         source: 'a := 1. a';
+			         source: '1 max: 2';
 			         isFaulty: false;
-			         raise: UndeclaredVariableWrite;
+			         value: 2).
+
+		        "Missing receiver or argument in message sends.
+		Note: a unary message send without a receiver will be 'correctly' mistaken as a variable, so not a parsing error"
+		        "binary"
+		        (self new
+			         source: ' + ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 4 3 4 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 + ';
+			         notices: #( #( 5 4 5 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' + 2';
+			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        "keywords"
+		        (self new
+			         source: ' hello: ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 9 8 9 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 hello: ';
 			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
-				            #( 9 9 9 'Undeclared variable' ) )).
+				         #( #( 10 9 10 'Variable or expression expected' ) )).
 		        (self new
-			         source: 'a := a';
-			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         numberOfCritiques: 1;
+			         source: ' hello: 2';
+			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: my: ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 10 9 10 'Variable or expression expected' )
+				            #( 14 13 14 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 goodby: my: ';
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
+				         #( #( 11 10 11 'Variable or expression expected' )
+				            #( 15 14 15 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 goodby: 2 my: ';
+			         notices:
+				         #( #( 17 16 17 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: 2 my: ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 16 15 16 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: my: 3';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 10 9 10 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1 goodby: my: 3';
+			         notices:
+				         #( #( 11 10 11 'Variable or expression expected' ) )).
+		        (self new
+			         source: ' goodby: 2 my: 3';
+			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
+		        "Combinaisons"
+		        (self new
+			         source: ' + foo: - ';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 4 3 4 'Variable or expression expected' )
+				            #( 9 8 9 'Variable or expression expected' )
+				            #( 11 10 11 'Variable or expression expected' ) )).
+
+		        "Bad assignments"
+		        (self new
+			         source: 'a := ';
+			         notices: #( #( 6 5 6 'Variable or expression expected' )
 				            #( 1 1 1 'Undeclared variable' ) )).
 		        (self new
-			         source: '^ a';
-			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+			         source: ':= ';
+			         notices: #( #( 4 3 4 'Variable or expression expected' )
+				            #( 1 3 1 'variable expected in assigment' ) )).
 		        (self new
-			         source: '{ a }';
-			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+			         source: ':= 2';
+			         notices: #( #( 1 4 1 'variable expected in assigment' ) )).
 		        (self new
-			         source: 'a + 1';
-			         isFaulty: false;
-			         raise: VariableNotDeclared;
-			         notices: #( #( 1 1 1 'Undeclared variable' ) )). "Different exception to keep compatibility with the current debugger"
+			         source: '1:=2';
+			         formattedCode: '1. := 2';
+			         notices: #( #( 1 1 2 'End of statement expected' )
+				            #( 2 4 2 'variable expected in assigment' ) )).
+
+		        "Bad cascades"
 		        (self new
-			         source: 'a isNil';
-			         isFaulty: false;
-			         value: true;
-			         notices: #( #( 1 1 1 'Undeclared variable' ) )). "But makes defined methods of nil available"
+			         source: ';';
+			         formattedCode: ' ; ';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 1 0 1 'Message expected' )
+				            #( 2 1 2 'Cascade message expected' ) )).
 		        (self new
-			         source: '1 + a';
-			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 5 5 5 'Undeclared variable' ) )).
+			         source: '1;foo';
+			         formattedCode: '1 ; foo';
+			         notices: #( #( 1 1 2 'Message expected' ) )).
 		        (self new
-			         source: '[ a ]';
+			         source: '1;';
+			         formattedCode: '1 ; ';
+			         notices:
+				         #( #( 1 1 2 'Message expected' )
+				            #( 3 2 3 'Cascade message expected' ) )).
+		        (self new
+			         source: '1 sign;';
+			         formattedCode: '1 sign; ';
+			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
+		        (self new
+			         source: '1 foo:;bar';
+			         formattedCode: '1 foo: ; bar';
+			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "The cascade is correct here. It's a simple error of a missing argument"
+		        (self new
+			         source: '1 foo;2';
+			         formattedCode: '1 foo; . 2';
+			         notices: #( #( 7 6 7 'Cascade message expected' )
+				            #( 1 6 7 'End of statement expected' ) )).
+		        (self new
+			         source: '(1 sign: 2);bar';
+			         formattedCode: '(1 sign: 2) ; bar';
+			         notices: #( #( 1 11 12 'Message expected' ) )).
+		        (self new
+			         source: '(1 sign);bar';
+			         formattedCode: '1 sign ; bar';
+			         notices: #( #( 1 8 9 'Message expected' ) )). "FIXME the parentheses are lost, and this changes the meaning"
+		        "Longer cascade"
+		        (self new
+			         source: ';;';
+			         formattedCode: ' ; ; ';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 1 0 1 'Message expected' )
+				            #( 2 1 2 'Cascade message expected' )
+				            #( 3 2 3 'Cascade message expected' ) )).
+		        (self new
+			         source: '1 sign;;bar';
+			         formattedCode: '1 sign; ; bar';
+			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
+
+		        "Bad returns"
+		        (self new
+			         source: '^ ';
+			         notices: #( #( 3 2 3 'Variable or expression expected' ) )).
+		        (self new
+			         source: '1+^2';
+			         formattedCode: '1 + . ^ 2';
+			         notices: #( #( 3 2 3 'Variable or expression expected' )
+				            #( 1 2 3 'End of statement expected' ) )).
+		        (self new
+			         source: '1 foo: ^2';
+			         formattedCode: '1 foo: . ^ 2';
+			         notices: #( #( 8 7 8 'Variable or expression expected' )
+				            #( 1 7 8 'End of statement expected' ) )).
+		        (self new
+			         source: '(^1)';
+			         formattedCode: '( . ^ 1 )';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 1 1 2 ''')'' expected' )
+				            #( 2 4 4 'Missing opener for closer: )' ) )). "^ can only appear a the begin of a statement, so a random ^ cause an unfinished statement error"
+		        (self new
+			         source: '^^1';
+			         formattedCode: '^ . ^ 1';
+			         notices: #( #( 2 1 2 'Variable or expression expected' )
+				            #( 1 1 2 'End of statement expected' ) )). "Same spirit"
+		        (self new
+			         source: '[ ^ 1 ]';
 			         isFaulty: false;
-			         raise: UndeclaredVariableRead;
-			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+			         raise: BlockCannotReturn). "when the block is evaluated, the method is already gone."
+		        (self new
+			         source: '{ ^ 1 }';
+			         isFaulty: false;
+			         value: 1). "I did not expect this one to be legal"
+		        (self new
+			         source: '#(^1)';
+			         formattedCode: '#( #''^'' 1 )';
+			         isFaulty: false;
+			         value: #( #'^' 1 )). "Obviously..."
+		        (self new
+			         source: '#[ ^ 1 ]';
+			         notices: #( #( 4 4 4 '8-bit integer expected' ) )).
+
+		        "Unreachable code (warnings)"
+		        "Unreachable analysis is very simple and targets statement that directly follows a return statement."
+		        "Note that faulty code can still be executed without a RuntimeSyntaxError"
+		        (self new
+			         source: '^ 1. 2. ^ 3';
+			         isFaulty: false;
+			         value: 1;
+			         notices: #( #( 6 6 6 'Unreachable statement' ) )).
+		        (self new
+			         source: '[ ^ 1. 2. ^ 3 ]';
+			         isFaulty: false;
+			         raise: BlockCannotReturn;
+			         notices: #( #( 8 8 8 'Unreachable statement' ) )). "like [^1]"
+		        (self new
+			         source: '{ ^ 1. 2. ^ 3 }';
+			         isFaulty: false;
+			         value: 1;
+			         notices: #( #( 8 8 8 'Unreachable statement' ) )).
+		        (self new
+			         source: '[ ^ 1 ]. 2. ^ 3';
+			         isFaulty: false;
+			         value: 3).
+		        (self new
+			         source: '{ ^ 1 }. 2. ^ 3';
+			         isFaulty: false;
+			         value: 1). "This one could have been..."
+		        (self new
+			         source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3';
+			         isFaulty: false;
+			         value: 1) "Not *syntactic* enough" }.
+
+	"Setup default values"
+	self new
+		group: #badSimpleExpressions;
+		isMethod: false;
+		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badTokens [
+	"This list focuses on bad literal, malformed tokens, unexpected character and other scanner related issue.
+	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
+	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
+
+	<script: 'self styleWithError: self badTokens'>
+	| list |
+	list := {
+		        (self new
+			         source: '#';
+			         notices: #( #( 1 1 2 'Literal expected' ) )).
+		        (self new
+			         source: '$';
+			         notices: #( #( 1 1 2 'Character expected' ) )).
+		        (self new
+			         source: ':';
+			         notices: #( #( 1 1 1 'Unexpected token' ) )).
+		        (self new
+			         source: '';
+			         isFaulty: false). "emptyness is ok"
+
+		        "Comments"
+		        "EFFormater is not the best here :("
+		        (self new
+			         source: '"" ';
+			         isFaulty: false).
+		        (self new
+			         source: '"nothing" ';
+			         isFaulty: false).
+		        (self new
+			         source: '"com"1"ment"';
+			         formattedCode: '1';
+			         isFaulty: false;
+			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
+		        (self new
+			         source: '"a" 1 "b". "c" 2 "d"';
+			         formattedCode: '1. "a" "b" "c" 2 "d"';
+			         isFaulty: false;
+			         value: 2). "a and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: '"unfinished';
+			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"also unfinished""';
+			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"';
+			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"""';
+			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
+
+
+		        "Bad string literal"
+		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
+		        (self new
+			         source: '''hello';
+			         notices: #( #( 1 6 7 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '''hello''''world';
+			         notices:
+				         #( #( 1 13 14 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '''';
+			         notices: #( #( 1 1 2 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '''hello''''';
+			         notices: #( #( 1 8 9 'Unmatched '' in string literal.' ) )). "unclosed string that ends with an escaped quote"
+
+		        "Bad symbol literal"
+		        (self new
+			         source: '#1';
+			         formattedCode: '#. 1';
+			         notices: #( #( 1 1 2 'Literal expected' ) )). "Become a bad sequence"
+		        (self new
+			         source: '#1r0';
+			         formattedCode: '#. 1 r0';
+			         notices:
+				         #( #( 1 1 2 'Literal expected' )
+				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
+		        (self new
+			         source: '##';
+			         notices: #( #( 1 2 3 'Literal expected' ) )).
+		        "Note: if quotes, same thing than strings"
+		        (self new
+			         source: '#''hello';
+			         notices: #( #( 1 7 8 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '#''hello''''world';
+			         notices:
+				         #( #( 1 14 15 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '#''';
+			         notices: #( #( 1 2 3 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '#''hello''''';
+			         notices:
+				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''hello';
+			         notices:
+				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''hello''''world';
+			         notices:
+				         #( #( 1 16 17 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''';
+			         notices: #( #( 1 4 5 'Unmatched '' in string literal.' ) )).
+		        (self new
+			         source: '###''hello''''';
+			         notices:
+				         #( #( 1 11 12 'Unmatched '' in string literal.' ) )).
+
+		        "Bad numeric literal"
+		        "Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
+		        (self new
+			         source: '2r';
+			         notices:
+				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )).
+		        (self new
+			         source: '2rx';
+			         formattedCode: '2r x';
+			         notices:
+				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a unary message send"
+		        (self new
+			         source: '2r3';
+			         formattedCode: '2r. 3';
+			         notices:
+				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a number, causing a case of unfinished sequence"
+		        (self new
+			         source: '0r';
+			         formattedCode: '0 r';
+			         notices:
+				         #( #( 1 1 2 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '000rx';
+			         formattedCode: '000 rx';
+			         notices:
+				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '000r1';
+			         formattedCode: '000 r1';
+			         notices:
+				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '3r12345';
+			         formattedCode: '3r12. 345';
+			         notices: #( #( 1 4 5 'End of statement expected' ) )).
+
+		        "These ones are correct, the number parser is very prermisive (except for radix, see above)"
+		        (self new
+			         source: '1.';
+			         formattedCode: '1';
+			         isFaulty: false;
+			         value: 1).
+		        (self new
+			         source: '1.1.1';
+			         formattedCode: '1.1. 1';
+			         isFaulty: false;
+			         value: 1).
+		        (self new
+			         source: '1a';
+			         formattedCode: '1 a';
+			         isFaulty: false;
+			         messageNotUnderstood: #a).
+		        (self new
+			         source: '1a1a1';
+			         formattedCode: '1 a1a1';
+			         isFaulty: false;
+			         messageNotUnderstood: #a1a1).
+		        (self new
+			         source: '1e';
+			         formattedCode: '1 e';
+			         isFaulty: false;
+			         messageNotUnderstood: #e).
+		        (self new
+			         source: '1e1e1';
+			         formattedCode: '1e1 e1';
+			         isFaulty: false;
+			         messageNotUnderstood: #e1).
+		        (self new
+			         source: '1s';
+			         isFaulty: false;
+			         value: 1s0). "ScaledDecimal is a thing (!) that have literals (!!) inconsistent with '1e' (!!!)"
+		        (self new
+			         source: '1s1s1';
+			         formattedCode: '1s1 s1';
+			         isFaulty: false;
+			         messageNotUnderstood: #s1).
+		        (self new
+			         source: '10r89abcd';
+			         formattedCode: '10r89 abcd';
+			         isFaulty: false;
+			         messageNotUnderstood: #abcd).
+		        (self new
+			         source: '12r89abcd';
+			         formattedCode: '12r89ab cd';
+			         isFaulty: false;
+			         messageNotUnderstood: #cd).
+		        (self new
+			         source: '36r1halt';
+			         isFaulty: false;
+			         value: 2486513). "ahah"
+
+		        "Bad characters"
+		        "Pharo is Unicode aware."
+		        "$Δ isLetter >>> true" "$Δ asInteger >>> 16r0394" "Greek Capital Letter Delta"
+		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
+		        (self new
+			         source: 'Δə';
+			         isFaulty: false;
+			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
+		        (self new
+			         source: '| Δə | Δə := 1. Δə + 1';
+			         isFaulty: false;
+			         value: 2).
+
+		        "$± isSpecial >>> true" "$± asInteger >>> 16r00B1" "Plus Minus Sign" "Only a few unicode characters are isSpecial in Pharo"
+		        (self new
+			         source: '1 ± 1';
+			         isFaulty: false;
+			         messageNotUnderstood: #±). "Valid binary operator, but not implemented"
+		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
+		        (self new
+			         source: '→';
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
+		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
+		        (self new
+			         source: '٠';
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
+		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
+		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
+		        (self new
+			         source: Character nbsp asString;
+			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
 
 		        (self new
+			         source: '$→';
+			         isFaulty: false;
+			         value: $→).
+		        (self new
+			         source: '''Δ→ə''';
+			         isFaulty: false;
+			         value: 'Δ→ə').
+		        (self new
+			         source: '"Δ→ə" ';
+			         isFaulty: false).
+		        (self new
+			         source: '#''Δ→ə''';
+			         isFaulty: false;
+			         value: #'Δ→ə').
+		        (self new
+			         source: '#Δə';
+			         formattedCode: '#''Δə''';
+			         isFaulty: false;
+			         value: #'Δə').
+		        (self new
+			         source: '#(Δ→ə)';
+			         formattedCode: '#( Δ → ə )';
+			         notices: #( #( 4 4 4 'Unknown character' ) )). "This one is faulty because → is a parse error"
+		        (self new
+			         source: '#→';
+			         formattedCode: '#. →';
+			         notices:
+				         #( #( 1 1 2 'Literal expected' )
+				            #( 2 2 2 'Unknown character' ) )) "Two independent errors" }.
+	"Setup default values"
+	self new
+		group: #badTokens;
+		isMethod: false;
+		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badVariableAndScopes [
+	"Test various combinaisons of error and warnings on variables and scope nesting"
+
+	<script: 'self styleWithError: self badVariableAndScopes'>
+	| list |
+	list := {
+		        (self new
 			         source: 'a := a. { [ :a }. a := a';
-			         formattedCode: 'a := a. { [ :a | } a := a';
-			         raise: UndeclaredVariableRead;
+			         formattedCode: 'a := a. { [ :a | }. a := a';
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
-				            #( 16 15 16 'Variable or expression expected' )
 				            #( 16 16 16 'Missing opener for closer: }' )
 				            #( 11 24 25 ''']'' expected' )
 				            #( 9 24 25 '''}'' expected' ) )). "OK, but maybe the `}` could close the `{` and consider the `[` unfinished?"
 		        (self new
 			         source: 'a := a. [ :a [ :a. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
-			         raise: UndeclaredVariableRead;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1525,27 +1541,24 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 9 25 26 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
-			         formattedCode: 'a := a. [ :a | [ :a | ] a := a';
-			         raise: UndeclaredVariableRead;
+			         formattedCode: 'a := a. [ :a | [ :a | ]. a := a';
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
 				            #( 9 27 28 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
-			         formattedCode: 'a := a. { [ :a | } a := a';
-			         raise: UndeclaredVariableRead;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
-				            #( 18 17 18 'Variable or expression expected' )
 				            #( 18 18 18 'Missing opener for closer: }' )
 				            #( 11 26 27 ''']'' expected' )
 				            #( 9 26 27 '''}'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
-			         formattedCode: 'a := a. { [ :a | a := a } a := a';
-			         raise: UndeclaredVariableRead;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1555,7 +1568,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
-			         raise: UndeclaredVariableRead;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1564,7 +1577,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a a ]. a := a';
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
-			         raise: UndeclaredVariableRead;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1574,7 +1587,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
-			         raise: UndeclaredVariableRead;
+			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1583,50 +1596,56 @@ RBCodeSnippet class >> badVariableAndScopes [
 
 		        "Chains of shadowing"
 		        (self new
-			         source: '[:a :a :b | | a a b | a + a + b ]';
-			         formattedCode: '[ :a :a :b | | a a b | a + a + b ]';
+			         source: '[ :a :a :b | | a a b | a + a + b ]';
 			         isFaulty: false;
 			         value: 4;
 			         notices:
-				         #( #( 6 6 6 'Name already defined' )
-				            #( 15 15 15 'Name already defined' )
-				            #( 15 15 15 'Unused variable' )
-				            #( 17 17 17 'Name already defined' )
-				            #( 19 19 19 'Name already defined' )
-				            #( 23 23 23 'Unitialized variable' )
-				            #( 27 27 27 'Unitialized variable' )
-				            #( 31 31 31 'Unitialized variable' ) )).
+				         #( #( 7 7 7 'Name already defined' )
+				            #( 16 16 16 'Name already defined' )
+				            #( 16 16 16 'Unused variable' )
+				            #( 18 18 18 'Name already defined' )
+				            #( 20 20 20 'Name already defined' )
+				            #( 24 24 24 'Unitialized variable' )
+				            #( 28 28 28 'Unitialized variable' )
+				            #( 32 32 32 'Unitialized variable' ) )).
 		        (self new
 			         source:
-				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b ]';
+				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b ]';
 			         isMethod: true;
-			         value: nil;
-			         notices: #( #( 11 10 11 'Variable name expected' )
-				            #( 14 13 14 'Variable name expected' )
-				            #( 14 13 14 'Name already defined' )
-				            #( 22 22 22 'Name already defined' )
-				            #( 25 25 25 'Name already defined' )
-				            #( 28 28 28 'Name already defined' )
-				            #( 34 34 34 'Name already defined' )
-				            #( 34 34 34 'Unused variable' )
-				            #( 36 36 36 'Name already defined' )
-				            #( 38 38 38 'Name already defined' )
-				            #( 42 42 42 'Unitialized variable' )
-				            #( 46 46 46 'Unitialized variable' )
-				            #( 50 50 50 'Unitialized variable' ) )).
+			         isFaulty: false;
+			         notices: #( #( 11 11 11 'Name already defined' )
+				            #( 21 21 21 'Name already defined' )
+				            #( 24 24 24 'Name already defined' )
+				            #( 27 27 27 'Name already defined' )
+				            #( 33 33 33 'Name already defined' )
+				            #( 33 33 33 'Unused variable' )
+				            #( 35 35 35 'Name already defined' )
+				            #( 37 37 37 'Name already defined' )
+				            #( 41 41 41 'Unitialized variable' )
+				            #( 45 45 45 'Unitialized variable' )
+				            #( 49 49 49 'Unitialized variable' ) )).
 		        (self new
-			         source: '[:a :a :b | | a a b | a + a + b';
-			         formattedCode: '[ :a :a :b | a + a + b';
-			         notices: #( #( 1 31 32 ''']'' expected' ) )). "FIXME where temps?"
+			         source: '[ :a :a :b | | a a b | a + a + b';
+			         notices:
+				         #( #( 16 16 16 'Unused variable' )
+				            #( 18 18 18 'Name already defined' )
+				            #( 24 24 24 'Unitialized variable' )
+				            #( 28 28 28 'Unitialized variable' )
+				            #( 32 32 32 'Unitialized variable' )
+				            #( 1 32 33 ''']'' expected' ) )).
 		        (self new
 			         source:
-				         'foo: a x: a: y: b [ :a :a :b | | a a b | a + a + b';
-			         formattedCode: 'foo: a x: a: y: b [ :a :a :b | a + a + b';
+				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b';
 			         isMethod: true;
-			         notices: #( #( 11 10 11 'Variable name expected' )
-				            #( 14 13 14 'Variable name expected' )
-				            #( 14 13 14 'Name already defined' )
-				            #( 19 50 51 ''']'' expected' ) )) "FIXME where temps?" }.
+			         notices: #( #( 11 11 11 'Name already defined' )
+				            #( 33 33 33 'Name already defined' )
+				            #( 33 33 33 'Unused variable' )
+				            #( 35 35 35 'Name already defined' )
+				            #( 37 37 37 'Name already defined' )
+				            #( 41 41 41 'Unitialized variable' )
+				            #( 45 45 45 'Unitialized variable' )
+				            #( 49 49 49 'Unitialized variable' )
+				            #( 18 49 50 ''']'' expected' ) )) }.
 	"Setup default values"
 	self new
 		group: #badVariableAndScopes;
@@ -1651,14 +1670,15 @@ RBCodeSnippet class >> styleAll [
 ]
 
 { #category : #script }
-RBCodeSnippet class >> styleAllWithError [
+RBCodeSnippet class >> styleWithError: snippets [
 	"Display all snippets in a big styled text with compilation error messages and error nodes.
 	Each compilation error message and each error node is displayed indenpendently."
 
-	<script>
+	<script: 'self styleWithError: self allSnippets'>
+
 	| bigtext |
 	bigtext := Text new.
-	self allSnippets do: [ :each |
+	snippets do: [ :each |
 		| text ast |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 

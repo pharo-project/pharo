@@ -47,7 +47,7 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	(Smalltalk globals includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition
-		                 copyReplaceAll: 'category: ' , (SystemOrganization categoryOfBehavior: oldClass) asString printString
+		                 copyReplaceAll: 'category: ' , (Smalltalk organization categoryOfBehavior: oldClass) asString printString
 		                 with: 'category: ' , newCategoryName printString.
 	class := self compiler
 		         logged: true;

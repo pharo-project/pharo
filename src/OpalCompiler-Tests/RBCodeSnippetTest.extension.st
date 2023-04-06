@@ -1,6 +1,30 @@
 Extension { #name : #RBCodeSnippetTest }
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileFailBlock [
+
+	| method error |
+	error := nil.
+	method := OpalCompiler new
+		          noPattern: snippet isMethod not;
+		          failBlock: [ :e |
+			          self assert: (snippet hasNotice: e).
+			          self assert: error isNil. "single invocation"
+			          error := e.
+			          #tag ];
+		          compile: snippet source.
+
+	snippet isFaulty | snippet hasUndeclared
+		ifTrue: [
+			self assert: error isNotNil.
+			self assert: method equals: #tag ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileFaulty [
 
 	| method |
@@ -69,11 +93,14 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 		          noPattern: snippet isMethod not;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
-			| n |
+			          | n |
 			          self assert: requestor notifyList size equals: 1.
-			n := requestor notifyList first.
-						self assert: (snippet hasNotice: (n first allButLast: 3) at: n second).
-			          self assert: snippet isFaulty.
+			          n := requestor notifyList first.
+			          self assert:
+					          (snippet
+						           hasNotice: (n first allButLast: 3)
+						           at: n second).
+			          self assert: snippet isFaulty | snippet hasUndeclared.
 			          ^ self ];
 		          compile: snippet source.
 
