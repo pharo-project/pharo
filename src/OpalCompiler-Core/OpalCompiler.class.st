@@ -264,7 +264,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		(self isInteractive and: [self compilationContext noPattern not]) ifTrue: [
+		self isInteractive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
