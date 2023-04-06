@@ -40,12 +40,6 @@ Protocol class >> name: nm methodSelectors: methods [
 ]
 
 { #category : #accessing }
-Protocol class >> nullProtocolName [
-
-	^ #'no messages'
-]
-
-{ #category : #accessing }
 Protocol class >> unclassified [
 	^ #'as yet unclassified'
 ]
