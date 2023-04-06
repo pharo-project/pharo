@@ -334,6 +334,7 @@ OpalCompiler >> compile [
 	keep := compilationContext noPattern or: [ ast isFaulty ].
 	keep ifTrue: [ compilationContext parseOptions: #( + #optionEmbeddSources ) ].
 	self callPlugins.
+	ast scope registerVariables.
 	method := ast generateMethod.
 	keep ifTrue: [ method propertyAt: #ast put: ast ].
 	^ method
