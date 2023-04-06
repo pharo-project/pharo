@@ -542,11 +542,9 @@ CompilationContext >> noPattern [
 
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
-	anObject ifTrue: [
-		semanticScope := semanticScope asDoItScope.
-		"when we compile an expression, embedd sources, as the resulting method will never be installed"
-		self parseOptions: #(+ #optionEmbeddSources).
-	 ]
+
+	(anObject and: [ self noPattern not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #options }
