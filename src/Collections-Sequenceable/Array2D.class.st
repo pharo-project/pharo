@@ -657,16 +657,6 @@ Array2D >> select: aBlock [
 	self shouldNotImplement
 ]
 
-{ #category : #copying }
-Array2D >> shuffled [
-	^self class rows: numberOfRows columns: numberOfColumns contents: (contents shuffled)
-]
-
-{ #category : #copying }
-Array2D >> shuffledBy: aRandom [
-	^self class rows: numberOfRows columns: numberOfColumns contents: (contents copy shuffleBy: aRandom)
-]
-
 { #category : #accessing }
 Array2D >> size [
 	^ contents size

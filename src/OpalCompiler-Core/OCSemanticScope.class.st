@@ -47,21 +47,6 @@ OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 	aSystemAnnouncer evaluated: aSourceString context: nil
 ]
 
-{ #category : #converting }
-OCSemanticScope >> asDoItScope [
-	self subclassResponsibility
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForContext: aContext [
-	^OCContextualDoItSemanticScope targetingContext: aContext
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForReceiver: anObject [
-	^OCReceiverDoItSemanticScope targetingReceiver: anObject
-]
-
 { #category : #testing }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
 
@@ -81,16 +66,6 @@ OCSemanticScope >> lookupVar: name [
 	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
 	^outerScope ifNotNil: [ outerScope lookupVar: name ]
-]
-
-{ #category : #'code compilation' }
-OCSemanticScope >> parseASTBy: aParser [
-	self subclassResponsibility
-]
-
-{ #category : #printing }
-OCSemanticScope >> scopeLevel [
-	^0
 ]
 
 { #category : #accessing }

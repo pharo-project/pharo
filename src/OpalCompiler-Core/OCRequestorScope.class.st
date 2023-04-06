@@ -70,11 +70,6 @@ OCRequestorScope >> requestor: anObject [
 ]
 
 { #category : #accessing }
-OCRequestorScope >> scopeLevel [
-	^ 0
-]
-
-{ #category : #accessing }
 OCRequestorScope >> variables [
 
 	^ variables ifNil: [ variables := Dictionary new ].

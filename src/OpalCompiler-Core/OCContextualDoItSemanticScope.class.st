@@ -37,14 +37,6 @@ OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSyst
 	aSystemAnnouncer evaluated: aSourceString context: targetContext
 ]
 
-{ #category : #converting }
-OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [
-	anObject == targetContext receiver ifFalse: [
-		self error: 'Receiver is not same as context receiver' ].
-
-	^self
-]
-
 { #category : #testing }
 OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
 

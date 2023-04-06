@@ -27,7 +27,7 @@ Behavior >> compile: code notifying: requestor [
 	method  := self compiler
 		source: code;
 		requestor: requestor;
-		failBlock: (requestor ifNil: nil ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
+		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
 		compile.
 
 	method putSource: code
@@ -67,6 +67,7 @@ Behavior >> compilerClass [
 
 { #category : #'*OpalCompiler-Core' }
 Behavior >> evaluate: aString [
+	self deprecated: 'You should not even use it as `self` does not impact the result' transformWith: '`@rcv evaluate: `@arg' -> '`@rcv compiler evaluate: `@arg'.
 	^self compiler evaluate: aString
 ]
 
@@ -124,10 +125,4 @@ Behavior >> recompileBasic: selector from: oldClass [
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod
-]
-
-{ #category : #'*OpalCompiler-Core' }
-Behavior >> scopeLevel [
-	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
-	^ 0
 ]

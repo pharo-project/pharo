@@ -185,11 +185,6 @@ RBMethodNode >> sourceNodeForPC: anInteger [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> sourceText: aString [
-	self source: aString
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> startWithoutParentheses [
 	^ 1
 ]

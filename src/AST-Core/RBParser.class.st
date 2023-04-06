@@ -649,9 +649,13 @@ RBParser >> parseLiteralArray [
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
 	faulty ifTrue: [
-		^ (self parseEnglobingError: literals with: startToken errorMessage: nil)
+		^ RBLiteralArrayErrorNode new
+			value: '#(';
+		 	start: startToken start;
+			contents: literals;
 			valueAfter: ')';
 			stop: stop;
+			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start
@@ -697,9 +701,13 @@ RBParser >> parseLiteralByteArray [
 	stop := currentToken stop.
 	self step.
 	faulty ifTrue: [
-		^ (self parseEnglobingError: stream contents with: startToken errorMessage: nil)
+		^ RBLiteralByteArrayErrorNode new
+			value: '#[';
+		 	start: startToken start;
+			contents: stream contents;
 			valueAfter: ']';
 			stop: stop;
+			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
 	^self literalArrayNodeClass
 		startPosition: startToken start

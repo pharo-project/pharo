@@ -13,32 +13,6 @@ Class {
 	#category : #'System-Changes-Tests-Base'
 }
 
-{ #category : #support }
-ChangeSetClassChangesTest >> assertDefinition: actualString equivalentTo: expectedString [
-	"When a class definition is reconstructed with #fatDefForClass, it may
-	contain extra trailing space characters in parts of the definition. This
-	is probably a minor bug, but it should be overlooked for purposes of
-	testing the change set update mechanism. The expedient here is to just
-	remove spaces before comparing the definition strings."
-
-	^ self
-		assert: actualString
-		equals: expectedString
-]
-
-{ #category : #support }
-ChangeSetClassChangesTest >> denyDefinition: actualString equivalentTo: expectedString [
-	"When a class definition is reconstructed with #fatDefForClass, it may
-	contain extra trailing space characters in parts of the definition. This
-	is probably a minor bug, but it should be overlooked for purposes of
-	testing the change set update mechanism. The expedient here is to just
-	remove spaces before comparing the definition strings."
-
-	^ self
-		deny: (actualString copyReplaceAll: ' ''' with: '''')
-		equals: (expectedString copyReplaceAll: ' ''' with: '''')
-]
-
 { #category : #running }
 ChangeSetClassChangesTest >> setUp [
 
@@ -59,7 +33,6 @@ ChangeSetClassChangesTest >> tearDown [
 
 { #category : #tests }
 ChangeSetClassChangesTest >> testAddInstanceVariable [
-
 	"Adding an instance variable to the class should result in a change
 	record being added to the current change set."
 
@@ -69,21 +42,15 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 	className := class name.
 	saveClassDefinition := class definitionString.
 
-	self
-		assertDefinition: saveClassDefinition
-		equivalentTo: class definitionString.
+	self assert: saveClassDefinition equals: class definitionString.
 
 	"Redefine the class, adding one instance variable"
 	factory redefineClass: class instanceVariableNames: 'zzz aaa'.
 
-	self
-		denyDefinition: class definitionString
-		equivalentTo: saveClassDefinition.
+	self deny: class definitionString equals: saveClassDefinition.
 
 	"Assert that the change has been recorded in the current change set"
-	self
-		assertDefinition: (ChangeSet current changeRecorderFor: class) priorDefinition
-		equivalentTo: saveClassDefinition
+	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: saveClassDefinition
 ]
 
 { #category : #tests }
@@ -92,16 +59,13 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	record being updated in the current change set."
 
 	| class saveClassDefinition |
-
 	class := factory newClassWithInstanceVariableNames: 'zzz'.
- 	saveClassDefinition := class definitionString.
+	saveClassDefinition := class definitionString.
 	ChangeSet current removeClassChanges: class name.
 	"Redefine the class, adding one instance variable"
 	factory redefineClass: class instanceVariableNames: 'zzz aaa'.
 
-	self
-		assertDefinition: (ChangeSet current changeRecorderFor: class name) priorDefinition
-		equivalentTo: saveClassDefinition
+	self assert: (ChangeSet current changeRecorderFor: class name) priorDefinition equals: saveClassDefinition
 ]
 
 { #category : #tests }
@@ -111,23 +75,16 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 
 	| class saveClassDefinition |
 	"Define a class and save its definition"
-
 	class := factory newClassInCategory: 'TestPackage1'.
 	saveClassDefinition := class definitionString.
-	self
-		assert: saveClassDefinition
-		equals: class definitionString.
+	self assert: saveClassDefinition equals: class definitionString.
 
 	"Redefine the class, changing only the class category"
 	factory redefineClass: class category: 'TestPackage2'.
-	self
-		denyDefinition: class definitionString
-		equivalentTo: saveClassDefinition.
+	self deny: class definitionString equals: saveClassDefinition.
 
 	"Assert that the change has been recorded in the current change set"
-	self
-		assertDefinition: (ChangeSet current changeRecorderFor: class) priorDefinition
-		equivalentTo: class definitionString
+	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString
 ]
 
 { #category : #tests }
@@ -147,9 +104,7 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	"Redefine the class, changing only the class category"
 	factory redefineClass: class category: 'TestPackage2'.
 
-	self
-		assertDefinition: (ChangeSet current changeRecorderFor: class) priorDefinition
-		equivalentTo: class definitionString
+	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString
 ]
 
 { #category : #tests }
