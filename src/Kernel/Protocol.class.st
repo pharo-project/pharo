@@ -18,10 +18,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> name: nm [
+Protocol class >> name: name [
 
 	^ self new
-		name: nm asSymbol;
+		name: name asSymbol;
 		yourself
 ]
 

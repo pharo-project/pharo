@@ -14,7 +14,7 @@ RBCodeSnippetTest >> testCompileFailBlock [
 			          #tag ];
 		          compile: snippet source.
 
-	snippet isFaulty | snippet hasUndeclared
+	snippet isFaulty
 		ifTrue: [
 			self assert: error isNotNil.
 			self assert: method equals: #tag ]
@@ -82,6 +82,31 @@ RBCodeSnippetTest >> testCompileOnErrorResume [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
+
+	| method error |
+	error := nil.
+	method := OpalCompiler new
+		          noPattern: snippet isMethod not;
+		          permitUndeclared: true;
+		          failBlock: [ :e |
+			          self assert: (snippet hasNotice: e).
+			          self assert: error isNil. "single invocation"
+			          error := e.
+			          #tag ];
+		          compile: snippet source.
+
+	snippet isFaultyMinusUndeclared
+		ifTrue: [
+			self assert: error isNotNil.
+			self assert: method equals: #tag ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileWithRequestor [
 
 	| requestor method |
@@ -100,7 +125,7 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 					          (snippet
 						           hasNotice: (n first allButLast: 3)
 						           at: n second).
-			          self assert: snippet isFaulty | snippet hasUndeclared.
+			          self assert: snippet isFaulty.
 			          ^ self ];
 		          compile: snippet source.
 

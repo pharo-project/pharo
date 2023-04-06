@@ -196,11 +196,6 @@ OpalCompiler >> addPlugin: aClass [
 	compilationContext addASTTransformationPlugin: aClass
 ]
 
-{ #category : #private }
-OpalCompiler >> allowParseErrorsNonInteractive [
-	^self compilationContext optionParseErrorsNonInteractiveOnly and: [ self isInteractive not ]
-]
-
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
@@ -264,7 +259,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		(self isInteractive and: [self compilationContext noPattern not]) ifTrue: [
+		(self compilationContext interactive and: [self compilationContext noPattern not]) ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -366,7 +361,7 @@ OpalCompiler >> context: aContext [
 		The nil context here means to do nothing in such scenarious. So no need to touch the scope here"
 		^self ].
 
-	self semanticScope: (self semanticScope asDoItScopeForContext: aContext)
+	self semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext)
 ]
 
 { #category : #'public access' }
@@ -475,11 +470,6 @@ OpalCompiler >> install: aSource [
 	^ self install
 ]
 
-{ #category : #testing }
-OpalCompiler >> isInteractive [
-	^ compilationContext interactive
-]
-
 { #category : #private }
 OpalCompiler >> logDoIt [
 	self compilationContext logDoItEvaluation: source
@@ -507,11 +497,11 @@ OpalCompiler >> parse [
 	"Policy: simple parsing is faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: true ].
 	"Compatible policy: undeclared if failBlock present"
-	self permitUndeclared ifNil: [ self permitUndeclared: self compilationContext failBlock isNil ].
+	self permitUndeclared ifNil: [ self permitUndeclared: false ].
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
-	ast := self semanticScope parseASTBy: parser.
+	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self callParsePlugins.
@@ -591,7 +581,7 @@ OpalCompiler >> protocol: aProtocol [
 
 { #category : #accessing }
 OpalCompiler >> receiver: anObject [
-	self semanticScope: (self semanticScope asDoItScopeForReceiver: anObject)
+	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
 ]
 
 { #category : #accessing }

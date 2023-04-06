@@ -49,7 +49,7 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
 		transformations := OrderedCollection
-			with: (RBInsertClassTransformation
+			with: (RBInsertNewClassTransformation
 						addClass: self tmpName
 						superclass: className asSymbol
 						subclasses: #()

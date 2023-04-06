@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : #accessing }
+SystemDependenciesTest class >> defaultTimeLimit [
+
+	^ 1 minute
+]
+
+{ #category : #accessing }
 SystemDependenciesTest class >> dependenciesReport [
 
 	^ dependenciesReport ifNil: [ self rebuildDependenciesReport ]
@@ -152,12 +158,6 @@ SystemDependenciesTest >> knownUIDependencies [
 	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
-{ #category : #utilities }
-SystemDependenciesTest >> longTestCase [
-
-	self timeLimit: 60 seconds
-]
-
 { #category : #accessing }
 SystemDependenciesTest >> metacelloPackageNames [
 
@@ -185,11 +185,19 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 ]
 
 { #category : #tests }
+SystemDependenciesTest >> testCollectionsShouldNotDependOnRandom [
+	"In the past Random-Core was depending on Collection-Abstract and Collections-Sequenceable but both those packages also depended on Random-Core.
+	This dependency has been removed and this test is here to ensure it does not get added back in the future."
+
+	| dependencies |
+	dependencies := self externalDependendiesOf: #( 'Collections-Abstract' 'Collections-Sequenceable' ).
+	self deny: (dependencies includes: 'Random-Core')
+]
+
+{ #category : #tests }
 SystemDependenciesTest >> testExternalBasicToolsDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
@@ -226,8 +234,6 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 
 	| dependencies |
 
-	self longTestCase.
-
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
@@ -241,8 +247,6 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 SystemDependenciesTest >> testExternalDisplayDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
@@ -258,8 +262,6 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 	| dependencies |
 
-	self longTestCase.
-
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
@@ -273,7 +275,6 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 { #category : #tests }
 SystemDependenciesTest >> testExternalIDEDependencies [
 	| dependencies packages |
-	self longTestCase.
 	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
 
 	{BaselineOfAthens.
@@ -355,7 +356,6 @@ If you will break or weaken this test, a puppy will die!!!
      (_(_/-(_/
 "
 	| dependencies |
-	self longTestCase.
 
 	dependencies := self
 		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames, BaselineOfPharoBootstrap kernelAdditionalPackagesNames.
@@ -367,8 +367,6 @@ If you will break or weaken this test, a puppy will die!!!
 SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
 		BaselineOfTraits corePackages,
@@ -389,8 +387,6 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 
 	| dependencies |
 
-	self longTestCase.
-
 	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
 
 	self assert: dependencies isEmpty
@@ -400,8 +396,6 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 SystemDependenciesTest >> testExternalMonticelloDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
 		BaselineOfTraits corePackages,
@@ -421,8 +415,6 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 
 	| dependencies |
 
-	self longTestCase.
-
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -440,8 +432,6 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 SystemDependenciesTest >> testExternalMorphicDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
@@ -470,8 +460,6 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 
 	| dependencies |
 
-	self longTestCase.
-
 	dependencies := self externalDependendiesOf: (
 		BaselineOfTraits corePackages,
 		self metacelloPackageNames,
@@ -485,8 +473,6 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap compilerPackageNames,
@@ -503,8 +489,6 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := (self externalDependendiesOf: (
 		"Language"
@@ -545,8 +529,6 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 
 	| dependencies |
 
-	self longTestCase.
-
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -562,8 +544,6 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 SystemDependenciesTest >> testExternalUIDependencies [
 
 	| dependencies |
-
-	self longTestCase.
 
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
