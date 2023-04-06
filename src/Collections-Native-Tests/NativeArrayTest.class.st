@@ -4,7 +4,7 @@ SUnit tests for ByteArray, DoubleByteArray, WordArray and DoubleWordArray.
 Class {
 	#name : #NativeArrayTest,
 	#superclass : #TestCase,
-	#category : #'Collections-Tests-Arrayed'
+	#category : #'Collections-Native-Tests-Base'
 }
 
 { #category : #utilities }

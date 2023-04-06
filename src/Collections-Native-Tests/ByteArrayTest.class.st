@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'collectionWith5Elements'
 	],
-	#category : #'Collections-Tests-Arrayed'
+	#category : #'Collections-Native-Tests-Base'
 }
 
 { #category : #requirements }
