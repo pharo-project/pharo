@@ -299,14 +299,12 @@ RPackage >> basicAddClassTag: tagName [
 RPackage >> basicImportClass: aClass [
 	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
 
-	"Note: Protocol defaultName is #'as yet unclassified'"
-
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
 	| protocols |
 	self addClassDefinition: aClass.
 	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol defaultName ] ].
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol unclassified ] ].
 	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
@@ -1136,7 +1134,7 @@ RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
 	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol defaultName ] ].
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].

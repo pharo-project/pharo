@@ -17,12 +17,6 @@ Protocol class >> ambiguous [
 	^ #ambiguous
 ]
 
-{ #category : #accessing }
-Protocol class >> defaultName [
-
-	^  self unclassified
-]
-
 { #category : #'instance creation' }
 Protocol class >> name: nm [
 
@@ -37,12 +31,6 @@ Protocol class >> name: nm methodSelectors: methods [
 		methodSelectors: methods;
 		name: nm asSymbol;
 		yourself
-]
-
-{ #category : #accessing }
-Protocol class >> nullProtocolName [
-
-	^ #'no messages'
 ]
 
 { #category : #accessing }
@@ -82,7 +70,7 @@ Protocol >> initialize [
 	super initialize.
 
 	methodSelectors := IdentitySet new.
-	name := self class defaultName
+	name := self class unclassified
 ]
 
 { #category : #testing }

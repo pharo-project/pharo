@@ -27,6 +27,7 @@ Class {
 		'isMethod',
 		'isParseFaulty',
 		'isFaulty',
+		'isFaultyMinusUndeclared',
 		'notices',
 		'value',
 		'hasValue',
@@ -290,12 +291,16 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '| | a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
@@ -422,7 +427,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a b]';
 			         formattedCode: '[ :a | b ]';
-			         value: nil;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' )
 				            #( 5 5 5 'Undeclared variable' ) )). "FIXME"
 		        (self new
@@ -479,7 +484,9 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
@@ -755,12 +762,17 @@ RBCodeSnippet class >> badSemantic [
 	list := {
 		        (self new
 			         source: 'a := 10. ^ a';
+			         isFaulty: true;
+			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableWrite;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 12 12 12 'Undeclared variable' ) )).
 		        (self new
 			         source: '^ a';
+			         isFaulty: true;
+			         isFaultyMinusUndeclared: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
 		        "Uninitialized variable"
@@ -979,7 +991,6 @@ RBCodeSnippet class >> badSemantic [
 			         isMethod: true;
 			         isFaulty: true;
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
-
 		        (self new
 			         source: 'CodeError signal: ''false error''';
 			         raise: CodeError;
@@ -1448,7 +1459,9 @@ RBCodeSnippet class >> badTokens [
 		        "$ə isLetter >>> true" "$ə asInteger >>> 16r0259" "Latin Small Letter Schwa"
 		        (self new
 			         source: 'Δə';
-			         isFaulty: false;
+			         isParseFaulty: false;
+			         isFaultyMinusUndeclared: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
@@ -1473,7 +1486,6 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: Character nbsp asString;
 			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
-
 		        (self new
 			         source: '$→';
 			         isFaulty: false;
@@ -1523,7 +1535,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
 			         formattedCode: 'a := a. { [ :a | }. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1533,7 +1545,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1542,14 +1554,14 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
 				            #( 9 27 28 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1558,7 +1570,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 9 26 27 '''}'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1568,7 +1580,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1577,7 +1589,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a a ]. a := a';
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1587,7 +1599,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1741,6 +1753,7 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
+		each isFaultyMinusUndeclared ifNil: [ each isFaultyMinusUndeclared: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
 	]
 ]
@@ -1802,6 +1815,10 @@ RBCodeSnippet >> dumpDefinition [
 			  aStream
 				  nextPutAll: '; isParseFaulty: ';
 				  print: self isParseFaulty ].
+		  self isFaultyMinusUndeclared ~= self isFaulty ifTrue: [
+			  aStream
+				  nextPutAll: '; isFaultyMinusUndeclared: ';
+				  print: self isFaultyMinusUndeclared ].
 		  self dumpDefinitionValue: aStream.
 		  self numberOfCritiques ifNotNil: [
 			  aStream
@@ -1934,6 +1951,18 @@ RBCodeSnippet >> isFaulty [
 RBCodeSnippet >> isFaulty: anObject [
 
 	isFaulty := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isFaultyMinusUndeclared [
+
+	^ isFaultyMinusUndeclared
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
+
+	isFaultyMinusUndeclared := anObject
 ]
 
 { #category : #accessing }
@@ -2127,6 +2156,7 @@ RBCodeSnippet >> updateExpectations [
 	self isParseFaulty: ast isFaulty.
 	ast := self doSemanticAnalysis.
 	self isFaulty: ast isFaulty.
+	self isFaultyMinusUndeclared: self isFaulty & (ast allErrorNotices allSatisfy: #isUndeclaredNotice) not.
 	self notices: (ast allNotices
 			 collect: [ :each |
 				 {
