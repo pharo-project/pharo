@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Watches'
 }
 
+{ #category : #testing }
+DoOnlyOnceIconStyler class >> isDeprecated [ 
+
+	^true
+]
+
 { #category : #defaults }
 DoOnlyOnceIconStyler >> iconBlock: aNode [
 	^[ :arg | self rearmOneShot]
