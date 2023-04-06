@@ -320,6 +320,21 @@ SHRBStyleAttributionTest >> testCommentStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInLiteralArrayNode [
+
+	| aText |
+	aText := 'test
+	(#(123) "comment")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 15
+		and: 23
+		shouldBe: #comment
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCommentsInLiteralValueNode [
 
 	| aText |
@@ -362,6 +377,21 @@ SHRBStyleAttributionTest >> testCommentsInVariaousPlaces [
 		assertStyleOf: aText
 		between: 57
 		and: 66
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsPragmaNode [
+
+	| aText |
+	aText := 'test
+	<test "comment">' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 13
+		and: 21
 		shouldBe: #comment
 ]
 
