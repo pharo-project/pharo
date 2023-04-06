@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'classFactory'
 	],
-	#category : #'Tests-Streams'
+	#category : #'System-Sources-Tests'
 }
 
 { #category : #running }
