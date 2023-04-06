@@ -4,8 +4,14 @@ I render an icon to control the state of #doOnlyOnce:
 Class {
 	#name : #DoOnlyOnceIconStyler,
 	#superclass : #IconStyler,
-	#category : #'Reflectivity-Tools-Watches'
+	#category : #Deprecated12
 }
+
+{ #category : #testing }
+DoOnlyOnceIconStyler class >> isDeprecated [ 
+
+	^ true
+]
 
 { #category : #defaults }
 DoOnlyOnceIconStyler >> iconBlock: aNode [

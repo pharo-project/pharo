@@ -89,16 +89,6 @@ ProtoObject >> class [
 	self primitiveFailed
 ]
 
-{ #category : #debugging }
-ProtoObject >> doOnlyOnce: aBlock [
-	"If the 'one-shot' mechanism is armed, evaluate aBlock once and disarm the one-shot mechanism.  To rearm the mechanism, evaluate  'self rearmOneShot' manually."
-
-	(self class environment at: #OneShotArmed ifAbsent: [ true ])
-		ifTrue: [
-			self class environment at: #OneShotArmed put: false.
-			aBlock value ]
-]
-
 { #category : #'reflective operations' }
 ProtoObject >> doesNotUnderstand: aMessage [
 
@@ -374,16 +364,6 @@ ProtoObject >> primitiveFailed: selector [
 	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
 
 	PrimitiveFailed signalFor: selector
-]
-
-{ #category : #debugging }
-ProtoObject >> rearmOneShot [
-	"Call this manually to arm the one-shot mechanism; use the mechanism in code by calling
-		self doOnlyOnce: <a block>"
-
-	self class environment at: #OneShotArmed put: true
-
-	"self rearmOneShot"
 ]
 
 { #category : #'apply primitives' }
