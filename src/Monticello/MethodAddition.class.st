@@ -44,7 +44,7 @@ MethodAddition >> createCompiledMethod [
 	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
 	
 	Can't we just call #compile:classfied: here?"
-	compiledMethod := myClass compiler compile: text asString.
+	compiledMethod := myClass compiler permitUndeclared: true; compile: text asString.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].
