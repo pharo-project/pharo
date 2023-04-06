@@ -125,7 +125,7 @@ RBTransformationsTest >> testCompositeTransform [
 	newClassName := (self changeMock name, 'Temporary') asSymbol.
 	transformation := RBCompositeTransformation new
 		transformations: (OrderedCollection new
-			add: (RBInsertClassTransformation
+			add: (RBInsertNewClassTransformation
 					addClass: newClassName
 					superclass: #Object
 					subclasses: #()
