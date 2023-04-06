@@ -385,6 +385,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		source: sourceCode;
 		requestor: requestor;
 		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
+		permitUndeclared: (requestor isNil); "compatibility: permit undeclared if no requestor"
 		protocol: protocol;
 		changeStamp: changeStamp;
 		logged: logSource;

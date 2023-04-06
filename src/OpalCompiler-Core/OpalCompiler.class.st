@@ -497,7 +497,7 @@ OpalCompiler >> parse [
 	"Policy: simple parsing is faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: true ].
 	"Compatible policy: undeclared if failBlock present"
-	self permitUndeclared ifNil: [ self permitUndeclared: self compilationContext failBlock isNil ].
+	self permitUndeclared ifNil: [ self permitUndeclared: false ].
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.

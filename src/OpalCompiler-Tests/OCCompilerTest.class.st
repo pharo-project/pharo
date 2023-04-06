@@ -246,15 +246,6 @@ OCCompilerTest >> testUndefinedVariable [
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	self
 		assert: {
-			OpalCompiler new evaluate: 'undefinedName123'.
-			[ OpalCompiler new evaluate: 'undefinedName123 := 1. undefinedName123' ] on: UndeclaredVariableWrite do: [ UndeclaredVariableWrite ].
-			OpalCompiler new evaluate: 'undefinedName123'.
-			}
-		equals: { nil. UndeclaredVariableWrite. nil. }.
-
-	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
-	self
-		assert: {
 			OpalCompiler new
 				permitFaulty: true;
 				evaluate: 'undefinedName123'.
