@@ -291,11 +291,13 @@ RBCodeSnippet class >> badExpressions [
 			         source: '| | a';
 			         formattedCode: 'a';
 			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         formattedCode: 'a';
 			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
@@ -422,7 +424,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a b]';
 			         formattedCode: '[ :a | b ]';
-			         value: nil;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' )
 				            #( 5 5 5 'Undeclared variable' ) )). "FIXME"
 		        (self new
@@ -480,6 +482,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: '[:a| | |b]';
 			         formattedCode: '[ :a | b ]';
 			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
@@ -761,6 +764,7 @@ RBCodeSnippet class >> badSemantic [
 				            #( 12 12 12 'Undeclared variable' ) )).
 		        (self new
 			         source: '^ a';
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
 
 		        "Uninitialized variable"
@@ -1449,6 +1453,7 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: 'Δə';
 			         isFaulty: false;
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
@@ -1523,7 +1528,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
 			         formattedCode: 'a := a. { [ :a | }. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1533,7 +1538,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1542,14 +1547,14 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
 			         formattedCode: 'a := a. [ :a | [ :a | ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
 				            #( 9 27 28 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1558,7 +1563,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 				            #( 9 26 27 '''}'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1568,7 +1573,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1577,7 +1582,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a a ]. a := a';
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
@@ -1587,7 +1592,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
-			         raise: UndeclaredVariableWrite;
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
 				            #( 1 1 1 'Undeclared variable' )
