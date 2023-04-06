@@ -885,7 +885,8 @@ ClassDescription >> removeMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods.
 	Here we could remove what we not need"
-	self organization removeProtocolNamed: aSymbol
+
+	self organization removeProtocolIfEmpty: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -894,7 +895,7 @@ ClassDescription >> removeProtocol: protocolName [
 	dictionary of the receiver. Then remove the category aString."
 
 	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
-	self organization removeProtocolNamed: protocolName
+	self organization removeProtocolIfEmpty: protocolName
 ]
 
 { #category : #'accessing - method dictionary' }
