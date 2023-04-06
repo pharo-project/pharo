@@ -288,6 +288,24 @@ SHRBStyleAttributionTest >> testClassVarStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCommentOfVariableInParenthesis [
+	"Regression test for https://github.com/pharo-project/pharo/issues/13316"
+
+	| aText |
+	aText := 'test
+
+	| toto |
+	^ (toto "this returns nil")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 26
+		and: 43
+		shouldBe: #comment
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCommentStyle [
 
 	| aText |

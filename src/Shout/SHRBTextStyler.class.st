@@ -1101,10 +1101,10 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
-	self
-		addStyle: (self resolveStyleFor: aVariableNode)
-		attributes: (self resolveVariableAttributesFor: aVariableNode)
-		forNode: aVariableNode
+
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
+
+	self visitMethodComments: aVariableNode comments
 ]
 
 { #category : #accessing }
