@@ -289,7 +289,7 @@ PBImageBuilder50 >> createInitialObjects [
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Transcript put: nil.'.
 	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #SystemOrganisation put: nil.'.
+		'Smalltalk globals at: #SystemOrganization put: nil.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #SourceFiles put: nil.'.
 
