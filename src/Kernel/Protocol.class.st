@@ -60,11 +60,6 @@ Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
 ]
 
-{ #category : #private }
-Protocol >> canBeRemoved [
-	^ self isEmpty
-]
-
 { #category : #testing }
 Protocol >> canBeRenamed [
 	^ true
