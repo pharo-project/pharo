@@ -14,6 +14,12 @@ OCDoitTest >> bindingOf: aSelector [
 		ifFalse:  [nil]
 ]
 
+{ #category : #testing }
+OCDoitTest >> canDeclareBindings [
+
+	^ true
+]
+
 { #category : #binding }
 OCDoitTest >> hasBindingOf: aSelector [
 	^aSelector == #requestorVarForTesting

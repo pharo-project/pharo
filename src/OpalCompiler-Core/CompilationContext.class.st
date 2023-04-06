@@ -707,6 +707,8 @@ CompilationContext >> requestorCanDeclare: aRequestor [
 	Because there is no sane API on requestors, we just typecheck until all requestors are dead and buried"
 
 	aRequestor ifNil: [ ^ false ].
+	(aRequestor respondsTo: #canDeclareBindings) ifTrue: [
+		^ aRequestor canDeclareBindings ].
 	(aRequestor isKindOf: SpCodeScriptingInteractionModel) ifTrue: [
 		^ true ].
 	(aRequestor respondsTo: #interactionModel) ifTrue: [
