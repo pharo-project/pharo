@@ -1,7 +1,7 @@
 "
 I represent a driver that invokes `PushDownMethod` refactoring.
 
-I am responsible for asking user which methods to push down.
+I am responsible for asking user which methods to push down and to which classes to push to.
 
 When I gather all needed information I am calling and executing push down method refactoring.
 
@@ -12,29 +12,29 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : #RBPushDownMethodDriver,
-	#superclass : #RBDriver,
+	#name : #RBPushDownMethodInSomeClassesDriver,
+	#superclass : #RBPushDownMethodDriver,
 	#instVars : [
-		'methods',
-		'scopes',
-		'class'
+		'classes'
 	],
 	#category : #'Refactoring-UI'
 }
 
 { #category : #initialization }
-RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDown: methods [
+RBPushDownMethodInSomeClassesDriver class >> model: aRBNamespace scopes: refactoringScopes pushDown: methods [
 
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
 ]
 
 { #category : #execution }
-RBPushDownMethodDriver >> execute [
+RBPushDownMethodInSomeClassesDriver >> execute [
 
 	| changes refactoring |
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
-
+	classes := self selectClasses.
+	classes ifNil: [ ^ self ].
+	
 	refactoring := self refactoring.
 	changes := [
 	           [ refactoring generateChanges ]
@@ -52,34 +52,26 @@ RBPushDownMethodDriver >> execute [
 		 scopes: scopes) open
 ]
 
-{ #category : #initialization }
-RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
-
-	model := aRBNamespace.
-	scopes := refactoringScopes.
-	methods := methodsList.
-	class := methods first origin
-]
-
 { #category : #resources }
-RBPushDownMethodDriver >> refactoring [
+RBPushDownMethodInSomeClassesDriver >> refactoring [
 
 	^ RBPushDownMethodRefactoring
-		  model: model
-		  pushDown: (methods collect: [ :each | each selector ])
-		  from: class
+		model: model
+		pushDown: (methods collect: [ :each | each selector ])
+		from: class
+		in: classes.
 ]
 
 { #category : #execution }
-RBPushDownMethodDriver >> selectMethods [
+RBPushDownMethodInSomeClassesDriver >> selectClasses [
 
 	| dialog |
-	dialog := StMethodsSelectionPresenter
-		          label: 'Push down methods from ' , class name
+	dialog := StVariablesSelectionPresenter
+		          label: 'Push down in classes: '
 		          withItems:
-			          (class methods sort: [ :a :b | a asString < b asString ])
+			          (class subclasses sort: [ :a :b | a name < b name ])
 				          asOrderedCollection
-		          selecting: methods asOrderedCollection.
+		          selecting: class subclasses.
 	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog presenter selectedItems
+	^ dialog presenter selectedItems collect: [ :each | each name ]
 ]
