@@ -76,11 +76,11 @@ OCSemanticScope >> isDoItScope [
 ]
 
 { #category : #lookup }
-OCSemanticScope >> lookupVar: name declare: aBoolean [
+OCSemanticScope >> lookupVar: name [
 
-	(self targetClass lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^v ].
+	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
-	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
+	^outerScope ifNotNil: [ outerScope lookupVar: name ]
 ]
 
 { #category : #'code compilation' }

@@ -64,7 +64,7 @@ Context >> lookupVar: aSymbol [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupVar: aSymbol declare: aBoolean [
-	^ self astScope lookupVar: aSymbol declare: aBoolean
+	^ self astScope lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
