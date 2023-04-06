@@ -124,6 +124,17 @@ SystemDictionaryTest >> testSmalltalkSelfEvaluating [
 	self assert: Smalltalk isSelfEvaluating
 ]
 
+{ #category : #'tests - printing' }
+SystemDictionaryTest >> testStoreOnWithNegativeInteger [
+
+	| dictionary |
+	dictionary := { ('x' -> -1) } as: self classToBeTested.
+
+	self
+		assert: (String streamContents: [ :s | dictionary storeOn: s ])
+		equals: '((SystemDictionary new) add: (#SystemOrganization->(SystemOrganizer new categoryMap: ((Dictionary new)); yourself)); add: (''x''-> -1); yourself)'
+]
+
 { #category : #tests }
 SystemDictionaryTest >> testUnCategorizedMethods [
 
