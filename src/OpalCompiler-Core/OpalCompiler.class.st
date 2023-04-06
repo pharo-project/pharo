@@ -196,11 +196,6 @@ OpalCompiler >> addPlugin: aClass [
 	compilationContext addASTTransformationPlugin: aClass
 ]
 
-{ #category : #private }
-OpalCompiler >> allowParseErrorsNonInteractive [
-	^self compilationContext optionParseErrorsNonInteractiveOnly and: [ self isInteractive not ]
-]
-
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
@@ -264,7 +259,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		(self isInteractive and: [self compilationContext noPattern not]) ifTrue: [
+		(self compilationContext interactive and: [self compilationContext noPattern not]) ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -473,11 +468,6 @@ OpalCompiler >> install: aSource [
 
 	self source: aSource.
 	^ self install
-]
-
-{ #category : #testing }
-OpalCompiler >> isInteractive [
-	^ compilationContext interactive
 ]
 
 { #category : #private }

@@ -162,32 +162,25 @@ RBCodeSnippet class >> badExpressions [
 			         source: '#( 0 1r2 4 )';
 			         formattedCode: '#( 0 1 r2 4 )';
 			         notices:
-				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' )
-				            #( 1 12 13 ''')'' expected' ) )). "Almost anything..."
+				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' ) )). "Almost anything..."
 		        (self new
 			         source: '#[ 1 ) 2 ]';
-			         notices: #( #( 6 6 6 '8-bit integer expected' )
-				            #( 1 10 11 ''']'' expected' ) )).
+			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 } 2 ]';
-			         notices: #( #( 6 6 6 '8-bit integer expected' )
-				            #( 1 10 11 ''']'' expected' ) )).
+			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 a 2 ]';
-			         notices: #( #( 6 6 6 '8-bit integer expected' )
-				            #( 1 10 11 ''']'' expected' ) )).
+			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 -1 2 ]';
-			         notices: #( #( 6 7 6 '8-bit integer expected' )
-				            #( 1 11 12 ''']'' expected' ) )).
+			         notices: #( #( 6 7 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 1.0 2 ]';
-			         notices: #( #( 6 8 6 '8-bit integer expected' )
-				            #( 1 12 13 ''']'' expected' ) )).
+			         notices: #( #( 6 8 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 256 2 ]';
-			         notices: #( #( 6 8 6 '8-bit integer expected' )
-				            #( 1 12 13 ''']'' expected' ) )).
+			         notices: #( #( 6 8 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '{1)2}';
 			         formattedCode: '{ 1 ). 2 }';
@@ -734,8 +727,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo <bar: #[ -1 ]> ';
 			         value: nil;
-			         notices: #( #( 14 15 14 '8-bit integer expected' )
-				            #( 11 17 18 ''']'' expected' ) )). "Literal bytes arrays are acceptable, but this one is faulty"
+			         notices: #( #( 14 15 14 '8-bit integer expected' ) )). "Literal bytes arrays are acceptable, but this one is faulty"
 		        (self new
 			         source: 'foo < + 1> ';
 			         isFaulty: false). "Binary message is legal pragma"
@@ -1202,8 +1194,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 			         value: #( #'^' 1 )). "Obviously..."
 		        (self new
 			         source: '#[ ^ 1 ]';
-			         notices: #( #( 4 4 4 '8-bit integer expected' )
-				            #( 1 8 9 ''']'' expected' ) )).
+			         notices: #( #( 4 4 4 '8-bit integer expected' ) )).
 
 		        "Unreachable code (warnings)"
 		        "Unreachable analysis is very simple and targets statement that directly follows a return statement."
@@ -1250,7 +1241,7 @@ RBCodeSnippet class >> badTokens [
 	"This list focuses on bad literal, malformed tokens, unexpected character and other scanner related issue.
 	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
 	Unless specifically testing token handling (e.g. in the scanner) try to use the formater format `formattedCode` as the source to simplify this file"
-	
+
 	<script: 'self styleWithError: self badTokens'>
 	| list |
 	list := {
@@ -1506,9 +1497,7 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '#(Δ→ə)';
 			         formattedCode: '#( Δ → ə )';
-			         notices:
-				         #( #( 4 4 4 'Unknown character' )
-				            #( 1 6 7 ''')'' expected' ) )). "This one is faulty because → is a parse error"
+			         notices: #( #( 4 4 4 'Unknown character' ) )). "This one is faulty because → is a parse error"
 		        (self new
 			         source: '#→';
 			         formattedCode: '#. →';
