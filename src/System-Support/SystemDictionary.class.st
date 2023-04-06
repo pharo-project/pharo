@@ -254,13 +254,6 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 	^ false
 ]
 
-{ #category : #initialization }
-SystemDictionary >> initialize: aSize [
-
-	super initialize: aSize.
-	self organization: SystemOrganizer new
-]
-
 { #category : #'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
@@ -297,7 +290,9 @@ SystemDictionary >> nonClassNames [
 SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
-	^ self at: #SystemOrganization ifAbsent: nil
+	^ self at: #SystemOrganization ifAbsent: [
+		  self organization: SystemOrganizer new.
+		  self at: #SystemOrganization ]
 ]
 
 { #category : #accessing }

@@ -43,7 +43,9 @@ SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
 { #category : #tests }
 SystemDictionaryTest >> testEnvironmentOfOrganization [
 
-	self assert: SystemDictionary new organization environment equals: SystemDictionary new
+	| aDictionary |
+	aDictionary := SystemDictionary new.
+	self assert: aDictionary organization environment equals: aDictionary
 ]
 
 { #category : #tests }
