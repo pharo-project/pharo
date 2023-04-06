@@ -161,7 +161,7 @@ Object << #Faked
 { #category : #configure }
 ClassDefinitionPrinter class >> showFluidClassDefinition [
 
-	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := false ]
+	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := true ]
 ]
 
 { #category : #configure }
