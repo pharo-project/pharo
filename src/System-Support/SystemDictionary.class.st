@@ -31,15 +31,6 @@ Class {
 	#category : #'System-Support-Utilities'
 }
 
-{ #category : #'instance creation' }
-SystemDictionary class >> withOrganizer: anOrganizer [
-
-	| dictionary |
-	dictionary := self new.
-	dictionary organization: anOrganizer. "update too the back pointer"
-	^ dictionary
-]
-
 { #category : #'accessing - classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
@@ -261,6 +252,13 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 		ifTrue: [ :aSymbol |
 		^ (self at: aSymbol ifAbsent: [ nil ]) isClassOrTrait ].
 	^ false
+]
+
+{ #category : #initialization }
+SystemDictionary >> initialize: aSize [
+
+	super initialize: aSize.
+	self organization: SystemOrganizer new
 ]
 
 { #category : #'accessing - variable lookup' }
