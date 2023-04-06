@@ -4,6 +4,9 @@ I'm a Set with weak elements
 Class {
 	#name : #WeakSet,
 	#superclass : #Set,
+	#instVars : [
+		'flag'
+	],
 	#category : #'Collections-Weak-Base'
 }
 

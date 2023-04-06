@@ -4,6 +4,9 @@ I'm a IdentitySet with weak elements
 Class {
 	#name : #WeakIdentitySet,
 	#superclass : #IdentitySet,
+	#instVars : [
+		'flag'
+	],
 	#category : #'Collections-Weak-Base'
 }
 
