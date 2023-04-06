@@ -68,11 +68,6 @@ OCSemanticScope >> lookupVar: name declare: aBoolean [
 	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
 ]
 
-{ #category : #printing }
-OCSemanticScope >> scopeLevel [
-	^0
-]
-
 { #category : #accessing }
 OCSemanticScope >> targetClass [
 	self subclassResponsibility

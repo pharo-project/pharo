@@ -8,7 +8,7 @@ TODO: unify with the OCSemanticWarning hierarchy
 Class {
 	#name : #SyntaxErrorNotification,
 	#superclass : #CodeError,
-	#category : #'OpalCompiler-Core-Exception'
+	#category : #Deprecated12
 }
 
 { #category : #exceptionInstantiator }
