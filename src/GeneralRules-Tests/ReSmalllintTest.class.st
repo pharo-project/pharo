@@ -251,7 +251,7 @@ ReSmalllintTest >> testAtIfAbsent [
 
 { #category : #tests }
 ReSmalllintTest >> testBadMessage [
-	self ruleFor: self currentSelector plusSelectors: #(badMessage collectionMessagesToExternalObject)
+	self ruleFor: self currentSelector plusSelectors: #(badMessage collectionMessagesToExternalObject debuggingMessageSent)
 ]
 
 { #category : #tests }
