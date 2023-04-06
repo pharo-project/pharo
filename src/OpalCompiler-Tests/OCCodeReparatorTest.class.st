@@ -284,5 +284,5 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 	self assert: flag.
 	self assert: method isCompiledMethod.
 	self assert: method literals first isUndeclaredVariable.
-	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle ^ ''<an unprintable nonliteral value>'' runtimeUndeclaredRead' "Could be better, but good enough for now"
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle ^ goo'
 ]
