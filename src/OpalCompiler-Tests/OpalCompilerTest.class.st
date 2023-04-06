@@ -147,3 +147,68 @@ OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
 ]
+
+{ #category : #tests }
+OpalCompilerTest >> testInstall [
+
+	| method |
+	"Cleanup"
+	(MockForCompilation includesSelector: #foo) ifTrue: [
+		MockForCompilation removeSelector: #foo ].
+	"Precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	method := MockForCompilation compiler
+		          source: 'foo ^42';
+		          changeStamp: 'JP 4/01/2023 01:23';
+		          protocol: 'hitching';
+		          install.
+
+	self assert: method equals: MockForCompilation >> #foo.
+	self assert: MockForCompilation new foo equals: 42.
+
+	"Cleanup"
+	method removeFromSystem.
+	self deny: (MockForCompilation includesSelector: #foo)
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testInstallException [
+
+	| method message |
+	"Precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	[ method := MockForCompilation compiler install: 'foo ^¿' ]
+		on: CodeError
+		do: [ :error | message := error messageText , ' :(' ].
+
+	self deny: (MockForCompilation includesSelector: #foo).
+	self assert: method isNil.
+	self assert: message equals: 'Unknown character :('
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testInstallRequestor [
+
+	| method requestor |
+	"precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	requestor := OCMockRequestor new.
+
+	[
+	method := MockForCompilation compiler
+		          source: 'foo ^¿';
+		          requestor: requestor;
+		          failBlock: [  ];
+		          changeStamp: 'JP 3/24/2023 18:39';
+		          protocol: 'hitching';
+		          install ]
+		on: CodeError
+		do: [  ].
+
+	self deny: (MockForCompilation includesSelector: #foo).
+	self assert: method isNil.
+	self assert: requestor notifyList first first equals: 'Unknown character ->'
+]

@@ -437,20 +437,6 @@ ChangeSet class >> resetCurrentToNewUnnamedChangeSet [
 	self newChanges: current
 ]
 
-{ #category : #scanning }
-ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: stamp [
-
-	| itemPosition method items |
-	items := OrderedCollection new.
-	[itemPosition := file position.
-	method := file nextChunk.
-	file skipStyleChunk.
-	method notEmpty] whileTrue:[
-		items add: (ChangeRecord new file: file position: itemPosition type: #method
-							class: class category: cat meta: meta stamp: stamp)].
-	^ items
-]
-
 { #category : #'file in/out' }
 ChangeSet class >> traitsOrder: aCollection [
 	"Arrange the traits in the collection, first who don't depend on others."
@@ -1140,7 +1126,7 @@ ChangeSet >> methodsWithoutClassifications [
 		[:aClass |
 		(self methodChangesAtClass: aClass name) associationsDo:
 				[:mAssoc | | aSelector | (aClass includesSelector:  (aSelector := mAssoc key)) ifTrue:
-						[(notClassified includes: (aClass organization categoryOfElement: aSelector))
+						[(notClassified includes: (aClass organization protocolNameOfElement: aSelector))
 								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
 	^ slips
 ]

@@ -340,7 +340,8 @@ CompiledMethod >> cachePragmas [
 { #category : #'accessing - backward compatible' }
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
-	^ self methodClass organization categoryOfElement: self selector
+
+	^ self methodClass organization protocolNameOfElement: self selector
 ]
 
 { #category : #accessing }
@@ -604,11 +605,15 @@ CompiledMethod >> isFaulty [
 	| ast |
 	"fast pre-check: all methods with syntax errors reference this symbol"
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
-	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
-	ast := self methodClass compiler
+
+	"Check the ast in cache, if any"
+	ast := self propertyAt: #ast ifAbsent: [].
+
+	ast ifNil: [
+		"Warning, the following does not work for doit methods because this assumes `noPrefix:false` "
+		ast := self methodClass compiler
 				source: self sourceCode;
-				options: #(+ optionParseErrors);
-				parse.
+				parse ].
 	^ ast isFaulty
 ]
 
@@ -861,12 +866,16 @@ CompiledMethod >> properties [
 { #category : #accessing }
 CompiledMethod >> properties: aMethodProperties [
 	"Set the method-properties of the receiver to aMethodProperties."
-	self literalAt: self numLiterals - 1
-		put: (aMethodProperties isEmpty
-				ifTrue: [aMethodProperties selector]
-				ifFalse: [aMethodProperties
-							setMethod: self;
-							yourself])
+
+	self
+		literalAt: self numLiterals - 1
+		put:
+			(aMethodProperties
+				ifEmpty: [ aMethodProperties selector ]
+				ifNotEmpty: [
+			 		aMethodProperties
+				 		setMethod: self;
+				 		yourself ])
 ]
 
 { #category : #'accessing - pragmas & properties' }

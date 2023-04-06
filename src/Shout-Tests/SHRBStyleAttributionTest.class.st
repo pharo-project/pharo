@@ -46,7 +46,6 @@ SHRBStyleAttributionTest >> style: aText [
 		       source: aText asString;
 		       noPattern: false;
 		       class: self class;
-		       options: #( + optionParseErrors + optionSkipSemanticWarnings );
 		       parse.
 	styler style: aText ast: ast.
 
@@ -539,9 +538,30 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 
 	self
 		assertStyleOf: aText
-		between: 4
+		between: 3
 		and: 8
 		shouldBe: #pragma
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testPragmaStyleWithCrazyPragma [
+
+	| aText |
+	aText := 'm 	<  test: #toto test2: 2 > ^ a' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 4 shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 7
+		and: 11
+		shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 19
+		and: 24
+		shouldBe: #pragma.
+	self assertStyleOf: aText at: 28 shouldBe: #pragma
 ]
 
 { #category : #tests }

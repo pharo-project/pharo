@@ -878,7 +878,11 @@ Object >> errorSubscriptBounds: index [
 Object >> executor [
 	"Return an object which can act as executor for finalization of the receiver"
 
-	^ self shallowCopy actAsExecutor
+	self
+		deprecated: 'Please use #finalizer instead. See Phep0003'
+		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
+
+	^ self finalizer
 ]
 
 { #category : #'error handling' }
@@ -911,13 +915,20 @@ Object >> explicitRequirement [
 { #category : #finalization }
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
-
-	^ WeakRegistry default
+	
+	^ FinalizationRegistry default
 ]
 
 { #category : #finalization }
 Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
+]
+
+{ #category : #finalization }
+Object >> finalizer [
+	"Return an object which can act as finalizer of the receiver"
+
+	^ self
 ]
 
 { #category : #enumerating }
@@ -1463,9 +1474,10 @@ Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #printing }
@@ -1473,9 +1485,10 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0 ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #dependencies }
@@ -1793,8 +1806,8 @@ Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
 	| dependents |
-	dependents := self dependents reject: [:each | each == anObject].
-	self myDependents: (dependents isEmpty ifFalse: [dependents]).
+	dependents := self dependents reject: [ :each | each == anObject ].
+	self myDependents: dependents.
 	^ anObject
 ]
 
@@ -2028,13 +2041,16 @@ Object >> subclassResponsibility [
 Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 	"When I am finalized (e.g., garbage collected) close the associated resource handle by sending aSelector to the appropriate finalizer (the guy who knows how to get rid of the resource).
 	WARNING: Neither the finalizer nor the resource handle are allowed to reference me. If they do, then I will NEVER be garbage collected. Since this cannot be validated here, it is up to the client to make sure this invariant is not broken."
-	self == aFinalizer ifTrue:[self error: 'I cannot finalize myself'].
-	self == aResourceHandle ifTrue:[self error: 'I cannot finalize myself'].
-	^self finalizationRegistry add: self executor:
-		(ObjectFinalizer new
-			receiver: aFinalizer
-			selector: aSelector
-			argument: aResourceHandle)
+
+	self == aFinalizer ifTrue: [ self error: 'I cannot finalize myself' ].
+	self == aResourceHandle ifTrue: [
+		self error: 'I cannot finalize myself' ].
+	^ self finalizationRegistry
+		  add: self
+		  finalizer: (ObjectFinalizer new
+				   receiver: aFinalizer
+				   selector: aSelector
+				   argument: aResourceHandle)
 ]
 
 { #category : #'error handling' }

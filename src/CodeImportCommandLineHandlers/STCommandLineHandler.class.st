@@ -45,12 +45,12 @@ STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 ]
 
 { #category : #printing }
-STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
+STCommandLineHandler class >> printCodeError: aCodeError [
 	| stderr position contents errorLine errorMessage maxLineNumberSize lineNumber |
 
 	"format the error"
-	position := aSyntaxErrorNotification location.
-	contents := aSyntaxErrorNotification errorCode.
+	position := aCodeError position.
+	contents := aCodeError sourceCode.
 	errorLine := contents lineNumberCorrespondingToIndex: position.
 	stderr := VTermOutputDriver stderr.
 
@@ -58,7 +58,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	errorMessage := String streamContents: [ :s|
 		s nextPutAll: 'Syntax Error on line ';
 			print: errorLine; nextPutAll: ': ';
-			print: aSyntaxErrorNotification errorMessage].
+			print: aCodeError messageText].
 
 	 stderr red;
 		nextPutAll: errorMessage; lf;
@@ -112,42 +112,33 @@ STCommandLineHandler >> end [
 
 { #category : #private }
 STCommandLineHandler >> handleError: error [
+	"for syntax errors we print more detailed error informations"
 
-	"for syntax errors we can used the default action"	"otherwise resignal it"
-	(error isKindOf: SyntaxErrorNotification)
-		ifTrue: [ error defaultAction ]
-		ifFalse: [ error pass ]
+	(error isKindOf: CodeError) ifTrue: [
+		self class printCodeError: error ].
+
+	error pass
 ]
 
 { #category : #private }
 STCommandLineHandler >> handleError: error reference: aReference [
 	"Print a header before failing on an errro / syntax notification from the the script loaded by the given request"
 
-	"We ignore warnings for now"
-	(error isKindOf: OCSemanticWarning)
-		ifTrue: [ ^ error pass ].
+	"Display CodeError nicely"
+	(error isKindOf: CodeError)
+		ifTrue: [ self class printCodeError: error ].
 
 	"spit out a warning if in headless mode, otherwise a debugger will popup"
 	Smalltalk isHeadless
 		ifTrue: [ self inform: 'Errors in script loaded from ', aReference name ].
 
-	"for syntax errors we can use the default action"
-	(error isKindOf: SyntaxErrorNotification)
-		ifTrue: [ ^ error defaultAction ].
-
-	(error isKindOf: OCSemanticError)
-		ifTrue: [
-			self class printCompilerWarning: error.
-			^ error resume: error defaultAction ].
-
-	"otherwise resignal it"
 	error pass
 ]
 
 { #category : #installing }
 STCommandLineHandler >> handleErrorsDuring: aBlock reference: aReference [
 	aBlock
-		on: Error, OCSemanticWarning, OCSemanticError
+		on: Error
 		do: [ :e | self handleError: e reference: aReference ]
 ]
 

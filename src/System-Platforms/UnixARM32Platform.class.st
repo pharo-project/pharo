@@ -11,6 +11,6 @@ Class {
 UnixARM32Platform class >> isActivePlatform [
 
 	^ (Smalltalk vm operatingSystemName = 'unix')
-		and: [ Smalltalk vm wordSize = 4
+		and: [ Smalltalk vm is32bit
 			and: [ Smalltalk vm architectureName = 'armv7l' ] ]
 ]

@@ -358,7 +358,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self packageOrganizer basicRegisterPackage: p2.
 	self packageOrganizer basicRegisterPackage: p3.
 	self assert: self packageOrganizer packageNames size equals: 4.
-	self packageOrganizer basicUnregisterPackage: p3.
+	self packageOrganizer basicUnregisterPackageNamed: p3 name.
 	self assert: self packageOrganizer packageNames size equals: 3
 ]
 
@@ -373,18 +373,17 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 ]
 
 { #category : #'tests - extensions' }
-RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
+RPackageOrganizerTest >> testSilentlyRenameProtocolNamedToBe [
 
 	| class |
-
 	class := self createNewClassNamed: #ClassForTestAboutSilentRecategorization inCategory: 'RPackage-Tests'.
-	class organization addCategory:#foo.
-	self assert: (class organization categories includes: #foo).
-	self deny: (class organization categories includes: #bar).
-	class organization silentlyRenameCategory: #foo toBe: #bar.
+	class organization addProtocolNamed: #foo.
+	self assert: (class organization protocolNames includes: #foo).
+	self deny: (class organization protocolNames includes: #bar).
+	class organization silentlyRenameProtocolNamed: #foo toBe: #bar.
 
-	self assert: (class organization categories includes: #bar).
-	self deny: (class organization categories includes: #foo)
+	self assert: (class organization protocolNames includes: #bar).
+	self deny: (class organization protocolNames includes: #foo)
 ]
 
 { #category : #tests }

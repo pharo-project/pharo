@@ -27,7 +27,7 @@ Behavior >> compile: code notifying: requestor [
 	method  := self compiler
 		source: code;
 		requestor: requestor;
-		failBlock: [ ^nil ];
+		failBlock: (requestor ifNil: nil ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
 		compile.
 
 	method putSource: code
@@ -109,16 +109,27 @@ Behavior >> recompile: selector [
 Behavior >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
+	| newMethod |
+	newMethod := self recompileBasic: selector from: oldClass.
+	self addSelector: selector withRecompiledMethod: newMethod
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> recompileBasic: selector from: oldClass [
+	"Compile the method associated with selector in the receiver's context.
+	The resulting compiled method is not installed.
+	If the original method is faulty, the result will be also faulty (silently)."
+
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
 	newMethod := oldClass compiler
 				source: (oldClass sourceCodeAt: selector);
 				class: self;
-				failBlock: [^ self];
+				permitFaulty: true;
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	self addSelector: selector withRecompiledMethod: newMethod
+	^ newMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }

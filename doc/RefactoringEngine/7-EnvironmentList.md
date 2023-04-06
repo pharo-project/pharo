@@ -14,13 +14,15 @@ And I act as a factory for various specialized environments. See my 'environment
 I am used by different tools to create a 'views' of subsets of the whole system environment to browse or act on (searching/validations/refactoring)
 
 #### create instances:
-```
+
+```st
 RBBrowserEnvironment new forClasses:  Number withAllSubclasses.
 RBBrowserEnvironment new forPackageNames: { #Kernel }.
 ```
+
 #### query:
 
-```
+```st
 |env|
 env := RBBrowserEnvironment new forPackageNames: { #Kernel }.
 env referencesTo:#asArray.
@@ -29,7 +31,7 @@ env referencesTo:#asArray.
 
 #### browse:
 
-```
+```st
 |env|
 env := RBBrowserEnvironment new forPackageNames: { #Kernel }.
 (Smalltalk tools browser browsedEnvironment: env) open.
@@ -49,7 +51,8 @@ I am more restricted to the exact category name compared
 to a package environment.
 
 Example, all Morph subclasses in category Morphic-Base-Menus
-```
+
+```st
 (RBBrowserEnvironment new forClasses: Morph withAllSubclasses) forCategories: {#'Morphic-Base-Menus'}
 ```
 
@@ -58,7 +61,8 @@ I am a RBBrowserEnvironment on a set of classes.
 I containt all entities of this set.
 
 Example:
-```
+
+```st
 (RBBrowserEnvironment new) forClasses: Number withAllSubclasses.
 ```
 ### RBClassHierarchyEnvironment
@@ -66,7 +70,7 @@ I am a RBBrowserEnvironment on a set of classes of a class hierarchy.
 
 Example:
 
-```
+```st
 (RBBrowserEnvironment new) forClass:Morph protocols:{'printing'}.
 ```
 
@@ -98,7 +102,8 @@ I containt all entities are defined in this packages.
 (classes and class that have extensions from this packages)
 
 Example:
-```
+
+```st
 RBBrowserEnvironment new forPackageNames:{ 'Morphic-Base'}.
 ```
 
@@ -106,22 +111,26 @@ RBBrowserEnvironment new forPackageNames:{ 'Morphic-Base'}.
 I am a RBBrowserEnvironment on a set of Pragmas.
 I containt all entities that define methods using this pragmas.
 Example:
-```
+
+```st
 RBBrowserEnvironment new forPragmas:{ #primitive:}.
 ```
+
 ### RBProtocolEnvironment
 I am a RBBrowserEnvironment on a set of protocols of a class.
 
 Example:
-```
+
+```st
 RBBrowserEnvironment new forClass:Morph protocols:{'printing'}.
 ```
+
 ### RBSelectorEnvironment
 I am a RBBrowserEnvironment for a set of selectors. 
 Usually I am constructed as a result of a query on another environment:
 
-```
-env referencesTo:#aselector -> a RBSelectorEnvironments.
+```st
+env referencesTo: #aselector -> a RBSelectorEnvironments.
 ```
 
 ### RBVariableEnvironment
@@ -130,7 +139,7 @@ Constructed by quering extisting environments with
 refering, reading or writing to the variables of a class.
 
 Example:
-```
+```st
 RBBrowserEnvironment new instVarWritersTo:#color in: Morph.
 -> a RBVariableEnvironment
 ```

@@ -215,12 +215,6 @@ TRBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
-
-	^ self visitEnglobingErrorNode: anUnreachableStatement
-]
-
-{ #category : #visiting }
 TRBProgramNodeVisitor >> visitVariableNode: aVariableNode [
 	^ aVariableNode
 ]

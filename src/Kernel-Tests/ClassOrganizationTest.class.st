@@ -24,16 +24,18 @@ ClassOrganizationTest >> runCase [
 
 { #category : #running }
 ClassOrganizationTest >> setUp [
+
 	super setUp.
 
 	class := self class classInstaller make: [ :aBuilder |
-		aBuilder name: #ClassForTests;
-		package: 'ClassOrganizer-Tests' ].
+		         aBuilder
+			         name: #ClassForTests;
+			         package: 'ClassOrganizer-Tests' ].
 
 	organization := ClassOrganization forClass: class.
-	organization addCategory: 'empty'.
-	organization addCategory: 'one'.
-	organization classify: #one under: 'one' suppressIfDefault: true
+	organization addProtocolNamed: 'empty'.
+	organization addProtocolNamed: 'one'.
+	organization classify: #one under: 'one'
 ]
 
 { #category : #running }
@@ -43,44 +45,52 @@ ClassOrganizationTest >> tearDown [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testAddCategory [
+ClassOrganizationTest >> testAddProtocolNamed [
 
-	self organization addCategory: 'test-protocol'.
+	self organization addProtocolNamed: 'test-protocol'.
 
-	self assert: (self organization categories includes: 'test-protocol')
+	self assert: (self organization protocolNames includes: 'test-protocol')
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testCategories [
-	| categories |
+ClassOrganizationTest >> testMethodSelectorsInProtocol [
 
-	categories := self organization categories.
-	self assert: categories notEmpty
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testListAtCategoryNamed [
 	| methods |
-	methods := self organization listAtCategoryNamed: 'empty'.
+	methods := self organization methodSelectorsInProtocol: 'empty'.
 	self assertEmpty: methods.
 
-	methods := self organization listAtCategoryNamed: 'one'.
+	methods := self organization methodSelectorsInProtocol: 'one'.
 	self assert: methods size equals: 1.
 	self assert: methods first equals: #one
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testRemoveCategory [
-	self assert: self organization categories size equals: 2.
-	"just ignore removing of non empty categories"
-	self organization removeCategory: 'one'.
-	self assert: self organization categories size equals: 2.
-	self organization removeCategory: 'empty'.
-	self assert: self organization categories size equals: 1.
-	self assert: self organization categories first equals: 'one'
+ClassOrganizationTest >> testProtocolNamed [
+
+	self assert: (self organization protocolNamed: 'empty') name equals: 'empty'.
+	self should: [ self organization protocolNamed: 'non existing' ] raise: NotFound
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testProtocolNames [
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one )
 ]
 
 { #category : #tests }
 ClassOrganizationTest >> testRemoveNonExistingProtocol [
-	self organization removeCategory: 'non-existent'
+
+	self organization removeProtocolNamed: 'non-existent'
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testRemoveProtocolNamed [
+
+	self assert: self organization protocolNames size equals: 2.
+	"just ignore removing of non empty categories"
+	self organization removeProtocolNamed: 'one'.
+	self assert: self organization protocolNames size equals: 2.
+	self organization removeProtocolNamed: 'empty'.
+	self assert: self organization protocolNames size equals: 1.
+	self assert: self organization protocolNames first equals: 'one'
 ]

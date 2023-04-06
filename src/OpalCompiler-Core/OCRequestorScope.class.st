@@ -48,7 +48,8 @@ OCRequestorScope >> lookupVar: name declare: aBoolean [
 	"We do not want to auto define bindings for unknown Globals"
 	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean].
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
-	((compilationContext optionSkipSemanticWarnings or: [aBoolean not])
+	self flag: 'The faulty mode should not impact how variable are bound'.
+	((compilationContext permitFaulty or: [aBoolean not])
 		and: [ (requestor hasBindingOf: name) not ])
 		ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
 

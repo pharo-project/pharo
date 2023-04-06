@@ -4,7 +4,7 @@ It's composed of a name and a set of method selectors
 "
 Class {
 	#name : #Protocol,
-	#superclass : #AbstractProtocol,
+	#superclass : #Object,
 	#instVars : [
 		'name',
 		'methodSelectors'
@@ -13,8 +13,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> empty [
-	 ^ self name: #''
+Protocol class >> ambiguous [
+	^ #ambiguous
+]
+
+{ #category : #accessing }
+Protocol class >> defaultName [
+
+	^  self unclassified
 ]
 
 { #category : #'instance creation' }
@@ -33,6 +39,17 @@ Protocol class >> name: nm methodSelectors: methods [
 		yourself
 ]
 
+{ #category : #accessing }
+Protocol class >> nullProtocolName [
+
+	^ #'no messages'
+]
+
+{ #category : #accessing }
+Protocol class >> unclassified [
+	^ #'as yet unclassified'
+]
+
 { #category : #'adding-removing' }
 Protocol >> addAllMethodsFrom: aProtocol [
 	aProtocol methodSelectors do: [ :each | self addMethodSelector: each ]
@@ -43,6 +60,22 @@ Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
 ]
 
+{ #category : #private }
+Protocol >> canBeRemoved [
+	^ self isEmpty
+]
+
+{ #category : #testing }
+Protocol >> canBeRenamed [
+	^ true
+]
+
+{ #category : #testing }
+Protocol >> includesSelector: selector [
+
+	^ self methodSelectors includes: selector
+]
+
 { #category : #initialization }
 Protocol >> initialize [
 
@@ -50,6 +83,22 @@ Protocol >> initialize [
 
 	methodSelectors := IdentitySet new.
 	name := self class defaultName
+]
+
+{ #category : #testing }
+Protocol >> isEmpty [
+	^ self methodSelectors isEmpty
+]
+
+{ #category : #testing }
+Protocol >> isExtensionProtocol [
+	^ self name first = $*
+]
+
+{ #category : #testing }
+Protocol >> isVirtualProtocol [
+	"A virtual protocol is a calculated one (it does not have any methods by it self)"
+	^ false
 ]
 
 { #category : #accessing }
@@ -71,6 +120,17 @@ Protocol >> name [
 { #category : #accessing }
 Protocol >> name: anObject [
 	name := anObject asSymbol
+]
+
+{ #category : #printing }
+Protocol >> printOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' (';
+		nextPutAll: self name;
+		nextPutAll: ') - ';
+		print: self methodSelectors size;
+		nextPutAll: ' selector(s)'
 ]
 
 { #category : #'adding-removing' }

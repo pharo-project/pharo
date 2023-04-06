@@ -30,7 +30,6 @@ DoItChunk >> importFor: requestor logSource: logSource [
 
 	SystemAnnouncer uniqueInstance announce: (DoItChunkImported new
 		contents: contents;
-		requestor: requestor;
 		logSource: logSource;
 		yourself).
 

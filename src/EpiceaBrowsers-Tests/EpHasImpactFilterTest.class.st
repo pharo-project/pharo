@@ -78,8 +78,8 @@ EpHasImpactFilterTest >> testCommentWithImpact [
 		newWithBehavior: aClass asEpiceaRingDefinition
 		oldComment: 'a'
 		newComment: 'b'
-		oldStamp: aClass organization commentStamp
-		newStamp: aClass organization commentStamp).
+		oldStamp: aClass commentStamp
+		newStamp: aClass commentStamp).
 	aClass comment: 'c'.
 	self assert: (impactFilter accepts: anEvent)
 ]
@@ -93,8 +93,8 @@ EpHasImpactFilterTest >> testCommentWithoutImpact [
 		newWithBehavior: aClass asEpiceaRingDefinition
 		oldComment: 'a'
 		newComment: 'b'
-		oldStamp: aClass organization commentStamp
-		newStamp: aClass organization commentStamp).
+		oldStamp: aClass commentStamp
+		newStamp: aClass commentStamp).
 	aClass comment: 'c'.
 	aClass comment: 'b'.
 	self deny: (impactFilter accepts: anEvent)

@@ -10,53 +10,19 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Editors-Classes'
 }
 
-{ #category : #building }
+{ #category : #operations }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
-	| text |
-	text := self pendingText copy.
-	^ self applyChangesAsClassDefinition or: [
-		  self pendingText: text.
-		  self applyChangesAsMethodDefinition ]
-]
-
-{ #category : #building }
-ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
-
-	| newClass oldText |
-	oldText := self pendingText copy.
+	| newClass |
 	newClass := browser
 		            compileANewClassFrom: self pendingText asString
 		            notifying: textMorph
 		            startingFrom: editingClass.
 
-	"This was indeed a class, however, there is a syntax error somewhere"
-	textMorph text = oldText ifFalse: [ ^ true ].
-
 	newClass ifNil: [ ^ false ].
 
 	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
-	^ true
-]
-
-{ #category : #building }
-ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
-
-	| newMethod selector selectedClass |
-	selectedClass := self editingClass.
-
-	selector := selectedClass
-		            compile: self pendingText asString
-		            notifying: textMorph.
-
-	selector ifNil: [ ^ false ].
-	newMethod := selectedClass >> selector.
-	MethodClassifier classify: newMethod.
-
-	self removeFromBrowser.
-	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
-	browser selectMethod: newMethod.
 	^ true
 ]
 

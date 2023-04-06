@@ -85,9 +85,9 @@ Finder >> computeWithMethodFinder: aString [
 	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
 
 	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
-		on: SyntaxErrorNotification, RuntimeSyntaxError
+		on: CodeError, RuntimeSyntaxError
 		do: [ :e |
-			self inform: 'Syntax Error: ' , e errorMessage.
+			self inform: 'Error: ' , e messageText.
 			^ #() ].	"#( data1 data2 result )"
 
 	dataObjects size < 2

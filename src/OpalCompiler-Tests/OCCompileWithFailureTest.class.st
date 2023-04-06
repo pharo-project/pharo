@@ -23,7 +23,6 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	result := UndefinedObject compiler
     source: '^[ :]';
     noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
     requestor: self;
     parse.
 	self assert: result isDoIt.
@@ -35,7 +34,6 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	| ast cm |
 	ast := OpalCompiler new
 				source: 'method 3+';
-				options: #(+ optionParseErrors);
 				parse.
 
 	self assert: ast isMethod.
@@ -51,7 +49,6 @@ OCCompileWithFailureTest >> testParenthesis [
 	result := UndefinedObject compiler
     source: 'self assert: pragma( numArgs equals: 0.';
     noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
     requestor: self;
     parse.
 	self assert: result isDoIt.

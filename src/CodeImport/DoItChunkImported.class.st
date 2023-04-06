@@ -6,7 +6,6 @@ Class {
 	#superclass : #SystemAnnouncement,
 	#instVars : [
 		'contents',
-		'requestor',
 		'logSource'
 	],
 	#category : #'CodeImport-Utilities'
@@ -30,14 +29,4 @@ DoItChunkImported >> logSource [
 { #category : #accessing }
 DoItChunkImported >> logSource: anObject [
 	logSource := anObject
-]
-
-{ #category : #accessing }
-DoItChunkImported >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-DoItChunkImported >> requestor: anObject [
-	requestor := anObject
 ]

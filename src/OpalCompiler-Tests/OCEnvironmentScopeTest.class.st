@@ -26,6 +26,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 	method := OpalCompiler new
 					environment: environment;
 					class: (environment at: #MyClass);
+					permitFaulty: true;
 					compile: 'tt ^Object'.
 	return := method valueWithReceiver: nil arguments: #().
 	self assert: return equals: nil

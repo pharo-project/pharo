@@ -85,9 +85,7 @@ DoItVariableTest >> testReadCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
 	doIt := ast generateWithSource.
 
@@ -119,9 +117,7 @@ DoItVariableTest >> testWriteCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
 	doIt := ast generateWithSource.
 	doIt valueWithReceiver: self arguments: #().

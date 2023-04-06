@@ -21,7 +21,7 @@ MCClassDefinitionTest class >> restoreClassAComment [
 	
 	self environment
 		at: #MCMockClassA
-		ifPresent: [ :a | a classComment: self classAComment stamp: self classACommentStamp ]
+		ifPresent: [ :a | a comment: self classAComment stamp: self classACommentStamp ]
 ]
 
 { #category : #private }
@@ -81,7 +81,7 @@ MCClassDefinitionTest >> testCreation [
 	self assert: d classInstVarNames asArray equals: #().
 	self assert: d comment isString.
 	self assert: d comment equals: self classAComment.
-	self assert: d commentStamp equals: self mockClassA organization commentStamp
+	self assert: d commentStamp equals: self mockClassA commentStamp
 ]
 
 { #category : #tests }
@@ -141,8 +141,8 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	self assertEmpty: c classVarNames.
 	self assertEmpty: c sharedPools.
 	self assert: c category equals: self mockCategoryName.
-	self assert: c organization classComment equals: (self commentForClass: 'MCMockClassC').
-	self assert: c organization commentStamp equals: (self commentStampForClass: 'MCMockClassC').
+	self assert: c comment equals: (self commentForClass: 'MCMockClassC').
+	self assert: c commentStamp equals: (self commentStampForClass: 'MCMockClassC').
 	d unload.
 	self deny: (testingEnvironment hasClassNamed: 'MCMockClassC')
 ]

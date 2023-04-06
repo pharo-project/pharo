@@ -4,7 +4,7 @@ The simplest regular expression is a single character.  It matches
 exactly that character. A sequence of characters matches a string with
 exactly the same sequence of characters:
 
-```
+```st
 	'a' matchesRegex: 'a'				"true"
 	'foobar' matchesRegex: 'foobar'		"true"
 	'blorple' matchesRegex: 'foobar'	"false"
@@ -21,7 +21,7 @@ referred to as 'a star'. A regular expression followed by an asterisk
 matches any number (including 0) of matches of the original
 expression. For example:
 
-```
+```st
 	'ab' matchesRegex: 'a*b'		 	"true"
 	'aaaaab' matchesRegex: 'a*b'	 	"true"
 	'b' matchesRegex: 'a*b'		 		"true"
@@ -33,7 +33,7 @@ to the shortest possible subexpression that precedes it. For example,
 'ab*' means 'a followed by zero or more occurrences of b', not 'zero
 or more occurrences of ab':
 
-```
+```st
 	'abbb' matchesRegex: 'ab*'	 		"true"
 	'abab' matchesRegex: 'ab*'		 	"false"
 
@@ -49,7 +49,7 @@ closure, or simply 'plus') matches one or more occurrences of the
 original expression. '?' ('optional') matches zero or one, but never
 more, occurrences.
 
-```
+```st
 	'ac' matchesRegex: 'ab*c'	 		"true"
 	'ac' matchesRegex: 'ab+c'	 		"false: need at least one b"
 	'abbc' matchesRegex: 'ab+c'		 	"true"
@@ -63,7 +63,7 @@ backslash is also special character, and needs to be quoted for a
 literal match--as well as any other special character described
 further).
 
-```
+```st
 	'ab*' matchesRegex: 'ab*'		 	"false: star in the right string is special"
 	'ab*' matchesRegex: 'ab\*'	 		"true"
 	'a\c' matchesRegex: 'a\\c'		 	"true"
@@ -75,7 +75,7 @@ the expressions matches. It has the lowest possible precedence (lower
 than sequencing). For example, `'ab*|ba*'` means 'a followed by any
 number of b's, or b followed by any number of a's':
 
-```
+```st
 	'abb' matchesRegex: 'ab*|ba*'	 	"true"
 	'baa' matchesRegex: 'ab*|ba*'	 	"true"
 	'baab' matchesRegex: 'ab*|ba*'	 	"false"
@@ -84,7 +84,7 @@ number of b's, or b followed by any number of a's':
 A bit more complex example is the following expression, matching the
 name of any of the Lisp-style 'car', 'cdr', 'caar', 'cadr',
 
-```
+```st
 	'cadr' matchesRegex: 'c(a|d)+r'     "true"
 ```
 
@@ -99,7 +99,7 @@ A character set is a string of characters enclosed in square
 brackets. It matches any single character if it appears between the
 brackets. For example, `'[01]'` matches either `'0'` or `'1'`:
 
-```
+```st
 	'0' matchesRegex: '[01]'		 		"true"
 	'3' matchesRegex: '[01]'		 		"false"
 	'11' matchesRegex: '[01]'		 		"false: a set matches only one character"
@@ -108,7 +108,7 @@ brackets. For example, `'[01]'` matches either `'0'` or `'1'`:
 Using plus operator, we can build the following binary number
 recognizer:
 
-```
+```st
 	'10010100' matchesRegex: '[01]+'	 	"true"
 	'10001210' matchesRegex: '[01]+'	 	"false"
 ```
@@ -117,7 +117,7 @@ If the first character after the opening bracket is `'^'`, the set is
 inverted: it matches any single character *not* appearing between the
 brackets:
 
-```
+```st
 	'0' matchesRegex: '[^01]'		  		"false"
 	'3' matchesRegex: '[^01]'		 		"true"
 ```
@@ -225,7 +225,7 @@ been written in alternative ways.
 
 Checking if aString may represent a nonnegative integer number:
 
-```
+```st
     "All of these are equivelent"
 	'' matchesRegex: ':isDigit:+'
 	'' matchesRegex: '[0-9]+'
@@ -235,20 +235,20 @@ Checking if aString may represent a nonnegative integer number:
 Checking if aString may represent an integer number with an optional
 sign in front:
 
-```
+```st
 	'' matchesRegex: '(\+|-)?\d+'
 ```
 
 Checking if aString is a fixed-point number, with at least one digit
 is required after a dot:
 
-```
+```st
 	'' matchesRegex: '(\+|-)?\d+(\.\d+)?'
 ```
 
 The same, but allow notation like '123.':
 
-```
+```st
 	'' matchesRegex: '(\+|-)?\d+(\.\d*)?'
 ```
 
@@ -256,20 +256,20 @@ The same, but allow notation like '123.':
 Recognizer for a string that might be a name: one word with first
 capital letter, no blanks, no digits.  More traditional:
 
-```
+```st
 	'' matchesRegex: '[A-Z][A-Za-z]*'
 ```
 
 more Smalltalkish:
 
-```
+```st
 	'' matchesRegex: ':isUppercase::isAlphabetic:*'
 ```
 
 A date in format MMM DD, YYYY with any number of spaces in between, in
 XX century:
 
-```
+```st
 	'' matchesRegex: '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[ ]+(\d\d?)[ ]*,[ ]*19(\d\d)'
 ```
 
@@ -280,6 +280,6 @@ that have matched them (i.e. month name, day number, and year number).
 For dessert, coming back to numbers: here is a recognizer for a
 general number format: anything like 999, or 999.999, or -999.999e+21.
 
-```
+```st
 	'' matchesRegex: '(\+|-)?\d+(\.\d*)?((e|E)(\+|-)?\d+)?'
 ```

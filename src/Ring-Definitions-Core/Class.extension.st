@@ -52,8 +52,8 @@ Class >> asRingDefinition [
 		addInstanceVariables: self instVarNames;
 		addClassVariables: self classVarNames;
 		addSharedPools: self sharedPoolNames;
-		comment: self organization classComment;
-		stamp: self organization commentStamp;
+		comment: self comment;
+		stamp: self commentStamp;
 		definitionSource: self definitionString;
 		package: self package asRingDefinition;
 		withMetaclass.

@@ -23,9 +23,6 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 		label: 'Code search...' translated;
 		withSeparatorAfter;
 		with: [
-					(aBuilder item: #'Browse full class' translated)
-						keyText: 'b';
-						selector: #browseFullClass.
 					(aBuilder item: #'Senders of it' translated)
 						keyText: 'n';
 						selector: #sendersOfIt.
@@ -43,8 +40,8 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 						keyText: 'E';
 						selector: #methodStringsContainingit.
 					(aBuilder item: #'Case sensitive method literal strings with it' translated)
-						keyText: 'E';
-						selector: #methodCaseSensitiveStringsContainingit.
+						keyText: 'U';
+						selector: #methodCaseSensitiveStringsContainingIt.
 					(aBuilder item: #'Method source with it' translated)
 						selector: #methodSourceContainingIt;
 						withSeparatorAfter.

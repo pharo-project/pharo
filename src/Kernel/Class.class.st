@@ -281,12 +281,10 @@ Class >> category [
 	(latter is much more expensive)"
 
 	| result |
-	self basicCategory ifNotNil: [ :symbol |
-		((self environment organization listAtCategoryNamed: symbol) includes: self name)
-			ifTrue: [ ^symbol ] ].
-	result := (self environment organization categoryOfElement: self name)
-		ifNil: [ #Unclassified ]
-		ifNotNil: [:value | value].
+	self basicCategory ifNotNil: [ :symbol | ((self environment organization listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
+	result := (self environment organization categoryOfBehavior: self)
+		          ifNil: [ #Unclassified ]
+		          ifNotNil: [ :value | value ].
 	self basicCategory: result.
 
 	^ result
@@ -514,8 +512,8 @@ Class >> duplicateClassWithNewName: aSymbol [
 			builder
 				fillFor: self;
 				name: copysName ].
-	class copyAllCategoriesFrom: self.
-	class class copyAllCategoriesFrom: self class.
+	class copyAllMethodsFrom: self.
+	class class copyAllMethodsFrom: self class.
 	^ class
 ]
 
@@ -838,21 +836,18 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 
 	| aSymbol varUserClass |
 	aSymbol := aString asSymbol.
-	(self classPool includesKey: aSymbol)
-		ifFalse: [ ^ self error: aString , ' is not a class variable' ].
+	(self classPool includesKey: aSymbol) ifFalse: [ ^ self error: aString , ' is not a class variable' ].
 	varUserClass := self anyUserOfClassVarNamed: aSymbol.
 	varUserClass notNil & interactive ifTrue: [
-		(self	confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs)
-			ifFalse: [ ^ self ] ].
+		(self confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs) ifFalse: [ ^ self ] ].
 
 	varUserClass
 		ifNotNil: [
 			NewUndeclaredWarning signal: aString in: self name.
-			Undeclared declare: aSymbol from: self classPool]
-		ifNil: [ self classPool removeKey: aSymbol].
+			Undeclared declare: aSymbol from: self classPool ]
+		ifNil: [ self classPool removeKey: aSymbol ].
 
-	self classPool isEmpty
-		ifTrue: [ self classPool: nil ].
+	self classPool ifEmpty: [ self classPool: nil ].
 
 	SystemAnnouncer uniqueInstance classModificationAppliedTo: self
 ]
@@ -906,49 +901,42 @@ Class >> removeSharedPool: aDictionary [
 	: Note that it removes the wrong one if there are two empty Dictionaries in the list."
 
 	| satisfiedSet workingSet aSubclass |
-	(self sharedPools includes: aDictionary)
-		ifFalse: [^self error: 'the dictionary is not in my pool'].
+	(self sharedPools includes: aDictionary) ifFalse: [ ^ self error: 'the dictionary is not in my pool' ].
 
 	"first see if it is declared in a superclass in which case we can remove it."
-	(self selectSuperclasses: [:class | class sharedPools includes: aDictionary]) isEmpty
-		ifFalse: [self sharedPools remove: aDictionary.
-				self sharedPools isEmpty ifTrue: [self sharedPools: nil].
-				^self].
+	(self selectSuperclasses: [ :class | class sharedPools includes: aDictionary ]) ifNotEmpty: [
+		self sharedPools remove: aDictionary.
+		self sharedPools isEmpty ifTrue: [ self sharedPools: nil ].
+		^ self ].
 
 	"second get all the subclasses that reference aDictionary through me rather than a
 	superclass that is one of my subclasses."
 
 	workingSet := self subclasses asOrderedCollection.
 	satisfiedSet := Set new.
-	[workingSet isEmpty] whileFalse:
-		[aSubclass := workingSet removeFirst.
-		(aSubclass sharedPools includes: aDictionary)
-			ifFalse:
-				[satisfiedSet add: aSubclass.
-				workingSet addAll: aSubclass subclasses]].
+	[ workingSet isEmpty ] whileFalse: [
+		aSubclass := workingSet removeFirst.
+		(aSubclass sharedPools includes: aDictionary) ifFalse: [
+			satisfiedSet add: aSubclass.
+			workingSet addAll: aSubclass subclasses ] ].
 
 	"for each of these, see if they refer to any of the variables in aDictionary because
 	if they do, we can not remove the dictionary."
 	satisfiedSet add: self.
-	satisfiedSet do:
-		[:sub |
-		aDictionary associationsDo:
-			[:aGlobal |
-			(sub whichSelectorsReferTo: aGlobal) isEmpty
-				ifFalse: [^self error: aGlobal key
-								, ' is still used in code of class '
-								, sub name]]].
+	satisfiedSet do: [ :sub |
+		aDictionary associationsDo: [ :aGlobal |
+			(sub whichSelectorsReferTo: aGlobal) ifNotEmpty: [ ^ self error: aGlobal key , ' is still used in code of class ' , sub name ] ] ].
 	self sharedPools remove: aDictionary.
-	self sharedPools isEmpty ifTrue: [self sharedPools: nil]
+	self sharedPools ifEmpty: [ self sharedPools: nil ]
 ]
 
 { #category : #'accessing - class hierarchy' }
 Class >> removeSubclass: aSubclass [
 	"If the argument, aSubclass, is one of the receiver's subclasses, remove it."
 
-	self subclasses == nil ifFalse:
-		[self subclasses:  (self subclasses copyWithout: aSubclass).
-		self subclasses isEmpty ifTrue: [self subclasses: nil]]
+	self subclasses == nil ifFalse: [
+		self subclasses: (self subclasses copyWithout: aSubclass).
+		self subclasses ifEmpty: [ self subclasses: nil ] ]
 ]
 
 { #category : #'class name' }
@@ -1015,24 +1003,25 @@ Class >> sharedPoolsDo: aBlockClosure [
 { #category : #initialization }
 Class >> sharing: poolString [
 	"Set up sharedPools. Answer whether recompilation is advisable."
+
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
-	(poolString substrings: ' ') do:
-		[:poolName |
-		self sharedPools add: (self environment at: poolName asSymbol ifAbsent:[
-			(self confirm: 'The pool dictionary ', poolName,' does not exist.',
-						'\Do you want it automatically created?' withCRs)
-				ifTrue: [ self classInstaller make: [ :builder |
-							builder superclass: SharedPool;
-							name: poolName;
-							category: self category ]]
-				ifFalse:[^self inform: poolName,' does not exist']])].
-	self sharedPools isEmpty ifTrue: [self sharedPools: nil].
-	oldPools do: [:pool |
-				| found |
-				found := self sharedPools anySatisfy: [:p | p == pool].
-				found ifFalse: [^ true "A pool got deleted"]].
+	(poolString substrings: ' ') do: [ :poolName |
+		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
+				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
+					 ifTrue: [
+						 self classInstaller make: [ :builder |
+							 builder
+								 superclass: SharedPool;
+								 name: poolName;
+								 category: self category ] ]
+					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
+	self sharedPools ifEmpty: [ self sharedPools: nil ].
+	oldPools do: [ :pool |
+		| found |
+		found := self sharedPools anySatisfy: [ :p | p == pool ].
+		found ifFalse: [ ^ true "A pool got deleted" ] ].
 	^ false
 ]
 

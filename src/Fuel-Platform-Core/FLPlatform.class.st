@@ -95,25 +95,9 @@ FLPlatform class >> extensionProtocolName [
 FLPlatform class >> fixMetacello [
 ]
 
-{ #category : #accessing }
-FLPlatform class >> hacksCategoryName [
-	^ 'FuelPlatformHacks'
-]
-
 { #category : #testing }
 FLPlatform class >> isResponsibleForCurrentPlatform [
 	^ self subclassResponsibility
-]
-
-{ #category : #'private-convenience' }
-FLPlatform class >> removeModifications [
-	((Smalltalk globals at: #(Smalltalk globals at: #PackageInfo)) named: self extensionProtocolName) extensionMethods do: [ :methodReference |
-		methodReference actualClass removeSelector: methodReference selector ].
-	((Smalltalk globals at: #(Smalltalk globals at: #PackageInfo)) named: self hacksCategoryName) in: [ :hacks |
-		hacks classes do: [ :classOrTrait |
-			classOrTrait removeFromSystem ].
-		(Smalltalk globals at: #PackageOrganizer) default  unregisterPackage: hacks ].
-	SystemOrganizer default removeCategory: self hacksCategoryName
 ]
 
 { #category : #'class initialization' }

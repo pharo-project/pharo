@@ -40,10 +40,9 @@ ReProperMethodProtocolNameRule class >> isAbstract [
 
 { #category : #idioms }
 ReProperMethodProtocolNameRule class >> protocolIdiom [
-	"Subclasses should override to return an association between a
-	 wished category and an array of category names that are not so good."
+	"Subclasses should override to return an association between a wished protocol and an array of protocol names that are not so good."
 
-	^self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #'private - utilities' }
@@ -56,19 +55,22 @@ ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 
 { #category : #running }
 ReProperMethodProtocolNameRule >> basicCheck: aMethod [
-	self methodProtocolName: aMethod category.
-	^ self class badMethodProtocolNames includes: aMethod category
+
+	| protocol |
+	protocol := aMethod protocol.
+	self methodProtocolName: protocol.
+	^ self class badMethodProtocolNames includes: protocol
 ]
 
 { #category : #helpers }
 ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
-	| proposedCategory |
-	proposedCategory := self class goodMethodProtocolName asSymbol.
+	| proposedProtocol |
+	proposedProtocol := self class goodMethodProtocolName asSymbol.
 
 	^ (ReRefactoringCritique
 		   withAnchor: (self anchorFor: aMethod)
 		   by: self) refactoring: (RBMethodProtocolTransformation
-			   protocol: { proposedCategory }
+			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
 			   inClass: aMethod methodClass name) asRefactoring
 ]
@@ -108,8 +110,7 @@ ReProperMethodProtocolNameRule >> rationale [
 
 { #category : #'private - utilities' }
 ReProperMethodProtocolNameRule >> use: valid insteadOf: arrayOfInvalid [
-	"Instead of directly creating an array we use this utility method for better readability
-	 in senders of this method"
+	"Instead of directly creating an array we use this utility method for better readability in senders of this method"
 
 	^self class use: valid insteadOf: arrayOfInvalid
 ]

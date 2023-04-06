@@ -75,13 +75,6 @@ MockSourceEditor >> selection [
 ]
 
 { #category : #selection }
-MockSourceEditor >> selectionAsStream [
-
-	^ ReadStream
-		on: (self text copyFrom: selectionStart to: selectionEnd)
-]
-
-{ #category : #selection }
 MockSourceEditor >> selectionInterval [
 
 	^ Interval from: selectionStart to: selectionEnd

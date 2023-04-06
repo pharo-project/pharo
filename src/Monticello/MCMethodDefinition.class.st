@@ -128,7 +128,6 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 		compile: source
 		classified: category
 		withStamp: timeStamp
-		notifying: nil
 		logSource: true
 		inClass: self actualClass.
 	"This might raise an exception and never return"
@@ -256,13 +255,19 @@ MCMethodDefinition >> isOverrideMethod [
 	^ self isExtensionMethod and: [category endsWith: '-override']
 ]
 
-{ #category : #accessing }
+{ #category : #installing }
 MCMethodDefinition >> load [
-	self actualClass
+	| sel |
+	sel := self actualClass
 		compile: source
 		classified: category
 		withStamp: timeStamp
-		notifying: nil
+		notifying: nil.
+	sel = selector ifTrue: [ ^ self ].
+	Warning signal: (
+		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
+		format: { sel. selector. self actualClass name }).
+	selector := sel
 ]
 
 { #category : #installing }
@@ -322,14 +327,10 @@ MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 	to another package, but remove the category if it is empty."
 
 	| newProtocol |
-	newProtocol := aClass organization categoryOfElement: aSelector.
-	newProtocol
-		ifNotNil: [ 
-			"If moved to and fro extension, ignore removal"
-			(category beginsWith: '*') = (newProtocol beginsWith: '*')
-				ifFalse: [ ^ self ].	"Check if moved between different extension categories"
-			((category beginsWith: '*') and: [ category ~= newProtocol ])
-				ifTrue: [ ^ self ] ].
+	newProtocol := aClass organization protocolNameOfElement: aSelector.
+	newProtocol ifNotNil: [ "If moved to and fro extension, ignore removal"
+		(category beginsWith: '*') = (newProtocol beginsWith: '*') ifFalse: [ ^ self ]. "Check if moved between different extension categories"
+		((category beginsWith: '*') and: [ category ~= newProtocol ]) ifTrue: [ ^ self ] ].
 	aClass removeSelector: aSelector.
 	aClass organization removeProtocolIfEmpty: category
 ]

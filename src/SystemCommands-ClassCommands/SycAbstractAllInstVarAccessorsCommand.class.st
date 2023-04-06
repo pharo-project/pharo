@@ -48,7 +48,7 @@ SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolCon
 SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 	classes := classes collect: [:aClass | | vars dialog |
 		vars := aClass slots asOrderedCollection.
-		dialog := RBVariablesSelectionPresenter
+		dialog := StVariablesSelectionPresenter
 		   label: aClass name,' - Select all variables to convert abstract'
 			withItems: vars
 			selecting: vars.

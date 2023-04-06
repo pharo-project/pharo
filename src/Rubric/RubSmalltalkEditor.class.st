@@ -28,7 +28,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $b meta
 		do: [ :target | target editor browseFullClass ]
-		description: 'Browse'.
+		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
 		category: RubSmalltalkEditor name
@@ -40,13 +40,13 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $i meta
 		do: [ :target | target editor inspectIt: nil ]
-		description: 'Inspect it'.
+		description: 'Do & inspect it'.
 
 	(aBuilder shortcut: #basicInspectIt)
 		category: RubSmalltalkEditor name
 		default: $i meta shift
 		do: [ :target | target editor basicInspectIt ]
-		description: 'Basic Inspect it'.
+		description: 'Do & basic inspect it'.
 
 	(aBuilder shortcut: #implementorsOfIt)
 		category: RubSmalltalkEditor name
@@ -64,7 +64,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $p meta
 		do: [ :target | target editor printIt ]
-		description: 'Print it'.
+		description: 'Do & print it'.
 
 	(aBuilder shortcut: #debugIt)
 		category: RubSmalltalkEditor name
@@ -84,11 +84,17 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor methodStringsContainingIt: nil ]
 		description: 'Method strings containing it'.
 
+	(aBuilder shortcut: #methodStringsContainingItCaseSensitive)
+		category: RubSmalltalkEditor name
+		default: $u meta shift
+		do: [ :target | target editor methodCaseSensitiveStringsContainingIt ]
+		description: 'Method strings containing it (case sensitive)'.
+
+
 	(aBuilder shortcut: #format)
 		category: RubSmalltalkEditor name
 		default: PharoShortcuts current formatCodeShortcut
 		do: [ :target | target formatMethodCode ].
-
 
 	(aBuilder shortcut: #jumpToNextKeywordOfIt)
 		category: RubSmalltalkEditor name
@@ -191,16 +197,10 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
 
-	| node start stop |
-
-	start := self textArea startIndex.
-	stop := self textArea stopIndex.
-
-	[node := RBParser parseMethod: self textArea string onError: [
-		RBParser parseFaultyExpression: self textArea string]
-	] on: Error do: [^nil].
-
-	^node bestNodeFor: (start to: stop)
+	"We build the AST (which can be faulty when we are scripting) then ask the best node for the interval."
+	^ (self isScripting
+		   ifTrue: [ RBParser parseFaultyExpression: self textArea string ]
+		   ifFalse: [ RBParser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
 ]
 
 { #category : #'source navigation' }
@@ -328,7 +328,7 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	^ self compile: self selectionAsStream for: anObject in: evalContext
+	^ self compile: self selection for: anObject in: evalContext
 ]
 
 { #category : #'completion engine' }
@@ -396,11 +396,6 @@ RubSmalltalkEditor >> computeSelectionIntervalForCurrentLine [
 			(s at: right) = $" ifTrue: [ quoteCounter := quoteCounter + 1 ].
 			right := right - 1 ].
 	^ left to: right
-]
-
-{ #category : #private }
-RubSmalltalkEditor >> computeSelectionIntervalFromCodeIn: aString at: anInterval [
-	^ (RBParser parseExpression: (aString copyFrom: anInterval first to: anInterval last)) sourceInterval
 ]
 
 { #category : #private }
@@ -494,7 +489,7 @@ RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 
 	self lineSelectAndEmptyCheck: [^self].
-	self debug: self selectionAsStream
+	self debug: self selection
 ]
 
 { #category : #'do-its' }
@@ -550,7 +545,7 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 
 	self lineSelectAndEmptyCheck: [^ ''].
 	^ self
-		evaluate: self selectionForDoitAsStream
+		evaluate: self selection
 		andDo: aBlock
 ]
 
@@ -843,7 +838,7 @@ RubSmalltalkEditor >> keystroke: aKeyboardEvent [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> methodCaseSensitiveStringsContainingit [
+RubSmalltalkEditor >> methodCaseSensitiveStringsContainingIt [
 	"Open a browser on methods which contain the current selection as part of a string constant."
 
 	self lineSelectAndEmptyCheck: [^ self].
@@ -1183,7 +1178,7 @@ RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
 	self lineSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selectionAsStream
+	self tally: self selection
 ]
 
 { #category : #'completion engine' }

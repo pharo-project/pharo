@@ -24,7 +24,7 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
 			aClass
-				classComment: aChange newComment
+				comment: aChange newComment
 				stamp: aChange newStamp ]
 ]
 
@@ -115,10 +115,8 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
-	self
-		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior |
-			behavior organization addCategory: aProtocolAddition protocol ]
+
+	self behaviorNamed: aProtocolAddition behaviorAffectedName ifPresent: [ :behavior | behavior organization addProtocolNamed: aProtocolAddition protocol ]
 ]
 
 { #category : #visitor }

@@ -49,11 +49,10 @@ RBSmalllintChecker >> checkClass: aClass [
 
 { #category : #private }
 RBSmalllintChecker >> checkMethodsForClass: aClass [
-	^ environment
-		selectorsForClass: aClass
-		do: [ :each |
-			rule checkMethod: aClass>>each.
-			methodBlock value ]
+
+	^ environment methodsForClass: aClass do: [ :method |
+		  rule checkMethod: method.
+		  methodBlock value ]
 ]
 
 { #category : #private }

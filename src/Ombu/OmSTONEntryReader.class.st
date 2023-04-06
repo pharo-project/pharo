@@ -13,11 +13,7 @@ Class {
 { #category : #reading }
 OmSTONEntryReader >> entryPositionsDo: aBlock [
 
-	[ self
-		nextEntryPositionIfFound: [:position |
-			aBlock value: position. true ]
-		ifNone: [ false ]
-	] whileTrue
+	[ self nextEntryPositionIfFound: [ :position | aBlock value: position ] ifNone: [ ^ self ] ] repeat
 ]
 
 { #category : #reading }
@@ -80,6 +76,37 @@ OmSTONEntryReader >> nextEntryPositionIfFound: foundBlock ifNone: noneBlock [
 	^ stream atEnd
 		ifTrue: [ noneBlock value ]
 		ifFalse: [ foundBlock value: stream position - token size ]
+]
+
+{ #category : #accessing }
+OmSTONEntryReader >> positionAtNextEntry [
+	"Consume readStream up to the start of the next OmEntry.
+	Return true if an entry was found."
+
+	| entryPrefix |
+	"Only the first entry may be not preceded by a cr character"
+	(stream position = 0 and: [ stream match: 'OmEntry' ]) ifTrue: [
+		stream position: 0.
+		^ true ].
+
+	"Otherwise, the cr is mandatory."
+	entryPrefix := '
+OmEntry {'.
+	^ (stream match: entryPrefix)
+		  ifTrue: [
+			  stream position: stream position - entryPrefix size.
+			  true ]
+		  ifFalse: [ false ]
+]
+
+{ #category : #accessing }
+OmSTONEntryReader >> positionAtNextEntryStartingAt: aPosition [
+	"Consume reamStream up to the start of the next OmEntry. Note that aPosition may indicate the middle of multibyte UTF-8 character, that's tolerated by skipping forward the bytes.
+	Return true if an entry was found."
+
+	stream positionForward: aPosition.
+
+	^ self positionAtNextEntry
 ]
 
 { #category : #accessing }

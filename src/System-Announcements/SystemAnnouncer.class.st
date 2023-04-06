@@ -24,14 +24,9 @@ SystemAnnouncer class >> announcer: anAnnouncer [
 
 { #category : #'class initialization' }
 SystemAnnouncer class >> reset [
-
 	"unregister all current weak subscriptions because it can cause a memory leak"
-	announcer subscriptions subscriptions
- 		select: [:each | each isKindOf: WeakAnnouncementSubscription]
-		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []].
-	Smalltalk garbageCollect.
 
-	self announcer: nil
+	self announcer: nil.
 ]
 
 { #category : #initialization }
@@ -75,11 +70,9 @@ SystemAnnouncer >> class: aClass oldComment: oldComment newComment: newComment o
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> class: aClass recategorizedFrom: oldCategory to: newCategory [
-	self announce: (ClassRecategorized
-						class: aClass
-						recategorizedFrom: oldCategory
-						to: newCategory)
+SystemAnnouncer >> class: aClass recategorizedFrom: oldPackageName to: newPackageName [
+
+	self announce: (ClassRecategorized class: aClass recategorizedFrom: oldPackageName to: newPackageName)
 ]
 
 { #category : #triggering }

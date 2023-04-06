@@ -1175,7 +1175,7 @@ RubTextEditor >> forwardDelete: aKeyboardEvent [
 			| idx1 idx2 |
 			idx1 := self startIndex min: self stopIndex.
 			idx2 := self stopIndex max: self startIndex.
-			aKeyboardEvent controlKeyPressed
+			aKeyboardEvent controlKeyPressed | aKeyboardEvent commandKeyPressed
 				ifTrue: [ idx2 := self nextWord: idx1 + 1 ]
 				ifFalse: [ idx2 := idx2 + 1 ].
 			self selectInvisiblyFrom: idx1 to: idx2 - 1 ].
@@ -1593,19 +1593,22 @@ RubTextEditor >> nextCharacterIfAbsent: aBlock [
 
 { #category : #private }
 RubTextEditor >> nextWord: position [
-	| string index initialIsAlphaNumeric size |
 
-	position <= 1 ifTrue:[ ^ 1 ].	
+	| string index initialIsAlphaNumeric size |
+	"Positions go from 1 to size + 1
+	Position N + 1 is after the Nth character"
+	index := 1 max: position.
+
 	string := self string.
-	size := string size.
+	size := string size + 1.
 	position >= size ifTrue: [ ^ size ].
 
-	index := position.
-	initialIsAlphaNumeric := self isWordCharacterAt: (index - 1) in: string.
+	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
 
-	[(index < size) 
-		and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]]
-			whileTrue: [index := index + 1].
+	[
+	index < size and: [
+		(self isWordCharacterAt: index in: string) = initialIsAlphaNumeric ] ]
+		whileTrue: [ index := index + 1 ].
 
 	^ index
 ]
@@ -1745,19 +1748,38 @@ RubTextEditor >> previousCharacterIfAbsent: aBlock [
 
 { #category : #private }
 RubTextEditor >> previousWord: position [
-	| string index initialIsAlphaNumeric size |
-	position <= 1 ifTrue: [ ^ 1 ].	
+
+	| string index size beforeCaretIsAlpha afterCaretIsAlpha |
+	"The main strategy behind this is to move the caret backwards until there is a alpha/nonalpha or nonalpha/alpha pair.
+	To avoid staying in the same place, we need always move the character at least once before checking the condition"
+
+	position <= 2 ifTrue: [ ^ 1 ].
 	string := self string.
 	size := string size.
-	position > size ifTrue: [ ^ size ].
-	
-	index := position.
-	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
 
-	[index := index - 1] doWhileTrue:
-		[(index > 0) and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]].
+	"If we ask for the word starting after the string, start at the end of the string.
+	Remember that there are N+1 caret positions for a N-sized string."
+	index := (size + 1) min: position.
 
-	^ index + 1
+	"Go backwards once and check if character before the caret is alphanumeric.
+	If not alphanumeric, we go backwards once more.
+	This handles the case when the caret is after the first character of a word, in which case we should just go once backwards.
+	All other cases should go backwards more than once."
+	index := index - 1.
+	beforeCaretIsAlpha := index = 1 or: [
+		                      self isWordCharacterAt: index in: string ].
+	beforeCaretIsAlpha ifFalse: [
+		index := index - 1 ].
+
+	"Finally, iterate backwards until the alphanumericness before and after the caret changes"
+	[
+	afterCaretIsAlpha := beforeCaretIsAlpha := index = 1 or: [
+		                      self isWordCharacterAt: index in: string ].
+	beforeCaretIsAlpha := index = 1 or: [
+		                      self isWordCharacterAt: index - 1 in: string ].
+	beforeCaretIsAlpha = afterCaretIsAlpha and: [ index > 1 ] ]
+		whileTrue: [ index := index - 1 ].
+	^ index
 ]
 
 { #category : #'nonediting/nontyping keys' }
@@ -2129,17 +2151,19 @@ RubTextEditor >> selectWord: aKeyboardEvent [
 
 { #category : #'new selection' }
 RubTextEditor >> selectWordMark: marker point: selectionPoint [
+
 	| marker2 selectionPoint2 |
 	"This method is used my mouse drag.
 	It selects the correct words between the original point and the selection cursor point"
-	marker <= selectionPoint ifTrue: [
-		marker2 := self previousWord: marker.
-		selectionPoint2 := self nextWord: selectionPoint.
-	] ifFalse: [
-		"Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
-		marker2 := self nextWord: (marker > 0 ifTrue:[ marker ] ifFalse:[ 1 ]).
-		selectionPoint2 := (self previousWord: selectionPoint) - 1.
-	].
+	marker <= selectionPoint
+		ifTrue: [
+			marker2 := self previousWord: marker.
+			selectionPoint2 := (self nextWord: selectionPoint) - 1 ]
+		ifFalse: [ "Mark calculations makes that its value sometimes is 0, and the next call fails without checking the border case."
+			marker2 := self nextWord: (marker > 0
+					            ifTrue: [ marker ]
+					            ifFalse: [ 1 ]).
+			selectionPoint2 := (self previousWord: selectionPoint) - 1 ].
 
 	self selectMark: marker2 point: selectionPoint2
 ]
@@ -2148,15 +2172,6 @@ RubTextEditor >> selectWordMark: marker point: selectionPoint [
 RubTextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 	^self text copyFrom: self startIndex to: self stopIndex - 1
-]
-
-{ #category : #'accessing - selection' }
-RubTextEditor >> selectionAsStream [
-	"Answer a ReadStream on the text in the paragraph that is currently
-	selected."
-
-	^ReadStream
-		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
 { #category : #'accessing - selection' }

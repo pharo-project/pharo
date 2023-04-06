@@ -68,12 +68,22 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 ]
 
-{ #category : #errors }
+{ #category : #notice }
 RBProgramNode >> addError: anErrorMessage [
-
 	"Add an error information to the node. Node with error information are considered faulty.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
-	self propertyAt: #error put: anErrorMessage
+
+	| notice |
+	notice := RBErrorNotice new messageText: anErrorMessage.
+	self addNotice: notice.
+	^ notice
+]
+
+{ #category : #adding }
+RBProgramNode >> addNotice: aRBNotice [
+
+	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
+	aRBNotice node: self
 ]
 
 { #category : #replacing }
@@ -82,12 +92,15 @@ RBProgramNode >> addReplacement: aStringReplacement [
 	parent addReplacement: aStringReplacement
 ]
 
-{ #category : #adding }
+{ #category : #notice }
 RBProgramNode >> addWarning: aMessage [
 
+	| notice |
 	"Add a warning information to the node.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
-	self propertyAt: #semanticWarning put: aMessage
+	notice := RBWarningNotice new messageText: aMessage.
+	self addNotice: notice.
+	^ notice
 ]
 
 { #category : #accessing }
@@ -129,6 +142,26 @@ RBProgramNode >> allDefinedVariables [
 			vars
 				addAll: each allDefinedVariables;
 				yourself]
+]
+
+{ #category : #notice }
+RBProgramNode >> allErrorNotices [
+	"Include also error notices of all children"
+
+	| result |
+	result := OrderedCollection new.
+	self nodesPostorderDo: [ :node | result addAll: node errorNotices ].
+	^ result
+]
+
+{ #category : #notice }
+RBProgramNode >> allNotices [
+	"Include also notices of all children"
+
+	| result |
+	result := OrderedCollection new.
+	self nodesPostorderDo: [ :node | result addAll: node notices ].
+	^ result
 ]
 
 { #category : #accessing }
@@ -270,6 +303,24 @@ RBProgramNode >> cascadeListCharacter [
 	^$;
 ]
 
+{ #category : #notice }
+RBProgramNode >> checkFaulty: aBlock [
+	"Helper method to evaluate errorBlock and/or signal SyntaxErrorNotification in case of a faulty AST"
+
+	| errorNotice |
+	"Fast noop case"
+	self isFaulty ifFalse: [ ^ self ].
+
+	"Search for the first error, to signal"
+	errorNotice := self allErrorNotices first.
+
+	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice position cull: self ].
+
+	errorNotice signalError.
+
+	"If resumed, just return"
+]
+
 { #category : #accessing }
 RBProgramNode >> children [
 	^#()
@@ -406,11 +457,11 @@ RBProgramNode >> equalTo: aNode withMapping: aDictionary [
 	^self = aNode
 ]
 
-{ #category : #accessing }
-RBProgramNode >> errorMessage [
+{ #category : #notice }
+RBProgramNode >> errorNotices [
+	"The errors attached to the receiver"
 
-	"Return the associated error message, if any"
-	^ self propertyAt: #error ifAbsent: [ nil ]
+	^ self notices select: #isError
 ]
 
 { #category : #testing }
@@ -568,12 +619,11 @@ RBProgramNode >> isEnglobingError [
 	^false
 ]
 
-{ #category : #errors }
+{ #category : #notice }
 RBProgramNode >> isError [
-	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for semantic errors).
-	see `addError:`"
+	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
 
-	^ self propertyAt: #error ifPresent: [ true ] ifAbsent: [ false ]
+	^ self errorNotices isNotEmpty
 ]
 
 { #category : #testing }
@@ -583,7 +633,7 @@ RBProgramNode >> isEvaluatedFirst [
 	^parent isNil or: [parent isSequence or: [parent evaluatedFirst: self]]
 ]
 
-{ #category : #errors }
+{ #category : #notice }
 RBProgramNode >> isFaulty [
 
 	"return true if the AST is or contains a isError node."
@@ -882,6 +932,13 @@ RBProgramNode >> nodesPostorderDo: aBlock [
 	aBlock value: self
 ]
 
+{ #category : #notice }
+RBProgramNode >> notices [
+	"The notices attached to the receiver"
+
+	^ self propertyAt: #notices ifAbsent: #()
+]
+
 { #category : #accessing }
 RBProgramNode >> parent [
 	^parent
@@ -1170,6 +1227,13 @@ RBProgramNode >> variableReadNodes [
 { #category : #querying }
 RBProgramNode >> variableWriteNodes [
 		^self variableNodes select: [:each | each isWrite]
+]
+
+{ #category : #notice }
+RBProgramNode >> warningNotices [
+	"The warnings attached to the receiver"
+
+	^ self notices select: #isWarning
 ]
 
 { #category : #querying }

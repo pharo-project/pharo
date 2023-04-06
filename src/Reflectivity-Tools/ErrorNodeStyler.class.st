@@ -16,7 +16,9 @@ ErrorNodeStyler >> iconFor: aNode [
 
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
-	^ aNode errorMessage
+
+	self flag: 'What if more than one error?'.
+	^ aNode errorNotices first messageText
 ]
 
 { #category : #hooks }
@@ -47,10 +49,4 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 	textModel announce: conf.
 
 	anEnglobingNode contents do: [ :each | self visitNode: each ]
-]
-
-{ #category : #visiting }
-ErrorNodeStyler >> visitUnreachableStatement: anUnreachableStatement [
-	"self overrides visitEnglobingErrorNode:"
-	^ super visitEnglobingErrorNode: anUnreachableStatement
 ]

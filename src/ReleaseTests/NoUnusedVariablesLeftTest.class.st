@@ -22,7 +22,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
-	validExceptions := #( OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
+	validExceptions := #( OSKeySymbols SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
 	                      RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest
 	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler ).
 
@@ -39,7 +39,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
-	validExceptions := { RBFooLintRuleTestData . RBLintRuleTestData .RBFooDummyLintRuleTest . RBDummyLintRuleTest. MockWithComplexSlot .ClassDescription }.
+	validExceptions := { RBFooLintRuleTestData . RBLintRuleTestData .RBFooDummyLintRuleTest . RBDummyLintRuleTest. MockWithComplexSlot }.
 
 	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
 	self assert: remaining isEmpty description: ('the following classes have unused instance variables and should be cleaned: ', remaining asString)

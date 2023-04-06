@@ -217,7 +217,7 @@ SystemDictionary >> forgetClass: aClass logged: aBool [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
-	self organization removeElement: aClass name.
+	self organization removeBehavior: aClass.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
@@ -390,9 +390,9 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
-	category := self organization categoryOfElement: oldName.
+	category := self organization categoryOfBehavior: oldName.
 	self organization classify: newName under: category.
-	self organization removeElement: oldName.
+	self organization removeBehavior: oldName.
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.

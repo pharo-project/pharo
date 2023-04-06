@@ -143,14 +143,11 @@ TraitPureBehaviorTest >> testLocalSelectors [
 TraitPureBehaviorTest >> testMethodCategoryReorganization [
 
 	self t1 compile: 'm1' classified: 'category1'.
-	self assert: (self t5 organization categoryOfElement: #m1) equals: #category1.
-	self assert: (self c2 organization categoryOfElement: #m1) equals: #category1.
-	self t1 organization
-		classify: #m1
-		under: #category2
-		suppressIfDefault: true.
-	self assert: (self t5 organization categoryOfElement: #m1) equals: #category2.
-	self assert: (self c2 organization categoryOfElement: #m1) equals: #category2
+	self assert: (self t5 organization protocolNameOfElement: #m1) equals: #category1.
+	self assert: (self c2 organization protocolNameOfElement: #m1) equals: #category1.
+	self t1 organization classify: #m1 under: #category2.
+	self assert: (self t5 organization protocolNameOfElement: #m1) equals: #category2.
+	self assert: (self c2 organization protocolNameOfElement: #m1) equals: #category2
 ]
 
 { #category : #'tests - applying trait composition' }
