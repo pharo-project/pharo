@@ -416,12 +416,12 @@ KeyboardKey class >> initializeKeyFromCharacterCompatibilityTable [
 		Character end 			. #End "XK_End".
 		Character space 		. #Space "XK_Space".
 		$/ 							. #SLASH.
-		$] 							. #BRACKETLEFT.
-		$[ 							. #BRACKETRIGHT.
+		$] 							. #BRACKETRIGHT.
+		$[ 							. #BRACKETLEFT.
 		$( 							. #parenleft.
 		$) 							. #parenright.
 		$< 							. #less.
-		$< 							. #greater.
+		$> 							. #greater.
 		$| 							. #bar.
 		$- 							. #minus}
 			pairsDo: [ :character :keyname |
