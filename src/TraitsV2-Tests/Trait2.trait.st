@@ -1,6 +1,6 @@
 Trait {
 	#name : #Trait2,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-MOP'
 }
 
 { #category : #'trait2 - c' }

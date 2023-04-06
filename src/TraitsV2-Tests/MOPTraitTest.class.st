@@ -1,7 +1,7 @@
 Class {
 	#name : #MOPTraitTest,
 	#superclass : #TestCase,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-MOP'
 }
 
 { #category : #tests }
