@@ -701,6 +701,22 @@ CompilationContext >> requestor: anObject [
 	requestor := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+CompilationContext >> requestorCanDeclare: aRequestor [
+	"Heuristic to know if the possible (legagy) requestor can declare new bindings.
+	Because there is no sane API on requestors, we just typecheck until all requestors are dead and buried"
+
+	aRequestor ifNil: [ ^ false ].
+	(aRequestor isKindOf: SpCodeScriptingInteractionModel) ifTrue: [
+		^ true ].
+	(aRequestor respondsTo: #interactionModel) ifTrue: [
+		| req2 |
+		req2 := aRequestor interactionModel.
+		aRequestor = req2 ifTrue: [ ^ false ].
+		^ self requestorCanDeclare: req2 ].
+	^ false
+]
+
 { #category : #accessing }
 CompilationContext >> requestorScopeClass [
 	^ requestorScopeClass ifNil: [ requestorScopeClass := OCRequestorScope ]
@@ -717,8 +733,8 @@ CompilationContext >> scope [
 	| newScope |
 
 	newScope := semanticScope.
-	requestor ifNotNil: [
-		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
+	(self requestorCanDeclare: requestor) ifTrue: [
+		"the requestor should not be allowed to manage bindings this way, but keep it for compatibility"
 		newScope := (self requestorScopeClass new
 			compilationContext: self;
 			requestor: requestor) outerScope: newScope].
