@@ -70,7 +70,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.
 		spec package: 'MonticelloGUI'.
-		spec package: 'Tests'.
 		spec package: 'System-Changes-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Announcements-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
