@@ -1,6 +1,11 @@
 "
-A Protocol is a simple value holder representing a protocol.
-It's composed of a name and a set of method selectors
+A Protocol is a categorization of methods in Pharo. 
+
+A class has methods, and the methods are classified into protocols.
+
+A class holds my instances (for now through ClassOrganization but we want to remove this class in the future) and I hold the selectors of the methods that are inside me.
+
+I have a name that is used in browsers to display the different protocols.
 "
 Class {
 	#name : #Protocol,
@@ -11,17 +16,6 @@ Class {
 	],
 	#category : #'Kernel-Protocols'
 }
-
-{ #category : #'instance creation' }
-Protocol class >> ambiguous [
-	^ #ambiguous
-]
-
-{ #category : #accessing }
-Protocol class >> defaultName [
-
-	^  self unclassified
-]
 
 { #category : #'instance creation' }
 Protocol class >> name: nm [
@@ -40,12 +34,6 @@ Protocol class >> name: nm methodSelectors: methods [
 ]
 
 { #category : #accessing }
-Protocol class >> nullProtocolName [
-
-	^ #'no messages'
-]
-
-{ #category : #accessing }
 Protocol class >> unclassified [
 	^ #'as yet unclassified'
 ]
@@ -60,16 +48,6 @@ Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
 ]
 
-{ #category : #private }
-Protocol >> canBeRemoved [
-	^ self isEmpty
-]
-
-{ #category : #testing }
-Protocol >> canBeRenamed [
-	^ true
-]
-
 { #category : #testing }
 Protocol >> includesSelector: selector [
 
@@ -82,7 +60,7 @@ Protocol >> initialize [
 	super initialize.
 
 	methodSelectors := IdentitySet new.
-	name := self class defaultName
+	name := self class unclassified
 ]
 
 { #category : #testing }
@@ -92,13 +70,11 @@ Protocol >> isEmpty [
 
 { #category : #testing }
 Protocol >> isExtensionProtocol [
-	^ self name first = $*
-]
+	"For now, extension methods are managed via protocols. 
+	
+	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
 
-{ #category : #testing }
-Protocol >> isVirtualProtocol [
-	"A virtual protocol is a calculated one (it does not have any methods by it self)"
-	^ false
+	^ self name first = $*
 ]
 
 { #category : #accessing }

@@ -54,7 +54,7 @@ RBRemoveProtocolTransformation >> preconditions [
 			includes: protocol ]
 			errorString: 'Protocol named ', protocol, ' does not exist' )
 		& ( RBCondition
-			withBlock: [ (self definingClass realClass organization protocolNamed: protocol ) canBeRemoved ]
+			withBlock: [ (self definingClass realClass organization protocolNamed: protocol ) isEmpty ]
 			errorString: 'Protocol named ', protocol, ' is a virtual protocol and it cannot be removed' )
 		& ( RBCondition
 			withBlock: [ (self definingClass realClass organization protocolNamed: protocol ) isEmpty ]

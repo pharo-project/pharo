@@ -91,7 +91,7 @@ TaSequence >> categoryOfMethod: method withSelector: selector [
 
 	^ categories size = 1
 		ifTrue: [ ^ categories anyOne ]
-		ifFalse: [ Protocol ambiguous ]
+		ifFalse: [ Protocol traitProtocolConflictName ]
 ]
 
 { #category : #testing }

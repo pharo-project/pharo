@@ -147,12 +147,10 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	"Check that we have no protocols left without methods"
 
-	| violating protocolsWithoutMethods |
+	| violating |
 	violating := Dictionary new.
-	ProtoObject withAllSubclasses
-		do: [ :cls |
-			protocolsWithoutMethods := cls organization protocols select: [ :e | e isEmpty and: [ e canBeRemoved ] ].
-			protocolsWithoutMethods notEmpty ifTrue: [ violating at: cls put: protocolsWithoutMethods ] ].
+	ProtoObject withAllSubclasses do: [ :cls |
+		(cls organization protocols select: [ :e | e isEmpty ]) ifNotEmpty: [ :emptyProtocols | violating at: cls put: emptyProtocols ] ].
 
 	self assertEmpty: violating
 ]
