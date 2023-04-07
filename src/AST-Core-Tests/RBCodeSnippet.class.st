@@ -52,6 +52,7 @@ RBCodeSnippet class >> allSnippets [
 		  self badTokens.
 		  self badMethods.
 		  self badSemantic.
+		  self badPositions.
 		  self badVariableAndScopes } flattened
 ]
 
@@ -748,6 +749,61 @@ RBCodeSnippet class >> badMethods [
 		group: #badMethods;
 		isMethod: true;
 		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badPositions [
+	"This list focuses on node positions (and later highlighing)"
+
+	<script:
+	'self styleWithError: self badPositions. self updateSnippets: self badPositions'>
+	| list |
+	list := {
+		        (self new
+			         source: ' foo | tmp | tmp := 1 . ^ tmp . ';
+			         nodeAt: '00000112221115553333411166777110';
+			         formattedCode: 'foo | tmp | tmp := 1. ^ tmp';
+			         isMethod: true;
+			         value: 1).
+		        (self new
+			         source: ' foo: arg bar: arr ^ arg + arr . ';
+			         nodeAt: '000000111000000222044666555777330';
+			         formattedCode: 'foo: arg bar: arr ^ arg + arr';
+			         isMethod: true;
+			         value: 3).
+		        (self new
+			         source: ' | tmp | tmp := 1 . ^ tmp . ';
+			         nodeAt: ' 00111000444222230005566600';
+			         formattedCode: '| tmp | tmp := 1. ^ tmp';
+			         value: 1).
+		        (self new
+			         source: ' foo: arg ^ arg min: arg + 2 ; abs . ';
+			         nodeAt: '000000111033BBB5555558887779AAAAAA220';
+			         formattedCode: 'foo: arg ^ arg min: arg + 2; abs';
+			         isMethod: true;
+			         value: 1).
+		        (self new
+			         source: ' foo: arg ^ ( ( ( ( arg ) ) + ( ( 1 ) ) ) ) . ';
+			         nodeAt: '0000001110334444555555555554446666666664444220';
+			         formattedCode: 'foo: arg ^ arg + 1';
+			         isMethod: true;
+			         value: 2).
+		        (self new
+			         source: ' ( [ :aaa : bbb | | ccc ddd | aaa . ] ) . ';
+			         nodeAt: ' 00000111000222000334443555333666330000';
+			         formattedCode: '[ :aaa :bbb | | ccc ddd | aaa ]';
+			         value: 1;
+			         notices:
+				         #( #( 21 23 21 'Unused variable' )
+				            #( 25 27 25 'Unused variable' ) )) }.
+
+	"Setup default values"
+	self new
+		group: #badPositions;
+		isMethod: false;
+		isFaulty: false;
 		applyDefaultTo: list.
 	^ list
 ]
