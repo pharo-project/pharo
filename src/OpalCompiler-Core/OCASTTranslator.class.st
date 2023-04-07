@@ -447,18 +447,6 @@ OCASTTranslator >> privateMethodBuilder [
 	^ methodBuilder
 ]
 
-{ #category : #private }
-OCASTTranslator >> privateValueTranslator [
-	^ valueTranslator
-]
-
-{ #category : #initialization }
-OCASTTranslator >> setFromSimilar: aParentTranslator [
-	methodBuilder := aParentTranslator privateMethodBuilder.
-	valueTranslator := aParentTranslator privateValueTranslator.
-	parentTranslator := aParentTranslator.
-]
-
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateConstantBlock: aBlockNode [
 	| ir |
