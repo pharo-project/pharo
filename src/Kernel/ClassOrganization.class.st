@@ -76,7 +76,7 @@ ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: selector under: protocol [
+ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocolName forceNotify oldProtocols protocolName |
 	"The next section deserve more cleanings.
@@ -84,9 +84,9 @@ ClassOrganization >> classify: selector under: protocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := protocol isString
-		                ifTrue: [ protocol ]
-		                ifFalse: [ protocol name ].
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
