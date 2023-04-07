@@ -171,7 +171,13 @@ OCASTTranslator >> emitIf: aMessageNode boolean: aBoolean [
 { #category : #'inline messages' }
 OCASTTranslator >> emitIfFalse: aMessageNode [
 
-	self shouldBeSentToValueOrEffectTranslator
+	self visitNode: aMessageNode receiver.
+	methodBuilder jumpAheadTo: #false if: false.
+		methodBuilder pushLiteral: nil.
+		methodBuilder jumpAheadTo: #end.
+		methodBuilder jumpAheadTarget: #false.
+	self visitInlinedBlockNode: aMessageNode arguments first.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
@@ -216,8 +222,17 @@ OCASTTranslator >> emitIfNilIfNotNil: aMessageNode [
 
 { #category : #'inline messages' }
 OCASTTranslator >> emitIfNotNil: aMessageNode [
-
-	self shouldBeSentToValueOrEffectTranslator
+	| args |
+	self visitNode: aMessageNode receiver.
+	args := aMessageNode arguments.
+	args first arguments ifNotEmpty: [ args first arguments first variable emitStore: methodBuilder ].
+	methodBuilder pushDup.
+	methodBuilder pushLiteral: nil.
+	methodBuilder send: #==.
+	methodBuilder jumpAheadTo: #end if: true.
+	methodBuilder popTop.
+	self visitInlinedBlockNode: args first.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
@@ -228,7 +243,13 @@ OCASTTranslator >> emitIfNotNilIfNil: aMessageNode [
 { #category : #'inline messages' }
 OCASTTranslator >> emitIfTrue: aMessageNode [
 
-	self shouldBeSentToValueOrEffectTranslator
+	self visitNode: aMessageNode receiver.
+	methodBuilder jumpAheadTo: #else if: false.
+	self visitInlinedBlockNode:  aMessageNode arguments first.
+	methodBuilder jumpAheadTo: #end.
+	methodBuilder jumpAheadTarget: #else.
+	methodBuilder pushLiteral: nil.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
@@ -466,11 +487,6 @@ OCASTTranslator >> setFromSimilar: aParentTranslator [
 	effectTranslator := aParentTranslator privateEffectTranslator.
 	valueTranslator := aParentTranslator privateValueTranslator.
 	parentTranslator := aParentTranslator.
-]
-
-{ #category : #errors }
-OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
-	self error: 'should be sent only to valueTranslator or effectTranslator'
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -727,8 +743,13 @@ OCASTTranslator >> visitReturnNode: aReturnNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitSequenceNode: aSequenceNode [
-
-	self shouldBeSentToValueOrEffectTranslator
+	| statements |
+	statements := aSequenceNode statements.
+	statements ifEmpty: [
+		methodBuilder pushLiteral: nil.
+		^self].
+	statements allButLastDo: [:each | effectTranslator visitNode: each].
+	self visitNode: statements last
 ]
 
 { #category : #'visitor - double dispatching' }
