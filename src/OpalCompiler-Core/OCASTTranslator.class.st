@@ -431,9 +431,7 @@ OCASTTranslator >> initialize [
 	super initialize.
 	
 	methodBuilder := IRBuilder new.
-	effectTranslator := self classForEffect basicNew.
 	valueTranslator := self.
-	effectTranslator setFromSimilar: self.
 	nextUniqueInlineID := 0
 ]
 
@@ -455,11 +453,6 @@ OCASTTranslator >> nextUniqueInlineID [
 ]
 
 { #category : #private }
-OCASTTranslator >> privateEffectTranslator [
-	^ effectTranslator
-]
-
-{ #category : #private }
 OCASTTranslator >> privateMethodBuilder [
 	^ methodBuilder
 ]
@@ -472,7 +465,6 @@ OCASTTranslator >> privateValueTranslator [
 { #category : #initialization }
 OCASTTranslator >> setFromSimilar: aParentTranslator [
 	methodBuilder := aParentTranslator privateMethodBuilder.
-	effectTranslator := aParentTranslator privateEffectTranslator.
 	valueTranslator := aParentTranslator privateValueTranslator.
 	parentTranslator := aParentTranslator.
 ]
