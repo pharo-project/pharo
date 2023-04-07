@@ -717,7 +717,7 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 			createTempVectorNamed: aMethodNode scope tempVectorName
 			withVars: aMethodNode scope tempVectorVarNames
 	].
-	effectTranslator visitNode: aMethodNode body.
+	self visitEffectNode: aMethodNode body.
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]
 ]
 
