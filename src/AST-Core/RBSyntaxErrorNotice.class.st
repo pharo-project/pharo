@@ -7,6 +7,12 @@ Class {
 	#category : #'AST-Core-Notice'
 }
 
+{ #category : #testing }
+RBSyntaxErrorNotice >> isSyntaxError [
+
+	^ true
+]
+
 { #category : #accessing }
 RBSyntaxErrorNotice >> messageText [
 

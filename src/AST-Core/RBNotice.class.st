@@ -45,6 +45,12 @@ RBNotice >> isError [
 ]
 
 { #category : #testing }
+RBNotice >> isSyntaxError [
+
+	^ false
+]
+
+{ #category : #testing }
 RBNotice >> isUndeclaredNotice [
 
 	^ false
