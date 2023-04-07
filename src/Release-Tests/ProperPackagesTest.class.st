@@ -4,7 +4,7 @@ Check for proper Manifest categorization
 Class {
 	#name : #ProperPackagesTest,
 	#superclass : #TestCase,
-	#category : #'ReleaseTests-Categorization'
+	#category : #'Release-Tests-Categorization'
 }
 
 { #category : #'tests - sunit' }

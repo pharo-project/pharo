@@ -6,7 +6,7 @@ The goal is to keep some conventions around protocols. For example we should use
 Class {
 	#name : #ProtocolConventionsTest,
 	#superclass : #TestCase,
-	#category : #'ReleaseTests-Categorization'
+	#category : #'Release-Tests-Categorization'
 }
 
 { #category : #asserting }
