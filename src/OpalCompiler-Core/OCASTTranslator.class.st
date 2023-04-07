@@ -19,8 +19,7 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'methodBuilder',
-		'nextUniqueInlineID',
-		'parentTranslator'
+		'nextUniqueInlineID'
 	],
 	#classVars : [
 		'OptimizedMessages'
@@ -430,10 +429,6 @@ OCASTTranslator >> ir [
 
 { #category : #'inline messages' }
 OCASTTranslator >> nextUniqueInlineID [
-
-	"The UniqueID has to be shared between the hierarchy of OCASTTranslators.
-	The OCASTTranslator has inside one for Effect and one for value. They should share ID values."
-	parentTranslator ifNotNil: [ ^ parentTranslator nextUniqueInlineID ].
 
 	nextUniqueInlineID := nextUniqueInlineID + 1.
 	^ nextUniqueInlineID asString asSymbol
