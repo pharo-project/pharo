@@ -699,7 +699,7 @@ CompilationContext >> requestor: anObject [
 	requestor := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 CompilationContext >> requestorCanDeclare: aRequestor [
 	"Heuristic to know if the possible (legagy) requestor can declare new bindings.
 	Because there is no sane API on requestors, we just typecheck until all requestors are dead and buried"

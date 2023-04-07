@@ -63,7 +63,7 @@ OCAbstractScope >> outerScope: aSemScope [
 	outerScope := aSemScope
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 OCAbstractScope >> registerVariables [
 
 	outerScope ifNotNil: [ :it | it registerVariables ]

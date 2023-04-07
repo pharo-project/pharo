@@ -47,7 +47,7 @@ OCRequestorScope >> lookupVar: name [
 	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 OCRequestorScope >> registerVariables [
 
 	self variables do: [ :each |
