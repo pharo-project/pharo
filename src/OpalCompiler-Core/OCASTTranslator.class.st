@@ -452,7 +452,7 @@ OCASTTranslator >> isEffectTranslator [
 
 { #category : #testing }
 OCASTTranslator >> isValueTranslator [
-	^self == valueTranslator
+	^self isEffectTranslator not
 ]
 
 { #category : #'inline messages' }
@@ -611,6 +611,20 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 	compiledBlock := self translateConstantBlock: anBlockNode.
 	constantBlock compiledBlock: compiledBlock.
 	methodBuilder pushLiteral: constantBlock
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitEffectInlinedBlockNode: anOptimizedBlockNode [
+
+	valueTranslator visitInlinedBlockNode: anOptimizedBlockNode.
+	methodBuilder popTop
+]
+
+{ #category : #'visitor - double dispatching' }
+OCASTTranslator >> visitEffectNode: aNode [
+
+	valueTranslator visitNode: aNode.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
