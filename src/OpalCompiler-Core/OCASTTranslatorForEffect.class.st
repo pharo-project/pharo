@@ -59,6 +59,13 @@ OCASTTranslatorForEffect >> emitOr: aMessageNode [
 	methodBuilder popTop
 ]
 
+{ #category : #'inline messages factored' }
+OCASTTranslatorForEffect >> emitWhile: aMessageNode boolean: aBoolean [
+
+	super emitWhile: aMessageNode boolean: aBoolean.
+	methodBuilder popTop
+]
+
 { #category : #'visitor - double dispatching' }
 OCASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 	"An arrayNode may have side effect, for example: '{self foo}'. So we cannot just generate nothing for this node."

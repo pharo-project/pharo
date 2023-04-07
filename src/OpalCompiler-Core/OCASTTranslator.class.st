@@ -411,7 +411,8 @@ OCASTTranslator >> emitWhile: aMessageNode boolean: aBoolean [
 	aMessageNode arguments ifNotEmpty: [
 			effectTranslator visitInlinedBlockNode: aMessageNode arguments first].
 	methodBuilder jumpBackTo: #begin.
-	methodBuilder jumpAheadTarget: #end
+	methodBuilder jumpAheadTarget: #end.
+	methodBuilder pushLiteral: nil
 ]
 
 { #category : #'inline messages' }

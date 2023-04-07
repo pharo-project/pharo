@@ -6,17 +6,3 @@ Class {
 	#superclass : #OCASTTranslator,
 	#category : #'OpalCompiler-Core-Translator'
 }
-
-{ #category : #'inline messages' }
-OCASTTranslatorForValue >> emitWhileFalse: aMessageNode [
-
-	super emitWhileFalse: aMessageNode.
-	methodBuilder pushLiteral: nil
-]
-
-{ #category : #'inline messages' }
-OCASTTranslatorForValue >> emitWhileTrue: aMessageNode [
-
-	super emitWhileTrue: aMessageNode.
-	methodBuilder pushLiteral: nil
-]
