@@ -60,7 +60,14 @@ EpApplyVisitor >> visitCategoryRename: aChange [
 { #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
 	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
-	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall
+	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall.
+	"update the class comment"
+	self
+		behaviorNamed: aClassCreation behaviorAffectedName
+		ifPresent: [ :aClass |
+			aClass
+				comment: aClassCreation classAdded comment content
+				stamp: aClassCreation classAdded comment stamp ]
 ]
 
 { #category : #visitor }
