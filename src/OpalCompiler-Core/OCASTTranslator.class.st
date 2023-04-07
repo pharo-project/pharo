@@ -19,8 +19,6 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'methodBuilder',
-		'effectTranslator',
-		'valueTranslator',
 		'nextUniqueInlineID',
 		'parentTranslator'
 	],
