@@ -7,16 +7,6 @@ Class {
 	#category : #'Reflectivity-Compiler'
 }
 
-{ #category : #initialization }
-RFASTTranslator >> classForEffect [
-	^RFASTTranslatorForEffect
-]
-
-{ #category : #initialization }
-RFASTTranslator >> classForValue [
-	^RFASTTranslatorForValue
-]
-
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> emitMessageNode: aMessageNode [
 

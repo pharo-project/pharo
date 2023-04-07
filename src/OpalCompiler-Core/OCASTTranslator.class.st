@@ -56,16 +56,6 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
-{ #category : #initialization }
-OCASTTranslator >> classForEffect [
-	^OCASTTranslatorForEffect
-]
-
-{ #category : #initialization }
-OCASTTranslator >> classForValue [
-	^OCASTTranslatorForValue
-]
-
 { #category : #accessing }
 OCASTTranslator >> compilationContext [
 	^methodBuilder compilationContext
