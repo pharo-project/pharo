@@ -11,8 +11,8 @@ Class {
 RFASTTranslator >> emitMessageNode: aMessageNode [
 
 	(aMessageNode isCascaded and: [(aMessageNode hasProperty: #hook) not])
-		ifFalse: [ valueTranslator visitNode: aMessageNode receiver ].
-	aMessageNode arguments do: [ :each | valueTranslator visitNode: each ].
+		ifFalse: [ self visitNode: aMessageNode receiver ].
+	aMessageNode arguments do: [ :each | self visitNode: each ].
 	self emitPreamble: aMessageNode.
 	self emitMetaLinkBefore: aMessageNode.
 	aMessageNode hasMetalinkInstead
@@ -29,7 +29,7 @@ RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 	| ensureBlock compiledBlock |
 
 	"this saves the value from top of stack, executed [operation <here>] ensure: [ afterhook ] "
-	aNode postambles do: [ :each | valueTranslator visitNode: each ].
+	aNode postambles do: [ :each | self visitNode: each ].
 	ensureBlock := RBBlockNode body: (RBSequenceNode statements: aNode afterHooks).
 
 	ensureBlock parent: aNode.
@@ -46,7 +46,7 @@ RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 RFASTTranslator >> emitMetaLinkAfterNoEnsure: aNode [
 
 	aNode hasMetalinkAfter ifFalse: [ ^self ].
-	aNode postambles do: [ :each | valueTranslator visitNode: each ].
+	aNode postambles do: [ :each | self visitNode: each ].
 	aNode afterHooks do: [ :each | self visitEffectNode: each ]
 ]
 
@@ -58,12 +58,12 @@ RFASTTranslator >> emitMetaLinkBefore: aNode [
 
 { #category : #reflectivity }
 RFASTTranslator >> emitMetaLinkInstead: aNode [
-	valueTranslator visitNode: aNode insteadHooks
+	self visitNode: aNode insteadHooks
 ]
 
 { #category : #reflectivity }
 RFASTTranslator >> emitPreamble: aNode [
-	aNode preambles do: [ :pre | valueTranslator visitNode: pre]
+	aNode preambles do: [ :pre | self visitNode: pre]
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -74,7 +74,7 @@ RFASTTranslator >> visitArrayNode: anArrayNode [
 	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
-	elementNodes do: [:node | valueTranslator visitNode: node].
+	elementNodes do: [:node | self visitNode: node].
 	self emitPreamble: anArrayNode.
 	self emitMetaLinkBefore: anArrayNode.
 	anArrayNode hasMetalinkInstead
@@ -85,7 +85,7 @@ RFASTTranslator >> visitArrayNode: anArrayNode [
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
-	valueTranslator visitNode: anAssignmentNode value.
+	self visitNode: anAssignmentNode value.
 	self emitPreamble: anAssignmentNode.
 	self emitMetaLinkBefore: anAssignmentNode.
 	self emitPreamble: anAssignmentNode variable.
@@ -124,7 +124,7 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitCascadeNode: aCascadeNode [
-	valueTranslator visitNode: aCascadeNode receiver.
+	self visitNode: aCascadeNode receiver.
 
 	self emitPreamble: aCascadeNode.
 	self emitMetaLinkBefore: aCascadeNode.
@@ -258,7 +258,7 @@ RFASTTranslator >> visitPragmaNode: aPragmaNode [
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitReturnNode: aReturnNode [
 
-	valueTranslator visitNode: aReturnNode value.
+	self visitNode: aReturnNode value.
 	self emitPreamble: aReturnNode.
 	self emitMetaLinkBefore: aReturnNode.
 	aReturnNode hasMetalinkInstead
