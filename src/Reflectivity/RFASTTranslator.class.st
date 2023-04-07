@@ -57,13 +57,13 @@ RFASTTranslator >> emitMetaLinkAfterNoEnsure: aNode [
 
 	aNode hasMetalinkAfter ifFalse: [ ^self ].
 	aNode postambles do: [ :each | valueTranslator visitNode: each ].
-	aNode afterHooks do: [ :each | effectTranslator visitNode: each ]
+	aNode afterHooks do: [ :each | self visitEffectNode: each ]
 ]
 
 { #category : #reflectivity }
 RFASTTranslator >> emitMetaLinkBefore: aNode [
 	aNode hasMetalinkBefore ifFalse: [ ^self ].
-	aNode beforeHooks do: [ :hook | effectTranslator visitNode: hook ]
+	aNode beforeHooks do: [ :hook | self visitEffectNode: hook ]
 ]
 
 { #category : #reflectivity }
@@ -143,7 +143,7 @@ RFASTTranslator >> visitCascadeNode: aCascadeNode [
 		ifFalse: [
 			aCascadeNode messages allButLastDo: [:node |
 				methodBuilder pushDup.
-				effectTranslator visitNode: node.
+				self visitEffectNode: node.
 			].
 				self visitNode: aCascadeNode messages last.].
 	self emitMetaLinkAfterNoEnsure: aCascadeNode
@@ -243,7 +243,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 			createTempVectorNamed: aMethodNode scope tempVectorName
 			withVars: aMethodNode scope tempVectorVarNames.
 	].
-	effectTranslator visitNode: aMethodNode body.
+	self visitEffectNode: aMethodNode body.
 	(aMethodNode hasProperty: #wrapperMethod)
 	 ifTrue: [
 		"after links are only active in the wrapper method"

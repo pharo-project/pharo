@@ -78,7 +78,7 @@ RFASTTranslatorForValue >> visitSequenceNode: aSequenceNode [
 			statements ifEmpty: [
 			methodBuilder pushLiteral: nil.
 			^self].
-		statements allButLastDo: [:each | effectTranslator visitNode: each].
+		statements allButLastDo: [:each | self visitEffectNode: each].
 		self visitNode: statements last.
 	]
 ]
