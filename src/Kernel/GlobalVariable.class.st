@@ -32,6 +32,12 @@ GlobalVariable >> emitValue: methodBuilder [
 ]
 
 { #category : #testing }
+GlobalVariable >> isDeprecated [
+
+	^ false
+]
+
+{ #category : #testing }
 GlobalVariable >> isGlobalVariable [
 	^true
 ]

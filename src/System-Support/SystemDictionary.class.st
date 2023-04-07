@@ -106,6 +106,17 @@ SystemDictionary >> at: aKey put: anObject [
 	^ anObject
 ]
 
+{ #category : #'accessing - dictionary access' }
+SystemDictionary >> at: aKey putDeprecated: anObject [
+	"Override from Dictionary to check Undeclared and fix up references to undeclared variables with a deprecated global."
+
+	(self includesKey: aKey) ifFalse: [
+		self declareDeprecated: aKey from: Undeclared.
+		self flushClassNameCache ].
+	super at: aKey put: anObject.
+	^ anObject
+]
+
 { #category : #'accessing - variable lookup' }
 SystemDictionary >> bindingOf: varName [
 	"SystemDictionaries includes symbols only"
