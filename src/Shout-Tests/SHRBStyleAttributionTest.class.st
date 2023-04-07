@@ -326,7 +326,8 @@ SHRBStyleAttributionTest >> testDeprecatedGlobalVariable [
 
 	[
 	| aText |
-	Smalltalk globals at: #SHRBDeprecatedGlobalVariable putDeprecated: self class.
+	Smalltalk globals at: #SHRBDeprecatedGlobalVariable put: self class.
+	(Smalltalk globals lookupVar: #SHRBDeprecatedGlobalVariable) isDeprecated: true.
 	aText := 'm ^ SHRBDeprecatedGlobalVariable' asText.
 	self style: aText.
 

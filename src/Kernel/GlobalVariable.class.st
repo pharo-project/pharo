@@ -2,10 +2,15 @@
 I model Globals. I am stored as a binding in the Smalltalk globals.
 
 The compiler forwards bytecode generation to me for accessing the variable.
+
+The users can tag me as deprecated in order to warn the users to not use me because I will be removed, via the syntax highlighting for example.
 "
 Class {
 	#name : #GlobalVariable,
 	#superclass : #LiteralVariable,
+	#instVars : [
+		'isDeprecated'
+	],
 	#category : #'Kernel-Variables'
 }
 
@@ -31,10 +36,22 @@ GlobalVariable >> emitValue: methodBuilder [
 	methodBuilder pushLiteralVariable: self
 ]
 
+{ #category : #initialization }
+GlobalVariable >> initialize [
+	super initialize.
+	isDeprecated := false
+]
+
 { #category : #testing }
 GlobalVariable >> isDeprecated [
 
-	^ self value isClass and: [ self value isDeprecated ]
+	^ isDeprecated or: [ self value isClass and: [ self value isDeprecated ] ]
+]
+
+{ #category : #accessing }
+GlobalVariable >> isDeprecated: aBoolean [
+
+	isDeprecated := aBoolean
 ]
 
 { #category : #testing }
