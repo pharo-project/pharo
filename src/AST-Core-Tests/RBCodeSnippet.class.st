@@ -1798,6 +1798,9 @@ RBCodeSnippet >> dumpDefinition [
 			  nextPutAll: '(self new';
 			  nextPutAll: ' source: ';
 			  print: self source.
+		  aStream
+			  nextPutAll: '; nodeAt: ';
+			  print: self nodePositions.
 		  self formattedCode = self source ifFalse: [
 			  aStream
 				  nextPutAll: '; formattedCode: ';
@@ -2174,9 +2177,12 @@ RBCodeSnippet >> updateExpectations [
 	ast := self parse.
 	self formattedCode: ast formattedCode withSeparatorsCompacted.
 	self isParseFaulty: ast isFaulty.
+	self nodePositions:
+		(' ' repeat: ast start - 1) , ast asPositionDebugString.
 	ast := self doSemanticAnalysis.
 	self isFaulty: ast isFaulty.
-	self isFaultyMinusUndeclared: self isFaulty & (ast allErrorNotices allSatisfy: #isUndeclaredNotice) not.
+	self isFaultyMinusUndeclared: self isFaulty
+		& (ast allErrorNotices allSatisfy: #isUndeclaredNotice) not.
 	self notices: (ast allNotices
 			 collect: [ :each |
 				 {
