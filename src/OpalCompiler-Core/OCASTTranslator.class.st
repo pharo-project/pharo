@@ -434,9 +434,8 @@ OCASTTranslator >> initialize [
 	
 	methodBuilder := IRBuilder new.
 	effectTranslator := self classForEffect basicNew.
-	valueTranslator := self classForValue basicNew.
+	valueTranslator := self.
 	effectTranslator setFromSimilar: self.
-	valueTranslator setFromSimilar: self.
 	nextUniqueInlineID := 0
 ]
 
