@@ -287,7 +287,7 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	| block |
 	block := aMessageNode receiver.
 	methodBuilder jumpBackTarget: #start.
-	effectTranslator visitInlinedBlockNode: block.
+	self visitEffectInlinedBlockNode: block.
 	methodBuilder jumpBackTo: #start.
 	self isValueTranslator ifTrue: [ methodBuilder pushLiteral: nil ]
 ]
@@ -337,7 +337,7 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	methodBuilder send: #'<='.
 	methodBuilder jumpAheadTo: doneLabelName if: false.
 
-	effectTranslator visitInlinedBlockNode: block.
+	self visitEffectInlinedBlockNode: block.
 	methodBuilder pushTemp: iteratorVariableName.
 	methodBuilder pushLiteral: 1.
 	methodBuilder send: #+.
@@ -392,7 +392,7 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	methodBuilder send: (step > 0 ifTrue: [#<=] ifFalse: [#>=]).
 	methodBuilder jumpAheadTo: #done if: false.
 
-	effectTranslator visitInlinedBlockNode: block.
+	self visitEffectInlinedBlockNode: block.
 	iterator emitValue: methodBuilder.
 	methodBuilder pushLiteral: step.
 	methodBuilder send: #+.
@@ -409,7 +409,7 @@ OCASTTranslator >> emitWhile: aMessageNode boolean: aBoolean [
 	valueTranslator visitInlinedBlockNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #end if: aBoolean.
 	aMessageNode arguments ifNotEmpty: [
-			effectTranslator visitInlinedBlockNode: aMessageNode arguments first].
+			self visitEffectInlinedBlockNode: aMessageNode arguments first].
 	methodBuilder jumpBackTo: #begin.
 	methodBuilder jumpAheadTarget: #end.
 	methodBuilder pushLiteral: nil
@@ -581,7 +581,7 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 	valueTranslator visitNode: aCascadeNode receiver.
 	aCascadeNode messages allButLastDo: [:node |
 		methodBuilder pushDup.
-		effectTranslator visitNode: node.
+		self visitEffectNode: node.
 	].
 	self visitNode: aCascadeNode messages last
 ]
@@ -762,7 +762,7 @@ OCASTTranslator >> visitSequenceNode: aSequenceNode [
 	statements ifEmpty: [
 		methodBuilder pushLiteral: nil.
 		^self].
-	statements allButLastDo: [:each | effectTranslator visitNode: each].
+	statements allButLastDo: [:each | self visitEffectNode: each].
 	self visitNode: statements last
 ]
 
