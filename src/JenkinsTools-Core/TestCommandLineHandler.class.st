@@ -106,8 +106,9 @@ TestCommandLineHandler >> packages [
 
 	"Releases tests should be run last because the previous tests might miss some tear downs and let the system in a bad state.
 	Thus, if a release package is present in the list of packages, we move it last in the testing order."
+	packageNames := packageNames asArray.
 	releasePackageNames := packageNames select: [ :packageName | packageName beginsWith: 'Release' ].
-	packageNames := packageNames asArray copyWithoutAll: releasePackageNames.
+	packageNames := packageNames copyWithoutAll: releasePackageNames.
 	packageNames := packageNames copyWithAll: releasePackageNames.
 
 	^ packageNames
