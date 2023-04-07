@@ -1728,15 +1728,15 @@ RBCodeSnippet class >> styleWithError: snippets [
 ]
 
 { #category : #updating }
-RBCodeSnippet class >> updateAllSnippets [
+RBCodeSnippet class >> updateSnippets: snippets [
 	"This script will update all definitions of all snippets.
 	Beware of code loss and double check the generated definitions."
 
 	"I did not manage to update all in a single transformation (with a preview!)
 	So do them one by one with a progress bar :("
 
-	<script>
-	self allSnippets
+	<script: 'self updateSnippets: self allSnippets'>
+	snippets
 		do: [ :snippet |
 			snippet definitionRefactoring ifNotNil: [ :refactoring |
 				refactoring
