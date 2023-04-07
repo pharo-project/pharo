@@ -19,3 +19,8 @@ SyntaxErrorNotification class >> inClass: aClass withCode: codeString doitFlag: 
 		location: location;
 		signal
 ]
+
+{ #category : #testing }
+SyntaxErrorNotification class >> isDeprecated [
+	^true
+]
