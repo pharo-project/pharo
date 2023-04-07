@@ -277,7 +277,7 @@ PBImageBuilder50 >> createInitialObjects [
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk := SmalltalkImage basicNew.'.
 	self bootstrapInterpreter evaluateCode:
-		'Smalltalk instVarAt: 1 put: (SystemDictionary withOrganizer: SystemOrganizer new).'.
+		'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
 	self bootstrapInterpreter evaluateCode:

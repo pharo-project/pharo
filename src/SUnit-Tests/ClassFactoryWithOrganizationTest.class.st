@@ -19,7 +19,7 @@ ClassFactoryWithOrganizationTest >> assertEnvironmentOf: aBehavior [
 ClassFactoryWithOrganizationTest >> setUp [
 	| environment |
 	super setUp.
-	environment := SystemDictionary withOrganizer: SystemOrganizer new.
+	environment := SystemDictionary new.
 	factory := ClassFactoryWithOrganization newWithOrganization: environment organization
 ]
 
