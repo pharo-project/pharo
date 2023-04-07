@@ -101,6 +101,21 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 		compile
 ]
 
+{ #category : #tests }
+OCCompilerTest >> testErrorOrders [
+
+	| ast notices |
+	ast := OpalCompiler new parse: 'foo | b | ^ a + ¿. 5 "what'.
+	notices := ast allNotices sorted
+		           collect: [ :e |
+		           e position asString , ':' , e messageText ]
+		           as: Array.
+	self
+		assertCollection: notices
+		equals: #( '17:Unknown character' '27:Unmatched " in comment.'
+			   '13:Undeclared variable' '7:Unused variable' '20:Unreachable statement' )
+]
+
 { #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 	self initializeErrorMessage.
@@ -245,17 +260,20 @@ OCCompilerTest >> testUndefinedVariable [
 
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	self
-		assert: {
+		assert: ( [ {
 			OpalCompiler new
 				permitFaulty: true;
 				evaluate: 'undefinedName123'.
-			[ OpalCompiler new
-				permitFaulty: true;
-				evaluate: 'undefinedName123 := 2. undefinedName123' ] on: UndeclaredVariableWrite do: [ UndeclaredVariableWrite ].
 			OpalCompiler new
 				permitFaulty: true;
-				evaluate: 'undefinedName123' }
-		equals: { nil. UndeclaredVariableWrite. nil. }.
+				evaluate: 'undefinedName123 := 1'.
+			OpalCompiler new
+				permitFaulty: true;
+				evaluate: 'undefinedName123 := 2. undefinedName123'.
+			OpalCompiler new
+				permitFaulty: true;
+				evaluate: 'undefinedName123' }  ] on: UndeclaredVariableRead , UndeclaredVariableWrite do: [ :e | e resume: e class ] )
+		equals: { UndeclaredVariableRead. UndeclaredVariableWrite. UndeclaredVariableRead. UndeclaredVariableRead }.
 
 	"Cleanup"
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]

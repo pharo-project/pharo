@@ -95,7 +95,7 @@ ClassOrganization >> classify: selector under: protocol [
 	self classify: selector inProtocolNamed: protocolName.
 	oldProtocols
 		select: #isEmpty
-		thenDo: [ :e | self removeProtocol: e ].
+		thenDo: [ :aProtocol | self removeProtocol: aProtocol ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -353,7 +353,7 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 
 	| protocol |
 	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
-	(protocol isEmpty and: [ protocol isEmpty ]) ifTrue: [ self removeProtocol: protocol ]
+	protocol isEmpty ifTrue: [ self removeProtocol: protocol ]
 ]
 
 { #category : #accessing }
