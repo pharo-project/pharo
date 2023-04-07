@@ -1,7 +1,7 @@
 Class {
 	#name : #TraitTest,
 	#superclass : #TraitsTestCase,
-	#category : #'Tests-Traits'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #utilities }
@@ -351,7 +351,7 @@ TraitTest >> testPrinting [
 	self assertPrints: (ClassDefinitionPrinter oldPharo for: self t6) definitionString like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
 	instanceVariableNames:''''
-	package: ''Tests-Traits'''
+	package: ''TraitsV2-Tests'''
 ]
 
 { #category : #tests }

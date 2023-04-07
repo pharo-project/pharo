@@ -1,7 +1,7 @@
 Class {
 	#name : #ObjectFinalizerTest,
 	#superclass : #TestCase,
-	#category : #'Tests-Finalization'
+	#category : #'Kernel-Tests-Finalization'
 }
 
 { #category : #tests }
