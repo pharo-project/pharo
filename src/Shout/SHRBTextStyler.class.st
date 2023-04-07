@@ -820,14 +820,16 @@ SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
-	| textLink global |
+
+	| textLink |
 	textLink := self resolveTextLinkFor: aVariableNode.
-	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink} ].
+	aVariableNode binding isGlobalVariable ifFalse: [ ^ { textLink } ].
 
-	global :=	 aVariableNode binding value.
-	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
+	aVariableNode binding isDeprecated ifFalse: [ ^ { textLink } ].
 
-	^{ textLink. TextEmphasis struckOut }
+	^ {
+		  textLink.
+		  TextEmphasis struckOut }
 ]
 
 { #category : #private }
