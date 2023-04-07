@@ -37,7 +37,8 @@ Class {
 		'messageNotUnderstood',
 		'numberOfCritiques',
 		'group',
-		'default'
+		'default',
+		'nodePositions'
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }
@@ -1999,6 +2000,25 @@ RBCodeSnippet >> messageNotUnderstood [
 RBCodeSnippet >> messageNotUnderstood: anObject [
 
 	messageNotUnderstood := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> nodeAt: anObject [
+	"Synonym for `bestNodes:` used to be aligned with `source:`"
+
+	nodePositions := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> nodePositions [
+
+	^ nodePositions
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> nodePositions: anObject [
+
+	nodePositions := anObject
 ]
 
 { #category : #accessing }
