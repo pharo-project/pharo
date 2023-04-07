@@ -508,7 +508,7 @@ OpalCompiler >> parse [
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
-		ast allNotices do: [ :n |
+		ast allNotices sorted do: [ :n |
 			| check |
 			check := self checkNotice: n.
 			check ifNil: [ ^ ast ].

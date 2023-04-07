@@ -84,14 +84,16 @@ ClassOrganization >> classify: selector under: protocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := protocol isString ifTrue: [ protocol ] ifFalse: [ protocol name ].
+	protocolName := protocol isString
+		                ifTrue: [ protocol ]
+		                ifFalse: [ protocol name ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
 
 	self classify: selector inProtocolNamed: protocolName.
-	(oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocolIfEmpty: e ].
+	oldProtocols do: [ :protocol | self removeProtocolIfEmpty: protocol ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
