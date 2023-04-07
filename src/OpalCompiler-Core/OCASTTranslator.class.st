@@ -137,7 +137,6 @@ OCASTTranslator >> emitCaseOf: aMessageNode otherwiseBlock: aBlock [
 			(aMessageNode owningScope) isBlockScope
 				ifTrue: [methodBuilder blockReturnTop]
 				ifFalse: [methodBuilder returnTop]]
-		ifFalse: [self isEffectTranslator ifTrue: [methodBuilder popTop]]
 ]
 
 { #category : #'inline messages' }
@@ -190,11 +189,11 @@ OCASTTranslator >> emitIfFalseIfTrue: aMessageNode [
 OCASTTranslator >> emitIfNil: aMessageNode [
 
 	valueTranslator visitNode: aMessageNode receiver.
-	self isValueTranslator ifTrue: [ methodBuilder pushDup ].
+	methodBuilder pushDup.
 	methodBuilder pushLiteral: nil.
 	methodBuilder send: #==.
 	methodBuilder jumpAheadTo: #else if: false.
-	self isValueTranslator ifTrue: [ methodBuilder popTop ].
+	methodBuilder popTop.
 	self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTarget: #else
 ]
@@ -289,7 +288,7 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	methodBuilder jumpBackTarget: #start.
 	self visitEffectInlinedBlockNode: block.
 	methodBuilder jumpBackTo: #start.
-	self isValueTranslator ifTrue: [ methodBuilder pushLiteral: nil ]
+	methodBuilder pushLiteral: nil
 ]
 
 { #category : #errors }
@@ -326,7 +325,7 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 			limitEmit := [ methodBuilder pushTemp: limitVariableName ] ].
 
 	"push start. allocate and initialize iterator"
-	self isValueTranslator ifTrue: [ limitEmit value ].
+	limitEmit value.
 	methodBuilder pushLiteral: 1.
 	methodBuilder addTemp: iteratorVariableName.
 	methodBuilder storeTemp: iteratorVariableName.
@@ -385,7 +384,6 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	"push start. allocate and initialize iterator"
 	valueTranslator visitNode: aMessageNode receiver.
 	iterator emitStore: methodBuilder.
-	self isEffectTranslator ifTrue: [methodBuilder popTop].
 	methodBuilder jumpBackTarget: #start.
 	iterator emitValue: methodBuilder.
 	limitEmit value.
@@ -443,16 +441,6 @@ OCASTTranslator >> initialize [
 OCASTTranslator >> ir [
 
 	^ methodBuilder ir
-]
-
-{ #category : #testing }
-OCASTTranslator >> isEffectTranslator [
-	^self == effectTranslator
-]
-
-{ #category : #testing }
-OCASTTranslator >> isValueTranslator [
-	^self isEffectTranslator not
 ]
 
 { #category : #'inline messages' }
