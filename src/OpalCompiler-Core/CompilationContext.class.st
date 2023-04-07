@@ -707,8 +707,8 @@ CompilationContext >> requestorCanDeclare: aRequestor [
 	aRequestor ifNil: [ ^ false ].
 	(aRequestor respondsTo: #canDeclareBindings) ifTrue: [
 		^ aRequestor canDeclareBindings ].
-	(aRequestor isKindOf: SpCodeScriptingInteractionModel) ifTrue: [
-		^ true ].
+	(#( #StPlaygroundInteractionModel #StSindarinContextInteractionModel )
+		 includes: aRequestor class name) ifTrue: [ ^ true ].
 	(aRequestor respondsTo: #interactionModel) ifTrue: [
 		| req2 |
 		req2 := aRequestor interactionModel.
