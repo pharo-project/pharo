@@ -39,7 +39,7 @@ RBNotice >> description [
 			  nextPutAll: (node sourceCode asString withBlanksCondensed truncateWithElipsisTo: 60) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'error handling' }
 RBNotice >> errorLevel [
 
 	self isSyntaxError ifTrue: [ ^ 3 ].
