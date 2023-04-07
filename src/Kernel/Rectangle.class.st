@@ -112,9 +112,8 @@ Rectangle class >> point: pt1 point: pt2 [
 Rectangle >> = aRectangle [
 	"Answer true if the receiver's species, origin and corner match aRectangle's."
 
-	self species = aRectangle species
-		ifTrue: [^origin = aRectangle origin and: [corner = aRectangle corner]]
-		ifFalse: [^false]
+	^ self species = aRectangle species and: [
+		  origin = aRectangle origin and: [ corner = aRectangle corner ] ]
 ]
 
 { #category : #accessing }
