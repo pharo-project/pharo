@@ -84,14 +84,18 @@ ClassOrganization >> classify: selector under: protocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := protocol isString ifTrue: [ protocol ] ifFalse: [ protocol name ].
+	protocolName := protocol isString
+		                ifTrue: [ protocol ]
+		                ifFalse: [ protocol name ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
 
 	self classify: selector inProtocolNamed: protocolName.
-	(oldProtocols select: #canBeRemoved) do: [ :e | self removeProtocol: e ].
+	oldProtocols
+		select: #isEmpty
+		thenDo: [ :aProtocol | self removeProtocol: aProtocol ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -323,7 +327,7 @@ ClassOrganization >> removeEmptyProtocols [
 	oldProtocolNames := self protocolNames copy.
 
 	removedProtocols := protocols
-		                    select: [ :protocol | protocol canBeRemoved ]
+		                    select: [ :protocol | protocol isEmpty ]
 		                    thenDo: [ :protocol |
 			                    self removeProtocol: protocol.
 			                    self notifyOfRemovedProtocolNamed: protocol name ].
@@ -335,7 +339,7 @@ ClassOrganization >> removeEmptyProtocols [
 ClassOrganization >> removeProtocol: aProtocol [
 
 	| oldProtocolNames |
-	aProtocol canBeRemoved ifFalse: [ ^ self ].
+	aProtocol isEmpty ifFalse: [ ^ self ].
 
 	oldProtocolNames := self protocolNames copy.
 	protocols remove: aProtocol ifAbsent: [  ].
@@ -349,7 +353,7 @@ ClassOrganization >> removeProtocolIfEmpty: protocolName [
 
 	| protocol |
 	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
-	(protocol isEmpty and: [ protocol canBeRemoved ]) ifTrue: [ self removeProtocol: protocol ]
+	protocol isEmpty ifTrue: [ self removeProtocol: protocol ]
 ]
 
 { #category : #accessing }
