@@ -33,7 +33,7 @@ ClassOrganization >> addProtocolNamed: protocolName [
 	oldProtocols := self protocolNames copy.
 
 	protocol := self addSilentlyProtocolNamed: protocolName.
-	self notifyOfAddedProtocol: protocolName.
+	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass.
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -213,20 +213,6 @@ ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 ]
 
 { #category : #notifications }
-ClassOrganization >> notifyOfAddedProtocol: protocolName [
-
-	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass
-]
-
-{ #category : #notifications }
-ClassOrganization >> notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil [
-
-	oldNameOrNil ~= newNameOrNil ifFalse: [ ^ self ].
-	SystemAnnouncer uniqueInstance protocolRenamedFrom: oldNameOrNil to: newNameOrNil inClass: self organizedClass.
-	SystemAnnouncer uniqueInstance classReorganized: self organizedClass
-]
-
-{ #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
 
 	oldProtocols ~= newProtocols ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self organizedClass ]
@@ -359,9 +345,13 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
-	self notifyOfChangedProtocolNameFrom: oldName to: newName.
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+	"Announce the changes in the system"
+	oldName ~= newName ifTrue: [
+		SystemAnnouncer uniqueInstance protocolRenamedFrom: oldName to: newName inClass: self organizedClass.
+		SystemAnnouncer uniqueInstance classReorganized: self organizedClass.
+
+		"I need to notify also the selector changes, otherwise RPackage will not notice"
+		(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ] ]
 ]
 
 { #category : #initialization }
