@@ -266,6 +266,27 @@ RFASTTranslator >> visitReturnNode: aReturnNode [
 		ifFalse: [ methodBuilder returnTop ]
 ]
 
+{ #category : #visiting }
+RFASTTranslator >> visitSequenceNode: aSequenceNode [
+	| statements |
+
+	self emitPreamble: aSequenceNode.
+	self emitMetaLinkBefore: aSequenceNode.
+
+	aSequenceNode hasMetalinkAfter ifTrue: [ ^ self visitSequenceWithAfter: aSequenceNode  ].
+
+	aSequenceNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aSequenceNode ]
+		ifFalse: [
+			statements := aSequenceNode statements.
+			statements ifEmpty: [
+			methodBuilder pushLiteral: nil.
+			^self].
+		statements allButLastDo: [:each | self visitEffectNode: each].
+		self visitNode: statements last.
+	]
+]
+
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
 	| wrappedBlock compiledBlock |
