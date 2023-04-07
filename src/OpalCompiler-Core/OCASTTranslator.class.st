@@ -69,7 +69,7 @@ OCASTTranslator >> emitAllButLastCases: cases [
 	1 to: cases size - 1 do: [:i |
 		methodBuilder pushDup.
 		assocMessageNode := cases at: i.
-		valueTranslator visitInlinedBlockNode: assocMessageNode receiver.
+		self visitInlinedBlockNode: assocMessageNode receiver.
 		methodBuilder send: #=.
 		methodBuilder jumpAheadTo: #next if: false.
 		methodBuilder popTop.
@@ -82,9 +82,9 @@ OCASTTranslator >> emitAllButLastCases: cases [
 { #category : #'inline messages' }
 OCASTTranslator >> emitAnd: aMessageNode [
 
-	valueTranslator visitNode: aMessageNode receiver.
+	self visitNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #else if: false.
-	valueTranslator visitInlinedBlockNode: aMessageNode arguments first.
+	self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTo: #end.
 	methodBuilder jumpAheadTarget: #else.
 	methodBuilder pushLiteral: false.
@@ -107,15 +107,15 @@ OCASTTranslator >> emitCaseOf: aMessageNode otherwiseBlock: aBlock [
 	| cases assocMessageNode  |
 
 	cases := aMessageNode arguments first statements.
-	valueTranslator visitNode: aMessageNode receiver.
-	valueTranslator emitAllButLastCases: cases.
+	self visitNode: aMessageNode receiver.
+	self emitAllButLastCases: cases.
 
 	"last case with otherwise"
 	assocMessageNode := cases last.
-	valueTranslator visitInlinedBlockNode: assocMessageNode receiver.
+	self visitInlinedBlockNode: assocMessageNode receiver.
 	methodBuilder send: #=.
 	methodBuilder jumpAheadTo: #next if: false.
-	valueTranslator visitInlinedBlockNode: assocMessageNode arguments first.
+	self visitInlinedBlockNode: assocMessageNode arguments first.
 	methodBuilder jumpAheadTo: #end.
 	methodBuilder jumpAheadTarget: #next.
 	aBlock value.
@@ -134,7 +134,7 @@ OCASTTranslator >> emitCaseOfOtherwise: aMessageNode [
 
 	self
 		emitCaseOf: aMessageNode
-		otherwiseBlock: [ valueTranslator visitInlinedBlockNode: aMessageNode arguments last ]
+		otherwiseBlock: [ self visitInlinedBlockNode: aMessageNode arguments last ]
 ]
 
 { #category : #'inline messages factored' }
@@ -152,7 +152,7 @@ OCASTTranslator >> emitCondition: args boolean: aBoolean [
 { #category : #'inline messages factored' }
 OCASTTranslator >> emitIf: aMessageNode boolean: aBoolean [
 
-	valueTranslator visitNode: aMessageNode receiver.
+	self visitNode: aMessageNode receiver.
 
 	self emitCondition: aMessageNode arguments boolean: aBoolean
 ]
@@ -178,7 +178,7 @@ OCASTTranslator >> emitIfFalseIfTrue: aMessageNode [
 { #category : #'inline messages' }
 OCASTTranslator >> emitIfNil: aMessageNode [
 
-	valueTranslator visitNode: aMessageNode receiver.
+	self visitNode: aMessageNode receiver.
 	methodBuilder pushDup.
 	methodBuilder pushLiteral: nil.
 	methodBuilder send: #==.
@@ -192,7 +192,7 @@ OCASTTranslator >> emitIfNil: aMessageNode [
 OCASTTranslator >> emitIfNil: aMessageNode boolean: aBoolean [
 	| args notNilBlock |
 
-	valueTranslator visitNode: aMessageNode receiver.
+	self visitNode: aMessageNode receiver.
 
 	"emits the == nil code and push correct value on stack if the ifNotNil block has an argument"
 	args := aMessageNode arguments.
@@ -251,9 +251,9 @@ OCASTTranslator >> emitIfTrueIfFalse: aMessageNode [
 OCASTTranslator >> emitMessageNode: aMessageNode [
 
 	aMessageNode isCascaded ifFalse: [
-		valueTranslator visitNode: aMessageNode receiver].
+		self visitNode: aMessageNode receiver].
 	aMessageNode arguments do: [:each |
-		valueTranslator visitNode: each].
+		self visitNode: each].
 	aMessageNode isSuperSend
 		ifTrue: [methodBuilder send: aMessageNode selector toSuperOf: self compilationContext getClass]
 		ifFalse: [methodBuilder send: aMessageNode selector]
@@ -262,12 +262,12 @@ OCASTTranslator >> emitMessageNode: aMessageNode [
 { #category : #'inline messages' }
 OCASTTranslator >> emitOr: aMessageNode [
 
-	valueTranslator visitNode: aMessageNode receiver.
+	self visitNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #else if: false.
 	methodBuilder pushLiteral: true.
 	methodBuilder jumpAheadTo: #end.
 	methodBuilder jumpAheadTarget: #else.
-	valueTranslator visitInlinedBlockNode: aMessageNode arguments first.
+	self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTarget: #end
 ]
 
@@ -303,12 +303,12 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	startLabelName := uniqueInlineID , #start.
 	doneLabelName := uniqueInlineID , #done.
 
-	limitEmit := [ valueTranslator visitNode: limit ].
+	limitEmit := [ self visitNode: limit ].
 	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
 	(limit isLiteralNode or: [
 		 limit isVariable and: [ limit variable isWritable not ] ])
 		ifFalse: [
-			valueTranslator visitNode: limit.
+			self visitNode: limit.
 			methodBuilder addTemp: limitVariableName.
 			methodBuilder storeTemp: limitVariableName.
 			methodBuilder popTop.
@@ -362,17 +362,17 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	block := aMessageNode arguments last.
 	iterator := block arguments first variable.
 
-	limitEmit := [valueTranslator visitNode: limit].
+	limitEmit := [self visitNode: limit].
 	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
 	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
-		valueTranslator visitNode: limit.
+		self visitNode: limit.
 		methodBuilder addTemp: ('0limit_', iterator name).
 		methodBuilder storeTemp: ('0limit_', iterator name).
 		methodBuilder popTop.
 		limitEmit := [methodBuilder pushTemp: ('0limit_', iterator name)]].
 
 	"push start. allocate and initialize iterator"
-	valueTranslator visitNode: aMessageNode receiver.
+	self visitNode: aMessageNode receiver.
 	iterator emitStore: methodBuilder.
 	methodBuilder jumpBackTarget: #start.
 	iterator emitValue: methodBuilder.
@@ -394,7 +394,7 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 OCASTTranslator >> emitWhile: aMessageNode boolean: aBoolean [
 
 	methodBuilder jumpBackTarget: #begin.
-	valueTranslator visitInlinedBlockNode: aMessageNode receiver.
+	self visitInlinedBlockNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #end if: aBoolean.
 	aMessageNode arguments ifNotEmpty: [
 			self visitEffectInlinedBlockNode: aMessageNode arguments first].
@@ -479,7 +479,7 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 			createTempVectorNamed: aBlockNode scope tempVectorName
 			withVars: aBlockNode scope tempVectorVarNames.
 	].
-	valueTranslator visitNode: aBlockNode body.
+	self visitNode: aBlockNode body.
 	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
 	aBlockNode ir: self ir.
@@ -495,7 +495,7 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
-	elementNodes do: [:node | valueTranslator visitNode: node].
+	elementNodes do: [:node | self visitNode: node].
 	methodBuilder pushConsArray: elementNodes size
 ]
 
@@ -504,7 +504,7 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	| var |
 	var := anAssignmentNode variable variable.
-	valueTranslator visitNode: anAssignmentNode value.
+	self visitNode: anAssignmentNode value.
 	"Even in faulty mode, do not baspass the isWritable semantic to avoid very bad consequences on the image"
 	var isWritable ifFalse: [ ^ self emitRuntimeError: anAssignmentNode variable ].
 
@@ -536,7 +536,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitCascadeNode: aCascadeNode [
 
-	valueTranslator visitNode: aCascadeNode receiver.
+	self visitNode: aCascadeNode receiver.
 	aCascadeNode messages allButLastDo: [:node |
 		methodBuilder pushDup.
 		self visitEffectNode: node.
@@ -574,14 +574,14 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitEffectInlinedBlockNode: anOptimizedBlockNode [
 
-	valueTranslator visitInlinedBlockNode: anOptimizedBlockNode.
+	self visitInlinedBlockNode: anOptimizedBlockNode.
 	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitEffectNode: aNode [
 
-	valueTranslator visitNode: aNode.
+	self visitNode: aNode.
 	methodBuilder popTop
 ]
 
@@ -628,7 +628,7 @@ OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
 	methodBuilder send: #braceStream:.
 	aRBArrayNode statements do: [ :each |
 		methodBuilder pushDup.
-		valueTranslator visitNode: each.
+		self visitNode: each.
 		methodBuilder send: #nextPut:.
 		methodBuilder popTop.
 		].
@@ -709,7 +709,7 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitReturnNode: aReturnNode [
 
-	valueTranslator visitNode: aReturnNode value.
+	self visitNode: aReturnNode value.
 	methodBuilder returnTop
 ]
 
