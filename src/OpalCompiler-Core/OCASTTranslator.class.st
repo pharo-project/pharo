@@ -421,7 +421,6 @@ OCASTTranslator >> initialize [
 	super initialize.
 	
 	methodBuilder := IRBuilder new.
-	valueTranslator := self.
 	nextUniqueInlineID := 0
 ]
 
