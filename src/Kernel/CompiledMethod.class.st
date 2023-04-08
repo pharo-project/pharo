@@ -1075,6 +1075,7 @@ CompiledMethod >> sourceCodeOrNil [
 	| trailer |
 	trailer := self trailer.
 	trailer sourceCode ifNotNil: [ :code | ^ code ].
+	self propertyAt: #source ifPresent:  [ :code | ^ code ].
 	trailer hasSourcePointer ifFalse: [ ^ nil ].
 	^ self getSourceFromFile ifEmpty: [ nil ]
 ]
