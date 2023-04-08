@@ -902,6 +902,14 @@ CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 ]
 
 { #category : #'accessing - pragmas & properties' }
+CompiledMethod >> propertyAt: propName ifPresent: aBlock [
+	| propertiesOrSelector |
+	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
+		ifTrue: [propertiesOrSelector at: propName ifPresent: aBlock]
+		ifFalse: [nil]
+]
+
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: propName put: propValue [
 	"Set or add the property with key propName and value propValue.
 	 If the receiver does not yet have a method properties create one and replace
