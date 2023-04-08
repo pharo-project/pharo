@@ -76,7 +76,7 @@ ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: selector under: protocol [
+ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocolName forceNotify oldProtocols protocolName |
 	"The next section deserve more cleanings.
@@ -84,18 +84,16 @@ ClassOrganization >> classify: selector under: protocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := protocol isString
-		                ifTrue: [ protocol ]
-		                ifFalse: [ protocol name ].
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
 
 	self classify: selector inProtocolNamed: protocolName.
-	oldProtocols
-		select: #isEmpty
-		thenDo: [ :aProtocol | self removeProtocol: aProtocol ].
+	oldProtocols do: [ :protocol | self removeProtocolIfEmpty: protocol ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -285,7 +283,7 @@ ClassOrganization >> protocolsOfSelector: aSelector [
 	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #removing }
 ClassOrganization >> removeElement: aSymbol [
 
 	| oldProtocol |
@@ -299,43 +297,25 @@ ClassOrganization >> removeElement: aSymbol [
 { #category : #removing }
 ClassOrganization >> removeEmptyProtocols [
 
-	| oldProtocolNames removedProtocols |
-	oldProtocolNames := self protocolNames copy.
-
-	removedProtocols := protocols
-		                    select: [ :protocol | protocol isEmpty ]
-		                    thenDo: [ :protocol |
-			                    self removeProtocol: protocol.
-			                    self notifyOfRemovedProtocolNamed: protocol name ].
-
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
+	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> removeProtocol: aProtocol [
+{ #category : #removing }
+ClassOrganization >> removeProtocolIfEmpty: aProtocol [
+	"I take a protocol or a protocol name and remvoe it if it is empty."
 
-	| oldProtocolNames |
-	aProtocol isEmpty ifFalse: [ ^ self ].
+	| protocol oldProtocolNames |
+	protocol := aProtocol isString
+		            ifTrue: [ self protocolNamed: aProtocol ifAbsent: [ ^ self ] ]
+		            ifFalse: [ aProtocol ].
+
+	protocol isEmpty ifFalse: [ ^ self ].
 
 	oldProtocolNames := self protocolNames copy.
-	protocols remove: aProtocol ifAbsent: [  ].
-	self notifyOfRemovedProtocolNamed: aProtocol name.
+	protocols remove: protocol ifAbsent: [  ].
+	self notifyOfRemovedProtocolNamed: protocol name.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
-]
-
-{ #category : #accessing }
-ClassOrganization >> removeProtocolIfEmpty: protocolName [
-	"The protocol may already have been removed, be non empty or a special protocol which can't be removed, such as 'all'."
-
-	| protocol |
-	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
-	protocol isEmpty ifTrue: [ self removeProtocol: protocol ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> removeProtocolNamed: protocolName [
-
-	^ self removeProtocol: (self protocolNamed: protocolName ifAbsent: [ ^ self ])
 ]
 
 { #category : #removing }
@@ -374,7 +354,7 @@ ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
 	(self hasProtocolNamed: newName)
 		ifTrue: [
 			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolNamed: oldName ]
+			self removeProtocolIfEmpty: oldName ]
 		ifFalse: [
 			^ (self protocolNamed: oldName)
 				  name: newName;
