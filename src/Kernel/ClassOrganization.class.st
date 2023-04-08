@@ -66,7 +66,9 @@ ClassOrganization >> classComment: aString [
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
 	| protocol |
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ].
+	protocol := self protocolNamed: aProtocolName ifAbsent: [
+		            ('Preparing to add protocol named ' , aProtocolName , ' to classify ' , aSymbol , ' into ' , organizedClass name) traceCr.
+		            self addProtocolNamed: aProtocolName ].
 	"maybe here we should check if this method already belong to another protocol"
 	self protocols
 		select: [ :p | p includesSelector: aSymbol ]
