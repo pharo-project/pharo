@@ -241,7 +241,8 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 		"the wrapper has to return the value of the wrapped method"
 		methodBuilder pushTemp: #RFReifyValueVar; returnTop]
 	ifFalse: [
-		aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]]
+		"Always add a return reveiver to be safe since the ones in the body could have been removed"
+		methodBuilder pushReceiver ; returnTop ]
 ]
 
 { #category : #'visitor - double dispatching' }
