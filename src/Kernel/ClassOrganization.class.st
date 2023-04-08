@@ -182,11 +182,7 @@ ClassOrganization >> initializeClass: aClass [
 
 	self initialize.
 	organizedClass := aClass.
-	organizedClass selectors ifNotEmpty: [ :selectors |
-		| protocol |
-		"We initialize silently the first protocol without announcing it because the announcements this early would lead to a new class initialization in the case of TraitedMetaclass and this would create an infinit loop."
-		protocol := self addProtocol: Protocol new.
-		selectors do: [ :each | self classify: each under: protocol ] ]
+	organizedClass selectors ifNotEmpty: [ :selectors | selectors do: [ :each | self classify: each under: Protocol unclassified ] ]
 ]
 
 { #category : #accessing }
