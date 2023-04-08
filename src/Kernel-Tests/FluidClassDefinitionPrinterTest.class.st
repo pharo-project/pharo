@@ -66,7 +66,7 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	self
 		assert: (self forClass: ChronologyConstants)
 		equals: 'SharedPool << #ChronologyConstants
-	sharedVariables: { #SqueakEpoch . #SecondsInDay . #DayNames . #MonthNames . #SecondsInHour . #MicrosecondsInDay . #NanosInSecond . #SecondsInMinute . #NanosInMillisecond . #DaysInMonth . #NanosInMicroSecond . #HoursInDay . #MinutesInHour };
+	sharedVariables: { #NanosInSecond . #MonthNames . #SecondsInHour . #SqueakEpoch . #SecondsInDay . #DayNames . #NanosInMillisecond . #DaysInMonth . #SecondsInMinute . #HoursInDay . #MinutesInHour . #NanosInMicroSecond . #MicrosecondsInDay };
 	tag: ''Chronology'';
 	package: ''Kernel'''
 ]
