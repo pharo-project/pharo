@@ -126,6 +126,18 @@ NumberTest >> testRaisedTo [
 ]
 
 { #category : #tests }
+NumberTest >> testRaisedTo02 [
+
+	self assert: (2 raisedTo: 8) equals: 256.
+	self assert: (2 raisedTo: 1 / 12) equals: 1.0594630943592953.
+	self should: [ -10 raisedTo: 1.5 ] raise: ArithmeticError.
+	self assert: (10 raisedTo: 0.0) equals: 1.
+	self assert: (10 raisedTo: 1.0) equals: 10.
+	self assert: (0 raisedTo: 1.2) equals: 0.
+	self assert: (10 raisedTo: 2.5) equals: 316.22776601683825
+]
+
+{ #category : #tests }
 NumberTest >> testRaisedToInteger [
 	self
 		assert: (2 raisedToInteger: 0) equals: 1;
