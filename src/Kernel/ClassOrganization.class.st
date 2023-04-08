@@ -21,7 +21,10 @@ ClassOrganization class >> forClass: aClass [
 { #category : #adding }
 ClassOrganization >> addProtocol: aProtocol [
 
-	^ protocols add: aProtocol
+	(self protocols includes: aProtocol) ifTrue: [ ^ aProtocol ].
+
+	protocols := protocols copyWith: aProtocol.
+	^ aProtocol
 ]
 
 { #category : #accessing }
@@ -64,15 +67,13 @@ ClassOrganization >> classComment: aString [
 
 { #category : #'protocol - adding' }
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
-
-	| protocol |
 	"maybe here we should check if this method already belong to another protocol"
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addSilentlyProtocolNamed: aProtocolName ].
 
-	protocol addMethodSelector: aSymbol
+	self protocols
+		select: [ :protocol | protocol includesSelector: aSymbol ]
+		thenDo: [ :protocol | protocol removeMethodSelector: aSymbol ].
+	(self protocolNamed: aProtocolName ifAbsent: [ self addSilentlyProtocolNamed: aProtocolName ])
+		addMethodSelector: aSymbol
 ]
 
 { #category : #'backward compatibility' }
@@ -274,13 +275,13 @@ ClassOrganization >> protocolNames [
 { #category : #accessing }
 ClassOrganization >> protocols [
 
-	^ protocols asArray
+	^ protocols
 ]
 
 { #category : #protocol }
 ClassOrganization >> protocolsOfSelector: aSelector [
 
-	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
+	^ self protocols select: [ :each | each includesSelector: aSelector ]
 ]
 
 { #category : #removing }
@@ -313,7 +314,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	protocol isEmpty ifFalse: [ ^ self ].
 
 	oldProtocolNames := self protocolNames copy.
-	protocols remove: protocol ifAbsent: [  ].
+	protocols := protocols copyWithout: protocol.
 	self notifyOfRemovedProtocolNamed: protocol name.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
@@ -337,7 +338,7 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 { #category : #initialization }
 ClassOrganization >> reset [
 
-	protocols := IdentitySet new
+	protocols := Array new
 ]
 
 { #category : #'backward compatibility' }
