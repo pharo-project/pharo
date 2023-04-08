@@ -164,7 +164,7 @@ ContextTest >> testAstScope [
 	self assert: scope isOptimized.
 
 	"test that we do not get a block scope when pushing a block on the stack"
-	aMethodContext pc: 92 + 1.
+	aMethodContext pc: 95 + 1.
 	scope := aMethodContext astScope.
 	self assert: aMethodContext sourceNodeExecuted isBlock.
 	self deny: scope isBlockScope

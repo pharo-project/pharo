@@ -53,8 +53,8 @@ BlockClosureTest >> testTallyInstructions [
 	| expected |
 	expected := Smalltalk compiler compilationContext
 		            optionCleanBlockClosure
-		            ifTrue: [ 27 ]
-		            ifFalse: [ 28 ].
+		            ifTrue: [ 26 ]
+		            ifFalse: [ 27 ].
 	self
 		assert: (Context tallyInstructions: aBlockContext) size
 		equals: expected
