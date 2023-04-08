@@ -327,6 +327,7 @@ OpalCompiler >> compile [
 	self callPlugins.
 	method := ast generateMethod.
 	method propertyAt: #source put: source.
+	compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 	^ method
 ]
 
