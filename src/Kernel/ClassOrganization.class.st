@@ -67,7 +67,10 @@ ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
 	| protocol |
 	protocol := self protocolNamed: aProtocolName ifAbsent: [
-		            ('Preparing to add protocol named ' , aProtocolName , ' to classify ' , aSymbol , ' into ' , organizedClass name) traceCr.
+		            Smalltalk globals at: #Transcript ifPresent: [ :t |
+			            t
+				            show: 'Preparing to add protocol named ' , aProtocolName , ' to classify ' , aSymbol , ' into ' , organizedClass name;
+				            cr ].
 		            self addProtocolNamed: aProtocolName ].
 	"maybe here we should check if this method already belong to another protocol"
 	self protocols
