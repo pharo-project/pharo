@@ -1044,7 +1044,7 @@ ReflectivityControlTest >> testInsteadCascade [
 { #category : #'tests - after - variables' }
 ReflectivityControlTest >> testInsteadClassVariable [
 	| classVar |
-	self skip.
+
 	classVar := ReflectivityExamples classVariableNamed: #ClassVar.
 	link := MetaLink new
 		metaObject: self;
@@ -1169,7 +1169,6 @@ ReflectivityControlTest >> testInsteadSendMultipleSites [
 { #category : #'tests - instead' }
 ReflectivityControlTest >> testInsteadSequence [
 	| seqNode |
-	self skip.
 	
 	seqNode := (ReflectivityExamples >> #exampleAssignment) ast body.
 	self assert: seqNode isSequence.
