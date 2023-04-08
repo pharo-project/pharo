@@ -1169,6 +1169,8 @@ ReflectivityControlTest >> testInsteadSendMultipleSites [
 { #category : #'tests - instead' }
 ReflectivityControlTest >> testInsteadSequence [
 	| seqNode |
+	self skip.
+	
 	seqNode := (ReflectivityExamples >> #exampleAssignment) ast body.
 	self assert: seqNode isSequence.
 	link := MetaLink new

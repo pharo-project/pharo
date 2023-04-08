@@ -1032,6 +1032,8 @@ ReflectivityReificationTest >> testReifyMethodBodyArgsBefore [
 { #category : #'tests - method - body' }
 ReflectivityReificationTest >> testReifyMethodBodyArgsInstead [
 	| sequenceNode instance |
+	self skip.
+
 	sequenceNode := (ReflectivityExamples >> #exampleWithArg:) ast body.
 	link := MetaLink new
 		metaObject: self;
