@@ -34,6 +34,9 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
+	"Force a recompilation to remove leaking ReflectiveMethods"
+	"TODO fail the test if things are leaking"
+	ReflectivityExamples recompile.
 	super tearDown
 ]
 
