@@ -567,14 +567,20 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 OCASTTranslator >> visitEffectInlinedBlockNode: anOptimizedBlockNode [
 
 	self visitInlinedBlockNode: anOptimizedBlockNode.
-	methodBuilder popTop
+	"Pop the stack top in the context of anOptimizedBlockNode"
+	methodBuilder mapToNode: anOptimizedBlockNode.
+	methodBuilder popTop.
+	methodBuilder popMap
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitEffectNode: aNode [
 
 	self visitNode: aNode.
-	methodBuilder popTop
+	"Pop the stack top in the context of aNode"
+	methodBuilder mapToNode: aNode.
+	methodBuilder popTop.
+	methodBuilder popMap
 ]
 
 { #category : #'visitor - double dispatching' }
