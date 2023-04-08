@@ -233,7 +233,13 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 			createTempVectorNamed: aMethodNode scope tempVectorName
 			withVars: aMethodNode scope tempVectorVarNames.
 	].
-	self visitEffectNode: aMethodNode body.
+	aMethodNode body hasMetalinkInstead
+		ifTrue: [
+			"Apparently, body replacements expect that the result value of the replacement is return value of the method"
+			self visitNode: aMethodNode body.
+			methodBuilder returnTop ]
+		ifFalse: [
+			self visitEffectNode: aMethodNode body ].
 	(aMethodNode hasProperty: #wrapperMethod)
 	 ifTrue: [
 		"after links are only active in the wrapper method"
