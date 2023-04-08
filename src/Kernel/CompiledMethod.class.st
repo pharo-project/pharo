@@ -1063,12 +1063,20 @@ CompiledMethod >> setSourcePointer: srcPointer [
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
 
+	^ self sourceCodeOrNil
+		  ifNotNil: [ :code | ^ code ]
+		  ifNil: [ self codeForNoSource ]
+]
+
+{ #category : #accessing }
+CompiledMethod >> sourceCodeOrNil [
+	"Retrieve the source code for this method, or return nil."
+
 	| trailer |
 	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ code ].
-	trailer hasSourcePointer ifFalse: [ ^ self codeForNoSource ].
-
-	^ self getSourceFromFile ifEmpty: [ self codeForNoSource ]
+	trailer sourceCode ifNotNil: [ :code | ^ code ].
+	trailer hasSourcePointer ifFalse: [ ^ nil ].
+	^ self getSourceFromFile ifEmpty: [ nil ]
 ]
 
 { #category : #'source code management' }
