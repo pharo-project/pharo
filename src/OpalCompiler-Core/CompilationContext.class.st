@@ -517,6 +517,7 @@ CompilationContext >> interactive [
 
 { #category : #accessing }
 CompilationContext >> logDoItEvaluation: aSourceString [
+	self logged ifNil: [ ^self ].
 	self logged ifFalse: [ ^self ].
 
 	Smalltalk globals
@@ -527,7 +528,7 @@ CompilationContext >> logDoItEvaluation: aSourceString [
 
 { #category : #accessing }
 CompilationContext >> logged [
-	^logged ifNil: [ false ]
+	^logged
 ]
 
 { #category : #accessing }
