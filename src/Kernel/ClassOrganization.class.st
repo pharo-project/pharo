@@ -182,7 +182,7 @@ ClassOrganization >> initializeClass: aClass [
 
 	self initialize.
 	organizedClass := aClass.
-	organizedClass selectors ifNotEmpty: [ :selectors | selectors do: [ :each | self classify: each under: Protocol unclassified ] ]
+	organizedClass selectors do: [ :each | self classify: each under: Protocol unclassified ]
 ]
 
 { #category : #accessing }
