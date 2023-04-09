@@ -18,18 +18,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> name: name [
+Protocol class >> name: aString [
 
 	^ self new
-		name: name asSymbol;
+		name: aString asSymbol;
 		yourself
 ]
 
 { #category : #'instance creation' }
-Protocol class >> name: nm methodSelectors: methods [
-	^ self new
+Protocol class >> name: aString methodSelectors: methods [
+	^ (self name: aString)
 		methodSelectors: methods;
-		name: nm asSymbol;
 		yourself
 ]
 
