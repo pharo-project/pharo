@@ -10,7 +10,7 @@ Class {
 	#category : #'System-Changes-Tests-Base'
 }
 
-{ #category : #tests }
+{ #category : #helpers }
 ClassRenameFixTest >> packageName [
 
 	^ 'ClassRenameFix-GeneradClass'
@@ -52,7 +52,7 @@ ClassRenameFixTest >> testRenameClassUsingClass [
 	self assert: createdClass name equals: newClassName
 ]
 
-{ #category : #running }
+{ #category : #helpers }
 ClassRenameFixTest >> verifyRenameEvent: aRenamedEvent [
 	| renamedClass |
 	renamedClass := aRenamedEvent classRenamed.
