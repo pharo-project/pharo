@@ -1,14 +1,14 @@
 Class {
 	#name : #ClassRenameFixTest,
 	#superclass : #AbstractEnvironmentTestCase,
-	#instVars : [
-		'previousChangeSet',
-		'testsChangeSet',
-		'newClassName',
-		'originalName'
-	],
 	#category : #'System-Changes-Tests-Base'
 }
+
+{ #category : #accessing }
+ClassRenameFixTest >> newClassName [
+
+	^ #ClassRenameMockClass2
+]
 
 { #category : #helpers }
 ClassRenameFixTest >> packageName [
@@ -35,27 +35,25 @@ ClassRenameFixTest >> tearDown [
 ClassRenameFixTest >> testRenameClassUsingClass [
 
 	| createdClass foundClasses |
-	originalName := #ClassRenameMockClass1.
-
 	createdClass := self class classInstaller make: [ :aBuilder |
 		                aBuilder
-			                name: originalName;
+			                name: #ClassRenameMockClass1;
 			                package: self packageName ].
 
-	newClassName := #ClassRenameMockClass2.
-	createdClass rename: newClassName.
-	self assert: (testingEnvironment classNamed: originalName) isNil.
-	self assert: (testingEnvironment classNamed: newClassName) isNotNil.
+	createdClass rename: self newClassName.
+	self assert: (testingEnvironment classNamed: #ClassRenameMockClass1) isNil.
+	self assert: (testingEnvironment classNamed: self newClassName) isNotNil.
 	foundClasses := testingEnvironment organization listAtCategoryNamed: self packageName.
 
-	self assert: (foundClasses includes: newClassName).
-	self assert: createdClass name equals: newClassName
+	self assert: (foundClasses includes: self newClassName).
+	self assert: createdClass name equals: self newClassName
 ]
 
 { #category : #helpers }
 ClassRenameFixTest >> verifyRenameEvent: aRenamedEvent [
+
 	| renamedClass |
 	renamedClass := aRenamedEvent classRenamed.
-	self assert: (testingEnvironment classNamed: newClassName) name equals: newClassName.
-	self assert: renamedClass name equals: newClassName
+	self assert: (testingEnvironment classNamed: self newClassName) name equals: self newClassName.
+	self assert: renamedClass name equals: self newClassName
 ]
