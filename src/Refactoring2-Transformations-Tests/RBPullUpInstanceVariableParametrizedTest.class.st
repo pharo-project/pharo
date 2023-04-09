@@ -19,9 +19,8 @@ RBPullUpInstanceVariableParametrizedTest >> testPullUpInstVar [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
 			{'result' . #RBLintRuleTestData}.
-	self flag: #shouldRemoveRefactoringError.
 	[self executeRefactoring: refactoring]
-		on: RBRefactoringError, RBRefactoringWarning
+		on: RBRefactoringWarning
 		do: [ :e | e resume ].
 	self assert: ((refactoring model classNamed: #RBLintRuleTestData)
 		directlyDefinesInstanceVariable: 'result').

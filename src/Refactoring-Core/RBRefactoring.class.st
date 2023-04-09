@@ -172,7 +172,7 @@ RBRefactoring >> checkPreconditions [
 	block := conditions errorBlock.
 	block
 		ifNotNil: [
-		self refactoringError: conditions errorString with: block ]
+		self refactoringWarning: conditions errorString with: block ]
 		ifNil: [ self refactoringError: conditions errorString ]
 ]
 

@@ -58,11 +58,11 @@ RBTRefactoringBuilder >> refactoringError: aString [
 ]
 
 { #category : #exceptions }
-RBTRefactoringBuilder >> refactoringError: aString with: aBlock [
-	^ RBRefactoringError signal: aString with: aBlock
+RBTRefactoringBuilder >> refactoringWarning: aString [
+	^ RBRefactoringWarning signal: aString
 ]
 
 { #category : #exceptions }
-RBTRefactoringBuilder >> refactoringWarning: aString [
-	^ RBRefactoringWarning signal: aString
+RBTRefactoringBuilder >> refactoringWarning: aString with: aBlock [
+	^ RBRefactoringWarning signal: aString with: aBlock
 ]

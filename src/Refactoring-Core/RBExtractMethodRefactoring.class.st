@@ -469,7 +469,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 	conditions check
 		ifFalse: [ block := conditions errorBlock.
 			block
-				ifNotNil: [ self refactoringError: conditions errorString with: block ]
+				ifNotNil: [ self refactoringWarning: conditions errorString with: block ]
 				ifNil: [ self refactoringError: conditions errorString ] ].
 	(self parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].

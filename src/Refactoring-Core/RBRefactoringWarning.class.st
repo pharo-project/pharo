@@ -10,6 +10,13 @@ Class {
 	#category : #'Refactoring-Core-Support'
 }
 
+{ #category : #signalling }
+RBRefactoringWarning class >> signal: aString with: aBlock [
+	^ self new
+		actionBlock: aBlock;
+		signal: aString
+]
+
 { #category : #accessing }
 RBRefactoringWarning >> actionBlock [
 
