@@ -80,17 +80,17 @@ ClassOrganizationTest >> testProtocolNames [
 { #category : #tests }
 ClassOrganizationTest >> testRemoveNonExistingProtocol [
 
-	self organization removeProtocolNamed: 'non-existent'
+	self organization removeProtocolIfEmpty: 'non-existent'
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testRemoveProtocolNamed [
+ClassOrganizationTest >> testRemoveProtocolIfEmpty [
 
 	self assert: self organization protocolNames size equals: 2.
 	"just ignore removing of non empty categories"
-	self organization removeProtocolNamed: 'one'.
+	self organization removeProtocolIfEmpty: 'one'.
 	self assert: self organization protocolNames size equals: 2.
-	self organization removeProtocolNamed: 'empty'.
+	self organization removeProtocolIfEmpty: 'empty'.
 	self assert: self organization protocolNames size equals: 1.
 	self assert: self organization protocolNames first equals: 'one'
 ]

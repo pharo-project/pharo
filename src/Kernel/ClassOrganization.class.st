@@ -33,7 +33,7 @@ ClassOrganization >> addProtocolNamed: protocolName [
 	oldProtocols := self protocolNames copy.
 
 	protocol := self addSilentlyProtocolNamed: protocolName.
-	self notifyOfAddedProtocol: protocolName.
+	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass.
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -76,7 +76,7 @@ ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: selector under: protocol [
+ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocolName forceNotify oldProtocols protocolName |
 	"The next section deserve more cleanings.
@@ -84,18 +84,16 @@ ClassOrganization >> classify: selector under: protocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := protocol isString
-		                ifTrue: [ protocol ]
-		                ifFalse: [ protocol name ].
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocols := self protocolsOfSelector: selector.
 
 	self classify: selector inProtocolNamed: protocolName.
-	oldProtocols
-		select: #isEmpty
-		thenDo: [ :aProtocol | self removeProtocol: aProtocol ].
+	oldProtocols do: [ :protocol | self removeProtocolIfEmpty: protocol ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -167,12 +165,6 @@ ClassOrganization >> hasComment [
 ]
 
 { #category : #testing }
-ClassOrganization >> hasOrganizedClass [
-
-	^ organizedClass isNotNil
-]
-
-{ #category : #testing }
 ClassOrganization >> hasProtocolNamed: aString [
 
 	^ self protocols anySatisfy: [ :each | each name = aString ]
@@ -219,37 +211,19 @@ ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 ]
 
 { #category : #notifications }
-ClassOrganization >> notifyOfAddedProtocol: protocolName [
-
-	self hasOrganizedClass ifFalse: [ ^ self ].
-
-	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass
-]
-
-{ #category : #notifications }
-ClassOrganization >> notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil [
-
-	(self hasOrganizedClass and: [ oldNameOrNil ~= newNameOrNil ]) ifFalse: [ ^ self ].
-	SystemAnnouncer uniqueInstance protocolRenamedFrom: oldNameOrNil to: newNameOrNil inClass: self organizedClass.
-	SystemAnnouncer uniqueInstance classReorganized: self organizedClass
-]
-
-{ #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
 
-	(self hasOrganizedClass and: [ oldProtocols ~= newProtocols ]) ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self organizedClass ]
+	oldProtocols ~= newProtocols ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self organizedClass ]
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: newProtocolName [
 
-	(self hasOrganizedClass and: [ oldProtocolName ~= newProtocolName ]) ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
+	oldProtocolName ~= newProtocolName ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
 ]
 
 { #category : #notifications }
 ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
-
-	self hasOrganizedClass ifFalse: [ ^ self ].
 
 	SystemAnnouncer uniqueInstance protocolRemoved: protocolName inClass: self organizedClass
 ]
@@ -257,7 +231,7 @@ ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
 { #category : #accessing }
 ClassOrganization >> organizedClass [
 
-	^ organizedClass
+	^ organizedClass ifNil: [ self error: 'ClassOrganization should always have an organized class associated.' ]
 ]
 
 { #category : #accessing }
@@ -309,7 +283,7 @@ ClassOrganization >> protocolsOfSelector: aSelector [
 	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #removing }
 ClassOrganization >> removeElement: aSymbol [
 
 	| oldProtocol |
@@ -323,43 +297,25 @@ ClassOrganization >> removeElement: aSymbol [
 { #category : #removing }
 ClassOrganization >> removeEmptyProtocols [
 
-	| oldProtocolNames removedProtocols |
-	oldProtocolNames := self protocolNames copy.
-
-	removedProtocols := protocols
-		                    select: [ :protocol | protocol isEmpty ]
-		                    thenDo: [ :protocol |
-			                    self removeProtocol: protocol.
-			                    self notifyOfRemovedProtocolNamed: protocol name ].
-
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
+	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> removeProtocol: aProtocol [
+{ #category : #removing }
+ClassOrganization >> removeProtocolIfEmpty: aProtocol [
+	"I take a protocol or a protocol name and remvoe it if it is empty."
 
-	| oldProtocolNames |
-	aProtocol isEmpty ifFalse: [ ^ self ].
+	| protocol oldProtocolNames |
+	protocol := aProtocol isString
+		            ifTrue: [ self protocolNamed: aProtocol ifAbsent: [ ^ self ] ]
+		            ifFalse: [ aProtocol ].
+
+	protocol isEmpty ifFalse: [ ^ self ].
 
 	oldProtocolNames := self protocolNames copy.
-	protocols remove: aProtocol ifAbsent: [  ].
-	self notifyOfRemovedProtocolNamed: aProtocol name.
+	protocols remove: protocol ifAbsent: [  ].
+	self notifyOfRemovedProtocolNamed: protocol name.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
-]
-
-{ #category : #accessing }
-ClassOrganization >> removeProtocolIfEmpty: protocolName [
-	"The protocol may already have been removed, be non empty or a special protocol which can't be removed, such as 'all'."
-
-	| protocol |
-	protocol := self protocolNamed: protocolName ifAbsent: [ ^ self ].
-	protocol isEmpty ifTrue: [ self removeProtocol: protocol ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> removeProtocolNamed: protocolName [
-
-	^ self removeProtocol: (self protocolNamed: protocolName ifAbsent: [ ^ self ])
 ]
 
 { #category : #removing }
@@ -369,9 +325,13 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
-	self notifyOfChangedProtocolNameFrom: oldName to: newName.
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+	"Announce the changes in the system"
+	oldName ~= newName ifTrue: [
+		SystemAnnouncer uniqueInstance protocolRenamedFrom: oldName to: newName inClass: self organizedClass.
+		SystemAnnouncer uniqueInstance classReorganized: self organizedClass.
+
+		"I need to notify also the selector changes, otherwise RPackage will not notice"
+		(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ] ]
 ]
 
 { #category : #initialization }
@@ -394,7 +354,7 @@ ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
 	(self hasProtocolNamed: newName)
 		ifTrue: [
 			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolNamed: oldName ]
+			self removeProtocolIfEmpty: oldName ]
 		ifFalse: [
 			^ (self protocolNamed: oldName)
 				  name: newName;

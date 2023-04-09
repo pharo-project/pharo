@@ -1,6 +1,6 @@
 Extension { #name : #SystemVersion }
 
-{ #category : #'*Tests' }
+{ #category : #'*System-Support-Tests' }
 SystemVersion class >> fromVersionString: aString [
 	| matcher instance minor major patch |
 

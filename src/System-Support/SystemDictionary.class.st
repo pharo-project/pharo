@@ -31,15 +31,6 @@ Class {
 	#category : #'System-Support-Utilities'
 }
 
-{ #category : #'instance creation' }
-SystemDictionary class >> withOrganizer: anOrganizer [
-
-	| dictionary |
-	dictionary := self new.
-	dictionary organization: anOrganizer. "update too the back pointer"
-	^ dictionary
-]
-
 { #category : #'accessing - classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
@@ -299,7 +290,9 @@ SystemDictionary >> nonClassNames [
 SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
-	^ self at: #SystemOrganization ifAbsent: nil
+	^ self at: #SystemOrganization ifAbsent: [
+		  self organization: SystemOrganizer new.
+		  self at: #SystemOrganization ]
 ]
 
 { #category : #accessing }
