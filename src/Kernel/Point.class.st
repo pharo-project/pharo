@@ -115,8 +115,7 @@ Point >> <= aPoint [
 Point >> = aPoint [
 
 	^ self species = aPoint species
-		ifTrue: [ x = aPoint x and: [ y = aPoint y ]]
-		ifFalse: [ false ]
+		and: [ x = aPoint x and: [ y = aPoint y ]]
 ]
 
 { #category : #comparing }
