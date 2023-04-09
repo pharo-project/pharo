@@ -90,7 +90,7 @@ ASTCache >> at: aCompiledMethod [
 { #category : #accessing }
 ASTCache >> at: aCollection ifAbsentPut: aRBMethodNode [
 
-	self cache at: aCollection ifAbsentPut: aRBMethodNode
+	self cache at: aCollection ifAbsentPut: [ aRBMethodNode ]
 ]
 
 { #category : #accessing }
