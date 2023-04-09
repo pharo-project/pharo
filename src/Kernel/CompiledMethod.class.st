@@ -360,7 +360,6 @@ CompiledMethod >> classBinding: aBinding [
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
 	"If there is no compiler, we cannot decompile it"
-	self error: 'I don''t have source :('.
 	Smalltalk hasCompiler ifFalse: [ ^ nil ].
 
 	 ^(self compiler decompileMethod: self) formattedCode
