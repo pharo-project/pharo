@@ -23,9 +23,7 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 			"Method chunk needs a final ! !"
 			(SourceChunkWriteStream on: theChangesFileStream) nextPut: ' '.
 			"Update with new source pointer"
-			self setSourcePointer: newSourcePointer.
-			"And drop the #source property"
-			self removeProperty: #source ]
+			self setSourcePointer: newSourcePointer ]
 		onFail: [
 			self becomeForward: (self copyWithSource: source) ]
 ]

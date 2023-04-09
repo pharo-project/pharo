@@ -1037,6 +1037,9 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
 	| trailer copy |
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	
 	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
 	copy := self copyWithTrailerBytes: trailer.
 	"If possible do a replace in place as an optimization"
