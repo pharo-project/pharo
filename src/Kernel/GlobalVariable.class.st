@@ -8,9 +8,6 @@ The users can tag me as deprecated in order to warn the users to not use me beca
 Class {
 	#name : #GlobalVariable,
 	#superclass : #LiteralVariable,
-	#instVars : [
-		'isDeprecated'
-	],
 	#category : #'Kernel-Variables'
 }
 
@@ -36,22 +33,16 @@ GlobalVariable >> emitValue: methodBuilder [
 	methodBuilder pushLiteralVariable: self
 ]
 
-{ #category : #initialization }
-GlobalVariable >> initialize [
-	super initialize.
-	isDeprecated := false
-]
-
 { #category : #testing }
 GlobalVariable >> isDeprecated [
 
-	^ isDeprecated or: [ self value isClass and: [ self value isDeprecated ] ]
+	^ (self propertyAt: #isDeprecated ifAbsent: [ false ]) or: [ self value isClass and: [ self value isDeprecated ] ]
 ]
 
 { #category : #accessing }
 GlobalVariable >> isDeprecated: aBoolean [
 
-	isDeprecated := aBoolean
+	self propertyAt: #isDeprecated put: aBoolean
 ]
 
 { #category : #testing }
