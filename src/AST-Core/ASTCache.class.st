@@ -82,9 +82,12 @@ ASTCache >> at: aCompiledMethod [
 
 	^ aCompiledMethod propertyAt: #ast ifAbsent: [
 		  self cache
-			  at: aCompiledMethod
-			  ifAbsentPut: [
-			  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
+			  ifNil: [ self class cacheMissStrategy getASTFor: aCompiledMethod ]
+			  ifNotNil: [
+				  self cache
+					  at: aCompiledMethod
+					  ifAbsentPut: [
+					  self class cacheMissStrategy getASTFor: aCompiledMethod ] ] ]
 ]
 
 { #category : #accessing }
@@ -96,7 +99,10 @@ ASTCache >> at: aCollection ifAbsentPut: aRBMethodNode [
 { #category : #accessing }
 ASTCache >> cache [
 
-	^ cache ifNil: [ cache := LRUCache new ]
+	^ cache ifNil: [ "I don't want to depend on System-Caching. So, no system caching, no cache :P"
+		  Smalltalk globals
+			  at: #LRUCache
+			  ifPresent: [ :class | cache := class new ] ]
 ]
 
 { #category : #printing }
@@ -109,5 +115,6 @@ ASTCache >> printOn: aStream [
 { #category : #initialization }
 ASTCache >> reset [
 
-	self cache removeAll
+	self cache removeAll.
+	cache := nil
 ]
