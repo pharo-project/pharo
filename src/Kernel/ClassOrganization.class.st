@@ -32,16 +32,10 @@ ClassOrganization >> addProtocolNamed: protocolName [
 
 	oldProtocols := self protocolNames copy.
 
-	protocol := self addSilentlyProtocolNamed: protocolName.
+	protocol := self addProtocol: (Protocol name: protocolName).
 	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass.
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
-]
-
-{ #category : #accessing }
-ClassOrganization >> addSilentlyProtocolNamed: protocolName [
-	
-	^ self addProtocol: (Protocol name: protocolName)
 ]
 
 { #category : #'backward compatibility' }
@@ -66,11 +60,11 @@ ClassOrganization >> classComment: aString [
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
 	| protocol |
+	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ].
 	"maybe here we should check if this method already belong to another protocol"
 	self protocols
 		select: [ :p | p includesSelector: aSymbol ]
 		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addSilentlyProtocolNamed: aProtocolName ].
 
 	protocol addMethodSelector: aSymbol
 ]
