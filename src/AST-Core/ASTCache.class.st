@@ -17,9 +17,9 @@ Code that wants to modify the AST without making sure the compiledMethod is in s
 "
 Class {
 	#name : #ASTCache,
-	#superclass : #WeakIdentityKeyDictionary,
+	#superclass : #Object,
 	#instVars : [
-		'statistics'
+		'cache'
 	],
 	#classVars : [
 		'CacheMissStrategy'
@@ -81,35 +81,27 @@ ASTCache >> at: aCompiledMethod [
 	"For doit methods, the AST is stored in the method property"
 
 	^ aCompiledMethod propertyAt: #ast ifAbsent: [
-		  self
+		  self cache
 			  at: aCompiledMethod
-			  ifPresent: [ :it |
-				  self statistics addHit.
-				  it ]
 			  ifAbsentPut: [
-				  self statistics addMiss.
-				  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
+			  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
+]
+
+{ #category : #accessing }
+ASTCache >> cache [
+
+	^ cache ifNil: [ cache := LRUCache new ]
 ]
 
 { #category : #printing }
-ASTCache >> printElementsOn: stream [
+ASTCache >> printOn: aStream [
 
-	stream
-		nextPut: $#;
-		print: self size;
-		space;
-		print: (self statistics hitRatio * 100.0) rounded;
-		nextPut: $%
+	super printOn: aStream.
+	self cache printElementsOn: aStream
 ]
 
 { #category : #initialization }
 ASTCache >> reset [
-	self removeAll.
-	statistics := nil
-]
 
-{ #category : #accessing }
-ASTCache >> statistics [
-
-	^ statistics ifNil: [ statistics := CacheStatistics new ]
+	self cache removeAll
 ]
