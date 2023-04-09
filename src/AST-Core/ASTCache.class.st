@@ -91,6 +91,17 @@ ASTCache >> at: aCompiledMethod [
 				  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
 ]
 
+{ #category : #printing }
+ASTCache >> printElementsOn: stream [
+
+	stream
+		nextPut: $#;
+		print: self size;
+		space;
+		print: (self statistics hitRatio * 100.0) rounded;
+		nextPut: $%
+]
+
 { #category : #initialization }
 ASTCache >> reset [
 	self removeAll.
