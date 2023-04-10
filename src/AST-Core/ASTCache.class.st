@@ -77,6 +77,18 @@ ASTCache class >> shutDown [
 	self reset
 ]
 
+{ #category : #adding }
+ASTCache >> addHit [
+
+	self statistics ifNotNil: [ statistics addHit ]
+]
+
+{ #category : #adding }
+ASTCache >> addMiss [
+
+	self statistics ifNotNil: [ statistics addMiss ]
+]
+
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod [
 
@@ -92,21 +104,22 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	"For doit methods, the AST is stored in the method property"
 
 	(aCompiledMethod propertyAt: #ast) ifNotNil: [ :ast |
-		self statistics addHit.
+		self addHit.
 		^ ast ].
 
 	"Reflective methods have a strongly held AST, return this one"
 	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf |
-		self statistics addHit.
+		self addHit.
 		^ rf ast ].
 
 	"Look in the (almost infinite) cache"
 	self weakDictionary at: aCompiledMethod ifPresent: [ :wa |
 		(wa at: 1) ifNotNil: [ :ast |
-			self statistics addHit.
+			self addHit.
 			^ ast ] ].
-	self statistics addMiss.
+
 	"We tried everything we could. So compute and store it"
+	self addMiss.
 	^ self at: aCompiledMethod put: aBlock value
 ]
 
@@ -129,6 +142,13 @@ ASTCache >> getASTFor: aCompiledMethod [
 	^ self class cacheMissStrategy getASTFor: aCompiledMethod
 ]
 
+{ #category : #'accessing - statistics' }
+ASTCache >> hitRatio [
+
+	self statistics ifNil: [ ^ 0 ].
+	^ self statistics hitRatio
+]
+
 { #category : #copying }
 ASTCache >> postCopy [
 
@@ -144,7 +164,7 @@ ASTCache >> printOn: aStream [
 		nextPutAll: '#';
 		print: self weakDictionary size;
 		space;
-		print: (self statistics hitRatio * 100.0) rounded;
+		print: (self hitRatio * 100.0) rounded;
 		nextPut: $%
 ]
 
@@ -152,13 +172,16 @@ ASTCache >> printOn: aStream [
 ASTCache >> reset [
 	self weakDictionary removeAll.
 	weakDictionary := nil.
-	self statistics reset.
+	statistics := nil.
 ]
 
 { #category : #accessing }
 ASTCache >> statistics [
 
-	^ statistics ifNil: [ statistics := CacheStatistics new ]
+	^ statistics ifNil: [ "CacheStatistics comes from another package. It does not worth the dependency"
+		  Smalltalk globals
+			  at: #CacheStatistics
+			  ifPresent: [ :CS | statistics := CS new ] ]
 ]
 
 { #category : #accessing }
