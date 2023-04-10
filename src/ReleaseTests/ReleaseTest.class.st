@@ -411,6 +411,21 @@ ReleaseTest >> testRPackageOrganizer [
 ]
 
 { #category : #tests }
+ReleaseTest >> testRatioOfCommentedClasses [
+
+	| stereotypes violating |
+	stereotypes := OrderedCollection new.
+	stereotypes
+		addAll: Smalltalk allTraits;
+		addAll: Smalltalk allClasses.
+
+	stereotypes removeAll: TestCase allSubclasses.
+	stereotypes removeAll: BaselineOf allSubclasses.
+	violating := stereotypes select: [ :each | each comment isEmpty ].
+	self assert: violating size <= 914
+]
+
+{ #category : #tests }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
 

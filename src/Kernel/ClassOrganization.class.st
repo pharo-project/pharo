@@ -21,7 +21,10 @@ ClassOrganization class >> forClass: aClass [
 { #category : #adding }
 ClassOrganization >> addProtocol: aProtocol [
 
-	^ protocols add: aProtocol
+	(self protocols includes: aProtocol) ifTrue: [ ^ aProtocol ].
+
+	protocols := protocols copyWith: aProtocol.
+	^ aProtocol
 ]
 
 { #category : #accessing }
@@ -250,7 +253,7 @@ ClassOrganization >> protocolOf: aSelector [
 { #category : #accessing }
 ClassOrganization >> protocols [
 
-	^ protocols asArray
+	^ protocols
 ]
 
 { #category : #removing }
@@ -283,7 +286,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	protocol isEmpty ifFalse: [ ^ self ].
 
 	oldProtocolNames := self protocolNames copy.
-	protocols remove: protocol ifAbsent: [  ].
+	protocols := protocols copyWithout: protocol.
 	self notifyOfRemovedProtocolNamed: protocol name.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
@@ -307,7 +310,7 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 { #category : #initialization }
 ClassOrganization >> reset [
 
-	protocols := IdentitySet new
+	protocols := Array new
 ]
 
 { #category : #'backward compatibility' }

@@ -114,10 +114,11 @@ TaAbstractComposition >> asTraitComposition [
 
 { #category : #accessing }
 TaAbstractComposition >> categoryOfMethod: method withSelector: selector [
-	"I return the category of the method with the selector.
-	This is useful when the method is aliased or the method came from different traits or it is a conflicting category.
-	The basic implementation returns the category of the method"
-	^ method category
+	"I return the protocol of the method with the selector.
+	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
+	The basic implementation returns the protocol of the method"
+
+	^ method protocol
 ]
 
 { #category : #testing }
