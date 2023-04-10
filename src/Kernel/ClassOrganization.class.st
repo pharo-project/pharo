@@ -56,33 +56,16 @@ ClassOrganization >> classComment: aString [
 	self comment: aString
 ]
 
-{ #category : #'protocol - adding' }
-ClassOrganization >> classify: aSelector inProtocol: aProtocol [
-
-	(self protocolOf: aSelector) ifNotNil: [ :protocol | protocol removeMethodSelector: aSelector ].
-
-	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
-]
-
-{ #category : #'backward compatibility' }
+{ #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
-	| oldProtocol protocolName |
-	"The next section deserve more cleanings.
-	
-	Some code was added to make it possible to classify giving a real protocol.
-	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
-	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := aProtocol isString
-		                ifTrue: [ aProtocol ]
-		                ifFalse: [ aProtocol name ].
-	oldProtocol := self protocolOf: selector.
-	(oldProtocol isNotNil and: [ oldProtocol name = protocolName and: [ protocolName = Protocol unclassified ] ]) ifTrue: [ ^ self ].
+	| oldProtocol newProtocol |
+	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOf: selector) ifTrue: [ ^ self ].
 
-	self classify: selector inProtocol: protocolName.
-	oldProtocol ifNotNil: [
-		self removeProtocolIfEmpty: oldProtocol.
-		self notifyOfChangedSelector: selector from: oldProtocol name to: protocolName ]
+	self silentlyClassify: selector under: newProtocol.
+
+	"During the first classification of a method we don't need to announce the classification because users can subscribe to the method added announcement."
+	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol ]
 ]
 
 { #category : #cleanup }
@@ -122,10 +105,10 @@ ClassOrganization >> commentStamp [
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocol: protocol ] ]
+	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self silentlyClassify: m under: protocol ] ]
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : #accessing }
 ClassOrganization >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -256,7 +239,7 @@ ClassOrganization >> protocolNames [
 	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
-{ #category : #protocol }
+{ #category : #accessing }
 ClassOrganization >> protocolOf: aSelector [
 
 	^ self protocols
@@ -331,6 +314,16 @@ ClassOrganization >> reset [
 ClassOrganization >> setSubject: anObject [
 
 	organizedClass := anObject
+]
+
+{ #category : #classification }
+ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
+
+	(self protocolOf: aSelector) ifNotNil: [ :oldProtocol |
+		oldProtocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]
 
 { #category : #private }
