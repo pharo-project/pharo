@@ -95,7 +95,7 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf | ^ rf ast ].
 
 	"Look in the (almost infinite) cache"
-	self weakDictionary at: aCompiledMethod ifPresent: [ :ast | ^ ast ].
+	self weakDictionary at: aCompiledMethod ifPresent: [ :wa | (wa at: 1) ifNotNil: [ :ast | ^ast ] ].
 
 	"We tried everything we could. So compute and store it"
 	^ self at: aCompiledMethod put: aBlock value
@@ -104,7 +104,11 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod put: aRBMethodNode [
 
-	^ self weakDictionary at: aCompiledMethod put: aRBMethodNode
+	"Cleanup weak AST. Note `associations` return a copy, so the iteration is safe"
+	self weakDictionary associations do: [ :each |
+		(each value at: 1) ifNil: [ self weakDictionary removeKey: each key ] ].
+	self weakDictionary at: aCompiledMethod put: aRBMethodNode asWeakReference.
+	^ aRBMethodNode
 ]
 
 { #category : #accessing }
