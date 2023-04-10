@@ -723,7 +723,7 @@ Rectangle >> printOn: aStream [
 
 { #category : #'rectangle functions' }
 Rectangle >> quickMerge: aRectangle [
-	"Answer the receiver if it encloses the given rectangle or the merge of the two rectangles if it doesn't. THis method is an optimization to reduce extra rectangle creations."
+	"Answer the receiver if it encloses the given rectangle or the merge of the two rectangles if it doesn't. This method is an optimization to reduce extra rectangle creations."
 	| useRcvr rOrigin rCorner minX maxX minY maxY |
 
 	aRectangle ifNil: [ ^self ].
@@ -751,10 +751,10 @@ Rectangle >> quickMerge: aRectangle [
 			[ useRcvr := false.
 			rCorner y ]
 		ifFalse: [ corner y ].
-	useRcvr
-		ifTrue: [ ^ self ]
+	^ useRcvr
+		ifTrue: [ self ]
 		ifFalse:
-			[ ^ Rectangle
+			[ self class
 				origin: minX @ minY
 				corner: maxX @ maxY ]
 ]
