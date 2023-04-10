@@ -57,16 +57,11 @@ ClassOrganization >> classComment: aString [
 ]
 
 { #category : #'protocol - adding' }
-ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
+ClassOrganization >> classify: aSelector inProtocol: aProtocol [
 
-	| protocol |
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ].
-	"maybe here we should check if this method already belong to another protocol"
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
+	(self protocolOf: aSelector) ifNotNil: [ :protocol | protocol removeMethodSelector: aSelector ].
 
-	protocol addMethodSelector: aSymbol
+	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]
 
 { #category : #'backward compatibility' }
@@ -84,7 +79,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	oldProtocol := self protocolOf: selector.
 	(oldProtocol isNotNil and: [ oldProtocol name = protocolName and: [ protocolName = Protocol unclassified ] ]) ifTrue: [ ^ self ].
 
-	self classify: selector inProtocolNamed: protocolName.
+	self classify: selector inProtocol: protocolName.
 	oldProtocol ifNotNil: [
 		self removeProtocolIfEmpty: oldProtocol.
 		self notifyOfChangedSelector: selector from: oldProtocol name to: protocolName ]
@@ -127,7 +122,7 @@ ClassOrganization >> commentStamp [
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocolNamed: protocol name ] ]
+	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocol: protocol ] ]
 ]
 
 { #category : #'queries - protocols' }
