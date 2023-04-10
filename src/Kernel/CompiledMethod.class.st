@@ -981,6 +981,9 @@ CompiledMethod >> removeProperty: propName [
 									(Association
 										key: propName
 										value: value)).
+
+	"Remove unneded AdditionalMethodState"
+	self penultimateLiteral size = 0 ifTrue: [ self penultimateLiteral: self selector ].
 	^value
 ]
 
