@@ -95,7 +95,7 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf | ^ rf ast ].
 
 	"Look in the (almost infinite) cache"
-	self weakDictionary at: aCompiledMethod ifPresent: [ :ast | ^ ast ].
+	"self weakDictionary at: aCompiledMethod ifPresent: [ :ast | ^ ast ]."
 
 	"We tried everything we could. So compute and store it"
 	^ self at: aCompiledMethod put: aBlock value
