@@ -9,8 +9,10 @@ Class {
 	#category : #'Monticello-Tests-Base'
 }
 
-{ #category : #mocks }
-MCMethodDefinitionTest >> override [ ^ 1
+{ #category : #running }
+MCMethodDefinitionTest >> extensionPackageName [
+
+	^ 'FooBarBaz'
 ]
 
 { #category : #running }
@@ -30,13 +32,14 @@ MCMethodDefinitionTest >> setUp [
 
 { #category : #running }
 MCMethodDefinitionTest >> tearDown [
-      self restoreMocks.
-      extensionPackage unregister.
-		extensionPackage := nil.
-      self class compile: 'override ^ 1' classified: 'mocks'.
-      self ownPackage modified: isModified.
-		super tearDown
-       "FIXME: Unregister Monticellomocks if it got created implicitly.
+
+	self restoreMocks.
+	extensionPackage unregister.
+	self class compiledMethodAt: #override ifPresent: [ :method | method removeFromSystem ].
+	(self extensionPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self ownPackage modified: isModified.
+	super tearDown
+	"FIXME: Unregister Monticellomocks if it got created implicitly.
        This avoids a nasty failure of MCChangeNotificationTest due to
        some inconsistency about whether package names are case sensitive
        or not. They're treated as case insensitive in some name lookups but not
@@ -46,7 +49,7 @@ MCMethodDefinitionTest >> tearDown [
        in MCChangeNotificationTest is MonticelloMocks and an instance of
        MCMockPackageInfo. Since *that* lookup is case insensitive it can
        find Monticellomocks instead of MonticelloMocks and fail."
-       "PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
+	"PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
 ]
 
 { #category : #testing }
@@ -133,9 +136,11 @@ MCMethodDefinitionTest >> testRevertOldMethod [
 
 { #category : #testing }
 MCMethodDefinitionTest >> testRevertOverrideMethod [
+
 	| definition |
+	self class compile: 'override ^ 1' classified: 'mocks'.
 	self class compile: 'override ^ 2' classified: self mockOverrideMethodCategory.
-	definition := (self class>>#override) asMCMethodDefinition.
+	definition := (self class >> #override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
 	self assert: self override equals: 2.
 	definition unload.
