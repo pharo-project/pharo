@@ -108,7 +108,7 @@ ClassOrganization >> commentStamp [
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self silentlyClassify: m under: protocol ] ]
+	protocols := otherOrganization protocols copy
 ]
 
 { #category : #accessing }

@@ -100,6 +100,13 @@ Protocol >> name: anObject [
 	name := anObject asSymbol
 ]
 
+{ #category : #copying }
+Protocol >> postCopy [
+
+	super postCopy.
+	methodSelectors := methodSelectors copy
+]
+
 { #category : #printing }
 Protocol >> printOn: aStream [
 	aStream
