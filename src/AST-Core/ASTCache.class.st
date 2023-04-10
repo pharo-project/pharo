@@ -19,7 +19,8 @@ Class {
 	#name : #ASTCache,
 	#superclass : #Object,
 	#instVars : [
-		'cache'
+		'cache',
+		'weakdict'
 	],
 	#classVars : [
 		'CacheMissStrategy'
@@ -80,25 +81,31 @@ ASTCache class >> shutDown [
 ASTCache >> at: aCompiledMethod [
 	"For doit methods, the AST is stored in the method property"
 
+	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [
+		:reflectiveMethod | ^ reflectiveMethod ast ].
+
 	^ aCompiledMethod propertyAt: #ast ifAbsent: [
+		weakdict at: aCompiledMethod ifPresent: [ :ast | ^ ast ].
 		  self cache
-			  ifNil: [ self class cacheMissStrategy getASTFor: aCompiledMethod ]
+			  ifNil: [ self getASTFor: aCompiledMethod ]
 			  ifNotNil: [
 				  self cache
 					  at: aCompiledMethod
 					  ifAbsentPut: [
-					  self class cacheMissStrategy getASTFor: aCompiledMethod ] ] ]
+					  self getASTFor: aCompiledMethod ] ] ]
 ]
 
 { #category : #accessing }
 ASTCache >> at: aCollection ifAbsentPut: aRBMethodNode [
 
+	self weakdict at: aCollection ifAbsentPut: [ aRBMethodNode ].
 	self cache at: aCollection ifAbsentPut: [ aRBMethodNode ]
 ]
 
 { #category : #accessing }
 ASTCache >> at: aCollection put: aRBMethodNode [
 
+	self weakdict at: aCollection put: aRBMethodNode.
 	self cache at: aCollection put: aRBMethodNode
 ]
 
@@ -106,9 +113,24 @@ ASTCache >> at: aCollection put: aRBMethodNode [
 ASTCache >> cache [
 
 	^ cache ifNil: [ "I don't want to depend on System-Caching. So, no system caching, no cache :P"
-		  Smalltalk globals
-			  at: #LRUCache
-			  ifPresent: [ :class | cache := class new beThreadSafe; keyIndex: IdentityDictionary new ] ]
+		  Smalltalk globals at: #LRUCache ifPresent: [ :class |
+			  cache := class new
+				           beThreadSafe;
+				           maximumWeight: 1; "Force 1-slot LRU"
+				           keyIndex: IdentityDictionary new ] ]
+]
+
+{ #category : #accessing }
+ASTCache >> getASTFor: aCompiledMethod [
+
+	| ast |
+	ast := self class cacheMissStrategy getASTFor: aCompiledMethod.
+	"weakdict is bad and can become large, a cleaning method exists in as an extension method in calypso..."
+	(weakdict respondsTo: #clyCleanGarbage) ifTrue: [
+		weakdict clyCleanGarbage ].
+	weakdict at: aCompiledMethod put: ast.
+	cache ifNotNil: [ cache at: aCompiledMethod put: ast ].
+	^ ast
 ]
 
 { #category : #printing }
@@ -122,5 +144,12 @@ ASTCache >> printOn: aStream [
 ASTCache >> reset [
 
 	self cache removeAll.
+	self weakdict removeAll.
 	cache := nil
+]
+
+{ #category : #accessing }
+ASTCache >> weakdict [
+
+	^ weakdict ifNil: [ weakdict := WeakIdentityValueDictionary new ]
 ]
