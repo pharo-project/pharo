@@ -96,10 +96,10 @@ ASTCache >> at: aCompiledMethod [
 ]
 
 { #category : #accessing }
-ASTCache >> at: aCollection ifAbsentPut: aRBMethodNode [
+ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 
-	self weakdict at: aCollection ifAbsentPut: [ aRBMethodNode ].
-	self cache at: aCollection ifAbsentPut: [ aRBMethodNode ]
+	self weakdict at: aCompiledMethod ifAbsentPut: aBlock.
+	self cache at: aCompiledMethod ifAbsentPut: aBlock
 ]
 
 { #category : #accessing }
