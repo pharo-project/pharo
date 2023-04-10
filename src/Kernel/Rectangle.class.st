@@ -754,7 +754,7 @@ Rectangle >> quickMerge: aRectangle [
 	^ useRcvr
 		ifTrue: [ self ]
 		ifFalse:
-			[ self class
+			[ Rectangle
 				origin: minX @ minY
 				corner: maxX @ maxY ]
 ]
