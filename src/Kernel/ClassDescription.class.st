@@ -837,9 +837,8 @@ ClassDescription >> organization [
 	of the messages of the receiver."
 
 	^ organization ifNil: [
-		  | classOrganization |
-		  self organization: (classOrganization := ClassOrganization new).
-		  self isTrait ifFalse: [ classOrganization initializeClass: self ].
+		  self organization: ClassOrganization new.
+		  self isTrait ifFalse: [ organization initializeClass: self ].
 		  organization ]
 ]
 
