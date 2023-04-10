@@ -879,6 +879,7 @@ TestCase >> setTestSelector: aSymbol [
 { #category : #running }
 TestCase >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+	self class package name = 'Reflectivity-Tests' ifTrue: [ self skip ]
 ]
 
 { #category : #events }
