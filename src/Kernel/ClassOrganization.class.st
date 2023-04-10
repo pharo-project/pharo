@@ -72,7 +72,7 @@ ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 { #category : #'backward compatibility' }
 ClassOrganization >> classify: selector under: aProtocol [
 
-	| oldProtocolName forceNotify oldProtocols protocolName |
+	| oldProtocolName forceNotify oldProtocol protocolName |
 	"The next section deserve more cleanings.
 	
 	Some code was added to make it possible to classify giving a real protocol.
@@ -84,10 +84,10 @@ ClassOrganization >> classify: selector under: aProtocol [
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
-	oldProtocols := self protocolsOfSelector: selector.
+	oldProtocol := self protocolOf: selector.
 
 	self classify: selector inProtocolNamed: protocolName.
-	oldProtocols do: [ :protocol | self removeProtocolIfEmpty: protocol ].
+	oldProtocol ifNotNil: [ self removeProtocolIfEmpty: oldProtocol ].
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -237,12 +237,9 @@ ClassOrganization >> protocolNameOfElement: aSelector [
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
-	^ (self protocolsOfSelector: aSelector)
-		  ifEmpty: [
-			  (organizedClass includesSelector: aSelector)
-				  ifTrue: [ Protocol unclassified ]
-				  ifFalse: [ aBlock value ] ]
-		  ifNotEmpty: [ :col | col first name ]
+	^ (self protocolOf: aSelector)
+		  ifNil: [ aBlock value ]
+		  ifNotNil: [ :protocol | protocol name ]
 ]
 
 { #category : #accessing }
@@ -265,16 +262,18 @@ ClassOrganization >> protocolNames [
 	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
+{ #category : #protocol }
+ClassOrganization >> protocolOf: aSelector [
+
+	^ self protocols
+		  detect: [ :each | each includesSelector: aSelector ]
+		  ifNone: [ nil ]
+]
+
 { #category : #accessing }
 ClassOrganization >> protocols [
 
 	^ protocols asArray
-]
-
-{ #category : #protocol }
-ClassOrganization >> protocolsOfSelector: aSelector [
-
-	^ (self protocols select: [:each | each includesSelector: aSelector ]) asArray
 ]
 
 { #category : #removing }
