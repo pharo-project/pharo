@@ -68,7 +68,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	self silentlyClassify: selector under: newProtocol.
 
 	"During the first classification of a method we don't need to announce the classification because users can subscribe to the method added announcement."
-	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol ]
+	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #cleanup }
