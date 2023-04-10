@@ -160,16 +160,6 @@ ClassDescription >> baseClass [
 	^ self instanceSide
 ]
 
-{ #category : #organization }
-ClassDescription >> basicOrganization [
-	^ organization
-]
-
-{ #category : #organization }
-ClassDescription >> basicOrganization: aClassOrg [
-	organization := aClassOrg
-]
-
 { #category : #'accessing - comment' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
@@ -846,19 +836,19 @@ ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
 
-	self basicOrganization ifNil: [
-		| classOrganization |
-		self basicOrganization: (classOrganization := ClassOrganization new).
-		self isTrait ifFalse: [ classOrganization initializeClass: self ] ].
-	^ self basicOrganization setSubject: self "Making sure that subject is set correctly. It should not be necessary."
+	^ organization ifNil: [
+		  | classOrganization |
+		  self organization: (classOrganization := ClassOrganization new).
+		  self isTrait ifFalse: [ classOrganization initializeClass: self ].
+		  organization ]
 ]
 
 { #category : #organization }
 ClassDescription >> organization: aClassOrg [
 	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
 
-	aClassOrg ifNotNil: [aClassOrg setSubject: self].
-	self basicOrganization: aClassOrg
+	aClassOrg ifNotNil: [ aClassOrg setSubject: self ].
+	organization := aClassOrg
 ]
 
 { #category : #printing }
