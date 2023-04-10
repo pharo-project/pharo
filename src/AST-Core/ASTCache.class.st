@@ -19,7 +19,8 @@ Class {
 	#name : #ASTCache,
 	#superclass : #Object,
 	#instVars : [
-		'weakDictionary'
+		'weakDictionary',
+		'statistics'
 	],
 	#classVars : [
 		'CacheMissStrategy'
@@ -89,14 +90,22 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	"Get an AST using strongly held information, or failback to aBlock (that might compute a new AST)"
 
 	"For doit methods, the AST is stored in the method property"
-	(aCompiledMethod propertyAt: #ast) ifNotNil: [ :ast | ^ ast ].
+
+	(aCompiledMethod propertyAt: #ast) ifNotNil: [ :ast |
+		self statistics addHit.
+		^ ast ].
 
 	"Reflective methods have a strongly held AST, return this one"
-	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf | ^ rf ast ].
+	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf |
+		self statistics addHit.
+		^ rf ast ].
 
 	"Look in the (almost infinite) cache"
-	self weakDictionary at: aCompiledMethod ifPresent: [ :wa | (wa at: 1) ifNotNil: [ :ast | ^ast ] ].
-
+	self weakDictionary at: aCompiledMethod ifPresent: [ :wa |
+		(wa at: 1) ifNotNil: [ :ast |
+			self statistics addHit.
+			^ ast ] ].
+	self statistics addMiss.
 	"We tried everything we could. So compute and store it"
 	^ self at: aCompiledMethod put: aBlock value
 ]
@@ -123,7 +132,8 @@ ASTCache >> getASTFor: aCompiledMethod [
 { #category : #copying }
 ASTCache >> postCopy [
 
-	weakDictionary := weakDictionary copy
+	weakDictionary := weakDictionary copy.
+	statistics := statistics copy
 ]
 
 { #category : #printing }
@@ -132,13 +142,23 @@ ASTCache >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPutAll: '#';
-		print: self weakDictionary size
+		print: self weakDictionary size;
+		space;
+		print: (self statistics hitRatio * 100.0) rounded;
+		nextPut: $%
 ]
 
 { #category : #initialization }
 ASTCache >> reset [
 	self weakDictionary removeAll.
 	weakDictionary := nil.
+	self statistics reset.
+]
+
+{ #category : #accessing }
+ASTCache >> statistics [
+
+	^ statistics ifNil: [ statistics := CacheStatistics new ]
 ]
 
 { #category : #accessing }
