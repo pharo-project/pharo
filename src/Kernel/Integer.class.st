@@ -174,8 +174,7 @@ Integer >> = aNumber [
 	aNumber isNumber ifFalse: [^ false].
 	aNumber isInteger ifTrue:
 		[^ aNumber negative == self negative
-			ifTrue: [ (self bytesCompare: aNumber) = 0]
-			ifFalse: [ false]].
+			and: [ (self bytesCompare: aNumber) = 0]].
 	^ aNumber adaptToInteger: self andCompare: #=
 ]
 

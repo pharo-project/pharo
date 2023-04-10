@@ -32,14 +32,14 @@ ClassOrganization >> putCommentOnFile: aFileStream forClass: aClass [
 ClassOrganization >> stringForFileOut [
 
 	^ String streamContents: [ :aStream |
-		  self protocols do: [ :p |
+		  self protocols do: [ :protocol |
 			  aStream
 				  nextPut: $(;
-				  nextPutAll: p name printString.
-			  p methodSelectors do: [ :m |
+				  nextPutAll: protocol name printString.
+			  protocol methodSelectors do: [ :selector |
 				  aStream
 					  space;
-					  nextPutAll: m ].
+					  nextPutAll: selector ].
 			  aStream
 				  nextPut: $);
 				  cr ] ]
