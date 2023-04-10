@@ -17,6 +17,12 @@ Class {
 	#category : #'System-Announcements-Core'
 }
 
+{ #category : #announcer }
+SystemAnnouncer class >> announce: anAnnouncement [
+
+	^ self uniqueInstance announce: anAnnouncement
+]
+
 { #category : #accessing }
 SystemAnnouncer class >> announcer: anAnnouncer [
 	announcer := anAnnouncer

@@ -46,7 +46,7 @@ VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext
 		on: aBreakpoint
 		nodes: {node}.
 	announcement valueOrNil: (node variableValueInContext: aContext).
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #API }
