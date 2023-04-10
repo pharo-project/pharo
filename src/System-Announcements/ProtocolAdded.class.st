@@ -6,3 +6,12 @@ Class {
 	#superclass : #ProtocolAnnouncement,
 	#category : #'System-Announcements-System-Protocols'
 }
+
+{ #category : #'class initialization' }
+ProtocolAdded class >> in: aClass protocol: aProtocolName [
+
+	^ self new
+		  classReorganized: aClass;
+		  protocol: aProtocolName;
+		  yourself
+]

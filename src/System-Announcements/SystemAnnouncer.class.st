@@ -235,29 +235,20 @@ SystemAnnouncer >> private [
 
 { #category : #triggering }
 SystemAnnouncer >> protocolAdded: aString inClass: aClass [
-	self announce: (ProtocolAdded new
-		classReorganized: aClass;
-		protocol: aString;
-		yourself)
+
+	self announce: (ProtocolAdded in: aClass protocol: aString)
 ]
 
 { #category : #triggering }
 SystemAnnouncer >> protocolRemoved: aString inClass: aClass [
-	self announce: (ProtocolRemoved new
-		classReorganized: aClass;
-		protocol: aString;
-		yourself)
+
+	self announce: (ProtocolRemoved in: aClass protocol: aString)
 ]
 
 { #category : #triggering }
 SystemAnnouncer >> protocolRenamedFrom: oldName to: newName inClass: aClass [
-	self
-		announce:
-			(ProtocolRenamed new
-				classReorganized: aClass;
-				oldProtocolName: oldName;
-				newProtocolName: newName;
-				yourself)
+
+	self announce: (ProtocolRenamed in: aClass from: oldName to: newName)
 ]
 
 { #category : #triggering }
