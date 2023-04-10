@@ -183,6 +183,14 @@ LRUCache >> isEmpty [
 	^ keyIndex isEmpty
 ]
 
+{ #category : #accessing }
+LRUCache >> keyIndex: anObject [
+	"Use you own dictionary"
+
+	self removeAll.
+	keyIndex := anObject
+]
+
 { #category : #enumerating }
 LRUCache >> keysAndValuesDo: block [
 	"Execute block with each key and value present in me.

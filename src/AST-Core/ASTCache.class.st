@@ -108,7 +108,7 @@ ASTCache >> cache [
 	^ cache ifNil: [ "I don't want to depend on System-Caching. So, no system caching, no cache :P"
 		  Smalltalk globals
 			  at: #LRUCache
-			  ifPresent: [ :class | cache := class new ] ]
+			  ifPresent: [ :class | cache := class new beThreadSafe; keyIndex: IdentityDictionary new ] ]
 ]
 
 { #category : #printing }
