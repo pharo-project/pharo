@@ -79,34 +79,39 @@ ASTCache class >> shutDown [
 
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod [
-	"For doit methods, the AST is stored in the method property"
 
-	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [
-		:reflectiveMethod | ^ reflectiveMethod ast ].
-
-	^ aCompiledMethod propertyAt: #ast ifAbsent: [
-		weakdict at: aCompiledMethod ifPresent: [ :ast | ^ ast ].
-		  self cache
-			  ifNil: [ self getASTFor: aCompiledMethod ]
-			  ifNotNil: [
-				  self cache
-					  at: aCompiledMethod
-					  ifAbsentPut: [
-					  self getASTFor: aCompiledMethod ] ] ]
+	^ self
+		  at: aCompiledMethod
+		  ifAbsentPut: [ self getASTFor: aCompiledMethod ]
 ]
 
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
+	"Reflective methods have a strongly held AST (with possible metalink)"
 
-	self weakdict at: aCompiledMethod ifAbsentPut: aBlock.
-	self cache at: aCompiledMethod ifAbsentPut: aBlock
+	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [
+		:reflectiveMethod | ^ reflectiveMethod ast ].
+
+	"For doit methods, the AST is stored in the method property"
+	^ aCompiledMethod
+		  propertyAt: #ast
+		  ifAbsent: [ "Otherwise look at the weak dictionaly to resuse existing (non collected) AST"
+			  weakdict at: aCompiledMethod ifPresent: [ :ast | ^ ast ].
+			  "Otherwise look at the LRU cache, for recent AST"
+			  self cache
+				  ifNil: [ aBlock value ]
+				  ifNotNil: [ self cache at: aCompiledMethod ifAbsentPut: aBlock ] ]
 ]
 
 { #category : #accessing }
-ASTCache >> at: aCollection put: aRBMethodNode [
+ASTCache >> at: aCompiledMethod put: aRBMethodNode [
+	"weakdict is bad and can become large, a cleaning method exists in as an extension method in calypso..."
 
-	self weakdict at: aCollection put: aRBMethodNode.
-	self cache at: aCollection put: aRBMethodNode
+	(weakdict respondsTo: #clyCleanGarbage) ifTrue: [
+		weakdict clyCleanGarbage ].
+
+	weakdict at: aCompiledMethod put: aRBMethodNode.
+	self cache ifNotNil: [ self cache at: aCompiledMethod put: aRBMethodNode ]
 ]
 
 { #category : #accessing }
@@ -125,11 +130,7 @@ ASTCache >> getASTFor: aCompiledMethod [
 
 	| ast |
 	ast := self class cacheMissStrategy getASTFor: aCompiledMethod.
-	"weakdict is bad and can become large, a cleaning method exists in as an extension method in calypso..."
-	(weakdict respondsTo: #clyCleanGarbage) ifTrue: [
-		weakdict clyCleanGarbage ].
-	weakdict at: aCompiledMethod put: ast.
-	cache ifNotNil: [ cache at: aCompiledMethod put: ast ].
+	self at: aCompiledMethod put: ast.
 	^ ast
 ]
 
@@ -137,6 +138,9 @@ ASTCache >> getASTFor: aCompiledMethod [
 ASTCache >> printOn: aStream [
 
 	super printOn: aStream.
+	aStream nextPutAll: ' dict#'.
+	aStream print: weakdict size.
+	aStream nextPutAll: ' LRU'.
 	self cache printElementsOn: aStream
 ]
 
