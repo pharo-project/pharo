@@ -87,7 +87,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
-	oldProtocol := self protocolOf: selector.
+	oldProtocol := self protocolOfSelector: selector.
 
 	self classify: selector inProtocolNamed: protocolName.
 	oldProtocol ifNotNil: [ self removeProtocolIfEmpty: oldProtocol ].
@@ -240,7 +240,7 @@ ClassOrganization >> protocolNameOfElement: aSelector [
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
-	^ (self protocolOf: aSelector)
+	^ (self protocolOfSelector: aSelector)
 		  ifNil: [ aBlock value ]
 		  ifNotNil: [ :protocol | protocol name ]
 ]
@@ -266,7 +266,7 @@ ClassOrganization >> protocolNames [
 ]
 
 { #category : #protocol }
-ClassOrganization >> protocolOf: aSelector [
+ClassOrganization >> protocolOfSelector: aSelector [
 
 	^ self protocols
 		  detect: [ :each | each includesSelector: aSelector ]
