@@ -30,7 +30,7 @@ Class {
 { #category : #'private - announcements' }
 ASTCache class >> announceCacheReset [
 
-	SystemAnnouncer uniqueInstance announce: ASTCacheReset new
+	SystemAnnouncer announce: ASTCacheReset new
 ]
 
 { #category : #accessing }

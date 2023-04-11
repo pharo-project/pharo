@@ -181,7 +181,7 @@ DisplayScreen >> fullscreen [
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	SystemAnnouncer uniqueInstance announce: (FullscreenAnnouncement new
+	SystemAnnouncer announce: (FullscreenAnnouncement new
 		displayScreen: self;
 		fullscreen: (LastScreenModeSelected := aBoolean))
 ]
