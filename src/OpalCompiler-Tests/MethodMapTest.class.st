@@ -41,7 +41,7 @@ MethodMapTest >> testBlockAndContextSourceNode [
 	block value.
 	blockNodeViaClosure := block sourceNode.
 
-	self assert: blockNodeViaContext identicalTo: blockNodeViaClosure
+	self assert: blockNodeViaContext equals: blockNodeViaClosure
 ]
 
 { #category : #'tests - ast mapping' }

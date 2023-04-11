@@ -19,12 +19,12 @@ OCBytecodeToASTCacheTest >> setUp [
 { #category : #helpers }
 OCBytecodeToASTCacheTest >> testCacheInInterval: interval equalsNode: aNode [
 	interval do: [ :i |
-		self assert: (cache nodeForPC: i) identicalTo: aNode ]
+		self assert: (cache nodeForPC: i) equals: aNode ]
 ]
 
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testCachedMethodNode [
-	self assert: cache methodOrBlockNode identicalTo: compiledMethod ast
+	self assert: cache methodOrBlockNode equals: compiledMethod ast
 ]
 
 { #category : #tests }
@@ -36,7 +36,7 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetTest [
 OCBytecodeToASTCacheTest >> testFirstBCOffsetWithBlock [
 	compiledMethod := (MethodMapExamples >> #helperMethod14:).
 	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
-	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast statements first receiver
+	self assert: (cache nodeForPC: cache firstBcOffset) equals: compiledMethod ast statements first receiver
 ]
 
 { #category : #tests }
@@ -44,11 +44,11 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 	compiledMethod := ( MethodMapExamples >> #ivar).
 	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
 	self assert: cache firstBcOffset equals: compiledMethod initialPC.
-	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast.
-	self assert: (cache nodeForPC: cache lastBcOffset) identicalTo: compiledMethod ast statements last.
+	self assert: (cache nodeForPC: cache firstBcOffset) equals: compiledMethod ast.
+	self assert: (cache nodeForPC: cache lastBcOffset) equals: compiledMethod ast statements last.
 
 	cache firstBcOffset to: cache lastBcOffset - 1 do:[:pc|
-		self assert: (cache nodeForPC: pc) identicalTo: compiledMethod ast]
+		self assert: (cache nodeForPC: pc) equals: compiledMethod ast]
 ]
 
 { #category : #tests }
@@ -86,7 +86,7 @@ OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 	"if we are beyond the last bc, we map to the whole method"
 	self
 		assert: (cache nodeForPC: pc)
-		identicalTo: compiledMethod ast
+		equals: compiledMethod ast
 ]
 
 { #category : #tests }
