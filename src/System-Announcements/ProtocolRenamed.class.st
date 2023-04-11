@@ -10,6 +10,16 @@ Class {
 	#category : #'System-Announcements-System-Protocols'
 }
 
+{ #category : #'class initialization' }
+ProtocolRenamed class >> in: aClass from: oldName to: newName [
+
+	^ self new
+		  classReorganized: aClass;
+		  oldProtocolName: oldName;
+		  newProtocolName: newName;
+		  yourself
+]
+
 { #category : #accessing }
 ProtocolRenamed >> newProtocolName [
 	^ newProtocolName

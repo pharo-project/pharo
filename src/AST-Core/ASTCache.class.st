@@ -19,7 +19,8 @@ Class {
 	#name : #ASTCache,
 	#superclass : #Object,
 	#instVars : [
-		'weakDictionary'
+		'weakDictionary',
+		'statistics'
 	],
 	#classVars : [
 		'CacheMissStrategy'
@@ -33,7 +34,7 @@ Class {
 { #category : #'private - announcements' }
 ASTCache class >> announceCacheReset [
 
-	SystemAnnouncer uniqueInstance announce: ASTCacheReset new
+	SystemAnnouncer announce: ASTCacheReset new
 ]
 
 { #category : #accessing }
@@ -76,6 +77,18 @@ ASTCache class >> shutDown [
 	self reset
 ]
 
+{ #category : #adding }
+ASTCache >> addHit [
+
+	self statistics ifNotNil: [ statistics addHit ]
+]
+
+{ #category : #adding }
+ASTCache >> addMiss [
+
+	self statistics ifNotNil: [ statistics addMiss ]
+]
+
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod [
 
@@ -89,22 +102,40 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	"Get an AST using strongly held information, or failback to aBlock (that might compute a new AST)"
 
 	"For doit methods, the AST is stored in the method property"
-	(aCompiledMethod propertyAt: #ast) ifNotNil: [ :ast | ^ ast ].
+
+	(aCompiledMethod propertyAt: #ast) ifNotNil: [ :ast |
+		self addHit.
+		^ ast ].
 
 	"Reflective methods have a strongly held AST, return this one"
-	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf | ^ rf ast ].
+	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf |
+		self addHit.
+		^ rf ast ].
 
 	"Look in the (almost infinite) cache"
-	"self weakDictionary at: aCompiledMethod ifPresent: [ :ast | ^ ast ]."
+"
+	self weakDictionary at: aCompiledMethod ifPresent: [ :wa |
+		(wa at: 1) ifNotNil: [ :ast |
+			self addHit.
+			^ ast ] ].
+"
 
 	"We tried everything we could. So compute and store it"
+	self addMiss.
 	^ self at: aCompiledMethod put: aBlock value
 ]
 
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod put: aRBMethodNode [
 
-	^ self weakDictionary at: aCompiledMethod put: aRBMethodNode
+	"Cleanup weak AST. Note `associations` return a copy, so the iteration is safe"
+	| weakRef |
+	self weakDictionary associations do: [ :each |
+		(each value at: 1) ifNil: [ self weakDictionary removeKey: each key ] ].
+	weakRef := WeakArray new: 1.
+	weakRef at: 1 put: aRBMethodNode.
+	self weakDictionary at: aCompiledMethod put: weakRef.
+	^ aRBMethodNode
 ]
 
 { #category : #accessing }
@@ -113,10 +144,18 @@ ASTCache >> getASTFor: aCompiledMethod [
 	^ self class cacheMissStrategy getASTFor: aCompiledMethod
 ]
 
+{ #category : #'accessing - statistics' }
+ASTCache >> hitRatio [
+
+	self statistics ifNil: [ ^ 0 ].
+	^ self statistics hitRatio
+]
+
 { #category : #copying }
 ASTCache >> postCopy [
 
-	weakDictionary := weakDictionary copy
+	weakDictionary := weakDictionary copy.
+	statistics := statistics copy
 ]
 
 { #category : #printing }
@@ -125,13 +164,26 @@ ASTCache >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPutAll: '#';
-		print: self weakDictionary size
+		print: self weakDictionary size;
+		space;
+		print: (self hitRatio * 100.0) rounded;
+		nextPut: $%
 ]
 
 { #category : #initialization }
 ASTCache >> reset [
 	self weakDictionary removeAll.
 	weakDictionary := nil.
+	statistics := nil.
+]
+
+{ #category : #accessing }
+ASTCache >> statistics [
+
+	^ statistics ifNil: [ "CacheStatistics comes from another package. It does not worth the dependency"
+		  Smalltalk globals
+			  at: #CacheStatistics
+			  ifPresent: [ :CS | statistics := CS new ] ]
 ]
 
 { #category : #accessing }

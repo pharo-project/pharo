@@ -36,7 +36,7 @@ ClassOrganization >> addProtocolNamed: protocolName [
 	oldProtocols := self protocolNames copy.
 
 	protocol := self addProtocol: (Protocol name: protocolName).
-	SystemAnnouncer uniqueInstance protocolAdded: protocolName inClass: self organizedClass.
+	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocolName).
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -210,7 +210,7 @@ ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
 
-	oldProtocols ~= newProtocols ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self organizedClass ]
+	oldProtocols ~= newProtocols ifTrue: [ SystemAnnouncer announce: (ClassReorganized class: self organizedClass) ]
 ]
 
 { #category : #notifications }
@@ -222,13 +222,24 @@ ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: 
 { #category : #notifications }
 ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
 
-	SystemAnnouncer uniqueInstance protocolRemoved: protocolName inClass: self organizedClass
+	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocolName)
 ]
 
 { #category : #accessing }
 ClassOrganization >> organizedClass [
 
 	^ organizedClass ifNil: [ self error: 'ClassOrganization should always have an organized class associated.' ]
+]
+
+{ #category : #printing }
+ClassOrganization >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream
+		nextPutAll: ' (';
+		print: self organizedClass;
+		nextPut: $)
 ]
 
 { #category : #accessing }
@@ -322,13 +333,14 @@ ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
-	"Announce the changes in the system"
-	oldName ~= newName ifTrue: [
-		SystemAnnouncer uniqueInstance protocolRenamedFrom: oldName to: newName inClass: self organizedClass.
-		SystemAnnouncer uniqueInstance classReorganized: self organizedClass.
+	"Announce the changes in the system if the name changed"
+	oldName = newName ifTrue: [ ^ self ].
 
-		"I need to notify also the selector changes, otherwise RPackage will not notice"
-		(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ] ]
+	self notifyOfChangedProtocolNamesFrom: oldName to: newName.
+	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldName to: newName).
+
+	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
 ]
 
 { #category : #initialization }

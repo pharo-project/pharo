@@ -31,6 +31,12 @@ RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 ]
 
 { #category : #accessing }
+RBBlockErrorNode >> argumentNames [
+
+	^ self arguments collect: [:each | each name] as: Array
+]
+
+{ #category : #accessing }
 RBBlockErrorNode >> arguments [
 	^arguments
 ]
