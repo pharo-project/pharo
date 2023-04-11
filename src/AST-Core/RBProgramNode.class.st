@@ -217,6 +217,11 @@ RBProgramNode >> asReturn [
 	^parent addReturn
 ]
 
+{ #category : #replacing }
+RBProgramNode >> asSequenceNode [
+	^RBSequenceNode statements: {self}
+]
+
 { #category : #querying }
 RBProgramNode >> assignmentNodes [
 	^self allChildren select: [:each | each isAssignment]

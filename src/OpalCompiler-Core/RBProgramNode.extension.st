@@ -21,11 +21,6 @@ RBProgramNode >> asDoit [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asSequenceNode [
-	^RBSequenceNode statements: {self}
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysis
