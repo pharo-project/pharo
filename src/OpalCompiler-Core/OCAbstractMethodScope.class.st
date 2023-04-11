@@ -140,7 +140,8 @@ OCAbstractMethodScope >> localTemps [
 OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aContext [
 	"Is this the definition context for var? If it not, we look in the outer context using the corresponding outer scope. If found, we return the context"
 
-	^self = var scope
+	"Because AST are not reliable, we do the correspondance on var names"
+	^ (self localTempNames includes: var name)
 		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: (self nextOuterScopeContextOf: aContext) ]
 		ifTrue: [ aContext ]
 ]
