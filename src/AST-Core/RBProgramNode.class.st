@@ -79,7 +79,7 @@ RBProgramNode >> addError: anErrorMessage [
 	^ notice
 ]
 
-{ #category : #adding }
+{ #category : #notice }
 RBProgramNode >> addNotice: aRBNotice [
 
 	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
