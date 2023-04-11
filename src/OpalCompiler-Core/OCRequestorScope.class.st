@@ -28,6 +28,14 @@ OCRequestorScope >> canDeclareVariableName: name [
 	"Empty names come from faulty parameters. Ignore them"
 	name ifEmpty: [ ^ false ].
 
+	"Ensure compatibility with old requestors"
+	(requestor respondsTo: #canDeclareVariableName:) ifTrue: [
+		^ requestor canDeclareVariableName: name ].
+
+	"Supported legacy: only the workspace"
+	requestor class name = #StPlaygroundInteractionModel ifFalse: [
+		^ false ].
+
 	"Heuristic, assume the requestor does not want upercased variables.
 	A menu will likely open to offer reparation for class or global or something."
 	name first isUppercase ifTrue: [ ^ false ].
