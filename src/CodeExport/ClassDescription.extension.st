@@ -50,7 +50,7 @@ ClassDescription >> fileOutOn: aFileStream [
 	"we for now file out old style class definitions"
 
 	aFileStream nextChunkPut: self oldPharoDefinition.
-	self organization putCommentOnFile: aFileStream forClass: self.
+	self putCommentOnFile: aFileStream.
 	self organization protocolNames do: [ :protocolName | self fileOutLocalMethodsInProtocolNamed: protocolName on: aFileStream ]
 ]
 
@@ -131,6 +131,32 @@ ClassDescription >> printProtocolChunk: protocol on: aFileStream withStamp: chan
 				 strm
 					 nextPutAll: ' prior: ';
 					 print: priorMethod sourcePointer ] ])
+]
+
+{ #category : #'*CodeExport' }
+ClassDescription >> putCommentOnFile: aFileStream [ 
+	"Store the comment about the class onto file, aFileStream."
+
+	| header |
+	self comment isEmptyOrNil ifTrue: [ ^ self ].
+
+	aFileStream
+		cr;
+		nextPut: $!.
+	header := String streamContents: [ :strm |
+		          strm
+			          nextPutAll: self name;
+			          nextPutAll: ' commentStamp: '.
+		          self commentStamp storeOn: strm.
+		          strm
+			          nextPutAll: ' prior: ';
+			          nextPutAll: '0' ].
+	aFileStream nextChunkPut: header.
+	self comment ifNotNil: [ :comment |
+		aFileStream
+			cr;
+			nextChunkPut: comment string ].
+	aFileStream cr
 ]
 
 { #category : #'*CodeExport' }
