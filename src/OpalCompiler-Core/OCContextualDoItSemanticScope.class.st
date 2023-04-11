@@ -73,11 +73,11 @@ OCContextualDoItSemanticScope >> initialize [
 ]
 
 { #category : #lookup }
-OCContextualDoItSemanticScope >> lookupVar: name declare: aBoolean [
+OCContextualDoItSemanticScope >> lookupVar: name [
 
-	(targetContext lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^self importVariable: v].
+	(targetContext lookupVar: name) ifNotNil: [ :v | ^self importVariable: v].
 
-	^super lookupVar: name declare: aBoolean
+	^super lookupVar: name
 ]
 
 { #category : #accessing }

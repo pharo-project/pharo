@@ -32,7 +32,7 @@ OCRequestorScope >> compilationContext: anObject [
 ]
 
 { #category : #lookup }
-OCRequestorScope >> lookupVar: name declare: aBoolean [
+OCRequestorScope >> lookupVar: name [
 
 	(requestor hasBindingOf: name) ifTrue: [ ^ requestor bindingOf: name ].
 	"Note that is an outerscope is a requestor tant can declare, it will win the declaration.
