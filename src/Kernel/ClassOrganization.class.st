@@ -63,7 +63,7 @@ ClassOrganization >> classComment: aString [
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOf: selector) ifTrue: [ ^ self ].
+	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
 
 	self silentlyClassify: selector under: newProtocol.
 
@@ -217,7 +217,7 @@ ClassOrganization >> protocolNameOfElement: aSelector [
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
-	^ (self protocolOf: aSelector)
+	^ (self protocolOfSelector: aSelector)
 		  ifNil: [ aBlock value ]
 		  ifNotNil: [ :protocol | protocol name ]
 ]
@@ -243,7 +243,7 @@ ClassOrganization >> protocolNames [
 ]
 
 { #category : #accessing }
-ClassOrganization >> protocolOf: aSelector [
+ClassOrganization >> protocolOfSelector: aSelector [
 
 	^ self protocols
 		  detect: [ :each | each includesSelector: aSelector ]
@@ -322,7 +322,7 @@ ClassOrganization >> setSubject: anObject [
 { #category : #classification }
 ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
 
-	(self protocolOf: aSelector) ifNotNil: [ :oldProtocol |
+	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |
 		oldProtocol removeMethodSelector: aSelector.
 		self removeProtocolIfEmpty: oldProtocol ].
 
