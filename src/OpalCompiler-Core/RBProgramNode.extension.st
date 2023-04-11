@@ -9,18 +9,6 @@ RBProgramNode >> asDoItForContext: aContext [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoit [
-	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
-	| methodNode |
-
-	methodNode := RBMethodNode
-		selector: #DoIt
-		body: self asSequenceNode transformLastToReturn.
-	methodNode source: methodNode formattedCode.
-	^methodNode
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysis
