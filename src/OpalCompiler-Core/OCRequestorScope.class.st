@@ -10,7 +10,8 @@ Class {
 	#superclass : #OCAbstractScope,
 	#instVars : [
 		'requestor',
-		'compilationContext'
+		'compilationContext',
+		'variables'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -33,30 +34,29 @@ OCRequestorScope >> compilationContext: anObject [
 { #category : #lookup }
 OCRequestorScope >> lookupVar: name declare: aBoolean [
 
-	"the system normally allows any object as the name, but the requestor uses some
-	heuristics based on names of variables"
+	(requestor hasBindingOf: name) ifTrue: [ ^ requestor bindingOf: name ].
+	"Note that is an outerscope is a requestor tant can declare, it will win the declaration.
+	But maybe it is better this way."
+	(outerScope lookupVar: name) ifNotNil: [ :binding | ^ binding ].
+	
+	"Heuristic, assume the requestor does not want upercased variables.
+	A menu will likely open to offer reparation for class or global or something."
+	name first isUppercase ifTrue: [ ^ nil ].
+	
+	"We do not register it yet, to not fill the requestor with garbage variable during styling for instance"
+	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
+]
 
-	name isString ifFalse: [ ^ outerScope lookupVar: name declare: aBoolean ].
-	name isEmpty ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
+{ #category : #lookup }
+OCRequestorScope >> registerVariables [
 
-	"reserved Variables are defined by the global scope, thus we look up in the outer scope"
-	(ReservedVariable nameIsReserved: name) ifTrue: [
-		^ outerScope lookupVar: name declare: aBoolean ].
-
-	"generated temps (e.g. for limits in to:do: should not create bindings"
-	name first = $0 ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
-	"We do not want to auto define bindings for unknown Globals"
-	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean].
-	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
-	self flag: 'The faulty mode should not impact how variable are bound'.
-	((compilationContext permitFaulty or: [aBoolean not])
-		and: [ (requestor hasBindingOf: name) not ])
-		ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
-
-	"the requestors #bindingOf may create a binding for not yet existing variables"
-	^(requestor bindingOf: name)
-		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name declare: aBoolean ]
+	self variables do: [ :each |
+		| var |
+		"Force the declaraction, if needed"
+		var := requestor bindingOf: each name.
+		"Because we no non control how requestor handle its variables, just update the one we used locally"
+		var == each ifFalse: [ each becomeForward: var ] ].
+	super registerVariables
 ]
 
 { #category : #accessing }
@@ -67,4 +67,10 @@ OCRequestorScope >> requestor [
 { #category : #accessing }
 OCRequestorScope >> requestor: anObject [
 	requestor := anObject
+]
+
+{ #category : #accessing }
+OCRequestorScope >> variables [
+
+	^ variables ifNil: [ variables := Dictionary new ].
 ]
