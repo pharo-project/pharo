@@ -496,7 +496,6 @@ RBParser >> parseDoIt [
 	| methodNode |
 	methodNode := self doItMethodNodeClass new.
 	self parseMethodBodyInto: methodNode.
-	methodNode addReturn.
 	^methodNode
 ]
 

@@ -213,7 +213,7 @@ RBProgramNode >> asDoit [
 	| source |
 	source := self source.
 	^ RBDoItMethodNode new
-		  body: self asSequenceNode transformLastToReturn;
+		  body: self asSequenceNode;
 		  source: source
 ]
 

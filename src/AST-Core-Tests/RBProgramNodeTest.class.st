@@ -340,7 +340,7 @@ RBProgramNodeTest >> testAsDoit [
 	ast2 := ast statements second asDoit.
 	self assert: ast2 sourceCode equals: 'a - 2'.
 	self assert: ast2 isMethod.
-	self assert: ast2 body statements first value selector equals: #-
+	self assert: ast2 body statements first selector equals: #-
 ]
 
 { #category : #'tests - bestNodeFor' }

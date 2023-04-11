@@ -687,8 +687,17 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 			createTempVectorNamed: aMethodNode scope tempVectorName
 			withVars: aMethodNode scope tempVectorVarNames
 	].
-	effectTranslator visitNode: aMethodNode body.
-	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]
+
+	aMethodNode body lastIsReturn
+		ifTrue: [
+			effectTranslator visitNode: aMethodNode body ]
+		ifFalse: [ aMethodNode isDoIt
+			ifTrue: [ 
+				valueTranslator visitNode: aMethodNode body.
+				methodBuilder returnTop ]
+			ifFalse: [ 
+				effectTranslator visitNode: aMethodNode body.
+				methodBuilder pushReceiver; returnTop ] ]
 ]
 
 { #category : #'visitor - double dispatching' }
