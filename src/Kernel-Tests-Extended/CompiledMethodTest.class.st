@@ -731,7 +731,7 @@ CompiledMethodTest >> testPragmaAt [
 	self assert: (method pragmaAt: #hello) equals: nil
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CompiledMethodTest >> testProperties [
 
 	| method tmp |
