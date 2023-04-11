@@ -210,9 +210,11 @@ RBProgramNode >> allVariables [
 RBProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
 
+	| source |
+	source := self source.
 	^ RBDoItMethodNode new
 		  body: self asSequenceNode transformLastToReturn;
-		  source: self source
+		  source: source
 ]
 
 { #category : #replacing }
