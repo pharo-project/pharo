@@ -25,6 +25,9 @@ OCRequestorScope >> allTemps [
 OCRequestorScope >> canDeclareVariableName: name [
 	"Test for free workspace declaration"
 
+	"Empty names come from faulty parameters. Ignore them"
+	name ifEmpty: [ ^ false ].
+
 	"Heuristic, assume the requestor does not want upercased variables.
 	A menu will likely open to offer reparation for class or global or something."
 	name first isUppercase ifTrue: [ ^ false ].
