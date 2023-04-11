@@ -29,7 +29,7 @@ RFASTTranslator >> emitMessageNode: aMessageNode [
 		ifTrue: [ self emitMetaLinkInstead: aMessageNode ]
 		ifFalse: [
 			aMessageNode isSuperSend
-				ifTrue: [ methodBuilder send: aMessageNode selector toSuperOf: self compilationContext getClass ]
+				ifTrue: [ methodBuilder send: aMessageNode selector toSuperOf: aMessageNode superOf ]
 				ifFalse: [ methodBuilder send: aMessageNode selector ] ].
 	self emitMetaLinkAfterNoEnsure: aMessageNode
 ]

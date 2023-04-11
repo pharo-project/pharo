@@ -227,6 +227,13 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
+	
+	super visitMessageNode: aMessageNode.
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: self compilationContext getClass ]
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
