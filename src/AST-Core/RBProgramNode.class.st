@@ -206,7 +206,7 @@ RBProgramNode >> allVariables [
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
-{ #category : #accessing }
+{ #category : #replacing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."
 
