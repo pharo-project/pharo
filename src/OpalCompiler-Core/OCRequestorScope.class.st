@@ -10,7 +10,6 @@ Class {
 	#superclass : #OCAbstractScope,
 	#instVars : [
 		'requestor',
-		'compilationContext',
 		'variables'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
@@ -41,16 +40,6 @@ OCRequestorScope >> canDeclareVariableName: name [
 	name first isUppercase ifTrue: [ ^ false ].
 
 	^ true
-]
-
-{ #category : #accessing }
-OCRequestorScope >> compilationContext [
-	^ compilationContext
-]
-
-{ #category : #accessing }
-OCRequestorScope >> compilationContext: anObject [
-	compilationContext := anObject
 ]
 
 { #category : #lookup }
