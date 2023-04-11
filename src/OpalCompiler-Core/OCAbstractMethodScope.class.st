@@ -133,6 +133,7 @@ OCAbstractMethodScope >> localTemps [
 					var isStoringTempVector
 						ifTrue: [ var originalVar scope tempVector
 								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
+			self hasTempVector ifTrue: [ str nextPut: self tempVectorVar ].
 			str nextPutAll: tempVars values]
 ]
 
