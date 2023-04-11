@@ -17,7 +17,10 @@ Code that wants to modify the AST without making sure the compiledMethod is in s
 "
 Class {
 	#name : #ASTCache,
-	#superclass : #WeakIdentityKeyDictionary,
+	#superclass : #Object,
+	#instVars : [
+		'weakDictionary'
+	],
 	#classVars : [
 		'CacheMissStrategy'
 	],
@@ -75,15 +78,65 @@ ASTCache class >> shutDown [
 
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod [
+
+	^ self
+		  at: aCompiledMethod
+		  ifAbsentPut: [ self getASTFor: aCompiledMethod ]
+]
+
+{ #category : #accessing }
+ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
+	"Get an AST using strongly held information, or failback to aBlock (that might compute a new AST)"
+
 	"For doit methods, the AST is stored in the method property"
-	^ aCompiledMethod propertyAt: #ast ifAbsent: [
-		  self
-			  at: aCompiledMethod
-			  ifAbsentPut: [
-			  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
+	(aCompiledMethod propertyAt: #ast) ifNotNil: [ :ast | ^ ast ].
+
+	"Reflective methods have a strongly held AST, return this one"
+	(aCompiledMethod propertyAt: #reflectiveMethod) ifNotNil: [ :rf | ^ rf ast ].
+
+	"Look in the (almost infinite) cache"
+	self weakDictionary at: aCompiledMethod ifPresent: [ :ast | ^ ast ].
+
+	"We tried everything we could. So compute and store it"
+	^ self at: aCompiledMethod put: aBlock value
+]
+
+{ #category : #accessing }
+ASTCache >> at: aCompiledMethod put: aRBMethodNode [
+
+	^ self weakDictionary at: aCompiledMethod put: aRBMethodNode
+]
+
+{ #category : #accessing }
+ASTCache >> getASTFor: aCompiledMethod [
+
+	^ self class cacheMissStrategy getASTFor: aCompiledMethod
+]
+
+{ #category : #copying }
+ASTCache >> postCopy [
+
+	weakDictionary := weakDictionary copy
+]
+
+{ #category : #printing }
+ASTCache >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: '#';
+		print: self weakDictionary size
 ]
 
 { #category : #initialization }
 ASTCache >> reset [
-	self removeAll
+	self weakDictionary removeAll.
+	weakDictionary := nil.
+]
+
+{ #category : #accessing }
+ASTCache >> weakDictionary [
+
+	^ weakDictionary ifNil: [
+		  weakDictionary := WeakIdentityKeyDictionary new ]
 ]
