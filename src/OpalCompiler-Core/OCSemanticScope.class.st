@@ -65,7 +65,7 @@ OCSemanticScope >> lookupVar: name [
 
 	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
-	^outerScope ifNotNil: [ outerScope lookupVar: name ]
+	^ super lookupVar: name
 ]
 
 { #category : #accessing }

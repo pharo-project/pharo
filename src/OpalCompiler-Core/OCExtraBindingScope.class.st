@@ -43,5 +43,5 @@ OCExtraBindingScope >> bindings: anObject [
 OCExtraBindingScope >> lookupVar: name [
 	^(bindings bindingOf: name asSymbol)
 		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name]
+		ifNil: [ super lookupVar: name ]
 ]

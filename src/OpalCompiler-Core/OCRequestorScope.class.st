@@ -37,7 +37,7 @@ OCRequestorScope >> lookupVar: name [
 	(requestor hasBindingOf: name) ifTrue: [ ^ requestor bindingOf: name ].
 	"Note that is an outerscope is a requestor tant can declare, it will win the declaration.
 	But maybe it is better this way."
-	(outerScope lookupVar: name) ifNotNil: [ :binding | ^ binding ].
+	(super lookupVar: name) ifNotNil: [ :binding | ^ binding ].
 	
 	"Heuristic, assume the requestor does not want upercased variables.
 	A menu will likely open to offer reparation for class or global or something."

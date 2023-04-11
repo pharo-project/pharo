@@ -152,7 +152,7 @@ OCAbstractMethodScope >> lookupVar: name [
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
-	^self outerScope lookupVar: name
+	^ super lookupVar: name
 ]
 
 { #category : #scope }

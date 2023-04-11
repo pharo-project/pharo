@@ -48,7 +48,8 @@ OCAbstractScope >> isMethodScope [
 { #category : #lookup }
 OCAbstractScope >> lookupVar: name [
 	"search the scope (and the outer scopes) for a variable 'name' and return it"
-	^ self subclassResponsibility
+
+	^ outerScope ifNotNil: [ :it | it lookupVar: name ]
 ]
 
 { #category : #lookup }
