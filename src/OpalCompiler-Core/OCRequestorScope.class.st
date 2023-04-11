@@ -21,6 +21,17 @@ OCRequestorScope >> allTemps [
 	^#()
 ]
 
+{ #category : #testing }
+OCRequestorScope >> canDeclareVariableName: name [
+	"Test for free workspace declaration"
+
+	"Heuristic, assume the requestor does not want upercased variables.
+	A menu will likely open to offer reparation for class or global or something."
+	name first isUppercase ifTrue: [ ^ false ].
+
+	^ true
+]
+
 { #category : #accessing }
 OCRequestorScope >> compilationContext [
 	^ compilationContext
@@ -38,11 +49,9 @@ OCRequestorScope >> lookupVar: name [
 	"Note that is an outerscope is a requestor tant can declare, it will win the declaration.
 	But maybe it is better this way."
 	(super lookupVar: name) ifNotNil: [ :binding | ^ binding ].
-	
-	"Heuristic, assume the requestor does not want upercased variables.
-	A menu will likely open to offer reparation for class or global or something."
-	name first isUppercase ifTrue: [ ^ nil ].
-	
+
+	"Can we have a free workspace variable or not?"
+	(self canDeclareVariableName: name) ifFalse: [ ^nil ].
 	"We do not register it yet, to not fill the requestor with garbage variable during styling for instance"
 	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
 ]
