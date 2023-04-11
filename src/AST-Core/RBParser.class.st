@@ -539,8 +539,7 @@ RBParser >> parseErrorNode: aMessageString [
 RBParser >> parseExpression [
 	"Parse and return an AST node corresponding to the expression passed as a #source"
 	| methodNode |
-	methodNode := self doItMethodNodeClass new.
-	self parseMethodBodyInto: methodNode.
+	methodNode := self parseDoIt.
 	^(methodNode statements size == 1 and: [ methodNode temporaries isEmpty ])
 		  ifTrue: [ methodNode statements first ]
 		  ifFalse: [ methodNode body ]
