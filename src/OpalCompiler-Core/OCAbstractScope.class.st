@@ -77,3 +77,12 @@ OCAbstractScope >> outerScope: aSemScope [
 
 	outerScope := aSemScope
 ]
+
+{ #category : #initialization }
+OCAbstractScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue from: aContext [ 
+
+	^ self outerScope ifNotNil: [  outerScope
+		setCopyingTempToAllScopesUpToDefTemp: aVar
+		to: aValue
+		from: (self nextOuterScopeContextOf: aContext) ]
+]
