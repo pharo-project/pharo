@@ -61,7 +61,7 @@ StepOverTest >> stepB3 [
 { #category : #tests }
 StepOverTest >> stepC1 [
 	self stepC2.
-	^ self
+	^ 42
 ]
 
 { #category : #tests }
