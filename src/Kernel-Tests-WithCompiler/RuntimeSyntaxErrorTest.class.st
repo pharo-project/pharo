@@ -21,7 +21,7 @@ RuntimeSyntaxErrorTest >> testFaultyInstalledMethod [
 			self
 				assert: error description
 				equals: 'RuntimeSyntaxError: Unknown character'.
-			ctx := error signalContext skipDebuggerComplete.
+			ctx := error signalContext filterDebuggerStack.
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ].
 
 	method removeFromSystem
@@ -42,7 +42,7 @@ RuntimeSyntaxErrorTest >> testFaultyScript [
 			self
 				assert: error description
 				equals: 'RuntimeSyntaxError: Unknown character'.
-			ctx := error signalContext skipDebuggerComplete.
+			ctx := error signalContext filterDebuggerStack.
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ]
 ]
 
@@ -63,6 +63,6 @@ RuntimeSyntaxErrorTest >> testFaultyUninstalledMethod [
 			self
 				assert: error description
 				equals: 'RuntimeSyntaxError: Unknown character'.
-			ctx := error signalContext skipDebuggerComplete.
+			ctx := error signalContext filterDebuggerStack.
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ]
 ]
