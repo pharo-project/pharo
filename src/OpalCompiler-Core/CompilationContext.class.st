@@ -628,8 +628,6 @@ CompilationContext >> optionSkipSemanticWarnings [
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
 
-	(optionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
-
 	options parseOptions: optionsArray
 ]
 

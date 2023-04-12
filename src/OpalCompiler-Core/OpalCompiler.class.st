@@ -495,6 +495,10 @@ OpalCompiler >> noPattern: aBoolean [
 
 { #category : #'public access' }
 OpalCompiler >> options: anOptionsArray [
+
+	"Compatibility for those options"
+	(anOptionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
+
 	self compilationContext parseOptions: anOptionsArray
 ]
 
