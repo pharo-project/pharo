@@ -405,7 +405,12 @@ OpalCompiler >> evaluate [
 	doItMethod := self compile.
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
-	self logDoIt.
+
+	self logged == true ifTrue: [
+		Smalltalk globals at: #SystemAnnouncer ifPresent: [ :sysAnn |
+			self semanticScope
+				announceDoItEvaluation: source
+				by: sysAnn uniqueInstance ] ].
 	^ value
 ]
 
@@ -455,7 +460,7 @@ OpalCompiler >> install [
 
 	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
-	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
+	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
 
 	logSource ifTrue: [
 		class
@@ -478,9 +483,9 @@ OpalCompiler >> install: aSource [
 	^ self install
 ]
 
-{ #category : #private }
-OpalCompiler >> logDoIt [
-	self compilationContext logDoItEvaluation: source
+{ #category : #accessing }
+OpalCompiler >> logged [
+	^ self compilationContext logged
 ]
 
 { #category : #accessing }

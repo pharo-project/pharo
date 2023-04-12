@@ -503,17 +503,6 @@ CompilationContext >> interactive [
 ]
 
 { #category : #accessing }
-CompilationContext >> logDoItEvaluation: aSourceString [
-	self logged ifNil: [ ^self ].
-	self logged ifFalse: [ ^self ].
-
-	Smalltalk globals
-			at: #SystemAnnouncer
-			ifPresent: [ :sysAnn |
-				semanticScope announceDoItEvaluation: aSourceString by: sysAnn uniqueInstance ]
-]
-
-{ #category : #accessing }
 CompilationContext >> logged [
 	^logged
 ]
