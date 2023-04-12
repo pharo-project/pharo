@@ -129,7 +129,11 @@ ASTCache >> at: aCompiledMethod put: aRBMethodNode [
 	"Cleanup weak AST. Note `associations` return a copy, so the iteration is safe"
 	| weakRef |
 	self weakDictionary associations do: [ :each |
-		(each value at: 1) ifNil: [ self weakDictionary removeKey: each key ] ].
+		(each value at: 1) ifNil: [
+			self weakDictionary
+				removeKey: each key
+				ifAbsent: [ "prevent TOCTOU" ] ] ].
+
 	weakRef := WeakArray new: 1.
 	weakRef at: 1 put: aRBMethodNode.
 	self weakDictionary at: aCompiledMethod put: weakRef.
