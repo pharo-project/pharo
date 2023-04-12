@@ -180,6 +180,11 @@ Number >> asFloat [
 ]
 
 { #category : #converting }
+Number >> asFraction [
+	^ self subclassResponsibility
+]
+
+{ #category : #converting }
 Number >> asInteger [
 	"Round me towards nearest integer closer to zero."
 	"This violates the ANSI standard, but the system depends on this"
@@ -361,6 +366,11 @@ Number >> isNaN [
 { #category : #testing }
 Number >> isNumber [
 	^ true
+]
+
+{ #category : #testing }
+Number >> isPowerOfTwo [
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
