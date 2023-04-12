@@ -40,7 +40,9 @@ Protocol >> addAllMethodsFrom: aProtocol [
 
 { #category : #'adding-removing' }
 Protocol >> addMethodSelector: aSymbol [
-	^ methodSelectors add: aSymbol
+	(methodSelectors includes: aSymbol) ifTrue: [ ^ self ].
+	
+	methodSelectors := methodSelectors copyWith: aSymbol
 ]
 
 { #category : #testing }
@@ -59,7 +61,7 @@ Protocol >> initialize [
 
 	super initialize.
 
-	methodSelectors := IdentitySet new.
+	methodSelectors := Array empty.
 	name := self class unclassified
 ]
 
@@ -113,12 +115,12 @@ Protocol >> printOn: aStream [
 
 { #category : #'adding-removing' }
 Protocol >> removeAllMethodSelectors [
-	^ methodSelectors removeAll
+	methodSelectors := Array empty
 ]
 
 { #category : #'adding-removing' }
 Protocol >> removeMethodSelector: aSymbol [
-	^ methodSelectors remove: aSymbol
+	methodSelectors := methodSelectors copyWithout: aSymbol
 ]
 
 { #category : #accessing }
