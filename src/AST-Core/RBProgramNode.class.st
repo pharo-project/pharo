@@ -225,10 +225,10 @@ RBProgramNode >> asPositionDebugString [
 			cpt := cpt + 1 ] ].
 
 	"Fill the result string"
-	result := String new: self stop - self start + 1.
-	self start to: self stop do: [ :i |
+	result := String new: self source size.
+	1 to: self source size do: [ :i |
 		result
-			at: i - self start + 1
+			at: i
 			put: (characters at: (self nodeForOffset: i)) ].
 	^ result
 ]

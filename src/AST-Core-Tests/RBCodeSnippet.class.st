@@ -2541,8 +2541,7 @@ RBCodeSnippet >> updateExpectations [
 	ast := self parse.
 	self formattedCode: ast formattedCode withSeparatorsCompacted.
 	self isParseFaulty: ast isFaulty.
-	self nodePositions:
-		(' ' repeat: ast start - 1) , ast asPositionDebugString.
+	self nodePositions: ast asPositionDebugString.
 	ast := self doSemanticAnalysis.
 	self isFaulty: ast isFaulty.
 	self isFaultyMinusUndeclared: self isFaulty
