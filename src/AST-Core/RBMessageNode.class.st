@@ -190,7 +190,7 @@ RBMessageNode >> isHaltNode [
 
 { #category : #testing }
 RBMessageNode >> isKeyword [
-	^(self selector indexOf: $:) ~= 0
+	^ self selector isKeyword
 ]
 
 { #category : #testing }
