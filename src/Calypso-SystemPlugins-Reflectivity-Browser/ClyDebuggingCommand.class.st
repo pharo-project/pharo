@@ -14,11 +14,12 @@ ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
 	^ self isAbstract not and: [
 		  node := aBrowserContext lastSelectedSourceNode.
 
-		  node isCommentNode not and: [
-			  node isPragma not and: [
-				  node isSequence not and: [
-					  node isLiteralNode not and: [
-						  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ]
+		  node isNotNil and: [
+			  node isCommentNode not and: [
+				  node isPragma not and: [
+					  node isSequence not and: [
+						  node isLiteralNode not and: [
+							  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
 ]
 
 { #category : #activation }
