@@ -137,10 +137,7 @@ IRPrinterTest >> testPopTop [
 		equals:
 			'
 label: 1
-pushReceiver
-pushLiteral: false
-popTop
-returnTop
+returnReceiver
 '
 ]
 

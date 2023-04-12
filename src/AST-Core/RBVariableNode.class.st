@@ -260,12 +260,9 @@ RBVariableNode >> replaceSourceWith: aNode [
 ]
 
 { #category : #accessing }
-RBVariableNode >> start [
-	^ start
-]
-
-{ #category : #accessing }
 RBVariableNode >> start: aPosition [
+	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+
 	start := aPosition
 ]
 

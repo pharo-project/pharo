@@ -85,12 +85,6 @@ Behavior >> lookupVar: aName declare: aBoolean [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Behavior >> lookupVarForDeclaration: name [
-	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
-	^ self lookupVar: name
-]
-
-{ #category : #'*OpalCompiler-Core' }
 Behavior >> outerScope [
 	^self environment
 ]

@@ -288,6 +288,24 @@ SHRBStyleAttributionTest >> testClassVarStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCommentOfVariableInParenthesis [
+	"Regression test for https://github.com/pharo-project/pharo/issues/13316"
+
+	| aText |
+	aText := 'test
+
+	| toto |
+	^ (toto "this returns nil")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 26
+		and: 43
+		shouldBe: #comment
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCommentStyle [
 
 	| aText |
@@ -298,6 +316,82 @@ SHRBStyleAttributionTest >> testCommentStyle [
 		assertStyleOf: aText
 		between: 3
 		and: 16
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInLiteralArrayNode [
+
+	| aText |
+	aText := 'test
+	(#(123) "comment")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 15
+		and: 23
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInLiteralValueNode [
+
+	| aText |
+	aText := 'test
+	(123 "comment")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 12
+		and: 20
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInVariaousPlaces [
+	"For now, the AST does not visit really well the comments. Some work is needed to do that and until it is done, this test will help to avoid regression."
+
+	| aText |
+	aText := 'test
+	("comment1" (123 "comment2")) + ("comment3" (self "comment4"))' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 8
+		and: 17
+		shouldBe: #comment.
+	self
+		assertStyleOf: aText
+		between: 24
+		and: 33
+		shouldBe: #comment.
+	self
+		assertStyleOf: aText
+		between: 40
+		and: 49
+		shouldBe: #comment.
+	self
+		assertStyleOf: aText
+		between: 57
+		and: 66
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsPragmaNode [
+
+	| aText |
+	aText := 'test
+	<test "comment">' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 13
+		and: 21
 		shouldBe: #comment
 ]
 
