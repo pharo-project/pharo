@@ -283,7 +283,7 @@ OpalCompiler >> checkNotice: aNotice [
 
 	"If a failBlock is provided in non-requestor mode,
 	we honor it and do not signal exceptions"
-	self compilationContext failBlock ifNotNil: [ ^ false ].
+	self failBlock ifNotNil: [ ^ false ].
 
 	aNotice signalError.
 
@@ -417,6 +417,12 @@ OpalCompiler >> evaluate: textOrString [
 ]
 
 { #category : #accessing }
+OpalCompiler >> failBlock [
+
+	^ self compilationContext failBlock
+]
+
+{ #category : #accessing }
 OpalCompiler >> failBlock: aBlock [
 	self compilationContext failBlock: aBlock
 ]
@@ -514,7 +520,7 @@ OpalCompiler >> parse [
 			check ifNil: [ ^ ast ].
 			check ifFalse: [
 				ast := nil.
-				^ self compilationContext failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
+				^ self failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
 				] ] ].
 
 	^ ast
