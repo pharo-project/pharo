@@ -2015,6 +2015,15 @@ Context >> size [
 ]
 
 { #category : #'debugger access' }
+Context >> skipDebuggerComplete [
+	"Answer the self or the first sender that do not have the pragma `debuggerCompleteToSender`"
+
+	(self method hasPragmaNamed: #debuggerCompleteToSender) ifFalse: [
+		^ self ].
+	^ sender ifNotNil: [ sender skipDebuggerComplete ]
+]
+
+{ #category : #'debugger access' }
 Context >> sourceCode [
 	^self compiledCode sourceCode
 ]
