@@ -1,27 +1,27 @@
 "
-SUnit tests for SystemOrganizer
+I am a test case to make sure the Smalltalk environment work as intended with its system package organizer.
 "
 Class {
-	#name : #SystemOrganizerTest,
+	#name : #RPackageOrganizerSystemTest,
 	#superclass : #TestCase,
-	#category : #'System-Support-Tests-Image'
+	#category : #'RPackage-Tests-Image'
 }
 
 { #category : #tests }
-SystemOrganizerTest >> testDefault [
+RPackageOrganizerSystemTest >> testDefault [
 
 	self assert: RPackageOrganizer default identicalTo: self class environment organization
 ]
 
 { #category : #tests }
-SystemOrganizerTest >> testDefaultEnvironment [
+RPackageOrganizerSystemTest >> testDefaultEnvironment [
 	"When no environment is specified, point to the default one"
 
 	self assert: RPackageOrganizer new environment identicalTo: Smalltalk globals
 ]
 
 { #category : #tests }
-SystemOrganizerTest >> testThatExistingPackagenamesDoesNotContainIllegalCharacters [
+RPackageOrganizerSystemTest >> testThatExistingPackageNamesDoesNotContainIllegalCharacters [
 	| illegalCharacters |
 
 	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
