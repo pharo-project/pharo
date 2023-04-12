@@ -353,6 +353,16 @@ RBProgramNode >> children [
 	^#()
 ]
 
+{ #category : #accessing }
+RBProgramNode >> childrenAndComments [
+	
+	| result |
+	result := self children.
+	result ifEmpty: [ ^ self comments ].
+	self comments ifEmpty: [ ^ result ].
+	^ result , self comments
+]
+
 { #category : #replacing }
 RBProgramNode >> clearReplacements [
 	parent ifNil: [^self].
