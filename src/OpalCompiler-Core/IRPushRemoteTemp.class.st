@@ -11,3 +11,9 @@ Class {
 IRPushRemoteTemp >> accept: aVisitor [
 	^ aVisitor visitPushRemoteTemp: self
 ]
+
+{ #category : #testing }
+IRPushRemoteTemp >> isRemovableByPop [
+
+	^ true
+]

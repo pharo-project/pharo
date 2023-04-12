@@ -34,6 +34,9 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
+	"Force a recompilation to remove leaking ReflectiveMethods"
+	"TODO fail the test if things are leaking"
+	ReflectivityExamples recompile.
 	super tearDown
 ]
 
@@ -1044,7 +1047,7 @@ ReflectivityControlTest >> testInsteadCascade [
 { #category : #'tests - after - variables' }
 ReflectivityControlTest >> testInsteadClassVariable [
 	| classVar |
-	self skip.
+
 	classVar := ReflectivityExamples classVariableNamed: #ClassVar.
 	link := MetaLink new
 		metaObject: self;
