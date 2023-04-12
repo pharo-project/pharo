@@ -957,15 +957,17 @@ RBProgramNode >> nodeForOffset: anInteger [
 
 { #category : #iterating }
 RBProgramNode >> nodesDo: aBlock [
+	"Evaluate aBlock on self and all chindren nodes, including comments"
+
 	aBlock value: self.
-	self children do: [ :each | each nodesDo: aBlock ]
+	self childrenAndComments do: [ :each | each nodesDo: aBlock ]
 ]
 
 { #category : #iterating }
 RBProgramNode >> nodesPostorderDo: aBlock [
 	"Like RBProgramNode>>#nodesDo: but visit children first"
 
-	self children do: [ :each | each nodesPostorderDo: aBlock ].
+	self childrenAndComments do: [ :each | each nodesPostorderDo: aBlock ].
 	aBlock value: self
 ]
 
