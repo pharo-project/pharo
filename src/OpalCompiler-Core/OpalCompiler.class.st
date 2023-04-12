@@ -35,6 +35,7 @@ Class {
 		'compilationContextClass',
 		'permitFaulty',
 		'permitUndeclared',
+		'failBlock',
 		'changeStamp',
 		'protocol'
 	],
@@ -419,12 +420,13 @@ OpalCompiler >> evaluate: textOrString [
 { #category : #accessing }
 OpalCompiler >> failBlock [
 
-	^ self compilationContext failBlock
+	^ failBlock
 ]
 
 { #category : #accessing }
 OpalCompiler >> failBlock: aBlock [
-	self compilationContext failBlock: aBlock
+
+	failBlock := aBlock
 ]
 
 { #category : #'public access' }

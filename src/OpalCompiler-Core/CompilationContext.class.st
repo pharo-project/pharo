@@ -17,7 +17,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'requestor',
-		'failBlock',
 		'logged',
 		'compiledMethod',
 		'options',
@@ -476,16 +475,6 @@ CompilationContext >> environment [
 { #category : #accessing }
 CompilationContext >> environment: anObject [
 	environment := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock [
-	^ failBlock
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock: anObject [
-	failBlock := anObject
 ]
 
 { #category : #accessing }
