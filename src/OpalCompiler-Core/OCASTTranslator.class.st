@@ -284,7 +284,7 @@ OCASTTranslator >> emitRuntimeError: aNode [
 
 	methodBuilder
 		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: aNode;
+		pushLiteral: aNode errorMessage;
 		send: #signalSyntaxError:
 ]
 
