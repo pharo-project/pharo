@@ -18,8 +18,6 @@ Class {
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 
-	"Policy: simple semantic analysis is faulty by default"
-	compilationContext permitFaulty ifNil: [ compilationContext permitFaulty: true ].
 	self visitNode: aNode.
 	OCASTClosureAnalyzer new visitNode: aNode.
 	OCASTMethodMetadataAnalyser new visitNode: aNode
