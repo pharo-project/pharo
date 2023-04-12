@@ -241,7 +241,7 @@ ClassOrganization >> protocolNameOfElement: aSelector [
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
 	^ (self protocolOfSelector: aSelector)
-		  ifNil: [ aBlock value ]
+		  ifNil: [ (organizedClass includesSelector: aSelector) ifTrue: [ Protocol unclassified ] ifFalse: [ aBlock value ] ]
 		  ifNotNil: [ :protocol | protocol name ]
 ]
 
