@@ -946,13 +946,16 @@ RBProgramNode >> newSource [
 
 { #category : #'node access' }
 RBProgramNode >> nodeForOffset: anInteger [
-	| children |
-	"choosing the best node on the specific offset"
-	children := self children.
-	"when we are on a leaf, we take the leaf node"
-	(children isEmpty) ifTrue: [ (self sourceInterval includes: anInteger) ifTrue: [^self]].
-	"if the node has children then we check the children"
-	children do: [:each | (each sourceInterval includes: anInteger) ifTrue: [^each nodeForOffset: anInteger] ]
+	"Choose the best node on the specific offset, including comments.
+	Because comments can be oustide the span of sourceInterval, we have to visit all children.
+	Return nil if anInteger is out of range."
+
+	self childrenAndComments do: [ :each |
+		(each nodeForOffset: anInteger) ifNotNil: [ :node | ^ node ] ].
+
+	^ (self sourceInterval includes: anInteger)
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #iterating }
