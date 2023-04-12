@@ -340,7 +340,8 @@ CompiledMethod >> cachePragmas [
 { #category : #'accessing - backward compatible' }
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
-	^ self methodClass organization categoryOfElement: self selector
+
+	^ self methodClass organization protocolNameOfElement: self selector
 ]
 
 { #category : #accessing }
@@ -502,25 +503,13 @@ CompiledMethod >> hasProperty: aKey [
 
 	| extendedMethodState |
 	^ (extendedMethodState := self penultimateLiteral) isMethodProperties
-		  ifTrue: [  extendedMethodState includesProperty: aKey ]
-		  ifFalse: [ false ]
+		  and: [  extendedMethodState includesProperty: aKey ]
 ]
 
 { #category : #accessing }
 CompiledMethod >> hasSourceCode [
 
-	"Retrieve or reconstruct the source code for this method."
-	| trailer source |
-	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ true ].
-	trailer hasSourcePointer ifFalse: [^ false].
-
-	"Situation normal;  read the sourceCode from the file"
-	source := [self getSourceFromFile]
-				on: Error
-				do: [ :ex | ex return: nil].
-	source isEmptyOrNil ifTrue: [^ false].
-	^ true
+	^ self sourceCodeOrNil isNotNil
 ]
 
 { #category : #testing }
@@ -604,11 +593,15 @@ CompiledMethod >> isFaulty [
 	| ast |
 	"fast pre-check: all methods with syntax errors reference this symbol"
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
-	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
-	ast := self methodClass compiler
+
+	"Check the ast in cache, if any"
+	ast := self propertyAt: #ast ifAbsent: [].
+
+	ast ifNil: [
+		"Warning, the following does not work for doit methods because this assumes `noPrefix:false` "
+		ast := self methodClass compiler
 				source: self sourceCode;
-				options: #(+ optionParseErrors);
-				parse.
+				parse ].
 	^ ast isFaulty
 ]
 
@@ -861,12 +854,16 @@ CompiledMethod >> properties [
 { #category : #accessing }
 CompiledMethod >> properties: aMethodProperties [
 	"Set the method-properties of the receiver to aMethodProperties."
-	self literalAt: self numLiterals - 1
-		put: (aMethodProperties isEmpty
-				ifTrue: [aMethodProperties selector]
-				ifFalse: [aMethodProperties
-							setMethod: self;
-							yourself])
+
+	self
+		literalAt: self numLiterals - 1
+		put:
+			(aMethodProperties
+				ifEmpty: [ aMethodProperties selector ]
+				ifNotEmpty: [
+			 		aMethodProperties
+				 		setMethod: self;
+				 		yourself ])
 ]
 
 { #category : #'accessing - pragmas & properties' }
@@ -890,6 +887,14 @@ CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
 
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
+]
+
+{ #category : #'accessing - pragmas & properties' }
+CompiledMethod >> propertyAt: propName ifPresent: aBlock [
+	| propertiesOrSelector |
+	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
+		ifTrue: [propertiesOrSelector at: propName ifPresent: aBlock]
+		ifFalse: [nil]
 ]
 
 { #category : #'accessing - pragmas & properties' }
@@ -973,6 +978,9 @@ CompiledMethod >> removeProperty: propName [
 									(Association
 										key: propName
 										value: value)).
+
+	"Remove unneded AdditionalMethodState"
+	self penultimateLiteral size = 0 ifTrue: [ self penultimateLiteral: self selector ].
 	^value
 ]
 
@@ -1030,6 +1038,9 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
 	| trailer copy |
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	
 	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
 	copy := self copyWithTrailerBytes: trailer.
 	"If possible do a replace in place as an optimization"
@@ -1046,12 +1057,21 @@ CompiledMethod >> setSourcePointer: srcPointer [
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
 
+	^ self sourceCodeOrNil
+		  ifNotNil: [ :code | ^ code ]
+		  ifNil: [ self codeForNoSource ]
+]
+
+{ #category : #accessing }
+CompiledMethod >> sourceCodeOrNil [
+	"Retrieve the source code for this method, or return nil."
+
 	| trailer |
 	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ code ].
-	trailer hasSourcePointer ifFalse: [ ^ self codeForNoSource ].
-
-	^ self getSourceFromFile ifEmpty: [ self codeForNoSource ]
+	trailer sourceCode ifNotNil: [ :code | ^ code ].
+	self propertyAt: #source ifPresent:  [ :code | ^ code ].
+	trailer hasSourcePointer ifFalse: [ ^ nil ].
+	^ self getSourceFromFile ifEmpty: [ nil ]
 ]
 
 { #category : #'source code management' }

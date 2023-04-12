@@ -46,7 +46,6 @@ Class {
 		'readStream',
 		'codeDeclarations',
 		'parserClass',
-		'requestor',
 		'logSource'
 	],
 	#category : #'CodeImport-Base'
@@ -120,9 +119,7 @@ CodeImporter >> evaluate [
 	" stripped down version of evaluateDeclarations"
 	| value |
 	self codeDeclarations do: [ :declaration |
-		requestor ifNotNil: [
-			requestor contents: declaration contents ].
-		value := declaration importFor: requestor logSource: logSource  ].
+		value := declaration importFor: nil logSource: logSource  ].
 	self flushChangesFile.
 
 	^value
@@ -138,8 +135,7 @@ CodeImporter >> evaluateDeclarations [
 
 { #category : #accessing }
 CodeImporter >> file: aFileStream [
-	self readStream: aFileStream.
-	self requestor: FileCompilerRequestor new
+	self readStream: aFileStream
 ]
 
 { #category : #evaluating }
@@ -170,20 +166,4 @@ CodeImporter >> parseChunks [
 { #category : #accessing }
 CodeImporter >> readStream: aReadStream [
 	readStream := aReadStream
-]
-
-{ #category : #accessing }
-CodeImporter >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-CodeImporter >> requestor: anObject [
-	requestor := anObject
-]
-
-{ #category : #fileHandling }
-CodeImporter >> selectTextConverterForCode [
-
-	readStream text
 ]

@@ -282,6 +282,9 @@ IRBuilder >> popScope [
 { #category : #instructions }
 IRBuilder >> popTop [
 
+	currentSequence ifNotEmpty: [
+		currentSequence last isRemovableByPop ifTrue: [
+			^ currentSequence removeLast ] ].
 	self add: IRInstruction popTop
 ]
 

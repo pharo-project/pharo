@@ -34,7 +34,9 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope'
+		'semanticScope',
+		'permitFaulty',
+		'permitUndeclared'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -515,6 +517,7 @@ CompilationContext >> interactive [
 
 { #category : #accessing }
 CompilationContext >> logDoItEvaluation: aSourceString [
+	self logged ifNil: [ ^self ].
 	self logged ifFalse: [ ^self ].
 
 	Smalltalk globals
@@ -525,7 +528,7 @@ CompilationContext >> logDoItEvaluation: aSourceString [
 
 { #category : #accessing }
 CompilationContext >> logged [
-	^logged ifNil: [ false ]
+	^logged
 ]
 
 { #category : #accessing }
@@ -540,11 +543,9 @@ CompilationContext >> noPattern [
 
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
-	anObject ifTrue: [
-		semanticScope := semanticScope asDoItScope.
-		"when we compile an expression, embedd sources, as the resulting method will never be installed"
-		self parseOptions: #(+ #optionEmbeddSources).
-	 ]
+
+	(anObject and: [ self noPattern not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #options }
@@ -639,6 +640,9 @@ CompilationContext >> optionSkipSemanticWarnings [
 
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
+
+	(optionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
+
 	options parseOptions: optionsArray
 ]
 
@@ -650,6 +654,30 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> permitFaulty [
+
+	^ permitFaulty
+]
+
+{ #category : #accessing }
+CompilationContext >> permitFaulty: anObject [
+
+	permitFaulty := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> permitUndeclared [
+
+	^ permitUndeclared
+]
+
+{ #category : #accessing }
+CompilationContext >> permitUndeclared: anObject [
+
+	permitUndeclared := anObject
 ]
 
 { #category : #accessing }
@@ -691,7 +719,6 @@ CompilationContext >> scope [
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
 		newScope := (self requestorScopeClass new
-			compilationContext: self;
 			requestor: requestor) outerScope: newScope].
 
 	bindings ifNotNil: [

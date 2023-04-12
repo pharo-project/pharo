@@ -1149,7 +1149,7 @@ File class >> register: anObject [
 
 { #category : #registry }
 File class >> registry [
-	^Registry ifNil: [Registry := WeakRegistry new]
+	^Registry ifNil: [Registry := FinalizationRegistry new]
 ]
 
 { #category : #'primitives - path' }

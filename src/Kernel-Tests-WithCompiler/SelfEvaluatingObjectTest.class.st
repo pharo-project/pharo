@@ -31,17 +31,20 @@ SelfEvaluatingObjectTest >> testObjects [
 	self assert: 10 isSelfEvaluating.
 	self assert: $a isSelfEvaluating.
 	self assert: 3.14157 isSelfEvaluating.
-	self assert: #(1 2 3) isSelfEvaluating.
+	self assert: #( 1 2 3 ) isSelfEvaluating.
 	self assert: #abc isSelfEvaluating.
 	self assert: 'abc' isSelfEvaluating.
 
 	self assert: Object isSelfEvaluating.
-	self assert: Object new isSelfEvaluating not.
+	self deny: Object new isSelfEvaluating.
 
-	self assert: {Float infinity . Float nan. Float infinity negated} isSelfEvaluating.
+	self assert: {
+			Float infinity.
+			Float nan.
+			Float infinity negated } isSelfEvaluating.
 
 	self assert: (Array with: 10) isSelfEvaluating.
-	self assert: (Array with: Object new) isSelfEvaluating not.
+	self deny: (Array with: Object new) isSelfEvaluating.
 
 	self assert: true isSelfEvaluating.
 	self assert: false isSelfEvaluating.
@@ -49,6 +52,6 @@ SelfEvaluatingObjectTest >> testObjects [
 	self assert: nil isSelfEvaluating.
 
 	self assert: (1 to: 10) isSelfEvaluating.
-	self assert: (1->2) isSelfEvaluating.
+	self assert: (1 -> 2) isSelfEvaluating.
 	self assert: Color red isSelfEvaluating
 ]

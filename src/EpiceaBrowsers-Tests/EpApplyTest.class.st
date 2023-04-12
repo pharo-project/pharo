@@ -116,6 +116,21 @@ EpApplyTest >> testClassAdditionWithClassRemoved [
 ]
 
 { #category : #tests }
+EpApplyTest >> testClassAdditionWithCommentChanged [
+
+	| aClass |
+	aClass := classFactory newClass.
+	aClass comment: 'First comment'.
+	self setHeadAsInputEntry.
+
+	aClass comment: 'Second comment'.
+
+	self assert: aClass comment equals: 'Second comment'.
+	self applyInputEntry.
+	self assert: aClass comment equals: 'First comment'
+]
+
+{ #category : #tests }
 EpApplyTest >> testClassAdditionWithInstanceVariablesChanged [
 
 	| aClass |
@@ -280,14 +295,14 @@ EpApplyTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocolNamed: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self deny: (aClass organization hasProtocolNamed: 'protocol').
 	self applyInputEntry.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self assert: (aClass organization hasProtocolNamed: 'protocol')
 ]
 
 { #category : #tests }
@@ -295,15 +310,15 @@ EpApplyTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocolNamed: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocolNamed: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self assert: (aClass organization hasProtocolNamed: 'protocol').
 	self applyInputEntry.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self deny: (aClass organization hasProtocolNamed: 'protocol')
 ]
 
 { #category : #tests }

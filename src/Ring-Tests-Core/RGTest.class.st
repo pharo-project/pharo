@@ -9,9 +9,9 @@ RGTest >> checkClassesConsistency: object1 and: object2 [
 
 	"check if instance variables have the same types (after sending of #value)"
 
-	self assert: (object1 class instVarNames collect: [ :var | 
-		var -> (object1 instVarNamed: var) value class ]) 
-		equals: (object2 class instVarNames collect: [ :var | 
+	self assert: (object1 class instVarNames collect: [ :var |
+		var -> (object1 instVarNamed: var) value class ])
+		equals: (object2 class instVarNames collect: [ :var |
 		var -> (object2 instVarNamed: var) value class ])
 ]
 
@@ -36,17 +36,17 @@ RGTest >> checkHierarchyConsistencyOf: anRGClass [
 
 { #category : #utilities }
 RGTest >> checkImplicitSingleClassEnvironmentOf: anRGClass [
-	
+
 	self deny: (anRGClass isRingResolved).
 
 	"we have SomeClass, SomeClass class, SomeClass superclass, SomeClass superclass class"
 	self assert: anRGClass environment ask behaviors size equals: 4.
 
-	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass 
-	and SomeClass superclass class"	
+	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass
+	and SomeClass superclass class"
 	self assert: anRGClass environment ask packages size equals: 2.
 
-	self checkHierarchyConsistencyOf: anRGClass.
+	self checkHierarchyConsistencyOf: anRGClass
 ]
 
 { #category : #utilities }

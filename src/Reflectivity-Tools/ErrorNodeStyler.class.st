@@ -16,7 +16,9 @@ ErrorNodeStyler >> iconFor: aNode [
 
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
-	^ aNode errorMessage
+
+	self flag: 'What if more than one error?'.
+	^ aNode errorNotices first messageText
 ]
 
 { #category : #hooks }
@@ -27,7 +29,7 @@ ErrorNodeStyler >> segmentMorphClass [
 
 { #category : #visiting }
 ErrorNodeStyler >> shouldStyleNode: aNode [
-	^ aNode isParseError
+	^ aNode isError
 ]
 
 { #category : #visiting }
@@ -46,11 +48,5 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 		r borderColor: self borderColor ].
 	textModel announce: conf.
 
-	anEnglobingNode content do: [ :each | self visitNode: each ]
-]
-
-{ #category : #visiting }
-ErrorNodeStyler >> visitUnreachableStatement: anUnreachableStatement [
-	"self overrides visitEnglobingErrorNode:"
-	^ super visitEnglobingErrorNode: anUnreachableStatement
+	anEnglobingNode contents do: [ :each | self visitNode: each ]
 ]

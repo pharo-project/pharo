@@ -50,10 +50,9 @@ RBPatternParser >> parsePatternBlock: aClass [
 	self
 		parseStatements: false
 		into: node body
-		until: [ currentToken isSpecial
-			and: [ currentToken value = $} ] ].
+		untilAnyCloserOf: '}'.
 
-	(currentToken isSpecial and: [currentToken value = $}])
+	(currentToken isSpecial: $})
 		ifFalse: [ self addParserError: '''}'' expected' to: node body.
 			^ node ].
 	node right: currentToken start.
@@ -116,7 +115,7 @@ RBPatternParser >> parseUnaryMessage [
 	currentToken isIdentifier]
 			whileTrue: [
 				currentToken isKeywordPattern
-					ifTrue: [ self parserError: ' incomplete keyword pattern ' ].
+					ifTrue: [ self parseErrorNode: ' incomplete keyword pattern ' ].
 				node := self parseUnaryMessageWith: node].
 	self addCommentsTo: node.
 	^node

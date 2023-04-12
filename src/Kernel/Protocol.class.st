@@ -4,18 +4,13 @@ It's composed of a name and a set of method selectors
 "
 Class {
 	#name : #Protocol,
-	#superclass : #AbstractProtocol,
+	#superclass : #Object,
 	#instVars : [
 		'name',
 		'methodSelectors'
 	],
 	#category : #'Kernel-Protocols'
 }
-
-{ #category : #'instance creation' }
-Protocol class >> empty [
-	 ^ self name: #''
-]
 
 { #category : #'instance creation' }
 Protocol class >> name: nm [
@@ -33,6 +28,11 @@ Protocol class >> name: nm methodSelectors: methods [
 		yourself
 ]
 
+{ #category : #accessing }
+Protocol class >> unclassified [
+	^ #'as yet unclassified'
+]
+
 { #category : #'adding-removing' }
 Protocol >> addAllMethodsFrom: aProtocol [
 	aProtocol methodSelectors do: [ :each | self addMethodSelector: each ]
@@ -43,13 +43,40 @@ Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
 ]
 
+{ #category : #testing }
+Protocol >> canBeRenamed [
+	^ true
+]
+
+{ #category : #testing }
+Protocol >> includesSelector: selector [
+
+	^ self methodSelectors includes: selector
+]
+
 { #category : #initialization }
 Protocol >> initialize [
 
 	super initialize.
 
 	methodSelectors := IdentitySet new.
-	name := self class defaultName
+	name := self class unclassified
+]
+
+{ #category : #testing }
+Protocol >> isEmpty [
+	^ self methodSelectors isEmpty
+]
+
+{ #category : #testing }
+Protocol >> isExtensionProtocol [
+	^ self name first = $*
+]
+
+{ #category : #testing }
+Protocol >> isVirtualProtocol [
+	"A virtual protocol is a calculated one (it does not have any methods by it self)"
+	^ false
 ]
 
 { #category : #accessing }
@@ -71,6 +98,17 @@ Protocol >> name [
 { #category : #accessing }
 Protocol >> name: anObject [
 	name := anObject asSymbol
+]
+
+{ #category : #printing }
+Protocol >> printOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' (';
+		nextPutAll: self name;
+		nextPutAll: ') - ';
+		print: self methodSelectors size;
+		nextPutAll: ' selector(s)'
 ]
 
 { #category : #'adding-removing' }

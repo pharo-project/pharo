@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 ZnResourceMetaUtilsTest >> testDecodePercent [
 	self assert: (ZnResourceMetaUtils decodePercent: 'foo%20bar') equals: 'foo bar'.
-	self should: [ ZnResourceMetaUtils decodePercent: 'foo%%bar' ] raise: ZnCharacterEncodingError 
+	self should: [ ZnResourceMetaUtils decodePercent: 'foo%%bar' ] raise: ZnCharacterEncodingError
 ]
 
 { #category : #testing }
@@ -25,8 +25,8 @@ ZnResourceMetaUtilsTest >> testQueryWriting [
 	(fields := Dictionary new)
 		at: 'foo' put: '100';
 		at: 'bar' put: 'a b'.
-	string := String streamContents: [ :stream | 
+	string := String streamContents: [ :stream |
 		ZnResourceMetaUtils writeQueryFields: fields on: stream ].
 	self assert: (string includesSubstring: 'foo=1').
-	self assert: (string includesSubstring: 'bar=a%20b').
+	self assert: (string includesSubstring: 'bar=a%20b')
 ]

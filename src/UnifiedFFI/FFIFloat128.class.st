@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIFloat128 class >> externalType [ 
+FFIFloat128 class >> externalType [
 	^ self error: '128bits floats are not currently supported!'
 ]
 

@@ -70,7 +70,7 @@ RBProgramNodeVisitor >> visitClassVariableNode: aNode [
 
 { #category : #visiting }
 RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
-	anEnglobingErrorNode content do: [ :each | self visitNode: each ]
+	anEnglobingErrorNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
@@ -218,12 +218,6 @@ RBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
-]
-
-{ #category : #visiting }
-RBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
-
-	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 
 { #category : #visiting }

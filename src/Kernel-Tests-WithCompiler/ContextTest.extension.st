@@ -9,7 +9,7 @@ ContextTest >> testScopeOptimizedBlock [
 
 	method := Smalltalk compiler
 							  class: Object;
-							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext astScope ]'.
+							  compile:  'test true ifTrue: [ ^ thisContext astScope ]'.
 	astScope := method valueWithReceiver: nil arguments: #().
 
 	self assert: astScope class equals: OCOptimizedBlockScope

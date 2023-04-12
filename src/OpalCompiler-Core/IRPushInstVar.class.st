@@ -17,6 +17,12 @@ IRPushInstVar >> canBeQuickReturn [
 	^ true
 ]
 
+{ #category : #testing }
+IRPushInstVar >> isRemovableByPop [
+
+	^ true
+]
+
 { #category : #accessing }
 IRPushInstVar >> quickRetNode [
 	^ IRReturnInstVar new

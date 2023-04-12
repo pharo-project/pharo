@@ -59,7 +59,7 @@ defined temporaries and the actual code, RBAssignmentNode for variable assignmen
 
 This is how the structure  for Numbers #sgn method AST looks:
 
-```
+```st
 RBParser parseMethod:'sign
 	self > 0 ifTrue: [^1].
 	self < 0 ifTrue: [^-1].

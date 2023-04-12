@@ -88,6 +88,37 @@ OpalCompilerTest >> testCompileEmbeddsSource [
 ]
 
 { #category : #tests }
+OpalCompilerTest >> testCompileSource [
+	| source result |
+	source := 'tt ^3+4'.
+
+	"Compiled but uninstalled methods have a #source but no sourcePointer"
+	result := MockForCompilation compiler compile: source.
+	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self deny: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: (result propertyAt: #source) equals: source.
+	self assert: result sourceCodeOrNil equals: source.
+
+	"Installed methods have asourcePointer but no #source"
+	result := MockForCompilation compiler install: source.
+	self assert: result equals: MockForCompilation>>#tt.
+	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: (result propertyAt: #source) equals: nil.
+	self assert: result sourceCodeOrNil equals: source.
+
+	"When uninstalled, they still keep their source pointer"
+	MockForCompilation compiler install: 'tt ^42'.
+	self deny: result equals: MockForCompilation>>#tt.
+	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: (result propertyAt: #source) equals: nil.
+	self assert: result sourceCodeOrNil equals: source.
+	
+	(MockForCompilation>>#tt) removeFromSystem
+]
+
+{ #category : #tests }
 OpalCompilerTest >> testCompileWithNilClass [
 	"we shoud use UndefinedObject if the class is nil"
 	| method |
@@ -146,4 +177,69 @@ OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 		bindings: {(#MyVar -> 3)} asDictionary;
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testInstall [
+
+	| method |
+	"Cleanup"
+	(MockForCompilation includesSelector: #foo) ifTrue: [
+		MockForCompilation removeSelector: #foo ].
+	"Precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	method := MockForCompilation compiler
+		          source: 'foo ^42';
+		          changeStamp: 'JP 4/01/2023 01:23';
+		          protocol: 'hitching';
+		          install.
+
+	self assert: method equals: MockForCompilation >> #foo.
+	self assert: MockForCompilation new foo equals: 42.
+
+	"Cleanup"
+	method removeFromSystem.
+	self deny: (MockForCompilation includesSelector: #foo)
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testInstallException [
+
+	| method message |
+	"Precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	[ method := MockForCompilation compiler install: 'foo ^¿' ]
+		on: CodeError
+		do: [ :error | message := error messageText , ' :(' ].
+
+	self deny: (MockForCompilation includesSelector: #foo).
+	self assert: method isNil.
+	self assert: message equals: 'Unknown character :('
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testInstallRequestor [
+
+	| method requestor |
+	"precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	requestor := OCMockRequestor new.
+
+	[
+	method := MockForCompilation compiler
+		          source: 'foo ^¿';
+		          requestor: requestor;
+		          failBlock: [  ];
+		          changeStamp: 'JP 3/24/2023 18:39';
+		          protocol: 'hitching';
+		          install ]
+		on: CodeError
+		do: [  ].
+
+	self deny: (MockForCompilation includesSelector: #foo).
+	self assert: method isNil.
+	self assert: requestor notifyList first first equals: 'Unknown character ->'
 ]

@@ -61,7 +61,6 @@ ObservableSlotTest >> testIsObservableSlot [
 ObservableSlotTest >> testObservableSlotAssignReturnsValue [
 	"When assigning to a Observable Slot, the return value should be the value"
 	self assert: (point xReturn: 299) equals: 299
-
 ]
 
 { #category : #tests }

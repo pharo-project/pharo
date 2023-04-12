@@ -25,9 +25,9 @@ TKTWatchDog class >> onDuty [
 
 { #category : #'class initialization' }
 TKTWatchDog class >> reset [
-	
+
 	onDuty ifNotNil: [ onDuty stop ].
-	onDuty := nil.
+	onDuty := nil
 ]
 
 { #category : #initialization }
@@ -76,7 +76,7 @@ TKTWatchDog >> pharoProcess [
 TKTWatchDog >> privateStart [
 	stopRequested := false.
 	stopCallbacks := Set new.
-	" A worker normally needs to be watched. But the watchdog process cannot be watched, because the watchdog do not yet exists. 
+	" A worker normally needs to be watched. But the watchdog process cannot be watched, because the watchdog do not yet exists.
 	 This is a hacky workaround. Think a better solution.
 	"
 	worker := TKTWorker basicNew.
@@ -121,8 +121,8 @@ TKTWatchDog >> watch: aValue [
 { #category : #initialization }
 TKTWatchDog >> watchDog: aParameterPool [
 	[ aParameterPool ensureIsWorking ]
-		on: UnhandledError 
-		do: [ :err | 
+		on: UnhandledError
+		do: [ :err |
 			self traceCr: err printString.
 			self
 				log:
@@ -134,6 +134,6 @@ TKTWatchDog >> watchDog: aParameterPool [
 
 { #category : #initialization }
 TKTWatchDog >> watchedValues [
-	
+
 	^  values
 ]

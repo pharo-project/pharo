@@ -52,14 +52,14 @@ ZnStaticFileServerDelegate >> actualFilenameFor: uri [
 	subDir := subElements allButLast inject: self directory into: [ :parent :sub | | file |
 		(file := parent / sub) exists
 			ifTrue: [ file ]
-			ifFalse: [ ^ nil ] ]. 
+			ifFalse: [ ^ nil ] ].
 	subElements isEmpty
-		ifTrue: [ entry := subDir entry ] 
+		ifTrue: [ entry := subDir entry ]
 		ifFalse: [ | file |
-			 (file := subDir / subElements last) exists 
-				ifTrue: [ entry := file entry ] 
+			 (file := subDir / subElements last) exists
+				ifTrue: [ entry := file entry ]
 				ifFalse: [ ^ nil ] ].
-	^ entry isDirectory 
+	^ entry isDirectory
 		ifTrue: [ self indexFileIn: entry reference ]
 		ifFalse: [ entry reference fullName ]
 ]
@@ -67,8 +67,8 @@ ZnStaticFileServerDelegate >> actualFilenameFor: uri [
 { #category : #accessing }
 ZnStaticFileServerDelegate >> directory [
 	"The directory whose files I am serving"
-	
-	^ directory 
+
+	^ directory
 ]
 
 { #category : #accessing }
@@ -81,8 +81,8 @@ ZnStaticFileServerDelegate >> directory: fileDirectory [
 { #category : #private }
 ZnStaticFileServerDelegate >> directoryRedirectFor: uri [
 	| directoryUri |
-	directoryUri := uri copy addPathSegment: $/.  
-	^ ZnResponse redirect: directoryUri 
+	directoryUri := uri copy addPathSegment: $/.
+	^ ZnResponse redirect: directoryUri
 ]
 
 { #category : #private }
@@ -101,7 +101,7 @@ ZnStaticFileServerDelegate >> handleRequest: request [
 		ifFalse: [ ^ ZnResponse methodNotAllowed: request ].
 	actualFilename := self actualFilenameFor: request uri.
 	^ actualFilename notNil
-		ifTrue: [ 
+		ifTrue: [
 			(self redirectNeededFor: request uri actualFilename: actualFilename)
 				ifTrue: [ self directoryRedirectFor: request uri ]
 				ifFalse: [ self responseForFile: actualFilename fromRequest: request ] ]
@@ -112,10 +112,9 @@ ZnStaticFileServerDelegate >> handleRequest: request [
 ZnStaticFileServerDelegate >> indexFileIn: fileDirectory [
 	#( 'index.html' 'index.htm' ) do: [ :each | | file |
 			(file := fileDirectory / each) exists
-				ifTrue: [ 
+				ifTrue: [
 					^ file fullName ] ].
 	^ nil
-
 ]
 
 { #category : #private }
@@ -144,14 +143,14 @@ ZnStaticFileServerDelegate >> mimeTypeExpirations: aDictionary [
 { #category : #accessing }
 ZnStaticFileServerDelegate >> prefix [
 	"The path prefix collection under which I am serving files"
-	
+
 	^ prefix ifNil: [ prefix := #() ]
 ]
 
 { #category : #accessing }
 ZnStaticFileServerDelegate >> prefix: orderedCollection [
 	"Set the path prefix under which I should be serving files to orderedCollection containing path elements"
-	
+
 	prefix := orderedCollection
 ]
 
@@ -165,7 +164,7 @@ ZnStaticFileServerDelegate >> prefixFromString: string [
 
 { #category : #private }
 ZnStaticFileServerDelegate >> redirectNeededFor: uri actualFilename: actualFilename [
-	uri isDirectoryPath ifTrue: [ ^ false ].  
+	uri isDirectoryPath ifTrue: [ ^ false ].
 	^ (actualFilename endsWith: uri lastPathSegment) not
 ]
 
@@ -181,14 +180,14 @@ ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 		at: 'If-Modified-Since'
 		ifPresent: [ modified := time > (ZnUtils parseHttpDate: (aRequest headers at: 'If-Modified-Since')) ].
 	modified
-		ifTrue: [ 
+		ifTrue: [
 			mimeType := ZnMimeType forFilenameExtension: file extension.
 			fileStream := file binaryReadStream.
-			(entity := ZnStreamingEntity type: mimeType length: size) 
+			(entity := ZnStreamingEntity type: mimeType length: size)
 				stream: fileStream.
-			(response := ZnResponse ok: entity) 
+			(response := ZnResponse ok: entity)
 				headers at: 'Modification-Date' put: (ZnUtils httpDate: time).
-			(self maxAgeFor: mimeType) 
+			(self maxAgeFor: mimeType)
 				ifNotNil: [ :maxAge | response headers at: 'Cache-Control' put: maxAge ].
 			(self expirationDateFor: mimeType)
 				ifNotNil: [ :expirationDate | response headers at: 'Expires' put: expirationDate ] ]
@@ -199,6 +198,6 @@ ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 { #category : #public }
 ZnStaticFileServerDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
-	
+
 	^ self handleRequest: request
 ]

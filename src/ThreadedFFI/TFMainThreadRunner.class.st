@@ -22,25 +22,25 @@ TFMainThreadRunner class >> uniqueInstance [
 
 { #category : #private }
 TFMainThreadRunner >> doInitialize [
-	
+
 	super doInitialize.
 	MainThreadHandle := self workerAddress.
 	handle := MainThreadHandle
 ]
 
 { #category : #executing }
-TFMainThreadRunner >> executeFunction: aTFExternalFunction withArguments: arguments usingSemaphore: anInteger [ 
+TFMainThreadRunner >> executeFunction: aTFExternalFunction withArguments: arguments usingSemaphore: anInteger [
 	<primitive: 'primitiveWorkerCallout' error: ec>
-	
-	self primitiveFailed 
+
+	self primitiveFailed
 ]
 
 { #category : #private }
-TFMainThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder withReturnHolder: aReturnHolder usingSemaphore: anInteger [ 
-	
+TFMainThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder withReturnHolder: aReturnHolder usingSemaphore: anInteger [
+
 	<primitive: 'primitivePerformWorkerCall'>
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #executing }

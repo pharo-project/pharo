@@ -25,10 +25,10 @@ TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock [
 ]
 
 { #category : #asserting }
-TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [ 
+TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [
 	| exception |
 	aBooleanOrBlock value
-		ifFalse: 
+		ifFalse:
 			[|aString|
 			aString := aStringOrBlock value.
 			exception := resumableBoolean
@@ -61,19 +61,29 @@ TAssertable >> assertCollection: actual equals: expected [
 
 { #category : #asserting }
 TAssertable >> assertCollection: actual hasSameElements: expected [
-	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
+	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements. Occurences of elements mater."
+
 	| missingElements additionalElements |
-	
+	"For performance reasons we check first that they are not equals because difference computation takes long on collections that are not really small."
+	actual = expected ifTrue: [ ^ self ].
+
+	"The fast way to know if they have the same elements is to make them a bag. In case they don't have the same elements, then we compute the differences to print a nice little log to the user so that he knows the added and removed elements :)"
+	actual asBag = expected asBag ifTrue: [ ^ self ].
+
 	additionalElements := actual difference: expected.
 	missingElements := expected difference: (actual intersection: expected).
-	self 
-		assert: (additionalElements isEmpty and: [ missingElements isEmpty ])
-		description: (String streamContents: 
-			[:stream |
-			stream
-				nextPutAll: 'Given Collections do not match!'; lf;
-				tab; nextPutAll: 'additions : '; print: additionalElements asArray; lf;
-				tab; nextPutAll: 'missing: '; print: missingElements asArray; lf ])
+	self assert: (additionalElements isEmpty and: [ missingElements isEmpty ]) description: (String streamContents: [ :stream |
+			 stream
+				 nextPutAll: 'Given Collections do not match!';
+				 lf;
+				 tab;
+				 nextPutAll: 'additions : ';
+				 print: additionalElements asArray;
+				 lf;
+				 tab;
+				 nextPutAll: 'missing: ';
+				 print: missingElements asArray;
+				 lf ])
 ]
 
 { #category : #asserting }
@@ -90,12 +100,12 @@ TAssertable >> classForTestResult [
 { #category : #private }
 TAssertable >> comparingCollectionBetween: left and: right [
 	| additionalLeft additionalRight sortBlock|
-	
+
 	"use a very slow sort block"
 	sortBlock := [ :a :b | a asString <= b asString ].
 	additionalLeft := (left difference: right) sorted: sortBlock.
-	additionalRight := (right difference: left) sorted: sortBlock. 
-	
+	additionalRight := (right difference: left) sorted: sortBlock.
+
 	^ String streamContents: [:stream |
 		stream
 			nextPutAll: 'Given Collections do not match. Got '; lf;
@@ -103,22 +113,22 @@ TAssertable >> comparingCollectionBetween: left and: right [
 			nextPutAll: ' instead of ';
 			tab; nextPutAll: ' right :='; print: left; nextPut: $.; lf.
 		left size = right size
-			ifFalse: [ 
-				stream 
-					nextPutAll: 'Collection size does not match: left='; 
+			ifFalse: [
+				stream
+					nextPutAll: 'Collection size does not match: left=';
 					print: left size;
 					nextPutAll: ' vs. right=';
 					print: right size; lf ].
 		additionalLeft isEmpty
-			ifFalse: [ 
-				stream 
+			ifFalse: [
+				stream
 					nextPutAll: 'Got ';
 					print: additionalLeft size;
 					nextPutAll: ' additional element(s) in the left collection: ';
 					tab; print: additionalLeft  ].
 		additionalRight isEmpty
-			ifFalse: [ 
-				stream 
+			ifFalse: [
+				stream
 					nextPutAll: 'Got ';
 					print: additionalRight size;
 					nextPutAll: ' additional element(s) in the right collection: ';
@@ -160,7 +170,7 @@ TAssertable >> deny: aBooleanOrBlock description: aString [
 ]
 
 { #category : #asserting }
-TAssertable >> deny: aBooleanOrBlock description: aString resumable: resumableBoolean [ 
+TAssertable >> deny: aBooleanOrBlock description: aString resumable: resumableBoolean [
 	self
 		assert: aBooleanOrBlock value not
 		description: aString
@@ -204,7 +214,7 @@ TAssertable >> denyEmpty: aCollection [
 ]
 
 { #category : #asserting }
-TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent [ 
+TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: true]
@@ -228,9 +238,9 @@ TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescripti
 TAssertable >> executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock [
 
 	^[aBlock value.
- 	false] 
+ 	false]
 		on: anException
-		do: [:exception | 
+		do: [:exception |
 			anotherBlock value: exception.
 			exception return: true]
 ]
@@ -263,8 +273,8 @@ TAssertable >> should: aBlock notTakeMoreThan: aDuration [
     to run we report a test failure. "
 
 	^ aBlock valueWithin: aDuration onTimeout: [
-		self 
-			assert: false 
+		self
+			assert: false
 			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
 	]
 ]
@@ -273,40 +283,40 @@ TAssertable >> should: aBlock notTakeMoreThan: aDuration [
 TAssertable >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
     "For compatibility with other Smalltalks"
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger).
+   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
 ]
 
 { #category : #asserting }
-TAssertable >> should: aBlock raise: anExceptionalEvent [ 
+TAssertable >> should: aBlock raise: anExceptionalEvent [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 ]
 
 { #category : #asserting }
-TAssertable >> should: aBlock raise: anExceptionalEvent description: aString [ 
+TAssertable >> should: aBlock raise: anExceptionalEvent description: aString [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 		description: aString
 ]
 
 { #category : #asserting }
-TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
+TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring)
 		description: aString
 ]
 
 { #category : #asserting }
-TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [ 
+TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring)
 		description: aString
 ]
 
 { #category : #asserting }
-TAssertable >> should: aBlock raise: anException withExceptionDo: anotherBlock [ 
+TAssertable >> should: aBlock raise: anException withExceptionDo: anotherBlock [
 
 	^self assert: (self executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock)
 ]
 
 { #category : #asserting }
-TAssertable >> shouldFix: aBlock [ 
+TAssertable >> shouldFix: aBlock [
 	"Run the block expecting an Exception. Throw an assertion failure if the block does NOT throw an exception."
 	^self should: aBlock raise: Exception
 ]
@@ -322,31 +332,31 @@ TAssertable >> shouldnt: aBlock description: aString [
 ]
 
 { #category : #asserting }
-TAssertable >> shouldnt: aBlock raise: anExceptionalEvent [  
-	 
+TAssertable >> shouldnt: aBlock raise: anExceptionalEvent [
+
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 ]
 
 { #category : #asserting }
-TAssertable >> shouldnt: aBlock raise: anExceptionalEvent description: aString [  
- 
+TAssertable >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
+
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 		description: aString
 ]
 
 { #category : #asserting }
-TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [ 
-	 
+TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
+
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring) not
 		description: aString
 ]
 
 { #category : #asserting }
-TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [  
-	 
-	^self 
+TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
+
+	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring) not
 		description: aString
 ]

@@ -26,7 +26,9 @@ OCASTTranslatorTest >> compilationContext [
 	context := CompilationContext new
 		encoderClass: self encoder;
 		bindings: globals;
-		yourself.
+		parseOptions: { #'+' . optimization };
+		yourself.	
+	
 	^ context
 ]
 
@@ -41,7 +43,9 @@ OCASTTranslatorTest >> compileSource: source [
 	| ir ast |
 	ast := RBParser parseMethod: source.
 	ast compilationContext: self compilationContext.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ast doSemanticAnalysisIn: OCOpalExamples.
+	ast checkFaulty: nil.
+	ir := ast ir.
 	^ 	method := ir compiledMethod
 ]
 

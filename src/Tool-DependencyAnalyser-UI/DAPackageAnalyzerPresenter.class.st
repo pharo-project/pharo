@@ -50,12 +50,12 @@ DAPackageAnalyzerPresenter >> defaultLabel [
 ]
 
 { #category : #layout }
-DAPackageAnalyzerPresenter >> defaultLayout [ 
+DAPackageAnalyzerPresenter >> defaultLayout [
 	^ SpPanedLayout newHorizontal
 		add: self model;
 		add: browserWrapper;
 		positionOfSlider: 0.3;
-		yourself 
+		yourself
 ]
 
 { #category : #'open/close' }
@@ -75,8 +75,8 @@ DAPackageAnalyzerPresenter >> initialExtent [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerPresenter >> initializePresenters [ 
+DAPackageAnalyzerPresenter >> initializePresenters [
 
-	browserWrapper := self newMorph 
-		morph: self browserWindow.
+	browserWrapper := self newMorph
+		morph: self browserWindow
 ]

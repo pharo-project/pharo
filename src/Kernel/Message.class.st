@@ -99,13 +99,12 @@ Message >> numArgs [
 { #category : #printing }
 Message >> printOn: stream [
 
-	args isEmpty ifTrue: [^ stream nextPutAll: selector].
-	args with: selector keywords do: [:arg :word |
+	args ifEmpty: [ ^ stream nextPutAll: selector ].
+	args with: selector keywords do: [ :arg :word |
 		stream nextPutAll: word.
 		stream space.
 		arg printOn: stream.
-		stream space.
-	].
+		stream space ].
 	stream skip: -1
 ]
 

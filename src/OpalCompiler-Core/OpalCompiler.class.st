@@ -32,7 +32,9 @@ Class {
 		'ast',
 		'source',
 		'compilationContext',
-		'compilationContextClass'
+		'compilationContextClass',
+		'changeStamp',
+		'protocol'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -194,11 +196,6 @@ OpalCompiler >> addPlugin: aClass [
 	compilationContext addASTTransformationPlugin: aClass
 ]
 
-{ #category : #private }
-OpalCompiler >> allowParseErrorsNonInteractive [
-	^self compilationContext optionParseErrorsNonInteractiveOnly and: [ self isInteractive not ]
-]
-
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
@@ -221,6 +218,74 @@ OpalCompiler >> callPlugins [
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
 	plugins do: [ :each | ast := each transform: ast ]
+]
+
+{ #category : #accessing }
+OpalCompiler >> changeStamp: aString [ 
+	changeStamp := aString
+]
+
+{ #category : #private }
+OpalCompiler >> checkNotice: aNotice [
+	"This method handles all the logic of error handling.
+	
+	Error handing in the compiler is only performed at one place, after the parsing/semantic analysis/other parse plugins.
+	Each RBNotice in the AST is then checked with this method.
+
+	There is only three outcomes:
+	* If this method returns true (OK), then the work of the compiler can continue.
+	  Next notice is then processed.
+	  Or, if this that was the last notice, compilation and cie can be performed.
+	* If this method returns false (not OK), then the compilation is cancelled.
+	  The failBlock will be invoked.
+	* If this method returns nil (stop checking), then skip the rest of the notice checks.
+	  This one is used in case of reparation, where a new (checked) AST is produced.
+
+	Errors that may happen later in the backend are consireded internal errors and should not occur (bugs).
+
+	This method is a little long because it handles the requestor (quirks) mode.
+	"
+
+	aNotice isWarning ifTrue: [ ^ true ].
+	(aNotice isUndeclaredNotice and: [ self permitUndeclared ]) ifTrue: [
+		OCUndeclaredVariableWarning new
+			notice: aNotice;
+			signal.
+		^ true ].
+
+	self compilationContext requestor ifNotNil: [ :requestor |
+		"A requestor is available. We are in quirks mode and are expected to do UI things."
+		"Reparation menu in quirks mode:
+		* require a requestor (because quirks mode, and also some reparations expect a requestor)
+		* require interactive mode (because GUI)
+		* require method definition becase some reparation assume it's a method body"
+		compilationContext interactive ifTrue: [
+			aNotice reparator ifNotNil: [ :reparator |
+				| res |
+				res := reparator
+					requestor: requestor;
+					openMenu.
+				res ifNil: [ ^ true "reparation unneded, let AST as is" ].
+				res ifFalse: [ ^ false "operation cancelled, fail" ].
+				self parse: requestor text. "some reparation was done, reparse"
+				^ nil ] ].
+
+		"Quirks mode: otherwise, push the error message to the requestor"
+		requestor
+			notify: aNotice messageText , ' ->'
+			at: aNotice position
+			in: aNotice node source.
+		
+		"Quirks mode: Then leave"
+		^ false ].
+
+	"If a failBlock is provided in non-requestor mode,
+	we honor it and do not signal exceptions"
+	self compilationContext failBlock ifNotNil: [ ^ false ].
+
+	aNotice signalError.
+
+	^ true "Error was resumed, so we consider it's OK to continue"
 ]
 
 { #category : #accessing }
@@ -250,18 +315,21 @@ OpalCompiler >> compilationContextClass: aClass [
 
 { #category : #'public access' }
 OpalCompiler >> compile [
-	^[
-		self parse.
-		self semanticScope compileMethodFromASTBy: self
-	] on: SyntaxErrorNotification do: [ :exception |
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor
-							notify: exception errorMessage , ' ->'
-							at: exception location
-							in: exception errorCode.
-                    ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ]]
+
+	| result method |
+	
+	"Policy: compiling is non-faulty by default"
+	self permitFaulty ifNil: [ self permitFaulty: false ].
+
+	result := self parse.
+	ast ifNil: [ ^ result ]. "some failBlock"
+
+	self callPlugins.
+	ast scope registerVariables.
+	method := ast generateMethod.
+	method propertyAt: #source put: source.
+	compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	^ method
 ]
 
 { #category : #'public access' }
@@ -270,20 +338,6 @@ OpalCompiler >> compile: textOrString [
 	^self
 		source: textOrString;
 		compile
-]
-
-{ #category : #private }
-OpalCompiler >> compileDoItFromAST [
-	| method |
-	method := self compileMethodFromAST.
-	method propertyAt: #ast put: ast.
-	^method
-]
-
-{ #category : #private }
-OpalCompiler >> compileMethodFromAST [
-	self callPlugins.
-	^ast generateMethod
 ]
 
 { #category : #accessing }
@@ -305,18 +359,7 @@ OpalCompiler >> context: aContext [
 		The nil context here means to do nothing in such scenarious. So no need to touch the scope here"
 		^self ].
 
-	self semanticScope: (self semanticScope asDoItScopeForContext: aContext)
-]
-
-{ #category : #private }
-OpalCompiler >> createParser [
-
-	| parser |
-	parser := self parserClass new.
-	(self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
-		ifTrue: [ parser beFaulty ].
-	parser	 initializeParserWith: source contents.
-	^parser
+	self semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext)
 ]
 
 { #category : #'public access' }
@@ -331,9 +374,7 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^[ast doSemanticAnalysis]
-		on: OCSemanticError
-		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
+	^ ast doSemanticAnalysis
 ]
 
 { #category : #plugins }
@@ -358,10 +399,9 @@ OpalCompiler >> evaluate [
 
 	| value doItMethod |
 	self noPattern: true.
-	self getSourceFromRequestorSelection.
 	doItMethod := self compile.
-	doItMethod ifNotNil: [
-			value := self semanticScope evaluateDoIt: doItMethod ].
+	ast ifNil: [ ^ doItMethod ].
+	value := self semanticScope evaluateDoIt: doItMethod.
 	self logDoIt.
 	^ value
 ]
@@ -392,25 +432,45 @@ OpalCompiler >> format: textOrString [
 		format
 ]
 
-{ #category : #private }
-OpalCompiler >> getSourceFromRequestorSelection [
-    | selection |
-    "if the requestor can provide a selection, we use that as the source"
-     (self compilationContext requestor respondsTo: #selection) ifFalse: [ ^self ].
+{ #category : #actions }
+OpalCompiler >> install [
+	"Compile and install a method in a class"
 
-    selection := self compilationContext requestor selection .
-    selection isEmptyOrNil ifTrue: [ ^self ].
-    self source: selection asString
+	| class method logSource |
+	class := self semanticScope targetClass.
+	self assert: class isNotNil.
+
+	method := self compile.
+	method ifNil: [ ^ method ].
+
+	protocol := class ensureProtocol: protocol.
+	changeStamp ifNil: [ changeStamp := Author changeStamp ].
+	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
+
+	logSource ifTrue: [
+		class
+			logMethodSource: source
+			forMethod: method
+			inProtocol: protocol
+			withStamp: changeStamp ].
+
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+
+	class instanceSide noteCompilationOf: method meta: class isClassSide.
+
+	^ method
 ]
 
-{ #category : #testing }
-OpalCompiler >> isInteractive [
-	^ compilationContext interactive
+{ #category : #actions }
+OpalCompiler >> install: aSource [
+
+	self source: aSource.
+	^ self install
 ]
 
 { #category : #private }
 OpalCompiler >> logDoIt [
-	self compilationContext logDoItEvaluation: source contents
+	self compilationContext logDoItEvaluation: source
 ]
 
 { #category : #accessing }
@@ -430,17 +490,30 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	| parser |
-	[
-		parser := self createParser.
-		ast := self semanticScope parseASTBy: parser.
 
-		ast methodNode compilationContext: self compilationContext.
-		self callParsePlugins.
-		self doSemanticAnalysis ]
-	on: ReparseAfterSourceEditing do: [:notification |
-			self source: notification newSource.
-			notification retry ].
+	| parser |
+	"Policy: simple parsing is faulty by default"
+	self permitFaulty ifNil: [ self permitFaulty: true ].
+	"Compatible policy: undeclared if failBlock present"
+	self permitUndeclared ifNil: [ self permitUndeclared: false ].
+
+	parser := self parserClass new.
+	parser initializeParserWith: source.
+	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
+
+	ast methodNode compilationContext: self compilationContext.
+	self callParsePlugins.
+	self doSemanticAnalysis.
+
+	self permitFaulty ifFalse: [
+		ast allNotices sorted do: [ :n |
+			| check |
+			check := self checkNotice: n.
+			check ifNil: [ ^ ast ].
+			check ifFalse: [
+				ast := nil.
+				^ self compilationContext failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
+				] ] ].
 
 	^ ast
 ]
@@ -470,14 +543,43 @@ OpalCompiler >> parserClass [
 	^self compilationContext parserClass
 ]
 
+{ #category : #'public access' }
+OpalCompiler >> permitFaulty [
+
+	^ self compilationContext permitFaulty
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitFaulty: aBoolean [
+
+	self compilationContext permitFaulty: aBoolean
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared [
+
+	^ self compilationContext permitUndeclared
+]
+
+{ #category : #'public access' }
+OpalCompiler >> permitUndeclared: aBoolean [
+
+	self compilationContext permitUndeclared: aBoolean
+]
+
 { #category : #accessing }
 OpalCompiler >> productionEnvironment: anObject [
 	compilationContext productionEnvironment: anObject
 ]
 
 { #category : #accessing }
+OpalCompiler >> protocol: aProtocol [ 
+	protocol := aProtocol
+]
+
+{ #category : #accessing }
 OpalCompiler >> receiver: anObject [
-	self semanticScope: (self semanticScope asDoItScopeForReceiver: anObject)
+	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
 ]
 
 { #category : #accessing }
@@ -503,5 +605,7 @@ OpalCompiler >> semanticScope: anObject [
 
 { #category : #accessing }
 OpalCompiler >> source: aString [
-	source := aString readStream
+
+	"source should be a string, but call contents for old clients that send streams"
+	source := aString contents
 ]

@@ -139,7 +139,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 		ifTrue: [
 			ClassDefinitionPrinter showFluidClassDefinition: true.
 			^ self
-				  defineNewFluidClassOrTraitFrom: newClassDefinitionString
+				  defineNewClassFrom: newClassDefinitionString
 				  notifying: aController
 				  startingFrom: oldClass ]
 		ifFalse: [
@@ -186,46 +186,22 @@ ClySystemEnvironment >> defaultClassCompiler [
 { #category : #compiling }
 ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
 
-	"Precondition: newClassDefinitionString is not a fluid class"
+	"Note: newClassDefinitionString can be a fluid class of a standars one"
 
 	| newClass |
-	[
+	"On parser & semantic errors (including undeclared because we are in the legacy scripting interactive mode),
+	there is UI notification.
+	On execution, some methods might be recompiled and cause issues:
+	* Warnings (undeclared/shadowed) are sillently passed, but should be fixed by the user later.
+	* Errors are unlikely (method should be already broken), but cause (resumable) syntax error for now."
 	newClass := (self classCompilerFor: oldClass)
 		            source: newClassDefinitionString;
 		            requestor: aController;
 		            failBlock: [ ^ nil ];
 		            logged: true;
-		            evaluate ]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex | "we are only interested in class definitions"
-			ex compilationContext noPattern ifFalse: [ ex pass ].
-			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
-			self inform: 'Undeclared Variable in Class Definition'.
-			^ nil ].
-
-	^ newClass isBehavior
-		  ifTrue: [ newClass ]
-		  ifFalse: [ nil ]
-]
-
-{ #category : #compiling }
-ClySystemEnvironment >> defineNewFluidClassOrTraitFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
-
-	"Precondition: newClassDefinitionString is a fluid class or trait"
-
-	| newClass |
-	[
-	newClass := (self classCompilerFor: oldClass)
-		            source: '(' , newClassDefinitionString , ') install';
-		            requestor: aController;
-		            logged: true;
-		            "for now a super ugly patch"evaluate ]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex | "we are only interested in class definitions"
-			ex compilationContext noPattern ifFalse: [ ex pass ].
-			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
-			self inform: 'Undeclared Variable in Class Definition'.
-			^ nil ].
+		            evaluate.
+	"mild ugly hack for fluid classes (and traits)"
+	(newClass isKindOf: FluidClassBuilder) ifTrue: [ newClass := newClass install ].
 
 	^ newClass isBehavior
 		  ifTrue: [ newClass ]

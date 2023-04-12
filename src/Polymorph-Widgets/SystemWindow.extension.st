@@ -6,7 +6,7 @@ SystemWindow >> aboutText [
 
 	^self model
 		ifNil: ['This is a system window without a model' translated]
-		ifNotNil: [self model class instanceSide organization classComment
+		ifNotNil: [self model class instanceSide comment
 					ifEmpty: ['The model of this window has no class comment']
 					ifNotEmpty: [:comment | comment]]
 ]

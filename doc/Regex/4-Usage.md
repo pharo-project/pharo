@@ -10,7 +10,7 @@ the matcher.
 
 A `String` also understands these messages:
 
-```
+```st
 	prefixMatchesRegex: 'regexString'
 	matchesRegexIgnoringCase: 'regexString'
 	prefixMatchesRegexIgnoringCase: 'regexString'
@@ -20,7 +20,7 @@ A `String` also understands these messages:
 receiver is not expected to match the regular expression passed as the
 argument; matching just a prefix of it is enough.  For example:
 
-```
+```st
 	'abcde' matchesRegex: '(a|b)+'		"false"
 	'abcde' prefixMatchesRegex: '(a|b)+'	"true"
 ```
@@ -54,7 +54,7 @@ It is possible to replace all matches of a regular expression with a
 certain string using the `String>>#copyWithRegex:matchesReplacedWith:` message.
 For example:
 
-```
+```st
 	'ab cd ab' copyWithRegex: '(a|b)+' matchesReplacedWith: 'foo'
 ```
 
@@ -65,7 +65,7 @@ expression in the receiver string and answers a copy of the receiver
 with the block results spliced into it in place of the respective
 matches.  For example:
 
-```
+```st
 	'ab cd ab' copyWithRegex: '(a|b)+' matchesTranslatedUsing: [:each | each asUppercase]
 ```
 
@@ -116,7 +116,7 @@ understood by String.
 
 Here are four examples of creating a matcher:
 
-```
+```st
 	hexRecognizer := RxMatcher forString: '16r[0-9A-Fa-f]+'
 	hexRecognizer := RxMatcher forString: '16r[0-9A-Fa-f]+' ignoreCase: false
 	hexRecognizer := '16r[0-9A-Fa-f]+' asRegex
@@ -186,7 +186,7 @@ uses the 'MMM DD, YYYY' date format recognizer example from the
 'Syntax' section to convert a date to a three-element array with year,
 month, and day strings (you can select and evaluate it right here):
 
-```
+```st
 	| matcher |
 	matcher := RxMatcher forString: '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[ ]+(:isDigit::isDigit:?)[ ]*,[ ]*(19|20)(:isDigit::isDigit:)'.
 	(matcher matches: 'Aug 6, 1996')
@@ -205,7 +205,7 @@ The enumeration and replacement protocols exposed in `String`
 are actually implemented by the matcher.  The following messages are
 understood:
 
-```
+```st
 	#matchesIn: aString
 	#matchesIn: aString do: aBlock
 	#matchesIn: aString collect: aBlock

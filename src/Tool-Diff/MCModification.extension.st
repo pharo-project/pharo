@@ -16,7 +16,7 @@ MCModification >> diff [
 MCModification >> diffFromSource [
 	"Answer fromSource of the modification. If a class patch then answer
 	the fromSource with the class-side definition and comment appended."
-	
+
 	^self isClassPatch
 		ifTrue: [self fromSource, String cr, String cr,
 				obsoletion classDefinitionString, String cr, String cr,
@@ -29,9 +29,9 @@ MCModification >> diffFromSource [
 MCModification >> diffToSource [
 	"Answer toSource of the modification. If a class patch then answer
 	the toSource with the class-side definition and comment appended."
-	
+
 	^self isClassPatch
-		ifTrue: [self toSource, String cr, String cr, 
+		ifTrue: [self toSource, String cr, String cr,
 				modification classDefinitionString, String cr, String cr,
 				modification commentStamp, String cr,
 				modification comment]

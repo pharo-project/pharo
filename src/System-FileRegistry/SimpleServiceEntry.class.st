@@ -38,7 +38,7 @@ Class {
 { #category : #'instance creation' }
 SimpleServiceEntry class >> provider: anObject label: aString selector: aSymbol [
 
-	^self provider: anObject label: aString selector: aSymbol description: ''.
+	^self provider: anObject label: aString selector: aSymbol description: ''
 ]
 
 { #category : #'instance creation' }
@@ -68,9 +68,9 @@ SimpleServiceEntry >> buttonLabel [
 ]
 
 { #category : #accessing }
-SimpleServiceEntry >> buttonLabel: aString [ 
-	"Set the receiver's buttonLabel, to be used on a button in a 
-	tool-pane; this is split out so that a more abbreviated wording 
+SimpleServiceEntry >> buttonLabel: aString [
+	"Set the receiver's buttonLabel, to be used on a button in a
+	tool-pane; this is split out so that a more abbreviated wording
 	can be deployed if desired"
 	buttonLabel := aString
 ]
@@ -117,7 +117,7 @@ SimpleServiceEntry >> getArgumentsFrom: aProvider [
 
 { #category : #initialization }
 SimpleServiceEntry >> initialize [
-	
+
 	super initialize.
 	self useLineAfter
 ]
@@ -155,7 +155,7 @@ SimpleServiceEntry >> printOn: aStream [
 	aStream nextPutAll: self class name; nextPutAll: ': ('.
 	self provider notNil
 		ifTrue: [ aStream print: provider ].
-	aStream nextPutAll: ' --- '. 
+	aStream nextPutAll: ' --- '.
 	self selector notNil
 		ifTrue: [ aStream print: selector ].
 	aStream nextPut: $)
@@ -168,7 +168,7 @@ SimpleServiceEntry >> provider [
 ]
 
 { #category : #accessing }
-SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol [ 
+SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol [
 	"basic initialization message"
 	provider := anObject.
 	label := aString.
@@ -178,7 +178,7 @@ SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol [
 ]
 
 { #category : #'performing service' }
-SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol description: anotherString [ 
+SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol description: anotherString [
 	"basic initialization message"
 	self
 		provider: anObject

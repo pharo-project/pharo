@@ -22,29 +22,26 @@ Class {
 DADependenciesHTMLPublisher class >> generateSystemReport [
 
 	<script>
-	
+
 	| report |
-	
+
 	report := DADependencyChecker new computeImageDependencies.
 'dependency-report.html' asFileReference writeStreamDo: [ :stream |
-	 DADependenciesHTMLPublisher 
+	 DADependenciesHTMLPublisher
 		publishReportFrom: report
-		stream: stream ].
-
-	
+		stream: stream ]
 ]
 
 { #category : #publishing }
-DADependenciesHTMLPublisher class >> publishReportFrom: aCGODependencyReport stream: aStream [ 
-	self basicNew 
+DADependenciesHTMLPublisher class >> publishReportFrom: aCGODependencyReport stream: aStream [
+	self basicNew
 		initializeWithReport: aCGODependencyReport stream: aStream;
 		publish
-		
 ]
 
 { #category : #'html utilities' }
 DADependenciesHTMLPublisher >> accordion: id name: name headingContent: heading body: body [
-	stream 
+	stream
 		<< '<div class="panel-group" id="' << id << '" role="tablist" aria-multiselectable="true">'.
 
 	stream << '  <div class="panel panel-default">
@@ -60,13 +57,13 @@ DADependenciesHTMLPublisher >> accordion: id name: name headingContent: heading 
     <div id="collapse' << name << '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading' << name << '">
       <div class="panel-body">
       		'.
-	stream 
+	stream
 		<< body
 		<< '
       </div>
     </div>
   </div>'.
-		
+
 	stream
 		<< '</div>'; lf
 ]
@@ -85,27 +82,24 @@ DADependenciesHTMLPublisher >> dangerLabel: aString [
 DADependenciesHTMLPublisher >> htmlForDependencies: dependencies of: aPackageName [
 	^ String streamContents: [ :str |
 		dependencies
-			do: [ :dependency | str 
+			do: [ :dependency | str
 				<< '<a href="#'
 				<< dependency
 				<< '">'
 				<< (self htmlForDependency: dependency of: aPackageName)
 				<< '</a>' ]
 			separatedBy: [ str space ] ]
-		
-
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> htmlForDependency: dependencyPackageName of: aPackageName [
 	^ 	dependencyPackageName
-
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> htmlForIgnoredDependenciesOf: aPackageName [
 	^ String streamContents: [ :str |
-		(RPackage organizer packageNamed: aPackageName) ignoredDependencies 
+		(RPackage organizer packageNamed: aPackageName) ignoredDependencies
 			do: [ :dependency | str << (self warningLabel: dependency) ]
 			separatedBy: [ str space ] ]
 ]
@@ -113,7 +107,6 @@ DADependenciesHTMLPublisher >> htmlForIgnoredDependenciesOf: aPackageName [
 { #category : #publishing }
 DADependenciesHTMLPublisher >> htmlForPackage: aPackageName [
 	^ 	aPackageName
-
 ]
 
 { #category : #publishing }
@@ -130,15 +123,15 @@ DADependenciesHTMLPublisher >> initializeWithReport: aCGODependencyReport stream
 
 { #category : #'html utilities' }
 DADependenciesHTMLPublisher >> javaScript: scriptFileName [
-	stream 
+	stream
 		<< '<script type="text/javascript" language="javascript" src="'
-		<< scriptFileName 
+		<< scriptFileName
 		<< '"></script>'; lf
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publish [
-	self 
+	self
 		publishHTMLHeader;
 		publishSetup;
 		publishWarnings;
@@ -146,22 +139,22 @@ DADependenciesHTMLPublisher >> publish [
 		publishDependencies;
 		publishDependenciesCaption;
 		publishHTMLFooter.
-	stream close.
+	stream close
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publish: aPackageName dependencies: dependencies dependants: dependants [
 	| dependantLinks |
 	dependantLinks := dependants sorted collect: [ :name | '<a href="#', name , '">' , name , '</a>' ].
-	
-	stream << 
+
+	stream <<
 '						<tr>
 							<td id="' << aPackageName << '">' << (self htmlForPackage: aPackageName) << '</td>
-							<td>' << (self sizeBadgeFor: dependencies) << Character space 
+							<td>' << (self sizeBadgeFor: dependencies) << Character space
 							<< (self htmlForDependencies: dependencies sorted of: aPackageName) << Character space
 							<< (self htmlForIgnoredDependenciesOf: aPackageName) << '</td>
 							<td>' << (self sizeBadgeFor: dependants) << Character space << (Character space join: dependantLinks) << '</td>
-						</tr>'; lf.
+						</tr>'; lf
 ]
 
 { #category : #publishing }
@@ -219,7 +212,7 @@ DADependenciesHTMLPublisher >> publishHTMLHeader [
 	self javaScript: 'https://code.jquery.com/jquery-1.11.3.min.js'.
 	self javaScript: 'https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js'.
 	self javaScript: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'.
-			
+
 	stream << '<script type="text/javascript" class="init">
 $(document).ready(function() {
 	$(''#example'').DataTable( {
@@ -228,13 +221,13 @@ $(document).ready(function() {
 	});
 } );
 	</script>'.
-		
+
 	self stream
 		lf;
 		<< '</head>'; lf;
 		<< '<body>'; lf;
 		<< '<div class="container">'; lf;
-		<< '<h1>Dependency analysis</h1>'; lf.
+		<< '<h1>Dependency analysis</h1>'; lf
 ]
 
 { #category : #publishing }
@@ -249,9 +242,9 @@ DADependenciesHTMLPublisher >> publishSetup [
 	body := String streamContents: [ :str |
 		str
 			<< 'Image version: <span class="label label-primary">';
-			<< self imageVersionString; 
+			<< self imageVersionString;
 			<< '</span></br> Analysis run on ';
-			<< report analysisRunString ; 
+			<< report analysisRunString ;
 			<< '</br>' ].
 	self accordion: 'accordionSetup' name: 'Setup' headingContent: 'Analysis setup' body: body
 ]
@@ -262,14 +255,13 @@ DADependenciesHTMLPublisher >> publishWarnings [
 	body := String streamContents: [ :str |
 		(report warnings sorted: [ :a :b | a package < b package ])
 			do: [ :warning | str << warning messageText << '<br/>' ] ].
-	self 
+	self
 		accordion: 'accordionWarnings'
 		name: 'Warnings'
 		headingContent: 'Warnings ' , (self sizeBadgeFor: report warnings)
-		body: body.		
+		body: body.
 	stream
-		<< '</br>'; lf.
-	
+		<< '</br>'; lf
 ]
 
 { #category : #'html utilities' }
@@ -284,9 +276,9 @@ DADependenciesHTMLPublisher >> stream [
 
 { #category : #'html utilities' }
 DADependenciesHTMLPublisher >> styleSheet: styleSheetUrl [
-	stream 
+	stream
 		<< '<link rel="stylesheet" type="text/css" href="'
-		<< styleSheetUrl 
+		<< styleSheetUrl
 		<< '">'; lf
 ]
 

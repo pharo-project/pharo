@@ -15,7 +15,7 @@ DADependencyCheckerTest >> setUp [
 
 { #category : #tests }
 DADependencyCheckerTest >> testShouldGetDirectDependencies [
-	self 	
+	self
 		assert: (checker dependenciesOf: 'Tool-DependencyAnalyser-Tests-Data')
 		equals: #(#Kernel #'Kernel-BytecodeEncoders')
 ]
@@ -23,13 +23,12 @@ DADependencyCheckerTest >> testShouldGetDirectDependencies [
 { #category : #tests }
 DADependencyCheckerTest >> testShouldGetUnresolvedDependencies [
 
-	| result |	
+	| result |
 	result := (checker unresolvedDependenciesOf: 'Tool-DependencyAnalyser-Tests-Data').
-	self 	
+	self
 		assert: result size
 		equals: 2.
 	self flag: #Torevisit.
 	"I do not like to have a dependency on another tools. It would be better to check against a lib in a lower layer."
-	self assert: ((result at: #collect:as:) includesAll: #(#'NewTools-Spotter' #'Collections-Abstract')).
-	
+	self assert: ((result at: #collect:as:) includesAll: #(#'NewTools-Spotter' #'Collections-Abstract'))
 ]

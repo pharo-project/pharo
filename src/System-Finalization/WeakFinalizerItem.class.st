@@ -50,7 +50,7 @@ WeakFinalizerItem class >> new [
 { #category : #accessing }
 WeakFinalizerItem >> add: newExecutor [
 
-	executor 
+	executor
 		ifNil: [ executor := newExecutor ]
 		ifNotNil: [
 			executor hasMultipleExecutors
@@ -61,7 +61,7 @@ WeakFinalizerItem >> add: newExecutor [
 
 { #category : #accessing }
 WeakFinalizerItem >> clear [
-	list := next := nil.
+	list := next := nil
 ]
 
 { #category : #copying }
@@ -82,7 +82,7 @@ WeakFinalizerItem >> finalizeValues [
 	ex := executor.
 	executor := nil.
 	next := nil.
-	ex finalize.
+	ex finalize
 ]
 
 { #category : #accessing }
@@ -99,7 +99,7 @@ WeakFinalizerItem >> list: aList [
 WeakFinalizerItem >> list: weakFinalizationList object: anObject [
 	self assert: (weakFinalizationList class == WeakFinalizationList).
 	list := weakFinalizationList.
-	self at: 1 put: anObject.
+	self at: 1 put: anObject
 ]
 
 { #category : #initialization }
@@ -122,5 +122,5 @@ WeakFinalizerItem >> object [
 
 { #category : #copying }
 WeakFinalizerItem >> postCopy [
-	executor hasMultipleExecutors ifTrue: [ executor := executor copy ].
+	executor hasMultipleExecutors ifTrue: [ executor := executor copy ]
 ]

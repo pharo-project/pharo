@@ -649,6 +649,25 @@ IntervalTest >> testPermutationsDo [
 ]
 
 { #category : #tests }
+IntervalTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each |
+		                       String streamContents: [ :stream |
+			                       each printOn: stream ] ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self
+		assert: printed
+		equals:
+			'(' , self nonEmpty first asString , ' to: '
+			, self nonEmpty last asString , ' by: '
+			, self nonEmpty increment asString , ')'
+]
+
+{ #category : #tests }
 IntervalTest >> testRangeIncludes [
 
 	self assert: ((1 to: 10) rangeIncludes: 3).

@@ -9,7 +9,7 @@ Metavariables are a part of a parser expression, just like any other Smalltalk c
 ### An example:
 Parsing an expression like:
 
-```
+```st
 a := a + 1 
 ```
 creates a parse tree with an assignment node assigning to 'a', the value of sending the message '+' with argument 1 to the object 'a'.
@@ -108,7 +108,7 @@ Example, match ifTrue:ifFalse: with first statement in true and false block bein
 
 This will match
 
-```
+```st
 someValue ifTrue:[ self doA.
 	                self doFoo]
           ifFalse:[ self doA.
@@ -128,13 +128,13 @@ This expression will find all senders of add:
 but if we would use this expression to rewrite add: by addItem:
 an expression like
 
-```
+```st
 var add: (self add: aValue).
 ```
 
 would be replaced by
 
-```
+```st
 var addItem: (self add: aValue).
 ```
 
@@ -155,7 +155,7 @@ Calypso has a search function that is the simples way to use and see the result 
 Search code
 The search code menu will put a search pattern template in the code pane:
 
-```
+```st
 RBParseTreeSearcher new
 	matches: '`@object' do: [ :node :answer | node ];
 	matchesMethod: '`@method: `@args | `@temps | `@.statements' do: [ :node :answer | node ];
@@ -181,7 +181,7 @@ And most of the time you only want to use one, the code expression search or the
 
 A first example, replace the code pane content by:
 
-```
+```st
 RBParseTreeSearcher new
 	matchesMethod: 'drawOn: `@args | `@temps | `@.statements' do: [ :node :answer | node ];
 	yourself
@@ -192,7 +192,7 @@ The result is actually the same as if we had searched for all implementors of #d
 
 Next example, replace the code pane content by:
 
-```
+```st
 RBParseTreeSearcher new
 	matches: '`@object drawOn: `@args' do: [ :node :answer | node ];
 	yourself
@@ -204,7 +204,7 @@ The `do:` block can be used to further test or filter the found matches. The nod
 
 Example, search for all methods with at least one argument where the method name starts with `'perform'`:
 
-```
+```st
 RBParseTreeSearcher new
 		matchesMethod: '`@method: `@args | `@temps | `@.statements'
 			do: [ :node :answer | 
@@ -217,7 +217,7 @@ RBParseTreeSearcher new
 Another way to use extended pattern syntax is to directly instantiate a `RBParseTreeSearcher` and execute it on a parse tree.
 First we define the pattern, instantiate a tree searcher and tell him what to do when matching this pattern (just return the matched node) and execute it on the AST of Numbers method #asPoint.
 
-```
+```st
 | searcher pattern parseTree |
 pattern := '^ self'.
 searcher := RBParseTreeSearcher new.
@@ -227,13 +227,13 @@ searcher executeTree: (Number>>#asPoint) ast initialAnswer: nil.
 
 it will return nil, since no node in that method returns 'self'. If we execute the searcher instead on the method for class `Point`, it will return the found node, a `RBReturnNode`
 
-```
+```st
 searcher executeTree: (Point>>#asPoint) ast initialAnswer: nil.
 ```
 
 If we don't just want to match an expression but collecting all matching nodes, we can collect all nodes within the #do: block:
 
-```
+```st
 | searcher pattern parseTree  selfMessages |
 selfMessages := Set new.
 pattern := 'self `@message: ``@args'.
@@ -264,13 +264,13 @@ You start with a default environment containing all classes from the system and 
 
 For example, creating an environment for all classes in package 'Kernel':
 
-```
+```st
 RBBrowserEnvironment new forPackageNames:{'Kernel'}.
 ```
 
 You can query the environment.
 
-```
+```st
 | env |
 env := RBBrowserEnvironment new forPackageNames:{'Kernel'}.
 env allClasses 
@@ -282,19 +282,19 @@ env browse "-> starts Calypso showing only this package"
 
 and you can further restrict this package environment by calling one of the other factory methods:
 
-```
+```st
 env class 
 -> a RBPackageEnvironment
 ```
 
-```
+```st
 (env implementorsOf:#collect:) class
 ->  RBSelectorEnvironment
 ```
 
 Another way to combine or further restrict environments is to use boolean operations and, not or or.
 
-```
+```st
 | implDrawOn callsDrawOn implAndCalls |
 callsDrawOn := RBBrowserEnvironment new referencesTo: #drawOn:.
 implDrawOn :=  RBBrowserEnvironment new implementorsOf: #drawOn:.
@@ -306,7 +306,7 @@ MessageBrowser browse: implAndCalls methods.
 
 This opens a MessageBrowser on all methods in the system that implement `#drawOn:` and calls `drawOn:`.
 
-```
+```st
 | implPrintOn notImplPrintOn |
 implPrintOn := RBBrowserEnvironment new implementorsOf: #printOn:.
 "create a 'not'-environment"
@@ -321,7 +321,7 @@ Classes implementing `#printOn:` are not in the 'not'-environment.
 
 A more generic way to create an environment by giving an explicit 'test'-block to select methods for this environment:
 
-```
+```st
 |implementedByMe|
 implementedByMe := RBBrowserEnvironment new selectMethods:[:m | m author = Author fullName ].
 implementedByMe browse.

@@ -36,9 +36,10 @@ ClyMethodCodeEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContex
 ClyMethodCodeEditorToolMorph >> applyChanges [
 	| selector methodClass currentMethod |
 	methodClass := self chooseClassForNewMethodIfNone: [^false].
-	selector := methodClass compile: self pendingText classified: editingMethod protocol notifying: textMorph.
+	selector := methodClass compile: self pendingText asString classified: editingMethod protocol notifying: textMorph.
 	selector ifNil: [^false ].
 	currentMethod := methodClass >> selector.
+	self setMethodProtocol: currentMethod.
 	self tagAndPackageEditingMethod: currentMethod.
 	self switchToMethod: currentMethod.
 	"update the AST to the just compiled method. This clears breakpoints. To be improved"
@@ -312,6 +313,18 @@ ClyMethodCodeEditorToolMorph >> selectedSourceNode [
 		ifFalse: [ ast bestNodeFor: selectedInterval ].
 
 	^ selectedNode ifNil: [ ast ]
+]
+
+{ #category : #operations }
+ClyMethodCodeEditorToolMorph >> setMethodProtocol: currentMethod [
+	"Only change the protocol if we created a new method, not if we edit an existing one"
+
+	(editingMethod selector = currentMethod selector and: [
+		 editingMethod methodClass = currentMethod methodClass ]) ifTrue: [ ^ self ].
+
+	MethodClassifier
+		classify: currentMethod
+		fallbackProtocol: editingMethod protocol
 ]
 
 { #category : #initialization }

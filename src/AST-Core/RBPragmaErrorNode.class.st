@@ -17,11 +17,16 @@ RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
 	 Since the closure is a superior sign, the default assumption is that it's a binary selector."
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty
-		ifTrue: [ self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: '''>'' expected' ]
-		ifFalse: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''>'' expected' ]
+		ifTrue: [ self new contents: aCollection; start: aToken start; stop: aToken stop; errorMessage: '''>'' expected' ]
+		ifFalse: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''>'' expected' ]
 ]
 
 { #category : #testing }
 RBPragmaErrorNode >> isPragmaError [
 	^true
+]
+
+{ #category : #testing }
+RBPragmaErrorNode >> isPrimitive [
+	^false
 ]

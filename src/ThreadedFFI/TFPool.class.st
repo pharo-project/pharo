@@ -19,7 +19,7 @@ Class {
 { #category : #'instance creation' }
 TFPool class >> newProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock;
 		yourself
 ]
@@ -33,12 +33,12 @@ TFPool >> elements [
 { #category : #private }
 TFPool >> growBy: aNumber [
 
-	elements := elements, (self populate: (Array new: aNumber)).
+	elements := elements, (self populate: (Array new: aNumber))
 ]
 
 { #category : #accessing }
 TFPool >> growRate [
- 
+
 	^ initialSize // 2
 ]
 
@@ -62,7 +62,7 @@ TFPool >> initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 
 { #category : #testing }
 TFPool >> isEmpty [
-	
+
 	^ elements allSatisfy: #isNil
 ]
 
@@ -77,7 +77,7 @@ TFPool >> populate: anArray [
 
 	1 to: anArray size do: [ :index |
 		anArray at: index put: provider value ].
-	
+
 	^ anArray
 ]
 
@@ -85,9 +85,9 @@ TFPool >> populate: anArray [
 TFPool >> printOn: stream [
 
 	super printOn: stream.
-	stream 
-		nextPut: $( ; 
-		print: self size  ; 
+	stream
+		nextPut: $( ;
+		print: self size  ;
 		nextPutAll: ' elements)'
 ]
 
@@ -97,21 +97,20 @@ TFPool >> release [
 	super release.
 
 	releaseBlock ifNotNil: [ elements do: releaseBlock ].
-	elements := nil.
-
+	elements := nil
 ]
 
 { #category : #accessing }
 TFPool >> returnOne: anObject [
 
-	mutex critical: [ 
+	mutex critical: [
 		| index |
-		index := pointer - 1. 
-		index > 0 ifFalse: [ 
+		index := pointer - 1.
+		index > 0 ifFalse: [
 			"This can happen if a new session starts in middle of a call."
 			'Returning an object but pool is full' crTrace.
-			releaseBlock value:anObject. 
-			^ self  ]. 
+			releaseBlock value:anObject.
+			^ self  ].
 		elements at: index put: anObject.
 		pointer := index ]
 ]
@@ -126,12 +125,12 @@ TFPool >> size [
 TFPool >> takeOne [
 	| element |
 
-	^ mutex critical: [ 
+	^ mutex critical: [
 		| index |
-		
+
 		self isOverflown
 			ifTrue: [ self growBy: self growRate ].
-		
+
 		index := pointer.
 		pointer := pointer + 1.
 		element := elements at: index.

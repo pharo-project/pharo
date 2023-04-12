@@ -33,8 +33,7 @@ Class {
 	#name : #DebugContext,
 	#superclass : #Object,
 	#instVars : [
-		'context',
-		'topContext'
+		'context'
 	],
 	#category : #'Debugger-Model-Core'
 }
@@ -110,8 +109,7 @@ DebugContext >> evaluate: expression [
 
 { #category : #initialization }
 DebugContext >> forContext: aContext [
-	context := aContext.
-	topContext := aContext
+	context := aContext
 ]
 
 { #category : #accessing }
@@ -176,7 +174,7 @@ DebugContext >> selectedClass [
 DebugContext >> selectedMessageCategoryName [
 	"Answer the name of the message category of the message of the current context."
 
-	^ self selectedClass organization categoryOfElement: self selectedMessageName
+	^ self selectedClass organization protocolNameOfElement: self selectedMessageName
 ]
 
 { #category : #accessing }
@@ -191,9 +189,4 @@ DebugContext >> selectedMessageName [
 DebugContext >> source [
 	"Answer the source code of the currently selected context."
 	^ context sourceCode
-]
-
-{ #category : #initialization }
-DebugContext >> topContext: aContext [
-	topContext := aContext
 ]

@@ -204,6 +204,22 @@ LiteralVariable >> readInContext: aContext [
 	^self value
 ]
 
+{ #category : #'code generation' }
+LiteralVariable >> runtimeUndeclaredRead [
+	"This method is used internally to compile polymorphic read on undeclared variables.
+	Do not call it youself to not polute senders."
+
+	^ self read
+]
+
+{ #category : #'code generation' }
+LiteralVariable >> runtimeUndeclaredWrite: anObject [
+	"This method is used internally to compile polymorphic write on undeclared variables.
+	Do not call it youself to not polute senders."
+
+	^ self write: anObject
+]
+
 { #category : #accessing }
 LiteralVariable >> scope [
 	^self definingClass

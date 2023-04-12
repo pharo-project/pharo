@@ -42,14 +42,14 @@ PickOneSettingDeclaration >> index [
 
 { #category : #'user interface' }
 PickOneSettingDeclaration >> index: anInteger [
-	self realValue: (self domainValues at: anInteger) realValue.
+	self realValue: (self domainValues at: anInteger) realValue
 ]
 
 { #category : #'user interface' }
 PickOneSettingDeclaration >> inputWidget [
 	| widget row |
 	row := self theme newRowIn: self for: {
-				widget := (self theme 
+				widget := (self theme
 						newDropListIn: self currentWorld
 						for: self
 						list: #domainValuesLabels

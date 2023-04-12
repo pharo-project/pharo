@@ -16,7 +16,7 @@ You can find more information, lists to browse/suscribe and places to share code
 
 You can learn Pharo by clicking on the following expression: 
 
-```
+```st
 ProfStef go.
 ```
 

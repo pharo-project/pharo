@@ -21,10 +21,10 @@ Class {
 ZnManagingMultiThreadedServer >> closeConnections [
 	self connections isEmpty ifTrue: [ ^ self ].
 	self lock critical: [
-		self connections do: [ :each | 
+		self connections do: [ :each |
 			self logConnectionClosed: each.
-			[ each close ] 
-				on: Exception 
+			[ each close ]
+				on: Exception
 				do: [ ] ].
 		self connections removeAll ]
 ]
@@ -32,7 +32,7 @@ ZnManagingMultiThreadedServer >> closeConnections [
 { #category : #private }
 ZnManagingMultiThreadedServer >> closeSocketStream: socketStream [
 	super closeSocketStream: socketStream.
-	self lock critical: [ 
+	self lock critical: [
 		self connections remove: socketStream ifAbsent: [ ] ]
 ]
 
@@ -63,7 +63,7 @@ ZnManagingMultiThreadedServer >> socketStreamOn: socket [
 	socketStream := super socketStreamOn: socket.
 	self connections size >= (ZnCurrentOptions at: #maximumNumberOfConcurrentConnections)
 		ifTrue: [ ^ self rejectConnection: socketStream ].
-	self lock critical: [ 
+	self lock critical: [
 		self connections add: socketStream ].
 	^ socketStream
 ]

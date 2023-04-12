@@ -49,7 +49,7 @@ ZnMessage >> = other [
 
 { #category : #accessing }
 ZnMessage >> clearEntity [
-	"Set my entity to nil. 
+	"Set my entity to nil.
 	Unlike #resetEntity:, my content type and length remain unchanged."
 
 	entity ifNotNil: [
@@ -186,20 +186,17 @@ ZnMessage >> readBinaryFrom: stream [
 { #category : #'initialize-release' }
 ZnMessage >> readEntityFrom: stream [
 	self entity: (self entityReaderOn: stream) readEntity
-	
 ]
 
 { #category : #'initialize-release' }
 ZnMessage >> readFrom: stream [
 	self readHeaderFrom: stream.
 	self readEntityFrom: stream
-	
 ]
 
 { #category : #'initialize-release' }
 ZnMessage >> readHeaderFrom: stream [
 	self headers: (ZnHeaders readFrom: stream)
-	
 ]
 
 { #category : #'initialize-release' }
@@ -209,7 +206,6 @@ ZnMessage >> readStreamingFrom: stream [
 	(entityReader := self entityReaderOn: stream)
 		streaming.
 	self entity: entityReader readEntity
-	
 ]
 
 { #category : #accessing }
@@ -218,7 +214,7 @@ ZnMessage >> resetEntity: object [
 	even if I am already describing an entity using my content type and length.
 	See also: #clearEntity"
 
-	(entity ~= object and: [ entity notNil ]) 
+	(entity ~= object and: [ entity notNil ])
 		ifTrue: [ entity close ].
 	entity := object.
 	self headers acceptEntityDescription: object
@@ -254,7 +250,7 @@ ZnMessage >> setConnectionKeepAlive [
 ZnMessage >> setContentType: mimeType [
 	"Explicitly set my Content-Type to mimeType.
 	I normally do this automatically by taking the #contentType from my entity."
-	
+
 	self headers contentType: mimeType
 ]
 
@@ -272,7 +268,7 @@ ZnMessage >> writeOn: stream [
 	bivalentWriteStream := ZnBivalentWriteStream on: stream.
 	self headers writeOn: bivalentWriteStream.
 	bivalentWriteStream nextPutAll: String crlf.
-	self hasEntity ifTrue: [ 
+	self hasEntity ifTrue: [
 		(self entityWriterOn: bivalentWriteStream) writeEntity: self entity ]
 ]
 

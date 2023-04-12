@@ -10,9 +10,9 @@ Class {
 
 { #category : #executing }
 SycCmInsertSubclassCommand >> executeRefactoring [
-	
+
 	| refactoring |
-	refactoring := RBInsertClassTransformation
+	refactoring := RBInsertNewClassRefactoring
 		addClass: newClassName
 		superclass: targetClass asString
 		subclasses: targetClass subclasses
@@ -27,7 +27,7 @@ SycCmInsertSubclassCommand >> icon [
 
 { #category : #testing }
 SycCmInsertSubclassCommand >> isApplicable [
-	
+
 	^ true
 ]
 
@@ -37,6 +37,6 @@ SycCmInsertSubclassCommand >> name [
 ]
 
 { #category : #accessing }
-SycCmInsertSubclassCommand >> order [ 
+SycCmInsertSubclassCommand >> order [
 	^ 20
 ]

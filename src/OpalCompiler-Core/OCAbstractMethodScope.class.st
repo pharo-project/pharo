@@ -146,13 +146,13 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupVar: name declare: aBoolean [
+OCAbstractMethodScope >> lookupVar: name [
 
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
-	^self outerScope lookupVar: name declare: aBoolean
+	^ super lookupVar: name
 ]
 
 { #category : #scope }
@@ -216,24 +216,10 @@ OCAbstractMethodScope >> popScope [
 	^ self outerScope
 ]
 
-{ #category : #printing }
-OCAbstractMethodScope >> printOn: stream [
-
-	super printOn: stream.
-	stream space.
-	self scopeLevel printOn: stream
-]
-
 { #category : #'temp vars' }
 OCAbstractMethodScope >> removeTemp: tempVar [
 
 	tempVars removeKey: tempVar name
-]
-
-{ #category : #printing }
-OCAbstractMethodScope >> scopeLevel [
-	"For debugging we print a counter for all Method and Block scopes"
-	^ outerScope scopeLevel + 1
 ]
 
 { #category : #'temp vars - copying' }

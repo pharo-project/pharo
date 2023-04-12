@@ -3,8 +3,7 @@ Extension { #name : #DAReferenceDependency }
 { #category : #'*Tool-DependencyAnalyser-UI' }
 DAReferenceDependency >> browseIn: aBrowser [
 
-	aBrowser selectMethod: self method.
-	
+	aBrowser selectMethod: self method
 ]
 
 { #category : #'*Tool-DependencyAnalyser-UI' }

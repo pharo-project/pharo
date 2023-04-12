@@ -173,36 +173,70 @@ Class {
 
 { #category : #accessing }
 STON class >> associationClass [
+	"Return the class of STON associations, Association, a system wide constant"
+
+	"(STON fromString: '#foo : 100') class >>> STON associationClass"
+
 	^ Association
 ]
 
 { #category : #accessing }
 STON class >> classNameKey [
+	"Return the key that will be used to add a property with the class name
+	when an unknown class is read and the option STONReader>>#acceptUnknownClasses: is true,
+	by default #className. Such unknown classes are returned as generic maps."
+
+	"((STON reader acceptUnknownClasses: true; on: 'FooBarBaz { #foo : 100 }' readStream; next) at: STON classNameKey) >>> #FooBarBaz"
+
 	^ #className
 ]
 
 { #category : #convencience }
 STON class >> fromStream: readStream [
+	"Parse and materialize the STON representation in the character readStream"
+
+	"(STON fromStream: 'Point[1,2]' readStream) >>> (1@2)"
+
+	"FileLocator temp / ('{1}.ston' format: { Time millisecondClockValue }) in: [ :file |
+		file writeStreamDo: [ :out | STON put: 1@2 onStream: out ].
+		file readStreamDo: [ :in | STON fromStream: in ] ]"
+
 	^ (self reader on: readStream) next
 ]
 
 { #category : #convencience }
 STON class >> fromStreamWithComments: readStream [
+	"Parse and materialize the STON representation in the character readStream,
+	skipping C-style comments"
+
+	"(STON fromStreamWithComments: 'Point[1,/*comment*/2]' readStream) >>> (1@2)"
+
 	^ (self reader on: (STONCStyleCommentsSkipStream on: readStream)) next
 ]
 
 { #category : #convencience }
 STON class >> fromString: string [
+	"Parse and materialize the STON representation in string"
+
+	"(STON fromString: 'Point[1,2]') >>> (1@2)"
+
 	^ self fromStream: string readStream
 ]
 
 { #category : #convencience }
 STON class >> fromStringWithComments: string [
+	"Parse and materialize the STON representation in string,
+	skipping C-style comments"
+
+	"(STON fromStringWithComments: 'Point[1,/*comment*/2]') >>> (1@2)"
+
 	^ self fromStreamWithComments: string readStream
 ]
 
 { #category : #accessing }
 STON class >> jsonWriter [
+	"Shortcut to create a new STONWriter instance configured to output JSON"
+
 	^ STONWriter new
 			jsonMode: true;
 			referencePolicy: #error;
@@ -211,68 +245,122 @@ STON class >> jsonWriter [
 
 { #category : #accessing }
 STON class >> listClass [
+	"Return the class of STON lists, Array, a system wide constant"
+
+	"(STON fromString: '[1 , 2 , 3]') class >>> STON listClass"
+
 	^ Array
 ]
 
 { #category : #accessing }
 STON class >> mapClass [
+	"Return the class of STON maps, Dictionary, a system wide constant"
+
+	"(STON fromString: '{ #foo : 1 , #bar : 2 }') class >>> STON mapClass"
+
 	^ Dictionary
 ]
 
 { #category : #convencience }
-STON class >> put: object asJsonOnStream: stream [
-	(self jsonWriter on: stream) nextPut: object
+STON class >> put: object asJsonOnStream: writeStream [
+	"Write the JSON serialization of object to the character writeStream.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"String streamContents: [ :out |
+		STON put: { { #foo->1 } asDictionary. { #bar->2 } asDictionary } asJsonOnStream: out ]"
+
+	(self jsonWriter on: writeStream) nextPut: object
 ]
 
 { #category : #convencience }
-STON class >> put: object asJsonOnStreamPretty: stream [
-	(self jsonWriter on: stream)
-		prettyPrint: true; 
+STON class >> put: object asJsonOnStreamPretty: writeStream [
+	"Write the pretty printed JSON serialization of object to the character writeStream.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"String streamContents: [ :out |
+		STON put: { { #foo->1 } asDictionary. { #bar->2 } asDictionary } asJsonOnStreamPretty: out ]"
+
+	(self jsonWriter on: writeStream)
+		prettyPrint: true;
 		nextPut: object
 ]
 
 { #category : #convencience }
-STON class >> put: object onStream: stream [
-	(self writer on: stream) nextPut: object
+STON class >> put: object onStream: writeStream [
+	"Write the STON serialization of object to the character writeStream"
+
+	"(String streamContents: [ :out | STON put: 1@2 onStream: out ]) >>> 'Point[1,2]'"
+
+	"FileLocator temp / ('{1}.ston' format: { Time millisecondClockValue }) in: [ :file |
+		file writeStreamDo: [ :out | STON put: 1@2 onStream: out ].
+		file readStreamDo: [ :in | STON fromStream: in ] ]"
+
+	(self writer on: writeStream) nextPut: object
 ]
 
 { #category : #convencience }
-STON class >> put: object onStreamPretty: stream [
-	(self writer on: stream)
-		prettyPrint: true; 
+STON class >> put: object onStreamPretty: writeStream [
+	"Write the pretty printed STON serialization of object to the character writeStream"
+
+	"String streamContents: [ :out | STON put: (0@0 extent: 20@30) onStreamPretty: out ]"
+
+	(self writer on: writeStream)
+		prettyPrint: true;
 		nextPut: object
 ]
 
 { #category : #accessing }
 STON class >> reader [
+	"Shortcut to create a new STONReader instance"
+
 	^ STONReader new
 ]
 
 { #category : #convencience }
 STON class >> toJsonString: object [
+	"Return a String with the JSON serialization of object.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"(STON toJsonString: { { #foo->1 } asDictionary. { #bar->2 } asDictionary }) >>> '[{""foo"":1},{""bar"":2}]'"
+
 	^ String streamContents: [ :stream |
-		self put: object asJsonOnStream: stream ]
+			self put: object asJsonOnStream: stream ]
 ]
 
 { #category : #convencience }
 STON class >> toJsonStringPretty: object [
+	"Return a String with the pretty printed JSON serialization of object.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"STON toJsonStringPretty: { { #foo->1 } asDictionary. { #bar->2 } asDictionary }"
+
 	^ String streamContents: [ :stream |
-		self put: object asJsonOnStreamPretty: stream ]
+			self put: object asJsonOnStreamPretty: stream ]
 ]
 
 { #category : #convencience }
 STON class >> toString: object [
+	"Return a String with the STON serialization of object"
+
+	"(STON toString: 1@2) >>> 'Point[1,2]'"
+
 	^ String streamContents: [ :stream |
-		self put: object onStream: stream ]
+			self put: object onStream: stream ]
 ]
 
 { #category : #convencience }
 STON class >> toStringPretty: object [
+	"Return a String with the pretty printed STON serialization of object"
+
+	"STON toStringPretty: (0@0 extent: 20@30)"
+
 	^ String streamContents: [ :stream |
-		self put: object onStreamPretty: stream ]
+			self put: object onStreamPretty: stream ]
 ]
 
 { #category : #accessing }
 STON class >> writer [
+	"Shortcut to create a new STONWriter instance"
+
 	^ STONWriter new
 ]

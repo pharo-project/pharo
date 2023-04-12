@@ -299,17 +299,13 @@ RPackage >> basicAddClassTag: tagName [
 RPackage >> basicImportClass: aClass [
 	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
 
-	"Note: Protocol defaultName is #'as yet unclassified'"
-
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
 	| protocols |
 	self addClassDefinition: aClass.
-	aClass organization categories
-		do: [ :each |
-			(self isYourClassExtension: each)
-				ifTrue: [ aClass organization renameCategory: each toBe: Protocol defaultName ] ].
-	protocols := aClass organization categories reject: [ :each | each first = $* ].
+	aClass organization protocolNames do: [ :each |
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol unclassified ] ].
+	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
 
@@ -478,12 +474,10 @@ RPackage >> definedClassNames [
 
 { #category : #accessing }
 RPackage >> definedClasses [
+
 	| definedClasses |
-	definedClasses := Set new.
-	classes do: [:each |
-		Smalltalk globals
-			at: each
-			ifPresent: [:aClass| definedClasses add: aClass ]].
+	definedClasses := Set new: classes size.
+	classes do: [ :each | Smalltalk globals at: each ifPresent: [ :aClass | definedClasses add: aClass ] ].
 	^ definedClasses
 ]
 
@@ -654,9 +648,9 @@ RPackage >> extendsClass: aClass [
 
 { #category : #'system compatibility' }
 RPackage >> extensionCategoriesForClass: aClass [
+
 	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass organization categories
-		select: [ :cat | self isYourClassExtension: cat ]
+	^ aClass organization protocolNames select: [ :cat | self isYourClassExtension: cat ]
 ]
 
 { #category : #accessing }
@@ -760,10 +754,7 @@ RPackage >> importPackage: anRPackage [
 RPackage >> importProtocol: aProtocol forClass: aClass [
 	"import all the methods of a protocol as defined in the receiver."
 
-	(aClass organization listAtCategoryNamed: aProtocol) do: [ :each |
-		aClass
-			compiledMethodAt: each
-			ifPresent: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ] ]
+	(aClass methodsInProtocol: aProtocol) do: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ]
 ]
 
 { #category : #testing }
@@ -777,7 +768,7 @@ RPackage >> includesClass: aClass [
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ classes includes: aSymbol asSymbol
+	^ classes includes: aSymbol
 ]
 
 { #category : #testing }
@@ -1008,10 +999,7 @@ RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
-	SystemAnnouncer uniqueInstance
-		classRepackaged: aClass
-		from: oldPackage
-		to: self
+	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
 ]
 
 { #category : #private }
@@ -1145,12 +1133,10 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
-	aClass organization categories
-		do: [ :each |
-			(self isYourClassExtension: each)
-				ifTrue: [ aClass organization renameCategory: each toBe: Protocol defaultName ] ].
+	aClass organization protocolNames do: [ :each |
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-		"we also have also have to remove methods from class side"
+	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	self removeClassDefinitionWithoutCheckingMethods: aClass.
 	self removeClassTagsForClassNamed: aClass name
@@ -1353,13 +1339,11 @@ RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #private }
 RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
+
 	| protocols |
+	protocols := self extensionMethods collect: [ :each | each origin organization protocolNamed: each protocol ] as: Set.
 
-	protocols := self extensionMethods
-		collect: [ :each | each origin organization protocolNamed:  each protocol ]
-		as: Set.
-
-	protocols do: [ :each | each rename: '*', newName, (each name allButFirst: oldName size + 1) ]
+	protocols do: [ :each | each rename: '*' , newName , (each name allButFirst: oldName size + 1) ]
 ]
 
 { #category : #private }
@@ -1400,7 +1384,7 @@ RPackage >> renameTo: aSymbol [
 				do:
 					[ :each | each category: newName , (each category allButFirst: oldName size) ].
 			oldCategoryNames
-				do: [ :each | SystemOrganizer default removeCategory: each ] ].
+				do: [ :each | self systemOrganization removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
 	self organizer
@@ -1462,7 +1446,7 @@ RPackage >> systemCategoryPrefix [
 { #category : #'system compatibility' }
 RPackage >> systemOrganization [
 
-	^ Smalltalk globals organization
+	^ self organizer systemOrganizer
 ]
 
 { #category : #queries }
@@ -1475,9 +1459,10 @@ RPackage >> tagsForClasses [
 
 { #category : #private }
 RPackage >> toTagName: aSymbol [
-	^ (aSymbol beginsWith: self name asString, '-')
-		ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
-		ifFalse: [ aSymbol ]
+
+	^ (aSymbol beginsWith: self name asString , '-')
+		  ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
+		  ifFalse: [ aSymbol ]
 ]
 
 { #category : #register }

@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 STONWriterTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
-		STON writer 
+		STON writer
 			on: stream;
 			nextPut: anObject ]
 ]
@@ -18,7 +18,7 @@ STONWriterTest >> serialize: anObject [
 { #category : #private }
 STONWriterTest >> serializeAsciiOnly: anObject [
 	^ String streamContents: [ :stream |
-		STON writer 
+		STON writer
 			on: stream;
 			asciiOnly: true;
 			nextPut: anObject ]
@@ -27,16 +27,16 @@ STONWriterTest >> serializeAsciiOnly: anObject [
 { #category : #private }
 STONWriterTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
-		STON jsonWriter 
-			on: stream; 
+		STON jsonWriter
+			on: stream;
 			nextPut: anObject ]
 ]
 
 { #category : #private }
 STONWriterTest >> serializePretty: anObject [
 	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream; 
+		STON writer
+			on: stream;
 			prettyPrint: true;
 			nextPut: anObject ]
 ]
@@ -51,10 +51,10 @@ STONWriterTest >> testAssociation [
 
 { #category : #tests }
 STONWriterTest >> testBag [
-	self 
+	self
 		assert: (self serialize: (Bag withAll: #(a a)))
 		equals: 'Bag{#a:2}'.
-	self 
+	self
 		assert: (self serialize: Bag new)
 		equals: 'Bag{}'
 ]
@@ -77,15 +77,15 @@ STONWriterTest >> testClass [
 
 { #category : #tests }
 STONWriterTest >> testColor [
-	self 
-		assert: (self serialize: Color red) 
+	self
+		assert: (self serialize: Color red)
 		equals: 'Color[#red]'.
-	self 
-		assert: (self serialize: (Color red copy setAlpha: 0.4)) 
+	self
+		assert: (self serialize: (Color red copy setAlpha: 0.4))
 		equals: 'Color{#red:1.0,#green:0.0,#blue:0.0,#alpha:0.4}'.
-	self 
-		assert: (self serialize: Color red lighter lighter) 
-		equals: 'Color{#red:1.0,#green:0.061,#blue:0.061,#alpha:1.0}'.
+	self
+		assert: (self serialize: Color red lighter lighter)
+		equals: 'Color{#red:1.0,#green:0.06060606060606061,#blue:0.06060606060606061,#alpha:1.0}'
 ]
 
 { #category : #tests }
@@ -96,8 +96,8 @@ STONWriterTest >> testCustomNewline [
 			newLine: String lf;
 			prettyPrint: true;
 			nextPut: #( 1 ) ].
-	self 
-		assert: output 
+	self
+		assert: output
 		equals: ('[\	1\]' withCRs replaceAll: Character cr with: Character lf)
 ]
 
@@ -107,7 +107,7 @@ STONWriterTest >> testDate [
 	date := (Date year: 2012 month: 1 day: 1) translateToUTC.
 	self assert: (self serialize: date) equals: 'Date[''2012-01-01Z'']'.
 	date := (Date year: 2012 month: 1 day: 1) translateTo: 1 hour.
-	self assert: (self serialize: date) equals: 'Date[''2012-01-01+01:00'']'.
+	self assert: (self serialize: date) equals: 'Date[''2012-01-01+01:00'']'
 ]
 
 { #category : #tests }
@@ -148,7 +148,7 @@ STONWriterTest >> testDiskFile [
 	self assert: (self serialize: '/tmp/foo.txt' asFileReference) equals: 'FILE[''/tmp/foo.txt'']'.
 	self assert: (self serialize: 'tmp/foo.txt' asFileReference) equals: 'FILE[''tmp/foo.txt'']'.
 	self assert: (self serialize: '/tmp' asFileReference) equals: 'FILE[''/tmp'']'.
-	self assert: (self serialize: '/tmp/' asFileReference) equals: 'FILE[''/tmp'']'.
+	self assert: (self serialize: '/tmp/' asFileReference) equals: 'FILE[''/tmp'']'
 ]
 
 { #category : #tests }
@@ -181,7 +181,10 @@ STONWriterTest >> testFloat [
 	self assert: ((self serialize: (1 / 3) asFloat) beginsWith: '0.333').
 	self assert: (self serialize: (10 raisedTo: 100) asFloat) equals: '1.0e100'.
 	self assert: (self serialize: (10 raisedTo: -50) asFloat) equals: '1.0e-50'.
-	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'
+	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'.
+	self assert: (self serialize: Float nan) equals: 'Float[#nan]'.
+	self assert: (self serialize: Float infinity) equals: 'Float[#infinity]'.
+	self assert: (self serialize: Float negativeInfinity) equals: 'Float[#negativeInfinity]'
 ]
 
 { #category : #tests }
@@ -191,7 +194,7 @@ STONWriterTest >> testFraction [
 	self assert: (self serialize: 10/100) equals: '1/10'.
 	self assert: (self serialize: 100/10) equals: '10'.
 	self assert: (self serialize: 123/123) equals: '1'.
-	self assert: (self serialize: 100/11) equals: '100/11'.
+	self assert: (self serialize: 100/11) equals: '100/11'
 ]
 
 { #category : #tests }
@@ -232,17 +235,17 @@ STONWriterTest >> testIsSimpleSymbol [
 { #category : #tests }
 STONWriterTest >> testKeepingNewLines [
 	| input result output |
-	input := 'line ending with CR', String cr, 
-		'line ending with LF', String lf, 
+	input := 'line ending with CR', String cr,
+		'line ending with LF', String lf,
 		'line ending with CRLF', String crlf.
-	output := '''line ending with CR', String crlf, 
-		'line ending with LF', String crlf, 
+	output := '''line ending with CR', String crlf,
+		'line ending with LF', String crlf,
 		'line ending with CRLF', String crlf, ''''.
 	result := String streamContents: [ :out |
 		(STON writer on: out) newLine: String crlf; keepNewLines: true; nextPut: input ].
 	self assert: result equals: output.
-	output := '''line ending with CR', String cr, 
-		'line ending with LF', String cr, 
+	output := '''line ending with CR', String cr,
+		'line ending with LF', String cr,
 		'line ending with CRLF', String cr, ''''.
 	result := String streamContents: [ :out |
 		(STON writer on: out) newLine: String cr; keepNewLines: true; nextPut: input ].
@@ -284,7 +287,7 @@ STONWriterTest >> testMimeType [
 		equals: 'MimeType[''application/json'']'.
 	self
 		assert: (self serialize: ZnMimeType textPlain)
-		equals: 'MimeType[''text/plain;charset=utf-8'']'.
+		equals: 'MimeType[''text/plain;charset=utf-8'']'
 ]
 
 { #category : #tests }
@@ -340,25 +343,25 @@ STONWriterTest >> testReferenceSharing [
 { #category : #tests }
 STONWriterTest >> testReferenceSharingError [
 	| serializer array one |
-	serializer := [ :object | 
+	serializer := [ :object |
 		String streamContents: [ :stream |
-			STON writer 
+			STON writer
 				on: stream;
-				referencePolicy: #error; 
+				referencePolicy: #error;
 				nextPut: object ] ].
 	one := { #one }.
 	array := STON listClass with: one with: one with: one.
-	self 
-		should: [ (serializer value: array) = '[[#one],[#one],[#one]]' ] 
+	self
+		should: [ (serializer value: array) = '[[#one],[#one],[#one]]' ]
 		raise: STONWriterError
 ]
 
 { #category : #tests }
 STONWriterTest >> testReferenceSharingIgnore [
 	| serializer array one |
-	serializer := [ :object | 
+	serializer := [ :object |
 	String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			STON writer
 				on: stream;
 				referencePolicy: #ignore;
@@ -372,7 +375,7 @@ STONWriterTest >> testReferenceSharingIgnore [
 STONWriterTest >> testRestrictedClassesInJsonMode [
 	self should: [ self serializeJson: 1@2 ] raise: STONWriterError.
 	self should: [ self serializeJson: #foo->100 ] raise: STONWriterError.
-	self should: [ self serializeJson: STONTestUser dummy ] raise: STONWriterError.
+	self should: [ self serializeJson: STONTestUser dummy ] raise: STONWriterError
 ]
 
 { #category : #tests }
@@ -380,7 +383,7 @@ STONWriterTest >> testScaledDecimal [
 	self assert: (self serialize: 1/3s2) equals: '1/3s2'.
 	self assert: (self serialize: -1/3s2) equals: '-1/3s2'.
 	self assert: (self serialize: 1/3s10) equals: '1/3s10'.
-	self assert: (self serialize: -1/3s10) equals: '-1/3s10'.
+	self assert: (self serialize: -1/3s10) equals: '-1/3s10'
 ]
 
 { #category : #tests }
@@ -419,7 +422,7 @@ STONWriterTest >> testTime [
 	time := Time hour: 6 minute: 30 second: 15.
 	self assert: (self serialize: time) equals: 'Time[''06:30:15'']'.
 	time := Time hour: 6 minute: 30 second: 15 nanoSecond: 123.
-	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'.
+	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'
 ]
 
 { #category : #tests }
@@ -435,7 +438,7 @@ STONWriterTest >> testURL [
 		equals: 'URL[''file:///var/log/system.log'']'.
 	self
 		assert: (self serialize: 'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asUrl)
-		equals: 'URL[''scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag'']'.
+		equals: 'URL[''scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag'']'
 ]
 
 { #category : #tests }
@@ -444,7 +447,7 @@ STONWriterTest >> testUser [
 	(user := STONTestUser new)
 		username: 'john@foo.com';
 		password: 'secret1'.
-	self 
+	self
 		assert: (self serialize: user)
 		equals: 'TestUser{#username:''john@foo.com'',#password:''secret1'',#enabled:true}'
 ]
@@ -455,7 +458,7 @@ STONWriterTest >> testUser2 [
 	(user := STONTestUser2 new)
 		username: 'john@foo.com';
 		password: 'secret1'.
-	self 
+	self
 		assert: (self serialize: user)
 		equals: 'TestUser2{#username:''john@foo.com'',#password:''secret1'',#enabled:true}'
 ]
@@ -464,8 +467,8 @@ STONWriterTest >> testUser2 [
 STONWriterTest >> testUser3Nil [
 	| user |
 	user := STONTestUser3 new.
-	self 
-		assert: (self serialize: user) 
+	self
+		assert: (self serialize: user)
 		equals: 'TestUser3{#username:nil,#password:nil,#enabled:true}'
 ]
 

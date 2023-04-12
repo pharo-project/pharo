@@ -125,14 +125,15 @@ RBPragmaNode >> isBinary [
 	^ (self isUnary or: [self isKeyword]) not
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBPragmaNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self arguments anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }
 RBPragmaNode >> isKeyword [
-	^(selector indexOf: $:) ~= 0
+	^ selector isKeyword
 ]
 
 { #category : #testing }

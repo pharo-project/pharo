@@ -7,18 +7,16 @@ Class {
 	#category : #'Equals-Tests'
 }
 
-{ #category : #'setUp-tearDown' }
+{ #category : #running }
 TEqualityTest >> setUp [
 	super setUp.
-	classFactory := ClassFactoryForTestCase new.
-
+	classFactory := ClassFactoryForTestCase new
 ]
 
-{ #category : #'setUp-tearDown' }
+{ #category : #running }
 TEqualityTest >> tearDown [
-	super tearDown.
-	classFactory cleanUp
-
+	classFactory cleanUp.
+	super tearDown
 ]
 
 { #category : #testing }

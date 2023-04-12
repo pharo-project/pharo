@@ -23,7 +23,7 @@ Class {
 
 { #category : #'instance creation' }
 CollatorBlockFunction class >> usingBlock: twoArgsBlock [
-	^self new 
+	^self new
 		collatorBlock: twoArgsBlock
 ]
 

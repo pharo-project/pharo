@@ -42,7 +42,7 @@ Class {
 { #category : #'instance creation' }
 ZnPositionableReadStream class >> on: readStream [
 	"Create an instance of ZnPositionableReadStream that wraps readStream to add limited positioning capabilities to it."
-	
+
 	^ self new
 		on: readStream;
 		yourself
@@ -59,9 +59,8 @@ ZnPositionableReadStream class >> on: readStream do: block [
 { #category : #testing }
 ZnPositionableReadStream >> atEnd [
 	"Answer whether I can access any more objects."
-	
+
 	^ delta = 0 and: [ stream atEnd ]
-		
 ]
 
 { #category : #positioning }
@@ -75,14 +74,14 @@ ZnPositionableReadStream >> back [
 { #category : #accessing }
 ZnPositionableReadStream >> bufferSize [
 	"Return the size of my buffer, which limits how far I can be positioned backwards. See #sizeBuffer: to set another buffer size."
-	
+
 	^ buffer size
 ]
 
 { #category : #'initialize-release' }
 ZnPositionableReadStream >> close [
 	"Close me after which I can no longer be accessed. I delegate this to the stream that I wrap."
-	
+
 	stream close
 ]
 
@@ -100,7 +99,7 @@ ZnPositionableReadStream >> collectionSpecies [
 { #category : #accessing }
 ZnPositionableReadStream >> defaultBufferSize [
 	"Return the default size of my buffer, which limits how far I can be positioned backwards. See #sizeBuffer: to set another buffer size."
-	
+
 	^ 2 raisedToInteger: 8
 ]
 
@@ -113,34 +112,34 @@ ZnPositionableReadStream >> initialize [
 { #category : #testing }
 ZnPositionableReadStream >> isBinary [
 	"Return whether I am binary, whether my elements are byte values (8 bit integers between 0 and 255)"
-	
+
 	^ stream isBinary
 ]
 
 { #category : #accessing }
 ZnPositionableReadStream >> next [
 	"Return the next element and move over it"
-	
+
 	| next |
 	delta = 0
-		ifTrue: [ 
-			(next := stream next) ifNotNil: [ 
+		ifTrue: [
+			(next := stream next) ifNotNil: [
 				count := count + 1.
 				buffer at: index + 1 put: next.
 				index := (index + 1) \\ buffer size ] ]
-		ifFalse: [ 
+		ifFalse: [
 			next := buffer at: ((index - delta) \\ buffer size) + 1.
 			delta := delta - 1 ].
 	^ next
 ]
 
 { #category : #accessing }
-ZnPositionableReadStream >> next: requestedCount [ 
+ZnPositionableReadStream >> next: requestedCount [
 	"Read requestedCount elements and return them as a collection.
 	If less are available, a smaller collection will be returned."
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -148,33 +147,33 @@ ZnPositionableReadStream >> next: requestedCount [
 ZnPositionableReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
-	^ self 
-		next: requestedCount 
-		into: collection 
-		startingAt: 1   
+
+	^ self
+		next: requestedCount
+		into: collection
+		startingAt: 1
 ]
 
 { #category : #accessing }
 ZnPositionableReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| read |
-	read := self 
-		readInto: collection 
-		startingAt: offset 
+	read := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
-	^ read = requestedCount 
+	^ read = requestedCount
 		ifTrue: [ collection ]
-		ifFalse: [ collection copyFrom: 1 to: offset + read - 1 ]     
+		ifFalse: [ collection copyFrom: 1 to: offset + read - 1 ]
 ]
 
 { #category : #accessing }
 ZnPositionableReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: collection size
 		into: collection
@@ -183,7 +182,7 @@ ZnPositionableReadStream >> nextInto: collection [
 { #category : #'instance creation' }
 ZnPositionableReadStream >> on: readStream [
 	"Initialize me on readStream"
-	
+
 	stream := readStream.
 	self sizeBuffer: self defaultBufferSize
 ]
@@ -191,17 +190,17 @@ ZnPositionableReadStream >> on: readStream [
 { #category : #accessing }
 ZnPositionableReadStream >> peek [
 	"Return the next element but do not move over it"
-	
+
 	^ self savingPositionDo: [ self next ]
 ]
 
 { #category : #accessing }
 ZnPositionableReadStream >> peekFor: object [
-	"Answer false and do not move over the next element if it is not equal to object, or if the receiver is at the end. 
+	"Answer false and do not move over the next element if it is not equal to object, or if the receiver is at the end.
 	Answer true and move over the next element when it is equal to object."
 
 	^ self peek = object
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			true ]
 		ifFalse: [ false ]
@@ -210,21 +209,21 @@ ZnPositionableReadStream >> peekFor: object [
 { #category : #positioning }
 ZnPositionableReadStream >> position [
 	"Return my current position. This is an object that can be used as argument to #position: to move back to that position. Although opaque, it is currently an integer count of the number of #next operations done on the stream that I wrap."
-	
+
 	^ count - delta
 ]
 
 { #category : #positioning }
 ZnPositionableReadStream >> position: newPosition [
 	"Move my current position to newPosition, an object obtained by previously calling #position. My buffer size limits how far I can be positioned backwards. A SubscriptOutOfBounds exception will be signalled in case this operation cannot be completed. It is also no possible to go backwards unless data has been read previously."
-	
+
 	| newDelta |
 	newDelta := count - newPosition.
 	(newDelta between: 0 and: (buffer size min: count))
-		ifFalse: [ 
-			^ SubscriptOutOfBounds 
-					signalFor: self 
-					lowerBound: self position 
+		ifFalse: [
+			^ SubscriptOutOfBounds
+					signalFor: self
+					lowerBound: self position
 					upperBound: self position - (buffer size min: count) ].
 	^ delta := newDelta
 ]
@@ -235,7 +234,7 @@ ZnPositionableReadStream >> readInto: collection startingAt: offset count: reque
 	returning the number of elements read, there could be less elements available."
 
 	0 to: requestedCount - 1 do: [ :aCount | | object |
-		(object := self next) ifNil: [ ^ aCount ].  
+		(object := self next) ifNil: [ ^ aCount ].
 		collection at: offset + aCount put: object ].
 	^ requestedCount
 ]
@@ -248,7 +247,7 @@ ZnPositionableReadStream >> readStream [
 { #category : #positioning }
 ZnPositionableReadStream >> savingPositionDo: block [
 	"Execute block so that any reading from me in it has no effect afterwards. I remember the current #position and move back to it using #position: after evaluating block. My buffer size limits how long the excursion can be. A SubscriptOutOfBounds exception will be signalled in case this operation cannot be completed."
-	
+
 	| savedPosition |
 	savedPosition := self position.
 	^ block ensure: [ self position: savedPosition ]
@@ -257,27 +256,27 @@ ZnPositionableReadStream >> savingPositionDo: block [
 { #category : #'initialize-release' }
 ZnPositionableReadStream >> sizeBuffer: size [
 	"Change the buffer size. This should be done when I am still in my initial state."
-	
+
 	buffer := self collectionSpecies new: size
 ]
 
 { #category : #accessing }
 ZnPositionableReadStream >> skip: integer [
 	"Skip over integer count elements."
-	
+
 	integer > 0
 		ifTrue: [ integer timesRepeat: [ self next ] ]
 		ifFalse: [ self position: (self position + integer) ]
 ]
 
 { #category : #accessing }
-ZnPositionableReadStream >> upTo: value [ 
+ZnPositionableReadStream >> upTo: value [
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream."
-	
-	^ self collectionSpecies 
+
+	^ self collectionSpecies
 		streamContents: [ :writeStream | | element |
-			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [ 
+			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [
 				writeStream nextPut: element ] ]
 ]
 
@@ -286,13 +285,13 @@ ZnPositionableReadStream >> upToEnd [
 	"Read elements until the stream is atEnd and return them as a collection."
 
 	^ self collectionSpecies
-		streamContents: [ :collectionStream | 
+		streamContents: [ :collectionStream |
 			[ self atEnd ] whileFalse: [ collectionStream nextPut: self next ] ]
 ]
 
 { #category : #accessing }
 ZnPositionableReadStream >> wrappedStream [
 	"Return the read stream that I wrap."
-	
+
 	^ stream
 ]

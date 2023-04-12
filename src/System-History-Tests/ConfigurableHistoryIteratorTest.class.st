@@ -51,13 +51,13 @@ ConfigurableHistoryIteratorTest >> testRedo [
 	self assert: historyList hasNext.
 	self assert: saved equals: '3'.
 	self assert: historyList current equals: 3.
-	
+
 	historyList redo.
 
 	self deny: historyList hasNext.
 	self assert: saved equals: '5'.
 	self assert: historyList current equals: 5.
-	
+
 	self should: [ historyList redo ] raise: NothingToRedo
 ]
 
@@ -73,7 +73,7 @@ ConfigurableHistoryIteratorTest >> testRedoIfEmpty [
 
 	self deny: historyList hasNext.
 	self assert: saved equals: '3'.
-	
+
 	historyList redoIfEmpty: [ saved := nil ].
 
 	self assert: saved isNil

@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #notification }
-RubTextInsertionStrategy >> notify: aString at: anInteger in: aStream [ 
-	"The compilation of text failed. The syntax error is noted as the argument, 
+RubTextInsertionStrategy >> notify: aString at: anInteger in: aStream [
+	"The compilation of text failed. The syntax error is noted as the argument,
 	aString. Insert it in the text at starting character position anInteger."
 
 	| pos |

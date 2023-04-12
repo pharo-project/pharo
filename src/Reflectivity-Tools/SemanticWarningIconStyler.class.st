@@ -14,15 +14,17 @@ SemanticWarningIconStyler >> highlightColor [
 
 { #category : #defaults }
 SemanticWarningIconStyler >> iconFor: aNode [
-	^self iconNamed: #flag
+	^self iconNamed: #warning
 ]
 
 { #category : #defaults }
 SemanticWarningIconStyler >> iconLabel: aNode [
-	^'Semantic warning: ', (aNode propertyAt: #semanticWarning) asString
+
+	self flag: 'What if more than one warning?'.
+	^ aNode warningNotices first messageText
 ]
 
 { #category : #testing }
 SemanticWarningIconStyler >> shouldStyleNode: aNode [
-	^aNode hasProperty: #semanticWarning
+	^aNode warningNotices isNotEmpty
 ]
