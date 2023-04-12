@@ -1590,6 +1590,13 @@ RBCodeSnippet class >> badTokens [
 			         isFaulty: false;
 			         value: 2). "a and b moved around. Formatter issue. FIXME?"
 		        (self new
+			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
+			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
+			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
+			         isMethod: true;
+			         isFaulty: false;
+			         value: 2). "z and b moved around. Formatter issue. FIXME?"
+		        (self new
 			         source: '"unfinished';
 			         nodeAt: '00000000000';
 			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
