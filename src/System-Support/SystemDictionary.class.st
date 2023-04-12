@@ -291,7 +291,7 @@ SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
 	^ self at: #SystemOrganization ifAbsent: [
-		  self organization: SystemOrganizer new.
+		  self organization: RPackageOrganizer default.
 		  self at: #SystemOrganization ]
 ]
 
