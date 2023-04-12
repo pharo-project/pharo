@@ -184,11 +184,11 @@ ContextTest >> testHasNonLocalReturn [
 	self deny: thisContext hasNonLocalReturn.
 	"this block context has no non-local return"
 	[ self deny: thisContext hasNonLocalReturn] value.
-	"but this"
-	[ self assert: thisContext hasNonLocalReturn. ^self] value.
 	"again, this is about the context locally, nested blocks to not count"
-	[ self deny: thisContext hasNonLocalReturn. [^self]] value.
-	[ self deny: thisContext hasNonLocalReturn. [self assert: thisContext hasNonLocalReturn. ^self]] value
+	[ self deny: thisContext hasNonLocalReturn. [ ^ self ] ] value.
+	[ self deny: thisContext hasNonLocalReturn ] value.
+	"We need to have the ^ self but as this assertion is at the end is not a problem if we return"
+	[ self assert: thisContext hasNonLocalReturn. ^ self ] value.
 ]
 
 { #category : #tests }
