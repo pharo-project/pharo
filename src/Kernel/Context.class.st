@@ -2016,11 +2016,12 @@ Context >> size [
 
 { #category : #'debugger access' }
 Context >> skipDebuggerComplete [
-	"Answer the self or the first sender that do not have the pragma `debuggerCompleteToSender`"
+	"Answer self or the first sender that do not have the pragma `debuggerCompleteToSender` or belong to the `Exception` class hierarchy"
 
-	(self method hasPragmaNamed: #debuggerCompleteToSender) ifFalse: [
-		^ self ].
-	^ sender ifNotNil: [ sender skipDebuggerComplete ]
+	^ ((self method methodClass instanceSide includesBehavior: Exception)
+		   or: [ self method hasPragmaNamed: #debuggerCompleteToSender ])
+		  ifTrue: [ sender ifNotNil: [ sender skipDebuggerComplete ] ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #'debugger access' }
