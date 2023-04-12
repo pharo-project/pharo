@@ -17,6 +17,11 @@ WeakRegistry class >> default [
 ]
 
 { #category : #'instance creation' }
+WeakRegistry class >> new [
+	^ FinalizationRegistry new
+]
+
+{ #category : #'instance creation' }
 WeakRegistry class >> new: n [
 
 	^ FinalizationRegistry new
