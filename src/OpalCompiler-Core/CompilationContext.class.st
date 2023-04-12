@@ -34,9 +34,7 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope',
-		'permitFaulty',
-		'permitUndeclared'
+		'semanticScope'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -654,30 +652,6 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> permitFaulty [
-
-	^ permitFaulty
-]
-
-{ #category : #accessing }
-CompilationContext >> permitFaulty: anObject [
-
-	permitFaulty := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> permitUndeclared [
-
-	^ permitUndeclared
-]
-
-{ #category : #accessing }
-CompilationContext >> permitUndeclared: anObject [
-
-	permitUndeclared := anObject
 ]
 
 { #category : #accessing }

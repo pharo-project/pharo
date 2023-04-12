@@ -33,6 +33,8 @@ Class {
 		'source',
 		'compilationContext',
 		'compilationContextClass',
+		'permitFaulty',
+		'permitUndeclared',
 		'changeStamp',
 		'protocol'
 	],
@@ -546,25 +548,25 @@ OpalCompiler >> parserClass [
 { #category : #'public access' }
 OpalCompiler >> permitFaulty [
 
-	^ self compilationContext permitFaulty
+	^ permitFaulty
 ]
 
 { #category : #'public access' }
 OpalCompiler >> permitFaulty: aBoolean [
 
-	self compilationContext permitFaulty: aBoolean
+	permitFaulty := aBoolean
 ]
 
 { #category : #'public access' }
 OpalCompiler >> permitUndeclared [
 
-	^ self compilationContext permitUndeclared
+	^ permitUndeclared
 ]
 
 { #category : #'public access' }
 OpalCompiler >> permitUndeclared: aBoolean [
 
-	self compilationContext permitUndeclared: aBoolean
+	permitUndeclared := aBoolean
 ]
 
 { #category : #accessing }
