@@ -36,6 +36,7 @@ Class {
 		'permitFaulty',
 		'permitUndeclared',
 		'failBlock',
+		'logged',
 		'changeStamp',
 		'protocol'
 	],
@@ -485,12 +486,12 @@ OpalCompiler >> install: aSource [
 
 { #category : #accessing }
 OpalCompiler >> logged [
-	^ self compilationContext logged
+	^ logged
 ]
 
 { #category : #accessing }
 OpalCompiler >> logged: aBoolean [
-	self compilationContext logged:  aBoolean
+	logged := aBoolean
 ]
 
 { #category : #accessing }

@@ -17,7 +17,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'requestor',
-		'logged',
 		'compiledMethod',
 		'options',
 		'environment',
@@ -500,16 +499,6 @@ CompilationContext >> interactive [
 	^ (requestor respondsTo: #interactive)
 		  ifTrue: [ requestor interactive ]
 		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logged [
-	^logged
-]
-
-{ #category : #accessing }
-CompilationContext >> logged: anObject [
-	logged := anObject
 ]
 
 { #category : #accessing }
