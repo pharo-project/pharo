@@ -966,6 +966,12 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitCommentNodes: anASTNode [
+
+	anASTNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ]
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
@@ -994,7 +1000,6 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	| value link |
 	value := aLiteralValueNode value.
 
-
 	"We can have 3 different kind of links from a literal:
 	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
@@ -1006,7 +1011,8 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 				        ifPresent: [ :aGlobal | TextClassLink className: value ]
 				        ifAbsent: [ TextMethodLink selector: value ] ]
 		        ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: { link } forNode: aLiteralValueNode
+	self addStyle: (self literalStyleSymbol: value) attributes: { link } forNode: aLiteralValueNode.
+	self visitCommentNodes: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1039,7 +1045,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
-	self visitMethodComments: aMethodNode comments.
+	self visitMethodComments: aMethodNode.
 	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
 	aMethodNode selectorParts
@@ -1101,10 +1107,10 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
-	self
-		addStyle: (self resolveStyleFor: aVariableNode)
-		attributes: (self resolveVariableAttributesFor: aVariableNode)
-		forNode: aVariableNode
+
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
+
+	self visitCommentNodes: aVariableNode
 ]
 
 { #category : #accessing }
