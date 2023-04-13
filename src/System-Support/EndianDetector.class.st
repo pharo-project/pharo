@@ -42,13 +42,6 @@ EndianDetector class >> endianness [
 	^ EndianCache
 ]
 
-{ #category : #'class initialization' }
-EndianDetector class >> initialize [
-
-	SessionManager default
-		registerSystemClassNamed: self name
-]
-
 { #category : #testing }
 EndianDetector class >> isBigEndian [
 

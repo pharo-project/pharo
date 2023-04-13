@@ -33,8 +33,8 @@ SharedRandom class >> globalGenerator [
 
 { #category : #'class initialization' }
 SharedRandom class >> initialize [
-	self reset.
-	SessionManager default registerSystemClassNamed: #SharedRandom
+
+	self reset
 ]
 
 { #category : #'class initialization' }

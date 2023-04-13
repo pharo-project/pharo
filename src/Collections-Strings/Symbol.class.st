@@ -115,9 +115,8 @@ Symbol class >> hasInterned: aString ifTrue: symBlock [
 
 { #category : #'class initialization' }
 Symbol class >> initialize [
-	self rehash.
-	SessionManager default
-		registerSystemClassNamed: #Symbol
+
+	self rehash
 ]
 
 { #category : #'symbol table' }

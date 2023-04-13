@@ -54,12 +54,6 @@ BasicCommandLineHandler class >> description [
 	^ 'basic responsible for the default options and activating other commands'
 ]
 
-{ #category : #'class initialization' }
-BasicCommandLineHandler class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-]
-
 { #category : #'handler selection' }
 BasicCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"I do not match ever, because my activation is manual"

@@ -26,9 +26,7 @@ SmallInteger class >> basicNew [
 
 { #category : #'class initialization' }
 SmallInteger class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 10.
+
 	self startUp: true
 ]
 
