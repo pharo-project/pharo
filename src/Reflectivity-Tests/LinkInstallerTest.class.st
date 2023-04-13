@@ -381,8 +381,10 @@ LinkInstallerTest >> testObjectsAreWeakReferenced [
 	weakArray := WeakArray with: obj1.
 
 	self assert: weakArray first identicalTo: obj1.
+
 	obj1 := nil.
-	Smalltalk garbageCollect.
+	4 timesRepeat: [Smalltalk garbageCollect].
+
 	self assert: weakArray first equals: nil
 ]
 

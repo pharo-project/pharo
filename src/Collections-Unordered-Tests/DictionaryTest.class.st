@@ -265,7 +265,7 @@ DictionaryTest >> otherDictionaryClasses [
 	"(DictionaryTest withAllSubclasses collect: [:each | each new classToBeTested]) asArray"
 	^ {SmallDictionary. IdentityDictionary. PluggableDictionary.
 		WeakValueDictionary. SystemDictionary. WeakKeyDictionary. SmallIdentityDictionary.
-		WeakIdentityKeyDictionary. WeakKeyToCollectionDictionary. Dictionary}
+		WeakIdentityKeyDictionary. Dictionary}
 			reject: [:each | each new species == self classToBeTested new species]
 ]
 
@@ -752,8 +752,9 @@ DictionaryTest >> testStoreOnWithNegativeInteger [
 
 { #category : #requirements }
 DictionaryTest >> valueNotIn [
-" return a value not included in nonEmpty "
-^valueNotIn
+	" return a value not included in nonEmpty "
+
+	^ valueNotIn
 ]
 
 { #category : #requirements }
