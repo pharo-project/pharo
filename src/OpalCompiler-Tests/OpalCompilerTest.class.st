@@ -4,6 +4,10 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
+{ #category : #error }
+OpalCompilerTest >> faultySource [ ^ 1+¿
+]
+
 { #category : #'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
