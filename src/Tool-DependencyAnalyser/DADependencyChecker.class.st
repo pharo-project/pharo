@@ -12,14 +12,17 @@ Class {
 	#name : #DADependencyChecker,
 	#superclass : #Object,
 	#instVars : [
-		'report'
+		'report',
+		'shouldComputeMessageSendDependencies'
 	],
 	#category : #'Tool-DependencyAnalyser-Report'
 }
 
 { #category : #private }
 DADependencyChecker >> buildPackageRelationGraphFor: aPackageName [
-	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName }) build ]
+	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName })
+		 	shouldComputeMessageSendDependencies: self shouldComputeMessageSendDependencies;
+			build ]
 		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | report addWarning: ex. ex resume ]
 ]
@@ -121,6 +124,16 @@ DADependencyChecker >> shortestPathToPackageIntroducingDependency: dependencyPac
 			dijkstra edges: { packageName } from: [ :ignored | packageName ] to: [ :ignored | dependency ] ] ].
 	dijkstra runFrom: aPackageName to: dependencyPackageName.
 	^ dijkstra reconstructPath
+]
+
+{ #category : #accessing }
+DADependencyChecker >> shouldComputeMessageSendDependencies [
+	^ shouldComputeMessageSendDependencies ifNil: [ true ]
+]
+
+{ #category : #accessing }
+DADependencyChecker >> shouldComputeMessageSendDependencies: aBoolean [
+	shouldComputeMessageSendDependencies := aBoolean 
 ]
 
 { #category : #'computing - dependencies' }
