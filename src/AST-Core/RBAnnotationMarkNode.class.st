@@ -57,6 +57,12 @@ RBAnnotationMarkNode >> isAnnotationMark [
 ]
 
 { #category : #testing }
+RBAnnotationMarkNode >> isHandled [
+
+	^ self emitValueBlock isNotNil
+]
+
+{ #category : #testing }
 RBAnnotationMarkNode >> needsParenthesis [
 	^false
 ]

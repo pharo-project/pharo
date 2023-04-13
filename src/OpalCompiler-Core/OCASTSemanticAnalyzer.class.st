@@ -182,8 +182,12 @@ OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 
-	(aRBAnnotationValueNode parent isNil or: [ aRBAnnotationValueNode parent isMessage ]) ifTrue: [ ^ self ].
-	self error: 'Bad annotation' forNode: aRBAnnotationValueNode
+	(aRBAnnotationValueNode parent isNotNil and: [
+		 aRBAnnotationValueNode parent isMessage ]) ifTrue: [
+		aRBAnnotationValueNode isHandled ifFalse: [
+			self error: 'Unknown annotation' forNode: aRBAnnotationValueNode parent ].
+		^ self ].
+	self error: 'Unexpected token' forNode: aRBAnnotationValueNode
 ]
 
 { #category : #visiting }
