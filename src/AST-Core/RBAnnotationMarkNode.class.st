@@ -1,14 +1,22 @@
 "
 Annotations are message send witout receiver and starting with `@`.
 
+E.g.
 ```st
-@something
+@foo.
+@foo: 5 bar: self something.
+foo := @bar
 ```
 
 In order to keep a simple and powerful parser, annotations are implemented as classic message sends on a special receiver `@`. The current class models this receiver.
-AST validations and transformations will deal with this.
 
-Note: it's not a variable, merly a placeholder.
+AST validations and transformations (and most likely compiler plugins) have the responsibility to handle the annotations:
+
+* checking the correct syntaxic and semantic usage (parsePlugin);
+* transforming the AST;
+* and/or attaching a custom IR emiter (see `emitValue:` and `emitValueBlock`).
+
+Note: the node is not a value nor a variable, it is a placeholder at best.
 "
 Class {
 	#name : #RBAnnotationMarkNode,
@@ -72,5 +80,5 @@ RBAnnotationMarkNode >> startWithoutParentheses [
 
 { #category : #accessing }
 RBAnnotationMarkNode >> stopWithoutParentheses [
-	^ start + 1
+	^ start
 ]
