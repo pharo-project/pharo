@@ -21,6 +21,10 @@ RBProgramNodeVisitor >> visit: aRBMessageNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 	"Sent *each time* an argument node is found"
 

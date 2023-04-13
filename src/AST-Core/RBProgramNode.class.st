@@ -590,6 +590,11 @@ RBProgramNode >> intersectsInterval: anInterval [
 ]
 
 { #category : #testing }
+RBProgramNode >> isAnnotationMark [
+	^ false
+]
+
+{ #category : #testing }
 RBProgramNode >> isArgumentVariable [
 	^ false
 ]

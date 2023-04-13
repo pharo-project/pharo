@@ -900,6 +900,13 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
 
+	"Annotations are implemented as a magic receiver '@'"
+	(currentToken isBinary: #@) ifTrue: [
+		| position |
+		position := currentToken start.
+		self step. "@"
+		^ RBAnnotationMarkNode new start: position ].
+
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
 		ifTrue: [
