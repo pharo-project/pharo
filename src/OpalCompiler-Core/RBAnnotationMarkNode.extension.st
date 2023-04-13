@@ -5,9 +5,9 @@ RBAnnotationMarkNode >> emitValue: methodBuilder [
 
 	emitValueBlock ifNotNil: [ ^ emitValueBlock value: methodBuilder ].
 	methodBuilder
-		pushLiteralVariable: Error binding;
-		pushLiteral: 'Error: untransformed annotation';
-		send: #signal:
+		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteral: 'Unhandled annotation';
+		send: #signalSyntaxError:
 ]
 
 { #category : #'*OpalCompiler-Core' }
