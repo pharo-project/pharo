@@ -19,9 +19,21 @@ Class {
 	#category : #'AST-Core-Nodes'
 }
 
+{ #category : #comparing }
+RBAnnotationMarkNode >> = anObject [
+	"All annotation marks are equivalent"
+	^self class = anObject class
+]
+
 { #category : #visiting }
 RBAnnotationMarkNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitAnnotationMarkNode: self
+]
+
+{ #category : #comparing }
+RBAnnotationMarkNode >> hash [
+
+	^ self class hash
 ]
 
 { #category : #initialization }
@@ -38,6 +50,11 @@ RBAnnotationMarkNode >> isAnnotationMark [
 { #category : #testing }
 RBAnnotationMarkNode >> needsParenthesis [
 	^false
+]
+
+{ #category : #accessing }
+RBAnnotationMarkNode >> precedence [
+	^0
 ]
 
 { #category : #accessing }
