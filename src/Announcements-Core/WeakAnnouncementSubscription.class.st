@@ -35,11 +35,6 @@ WeakAnnouncementSubscription >> finalize [
 	announcer removeSubscription: self
 ]
 
-{ #category : #initialization }
-WeakAnnouncementSubscription >> initialize [
-	list := self class finalizationList
-]
-
 { #category : #converting }
 WeakAnnouncementSubscription >> makeStrong [
 
