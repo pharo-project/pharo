@@ -60,8 +60,8 @@ Protocol >> includesSelector: selector [
 Protocol >> initialize [
 
 	super initialize.
-
-	methodSelectors := Array empty.
+	
+	self resetMethodSelectors.
 	name := self class unclassified
 ]
 
@@ -114,11 +114,6 @@ Protocol >> printOn: aStream [
 ]
 
 { #category : #'adding-removing' }
-Protocol >> removeAllMethodSelectors [
-	methodSelectors := Array empty
-]
-
-{ #category : #'adding-removing' }
 Protocol >> removeMethodSelector: aSymbol [
 	methodSelectors := methodSelectors copyWithout: aSymbol
 ]
@@ -127,4 +122,9 @@ Protocol >> removeMethodSelector: aSymbol [
 Protocol >> rename: newName [
 
 	self name: newName
+]
+
+{ #category : #'adding-removing' }
+Protocol >> resetMethodSelectors [
+	methodSelectors := Array empty
 ]
