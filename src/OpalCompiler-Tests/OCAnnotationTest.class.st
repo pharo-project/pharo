@@ -6,12 +6,16 @@ Class {
 
 { #category : #tests }
 OCAnnotationTest >> testAnnotationAST [
+	"This test uses an AST plugin to detect and transform a custom annotation `@meaning:`
+	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeRewriter`).
+	
+	The annotation (the full message node) is transformed into a simple literal node."
 
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast |
 			          (RBParseTreeRewriter new
-				           replace: '@ meaning: `@arg'
+				           replace: '@meaning: `@arg'
 				           withValueFrom: [ :node |
 					           RBLiteralNode value:
 						           ((node arguments first isLiteralNode and: [
@@ -23,7 +27,7 @@ OCAnnotationTest >> testAnnotationAST [
 
 	"Use plugin with compiler"
 	result := Object compiler
-		          addPlugin: plugin;
+		          addParsePlugin: plugin;
 		          evaluate:
 			          '{@meaning: 42. @meaning: 12. @meaning: self error. 42}'.
 	self
@@ -33,12 +37,19 @@ OCAnnotationTest >> testAnnotationAST [
 
 { #category : #tests }
 OCAnnotationTest >> testAnnotationIR [
+	"This test uses an AST plugin to detect a custom annotation `@meaning:`
+	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeSearcher`)
+	and attach a custom `emitValueBlock` to it.
+	It does not transform the AST.
+
+	At translation-time (AST->IR), the annotation (the full message node) is
+	compiled with the help of the attached `emitValueBlock`."
 
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast | "In fact, there is no transformation. Just an addition to the annotation mark"
 			          (RBParseTreeSearcher new
-				           matches: '@ meaning: `@arg'
+				           matches: '@meaning: `@arg'
 				           do: [ :node :ans |
 					           node receiver emitValueBlock: [ :methodBuilder |
 						           methodBuilder pushLiteral:
@@ -51,7 +62,7 @@ OCAnnotationTest >> testAnnotationIR [
 
 	"Use plugin with compiler"
 	result := Object compiler
-		          addPlugin: plugin;
+		          addParsePlugin: plugin;
 		          evaluate:
 			          '{@meaning: 42. @meaning: 12. @meaning: self error. 42}'.
 	self
