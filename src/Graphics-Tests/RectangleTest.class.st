@@ -211,6 +211,22 @@ RectangleTest >> testCloseToWithPrecision [
 	self assert: ((aOrigin extent: aCorner) closeTo: (bOrigin extent: bCorner) precision: 0.1)
 ]
 
+{ #category : #'tests - comparing' }
+RectangleTest >> testEquals [
+
+	self deny: nil equals: (10 @ 10 corner: 20 @ 20).
+	self deny: Object new equals: (10 @ 10 corner: 20 @ 20).
+	self 
+		deny: (10 @ 8 corner: 20 @ 20) 
+		equals: (10 @ 10 corner: 20 @ 20).
+	self
+		deny: (10 @ 10 corner: 20 @ 8)
+		equals: (10 @ 10 corner: 20 @ 20).
+	self
+		assert: (10 @ 10 corner: 20 @ 20)
+		equals: (10 @ 10 corner: 20 @ 20)
+]
+
 { #category : #tests }
 RectangleTest >> testFlip [
 	| r1 c r1Horiz r1Vert |

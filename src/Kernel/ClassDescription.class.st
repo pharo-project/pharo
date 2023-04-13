@@ -160,16 +160,6 @@ ClassDescription >> baseClass [
 	^ self instanceSide
 ]
 
-{ #category : #organization }
-ClassDescription >> basicOrganization [
-	^ organization
-]
-
-{ #category : #organization }
-ClassDescription >> basicOrganization: aClassOrg [
-	organization := aClassOrg
-]
-
 { #category : #'accessing - comment' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
@@ -846,19 +836,18 @@ ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
 
-	self basicOrganization
-		ifNil: [ self basicOrganization: (self isTrait
-						ifTrue: [ ClassOrganization new ]
-						ifFalse: [ ClassOrganization forClass: self ]) ].
-	^self basicOrganization setSubject: self.	"Making sure that subject is set correctly. It should not be necessary."
+	^ organization ifNil: [
+		  self organization: ClassOrganization new.
+		  self isTrait ifFalse: [ organization initializeClass: self ].
+		  organization ]
 ]
 
 { #category : #organization }
 ClassDescription >> organization: aClassOrg [
 	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
 
-	aClassOrg ifNotNil: [aClassOrg setSubject: self].
-	self basicOrganization: aClassOrg
+	aClassOrg ifNotNil: [ aClassOrg setSubject: self ].
+	organization := aClassOrg
 ]
 
 { #category : #printing }
@@ -885,7 +874,8 @@ ClassDescription >> removeMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods.
 	Here we could remove what we not need"
-	self organization removeProtocolNamed: aSymbol
+
+	self organization removeProtocolIfEmpty: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -894,7 +884,7 @@ ClassDescription >> removeProtocol: protocolName [
 	dictionary of the receiver. Then remove the category aString."
 
 	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
-	self organization removeProtocolNamed: protocolName
+	self organization removeProtocolIfEmpty: protocolName
 ]
 
 { #category : #'accessing - method dictionary' }

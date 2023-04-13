@@ -8,6 +8,14 @@ Class {
 	#category : #'Debugger-Oups-Tests-Tests - strategies'
 }
 
+{ #category : #private }
+OupsSingleDebuggerSelectorTest >> performTest [
+	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
+
+	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	self perform: testSelector asSymbol
+]
+
 { #category : #running }
 OupsSingleDebuggerSelectorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."

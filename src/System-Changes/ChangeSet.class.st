@@ -344,7 +344,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
 		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
 
-	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
+	SystemAnnouncer announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
 ]
 
 { #category : #services }
@@ -881,9 +881,7 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 				vars in this class, warn author when new ones are added." ] ].
 	(self atClass: class includes: #comment)
 		ifFalse: [ ^ self ].
-	class instanceSide organization
-		putCommentOnFile: stream
-		forClass: class instanceSide.
+	class instanceSide putCommentOnFile: stream.
 	stream cr
 ]
 

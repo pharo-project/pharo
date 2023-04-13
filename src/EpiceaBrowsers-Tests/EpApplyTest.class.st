@@ -116,6 +116,21 @@ EpApplyTest >> testClassAdditionWithClassRemoved [
 ]
 
 { #category : #tests }
+EpApplyTest >> testClassAdditionWithCommentChanged [
+
+	| aClass |
+	aClass := classFactory newClass.
+	aClass comment: 'First comment'.
+	self setHeadAsInputEntry.
+
+	aClass comment: 'Second comment'.
+
+	self assert: aClass comment equals: 'Second comment'.
+	self applyInputEntry.
+	self assert: aClass comment equals: 'First comment'
+]
+
+{ #category : #tests }
 EpApplyTest >> testClassAdditionWithInstanceVariablesChanged [
 
 	| aClass |

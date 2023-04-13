@@ -13,11 +13,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> ambiguous [
-	^ #ambiguous
-]
-
-{ #category : #'instance creation' }
 Protocol class >> name: nm [
 
 	^ self new
@@ -46,11 +41,6 @@ Protocol >> addAllMethodsFrom: aProtocol [
 { #category : #'adding-removing' }
 Protocol >> addMethodSelector: aSymbol [
 	^ methodSelectors add: aSymbol
-]
-
-{ #category : #private }
-Protocol >> canBeRemoved [
-	^ self isEmpty
 ]
 
 { #category : #testing }

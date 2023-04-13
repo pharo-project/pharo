@@ -503,25 +503,13 @@ CompiledMethod >> hasProperty: aKey [
 
 	| extendedMethodState |
 	^ (extendedMethodState := self penultimateLiteral) isMethodProperties
-		  ifTrue: [  extendedMethodState includesProperty: aKey ]
-		  ifFalse: [ false ]
+		  and: [  extendedMethodState includesProperty: aKey ]
 ]
 
 { #category : #accessing }
 CompiledMethod >> hasSourceCode [
 
-	"Retrieve or reconstruct the source code for this method."
-	| trailer source |
-	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ true ].
-	trailer hasSourcePointer ifFalse: [^ false].
-
-	"Situation normal;  read the sourceCode from the file"
-	source := [self getSourceFromFile]
-				on: Error
-				do: [ :ex | ex return: nil].
-	source isEmptyOrNil ifTrue: [^ false].
-	^ true
+	^ self sourceCodeOrNil isNotNil
 ]
 
 { #category : #testing }
@@ -902,6 +890,14 @@ CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 ]
 
 { #category : #'accessing - pragmas & properties' }
+CompiledMethod >> propertyAt: propName ifPresent: aBlock [
+	| propertiesOrSelector |
+	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
+		ifTrue: [propertiesOrSelector at: propName ifPresent: aBlock]
+		ifFalse: [nil]
+]
+
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: propName put: propValue [
 	"Set or add the property with key propName and value propValue.
 	 If the receiver does not yet have a method properties create one and replace
@@ -982,6 +978,9 @@ CompiledMethod >> removeProperty: propName [
 									(Association
 										key: propName
 										value: value)).
+
+	"Remove unneded AdditionalMethodState"
+	self penultimateLiteral size = 0 ifTrue: [ self penultimateLiteral: self selector ].
 	^value
 ]
 
@@ -1039,6 +1038,9 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
 	| trailer copy |
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	
 	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
 	copy := self copyWithTrailerBytes: trailer.
 	"If possible do a replace in place as an optimization"
@@ -1055,12 +1057,21 @@ CompiledMethod >> setSourcePointer: srcPointer [
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
 
+	^ self sourceCodeOrNil
+		  ifNotNil: [ :code | ^ code ]
+		  ifNil: [ self codeForNoSource ]
+]
+
+{ #category : #accessing }
+CompiledMethod >> sourceCodeOrNil [
+	"Retrieve the source code for this method, or return nil."
+
 	| trailer |
 	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ code ].
-	trailer hasSourcePointer ifFalse: [ ^ self codeForNoSource ].
-
-	^ self getSourceFromFile ifEmpty: [ self codeForNoSource ]
+	trailer sourceCode ifNotNil: [ :code | ^ code ].
+	self propertyAt: #source ifPresent:  [ :code | ^ code ].
+	trailer hasSourcePointer ifFalse: [ ^ nil ].
+	^ self getSourceFromFile ifEmpty: [ nil ]
 ]
 
 { #category : #'source code management' }

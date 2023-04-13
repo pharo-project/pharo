@@ -259,7 +259,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		(self compilationContext interactive and: [self compilationContext noPattern not]) ifTrue: [
+		compilationContext interactive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -316,7 +316,7 @@ OpalCompiler >> compilationContextClass: aClass [
 { #category : #'public access' }
 OpalCompiler >> compile [
 
-	| result keep method |
+	| result method |
 	
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
@@ -324,13 +324,11 @@ OpalCompiler >> compile [
 	result := self parse.
 	ast ifNil: [ ^ result ]. "some failBlock"
 
-	"We need to keep information (source and ast) on doit method and faulty code,
-	 because decompilation is not reliable and those will likely not be installed in a class."
-	keep := compilationContext noPattern or: [ ast isFaulty ].
-	keep ifTrue: [ compilationContext parseOptions: #( + #optionEmbeddSources ) ].
 	self callPlugins.
+	ast scope registerVariables.
 	method := ast generateMethod.
-	keep ifTrue: [ method propertyAt: #ast put: ast ].
+	method propertyAt: #source put: source.
+	compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 	^ method
 ]
 
@@ -508,7 +506,7 @@ OpalCompiler >> parse [
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
-		ast allNotices do: [ :n |
+		ast allNotices sorted do: [ :n |
 			| check |
 			check := self checkNotice: n.
 			check ifNil: [ ^ ast ].

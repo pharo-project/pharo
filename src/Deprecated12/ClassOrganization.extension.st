@@ -45,28 +45,12 @@ ClassOrganization >> listAtCategoryNamed: aName [
 ]
 
 { #category : #'*Deprecated12' }
-ClassOrganization >> notifyOfAddedCategory: protocolName [
-
-	self deprecated: 'Use #notifyOfAddedProtocol: instead.' transformWith: '`@rcv notifyOfAddedCategory: `@arg' -> '`@rcv notifyOfAddedProtocol: `@arg'.
-	self notifyOfAddedProtocol: protocolName
-]
-
-{ #category : #'*Deprecated12' }
 ClassOrganization >> notifyOfChangedCategoriesFrom: oldProtocolName to: newProtocolName [
 
 	self
 		deprecated: 'Use #notifyOfChangedProtocolNamesFrom:to: instead.'
 		transformWith: '`@rcv notifyOfChangedCategoriesFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNamesFrom: `@arg1 to: `@arg2'.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolName to: newProtocolName
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> notifyOfChangedCategoryFrom: oldNameOrNil to: newNameOrNil [
-
-	self
-		deprecated: 'Use #notifyOfChangedProtocolNameFrom: instead.'
-		transformWith: '`@rcv notifyOfChangedCategoryFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNameFrom: `@arg1 to: `@arg2'.
-	self notifyOfChangedProtocolNameFrom: oldNameOrNil to: newNameOrNil
 ]
 
 { #category : #'*Deprecated12' }
@@ -81,8 +65,8 @@ ClassOrganization >> notifyOfRemovedCategory: protocolName [
 { #category : #'*Deprecated12' }
 ClassOrganization >> removeCategory: protocolName [
 
-	self deprecated: 'Use #removeProtocolNamed: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolNamed: `@arg'.
-	self removeProtocolNamed: protocolName
+	self deprecated: 'Use #removeProtocolIfEmpty: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
+	self removeProtocolIfEmpty: protocolName
 ]
 
 { #category : #'*Deprecated12' }
@@ -90,6 +74,22 @@ ClassOrganization >> removeEmptyCategories [
 
 	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
 	self removeEmptyProtocols
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> removeProtocol: aProtocol [
+
+	self
+		deprecated: 'Use #removeProtocolIfEmpty: since I was also removing only empty protocols.'
+		transformWith: '`@rcv removeProtocol: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
+	^ self removeProtocolIfEmpty: aProtocol
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> removeProtocolNamed: protocolName [
+
+	self deprecated: 'Use #removeProtocolIfEmpty: instead' transformWith: '`@rcv removeProtocolNamed: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
+	^ self removeProtocolIfEmpty: protocolName
 ]
 
 { #category : #'*Deprecated12' }

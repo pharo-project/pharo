@@ -966,6 +966,12 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitCommentNodes: anASTNode [
+
+	anASTNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ]
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
@@ -1008,7 +1014,8 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
 				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNodee.
+	self visitCommentNodes: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1041,7 +1048,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
-	self visitMethodComments: aMethodNode comments.
+	self visitMethodComments: aMethodNode.
 	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
 	aMethodNode selectorParts
@@ -1103,10 +1110,10 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
-	self
-		addStyle: (self resolveStyleFor: aVariableNode)
-		attributes: (self resolveVariableAttributesFor: aVariableNode)
-		forNode: aVariableNode
+
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
+
+	self visitCommentNodes: aVariableNode
 ]
 
 { #category : #accessing }

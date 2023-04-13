@@ -156,7 +156,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 	d := MCClassDefinition
 		name: className
 		superclassName: 'Object'
-		traitComposition: '{Trait1}'
+		traitComposition: '{MCTraitMock1}'
 		classTraitComposition: '{}'
 		category: self mockCategoryName
 		instVarNames: #()
@@ -170,7 +170,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1)
 ]
 
 { #category : #tests }
@@ -182,7 +182,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 	d := MCClassDefinition
 		name: className
 		superclassName: 'Object'
-		traitComposition: 'Trait1'
+		traitComposition: 'MCTraitMock1'
 		classTraitComposition: '{}'
 		category: self mockCategoryName
 		instVarNames: #()
@@ -196,7 +196,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1)
 ]
 
 { #category : #tests }
@@ -208,7 +208,7 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 	d := MCClassDefinition
 		name: className
 		superclassName: 'Object'
-		traitComposition: 'Trait1 + Trait2'
+		traitComposition: 'MCTraitMock1 + MCTraitMock2'
 		classTraitComposition: '{}'
 		category: self mockCategoryName
 		instVarNames: #()
@@ -223,8 +223,8 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
 	self assert: (cls includesSelector: #c2).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait2)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1).
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock2)
 ]
 
 { #category : #tests }
@@ -236,7 +236,7 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 	d := MCClassDefinition
 		name: className
 		superclassName: 'Object'
-		traitComposition: 'Trait1 - {#c1}'
+		traitComposition: 'MCTraitMock1 - {#c1}'
 		classTraitComposition: '{}'
 		category: self mockCategoryName
 		instVarNames: #()

@@ -265,7 +265,7 @@ PBBootstrap30 >> createInitialObjects [
 	self bootstrapInterpreter evaluateCode: 'DangerousClassNotifier disable'.
 	self bootstrapInterpreter evaluateCode: 'Undeclared := Dictionary new.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk := SmalltalkImage basicNew.'.
-	self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: (SystemDictionary withOrganizer: SystemOrganizer new).'.
+	self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk at: #Smalltalk put: Smalltalk.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk at: #Undeclared put: Undeclared.'.
 	

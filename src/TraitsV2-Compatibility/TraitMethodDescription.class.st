@@ -72,7 +72,7 @@ TraitMethodDescription >> effectiveMethodCategoryCurrent: currentCategoryOrNil n
 	isConflict ifFalse: [^ result].
 	(isCurrent not and: [newCategoryOrNil notNil]) ifTrue: [^ newCategoryOrNil].
 
-	^ Protocol ambiguous
+	^ Protocol traitConflictName
 ]
 
 { #category : #private }

@@ -180,6 +180,11 @@ Number >> asFloat [
 ]
 
 { #category : #converting }
+Number >> asFraction [
+	^ self subclassResponsibility
+]
+
+{ #category : #converting }
 Number >> asInteger [
 	"Round me towards nearest integer closer to zero."
 	"This violates the ANSI standard, but the system depends on this"
@@ -364,6 +369,11 @@ Number >> isNumber [
 ]
 
 { #category : #testing }
+Number >> isPowerOfTwo [
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
 Number >> isZero [
 	^self = 0
 ]
@@ -536,9 +546,9 @@ Number >> raisedTo: aNumber [
 	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
-		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: 1) signal]
-			ifFalse: [^ self]].
+		^ aNumber < 0
+			ifTrue: [ (ZeroDivide dividend: 1) signal]
+			ifFalse: [ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
 ]
 

@@ -6,7 +6,7 @@ Instance Variables:
 	receiver	<RBValueNode>	the receiver's node
 	selector	<Symbol>	the selector we're sending
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
-
+	superOf <Behavior> the current class (for super-send messages)
 
 "
 Class {
@@ -16,7 +16,8 @@ Class {
 		'receiver',
 		'selector',
 		'keywordsPositions',
-		'arguments'
+		'arguments',
+		'superOf'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -190,7 +191,7 @@ RBMessageNode >> isHaltNode [
 
 { #category : #testing }
 RBMessageNode >> isKeyword [
-	^(self selector indexOf: $:) ~= 0
+	^ self selector isKeyword
 ]
 
 { #category : #testing }
@@ -494,4 +495,16 @@ RBMessageNode >> stopWithoutParentheses [
 	^arguments isEmpty
 		ifTrue: [self keywordsIntervals first last]
 		ifFalse: [arguments last stop]
+]
+
+{ #category : #accessing }
+RBMessageNode >> superOf [
+
+	^ superOf
+]
+
+{ #category : #accessing }
+RBMessageNode >> superOf: anObject [
+
+	superOf := anObject
 ]

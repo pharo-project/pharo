@@ -11,6 +11,14 @@ Class {
 	#category : #'AST-Core-Notice'
 }
 
+{ #category : #comparing }
+RBNotice >> <= other [
+
+	self errorLevel = other errorLevel ifFalse: [
+		^ self errorLevel > other errorLevel ]. "Errors before warnings"
+	^ self position <= other position
+]
+
 { #category : #accessing }
 RBNotice >> description [
 
@@ -31,6 +39,15 @@ RBNotice >> description [
 			  nextPutAll: (node sourceCode asString withBlanksCondensed truncateWithElipsisTo: 60) ]
 ]
 
+{ #category : #'error handling' }
+RBNotice >> errorLevel [
+
+	self isSyntaxError ifTrue: [ ^ 3 ].
+	self isError ifTrue: [ ^ 2 ].
+	self isWarning ifTrue: [ ^ 1 ].
+	^ 0
+]
+
 { #category : #inspecting }
 RBNotice >> inspectionSource [
 
@@ -40,6 +57,12 @@ RBNotice >> inspectionSource [
 
 { #category : #testing }
 RBNotice >> isError [
+
+	^ false
+]
+
+{ #category : #testing }
+RBNotice >> isSyntaxError [
 
 	^ false
 ]

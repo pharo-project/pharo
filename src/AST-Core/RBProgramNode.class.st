@@ -206,6 +206,33 @@ RBProgramNode >> allVariables [
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
+{ #category : #tests }
+RBProgramNode >> asPositionDebugString [
+	"Compute a string representing the positions of children nodes.
+	Each character is an identifier (0 to 9 then A to Z) that corresponds to the chidren node at the corresponding position.
+	Identifiers are assigned with a deep-first search: self is 0, first chisdren is 1, etc."
+
+	| cpt characters result |
+	"DFS to assign identifiers to nodes"
+	cpt := 0.
+	characters := IdentityDictionary new.
+	characters at: nil put: Character space.
+	self nodesDo: [ :each |
+		characters at: each put: cpt asCharacterDigit.
+		cpt := cpt + 1.
+		each comments do: [ :eachCmt |
+			characters at: eachCmt put: cpt asCharacterDigit.
+			cpt := cpt + 1 ] ].
+
+	"Fill the result string"
+	result := String new: self stop - self start + 1.
+	self start to: self stop do: [ :i |
+		result
+			at: i - self start + 1
+			put: (characters at: (self nodeForOffset: i)) ].
+	^ result
+]
+
 { #category : #accessing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."

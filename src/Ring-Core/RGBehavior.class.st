@@ -669,14 +669,6 @@ RGBehavior >> lookupVar: aName declare: aBoolean [
 	^ self lookupVar: aName
 ]
 
-{ #category : #lookup }
-RGBehavior >> lookupVarForDeclaration: aName [
-
-	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
-
-	^ self lookupVar: aName
-]
-
 { #category : #resolving }
 RGBehavior >> makeResolved [
 
