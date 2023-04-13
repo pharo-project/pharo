@@ -479,6 +479,12 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 
+{ #category : #visiting }
+OCASTTranslator >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	self emitRuntimeError: aRBAnnotationValueNode
+]
+
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
 

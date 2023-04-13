@@ -180,6 +180,13 @@ OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	(aRBAnnotationValueNode parent isNil or: [ aRBAnnotationValueNode parent isMessage ]) ifTrue: [ ^ self ].
+	self error: 'Bad annotation' forNode: aRBAnnotationValueNode
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	self visitNode: anAssignmentNode value.
