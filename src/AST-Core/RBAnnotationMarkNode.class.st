@@ -14,7 +14,8 @@ Class {
 	#name : #RBAnnotationMarkNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'start'
+		'start',
+		'emitValueBlock'
 	],
 	#category : #'AST-Core-Nodes'
 }
