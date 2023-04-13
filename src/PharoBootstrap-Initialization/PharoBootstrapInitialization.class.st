@@ -72,14 +72,15 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	SmallInteger initialize.
 
 	"FFI"
-	ExternalObject initialize.
 	ExternalType initialize.
 	FFIBackend initialize.
 
-	"Initialize basic command line behaviour"
-	Stdio initialize.
+	"Transcript"
 	NonInteractiveTranscript initialize.
-	BasicCommandLineHandler initialize.
+	
+	"Register all KernelGroup classes needing registrations to the SessionManager"
+	SessionManager initializeKernelRegistrations.
+
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
