@@ -198,8 +198,14 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 { #category : #accessing }
 MethodClassifier >> listToFindProtocols [
 
-	^ #( #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma: #protocolByKnownPrefix: #protocolByOtherImplementors:
-	     #protocolInSuperclassProtocol: )
+	^ #( #protocolInSuperclassProtocol: #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma:
+	     #protocolByKnownPrefix: #protocolByOtherImplementors: )
+]
+
+{ #category : #accessing }
+MethodClassifier >> protocol [
+
+	^ protocol
 ]
 
 { #category : #'classification-rules' }

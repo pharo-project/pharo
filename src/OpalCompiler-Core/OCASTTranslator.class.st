@@ -431,7 +431,7 @@ OCASTTranslator >> ir [
 OCASTTranslator >> nextUniqueInlineID [
 
 	nextUniqueInlineID := nextUniqueInlineID + 1.
-	^ nextUniqueInlineID asString asSymbol
+	^ '0', nextUniqueInlineID asString asSymbol
 ]
 
 { #category : #private }
