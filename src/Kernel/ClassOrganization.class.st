@@ -202,7 +202,7 @@ ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 	toProtocol := self protocolNamed: toProtocolNamed.
 
 	toProtocol addAllMethodsFrom: fromProtocol.
-	fromProtocol removeAllMethodSelectors.
+	fromProtocol resetMethodSelectors.
 
 	^ toProtocol
 ]
