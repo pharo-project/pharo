@@ -47,6 +47,7 @@ Class {
 RBCodeSnippet class >> allSnippets [
 
 	^ {
+		  self badAnnotations.
 		  self badSimpleExpressions.
 		  self badExpressions.
 		  self badTokens.
@@ -54,6 +55,64 @@ RBCodeSnippet class >> allSnippets [
 		  self badSemantic.
 		  self badPositions.
 		  self badVariableAndScopes } flattened
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badAnnotations [
+
+	<script: 'self styleWithError: self badAnnotations'>
+	| list |
+	list := {
+		        (self new
+			         source: '@';
+			         nodeAt: '0';
+			         isParseFaulty: false;
+			         notices: #( #( 1 1 1 'Unexpected token' ) )).
+		        (self new
+			         source: '@5';
+			         nodeAt: '23';
+			         formattedCode: '@. 5';
+			         notices:
+				         #( #( 1 1 1 'Unexpected token' )
+				            #( 1 1 2 'End of statement expected' ) )).
+		        (self new
+			         source: 'a := @';
+			         nodeAt: '200001';
+			         isParseFaulty: false;
+			         notices:
+				         #( #( 6 6 6 'Unexpected token' )
+				            #( 1 1 1 'Undeclared variable' ) )).
+		        (self new
+			         source: '^ @';
+			         nodeAt: '001';
+			         isParseFaulty: false;
+			         notices: #( #( 3 3 3 'Unexpected token' ) )).
+		        (self new
+			         source: '@foo';
+			         nodeAt: '1000';
+			         formattedCode: '@ foo';
+			         isParseFaulty: false;
+			         notices: #( #( 1 4 1 'Unknown annotation' ) )).
+		        (self new
+			         source: '@foo:';
+			         nodeAt: '10000';
+			         formattedCode: '@ foo: ';
+			         notices: #( #( 6 5 6 'Variable or expression expected' )
+				            #( 1 5 1 'Unknown annotation' ) )).
+		        (self new
+			         source: '@foo:5';
+			         nodeAt: '100002';
+			         formattedCode: '@ foo: 5';
+			         isParseFaulty: false;
+			         notices: #( #( 1 6 1 'Unknown annotation' ) )) }.
+
+	"Setup default values"
+	self new
+		group: #badAnnotations;
+		isMethod: false;
+		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
 ]
 
 { #category : #accessing }
