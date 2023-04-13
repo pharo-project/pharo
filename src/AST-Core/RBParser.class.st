@@ -800,7 +800,7 @@ RBParser >> parsePragma [
 	startToken := currentToken.
 	self step. "<"
 	pragma := self basicParsePragma.
-	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+	(currentToken isBinary: #>) ifFalse: [
 		pragma isPragma ifTrue: [
 			pragma
 				left: startToken start;
@@ -835,7 +835,7 @@ RBParser >> parsePragmaLiteral [
 { #category : #'private - parsing' }
 RBParser >> parsePragmas [
 
-	[ currentToken isBinary and: [ currentToken value = #< ] ]
+	[ currentToken isBinary: #< ]
 		whileTrue: [ self parsePragma ]
 ]
 
