@@ -46,8 +46,7 @@ EventManager class >> flushEvents [
 		"make sure we don't modify evtDict while enumerating"
 		evtDict keysDo: [:evtName| | msgSet |
 			msgSet := evtDict at: evtName ifAbsent:[nil].
-			(msgSet == nil) ifTrue:[rcvr removeActionsForEvent: evtName]]]].
-	EventManager actionMaps finalizeValues
+			(msgSet == nil) ifTrue:[rcvr removeActionsForEvent: evtName]]]]
 ]
 
 { #category : #'class initialization' }

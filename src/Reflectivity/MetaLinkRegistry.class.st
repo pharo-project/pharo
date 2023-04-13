@@ -42,7 +42,8 @@ Class {
 
 { #category : #adding }
 MetaLinkRegistry >> addMetaLink: aLink forObject: anObject [
-	(links at: aLink ifAbsentPut: WeakSet new) add: anObject
+
+	(links at: aLink ifAbsentPut: [ WeakSet new ]) add: anObject
 ]
 
 { #category : #permalinks }
