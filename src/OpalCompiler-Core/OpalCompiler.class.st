@@ -263,7 +263,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		compilationContext interactive ifTrue: [
+		self compilationContext interactive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -332,7 +332,7 @@ OpalCompiler >> compile [
 	ast scope registerVariables.
 	method := ast generateMethod.
 	method propertyAt: #source put: source.
-	compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 	^ method
 ]
 
@@ -589,7 +589,7 @@ OpalCompiler >> permitUndeclared: aBoolean [
 
 { #category : #accessing }
 OpalCompiler >> productionEnvironment: anObject [
-	compilationContext productionEnvironment: anObject
+	self compilationContext productionEnvironment: anObject
 ]
 
 { #category : #accessing }

@@ -146,8 +146,7 @@ IRMethod >> firstInstructionMatching: aBlock [
 
 { #category : #accessing }
 IRMethod >> forceLongForm [
-	compilationContext ifNil: [ ^ false ].
-	^compilationContext optionLongIvarAccessBytecodes
+	^ self compilationContext optionLongIvarAccessBytecodes
 ]
 
 { #category : #translating }
@@ -159,7 +158,7 @@ IRMethod >> generate [
 IRMethod >> generate: trailer [
 
 	| irTranslator |
-   irTranslator := IRTranslator context: compilationContext trailer: trailer.
+   irTranslator := IRTranslator context: self compilationContext trailer: trailer.
 	irTranslator
 		visitNode: self;
 		pragmas: pragmas.
@@ -177,7 +176,7 @@ IRMethod >> generate: trailer [
 { #category : #translating }
 IRMethod >> generateBlock: trailer withScope: scope [
 	| irTranslator |
-      irTranslator := IRTranslator context: compilationContext trailer: trailer.
+      irTranslator := IRTranslator context: self compilationContext trailer: trailer.
 	irTranslator
 		pushOuterVectors: scope;
 		visitNode: self;

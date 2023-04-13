@@ -236,7 +236,7 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
