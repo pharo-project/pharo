@@ -208,12 +208,6 @@ MethodClassifier >> protocol [
 	^ protocol
 ]
 
-{ #category : #accessing }
-MethodClassifier >> protocol: anObject [
-
-	^ protocol := anObject
-]
-
 { #category : #'classification-rules' }
 MethodClassifier >> protocolAccessorFor: aMethod [
 	" If the method is a setter or getter for a  "
