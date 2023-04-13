@@ -64,7 +64,6 @@ Object class >> flushDependents [
 	DependentsFields keysAndValuesDo:[:key :dep|
 		key ifNotNil:[key removeDependent: nil].
 	].
-	DependentsFields finalizeValues
 ]
 
 { #category : #documentation }
@@ -158,7 +157,7 @@ Object class >> reInitializeDependentsFields [
 
 	| oldFields |
 	oldFields := DependentsFields.
-	DependentsFields := WeakIdentityKeyDictionary new.
+	self initializeDependentsFields.
 	oldFields
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
@@ -380,7 +379,8 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [
+	"we do the == true check to avoid NonBooleanReceiver error for nonBoolean aBlock values"
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 
@@ -2039,13 +2039,16 @@ Object >> subclassResponsibility [
 Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 	"When I am finalized (e.g., garbage collected) close the associated resource handle by sending aSelector to the appropriate finalizer (the guy who knows how to get rid of the resource).
 	WARNING: Neither the finalizer nor the resource handle are allowed to reference me. If they do, then I will NEVER be garbage collected. Since this cannot be validated here, it is up to the client to make sure this invariant is not broken."
-	self == aFinalizer ifTrue:[self error: 'I cannot finalize myself'].
-	self == aResourceHandle ifTrue:[self error: 'I cannot finalize myself'].
-	^self finalizationRegistry add: self executor:
-		(ObjectFinalizer new
-			receiver: aFinalizer
-			selector: aSelector
-			argument: aResourceHandle)
+
+	self == aFinalizer ifTrue: [ self error: 'I cannot finalize myself' ].
+	self == aResourceHandle ifTrue: [
+		self error: 'I cannot finalize myself' ].
+	^ self finalizationRegistry
+		  add: self
+		  finalizer: (ObjectFinalizer new
+				   receiver: aFinalizer
+				   selector: aSelector
+				   argument: aResourceHandle)
 ]
 
 { #category : #'error handling' }

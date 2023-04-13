@@ -13,36 +13,13 @@ Class {
 	#superclass : #Object,
 	#type : #weak,
 	#instVars : [
-		'list',
 		'next',
 		'announcer',
 		'announcementClass',
 		'action'
 	],
-	#classVars : [
-		'FinalizationList'
-	],
 	#category : #'Announcements-Core-Subscription'
 }
-
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizationList [
-
-	^ FinalizationList ifNil: [ FinalizationList := WeakFinalizationList new ]
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizeValues [
-
-	| head |
-
-	head := self finalizationList swapWithNil.
-
-	[ head notNil ] whileTrue: [
-		head finalize.
-		head := head next
-	]
-]
 
 { #category : #'instance creation' }
 WeakAnnouncementSubscription class >> new [
@@ -108,11 +85,6 @@ WeakAnnouncementSubscription >> finalize [
 WeakAnnouncementSubscription >> handlesAnnouncement: anAnnouncement [
 
 	^ announcementClass handlesAnnouncement: anAnnouncement
-]
-
-{ #category : #initialization }
-WeakAnnouncementSubscription >> initialize [
-	list := self class finalizationList
 ]
 
 { #category : #converting }

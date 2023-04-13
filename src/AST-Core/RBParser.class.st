@@ -1403,6 +1403,9 @@ RBParser >> stepBar [
 	value := currentToken value.
 	(value size < 2 or: [ value first ~= $| ]) ifTrue: [ ^ self step ].
 
+	"Because the current token might escape, we need to update the old curent token and create a new current token"
+	currentToken value: '|'.
+	currentToken := currentToken clone.
 	currentToken value: value allButFirst.
 	currentToken start: currentToken start + 1
 ]

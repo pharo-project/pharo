@@ -126,55 +126,57 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 
 	(self isMenuOpen not and: [
-		self editor atCompletionPosition and: [
-			NECPreferences popupShowWithShortcut matches: {aKeyboardEvent}]])
-				ifTrue: [
-					aKeyboardEvent supressNextKeyPress: true.
-					self openMenu. ^ true ].
-
-	key = KeyboardKey backspace
+		 self editor atCompletionPosition and: [
+			 NECPreferences popupShowWithShortcut matches: { aKeyboardEvent } ] ])
 		ifTrue: [
-			self smartBackspace ifTrue: [ ^ true ]].
+			aKeyboardEvent supressNextKeyPress: true.
+			self openMenu.
+			^ true ].
+
+	key = KeyboardKey backspace ifTrue: [
+		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
 
-	({ KeyboardKey left . KeyboardKey right.
-		KeyboardKey keypadLeft . KeyboardKey keypadRight }
-			includes: key) ifTrue: [ "just move the caret" ^ false ].
+	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
+		menuMorph showDetail.
+		^ true ].
 
-	({ KeyboardKey up . KeyboardKey keypadUp } includes: key)
-		ifTrue: [
-			menuMorph moveUp.
-			^ true ].
-	({ KeyboardKey down . KeyboardKey keypadDown } includes: key)
-		ifTrue: [
-			menuMorph moveDown.
-			^ true ].
-	(key = KeyboardKey pageUp)
-		ifTrue: [
-			menuMorph pageUp.
-			^ true ].
-	(key = KeyboardKey pageDown)
-		ifTrue: [
-			menuMorph pageDown.
-			^ true ].
-	((key = KeyboardKey enter or:[key = KeyboardKey keypadEnter]) and: [ NECPreferences useEnterToAccept ])
-		ifTrue: [
-			menuMorph insertSelected
-				ifTrue: [ ^ true ] ].
-	key = KeyboardKey tab
-		ifTrue: [
-			menuMorph insertSelected
-						ifTrue: [ ^ true ] ].
-	key = KeyboardKey backspace
-		ifTrue: [
-			editor isCaretBehindChar
-				ifFalse: [ self closeMenu ].
-			^ false ].
-	(controlKeyPressed or: [ commandKeyPressed or: [ key = KeyboardKey escape ] ])
-		ifTrue: [
-			self closeMenu.
-			^ true ].
+
+	({
+		 KeyboardKey left.
+		 KeyboardKey right.
+		 KeyboardKey keypadLeft.
+		 KeyboardKey keypadRight } includes: key) ifTrue: [ "just move the caret"
+		^ false ].
+
+	({
+		 KeyboardKey up.
+		 KeyboardKey keypadUp } includes: key) ifTrue: [
+		menuMorph moveUp.
+		^ true ].
+	({
+		 KeyboardKey down.
+		 KeyboardKey keypadDown } includes: key) ifTrue: [
+		menuMorph moveDown.
+		^ true ].
+	key = KeyboardKey pageUp ifTrue: [
+		menuMorph pageUp.
+		^ true ].
+	key = KeyboardKey pageDown ifTrue: [
+		menuMorph pageDown.
+		^ true ].
+	((key = KeyboardKey enter or: [ key = KeyboardKey keypadEnter ])
+		 and: [ NECPreferences useEnterToAccept ]) ifTrue: [
+		menuMorph insertSelected ifTrue: [ ^ true ] ].
+	key = KeyboardKey tab ifTrue: [
+		menuMorph insertSelected ifTrue: [ ^ true ] ].
+	key = KeyboardKey backspace ifTrue: [
+		editor isCaretBehindChar ifFalse: [ self closeMenu ].
+		^ false ].
+	key = KeyboardKey escape ifTrue: [
+		self closeMenu.
+		^ true ].
 	^ false
 ]
 
@@ -227,6 +229,12 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 CompletionEngine >> hasCompletionContext [
 
 	^ context notNil
+]
+
+{ #category : #'menu morph' }
+CompletionEngine >> hasDetail [
+
+	^ self isMenuOpen and: [ menuMorph hasDetail ]
 ]
 
 { #category : #keyboard }
@@ -309,12 +317,12 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart rest |
 	"Try to correctly replace the current token in the word.
 	The code editor should be able to do it by himself"
-	wordEnd := self editor nextWord: self editor caret.
+	wordEnd := (self editor nextWord: self editor caret - 1).
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
-	wordEnd = self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
-	
+	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
+
 	wordStart := self editor previousWord: (self editor caret - 1).
-		
+
 	self editor
 		selectInvisiblyFrom: wordStart
 		to: wordEnd - 1.
