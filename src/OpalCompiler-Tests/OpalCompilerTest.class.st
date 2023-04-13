@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #error }
-OpalCompilerTest >> faultySource [ ^ 1+¿
+OpalCompilerTest >> faultySource [ ^ 1+]
 ]
 
 { #category : #'tests - bindings' }
