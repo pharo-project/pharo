@@ -252,7 +252,13 @@ ClassOrganization >> protocolNameOfElement: aSelector [
 ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 
 	^ (self protocolOfSelector: aSelector)
-		  ifNil: [ (organizedClass includesSelector: aSelector) ifTrue: [ Protocol unclassified ] ifFalse: [ aBlock value ] ]
+		  ifNil: [
+			  (organizedClass includesSelector: aSelector)
+				  ifTrue: [
+					  ('Selector #' , aSelector , ' of ' , organizedClass name , ' is in not protocol but is in the class... Called by: ' , thisContext sender asString)
+						  traceCr.
+					  Protocol unclassified ]
+				  ifFalse: [ aBlock value ] ]
 		  ifNotNil: [ :protocol | protocol name ]
 ]
 
