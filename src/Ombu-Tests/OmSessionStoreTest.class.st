@@ -27,6 +27,16 @@ OmSessionStoreTest >> tearDown [
 ]
 
 { #category : #tests }
+OmSessionStoreTest >> testNextStoreName [
+
+	| names |
+	names := OrderedCollection new.
+	100 timesRepeat: [ names add: store nextStoreName ].
+	self assertCollection: names hasSameElements: names asSet.
+	self assert: names size equals: names asSet size
+]
+
+{ #category : #tests }
 OmSessionStoreTest >> testResetWithNextStoreNameWithRandomSuffix [
 	| aFileReference anotherFileReference |
 	store storeNameStrategy: OmRandomSuffixStrategy new.
