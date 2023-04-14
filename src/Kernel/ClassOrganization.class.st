@@ -18,25 +18,21 @@ ClassOrganization class >> forClass: aClass [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 ClassOrganization >> addProtocol: aProtocol [
 
-	(self protocols includes: aProtocol) ifTrue: [ ^ aProtocol ].
-
-	protocols := protocols copyWith: aProtocol.
-	^ aProtocol
-]
-
-{ #category : #accessing }
-ClassOrganization >> addProtocolNamed: protocolName [
-
 	| oldProtocols protocol |
-	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
+	protocol := aProtocol isString
+		            ifTrue: [ Protocol name: aProtocol ]
+		            ifFalse: [ aProtocol ].
+
+	(self protocols includes: protocol) ifTrue: [ ^ protocol ].
 
 	oldProtocols := self protocolNames copy.
 
-	protocol := self addProtocol: (Protocol name: protocolName).
-	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocolName).
+	protocols := protocols copyWith: protocol.
+
+	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: aProtocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -63,7 +59,7 @@ ClassOrganization >> classComment: aString [
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
 	| protocol |
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ].
+	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocol: aProtocolName ].
   
 	self protocols
 		select: [ :p | p includesSelector: aSymbol ]
@@ -148,7 +144,7 @@ ClassOrganization >> ensureProtocol: aProtocol [
 		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocolNamed: aProtocol ]
+	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #accessing }
