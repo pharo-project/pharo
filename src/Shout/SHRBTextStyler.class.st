@@ -997,21 +997,24 @@ at once, but for ordinary literal arrays, style every node"
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
-	| value link |
+	| value attributes |
 	value := aLiteralValueNode value.
+	attributes := OrderedCollection new.
 
 	"We can have 3 different kind of links from a literal:
 	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
-	link := value isSymbol
-		        ifTrue: [
-			        self class environment
-				        at: value
-				        ifPresent: [ :aGlobal | TextClassLink className: value ]
-				        ifAbsent: [ TextMethodLink selector: value ] ]
-		        ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: { link } forNode: aLiteralValueNode.
+	value isSymbol
+		ifTrue: [
+			self class environment
+				at: value
+				ifPresent: [ :aGlobal |
+					attributes add: (TextClassLink className: value).
+					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
+				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
+		ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNodee.
 	self visitCommentNodes: aLiteralValueNode
 ]
 
