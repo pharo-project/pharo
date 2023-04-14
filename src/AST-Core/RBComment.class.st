@@ -61,7 +61,7 @@ RBComment class >> with: aString at: startPosition [
 { #category : #comparing }
 RBComment >> = anObject [
 	self == anObject ifTrue: [ ^true ].
-	^ self class = anObject class ifTrue: [ self contents = anObject contents ] ifFalse: [ false ]
+	^ self class = anObject class and: [ self contents = anObject contents ]
 ]
 
 { #category : #visiting }
