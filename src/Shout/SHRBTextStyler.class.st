@@ -1014,7 +1014,7 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
 				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNodee.
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode.
 	self visitCommentNodes: aLiteralValueNode
 ]
 
