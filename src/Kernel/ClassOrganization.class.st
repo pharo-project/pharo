@@ -255,8 +255,8 @@ ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
 		  ifNil: [
 			  (organizedClass includesSelector: aSelector)
 				  ifTrue: [
-					  Smalltalk at: #ThreadSafeTranscript ifPresent: [ :t | ('Selector #' , aSelector , ' of ' , organizedClass name , ' is in not protocol but is in the class... Called by: ' , thisContext sender asString)
-						  traceCr].
+					  Smalltalk at: #ThreadSafeTranscript ifPresent: [ :t | ('' respondsTo: #traceCr) ifTrue:  [('Selector #' , aSelector , ' of ' , organizedClass name , ' is in not protocol but is in the class... Called by: ' , thisContext sender asString)
+						  traceCr]].
 					  Protocol unclassified ]
 				  ifFalse: [ aBlock value ] ]
 		  ifNotNil: [ :protocol | protocol name ]
