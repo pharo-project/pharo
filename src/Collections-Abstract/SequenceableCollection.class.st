@@ -2234,6 +2234,12 @@ SequenceableCollection >> swap: oneIndex with: anotherIndex [
 ]
 
 { #category : #accessing }
+SequenceableCollection >> takeFirst: anInteger [
+
+	^ self first: (self size min: anInteger)
+]
+
+{ #category : #accessing }
 SequenceableCollection >> third [
 	"Answer the third element of the receiver.
 	Raise an error if there are not enough elements."

@@ -89,7 +89,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	| name var shadowing |
 	name := aVariableNode name.
 	"check if another variable with same name is visible"
-	shadowing := scope lookupVarForDeclaration: name.
+	shadowing := scope lookupVar: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
 	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
@@ -224,6 +224,13 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 	aBlockNode arguments do: [:node | self declareArgumentNode: node ].
 	self visitNode: aBlockNode body.
 	scope := scope popScope
+]
+
+{ #category : #visiting }
+OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
+	
+	super visitMessageNode: aMessageNode.
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: self compilationContext getClass ]
 ]
 
 { #category : #visiting }

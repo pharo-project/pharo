@@ -168,7 +168,7 @@ OCCodeReparatorTest >> testDeclareTempAndPaste [
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | goo | ^ goo'.
 	self assert: method isCompiledMethod.
-	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | goo | ^ goo'
 ]
 
 { #category : #tests }
@@ -189,7 +189,7 @@ OCCodeReparatorTest >> testDeclareTempAndPasteBlock [
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | goo | ^ goo'.
 	self assert: method isCompiledMethod.
-	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | goo | ^ goo'
 ]
 
 { #category : #tests }
@@ -243,7 +243,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | foo | ^ foo'.
 	self assert: method isCompiledMethod.
-	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | foo | ^ foo'
 ]
 
 { #category : #tests }
@@ -264,7 +264,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtIntervalBlock [
 
 	self assert: requestor text withSeparatorsCompacted equals: 'griffle | foo | ^ foo'.
 	self assert: method isCompiledMethod.
-	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | tmp1 | ^ tmp1' "good enough"
+	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | foo | ^ foo'
 ]
 
 { #category : #tests }

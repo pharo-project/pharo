@@ -38,7 +38,7 @@ RBCodeSnippetTest >> testCompileFaulty [
 			| ast |
 			self assert: method hasSourceCode.
 			self assert: method sourceCode equals: snippet source.
-			ast := method propertyAt: #ast.
+			ast := method ast.
 			self assert: ast isFaulty.
 
 			"Some faulty AST can produce non faulty method where no `signalSyntaxError:` is present"

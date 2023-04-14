@@ -49,7 +49,7 @@ Class {
 
 { #category : #private }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer uniqueInstance announce: EFSettingChanged
+	SystemAnnouncer announce: EFSettingChanged
 ]
 
 { #category : #private }

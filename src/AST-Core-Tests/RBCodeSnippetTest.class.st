@@ -163,6 +163,11 @@ RBCodeSnippetTest >> testParse [
 	"Smoke test on the method node"
 	self assert: ast methodNode reformatSource isString.
 
+	snippet nodePositions ifNotNil: [
+		| positions |
+		positions := (' ' repeat: ast start - 1) , ast asPositionDebugString.
+		self assert: positions equals: snippet nodePositions ].
+
 	"Smoke test on each AST node (in alphabetic order of selectors)"
 	ast nodesDo: [ :node |
 		self assert: ((node allParents includes: ast) or: [node = ast]).

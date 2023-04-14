@@ -41,7 +41,9 @@ DABrowserToolMorph >> build [
 { #category : #private }
 DABrowserToolMorph >> daPackageFor: aPackageName [
 
-	^ DADependencyChecker new daPackageFor: aPackageName
+	^ DADependencyChecker new 
+		shouldComputeMessageSendDependencies: false; "Message sends dependencies are not displayed and they take time to compute"
+		daPackageFor: aPackageName
 ]
 
 { #category : #initialization }

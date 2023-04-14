@@ -45,6 +45,11 @@ FluidClassBuilderTest >> tearDown [
 	(RPackageOrganizer default packageNamed: #'Mock' ifAbsent: [ nil ])
 		ifNotNil: [:x | x removeFromSystem ].
 
+	(RPackageOrganizer default packageNamed: #'FakedCore' ifAbsent: [ nil ])
+		ifNotNil: [:x | x removeFromSystem ].
+		
+		
+
 	super tearDown
 ]
 
@@ -295,7 +300,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	sharedVariables: {};
 	tag: '''' ;
 	sharedPools: {};
-	package: ''MyPackage'''.
+	package: ''Mock'''.
 	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 

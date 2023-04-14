@@ -27,6 +27,15 @@ ObjectTest >> testAs [
 	self assert: coll1 identicalTo: coll2
 ]
 
+{ #category : #tests }
+ObjectTest >> testAssert [
+
+	self shouldnt: [Object new assert: true] raise: AssertionFailure.
+	self shouldnt: [
+		"make sure that we non-boolean arguments just fails"
+		self should: [Object new assert: 1] raise: AssertionFailure ] raise: [NonBooleanReceiver]. 
+]
+
 { #category : #'tests - accessing' }
 ObjectTest >> testBasicSize [
 	"Numbers are not indexable"

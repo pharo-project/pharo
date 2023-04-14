@@ -11,3 +11,9 @@ Class {
 IRPushThisContext >> accept: aVisitor [
 	^ aVisitor visitPushThisContext: self
 ]
+
+{ #category : #testing }
+IRPushThisContext >> isRemovableByPop [
+
+	^ true
+]
