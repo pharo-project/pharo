@@ -262,14 +262,6 @@ ClassOrganization >> protocolOfSelector: aSelector [
 ]
 
 { #category : #accessing }
-ClassOrganization >> protocolOfSelector: aSelector [
-
-	^ self protocols
-		  detect: [ :each | each includesSelector: aSelector ]
-		  ifNone: [ nil ]
-]
-
-{ #category : #accessing }
 ClassOrganization >> protocols [
 
 	^ protocols
