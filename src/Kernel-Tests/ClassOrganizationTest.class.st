@@ -85,6 +85,20 @@ ClassOrganizationTest >> testClassifyUnder [
 ]
 
 { #category : #tests }
+ClassOrganizationTest >> testClassifyUnderWithProtocol [
+	"Set the base for the test"
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
+
+	"Lets create a new protocol via classification"
+	self organization classify: #king under: #owl.
+	self organization classify: #luz under: (self organization protocolNamed: #owl).
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
+	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz )
+]
+
+{ #category : #tests }
 ClassOrganizationTest >> testMethodSelectorsInProtocol [
 
 	| methods |
@@ -125,4 +139,50 @@ ClassOrganizationTest >> testRemoveProtocolIfEmpty [
 	self organization removeProtocolIfEmpty: 'empty'.
 	self assert: self organization protocolNames size equals: 1.
 	self assert: self organization protocolNames first equals: 'one'
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testSilentlyClassifyUnder [
+	"Set the base for the test"
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
+
+	"Lets create a new protocol via classification"
+	self organization silentlyClassify: #king under: #owl.
+	self organization silentlyClassify: #luz under: #owl.
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
+	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz).
+	
+	"Move a method"
+	self organization silentlyClassify: #luz under: #one.
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
+	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king ).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz).
+	
+	"Move last method"
+	self organization silentlyClassify: #king under: #two.
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #two ).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz).
+	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( #king ).
+	
+	"Nothing should change if the new protocol is the same than the old one"
+	self organization silentlyClassify: #king under: #two.
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #two ).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz).
+	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( #king ).
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testSilentlyClassifyUnderWithProtocol [
+	"Set the base for the test"
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
+
+	"Lets create a new protocol via classification"
+	self organization silentlyClassify: #king under: #owl.
+	self organization silentlyClassify: #luz under: (self organization protocolNamed: #owl).
+
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
+	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz )
 ]
