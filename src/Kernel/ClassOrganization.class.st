@@ -22,11 +22,11 @@ ClassOrganization class >> forClass: aClass [
 ClassOrganization >> addProtocol: aProtocol [
 
 	| oldProtocols protocol |
-	protocol := aProtocol isString
-		            ifTrue: [ Protocol name: aProtocol ]
-		            ifFalse: [ aProtocol ].
+	
+	(self hasProtocol: aProtocol) ifTrue: [
+		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
 
-	(self protocols includes: protocol) ifTrue: [ ^ protocol ].
+	protocol := aProtocol isString ifTrue: [ Protocol name: aProtocol ] ifFalse: [ aProtocol ].
 
 	oldProtocols := self protocolNames copy.
 
@@ -158,9 +158,11 @@ ClassOrganization >> hasComment [
 ]
 
 { #category : #testing }
-ClassOrganization >> hasProtocolNamed: aString [
+ClassOrganization >> hasProtocol: aProtocol [
 
-	^ self protocols anySatisfy: [ :each | each name = aString ]
+	| protocolName |
+	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
+	^ self protocols anySatisfy: [ :each | each name = protocolName ]
 ]
 
 { #category : #testing }
@@ -324,7 +326,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
-	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+	(self hasProtocol: oldName) ifFalse: [ ^ self ].
 
 	self silentlyRenameProtocolNamed: oldName toBe: newName.
 
@@ -353,9 +355,9 @@ ClassOrganization >> setSubject: anObject [
 { #category : #private }
 ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
 
-	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+	(self hasProtocol: oldName) ifFalse: [ ^ self ].
 
-	(self hasProtocolNamed: newName)
+	(self hasProtocol: newName)
 		ifTrue: [
 			self moveMethodsFrom: oldName to: newName.
 			self removeProtocolIfEmpty: oldName ]
