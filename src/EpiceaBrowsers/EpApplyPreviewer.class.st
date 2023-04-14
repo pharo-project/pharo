@@ -203,7 +203,7 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 EpApplyPreviewer >> visitProtocolAddition: aChange [
 
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
-		^ (behavior organization hasProtocolNamed: aChange protocol)
+		^ (behavior organization hasProtocol: aChange protocol)
 			  ifTrue: [ #(  ) ]
 			  ifFalse: [ { (EpProtocolAddition behavior: behavior protocol: aChange protocol) } ] ].
 
@@ -214,7 +214,7 @@ EpApplyPreviewer >> visitProtocolAddition: aChange [
 EpApplyPreviewer >> visitProtocolRemoval: aChange [
 
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
-		^ (behavior organization hasProtocolNamed: aChange protocol)
+		^ (behavior organization hasProtocol: aChange protocol)
 			  ifTrue: [ { (EpProtocolRemoval behavior: behavior protocol: aChange protocol) } ]
 			  ifFalse: [ #(  ) ] ].
 

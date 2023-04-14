@@ -3,8 +3,8 @@ Extension { #name : #ClassOrganization }
 { #category : #'*Deprecated12' }
 ClassOrganization >> addCategory: aString [
 
-	self deprecated: 'Use #addProtocolNamed: instead.' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addProtocolNamed: `@arg'.
-	self addProtocolNamed: aString
+	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addProtocol: `@arg'.
+	self addProtocol: aString
 ]
 
 { #category : #'*Deprecated12' }
