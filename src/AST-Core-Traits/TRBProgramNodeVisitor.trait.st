@@ -56,6 +56,12 @@ TRBProgramNodeVisitor >> visitClassVariableNode: aNode [
 ]
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitCommentNode: aRBComment [
+	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
+	This method can still be reached by custom visitors and direct visit on a comment node."
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	anEnglobingErrorNode content do: [ :each | self visitNode: each ]
 ]
