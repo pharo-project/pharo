@@ -217,7 +217,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
-	aClass organization classify: aSelector inProtocolNamed: aCompiledMethod category asSymbol.
+	aClass organization classify: aSelector inProtocolNamed: aCompiledMethod category.
 
 	aClass organization removeEmptyProtocols.
 
