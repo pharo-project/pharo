@@ -312,7 +312,7 @@ CompiledCodeTest >> testLocalMessages [
 CompiledCodeTest >> testMessages [
 	| method |
 	method := self class compiler compile: 'method self doit. [Object class]'.
-	self assert: method messages asArray equals: #(#doit #class).
+	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
 ]
 
 { #category : #'tests - testing' }

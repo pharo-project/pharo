@@ -33,8 +33,8 @@ ClassOrganizationTest >> setUp [
 			         package: 'ClassOrganizer-Tests' ].
 
 	organization := ClassOrganization forClass: class.
-	organization addProtocolNamed: 'empty'.
-	organization addProtocolNamed: 'one'.
+	organization addProtocol: 'empty'.
+	organization addProtocol: 'one'.
 	organization classify: #one under: 'one'
 ]
 
@@ -45,9 +45,9 @@ ClassOrganizationTest >> tearDown [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testAddProtocolNamed [
+ClassOrganizationTest >> testAddProtocol [
 
-	self organization addProtocolNamed: 'test-protocol'.
+	self organization addProtocol: 'test-protocol'.
 
 	self assert: (self organization protocolNames includes: 'test-protocol')
 ]

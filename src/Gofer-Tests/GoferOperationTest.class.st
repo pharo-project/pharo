@@ -86,8 +86,8 @@ GoferOperationTest >> testCleanup [
 		load.
 	class := environment classNamed: #GoferFoo.
 	environment organization addCategory: #'GoferFoo-Empty'.
-	class organization addProtocolNamed: #empty.
-	class class organization addProtocolNamed: #empty.
+	class organization addProtocol: #empty.
+	class class organization addProtocol: #empty.
 	gofer cleanup.
 	self deny: (Smalltalk organization categories includes: #'GoferFoo-Empty').
 	self deny: (class organization protocolNames includes: #'GoferFoo-Empty').

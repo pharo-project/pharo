@@ -61,15 +61,13 @@ RBComment class >> with: aString at: startPosition [
 { #category : #comparing }
 RBComment >> = anObject [
 	self == anObject ifTrue: [ ^true ].
-	^ self class = anObject class ifTrue: [ self contents = anObject contents ] ifFalse: [ false ]
+	^ self class = anObject class and: [ self contents = anObject contents ]
 ]
 
 { #category : #visiting }
 RBComment >> acceptVisitor: aProgramNodeVisitor [
-	"At some point we will have to think what we do to visit comment.
-	It may have an impact on visitors so this should be done carefully.
-	Since by default previously comment node were not subclass of ProgramNode
-	we do nothing by default."
+
+	^ aProgramNodeVisitor visitCommentNode: self
 ]
 
 { #category : #accessing }

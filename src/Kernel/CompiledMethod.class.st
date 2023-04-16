@@ -540,6 +540,12 @@ CompiledMethod >> isClassSide [
 ]
 
 { #category : #testing }
+CompiledMethod >> isClassified [
+
+	^ self protocol ~= Protocol unclassified
+]
+
+{ #category : #testing }
 CompiledMethod >> isCompiledMethod [
 
 	^ true

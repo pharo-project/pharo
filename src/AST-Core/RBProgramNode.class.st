@@ -225,10 +225,10 @@ RBProgramNode >> asPositionDebugString [
 			cpt := cpt + 1 ] ].
 
 	"Fill the result string"
-	result := String new: self stop - self start + 1.
-	self start to: self stop do: [ :i |
+	result := String new: self source size.
+	1 to: self source size do: [ :i |
 		result
-			at: i - self start + 1
+			at: i
 			put: (characters at: (self nodeForOffset: i)) ].
 	^ result
 ]
@@ -351,6 +351,16 @@ RBProgramNode >> checkFaulty: aBlock [
 { #category : #accessing }
 RBProgramNode >> children [
 	^#()
+]
+
+{ #category : #accessing }
+RBProgramNode >> childrenAndComments [
+	
+	| result |
+	result := self children.
+	result ifEmpty: [ ^ self comments ].
+	self comments ifEmpty: [ ^ result ].
+	^ result , self comments
 ]
 
 { #category : #replacing }
@@ -936,26 +946,31 @@ RBProgramNode >> newSource [
 
 { #category : #'node access' }
 RBProgramNode >> nodeForOffset: anInteger [
-	| children |
-	"choosing the best node on the specific offset"
-	children := self children.
-	"when we are on a leaf, we take the leaf node"
-	(children isEmpty) ifTrue: [ (self sourceInterval includes: anInteger) ifTrue: [^self]].
-	"if the node has children then we check the children"
-	children do: [:each | (each sourceInterval includes: anInteger) ifTrue: [^each nodeForOffset: anInteger] ]
+	"Choose the best node on the specific offset, including comments.
+	Because comments can be oustide the span of sourceInterval, we have to visit all children.
+	Return nil if anInteger is out of range."
+
+	self childrenAndComments do: [ :each |
+		(each nodeForOffset: anInteger) ifNotNil: [ :node | ^ node ] ].
+
+	^ (self sourceInterval includes: anInteger)
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #iterating }
 RBProgramNode >> nodesDo: aBlock [
+	"Evaluate aBlock on self and all chindren nodes, including comments"
+
 	aBlock value: self.
-	self children do: [ :each | each nodesDo: aBlock ]
+	self childrenAndComments do: [ :each | each nodesDo: aBlock ]
 ]
 
 { #category : #iterating }
 RBProgramNode >> nodesPostorderDo: aBlock [
 	"Like RBProgramNode>>#nodesDo: but visit children first"
 
-	self children do: [ :each | each nodesPostorderDo: aBlock ].
+	self childrenAndComments do: [ :each | each nodesPostorderDo: aBlock ].
 	aBlock value: self
 ]
 

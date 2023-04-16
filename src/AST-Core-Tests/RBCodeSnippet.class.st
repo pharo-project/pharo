@@ -104,7 +104,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 2 3 ''')'' expected' ) )).
 		        (self new
 			         source: '#( ';
-			         nodeAt: '00';
+			         nodeAt: '00 ';
 			         notices: #( #( 1 2 4 ''')'' expected' ) )).
 		        (self new
 			         source: '[ ';
@@ -112,11 +112,11 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '#[ ';
-			         nodeAt: '00';
+			         nodeAt: '00 ';
 			         notices: #( #( 1 2 4 ''']'' expected' ) )).
 		        (self new
 			         source: '{ ';
-			         nodeAt: '0';
+			         nodeAt: '0 ';
 			         notices: #( #( 1 1 3 '''}'' expected' ) )).
 		        (self new
 			         source: '{ [ ( ';
@@ -313,7 +313,7 @@ RBCodeSnippet class >> badExpressions [
 		        "Note: bad temporaries will be stored as error statements"
 		        (self new
 			         source: '| ';
-			         nodeAt: '0';
+			         nodeAt: '0 ';
 			         formattedCode: '| | ';
 			         notices: #( #( 1 1 3 '''|'' or variable expected' ) )).
 		        (self new
@@ -915,7 +915,7 @@ RBCodeSnippet class >> badPositions [
 			         value: 3).
 		        (self new
 			         source: ' | tmp | tmp := 1 . ^ tmp . ';
-			         nodeAt: ' 00111000444222230005566600';
+			         nodeAt: ' 00111000444222230005566600 ';
 			         formattedCode: '| tmp | tmp := 1. ^ tmp';
 			         value: 1).
 		        (self new
@@ -932,7 +932,7 @@ RBCodeSnippet class >> badPositions [
 			         value: 2).
 		        (self new
 			         source: ' ( [ :aaa : bbb | | ccc ddd | aaa . ] ) . ';
-			         nodeAt: ' 00000111000222000334443555333666330000';
+			         nodeAt: ' 00000111000222000334443555333666330000   ';
 			         formattedCode: '[ :aaa :bbb | | ccc ddd | aaa ]';
 			         value: 1;
 			         notices:
@@ -1571,24 +1571,31 @@ RBCodeSnippet class >> badTokens [
 		        "EFFormater is not the best here :("
 		        (self new
 			         source: '"" ';
-			         nodeAt: '';
+			         nodeAt: '22 ';
 			         isFaulty: false).
 		        (self new
 			         source: '"nothing" ';
-			         nodeAt: '';
+			         nodeAt: '222222222 ';
 			         isFaulty: false).
 		        (self new
 			         source: '"com"1"ment"';
-			         nodeAt: '     0';
+			         nodeAt: '333330444444';
 			         formattedCode: '1';
 			         isFaulty: false;
 			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
 		        (self new
 			         source: '"a" 1 "b". "c" 2 "d"';
-			         nodeAt: '    100000000005';
+			         nodeAt: '555 106660077708 AAA';
 			         formattedCode: '1. "a" "b" "c" 2 "d"';
 			         isFaulty: false;
 			         value: 2). "a and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
+			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
+			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
+			         isMethod: true;
+			         isFaulty: false;
+			         value: 2). "z and b moved around. Formatter issue. FIXME?"
 		        (self new
 			         source: '"unfinished';
 			         nodeAt: '00000000000';
@@ -1729,7 +1736,7 @@ RBCodeSnippet class >> badTokens [
 		        "These ones are correct, the number parser is very prermisive (except for radix, see above)"
 		        (self new
 			         source: '1.';
-			         nodeAt: '0';
+			         nodeAt: '0 ';
 			         formattedCode: '1';
 			         isFaulty: false;
 			         value: 1).
@@ -1842,7 +1849,7 @@ RBCodeSnippet class >> badTokens [
 			         value: 'Δ→ə').
 		        (self new
 			         source: '"Δ→ə" ';
-			         nodeAt: '';
+			         nodeAt: '22222 ';
 			         isFaulty: false).
 		        (self new
 			         source: '#''Δ→ə''';
@@ -2541,8 +2548,7 @@ RBCodeSnippet >> updateExpectations [
 	ast := self parse.
 	self formattedCode: ast formattedCode withSeparatorsCompacted.
 	self isParseFaulty: ast isFaulty.
-	self nodePositions:
-		(' ' repeat: ast start - 1) , ast asPositionDebugString.
+	self nodePositions: ast asPositionDebugString.
 	ast := self doSemanticAnalysis.
 	self isFaulty: ast isFaulty.
 	self isFaultyMinusUndeclared: self isFaulty
