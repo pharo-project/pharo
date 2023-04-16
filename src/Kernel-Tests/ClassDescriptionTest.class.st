@@ -109,6 +109,25 @@ ClassDescriptionTest >> testOrganization [
 	self assert: (aClassOrganizer isKindOf: ClassOrganization)
 ]
 
+{ #category : #tests }
+ClassDescriptionTest >> testProtocolOfSelector [
+	"First let's check the protocol of a local method."
+
+	self assert: (self classToBeTested includesSelector: #protocolOfSelector:).
+	self assert: (self classToBeTested allSelectors includes: #protocolOfSelector:).
+	self assert: (self classToBeTested protocolOfSelector: #protocolOfSelector:) name equals: #'accessing - protocols'.
+
+	"Then the protocol of a method present in the superclass"
+	self deny: (self classToBeTested includesSelector: #originalName).
+	self assert: (self classToBeTested allSelectors includes: #originalName).
+	self assert: (self classToBeTested protocolOfSelector: #originalName) name equals: #initialization.
+
+	"Now a method that does not exists."
+	self deny: (self classToBeTested includesSelector: #king).
+	self deny: (self classToBeTested allSelectors includes: #king).
+	self assert: (self classToBeTested protocolOfSelector: #king) isNil
+]
+
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlotNamed [
 	self assert: (Point slotNamed: #x) name equals: #x

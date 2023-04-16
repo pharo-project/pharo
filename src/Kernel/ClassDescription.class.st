@@ -855,6 +855,17 @@ ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
+{ #category : #'accessing - protocols' }
+ClassDescription >> protocolOfSelector: aSelector [
+	"I return the protocol of a given selector.
+	If the selector is in one of my superclass I still return its protocol.
+	If I do not include this selector, I return nil."
+
+	(self isLocalSelector: aSelector) ifTrue: [ ^ self organization protocolOfSelector: aSelector ].
+
+	^ self superclass ifNotNil: [ :superClass | superClass protocolOfSelector: aSelector ]
+]
+
 { #category : #compiling }
 ClassDescription >> reformatAll [
 	"Reformat all methods in this class"
