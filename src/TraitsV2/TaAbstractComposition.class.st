@@ -159,7 +159,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
-	aClass organization classify: selector inProtocolNamed: (self categoryOfMethod: method withSelector: method selector).
+	aClass organization silentlyClassify: selector under: (self categoryOfMethod: method withSelector: method selector).
 
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -217,7 +217,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
-	aClass organization classify: aSelector inProtocolNamed: aCompiledMethod category asSymbol.
+	aClass organization silentlyClassify: aSelector under: aCompiledMethod category asSymbol.
 
 	aClass organization removeEmptyProtocols.
 
