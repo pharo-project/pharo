@@ -49,7 +49,7 @@ ClassOrganizationTest >> testAddProtocol [
 
 	self organization addProtocol: 'test-protocol'.
 
-	self assert: (self organization protocolNames includes: 'test-protocol')
+	self assert: (self organization hasProtocol: 'test-protocol')
 ]
 
 { #category : #tests }
@@ -127,4 +127,17 @@ ClassOrganizationTest >> testRemoveProtocolIfEmpty [
 	self organization removeProtocolIfEmpty: 'empty'.
 	self assert: self organization protocolNames size equals: 1.
 	self assert: self organization protocolNames first equals: 'one'
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testRenameProtocolNamedToBe [
+
+	self assert: (self organization hasProtocol: #one).
+	self deny: (self organization hasProtocol: #two).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
+	self organization renameProtocolNamed: #one toBe: #two.
+
+	self assert: (self organization hasProtocol: #two).
+	self deny: (self organization hasProtocol: #one).
+	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( 'one' ).
 ]

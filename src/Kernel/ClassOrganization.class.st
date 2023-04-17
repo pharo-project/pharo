@@ -326,13 +326,17 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
-	(self hasProtocol: oldName) ifFalse: [ ^ self ].
-
-	self silentlyRenameProtocolNamed: oldName toBe: newName.
-
-	"Announce the changes in the system if the name changed"
 	oldName = newName ifTrue: [ ^ self ].
 
+	(self hasProtocol: oldName) ifFalse: [ ^ self ].
+
+	(self hasProtocol: newName)
+		ifTrue: [
+			self moveMethodsFrom: oldName to: newName.
+			self removeProtocolIfEmpty: oldName ]
+		ifFalse: [ (self protocolNamed: oldName) name: newName ].
+
+	"Announce the changes in the system"
 	self notifyOfChangedProtocolNamesFrom: oldName to: newName.
 	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldName to: newName).
 
@@ -350,21 +354,6 @@ ClassOrganization >> reset [
 ClassOrganization >> setSubject: anObject [
 
 	organizedClass := anObject
-]
-
-{ #category : #private }
-ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
-
-	(self hasProtocol: oldName) ifFalse: [ ^ self ].
-
-	(self hasProtocol: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolIfEmpty: oldName ]
-		ifFalse: [
-			^ (self protocolNamed: oldName)
-				  name: newName;
-				  yourself ]
 ]
 
 { #category : #'backward compatibility' }
