@@ -127,7 +127,7 @@ ClassOrganization >> commentStamp [
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocolNamed: protocol name ] ]
+	protocols := otherOrganization protocols copy
 ]
 
 { #category : #'queries - protocols' }
