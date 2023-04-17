@@ -49,7 +49,7 @@ ClassOrganizationTest >> testAddProtocol [
 
 	self organization addProtocol: 'test-protocol'.
 
-	self assert: (self organization protocolNames includes: 'test-protocol')
+	self assert: (self organization hasProtocol: 'test-protocol')
 ]
 
 { #category : #tests }
