@@ -192,7 +192,7 @@ RubParagraph >> defaultCharacterBlock [
 
 { #category : #private }
 RubParagraph >> defaultEmptyText [
-	^ Text string: '' attributes: (Array with: self defaultFontChange)
+	^ Text string: '' attributes: { self defaultFontChange }
 ]
 
 { #category : #private }
@@ -562,7 +562,7 @@ RubParagraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	line1 := self lineIndexOfCharacterIndex: cb1 stringIndex.
 	line2 := self lineIndexOfCharacterIndex: cb2 stringIndex.
 	line1 = line2
-		ifTrue: [ ^ Array with: (cb1 topLeft corner: cb2 bottomRight) ].
+		ifTrue: [ ^ {cb1 topLeft corner: cb2 bottomRight} ].
 	^ Array
 		streamContents: [ :strm |
 			| last |
