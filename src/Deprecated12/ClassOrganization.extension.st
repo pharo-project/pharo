@@ -105,7 +105,7 @@ ClassOrganization >> renameCategory: oldName toBe: newName [
 ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #silentlyRenameProtocolNamed:toBe: instead.'
-		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv silentlyRenameProtocolNamed: `@arg1 toBe: `@arg2'.
-	self silentlyRenameProtocolNamed: oldName toBe: newName
+		deprecated: 'Use #renameProtocolNamed:toBe: instead.'
+		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
+	self renameProtocolNamed: oldName toBe: newName
 ]
