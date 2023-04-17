@@ -122,7 +122,7 @@ TextContainer >> rectanglesAt: lineY height: lineHeight [
 	Cache the results for later retrieval if the owner does not change."
 
 	| hProfile rects thisWidth thisX count pair outerWidth lineRect lineForm |
-	pair := Array with: lineY with: lineHeight.
+	pair := { lineY . lineHeight }.
 	rects := rectangleCache at: pair ifAbsent: [nil].
 	rects ifNotNil: [^rects].
 	outerWidth := minWidth + (2 * OuterMargin).
@@ -132,9 +132,9 @@ TextContainer >> rectanglesAt: lineY height: lineHeight [
 	lineForm := shadowForm copy: lineRect.
 
 	"Check for a full line -- frequent case"
-	(lineForm tallyPixelValues second) = lineRect area
+	lineForm tallyPixelValues second = lineRect area
 		ifTrue:
-			[rects := Array with: (shadowForm offset x @ lineY extent: lineRect extent)]
+			[rects := {shadowForm offset x @ lineY extent: lineRect extent}]
 		ifFalse:
 			["No such luck -- scan the horizontal profile for segments of minWidth"
 
