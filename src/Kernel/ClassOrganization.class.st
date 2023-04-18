@@ -43,18 +43,6 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment [
-
-	^ self comment
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment: aString [
-
-	self comment: aString
-]
-
 { #category : #'protocol - adding' }
 ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
 
@@ -95,17 +83,6 @@ ClassOrganization >> cleanUpProtocolsForClass: aClass [
 	"remove all entries that have no methods"
 
 	self allMethodSelectors do: [ :each | (aClass includesSelector: each) ifFalse: [ self removeElement: each ] ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment [
-
-	^ organizedClass comment
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment: aString [
-	organizedClass comment: aString
 ]
 
 { #category : #accessing }

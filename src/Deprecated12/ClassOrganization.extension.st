@@ -38,6 +38,47 @@ ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 ]
 
 { #category : #'*Deprecated12' }
+ClassOrganization >> classComment [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+
+	^ self comment
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> classComment: aString [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	self comment: aString
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> comment [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	^ organizedClass comment
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> comment: aString [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	organizedClass comment: aString
+]
+
+{ #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
 	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodSelectorsInProtocol: `@arg'.
