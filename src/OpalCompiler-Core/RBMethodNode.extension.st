@@ -7,9 +7,9 @@ RBMethodNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	compilationContext compiledMethod
-		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
-	^compilationContext compiledMethod
+	self compilationContext compiledMethod
+		ifNil: [ self compilationContext compiledMethod: self ir compiledMethod ].
+	^ self compilationContext compiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
