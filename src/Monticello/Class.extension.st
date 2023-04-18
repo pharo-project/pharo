@@ -48,5 +48,5 @@ Class >> asClassDefinition [
 
 { #category : #'*Monticello' }
 Class >> classDefinitions [
-	^ Array with: self asClassDefinition
+	^ { self asClassDefinition }
 ]

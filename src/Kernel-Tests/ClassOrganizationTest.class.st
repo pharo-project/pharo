@@ -49,7 +49,41 @@ ClassOrganizationTest >> testAddProtocol [
 
 	self organization addProtocol: 'test-protocol'.
 
-	self assert: (self organization protocolNames includes: 'test-protocol')
+	self assert: (self organization hasProtocol: 'test-protocol')
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testCopyFrom [
+
+    | newOrganization |
+    "First lets check the current state of the org."
+    self assertCollection: self organization protocolNames hasSameElements: #( 'empty' 'one' ).
+    self assertCollection: (self organization protocolNamed: 'one') methodSelectors hasSameElements: #( 'one' ).
+    self assertEmpty: (self organization protocolNamed: 'empty') methodSelectors.
+
+    "Now lets check that the new org has the same"
+    newOrganization := ClassOrganization new
+                           setSubject: self organization organizedClass;
+                           copyFrom: self organization;
+                           yourself.
+
+    self assertCollection: newOrganization protocolNames hasSameElements: #( 'empty' 'one' ).
+    self assertCollection: (newOrganization protocolNamed: 'one') methodSelectors hasSameElements: #( 'one' ).
+    self assertEmpty: (newOrganization protocolNamed: 'empty') methodSelectors.
+
+    "And now lets check that updating one does not update the other."
+    self organization addProtocol: 'two'.
+    newOrganization classify: 'new' under: 'init'.
+
+    self assertCollection: self organization protocolNames hasSameElements: #( 'empty' 'one' 'two' ).
+    self assertCollection: (self organization protocolNamed: 'one') methodSelectors hasSameElements: #( 'one' ).
+    self assertEmpty: (self organization protocolNamed: 'empty') methodSelectors.
+    self assertEmpty: (self organization protocolNamed: 'two') methodSelectors.
+
+    self assertCollection: newOrganization protocolNames hasSameElements: #( 'empty' 'one' 'init' ).
+    self assertCollection: (newOrganization protocolNamed: 'one') methodSelectors hasSameElements: #( 'one' ).
+    self assertEmpty: (newOrganization protocolNamed: 'empty') methodSelectors.
+    self assertCollection: (newOrganization protocolNamed: 'init') methodSelectors hasSameElements: #( 'new' )
 ]
 
 { #category : #tests }
@@ -93,6 +127,19 @@ ClassOrganizationTest >> testRemoveProtocolIfEmpty [
 	self organization removeProtocolIfEmpty: 'empty'.
 	self assert: self organization protocolNames size equals: 1.
 	self assert: self organization protocolNames first equals: 'one'
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testRenameProtocolNamedToBe [
+
+	self assert: (self organization hasProtocol: #one).
+	self deny: (self organization hasProtocol: #two).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
+	self organization renameProtocolNamed: #one toBe: #two.
+
+	self assert: (self organization hasProtocol: #two).
+	self deny: (self organization hasProtocol: #one).
+	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( 'one' ).
 ]
 
 { #category : #tests }
