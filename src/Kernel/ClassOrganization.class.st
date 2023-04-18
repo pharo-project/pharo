@@ -43,18 +43,6 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment [
-
-	^ self comment
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment: aString [
-
-	self comment: aString
-]
-
 { #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
@@ -72,33 +60,6 @@ ClassOrganization >> cleanUpProtocolsForClass: aClass [
 	"remove all entries that have no methods"
 
 	self allMethodSelectors do: [ :each | (aClass includesSelector: each) ifFalse: [ self removeElement: each ] ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment [
-
-	^ organizedClass comment
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment: aString [
-	organizedClass comment: aString
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentSourcePointer [
-	^ organizedClass commentSourcePointer
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentSourcePointer: anObject [
-	organizedClass commentSourcePointer: anObject
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentStamp [
-
-	^ organizedClass commentStamp
 ]
 
 { #category : #copying }
@@ -127,11 +88,6 @@ ClassOrganization >> ensureProtocol: aProtocol [
 { #category : #accessing }
 ClassOrganization >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
-]
-
-{ #category : #testing }
-ClassOrganization >> hasComment [
-	^ organizedClass hasComment
 ]
 
 { #category : #testing }
@@ -303,13 +259,17 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
-	(self hasProtocol: oldName) ifFalse: [ ^ self ].
-
-	self silentlyRenameProtocolNamed: oldName toBe: newName.
-
-	"Announce the changes in the system if the name changed"
 	oldName = newName ifTrue: [ ^ self ].
 
+	(self hasProtocol: oldName) ifFalse: [ ^ self ].
+
+	(self hasProtocol: newName)
+		ifTrue: [
+			self moveMethodsFrom: oldName to: newName.
+			self removeProtocolIfEmpty: oldName ]
+		ifFalse: [ (self protocolNamed: oldName) name: newName ].
+
+	"Announce the changes in the system"
 	self notifyOfChangedProtocolNamesFrom: oldName to: newName.
 	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldName to: newName).
 
@@ -337,26 +297,4 @@ ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
 		self removeProtocolIfEmpty: oldProtocol ].
 
 	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
-]
-
-{ #category : #private }
-ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
-
-	(self hasProtocol: oldName) ifFalse: [ ^ self ].
-
-	(self hasProtocol: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolIfEmpty: oldName ]
-		ifFalse: [
-			^ (self protocolNamed: oldName)
-				  name: newName;
-				  yourself ]
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> subject [
-
-	self deprecated: 'Use #organizedClass instead.' transformWith: '`@rcv subject' -> '`@rcv organizedClass'.
-	^ self organizedClass
 ]

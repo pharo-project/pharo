@@ -41,7 +41,7 @@ RunArray class >> new: size withAll: value [
 	argument, value."
 
 	size = 0 ifTrue: [^self new].
-	^self runs: (Array with: size) values: (Array with: value)
+	^self runs: { size } values: { value }
 ]
 
 { #category : #'instance creation' }
@@ -325,7 +325,7 @@ RunArray >> copyFrom: start to: stop [
 	self at: stop setRunOffsetAndValue: [:r :o :value2 | run2 := r. offset2 := o. value2].
 	run1 = run2
 		ifTrue:
-			[newRuns := Array with: offset2 - offset1 + 1]
+			[newRuns := { offset2 - offset1 + 1} ]
 		ifFalse:
 			[newRuns := runs copyFrom: run1 to: run2.
 			newRuns at: 1 put: (newRuns at: 1) - offset1.
