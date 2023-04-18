@@ -175,7 +175,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithExistingProtocolWithProtocol 
 
 	self assert: (self organization hasProtocol: two).
 	self deny: (self organization hasProtocol: one).
-	self assertCollection: (self organization protocolNamed: two) methodSelectors hasSameElements: #( 'one' 'king' )
+	self assertCollection: two methodSelectors hasSameElements: #( 'one' 'king' )
 ]
 
 { #category : #tests }

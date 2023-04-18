@@ -192,19 +192,6 @@ ClassOrganization >> methodSelectorsInProtocol: aName [
 	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
 ]
 
-{ #category : #private }
-ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
-
-	| fromProtocol toProtocol |
-	fromProtocol := self protocolNamed: fromProtocolNamed.
-	toProtocol := self protocolNamed: toProtocolNamed.
-
-	toProtocol addAllMethodsFrom: fromProtocol.
-	fromProtocol resetMethodSelectors.
-
-	^ toProtocol
-]
-
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
 
@@ -324,24 +311,28 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 ]
 
 { #category : #removing }
-ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
+ClassOrganization >> renameProtocolNamed: anOldProtocol toBe: aNewProtocol [
 
-	oldName = newName ifTrue: [ ^ self ].
+	| oldProtocol newProtocol |
+	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
-	(self hasProtocol: oldName) ifFalse: [ ^ self ].
+	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
-	(self hasProtocol: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolIfEmpty: oldName ]
-		ifFalse: [ (self protocolNamed: oldName) name: newName ].
+	oldProtocol := self ensureProtocol: anOldProtocol.
+	newProtocol := self ensureProtocol: aNewProtocol.
+
+	oldProtocol = newProtocol ifTrue: [ ^ self ].
+
+	newProtocol addAllMethodsFrom: oldProtocol.
+	oldProtocol resetMethodSelectors.
+	self removeProtocolIfEmpty: oldProtocol.
 
 	"Announce the changes in the system"
-	self notifyOfChangedProtocolNamesFrom: oldName to: newName.
-	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldName to: newName).
+	self notifyOfChangedProtocolNamesFrom: oldProtocol name to: newProtocol name.
+	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldProtocol name to: newProtocol name).
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolNamed: newName) methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
+	newProtocol methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #initialization }
