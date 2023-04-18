@@ -17,8 +17,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'requestor',
-		'failBlock',
-		'logged',
 		'compiledMethod',
 		'options',
 		'environment',
@@ -34,9 +32,7 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope',
-		'permitFaulty',
-		'permitUndeclared'
+		'semanticScope'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -481,16 +477,6 @@ CompilationContext >> environment: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> failBlock [
-	^ failBlock
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock: anObject [
-	failBlock := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> getClass [
 	^ semanticScope targetClass
 ]
@@ -513,27 +499,6 @@ CompilationContext >> interactive [
 	^ (requestor respondsTo: #interactive)
 		  ifTrue: [ requestor interactive ]
 		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logDoItEvaluation: aSourceString [
-	self logged ifNil: [ ^self ].
-	self logged ifFalse: [ ^self ].
-
-	Smalltalk globals
-			at: #SystemAnnouncer
-			ifPresent: [ :sysAnn |
-				semanticScope announceDoItEvaluation: aSourceString by: sysAnn uniqueInstance ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logged [
-	^logged
-]
-
-{ #category : #accessing }
-CompilationContext >> logged: anObject [
-	logged := anObject
 ]
 
 { #category : #accessing }
@@ -641,8 +606,6 @@ CompilationContext >> optionSkipSemanticWarnings [
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
 
-	(optionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
-
 	options parseOptions: optionsArray
 ]
 
@@ -654,30 +617,6 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> permitFaulty [
-
-	^ permitFaulty
-]
-
-{ #category : #accessing }
-CompilationContext >> permitFaulty: anObject [
-
-	permitFaulty := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> permitUndeclared [
-
-	^ permitUndeclared
-]
-
-{ #category : #accessing }
-CompilationContext >> permitUndeclared: anObject [
-
-	permitUndeclared := anObject
 ]
 
 { #category : #accessing }

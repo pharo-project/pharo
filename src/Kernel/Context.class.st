@@ -775,6 +775,16 @@ Context >> failPrimitiveWith: maybePrimFailToken [
 		[self at: stackp put: maybePrimFailToken last]
 ]
 
+{ #category : #'debugger access' }
+Context >> filterDebuggerStack [
+	"Answer self or the first sender that do not have the pragma `debuggerCompleteToSender` or belong to the `Exception` class hierarchy"
+
+	^ ((self method methodClass instanceSide includesBehavior: Exception)
+		   or: [ self method hasPragmaNamed: #debuggerCompleteToSender ])
+		  ifTrue: [ sender ifNotNil: [ sender filterDebuggerStack ] ]
+		  ifFalse: [ self ]
+]
+
 { #category : #query }
 Context >> findContextSuchThat: testBlock [
 	"Search self and my sender chain for first one that satisfies testBlock.  Return nil if none satisfy"

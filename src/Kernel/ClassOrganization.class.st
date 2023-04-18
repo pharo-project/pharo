@@ -44,31 +44,6 @@ ClassOrganization >> allMethodSelectors [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classComment [
-
-	^ self comment
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment: aString [
-
-	self comment: aString
-]
-
-{ #category : #'protocol - adding' }
-ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
-
-	| protocol |
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocol: aProtocolName ].
-  
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-
-		protocol addMethodSelector: aSymbol
-]
-
-{ #category : #'backward compatibility' }
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocolName forceNotify oldProtocol protocolName |
@@ -85,8 +60,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocol := self protocolOfSelector: selector.
 
-	self classify: selector inProtocolNamed: protocolName.
-	oldProtocol ifNotNil: [ self removeProtocolIfEmpty: oldProtocol ].
+	self silentlyClassify: selector under: protocolName.
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -95,33 +69,6 @@ ClassOrganization >> cleanUpProtocolsForClass: aClass [
 	"remove all entries that have no methods"
 
 	self allMethodSelectors do: [ :each | (aClass includesSelector: each) ifFalse: [ self removeElement: each ] ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment [
-
-	^ organizedClass comment
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment: aString [
-	organizedClass comment: aString
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentSourcePointer [
-	^ organizedClass commentSourcePointer
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentSourcePointer: anObject [
-	organizedClass commentSourcePointer: anObject
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentStamp [
-
-	^ organizedClass commentStamp
 ]
 
 { #category : #copying }
@@ -150,11 +97,6 @@ ClassOrganization >> ensureProtocol: aProtocol [
 { #category : #accessing }
 ClassOrganization >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
-]
-
-{ #category : #testing }
-ClassOrganization >> hasComment [
-	^ organizedClass hasComment
 ]
 
 { #category : #testing }
@@ -347,9 +289,13 @@ ClassOrganization >> setSubject: anObject [
 	organizedClass := anObject
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> subject [
+{ #category : #'protocol - adding' }
+ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
 
-	self deprecated: 'Use #organizedClass instead.' transformWith: '`@rcv subject' -> '`@rcv organizedClass'.
-	^ self organizedClass
+	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |
+		oldProtocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+
+	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]
