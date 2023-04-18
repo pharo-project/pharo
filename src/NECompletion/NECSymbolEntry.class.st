@@ -64,7 +64,7 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 			description: 'This is just symbol.' ].
 	implementors do: [ :each |
 		output
-			nextPutAll: each className printString;
+			nextPutAll: each methodClass printString;
 			cr ].
 	^ NECEntryDescription
 		label: self label
