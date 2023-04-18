@@ -282,9 +282,14 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 OCASTTranslator >> emitRuntimeError: aNode [
 	"Runtime errors should only be emited on faulty code"
 
+	| errors |
+	errors := aNode allErrorNotices.
+
 	methodBuilder
 		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: aNode;
+		pushLiteral: (errors isEmpty
+				 ifTrue: [ 'Syntax error' ]
+				 ifFalse: [ errors first messageText ]);
 		send: #signalSyntaxError:
 ]
 
