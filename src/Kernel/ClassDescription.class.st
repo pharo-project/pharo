@@ -337,7 +337,7 @@ ClassDescription >> commentStamp [
 { #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
 	"update the changeStamp"
-	self comment: self instanceSide organization comment stamp: changeStamp
+	self comment: self instanceSide comment stamp: changeStamp
 ]
 
 { #category : #compiling }
