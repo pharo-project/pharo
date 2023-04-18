@@ -622,18 +622,14 @@ SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
 
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
-	self
-		addAttributes: attributes
-		from: anRBNode start
-		to: anRBNode stop
+
+	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes from: start to: stop [
-	charAttr
-		from: (start max: 1)
-		to: (stop min: charAttr size)
-		put: attributes
+
+	charAttr from: (start max: 1) to: (stop min: charAttr size) put: attributes
 ]
 
 { #category : #converting }
@@ -903,6 +899,14 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 					parentheseLevel := parentheseLevel + 1 ]]
 ]
 
+{ #category : #visiting }
+SHRBTextStyler >> styleParenthesisOf: aNode around: aBlock [
+
+	self styleOpenParenthese: aNode.
+	aBlock value.
+	self styleCloseParenthese: aNode
+]
+
 { #category : #private }
 SHRBTextStyler >> styleTempBars: aSequenceNode [
 	| tempBarAttribute |
@@ -1020,29 +1024,25 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
-	| style link |
 
+	| style link |
 	style := aMessageNode selector isSelectorSymbol
-		ifTrue: [ #selector ]
-		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
+		         ifTrue: [ #selector ]
+		         ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
-	self styleOpenParenthese: aMessageNode.
 
-	aMessageNode selectorParts
-		with: aMessageNode keywordsPositions
-		do: [ :keyword :position |
+	self styleParenthesisOf: aMessageNode around: [
+		aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
 			self
 				addStyle: style
 				attribute: link
 				from: position
 				to: position + keyword size - 1 ].
 
-	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
-		ifTrue: [ self visitNode: aMessageNode receiver ].
+		(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) ifTrue: [ self visitNode: aMessageNode receiver ].
 
-	aMessageNode arguments do: [ :each | self visitNode: each ].
-	self styleCloseParenthese: aMessageNode
+		aMessageNode arguments do: [ :each | self visitNode: each ] ]
 ]
 
 { #category : #visiting }
@@ -1111,9 +1111,9 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
 
-	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
-
-	self visitCommentNodes: aVariableNode
+	self styleParenthesisOf: aVariableNode around: [
+		self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
+		self visitCommentNodes: aVariableNode ]
 ]
 
 { #category : #accessing }

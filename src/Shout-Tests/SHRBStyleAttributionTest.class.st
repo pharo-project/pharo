@@ -580,6 +580,22 @@ SHRBStyleAttributionTest >> testParenthesisStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testParenthesisSurroundingVar [
+
+	| aText |
+	aText := 'm |var| ^ (var)' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 11 shouldBe: #parenthesis.
+	self
+		assertStyleOf: aText
+		between: 12
+		and: 14
+		shouldBe: #tempVar.
+	self assertStyleOf: aText at: 15 shouldBe: #parenthesis
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testPatternArgStyle [
 
 	| aText |
