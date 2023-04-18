@@ -28,3 +28,11 @@ UndeclaredVariableError >> variable: anObject [
 
 	variable := anObject
 ]
+
+{ #category : #accessing }
+UndeclaredVariableError >> variableNode [
+	"Return the possible AST node doing the variable access (for reparation)"
+
+	^ self signalContext filterDebuggerStack ifNotNil: [ :ctx |
+		  ctx sourceNodeExecuted ]
+]
