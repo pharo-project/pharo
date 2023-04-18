@@ -33,6 +33,10 @@ Class {
 		'source',
 		'compilationContext',
 		'compilationContextClass',
+		'permitFaulty',
+		'permitUndeclared',
+		'failBlock',
+		'logged',
 		'changeStamp',
 		'protocol'
 	],
@@ -259,7 +263,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		compilationContext interactive ifTrue: [
+		self compilationContext interactive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -281,7 +285,7 @@ OpalCompiler >> checkNotice: aNotice [
 
 	"If a failBlock is provided in non-requestor mode,
 	we honor it and do not signal exceptions"
-	self compilationContext failBlock ifNotNil: [ ^ false ].
+	self failBlock ifNotNil: [ ^ false ].
 
 	aNotice signalError.
 
@@ -328,7 +332,7 @@ OpalCompiler >> compile [
 	ast scope registerVariables.
 	method := ast generateMethod.
 	method propertyAt: #source put: source.
-	compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 	^ method
 ]
 
@@ -402,7 +406,12 @@ OpalCompiler >> evaluate [
 	doItMethod := self compile.
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
-	self logDoIt.
+
+	self logged == true ifTrue: [
+		Smalltalk globals at: #SystemAnnouncer ifPresent: [ :sysAnn |
+			self semanticScope
+				announceDoItEvaluation: source
+				by: sysAnn uniqueInstance ] ].
 	^ value
 ]
 
@@ -415,8 +424,15 @@ OpalCompiler >> evaluate: textOrString [
 ]
 
 { #category : #accessing }
+OpalCompiler >> failBlock [
+
+	^ failBlock
+]
+
+{ #category : #accessing }
 OpalCompiler >> failBlock: aBlock [
-	self compilationContext failBlock: aBlock
+
+	failBlock := aBlock
 ]
 
 { #category : #'public access' }
@@ -445,7 +461,7 @@ OpalCompiler >> install [
 
 	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
-	logSource := compilationContext logged ifNil: [ class acceptsLoggingOfCompilation ].
+	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
 
 	logSource ifTrue: [
 		class
@@ -468,14 +484,14 @@ OpalCompiler >> install: aSource [
 	^ self install
 ]
 
-{ #category : #private }
-OpalCompiler >> logDoIt [
-	self compilationContext logDoItEvaluation: source
+{ #category : #accessing }
+OpalCompiler >> logged [
+	^ logged
 ]
 
 { #category : #accessing }
 OpalCompiler >> logged: aBoolean [
-	self compilationContext logged:  aBoolean
+	logged := aBoolean
 ]
 
 { #category : #accessing }
@@ -485,6 +501,10 @@ OpalCompiler >> noPattern: aBoolean [
 
 { #category : #'public access' }
 OpalCompiler >> options: anOptionsArray [
+
+	"Compatibility for those options"
+	(anOptionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
+
 	self compilationContext parseOptions: anOptionsArray
 ]
 
@@ -512,7 +532,7 @@ OpalCompiler >> parse [
 			check ifNil: [ ^ ast ].
 			check ifFalse: [
 				ast := nil.
-				^ self compilationContext failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
+				^ self failBlock ifNotNil: [ :block | block cull: n ] ifNil: [ nil ].
 				] ] ].
 
 	^ ast
@@ -546,30 +566,30 @@ OpalCompiler >> parserClass [
 { #category : #'public access' }
 OpalCompiler >> permitFaulty [
 
-	^ self compilationContext permitFaulty
+	^ permitFaulty
 ]
 
 { #category : #'public access' }
 OpalCompiler >> permitFaulty: aBoolean [
 
-	self compilationContext permitFaulty: aBoolean
+	permitFaulty := aBoolean
 ]
 
 { #category : #'public access' }
 OpalCompiler >> permitUndeclared [
 
-	^ self compilationContext permitUndeclared
+	^ permitUndeclared
 ]
 
 { #category : #'public access' }
 OpalCompiler >> permitUndeclared: aBoolean [
 
-	self compilationContext permitUndeclared: aBoolean
+	permitUndeclared := aBoolean
 ]
 
 { #category : #accessing }
 OpalCompiler >> productionEnvironment: anObject [
-	compilationContext productionEnvironment: anObject
+	self compilationContext productionEnvironment: anObject
 ]
 
 { #category : #accessing }
