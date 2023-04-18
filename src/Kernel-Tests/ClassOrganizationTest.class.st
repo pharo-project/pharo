@@ -248,6 +248,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithProtocol [
 	self assert: (self organization hasProtocol: two).
 	self deny: (self organization hasProtocol: one).
 	self assertCollection: two methodSelectors hasSameElements: #( 'one' )
+]
 
 { #category : #tests }
 ClassOrganizationTest >> testSilentlyClassifyUnder [
