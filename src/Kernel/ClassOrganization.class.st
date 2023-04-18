@@ -43,19 +43,6 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #'protocol - adding' }
-ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
-
-	| protocol |
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocol: aProtocolName ].
-  
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-
-		protocol addMethodSelector: aSymbol
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> classify: selector under: aProtocol [
 
@@ -73,8 +60,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocol := self protocolOfSelector: selector.
 
-	self classify: selector inProtocolNamed: protocolName.
-	oldProtocol ifNotNil: [ self removeProtocolIfEmpty: oldProtocol ].
+	self silentlyClassify: selector under: protocolName.
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -310,4 +296,15 @@ ClassOrganization >> reset [
 ClassOrganization >> setSubject: anObject [
 
 	organizedClass := anObject
+]
+
+{ #category : #'protocol - adding' }
+ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
+
+	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |
+		oldProtocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+
+	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]
