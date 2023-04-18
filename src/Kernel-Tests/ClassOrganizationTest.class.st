@@ -135,7 +135,7 @@ ClassOrganizationTest >> testRenameProtocolInto [
 	self assert: (self organization hasProtocol: #one).
 	self deny: (self organization hasProtocol: #two).
 	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
-	self organization renameProtocolNamed: #one toBe: #two.
+	self organization renameProtocol: #one into: #two.
 
 	self assert: (self organization hasProtocol: #two).
 	self deny: (self organization hasProtocol: #one).
@@ -151,7 +151,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithExistingProtocol [
 	self assert: (self organization hasProtocol: #two).
 	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
 	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( 'king' ).
-	self organization renameProtocolNamed: #one toBe: #two.
+	self organization renameProtocol: #one into: #two.
 
 	self assert: (self organization hasProtocol: #two).
 	self deny: (self organization hasProtocol: #one).
@@ -171,7 +171,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithExistingProtocolWithProtocol 
 	self assert: (self organization hasProtocol: two).
 	self assertCollection: one methodSelectors hasSameElements: #( 'one' ).
 	self assertCollection: two methodSelectors hasSameElements: #( 'king' ).
-	self organization renameProtocolNamed: one toBe: two.
+	self organization renameProtocol: one into: two.
 
 	self assert: (self organization hasProtocol: two).
 	self deny: (self organization hasProtocol: one).
@@ -185,7 +185,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithNil [
 	self deny: (self organization hasProtocol: #two).
 	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
 
-	self organization renameProtocolNamed: #one toBe: nil.
+	self organization renameProtocol: #one into: nil.
 	"Check that nothing changed."
 	self assert: (self organization hasProtocol: #one).
 	self deny: (self organization hasProtocol: #two).
@@ -199,7 +199,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithNil2 [
 	self deny: (self organization hasProtocol: #two).
 	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
 
-	self organization renameProtocolNamed: nil toBe: #two.
+	self organization renameProtocol: nil into: #two.
 	"Check that nothing changed."
 	self assert: (self organization hasProtocol: #one).
 	self deny: (self organization hasProtocol: #two).
@@ -213,7 +213,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithNil3 [
 	self deny: (self organization hasProtocol: #two).
 	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
 
-	self organization renameProtocolNamed: nil toBe: nil.
+	self organization renameProtocol: nil into: nil.
 	"Check that nothing changed."
 	self assert: (self organization hasProtocol: #one).
 	self deny: (self organization hasProtocol: #two).
@@ -227,7 +227,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithNonExistingProtocol [
 	self deny: (self organization hasProtocol: #two).
 	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
 
-	self organization renameProtocolNamed: #two toBe: #one.
+	self organization renameProtocol: #two into: #one.
 	"Check that nothing changed."
 	self assert: (self organization hasProtocol: #one).
 	self deny: (self organization hasProtocol: #two).
@@ -242,7 +242,7 @@ ClassOrganizationTest >> testRenameProtocolIntoWithProtocol [
 	self assert: (self organization hasProtocol: one).
 	self deny: (self organization hasProtocol: #two).
 	self assertCollection: one methodSelectors hasSameElements: #( 'one' ).
-	self organization renameProtocolNamed: one toBe: #two.
+	self organization renameProtocol: one into: #two.
 
 	two := self organization protocolNamed: #two.
 	self assert: (self organization hasProtocol: two).

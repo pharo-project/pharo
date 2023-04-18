@@ -311,7 +311,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 ]
 
 { #category : #removing }
-ClassOrganization >> renameProtocolNamed: anOldProtocol toBe: aNewProtocol [
+ClassOrganization >> renameProtocol: anOldProtocol into: aNewProtocol [
 
 	| oldProtocol newProtocol |
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
