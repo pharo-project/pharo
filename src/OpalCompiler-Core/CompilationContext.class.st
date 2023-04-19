@@ -156,16 +156,6 @@ CompilationContext class >> optionConstantBlockClosure: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources [
-	^ self readDefaultOption: #optionEmbeddSources
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources: aBoolean [
-	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
-]
-
-{ #category : #'options - settings API' }
 CompilationContext class >> optionInlineAndOr [
 	^ self readDefaultOption: #optionInlineAndOr
 ]
@@ -323,7 +313,6 @@ CompilationContext class >> optionsDescription [
 	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
 	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
@@ -537,11 +526,6 @@ CompilationContext >> optionCleanBlockClosure [
 { #category : #options }
 CompilationContext >> optionConstantBlockClosure [
 	^ options includes: #optionConstantBlockClosure
-]
-
-{ #category : #options }
-CompilationContext >> optionEmbeddSources [
-	^ options includes: #optionEmbeddSources
 ]
 
 { #category : #options }
