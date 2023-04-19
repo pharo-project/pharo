@@ -1097,7 +1097,7 @@ SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 SHRBTextStyler >> visitReturnNode: aReturnNode [
 
-	self addStyle: #return from: aReturnNode start to: aReturnNode stop.
+	self addStyle: #return from: aReturnNode start to: aReturnNode start.
 
 	self visitNode: aReturnNode value
 ]

@@ -38,7 +38,8 @@ Class {
 		'numberOfCritiques',
 		'group',
 		'default',
-		'nodePositions'
+		'nodePositions',
+		'styledPattern'
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }
