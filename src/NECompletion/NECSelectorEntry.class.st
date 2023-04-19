@@ -31,7 +31,9 @@ NECSelectorEntry >> browse [
 { #category : #private }
 NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	| theClass result implementors |
-	theClass := node receiver propertyAt: #type ifAbsent: nil.
+	theClass := node isMessage
+		ifTrue: [ node receiver propertyAt: #type ifAbsent: nil ]
+		ifFalse: [ nil ].
 	result := theClass
 				ifNil: [implementors := self systemNavigation allImplementorsOf: self selector.
 					implementors size == 1
@@ -45,8 +47,9 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 
 { #category : #accessing }
 NECSelectorEntry >> label [
-	"I return whether the variable is a class or a method."
+	node isMessage ifFalse: [ ^ '' ].
 
+	"I return whether the variable is a class or a method."
 	 ^node receiver
 		propertyAt: #type
 		ifPresent:  [ 'method' ]
