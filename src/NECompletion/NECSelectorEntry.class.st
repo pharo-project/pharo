@@ -22,9 +22,9 @@ NECSelectorEntry >> browse [
 				openOnClass: method methodClass
 				selector: method selector.
 			true ]
-		ifAbsent: [ :selector |
+		ifAbsent: [ :sel |
 			SystemNavigation new
-				browseAllImplementorsOf: selector.
+				browseAllImplementorsOf: sel.
 			true ]
 ]
 
