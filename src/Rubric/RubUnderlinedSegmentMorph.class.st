@@ -27,6 +27,7 @@ RubUnderlinedSegmentMorph >> computeVertices [
 			ifTrue: [ lastIndex ]
 			ifFalse: [ line last ].
 		rpos := (self characterBlockForIndex: cidx) bottomLeft.
+		rpos := rpos max: lpos + 5. "Force to have at least a non empty underlining"
 		underlineShape add: (self underlineShapeFromPosition: lpos toPosition: rpos) ]
 ]
 
