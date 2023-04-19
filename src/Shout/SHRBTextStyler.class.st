@@ -870,9 +870,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 SHRBTextStyler >> styleOpenBrace: anArrayNode [
 
 	| style |
-	style := anArrayNode isFaulty
-		         ifTrue: [ #invalid ]
-		         ifFalse: [ self braceStyleName ].
+	style := self braceStyleName.
 	self addStyle: style from: anArrayNode left to: anArrayNode left.
 	braceLevel := braceLevel + 1
 ]
@@ -880,9 +878,7 @@ SHRBTextStyler >> styleOpenBrace: anArrayNode [
 { #category : #private }
 SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
-	style := aBlockNode isFaulty
-		ifTrue: [ #invalid ]
-		ifFalse: [ self bracketStyleName ].
+	style := self bracketStyleName.
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
@@ -978,7 +974,10 @@ SHRBTextStyler >> visitCommentNodes: anASTNode [
 { #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
-	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
+	anEnglobingErrorNode value ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode startWithoutParentheses to: anEnglobingErrorNode startWithoutParentheses + anEnglobingErrorNode value size - 1 ].
+	anEnglobingErrorNode valueAfter ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode stopWithoutParentheses to: anEnglobingErrorNode stopWithoutParentheses + anEnglobingErrorNode valueAfter size - 1 ].
 	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
@@ -1075,7 +1074,10 @@ SHRBTextStyler >> visitNode: aNode [
 { #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 
-	self addStyle: #invalid forNode: anErrorNode
+	self addStyle: #invalid forNode: anErrorNode.
+
+	"Also force whatever is at the error position to be marked (to see missing/unexpected tokens)"
+	self addStyle: #invalid from: anErrorNode errorPosition to: anErrorNode errorPosition
 ]
 
 { #category : #visiting }
