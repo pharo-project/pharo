@@ -501,6 +501,17 @@ CompilationContext >> interactive [
 		  ifFalse: [ true ]
 ]
 
+{ #category : #testing }
+CompilationContext >> needRequestorScope [
+	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
+	Modern requestors should not register temselves but use `bindings:`."
+
+	requestor ifNil: [ ^ false ].
+	"Because requestor do not have a real API, introspection is used."
+	(requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
+	^ requestor needRequestorScope
+]
+
 { #category : #accessing }
 CompilationContext >> noPattern [
 	^semanticScope isDoItScope
@@ -655,7 +666,7 @@ CompilationContext >> scope [
 	| newScope |
 
 	newScope := semanticScope.
-	requestor ifNotNil: [
+	self needRequestorScope ifTrue: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
 		newScope := (self requestorScopeClass new
 			requestor: requestor) outerScope: newScope].
