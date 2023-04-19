@@ -68,26 +68,6 @@ OpalCompilerTest >> testBindingsWriteGlobals [
 ]
 
 { #category : #tests }
-OpalCompilerTest >> testCompileEmbeddsSource [
-	| result |
-	result := Smalltalk compiler
-		class: UndefinedObject;
-		options: #( + #optionEmbeddSources );
-		compile: 'tt ^3+4'.
-	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
-	self deny: result trailer hasSourcePointer. "no sourcePointer"
-	self assert: result trailer hasSource.		 "but source embedded"
-
-	result := Smalltalk compiler
-		class: UndefinedObject;
-		options: #( - #optionEmbeddSources );
-		compile: 'tt ^3+4'.
-	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
-	self deny: result trailer hasSourcePointer. "no sourcePointer"
-	self deny: result trailer hasSource.			 "and source embedded"
-]
-
-{ #category : #tests }
 OpalCompilerTest >> testCompileSource [
 	| source result |
 	source := 'tt ^3+4'.

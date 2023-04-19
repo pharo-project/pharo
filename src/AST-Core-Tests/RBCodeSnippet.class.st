@@ -336,12 +336,14 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: 'a | ';
 			         nodeAt: '1000';
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'a || ';
 			         nodeAt: '10000';
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 6 5 6 'Variable or expression expected' ) )).
@@ -847,6 +849,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo < bar: baz > ';
 			         nodeAt: '00002222222666555';
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
 				            #( 12 14 12 'Undeclared variable' )

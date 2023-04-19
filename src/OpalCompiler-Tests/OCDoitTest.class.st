@@ -19,6 +19,11 @@ OCDoitTest >> hasBindingOf: aSelector [
 	^aSelector == #requestorVarForTesting
 ]
 
+{ #category : #binding }
+OCDoitTest >> needRequestorScope [
+	^true
+]
+
 { #category : #'interactive error protocol' }
 OCDoitTest >> notify: aString at: anInteger in: aString3 [
 	"we ignore"
