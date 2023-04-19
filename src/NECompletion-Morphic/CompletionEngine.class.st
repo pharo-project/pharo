@@ -303,7 +303,9 @@ CompletionEngine >> openMenu [
 				engine: self
 				position: (editor selectionPosition: context completionToken).
 
-	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
+	theMenu isClosed ifFalse: [ 
+		menuMorph := theMenu.
+		theMenu showDetail ]
 ]
 
 { #category : #replacement }
