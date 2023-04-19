@@ -237,6 +237,12 @@ CompletionEngine >> hasDetail [
 	^ self isMenuOpen and: [ menuMorph hasDetail ]
 ]
 
+{ #category : #actions }
+CompletionEngine >> hideDetail [
+
+	menuMorph hideDetail
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds
@@ -370,6 +376,12 @@ CompletionEngine >> setEditor: anObject [
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self
+]
+
+{ #category : #actions }
+CompletionEngine >> showDetail [
+
+	menuMorph showDetail
 ]
 
 { #category : #keyboard }
