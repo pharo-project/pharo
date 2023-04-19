@@ -36,10 +36,11 @@ ErrorNodeStyler >> shouldStyleNode: aNode [
 ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |
+	"Only add red underline at the error position (instead on the whole node)"
 	conf := RubConfigurationChange new.
 	conf configurationBlock: [ :text |
 		| r |
-		r := self segmentMorphClass from: anEnglobingNode stop to: anEnglobingNode stop + 1.
+		r := self segmentMorphClass from: anEnglobingNode errorPosition to: anEnglobingNode errorPosition.
 		text addSegment: r.
 		r label: (self iconLabelBlock: anEnglobingNode).
 		r icon: (self iconFor: anEnglobingNode).
