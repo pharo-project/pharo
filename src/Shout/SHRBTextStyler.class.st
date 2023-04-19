@@ -1050,15 +1050,16 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 	self visitMethodComments: aMethodNode.
 	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
-	aMethodNode selectorParts
-		with: aMethodNode keywordsPositions
-		do:
-			[ :keyword :position |
-			self
-				addStyle: #patternSelector
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMethodNode isDoIt ifFalse: [
+		aMethodNode selectorParts
+			with: aMethodNode keywordsPositions
+			do:
+				[ :keyword :position |
+				self
+					addStyle: #patternSelector
+					attribute: link
+					from: position
+					to: position + keyword size - 1 ] ].
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
