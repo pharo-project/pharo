@@ -2512,6 +2512,24 @@ RBCodeSnippet >> source: anObject [
 	source := anObject
 ]
 
+{ #category : #accessing }
+RBCodeSnippet >> styled: anObject [
+
+	styledPattern := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> styledPattern [
+
+	^ styledPattern
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> styledPattern: anObject [
+
+	styledPattern := anObject
+]
+
 { #category : #inspecting }
 RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 
