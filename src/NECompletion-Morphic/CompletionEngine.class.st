@@ -584,6 +584,5 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph refreshSelection
+	context narrowWith: aParagraphEditor wordAtCaret
 ]
