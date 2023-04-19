@@ -29,13 +29,16 @@ ErrorNodeStyler >> segmentMorphClass [
 
 { #category : #visiting }
 ErrorNodeStyler >> shouldStyleNode: aNode [
-	^ aNode isError
+	^ aNode isError and: [ aNode errorNotices isNotEmpty ]
 ]
 
 { #category : #visiting }
 ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |
+
+	(self shouldStyleNode: anEnglobingNode) ifFalse: [ ^ super visitEnglobingErrorNode: anEnglobingNode ].
+
 	"Only add red underline at the error position (instead on the whole node)"
 	conf := RubConfigurationChange new.
 	conf configurationBlock: [ :text |
