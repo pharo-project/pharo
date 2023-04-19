@@ -11,7 +11,7 @@ Class {
 NECSymbolEntry >> browse [
 	| class |
 	class := node propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents. ^true].
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: self selector. ^true].
 
 	^ self
 		findMethodAndDo: [ :method |
@@ -42,12 +42,12 @@ NECSymbolEntry >> createDescription [
 NECSymbolEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	| result  implementors |
 
-	implementors := self systemNavigation allImplementorsOf: contents.
+	implementors := self systemNavigation allImplementorsOf: self selector.
 	implementors size == 1
 						ifTrue: [| ref |
 							ref := implementors first.
 							result := ref realClass lookupSelector: ref selector]
-						ifFalse: [^ notfoundBlock value: contents].
+						ifFalse: [^ notfoundBlock value: self selector ].
 
 	^ foundBlock value: result
 ]
@@ -64,7 +64,7 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 			description: 'This is just symbol.' ].
 	implementors do: [ :each |
 		output
-			nextPutAll: each className printString;
+			nextPutAll: each methodClass printString;
 			cr ].
 	^ NECEntryDescription
 		label: self label
@@ -85,4 +85,10 @@ NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 		label: self label
 		title: aClass printString
 		description: styledText
+]
+
+{ #category : #accessing }
+NECSymbolEntry >> selector [
+
+	^ contents
 ]

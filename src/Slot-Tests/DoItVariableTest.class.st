@@ -87,7 +87,7 @@ DoItVariableTest >> testReadCompilation [
 	var := DoItVariable named: #temp fromContext: thisContext.
 	ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generate.
 
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
@@ -119,7 +119,7 @@ DoItVariableTest >> testWriteCompilation [
 	var := DoItVariable named: #temp fromContext: thisContext.
 	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generate.
 	doIt valueWithReceiver: self arguments: #().
 
 	self assert: temp equals: 500

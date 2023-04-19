@@ -156,16 +156,6 @@ CompilationContext class >> optionConstantBlockClosure: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources [
-	^ self readDefaultOption: #optionEmbeddSources
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources: aBoolean [
-	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
-]
-
-{ #category : #'options - settings API' }
 CompilationContext class >> optionInlineAndOr [
 	^ self readDefaultOption: #optionInlineAndOr
 ]
@@ -323,7 +313,6 @@ CompilationContext class >> optionsDescription [
 	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
 	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
@@ -501,6 +490,17 @@ CompilationContext >> interactive [
 		  ifFalse: [ true ]
 ]
 
+{ #category : #testing }
+CompilationContext >> needRequestorScope [
+	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
+	Modern requestors should not register temselves but use `bindings:`."
+
+	requestor ifNil: [ ^ false ].
+	"Because requestor do not have a real API, introspection is used."
+	(requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
+	^ requestor needRequestorScope
+]
+
 { #category : #accessing }
 CompilationContext >> noPattern [
 	^semanticScope isDoItScope
@@ -526,11 +526,6 @@ CompilationContext >> optionCleanBlockClosure [
 { #category : #options }
 CompilationContext >> optionConstantBlockClosure [
 	^ options includes: #optionConstantBlockClosure
-]
-
-{ #category : #options }
-CompilationContext >> optionEmbeddSources [
-	^ options includes: #optionEmbeddSources
 ]
 
 { #category : #options }
@@ -655,7 +650,7 @@ CompilationContext >> scope [
 	| newScope |
 
 	newScope := semanticScope.
-	requestor ifNotNil: [
+	self needRequestorScope ifTrue: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
 		newScope := (self requestorScopeClass new
 			requestor: requestor) outerScope: newScope].

@@ -268,6 +268,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
+	(oldName isNil or: [ newName isNil ]) ifTrue: [ ^ self ].
 	oldName = newName ifTrue: [ ^ self ].
 
 	(self hasProtocol: oldName) ifFalse: [ ^ self ].
