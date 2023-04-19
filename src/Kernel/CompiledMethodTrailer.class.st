@@ -532,6 +532,11 @@ CompiledMethodTrailer >> encodeVarLengthSourcePointer [
 ]
 
 { #category : #accessing }
+CompiledMethodTrailer >> encodedData [
+	^encodedData
+]
+
+{ #category : #accessing }
 CompiledMethodTrailer >> endPC [
 	"Answer the index of the last bytecode."
 

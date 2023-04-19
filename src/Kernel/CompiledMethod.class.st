@@ -1024,19 +1024,18 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	"We can't change the trailer of existing method, since it could have completely different format.
 	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
-	| trailer copy |
+	| trailer |
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	
-	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
-	copy := self copyWithTrailerBytes: trailer.
+	trailer := (CompiledMethodTrailer new sourcePointer: srcPointer) encode.
 	"If possible do a replace in place as an optimization"
-	(self trailer class == trailer class and: [ self size = copy size ])
+	(self trailer class == trailer class and: [ trailer size = self trailer size ])
 		ifTrue: [
 			| start |
 			start := self endPC + 1.
-			self replaceFrom: start to: self size with: copy startingAt: start ]
-		ifFalse: [ self becomeForward: copy ].
+			self replaceFrom: start to: self size with: trailer encodedData startingAt: 1 ]
+		ifFalse: [ self becomeForward: (self copyWithTrailerBytes: trailer) ].
 	^ self
 ]
 
