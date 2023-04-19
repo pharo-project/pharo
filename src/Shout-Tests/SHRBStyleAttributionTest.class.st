@@ -406,6 +406,32 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testErrorStyle [
+
+	| aText |
+	aText := 'm 1 ] . foo: . [ 2' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 5
+		shouldBe: #invalid. "closing ]"
+
+	self
+		assertStyleOf: aText
+		between: 9
+		and: 9
+		shouldBe: #invalid. "f of foo: because missing receiver"
+
+	self
+		assertStyleOf: aText
+		between: 16
+		and: 16
+		shouldBe: #invalid. "opening ["
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testFalseStyle [
 
 	| aText |
