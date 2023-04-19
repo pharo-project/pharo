@@ -77,7 +77,7 @@ TraitMethodDescription >> effectiveMethodCategoryCurrent: currentCategoryOrNil n
 
 { #category : #private }
 TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs: aNumber binary: aBoolean [
-	| source node keywords |
+	| source keywords method |
 	source := String streamContents: [:stream |
 		aNumber < 1
 			ifTrue: [stream nextPutAll: aSelector]
@@ -92,12 +92,12 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 							nextPutAll: 'arg'; nextPutAll: argumentNumber asString; space]]].
 		stream cr; tab; nextPutAll: 'self '; nextPutAll: aSymbol].
 
-	node := self class compiler
+	method := self class compiler
 		source: source;
 		class: self class;
-		failBlock: [];
-		parse.
-	^(node generateWithSource) selector: aSelector; yourself
+		permitFaulty;
+		compile.
+	^method selector: aSelector; yourself
 ]
 
 { #category : #initialization }
