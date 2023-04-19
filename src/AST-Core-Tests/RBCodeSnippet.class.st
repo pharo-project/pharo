@@ -2173,6 +2173,9 @@ RBCodeSnippet >> dumpDefinition [
 		  aStream
 			  nextPutAll: '; nodeAt: ';
 			  print: self nodePositions.
+		  aStream
+			  nextPutAll: '; styled: ';
+			  print: self styledPattern.
 		  self formattedCode = self source ifFalse: [
 			  aStream
 				  nextPutAll: '; formattedCode: ';
@@ -2572,6 +2575,7 @@ RBCodeSnippet >> updateExpectations [
 	self isFaulty: ast isFaulty.
 	self isFaultyMinusUndeclared: self isFaulty
 		& (ast allErrorNotices allSatisfy: #isUndeclaredNotice) not.
+	self styledPattern: self mockedStyledText.
 	self notices: (ast allNotices
 			 collect: [ :each |
 				 {
