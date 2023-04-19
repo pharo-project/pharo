@@ -156,17 +156,16 @@ Context class >> initializePrimitiveSimulators [
 
 { #category : #simulation }
 Context class >> initializeTryNamedPrimitiveTemplateMethod [
-	| source method |
+	| source |
 	source := 'tryNamedPrimitive
 	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
 	<primitive:'' module:'' error: errorCode>
 	^ Context primitiveFailTokenFor: errorCode'.
-	method := Smalltalk compiler
+	TryNamedPrimitiveTemplateMethod := Smalltalk compiler
 				class: UndefinedObject;
 				source: source;
-				compile.
-	TryNamedPrimitiveTemplateMethod := method copyWithSource: source
+				compile
 ]
 
 { #category : #'instance creation' }

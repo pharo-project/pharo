@@ -1155,6 +1155,11 @@ CompiledMethod >> usesUndeclareds [
 ]
 
 { #category : #evaluating }
+CompiledMethod >> valueWithReceiver: aReceiver [
+	^self receiver: aReceiver withArguments: #() executeMethod: self
+]
+
+{ #category : #evaluating }
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [
 	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
