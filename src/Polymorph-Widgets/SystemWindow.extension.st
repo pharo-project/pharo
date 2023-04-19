@@ -721,9 +721,7 @@ SystemWindow >> initializeLabelArea [
 		expandBox := self createExpandBox.
 		self setExpandBoxBalloonText].
 	menuBox := self createMenuBox.
-	stripes := Array
-						with: (Morph newBounds: bounds)
-						with: (Morph newBounds: bounds).
+	stripes := {Morph newBounds: bounds . Morph newBounds: bounds }.
 	self addLabelArea.
 	labelArea
 		goBehind.
