@@ -68,6 +68,17 @@ OpalCompilerTest >> testBindingsWriteGlobals [
 ]
 
 { #category : #tests }
+OpalCompilerTest >> testCompileFromAnalysedAST [
+
+	| source ast value |
+	source := 'foo |a| a := 3. ^a+4'.
+	
+	ast := MockForCompilation compiler parse: source.
+	value := MockForCompilation compiler ast: ast; evaluate.
+	self assert: value equals: 7.
+]
+
+{ #category : #tests }
 OpalCompilerTest >> testCompileSource [
 	| source result |
 	source := 'tt ^3+4'.
