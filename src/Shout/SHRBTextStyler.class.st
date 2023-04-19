@@ -978,7 +978,10 @@ SHRBTextStyler >> visitCommentNodes: anASTNode [
 { #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
-	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
+	anEnglobingErrorNode value ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode startWithoutParentheses to: anEnglobingErrorNode startWithoutParentheses + anEnglobingErrorNode value size - 1 ].
+	anEnglobingErrorNode valueAfter ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode stopWithoutParentheses to: anEnglobingErrorNode stopWithoutParentheses + anEnglobingErrorNode valueAfter size - 1 ].
 	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
