@@ -1078,7 +1078,10 @@ SHRBTextStyler >> visitNode: aNode [
 { #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 
-	self addStyle: #invalid forNode: anErrorNode
+	self addStyle: #invalid forNode: anErrorNode.
+
+	"Also force whatever is at the error position to be marked (to see missing/unexpected tokens)"
+	self addStyle: #invalid from: anErrorNode errorPosition to: anErrorNode errorPosition
 ]
 
 { #category : #visiting }
