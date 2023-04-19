@@ -365,8 +365,8 @@ BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	self deny: method hasSourceCode.
 	
 	block := method valueWithReceiver: nil.
-
-	self assert: block printString equals: '[ 1 + 2 ]'
+	"we compare the ast to not depend on pretty printer settings"
+	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
 ]
 
 { #category : #tests }
