@@ -870,9 +870,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 SHRBTextStyler >> styleOpenBrace: anArrayNode [
 
 	| style |
-	style := anArrayNode isFaulty
-		         ifTrue: [ #invalid ]
-		         ifFalse: [ self braceStyleName ].
+	style := self braceStyleName.
 	self addStyle: style from: anArrayNode left to: anArrayNode left.
 	braceLevel := braceLevel + 1
 ]
@@ -880,9 +878,7 @@ SHRBTextStyler >> styleOpenBrace: anArrayNode [
 { #category : #private }
 SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
-	style := aBlockNode isFaulty
-		ifTrue: [ #invalid ]
-		ifFalse: [ self bracketStyleName ].
+	style := self bracketStyleName.
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
