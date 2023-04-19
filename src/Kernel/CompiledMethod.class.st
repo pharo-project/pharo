@@ -49,14 +49,6 @@ CompiledMethod class >> checkIsValidBytecodeEncoder: aBytecodeEncoderSubclass [
 		[self error: 'A bytecode set encoder is expected to be a subclass of BytecodeEncoder']
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> cleanUpSourceInTrailers [
-
-	self allInstances do: [:e | e isInstalled ifFalse: [e embeddSourceInTrailer]].
-	"pay attention since embeddSourceInTrailer creates a new compiled method. So iterating while
-	changing it is a bad idea. This is why we use allInstances do and not allInstancesDo:"
-]
-
 { #category : #constants }
 CompiledMethod class >> conflictMarker [
 	^ #traitConflict
@@ -406,17 +398,6 @@ CompiledMethod >> defaultSelector [
 { #category : #printing }
 CompiledMethod >> displayStringOn: aStream [
 	aStream print: self methodClass; nextPutAll: '>>'; store: self selector
-]
-
-{ #category : #'source code management' }
-CompiledMethod >> embeddSourceInTrailer [
-	"When receiver is deinstalled from its class, its not managed anymore by development tools
-	and it's hard to predict, how long a method could stay in the image, because if it contains blocks,
-	they could still reference it.
-	Therefore we trying to preserve as much as we can , actually by embedding the method's source code into its trailer
-	"
-	self trailer hasSourcePointer ifTrue: [
-		^self becomeForward: (self copyWithSource: self sourceCode)]
 ]
 
 { #category : #accessing }
