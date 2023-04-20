@@ -2597,10 +2597,13 @@ RBCodeSnippet >> dumpDefinition [
 				  nextPutAll: '; notices: ';
 				  print: self notices ].
 		  self skippedTests ifNotNil: [
+			  | defaultSkips |
+			  defaultSkips := default skippedTests ifNil: [ #(  ) ].
 			  self skippedTests do: [ :each |
-				  aStream
-					  nextPutAll: '; skip: ';
-					  print: each ] ].
+				  (defaultSkips includes: each) ifFalse: [
+					  aStream
+						  nextPutAll: '; skip: ';
+						  print: each ] ] ].
 		  aStream nextPut: $) ]
 ]
 
