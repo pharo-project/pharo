@@ -4,7 +4,7 @@ Small pieces of source code used used to test various AST based tools.
 See `RBCodeSnippet allSnippets` for a various collection of instances.
 
 * source <String> the source code of the snippet
-* isMethod <Boolean> the source is for a full method (with pattern and maybe pragmas)
+* isScripting <Boolean> the source is for a script (without pattern or pragmas)
 * formatedCode <String> the expected reformated code
 * isParseFaulty <Boolean> is the parser expected to produce a faulty AST (only syntactic errors)
 * isFaulty <Boolean> is the compiler expected to produce a faulty AST (syntactic and semantic errors)
@@ -24,7 +24,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
-		'isMethod',
+		'isScripting',
 		'isParseFaulty',
 		'isFaulty',
 		'isFaultyMinusUndeclared',
@@ -67,11 +67,13 @@ RBCodeSnippet class >> badAnnotations [
 		        (self new
 			         source: '@';
 			         nodeAt: '0';
+			         styled: '<';
 			         isParseFaulty: false;
 			         notices: #( #( 1 1 1 'Unexpected token' ) )).
 		        (self new
 			         source: '@5';
 			         nodeAt: '23';
+			         styled: '<X';
 			         formattedCode: '@. 5';
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
@@ -79,6 +81,7 @@ RBCodeSnippet class >> badAnnotations [
 		        (self new
 			         source: 'a := @';
 			         nodeAt: '200001';
+			         styled: 'u    <';
 			         isParseFaulty: false;
 			         notices:
 				         #( #( 6 6 6 'Unexpected token' )
@@ -86,23 +89,27 @@ RBCodeSnippet class >> badAnnotations [
 		        (self new
 			         source: '^ @';
 			         nodeAt: '001';
+			         styled: '^ <';
 			         isParseFaulty: false;
 			         notices: #( #( 3 3 3 'Unexpected token' ) )).
 		        (self new
 			         source: '@foo';
 			         nodeAt: '1000';
+			         styled: '<<<<';
 			         formattedCode: '@ foo';
 			         isParseFaulty: false;
 			         notices: #( #( 1 4 1 'Unknown annotation' ) )).
 		        (self new
 			         source: '@foo:';
 			         nodeAt: '10000';
+			         styled: '<<<<<';
 			         formattedCode: '@ foo: ';
 			         notices: #( #( 6 5 6 'Variable or expression expected' )
 				            #( 1 5 1 'Unknown annotation' ) )).
 		        (self new
 			         source: '@foo:5';
 			         nodeAt: '100002';
+			         styled: '<<<<<n';
 			         formattedCode: '@ foo: 5';
 			         isParseFaulty: false;
 			         notices: #( #( 1 6 1 'Unknown annotation' ) )) }.
@@ -110,7 +117,7 @@ RBCodeSnippet class >> badAnnotations [
 	"Setup default values"
 	self new
 		group: #badAnnotations;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -841,7 +848,7 @@ RBCodeSnippet class >> badExpressions [
 	"Setup default values"
 	self new
 		group: #badExpressions;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -1090,7 +1097,7 @@ RBCodeSnippet class >> badMethods [
 	"Setup default values"
 	self new
 		group: #badMethods;
-		isMethod: true;
+		isScripting: false;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -1109,14 +1116,14 @@ RBCodeSnippet class >> badPositions [
 			         nodeAt: '00000112221115553333411166777110';
 			         styled: ' ppp | TTT | ttt    n . ^ ttt . ';
 			         formattedCode: 'foo | tmp | tmp := 1. ^ tmp';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 1).
 		        (self new
 			         source: ' foo: arg bar: arr ^ arg + arr . ';
 			         nodeAt: '000000111000000222044666555777330';
 			         styled: ' pppp AAA pppp AAA ^ aaa s aaa . ';
 			         formattedCode: 'foo: arg bar: arr ^ arg + arr';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 3).
 		        (self new
 			         source: ' | tmp | tmp := 1 . ^ tmp . ';
@@ -1129,14 +1136,14 @@ RBCodeSnippet class >> badPositions [
 			         nodeAt: '000000111033BBB5555558887779AAAAAA220';
 			         styled: ' pppp AAA ^ aaa ssss aaa s n ; sss . ';
 			         formattedCode: 'foo: arg ^ arg min: arg + 2; abs';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 1).
 		        (self new
 			         source: ' foo: arg ^ ( ( ( ( arg ) ) + ( ( 1 ) ) ) ) . ';
 			         nodeAt: '0000001110334444555555555554446666666664444220';
 			         styled: ' pppp AAA ^ 0 1 2 3 aaa 3 2 s 2 3 n 3 2 1 0 . ';
 			         formattedCode: 'foo: arg ^ arg + 1';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 2).
 		        (self new
 			         source: ' ( [ :aaa : bbb | | ccc ddd | aaa . ] ) . ';
@@ -1151,7 +1158,7 @@ RBCodeSnippet class >> badPositions [
 	"Setup default values"
 	self new
 		group: #badPositions;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: false;
 		applyDefaultTo: list.
 	^ list
@@ -1207,7 +1214,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: a bar: a ^ a';
 			         nodeAt: '00000100000020445';
 			         styled: 'pppp A pppp A ^ a';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 1;
 			         notices: #( #( 13 13 13 'Name already defined' ) )).
 		        (self new
@@ -1238,7 +1245,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: a ^ [ | a | a := 10. a ] value + a';
 			         nodeAt: '00000103366778777B9999AA77C66555555444D';
 			         styled: 'pppp A ^ 0 | T | t    nn. t 0 sssss s a';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 14 14 14 'Name already defined' ) )).
 		        (self new
@@ -1248,7 +1255,7 @@ RBCodeSnippet class >> badSemantic [
 				         '0000112111533334116699AABAAAECCCCDDAAF99888888777G';
 			         styled:
 				         'ppp | T | t    n. ^ 0 | T | t    nn. t 0 sssss s t';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 25 25 25 'Name already defined' ) )).
 		        (self new
@@ -1258,7 +1265,7 @@ RBCodeSnippet class >> badSemantic [
 				         '0000224455655597777855CCDDEDDDHFFFFGGDDICCBBBBBBAAAJ44333333';
 			         styled:
 				         'ppp ^ 0 | T | t    n. 1 | T | t    nn. t 1 sssss s t 0 sssss';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 27 27 27 'Name already defined' ) )).
 		        (self new
@@ -1268,21 +1275,21 @@ RBCodeSnippet class >> badSemantic [
 				         '000022444544499AABAAAECCCCDDAAF99888888777G4433333333H';
 			         styled:
 				         'ppp ^ 0 :B | 1 | T | t    nn. t 1 sssss s b 0 ssssss n';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 18 18 18 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: a ^ [ :a | a ] value: 10 + a';
 			         nodeAt: '000001033555655585544444444AA999B';
 			         styled: 'pppp A ^ 0 :B | b 0 ssssss nn s a';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 13 13 13 'Name already defined' ) )).
 		        (self new
 			         source: 'foo | a | a := 1. ^ [ :a | a ] value: 10 + a';
 			         nodeAt: '000011211153333411668889888B8877777777DDCCCE';
 			         styled: 'ppp | T | t    n. ^ 0 :B | b 0 ssssss nn s t';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 24 24 24 'Name already defined' ) )).
 		        (self new
@@ -1292,14 +1299,14 @@ RBCodeSnippet class >> badSemantic [
 				         '0000224455655597777855BBBCBBBEBBAAAAAAAAGGFFFH44333333';
 			         styled:
 				         'ppp ^ 0 | T | t    n. 1 :B | b 1 ssssss nn s t 0 sssss';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 26 26 26 'Name already defined' ) )).
 		        (self new
 			         source: 'foo ^ [ :a | [ :a | a ] value: 10 + a ] value: 1';
 			         nodeAt: '00002244454448889888B8877777777DDCCCE4433333333F';
 			         styled: 'ppp ^ 0 :B | 1 :B | b 1 ssssss nn s b 0 ssssss n';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 17 17 17 'Name already defined' ) )). "phonyArgs"
 
@@ -1308,7 +1315,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: a a := 10. ^ a';
 			         nodeAt: '0000010533334422667';
 			         styled: 'pppp A XXXXXXX. ^ a';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         notices:
 				         #( #( 8 8 8 'Assignment to read-only variable' ) )).
@@ -1412,7 +1419,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: self ^ self + 1';
 			         nodeAt: '00000111103355554446';
 			         styled: 'pppp AAAA ^ aaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 6 9 6 'Reserved variable name' ) )).
@@ -1420,7 +1427,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: super ^ super + 1';
 			         nodeAt: '0000011111033555554446';
 			         styled: 'pppp AAAAA ^ aaaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 6 10 6 'Reserved variable name' ) )).
@@ -1428,7 +1435,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: thisContext ^ thisContext + 1';
 			         nodeAt: '0000011111111111033555555555554446';
 			         styled: 'pppp AAAAAAAAAAA ^ aaaaaaaaaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 6 16 6 'Reserved variable name' ) )).
@@ -1436,7 +1443,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: Object ^ Object + 1';
 			         nodeAt: '000001111110335555554446';
 			         styled: 'pppp AAAAAA ^ aaaaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 2;
 			         notices: #( #( 6 11 6 'Name already defined' ) )).
 		        (self new
@@ -1477,7 +1484,7 @@ RBCodeSnippet class >> badSemantic [
 				         '000022333443355336633773388339933AA33BB33CC33DDD33EEE33FFF33GGG33HHH33III33JJJ333LL33';
 			         styled:
 				         'ppp ^ 0 :BB :BB :BB :BB :BB :BB :BB :BB :BB :BBB :BBB :BBB :BBB :BBB :BBB :BBB | bb 0';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         notices: #( #( 7 85 7 'Too many arguments' ) )). "Too many arguments"
 		        (self new
@@ -1487,7 +1494,7 @@ RBCodeSnippet class >> badSemantic [
 				         '00001100000220000033000004400000550000066000007700000880000099000000AAA000000BBB000000CCC000000DDD000000EEE000000FFF000000GGG0IIJJ';
 			         styled:
 				         'ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA ^ aa';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
 		        (self new
@@ -1513,7 +1520,7 @@ RBCodeSnippet class >> badSemantic [
 	"Setup default values"
 	self new
 		group: #badSemantic;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: false;
 		isParseFaulty: false;
 		applyDefaultTo: list.
@@ -1841,7 +1848,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 	"Setup default values"
 	self new
 		group: #badSimpleExpressions;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -1908,7 +1915,7 @@ RBCodeSnippet class >> badTokens [
 			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
 			         styled: ' """ ppp """ n """. """ ^ n """ ';
 			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: false;
 			         value: 2). "z and b moved around. Formatter issue. FIXME?"
 		        (self new
@@ -2243,7 +2250,7 @@ RBCodeSnippet class >> badTokens [
 	"Setup default values"
 	self new
 		group: #badTokens;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -2369,7 +2376,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 				         '00000100002000030555655755855599A9B9C999FEEEGDDDH55';
 			         styled:
 				         'pppp A pp A pp A 0 :B :b :B | | T t T | t s t s t 0';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
 				            #( 21 21 21 'Name already defined' )
@@ -2400,7 +2407,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 				         '0000010000200003055555555555556676869666CBBBDAAAE';
 			         styled:
 				         'pppp A pp A pp A X            | t t t | t s t s t';
-			         isMethod: true;
+			         isScripting: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
 				            #( 33 33 33 'Name already defined' )
 				            #( 33 33 33 'Unused variable' )
@@ -2413,7 +2420,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 	"Setup default values"
 	self new
 		group: #badVariableAndScopes;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -2501,7 +2508,7 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 
 	aCollection do: [ :each |
 		each default: self.
-		each isMethod ifNil: [ each isMethod: self isMethod ].
+		each isScripting ifNil: [ each isScripting: self isScripting ].
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
@@ -2559,10 +2566,10 @@ RBCodeSnippet >> dumpDefinition [
 			  aStream
 				  nextPutAll: '; formattedCode: ';
 				  print: self formattedCode ].
-		  self isMethod = default isMethod ifFalse: [
+		  self isScripting = default isScripting ifFalse: [
 			  aStream
-				  nextPutAll: '; isMethod: ';
-				  print: self isMethod ].
+				  nextPutAll: '; isScripting: ';
+				  print: self isScripting ].
 		  self isFaulty = default isFaulty ifFalse: [
 			  aStream
 				  nextPutAll: '; isFaulty: ';
@@ -2724,18 +2731,6 @@ RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
 ]
 
 { #category : #accessing }
-RBCodeSnippet >> isMethod [
-
-	^ isMethod
-]
-
-{ #category : #accessing }
-RBCodeSnippet >> isMethod: anObject [
-
-	isMethod := anObject
-]
-
-{ #category : #accessing }
 RBCodeSnippet >> isParseFaulty [
 
 	^ isParseFaulty
@@ -2745,6 +2740,18 @@ RBCodeSnippet >> isParseFaulty [
 RBCodeSnippet >> isParseFaulty: anObject [
 
 	isParseFaulty := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isScripting [
+
+	^ isScripting
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isScripting: anObject [
+
+	isScripting := anObject
 ]
 
 { #category : #accessing }
@@ -2802,17 +2809,18 @@ RBCodeSnippet >> numberOfCritiques: anObject [
 
 { #category : #parsing }
 RBCodeSnippet >> parse [
-	^ isMethod
-		ifTrue: [ RBParser parseFaultyMethod: self source ]
-		ifFalse: [ RBParser parseFaultyExpression: self source ]
+	^ isScripting
+		ifTrue: [ RBParser parseFaultyExpression: self source ]
+		ifFalse: [ RBParser parseFaultyMethod: self source ]
+
 ]
 
 { #category : #parsing }
 RBCodeSnippet >> parseOnError: aBlock [
 
-	^ [ isMethod
-			  ifTrue: [ RBParser parseMethod: self source ]
-			  ifFalse: [ RBParser parseExpression: self source ] ]
+	^ [ isScripting
+			  ifTrue: [ RBParser parseExpression: self source ]
+			  ifFalse: [ RBParser parseMethod: self source ] ]
 		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]
