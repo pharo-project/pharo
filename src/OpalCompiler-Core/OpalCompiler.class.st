@@ -525,6 +525,11 @@ OpalCompiler >> logged: aBoolean [
 
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
+
+	self
+		deprecated: 'Use #isScripting: instead'
+		transformWith: '`@receiver noPattern: `@arg' -> '`@receiver isScripting: `@arg'.
+
 	self isScripting: aBoolean
 ]
 
