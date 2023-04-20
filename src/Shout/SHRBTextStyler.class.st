@@ -836,6 +836,10 @@ SHRBTextStyler >> style: aText ast: ast [
 	parentheseLevel := 0.
 	braceLevel := 0.
 	self visitNode: ast.
+	"Second pass to ensure that all syntax errors are visible"
+	ast allErrorNotices do: [ :notice | 
+		notice isSyntaxError ifTrue: [
+			self addStyle: #invalid from: notice position to: notice position ] ].
 	^ aText runs: (RunArray newFrom: charAttr)
 ]
 
@@ -859,7 +863,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				reverseDo: [:interval |
+				do: [:interval |
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
@@ -888,7 +892,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				do: [ :interval |
+				reverseDo: [ :interval |
 					| pos |
 					pos := interval first.
 					self addStyle:  self parenthesisStyleName from: pos to: pos.
@@ -897,6 +901,8 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 
 { #category : #visiting }
 SHRBTextStyler >> styleParenthesisOf: aNode around: aBlock [
+
+	aNode isValue ifFalse: [ ^ aBlock value ].
 
 	self styleOpenParenthese: aNode.
 	aBlock value.
@@ -966,12 +972,6 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitCommentNodes: anASTNode [
-
-	anASTNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ]
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 	anEnglobingErrorNode value ifNotEmpty: [
@@ -1017,8 +1017,7 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
 				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode.
-	self visitCommentNodes: aLiteralValueNode
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1031,13 +1030,12 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 
 	link := TextMethodLink sourceNode: aMessageNode.
 
-	self styleParenthesisOf: aMessageNode around: [
-		aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
-			self
-				addStyle: style
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
+		self
+			addStyle: style
+			attribute: link
+			from: position
+			to: position + keyword size - 1.
 
 		(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) ifTrue: [ self visitNode: aMessageNode receiver ].
 
@@ -1069,16 +1067,13 @@ SHRBTextStyler >> visitNode: aNode [
 
 	aNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
 
-	^ aNode acceptVisitor: self
+	^ self styleParenthesisOf: aNode around: [ aNode acceptVisitor: self ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 
-	self addStyle: #invalid forNode: anErrorNode.
-
-	"Also force whatever is at the error position to be marked (to see missing/unexpected tokens)"
-	self addStyle: #invalid from: anErrorNode errorPosition to: anErrorNode errorPosition
+	self addStyle: #invalid forNode: anErrorNode
 ]
 
 { #category : #visiting }
@@ -1114,9 +1109,7 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
 
-	self styleParenthesisOf: aVariableNode around: [
-		self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
-		self visitCommentNodes: aVariableNode ]
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
 ]
 
 { #category : #accessing }
