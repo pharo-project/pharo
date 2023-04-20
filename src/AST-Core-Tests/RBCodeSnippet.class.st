@@ -182,7 +182,7 @@ RBCodeSnippet class >> badComments [
 		        (self new
 			         source: '"a" #( "b" 1 "c" two "d" ( "e" 3 "f" ) "g" ) "h"';
 			         nodeAt: 'CCC 000DDD080EEE099900000AAAAAABAAAAAA0HHH00 III';
-			         styled: '"""    """ n """ ###       """ n """   """   """';
+			         styled: '""" 00 """ n """ ###     1 """ n """ 1 """ 0 """';
 			         formattedCode: '#( 1 two #( 3 ) )';
 			         value: #( 1 #two #( 3 ) )).
 		        (self new
@@ -207,7 +207,7 @@ RBCodeSnippet class >> badComments [
 		        (self new
 			         source: '"a" #[ "b" 1 "c" 2 "d" ] "e"';
 			         nodeAt: '888 000999060AAA070BBB00 CCC';
-			         styled: '"""    """ n """ n """   """';
+			         styled: '""" 00 """ n """ n """ 0 """';
 			         formattedCode: '#[ 1 2 ]';
 			         value: #[ 1 2 ]).
 		        (self new
@@ -436,7 +436,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#(1]2}3)';
 			         nodeAt: '00123450';
-			         styled: '  n#n#n ';
+			         styled: '00n#n#n0';
 			         formattedCode: '#( 1 #'']'' 2 #''}'' 3 )';
 			         isFaulty: false;
 			         value: #( 1 #']' 2 #'}' 3 )). "`#(` can eat almost anything"
@@ -447,6 +447,70 @@ RBCodeSnippet class >> badExpressions [
 			         formattedCode: '#( 0 1 r2 4 )';
 			         notices:
 				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' ) )). "Almost anything..."
+		        (self new
+			         source: '#( ( 0 1 2 ) )';
+			         nodeAt: '00011213141100';
+			         styled: '00 1 n n n 1 0';
+			         formattedCode: '#( #( 0 1 2 ) )';
+			         isFaulty: false;
+			         value: #( #( 0 1 2 ) )).
+		        (self new
+			         source: '#( #( 0 1 2 ) )';
+			         nodeAt: '000111213141100';
+			         styled: '00 11 n n n 1 0';
+			         isFaulty: false;
+			         value: #( #( 0 1 2 ) )).
+		        (self new
+			         source: '#( #( 0 1 2 )';
+			         nodeAt: '0001112131411';
+			         styled: 'XX 00 n n n 0';
+			         notices: #( #( 1 13 14 ''')'' expected' ) )).
+		        (self new
+			         source: '#( #( 0 1r2 3 ) )';
+			         nodeAt: '00011121344151100';
+			         styled: 'XX XX n XX# n X X';
+			         formattedCode: '#( #( 0 1 r2 3 ) )';
+			         notices:
+				         #( #( 9 9 10 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '#( #( 0 1r2 3 )';
+			         nodeAt: '000111213441511';
+			         styled: 'XX XX n XX# n X';
+			         formattedCode: '#( #( 0 1 r2 3 )';
+			         notices:
+				         #( #( 9 9 10 'an integer greater than 1 as valid radix expected' )
+				            #( 1 15 16 ''')'' expected' ) )).
+		        (self new
+			         source: '#( #[ 0 1 2 ] )';
+			         nodeAt: '000111213141100';
+			         styled: '00 00 n n n 0 0';
+			         isFaulty: false;
+			         value: #( #[ 0 1 2 ] )).
+		        (self new
+			         source: '#( #[ 0 1000 2 ] )';
+			         nodeAt: '000111213333141100';
+			         styled: 'XX XX n XXXX n X X';
+			         notices: #( #( 9 12 9 '8-bit integer expected' ) )).
+		        (self new
+			         source: '#( #[ 0 1 2 )';
+			         nodeAt: '0001112131415';
+			         styled: 'XX XX n n n X';
+			         notices: #( #( 13 13 13 '8-bit integer expected' )
+				            #( 4 13 14 ''']'' expected' )
+				            #( 1 13 14 ''')'' expected' ) )).
+		        (self new
+			         source: '#( #[ 0 1 2 ]';
+			         nodeAt: '0001112131411';
+			         styled: 'XX 00 n n n 0';
+			         notices: #( #( 1 13 14 ''')'' expected' ) )).
+		        (self new
+			         source: '[(#("a"("b"###("c"###["d"]#["e"]["f"]))))]';
+			         nodeAt: '0222EEE88889999999AAAAAAAABBBBBBC999D98220';
+			         styled: '0011"""2"""3333"""1111"""111"""1#   #32100';
+			         formattedCode:
+				         '[ #( #( #( #[ ] #[ ] #''['' #'']'' ) ) ) "a" "b" "c" "d" "e" ]';
+			         isFaulty: false;
+			         value: #( #( #( #[  ] #[  ] #'[' #']' ) ) )). "dry [ and ] in lit array are symbols"
 		        (self new
 			         source: '#[ 1 ) 2 ]';
 			         nodeAt: '0001020300';
@@ -505,13 +569,13 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#( )';
 			         nodeAt: '0000';
-			         styled: '    ';
+			         styled: '00 0';
 			         isFaulty: false;
 			         value: #(  )).
 		        (self new
 			         source: '#[ ]';
 			         nodeAt: '0000';
-			         styled: '    ';
+			         styled: '00 0';
 			         isFaulty: false;
 			         value: #[  ]).
 		        (self new
@@ -579,13 +643,13 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#(1)#(2)';
 			         nodeAt: '22324454';
-			         styled: '  n X n ';
+			         styled: '00n0X0n0';
 			         formattedCode: '#( 1 ). #( 2 )';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 		        (self new
 			         source: '#[1]#[2]';
 			         nodeAt: '22324454';
-			         styled: '  n X n ';
+			         styled: '00n0X0n0';
 			         formattedCode: '#[ 1 ]. #[ 2 ]';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 
@@ -1060,7 +1124,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: '#(foo bar)';
 			         nodeAt: '3344435553';
-			         styled: 'X ### ### ';
+			         styled: 'X0### ###0';
 			         formattedCode: ' . #( foo bar )';
 			         notices: #( #( 1 0 1 'Message pattern expected' ) )).
 
@@ -1956,7 +2020,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '#(^1)';
 			         nodeAt: '00120';
-			         styled: '  #n ';
+			         styled: '00#n0';
 			         formattedCode: '#( #''^'' 1 )';
 			         isFaulty: false;
 			         value: #( #'^' 1 )). "Obviously..."
@@ -2347,6 +2411,16 @@ RBCodeSnippet class >> badTokens [
 			         styled: 'XX#X#X';
 			         formattedCode: '#( Δ → ə )';
 			         notices: #( #( 4 4 4 'Unknown character' ) )). "This one is faulty because → is a parse error"
+		        (self new
+			         source: '#( ( Δ → ə ) )';
+			         nodeAt: '00011213141100';
+			         styled: 'XX X # X # X X';
+			         notices: #( #( 8 8 8 'Unknown character' ) )). "This one is faulty because → is a parse error"
+		        (self new
+			         source: '#( #( Δ → ə ) )';
+			         nodeAt: '000111213141100';
+			         styled: 'XX XX # X # X X';
+			         notices: #( #( 9 9 9 'Unknown character' ) )). "This one is faulty because → is a parse error"
 		        (self new
 			         source: '#→';
 			         nodeAt: '12';
