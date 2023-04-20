@@ -467,10 +467,10 @@ RBScanner >> scanLiteral [
 RBScanner >> scanLiteralArrayToken [
 	"This scan accepts any character but is only meant to be used when a # is followed by ( or [ ."
 	| token |
-	token := RBLiteralArrayToken
-				value: (String with: $# with: currentCharacter)
-				start: tokenStart.
 	self step.
+	token := RBLiteralArrayToken
+				value: (self scanBackFrom: tokenStart)
+				start: tokenStart.
 	^token
 ]
 
