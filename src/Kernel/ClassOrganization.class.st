@@ -134,19 +134,6 @@ ClassOrganization >> methodSelectorsInProtocol: aName [
 	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
 ]
 
-{ #category : #private }
-ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
-
-	| fromProtocol toProtocol |
-	fromProtocol := self protocolNamed: fromProtocolNamed.
-	toProtocol := self protocolNamed: toProtocolNamed.
-
-	toProtocol addAllMethodsFrom: fromProtocol.
-	fromProtocol resetMethodSelectors.
-
-	^ toProtocol
-]
-
 { #category : #notifications }
 ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
 
@@ -268,16 +255,18 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
+	| newProtocol oldProtocol |
 	(oldName isNil or: [ newName isNil ]) ifTrue: [ ^ self ].
 	oldName = newName ifTrue: [ ^ self ].
 
 	(self hasProtocol: oldName) ifFalse: [ ^ self ].
 
-	(self hasProtocol: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolIfEmpty: oldName ]
-		ifFalse: [ (self protocolNamed: oldName) name: newName ].
+	newProtocol := self ensureProtocol: newName.
+	oldProtocol := self protocolNamed: oldName.
+
+	newProtocol addAllMethodsFrom: oldProtocol.
+	oldProtocol resetMethodSelectors.
+	self removeProtocolIfEmpty: oldProtocol.
 
 	"Announce the changes in the system"
 	self notifyOfChangedProtocolNamesFrom: oldName to: newName.
