@@ -990,13 +990,6 @@ SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	"Do not try to be smart and just style elements independently"
-
-	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
 	| value attributes |
