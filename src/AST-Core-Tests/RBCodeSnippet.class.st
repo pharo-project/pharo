@@ -49,6 +49,7 @@ RBCodeSnippet class >> allSnippets [
 
 	^ {
 		  self badAnnotations.
+		  self badComments.
 		  self badSimpleExpressions.
 		  self badExpressions.
 		  self badTokens.
@@ -117,6 +118,63 @@ RBCodeSnippet class >> badAnnotations [
 	"Setup default values"
 	self new
 		group: #badAnnotations;
+		isScripting: true;
+		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badComments [
+	"EFFormater is not the best here :("
+
+	<script: 'self styleWithError: self badComments'>
+	| list |
+	list := {
+		        (self new
+			         source: '"" ';
+			         nodeAt: '22 ';
+			         styled: '"" ';
+			         isFaulty: false).
+		        (self new
+			         source: '"nothing" ';
+			         nodeAt: '222222222 ';
+			         styled: '""""""""" ';
+			         isFaulty: false).
+		        (self new
+			         source: '"com"1"ment"';
+			         nodeAt: '333330444444';
+			         styled: '"""""n""""""';
+			         formattedCode: '1';
+			         isFaulty: false;
+			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
+
+		        "Unfinished comments"
+		        (self new
+			         source: '"unfinished';
+			         nodeAt: '00000000000';
+			         styled: 'XXXXXXXXXXX';
+			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"also unfinished""';
+			         nodeAt: '000000000000000000';
+			         styled: 'XXXXXXXXXXXXXXXXXX';
+			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"';
+			         nodeAt: '0';
+			         styled: 'X';
+			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"""';
+			         nodeAt: '000';
+			         styled: 'XXX';
+			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )) }.
+
+
+	"Setup default values"
+	self new
+		group: #badComments;
 		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
@@ -1883,62 +1941,6 @@ RBCodeSnippet class >> badTokens [
 			         nodeAt: '';
 			         styled: '';
 			         isFaulty: false). "emptyness is ok"
-
-		        "Comments"
-		        "EFFormater is not the best here :("
-		        (self new
-			         source: '"" ';
-			         nodeAt: '22 ';
-			         styled: '"" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"nothing" ';
-			         nodeAt: '222222222 ';
-			         styled: '""""""""" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"com"1"ment"';
-			         nodeAt: '333330444444';
-			         styled: '"""""n""""""';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
-		        (self new
-			         source: '"a" 1 "b". "c" 2 "d"';
-			         nodeAt: '555 106660077708 AAA';
-			         styled: '""" n """. """ n """';
-			         formattedCode: '1. "a" "b" "c" 2 "d"';
-			         isFaulty: false;
-			         value: 2). "a and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
-			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
-			         styled: ' """ ppp """ n """. """ ^ n """ ';
-			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
-			         isScripting: false;
-			         isFaulty: false;
-			         value: 2). "z and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: '"unfinished';
-			         nodeAt: '00000000000';
-			         styled: 'XXXXXXXXXXX';
-			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"also unfinished""';
-			         nodeAt: '000000000000000000';
-			         styled: 'XXXXXXXXXXXXXXXXXX';
-			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"';
-			         nodeAt: '0';
-			         styled: 'X';
-			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"""';
-			         nodeAt: '000';
-			         styled: 'XXX';
-			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
-
 
 		        "Bad string literal"
 		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
