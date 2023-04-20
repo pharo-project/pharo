@@ -499,6 +499,11 @@ OpalCompiler >> install: aSource [
 ]
 
 { #category : #accessing }
+OpalCompiler >> isScripting [
+	^ self compilationContext noPattern
+]
+
+{ #category : #accessing }
 OpalCompiler >> isScripting: aBoolean [
 	self compilationContext noPattern: aBoolean
 ]
