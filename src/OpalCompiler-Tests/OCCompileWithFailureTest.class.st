@@ -22,7 +22,7 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	"parse [:] in parse error mode, this results in arg vars with an empty string as a name"
 	result := UndefinedObject compiler
     source: '^[ :]';
-    noPattern: true;
+    isScripting: true;
     requestor: self;
     parse.
 	self assert: result isDoIt.
@@ -48,7 +48,7 @@ OCCompileWithFailureTest >> testParenthesis [
 	| result cm |
 	result := UndefinedObject compiler
     source: 'self assert: pragma( numArgs equals: 0.';
-    noPattern: true;
+    isScripting: true;
     requestor: self;
     parse.
 	self assert: result isDoIt.

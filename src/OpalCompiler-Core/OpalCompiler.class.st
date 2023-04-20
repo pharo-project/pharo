@@ -416,7 +416,7 @@ OpalCompiler >> evaluate [
 	 the system no longer creates Doit method litter on errors."
 
 	| value doItMethod |
-	self noPattern: true.
+	self isScripting: true.
 	doItMethod := self compile.
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
@@ -515,7 +515,7 @@ OpalCompiler >> logged: aBoolean [
 
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
-	self compilationContext noPattern: aBoolean
+	self isScripting: aBoolean
 ]
 
 { #category : #'public access' }

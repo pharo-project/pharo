@@ -156,9 +156,8 @@ ProfilerModel >> profileCode: someCode notifying: requestor [
 
 	compiledMethod := Smalltalk compiler
 		                  source: (self doItSourceCodeFrom: someCode);
-		                  context: nil;
 		                  requestor: requestor;
-		                  noPattern: true;
+		                  isScripting: true;
 		                  failBlock: [ ^ self ];
 		                  compile.
 	compiledMethod valueWithReceiver: self arguments: #(  )
