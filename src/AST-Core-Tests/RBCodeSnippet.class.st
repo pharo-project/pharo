@@ -2878,7 +2878,7 @@ RBCodeSnippet >> searchDefinition [
 RBCodeSnippet >> skip: aSymbol [
 
 	skippedTests ifNil: [ skippedTests := OrderedCollection new ].
-	skippedTests add: aSymbol
+	skippedTests addIfNotPresent: aSymbol
 ]
 
 { #category : #accessing }
