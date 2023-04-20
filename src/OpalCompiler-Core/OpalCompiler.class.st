@@ -371,6 +371,11 @@ OpalCompiler >> compiledMethodTrailer: bytes [
 
 { #category : #accessing }
 OpalCompiler >> context: aContext [
+	"Prepare self to parse/compile/evaluate according to a context.
+	This impacts the scope (for name resolutions) and toggles `isScripting` to true.
+	Note that you may prefer to use `Context>>#compiler` that also takes in account
+	the compilation preferences of the class of the receiver (e.g. plugins)."
+
 	aContext ifNil: [
 		"There are such users which sets up all parameters (doItContext and doItReceiver).
 		For example check SpCodePresenter>>#evaluate:onCompileError:onError:.
@@ -416,7 +421,7 @@ OpalCompiler >> evaluate [
 	 the system no longer creates Doit method litter on errors."
 
 	| value doItMethod |
-	self noPattern: true.
+	self isScripting: true.
 	doItMethod := self compile.
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
@@ -499,6 +504,16 @@ OpalCompiler >> install: aSource [
 ]
 
 { #category : #accessing }
+OpalCompiler >> isScripting [
+	^ self compilationContext noPattern
+]
+
+{ #category : #accessing }
+OpalCompiler >> isScripting: aBoolean [
+	self compilationContext noPattern: aBoolean
+]
+
+{ #category : #accessing }
 OpalCompiler >> logged [
 	^ logged
 ]
@@ -510,7 +525,12 @@ OpalCompiler >> logged: aBoolean [
 
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
-	self compilationContext noPattern: aBoolean
+
+	self
+		deprecated: 'Use #isScripting: instead'
+		transformWith: '`@receiver noPattern: `@arg' -> '`@receiver isScripting: `@arg'.
+
+	self isScripting: aBoolean
 ]
 
 { #category : #'public access' }
@@ -563,6 +583,13 @@ OpalCompiler >> parse: textOrString [
 { #category : #'public access' }
 OpalCompiler >> parseLiterals: aString [
 	^self parserClass parseLiterals: aString
+]
+
+{ #category : #'public access' }
+OpalCompiler >> parseScript: aString [
+
+	self isScripting: true.
+	^ self parse: aString
 ]
 
 { #category : #'public access' }

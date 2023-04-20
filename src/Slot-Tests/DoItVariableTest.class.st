@@ -46,7 +46,7 @@ DoItVariableTest >> testDoItCompilation [
 	doIt := thisContext class compiler
 		source: 'temp + 2';
 		context: thisContext;
-		noPattern: true;
+		isScripting: true;
 		bindings: { var };
 		compile.
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102

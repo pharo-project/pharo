@@ -42,11 +42,7 @@ SHRBStyleAttributionTest >> setUp [
 SHRBStyleAttributionTest >> style: aText [
 
 	| ast |
-	ast := self class compiler
-		       source: aText asString;
-		       noPattern: false;
-		       class: self class;
-		       parse.
+	ast := self class compiler parse: aText asString.
 	styler style: aText ast: ast.
 
 	^ ast
