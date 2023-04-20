@@ -23,6 +23,7 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> tearDown [
 
 	(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	SystemOrganizer default removeCategory: self packageName.
+	SystemOrganizer default removeCategoriesMatching: self packageName , '-*'.
 	super tearDown
 ]
 
