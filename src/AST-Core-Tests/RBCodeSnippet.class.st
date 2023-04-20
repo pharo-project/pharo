@@ -2731,18 +2731,6 @@ RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
 ]
 
 { #category : #accessing }
-RBCodeSnippet >> isMethod [
-
-	^ isScripting ifNotNil: [ isScripting not ]
-]
-
-{ #category : #accessing }
-RBCodeSnippet >> isMethod: anObject [
-
-	isScripting := anObject not
-]
-
-{ #category : #accessing }
 RBCodeSnippet >> isParseFaulty [
 
 	^ isParseFaulty
