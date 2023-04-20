@@ -4,7 +4,7 @@ Small pieces of source code used used to test various AST based tools.
 See `RBCodeSnippet allSnippets` for a various collection of instances.
 
 * source <String> the source code of the snippet
-* isMethod <Boolean> the source is for a full method (with pattern and maybe pragmas)
+* isScripting <Boolean> the source is for a script (without pattern or pragmas)
 * formatedCode <String> the expected reformated code
 * isParseFaulty <Boolean> is the parser expected to produce a faulty AST (only syntactic errors)
 * isFaulty <Boolean> is the compiler expected to produce a faulty AST (syntactic and semantic errors)
@@ -24,7 +24,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
-		'isMethod',
+		'isScripting',
 		'isParseFaulty',
 		'isFaulty',
 		'isFaultyMinusUndeclared',
@@ -2508,7 +2508,7 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 
 	aCollection do: [ :each |
 		each default: self.
-		each isMethod ifNil: [ each isMethod: self isMethod ].
+		each isScripting ifNil: [ each isScripting: self isScripting ].
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
@@ -2566,10 +2566,10 @@ RBCodeSnippet >> dumpDefinition [
 			  aStream
 				  nextPutAll: '; formattedCode: ';
 				  print: self formattedCode ].
-		  self isMethod = default isMethod ifFalse: [
+		  self isScripting = default isScripting ifFalse: [
 			  aStream
-				  nextPutAll: '; isMethod: ';
-				  print: self isMethod ].
+				  nextPutAll: '; isScripting: ';
+				  print: self isScripting ].
 		  self isFaulty = default isFaulty ifFalse: [
 			  aStream
 				  nextPutAll: '; isFaulty: ';
@@ -2733,13 +2733,13 @@ RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
 { #category : #accessing }
 RBCodeSnippet >> isMethod [
 
-	^ isMethod
+	^ isScripting ifNotNil: [ isScripting not ]
 ]
 
 { #category : #accessing }
 RBCodeSnippet >> isMethod: anObject [
 
-	isMethod := anObject
+	isScripting := anObject not
 ]
 
 { #category : #accessing }
@@ -2752,6 +2752,18 @@ RBCodeSnippet >> isParseFaulty [
 RBCodeSnippet >> isParseFaulty: anObject [
 
 	isParseFaulty := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isScripting [
+
+	^ isScripting
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isScripting: anObject [
+
+	isScripting := anObject
 ]
 
 { #category : #accessing }
@@ -2809,17 +2821,18 @@ RBCodeSnippet >> numberOfCritiques: anObject [
 
 { #category : #parsing }
 RBCodeSnippet >> parse [
-	^ isMethod
-		ifTrue: [ RBParser parseFaultyMethod: self source ]
-		ifFalse: [ RBParser parseFaultyExpression: self source ]
+	^ isScripting
+		ifTrue: [ RBParser parseFaultyExpression: self source ]
+		ifFalse: [ RBParser parseFaultyMethod: self source ]
+
 ]
 
 { #category : #parsing }
 RBCodeSnippet >> parseOnError: aBlock [
 
-	^ [ isMethod
-			  ifTrue: [ RBParser parseMethod: self source ]
-			  ifFalse: [ RBParser parseExpression: self source ] ]
+	^ [ isScripting
+			  ifTrue: [ RBParser parseExpression: self source ]
+			  ifFalse: [ RBParser parseMethod: self source ] ]
 		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]
