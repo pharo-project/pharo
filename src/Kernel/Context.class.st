@@ -162,10 +162,7 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 	execute primitives. See Object documentation whatIsAPrimitive."
 	<primitive:'' module:'' error: errorCode>
 	^ Context primitiveFailTokenFor: errorCode'.
-	TryNamedPrimitiveTemplateMethod := Smalltalk compiler
-				class: UndefinedObject;
-				source: source;
-				compile
+	TryNamedPrimitiveTemplateMethod := Smalltalk compiler compile: source
 ]
 
 { #category : #'instance creation' }
