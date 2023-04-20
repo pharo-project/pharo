@@ -1005,12 +1005,12 @@ SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 	self
 		addStyle: style
-		from: aRBLiteralArrayNode start
-		to: aRBLiteralArrayNode start + aRBLiteralArrayNode openerSize - 1.
+		from: aRBLiteralArrayNode startWithoutParentheses
+		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
 	self
 		addStyle: style
-		from: aRBLiteralArrayNode stop
-		to: aRBLiteralArrayNode stop.
+		from: aRBLiteralArrayNode stopWithoutParentheses
+		to: aRBLiteralArrayNode stopWithoutParentheses.
 
 	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
 
