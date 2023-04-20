@@ -836,6 +836,10 @@ SHRBTextStyler >> style: aText ast: ast [
 	parentheseLevel := 0.
 	braceLevel := 0.
 	self visitNode: ast.
+	"Second pass to ensure that all syntax errors are visible"
+	ast allErrorNotices do: [ :notice | 
+		notice isSyntaxError ifTrue: [
+			self addStyle: #invalid from: notice position to: notice position ] ].
 	^ aText runs: (RunArray newFrom: charAttr)
 ]
 
@@ -1069,10 +1073,7 @@ SHRBTextStyler >> visitNode: aNode [
 { #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 
-	self addStyle: #invalid forNode: anErrorNode.
-
-	"Also force whatever is at the error position to be marked (to see missing/unexpected tokens)"
-	self addStyle: #invalid from: anErrorNode errorPosition to: anErrorNode errorPosition
+	self addStyle: #invalid forNode: anErrorNode
 ]
 
 { #category : #visiting }
