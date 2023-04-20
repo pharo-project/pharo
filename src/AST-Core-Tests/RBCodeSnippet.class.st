@@ -2516,6 +2516,7 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
 		each isFaultyMinusUndeclared ifNil: [ each isFaultyMinusUndeclared: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
+		self skippedTests ifNotNil: [ self skippedTests do: [ :name | each skip: name ] ]
 	]
 ]
 
