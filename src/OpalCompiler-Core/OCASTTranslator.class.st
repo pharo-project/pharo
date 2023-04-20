@@ -484,6 +484,12 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 
+{ #category : #visiting }
+OCASTTranslator >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	self emitRuntimeError: aRBAnnotationValueNode
+]
+
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
 
@@ -652,6 +658,10 @@ OCASTTranslator >> visitLiteralNode: aLiteralNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMessageNode: aMessageNode [
+
+	aMessageNode isAnnotation ifTrue: [
+		^ aMessageNode receiver emitValue: methodBuilder ].
+
 	aMessageNode isInlined ifTrue: [
 		methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
 		^self

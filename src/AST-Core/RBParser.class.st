@@ -798,7 +798,7 @@ RBParser >> parsePragma [
 	startToken := currentToken.
 	self step. "<"
 	pragma := self basicParsePragma.
-	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+	(currentToken isBinary: #>) ifFalse: [
 		pragma isPragma ifTrue: [
 			pragma
 				left: startToken start;
@@ -833,7 +833,7 @@ RBParser >> parsePragmaLiteral [
 { #category : #'private - parsing' }
 RBParser >> parsePragmas [
 
-	[ currentToken isBinary and: [ currentToken value = #< ] ]
+	[ currentToken isBinary: #< ]
 		whileTrue: [ self parsePragma ]
 ]
 
@@ -897,6 +897,13 @@ RBParser >> parsePrimitiveObject [
 			[currentToken value = $[ ifTrue: [^self saveCommentsDuring:[self parseBlock]].
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
+
+	"Annotations are implemented as a magic receiver '@'"
+	(currentToken isBinary: #@) ifTrue: [
+		| position |
+		position := currentToken start.
+		self step. "@"
+		^ RBAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
