@@ -648,18 +648,18 @@ RBParser >> parseLiteralArray [
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralArrayErrorNode new
-			value: '#(';
+			value: startToken value asString;
 		 	start: startToken start;
 			contents: literals;
 			valueAfter: ')';
 			stop: stop;
 			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
-	^self literalArrayNodeClass
+	^(self literalArrayNodeClass
 		startPosition: startToken start
 		contents: literals
 		stopPosition: stop
-		isByteArray: false
+		isByteArray: false) openerSize: startToken length.
 ]
 
 { #category : #'private - parsing' }
@@ -700,18 +700,18 @@ RBParser >> parseLiteralByteArray [
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralByteArrayErrorNode new
-			value: '#[';
+			value: startToken value asString;
 		 	start: startToken start;
 			contents: stream contents;
 			valueAfter: ']';
 			stop: stop;
 			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
-	^self literalArrayNodeClass
+	^(self literalArrayNodeClass
 		startPosition: startToken start
 		contents: stream contents
 		stopPosition: stop
-		isByteArray: true
+		isByteArray: true) openerSize: startToken length.
 ]
 
 { #category : #'private - parsing' }
