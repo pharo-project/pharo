@@ -294,13 +294,13 @@ EpRevertTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocolNamed: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self assert: (aClass organization hasProtocolNamed: 'protocol').
+	self assert: (aClass organization hasProtocol: 'protocol').
 	self revertInputEntry.
-	self deny: (aClass organization hasProtocolNamed: 'protocol')
+	self deny: (aClass organization hasProtocol: 'protocol')
 ]
 
 { #category : #tests }
@@ -308,14 +308,14 @@ EpRevertTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocolNamed: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self deny: (aClass organization hasProtocolNamed: 'protocol').
+	self deny: (aClass organization hasProtocol: 'protocol').
 	self revertInputEntry.
-	self assert: (aClass organization hasProtocolNamed: 'protocol')
+	self assert: (aClass organization hasProtocol: 'protocol')
 ]
 
 { #category : #tests }

@@ -387,6 +387,12 @@ RBSimpleFormatter >> traditionalBinaryPrecedenceArray [
 ]
 
 { #category : #visiting }
+RBSimpleFormatter >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	codeStream nextPut: $@
+]
+
+{ #category : #visiting }
 RBSimpleFormatter >> visitArrayNode: anArrayNode [
 	self bracketWith: '{}' around: [ self formatArray: anArrayNode ]
 ]

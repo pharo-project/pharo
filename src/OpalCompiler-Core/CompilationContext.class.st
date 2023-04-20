@@ -17,8 +17,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'requestor',
-		'failBlock',
-		'logged',
 		'compiledMethod',
 		'options',
 		'environment',
@@ -34,9 +32,7 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope',
-		'permitFaulty',
-		'permitUndeclared'
+		'semanticScope'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -157,16 +153,6 @@ CompilationContext class >> optionConstantBlockClosure [
 { #category : #'options - settings API' }
 CompilationContext class >> optionConstantBlockClosure: aBoolean [
 	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources [
-	^ self readDefaultOption: #optionEmbeddSources
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources: aBoolean [
-	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -327,7 +313,6 @@ CompilationContext class >> optionsDescription [
 	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
 	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
@@ -481,16 +466,6 @@ CompilationContext >> environment: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> failBlock [
-	^ failBlock
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock: anObject [
-	failBlock := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> getClass [
 	^ semanticScope targetClass
 ]
@@ -515,25 +490,15 @@ CompilationContext >> interactive [
 		  ifFalse: [ true ]
 ]
 
-{ #category : #accessing }
-CompilationContext >> logDoItEvaluation: aSourceString [
-	self logged ifNil: [ ^self ].
-	self logged ifFalse: [ ^self ].
+{ #category : #testing }
+CompilationContext >> needRequestorScope [
+	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
+	Modern requestors should not register temselves but use `bindings:`."
 
-	Smalltalk globals
-			at: #SystemAnnouncer
-			ifPresent: [ :sysAnn |
-				semanticScope announceDoItEvaluation: aSourceString by: sysAnn uniqueInstance ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logged [
-	^logged
-]
-
-{ #category : #accessing }
-CompilationContext >> logged: anObject [
-	logged := anObject
+	requestor ifNil: [ ^ false ].
+	"Because requestor do not have a real API, introspection is used."
+	(requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
+	^ requestor needRequestorScope
 ]
 
 { #category : #accessing }
@@ -561,11 +526,6 @@ CompilationContext >> optionCleanBlockClosure [
 { #category : #options }
 CompilationContext >> optionConstantBlockClosure [
 	^ options includes: #optionConstantBlockClosure
-]
-
-{ #category : #options }
-CompilationContext >> optionEmbeddSources [
-	^ options includes: #optionEmbeddSources
 ]
 
 { #category : #options }
@@ -641,8 +601,6 @@ CompilationContext >> optionSkipSemanticWarnings [
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
 
-	(optionsArray includesAny: #( #optionParseErrors #optionParseErrorsNonInteractiveOnly #optionSkipSemanticWarnings )) ifTrue: [ permitFaulty := true ].
-
 	options parseOptions: optionsArray
 ]
 
@@ -654,30 +612,6 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> permitFaulty [
-
-	^ permitFaulty
-]
-
-{ #category : #accessing }
-CompilationContext >> permitFaulty: anObject [
-
-	permitFaulty := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> permitUndeclared [
-
-	^ permitUndeclared
-]
-
-{ #category : #accessing }
-CompilationContext >> permitUndeclared: anObject [
-
-	permitUndeclared := anObject
 ]
 
 { #category : #accessing }
@@ -716,7 +650,7 @@ CompilationContext >> scope [
 	| newScope |
 
 	newScope := semanticScope.
-	requestor ifNotNil: [
+	self needRequestorScope ifTrue: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
 		newScope := (self requestorScopeClass new
 			requestor: requestor) outerScope: newScope].

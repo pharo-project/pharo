@@ -18,25 +18,21 @@ ClassOrganization class >> forClass: aClass [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 ClassOrganization >> addProtocol: aProtocol [
 
-	(self protocols includes: aProtocol) ifTrue: [ ^ aProtocol ].
-
-	protocols := protocols copyWith: aProtocol.
-	^ aProtocol
-]
-
-{ #category : #accessing }
-ClassOrganization >> addProtocolNamed: protocolName [
-
 	| oldProtocols protocol |
-	(self hasProtocolNamed: protocolName) ifTrue: [ ^ self ].
+	
+	(self hasProtocol: aProtocol) ifTrue: [
+		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+
+	protocol := aProtocol isString ifTrue: [ Protocol name: aProtocol ] ifFalse: [ aProtocol ].
 
 	oldProtocols := self protocolNames copy.
 
-	protocol := self addProtocol: (Protocol name: protocolName).
-	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocolName).
+	protocols := protocols copyWith: protocol.
+
+	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: aProtocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -47,32 +43,7 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment [
-
-	^ self comment
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> classComment: aString [
-
-	self comment: aString
-]
-
-{ #category : #'protocol - adding' }
-ClassOrganization >> classify: aSymbol inProtocolNamed: aProtocolName [
-
-	| protocol |
-	protocol := self protocolNamed: aProtocolName ifAbsent: [ self addProtocolNamed: aProtocolName ].
-  
-	self protocols
-		select: [ :p | p includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-
-		protocol addMethodSelector: aSymbol
-]
-
-{ #category : #'backward compatibility' }
+{ #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocolName forceNotify oldProtocol protocolName |
@@ -89,8 +60,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
 	oldProtocol := self protocolOfSelector: selector.
 
-	self classify: selector inProtocolNamed: protocolName.
-	oldProtocol ifNotNil: [ self removeProtocolIfEmpty: oldProtocol ].
+	self silentlyClassify: selector under: protocolName.
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
 ]
 
@@ -101,40 +71,13 @@ ClassOrganization >> cleanUpProtocolsForClass: aClass [
 	self allMethodSelectors do: [ :each | (aClass includesSelector: each) ifFalse: [ self removeElement: each ] ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> comment [
-
-	^ organizedClass comment
-]
-
-{ #category : #accessing }
-ClassOrganization >> comment: aString [
-	organizedClass comment: aString
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentSourcePointer [
-	^ organizedClass commentSourcePointer
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentSourcePointer: anObject [
-	organizedClass commentSourcePointer: anObject
-]
-
-{ #category : #accessing }
-ClassOrganization >> commentStamp [
-
-	^ organizedClass commentStamp
-]
-
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	otherOrganization protocols do: [ :protocol | protocol methodSelectors do: [ :m | self classify: m inProtocolNamed: protocol name ] ]
+	protocols := otherOrganization protocols copy
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : #accessing }
 ClassOrganization >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -148,7 +91,7 @@ ClassOrganization >> ensureProtocol: aProtocol [
 		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocolNamed: aProtocol ]
+	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #accessing }
@@ -157,14 +100,11 @@ ClassOrganization >> extensionProtocols [
 ]
 
 { #category : #testing }
-ClassOrganization >> hasComment [
-	^ organizedClass hasComment
-]
+ClassOrganization >> hasProtocol: aProtocol [
 
-{ #category : #testing }
-ClassOrganization >> hasProtocolNamed: aString [
-
-	^ self protocols anySatisfy: [ :each | each name = aString ]
+	| protocolName |
+	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
+	^ self protocols anySatisfy: [ :each | each name = protocolName ]
 ]
 
 { #category : #testing }
@@ -202,7 +142,7 @@ ClassOrganization >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 	toProtocol := self protocolNamed: toProtocolNamed.
 
 	toProtocol addAllMethodsFrom: fromProtocol.
-	fromProtocol removeAllMethodSelectors.
+	fromProtocol resetMethodSelectors.
 
 	^ toProtocol
 ]
@@ -328,13 +268,18 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocolNamed: oldName toBe: newName [
 
-	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
-
-	self silentlyRenameProtocolNamed: oldName toBe: newName.
-
-	"Announce the changes in the system if the name changed"
+	(oldName isNil or: [ newName isNil ]) ifTrue: [ ^ self ].
 	oldName = newName ifTrue: [ ^ self ].
 
+	(self hasProtocol: oldName) ifFalse: [ ^ self ].
+
+	(self hasProtocol: newName)
+		ifTrue: [
+			self moveMethodsFrom: oldName to: newName.
+			self removeProtocolIfEmpty: oldName ]
+		ifFalse: [ (self protocolNamed: oldName) name: newName ].
+
+	"Announce the changes in the system"
 	self notifyOfChangedProtocolNamesFrom: oldName to: newName.
 	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldName to: newName).
 
@@ -354,24 +299,13 @@ ClassOrganization >> setSubject: anObject [
 	organizedClass := anObject
 ]
 
-{ #category : #private }
-ClassOrganization >> silentlyRenameProtocolNamed: oldName toBe: newName [
+{ #category : #classification }
+ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
 
-	(self hasProtocolNamed: oldName) ifFalse: [ ^ self ].
+	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |
+		oldProtocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: oldProtocol ].
 
-	(self hasProtocolNamed: newName)
-		ifTrue: [
-			self moveMethodsFrom: oldName to: newName.
-			self removeProtocolIfEmpty: oldName ]
-		ifFalse: [
-			^ (self protocolNamed: oldName)
-				  name: newName;
-				  yourself ]
-]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> subject [
-
-	self deprecated: 'Use #organizedClass instead.' transformWith: '`@rcv subject' -> '`@rcv organizedClass'.
-	^ self organizedClass
+	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]

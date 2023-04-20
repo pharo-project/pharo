@@ -94,3 +94,12 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 
 	self copyAll: (aClass organization methodSelectorsInProtocol: protocolName) from: aClass classified: newProtocolName
 ]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> removeMethodTag: aSymbol [
+
+	self
+		deprecated: 'Use #removeProtocolIfEmpty: instead since this previous name is missleading.'
+		transformWith: '`@rcv removeMethodTag: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
+	^ self removeProtocolIfEmpty: aSymbol
+]

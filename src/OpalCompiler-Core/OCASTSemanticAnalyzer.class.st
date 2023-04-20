@@ -18,8 +18,6 @@ Class {
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 
-	"Policy: simple semantic analysis is faulty by default"
-	compilationContext permitFaulty ifNil: [ compilationContext permitFaulty: true ].
 	self visitNode: aNode.
 	OCASTClosureAnalyzer new visitNode: aNode.
 	OCASTMethodMetadataAnalyser new visitNode: aNode
@@ -180,6 +178,17 @@ OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	(aRBAnnotationValueNode parent isNotNil and: [
+		 aRBAnnotationValueNode parent isMessage ]) ifTrue: [
+		aRBAnnotationValueNode isHandled ifFalse: [
+			self error: 'Unknown annotation' forNode: aRBAnnotationValueNode parent ].
+		^ self ].
+	self error: 'Unexpected token' forNode: aRBAnnotationValueNode
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	self visitNode: anAssignmentNode value.
@@ -238,7 +247,7 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].

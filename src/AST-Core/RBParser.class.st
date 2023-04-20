@@ -318,13 +318,13 @@ RBParser >> parseBinaryMessageWith: aNode [
 	| binaryNode |
 	binaryNode := self selectorNodeClass
 		value: currentToken value
-		keywordPositions: (Array with: currentToken start).
+		keywordPositions: { currentToken start }.
 	self step.
 	^self messageNodeClass
 		receiver: aNode
 		selector:  binaryNode
 		keywordsPositions: binaryNode keywordPositions
-		arguments: (Array with: self parseUnaryMessage)
+		arguments: { self parseUnaryMessage }
 ]
 
 { #category : #'private - parsing' }
@@ -496,7 +496,6 @@ RBParser >> parseDoIt [
 	| methodNode |
 	methodNode := self doItMethodNodeClass new.
 	self parseMethodBodyInto: methodNode.
-	methodNode addReturn.
 	^methodNode
 ]
 
@@ -540,8 +539,7 @@ RBParser >> parseErrorNode: aMessageString [
 RBParser >> parseExpression [
 	"Parse and return an AST node corresponding to the expression passed as a #source"
 	| methodNode |
-	methodNode := self doItMethodNodeClass new.
-	self parseMethodBodyInto: methodNode.
+	methodNode := self parseDoIt.
 	^(methodNode statements size == 1 and: [ methodNode temporaries isEmpty ])
 		  ifTrue: [ methodNode statements first ]
 		  ifFalse: [ methodNode body ]
@@ -800,7 +798,7 @@ RBParser >> parsePragma [
 	startToken := currentToken.
 	self step. "<"
 	pragma := self basicParsePragma.
-	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+	(currentToken isBinary: #>) ifFalse: [
 		pragma isPragma ifTrue: [
 			pragma
 				left: startToken start;
@@ -835,7 +833,7 @@ RBParser >> parsePragmaLiteral [
 { #category : #'private - parsing' }
 RBParser >> parsePragmas [
 
-	[ currentToken isBinary and: [ currentToken value = #< ] ]
+	[ currentToken isBinary: #< ]
 		whileTrue: [ self parsePragma ]
 ]
 
@@ -899,6 +897,13 @@ RBParser >> parsePrimitiveObject [
 			[currentToken value = $[ ifTrue: [^self saveCommentsDuring:[self parseBlock]].
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
+
+	"Annotations are implemented as a magic receiver '@'"
+	(currentToken isBinary: #@) ifTrue: [
+		| position |
+		position := currentToken start.
+		self step. "@"
+		^ RBAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
@@ -1107,7 +1112,7 @@ RBParser >> parseUnaryMessage [
 { #category : #'private - parsing' }
 RBParser >> parseUnaryMessageWith: aNode [
 	| selector |
-	selector := self selectorNodeClass value: currentToken value keywordPositions: (Array with: currentToken start).
+	selector := self selectorNodeClass value: currentToken value keywordPositions: {currentToken start}.
 	self step.
 	^self messageNodeClass
 		receiver: aNode
@@ -1123,7 +1128,7 @@ RBParser >> parseUnaryPattern [
 	self step.
 	^self methodNodeClass
 		selector: selector value asSymbol
-		keywordsPositions: (Array with: selector start)
+		keywordsPositions: {selector start}
 		arguments: #()
 ]
 

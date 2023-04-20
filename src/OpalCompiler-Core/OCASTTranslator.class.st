@@ -282,9 +282,14 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 OCASTTranslator >> emitRuntimeError: aNode [
 	"Runtime errors should only be emited on faulty code"
 
+	| errors |
+	errors := aNode allErrorNotices.
+
 	methodBuilder
 		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: aNode;
+		pushLiteral: (errors isEmpty
+				 ifTrue: [ 'Syntax error' ]
+				 ifFalse: [ errors first messageText ]);
 		send: #signalSyntaxError:
 ]
 
@@ -479,6 +484,12 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 
+{ #category : #visiting }
+OCASTTranslator >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	self emitRuntimeError: aRBAnnotationValueNode
+]
+
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
 
@@ -647,6 +658,10 @@ OCASTTranslator >> visitLiteralNode: aLiteralNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMessageNode: aMessageNode [
+
+	aMessageNode isAnnotation ifTrue: [
+		^ aMessageNode receiver emitValue: methodBuilder ].
+
 	aMessageNode isInlined ifTrue: [
 		methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
 		^self
@@ -673,8 +688,17 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 			createTempVectorNamed: aMethodNode scope tempVectorName
 			withVars: aMethodNode scope tempVectorVarNames
 	].
-	self visitEffectNode: aMethodNode body.
-	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]
+
+	aMethodNode body lastIsReturn
+		ifTrue: [
+			self visitEffectNode: aMethodNode body ]
+		ifFalse: [ aMethodNode isDoIt
+			ifTrue: [ 
+				self visitNode: aMethodNode body.
+				methodBuilder returnTop ]
+			ifFalse: [ 
+				self visitEffectNode: aMethodNode body.
+				methodBuilder pushReceiver; returnTop ] ]
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -730,20 +754,7 @@ OCASTTranslator >> visitVariableNode: aVariableNode [
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
 	aVariableNode variable isUndeclaredVariable ifTrue: [
-		aVariableNode variable register.
-
-		(aVariableNode parent isMessage and: [ aVariableNode parent receiver == aVariableNode ]) ifTrue: [ 
-			"Let's try to hack a hack!
-			StDebugger expects some `VariableNotDeclared` (badly named class) when a message
-			is send to a `nil` that comes from an undeclared variable (awful fragile heuristics are used).
-			To be compatible, we can either emulate the hack (that seems to be very ugly and complex),
-			or we can just compile the undelared variable used as a receiver as a literal read.
-			Therefore, if the variable become declared, the emmited code is compatible, and if
-			the variable is still undeclared at runtime, then `nil` from an undeclared is used and
-			the debugger is fooled.
-			Once the debugger learn to deal with `UndeclaredVariableRead`, this hack can be removed."
-			methodBuilder pushLiteralVariable: aVariableNode variable.
-			^ self ] ].
+		aVariableNode variable register ].
 
 	aVariableNode variable emitValue: methodBuilder
 ]
