@@ -391,6 +391,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: 'a | ';
 			         nodeAt: '1000';
 			         styled: 'u s ';
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
@@ -398,6 +399,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: 'a || ';
 			         nodeAt: '10000';
 			         styled: 'u uu ';
+			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
 				            #( 6 5 6 'Variable or expression expected' ) )).
@@ -982,6 +984,7 @@ RBCodeSnippet class >> badMethods [
 			         source: 'foo < bar: baz > ';
 			         nodeAt: '00002222222666555';
 			         styled: 'ppp < <<<<<Xuu s ';
+			         raise: UndeclaredVariableRead;
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
 				            #( 12 14 12 'Undeclared variable' )

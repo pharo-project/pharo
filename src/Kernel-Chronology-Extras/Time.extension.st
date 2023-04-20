@@ -120,9 +120,7 @@ Time class >> dateAndTimeFromSeconds: secondCountSinceEpoch [
 
 	| dateAndTime |
 	dateAndTime := DateAndTime fromSeconds: secondCountSinceEpoch.
- 	^ Array
- 		with: dateAndTime asDate
- 		with: dateAndTime asTime
+ 	^ { dateAndTime asDate .  dateAndTime asTime }
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
