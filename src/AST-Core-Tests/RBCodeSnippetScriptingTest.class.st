@@ -8,6 +8,6 @@ Class {
 RBCodeSnippetScriptingTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-		  forSelector: #snippet addOptions: (RBCodeSnippet allSnippets select: [:each | each isMethod not ]);
+		  forSelector: #snippet addOptions: (RBCodeSnippet allSnippets select: [:each | each isScripting ]);
 		  yourself
 ]
