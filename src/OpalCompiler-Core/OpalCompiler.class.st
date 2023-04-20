@@ -371,6 +371,11 @@ OpalCompiler >> compiledMethodTrailer: bytes [
 
 { #category : #accessing }
 OpalCompiler >> context: aContext [
+	"Prepare self to parse/compile/evaluate according to a context.
+	This impacts the scope (for name resolutions) and toggles `isScripting` to true.
+	Note that you may prefer to use `Context>>#compiler` that also takes in account
+	the compilation preferences of the class of the receiver (e.g. plugins)."
+
 	aContext ifNil: [
 		"There are such users which sets up all parameters (doItContext and doItReceiver).
 		For example check SpCodePresenter>>#evaluate:onCompileError:onError:.
