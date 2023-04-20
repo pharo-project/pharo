@@ -43,7 +43,7 @@ ClassOrganization >> allMethodSelectors [
 	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocolName forceNotify oldProtocol protocolName |
@@ -77,7 +77,7 @@ ClassOrganization >> copyFrom: otherOrganization [
 	protocols := otherOrganization protocols copy
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : #accessing }
 ClassOrganization >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -289,7 +289,7 @@ ClassOrganization >> setSubject: anObject [
 	organizedClass := anObject
 ]
 
-{ #category : #'protocol - adding' }
+{ #category : #classification }
 ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |

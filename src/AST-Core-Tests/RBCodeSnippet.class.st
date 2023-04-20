@@ -38,7 +38,8 @@ Class {
 		'numberOfCritiques',
 		'group',
 		'default',
-		'nodePositions'
+		'nodePositions',
+		'styledPattern'
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }
@@ -68,59 +69,73 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '( 1 + 2';
 			         nodeAt: '0021113';
+			         styled: 'X n s n';
 			         notices: #( #( 1 7 8 ''')'' expected' ) )).
 		        (self new
 			         source: '#( 1 + 2';
 			         nodeAt: '00010203';
+			         styled: 'XX n # n';
 			         notices: #( #( 1 8 9 ''')'' expected' ) )).
 		        (self new
 			         source: '[ 1 + 2';
 			         nodeAt: '0032224';
+			         styled: 'X n s n';
 			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '#[ 1 2';
 			         nodeAt: '000102';
+			         styled: 'XX n n';
 			         notices: #( #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '{ 1 + 2';
 			         nodeAt: '0021113';
+			         styled: 'X n s n';
 			         notices: #( #( 1 7 8 '''}'' expected' ) )).
 		        (self new
 			         source: '1 + 2 )';
 			         nodeAt: '2111300';
+			         styled: 'n s n X';
 			         notices: #( #( 1 7 7 'Missing opener for closer: )' ) )).
 		        (self new
 			         source: '1 + 2 ]';
 			         nodeAt: '2111300';
+			         styled: 'n s n X';
 			         notices: #( #( 1 7 7 'Missing opener for closer: ]' ) )).
 		        (self new
 			         source: '1 + 2 }';
 			         nodeAt: '2111300';
+			         styled: 'n s n X';
 			         notices: #( #( 1 7 7 'Missing opener for closer: }' ) )).
 		        (self new
 			         source: '( ';
 			         nodeAt: '00';
+			         styled: 'X ';
 			         notices: #( #( 3 2 3 'Variable or expression expected' )
 				            #( 1 2 3 ''')'' expected' ) )).
 		        (self new
 			         source: '#( ';
 			         nodeAt: '00 ';
+			         styled: 'XX ';
 			         notices: #( #( 1 2 4 ''')'' expected' ) )).
 		        (self new
 			         source: '[ ';
 			         nodeAt: '00';
+			         styled: 'X ';
 			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '#[ ';
 			         nodeAt: '00 ';
+			         styled: 'XX ';
 			         notices: #( #( 1 2 4 ''']'' expected' ) )).
 		        (self new
 			         source: '{ ';
 			         nodeAt: '0 ';
+			         styled: 'X ';
 			         notices: #( #( 1 1 3 '''}'' expected' ) )).
 		        (self new
 			         source: '{ [ ( ';
 			         nodeAt: '001133';
+			         styled: 'X X X ';
 			         notices: #( #( 7 6 7 'Variable or expression expected' )
 				            #( 5 6 7 ''')'' expected' )
 				            #( 3 6 7 ''']'' expected' )
@@ -128,19 +143,23 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: ' )';
 			         nodeAt: ' 0';
+			         styled: ' X';
 			         notices: #( #( 2 2 2 'Missing opener for closer: )' ) )).
 		        (self new
 			         source: ' ]';
 			         nodeAt: ' 0';
+			         styled: ' X';
 			         notices: #( #( 2 2 2 'Missing opener for closer: ]' ) );
 			         skip: #testCodeImporter). "FIXME. code importer do not like rogue starting `]`"
 		        (self new
 			         source: ' }';
 			         nodeAt: ' 0';
+			         styled: ' X';
 			         notices: #( #( 2 2 2 'Missing opener for closer: }' ) )).
 		        (self new
 			         source: ' ) ] }';
 			         nodeAt: ' 21100';
+			         styled: ' X X X';
 			         notices: #( #( 2 2 2 'Missing opener for closer: )' )
 				            #( 2 4 4 'Missing opener for closer: ]' )
 				            #( 2 6 6 'Missing opener for closer: }' ) )).
@@ -149,6 +168,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '(1]2)';
 			         nodeAt: '23154';
+			         styled: 'XnXnX';
 			         formattedCode: '( 1 ]. 2 )';
 			         notices:
 				         #( #( 1 2 3 ''')'' expected' )
@@ -157,6 +177,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '(1}2)';
 			         nodeAt: '23154';
+			         styled: 'XnXnX';
 			         formattedCode: '( 1 }. 2 )';
 			         notices:
 				         #( #( 1 2 3 ''')'' expected' )
@@ -165,6 +186,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '(1. 2)';
 			         nodeAt: '120043';
+			         styled: 'XnX nX';
 			         formattedCode: '( 1. 2 )';
 			         notices:
 				         #( #( 1 2 3 ''')'' expected' )
@@ -172,57 +194,69 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[1)2]';
 			         nodeAt: '03240';
+			         styled: '0nXn0';
 			         formattedCode: '[ 1 ). 2 ]';
 			         notices: #( #( 2 3 3 'Missing opener for closer: )' ) )).
 		        (self new
 			         source: '[1}2]';
 			         nodeAt: '03240';
+			         styled: '0nXn0';
 			         formattedCode: '[ 1 }. 2 ]';
 			         notices: #( #( 2 3 3 'Missing opener for closer: }' ) )).
 		        (self new
 			         source: '#(1]2}3)';
 			         nodeAt: '00123450';
+			         styled: '  n#n#n ';
 			         formattedCode: '#( 1 #'']'' 2 #''}'' 3 )';
 			         isFaulty: false;
 			         value: #( 1 #']' 2 #'}' 3 )). "`#(` can eat almost anything"
 		        (self new
 			         source: '#( 0 1r2 4 )';
 			         nodeAt: '000102330400';
+			         styled: 'XX n XX# n X';
 			         formattedCode: '#( 0 1 r2 4 )';
 			         notices:
 				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' ) )). "Almost anything..."
 		        (self new
 			         source: '#[ 1 ) 2 ]';
 			         nodeAt: '0001020300';
+			         styled: 'XX n X n X';
 			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 } 2 ]';
 			         nodeAt: '0001020300';
+			         styled: 'XX n X n X';
 			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 a 2 ]';
 			         nodeAt: '0001020300';
+			         styled: 'XX n X n X';
 			         notices: #( #( 6 6 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 -1 2 ]';
 			         nodeAt: '00010220300';
+			         styled: 'XX n XX n X';
 			         notices: #( #( 6 7 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 1.0 2 ]';
 			         nodeAt: '000102220300';
+			         styled: 'XX n XXX n X';
 			         notices: #( #( 6 8 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '#[ 1 256 2 ]';
 			         nodeAt: '000102220300';
+			         styled: 'XX n XXX n X';
 			         notices: #( #( 6 8 6 '8-bit integer expected' ) )).
 		        (self new
 			         source: '{1)2}';
 			         nodeAt: '02130';
+			         styled: '0nXn0';
 			         formattedCode: '{ 1 ). 2 }';
 			         notices: #( #( 2 3 3 'Missing opener for closer: )' ) )).
 		        (self new
 			         source: '{1]2}';
 			         nodeAt: '02130';
+			         styled: '0nXn0';
 			         formattedCode: '{ 1 ]. 2 }';
 			         notices: #( #( 2 3 3 'Missing opener for closer: ]' ) )).
 
@@ -231,24 +265,29 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '()';
 			         nodeAt: '00';
+			         styled: '0X';
 			         notices: #( #( 1 2 2 'Variable or expression expected' ) )).
 		        (self new
 			         source: '[ ]';
 			         nodeAt: '000';
+			         styled: '0 0';
 			         isFaulty: false).
 		        (self new
 			         source: '#( )';
 			         nodeAt: '0000';
+			         styled: '    ';
 			         isFaulty: false;
 			         value: #(  )).
 		        (self new
 			         source: '#[ ]';
 			         nodeAt: '0000';
+			         styled: '    ';
 			         isFaulty: false;
 			         value: #[  ]).
 		        (self new
 			         source: '{ }';
 			         nodeAt: '000';
+			         styled: '0 0';
 			         isFaulty: false;
 			         value: #(  )).
 
@@ -256,56 +295,67 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '1 2';
 			         nodeAt: '213';
+			         styled: 'n X';
 			         formattedCode: '1. 2';
 			         notices: #( #( 1 2 3 'End of statement expected' ) )).
 		        (self new
 			         source: '1 foo 2';
 			         nodeAt: '3222214';
+			         styled: 'n sss X';
 			         formattedCode: '1 foo. 2';
 			         notices: #( #( 1 6 7 'End of statement expected' ) )).
 		        (self new
 			         source: '(1)2';
 			         nodeAt: '2223';
+			         styled: '0n0X';
 			         formattedCode: '1. 2';
 			         notices: #( #( 1 3 4 'End of statement expected' ) )).
 		        (self new
 			         source: '1(2)';
 			         nodeAt: '2333';
+			         styled: 'nXn0';
 			         formattedCode: '1. 2';
 			         notices: #( #( 1 1 2 'End of statement expected' ) )).
 		        (self new
 			         source: '(1)(2)';
 			         nodeAt: '222333';
+			         styled: '0n0Xn0';
 			         formattedCode: '1. 2';
 			         notices: #( #( 1 3 4 'End of statement expected' ) )).
 		        (self new
 			         source: '#hello#world';
 			         nodeAt: '222222333333';
+			         styled: '######X#####';
 			         formattedCode: '#hello. #world';
 			         notices: #( #( 1 6 7 'End of statement expected' ) )).
 		        (self new
 			         source: '$h$w';
 			         nodeAt: '2233';
+			         styled: '$$X$';
 			         formattedCode: '$h. $w';
 			         notices: #( #( 1 2 3 'End of statement expected' ) )).
 		        (self new
 			         source: '[1][2]';
 			         nodeAt: '242575';
+			         styled: '0n0Xn0';
 			         formattedCode: '[ 1 ]. [ 2 ]';
 			         notices: #( #( 1 3 4 'End of statement expected' ) )).
 		        (self new
 			         source: '{1}{2}';
 			         nodeAt: '232454';
+			         styled: '0n0Xn0';
 			         formattedCode: '{ 1 }. { 2 }';
 			         notices: #( #( 1 3 4 'End of statement expected' ) )).
 		        (self new
 			         source: '#(1)#(2)';
 			         nodeAt: '22324454';
+			         styled: '  n X n ';
 			         formattedCode: '#( 1 ). #( 2 )';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 		        (self new
 			         source: '#[1]#[2]';
 			         nodeAt: '22324454';
+			         styled: '  n X n ';
 			         formattedCode: '#[ 1 ]. #[ 2 ]';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 
@@ -314,28 +364,33 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '| ';
 			         nodeAt: '0 ';
+			         styled: 'X ';
 			         formattedCode: '| | ';
 			         notices: #( #( 1 1 3 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '| a b';
 			         nodeAt: '00102';
+			         styled: 'X X X';
 			         formattedCode: '| a b | ';
 			         notices: #( #( 1 5 6 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '|- 1';
 			         nodeAt: '1224';
+			         styled: 'XX n';
 			         formattedCode: '| | . - 1';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 1 2 'Variable or expression expected' ) )). "Here |- is scanned as a single operator token, so parser must work more"
 		        (self new
 			         source: '| 1';
 			         nodeAt: '102';
+			         styled: 'X X';
 			         formattedCode: '| | . 1';
 			         notices: #( #( 1 1 3 '''|'' or variable expected' ) )).
 		        "Note that the | character is also a binary operator, so a missing opening | become a binary call with a missing argument (see bellow)"
 		        (self new
 			         source: 'a | ';
 			         nodeAt: '1000';
+			         styled: 'u s ';
 			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
@@ -343,6 +398,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: 'a || ';
 			         nodeAt: '10000';
+			         styled: 'u uu ';
 			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
@@ -350,6 +406,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '| | a';
 			         nodeAt: '    0';
+			         styled: '| | u';
 			         formattedCode: 'a';
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
@@ -358,6 +415,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '|| a';
 			         nodeAt: '   0';
+			         styled: '|| u';
 			         formattedCode: 'a';
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
@@ -366,23 +424,27 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: ' ||| a';
 			         nodeAt: '   002';
+			         styled: ' ||X u';
 			         formattedCode: ' | a';
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
 				            #( 6 6 6 'Undeclared variable' ) )). "this one is a empty temps and a binary operator | with a mising receiver"
 		        (self new
 			         source: ' |||| a';
 			         nodeAt: '   0002';
+			         styled: ' ||Xu u';
 			         formattedCode: ' || a';
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
 				            #( 7 7 7 'Undeclared variable' ) )). "this one is a empty temps and a binary operator || with a mising receiver"
 		        (self new
 			         source: '| a | | a';
 			         nodeAt: '001000224';
+			         styled: '| T | X t';
 			         notices: #( #( 7 6 7 'Variable or expression expected' )
 				            #( 9 9 9 'Unitialized variable' ) )). "A valid temporary followed by a binary operator with a missing receiver"
 		        (self new
 			         source: '| a ||a';
 			         nodeAt: '0010024';
+			         styled: '| T |Xt';
 			         formattedCode: '| a | | a';
 			         notices: #( #( 6 5 6 'Variable or expression expected' )
 				            #( 7 7 7 'Unitialized variable' ) )). "same"
@@ -393,10 +455,12 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: ':a';
 			         nodeAt: '00';
+			         styled: 'XX';
 			         notices: #( #( 1 2 1 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '::a';
 			         nodeAt: '122';
+			         styled: 'XXX';
 			         formattedCode: ':. :a';
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
@@ -404,6 +468,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: ':::a';
 			         nodeAt: '1233';
+			         styled: 'XXXX';
 			         formattedCode: ':. :. :a';
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
@@ -412,6 +477,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '::';
 			         nodeAt: '12';
+			         styled: 'XX';
 			         formattedCode: ':. :';
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
@@ -419,10 +485,12 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: ':a foo';
 			         nodeAt: '110000';
+			         styled: 'XX sss';
 			         notices: #( #( 1 2 1 'Unexpected block parameter' ) )).
 		        (self new
 			         source: 'a :foo';
 			         nodeAt: '213333';
+			         styled: 'u XXXX';
 			         formattedCode: 'a. :foo';
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
@@ -431,6 +499,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: 'a : foo';
 			         nodeAt: '2133333';
+			         styled: 'u XXXXX';
 			         formattedCode: 'a. :foo';
 			         notices:
 				         #( #( 1 1 1 'Undeclared variable' )
@@ -439,22 +508,26 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: 'a:';
 			         nodeAt: '00';
+			         styled: 'Xs';
 			         formattedCode: ' a: ';
 			         notices: #( #( 1 0 1 'Variable or expression expected' )
 				            #( 3 2 3 'Variable or expression expected' ) )). "keyword message with a missing receiver and argument"
 		        (self new
 			         source: 'a::';
 			         nodeAt: '000';
+			         styled: 'XXX';
 			         notices: #( #( 1 3 1 'Unexpected token' ) )). "just a bad token"
 		        (self new
 			         source: 'a:foo';
 			         nodeAt: '00222';
+			         styled: 'Xsuuu';
 			         formattedCode: ' a: foo';
 			         notices: #( #( 1 0 1 'Variable or expression expected' )
 				            #( 3 5 3 'Undeclared variable' ) )). "keyword message with a missing receiver"
 		        (self new
 			         source: 'a::foo';
 			         nodeAt: '111222';
+			         styled: 'XXXuuu';
 			         formattedCode: 'a::. foo';
 			         notices:
 				         #( #( 1 3 1 'Unexpected token' )
@@ -462,6 +535,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: ':a:foo';
 			         nodeAt: '122444';
+			         styled: 'XXsuuu';
 			         formattedCode: ':. a: foo';
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
@@ -470,6 +544,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '|:a|';
 			         nodeAt: '1332';
+			         styled: 'XXXs';
 			         formattedCode: '| | . :a | ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 3 2 'Unexpected block parameter' )
@@ -477,12 +552,14 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '|:a';
 			         nodeAt: '122';
+			         styled: 'XXX';
 			         formattedCode: '| | . :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 3 2 'Unexpected block parameter' ) )).
 		        (self new
 			         source: '|::a';
 			         nodeAt: '1233';
+			         styled: 'XXXX';
 			         formattedCode: '| | . :. :a';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 2 2 'Unexpected token' )
@@ -490,6 +567,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '|a:|';
 			         nodeAt: '1224';
+			         styled: 'XXsX';
 			         formattedCode: '| | . a: | ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 1 2 'Variable or expression expected' )
@@ -498,6 +576,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '|a:';
 			         nodeAt: '122';
+			         styled: 'XXs';
 			         formattedCode: '| | . a: ';
 			         notices: #( #( 1 1 2 '''|'' or variable expected' )
 				            #( 2 1 2 'Variable or expression expected' )
@@ -509,6 +588,7 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a b]';
 			         nodeAt: '001040';
+			         styled: '0:B X0';
 			         formattedCode: '[ :a | b ]';
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' )
@@ -516,34 +596,40 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a 1]';
 			         nodeAt: '001040';
+			         styled: '0:B X0';
 			         formattedCode: '[ :a | 1 ]';
 			         value: 1;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' ) )). "FIXME"
 		        (self new
 			         source: '[:a :]';
 			         nodeAt: '001000';
+			         styled: '0:B :X';
 			         formattedCode: '[ :a : | ]';
 			         value: nil;
 			         notices: #( #( 6 5 6 'Variable name expected' ) )). "FIXME"
 		        (self new
 			         source: '[:a ::b]';
 			         nodeAt: '00100220';
+			         styled: '0:B :XX0';
 			         formattedCode: '[ :a ::b | ]';
 			         value: nil;
 			         notices: #( #( 6 7 6 'Variable name expected' ) )). "FIXME"
 		        (self new
 			         source: '[:a :b]';
 			         nodeAt: '0010020';
+			         styled: '0:B :B0';
 			         formattedCode: '[ :a :b | ]';
 			         isFaulty: false). "no pipe (and no body) is legal"
 		        (self new
 			         source: '[: a : b]';
 			         nodeAt: '000100020';
+			         styled: '0: B : B0';
 			         formattedCode: '[ :a :b | ]';
 			         isFaulty: false). "spaces are also legal"
 		        (self new
 			         source: '[:a:b]';
 			         nodeAt: '004460';
+			         styled: '0:Xsu0';
 			         formattedCode: '[ : | a: b ]';
 			         notices: #( #( 3 2 3 'Variable name expected' )
 				            #( 3 2 3 '''|'' or parameter expected' )
@@ -553,31 +639,37 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[ a: ]';
 			         nodeAt: '002220';
+			         styled: '0 Xs X';
 			         notices: #( #( 3 2 3 'Variable or expression expected' )
 				            #( 6 5 6 'Variable or expression expected' ) )). "no parameters, a keyword message send witout receiver nor arguments"
 		        (self new
 			         source: '[ | ]';
 			         nodeAt: '00200';
+			         styled: '0 X X';
 			         formattedCode: '[ | | ]';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[ | b ]';
 			         nodeAt: '0022300';
+			         styled: '0 X X X';
 			         formattedCode: '[ | b | ]';
 			         notices: #( #( 3 5 7 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[ :a | | a b ]';
 			         nodeAt: '00010003343500';
+			         styled: '0 :B | X b X X';
 			         formattedCode: '[ :a | | a b | ]';
 			         notices: #( #( 8 12 14 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[ :a || a b ]';
 			         nodeAt: '0001003343500';
+			         styled: '0 :B |X b X X';
 			         formattedCode: '[ :a | | a b | ]';
 			         notices: #( #( 7 11 13 '''|'' or variable expected' ) )).
 		        (self new
 			         source: '[:a| | |b]';
 			         nodeAt: '0010022230';
+			         styled: '0:B| | |u0';
 			         formattedCode: '[ :a | b ]';
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
@@ -586,24 +678,28 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[:a| ||a]';
 			         nodeAt: '001002230';
+			         styled: '0:B| ||b0';
 			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
 			         value: 1). "Same but mess with the Scanner"
 		        (self new
 			         source: '[:a|| |a]';
 			         nodeAt: '001022230';
+			         styled: '0:B|| |b0';
 			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
 			         value: 1). "Same"
 		        (self new
 			         source: '[:a|||a]';
 			         nodeAt: '00102230';
+			         styled: '0:B|||b0';
 			         formattedCode: '[ :a | a ]';
 			         isFaulty: false;
 			         value: 1). "Same"
 		        (self new
 			         source: '[:a||||a]';
 			         nodeAt: '001022350';
+			         styled: '0:B|||Xb0';
 			         formattedCode: '[ :a | | a ]';
 			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "same + binary | without receiver"
 
@@ -611,29 +707,35 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[ : | ';
 			         nodeAt: '000000';
+			         styled: 'X     ';
 			         notices: #( #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[:';
 			         nodeAt: '00';
+			         styled: 'X ';
 			         formattedCode: '[ : | ';
 			         notices: #( #( 1 2 3 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a :b | ';
 			         nodeAt: '0000000000';
+			         styled: 'X         ';
 			         notices: #( #( 1 10 11 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a :b';
 			         nodeAt: '0000000';
+			         styled: 'X      ';
 			         formattedCode: '[ :a :b | ';
 			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a a';
 			         nodeAt: '000002';
+			         styled: 'X    X';
 			         formattedCode: '[ :a | a';
 			         notices: #( #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a b';
 			         nodeAt: '000002';
+			         styled: 'X    u';
 			         formattedCode: '[ :a | b';
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
@@ -641,32 +743,38 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '[ :a | ';
 			         nodeAt: '0000000';
+			         styled: 'X      ';
 			         notices: #( #( 1 7 8 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | a';
 			         nodeAt: '00000002';
+			         styled: 'X      X';
 			         notices: #( #( 1 8 9 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | b';
 			         nodeAt: '00000002';
+			         styled: 'X      u';
 			         notices:
 				         #( #( 8 8 8 'Undeclared variable' )
 				            #( 1 8 9 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | ';
 			         nodeAt: '0020';
+			         styled: 'X X ';
 			         formattedCode: '[ | | ';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 4 5 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | 1';
 			         nodeAt: '00213';
+			         styled: 'X X X';
 			         formattedCode: '[ | | . 1';
 			         notices: #( #( 3 3 5 '''|'' or variable expected' )
 				            #( 1 5 6 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | a b';
 			         nodeAt: '0022324';
+			         styled: 'X X X X';
 			         formattedCode: '[ | a b | ';
 			         notices: #( #( 3 7 8 '''|'' or variable expected' )
 				            #( 1 7 8 ''']'' expected' ) )) }.
@@ -689,6 +797,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: ' ';
 			         nodeAt: '0';
+			         styled: ' ';
 			         notices: #( #( 2 1 2 'Message pattern expected' ) )).
 
 		        "Wrong token for pattern"
@@ -696,27 +805,32 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: '5';
 			         nodeAt: '3';
+			         styled: 'X';
 			         formattedCode: ' . 5';
 			         notices: #( #( 1 0 1 'Message pattern expected' ) )).
 		        (self new
 			         source: '''hello''';
 			         nodeAt: '3333333';
+			         styled: 'X''''''''''''';
 			         formattedCode: ' . ''hello''';
 			         notices: #( #( 1 0 1 'Message pattern expected' ) )).
 		        (self new
 			         source: '#hello';
 			         nodeAt: '333333';
+			         styled: 'X#####';
 			         formattedCode: ' . #hello';
 			         notices: #( #( 1 0 1 'Message pattern expected' ) )).
 		        (self new
 			         source: ':';
 			         nodeAt: '3';
+			         styled: 'X';
 			         formattedCode: ' . :';
 			         notices: #( #( 1 0 1 'Message pattern expected' )
 				            #( 1 1 1 'Unexpected token' ) )).
 		        (self new
 			         source: '#(foo bar)';
 			         nodeAt: '3344435553';
+			         styled: 'X ### ### ';
 			         formattedCode: ' . #( foo bar )';
 			         notices: #( #( 1 0 1 'Message pattern expected' ) )).
 
@@ -725,14 +839,17 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: ' $';
 			         nodeAt: '02';
+			         styled: ' X';
 			         notices: #( #( 2 2 3 'Character expected' ) )).
 		        (self new
 			         source: ' ''hello';
 			         nodeAt: '0222222';
+			         styled: ' XXXXXX';
 			         notices: #( #( 2 7 8 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: ' 2r3';
 			         nodeAt: '0223';
+			         styled: ' XXX';
 			         formattedCode: ' 2r. 3';
 			         notices:
 				         #( #( 2 3 4 'a digit between 0 and 1 expected' ) )).
@@ -742,38 +859,45 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: '+ ';
 			         nodeAt: '00';
+			         styled: 'p ';
 			         value: nil;
 			         notices: #( #( 3 2 3 'Variable name expected' ) )).
 		        (self new
 			         source: '+ 1';
 			         nodeAt: '003';
+			         styled: 'p X';
 			         value: nil;
 			         notices: #( #( 3 2 3 'Variable name expected' ) )).
 		        (self new
 			         source: '+ foo: ';
 			         nodeAt: '0033333';
+			         styled: 'p Xsss ';
 			         notices: #( #( 3 2 3 'Variable name expected' )
 				            #( 3 2 3 'Variable or expression expected' )
 				            #( 8 7 8 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo: ';
 			         nodeAt: '00000';
+			         styled: 'pppp ';
 			         value: nil;
 			         notices: #( #( 6 5 6 'Variable name expected' ) )).
 		        (self new
 			         source: 'foo: 1';
 			         nodeAt: '000003';
+			         styled: 'pppp X';
 			         value: nil;
 			         notices: #( #( 6 5 6 'Variable name expected' ) )).
 		        (self new
 			         source: 'foo: + ';
 			         nodeAt: '0000033';
+			         styled: 'pppp X ';
 			         notices: #( #( 6 5 6 'Variable name expected' )
 				            #( 6 5 6 'Variable or expression expected' )
 				            #( 8 7 8 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo: bar: ';
 			         nodeAt: '0000000000';
+			         styled: 'pppp Xppp ';
 			         value: nil;
 			         notices: #( #( 6 5 6 'Variable name expected' )
 				            #( 11 10 11 'Variable name expected' )
@@ -781,6 +905,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo:bar:';
 			         nodeAt: '33333333';
+			         styled: 'XXXXXXXX';
 			         formattedCode: ' . foo:bar:';
 			         notices: #( #( 1 0 1 'Message pattern expected' )
 				            #( 1 8 1 'Unexpected token' ) )). "`foo:bar:` is a single token, and is unexpected"
@@ -789,40 +914,47 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo < ';
 			         nodeAt: '000011';
+			         styled: 'ppp X ';
 			         value: nil;
 			         notices: #( #( 7 6 7 'Message pattern expected' )
 				            #( 5 6 7 '''>'' expected' ) )).
 		        (self new
 			         source: 'foo <> ';
 			         nodeAt: '0000222';
+			         styled: 'ppp Xu ';
 			         notices: #( #( 5 4 5 'Variable or expression expected' )
 				            #( 8 7 8 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo < 4';
 			         nodeAt: '0000114';
+			         styled: 'ppp X X';
 			         value: nil;
 			         notices: #( #( 7 6 7 'Message pattern expected' )
 				            #( 5 6 7 '''>'' expected' ) )).
 		        (self new
 			         source: 'foo < bar ';
 			         nodeAt: '0000222222';
+			         styled: 'ppp < <<<<';
 			         value: nil;
 			         notices: #( #( 5 10 11 '''>'' expected' ) )).
 		        (self new
 			         source: 'foo < bar: ';
 			         nodeAt: '00002222222';
+			         styled: 'ppp < <<<<<';
 			         value: nil;
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' ) )).
 		        (self new
 			         source: 'foo < bar: 1 1 > ';
 			         nodeAt: '00002222222326555';
+			         styled: 'ppp < <<<< n<X s ';
 			         notices:
 				         #( #( 5 13 14 '''>'' expected' )
 				            #( 18 17 18 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo < bar ; baz > ';
 			         nodeAt: '0000222222888884AA';
+			         styled: 'ppp < <<<<X uuu X ';
 			         formattedCode: 'foo < bar ; baz. > ';
 			         notices:
 				         #( #( 5 10 11 '''>'' expected' )
@@ -837,11 +969,13 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo <bar: > ';
 			         nodeAt: '000011111110';
+			         styled: 'ppp <<<<< X ';
 			         value: nil;
 			         notices: #( #( 11 10 11 'Literal constant expected' ) )).
 		        (self new
 			         source: 'foo <bar:(1)>';
 			         nodeAt: '0000222226665';
+			         styled: 'ppp <<<<<Xn0s';
 			         formattedCode: 'foo < bar: 1 > ';
 			         notices: #( #( 10 9 10 'Literal constant expected' )
 				            #( 5 9 10 '''>'' expected' )
@@ -849,6 +983,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo < bar: baz > ';
 			         nodeAt: '00002222222666555';
+			         styled: 'ppp < <<<<<Xuu s ';
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
@@ -857,6 +992,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo < bar: 1 + 1 > ';
 			         nodeAt: '0000222222232668555';
+			         styled: 'ppp < <<<< n<X n s ';
 			         notices:
 				         #( #( 5 13 14 '''>'' expected' )
 				            #( 14 13 14 'Variable or expression expected' )
@@ -864,27 +1000,32 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: 'foo < bar: [ 1 ] > ';
 			         nodeAt: '0000222222266866555';
+			         styled: 'ppp < <<<<<X n 0 s ';
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
 				            #( 20 19 20 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo < bar: { 1 } > ';
 			         nodeAt: '0000222222266766555';
+			         styled: 'ppp < <<<<<X n 0 s ';
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
 				            #( 20 19 20 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo <bar: #[ -1 ]> ';
 			         nodeAt: '0000111111222332210';
+			         styled: 'ppp <<<<< XX XX X< ';
 			         value: nil;
 			         notices: #( #( 14 15 14 '8-bit integer expected' ) )). "Literal bytes arrays are acceptable, but this one is faulty"
 		        (self new
 			         source: 'foo < + 1> ';
 			         nodeAt: '00001111210';
+			         styled: 'ppp < < n< ';
 			         isFaulty: false). "Binary message is legal pragma"
 		        (self new
 			         source: 'foo < + > ';
 			         nodeAt: '0000111110';
+			         styled: 'ppp < < X ';
 			         value: nil;
 			         notices: #( #( 9 8 9 'Literal constant expected' ) )) }.
 	"Setup default values"
@@ -907,35 +1048,41 @@ RBCodeSnippet class >> badPositions [
 		        (self new
 			         source: ' foo | tmp | tmp := 1 . ^ tmp . ';
 			         nodeAt: '00000112221115553333411166777110';
+			         styled: ' ppp | TTT | ttt    n . ^ ttt . ';
 			         formattedCode: 'foo | tmp | tmp := 1. ^ tmp';
 			         isMethod: true;
 			         value: 1).
 		        (self new
 			         source: ' foo: arg bar: arr ^ arg + arr . ';
 			         nodeAt: '000000111000000222044666555777330';
+			         styled: ' pppp AAA pppp AAA ^ aaa s aaa . ';
 			         formattedCode: 'foo: arg bar: arr ^ arg + arr';
 			         isMethod: true;
 			         value: 3).
 		        (self new
 			         source: ' | tmp | tmp := 1 . ^ tmp . ';
 			         nodeAt: ' 00111000444222230005566600 ';
+			         styled: ' | TTT | ttt    n . ^ ttt . ';
 			         formattedCode: '| tmp | tmp := 1. ^ tmp';
 			         value: 1).
 		        (self new
 			         source: ' foo: arg ^ arg min: arg + 2 ; abs . ';
 			         nodeAt: '000000111033BBB5555558887779AAAAAA220';
+			         styled: ' pppp AAA ^ aaa ssss aaa s n ; sss . ';
 			         formattedCode: 'foo: arg ^ arg min: arg + 2; abs';
 			         isMethod: true;
 			         value: 1).
 		        (self new
 			         source: ' foo: arg ^ ( ( ( ( arg ) ) + ( ( 1 ) ) ) ) . ';
 			         nodeAt: '0000001110334444555555555554446666666664444220';
+			         styled: ' pppp AAA ^ 0 1 2 3 aaa 3 2 s 2 3 n 3 2 1 0 . ';
 			         formattedCode: 'foo: arg ^ arg + 1';
 			         isMethod: true;
 			         value: 2).
 		        (self new
 			         source: ' ( [ :aaa : bbb | | ccc ddd | aaa . ] ) . ';
 			         nodeAt: ' 00000111000222000334443555333666330000   ';
+			         styled: ' 0 0 :BBB : BBB | | TTT TTT | bbb . 0 0 . ';
 			         formattedCode: '[ :aaa :bbb | | ccc ddd | aaa ]';
 			         value: 1;
 			         notices:
@@ -963,6 +1110,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'a := 10. ^ a';
 			         nodeAt: '311112200445';
+			         styled: 'u    nn. ^ u';
 			         isFaulty: true;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableWrite;
@@ -972,6 +1120,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '^ a';
 			         nodeAt: '001';
+			         styled: '^ u';
 			         isFaulty: true;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
@@ -981,13 +1130,16 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '| a | ^ a';
 			         nodeAt: '001000223';
+			         styled: '| T | ^ t';
 			         notices: #( #( 9 9 9 'Unitialized variable' ) )).
 		        (self new
 			         source: '| a | [ a := 10 ]. ^ a';
-			         nodeAt: '0010002264444552200778').
+			         nodeAt: '0010002264444552200778';
+			         styled: '| T | 0 t    nn 0. ^ t').
 		        (self new
 			         source: '| a | [ ^ a ]. a := 10';
 			         nodeAt: '0010002244522008666677';
+			         styled: '| T | 0 ^ t 0. t    nn';
 			         value: 10;
 			         notices: #( #( 11 11 11 'Unitialized variable' ) )).
 
@@ -995,12 +1147,14 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: a bar: a ^ a';
 			         nodeAt: '00000100000020445';
+			         styled: 'pppp A pppp A ^ a';
 			         isMethod: true;
 			         value: 1;
 			         notices: #( #( 13 13 13 'Name already defined' ) )).
 		        (self new
 			         source: '| a a | a := 10. ^ a';
 			         nodeAt: '00102000533334400667';
+			         styled: '| T t | t    nn. ^ t';
 			         value: 10;
 			         notices:
 				         #( #( 3 3 3 'Unused variable' )
@@ -1008,6 +1162,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '[ | a a | a := 10. a ]';
 			         nodeAt: '0011213111644445511700';
+			         styled: '0 | T t | t    nn. t 0';
 			         value: 10;
 			         notices:
 				         #( #( 5 5 5 'Unused variable' )
@@ -1015,6 +1170,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '[ :a :a | a ]';
 			         nodeAt: '0001002000400';
+			         styled: '0 :B :b | b 0';
 			         value: 1;
 			         notices: #( #( 7 7 7 'Name already defined' ) )).
 
@@ -1022,6 +1178,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: a ^ [ | a | a := 10. a ] value + a';
 			         nodeAt: '00000103366778777B9999AA77C66555555444D';
+			         styled: 'pppp A ^ 0 | T | t    nn. t 0 sssss s a';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 14 14 14 'Name already defined' ) )).
@@ -1030,6 +1187,8 @@ RBCodeSnippet class >> badSemantic [
 				         'foo | a | a := 1. ^ [ | a | a := 10. a ] value + a';
 			         nodeAt:
 				         '0000112111533334116699AABAAAECCCCDDAAF99888888777G';
+			         styled:
+				         'ppp | T | t    n. ^ 0 | T | t    nn. t 0 sssss s t';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 25 25 25 'Name already defined' ) )).
@@ -1038,6 +1197,8 @@ RBCodeSnippet class >> badSemantic [
 				         'foo ^ [ | a | a := 1. [ | a | a := 10. a ] value + a ] value';
 			         nodeAt:
 				         '0000224455655597777855CCDDEDDDHFFFFGGDDICCBBBBBBAAAJ44333333';
+			         styled:
+				         'ppp ^ 0 | T | t    n. 1 | T | t    nn. t 1 sssss s t 0 sssss';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 27 27 27 'Name already defined' ) )).
@@ -1046,18 +1207,22 @@ RBCodeSnippet class >> badSemantic [
 				         'foo ^ [ :a | [ | a | a := 10. a ] value + a ] value: 1';
 			         nodeAt:
 				         '000022444544499AABAAAECCCCDDAAF99888888777G4433333333H';
+			         styled:
+				         'ppp ^ 0 :B | 1 | T | t    nn. t 1 sssss s b 0 ssssss n';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 18 18 18 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: a ^ [ :a | a ] value: 10 + a';
 			         nodeAt: '000001033555655585544444444AA999B';
+			         styled: 'pppp A ^ 0 :B | b 0 ssssss nn s a';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 13 13 13 'Name already defined' ) )).
 		        (self new
 			         source: 'foo | a | a := 1. ^ [ :a | a ] value: 10 + a';
 			         nodeAt: '000011211153333411668889888B8877777777DDCCCE';
+			         styled: 'ppp | T | t    n. ^ 0 :B | b 0 ssssss nn s t';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 24 24 24 'Name already defined' ) )).
@@ -1066,12 +1231,15 @@ RBCodeSnippet class >> badSemantic [
 				         'foo ^ [ | a | a := 1. [ :a | a ] value: 10 + a ] value';
 			         nodeAt:
 				         '0000224455655597777855BBBCBBBEBBAAAAAAAAGGFFFH44333333';
+			         styled:
+				         'ppp ^ 0 | T | t    n. 1 :B | b 1 ssssss nn s t 0 sssss';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 26 26 26 'Name already defined' ) )).
 		        (self new
 			         source: 'foo ^ [ :a | [ :a | a ] value: 10 + a ] value: 1';
 			         nodeAt: '00002244454448889888B8877777777DDCCCE4433333333F';
+			         styled: 'ppp ^ 0 :B | 1 :B | b 1 ssssss nn s b 0 ssssss n';
 			         isMethod: true;
 			         value: 11;
 			         notices: #( #( 17 17 17 'Name already defined' ) )). "phonyArgs"
@@ -1080,6 +1248,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: a a := 10. ^ a';
 			         nodeAt: '0000010533334422667';
+			         styled: 'pppp A XXXXXXX. ^ a';
 			         isMethod: true;
 			         isFaulty: true;
 			         notices:
@@ -1087,6 +1256,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '[ :a | a := 10. a ]';
 			         nodeAt: '0001000533334422600';
+			         styled: '0 :B | XXXXXXX. b 0';
 			         isFaulty: true;
 			         notices:
 				         #( #( 8 8 8 'Assignment to read-only variable' ) )).
@@ -1094,6 +1264,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'nil := nil';
 			         nodeAt: '2221333444';
+			         styled: 'kkk XX kkk';
 			         formattedCode: 'nil. := nil';
 			         isFaulty: true;
 			         isParseFaulty: true;
@@ -1102,6 +1273,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'true := true';
 			         nodeAt: '222213334444';
+			         styled: 'kkkk XX kkkk';
 			         formattedCode: 'true. := true';
 			         isFaulty: true;
 			         isParseFaulty: true;
@@ -1110,6 +1282,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'false := false';
 			         nodeAt: '22222133344444';
+			         styled: 'kkkkk XX kkkkk';
 			         formattedCode: 'false. := false';
 			         isFaulty: true;
 			         isParseFaulty: true;
@@ -1118,6 +1291,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'self := self';
 			         nodeAt: '222200001111';
+			         styled: 'XXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
 			         notices: #( #( 1 4 1 'Assigment to reserved variable' )
@@ -1125,6 +1299,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'super := super';
 			         nodeAt: '22222000011111';
+			         styled: 'XXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
 			         notices: #( #( 1 5 1 'Assigment to reserved variable' )
@@ -1132,6 +1307,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'thisContext := thisContext';
 			         nodeAt: '22222222222000011111111111';
+			         styled: 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
 			         notices: #( #( 1 11 1 'Assigment to reserved variable' )
@@ -1139,6 +1315,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'Object := Object';
 			         nodeAt: '2222220000111111';
+			         styled: 'XXXXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
 			         notices:
@@ -1148,29 +1325,34 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '| self | self := 1. ^ self';
 			         nodeAt: '00111100044442222300556666';
+			         styled: '| TTTT | tttt    n. ^ tttt';
 			         isFaulty: true;
 			         value: 1;
 			         notices: #( #( 3 6 3 'Reserved variable name' ) )).
 		        (self new
 			         source: '| super | super := 1. ^ super';
 			         nodeAt: '00111110004444422223005566666';
+			         styled: '| TTTTT | ttttt    n. ^ ttttt';
 			         isFaulty: true;
 			         value: 1;
 			         notices: #( #( 3 7 3 'Reserved variable name' ) )).
 		        (self new
 			         source: '| thisContext | thisContext := 1. ^ thisContext';
 			         nodeAt: '00111111111110004444444444422223005566666666666';
+			         styled: '| TTTTTTTTTTT | ttttttttttt    n. ^ ttttttttttt';
 			         isFaulty: true;
 			         value: 1;
 			         notices: #( #( 3 13 3 'Reserved variable name' ) )).
 		        (self new
 			         source: '| Object | Object := 1. ^ Object';
 			         nodeAt: '00111111000444444222230055666666';
+			         styled: '| TTTTTT | tttttt    n. ^ tttttt';
 			         value: 1;
 			         notices: #( #( 3 8 3 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: self ^ self + 1';
 			         nodeAt: '00000111103355554446';
+			         styled: 'pppp AAAA ^ aaaa s n';
 			         isMethod: true;
 			         isFaulty: true;
 			         value: 2;
@@ -1178,6 +1360,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: super ^ super + 1';
 			         nodeAt: '0000011111033555554446';
+			         styled: 'pppp AAAAA ^ aaaaa s n';
 			         isMethod: true;
 			         isFaulty: true;
 			         value: 2;
@@ -1185,6 +1368,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: thisContext ^ thisContext + 1';
 			         nodeAt: '0000011111111111033555555555554446';
+			         styled: 'pppp AAAAAAAAAAA ^ aaaaaaaaaaa s n';
 			         isMethod: true;
 			         isFaulty: true;
 			         value: 2;
@@ -1192,30 +1376,35 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'foo: Object ^ Object + 1';
 			         nodeAt: '000001111110335555554446';
+			         styled: 'pppp AAAAAA ^ aaaaaa s n';
 			         isMethod: true;
 			         value: 2;
 			         notices: #( #( 6 11 6 'Name already defined' ) )).
 		        (self new
 			         source: '[ :self | self + 1 ]';
 			         nodeAt: '00011110004444333500';
+			         styled: '0 :BBBB | bbbb s n 0';
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 4 7 4 'Reserved variable name' ) )).
 		        (self new
 			         source: '[ :super | super + 1 ]';
 			         nodeAt: '0001111100044444333500';
+			         styled: '0 :BBBBB | bbbbb s n 0';
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 4 8 4 'Reserved variable name' ) )).
 		        (self new
 			         source: '[ :thisContext | thisContext + 1 ]';
 			         nodeAt: '0001111111111100044444444444333500';
+			         styled: '0 :BBBBBBBBBBB | bbbbbbbbbbb s n 0';
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 4 14 4 'Reserved variable name' ) )).
 		        (self new
 			         source: '[ :Object | Object + 1 ]';
 			         nodeAt: '000111111000444444333500';
+			         styled: '0 :BBBBBB | bbbbbb s n 0';
 			         value: 2;
 			         notices: #( #( 4 9 4 'Name already defined' ) )).
 
@@ -1227,6 +1416,8 @@ RBCodeSnippet class >> badSemantic [
 				         'foo ^ [ :a1 :a2 :a3 :a4 :a5 :a6 :a7 :a8 :a9 :a10 :a11 :a12 :a13 :a14 :a15 :a16 | a1 ]';
 			         nodeAt:
 				         '000022333443355336633773388339933AA33BB33CC33DDD33EEE33FFF33GGG33HHH33III33JJJ333LL33';
+			         styled:
+				         'ppp ^ 0 :BB :BB :BB :BB :BB :BB :BB :BB :BB :BBB :BBB :BBB :BBB :BBB :BBB :BBB | bb 0';
 			         isMethod: true;
 			         isFaulty: true;
 			         notices: #( #( 7 85 7 'Too many arguments' ) )). "Too many arguments"
@@ -1235,12 +1426,15 @@ RBCodeSnippet class >> badSemantic [
 				         'a1: a1 a2: a2 a3: a3 a4: a4 a5: a5 a6: a6 a7: a7 a8: a8 a9: a9 a10: a10 a11: a11 a12: a12 a13: a13 a14: a14 a15: a15 a16: a16 ^ a1';
 			         nodeAt:
 				         '00001100000220000033000004400000550000066000007700000880000099000000AAA000000BBB000000CCC000000DDD000000EEE000000FFF000000GGG0IIJJ';
+			         styled:
+				         'ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA ^ aa';
 			         isMethod: true;
 			         isFaulty: true;
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
 		        (self new
 			         source: 'CodeError signal: ''false error''';
 			         nodeAt: '1111111110000000002222222222222';
+			         styled: 'ggggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: CodeError;
 			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
 		        (self new
@@ -1248,10 +1442,14 @@ RBCodeSnippet class >> badSemantic [
 				         'OCUndeclaredVariableWarning signal: ''false error''';
 			         nodeAt:
 				         '1111111111111111111111111110000000002222222222222';
+			         styled:
+				         'ggggggggggggggggggggggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: OCUndeclaredVariableWarning). "same, but warning are silently ignored"
 		        (self new
 			         source: 'RuntimeSyntaxError signal: ''false error''';
 			         nodeAt: '1111111111111111110000000002222222222222';
+			         styled:
+				         'gggggggggggggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: RuntimeSyntaxError) "runtime errors are not special" }.
 	"Setup default values"
 	self new
@@ -1275,16 +1473,19 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '1 abs';
 			         nodeAt: '10000';
+			         styled: 'n sss';
 			         isFaulty: false;
 			         value: 1).
 		        (self new
 			         source: '1 + 2';
 			         nodeAt: '10002';
+			         styled: 'n s n';
 			         isFaulty: false;
 			         value: 3).
 		        (self new
 			         source: '1 max: 2';
 			         nodeAt: '10000002';
+			         styled: 'n ssss n';
 			         isFaulty: false;
 			         value: 2).
 
@@ -1294,71 +1495,85 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: ' + ';
 			         nodeAt: ' 00';
+			         styled: ' X ';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 4 3 4 'Variable or expression expected' ) )).
 		        (self new
 			         source: '1 + ';
 			         nodeAt: '1000';
+			         styled: 'n s ';
 			         notices: #( #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: ' + 2';
 			         nodeAt: ' 002';
+			         styled: ' X n';
 			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
 		        "keywords"
 		        (self new
 			         source: ' hello: ';
 			         nodeAt: ' 0000000';
+			         styled: ' Xuuuuu ';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 9 8 9 'Variable or expression expected' ) )).
 		        (self new
 			         source: '1 hello: ';
 			         nodeAt: '100000000';
+			         styled: 'n uuuuuu ';
 			         notices:
 				         #( #( 10 9 10 'Variable or expression expected' ) )).
 		        (self new
 			         source: ' hello: 2';
 			         nodeAt: ' 00000002';
+			         styled: ' Xuuuuu n';
 			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
 		        (self new
 			         source: ' goodby: my: ';
 			         nodeAt: ' 000000000000';
+			         styled: ' Xuuuuuu Xuu ';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 10 9 10 'Variable or expression expected' )
 				            #( 14 13 14 'Variable or expression expected' ) )).
 		        (self new
 			         source: '1 goodby: my: ';
 			         nodeAt: '10000000000000';
+			         styled: 'n uuuuuuu Xuu ';
 			         notices:
 				         #( #( 11 10 11 'Variable or expression expected' )
 				            #( 15 14 15 'Variable or expression expected' ) )).
 		        (self new
 			         source: '1 goodby: 2 my: ';
 			         nodeAt: '1000000000200000';
+			         styled: 'n uuuuuuu n uuu ';
 			         notices:
 				         #( #( 17 16 17 'Variable or expression expected' ) )).
 		        (self new
 			         source: ' goodby: 2 my: ';
 			         nodeAt: ' 00000000200000';
+			         styled: ' Xuuuuuu n uuu ';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 16 15 16 'Variable or expression expected' ) )).
 		        (self new
 			         source: ' goodby: my: 3';
 			         nodeAt: ' 0000000000003';
+			         styled: ' Xuuuuuu Xuu n';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 10 9 10 'Variable or expression expected' ) )).
 		        (self new
 			         source: '1 goodby: my: 3';
 			         nodeAt: '100000000000003';
+			         styled: 'n uuuuuuu Xuu n';
 			         notices:
 				         #( #( 11 10 11 'Variable or expression expected' ) )).
 		        (self new
 			         source: ' goodby: 2 my: 3';
 			         nodeAt: ' 000000002000003';
+			         styled: ' Xuuuuuu n uuu n';
 			         notices: #( #( 2 1 2 'Variable or expression expected' ) )).
 		        "Combinaisons"
 		        (self new
 			         source: ' + foo: - ';
 			         nodeAt: ' 110000044';
+			         styled: ' X Xsss X ';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 4 3 4 'Variable or expression expected' )
 				            #( 9 8 9 'Variable or expression expected' )
@@ -1368,20 +1583,24 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: 'a := ';
 			         nodeAt: '20000';
+			         styled: 'u    ';
 			         notices: #( #( 6 5 6 'Variable or expression expected' )
 				            #( 1 1 1 'Undeclared variable' ) )).
 		        (self new
 			         source: ':= ';
 			         nodeAt: '000';
+			         styled: 'XX ';
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
 				            #( 1 3 1 'variable expected in assigment' ) )).
 		        (self new
 			         source: ':= 2';
 			         nodeAt: '0001';
+			         styled: 'XX n';
 			         notices: #( #( 1 4 1 'variable expected in assigment' ) )).
 		        (self new
 			         source: '1:=2';
 			         nodeAt: '2334';
+			         styled: 'nXXn';
 			         formattedCode: '1. := 2';
 			         notices: #( #( 1 1 2 'End of statement expected' )
 				            #( 2 4 2 'variable expected in assigment' ) )).
@@ -1390,6 +1609,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: ';';
 			         nodeAt: '0';
+			         styled: 'X';
 			         formattedCode: ' ; ';
 			         notices: #( #( 1 0 1 'Variable or expression expected' )
 				            #( 1 0 1 'Message expected' )
@@ -1397,11 +1617,13 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '1;foo';
 			         nodeAt: '43333';
+			         styled: 'nXsss';
 			         formattedCode: '1 ; foo';
 			         notices: #( #( 1 1 2 'Message expected' ) )).
 		        (self new
 			         source: '1;';
 			         nodeAt: '20';
+			         styled: 'nX';
 			         formattedCode: '1 ; ';
 			         notices:
 				         #( #( 1 1 2 'Message expected' )
@@ -1409,33 +1631,39 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '1 sign;';
 			         nodeAt: '2111110';
+			         styled: 'n ssss;';
 			         formattedCode: '1 sign; ';
 			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
 		        (self new
 			         source: '1 foo:;bar';
 			         nodeAt: '5111114444';
+			         styled: 'n ssssXsss';
 			         formattedCode: '1 foo: ; bar';
 			         notices: #( #( 7 6 7 'Variable or expression expected' ) )). "The cascade is correct here. It's a simple error of a missing argument"
 		        (self new
 			         source: '1 foo;2';
 			         nodeAt: '4333326';
+			         styled: 'n sss;X';
 			         formattedCode: '1 foo; . 2';
 			         notices: #( #( 7 6 7 'Cascade message expected' )
 				            #( 1 6 7 'End of statement expected' ) )).
 		        (self new
 			         source: '(1 sign: 2);bar';
 			         nodeAt: '676666666865555';
+			         styled: '0n sssss n0Xsss';
 			         formattedCode: '(1 sign: 2) ; bar';
 			         notices: #( #( 1 11 12 'Message expected' ) )).
 		        (self new
 			         source: '(1 sign);bar';
 			         nodeAt: '565555554444';
+			         styled: '0n ssss0Xsss';
 			         formattedCode: '1 sign ; bar';
 			         notices: #( #( 1 8 9 'Message expected' ) )). "FIXME the parentheses are lost, and this changes the meaning"
 		        "Longer cascade"
 		        (self new
 			         source: ';;';
 			         nodeAt: '00';
+			         styled: 'XX';
 			         formattedCode: ' ; ; ';
 			         notices: #( #( 1 0 1 'Variable or expression expected' )
 				            #( 1 0 1 'Message expected' )
@@ -1444,6 +1672,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '1 sign;;bar';
 			         nodeAt: '51111144444';
+			         styled: 'n ssss;Xsss';
 			         formattedCode: '1 sign; ; bar';
 			         notices: #( #( 8 7 8 'Cascade message expected' ) )).
 
@@ -1451,22 +1680,26 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '^ ';
 			         nodeAt: '00';
+			         styled: '^ ';
 			         notices: #( #( 3 2 3 'Variable or expression expected' ) )).
 		        (self new
 			         source: '1+^2';
 			         nodeAt: '3256';
+			         styled: 'nsXn';
 			         formattedCode: '1 + . ^ 2';
 			         notices: #( #( 3 2 3 'Variable or expression expected' )
 				            #( 1 2 3 'End of statement expected' ) )).
 		        (self new
 			         source: '1 foo: ^2';
 			         nodeAt: '322222256';
+			         styled: 'n ssss Xn';
 			         formattedCode: '1 foo: . ^ 2';
 			         notices: #( #( 8 7 8 'Variable or expression expected' )
 				            #( 1 7 8 'End of statement expected' ) )).
 		        (self new
 			         source: '(^1)';
 			         nodeAt: '1453';
+			         styled: 'XXnX';
 			         formattedCode: '( . ^ 1 )';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 1 1 2 ''')'' expected' )
@@ -1474,28 +1707,33 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '^^1';
 			         nodeAt: '245';
+			         styled: '^Xn';
 			         formattedCode: '^ . ^ 1';
 			         notices: #( #( 2 1 2 'Variable or expression expected' )
 				            #( 1 1 2 'End of statement expected' ) )). "Same spirit"
 		        (self new
 			         source: '[ ^ 1 ]';
 			         nodeAt: '0022300';
+			         styled: '0 ^ n 0';
 			         isFaulty: false;
 			         raise: BlockCannotReturn). "when the block is evaluated, the method is already gone."
 		        (self new
 			         source: '{ ^ 1 }';
 			         nodeAt: '0011200';
+			         styled: '0 ^ n 0';
 			         isFaulty: false;
 			         value: 1). "I did not expect this one to be legal"
 		        (self new
 			         source: '#(^1)';
 			         nodeAt: '00120';
+			         styled: '  #n ';
 			         formattedCode: '#( #''^'' 1 )';
 			         isFaulty: false;
 			         value: #( #'^' 1 )). "Obviously..."
 		        (self new
 			         source: '#[ ^ 1 ]';
 			         nodeAt: '00010200';
+			         styled: 'XX X n X';
 			         notices: #( #( 4 4 4 '8-bit integer expected' ) )).
 
 		        "Unreachable code (warnings)"
@@ -1504,34 +1742,40 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '^ 1. 2. ^ 3';
 			         nodeAt: '11200300445';
+			         styled: '^ n. n. ^ n';
 			         isFaulty: false;
 			         value: 1;
 			         notices: #( #( 6 6 6 'Unreachable statement' ) )).
 		        (self new
 			         source: '[ ^ 1. 2. ^ 3 ]';
 			         nodeAt: '002231141155600';
+			         styled: '0 ^ n. n. ^ n 0';
 			         isFaulty: false;
 			         raise: BlockCannotReturn;
 			         notices: #( #( 8 8 8 'Unreachable statement' ) )). "like [^1]"
 		        (self new
 			         source: '{ ^ 1. 2. ^ 3 }';
 			         nodeAt: '001120030044500';
+			         styled: '0 ^ n  n  ^ n 0';
 			         isFaulty: false;
 			         value: 1;
 			         notices: #( #( 8 8 8 'Unreachable statement' ) )).
 		        (self new
 			         source: '[ ^ 1 ]. 2. ^ 3';
 			         nodeAt: '113341100500667';
+			         styled: '0 ^ n 0. n. ^ n';
 			         isFaulty: false;
 			         value: 3).
 		        (self new
 			         source: '{ ^ 1 }. 2. ^ 3';
 			         nodeAt: '112231100400556';
+			         styled: '0 ^ n 0. n. ^ n';
 			         isFaulty: false;
 			         value: 1). "This one could have been..."
 		        (self new
 			         source: 'true ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. ^ 3';
 			         nodeAt: '2222111111111335563311111111117799A7700BBC';
+			         styled: 'kkkk sssssss 0 ^ n 0 ssssssss 0 ^ n 0. ^ n';
 			         isFaulty: false;
 			         value: 1) "Not *syntactic* enough" }.
 
@@ -1556,18 +1800,22 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '#';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 2 'Literal expected' ) )).
 		        (self new
 			         source: '$';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 2 'Character expected' ) )).
 		        (self new
 			         source: ':';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 1 'Unexpected token' ) )).
 		        (self new
 			         source: '';
 			         nodeAt: '';
+			         styled: '';
 			         isFaulty: false). "emptyness is ok"
 
 		        "Comments"
@@ -1575,26 +1823,31 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '"" ';
 			         nodeAt: '22 ';
+			         styled: '"" ';
 			         isFaulty: false).
 		        (self new
 			         source: '"nothing" ';
 			         nodeAt: '222222222 ';
+			         styled: '""""""""" ';
 			         isFaulty: false).
 		        (self new
 			         source: '"com"1"ment"';
 			         nodeAt: '333330444444';
+			         styled: '"""""n""""""';
 			         formattedCode: '1';
 			         isFaulty: false;
 			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
 		        (self new
 			         source: '"a" 1 "b". "c" 2 "d"';
 			         nodeAt: '555 106660077708 AAA';
+			         styled: '""" n """. """ n """';
 			         formattedCode: '1. "a" "b" "c" 2 "d"';
 			         isFaulty: false;
 			         value: 2). "a and b moved around. Formatter issue. FIXME?"
 		        (self new
 			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
 			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
+			         styled: ' """ ppp """ n """. """ ^ n """ ';
 			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
 			         isMethod: true;
 			         isFaulty: false;
@@ -1602,18 +1855,22 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '"unfinished';
 			         nodeAt: '00000000000';
+			         styled: 'XXXXXXXXXXX';
 			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
 		        (self new
 			         source: '"also unfinished""';
 			         nodeAt: '000000000000000000';
+			         styled: 'XXXXXXXXXXXXXXXXXX';
 			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
 		        (self new
 			         source: '"';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
 		        (self new
 			         source: '"""';
 			         nodeAt: '000';
+			         styled: 'XXX';
 			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
 
 
@@ -1622,30 +1879,36 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '''hello';
 			         nodeAt: '000000';
+			         styled: 'XXXXXX';
 			         notices: #( #( 1 6 7 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '''hello''''world';
 			         nodeAt: '0000000000000';
+			         styled: 'XXXXXXXXXXXXX';
 			         notices:
 				         #( #( 1 13 14 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '''';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 2 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '''hello''''';
 			         nodeAt: '00000000';
+			         styled: 'XXXXXXXX';
 			         notices: #( #( 1 8 9 'Unmatched '' in string literal.' ) )). "unclosed string that ends with an escaped quote"
 
 		        "Bad symbol literal"
 		        (self new
 			         source: '#1';
 			         nodeAt: '12';
+			         styled: 'XX';
 			         formattedCode: '#. 1';
 			         notices: #( #( 1 1 2 'Literal expected' ) )). "Become a bad sequence"
 		        (self new
 			         source: '#1r0';
 			         nodeAt: '1322';
+			         styled: 'XXXu';
 			         formattedCode: '#. 1 r0';
 			         notices:
 				         #( #( 1 1 2 'Literal expected' )
@@ -1653,43 +1916,52 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '##';
 			         nodeAt: '00';
+			         styled: 'XX';
 			         notices: #( #( 1 2 3 'Literal expected' ) )).
 		        "Note: if quotes, same thing than strings"
 		        (self new
 			         source: '#''hello';
 			         nodeAt: '0000000';
+			         styled: 'XXXXXXX';
 			         notices: #( #( 1 7 8 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '#''hello''''world';
 			         nodeAt: '00000000000000';
+			         styled: 'XXXXXXXXXXXXXX';
 			         notices:
 				         #( #( 1 14 15 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '#''';
 			         nodeAt: '00';
+			         styled: 'XX';
 			         notices: #( #( 1 2 3 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '#''hello''''';
 			         nodeAt: '000000000';
+			         styled: 'XXXXXXXXX';
 			         notices:
 				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''hello';
 			         nodeAt: '000000000';
+			         styled: 'XXXXXXXXX';
 			         notices:
 				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''hello''''world';
 			         nodeAt: '0000000000000000';
+			         styled: 'XXXXXXXXXXXXXXXX';
 			         notices:
 				         #( #( 1 16 17 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''';
 			         nodeAt: '0000';
+			         styled: 'XXXX';
 			         notices: #( #( 1 4 5 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''hello''''';
 			         nodeAt: '00000000000';
+			         styled: 'XXXXXXXXXXX';
 			         notices:
 				         #( #( 1 11 12 'Unmatched '' in string literal.' ) )).
 
@@ -1698,41 +1970,48 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '2r';
 			         nodeAt: '00';
+			         styled: 'XX';
 			         notices:
 				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )).
 		        (self new
 			         source: '2rx';
 			         nodeAt: '110';
+			         styled: 'XXX';
 			         formattedCode: '2r x';
 			         notices:
 				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a unary message send"
 		        (self new
 			         source: '2r3';
 			         nodeAt: '112';
+			         styled: 'XXX';
 			         formattedCode: '2r. 3';
 			         notices:
 				         #( #( 1 2 3 'a digit between 0 and 1 expected' ) )). "a bad number followed by a number, causing a case of unfinished sequence"
 		        (self new
 			         source: '0r';
 			         nodeAt: '10';
+			         styled: 'XX';
 			         formattedCode: '0 r';
 			         notices:
 				         #( #( 1 1 2 'an integer greater than 1 as valid radix expected' ) )).
 		        (self new
 			         source: '000rx';
 			         nodeAt: '11100';
+			         styled: 'XXXXu';
 			         formattedCode: '000 rx';
 			         notices:
 				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
 		        (self new
 			         source: '000r1';
 			         nodeAt: '11100';
+			         styled: 'XXXXu';
 			         formattedCode: '000 r1';
 			         notices:
 				         #( #( 1 3 4 'an integer greater than 1 as valid radix expected' ) )).
 		        (self new
 			         source: '3r12345';
 			         nodeAt: '2222333';
+			         styled: 'nnnnXnn';
 			         formattedCode: '3r12. 345';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 
@@ -1740,65 +2019,76 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '1.';
 			         nodeAt: '0 ';
+			         styled: 'n.';
 			         formattedCode: '1';
 			         isFaulty: false;
 			         value: 1).
 		        (self new
 			         source: '1.1.1';
 			         nodeAt: '11102';
+			         styled: 'nnn.n';
 			         formattedCode: '1.1. 1';
 			         isFaulty: false;
 			         value: 1).
 		        (self new
 			         source: '1a';
 			         nodeAt: '10';
+			         styled: 'ns';
 			         formattedCode: '1 a';
 			         isFaulty: false;
 			         messageNotUnderstood: #a).
 		        (self new
 			         source: '1a1a1';
 			         nodeAt: '10000';
+			         styled: 'nuuuu';
 			         formattedCode: '1 a1a1';
 			         isFaulty: false;
 			         messageNotUnderstood: #a1a1).
 		        (self new
 			         source: '1e';
 			         nodeAt: '10';
+			         styled: 'ns';
 			         formattedCode: '1 e';
 			         isFaulty: false;
 			         messageNotUnderstood: #e).
 		        (self new
 			         source: '1e1e1';
 			         nodeAt: '11100';
+			         styled: 'nnnuu';
 			         formattedCode: '1e1 e1';
 			         isFaulty: false;
 			         messageNotUnderstood: #e1).
 		        (self new
 			         source: '1s';
 			         nodeAt: '00';
+			         styled: 'nn';
 			         isFaulty: false;
 			         value: 1s0). "ScaledDecimal is a thing (!) that have literals (!!) inconsistent with '1e' (!!!)"
 		        (self new
 			         source: '1s1s1';
 			         nodeAt: '11100';
+			         styled: 'nnnuu';
 			         formattedCode: '1s1 s1';
 			         isFaulty: false;
 			         messageNotUnderstood: #s1).
 		        (self new
 			         source: '10r89abcd';
 			         nodeAt: '111110000';
+			         styled: 'nnnnnuuuu';
 			         formattedCode: '10r89 abcd';
 			         isFaulty: false;
 			         messageNotUnderstood: #abcd).
 		        (self new
 			         source: '12r89abcd';
 			         nodeAt: '111111100';
+			         styled: 'nnnnnnnuu';
 			         formattedCode: '12r89ab cd';
 			         isFaulty: false;
 			         messageNotUnderstood: #cd).
 		        (self new
 			         source: '36r1halt';
 			         nodeAt: '00000000';
+			         styled: 'nnnnnnnn';
 			         isFaulty: false;
 			         value: 2486513). "ahah"
 
@@ -1809,6 +2099,7 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: 'Δə';
 			         nodeAt: '00';
+			         styled: 'uu';
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
@@ -1816,6 +2107,7 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
 			         nodeAt: '0011000442222300665557';
+			         styled: '| TT | tt    n. tt s n';
 			         isFaulty: false;
 			         value: 2).
 
@@ -1823,56 +2115,68 @@ RBCodeSnippet class >> badTokens [
 		        (self new
 			         source: '1 ± 1';
 			         nodeAt: '10002';
+			         styled: 'n u n';
 			         isFaulty: false;
 			         messageNotUnderstood: #±). "Valid binary operator, but not implemented"
 		        "$→ isSpecial >>> false" "$→ asInteger hex >>> 16r2192" "Rightwards Arrow"
 		        (self new
 			         source: '→';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSpecial"
 		        "$٠ isDigit >>> true" "$٠ asInteger >>> 16r0660" "Arabic-indic Digit Zero"
 		        (self new
 			         source: '٠';
 			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not a valid number (basic ASCII only for numbers!)"
 		        "Currently in Pharo, there is no 'isSeparator' character outside the ASCII range"
 		        "Character nbsp isSeparator >>> false" "Even the standard nbsp"
 		        (self new
 			         source: Character nbsp asString;
+			         nodeAt: '0';
+			         styled: 'X';
 			         notices: #( #( 1 1 1 'Unknown character' ) )). "Unknown character. Not isSeparator"
 		        (self new
 			         source: '$→';
 			         nodeAt: '00';
+			         styled: '$$';
 			         isFaulty: false;
 			         value: $→).
 		        (self new
 			         source: '''Δ→ə''';
 			         nodeAt: '00000';
+			         styled: '''''''''''';
 			         isFaulty: false;
 			         value: 'Δ→ə').
 		        (self new
 			         source: '"Δ→ə" ';
 			         nodeAt: '22222 ';
+			         styled: '""""" ';
 			         isFaulty: false).
 		        (self new
 			         source: '#''Δ→ə''';
 			         nodeAt: '000000';
+			         styled: '######';
 			         isFaulty: false;
 			         value: #'Δ→ə').
 		        (self new
 			         source: '#Δə';
 			         nodeAt: '000';
+			         styled: '###';
 			         formattedCode: '#''Δə''';
 			         isFaulty: false;
 			         value: #'Δə').
 		        (self new
 			         source: '#(Δ→ə)';
 			         nodeAt: '001230';
+			         styled: 'XX#X#X';
 			         formattedCode: '#( Δ → ə )';
 			         notices: #( #( 4 4 4 'Unknown character' ) )). "This one is faulty because → is a parse error"
 		        (self new
 			         source: '#→';
 			         nodeAt: '12';
+			         styled: 'XX';
 			         formattedCode: '#. →';
 			         notices:
 				         #( #( 1 1 2 'Literal expected' )
@@ -1896,6 +2200,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a }. a := a';
 			         nodeAt: '311112004455555766A88889';
+			         styled: 'u    u. X X    X. X    X';
 			         formattedCode: 'a := a. { [ :a | }. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
@@ -1907,6 +2212,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a. a := a';
 			         nodeAt: '3111120044444666666A88889';
+			         styled: 'u    u. X    X   . X    X';
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
@@ -1917,6 +2223,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a [ :a ]. a := a';
 			         nodeAt: '311112004444466676655B9999A';
+			         styled: 'u    u. X    0 :B 0. X    X';
 			         formattedCode: 'a := a. [ :a | [ :a | ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
@@ -1926,6 +2233,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
 			         nodeAt: '31111200445555555766A88889';
+			         styled: 'u    u. X X      X. X    X';
 			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
@@ -1936,6 +2244,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. { [ :a | a := a }. a := a';
 			         nodeAt: '31111200445555555A888897766DBBBBC';
+			         styled: 'u    u. X X      X    X X. X    X';
 			         raise: UndeclaredVariableRead;
 			         notices:
 				         #( #( 6 6 6 'Undeclared variable' )
@@ -1946,6 +2255,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ | a a := a ]. a := a';
 			         nodeAt: '3111120044667685999A4400DBBBBC';
+			         styled: 'u    u. 0 X X X XX X 0. X    X';
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
@@ -1956,6 +2266,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a a ]. a := a';
 			         nodeAt: '311112004445484400B9999A';
+			         styled: 'u    u. 0 :B X 0. u    u';
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
@@ -1967,6 +2278,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         nodeAt: '311112004445444778796AAAB4400ECCCCD';
+			         styled: 'u    u. 0 :B | X b b XX b 0. X    X';
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
@@ -1979,6 +2291,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: '[ :a :a :b | | a a b | a + a + b ]';
 			         nodeAt: '00010020030004454647444A999B888C00';
+			         styled: '0 :B :b :B | | T t T | t s t s t 0';
 			         isFaulty: false;
 			         value: 4;
 			         notices:
@@ -1995,6 +2308,8 @@ RBCodeSnippet class >> badVariableAndScopes [
 				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b ]';
 			         nodeAt:
 				         '00000100002000030555655755855599A9B9C999FEEEGDDDH55';
+			         styled:
+				         'pppp A pp A pp A 0 :B :b :B | | T t T | t s t s t 0';
 			         isMethod: true;
 			         isFaulty: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
@@ -2011,6 +2326,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: '[ :a :a :b | | a a b | a + a + b';
 			         nodeAt: '00000000000001121314111766685559';
+			         styled: 'X            | t t t | t s t s t';
 			         notices:
 				         #( #( 16 16 16 'Unused variable' )
 				            #( 18 18 18 'Name already defined' )
@@ -2023,6 +2339,8 @@ RBCodeSnippet class >> badVariableAndScopes [
 				         'foo: a x: a y: b [ :a :a :b | | a a b | a + a + b';
 			         nodeAt:
 				         '0000010000200003055555555555556676869666CBBBDAAAE';
+			         styled:
+				         'pppp A pp A pp A X            | t t t | t s t s t';
 			         isMethod: true;
 			         notices: #( #( 11 11 11 'Name already defined' )
 				            #( 33 33 33 'Name already defined' )
@@ -2175,6 +2493,9 @@ RBCodeSnippet >> dumpDefinition [
 		  aStream
 			  nextPutAll: '; nodeAt: ';
 			  print: self nodePositions.
+		  aStream
+			  nextPutAll: '; styled: ';
+			  print: self styledPattern.
 		  self formattedCode = self source ifFalse: [
 			  aStream
 				  nextPutAll: '; formattedCode: ';
@@ -2514,6 +2835,24 @@ RBCodeSnippet >> source: anObject [
 	source := anObject
 ]
 
+{ #category : #accessing }
+RBCodeSnippet >> styled: anObject [
+
+	styledPattern := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> styledPattern [
+
+	^ styledPattern
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> styledPattern: anObject [
+
+	styledPattern := anObject
+]
+
 { #category : #inspecting }
 RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 
@@ -2556,6 +2895,7 @@ RBCodeSnippet >> updateExpectations [
 	self isFaulty: ast isFaulty.
 	self isFaultyMinusUndeclared: self isFaulty
 		& (ast allErrorNotices allSatisfy: #isUndeclaredNotice) not.
+	self styledPattern: self mockedStyledText.
 	self notices: (ast allNotices
 			 collect: [ :each |
 				 {

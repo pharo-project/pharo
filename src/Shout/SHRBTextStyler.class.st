@@ -836,6 +836,10 @@ SHRBTextStyler >> style: aText ast: ast [
 	parentheseLevel := 0.
 	braceLevel := 0.
 	self visitNode: ast.
+	"Second pass to ensure that all syntax errors are visible"
+	ast allErrorNotices do: [ :notice | 
+		notice isSyntaxError ifTrue: [
+			self addStyle: #invalid from: notice position to: notice position ] ].
 	^ aText runs: (RunArray newFrom: charAttr)
 ]
 
@@ -859,7 +863,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				reverseDo: [:interval |
+				do: [:interval |
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
@@ -870,9 +874,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 SHRBTextStyler >> styleOpenBrace: anArrayNode [
 
 	| style |
-	style := anArrayNode isFaulty
-		         ifTrue: [ #invalid ]
-		         ifFalse: [ self braceStyleName ].
+	style := self braceStyleName.
 	self addStyle: style from: anArrayNode left to: anArrayNode left.
 	braceLevel := braceLevel + 1
 ]
@@ -880,9 +882,7 @@ SHRBTextStyler >> styleOpenBrace: anArrayNode [
 { #category : #private }
 SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
-	style := aBlockNode isFaulty
-		ifTrue: [ #invalid ]
-		ifFalse: [ self bracketStyleName ].
+	style := self bracketStyleName.
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
@@ -892,7 +892,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				do: [ :interval |
+				reverseDo: [ :interval |
 					| pos |
 					pos := interval first.
 					self addStyle:  self parenthesisStyleName from: pos to: pos.
@@ -901,6 +901,8 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 
 { #category : #visiting }
 SHRBTextStyler >> styleParenthesisOf: aNode around: aBlock [
+
+	aNode isValue ifFalse: [ ^ aBlock value ].
 
 	self styleOpenParenthese: aNode.
 	aBlock value.
@@ -970,15 +972,12 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitCommentNodes: anASTNode [
-
-	anASTNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ]
-]
-
-{ #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
-	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
+	anEnglobingErrorNode value ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode startWithoutParentheses to: anEnglobingErrorNode startWithoutParentheses + anEnglobingErrorNode value size - 1 ].
+	anEnglobingErrorNode valueAfter ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode stopWithoutParentheses to: anEnglobingErrorNode stopWithoutParentheses + anEnglobingErrorNode valueAfter size - 1 ].
 	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
@@ -1018,8 +1017,7 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
 				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode.
-	self visitCommentNodes: aLiteralValueNode
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1032,13 +1030,12 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 
 	link := TextMethodLink sourceNode: aMessageNode.
 
-	self styleParenthesisOf: aMessageNode around: [
-		aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
-			self
-				addStyle: style
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
+		self
+			addStyle: style
+			attribute: link
+			from: position
+			to: position + keyword size - 1.
 
 		(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) ifTrue: [ self visitNode: aMessageNode receiver ].
 
@@ -1051,15 +1048,16 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 	self visitMethodComments: aMethodNode.
 	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
-	aMethodNode selectorParts
-		with: aMethodNode keywordsPositions
-		do:
-			[ :keyword :position |
-			self
-				addStyle: #patternSelector
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMethodNode isDoIt ifFalse: [
+		aMethodNode selectorParts
+			with: aMethodNode keywordsPositions
+			do:
+				[ :keyword :position |
+				self
+					addStyle: #patternSelector
+					attribute: link
+					from: position
+					to: position + keyword size - 1 ] ].
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
@@ -1069,7 +1067,7 @@ SHRBTextStyler >> visitNode: aNode [
 
 	aNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
 
-	^ aNode acceptVisitor: self
+	^ self styleParenthesisOf: aNode around: [ aNode acceptVisitor: self ]
 ]
 
 { #category : #visiting }
@@ -1094,7 +1092,7 @@ SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 SHRBTextStyler >> visitReturnNode: aReturnNode [
 
-	self addStyle: #return from: aReturnNode start to: aReturnNode stop.
+	self addStyle: #return from: aReturnNode start to: aReturnNode start.
 
 	self visitNode: aReturnNode value
 ]
@@ -1111,9 +1109,7 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
 
-	self styleParenthesisOf: aVariableNode around: [
-		self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
-		self visitCommentNodes: aVariableNode ]
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
 ]
 
 { #category : #accessing }

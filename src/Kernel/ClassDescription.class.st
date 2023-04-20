@@ -869,15 +869,6 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> removeMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods.
-	Here we could remove what we not need"
-
-	self organization removeProtocolIfEmpty: aSymbol
-]
-
 { #category : #'accessing - method dictionary' }
 ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
@@ -885,6 +876,13 @@ ClassDescription >> removeProtocol: protocolName [
 
 	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
 	self organization removeProtocolIfEmpty: protocolName
+]
+
+{ #category : #'accessing - protocols' }
+ClassDescription >> removeProtocolIfEmpty: aProtocol [
+	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
+
+	self organization removeProtocolIfEmpty: aProtocol
 ]
 
 { #category : #'accessing - method dictionary' }

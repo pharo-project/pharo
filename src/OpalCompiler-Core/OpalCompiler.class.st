@@ -201,6 +201,19 @@ OpalCompiler >> addPlugin: aClass [
 ]
 
 { #category : #accessing }
+OpalCompiler >> ast [
+
+	^ ast
+]
+
+{ #category : #accessing }
+OpalCompiler >> ast: anObject [
+
+	ast := anObject.
+	source := ast source
+]
+
+{ #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
 	self compilationContext bindings: aDictionary
@@ -325,8 +338,9 @@ OpalCompiler >> compile [
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
 
-	result := self parse.
-	ast ifNil: [ ^ result ]. "some failBlock"
+	ast ifNil: [
+		result := self parse.
+		ast ifNil: [ ^ result ] "some failBlock" ].
 
 	self callPlugins.
 	ast scope registerVariables.
@@ -627,5 +641,6 @@ OpalCompiler >> semanticScope: anObject [
 OpalCompiler >> source: aString [
 
 	"source should be a string, but call contents for old clients that send streams"
-	source := aString contents
+	source := aString contents.
+	ast := nil
 ]
