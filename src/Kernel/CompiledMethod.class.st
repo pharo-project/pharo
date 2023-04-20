@@ -49,14 +49,6 @@ CompiledMethod class >> checkIsValidBytecodeEncoder: aBytecodeEncoderSubclass [
 		[self error: 'A bytecode set encoder is expected to be a subclass of BytecodeEncoder']
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> cleanUpSourceInTrailers [
-
-	self allInstances do: [:e | e isInstalled ifFalse: [e embeddSourceInTrailer]].
-	"pay attention since embeddSourceInTrailer creates a new compiled method. So iterating while
-	changing it is a bad idea. This is why we use allInstances do and not allInstancesDo:"
-]
-
 { #category : #constants }
 CompiledMethod class >> conflictMarker [
 	^ #traitConflict
@@ -406,17 +398,6 @@ CompiledMethod >> defaultSelector [
 { #category : #printing }
 CompiledMethod >> displayStringOn: aStream [
 	aStream print: self methodClass; nextPutAll: '>>'; store: self selector
-]
-
-{ #category : #'source code management' }
-CompiledMethod >> embeddSourceInTrailer [
-	"When receiver is deinstalled from its class, its not managed anymore by development tools
-	and it's hard to predict, how long a method could stay in the image, because if it contains blocks,
-	they could still reference it.
-	Therefore we trying to preserve as much as we can , actually by embedding the method's source code into its trailer
-	"
-	self trailer hasSourcePointer ifTrue: [
-		^self becomeForward: (self copyWithSource: self sourceCode)]
 ]
 
 { #category : #accessing }
@@ -1043,19 +1024,18 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	"We can't change the trailer of existing method, since it could have completely different format.
 	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
-	| trailer copy |
+	| trailer |
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	
-	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
-	copy := self copyWithTrailerBytes: trailer.
+	trailer := (CompiledMethodTrailer new sourcePointer: srcPointer) encode.
 	"If possible do a replace in place as an optimization"
-	(self trailer class == trailer class and: [ self size = copy size ])
+	(self trailer class == trailer class and: [ trailer size = self trailer size ])
 		ifTrue: [
 			| start |
 			start := self endPC + 1.
-			self replaceFrom: start to: self size with: copy startingAt: start ]
-		ifFalse: [ self becomeForward: copy ].
+			self replaceFrom: start to: self size with: trailer encodedData startingAt: 1 ]
+		ifFalse: [ self becomeForward: (self copyWithTrailerBytes: trailer) ].
 	^ self
 ]
 

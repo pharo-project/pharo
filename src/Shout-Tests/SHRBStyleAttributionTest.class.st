@@ -406,6 +406,32 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testErrorStyle [
+
+	| aText |
+	aText := 'm 1 ] . foo: . [ 2' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 5
+		shouldBe: #invalid. "closing ]"
+
+	self
+		assertStyleOf: aText
+		between: 9
+		and: 9
+		shouldBe: #invalid. "f of foo: because missing receiver"
+
+	self
+		assertStyleOf: aText
+		between: 16
+		and: 16
+		shouldBe: #invalid. "opening ["
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testFalseStyle [
 
 	| aText |
@@ -577,6 +603,22 @@ SHRBStyleAttributionTest >> testParenthesisStyle [
 	self assertStyleOf: aText at: 55 shouldBe: #parenthesis2.
 	self assertStyleOf: aText at: 56 shouldBe: #parenthesis1.
 	self assertStyleOf: aText at: 57 shouldBe: #parenthesis
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testParenthesisSurroundingVar [
+
+	| aText |
+	aText := 'm |var| ^ (var)' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 11 shouldBe: #parenthesis.
+	self
+		assertStyleOf: aText
+		between: 12
+		and: 14
+		shouldBe: #tempVar.
+	self assertStyleOf: aText at: 15 shouldBe: #parenthesis
 ]
 
 { #category : #tests }
