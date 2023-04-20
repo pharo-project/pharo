@@ -207,7 +207,7 @@ RBCodeSnippet class >> badComments [
 		        (self new
 			         source: '"a" #[ "b" 1 "c" 2 "d" ] "e"';
 			         nodeAt: '888 000999060AAA070BBB00 CCC';
-			         styled: '"""   nnnnnnnnnnnnnnnnn  """';
+			         styled: '"""    """ n """ n """   """';
 			         formattedCode: '#[ 1 2 ]';
 			         value: #[ 1 2 ]).
 		        (self new
@@ -231,7 +231,7 @@ RBCodeSnippet class >> badComments [
 		        (self new
 			         source: ' "a" foo: "b" x "c" bar: "d" y "e" ^ "f" x "g" ';
 			         nodeAt: '0777000000888030999000000III0A0JJJ0CCGGGCD0HHH0';
-			         styled: '     pppp     A     pppp """ A """ ^ """ a """ ';
+			         styled: ' """ pppp """ A """ pppp """ A """ ^ """ a """ ';
 			         formattedCode: 'foo: x bar: y "d" "e" ^ x "f" "g"';
 			         isScripting: false;
 			         value: 1).
@@ -1400,7 +1400,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '[ :a :a | a ]';
 			         nodeAt: '0001002000400';
-			         styled: '0 :B :b | b 0';
+			         styled: '0 :B :B | b 0';
 			         value: 1;
 			         notices: #( #( 7 7 7 'Name already defined' ) )).
 
@@ -2465,7 +2465,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: '[ :a :a :b | | a a b | a + a + b ]';
 			         nodeAt: '00010020030004454647444A999B888C00';
-			         styled: '0 :B :b :B | | T t T | t s t s t 0';
+			         styled: '0 :B :B :B | | T t T | t s t s t 0';
 			         isFaulty: false;
 			         value: 4;
 			         notices:
@@ -2483,7 +2483,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 			         nodeAt:
 				         '00000100002000030555655755855599A9B9C999FEEEGDDDH55';
 			         styled:
-				         'pppp A pp A pp A 0 :B :b :B | | T t T | t s t s t 0';
+				         'pppp A pp A pp A 0 :B :B :B | | T t T | t s t s t 0';
 			         isScripting: false;
 			         isFaulty: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
