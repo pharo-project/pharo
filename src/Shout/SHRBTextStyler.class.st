@@ -898,6 +898,8 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 { #category : #visiting }
 SHRBTextStyler >> styleParenthesisOf: aNode around: aBlock [
 
+	aNode isValue ifFalse: [ ^ aBlock value ].
+
 	self styleOpenParenthese: aNode.
 	aBlock value.
 	self styleCloseParenthese: aNode
@@ -1031,13 +1033,12 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 
 	link := TextMethodLink sourceNode: aMessageNode.
 
-	self styleParenthesisOf: aMessageNode around: [
-		aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
-			self
-				addStyle: style
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
+		self
+			addStyle: style
+			attribute: link
+			from: position
+			to: position + keyword size - 1.
 
 		(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) ifTrue: [ self visitNode: aMessageNode receiver ].
 
@@ -1069,7 +1070,7 @@ SHRBTextStyler >> visitNode: aNode [
 
 	aNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
 
-	^ aNode acceptVisitor: self
+	^ self styleParenthesisOf: aNode around: [ aNode acceptVisitor: self ]
 ]
 
 { #category : #visiting }
@@ -1114,9 +1115,8 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
 
-	self styleParenthesisOf: aVariableNode around: [
-		self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
-		self visitCommentNodes: aVariableNode ]
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
+	self visitCommentNodes: aVariableNode
 ]
 
 { #category : #accessing }
