@@ -612,21 +612,7 @@ OpalCompiler >> protocol: aProtocol [
 ]
 
 { #category : #accessing }
-OpalCompiler >> receiver [
-
-	^ self semanticScope ifNotNil: [ :scope |
-		  scope isDoItScope
-			  ifTrue: [ scope receiver ]
-			  ifFalse: [ nil ] ]
-]
-
-{ #category : #accessing }
 OpalCompiler >> receiver: anObject [
-	"Note: some clients set up a `receiver:` AFTER setting up a `context:`
-	BUT expect that the context remain,
-	so just noop if the receiver is already known, thus do not change the doit scope"
-
-	self receiver == anObject ifTrue: [ ^ self ].
 	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
 ]
 
