@@ -859,7 +859,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				reverseDo: [:interval |
+				do: [:interval |
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
@@ -888,7 +888,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				do: [ :interval |
+				reverseDo: [ :interval |
 					| pos |
 					pos := interval first.
 					self addStyle:  self parenthesisStyleName from: pos to: pos.
