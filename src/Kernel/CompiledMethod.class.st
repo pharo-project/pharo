@@ -938,7 +938,13 @@ CompiledMethod >> readsField: varIndex [
 ]
 
 { #category : #evaluating }
-CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anObject [
+CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: aMethod [
+	"execute aMethod.
+	This method takes aMethod as an argument so we can call primitive 188.
+	Clients should use #valueWithReceiver:arguments:
+	
+	We have this method here in addition to ProtoObject>>#withArgs:executeMethod:
+	so we can execute a method without sending a message to aReceiver"
 	<primitive: 188>
 	self primitiveFailed
 ]
