@@ -1047,7 +1047,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
 	self visitMethodComments: aMethodNode.
-	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
+	aMethodNode arguments do: [ :argument | self visitNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
 	aMethodNode isDoIt ifFalse: [
 		aMethodNode selectorParts
