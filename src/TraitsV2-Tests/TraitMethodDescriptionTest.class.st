@@ -36,7 +36,7 @@ TraitMethodDescriptionTest >> testCategories [
 	self t1 compile: 'mA' classified: #catA.
 	self assert: (self t4 organization protocolNameOfElement: #mA) equals: #catA.
 	self t1 organization classify: #mA under: #cat1.
-	self assert: (self t4 organization protocolNames includes: #catA) not
+	self assert: (self t4 organization hasProtocol: #catA) not
 ]
 
 { #category : #tests }
@@ -83,19 +83,19 @@ TraitMethodDescriptionTest >> testConflictingCategories [
 	| t7 t8 |
 	self t2 compile: 'm11' classified: #catY.
 	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization protocolNameOfElement: #m11) equals: Protocol ambiguous.
+	self assert: (self t5 organization protocolNameOfElement: #m11) equals: Protocol traitConflictName.
 	t7 := self createTraitNamed: #T7 uses: self t1 + self t2.
-	self assert: (t7 organization protocolNameOfElement: #m11) equals: Protocol ambiguous.
+	self assert: (t7 organization protocolNameOfElement: #m11) equals: Protocol traitConflictName.
 	self t1 removeSelector: #m11.
 	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
 	self assert: (self t5 organization protocolNameOfElement: #m11) equals: #catY.
 	self assert: (t7 organization protocolNameOfElement: #m11) equals: #catY.
-	self assert: (t7 organization protocolNames includes: Protocol ambiguous) not.
+	self deny: (t7 organization hasProtocol: Protocol traitConflictName).
 	self t1 compile: 'm11' classified: #cat1.
 	t8 := self createTraitNamed: #T8 uses: self t1 + self t2.
 	t8 organization classify: #m11 under: #cat1.
 	self t1 organization classify: #m11 under: #catZ.
 	self assert: (self t4 organization protocolNameOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization protocolNameOfElement: #m11) equals: Protocol ambiguous.
+	self assert: (self t5 organization protocolNameOfElement: #m11) equals: Protocol traitConflictName.
 	self assert: (t8 organization protocolNameOfElement: #m11) equals: #catZ
 ]

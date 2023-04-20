@@ -18,6 +18,12 @@ IRPushReceiver >> canBeQuickReturn [
 ]
 
 { #category : #testing }
+IRPushReceiver >> isRemovableByPop [
+
+	^ true
+]
+
+{ #category : #testing }
 IRPushReceiver >> isSelf [
 	^true
 ]

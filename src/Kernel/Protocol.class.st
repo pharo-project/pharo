@@ -13,11 +13,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> ambiguous [
-	^ #ambiguous
-]
-
-{ #category : #'instance creation' }
 Protocol class >> name: nm [
 
 	^ self new
@@ -45,7 +40,9 @@ Protocol >> addAllMethodsFrom: aProtocol [
 
 { #category : #'adding-removing' }
 Protocol >> addMethodSelector: aSymbol [
-	^ methodSelectors add: aSymbol
+	(methodSelectors includes: aSymbol) ifTrue: [ ^ self ].
+	
+	methodSelectors := methodSelectors copyWith: aSymbol
 ]
 
 { #category : #testing }
@@ -63,8 +60,8 @@ Protocol >> includesSelector: selector [
 Protocol >> initialize [
 
 	super initialize.
-
-	methodSelectors := IdentitySet new.
+	
+	self resetMethodSelectors.
 	name := self class unclassified
 ]
 
@@ -117,17 +114,17 @@ Protocol >> printOn: aStream [
 ]
 
 { #category : #'adding-removing' }
-Protocol >> removeAllMethodSelectors [
-	^ methodSelectors removeAll
-]
-
-{ #category : #'adding-removing' }
 Protocol >> removeMethodSelector: aSymbol [
-	^ methodSelectors remove: aSymbol
+	methodSelectors := methodSelectors copyWithout: aSymbol
 ]
 
 { #category : #accessing }
 Protocol >> rename: newName [
 
 	self name: newName
+]
+
+{ #category : #'adding-removing' }
+Protocol >> resetMethodSelectors [
+	methodSelectors := Array empty
 ]

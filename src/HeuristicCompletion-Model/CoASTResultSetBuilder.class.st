@@ -112,6 +112,12 @@ CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitCommentNode: aRBComment [ 
+
+	^ self visitNode: aRBComment
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [
 	^ self visitNode: aRBVariableNode
 ]

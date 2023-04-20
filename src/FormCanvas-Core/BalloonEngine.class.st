@@ -716,7 +716,7 @@ BalloonEngine >> registerFill: aFillStyle [
 
 { #category : #drawing }
 BalloonEngine >> registerFill: fill1 and: fill2 [
-	^self registerFills: (Array with: fill1 with: fill2)
+	^self registerFills: { fill1 . fill2 }
 ]
 
 { #category : #drawing }

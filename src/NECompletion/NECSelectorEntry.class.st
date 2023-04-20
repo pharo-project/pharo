@@ -4,6 +4,9 @@ I represent a selector of a method
 Class {
 	#name : #NECSelectorEntry,
 	#superclass : #NECSymbolEntry,
+	#instVars : [
+		'selector'
+	],
 	#category : #'NECompletion-Model'
 }
 
@@ -11,7 +14,7 @@ Class {
 NECSelectorEntry >> browse [
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents. ^true].
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: self selector. ^true].
 
 	^ self
 		findMethodAndDo: [ :method |
@@ -19,33 +22,48 @@ NECSelectorEntry >> browse [
 				openOnClass: method methodClass
 				selector: method selector.
 			true ]
-		ifAbsent: [ :selector |
+		ifAbsent: [ :sel |
 			SystemNavigation new
-				browseAllImplementorsOf: selector.
+				browseAllImplementorsOf: sel.
 			true ]
 ]
 
 { #category : #private }
 NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	| theClass result implementors |
-	theClass := node receiver propertyAt: #type ifAbsent: nil.
+	theClass := node isMessage
+		ifTrue: [ node receiver propertyAt: #type ifAbsent: nil ]
+		ifFalse: [ nil ].
 	result := theClass
-				ifNil: [implementors := self systemNavigation allImplementorsOf: contents.
+				ifNil: [implementors := self systemNavigation allImplementorsOf: self selector.
 					implementors size == 1
 						ifTrue: [| ref |
 							ref := implementors first.
 							ref realClass lookupSelector: ref selector]
-						ifFalse: [^ notfoundBlock value: contents]]
-				ifNotNil: [theClass lookupSelector: contents ].
+						ifFalse: [^ notfoundBlock value: self selector]]
+				ifNotNil: [theClass lookupSelector: self selector ].
 	^ foundBlock value: result
 ]
 
 { #category : #accessing }
 NECSelectorEntry >> label [
-	"I return whether the variable is a class or a method."
+	node isMessage ifFalse: [ ^ '' ].
 
+	"I return whether the variable is a class or a method."
 	 ^node receiver
 		propertyAt: #type
 		ifPresent:  [ 'method' ]
 		ifAbsent:  [ 'class' ]
+]
+
+{ #category : #accessing }
+NECSelectorEntry >> selector [
+
+	^ selector ifNil: [ contents ]
+]
+
+{ #category : #accessing }
+NECSelectorEntry >> selector: anObject [
+
+	selector := anObject
 ]

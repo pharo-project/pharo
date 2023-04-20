@@ -438,6 +438,12 @@ NECMenuMorph >> handlesMouseDown: anEvent [
 	^ true
 ]
 
+{ #category : #actions }
+NECMenuMorph >> hasDetail [
+
+	^ detailMorph notNil
+]
+
 { #category : #drawing }
 NECMenuMorph >> hasMessage [
 	^ true
@@ -657,6 +663,7 @@ NECMenuMorph >> takesKeyboardFocus [
 NECMenuMorph >> updateDetail [
 	detailMorph
 		ifNil: [^ self].
+	detailPosition ifNil: [^ self].
 	detailMorph
 		entryDescription: (self selectedEntry description);
 		position: detailPosition menuWidth: self width;

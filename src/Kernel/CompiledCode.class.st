@@ -530,6 +530,19 @@ CompiledCode >> literalsToSkip [
 ]
 
 { #category : #scanning }
+CompiledCode >> localMessages [
+	"Answer a Set of all the message selectors sent by this method."
+
+	| scanner aSet |
+	aSet := IdentitySet new.
+	scanner := InstructionStream on: self.
+	scanner scanFor: [:x | 
+			scanner addSelectorTo: aSet.
+			false	"keep scanning"].
+	^aSet
+]
+
+{ #category : #scanning }
 CompiledCode >> localReadsRef: literalAssociation [
 	"Answer whether the receiver loads the argument."
 	| litIndex scanner |
@@ -589,6 +602,15 @@ CompiledCode >> longPrintOn: aStream [
 		self printPrimitiveOn: aStream.
 	].
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
+]
+
+{ #category : #scanning }
+CompiledCode >> messages [
+	"Answer a Set of all the message selectors sent by this method."
+	| aSet |
+	aSet := self localMessages.
+	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
+	^ aSet
 ]
 
 { #category : #accessing }

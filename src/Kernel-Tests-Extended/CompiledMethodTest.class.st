@@ -477,7 +477,6 @@ CompiledMethodTest >> testIsFaulty [
 	cm := OpalCompiler new
 				source: 'method 3+';
 				permitFaulty: true;
-				options: #(+ #optionEmbeddSources );
 				compile.
 	self assert: cm isFaulty.
 	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
@@ -731,6 +730,53 @@ CompiledMethodTest >> testPragmaAt [
 	self assert: (method pragmaAt: #hello) equals: nil
 ]
 
+{ #category : #tests }
+CompiledMethodTest >> testProperties [
+
+	| method tmp |
+	method := self class >> #returnTrue.
+	
+	"No property. Unlike classic collections, nil is returned on absence"
+	self deny: method hasProperties.
+	self deny: (method hasProperty: #doesNotExist).
+	self assert: (method propertyAt: #doesNotExist) equals: nil.
+	self assert: (method propertyAt: #doesNotExist ifAbsent: [ #tag ]) equals: #tag.
+	self assert: (method removeProperty: #doesNotExist) equals: nil.
+	self assert: (method removeProperty: #doesNotExist ifAbsent: [ #tag ]) equals: #tag.
+	
+	"Add a property"
+	self assert: (method propertyAt: #doesNotExist put: #yesItDoes) equals: #yesItDoes.
+	self assert: method hasProperties.
+	self assert: (method hasProperty: #doesNotExist).
+	self assert: (method propertyAt: #doesNotExist) equals: #yesItDoes.
+	self assert: (method propertyAt: #doesNotExist ifAbsent: [ #tag ]) equals: #yesItDoes.
+
+	"Remove it"
+	self assert: (method removeProperty: #doesNotExist) equals: #yesItDoes.
+	self deny: method hasProperties.
+	self assert: (method removeProperty: #doesNotExist) equals: nil.
+
+	"Add it back"
+	self assert: (method propertyAt: #doesNotExist ifAbsentPut: [ #yesItDoesAgain ]) equals: #yesItDoesAgain.
+	self assert: method hasProperties.
+	self assert: (method propertyAt: #doesNotExist) equals: #yesItDoesAgain.
+
+	"Add a second one"
+	self assert: (method propertyAt: #doesExist put: #yesItDoes) equals: #yesItDoes.
+	
+	tmp := OrderedCollection new.
+	method propertyKeysAndValuesDo: [ :key :value | tmp add: { key . value } ].
+	self assertCollection: tmp hasSameElements: #( #( #doesNotExist #yesItDoesAgain ) #(#doesExist #yesItDoes) ).
+	
+	"Remove both"
+	method removeProperty: #doesNotExist.
+	self assert: method hasProperties.
+	self assert: (method propertyAt: #doesNotExist) equals: nil.
+	self assert: (method propertyAt: #doesExist) equals: #yesItDoes.
+	method removeProperty: #doesExist.
+	self deny: method hasProperties
+]
+
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testReadsField [
 	| method |
@@ -948,6 +994,17 @@ CompiledMethodTest >> testUsesUndeclareds [
 	self assert: method usesUndeclareds.
 	method := self class compiler permitFaulty: true; compile: 'msg self in: [ :anObject | var1 := 1 ]'.
 	self assert: method usesUndeclareds
+]
+
+{ #category : #'tests - evaluating' }
+CompiledMethodTest >> testValueWithReceiver [
+
+	| method value |
+
+	method := self class compiledMethodAt: #returnTrue.
+
+	value := method valueWithReceiver: nil .
+	self assert: value equals: true.
 ]
 
 { #category : #'tests - evaluating' }

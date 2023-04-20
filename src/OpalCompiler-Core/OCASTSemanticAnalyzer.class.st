@@ -18,8 +18,6 @@ Class {
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 
-	"Policy: simple semantic analysis is faulty by default"
-	compilationContext permitFaulty ifNil: [ compilationContext permitFaulty: true ].
 	self visitNode: aNode.
 	OCASTClosureAnalyzer new visitNode: aNode.
 	OCASTMethodMetadataAnalyser new visitNode: aNode
@@ -89,7 +87,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	| name var shadowing |
 	name := aVariableNode name.
 	"check if another variable with same name is visible"
-	shadowing := scope lookupVarForDeclaration: name.
+	shadowing := scope lookupVar: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
 	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
@@ -227,11 +225,18 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
+	
+	super visitMessageNode: aMessageNode.
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: self compilationContext getClass ]
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].

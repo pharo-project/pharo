@@ -86,19 +86,6 @@ ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
 ]
 
 { #category : #testing }
-ClassFactoryForTestCaseTest >> testDuplicateClassWithNewName [
-	| createdClass |
-
-	"Skip this tests if no compiler is available. Do not use #skip because it breaks an announcements tests"
-
-	Smalltalk compilerClass ifNotNil: [
-		createdClass := factory duplicateClass: TestCase withNewName: #MyTestClass.
-		self assert: (factory createdClasses allSatisfy: [:class| self class environment includesKey: class name ]).
-		factory cleanUp.
-		self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]) ]
-]
-
-{ #category : #testing }
 ClassFactoryForTestCaseTest >> testMultipleClassCreation [
 	5 timesRepeat: [ factory newClass ].
 	self assert: (SystemNavigation new allClasses includesAll: factory createdClasses).

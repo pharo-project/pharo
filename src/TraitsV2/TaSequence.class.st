@@ -84,14 +84,16 @@ TaSequence >> allTraits [
 ]
 
 { #category : #accessing }
-TaSequence >> categoryOfMethod: method withSelector: selector [
-	| categories |
+TaSequence >> categoryOfMethod: aMethod withSelector: selector [
 
-	categories := (self methods select: [ :e | e selector = selector ] thenCollect: #category) asSet.
+	| protocols |
+	protocols := (self methods
+		              select: [ :method | method selector = selector ]
+		              thenCollect: #protocol) asSet.
 
-	^ categories size = 1
-		ifTrue: [ ^ categories anyOne ]
-		ifFalse: [ Protocol ambiguous ]
+	^ protocols size = 1
+		  ifTrue: [ protocols anyOne ]
+		  ifFalse: [ Protocol traitConflictName ]
 ]
 
 { #category : #testing }

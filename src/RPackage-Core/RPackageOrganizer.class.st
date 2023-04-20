@@ -410,7 +410,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	package definedClasses do: [ :definedClass|
 			self registerPackage: package forClass: definedClass].
 
-	SystemAnnouncer uniqueInstance announce: (RPackageRegistered to: package).
+	SystemAnnouncer announce: (RPackageRegistered to: package).
 
 	^ package
 ]
@@ -626,31 +626,6 @@ RPackageOrganizer >> packageClass [
 	"Return the system class that represent packages."
 
 	^ RPackage
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingMethod: aCompiledMethod [
-	^ self packageDefiningOrExtendingSelector: aCompiledMethod selector inClass: aCompiledMethod methodClass
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClass: aClass [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-
-
-	^ (aClass packages) detect: [:each | each includesSelector: aSelector ofClass: aClass ] ifNone: [
-		"if we do not find in the packages of the class, it means that the method is coming from a trait: "
-		|tmpTrait|
-		tmpTrait := (aClass traitComposition traitProvidingSelector: aSelector).
-		(aClass traitComposition traitProvidingSelector: aSelector) packages detect: [:each |
-			each includesSelector: aSelector ofClass: tmpTrait.
-			].
-		]
-
-"	self packages detect: [:each |
-		each includesSelector: aSelector ofClass: aClass ].
-"
 ]
 
 { #category : #accessing }
@@ -902,7 +877,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 	aPackage definedClasses
 		do: [ :definedClass | self registerPackage: aPackage forClass: definedClass].
 
-	SystemAnnouncer uniqueInstance announce: (RPackageRegistered to: aPackage).
+	SystemAnnouncer announce: (RPackageRegistered to: aPackage).
 
 	^ aPackage
 ]
@@ -990,7 +965,7 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 
 	"we also rename all the extension protocols in the system with the new name"
 	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
-	classesAndProtocolsToRename do: [ :method | method methodClass organization silentlyRenameProtocolNamed: method category toBe: '*' , newName ]
+	classesAndProtocolsToRename do: [ :method | method methodClass organization renameProtocolNamed: method category toBe: '*' , newName ]
 ]
 
 { #category : #private }
@@ -1357,7 +1332,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
 	aPackage definedClasses
 		do: [ :definedClass | self unregisterPackage: aPackage forClass: definedClass].
-	SystemAnnouncer uniqueInstance announce: (RPackageUnregistered to: aPackage).
+	SystemAnnouncer announce: (RPackageUnregistered to: aPackage).
 
 	^ aPackage
 ]

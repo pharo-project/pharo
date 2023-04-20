@@ -7,9 +7,9 @@ RBMethodNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	compilationContext compiledMethod
-		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
-	^compilationContext compiledMethod
+	self compilationContext compiledMethod
+		ifNil: [ self compilationContext compiledMethod: self ir compiledMethod ].
+	^ self compilationContext compiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -91,11 +91,7 @@ RBMethodNode >> generateIR [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateMethod [
-	| methodTrailer |
-	methodTrailer := self compilationContext optionEmbeddSources
-			ifTrue: [ CompiledMethodTrailer new sourceCode: source ]
-			ifFalse: [self compilationContext compiledMethodTrailer ].
-	^self generate: methodTrailer
+	^self generate: self compilationContext compiledMethodTrailer 
 ]
 
 { #category : #'*OpalCompiler-Core' }

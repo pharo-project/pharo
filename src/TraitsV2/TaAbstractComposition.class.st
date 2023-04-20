@@ -114,10 +114,11 @@ TaAbstractComposition >> asTraitComposition [
 
 { #category : #accessing }
 TaAbstractComposition >> categoryOfMethod: method withSelector: selector [
-	"I return the category of the method with the selector.
-	This is useful when the method is aliased or the method came from different traits or it is a conflicting category.
-	The basic implementation returns the category of the method"
-	^ method category
+	"I return the protocol of the method with the selector.
+	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
+	The basic implementation returns the protocol of the method"
+
+	^ method protocol
 ]
 
 { #category : #testing }
@@ -158,7 +159,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
-	aClass organization classify: selector inProtocolNamed: (self categoryOfMethod: method withSelector: method selector).
+	aClass organization silentlyClassify: selector under: (self categoryOfMethod: method withSelector: method selector).
 
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -216,7 +217,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
-	aClass organization classify: aSelector inProtocolNamed: aCompiledMethod category asSymbol.
+	aClass organization silentlyClassify: aSelector under: aCompiledMethod protocol.
 
 	aClass organization removeEmptyProtocols.
 
