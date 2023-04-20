@@ -936,6 +936,12 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+
+	self addStyle: #pragma from: aRBAnnotationMarkNode start to: aRBAnnotationMarkNode start.
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitArrayNode: anArrayNode [
 
 	anArrayNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
@@ -1025,9 +1031,11 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 
-	| style link |
+	| style link styleName |
+	
+	styleName := aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ].
 	style := aMessageNode selector isSelectorSymbol
-		         ifTrue: [ #selector ]
+		         ifTrue: [ styleName ]
 		         ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 
 	link := TextMethodLink sourceNode: aMessageNode.

@@ -67,11 +67,13 @@ RBCodeSnippet class >> badAnnotations [
 		        (self new
 			         source: '@';
 			         nodeAt: '0';
+			         styled: '<';
 			         isParseFaulty: false;
 			         notices: #( #( 1 1 1 'Unexpected token' ) )).
 		        (self new
 			         source: '@5';
 			         nodeAt: '23';
+			         styled: '<X';
 			         formattedCode: '@. 5';
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
@@ -79,6 +81,7 @@ RBCodeSnippet class >> badAnnotations [
 		        (self new
 			         source: 'a := @';
 			         nodeAt: '200001';
+			         styled: 'u    <';
 			         isParseFaulty: false;
 			         notices:
 				         #( #( 6 6 6 'Unexpected token' )
@@ -86,23 +89,27 @@ RBCodeSnippet class >> badAnnotations [
 		        (self new
 			         source: '^ @';
 			         nodeAt: '001';
+			         styled: '^ <';
 			         isParseFaulty: false;
 			         notices: #( #( 3 3 3 'Unexpected token' ) )).
 		        (self new
 			         source: '@foo';
 			         nodeAt: '1000';
+			         styled: '<<<<';
 			         formattedCode: '@ foo';
 			         isParseFaulty: false;
 			         notices: #( #( 1 4 1 'Unknown annotation' ) )).
 		        (self new
 			         source: '@foo:';
 			         nodeAt: '10000';
+			         styled: '<<<<<';
 			         formattedCode: '@ foo: ';
 			         notices: #( #( 6 5 6 'Variable or expression expected' )
 				            #( 1 5 1 'Unknown annotation' ) )).
 		        (self new
 			         source: '@foo:5';
 			         nodeAt: '100002';
+			         styled: '<<<<<n';
 			         formattedCode: '@ foo: 5';
 			         isParseFaulty: false;
 			         notices: #( #( 1 6 1 'Unknown annotation' ) )) }.
