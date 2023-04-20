@@ -116,10 +116,8 @@ OCDoitTest >> testDoItRequestorReadRequestorVar [
 	| value  |
 	"we can read a variable from a requestor"
 	value := OpalCompiler new
-		          source: 'requestorVarForTesting';
-		          noPattern: true;
 		          requestor: self;
-		          evaluate.
+		          evaluate: 'requestorVarForTesting'.
 
 	self assert: value equals: 5
 ]
@@ -130,10 +128,8 @@ OCDoitTest >> testDoItRequestorShadow [
 	| value  |
 	"we can shadow a var defined in the requestor without error"
 	value := OpalCompiler new
-		          source: '|requestorVarForTesting| requestorVarForTesting';
-		          noPattern: true;
 		          requestor: self;
-		          evaluate.
+		          evaluate: '|requestorVarForTesting| requestorVarForTesting'.
 
 	self assert: value equals: nil
 ]

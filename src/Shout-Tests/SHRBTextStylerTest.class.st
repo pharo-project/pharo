@@ -21,10 +21,7 @@ SHRBTextStylerTest >> style: aText [
 
 	| ast |
 
-	ast := self class compiler
-		source: aText asString;
-		noPattern: false ;
-		parse.
+	ast := self class compiler parse: aText asString.
 	styler style: aText ast: ast.
 
 	^ ast
