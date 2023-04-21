@@ -94,7 +94,7 @@ CompiledMethodTrailer class >> empty [
 { #category : #generated }
 CompiledMethodTrailer class >> trailerKindDecoders [
 
-	^#(#decodeNoTrailer #decodeClearedTrailer #decodeTempsNamesQCompress #decodeTempsNamesZip #decodeSourceBySelector #decodeSourceByStringIdentifier #decodeUndefined #decodeUndefined  #decodeVarLengthSourcePointer #decodeExtendedKind #decodeNativeCodeTrailer #decodeEmbeddedSource #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeSourcePointer)
+	^#(#decodeNoTrailer #decodeClearedTrailer #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined  #decodeVarLengthSourcePointer #Undefined #decodeUndefined #decodeEmbeddedSource #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeSourcePointer)
 ]
 
 { #category : #kinds }
@@ -111,7 +111,7 @@ CompiledMethodTrailer class >> trailerKinds [
 "000110" #Undefined
 "000111" #Undefined
 "001000" #VarLengthSourcePointer
-"001001" #ExtendedKind
+"001001" #Undefined
 "001010" #Undefined
 "001011" #EmbeddedSource
 "001100" #EmbeddedSourceWide
@@ -235,13 +235,6 @@ CompiledMethodTrailer >> decodeEmbeddedSourceWide [
 		with: method
 		startingAt: start.
 	data := byteArray utf8Decoded
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> decodeExtendedKind [
-
-	"reserved for future use"
-	self shouldBeImplemented
 ]
 
 { #category : #private }
