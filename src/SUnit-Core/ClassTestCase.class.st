@@ -138,8 +138,7 @@ ClassTestCase >> testNew [
 ClassTestCase >> testUnCategorizedMethods [
 
 	| uncategorizedMethods |
-	uncategorizedMethods := self targetClass selectorsInProtocol:
-		                        Protocol unclassified.
+	uncategorizedMethods := self targetClass selectorsInProtocol: Protocol unclassified.
 	self
 		assert: uncategorizedMethods isEmpty
 		description: uncategorizedMethods asString
