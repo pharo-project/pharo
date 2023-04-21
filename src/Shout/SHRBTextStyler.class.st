@@ -94,13 +94,13 @@ SHRBTextStyler class >> blueStyleTable [
 			(argument 								(blue muchDarker))
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
-			(instVar 								(blue muchDarker))
+			(instVar 								(cyan muchDarker))
 
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
-			(poolConstant 							(blue muchDarker))
-			(classVar 								(blue muchDarker))
-			(globalVar 								(blue muchDarker))
+			(poolConstant 							(cyan muchDarker))
+			(classVar 								(cyan muchDarker))
+			(globalVar 								(purple muchDarker))
 
 			(incompleteIdentifier 					blue italic)
 			(incompleteSelector 					nil  italic)
