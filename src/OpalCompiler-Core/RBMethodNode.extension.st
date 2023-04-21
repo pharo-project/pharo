@@ -7,9 +7,17 @@ RBMethodNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	self compilationContext compiledMethod
-		ifNil: [ self compilationContext compiledMethod: self ir compiledMethod ].
-	^ self compilationContext compiledMethod
+	"Retrieve or generate a CompiledMethod (cached version).
+	The cache is not reset even is the AST is modified but can be overrided with `compiledMethod:`.
+	See limitations in `generateMethod`."
+
+	^ self propertyAt: #compiledMethod ifAbsentPut: [ self generateMethod ]
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> compiledMethod: aCompiledMethod [
+
+	self propertyAt: #compiledMethod put: aCompiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -90,7 +98,12 @@ RBMethodNode >> generateIR [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateMethod [
-	^self generate: self compilationContext compiledMethodTrailer 
+	"Generate a CompiledMethod (uncached, see `compiledMethod` for the cached version).
+	Important: the current state of the AST is not cheched, and specific controls or steps done
+	by OpalCompiler in a full compilation chain might be missing.
+	So use this method if you know what you are doing."
+
+	^ self generate: self compilationContext compiledMethodTrailer
 ]
 
 { #category : #'*OpalCompiler-Core' }
