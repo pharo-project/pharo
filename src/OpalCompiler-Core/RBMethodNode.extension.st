@@ -55,11 +55,10 @@ RBMethodNode >> firstPcForNode: aNode [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate [
-	"The receiver is the root of a parse tree. Answer a CompiledMethod. The
-	argument, trailer, is the references to the source code that is stored with
-	every CompiledMethod."
 
-	^ self generate: CompiledMethodTrailer empty
+	self deprecated: 'Use generateMethod. Beware that there are limitations so read the comments.' transformWith: '`@receiver generate' -> '`@receiver generateMethod'.
+
+	^ self generateMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
