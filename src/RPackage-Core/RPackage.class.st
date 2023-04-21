@@ -110,9 +110,9 @@ RPackage class >> initializeProperties [
 { #category : #'instance creation' }
 RPackage class >> named: aString [
 
-	| newPackage |
-	newPackage := self new name: aString ;yourself.
-	^ newPackage
+	^ self new
+		  name: aString;
+		  yourself
 ]
 
 { #category : #'protected only for tests' }

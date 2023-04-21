@@ -21,7 +21,7 @@ PharoDocCommentExpression >> evaluate [
 
 	^ self methodClass compiler
 		  source: self source;
-		  noPattern: true;
+		  isScripting: true;
 		  receiver: self methodClass;
 		  evaluate
 ]
