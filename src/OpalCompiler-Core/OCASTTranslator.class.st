@@ -58,6 +58,11 @@ OCASTTranslator >> compilationContext [
 	^methodBuilder compilationContext
 ]
 
+{ #category : #accessing }
+OCASTTranslator >> compilationContext: anObject [
+	methodBuilder compilationContext: anObject
+]
+
 { #category : #'inline messages factored' }
 OCASTTranslator >> emitAllButLastCases: cases [
 
