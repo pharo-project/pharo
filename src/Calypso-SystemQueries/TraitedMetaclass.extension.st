@@ -5,9 +5,7 @@ TraitedMetaclass >> tagsForAllMethods [
 	"I act as #tagsForMethods but I also takes into account methods comming from traits"
 
 	| allProtocols selectors |
-
-	allProtocols := self organization protocols
-		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	allProtocols := self organization protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
 
 	selectors := self visibleMethods collect: [ :each | each selector ].
 

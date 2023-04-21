@@ -1095,7 +1095,7 @@ ClassDescription >> tagsForMethods [
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
 	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	allProtocols := self organization protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
 
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
