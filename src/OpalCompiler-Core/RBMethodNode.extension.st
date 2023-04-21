@@ -190,8 +190,3 @@ RBMethodNode >> primitiveFromPragma [
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
 ]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> startWithoutParentheses [
-	^ 1
-]
