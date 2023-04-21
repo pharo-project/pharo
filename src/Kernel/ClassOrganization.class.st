@@ -159,12 +159,6 @@ ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: 
 	oldProtocolName ~= newProtocolName ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
 ]
 
-{ #category : #notifications }
-ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
-
-	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocolName)
-]
-
 { #category : #accessing }
 ClassOrganization >> organizedClass [
 
@@ -261,7 +255,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames copy.
 	protocols := protocols copyWithout: protocol.
-	self notifyOfRemovedProtocolNamed: protocol name.
+	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
 

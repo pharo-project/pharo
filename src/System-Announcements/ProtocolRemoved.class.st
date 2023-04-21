@@ -1,5 +1,7 @@
 "
-This class is not used, but should be used when we hook into the addition and removal of protocols. Right now, we only get ClassReorganizedAnnouncement
+I am an announcement raised when we add a protocol is removed from a class.
+
+I know the protocol that was removed and allow users to react to it.
 "
 Class {
 	#name : #ProtocolRemoved,

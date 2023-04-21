@@ -842,9 +842,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when:  MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when:  MethodModified send: #systemMethodModifiedActionFrom: to: self;
 		when:  MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self;
-		when:  MethodRemoved send: #systemMethodRemovedActionFrom: to: self;
-		when:  ProtocolAdded send: #systemProtocolAddedActionFrom: to: self;
-		when:  ProtocolRemoved send: #systemProtocolRemovedActionFrom: to: self.
+		when:  MethodRemoved send: #systemMethodRemovedActionFrom: to: self.
 
 	self flag: #hack. "for decoupling MC"
 	self class environment at: #MCWorkingCopy ifPresent: [
@@ -1264,17 +1262,6 @@ RPackageOrganizer >> systemOrganizer [
 RPackageOrganizer >> systemOrganizer: anObject [
 
 	systemOrganizer := anObject
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemProtocolAddedActionFrom: ann [
-
-	"for now I don't see anything to do'"
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemProtocolRemovedActionFrom: ann [
-	"to be unregistered"
 ]
 
 { #category : #accessing }

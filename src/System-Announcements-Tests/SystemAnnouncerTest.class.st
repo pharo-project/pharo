@@ -63,7 +63,7 @@ SystemAnnouncerTest >> testProtocolRemoved [
 
 	self assert: pass.
 	self assert: classRemoved equals: class.
-	self assert: protocolRemoved equals: 'shiny-new-category'
+	self assert: protocolRemoved name equals: 'shiny-new-category'
 ]
 
 { #category : #tests }
