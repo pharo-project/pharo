@@ -469,8 +469,7 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 { #category : #'accessing - compiled method' }
 RBMethodNode >> method [
 	"return the method that I have been compiled for"
-	^self compilationContext ifNotNil: [ :ccntx |
-		 ccntx compiledMethod ifNil: [ccntx getClass >> self selector]]
+	^ self propertyAt: #compiledMethod ifAbsent: [ nil ]
 ]
 
 { #category : #'accessing - compiled method' }

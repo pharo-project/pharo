@@ -9,7 +9,9 @@ RBMethodNode >> bcToASTCache [
 RBMethodNode >> compiledMethod [
 	"Retrieve or generate a CompiledMethod (cached version).
 	The cache is not reset even is the AST is modified but can be overrided with `compiledMethod:`.
-	See limitations in `generateMethod`."
+	See limitations in `generateMethod`.
+	
+	To get a CompiledMethod without compiling it, see `method`"
 
 	^ self propertyAt: #compiledMethod ifAbsentPut: [ self generateMethod ]
 ]
