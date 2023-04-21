@@ -541,7 +541,7 @@ EpMonitor >> protocolAdded: aProtocolAdded [
 		self addEvent:
 			(EpProtocolAddition
 				behavior: aProtocolAdded classAffected
-				protocol: aProtocolAdded protocol)]
+				protocol: aProtocolAdded protocol name)]
 ]
 
 { #category : #'announcement handling' }

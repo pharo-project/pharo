@@ -32,7 +32,7 @@ ClassOrganization >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
-	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: aProtocol).
+	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
