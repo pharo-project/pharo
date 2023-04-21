@@ -145,7 +145,7 @@ IRTranslator >> visitMethod: anIr [
 	gen numArgs: anIr numArgs.
 	gen properties: anIr properties.
 	gen numTemps: (anIr tempMap size).
-	gen forceLongForm: anIr forceLongForm.
+	gen forceLongForm: self compilationContext optionLongIvarAccessBytecodes.
 	self visitSequences: anIr allSequences.
 	"Literals for sends and pushLiteral: are added later, here we
 	add all the additionalLiterals from e.g. optimized constructs like #ifTrue:.
