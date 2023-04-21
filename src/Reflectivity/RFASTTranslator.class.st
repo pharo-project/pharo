@@ -214,7 +214,6 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 
 	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
-	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 
 	aMethodNode isPrimitive ifFalse: [self emitPreamble: aMethodNode. self emitMetaLinkBefore: aMethodNode].

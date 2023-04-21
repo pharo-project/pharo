@@ -475,7 +475,6 @@ OCASTTranslator >> translateConstantBlock: aBlockNode [
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
-	methodBuilder compilationContext: aBlockNode methodNode compilationContext.
 
 	"args, then copied, then temps"
 	methodBuilder addTemps: aBlockNode argumentNames.
@@ -686,7 +685,6 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 
 	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
-	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 
 	methodBuilder properties: aMethodNode methodProperties.
