@@ -358,7 +358,7 @@ Breakpoint >> generateConditionBlockFrom: aString [
 	| conditionBlockProducerMethodAST |
 	conditionBlockProducerMethodAST := self conditionBlockProducerMethodAST: aString.
 
-	^ ((conditionBlockProducerMethodAST generateWithSource) valueWithReceiver: nil arguments: {})
+	^ conditionBlockProducerMethodAST generateMethod valueWithReceiver: nil
 ]
 
 { #category : #accessing }

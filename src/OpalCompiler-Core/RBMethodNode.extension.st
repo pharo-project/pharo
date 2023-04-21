@@ -95,12 +95,6 @@ RBMethodNode >> generateMethod [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> generateWithSource [
-	"Answer a CompiledMethod with source encoded in trailer."
-	^self generate: (CompiledMethodTrailer new sourceCode: source)
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> ir [
 
 	^ self propertyAt: #ir ifAbsent: [self generateIR]
