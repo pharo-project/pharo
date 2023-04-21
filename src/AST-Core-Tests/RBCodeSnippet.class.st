@@ -49,6 +49,7 @@ RBCodeSnippet class >> allSnippets [
 
 	^ {
 		  self badAnnotations.
+		  self badComments.
 		  self badSimpleExpressions.
 		  self badExpressions.
 		  self badTokens.
@@ -120,6 +121,169 @@ RBCodeSnippet class >> badAnnotations [
 		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badComments [
+	"EFFormater is not the best here :("
+
+	<script: 'self styleWithError: self badComments'>
+	| list |
+	list := {
+		        (self new
+			         source: '"" ';
+			         nodeAt: '22 ';
+			         styled: '"" ').
+		        (self new
+			         source: '"nothing" ';
+			         nodeAt: '222222222 ';
+			         styled: '""""""""" ').
+		        (self new
+			         source: '"com"1"ment"';
+			         nodeAt: '333330444444';
+			         styled: '"""""n""""""';
+			         formattedCode: '1';
+			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
+
+		        "Comments betwen all tokens"
+		        "Unfortunately, EFFormater loose a lot of comments :("
+		        (self new
+			         source: '"a" 1 "b". "c" 2 "d"';
+			         nodeAt: '555 106660077708 AAA';
+			         styled: '""" n """. """ n """';
+			         formattedCode: '1. "a" "b" "c" 2 "d"';
+			         value: 2). "a and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
+			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
+			         styled: ' """ ppp """ n """. """ ^ n """ ';
+			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
+			         isScripting: false;
+			         value: 2). "z and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: '"a" 1 "b" max: "c" 2 "d" + "e" 3 "f" abs "g"';
+			         nodeAt: '444 10555000000AAA076BBB666HHH6ECIIICCCC JJJ';
+			         styled: '""" n """ ssss """ n """ s """ n """ sss """';
+			         formattedCode: '1 max: 2 + 3 abs';
+			         value: 5).
+		        (self new
+			         source: '"a" ( "b" ( "c" 1 "d" ) "e" ) "f"';
+			         nodeAt: '777 00888000999000AAA000BBB00 CCC';
+			         styled: '""" 0 """ 1 """ n """ 1 """ 0 """';
+			         formattedCode: '1';
+			         value: 1).
+		        (self new
+			         source: ' "a" 1 "b" max: "c" 2 "d" ; "e" min: "f" 3 "g" ';
+			         nodeAt: ' HHH E1III111111AAA17CBBBCCCOOOCCCCCCMMMCJ NNN ';
+			         styled: ' """ n """ ssss """ n """ ; """ ssss """ n """ ';
+			         formattedCode: '1 max: 2; "e"min: 3';
+			         value: 1).
+		        (self new
+			         source: '"a" #( "b" 1 "c" two "d" ( "e" 3 "f" ) "g" ) "h"';
+			         nodeAt: 'CCC 000DDD080EEE099900000AAAAAABAAAAAA0HHH00 III';
+			         styled: '"""    """ n """ ###       """ n """   """   """';
+			         formattedCode: '#( 1 two #( 3 ) )';
+			         value: #( 1 #two #( 3 ) )).
+		        (self new
+			         source: '"a" [ "b" 1 "c" . "d" 2 "e" ] "f"';
+			         nodeAt: 'DDD 00EEE0548884449994A0CCC00 FFF';
+			         styled: '""" 0 """ n """ . """ n """ 0 """';
+			         formattedCode: '[ "a""b""f" 1. "c" "d" 2 "e" ]';
+			         value: 1).
+		        (self new
+			         source: '"a" [ "b" : "c" x "d" : "e" y "f" | "g" ] "h"';
+			         nodeAt: '888 00999000AAA030BBB000FFF0C0GGG000III00 JJJ';
+			         styled: '""" 0 """ : """ B """ : """ B """ | """ 0 """';
+			         formattedCode: '[ :x "a""b""c""d" :y "e""f" | "g""h" ]').
+		        (self new
+			         source: '"a" [ "b" | "c" x "d" y "e" | "f" ] "g"';
+			         nodeAt: 'FFF 00GGG044999464AAA4B0DDD000EEE00 HHH';
+			         styled: '""" 0 """ | """ T """ T """ | """ 0 """';
+			         formattedCode: '[ "a""b""g" | x "c" "d" y "e" | "f" ]';
+			         notices:
+				         #( #( 17 17 17 'Unused variable' )
+				            #( 23 23 23 'Unused variable' ) )).
+		        (self new
+			         source: '"a" #[ "b" 1 "c" 2 "d" ] "e"';
+			         nodeAt: '888 000999060AAA070BBB00 CCC';
+			         styled: '"""    """ n """ n """   """';
+			         formattedCode: '#[ 1 2 ]';
+			         value: #[ 1 2 ]).
+		        (self new
+			         source: '"a" { "b" 1 "c" . "d" 2 "e" } "f"';
+			         nodeAt: 'CCC 00DDD040777000888090BBB00 EEE';
+			         styled: '""" 0 """ n """   """ n """ 0 """';
+			         formattedCode: '{ 1. 2 }';
+			         value: #( 1 2 )).
+		        (self new
+			         source: ' "a" | "b" x "c" | "d" x "e" := "f" 5 "g" ';
+			         nodeAt: ' 666 00777020888000III0F9HHH9999DDD9A EEE ';
+			         styled: ' """ | """ T """ | """ t """    """ n """ ';
+			         formattedCode: '| x "a" "b" "c" | "d" x := 5 "e" "f" "g"';
+			         value: 5).
+		        (self new
+			         source: ' "a" ^ "b" 5 "c" ';
+			         nodeAt: ' 555 0066601 777 ';
+			         styled: ' """ ^ """ n """ ';
+			         formattedCode: '^ 5';
+			         value: 5).
+		        (self new
+			         source: ' "a" foo: "b" x "c" bar: "d" y "e" ^ "f" x "g" ';
+			         nodeAt: '0777000000888030999000000III0A0JJJ0CCGGGCD0HHH0';
+			         styled: ' """ pppp """ A """ pppp """ A """ ^ """ a """ ';
+			         formattedCode: 'foo: x bar: y "d" "e" ^ x "f" "g"';
+			         isScripting: false;
+			         value: 1).
+		        (self new
+			         source: 'foo "a" < "b" bar "c" > "d" < "e" baz "f" > "g" ';
+			         nodeAt: '0000BBB08888888888888880EEE09999999999999990HHH0';
+			         styled: 'ppp """ < """ <<< """ < """ < """ <<< """ < """ ';
+			         formattedCode:
+				         'foo "a" "b" "c" "d" "e" "f" "g" <bar> <baz> ';
+			         isScripting: false).
+		        (self new
+			         source: 'foo "a" < "b" bar: "c" 1 "d" z: "e" 2 "f" > "g"';
+			         nodeAt: '0000CCC08888888888888889888888888888A8888880III';
+			         styled: 'ppp """ < """ <<<< """ n """ << """ n """ < """';
+			         formattedCode:
+				         'foo "a" "b" "c" "d" "e" "f" "g" <bar: 1 z: 2> ';
+			         isScripting: false).
+
+		        "Unfinished comments"
+		        (self new
+			         source: '"unfinished';
+			         nodeAt: '00000000000';
+			         styled: 'XXXXXXXXXXX';
+			         isFaulty: true;
+			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"also unfinished""';
+			         nodeAt: '000000000000000000';
+			         styled: 'XXXXXXXXXXXXXXXXXX';
+			         isFaulty: true;
+			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"';
+			         nodeAt: '0';
+			         styled: 'X';
+			         isFaulty: true;
+			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"""';
+			         nodeAt: '000';
+			         styled: 'XXX';
+			         isFaulty: true;
+			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )) }.
+
+
+	"Setup default values"
+	self new
+		group: #badComments;
+		isScripting: true;
+		isFaulty: false;
+		skip: #testSimpleFormattedCode;
+		"The simple one is too much broken"applyDefaultTo: list.
 	^ list
 ]
 
@@ -1236,7 +1400,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '[ :a :a | a ]';
 			         nodeAt: '0001002000400';
-			         styled: '0 :B :b | b 0';
+			         styled: '0 :B :B | b 0';
 			         value: 1;
 			         notices: #( #( 7 7 7 'Name already defined' ) )).
 
@@ -1884,62 +2048,6 @@ RBCodeSnippet class >> badTokens [
 			         styled: '';
 			         isFaulty: false). "emptyness is ok"
 
-		        "Comments"
-		        "EFFormater is not the best here :("
-		        (self new
-			         source: '"" ';
-			         nodeAt: '22 ';
-			         styled: '"" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"nothing" ';
-			         nodeAt: '222222222 ';
-			         styled: '""""""""" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"com"1"ment"';
-			         nodeAt: '333330444444';
-			         styled: '"""""n""""""';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
-		        (self new
-			         source: '"a" 1 "b". "c" 2 "d"';
-			         nodeAt: '555 106660077708 AAA';
-			         styled: '""" n """. """ n """';
-			         formattedCode: '1. "a" "b" "c" 2 "d"';
-			         isFaulty: false;
-			         value: 2). "a and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
-			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
-			         styled: ' """ ppp """ n """. """ ^ n """ ';
-			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
-			         isScripting: false;
-			         isFaulty: false;
-			         value: 2). "z and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: '"unfinished';
-			         nodeAt: '00000000000';
-			         styled: 'XXXXXXXXXXX';
-			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"also unfinished""';
-			         nodeAt: '000000000000000000';
-			         styled: 'XXXXXXXXXXXXXXXXXX';
-			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"';
-			         nodeAt: '0';
-			         styled: 'X';
-			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"""';
-			         nodeAt: '000';
-			         styled: 'XXX';
-			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
-
-
 		        "Bad string literal"
 		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
 		        (self new
@@ -2357,7 +2465,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: '[ :a :a :b | | a a b | a + a + b ]';
 			         nodeAt: '00010020030004454647444A999B888C00';
-			         styled: '0 :B :b :B | | T t T | t s t s t 0';
+			         styled: '0 :B :B :B | | T t T | t s t s t 0';
 			         isFaulty: false;
 			         value: 4;
 			         notices:
@@ -2375,7 +2483,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 			         nodeAt:
 				         '00000100002000030555655755855599A9B9C999FEEEGDDDH55';
 			         styled:
-				         'pppp A pp A pp A 0 :B :b :B | | T t T | t s t s t 0';
+				         'pppp A pp A pp A 0 :B :B :B | | T t T | t s t s t 0';
 			         isScripting: false;
 			         isFaulty: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
@@ -2514,6 +2622,7 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
 		each isFaultyMinusUndeclared ifNil: [ each isFaultyMinusUndeclared: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
+		self skippedTests ifNotNil: [ self skippedTests do: [ :name | each skip: name ] ]
 	]
 ]
 
@@ -2594,10 +2703,13 @@ RBCodeSnippet >> dumpDefinition [
 				  nextPutAll: '; notices: ';
 				  print: self notices ].
 		  self skippedTests ifNotNil: [
+			  | defaultSkips |
+			  defaultSkips := default skippedTests ifNil: [ #(  ) ].
 			  self skippedTests do: [ :each |
-				  aStream
-					  nextPutAll: '; skip: ';
-					  print: each ] ].
+				  (defaultSkips includes: each) ifFalse: [
+					  aStream
+						  nextPutAll: '; skip: ';
+						  print: each ] ] ].
 		  aStream nextPut: $) ]
 ]
 
@@ -2875,7 +2987,7 @@ RBCodeSnippet >> searchDefinition [
 RBCodeSnippet >> skip: aSymbol [
 
 	skippedTests ifNil: [ skippedTests := OrderedCollection new ].
-	skippedTests add: aSymbol
+	skippedTests addIfNotPresent: aSymbol
 ]
 
 { #category : #accessing }
