@@ -144,11 +144,6 @@ IRMethod >> firstInstructionMatching: aBlock [
 	^nil
 ]
 
-{ #category : #accessing }
-IRMethod >> forceLongForm [
-	^ self compilationContext optionLongIvarAccessBytecodes
-]
-
 { #category : #translating }
 IRMethod >> generate [
 	^self generate: CompiledMethodTrailer empty
