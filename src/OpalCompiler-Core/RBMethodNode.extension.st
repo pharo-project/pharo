@@ -78,6 +78,8 @@ RBMethodNode >> generate: trailer [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
+	"Generate an IRMethod. See `ir` for the chached version."
+
 	| ir |
 	scope ifNil: [self doSemanticAnalysis].
 
@@ -93,7 +95,7 @@ RBMethodNode >> generateIR [
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
-	^ self ir: ir
+	^ ir
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -108,8 +110,9 @@ RBMethodNode >> generateMethod [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> ir [
+	"Retrieve or generate an IRMethod (cached version)"
 
-	^ self propertyAt: #ir ifAbsent: [self generateIR]
+	^ self propertyAt: #ir ifAbsentPut: [ self generateIR ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
