@@ -990,6 +990,36 @@ SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
+	"We reuse the nested brackets/parenthesis style.
+	The main point it to easyly match opener and closer, nor necesarily to add type semanting"
+
+	| style |
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [
+			style := self bracketStyleName.
+			bracketLevel := bracketLevel + 1 ]
+		ifFalse: [
+			style := self parenthesisStyleName.
+			parentheseLevel := parentheseLevel + 1 ].
+
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode startWithoutParentheses
+		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode stopWithoutParentheses
+		to: aRBLiteralArrayNode stopWithoutParentheses.
+
+	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
+
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [ bracketLevel := bracketLevel - 1 ]
+		ifFalse: [ parentheseLevel := parentheseLevel - 1 ]
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
 	| value attributes |
