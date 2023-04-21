@@ -258,8 +258,9 @@ IRMethod >> numArgs: anInteger [
 
 { #category : #optimizing }
 IRMethod >> optimize [
+	"Perform all optimizations"
+
 	self removeEmptyStart.
-	self compilationContext optionOptimizeIR ifFalse: [^self].
 	self absorbJumpsToSingleInstrs
 ]
 
