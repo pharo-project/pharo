@@ -8,8 +8,11 @@ Class {
 OCASTCheckerTest >> nameAnalysisNoClosureIn: class for: ast [
 	"Look up vars in classOrScope.  My tree will be annotated with bindings to Scopes and Variables."
 
+	| ctx |
+	ctx := class compiler compilationContext.
 	OCASTSemanticAnalyzer new
-		compilationContext: class compiler compilationContext;
+		outerScope: ctx scope;
+		compilationContext: ctx;
 		visitNode: ast
 ]
 
