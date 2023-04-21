@@ -363,11 +363,6 @@ CompiledMethod >> containsHalt [
 	^ self hasProperty: #containsHalt
 ]
 
-{ #category : #'source code management' }
-CompiledMethod >> copyWithSource: aString [
-	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString)
-]
-
 { #category : #initialization }
 CompiledMethod >> copyWithTrailerBytes: trailer [
 "Testing:

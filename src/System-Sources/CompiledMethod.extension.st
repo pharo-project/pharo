@@ -25,5 +25,6 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 			"Update with new source pointer"
 			self setSourcePointer: newSourcePointer ]
 		onFail: [
-			self becomeForward: (self copyWithSource: source) ]
+			self traceCr: 'Warning, could not write sources'.
+			self propertyAt: #source put: source ]
 ]
