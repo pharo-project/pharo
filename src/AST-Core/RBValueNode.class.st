@@ -49,8 +49,12 @@ RBValueNode >> evaluate [
 { #category : #evaluating }
 RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
-	^(self asDoItForContext: aContext)
-		generateWithSource valueWithReceiver: aContext receiver arguments: #()
+	| methodNode scope |
+	methodNode := self asDoit.
+	scope := OCContextualDoItSemanticScope targetingContext: aContext.
+	methodNode semanticScope: scope.
+	methodNode doSemanticAnalysis: scope.
+	^ methodNode generate valueWithReceiver: aContext receiver
 ]
 
 { #category : #evaluating }
