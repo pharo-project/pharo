@@ -15,8 +15,9 @@ RBMethodNode >> compiledMethod [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis [
 
-	self compilationContext ifNil: [ self methodClass: nil class ].
-	self doSemanticAnalysis: self compilationContext scope
+	| outerScope |
+	outerScope := OCMethodSemanticScope targetingClass: methodClass.
+	self doSemanticAnalysis: outerScope
 ]
 
 { #category : #'*OpalCompiler-Core' }

@@ -31,7 +31,8 @@ Class {
 		'replacements',
 		'nodeReplacements',
 		'compilationContext',
-		'bcToASTCache'
+		'bcToASTCache',
+		'methodClass'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -476,12 +477,13 @@ RBMethodNode >> method [
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass [
 
-	^ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ]
+	^ methodClass ifNil: [ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ] ]
 ]
 
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass: aClass [
-	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
+
+	methodClass := aClass
 ]
 
 { #category : #accessing }
