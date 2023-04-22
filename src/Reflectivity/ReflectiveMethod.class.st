@@ -201,7 +201,7 @@ ReflectiveMethod >> printOn: aStream [
 ReflectiveMethod >> recompileAST [
 
 	OCASTSemanticCleaner clean: ast.
-	ast compilationContext
+	ast compilationContextOrDefault
 		semanticAnalyzerClass: RFSemanticAnalyzer;
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
