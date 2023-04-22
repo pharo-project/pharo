@@ -21,6 +21,8 @@ ReflectivityReificationTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityReificationTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
+	"Unfortunately, uninstall is not enough, so force a recompilation"
+	ReflectivityExamples recompile.
 	super tearDown
 ]
 

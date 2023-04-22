@@ -53,7 +53,7 @@ RBValueNode >> evaluateForContext: aContext [
 	methodNode := self asDoit.
 	scope := OCContextualDoItSemanticScope targetingContext: aContext.
 	methodNode doSemanticAnalysis: scope.
-	^ methodNode generate valueWithReceiver: aContext receiver
+	^ methodNode generateMethod valueWithReceiver: aContext receiver
 ]
 
 { #category : #evaluating }
@@ -63,7 +63,7 @@ RBValueNode >> evaluateForReceiver: aReceicer [
 
 	methodNode := self asDoit.
 	methodNode methodClass: aReceicer class.
-	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #()
+	^methodNode generateMethod valueWithReceiver: aReceicer
 ]
 
 { #category : #testing }
