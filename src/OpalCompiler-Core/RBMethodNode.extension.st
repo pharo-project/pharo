@@ -23,14 +23,20 @@ RBMethodNode >> compiledMethod: aCompiledMethod [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> compiler [
+	"Return a compiler configured with self as the AST"
+
+	self methodClass ifNil: [ self methodClass: nil class ].
+
+	^ self methodClass compiler
+		  compilationContext: self compilationContext;
+		  ast: self
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis [
 
-	self compilationContext ifNil: [ self methodClass: nil class ].
-
-	self methodClass compiler
-		ast: self;
-		compilationContext: self compilationContext;
-		doSemanticAnalysis
+	self compiler doSemanticAnalysis
 ]
 
 { #category : #'*OpalCompiler-Core' }
