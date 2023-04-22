@@ -397,7 +397,7 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^ ast doSemanticAnalysis
+	^ ast doSemanticAnalysis: self compilationContext scope
 ]
 
 { #category : #plugins }
