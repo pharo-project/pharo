@@ -34,13 +34,8 @@ RBMethodNode >> doSemanticAnalysis [
 RBMethodNode >> doSemanticAnalysis: outerScope [
 
 	| ctx |
-	ctx := self compilationContext.
-	ctx ifNil: [
-		"If no compilation context, allocate a minimal one based on the target class.
-		This is needed because dependency injection and to get a correct default set of compilation options"
-		ctx := outerScope targetClass compiler compilationContext.
-		self compilationContext: ctx ].
-	"self methodClass: outerScope targetClass."
+	self methodClass: outerScope targetClass.
+	ctx := self compilationContextOrDefault.
 
 	ctx semanticAnalyzerClass new
 		outerScope: outerScope;
@@ -122,7 +117,7 @@ RBMethodNode >> generateMethod [
 	by OpalCompiler in a full compilation chain might be missing.
 	So use this method if you know what you are doing."
 
-	^ self generate: self compilationContext compiledMethodTrailer
+	^ self generate: self compilationContextOrDefault compiledMethodTrailer
 ]
 
 { #category : #'*OpalCompiler-Core' }

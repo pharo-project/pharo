@@ -243,6 +243,15 @@ RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
+{ #category : #'accessing - compiled method' }
+RBMethodNode >> compilationContextOrDefault [
+	"If no compilation context, allocate a minimal one based on the method class (or nil class if none).
+	This is needed because dependency injection and to get a correct default set of compilation options"
+
+	^ compilationContext ifNil: [
+		  compilationContext := self methodClass compiler compilationContext ]
+]
+
 { #category : #'accessing - conceptual' }
 RBMethodNode >> conceptualArgumentSize [
 	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors.
