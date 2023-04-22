@@ -109,7 +109,7 @@ OCASTSemanticAnalyzer >> invalidVariables [
 { #category : #accessing }
 OCASTSemanticAnalyzer >> outerScope [
 
-	^ outerScope ifNil: [ outerScope := self compilationContext scope ]
+	^ outerScope
 ]
 
 { #category : #accessing }
