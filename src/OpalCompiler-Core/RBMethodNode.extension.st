@@ -23,16 +23,17 @@ RBMethodNode >> doSemanticAnalysis [
 RBMethodNode >> doSemanticAnalysis: outerScope [
 
 	| ctx |
-	ctx := self compilationContext ifNil: [ 
-		self compilationContext: outerScope targetClass compiler compilationContext.
-		self compilationContext
-		 ].
+	ctx := self compilationContext.
+	ctx ifNil: [
+		"If no compilation context, allocate a minimal one based on the target class.
+		This is needed because dependency injection and to get a correct default set of compilation options"
+		ctx := outerScope targetClass compiler compilationContext.
+		self compilationContext: ctx ].
 
-	self
-		compilationContext semanticAnalyzerClass new
-			outerScope: outerScope;
-			compilationContext: self compilationContext;
-			analyze: self
+	ctx semanticAnalyzerClass new
+		outerScope: outerScope;
+		compilationContext: ctx;
+		analyze: self
 ]
 
 { #category : #'*OpalCompiler-Core' }
