@@ -26,11 +26,9 @@ RBMethodNode >> compiledMethod: aCompiledMethod [
 RBMethodNode >> compiler [
 	"Return a compiler configured with self as the AST"
 
-	self methodClass ifNil: [ self methodClass: nil class ].
-
-	^ self methodClass compiler
-		  compilationContext: self compilationContext;
-		  ast: self
+	| class |
+	class := self methodClass ifNil: [ nil class ].
+	^ class compiler ast: self
 ]
 
 { #category : #'*OpalCompiler-Core' }

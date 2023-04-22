@@ -210,7 +210,13 @@ OpalCompiler >> ast [
 OpalCompiler >> ast: anObject [
 
 	ast := anObject.
-	source := ast source
+	source := ast source.
+
+	"If a compilation context exists in the AST, we use this one.
+	Otherwise, we assign our"
+	ast compilationContext
+		ifNil: [ ast compilationContext: self compilationContext ]
+		ifNotNil: [ self compilationContext: ast compilationContext ]
 ]
 
 { #category : #accessing }
