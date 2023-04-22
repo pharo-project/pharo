@@ -69,3 +69,14 @@ OCAbstractScope >> registerVariables [
 
 	outerScope ifNotNil: [ :it | it registerVariables ]
 ]
+
+{ #category : #accessing }
+OCAbstractScope >> targetClass [
+
+	^ outerScope ifNotNil: [ :it | it targetClass ]
+]
+
+{ #category : #accessing }
+OCAbstractScope >> targetEnvironment [
+	^self targetClass environment
+]
