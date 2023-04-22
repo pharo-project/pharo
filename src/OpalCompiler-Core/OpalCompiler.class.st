@@ -231,6 +231,24 @@ OpalCompiler >> bindings: aDictionary [
 ]
 
 { #category : #private }
+OpalCompiler >> buildOuterScope [
+	| newScope |
+
+	newScope := self semanticScope.
+	self needRequestorScope ifTrue: [
+		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
+		newScope := (self compilationContext requestorScopeClass new
+			requestor: self requestor) outerScope: newScope].
+
+	self bindings ifNotNil: [
+		"if we passed additional bindings in, setup a scope here"
+		newScope := (OCExtraBindingScope  new
+			bindings: self bindings) outerScope: newScope].
+
+	^newScope
+]
+
+{ #category : #private }
 OpalCompiler >> callParsePlugins [
 	| plugins |
 
@@ -411,8 +429,9 @@ OpalCompiler >> doSemanticAnalysis [
 
 	self callParsePlugins.
 	self compilationContext semanticAnalyzerClass new
-		  compilationContext: self compilationContext;
-		  analyze: ast.
+		compilationContext: self compilationContext;
+		outerScope: self buildOuterScope;
+		analyze: ast.
 	^ ast
 ]
 
@@ -537,6 +556,17 @@ OpalCompiler >> logged [
 { #category : #accessing }
 OpalCompiler >> logged: aBoolean [
 	logged := aBoolean
+]
+
+{ #category : #testing }
+OpalCompiler >> needRequestorScope [
+	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
+	Modern requestors should not register temselves but use `bindings:`."
+
+	self requestor ifNil: [ ^ false ].
+	"Because requestor do not have a real API, introspection is used."
+	(self requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
+	^ self requestor needRequestorScope
 ]
 
 { #category : #accessing }

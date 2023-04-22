@@ -479,17 +479,6 @@ CompilationContext >> interactive [
 		  ifFalse: [ true ]
 ]
 
-{ #category : #testing }
-CompilationContext >> needRequestorScope [
-	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
-	Modern requestors should not register temselves but use `bindings:`."
-
-	requestor ifNil: [ ^ false ].
-	"Because requestor do not have a real API, introspection is used."
-	(requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
-	^ requestor needRequestorScope
-]
-
 { #category : #accessing }
 CompilationContext >> noPattern [
 	^semanticScope isDoItScope
@@ -632,24 +621,6 @@ CompilationContext >> requestorScopeClass [
 CompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> scope [
-	| newScope |
-
-	newScope := semanticScope.
-	self needRequestorScope ifTrue: [
-		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
-		newScope := (self requestorScopeClass new
-			requestor: requestor) outerScope: newScope].
-
-	bindings ifNotNil: [
-		"if we passed additional bindings in, setup a scope here"
-		newScope := (OCExtraBindingScope  new
-			bindings: bindings) outerScope: newScope].
-
-	^newScope
 ]
 
 { #category : #accessing }
