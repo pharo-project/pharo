@@ -695,14 +695,6 @@ RBMethodNode >> selectorParts [
 	^ self keywords collect: [:each | each asSymbol]
 ]
 
-{ #category : #'accessing compiled method' }
-RBMethodNode >> semanticScope: aSemanticScope [
-	compilationContext ifNil: [
-		compilationContext := aSemanticScope targetClass compiler compilationContext].
-
-	self compilationContext semanticScope: aSemanticScope
-]
-
 { #category : #accessing }
 RBMethodNode >> source [
 	^source
