@@ -16,7 +16,7 @@ RBMethodNode >> compiledMethod [
 RBMethodNode >> doSemanticAnalysis [
 
 	| outerScope |
-	outerScope := OCMethodSemanticScope targetingClass: methodClass.
+	outerScope := OCMethodSemanticScope targetingClass: (methodClass ifNil: [ nil class ]).
 	self doSemanticAnalysis: outerScope
 ]
 
@@ -30,7 +30,7 @@ RBMethodNode >> doSemanticAnalysis: outerScope [
 		This is needed because dependency injection and to get a correct default set of compilation options"
 		ctx := outerScope targetClass compiler compilationContext.
 		self compilationContext: ctx ].
-	self methodClass: outerScope targetClass.
+	"self methodClass: outerScope targetClass."
 
 	ctx semanticAnalyzerClass new
 		outerScope: outerScope;
