@@ -22,6 +22,12 @@ RBMethodNode >> doSemanticAnalysis [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis: outerScope [
 
+	| ctx |
+	ctx := self compilationContext ifNil: [ 
+		self compilationContext: outerScope targetClass compiler compilationContext.
+		self compilationContext
+		 ].
+
 	self
 		compilationContext semanticAnalyzerClass new
 			outerScope: outerScope;
