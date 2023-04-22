@@ -397,7 +397,12 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^ ast doSemanticAnalysis
+
+	self callParsePlugins.
+	self compilationContext semanticAnalyzerClass new
+		  compilationContext: self compilationContext;
+		  analyze: ast.
+	^ ast
 ]
 
 { #category : #plugins }
@@ -556,7 +561,6 @@ OpalCompiler >> parse [
 	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
-	self callParsePlugins.
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
