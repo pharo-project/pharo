@@ -7,9 +7,19 @@ RBMethodNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	self compilationContext compiledMethod
-		ifNil: [ self compilationContext compiledMethod: self ir compiledMethod ].
-	^ self compilationContext compiledMethod
+	"Retrieve or generate a CompiledMethod (cached version).
+	The cache is not reset even is the AST is modified but can be overrided with `compiledMethod:`.
+	See limitations in `generateMethod`.
+	
+	To get a CompiledMethod without compiling it, see `method`"
+
+	^ self propertyAt: #compiledMethod ifAbsentPut: [ self generateMethod ]
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> compiledMethod: aCompiledMethod [
+
+	self propertyAt: #compiledMethod put: aCompiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -55,11 +65,10 @@ RBMethodNode >> firstPcForNode: aNode [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate [
-	"The receiver is the root of a parse tree. Answer a CompiledMethod. The
-	argument, trailer, is the references to the source code that is stored with
-	every CompiledMethod."
 
-	^ self generate: CompiledMethodTrailer empty
+	self deprecated: 'Use generateMethod. Beware that there are limitations so read the comments.' transformWith: '`@receiver generate' -> '`@receiver generateMethod'.
+
+	^ self generateMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -71,6 +80,8 @@ RBMethodNode >> generate: trailer [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
+	"Generate an IRMethod. See `ir` for the chached version."
+
 	| ir |
 	scope ifNil: [self doSemanticAnalysis].
 
@@ -86,24 +97,24 @@ RBMethodNode >> generateIR [
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
-	^ self ir: ir
+	^ ir
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateMethod [
-	^self generate: self compilationContext compiledMethodTrailer 
-]
+	"Generate a CompiledMethod (uncached, see `compiledMethod` for the cached version).
+	Important: the current state of the AST is not cheched, and specific controls or steps done
+	by OpalCompiler in a full compilation chain might be missing.
+	So use this method if you know what you are doing."
 
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> generateWithSource [
-	"Answer a CompiledMethod with source encoded in trailer."
-	^self generate: (CompiledMethodTrailer new sourceCode: source)
+	^ self generate: self compilationContext compiledMethodTrailer
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> ir [
+	"Retrieve or generate an IRMethod (cached version)"
 
-	^ self propertyAt: #ir ifAbsent: [self generateIR]
+	^ self propertyAt: #ir ifAbsentPut: [ self generateIR ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -178,9 +189,4 @@ RBMethodNode >> primitiveFromPragma [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> startWithoutParentheses [
-	^ 1
 ]

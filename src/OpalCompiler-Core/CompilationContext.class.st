@@ -17,7 +17,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'requestor',
-		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -402,16 +401,6 @@ CompilationContext >> bytecodeGeneratorClass: anObject [
 { #category : #accessing }
 CompilationContext >> class: aClass [
 	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod [
-	^ compiledMethod
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod: anObject [
-	compiledMethod := anObject
 ]
 
 { #category : #accessing }

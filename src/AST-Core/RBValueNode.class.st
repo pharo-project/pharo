@@ -50,7 +50,7 @@ RBValueNode >> evaluate [
 RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
 	^(self asDoItForContext: aContext)
-		generateWithSource valueWithReceiver: aContext receiver arguments: #()
+		generateMethod valueWithReceiver: aContext receiver
 ]
 
 { #category : #evaluating }
@@ -60,7 +60,7 @@ RBValueNode >> evaluateForReceiver: aReceicer [
 
 	methodNode := self asDoit.
 	methodNode methodClass: aReceicer class.
-	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #()
+	^methodNode generateMethod valueWithReceiver: aReceicer
 ]
 
 { #category : #testing }
