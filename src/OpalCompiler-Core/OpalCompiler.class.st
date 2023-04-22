@@ -220,6 +220,11 @@ OpalCompiler >> ast: anObject [
 ]
 
 { #category : #accessing }
+OpalCompiler >> bindings [
+	^ self compilationContext bindings
+]
+
+{ #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
 	self compilationContext bindings: aDictionary
@@ -665,6 +670,11 @@ OpalCompiler >> receiver: anObject [
 	so just noop if the receiver is already known, thus do not change the doit scope"
 	self receiver == anObject ifTrue: [ ^self ].
 	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
+]
+
+{ #category : #accessing }
+OpalCompiler >> requestor [
+	^ self compilationContext requestor
 ]
 
 { #category : #accessing }
