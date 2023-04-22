@@ -477,7 +477,7 @@ RBMethodNode >> method [
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass [
 
-	^ methodClass ifNil: [ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ] ]
+	^ methodClass
 ]
 
 { #category : #'accessing - compiled method' }

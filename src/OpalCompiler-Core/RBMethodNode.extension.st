@@ -30,6 +30,7 @@ RBMethodNode >> doSemanticAnalysis: outerScope [
 		This is needed because dependency injection and to get a correct default set of compilation options"
 		ctx := outerScope targetClass compiler compilationContext.
 		self compilationContext: ctx ].
+	self methodClass: outerScope targetClass.
 
 	ctx semanticAnalyzerClass new
 		outerScope: outerScope;

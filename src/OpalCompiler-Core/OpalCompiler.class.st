@@ -556,6 +556,7 @@ OpalCompiler >> parse [
 	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
+	ast methodClass: self compilationContext semanticScope targetClass.
 	self callParsePlugins.
 	self doSemanticAnalysis.
 
