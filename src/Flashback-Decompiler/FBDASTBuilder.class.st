@@ -118,10 +118,14 @@ FBDASTBuilder >> codeMessage: selector receiver: rcvr arguments:args [
 
 { #category : #building }
 FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragmas class: class [
-	^ ((RBMethodNode selector: selector arguments: args body: body)
-		pragmas: pragmas;
-		methodClass: class;
-		yourself) doSemanticAnalysis
+
+	| ast |
+	ast := RBMethodNode selector: selector arguments: args body: body.
+	ast pragmas: pragmas.
+	class compiler
+		ast: ast;
+		doSemanticAnalysis.
+	^ ast
 ]
 
 { #category : #building }
