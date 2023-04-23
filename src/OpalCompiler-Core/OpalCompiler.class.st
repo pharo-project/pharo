@@ -306,7 +306,7 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self requestor ifNotNil: [ :requestor |
+	self requestor ifNotNil: [
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
@@ -316,11 +316,11 @@ OpalCompiler >> checkNotice: aNotice [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
-					requestor: requestor;
+					requestor: self requestor;
 					openMenu.
 				res ifNil: [ ^ true "reparation unneded, let AST as is" ].
 				res ifFalse: [ ^ false "operation cancelled, fail" ].
-				self parse: requestor text. "some reparation was done, reparse"
+				self parse: self requestor text. "some reparation was done, reparse"
 				^ nil ] ].
 
 		"Quirks mode: otherwise, push the error message to the requestor"
