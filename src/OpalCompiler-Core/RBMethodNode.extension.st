@@ -101,6 +101,7 @@ RBMethodNode >> generateIR [
 	].
 
  	ir := (self compilationContext astTranslatorClass new
+			compilationContext: self compilationContext;
 			visitNode: self)
 			ir.
 	^ ir

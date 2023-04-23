@@ -58,6 +58,11 @@ OCASTTranslator >> compilationContext [
 	^methodBuilder compilationContext
 ]
 
+{ #category : #accessing }
+OCASTTranslator >> compilationContext: anObject [
+	methodBuilder compilationContext: anObject
+]
+
 { #category : #'inline messages factored' }
 OCASTTranslator >> emitAllButLastCases: cases [
 
@@ -444,6 +449,13 @@ OCASTTranslator >> privateMethodBuilder [
 	^ methodBuilder
 ]
 
+{ #category : #private }
+OCASTTranslator >> subTranslator [
+	"Return a new translator that can be used on blocks"
+
+	^ self compilationContext astTranslatorClass new compilationContext: self compilationContext
+]
+
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateConstantBlock: aBlockNode [
 	| ir |
@@ -463,7 +475,6 @@ OCASTTranslator >> translateConstantBlock: aBlockNode [
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
-	methodBuilder compilationContext: aBlockNode methodNode compilationContext.
 
 	"args, then copied, then temps"
 	methodBuilder addTemps: aBlockNode argumentNames.
@@ -529,7 +540,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ]) ifTrue: [ ^ self visitCleanBlockNode: aBlockNode].
 
-	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
+	compiledBlock := self subTranslator translateFullBlock: aBlockNode.
 
 	self compilationContext optionBlockClosureOptionalOuter
 		ifTrue: [ methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames outerContextNeeded: aBlockNode hasNonLocalReturn  ]
@@ -554,8 +565,7 @@ OCASTTranslator >> visitCleanBlockNode: aBlockNode [
 
 	| compiledBlock cleanBlock |
 
-	compiledBlock := self compilationContext astTranslatorClass new
-		                 translateFullBlock: aBlockNode.
+	compiledBlock := self subTranslator translateFullBlock: aBlockNode.
 	cleanBlock := CleanBlockClosure compiledBlock: compiledBlock.
 
 	methodBuilder pushLiteral: cleanBlock
@@ -675,7 +685,6 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 
 	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
-	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 
 	methodBuilder properties: aMethodNode methodProperties.
