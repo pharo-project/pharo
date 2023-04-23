@@ -342,7 +342,7 @@ OpalCompiler >> checkNotice: aNotice [
 
 { #category : #accessing }
 OpalCompiler >> class: aClass [
-	self compilationContext class: aClass
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : #accessing }
