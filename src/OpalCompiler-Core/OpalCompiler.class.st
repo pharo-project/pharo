@@ -210,13 +210,42 @@ OpalCompiler >> ast [
 OpalCompiler >> ast: anObject [
 
 	ast := anObject.
-	source := ast source
+	source := ast source.
+
+	"If a compilation context exists in the AST, we use this one.
+	Otherwise, we assign our"
+	ast compilationContext
+		ifNil: [ ast compilationContext: self compilationContext ]
+		ifNotNil: [ self compilationContext: ast compilationContext ]
+]
+
+{ #category : #accessing }
+OpalCompiler >> bindings [
+	^ self compilationContext bindings
 ]
 
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
 	self compilationContext bindings: aDictionary
+]
+
+{ #category : #private }
+OpalCompiler >> buildOuterScope [
+	| newScope |
+
+	newScope := self semanticScope.
+	self needRequestorScope ifTrue: [
+		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
+		newScope := (self compilationContext requestorScopeClass new
+			requestor: self requestor) outerScope: newScope].
+
+	self bindings ifNotNil: [
+		"if we passed additional bindings in, setup a scope here"
+		newScope := (OCExtraBindingScope  new
+			bindings: self bindings) outerScope: newScope].
+
+	^newScope
 ]
 
 { #category : #private }
@@ -397,7 +426,13 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^ ast doSemanticAnalysis
+
+	self callParsePlugins.
+	self compilationContext semanticAnalyzerClass new
+		compilationContext: self compilationContext;
+		outerScope: self buildOuterScope;
+		analyze: ast.
+	^ ast
 ]
 
 { #category : #plugins }
@@ -523,6 +558,17 @@ OpalCompiler >> logged: aBoolean [
 	logged := aBoolean
 ]
 
+{ #category : #testing }
+OpalCompiler >> needRequestorScope [
+	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
+	Modern requestors should not register temselves but use `bindings:`."
+
+	self requestor ifNil: [ ^ false ].
+	"Because requestor do not have a real API, introspection is used."
+	(self requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
+	^ self requestor needRequestorScope
+]
+
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
 
@@ -556,7 +602,6 @@ OpalCompiler >> parse [
 	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
-	self callParsePlugins.
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
@@ -655,6 +700,11 @@ OpalCompiler >> receiver: anObject [
 	so just noop if the receiver is already known, thus do not change the doit scope"
 	self receiver == anObject ifTrue: [ ^self ].
 	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
+]
+
+{ #category : #accessing }
+OpalCompiler >> requestor [
+	^ self compilationContext requestor
 ]
 
 { #category : #accessing }

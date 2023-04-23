@@ -7,6 +7,7 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'scope',
+		'outerScope',
 		'compilationContext',
 		'blockCounter',
 		'undeclared',
@@ -103,6 +104,18 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 { #category : #accessing }
 OCASTSemanticAnalyzer >> invalidVariables [
 	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> outerScope [
+
+	^ outerScope
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> outerScope: anObject [
+
+	outerScope := anObject
 ]
 
 { #category : #variables }
@@ -247,7 +260,7 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
-	scope := OCMethodScope new outerScope: self compilationContext scope.
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
