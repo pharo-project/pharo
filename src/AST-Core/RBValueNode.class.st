@@ -49,18 +49,19 @@ RBValueNode >> evaluate [
 { #category : #evaluating }
 RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
-	^(self asDoItForContext: aContext)
-		generateMethod valueWithReceiver: aContext receiver
+	^ aContext compiler
+		  ast: self asDoit;
+		  evaluate
 ]
 
 { #category : #evaluating }
-RBValueNode >> evaluateForReceiver: aReceicer [
-	"evaluate the AST without taking variables into account"
-	| methodNode |
+RBValueNode >> evaluateForReceiver: aReceiver [
+	"evaluate the AST binding self to the receiver and taking its variables"
 
-	methodNode := self asDoit.
-	methodNode methodClass: aReceicer class.
-	^methodNode generateMethod valueWithReceiver: aReceicer
+	^ aReceiver class compiler
+		  ast: self asDoit;
+		  receiver: aReceiver;
+		  evaluate
 ]
 
 { #category : #testing }

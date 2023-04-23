@@ -39,8 +39,10 @@ RBMethodNode >> doSemanticAnalysis [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysisIn: behavior [
-	behavior ifNotNil: [self methodClass: behavior].
-	self doSemanticAnalysis
+
+	behavior compiler
+		ast: self
+		doSemanticAnalysis
 ]
 
 { #category : #'*OpalCompiler-Core' }
