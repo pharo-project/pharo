@@ -224,13 +224,17 @@ OpalCompiler >> ast: anObject [
 
 { #category : #accessing }
 OpalCompiler >> bindings [
-	^ self compilationContext bindings
+	^ bindings ifNil: [ self compilationContext bindings ]
 ]
 
 { #category : #accessing }
-OpalCompiler >> bindings: aDictionary [
+OpalCompiler >> bindings: aCollectionOfAssociations [
 	"allows to define additional binding, note: Globals are not shadowed"
-	self compilationContext bindings: aDictionary
+	"bindings are LiteralVariables, not simple Associations.
+	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
+	bindings := (aCollectionOfAssociations asDictionary associations
+		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary	.
+	self compilationContext bindings: aCollectionOfAssociations
 ]
 
 { #category : #private }
@@ -718,11 +722,12 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor [
-	^ self compilationContext requestor
+	^ requestor ifNil: [ self compilationContext requestor ]
 ]
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
+	requestor := aRequestor.
 	self compilationContext requestor: aRequestor
 ]
 
@@ -734,11 +739,12 @@ OpalCompiler >> requestorScopeClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> semanticScope [
-	^self compilationContext semanticScope
+	^ semanticScope ifNil: [ self compilationContext semanticScope ]
 ]
 
 { #category : #accessing }
 OpalCompiler >> semanticScope: anObject [
+	semanticScope := anObject.
 	self compilationContext semanticScope: anObject
 ]
 
