@@ -381,7 +381,7 @@ OpalCompiler >> compile [
 	ast scope registerVariables.
 	method := ast generateMethod.
 	method propertyAt: #source put: source.
-	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 	^ method
 ]
 
@@ -557,7 +557,7 @@ OpalCompiler >> interactive [
 
 { #category : #accessing }
 OpalCompiler >> isScripting [
-	^ self compilationContext noPattern
+	^ self semanticScope isDoItScope
 ]
 
 { #category : #accessing }
@@ -616,7 +616,7 @@ OpalCompiler >> parse [
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
-	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
+	ast := self isScripting ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self doSemanticAnalysis.
