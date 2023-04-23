@@ -7,29 +7,6 @@ Class {
 	#category : #'Kernel-Tests-Methods'
 }
 
-{ #category : #utilities }
-CompiledMethodTrailerTest >> testEmbeddingSourceCode: sourceCode [
-
-	| trailer newTrailer |
-
-	trailer := CompiledMethodTrailer new.
-	trailer embeddedSourceCode: sourceCode.
-	newTrailer := trailer testEncoding.
-
-	self assert: (#(EmbeddedSource EmbeddedSourceWide) includes: trailer kind).
-	self assert: newTrailer sourceCode equals: sourceCode.
-
-	"the last bytecode index must be at 0"
-	self assert: newTrailer endPC equals: 0
-]
-
-{ #category : #tests }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [
-	"Test that wide strings survive"
-
-	self testEmbeddingSourceCode: 'doit ^''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'' '
-]
-
 { #category : #tests }
 CompiledMethodTrailerTest >> testEncodingNoTrailer [
 	| trailer |

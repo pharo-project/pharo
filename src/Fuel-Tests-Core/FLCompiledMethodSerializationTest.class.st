@@ -17,14 +17,12 @@ FLCompiledMethodSerializationTest >> setUp [
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testDoIt [
 	| materialized |
-	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
-	That means we have to store the source too."
 	self useDoIt.
 
 	theCompiledMethod selector: #DoIt.
 	self assert: theCompiledMethod isDoIt.
 	self assert: theCompiledMethod isInstalled.
-	self deny: theCompiledMethod trailer hasSource.
+	self deny: theCompiledMethod sourceCode isEmpty.
 	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod trailer hasSourcePointer.
 
@@ -32,9 +30,9 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	"not possible since it's a different instance"
 	self deny: materialized isInstalled.
 	self assert: materialized isDoIt.
-	"we serialized the source"
-	self assert: materialized trailer hasSource.
-	self deny: materialized trailer isEmpty.
+	"we serialized the source, trailer is cleared"
+	self assert: materialized sourceCode notNil.
+	self assert: materialized trailer isEmpty.
 	self deny: materialized trailer hasSourcePointer.
 
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
@@ -43,13 +41,11 @@ FLCompiledMethodSerializationTest >> testDoIt [
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testInstalled [
 	| materialized |
-	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
-	That means we have to store the source too."
 	self useInstalled.
 
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer hasSource.
+	self deny: theCompiledMethod sourceCode isEmpty.
 	self deny: theCompiledMethod trailer isEmpty.
 	self assert: theCompiledMethod trailer hasSourcePointer.
 
@@ -67,7 +63,6 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer hasSource.
 	self deny: theCompiledMethod trailer isEmpty.
 	self assert: theCompiledMethod trailer hasSourcePointer.
 
@@ -75,7 +70,6 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	"different instance can not be installed at the same time."
 	self deny: copy isInstalled.
 	self deny: copy isDoIt.
-	self deny: copy trailer hasSource.
 	self deny: copy trailer isEmpty.
 	self assert: copy trailer hasSourcePointer.
 
@@ -86,9 +80,7 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	self deny: materialized isInstalled.
 	self deny: materialized isDoIt.
 	"we serialized the source"
-	self assert: materialized trailer hasSource.
-	self deny: materialized trailer isEmpty.
-	self deny: materialized trailer hasSourcePointer
+	self assert: materialized sourceCode notNil.
 ]
 
 { #category : #tests }
@@ -134,16 +126,15 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	
 	self deny: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer hasSource.
 	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod trailer hasSourcePointer.
 	
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
 	self deny: materialized isInstalled.
 	self deny: materialized isDoIt.
-	"we serialized the source"
-	self assert: materialized trailer hasSource.
-	self deny: materialized trailer isEmpty.
+	"we serialized the source, trailer is empty"
+	self assert: materialized sourceCode notNil.
+	self assert: materialized trailer isEmpty.
 	self deny: materialized trailer hasSourcePointer.
 	
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
