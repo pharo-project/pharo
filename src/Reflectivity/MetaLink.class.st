@@ -336,7 +336,7 @@ MetaLink >> metaObject: anObject [
 MetaLink >> methods [
 	^nodes flatCollect: [ :entity |
 		(entity isKindOf: RBProgramNode)
-			ifTrue: [ {entity methodNode compiledMethod}  ]
+			ifTrue: [ { entity methodNode method } ]
 			ifFalse: [ entity usingMethods ] ]
 ]
 
