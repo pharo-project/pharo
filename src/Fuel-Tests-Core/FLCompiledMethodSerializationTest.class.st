@@ -22,7 +22,7 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	theCompiledMethod selector: #DoIt.
 	self assert: theCompiledMethod isDoIt.
 	self assert: theCompiledMethod isInstalled.
-	self deny: theCompiledMethod sourceCode isEmpty.
+	self deny: theCompiledMethod sourceCode isNil.
 	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod trailer hasSourcePointer.
 
@@ -45,7 +45,7 @@ FLCompiledMethodSerializationTest >> testInstalled [
 
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod sourceCode isEmpty.
+	self deny: theCompiledMethod sourceCode isNil.
 	self deny: theCompiledMethod trailer isEmpty.
 	self assert: theCompiledMethod trailer hasSourcePointer.
 
@@ -70,6 +70,7 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	"different instance can not be installed at the same time."
 	self deny: copy isInstalled.
 	self deny: copy isDoIt.
+	self deny: theCompiledMethod sourceCode isNil.
 	self deny: copy trailer isEmpty.
 	self assert: copy trailer hasSourcePointer.
 
