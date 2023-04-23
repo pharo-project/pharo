@@ -722,13 +722,12 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor [
-	^ requestor ifNil: [ self compilationContext requestor ]
+	^ requestor
 ]
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
-	requestor := aRequestor.
-	self compilationContext requestor: aRequestor
+	requestor := aRequestor
 ]
 
 { #category : #plugins }
