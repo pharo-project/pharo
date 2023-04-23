@@ -31,28 +31,28 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 
 { #category : #tests }
 OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
-	| ast cm |
-	ast := OpalCompiler new
+	| compiler cm |
+	cm := (compiler := OpalCompiler new)
 				source: 'method 3+';
-				parse.
+				permitFaulty: true;
+				compile.
 
-	self assert: ast isMethod.
-	self assert: ast isFaulty.
+	self assert: compiler ast isMethod.
+	self assert: compiler ast isFaulty.
 
-	cm := ast compiledMethod.
 	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]
 
 { #category : #tests }
 OCCompileWithFailureTest >> testParenthesis [
-	| result cm |
-	result := UndefinedObject compiler
+	| compiler cm |
+	cm := (compiler := UndefinedObject compiler)
     source: 'self assert: pragma( numArgs equals: 0.';
     isScripting: true;
     requestor: self;
-    parse.
-	self assert: result isDoIt.
-	self assert: result isFaulty.
-	cm := result compiledMethod.
+    permitFaulty: true;
+    compile.
+	self assert: compiler ast isDoIt.
+	self assert: compiler ast isFaulty.
 	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]
