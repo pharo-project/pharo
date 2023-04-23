@@ -37,7 +37,8 @@ FLCompiledMethodCluster class >> setTrailerWithSourceCode [
 		"we set the source as a property, not yet installed methods already have
 		it, but for installed methods we put it back "
 		(aCompiledMethod copyWithTrailerBytes: CompiledMethodTrailer empty)
-			propertyAt: #source put: aCompiledMethod sourceCode.
+			propertyAt: #source put: aCompiledMethod sourceCode;
+			yourself
 		]
 ]
 
