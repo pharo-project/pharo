@@ -28,7 +28,6 @@ Class {
 		'astTransformPlugins',
 		'astParseTransformPlugins',
 		'requestorScopeClass',
-		'bindings',
 		'compiledMethodClass',
 		'semanticScope'
 	],
@@ -372,19 +371,6 @@ CompilationContext >> astTranslatorClass [
 { #category : #accessing }
 CompilationContext >> astTranslatorClass: anObject [
 	astTranslatorClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> bindings [
-	^ bindings
-]
-
-{ #category : #accessing }
-CompilationContext >> bindings: aCollectionOfAssociations [
-	"bindings are LiteralVariables, not simple Associations.
-	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
-	bindings := (aCollectionOfAssociations asDictionary associations
-		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary
 ]
 
 { #category : #accessing }
