@@ -562,7 +562,9 @@ OpalCompiler >> isScripting [
 
 { #category : #accessing }
 OpalCompiler >> isScripting: aBoolean [
-	self compilationContext noPattern: aBoolean
+
+	(aBoolean and: [ self isScripting not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #accessing }

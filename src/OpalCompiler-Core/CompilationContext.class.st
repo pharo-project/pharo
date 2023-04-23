@@ -453,18 +453,6 @@ CompilationContext >> initialize [
 	semanticScope := OCMethodSemanticScope targetingClass: nil class
 ]
 
-{ #category : #accessing }
-CompilationContext >> noPattern [
-	^semanticScope isDoItScope
-]
-
-{ #category : #accessing }
-CompilationContext >> noPattern: anObject [
-
-	(anObject and: [ self noPattern not ]) ifTrue: [
-		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
-]
-
 { #category : #options }
 CompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
