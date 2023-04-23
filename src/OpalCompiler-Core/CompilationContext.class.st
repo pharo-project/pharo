@@ -469,17 +469,6 @@ CompilationContext >> initialize [
 ]
 
 { #category : #accessing }
-CompilationContext >> interactive [
-
-	requestor ifNil: [ ^ false ].
-	"we asume requestors are interactive, but they can override.
-	this should be simplified "
-	^ (requestor respondsTo: #interactive)
-		  ifTrue: [ requestor interactive ]
-		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
 CompilationContext >> noPattern [
 	^semanticScope isDoItScope
 ]

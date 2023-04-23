@@ -35,6 +35,9 @@ Class {
 		'compilationContextClass',
 		'permitFaulty',
 		'permitUndeclared',
+		'requestor',
+		'bindings',
+		'semanticScope',
 		'failBlock',
 		'logged',
 		'changeStamp',
@@ -299,13 +302,13 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self compilationContext requestor ifNotNil: [ :requestor |
+	self requestor ifNotNil: [ :requestor |
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		self compilationContext interactive ifTrue: [
+		self interactive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -536,6 +539,17 @@ OpalCompiler >> install: aSource [
 
 	self source: aSource.
 	^ self install
+]
+
+{ #category : #accessing }
+OpalCompiler >> interactive [
+
+	self requestor ifNil: [ ^ false ].
+	"we asume requestors are interactive, but they can override.
+	this should be simplified "
+	^ (self requestor respondsTo: #interactive)
+		  ifTrue: [ self requestor interactive ]
+		  ifFalse: [ true ]
 ]
 
 { #category : #accessing }
