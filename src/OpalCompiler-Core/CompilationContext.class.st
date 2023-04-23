@@ -384,11 +384,6 @@ CompilationContext >> bytecodeGeneratorClass: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> class: aClass [
-	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
-]
-
-{ #category : #accessing }
 CompilationContext >> compiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 	^ compiledMethodClass ifNil: [
