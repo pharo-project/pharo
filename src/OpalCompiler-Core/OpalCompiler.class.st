@@ -224,7 +224,7 @@ OpalCompiler >> ast: anObject [
 
 { #category : #accessing }
 OpalCompiler >> bindings [
-	^ bindings ifNil: [ self compilationContext bindings ]
+	^ bindings
 ]
 
 { #category : #accessing }
@@ -233,8 +233,7 @@ OpalCompiler >> bindings: aCollectionOfAssociations [
 	"bindings are LiteralVariables, not simple Associations.
 	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
 	bindings := (aCollectionOfAssociations asDictionary associations
-		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary	.
-	self compilationContext bindings: aCollectionOfAssociations
+		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary	
 ]
 
 { #category : #private }
