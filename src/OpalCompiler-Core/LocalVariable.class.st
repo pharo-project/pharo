@@ -242,7 +242,7 @@ LocalVariable >> markWrite [
 
 { #category : #queries }
 LocalVariable >> method [
-	^scope node methodNode compiledMethod
+	^scope node methodNode method
 ]
 
 { #category : #accessing }
@@ -304,7 +304,7 @@ LocalVariable >> usage: anObject [
 { #category : #queries }
 LocalVariable >> usingMethods [
 
-	^ self isUsed ifTrue: [ { self method } ] ifFalse: [ #(  ) ]
+	^ self isUsed ifTrue: [ self method ifNotNil: [ { self method } ] ] ifFalse: [ #(  ) ]
 ]
 
 { #category : #debugging }
