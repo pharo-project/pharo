@@ -369,13 +369,14 @@ OpalCompiler >> compilationContextClass: aClass [
 OpalCompiler >> compile [
 
 	| result method |
-	
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
 
-	ast ifNil: [
-		result := self parse.
-		ast ifNil: [ ^ result ] "some failBlock" ].
+	ast
+		ifNil: [
+			result := self parse.
+			ast ifNil: [ "some failBlock" ^ result ] ]
+		ifNotNil: [ ast scope ifNil: [ self doSemanticAnalysis ] ].
 
 	self callPlugins.
 	ast scope registerVariables.
