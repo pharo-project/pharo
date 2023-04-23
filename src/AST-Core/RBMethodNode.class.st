@@ -285,12 +285,6 @@ RBMethodNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : #accessing }
-RBMethodNode >> decompileString [
-
-	^ self formattedCode
-]
-
 { #category : #testing }
 RBMethodNode >> defines: aName [
 	^ (arguments anySatisfy: [ :each | each name = aName ])
