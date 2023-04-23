@@ -91,12 +91,6 @@ CompiledMethodTrailer class >> empty [
 	^ self new
 ]
 
-{ #category : #generated }
-CompiledMethodTrailer class >> trailerKindDecoders [
-
-	^#(#decodeNoTrailer #decodeClearedTrailer #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined  #decodeVarLengthSourcePointer #Undefined #decodeUndefined #decodeEmbeddedSource #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeSourcePointer)
-]
-
 { #category : #kinds }
 CompiledMethodTrailer class >> trailerKinds [
 	" see class comment for description."
@@ -113,8 +107,8 @@ CompiledMethodTrailer class >> trailerKinds [
 "001000" #VarLengthSourcePointer
 "001001" #Undefined
 "001010" #Undefined
-"001011" #EmbeddedSource
-"001100" #EmbeddedSourceWide
+"001011" #Undefined
+"001100" #Undefined
 "001101" #Undefined
 "001110" #Undefined
 "001111" #Undefined
@@ -203,40 +197,6 @@ CompiledMethodTrailer >> decodeClearedTrailer [
 	self decodeLengthField
 ]
 
-{ #category : #decoding }
-CompiledMethodTrailer >> decodeEmbeddedSource [
-	"data is string with method's source code"
-
-	| len start end newSize byteArray |
-	len := self decodeLengthField.
-	start := method size - self size + 1.
-	end := method size - self size + len.
-	newSize := end - start + 1.
-	byteArray := (ByteArray new: newSize)
-		replaceFrom: 1
-		to: newSize
-		with: method
-		startingAt: start.
-	data := byteArray asString
-]
-
-{ #category : #decoding }
-CompiledMethodTrailer >> decodeEmbeddedSourceWide [
-	"data is string with method's source code"
-
-	| len start end newSize byteArray |
-	len := self decodeLengthField.
-	start := method size - self size + 1.
-	end := method size - self size + len.
-	newSize := end - start + 1.
-	byteArray := (ByteArray new: newSize)
-		replaceFrom: 1
-		to: newSize
-		with: method
-		startingAt: start.
-	data := byteArray utf8Decoded
-]
-
 { #category : #private }
 CompiledMethodTrailer >> decodeLengthField [
 
@@ -297,26 +257,6 @@ CompiledMethodTrailer >> decodeVarLengthSourcePointer [
 	size := method size - pos
 ]
 
-{ #category : #accessing }
-CompiledMethodTrailer >> embeddedSourceCode [
-	"Answer the already decoded source code of compiled method"
-
-	^ data
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> embeddedSourceCode: aString [
-	"Embed the source code into compiled method trailer"
-
-	self clear.
-
-	data := aString asString.
-	kind := data isWideString
-		ifTrue: [#EmbeddedSourceWide]
-		ifFalse: [#EmbeddedSource].
-	self encode
-]
-
 { #category : #encoding }
 CompiledMethodTrailer >> encode [
 	"encode the trailer into byte array"
@@ -328,13 +268,9 @@ CompiledMethodTrailer >> encode [
 		ifTrue: [ ^self encodeSourcePointer ].
    kind == #VarLengthSourcePointer
 		ifTrue: [ ^self encodeVarLengthSourcePointer ].
-	kind == #EmbeddedSource
-		ifTrue: [ ^self encodeEmbeddedSource ].
 	kind == #NoTrailer
 		ifTrue: [ ^self encodeNoTrailer ].
-
-	"slow but general decoding using perform"
-	self perform: ('encode' , kind) asSymbol
+	self error: 'encoding type not supported'
 ]
 
 { #category : #encoding }
@@ -345,39 +281,6 @@ CompiledMethodTrailer >> encodeClearedTrailer [
 	kind := #NoTrailer.
 
 	^ self encode
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> encodeEmbeddedSource [
-	"data is string with method's source code"
-
-	| length str encodedLength |
-	length := data size.
-	str := WriteStream on: (ByteArray new: length).
-	encodedLength := self encodeLengthField: length.
-	str
-		nextPutAll: data asByteArray;
-		nextPutAll: encodedLength;	"trailing byte"
-	 	nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents.
-	size := encodedData size
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> encodeEmbeddedSourceWide [
-	"data is string with method's source code"
-
-	| str length encodedLength utf8data |
-	[ data isString ] assert.
-	utf8data := data utf8Encoded.
-	str := WriteStream on: (ByteArray new: utf8data size).
-	length := utf8data size.
-	encodedLength := self encodeLengthField: length.
-	str nextPutAll: utf8data asByteArray.
-	str nextPutAll: encodedLength.	"trailing byte"
-	str nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents.
-	size := encodedData size
 ]
 
 { #category : #private }
@@ -459,7 +362,8 @@ CompiledMethodTrailer >> endPC [
 
 { #category : #testing }
 CompiledMethodTrailer >> hasSource [
-	^ kind == #EmbeddedSource
+	"Not supported anymore, trailers never encode source"
+	^ false
 ]
 
 { #category : #testing }
@@ -511,8 +415,6 @@ CompiledMethodTrailer >> method: aMethod [
 		ifTrue: [ ^self decodeSourcePointer ].
    kind == #VarLengthSourcePointer
 		ifTrue: [ ^self decodeVarLengthSourcePointer ].
-	kind == #EmbeddedSource
-		ifTrue: [ ^self decodeEmbeddedSource ].
 	kind == #NoTrailer
 		ifTrue: [ ^self decodeNoTrailer ].
 
@@ -528,19 +430,8 @@ CompiledMethodTrailer >> size [
 
 { #category : #accessing }
 CompiledMethodTrailer >> sourceCode [
-	"Answer the source code of compiled method as it was decoded.
-	Note: it does not attempts to read from source files using sourcePointer,
-	nor reconstruct the source code using temp names"
-
-	kind == #EmbeddedSource ifTrue: [ ^data ].
-	kind == #EmbeddedSourceWide ifTrue: [ ^data ].
+	"Not supported anymore, trailers never encode source"
 	^ nil
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> sourceCode: aString [
-
-	^ self embeddedSourceCode: aString
 ]
 
 { #category : #accessing }
