@@ -12,7 +12,7 @@ RBMethodNode >> compiledMethod [
 	See limitations in `generateMethod`.
 	
 	To get a CompiledMethod without compiling it, see `method`"
-
+	self error: 'test for clients'.
 	^ self propertyAt: #compiledMethod ifAbsentPut: [ self generateMethod ]
 ]
 
