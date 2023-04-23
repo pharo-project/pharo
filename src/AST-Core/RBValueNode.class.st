@@ -49,8 +49,9 @@ RBValueNode >> evaluate [
 { #category : #evaluating }
 RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
-	^(self asDoItForContext: aContext)
-		generateMethod valueWithReceiver: aContext receiver
+	^ aContext compiler
+		  ast: self asDoit;
+		  evaluate
 ]
 
 { #category : #evaluating }
