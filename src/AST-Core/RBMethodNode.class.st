@@ -688,7 +688,7 @@ RBMethodNode >> selectorParts [
 
 { #category : #'accessing compiled method' }
 RBMethodNode >> semanticScope: aSemanticScope [
-	self error: 'test for clients'.
+	"self error: 'test for clients'."
 	compilationContext ifNil: [
 		compilationContext := aSemanticScope targetClass compiler compilationContext].
 
