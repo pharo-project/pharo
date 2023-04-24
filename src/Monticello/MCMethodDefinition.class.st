@@ -200,7 +200,7 @@ MCMethodDefinition >> initializeWithClassName: aClassName classIsMeta: metaBoole
 	selector := aSelector asSymbol.
 	protocolName := aProtocolName isEmptyOrNil
 		            ifTrue: [ Protocol unclassified ]
-		            ifFalse: [ aProtocolName ].
+		            ifFalse: [ aProtocolName asSymbol ].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings
