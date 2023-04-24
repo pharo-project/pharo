@@ -15,6 +15,11 @@ OCAbstractScope class >> isAbstract [
 	^self = OCAbstractScope
 ]
 
+{ #category : #accessing }
+OCAbstractScope >> environment [
+	^self targetClass environment
+]
+
 { #category : #lookup }
 OCAbstractScope >> hasBindingThatBeginsWith: aString [
 	"check weather there are any variables defined that start with aString"
@@ -73,9 +78,4 @@ OCAbstractScope >> registerVariables [
 { #category : #accessing }
 OCAbstractScope >> targetClass [
 	^outerScope ifNotNil: [ :it | it targetClass ]
-]
-
-{ #category : #accessing }
-OCAbstractScope >> targetEnvironment [
-	^self targetClass environment
 ]
