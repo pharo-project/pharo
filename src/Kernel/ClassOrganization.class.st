@@ -47,9 +47,7 @@ ClassOrganization >> allMethodSelectors [
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	"Thes next line should just be `self protocolOfSelector: selector` but currently the system relies on a hack and we need some more cleanings before been able to remove the hack." 
-	oldProtocol := (self protocolNameOfElement: selector) ifNotNil: [ :p | self protocolNamed: p ].
-	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
+	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
 
 	self silentlyClassify: selector under: newProtocol.
 
@@ -214,7 +212,17 @@ ClassOrganization >> protocolOfSelector: aSelector [
 
 	^ self protocols
 		  detect: [ :each | each includesSelector: aSelector ]
-		  ifNone: [ nil ]
+		  ifNone: [ 
+			"This is an horrible hack to be able to proceed with the cleanings because It's really hard to find the root :(.
+			I'll try a first version where I'll recategorize instead of just returning the unclassified protocol and I'll also try to log it."
+			(organizedClass includesSelector: aSelector)
+				ifTrue: [
+					Stdio stdout nextPutAll: 'Selecton ', aSelector , ' is present in ' , organizedClass name , ' but not in its protocols. Categorizing it under unclassified.'.
+					(self ensureProtocol: Protocol unclassified)
+						addMethodSelector: aSelector;
+						yourself
+					]
+				ifFalse: [ nil ] ]
 ]
 
 { #category : #accessing }
