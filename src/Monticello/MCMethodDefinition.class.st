@@ -135,6 +135,13 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 
 ]
 
+{ #category : #'deprecated' }
+MCMethodDefinition >> category [
+
+	self deprecated: 'Use #protocol instead.' transformWith: '`@rcv category' -> '`@rcv protocol'.
+	^ self protocol
+]
+
 { #category : #accessing }
 MCMethodDefinition >> classIsMeta [
 	^ classIsMeta
