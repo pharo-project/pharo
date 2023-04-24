@@ -394,15 +394,16 @@ CompiledMethodTrailer >> kindAsByte [
 { #category : #accessing }
 CompiledMethodTrailer >> method: aMethod [
 
-	| msz |
+		| msz |
 	method := aMethod.
 	kind := #SourcePointer.
 	msz := method size.
-	data := {
+	encodedData := {
 		method at: msz-3.
 		method at: msz-2.
 		method at: msz-1.
-		method at: msz } asByteArray asInteger
+		method at: msz } asByteArray.
+	data := encodedData asInteger
 ]
 
 { #category : #accessing }
