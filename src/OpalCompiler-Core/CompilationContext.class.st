@@ -454,11 +454,6 @@ CompilationContext >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #accessing }
-CompilationContext >> getClass [
-	^ semanticScope targetClass
-]
-
 { #category : #initialization }
 CompilationContext >> initialize [
 
