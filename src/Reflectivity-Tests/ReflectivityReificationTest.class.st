@@ -1,6 +1,6 @@
 Class {
 	#name : #ReflectivityReificationTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag',
 		'link',
@@ -23,11 +23,6 @@ ReflectivityReificationTest >> tagExec: aTag [
 ReflectivityReificationTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
 	link2 ifNotNil: [ link2 uninstall ].
-	"Unfortunately, uninstall is not enough, so force a recompilation"
-	ReflectivityExamples methods do: [ :m |
-		m hasMetaLinks ifTrue: [
-			m recompile.
-			self fail: 'Leaked metalinks' ] ].
 	super tearDown
 ]
 

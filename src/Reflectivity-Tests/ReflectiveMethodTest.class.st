@@ -7,13 +7,6 @@ Class {
 	#category : #'Reflectivity-Tests-Base'
 }
 
-{ #category : #running }
-ReflectiveMethodTest >> tearDown [
-	selector ifNotNil: [
-		ReflectivityExamples recompile: selector].
-	super tearDown
-]
-
 { #category : #tests }
 ReflectiveMethodTest >> testASTCacheIsCleanedAfterMetaLinkRemoval [
 	| method bcToASTCache |

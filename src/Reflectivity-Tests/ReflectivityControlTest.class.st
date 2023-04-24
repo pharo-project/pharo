@@ -3,7 +3,7 @@ Tests for Reflective method
 "
 Class {
 	#name : #ReflectivityControlTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag',
 		'link'

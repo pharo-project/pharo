@@ -39,12 +39,6 @@ MetaLinkObjectAPITest >> tagExec: aTag [
 	tag add: aTag
 ]
 
-{ #category : #running }
-MetaLinkObjectAPITest >> tearDown [
-	MetaLink uninstallAll.
-	super tearDown
-]
-
 { #category : #'class api' }
 MetaLinkObjectAPITest >> testLinkClassToAST [
 	| link instance |
