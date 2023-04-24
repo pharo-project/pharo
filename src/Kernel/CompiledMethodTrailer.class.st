@@ -361,6 +361,7 @@ CompiledMethodTrailer >> hasSource [
 
 { #category : #testing }
 CompiledMethodTrailer >> hasSourcePointer [
+	encodedData = #[0 0 0 0] ifTrue: [ ^false ].
 	^ kind == #SourcePointer or: [ kind == #VarLengthSourcePointer ]
 ]
 
@@ -371,7 +372,7 @@ CompiledMethodTrailer >> initialize [
 
 { #category : #testing }
 CompiledMethodTrailer >> isEmpty [
-	^ kind == #NoTrailer or: [ kind == #ClearedTrailer ]
+	^ kind == #NoTrailer or: [ kind == #ClearedTrailer or: [encodedData = #[0 0 0 0]]]
 ]
 
 { #category : #accessing }
