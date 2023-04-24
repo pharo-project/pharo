@@ -6,6 +6,12 @@ RBMethodNode >> bcToASTCache [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> bcToASTCache: anObject [
+
+	bcToASTCache := anObject
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
 	"Retrieve the associated CompiledMethod (cached version).
 	If no CompiledMethod was generated, nil is returned.
