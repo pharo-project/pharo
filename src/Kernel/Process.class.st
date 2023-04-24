@@ -260,9 +260,6 @@ Process >> doTerminationFromAnotherProcess [
 		ctxt unwindComplete ifNil: [
 			ctxt unwindComplete: true.
 			unwindBlock := ctxt unwindBlock.
-			"Create a context for the unwind block and execute it on the unwind block's stack.
-			Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
-			the unwind on the wrong stack preventing the correct execution of non-local returns."
 			unwindBlock valueUnwindInContext: ctxt ].
 		ctxt := ctxt findNextUnwindContextUpTo: nil].
 
