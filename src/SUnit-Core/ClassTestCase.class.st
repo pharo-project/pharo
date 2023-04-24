@@ -36,8 +36,7 @@ ClassTestCase class >> mustTestCoverage [
 { #category : #private }
 ClassTestCase >> categoriesForClass: aClass [
 
-	^ aClass organization allMethodSelectors collect: [ :each |
-		  aClass organization categoryOfElement: each ]
+	^ aClass organization allMethodSelectors collect: [ :each | aClass organization protocolNameOfElement: each ]
 ]
 
 { #category : #coverage }
@@ -139,8 +138,7 @@ ClassTestCase >> testNew [
 ClassTestCase >> testUnCategorizedMethods [
 
 	| uncategorizedMethods |
-	uncategorizedMethods := self targetClass selectorsInProtocol:
-		                        Protocol unclassified.
+	uncategorizedMethods := self targetClass selectorsInProtocol: Protocol unclassified.
 	self
 		assert: uncategorizedMethods isEmpty
 		description: uncategorizedMethods asString

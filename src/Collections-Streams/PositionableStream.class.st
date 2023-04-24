@@ -750,37 +750,6 @@ PositionableStream >> uint32: anInteger [
 	self nextPut: (anInteger byteAt: 1)
 ]
 
-{ #category : #positioning }
-PositionableStream >> untilEnd: aBlock displayingProgress: aString [
-	aString
-		displayProgressFrom: 0 to: self size
-		during:
-			[:bar |
-			[self atEnd] whileFalse:
-				[bar current: self position.
-				aBlock value]]
-]
-
-{ #category : #positioning }
-PositionableStream >> untilEndWithFork: aBlock displayingProgress: aString [
-	| sem done result |
-	sem := Semaphore new.
-	done := false.
-	[
-	result := [ aBlock value ]
-		ensure: [
-			done := true.
-			sem signal ] ] fork.
-	self
-		untilEnd: [
-			done
-				ifTrue: [ ^ result ].
-			(Delay forSeconds: 0.2) wait ]
-		displayingProgress: aString.
-	sem wait.
-	^ result
-]
-
 { #category : #accessing }
 PositionableStream >> upTo: anObject [
 	"Answer a subcollection from the current access position to the

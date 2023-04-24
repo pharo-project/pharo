@@ -44,7 +44,7 @@ SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
 SystemDictionaryTest >> testEnvironmentOfOrganization [
 
 	| aDictionary |
-	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
+	aDictionary := SystemDictionary new.
 	self assert: aDictionary organization environment equals: aDictionary
 ]
 
@@ -59,10 +59,7 @@ SystemDictionaryTest >> testHasBindingThatBeginsWith [
 { #category : #tests }
 SystemDictionaryTest >> testOrganizationPerInstance [
 
-	| aDictionary otherDictionary |
-	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
-	otherDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
-	self deny: aDictionary organization equals: otherDictionary organization
+	self deny: SystemDictionary new organization equals: SystemDictionary new organization
 ]
 
 { #category : #tests }

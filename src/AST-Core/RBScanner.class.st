@@ -270,10 +270,7 @@ RBScanner >> next [
 
 	buffer reset.
 	tokenStart := stream position.
-	token := characterType = #eof
-				ifTrue:
-					[RBEOFToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
-				ifFalse: [self scanToken].
+	token := self scanToken.
 	self stripSeparators.
 	token comments: self getComments.
 	^token
@@ -297,23 +294,26 @@ RBScanner >> on: aStream [
 
 { #category : #private }
 RBScanner >> previousStepPosition [
+	"The index of the previous character (that was consumed)"
+
 	^characterType = #eof
-		ifTrue: [stream position]
-		ifFalse: [stream position - 1]
+		ifTrue: [stream position] "it's the index of the last character"
+		ifFalse: [stream position - 1] "-1 to cancel the lookahead"
 ]
 
 { #category : #'private - scanning' }
 RBScanner >> scanBackFrom: start [
-	"Return the verbatim content from the `start` position until the current position.
-	 The starting and current character are both included.
+	"Return the verbatim content from the `start` position until the current character.
+	 The starting character is included, the current character is not included.
 	 The stream status (inclutiong its position) is preserved"
 
-	| len string stop |
-	stop := stream position.
+	| len string stop current |
+	current := stream position.
+	stop := self previousStepPosition.
 	len := stop - start + 1.
 	stream position: start - 1.
 	string := stream next: len.
-	stream position: stop.
+	stream position: current.
 	^ string
 ]
 
@@ -363,38 +363,20 @@ RBScanner >> scanComment [
 
 { #category : #'private - scanning' }
 RBScanner >> scanError: theCause [
-	"An error token accepts every character given, recognised or not."
-	"The value of an error token is one character maximum : the current character."
-	| location |
-	"error location is the next not parseable character. Or current stream position + 1 if
-	an expected character is missing."
-	location := stream position.
-	currentCharacter
-		ifNotNil: [ :char | buffer nextPut: char ]
-		ifNil: [ location := stream position + 1 ].
-	^ RBErrorToken
-		value: buffer contents asString
-		start: tokenStart
-		cause: theCause
-		location: location
+
+	^ self scanError: theCause from: tokenStart
 ]
 
 { #category : #'private - scanning' }
 RBScanner >> scanError: theCause from: aPosition [
-	"An error token accepts every character given, recognised or not."
-	"The value of the error token is the verbatim text from aPosition to the current position (both included)."
-	| location |
-	"error location is the next not parseable character. Or current stream position + 1 if
-	an expected character is missing."
-	location := stream position.
-	currentCharacter
-		ifNotNil: [ :char | buffer nextPut: char ]
-		ifNil: [ location := stream position + 1 ].
+	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included).
+	The error location is index of the current (problematic) character. Or index of the last character + 1 if eof."
+
 	^ RBErrorToken
-		value: (self scanBackFrom: aPosition)
-		start: aPosition
-		cause: theCause
-		location: location
+		  value: (self scanBackFrom: aPosition)
+		  start: aPosition
+		  cause: theCause
+		  location: self previousStepPosition + 1
 ]
 
 { #category : #'private - scanning' }
@@ -478,17 +460,17 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ (self scanError: 'Literal expected') value: '#'
+	^ self scanError: 'Literal expected'
 ]
 
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralArrayToken [
 	"This scan accepts any character but is only meant to be used when a # is followed by ( or [ ."
 	| token |
-	token := RBLiteralArrayToken
-				value: (String with: $# with: currentCharacter)
-				start: tokenStart.
 	self step.
+	token := RBLiteralArrayToken
+				value: (self scanBackFrom: tokenStart)
+				start: tokenStart.
 	^token
 ]
 
@@ -505,7 +487,7 @@ RBScanner >> scanLiteralCharacter [
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
 	| token |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ (self scanError:'Character expected') value: '$'].
+	currentCharacter ifNil:[ ^ self scanError: 'Character expected' ].
 	token := RBLiteralToken
 				value: currentCharacter
 				start: tokenStart
@@ -524,8 +506,8 @@ RBScanner >> scanLiteralString [
 	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
 		"the peek logic here is because #upTo: does not tell if given char was found.
 		So if the stream did not move of if the last char is not a quote, then we have a problem."
-		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		self step. "to handle eof"
+		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		^ RBErrorToken
 			value: string
 			start: tokenStart
@@ -563,8 +545,8 @@ RBScanner >> scanNumber [
 	gotError := nil.
 	number := NumberParser parse: stream onError: [ :message | gotError := message ].
 	stop := stream position.
-	string := self scanBackFrom: start.
 	self step.
+	string := self scanBackFrom: start.
 	gotError ifNotNil: [
 	^ RBErrorToken
 		value: string
@@ -630,6 +612,7 @@ RBScanner >> scanToken [
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
+	characterType = #eof ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
 	characterType = #alphabetic ifTrue: [^self scanIdentifierOrKeyword].
 	(characterType = #digit
 		or: [currentCharacter = $- and: [(self classify: stream peek) = #digit]])
@@ -646,9 +629,10 @@ RBScanner >> scanToken [
 { #category : #'private - scanning' }
 RBScanner >> scanUnknownCharacter [
 	| errorToken |
-	errorToken := self scanError: 'Unknown character'.
-	"advance"
+	"consume unexpected character"
 	self step.
+	errorToken := self scanError: 'Unknown character'.
+	errorToken location: tokenStart. "Unlike other scanner errors, error location is here before the bad token"
 	^ errorToken
 ]
 

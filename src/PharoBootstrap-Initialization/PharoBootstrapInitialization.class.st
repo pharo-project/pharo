@@ -57,7 +57,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalSemaphoreTable initialize.
 	Collection initialize.
 	CompiledMethod initialize.
-	Categorizer initialize.
 	Slot initialize.
 	RPackage initialize.
 	Behavior initialize.

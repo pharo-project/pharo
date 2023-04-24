@@ -17,9 +17,8 @@ ClyReflectivityCommand class >> canBeExecutedInContext: aBrowserContext [
 	^ self showReflectivityCommands and: [
 		  self isAbstract not and: [
 			  node := aBrowserContext lastSelectedSourceNode.
-			  node isNotNil and: [
-				  node isCommentNode not and: [
-					  node isPragma not and: [ node isSequence not ] ] ] ] ]
+			  node isCommentNode not and: [
+				  node isPragma not and: [ node isSequence not ] ] ] ]
 ]
 
 { #category : #activation }

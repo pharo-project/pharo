@@ -5,6 +5,8 @@
 set -x
 set -e
 
+echo $(date -u) "Bootstrap: Beginning to prepare the image used for bootstrapping"
+
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 . ${SCRIPTS}/envvars.sh

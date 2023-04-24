@@ -845,6 +845,14 @@ BlockClosure >> valueUnpreemptively [
 	^result
 ]
 
+{ #category : #scheduling }
+BlockClosure >> valueUnwindInContext: ctxt [
+
+	| ensureContext |
+	ensureContext := self asContextWithSender: ctxt.
+	ensureContext runUntilErrorOrReturnFrom: ensureContext
+]
+
 { #category : #evaluating }
 BlockClosure >> valueWithArguments: anArray [
 	"Activate the receiver, creating a closure activation (MethodContext)

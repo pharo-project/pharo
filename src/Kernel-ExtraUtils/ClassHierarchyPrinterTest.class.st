@@ -49,6 +49,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 		RBReturnNode
 		RBSequenceNode
 		RBValueNode
+			RBAnnotationMarkNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
@@ -69,7 +70,6 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 					RBPragmaErrorNode
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
-					RBUnreachableStatementErrorNode
 			RBSelectorNode
 			RBVariableNode
 	RBSlotInitializationNode

@@ -22,8 +22,7 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	"parse [:] in parse error mode, this results in arg vars with an empty string as a name"
 	result := UndefinedObject compiler
     source: '^[ :]';
-    noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+    isScripting: true;
     requestor: self;
     parse.
 	self assert: result isDoIt.
@@ -35,7 +34,6 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	| ast cm |
 	ast := OpalCompiler new
 				source: 'method 3+';
-				options: #(+ optionParseErrors);
 				parse.
 
 	self assert: ast isMethod.
@@ -50,8 +48,7 @@ OCCompileWithFailureTest >> testParenthesis [
 	| result cm |
 	result := UndefinedObject compiler
     source: 'self assert: pragma( numArgs equals: 0.';
-    noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+    isScripting: true;
     requestor: self;
     parse.
 	self assert: result isDoIt.

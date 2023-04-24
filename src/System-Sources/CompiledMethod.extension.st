@@ -1,16 +1,15 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*System-Sources' }
-CompiledMethod >> putSource: sourceStr class: class category: catName withStamp: changeStamp priorMethod: priorMethod [
-	^ self
-		putSource: sourceStr
-		withPreamble: [ :file |
-			class
-				printCategoryChunk: catName
-				on: file
-				withStamp: changeStamp
-				priorMethod: priorMethod.
-			file cr ]
+CompiledMethod >> putSource: sourceStr class: class protocol: protocol withStamp: changeStamp priorMethod: priorMethod [
+
+	^ self putSource: sourceStr withPreamble: [ :file |
+		  class
+			  printProtocolChunk: protocol
+			  on: file
+			  withStamp: changeStamp
+			  priorMethod: priorMethod.
+		  file cr ]
 ]
 
 { #category : #'*System-Sources' }
@@ -26,5 +25,6 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 			"Update with new source pointer"
 			self setSourcePointer: newSourcePointer ]
 		onFail: [
-			self becomeForward: (self copyWithSource: source) ]
+			"if we can not store the source pointer, we put back the property"
+			self propertyAt: #source put: source ]
 ]

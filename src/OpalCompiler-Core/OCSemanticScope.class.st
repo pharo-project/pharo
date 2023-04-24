@@ -47,26 +47,6 @@ OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 	aSystemAnnouncer evaluated: aSourceString context: nil
 ]
 
-{ #category : #converting }
-OCSemanticScope >> asDoItScope [
-	self subclassResponsibility
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForContext: aContext [
-	^OCContextualDoItSemanticScope targetingContext: aContext
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForReceiver: anObject [
-	^OCReceiverDoItSemanticScope targetingReceiver: anObject
-]
-
-{ #category : #'code compilation' }
-OCSemanticScope >> compileMethodFromASTBy: aCompiler [
-	self subclassResponsibility
-]
-
 { #category : #testing }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
 
@@ -81,21 +61,11 @@ OCSemanticScope >> isDoItScope [
 ]
 
 { #category : #lookup }
-OCSemanticScope >> lookupVar: name declare: aBoolean [
+OCSemanticScope >> lookupVar: name [
 
-	(self targetClass lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^v ].
+	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
-	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
-]
-
-{ #category : #'code compilation' }
-OCSemanticScope >> parseASTBy: aParser [
-	self subclassResponsibility
-]
-
-{ #category : #printing }
-OCSemanticScope >> scopeLevel [
-	^0
+	^ super lookupVar: name
 ]
 
 { #category : #accessing }

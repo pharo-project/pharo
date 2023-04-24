@@ -105,7 +105,7 @@ ThemeIcons class >> current [
 ThemeIcons class >> current: aPack [
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
-	SystemAnnouncer uniqueInstance announce: IconSetChanged
+	SystemAnnouncer announce: IconSetChanged
 ]
 
 { #category : #accessing }

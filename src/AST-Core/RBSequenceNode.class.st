@@ -330,6 +330,7 @@ RBSequenceNode >> initialize [
 { #category : #errors }
 RBSequenceNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
+	(self temporaries anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 

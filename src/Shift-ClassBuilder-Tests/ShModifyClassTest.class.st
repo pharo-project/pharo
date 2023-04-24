@@ -11,7 +11,8 @@ ShModifyClassTest >> testEmptyClass [
 
 	self validateResult.
 	self validateSuperclass: Object.
-	self validateMethods: #()
+	self validateMethods: #().
+	self assert: result hasComment.
 ]
 
 { #category : #tests }

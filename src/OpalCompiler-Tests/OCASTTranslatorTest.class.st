@@ -43,7 +43,12 @@ OCASTTranslatorTest >> compileSource: source [
 	| ir ast |
 	ast := RBParser parseMethod: source.
 	ast compilationContext: self compilationContext.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ast compiler
+		class: OCOpalExamples;
+		bindings: globals;
+		doSemanticAnalysis.
+	ast checkFaulty: nil.
+	ir := ast ir.
 	^ 	method := ir compiledMethod
 ]
 

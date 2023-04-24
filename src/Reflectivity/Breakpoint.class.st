@@ -156,7 +156,7 @@ Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 	announcement := BreakpointAdded
 		on: aBreakpoint
 		nodes: aBreakpoint link nodes.
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #'observers - experimental' }
@@ -166,7 +166,7 @@ Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: n
 	announcement := BreakpointHit
 		on: aBreakpoint
 		nodes: {node}.
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #'observers - experimental' }
@@ -176,7 +176,7 @@ Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
 	announcement := BreakpointRemoved
 		on: aBreakpoint
 		nodes: nodes.
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #'class initialization' }
@@ -358,7 +358,7 @@ Breakpoint >> generateConditionBlockFrom: aString [
 	| conditionBlockProducerMethodAST |
 	conditionBlockProducerMethodAST := self conditionBlockProducerMethodAST: aString.
 
-	^ ((conditionBlockProducerMethodAST generateWithSource) valueWithReceiver: nil arguments: {})
+	^ conditionBlockProducerMethodAST generateMethod valueWithReceiver: nil
 ]
 
 { #category : #accessing }

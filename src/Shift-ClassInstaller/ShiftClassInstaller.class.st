@@ -64,7 +64,7 @@ ShiftClassInstaller >> builder [
 
 { #category : #accessing }
 ShiftClassInstaller >> comment: newClass [
-	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
+	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
 ]
 
 { #category : #building }

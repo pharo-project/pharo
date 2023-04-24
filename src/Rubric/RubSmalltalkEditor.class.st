@@ -28,7 +28,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $b meta
 		do: [ :target | target editor browseFullClass ]
-		description: 'Browse'.
+		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
 		category: RubSmalltalkEditor name
@@ -40,13 +40,13 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $i meta
 		do: [ :target | target editor inspectIt: nil ]
-		description: 'Inspect it'.
+		description: 'Do & inspect it'.
 
 	(aBuilder shortcut: #basicInspectIt)
 		category: RubSmalltalkEditor name
 		default: $i meta shift
 		do: [ :target | target editor basicInspectIt ]
-		description: 'Basic Inspect it'.
+		description: 'Do & basic inspect it'.
 
 	(aBuilder shortcut: #implementorsOfIt)
 		category: RubSmalltalkEditor name
@@ -64,7 +64,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		category: RubSmalltalkEditor name
 		default: $p meta
 		do: [ :target | target editor printIt ]
-		description: 'Print it'.
+		description: 'Do & print it'.
 
 	(aBuilder shortcut: #debugIt)
 		category: RubSmalltalkEditor name
@@ -320,15 +320,14 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
-		requestor: self morph;
-		noPattern: true;
-		failBlock: [ ^ nil ];
+		isScripting: true;
+		permitFaulty: true;
 		compile
 ]
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	^ self compile: self selectionAsStream for: anObject in: evalContext
+	^ self compile: self selection for: anObject in: evalContext
 ]
 
 { #category : #'completion engine' }
@@ -396,11 +395,6 @@ RubSmalltalkEditor >> computeSelectionIntervalForCurrentLine [
 			(s at: right) = $" ifTrue: [ quoteCounter := quoteCounter + 1 ].
 			right := right - 1 ].
 	^ left to: right
-]
-
-{ #category : #private }
-RubSmalltalkEditor >> computeSelectionIntervalFromCodeIn: aString at: anInterval [
-	^ (RBParser parseExpression: (aString copyFrom: anInterval first to: anInterval last)) sourceInterval
 ]
 
 { #category : #private }
@@ -494,7 +488,7 @@ RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 
 	self lineSelectAndEmptyCheck: [^self].
-	self debug: self selectionAsStream
+	self debug: self selection
 ]
 
 { #category : #'do-its' }
@@ -529,8 +523,7 @@ RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
 			source: aStream;
 			context: ctxt;
 			receiver: rcvr;
-			requestor: self morph  "don't set it to self.. The receiver can be destroyed as a result of evaluateSelection";
-			failBlock:  [self morph flash. ^ nil];
+			permitFaulty: true;
 			evaluate.
 
 	^ aBlock value: result
@@ -550,7 +543,7 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 
 	self lineSelectAndEmptyCheck: [^ ''].
 	^ self
-		evaluate: self selectionForDoitAsStream
+		evaluate: self selection
 		andDo: aBlock
 ]
 
@@ -1183,7 +1176,7 @@ RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
 	self lineSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selectionAsStream
+	self tally: self selection
 ]
 
 { #category : #'completion engine' }

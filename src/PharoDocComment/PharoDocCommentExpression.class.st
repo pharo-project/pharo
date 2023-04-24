@@ -21,7 +21,7 @@ PharoDocCommentExpression >> evaluate [
 
 	^ self methodClass compiler
 		  source: self source;
-		  noPattern: true;
+		  isScripting: true;
 		  receiver: self methodClass;
 		  evaluate
 ]
@@ -44,7 +44,6 @@ PharoDocCommentExpression >> expressionNodeReal [
 		  source: self source;
 		  noPattern: true;
 		  receiver: self methodClass;
-		  options: #( + optionParseErrors );
 		  parse
 ]
 

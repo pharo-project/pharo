@@ -21,6 +21,8 @@ ReflectivityReificationTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityReificationTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
+	"Unfortunately, uninstall is not enough, so force a recompilation"
+	ReflectivityExamples recompile.
 	super tearDown
 ]
 
@@ -1975,7 +1977,7 @@ ReflectivityReificationTest >> testReifyTempOperationAfter [
 { #category : #'tests - operations' }
 ReflectivityReificationTest >> testReifyTempOperationInstead [
 	| varNode instance executed |
-	self skip.
+
 	"skip for now as #usingMethods of the variable gets confused with instead"
 	varNode := (ReflectivityExamples >> #exampleAssignment) ast body statements last value.
 	executed := false.

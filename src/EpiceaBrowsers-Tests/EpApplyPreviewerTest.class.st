@@ -79,9 +79,9 @@ EpApplyPreviewerTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
-	aClass classComment: 'after'.
+	aClass comment: 'after'.
 
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpBehaviorCommentChange.
@@ -365,14 +365,13 @@ EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolAddition.
-		self assert: output protocol equals: 'protocol'.
-		]
+		self assert: output protocol equals: 'protocol' ]
 ]
 
 { #category : #tests }
@@ -380,15 +379,14 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolRemoval.
-		self assert: output protocol equals: 'protocol'.
-		]
+		self assert: output protocol equals: 'protocol' ]
 ]
 
 { #category : #tests }
@@ -425,9 +423,9 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -438,7 +436,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
@@ -550,7 +548,7 @@ EpApplyPreviewerTest >> testRedundantProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -561,7 +559,7 @@ EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass organization addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 

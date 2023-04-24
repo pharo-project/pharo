@@ -526,6 +526,19 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 		assertNodeValue: 3
 ]
 
+{ #category : #tests }
+RubSmalltalkEditorTest >> testCompileForIn [
+
+	| editor method |
+	editor := RubSmalltalkEditor new.
+
+	method := editor compile: '40+2' for: nil in: nil.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	method := editor compile: '40+¿' for: nil in: nil.
+	self should: [ nil executeMethod: method ] raise: RuntimeSyntaxError
+]
+
 { #category : #'tests - copy' }
 RubSmalltalkEditorTest >> testCopySelection [
 
@@ -557,6 +570,24 @@ RubSmalltalkEditorTest >> testDefaultCompletionIsNilIfNoGlobalClass [
 	textEditor := RubSmalltalkEditor new.
 	RubSmalltalkEditor noCompletion.
 	self assert: textEditor completionEngine isNil
+]
+
+{ #category : #tests }
+RubSmalltalkEditorTest >> testEvaluateAndDo [
+
+	| editor result |
+	editor := RubSmalltalkEditor new.
+	editor textArea: RubEditingArea new.
+
+	result := editor evaluate: '40+2' andDo: [ :value |
+		          self assert: value equals: 42.
+		          #flag ].
+	self assert: result equals: #flag.
+
+	self
+		should: [
+		editor evaluate: '40+¿' andDo: [ :value | self error: 'DEADCODE' ] ]
+		raise: RuntimeSyntaxError
 ]
 
 { #category : #'tests - completion' }

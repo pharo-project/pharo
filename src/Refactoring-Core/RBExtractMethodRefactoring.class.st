@@ -151,18 +151,16 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> extractMethod [
-	| parseTree isSequence extractCode subtree newCode errorMessage |
+	| parseTree isSequence extractCode subtree newCode |
 	extractCode := self getExtractedSource.
-	extractedParseTree := self parserClass
-		parseExpression: extractCode
-		onError: [ :string :pos :parser |
-			errorMessage := string.
-			parser parseErrorNode: string ].
+	extractedParseTree := self parserClass new
+		source: extractCode;
+		parseExpression.
 	extractedParseTree
 		ifNil: [ self refactoringFailure: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
 		ifTrue: [ self
-				refactoringFailure: 'Invalid source to extract - ' , errorMessage ].
+				refactoringFailure: 'Invalid source to extract - ' , extractedParseTree allErrorNotices first messageText ].
 	(extractedParseTree isSequence
 		and: [ extractedParseTree statements isEmpty ])
 		ifTrue: [ self refactoringError: 'Select some code to extract' ].

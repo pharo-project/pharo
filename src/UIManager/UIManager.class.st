@@ -753,12 +753,6 @@ UIManager >> spawnNewProcessIfThisIsUI: suspendedProcess [
 ]
 
 { #category : #'default actions' }
-UIManager >> syntaxErrorNotificationDefaultAction: anException [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #'default actions' }
 UIManager >> systemNotificationDefaultAction: aNotification [
 
 	"by default, do nothing"

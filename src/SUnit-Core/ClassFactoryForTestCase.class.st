@@ -128,24 +128,13 @@ ClassFactoryForTestCase >> deleteClasses [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	| categoriesMatchString |
-	categoriesMatchString := self packageName , '-*'.
-	SystemOrganization removeCategoriesMatching: categoriesMatchString
+	Smalltalk organization removeCategoriesMatching: self packageName , '-*'
 ]
 
 { #category : #cleaning }
 ClassFactoryForTestCase >> deleteTraits [
 
 	self createdTraits do: [ :trait | self delete: trait ]
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> duplicateClass: aClass withNewName: name [
-
-	| newClass |
-	newClass := aClass duplicateClassWithNewName: name.
-	self createdClasses add: newClass.
-	^ newClass
 ]
 
 { #category : #initialization }

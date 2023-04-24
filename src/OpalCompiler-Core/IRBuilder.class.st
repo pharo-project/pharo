@@ -184,7 +184,8 @@ IRBuilder >> initialize [
 { #category : #results }
 IRBuilder >> ir [
 
-	^ ir optimize
+	self optimize.
+	^ ir
 ]
 
 { #category : #accessing }
@@ -268,6 +269,15 @@ IRBuilder >> numArgs: anInteger [
 	ir sourceNode: self sourceNode
 ]
 
+{ #category : #optimizing }
+IRBuilder >> optimize [
+	"Perform configured optimizations"
+
+	ir removeEmptyStart.
+	self compilationContext optionOptimizeIR ifFalse: [^self].
+	ir absorbJumpsToSingleInstrs
+]
+
 { #category : #mapping }
 IRBuilder >> popMap [
 
@@ -282,6 +292,9 @@ IRBuilder >> popScope [
 { #category : #instructions }
 IRBuilder >> popTop [
 
+	currentSequence ifNotEmpty: [
+		currentSequence last isRemovableByPop ifTrue: [
+			^ currentSequence removeLast ] ].
 	self add: IRInstruction popTop
 ]
 

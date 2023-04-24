@@ -10,9 +10,21 @@ Class {
 	#category : #'Refactoring2-Transformations-Model'
 }
 
+{ #category : #displaying }
+RBRealizeClassTransformation class >> basicMenuItemString [
+
+	^ 'Realize class'
+]
+
 { #category : #api }
 RBRealizeClassTransformation class >> className: aName [
 	^ self new className: aName
+]
+
+{ #category : #testing }
+RBRealizeClassTransformation class >> isTransformation [
+
+	^ true
 ]
 
 { #category : #api }

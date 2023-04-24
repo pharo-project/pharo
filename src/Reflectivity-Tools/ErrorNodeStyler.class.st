@@ -16,7 +16,9 @@ ErrorNodeStyler >> iconFor: aNode [
 
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
-	^ aNode errorMessage
+
+	self flag: 'What if more than one error?'.
+	^ aNode errorNotices first messageText
 ]
 
 { #category : #hooks }
@@ -27,17 +29,21 @@ ErrorNodeStyler >> segmentMorphClass [
 
 { #category : #visiting }
 ErrorNodeStyler >> shouldStyleNode: aNode [
-	^ aNode isError
+	^ aNode isError and: [ aNode errorNotices isNotEmpty ]
 ]
 
 { #category : #visiting }
 ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |
+
+	(self shouldStyleNode: anEnglobingNode) ifFalse: [ ^ super visitEnglobingErrorNode: anEnglobingNode ].
+
+	"Only add red underline at the error position (instead on the whole node)"
 	conf := RubConfigurationChange new.
 	conf configurationBlock: [ :text |
 		| r |
-		r := self segmentMorphClass from: anEnglobingNode stop to: anEnglobingNode stop + 1.
+		r := self segmentMorphClass from: anEnglobingNode errorPosition to: anEnglobingNode errorPosition.
 		text addSegment: r.
 		r label: (self iconLabelBlock: anEnglobingNode).
 		r icon: (self iconFor: anEnglobingNode).
@@ -47,10 +53,4 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 	textModel announce: conf.
 
 	anEnglobingNode contents do: [ :each | self visitNode: each ]
-]
-
-{ #category : #visiting }
-ErrorNodeStyler >> visitUnreachableStatement: anUnreachableStatement [
-	"self overrides visitEnglobingErrorNode:"
-	^ super visitEnglobingErrorNode: anUnreachableStatement
 ]

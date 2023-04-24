@@ -51,6 +51,11 @@ RBToken >> isBinary [
 ]
 
 { #category : #testing }
+RBToken >> isBinary: aString [
+	^false
+]
+
+{ #category : #testing }
 RBToken >> isComment [
 	^false
 ]

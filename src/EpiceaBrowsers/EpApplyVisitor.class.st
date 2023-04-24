@@ -24,7 +24,7 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
 			aClass
-				classComment: aChange newComment
+				comment: aChange newComment
 				stamp: aChange newStamp ]
 ]
 
@@ -60,7 +60,14 @@ EpApplyVisitor >> visitCategoryRename: aChange [
 { #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
 	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
-	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall
+	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall.
+	"update the class comment"
+	self
+		behaviorNamed: aClassCreation behaviorAffectedName
+		ifPresent: [ :aClass |
+			aClass
+				comment: aClassCreation classAdded comment content
+				stamp: aClassCreation classAdded comment stamp ]
 ]
 
 { #category : #visitor }
@@ -115,10 +122,8 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
-	self
-		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior |
-			behavior organization addCategory: aProtocolAddition protocol ]
+
+	self behaviorNamed: aProtocolAddition behaviorAffectedName ifPresent: [ :behavior | behavior organization addProtocol: aProtocolAddition protocol ]
 ]
 
 { #category : #visitor }
