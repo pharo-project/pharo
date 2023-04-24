@@ -252,7 +252,7 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
 	
 	super visitMessageNode: aMessageNode.
-	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: self compilationContext getClass ]
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: scope targetClass ]
 ]
 
 { #category : #visiting }
