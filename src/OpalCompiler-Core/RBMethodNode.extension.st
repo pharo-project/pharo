@@ -8,7 +8,7 @@ RBMethodNode >> bcToASTCache [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
 	"Retrieve the associated CompiledMethod (cached version).
-	If no CompiledMethod was was generated, nil is returned.
+	If no CompiledMethod was generated, nil is returned.
 
 	When the AST is recompiled (see `generateMethod`), the cache is updated.
 	However, the cache is not reset if the AST is modified."
