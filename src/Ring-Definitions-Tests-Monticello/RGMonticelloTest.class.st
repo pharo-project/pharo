@@ -9,6 +9,7 @@ Class {
 
 { #category : #testing }
 RGMonticelloTest >> testAsMCMethodDefinition [
+
 	| ringMethod mcMethod |
 	ringMethod := (OrderedCollection >> #size) asActiveRingDefinition.
 	mcMethod := ringMethod asMCMethodDefinition.
@@ -17,7 +18,7 @@ RGMonticelloTest >> testAsMCMethodDefinition [
 	self assert: mcMethod className equals: #OrderedCollection.
 	self deny: mcMethod classIsMeta.
 	self assert: mcMethod selector equals: #size.
-	self assert: mcMethod category equals: #accessing.
+	self assert: mcMethod protocol equals: #accessing.
 	self assert: mcMethod source equals: (OrderedCollection >> #size) sourceCode
 ]
 

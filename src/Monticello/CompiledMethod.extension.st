@@ -36,10 +36,8 @@ CompiledMethod >> basicAsMCMethodDefinition [
 { #category : #'*Monticello' }
 CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
 
-	^ anMCMethodDefinition selector = self selector and: [ 
-		  anMCMethodDefinition className = self className and: [ 
-			  anMCMethodDefinition classIsMeta = self isClassSide 
-				  and: [ 
-					  anMCMethodDefinition category = self protocol and: [ 
-						  anMCMethodDefinition source = self sourceCode ] ] ] ]
+	^ anMCMethodDefinition selector = self selector and: [
+		  anMCMethodDefinition className = self className and: [
+			  anMCMethodDefinition classIsMeta = self isClassSide and: [
+				  anMCMethodDefinition protocol = self protocol and: [ anMCMethodDefinition source = self sourceCode ] ] ] ]
 ]

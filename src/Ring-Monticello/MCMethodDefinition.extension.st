@@ -41,7 +41,7 @@ MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		def author: (self authorForStamp: self timeStamp).
 		def time: (self timeForStamp: self timeStamp).
 
-		protocol := parent ensureProtocolNamed: self category asSymbol.
+		protocol := parent ensureProtocolNamed: self protocol asSymbol.
 		parent addProtocol: protocol.
 		def protocol: protocol.
 		def

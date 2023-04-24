@@ -192,17 +192,16 @@ MCStWriter >> writeMethodPostscript [
 
 { #category : #writing }
 MCStWriter >> writeMethodPreamble: definition [
-	self chunkContents: [:str |
+
+	self chunkContents: [ :str |
 		stream bang.
 		str nextPutAll: definition className asString.
-		definition classIsMeta ifTrue:
-			[ str nextPutAll: ' class' ].
+		definition classIsMeta ifTrue: [ str nextPutAll: ' class' ].
 		str
 			nextPutAll: ' methodsFor: ';
-			nextPutAll: definition category asString printString;
+			nextPutAll: definition protocol asString printString;
 			nextPutAll: ' stamp: ';
-			nextPutAll: definition timeStamp asString printString
-		]
+			nextPutAll: definition timeStamp asString printString ]
 ]
 
 { #category : #writing }
