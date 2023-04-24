@@ -47,7 +47,9 @@ ClassOrganization >> allMethodSelectors [
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	"Thes next line should just be `self protocolOfSelector: selector` but currently the system relies on a hack and we need some more cleanings before been able to remove the hack." 
+	oldProtocol := (self protocolNameOfElement: selector) ifNotNil: [ :p | self protocolNamed: p ].
+	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
 	self silentlyClassify: selector under: newProtocol.
 
