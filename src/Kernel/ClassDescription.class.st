@@ -35,14 +35,14 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
-	oldProtocol := self organization protocolNameOfElement: selector.
+	oldProtocol := self organization protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self organization classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
 				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
-	newProtocol := self organization protocolNameOfElement: selector.
+	newProtocol := self organization protocolOfSelector: selector.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
@@ -52,10 +52,10 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 			self
 				notifyRepackage: selector
 				method: compiledMethod
-				oldProtocol: oldProtocol
-				newProtocol: newProtocol.
+				oldProtocol: oldProtocol name
+				newProtocol: newProtocol name.
 
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol name ]
 ]
 
 { #category : #'instance variables' }
