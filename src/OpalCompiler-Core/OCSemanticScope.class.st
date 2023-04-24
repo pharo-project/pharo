@@ -67,13 +67,3 @@ OCSemanticScope >> lookupVar: name [
 
 	^ super lookupVar: name
 ]
-
-{ #category : #accessing }
-OCSemanticScope >> targetClass [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetEnvironment [
-	^self targetClass environment
-]
