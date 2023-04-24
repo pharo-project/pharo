@@ -175,6 +175,12 @@ RBMethodNode >> asSequenceNode [
 ]
 
 { #category : #accessing }
+RBMethodNode >> bcToASTCache: anObject [
+
+	bcToASTCache := anObject
+]
+
+{ #category : #accessing }
 RBMethodNode >> body [
 	^body
 ]
