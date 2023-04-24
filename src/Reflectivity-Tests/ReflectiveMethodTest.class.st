@@ -1,6 +1,6 @@
 Class {
 	#name : #ReflectiveMethodTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'selector'
 	],
@@ -146,7 +146,9 @@ ReflectiveMethodTest >> testSetLinkOnClassVariable [
 
 	self assert: (classVar links includes: link).
 	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: ReflectiveMethod.
-	classVar removeProperty: #links
+	link uninstall.
+	classVar removeProperty: #links.
+
 ]
 
 { #category : #'tests - variables' }
