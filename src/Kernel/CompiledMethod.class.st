@@ -310,6 +310,12 @@ CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
 	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
 ]
 
+{ #category : #constants }
+CompiledMethod class >> trailerSize [
+	"we use the last 4 byte to store the source pointer, this allows for 2GB .sources/.changes"
+	^ 4
+]
+
 { #category : #queries }
 CompiledMethod >> allIgnoredNotImplementedSelectors [
 
@@ -398,7 +404,7 @@ CompiledMethod >> displayStringOn: aStream [
 { #category : #accessing }
 CompiledMethod >> endPC [
 	"Answer the index of the last bytecode, as the trailer size varies we have to delegate"
-	^ self trailer endPC
+	^ self size - self class trailerSize
 ]
 
 { #category : #accessing }
@@ -1022,22 +1028,14 @@ CompiledMethod >> selector: aSelector [
 
 { #category : #'source code management' }
 CompiledMethod >> setSourcePointer: srcPointer [
-	"We can't change the trailer of existing method, since it could have completely different format.
-	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
-	| trailer |
+	| trailer start |
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	
-	trailer := (CompiledMethodTrailer new sourcePointer: srcPointer) encode.
-	"If possible do a replace in place as an optimization"
-	(self trailer class == trailer class and: [ trailer size = self trailer size ])
-		ifTrue: [
-			| start |
-			start := self endPC + 1.
-			self replaceFrom: start to: self size with: trailer encodedData startingAt: 1 ]
-		ifFalse: [ self becomeForward: (self copyWithTrailerBytes: trailer) ].
-	^ self
+	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
+	start := self endPC + 1.
+	self replaceFrom: start to: self size with: trailer encodedData startingAt: 1.
 ]
 
 { #category : #accessing }
@@ -1057,7 +1055,7 @@ CompiledMethod >> sourceCodeOrNil [
 	trailer := self trailer.
 	trailer sourceCode ifNotNil: [ :code | ^ code ].
 	self propertyAt: #source ifPresent:  [ :code | ^ code ].
-	trailer hasSourcePointer ifFalse: [ ^ nil ].
+	self hasSourcePointer ifFalse: [ ^ nil ].
 	^ self getSourceFromFile ifEmpty: [ nil ]
 ]
 
