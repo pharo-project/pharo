@@ -1029,13 +1029,13 @@ CompiledMethod >> selector: aSelector [
 { #category : #'source code management' }
 CompiledMethod >> setSourcePointer: srcPointer [
 
-	| trailer start |
+	| trailerBytes start |
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	
-	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
+	trailerBytes := srcPointer asByteArrayOfSize: self class trailerSize.
 	start := self endPC + 1.
-	self replaceFrom: start to: self size with: trailer encodedData startingAt: 1.
+	self replaceFrom: start to: self size with: trailerBytes startingAt: 1.
 ]
 
 { #category : #accessing }
@@ -1051,9 +1051,6 @@ CompiledMethod >> sourceCode [
 CompiledMethod >> sourceCodeOrNil [
 	"Retrieve the source code for this method, or return nil."
 
-	| trailer |
-	trailer := self trailer.
-	trailer sourceCode ifNotNil: [ :code | ^ code ].
 	self propertyAt: #source ifPresent:  [ :code | ^ code ].
 	self hasSourcePointer ifFalse: [ ^ nil ].
 	^ self getSourceFromFile ifEmpty: [ nil ]
