@@ -13,7 +13,6 @@ Class {
 	#instVars : [
 		'data',
 		'encodedData',
-		'kind',
 		'method'
 	],
 	#category : #'Kernel-Methods'
@@ -27,7 +26,6 @@ CompiledMethodTrailer class >> empty [
 
 { #category : #initialization }
 CompiledMethodTrailer >> clear [
-	kind := #NoTrailer.
 	data := 0.
 	encodedData :=  #[0 0 0 0].
 	method := nil
@@ -83,8 +81,8 @@ CompiledMethodTrailer >> hasSource [
 
 { #category : #testing }
 CompiledMethodTrailer >> hasSourcePointer [
-	encodedData = #[0 0 0 0] ifTrue: [ ^false ].
-	^ kind == #SourcePointer
+
+	^ encodedData ~= #[ 0 0 0 0 ]
 ]
 
 { #category : #initialization }
@@ -94,15 +92,8 @@ CompiledMethodTrailer >> initialize [
 
 { #category : #testing }
 CompiledMethodTrailer >> isEmpty [
-	^ kind == #NoTrailer or: [ kind == #ClearedTrailer or: [encodedData = #[0 0 0 0]]]
-]
 
-{ #category : #accessing }
-CompiledMethodTrailer >> kind [
-	"Answer a symbolic name of trailer kind.
-	See #trailerKinds on class side and class comment for details"
-
-	^ kind
+	^ encodedData = #[ 0 0 0 0 ]
 ]
 
 { #category : #accessing }
@@ -110,7 +101,6 @@ CompiledMethodTrailer >> method: aMethod [
 
 	| msz |
 	method := aMethod.
-	kind := #SourcePointer.
 	msz := method size.
 	encodedData := {
 		method at: msz-3.
@@ -135,16 +125,13 @@ CompiledMethodTrailer >> sourceCode [
 { #category : #accessing }
 CompiledMethodTrailer >> sourcePointer [
 
-	^ kind == #SourcePointer
-		ifTrue: [ data ]
-		ifFalse: [ 0 ]
+	^ data
 ]
 
 { #category : #accessing }
 CompiledMethodTrailer >> sourcePointer: ptr [
 
 	data := ptr.
-	kind := #SourcePointer.
 	self encode.
 	
 ]
