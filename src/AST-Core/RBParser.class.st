@@ -1199,13 +1199,6 @@ RBParser >> patchLiteralArrayToken [
 						start: currentToken start
 						stop: currentToken stop.
 			^self].
-	(currentToken isIdentifier and: [currentToken value includes: $.])
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: currentToken value
-						start: currentToken start
-						stop: currentToken stop.
-			^self].
 	(currentToken isIdentifier
 		or: [currentToken isBinary or: [currentToken isKeyword]])
 			ifFalse: [^self parseErrorNode: 'Invalid token'].
