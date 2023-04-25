@@ -252,39 +252,40 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 { #category : #removing }
 ClassOrganization >> renameProtocol: anOldProtocol into: aNewProtocol [
 
-	| oldProtocol oldProtocolName newProtocol |
+	| oldProtocol newProtocol |
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
 	oldProtocol := self ensureProtocol: anOldProtocol.
 	"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
-	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements...
-	We also save the old protocol name since we will directly update the old protocol instance because of this hack."
-	oldProtocolName := oldProtocol name.
+	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
 	(self hasProtocol: aNewProtocol)
 		ifTrue: [
 			newProtocol := self ensureProtocol: aNewProtocol.
 
 			oldProtocol = newProtocol ifTrue: [ ^ self ].
 
-			newProtocol addAllMethodsFrom: oldProtocol.
-			oldProtocol resetMethodSelectors.
-			self removeProtocolIfEmpty: oldProtocol ]
+			newProtocol addAllMethodsFrom: oldProtocol ]
 		ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
 			| newProtocolName |
 			newProtocolName := aNewProtocol isString
 				                   ifTrue: [ aNewProtocol ]
 				                   ifFalse: [ aNewProtocol name ].
-			oldProtocolName = newProtocolName ifTrue: [ ^ self ].
-			oldProtocol name: newProtocolName ].
+			oldProtocol name = newProtocolName ifTrue: [ ^ self ].
+			newProtocol := oldProtocol copy
+				               name: newProtocolName;
+				               yourself.
+			protocols := protocols copyWith: newProtocol ].
+	oldProtocol resetMethodSelectors.
+	self removeProtocolIfEmpty: oldProtocol.
 
 	"Announce the changes in the system"
-	self notifyOfChangedProtocolNamesFrom: oldProtocolName to: newProtocol name.
-	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldProtocolName to: newProtocol name).
+	self notifyOfChangedProtocolNamesFrom: oldProtocol name to: newProtocol name.
+	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldProtocol name to: newProtocol name).
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	newProtocol methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldProtocolName to: newProtocol name ]
+	newProtocol methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #initialization }
