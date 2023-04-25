@@ -3,7 +3,7 @@ Tests for Reflective method
 "
 Class {
 	#name : #ReflectivityControlTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag',
 		'link'
@@ -1044,7 +1044,7 @@ ReflectivityControlTest >> testInsteadCascade [
 { #category : #'tests - after - variables' }
 ReflectivityControlTest >> testInsteadClassVariable [
 	| classVar |
-	self skip.
+
 	classVar := ReflectivityExamples classVariableNamed: #ClassVar.
 	link := MetaLink new
 		metaObject: self;

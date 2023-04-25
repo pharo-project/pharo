@@ -3,8 +3,8 @@ Extension { #name : #ClassOrganization }
 { #category : #'*Deprecated12' }
 ClassOrganization >> addCategory: aString [
 
-	self deprecated: 'Use #addProtocolNamed: instead.' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addProtocolNamed: `@arg'.
-	self addProtocolNamed: aString
+	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addProtocol: `@arg'.
+	self addProtocol: aString
 ]
 
 { #category : #'*Deprecated12' }
@@ -38,6 +38,87 @@ ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 ]
 
 { #category : #'*Deprecated12' }
+ClassOrganization >> classComment [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+
+	^ self comment
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> classComment: aString [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	self comment: aString
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> comment [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	^ organizedClass comment
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> comment: aString [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	organizedClass comment: aString
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> commentSourcePointer [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	^ organizedClass commentSourcePointer
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> commentSourcePointer: anObject [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	organizedClass commentSourcePointer: anObject
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> commentStamp [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	^ organizedClass commentStamp
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> hasComment [
+
+	self
+		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
+		on: '18 April 2023'
+		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
+	^ organizedClass hasComment
+]
+
+{ #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
 	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodSelectorsInProtocol: `@arg'.
@@ -51,15 +132,6 @@ ClassOrganization >> notifyOfChangedCategoriesFrom: oldProtocolName to: newProto
 		deprecated: 'Use #notifyOfChangedProtocolNamesFrom:to: instead.'
 		transformWith: '`@rcv notifyOfChangedCategoriesFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNamesFrom: `@arg1 to: `@arg2'.
 	self notifyOfChangedProtocolNamesFrom: oldProtocolName to: newProtocolName
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> notifyOfRemovedCategory: protocolName [
-
-	self
-		deprecated: 'Use #notifyOfRemovedProtocolNamed: instead.'
-		transformWith: '`@rcv notifyOfRemovedCategory: `@arg' -> '`@rcv notifyOfRemovedProtocolNamed: `@arg'.
-	self notifyOfRemovedProtocolNamed: protocolName
 ]
 
 { #category : #'*Deprecated12' }
@@ -105,7 +177,14 @@ ClassOrganization >> renameCategory: oldName toBe: newName [
 ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #silentlyRenameProtocolNamed:toBe: instead.'
-		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv silentlyRenameProtocolNamed: `@arg1 toBe: `@arg2'.
-	self silentlyRenameProtocolNamed: oldName toBe: newName
+		deprecated: 'Use #renameProtocolNamed:toBe: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
+		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
+	self renameProtocolNamed: oldName toBe: newName
+]
+
+{ #category : #'*Deprecated12' }
+ClassOrganization >> subject [
+
+	self deprecated: 'Use #organizedClass instead.' transformWith: '`@rcv subject' -> '`@rcv organizedClass'.
+	^ self organizedClass
 ]

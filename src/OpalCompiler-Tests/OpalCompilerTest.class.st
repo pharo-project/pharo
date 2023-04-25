@@ -68,23 +68,45 @@ OpalCompilerTest >> testBindingsWriteGlobals [
 ]
 
 { #category : #tests }
-OpalCompilerTest >> testCompileEmbeddsSource [
-	| result |
-	result := Smalltalk compiler
-		class: UndefinedObject;
-		options: #( + #optionEmbeddSources );
-		compile: 'tt ^3+4'.
-	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
-	self deny: result trailer hasSourcePointer. "no sourcePointer"
-	self assert: result trailer hasSource.		 "but source embedded"
+OpalCompilerTest >> testCompileFromAnalysedAST [
 
-	result := Smalltalk compiler
-		class: UndefinedObject;
-		options: #( - #optionEmbeddSources );
-		compile: 'tt ^3+4'.
+	| source ast value |
+	source := 'foo |a| a := 3. ^a+4'.
+	
+	ast := MockForCompilation compiler parse: source.
+	value := MockForCompilation compiler ast: ast; evaluate.
+	self assert: value equals: 7.
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testCompileSource [
+	| source result |
+	source := 'tt ^3+4'.
+
+	"Compiled but uninstalled methods have a #source but no sourcePointer"
+	result := MockForCompilation compiler compile: source.
 	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
 	self deny: result trailer hasSourcePointer. "no sourcePointer"
-	self deny: result trailer hasSource.			 "and source embedded"
+	self assert: (result propertyAt: #source) equals: source.
+	self assert: result sourceCodeOrNil equals: source.
+
+	"Installed methods have asourcePointer but no #source"
+	result := MockForCompilation compiler install: source.
+	self assert: result equals: MockForCompilation>>#tt.
+	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: (result propertyAt: #source) equals: nil.
+	self assert: result sourceCodeOrNil equals: source.
+
+	"When uninstalled, they still keep their source pointer"
+	MockForCompilation compiler install: 'tt ^42'.
+	self deny: result equals: MockForCompilation>>#tt.
+	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: (result propertyAt: #source) equals: nil.
+	self assert: result sourceCodeOrNil equals: source.
+	
+	(MockForCompilation>>#tt) removeFromSystem
 ]
 
 { #category : #tests }

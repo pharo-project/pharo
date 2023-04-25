@@ -198,8 +198,14 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 { #category : #accessing }
 MethodClassifier >> listToFindProtocols [
 
-	^ #( #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma: #protocolByKnownPrefix: #protocolByOtherImplementors:
-	     #protocolInSuperclassProtocol: )
+	^ #( #protocolInSuperclassProtocol: #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma:
+	     #protocolByKnownPrefix: #protocolByOtherImplementors: )
+]
+
+{ #category : #accessing }
+MethodClassifier >> protocol [
+
+	^ protocol
 ]
 
 { #category : #'classification-rules' }
@@ -256,7 +262,7 @@ MethodClassifier >> protocolByOtherImplementors: aMethod [
 		ifNotEmpty: [ :methods |
 			methods
 				do: [ :method |
-					((method protocol beginsWith: '*') or: [ method protocol = Protocol unclassified ])
+					((method protocol beginsWith: '*') or: [ method isClassified not ])
 						ifFalse: [ protocolBag add: method protocol ]]
 				without: aMethod ].
 

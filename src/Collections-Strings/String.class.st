@@ -2519,7 +2519,7 @@ String >> stemAndNumericSuffix [
 		[suffix :=  stem last digitValue * position + suffix.
 		position := position * 10.
 		stem := stem copyFrom: 1 to: stem size - 1].
-	^ Array with: stem with: suffix
+	^ { stem . suffix }
 ]
 
 { #category : #printing }

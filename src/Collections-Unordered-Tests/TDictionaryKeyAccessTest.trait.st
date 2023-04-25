@@ -83,6 +83,7 @@ TDictionaryKeyAccessTest >> testKeyAtValueIfAbsent [
 
 { #category : #requirements }
 TDictionaryKeyAccessTest >> valueNotIn [
-" return a value not included in nonEmptyWithoutEqualValues "
-^self explicitRequirement
+	" return a value not included in nonEmptyWithoutEqualValues "
+
+	^ self explicitRequirement
 ]

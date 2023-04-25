@@ -3,7 +3,7 @@ Tests for MetaLink
 "
 Class {
 	#name : #MetaLinkTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#category : #'Reflectivity-Tests-Base'
 }
 

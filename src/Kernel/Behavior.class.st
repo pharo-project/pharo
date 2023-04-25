@@ -17,19 +17,6 @@ Class {
 	#category : #'Kernel-Classes'
 }
 
-{ #category : #cleanup }
-Behavior class >> cleanUp [
-	"Flush the obsolete subclasses."
-
-	self flushObsoleteSubclasses
-]
-
-{ #category : #'class initialization' }
-Behavior class >> flushObsoleteSubclasses [
-	"Behavior flushObsoleteSubclasses"
-	ObsoleteSubclasses finalizeValues
-]
-
 { #category : #'class initialization' }
 Behavior class >> initialize [
 	"Behavior initialize"
@@ -37,15 +24,13 @@ Behavior class >> initialize [
 	ObsoleteSubclasses
 		ifNil: [ self initializeObsoleteSubclasses ]
 		ifNotNil: [ | newDict |
-			newDict := WeakKeyToCollectionDictionary newFrom: ObsoleteSubclasses.
-			newDict rehash.
+			newDict := WeakIdentityKeyDictionary newFrom: ObsoleteSubclasses.
 			ObsoleteSubclasses := newDict ].
 
 	ClassProperties
 		ifNil: [ self initializeClassProperties ]
 		ifNotNil: [ | newDict |
 			newDict := WeakIdentityKeyDictionary newFrom: ClassProperties.
-			newDict rehash.
 			ClassProperties := newDict ]
 ]
 
@@ -56,7 +41,7 @@ Behavior class >> initializeClassProperties [
 
 { #category : #'class initialization' }
 Behavior class >> initializeObsoleteSubclasses [
-	ObsoleteSubclasses := WeakKeyToCollectionDictionary new
+	ObsoleteSubclasses := WeakIdentityKeyDictionary new
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -71,13 +56,12 @@ Behavior >> >> selector [
 { #category : #'obsolete subclasses' }
 Behavior >> addObsoleteSubclass: aClass [
 	"Weakly remember that aClass was a subclass of the receiver and is now obsolete"
-	| obs |
 
-	obs := self basicObsoleteSubclasses at: self ifAbsent:[WeakArray new].
-	(obs includes: aClass) ifTrue:[^self].
-	obs := obs copyWithout: nil.
-	obs := obs copyWith: aClass.
-	self basicObsoleteSubclasses at: self put: obs
+	| obsoleteSubclasses |
+	obsoleteSubclasses := self basicObsoleteSubclasses
+		                      at: self
+		                      ifAbsent: [ WeakSet new ].
+	obsoleteSubclasses add: aClass
 ]
 
 { #category : #'adding-removing methods' }
@@ -1266,9 +1250,8 @@ Behavior >> obsolete [
 { #category : #'obsolete subclasses' }
 Behavior >> obsoleteSubclasses [
 	"Return all the weakly remembered obsolete subclasses of the receiver"
-	| obs |
-	obs := self basicObsoleteSubclasses at: self ifAbsent: [^ #()].
-	^ obs copyWithout: nil
+
+	^ self basicObsoleteSubclasses at: self ifAbsent: [ #(  ) ]
 ]
 
 { #category : #initialization }
@@ -1341,7 +1324,8 @@ Behavior >> realClass [
 { #category : #'obsolete subclasses' }
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
-	self basicObsoleteSubclasses removeKey: self ifAbsent: []
+
+	self basicObsoleteSubclasses removeKey: self ifAbsent: [  ]
 ]
 
 { #category : #'accessing - properties' }

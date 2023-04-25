@@ -1,31 +1,45 @@
 "
-This is event about protocol rename. It should substitute ClassReorganized announcement 
+I am an announcement raised when we rename a protocol.
+
+I should not be used because I will soon be removed since a rename is an addition and a removal in the end.
 "
 Class {
 	#name : #ProtocolRenamed,
 	#superclass : #ProtocolAnnouncement,
 	#instVars : [
-		'newProtocolName'
+		'newProtocol'
 	],
 	#category : #'System-Announcements-System-Protocols'
 }
 
-{ #category : #accessing }
-ProtocolRenamed >> newProtocolName [
-	^ newProtocolName
+{ #category : #'class initialization' }
+ProtocolRenamed class >> in: aClass from: oldName to: newName [
+
+	^ (self in: aClass protocol: oldName)
+		  newProtocol: newName;
+		  yourself
 ]
 
 { #category : #accessing }
-ProtocolRenamed >> newProtocolName: anObject [
-	newProtocolName := anObject
+ProtocolRenamed >> newProtocol [
+
+	^ newProtocol
 ]
 
 { #category : #accessing }
-ProtocolRenamed >> oldProtocolName [
-	^ protocol
+ProtocolRenamed >> newProtocol: anObject [
+
+	newProtocol := anObject
 ]
 
 { #category : #accessing }
-ProtocolRenamed >> oldProtocolName: aString [
+ProtocolRenamed >> oldProtocol [
+
+	^ self protocol
+]
+
+{ #category : #accessing }
+ProtocolRenamed >> oldProtocol: aString [
+
 	self protocol: aString
 ]

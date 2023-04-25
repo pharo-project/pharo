@@ -126,55 +126,57 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 
 	(self isMenuOpen not and: [
-		self editor atCompletionPosition and: [
-			NECPreferences popupShowWithShortcut matches: {aKeyboardEvent}]])
-				ifTrue: [
-					aKeyboardEvent supressNextKeyPress: true.
-					self openMenu. ^ true ].
-
-	key = KeyboardKey backspace
+		 self editor atCompletionPosition and: [
+			 NECPreferences popupShowWithShortcut matches: { aKeyboardEvent } ] ])
 		ifTrue: [
-			self smartBackspace ifTrue: [ ^ true ]].
+			aKeyboardEvent supressNextKeyPress: true.
+			self openMenu.
+			^ true ].
+
+	key = KeyboardKey backspace ifTrue: [
+		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
 
-	({ KeyboardKey left . KeyboardKey right.
-		KeyboardKey keypadLeft . KeyboardKey keypadRight }
-			includes: key) ifTrue: [ "just move the caret" ^ false ].
+	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
+		menuMorph showDetail.
+		^ true ].
 
-	({ KeyboardKey up . KeyboardKey keypadUp } includes: key)
-		ifTrue: [
-			menuMorph moveUp.
-			^ true ].
-	({ KeyboardKey down . KeyboardKey keypadDown } includes: key)
-		ifTrue: [
-			menuMorph moveDown.
-			^ true ].
-	(key = KeyboardKey pageUp)
-		ifTrue: [
-			menuMorph pageUp.
-			^ true ].
-	(key = KeyboardKey pageDown)
-		ifTrue: [
-			menuMorph pageDown.
-			^ true ].
-	((key = KeyboardKey enter or:[key = KeyboardKey keypadEnter]) and: [ NECPreferences useEnterToAccept ])
-		ifTrue: [
-			menuMorph insertSelected
-				ifTrue: [ ^ true ] ].
-	key = KeyboardKey tab
-		ifTrue: [
-			menuMorph insertSelected
-						ifTrue: [ ^ true ] ].
-	key = KeyboardKey backspace
-		ifTrue: [
-			editor isCaretBehindChar
-				ifFalse: [ self closeMenu ].
-			^ false ].
-	(controlKeyPressed or: [ commandKeyPressed or: [ key = KeyboardKey escape ] ])
-		ifTrue: [
-			self closeMenu.
-			^ true ].
+
+	({
+		 KeyboardKey left.
+		 KeyboardKey right.
+		 KeyboardKey keypadLeft.
+		 KeyboardKey keypadRight } includes: key) ifTrue: [ "just move the caret"
+		^ false ].
+
+	({
+		 KeyboardKey up.
+		 KeyboardKey keypadUp } includes: key) ifTrue: [
+		menuMorph moveUp.
+		^ true ].
+	({
+		 KeyboardKey down.
+		 KeyboardKey keypadDown } includes: key) ifTrue: [
+		menuMorph moveDown.
+		^ true ].
+	key = KeyboardKey pageUp ifTrue: [
+		menuMorph pageUp.
+		^ true ].
+	key = KeyboardKey pageDown ifTrue: [
+		menuMorph pageDown.
+		^ true ].
+	((key = KeyboardKey enter or: [ key = KeyboardKey keypadEnter ])
+		 and: [ NECPreferences useEnterToAccept ]) ifTrue: [
+		menuMorph insertSelected ifTrue: [ ^ true ] ].
+	key = KeyboardKey tab ifTrue: [
+		menuMorph insertSelected ifTrue: [ ^ true ] ].
+	key = KeyboardKey backspace ifTrue: [
+		editor isCaretBehindChar ifFalse: [ self closeMenu ].
+		^ false ].
+	key = KeyboardKey escape ifTrue: [
+		self closeMenu.
+		^ true ].
 	^ false
 ]
 
@@ -227,6 +229,18 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 CompletionEngine >> hasCompletionContext [
 
 	^ context notNil
+]
+
+{ #category : #'menu morph' }
+CompletionEngine >> hasDetail [
+
+	^ self isMenuOpen and: [ menuMorph hasDetail ]
+]
+
+{ #category : #actions }
+CompletionEngine >> hideDetail [
+
+	menuMorph hideDetail
 ]
 
 { #category : #keyboard }
@@ -295,7 +309,9 @@ CompletionEngine >> openMenu [
 				engine: self
 				position: (editor selectionPosition: context completionToken).
 
-	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
+	theMenu isClosed ifFalse: [ 
+		menuMorph := theMenu.
+		theMenu showDetail ]
 ]
 
 { #category : #replacement }
@@ -360,6 +376,12 @@ CompletionEngine >> setEditor: anObject [
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self
+]
+
+{ #category : #actions }
+CompletionEngine >> showDetail [
+
+	menuMorph showDetail
 ]
 
 { #category : #keyboard }
@@ -576,6 +598,5 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph refreshSelection
+	context narrowWith: aParagraphEditor wordAtCaret
 ]

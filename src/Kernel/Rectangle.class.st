@@ -295,7 +295,7 @@ Rectangle >> boundingBox [
 	^ self
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> ceiling [
 	"Answer the integer rectangle to the bottom right of receiver.
 	Return receiver if it is already an integerRectangle."
@@ -329,7 +329,7 @@ Rectangle >> closeTo: aRectangle precision: aPrecision [
 		corner closeTo: aRectangle corner precision: aPrecision ]
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> compressTo: grid [
 	"Answer a Rectangle whose origin and corner are rounded to grid x and grid y.
 	Rounding is done by upper value on origin and lower value on corner so that
@@ -339,7 +339,7 @@ Rectangle >> compressTo: grid [
 				corner: (corner roundDownTo: grid)
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> compressed [
 	"Answer a Rectangle whose origin and corner are rounded to integers.
 	Rounding is done by upper value on origin and lower value on corner so that
@@ -419,7 +419,7 @@ Rectangle >> expandBy: delta [
 	^ delta asMargin expandRectangle: self
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> expandTo: grid [
 	"Answer a Rectangle whose origin and corner are rounded to grid x and grid y.
 	Rounding is done by upper value on origin and lower value on corner so that
@@ -429,7 +429,7 @@ Rectangle >> expandTo: grid [
 				corner: (corner roundUpTo: grid)
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> expanded [
 	"Answer a Rectangle whose origin and corner are rounded to integers.
 	Rounding is done by upper value on origin and lower value on corner so that
@@ -465,7 +465,7 @@ Rectangle >> floatCenter [
 	^ self topLeft + self bottomRight / 2.0
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> floor [
 	"Answer the integer rectangle to the topLeft of receiver.
 	Return receiver if it is already an integerRectangle."
@@ -620,7 +620,7 @@ Rectangle >> intersects: aRectangle [
 	^ true
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> isIntegerRectangle [
 	"Answer true if all component of receiver are integral."
 
@@ -723,7 +723,7 @@ Rectangle >> printOn: aStream [
 
 { #category : #'rectangle functions' }
 Rectangle >> quickMerge: aRectangle [
-	"Answer the receiver if it encloses the given rectangle or the merge of the two rectangles if it doesn't. THis method is an optimization to reduce extra rectangle creations."
+	"Answer the receiver if it encloses the given rectangle or the merge of the two rectangles if it doesn't. This method is an optimization to reduce extra rectangle creations."
 	| useRcvr rOrigin rCorner minX maxX minY maxY |
 
 	aRectangle ifNil: [ ^self ].
@@ -751,10 +751,10 @@ Rectangle >> quickMerge: aRectangle [
 			[ useRcvr := false.
 			rCorner y ]
 		ifFalse: [ corner y ].
-	useRcvr
-		ifTrue: [ ^ self ]
+	^ useRcvr
+		ifTrue: [ self ]
 		ifFalse:
-			[ ^ Rectangle
+			[ Rectangle
 				origin: minX @ minY
 				corner: maxX @ maxY ]
 ]
@@ -777,8 +777,10 @@ Rectangle >> quickMergePoint: aPoint [
 
 { #category : #'rectangle functions' }
 Rectangle >> rectanglesAt: y height: ht [
-	(y+ht) > self bottom ifTrue: [^ Array new].
-	^ Array with: (origin x @ y corner: corner x @ (y+ht))
+
+	^ y + ht > self bottom
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { (origin x @ y corner: corner x @ (y + ht)) } ]
 ]
 
 { #category : #accessing }
@@ -807,7 +809,7 @@ Rectangle >> rotateBy: direction centerAt: aPoint [
 		rectangle: (corner rotateBy: direction centerAt: aPoint)
 ]
 
-{ #category : #'truncation and roundoff' }
+{ #category : #'truncation and round off' }
 Rectangle >> roundTo: grid [
 	"Answer a Rectangle whose origin and corner are rounded to grid x and grid y."
 

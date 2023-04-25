@@ -33,8 +33,6 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
-	self addSelectorSilently: selector withMethod: compiledMethod.
-
 	oldProtocol := self organization protocolNameOfElement: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self organization classify: selector under: ((protocol isString
@@ -43,6 +41,8 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
 	newProtocol := self organization protocolNameOfElement: selector.
+
+	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
@@ -70,7 +70,7 @@ ClassDescription >> addMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods"
 
-	self organization addProtocolNamed: aSymbol
+	self organization addProtocol: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -158,16 +158,6 @@ ClassDescription >> baseClass [
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
 						-> '`@receiver instanceSide'.
 	^ self instanceSide
-]
-
-{ #category : #organization }
-ClassDescription >> basicOrganization [
-	^ organization
-]
-
-{ #category : #organization }
-ClassDescription >> basicOrganization: aClassOrg [
-	organization := aClassOrg
 ]
 
 { #category : #'accessing - comment' }
@@ -347,7 +337,7 @@ ClassDescription >> commentStamp [
 { #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
 	"update the changeStamp"
-	self comment: self instanceSide organization comment stamp: changeStamp
+	self comment: self instanceSide comment stamp: changeStamp
 ]
 
 { #category : #compiling }
@@ -846,19 +836,18 @@ ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
 
-	self basicOrganization ifNil: [
-		| classOrganization |
-		self basicOrganization: (classOrganization := ClassOrganization new).
-		self isTrait ifFalse: [ classOrganization initializeClass: self ] ].
-	^ self basicOrganization setSubject: self "Making sure that subject is set correctly. It should not be necessary."
+	^ organization ifNil: [
+		  self organization: ClassOrganization new.
+		  self isTrait ifFalse: [ organization initializeClass: self ].
+		  organization ]
 ]
 
 { #category : #organization }
 ClassDescription >> organization: aClassOrg [
 	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
 
-	aClassOrg ifNotNil: [aClassOrg setSubject: self].
-	self basicOrganization: aClassOrg
+	aClassOrg ifNotNil: [ aClassOrg setSubject: self ].
+	organization := aClassOrg
 ]
 
 { #category : #printing }
@@ -880,15 +869,6 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> removeMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods.
-	Here we could remove what we not need"
-
-	self organization removeProtocolIfEmpty: aSymbol
-]
-
 { #category : #'accessing - method dictionary' }
 ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
@@ -896,6 +876,13 @@ ClassDescription >> removeProtocol: protocolName [
 
 	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
 	self organization removeProtocolIfEmpty: protocolName
+]
+
+{ #category : #'accessing - protocols' }
+ClassDescription >> removeProtocolIfEmpty: aProtocol [
+	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
+
+	self organization removeProtocolIfEmpty: aProtocol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -1108,7 +1095,7 @@ ClassDescription >> tagsForMethods [
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
 	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	allProtocols := self organization protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
 
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]

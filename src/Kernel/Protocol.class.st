@@ -39,7 +39,9 @@ Protocol >> addAllMethodsFrom: aProtocol [
 
 { #category : #'adding-removing' }
 Protocol >> addMethodSelector: aSymbol [
-	^ methodSelectors add: aSymbol
+	(methodSelectors includes: aSymbol) ifTrue: [ ^ self ].
+	
+	methodSelectors := methodSelectors copyWith: aSymbol
 ]
 
 { #category : #testing }
@@ -52,8 +54,8 @@ Protocol >> includesSelector: selector [
 Protocol >> initialize [
 
 	super initialize.
-
-	methodSelectors := IdentitySet new.
+	
+	self resetMethodSelectors.
 	name := self class unclassified
 ]
 
@@ -69,6 +71,11 @@ Protocol >> isExtensionProtocol [
 	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
 
 	^ self name first = $*
+
+{ #category : #testing }
+Protocol >> isUnclassifiedProtocol [
+
+	^ self name = self class unclassified
 ]
 
 { #category : #accessing }
@@ -104,17 +111,17 @@ Protocol >> printOn: aStream [
 ]
 
 { #category : #'adding-removing' }
-Protocol >> removeAllMethodSelectors [
-	^ methodSelectors removeAll
-]
-
-{ #category : #'adding-removing' }
 Protocol >> removeMethodSelector: aSymbol [
-	^ methodSelectors remove: aSymbol
+	methodSelectors := methodSelectors copyWithout: aSymbol
 ]
 
 { #category : #accessing }
 Protocol >> rename: newName [
 
 	self name: newName
+]
+
+{ #category : #'adding-removing' }
+Protocol >> resetMethodSelectors [
+	methodSelectors := Array empty
 ]

@@ -10,6 +10,11 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #testing }
+VariableNotDeclared class >> isDeprecated [
+	^true
+]
+
 { #category : #accessing }
 VariableNotDeclared >> classSymbol [
 	^ self variableNode name

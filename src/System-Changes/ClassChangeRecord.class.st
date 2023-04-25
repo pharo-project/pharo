@@ -83,10 +83,9 @@ ClassChangeRecord >> assimilateAllChangesIn: otherRecord [
 		changeType := changeRecord changeType.
 		(changeType == #remove or: [changeType == #addedThenRemoved])
 			ifTrue:
-				[changeType == #addedThenRemoved
-					ifTrue: [self atSelector: selector put: #add].
-				self noteRemoveSelector: selector priorMethod: nil
-						lastMethodInfo: changeRecord methodInfoFromRemoval]
+				[ 
+				changeType == #addedThenRemoved ifTrue: [ self atSelector: selector put: #add ].
+				self noteRemoveSelector: selector priorMethod: nil lastSourcePointer: changeRecord lastSourcePointer ]
 			ifFalse:
 				[self atSelector: selector put: changeType]]
 ]
@@ -269,17 +268,16 @@ ClassChangeRecord >> notePriorDefinition: oldClass [
 ]
 
 { #category : #'method changes' }
-ClassChangeRecord >> noteRemoveSelector: selector priorMethod: priorMethod lastMethodInfo: infoOrNil [
+ClassChangeRecord >> noteRemoveSelector: selector priorMethod: priorMethod lastSourcePointer: lastSourcePointer [
 
 	| methodChange |
 	methodChange := self findOrMakeMethodChangeAt: selector priorMethod: priorMethod.
-	methodChange changeType == #add
-		ifTrue: [methodChange noteChangeType: #addedThenRemoved]
-		ifFalse: [methodChange noteChangeType: #remove].
+	methodChange noteChangeType: (methodChange changeType == #add
+			 ifTrue: [ #addedThenRemoved ]
+			 ifFalse: [ #remove ]).
 
-	infoOrNil ifNotNil:
-		["Save the source code pointer and category so can still browse old versions"
-		methodChange noteMethodInfoFromRemoval: infoOrNil]
+	"Save the source code pointer so we can still browse old versions"
+	methodChange lastSourcePointer: lastSourcePointer
 ]
 
 { #category : #definition }

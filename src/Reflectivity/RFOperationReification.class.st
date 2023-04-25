@@ -85,7 +85,7 @@ RFOperationReification >> genForRBMethodNode [
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.
 
-	ast messages second arguments: {(RBLiteralNode value: entity methodNode method)}.
+	ast messages second arguments: {(RBLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
 	^ast
 ]
 

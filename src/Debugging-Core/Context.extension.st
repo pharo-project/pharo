@@ -64,7 +64,7 @@ Context >> lookupVar: aSymbol [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupVar: aSymbol declare: aBoolean [
-	^ self astScope lookupVar: aSymbol declare: aBoolean
+	^ self astScope lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
@@ -343,7 +343,7 @@ Context class >> tallyInstructions: aBlock [
 	
 	This method uses the in-image bytecode interpreter to evaluate and count the instructions."
 	
-	"(Context tallyInstructions: [3.14159 printString]) size >>> 122"
+	"(Context tallyInstructions: [3.14159 printString]) size >>> 120"
 	
 	| tallies |
 	tallies := Bag new.

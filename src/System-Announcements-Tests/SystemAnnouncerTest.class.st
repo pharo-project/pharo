@@ -38,11 +38,11 @@ SystemAnnouncerTest >> testProtocolAdded [
 		protocolAdded := ann protocol ].
 
 	class := factory newClass.
-	class organization addProtocolNamed: 'shiny-new-category'.
+	class organization addProtocol: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classReorganized equals: class.
-	self assert: protocolAdded equals: 'shiny-new-category'
+	self assert: protocolAdded name equals: 'shiny-new-category'
 ]
 
 { #category : #tests }
@@ -57,13 +57,13 @@ SystemAnnouncerTest >> testProtocolRemoved [
 		protocolRemoved := ann protocol ].
 
 	class := factory newClass.
-	class organization addProtocolNamed: 'shiny-new-category'.
+	class organization addProtocol: 'shiny-new-category'.
 
-	class organization removeProtocolNamed: 'shiny-new-category'.
+	class organization removeProtocolIfEmpty: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classRemoved equals: class.
-	self assert: protocolRemoved equals: 'shiny-new-category'
+	self assert: protocolRemoved name equals: 'shiny-new-category'
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ SystemAnnouncerTest >> testSuspendAllWhile [
 
 	self assert: value equals: 42. "The answer is always 42 :)"
 
-	SystemAnnouncer uniqueInstance announce: ClassAdded.
+	SystemAnnouncer announce: ClassAdded.
 
 	self assert: value equals: 43
 ]
@@ -89,7 +89,7 @@ SystemAnnouncerTest >> testSuspendAllWhileStoring [
 
 	| stored |
 
-	stored := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ SystemAnnouncer uniqueInstance announce: ClassAdded ].
+	stored := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ SystemAnnouncer announce: ClassAdded ].
 
 	self assert: stored size equals: 1.
 	self assert: ( stored at: 1 ) equals: ClassAdded
@@ -100,7 +100,7 @@ SystemAnnouncerTest >> testSuspendAllWhileStoringNested [
 	|  stored |
 
 	stored := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [
-		SystemAnnouncer uniqueInstance suspendAllWhileStoring:[SystemAnnouncer uniqueInstance announce: ClassAdded ]
+		SystemAnnouncer uniqueInstance suspendAllWhileStoring:[SystemAnnouncer announce: ClassAdded ]
 	].
 
 	self assert: stored size equals: 1.
