@@ -389,7 +389,11 @@ RBScanner >> scanIdentifierOrKeyword [
 	| name |
 	self scanName.
 	(currentCharacter = $: and: [stream peek ~= $=])
-		ifTrue: [^self scanKeyword].
+		ifTrue: [
+			buffer nextPut: currentCharacter.
+			self step.
+			name := buffer contents.
+			^RBKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
 	name = 'true'
 		ifTrue:
