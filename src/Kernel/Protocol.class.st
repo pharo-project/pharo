@@ -71,6 +71,7 @@ Protocol >> isExtensionProtocol [
 	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
 
 	^ self name first = $*
+]
 
 { #category : #testing }
 Protocol >> isUnclassifiedProtocol [
