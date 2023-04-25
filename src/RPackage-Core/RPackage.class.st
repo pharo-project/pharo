@@ -110,9 +110,9 @@ RPackage class >> initializeProperties [
 { #category : #'instance creation' }
 RPackage class >> named: aString [
 
-	| newPackage |
-	newPackage := self new name: aString ;yourself.
-	^ newPackage
+	^ self new
+		  name: aString;
+		  yourself
 ]
 
 { #category : #'protected only for tests' }
@@ -1242,14 +1242,20 @@ RPackage >> removeClassesMatchingTag: aTag [
 
 { #category : #removing }
 RPackage >> removeFromSystem [
-	| extendedClasses |
 
+	| extendedClasses categories |
+	categories := (self classTags collect: [ :each | each categoryName ] as: Set)
+		              add: self name;
+		              yourself.
 	extendedClasses := self extendedClasses.
 
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	extendedClasses do:[:each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol].
+	extendedClasses do: [ :each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol ].
+	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
+	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
+	categories do: [ :cat | self organizer systemOrganizer removeCategory: cat ].
 	self unregister
 ]
 

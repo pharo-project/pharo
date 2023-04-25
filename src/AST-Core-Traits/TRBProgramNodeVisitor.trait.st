@@ -7,6 +7,10 @@ Trait {
 }
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 	"Sent *each time* an argument node is found"
 	^ self visitVariableNode: anArgumentNode

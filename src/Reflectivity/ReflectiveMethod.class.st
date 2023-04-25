@@ -31,6 +31,17 @@ ReflectiveMethod >> ast [
 ]
 
 { #category : #evaluation }
+ReflectiveMethod >> compileAST [
+
+	OCASTSemanticCleaner clean: ast.
+	ast compilationContext
+		semanticAnalyzerClass: RFSemanticAnalyzer;
+		astTranslatorClass: RFASTTranslator.
+	ast doSemanticAnalysis. "force semantic analysis"
+	^ ast generate: compiledMethod trailer
+]
+
+{ #category : #evaluation }
 ReflectiveMethod >> compileAndInstallCompiledMethod [
 	self wrapperNeeded ifTrue: [ self generatePrimitiveWrapper ].
 	self recompileAST.
@@ -82,12 +93,7 @@ ReflectiveMethod >> flushCache [
 { #category : #evaluation }
 ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
-	OCASTSemanticCleaner clean: ast.
-	ast compilationContext
-		semanticAnalyzerClass: RFSemanticAnalyzer;
-		astTranslatorClass: RFASTTranslator.
-	ast doSemanticAnalysis. "force semantic analysis"
-	wrappedMethod := ast generate: compiledMethod trailer.
+	wrappedMethod := self compileAST.
 
 	send := RBMessageNode
 		receiver: RBVariableNode selfNode
@@ -200,13 +206,8 @@ ReflectiveMethod >> printOn: aStream [
 { #category : #evaluation }
 ReflectiveMethod >> recompileAST [
 
-	OCASTSemanticCleaner clean: ast.
-	ast compilationContext
-		semanticAnalyzerClass: RFSemanticAnalyzer;
-		astTranslatorClass: RFASTTranslator.
-	ast doSemanticAnalysis. "force semantic analysis"
-	compiledMethod := ast generate: compiledMethod trailer.
-	ast compilationContext compiledMethod: compiledMethod.
+	compiledMethod := self compileAST.
+	ast compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self
 ]
 

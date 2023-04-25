@@ -144,11 +144,6 @@ IRMethod >> firstInstructionMatching: aBlock [
 	^nil
 ]
 
-{ #category : #accessing }
-IRMethod >> forceLongForm [
-	^ self compilationContext optionLongIvarAccessBytecodes
-]
-
 { #category : #translating }
 IRMethod >> generate [
 	^self generate: CompiledMethodTrailer empty
@@ -258,8 +253,9 @@ IRMethod >> numArgs: anInteger [
 
 { #category : #optimizing }
 IRMethod >> optimize [
+	"Perform all optimizations"
+
 	self removeEmptyStart.
-	self compilationContext optionOptimizeIR ifFalse: [^self].
 	self absorbJumpsToSingleInstrs
 ]
 

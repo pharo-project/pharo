@@ -1107,9 +1107,7 @@ ChangeSet >> methodRemoved: anEvent [
 		removeSelector: anEvent selector
 		class: anEvent methodClass
 		priorMethod: anEvent method
-		lastMethodInfo: {
-				anEvent method sourcePointer.
-				anEvent protocol }
+		lastSourcePointer: anEvent method sourcePointer
 ]
 
 { #category : #testing }
@@ -1342,14 +1340,11 @@ ChangeSet >> removePreamble [
 ]
 
 { #category : #'change logging' }
-ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastMethodInfo: info [
-	"Include indication that a method has been forgotten.
-	info is a pair of the source code pointer and message category
-	for the method that was removed."
+ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastSourcePointer: lastSourcePointer [
+	"Include indication that a method has been forgotten."
 
-	class wantsChangeSetLogging ifFalse: [^ self].
-	(self changeRecorderFor: class)
-		noteRemoveSelector: selector priorMethod: priorMethod lastMethodInfo: info
+	class wantsChangeSetLogging ifFalse: [ ^ self ].
+	(self changeRecorderFor: class) noteRemoveSelector: selector priorMethod: priorMethod lastSourcePointer: lastSourcePointer
 ]
 
 { #category : #'method changes' }

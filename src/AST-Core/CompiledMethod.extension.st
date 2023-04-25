@@ -28,6 +28,6 @@ CompiledMethod >> parseTree [
 		source: self sourceCode;
 		class: self methodClass;
 		parse.
-	ast compilationContext compiledMethod: self.
+	ast compiledMethod: self.
 	^ast
 ]

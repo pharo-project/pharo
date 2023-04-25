@@ -14,7 +14,7 @@ ArgumentVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
 { #category : #queries }
 ArgumentVariable >> definingNode [
-	^ scope node arguments detect: [ :each | each name = name ]
+	^ scope node arguments detect: [ :each | each variable == self ]
 ]
 
 { #category : #testing }

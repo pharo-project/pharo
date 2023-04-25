@@ -91,12 +91,6 @@ CompiledMethodTrailer class >> empty [
 	^ self new
 ]
 
-{ #category : #generated }
-CompiledMethodTrailer class >> trailerKindDecoders [
-
-	^#(#decodeNoTrailer #decodeClearedTrailer #decodeTempsNamesQCompress #decodeTempsNamesZip #decodeSourceBySelector #decodeSourceByStringIdentifier #decodeEmbeddedSourceQCompress #decodeEmbeddedSourceZip #decodeVarLengthSourcePointer #decodeExtendedKind #decodeNativeCodeTrailer #decodeEmbeddedSource #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeUndefined #decodeSourcePointer)
-]
-
 { #category : #kinds }
 CompiledMethodTrailer class >> trailerKinds [
 	" see class comment for description."
@@ -104,17 +98,17 @@ CompiledMethodTrailer class >> trailerKinds [
 	^#(
 "000000" #NoTrailer
 "000001" #ClearedTrailer
-"000010" #TempsNamesQCompress
-"000011" #TempsNamesZip
-"000100" #SourceBySelector
-"000101" #SourceByStringIdentifier
-"000110" #EmbeddedSourceQCompress
-"000111" #EmbeddedSourceZip
+"000010" #Undefined
+"000011" #Undefined
+"000100" #Undefined
+"000101" #Undefined
+"000110" #Undefined
+"000111" #Undefined
 "001000" #VarLengthSourcePointer
-"001001" #ExtendedKind
-"001010" #NativeCodeTrailer  "this number is hardcoded in VM"
-"001011" #EmbeddedSource
-"001100" #EmbeddedSourceWide
+"001001" #Undefined
+"001010" #Undefined
+"001011" #Undefined
+"001100" #Undefined
 "001101" #Undefined
 "001110" #Undefined
 "001111" #Undefined
@@ -173,39 +167,9 @@ CompiledMethodTrailer class >> trailerKinds [
 CompiledMethodTrailer >> clear [
 	kind := #NoTrailer.
 	size := 4.
-	data := encodedData := method := nil
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> compressSourceCode: aString [
-	"Embed the source code into compiled method trailer,
-	pick best compression method"
-	| temp |
-	self clear.
-	kind := #EmbeddedSourceQCompress.
-	data := aString asString.
-
-	self encode.
-	temp := encodedData.
-
-	kind := #EmbeddedSourceZip.
-	self encode.
-	encodedData size > temp size ifTrue: [
-		encodedData := temp.
-		kind := #EmbeddedSourceQCompress.
-		size := encodedData size.
-		]
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> compressedSourceCode [
-	"Answer the source code of compiled method.
-	Note: it does not attempts to read from source files using sourcePointer,
-	nor reconstruct the source code using temp names"
-
-	kind == #EmbeddedSourceQCompress ifTrue: [^ data ].
-	kind == #EmbeddedSourceZip ifTrue: [^ data ].
-	^ nil
+	data := 0.
+	encodedData :=  #[0 0 0 0].
+	method := nil
 ]
 
 { #category : #'creating a method' }
@@ -233,82 +197,6 @@ CompiledMethodTrailer >> decodeClearedTrailer [
 	"Size is set in #decodeLengthField"
 
 	self decodeLengthField
-]
-
-{ #category : #decoding }
-CompiledMethodTrailer >> decodeEmbeddedSource [
-	"data is string with method's source code"
-
-	| len start end newSize byteArray |
-	len := self decodeLengthField.
-	start := method size - self size + 1.
-	end := method size - self size + len.
-	newSize := end - start + 1.
-	byteArray := (ByteArray new: newSize)
-		replaceFrom: 1
-		to: newSize
-		with: method
-		startingAt: start.
-	data := byteArray asString
-]
-
-{ #category : #decoding }
-CompiledMethodTrailer >> decodeEmbeddedSourceQCompress [
-	"Trailer is compressed string using qCompress method + length field + 1 byte
-
-	Decompress strings compressed by qCompress:.
-	Most common 11 chars get values 0-10 packed in one 4-bit nibble;
-	next most common 52 get values 12-15 (2 bits) * 16 plus next nibble;
-	escaped chars get three nibbles"
-	| len str input |
-
-	len := self decodeLengthField.
- 	input := (ReadStream on: method from: method size - size+1 to: method size - size + len).
-
-	str := String streamContents:
-		[:strm | | nextNibble nibble peek charTable |
-		charTable :=  "Character encoding table must match qCompress:"
-		'ear tonsilcmbdfghjkpquvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345[]()'.
-		peek := true.
-		nextNibble := [peek
-						ifTrue: [peek := false. input peek ifNil: [0] ifNotNil: [:b| b // 16]]
-						ifFalse: [peek := true. input next ifNil: [0] ifNotNil: [:b| b \\ 16]]].
-		[input atEnd] whileFalse:
-			[(nibble := nextNibble value) = 0
-				ifTrue: [input atEnd ifFalse:
-						[strm nextPut: (Character value: nextNibble value * 16 + nextNibble value)]]
-				ifFalse:
-					[nibble <= 11
-						ifTrue:
-							[strm nextPut: (charTable at: nibble)]
-						ifFalse:
-							[strm nextPut: (charTable at: (nibble-12) * 16 + nextNibble value)]]]].
-
-	data := str asByteArray utf8Decoded
-]
-
-{ #category : #decoding }
-CompiledMethodTrailer >> decodeEmbeddedSourceWide [
-	"data is string with method's source code"
-
-	| len start end newSize byteArray |
-	len := self decodeLengthField.
-	start := method size - self size + 1.
-	end := method size - self size + len.
-	newSize := end - start + 1.
-	byteArray := (ByteArray new: newSize)
-		replaceFrom: 1
-		to: newSize
-		with: method
-		startingAt: start.
-	data := byteArray utf8Decoded
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> decodeExtendedKind [
-
-	"reserved for future use"
-	self shouldBeImplemented
 ]
 
 { #category : #private }
@@ -371,44 +259,11 @@ CompiledMethodTrailer >> decodeVarLengthSourcePointer [
 	size := method size - pos
 ]
 
-{ #category : #accessing }
-CompiledMethodTrailer >> embeddedSourceCode [
-	"Answer the already decoded source code of compiled method"
-
-	^ data
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> embeddedSourceCode: aString [
-	"Embed the source code into compiled method trailer"
-
-	self clear.
-
-	data := aString asString.
-	kind := data isWideString
-		ifTrue: [#EmbeddedSourceWide]
-		ifFalse: [#EmbeddedSource].
-	self encode
-]
-
 { #category : #encoding }
 CompiledMethodTrailer >> encode [
 	"encode the trailer into byte array"
 
-	encodedData := nil.
-
-	"inline some common types to speed up encoding"
-	kind == #SourcePointer
-		ifTrue: [ ^self encodeSourcePointer ].
-   kind == #VarLengthSourcePointer
-		ifTrue: [ ^self encodeVarLengthSourcePointer ].
-	kind == #EmbeddedSource
-		ifTrue: [ ^self encodeEmbeddedSource ].
-	kind == #NoTrailer
-		ifTrue: [ ^self encodeNoTrailer ].
-
-	"slow but general decoding using perform"
-	self perform: ('encode' , kind) asSymbol
+	encodedData := data asByteArrayOfSize: 4
 ]
 
 { #category : #encoding }
@@ -419,54 +274,6 @@ CompiledMethodTrailer >> encodeClearedTrailer [
 	kind := #NoTrailer.
 
 	^ self encode
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> encodeEmbeddedSource [
-	"data is string with method's source code"
-
-	| length str encodedLength |
-	length := data size.
-	str := WriteStream on: (ByteArray new: length).
-	encodedLength := self encodeLengthField: length.
-	str
-		nextPutAll: data asByteArray;
-		nextPutAll: encodedLength;	"trailing byte"
-	 	nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents.
-	size := encodedData size
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> encodeEmbeddedSourceQCompress [
-	"data is string with method's source code, encode it using qCompress method"
-
-	| str length encodedLength |
-	[ data isString ] assert.
-	str := self qCompress: data.
-	length := str position.
-	encodedLength := self encodeLengthField: length.
-	str nextPutAll: encodedLength.	"trailing byte"
-	str nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents.
-	size := encodedData size
-]
-
-{ #category : #encoding }
-CompiledMethodTrailer >> encodeEmbeddedSourceWide [
-	"data is string with method's source code"
-
-	| str length encodedLength utf8data |
-	[ data isString ] assert.
-	utf8data := data utf8Encoded.
-	str := WriteStream on: (ByteArray new: utf8data size).
-	length := utf8data size.
-	encodedLength := self encodeLengthField: length.
-	str nextPutAll: utf8data asByteArray.
-	str nextPutAll: encodedLength.	"trailing byte"
-	str nextPut: self kindAsByte + encodedLength size - 1.
-	encodedData := str contents.
-	size := encodedData size
 ]
 
 { #category : #private }
@@ -548,11 +355,13 @@ CompiledMethodTrailer >> endPC [
 
 { #category : #testing }
 CompiledMethodTrailer >> hasSource [
-	^ kind == #EmbeddedSource or: [ kind == #EmbeddedSourceQCompress or: [ kind == #EmbeddedSourceZip ] ]
+	"Not supported anymore, trailers never encode source"
+	^ false
 ]
 
 { #category : #testing }
 CompiledMethodTrailer >> hasSourcePointer [
+	encodedData = #[0 0 0 0] ifTrue: [ ^false ].
 	^ kind == #SourcePointer or: [ kind == #VarLengthSourcePointer ]
 ]
 
@@ -563,7 +372,7 @@ CompiledMethodTrailer >> initialize [
 
 { #category : #testing }
 CompiledMethodTrailer >> isEmpty [
-	^ kind == #NoTrailer or: [ kind == #ClearedTrailer ]
+	^ kind == #NoTrailer or: [ kind == #ClearedTrailer or: [encodedData = #[0 0 0 0]]]
 ]
 
 { #category : #accessing }
@@ -586,64 +395,16 @@ CompiledMethodTrailer >> kindAsByte [
 { #category : #accessing }
 CompiledMethodTrailer >> method: aMethod [
 
-	| flagByte |
-
-	data := size := nil.
+		| msz |
 	method := aMethod.
-	flagByte := method at: method size.
-
-	"trailer kind encoded in 6 high bits of last byte"
-	kind := self class trailerKinds at: 1+(flagByte>>2).
-
-	"decode the trailer bytes, inline some common types to speed up decoding"
-	kind == #SourcePointer
-		ifTrue: [ ^self decodeSourcePointer ].
-   kind == #VarLengthSourcePointer
-		ifTrue: [ ^self decodeVarLengthSourcePointer ].
-	kind == #EmbeddedSource
-		ifTrue: [ ^self decodeEmbeddedSource ].
-	kind == #NoTrailer
-		ifTrue: [ ^self decodeNoTrailer ].
-
-	"slow but general decoding using perform"
-	self perform: ('decode' , kind) asSymbol
-]
-
-{ #category : #private }
-CompiledMethodTrailer >> qCompress: string [
-	"A very simple text compression routine designed for method temp names.
-	 Most common 11 chars get values 1-11 packed in one 4-bit nibble;
-	 the next most common get values 12-15 (2 bits) * 16 plus next nibble;
-	 unusual ones get three nibbles, the first being the escape nibble 0.
-
-	Answer the write stream with compressed data inside"
-
-	| utf8str stream oddNibble |
-
-	string isEmpty ifTrue:
-		[^self qCompress: ' '].
-	utf8str := string utf8Encoded.
-
-	stream := WriteStream on: (ByteArray new: utf8str size).
-	oddNibble := nil.
-
-	utf8str do:	[:byte | | ix |
-		ix := 'ear tonsilcmbdfghjkpquvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345[]()'
-			indexOf: byte asCharacter ifAbsent: 0.
-		(ix = 0
-			ifTrue:
-				[{ 0. byte // 16. byte \\ 16 }]
-			ifFalse:
-				[ix <= 11
-					ifTrue: [{ ix }]
-					ifFalse: [{ ix//16+12. ix\\16 }]])
-				do: [:nibble |
-					oddNibble
-						ifNotNil: [stream nextPut: oddNibble*16 + nibble. oddNibble := nil]
-						ifNil: [oddNibble := nibble]]].
-	oddNibble ifNotNil: "4 = 'ear tonsil' indexOf: Character space"
-		[stream nextPut: oddNibble * 16 + 4].
-	^ stream
+	kind := #SourcePointer.
+	msz := method size.
+	encodedData := {
+		method at: msz-3.
+		method at: msz-2.
+		method at: msz-1.
+		method at: msz } asByteArray.
+	data := encodedData asInteger
 ]
 
 { #category : #accessing }
@@ -654,27 +415,13 @@ CompiledMethodTrailer >> size [
 
 { #category : #accessing }
 CompiledMethodTrailer >> sourceCode [
-	"Answer the source code of compiled method as it was decoded.
-	Note: it does not attempts to read from source files using sourcePointer,
-	nor reconstruct the source code using temp names"
-
-	kind == #EmbeddedSource ifTrue: [ ^data ].
-	kind == #EmbeddedSourceWide ifTrue: [ ^data ].
-	kind == #EmbeddedSourceQCompress ifTrue: [ ^data ].
-	kind == #EmbeddedSourceZip ifTrue: [ ^data ].
+	"Not supported anymore, trailers never encode source"
 	^ nil
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> sourceCode: aString [
-
-	^ self embeddedSourceCode: aString
 ]
 
 { #category : #accessing }
 CompiledMethodTrailer >> sourcePointer [
 
-	kind == #NativeCodeTrailer ifTrue: [ ^ data at: 3].
 	^ (kind == #SourcePointer or: [ kind == #VarLengthSourcePointer ] )
 		ifTrue: [ data ]
 		ifFalse: [ 0 ]
@@ -686,8 +433,7 @@ CompiledMethodTrailer >> sourcePointer: ptr [
 	self clear.
 	data := ptr.
 	"see if we can encode pointer using 4-byte trailer"
-	kind := (ptr between: 16r1000000 and: 16r4FFFFFF)
-		ifTrue: [ #SourcePointer ] ifFalse: [ #VarLengthSourcePointer ]
+	kind := #SourcePointer
 ]
 
 { #category : #testing }

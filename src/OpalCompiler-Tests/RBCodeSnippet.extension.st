@@ -5,7 +5,7 @@ RBCodeSnippet >> compile [
 
 	^ [ OpalCompiler new
 		  permitFaulty: true;
-		  noPattern: isMethod not;
+		  isScripting: isScripting;
 		  compile: self source ]
 	on: CodeError do: [ :e |
 		"Compilation should success, because its the *faulty* mode".
@@ -19,7 +19,7 @@ RBCodeSnippet >> compile [
 RBCodeSnippet >> compileOnError: aBlock [
 
 	^ [ OpalCompiler new
-		  noPattern: isMethod not;
+		  isScripting: isScripting;
 		  compile: self source ] on: CodeError do: [ :e | aBlock cull: e ]
 ]
 
@@ -34,7 +34,7 @@ RBCodeSnippet >> doSemanticAnalysis [
 	So just ask the compiler."
 
 	^ OpalCompiler new
-		  noPattern: isMethod not;
+		  isScripting: isScripting;
 		  parse: self source "Note: `parse:` also does the semantic analysis and return the AST"
 ]
 
@@ -42,7 +42,7 @@ RBCodeSnippet >> doSemanticAnalysis [
 RBCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 
 	^ [ OpalCompiler new
-		  noPattern: isMethod not;
+		  isScripting: isScripting;
 		  permitFaulty: false;
 		  parse: self source ] on: CodeError do: [ :e | aBlock value: e ]
 ]

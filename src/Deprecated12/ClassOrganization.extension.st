@@ -135,15 +135,6 @@ ClassOrganization >> notifyOfChangedCategoriesFrom: oldProtocolName to: newProto
 ]
 
 { #category : #'*Deprecated12' }
-ClassOrganization >> notifyOfRemovedCategory: protocolName [
-
-	self
-		deprecated: 'Use #notifyOfRemovedProtocolNamed: instead.'
-		transformWith: '`@rcv notifyOfRemovedCategory: `@arg' -> '`@rcv notifyOfRemovedProtocolNamed: `@arg'.
-	self notifyOfRemovedProtocolNamed: protocolName
-]
-
-{ #category : #'*Deprecated12' }
 ClassOrganization >> removeCategory: protocolName [
 
 	self deprecated: 'Use #removeProtocolIfEmpty: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.

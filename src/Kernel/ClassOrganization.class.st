@@ -32,7 +32,7 @@ ClassOrganization >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
-	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: aProtocol).
+	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -51,7 +51,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 
 	self silentlyClassify: selector under: newProtocol.
 
-	"During the first classification of a method we don't need to announce the classification because users can subscribe to the method added announcement."
+	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
 	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol name ]
 ]
 
@@ -148,12 +148,6 @@ ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProto
 ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: newProtocolName [
 
 	oldProtocolName ~= newProtocolName ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
-]
-
-{ #category : #notifications }
-ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
-
-	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocolName)
 ]
 
 { #category : #accessing }
@@ -262,7 +256,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames copy.
 	protocols := protocols copyWithout: protocol.
-	self notifyOfRemovedProtocolNamed: protocol name.
+	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
 

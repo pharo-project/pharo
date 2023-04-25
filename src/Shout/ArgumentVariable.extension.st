@@ -8,5 +8,8 @@ ArgumentVariable >> styleNameIn: aRBVariableNode [
 			  aRBVariableNode isDefinition
 				  ifTrue: [ #blockPatternArg ]
 				  ifFalse: [ #blockArg ] ]
-		  ifFalse: [ #argument ]
+		  ifFalse: [
+			  aRBVariableNode isDefinition			
+				  ifTrue: [ #patternArg ]
+				  ifFalse: [ #argument ] ]
 ]
