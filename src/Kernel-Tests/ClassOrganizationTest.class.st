@@ -85,6 +85,31 @@ ClassOrganizationTest >> testClassifyUnder [
 ]
 
 { #category : #tests }
+ClassOrganizationTest >> testClassifyUnderWithNil [
+	"Set the base for the test"
+	| unclassified|
+	unclassified := Protocol unclassified.
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
+
+	self organization classify: #king under: nil.
+
+	self assertCollection: self organization protocolNames hasSameElements: { #empty. #one. unclassified }.
+	self assertCollection: (self organization protocolNamed: unclassified ) methodSelectors hasSameElements: #( #king ).
+	
+	self organization classify: #luz under: #owl.
+
+	self assertCollection: self organization protocolNames hasSameElements: { #empty. #one. unclassified . #owl }.
+	self assertCollection: (self organization protocolNamed: #owl ) methodSelectors hasSameElements: #( #luz ).
+	
+	"Now let's test the behavior if we already have a protocol.
+	The behavior should change to not change the protocol but this test will ensure that the change is intentional and not a regression."
+	self organization classify: #luz under: nil.
+
+	self assertCollection: self organization protocolNames hasSameElements: { #empty. #one. unclassified }.
+	self assertCollection: (self organization protocolNamed: unclassified ) methodSelectors hasSameElements: #( #king #luz ).
+]
+
+{ #category : #tests }
 ClassOrganizationTest >> testClassifyUnderWithProtocol [
 	"Set the base for the test"
 
