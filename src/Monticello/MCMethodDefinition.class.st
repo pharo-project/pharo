@@ -18,11 +18,11 @@ Class {
 	#instVars : [
 		'classIsMeta',
 		'source',
-		'category',
 		'selector',
 		'className',
 		'timeStamp',
-		'sortKey'
+		'sortKey',
+		'protocolName'
 	],
 	#classVars : [
 		'Definitions',
@@ -126,7 +126,7 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 	| methodAddition |
 	methodAddition := MethodAddition new
 		compile: source
-		classified: category
+		classified: protocolName
 		withStamp: timeStamp
 		logSource: true
 		inClass: self actualClass.
@@ -139,7 +139,7 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 { #category : #'accessing - backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
-	^ category
+	^ protocolName
 ]
 
 { #category : #accessing }
@@ -188,23 +188,19 @@ MCMethodDefinition >> hash [
 	| hash |
 	hash := String stringHash: classIsMeta asString initialHash: 0.
 	hash := String stringHash: source initialHash: hash.
-	hash := String stringHash: category initialHash: hash.
+	hash := String stringHash: protocolName initialHash: hash.
 	hash := String stringHash: className initialHash: hash.
 	^ hash
 ]
 
 { #category : #serializing }
-MCMethodDefinition >> initializeWithClassName: classString
-classIsMeta: metaBoolean
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
+MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBoolean selector: selectorString category: aProtocolName timeStamp: timeString source: sourceString [
+
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := catString
-		ifNil: [ #'as yet unclassified']
-		ifNotNil: [ (catString asSymbol) ifEmpty: [#'as yet unclassified']].
+	protocolName := aProtocolName
+		                ifNil: [ #'as yet unclassified' ]
+		                ifNotNil: [ aProtocolName asSymbol ifEmpty: [ #'as yet unclassified' ] ].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings
@@ -217,7 +213,7 @@ MCMethodDefinition >> isCodeDefinition [
 
 { #category : #installing }
 MCMethodDefinition >> isExtensionMethod [
-	^ category beginsWith: '*'
+	^ protocolName beginsWith: '*'
 ]
 
 { #category : #installing }
@@ -252,14 +248,14 @@ MCMethodDefinition >> isMethodDefinition [
 { #category : #installing }
 MCMethodDefinition >> isOverrideMethod [
 	"this oughta check the package"
-	^ self isExtensionMethod and: [category endsWith: '-override']
+	^ self isExtensionMethod and: [protocolName endsWith: '-override']
 ]
 
 { #category : #installing }
 MCMethodDefinition >> load [
 	| sel |
 	sel := (self actualClass compiler
-		protocol: category;
+		protocol: protocolName;
 		changeStamp: timeStamp;
 		permitUndeclared: true;
 		install: source) selector.
@@ -285,7 +281,7 @@ MCMethodDefinition >> overridenMethodOrNil [
 		
 	^ SourceFiles
 		changeRecordsFor: realMethod asRingDefinition
-		detect: [ :protocol | protocol ~= category ]
+		detect: [ :protocol | protocol ~= protocolName ]
 ]
 
 { #category : #installing }
@@ -317,7 +313,7 @@ MCMethodDefinition >> printAnnotations: requests on: aStream [
 { #category : #accessing }
 MCMethodDefinition >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
-	^ category
+	^ protocolName
 ]
 
 { #category : #installing }
@@ -329,10 +325,10 @@ MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 	| newProtocol |
 	newProtocol := aClass organization protocolNameOfElement: aSelector.
 	newProtocol ifNotNil: [ "If moved to and fro extension, ignore removal"
-		(category beginsWith: '*') = (newProtocol beginsWith: '*') ifFalse: [ ^ self ]. "Check if moved between different extension categories"
-		((category beginsWith: '*') and: [ category ~= newProtocol ]) ifTrue: [ ^ self ] ].
+		self isExtensionMethod = (newProtocol beginsWith: '*') ifFalse: [ ^ self ]. "Check if moved between different extension categories"
+		(self isExtensionMethod and: [ protocolName ~= newProtocol ]) ifTrue: [ ^ self ] ].
 	aClass removeSelector: aSelector.
-	aClass organization removeProtocolIfEmpty: category
+	aClass organization removeProtocolIfEmpty: protocolName
 ]
 
 { #category : #comparing }
