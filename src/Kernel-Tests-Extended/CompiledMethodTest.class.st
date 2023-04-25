@@ -352,23 +352,6 @@ CompiledMethodTest >> testCopy [
 	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
-{ #category : #tests }
-CompiledMethodTest >> testCopyWithTrailerBytes [
-	<pragma: #pragma>
-	| method copy |
-	method := thisContext method.
-	self assert: method pragmas notEmpty.
-	copy := method copyWithTrailerBytes: method trailer.
-	self assert: (method equivalentTo: copy).
-	self deny: method identicalTo: copy.
-	self assert: method symbolic equals: copy symbolic.	"but their bytecode should be the same"
-	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method identicalTo: copy.
-	self assert: method penultimateLiteral method identicalTo: method.
-	method pragmas do: [ :p | self assert: p method identicalTo: method ].
-	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
-]
-
 { #category : #'tests - comparing' }
 CompiledMethodTest >> testEqualityClassSideMethod [
    	| method1 method2 |

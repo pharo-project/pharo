@@ -23,7 +23,6 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	self assert: theCompiledMethod isDoIt.
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod sourceCode isNil.
-	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod hasSourcePointer.
 
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
@@ -32,7 +31,6 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	self assert: materialized isDoIt.
 	"we serialized the source, trailer is cleared"
 	self assert: materialized sourceCode notNil.
-	self assert: materialized trailer isEmpty.
 	self deny: materialized hasSourcePointer.
 
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
@@ -46,7 +44,6 @@ FLCompiledMethodSerializationTest >> testInstalled [
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
 	self deny: theCompiledMethod sourceCode isNil.
-	self deny: theCompiledMethod trailer isEmpty.
 	self assert: theCompiledMethod hasSourcePointer.
 
 	"if installed but not different, the installed instance will be answered"
@@ -63,7 +60,6 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer isEmpty.
 	self assert: theCompiledMethod hasSourcePointer.
 
 	copy := theCompiledMethod copy.
@@ -71,7 +67,6 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	self deny: copy isInstalled.
 	self deny: copy isDoIt.
 	self deny: theCompiledMethod sourceCode isNil.
-	self deny: copy trailer isEmpty.
 	self assert: copy hasSourcePointer.
 
 	"if installed but not different, the installed instance will be answered"
@@ -127,7 +122,6 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	
 	self deny: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod hasSourcePointer.
 	
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
@@ -135,7 +129,6 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	self deny: materialized isDoIt.
 	"we serialized the source, trailer is empty"
 	self assert: materialized sourceCode notNil.
-	self assert: materialized trailer isEmpty.
 	self deny: materialized hasSourcePointer.
 	
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
