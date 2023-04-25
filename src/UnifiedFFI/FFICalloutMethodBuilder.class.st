@@ -147,7 +147,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 		r := self generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary.
 		ffiLibrary postMethodBuildContext: sender builder: builder spec: functionSpec.
 		r].
-	^ ir generate: self method trailer
+	^ ir generate: self methodTrailer
 ]
 
 { #category : #initialization }
@@ -187,6 +187,12 @@ FFICalloutMethodBuilder >> libraryName [
 { #category : #accessing }
 FFICalloutMethodBuilder >> method [
 	^ self sender homeMethod
+]
+
+{ #category : #compatibility }
+FFICalloutMethodBuilder >> methodTrailer [
+
+ 	^ self method trailer
 ]
 
 { #category : #private }

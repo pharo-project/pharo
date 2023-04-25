@@ -138,19 +138,17 @@ TaAbstractComposition >> compile: selector into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| method newMethod sourceCode trailer traitDefining |
+	| method newMethod sourceCode traitDefining |
 	traitDefining := self traitDefining: selector.
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
-	trailer := method trailer.
-
+	
 	newMethod := aClass compiler
 		             source: sourceCode;
-		             compiledMethodTrailer: trailer;
 		             permitUndeclared: true;
 		             compile.
-
+	newMethod setSourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
