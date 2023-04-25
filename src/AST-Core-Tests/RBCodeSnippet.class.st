@@ -1498,12 +1498,13 @@ RBCodeSnippet class >> badScanner [
 				         #( #( 3 3 4 'Literal expected' )
 				            #( 7 8 9 'Literal expected' ) )). "Check if comments are lost"
 		        (self new
-			         source: '#(:=aa:=:==cc:==)';
-			         nodeAt: '001033345078889A0';
-			         styled: '00# ##### ######0';
+			         source: '#(:=aa:=:==bb:==#cc:==)';
+			         nodeAt: '001033345078889ABBBBCC0';
+			         styled: '00# ##### ############0';
 			         formattedCode:
-				         '#( #'':'' #= #aa: #= #'':'' #= = #cc: #= = )';
-			         value: #( #':' #= #aa: #= #':' #= #= #cc: #= #= )). "Assigments are split, creating symbols"
+				         '#( #'':'' #= #aa: #= #'':'' #= = #bb: #= = #cc: == )';
+			         value:
+				         #( #':' #= #aa: #= #':' #= #= #bb: #= #= #cc: #'==' )). "Assigments are split, creating symbols"
 		        (self new
 			         source: '#(:="A"aa:="B":=="C"cc:=="D")';
 			         nodeAt: '001000033340005070008889A0000';
