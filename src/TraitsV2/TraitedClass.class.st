@@ -99,18 +99,6 @@ TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : #'accessing - method dictionary' }
-TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [
-	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
-
-	compiledMethod isFromTrait
-		ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
-
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withRecompiledMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
-]
-
 { #category : #querying }
 TraitedClass >> allTraits [
 	^ self traitComposition allTraits
@@ -280,11 +268,9 @@ TraitedClass >> recompile: selector from: oldClass [
 	method := oldClass compiledMethodAt: selector.
 	newMethod := self recompileBasic: selector from: oldClass.
 
-	method properties
-		at: #traitSource
-		ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource].
+	method properties at: #traitSource ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource ].
 
-	self addSelector: selector withRecompiledMethod: newMethod
+	self addSelector: selector withMethod: newMethod
 ]
 
 { #category : #'trait-composition' }

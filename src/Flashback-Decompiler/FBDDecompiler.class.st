@@ -588,7 +588,7 @@ FBDDecompiler >> recompile: selector from: oldClass [
 		compile.	"Assume OK after proceed from SyntaxError"
 	selector == newMethod selector
 		ifFalse: [ self error: 'selector changed!' ].
-	oldClass 	addSelector: selector withRecompiledMethod: newMethod
+	oldClass 	addSelector: selector withMethod: newMethod
 ]
 
 { #category : #'data flow instructions' }

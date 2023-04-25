@@ -104,9 +104,7 @@ Behavior >> recompile: selector [
 Behavior >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
-	| newMethod |
-	newMethod := self recompileBasic: selector from: oldClass.
-	self addSelector: selector withRecompiledMethod: newMethod
+	self addSelector: selector withMethod: (self recompileBasic: selector from: oldClass)
 ]
 
 { #category : #'*OpalCompiler-Core' }
