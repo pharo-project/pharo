@@ -86,8 +86,13 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	super addSelectorSilently: selector withMethod: compiledMethod.
-	self instanceSide noteAddedSelector: selector meta: self isMeta
+	self instanceSide noteAddedSelector: selector meta: self isMeta.
+
+	"In case we silently add a method without classification, we want to be sure that the method is classified. So we add it to the unclassified protocol if it has not been classified before."
+	(self organization protocolOfSelector: selector) ifNil: [
+		SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization silentlyClassify: selector under: Protocol unclassified ] ]
 ]
 
 { #category : #'instance variables' }
