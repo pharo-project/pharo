@@ -1,6 +1,6 @@
 Class {
 	#name : #ReflectivityTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'count',
 		'tag',
@@ -39,7 +39,6 @@ ReflectivityTest >> tearDown [
 	link2 ifNotNil: [link2 uninstall].
 	tag := nil.
 	count := 0.
-	(ReflectivityExamples>>#exampleWithArg:) recompile.
 	ASTCache default: cache.
 	super tearDown
 ]

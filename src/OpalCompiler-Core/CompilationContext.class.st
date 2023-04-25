@@ -446,17 +446,12 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := semanticScope targetEnvironment ]
+	^ environment ifNil: [ environment := semanticScope environment ]
 ]
 
 { #category : #accessing }
 CompilationContext >> environment: anObject [
 	environment := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> getClass [
-	^ semanticScope targetClass
 ]
 
 { #category : #initialization }
