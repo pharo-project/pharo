@@ -17,7 +17,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'requestor',
-		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -405,16 +404,6 @@ CompilationContext >> class: aClass [
 ]
 
 { #category : #accessing }
-CompilationContext >> compiledMethod [
-	^ compiledMethod
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod: anObject [
-	compiledMethod := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> compiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 	^ compiledMethodClass ifNil: [
@@ -457,17 +446,12 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := semanticScope targetEnvironment ]
+	^ environment ifNil: [ environment := semanticScope environment ]
 ]
 
 { #category : #accessing }
 CompilationContext >> environment: anObject [
 	environment := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> getClass [
-	^ semanticScope targetClass
 ]
 
 { #category : #initialization }
@@ -488,17 +472,6 @@ CompilationContext >> interactive [
 	^ (requestor respondsTo: #interactive)
 		  ifTrue: [ requestor interactive ]
 		  ifFalse: [ true ]
-]
-
-{ #category : #testing }
-CompilationContext >> needRequestorScope [
-	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
-	Modern requestors should not register temselves but use `bindings:`."
-
-	requestor ifNil: [ ^ false ].
-	"Because requestor do not have a real API, introspection is used."
-	(requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
-	^ requestor needRequestorScope
 ]
 
 { #category : #accessing }
@@ -643,24 +616,6 @@ CompilationContext >> requestorScopeClass [
 CompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> scope [
-	| newScope |
-
-	newScope := semanticScope.
-	self needRequestorScope ifTrue: [
-		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
-		newScope := (self requestorScopeClass new
-			requestor: requestor) outerScope: newScope].
-
-	bindings ifNotNil: [
-		"if we passed additional bindings in, setup a scope here"
-		newScope := (OCExtraBindingScope  new
-			bindings: bindings) outerScope: newScope].
-
-	^newScope
 ]
 
 { #category : #accessing }

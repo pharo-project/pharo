@@ -136,7 +136,8 @@ RBProgramNode >> insteadLinks [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> invalidate [
-	self methodNode method invalidate
+
+	self methodNode compiledMethod invalidate
 ]
 
 { #category : #'*Reflectivity' }
@@ -148,13 +149,18 @@ RBProgramNode >> isEquivalentTo: aNode [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> link: aMetaLink [
-	(aMetaLink checkForCompatibilityWith: self)
-		ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
-	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
+
+	(aMetaLink checkForCompatibilityWith: self) ifFalse: [
+		self error:
+			'link requests reification that can not be provided by this node' ].
+	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ])
+		add: aMetaLink.
 	aMetaLink installOn: self.
 	self clearReflectivityAnnotations.
-	self methodNode method installLink: aMetaLink.
-	aMetaLink linkInstaller propagateLinkAddition: aMetaLink forNode: self.
+	self methodNode compiledMethod installLink: aMetaLink.
+	aMetaLink linkInstaller
+		propagateLinkAddition: aMetaLink
+		forNode: self.
 	aMetaLink announceInstall: self
 ]
 
@@ -200,14 +206,14 @@ RBProgramNode >> removeBreakpoint: aBreakpoint [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> removeLink: aMetaLink [
-	self hasMetalink
-		ifFalse: [ ^ self ].
+
+	self hasMetalink ifFalse: [ ^ self ].
 	self links remove: aMetaLink ifAbsent: [  ].
 	self links ifEmpty: [ self removeProperty: #links ].
 	self clearReflectivityAnnotations.
-	(self methodNode methodClass methodDict includesKey: self methodNode selector)
-		ifFalse: [ ^ self ].
-	self methodNode method removeLink: aMetaLink.
+	(self methodNode methodClass methodDict includesKey:
+		 self methodNode selector) ifFalse: [ ^ self ].
+	self methodNode compiledMethod removeLink: aMetaLink.
 	aMetaLink linkInstaller propagateLinkRemoval: aMetaLink forNode: self.
 	aMetaLink announceRemove: self
 ]

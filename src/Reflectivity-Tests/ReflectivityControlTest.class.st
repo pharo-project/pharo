@@ -3,7 +3,7 @@ Tests for Reflective method
 "
 Class {
 	#name : #ReflectivityControlTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag',
 		'link'
@@ -34,9 +34,6 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
-	"Force a recompilation to remove leaking ReflectiveMethods"
-	"TODO fail the test if things are leaking"
-	ReflectivityExamples recompile.
 	super tearDown
 ]
 

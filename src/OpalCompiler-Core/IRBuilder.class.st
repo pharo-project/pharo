@@ -184,7 +184,8 @@ IRBuilder >> initialize [
 { #category : #results }
 IRBuilder >> ir [
 
-	^ ir optimize
+	self optimize.
+	^ ir
 ]
 
 { #category : #accessing }
@@ -266,6 +267,15 @@ IRBuilder >> mapToNode: object [
 IRBuilder >> numArgs: anInteger [
 	ir numArgs: anInteger.
 	ir sourceNode: self sourceNode
+]
+
+{ #category : #optimizing }
+IRBuilder >> optimize [
+	"Perform configured optimizations"
+
+	ir removeEmptyStart.
+	self compilationContext optionOptimizeIR ifFalse: [^self].
+	ir absorbJumpsToSingleInstrs
 ]
 
 { #category : #mapping }

@@ -363,11 +363,6 @@ CompiledMethod >> containsHalt [
 	^ self hasProperty: #containsHalt
 ]
 
-{ #category : #'source code management' }
-CompiledMethod >> copyWithSource: aString [
-	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString)
-]
-
 { #category : #initialization }
 CompiledMethod >> copyWithTrailerBytes: trailer [
 "Testing:
@@ -938,7 +933,13 @@ CompiledMethod >> readsField: varIndex [
 ]
 
 { #category : #evaluating }
-CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anObject [
+CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: aMethod [
+	"execute aMethod.
+	This method takes aMethod as an argument so we can call primitive 188.
+	Clients should use #valueWithReceiver:arguments:
+	
+	We have this method here in addition to ProtoObject>>#withArgs:executeMethod:
+	so we can execute a method without sending a message to aReceiver"
 	<primitive: 188>
 	self primitiveFailed
 ]
@@ -1151,6 +1152,11 @@ CompiledMethod >> usesUndeclareds [
 			 literal value isBehavior and: [ literal value isObsolete ] ])
 			ifTrue: [ ^ true ] ].
 	^ false
+]
+
+{ #category : #evaluating }
+CompiledMethod >> valueWithReceiver: aReceiver [
+	^self receiver: aReceiver withArguments: #() executeMethod: self
 ]
 
 { #category : #evaluating }

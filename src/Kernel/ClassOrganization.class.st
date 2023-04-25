@@ -32,7 +32,7 @@ ClassOrganization >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
-	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: aProtocol).
+	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
 	^ protocol
 ]
@@ -52,9 +52,12 @@ ClassOrganization >> classify: selector under: aProtocol [
 	Some code was added to make it possible to classify giving a real protocol.
 	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
 	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := aProtocol isString
-		                ifTrue: [ aProtocol ]
-		                ifFalse: [ aProtocol name ].
+	protocolName := aProtocol
+		                ifNil: [ Protocol unclassified ]
+		                ifNotNil: [
+			                aProtocol isString
+				                ifTrue: [ aProtocol ]
+				                ifFalse: [ aProtocol name ] ].
 	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
 	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
@@ -144,12 +147,6 @@ ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProto
 ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: newProtocolName [
 
 	oldProtocolName ~= newProtocolName ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
-]
-
-{ #category : #notifications }
-ClassOrganization >> notifyOfRemovedProtocolNamed: protocolName [
-
-	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocolName)
 ]
 
 { #category : #accessing }
@@ -248,7 +245,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames copy.
 	protocols := protocols copyWithout: protocol.
-	self notifyOfRemovedProtocolNamed: protocol name.
+	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
 	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
 ]
 

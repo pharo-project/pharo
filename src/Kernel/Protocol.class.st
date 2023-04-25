@@ -76,6 +76,12 @@ Protocol >> isExtensionProtocol [
 ]
 
 { #category : #testing }
+Protocol >> isUnclassifiedProtocol [
+
+	^ self name = self class unclassified
+]
+
+{ #category : #testing }
 Protocol >> isVirtualProtocol [
 	"A virtual protocol is a calculated one (it does not have any methods by it self)"
 	^ false

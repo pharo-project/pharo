@@ -997,6 +997,17 @@ CompiledMethodTest >> testUsesUndeclareds [
 ]
 
 { #category : #'tests - evaluating' }
+CompiledMethodTest >> testValueWithReceiver [
+
+	| method value |
+
+	method := self class compiledMethodAt: #returnTrue.
+
+	value := method valueWithReceiver: nil .
+	self assert: value equals: true.
+]
+
+{ #category : #'tests - evaluating' }
 CompiledMethodTest >> testValueWithReceiverArguments [
 
 	| method value |
