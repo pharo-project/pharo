@@ -167,7 +167,9 @@ CompiledMethodTrailer class >> trailerKinds [
 CompiledMethodTrailer >> clear [
 	kind := #NoTrailer.
 	size := 4.
-	data := encodedData := method := nil
+	data := 0.
+	encodedData :=  #[0 0 0 0].
+	method := nil
 ]
 
 { #category : #'creating a method' }
@@ -261,16 +263,7 @@ CompiledMethodTrailer >> decodeVarLengthSourcePointer [
 CompiledMethodTrailer >> encode [
 	"encode the trailer into byte array"
 
-	encodedData := nil.
-
-	"inline some common types to speed up encoding"
-	kind == #SourcePointer
-		ifTrue: [ ^self encodeSourcePointer ].
-   kind == #VarLengthSourcePointer
-		ifTrue: [ ^self encodeVarLengthSourcePointer ].
-	kind == #NoTrailer
-		ifTrue: [ ^self encodeNoTrailer ].
-	self error: 'encoding type not supported'
+	encodedData := data asByteArrayOfSize: 4
 ]
 
 { #category : #encoding }
@@ -368,6 +361,7 @@ CompiledMethodTrailer >> hasSource [
 
 { #category : #testing }
 CompiledMethodTrailer >> hasSourcePointer [
+	encodedData = #[0 0 0 0] ifTrue: [ ^false ].
 	^ kind == #SourcePointer or: [ kind == #VarLengthSourcePointer ]
 ]
 
@@ -378,7 +372,7 @@ CompiledMethodTrailer >> initialize [
 
 { #category : #testing }
 CompiledMethodTrailer >> isEmpty [
-	^ kind == #NoTrailer or: [ kind == #ClearedTrailer ]
+	^ kind == #NoTrailer or: [ kind == #ClearedTrailer or: [encodedData = #[0 0 0 0]]]
 ]
 
 { #category : #accessing }
@@ -401,25 +395,16 @@ CompiledMethodTrailer >> kindAsByte [
 { #category : #accessing }
 CompiledMethodTrailer >> method: aMethod [
 
-	| flagByte |
-
-	data := size := nil.
+		| msz |
 	method := aMethod.
-	flagByte := method at: method size.
-
-	"trailer kind encoded in 6 high bits of last byte"
-	kind := self class trailerKinds at: 1+(flagByte>>2).
-
-	"decode the trailer bytes, inline some common types to speed up decoding"
-	kind == #SourcePointer
-		ifTrue: [ ^self decodeSourcePointer ].
-   kind == #VarLengthSourcePointer
-		ifTrue: [ ^self decodeVarLengthSourcePointer ].
-	kind == #NoTrailer
-		ifTrue: [ ^self decodeNoTrailer ].
-
-	"slow but general decoding using perform"
-	self perform: ('decode' , kind) asSymbol
+	kind := #SourcePointer.
+	msz := method size.
+	encodedData := {
+		method at: msz-3.
+		method at: msz-2.
+		method at: msz-1.
+		method at: msz } asByteArray.
+	data := encodedData asInteger
 ]
 
 { #category : #accessing }
@@ -448,8 +433,7 @@ CompiledMethodTrailer >> sourcePointer: ptr [
 	self clear.
 	data := ptr.
 	"see if we can encode pointer using 4-byte trailer"
-	kind := (ptr between: 16r1000000 and: 16r4FFFFFF)
-		ifTrue: [ #SourcePointer ] ifFalse: [ #VarLengthSourcePointer ]
+	kind := #SourcePointer
 ]
 
 { #category : #testing }
