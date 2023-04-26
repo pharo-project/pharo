@@ -396,31 +396,8 @@ RBScanner >> scanIdentifierOrKeyword [
 			name := buffer contents.
 			^RBKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
-	(self scanKeyword: name) ifNotNil: [ :token | ^ token ].
+	(self scanNamedLiteral: name) ifNotNil: [ :token | ^ token ].
 	^RBIdentifierToken value: name start: tokenStart
-]
-
-{ #category : #'private - scanning' }
-RBScanner >> scanKeyword: name [
-	name = 'true'
-		ifTrue:
-			[^RBLiteralToken
-				value: true
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'false'
-		ifTrue:
-			[^RBLiteralToken
-				value: false
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'nil'
-		ifTrue:
-			[^RBLiteralToken
-				value: nil
-				start: tokenStart
-				stop: self previousStepPosition].
-	^ nil
 ]
 
 { #category : #'private - scanning' }
@@ -520,6 +497,29 @@ RBScanner >> scanName [
 ]
 
 { #category : #'private - scanning' }
+RBScanner >> scanNamedLiteral: name [
+	name = 'true'
+		ifTrue:
+			[^RBLiteralToken
+				value: true
+				start: tokenStart
+				stop: self previousStepPosition].
+	name = 'false'
+		ifTrue:
+			[^RBLiteralToken
+				value: false
+				start: tokenStart
+				stop: self previousStepPosition].
+	name = 'nil'
+		ifTrue:
+			[^RBLiteralToken
+				value: nil
+				start: tokenStart
+				stop: self previousStepPosition].
+	^ nil
+]
+
+{ #category : #'private - scanning' }
 RBScanner >> scanNumber [
 	| start number stop string gotError |
 	start := stream position.
@@ -595,12 +595,11 @@ RBScanner >> scanSymbolContent [
 ]
 
 { #category : #'private - scanning' }
-RBScanner >> scanSymbolOrKeyword [
+RBScanner >> scanSymbolOrNamedLiteral [
 	| text |
 	self scanSymbolContent.
 	text := buffer contents.
-	(self scanKeyword: text) ifNotNil: [ :token | ^ token ].
-
+	(self scanNamedLiteral: text) ifNotNil: [ :token | ^ token ].
 	^ RBLiteralToken
 		value: text asSymbol
 		start: tokenStart
