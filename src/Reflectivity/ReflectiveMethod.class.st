@@ -38,7 +38,7 @@ ReflectiveMethod >> compileAST [
 		semanticAnalyzerClass: RFSemanticAnalyzer;
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
-	^ ast generate: compiledMethod trailer
+	^ ast generate setSourcePointer: compiledMethod sourcePointer
 ]
 
 { #category : #evaluation }
