@@ -90,7 +90,8 @@ Announcer >> weak [
 
 { #category : #subscription }
 Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
-	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber."
+	"Subscribe aSubscriber to announcements of anAnnouncementClass class. 
+	 When the announcement is raised, aValuable is executed."
 
 	^ registry add: (AnnouncementSubscription new
 			   announcer: self;
