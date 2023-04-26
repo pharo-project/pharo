@@ -32,7 +32,8 @@ Class {
 		'characterType',
 		'classificationTable',
 		'comments',
-		'nextToken'
+		'nextToken',
+		'state'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -619,6 +620,18 @@ RBScanner >> scanUnknownCharacter [
 	errorToken := self scanError: 'Unknown character'.
 	errorToken location: tokenStart. "Unlike other scanner errors, error location is here before the bad token"
 	^ errorToken
+]
+
+{ #category : #accessing }
+RBScanner >> state [
+
+	^ state
+]
+
+{ #category : #accessing }
+RBScanner >> state: anObject [
+
+	state := anObject
 ]
 
 { #category : #private }
