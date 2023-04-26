@@ -40,7 +40,6 @@ ReflectiveMethod >> compileAST [
 	ast doSemanticAnalysis. "force semantic analysis"
 	method := ast generate: CompiledMethodTrailer empty.
 	method setSourcePointer: compiledMethod sourcePointer.
-	ast compiledMethod: method.
 	^method.
 ]
 
