@@ -573,15 +573,20 @@ RBScanner >> scanStringSymbol [
 RBScanner >> scanSymbol [
 	"Always return a literal token but only recognises Identifier and keyword strings.
 	 Therefor any other string lead to an empty string value."
-	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
-		self scanName.
-		currentCharacter = $: ifTrue: [
-			buffer nextPut: $:.
-			self step ] ].
+	self scanSymbolContent.
 	^ RBLiteralToken
 		value: buffer contents asSymbol
 		start: tokenStart
 		stop: self previousStepPosition
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanSymbolContent [
+	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
+		self scanName.
+		currentCharacter = $: ifTrue: [
+			buffer nextPut: $:.
+			self step ] ]
 ]
 
 { #category : #accessing }
