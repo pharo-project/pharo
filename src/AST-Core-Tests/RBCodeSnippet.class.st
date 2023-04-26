@@ -809,9 +809,13 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 2 3 'Variable or expression expected' ) )). "keyword message with a missing receiver and argument"
 		        (self new
 			         source: 'a::';
-			         nodeAt: '000';
-			         styled: 'XXX';
-			         notices: #( #( 1 3 1 'Unexpected token' ) )). "just a bad token"
+			         nodeAt: '225';
+			         styled: 'XsX';
+			         formattedCode: ' a: . :';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 3 2 3 'Variable or expression expected' )
+				            #( 1 2 3 'End of statement expected' )
+				            #( 3 3 3 'Unexpected token' ) )). "same plus an unexpected :"
 		        (self new
 			         source: 'a:foo';
 			         nodeAt: '00222';
@@ -821,12 +825,11 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 5 3 'Undeclared variable' ) )). "keyword message with a missing receiver"
 		        (self new
 			         source: 'a::foo';
-			         nodeAt: '111222';
-			         styled: 'XXXuuu';
-			         formattedCode: 'a::. foo';
-			         notices:
-				         #( #( 1 3 1 'Unexpected token' )
-				            #( 4 6 4 'Undeclared variable' ) )).
+			         nodeAt: '002222';
+			         styled: 'XsXXXX';
+			         formattedCode: ' a: :foo';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 3 6 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: ':a:foo';
 			         nodeAt: '122444';
@@ -1199,11 +1202,13 @@ RBCodeSnippet class >> badMethods [
 				            #( 11 10 11 'Name already defined' ) )).
 		        (self new
 			         source: 'foo:bar:';
-			         nodeAt: '33333333';
-			         styled: 'XXXXXXXX';
-			         formattedCode: ' . foo:bar:';
-			         notices: #( #( 1 0 1 'Message pattern expected' )
-				            #( 1 8 1 'Unexpected token' ) )). "`foo:bar:` is a single token, and is unexpected"
+			         nodeAt: '00000000';
+			         styled: 'ppppXppp';
+			         formattedCode: 'foo: bar: ';
+			         value: nil;
+			         notices: #( #( 5 4 5 'Variable name expected' )
+				            #( 9 8 9 'Variable name expected' )
+				            #( 9 8 9 'Name already defined' ) )). "same. `foo:bar:` is no more a single token"
 
 		        "Bad pragma message"
 		        (self new
@@ -1450,18 +1455,18 @@ RBCodeSnippet class >> badScanner [
 		        "Tokens in literal arrays are really weird."
 		        (self new
 			         source: '#(aa:bb:cc#aa:bb:cc#cc==#== =#=)';
-			         nodeAt: '00111111223333333334445566607880';
+			         nodeAt: '00111111112222222223334455506770';
 			         styled: '00######################### ###0';
 			         formattedCode:
-				         '#( #aa:bb: cc #''aa:bb:cc'' #cc == #''=='' = #= )';
-			         value: #( #aa:bb: #cc #'aa:bb:cc' #cc #'==' #'==' #= #= )). "Identifiers, keywords and binary operators are implicitely transformed into symbols. Note that formatting is inconsistent."
+				         '#( aa:bb:cc #''aa:bb:cc'' #cc == #''=='' = #= )';
+			         value: #( #aa:bb:cc #'aa:bb:cc' #cc #'==' #'==' #= #= )). "Identifiers, keywords and binary operators are implicitely transformed into symbols. Note that formatting is inconsistent."
 		        (self new
 			         source: '#(aa:bb:"A"cc"B"#aa:bb:cc"C"#cc"D"++"E"#++"F")';
-			         nodeAt: '00555555BBB66000777777777CCC888DDD99000AAAEEE0';
-			         styled: '00######"""##   #########"""###"""##   ###"""0';
+			         nodeAt: '0044444400055000666666666AAA777BBB88000999CCC0';
+			         styled: '00######   ##   #########"""###"""##   ###"""0';
 			         formattedCode:
-				         '#( #aa:bb: cc #''aa:bb:cc'' #cc ++ #''++'' )';
-			         value: #( #aa:bb: #cc #'aa:bb:cc' #cc #'++' #'++' )). "Check if comments are lost"
+				         '#( aa:bb: cc #''aa:bb:cc'' #cc ++ #''++'' )';
+			         value: #( #aa:bb: cc #'aa:bb:cc' #cc #'++' #'++' )). "Check if comments are lost"
 		        (self new
 			         source: '#(().:;[]{}^#a)';
 			         nodeAt: '001123456789AA0';
