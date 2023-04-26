@@ -599,11 +599,17 @@ RBScanner >> scanToken [
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
 	characterType = #eof ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
-	characterType = #alphabetic ifTrue: [^self scanIdentifierOrKeyword].
+	characterType = #alphabetic ifTrue: [
+		^ state = #literalArray
+			ifTrue: [self scanSymbolOrNamedLiteral]
+			ifFalse: [self scanIdentifierOrKeyword]].
 	(characterType = #digit
 		or: [currentCharacter = $- and: [(self classify: stream peek) = #digit]])
 			ifTrue: [^self scanNumber].
-	characterType = #binary ifTrue: [^self scanBinarySelector].
+	characterType = #binary ifTrue: [
+		^ state = #literalArray
+			ifTrue: [ self scanLiteralBinary]
+			ifFalse: [ self scanBinarySelector]].
 	characterType = #special ifTrue: [^self scanSpecialCharacter].
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
