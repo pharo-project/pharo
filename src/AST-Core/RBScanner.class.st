@@ -451,7 +451,7 @@ RBScanner >> scanLiteralCharacter [
 	^ self scanLiteralForValue: char
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - scanning' }
 RBScanner >> scanLiteralForValue: aValue [
 
 	^ RBLiteralToken
