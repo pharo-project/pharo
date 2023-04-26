@@ -13,7 +13,6 @@ Class {
 	#instVars : [
 		'data',
 		'encodedData',
-		'kind',
 		'method'
 	],
 	#category : #'Kernel-Methods'
@@ -25,84 +24,36 @@ CompiledMethodTrailer class >> empty [
 	^ self new
 ]
 
-{ #category : #initialization }
-CompiledMethodTrailer >> clear [
-	kind := #NoTrailer.
-	data := 0.
-	encodedData :=  #[0 0 0 0].
-	method := nil
-]
-
 { #category : #'creating a method' }
 CompiledMethodTrailer >> createMethod: numberOfBytesForAllButTrailer class: aCompiledMethodClass header: headerWord [
-	| meth |
+	| meth size |
 	"Instantiates a compiled method with this trailer.
 	- numberOfBytesForAllButTrailer specifies the number of bytes needed to encode the literals and the bytecode.
 	- aCompiledMethodClass specifies the concrete class of the compiled method.
 	- headerWord specifies the header used for the compiled method.
 
 	This method will create a compiled method instance of the correct size, set it's header and trailing bytes. The bytecode and literals must be set by the caller."
-
-	encodedData ifNil: [ self encode ].
-
-	meth := aCompiledMethodClass newMethod: numberOfBytesForAllButTrailer + encodedData size header: headerWord.
+	size := CompiledMethod trailerSize.
+	encodedData := data asByteArrayOfSize: size.
+	
+	meth := aCompiledMethodClass newMethod: numberOfBytesForAllButTrailer + size header: headerWord.
 	"copy the encoded trailer data"
-	1 to: encodedData size do:
-		[:i | meth at: meth size - encodedData size + i put: (encodedData at: i)].
+	1 to: size do:
+		[:i | meth at: meth size - size + i put: (encodedData at: i)].
 
 	^meth
 ]
 
-{ #category : #encoding }
-CompiledMethodTrailer >> encode [
-	"encode the trailer into byte array"
-
-	encodedData := data asByteArrayOfSize: 4
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> encodedData [
-	^encodedData
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> endPC [
-	"Answer the index of the last bytecode."
-
-	method ifNil: [ self error: 'Cannot determine the endPC without compiled method' ].
-
-	"if method set, then size should be set as well"
-	^ method size - encodedData size
-]
-
-{ #category : #testing }
-CompiledMethodTrailer >> hasSource [
-	"Not supported anymore, trailers never encode source"
-	^ false
-]
-
 { #category : #testing }
 CompiledMethodTrailer >> hasSourcePointer [
-	encodedData = #[0 0 0 0] ifTrue: [ ^false ].
-	^ kind == #SourcePointer
+
+	^ encodedData ~= #[ 0 0 0 0 ]
 ]
 
 { #category : #initialization }
 CompiledMethodTrailer >> initialize [
-	self clear
-]
-
-{ #category : #testing }
-CompiledMethodTrailer >> isEmpty [
-	^ kind == #NoTrailer or: [ kind == #ClearedTrailer or: [encodedData = #[0 0 0 0]]]
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> kind [
-	"Answer a symbolic name of trailer kind.
-	See #trailerKinds on class side and class comment for details"
-
-	^ kind
+	data := 0.
+	encodedData :=  #[0 0 0 0]
 ]
 
 { #category : #accessing }
@@ -110,7 +61,6 @@ CompiledMethodTrailer >> method: aMethod [
 
 	| msz |
 	method := aMethod.
-	kind := #SourcePointer.
 	msz := method size.
 	encodedData := {
 		method at: msz-3.
@@ -123,7 +73,7 @@ CompiledMethodTrailer >> method: aMethod [
 { #category : #accessing }
 CompiledMethodTrailer >> size [
 	"Answer the size of method's trailer , in bytes"
-	^ encodedData size
+	^ CompiledMethod trailerSize
 ]
 
 { #category : #accessing }
@@ -135,16 +85,5 @@ CompiledMethodTrailer >> sourceCode [
 { #category : #accessing }
 CompiledMethodTrailer >> sourcePointer [
 
-	^ kind == #SourcePointer
-		ifTrue: [ data ]
-		ifFalse: [ 0 ]
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> sourcePointer: ptr [
-
-	data := ptr.
-	kind := #SourcePointer.
-	self encode.
-	
+	^ data
 ]

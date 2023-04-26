@@ -189,10 +189,10 @@ FFICalloutMethodBuilder >> method [
 	^ self sender homeMethod
 ]
 
-{ #category : #accessing }
+{ #category : #compatibility }
 FFICalloutMethodBuilder >> methodTrailer [
 
-	^ self method trailer
+ 	^ self method trailer
 ]
 
 { #category : #private }
