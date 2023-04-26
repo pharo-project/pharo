@@ -395,6 +395,12 @@ RBScanner >> scanIdentifierOrKeyword [
 			name := buffer contents.
 			^RBKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
+	(self scanKeyword: name) ifNotNil: [ :token | ^ token ].
+	^RBIdentifierToken value: name start: tokenStart
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanKeyword: name [
 	name = 'true'
 		ifTrue:
 			[^RBLiteralToken
@@ -413,7 +419,7 @@ RBScanner >> scanIdentifierOrKeyword [
 				value: nil
 				start: tokenStart
 				stop: self previousStepPosition].
-	^RBIdentifierToken value: name start: tokenStart
+	^ nil
 ]
 
 { #category : #'private - scanning' }
