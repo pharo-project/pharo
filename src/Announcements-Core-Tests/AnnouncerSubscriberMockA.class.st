@@ -22,8 +22,6 @@ AnnouncerSubscriberMockA >> announcer: anAnnouncer [
 
 { #category : #events }
 AnnouncerSubscriberMockA >> registerEvents [
-	"We do not use constant blocks here, instead use a clean block.
-	Using Constant blocks with announcements makes no senese, as they do nothing."
 
-	self announcer when: AnnouncementMockA do: [ nil yourself ] for: self
+	self announcer when: AnnouncementMockA do: [ nil ] for: self
 ]
