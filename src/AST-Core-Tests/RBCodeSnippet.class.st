@@ -441,7 +441,9 @@ RBCodeSnippet class >> badExpressions [
 			         styled: '00n#n#n0';
 			         formattedCode: '#( 1 #'']'' 2 #''}'' 3 )';
 			         isFaulty: false;
-			         value: #( 1 #']' 2 #'}' 3 )). "`#(` can eat almost anything"
+			         value: #( 1 #']' 2 #'}' 3 );
+			         notices: #( #( 4 4 4 'Use a proper symbol literal' )
+				            #( 6 6 6 'Use a proper symbol literal' ) )). "`#(` can eat almost anything"
 		        (self new
 			         source: '#( 0 1r2 4 )';
 			         nodeAt: '000102330400';
@@ -507,12 +509,14 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 13 14 ''')'' expected' ) )).
 		        (self new
 			         source: '[(#("a"("b"###("c"###["d"]#["e"]["f"]))))]';
-			         nodeAt: '0222EEE88889999999AAAAAAAABBBBBBC999D98220';
-			         styled: '0011"""2"""3333"""1111"""111"""1#   #32100';
+			         nodeAt: '0222FFF9999AAAAAAABBBBBBBBCCCCCCDAAAEA9220';
+			         styled: '0011"""2"""3333"""1111"""111"""1#"""#32100';
 			         formattedCode:
-				         '[ #( #( #( #[ ] #[ ] #''['' #'']'' ) ) ) "a" "b" "c" "d" "e" ]';
+				         '[ #( #( #( #[ ] #[ ] #''['' #'']'' ) ) ) "a" "b" "c" "d" "e" "f" ]';
 			         isFaulty: false;
-			         value: #( #( #( #[  ] #[  ] #'[' #']' ) ) )). "dry [ and ] in lit array are symbols"
+			         value: #( #( #( #[  ] #[  ] #'[' #']' ) ) );
+			         notices: #( #( 33 33 33 'Use a proper symbol literal' )
+				            #( 37 37 37 'Use a proper symbol literal' ) )). "dry [ and ] in lit array are symbols"
 		        (self new
 			         source: '#[ 1 ) 2 ]';
 			         nodeAt: '0001020300';
@@ -1475,14 +1479,30 @@ RBCodeSnippet class >> badScanner [
 			         formattedCode:
 				         '#( #( ) #''.'' #'':'' #'';'' #''['' #'']'' #''{'' #''}'' #''^'' #a )';
 			         value:
-				         #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' #a )). "Most special characters are transformed into single character symbols, including brackets!"
+				         #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' #a );
+			         notices: #( #( 5 5 5 'Use a proper symbol literal' )
+				            #( 6 6 6 'Use a proper symbol literal' )
+				            #( 7 7 7 'Use a proper symbol literal' )
+				            #( 8 8 8 'Use a proper symbol literal' )
+				            #( 9 9 9 'Use a proper symbol literal' )
+				            #( 10 10 10 'Use a proper symbol literal' )
+				            #( 11 11 11 'Use a proper symbol literal' )
+				            #( 12 12 12 'Use a proper symbol literal' ) )). "Most special characters are transformed into single character symbols, including brackets!"
 		        (self new
 			         source: '#(("A")"B"."C":"D";"E"["F"]"G"{"H"}"I"^"J")';
-			         nodeAt: '0033333DDD400050006000700080009000A000B0000';
-			         styled: '001"""1"""#   #   #   #   #   #   #   #   0';
+			         nodeAt: '00BBBBBLLLCMMMDNNNEOOOFPPPGQQQHRRRISSSJTTT0';
+			         styled: '001"""1"""#"""#"""#"""#"""#"""#"""#"""#"""0';
 			         formattedCode:
 				         '#( #( ) #''.'' #'':'' #'';'' #''['' #'']'' #''{'' #''}'' #''^'' )';
-			         value: #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' )). "Check if comments are lost"
+			         value: #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' );
+			         notices: #( #( 11 11 11 'Use a proper symbol literal' )
+				            #( 15 15 15 'Use a proper symbol literal' )
+				            #( 19 19 19 'Use a proper symbol literal' )
+				            #( 23 23 23 'Use a proper symbol literal' )
+				            #( 27 27 27 'Use a proper symbol literal' )
+				            #( 31 31 31 'Use a proper symbol literal' )
+				            #( 35 35 35 'Use a proper symbol literal' )
+				            #( 39 39 39 'Use a proper symbol literal' ) )). "Check if comments are lost"
 		        (self new
 			         source: '#(# ## #ab #10 #. 10)';
 			         nodeAt: '001022033304550670880';
@@ -1493,7 +1513,8 @@ RBCodeSnippet class >> badScanner [
 				         #( #( 3 3 4 'Literal expected' )
 				            #( 5 6 7 'Literal expected' )
 				            #( 12 12 13 'Literal expected' )
-				            #( 16 16 17 'Literal expected' ) )). "Lonely # are errors"
+				            #( 16 16 17 'Literal expected' )
+				            #( 17 17 17 'Use a proper symbol literal' ) )). "Lonely # are errors"
 		        (self new
 			         source: '#(#"A"##"B")';
 			         nodeAt: '003555446660';
@@ -1505,19 +1526,22 @@ RBCodeSnippet class >> badScanner [
 				            #( 7 8 9 'Literal expected' ) )). "Check if comments are lost"
 		        (self new
 			         source: '#(:=aa:=:==bb:==#cc:==)';
-			         nodeAt: '00102223405666778888990';
-			         styled: '00# ##### ############0';
+			         nodeAt: '00112223445666778888990';
+			         styled: '00####################0';
 			         formattedCode:
 				         '#( #'':='' aa: #= #'':='' #= bb: #''=='' #cc: #''=='' )';
-			         value:
-				         #( #':=' #aa: #= #':=' #= #bb: #'==' #cc: #'==' )). "Assigments are split, creating symbols"
+			         value: #( #':=' #aa: #= #':=' #= #bb: #'==' #cc: #'==' );
+			         notices: #( #( 3 4 3 'Use a proper symbol literal' )
+				            #( 9 10 9 'Use a proper symbol literal' ) )). "Assigments are split, creating symbols"
 		        (self new
 			         source: '#(:="A"aa:="B":=="C"cc:=="D")';
-			         nodeAt: '00400005556BBB708CCC999AADDD0';
-			         styled: '00#    ####"""# #"""#####"""0';
+			         nodeAt: '0055CCC6667DDD889EEEAAABBFFF0';
+			         styled: '00##"""####"""###"""#####"""0';
 			         formattedCode:
 				         '#( #'':='' aa: #= #'':='' #= cc: #''=='' )';
-			         value: #( #':=' #aa: #= #':=' #= #cc: #'==' )) "Check if comments are lost" }.
+			         value: #( #':=' #aa: #= #':=' #= #cc: #'==' );
+			         notices: #( #( 3 4 3 'Use a proper symbol literal' )
+				            #( 15 16 15 'Use a proper symbol literal' ) )) "Check if comments are lost" }.
 	"Setup default values"
 	self new
 		group: #badScanner;
@@ -2158,7 +2182,8 @@ RBCodeSnippet class >> badSimpleExpressions [
 			         styled: '00#n0';
 			         formattedCode: '#( #''^'' 1 )';
 			         isFaulty: false;
-			         value: #( #'^' 1 )). "Obviously..."
+			         value: #( #'^' 1 );
+			         notices: #( #( 3 3 3 'Use a proper symbol literal' ) )). "Obviously..."
 		        (self new
 			         source: '#[ ^ 1 ]';
 			         nodeAt: '00010200';
