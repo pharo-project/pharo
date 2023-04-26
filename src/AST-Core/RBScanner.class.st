@@ -594,6 +594,19 @@ RBScanner >> scanSymbolContent [
 			self step ] ]
 ]
 
+{ #category : #'private - scanning' }
+RBScanner >> scanSymbolOrKeyword [
+	| text |
+	self scanSymbolContent.
+	text := buffer contents.
+	(self scanKeyword: text) ifNotNil: [ :token | ^ token ].
+
+	^ RBLiteralToken
+		value: text asSymbol
+		start: tokenStart
+		stop: self previousStepPosition
+]
+
 { #category : #accessing }
 RBScanner >> scanToken [
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
