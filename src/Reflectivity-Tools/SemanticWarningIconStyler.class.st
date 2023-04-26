@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+SemanticWarningIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 SemanticWarningIconStyler >> highlightColor [
 	^(Color yellow alpha: 0.3)
