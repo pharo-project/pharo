@@ -443,15 +443,12 @@ RBScanner >> scanLiteralCharacter [
 	"Accepts any character."
 	"This scan must only be used after the encounter of a $."
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
-	| token |
+	| char |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ self scanError: 'Character expected' ].
-	token := RBLiteralToken
-				value: currentCharacter
-				start: tokenStart
-				stop: stream position.
+	char := currentCharacter.
+	char ifNil:[ ^ self scanError: 'Character expected' ].
 	self step.	"char"
-	^token
+	^ self scanLiteralForValue: char
 ]
 
 { #category : #'as yet unclassified' }
@@ -491,10 +488,7 @@ RBScanner >> scanLiteralString [
 
 	"It's possible to use a plain Text for parsing.
 	In that case string here could be a Text instance but literal value must be a String"
-	^RBLiteralToken
-		value: string asString
-		start: tokenStart
-		stop: self previousStepPosition
+	^ self scanLiteralForValue: string asString
 ]
 
 { #category : #'private - scanning' }
@@ -573,10 +567,7 @@ RBScanner >> scanSymbol [
 	"Always return a literal token but only recognises Identifier and keyword strings.
 	 Therefor any other string lead to an empty string value."
 	self scanSymbolContent.
-	^ RBLiteralToken
-		value: buffer contents asSymbol
-		start: tokenStart
-		stop: self previousStepPosition
+	^ self scanLiteralForValue: buffer contents asSymbol
 ]
 
 { #category : #'private - scanning' }
