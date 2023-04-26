@@ -1013,8 +1013,11 @@ CompiledMethod >> sourceCodeOrNil [
 CompiledMethod >> sourcePointer [
 	"Answer the integer which can be used to find the source file and position for this method.
 	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
-
-	^ self trailer sourcePointer
+	| bytes endPC |
+	bytes := ByteArray new: self class trailerSize.
+	endPC := self endPC.
+	endPC+1 to: self size do: [:n | bytes at: n-endPC put: (self at: n) ].
+	^ bytes asInteger
 ]
 
 { #category : #'debugger support' }
