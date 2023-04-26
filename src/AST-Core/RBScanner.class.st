@@ -417,33 +417,6 @@ RBScanner >> scanIdentifierOrKeyword [
 ]
 
 { #category : #'private - scanning' }
-RBScanner >> scanKeyword [
-	"This scan can actually give odd keywords like a single colon.
-	 : is a keyword but it is an impossible one to reach with a call to next.
-	 However, a call to next can give an RBMultiKeywordLiteralToken even if the string scanned is like
-	 the following : 'keyword:::::::'. Here, each colon is considered a keyword."
-	"Of course, a keyword must finish with a colon. That's why arguments are not taken into account."
-	| outputPosition inputPosition name |
-	[currentCharacter = $:] whileTrue:
-			[buffer nextPut: currentCharacter.
-			outputPosition := buffer position.
-			inputPosition := stream position.
-			self step.	":"
-			[characterType = #alphabetic] whileTrue: [self scanName]].
-	buffer position: outputPosition.
-	stream position: inputPosition.
-	self step.
-	name := buffer contents.
-	^(name occurrencesOf: $:) == 1
-		ifTrue: [RBKeywordToken value: name start: tokenStart]
-		ifFalse:
-			[RBMultiKeywordLiteralToken
-				value: name asSymbol
-				start: tokenStart
-				stop: tokenStart + name size - 1]
-]
-
-{ #category : #'private - scanning' }
 RBScanner >> scanLiteral [
 	"Do not allow whitespace between # and the literal."
 

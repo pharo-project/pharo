@@ -885,8 +885,7 @@ RBParser >> parsePrimitiveLiteral [
 RBParser >> parsePrimitiveObject [
 	| errorNode |
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
-	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
-		ifTrue: [^self parsePrimitiveLiteral].
+	currentToken isLiteralToken ifTrue: [^self parsePrimitiveLiteral].
 	currentToken isLiteralArrayToken
 		ifTrue:
 			[^currentToken isForByteArray
