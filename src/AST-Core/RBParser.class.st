@@ -1170,29 +1170,13 @@ RBParser >> parseVariableNode [
 
 { #category : #private }
 RBParser >> patchLiteralArrayToken [
-	(currentToken isIdentifier and:
-			[self nextToken isAssignment
-				and: [currentToken isTouching: self nextToken]])
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: (currentToken value , ':') asSymbol
-						start: currentToken start
-						stop: self nextToken start.
-			nextToken := RBLiteralToken
-						value: #=
-						start: nextToken stop
-						stop: nextToken stop.
-			^self].
+
 	currentToken isAssignment
 		ifTrue:
 			[currentToken := RBLiteralToken
-						value: #':'
+						value: #':='
 						start: currentToken start
 						stop: currentToken start.
-			nextToken := RBLiteralToken
-						value: #=
-						start: currentToken stop
-						stop: currentToken stop.
 			^self].
 	currentToken isSpecial
 		ifTrue:
@@ -1202,37 +1186,7 @@ RBParser >> patchLiteralArrayToken [
 						stop: currentToken stop.
 			^self].
 
-	"Build super symbol (selector) by combining keywords and identifiers.
-	So that `#(foo:bar)` is the same as `#(#foo:bar)`"
-	(currentToken isIdentifier or: [currentToken isKeyword]) ifTrue: [
-		| value start |
-		start := currentToken start.
-		value := nil.
-		[ (currentToken isTouching: self nextToken)
-			and: [self nextToken isIdentifier
-				or: [self nextToken isKeyword
-					or: [self nextToken isSpecial: $:]]] ] whileTrue: [
-			value ifNil: [
-				value := currentToken value asString. "Start accumulating"
-			].
-			self step. "Consume current token"
-			value := value , currentToken value asString "Extends" ].
-		value ifNotNil: [
-			currentToken := RBLiteralToken
-				value: value asSymbol
-				start: start
-				stop: currentToken stop
-				source: value asString.
-			^ self ] ].
-
-	(currentToken isIdentifier
-		or: [currentToken isBinary or: [currentToken isKeyword]])
-			ifFalse: [^self parseErrorNode: 'Invalid token'].
-	currentToken := RBLiteralToken
-				value: currentToken value asSymbol
-				start: currentToken start
-				stop: currentToken stop
-				source: currentToken value asString
+	^self parseErrorNode: 'Invalid token'
 ]
 
 { #category : #private }
