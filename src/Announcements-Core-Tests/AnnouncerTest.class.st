@@ -35,18 +35,17 @@ AnnouncerTest >> setUp [
 
 { #category : #'tests - subscribers' }
 AnnouncerTest >> testAccessingSubscribers [
+
 	| subscribers |
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
 
-	"We do not use constant blocks here, instead use a clean block.
-	Using Constant blocks with announcements makes no senese, as they do nothing."
-	announcer when: AnnouncementMockA do: [ nil yourself ] for: self.
-	announcer when: AnnouncementMockB do: [ nil yourself ] for: self.
+	announcer when: AnnouncementMockA do: [ nil ] for: self.
+	announcer when: AnnouncementMockB do: [ nil ] for: self.
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 2.
 
-	subscribers do: [ :subscriber |	announcer unsubscribe: subscriber ].
+	subscribers do: [ :subscriber | announcer unsubscribe: subscriber ].
 
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0
@@ -98,9 +97,8 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 { #category : #'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
-	"We do not use constant blocks here, instead use a clean block.
-	Using Constant blocks with announcements makes no senese, as they do nothing."
-	announcer when: AnnouncementMockA do: [ nil yourself ] for: self.
+
+	announcer when: AnnouncementMockA do: [ nil ] for: self.
 
 	self assert: (announcer handleSubscriberClass: self class).
 	self deny: (announcer handleSubscriberClass: AnnouncementMockA)
