@@ -325,22 +325,6 @@ CompiledMethod >> containsHalt [
 	^ self hasProperty: #containsHalt
 ]
 
-{ #category : #initialization }
-CompiledMethod >> copyWithTrailerBytes: trailer [
-
-	| copy end start penultimateLiteral |
-	start := self initialPC.
-	end := self endPC.
-	copy := self class newMethod: end - start + 1 + self class trailerSize header: self header.
-	1 to: self numLiterals do: [:i | copy literalAt: i put: (self literalAt: i)].
-	(penultimateLiteral := self penultimateLiteral) isMethodProperties ifTrue:
-		[copy penultimateLiteral: (penultimateLiteral copy
-									setMethod: copy;
-									yourself)].
-	start to: end do: [:i | copy at: i put: (self at: i)].
-	^copy
-]
-
 { #category : #accessing }
 CompiledMethod >> defaultSelector [
 	"Invent and answer an appropriate message selector (a Symbol) for me,
