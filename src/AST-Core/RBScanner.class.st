@@ -428,9 +428,7 @@ RBScanner >> scanLiteral [
 	characterType = #alphabetic
 		ifTrue: [ ^ self scanSymbol ].
 	characterType = #binary
-		ifTrue:
-			[ ^ (self scanLiteralBinary)
-				stop: self previousStepPosition ].
+		ifTrue: [ ^ self scanLiteralBinary ].
 	currentCharacter = $'
 		ifTrue: [ ^ self scanStringSymbol ].
 	(currentCharacter = $( or: [ currentCharacter = $[ ])
@@ -455,7 +453,7 @@ RBScanner >> scanLiteralArrayToken [
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralBinary [
 	"Used when binary characters are encountered and beginning with #"
-	^self scanBinary: RBLiteralToken
+	^ (self scanBinary: RBLiteralToken) stop: self previousStepPosition
 ]
 
 { #category : #'private - scanning' }
