@@ -633,7 +633,9 @@ RBParser >> parseKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parseLiteralArray [
-	| literals startToken stop faulty value |
+	| literals startToken stop faulty value prevState |
+	prevState := scanner state.
+	scanner state: #literalArray.
 	startToken := currentToken.
 	literals := (OrderedCollection new: 5).
 	faulty := false.
@@ -645,6 +647,7 @@ RBParser >> parseLiteralArray [
 	stop := currentToken stop.
 	(currentToken isSpecial: $))
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
+	scanner state: prevState.
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralArrayErrorNode new
