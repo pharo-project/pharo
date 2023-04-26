@@ -454,6 +454,15 @@ RBScanner >> scanLiteralCharacter [
 	^token
 ]
 
+{ #category : #'as yet unclassified' }
+RBScanner >> scanLiteralForValue: aValue [
+
+	^ RBLiteralToken
+		  value: aValue
+		  start: tokenStart
+		  stop: self previousStepPosition
+]
+
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralString [
 	"The current character is the first one after the starting quote"
@@ -497,24 +506,10 @@ RBScanner >> scanName [
 
 { #category : #'private - scanning' }
 RBScanner >> scanNamedLiteral: name [
-	name = 'true'
-		ifTrue:
-			[^RBLiteralToken
-				value: true
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'false'
-		ifTrue:
-			[^RBLiteralToken
-				value: false
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'nil'
-		ifTrue:
-			[^RBLiteralToken
-				value: nil
-				start: tokenStart
-				stop: self previousStepPosition].
+
+	name = 'true' ifTrue: [ ^ self scanLiteralForValue: true ].
+	name = 'false' ifTrue: [ ^ self scanLiteralForValue: false ].
+	name = 'nil' ifTrue: [ ^ self scanLiteralForValue: nil ].
 	^ nil
 ]
 
