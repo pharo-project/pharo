@@ -64,7 +64,6 @@ Object class >> flushDependents [
 	DependentsFields keysAndValuesDo:[:key :dep|
 		key ifNotNil:[key removeDependent: nil].
 	].
-	DependentsFields finalizeValues
 ]
 
 { #category : #documentation }
@@ -158,7 +157,7 @@ Object class >> reInitializeDependentsFields [
 
 	| oldFields |
 	oldFields := DependentsFields.
-	DependentsFields := WeakIdentityKeyDictionary new.
+	self initializeDependentsFields.
 	oldFields
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
@@ -380,7 +379,8 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [
+	"we do the == true check to avoid NonBooleanReceiver error for nonBoolean aBlock values"
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 
@@ -1474,9 +1474,10 @@ Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #printing }
@@ -1484,9 +1485,10 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0 ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #dependencies }
@@ -1804,8 +1806,8 @@ Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
 	| dependents |
-	dependents := self dependents reject: [:each | each == anObject].
-	self myDependents: (dependents isEmpty ifFalse: [dependents]).
+	dependents := self dependents reject: [ :each | each == anObject ].
+	self myDependents: dependents.
 	^ anObject
 ]
 

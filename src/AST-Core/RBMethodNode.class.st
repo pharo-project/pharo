@@ -242,11 +242,6 @@ RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
-{ #category : #completion }
-RBMethodNode >> completionToken [
-	^ self selector
-]
-
 { #category : #'accessing - conceptual' }
 RBMethodNode >> conceptualArgumentSize [
 	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors.
@@ -288,12 +283,6 @@ RBMethodNode >> copyInContext: aDictionary [
 		body: (self body copyInContext: aDictionary);
 		source: (aDictionary at: '-source-' ifAbsentPut: [ self source ]);
 		yourself
-]
-
-{ #category : #accessing }
-RBMethodNode >> decompileString [
-
-	^ self formattedCode
 ]
 
 { #category : #testing }
@@ -473,15 +462,15 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 
 { #category : #'accessing - compiled method' }
 RBMethodNode >> method [
-	"return the method that I have been compiled for"
-	^self compilationContext ifNotNil: [ :ccntx |
-		 ccntx compiledMethod ifNil: [ccntx getClass >> self selector]]
+	
+	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
+	^ self compiledMethod
 ]
 
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass [
 
-	^ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ]
+	^ self scope ifNotNil: [ :s | s targetClass ]
 ]
 
 { #category : #'accessing - compiled method' }

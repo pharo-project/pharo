@@ -2560,14 +2560,8 @@ Morph >> fitInWorld [
 
 { #category : #macpal }
 Morph >> flash [
-	| originalFill flashFill |
 
-	flashFill := self flashFillStyle.
-	originalFill := self fillStyle.
-
-	self fillStyle: flashFill.
-
-	self addAlarm: #flashFinished:original: withArguments: { flashFill . originalFill } after: 50
+	self flashColor: self flashFillStyle
 ]
 
 { #category : #drawing }
@@ -2576,6 +2570,17 @@ Morph >> flashBounds [
 
 	5 timesRepeat:
 		[Display flash: self boundsInWorld  andWait: 120]
+]
+
+{ #category : #macpal }
+Morph >> flashColor: aColor [
+	| originalFill |
+
+	originalFill := self fillStyle.
+
+	self fillStyle: aColor.
+
+	self addAlarm: #flashFinished:original: withArguments: { aColor . originalFill } after: 50
 ]
 
 { #category : #macpal }
@@ -4887,7 +4892,7 @@ Morph >> privateAddMorph: aMorph atIndex: index [
 					oldOwner privateRemove: aMorph.
 					oldOwner removedMorph: aMorph ].
 			aMorph privateOwner: self.
-			submorphs := submorphs copyReplaceFrom: index to: index - 1 with: (Array with: aMorph).
+			submorphs := submorphs copyReplaceFrom: index to: index - 1 with: { aMorph } .
 			itsWorld == myWorld
 				ifFalse: [ aMorph intoWorld: myWorld ] ].
 	myWorld ifNotNil: [ self privateInvalidateMorph: aMorph ].

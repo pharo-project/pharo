@@ -1,13 +1,51 @@
 Extension { #name : #RBCodeSnippetTest }
 
 { #category : #'*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompile [
+RBCodeSnippetTest >> testCompileFailBlock [
+
+	| method error |
+	error := nil.
+	method := OpalCompiler new
+		          isScripting: snippet isScripting;
+		          failBlock: [ :e |
+			          self assert: (snippet hasNotice: e).
+			          self assert: error isNil. "single invocation"
+			          error := e.
+			          #tag ];
+		          compile: snippet source.
+
+	snippet isFaulty
+		ifTrue: [
+			self assert: error isNotNil.
+			self assert: method equals: #tag ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileFaulty [
 
 	| method |
 
 	self skipIf: #compile.
 	method := snippet compile.
-	self assert: method isCompiledMethod
+	self assert: method isCompiledMethod.
+
+	snippet isFaulty
+		ifTrue: [
+			| ast |
+			self assert: method hasSourceCode.
+			self assert: method sourceCode equals: snippet source.
+			ast := method ast.
+			self assert: ast isFaulty.
+
+			"Some faulty AST can produce non faulty method where no `signalSyntaxError:` is present"
+			]
+		ifFalse: [
+			self deny: method isFaulty ].
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -15,12 +53,57 @@ RBCodeSnippetTest >> testCompileOnError [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e | error := e errorMessage ].
+	method := snippet compileOnError: [ :e |
+		          self assert:
+			          (snippet hasNotice: e messageText at: e position).
+		          self assert: error isNil. "single invocation"
+		          error := e ].
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]
 		ifFalse: [
 			self assert: error isNil.
-			self assert: method isCompiledMethod ]
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileOnErrorResume [
+
+	| method error |
+	error := nil.
+	method := snippet compileOnError: [ :e |
+		          self assert:
+			          (snippet hasNotice: e messageText at: e position).
+		          error := e.
+		          e resume ].
+	self assert: snippet isFaulty equals: error isNotNil.
+	self assert: method isCompiledMethod.
+	self testExecute: method
+]
+
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
+
+	| method error |
+	error := nil.
+	method := OpalCompiler new
+		          isScripting: snippet isScripting;
+		          permitUndeclared: true;
+		          failBlock: [ :e |
+			          self assert: (snippet hasNotice: e).
+			          self assert: error isNil. "single invocation"
+			          error := e.
+			          #tag ];
+		          compile: snippet source.
+
+	snippet isFaultyMinusUndeclared
+		ifTrue: [
+			self assert: error isNotNil.
+			self assert: method equals: #tag ]
+		ifFalse: [
+			self assert: error isNil.
+			self assert: method isCompiledMethod.
+			self testExecute: method ]
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -29,19 +112,28 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 	| requestor method |
 	requestor := OCMockRequestor new.
 	requestor interactive: false.
-	requestor isScripting: snippet isMethod not. "Not sure how this lead to different information than `noPattern:` or it is just a redundant redundancy"
+	requestor isScripting: nil.
+	requestor text: nil.
 	method := OpalCompiler new
-		          noPattern: snippet isMethod not;
+		          isScripting: snippet isScripting;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
+			          | n |
+			          self assert: requestor notifyList size equals: 1.
+			          n := requestor notifyList first.
+			          self assert:
+					          (snippet
+						           hasNotice: (n first allButLast: 3)
+						           at: n second).
 			          self assert: snippet isFaulty.
-			          self assert: requestor notifyList isNotEmpty.
 			          ^ self ];
 		          compile: snippet source.
 
 	"Still alive? (failBlock never called)"
 	self deny: snippet isFaulty.
-	self assert: requestor notifyList isEmpty
+	self assert: requestor notifyList isEmpty.
+	self assert: method isCompiledMethod.
+	self testExecute: method
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -51,6 +143,8 @@ RBCodeSnippetTest >> testDecompile [
 	method := snippet compile.
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ast := method decompile.
+	self assert: ast isMethod.
+	ast := method parseTree.
 	self assert: ast isMethod.
 	"Decompilation lose many information. Not sure how to test more"
 ]
@@ -73,7 +167,9 @@ RBCodeSnippetTest >> testDoSemanticAnalysis [
 	| ast |
 	ast := snippet doSemanticAnalysis.
 	self assert: ast isMethod.
-	self assert: ast isFaulty equals: snippet isFaulty
+	self assert: ast isFaulty equals: snippet isFaulty.
+
+	self assert: (snippet hasAllNotices: ast allNotices)
 ]
 
 { #category : #'*OpalCompiler-Tests' }
@@ -83,7 +179,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 	| ast error |
 	error := nil.
 
-	ast := snippet doSemanticAnalysisOnError: [ :e | error := e errorMessage ].
+	ast := snippet doSemanticAnalysisOnError: [ :e | error := e messageText ].
 
 	snippet isFaulty
 		ifTrue: [ self assert: error isNotNil ]
@@ -93,29 +189,38 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 ]
 
 { #category : #'*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testExecute [
+RBCodeSnippetTest >> testExecute: method [
 
-	| method runBlock phonyArgs |
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Compilation error is for an other test"
+	| runBlock phonyArgs |
+	self skipIf: #exec.
 	self assert: method isCompiledMethod.
 
 	phonyArgs := (1 to: method numArgs) asArray.
+	runBlock := [ nil withArgs: phonyArgs executeMethod: method ].
 
-	"Executing a lone block will just return a block, we have to call value to have something more interesting"
-	snippet parse isBlock
-		ifTrue: [
-			| block phonyBlockArgs |
-			block := nil withArgs: phonyArgs executeMethod: method.
-			phonyBlockArgs := (1 to: block numArgs) asArray.
-			runBlock := [ block valueWithArguments: phonyBlockArgs ] ]
-		ifFalse: [ runBlock := [ nil withArgs: phonyArgs executeMethod: method ] ].
+	self testExecuteBlock: runBlock
+]
 
+{ #category : #'*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testExecuteBlock: aRunBlock [
+
+	| runBlock |
+	"a block that apply value on aRunBlock until it's no more a block"
+	runBlock := [
+	            | value block phonyBlockArgs |
+	            block := aRunBlock.
+	            [  phonyBlockArgs := (1 to: block numArgs) asArray.
+	               value := block valueWithArguments: phonyBlockArgs.
+	               value isBlock ] whileTrue: [ block := value ].
+	            value ].
+
+	"Now we can evaluate and check the various possible expectations"
 	snippet messageNotUnderstood ifNotNil: [ :mnu |
 		runBlock onDNU: mnu do: [ ^ self ].
 		self signalFailure: 'Should have raised MNU ' , mnu ].
 
-	snippet raise ifNotNil: [ :class | ^ self should: runBlock raise: class ].
+	snippet raise ifNotNil: [ :class |
+		^ self should: runBlock raise: class ].
 
 	snippet hasValue
 		ifFalse: [ self should: runBlock raise: RuntimeSyntaxError ]

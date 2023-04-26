@@ -541,20 +541,20 @@ EpMonitor >> protocolAdded: aProtocolAdded [
 		self addEvent:
 			(EpProtocolAddition
 				behavior: aProtocolAdded classAffected
-				protocol: aProtocolAdded protocol)]
+				protocol: aProtocolAdded protocol name)]
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> protocolRemoved: aProtocolRemoved [
 
 	"Skip an irrelevant case"
-	aProtocolRemoved protocol = Protocol unclassified ifTrue: [ ^self ].
+	aProtocolRemoved protocol isUnclassifiedProtocol ifTrue: [ ^self ].
 
 	self handleAnyErrorDuring: [
 		self addEvent:
 			(EpProtocolRemoval
 				behavior: aProtocolRemoved classAffected
-				protocol: aProtocolRemoved protocol)]
+				protocol: aProtocolRemoved protocol name)]
 ]
 
 { #category : #'announcement handling' }

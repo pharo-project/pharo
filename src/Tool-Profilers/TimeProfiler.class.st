@@ -164,7 +164,6 @@ TimeProfiler >> blockCode: aString notifying: aRequestor [
 		source: ('self runBlock: [', aString, ']');
 		context: self doItContext;
 		requestor: self;
-		noPattern: true;
 		failBlock: [^self];
 		compile.
 	self showResult: ( compiledMethod valueWithReceiver: self arguments: #()).
@@ -540,7 +539,7 @@ TimeProfiler >> selectedMethodCode: aString notifying: aController [
 			class := currNode methodClass.
 			oldSelector := currNode selector.
 			class ifNil: [ ^ false ].	"Normal method accept"
-			category := class organization categoryOfElement: oldSelector.
+			category := class organization protocolNameOfElement: oldSelector.
 			newSelector := class compile: aString classified: category notifying: aController.
 			newSelector ifNil: [ ^ false ].
 			self changed: #selectedMethodCode.

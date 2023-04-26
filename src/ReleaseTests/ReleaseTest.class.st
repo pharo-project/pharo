@@ -138,20 +138,6 @@ ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 ]
 
 { #category : #tests }
-ReleaseTest >> testInstalledMethodsWithIncorrectTrailerKind [
-	| incorrectMethods |
-
-	incorrectMethods := SystemNavigation new installedMethodsWithIncorrectTrailerKind.
-
-	self
-		assert: incorrectMethods isEmpty
-		description: [ String streamContents: [ :s|
-			s
-				nextPutAll: 'Found methods with incorrect trailer kind: ';
-				print: incorrectMethods ]]
-]
-
-{ #category : #tests }
 ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	| instanceSideMethodsWithNilKeyInLastLiteral |
 
@@ -181,6 +167,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 
 { #category : #tests }
 ReleaseTest >> testLayoutIntegrity [
+
 	SystemNavigation default allClassesDo: [ :class |
 		class instanceSide classLayout checkIntegrity.
 		class classSide classLayout checkIntegrity ]
@@ -333,7 +320,7 @@ ReleaseTest >> testNoSentNotImplementedSelectors [
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
-	found := SystemNavigation default allMethodsSelect: [ :m |
+	found := SystemNavigation default methods select: [ :m |
 		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
 	"Make sure to not waste memory with all the ASTs"
 	ASTCache reset.
@@ -407,6 +394,21 @@ ReleaseTest >> testRPackageOrganizer [
 	self
 		assert: RPackageOrganizer allInstances first == RPackageOrganizer default
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
+]
+
+{ #category : #tests }
+ReleaseTest >> testRatioOfCommentedClasses [
+
+	| stereotypes violating |
+	stereotypes := OrderedCollection new.
+	stereotypes
+		addAll: Smalltalk allTraits;
+		addAll: Smalltalk allClasses.
+
+	stereotypes removeAll: TestCase allSubclasses.
+	stereotypes removeAll: BaselineOf allSubclasses.
+	violating := stereotypes select: [ :each | each comment isEmpty ].
+	self assert: violating size <= 914
 ]
 
 { #category : #tests }

@@ -15,7 +15,7 @@ RBErrorNodeParserTest >> testFaultyAssigment [
 	self   deny: node contents first isFaulty.
 	self assert: node contents first value equals: 1.
 	self assert: node sourceInterval equals: (1 to: 3).
-	self assert: node errorMessage equals: 'identifier expected in assigment'.
+	self assert: node errorMessage equals: 'variable expected in assigment'.
 	self assert: node formattedCode equals: ':= 1'
 ]
 
@@ -261,7 +261,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 1).
+	self assert: node messages first sourceInterval equals: (1 to: 0).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -286,7 +286,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 1).
+	self assert: node messages first sourceInterval equals: (1 to: 0).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -318,7 +318,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 8).
+	self assert: node messages first sourceInterval equals: (1 to: 7).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -347,7 +347,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 	self assert: node isCascade.
 
 	self assert: node messages first isCascadeError.
-	self assert: node messages first sourceInterval equals: (1 to: 2).
+	self assert: node messages first sourceInterval equals: (1 to: 1).
 	self
 		assert: node messages first errorMessage
 		equals: 'Message expected'.
@@ -437,7 +437,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCo
 RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
 
 	| parser |
-	parser := self parserClass newFaulty.
+	parser := self parserClass new.
 	parser initializeParserWith: 'ret ^ 1 ^ 2'.
 	parser parseMethod.
 
@@ -478,7 +478,8 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral [
 	self assert: node isFaulty.
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
-	self assert: node receiver sourceInterval equals: (1 to: 4).
+	self assert: node receiver sourceInterval equals: (1 to: 3).
+	self assert: node receiver errorPosition equals: 4.
 	self assert: node receiver errorMessage equals: 'an integer greater than 1 as valid radix expected'.
 	self assert: node selector equals: #r.
 	self assert: node receiver formattedCode equals: '000'.
@@ -494,7 +495,8 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
 	self assert: node isFaulty.
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
-	self assert: node receiver sourceInterval equals: (1 to: 3).
+	self assert: node receiver sourceInterval equals: (1 to: 2).
+	self assert: node receiver errorPosition equals: 3.
 	self assert: node receiver errorMessage equals: 'a digit between 0 and 1 expected'.
 	self assert: node selector equals: #x.
 	self assert: node receiver formattedCode equals: '2r'.
@@ -512,9 +514,10 @@ RBErrorNodeParserTest >> testFaultyStringLiteral [
 	self assert: node selector equals: #','.
 	self assert: node arguments first isParseError.
 	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
-	self assert: node arguments first sourceInterval equals: (7 to: 11).
+	self assert: node arguments first sourceInterval equals: (7 to: 10).
+	self assert: node arguments first errorPosition equals: 11.
 	self assert: node arguments first formattedCode equals: '''bar'.
-	self assert: node formattedCode equals: '''foo'' , ''bar'.
+	self assert: node formattedCode equals: '''foo'' , ''bar'
 ]
 
 { #category : #tests }
@@ -528,7 +531,8 @@ RBErrorNodeParserTest >> testFaultyStringLiteral2 [
 	self assert: node selector equals: #','.
 	self assert: node arguments first isParseError.
 	self assert: node arguments first errorMessage equals: 'Unmatched '' in string literal.'.
-	self assert: node arguments first sourceInterval equals: (7 to: 8).
+	self assert: node arguments first sourceInterval equals: (7 to: 7).
+	self assert: node arguments first errorPosition equals: 8.
 	self assert: node arguments first formattedCode equals: ''''.
 	self assert: node formattedCode equals: '''foo'' , '''.
 ]

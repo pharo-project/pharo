@@ -65,8 +65,8 @@ T2FluidClassDefinitionPrinterTest >> testComplexTrait [
 
 	self assert: (self forClass: MOPTestClassD) equals: 'Object << #MOPTestClassD
 	traits: {Trait2 @ {#c3->#c2}};
-	tag: ''Traits-MOP'';
-	package: ''Tests'''
+	tag: ''MOP'';
+	package: ''TraitsV2-Tests'''
 ]
 
 { #category : #'tests - complex slots' }
@@ -238,10 +238,8 @@ T2FluidClassDefinitionPrinterTest >> testTrait3 [
 { #category : #'tests - traits' }
 T2FluidClassDefinitionPrinterTest >> testTrait3AndTag [
 
-	self
-		assert: (self forClass: Trait3)
-		equals: 'Trait << #Trait3
+	self assert: (self forClass: Trait3) equals: 'Trait << #Trait3
 	traits: {Trait2};
-	tag: ''Traits-MOP'';
-	package: ''Tests'''
+	tag: ''MOP'';
+	package: ''TraitsV2-Tests'''
 ]

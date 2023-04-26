@@ -1,9 +1,10 @@
 Class {
 	#name : #ReflectivityReificationTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag',
-		'link'
+		'link',
+		'link2'
 	],
 	#category : #'Reflectivity-Tests-Base'
 }
@@ -21,6 +22,7 @@ ReflectivityReificationTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityReificationTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
+	link2 ifNotNil: [ link2 uninstall ].
 	super tearDown
 ]
 
@@ -1583,12 +1585,12 @@ ReflectivityReificationTest >> testReifySendArgumentsInstead [
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendArgumentsInsteadAndBefore [
-	| sendNode instance beforeLink executed |
+	| sendNode instance executed |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
 		statements first value.
 
 	executed := false.
-	beforeLink :=  MetaLink new
+	link2 :=  MetaLink new
 		metaObject: [:args | executed := true ];
 		selector: #value:;
 		arguments: #(arguments).
@@ -1598,7 +1600,7 @@ ReflectivityReificationTest >> testReifySendArgumentsInsteadAndBefore [
 		selector: #tagExec:;
 		control: #instead;
 		arguments: #(arguments).
-	sendNode link: beforeLink.
+	sendNode link: link2.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
@@ -1646,12 +1648,12 @@ ReflectivityReificationTest >> testReifySendMethodToExecute [
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendOperationInsteadAndBefore [
-	| sendNode instance beforeLink executed |
+	| sendNode instance executed |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
 		statements first value.
 
 	executed := false.
-	beforeLink :=  MetaLink new
+	link2 :=  MetaLink new
 		metaObject: [:args | executed := true ];
 		selector: #value:;
 		arguments: #(operation).
@@ -1661,7 +1663,7 @@ ReflectivityReificationTest >> testReifySendOperationInsteadAndBefore [
 		selector: #tagExec:;
 		control: #instead;
 		arguments: #(operation).
-	sendNode link: beforeLink.
+	sendNode link: link2.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
@@ -1975,7 +1977,7 @@ ReflectivityReificationTest >> testReifyTempOperationAfter [
 { #category : #'tests - operations' }
 ReflectivityReificationTest >> testReifyTempOperationInstead [
 	| varNode instance executed |
-	self skip.
+
 	"skip for now as #usingMethods of the variable gets confused with instead"
 	varNode := (ReflectivityExamples >> #exampleAssignment) ast body statements last value.
 	executed := false.

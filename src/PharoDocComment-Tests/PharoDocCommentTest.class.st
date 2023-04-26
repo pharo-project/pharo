@@ -86,8 +86,8 @@ PharoDocCommentTest >> testExpressionSyntaxError [
 	self assert: node expression isFaulty.
 	"but the structure of the >>> looks ok"
 	self assert: node expression isWellFormed.
-	self should: [ node expression evaluate ] raise: SyntaxErrorNotification.
-	self should: [ (CommentTestCase for: node) testIt ] raise: SyntaxErrorNotification
+	self should: [ node expression evaluate ] raise: CodeError.
+	self should: [ (CommentTestCase for: node) testIt ] raise: CodeError
 ]
 
 { #category : #tests }

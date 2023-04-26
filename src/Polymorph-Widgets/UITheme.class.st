@@ -106,7 +106,7 @@ UITheme class >> current: aUITheme [
 	self currentWorld themeChanged.
 	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
 
-	SystemAnnouncer uniqueInstance announce: UIThemeChanged
+	SystemAnnouncer announce: UIThemeChanged
 ]
 
 { #category : #accessing }

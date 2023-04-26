@@ -344,7 +344,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
 		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
 
-	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
+	SystemAnnouncer announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
 ]
 
 { #category : #services }
@@ -435,20 +435,6 @@ ChangeSet class >> resetCurrentToNewUnnamedChangeSet [
 
 	current := self new.
 	self newChanges: current
-]
-
-{ #category : #scanning }
-ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: stamp [
-
-	| itemPosition method items |
-	items := OrderedCollection new.
-	[itemPosition := file position.
-	method := file nextChunk.
-	file skipStyleChunk.
-	method notEmpty] whileTrue:[
-		items add: (ChangeRecord new file: file position: itemPosition type: #method
-							class: class category: cat meta: meta stamp: stamp)].
-	^ items
 ]
 
 { #category : #'file in/out' }
@@ -895,9 +881,7 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 				vars in this class, warn author when new ones are added." ] ].
 	(self atClass: class includes: #comment)
 		ifFalse: [ ^ self ].
-	class instanceSide organization
-		putCommentOnFile: stream
-		forClass: class instanceSide.
+	class instanceSide putCommentOnFile: stream.
 	stream cr
 ]
 
@@ -1123,9 +1107,7 @@ ChangeSet >> methodRemoved: anEvent [
 		removeSelector: anEvent selector
 		class: anEvent methodClass
 		priorMethod: anEvent method
-		lastMethodInfo: {
-				anEvent method sourcePointer.
-				anEvent protocol }
+		lastSourcePointer: anEvent method sourcePointer
 ]
 
 { #category : #testing }
@@ -1140,7 +1122,7 @@ ChangeSet >> methodsWithoutClassifications [
 		[:aClass |
 		(self methodChangesAtClass: aClass name) associationsDo:
 				[:mAssoc | | aSelector | (aClass includesSelector:  (aSelector := mAssoc key)) ifTrue:
-						[(notClassified includes: (aClass organization categoryOfElement: aSelector))
+						[(notClassified includes: (aClass organization protocolNameOfElement: aSelector))
 								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
 	^ slips
 ]
@@ -1358,14 +1340,11 @@ ChangeSet >> removePreamble [
 ]
 
 { #category : #'change logging' }
-ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastMethodInfo: info [
-	"Include indication that a method has been forgotten.
-	info is a pair of the source code pointer and message category
-	for the method that was removed."
+ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastSourcePointer: lastSourcePointer [
+	"Include indication that a method has been forgotten."
 
-	class wantsChangeSetLogging ifFalse: [^ self].
-	(self changeRecorderFor: class)
-		noteRemoveSelector: selector priorMethod: priorMethod lastMethodInfo: info
+	class wantsChangeSetLogging ifFalse: [ ^ self ].
+	(self changeRecorderFor: class) noteRemoveSelector: selector priorMethod: priorMethod lastSourcePointer: lastSourcePointer
 ]
 
 { #category : #'method changes' }

@@ -11,8 +11,8 @@ Trait >> asRingDefinition [
 		        category: self category;
 		        superclassName: #Trait;
 		        traitCompositionSource: self traitCompositionString;
-		        comment: self organization classComment;
-		        stamp: self organization commentStamp;
+		        comment: self comment;
+		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
 		        withMetaclass.
 

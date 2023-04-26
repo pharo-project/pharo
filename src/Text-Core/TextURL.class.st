@@ -14,13 +14,6 @@ Class {
 	#category : #'Text-Core-Attributes'
 }
 
-{ #category : #'instance creation' }
-TextURL class >> scanFrom: strm [
-	"Read a link in the funny format used by Text styles on files."
-
-	^ self new url: (strm upTo: $;)
-]
-
 { #category : #evaluating }
 TextURL >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 	self notify: 'Please configure the actOnClickBlock to invoke the computation you need. In Pharo by default there is no external web browser'

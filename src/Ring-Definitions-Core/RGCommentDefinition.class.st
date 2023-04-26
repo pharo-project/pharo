@@ -41,7 +41,7 @@ RGCommentDefinition >> asHistorical [
 	self annotationNamed: self class statusKey put: #historical.
 	self sourcePointer ifNil: [
 		self realClass ifNotNil: [ :realClass |
-			self sourcePointer: realClass organization commentSourcePointer ] ]
+			self sourcePointer: realClass commentSourcePointer ] ]
 ]
 
 { #category : #'type of comments' }
@@ -80,9 +80,9 @@ RGCommentDefinition >> commentDataPointers [
 RGCommentDefinition >> content [
 
 	self isActive
-		ifTrue: [ ^ self realClass organization classComment ].
+		ifTrue: [ ^ self realClass comment ].
 	self isHistorical
-		ifTrue: [ ^ self contentAtPointer ifNil:[ self realClass ifNil:[ content ] ifNotNil:[ :rc| rc organization classComment ] ] ].
+		ifTrue: [ ^ self contentAtPointer ifNil:[ self realClass ifNil:[ content ] ifNotNil:[ :rc| rc comment ] ] ].
 	^ content
 ]
 
@@ -114,13 +114,11 @@ RGCommentDefinition >> fromActiveToPassive [
 	"If the receiver was generated as an active comment, it can be converted to a passive one by reading the data of the real class organization"
 
 	| realClass |
-	self isActive
-		ifFalse: [ ^ self ].
+	self isActive ifFalse: [ ^ self ].
 	realClass := self realClass.
-	realClass notNil
-		ifTrue: [
-			self content: realClass organization classComment.
-			self stamp: realClass organization commentStamp ].
+	realClass ifNotNil: [
+		self content: realClass comment.
+		self stamp: realClass commentStamp ].
 	self asPassive
 ]
 
@@ -253,9 +251,9 @@ RGCommentDefinition >> stamp [
 	"Retrieves the user-alias + timestamp associated to the receiver (if exists)"
 
 	self isActive
-		ifTrue: [ ^ self realClass organization commentStamp ].
+		ifTrue: [ ^ self realClass commentStamp ].
 	self isHistorical
-		ifTrue: [ ^ self stampAtPointer ifNil:[ self realClass ifNil:[ stamp ] ifNotNil:[ :rc| rc organization commentStamp ] ] ].
+		ifTrue: [ ^ self stampAtPointer ifNil:[ self realClass ifNil:[ stamp ] ifNotNil:[ :rc| rc commentStamp ] ] ].
 	^ stamp
 ]
 

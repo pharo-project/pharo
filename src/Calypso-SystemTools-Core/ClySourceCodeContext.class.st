@@ -68,7 +68,10 @@ ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 
 { #category : #testing }
 ClySourceCodeContext >> isArgOrTempVariableSelected [
-	^ self selectedSourceNode isLocalVariable
+
+	| sourceNode |
+	sourceNode := self selectedSourceNode.
+	^ sourceNode isTempVariable or: [ sourceNode isArgumentVariable ]
 ]
 
 { #category : #testing }

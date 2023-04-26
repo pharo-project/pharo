@@ -204,7 +204,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
 	cmClass := self compilationContext compiledMethodClass.
-	cm := trailer createMethod: self bytecodes size class: cmClass header: header.
+	cm := cmClass newMethod: self bytecodes size + CompiledMethod trailerSize header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
 		nextPutAll: self bytecodes.

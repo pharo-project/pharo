@@ -81,11 +81,6 @@ WeakKeyDictionaryTest >> size [
 	^1000
 ]
 
-{ #category : #requirements }
-WeakKeyDictionaryTest >> supportsNilKey [
-	^ false
-]
-
 { #category : #tests }
 WeakKeyDictionaryTest >> testClearing [
 	keys := nil.
@@ -97,8 +92,6 @@ WeakKeyDictionaryTest >> testClearing [
 	"Keys are gone but not yet finalized."
 	self assert: dict size equals: self size + 1.
 	self assert: dict keys size equals: 1.
-
-	dict finalizeValues.
 
 	"Now the size should be adjusted."
 	self assert: dict size equals: 1
@@ -112,14 +105,4 @@ WeakKeyDictionaryTest >> testGrow [
 
 	"Keys are gone but not yet finalized."
 	dict grow
-]
-
-{ #category : #'tests - printing' }
-WeakKeyDictionaryTest >> testStoreOnWithNegativeInteger [
-	| dictionary |
-	dictionary := { 'x' -> -1 } as: self classToBeTested.
-
-	self
-		assert: (String streamContents: [ :s | dictionary storeOn: s ])
-		equals: '((',self classToBeTested name,' new) add: (WeakKeyAssociation key: ''x'' value: -1); yourself)'
 ]

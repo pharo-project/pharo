@@ -30,7 +30,8 @@ PackageManifest class >> isDeprecated [
 
 { #category : #testing }
 PackageManifest class >> isManifest [
-	^ (self = PackageManifest) not
+
+	^ self ~= PackageManifest
 ]
 
 { #category : #'System-Support' }

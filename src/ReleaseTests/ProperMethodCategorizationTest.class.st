@@ -111,13 +111,6 @@ ProperMethodCategorizationTest >> testFinalizeMethodNeedsToBeInComparingProtocol
 ]
 
 { #category : #'tests - object' }
-ProperMethodCategorizationTest >> testFinalizeValuesMethodNeedsToBeInComparingProtocol [
-	"The #finalizeValues methods should be in method protocol 'finalization'"
-
-	self assureAll: #finalizeValues areCategorizedIn: #finalization whenSubclassOf: Object
-]
-
-{ #category : #'tests - object' }
 ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	"The #hash method should be in method protocol 'comparing'"
 
@@ -147,14 +140,13 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	"Check that we have no protocols left without methods"
 
-	| violating protocolsWithoutMethods |
-	violating := Dictionary new.
-	ProtoObject withAllSubclasses
-		do: [ :cls |
-			protocolsWithoutMethods := cls organization protocolOrganizer protocols select: [ :e | e isEmpty and: [ e canBeRemoved ] ].
-			protocolsWithoutMethods notEmpty ifTrue: [ violating at: cls put: protocolsWithoutMethods ] ].
+	| violations |
+	violations := Dictionary new.
+	ProtoObject withAllSubclasses do: [ :cls |
+		(cls organization protocols select: [ :protocol | protocol isEmpty ])
+			ifNotEmpty: [ :emptyProtocols | violations at: cls put: emptyProtocols ] ].
 
-	self assertEmpty: violating
+	self assertEmpty: violations
 ]
 
 { #category : #tests }
@@ -165,11 +157,9 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	violations := OrderedCollection new.
 
 	Object allSubclasses do: [ :each |
-		each organization allCategories do: [ :cat |
-			((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [
-				violations add: each -> cat ] ] ].
+		each organization protocolNames do: [ :cat | ((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ violations add: each -> cat ] ] ].
 
-	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ', violations asString
+	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ' , violations asString
 ]
 
 { #category : #tests }

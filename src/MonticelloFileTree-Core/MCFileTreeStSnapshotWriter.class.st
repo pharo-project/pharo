@@ -15,8 +15,8 @@ Class {
 
 { #category : #accessing }
 MCFileTreeStSnapshotWriter >> classDefinitions [
-    classDefinitions ifNil: [ classDefinitions := Dictionary new ].
-    ^ classDefinitions
+    ^ classDefinitions ifNil: [ classDefinitions := Dictionary new ]
+   
 ]
 
 { #category : #accessing }

@@ -37,6 +37,25 @@ ClyTextEditor >> cancel [
 	self browserTool cancelChanges
 ]
 
+{ #category : #'new selection' }
+ClyTextEditor >> notify: aString at: anInteger in: aStream [
+	"Because in calypso there is error icons and UI feedback absent in others RubEditor,
+	there no need to insert -> message in the text area"
+	"Note: error reporting can still be improved, but this need more work"
+
+	| pos message |
+	message := (aString endsWith: ' ->')
+		ifTrue: [ aString allButLast: 3 ]
+		ifFalse: [ aString ].
+
+	self inform: message.
+	pos := self selectionInterval notEmpty
+		ifTrue: [ self startIndex + anInteger - 1 ]
+		ifFalse: [ anInteger ].
+	self selectFrom: pos to: pos - 1. "move cursor in front of the location"
+	textArea flashColor: self theme dangerBackgroundColor
+]
+
 { #category : #operations }
 ClyTextEditor >> printIt [
 	"Treat the current text selection as an expression; evaluate it. Insert the

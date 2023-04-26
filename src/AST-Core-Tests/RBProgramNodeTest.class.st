@@ -324,6 +324,25 @@ RBProgramNodeTest >> testAllStatementsTwoMessages [
 	self assert: stats size equals: 1
 ]
 
+{ #category : #tests }
+RBProgramNodeTest >> testAsDoit [
+
+	| source ast ast2 |
+	source := '|a| a + 1. a - 2. a * 3'.
+	ast := self parseExpression: source.
+	self assert: ast isSequence.
+
+	ast2 := ast asDoit.
+	self assert: ast2 sourceCode equals: source.
+	self assert: ast2 isMethod.
+	self assert: ast2 body statements first selector equals: #+.
+
+	ast2 := ast statements second asDoit.
+	self assert: ast2 sourceCode equals: 'a - 2'.
+	self assert: ast2 isMethod.
+	self assert: ast2 body statements first selector equals: #-
+]
+
 { #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	| ast string start |

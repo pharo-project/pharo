@@ -1,7 +1,7 @@
 "
 A ChangeRecord represents a change recorded on a file in fileOut format.
-It includes a type (more needs to be done here), and additional information
-for certain types such as method defs which need class and category.
+
+It includes a type (more needs to be done here), and additional information for certain types such as method defs which need class and protocol name.
 "
 Class {
 	#name : #ChangeRecord,
@@ -11,7 +11,7 @@ Class {
 		'position',
 		'type',
 		'class',
-		'category',
+		'protocol',
 		'meta',
 		'stamp'
 	],
@@ -24,11 +24,6 @@ ChangeRecord >> <= anotherOne [
 	self stamp ifNil: [ ^ false ].
 	anotherOne stamp ifNil: [ ^ true ].
 	^ self timeStamp <= anotherOne timeStamp
-]
-
-{ #category : #accessing }
-ChangeRecord >> category [
-	^category
 ]
 
 { #category : #testing }
@@ -57,10 +52,10 @@ ChangeRecord >> file: f position: p type: t [
 ]
 
 { #category : #initialization }
-ChangeRecord >> file: f position: p type: t class: c category: cat meta: m stamp: s [
+ChangeRecord >> file: f position: p type: t class: c protocol: aProtocol meta: m stamp: s [
 	self file: f position: p type: t.
 	class := c.
-	category := cat.
+	protocol := aProtocol.
 	meta := m.
 	stamp := s
 ]
@@ -69,26 +64,18 @@ ChangeRecord >> file: f position: p type: t class: c category: cat meta: m stamp
 ChangeRecord >> fileIn [
 	"File the receiver in.  If I represent a method or a class-comment, file the method in and make a note of it in the recent-submissions list; if I represent a do-it, then, well, do it."
 
-	UIManager default
-		showWaitCursorWhile:
-			[
-			| methodClass s |
-			(methodClass := self methodClass) notNil
-				ifTrue:
-					[
-					methodClass
-						compile: self text
-						classified: category
-						withStamp: stamp
-						notifying: nil ].
-			type == #doIt
-				ifTrue:
-					[
-					((s := self string) beginsWith: '----')
-						ifFalse: [ self class compiler evaluate: s ] ].
-			type == #classComment
-				ifTrue:
-					[ (Smalltalk globals at: class asSymbol) comment: self text stamp: stamp ] ]
+	UIManager default showWaitCursorWhile: [
+		self methodClass ifNotNil: [ :methodClass |
+			methodClass
+				compile: self string
+				classified: protocol
+				withStamp: stamp
+				notifying: nil ].
+		type == #doIt ifTrue: [
+			| string |
+			string := self string.
+			(string beginsWith: '----') ifFalse: [ self class compiler evaluate: string ] ].
+		type == #classComment ifTrue: [ (Smalltalk globals at: class asSymbol) comment: self string stamp: stamp ] ]
 ]
 
 { #category : #accessing }
@@ -107,7 +94,7 @@ ChangeRecord >> fileOutOn: aFileStream [
 			aString :=  class asString
 							, (meta ifTrue: [' class methodsFor: ']
 									ifFalse: [' methodsFor: '])
-							, category asString printString.
+							, protocol asString printString.
 			stamp ifNotNil:
 				[aString := aString, ' stamp: ''', stamp, ''''].
 			aFileStream nextChunkPut: aString.
@@ -194,6 +181,12 @@ ChangeRecord >> printOn: aStream [
 
 	self type printOn: aStream.
 	self stamp ifNotNil: [ :s | s printOn: aStream ]
+]
+
+{ #category : #accessing }
+ChangeRecord >> protocol [
+
+	^ protocol
 ]
 
 { #category : #accessing }

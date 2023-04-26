@@ -7,6 +7,10 @@ Trait {
 }
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 	"Sent *each time* an argument node is found"
 	^ self visitVariableNode: anArgumentNode
@@ -53,6 +57,12 @@ TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitClassVariableNode: aNode [
 	^ self visitLiteralVariableNode: aNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitCommentNode: aRBComment [
+	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
+	This method can still be reached by custom visitors and direct visit on a comment node."
 ]
 
 { #category : #visiting }
@@ -212,12 +222,6 @@ TRBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
-]
-
-{ #category : #visiting }
-TRBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
-
-	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 
 { #category : #visiting }

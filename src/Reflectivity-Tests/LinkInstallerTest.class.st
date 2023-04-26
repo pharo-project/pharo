@@ -1,6 +1,6 @@
 Class {
 	#name : #LinkInstallerTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'obj1',
 		'obj2',
@@ -31,9 +31,6 @@ LinkInstallerTest >> setUp [
 LinkInstallerTest >> tearDown [
 	ReflectivityExamples2 new removeModifiedMethodWithInstVarAccess.
 	ReflectivityExamples new removeTemporaryMethods.
-	Smalltalk garbageCollectMost.
-	MetaLink uninstallAll.
-	Smalltalk garbageCollectMost.
 	super tearDown
 ]
 
@@ -381,8 +378,10 @@ LinkInstallerTest >> testObjectsAreWeakReferenced [
 	weakArray := WeakArray with: obj1.
 
 	self assert: weakArray first identicalTo: obj1.
+
 	obj1 := nil.
-	Smalltalk garbageCollect.
+	4 timesRepeat: [Smalltalk garbageCollect].
+
 	self assert: weakArray first equals: nil
 ]
 
@@ -496,7 +495,10 @@ LinkInstallerTest >> testPropagateClassScopedLinks [
 	anonNode := metalink linkInstaller findSubNode: node in: (obj1 class >> #exampleIfTrueIfFalse) ast.
 
 	self assert: anonNode links size equals: 2.
-	self assert: (anonNode links includes: metalink)
+	self assert: (anonNode links includes: metalink).
+	
+	metalink uninstall.
+	metalink2 uninstall
 ]
 
 { #category : #'links - updating' }
@@ -516,7 +518,10 @@ LinkInstallerTest >> testPropagateClassScopedLinksOnMethodNode [
 
 	anonNode := (obj1 class >> #exampleIfTrueIfFalse) ast.
 
-	self assert: (anonNode links includes: metalink)
+	self assert: (anonNode links includes: metalink).
+	
+	metalink uninstall.
+	metalink2 uninstall
 ]
 
 { #category : #'links - updating' }
@@ -582,7 +587,11 @@ LinkInstallerTest >> testPropagateLinksOnRBProgramNode [
 
 	self assert: objectSpecificVarNode links size equals: 2.
 	self assert: (objectSpecificVarNode links includes: link).
-	self assert: (objectSpecificVarNode links includes: link2)
+	self assert: (objectSpecificVarNode links includes: link2).
+	
+	
+	link uninstall.
+	link2 uninstall
 ]
 
 { #category : #'links - updating' }
@@ -604,7 +613,10 @@ LinkInstallerTest >> testPropagateNewClassScopedLinks [
 	"After adding a link to the base class, it must be present on the copied node
 	in the anonymous subclass"
 	node link: metalink.
-	self assert: (anonNode links includes: metalink)
+	self assert: (anonNode links includes: metalink).
+
+	metalink uninstall.
+	metalink2 uninstall
 ]
 
 { #category : #'links - updating' }
@@ -626,7 +638,10 @@ LinkInstallerTest >> testPropagateNewClassScopedLinksOnMethodNode [
 	"After adding a link to the base class, it must be present on the copied node
 	in the anonymous subclass"
 	node link: metalink.
-	self assert: (anonNode links includes: metalink)
+	self assert: (anonNode links includes: metalink).
+	
+	metalink uninstall.
+	metalink2 uninstall
 ]
 
 { #category : #'links - removing' }
@@ -884,7 +899,9 @@ LinkInstallerTest >> testUninstallLinkFromNode [
 
 	self deny: obj1 class isAnonymous.
 	self assert: metalink nodes size equals: 1.
-	self assert: (metalink nodes includes: node)
+	self assert: (metalink nodes includes: node).
+	
+	metalink uninstall
 ]
 
 { #category : #permalinks }

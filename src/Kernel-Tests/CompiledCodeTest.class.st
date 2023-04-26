@@ -60,7 +60,7 @@ CompiledCodeTest >> testBlockReturnSpecial [
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
-	method := self class compiler compile: 'method
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self doIt: [
@@ -94,7 +94,7 @@ CompiledCodeTest >> testHasLiteral [
 CompiledCodeTest >> testHasLiteralSuchThat [
 
 	| method |
-	method := self class compiler compile: 'method
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self doIt: [
@@ -126,7 +126,7 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 CompiledCodeTest >> testHasSelector [
 
 	| method |
-	method := self class compiler compile: 'method
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self doIt: [
@@ -158,7 +158,7 @@ CompiledCodeTest >> testHasSelector [
 CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 
 	| method specialIndex |
-	method := self class compiler compile: 'method
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self do: [
@@ -210,7 +210,7 @@ CompiledCodeTest >> testHasTemporaries [
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
 	| method block |
-	method := self class compiler compile: 'method
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		Class.
@@ -220,7 +220,7 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 		Object.
 		self name ].
 		^#(#array) '.
-	block := (self class compiler evaluate: '[
+	block := (self class compiler permitFaulty: true; evaluate: '[
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		Object.
@@ -228,6 +228,7 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 	self assertCollection: method literals equals: {
 			2.
 			(UndeclaredVariable key: #test value: nil).
+			#runtimeUndeclaredWrite:.
 			(GlobalVariable key: #Class value: Class).
 			block.
 			#doIt:.
@@ -253,7 +254,7 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	"The behavior is different than literals"
 	| method |
-	method := self class compiler compile: 'method
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		Class.
@@ -270,9 +271,11 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		equals: {
 				2.
 				(UndeclaredVariable key: #test value: nil).
+				#runtimeUndeclaredWrite:.
 				(GlobalVariable key: #Class value: Class).
 				2.
 				(UndeclaredVariable key: #test value: nil).
+				#runtimeUndeclaredWrite:.
 				#( #arrayInBlock ).
 				(GlobalVariable key: #Object value: Object).
 				#name.
@@ -295,6 +298,21 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testLocalMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assert: method localMessages asArray equals: #(#doit) .
+	
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
 ]
 
 { #category : #'tests - testing' }

@@ -6,8 +6,8 @@ SystemOrganizer >> fileOut [
 
 	| internalStream |
 	internalStream := (String new: 30000) writeStream.
-	internalStream nextPutAll: 'SystemOrganization changeFromCategorySpecs: #('; cr;
-		print: SystemOrganization;  "ends with a cr"
+	internalStream nextPutAll: 'Smalltalk organization changeFromCategorySpecs: #('; cr;
+		print: Smalltalk organization;  "ends with a cr"
 		nextPutAll: ')!'; cr.
 
 	CodeExporter

@@ -645,8 +645,7 @@ SmalltalkImage >> fixObsoleteReferences [
 	self
 		garbageCollect;
 		fixObsoleteBindings;
-		fixObsoleteSharedPools.
-	Behavior flushObsoleteSubclasses
+		fixObsoleteSharedPools
 ]
 
 { #category : #housekeeping }
@@ -1529,9 +1528,10 @@ SmalltalkImage >> removeClassNamed: aName [
 { #category : #housekeeping }
 SmalltalkImage >> removeEmptyMessageCategories [
 	"Smalltalk removeEmptyMessageCategories"
+
 	self garbageCollect.
-	ClassOrganization allInstancesDo: [ :org | org removeEmptyCategories ].
-	SystemOrganization removeEmptyCategories
+	ClassOrganization allInstancesDo: [ :org | org removeEmptyProtocols ].
+	Smalltalk organization removeEmptyPackages
 ]
 
 { #category : #shrinking }

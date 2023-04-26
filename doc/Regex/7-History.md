@@ -118,7 +118,7 @@ messages CharacterArray understands: #asRegexIgnoringCase,
 in a particular string or on a particular stream, as well as
 substitution protocol. The interface includes the following messages:
 
-```
+```st
 	matchesIn: aString
 	matchesIn: aString collect: aBlock
 	matchesIn: aString do: aBlock

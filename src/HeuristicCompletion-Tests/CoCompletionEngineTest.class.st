@@ -41,24 +41,6 @@ CoCompletionEngineTest >> testAdvanceWordDoesNotCloseCompletionContext [
 ]
 
 { #category : #'tests - interaction' }
-CoCompletionEngineTest >> testAdvanceWordGoesToNextWord [
-
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size - 10.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	editor keyDown: (self keyboardEventFor: Character arrowRight useCommand: true).
-
-	self assert: editor caret equals: text size - 'toto' size
-]
-
-{ #category : #'tests - interaction' }
 CoCompletionEngineTest >> testAdvanceWordTwiceClosesCompletionContext [
 	"Because it exists current word"
 	| text |
@@ -75,6 +57,56 @@ CoCompletionEngineTest >> testAdvanceWordTwiceClosesCompletionContext [
 		editor keystroke: (self keyboardEventFor: Character arrowRight useCommand: true) ].
 
 	self deny: controller hasCompletionContext
+]
+
+{ #category : #'tests - interaction' }
+CoCompletionEngineTest >> testCmdCtrlLeftClosesDetail [
+
+	| text |
+	text := 'self asOrdered'.
+	self
+		setEditorText: text;
+		selectAt: text size - 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	"Detail already closed? open it"
+	controller hasDetail ifFalse: [ controller showDetail ].
+
+	"Force the drawing of the menu, so the detail can get its position..."
+	WorldMorph doOneCycle.
+	"This is the current shortcut to open the details of the completion engine... Cmd/ctrl+right for all platforms"
+	editor keyDown:
+		((self keyboardEventFor: Character arrowLeft) buttons:
+			 KMModifier meta eventCode).
+
+	self deny: controller hasDetail
+]
+
+{ #category : #'tests - interaction' }
+CoCompletionEngineTest >> testCmdCtrlRightOpensDetail [
+
+	| text |
+	text := 'self asOrdered'.
+	self
+		setEditorText: text;
+		selectAt: text size - 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	"Detail already open? close it"
+	controller hasDetail ifTrue: [ controller hideDetail ].
+
+	"Force the drawing of the menu, so the detail can get its position..."
+	WorldMorph doOneCycle.
+	"This is the current shortcut to open the details of the completion engine... Cmd/ctrl+right for all platforms"
+	editor keyDown:
+		((self keyboardEventFor: Character arrowRight) buttons:
+			 KMModifier meta eventCode).
+
+	self assert: controller hasDetail
 ]
 
 { #category : #'tests - interaction' }

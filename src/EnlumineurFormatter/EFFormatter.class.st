@@ -49,7 +49,7 @@ Class {
 
 { #category : #private }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer uniqueInstance announce: EFSettingChanged
+	SystemAnnouncer announce: EFSettingChanged
 ]
 
 { #category : #private }
@@ -2085,6 +2085,12 @@ EFFormatter >> useBasicCommentFormat: aBoolean [
 ]
 
 { #category : #visiting }
+EFFormatter >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	codeStream nextPut: $@
+]
+
+{ #category : #visiting }
 EFFormatter >> visitArrayNode: anArrayNode [
 	self bracketWith: '{}' around: [ self formatArray: anArrayNode ]
 ]
@@ -2137,6 +2143,8 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 EFFormatter >> visitEnglobingErrorNode: aNode [
 
+	aNode isTemporariesError ifTrue: [
+		^ self formatTemporariesFor: aNode ].
 	aNode value = '' ifFalse: [
 		self writeString: aNode value.
 		codeStream space ].

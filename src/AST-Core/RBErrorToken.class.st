@@ -38,6 +38,11 @@ RBErrorToken >> location [
 ]
 
 { #category : #accessing }
+RBErrorToken >> location: anInteger [
+	location := anInteger
+]
+
+{ #category : #accessing }
 RBErrorToken >> value: theValue start: tokenStart cause: errorCause location: errorPosition [
 	self value: theValue start: tokenStart.
 	location := errorPosition.

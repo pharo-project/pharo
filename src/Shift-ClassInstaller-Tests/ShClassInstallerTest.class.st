@@ -166,7 +166,7 @@ ShClassInstallerTest >> testClassWithComment [
 				commentStamp: 'anStamp' ].
 
 	self assert: newClass comment equals: 'I have a comment'.
-	self assert: newClass organization commentStamp equals: 'anStamp'
+	self assert: newClass commentStamp equals: 'anStamp'
 ]
 
 { #category : #tests }
