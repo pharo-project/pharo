@@ -376,9 +376,9 @@ CompiledMethod >> getPreambleFrom: aFileStream at: position [
 CompiledMethod >> getSourceFromFile [
 	"PLEASE Note: clients should always call #sourceCode"
 	"Read the source code from file, determining source file index and
-	file position from the last 3 bytes of this method."
+	file position from the last bytes of this method (size defined in #trailerSize)."
 
-	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ '' ]
+	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
 ]
 
 { #category : #'source code management' }
@@ -1006,7 +1006,7 @@ CompiledMethod >> sourceCodeOrNil [
 
 	self propertyAt: #source ifPresent:  [ :code | ^ code ].
 	self hasSourcePointer ifFalse: [ ^ nil ].
-	^ self getSourceFromFile ifEmpty: [ nil ]
+	^ self getSourceFromFile
 ]
 
 { #category : #'source code management' }
