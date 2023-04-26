@@ -182,8 +182,8 @@ RBCodeSnippet class >> badComments [
 			         value: 1).
 		        (self new
 			         source: '"a" #( "b" 1 "c" two "d" ( "e" 3 "f" ) "g" ) "h"';
-			         nodeAt: 'CCC 000DDD080EEE099900000AAAAAABAAAAAA0HHH00 III';
-			         styled: '""" 00 """ n """ ###     1 """ n """ 1 """ 0 """';
+			         nodeAt: 'DDD 000EEE090FFF0AAA0GGG0BBBBBBCBBBBBB0JJJ00 KKK';
+			         styled: '""" 00 """ n """ ### """ 1 """ n """ 1 """ 0 """';
 			         formattedCode: '#( 1 two #( 3 ) )';
 			         value: #( 1 #two #( 3 ) )).
 		        (self new
@@ -306,6 +306,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: '#( 1 + 2';
 			         nodeAt: '00010203';
 			         styled: 'XX n # n';
+			         formattedCode: '#( 1 #+ 2';
 			         notices: #( #( 1 8 9 ''')'' expected' ) )).
 		        (self new
 			         source: '[ 1 + 2';
@@ -1458,15 +1459,15 @@ RBCodeSnippet class >> badScanner [
 			         nodeAt: '00111111112222222223334455506770';
 			         styled: '00######################### ###0';
 			         formattedCode:
-				         '#( aa:bb:cc #''aa:bb:cc'' #cc == #''=='' = #= )';
-			         value: #( #aa:bb:cc #'aa:bb:cc' #cc #'==' #'==' #= #= )). "Identifiers, keywords and binary operators are implicitely transformed into symbols. Note that formatting is inconsistent."
+				         '#( aa:bb:cc #''aa:bb:cc'' #cc #''=='' #''=='' #= #= )';
+			         value: #( #'aa:bb:cc' #'aa:bb:cc' #cc #'==' #'==' #= #= )). "Identifiers, keywords and binary operators are implicitely transformed into symbols. Note that formatting is inconsistent."
 		        (self new
 			         source: '#(aa:bb:"A"cc"B"#aa:bb:cc"C"#cc"D"++"E"#++"F")';
-			         nodeAt: '0044444400055000666666666AAA777BBB88000999CCC0';
-			         styled: '00######   ##   #########"""###"""##   ###"""0';
+			         nodeAt: '00777777DDD88EEE999999999FFFAAAGGGBBHHHCCCIII0';
+			         styled: '00######"""##"""#########"""###"""##"""###"""0';
 			         formattedCode:
-				         '#( aa:bb: cc #''aa:bb:cc'' #cc ++ #''++'' )';
-			         value: #( #aa:bb: cc #'aa:bb:cc' #cc #'++' #'++' )). "Check if comments are lost"
+				         '#( aa:bb: cc #''aa:bb:cc'' #cc #''++'' #''++'' )';
+			         value: #( #aa:bb: #cc #'aa:bb:cc' #cc #'++' #'++' )). "Check if comments are lost"
 		        (self new
 			         source: '#(().:;[]{}^#a)';
 			         nodeAt: '001123456789AA0';
@@ -1504,19 +1505,19 @@ RBCodeSnippet class >> badScanner [
 				            #( 7 8 9 'Literal expected' ) )). "Check if comments are lost"
 		        (self new
 			         source: '#(:=aa:=:==bb:==#cc:==)';
-			         nodeAt: '001033345078889ABBBBCC0';
+			         nodeAt: '00102223405666778888990';
 			         styled: '00# ##### ############0';
 			         formattedCode:
-				         '#( #'':'' #= #aa: #= #'':'' #= = #bb: #= = #cc: == )';
+				         '#( #'':='' aa: #= #'':='' #= bb: #''=='' #cc: #''=='' )';
 			         value:
-				         #( #':' #= #aa: #= #':' #= #= #bb: #= #= #cc: #'==' )). "Assigments are split, creating symbols"
+				         #( #':=' #aa: #= #':=' #= #bb: #'==' #cc: #'==' )). "Assigments are split, creating symbols"
 		        (self new
 			         source: '#(:="A"aa:="B":=="C"cc:=="D")';
-			         nodeAt: '001000033340005070008889A0000';
-			         styled: '00#    ####   # #   #####   0';
+			         nodeAt: '00400005556BBB708CCC999AADDD0';
+			         styled: '00#    ####"""# #"""#####"""0';
 			         formattedCode:
-				         '#( #'':'' #= #aa: #= #'':'' #= = #cc: #= = )';
-			         value: #( #':' #= #aa: #= #':' #= #= #cc: #= #= )) "Check if comments are lost" }.
+				         '#( #'':='' aa: #= #'':='' #= cc: #''=='' )';
+			         value: #( #':=' #aa: #= #':=' #= #cc: #'==' )) "Check if comments are lost" }.
 	"Setup default values"
 	self new
 		group: #badScanner;
