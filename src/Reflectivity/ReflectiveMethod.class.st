@@ -32,13 +32,16 @@ ReflectiveMethod >> ast [
 
 { #category : #evaluation }
 ReflectiveMethod >> compileAST [
-
+	| method |
 	OCASTSemanticCleaner clean: ast.
 	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
-	^ ast generateMethod setSourcePointer: compiledMethod sourcePointer
+	method := ast generate: CompiledMethodTrailer empty.
+	method setSourcePointer: compiledMethod sourcePointer.
+	ast compiledMethod: method.
+	^method.
 ]
 
 { #category : #evaluation }
