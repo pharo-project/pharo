@@ -462,14 +462,15 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 
 { #category : #'accessing - compiled method' }
 RBMethodNode >> method [
-	"return the method that I have been compiled for"
-	^ self propertyAt: #compiledMethod ifAbsent: [ nil ]
+	
+	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
+	^ self compiledMethod
 ]
 
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass [
 
-	^ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ]
+	^ self scope ifNotNil: [ :s | s targetClass ]
 ]
 
 { #category : #'accessing - compiled method' }

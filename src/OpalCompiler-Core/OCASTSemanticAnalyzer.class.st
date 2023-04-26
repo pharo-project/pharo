@@ -252,7 +252,7 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
 	
 	super visitMessageNode: aMessageNode.
-	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: self outerScope targetClass ]
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: scope targetClass ]
 ]
 
 { #category : #visiting }
@@ -274,7 +274,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 	super visitPragmaNode: aPragmaNode.
 	aPragmaNode selector = #compilerOptions: ifTrue: [
 		aPragmaNode asPragma sendTo:
-			aPragmaNode methodNode compilationContext ].
+			self compilationContext ].
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp
 	for it"

@@ -434,6 +434,12 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
 
+	|scope|
+	"First thing is to attach a initial scope to the method,
+	so plugins can have something to rely on for their analysis and transformations"
+	scope := OCMethodScope new outerScope: self buildOuterScope.
+	ast scope: scope.  scope node: ast.
+
 	self callParsePlugins.
 	self compilationContext semanticAnalyzerClass new
 		compilationContext: self compilationContext;
