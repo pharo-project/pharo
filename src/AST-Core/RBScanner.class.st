@@ -603,6 +603,7 @@ RBScanner >> scanSymbolOrNamedLiteral [
 		value: text asSymbol
 		start: tokenStart
 		stop: self previousStepPosition
+		source: (self scanBackFrom: tokenStart)
 ]
 
 { #category : #accessing }
