@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'gen',
 		'currentScope',
-		'trailer',
 		'tempVectorStack',
 		'compilationContext'
 	],
@@ -45,12 +44,6 @@ IRTranslator >> compiledBlock [
 
 { #category : #results }
 IRTranslator >> compiledMethod [
-	^ gen compiledMethod
-]
-
-{ #category : #results }
-IRTranslator >> compiledMethodWith: aTrailer [
-
 	^ gen compiledMethod
 ]
 
@@ -101,12 +94,6 @@ IRTranslator >> pushOuterVectors: scope [
 IRTranslator >> pushScope: anIRBlockOrMethod [
 
 	currentScope push: anIRBlockOrMethod
-]
-
-{ #category : #accessing }
-IRTranslator >> trailer: aTrailer [
-
-	trailer := aTrailer
 ]
 
 { #category : #visiting }
