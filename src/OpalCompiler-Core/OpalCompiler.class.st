@@ -396,7 +396,7 @@ OpalCompiler >> compiledMethodClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> compiledMethodTrailer: bytes [
-	self compilationContext compiledMethodTrailer: bytes
+	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
 ]
 
 { #category : #accessing }

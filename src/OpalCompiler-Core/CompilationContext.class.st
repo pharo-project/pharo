@@ -24,7 +24,6 @@ Class {
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
 		'bytecodeGeneratorClass',
-		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
 		'astParseTransformPlugins',
@@ -417,16 +416,6 @@ CompilationContext >> compiledMethodClass: aCompiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 
 	compiledMethodClass := aCompiledMethodClass
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer [
-	^ compiledMethodTrailer
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer: anObject [
-	compiledMethodTrailer := anObject
 ]
 
 { #category : #options }

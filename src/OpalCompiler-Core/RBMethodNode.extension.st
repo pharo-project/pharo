@@ -79,9 +79,11 @@ RBMethodNode >> generate [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate: trailer [
-	"if the bytecode is regenerated, we need to reset the cache"
-	bcToASTCache := nil.
-	^ self generateIR compiledMethodWith: trailer
+	self
+		deprecated: 'Use generateMethod'
+		transformWith: '`@receiver generate: `@argument'
+			-> '`@receiver generateMethod'.
+	^ self generateMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -115,7 +117,10 @@ RBMethodNode >> generateMethod [
 	So use this method if you know what you are doing."
 
 	| cm |
-	cm := self generate: self compilationContext compiledMethodTrailer.
+	
+	"if the bytecode is regenerated, we need to reset the cache"
+	bcToASTCache := nil.
+	cm :=  self generateIR compiledMethod.
 	self compiledMethod: cm.
 	^ cm
 ]
