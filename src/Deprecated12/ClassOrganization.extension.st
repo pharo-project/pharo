@@ -168,18 +168,18 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 ClassOrganization >> renameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #renameProtocol:into: instead.'
-		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 into: `@arg2'.
-	self renameProtocol: oldName into: newName
+		deprecated: 'Use #renameProtocol:as: instead.'
+		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 as: `@arg2'.
+	self renameProtocol: oldName as: newName
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #renameProtocol:into: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
-		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 into: `@arg2'.
-	self renameProtocol: oldName into: newName
+		deprecated: 'Use #renameProtocol:as: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
+		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 as: `@arg2'.
+	self renameProtocol: oldName as: newName
 ]
 
 { #category : #'*Deprecated12' }
