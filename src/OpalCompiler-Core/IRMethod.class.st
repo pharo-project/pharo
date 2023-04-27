@@ -118,7 +118,7 @@ IRMethod >> compilationContext: aCompilationContext [
 IRMethod >> compiledBlock: scope [
 
 	^compiledMethod
-		ifNil: [self generateBlock: CompiledMethodTrailer empty withScope: scope ]
+		ifNil: [self generateBlockWithScope: scope ]
 		ifNotNil: [compiledMethod]
 ]
 
@@ -169,7 +169,7 @@ IRMethod >> generate: trailer [
 ]
 
 { #category : #translating }
-IRMethod >> generateBlock: trailer withScope: scope [
+IRMethod >> generateBlockWithScope: scope [
 	| irTranslator |
       irTranslator := IRTranslator context: self compilationContext.
 	irTranslator
