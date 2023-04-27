@@ -421,7 +421,7 @@ CompilationContext >> compiledMethodClass: aCompiledMethodClass [
 
 { #category : #accessing }
 CompilationContext >> compiledMethodTrailer [
-	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
+	^ compiledMethodTrailer
 ]
 
 { #category : #accessing }

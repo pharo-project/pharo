@@ -155,7 +155,7 @@ IRBytecodeGenerator >> compilationContext: aCompilationContext [
 ]
 
 { #category : #results }
-IRBytecodeGenerator >> compiledBlockWith: trailer [
+IRBytecodeGenerator >> compiledBlock [
 	| lits quickPrimitive header cb |
 	lits := self literals allButLast "1 free only for compiledBlock".
 	quickPrimitive := self quickMethodPrim.
@@ -180,12 +180,6 @@ IRBytecodeGenerator >> compiledBlockWith: trailer [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledMethod [
-
-	^ self compiledMethodWith: CompiledMethodTrailer empty
-]
-
-{ #category : #results }
-IRBytecodeGenerator >> compiledMethodWith: trailer [
 	| lits quickPrimitive |
 	lits := self literals.
 	quickPrimitive := self quickMethodPrim.
@@ -196,11 +190,11 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 		encoder stream: primitiveBytes.
 		encoder genCallPrimitive: quickPrimitive.
 	].
-	^ self compiledMethodWith: trailer header: (self spurVMHeader: lits size) literals: lits
+	^ self compiledMethodHeader: (self spurVMHeader: lits size) literals: lits
 ]
 
 { #category : #results }
-IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits [
+IRBytecodeGenerator >> compiledMethodHeader: header literals: lits [
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
 	cmClass := self compilationContext compiledMethodClass.
