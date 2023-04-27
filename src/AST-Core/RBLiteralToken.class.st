@@ -48,11 +48,6 @@ RBLiteralToken >> isLiteralToken [
 	^true
 ]
 
-{ #category : #testing }
-RBLiteralToken >> isMultiKeyword [
-	^false
-]
-
 { #category : #private }
 RBLiteralToken >> length [
 	^stopPosition - self start + 1

@@ -215,14 +215,12 @@ ClassOrganization >> protocols [
 ]
 
 { #category : #removing }
-ClassOrganization >> removeElement: aSymbol [
+ClassOrganization >> removeElement: aSelector [
 
-	| oldProtocol |
-	oldProtocol := self protocolNameOfElement: aSymbol.
-	self protocols
-		select: [ :protocol | protocol includesSelector: aSymbol ]
-		thenDo: [ :p | p removeMethodSelector: aSymbol ].
-	self notifyOfChangedSelector: aSymbol from: oldProtocol to: (self protocolNameOfElement: aSymbol)
+	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
+		protocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: protocol.
+		self notifyOfChangedSelector: aSelector from: protocol name to: nil ]
 ]
 
 { #category : #removing }
