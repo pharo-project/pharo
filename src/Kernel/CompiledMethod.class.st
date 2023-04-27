@@ -274,7 +274,7 @@ CompiledMethod >> displayStringOn: aStream [
 
 { #category : #accessing }
 CompiledMethod >> endPC [
-	"Answer the index of the last bytecode"
+	"Answer the index of the last bytecode, as the trailer size varies we have to delegate"
 	^ self size - self class trailerSize
 ]
 
@@ -998,7 +998,8 @@ CompiledMethod >> tempNames [
 
 { #category : #accessing }
 CompiledMethod >> trailer [
-	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use setSourcePointer: / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
+	"Answer the receiver's trailer"
+	^ CompiledMethodTrailer new method: self
 ]
 
 { #category : #'accessing - tags' }
