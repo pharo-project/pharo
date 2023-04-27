@@ -25,7 +25,6 @@ OCASTTranslatorTest >> compilationContext [
 	| context |
 	context := CompilationContext new
 		encoderClass: self encoder;
-		bindings: globals;
 		parseOptions: { #'+' . optimization };
 		yourself.	
 	
