@@ -35,9 +35,6 @@ Class {
 		'compilationContextClass',
 		'permitFaulty',
 		'permitUndeclared',
-		'requestor',
-		'bindings',
-		'semanticScope',
 		'failBlock',
 		'logged',
 		'changeStamp',
@@ -224,16 +221,13 @@ OpalCompiler >> ast: anObject [
 
 { #category : #accessing }
 OpalCompiler >> bindings [
-	^ bindings
+	^ self compilationContext bindings
 ]
 
 { #category : #accessing }
-OpalCompiler >> bindings: aCollectionOfAssociations [
+OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
-	"bindings are LiteralVariables, not simple Associations.
-	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
-	bindings := (aCollectionOfAssociations asDictionary associations
-		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary	
+	self compilationContext bindings: aDictionary
 ]
 
 { #category : #private }
@@ -305,21 +299,21 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self requestor ifNotNil: [
+	self compilationContext requestor ifNotNil: [ :requestor |
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		self interactive ifTrue: [
+		self compilationContext interactive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
-					requestor: self requestor;
+					requestor: requestor;
 					openMenu.
 				res ifNil: [ ^ true "reparation unneded, let AST as is" ].
 				res ifFalse: [ ^ false "operation cancelled, fail" ].
-				self parse: self requestor text. "some reparation was done, reparse"
+				self parse: requestor text. "some reparation was done, reparse"
 				^ nil ] ].
 
 		"Quirks mode: otherwise, push the error message to the requestor"
@@ -342,7 +336,7 @@ OpalCompiler >> checkNotice: aNotice [
 
 { #category : #accessing }
 OpalCompiler >> class: aClass [
-	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
+	self compilationContext class: aClass
 ]
 
 { #category : #accessing }
@@ -382,7 +376,7 @@ OpalCompiler >> compile [
 	ast scope registerVariables.
 	method := ast generateMethod.
 	method propertyAt: #source put: source.
-	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 	^ method
 ]
 
@@ -552,26 +546,13 @@ OpalCompiler >> install: aSource [
 ]
 
 { #category : #accessing }
-OpalCompiler >> interactive [
-
-	self requestor ifNil: [ ^ false ].
-	"we asume requestors are interactive, but they can override.
-	this should be simplified "
-	^ (self requestor respondsTo: #interactive)
-		  ifTrue: [ self requestor interactive ]
-		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
 OpalCompiler >> isScripting [
-	^ self semanticScope isDoItScope
+	^ self compilationContext noPattern
 ]
 
 { #category : #accessing }
 OpalCompiler >> isScripting: aBoolean [
-
-	(aBoolean and: [ self isScripting not ]) ifTrue: [
-		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
+	self compilationContext noPattern: aBoolean
 ]
 
 { #category : #accessing }
@@ -625,7 +606,7 @@ OpalCompiler >> parse [
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
-	ast := self isScripting ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
+	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self doSemanticAnalysis.
@@ -730,12 +711,12 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor [
-	^ requestor
+	^ self compilationContext requestor
 ]
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
-	requestor := aRequestor
+	self compilationContext requestor: aRequestor
 ]
 
 { #category : #plugins }
@@ -746,12 +727,11 @@ OpalCompiler >> requestorScopeClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> semanticScope [
-	^ semanticScope ifNil: [ self compilationContext semanticScope ]
+	^self compilationContext semanticScope
 ]
 
 { #category : #accessing }
 OpalCompiler >> semanticScope: anObject [
-	semanticScope := anObject.
 	self compilationContext semanticScope: anObject
 ]
 
