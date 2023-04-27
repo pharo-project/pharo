@@ -27,5 +27,6 @@ AthensFontChange >> font: aFont [
 
 { #category : #rendering }
 AthensFontChange >> renderOn: anAthensTextRenderer [
+
 	anAthensTextRenderer setCurrentFont: font
 ]
