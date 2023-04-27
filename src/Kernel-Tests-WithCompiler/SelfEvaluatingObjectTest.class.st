@@ -9,7 +9,10 @@ Class {
 
 { #category : #utilities }
 SelfEvaluatingObjectTest >> assertCode: code print: aString [
-	self assert: (self class evaluate: code) printString equals: aString
+
+	self
+		assert: (self class compiler evaluate: code) printString
+		equals: aString
 ]
 
 { #category : #tests }

@@ -15,16 +15,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-IRTranslator class >> context: aCompilationContext trailer: aCompiledMethodTrailer [
+IRTranslator class >> context: aCompilationContext [
 	^self basicNew
 		initialize;
-		compilationContext: aCompilationContext;
-		trailer: aCompiledMethodTrailer
+		compilationContext: aCompilationContext
 ]
 
 { #category : #'instance creation' }
 IRTranslator class >> new [
-	^self context: CompilationContext default trailer: CompiledMethodTrailer empty
+	^self context: CompilationContext default
 ]
 
 { #category : #accessing }
@@ -41,18 +40,18 @@ IRTranslator >> compilationContext: aContext [
 
 { #category : #results }
 IRTranslator >> compiledBlock [
-	^ gen compiledBlockWith: trailer
+	^ gen compiledBlock
 ]
 
 { #category : #results }
 IRTranslator >> compiledMethod [
-	^ gen compiledMethodWith: trailer
+	^ gen compiledMethod
 ]
 
 { #category : #results }
 IRTranslator >> compiledMethodWith: aTrailer [
 
-	^ gen compiledMethodWith: aTrailer
+	^ gen compiledMethod
 ]
 
 { #category : #private }
@@ -145,7 +144,7 @@ IRTranslator >> visitMethod: anIr [
 	gen numArgs: anIr numArgs.
 	gen properties: anIr properties.
 	gen numTemps: (anIr tempMap size).
-	gen forceLongForm: anIr forceLongForm.
+	gen forceLongForm: self compilationContext optionLongIvarAccessBytecodes.
 	self visitSequences: anIr allSequences.
 	"Literals for sends and pushLiteral: are added later, here we
 	add all the additionalLiterals from e.g. optimized constructs like #ifTrue:.

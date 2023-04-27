@@ -79,7 +79,7 @@ RBProgramNode >> addError: anErrorMessage [
 	^ notice
 ]
 
-{ #category : #adding }
+{ #category : #notice }
 RBProgramNode >> addNotice: aRBNotice [
 
 	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
@@ -206,6 +206,17 @@ RBProgramNode >> allVariables [
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
+{ #category : #replacing }
+RBProgramNode >> asDoit [
+	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
+
+	| source |
+	source := self source.
+	^ RBDoItMethodNode new
+		  body: self asSequenceNode;
+		  source: source
+]
+
 { #category : #tests }
 RBProgramNode >> asPositionDebugString [
 	"Compute a string representing the positions of children nodes.
@@ -233,7 +244,7 @@ RBProgramNode >> asPositionDebugString [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : #replacing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."
 
@@ -242,6 +253,11 @@ RBProgramNode >> asReturn [
 		ifFalse: [self error: 'Parent node must be a sequence node.'].
 	(parent isLast: self) ifFalse: [self error: 'Return node must be last.'].
 	^parent addReturn
+]
+
+{ #category : #replacing }
+RBProgramNode >> asSequenceNode [
+	^RBSequenceNode statements: {self}
 ]
 
 { #category : #querying }
@@ -597,6 +613,11 @@ RBProgramNode >> instanceVariableWriteNodes [
 RBProgramNode >> intersectsInterval: anInterval [
 	^(anInterval first between: self start and: self stop)
 		or: [self start between: anInterval first and: anInterval last]
+]
+
+{ #category : #testing }
+RBProgramNode >> isAnnotationMark [
+	^ false
 ]
 
 { #category : #testing }

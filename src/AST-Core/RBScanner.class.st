@@ -389,54 +389,14 @@ RBScanner >> scanIdentifierOrKeyword [
 	| name |
 	self scanName.
 	(currentCharacter = $: and: [stream peek ~= $=])
-		ifTrue: [^self scanKeyword].
+		ifTrue: [
+			buffer nextPut: currentCharacter.
+			self step.
+			name := buffer contents.
+			^RBKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
-	name = 'true'
-		ifTrue:
-			[^RBLiteralToken
-				value: true
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'false'
-		ifTrue:
-			[^RBLiteralToken
-				value: false
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'nil'
-		ifTrue:
-			[^RBLiteralToken
-				value: nil
-				start: tokenStart
-				stop: self previousStepPosition].
+	(self scanNamedLiteral: name) ifNotNil: [ :token | ^ token ].
 	^RBIdentifierToken value: name start: tokenStart
-]
-
-{ #category : #'private - scanning' }
-RBScanner >> scanKeyword [
-	"This scan can actually give odd keywords like a single colon.
-	 : is a keyword but it is an impossible one to reach with a call to next.
-	 However, a call to next can give an RBMultiKeywordLiteralToken even if the string scanned is like
-	 the following : 'keyword:::::::'. Here, each colon is considered a keyword."
-	"Of course, a keyword must finish with a colon. That's why arguments are not taken into account."
-	| outputPosition inputPosition name |
-	[currentCharacter = $:] whileTrue:
-			[buffer nextPut: currentCharacter.
-			outputPosition := buffer position.
-			inputPosition := stream position.
-			self step.	":"
-			[characterType = #alphabetic] whileTrue: [self scanName]].
-	buffer position: outputPosition.
-	stream position: inputPosition.
-	self step.
-	name := buffer contents.
-	^(name occurrencesOf: $:) == 1
-		ifTrue: [RBKeywordToken value: name start: tokenStart]
-		ifFalse:
-			[RBMultiKeywordLiteralToken
-				value: name asSymbol
-				start: tokenStart
-				stop: tokenStart + name size - 1]
 ]
 
 { #category : #'private - scanning' }
@@ -450,9 +410,7 @@ RBScanner >> scanLiteral [
 	characterType = #alphabetic
 		ifTrue: [ ^ self scanSymbol ].
 	characterType = #binary
-		ifTrue:
-			[ ^ (self scanLiteralBinary)
-				stop: self previousStepPosition ].
+		ifTrue: [ ^ self scanLiteralBinary ].
 	currentCharacter = $'
 		ifTrue: [ ^ self scanStringSymbol ].
 	(currentCharacter = $( or: [ currentCharacter = $[ ])
@@ -467,17 +425,17 @@ RBScanner >> scanLiteral [
 RBScanner >> scanLiteralArrayToken [
 	"This scan accepts any character but is only meant to be used when a # is followed by ( or [ ."
 	| token |
-	token := RBLiteralArrayToken
-				value: (String with: $# with: currentCharacter)
-				start: tokenStart.
 	self step.
+	token := RBLiteralArrayToken
+				value: (self scanBackFrom: tokenStart)
+				start: tokenStart.
 	^token
 ]
 
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralBinary [
 	"Used when binary characters are encountered and beginning with #"
-	^self scanBinary: RBLiteralToken
+	^ (self scanBinary: RBLiteralToken) stop: self previousStepPosition
 ]
 
 { #category : #'private - scanning' }
@@ -485,15 +443,21 @@ RBScanner >> scanLiteralCharacter [
 	"Accepts any character."
 	"This scan must only be used after the encounter of a $."
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
-	| token |
+	| char |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ self scanError: 'Character expected' ].
-	token := RBLiteralToken
-				value: currentCharacter
-				start: tokenStart
-				stop: stream position.
+	char := currentCharacter.
+	char ifNil:[ ^ self scanError: 'Character expected' ].
 	self step.	"char"
-	^token
+	^ self scanLiteralForValue: char
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanLiteralForValue: aValue [
+
+	^ RBLiteralToken
+		  value: aValue
+		  start: tokenStart
+		  stop: self previousStepPosition
 ]
 
 { #category : #'private - scanning' }
@@ -524,10 +488,7 @@ RBScanner >> scanLiteralString [
 
 	"It's possible to use a plain Text for parsing.
 	In that case string here could be a Text instance but literal value must be a String"
-	^RBLiteralToken
-		value: string asString
-		start: tokenStart
-		stop: self previousStepPosition
+	^ self scanLiteralForValue: string asString
 ]
 
 { #category : #'private - scanning' }
@@ -535,6 +496,15 @@ RBScanner >> scanName [
 	[characterType = #alphabetic or: [characterType = #digit]] whileTrue:
 			[buffer nextPut: currentCharacter.
 			self step]
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanNamedLiteral: name [
+
+	name = 'true' ifTrue: [ ^ self scanLiteralForValue: true ].
+	name = 'false' ifTrue: [ ^ self scanLiteralForValue: false ].
+	name = 'nil' ifTrue: [ ^ self scanLiteralForValue: nil ].
+	^ nil
 ]
 
 { #category : #'private - scanning' }
@@ -596,15 +566,30 @@ RBScanner >> scanStringSymbol [
 RBScanner >> scanSymbol [
 	"Always return a literal token but only recognises Identifier and keyword strings.
 	 Therefor any other string lead to an empty string value."
+	self scanSymbolContent.
+	^ self scanLiteralForValue: buffer contents asSymbol
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanSymbolContent [
 	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
 		self scanName.
 		currentCharacter = $: ifTrue: [
 			buffer nextPut: $:.
-			self step ] ].
+			self step ] ]
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanSymbolOrNamedLiteral [
+	| text |
+	self scanSymbolContent.
+	text := buffer contents.
+	(self scanNamedLiteral: text) ifNotNil: [ :token | ^ token ].
 	^ RBLiteralToken
-		value: buffer contents asSymbol
+		value: text asSymbol
 		start: tokenStart
 		stop: self previousStepPosition
+		source: (self scanBackFrom: tokenStart)
 ]
 
 { #category : #accessing }

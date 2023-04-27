@@ -320,7 +320,7 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
-		noPattern: true;
+		isScripting: true;
 		permitFaulty: true;
 		compile
 ]

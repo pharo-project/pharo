@@ -237,6 +237,12 @@ CompletionEngine >> hasDetail [
 	^ self isMenuOpen and: [ menuMorph hasDetail ]
 ]
 
+{ #category : #actions }
+CompletionEngine >> hideDetail [
+
+	menuMorph hideDetail
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds
@@ -303,7 +309,9 @@ CompletionEngine >> openMenu [
 				engine: self
 				position: (editor selectionPosition: context completionToken).
 
-	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
+	theMenu isClosed ifFalse: [ 
+		menuMorph := theMenu.
+		theMenu showDetail ]
 ]
 
 { #category : #replacement }
@@ -368,6 +376,12 @@ CompletionEngine >> setEditor: anObject [
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self
+]
+
+{ #category : #actions }
+CompletionEngine >> showDetail [
+
+	menuMorph showDetail
 ]
 
 { #category : #keyboard }
@@ -584,6 +598,5 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph refreshSelection
+	context narrowWith: aParagraphEditor wordAtCaret
 ]

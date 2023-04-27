@@ -152,6 +152,11 @@ RBMessageNode >> hash [
 ]
 
 { #category : #testing }
+RBMessageNode >> isAnnotation [
+	^ self receiver isAnnotationMark
+]
+
+{ #category : #testing }
 RBMessageNode >> isBinary [
 	^(self isUnary or: [self isKeyword]) not
 ]

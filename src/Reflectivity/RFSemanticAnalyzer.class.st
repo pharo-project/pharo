@@ -64,7 +64,7 @@ RFSemanticAnalyzer >> visitAssignmentNode: aNode [
 { #category : #visiting }
 RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].

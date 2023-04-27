@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+MetaLinkIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 MetaLinkIconStyler >> highlightColor [
 	^(Color orange alpha: 0.1)

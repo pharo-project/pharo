@@ -103,17 +103,10 @@ Object >> taskbarIcon [
 ]
 
 { #category : #'*Morphic-Base' }
-Object class >> taskbarIcon [
+Object class >> taskbarIconName [
 	"Answer the icon for an instance of the receiver in a task bar"
 
-	self
-		deprecated: 'The direct usage of #taskbarIcon is not recommended anymore since it
-	introduces a dependency with UI layer we do not want to have here. Instead, our UI
-	components should us #taskbarIconName to get the icon to use, and then user can resolve it
-	as their want (since different applications can have different iconpacks, etc.) #Pharo11'
-		transformWith: '`@receiver taskbarIcon' -> '`@receiver iconNamed: `@receiver taskbarIconName'.
-
-	^ self iconNamed: self taskbarIconName
+	^#smallWindow
 ]
 
 { #category : #'*Morphic-Base' }
@@ -122,13 +115,6 @@ Object >> taskbarIconName [
 	or nil for the default."
 
 	^self class taskbarIconName
-]
-
-{ #category : #'*Morphic-Base' }
-Object class >> taskbarIconName [
-	"Answer the icon for an instance of the receiver in a task bar"
-
-	^#smallWindow
 ]
 
 { #category : #'*Morphic-Base' }

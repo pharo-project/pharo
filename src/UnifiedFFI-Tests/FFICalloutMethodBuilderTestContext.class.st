@@ -80,8 +80,3 @@ FFICalloutMethodBuilderTestContext >> selector [
 FFICalloutMethodBuilderTestContext >> selector: anObject [
 	selector := anObject
 ]
-
-{ #category : #accessing }
-FFICalloutMethodBuilderTestContext >> trailer [
-	^ CompiledMethodTrailer empty
-]
