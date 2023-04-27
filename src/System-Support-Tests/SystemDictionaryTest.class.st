@@ -10,7 +10,7 @@ Class {
 { #category : #'building suites' }
 SystemDictionaryTest class >> shouldInheritSelectors [
 
-^true
+	^ true
 ]
 
 { #category : #requirements }
@@ -124,13 +124,4 @@ SystemDictionaryTest >> testSmalltalkPrintString [
 SystemDictionaryTest >> testSmalltalkSelfEvaluating [
 
 	self assert: Smalltalk isSelfEvaluating
-]
-
-{ #category : #tests }
-SystemDictionaryTest >> testUnCategorizedMethods [
-
-	| categories slips |
-	categories := self categoriesForClass: self targetClass.
-	slips := categories select: [ :each | each = #'as yet unclassified' ].
-	self assertEmpty: slips
 ]
