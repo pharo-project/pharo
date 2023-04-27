@@ -16,6 +16,7 @@ Class {
 	#name : #CompilationContext,
 	#superclass : #Object,
 	#instVars : [
+		'requestor',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -28,6 +29,7 @@ Class {
 		'astTransformPlugins',
 		'astParseTransformPlugins',
 		'requestorScopeClass',
+		'bindings',
 		'compiledMethodClass',
 		'semanticScope'
 	],
@@ -374,6 +376,19 @@ CompilationContext >> astTranslatorClass: anObject [
 ]
 
 { #category : #accessing }
+CompilationContext >> bindings [
+	^ bindings
+]
+
+{ #category : #accessing }
+CompilationContext >> bindings: aCollectionOfAssociations [
+	"bindings are LiteralVariables, not simple Associations.
+	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
+	bindings := (aCollectionOfAssociations asDictionary associations
+		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary
+]
+
+{ #category : #accessing }
 CompilationContext >> bytecodeGeneratorClass [
 	^ bytecodeGeneratorClass ifNil: [ bytecodeGeneratorClass := IRBytecodeGenerator ]
 ]
@@ -381,6 +396,11 @@ CompilationContext >> bytecodeGeneratorClass [
 { #category : #accessing }
 CompilationContext >> bytecodeGeneratorClass: anObject [
 	bytecodeGeneratorClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> class: aClass [
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : #accessing }
@@ -441,6 +461,29 @@ CompilationContext >> initialize [
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
 	astParseTransformPlugins := OrderedCollection withAll: self class defaultParseTransformationPlugins.
 	semanticScope := OCMethodSemanticScope targetingClass: nil class
+]
+
+{ #category : #accessing }
+CompilationContext >> interactive [
+
+	requestor ifNil: [ ^ false ].
+	"we asume requestors are interactive, but they can override.
+	this should be simplified "
+	^ (requestor respondsTo: #interactive)
+		  ifTrue: [ requestor interactive ]
+		  ifFalse: [ true ]
+]
+
+{ #category : #accessing }
+CompilationContext >> noPattern [
+	^semanticScope isDoItScope
+]
+
+{ #category : #accessing }
+CompilationContext >> noPattern: anObject [
+
+	(anObject and: [ self noPattern not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #options }
@@ -552,6 +595,16 @@ CompilationContext >> productionEnvironment [
 { #category : #accessing }
 CompilationContext >> productionEnvironment: aDictionary [
 	productionEnvironment := aDictionary
+]
+
+{ #category : #accessing }
+CompilationContext >> requestor [
+	^ requestor
+]
+
+{ #category : #accessing }
+CompilationContext >> requestor: anObject [
+	requestor := anObject
 ]
 
 { #category : #accessing }
