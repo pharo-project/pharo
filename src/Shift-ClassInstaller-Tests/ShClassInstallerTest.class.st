@@ -57,6 +57,22 @@ ShClassInstallerTest >> tearDown [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
+	"This is a regression test. 
+	What was happening before was that the slots were generating a method to initialize themselves and after that the old class organization was copied. The problem is that during the first class creation, this was reseting the protocol of the generated slot methods."
+
+	newClass := self newClass: #ShCITestClass slots: { (#anInstanceVariable => BooleanSlot) }.
+
+	self assertCollection: newClass selectors hasSameElements: { #initialize }.
+	self assert: (newClass organization protocolOfSelector: #initialize) isNotNil.
+
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+
+	self assertCollection: newClass2 selectors hasSameElements: { #initialize }.
+	self assert: (newClass2 organization protocolOfSelector: #initialize) isNotNil
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 
 	newClass := ShiftClassInstaller make: [ :builder |
