@@ -9,7 +9,7 @@ RecompileTest >> testRecompileDoIt [
 
 	| method node |
 	method := nil compiler
-		          noPattern: true;
+		          isScripting: true;
 		          compile: '| a | a := 42'.
 	self settingUpSessionAndProcessAndContextForBlock: [
 		nil executeMethod: method ].
