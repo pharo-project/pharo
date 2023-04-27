@@ -22,7 +22,7 @@ CompiledBlock >> displayStringOn: stream [
 
 { #category : #accessing }
 CompiledBlock >> endPC [
-	"Answer the index of the last bytecode."
+	"Answer the index of the last bytecode"
 	^ self size
 ]
 

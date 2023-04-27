@@ -52,9 +52,3 @@ FFIMockCalloutMethodBuilder >> methodProperties [
 	"To mock the creation of the IR..."
 	^ nil
 ]
-
-{ #category : #compatibility }
-FFIMockCalloutMethodBuilder >> methodTrailer [
-
-	^ CompiledMethodTrailer empty
-]

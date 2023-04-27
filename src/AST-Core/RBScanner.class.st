@@ -395,24 +395,7 @@ RBScanner >> scanIdentifierOrKeyword [
 			name := buffer contents.
 			^RBKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
-	name = 'true'
-		ifTrue:
-			[^RBLiteralToken
-				value: true
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'false'
-		ifTrue:
-			[^RBLiteralToken
-				value: false
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'nil'
-		ifTrue:
-			[^RBLiteralToken
-				value: nil
-				start: tokenStart
-				stop: self previousStepPosition].
+	(self scanNamedLiteral: name) ifNotNil: [ :token | ^ token ].
 	^RBIdentifierToken value: name start: tokenStart
 ]
 
@@ -427,9 +410,7 @@ RBScanner >> scanLiteral [
 	characterType = #alphabetic
 		ifTrue: [ ^ self scanSymbol ].
 	characterType = #binary
-		ifTrue:
-			[ ^ (self scanLiteralBinary)
-				stop: self previousStepPosition ].
+		ifTrue: [ ^ self scanLiteralBinary ].
 	currentCharacter = $'
 		ifTrue: [ ^ self scanStringSymbol ].
 	(currentCharacter = $( or: [ currentCharacter = $[ ])
@@ -454,7 +435,7 @@ RBScanner >> scanLiteralArrayToken [
 { #category : #'private - scanning' }
 RBScanner >> scanLiteralBinary [
 	"Used when binary characters are encountered and beginning with #"
-	^self scanBinary: RBLiteralToken
+	^ (self scanBinary: RBLiteralToken) stop: self previousStepPosition
 ]
 
 { #category : #'private - scanning' }
@@ -462,15 +443,21 @@ RBScanner >> scanLiteralCharacter [
 	"Accepts any character."
 	"This scan must only be used after the encounter of a $."
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
-	| token |
+	| char |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ self scanError: 'Character expected' ].
-	token := RBLiteralToken
-				value: currentCharacter
-				start: tokenStart
-				stop: stream position.
+	char := currentCharacter.
+	char ifNil:[ ^ self scanError: 'Character expected' ].
 	self step.	"char"
-	^token
+	^ self scanLiteralForValue: char
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanLiteralForValue: aValue [
+
+	^ RBLiteralToken
+		  value: aValue
+		  start: tokenStart
+		  stop: self previousStepPosition
 ]
 
 { #category : #'private - scanning' }
@@ -501,10 +488,7 @@ RBScanner >> scanLiteralString [
 
 	"It's possible to use a plain Text for parsing.
 	In that case string here could be a Text instance but literal value must be a String"
-	^RBLiteralToken
-		value: string asString
-		start: tokenStart
-		stop: self previousStepPosition
+	^ self scanLiteralForValue: string asString
 ]
 
 { #category : #'private - scanning' }
@@ -512,6 +496,15 @@ RBScanner >> scanName [
 	[characterType = #alphabetic or: [characterType = #digit]] whileTrue:
 			[buffer nextPut: currentCharacter.
 			self step]
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanNamedLiteral: name [
+
+	name = 'true' ifTrue: [ ^ self scanLiteralForValue: true ].
+	name = 'false' ifTrue: [ ^ self scanLiteralForValue: false ].
+	name = 'nil' ifTrue: [ ^ self scanLiteralForValue: nil ].
+	^ nil
 ]
 
 { #category : #'private - scanning' }
@@ -573,15 +566,30 @@ RBScanner >> scanStringSymbol [
 RBScanner >> scanSymbol [
 	"Always return a literal token but only recognises Identifier and keyword strings.
 	 Therefor any other string lead to an empty string value."
+	self scanSymbolContent.
+	^ self scanLiteralForValue: buffer contents asSymbol
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanSymbolContent [
 	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
 		self scanName.
 		currentCharacter = $: ifTrue: [
 			buffer nextPut: $:.
-			self step ] ].
+			self step ] ]
+]
+
+{ #category : #'private - scanning' }
+RBScanner >> scanSymbolOrNamedLiteral [
+	| text |
+	self scanSymbolContent.
+	text := buffer contents.
+	(self scanNamedLiteral: text) ifNotNil: [ :token | ^ token ].
 	^ RBLiteralToken
-		value: buffer contents asSymbol
+		value: text asSymbol
 		start: tokenStart
 		stop: self previousStepPosition
+		source: (self scanBackFrom: tokenStart)
 ]
 
 { #category : #accessing }
