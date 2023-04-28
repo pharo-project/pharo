@@ -998,7 +998,7 @@ CompiledMethod >> tempNames [
 
 { #category : #accessing }
 CompiledMethod >> trailer [
-	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use setSourcePointer: / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
 { #category : #'accessing - tags' }

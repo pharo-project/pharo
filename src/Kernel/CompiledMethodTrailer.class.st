@@ -1,57 +1,45 @@
 "
-I am responsible for encoding and decoding various kinds of compiled method trailer data.
+CompiledMethodTrailer was removed in Pharo12
 
-I should not expose any binary data outside of myself, so all tools which working with compiled methods
-should ask me to encode the meta-data, they want to be added to the compiled method trailer, as well as retrieve it.
+It was responsible for encoding and decoding various kinds of compiled method trailer data, but that had many downsides:
+- variable length trailers forced often called methods like CompiledMethod>>#endPC to instantiate an instance
+- setting a sourcePointer (or embedding sources) needed to create a new compiled method and do a become
+- to avoid that, the compiler supported to use an existing trailer and delegated instance creation of CompiledMethod to it.
+- using 1 byte for the trailer kind lead to the need use Variable length encoding already for our ~40MB source file for some methods.
 
-Trailers are now very simple: a fixed number of bytes (currently 4, this will be increased later to support .changes >2GB).
+All in all, the CompiledMethodTrailer added a lot of complexity for nothing.
+
+What do we do now?
+- use use a fixed-length trailer (see #trailerSize)
+- writing and reading that is not that complex (see #setSourcePointer, #sourcePointer:)
+
+Q: I used to hand a trailer to the compiler, what should I do now?
+
+The compiler now creates always CompiledMethods with a fixed, but empty trailer. Just use #sourcePoitner to set it after.
+
+Q: I used to clear the trailer using #copyWithTrailerBytes:, what should I do now?
+
+There is now #cearSourcePointer. Just use #copy before if you want a copy.
+
+Q: I want to have a non-installed method, but with source code.
+The compiler now sets a #source property (and setting a source pointer via #sourcePointer: removes it).
+If you use the compiler, you need to do nothing special anymore! All methods come with source via the property by default.
+
+
 
 "
 Class {
 	#name : #CompiledMethodTrailer,
 	#superclass : #Object,
-	#instVars : [
-		'data',
-		'encodedData',
-		'method'
-	],
 	#category : #'Kernel-Methods'
 }
 
 { #category : #kinds }
 CompiledMethodTrailer class >> empty [
-	"answer the empty trailer"
-	^ self new
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
-{ #category : #initialization }
-CompiledMethodTrailer >> initialize [
-	data := 0.
-	encodedData :=  #[0 0 0 0]
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> method: aMethod [
-
-	| msz |
-	method := aMethod.
-	msz := method size.
-	encodedData := {
-		method at: msz-3.
-		method at: msz-2.
-		method at: msz-1.
-		method at: msz } asByteArray.
-	data := encodedData asInteger
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> size [
-	"Answer the size of method's trailer , in bytes"
-	^ CompiledMethod trailerSize
-]
-
-{ #category : #accessing }
-CompiledMethodTrailer >> sourcePointer [
-
-	^ data
+{ #category : #testing }
+CompiledMethodTrailer class >> isDeprecated [
+	^ true
 ]
