@@ -157,23 +157,16 @@ SourceFileArray >> fileAt: index ifAbsent: aBlock [
 SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 	"Return the index of the source file which contains the source chunk addressed by anInteger"
 
-	^ (anInteger bitAnd: 16r1000000) ~= 0
-		ifTrue: [ 1	"sources file" ]
-		ifFalse: [ anInteger >= 16r1000000
-				ifTrue: [ 2	"changes file" ]
-				ifFalse: [ 0	"compatibility with StandardSourceFileArray" ] ]
+	^ (anInteger allMask: 1)
+		ifFalse: [ 1 "sources file" ]
+		ifTrue: [ 2 "changes file" ]
 ]
 
 { #category : #'private - sourcepointer conversion' }
 SourceFileArray >> filePositionFromSourcePointer: anInteger [
-	"Return the position of the source chunk addressed by anInteger"
+	"Return the position of the source chunk addressed by anInteger, just shift by one"
 
-	| hi lo |
-	hi := anInteger // 33554432.
-	lo := anInteger \\ 16777216.
-	^ ((anInteger bitAnd: 16777216) ~= 0 or: [ anInteger < 16777216	"compatibility with StandardSourceFileArray" ])
-		ifTrue: [ hi * 16777216 + lo	"sources file" ]
-		ifFalse: [ (hi - 1) * 16777216 + lo	"changes file" ]
+	^ anInteger >> 1
 ]
 
 { #category : #private }
@@ -386,13 +379,12 @@ SourceFileArray >> sourceDataPointers [
 SourceFileArray >> sourcePointerFromFileIndex: index andPosition: position [
 	"Return a sourcePointer encoding the given file index and position"
 
-	| hi lo |
 	(index = 1 or: [index = 2])
 		ifFalse: [self error: 'invalid source file index'].
 	position < 0 ifTrue: [self error: 'invalid source code pointer'].
-	hi := position // 16r1000000 *2 + index.
-	lo := position \\ 16r1000000.
-	^ hi * 16r1000000 + lo
+	
+	"we shift the position by one and set the last bit for .changes"
+	^ (position << 1) bitOr: index - 1
 ]
 
 { #category : #'public - string reading' }
