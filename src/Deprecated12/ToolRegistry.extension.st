@@ -1,6 +1,6 @@
 Extension { #name : #ToolRegistry }
 
-{ #category : #'*Deprecated11' }
+{ #category : #'*Deprecated12' }
 ToolRegistry >> whenToolRegistered: aBlock [
 
 	| subscriberForDeprecation |
@@ -26,7 +26,7 @@ ToolRegistry >> whenToolRegistered: aBlock [
 		for: aBlock receiver
 ]
 
-{ #category : #'*Deprecated11' }
+{ #category : #'*Deprecated12' }
 ToolRegistry >> whenToolUnregistered: aBlock [
 
 	| subscriberForDeprecation |
