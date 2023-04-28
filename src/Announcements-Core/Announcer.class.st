@@ -111,4 +111,5 @@ Announcer >> when: anAnnouncementClass send: aSelector to: anObject [
 	^ self
 		when: anAnnouncementClass
 		do: (MessageSend receiver: anObject selector: aSelector)
+		for: anObject
 ]

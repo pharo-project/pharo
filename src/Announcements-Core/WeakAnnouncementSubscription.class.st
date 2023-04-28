@@ -12,7 +12,9 @@ Class {
 	#name : #WeakAnnouncementSubscription,
 	#superclass : #AbstractAnnouncementSubscription,
 	#type : #weak,
-	#instVars : [ 'next' ],
+	#instVars : [
+		'next'
+	],
 	#category : #'Announcements-Core-Subscription'
 }
 

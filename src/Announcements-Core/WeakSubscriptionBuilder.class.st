@@ -51,5 +51,9 @@ WeakSubscriptionBuilder >> when: anAnnouncementClass do: aValuable for: receiver
 
 { #category : #'wrapped protocol' }
 WeakSubscriptionBuilder >> when: anAnnouncementClass send: aSelector to: anObject [
-	^ self when: anAnnouncementClass do: (WeakMessageSend receiver: anObject selector: aSelector)
+
+	^ self
+		  when: anAnnouncementClass
+		  do: (WeakMessageSend receiver: anObject selector: aSelector)
+		  for: anObject
 ]
