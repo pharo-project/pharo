@@ -125,9 +125,9 @@ IRMethod >> compiledBlock: scope [
 { #category : #translating }
 IRMethod >> compiledMethod [
 
-	^compiledMethod
+	^ compiledMethod 
 		ifNil: [self generate ]
-		ifNotNil: [compiledMethod]
+
 ]
 
 { #category : #translating }
