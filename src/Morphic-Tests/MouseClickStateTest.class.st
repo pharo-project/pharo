@@ -45,6 +45,23 @@ MouseClickStateTest >> testClickFromMorph [
 ]
 
 { #category : #tests }
+MouseClickStateTest >> testDoubleClickShouldNotTriggerIfClickedOutsideBounds [
+	(hand mouseClickStateFor: morph event: event)
+		doubleClickSelector: #myMagicDoubleClick:.
+	"the first click does not do anything"
+	hand handleEvent: event.
+	event setType: #mouseUp.
+	hand handleEvent: event.
+
+	"Out of bounds"
+	event setPosition: morph bounds topRight + 100.
+	event setType: #mouseDown.
+	hand handleEvent: event.
+
+	self deny: morph hasMyMagicDoubleClickActivated
+]
+
+{ #category : #tests }
 MouseClickStateTest >> testHandleEventFrom [
 	hand
 		waitForClicksOrDrag: morph
