@@ -215,6 +215,11 @@ OSWorldRenderer >> initialize [
 ]
 
 { #category : #accessing }
+OSWorldRenderer >> osWindow [
+	^ osWindow
+]
+
+{ #category : #accessing }
 OSWorldRenderer >> osWindowRenderer [
 
 	osWindow ifNil: [ ^ nil ].
