@@ -5265,7 +5265,7 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 Morph >> requestStopTextEditing [
 
 	"Used by a morph to request stop text edition capabilities.
-	The rendering backend can use this, for example, close the IME (input-method-editor).
+	The rendering backend uses this to stop all text input.
 	Use it in pair with requestTextEditingAt:
 
 	By default, propagate the request to the owner.
