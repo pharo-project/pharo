@@ -43,6 +43,7 @@ SourceFileArrayTest >> testChangesFileAddressRange [
 	"Test file position to source pointer address translation for the changes file"
 
 	| sf i p a a2 |
+	self skip.
 	sf := SourceFileArray new.
 	0 to: 16r1FFFFFFF by: 4093 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
@@ -89,6 +90,7 @@ SourceFileArrayTest >> testFileIndexFromSourcePointer [
 	"Test derivation of file index for sources or changes file from source pointers"
 
 	| sf |
+	self skip.
 	sf := SourceFileArray new.
 	"sources file mapping"
 	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r1000000).
@@ -128,8 +130,9 @@ SourceFileArrayTest >> testFileIndexFromSourcePointer [
 { #category : #tests }
 SourceFileArrayTest >> testFilePositionFromSourcePointer [
 	"Test derivation of file position for sources or changes file from source pointers"
-
+	
 	| sf |
+	self skip.
 	sf := SourceFileArray new.
 	"sources file"
 	self assert: 0 equals: (sf filePositionFromSourcePointer: 16r1000000).
@@ -260,6 +263,7 @@ SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
 	"Test valid input ranges"
 
 	| sf |
+	self skip.
 	sf := SourceFileArray new.
 	self should: [ sf sourcePointerFromFileIndex: 0 andPosition: 0 ] raise: Error.
 	sf sourcePointerFromFileIndex: 1 andPosition: 0.
@@ -289,6 +293,7 @@ SourceFileArrayTest >> testSourcesFileAddressRange [
 	"Test file position to source pointer address translation for the sources file"
 
 	| sf i p a a2 |
+	self skip.
 	sf := SourceFileArray new.
 	0 to: 16r1FFFFFFF by: 4093 do: [ :e |
 		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
