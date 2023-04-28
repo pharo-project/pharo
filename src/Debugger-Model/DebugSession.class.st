@@ -307,7 +307,7 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	| newMethod recompilationContext canRewind |
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
 	"Do not try to recompile a doIt method"
-	aContext method isDoIt
+	aContext homeMethod isDoIt
 		ifTrue: [ UIManager default alert:  'Can not modify a DoIt-Method.'.
 			^ false ].
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
