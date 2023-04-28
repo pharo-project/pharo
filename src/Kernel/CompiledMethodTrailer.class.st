@@ -31,11 +31,6 @@ If you use the compiler, you need to do nothing special anymore! All methods com
 Class {
 	#name : #CompiledMethodTrailer,
 	#superclass : #Object,
-	#instVars : [
-		'data',
-		'encodedData',
-		'method'
-	],
 	#category : #'Kernel-Methods'
 }
 
