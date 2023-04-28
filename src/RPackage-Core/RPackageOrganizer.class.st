@@ -122,10 +122,7 @@ RPackageOrganizer class >> default [
 	"WARNING: Since this component can be changed (i.e. for testing) you should NOT use it directly.
 	  Use RPackage class>>#organizer instead"
 
-	^ default ifNil: [
-		  default := self new
-			             systemOrganizer: Smalltalk organization;
-			             yourself ]
+	^ default ifNil: [ default := self new ]
 ]
 
 { #category : #'class initialization' }
