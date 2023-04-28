@@ -28,13 +28,6 @@ Class {
 	#category : #'System-CommandLineHandler-Base'
 }
 
-{ #category : #'instance creation' }
-PharoCommandLineHandler class >> activateWith: aCommandLine [
-	"Make sure that the PharoCommandLineHandler starts at the top of the stack in the main UI thread."
-	UIManager default defer:  [
-		super activateWith: aCommandLine ]
-]
-
 { #category : #accessing }
 PharoCommandLineHandler class >> description [
 	^ 'responsible for the default options and activating other commands'

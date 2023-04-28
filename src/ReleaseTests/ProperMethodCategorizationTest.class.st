@@ -111,13 +111,6 @@ ProperMethodCategorizationTest >> testFinalizeMethodNeedsToBeInComparingProtocol
 ]
 
 { #category : #'tests - object' }
-ProperMethodCategorizationTest >> testFinalizeValuesMethodNeedsToBeInComparingProtocol [
-	"The #finalizeValues methods should be in method protocol 'finalization'"
-
-	self assureAll: #finalizeValues areCategorizedIn: #finalization whenSubclassOf: Object
-]
-
-{ #category : #'tests - object' }
 ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	"The #hash method should be in method protocol 'comparing'"
 

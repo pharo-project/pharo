@@ -300,6 +300,21 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 		equals: #( 'b' #tempNamed: )
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testLocalMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assert: method localMessages asArray equals: #(#doit) .
+	
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
+]
+
 { #category : #'tests - testing' }
 CompiledCodeTest >> testMethodReturnSpecial [
 

@@ -38,11 +38,11 @@ SystemAnnouncerTest >> testProtocolAdded [
 		protocolAdded := ann protocol ].
 
 	class := factory newClass.
-	class organization addProtocolNamed: 'shiny-new-category'.
+	class organization addProtocol: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classReorganized equals: class.
-	self assert: protocolAdded equals: 'shiny-new-category'
+	self assert: protocolAdded name equals: 'shiny-new-category'
 ]
 
 { #category : #tests }
@@ -57,13 +57,13 @@ SystemAnnouncerTest >> testProtocolRemoved [
 		protocolRemoved := ann protocol ].
 
 	class := factory newClass.
-	class organization addProtocolNamed: 'shiny-new-category'.
+	class organization addProtocol: 'shiny-new-category'.
 
-	class organization removeProtocolNamed: 'shiny-new-category'.
+	class organization removeProtocolIfEmpty: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classRemoved equals: class.
-	self assert: protocolRemoved equals: 'shiny-new-category'
+	self assert: protocolRemoved name equals: 'shiny-new-category'
 ]
 
 { #category : #tests }

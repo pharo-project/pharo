@@ -154,7 +154,6 @@ Integer >> < aNumber [
 Integer >> << shiftAmount [
 	"left shift"
 
-	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
 	^ self bitShift: shiftAmount
 ]
 
@@ -204,7 +203,6 @@ Integer >> >= aNumber [
 Integer >> >> shiftAmount [
 	"right shift"
 
-	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
 	^ self bitShift: 0 - shiftAmount
 ]
 
@@ -499,8 +497,8 @@ Integer >> bitShift: shiftCount [
 	shift right. Zeros are shifted in from the right in left shifts."
 	| magnitudeShift |
 	magnitudeShift := self bitShiftMagnitude: shiftCount.
-	^ ((self negative and: [shiftCount negative])
-		and: [self anyBitOfMagnitudeFrom: 1 to: shiftCount negated])
+	^ (self negative and: [shiftCount negative
+		and: [self anyBitOfMagnitudeFrom: 1 to: shiftCount negated]])
 		ifTrue: [magnitudeShift - 1]
 		ifFalse: [magnitudeShift]
 ]

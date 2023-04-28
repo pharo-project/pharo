@@ -79,7 +79,7 @@ RBProgramNode >> addError: anErrorMessage [
 	^ notice
 ]
 
-{ #category : #adding }
+{ #category : #notice }
 RBProgramNode >> addNotice: aRBNotice [
 
 	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
@@ -206,7 +206,45 @@ RBProgramNode >> allVariables [
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
-{ #category : #accessing }
+{ #category : #replacing }
+RBProgramNode >> asDoit [
+	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
+
+	| source |
+	source := self source.
+	^ RBDoItMethodNode new
+		  body: self asSequenceNode;
+		  source: source
+]
+
+{ #category : #tests }
+RBProgramNode >> asPositionDebugString [
+	"Compute a string representing the positions of children nodes.
+	Each character is an identifier (0 to 9 then A to Z) that corresponds to the chidren node at the corresponding position.
+	Identifiers are assigned with a deep-first search: self is 0, first chisdren is 1, etc."
+
+	| cpt characters result |
+	"DFS to assign identifiers to nodes"
+	cpt := 0.
+	characters := IdentityDictionary new.
+	characters at: nil put: Character space.
+	self nodesDo: [ :each |
+		characters at: each put: cpt asCharacterDigit.
+		cpt := cpt + 1.
+		each comments do: [ :eachCmt |
+			characters at: eachCmt put: cpt asCharacterDigit.
+			cpt := cpt + 1 ] ].
+
+	"Fill the result string"
+	result := String new: self source size.
+	1 to: self source size do: [ :i |
+		result
+			at: i
+			put: (characters at: (self nodeForOffset: i)) ].
+	^ result
+]
+
+{ #category : #replacing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."
 
@@ -215,6 +253,11 @@ RBProgramNode >> asReturn [
 		ifFalse: [self error: 'Parent node must be a sequence node.'].
 	(parent isLast: self) ifFalse: [self error: 'Return node must be last.'].
 	^parent addReturn
+]
+
+{ #category : #replacing }
+RBProgramNode >> asSequenceNode [
+	^RBSequenceNode statements: {self}
 ]
 
 { #category : #querying }
@@ -324,6 +367,16 @@ RBProgramNode >> checkFaulty: aBlock [
 { #category : #accessing }
 RBProgramNode >> children [
 	^#()
+]
+
+{ #category : #accessing }
+RBProgramNode >> childrenAndComments [
+	
+	| result |
+	result := self children.
+	result ifEmpty: [ ^ self comments ].
+	self comments ifEmpty: [ ^ result ].
+	^ result , self comments
 ]
 
 { #category : #replacing }
@@ -560,6 +613,11 @@ RBProgramNode >> instanceVariableWriteNodes [
 RBProgramNode >> intersectsInterval: anInterval [
 	^(anInterval first between: self start and: self stop)
 		or: [self start between: anInterval first and: anInterval last]
+]
+
+{ #category : #testing }
+RBProgramNode >> isAnnotationMark [
+	^ false
 ]
 
 { #category : #testing }
@@ -909,26 +967,31 @@ RBProgramNode >> newSource [
 
 { #category : #'node access' }
 RBProgramNode >> nodeForOffset: anInteger [
-	| children |
-	"choosing the best node on the specific offset"
-	children := self children.
-	"when we are on a leaf, we take the leaf node"
-	(children isEmpty) ifTrue: [ (self sourceInterval includes: anInteger) ifTrue: [^self]].
-	"if the node has children then we check the children"
-	children do: [:each | (each sourceInterval includes: anInteger) ifTrue: [^each nodeForOffset: anInteger] ]
+	"Choose the best node on the specific offset, including comments.
+	Because comments can be oustide the span of sourceInterval, we have to visit all children.
+	Return nil if anInteger is out of range."
+
+	self childrenAndComments do: [ :each |
+		(each nodeForOffset: anInteger) ifNotNil: [ :node | ^ node ] ].
+
+	^ (self sourceInterval includes: anInteger)
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #iterating }
 RBProgramNode >> nodesDo: aBlock [
+	"Evaluate aBlock on self and all chindren nodes, including comments"
+
 	aBlock value: self.
-	self children do: [ :each | each nodesDo: aBlock ]
+	self childrenAndComments do: [ :each | each nodesDo: aBlock ]
 ]
 
 { #category : #iterating }
 RBProgramNode >> nodesPostorderDo: aBlock [
 	"Like RBProgramNode>>#nodesDo: but visit children first"
 
-	self children do: [ :each | each nodesPostorderDo: aBlock ].
+	self childrenAndComments do: [ :each | each nodesPostorderDo: aBlock ].
 	aBlock value: self
 ]
 

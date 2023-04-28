@@ -103,12 +103,9 @@ TraitedClass >> addSelector: selector withMethod: compiledMethod [
 TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 
-	compiledMethod isFromTrait
-		ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
+	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
 
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withRecompiledMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
+	self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #querying }

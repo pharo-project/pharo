@@ -258,11 +258,11 @@ MCMethodDefinition >> isOverrideMethod [
 { #category : #installing }
 MCMethodDefinition >> load [
 	| sel |
-	sel := self actualClass
-		compile: source
-		classified: category
-		withStamp: timeStamp
-		notifying: nil.
+	sel := (self actualClass compiler
+		protocol: category;
+		changeStamp: timeStamp;
+		permitUndeclared: true;
+		install: source) selector.
 	sel = selector ifTrue: [ ^ self ].
 	Warning signal: (
 		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
@@ -337,7 +337,7 @@ MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 
 { #category : #comparing }
 MCMethodDefinition >> requirements [
-	^ Array with: className
+	^ { className }
 ]
 
 { #category : #accessing }

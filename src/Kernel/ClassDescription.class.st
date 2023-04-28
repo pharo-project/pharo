@@ -33,16 +33,16 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
-	self addSelectorSilently: selector withMethod: compiledMethod.
-
-	oldProtocol := self organization protocolNameOfElement: selector.
+	oldProtocol := self organization protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self organization classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
 				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
-	newProtocol := self organization protocolNameOfElement: selector.
+	newProtocol := self organization protocolOfSelector: selector.
+
+	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
@@ -55,7 +55,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol name ]
 ]
 
 { #category : #'instance variables' }
@@ -70,7 +70,7 @@ ClassDescription >> addMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods"
 
-	self organization addProtocolNamed: aSymbol
+	self organization addProtocol: aSymbol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -337,7 +337,7 @@ ClassDescription >> commentStamp [
 { #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
 	"update the changeStamp"
-	self comment: self instanceSide organization comment stamp: changeStamp
+	self comment: self instanceSide comment stamp: changeStamp
 ]
 
 { #category : #compiling }
@@ -773,29 +773,19 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to
 
 { #category : #private }
 ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
-	| oldPackage newPackage |
 
-	(newProtocol = oldProtocol)
-		ifTrue: [ ^ self ].
+	| oldPackage newPackage |
+	newProtocol = oldProtocol ifTrue: [ ^ self ].
 
 	"This indirection is because we need to abstract RPackage from the kernel"
 	self class environment at: #RPackage ifPresent: [ :rPackageClass |
-			newPackage := rPackageClass organizer
-				packageForProtocol: newProtocol
-				inClass: self.
-			oldPackage := rPackageClass organizer
-				packageForProtocol: oldProtocol
-				inClass: self.
+		newPackage := rPackageClass organizer packageForProtocol: newProtocol name inClass: self.
+		oldPackage := rPackageClass organizer packageForProtocol: oldProtocol name inClass: self.
 
-			"Announce recategorization"
-			newPackage = oldPackage
-				ifFalse: [
-					SystemAnnouncer uniqueInstance
-						methodRepackaged: compiledMethod
-						from: oldPackage
-						to: newPackage ] ].
+		"Announce recategorization"
+		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
 
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol name
 ]
 
 { #category : #private }
@@ -869,15 +859,6 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> removeMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods.
-	Here we could remove what we not need"
-
-	self organization removeProtocolIfEmpty: aSymbol
-]
-
 { #category : #'accessing - method dictionary' }
 ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
@@ -885,6 +866,13 @@ ClassDescription >> removeProtocol: protocolName [
 
 	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
 	self organization removeProtocolIfEmpty: protocolName
+]
+
+{ #category : #'accessing - protocols' }
+ClassDescription >> removeProtocolIfEmpty: aProtocol [
+	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
+
+	self organization removeProtocolIfEmpty: aProtocol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -1097,7 +1085,7 @@ ClassDescription >> tagsForMethods [
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
 	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	allProtocols := self organization protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
 
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]

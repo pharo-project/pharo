@@ -1013,8 +1013,9 @@ RBParserTest >> testMethodNodeStartAtOne [
 	tree := (self parserClass parseExpression: 'foo koong. ^foo').
 	self assert: tree parent start equals: 1.
 
+	"DoItMethod do not start at 1"
 	tree := (self parserClass parseExpression: '  foo koong. ^foo').
-	self assert: tree parent start equals: 1.
+	self assert: tree parent start equals: 3.
 
 	"parseMethod always return a method node."
 	tree := (self parserClass parseMethod: 'foo koong. ^foo').

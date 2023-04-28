@@ -12,6 +12,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+IconStyler class >> isStaticStyler [
+
+	^ false
+]
+
 { #category : #style }
 IconStyler class >> withStaticStylers [
 	"Configure the receiver to invoke several static stylers. Now it is probably better to use the instance API:
@@ -22,8 +28,8 @@ IconStyler class >> withStaticStylers [
 	"
 
 	^ self new
-		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DisabledBreakpointIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler};
-		yourself
+		  stylerClasses: (self allSubclasses select: #isStaticStyler);
+		  yourself
 ]
 
 { #category : #styling }

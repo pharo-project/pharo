@@ -123,7 +123,7 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
 
-	self behaviorNamed: aProtocolAddition behaviorAffectedName ifPresent: [ :behavior | behavior organization addProtocolNamed: aProtocolAddition protocol ]
+	self behaviorNamed: aProtocolAddition behaviorAffectedName ifPresent: [ :behavior | behavior organization addProtocol: aProtocolAddition protocol ]
 ]
 
 { #category : #visitor }

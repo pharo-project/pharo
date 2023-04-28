@@ -645,8 +645,7 @@ SmalltalkImage >> fixObsoleteReferences [
 	self
 		garbageCollect;
 		fixObsoleteBindings;
-		fixObsoleteSharedPools.
-	Behavior flushObsoleteSubclasses
+		fixObsoleteSharedPools
 ]
 
 { #category : #housekeeping }

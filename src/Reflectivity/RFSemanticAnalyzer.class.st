@@ -64,7 +64,7 @@ RFSemanticAnalyzer >> visitAssignmentNode: aNode [
 { #category : #visiting }
 RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
@@ -85,7 +85,7 @@ RFSemanticAnalyzer >> visitNode: aNode [
 RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var	ifNil: [
 			var := scope addTemp: (TemporaryVariable named: aNode name) ].
 	aNode binding: var
@@ -95,7 +95,7 @@ RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [
 RFSemanticAnalyzer >> visitStorePopIntoTempNode: aNode [
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var	ifNil: [
 			var := scope addTemp: (TemporaryVariable named: aNode name) ].
 	aNode binding: var

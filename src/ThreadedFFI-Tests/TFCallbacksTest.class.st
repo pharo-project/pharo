@@ -142,30 +142,32 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallbackUsingSameProcessForCallbac
 
 	| callback fun returnValue |
 	"Avoid running this test before the image side support handles this case.
-	Otherwise both the UI thread and the callback management thread will get blocked in a deadlock."
-	"true ifTrue: [ ^ self skip ]."
-
-	fun := TFExternalFunction
-		name: 'singleCallToCallback'
-		moduleName: self libraryPath
-		definition: (TFFunctionDefinition
-			parameterTypes: {TFBasicType pointer. TFBasicType sint}
-			returnType: TFBasicType sint).
+	Otherwise both the UI thread and the callback management thread will get blocked in a deadlock.""true ifTrue: [ ^ self skip ]."
+	fun := TFExternalFunction name: 'singleCallToCallback' moduleName: self libraryPath definition: (TFFunctionDefinition
+			        parameterTypes: {
+					        TFBasicType pointer.
+					        TFBasicType sint }
+			        returnType: TFBasicType sint).
 
 	callback := TFCallback
-		forCallback: [ :times |
-			times = 7
-				ifTrue: [ times ]
-				ifFalse: [
-					runner invokeFunction: fun withArguments: {callback getHandle. times + 1} ] ]
-		parameters: { TFBasicType sint. }
-		returnType: TFBasicType sint
-		runner: runner.
+		            forCallback: [ :times |
+			            times = 7
+				            ifTrue: [ times ]
+				            ifFalse: [
+					            runner invokeFunction: fun withArguments: {
+							            callback getHandle.
+							            (times + 1) } ] ]
+		            parameters: { TFBasicType sint }
+		            returnType: TFBasicType sint
+		            runner: runner.
 
+	[
 	callback runStrategy: TFCallbackSameProcessRunStrategy uniqueInstance.
 
-	returnValue := runner invokeFunction: fun withArguments: {callback getHandle. 0}.
-	self assert: returnValue equals: 7
+	returnValue := runner invokeFunction: fun withArguments: {
+			               callback getHandle.
+			               0 }.
+	self assert: returnValue equals: 7 ] ensure: [ callback runStrategy callbackProcess terminate ]
 ]
 
 { #category : #tests }

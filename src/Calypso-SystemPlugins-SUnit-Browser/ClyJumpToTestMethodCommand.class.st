@@ -77,7 +77,7 @@ ClyJumpToTestMethodCommand >> generateTestMethodNamed: aSymbol in: aClass [
 
 	self flag: #toImplement.
 	self assert: false' format: {aSymbol}.
-	aClass compile: body classified: 'test'
+	aClass compile: body classified: 'tests'
 ]
 
 { #category : #execution }

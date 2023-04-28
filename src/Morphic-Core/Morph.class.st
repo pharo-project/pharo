@@ -4892,7 +4892,7 @@ Morph >> privateAddMorph: aMorph atIndex: index [
 					oldOwner privateRemove: aMorph.
 					oldOwner removedMorph: aMorph ].
 			aMorph privateOwner: self.
-			submorphs := submorphs copyReplaceFrom: index to: index - 1 with: (Array with: aMorph).
+			submorphs := submorphs copyReplaceFrom: index to: index - 1 with: { aMorph } .
 			itsWorld == myWorld
 				ifFalse: [ aMorph intoWorld: myWorld ] ].
 	myWorld ifNotNil: [ self privateInvalidateMorph: aMorph ].

@@ -267,7 +267,7 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 EpCodeChangeIntegrationTest >> testProtocolAddition [
 
 	aClass := classFactory newClass.
-	aClass organization addProtocolNamed: #testing42.
+	aClass organization addProtocol: #testing42.
 
 	self assert: (self countLogEventsWith: EpProtocolAddition) equals: 1
 ]

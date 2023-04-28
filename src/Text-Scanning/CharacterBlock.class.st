@@ -48,9 +48,8 @@ CharacterBlock >> <= aCharacterBlock [
 { #category : #comparing }
 CharacterBlock >> = aCharacterBlock [
 
-	^self species = aCharacterBlock species
-		ifTrue: [ stringIndex = aCharacterBlock stringIndex]
-		ifFalse: [ false]
+	^ self species = aCharacterBlock species
+		and: [ stringIndex = aCharacterBlock stringIndex ]
 ]
 
 { #category : #comparing }

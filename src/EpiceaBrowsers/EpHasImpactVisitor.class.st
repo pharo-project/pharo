@@ -153,7 +153,7 @@ EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior | ^ (behavior organization hasProtocolNamed: aProtocolAddition protocol) not ].
+		ifPresent: [ :behavior | ^ (behavior organization hasProtocol: aProtocolAddition protocol) not ].
 
 	^ true
 ]

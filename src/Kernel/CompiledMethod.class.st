@@ -49,14 +49,6 @@ CompiledMethod class >> checkIsValidBytecodeEncoder: aBytecodeEncoderSubclass [
 		[self error: 'A bytecode set encoder is expected to be a subclass of BytecodeEncoder']
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> cleanUpSourceInTrailers [
-
-	self allInstances do: [:e | e isInstalled ifFalse: [e embeddSourceInTrailer]].
-	"pay attention since embeddSourceInTrailer creates a new compiled method. So iterating while
-	changing it is a bad idea. This is why we use allInstances do and not allInstancesDo:"
-]
-
 { #category : #constants }
 CompiledMethod class >> conflictMarker [
 	^ #traitConflict
@@ -175,65 +167,6 @@ CompiledMethod class >> new [
 ]
 
 { #category : #'instance creation' }
-CompiledMethod class >> newBytes: numberOfBytes trailerBytes: trailer nArgs: nArgs nTemps: nTemps nStack: stackSize nLits: nLits primitive: primitiveIndex [
-	"Answer an instance of me. The header is specified by the message
-	 arguments. The remaining parts are not as yet determined."
-	| method pc |
-	nArgs > 15 ifTrue:
-		[^self error: 'Cannot compile -- too many arguments'].
-	nTemps > 63 ifTrue:
-		[^self error: 'Cannot compile -- too many temporary variables'].
-	nLits > 65535 ifTrue:
-		[^self error: 'Cannot compile -- too many literals'].
-
-	method := trailer
-				createMethod: numberOfBytes
-				class: self
-				header:    (nArgs bitShift: 24)
-						+ (nTemps bitShift: 18)
-						+ ((nTemps + stackSize) > SmallFrame ifTrue: [1 bitShift: 17] ifFalse: [0])
-						+ nLits
-						+ (primitiveIndex > 0 ifTrue: [1 bitShift: 16] ifFalse: [0]).
-	primitiveIndex > 0 ifTrue:
-		[pc := method initialPC.
-		 method
-			at: pc + 0 put: method encoderClass callPrimitiveCode;
-			at: pc + 1 put: (primitiveIndex bitAnd: 16rFF);
-			at: pc + 2 put: (primitiveIndex bitShift: -8)].
-	^method
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> newBytes: numberOfBytes trailerBytes: trailer nArgs: nArgs nTemps: nTemps nStack: stackSize nLits: nLits primitive: primitiveIndex flag: flag [
-	"Answer an instance of me. The header is specified by the message
-	 arguments. The remaining parts are not as yet determined."
-	| method pc |
-	nArgs > 15 ifTrue:
-		[^self error: 'Cannot compile -- too many arguments'].
-	nTemps > 63 ifTrue:
-		[^self error: 'Cannot compile -- too many temporary variables'].
-	nLits > 65535 ifTrue:
-		[^self error: 'Cannot compile -- too many literals'].
-
-	method := trailer
-				createMethod: numberOfBytes
-				class: self
-				header:    (nArgs bitShift: 24)
-						+ (nTemps bitShift: 18)
-						+ ((nTemps + stackSize) > SmallFrame ifTrue: [1 bitShift: 17] ifFalse: [0])
-						+ nLits
-						+ (primitiveIndex > 0 ifTrue: [1 bitShift: 16] ifFalse: [0])
-						+ (flag ifTrue: [1 bitShift: 29] ifFalse: [0]).
-	primitiveIndex > 0 ifTrue:
-		[pc := method initialPC.
-		 method
-			at: pc + 0 put: method encoderClass callPrimitiveCode;
-			at: pc + 1 put: (primitiveIndex bitAnd: 16rFF);
-			at: pc + 2 put: (primitiveIndex bitShift: -8)].
-	^method
-]
-
-{ #category : #'instance creation' }
 CompiledMethod class >> newFrom: aCompiledMethod [
 	| inst |
 	inst := super basicNew: aCompiledMethod size.
@@ -256,27 +189,6 @@ CompiledMethod class >> newInstanceFrom: oldInstance variable: variable size: in
 	^new
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> primitive: primNum numArgs: numArgs numTemps: numTemps stackSize: stackSize literals: literals bytecodes: bytecodes trailer: trailerBytes [
-	"Create method with given attributes.  numTemps includes numArgs.  stackSize does not include numTemps."
-
-	| compiledMethod |
-	compiledMethod := self
-		newBytes: bytecodes size
-		trailerBytes: trailerBytes
-		nArgs: numArgs
-		nTemps: numTemps
-		nStack: 0
-		nLits: literals size
-		primitive: primNum.
-	(WriteStream with: compiledMethod)
-		position: compiledMethod initialPC - 1;
-		nextPutAll: bytecodes.
-	literals withIndexDo: [:obj :i | compiledMethod literalAt: i put: obj].
-	compiledMethod needsFrameSize: stackSize.
-	^ compiledMethod
-]
-
 { #category : #'class initialization' }
 CompiledMethod class >> smallFrameSize [
 
@@ -288,34 +200,10 @@ CompiledMethod class >> subclassResponsibilityMarker [
 	^ #subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnConstant: index trailerBytes: trailer [
-	"Answer an instance of me that is a quick return of the constant
-	indexed in (true false nil -1 0 1 2)."
-
-	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256 + index
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnField: field trailerBytes: trailer [
-	"Answer an instance of me that is a quick return of the instance variable
-	indexed by the argument, field."
-
-	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 264 + field
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnSelf [
-	"Answer an instance of me that is a quick return of the instance (^self)."
-
-	^ self toReturnSelfTrailerBytes: CompiledMethodTrailer empty
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
-	"Answer an instance of me that is a quick return of the instance (^self)."
-
-	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
+{ #category : #constants }
+CompiledMethod class >> trailerSize [
+	"we use the last 4 byte to store the source pointer, this allows for 2GB .sources/.changes"
+	^ 4
 ]
 
 { #category : #queries }
@@ -341,7 +229,7 @@ CompiledMethod >> cachePragmas [
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 
-	^ self methodClass organization protocolNameOfElement: self selector
+	^ (self methodClass organization protocolOfSelector: self selector) ifNotNil: #name
 ]
 
 { #category : #accessing }
@@ -371,30 +259,6 @@ CompiledMethod >> containsHalt [
 	^ self hasProperty: #containsHalt
 ]
 
-{ #category : #'source code management' }
-CompiledMethod >> copyWithSource: aString [
-	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString)
-]
-
-{ #category : #initialization }
-CompiledMethod >> copyWithTrailerBytes: trailer [
-"Testing:
-	(CompiledMethod compiledMethodAt: #copyWithTrailerBytes:)
-		tempNamesPut: 'copy end '
-"
-	| copy end start penultimateLiteral |
-	start := self initialPC.
-	end := self endPC.
-	copy := trailer createMethod: end - start + 1 class: self class header: self header.
-	1 to: self numLiterals do: [:i | copy literalAt: i put: (self literalAt: i)].
-	(penultimateLiteral := self penultimateLiteral) isMethodProperties ifTrue:
-		[copy penultimateLiteral: (penultimateLiteral copy
-									setMethod: copy;
-									yourself)].
-	start to: end do: [:i | copy at: i put: (self at: i)].
-	^copy
-]
-
 { #category : #accessing }
 CompiledMethod >> defaultSelector [
 	"Invent and answer an appropriate message selector (a Symbol) for me,
@@ -408,21 +272,10 @@ CompiledMethod >> displayStringOn: aStream [
 	aStream print: self methodClass; nextPutAll: '>>'; store: self selector
 ]
 
-{ #category : #'source code management' }
-CompiledMethod >> embeddSourceInTrailer [
-	"When receiver is deinstalled from its class, its not managed anymore by development tools
-	and it's hard to predict, how long a method could stay in the image, because if it contains blocks,
-	they could still reference it.
-	Therefore we trying to preserve as much as we can , actually by embedding the method's source code into its trailer
-	"
-	self trailer hasSourcePointer ifTrue: [
-		^self becomeForward: (self copyWithSource: self sourceCode)]
-]
-
 { #category : #accessing }
 CompiledMethod >> endPC [
-	"Answer the index of the last bytecode, as the trailer size varies we have to delegate"
-	^ self trailer endPC
+	"Answer the index of the last bytecode"
+	^ self size - self class trailerSize
 ]
 
 { #category : #accessing }
@@ -441,9 +294,9 @@ CompiledMethod >> getPreambleFrom: aFileStream at: position [
 CompiledMethod >> getSourceFromFile [
 	"PLEASE Note: clients should always call #sourceCode"
 	"Read the source code from file, determining source file index and
-	file position from the last 3 bytes of this method."
+	file position from the last bytes of this method (size defined in #trailerSize)."
 
-	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ '' ]
+	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
 ]
 
 { #category : #'source code management' }
@@ -514,7 +367,7 @@ CompiledMethod >> hasSourceCode [
 
 { #category : #testing }
 CompiledMethod >> hasSourcePointer [
-	^ self trailer hasSourcePointer
+	^ self sourcePointer ~= 0
 ]
 
 { #category : #testing }
@@ -537,6 +390,12 @@ CompiledMethod >> isBinarySelector [
 { #category : #testing }
 CompiledMethod >> isClassSide [
 	^self methodClass isClassSide
+]
+
+{ #category : #testing }
+CompiledMethod >> isClassified [
+
+	^ self protocol ~= Protocol unclassified
 ]
 
 { #category : #testing }
@@ -951,7 +810,13 @@ CompiledMethod >> readsField: varIndex [
 ]
 
 { #category : #evaluating }
-CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anObject [
+CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: aMethod [
+	"execute aMethod.
+	This method takes aMethod as an argument so we can call primitive 188.
+	Clients should use #valueWithReceiver:arguments:
+	
+	We have this method here in addition to ProtoObject>>#withArgs:executeMethod:
+	so we can execute a method without sending a message to aReceiver"
 	<primitive: 188>
 	self primitiveFailed
 ]
@@ -1034,23 +899,14 @@ CompiledMethod >> selector: aSelector [
 
 { #category : #'source code management' }
 CompiledMethod >> setSourcePointer: srcPointer [
-	"We can't change the trailer of existing method, since it could have completely different format.
-	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
-	| trailer copy |
+	| trailerBytes start |
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	
-	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
-	copy := self copyWithTrailerBytes: trailer.
-	"If possible do a replace in place as an optimization"
-	(self trailer class == trailer class and: [ self size = copy size ])
-		ifTrue: [
-			| start |
-			start := self endPC + 1.
-			self replaceFrom: start to: self size with: copy startingAt: start ]
-		ifFalse: [ self becomeForward: copy ].
-	^ self
+	trailerBytes := srcPointer asByteArrayOfSize: self class trailerSize.
+	start := self endPC + 1.
+	self replaceFrom: start to: self size with: trailerBytes startingAt: 1.
 ]
 
 { #category : #accessing }
@@ -1066,20 +922,20 @@ CompiledMethod >> sourceCode [
 CompiledMethod >> sourceCodeOrNil [
 	"Retrieve the source code for this method, or return nil."
 
-	| trailer |
-	trailer := self trailer.
-	trailer sourceCode ifNotNil: [ :code | ^ code ].
 	self propertyAt: #source ifPresent:  [ :code | ^ code ].
-	trailer hasSourcePointer ifFalse: [ ^ nil ].
-	^ self getSourceFromFile ifEmpty: [ nil ]
+	self hasSourcePointer ifFalse: [ ^ nil ].
+	^ self getSourceFromFile
 ]
 
 { #category : #'source code management' }
 CompiledMethod >> sourcePointer [
 	"Answer the integer which can be used to find the source file and position for this method.
 	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
-
-	^ self trailer sourcePointer
+	| bytes endPC |
+	bytes := ByteArray new: self class trailerSize.
+	endPC := self endPC.
+	endPC+1 to: self size do: [:n | bytes at: n-endPC put: (self at: n) ].
+	^ bytes asInteger
 ]
 
 { #category : #'debugger support' }
@@ -1142,8 +998,7 @@ CompiledMethod >> tempNames [
 
 { #category : #accessing }
 CompiledMethod >> trailer [
-	"Answer the receiver's trailer"
-	^ CompiledMethodTrailer new method: self
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
 { #category : #'accessing - tags' }
@@ -1165,6 +1020,11 @@ CompiledMethod >> usesUndeclareds [
 			 literal value isBehavior and: [ literal value isObsolete ] ])
 			ifTrue: [ ^ true ] ].
 	^ false
+]
+
+{ #category : #evaluating }
+CompiledMethod >> valueWithReceiver: aReceiver [
+	^self receiver: aReceiver withArguments: #() executeMethod: self
 ]
 
 { #category : #evaluating }

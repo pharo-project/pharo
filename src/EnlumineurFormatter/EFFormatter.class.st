@@ -2085,6 +2085,12 @@ EFFormatter >> useBasicCommentFormat: aBoolean [
 ]
 
 { #category : #visiting }
+EFFormatter >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	codeStream nextPut: $@
+]
+
+{ #category : #visiting }
 EFFormatter >> visitArrayNode: anArrayNode [
 	self bracketWith: '{}' around: [ self formatArray: anArrayNode ]
 ]

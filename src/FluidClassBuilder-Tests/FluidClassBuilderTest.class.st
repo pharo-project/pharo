@@ -45,6 +45,11 @@ FluidClassBuilderTest >> tearDown [
 	(RPackageOrganizer default packageNamed: #'Mock' ifAbsent: [ nil ])
 		ifNotNil: [:x | x removeFromSystem ].
 
+	(RPackageOrganizer default packageNamed: #'FakedCore' ifAbsent: [ nil ])
+		ifNotNil: [:x | x removeFromSystem ].
+		
+		
+
 	super tearDown
 ]
 
@@ -295,7 +300,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	sharedVariables: {};
 	tag: '''' ;
 	sharedPools: {};
-	package: ''MyPackage'''.
+	package: ''Mock'''.
 	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 
@@ -486,10 +491,11 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 { #category : #'tests - classBuilder generation' }
 FluidClassBuilderTest >> testInstallSimplePoint2 [
 
-	[ | pt2Class |
+	[
+	| pt2Class |
 	self assert: (self class environment at: #Point2 ifAbsent: [ true ]).
 	builder := Object << #Point2.
-	builder slots: { #x . #y }.
+	builder slots: { #x. #y }.
 	builder package: 'FakedCore'.
 	builder install.
 
@@ -497,6 +503,6 @@ FluidClassBuilderTest >> testInstallSimplePoint2 [
 	self assert: pt2Class superclass equals: Object.
 	self assert: pt2Class name equals: #Point2.
 	self assert: pt2Class slots size equals: 2 ] ensure: [
-			self class environment removeKey: #Point2 ifAbsent: [self fail].
-			self assert: (self class environment at: #Point2 ifAbsent: [ true ])]
+		(self class environment at: #Point2 ifAbsent: [ self fail ]) removeFromSystem.
+		self assert: (self class environment at: #Point2 ifAbsent: [ true ]) ]
 ]

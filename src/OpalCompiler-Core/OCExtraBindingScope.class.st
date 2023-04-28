@@ -40,8 +40,8 @@ OCExtraBindingScope >> bindings: anObject [
 ]
 
 { #category : #lookup }
-OCExtraBindingScope >> lookupVar: name declare: aBoolean [
+OCExtraBindingScope >> lookupVar: name [
 	^(bindings bindingOf: name asSymbol)
 		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name declare: aBoolean]
+		ifNil: [ super lookupVar: name ]
 ]

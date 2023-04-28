@@ -306,14 +306,6 @@ SystemNavigation >> initialize [
 ]
 
 { #category : #query }
-SystemNavigation >> installedMethodsWithIncorrectTrailerKind [
-
-	^ self allMethodsSelect:
-		[ :each | (#(#SourcePointer #VarLengthSourcePointer #NativeCodeTrailer)
-							includes: each trailer kind) not and: [ each isInstalled ] ]
-]
-
-{ #category : #query }
 SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 	"This answers all the instance side methods that has NIL as the key in their last literal. There should be none (only class side methods have this)"
 

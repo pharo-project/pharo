@@ -436,7 +436,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtoc
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
-	class organization addProtocolNamed: '*yyyyy'.
+	class organization addProtocol: '*yyyyy'.
 
 	self assert: (self organizer includesPackageNamed: #Yyyyy)
 ]
@@ -450,7 +450,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoes
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
-	class organization addProtocolNamed: 'accessing'.
+	class organization addProtocol: 'accessing'.
 
 	self assert: (XPackage includesClass: class).
 	self assert: (XPackage includesDefinedSelector: #newMethod ofClass: class).

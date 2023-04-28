@@ -61,19 +61,9 @@ OCSemanticScope >> isDoItScope [
 ]
 
 { #category : #lookup }
-OCSemanticScope >> lookupVar: name declare: aBoolean [
+OCSemanticScope >> lookupVar: name [
 
-	(self targetClass lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^v ].
+	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
-	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetClass [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetEnvironment [
-	^self targetClass environment
+	^ super lookupVar: name
 ]

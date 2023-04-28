@@ -64,7 +64,6 @@ Object class >> flushDependents [
 	DependentsFields keysAndValuesDo:[:key :dep|
 		key ifNotNil:[key removeDependent: nil].
 	].
-	DependentsFields finalizeValues
 ]
 
 { #category : #documentation }
@@ -158,7 +157,7 @@ Object class >> reInitializeDependentsFields [
 
 	| oldFields |
 	oldFields := DependentsFields.
-	DependentsFields := WeakIdentityKeyDictionary new.
+	self initializeDependentsFields.
 	oldFields
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
@@ -380,7 +379,8 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [
+	"we do the == true check to avoid NonBooleanReceiver error for nonBoolean aBlock values"
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 

@@ -978,7 +978,7 @@ PolygonMorph >> drawArrowsOn: aCanvas [
 PolygonMorph >> drawBorderOn: aCanvas [
 	self
 		drawClippedBorderOn: aCanvas
-		usingEnds: (Array with: vertices first with: vertices last)
+		usingEnds: { vertices first . vertices last }
 ]
 
 { #category : #drawing }

@@ -71,18 +71,29 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownCompilerDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'FileSystem-Core')
+	"Note: #Monticello #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownDisplayDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets')
+	"Note: #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'Transcript-Core' )
+]
+
+{ #category : #'known dependencies' }
+SystemDependenciesTest >> knownFileSystemDependencies [
+	"ideally this list should be empty"
+
+	"Note: #Monticello #'Transcript-Core' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #Monticello #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -95,18 +106,49 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownKernelDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'FileSystem-Core')
+	"Note: #Monticello #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' #Jobs )
+]
+
+{ #category : #'known dependencies' }
+SystemDependenciesTest >> knownLocalMonticelloDependencies [
+	"ideally this list should be empty"
+
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	"Remove Zinc-HTTP next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP."
+
+	^ #( #'Transcript-Core' #'Zinc-HTTP' )
+]
+
+{ #category : #'known dependencies' }
+SystemDependenciesTest >> knownMetacelloDependencies [
+	"ideally this list should be empty"
+
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'Transcript-Core' )
+]
+
+{ #category : #'known dependencies' }
+SystemDependenciesTest >> knownMonticelloDependencies [
+	"ideally this list should be empty"
+
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -119,18 +161,20 @@ SystemDependenciesTest >> knownMorphicDependencies [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownSUnitDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownSUnitKernelDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'FileSystem-Core')
+	"Note: #Monticello #''Transcript-Core'' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #Monticello #'Transcript-Core' #'FileSystem-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -143,10 +187,11 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownUFFIDependencies [
-
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -254,22 +299,19 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 		BaselineOfTraits corePackages,
 		BaselineOfDisplay allPackageNames).
 
-	self assert: dependencies isEmpty
+	self assertCollection: dependencies hasSameElements: self knownDisplayDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 	| dependencies |
+	dependencies := self externalDependendiesOf:
+		                BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames
+		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfPharoBootstrap compilerPackageNames
+		                , BaselineOfPharoBootstrap fileSystemPackageNames.
 
-	dependencies := self externalDependendiesOf: (
-		BaselineOfPharoBootstrap kernelPackageNames,
-		BaselineOfPharoBootstrap multilingualPackageNames,
-		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
-		BaselineOfPharoBootstrap compilerPackageNames,
-		BaselineOfPharoBootstrap fileSystemPackageNames).
-
-	self assert: dependencies isEmpty
+	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies
 ]
 
 { #category : #tests }
@@ -367,29 +409,21 @@ If you will break or weaken this test, a puppy will die!!!
 SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 
 	| dependencies |
+	dependencies := self externalDependendiesOf:
+		                BaselineOfTraits corePackages , BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap compilerPackageNames
+		                , BaselineOfPharoBootstrap multilingualPackageNames , BaselineOfPharoBootstrap fileSystemPackageNames
+		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfMonticello corePackageNames.
 
-	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits corePackages,
-		BaselineOfPharoBootstrap kernelPackageNames,
-		BaselineOfPharoBootstrap compilerPackageNames,
-		BaselineOfPharoBootstrap multilingualPackageNames,
-		BaselineOfPharoBootstrap fileSystemPackageNames,
-		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
-		BaselineOfMonticello corePackageNames).
-
-	self flag: 'TODO: remove next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP.'.
-	dependencies := dependencies copyWithout: #'Zinc-HTTP'.
-	self assert: dependencies isEmpty
+	self assertCollection: dependencies hasSameElements: self knownLocalMonticelloDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalMetacelloDependencies [
 
 	| dependencies |
+	dependencies := self externalDependendiesOf: self metacelloPackageNames , BaselineOfTraits corePackages.
 
-	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
-
-	self assert: dependencies isEmpty
+	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies
 ]
 
 { #category : #tests }
@@ -407,7 +441,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 
-	self assert: dependencies isEmpty
+	self assertCollection: dependencies hasSameElements: self knownMonticelloDependencies
 ]
 
 { #category : #tests }

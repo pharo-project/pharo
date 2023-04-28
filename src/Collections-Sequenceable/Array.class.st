@@ -61,64 +61,6 @@ Array class >> braceStream: nElements [
 	^ WriteStream basicNew braceArray: (self new: nElements)
 ]
 
-{ #category : #'brace support' }
-Array class >> braceWith: a [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 1.
-	array at: 1 put: a.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWith: a with: b [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 2.
-	array at: 1 put: a.
-	array at: 2 put: b.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWith: a with: b with: c [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 3.
-	array at: 1 put: a.
-	array at: 2 put: b.
-	array at: 3 put: c.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWith: a with: b with: c with: d [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 4.
-	array at: 1 put: a.
-	array at: 2 put: b.
-	array at: 3 put: c.
-	array at: 4 put: d.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWithNone [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	^ self new: 0
-]
-
 { #category : #'instance creation' }
 Array class >> empty [
 	"A canonicalized empty Array instance."

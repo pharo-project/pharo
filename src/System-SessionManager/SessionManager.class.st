@@ -140,7 +140,6 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #DiskStore; "System"
 		registerSystemClassNamed: #MemoryStore; "System"
 		registerSystemClassNamed: #SmalltalkImage; "System"
-		registerSystemClassNamed: #WeakFinalizationList; "System"
 		registerSystemClassNamed: #Clipboard; "System"
 		registerSystemClassNamed: #MCMethodDefinition; "System"
 		registerSystemClassNamed: #Symbol; "System"

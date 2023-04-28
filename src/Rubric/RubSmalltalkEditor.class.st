@@ -320,9 +320,8 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
-		requestor: self morph;
-		noPattern: true;
-		failBlock: [ ^ nil ];
+		isScripting: true;
+		permitFaulty: true;
 		compile
 ]
 
@@ -524,8 +523,7 @@ RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
 			source: aStream;
 			context: ctxt;
 			receiver: rcvr;
-			requestor: self morph  "don't set it to self.. The receiver can be destroyed as a result of evaluateSelection";
-			failBlock:  [self morph flash. ^ nil];
+			permitFaulty: true;
 			evaluate.
 
 	^ aBlock value: result

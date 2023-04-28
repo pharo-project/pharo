@@ -34,7 +34,7 @@ RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
 { #category : #comparing }
 RBSelectorNode >> = anObject [
 	self == anObject ifTrue: [^true].
-	^ self class = anObject class ifTrue: [ self value = anObject value ] ifFalse: [ false ]
+	^ self class = anObject class and: [ self value = anObject value ]
 ]
 
 { #category : #visiting }

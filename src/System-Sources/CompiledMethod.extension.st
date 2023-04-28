@@ -25,5 +25,6 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 			"Update with new source pointer"
 			self setSourcePointer: newSourcePointer ]
 		onFail: [
-			self becomeForward: (self copyWithSource: source) ]
+			"if we can not store the source pointer, we put back the property"
+			self propertyAt: #source put: source ]
 ]
