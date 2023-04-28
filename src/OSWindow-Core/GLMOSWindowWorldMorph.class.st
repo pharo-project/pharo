@@ -44,5 +44,11 @@ GLMOSWindowWorldMorph >> toolbarBox: anObject [
 { #category : #announcing }
 GLMOSWindowWorldMorph >> when: anAnnouncement do: aBlock [
 	"TODO: REMOVE THIS METHOD"
-	^ self announcer when: anAnnouncement do: aBlock for: self
+	^ self announcer when: anAnnouncement do: aBlock for: aBlock receiver
+]
+
+{ #category : #announcing }
+GLMOSWindowWorldMorph >> when: anAnnouncement do: aBlock for: subscriber [
+
+	^ self announcer when: anAnnouncement do: aBlock for: subscriber
 ]
