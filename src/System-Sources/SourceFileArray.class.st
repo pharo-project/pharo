@@ -156,10 +156,9 @@ SourceFileArray >> fileAt: index ifAbsent: aBlock [
 { #category : #'private - sourcepointer conversion' }
 SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 	"Return the index of the source file which contains the source chunk addressed by anInteger"
+	"1 is sources file, 2 is changes file"
 
-	^ (anInteger allMask: 1)
-		ifFalse: [ 1 "sources file" ]
-		ifTrue: [ 2 "changes file" ]
+	^ (anInteger bitAnd: 1) + 1
 ]
 
 { #category : #'private - sourcepointer conversion' }
