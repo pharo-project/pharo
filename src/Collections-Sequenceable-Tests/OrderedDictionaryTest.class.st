@@ -476,6 +476,14 @@ OrderedDictionaryTest >> testAt [
 ]
 
 { #category : #tests }
+OrderedDictionaryTest >> testAtAt [ 
+	| dict |
+	dict := { #key1 -> { #key2 -> #value2 } asOrderedDictionary } asOrderedDictionary.
+	self assert: (dict at: #key1 at: #key2) equals: #value2.
+	self should: [ dict at: #key1 at: #unknownKey ] raise: KeyNotFound
+]
+
+{ #category : #tests }
 OrderedDictionaryTest >> testAtIfAbsent [
 	| dictionary |
 
