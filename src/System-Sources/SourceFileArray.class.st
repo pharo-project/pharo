@@ -370,7 +370,7 @@ SourceFileArray >> sourceCodeAt: sourcePointer [
 	^ self
 		readStreamAt: sourcePointer
 		ifPresent: [ :stream | (ChunkReadStream on: stream) next ]
-		ifAbsent: [ '' ]
+		ifAbsent: [ nil ]
 ]
 
 { #category : #private }
