@@ -119,10 +119,9 @@ Class {
 
 { #category : #singleton }
 RPackageOrganizer class >> default [
-	"WARNING: Since this component can be changed (i.e. for testing) you should NOT use it directly.
-	  Use RPackage class>>#organizer instead"
+	"Warning: Use 'Smalltalk organization' since I will be removed in the future."
 
-	^ default ifNil: [ default := self new ]
+	^ Smalltalk organization
 ]
 
 { #category : #'class initialization' }
