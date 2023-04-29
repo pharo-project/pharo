@@ -11,21 +11,19 @@ All in all, the CompiledMethodTrailer added a lot of complexity for nothing.
 
 What do we do now?
 - use use a fixed-length trailer (see #trailerSize)
-- writing and reading that is not that complex (see #setSourcePointer, #sourcePointer:)
+- writing and reading that is not that complex (see #setSourcePointer:, #sourcePointer)
 
 Q: I used to hand a trailer to the compiler, what should I do now?
 
-The compiler now creates always CompiledMethods with a fixed, but empty trailer. Just use #sourcePoitner to set it after.
+The compiler now creates always CompiledMethods with a fixed, but empty trailer. Just use #sourcePointer: to set it after.
 
 Q: I used to clear the trailer using #copyWithTrailerBytes:, what should I do now?
 
-There is now #cearSourcePointer. Just use #copy before if you want a copy.
+There is now #clearSourcePointer. Just use #copy before if you want a copy.
 
 Q: I want to have a non-installed method, but with source code.
 The compiler now sets a #source property (and setting a source pointer via #sourcePointer: removes it).
 If you use the compiler, you need to do nothing special anymore! All methods come with source via the property by default.
-
-
 
 "
 Class {
