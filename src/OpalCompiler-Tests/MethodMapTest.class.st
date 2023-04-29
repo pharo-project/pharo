@@ -15,7 +15,7 @@ MethodMapTest >> compileAndRunExample: aSelector [
 { #category : #utilities }
 MethodMapTest >> compileMethod: aMethod [
 
-	^ aMethod parseTree generateMethod setSourcePointer: aMethod sourcePointer
+	^ aMethod parseTree generateMethod sourcePointer: aMethod sourcePointer
 ]
 
 { #category : #'tests - ast mapping' }

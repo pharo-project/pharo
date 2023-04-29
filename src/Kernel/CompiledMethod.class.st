@@ -244,6 +244,12 @@ CompiledMethod >> classBinding: aBinding [
        ^self literalAt: self numLiterals put: aBinding
 ]
 
+{ #category : #'source code management' }
+CompiledMethod >> clearSourcePointer [
+	"we use #setSourcePointer: to not clear the property #source"
+	self setSourcePointer: 0
+]
+
 { #category : #accessing }
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
@@ -936,6 +942,14 @@ CompiledMethod >> sourcePointer [
 	endPC := self endPC.
 	endPC+1 to: self size do: [:n | bytes at: n-endPC put: (self at: n) ].
 	^ bytes asInteger
+]
+
+{ #category : #'source code management' }
+CompiledMethod >> sourcePointer: srcPointer [
+
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	self setSourcePointer: srcPointer
 ]
 
 { #category : #'debugger support' }

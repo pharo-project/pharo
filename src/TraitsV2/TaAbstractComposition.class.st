@@ -148,7 +148,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 		             source: sourceCode;
 		             permitUndeclared: true;
 		             compile.
-	newMethod setSourcePointer: method sourcePointer.
+	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
