@@ -1296,6 +1296,44 @@ RBParserTest >> testParseGivesMethod [
 	self assert: tree isMethod
 ]
 
+{ #category : #tests }
+RBParserTest >> testParseLiterals [
+
+	self assert: (RBParser parseLiterals: '') equals: #(  ).
+	self
+		assert: (RBParser parseLiterals: '10 1.1 true nil false')
+		equals: #( 10 1.1 true nil false ).
+	self
+		assert: (RBParser parseLiterals: '#foo #foo: #foo:bar:baz')
+		equals: #( #foo #foo: #'foo:bar:baz' ).
+	self
+		assert: (RBParser parseLiterals: 'foo foo: foo:bar:baz')
+		equals: #( #foo #foo: #'foo:bar:baz' ).
+	self
+		assert: (RBParser parseLiterals:
+				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
+		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
+	self
+		assert: (RBParser parseLiterals: '(1 2) #(1 2) #[1 2]')
+		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
+	self
+		assert: (RBParser parseLiterals: '.[];::=^')
+		equals: #( #'.' #'[' #']' #';' #':' #':=' #'^' ).
+
+	self
+		should: [ RBParser parseLiterals: '#( unclosed' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: ') unopened' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: 'syntax¿error' ]
+		raise: CodeError
+]
+
 { #category : #'tests - Pattern' }
 RBParserTest >> testParseMethodPatternGivesSelector [
 	#(#('+ a ^self + a' 				#+)
