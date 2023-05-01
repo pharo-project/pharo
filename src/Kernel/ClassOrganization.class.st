@@ -59,7 +59,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 				                ifTrue: [ aProtocol ]
 				                ifFalse: [ aProtocol name ] ].
 	oldProtocolName := self protocolNameOfElement: selector.
-	((self includesSelector: selector) and: [ oldProtocolName = protocolName = Protocol unclassified ]) ifTrue: [ ^ self ].
+	((self includesSelector: selector) and: [ oldProtocolName = protocolName and: [ protocolName = Protocol unclassified ] ]) ifTrue: [ ^ self ].
 
 	self silentlyClassify: selector under: protocolName.
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
