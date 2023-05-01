@@ -169,14 +169,11 @@ ClassOrganization >> printOn: aStream [
 { #category : #accessing }
 ClassOrganization >> protocolNameOfElement: aSelector [
 
-	^ self protocolNameOfElement: aSelector ifAbsent: nil
-]
-
-{ #category : #accessing }
-ClassOrganization >> protocolNameOfElement: aSelector ifAbsent: aBlock [
-
 	^ (self protocolOfSelector: aSelector)
-		  ifNil: [ (organizedClass includesSelector: aSelector) ifTrue: [ Protocol unclassified ] ifFalse: [ aBlock value ] ]
+		  ifNil: [
+			  (organizedClass includesSelector: aSelector)
+				  ifTrue: [ Protocol unclassified ]
+				  ifFalse: [ nil ] ]
 		  ifNotNil: [ :protocol | protocol name ]
 ]
 
