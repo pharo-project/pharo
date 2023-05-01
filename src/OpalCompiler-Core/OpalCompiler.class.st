@@ -299,7 +299,7 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self compilationContext requestor ifNotNil: [ :requestor |
+	self requestor ifNotNil: [ :requestor |
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
@@ -547,12 +547,14 @@ OpalCompiler >> install: aSource [
 
 { #category : #accessing }
 OpalCompiler >> isScripting [
-	^ self compilationContext noPattern
+	^ self semanticScope isDoItScope
 ]
 
 { #category : #accessing }
 OpalCompiler >> isScripting: aBoolean [
-	self compilationContext noPattern: aBoolean
+
+	(aBoolean and: [ self isScripting not ]) ifTrue: [
+		self semanticScope: OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #accessing }
@@ -606,7 +608,7 @@ OpalCompiler >> parse [
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
-	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
+	ast := self isScripting ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self doSemanticAnalysis.
