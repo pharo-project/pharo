@@ -45,7 +45,7 @@ FLConfiguration class >> defaultGlobalEnvironment [
 { #category : #'accessing-defaults' }
 FLConfiguration class >> defaultGlobalSymbols [
 
-    ^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
+    ^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #World)
 ]
 
 { #category : #'accessing-defaults' }
