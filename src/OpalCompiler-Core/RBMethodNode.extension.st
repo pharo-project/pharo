@@ -6,6 +6,12 @@ RBMethodNode >> bcToASTCache [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> bcToASTCache: anObject [
+
+	bcToASTCache := anObject
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
 	"Retrieve the associated CompiledMethod (cached version).
 	If no CompiledMethod was generated, nil is returned.
@@ -88,25 +94,9 @@ RBMethodNode >> generate: trailer [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
-	"Generate an IRMethod. See `ir` for the chached version."
+	"Generate an IRMethod. See `ir` for the cached version."
 
-	| ir |
-	scope ifNil: [self doSemanticAnalysis].
-
-	self pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
-		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
-		copy := self copy.
-		copy removePragmaNamed: pragma selector.
-		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
-		ir sourceNode: self.
-		^ ir
-	].
-
- 	ir := (self compilationContext astTranslatorClass new
-			compilationContext: self compilationContext;
-			visitNode: self)
-			ir.
-	^ ir
+	^ self compiler generateIR
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -116,13 +106,7 @@ RBMethodNode >> generateMethod [
 	by OpalCompiler in a full compilation chain might be missing.
 	So use this method if you know what you are doing."
 
-	| cm |
-	
-	"if the bytecode is regenerated, we need to reset the cache"
-	bcToASTCache := nil.
-	cm :=  self generateIR compiledMethod.
-	self compiledMethod: cm.
-	^ cm
+	^ self compiler compile
 ]
 
 { #category : #'*OpalCompiler-Core' }
