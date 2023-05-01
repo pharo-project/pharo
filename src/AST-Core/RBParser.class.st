@@ -55,9 +55,15 @@ RBParser class >> parseFaultyMethod: aString [
 
 { #category : #parsing }
 RBParser class >> parseLiterals: aString [
-	^ self new
-		  initializeParserWith: aString;
-		  parseLiterals: aString
+
+	| scanner parser |
+	parser := self new.
+	scanner := parser scannerClass on: (ReadStream on: aString).
+	scanner state: #literalArray.
+	^ parser
+		  source: aString;
+		  scanner: scanner;
+		  parseLiterals
 ]
 
 { #category : #parsing }
@@ -749,13 +755,22 @@ RBParser >> parseLiteralByteArrayObject [
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseLiterals: aString [
+RBParser >> parseLiterals [
+
 	| stream |
 	stream := (Array new: 5) writeStream.
-	[self atEnd or: [currentToken isSpecial: $)]]
-		whileFalse: [stream nextPut: self parseLiteralArrayObject].
-	self atEnd ifFalse: [ ^ self parseErrorNode: 'Unknown input at end'].
-	^stream contents collect: [ :each | each value ]
+	[ self atEnd ] whileFalse: [
+		| node |
+		node := (currentToken isSpecial: $))
+			        ifTrue: [
+			        self parseErrorNode: 'Unexpected closing parenthesis' ]
+			        ifFalse: [ self parseLiteralArrayObject ].
+		node isError ifTrue: [ node checkFaulty: nil ].
+		"parseLiterals always success, and in case of syntax error just returns the problematic token as a symbol"
+		stream nextPut: (node isError
+				 ifTrue: [ node value asSymbol ]
+				 ifFalse: [ node value ]) ].
+	^ stream contents
 ]
 
 { #category : #'private - parsing' }
