@@ -679,6 +679,7 @@ RBParser >> parseLiteralArrayObject [
 
 	currentToken isError ifTrue:[ |errorNode| errorNode :=  self parseErrorNode: currentToken cause.
 		 ^ errorNode].
+	currentToken isLiteralToken ifFalse: [self patchLiteralArrayToken].
 
 	"For the moment, special tokens are transformed into symbol."
 	(currentToken isAssignment or: [ currentToken isSpecial ])
