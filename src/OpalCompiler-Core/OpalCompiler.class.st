@@ -534,7 +534,7 @@ OpalCompiler >> generateMethod [
 
 	ast bcToASTCache: nil.
 	ir := self generateIR.
-	method := ir compiledMethodWith: self compilationContext compiledMethodTrailer.
+	method := ir compiledMethod.
 
 	ast compiledMethod: method.	
 	method propertyAt: #source put: source.
