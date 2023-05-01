@@ -305,7 +305,7 @@ OpalCompiler >> checkNotice: aNotice [
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		self compilationContext interactive ifTrue: [
+		self isInteractive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -543,6 +543,17 @@ OpalCompiler >> install: aSource [
 
 	self source: aSource.
 	^ self install
+]
+
+{ #category : #testing }
+OpalCompiler >> isInteractive [
+
+	self requestor ifNil: [ ^ false ].
+	"we asume requestors are interactive, but they can override.
+	this should be simplified "
+	^ (self requestor respondsTo: #interactive)
+		  ifTrue: [ self requestor interactive ]
+		  ifFalse: [ true ]
 ]
 
 { #category : #accessing }
