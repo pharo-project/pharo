@@ -878,7 +878,7 @@ RBBrowserEnvironment >> whichCategoryIncludes: aClassName [
 { #category : #accessing }
 RBBrowserEnvironment >> whichProtocolIncludes: aSelector in: aClass [
 
-	^ aClass organization protocolNameOfElement: aSelector ifAbsent: [ Protocol unclassified ]
+	^ (aClass organization protocolOfSelector: aSelector) ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #environments }

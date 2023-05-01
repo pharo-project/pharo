@@ -32,9 +32,9 @@ ClassOrganization >> categoryOfElement: aSelector [
 ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self
-		deprecated: 'Use #protocolNameOfElement:ifAbsent: instead.'
-		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '`@rcv protocolNameOfElement: `@arg1 ifAbsent: `@arg2'.
-	^ self protocolNameOfElement: aSelector ifAbsent: aBlock
+		deprecated: 'Use #protocolNameOfElement: instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfElement: `@arg1) ifNil: `@arg2'.
+	^ (self protocolNameOfElement: aSelector) ifNil: aBlock
 ]
 
 { #category : #'*Deprecated12' }
