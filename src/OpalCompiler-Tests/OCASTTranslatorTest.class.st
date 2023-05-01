@@ -215,13 +215,6 @@ OCASTTranslatorTest >> testExamplePrimitiveModuleError [
 	self assert: ir tempKeys equals: #(#errorCode)
 ]
 
-{ #category : #'tests - simple' }
-OCASTTranslatorTest >> testSendSpecialBinaryMessage [
-
-	self assert: (Smalltalk specialSelectors includes: #+).
-	self assert: (self testExample: #exampleReturn1plus2) equals: 3
-]
-
 { #category : #support }
 OCASTTranslatorTest >> testSource: sourceCode [
 

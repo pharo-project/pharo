@@ -37,12 +37,11 @@ PharoDocCommentExpression >> expressionNode [
 
 { #category : #accessing }
 PharoDocCommentExpression >> expressionNodeReal [
-
 	"Force the parsing of the expression node"
 
 	^ self methodClass compiler
 		  source: self source;
-		  noPattern: true;
+		  isScripting: true;
 		  receiver: self methodClass;
 		  parse
 ]

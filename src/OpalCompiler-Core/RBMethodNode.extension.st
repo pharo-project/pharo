@@ -85,10 +85,11 @@ RBMethodNode >> generate [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate: trailer [
-
-	^ self compiler
-		compiledMethodTrailer: trailer;
-		compile
+	self
+		deprecated: 'Use generateMethod'
+		transformWith: '`@receiver generate: `@argument'
+			-> '`@receiver generateMethod'.
+	^ self generateMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }

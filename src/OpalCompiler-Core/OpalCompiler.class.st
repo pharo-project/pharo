@@ -391,7 +391,7 @@ OpalCompiler >> compiledMethodClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> compiledMethodTrailer: bytes [
-	self compilationContext compiledMethodTrailer: bytes
+	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
 ]
 
 { #category : #accessing }
@@ -422,6 +422,12 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
+
+	|scope|
+	"First thing is to attach a initial scope to the method,
+	so plugins can have something to rely on for their analysis and transformations"
+	scope := OCMethodScope new outerScope: self buildOuterScope.
+	ast scope: scope.  scope node: ast.
 
 	self callParsePlugins.
 	self compilationContext semanticAnalyzerClass new

@@ -54,6 +54,7 @@ RBCodeSnippet class >> allSnippets [
 		  self badExpressions.
 		  self badTokens.
 		  self badMethods.
+		  self badScanner.
 		  self badSemantic.
 		  self badPositions.
 		  self badVariableAndScopes } flattened
@@ -808,9 +809,13 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 2 3 'Variable or expression expected' ) )). "keyword message with a missing receiver and argument"
 		        (self new
 			         source: 'a::';
-			         nodeAt: '000';
-			         styled: 'XXX';
-			         notices: #( #( 1 3 1 'Unexpected token' ) )). "just a bad token"
+			         nodeAt: '225';
+			         styled: 'XsX';
+			         formattedCode: ' a: . :';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 3 2 3 'Variable or expression expected' )
+				            #( 1 2 3 'End of statement expected' )
+				            #( 3 3 3 'Unexpected token' ) )). "same plus an unexpected :"
 		        (self new
 			         source: 'a:foo';
 			         nodeAt: '00222';
@@ -820,12 +825,11 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 5 3 'Undeclared variable' ) )). "keyword message with a missing receiver"
 		        (self new
 			         source: 'a::foo';
-			         nodeAt: '111222';
-			         styled: 'XXXuuu';
-			         formattedCode: 'a::. foo';
-			         notices:
-				         #( #( 1 3 1 'Unexpected token' )
-				            #( 4 6 4 'Undeclared variable' ) )).
+			         nodeAt: '002222';
+			         styled: 'XsXXXX';
+			         formattedCode: ' a: :foo';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 3 6 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: ':a:foo';
 			         nodeAt: '122444';
@@ -1198,11 +1202,13 @@ RBCodeSnippet class >> badMethods [
 				            #( 11 10 11 'Name already defined' ) )).
 		        (self new
 			         source: 'foo:bar:';
-			         nodeAt: '33333333';
-			         styled: 'XXXXXXXX';
-			         formattedCode: ' . foo:bar:';
-			         notices: #( #( 1 0 1 'Message pattern expected' )
-				            #( 1 8 1 'Unexpected token' ) )). "`foo:bar:` is a single token, and is unexpected"
+			         nodeAt: '00000000';
+			         styled: 'ppppXppp';
+			         formattedCode: 'foo: bar: ';
+			         value: nil;
+			         notices: #( #( 5 4 5 'Variable name expected' )
+				            #( 9 8 9 'Variable name expected' )
+				            #( 9 8 9 'Name already defined' ) )). "same. `foo:bar:` is no more a single token"
 
 		        "Bad pragma message"
 		        (self new
@@ -1386,6 +1392,134 @@ RBCodeSnippet class >> badPositions [
 	"Setup default values"
 	self new
 		group: #badPositions;
+		isScripting: true;
+		isFaulty: false;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badScanner [
+	"While simple, the Pharo syntax has some hacks and exceptions when dealing with the scanning of token.
+	Raw scanned lexical tokens are not always used as is and might be transformed or split according to specific grammatical rules."
+
+	<script: 'self styleWithError: self badScanner'>
+	| list |
+	list := {
+		        (self new
+			         source: '1 true false nil self super thisContext';
+			         nodeAt: '655555444444333322222111111000000000000';
+			         styled: 'n uuuu uuuuu uuu uuuu uuuuu uuuuuuuuuuu';
+			         messageNotUnderstood: #true). "Simili-keywords can be used as unary messages"
+		        (self new
+			         source:
+				         '1"A"true"B"false"C"nil"D"self"E"super"F"thisContext"G"';
+			         nodeAt:
+				         '9BBB888877777777666666555555544444444DDD00000000000EEE';
+			         styled:
+				         'n"""uuuu   uuuuu   uuu   uuuu"""uuuuu"""uuuuuuuuuuu"""';
+			         formattedCode: '1 true false nil self super thisContext';
+			         messageNotUnderstood: #true). "Check if comments are lost"
+
+		        "`-` appear in negative number and in binary operators"
+		        (self new
+			         source: '1-1 - 1abs-1 - 1max:-1';
+			         nodeAt: '546333877729111A0000BB';
+			         styled: 'nsn s nssssn s nssssnn';
+			         formattedCode: '1 - 1 - 1 abs - 1 - 1 max: -1';
+			         value: -1).
+		        (self new
+			         source: '1-1"A" - 1abs-1"B" - 1max:-1"C"';
+			         nodeAt: '546888333A9992BDDD111E0000FFHHH';
+			         styled: 'nsn""" s nssssn""" s nssssnn"""';
+			         formattedCode: '1 - 1 - 1 abs - 1 - 1 max: -1';
+			         value: -1). "Check if comments are lost"
+		        (self new
+			         source: '1*-1 + 1--1 + 1- -1';
+			         nodeAt: '54463337228111900AA';
+			         styled: 'nuun s nssn s ns nn';
+			         formattedCode: '1 *- 1 + 1 -- 1 + 1 - -1';
+			         messageNotUnderstood: #'*-'). "Note: long binary operators ending in `-` are not split into negative numbers"
+		        (self new
+			         source: '+1. -a. - 1. -"A"1';
+			         nodeAt: '1300460077900AEEEC';
+			         styled: 'Xn. Xu. X n. X"""n';
+			         formattedCode: ' + 1. - a. - 1. - 1 "A"';
+			         isFaulty: true;
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 5 4 5 'Variable or expression expected' )
+				            #( 6 6 6 'Undeclared variable' )
+				            #( 9 8 9 'Variable or expression expected' )
+				            #( 14 13 14 'Variable or expression expected' ) )). "prefix - is limited to raw integer tokens"
+
+		        "Tokens in literal arrays are really weird."
+		        (self new
+			         source: '#(aa:bb:cc#aa:bb:cc#cc==#== =#=)';
+			         nodeAt: '00111111112222222223334455506770';
+			         styled: '00######################### ###0';
+			         formattedCode:
+				         '#( aa:bb:cc #''aa:bb:cc'' #cc == #''=='' = #= )';
+			         value: #( #aa:bb:cc #'aa:bb:cc' #cc #'==' #'==' #= #= )). "Identifiers, keywords and binary operators are implicitely transformed into symbols. Note that formatting is inconsistent."
+		        (self new
+			         source: '#(aa:bb:"A"cc"B"#aa:bb:cc"C"#cc"D"++"E"#++"F")';
+			         nodeAt: '0044444400055000666666666AAA777BBB88000999CCC0';
+			         styled: '00######   ##   #########"""###"""##   ###"""0';
+			         formattedCode:
+				         '#( aa:bb: cc #''aa:bb:cc'' #cc ++ #''++'' )';
+			         value: #( #aa:bb: cc #'aa:bb:cc' #cc #'++' #'++' )). "Check if comments are lost"
+		        (self new
+			         source: '#(().:;[]{}^#a)';
+			         nodeAt: '001123456789AA0';
+			         styled: '0011##########0';
+			         formattedCode:
+				         '#( #( ) #''.'' #'':'' #'';'' #''['' #'']'' #''{'' #''}'' #''^'' #a )';
+			         value:
+				         #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' #a )). "Most special characters are transformed into single character symbols, including brackets!"
+		        (self new
+			         source: '#(("A")"B"."C":"D";"E"["F"]"G"{"H"}"I"^"J")';
+			         nodeAt: '0033333DDD400050006000700080009000A000B0000';
+			         styled: '001"""1"""#   #   #   #   #   #   #   #   0';
+			         formattedCode:
+				         '#( #( ) #''.'' #'':'' #'';'' #''['' #'']'' #''{'' #''}'' #''^'' )';
+			         value: #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' )). "Check if comments are lost"
+		        (self new
+			         source: '#(# ## #ab #10 #. 10)';
+			         nodeAt: '001022033304550670880';
+			         styled: 'XXXXXXX### XXn XX nnX';
+			         formattedCode: '#( # ## #ab # 10 # #''.'' 10 )';
+			         isFaulty: true;
+			         notices:
+				         #( #( 3 3 4 'Literal expected' )
+				            #( 5 6 7 'Literal expected' )
+				            #( 12 12 13 'Literal expected' )
+				            #( 16 16 17 'Literal expected' ) )). "Lonely # are errors"
+		        (self new
+			         source: '#(#"A"##"B")';
+			         nodeAt: '003555446660';
+			         styled: 'XXXX""XXX""X';
+			         formattedCode: '#( # ## )';
+			         isFaulty: true;
+			         notices:
+				         #( #( 3 3 4 'Literal expected' )
+				            #( 7 8 9 'Literal expected' ) )). "Check if comments are lost"
+		        (self new
+			         source: '#(:=aa:=:==bb:==#cc:==)';
+			         nodeAt: '001033345078889ABBBBCC0';
+			         styled: '00# ##### ############0';
+			         formattedCode:
+				         '#( #'':'' #= #aa: #= #'':'' #= = #bb: #= = #cc: == )';
+			         value:
+				         #( #':' #= #aa: #= #':' #= #= #bb: #= #= #cc: #'==' )). "Assigments are split, creating symbols"
+		        (self new
+			         source: '#(:="A"aa:="B":=="C"cc:=="D")';
+			         nodeAt: '001000033340005070008889A0000';
+			         styled: '00#    ####   # #   #####   0';
+			         formattedCode:
+				         '#( #'':'' #= #aa: #= #'':'' #= = #cc: #= = )';
+			         value: #( #':' #= #aa: #= #':' #= #= #cc: #= #= )) "Check if comments are lost" }.
+	"Setup default values"
+	self new
+		group: #badScanner;
 		isScripting: true;
 		isFaulty: false;
 		applyDefaultTo: list.

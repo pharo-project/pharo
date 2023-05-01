@@ -337,7 +337,9 @@ RFASTTranslator >> visitVariableValue: aVariable [
 	self emitPreamble: aVariable.
 	self emitMetaLinkBefore: aVariable.
 	aVariable hasMetalinkInstead
-		ifTrue: [self emitMetaLinkInstead: aVariable]
+		ifTrue: [
+			methodBuilder addLiteral: aVariable.
+			self emitMetaLinkInstead: aVariable]
 		ifFalse: [aVariable emitValue: methodBuilder].
 	self emitMetaLinkAfterNoEnsure: aVariable
 ]
