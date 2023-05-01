@@ -164,7 +164,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 		(selectionInterval isEmpty and: [ isFavouringExpressions and: [
 			(source at: (stop + 1 min: source size)) isAlphaNumeric not ]]) ifTrue: [
 				"If there is white space or statement terminator, try to backup to find a better node"
-				[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
+				[stop > 0 and: [((source at: stop) = $;) or: [(source at: stop) isSeparator ]]]
 					whileTrue: [ start := stop := stop - 1 ].
 				start := stop].
 		node := ast bestNodeFor: (start to: stop).
@@ -320,7 +320,7 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
-		noPattern: true;
+		isScripting: true;
 		permitFaulty: true;
 		compile
 ]
@@ -487,7 +487,7 @@ RubSmalltalkEditor >> debugIt: aKeyboardEvent [
 RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 
-	self lineSelectAndEmptyCheck: [^self].
+	self expressionSelectAndEmptyCheck: [^self].
 	self debug: self selection
 ]
 
@@ -541,7 +541,7 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
 
-	self lineSelectAndEmptyCheck: [^ ''].
+	self expressionSelectAndEmptyCheck: [^ ''].
 	^ self
 		evaluate: self selection
 		andDo: aBlock
@@ -558,6 +558,16 @@ RubSmalltalkEditor >> exploreIt: aKeyboardEvent [
 
 	self exploreIt.
 	^ true
+]
+
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> expressionSelectAndEmptyCheck: returnBlock [
+	"If the current selection is an insertion point, expand it to be the entire current expression; if after that's done the selection is still empty, then evaluate the returnBlock, which will typically consist of '[^ self]' in the caller -- check senders of this method to understand this."
+	"Based on lineSelectAndEmptyCheck:"
+
+	self hasSelection ifTrue: [ ^ self ].
+	self widenSelectionOfIt.  "if current selection is an insertion point, then first select the entire expression in which occurs before proceeding"
+	self hasSelection ifFalse: [textArea flash.  ^ returnBlock value]
 ]
 
 { #category : #'source navigation' }
@@ -1175,7 +1185,7 @@ RubSmalltalkEditor >> tallyIt [
 RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
-	self lineSelectAndEmptyCheck: [ ^ self ].
+	self expressionSelectAndEmptyCheck: [ ^ self ].
 	self tally: self selection
 ]
 

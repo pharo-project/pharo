@@ -135,15 +135,6 @@ ClassOrganization >> notifyOfChangedCategoriesFrom: oldProtocolName to: newProto
 ]
 
 { #category : #'*Deprecated12' }
-ClassOrganization >> notifyOfRemovedCategory: protocolName [
-
-	self
-		deprecated: 'Use #notifyOfRemovedProtocolNamed: instead.'
-		transformWith: '`@rcv notifyOfRemovedCategory: `@arg' -> '`@rcv notifyOfRemovedProtocolNamed: `@arg'.
-	self notifyOfRemovedProtocolNamed: protocolName
-]
-
-{ #category : #'*Deprecated12' }
 ClassOrganization >> removeCategory: protocolName [
 
 	self deprecated: 'Use #removeProtocolIfEmpty: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
@@ -177,18 +168,18 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 ClassOrganization >> renameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #renameProtocolNamed:toBe: instead.'
-		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
-	self renameProtocolNamed: oldName toBe: newName
+		deprecated: 'Use #renameProtocol:as: instead.'
+		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 as: `@arg2'.
+	self renameProtocol: oldName as: newName
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #renameProtocolNamed:toBe: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
-		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
-	self renameProtocolNamed: oldName toBe: newName
+		deprecated: 'Use #renameProtocol:as: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
+		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 as: `@arg2'.
+	self renameProtocol: oldName as: newName
 ]
 
 { #category : #'*Deprecated12' }

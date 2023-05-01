@@ -37,7 +37,7 @@ RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 	(aNode parent scope copiedVars, aNode parent scope tempVars) do: [ :var |
 		ensureBlock scope addCopyingTempToAllScopesUpToDefTemp: var].
 
-	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: ensureBlock.
+	compiledBlock := self subTranslator translateFullBlock: ensureBlock.
 	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: ensureBlock scope copiedVarNames.
 	methodBuilder send: #ensure:
 ]
@@ -114,7 +114,7 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 	aBlockNode hasMetalinkInstead
 				ifTrue: [ self emitMetaLinkInstead: aBlockNode ]
 				ifFalse: [
-	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
+	compiledBlock := self subTranslator translateFullBlock: aBlockNode.
 	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
 		ifTrue: [ methodBuilder pushLiteral: (CleanBlockClosure compiledBlock: compiledBlock)]
 		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ].
@@ -214,7 +214,6 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 
 	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
-	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 
 	aMethodNode isPrimitive ifFalse: [self emitPreamble: aMethodNode. self emitMetaLinkBefore: aMethodNode].
@@ -303,7 +302,7 @@ RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
 	 (aSequenceNode parent scope copiedVars, aSequenceNode parent scope tempVars) do: [ :var |
 		wrappedBlock scope addCopyingTempToAllScopesUpToDefTemp: var].
 
-	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: wrappedBlock.
+	compiledBlock := self subTranslator translateFullBlock: wrappedBlock.
 	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: wrappedBlock scope copiedVarNames.
 	self emitMetaLinkAfterEnsure: aSequenceNode
 ]
@@ -338,7 +337,9 @@ RFASTTranslator >> visitVariableValue: aVariable [
 	self emitPreamble: aVariable.
 	self emitMetaLinkBefore: aVariable.
 	aVariable hasMetalinkInstead
-		ifTrue: [self emitMetaLinkInstead: aVariable]
+		ifTrue: [
+			methodBuilder addLiteral: aVariable.
+			self emitMetaLinkInstead: aVariable]
 		ifFalse: [aVariable emitValue: methodBuilder].
 	self emitMetaLinkAfterNoEnsure: aVariable
 ]

@@ -164,7 +164,6 @@ TimeProfiler >> blockCode: aString notifying: aRequestor [
 		source: ('self runBlock: [', aString, ']');
 		context: self doItContext;
 		requestor: self;
-		noPattern: true;
 		failBlock: [^self];
 		compile.
 	self showResult: ( compiledMethod valueWithReceiver: self arguments: #()).

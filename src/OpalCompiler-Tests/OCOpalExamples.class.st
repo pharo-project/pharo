@@ -583,7 +583,8 @@ OCOpalExamples >> exampleSimpleBlockReturn [
 
 { #category : #'examples - blocks' }
 OCOpalExamples >> exampleSimpleBlockiVar [
-	^[iVar] value
+
+	^ [ iVar ] value
 ]
 
 { #category : #'examples - variables' }

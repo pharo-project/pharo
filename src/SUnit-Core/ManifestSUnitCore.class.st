@@ -16,8 +16,3 @@ ManifestSUnitCore class >> ruleExcessiveArgumentsRuleV1FalsePositive [
 ManifestSUnitCore class >> ruleStringConcatenationRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#ClassFactoryForTestCase #cleanUpChangeSetForClassNames: #false)) #'2021-12-05T23:07:46.009058+01:00') )
 ]
-
-{ #category : #'code-critics' }
-ManifestSUnitCore class >> ruleUtilityMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#ClassTestCase #categoriesForClass: #false)) #'2021-12-05T23:37:26.237093+01:00') )
-]

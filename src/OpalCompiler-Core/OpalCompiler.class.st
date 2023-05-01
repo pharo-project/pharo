@@ -210,13 +210,42 @@ OpalCompiler >> ast [
 OpalCompiler >> ast: anObject [
 
 	ast := anObject.
-	source := ast source
+	source := ast source.
+
+	"If a compilation context exists in the AST, we use this one.
+	Otherwise, we assign our"
+	ast compilationContext
+		ifNil: [ ast compilationContext: self compilationContext ]
+		ifNotNil: [ self compilationContext: ast compilationContext ]
+]
+
+{ #category : #accessing }
+OpalCompiler >> bindings [
+	^ self compilationContext bindings
 ]
 
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
 	self compilationContext bindings: aDictionary
+]
+
+{ #category : #private }
+OpalCompiler >> buildOuterScope [
+	| newScope |
+
+	newScope := self semanticScope.
+	self needRequestorScope ifTrue: [
+		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
+		newScope := (self compilationContext requestorScopeClass new
+			requestor: self requestor) outerScope: newScope].
+
+	self bindings ifNotNil: [
+		"if we passed additional bindings in, setup a scope here"
+		newScope := (OCExtraBindingScope  new
+			bindings: self bindings) outerScope: newScope].
+
+	^newScope
 ]
 
 { #category : #private }
@@ -334,13 +363,14 @@ OpalCompiler >> compilationContextClass: aClass [
 OpalCompiler >> compile [
 
 	| result method |
-	
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
 
-	ast ifNil: [
-		result := self parse.
-		ast ifNil: [ ^ result ] "some failBlock" ].
+	ast
+		ifNil: [
+			result := self parse.
+			ast ifNil: [ "some failBlock" ^ result ] ]
+		ifNotNil: [ ast scope ifNil: [ self doSemanticAnalysis ] ].
 
 	self callPlugins.
 	ast scope registerVariables.
@@ -366,11 +396,16 @@ OpalCompiler >> compiledMethodClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> compiledMethodTrailer: bytes [
-	self compilationContext compiledMethodTrailer: bytes
+	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
 ]
 
 { #category : #accessing }
 OpalCompiler >> context: aContext [
+	"Prepare self to parse/compile/evaluate according to a context.
+	This impacts the scope (for name resolutions) and toggles `isScripting` to true.
+	Note that you may prefer to use `Context>>#compiler` that also takes in account
+	the compilation preferences of the class of the receiver (e.g. plugins)."
+
 	aContext ifNil: [
 		"There are such users which sets up all parameters (doItContext and doItReceiver).
 		For example check SpCodePresenter>>#evaluate:onCompileError:onError:.
@@ -392,7 +427,19 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^ ast doSemanticAnalysis
+
+	|scope|
+	"First thing is to attach a initial scope to the method,
+	so plugins can have something to rely on for their analysis and transformations"
+	scope := OCMethodScope new outerScope: self buildOuterScope.
+	ast scope: scope.  scope node: ast.
+
+	self callParsePlugins.
+	self compilationContext semanticAnalyzerClass new
+		compilationContext: self compilationContext;
+		outerScope: self buildOuterScope;
+		analyze: ast.
+	^ ast
 ]
 
 { #category : #plugins }
@@ -416,7 +463,7 @@ OpalCompiler >> evaluate [
 	 the system no longer creates Doit method litter on errors."
 
 	| value doItMethod |
-	self noPattern: true.
+	self isScripting: true.
 	doItMethod := self compile.
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
@@ -499,6 +546,16 @@ OpalCompiler >> install: aSource [
 ]
 
 { #category : #accessing }
+OpalCompiler >> isScripting [
+	^ self compilationContext noPattern
+]
+
+{ #category : #accessing }
+OpalCompiler >> isScripting: aBoolean [
+	self compilationContext noPattern: aBoolean
+]
+
+{ #category : #accessing }
 OpalCompiler >> logged [
 	^ logged
 ]
@@ -508,9 +565,25 @@ OpalCompiler >> logged: aBoolean [
 	logged := aBoolean
 ]
 
+{ #category : #testing }
+OpalCompiler >> needRequestorScope [
+	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
+	Modern requestors should not register temselves but use `bindings:`."
+
+	self requestor ifNil: [ ^ false ].
+	"Because requestor do not have a real API, introspection is used."
+	(self requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
+	^ self requestor needRequestorScope
+]
+
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
-	self compilationContext noPattern: aBoolean
+
+	self
+		deprecated: 'Use #isScripting: instead'
+		transformWith: '`@receiver noPattern: `@arg' -> '`@receiver isScripting: `@arg'.
+
+	self isScripting: aBoolean
 ]
 
 { #category : #'public access' }
@@ -536,7 +609,6 @@ OpalCompiler >> parse [
 	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
-	self callParsePlugins.
 	self doSemanticAnalysis.
 
 	self permitFaulty ifFalse: [
@@ -563,6 +635,13 @@ OpalCompiler >> parse: textOrString [
 { #category : #'public access' }
 OpalCompiler >> parseLiterals: aString [
 	^self parserClass parseLiterals: aString
+]
+
+{ #category : #'public access' }
+OpalCompiler >> parseScript: aString [
+
+	self isScripting: true.
+	^ self parse: aString
 ]
 
 { #category : #'public access' }
@@ -612,8 +691,27 @@ OpalCompiler >> protocol: aProtocol [
 ]
 
 { #category : #accessing }
+OpalCompiler >> receiver [
+
+	^ self semanticScope ifNotNil: [ :scope |
+		  scope isDoItScope
+			  ifTrue: [ scope receiver ]
+			  ifFalse: [ nil ] ]
+]
+
+{ #category : #accessing }
 OpalCompiler >> receiver: anObject [
+
+	"Note: some clients set up a `receiver:` AFTER setting up a `context:`
+	BUT expect that the context remain,
+	so just noop if the receiver is already known, thus do not change the doit scope"
+	self receiver == anObject ifTrue: [ ^self ].
 	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
+]
+
+{ #category : #accessing }
+OpalCompiler >> requestor [
+	^ self compilationContext requestor
 ]
 
 { #category : #accessing }

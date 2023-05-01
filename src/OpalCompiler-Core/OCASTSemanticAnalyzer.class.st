@@ -7,6 +7,7 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'scope',
+		'outerScope',
 		'compilationContext',
 		'blockCounter',
 		'undeclared',
@@ -103,6 +104,18 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 { #category : #accessing }
 OCASTSemanticAnalyzer >> invalidVariables [
 	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> outerScope [
+
+	^ outerScope
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> outerScope: anObject [
+
+	outerScope := anObject
 ]
 
 { #category : #variables }
@@ -239,7 +252,7 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
 	
 	super visitMessageNode: aMessageNode.
-	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: self compilationContext getClass ]
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: scope targetClass ]
 ]
 
 { #category : #visiting }
@@ -247,7 +260,7 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
-	scope := OCMethodScope new outerScope: self compilationContext scope.
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
@@ -261,7 +274,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 	super visitPragmaNode: aPragmaNode.
 	aPragmaNode selector = #compilerOptions: ifTrue: [
 		aPragmaNode asPragma sendTo:
-			aPragmaNode methodNode compilationContext ].
+			self compilationContext ].
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp
 	for it"

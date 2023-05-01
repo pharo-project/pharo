@@ -502,7 +502,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCatego
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 	self createMethodNamed: 'stubMethod2' inClass: class inCategory: 'classic category'.
 
-	class organization renameProtocolNamed: 'classic category' toBe: '*yyyyy'.
+	class organization renameProtocol: 'classic category' as: '*yyyyy'.
 
 	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (YPackage includesExtensionSelector: #stubMethod2 ofClass: class).
@@ -520,7 +520,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCatego
 	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
-	class organization renameProtocolNamed: 'classic category' toBe: '*yyyyy'.
+	class organization renameProtocol: 'classic category' as: '*yyyyy'.
 	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
@@ -536,7 +536,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	ZPackage := self organizer packageNamed: #ZZZZZ.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
-	class organization renameProtocolNamed: '*yyyyy' toBe: '*zzzzz'.
+	class organization renameProtocol: '*yyyyy' as: '*zzzzz'.
 	self assert: (ZPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class)
@@ -555,7 +555,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
 
-	class organization renameProtocolNamed: '*yyyyy' toBe: 'classic category'.
+	class organization renameProtocol: '*yyyyy' as: 'classic category'.
 
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (YPackage includesExtensionSelector: #stubMethod2 ofClass: class).
@@ -573,7 +573,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
-	class organization renameProtocolNamed: '*yyyyy' toBe: 'classic category'.
+	class organization renameProtocol: '*yyyyy' as: 'classic category'.
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (XPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]

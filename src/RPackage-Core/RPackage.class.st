@@ -110,9 +110,9 @@ RPackage class >> initializeProperties [
 { #category : #'instance creation' }
 RPackage class >> named: aString [
 
-	| newPackage |
-	newPackage := self new name: aString ;yourself.
-	^ newPackage
+	^ self new
+		  name: aString;
+		  yourself
 ]
 
 { #category : #'protected only for tests' }
@@ -304,7 +304,7 @@ RPackage >> basicImportClass: aClass [
 	| protocols |
 	self addClassDefinition: aClass.
 	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol unclassified ] ].
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
 	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
@@ -1134,7 +1134,7 @@ RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
 	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocolNamed: each toBe: Protocol unclassified ] ].
+		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
@@ -1242,14 +1242,20 @@ RPackage >> removeClassesMatchingTag: aTag [
 
 { #category : #removing }
 RPackage >> removeFromSystem [
-	| extendedClasses |
 
+	| extendedClasses categories |
+	categories := (self classTags collect: [ :each | each categoryName ] as: Set)
+		              add: self name;
+		              yourself.
 	extendedClasses := self extendedClasses.
 
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	extendedClasses do:[:each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol].
+	extendedClasses do: [ :each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol ].
+	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
+	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
+	categories do: [ :cat | self organizer systemOrganizer removeCategory: cat ].
 	self unregister
 ]
 

@@ -648,18 +648,18 @@ RBParser >> parseLiteralArray [
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralArrayErrorNode new
-			value: '#(';
+			value: startToken value asString;
 		 	start: startToken start;
 			contents: literals;
 			valueAfter: ')';
 			stop: stop;
 			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
-	^self literalArrayNodeClass
+	^(self literalArrayNodeClass
 		startPosition: startToken start
 		contents: literals
 		stopPosition: stop
-		isByteArray: false
+		isByteArray: false) openerSize: startToken length.
 ]
 
 { #category : #'private - parsing' }
@@ -700,18 +700,18 @@ RBParser >> parseLiteralByteArray [
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralByteArrayErrorNode new
-			value: '#[';
+			value: startToken value asString;
 		 	start: startToken start;
 			contents: stream contents;
 			valueAfter: ']';
 			stop: stop;
 			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
-	^self literalArrayNodeClass
+	^(self literalArrayNodeClass
 		startPosition: startToken start
 		contents: stream contents
 		stopPosition: stop
-		isByteArray: true
+		isByteArray: true) openerSize: startToken length.
 ]
 
 { #category : #'private - parsing' }
@@ -885,8 +885,7 @@ RBParser >> parsePrimitiveLiteral [
 RBParser >> parsePrimitiveObject [
 	| errorNode |
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
-	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
-		ifTrue: [^self parsePrimitiveLiteral].
+	currentToken isLiteralToken ifTrue: [^self parsePrimitiveLiteral].
 	currentToken isLiteralArrayToken
 		ifTrue:
 			[^currentToken isForByteArray
@@ -1170,7 +1169,7 @@ RBParser >> parseVariableNode [
 RBParser >> patchLiteralArrayToken [
 	(currentToken isIdentifier and:
 			[self nextToken isAssignment
-				and: [currentToken stop + 1 = self nextToken start]])
+				and: [currentToken isTouching: self nextToken]])
 		ifTrue:
 			[currentToken := RBLiteralToken
 						value: (currentToken value , ':') asSymbol
@@ -1199,13 +1198,30 @@ RBParser >> patchLiteralArrayToken [
 						start: currentToken start
 						stop: currentToken stop.
 			^self].
-	(currentToken isIdentifier and: [currentToken value includes: $.])
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: currentToken value
-						start: currentToken start
-						stop: currentToken stop.
-			^self].
+
+	"Build super symbol (selector) by combining keywords and identifiers.
+	So that `#(foo:bar)` is the same as `#(#foo:bar)`"
+	(currentToken isIdentifier or: [currentToken isKeyword]) ifTrue: [
+		| value start |
+		start := currentToken start.
+		value := nil.
+		[ (currentToken isTouching: self nextToken)
+			and: [self nextToken isIdentifier
+				or: [self nextToken isKeyword
+					or: [self nextToken isSpecial: $:]]] ] whileTrue: [
+			value ifNil: [
+				value := currentToken value asString. "Start accumulating"
+			].
+			self step. "Consume current token"
+			value := value , currentToken value asString "Extends" ].
+		value ifNotNil: [
+			currentToken := RBLiteralToken
+				value: value asSymbol
+				start: start
+				stop: currentToken stop
+				source: value asString.
+			^ self ] ].
+
 	(currentToken isIdentifier
 		or: [currentToken isBinary or: [currentToken isKeyword]])
 			ifFalse: [^self parseErrorNode: 'Invalid token'].
