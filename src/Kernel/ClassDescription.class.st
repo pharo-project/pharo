@@ -469,6 +469,33 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+ClassDescription >> deprecatedAliases [
+	"I return a potential list of alias names for myself that are deprecated."
+
+	^ self propertyAt: #deprecatedAliases ifAbsent: [ {  } ]
+]
+
+{ #category : #accessing }
+ClassDescription >> deprecatedAliases: aCollection [
+	"I allow one to declare deperecated names for myself. Typically, in case I get renamed, I can be used to declare the old name as a deprecated name.
+	Compared to the use of #isDeprecated, I have some advantages such as:
+	- Not needing to maintain a deprecated class
+	- Keep #isKindOf: working
+	- Keep #on:do: working
+	- And more cases like the previous two.
+	
+	In the future this should be improved so that we can declare the deprecated aliases in the FluidClassBuilder. But it requires a way to persist this information in Tonel.
+	Maybe we should also do another improvement that is to remove from the system dectionary the aliases if we set some aliases while I already had some set before."
+
+	self propertyAt: #deprecatedAliases put: (aCollection collect: [ :name | name asSymbol ]).
+	self deprecatedAliases do: [ :deprecatedName |
+		| systemDictionary |
+		systemDictionary := Smalltalk globals.
+		systemDictionary at: deprecatedName asSymbol put: self.
+		(systemDictionary lookupVar: deprecatedName asSymbol) isDeprecated: true ]
+]
+
 { #category : #'queries - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
