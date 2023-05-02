@@ -97,7 +97,7 @@ MCStWriter >> visitTraitDefinition: definition [
 { #category : #writing }
 MCStWriter >> writeCategory: categoryName [
 	stream
-		nextChunkPut: 'Smalltalk organization addCategory: ', categoryName printString;
+		nextChunkPut: 'SystemOrganization addCategory: ', categoryName printString;
 		cr
 ]
 

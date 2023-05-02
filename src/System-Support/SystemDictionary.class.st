@@ -26,8 +26,7 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'reservedVariables',
-		'organizer'
+		'reservedVariables'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -291,9 +290,9 @@ SystemDictionary >> nonClassNames [
 SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
-	^ organizer ifNil: [
+	^ self at: #SystemOrganization ifAbsent: [
 		  self organization: SystemOrganizer new.
-		  organizer ]
+		  self at: #SystemOrganization ]
 ]
 
 { #category : #accessing }
@@ -301,12 +300,7 @@ SystemDictionary >> organization: anOrganization [
 	"Return the organizer for the receiver"
 
 	anOrganization environment: self.
-
-	"Pharo12: For one version of Pharo we keep a deprecated SystemOrganization global variable but it will be removed in Pharo 13."
-	self at: #SystemOrganization put: anOrganization.
-	(self lookupVar: #SystemOrganization) isDeprecated: true.
-
-	^ organizer := anOrganization
+	^ self at: #SystemOrganization put: anOrganization
 ]
 
 { #category : #'accessing - variable lookup' }
