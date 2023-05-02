@@ -41,7 +41,7 @@ ReflectiveMethod >> compileAST [
 	method := ast generateMethod.
 	"#generateMethod sets the generated method as a property, put back the old"
 	ast compiledMethod: compiledMethod.
-	method setSourcePointer: compiledMethod sourcePointer.
+	method sourcePointer: compiledMethod sourcePointer.
 	^method.
 ]
 

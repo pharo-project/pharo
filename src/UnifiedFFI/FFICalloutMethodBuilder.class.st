@@ -148,7 +148,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 		ffiLibrary postMethodBuildContext: sender builder: builder spec: functionSpec.
 		r].
 	method := ir generate.
-	self method isCompiledMethod ifTrue: [method setSourcePointer: self method sourcePointer  ].
+	self method isCompiledMethod ifTrue: [method sourcePointer: self method sourcePointer  ].
 	^method
 ]
 

@@ -148,16 +148,16 @@ TaAbstractComposition >> compile: selector into: aClass [
 		             source: sourceCode;
 		             permitUndeclared: true;
 		             compile.
-	newMethod setSourcePointer: method sourcePointer.
+	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 
-	aClass addSelectorSilently: selector withMethod: newMethod.
-
 	aClass organization silentlyClassify: selector under: (self categoryOfMethod: method withSelector: method selector).
+
+	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -213,11 +213,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
-	aClass addSelectorSilently: aSelector withMethod: newMethod.
-
 	aClass organization silentlyClassify: aSelector under: aCompiledMethod protocol.
 
-	aClass organization removeEmptyProtocols.
+	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
 

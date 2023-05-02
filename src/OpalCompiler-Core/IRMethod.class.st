@@ -125,15 +125,18 @@ IRMethod >> compiledBlock: scope [
 { #category : #translating }
 IRMethod >> compiledMethod [
 
-	^ self compiledMethodWith: CompiledMethodTrailer empty
+	^ compiledMethod 
+		ifNil: [self generate ]
+
 ]
 
 { #category : #translating }
 IRMethod >> compiledMethodWith: trailer [
-
-	^compiledMethod
-		ifNil: [self generate: trailer ]
-		ifNotNil: [compiledMethod]
+	self
+		deprecated: 'Use compiledMethod'
+		transformWith: '`@receiver compiledMethodWith: `@argument'
+			-> '`@receiver compiledMethod'.
+	^ self compiledMethod
 ]
 
 { #category : #enumerating }
@@ -146,11 +149,6 @@ IRMethod >> firstInstructionMatching: aBlock [
 
 { #category : #translating }
 IRMethod >> generate [
-	^self generate: CompiledMethodTrailer empty
-]
-
-{ #category : #translating }
-IRMethod >> generate: trailer [
 
 	| irTranslator |
    irTranslator := IRTranslator context: self compilationContext.
@@ -166,6 +164,15 @@ IRMethod >> generate: trailer [
 			compiledMethod classBinding: UndefinedObject binding.
 			compiledMethod selector: #UndefinedMethod ].
 	^ compiledMethod
+]
+
+{ #category : #translating }
+IRMethod >> generate: trailer [
+	self
+		deprecated: 'Use generate'
+		transformWith: '`@receiver generate: `@argument'
+			-> '`@receiver generate'.
+	^ self generate 
 ]
 
 { #category : #translating }

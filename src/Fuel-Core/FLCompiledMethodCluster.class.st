@@ -34,13 +34,7 @@ FLCompiledMethodCluster class >> setTrailerWithSourceCode [
 	"Make compiled methods be serialized without source code."
 
 	^ self transformationForSerializing: [:aCompiledMethod |
-		"we set the source as a property, not yet installed methods already have
-		it, but for installed methods we put it back "
-		aCompiledMethod copy
-			setSourcePointer: 0;
-			propertyAt: #source put: aCompiledMethod sourceCode;
-			yourself
-		]
+		aCompiledMethod copy clearSourcePointer ]
 ]
 
 { #category : #accessing }

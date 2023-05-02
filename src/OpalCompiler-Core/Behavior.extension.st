@@ -122,7 +122,7 @@ Behavior >> recompileBasic: selector from: oldClass [
 				class: self;
 				permitFaulty: true;
 				compile.   "Assume OK after proceed from SyntaxError"
-	newMethod setSourcePointer: method sourcePointer.
+	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod
 ]

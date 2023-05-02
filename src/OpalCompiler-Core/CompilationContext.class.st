@@ -24,7 +24,6 @@ Class {
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
 		'bytecodeGeneratorClass',
-		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
 		'astParseTransformPlugins',
@@ -91,7 +90,7 @@ CompilationContext class >> default [
 
 { #category : #options }
 CompilationContext class >> defaultOptions [
-	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self fallBackDefaultOptions ]
+	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self initialDefaultOptions ]
 ]
 
 { #category : #accessing }
@@ -114,7 +113,8 @@ CompilationContext class >> defaultTransformationPlugins: anObject [
 ]
 
 { #category : #options }
-CompilationContext class >> fallBackDefaultOptions [
+CompilationContext class >> initialDefaultOptions [
+	"Skip the comment of each option"
 	^ (self optionsDescription collect: [ :each | each allButLast ]) flattened
 ]
 
@@ -254,6 +254,20 @@ CompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
 	^ self writeDefaultOption: #optionLongIvarAccessBytecodes value: aBoolean
 ]
 
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends [
+
+	^ self readDefaultOption: #optionOptimiseSpecialSends
+]
+
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends: aBoolean [
+
+	^ self
+		  writeDefaultOption: #optionOptimiseSpecialSends
+		  value: aBoolean
+]
+
 { #category : #'options - settings API' }
 CompilationContext class >> optionOptimizeIR [
 	^ self readDefaultOption: #optionOptimizeIR
@@ -302,6 +316,7 @@ CompilationContext class >> optionsDescription [
 
 	"each entry is fall-back default value (+/-), option name, description"
 	^ #(
+	(+ optionOptimiseSpecialSends 'Use optimised bytecodes for special selectors. These bytecodes hint the VM to do static type predictions')
 	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
 	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
 	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
@@ -417,16 +432,6 @@ CompilationContext >> compiledMethodClass: aCompiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 
 	compiledMethodClass := aCompiledMethodClass
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer [
-	^ compiledMethodTrailer
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer: anObject [
-	compiledMethodTrailer := anObject
 ]
 
 { #category : #options }
@@ -549,6 +554,11 @@ CompilationContext >> optionInlineWhile [
 { #category : #options }
 CompilationContext >> optionLongIvarAccessBytecodes [
 	^ options includes: #optionLongIvarAccessBytecodes
+]
+
+{ #category : #options }
+CompilationContext >> optionOptimiseSpecialSends [
+	^ options includes: #optionOptimiseSpecialSends
 ]
 
 { #category : #options }

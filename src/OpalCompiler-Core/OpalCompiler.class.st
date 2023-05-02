@@ -362,7 +362,7 @@ OpalCompiler >> compilationContextClass: aClass [
 { #category : #'public access' }
 OpalCompiler >> compile [
 
-	| result method |
+	| result |
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
 
@@ -372,12 +372,7 @@ OpalCompiler >> compile [
 			ast ifNil: [ "some failBlock" ^ result ] ]
 		ifNotNil: [ ast scope ifNil: [ self doSemanticAnalysis ] ].
 
-	self callPlugins.
-	ast scope registerVariables.
-	method := ast generateMethod.
-	method propertyAt: #source put: source.
-	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
-	^ method
+	^ self generateMethod
 ]
 
 { #category : #'public access' }
@@ -396,7 +391,7 @@ OpalCompiler >> compiledMethodClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> compiledMethodTrailer: bytes [
-	self compilationContext compiledMethodTrailer: bytes
+	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
 ]
 
 { #category : #accessing }
@@ -507,6 +502,45 @@ OpalCompiler >> format: textOrString [
 	^self
 		source: textOrString;
 		format
+]
+
+{ #category : #private }
+OpalCompiler >> generateIR [
+	| ir |
+
+	ast pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
+		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
+		copy := ast copy.
+		copy removePragmaNamed: pragma selector.
+		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
+		ir sourceNode: ast.
+		^ ir
+	].
+
+ 	ir := (self compilationContext astTranslatorClass new
+			compilationContext: self compilationContext;
+			visitNode: ast)
+			ir.
+	ast ir: ir.
+	^ ir
+]
+
+{ #category : #private }
+OpalCompiler >> generateMethod [
+
+	| method ir |
+	self callPlugins.
+	ast scope registerVariables.
+
+	ast bcToASTCache: nil.
+	ir := self generateIR.
+	method := ir compiledMethod.
+
+	ast compiledMethod: method.	
+	method propertyAt: #source put: source.
+	self compilationContext noPattern ifTrue: [
+		method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	^ method
 ]
 
 { #category : #actions }

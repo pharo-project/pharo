@@ -229,7 +229,7 @@ CompiledMethod >> cachePragmas [
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 
-	^ self methodClass organization protocolNameOfElement: self selector
+	^ (self methodClass organization protocolOfSelector: self selector) ifNotNil: #name
 ]
 
 { #category : #accessing }
@@ -242,6 +242,12 @@ CompiledMethod >> classBinding [
 CompiledMethod >> classBinding: aBinding [
        "sets the association to the class that I am installed in"
        ^self literalAt: self numLiterals put: aBinding
+]
+
+{ #category : #'source code management' }
+CompiledMethod >> clearSourcePointer [
+	"we use #setSourcePointer: to not clear the property #source"
+	self setSourcePointer: 0
 ]
 
 { #category : #accessing }
@@ -938,6 +944,14 @@ CompiledMethod >> sourcePointer [
 	^ bytes asInteger
 ]
 
+{ #category : #'source code management' }
+CompiledMethod >> sourcePointer: srcPointer [
+
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	self setSourcePointer: srcPointer
+]
+
 { #category : #'debugger support' }
 CompiledMethod >> stepIntoQuickMethods: aBoolean [
 	^self propertyAt: #stepIntoQuickMethod put: aBoolean
@@ -998,7 +1012,7 @@ CompiledMethod >> tempNames [
 
 { #category : #accessing }
 CompiledMethod >> trailer [
-	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use setSourcePointer: / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
 { #category : #'accessing - tags' }
