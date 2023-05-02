@@ -18,7 +18,7 @@ ClassDescriptionTest >> classToBeTested [
 
 { #category : #helpers }
 ClassDescriptionTest >> compilationTestPackageName [
-	^ 'Kernel-TemporaryTestPackageForTest'
+	^ 'TestKernel-TemporaryTestPackageForTest'
 ]
 
 { #category : #helpers }
