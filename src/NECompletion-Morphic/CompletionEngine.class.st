@@ -336,13 +336,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		to: wordEnd - 1.
 	old := self editor selection.
 
-	( old size >= aString size )
-		ifTrue:[
-				self editor replaceSelectionWith: aString. ]
-		ifFalse: [
-				self editor selectInvisiblyFrom: wordEnd	to: wordEnd - 1.
-				rest := aString asString copyFrom: old size + 1 to: aString size.
-				self editor replaceSelectionWith: rest ].
+	self editor replaceSelectionWith: aString.
 
 	offset := NECPreferences spaceAfterCompletion
 		ifTrue: [ 1 ]
