@@ -92,7 +92,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'v2.4.0'
+		version: 'v2.4.1'
 ]
 
 { #category : #'repository urls' }
@@ -159,7 +159,7 @@ BaselineOfPharo class >> welcomeBrowser [
 	^ PharoExternalProject 
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
-		project: 'WelcomeBrowser' 
+		project: 'NewTools-WelcomeBrowser' 
 		version: 'Pharo11'
 ]
 
