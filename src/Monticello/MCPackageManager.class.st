@@ -151,12 +151,10 @@ MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 ]
 
 { #category : #'system changes' }
-MCPackageManager class >> managersForClass: aClass category: methodCategory do: aBlock [
-	(methodCategory isEmptyOrNil or:[methodCategory first ~= $*]) ifTrue:[
-		"Not an extension method"
-		^self managersForClass: aClass do: aBlock.
-	].
-	self managersForCategory: methodCategory allButFirst do: aBlock.
+MCPackageManager class >> managersForClass: aClass category: protocolName do: aBlock [
+
+	(protocolName isEmptyOrNil or: [ protocolName first ~= $* ]) ifTrue: [ "Not an extension method" ^ self managersForClass: aClass do: aBlock ].
+	self managersForCategory: protocolName allButFirst do: aBlock
 ]
 
 { #category : #'system changes' }
@@ -173,7 +171,7 @@ MCPackageManager class >> managersForClass: aClass do: aBlock [
 { #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass selector: aSelector do: aBlock [
 
-	^ self managersForClass: aClass category: (aClass organization protocolNameOfElement: aSelector) do: aBlock
+	^ self managersForClass: aClass category: (aClass organization protocolOfSelector: aSelector) name do: aBlock
 ]
 
 { #category : #'system changes' }
