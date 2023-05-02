@@ -488,12 +488,20 @@ ClassDescription >> deprecatedAliases: aCollection [
 	In the future this should be improved so that we can declare the deprecated aliases in the FluidClassBuilder. But it requires a way to persist this information in Tonel.
 	Maybe we should also do another improvement that is to remove from the system dectionary the aliases if we set some aliases while I already had some set before."
 
+	| environment |
+	environment := self class environment.
+	
+	"If a global already has the name of an alias then we should warn the user."
+	aCollection do: [ :alias |
+		environment at: alias asSymbol ifPresent: [ :class |
+			"If the global exists but points to the same class then it means that we are just reaaplying the aliases."
+			class ~= self ifTrue: [
+				self notify: alias , ' is been applied as a deprecated alias for ' , self class name , ' but a global already exists under this name.' ] ] ].
+
 	self propertyAt: #deprecatedAliases put: (aCollection collect: [ :name | name asSymbol ]).
 	self deprecatedAliases do: [ :deprecatedName |
-		| systemDictionary |
-		systemDictionary := self class environment.
-		systemDictionary at: deprecatedName put: self.
-		(systemDictionary lookupVar: deprecatedName) isDeprecated: true ]
+		environment at: deprecatedName put: self.
+		(environment lookupVar: deprecatedName) isDeprecated: true ]
 ]
 
 { #category : #'queries - protocols' }

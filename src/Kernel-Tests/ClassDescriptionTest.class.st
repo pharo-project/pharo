@@ -92,6 +92,13 @@ ClassDescriptionTest >> testDeprecatedAliases [
 
 	self deny: (systemDictionary at: class name) isDeprecated.
 	self assert: (systemDictionary lookupVar: #TemporaryMockClassDeprecated) isDeprecated.
+	self assert: (systemDictionary lookupVar: #DeprecatedTemporaryMockClass) isDeprecated.
+
+	"It should be possible to reaaply the code."
+	class deprecatedAliases: #( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ).
+
+	self deny: (systemDictionary at: class name) isDeprecated.
+	self assert: (systemDictionary lookupVar: #TemporaryMockClassDeprecated) isDeprecated.
 	self assert: (systemDictionary lookupVar: #DeprecatedTemporaryMockClass) isDeprecated
 ]
 
@@ -115,6 +122,20 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemoval [
 	self deny: (systemDictionary includesKey: class name).
 	self deny: (systemDictionary includesKey: #TemporaryMockClassDeprecated).
 	self deny: (systemDictionary includesKey: #DeprecatedTemporaryMockClass)
+]
+
+{ #category : #'tests - slots' }
+ClassDescriptionTest >> testDeprecatedAliasesOnExistingNames [
+
+	| class systemDictionary |
+	class := ((Object << #TemporaryMockClass)
+		          slots: {  };
+		          package: self compilationTestPackageName) install.
+	"Create a second class to register its name in the globals."
+	(Object << #TemporaryMockClass2 package: self compilationTestPackageName) install.
+	systemDictionary := class environment.
+
+	self should: [ class deprecatedAliases: #( #TemporaryMockClass2 ) ] raise: Warning
 ]
 
 { #category : #'tests - slots' }
