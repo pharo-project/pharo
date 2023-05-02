@@ -16,7 +16,6 @@ Class {
 	#name : #CompilationContext,
 	#superclass : #Object,
 	#instVars : [
-		'requestor',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -594,16 +593,6 @@ CompilationContext >> productionEnvironment [
 { #category : #accessing }
 CompilationContext >> productionEnvironment: aDictionary [
 	productionEnvironment := aDictionary
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor: anObject [
-	requestor := anObject
 ]
 
 { #category : #accessing }

@@ -38,7 +38,8 @@ Class {
 		'failBlock',
 		'logged',
 		'changeStamp',
-		'protocol'
+		'protocol',
+		'requestor'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -724,12 +725,12 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor [
-	^ self compilationContext requestor
+	^ requestor
 ]
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
-	self compilationContext requestor: aRequestor
+	requestor := aRequestor
 ]
 
 { #category : #plugins }
