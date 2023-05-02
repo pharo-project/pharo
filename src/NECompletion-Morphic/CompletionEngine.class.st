@@ -322,7 +322,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart rest |
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
 	"Try to correctly replace the current token in the word.
 	The code editor should be able to do it by himself"
 	wordEnd := (self editor nextWord: self editor caret - 1).
