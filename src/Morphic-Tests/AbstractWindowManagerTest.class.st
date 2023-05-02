@@ -10,18 +10,17 @@ Class {
 { #category : #tests }
 AbstractWindowManagerTest >> runCaseManaged [
 
-	super runCaseManaged .
 	self runCase
 ]
 
 { #category : #running }
 AbstractWindowManagerTest >> setUp [
+
 	super setUp.
-	manager := MorphicWindowManager new.
-	
+	manager := MorphicWindowManager new
 ]
 
-{ #category : #tests }
+{ #category : #running }
 AbstractWindowManagerTest >> tearDown [ 
 
 	manager ensureDeleteAll.
