@@ -344,6 +344,25 @@ CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingW
 ]
 
 { #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord2 [
+
+	| text |
+	text := 'self foo something that follows'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self foo' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+
+	controller context replaceTokenInEditorWith: 'aLongString'.
+
+	self assert: editor text asString equals: 'self aLongString something that follows'
+]
+
+{ #category : #'tests - interaction' }
 CompletionEngineTest >> testReplaceTokenWithCaretOnEndOfWordReplacesEntireWord [
 
 	"If the caret is at the end of a word, replace the entire word"
