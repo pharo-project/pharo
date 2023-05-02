@@ -491,9 +491,9 @@ ClassDescription >> deprecatedAliases: aCollection [
 	self propertyAt: #deprecatedAliases put: (aCollection collect: [ :name | name asSymbol ]).
 	self deprecatedAliases do: [ :deprecatedName |
 		| systemDictionary |
-		systemDictionary := Smalltalk globals.
-		systemDictionary at: deprecatedName asSymbol put: self.
-		(systemDictionary lookupVar: deprecatedName asSymbol) isDeprecated: true ]
+		systemDictionary := self class environment.
+		systemDictionary at: deprecatedName put: self.
+		(systemDictionary lookupVar: deprecatedName) isDeprecated: true ]
 ]
 
 { #category : #'queries - protocols' }

@@ -80,6 +80,25 @@ ClassDescriptionTest >> testDefinesSlotNamed [
 ]
 
 { #category : #'tests - slots' }
+ClassDescriptionTest >> testDeprecatedAliases [
+
+	| class systemDictionary |
+	class := ((Object << #TemporaryMockClass)
+		          slots: {  };
+		          package: self compilationTestPackageName) install.
+	systemDictionary := class environment.
+
+	[
+	class deprecatedAliases: #( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ).
+
+	self deny: (systemDictionary at: class name) isDeprecated.
+	self assert: (systemDictionary lookupVar: #TemporaryMockClassDeprecated) isDeprecated.
+	self assert: (systemDictionary lookupVar: #DeprecatedTemporaryMockClass) isDeprecated ] ensure: [
+		#( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ) do: [ :alias |
+			systemDictionary removeKey: alias ifAbsent: [ "It was not added so we do not care." ] ] ]
+]
+
+{ #category : #'tests - slots' }
 ClassDescriptionTest >> testHasSlot [
 	self assert: (ExampleForTest11 hasSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable)).
 	self deny: (ExampleForTest11 definesSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable))
