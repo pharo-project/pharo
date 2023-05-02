@@ -70,7 +70,7 @@ CompletionEngine >> completionToken [
 { #category : #replacement }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
-	^ self editor previousWord: self editor caret - 1
+	^ self editor previousWord: self editor caret
 ]
 
 { #category : #accessing }
@@ -333,7 +333,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
 
-	wordStart := self editor previousWord: (self editor caret - 1).
+	wordStart := self editor previousWord: self editor caret.
 
 	self editor
 		selectInvisiblyFrom: wordStart
