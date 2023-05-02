@@ -109,7 +109,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'v0.8.0'
+		version: 'v0.8.1'
 ]
 
 { #category : #'repository urls' }
@@ -143,7 +143,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'v1.2.0'
+		version: 'v1.2.1'
 ]
 
 { #category : #'repository urls' }
