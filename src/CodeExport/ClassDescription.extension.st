@@ -5,7 +5,10 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	"File a description of the messages of this class that have been
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
-	self organization protocols do: [ :protocol | protocol methodSelectors do: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
+	self organization protocols do: [ :protocol |
+		protocol methodSelectors
+			select: [ :selector | aSet includes: selector ]
+			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
 ]
 
 { #category : #'*CodeExport' }
