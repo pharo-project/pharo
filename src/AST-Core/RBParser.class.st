@@ -765,10 +765,7 @@ RBParser >> parseLiterals [
 			        self parseErrorNode: 'Unexpected closing parenthesis' ]
 			        ifFalse: [ self parseLiteralArrayObject ].
 		node isError ifTrue: [ node checkFaulty: nil ].
-		"parseLiterals always success, and in case of syntax error just returns the problematic token as a symbol"
-		stream nextPut: (node isError
-				 ifTrue: [ node value asSymbol ]
-				 ifFalse: [ node value ]) ].
+		stream nextPut: node value ].
 	^ stream contents
 ]
 
