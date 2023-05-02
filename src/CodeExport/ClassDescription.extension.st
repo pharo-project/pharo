@@ -5,21 +5,16 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	"File a description of the messages of this class that have been
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
-	| org |
-	(org := self organization) protocolNames do: [ :protocolName |
-		(org methodSelectorsInProtocol: protocolName)
-			select: [ :selector | aSet includes: selector ]
-			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
+	self organization protocols do: [ :protocol | protocol methodSelectors do: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutLocalMethodsInProtocolNamed: protocolName on: aFileStream [
+ClassDescription >> fileOutLocalMethodsInProtocol: protocol on: aFileStream [
 	"File out methods for this protocol."
 
 	aFileStream cr.
 
-	(self selectorsInProtocolNamed: protocolName)
-		do: [ :selector | self printMethodChunk: selector on: aFileStream ]
+	protocol methodSelectors do: [ :selector | self printMethodChunk: selector on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
@@ -51,7 +46,7 @@ ClassDescription >> fileOutOn: aFileStream [
 
 	aFileStream nextChunkPut: self oldPharoDefinition.
 	self putCommentOnFile: aFileStream.
-	self organization protocolNames do: [ :protocolName | self fileOutLocalMethodsInProtocolNamed: protocolName on: aFileStream ]
+	self organization protocols do: [ :protocol | self fileOutLocalMethodsInProtocol: protocol on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
@@ -72,7 +67,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	"Copy the source code for the method associated with selector onto the fileStream."
 
 	| preamble method |
-	preamble := self name, ' methodsFor: ', (self organization protocolNameOfElement: selector) asString printString.
+	preamble := self name, ' methodsFor: ', (self organization protocolOfSelector: selector) name asString printString.
 	method := self methodDict
 		at: selector
 		ifAbsent: [
@@ -157,10 +152,4 @@ ClassDescription >> putCommentOnFile: aFileStream [
 			cr;
 			nextChunkPut: comment string ].
 	aFileStream cr
-]
-
-{ #category : #'*CodeExport' }
-ClassDescription >> selectorsInProtocolNamed: aSymbol [
-
-	^ self organization methodSelectorsInProtocol: aSymbol
 ]
