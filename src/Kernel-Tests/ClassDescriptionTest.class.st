@@ -88,14 +88,33 @@ ClassDescriptionTest >> testDeprecatedAliases [
 		          package: self compilationTestPackageName) install.
 	systemDictionary := class environment.
 
-	[
 	class deprecatedAliases: #( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ).
 
 	self deny: (systemDictionary at: class name) isDeprecated.
 	self assert: (systemDictionary lookupVar: #TemporaryMockClassDeprecated) isDeprecated.
-	self assert: (systemDictionary lookupVar: #DeprecatedTemporaryMockClass) isDeprecated ] ensure: [
-		#( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ) do: [ :alias |
-			systemDictionary removeKey: alias ifAbsent: [ "It was not added so we do not care." ] ] ]
+	self assert: (systemDictionary lookupVar: #DeprecatedTemporaryMockClass) isDeprecated
+]
+
+{ #category : #'tests - slots' }
+ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemoval [
+
+	| class systemDictionary |
+	class := ((Object << #TemporaryMockClass)
+		          slots: {  };
+		          package: self compilationTestPackageName) install.
+	systemDictionary := class environment.
+
+	class deprecatedAliases: #( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ).
+
+	self assert: (systemDictionary includesKey: class name).
+	self assert: (systemDictionary includesKey: #TemporaryMockClassDeprecated).
+	self assert: (systemDictionary includesKey: #DeprecatedTemporaryMockClass).
+
+	class removeFromSystem.
+
+	self deny: (systemDictionary includesKey: class name).
+	self deny: (systemDictionary includesKey: #TemporaryMockClassDeprecated).
+	self deny: (systemDictionary includesKey: #DeprecatedTemporaryMockClass)
 ]
 
 { #category : #'tests - slots' }
