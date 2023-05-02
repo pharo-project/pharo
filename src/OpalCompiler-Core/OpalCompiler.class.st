@@ -300,7 +300,7 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self requestor ifNotNil: [ :requestor |
+	self requestor ifNotNil: [
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
