@@ -46,7 +46,7 @@ ClassOrganization >> allMethodSelectors [
 { #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
-	| oldProtocolName forceNotify oldProtocol protocolName |
+	| oldProtocolName protocolName |
 	"The next section deserve more cleanings.
 	
 	Some code was added to make it possible to classify giving a real protocol.
@@ -58,10 +58,8 @@ ClassOrganization >> classify: selector under: aProtocol [
 			                aProtocol isString
 				                ifTrue: [ aProtocol ]
 				                ifFalse: [ aProtocol name ] ].
-	forceNotify := (self includesSelector: selector) not.
 	oldProtocolName := self protocolNameOfElement: selector.
-	(forceNotify or: [ oldProtocolName ~= protocolName or: [ protocolName ~= Protocol unclassified ] ]) ifFalse: [ ^ self ].
-	oldProtocol := self protocolOfSelector: selector.
+	((self includesSelector: selector) and: [ oldProtocolName = protocolName and: [ protocolName = Protocol unclassified ] ]) ifTrue: [ ^ self ].
 
 	self silentlyClassify: selector under: protocolName.
 	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: protocolName ]
