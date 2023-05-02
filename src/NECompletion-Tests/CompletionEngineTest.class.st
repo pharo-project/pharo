@@ -123,6 +123,44 @@ CompletionEngineTest >> tearDown [
 ]
 
 { #category : #'tests - keyboard' }
+CompletionEngineTest >> testCompletionOnFirstLetter [
+
+	| text |
+	text := 'self foo baz'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self f' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	
+	self assert: controller completionToken equals: 'f'.
+
+	controller context replaceTokenInEditorWith: 'bar'.
+	self assert: editor text asString equals: 'self bar baz'
+]
+
+{ #category : #'tests - keyboard' }
+CompletionEngineTest >> testCompletionOnSingleLetter [
+
+	| text |
+	text := 'self f baz'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self f' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	
+	self assert: controller completionToken equals: 'f'.
+
+	controller context replaceTokenInEditorWith: 'bar'.
+	self assert: editor text asString equals: 'self bar baz'
+]
+
+{ #category : #'tests - keyboard' }
 CompletionEngineTest >> testCompletionOpenOnUnderscore [
 
 	"If the caret is at the end of a word, replace the entire word"
