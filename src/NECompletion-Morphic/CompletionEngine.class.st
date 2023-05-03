@@ -70,6 +70,8 @@ CompletionEngine >> completionToken [
 { #category : #replacement }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
+	self editor caret <= 1 ifTrue: [ ^ self editor caret ].
+	(self editor isWordCharacterAt: self editor caret - 1 in: self editor text) ifFalse: [^ self editor caret ].	
 	^ self editor previousWord: self editor caret
 ]
 
@@ -323,17 +325,20 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	The completion context uses this API to insert text into the text editor"
 
 	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
-	"Try to correctly replace the current token in the word.
-	The code editor should be able to do it by himself"
-	wordEnd := (self editor nextWord: self editor caret - 1).
+
+	wordStart := self completionTokenStart.
+
+	"If completionToken is not empty, the end is the end of the whole word (according to the editor)"
+	wordEnd := wordStart = editor caret
+		ifTrue: [ wordStart ]
+		ifFalse: [ self editor nextWord: self editor caret - 1].
+
 	"Do not insert an aditional space if there is already one"
 	(aString last = $  and: [
 		wordEnd <= self editor text size and: [
 			(self editor text at: wordEnd) = $ ]]) ifTrue: [ wordEnd := wordEnd + 1 ].
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
-
-	wordStart := self editor previousWord: self editor caret.
 
 	self editor
 		selectInvisiblyFrom: wordStart
