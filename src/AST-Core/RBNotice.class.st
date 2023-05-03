@@ -25,18 +25,27 @@ RBNotice >> description [
 	^ String streamContents: [ :stream |
 		  stream
 			  nextPutAll: self class name;
-			  nextPutAll: ' ';
-			  nextPutAll: (node methodNode methodClass
-					   ifNotNil: [ :class | class name ]
-					   ifNil: [ '???' ]);
-			  nextPutAll: '>>#';
-			  nextPutAll: node methodNode selector;
+			  nextPutAll: ' '.
+		  node methodNode
+			  ifNotNil: [ :methodNode |
+				  stream
+					  nextPutAll: (methodNode methodClass
+							   ifNotNil: [ :class | class name ]
+							   ifNil: [ '???' ]);
+					  nextPutAll: '>>#';
+					  nextPutAll: node methodNode selector ]
+			  ifNil: [ '???>>#???' ].
+		  stream
 			  nextPutAll: ' ';
 			  print: self position;
 			  nextPutAll: ':';
-			  nextPutAll: self messageText;
-			  nextPutAll: '->';
-			  nextPutAll: (node sourceCode asString withBlanksCondensed truncateWithElipsisTo: 60) ]
+			  nextPutAll: self messageText.
+		  node methodNode ifNotNil: [
+			  stream
+				  nextPutAll: '->';
+				  nextPutAll:
+					  (node sourceCode asString withBlanksCondensed
+						   truncateWithElipsisTo: 60) ] ]
 ]
 
 { #category : #'error handling' }

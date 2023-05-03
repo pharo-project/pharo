@@ -133,13 +133,6 @@ RBPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 	^ node
 ]
 
-{ #category : #private }
-RBPatternParser >> patchLiteralArrayToken [
-	(currentToken isIdentifier and: [currentToken isPatternVariable])
-		ifTrue: [^self].
-	super patchLiteralArrayToken
-]
-
 { #category : #'private - classes' }
 RBPatternParser >> pragmaNodeClass [
 	^RBPatternPragmaNode
