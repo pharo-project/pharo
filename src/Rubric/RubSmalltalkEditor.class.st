@@ -139,7 +139,7 @@ RubSmalltalkEditor >> atCompletionPosition [
 	| cursorPosition |
 	cursorPosition := self startIndex.
 	cursorPosition < 2 ifTrue: [ ^ false ].
-	^ (self text at: cursorPosition - 1) isCompletionCharacter
+	^ (self lineIndentationStart: cursorPosition) < cursorPosition
 ]
 
 { #category : #'do-its' }
