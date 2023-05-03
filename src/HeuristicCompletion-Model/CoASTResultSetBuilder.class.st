@@ -72,7 +72,7 @@ CoASTResultSetBuilder >> parseNode [
 		(completionContext completionClass compiler
 			source: completionContext source;
 			isScripting: completionContext isScripting;
-			parse) nodeForOffset: completionContext position ]
+			parse) nodeBeforeOffset: completionContext position ]
 ]
 
 { #category : #visiting }
