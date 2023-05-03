@@ -973,9 +973,9 @@ RBProgramNode >> nodeBeforeOffset: anInteger [
 	| offset |
 	offset := anInteger.
 	[
-	offset > self source size or: [ (self source at: offset) isSeparator ] ]
+	offset > 0 and: [ offset > self source size or: [ (self source at: offset) isSeparator ] ] ]
 		whileTrue: [ offset := offset - 1 ].
-	^ self nodeForOffset: offset
+	^ self nodeForOffset: offset.
 ]
 
 { #category : #'node access' }
