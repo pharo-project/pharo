@@ -143,7 +143,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'v1.2.1'
+		version: 'v1.2.2'
 ]
 
 { #category : #'repository urls' }
@@ -195,5 +195,5 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 
 	"Load the WelcomeBrowser as last step"
 	(self class environment classNamed: #StWelcomeBrowser)
-		ifNotNil: [ :aClass | aClass open ]
+		ifNotNil: [ :aClass | aClass openForRelease ]
 ]
