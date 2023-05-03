@@ -54,8 +54,11 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRaisesClassRepackaged
 
 	| XPackage YPackage class ann |
 	ann := nil.
-	SystemAnnouncer uniqueInstance weak when: ClassRepackaged do: [ :a | ann := a ].
-
+	SystemAnnouncer uniqueInstance
+		when: ClassRepackaged do: [ :a |
+			ann := a.
+		] for: self.
+	
 	self addXCategory.
 	self addYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.

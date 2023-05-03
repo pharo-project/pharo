@@ -811,8 +811,8 @@ RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
 		 - but not by an assignment "
 		(character = $_) or: [
 			(character = $:) and: [
-				aString size > index
-					and: [  (aString at: index + 1) ~= $= ] ] ] ]
+				aString size = index
+					or: [  (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : #'menu messages' }
