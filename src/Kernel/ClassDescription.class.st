@@ -91,7 +91,7 @@ ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 	self instanceSide noteAddedSelector: selector meta: self isMeta.
 
 	(self organization protocolOfSelector: selector) ifNil: [
-		Stdio stdout nextPutAll: 'Uncategorized selector "' , selector , '"" added in "' , self name , '". Stack: ' , thisContext shortStack ]
+		Stdio stdout nextPutAll: 'Uncategorized selector "' , selector , '"" added in "' , self name , '".'; lf ]
 ]
 
 { #category : #'instance variables' }
