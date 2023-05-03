@@ -68,11 +68,13 @@ CoASTResultSetBuilder >> node: aNode [
 { #category : #'API - building' }
 CoASTResultSetBuilder >> parseNode [
 
+	| n |
 	^ node ifNil: [
-		(completionContext completionClass compiler
+		n := completionContext completionClass compiler
 			source: completionContext source;
 			isScripting: completionContext isScripting;
-			parse) nodeBeforeOffset: completionContext position ]
+			parse.
+		(n nodeBeforeOffset: completionContext position) ifNil: [ n ] ]
 ]
 
 { #category : #visiting }
