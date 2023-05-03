@@ -4479,7 +4479,11 @@ Morph >> okayToRotateEasily [
 
 { #category : #announcements }
 Morph >> onAnnouncement: anAnnouncement do: aValuable [
-	self announcer when: anAnnouncement do: aValuable
+
+	self announcer
+		when: anAnnouncement
+		do: aValuable
+		for: aValuable receiver
 ]
 
 { #category : #announcements }
