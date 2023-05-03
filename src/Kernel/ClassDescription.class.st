@@ -86,8 +86,12 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	super addSelectorSilently: selector withMethod: compiledMethod.
-	self instanceSide noteAddedSelector: selector meta: self isMeta
+	self instanceSide noteAddedSelector: selector meta: self isMeta.
+
+	(self organization protocolOfSelector: selector) ifNil: [
+		Stdio stdout nextPutAll: 'Uncategorized selector "' , selector , '"" added in "' , self name , '". Stack: ' , thisContext shortStack ]
 ]
 
 { #category : #'instance variables' }
