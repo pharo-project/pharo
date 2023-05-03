@@ -106,6 +106,12 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
+{ #category : #'extra worlds' }
+WorldMorph class >> extraWorldListMutex [
+
+	^ ExtraWorldListMutex
+]
+
 { #category : #'class initialization' }
 WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion
