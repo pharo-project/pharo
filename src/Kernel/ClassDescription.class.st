@@ -75,13 +75,18 @@ ClassDescription >> addMethodTag: aSymbol [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
+
 	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [nil].
-	oldProtocol := priorMethodOrNil ifNotNil: [ priorMethodOrNil protocol ].
+	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
+	oldProtocol := self organization protocolOfSelector: selector.
+
+	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
+	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: nil ] ].
+
 	self addSelectorSilently: selector withMethod: compiledMethod.
 	priorMethodOrNil
-		ifNil: [SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
 ]
 
 { #category : #'accessing - method dictionary' }
