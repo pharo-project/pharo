@@ -22,6 +22,38 @@ RubTextEditorTest >> setUp [
 ]
 
 { #category : #tests }
+RubTextEditorTest >> testLineIndentationStart [
+
+	| starts |
+	string := 'foo<r>  a b<r><t><t>a<t>b<r><r><r> <t><r> ' expandMacros.
+	editor textArea privateText: string.
+	self assert: editor string equals: string.
+
+	starts := (1 to: string size + 1) collect: [ :i |
+		          editor lineIndentationStart: i ].
+	self
+		assert: starts
+		equals:
+		#( 1 1 1 1 7 7 7 7 7 7 13 13 13 13 13 13 17 18 21 21 21 23 23 )
+]
+
+{ #category : #tests }
+RubTextEditorTest >> testLineStart [
+
+	| starts |
+	string := 'foo<r>  a b<r><t><t>a<t>b<r><r><r> <t><r> ' expandMacros.
+	editor textArea privateText: string.
+	self assert: editor string equals: string.
+
+	starts := (1 to: string size + 1) collect: [ :i |
+		          editor lineStart: i ].
+	self
+		assert: starts
+		equals:
+		#( 1 1 1 1 5 5 5 5 5 5 11 11 11 11 11 11 17 18 19 19 19 22 22 )
+]
+
+{ #category : #tests }
 RubTextEditorTest >> testNextWord [
 
 	| textSize |
