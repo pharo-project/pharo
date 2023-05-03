@@ -46,23 +46,14 @@ ClassOrganization >> allMethodSelectors [
 { #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
-	| oldProtocol protocolName |
-	"The next section deserve more cleanings.
-	
-	Some code was added to make it possible to classify giving a real protocol.
-	Here to keep a small change, I just ask the name to the protocol and use that for compatibility.
-	Later, I plan to update this code once more to directly use the actual object I'm givin instead of doing this little trick."
-	protocolName := aProtocol
-		                ifNil: [ Protocol unclassified ]
-		                ifNotNil: [
-			                aProtocol isString
-				                ifTrue: [ aProtocol ]
-				                ifFalse: [ aProtocol name ] ].
+	| oldProtocol newProtocol |
+	newProtocol := self ensureProtocol: aProtocol.
 	oldProtocol := self protocolOfSelector: selector.
-	(oldProtocol isNotNil and: [ oldProtocol name = protocolName ]) ifTrue: [ ^ self ].
+	"Ideally we should not rely on this #includesSelector: because it should be equivalent to oldProtocol been nil. But until we clean all protocol hacks in the system, we need to keep this."
+	((self includesSelector: selector) and: [ oldProtocol = newProtocol ]) ifTrue: [ ^ self ].
 
-	self silentlyClassify: selector under: protocolName.
-	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: protocolName ]
+	self silentlyClassify: selector under: newProtocol.
+	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #cleanup }

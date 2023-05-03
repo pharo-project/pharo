@@ -202,8 +202,8 @@ CompiledMethod class >> subclassResponsibilityMarker [
 
 { #category : #constants }
 CompiledMethod class >> trailerSize [
-	"we use the last 4 byte to store the source pointer, this allows for 2GB .sources/.changes"
-	^ 4
+	"we use the last 5 byte to store the source pointer"
+	^ 5
 ]
 
 { #category : #queries }
