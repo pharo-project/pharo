@@ -16,7 +16,6 @@ Class {
 	#name : #CompilationContext,
 	#superclass : #Object,
 	#instVars : [
-		'requestor',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -469,17 +468,6 @@ CompilationContext >> initialize [
 ]
 
 { #category : #accessing }
-CompilationContext >> interactive [
-
-	requestor ifNil: [ ^ false ].
-	"we asume requestors are interactive, but they can override.
-	this should be simplified "
-	^ (requestor respondsTo: #interactive)
-		  ifTrue: [ requestor interactive ]
-		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
 CompilationContext >> noPattern [
 	^semanticScope isDoItScope
 ]
@@ -605,16 +593,6 @@ CompilationContext >> productionEnvironment [
 { #category : #accessing }
 CompilationContext >> productionEnvironment: aDictionary [
 	productionEnvironment := aDictionary
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor: anObject [
-	requestor := anObject
 ]
 
 { #category : #accessing }

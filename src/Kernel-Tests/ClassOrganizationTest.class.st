@@ -85,6 +85,39 @@ ClassOrganizationTest >> testClassifyUnder [
 ]
 
 { #category : #tests }
+ClassOrganizationTest >> testClassifyUnderUnclassified [
+	"Ensure unclassified is acting as any other protocol because that was not the case in the past."
+
+	"Set the base for the test"
+	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
+
+	"Lets create a new protocol via classification"
+	self organization classify: #king under: Protocol unclassified.
+	self organization classify: #luz under: Protocol unclassified.
+
+	self assertCollection: self organization protocolNames hasSameElements: {#empty. #one. Protocol unclassified }.
+	self assertCollection: (self organization protocolNamed: Protocol unclassified) methodSelectors hasSameElements: #( #king #luz ).
+	
+	"This should do nothing."
+	self organization classify: #luz under: Protocol unclassified.
+
+	self assertCollection: self organization protocolNames hasSameElements: {#empty. #one. Protocol unclassified }.
+	self assertCollection: (self organization protocolNamed: Protocol unclassified) methodSelectors hasSameElements: #( #king #luz ).
+
+	"Now we move a method from unclassified to another protocol."
+	self organization classify: #luz under: #one.
+
+	self assertCollection: self organization protocolNames hasSameElements: {#empty. #one. Protocol unclassified }.
+	self assertCollection: (self organization protocolNamed: Protocol unclassified) methodSelectors hasSameElements: #( #king ).
+	
+	"Now we move back to unclassified."
+	self organization classify: #luz under: Protocol unclassified.
+
+	self assertCollection: self organization protocolNames hasSameElements: {#empty. #one. Protocol unclassified }.
+	self assertCollection: (self organization protocolNamed: Protocol unclassified) methodSelectors hasSameElements: #( #king #luz )
+]
+
+{ #category : #tests }
 ClassOrganizationTest >> testClassifyUnderWithNil [
 	"Set the base for the test"
 	| unclassified|

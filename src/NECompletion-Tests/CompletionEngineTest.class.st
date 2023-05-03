@@ -123,6 +123,44 @@ CompletionEngineTest >> tearDown [
 ]
 
 { #category : #'tests - keyboard' }
+CompletionEngineTest >> testCompletionOnFirstLetter [
+
+	| text |
+	text := 'self foo baz'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self f' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	
+	self assert: controller completionToken equals: 'f'.
+
+	controller context replaceTokenInEditorWith: 'bar'.
+	self assert: editor text asString equals: 'self bar baz'
+]
+
+{ #category : #'tests - keyboard' }
+CompletionEngineTest >> testCompletionOnSingleLetter [
+
+	| text |
+	text := 'self f baz'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self f' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	
+	self assert: controller completionToken equals: 'f'.
+
+	controller context replaceTokenInEditorWith: 'bar'.
+	self assert: editor text asString equals: 'self bar baz'
+]
+
+{ #category : #'tests - keyboard' }
 CompletionEngineTest >> testCompletionOpenOnUnderscore [
 
 	"If the caret is at the end of a word, replace the entire word"
@@ -283,6 +321,26 @@ CompletionEngineTest >> testReplaceTokenAfterMovingCaretToMiddleOfWordWithFollow
 	self assert: editor text equals: 'self toto something that follows'
 ]
 
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceTokenWithAditionalSpace [
+
+	"If the caret is at the end of a word, replace the entire word"
+
+	| text |
+	text := 'self mEthOdThatDoesNotExist something that follows'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto '.
+
+	self assert: editor text equals: 'self toto something that follows'
+]
+
 { #category : #tests }
 CompletionEngineTest >> testReplaceTokenWithCaretBeforeEndOfTextWithSpecialCharacterReplacesEntireWord [
 
@@ -341,6 +399,25 @@ CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingW
 	controller context replaceTokenInEditorWith: 'toto'.
 
 	self assert: editor text asString equals: 'self toto something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord2 [
+
+	| text |
+	text := 'self foo something that follows'.
+
+	self
+		setEditorText: text;
+		selectAt: 'self foo' size + 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+
+	controller context replaceTokenInEditorWith: 'aLongString'.
+
+	self assert: editor text asString equals: 'self aLongString something that follows'
 ]
 
 { #category : #'tests - interaction' }

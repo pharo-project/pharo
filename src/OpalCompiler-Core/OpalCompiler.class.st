@@ -38,7 +38,8 @@ Class {
 		'failBlock',
 		'logged',
 		'changeStamp',
-		'protocol'
+		'protocol',
+		'requestor'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -299,13 +300,13 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self compilationContext requestor ifNotNil: [ :requestor |
+	self requestor ifNotNil: [
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		self compilationContext interactive ifTrue: [
+		self isInteractive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -579,14 +580,27 @@ OpalCompiler >> install: aSource [
 	^ self install
 ]
 
+{ #category : #testing }
+OpalCompiler >> isInteractive [
+
+	self requestor ifNil: [ ^ false ].
+	"we asume requestors are interactive, but they can override.
+	this should be simplified "
+	^ (self requestor respondsTo: #interactive)
+		  ifTrue: [ self requestor interactive ]
+		  ifFalse: [ true ]
+]
+
 { #category : #accessing }
 OpalCompiler >> isScripting [
-	^ self compilationContext noPattern
+	^ self semanticScope isDoItScope
 ]
 
 { #category : #accessing }
 OpalCompiler >> isScripting: aBoolean [
-	self compilationContext noPattern: aBoolean
+
+	(aBoolean and: [ self isScripting not ]) ifTrue: [
+		self semanticScope: OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #accessing }
@@ -640,7 +654,7 @@ OpalCompiler >> parse [
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
-	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
+	ast := self isScripting ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self doSemanticAnalysis.
@@ -745,12 +759,12 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor [
-	^ self compilationContext requestor
+	^ requestor
 ]
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
-	self compilationContext requestor: aRequestor
+	requestor := aRequestor
 ]
 
 { #category : #plugins }

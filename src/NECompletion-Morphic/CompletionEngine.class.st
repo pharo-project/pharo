@@ -70,7 +70,7 @@ CompletionEngine >> completionToken [
 { #category : #replacement }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
-	^ self editor previousWord: self editor caret - 1
+	^ self editor previousWord: self editor caret
 ]
 
 { #category : #accessing }
@@ -322,27 +322,25 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart rest |
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
 	"Try to correctly replace the current token in the word.
 	The code editor should be able to do it by himself"
 	wordEnd := (self editor nextWord: self editor caret - 1).
+	"Do not insert an aditional space if there is already one"
+	(aString last = $  and: [
+		wordEnd <= self editor text size and: [
+			(self editor text at: wordEnd) = $ ]]) ifTrue: [ wordEnd := wordEnd + 1 ].
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
 
-	wordStart := self editor previousWord: (self editor caret - 1).
+	wordStart := self editor previousWord: self editor caret.
 
 	self editor
 		selectInvisiblyFrom: wordStart
 		to: wordEnd - 1.
 	old := self editor selection.
 
-	( old size >= aString size )
-		ifTrue:[
-				self editor replaceSelectionWith: aString. ]
-		ifFalse: [
-				self editor selectInvisiblyFrom: wordEnd	to: wordEnd - 1.
-				rest := aString asString copyFrom: old size + 1 to: aString size.
-				self editor replaceSelectionWith: rest ].
+	self editor replaceSelectionWith: aString.
 
 	offset := NECPreferences spaceAfterCompletion
 		ifTrue: [ 1 ]

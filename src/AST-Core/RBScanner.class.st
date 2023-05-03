@@ -32,7 +32,8 @@ Class {
 		'characterType',
 		'classificationTable',
 		'comments',
-		'nextToken'
+		'nextToken',
+		'state'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -221,19 +222,19 @@ RBScanner >> isSelector [
 RBScanner >> isSelectorNonBinary [
 	<script: '(ZnEasy getPng: ''http://www.plantuml.com/plantuml/png/RO-n2i8m48RtUugRXRn0XzBg98wEuX2R4mlNHE8LwTkRL4Xxa2cNx_z2_ki-OgFC4mF8A4nu9QP1GeJRuOx6j7WSlOqBDlXOXy9xVhzipy5Joco-m0vfeoQuP9n2cjFp8PygRJ7_qo259m2ide8REliBBTyGNQa16p9LGUUw1C1_uThk9TBrEl9kdlW7'') inspect'>
 
-	| state |
-	state := #alphaAlone.
+	| aState |
+	aState := #alphaAlone.
 	[ characterType = #alphabetic ]
-		whileTrue: [ state = #colon
-				ifTrue: [ state := #inKeyword ].
+		whileTrue: [ aState = #colon
+				ifTrue: [ aState := #inKeyword ].
 			self scanName.
 			characterType = #eof
-				ifTrue: [ ^ state = #alphaAlone ].
+				ifTrue: [ ^ aState = #alphaAlone ].
 			currentCharacter = $:
-				ifTrue: [ state := #colon.
+				ifTrue: [ aState := #colon.
 					self step ] ].
 	characterType = #eof
-		ifTrue: [ ^ state = #colon ].
+		ifTrue: [ ^ aState = #colon ].
 	^ false
 
 	"Diagram by:
@@ -598,11 +599,17 @@ RBScanner >> scanToken [
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
 	characterType = #eof ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
-	characterType = #alphabetic ifTrue: [^self scanIdentifierOrKeyword].
+	characterType = #alphabetic ifTrue: [
+		^ state = #literalArray
+			ifTrue: [self scanSymbolOrNamedLiteral]
+			ifFalse: [self scanIdentifierOrKeyword]].
 	(characterType = #digit
 		or: [currentCharacter = $- and: [(self classify: stream peek) = #digit]])
 			ifTrue: [^self scanNumber].
-	characterType = #binary ifTrue: [^self scanBinarySelector].
+	characterType = #binary ifTrue: [
+		^ state = #literalArray
+			ifTrue: [ self scanLiteralBinary]
+			ifFalse: [ self scanBinarySelector]].
 	characterType = #special ifTrue: [^self scanSpecialCharacter].
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
@@ -619,6 +626,18 @@ RBScanner >> scanUnknownCharacter [
 	errorToken := self scanError: 'Unknown character'.
 	errorToken location: tokenStart. "Unlike other scanner errors, error location is here before the bad token"
 	^ errorToken
+]
+
+{ #category : #accessing }
+RBScanner >> state [
+
+	^ state
+]
+
+{ #category : #accessing }
+RBScanner >> state: anObject [
+
+	state := anObject
 ]
 
 { #category : #private }
