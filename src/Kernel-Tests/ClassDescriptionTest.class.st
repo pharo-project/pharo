@@ -83,9 +83,7 @@ ClassDescriptionTest >> testDefinesSlotNamed [
 ClassDescriptionTest >> testDeprecatedAliases [
 
 	| class systemDictionary |
-	class := ((Object << #TemporaryMockClass)
-		          slots: {  };
-		          package: self compilationTestPackageName) install.
+	class := (Object << #TemporaryMockClass package: self compilationTestPackageName) install.
 	systemDictionary := class environment.
 
 	class deprecatedAliases: #( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ).
@@ -106,9 +104,7 @@ ClassDescriptionTest >> testDeprecatedAliases [
 ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemoval [
 
 	| class systemDictionary |
-	class := ((Object << #TemporaryMockClass)
-		          slots: {  };
-		          package: self compilationTestPackageName) install.
+	class := (Object << #TemporaryMockClass package: self compilationTestPackageName) install.
 	systemDictionary := class environment.
 
 	class deprecatedAliases: #( #TemporaryMockClassDeprecated #DeprecatedTemporaryMockClass ).
@@ -125,12 +121,32 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemoval [
 ]
 
 { #category : #'tests - slots' }
-ClassDescriptionTest >> testDeprecatedAliasesOnExistingNames [
+ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemovalSpecialCase [
 
 	| class systemDictionary |
 	class := ((Object << #TemporaryMockClass)
 		          slots: {  };
 		          package: self compilationTestPackageName) install.
+	systemDictionary := class environment.
+
+	class deprecatedAliases: #( #TemporaryMockClass2 ).
+
+	self assert: (systemDictionary includesKey: class name).
+	self assert: (systemDictionary includesKey: #TemporaryMockClass2).
+	
+	"Here is the trick, if someone change the global variable then we should not remove it with the class removal"
+	systemDictionary at: #TemporaryMockClass2 put: 1.
+	class removeFromSystem.
+
+	self deny: (systemDictionary includesKey: class name).
+	self assert: (systemDictionary includesKey: #TemporaryMockClass2)
+]
+
+{ #category : #'tests - slots' }
+ClassDescriptionTest >> testDeprecatedAliasesOnExistingNames [
+
+	| class systemDictionary |
+	class := (Object << #TemporaryMockClass package: self compilationTestPackageName) install.
 	"Create a second class to register its name in the globals."
 	(Object << #TemporaryMockClass2 package: self compilationTestPackageName) install.
 	systemDictionary := class environment.
