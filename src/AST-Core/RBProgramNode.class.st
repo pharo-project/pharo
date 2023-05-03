@@ -966,6 +966,19 @@ RBProgramNode >> newSource [
 ]
 
 { #category : #'node access' }
+RBProgramNode >> nodeBeforeOffset: anInteger [
+	"Return the node at offset `anInteger` or at the first non-separator previous character.
+	Ignoring space corresponds to what is the visible current or previous node in IDE."
+
+	| offset |
+	offset := anInteger.
+	[
+	offset > self source size or: [ (self source at: offset) isSeparator ] ]
+		whileTrue: [ offset := offset - 1 ].
+	^ self nodeForOffset: offset
+]
+
+{ #category : #'node access' }
 RBProgramNode >> nodeForOffset: anInteger [
 	"Choose the best node on the specific offset, including comments.
 	Because comments can be oustide the span of sourceInterval, we have to visit all children.
