@@ -76,6 +76,12 @@ CoASTResultSetBuilder >> parseNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+
+	^ self visitValueNode: aRBAnnotationMarkNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
 
 	^ self visitVariableNode: anArgumentNode
