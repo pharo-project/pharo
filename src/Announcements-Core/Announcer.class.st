@@ -88,22 +88,17 @@ Announcer >> weak [
 	^ WeakSubscriptionBuilder on: self
 ]
 
-{ #category : #'registration api' }
-Announcer >> when: anAnnouncementClass do: aValuable [
-	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that such method as well as #when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
-
-	^ registry add: (
-		AnnouncementSubscription new
-			announcer: self;
-			announcementClass: anAnnouncementClass;
-			valuable: aValuable)
-]
-
 { #category : #subscription }
 Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
-	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber."
+	"Subscribe aSubscriber to announcements of anAnnouncementClass class. 
+	 When the announcement is raised, aValuable is executed."
 
-    ^ (self when: anAnnouncementClass do: aValuable) subscriber: aSubscriber; yourself
+	^ registry add: (AnnouncementSubscription new
+			   announcer: self;
+			   announcementClass: anAnnouncementClass;
+			   action: aValuable;
+			   subscriber: aSubscriber;
+			   yourself)
 ]
 
 { #category : #'registration api' }
@@ -116,4 +111,5 @@ Announcer >> when: anAnnouncementClass send: aSelector to: anObject [
 	^ self
 		when: anAnnouncementClass
 		do: (MessageSend receiver: anObject selector: aSelector)
+		for: anObject
 ]

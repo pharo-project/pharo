@@ -171,7 +171,7 @@ EDDebuggingAPI >> revert: aCompiledMethod to: aChangeRecord [
 
 	aCompiledMethod methodClass
 		compile: aChangeRecord sourceCode
-		classified: aChangeRecord category
+		classified: aChangeRecord protocol
 		withStamp: aChangeRecord stamp
 		notifying: nil
 ]

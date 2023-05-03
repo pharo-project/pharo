@@ -32,9 +32,9 @@ ClassOrganization >> categoryOfElement: aSelector [
 ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self
-		deprecated: 'Use #protocolNameOfElement:ifAbsent: instead.'
-		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '`@rcv protocolNameOfElement: `@arg1 ifAbsent: `@arg2'.
-	^ self protocolNameOfElement: aSelector ifAbsent: aBlock
+		deprecated: 'Use #protocolNameOfElement: instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfElement: `@arg1) ifNil: `@arg2'.
+	^ (self protocolNameOfElement: aSelector) ifNil: aBlock
 ]
 
 { #category : #'*Deprecated12' }
@@ -168,18 +168,18 @@ ClassOrganization >> removeProtocolNamed: protocolName [
 ClassOrganization >> renameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #renameProtocolNamed:toBe: instead.'
-		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
-	self renameProtocolNamed: oldName toBe: newName
+		deprecated: 'Use #renameProtocol:as: instead.'
+		transformWith: '`@rcv renameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 as: `@arg2'.
+	self renameProtocol: oldName as: newName
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
 
 	self
-		deprecated: 'Use #renameProtocolNamed:toBe: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
-		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocolNamed: `@arg1 toBe: `@arg2'.
-	self renameProtocolNamed: oldName toBe: newName
+		deprecated: 'Use #renameProtocol:as: instead. Since Pharo12 it is not possible to not announce a protocol rename anymore because we should always announce those changes.'
+		transformWith: '`@rcv silentlyRenameCategory: `@arg1 toBe: `@arg2' -> '`@rcv renameProtocol: `@arg1 as: `@arg2'.
+	self renameProtocol: oldName as: newName
 ]
 
 { #category : #'*Deprecated12' }
