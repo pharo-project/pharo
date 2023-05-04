@@ -17,12 +17,6 @@ ClassOrganizationTest >> organization [
 ]
 
 { #category : #running }
-ClassOrganizationTest >> runCase [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ super runCase ]
-]
-
-{ #category : #running }
 ClassOrganizationTest >> setUp [
 
 	super setUp.
