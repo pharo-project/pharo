@@ -4,8 +4,18 @@ I am a test case specialized in checking that the announcements linked to protoc
 Class {
 	#name : #ProtocolAnnouncementsTest,
 	#superclass : #ProtocolTest,
+	#instVars : [
+		'numberOfAnnouncements'
+	],
 	#category : #'Kernel-Tests-Protocols'
 }
+
+{ #category : #running }
+ProtocolAnnouncementsTest >> setUp [
+
+	super setUp.
+	numberOfAnnouncements := 0
+]
 
 { #category : #running }
 ProtocolAnnouncementsTest >> tearDown [
@@ -17,15 +27,23 @@ ProtocolAnnouncementsTest >> tearDown [
 { #category : #tests }
 ProtocolAnnouncementsTest >> testAddProtocolAnnouncement [
 
-	| gotAnnouncement |
-	gotAnnouncement := false.
-	SystemAnnouncer uniqueInstance
-		when: ProtocolAdded
-		do: [ :ann |
-			gotAnnouncement := true.
-			self assert: ann protocol name equals: #king.
-			self assert: ann classReorganized name equals: self classNameForTests ]
-		for: self.
+	self when: ProtocolAdded do: [ :ann |
+		self assert: ann protocol name equals: #king.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
 	organization addProtocol: #king.
-	self assert: gotAnnouncement
+	self assert: numberOfAnnouncements equals: 2
+]
+
+{ #category : #helpers }
+ProtocolAnnouncementsTest >> when: anAnnouncement do: aBlock [
+
+	SystemAnnouncer uniqueInstance
+		when: anAnnouncement
+		do: [ :ann |
+			numberOfAnnouncements := numberOfAnnouncements + 1.
+			aBlock cull: ann ]
+		for: self
 ]

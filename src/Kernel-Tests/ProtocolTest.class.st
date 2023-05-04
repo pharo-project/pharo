@@ -8,7 +8,7 @@ Class {
 	#category : #'Kernel-Tests-Protocols'
 }
 
-{ #category : #running }
+{ #category : #helpers }
 ProtocolTest >> classNameForTests [
 
 	^ #ClassForTests
