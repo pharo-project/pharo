@@ -489,6 +489,12 @@ Class >> commentStamp [
 		  ifNotNil: [:sourcePointer | SourceFiles commentTimeStampAt: sourcePointer ]
 ]
 
+{ #category : #'accessing - comment' }
+Class >> commentStamp: changeStamp [
+	"update the changeStamp"
+	self comment: self comment stamp: changeStamp
+]
+
 { #category : #'accessing - class hierarchy' }
 Class >> commonSuperclassWith: aClass [
 	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"

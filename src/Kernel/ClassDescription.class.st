@@ -256,12 +256,6 @@ ClassDescription >> classVariablesString [
 	^ String streamContents: [ :stream | self classVariablesOn: stream ]
 ]
 
-{ #category : #'file in/out' }
-ClassDescription >> commentStamp: changeStamp [
-	"update the changeStamp"
-	self comment: self instanceSide comment stamp: changeStamp
-]
-
 { #category : #compiling }
 ClassDescription >> compile: sourceCode classified: protocol [
 	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).

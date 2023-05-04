@@ -155,6 +155,11 @@ Metaclass >> commentStamp [
 	^ self instanceSide commentStamp
 ]
 
+{ #category : #'accessing - comment' }
+Metaclass >> commentStamp: changeStamp [
+	self instanceSide commentStamp: changeStamp
+]
+
 { #category : #fileout }
 Metaclass >> definitionStringFor: aConfiguredPrinter [
 
