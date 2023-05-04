@@ -461,7 +461,7 @@ Class >> comment [
 Class >> comment: aStringOrText [
 	"Set the receiver's comment to be the argument, aStringOrText."
 
-	self instanceSide classComment: aStringOrText
+	self classComment: aStringOrText
 ]
 
 { #category : #'accessing - comment' }
