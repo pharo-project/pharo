@@ -117,7 +117,7 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
 { #category : #private }
 OSWorldRenderer >> doActivate [
-	| attributes initialExtent |
+	| initialExtent |
 
 	initialExtent := world worldState realWindowExtent ifNil: [976@665].
 

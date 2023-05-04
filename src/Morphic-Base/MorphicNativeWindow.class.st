@@ -144,7 +144,7 @@ MorphicNativeWindow >> ensureDoDelete [
 
 	self isOpen ifFalse: [ ^ self ].
 
-	"osWindow destroy ."
+	osWindow destroy .
 	window delete.
 	
 

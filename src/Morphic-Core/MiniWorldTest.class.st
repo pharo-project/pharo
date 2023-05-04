@@ -20,7 +20,7 @@ MiniWorldTest >> setUp [
 	
 ]
 
-{ #category : #tests }
+{ #category : #running }
 MiniWorldTest >> tearDown [ 
 
 	manager ensureDeleteAll.
