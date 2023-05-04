@@ -103,7 +103,7 @@ MorphicWindowManager >> ensureDeleteAll [
 	taskBarWindow ensureDelete 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 MorphicWindowManager >> initialize [
 
 	windows := OrderedCollection new.

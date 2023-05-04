@@ -21,7 +21,7 @@ AbstractWindowManagerTest >> setUp [
 	
 ]
 
-{ #category : #tests }
+{ #category : #running }
 AbstractWindowManagerTest >> tearDown [ 
 
 	manager ensureDeleteAll.
