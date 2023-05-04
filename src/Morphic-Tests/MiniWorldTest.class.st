@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'manager'
 	],
-	#category : #'Morphic-Core-Tests'
+	#category : #'Morphic-Tests'
 }
 
 { #category : #running }

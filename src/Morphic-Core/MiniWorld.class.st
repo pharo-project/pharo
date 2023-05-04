@@ -312,20 +312,6 @@ MiniWorld >> modalUnlockFrom: aSystemWindow [
 ]
 
 { #category : #'API - opening' }
-MiniWorld >> open [
-
-	| worldRenderer |
-	worldRenderer := OSWorldRenderer forWorld: self.
-	worldRenderer windowCloseAction: [ self worldRenderer deactivate ].
-	worldState activeHand: (self addHand: HandMorph new).
-	WorldMorph addExtraWorld: self.
-	worldRenderer osWindow announcer weak
-		when: DeleteWindowByCrossAnnouncement
-		send: #deleteByCross
-		to: self
-]
-
-{ #category : #'API - opening' }
 MiniWorld >> openInWindow: aMorph [
 
 	manager ifNotNil: [
@@ -334,7 +320,7 @@ MiniWorld >> openInWindow: aMorph [
 	aMorph openInExternalWindow
 ]
 
-{ #category : #'API - opening' }
+{ #category : #opening }
 MiniWorld >> openModal: aSystemWindow [
 	"Open the given window locking the receiver until it is dismissed.
 	Answer the system window.
@@ -347,23 +333,6 @@ MiniWorld >> openModal: aSystemWindow [
 		self modalUnlockFrom: aSystemWindow.
 		self activeHand newKeyboardFocus: keyboardFocus ].
 	^ aSystemWindow
-]
-
-{ #category : #'API - opening' }
-MiniWorld >> openWithAttributes: aAttributes [
-
-	| worldRenderer |
-	worldRenderer := OSWorldRenderer
-		                 forWorld: self
-		                 withAttributs: aAttributes.
-	self worldState worldRenderer:
-		(worldRenderer windowCloseAction: [ self worldRenderer deactivate ]).
-	worldState activeHand: (self addHand: HandMorph new).
-	WorldMorph addExtraWorld: self.
-	worldRenderer osWindow announcer weak
-		when: DeleteWindowByCrossAnnouncement
-		send: #deleteByCross
-		to: self
 ]
 
 { #category : #'world state' }
