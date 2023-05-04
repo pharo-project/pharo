@@ -143,6 +143,19 @@ AnnouncerTest >> testPreparationAnnouncementDeliveryWhenNoSubscriptions [
 ]
 
 { #category : #'tests - subscribing' }
+AnnouncerTest >> testPreventDuring [
+
+	| announcement instance |
+	announcer when: AnnouncementMockA do: [ self fail ] for: self.
+	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ] for: self.
+
+	announcer prevent: AnnouncementMockA during: [
+		announcer announce: AnnouncementMockA.
+		instance := announcer announce: AnnouncementMockB ].
+	self assert: announcement equals: instance
+]
+
+{ #category : #'tests - subscribing' }
 AnnouncerTest >> testSubscribeBlock [
 	| announcement instance |
 	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ] for: self.
