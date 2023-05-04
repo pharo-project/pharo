@@ -12,8 +12,7 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'organization',
-		'commentSourcePointer'
+		'organization'
 	],
 	#category : #'Kernel-Classes'
 }

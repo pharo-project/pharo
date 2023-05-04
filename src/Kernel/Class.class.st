@@ -18,7 +18,8 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category'
+		'category',
+		'commentSourcePointer'
 	],
 	#category : #'Kernel-Classes'
 }
