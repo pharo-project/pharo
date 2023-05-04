@@ -906,13 +906,13 @@ CompiledMethod >> selector: aSelector [
 { #category : #'source code management' }
 CompiledMethod >> setSourcePointer: srcPointer [
 
-	| trailerBytes start |
+	| trailerBytes endPC |
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	
 	trailerBytes := srcPointer asByteArrayOfSize: self class trailerSize.
-	start := self endPC + 1.
-	self replaceFrom: start to: self size with: trailerBytes startingAt: 1.
+	endPC := self endPC.
+	endPC + 1 to: self size do: [:n | self at: n put: (trailerBytes at: n - endPC) ]
 ]
 
 { #category : #accessing }
@@ -937,11 +937,11 @@ CompiledMethod >> sourceCodeOrNil [
 CompiledMethod >> sourcePointer [
 	"Answer the integer which can be used to find the source file and position for this method.
 	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
-	| bytes endPC |
-	bytes := ByteArray new: self class trailerSize.
+	| trailerBytes endPC |
+	trailerBytes := ByteArray new: self class trailerSize.
 	endPC := self endPC.
-	endPC+1 to: self size do: [:n | bytes at: n-endPC put: (self at: n) ].
-	^ bytes asInteger
+	endPC+1 to: self size do: [:n | trailerBytes at: n - endPC put: (self at: n) ].
+	^ trailerBytes asInteger
 ]
 
 { #category : #'source code management' }
