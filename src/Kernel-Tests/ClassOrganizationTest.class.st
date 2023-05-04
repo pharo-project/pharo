@@ -191,6 +191,16 @@ ClassOrganizationTest >> testCopyFrom [
 ]
 
 { #category : #tests }
+ClassOrganizationTest >> testHasProtocol [
+
+	self assert: (organization hasProtocol: #one).
+	self deny: (organization hasProtocol: #two).
+
+	self assert: (organization hasProtocol: (organization protocolNamed: #one)).
+	self deny: (organization hasProtocol: (self class organization protocolNamed: #tests))
+]
+
+{ #category : #tests }
 ClassOrganizationTest >> testMethodSelectorsInProtocol [
 
 	| methods |
