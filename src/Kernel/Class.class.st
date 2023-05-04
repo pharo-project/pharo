@@ -346,7 +346,7 @@ Class >> classComment: aString stamp: aStamp [
 		writeSource: aString
 		preamble: preamble
 		onSuccess: [ :newSourcePointer |
-			self instanceSide commentSourcePointer: newSourcePointer]
+			self commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 
 	SystemAnnouncer uniqueInstance
