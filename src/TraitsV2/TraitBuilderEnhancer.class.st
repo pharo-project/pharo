@@ -35,8 +35,8 @@ TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
 	"we need to remove the categories leftover after removing Traits"
 
-	aBuilder newClass organization cleanUpProtocolsForClass: aBuilder newClass.
-	aBuilder newClass class organization cleanUpProtocolsForClass: aBuilder newClass class.
+	aBuilder newClass organization removeUnexistingSelectorsFromProtocols.
+	aBuilder newClass class organization removeUnexistingSelectorsFromProtocols.
 
 	(self isTraitedMetaclass: aBuilder) ifFalse: [ ^ self ].
 

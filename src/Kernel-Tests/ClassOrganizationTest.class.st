@@ -32,7 +32,7 @@ ClassOrganizationTest >> setUp [
 			         name: #ClassForTests;
 			         package: 'ClassOrganizer-Tests' ].
 
-	organization := ClassOrganization forClass: class.
+	organization := class organization.
 	organization addProtocol: 'empty'.
 	organization addProtocol: 'one'.
 	organization classify: #one under: 'one'
@@ -247,6 +247,37 @@ ClassOrganizationTest >> testRemoveProtocolIfEmpty [
 	self organization removeProtocolIfEmpty: 'empty'.
 	self assert: self organization protocolNames size equals: 1.
 	self assert: self organization protocolNames first equals: 'one'
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testRemoveUnexistingSelectorsFromProtocols [
+
+	class compiler
+		protocol: #one;
+		install: 'one 1'.
+
+	class compiler
+		protocol: #one;
+		install: 'oneBis 1'.
+
+	class compiler
+		protocol: #two;
+		install: 'two 2'.
+
+	organization removeEmptyProtocols.
+
+	self assertCollection: organization protocolNames hasSameElements: #( one two ).
+	self assertCollection: (organization protocolNamed: #one) methodSelectors hasSameElements: #( one oneBis ).
+	self assertCollection: (organization protocolNamed: #two) methodSelectors hasSameElements: #( two ).
+
+	"Now that we asserted the actual state is good, we can test the actual method."
+	class methodDict
+		removeKey: #oneBis;
+		removeKey: #two.
+	organization removeUnexistingSelectorsFromProtocols.
+
+	self assertCollection: organization protocolNames hasSameElements: #( one ).
+	self assertCollection: (organization protocolNamed: #one) methodSelectors hasSameElements: #( one )
 ]
 
 { #category : #tests }
