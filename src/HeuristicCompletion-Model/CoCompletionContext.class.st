@@ -89,6 +89,12 @@ CoCompletionContext >> completionToken [
 ]
 
 { #category : #accessing }
+CoCompletionContext >> completionTokenStart [
+
+	^ self engine completionTokenStart
+]
+
+{ #category : #accessing }
 CoCompletionContext >> doItContext [
 
 	^ engine doItContext

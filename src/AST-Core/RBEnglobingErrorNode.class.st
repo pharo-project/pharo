@@ -105,6 +105,15 @@ RBEnglobingErrorNode >> isEnglobingError [
 	^true
 ]
 
+{ #category : #replacing }
+RBEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
+
+	self contents: (contents collect: [ :each |
+			 each == aNode
+				 ifTrue: [ anotherNode ]
+				 ifFalse: [ each ] ])
+]
+
 { #category : #accessing }
 RBEnglobingErrorNode >> stop: anInterger [
 	stop := anInterger

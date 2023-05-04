@@ -144,7 +144,6 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		menuMorph showDetail.
 		^ true ].
 
-
 	({
 		 KeyboardKey left.
 		 KeyboardKey right.
