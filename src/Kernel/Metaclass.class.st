@@ -121,6 +121,25 @@ Metaclass >> classVariables [
 ]
 
 { #category : #'accessing - comment' }
+Metaclass >> comment [
+    ^ self instanceSide comment
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment: aStringOrText [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self instanceSide comment: aStringOrText
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment: aStringOrText stamp: aStamp [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self instanceSide comment: aStringOrText stamp: aStamp
+]
+
+{ #category : #'accessing - comment' }
 Metaclass >> commentSourcePointer [
 	^ self instanceSide commentSourcePointer
 ]
@@ -128,6 +147,12 @@ Metaclass >> commentSourcePointer [
 { #category : #'accessing - comment' }
 Metaclass >> commentSourcePointer: anObject [
 	^ self instanceSide commentSourcePointer: anObject
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentStamp [
+
+	^ self instanceSide commentStamp
 ]
 
 { #category : #fileout }
@@ -165,6 +190,12 @@ Metaclass >> hasClassVarNamed: aString [
 	^self instanceSide
 		ifNil: [ false ]
 		ifNotNil: [ :class | class hasClassVarNamed: aString ]
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> hasComment [
+	"Return whether this class truly has a comment other than the default"
+	^ self instanceSide hasComment
 ]
 
 { #category : #compiling }
