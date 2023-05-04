@@ -381,24 +381,24 @@ ClassOrganizationTest >> testSilentlyClassifyUnder [
 	self organization silentlyClassify: #luz under: #owl.
 
 	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
-	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz).
+	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz ).
 
 	"Move a method"
 	self organization silentlyClassify: #luz under: #one.
 	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
 	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king ).
-	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz ).
 
 	"Move last method"
 	self organization silentlyClassify: #king under: #two.
 	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #two ).
-	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz ).
 	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( #king ).
 
 	"Nothing should change if the new protocol is the same than the old one"
 	self organization silentlyClassify: #king under: #two.
 	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #two ).
-	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz).
+	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz ).
 	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( #king )
 ]
 

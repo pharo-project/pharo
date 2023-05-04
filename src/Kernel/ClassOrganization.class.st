@@ -46,13 +46,13 @@ ClassOrganization >> allMethodSelectors [
 { #category : #classification }
 ClassOrganization >> classify: selector under: aProtocol [
 
-	| oldProtocolName newProtocol |
-	newProtocol := self ensureProtocol: aProtocol.
-	oldProtocolName := self protocolNameOfElement: selector.
-	((self includesSelector: selector) and: [ oldProtocolName = newProtocol name ]) ifTrue: [ ^ self ].
+	| oldProtocol newProtocol |
+	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
 
 	self silentlyClassify: selector under: newProtocol.
-	oldProtocolName ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocolName to: newProtocol name ]
+
+	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
+	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #cleanup }
@@ -289,7 +289,6 @@ ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
 	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |
 		oldProtocol removeMethodSelector: aSelector.
 		self removeProtocolIfEmpty: oldProtocol ].
-
 
 	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]
