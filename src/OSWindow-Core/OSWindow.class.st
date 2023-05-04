@@ -46,7 +46,8 @@ Class {
 		'initialAttributes',
 		'eventHandler',
 		'currentCursor',
-		'backendWindow'
+		'backendWindow',
+		'announcer'
 	],
 	#classVars : [
 		'TraceEvents'
@@ -76,11 +77,11 @@ OSWindow class >> createWithAttributes: attributes eventHandler: eventHandler [
 
 { #category : #finalization }
 OSWindow class >> finalizeResourceData: windowHandle [
-	windowHandle destroy
+	windowHandle destroy.
 ]
 
 { #category : #'class initialization' }
-OSWindow class >> initialize [
+OSWindow class >> initialize [ 
 
 	self traceEvents: false
 ]
@@ -100,6 +101,11 @@ OSWindow class >> traceEvents: aBoolean [
 	TraceEvents := aBoolean
 ]
 
+{ #category : #'accessing - arguments' }
+OSWindow >> announcer [
+	^ announcer
+]
+
 { #category : #accessing }
 OSWindow >> backendWindow [
 	^ backendWindow
@@ -107,7 +113,7 @@ OSWindow >> backendWindow [
 
 { #category : #accessing }
 OSWindow >> borderless [
-	^ self validHandle borderless
+	^ self initialAttributes borderless: (self validHandle borderless)
 ]
 
 { #category : #accessing }
@@ -117,7 +123,7 @@ OSWindow >> borderless: aBoolean [
 
 { #category : #accessing }
 OSWindow >> bounds [
-	^ self validHandle bounds
+	^ self initialAttributes bounds: (self validHandle bounds)
 ]
 
 { #category : #accessing }
@@ -133,7 +139,7 @@ OSWindow >> captureMouse [
 { #category : #private }
 OSWindow >> checkIsValid [
 
-	(backendWindow isNil or: [ backendWindow isValid not ]) ifTrue: [ self invalidHandle ]
+	(backendWindow isNil or: [ backendWindow isValid not ]) ifTrue: [ self invalidHandle ].
 ]
 
 { #category : #'clipboard handling' }
@@ -144,15 +150,16 @@ OSWindow >> clipboardText [
 { #category : #'clipboard handling' }
 OSWindow >> clipboardText: aString [
 	^ self validHandle clipboardText: aString
+	
 ]
 
 { #category : #private }
 OSWindow >> createWindow [
 	backendWindow ifNotNil: [ self error: 'The window is already created.' ].
-
+	
 	backendWindow := initialAttributes createWindowHandleFor: self.
-	backendWindow isValid ifTrue: [
-		"Handle here points to an OSWindowHandle, its #handle message has the real
+	backendWindow isValid ifTrue: [ 
+		"Handle here points to an OSWindowHandle, its #handle message has the real 
 		 external resource. This is a bit confusing, but is better like this :)"
 		backendWindow prepareExternalResourceForAutoRelease ]
 ]
@@ -163,7 +170,7 @@ OSWindow >> deliverEvent: anEvent [
 
 	TraceEvents
 		ifTrue: [ self traceCr: anEvent ].
-	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ]
+	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
 ]
 
 { #category : #'dispatching events' }
@@ -177,9 +184,11 @@ OSWindow >> deliverGlobalEvent: aGlobalEvent [
 
 { #category : #private }
 OSWindow >> destroy [
+	announcer  announce: DeleteWindowByCrossAnnouncement .
 	self validHandle destroy.
 	backendWindow := nil.
-	eventHandler := nil
+	eventHandler := nil.
+	
 ]
 
 { #category : #accessing }
@@ -201,7 +210,7 @@ OSWindow >> eventHandler: anObject [
 
 { #category : #accessing }
 OSWindow >> extent [
-	^ self validHandle extent
+	^ self initialAttributes extent: (self validHandle extent)
 ]
 
 { #category : #accessing }
@@ -249,6 +258,18 @@ OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	self initialize
 ]
 
+{ #category : #accessing }
+OSWindow >> initialAttributes [
+
+	^ initialAttributes
+]
+
+{ #category : #initialization }
+OSWindow >> initialize [
+
+	announcer := Announcer new.
+]
+
 { #category : #private }
 OSWindow >> invalidHandle [
 	self error: 'Invalid window handle'
@@ -273,14 +294,14 @@ OSWindow >> isVisible [
 
 { #category : #'window management' }
 OSWindow >> maximize [
-
-	self validHandle maximize
+	self validHandle maximize.
+	initialAttributes maximized: true.
 ]
 
 { #category : #'window management' }
 OSWindow >> minimize [
-
-	self validHandle minimize
+	self validHandle minimize.
+	initialAttributes minimized: true.
 ]
 
 { #category : #'instance creation' }
@@ -310,7 +331,7 @@ OSWindow >> platformSpecificHandle [
 
 { #category : #accessing }
 OSWindow >> position [
-	^ self validHandle position
+	^ self initialAttributes position: (self validHandle position)
 ]
 
 { #category : #accessing }
@@ -351,7 +372,7 @@ OSWindow >> resizable: aBoolean [
 { #category : #'window management' }
 OSWindow >> restore [
 
-	self validHandle restore
+	self validHandle restore.
 ]
 
 { #category : #accessing }
@@ -367,7 +388,7 @@ OSWindow >> screenScaleFactorBaseDPI [
 { #category : #'window management' }
 OSWindow >> setDraggableArea: aRectangle [
 
-	^self validHandle setDraggableArea: aRectangle
+	^self validHandle setDraggableArea: aRectangle.
 ]
 
 { #category : #private }
@@ -433,7 +454,7 @@ OSWindow >> stopTextInput [
 
 { #category : #accessing }
 OSWindow >> title [
-	^ self validHandle title
+	^ initialAttributes title: (self validHandle title)
 ]
 
 { #category : #accessing }

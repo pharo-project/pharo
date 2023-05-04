@@ -103,10 +103,10 @@ OSWindowDriver class >> shutDown: quitting [
 
 	"clean OSWindow worlds"
 	WorldMorph extraWorldList copy
-		select: [ :each | each isKindOf: OSWindowWorldMorph ]
+		select: [ :each | each isKindOf: MiniWorld  ]
 		thenDo: [ :each | WorldMorph removeExtraWorld: each ].
 	"Clean also active world"
-	(ActiveWorld isKindOf: OSWindowWorldMorph)
+	(ActiveWorld isKindOf: MiniWorld)
 		ifTrue: [ ActiveWorld := nil ]
 ]
 

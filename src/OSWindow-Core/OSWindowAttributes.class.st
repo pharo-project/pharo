@@ -111,7 +111,7 @@ OSWindowAttributes class >> initialize [
 	DefaultBorderless := false.
 	DefaultResizable := true.
 	DefaultMaximized := false.
-	DefaultMinimized := false
+	DefaultMinimized := false.
 ]
 
 { #category : #'instance creation' }
@@ -121,7 +121,9 @@ OSWindowAttributes class >> newWithNullDriver [
 
 { #category : #accessing }
 OSWindowAttributes >> applyTo: window [
-	window title: self title;
+
+	window
+		title: self title;
 		icon: self icon
 ]
 
@@ -132,6 +134,7 @@ OSWindowAttributes >> borderless [
 
 { #category : #accessing }
 OSWindowAttributes >> borderless: anObject [
+
 	borderless := anObject
 ]
 
@@ -142,8 +145,10 @@ OSWindowAttributes >> bounds [
 
 { #category : #accessing }
 OSWindowAttributes >> bounds: aRectangle [
-	position := aRectangle origin.
-	extent := aRectangle extent
+
+	self position: aRectangle origin.
+	extent := aRectangle extent.
+	self windowCentered: false
 ]
 
 { #category : #private }
@@ -161,30 +166,30 @@ OSWindowAttributes >> extent [
 
 { #category : #accessing }
 OSWindowAttributes >> extent: newExtent [
-	extent := newExtent
+	^ extent := newExtent
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> fullscreen [
-
+	
 	^ fullscreen
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> fullscreen: anObject [
-
+	
 	fullscreen := anObject
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> glAttributes [
-
+	
 	^ glAttributes
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> glAttributes: anObject [
-
+	
 	glAttributes := anObject
 ]
 
@@ -195,18 +200,19 @@ OSWindowAttributes >> height [
 
 { #category : #accessing }
 OSWindowAttributes >> icon [
-
+	
 	^ icon
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> icon: anObject [
-
+	
 	icon := anObject
 ]
 
 { #category : #initialization }
 OSWindowAttributes >> initialize [
+
 	visible := self class defaultVisible.
 	position := self class defaultPosition.
 	extent := self class defaultExtent.
@@ -247,18 +253,18 @@ OSWindowAttributes >> position [
 
 { #category : #accessing }
 OSWindowAttributes >> position: aPoint [
-	position := aPoint
+	^ position := aPoint
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> preferableDriver [
-
+	
 	^ preferableDriver
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> preferableDriver: anObject [
-
+	
 	preferableDriver := anObject
 ]
 
@@ -284,13 +290,13 @@ OSWindowAttributes >> screenId: newScreenId [
 
 { #category : #accessing }
 OSWindowAttributes >> title [
-
+	
 	^ title
 ]
 
 { #category : #accessing }
 OSWindowAttributes >> title: anObject [
-
+	
 	title := anObject
 ]
 
