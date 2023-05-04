@@ -3,36 +3,13 @@ I am a test case specialized in checking that the announcements linked to protoc
 "
 Class {
 	#name : #ProtocolAnnouncementsTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'class',
-		'organization'
-	],
+	#superclass : #ProtocolTest,
 	#category : #'Kernel-Tests-Protocols'
 }
 
 { #category : #running }
-ProtocolAnnouncementsTest >> classNameForTests [
-
-	^ #ClassForTests
-]
-
-{ #category : #running }
-ProtocolAnnouncementsTest >> setUp [
-
-	super setUp.
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: self classNameForTests;
-			         package: 'ClassOrganizer-Tests' ].
-
-	organization := class organization
-]
-
-{ #category : #running }
 ProtocolAnnouncementsTest >> tearDown [
 
-	class package removeFromSystem.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	super tearDown
 ]

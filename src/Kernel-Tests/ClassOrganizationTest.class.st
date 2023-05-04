@@ -3,11 +3,7 @@ SUnit tests for class organization
 "
 Class {
 	#name : #ClassOrganizationTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'organization',
-		'class'
-	],
+	#superclass : #ProtocolTest,
 	#category : #'Kernel-Tests-Protocols'
 }
 
@@ -16,26 +12,20 @@ ClassOrganizationTest >> organization [
 	^ organization
 ]
 
+{ #category : #private }
+ClassOrganizationTest >> performTest [
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
+]
+
 { #category : #running }
 ClassOrganizationTest >> setUp [
 
 	super setUp.
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: #ClassForTests;
-			         package: 'ClassOrganizer-Tests' ].
-
-	organization := ClassOrganization forClass: class.
 	organization addProtocol: 'empty'.
 	organization addProtocol: 'one'.
 	organization classify: #one under: 'one'
-]
-
-{ #category : #running }
-ClassOrganizationTest >> tearDown [
-	class removeFromSystem.
-	super tearDown
 ]
 
 { #category : #tests }
