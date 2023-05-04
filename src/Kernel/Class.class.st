@@ -313,6 +313,50 @@ Class >> classBuilder [
 		^ self classInstaller new builder
 ]
 
+{ #category : #'accessing - comment' }
+Class >> classComment: aString [
+	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
+	^ self comment: aString stamp: '<historical>'
+]
+
+{ #category : #'accessing - comment' }
+Class >> classComment: aString stamp: aStamp [
+	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
+
+	| pointer header oldComment oldStamp preamble |
+	oldComment := self comment.
+	oldStamp := self commentStamp.
+
+	aString string = oldComment string ifTrue: [ ^ self ].
+
+	pointer := self commentSourcePointer ifNil: [0].
+
+
+	preamble := String streamContents: [ :file |
+		file cr; nextPut: $!.
+		header := String streamContents: [:strm |
+			strm
+				nextPutAll: self name;
+				nextPutAll: ' commentStamp: '.
+			aStamp storeOn: strm.
+			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
+		file nextChunkPut: header; cr ].
+
+	SourceFiles
+		writeSource: aString
+		preamble: preamble
+		onSuccess: [ :newSourcePointer |
+			self commentSourcePointer: newSourcePointer]
+		onFail: [ "ignore" ].
+
+	SystemAnnouncer uniqueInstance
+		class: self
+		oldComment: oldComment
+		newComment: aString
+		oldStamp: oldStamp
+		newStamp: aStamp
+]
+
 { #category : #'subclass creation' }
 Class >> classInstaller [
 	"Answer the class responsible of creating subclasses of myself in the system."
@@ -404,6 +448,51 @@ Class >> classVariables [
 Class >> classVariablesNeedFullDefinition [
 
 	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
+]
+
+{ #category : #'accessing - comment' }
+Class >> comment [
+    ^ self commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+]
+
+{ #category : #'accessing - comment' }
+Class >> comment: aStringOrText [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self classComment: aStringOrText
+]
+
+{ #category : #'accessing - comment' }
+Class >> comment: aStringOrText stamp: aStamp [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self classComment: aStringOrText stamp: aStamp
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentSourcePointer [
+	^ commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentSourcePointer: anObject [
+	commentSourcePointer := anObject
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentStamp [
+
+	^ self commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [:sourcePointer | SourceFiles commentTimeStampAt: sourcePointer ]
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentStamp: changeStamp [
+	"update the changeStamp"
+	self comment: self comment stamp: changeStamp
 ]
 
 { #category : #'accessing - class hierarchy' }
@@ -616,6 +705,12 @@ Class >> hasClassVariable: aGlobal [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
 
 	^ self classVariables identityIncludes: aGlobal
+]
+
+{ #category : #'accessing - comment' }
+Class >> hasComment [
+	"Return whether this class truly has a comment other than the default"
+	^ self commentSourcePointer isNotNil
 ]
 
 { #category : #testing }
