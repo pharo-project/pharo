@@ -201,6 +201,7 @@ BaselineOfIDE >> baseline: spec [
 		self microdown: spec.
 		self beautifulComments: spec.
 		self documentBrowserCore: spec.
+		self welcomeBrowser: spec.
 		self roassal3: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
@@ -273,6 +274,7 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
+	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
@@ -447,4 +449,11 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
+]
+
+{ #category : #baselines }
+BaselineOfIDE >> welcomeBrowser: spec [
+
+	spec baseline: 'WelcomeBrowser' with: [
+		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

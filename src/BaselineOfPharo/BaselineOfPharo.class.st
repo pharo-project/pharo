@@ -7,24 +7,43 @@ Class {
 	#category : #BaselineOfPharo
 }
 
+{ #category : #'external projects' }
+BaselineOfPharo class >> beautifulComments [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'BeautifulComments' 
+		owner: 'pillar-markup' 
+		project: 'BeautifulComments' 
+		version: 'v1.0.0'
+]
+
 { #category : #'repository urls' }
 BaselineOfPharo class >> beautifulCommentsRepository [
 
 	^ (self externalProjectNamed: 'BeautifulComments') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : #private }
 BaselineOfPharo class >> declareExternalProjects [
 
-	^ {
-	PharoExternalProject newName: 'Iceberg' owner: 'pharo-vcs' project: 'iceberg' version: 'dev-2.0' sourceDir: nil.
-	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'v1.2.0'.
-	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'v0.8.0'.
-	PharoExternalProject newName: 'Microdown' owner: 'pillar-markup' project: 'Microdown' version: 'v2.4.0'.
-	PharoExternalProject newName: 'BeautifulComments' owner: 'pillar-markup' project: 'BeautifulComments' version: 'v1.0.0'.
-	PharoExternalProject newName: 'DocumentBrowser' owner: 'pharo-spec' project: 'NewTools-DocumentBrowser' version: 'v1.0.0'.
-	PharoExternalProject newName: 'Roassal3' owner: 'ObjectProfile' project: 'Roassal3' version: 'v0.9.9m' 
-	 }
+	^ (Pragma allNamed: #externalProject in: self class)
+		collect: [ :each | 
+			each method 
+				valueWithReceiver: self 
+				arguments: #() ]
+		as: Array
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> documentBrowser [
+	<externalProject>
+	
+	^ PharoExternalProject 
+		newName: 'DocumentBrowser' 
+		owner: 'pharo-spec' 
+		project: 'NewTools-DocumentBrowser' 
+		version: 'v1.0.0'
 ]
 
 { #category : #'repository urls' }
@@ -47,10 +66,33 @@ BaselineOfPharo class >> externalProjects [
 		ExternalProjects := self declareExternalProjects ]
 ]
 
+{ #category : #'external projects' }
+BaselineOfPharo class >> iceberg [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'Iceberg' 
+		owner: 'pharo-vcs' 
+		project: 'iceberg' 
+		version: 'dev-2.0' 
+		sourceDir: nil
+]
+
 { #category : #'repository urls' }
 BaselineOfPharo class >> icebergRepository [
 
 	^ (self externalProjectNamed: 'Iceberg') repository
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> microdown [
+	<externalProject>
+	
+	^ PharoExternalProject 
+		newName: 'Microdown' 
+		owner: 'pillar-markup' 
+		project: 'Microdown' 
+		version: 'v2.4.1'
 ]
 
 { #category : #'repository urls' }
@@ -59,10 +101,32 @@ BaselineOfPharo class >> microdownRepository [
 	^ (self externalProjectNamed: 'Microdown') repository
 ]
 
+{ #category : #'external projects' }
+BaselineOfPharo class >> newTools [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'NewTools' 
+		owner: 'pharo-spec' 
+		project: 'NewTools' 
+		version: 'v0.8.1'
+]
+
 { #category : #'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
 	^ (self externalProjectNamed: 'NewTools') repository
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> roassal [
+	<externalProject>	
+		
+	^ PharoExternalProject 
+		newName: 'Roassal3' 
+		owner: 'ObjectProfile' 
+		project: 'Roassal3' 
+		version: 'v0.9.9m'
 ]
 
 { #category : #'repository urls' }
@@ -71,10 +135,38 @@ BaselineOfPharo class >> roassal3Repository [
 	^ (self externalProjectNamed: 'Roassal3') repository
 ]
 
+{ #category : #'external projects' }
+BaselineOfPharo class >> spec [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'Spec2' 
+		owner: 'pharo-spec' 
+		project:'Spec' 
+		version: 'v1.2.2'
+]
+
 { #category : #'repository urls' }
 BaselineOfPharo class >> specRepository [
 
 	^ (self externalProjectNamed: 'Spec2') repository
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> welcomeBrowser [
+	<externalProject>
+	
+	^ PharoExternalProject 
+		newName: 'WelcomeBrowser' 
+		owner: 'pharo-spec' 
+		project: 'NewTools-WelcomeBrowser' 
+		version: 'Pharo11'
+]
+
+{ #category : #'repository urls' }
+BaselineOfPharo class >> welcomeBrowserRepository [
+
+	^ (self externalProjectNamed: 'WelcomeBrowser') repository
 ]
 
 { #category : #baselines }
@@ -101,5 +193,7 @@ BaselineOfPharo >> baseline: spec [
 { #category : #baseline }
 BaselineOfPharo >> postload: loader package: packageSpec [
 
-	"Here we will do something for the release announce"
+	"Load the WelcomeBrowser as last step"
+	(self class environment classNamed: #StWelcomeBrowser)
+		ifNotNil: [ :aClass | aClass openForRelease ]
 ]
