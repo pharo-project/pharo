@@ -33,7 +33,7 @@ ClassOrganization >> addProtocol: aProtocol [
 	protocols := protocols copyWith: protocol.
 
 	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocol).
-	self notifyOfChangedProtocolNamesFrom: oldProtocols to: self protocolNames.
+	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).
 	^ protocol
 ]
 
@@ -52,7 +52,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	self silentlyClassify: selector under: newProtocol.
 
 	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
-	oldProtocol ifNotNil: [ self notifyOfChangedSelector: selector from: oldProtocol name to: newProtocol name ]
+	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #cleanup }
@@ -125,18 +125,6 @@ ClassOrganization >> methodSelectorsInProtocol: aName [
 	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
 ]
 
-{ #category : #notifications }
-ClassOrganization >> notifyOfChangedProtocolNamesFrom: oldProtocols to: newProtocols [
-
-	oldProtocols ~= newProtocols ifTrue: [ SystemAnnouncer announce: (ClassReorganized class: self organizedClass) ]
-]
-
-{ #category : #notifications }
-ClassOrganization >> notifyOfChangedSelector: element from: oldProtocolName to: newProtocolName [
-
-	oldProtocolName ~= newProtocolName ifTrue: [ self organizedClass notifyOfRecategorizedSelector: element from: oldProtocolName to: newProtocolName ]
-]
-
 { #category : #accessing }
 ClassOrganization >> organizedClass [
 
@@ -205,7 +193,7 @@ ClassOrganization >> removeElement: aSelector [
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
 		protocol removeMethodSelector: aSelector.
 		self removeProtocolIfEmpty: protocol.
-		self notifyOfChangedSelector: aSelector from: protocol name to: nil ]
+		self organizedClass notifyOfRecategorizedSelector: aSelector from: protocol name to: nil ]
 ]
 
 { #category : #removing }
@@ -229,7 +217,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	oldProtocolNames := self protocolNames copy.
 	protocols := protocols copyWithout: protocol.
 	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
-	self notifyOfChangedProtocolNamesFrom: oldProtocolNames to: self protocolNames
+	SystemAnnouncer announce: (ClassReorganized class: self organizedClass)
 ]
 
 { #category : #removing }
@@ -267,11 +255,11 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 		self removeProtocolIfEmpty: oldProtocol ].
 
 	"Announce the changes in the system"
-	self notifyOfChangedProtocolNamesFrom: oldProtocol name to: newProtocol name.
+	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).
 	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldProtocol name to: newProtocol name).
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	newProtocol methodSelectors do: [ :each | self notifyOfChangedSelector: each from: oldProtocol name to: newProtocol name ]
+	newProtocol methodSelectors do: [ :each | self organizedClass notifyOfRecategorizedSelector: each from: oldProtocol name to: newProtocol name ]
 ]
 
 { #category : #initialization }
