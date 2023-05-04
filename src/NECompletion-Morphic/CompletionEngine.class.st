@@ -599,6 +599,7 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 		^ self ].
 
 	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
+	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
 	context narrowWith: aParagraphEditor wordAtCaret
 ]
