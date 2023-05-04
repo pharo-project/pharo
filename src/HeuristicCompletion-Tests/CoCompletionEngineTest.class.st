@@ -148,6 +148,36 @@ CoCompletionEngineTest >> testEndGoesToEndOfLine [
 ]
 
 { #category : #'tests - interaction' }
+CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
+
+	self setEditorTextWithCaret: 'self mEthOdThatDoesNotExis|t toto'.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	self assert: controller hasCompletionContext.
+	self assert: controller completionToken equals: 'mEthOdThatDoesNotExis'.
+	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: controller completionToken equals: 'mEthOdThatDoesNotExist'.
+	self assert: controller hasCompletionContext.
+	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: controller completionToken equals: ''.
+	self deny: controller hasCompletionContext.
+
+	self setEditorTextWithCaret: 'self m|EthOdThatDoesNotExist toto'.
+	controller openMenu.
+
+	self assert: controller hasCompletionContext.
+	self assert: controller completionToken equals: 'm'.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: controller completionToken equals: ''.
+	self assert: controller hasCompletionContext.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: controller completionToken equals: 'self'.
+	self deny: controller hasCompletionContext
+]
+
+{ #category : #'tests - interaction' }
 CoCompletionEngineTest >> testHomeClosesCompletionContext [
 
 	| text |
