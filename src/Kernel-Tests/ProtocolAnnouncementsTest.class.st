@@ -37,6 +37,48 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement [
 	self assert: numberOfAnnouncements equals: 2
 ]
 
+{ #category : #tests }
+ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
+
+	self when: ProtocolAdded do: [ :ann |
+		self assert: ann protocol name equals: #titan.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
+	organization classify: #king under: #titan.
+	self assert: numberOfAnnouncements equals: 2
+]
+
+{ #category : #tests }
+ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceClassReorganizedOnce [
+	"This is a regerssion test because at some point the class reorganized announcement got duplicated."
+
+	organization classify: #king under: #demon.
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
+	organization renameProtocol: #demon as: #titan.
+
+	self assert: numberOfAnnouncements equals: 1
+]
+
+{ #category : #tests }
+ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
+
+	organization classify: #king under: #demon.
+
+	self when: ProtocolAdded do: [ :ann |1halt.
+		self assert: ann protocol name equals: #titan.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | 1halt.self assert: ann classReorganized name equals: self classNameForTests ].
+
+	organization renameProtocol: #demon as: #titan.
+
+	self assert: numberOfAnnouncements equals: 2
+]
+
 { #category : #helpers }
 ProtocolAnnouncementsTest >> when: anAnnouncement do: aBlock [
 
