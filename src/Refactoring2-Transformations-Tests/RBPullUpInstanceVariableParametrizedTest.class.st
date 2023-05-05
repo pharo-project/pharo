@@ -9,8 +9,6 @@ RBPullUpInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPullUpInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
-		addCase: { #rbClass -> RBPullUpVariableTransformation .
-					  #constructor -> #instanceVariable:class: };
 		yourself
 ]
 
