@@ -3,11 +3,7 @@ SUnit tests for class organization
 "
 Class {
 	#name : #ClassOrganizationTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'organization',
-		'class'
-	],
+	#superclass : #ProtocolTest,
 	#category : #'Kernel-Tests-Protocols'
 }
 
@@ -16,10 +12,10 @@ ClassOrganizationTest >> organization [
 	^ organization
 ]
 
-{ #category : #running }
-ClassOrganizationTest >> runCase [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ super runCase ]
+{ #category : #private }
+ClassOrganizationTest >> performTest [
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
 ]
 
 { #category : #running }
@@ -27,21 +23,9 @@ ClassOrganizationTest >> setUp [
 
 	super setUp.
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: #ClassForTests;
-			         package: 'ClassOrganizer-Tests' ].
-
-	organization := class organization.
 	organization addProtocol: 'empty'.
 	organization addProtocol: 'one'.
 	organization classify: #one under: 'one'
-]
-
-{ #category : #running }
-ClassOrganizationTest >> tearDown [
-	class removeFromSystem.
-	super tearDown
 ]
 
 { #category : #tests }
@@ -188,6 +172,16 @@ ClassOrganizationTest >> testCopyFrom [
     self assertCollection: (newOrganization protocolNamed: 'one') methodSelectors hasSameElements: #( 'one' ).
     self assertEmpty: (newOrganization protocolNamed: 'empty') methodSelectors.
     self assertCollection: (newOrganization protocolNamed: 'init') methodSelectors hasSameElements: #( 'new' )
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testHasProtocol [
+
+	self assert: (organization hasProtocol: #one).
+	self deny: (organization hasProtocol: #two).
+
+	self assert: (organization hasProtocol: (organization protocolNamed: #one)).
+	self deny: (organization hasProtocol: (self class organization protocolNamed: #tests))
 ]
 
 { #category : #tests }
@@ -399,50 +393,4 @@ ClassOrganizationTest >> testRenameProtocolAsWithProtocol [
 	self assert: (self organization hasProtocol: two).
 	self deny: (self organization hasProtocol: one).
 	self assertCollection: two methodSelectors hasSameElements: #( 'one' )
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testSilentlyClassifyUnder [
-	"Set the base for the test"
-
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
-
-	"Lets create a new protocol via classification"
-	self organization silentlyClassify: #king under: #owl.
-	self organization silentlyClassify: #luz under: #owl.
-
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
-	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz ).
-
-	"Move a method"
-	self organization silentlyClassify: #luz under: #one.
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
-	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king ).
-	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz ).
-
-	"Move last method"
-	self organization silentlyClassify: #king under: #two.
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #two ).
-	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz ).
-	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( #king ).
-
-	"Nothing should change if the new protocol is the same than the old one"
-	self organization silentlyClassify: #king under: #two.
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #two ).
-	self assertCollection: (self organization protocolNamed: #one) methodSelectors hasSameElements: #( #one #luz ).
-	self assertCollection: (self organization protocolNamed: #two) methodSelectors hasSameElements: #( #king )
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testSilentlyClassifyUnderWithProtocol [
-	"Set the base for the test"
-
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one ).
-
-	"Lets create a new protocol via classification"
-	self organization silentlyClassify: #king under: #owl.
-	self organization silentlyClassify: #luz under: (self organization protocolNamed: #owl).
-
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one #owl ).
-	self assertCollection: (self organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz )
 ]
