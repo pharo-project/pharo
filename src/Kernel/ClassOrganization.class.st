@@ -255,7 +255,6 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	"Announce the changes in the system"
 	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).
-	SystemAnnouncer announce: (ProtocolRenamed in: self organizedClass from: oldProtocol name to: newProtocol name).
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
 	newProtocol methodSelectors do: [ :each | self organizedClass notifyOfRecategorizedSelector: each from: oldProtocol name to: newProtocol name ]
