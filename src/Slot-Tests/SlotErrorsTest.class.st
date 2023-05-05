@@ -79,7 +79,7 @@ SlotErrorsTest >> testClassSlotDuplicationConflict [
 { #category : #tests }
 SlotErrorsTest >> testClassSlotWithReservedName [
 
-	#(#self #super #thisContext #true #false #nil) do: [:reservedName |
+	#(#self #super #thisContext #thisProcess #true #false #nil) do: [:reservedName |
 		self should: [
 			self make: [ :builder |
 				builder classSlots: { reservedName } ] ]

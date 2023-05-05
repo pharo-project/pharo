@@ -42,6 +42,7 @@ SHRBMockTextStyler class >> patternStyleTable [
 			(#false 								$k)
 			(#nil 									$k)
 			(#thisContext 						$k)
+			(#thisProcess 						$k)
 			(#return 								$^)
 			(patternArg 							$A)
 			(blockPatternArg 					$B)

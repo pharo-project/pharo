@@ -158,6 +158,11 @@ OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 	result := Smalltalk compiler
 		bindings: {(#thisContext -> 3)} asDictionary;
 		evaluate: '1+thisContext'.
+	self assert: result equals: 4.
+	
+	result := Smalltalk compiler
+		bindings: {(#thisProcess -> 3)} asDictionary;
+		evaluate: '1+thisProcess'.
 	self assert: result equals: 4
 ]
 
