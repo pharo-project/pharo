@@ -227,28 +227,31 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
-	oldProtocol := self ensureProtocol: anOldProtocol.
-	"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
+	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
+	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
+		oldProtocol := self ensureProtocol: anOldProtocol.
+
+		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
 	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-	(self hasProtocol: aNewProtocol)
-		ifTrue: [
-			newProtocol := self ensureProtocol: aNewProtocol.
+		(self hasProtocol: aNewProtocol)
+			ifTrue: [
+				newProtocol := self ensureProtocol: aNewProtocol.
 
-			oldProtocol = newProtocol ifTrue: [ ^ self ].
+				oldProtocol = newProtocol ifTrue: [ ^ self ].
 
-			newProtocol addAllMethodsFrom: oldProtocol ]
-		ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
-			| newProtocolName |
-			newProtocolName := aNewProtocol isString
-				                   ifTrue: [ aNewProtocol ]
-				                   ifFalse: [ aNewProtocol name ].
-			oldProtocol name = newProtocolName ifTrue: [ ^ self ].
-			newProtocol := oldProtocol copy
-				               name: newProtocolName;
-				               yourself.
-			protocols := protocols copyWith: newProtocol ].
-	oldProtocol resetMethodSelectors.
-	self removeProtocolIfEmpty: oldProtocol.
+				newProtocol addAllMethodsFrom: oldProtocol ]
+			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
+				| newProtocolName |
+				newProtocolName := aNewProtocol isString
+					                   ifTrue: [ aNewProtocol ]
+					                   ifFalse: [ aNewProtocol name ].
+				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
+				newProtocol := oldProtocol copy
+					               name: newProtocolName;
+					               yourself.
+				protocols := protocols copyWith: newProtocol ].
+		oldProtocol resetMethodSelectors.
+		self removeProtocolIfEmpty: oldProtocol ].
 
 	"Announce the changes in the system"
 	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).

@@ -1,11 +1,15 @@
 "
 The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
+
+
+The method #prevent:during: allows one to prevent the firing of some announcements during the execution of a block wile letting the other announcements go throuht.
 "
 Class {
 	#name : #Announcer,
 	#superclass : #Object,
 	#instVars : [
-		'registry'
+		'registry',
+		'preventedAnnouncements'
 	],
 	#category : #'Announcements-Core-Base'
 }
@@ -15,9 +19,11 @@ Announcer >> announce: anAnnouncement [
 
 	| announcement |
 	announcement := anAnnouncement asAnnouncement.
-	registry ifNotNil: [
-		registry deliver: announcement
-		].
+
+	"If the user required to prevent the current announcement, we stop here."
+	(self preventedAnnouncements handlesAnnouncement: announcement) ifTrue: [ ^ self ].
+
+	registry ifNotNil: [ registry deliver: announcement ].
 	^ announcement
 ]
 
@@ -49,6 +55,24 @@ Announcer >> initialize [
 { #category : #statistics }
 Announcer >> numberOfSubscriptions [
 	^ registry numberOfSubscriptions
+]
+
+{ #category : #announce }
+Announcer >> prevent: anAnnouncementClass during: aBlock [
+	"This method allows one to ensure that an Announcement class or an AnnouncementSet will never be announced during the execution of a block.
+	One of the goal can be for example to allow to send messages that should announce something without doing the announcement multiple times while letting the other announcements pass throught."
+
+	| previousValue |
+	previousValue := self preventedAnnouncements copy.
+	[
+	preventedAnnouncements := self preventedAnnouncements , anAnnouncementClass.
+	aBlock value ] ensure: [ preventedAnnouncements := previousValue ]
+]
+
+{ #category : #accessing }
+Announcer >> preventedAnnouncements [
+
+	^ preventedAnnouncements ifNil: [ preventedAnnouncements := AnnouncementSet new ]
 ]
 
 { #category : #subscription }
