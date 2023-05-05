@@ -754,6 +754,13 @@ ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
+{ #category : #'accessing - protocols' }
+ClassDescription >> protocolNames [
+	"Return the list of all the protocol names included in this class."
+
+	^ self organization protocolNames copy
+]
+
 { #category : #compiling }
 ClassDescription >> reformatAll [
 	"Reformat all methods in this class"
