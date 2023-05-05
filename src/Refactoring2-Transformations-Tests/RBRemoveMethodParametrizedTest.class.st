@@ -84,7 +84,7 @@ RBRemoveMethodParametrizedTest >> testRemoveNonExistingMethod [
 
 { #category : #'failure tests' }
 RBRemoveMethodParametrizedTest >> testRemoveReferenced [
-	self shouldFail: (self createRefactoringWithModel: model
+	self shouldWarn: (self createRefactoringWithModel: model
 	andArgumentsColl:  #(#checkClass:)
 	andOtherArgs: { #RBBasicLintRuleTestData })
 ]
