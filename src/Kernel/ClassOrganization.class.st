@@ -49,7 +49,11 @@ ClassOrganization >> classify: selector under: aProtocol [
 	| oldProtocol newProtocol |
 	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
 
-	self silentlyClassify: selector under: newProtocol.
+	oldProtocol ifNotNil: [
+		oldProtocol removeMethodSelector: selector.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+	newProtocol addMethodSelector: selector.
 
 	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
 	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol name to: newProtocol name ]
@@ -269,14 +273,4 @@ ClassOrganization >> reset [
 ClassOrganization >> setSubject: anObject [
 
 	organizedClass := anObject
-]
-
-{ #category : #classification }
-ClassOrganization >> silentlyClassify: aSelector under: aProtocol [
-
-	(self protocolOfSelector: aSelector) ifNotNil: [ :oldProtocol |
-		oldProtocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	(self ensureProtocol: aProtocol) addMethodSelector: aSelector
 ]
