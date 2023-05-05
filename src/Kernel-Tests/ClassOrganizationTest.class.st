@@ -226,25 +226,7 @@ ClassOrganizationTest >> testRemoveElement [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testRemoveNonExistingProtocol [
-
-	self organization removeProtocolIfEmpty: 'non-existent'
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testRemoveProtocolIfEmpty [
-
-	self assert: self organization protocolNames size equals: 2.
-	"just ignore removing of non empty categories"
-	self organization removeProtocolIfEmpty: 'one'.
-	self assert: self organization protocolNames size equals: 2.
-	self organization removeProtocolIfEmpty: 'empty'.
-	self assert: self organization protocolNames size equals: 1.
-	self assert: self organization protocolNames first equals: 'one'
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testRemoveUnexistingSelectorsFromProtocols [
+ClassOrganizationTest >> testRemoveNonexistentSelectorsFromProtocols [
 
 	class compiler
 		protocol: #one;
@@ -272,6 +254,24 @@ ClassOrganizationTest >> testRemoveUnexistingSelectorsFromProtocols [
 
 	self assertCollection: organization protocolNames hasSameElements: #( one ).
 	self assertCollection: (organization protocolNamed: #one) methodSelectors hasSameElements: #( one )
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testRemoveNonexistingProtocol [
+
+	self organization removeProtocolIfEmpty: 'non-existent'
+]
+
+{ #category : #tests }
+ClassOrganizationTest >> testRemoveProtocolIfEmpty [
+
+	self assert: self organization protocolNames size equals: 2.
+	"just ignore removing of non empty categories"
+	self organization removeProtocolIfEmpty: 'one'.
+	self assert: self organization protocolNames size equals: 2.
+	self organization removeProtocolIfEmpty: 'empty'.
+	self assert: self organization protocolNames size equals: 1.
+	self assert: self organization protocolNames first equals: 'one'
 ]
 
 { #category : #tests }
