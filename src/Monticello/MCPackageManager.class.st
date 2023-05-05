@@ -80,7 +80,7 @@ MCPackageManager class >> classRemoved: anEvent [
 		packageMatchingExtensionName: anEvent categoryName) ifNotNil: [ :package |
 			package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ].
 		
-	anEvent classAffected protocols, anEvent classAffected classSide protocols
+	anEvent classAffected protocolNames, anEvent classAffected classSide protocolNames
 		do: [ :aProtocolName | 
 			(aProtocolName beginsWith: '*')
 				ifTrue:

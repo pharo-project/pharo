@@ -735,19 +735,15 @@ OrderedDictionaryTest >> testDictionary [
 
 { #category : #tests }
 OrderedDictionaryTest >> testDictionaryPublicProtocolCompatibility [
-	| dictionary |
 
+	| dictionary |
 	dictionary := self emptyDictionary.
-	{dictionary -> Dictionary.
-	dictionary class -> Dictionary class}
-		do: [:assoc |
-			assoc value protocols
-				reject: [:protocol |
-					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
-						anySatisfy: [:each | protocol asString beginsWith: each]]
-				thenDo: [:protocol |
-					(assoc value selectorsInProtocol: protocol)
-						do: [:each | self assert: (assoc key respondsTo: each)]]]
+	{
+		(dictionary -> Dictionary).
+		(dictionary class -> Dictionary class) } do: [ :assoc |
+		assoc value protocolNames
+			reject: [ :protocol | #( 'private' 'print' 'undeclared' 'copy' 'compar' '*' ) anySatisfy: [ :each | protocol asString beginsWith: each ] ]
+			thenDo: [ :protocol | (assoc value selectorsInProtocol: protocol) do: [ :each | self assert: (assoc key respondsTo: each) ] ] ]
 ]
 
 { #category : #tests }
