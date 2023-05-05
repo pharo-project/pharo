@@ -195,6 +195,15 @@ ClassOrganization >> removeEmptyProtocols [
 	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
+{ #category : #cleanup }
+ClassOrganization >> removeNonexistentSelectorsFromProtocols [
+	"For each protocol, remove the selectors that are not present in the class."
+
+	self allMethodSelectors
+		reject: [ :selector | self organizedClass includesSelector: selector ]
+		thenDo: [ :selector | self removeElement: selector ]
+]
+
 { #category : #removing }
 ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
@@ -210,15 +219,6 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	protocols := protocols copyWithout: protocol.
 	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
 	SystemAnnouncer announce: (ClassReorganized class: self organizedClass)
-]
-
-{ #category : #cleanup }
-ClassOrganization >> removeUnexistingSelectorsFromProtocols [
-	"For each protocol, remove the selectors that are not present in the class."
-
-	self allMethodSelectors
-		reject: [ :selector | self organizedClass includesSelector: selector ]
-		thenDo: [ :selector | self removeElement: selector ]
 ]
 
 { #category : #removing }

@@ -268,7 +268,7 @@ ClassOrganizationTest >> testRemoveUnexistingSelectorsFromProtocols [
 	class methodDict
 		removeKey: #oneBis;
 		removeKey: #two.
-	organization removeUnexistingSelectorsFromProtocols.
+	organization removeNonexistentSelectorsFromProtocols.
 
 	self assertCollection: organization protocolNames hasSameElements: #( one ).
 	self assertCollection: (organization protocolNamed: #one) methodSelectors hasSameElements: #( one )

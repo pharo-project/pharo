@@ -202,7 +202,7 @@ ShiftClassBuilder >> compareWithOldClass [
 ShiftClassBuilder >> compileMethods [
 
 	newClass compileAllFrom: self oldClass.
-	newClass organization removeUnexistingSelectorsFromProtocols
+	newClass organization removeNonexistentSelectorsFromProtocols
 ]
 
 { #category : #building }
