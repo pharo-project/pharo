@@ -32,7 +32,7 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingPackage [
 
 	SystemOrganizer default addCategory: self packageName.
 
-	self assert: (RPackageOrganizer default packageNames includes: self packageName).
+	self assert: (Smalltalk organization packageNames includes: self packageName).
 	self assert: (SystemOrganizer default includesCategory: self packageName)
 ]
 
@@ -42,12 +42,12 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackage [
 
 	SystemOrganizer default addCategory: self packageName.
 
-	self assert: (RPackageOrganizer default packageNames includes: self packageName).
+	self assert: (Smalltalk organization packageNames includes: self packageName).
 	self assert: (SystemOrganizer default includesCategory: self packageName).
 
 	self packageName asPackage removeFromSystem.
 
-	self deny: (RPackageOrganizer default packageNames includes: self packageName).
+	self deny: (Smalltalk organization packageNames includes: self packageName).
 	self deny: (SystemOrganizer default includesCategory: self packageName)
 ]
 
@@ -64,14 +64,14 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackageWithTags [
 		package: self packageName;
 		tag: 'tag2';
 		install.
-	self assert: (RPackageOrganizer default packageNames includes: self packageName).
+	self assert: (Smalltalk organization packageNames includes: self packageName).
 	self assert: (SystemOrganizer default includesCategory: self packageName).
 	self assert: (SystemOrganizer default includesCategory: self packageName , '-tag1').
 	self assert: (SystemOrganizer default includesCategory: self packageName , '-tag2').
 
 	self packageName asPackage removeFromSystem.
 
-	self deny: (RPackageOrganizer default packageNames includes: self packageName).
+	self deny: (Smalltalk organization packageNames includes: self packageName).
 	self deny: (SystemOrganizer default includesCategory: self packageName).
 	self deny: (SystemOrganizer default includesCategory: self packageName , '-tag1').
 	self deny: (SystemOrganizer default includesCategory: self packageName , '-tag2')

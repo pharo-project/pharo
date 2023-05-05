@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 RPackageOrganizerSystemTest >> testDefault [
 
-	self assert: RPackageOrganizer default identicalTo: self class environment organization
+	self assert: Smalltalk organization identicalTo: self class environment organization
 ]
 
 { #category : #tests }
