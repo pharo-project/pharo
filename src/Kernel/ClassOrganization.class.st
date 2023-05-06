@@ -59,13 +59,6 @@ ClassOrganization >> classify: selector under: aProtocol [
 	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol name to: newProtocol name ]
 ]
 
-{ #category : #cleanup }
-ClassOrganization >> cleanUpProtocolsForClass: aClass [
-	"remove all entries that have no methods"
-
-	self allMethodSelectors do: [ :each | (aClass includesSelector: each) ifFalse: [ self removeElement: each ] ]
-]
-
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
@@ -200,6 +193,15 @@ ClassOrganization >> removeEmptyProtocols [
 
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
 	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+]
+
+{ #category : #cleanup }
+ClassOrganization >> removeNonexistentSelectorsFromProtocols [
+	"For each protocol, remove the selectors that are not present in the class."
+
+	self allMethodSelectors
+		reject: [ :selector | self organizedClass includesSelector: selector ]
+		thenDo: [ :selector | self removeElement: selector ]
 ]
 
 { #category : #removing }
