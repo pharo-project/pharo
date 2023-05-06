@@ -116,7 +116,6 @@ ClassDescriptionTest >> testCompileClassifiedWithUnclassified [
 	| class method |
 	class := self createTestClass.
 
-	"During the first compilation if the protocol is nil we put it in Protocol unclassified."
 	class compile: 'foo ^3' classified: Protocol unclassified.
 	method := class >> #foo.
 
@@ -129,7 +128,7 @@ ClassDescriptionTest >> testCompileClassifiedWithUnclassified [
 	self assert: method sourceCode equals: 'foo ^3'.
 	self assert: method protocol equals: #protocol.
 
-	"If we give a nil protocol, we just keep the actual one."
+	"Protocol unclassified should work as any other protocol for the classification."
 	class compile: 'foo ^3' classified: Protocol unclassified.
 	method := class >> #foo.
 
