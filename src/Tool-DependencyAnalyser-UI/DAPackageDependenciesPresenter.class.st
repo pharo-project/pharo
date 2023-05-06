@@ -15,7 +15,7 @@ DAPackageDependenciesPresenter class >> collections [
 { #category : #'instance creation' }
 DAPackageDependenciesPresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
-			(RPackageOrganizer default packages
+			(Smalltalk organization packages
 				select: [ :package | match match: package packageName asString ]
 				thenCollect: [ :package | package packageName ]) )
 ]
