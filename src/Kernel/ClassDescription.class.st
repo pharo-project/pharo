@@ -33,12 +33,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
 
 	oldProtocol := self organization protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-		self organization classify: selector under: ((protocol isString
-				  ifTrue: [ protocol ]
-				  ifFalse: [ protocol name ]) = Protocol unclassified
-				 ifTrue: [ oldProtocol ]
-				 ifFalse: [ protocol ]) ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: protocol ].
 	newProtocol := self organization protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -303,7 +298,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 ClassDescription >> compile: sourceCode notifying: requestor [
 	"Refer to the comment in Behavior|compile:notifying:."
 
-	^ self compile: sourceCode classified: Protocol unclassified notifying: requestor
+	^ self compile: sourceCode classified: nil notifying: requestor
 ]
 
 { #category : #compiling }

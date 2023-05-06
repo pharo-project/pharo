@@ -47,7 +47,13 @@ ClassOrganization >> allMethodSelectors [
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	oldProtocol := self protocolOfSelector: selector.
+
+	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
+	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
+	
+	"If old and new protocols are the same, we skip the classification."
+	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.

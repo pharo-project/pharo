@@ -118,12 +118,12 @@ ClassOrganizationTest >> testClassifyUnderWithNil [
 	self assertCollection: self organization protocolNames hasSameElements: { #empty. #one. unclassified . #owl }.
 	self assertCollection: (self organization protocolNamed: #owl ) methodSelectors hasSameElements: #( #luz ).
 	
-	"Now let's test the behavior if we already have a protocol.
-	The behavior should change to not change the protocol but this test will ensure that the change is intentional and not a regression."
+	"In case we classify under nil while the method already has a protocol, we do not want to update the protocol."
 	self organization classify: #luz under: nil.
 
-	self assertCollection: self organization protocolNames hasSameElements: { #empty. #one. unclassified }.
-	self assertCollection: (self organization protocolNamed: unclassified ) methodSelectors hasSameElements: #( #king #luz ).
+	self assertCollection: self organization protocolNames hasSameElements: { #empty. #one. unclassified . #owl }.
+	self assertCollection: (self organization protocolNamed: unclassified ) methodSelectors hasSameElements: #( #king ).
+	self assertCollection: (self organization protocolNamed: #owl ) methodSelectors hasSameElements: #( #luz ).
 ]
 
 { #category : #tests }
