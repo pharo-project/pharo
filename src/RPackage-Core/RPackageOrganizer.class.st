@@ -158,9 +158,9 @@ RPackageOrganizer class >> packageClass [
 { #category : #'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
-	self default unregisterInterestToSystemAnnouncement.
+	Smalltalk organization unregisterInterestToSystemAnnouncement.
 	"To make sure that we do not have it twice registered"
-	self default registerInterestToSystemAnnouncement
+	Smalltalk organization registerInterestToSystemAnnouncement
 ]
 
 { #category : #'class initialization' }
