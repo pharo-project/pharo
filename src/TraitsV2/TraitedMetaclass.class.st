@@ -276,7 +276,7 @@ TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProt
 	newProtocol ifNil: [ ^ self ].
 
 	originalProtocol := (self organization protocolOfSelector: selector) ifNil: [ ^ self ].
-	originalProtocol = oldProtocol ifTrue: [ self organization classify: selector under: newProtocol ].
+	originalProtocol name = oldProtocol name ifTrue: [ self organization classify: selector under: newProtocol name ].
 
 	(self traitComposition reverseAlias: selector) do: [ :selectorAlias |
 		self recategorizeSelector: selectorAlias from: oldProtocol to: newProtocol.
