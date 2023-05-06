@@ -1,3 +1,6 @@
+"
+The receiver is signaled whenever a precondition of a refactoring is violated.
+"
 Class {
 	#name : #RBRefactoringError,
 	#superclass : #Error,
