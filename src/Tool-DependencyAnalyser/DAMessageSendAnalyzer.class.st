@@ -48,11 +48,10 @@ DAMessageSendAnalyzer >> implementedMessages [
 
 { #category : #computing }
 DAMessageSendAnalyzer >> implementedMessagesWithManuallyResolvedDependencies [
-	^ (self manuallyResolvedDependencies
-		flatCollect: [ :name | (RPackageOrganizer default packageNamed: name) selectors ]
-		as: Set)
-			addAll: self implementedMessages;
-			yourself
+
+	^ (self manuallyResolvedDependencies flatCollect: [ :name | (Smalltalk organization packageNamed: name) selectors ] as: Set)
+		  addAll: self implementedMessages;
+		  yourself
 ]
 
 { #category : #initialization }
