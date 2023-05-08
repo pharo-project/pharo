@@ -51,6 +51,12 @@ CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
 ]
 
+{ #category : #replacement }
+CompletionContext >> completionTokenStart [
+	
+	^ engine completionTokenStart
+]
+
 { #category : #accessing }
 CompletionContext >> engine [
 	^ engine
