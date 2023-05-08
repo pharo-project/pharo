@@ -62,9 +62,7 @@ CoCompletionEngineTest >> testAdvanceWordTwiceClosesCompletionContext [
 { #category : #'tests - interaction' }
 CoCompletionEngineTest >> testCmdCtrlLeftClosesDetail [
 
-	<expectedFailure>
-	"GUI/test issue caused by the fact that the begin of a word is now a valid completion point, thus the completion menu remains open.
-	Will be fixed late once we decide what we want"
+	"The start of a word does not close the completion menu"
 
 	| text |
 	text := 'self asOrdered'.
@@ -85,7 +83,7 @@ CoCompletionEngineTest >> testCmdCtrlLeftClosesDetail [
 		((self keyboardEventFor: Character arrowLeft) buttons:
 			 KMModifier meta eventCode).
 
-	self deny: controller hasDetail
+	self assert: controller hasDetail
 ]
 
 { #category : #'tests - interaction' }
