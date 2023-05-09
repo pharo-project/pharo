@@ -28,6 +28,8 @@ RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 		ifTrue: [ ^ self selfNode start: aPosition ].
 	anIdentifierName = #thisContext
 		ifTrue: [ ^ self thisContextNode start: aPosition ].
+	anIdentifierName = #thisProcess
+		ifTrue: [ ^ self thisProcessNode start: aPosition ].
 	anIdentifierName = #super
 		ifTrue: [ ^ self superNode start: aPosition ].
 	^ self named: anIdentifierName start: aPosition
@@ -58,6 +60,11 @@ RBVariableNode class >> superNode [
 { #category : #'instance creation' }
 RBVariableNode class >> thisContextNode [
 	^ (self named: #thisContext) variable: ThisContextVariable instance
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> thisProcessNode [
+	^ (self named: #thisProcess) variable: ThisProcessVariable instance
 ]
 
 { #category : #comparing }

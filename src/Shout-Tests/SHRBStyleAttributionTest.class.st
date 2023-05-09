@@ -852,6 +852,20 @@ SHRBStyleAttributionTest >> testThisContextStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testThisProcessStyle [
+
+	| aText |
+	aText := 'm thisProcess senders' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 12
+		shouldBe: #thisProcess
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testTrueStyle [
 
 	| aText |
