@@ -31,7 +31,7 @@ MCDependencySorter >> add: anItem [
 	(self unresolvedRequirementsFor: anItem)
 		ifEmpty: [ self addToOrder: anItem ]
 		ifNotEmpty: [ :requirements |
-			('Missing requirement: ', requirements asString , ' for item: ' , anItem asString) traceCr.
+			Stdio stdout nextPutAll: ('Missing requirement: ', requirements asString , ' for item: ' , anItem asString); lf.
 			self addRequirements: requirements for: anItem ].
 	^ anItem
 ]
