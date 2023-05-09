@@ -318,12 +318,17 @@ CompletionEngine >> openMenu [
 { #category : #replacement }
 CompletionEngine >> replaceTokenInEditorWith: aString [
 	"Main API with the completion context.
+
 	Replace the current completion token (as it was extracted by the completion context) by aString.
-	aString may contain a keyword selector string where each keyword is separated by two spaces (between:  and:)
-	After replacing, set the caret after the first keyword.
+	aString content is free and will inserted as a replacement as is, except for a possible ending space that will not be inserted if there is already a space in the text.
+
+	The caret will be moved at the end of the inserted string, or between the first double spaces.
+	This rule allows to put the cursor inside an inserted keyword selector where each keyword is separated by two spaces.
+	e.g. after replacing with `'between:  and:'`, the caret is set after the first keyword.
+
 	The completion context uses this API to insert text into the text editor"
 
-	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
+	| wordEnd old doubleSpace wordStart |
 
 	wordStart := self completionTokenStart.
 
@@ -346,12 +351,8 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 
 	self editor replaceSelectionWith: aString.
 
-	offset := NECPreferences spaceAfterCompletion
-		ifTrue: [ 1 ]
-		ifFalse: [ 0 ].
-	firstKeyword := (aString copyUpTo: $ ) size.
-	positionAfterFirstKeyword := wordEnd + firstKeyword + offset - old size.
-	self editor selectAt: positionAfterFirstKeyword.
+	doubleSpace := aString indexOfSubCollection: '  ' startingAt: 1 ifAbsent: [ aString size ].
+	self editor selectAt: wordEnd + doubleSpace - old size.
 
 	self editor morph invalidRect: self editor morph bounds
 ]
