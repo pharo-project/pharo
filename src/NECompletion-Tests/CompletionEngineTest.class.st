@@ -21,6 +21,15 @@ CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
+{ #category : #'tests - keyboard' }
+CompletionEngineTest >> editorTextWithCaret [
+	"The current test in the editor, with a `|` inserted at the caret position"
+
+	| source |
+	source := editor text asString.
+	^ (source copyFrom: 1 to: editor caret-1), '|', (source copyFrom: editor caret to: source size)
+]
+
 { #category : #accessing }
 CompletionEngineTest >> interactionModel [
 
@@ -629,6 +638,55 @@ CompletionEngineTest >> testReplaceTokenWithCaretOnEndOfWordReplacesEntireWord [
 	controller context replaceTokenInEditorWith: 'toto'.
 
 	self assert: editor text equals: 'self toto'
+]
+
+{ #category : #tests }
+CompletionEngineTest >> testReplaceWithSpaces [
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar '.
+	self assert: self editorTextWithCaret equals: 'self bar |baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  '.
+	self assert: self editorTextWithCaret equals: 'self bar | baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar bar'.
+	self assert: self editorTextWithCaret equals: 'self bar bar| baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar bar '.
+	self assert: self editorTextWithCaret equals: 'self bar bar |baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar bar  '.
+	self assert: self editorTextWithCaret equals: 'self bar bar | baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  bar'.
+	self assert: self editorTextWithCaret equals: 'self bar | bar baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  bar '.
+	self assert: self editorTextWithCaret equals: 'self bar | bar baz'.
+
+	self setEditorTextWithCaret: 'self fo|o baz'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  bar  '.
+	self assert: self editorTextWithCaret equals: 'self bar | bar  baz'.
 ]
 
 { #category : #'tests - keyboard' }
