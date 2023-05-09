@@ -44,7 +44,6 @@ MCFileTreeFileSystemUtils initialize.
 
 MetacelloPlatform initialize.
 MetacelloPharoPlatform initialize.
-MetacelloPharo30Platform initialize.
 
 STONWriter initialize.
 
