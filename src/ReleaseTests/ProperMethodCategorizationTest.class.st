@@ -166,16 +166,17 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
-	| violating validExceptions remaining|
-	violating := Smalltalk globals allBehaviors select: [ :class |
-		             class protocols includes: Protocol unclassified ].
+	| violating validExceptions remaining |
+	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: Protocol unclassified ].
 
 
-	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand).
+	validExceptions := #( ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class'
+	                      MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest
+	                      'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand ).
 
-	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+	remaining := violating asOrderedCollection reject: [ :each | validExceptions includes: each name ].
 
-	self assert: remaining isEmpty description: ('the following classes have uncategorized methods: ', remaining asString)
+	self assert: remaining isEmpty description: 'the following classes have uncategorized methods: ' , remaining asString
 ]
 
 { #category : #tests }
@@ -183,13 +184,10 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 	"Check that we have no #'utils' protocols left, the protocol should be 'utilities' "
 
 	| violating |
-	violating := Smalltalk globals allBehaviors select: [ :class |
-		             class protocols includes: #'utils' ].
+	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: #utils ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self 
-		assert: violating size <= 4
-		description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
+	self assert: violating size <= 4 description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
 ]
 
 { #category : #'tests - object' }

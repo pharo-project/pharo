@@ -94,7 +94,7 @@ RGReadOnlyImageBackendTest >> testClassTrait [
 	self assert: classTrait superclass name equals: #Trait.
 	self assert: classTrait comment content equals: RGTestTrait comment.
 	self assert: classTrait localMethods size equals: RGTestTrait classTrait localMethods size.
-	self assert: classTrait protocols asSortedCollection equals: RGTestTrait classTrait protocols asSortedCollection.
+	self assert: classTrait protocols asSortedCollection equals: RGTestTrait classTrait protocolNames asSortedCollection.
 	self assert: classTrait metaclass name equals: #MetaclassForTraits.
 	self assert: classTrait package name equals: 'Ring-Tests-Core'
 ]
@@ -273,7 +273,7 @@ RGReadOnlyImageBackendTest >> testTrait [
 	self assert: trait superclass identicalTo: trait.	"cycle, nil in reality"
 	self assert: trait comment content equals: RGTestTrait comment.
 	self assert: trait localMethods size equals: RGTestTrait localMethods size.
-	self assert: trait protocols asSortedCollection equals: RGTestTrait protocols asSortedCollection.
+	self assert: trait protocols asSortedCollection equals: RGTestTrait protocolNames asSortedCollection.
 	self assert: trait metaclass name equals: 'RGTestTrait classTrait'.
 	self assert: trait metaclass superclass name equals: 'Trait'.
 	self assert: trait package name equals: 'Ring-Tests-Core'
