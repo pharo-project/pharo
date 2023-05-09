@@ -111,6 +111,85 @@ CoCompletionEngineTest >> testCmdCtrlRightOpensDetail [
 	self assert: controller hasDetail
 ]
 
+{ #category : #tests }
+CoCompletionEngineTest >> testCompleteSuper [
+
+	| entries |
+	"Unary"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'postCopy ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'postCopy'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'postCopy ^ super po|'.
+	self assert: controller completionToken equals: 'po'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'postCopy'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'postCopy ^ super xx|'.
+	self assert: controller completionToken equals: 'xx'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: 'postCopy'.
+
+	"Binary"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: '= aaa ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: '= aaa'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: '= aaa ^ super xx|'.
+	self assert: controller completionToken equals: 'xx'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: '= aaa'.
+
+	"Keyword"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'at: bbb put: ccc ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'at: bbb put: ccc'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'at: bbb put: ccc ^ super a|'.
+	self assert: controller completionToken equals: 'a'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'at: bbb put: ccc'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'at: bbb put: ccc ^ super xx|'.
+	self assert: controller completionToken equals: 'xx'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: 'at: bbb put: ccc'.
+
+	"Message unknown in superclass, so does not appear in super completion"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'notARedefinition ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: 'notARedefinition'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'notARedefinition ^ super notARedefinitio|'.
+	self assert: controller completionToken equals: 'notARedefinitio'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assertEmpty: entries
+]
+
 { #category : #'tests - interaction' }
 CoCompletionEngineTest >> testEndClosesCompletionContext [
 
