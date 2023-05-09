@@ -68,11 +68,7 @@ RBSmalllintContext >> computeLiteralsForClass: aClass [
 { #category : #private }
 RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
 
-	| method |
-
-	method := aClass compiledMethodAt: aSelector ifAbsent: [ nil ].
-	method ifNil: [ ^ self ].
-	self addLiteralsFor: method
+	aClass compiledMethodAt: aSelector ifPresent: [ :method | self addLiteralsFor: method ]
 ]
 
 { #category : #testing }

@@ -488,18 +488,16 @@ RBAbstractClass >> localSelectors [
 
 { #category : #'method accessing' }
 RBAbstractClass >> methodFor: aSelector [
-	^ self newMethods
-		at: aSelector
-		ifAbsent: [ | compiledMethod class |
-			(self hasRemoved: aSelector) ifTrue: [ ^ nil ].
-			class := self realClass.
-			class ifNil: [ ^ nil ].
-			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [ nil ].
-			compiledMethod ifNotNil: [
-				compiledMethod isFromTrait
-					ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [
-						(model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
-					ifFalse: [modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ]] ]
+
+	^ self newMethods at: aSelector ifAbsent: [
+		  | class |
+		  (self hasRemoved: aSelector) ifTrue: [ ^ nil ].
+		  class := self realClass.
+		  class ifNil: [ ^ nil ].
+		  class compiledMethodAt: aSelector ifPresent: [ :compiledMethod |
+			  compiledMethod isFromTrait
+				  ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [ (model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
+				  ifFalse: [ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
 ]
 
 { #category : #accessing }

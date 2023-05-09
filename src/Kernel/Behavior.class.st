@@ -473,11 +473,7 @@ Behavior >> classAndMethodFor: aSymbol do: binaryBlock ifAbsent: absentBlock [
 	with the class that defines the selector and the associated method. Otherwise
 	absentBlock is evaluated."
 
-
-	self withAllSuperclassesDo: [:class | | method |
-		method := class compiledMethodAt: aSymbol ifAbsent: [nil].
-		method ifNotNil: [^ binaryBlock value: class value: method].
-	].
+	self withAllSuperclassesDo: [ :class | class compiledMethodAt: aSymbol ifPresent: [ :method | ^ binaryBlock value: class value: method ] ].
 	^ absentBlock value
 ]
 
