@@ -154,11 +154,14 @@ CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
 	controller openMenu.
 
 	self assert: controller hasCompletionContext.
+	self assert: self editorTextWithCaret equals: 'self mEthOdThatDoesNotExis|t toto'.
 	self assert: controller completionToken equals: 'mEthOdThatDoesNotExis'.
 	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: self editorTextWithCaret equals: 'self mEthOdThatDoesNotExist| toto'.
 	self assert: controller completionToken equals: 'mEthOdThatDoesNotExist'.
 	self assert: controller hasCompletionContext.
 	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: self editorTextWithCaret equals: 'self mEthOdThatDoesNotExist |toto'.
 	self assert: controller completionToken equals: ''.
 	self deny: controller hasCompletionContext.
 
@@ -166,11 +169,14 @@ CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
 	controller openMenu.
 
 	self assert: controller hasCompletionContext.
+	self assert: self editorTextWithCaret equals: 'self m|EthOdThatDoesNotExist toto'.
 	self assert: controller completionToken equals: 'm'.
 	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: self editorTextWithCaret equals: 'self |mEthOdThatDoesNotExist toto'.
 	self assert: controller completionToken equals: ''.
 	self assert: controller hasCompletionContext.
 	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: self editorTextWithCaret equals: 'self| mEthOdThatDoesNotExist toto'.
 	self assert: controller completionToken equals: 'self'.
 	self deny: controller hasCompletionContext
 ]

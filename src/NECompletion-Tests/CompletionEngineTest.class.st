@@ -148,27 +148,27 @@ CompletionEngineTest >> testCompletionAfterKeyword [
 	self setEditorTextWithCaret: 'self foo:| baz'.
 	self assert: controller completionToken equals: 'foo:'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self bar baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self"x"foo:|"x"baz'.
 	self assert: controller completionToken equals: 'foo:'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"bar"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
 	self setEditorTextWithCaret: 'self.foo:|.baz'.
 	self assert: controller completionToken equals: 'foo:'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.bar.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|.baz'.
 
 	self setEditorTextWithCaret: 'self:=foo:|:=baz'.
 	self assert: controller completionToken equals: 'foo:'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=bar:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
 	self setEditorTextWithCaret: 'foo:|'.
 	self assert: controller completionToken equals: 'foo:'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'bar'
+	self assert: self editorTextWithCaret equals: 'bar|'
 ]
 
 { #category : #tests }
@@ -177,27 +177,27 @@ CompletionEngineTest >> testCompletionAfterWord [
 	self setEditorTextWithCaret: 'self foo| baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self bar baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self"x"foo|"x"baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"bar"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
 	self setEditorTextWithCaret: 'self.foo|.baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.bar.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|.baz'.
 
 	self setEditorTextWithCaret: 'self:=foo|:=baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=bar:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
 	self setEditorTextWithCaret: 'foo|'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'bar'
+	self assert: self editorTextWithCaret equals: 'bar|'
 ]
 
 { #category : #tests }
@@ -206,27 +206,27 @@ CompletionEngineTest >> testCompletionBeforeKeywordColumn [
 	self setEditorTextWithCaret: 'self foo|: baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self bar baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self"x"foo|:"x"baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"bar"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
 	self setEditorTextWithCaret: 'self.foo|:.baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.bar.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|.baz'.
 
 	self setEditorTextWithCaret: 'self:=foo|::=baz'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=bar:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
 	self setEditorTextWithCaret: 'foo|:'.
 	self assert: controller completionToken equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'bar'
+	self assert: self editorTextWithCaret equals: 'bar|'
 ]
 
 { #category : #tests }
@@ -235,27 +235,27 @@ CompletionEngineTest >> testCompletionBeforeWord [
 	self setEditorTextWithCaret: 'self |foo baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self barfoo baz'.
+	self assert: self editorTextWithCaret equals: 'self bar|foo baz'.
 
 	self setEditorTextWithCaret: 'self"x"|foo"x"baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"barfoo"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|foo"x"baz'.
 
 	self setEditorTextWithCaret: 'self.|foo.baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.barfoo.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|foo.baz'.
 
 	self setEditorTextWithCaret: 'self:=|foo:=baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=barfoo:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|foo:=baz'.
 
 	self setEditorTextWithCaret: '|foo'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'barfoo'
+	self assert: self editorTextWithCaret equals: 'bar|foo'
 ]
 
 { #category : #tests }
@@ -265,7 +265,7 @@ CompletionEngineTest >> testCompletionOnBinary [
 	self setEditorTextWithCaret: 'self +|+ baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self +bar+ baz'
+	self assert: self editorTextWithCaret equals: 'self +bar|+ baz'
 ]
 
 { #category : #tests }
@@ -274,27 +274,27 @@ CompletionEngineTest >> testCompletionOnFirstLetter [
 	self setEditorTextWithCaret: 'self f|oo baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self bar baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self"x"f|oo"x"baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"bar"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
 	self setEditorTextWithCaret: 'self.f|oo.baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.bar.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|.baz'.
 
 	self setEditorTextWithCaret: 'self:=f|oo:=baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=bar:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
 	self setEditorTextWithCaret: 'f|oo'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'bar'
+	self assert: self editorTextWithCaret equals: 'bar|'
 ]
 
 { #category : #tests }
@@ -303,32 +303,32 @@ CompletionEngineTest >> testCompletionOnNoWord [
 	self setEditorTextWithCaret: 'self | baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self bar baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self"x"|"x"baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"bar"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
 	self setEditorTextWithCaret: 'self.|.baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.bar.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|.baz'.
 
 	self setEditorTextWithCaret: 'self:=|:=baz'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=bar:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
 	self setEditorTextWithCaret: ' | '.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: ' bar '.
+	self assert: self editorTextWithCaret equals: ' bar| '.
 
 	self setEditorTextWithCaret: '|'.
 	self assert: controller completionToken equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'bar'
+	self assert: self editorTextWithCaret equals: 'bar|'
 ]
 
 { #category : #tests }
@@ -337,27 +337,27 @@ CompletionEngineTest >> testCompletionOnSingleLetter [
 	self setEditorTextWithCaret: 'self f| baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self bar baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self"x"f|"x"baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self"x"bar"x"baz'.
+	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
 	self setEditorTextWithCaret: 'self.f|.baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self.bar.baz'.
+	self assert: self editorTextWithCaret equals: 'self.bar|.baz'.
 
 	self setEditorTextWithCaret: 'self:=f|:=baz'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'self:=bar:=baz'.
+	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
 	self setEditorTextWithCaret: 'f|'.
 	self assert: controller completionToken equals: 'f'.
 	controller context replaceTokenInEditorWith: 'bar'.
-	self assert: editor text asString equals: 'bar'
+	self assert: self editorTextWithCaret equals: 'bar|'
 ]
 
 { #category : #'tests - keyboard' }
