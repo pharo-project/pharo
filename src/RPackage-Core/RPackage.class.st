@@ -117,7 +117,8 @@ RPackage class >> named: aString [
 
 { #category : #'protected only for tests' }
 RPackage class >> organizer [
-	^ PackageGlobalOrganizer ifNil: [ RPackageOrganizer default ]
+
+	^ PackageGlobalOrganizer ifNil: [ Smalltalk organization ]
 ]
 
 { #category : #'protected only for tests' }

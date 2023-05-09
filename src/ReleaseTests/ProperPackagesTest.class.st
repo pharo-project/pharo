@@ -29,11 +29,12 @@ ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 
 { #category : #tests }
 ProperPackagesTest >> testProperClassTagCasing [
-	|violations|
+
+	| violations |
 	violations := OrderedCollection new.
-	RPackageOrganizer default packages
-        do: [:package | package classTags do: [:classTag | classTag name first isLowercase ifTrue: [ violations add: (package -> classTag) ] ] ].
-	self assert:  violations isEmpty description: 'Class Tags should be uppercase'
+	Smalltalk organization packages do: [ :package |
+		package classTags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
+	self assert: violations isEmpty description: 'Class Tags should be uppercase'
 ]
 
 { #category : #'tests - manifest' }

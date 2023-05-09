@@ -239,7 +239,7 @@ ReleaseTest >> testNoEmptyPackages [
 	"Test that we have no empty packages left"
 
 	| violating |
-	violating := RPackageOrganizer default packages select: #isEmpty.
+	violating := Smalltalk organization packages select: #isEmpty.
 	self assertEmpty: violating
 ]
 
@@ -384,15 +384,16 @@ ReleaseTest >> testProperManifestClasses [
 { #category : #'tests - rpackage' }
 ReleaseTest >> testRPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
+
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 
 	"Now check :)"
 	self
 		assert: RPackageOrganizer allInstances size = 1
-		description: 'There are multiple (', RPackageOrganizer allInstances size asString, ') instances of RPackageOrganizer'.
+		description: 'There are multiple (' , RPackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
 
 	self
-		assert: RPackageOrganizer allInstances first == RPackageOrganizer default
+		assert: RPackageOrganizer allInstances first == Smalltalk organization
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
@@ -501,22 +502,19 @@ ReleaseTest >> testUnknownProcesses [
 
 { #category : #'tests - rpackage' }
 ReleaseTest >> testUnpackagedClasses [
+
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [:each |
-		(RPackageOrganizer default packageOf: each) packageName = RPackage defaultPackageName ].
-	self
-		assert: unpackagedClasses isEmpty
-		description: (String streamContents: [ :s|
-			s nextPutAll: 'Found the following unpackaged classes: '.
-			unpackagedClasses
-				do: [ :cls| s tab print: cls ]
-				separatedBy: [ s cr ]])
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (Smalltalk organization packageOf: each) packageName = RPackage defaultPackageName ].
+	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
+			 s nextPutAll: 'Found the following unpackaged classes: '.
+			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
 ]
 
 { #category : #'tests - rpackage' }
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
+
 	| unpackagePackage |
-	unpackagePackage := RPackageOrganizer default packageNamed: RPackage defaultPackageName.
+	unpackagePackage := Smalltalk organization packageNamed: RPackage defaultPackageName.
 	"The unpackage package should not have any defined class or extended classes"
 	self assertEmpty: unpackagePackage classes
 ]
