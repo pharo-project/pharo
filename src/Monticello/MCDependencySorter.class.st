@@ -27,11 +27,12 @@ MCDependencySorter class >> sortItems: aCollection [
 
 { #category : #building }
 MCDependencySorter >> add: anItem [
-	| requirements |
-	requirements := self unresolvedRequirementsFor: anItem.
-	requirements isEmpty
-		ifTrue: [self addToOrder: anItem]
-		ifFalse: [self addRequirements: requirements for: anItem].
+
+	(self unresolvedRequirementsFor: anItem)
+		ifEmpty: [ self addToOrder: anItem ]
+		ifNotEmpty: [ :requirements |
+			('Missing requirement: ', requirements asString , ' for item: ' , anItem asString) traceCr.
+			self addRequirements: requirements for: anItem ].
 	^ anItem
 ]
 
