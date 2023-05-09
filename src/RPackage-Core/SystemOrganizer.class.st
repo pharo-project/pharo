@@ -10,7 +10,7 @@ Class {
 		'environment',
 		'categoryMap'
 	],
-	#category : #'System-Support-Image'
+	#category : #'RPackage-Core-Base'
 }
 
 { #category : #cleanup }
