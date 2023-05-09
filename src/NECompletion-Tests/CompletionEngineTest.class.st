@@ -651,7 +651,7 @@ CompletionEngineTest >> testReplaceWithSpaces [
 	self setEditorTextWithCaret: 'self fo|o baz'.
 	self assert: controller completionToken equals: 'fo'.
 	controller context replaceTokenInEditorWith: 'bar '.
-	self assert: self editorTextWithCaret equals: 'self bar |baz'.
+	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
 	self setEditorTextWithCaret: 'self fo|o baz'.
 	self assert: controller completionToken equals: 'fo'.
@@ -666,7 +666,7 @@ CompletionEngineTest >> testReplaceWithSpaces [
 	self setEditorTextWithCaret: 'self fo|o baz'.
 	self assert: controller completionToken equals: 'fo'.
 	controller context replaceTokenInEditorWith: 'bar bar '.
-	self assert: self editorTextWithCaret equals: 'self bar bar |baz'.
+	self assert: self editorTextWithCaret equals: 'self bar bar| baz'.
 
 	self setEditorTextWithCaret: 'self fo|o baz'.
 	self assert: controller completionToken equals: 'fo'.
