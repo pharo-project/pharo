@@ -12,6 +12,12 @@ ThisProcessVariable class >> variableName [
 	^#thisProcess
 ]
 
+{ #category : #'code generation' }
+ThisProcessVariable >> emitValue: methodBuilder [
+
+	methodBuilder pushThisProcess 
+]
+
 { #category : #testing }
 ThisProcessVariable >> isThisProcessVariable [
 	^true
