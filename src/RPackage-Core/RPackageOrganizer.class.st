@@ -111,9 +111,6 @@ Class {
 		'packageNames',
 		'systemOrganizer'
 	],
-	#classInstVars : [
-		'default'
-	],
 	#category : #'RPackage-Core-Base'
 }
 
@@ -161,32 +158,9 @@ RPackageOrganizer class >> packageClass [
 { #category : #'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
-	self default unregisterInterestToSystemAnnouncement.
+	Smalltalk organization unregisterInterestToSystemAnnouncement.
 	"To make sure that we do not have it twice registered"
-	self default registerInterestToSystemAnnouncement
-]
-
-{ #category : #singleton }
-RPackageOrganizer class >> resetDefault [
-
-	"self resetDefault"
-	default  ifNotNil: [
-		"When an Organizer is not used anymore, we should always pay attention that these two actions are corretly done."
-		default unregisterInterestToSystemAnnouncement.
-
-		self flag: #hack. "for decoupling MC"
-		self class environment at: #MCWorkingCopy ifPresent: [ :wc |
-			wc removeDependent: default]].
-	default := self new.
-	self packageClass initialize
-]
-
-{ #category : #private }
-RPackageOrganizer class >> setDefault: anOrganizer [
-	default ifNotNil: [ default unregister ].
-	default := anOrganizer.
-	default register.
-	RPackage organizer: nil
+	Smalltalk organization registerInterestToSystemAnnouncement
 ]
 
 { #category : #'class initialization' }

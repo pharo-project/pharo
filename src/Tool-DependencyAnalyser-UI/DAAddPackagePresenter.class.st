@@ -88,7 +88,8 @@ DAAddPackagePresenter >> selectedItemsFromPackageList [
 
 { #category : #accessing }
 DAAddPackagePresenter >> systemPackages [
-	^ (RPackageOrganizer default packages collect: [ :package | package packageName asString ] )asSortedCollection
+
+	^ (Smalltalk organization packages collect: [ :package | package packageName asString ]) asSortedCollection
 ]
 
 { #category : #protocol }

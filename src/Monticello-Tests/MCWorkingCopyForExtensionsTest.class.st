@@ -23,18 +23,18 @@ MCWorkingCopyForExtensionsTest >> tearDown [
 MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 
 	| aClass |
-	RPackageOrganizer default createPackageNamed: 'ATestPackage'.
-	RPackageOrganizer default createPackageNamed: 'AnotherTestPackage'.
+	Smalltalk organization createPackageNamed: 'ATestPackage'.
+	Smalltalk organization createPackageNamed: 'AnotherTestPackage'.
 
-	aClass := self class classInstaller make: [ :aBuilder | 
-		aBuilder 
-			name: #ATestClass;
-			package: 'AnotherTestPackage'].
+	aClass := self class classInstaller make: [ :aBuilder |
+		          aBuilder
+			          name: #ATestClass;
+			          package: 'AnotherTestPackage' ].
 
 	aClass compile: 'testingMethod ^ 42 ' classified: '*atestpackage-something-else'.
-	
-	self deny: (RPackageOrganizer default includesPackageNamed: 'Atestpackage-something-else').
+
+	self deny: (Smalltalk organization includesPackageNamed: 'Atestpackage-something-else').
 	self assert: ('ATestPackage' asPackage extendedClasses includes: aClass).
 
-	MCWorkingCopy registry at: (MCPackage named: 'atestpackage-something-else') ifPresent: [ self fail ].	
+	MCWorkingCopy registry at: (MCPackage named: 'atestpackage-something-else') ifPresent: [ self fail ]
 ]

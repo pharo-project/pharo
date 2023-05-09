@@ -13,19 +13,26 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> name: nm [
+Protocol class >> name: aString [
 
-	^ self new
-		name: nm asSymbol;
-		yourself
+	self deprecated: 'Use #named: instead' transformWith: '`@rcv name: `@arg' -> '`@rcv named: `@arg'.
+	^ self named: aString
 ]
 
 { #category : #'instance creation' }
-Protocol class >> name: nm methodSelectors: methods [
+Protocol class >> name: aString methodSelectors: methods [
+
+	^ (self named: aString)
+		  methodSelectors: methods;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+Protocol class >> named: aStrings [
+
 	^ self new
-		methodSelectors: methods;
-		name: nm asSymbol;
-		yourself
+		  name: aStrings;
+		  yourself
 ]
 
 { #category : #accessing }
