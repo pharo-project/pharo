@@ -243,12 +243,15 @@ MetaLinkInstaller >> nodesForPermaLink: permalink toBeInstalledIn: method [
 	"Looking for nodes from method where to install the permalink.
 	That means that each of these nodes has no links,
 	or that the link hosted by permalink is not present in their link set."
+
 	| slotOrVar persistenceType nodes |
 	slotOrVar := permalink slotOrVariable.
 	persistenceType := permalink persistenceType.
 	nodes := (slotOrVar accessingNodesFor: persistenceType) asIdentitySet
-					select: [ :node | node methodNode method = method ].
-	^ nodes select: [ :node | node hasMetaLinks not or: [ (node links includes: permalink link) not ] ]
+		         select: [ :node | node methodNode compiledMethod = method ].
+	^ nodes select: [ :node |
+		  node hasMetaLinks not or: [
+			  (node links includes: permalink link) not ] ]
 ]
 
 { #category : #links }

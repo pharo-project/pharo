@@ -11,7 +11,8 @@ Class {
 	#superclass : #RBLiteralNode,
 	#instVars : [
 		'isByteArray',
-		'contents'
+		'contents',
+		'openerSize'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -112,6 +113,18 @@ RBLiteralArrayNode >> match: aNode inContext: aDictionary [
 		matchList: contents
 		against: aNode contents
 		inContext: aDictionary
+]
+
+{ #category : #accessing }
+RBLiteralArrayNode >> openerSize [
+
+	^ openerSize
+]
+
+{ #category : #accessing }
+RBLiteralArrayNode >> openerSize: anObject [
+
+	openerSize := anObject
 ]
 
 { #category : #copying }

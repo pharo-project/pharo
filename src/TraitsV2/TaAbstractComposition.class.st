@@ -138,28 +138,26 @@ TaAbstractComposition >> compile: selector into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| method newMethod sourceCode trailer traitDefining |
+	| method newMethod sourceCode traitDefining |
 	traitDefining := self traitDefining: selector.
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
-	trailer := method trailer.
-
+	
 	newMethod := aClass compiler
 		             source: sourceCode;
-		             compiledMethodTrailer: trailer;
 		             permitUndeclared: true;
 		             compile.
-
+	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 
-	aClass addSelectorSilently: selector withMethod: newMethod.
+	aClass organization classify: selector under: (self categoryOfMethod: method withSelector: method selector).
 
-	aClass organization classify: selector inProtocolNamed: (self categoryOfMethod: method withSelector: method selector).
+	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -215,11 +213,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
+	aClass organization classify: aSelector under: aCompiledMethod protocol.
+
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
-
-	aClass organization classify: aSelector inProtocolNamed: aCompiledMethod category asSymbol.
-
-	aClass organization removeEmptyProtocols.
 
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
 

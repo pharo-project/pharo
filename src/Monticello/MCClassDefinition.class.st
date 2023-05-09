@@ -224,7 +224,7 @@ MCClassDefinition >> definitionString [
 
 { #category : #accessing }
 MCClassDefinition >> description [
-	^ Array with: name
+	^ { name }
 
 ]
 
@@ -456,14 +456,14 @@ MCClassDefinition >> printMetaDefinitionOn: stream [
 
 { #category : #comparing }
 MCClassDefinition >> provisions [
-	^ Array with: name
+	^ { name }
 ]
 
 { #category : #comparing }
 MCClassDefinition >> requirements [
 	^ ((superclassName == #nil) or: [superclassName asString beginsWith: 'AnObsolete'])
 		ifTrue: [self poolDictionaries]
-		ifFalse: [(Array with: superclassName), self poolDictionaries]
+		ifFalse: [{superclassName}, self poolDictionaries]
 ]
 
 { #category : #accessing }

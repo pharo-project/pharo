@@ -50,15 +50,14 @@ DADependencyChecker >> computeDependenciesOf: aPackageName visitedPackages: visi
 
 { #category : #'computing - dependencies' }
 DADependencyChecker >> computeImageDependencies [
+
 	| visited |
 	self newReport.
 	report
 		analysisRunString: 'Pharo image dependencies';
 		imageVersion: SystemVersion current.
 	visited := Set new.
-	RPackageOrganizer default packageNames
-		do: [ :packageName |
-			self computeDependenciesOf: packageName visitedPackages: visited ].
+	Smalltalk organization packageNames do: [ :packageName | self computeDependenciesOf: packageName visitedPackages: visited ].
 	^ report
 ]
 

@@ -10,6 +10,7 @@ Class {
 		'engine',
 		'source',
 		'position',
+		'completionTokenStart',
 		'completionBuilder',
 		'completionClass',
 		'completion'
@@ -23,6 +24,7 @@ CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aSt
 	^ self new
 		completionClass: aClass;
 		engine: aCompletionEngine;
+		completionTokenStart: aCompletionEngine completionTokenStart;
 		source: aString;
 		position: anInteger;
 		yourself
@@ -86,6 +88,18 @@ CoCompletionContext >> completionClass: aClass [
 CoCompletionContext >> completionToken [
 
 	^ self engine completionToken
+]
+
+{ #category : #accessing }
+CoCompletionContext >> completionTokenStart [
+
+	^ completionTokenStart
+]
+
+{ #category : #accessing }
+CoCompletionContext >> completionTokenStart: anObject [
+
+	completionTokenStart := anObject
 ]
 
 { #category : #accessing }

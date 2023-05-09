@@ -118,22 +118,25 @@ IRMethod >> compilationContext: aCompilationContext [
 IRMethod >> compiledBlock: scope [
 
 	^compiledMethod
-		ifNil: [self generateBlock: CompiledMethodTrailer empty withScope: scope ]
+		ifNil: [self generateBlockWithScope: scope ]
 		ifNotNil: [compiledMethod]
 ]
 
 { #category : #translating }
 IRMethod >> compiledMethod [
 
-	^ self compiledMethodWith: CompiledMethodTrailer empty
+	^ compiledMethod 
+		ifNil: [self generate ]
+
 ]
 
 { #category : #translating }
 IRMethod >> compiledMethodWith: trailer [
-
-	^compiledMethod
-		ifNil: [self generate: trailer ]
-		ifNotNil: [compiledMethod]
+	self
+		deprecated: 'Use compiledMethod'
+		transformWith: '`@receiver compiledMethodWith: `@argument'
+			-> '`@receiver compiledMethod'.
+	^ self compiledMethod
 ]
 
 { #category : #enumerating }
@@ -144,22 +147,11 @@ IRMethod >> firstInstructionMatching: aBlock [
 	^nil
 ]
 
-{ #category : #accessing }
-IRMethod >> forceLongForm [
-	compilationContext ifNil: [ ^ false ].
-	^compilationContext optionLongIvarAccessBytecodes
-]
-
 { #category : #translating }
 IRMethod >> generate [
-	^self generate: CompiledMethodTrailer empty
-]
-
-{ #category : #translating }
-IRMethod >> generate: trailer [
 
 	| irTranslator |
-   irTranslator := IRTranslator context: compilationContext trailer: trailer.
+   irTranslator := IRTranslator context: self compilationContext.
 	irTranslator
 		visitNode: self;
 		pragmas: pragmas.
@@ -175,9 +167,18 @@ IRMethod >> generate: trailer [
 ]
 
 { #category : #translating }
-IRMethod >> generateBlock: trailer withScope: scope [
+IRMethod >> generate: trailer [
+	self
+		deprecated: 'Use generate'
+		transformWith: '`@receiver generate: `@argument'
+			-> '`@receiver generate'.
+	^ self generate 
+]
+
+{ #category : #translating }
+IRMethod >> generateBlockWithScope: scope [
 	| irTranslator |
-      irTranslator := IRTranslator context: compilationContext trailer: trailer.
+      irTranslator := IRTranslator context: self compilationContext.
 	irTranslator
 		pushOuterVectors: scope;
 		visitNode: self;
@@ -259,8 +260,9 @@ IRMethod >> numArgs: anInteger [
 
 { #category : #optimizing }
 IRMethod >> optimize [
+	"Perform all optimizations"
+
 	self removeEmptyStart.
-	self compilationContext optionOptimizeIR ifFalse: [^self].
 	self absorbJumpsToSingleInstrs
 ]
 

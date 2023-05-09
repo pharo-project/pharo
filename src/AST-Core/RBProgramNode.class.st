@@ -79,7 +79,7 @@ RBProgramNode >> addError: anErrorMessage [
 	^ notice
 ]
 
-{ #category : #adding }
+{ #category : #notice }
 RBProgramNode >> addNotice: aRBNotice [
 
 	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
@@ -206,6 +206,17 @@ RBProgramNode >> allVariables [
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
+{ #category : #replacing }
+RBProgramNode >> asDoit [
+	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
+
+	| source |
+	source := self source.
+	^ RBDoItMethodNode new
+		  body: self asSequenceNode;
+		  source: source
+]
+
 { #category : #tests }
 RBProgramNode >> asPositionDebugString [
 	"Compute a string representing the positions of children nodes.
@@ -233,7 +244,7 @@ RBProgramNode >> asPositionDebugString [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : #replacing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."
 
@@ -242,6 +253,11 @@ RBProgramNode >> asReturn [
 		ifFalse: [self error: 'Parent node must be a sequence node.'].
 	(parent isLast: self) ifFalse: [self error: 'Return node must be last.'].
 	^parent addReturn
+]
+
+{ #category : #replacing }
+RBProgramNode >> asSequenceNode [
+	^RBSequenceNode statements: {self}
 ]
 
 { #category : #querying }
@@ -600,6 +616,11 @@ RBProgramNode >> intersectsInterval: anInterval [
 ]
 
 { #category : #testing }
+RBProgramNode >> isAnnotationMark [
+	^ false
+]
+
+{ #category : #testing }
 RBProgramNode >> isArgumentVariable [
 	^ false
 ]
@@ -942,6 +963,19 @@ RBProgramNode >> methodOrBlockNode [
 { #category : #accessing }
 RBProgramNode >> newSource [
 	^self formattedCode
+]
+
+{ #category : #'node access' }
+RBProgramNode >> nodeBeforeOffset: anInteger [
+	"Return the node at offset `anInteger` or at the first non-separator previous character.
+	Ignoring space corresponds to what is the visible current or previous node in IDE."
+
+	| offset |
+	offset := anInteger.
+	[
+	offset > 0 and: [ offset > self source size or: [ (self source at: offset) isSeparator ] ] ]
+		whileTrue: [ offset := offset - 1 ].
+	^ self nodeForOffset: offset.
 ]
 
 { #category : #'node access' }

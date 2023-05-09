@@ -41,12 +41,9 @@ TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesIn
 { #category : #comparing }
 TextLine >> = line [
 
-	^ self species = line species
-		  ifTrue: [
-			  ((firstIndex = line first and: [ lastIndex = line last ]) and: [
-				   internalSpaces = line internalSpaces ]) and: [
-				  paddingWidth = line paddingWidth ] ]
-		  ifFalse: [ false ]
+	^ self species = line species and: [
+		  firstIndex = line first and: [ lastIndex = line last and: [
+				  internalSpaces = line internalSpaces and: [ paddingWidth = line paddingWidth ] ] ] ]
 ]
 
 { #category : #accessing }

@@ -6,16 +6,10 @@ Class {
 
 { #category : #utilities }
 MethodMapTest >> compileAndRunExample: aSelector [
-	| cm |
-
-	cm := self compileMethod:  MethodMapExamples>>aSelector.
-	^cm valueWithReceiver:  MethodMapExamples new arguments: #()
-]
-
-{ #category : #utilities }
-MethodMapTest >> compileMethod: aMethod [
-
-	^aMethod parseTree generate: aMethod trailer
+	| oldMethod recompiledMethod |
+	oldMethod := MethodMapExamples>>aSelector.
+	recompiledMethod := oldMethod methodClass compiler compile: oldMethod sourceCode.
+	^recompiledMethod valueWithReceiver: MethodMapExamples new
 ]
 
 { #category : #'tests - ast mapping' }

@@ -70,7 +70,9 @@ CompletionEngine >> completionToken [
 { #category : #replacement }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
-	^ self editor previousWord: self editor caret - 1
+	self editor caret <= 1 ifTrue: [ ^ self editor caret ].
+	(self editor isWordCharacterAt: self editor caret - 1 in: self editor text) ifFalse: [^ self editor caret ].	
+	^ self editor previousWord: self editor caret
 ]
 
 { #category : #accessing }
@@ -141,7 +143,6 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
 		menuMorph showDetail.
 		^ true ].
-
 
 	({
 		 KeyboardKey left.
@@ -237,6 +238,12 @@ CompletionEngine >> hasDetail [
 	^ self isMenuOpen and: [ menuMorph hasDetail ]
 ]
 
+{ #category : #actions }
+CompletionEngine >> hideDetail [
+
+	menuMorph hideDetail
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds
@@ -303,7 +310,9 @@ CompletionEngine >> openMenu [
 				engine: self
 				position: (editor selectionPosition: context completionToken).
 
-	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
+	theMenu isClosed ifFalse: [ 
+		menuMorph := theMenu.
+		theMenu showDetail ]
 ]
 
 { #category : #replacement }
@@ -314,27 +323,28 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart rest |
-	"Try to correctly replace the current token in the word.
-	The code editor should be able to do it by himself"
-	wordEnd := (self editor nextWord: self editor caret - 1).
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
+
+	wordStart := self completionTokenStart.
+
+	"If completionToken is not empty, the end is the end of the whole word (according to the editor)"
+	wordEnd := wordStart = editor caret
+		ifTrue: [ wordStart ]
+		ifFalse: [ self editor nextWord: self editor caret - 1].
+
+	"Do not insert an aditional space if there is already one"
+	(aString last = $  and: [
+		wordEnd <= self editor text size and: [
+			(self editor text at: wordEnd) = $ ]]) ifTrue: [ wordEnd := wordEnd + 1 ].
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
-
-	wordStart := self editor previousWord: (self editor caret - 1).
 
 	self editor
 		selectInvisiblyFrom: wordStart
 		to: wordEnd - 1.
 	old := self editor selection.
 
-	( old size >= aString size )
-		ifTrue:[
-				self editor replaceSelectionWith: aString. ]
-		ifFalse: [
-				self editor selectInvisiblyFrom: wordEnd	to: wordEnd - 1.
-				rest := aString asString copyFrom: old size + 1 to: aString size.
-				self editor replaceSelectionWith: rest ].
+	self editor replaceSelectionWith: aString.
 
 	offset := NECPreferences spaceAfterCompletion
 		ifTrue: [ 1 ]
@@ -368,6 +378,12 @@ CompletionEngine >> setEditor: anObject [
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self
+]
+
+{ #category : #actions }
+CompletionEngine >> showDetail [
+
+	menuMorph showDetail
 ]
 
 { #category : #keyboard }
@@ -582,8 +598,7 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 	(aParagraphEditor isNil or: [ self isMenuOpen not ]) ifTrue: [
 		^ self ].
 
-	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
+	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph refreshSelection
+	context narrowWith: aParagraphEditor wordAtCaret
 ]

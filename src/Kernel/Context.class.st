@@ -156,17 +156,13 @@ Context class >> initializePrimitiveSimulators [
 
 { #category : #simulation }
 Context class >> initializeTryNamedPrimitiveTemplateMethod [
-	| source method |
+	| source |
 	source := 'tryNamedPrimitive
 	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
 	<primitive:'' module:'' error: errorCode>
 	^ Context primitiveFailTokenFor: errorCode'.
-	method := Smalltalk compiler
-				class: UndefinedObject;
-				source: source;
-				compile.
-	TryNamedPrimitiveTemplateMethod := method copyWithSource: source
+	TryNamedPrimitiveTemplateMethod := Smalltalk compiler compile: source
 ]
 
 { #category : #'instance creation' }
@@ -773,6 +769,16 @@ Context >> failPrimitiveWith: maybePrimFailToken [
 	((self isPrimFailToken: maybePrimFailToken)
 	  and: [method encoderClass isStoreAt: pc in: method]) ifTrue:
 		[self at: stackp put: maybePrimFailToken last]
+]
+
+{ #category : #'debugger access' }
+Context >> filterDebuggerStack [
+	"Answer self or the first sender that do not have the pragma `debuggerCompleteToSender` or belong to the `Exception` class hierarchy"
+
+	^ ((self method methodClass instanceSide includesBehavior: Exception)
+		   or: [ self method hasPragmaNamed: #debuggerCompleteToSender ])
+		  ifTrue: [ sender ifNotNil: [ sender filterDebuggerStack ] ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #query }

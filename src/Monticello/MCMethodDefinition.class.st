@@ -337,7 +337,7 @@ MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 
 { #category : #comparing }
 MCMethodDefinition >> requirements [
-	^ Array with: className
+	^ { className }
 ]
 
 { #category : #accessing }

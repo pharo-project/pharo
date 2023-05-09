@@ -81,7 +81,10 @@ SystemNavigation >> allClassesImplementing: aSelector [
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
 
-	^self allClasses flatCollectAsSet: [ :class | instanceSide ifTrue: [class protocols] ifFalse: [ class class protocols ] ]
+	^ self allClasses flatCollectAsSet: [ :class |
+		  instanceSide
+			  ifTrue: [ class protocolNames ]
+			  ifFalse: [ class class protocolNames ] ]
 ]
 
 { #category : #private }
@@ -303,14 +306,6 @@ SystemNavigation >> initialize [
 
 	super initialize.
 	self environment: Smalltalk globals
-]
-
-{ #category : #query }
-SystemNavigation >> installedMethodsWithIncorrectTrailerKind [
-
-	^ self allMethodsSelect:
-		[ :each | (#(#SourcePointer #VarLengthSourcePointer #NativeCodeTrailer)
-							includes: each trailer kind) not and: [ each isInstalled ] ]
 ]
 
 { #category : #query }

@@ -46,7 +46,7 @@ DoItVariableTest >> testDoItCompilation [
 	doIt := thisContext class compiler
 		source: 'temp + 2';
 		context: thisContext;
-		noPattern: true;
+		isScripting: true;
 		bindings: { var };
 		compile.
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
@@ -87,7 +87,7 @@ DoItVariableTest >> testReadCompilation [
 	var := DoItVariable named: #temp fromContext: thisContext.
 	ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
@@ -119,7 +119,7 @@ DoItVariableTest >> testWriteCompilation [
 	var := DoItVariable named: #temp fromContext: thisContext.
 	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 	doIt valueWithReceiver: self arguments: #().
 
 	self assert: temp equals: 500

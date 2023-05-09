@@ -99,7 +99,7 @@ RPackageTraitTest >> testPackageOfClassMethodFromTraitIsTraitPackage [
 	"test that a class method coming from a trait is packaged in the trait package"
 
 	self assert: (a1 >> #traitMethodDefinedInP4 packageFromOrganizer: self packageClass organizer) equals: p4.
-	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: self packageOrganizerClass default) equals: p5
+	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: Smalltalk organization) equals: p5
 ]
 
 { #category : #tests }
@@ -107,7 +107,7 @@ RPackageTraitTest >> testPackageOfClassMethodIsClassPackage [
 	"The package of a local method (not defined in a trait) is the package of its class"
 
 	self assert: (a1 >> #localMethodDefinedInP1 packageFromOrganizer: self packageClass organizer) equals: p4.
-	self assert: (a1 >> #anotherLocalMethodDefinedInP1 packageFromOrganizer: self packageOrganizerClass default) equals: p4.
+	self assert: (a1 >> #anotherLocalMethodDefinedInP1 packageFromOrganizer: Smalltalk organization) equals: p4.
 	self assert: (a1 >> #anotherLocalMethodDefinedInP1 packageFromOrganizer: self packageClass organizer) equals: p4
 ]
 
@@ -116,7 +116,7 @@ RPackageTraitTest >> testPackageOfTraitMethodIsTraitPackage [
 	"The package of a trait method is the package of its trait."
 
 	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: self packageClass organizer) equals: p5.
-	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: self packageOrganizerClass default) equals: p5.
+	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: Smalltalk organization) equals: p5.
 	self assert: (a1 >> #traitMethodDefinedInP4 packageFromOrganizer: self packageClass organizer) equals: p4
 ]
 

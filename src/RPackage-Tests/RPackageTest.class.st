@@ -18,12 +18,13 @@ RPackageTest >> tearDown [
 
 { #category : #tests }
 RPackageTest >> testActualClassTags [
+
 	| packageWithoutClassTags packageWithClassTags |
-	packageWithoutClassTags := RPackageOrganizer default packageOf: StartupAction.
+	packageWithoutClassTags := Smalltalk organization packageOf: StartupAction.
 	self denyEmpty: packageWithoutClassTags classTags.
 	self assertEmpty: packageWithoutClassTags actualClassTags.
 
-	packageWithClassTags := RPackageOrganizer default packageOf: Object.
+	packageWithClassTags := Smalltalk organization packageOf: Object.
 	self assert: packageWithClassTags actualClassTags equals: packageWithClassTags classTags
 ]
 
@@ -34,7 +35,7 @@ RPackageTest >> testAddClass [
 	package1 := (RPackage named: #Test1) register.
 	done := 0.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
-	SystemAnnouncer uniqueInstance weak when: ClassRecategorized do: [ done := done + 1].
+	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1] for: self.
 
 	self assert: (package1 includesClass: class).
 	self assert: (package1 classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
@@ -218,11 +219,11 @@ RPackageTest >> testHasProperty [
 
 { #category : #'tests - queries' }
 RPackageTest >> testHierarchyRoots [
+
 	| roots |
-	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') hierarchyRoots.
+	roots := (Smalltalk organization packageNamed: #'RPackage-Tests') hierarchyRoots.
 	roots := roots collect: [ :each | each name ].
-	#(RPackageTestCase)
-		do: [ :each | roots includes: each ]
+	#( RPackageTestCase ) do: [ :each | roots includes: each ]
 ]
 
 { #category : #tests }
@@ -290,8 +291,9 @@ RPackageTest >> testRenameToMakesMCDirty [
 
 { #category : #'tests - queries' }
 RPackageTest >> testRoots [
+
 	| roots |
-	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') roots.
+	roots := (Smalltalk organization packageNamed: #'RPackage-Tests') roots.
 	roots := roots collect: [ :each | each name ].
-	#(RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites RPackageTestCase RPackageWithDoTest) do: [ :each | roots includes: each ]
+	#( RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites RPackageTestCase RPackageWithDoTest ) do: [ :each | roots includes: each ]
 ]

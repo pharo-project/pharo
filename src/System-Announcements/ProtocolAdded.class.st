@@ -1,17 +1,10 @@
 "
-This class is not used, but should be used when we hook into the addition and removal of protocols. Right now, we only get ClassReorganizedAnnouncement
+I am an announcement raised when we add a new protocol in a class.
+
+I know the protocol that was added and allow users to react to it.
 "
 Class {
 	#name : #ProtocolAdded,
 	#superclass : #ProtocolAnnouncement,
 	#category : #'System-Announcements-System-Protocols'
 }
-
-{ #category : #'class initialization' }
-ProtocolAdded class >> in: aClass protocol: aProtocolName [
-
-	^ self new
-		  classReorganized: aClass;
-		  protocol: aProtocolName;
-		  yourself
-]

@@ -359,19 +359,14 @@ BlockClosureTest >> testPrintOn [
 
 { #category : #'tests - printing' }
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
-	| method copy start block |
-	"Generating method with source code"
-	UndefinedObject compile: 'method ^ [ 1 + 2 ]'.
-	method := UndefinedObject >> #method.
-	["Removing the source code of method"
-		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
-		start := method endPC + 1.
-		method replaceFrom: start to: method size with: copy startingAt: start.
-		block := nil method.
-
-		self deny: method hasSourceCode.
-		self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
-	] ensure: [ method removeFromSystem ]
+	| method block |
+	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
+	method removeProperty: #source.
+	self deny: method hasSourceCode.
+	
+	block := method valueWithReceiver: nil.
+	"we compare the ast to not depend on pretty printer settings"
+	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
 ]
 
 { #category : #tests }

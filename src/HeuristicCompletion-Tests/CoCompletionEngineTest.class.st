@@ -60,6 +60,33 @@ CoCompletionEngineTest >> testAdvanceWordTwiceClosesCompletionContext [
 ]
 
 { #category : #'tests - interaction' }
+CoCompletionEngineTest >> testCmdCtrlLeftClosesDetail [
+
+	"The start of a word does not close the completion menu"
+
+	| text |
+	text := 'self asOrdered'.
+	self
+		setEditorText: text;
+		selectAt: text size - 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	"Detail already closed? open it"
+	controller hasDetail ifFalse: [ controller showDetail ].
+
+	"Force the drawing of the menu, so the detail can get its position..."
+	WorldMorph doOneCycle.
+	"This is the current shortcut to open the details of the completion engine... Cmd/ctrl+right for all platforms"
+	editor keyDown:
+		((self keyboardEventFor: Character arrowLeft) buttons:
+			 KMModifier meta eventCode).
+
+	self assert: controller hasDetail
+]
+
+{ #category : #'tests - interaction' }
 CoCompletionEngineTest >> testCmdCtrlRightOpensDetail [
 
 	| text |
@@ -70,6 +97,9 @@ CoCompletionEngineTest >> testCmdCtrlRightOpensDetail [
 
 	editor textArea openInWorld.
 	controller openMenu.
+
+	"Detail already open? close it"
+	controller hasDetail ifTrue: [ controller hideDetail ].
 
 	"Force the drawing of the menu, so the detail can get its position..."
 	WorldMorph doOneCycle.
@@ -113,6 +143,36 @@ CoCompletionEngineTest >> testEndGoesToEndOfLine [
 	editor keyDown: (self keyboardEventFor: Character end).
 
 	self assert: editor caret equals: text size + 1
+]
+
+{ #category : #'tests - interaction' }
+CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
+
+	self setEditorTextWithCaret: 'self mEthOdThatDoesNotExis|t toto'.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	self assert: controller hasCompletionContext.
+	self assert: controller completionToken equals: 'mEthOdThatDoesNotExis'.
+	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: controller completionToken equals: 'mEthOdThatDoesNotExist'.
+	self assert: controller hasCompletionContext.
+	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: controller completionToken equals: ''.
+	self deny: controller hasCompletionContext.
+
+	self setEditorTextWithCaret: 'self m|EthOdThatDoesNotExist toto'.
+	controller openMenu.
+
+	self assert: controller hasCompletionContext.
+	self assert: controller completionToken equals: 'm'.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: controller completionToken equals: ''.
+	self assert: controller hasCompletionContext.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: controller completionToken equals: 'self'.
+	self deny: controller hasCompletionContext
 ]
 
 { #category : #'tests - interaction' }

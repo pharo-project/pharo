@@ -12,8 +12,7 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'organization',
-		'commentSourcePointer'
+		'organization'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -29,24 +28,25 @@ ClassDescription >> acceptsLoggingOfCompilation [
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
-	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
+	| priorMethod priorOrigin oldProtocol newProtocol |
+	self compiledMethodAt: selector ifPresent: [ :method |
+		priorMethod := method.
+		priorOrigin := method origin ].
 
-	self addSelectorSilently: selector withMethod: compiledMethod.
-
-	oldProtocol := self organization protocolNameOfElement: selector.
+	oldProtocol := self organization protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self organization classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
 				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
-	newProtocol := self organization protocolNameOfElement: selector.
+	newProtocol := self organization protocolOfSelector: selector.
+
+	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
-	(priorMethodOrNil isNil or: [ priorOriginOrNil ~= compiledMethod origin ])
+	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			self
@@ -55,7 +55,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol name ]
 ]
 
 { #category : #'instance variables' }
@@ -75,13 +75,18 @@ ClassDescription >> addMethodTag: aSymbol [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
+
 	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [nil].
-	oldProtocol := priorMethodOrNil ifNotNil: [ priorMethodOrNil protocol ].
+	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
+	oldProtocol := self organization protocolOfSelector: selector.
+
+	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
+	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: nil ] ].
+
 	self addSelectorSilently: selector withMethod: compiledMethod.
 	priorMethodOrNil
-		ifNil: [SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -158,50 +163,6 @@ ClassDescription >> baseClass [
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
 						-> '`@receiver instanceSide'.
 	^ self instanceSide
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> classComment: aString [
-	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
-	^ self comment: aString stamp: '<historical>'
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> classComment: aString stamp: aStamp [
-	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
-
-	| pointer header oldComment oldStamp preamble |
-	oldComment := self comment.
-	oldStamp := self commentStamp.
-
-	aString string = oldComment string ifTrue: [ ^ self ].
-
-	pointer := self instanceSide commentSourcePointer ifNil: [0].
-
-
-	preamble := String streamContents: [ :file |
-		file cr; nextPut: $!.
-		header := String streamContents: [:strm |
-			strm
-				nextPutAll: self name;
-				nextPutAll: ' commentStamp: '.
-			aStamp storeOn: strm.
-			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
-		file nextChunkPut: header; cr ].
-
-	SourceFiles
-		writeSource: aString
-		preamble: preamble
-		onSuccess: [ :newSourcePointer |
-			self instanceSide commentSourcePointer: newSourcePointer]
-		onFail: [ "ignore" ].
-
-	SystemAnnouncer uniqueInstance
-		class: self
-		oldComment: oldComment
-		newComment: aString
-		oldStamp: oldStamp
-		newStamp: aStamp
 ]
 
 { #category : #'accessing - comment' }
@@ -293,51 +254,6 @@ ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
 
 	^ String streamContents: [ :stream | self classVariablesOn: stream ]
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> comment [
-    ^ self instanceSide commentSourcePointer
-		  ifNil: [ '' ]
-		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> comment: aStringOrText [
-	"Set the receiver's comment to be the argument, aStringOrText."
-
-	self instanceSide classComment: aStringOrText
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> comment: aStringOrText stamp: aStamp [
-	"Set the receiver's comment to be the argument, aStringOrText."
-
-	self instanceSide classComment: aStringOrText stamp: aStamp
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> commentSourcePointer [
-	^ commentSourcePointer
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> commentSourcePointer: anObject [
-	commentSourcePointer := anObject
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> commentStamp [
-
-	^ self instanceSide commentSourcePointer
-		  ifNil: [ '' ]
-		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
-]
-
-{ #category : #'file in/out' }
-ClassDescription >> commentStamp: changeStamp [
-	"update the changeStamp"
-	self comment: self instanceSide organization comment stamp: changeStamp
 ]
 
 { #category : #compiling }
@@ -514,12 +430,6 @@ ClassDescription >> forceNewFrom: anArray [
 { #category : #'accessing - parallel hierarchy' }
 ClassDescription >> hasClassSide [
 	^self subclassResponsibility
-]
-
-{ #category : #'accessing - comment' }
-ClassDescription >> hasComment [
-	"Return whether this class truly has a comment other than the default"
-	^ self instanceSide commentSourcePointer isNotNil
 ]
 
 { #category : #'instance variables' }
@@ -761,41 +671,30 @@ ClassDescription >> noteCompilationOf: aSelector meta: isMeta [
 ]
 
 { #category : #'organization updating' }
-ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
-	(self compiledMethodAt: selector ifAbsent: [ nil ])
-		ifNotNil: [ :method |
-			SystemAnnouncer uniqueInstance
-				methodRecategorized: method
-				oldProtocol: oldCategory ]
+
+	self
+		compiledMethodAt: selector
+		ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
 ]
 
 { #category : #private }
 ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
-	| oldPackage newPackage |
 
-	(newProtocol = oldProtocol)
-		ifTrue: [ ^ self ].
+	| oldPackage newPackage |
+	newProtocol = oldProtocol ifTrue: [ ^ self ].
 
 	"This indirection is because we need to abstract RPackage from the kernel"
 	self class environment at: #RPackage ifPresent: [ :rPackageClass |
-			newPackage := rPackageClass organizer
-				packageForProtocol: newProtocol
-				inClass: self.
-			oldPackage := rPackageClass organizer
-				packageForProtocol: oldProtocol
-				inClass: self.
+		newPackage := rPackageClass organizer packageForProtocol: newProtocol name inClass: self.
+		oldPackage := rPackageClass organizer packageForProtocol: oldProtocol name inClass: self.
 
-			"Announce recategorization"
-			newPackage = oldPackage
-				ifFalse: [
-					SystemAnnouncer uniqueInstance
-						methodRepackaged: compiledMethod
-						from: oldPackage
-						to: newPackage ] ].
+		"Announce recategorization"
+		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
 
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol name
 ]
 
 { #category : #private }
@@ -855,6 +754,13 @@ ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
+{ #category : #'accessing - protocols' }
+ClassDescription >> protocolNames [
+	"Return the list of all the protocol names included in this class."
+
+	^ self organization protocolNames copy
+]
+
 { #category : #compiling }
 ClassDescription >> reformatAll [
 	"Reformat all methods in this class"
@@ -869,15 +775,6 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> removeMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods.
-	Here we could remove what we not need"
-
-	self organization removeProtocolIfEmpty: aSymbol
-]
-
 { #category : #'accessing - method dictionary' }
 ClassDescription >> removeProtocol: protocolName [
 	"Remove each of the messages categorized under aString in the method
@@ -885,6 +782,13 @@ ClassDescription >> removeProtocol: protocolName [
 
 	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
 	self organization removeProtocolIfEmpty: protocolName
+]
+
+{ #category : #'accessing - protocols' }
+ClassDescription >> removeProtocolIfEmpty: aProtocol [
+	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
+
+	self organization removeProtocolIfEmpty: aProtocol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -1097,7 +1001,7 @@ ClassDescription >> tagsForMethods [
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
 	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	allProtocols := self organization protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
 
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]

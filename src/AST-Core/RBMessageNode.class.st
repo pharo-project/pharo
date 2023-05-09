@@ -152,6 +152,11 @@ RBMessageNode >> hash [
 ]
 
 { #category : #testing }
+RBMessageNode >> isAnnotation [
+	^ self receiver isAnnotationMark
+]
+
+{ #category : #testing }
 RBMessageNode >> isBinary [
 	^(self isUnary or: [self isKeyword]) not
 ]
@@ -360,7 +365,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 		ifTrue:
 			[self receiver: anotherNode.
 			(parent notNil and: [parent isCascade])
-				ifTrue: [parent messages do: [:each | each receiver: anotherNode]]].
+				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]

@@ -320,7 +320,7 @@ RGReadOnlyImageBackend >> tagsForMethod: anRGMethod do: aBlock [
 { #category : #method }
 RGReadOnlyImageBackend >> tagsForMethodsFor: anRGBehavior do: aBlock [
 
-	(self realBehaviorFor: anRGBehavior) protocols do: aBlock
+	(self realBehaviorFor: anRGBehavior) protocolNames do: aBlock
 ]
 
 { #category : #method }

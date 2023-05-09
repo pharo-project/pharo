@@ -47,7 +47,7 @@ RBEnvironmentVisitor >> visitPackageEnv: rbPackageEnv [
 { #category : #visiting }
 RBEnvironmentVisitor >> visitProtocolEnv: rbProtocolEnv [
 	| list selectedList methodName items dialog |
-	list := rbProtocolEnv definedClass protocols sorted.
+	list := rbProtocolEnv definedClass protocolNames sorted.
 	selectedList := rbProtocolEnv protocols sorted.
 	methodName := #yourself.
 	items := OrderedCollection new.

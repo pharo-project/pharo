@@ -21,25 +21,15 @@ OCRequestorScope >> allTemps [
 ]
 
 { #category : #testing }
-OCRequestorScope >> canDeclareVariableName: name [
+OCRequestorScope >> canAddBindingOf: name [
 	"Test for free workspace declaration"
 
 	"Empty names come from faulty parameters. Ignore them"
 	name ifEmpty: [ ^ false ].
 
-	"Ensure compatibility with old requestors"
-	(requestor respondsTo: #canDeclareVariableName:) ifTrue: [
-		^ requestor canDeclareVariableName: name ].
-
-	"Supported legacy: only the workspace"
-	requestor class name = #StPlaygroundInteractionModel ifFalse: [
-		^ false ].
-
-	"Heuristic, assume the requestor does not want upercased variables.
-	A menu will likely open to offer reparation for class or global or something."
-	name first isUppercase ifTrue: [ ^ false ].
-
-	^ true
+	"Because requestor do not have a real API, introspection is used."
+	(requestor respondsTo: #canAddBindingOf:) ifFalse: [ ^ false ].
+	^ requestor canAddBindingOf: name
 ]
 
 { #category : #lookup }
@@ -51,7 +41,7 @@ OCRequestorScope >> lookupVar: name [
 	(super lookupVar: name) ifNotNil: [ :binding | ^ binding ].
 
 	"Can we have a free workspace variable or not?"
-	(self canDeclareVariableName: name) ifFalse: [ ^nil ].
+	(self canAddBindingOf: name) ifFalse: [ ^nil ].
 	"We do not register it yet, to not fill the requestor with garbage variable during styling for instance"
 	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
 ]

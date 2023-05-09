@@ -38,6 +38,19 @@ ClassDescriptionTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
+
+	| class method |
+	class := self createTestClass.
+	class addSelector: #wammawink withMethod: (class compiler compile: 'wammawink ^ self').
+	method := class >> #wammawink.
+
+	self assert: method sourceCode equals: 'wammawink ^ self'.
+	self assert: method protocol equals: Protocol unclassified.
+	self assert: (class organization protocolOfSelector: #wammawink) name equals: Protocol unclassified
+]
+
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testAllSlots [
 	self assert: Context allSlots size equals: 6
@@ -126,7 +139,7 @@ ClassDescriptionTest >> testSlots [
 
 { #category : #tests }
 ClassDescriptionTest >> testWhichCategoryIncludesSelector [
-	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing - comment'.
+	self assert: (ClassDescription whichCategoryIncludesSelector: #printOn:)  equals: #printing.
 	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil
 ]
 

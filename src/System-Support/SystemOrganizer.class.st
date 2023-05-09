@@ -176,7 +176,7 @@ SystemOrganizer >> removeCategory: category [
 
 	categoryMap
 		at: category
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'cannot remove non-empty category ' , category ] ]
+		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , category , '. Present classes: ' , classes printString ] ]
 		ifAbsent: [ ^ self ].
 
 	categoryMap removeKey: category.

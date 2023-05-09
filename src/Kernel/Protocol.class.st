@@ -15,19 +15,26 @@ Class {
 }
 
 { #category : #'instance creation' }
-Protocol class >> name: nm [
+Protocol class >> name: aString [
 
-	^ self new
-		name: nm asSymbol;
-		yourself
+	self deprecated: 'Use #named: instead' transformWith: '`@rcv name: `@arg' -> '`@rcv named: `@arg'.
+	^ self named: aString
 ]
 
 { #category : #'instance creation' }
-Protocol class >> name: nm methodSelectors: methods [
+Protocol class >> name: aString methodSelectors: methods [
+
+	^ (self named: aString)
+		  methodSelectors: methods;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+Protocol class >> named: aStrings [
+
 	^ self new
-		methodSelectors: methods;
-		name: nm asSymbol;
-		yourself
+		  name: aStrings;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -79,6 +86,12 @@ Protocol >> isExtensionProtocol [
 	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
 
 	^ self name first = $*
+]
+
+{ #category : #testing }
+Protocol >> isUnclassifiedProtocol [
+
+	^ self name = self class unclassified
 ]
 
 { #category : #testing }

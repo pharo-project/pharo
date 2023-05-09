@@ -67,6 +67,8 @@ CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 { #category : #visiting }
 CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 
+	completionContext completionToken ifEmpty: [ ^ super visitLiteralValueNode: aNode ].
+
 	^ self
 		configureFetcherForNode: aNode
 		usingHeuristicAvoidingRepetitions: self symbolsHeuristic
@@ -74,7 +76,9 @@ CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 
 { #category : #visiting }
 CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [ 
-	
+
+	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aRBMessageNode ].
+
 	^ self
 		configureFetcherForNode: aRBMessageNode
 		usingHeuristicAvoidingRepetitions: self messageHeuristic
@@ -83,13 +87,42 @@ CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [
 { #category : #visiting }
 CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
 
+	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aRBMethodNode ].
+
 	^ self
 		configureFetcherForNode: aRBMethodNode
 		usingHeuristicAvoidingRepetitions: self methodNodeHeuristic
 ]
 
 { #category : #visiting }
+CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
+
+	| offset |
+	offset := completionContext completionTokenStart.
+	completionContext completionToken isEmpty ifTrue: [
+		offset > aNode stopWithoutParentheses ifTrue: [
+			| aMessageNode |
+			"We are after a value node with a empty completion token.
+			So, try to complete a message send from scratch with the value node as the receiver.
+			In order to be compatible with the current complex completion framework,
+			we just inject a synthetic message node in the AST with an empty selector.
+			This empty selector will then be completed according to the existing rules and heuristics.
+			It is a little hackish but we believe in magic."
+			aMessageNode := RBMessageNode new.
+			aNode replaceWith: aMessageNode.
+			aMessageNode receiver: aNode.
+			aMessageNode selector: #''.
+			^ self
+				  configureFetcherForNode: aMessageNode
+				  usingHeuristicAvoidingRepetitions: self messageHeuristic ] ].
+
+	^ super visitValueNode: aNode
+]
+
+{ #category : #visiting }
 CoASTHeuristicsResultSetBuilder >> visitVariableNode: aRBVariableNode [
+
+	completionContext completionToken ifEmpty: [ ^ super visitVariableNode: aRBVariableNode ].
 
 	^ self
 		configureFetcherForNode: aRBVariableNode

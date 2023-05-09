@@ -6,7 +6,7 @@ RBCodeSnippetTest >> testCompileFailBlock [
 	| method error |
 	error := nil.
 	method := OpalCompiler new
-		          noPattern: snippet isMethod not;
+		          isScripting: snippet isScripting;
 		          failBlock: [ :e |
 			          self assert: (snippet hasNotice: e).
 			          self assert: error isNil. "single invocation"
@@ -87,7 +87,7 @@ RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
 	| method error |
 	error := nil.
 	method := OpalCompiler new
-		          noPattern: snippet isMethod not;
+		          isScripting: snippet isScripting;
 		          permitUndeclared: true;
 		          failBlock: [ :e |
 			          self assert: (snippet hasNotice: e).
@@ -115,7 +115,7 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 	requestor isScripting: nil.
 	requestor text: nil.
 	method := OpalCompiler new
-		          noPattern: snippet isMethod not;
+		          isScripting: snippet isScripting;
 		          requestor: requestor;
 		          failBlock: [ "When a requestion is set, a failBlock MUST also be set or compilation might crash internally"
 			          | n |

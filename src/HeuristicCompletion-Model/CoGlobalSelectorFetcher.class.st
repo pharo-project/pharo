@@ -18,9 +18,11 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 				allSelectorsStartingWith:
 				parent selector , filter completionString
 				do: [ :e |
-					aBlock value: (NECSelectorEntry
+					aBlock value: ((NECSelectorEntry
 							 contents: (e copyFrom: parent selector size + 1 to: e size)
-							 node: astNode) ] ] ] ].
+							 node: astNode)
+							 selector: e)
+							 ] ] ] ].
 
 	"Otherwise, just go wide"
 	self systemNavigation
