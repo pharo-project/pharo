@@ -760,6 +760,14 @@ ClassDescription >> protocolNames [
 	^ self organization protocolNames copy
 ]
 
+{ #category : #'accessing - protocols' }
+ClassDescription >> protocols [
+	"I return all the protocols contained in me.
+	In the past I was returning the protocol names but now I am returning the instances directly. If you want to deal with the names you can use #protocolNames."
+
+	^ self organization protocols
+]
+
 { #category : #compiling }
 ClassDescription >> reformatAll [
 	"Reformat all methods in this class"

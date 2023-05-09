@@ -46,3 +46,17 @@ ClassDescriptionProtocolsTest >> testProtocolNames [
 
 	self assertCollection: class protocolNames hasSameElements: #( #human #witch )
 ]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testProtocols [
+
+	class organization addProtocol: #titan.
+	class organization addProtocol: #human.
+	class organization addProtocol: #witch.
+
+	self assertCollection: class protocols hasSameElements: (#( #titan #human #witch ) collect: [ :protocolName | class organization protocolNamed: protocolName ]).
+
+	class organization removeProtocolIfEmpty: #titan.
+
+	self assertCollection: class protocols hasSameElements: (#( #human #witch ) collect: [ :protocolName | class organization protocolNamed: protocolName ])
+]
