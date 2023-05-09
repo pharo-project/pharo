@@ -551,15 +551,12 @@ RPackageOrganizer >> initializeFor: aBehavior [
 
 { #category : #'initialization - data' }
 RPackageOrganizer >> initializeMethodsFor: aBehavior [
-	| package |
 
+	| package |
 	package := aBehavior package.
-	(aBehavior organization protocols
-		select: [ :each | each isExtensionProtocol not ])
-		do: [ :eachProtocol |
-			 (eachProtocol methodSelectors
-				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
-				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
+	(aBehavior protocols reject: [ :each | each isExtensionProtocol ]) do: [ :eachProtocol |
+		(eachProtocol methodSelectors select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ]) do: [ :eachSelector |
+			package addMethod: aBehavior >> eachSelector ] ]
 ]
 
 { #category : #'system organizer facade' }

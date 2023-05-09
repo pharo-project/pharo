@@ -13,7 +13,7 @@ Class {
 ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors [
 	| violations |
 	violations := self class environment allClassesAndTraits
-		select: [ :c | (c protocolNames includesAny: aCollectionOfSelectors) or: [ c class protocols includesAny: aCollectionOfSelectors ] ].
+		select: [ :c | (c protocolNames includesAny: aCollectionOfSelectors) or: [ c class protocolNames includesAny: aCollectionOfSelectors ] ].
 	self
 		assert: violations isEmpty
 		description: [ 'In the default Pharo images, the protocol #{1} should be used instead of {2}.
