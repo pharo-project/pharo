@@ -146,10 +146,6 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 
 	self isMenuOpen ifFalse: [ ^ false ].
 
-	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
-		menuMorph showDetail.
-		^ true ].
-
 	({
 		 KeyboardKey left.
 		 KeyboardKey right.
