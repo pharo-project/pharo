@@ -89,7 +89,6 @@ RBInlineMethodTransformation >> compileMethod [
 RBInlineMethodTransformation >> findSelectedMessage [
 
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
-		sourceParseTree doSemanticAnalysis.
 	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage

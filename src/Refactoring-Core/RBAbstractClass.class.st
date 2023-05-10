@@ -545,7 +545,7 @@ RBAbstractClass >> parseTreeForSelector: aSelector [
 	class ifNil: [ ^ nil ].
 	method := class methodFor: aSelector.
 	method ifNil: [ ^ nil ].
-	^ method parseTree
+	^ method parseTree doSemanticAnalysis
 ]
 
 { #category : #accessing }

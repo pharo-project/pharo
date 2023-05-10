@@ -108,7 +108,7 @@ RBExtractToTemporaryTransformation >> parseTree [
 			parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 		].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
