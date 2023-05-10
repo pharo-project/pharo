@@ -308,7 +308,7 @@ CompletionEngine >> openMenu [
 	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
-				position: (editor selectionPosition: context completionToken).
+				position: (editor selectionPosition: self completionToken).
 
 	theMenu isClosed ifFalse: [ 
 		menuMorph := theMenu.
