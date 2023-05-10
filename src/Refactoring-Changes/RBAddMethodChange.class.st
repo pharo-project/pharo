@@ -168,10 +168,12 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 
 { #category : #private }
 RBAddMethodChange >> parseTree [
-
-	^ self parserClass
+	| tree |
+	tree := self parserClass
 		  parseMethod: self source
-		  onError: [ :str :pos | ^ nil ]
+		  onError: [ :str :pos | ^ nil ].
+	tree ifNotNil: [ tree doSemanticAnalysis ].
+	^ tree
 ]
 
 { #category : #private }
