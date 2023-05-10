@@ -305,10 +305,11 @@ Trait >> isUsed [
 ]
 
 { #category : #'organization updating' }
-Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+Trait >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
-	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
-	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ]
+
+	super notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol.
+	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #'accessing - method dictionary' }

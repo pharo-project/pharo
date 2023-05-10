@@ -318,13 +318,19 @@ CompletionEngine >> openMenu [
 { #category : #replacement }
 CompletionEngine >> replaceTokenInEditorWith: aString [
 	"Main API with the completion context.
+
 	Replace the current completion token (as it was extracted by the completion context) by aString.
-	aString may contain a keyword selector string where each keyword is separated by two spaces (between:  and:)
-	After replacing, set the caret after the first keyword.
+	aString content is free and will inserted as a replacement as is, except for a possible ending space that will not be inserted if there is already a space in the text.
+
+	The caret will be moved at the end of the inserted string, or between the first double spaces.
+	This rule allows to put the cursor inside an inserted keyword selector where each keyword is separated by two spaces.
+	e.g. after replacing with `'between:  and:'`, the caret is set after the first keyword.
+
 	The completion context uses this API to insert text into the text editor"
 
-	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart |
+	| newString wordEnd old doubleSpace wordStart |
 
+	newString := aString.
 	wordStart := self completionTokenStart.
 
 	"If completionToken is not empty, the end is the end of the whole word (according to the editor)"
@@ -333,9 +339,9 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		ifFalse: [ self editor nextWord: self editor caret - 1].
 
 	"Do not insert an aditional space if there is already one"
-	(aString last = $  and: [
+	(newString last = $  and: [
 		wordEnd <= self editor text size and: [
-			(self editor text at: wordEnd) = $ ]]) ifTrue: [ wordEnd := wordEnd + 1 ].
+			(self editor text at: wordEnd) = $ ]]) ifTrue: [ newString := newString copyWithoutIndex: newString size ].
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
 
@@ -344,14 +350,10 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		to: wordEnd - 1.
 	old := self editor selection.
 
-	self editor replaceSelectionWith: aString.
+	self editor replaceSelectionWith: newString.
 
-	offset := NECPreferences spaceAfterCompletion
-		ifTrue: [ 1 ]
-		ifFalse: [ 0 ].
-	firstKeyword := (aString copyUpTo: $ ) size.
-	positionAfterFirstKeyword := wordEnd + firstKeyword + offset - old size.
-	self editor selectAt: positionAfterFirstKeyword.
+	doubleSpace := newString indexOfSubCollection: '  ' startingAt: 1 ifAbsent: [ newString size ].
+	self editor selectAt: wordStart + doubleSpace.
 
 	self editor morph invalidRect: self editor morph bounds
 ]
@@ -598,7 +600,7 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 	(aParagraphEditor isNil or: [ self isMenuOpen not ]) ifTrue: [
 		^ self ].
 
-	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
+	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
 	context narrowWith: aParagraphEditor wordAtCaret
 ]

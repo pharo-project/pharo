@@ -28,9 +28,10 @@ ClassDescription >> acceptsLoggingOfCompilation [
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
-	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	priorMethodOrNil ifNotNil: [ priorOriginOrNil := priorMethodOrNil origin ].
+	| priorMethod priorOrigin oldProtocol newProtocol |
+	self compiledMethodAt: selector ifPresent: [ :method |
+		priorMethod := method.
+		priorOrigin := method origin ].
 
 	oldProtocol := self organization protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
@@ -45,7 +46,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	self isAnonymous ifTrue: [ ^ self ].
 
-	(priorMethodOrNil isNil or: [ priorOriginOrNil ~= compiledMethod origin ])
+	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			self
@@ -54,7 +55,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol name ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol name ]
 ]
 
 { #category : #'instance variables' }
@@ -670,14 +671,13 @@ ClassDescription >> noteCompilationOf: aSelector meta: isMeta [
 ]
 
 { #category : #'organization updating' }
-ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
-	(self compiledMethodAt: selector ifAbsent: [ nil ])
-		ifNotNil: [ :method |
-			SystemAnnouncer uniqueInstance
-				methodRecategorized: method
-				oldProtocol: oldCategory ]
+
+	self
+		compiledMethodAt: selector
+		ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
 ]
 
 { #category : #private }
@@ -752,6 +752,13 @@ ClassDescription >> organization: aClassOrg [
 { #category : #printing }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
+]
+
+{ #category : #'accessing - protocols' }
+ClassDescription >> protocolNames [
+	"Return the list of all the protocol names included in this class."
+
+	^ self organization protocolNames copy
 ]
 
 { #category : #compiling }

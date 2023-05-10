@@ -26,7 +26,7 @@ ClassOrganization >> addProtocol: aProtocol [
 	(self hasProtocol: aProtocol) ifTrue: [
 		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
 
-	protocol := aProtocol isString ifTrue: [ Protocol name: aProtocol ] ifFalse: [ aProtocol ].
+	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
 
 	oldProtocols := self protocolNames copy.
 
@@ -56,7 +56,7 @@ ClassOrganization >> classify: selector under: aProtocol [
 	newProtocol addMethodSelector: selector.
 
 	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
-	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol name to: newProtocol name ]
+	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #copying }
@@ -185,7 +185,7 @@ ClassOrganization >> removeElement: aSelector [
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
 		protocol removeMethodSelector: aSelector.
 		self removeProtocolIfEmpty: protocol.
-		self organizedClass notifyOfRecategorizedSelector: aSelector from: protocol name to: nil ]
+		self organizedClass notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
 ]
 
 { #category : #removing }
@@ -259,7 +259,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	newProtocol methodSelectors do: [ :each | self organizedClass notifyOfRecategorizedSelector: each from: oldProtocol name to: newProtocol name ]
+	newProtocol methodSelectors do: [ :each | self organizedClass notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #initialization }

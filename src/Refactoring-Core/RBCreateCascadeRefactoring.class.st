@@ -120,7 +120,7 @@ RBCreateCascadeRefactoring >> parseTree [
 		ifNil: [ parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringError: 'Could not parse sources' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
