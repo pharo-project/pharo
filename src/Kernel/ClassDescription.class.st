@@ -775,13 +775,17 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> removeProtocol: protocolName [
-	"Remove each of the messages categorized under aString in the method
-	dictionary of the receiver. Then remove the category aString."
+{ #category : #'accessing - protocols' }
+ClassDescription >> removeProtocol: aProtocol [
+	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
+	Does nothing if the protocol does not exists."
 
-	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
-	self organization removeProtocolIfEmpty: protocolName
+	| protocolToRemove |
+	(self organization hasProtocol: aProtocol) ifFalse: [ ^ self ].
+
+	protocolToRemove := self ensureProtocol: aProtocol.
+	protocolToRemove methodSelectors do: [ :sel | self removeSelector: sel ].
+	self organization removeProtocolIfEmpty: protocolToRemove
 ]
 
 { #category : #'accessing - protocols' }
