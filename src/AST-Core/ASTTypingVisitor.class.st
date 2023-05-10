@@ -38,6 +38,141 @@ Class {
 	#category : #'AST-Core-Type'
 }
 
+{ #category : #benchmarking }
+ASTTypingVisitor class >> bench: trees [
+
+	| report valueNodes duration count visitor steps moreTrees knownMethods |
+	report := WriteStream on: ''.
+	report
+		nextPutAll: 'Number of AST: ';
+		print: trees size;
+		cr.
+
+	valueNodes := (trees flatCollect: #allChildren) select: #isValue.
+	report
+		nextPutAll: 'Number of value nodes: ';
+		print: valueNodes size;
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	duration := [ trees do: [ :tree | self new visit: tree ] ] timeToRun.
+	report
+		nextPutAll: 'Individual typing';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	duration := [ trees do: [ :tree | visitor visit: tree ] ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: 'Agretated typing';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	steps := 0.
+	duration := [
+	            [
+	            steps := steps + 1.
+	            visitor dirty: false.
+	            trees do: [ :tree | visitor visit: tree ].
+	            visitor dirty ] whileTrue ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: '+fixed point typing';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  steps:';
+		print: steps;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	visitor cha: true.
+	steps := 0.
+	duration := [
+	            [
+	            steps := steps + 1.
+	            visitor dirty: false.
+	            trees do: [ :tree | visitor visit: tree ].
+	            visitor dirty ] whileTrue ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: '+CHA';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  steps:';
+		print: steps;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	moreTrees := OrderedCollection newFrom: trees.
+	knownMethods := trees collect: [ :tree | tree compiledMethod ] as: Set.
+	visitor unknownMethods do: [ :method |
+		(knownMethods includes: method) ifFalse: [ 
+		moreTrees add: method parseTree ].
+		].
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	visitor cha: true.
+	steps := 0.
+	duration := [
+	            [
+	            steps := steps + 1.
+	            visitor dirty: false.
+	            moreTrees do: [ :tree | visitor visit: tree ].
+	            visitor dirty ] whileTrue ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: '+CHA';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  steps:';
+		print: steps;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+	valueNodes groupedBy: [ :n | n propertyAt: #type ifAbsent: [ nil ] ].
+	^ report contents
+]
+
+{ #category : #printing }
+ASTTypingVisitor class >> printTypedNodeCount: valueNodes [
+
+	| count |
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	^ String streamContents: [ :aStream |
+		  aStream
+			  print: count;
+			  nextPutAll: ' (';
+			  print: (100.0 * count / valueNodes size) rounded;
+			  nextPutAll: '%)' ]
+]
+
 { #category : #accessing }
 ASTTypingVisitor >> cha [
 
