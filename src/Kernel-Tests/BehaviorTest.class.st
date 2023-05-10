@@ -105,7 +105,7 @@ BehaviorTest >> testBinding [
 BehaviorTest >> testDefinedVariables [
 	self assert: Behavior new definedVariables isEmpty.
 	self assert: Point definedVariables equals: Point instanceVariables.
-	self assert: ReservedVariable class definedVariables first name equals: #instance.
+	self assert: EmptyLayout class definedVariables first name equals: #instance.
 	self assert: (SmalltalkImage definedVariables includes: (SmalltalkImage classVariableNamed: #CompilerClass))
 ]
 
