@@ -38,6 +38,18 @@ Class {
 	#category : #'AST-Core-Type'
 }
 
+{ #category : #accessing }
+ASTTypingVisitor >> cha [
+
+	^ cha
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> cha: anObject [
+
+	cha := anObject
+]
+
 { #category : #analyzing }
 ASTTypingVisitor >> fixedPointAnalysis: aNode [
 	"Repeat the analysis until a fixed point is reached.
@@ -52,10 +64,44 @@ ASTTypingVisitor >> fixedPointAnalysis: aNode [
 { #category : #initialization }
 ASTTypingVisitor >> initialize [
 
-	variableTypes := Dictionary new.
-	returnTypes := Dictionary new.
-	unknownMethod := Set new.
-	shortcutKernelMessages := true
+	variableTypes := IdentityDictionary new.
+	returnTypes := IdentityDictionary new.
+	unknownMethods := Set new.
+	shortcutKernelMessages := true.
+	cha := false
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> lookupMethod: aSelector type: recvType [
+
+	| method methods type |
+	method := recvType lookupSelector: aSelector.
+
+	"Without CHA (Class Hierarchy Analysis), only look at a sigle method.
+	This is not sound (not even monotonous!) because we only consider a sigle static type and a single method,
+	at runtime, the concrete receiver type might be numerous and different"
+	cha ifFalse: [
+		^ returnTypes at: method ifAbsent: [
+			  unknownMethods add: method.
+			  nil ] ].
+
+	methods := Set new.
+	method ifNotNil: [ methods add: method ].
+
+	"Look for potential redefinitions in subclasses (CHA!)"
+	recvType subclasses do: [ :c |
+		c methodDictionary at: aSelector ifPresent: [ :m | methods add: m ] ].
+	methods ifEmpty: [ ^ nil ].
+
+	"Merge all possible return types"
+	type := nil.
+	methods do: [ :m |
+		returnTypes
+			at: m
+			ifPresent: [ :type2 | type := self merge: type with: type2 ]
+			ifAbsent: [ unknownMethods add: m ] ].
+
+	^ type
 ]
 
 { #category : #lattice }
@@ -195,7 +241,7 @@ ASTTypingVisitor >> visitLiteralNode: aLiteralNode [
 { #category : #visiting }
 ASTTypingVisitor >> visitMessageNode: aNode [
 
-	| recvType method |
+	| recvType type |
 	super visitMessageNode: aNode.
 
 	"Fast path for some special Kernel selectors (type of the receiver is not important)"
@@ -214,16 +260,14 @@ ASTTypingVisitor >> visitMessageNode: aNode [
 			 #( new new: basicNew basicNew: ) includes: aNode selector ])
 			ifTrue: [ ^ self typeNode: aNode with: recvType instanceSide ].
 
+		aNode selector == #yourself ifTrue: [
+			^ self typeNode: aNode with: recvType ].
 		aNode selector == #class ifTrue: [
 			^ self typeNode: aNode with: recvType class ] ].
 
-	"Method lookup. This one is not sound because we only consider a sigle static type and a single method,
-	at runtime, the concrete receiver type might be numerous and different."
-	method := recvType lookupSelector: aNode selector.
-	returnTypes
-		at: method
-		ifPresent: [ :type | ^ self typeNode: aNode with: type ].
-	unknownMethod add: method
+
+	type := self lookupMethod: aNode selector type: recvType.
+	type ifNotNil: [ self typeNode: aNode with: type ]
 ]
 
 { #category : #visiting }
