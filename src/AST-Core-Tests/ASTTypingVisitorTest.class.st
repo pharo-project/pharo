@@ -18,6 +18,19 @@ ASTTypingVisitorTest >> assertTypedTree: aNode [
 ]
 
 { #category : #examples }
+ASTTypingVisitorTest >> exampleCHA [
+	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
+
+	| bool |
+	true "<True>".
+	true not "<False>".
+
+	bool := self hash > 1000.
+	bool "<Boolean>".
+	bool not "<Boolean>" "Without CHA, type is nil as Boolean>>#not is subclass responsibility"
+]
+
+{ #category : #examples }
 ASTTypingVisitorTest >> exampleKernel: arg1 and: arg2 [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 	"List of special kernel method"
@@ -106,6 +119,23 @@ ASTTypingVisitorTest >> expectedNodeType: aNode [
 			^ self class compiler evaluate:
 				  (comment contents copyFrom: 2 to: comment contents size - 1) ].
 	^ nil
+]
+
+{ #category : #tests }
+ASTTypingVisitorTest >> testExampleCHA [
+
+	| typeVisitor ast methods |
+	typeVisitor := ASTTypingVisitor new.
+	typeVisitor cha: true.
+	methods := {
+		           (Boolean >> #not).
+		           (True >> #not).
+		           (False >> #not).
+		           (self class >> #exampleCHA) }.
+	methods do: [ :m |
+		ast := m parseTree.
+		typeVisitor fixedPointAnalysis: ast ].
+	self assertTypedTree: ast
 ]
 
 { #category : #tests }
