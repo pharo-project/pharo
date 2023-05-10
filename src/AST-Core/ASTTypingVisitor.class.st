@@ -162,14 +162,18 @@ ASTTypingVisitor >> typeMethod: aCompilerMethod with: aClass [
 
 { #category : #lattice }
 ASTTypingVisitor >> typeNode: aNode with: aClass [
-	"We assume monotonicity here, so no need to merge with the oldType."
 
-	aNode
-		propertyAt: #type
-		ifPresent: [ :oldType | oldType = aClass ifTrue: [ ^ self ] ].
+	| type |
+	type := aClass.
+	aNode propertyAt: #type ifPresent: [ :oldType |
+		oldType = type ifTrue: [ ^ self ].
+		"We expect that the analysis is monotonous, but it might not be always the case.
+		Se perform a join to rorce some kind of monotonicity."
+		type := self merge: oldType with: type.
+		oldType = type ifTrue: [ ^ self ] ].
 
 	dirty := true.
-	aNode propertyAt: #type put: aClass
+	aNode propertyAt: #type put: type
 ]
 
 { #category : #lattice }
