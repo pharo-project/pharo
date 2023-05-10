@@ -87,6 +87,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(#false 									(red muchDarker))
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
+			(#thisProcess 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
 			(patternArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
@@ -176,6 +177,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(#self 								'00CC6E')
 			(#super								'00CC6E')
 			(#thisContext 						'00CC6E')
+			(#thisProcess 						'00CC6E')
 			(#return 								'00CC6E' bold)
 
 			(patternArg 							'A7E2ED')
@@ -351,6 +353,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(#self 									'B58900')
 			(#super								'B58900')
 			(#thisContext 							'B58900')
+			(#thisProcess 							'B58900')
 			(#return 								'B58900' bold)
 
 			(patternArg 							('D33682'))
@@ -455,6 +458,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(#self 									'4d9a06')
 			(#super 								'4d9a06')
 			(#thisContext 							'4d9a06')
+			(#thisProcess 							'4d9a06')
 			(#return 								black bold)
 
 			(patternArg 							'2e3426' italic)
@@ -554,6 +558,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(#self 									'A31515')
 			(#super								'A31515')
 			(#thisContext 							'A31515')
+			(#thisProcess 							'A31515')
 			(#return 								'A31515' bold)
 
 			(patternArg 							(blue muchDarker))

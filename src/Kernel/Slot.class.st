@@ -42,7 +42,7 @@ Slot class >> checkValidName: aSymbol [
 
 	aSymbol startsWithDigit ifTrue: [
 		^ InvalidSlotName signalFor: aSymbol ].
-
+	
 	(self isPseudovariableName: aSymbol) ifTrue: [
 		^ InvalidSlotName signalFor: aSymbol ].
 
@@ -53,7 +53,7 @@ Slot class >> checkValidName: aSymbol [
 
 { #category : #testing }
 Slot class >> isPseudovariableName: aSymbol [
-	^ #('self' 'true' 'false' 'nil' 'thisContext' 'super') includes: aSymbol
+	^ #('self' 'true' 'false' 'nil' 'thisContext' 'thisProcess' 'super') includes: aSymbol
 ]
 
 { #category : #testing }

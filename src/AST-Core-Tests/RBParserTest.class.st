@@ -468,6 +468,12 @@ RBParserTest >> testCreationThisContexNodeWithExpression [
 ]
 
 { #category : #'tests - CreationProtocol' }
+RBParserTest >> testCreationThisProcessNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'thisProcess')
+		  to: RBVariableNode thisProcessNode 
+]
+
+{ #category : #'tests - CreationProtocol' }
 RBParserTest >> testCreationVariableNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'variable')
 		  to: (RBVariableNode named: #variable start: 1)

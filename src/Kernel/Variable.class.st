@@ -232,6 +232,11 @@ Variable >> isThisContextVariable [
 ]
 
 { #category : #testing }
+Variable >> isThisProcessVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isUndeclaredVariable [
 
 	^ false
