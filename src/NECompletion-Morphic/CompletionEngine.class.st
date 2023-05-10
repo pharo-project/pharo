@@ -602,5 +602,9 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret
+	"Do not update the content nor refresh the menu if the context token is the same"
+	context completionToken = self completionToken ifTrue: [ ^self ].
+
+	context narrowWith: aParagraphEditor wordAtCaret.
+	menuMorph refreshSelection
 ]
