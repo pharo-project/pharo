@@ -4,6 +4,12 @@ Class {
 	#category : #'HeuristicCompletion-Tests'
 }
 
+{ #category : #testing }
+CoCompletionEngineTest class >> shouldInheritSelectors [
+
+	^ true
+]
+
 { #category : #accessing }
 CoCompletionEngineTest >> doItContext [
 
@@ -14,12 +20,6 @@ CoCompletionEngineTest >> doItContext [
 CoCompletionEngineTest >> newCompletionEngine [
 
 	^ CoCompletionEngine new
-]
-
-{ #category : #asserting }
-CoCompletionEngineTest >> shouldInheritSelectors [
-
-	^ true
 ]
 
 { #category : #'tests - interaction' }
