@@ -29,10 +29,11 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'variableTypes',
-		'unknownMethod',
 		'shortcutKernelMessages',
 		'returnTypes',
-		'dirty'
+		'dirty',
+		'cha',
+		'unknownMethods'
 	],
 	#category : #'AST-Core-Type'
 }
@@ -140,9 +141,9 @@ ASTTypingVisitor >> typeVariable: aVariable with: aClass [
 ]
 
 { #category : #accessing }
-ASTTypingVisitor >> unknownMethod [
+ASTTypingVisitor >> unknownMethods [
 
-	^ unknownMethod
+	^ unknownMethods
 ]
 
 { #category : #visiting }
