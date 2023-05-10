@@ -18,6 +18,35 @@ ASTTypingVisitorTest >> assertTypedTree: aNode [
 ]
 
 { #category : #examples }
+ASTTypingVisitorTest >> exampleKernel: arg1 and: arg2 [
+	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
+	"List of special kernel method"
+	
+	(arg1 = arg2) "<Boolean>".
+	(arg1 ~= arg2) "<Boolean>".
+	(arg1 == arg2) "<Boolean>".
+	(arg1 ~~ arg2) "<Boolean>".
+	(arg1 < arg2) "<Boolean>".
+	(arg1 <= arg2) "<Boolean>".
+	(arg1 > arg2) "<Boolean>".
+	(arg1 >= arg2) "<Boolean>".
+	(arg1 isNil) "<Boolean>".
+	(arg1 isNotNil) "<Boolean>".
+	(arg1 isEmpty) "<Boolean>".
+	(arg1 size) "<Integer>".
+	(arg1 at: arg2) "<>". "not special"
+
+	(5 yourself) "<SmallInteger>".
+	(5 class) "<SmallInteger class>".
+	(Object new) "<Object>".
+	(Array new: 1) "<Array>".
+	(Object basicNew) "<Object>".
+	(Array basicNew: 1) "<Array>".
+	(5 at: 1) "<>" "not special".
+	(Object at: 1) "<>" "not special"
+]
+
+{ #category : #examples }
 ASTTypingVisitorTest >> exampleLoop [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 
@@ -77,6 +106,16 @@ ASTTypingVisitorTest >> expectedNodeType: aNode [
 			^ self class compiler evaluate:
 				  (comment contents copyFrom: 2 to: comment contents size - 1) ].
 	^ nil
+]
+
+{ #category : #tests }
+ASTTypingVisitorTest >> testExampleKernel [
+
+	| typeVisitor ast |
+	typeVisitor := ASTTypingVisitor new.
+	ast := (self class >> #exampleKernel:and:) parseTree.
+	typeVisitor visitNode: ast.
+	self assertTypedTree: ast
 ]
 
 { #category : #tests }
