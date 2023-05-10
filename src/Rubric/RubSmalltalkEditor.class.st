@@ -27,7 +27,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #browseFullClass)
 		category: RubSmalltalkEditor name
 		default: $b meta
-		do: [ :target | target editor browseFullClass ]
+		do: [ :target | target editor browseIt: nil ]
 		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
@@ -273,6 +273,17 @@ RubSmalltalkEditor >> browseFullClass [
  	"Launch a browser for the class of the current selection, i.e. if you select 1+2 then you will get a class browser on class Point. Notice that this method handles also when the expression is a class."
 
  	self evaluateSelectionAndDo: [:result | result class instanceSide browse ].
+]
+
+{ #category : #'editing keys' }
+RubSmalltalkEditor >> browseIt: aKeyboardEvent [
+ 	"Browse the current selection.
+	If a completion menu is open, the current item is browsed instead"
+
+	completionEngine isMenuOpen ifTrue: [ ^ completionEngine browse ].
+
+ 	self browseFullClass.
+	^true
 ]
 
 { #category : #'menu messages' }

@@ -47,6 +47,12 @@ CompletionEngine class >> isCompletionEnabled [
 	^NECPreferences enabled
 ]
 
+{ #category : #private }
+CompletionEngine >> browse [
+
+	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
+]
+
 { #category : #testing }
 CompletionEngine >> captureNavigationKeys [
 	^ NECPreferences captureNavigationKeys
