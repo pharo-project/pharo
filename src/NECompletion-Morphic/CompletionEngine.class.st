@@ -53,11 +53,6 @@ CompletionEngine >> browse [
 	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
 ]
 
-{ #category : #testing }
-CompletionEngine >> captureNavigationKeys [
-	^ NECPreferences captureNavigationKeys
-]
-
 { #category : #'menu morph' }
 CompletionEngine >> closeMenu [
 	self stopCompletionDelay.

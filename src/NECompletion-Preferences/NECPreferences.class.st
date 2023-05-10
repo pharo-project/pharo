@@ -219,9 +219,6 @@ NECPreferences class >> settingsOn: aBuilder [
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.
-					(aBuilder setting: #captureNavigationKeys)
-						default: true;
-						label: 'Use navigation keys for extended completion functionality'.
 					(aBuilder setting: #caseSensitive)
 						label: 'Case Sensitive';
 						default: true;
