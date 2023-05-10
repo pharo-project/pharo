@@ -42,6 +42,7 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 							ref realClass lookupSelector: ref selector]
 						ifFalse: [^ notfoundBlock value: self selector]]
 				ifNotNil: [theClass lookupSelector: self selector ].
+	result ifNil: [^ notfoundBlock value: self selector].
 	^ foundBlock value: result
 ]
 
