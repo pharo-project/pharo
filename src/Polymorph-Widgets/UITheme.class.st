@@ -1937,6 +1937,13 @@ UITheme >> handlesWindowDropShadowInHandFor: aSystemWindow [
 		aSystemWindow isActive]
 ]
 
+{ #category : #'basic-colors' }
+UITheme >> highlightTextColor [
+	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
+
+	^ colorPalette highlightTextColor
+]
+
 { #category : #'icons-utilities' }
 UITheme >> icons [
 	^ Smalltalk ui icons

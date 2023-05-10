@@ -270,6 +270,13 @@ UIThemePalette >> growlLabelColorFor: aGrowlMorph [
 	^ paletteDictionary at: #growlLabelColorFor: ifAbsentPut: [ colorConfigurator growlLabelColorFor: aGrowlMorph ]
 ]
 
+{ #category : #'basic-colors' }
+UIThemePalette >> highlightTextColor [
+	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
+
+	^ paletteDictionary at: #highlightTextColor ifAbsentPut: [ colorConfigurator highlightTextColor ]
+]
+
 { #category : #initialization }
 UIThemePalette >> initialize [
 
