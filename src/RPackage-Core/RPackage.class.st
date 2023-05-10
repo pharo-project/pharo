@@ -1256,7 +1256,7 @@ RPackage >> removeFromSystem [
 	extendedClasses do: [ :each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol ].
 	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
 	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
-	categories do: [ :cat | self organizer systemOrganizer removeCategory: cat ].
+	categories do: [ :cat | self organizer removeCategory: cat ].
 	self unregister
 ]
 
@@ -1448,12 +1448,6 @@ RPackage >> systemCategories [
 { #category : #'system compatibility' }
 RPackage >> systemCategoryPrefix [
 	^ self name
-]
-
-{ #category : #'system compatibility' }
-RPackage >> systemOrganization [
-
-	^ self organizer systemOrganizer
 ]
 
 { #category : #queries }
