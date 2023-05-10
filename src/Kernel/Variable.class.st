@@ -280,6 +280,14 @@ Variable >> needsFullDefinition [
 	^true
 ]
 
+{ #category : #accessing }
+Variable >> originalVar [
+	"Because some AST analysis optimize temps representatipn, specific implementation-dependant variables cas apears in AST. This method return the original temp.
+	On other varialbes, it's just self."
+
+	^ self
+]
+
 { #category : #properties }
 Variable >> properties [
 	^ Properties at: self ifAbsent: nil
