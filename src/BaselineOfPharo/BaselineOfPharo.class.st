@@ -74,7 +74,7 @@ BaselineOfPharo class >> iceberg [
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
 		project: 'iceberg' 
-		version: 'v2.1.0' 
+		version: 'v2.1.1' 
 		sourceDir: nil
 ]
 
@@ -109,7 +109,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'v0.8.1'
+		version: 'v0.8.4'
 ]
 
 { #category : #'repository urls' }
@@ -160,7 +160,7 @@ BaselineOfPharo class >> welcomeBrowser [
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo11'
+		version: 'v1.0.1'
 ]
 
 { #category : #'repository urls' }
