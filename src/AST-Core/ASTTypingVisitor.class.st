@@ -50,6 +50,18 @@ ASTTypingVisitor >> cha: anObject [
 	cha := anObject
 ]
 
+{ #category : #accessing }
+ASTTypingVisitor >> dirty [
+
+	^ dirty
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> dirty: anObject [
+
+	dirty := anObject
+]
+
 { #category : #analyzing }
 ASTTypingVisitor >> fixedPointAnalysis: aNode [
 	"Repeat the analysis until a fixed point is reached.
