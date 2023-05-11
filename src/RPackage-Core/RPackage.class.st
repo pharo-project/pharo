@@ -1391,7 +1391,7 @@ RPackage >> renameTo: aSymbol [
 				do:
 					[ :each | each category: newName , (each category allButFirst: oldName size) ].
 			oldCategoryNames
-				do: [ :each | self systemOrganization removeCategory: each ] ].
+				do: [ :each | self organizer removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
 	self organizer
