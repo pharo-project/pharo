@@ -305,7 +305,7 @@ CompletionEngine >> openMenu [
 	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
-				position: (editor selectionPosition: context completionToken).
+				position: (editor selectionPosition: self completionToken).
 
 	theMenu isClosed ifFalse: [ 
 		menuMorph := theMenu.
@@ -599,5 +599,9 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret
+	"Do not update the content nor refresh the menu if the context token is the same"
+	context completionToken = self completionToken ifTrue: [ ^self ].
+
+	context narrowWith: self completionToken.
+	menuMorph refreshSelection
 ]

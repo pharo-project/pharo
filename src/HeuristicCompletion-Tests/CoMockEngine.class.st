@@ -9,3 +9,8 @@ CoMockEngine >> completionToken [
 	"This is the token used to autocomplete"
 	^ 'token'
 ]
+
+{ #category : #replacement }
+CoMockEngine >> completionTokenStart [ 
+	^ 1
+]
