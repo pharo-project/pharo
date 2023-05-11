@@ -51,6 +51,30 @@ ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
 ]
 
 { #category : #tests }
+ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoesNotAnnounceAnything [
+
+	self when: ProtocolRemoved do: [ :ann | self fail ].
+
+	self when: ClassReorganized do: [ :ann | self fail ].
+
+	organization removeProtocolIfEmpty: #nonexisting.
+
+	self assert: numberOfAnnouncements equals: 0
+]
+
+{ #category : #tests }
+ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoesNotAnnounceAnything2 [
+
+	self when: ProtocolRemoved do: [ :ann | self fail ].
+
+	self when: ClassReorganized do: [ :ann | self fail ].
+
+	organization removeProtocolIfEmpty: (Protocol named: #nonexisting).
+
+	self assert: numberOfAnnouncements equals: 0
+]
+
+{ #category : #tests }
 ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceClassReorganizedOnce [
 	"This is a regerssion test because at some point the class reorganized announcement got duplicated."
 
