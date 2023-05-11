@@ -738,6 +738,55 @@ CompletionEngineTest >> testReplaceWithSpaces2 [
 	self assert: self editorTextWithCaret equals: 'self bar | bar  .'.
 ]
 
+{ #category : #tests }
+CompletionEngineTest >> testReplaceWithSpaces3 [
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar'.
+	self assert: self editorTextWithCaret equals: 'self bar|'.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar '.
+	self assert: self editorTextWithCaret equals: 'self bar |'.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  '.
+	self assert: self editorTextWithCaret equals: 'self bar | '.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar bar'.
+	self assert: self editorTextWithCaret equals: 'self bar bar|'.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar bar '.
+	self assert: self editorTextWithCaret equals: 'self bar bar |'.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar bar  '.
+	self assert: self editorTextWithCaret equals: 'self bar bar | '.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  bar'.
+	self assert: self editorTextWithCaret equals: 'self bar | bar'.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  bar '.
+	self assert: self editorTextWithCaret equals: 'self bar | bar '.
+
+	self setEditorTextWithCaret: 'self fo|'.
+	self assert: controller completionToken equals: 'fo'.
+	controller context replaceTokenInEditorWith: 'bar  bar  '.
+	self assert: self editorTextWithCaret equals: 'self bar | bar  '.
+]
+
 { #category : #'tests - keyboard' }
 CompletionEngineTest >> testSmartBackspace [
 	"Pressing backspace inside paired smart characters should remove both of them"

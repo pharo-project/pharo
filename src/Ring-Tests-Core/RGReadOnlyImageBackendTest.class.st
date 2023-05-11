@@ -221,6 +221,7 @@ RGReadOnlyImageBackendTest >> testMethod [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testProtocols [
+
 	| env1 point method method2 protocol protocol2 |
 	env1 := RGEnvironment new.
 	env1 backend: (RGReadOnlyImageBackend for: env1).
@@ -239,7 +240,11 @@ RGReadOnlyImageBackendTest >> testProtocols [
 	self assert: protocol isSymbol.
 	self assert: protocol equals: 'accessing'.
 
-	self should: [ (Protocol name: 'aProtocol') asRingMinimalDefinitionIn: RGEnvironment new ] raise: Error
+	self
+		should: [
+			(Protocol named: 'aProtocol') asRingMinimalDefinitionIn:
+				RGEnvironment new ]
+		raise: Error
 ]
 
 { #category : #tests }
