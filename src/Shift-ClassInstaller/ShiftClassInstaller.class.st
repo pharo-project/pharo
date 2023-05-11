@@ -95,10 +95,8 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	[ newClass isVariable ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ] ]
 		on: SubscriptOutOfBounds
 		do: [
-			Stdio stdout
-				nextPutAll: 'ERROR: ';
-				nextPutAll: (String streamContents: [ :s | thisContext printDetails: s ]);
-				lf ].
+			Stdio stdout nextPutAll: 'ERROR: '.
+			thisContext printDetails: Stdio stdout ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
 	oldObject setIsReadOnlyObject: false.
