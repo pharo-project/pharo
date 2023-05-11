@@ -299,10 +299,21 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 
 { #category : #'menu morph' }
 CompletionEngine >> openMenu [
-	| theMenu |
+
+	self openMenuForced: true
+
+]
+
+{ #category : #'menu morph' }
+CompletionEngine >> openMenuForced: forced [
+
+	| theMenu theContext |
 	self stopCompletionDelay.
 
-	context := self createContext.
+	theContext := self createContext.
+	(forced or: [ theContext hasEntries ]) ifFalse: [ ^ self ].
+	context := theContext.
+	
 	theMenu := self menuMorphClass
 				engine: self
 				position: (editor selectionPosition: self completionToken).
@@ -365,7 +376,7 @@ CompletionEngine >> resetCompletionDelay [
 	completionDelay := [
 			(Delay forMilliseconds: NECPreferences popupAutomaticDelay) wait.
 			UIManager default defer:  [
-				editor atCompletionPosition ifTrue: [ self openMenu ]]
+				editor atCompletionPosition ifTrue: [ self openMenuForced: false ]]
 		] fork
 ]
 
