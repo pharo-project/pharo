@@ -47,9 +47,10 @@ CompletionEngine class >> isCompletionEnabled [
 	^NECPreferences enabled
 ]
 
-{ #category : #testing }
-CompletionEngine >> captureNavigationKeys [
-	^ NECPreferences captureNavigationKeys
+{ #category : #private }
+CompletionEngine >> browse [
+
+	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
 ]
 
 { #category : #'menu morph' }
@@ -139,10 +140,6 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
-
-	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
-		menuMorph showDetail.
-		^ true ].
 
 	({
 		 KeyboardKey left.
@@ -302,13 +299,24 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 
 { #category : #'menu morph' }
 CompletionEngine >> openMenu [
-	| theMenu |
+
+	self openMenuForced: true
+
+]
+
+{ #category : #'menu morph' }
+CompletionEngine >> openMenuForced: forced [
+
+	| theMenu theContext |
 	self stopCompletionDelay.
 
-	context := self createContext.
+	theContext := self createContext.
+	(forced or: [ theContext hasEntries ]) ifFalse: [ ^ self ].
+	context := theContext.
+	
 	theMenu := self menuMorphClass
 				engine: self
-				position: (editor selectionPosition: context completionToken).
+				position: (editor selectionPosition: self completionToken).
 
 	theMenu isClosed ifFalse: [ 
 		menuMorph := theMenu.
@@ -368,7 +376,7 @@ CompletionEngine >> resetCompletionDelay [
 	completionDelay := [
 			(Delay forMilliseconds: NECPreferences popupAutomaticDelay) wait.
 			UIManager default defer:  [
-				editor atCompletionPosition ifTrue: [ self openMenu ]]
+				editor atCompletionPosition ifTrue: [ self openMenuForced: false ]]
 		] fork
 ]
 
@@ -602,5 +610,9 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret
+	"Do not update the content nor refresh the menu if the context token is the same"
+	context completionToken = self completionToken ifTrue: [ ^self ].
+
+	context narrowWith: self completionToken.
+	menuMorph refreshSelection
 ]

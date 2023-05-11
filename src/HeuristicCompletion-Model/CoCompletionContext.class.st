@@ -13,7 +13,8 @@ Class {
 		'completionTokenStart',
 		'completionBuilder',
 		'completionClass',
-		'completion'
+		'completion',
+		'completionToken'
 	],
 	#category : #'HeuristicCompletion-Model-SystemIntegration'
 }
@@ -24,7 +25,6 @@ CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aSt
 	^ self new
 		completionClass: aClass;
 		engine: aCompletionEngine;
-		completionTokenStart: aCompletionEngine completionTokenStart;
 		source: aString;
 		position: anInteger;
 		yourself
@@ -87,19 +87,13 @@ CoCompletionContext >> completionClass: aClass [
 { #category : #accessing }
 CoCompletionContext >> completionToken [
 
-	^ self engine completionToken
+	^ completionToken
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionTokenStart [
 
 	^ completionTokenStart
-]
-
-{ #category : #accessing }
-CoCompletionContext >> completionTokenStart: anObject [
-
-	completionTokenStart := anObject
 ]
 
 { #category : #accessing }
@@ -121,7 +115,9 @@ CoCompletionContext >> engine [
 
 { #category : #accessing }
 CoCompletionContext >> engine: anObject [
-	engine := anObject
+	engine := anObject.
+	completionTokenStart := anObject completionTokenStart.
+	completionToken := anObject completionToken
 ]
 
 { #category : #accessing }
@@ -169,6 +165,7 @@ CoCompletionContext >> isScripting [
 { #category : #narrowing }
 CoCompletionContext >> narrowWith: aString [
 
+	completionToken := aString.
 	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
 ]
 
