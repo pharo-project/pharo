@@ -116,7 +116,12 @@ RBMethod >> package [
 
 { #category : #accessing }
 RBMethod >> parseTree [
-	^ self parserClass parseMethod: self source onError: [:str :pos | ^nil]
+	| tree |
+	tree := self parserClass
+		  parseMethod: self source
+		  onError: [ :str :pos | ^ nil ].
+	tree ifNotNil: [ tree doSemanticAnalysis ].
+	^ tree
 ]
 
 { #category : #testing }

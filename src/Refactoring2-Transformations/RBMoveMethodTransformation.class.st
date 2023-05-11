@@ -91,7 +91,8 @@ RBMoveMethodTransformation >> addSelfReturn [
 RBMoveMethodTransformation >> buildParseTree [
 
 	parseTree := ( class parseTreeForSelector: selector ) copy.
-	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : #testing }

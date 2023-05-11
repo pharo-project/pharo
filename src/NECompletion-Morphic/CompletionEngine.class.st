@@ -353,7 +353,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	self editor replaceSelectionWith: newString.
 
 	doubleSpace := newString indexOfSubCollection: '  ' startingAt: 1 ifAbsent: [ newString size ].
-	self editor selectAt: wordEnd + doubleSpace - old size.
+	self editor selectAt: wordStart + doubleSpace.
 
 	self editor morph invalidRect: self editor morph bounds
 ]

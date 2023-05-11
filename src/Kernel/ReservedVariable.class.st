@@ -7,15 +7,13 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#classInstVars : [
-		'instance'
-	],
 	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }
 ReservedVariable class >> instance [
-	^instance ifNil: [ instance := self new ]
+	self deprecated: 'use new to get a new instance or #lookupVar: for the shared instance'.
+	^self new.
 ]
 
 { #category : #testing }
@@ -27,12 +25,7 @@ ReservedVariable class >> isAbstract [
 ReservedVariable class >> lookupDictionary [
 	"create a loopup table name -> instance for Semantic Analysis"
 	^ (self subclasses collect: [ :class |
-		   class instance name -> class instance ]) asDictionary
-]
-
-{ #category : #testing }
-ReservedVariable class >> nameIsReserved: aName [
-	^self subclasses anySatisfy: [ :class | class variableName = aName ]
+		   class instance name -> class new ]) asDictionary
 ]
 
 { #category : #accessing }
