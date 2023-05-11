@@ -74,29 +74,26 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-
 	| newObject hiddenSlots |
-	newObject := (newClass isVariable and: [ oldClass isVariable ])
-		             ifTrue: [ newClass basicNew: oldObject basicSize ]
-		             ifFalse: [ newClass basicNew ].
+
+	newObject := (newClass isVariable and: [oldClass isVariable])
+		ifTrue: [ newClass basicNew: oldObject basicSize ]
+		ifFalse: [ newClass basicNew ].
 
 	"first initialize all hidden slots"
-	hiddenSlots := newClass classLayout allSlots reject: [ :each | each isVisible ].
+	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
 	hiddenSlots do: [ :newSlot |
-		newSlot initialize: newObject.
-		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldObject) to: newObject ] ].
+			newSlot initialize: newObject.
+			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
+				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
 
 	"the initialize all visible slots"
-	newClass allSlots do: [ :newSlot |
-		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
+	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
 			newSlot initialize: newObject.
-			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
+		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
-	[ newClass isVariable ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ] ]
-		on: SubscriptOutOfBounds
-		do: [
-			Stdio stdout nextPutAll: 'ERROR: '.
-			thisContext printDetails: Stdio stdout ].
+	newClass isVariable
+		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
 	oldObject setIsReadOnlyObject: false.
