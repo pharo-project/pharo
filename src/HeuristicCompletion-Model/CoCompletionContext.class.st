@@ -40,8 +40,6 @@ CoCompletionContext >> activateEntryAt: anIndex [
 CoCompletionContext >> completion [
 
 	completion ifNotNil: [ ^ completion ].
-	completionTokenStart := engine completionTokenStart.
-	completionToken := engine completionToken.
 	completion := self completionBuilder
 		completionContext: self;
 		buildCompletion.
@@ -117,7 +115,9 @@ CoCompletionContext >> engine [
 
 { #category : #accessing }
 CoCompletionContext >> engine: anObject [
-	engine := anObject
+	engine := anObject.
+	completionTokenStart := anObject completionTokenStart.
+	completionToken := anObject completionToken
 ]
 
 { #category : #accessing }
