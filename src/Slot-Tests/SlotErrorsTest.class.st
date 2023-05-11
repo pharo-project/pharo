@@ -77,16 +77,6 @@ SlotErrorsTest >> testClassSlotDuplicationConflict [
 ]
 
 { #category : #tests }
-SlotErrorsTest >> testClassSlotWithReservedName [
-
-	#(#true #false #nil) do: [:reservedName |
-		self should: [
-			self make: [ :builder |
-				builder classSlots: { reservedName } ] ]
-			raise: InvalidSlotName ]
-]
-
-{ #category : #tests }
 SlotErrorsTest >> testDangerousClassesConditions [
 
 	| specialObjectsArrayItem |
@@ -183,16 +173,6 @@ SlotErrorsTest >> testSlotDuplicationConflict [
 				name: self anotherClassName;
 				slots: { #a } ] ]
 		raise: DuplicatedSlotName
-]
-
-{ #category : #tests }
-SlotErrorsTest >> testSlotWithReservedName [
-
-	#(#true #false #nil) do: [:reservedName |
-		self should: [
-			self make: [ :builder |
-				builder slots: { reservedName } ] ]
-			raise: InvalidSlotName ]
 ]
 
 { #category : #tests }

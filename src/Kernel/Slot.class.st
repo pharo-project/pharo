@@ -43,9 +43,6 @@ Slot class >> checkValidName: aSymbol [
 	aSymbol startsWithDigit ifTrue: [
 		^ InvalidSlotName signalFor: aSymbol ].
 	
-	(#(#true #false #nil) includes: aSymbol) ifTrue: [
-		^ InvalidSlotName signalFor: aSymbol ].
-
 	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [
 		^ InvalidSlotName signalFor: aSymbol ]
 ]
