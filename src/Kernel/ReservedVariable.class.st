@@ -28,11 +28,6 @@ ReservedVariable class >> lookupDictionary [
 		   class instance name -> class new ]) asDictionary
 ]
 
-{ #category : #testing }
-ReservedVariable class >> nameIsReserved: aName [
-	^self subclasses anySatisfy: [ :class | class variableName = aName ]
-]
-
 { #category : #accessing }
 ReservedVariable class >> variableName [
 	^self subclassResponsibility
