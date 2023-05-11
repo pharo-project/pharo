@@ -780,12 +780,9 @@ ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
-	| protocolToRemove |
 	(self organization hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
-	protocolToRemove := self ensureProtocol: aProtocol.
-	protocolToRemove methodSelectors do: [ :sel | self removeSelector: sel ].
-	self organization removeProtocolIfEmpty: protocolToRemove
+	(self ensureProtocol: aProtocol) methodSelectors do: [ :sel | self removeSelector: sel ]
 ]
 
 { #category : #'accessing - protocols' }
