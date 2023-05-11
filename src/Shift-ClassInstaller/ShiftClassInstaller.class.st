@@ -96,15 +96,8 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 		on: SubscriptOutOfBounds
 		do: [
 			Stdio stdout
-				nextPutAll: 'ERROR.';
-				lf;
-				nextPutAll: 'New class: ';
-				print: newClass;
-				lf;
-				nextPutAll: 'Old object: ';
-				print: oldObject;
-				nextPutAll: 'New object: ';
-				print: newObject;
+				nextPutAll: 'ERROR: ';
+				nextPutAll: (String streamContents: [ :s | thisContext printDetails: s ]);
 				lf ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
