@@ -16,9 +16,9 @@ AbstractWindowManagerTest >> runCaseManaged [
 
 { #category : #running }
 AbstractWindowManagerTest >> setUp [
+
 	super setUp.
-	manager := MorphicWindowManager new.
-	
+	manager := MorphicWindowManager new
 ]
 
 { #category : #running }

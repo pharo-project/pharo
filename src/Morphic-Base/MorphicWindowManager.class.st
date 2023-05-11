@@ -1,5 +1,6 @@
 "
-I manage the native window, when i was create i open a window with a taskbar, if you create a window, the window is add at the taskbar.
+I manage the native window, When I am created I open a window with a taskbar.
+If you create a window, the window is add at the taskbar.
 
 
     Instance Variables
@@ -25,15 +26,26 @@ Class {
 	#category : #'Morphic-Base'
 }
 
+{ #category : #'instance creation' }
+MorphicWindowManager class >> open [
+
+	<script>
+	| manager |
+	manager := self new.
+	manager open.
+	^ manager
+]
+
 { #category : #accessing }
 MorphicWindowManager >> allAttributes [
+
 	^ allAttributes
 ]
 
 { #category : #accessing }
 MorphicWindowManager >> allSaveRoot [
-	
-	^ rootSave 
+
+	^ rootSave
 ]
 
 { #category : #accessing }
@@ -48,7 +60,7 @@ MorphicWindowManager >> closeAllWindowToLeft: aWindow [
 	| index |
 	index := windows indexOf: aWindow.
 	index - 1 to: 1 by: -1 do: [ :m | (windows at: m) delete ].
-	taskBar updateTasks
+	self updateTasksBar
 ]
 
 { #category : #accessing }
@@ -56,24 +68,24 @@ MorphicWindowManager >> closeAllWindowToRight: aWindow [
 
 	| index |
 	index := windows indexOf: aWindow.
-	windows size to: index + 1 by: -1 do: [ :m | 
-	(windows at: m) delete ].
-	taskBar updateTasks
+	windows size to: index + 1 by: -1 do: [ :m | (windows at: m) delete ].
+	self updateTasksBar
 ]
 
 { #category : #accessing }
 MorphicWindowManager >> closeAllWindows [
+	"I delete all the windows opened that are attached to me starting from the end."
 
-	
-	(windows size) to: (1) by: (-1) do: [ :m | (windows at: m) delete  ].
-	taskBar updateTasks .
+	windows size to: 1 by: -1 do: [ :m | (windows at: m) delete ].
+	self updateTasksBar
 ]
 
 { #category : #accessing }
 MorphicWindowManager >> closeWindow: aWindow [
+	"If we don't have the window, they do Nothing"
 
 	(windows includes: aWindow) ifTrue: [ windows remove: aWindow ].
-	taskBar ifNotNil: [ taskBar updateTasks ]
+	((aWindow hash)= ( taskBarWindow hash) )ifFalse: [self updateTasksBar]
 ]
 
 { #category : #closing }
@@ -82,32 +94,37 @@ MorphicWindowManager >> deleteAll [
 	self closeAllWindows.
 
 	"Call doDelete because the taskbar window is not subscribed to manager"
-	taskBarWindow doDelete.
-
+	taskBarWindow ifNotNil: [ taskBarWindow doDelete ]
 ]
 
 { #category : #accessing }
 MorphicWindowManager >> ensureCloseAllWindow [
 
-	windows size to: 1 by: -1 do: [ :m | 
-		(windows at: m) ensureDelete ].
-	taskBar updateTasks
+	windows size to: 1 by: -1 do: [ :m | (windows at: m) ensureDelete ].
+	self updateTasksBar
+]
+
+{ #category : #accessing }
+MorphicWindowManager >> ensureCloseAllWindows [
+
+	windows size to: 1 by: -1 do: [ :m | (windows at: m) ensureDelete ].
+	self updateTasksBar
 ]
 
 { #category : #closing }
 MorphicWindowManager >> ensureDeleteAll [
 
-	self ensureCloseAllWindow.
+	self ensureCloseAllWindows.
 
-	"Call doDelete because the taskbar window is not subscribed to manager"
-	taskBarWindow ensureDelete 
+	"Call ensureDelete because the taskbar window is not subscribed to manager"
+	taskBarWindow ifNotNil: [ taskBarWindow ensureDelete ]
 ]
 
 { #category : #initialization }
 MorphicWindowManager >> initialize [
 
 	windows := OrderedCollection new.
-	self startupTaskbar .
+
 ]
 
 { #category : #testing }
@@ -145,15 +162,23 @@ MorphicWindowManager >> numberOfRootSave [
 
 { #category : #accessing }
 MorphicWindowManager >> numberOfWindows [
+
 	^ windows size
 ]
 
+{ #category : #'instance creation' }
+MorphicWindowManager >> open [
+
+	self startupTaskbar
+]
+
 { #category : #accessing }
-MorphicWindowManager >> openNewWindowWithRoot: aMorph [ 
+MorphicWindowManager >> openNewWindowWithRoot: aMorph [
 
 	| newWindow |
-	newWindow := ( self newWindowWithRoot: aMorph ) open.
-	taskBar updateTasks .
+	newWindow := (self newWindowWithRoot: aMorph) open.
+
+	self updateTasksBar.
 	^ newWindow
 ]
 
@@ -197,4 +222,10 @@ MorphicWindowManager >> startupTaskbar [
 MorphicWindowManager >> taskBar [
 
 	^ taskBar 
+]
+
+{ #category : #update }
+MorphicWindowManager >> updateTasksBar [
+
+	taskBarWindow ifNotNil: [taskBar ifNotNil: [ taskBar updateTasks ]]
 ]
