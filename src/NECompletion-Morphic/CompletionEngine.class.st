@@ -47,9 +47,10 @@ CompletionEngine class >> isCompletionEnabled [
 	^NECPreferences enabled
 ]
 
-{ #category : #testing }
-CompletionEngine >> captureNavigationKeys [
-	^ NECPreferences captureNavigationKeys
+{ #category : #private }
+CompletionEngine >> browse [
+
+	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
 ]
 
 { #category : #'menu morph' }
@@ -139,10 +140,6 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
-
-	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
-		menuMorph showDetail.
-		^ true ].
 
 	({
 		 KeyboardKey left.
@@ -308,7 +305,7 @@ CompletionEngine >> openMenu [
 	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
-				position: (editor selectionPosition: context completionToken).
+				position: (editor selectionPosition: self completionToken).
 
 	theMenu isClosed ifFalse: [ 
 		menuMorph := theMenu.
@@ -602,5 +599,9 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
 
-	context narrowWith: aParagraphEditor wordAtCaret
+	"Do not update the content nor refresh the menu if the context token is the same"
+	context completionToken = self completionToken ifTrue: [ ^self ].
+
+	context narrowWith: self completionToken.
+	menuMorph refreshSelection
 ]
