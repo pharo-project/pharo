@@ -114,11 +114,6 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	^ attributes
 ]
 
-{ #category : #'file system' }
-MetacelloPharoCommonPlatform >> deleteFileNamed: filePath [
-	filePath asFileReference ensureDelete
-]
-
 { #category : #notification }
 MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
 
@@ -158,100 +153,6 @@ MetacelloPharoCommonPlatform >> downloadBasicFile: url to: outputFileName userna
 	out close.
 	err close.
 	^ errorFileName
-]
-
-{ #category : #'github/bitbucket support' }
-MetacelloPharoCommonPlatform >> downloadJSON: url username: username pass: pass [
-	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
-
-	| jsonFileName jsonFile errorFileName |
-	jsonFileName := self
-		tempFileFor: 'tags-' , self processPID
-		suffix: 'json'.
-	errorFileName := self
-		downloadBasicFile: url
-		to: jsonFileName
-		username: username
-		pass: pass.
-	[ jsonFile := self fileHandleOn: jsonFileName.
-	jsonFile containingDirectory
-		readOnlyFileNamed: jsonFile localName
-		do: [ :fileStream | 
-			| result |
-			result := (Smalltalk at: #MCFileTreeJsonParser)
-				parseStream: fileStream self
-				deleteFileNamed: errorFileName.
-			^ result ] ]
-		on: Error
-		do: [ :ex | 
-			self
-				error:
-					'Error during download (' , ex description , ') please check the file '
-						, errorFileName printString , ' for error message.' ]
-]
-
-{ #category : #'github support' }
-MetacelloPharoCommonPlatform >> downloadZipArchive: url to: outputFileName [
-	"download zip archive from <url> into <outputFileName>"
-
-	| archive zipfile errorFileName |
-	errorFileName := self
-		downloadBasicFile: url
-		to: outputFileName
-		username: nil
-		pass: nil.
-	archive := ZipArchive new.
-	zipfile := self fileHandleOn: outputFileName.
-	zipfile containingDirectory
-		readOnlyFileNamed: zipfile localName
-		do: [ :fileStream | 
-			[ archive readFrom: fileStream ]
-				on: Error
-				do: [ :ex | 
-					self
-						error:
-							'Error during download (' , ex description , ') please check the file '
-								, errorFileName printString , ' for error message.' ] ].
-	self deleteFileNamed: errorFileName.
-	^ archive
-]
-
-{ #category : #'github support' }
-MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
-    "unzip <zipFile> into <directory>"
-
-    | out err proc errorMessage errorFileName |
-    errorFileName := self downloadErrorFileNameFor: zipFile.
-    out := ('/tmp/zip.out'asFileReference)
-		ensureDelete;
-		writeStream.
-    err := (errorFileName asFileReference)
-		ensureDelete;
-		writeStream.
-    errorMessage := ''.
-    [ 
-    proc := (self class environment at: #OSProcess) thisOSProcess
-        forkJob: '/usr/bin/unzip'
-        arguments:
-            {'-u'.
-            zipFile.
-            '-d'.
-            directory}
-        environment: nil
-        descriptors: (Array with: nil with: out with: err).
-    proc ifNil: [ self noAccessorAvailable ].
-    [ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ] ]
-        ensure: [ 
-            out close.
-            err close ].
-    errorFileName asFileReference
-        binaryReadStreamDo: [ :fileStream | 
-            (errorMessage := fileStream upToEnd) notEmpty
-                ifTrue: [ self error: 'unzip failure: ' , errorMessage printString ]
-                ifFalse: [
-                    (self fileHandleOn: '/tmp')
-                        deleteFileNamed: zipFile;
-                        deleteFileNamed: errorFileName ] ]
 ]
 
 { #category : #'repository creation' }
