@@ -6,7 +6,7 @@ My name is strange but this is to avoid to match with a Manifest class which is 
 "
 Class {
 	#name : #TheManifestBuilder,
-	#superclass : #AbstractTool,
+	#superclass : #Model,
 	#instVars : [
 		'manifestClass'
 	],
@@ -524,6 +524,36 @@ TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 	self removeAllItem: fp selector: selector
 ]
 
+{ #category : #class }
+TheManifestBuilder >> removeClasses: aCollection [
+	"Remove the selected classes from the system.  Check that the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
+
+	| classNames classesToRemove result |
+	aCollection isEmptyOrNil
+		ifTrue: [ ^ false ].
+	classesToRemove := aCollection collect: [:each | each instanceSide].
+	classNames := (classesToRemove collect: [:each | each name]) joinUsing: ', '.
+	(result := self confirm: (self removeClassesMessageFor: classNames))
+		ifTrue: [
+			classesToRemove
+				do: [ :classToRemove |
+					classToRemove subclasses notEmpty
+						ifTrue: [
+							(self confirm: (self removedClassHasSubclassesMessageFor: classToRemove name))
+								ifTrue: [ classToRemove removeFromSystem ] ]
+						ifFalse: [ classToRemove removeFromSystem ] ] ].
+	^ result
+]
+
+{ #category : #class }
+TheManifestBuilder >> removeClassesMessageFor: classNames [
+	^ 'Are you certain that you
+want to REMOVE the classes ' , classNames
+		,
+			'
+from the system?'
+]
+
 { #category : #'adding-removing' }
 TheManifestBuilder >> removeFalsePositive: fp of: ruleId version: versionId [
 
@@ -541,7 +571,7 @@ TheManifestBuilder >> removeItem: fp selector: selector [
 TheManifestBuilder >> removeManifestOf: aItem [
 
 	(self manifestOf: aItem) ifNotNil: [ :myManifest |
-			self removeClass: myManifest  ]
+			SystemNavigation new removeClass: myManifest  ]
 ]
 
 { #category : #private }
@@ -580,6 +610,13 @@ TheManifestBuilder >> removeToDo: fp of: ruleId version: versionId [
 	| selector |
 	selector := self selectorToDoOf:ruleId version: versionId.
 	self removeItem: fp selector: selector
+]
+
+{ #category : #class }
+TheManifestBuilder >> removedClassHasSubclassesMessageFor: className [
+
+	^ className, ' has subclasses.
+Do you really want to REMOVE it from the system ?'
 ]
 
 { #category : #'adding-removing' }

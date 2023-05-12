@@ -402,3 +402,53 @@ SystemNavigation new browseAllSelect:
 	found]
 "
 ]
+
+{ #category : #removing }
+SystemNavigation >> removeClass: aClass [
+	"Remove the selected class from the system, at interactive user request.  Make certain the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
+
+	| message className classToRemove result |
+	aClass ifNil: [ ^ false ].
+	classToRemove := aClass instanceSide.
+	className := classToRemove name.
+	message := self removeClassMessageFor: className.
+	(result := self confirm: message)
+		ifTrue: [
+			classToRemove subclasses notEmpty
+				ifTrue: [
+					(self confirm: 'class has subclasses: ' , message)
+						ifFalse: [ ^ false ] ].
+			classToRemove removeFromSystem ].
+	^ result
+]
+
+{ #category : #removing }
+SystemNavigation >> removeClassMessageFor: className [
+	^ 'Are you certain that you
+want to REMOVE the class ' , className
+		,
+			'
+from the system?'
+]
+
+{ #category : #removing }
+SystemNavigation >> removeMethod: aMethod inClass: aClass [
+	"If a message is selected, create a Confirmer so the user can verify that
+	the currently selected message should be removed from the system. If
+	so, remove it. "
+	| messageName confirmation |
+
+	aMethod ifNil: [^ false].
+	messageName := aMethod selector.
+	confirmation := self confirmRemovalOf: messageName on: aClass.
+	confirmation = 3
+		ifTrue: [^ false].
+	(aClass includesLocalSelector: messageName)
+		ifTrue: [ aClass removeSelector: messageName ].
+
+	"In case organization not cached"
+	confirmation = 2
+		ifTrue: [self browseAllSendersOf: messageName].
+
+	^ true
+]
