@@ -782,7 +782,9 @@ ClassDescription >> removeProtocol: aProtocol [
 
 	(self organization hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
-	(self ensureProtocol: aProtocol) methodSelectors do: [ :sel | self removeSelector: sel ]
+	(self ensureProtocol: aProtocol) in: [ :protocol |
+		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
+		self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : #'accessing - protocols' }

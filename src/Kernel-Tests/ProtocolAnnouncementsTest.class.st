@@ -74,7 +74,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization removeProtocolIfEmpty: #titan.
+	class removeProtocolIfEmpty: #titan.
 
 	self assert: numberOfAnnouncements equals: 2
 ]
@@ -90,9 +90,61 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization removeProtocolIfEmpty: (organization protocolNamed: #titan).
+	class removeProtocolIfEmpty: (organization protocolNamed: #titan).
 
 	self assert: numberOfAnnouncements equals: 2
+]
+
+{ #category : #'tests - removing' }
+ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement3 [
+
+	organization addProtocol: #titan.
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self when: ProtocolRemoved do: [ :ann |
+		self assert: ann protocol name equals: #titan.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
+	class removeProtocol: #titan.
+
+	self assert: numberOfAnnouncements equals: 2
+]
+
+{ #category : #'tests - removing' }
+ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement4 [
+
+	organization addProtocol: #titan.
+
+	self when: ProtocolRemoved do: [ :ann |
+		self assert: ann protocol name equals: #titan.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
+	class removeProtocol: #titan.
+
+	self assert: numberOfAnnouncements equals: 2
+]
+
+{ #category : #'tests - removing' }
+ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonEmptyProtocolDoesNotAnnounceAnything [
+
+	organization addProtocol: #titan.
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self when: ProtocolRemoved do: [ :ann | self fail ].
+
+	self when: ClassReorganized do: [ :ann | self fail ].
+
+	class removeProtocolIfEmpty: #titan.
+
+	self assert: numberOfAnnouncements equals: 0
 ]
 
 { #category : #'tests - removing' }
@@ -102,7 +154,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoe
 
 	self when: ClassReorganized do: [ :ann | self fail ].
 
-	organization removeProtocolIfEmpty: #nonexisting.
+	class removeProtocolIfEmpty: #nonexisting.
 
 	self assert: numberOfAnnouncements equals: 0
 ]
@@ -114,7 +166,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoe
 
 	self when: ClassReorganized do: [ :ann | self fail ].
 
-	organization removeProtocolIfEmpty: (Protocol named: #nonexisting).
+	class removeProtocolIfEmpty: (Protocol named: #nonexisting).
 
 	self assert: numberOfAnnouncements equals: 0
 ]
