@@ -112,6 +112,14 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #pasteRecent;
 		help: nil;
 		iconName: #smallCopy.
+	(aBuilder item: #'Indent' translated)
+		keyText: 'R';
+		selector: #indent;
+		help: nil.
+	(aBuilder item: #'Outdent' translated)
+		keyText: 'L';
+		selector: #outdent;
+		help: nil.
 	(aBuilder item: #'Widen selection' translated)
 		keyText: '2';
 		selector: #widenSelectionOfIt;
