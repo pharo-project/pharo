@@ -22,40 +22,40 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> packageName [
 RPackageOrganizerAndSystemOrganizeSynchTest >> tearDown [
 
 	(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
-	Smalltalk organization systemOrganizer  removeCategory: self packageName.
-	Smalltalk organization systemOrganizer  removeCategoriesMatching: self packageName , '-*'.
+	Smalltalk organization removeCategory: self packageName.
+	Smalltalk organization removeCategoriesMatching: self packageName , '-*'.
 	super tearDown
 ]
 
 { #category : #tests }
 RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingPackage [
 
-	Smalltalk organization systemOrganizer  addCategory: self packageName.
+	Smalltalk organization addCategory: self packageName.
 
 	self assert: (Smalltalk organization packageNames includes: self packageName).
-	self assert: (Smalltalk organization systemOrganizer  includesCategory: self packageName)
+	self assert: (Smalltalk organization includesCategory: self packageName)
 ]
 
 { #category : #tests }
 RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackage [
 	"Regression test because removing a RPackage from the system was not removing the category in SystemOrganizer."
 
-	Smalltalk organization systemOrganizer  addCategory: self packageName.
+	Smalltalk organization addCategory: self packageName.
 
 	self assert: (Smalltalk organization packageNames includes: self packageName).
-	self assert: (Smalltalk organization systemOrganizer  includesCategory: self packageName).
+	self assert: (Smalltalk organization includesCategory: self packageName).
 
 	self packageName asPackage removeFromSystem.
 
 	self deny: (Smalltalk organization packageNames includes: self packageName).
-	self deny: (Smalltalk organization systemOrganizer  includesCategory: self packageName)
+	self deny: (Smalltalk organization includesCategory: self packageName)
 ]
 
 { #category : #tests }
 RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackageWithTags [
 	"Regression test because removing a RPackage from the system was not removing the category in SystemOrganizer."
 
-	Smalltalk organization systemOrganizer addCategory: self packageName.
+	Smalltalk organization addCategory: self packageName.
 	(Object << 'RPackageOragizationSynchClass1')
 		package: self packageName;
 		tag: 'tag1';
@@ -65,14 +65,14 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackageWithTags [
 		tag: 'tag2';
 		install.
 	self assert: (Smalltalk organization packageNames includes: self packageName).
-	self assert: (Smalltalk organization systemOrganizer  includesCategory: self packageName).
-	self assert: (Smalltalk organization systemOrganizer  includesCategory: self packageName , '-tag1').
-	self assert: (Smalltalk organization systemOrganizer  includesCategory: self packageName , '-tag2').
+	self assert: (Smalltalk organization includesCategory: self packageName).
+	self assert: (Smalltalk organization includesCategory: self packageName , '-tag1').
+	self assert: (Smalltalk organization includesCategory: self packageName , '-tag2').
 
 	self packageName asPackage removeFromSystem.
 
 	self deny: (Smalltalk organization packageNames includes: self packageName).
-	self deny: (Smalltalk organization systemOrganizer  includesCategory: self packageName).
-	self deny: (Smalltalk organization systemOrganizer  includesCategory: self packageName , '-tag1').
-	self deny: (Smalltalk organization systemOrganizer  includesCategory: self packageName , '-tag2')
+	self deny: (Smalltalk organization includesCategory: self packageName).
+	self deny: (Smalltalk organization includesCategory: self packageName , '-tag1').
+	self deny: (Smalltalk organization includesCategory: self packageName , '-tag2')
 ]
