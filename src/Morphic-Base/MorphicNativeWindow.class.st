@@ -71,6 +71,28 @@ MorphicNativeWindow >> attributesSave [
 	^ attributes 
 ]
 
+{ #category : #'submorphs - add/remove' }
+MorphicNativeWindow >> attributs [
+
+	^ attributes
+]
+
+{ #category : #'submorphs - add/remove' }
+MorphicNativeWindow >> attributs: aOsWindowAttributs [
+
+	attributes := aOsWindowAttributs
+]
+
+{ #category : #'submorphs - add/remove' }
+MorphicNativeWindow >> attributsSave [
+
+	osWindow position.
+	osWindow title.
+	osWindow bounds.
+	
+	^ attributes 
+]
+
 { #category : #accessing }
 MorphicNativeWindow >> backend [
 
@@ -81,7 +103,7 @@ MorphicNativeWindow >> backend [
 MorphicNativeWindow >> canBeMaximized [
 	"Answer whether we are not we can be maximised."
 
-	^ attributes resizable and: [ attributes maximized not ]
+	^ attributes  resizable  and: [ attributes maximized not ]
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -123,10 +145,6 @@ MorphicNativeWindow >> doDelete [
 
 { #category : #'submorphs - add/remove' }
 MorphicNativeWindow >> ensureDelete [
-	"This method is the correct way to remove a NativeWindow
-
-	This method makes it possible to delete a NativeWindow in a safe way,
-	it makes it possible not to lose the connection with the manager."
 
 	self ensureDoDelete.
 	manager closeWindow: self
@@ -144,10 +162,10 @@ MorphicNativeWindow >> ensureDoDelete [
 
 	self isOpen ifFalse: [ ^ self ].
 
-	osWindow destroy .
+	"osWindow destroy ."
 	window delete.
 	
-
+	manager closeWindow: self.
 ]
 
 { #category : #testing }
@@ -178,7 +196,7 @@ MorphicNativeWindow >> isNotMinimized [
 MorphicNativeWindow >> isNotRestored [
 	"Answer whether we are maximised or minimised."
 
-	^ attributes minimized or: [ attributes maximized ]
+	^attributes  minimized or: [attributes maximized]
 ]
 
 { #category : #testing }
@@ -242,6 +260,8 @@ MorphicNativeWindow >> restore [
 { #category : #'taskbar-required' }
 MorphicNativeWindow >> taskbarButtonIsActive [
 
+	"true/false"
+	
 	^ true
 ]
 
@@ -329,25 +349,25 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 { #category : #icons }
 MorphicNativeWindow >> taskbarIcon [
 
-	^ window class taskbarIcon
+ ^ window class taskbarIcon
 ]
 
 { #category : #'taskbar-required' }
 MorphicNativeWindow >> taskbarLabel [
 	"Answer the label to use for a taskbar button for the receiver."
 	
-	^ self attributes title
+	^ self attributs title
 ]
 
 { #category : #'taskbar-required' }
 MorphicNativeWindow >> taskbarState [
 	"Answer one of #minimized, #restored, #maximized or #active."
 	
-	^ self attributes minimized
+	^ self attributs minimized
 		ifTrue: [#minimized]
-		ifFalse: [self attributes maximized
+		ifFalse: [self attributs maximized
 			ifTrue: [#maximized]
-			ifFalse: [self attributes  windowCentered
+			ifFalse: [self attributs  windowCentered
 						ifTrue: [#active]
 						ifFalse: [#restored]]]
 ]
