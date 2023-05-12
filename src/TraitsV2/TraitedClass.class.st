@@ -258,7 +258,7 @@ TraitedClass >> recategorizeSelector: selector from: oldProtocol to: newProtocol
 	"If it is nil is because it is a removal. It will removed when the method is removed."
 	newProtocol ifNil: [ ^ self ].
 
-	originalProtocol := (self organization protocolOfSelector: selector) ifNil: [ ^ self ].
+	originalProtocol := (self protocolOfSelector: selector) ifNil: [ ^ self ].
 	originalProtocol name = oldProtocol name ifTrue: [ self organization classify: selector under: newProtocol name ].
 
 	(self traitComposition reverseAlias: selector) do: [ :selectorAlias |

@@ -168,9 +168,7 @@ ClassOrganization >> protocolNames [
 { #category : #protocol }
 ClassOrganization >> protocolOfSelector: aSelector [
 
-	^ self protocols
-		  detect: [ :each | each includesSelector: aSelector ]
-		  ifNone: [ nil ]
+	^ self organizedClass protocolOfSelector: aSelector
 ]
 
 { #category : #accessing }

@@ -48,6 +48,19 @@ ClassDescriptionProtocolsTest >> testProtocolNames [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testProtocolOfSelector [
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assert: (class protocolOfSelector: #king) identicalTo: (class organization protocolNamed: #titan).
+	self assert: (class protocolOfSelector: #king) name equals: #titan.
+	"In the future this should maybe be an error?"
+	self assert: (class protocolOfSelector: #luz) isNil
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocol [
 
 	class organization addProtocol: #titan.

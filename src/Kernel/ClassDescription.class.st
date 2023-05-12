@@ -33,7 +33,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorMethod := method.
 		priorOrigin := method origin ].
 
-	oldProtocol := self organization protocolOfSelector: selector.
+	oldProtocol := self protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self organization classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
@@ -78,7 +78,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 	| priorMethodOrNil oldProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	oldProtocol := self organization protocolOfSelector: selector.
+	oldProtocol := self protocolOfSelector: selector.
 
 	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
 	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: nil ] ].
@@ -759,6 +759,14 @@ ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
 	^ self organization protocolNames copy
+]
+
+{ #category : #protocol }
+ClassDescription >> protocolOfSelector: aSelector [
+
+	^ self organization protocols
+		  detect: [ :each | each includesSelector: aSelector ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #compiling }
