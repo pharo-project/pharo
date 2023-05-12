@@ -30,6 +30,11 @@ NullWorldRenderer >> actualScreenSize [
 NullWorldRenderer >> checkForNewScreenSize [
 ]
 
+{ #category : #accessing }
+NullWorldRenderer >> clipboardText: aString [
+	"nothing because they don't have window"
+]
+
 { #category : #utilities }
 NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
