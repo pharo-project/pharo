@@ -38,9 +38,22 @@ ConstantBlockClosure class >> numArgs: numArgs literal: aLiteral [
 		literal: aLiteral
 ]
 
+{ #category : #literals }
+ConstantBlockClosure >> blockViaLiteralPath: anArray [ 
+	"return the compiledBlock for a path (see CompiledBlock>>literalPath)"
+	^ self
+]
+
 { #category : #accessing }
 ConstantBlockClosure >> literal: anObject [
 	 literal := anObject
+]
+
+{ #category : #accessing }
+ConstantBlockClosure >> literalPath [
+	"return an array with the offsets in the literals from the homeMethod to here"
+	
+	 ^self outerCode literalPath, {self outerCode indexOfLiteral: self}
 ]
 
 { #category : #evaluating }

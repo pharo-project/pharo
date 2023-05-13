@@ -151,6 +151,13 @@ CompiledCode >> author [
 	^''
 ]
 
+{ #category : #literals }
+CompiledCode >> blockViaLiteralPath: anArray [
+	"return the compiledBlock for a path (see CompiledBlock>>literalPath)"
+	anArray ifEmpty: [ ^self ].
+	^ (self literals at: anArray first) blockViaLiteralPath: anArray copyWithoutFirst
+]
+
 { #category : #accessing }
 CompiledCode >> bytecode [
 	self

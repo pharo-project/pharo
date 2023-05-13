@@ -102,6 +102,21 @@ CompiledBlock >> literalEqual: other [
 ]
 
 { #category : #literals }
+CompiledBlock >> literalPath [
+	"return an array with the offsets in the literals from the homeMethod to here"
+	| current path |
+	path := OrderedCollection new.
+	current := self.
+	"we go up till we reach a compiled method, recording the offsets"
+	[ current isCompiledBlock ] whileTrue: [
+		| outerCode |
+		outerCode := current outerCode.
+		path add: (outerCode indexOfLiteral: current).
+		current := outerCode ].
+	^ path asArray reversed
+]
+
+{ #category : #literals }
 CompiledBlock >> literalsToSkip [
 
 	^ 1

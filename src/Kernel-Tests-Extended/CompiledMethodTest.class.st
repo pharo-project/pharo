@@ -289,6 +289,24 @@ CompiledMethodTest >> testAsString [
 	self assert: thisContext method asString isString
 ]
 
+{ #category : #tests }
+CompiledMethodTest >> testBlockViaLiteralPath [
+	| block innerCompiledBlock |
+	block := [ self class . [self] "a real block" ].
+	innerCompiledBlock := block compiledBlock literals second.
+	
+	self 
+		assert: (thisContext method blockViaLiteralPath: innerCompiledBlock literalPath) 
+		equals: innerCompiledBlock.
+		
+	block := [ self class . [#clean] "a constant block" ].
+	innerCompiledBlock := block compiledBlock literals second.
+	
+	self 
+		assert: (thisContext method blockViaLiteralPath: innerCompiledBlock literalPath) 
+		equals: innerCompiledBlock
+]
+
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testBytecode [
 	"The result of this test depends on the used bytecode set.

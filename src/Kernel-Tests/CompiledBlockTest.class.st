@@ -25,6 +25,18 @@ CompiledBlockTest >> testLiteralEqual [
 ]
 
 { #category : #tests }
+CompiledBlockTest >> testLiteralPath [
+	| block innerCompiledBlock |
+	block := [ self class . [self] "a real block" ].
+	innerCompiledBlock := block compiledBlock literals second.
+	self assert: innerCompiledBlock literalPath equals: #(1 2).
+	
+	block := [ self class . [#clean] "a constant block" ].
+	innerCompiledBlock := block compiledBlock literals second.
+	self assert: innerCompiledBlock literalPath equals: #(8 2)
+]
+
+{ #category : #tests }
 CompiledBlockTest >> testPcInOuter [
 	| methodToTest compiledBlocks |
 	methodToTest := self class compiler compile: 'testWrongHeightlightSingleValue
