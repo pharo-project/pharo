@@ -48,7 +48,7 @@ ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
 
 	self assert: method sourceCode equals: 'wammawink ^ self'.
 	self assert: method protocol equals: Protocol unclassified.
-	self assert: (class organization protocolOfSelector: #wammawink) name equals: Protocol unclassified
+	self assert: (class protocolOfSelector: #wammawink) name equals: Protocol unclassified
 ]
 
 { #category : #'tests - slots' }

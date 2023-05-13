@@ -89,9 +89,7 @@ RGEnvironment >> bindingOf: aSymbol [
 
 	| behavior result |
 
-	(ReservedVariable nameIsReserved: aSymbol)
-		ifTrue: [ ^ ReservedVariable lookupDictionary at: aSymbol ].
-
+	ReservedVariable lookupDictionary at: aSymbol ifPresent: [ :val | ^ val ].
 	self globalVariablesBindings at: aSymbol ifPresent: [ :val | ^ val ].
 
 	self ask globalVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found |

@@ -160,8 +160,8 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 
 	t1 removeSelector: #m1.
 
-	self assert: (t1 organization protocolOfSelector: #m1) isNil.
-	self assert: (t2 organization protocolOfSelector: #m1) isNil.
+	self assert: (t1 protocolOfSelector: #m1) isNil.
+	self assert: (t2 protocolOfSelector: #m1) isNil.
 
 	self assert: (Smalltalk organization packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) isNil.
 	self assert: (Smalltalk organization packageDefiningOrExtendingSelector: #m1 inClassNamed: #T2) isNil

@@ -4,6 +4,12 @@ Class {
 	#category : #'HeuristicCompletion-Tests'
 }
 
+{ #category : #testing }
+CoCompletionEngineTest class >> shouldInheritSelectors [
+
+	^ true
+]
+
 { #category : #accessing }
 CoCompletionEngineTest >> doItContext [
 
@@ -16,99 +22,54 @@ CoCompletionEngineTest >> newCompletionEngine [
 	^ CoCompletionEngine new
 ]
 
-{ #category : #asserting }
-CoCompletionEngineTest >> shouldInheritSelectors [
-
-	^ true
-]
-
 { #category : #'tests - interaction' }
-CoCompletionEngineTest >> testAdvanceWordDoesNotCloseCompletionContext [
-	"Because it will still be at the end of the current word"
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size - 10.
+CoCompletionEngineTest >> testCmdCtrlLeft [
+
+	self setEditorTextWithCaret: 'self asOrder|ed'.
 
 	editor textArea openInWorld.
 	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	editor keyDown: (self keyboardEventFor: Character arrowRight useCommand: true).
-
-	self assert: controller hasCompletionContext
-]
-
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testAdvanceWordTwiceClosesCompletionContext [
-	"Because it exists current word"
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size - 10.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	2 timesRepeat: [
-		editor keystroke: (self keyboardEventFor: Character arrowRight useCommand: true) ].
-
-	self deny: controller hasCompletionContext
-]
-
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testCmdCtrlLeftClosesDetail [
-
-	"The start of a word does not close the completion menu"
-
-	| text |
-	text := 'self asOrdered'.
-	self
-		setEditorText: text;
-		selectAt: text size - 1.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"Detail already closed? open it"
-	controller hasDetail ifFalse: [ controller showDetail ].
-
 	"Force the drawing of the menu, so the detail can get its position..."
 	WorldMorph doOneCycle.
-	"This is the current shortcut to open the details of the completion engine... Cmd/ctrl+right for all platforms"
+
 	editor keyDown:
 		((self keyboardEventFor: Character arrowLeft) buttons:
 			 KMModifier meta eventCode).
 
-	self assert: controller hasDetail
+	self assert: self editorTextWithCaret equals: 'self |asOrdered'.
+	self assert: controller isMenuOpen.
+
+	editor keyDown:
+		((self keyboardEventFor: Character arrowLeft) buttons:
+			 KMModifier meta eventCode).
+
+	self assert: self editorTextWithCaret equals: '|self asOrdered'.
+	self deny: controller isMenuOpen
 ]
 
 { #category : #'tests - interaction' }
-CoCompletionEngineTest >> testCmdCtrlRightOpensDetail [
+CoCompletionEngineTest >> testCmdCtrlRight [
 
-	| text |
-	text := 'self asOrdered'.
-	self
-		setEditorText: text;
-		selectAt: text size - 1.
+	self setEditorTextWithCaret: 'self asOrder|ed trac'.
 
 	editor textArea openInWorld.
 	controller openMenu.
-
-	"Detail already open? close it"
-	controller hasDetail ifTrue: [ controller hideDetail ].
-
 	"Force the drawing of the menu, so the detail can get its position..."
 	WorldMorph doOneCycle.
-	"This is the current shortcut to open the details of the completion engine... Cmd/ctrl+right for all platforms"
+
 	editor keyDown:
 		((self keyboardEventFor: Character arrowRight) buttons:
 			 KMModifier meta eventCode).
 
-	self assert: controller hasDetail
+	self assert: self editorTextWithCaret equals: 'self asOrdered| trac'.
+	self assert: controller isMenuOpen.
+
+	editor keyDown:
+		((self keyboardEventFor: Character arrowRight) buttons:
+			 KMModifier meta eventCode).
+
+	self assert: self editorTextWithCaret equals: 'self asOrdered trac|'.
+	self deny: controller isMenuOpen
 ]
 
 { #category : #tests }
@@ -356,42 +317,6 @@ CoCompletionEngineTest >> testOpenMenuCreatesCompletionContext [
 	controller openMenu.
 
 	self assert: controller hasCompletionContext
-]
-
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testPreviousWordClosesCompletionContext [
-
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+left for all platforms"
-	editor keystroke: (self keyboardEventFor: Character arrowLeft useCommand: true).
-
-	self deny: controller hasCompletionContext
-]
-
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testPreviousWordGoesToPreviousWord [
-
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+left for all platforms"
-	editor keyDown: (self keyboardEventFor: Character arrowLeft useCommand: true).
-
-	self assert: editor caret equals: text size - 'toto' size + 1
 ]
 
 { #category : #'tests - interaction' }

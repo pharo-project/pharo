@@ -29,13 +29,173 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'variableTypes',
-		'unknownMethod',
 		'shortcutKernelMessages',
 		'returnTypes',
-		'dirty'
+		'dirty',
+		'cha',
+		'unknownMethods'
 	],
 	#category : #'AST-Core-Type'
 }
+
+{ #category : #benchmarking }
+ASTTypingVisitor class >> bench: trees [
+
+	| report valueNodes duration count visitor steps moreTrees knownMethods |
+	report := WriteStream on: ''.
+	report
+		nextPutAll: 'Number of AST: ';
+		print: trees size;
+		cr.
+
+	valueNodes := (trees flatCollect: #allChildren) select: #isValue.
+	report
+		nextPutAll: 'Number of value nodes: ';
+		print: valueNodes size;
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	duration := [ trees do: [ :tree | self new visit: tree ] ] timeToRun.
+	report
+		nextPutAll: 'Individual typing';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	duration := [ trees do: [ :tree | visitor visit: tree ] ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: 'Agretated typing';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	steps := 0.
+	duration := [
+	            [
+	            steps := steps + 1.
+	            visitor dirty: false.
+	            trees do: [ :tree | visitor visit: tree ].
+	            visitor dirty ] whileTrue ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: '+fixed point typing';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  steps:';
+		print: steps;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	visitor cha: true.
+	steps := 0.
+	duration := [
+	            [
+	            steps := steps + 1.
+	            visitor dirty: false.
+	            trees do: [ :tree | visitor visit: tree ].
+	            visitor dirty ] whileTrue ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: '+CHA';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  steps:';
+		print: steps;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+
+	moreTrees := OrderedCollection newFrom: trees.
+	knownMethods := trees collect: [ :tree | tree compiledMethod ] as: Set.
+	visitor unknownMethods do: [ :method |
+		(knownMethods includes: method) ifFalse: [ 
+		moreTrees add: method parseTree ].
+		].
+	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
+	visitor := self new.
+	visitor cha: true.
+	steps := 0.
+	duration := [
+	            [
+	            steps := steps + 1.
+	            visitor dirty: false.
+	            moreTrees do: [ :tree | visitor visit: tree ].
+	            visitor dirty ] whileTrue ] timeToRun.
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	report
+		nextPutAll: '+CHA';
+		cr;
+		nextPutAll: '  duration:';
+		print: duration;
+		cr;
+		nextPutAll: '  steps:';
+		print: steps;
+		cr;
+		nextPutAll: '  typed nodes: ';
+		nextPutAll: (self printTypedNodeCount: valueNodes);
+		cr.
+	valueNodes groupedBy: [ :n | n propertyAt: #type ifAbsent: [ nil ] ].
+	^ report contents
+]
+
+{ #category : #printing }
+ASTTypingVisitor class >> printTypedNodeCount: valueNodes [
+
+	| count |
+	count := valueNodes count: [ :x | x hasProperty: #type ].
+	^ String streamContents: [ :aStream |
+		  aStream
+			  print: count;
+			  nextPutAll: ' (';
+			  print: (100.0 * count / valueNodes size) rounded;
+			  nextPutAll: '%)' ]
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> cha [
+
+	^ cha
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> cha: anObject [
+
+	cha := anObject
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> dirty [
+
+	^ dirty
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> dirty: anObject [
+
+	dirty := anObject
+]
 
 { #category : #analyzing }
 ASTTypingVisitor >> fixedPointAnalysis: aNode [
@@ -51,10 +211,44 @@ ASTTypingVisitor >> fixedPointAnalysis: aNode [
 { #category : #initialization }
 ASTTypingVisitor >> initialize [
 
-	variableTypes := Dictionary new.
-	returnTypes := Dictionary new.
-	unknownMethod := Set new.
-	shortcutKernelMessages := true
+	variableTypes := IdentityDictionary new.
+	returnTypes := IdentityDictionary new.
+	unknownMethods := Set new.
+	shortcutKernelMessages := true.
+	cha := false
+]
+
+{ #category : #accessing }
+ASTTypingVisitor >> lookupMethod: aSelector type: recvType [
+
+	| method methods type |
+	method := recvType lookupSelector: aSelector.
+
+	"Without CHA (Class Hierarchy Analysis), only look at a sigle method.
+	This is not sound (not even monotonous!) because we only consider a sigle static type and a single method,
+	at runtime, the concrete receiver type might be numerous and different"
+	cha ifFalse: [
+		^ returnTypes at: method ifAbsent: [
+			  unknownMethods add: method.
+			  nil ] ].
+
+	methods := Set new.
+	method ifNotNil: [ methods add: method ].
+
+	"Look for potential redefinitions in subclasses (CHA!)"
+	recvType subclasses do: [ :c |
+		c methodDictionary at: aSelector ifPresent: [ :m | methods add: m ] ].
+	methods ifEmpty: [ ^ nil ].
+
+	"Merge all possible return types"
+	type := nil.
+	methods do: [ :m |
+		returnTypes
+			at: m
+			ifPresent: [ :type2 | type := self merge: type with: type2 ]
+			ifAbsent: [ unknownMethods add: m ] ].
+
+	^ type
 ]
 
 { #category : #lattice }
@@ -115,14 +309,18 @@ ASTTypingVisitor >> typeMethod: aCompilerMethod with: aClass [
 
 { #category : #lattice }
 ASTTypingVisitor >> typeNode: aNode with: aClass [
-	"We assume monotonicity here, so no need to merge with the oldType."
 
-	aNode
-		propertyAt: #type
-		ifPresent: [ :oldType | oldType = aClass ifTrue: [ ^ self ] ].
+	| type |
+	type := aClass.
+	aNode propertyAt: #type ifPresent: [ :oldType |
+		oldType = type ifTrue: [ ^ self ].
+		"We expect that the analysis is monotonous, but it might not be always the case.
+		Se perform a join to rorce some kind of monotonicity."
+		type := self merge: oldType with: type.
+		oldType = type ifTrue: [ ^ self ] ].
 
 	dirty := true.
-	aNode propertyAt: #type put: aClass
+	aNode propertyAt: #type put: type
 ]
 
 { #category : #lattice }
@@ -140,9 +338,9 @@ ASTTypingVisitor >> typeVariable: aVariable with: aClass [
 ]
 
 { #category : #accessing }
-ASTTypingVisitor >> unknownMethod [
+ASTTypingVisitor >> unknownMethods [
 
-	^ unknownMethod
+	^ unknownMethods
 ]
 
 { #category : #visiting }
@@ -194,7 +392,7 @@ ASTTypingVisitor >> visitLiteralNode: aLiteralNode [
 { #category : #visiting }
 ASTTypingVisitor >> visitMessageNode: aNode [
 
-	| recvType method |
+	| recvType type |
 	super visitMessageNode: aNode.
 
 	"Fast path for some special Kernel selectors (type of the receiver is not important)"
@@ -213,16 +411,14 @@ ASTTypingVisitor >> visitMessageNode: aNode [
 			 #( new new: basicNew basicNew: ) includes: aNode selector ])
 			ifTrue: [ ^ self typeNode: aNode with: recvType instanceSide ].
 
+		aNode selector == #yourself ifTrue: [
+			^ self typeNode: aNode with: recvType ].
 		aNode selector == #class ifTrue: [
 			^ self typeNode: aNode with: recvType class ] ].
 
-	"Method lookup. This one is not sound because we only consider a sigle static type and a single method,
-	at runtime, the concrete receiver type might be numerous and different."
-	method := recvType lookupSelector: aNode selector.
-	returnTypes
-		at: method
-		ifPresent: [ :type | ^ self typeNode: aNode with: type ].
-	unknownMethod add: method
+
+	type := self lookupMethod: aNode selector type: recvType.
+	type ifNotNil: [ self typeNode: aNode with: type ]
 ]
 
 { #category : #visiting }

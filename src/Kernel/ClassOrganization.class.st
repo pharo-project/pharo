@@ -168,9 +168,7 @@ ClassOrganization >> protocolNames [
 { #category : #protocol }
 ClassOrganization >> protocolOfSelector: aSelector [
 
-	^ self protocols
-		  detect: [ :each | each includesSelector: aSelector ]
-		  ifNone: [ nil ]
+	^ self organizedClass protocolOfSelector: aSelector
 ]
 
 { #category : #accessing }
@@ -209,9 +207,9 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
 
 	| protocol oldProtocolNames |
-	protocol := aProtocol isString
-		            ifTrue: [ self protocolNamed: aProtocol ifAbsent: [ ^ self ] ]
-		            ifFalse: [ aProtocol ].
+	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
+
+	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
 
 	protocol isEmpty ifFalse: [ ^ self ].
 
