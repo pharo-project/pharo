@@ -4,6 +4,13 @@ Class {
 	#category : #'Fuel-Platform-Pharo-Core'
 }
 
+{ #category : #operations }
+FLPharoPlatform class >> addHacks [
+	"no hacks for development platform"
+
+	
+]
+
 { #category : #'private-extensions-znbufferedreadstream' }
 FLPharoPlatform class >> fuelNextWordsInto: aWordObject [
 	<flExtensionOf: #ZnBufferedReadStream>

@@ -15,16 +15,8 @@ FLPlatform class >> addExtensions [
 
 { #category : #operations }
 FLPlatform class >> addHacks [
-	self current
-		useAuthor: 'Fuel'
-		during: [ self basicAddHacks ]
-]
 
-{ #category : #'private-hacks' }
-FLPlatform class >> basicAddHacks [
-	self
-		fixMetacello;
-		addExtensions
+	self current useAuthor: 'Fuel' during: [ self addExtensions ]
 ]
 
 { #category : #accessing }
@@ -89,10 +81,6 @@ FLPlatform class >> extensionPragmas [
 { #category : #accessing }
 FLPlatform class >> extensionProtocolName [
 	^ '*', self extensionCategoryName
-]
-
-{ #category : #'private-hacks-metacello' }
-FLPlatform class >> fixMetacello [
 ]
 
 { #category : #testing }
