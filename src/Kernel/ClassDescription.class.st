@@ -808,9 +808,9 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
 	| priorMethod priorProtocol origin |
-	priorMethod := self compiledMethodAt: selector ifAbsent: [^ nil].
+	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
-	priorProtocol := self whichCategoryIncludesSelector: selector.
+	priorProtocol := self protocolOfSelector: selector.
 	self organization removeElement: selector.
 
 	super removeSelector: selector.

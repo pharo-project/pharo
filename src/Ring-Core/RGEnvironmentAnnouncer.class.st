@@ -112,7 +112,8 @@ RGEnvironmentAnnouncer >> methodAdded: aMethod [
 { #category : #triggering }
 RGEnvironmentAnnouncer >> methodRemoved: aMethod [
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: aMethod protocol origin: aMethod parent)
+	"For the protocol we should just send #protocol to the method when #protocol will return a protocol and not a symbol."
+	self announce: (MethodRemoved methodRemoved: aMethod protocol: (aMethod methodClass protocolOfSelector: aMethod) origin: aMethod parent)
 ]
 
 { #category : #accessing }
