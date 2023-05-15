@@ -385,7 +385,7 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : #'accessing - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -756,6 +756,8 @@ ClassDescription >> printOn: aStream [
 
 { #category : #'accessing - protocols' }
 ClassDescription >> protocolNameOfSelector: aSelector [
+	"Return the protocol name including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
 
 	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
 ]
@@ -767,8 +769,10 @@ ClassDescription >> protocolNames [
 	^ self organization protocolNames copy
 ]
 
-{ #category : #protocol }
+{ #category : #'accessing - protocols' }
 ClassDescription >> protocolOfSelector: aSelector [
+	"Return the protocol including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
 
 	^ self organization protocols
 		  detect: [ :each | each includesSelector: aSelector ]
