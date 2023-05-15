@@ -34,6 +34,18 @@ ClassDescriptionProtocolsTest >> tearDown [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assert: (class protocolNameOfSelector: #king) equals: #titan.
+	"In the future this should maybe be an error?"
+	self assert: (class protocolNameOfSelector: #luz) isNil
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testProtocolNames [
 
 	class organization addProtocol: #titan.
