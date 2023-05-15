@@ -50,7 +50,9 @@ Variable class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-Variable class >> named: aSymbol [
+Variable class >> named: aString [
+	| aSymbol |
+	aSymbol := aString asSymbol.
 	self checkValidName: aSymbol.
 	^ self new
 		name: aSymbol;

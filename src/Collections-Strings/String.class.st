@@ -2025,8 +2025,8 @@ String >> isValidGlobalName [
 	self ifEmpty: [ ^ false ].
 
 	"reserverd default names"
-	self = 'NameOfSubclass' ifTrue: [ ^ false ].
-	self = 'TNameOfTrait' ifTrue: [ ^ false ].
+	self = #'NameOfSubclass' ifTrue: [ ^ false ].
+	self = #'TNameOfTrait' ifTrue: [ ^ false ].
 
 	^ (self first isLetter
 				and: [self first isUppercase])

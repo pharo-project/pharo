@@ -20,7 +20,7 @@ CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 
 	"if we get back CompiledMethodLayout or ByteLayout, we need to check the class name"
 	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [
-		layoutClass := (classDefinition className = 'CompiledMethod')
+		layoutClass := (classDefinition className = #'CompiledMethod')
 					ifTrue:  [  CompiledMethodLayout ]
 					ifFalse: [  ByteLayout ]].
 	classDefinition layoutClass: (layoutClass)

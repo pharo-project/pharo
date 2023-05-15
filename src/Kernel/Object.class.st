@@ -1091,9 +1091,9 @@ Object >> instVarNamed: aStringOrSymbol [
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aStringOrSymbol
+		slotNamed: aStringOrSymbol asSymbol
 		ifFound: [ :slot | slot read: self ]
-		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asString ]
+		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asSymbol ]
 ]
 
 { #category : #introspection }
@@ -1102,7 +1102,7 @@ Object >> instVarNamed: aString put: aValue [
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aString
+		slotNamed: aString asSymbol
 		ifFound: [ :slot | slot write: aValue to: self ]
 		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
