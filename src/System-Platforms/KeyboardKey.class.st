@@ -1112,7 +1112,7 @@ KeyboardKey class >> named: aString [
 
 	"(KeyboardKey named: #'SHIFT_L') >>> (KeyboardKey value: 65505)"
 
-	^ KeyNameTable at: aString
+	^ KeyNameTable at: aString asSymbol
 ]
 
 { #category : #'instance creation' }
