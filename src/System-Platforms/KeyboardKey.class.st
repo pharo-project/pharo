@@ -1110,7 +1110,7 @@ KeyboardKey class >> minus [
 KeyboardKey class >> named: aString [
 	"Returns the instance of myself having aString as name."
 
-	"(KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)"
+	"(KeyboardKey named: #'SHIFT_L') >>> (KeyboardKey value: 65505)"
 
 	^ KeyNameTable at: aString
 ]
@@ -1119,7 +1119,7 @@ KeyboardKey class >> named: aString [
 KeyboardKey class >> named: aString ifNone: aBlock [
 	"Returns the instance of myself having aString as name."
 
-	"(KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)"
+	"(KeyboardKey named: #'SHIFT_L') >>> (KeyboardKey value: 65505)"
 
 	^ KeyNameTable at: aString ifAbsent: aBlock
 ]

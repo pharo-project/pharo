@@ -45,9 +45,9 @@ ClassOrganizationTest >> tearDown [
 { #category : #tests }
 ClassOrganizationTest >> testAddCategory [
 
-	self organization addCategory: 'test-protocol'.
+	self organization addCategory: #'test-protocol'.
 
-	self assert: (self organization categories includes: 'test-protocol')
+	self assert: (self organization categories includes: #'test-protocol')
 ]
 
 { #category : #tests }

@@ -236,8 +236,8 @@ DateAndTimeUnixEpochTest >> testMinutes [
 { #category : #tests }
 DateAndTimeUnixEpochTest >> testMonth [
 	self assert: aDateAndTime month equals: 1.
-	self assert: aDateAndTime monthAbbreviation equals: 'Jan'.
-	self assert: aDateAndTime monthName equals: 'January'.
+	self assert: aDateAndTime monthAbbreviation equals: #'Jan'.
+	self assert: aDateAndTime monthName equals: #'January'.
 	self assert: aDateAndTime monthIndex equals: 1
 ]
 
