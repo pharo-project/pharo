@@ -17,7 +17,7 @@ Class {
 ClassRemoved class >> class: aClass category: aCategoryName [
 	^self new
 			classRemoved: aClass;
-			categoryName: aCategoryName;
+			categoryName: aCategoryName asSymbol;
 			yourself
 ]
 

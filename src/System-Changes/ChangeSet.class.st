@@ -273,7 +273,7 @@ ChangeSet class >> named: aName [
 	"Return the change set of the given name, or nil if none found."
 
 	^ AllChangeSets
-		  detect: [ :aChangeSet | aChangeSet name = aName ]
+		  detect: [ :aChangeSet | aChangeSet name = aName asSymbol ]
 		  ifNone: [ nil ]
 ]
 

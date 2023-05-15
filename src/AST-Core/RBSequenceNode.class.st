@@ -263,7 +263,7 @@ RBSequenceNode >> copyInContext: aDictionary [
 
 { #category : #testing }
 RBSequenceNode >> defines: aName [
-	^temporaries anySatisfy: [:each | each name = aName]
+	^temporaries anySatisfy: [:each | each name sameContents: aName]
 ]
 
 { #category : #testing }
@@ -427,7 +427,7 @@ RBSequenceNode >> removeNode: aNode [
 
 { #category : #accessing }
 RBSequenceNode >> removeTemporaryNamed: aName [
-	temporaries := temporaries reject: [:each | each name = aName]
+	temporaries := temporaries reject: [:each | each name sameContents: aName]
 ]
 
 { #category : #replacing }

@@ -45,5 +45,5 @@ RBVariableRefactoring >> storeOn: aStream [
 { #category : #initialization }
 RBVariableRefactoring >> variable: aVarName class: aClass [
 	class := self classObjectFor: aClass.
-	variableName := aVarName
+	variableName := aVarName asSymbol
 ]

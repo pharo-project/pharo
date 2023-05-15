@@ -657,7 +657,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 				(aSymbol size > tmpPackageName size)
 					ifTrue: [ tmpPackageName := aSymbol ]]].
 
-	^ tmpPackageName = ''
+	^ tmpPackageName = #''
 		ifTrue: [ nil ]
 		ifFalse: [ self packageNamed: tmpPackageName ]
 ]
@@ -948,10 +948,10 @@ RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	rPackage := packages at: categoryNameSymbol ifAbsent: [ ^ self ].
 	"Consider that a rPackage with extension selectors or tags is not empty and shouldn't be removed."
 	(rPackage extensionSelectors notEmpty
-		or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) notEmpty ])
+		or: [ (rPackage classTags reject: [ :tag | tag name sameContents: categoryName ]) notEmpty ])
 		ifTrue: [ ^ self ].
 	self basicUnregisterPackageNamed: categoryNameSymbol.
-	(managers detect: [ :each | each packageName = categoryName ] ifNone: [  ])
+	(managers detect: [ :each | each packageName sameContents: categoryName ] ifNone: [  ])
 		ifNotNil: [ :mcWorkingCopy | mcWorkingCopy unregister ]
 ]
 
@@ -1289,7 +1289,7 @@ RPackageOrganizer >> validateCanBeAddedPackage: aPackage [
 
 { #category : #private }
 RPackageOrganizer >> validateCanBeAddedPackage: aPackage tagName: aSymbol [
-	aPackage name = aSymbol
+	aPackage name = aSymbol asSymbol
 		ifTrue: [ ^ self ].
 	self
 		validateCanBeAddedPackageName: aPackage name , '-' , aSymbol

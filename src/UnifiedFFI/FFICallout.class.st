@@ -172,7 +172,7 @@ FFICallout >> loaderForArgNamed: argName [
 	loader := self loaderFromMethodArgsNamed: argName.
 	loader ifNil: [
 		"special case, receiver argument"
-		argName = 'self' ifTrue: [ loader := self receiverArgumentLoader ].
+		argName asSymbol = #'self' ifTrue: [ loader := self receiverArgumentLoader ].
 		loader ifNil: [
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.

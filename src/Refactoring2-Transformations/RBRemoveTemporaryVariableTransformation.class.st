@@ -95,6 +95,6 @@ RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 RBRemoveTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	self className: aClass.
-	selector := aSelector.
-	variableName := aVariableName
+	selector := aSelector asSymbol.
+	variableName := aVariableName asSymbol
 ]

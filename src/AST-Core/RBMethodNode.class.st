@@ -298,8 +298,8 @@ RBMethodNode >> decompileString [
 
 { #category : #testing }
 RBMethodNode >> defines: aName [
-	^ (arguments anySatisfy: [ :each | each name = aName ])
-		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
+	^ (arguments anySatisfy: [ :each | each name = aName asSymbol ])
+		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName asSymbol ] ]
 ]
 
 { #category : #comparing }

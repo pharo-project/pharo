@@ -142,7 +142,7 @@ TraitPureBehaviorTest >> testLocalSelectors [
 { #category : #tests }
 TraitPureBehaviorTest >> testMethodCategoryReorganization [
 
-	self t1 compile: 'm1' classified: 'category1'.
+	self t1 compile: #'m1' classified: #'category1'.
 	self assert: (self t5 organization categoryOfElement: #m1) equals: #category1.
 	self assert: (self c2 organization categoryOfElement: #m1) equals: #category1.
 	self t1 organization

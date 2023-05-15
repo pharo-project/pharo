@@ -348,7 +348,7 @@ Categorizer >> firstIndexOfCategoryNumber: anInteger [
 { #category : #testing }
 Categorizer >> isEmptyCategoryNamed: categoryName [
 	| i |
-	i := categoryArray indexOf: categoryName ifAbsent: [^false].
+	i := categoryArray indexOf: categoryName asSymbol ifAbsent: [^false].
 	^self isEmptyCategoryNumber: i
 ]
 
@@ -422,7 +422,7 @@ Categorizer >> removeCategory: cat [
 	category has any elements in it."
 
 	| index lastStop |
-	index := categoryArray indexOf: cat ifAbsent: [^self].
+	index := categoryArray indexOf: cat asSymbol ifAbsent: [^self].
 	lastStop :=
 		index = 1
 			ifTrue: [0]

@@ -288,7 +288,7 @@ RBAbstractClass >> directlyDefinesClassVariable: aString [
 
 { #category : #testing }
 RBAbstractClass >> directlyDefinesInstanceVariable: aString [
-	^self instanceVariableNames includes: aString
+	^self instanceVariableNames includes: aString asSymbol
 ]
 
 { #category : #testing }
@@ -645,8 +645,8 @@ RBAbstractClass >> removedMethods [
 { #category : #'variable accessing' }
 RBAbstractClass >> renameInstanceVariable: oldName to: newName around: aBlock [
 	self privateInstanceVariableNames
-		at: (self privateInstanceVariableNames indexOf: oldName asString)
-		put: newName asString.
+		at: (self privateInstanceVariableNames indexOf: oldName asSymbol)
+		put: newName asSymbol.
 	^ self model
 		performChange: (changeFactory
 							renameInstanceVariable: oldName
