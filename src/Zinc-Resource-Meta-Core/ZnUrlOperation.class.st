@@ -36,8 +36,8 @@ ZnUrlOperation class >> handlerForOperation: operation with: argument on: url [
 	self subclassesDo: [ :each |
 		(each handlesOperation: operation with: argument on: url)
 			ifTrue: [ ^ each ] ].
-	self error: 
-		('No URL hander found for operation {1} on URL {2} with {3}' 
+	self error:
+		('No URL hander found for operation {1} on URL {2} with {3}'
 			format: { operation. url. argument })
 ]
 
@@ -45,7 +45,7 @@ ZnUrlOperation class >> handlerForOperation: operation with: argument on: url [
 ZnUrlOperation class >> handlesOperation: operation with: argument on: url [
 	"Return true when my instances can handle operation with argument on url.
 	This can optionally be overridden for a more specific test."
-	
+
 	^ self operation = operation and: [ self schemes includes: url scheme ]
 ]
 
@@ -53,7 +53,7 @@ ZnUrlOperation class >> handlesOperation: operation with: argument on: url [
 ZnUrlOperation class >> operation [
 	"Return the operation that I implement.
 	Subclasses can/should override this method."
-	
+
 	^ nil
 ]
 
@@ -62,41 +62,40 @@ ZnUrlOperation class >> performOperation: operation with: argument on: url [
 	"Search for a subclass that can handle operation with argument on url.
 	Instanciate the operation, execute it and return the result.
 	Signal an Error when no matching handler is found."
-	
+
 	| handlerClass |
 	handlerClass := self handlerForOperation: operation with: argument on: url.
 	^ handlerClass new
 		url: url;
 		argument: argument;
-		performOperation 
+		performOperation
 ]
 
 { #category : #accessing }
 ZnUrlOperation class >> schemes [
 	"Return a collection of scheme identifiers that I handle.
 	Subclasses can/should override this method."
-	
+
 	^ #( )
 ]
 
 { #category : #accessing }
 ZnUrlOperation >> argument [
-	
+
 	^ argument
 ]
 
 { #category : #accessing }
 ZnUrlOperation >> argument: anObject [
-	
+
 	argument := anObject
 ]
 
 { #category : #operations }
 ZnUrlOperation >> performOperation [
 	"Perform the actual operation using url and the optional argument."
-	
-	self subclassResponsibility 
 
+	self subclassResponsibility
 ]
 
 { #category : #printing }
@@ -109,12 +108,12 @@ ZnUrlOperation >> printOn: stream [
 
 { #category : #accessing }
 ZnUrlOperation >> url [
-	
+
 	^ url
 ]
 
 { #category : #accessing }
 ZnUrlOperation >> url: aUrl [
-	
+
 	url := aUrl
 ]

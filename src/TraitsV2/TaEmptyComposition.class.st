@@ -15,7 +15,7 @@ TaEmptyComposition >> , anotherTrait [
 
 { #category : #operations }
 TaEmptyComposition >> - anArrayOfSelectors [
-	self error:'Could not remove a selector from an empty composition'.
+	self error:'Could not remove a selector from an empty composition'
 ]
 
 { #category : #comparing }
@@ -45,7 +45,7 @@ TaEmptyComposition >> addToSequence: sequence [
 ]
 
 { #category : #users }
-TaEmptyComposition >> addUser: aClass [ 
+TaEmptyComposition >> addUser: aClass [
 
 	"Nothing to do.... I am empty"
 ]
@@ -56,14 +56,14 @@ TaEmptyComposition >> allTraits [
 ]
 
 { #category : #testing }
-TaEmptyComposition >> changesSourceCode: aString [ 
-	
+TaEmptyComposition >> changesSourceCode: aString [
+
 	^ false
 ]
 
 { #category : #accessing }
 TaEmptyComposition >> classComposition [
-	^ self class new.
+	^ self class new
 ]
 
 { #category : #accessing }
@@ -74,13 +74,11 @@ TaEmptyComposition >> compiledMethodAt: aSelector [
 { #category : #copying }
 TaEmptyComposition >> copyTraitExpression [
 	^ self
-	
 ]
 
 { #category : #copying }
 TaEmptyComposition >> copyWithoutTrait: aTrait [
 	^ self
-	
 ]
 
 { #category : #comparing }
@@ -89,8 +87,8 @@ TaEmptyComposition >> hash [
 ]
 
 { #category : #testing }
-TaEmptyComposition >> isAliasSelector: aString [ 
-	
+TaEmptyComposition >> isAliasSelector: aString [
+
 	^ false
 ]
 
@@ -105,14 +103,14 @@ TaEmptyComposition >> methods [
 ]
 
 { #category : #users }
-TaEmptyComposition >> removeUser: aClass [ 
+TaEmptyComposition >> removeUser: aClass [
 
 	"Nothing to do.... I am empty"
 ]
 
 { #category : #querying }
 TaEmptyComposition >> reverseAlias: aSelector [
-	
+
 	^ #()
 ]
 
@@ -128,7 +126,7 @@ TaEmptyComposition >> slots [
 
 { #category : #printing }
 TaEmptyComposition >> traitCompositionExpression [
-	
+
 	^ '{}'
 ]
 

@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #testing }
-ExpanderMorphAnnouncement class >> isAbstract [ 
+ExpanderMorphAnnouncement class >> isAbstract [
 
 	 ^self == ExpanderMorphAnnouncement
 ]

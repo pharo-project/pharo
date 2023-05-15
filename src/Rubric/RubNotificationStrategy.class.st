@@ -23,6 +23,6 @@ RubNotificationStrategy >> editor: aSmalltalkEditor [
 ]
 
 { #category : #notifications }
-RubNotificationStrategy >> notify: aString at: anInteger in: aStream [ 
+RubNotificationStrategy >> notify: aString at: anInteger in: aStream [
 	self subclassResponsibility
 ]

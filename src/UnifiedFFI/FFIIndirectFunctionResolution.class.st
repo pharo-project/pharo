@@ -18,8 +18,8 @@ FFIIndirectFunctionResolution >> isApplicableFor: aRequestor [
 
 { #category : #resolving }
 FFIIndirectFunctionResolution >> resolveFunction: anExternalFunction [
-	^ (ExternalAddress 
+	^ (ExternalAddress
 		loadSymbol: anExternalFunction name
 		module: anExternalFunction module)
-		pointerAt: 1.
+		pointerAt: 1
 ]

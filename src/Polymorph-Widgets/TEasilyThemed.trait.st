@@ -74,7 +74,7 @@ TEasilyThemed >> chooseColor [
 ]
 
 { #category : #services }
-TEasilyThemed >> chooseColor: aColor [ 
+TEasilyThemed >> chooseColor: aColor [
 	"Answer the result of a color selector dialog with the given color."
 
 	^self theme
@@ -94,7 +94,7 @@ TEasilyThemed >> chooseColor: aColor title: title [
 ]
 
 { #category : #services }
-TEasilyThemed >> chooseDirectory: title [ 
+TEasilyThemed >> chooseDirectory: title [
 	"Answer the result of a file dialog with the given title, answer a directory."
 
 	^self
@@ -166,7 +166,7 @@ TEasilyThemed >> chooseFont [
 ]
 
 { #category : #services }
-TEasilyThemed >> chooseFont: aFont [ 
+TEasilyThemed >> chooseFont: aFont [
 	"Answer the result of a font selector dialog with the given initial font."
 
 	^self theme
@@ -421,7 +421,7 @@ TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel m
 		setValue: setSel
 		min: minValue
 		max: maxValue
-		quantum: quantum 
+		quantum: quantum
 		getEnabled: nil
 		help: helpText
 ]
@@ -435,7 +435,7 @@ TEasilyThemed >> newButtonFor: aModel action: actionSel getEnabled: enabledSel l
 		getState: nil
 		action: actionSel
 		arguments: nil
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		label: stringOrText
 		help: helpText
 ]
@@ -449,7 +449,7 @@ TEasilyThemed >> newButtonFor: aModel action: actionSel label: stringOrText help
 		getState: nil
 		action: actionSel
 		arguments: nil
-		getEnabled: nil 
+		getEnabled: nil
 		label: stringOrText
 		help: helpText
 ]
@@ -463,7 +463,7 @@ TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel argum
 		getState: stateSel
 		action: actionSel
 		arguments: args
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		getLabel: labelSel
 		help: helpText
 ]
@@ -477,7 +477,7 @@ TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel argum
 		getState: stateSel
 		action: actionSel
 		arguments: args
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		label: stringOrText
 		help: helpText
 ]
@@ -491,7 +491,7 @@ TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel argum
 		getState: stateSel
 		action: actionSel
 		arguments: args
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		label: (AlphaImageMorph new image: aForm)
 		help: helpText
 ]
@@ -1069,7 +1069,7 @@ TEasilyThemed >> newMenuFor: aModel [
 TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
 	"Answer a morph drop list for the given model."
 
-	^self 
+	^self
 		newMorphDropListFor: aModel
 		list: listSel
 		getSelected: getSel
@@ -1098,7 +1098,7 @@ TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel s
 TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel help: helpText [
 	"Answer a morph drop list for the given model."
 
-	^self 
+	^self
 		newMorphDropListFor: aModel
 		list: listSel
 		getSelected: getSel
@@ -1140,7 +1140,7 @@ TEasilyThemed >> newMultistateButton [
 	"Answer a new multistate button morph.
 	To be usable it needs to have fill styles assigned to various states along
 	with mouse-up/down actions."
-	
+
 	^self theme
 		newMultistateButtonIn: self
 ]
@@ -1191,7 +1191,7 @@ TEasilyThemed >> newOKButtonFor: aModel getEnabled: enabledSel [
 TEasilyThemed >> newOverflowRowForAll: aCollectionOfMorphs [
 	"Answer a new overflow row morph that provides a drop down for
 	the given contents that are unable to fit the bounds."
-	
+
 	^self theme
 		newOverflowRowIn: self
 		forAll: aCollectionOfMorphs
@@ -1290,7 +1290,7 @@ TEasilyThemed >> newSVSelector: aColor help: helpText [
 { #category : #controls }
 TEasilyThemed >> newScrollPaneFor: aMorph [
 	"Answer a new scroll pane morph to scroll the given morph."
-	
+
 	^self theme
 		newScrollPaneIn: self
 		for: aMorph
@@ -1433,10 +1433,10 @@ TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel [
 ]
 
 { #category : #controls }
-TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel getEnabled: enabledSel [ 
+TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel getEnabled: enabledSel [
 	"Answer a text editor for the given model."
 
-	^self 
+	^self
 		newTextEditorFor: aModel
 		getText: getSel
 		setText: setSel
@@ -1467,7 +1467,7 @@ TEasilyThemed >> newTextEntryFor: aModel get: getSel set: setSel class: aClass g
 		get: getSel
 		set: setSel
 		class: aClass
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		help: helpText
 ]
 
@@ -1481,7 +1481,7 @@ TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel getEnab
 		get: getSel
 		set: setSel
 		class: String
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		help: helpText
 ]
 
@@ -1496,7 +1496,7 @@ TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel getEnab
 		get: getSel
 		set: setSel
 		class: String
-		getEnabled: enabledSel 
+		getEnabled: enabledSel
 		help: helpText
 		entryCompletion: anEntryCompletion
 ]
@@ -1510,7 +1510,7 @@ TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel help: h
 		get: getSel
 		set: setSel
 		class: String
-		getEnabled: nil 
+		getEnabled: nil
 		help: helpText
 ]
 
@@ -1568,7 +1568,7 @@ TEasilyThemed >> newToolbarHandle [
 { #category : #controls }
 TEasilyThemed >> newTreeFor: aModel list: listSelector selected: getSelector changeSelected: setSelector [
 	"Answer a new tree morph."
-	
+
 	^self theme
 		newTreeIn: self
 		for: aModel
@@ -1588,7 +1588,7 @@ TEasilyThemed >> newVerticalSeparator [
 { #category : #controls }
 TEasilyThemed >> newWindowFor: aModel title: titleString [
 	"Answer a new window morph."
-	
+
 	^self theme
 		newWindowIn: self
 		for: aModel

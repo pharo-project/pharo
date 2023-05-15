@@ -12,7 +12,7 @@ RBExtractMethodToComponentParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractMethodToComponentParametrizedTest >> constructor [ 
+RBExtractMethodToComponentParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
@@ -84,7 +84,7 @@ RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 		equals:
 			(self
 				parseMethod:
-					'copyWithAssociations 
+					'copyWithAssociations
 							| newDictionary |
 							newDictionary := Dictionary new: self size.
 							self
@@ -95,6 +95,6 @@ RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 
 { #category : #'failure tests' }
 RBExtractMethodToComponentParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:  
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
 ]

@@ -61,11 +61,11 @@ RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 
 	"ifnil... tight blocks should not be returned as errors"
 	blockNodes ifNil: [ self checkMethodForBlocks ].
-	
+
 	^ (OrderedCollection
 		withAll: ((blockNodes
 			sorted: [ :a :b | a start > b start ])
-			collect: [ :blockNode | 
+			collect: [ :blockNode |
 				RBAddTemporaryVariableTransformation
 					variable: variableName
 					inInterval: blockNode body sourceInterval
@@ -84,7 +84,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			(aNode references: variableName)
 				ifTrue: [ answer add: aNode ].
 			answer ].
@@ -107,17 +107,17 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBlocks [
 
-	(candidateBlocks 
+	(candidateBlocks
 		detect: [:each | RBReadBeforeWrittenTester
 							isVariable: variableName readBeforeWrittenIn: each]
-		ifNone: [nil]) notNil 
+		ifNone: [nil]) notNil
 		ifTrue: [^false].
-		
+
 	blockNodes ifNil: [ blockNodes := OrderedCollection new ].
-	candidateBlocks do: [ :each | 
-		(self checkBlocksIn: each body) 
+	candidateBlocks do: [ :each |
+		(self checkBlocksIn: each body)
 			ifTrue: [ blockNodes add: each ]
-			ifFalse: 	[ (self checkLocationsIn: (self checkAllBlocksIn: each body)) 
+			ifFalse: 	[ (self checkLocationsIn: (self checkAllBlocksIn: each body))
 							ifFalse: [ blockNodes add: each ]]].
 	^ true
 ]
@@ -139,13 +139,13 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 		ifNil: [ self refactoringError: 'Method does not exist' ]
 		ifNotNil: [ :methodNode | methodNode variableWith: variableName ].
 	node ifNil: [self refactoringError: 'Unable to locate temporary variable in parse tree'].
-	
+
 	definingNode := node whoDefines: variableName.
-	definingNode 
+	definingNode
 		ifNil: [self refactoringError: 'Cannot locate variable definition'].
 	definingNode isSequence
 		ifFalse: [self refactoringError: 'Variable is an argument'].
-		
+
 	^ definingNode
 ]
 
@@ -171,7 +171,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
 ]
 
 { #category : #printing }
-RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [ 
+RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

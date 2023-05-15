@@ -35,13 +35,12 @@ ZdcSecurePOP3Client class >> retrieveMessagesFromGMailAccount: accountAddress pa
 		quit;
 		close.
 	^ messages
-
 ]
 
 { #category : #private }
 ZdcSecurePOP3Client >> ensureConnection [
 	"Overwritten & refactored"
-		
+
 	self isConnected ifTrue: [ ^ self ].
 	self stream ifNotNil: [ self stream close ].
 
@@ -57,7 +56,7 @@ ZdcSecurePOP3Client >> fetchNextResponse [
 
 { #category : #'private - protocol' }
 ZdcSecurePOP3Client >> getMultilineResponse [
-	"Get a multiple line response to the last command, filtering out LF characters. 
+	"Get a multiple line response to the last command, filtering out LF characters.
 	A multiple line response ends with a line containing only a single period (.) character."
 
 	| response done chunk |
@@ -70,7 +69,6 @@ ZdcSecurePOP3Client >> getMultilineResponse [
 			ifFalse: [ response nextPutAll: chunk; cr ].
 		done := (chunk = '.') ].
 	^ response contents
-
 ]
 
 { #category : #private }
@@ -89,11 +87,10 @@ ZdcSecurePOP3Client >> nextLineFromStream [
 { #category : #'private - protocol' }
 ZdcSecurePOP3Client >> sendCommand: aString [
 	self logVerbose: aString.
-	self stream 
+	self stream
 		nextPutAll: aString;
 		nextPutAll: #[13 10];
 		flush
-
 ]
 
 { #category : #private }

@@ -20,12 +20,12 @@ ReparseAfterSourceEditing class >> signalWithNewSource: aSourceCode [
 
 { #category : #accessing }
 ReparseAfterSourceEditing >> newSource [
-	
+
 	^ newSource
 ]
 
 { #category : #accessing }
 ReparseAfterSourceEditing >> newSource: anObject [
-	
+
 	newSource := anObject
 ]

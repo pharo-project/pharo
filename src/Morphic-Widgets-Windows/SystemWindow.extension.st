@@ -7,7 +7,7 @@ SystemWindow >> openModal: aSystemWindow [
 	Restore the original keyboard focus when closed."
 
 	| keyboardFocus |
-	
+
 	keyboardFocus := self activeHand keyboardFocus.
 	self modalLockTo: aSystemWindow.
 	[ aSystemWindow openModal ] ensure: [

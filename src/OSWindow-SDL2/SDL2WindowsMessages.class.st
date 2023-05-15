@@ -265,11 +265,11 @@ Class {
 { #category : #'class initialization' }
 SDL2WindowsMessages class >> initialize [
 
-"Spliting the initialization of constants. 
+"Spliting the initialization of constants.
 The Pharo 9 bootstrap is still building the image first in V3 bytecode and the number of literals is limited.
 These methods can be inlined when V3 bytecode is left behind in the bootstrap."
 
-	self 
+	self
 		initializeVariablesSet1;
 		initializeVariablesSet2;
 		initializeVariablesSet3;
@@ -345,7 +345,7 @@ SDL2WindowsMessages class >> initializeVariablesSet1 [
 	WM_TCARD := 82.
 	WM_HELP := 83.
 	WM_USERCHANGED := 84.
-	WM_NOTIFYFORMAT := 85.
+	WM_NOTIFYFORMAT := 85
 ]
 
 { #category : #'private - initialization' }
@@ -377,7 +377,7 @@ SDL2WindowsMessages class >> initializeVariablesSet2 [
 	WM_NCMBUTTONDBLCLK := 169.
 	WM_NCXBUTTONDOWN := 171.
 	WM_NCXBUTTONUP := 172.
-	WM_NCXBUTTONDBLCLK := 173.
+	WM_NCXBUTTONDBLCLK := 173
 ]
 
 { #category : #'private - initialization' }

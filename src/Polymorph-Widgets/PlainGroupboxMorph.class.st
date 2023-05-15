@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 PlainGroupboxMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
-	
+
 	super adoptPaneColor: (self theme subgroupColorFrom: paneColor).
 	self borderStyle: (self theme plainGroupPanelBorderStyleFor: self)
 ]
@@ -22,7 +22,7 @@ PlainGroupboxMorph >> initialize [
 	super initialize.
 	self
 		borderStyle: (self theme plainGroupPanelBorderStyleFor: self);
-		changeTableLayout; 
+		changeTableLayout;
 		layoutInset: 4;
 		cellInset: 8;
 		vResizing: #spaceFill;

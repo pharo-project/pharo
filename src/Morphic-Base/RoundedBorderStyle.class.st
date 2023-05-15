@@ -40,7 +40,7 @@ RoundedBorderStyle >> frameRectangle1: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 1."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (1@0) to: r topRight - (1@0) width: self width color: self color;
@@ -54,7 +54,7 @@ RoundedBorderStyle >> frameRectangle2: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 2."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (2@0) to: r topRight - (2@0) width: self width color: self color;
@@ -72,7 +72,7 @@ RoundedBorderStyle >> frameRectangle3: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 3."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (3@0) to: r topRight - (3@0) width: self width color: self color;
@@ -94,7 +94,7 @@ RoundedBorderStyle >> frameRectangle4: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 4."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (4@0) to: r topRight - (4@0) width: self width color: self color;
@@ -116,7 +116,7 @@ RoundedBorderStyle >> frameRectangle5: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 5."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (5@0) to: r topRight - (5@0) width: self width color: self color;
@@ -138,7 +138,7 @@ RoundedBorderStyle >> frameRectangle6: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 6."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (6@0) to: r topRight - (6@0) width: self width color: self color;
@@ -164,7 +164,7 @@ RoundedBorderStyle >> frameRectangle7: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 7."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (7@0) to: r topRight - (7@0) width: self width color: self color;
@@ -190,7 +190,7 @@ RoundedBorderStyle >> frameRectangle8: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 8."
 
 	|r|
-	r := aRectangle insetBy: self width // 2.	
+	r := aRectangle insetBy: self width // 2.
 	self width odd ifTrue: [r := r insetBy: (0@0 corner: 1@1)].
 	aCanvas
 		line: r topLeft + (8@0) to: r topRight - (8@0) width: self width color: self color;
@@ -214,7 +214,7 @@ RoundedBorderStyle >> frameRectangle8: aRectangle on: aCanvas [
 { #category : #drawing }
 RoundedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border. Radius is the x/y offset not width 'around the corner'."
-	
+
 	self cornerRadius = 0 ifTrue: [^self frameRectangle0: aRectangle on: aCanvas].
 	self cornerRadius = 1 ifTrue: [^self frameRectangle1: aRectangle on: aCanvas].
 	self cornerRadius = 2 ifTrue: [^self frameRectangle2: aRectangle on: aCanvas].
@@ -224,7 +224,7 @@ RoundedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	self cornerRadius = 6 ifTrue: [^self frameRectangle6: aRectangle on: aCanvas].
 	self cornerRadius = 7 ifTrue: [^self frameRectangle7: aRectangle on: aCanvas].
 	self cornerRadius = 8 ifTrue: [^self frameRectangle8: aRectangle on: aCanvas].
-	^super frameRectangle: aRectangle on: aCanvas.
+	^super frameRectangle: aRectangle on: aCanvas
 ]
 
 { #category : #initialization }

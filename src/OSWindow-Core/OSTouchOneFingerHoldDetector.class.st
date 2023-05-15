@@ -11,7 +11,7 @@ Class {
 
 { #category : #creation }
 OSTouchOneFingerHoldDetector >> createHoldEvent [
-	^ OSTouchOneFingerHoldEvent new 
+	^ OSTouchOneFingerHoldEvent new
 		position: self centerOfAllFingers;
 		timestamp: eventHandler lastUpdateTimestamp ;
 		deviceId: deviceId;

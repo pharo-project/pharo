@@ -28,12 +28,12 @@ ClassReorganized >> classAffected [
 
 { #category : #accessing }
 ClassReorganized >> classReorganized [
-	
+
 	^ classReorganized
 ]
 
 { #category : #accessing }
 ClassReorganized >> classReorganized: anObject [
-	
+
 	classReorganized := anObject
 ]

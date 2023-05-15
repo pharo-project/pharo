@@ -14,11 +14,11 @@ TemporaryVariableTest >> testDeclaringNode [
 	declaringNode := method ast body temporaries first.
 	declaringNodeViaVariable := method assignmentNodes first variable variable definingNode.
 	self assert: declaringNodeViaVariable equals: declaringNode.
-	
+
 	method := OrderedCollection >> #do:.
 	declaringNode := method ast arguments first.
 	declaringNodeViaVariable := method ast variableReadNodes third variable definingNode.
-	self assert: declaringNodeViaVariable equals: declaringNode.
+	self assert: declaringNodeViaVariable equals: declaringNode
 ]
 
 { #category : #tests }
@@ -41,22 +41,22 @@ TemporaryVariableTest >> testIsReferenced [
 	"The temp notReferenced is not used as we test exactly that here"
 	method := self class >> #testIsReferenced.
 	self assert: method temporaryVariables first isReferenced.
-	self deny: method temporaryVariables second isReferenced.
+	self deny: method temporaryVariables second isReferenced
 ]
 
 { #category : #properties }
 TemporaryVariableTest >> testPropertyAtPut [
 
 	| testValue temp |
-	
+
 	testValue := Date today.
 	temp := thisContext temporaryVariableNamed:  #testValue.
-	
+
 	temp propertyAt: #testKeySelector put: testValue.
 	self
 		assert: (temp propertyAt: #testKeySelector)
 		equals: testValue.
-		
+
 	temp removeProperty: #testKeySelector.
 	self assert: temp properties isNil
 ]
@@ -82,7 +82,7 @@ TemporaryVariableTest >> testScope [
 	| method variable |
 	method := self class >> #testTemporaryVariablesMethod.
 	self assert: method temporaryVariables first scope isMethodScope.
-	
+
 	variable := method temporaryVariables first.
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
@@ -99,12 +99,12 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 	| method |
 	method := self class >> #testTemporaryVariablesMethod.
 	self assert: method temporaryVariables first name equals: #method.
-	
+
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
 	method := OrderedCollection >> #do:.
 	self assert: method temporaryVariables first name equals: #aBlock.
 	self assert: (method hasTemporaryVariableNamed: #aBlock).
-	self assert: (method temporaryVariableNamed: #aBlock) class equals: ArgumentVariable.
+	self assert: (method temporaryVariableNamed: #aBlock) class equals: ArgumentVariable
 ]
 
 { #category : #tests }

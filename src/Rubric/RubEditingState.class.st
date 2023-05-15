@@ -106,7 +106,7 @@ RubEditingState >> previousInterval [
 { #category : #accessing }
 RubEditingState >> previousInterval: anInterval [
 
-	previousInterval := anInterval.
+	previousInterval := anInterval
 ]
 
 { #category : #'undo - redo' }
@@ -116,7 +116,7 @@ RubEditingState >> redo [
 
 { #category : #'undo - redo' }
 RubEditingState >> redoArray: doArray undoArray: undoArray [
-	self undoManager isPlugged 
+	self undoManager isPlugged
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
 ]
 
@@ -154,7 +154,7 @@ RubEditingState >> startOfTyping: anIntegerIndex [
 
 { #category : #accessing }
 RubEditingState >> textArea: aTextArea [
-	textArea := aTextArea.
+	textArea := aTextArea
 ]
 
 { #category : #'undo - redo' }
@@ -165,23 +165,23 @@ RubEditingState >> undo [
 { #category : #accessing }
 RubEditingState >> undoManager [
 
-	^ undoManager ifNil: [ undoManager := HistoryIterator new].
+	^ undoManager ifNil: [ undoManager := HistoryIterator new]
 ]
 
 { #category : #'undo - redo' }
 RubEditingState >> undoRedoTransaction: aBlock [
 	self undoManager openRecordGroup.
-	aBlock ensure: [  self undoManager closeRecordGroup ].
+	aBlock ensure: [  self undoManager closeRecordGroup ]
 ]
 
 { #category : #private }
 RubEditingState >> unplug [
 	super unplug.
 	undoManager
-		ifNotNil: [ 
+		ifNotNil: [
 			undoManager reset.
 			undoManager := nil ].
-	 pointBlock := markBlock := startOfTyping := previousInterval := nil.
+	 pointBlock := markBlock := startOfTyping := previousInterval := nil
 ]
 
 { #category : #accessing }

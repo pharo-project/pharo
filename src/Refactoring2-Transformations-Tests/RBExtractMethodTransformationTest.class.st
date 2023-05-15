@@ -19,7 +19,7 @@ RBExtractMethodTransformationTest >> testBadInterval [
 							from: #testMethod to: #bla
 							in: #RBRefactoryTestDataApp)
 							asRefactoring.
-				
+
 	self shouldFail: (RBExtractMethodTransformation
 							extract: (self sourceCodeAt: (80 to: 147)
 								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
@@ -37,14 +37,14 @@ RBExtractMethodTransformationTest >> testExtractFailure [
 			from: #subclassOf:overrides:
 			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring.
-	
+
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (53 to: 56)
 						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 			from: #subclassOf:overrides:
 			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring.
-	
+
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (77 to: 222)
 						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
@@ -65,19 +65,19 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 	transformation setOption: #useExistingMethod toUse: [ :re :sel | true ].
 	transformation asRefactoring transform.
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: #RBTransformationRuleTestData.
-	self assert: (class parseTreeForSelector: #checkMethod:) 
+	self assert: (class parseTreeForSelector: #checkMethod:)
 		  equals: (self parseMethod: 'checkMethod: aSmalllintContext
 	class := aSmalllintContext selectedClass.
-	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: [ 
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: [
 		(RecursiveSelfRule
 			 executeTree: rewriteRule tree
-			 initialAnswer: false) ifFalse: [ 
+			 initialAnswer: false) ifFalse: [
 			builder
 				compile: self rewriteRuleAsString
 				in: class
-				classified: aSmalllintContext protocols ] ]').	
+				classified: aSmalllintContext protocols ] ]').
 	self deny: (class directlyDefinesMethod: #bar)
 ]
 
@@ -93,19 +93,19 @@ RBExtractMethodTransformationTest >> testExtractWithoutUseExistingMethodRefactor
 	transformation setOption: #useExistingMethod toUse: [ :re :sel | false ].
 	transformation asRefactoring transform.
 	self assert: transformation model changes changes size equals: 2.
-	
+
 	class := transformation model classNamed: #RBTransformationRuleTestData.
-	self assert: (class parseTreeForSelector: #checkMethod:) 
+	self assert: (class parseTreeForSelector: #checkMethod:)
 		  equals: (self parseMethod: 'checkMethod: aSmalllintContext
 	class := aSmalllintContext selectedClass.
-	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: [ 
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: [
 		(RecursiveSelfRule
 			 executeTree: rewriteRule tree
-			 initialAnswer: false) ifFalse: [ 
+			 initialAnswer: false) ifFalse: [
 			builder
 				compile: self bar
 				in: class
-				classified: aSmalllintContext protocols ] ]').	
+				classified: aSmalllintContext protocols ] ]').
 	self assert: (class parseTreeForSelector: #bar)
 		equals: (self parseMethod: 'bar
 		rewriteRule tree printString').
@@ -129,13 +129,13 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 	| refactoring class |
 	refactoring := (RBExtractMethodTransformation
 						extract: 'rules isEmpty ifTrue: [^self].
-						rules size == 1 ifTrue: [^rules first viewResults]' 
+						rules size == 1 ifTrue: [^rules first viewResults]'
 						from: #openEditor
 						to: #foo: in: #RBDummyLintRuleTest)
 						asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 2.
-	
+
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
 	self assert: (class parseTreeForSelector: #openEditor)
 		  equals: (self parseMethod: 'openEditor
@@ -162,17 +162,17 @@ RBExtractMethodTransformationTest >> testRefactoring [
 		to: #foo:
 		in: #RBTransformationRuleTestData)
 		asRefactoring transform.
-		
+
 	self assert: transformation model changes changes size equals: 2.
-	
+
 	class := transformation model classNamed: #RBTransformationRuleTestData.
-	self assert: (class parseTreeForSelector: #checkMethod:) 
-		  equals: (self parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeForSelector: #checkMethod:)
+		  equals: (self parseMethod: 'checkMethod: aSmalllintContext
 			class := aSmalllintContext selectedClass.
 			(rewriteRule executeTree: aSmalllintContext parseTree)
-				ifTrue: [self foo: aSmalllintContext]').	
+				ifTrue: [self foo: aSmalllintContext]').
 	self assert: (class parseTreeForSelector: #foo:)
-		  equals: (self parseMethod: 'foo: aSmalllintContext 
+		  equals: (self parseMethod: 'foo: aSmalllintContext
 			(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 				ifFalse: [ builder
 							compile: rewriteRule tree printString
@@ -194,8 +194,8 @@ RBExtractMethodTransformationTest >> testTransform [
 					in: self changeMock name
 					withProtocols: {#accessing})
 					transform.
-	
-	transformation := (RBExtractMethodTransformation 
+
+	transformation := (RBExtractMethodTransformation
 				model: transformation model
 				extract: 'bar := 5.
 							temp := bar * bar.
@@ -204,11 +204,11 @@ RBExtractMethodTransformationTest >> testTransform [
 				to: #foobar
 				in: self changeMock name)
 				transform.
-	
-	self assert: transformation model changes changes size equals: 4.			
-	
-	class := transformation model classNamed: self changeMock name.		
-	self assert: (class parseTreeForSelector: #foo) 
+
+	self assert: transformation model changes changes size equals: 4.
+
+	class := transformation model classNamed: self changeMock name.
+	self assert: (class parseTreeForSelector: #foo)
 		  equals: (self parseMethod: 'foo
 													| temp |
 													temp := self foobar.
@@ -227,25 +227,25 @@ RBExtractMethodTransformationTest >> testWithArgument [
 
 	| refactoring class |
 	refactoring := (RBExtractMethodTransformation
-		extract: (self sourceCodeAt: (145 to: 343)
+		extract: (self sourceCodeAt: (143 to: 340)
 					 forMethod: #checkMethod: in: RBTransformationRuleTestData)
 		from: #checkMethod:
 		to: #foo:
 		in: #RBTransformationRuleTestData)
 		asRefactoring transform.
-		
+
 	self assert: refactoring model changes changes size equals: 2.
-		
+
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
-	self assert: (class parseTreeForSelector: #checkMethod:) 
-		  equals: (self parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeForSelector: #checkMethod:)
+		  equals: (self parseMethod: 'checkMethod: aSmalllintContext
 					class := aSmalllintContext selectedClass.
-					(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+					(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
 						[self foo: aSmalllintContext]').
-	self assert: (class parseTreeForSelector: #foo:) 
+	self assert: (class parseTreeForSelector: #foo:)
 		  equals: (self parseMethod: 'foo: aSmalllintContext
 					(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
-						ifFalse: 
+						ifFalse:
 							[builder compile: rewriteRule tree printString
 										in: class
 										classified: aSmalllintContext protocols]')
@@ -259,19 +259,19 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 	class := model classNamed: self class name.
 	class compile: 'foo [| temp | temp := 5. temp * temp] value'
 		classified: #(#accessing).
-	
+
 	refactoring := (RBExtractMethodTransformation
 		model: model
 		extract: '| temp | temp := 5. temp * temp'
 		from: #foo
 		to: #foobar
 		in: class)
-		asRefactoring transform. 
-	
+		asRefactoring transform.
+
 	self assert: refactoring model changes changes size equals: 4.
-	self assert: (class parseTreeForSelector: #foo) 
+	self assert: (class parseTreeForSelector: #foo)
 		  equals: (self parseMethod: 'foo [self foobar] value').
-	self assert: (class parseTreeForSelector: #foobar) 
+	self assert: (class parseTreeForSelector: #foobar)
 		  equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
 ]
 
@@ -288,7 +288,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 			Transcript show: temp printString; cr.
 			^temp * temp'.
 	class compile: method classified: #(#accessing).
-			
+
 	refactoring := (RBExtractMethodTransformation
 			model: model
 			extract: (method copyFrom: 24 to: 98)
@@ -296,11 +296,11 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 			to: #foobar
 			in: class)
 			asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 4.
-	self assert: (class parseTreeForSelector: #foo) 
+	self assert: (class parseTreeForSelector: #foo)
 		  equals: (self parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
-	self assert: (class parseTreeForSelector: #foobar) 
+	self assert: (class parseTreeForSelector: #foobar)
 		  equals: (self parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')
 ]
 
@@ -315,9 +315,9 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 		from: #superSends
 		to: #foo1 in: #RBTransformationRuleTestData)
 		asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 2.
-	
+
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeForSelector: #superSends)
 		  equals: (self parseMethod: 'superSends
@@ -328,7 +328,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 		  equals: (self parseMethod: 'foo1 | rule |
 				rule := RBParseTreeRewriter new.
 				rule addSearch: ''super `@message: ``@args''
-					-> ([:aNode | 
+					-> ([:aNode |
 					(class withAllSubclasses
 						detect: [:each | each includesSelector: aNode selector]
 						ifNone: [nil]) isNil]
@@ -347,7 +347,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
 		to: #foo:
 		in: #RBDummyLintRuleTest)
 		asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 2.
 
 	class := refactoring model classNamed: #RBDummyLintRuleTest.

@@ -71,7 +71,7 @@ TKTProfile class >> production [
 
 { #category : #accessing }
 TKTProfile class >> profileName [
-	
+
 	^ self subclassResponsibility
 ]
 

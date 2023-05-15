@@ -22,7 +22,7 @@ RBPullUpVariableTransformation >> buildTransformations [
 
 	^ OrderedCollection new
 		addAll: (self variableDefinitionsInHierarchy
-			collect: [ :each | 
+			collect: [ :each |
 				RBRemoveVariableTransformation
 				model: self model
 				variable: variableName
@@ -37,23 +37,23 @@ RBPullUpVariableTransformation >> buildTransformations [
 ]
 
 { #category : #preconditions }
-RBPullUpVariableTransformation >> preconditions [ 
-	^ isClassVariable 
-		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ] 
-		ifFalse: [ RBCondition withBlock: 
-			[(self definingClass hierarchyDefinesInstanceVariable: variableName) 
+RBPullUpVariableTransformation >> preconditions [
+	^ isClassVariable
+		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
+		ifFalse: [ RBCondition withBlock:
+			[(self definingClass hierarchyDefinesInstanceVariable: variableName)
 				ifFalse: [self refactoringFailure: 'No subclass defines ' , variableName].
-			(self definingClass subclasses 
-				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not]) 
-				ifTrue: 
-					[self 
-						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?' 
+			(self definingClass subclasses
+				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
+				ifTrue:
+					[self
+						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
 								, variableName , '.'].
 			true] ]
 ]
 
 { #category : #printing }
-RBPullUpVariableTransformation >> storeOn: aStream [ 
+RBPullUpVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -71,7 +71,7 @@ RBPullUpVariableTransformation >> variable: aVariableName class: aClassName clas
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]
 
 { #category : #private }

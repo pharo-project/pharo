@@ -24,59 +24,59 @@ Class {
 
 { #category : #private }
 RPackageSet class >> basicNamed: aString [
-	^ self basicNew 
+	^ self basicNew
 		initialize: aString;
 		yourself
 ]
 
 { #category : #private }
-RPackageSet class >> cacheActive: aBoolean [ 
+RPackageSet class >> cacheActive: aBoolean [
 	cacheActive := aBoolean
 ]
 
 { #category : #private }
 RPackageSet class >> cachePackageAt: aString ifAbsentPut: aBlock [
 	"self addCount: aString."
-	^ self cachePackages 
+	^ self cachePackages
 		at: aString asSymbol
 		ifAbsentPut: aBlock
 ]
 
 { #category : #private }
-RPackageSet class >> cachePackages [ 
+RPackageSet class >> cachePackages [
 	^ cachePackages ifNil: [ cachePackages := IdentityDictionary new ]
 ]
 
 { #category : #testing }
-RPackageSet class >> isCacheActive [ 
-	^ cacheActive ifNil: [ cacheActive := false ].
+RPackageSet class >> isCacheActive [
+	^ cacheActive ifNil: [ cacheActive := false ]
 ]
 
 { #category : #'instance creation' }
 RPackageSet class >> named: aString [
 
-	^ self isCacheActive 
-		ifTrue: [ 
-			self 
-				cachePackageAt: aString 
+	^ self isCacheActive
+		ifTrue: [
+			self
+				cachePackageAt: aString
 				ifAbsentPut: [ self basicNamed: aString ] ]
-		ifFalse: [ self basicNamed: aString ].
+		ifFalse: [ self basicNamed: aString ]
 ]
 
 { #category : #private }
-RPackageSet class >> resetCache [ 
-	cachePackages := nil.
+RPackageSet class >> resetCache [
+	cachePackages := nil
 ]
 
 { #category : #accessing }
-RPackageSet class >> withCacheDo: aBlock [ 
+RPackageSet class >> withCacheDo: aBlock [
 	| oldActive |
-	
+
 	oldActive := self isCacheActive.
 	self cacheActive: true.
-	aBlock ensure: [ 
+	aBlock ensure: [
 		self cacheActive: oldActive.
-		self isCacheActive ifFalse: [ self resetCache ] ].
+		self isCacheActive ifFalse: [ self resetCache ] ]
 ]
 
 { #category : #'system compatibility' }
@@ -91,7 +91,7 @@ RPackageSet >> category: categoryName matches: prefix [
 
 { #category : #accessing }
 RPackageSet >> categoryNames [
-	^  self packages 	
+	^  self packages
 		inject:  #()
 		into: [ :all :each | all, (each classTagCategoryNames asArray) ]
 ]
@@ -137,7 +137,7 @@ RPackageSet >> includesMethodCategory: categoryName ofClass: aClass [
 
 { #category : #'system compatibility' }
 RPackageSet >> includesSystemCategory: categoryName [
-	^self packages anySatisfy: [ :each | 
+	^self packages anySatisfy: [ :each |
 		each includesSystemCategory: categoryName ]
 ]
 

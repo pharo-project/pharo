@@ -66,7 +66,7 @@ RBMoveMethodRefactoring >> abstractVariables [
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> abstractVariablesRefactoring [
-	^RBAbstractVariablesRefactoring 
+	^RBAbstractVariablesRefactoring
 		model: self model
 		abstractVariablesIn: parseTree
 		from: class
@@ -104,7 +104,7 @@ RBMoveMethodRefactoring >> checkAssignmentsToVariable [
 
 { #category : #preconditions }
 RBMoveMethodRefactoring >> checkForPrimitiveMethod [
-	parseTree isPrimitive 
+	parseTree isPrimitive
 		ifTrue: [self refactoringError: 'Cannot move primitive methods']
 ]
 
@@ -125,13 +125,13 @@ RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 	| varNames |
 	varNames := parseTree allDefinedVariables.
 	selfVariableName ifNotNil: [varNames add: selfVariableName].
-	varNames do: 
-			[:name | 
-			moveToClasses do: 
-					[:each | 
-					(self canReferenceVariable: name in: each) 
-						ifTrue: 
-							[self refactoringError: ('<1p> already defines a variable called <2s>' 
+	varNames do:
+			[:name |
+			moveToClasses do:
+					[:each |
+					(self canReferenceVariable: name in: each)
+						ifTrue:
+							[self refactoringError: ('<1p> already defines a variable called <2s>'
 										expandMacrosWith: each
 										with: name)]]]
 ]
@@ -143,7 +143,7 @@ RBMoveMethodRefactoring >> compileDelegatorMethod [
 		                 receiver: (RBVariableNode named: variable)
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions
-		                 arguments: (parseTree argumentNames collect: [ :each | 
+		                 arguments: (parseTree argumentNames collect: [ :each |
 				                  each = selfVariableName
 					                  ifTrue: [ RBVariableNode selfNode ]
 					                  ifFalse: [ RBVariableNode named: each ] ]).
@@ -155,29 +155,29 @@ RBMoveMethodRefactoring >> compileDelegatorMethod [
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> compileNewMethods [
-	moveToClasses 
+	moveToClasses
 		do: [:each | each compile: parseTree newSource withAttributesFrom: (class methodFor: selector)]
 ]
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> getArgumentNameForSelf [
 	self needsToReplaceSelfReferences ifFalse: [^self].
-	
+
 	[selfVariableName := self requestSelfArgumentName.
-	(self checkInstanceVariableName: selfVariableName in: class) 
-		ifTrue: 
-			[self verifyTemporaryVariableDoesNotOverride 
-				ifFalse: 
-					[self 
-						refactoringWarning: 'The variable is already defined in one of the classes you''re moving the method to.<n>Try another?' 
+	(self checkInstanceVariableName: selfVariableName in: class)
+		ifTrue:
+			[self verifyTemporaryVariableDoesNotOverride
+				ifFalse:
+					[self
+						refactoringWarning: 'The variable is already defined in one of the classes you''re moving the method to.<n>Try another?'
 								expandMacros.
 					selfVariableName := nil]]
-		ifFalse: 
-			[self 
-				refactoringWarning: 'The variable name is not a valid Smalltalk temporary variable name<n>Try again?' 
+		ifFalse:
+			[self
+				refactoringWarning: 'The variable name is not a valid Smalltalk temporary variable name<n>Try again?'
 						expandMacros.
 			selfVariableName := nil].
-	selfVariableName isNil] 
+	selfVariableName isNil]
 			whileTrue: []
 ]
 
@@ -185,8 +185,8 @@ RBMoveMethodRefactoring >> getArgumentNameForSelf [
 RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 	| definingClass type |
 	definingClass := class whoDefinesClassVariable: (variable ifNil: ['']).
-	definingClass ifNil: [ 
-			type := (self model classNamed: variable) 
+	definingClass ifNil: [
+			type := (self model classNamed: variable)
 				ifNotNil: [ :cls | cls classSide ]
 				ifNil: [ self model classNamed: #Object ] ]
 		ifNotNil: [ type := definingClass typeOfClassVariable: variable ].
@@ -221,10 +221,10 @@ RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 
 { #category : #'private - accessing' }
 RBMoveMethodRefactoring >> getClassesToMoveTo [
-	self isMovingToArgument 
+	self isMovingToArgument
 		ifTrue: [self getClassesForTemporaryVariable]
-		ifFalse: 
-			[self isMovingToInstVar 
+		ifFalse:
+			[self isMovingToInstVar
 				ifTrue: [self getClassesForInstanceVariable]
 				ifFalse: [self getClassForGlobalOrClassVariable]].
 	moveToClasses ifEmpty: [self refactoringFailure: 'No classes selected, method not moved.']
@@ -302,20 +302,20 @@ RBMoveMethodRefactoring >> isMovingToArgument [
 
 { #category : #testing }
 RBMoveMethodRefactoring >> isMovingToInstVar [
-	^self isMovingToArgument not 
+	^self isMovingToArgument not
 		and: [(class whoDefinesInstanceVariable: variable) notNil]
 ]
 
 { #category : #testing }
 RBMoveMethodRefactoring >> needsToReplaceSelfReferences [
-	^self hasSelfReferences 
+	^self hasSelfReferences
 		or: [self abstractVariablesRefactoring hasVariablesToAbstract]
 ]
 
 { #category : #preconditions }
 RBMoveMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition withBlock: 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
 					[self buildParseTree.
 					self checkForPrimitiveMethod.
 					self checkForSuperReferences.
@@ -335,14 +335,14 @@ RBMoveMethodRefactoring >> removeArgument [
 	method is moved to. "
 	| removeIndex |
 	removeIndex := parseTree argumentNames indexOf: variable.
-	removeIndex = 0 ifFalse: 
-		[parseTree 
-			selector: ('' join: ((parseTree selector keywords asOrderedCollection) 
+	removeIndex = 0 ifFalse:
+		[parseTree
+			selector: ('' join: ((parseTree selector keywords asOrderedCollection)
 									removeAt: removeIndex; yourself)) asSymbol
-			keywordsPositions: ((parseTree keywordsPositions asOrderedCollection) 
+			keywordsPositions: ((parseTree keywordsPositions asOrderedCollection)
 									removeAt: removeIndex; yourself) asIntegerArray
-			arguments: ((parseTree arguments asOrderedCollection)  
-									removeAt: removeIndex; yourself) asArray].
+			arguments: ((parseTree arguments asOrderedCollection)
+									removeAt: removeIndex; yourself) asArray]
 ]
 
 { #category : #transforming }
@@ -351,10 +351,10 @@ RBMoveMethodRefactoring >> replaceSelfReferences [
 	self needsToReplaceSelfReferences ifTrue: [
 		replacer := self parseTreeRewriter.
 		replacer replace: 'self' with: selfVariableName.
-		self hasOnlySelfReturns ifTrue: 
+		self hasOnlySelfReturns ifTrue:
 			[replacer replace: '^self' with: '^self'].
 		replacer executeTree: parseTree.
-		parseTree := replacer tree].
+		parseTree := replacer tree]
 ]
 
 { #category : #transforming }
@@ -367,14 +367,14 @@ RBMoveMethodRefactoring >> replaceVariableReferences [
 ]
 
 { #category : #initialization }
-RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableName [ 
+RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableName [
 	selector := aSymbol.
 	class := self classObjectFor: aClass.
 	variable := aVariableName
 ]
 
 { #category : #printing }
-RBMoveMethodRefactoring >> storeOn: aStream [ 
+RBMoveMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -403,6 +403,6 @@ RBMoveMethodRefactoring >> transform [
 RBMoveMethodRefactoring >> verifyTemporaryVariableDoesNotOverride [
 	(parseTree allDefinedVariables includes: selfVariableName)
 		ifTrue: [ ^ false ].
-	^ moveToClasses 
+	^ moveToClasses
 		noneSatisfy: [ :each | each definesVariable: selfVariableName ]
 ]

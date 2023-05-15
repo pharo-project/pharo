@@ -24,7 +24,7 @@ NewValueHolderTest >> testValuesInBlock [
 	| valueHolder old new ann |
 	valueHolder := 'old' asValueHolder.
 	valueHolder
-		whenChangedDo: [ :newValue :oldValue :a | 
+		whenChangedDo: [ :newValue :oldValue :a |
 			new := newValue.
 			old := oldValue.
 			ann := a ].

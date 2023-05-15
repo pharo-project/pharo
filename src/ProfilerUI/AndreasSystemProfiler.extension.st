@@ -7,11 +7,11 @@ AndreasSystemProfiler >> blockCodeFrom: someCode [
 
 { #category : #'*ProfilerUI' }
 AndreasSystemProfiler >> doItSelectorsPath [
-	^ #( 'nil>>nil' 
+	^ #( 'nil>>nil'
 		  'FullBlockClosure>>newProcess'
-	     'ProfilerModel>>profileBlock:' 
+	     'ProfilerModel>>profileBlock:'
 		  'FullBlockClosure>>ensure:'
-	     'ProfilerModel>>DoIt' 
+	     'ProfilerModel>>DoIt'
 		  'ProfilerModel>>DoIt' )
 ]
 

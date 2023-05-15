@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-MockObjectForEventTests class >> isDeprecated [ 
+MockObjectForEventTests class >> isDeprecated [
 	^ true
 ]

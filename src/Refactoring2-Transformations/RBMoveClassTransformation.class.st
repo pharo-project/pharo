@@ -69,7 +69,7 @@ RBMoveClassTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBMoveClassTransformation >> storeOn: aStream [ 
+RBMoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

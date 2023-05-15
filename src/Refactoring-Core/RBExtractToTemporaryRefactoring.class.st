@@ -17,8 +17,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [ 
-	^ self new 
+RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [
+	^ self new
 		extract: anInterval
 		to: aString
 		from: aSelector
@@ -26,7 +26,7 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 ]
 
 { #category : #'instance creation' }
-RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [ 
+RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
@@ -38,17 +38,17 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> checkVariableName [
-	(class whoDefinesInstanceVariable: newVariableName) ifNotNil: 
-			[self refactoringError: ('<1p> defines an instance variable named <2s>' 
+	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
+			[self refactoringError: ('<1p> defines an instance variable named <2s>'
 						expandMacrosWith: class
 						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) ifNotNil: 
-			[self refactoringError: ('<1p> defines a class variabled named <2s>' 
+	(class whoDefinesClassVariable: newVariableName) ifNotNil:
+			[self refactoringError: ('<1p> defines a class variabled named <2s>'
 						expandMacrosWith: class
 						with: newVariableName)].
-	(self parseTree allDefinedVariables includes: newVariableName) 
-		ifTrue: 
-			[self refactoringError: ('<1s> is already a temporary variable name' 
+	(self parseTree allDefinedVariables includes: newVariableName)
+		ifTrue:
+			[self refactoringError: ('<1s> is already a temporary variable name'
 						expandMacrosWith: newVariableName)]
 ]
 
@@ -58,14 +58,14 @@ RBExtractToTemporaryRefactoring >> compileNewMethod [
 ]
 
 { #category : #transforming }
-RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [ 
+RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
 { #category : #initialization }
-RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
+RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval.
@@ -103,9 +103,9 @@ RBExtractToTemporaryRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class) 
-			& (RBCondition withBlock: 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
+			& (RBCondition withBlock:
 						[self verifySelectedInterval.
 						self checkVariableName.
 						true])
@@ -125,7 +125,7 @@ RBExtractToTemporaryRefactoring >> selectedSource [
 ]
 
 { #category : #printing }
-RBExtractToTemporaryRefactoring >> storeOn: aStream [ 
+RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' extract: '.

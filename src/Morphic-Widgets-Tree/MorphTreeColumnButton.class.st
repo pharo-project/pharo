@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-MorphTreeColumnButton class >> isDeprecated [ 
+MorphTreeColumnButton class >> isDeprecated [
 	^ true
 ]

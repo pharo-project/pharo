@@ -6,7 +6,7 @@ PositionableStream >> nextChunkText [
 	| string runsRaw strm runs peek pos |
 	"Read the plain text"
 	string := self nextChunk.
-	
+
 	"Test for ]style[ tag"
 	pos := self position.
 	peek := self skipSeparatorsAndPeekNext.
@@ -18,6 +18,5 @@ PositionableStream >> nextChunkText [
 	strm := ReadStream on: runsRaw from: 1 to: runsRaw size.
 	runs := RunArray scanFrom: strm.
 
-	^ Text basicNew setString: string setRunsChecking: runs.
-
+	^ Text basicNew setString: string setRunsChecking: runs
 ]

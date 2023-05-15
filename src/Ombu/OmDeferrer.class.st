@@ -41,7 +41,7 @@ OmDeferrer class >> send: selector to: object after: aDuration [
 OmDeferrer class >> shutDown: quitting [
 	"Force my instances to flush before image quits"
 
-	self allInstancesDo: [:each | each flush ].
+	self allInstancesDo: [:each | each flush ]
 ]
 
 { #category : #accessing }
@@ -60,17 +60,17 @@ OmDeferrer >> flush [
 
 	process ifNotNil: [
 		"Execute deferred action and clean up"
-		[ self sendMessage ] ensure: [ process := nil ] 
-	].
+		[ self sendMessage ] ensure: [ process := nil ]
+	]
 ]
 
 { #category : #initialization }
-OmDeferrer >> initializeWithSelector: aSelector object: anObject duration: aDuration [ 
-	
+OmDeferrer >> initializeWithSelector: aSelector object: anObject duration: aDuration [
+
 	self initialize.
 	selector := aSelector.
 	object := anObject.
-	duration := aDuration.
+	duration := aDuration
 ]
 
 { #category : #accessing }
@@ -85,11 +85,11 @@ OmDeferrer >> object: anObject [
 
 { #category : #scheduling }
 OmDeferrer >> runMessageProcess [
-	process := [ 
+	process := [
 		"Loop until enough time passed since last #schedule"
 		[ DateAndTime now < (lastSchedule + duration) ]
 			whileTrue: [ duration wait ].
-			
+
 		"Execute deferred action (if not flushed before) and clean up"
 		self flush.
 	] fork
@@ -99,7 +99,7 @@ OmDeferrer >> runMessageProcess [
 OmDeferrer >> schedule [
 	lastSchedule := DateAndTime now.
 
-	process ifNil: [ 
+	process ifNil: [
 		"Deferrer can be activated during tests which intercept any forked processes.
 		To prevent it we should ensure here that message process is running out of tests environment"
 		DefaultExecutionEnvironment beActiveDuring: [ self runMessageProcess ]]
@@ -117,6 +117,6 @@ OmDeferrer >> selector: anObject [
 
 { #category : #private }
 OmDeferrer >> sendMessage [
-	
+
 	object perform: selector
 ]

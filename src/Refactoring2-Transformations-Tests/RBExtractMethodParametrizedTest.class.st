@@ -12,7 +12,7 @@ RBExtractMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractMethodParametrizedTest >> constructor [ 
+RBExtractMethodParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
@@ -66,7 +66,7 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatMovesTemporaryVariable [
 	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 | rule | 	rule := RBParseTreeRewriter new.
 	rule addSearch: ''super `@message: ``@args''
 				-> (
-					[:aNode | 
+					[:aNode |
 					(class withAllSubclasses
 						detect: [:each | each includesSelector: aNode selector]
 						ifNone: [nil]) isNil]
@@ -77,17 +77,17 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatMovesTemporaryVariable [
 { #category : #tests }
 RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsArgument [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (145 to: 343) . #checkMethod: . RBTransformationRuleTestData }.
+	refactoring := self createRefactoringWithArguments: { (143 to: 340) . #checkMethod: . RBTransformationRuleTestData }.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 
-	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext
 	class := aSmalllintContext selectedClass.
-	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
 			[self foo: aSmalllintContext]').
 	self assert: (class parseTreeForSelector: #foo:) equals: (self parseMethod: 'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
-				ifFalse: 
+				ifFalse:
 					[builder compile: rewriteRule tree printString
 						in: class
 						classified: aSmalllintContext protocols]')
@@ -116,20 +116,20 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsTemporaryVariable [
 { #category : #tests }
 RBExtractMethodParametrizedTest >> testExtractMethodToSuperclass [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (145 to: 343) . #checkMethod: . RBTransformationRuleTestData }.
+	refactoring := self createRefactoringWithArguments: { (143 to: 340) . #checkMethod: . RBTransformationRuleTestData }.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
-	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData. 
+	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 
-	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext
 	class := aSmalllintContext selectedClass.
-	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
 			[self foo: aSmalllintContext]').
-	
+
 	class := refactoring model classNamed: #RBFooLintRuleTestData.
 	self assert: (class parseTreeForSelector: #foo:) equals: (self parseMethod: 'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
-				ifFalse: 
+				ifFalse:
 					[builder compile: rewriteRule tree printString
 						in: class
 						classified: aSmalllintContext protocols]')
@@ -179,9 +179,9 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected
 		andArguments: { (6 to: 36) . #foo . class }.
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #foo) 
+	self assert: (class parseTreeForSelector: #foo)
 			equals: (self parseMethod: 'foo [self foobar] value').
-	self assert: (class parseTreeForSelector: #foobar) 
+	self assert: (class parseTreeForSelector: #foobar)
 			equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
 ]
 
@@ -190,25 +190,25 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporaryAssigned [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
-	class 
+	class
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'
 		classified: #(#accessing).
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { (26 to: 102) . #foo . class }.
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #foo) 
+	self assert: (class parseTreeForSelector: #foo)
 			equals: (self parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
-	self 
-		assert: ((class parseTreeForSelector: #foobar) = (self 
+	self
+		assert: ((class parseTreeForSelector: #foobar) = (self
 						parseMethod: 'foobar | bar temp | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')) |
-				((class parseTreeForSelector: #foobar) = (self 
+				((class parseTreeForSelector: #foobar) = (self
 						parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.'))
 ]
 
 { #category : #'failure tests' }
 RBExtractMethodParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
 ]
 
@@ -220,7 +220,7 @@ RBExtractMethodParametrizedTest >> testValidateRenameParameters [
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	refactoring parameterMap: (Dictionary new at: #nameStream put: #nameStream; yourself ).
 	"Fail when use instance variables as new parameters"
-	self should: [ refactoring validateRenameOf: #nameStream to: #name ] raise: RBRefactoringError.	
+	self should: [ refactoring validateRenameOf: #nameStream to: #name ] raise: RBRefactoringError.
 	self should: [refactoring validateRenameOf: #nameStream to: #foo1] raise: RBRefactoringError.
 	"Fail when use class variables as new parameters"
 	self should: [refactoring validateRenameOf: #nameStream to: #Foo1] raise: RBRefactoringError.

@@ -11,7 +11,7 @@ Class {
 OCBytecodeDecompilerTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
-	SmalltalkImage compilerClass: OpalCompiler.
+	SmalltalkImage compilerClass: OpalCompiler
 ]
 
 { #category : #running }
@@ -39,7 +39,7 @@ OCBytecodeDecompilerTest >> testBugOffset [
 OCBytecodeDecompilerTest >> testDecompileBytecodeDecompilerTestClass [
 	| decompiledIR aCompiledMethod |
 	self class methods
-		do: [ :each | 
+		do: [ :each |
 			decompiledIR := IRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
@@ -48,7 +48,7 @@ OCBytecodeDecompilerTest >> testDecompileBytecodeDecompilerTestClass [
 OCBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
 	| decompiledIR aCompiledMethod |
 	OCBytecodeGeneratorTest methods
-		do: [ :each | 
+		do: [ :each |
 			decompiledIR := IRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
@@ -57,7 +57,7 @@ OCBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
 OCBytecodeDecompilerTest >> testDecompileIRBuilderTestClass [
 	| decompiledIR aCompiledMethod |
 	IRBuilderTest methods
-		do: [ :each | 
+		do: [ :each |
 			decompiledIR := IRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]

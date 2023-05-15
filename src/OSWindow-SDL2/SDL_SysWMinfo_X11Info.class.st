@@ -40,7 +40,7 @@ SDL_SysWMinfo_X11Info >> display [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_X11Info >> display: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_DISPLAY put: anObject getHandle.
+	handle pointerAt: OFFSET_DISPLAY put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -52,5 +52,5 @@ SDL_SysWMinfo_X11Info >> window [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_X11Info >> window: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
+	handle pointerAt: OFFSET_WINDOW put: anObject getHandle
 ]

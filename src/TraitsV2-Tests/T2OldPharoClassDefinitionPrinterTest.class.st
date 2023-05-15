@@ -6,9 +6,7 @@ Class {
 
 { #category : #helpers }
 T2OldPharoClassDefinitionPrinterTest >> forClass: aClass [
-	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString 
-
-
+	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString
 ]
 
 { #category : #running }
@@ -21,7 +19,7 @@ T2OldPharoClassDefinitionPrinterTest >> setUp [
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
-	self 
+	self
 		assert: (self forClass: AlignmentMorph class) equals: 'AlignmentMorph class
 	uses: TAbleToRotate classTrait
 	instanceVariableNames: '''''
@@ -33,11 +31,11 @@ T2OldPharoClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShould
 	ClassDefinitionPrinter showFluidClassDefinition: false.
 	self assert: TMockWithComplexSlot needsSlotClassDefinition.
 
-	self 
-		assert: (self forClass: TMockWithComplexSlot) 
+	self
+		assert: (self forClass: TMockWithComplexSlot)
 		equals: 'Trait << #TMockWithComplexSlot
 	slots: { #complexSlot => ObservableSlot };
-	package: ''TraitsV2-Tests''' 
+	package: ''TraitsV2-Tests'''
 ]
 
 { #category : #'tests - traits' }
@@ -48,7 +46,6 @@ T2OldPharoClassDefinitionPrinterTest >> testComplexTrait [
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	package: ''Tests-Traits-MOP'''
-
 ]
 
 { #category : #'tests - traits' }
@@ -64,7 +61,7 @@ T2OldPharoClassDefinitionPrinterTest >> testMultiPools [
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testTBehavior [
 	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
-	self 
+	self
 		assert: (self forClass: TBehavior)  equals:  'Trait named: #TBehavior
 	instanceVariableNames: ''''
 	package: ''TraitsV2-Compatibility-Traits'''
@@ -91,15 +88,15 @@ T2OldPharoClassDefinitionPrinterTest >> testTMockWithUseAndSlot [
 	ClassDefinitionPrinter showFluidClassDefinition: false.
 	self deny: TMockWithUseAndSlot needsSlotClassDefinition.
 	"if the slot would be complex automatically the class def would switch to the fluid one
-	So the test really test that the class creation API of the old syntax is correct. 
+	So the test really test that the class creation API of the old syntax is correct.
 	Even if we should push for using the fluid one."
 
-	self 
-		assert: (self forClass: TMockWithUseAndSlot) 
+	self
+		assert: (self forClass: TMockWithUseAndSlot)
 		equals: 'Trait named: #TMockWithUseAndSlot
 	uses: Trait3
 	instanceVariableNames: ''simpleSlot''
-	package: ''TraitsV2-Tests''' 
+	package: ''TraitsV2-Tests'''
 ]
 
 { #category : #'tests - traits' }
@@ -111,13 +108,12 @@ T2OldPharoClassDefinitionPrinterTest >> testTSortable [
 
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testTrait [
-	
+
 	self assert: (self forClass: RubScrolledTextModel) equals: 'Object subclass: #RubScrolledTextModel
 	uses: TViewModel
 	instanceVariableNames: ''hasUnacceptedEdits announcer text primarySelectionInterval interactionModel''
 	classVariableNames: ''''
 	package: ''Rubric-Editing-Widgets'''
-	 
 ]
 
 { #category : #'tests - traits' }
@@ -131,11 +127,11 @@ T2OldPharoClassDefinitionPrinterTest >> testTrait3 [
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
-	self 
-		assert: (self forClass: Trait3) 
-		equals: 
+	self
+		assert: (self forClass: Trait3)
+		equals:
  'Trait named: #Trait3
 	uses: Trait2
 	instanceVariableNames: ''''
-	package: ''Tests-Traits-MOP'''	
+	package: ''Tests-Traits-MOP'''
 ]

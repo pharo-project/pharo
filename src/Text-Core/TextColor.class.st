@@ -66,7 +66,7 @@ TextColor class >> scanFrom: strm [
 ]
 
 { #category : #constants }
-TextColor class >> white [ 
+TextColor class >> white [
 	^ self new color: Color white
 ]
 
@@ -76,13 +76,13 @@ TextColor class >> yellow [
 ]
 
 { #category : #comparing }
-TextColor >> = other [ 
-	^ (other class == self class) 
+TextColor >> = other [
+	^ (other class == self class)
 		and: [other color = color]
 ]
 
 { #category : #converting }
-TextColor >> asColor [ 
+TextColor >> asColor [
 
 	^ color
 ]

@@ -12,30 +12,30 @@ RBInlineParameterParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBInlineParameterParametrizedTest >> constructor [ 
+RBInlineParameterParametrizedTest >> constructor [
 	^ #inlineParameter:in:selector:
 ]
 
 { #category : #'failure tests' }
 RBInlineParameterParametrizedTest >> testInlineArgsWhitoutSameLiteral [
-	self shouldFail: (self createRefactoringWithArguments:  
+	self shouldFail: (self createRefactoringWithArguments:
 		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'Bar:') asSymbol })
 ]
 
 { #category : #'failure tests' }
 RBInlineParameterParametrizedTest >> testInlineBlockFailure [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ 'aBlock' . RBRefactoryTestDataApp . ('inline' , 'Foo:') asSymbol })
 ]
 
 { #category : #tests }
 RBInlineParameterParametrizedTest >> testInlineLiteralArray [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'ParameterMethod:') asSymbol }.
-	
+
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	
+
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeForSelector: #inlineParameterMethod) equals: (self parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
 	self assert: (class parseTreeForSelector: #sendInlineParameterMethod) equals: (self parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').

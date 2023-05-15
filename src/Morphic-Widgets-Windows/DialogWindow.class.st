@@ -10,6 +10,6 @@ Class {
 }
 
 { #category : #testing }
-DialogWindow class >> isDeprecated [ 
+DialogWindow class >> isDeprecated [
 	^ true
 ]

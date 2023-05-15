@@ -13,7 +13,7 @@ Class {
 { #category : #comparing }
 CompositeBorderStyle >> = aBorderStyle [
 	"Check the sub-borders too"
-	
+
 	^super = aBorderStyle and: [
 		self borders = aBorderStyle borders]
 ]
@@ -35,14 +35,14 @@ CompositeBorderStyle >> borders: anObject [
 { #category : #accessing }
 CompositeBorderStyle >> colorsAtCorners [
 	"Return the colors of the first border."
-	
+
 	^self borders first colorsAtCorners
 ]
 
 { #category : #drawing }
 CompositeBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw each border in turn."
-	
+
 	|r|
 	r := aRectangle.
 	self borders do: [:b |
@@ -53,7 +53,7 @@ CompositeBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 { #category : #comparing }
 CompositeBorderStyle >> hash [
 	"Since #= is overridden."
-	
+
 	^super hash bitXor: self borders hash
 ]
 

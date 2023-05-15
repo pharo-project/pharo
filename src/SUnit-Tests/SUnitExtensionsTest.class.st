@@ -18,7 +18,7 @@ SUnitExtensionsTest class >> lastStoredRun [
 { #category : #'real tests' }
 SUnitExtensionsTest >> assertionFailedInRaiseWithExceptionDoTest [
 
-	self 
+	self
 		should: [ Error signal ]
 		raise: Error
 		withExceptionDo: [ :anException | self assert: false ]
@@ -27,7 +27,7 @@ SUnitExtensionsTest >> assertionFailedInRaiseWithExceptionDoTest [
 { #category : #'real tests' }
 SUnitExtensionsTest >> differentExceptionInShouldRaiseWithExceptionDoTest [
 
-	[ self 
+	[ self
 		should: [ Error signal ]
 		raise: Halt
 		withExceptionDo: [ :anException | self assert: false description: 'should:raise:withExceptionDo: handled an exception that should not handle'] ]
@@ -38,7 +38,7 @@ SUnitExtensionsTest >> differentExceptionInShouldRaiseWithExceptionDoTest [
 { #category : #'real tests' }
 SUnitExtensionsTest >> errorInRaiseWithExceptionDoTest [
 
-	self 
+	self
 		should: [ Error  signal ]
 		raise: Error
 		withExceptionDo: [ :anException | Error signal: 'A forced error' ]
@@ -52,7 +52,7 @@ SUnitExtensionsTest >> failureLog [
 { #category : #'real tests' }
 SUnitExtensionsTest >> invalidShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan: 50 milliSeconds.
+	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan: 50 milliSeconds
 ]
 
 { #category : #'real tests' }
@@ -69,7 +69,7 @@ SUnitExtensionsTest >> isLogging [
 { #category : #'real tests' }
 SUnitExtensionsTest >> noExceptionInShouldRaiseWithExceptionDoTest [
 
-	self 
+	self
 		should: [  ]
 		raise: Error
 		withExceptionDo: [ :anException | Error signal: 'Should not get here' ]
@@ -93,7 +93,7 @@ SUnitExtensionsTest >> shouldRaiseWithSignalDoTest [
 
 { #category : #accessing }
 SUnitExtensionsTest >> stream [
-	^stream ifNil: [stream := String new writeStream].
+	^stream ifNil: [stream := String new writeStream]
 ]
 
 { #category : #tests }
@@ -169,7 +169,7 @@ SUnitExtensionsTest >> testExceptionWithMatchingString [
 
 { #category : #tests }
 SUnitExtensionsTest >> testExceptionWithoutMatchingString [
-	self 
+	self
 		should: [ Object obsolete ]
 		raise: Error
 		whoseDescriptionDoesNotInclude: 'Zero'
@@ -214,9 +214,9 @@ SUnitExtensionsTest >> testNoExceptionInShouldRaiseWithExceptionDo [
 
 { #category : #tests }
 SUnitExtensionsTest >> testNoExceptionWithMatchingString [
-	self 
+	self
 		shouldnt: [ Object messageNotUnderstoodByObject ]
-		raise: MessageNotUnderstood 
+		raise: MessageNotUnderstood
 		whoseDescriptionIncludes: 'Zero'
 		description: 'tested obsoleting Object'
 ]
@@ -281,7 +281,7 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 { #category : #'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan:  200 milliSeconds.
+	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan:  200 milliSeconds
 ]
 
 { #category : #'real tests' }

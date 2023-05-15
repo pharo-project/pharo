@@ -98,7 +98,7 @@ SDL_Renderer >> getOutputSizeW: w h: h [
 { #category : #accessing }
 SDL_Renderer >> info [
 	| info |
-	
+
 	info := SDL_RendererInfo externalNew autoRelease.
 	self primGetRendererInfo: info.
 	^ info
@@ -122,7 +122,7 @@ SDL_Renderer >> noRenderTarget [
 { #category : #rendering }
 SDL_Renderer >> outputExtent [
 
-	^ ExternalAddress allocate: 8 bytesDuring: [ :buffer | 
+	^ ExternalAddress allocate: 8 bytesDuring: [ :buffer |
 		  self getOutputSizeW: buffer h: buffer + 4.
 		  (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5) ]
 ]

@@ -59,21 +59,21 @@ TransferMorph class >> withPassenger: anObject from: source hand: dragHand [
 ]
 
 { #category : #'dropping/grabbing' }
-TransferMorph >> aboutToBeGrabbedBy: aHand [ 
-	"The receiver is being grabbed by a hand.                           
-	Perform necessary adjustments (if any) and return the actual morph    
+TransferMorph >> aboutToBeGrabbedBy: aHand [
+	"The receiver is being grabbed by a hand.
+	Perform necessary adjustments (if any) and return the actual morph
 	     that should be added to the hand."
-	"Since this morph has been initialized automatically with bounds origin   
+	"Since this morph has been initialized automatically with bounds origin
 	     0@0, we have to move it to aHand position."
 	super aboutToBeGrabbedBy: aHand.
 	self draggedMorph.
 	"self align: self bottomLeft with: aHand position."
 	self formerPosition: self position.
-	aHand newKeyboardFocus: self.
+	aHand newKeyboardFocus: self
 ]
 
 { #category : #'dropping/grabbing' }
-TransferMorph >> animationForMoveSuccess: success [ 
+TransferMorph >> animationForMoveSuccess: success [
 	| start stop slideForm |
 	success
 		ifTrue: [^ self]
@@ -81,7 +81,7 @@ TransferMorph >> animationForMoveSuccess: success [
 			start := self fullBounds origin.
 			stop := self formerPosition ifNil: [ self source bounds origin ]].
 	start = stop ifTrue: [^ self].
-	
+
 	slideForm := self imageForm offset: 0@0.
 	slideForm
 		slideWithFirstFrom: start
@@ -163,7 +163,7 @@ TransferMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
 	self layoutPolicy: TableLayout new.
-	
+
 	self listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
@@ -171,11 +171,11 @@ TransferMorph >> initialize [
 		cellInset: 3;
 		wrapCentering: #center;
 		cellPositioning: #leftCenter.
-		
+
 	self borderStyle: (BorderStyle
 		width: 1 color: Color lightGray).
-		
-	accepted := false.	
+
+	accepted := false.
 	copy := false.
 	self on: #keyStroke send: #keyStroke: to: self
 ]
@@ -187,7 +187,7 @@ TransferMorph >> isTransferable [
 ]
 
 { #category : #'dropping/grabbing' }
-TransferMorph >> justDroppedInto: targetMorph event: anEvent [ 
+TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 	"If only world wants this TransferMorph, treat it as unaccepted (see also >>delete)."
 	| formerPosition |
 	formerPosition := self formerPosition.
@@ -205,7 +205,7 @@ TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 TransferMorph >> keyDown: evt [
 	"Abort the drag on an escape"
 	evt keyCharacter ~= Character escape ifTrue: [ ^self ].
-	self delete.
+	self delete
 ]
 
 { #category : #accessing }
@@ -224,19 +224,19 @@ TransferMorph >> passenger: anObject [
 ]
 
 { #category : #private }
-TransferMorph >> privateFullMoveBy: delta [ 
+TransferMorph >> privateFullMoveBy: delta [
 	super privateFullMoveBy: delta.
 	self changed: #position
 ]
 
 { #category : #'dropping/grabbing' }
-TransferMorph >> result: result [ 
+TransferMorph >> result: result [
 	^ self result: result from: nil
 ]
 
 { #category : #'dropping/grabbing' }
-TransferMorph >> result: aResult from: aResultGenerator [ 
-	"Send aResult of the drop operation computed by aResultGenerator to a   
+TransferMorph >> result: aResult from: aResultGenerator [
+	"Send aResult of the drop operation computed by aResultGenerator to a
 	resultRecipient, if it exists."
 ]
 
@@ -247,7 +247,7 @@ TransferMorph >> shouldCopy [
 
 { #category : #accessing }
 TransferMorph >> shouldCopy: aBoolean [
-	copy := aBoolean.
+	copy := aBoolean
 ]
 
 { #category : #accessing }
@@ -264,9 +264,9 @@ TransferMorph >> source: anObject [
 TransferMorph >> step [
 	self shouldCopy = dragHand shiftPressed
 		ifTrue: [ ^ self ].
-	
+
 	self shouldCopy: dragHand shiftPressed.
-	self updateCopyIcon.
+	self updateCopyIcon
 ]
 
 { #category : #stepping }
@@ -277,12 +277,12 @@ TransferMorph >> stepTime [
 { #category : #private }
 TransferMorph >> updateCopyIcon [
 
-	| copyIcon |	
+	| copyIcon |
 	copyIcon := self submorphWithProperty: #tmCopyIcon.
 	self shouldCopy ifFalse: [
 		^ copyIcon ifNotNil: [ copyIcon delete ]].
 	copyIcon ifNotNil: [ ^ self ].
 	copyIcon := ImageMorph new form: CopyPlusIcon.
 	copyIcon setProperty: #tmCopyIcon toValue: true.
-	^ self addMorphFront: copyIcon.
+	^ self addMorphFront: copyIcon
 ]

@@ -170,29 +170,29 @@ WatchTest >> testStopRecording [
 { #category : #values }
 WatchTest >> testTimestamp [
 	|node watchpoint|
-	
+
 	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watch in: node.
-	
+
 	1 to: 10 do:[:i| ReflectivityExamples new exampleAssignmentIvar: i].
-	1 to: 9 do: [:i|  
+	1 to: 9 do: [:i|
 		|older newer|
 		older := watchpoint values at: i.
 		newer := watchpoint values at: i + 1.
 		self assert: (older key <= newer key).
-	]. 
-	
-	watchpoint uninstall.
+	].
+
+	watchpoint uninstall
 ]
 
 { #category : #adding }
 WatchTest >> testWatchTwice [
 	|node watchpoint|
-	
+
 	node := (ReflectivityExamples>>#exampleAssignment) ast body statements first.
 	watchpoint := Watch in: node.
-	
+
 	self should: [watchpoint install] raise: Error.
-	
-	watchpoint uninstall.
+
+	watchpoint uninstall
 ]

@@ -30,7 +30,7 @@ TextMethodLink class >> selector: aString senders: browseSenders [
 TextMethodLink class >> sourceNode: aMessageNode [
 	^ self new
 		selector: aMessageNode selector;
-		sourceNode: aMessageNode 
+		sourceNode: aMessageNode
 		yourself
 ]
 
@@ -45,7 +45,7 @@ TextMethodLink >> = anotherObject [
 { #category : #accessing }
 TextMethodLink >> browseSenders [
 
-	^browseSenders 
+	^browseSenders
 ]
 
 { #category : #comparing }
@@ -55,9 +55,9 @@ TextMethodLink >> hash [
 ]
 
 { #category : #initialization }
-TextMethodLink >> initialize [ 
+TextMethodLink >> initialize [
 	super initialize.
-	browseSenders := false.
+	browseSenders := false
 ]
 
 { #category : #accessing }
@@ -67,7 +67,7 @@ TextMethodLink >> selector [
 
 { #category : #accessing }
 TextMethodLink >> selector: aStringOrSymbol [
-	selector := aStringOrSymbol asSymbol.
+	selector := aStringOrSymbol asSymbol
 ]
 
 { #category : #accessing }

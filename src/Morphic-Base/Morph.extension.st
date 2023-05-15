@@ -3,10 +3,10 @@ Extension { #name : #Morph }
 { #category : #'*Morphic-Base' }
 Morph >> addHalo: evt [
 	| halo |
-	
+
 	self halosEnabled
 		ifFalse: [ ^ self ].
-		
+
 	halo := (Smalltalk globals at: self haloClass ifAbsent: [ HaloMorph ]) new.
 	halo bounds: (halo worldBoundsForMorph: self).
 	halo popUpFor: self event: evt.
@@ -17,15 +17,15 @@ Morph >> addHalo: evt [
 Morph >> addHandlesTo: aHaloMorph box: box [
 	"Add halo handles to the halo.  Apply the halo filter if appropriate"
 
-	
+
 	aHaloMorph haloBox: box.
 	HaloMorph  currentHaloSpecifications do:
-		[:aSpec | | wantsIt aSelector | 
+		[:aSpec | | wantsIt aSelector |
 			aSelector := aSpec addHandleSelector.
 			(wantsIt := self wantsHaloHandleWithSelector: aSelector inHalo: aHaloMorph)
-				ifTrue: [(#(addDupHandle:) includes: aSelector) 
+				ifTrue: [(#(addDupHandle:) includes: aSelector)
 					ifTrue: [wantsIt := self preferredDuplicationHandleSelector = aSelector]].
-			wantsIt 
+			wantsIt
 				ifTrue: [aHaloMorph perform: aSelector with: aSpec]].
 	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
 ]
@@ -33,7 +33,7 @@ Morph >> addHandlesTo: aHaloMorph box: box [
 { #category : #'*Morphic-Base' }
 Morph >> addWorldHandlesTo: aHaloMorph box: box [
 	aHaloMorph haloBox: box.
-	HaloMorph haloSpecificationsForWorld 
+	HaloMorph haloSpecificationsForWorld
 		do: [:aSpec | aHaloMorph perform: aSpec addHandleSelector with: aSpec].
 	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
 ]
@@ -56,7 +56,7 @@ Morph >> asText [
 	| anchor embedMorphSignal |
     anchor := TextAnchor new anchoredMorph: self.
     embedMorphSignal := (Character value: 1) asString. "required by the scanner"
-    ^ Text string: embedMorphSignal attribute: anchor.
+    ^ Text string: embedMorphSignal attribute: anchor
 ]
 
 { #category : #'*Morphic-Base' }
@@ -78,14 +78,14 @@ Morph >> assureTableProperties [
 	props ifNil:[
 		props := TableLayoutProperties new initializeFrom: self.
 		self layoutProperties: props].
-	props includesTableProperties 
+	props includesTableProperties
 		ifFalse:[self layoutProperties: (props := props asTableLayoutProperties)].
 	^props
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
 Morph >> attachKeymapCategory: aCategory [
-	self kmDispatcher attachCategory: aCategory.
+	self kmDispatcher attachCategory: aCategory
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
@@ -104,8 +104,8 @@ Morph >> bindKeyCombination: aShortcut toAction: anAction [
 ]
 
 { #category : #'*Morphic-Base' }
-Morph >> borderColor: aColorOrSymbolOrNil [ 
-	"Unfortunately, the argument to borderColor could be more than 	just a color. 
+Morph >> borderColor: aColorOrSymbolOrNil [
+	"Unfortunately, the argument to borderColor could be more than 	just a color.
 	It could also be a symbol, in which case it is to be interpreted as a style identifier.
 	But I might not be able to draw that kind of border, so it may have to be ignored.
 	Or it could be nil, in which case I should revert to the default border."
@@ -144,7 +144,7 @@ Morph >> borderWidth: aNumber [
 
 	style style = #none
 		ifTrue: [ self borderStyle: (SimpleBorderStyle width: aNumber color: Color transparent) ]
-		ifFalse: [ style width: aNumber. self changed ].
+		ifFalse: [ style width: aNumber. self changed ]
 ]
 
 { #category : #'*Morphic-Base' }
@@ -153,7 +153,7 @@ Morph >> changeCellInset: evt [
 	handle := HandleMorph new forEachPointDo:[:newPoint |
 		self cellInset: (newPoint - evt cursorPoint) asIntegerPoint // 5].
 	evt hand attachMorph: handle.
-	handle startStepping.
+	handle startStepping
 ]
 
 { #category : #'*Morphic-Base' }
@@ -162,7 +162,7 @@ Morph >> changeLayoutInset: evt [
 	handle := HandleMorph new forEachPointDo:[:newPoint |
 		self layoutInset: (newPoint - evt cursorPoint) asIntegerPoint // 5].
 	evt hand attachMorph: handle.
-	handle startStepping.
+	handle startStepping
 ]
 
 { #category : #'*Morphic-Base' }
@@ -171,7 +171,7 @@ Morph >> changeMaxCellSize: evt [
 	handle := HandleMorph new forEachPointDo:[:newPoint |
 		self maxCellSize: (newPoint - evt cursorPoint) asIntegerPoint].
 	evt hand attachMorph: handle.
-	handle startStepping.
+	handle startStepping
 ]
 
 { #category : #'*Morphic-Base' }
@@ -180,7 +180,7 @@ Morph >> changeMinCellSize: evt [
 	handle := HandleMorph new forEachPointDo:[:newPoint |
 		self minCellSize: (newPoint - evt cursorPoint) asIntegerPoint].
 	evt hand attachMorph: handle.
-	handle startStepping.
+	handle startStepping
 ]
 
 { #category : #'*Morphic-Base' }
@@ -189,7 +189,7 @@ Morph >> changeProportionalLayout [
 	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
-	self layoutChanged.
+	self layoutChanged
 ]
 
 { #category : #'*Morphic-Base' }
@@ -198,7 +198,7 @@ Morph >> changeTableLayout [
 	((layout := self layoutPolicy) notNil and:[layout isTableLayout])
 		ifTrue:[^self]. "already table layout"
 	self layoutPolicy: TableLayout new.
-	self layoutChanged.
+	self layoutChanged
 ]
 
 { #category : #'*Morphic-Base' }
@@ -215,7 +215,7 @@ Morph >> defaultBalloonFont [
 
 { #category : #'*Morphic-Base' }
 Morph >> defaultBitmapFillForm [
-	^ImageMorph defaultForm.
+	^ImageMorph defaultForm
 ]
 
 { #category : #'*Morphic-Base' }
@@ -233,7 +233,7 @@ Morph >> detachAllKeymapCategories [
 { #category : #'*Morphic-Base-keymapping' }
 Morph >> detachKeymapCategory: aCategoryName [
 
-	self kmDispatcher detachKeymapCategory: aCategoryName.
+	self kmDispatcher detachKeymapCategory: aCategoryName
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
@@ -243,13 +243,13 @@ Morph >> detachKeymapCategory: aCategoryName targetting: anObject [
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
-Morph >> dispatchKeystrokeForEvent: evt [ 
+Morph >> dispatchKeystrokeForEvent: evt [
 	self kmDispatcher dispatchKeystroke: evt
 ]
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAs: anExtension using: aWriter [
-	
+
 	| reference |
 	reference := UIManager default
 		chooseForSaveFileReference: 'Save Morph as ', anExtension asUppercase
@@ -260,20 +260,20 @@ Morph >> exportAs: anExtension using: aWriter [
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAsBMP [
-	
+
 	self exportAs: 'bmp' using: BMPReadWriter
 ]
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAsGIF [
-	
-	self exportAs: 'gif' using: GIFReadWriter.
+
+	self exportAs: 'gif' using: GIFReadWriter
 ]
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAsJPEG [
 	"Export the receiver's image as a JPEG"
-	
+
 	self exportAs: 'jpeg' using: PluginBasedJPEGReadWriter
 ]
 
@@ -284,11 +284,11 @@ Morph >> exportAsPNG [
 ]
 
 { #category : #'*Morphic-Base' }
-Morph >> fillWithRamp: rampSpecsOrColor oriented: aRatio [ 
+Morph >> fillWithRamp: rampSpecsOrColor oriented: aRatio [
 	rampSpecsOrColor isColor
 		ifTrue: [self color: rampSpecsOrColor".
 			self borderColor: rampSpecsOrColor muchDarker"]
-		ifFalse: [| fill | 
+		ifFalse: [| fill |
 			fill := GradientFillStyle ramp: rampSpecsOrColor.
 			fill origin: self bounds topLeft.
 			fill direction: (self bounds extent * aRatio) truncated.
@@ -302,13 +302,13 @@ Morph >> handleKeystrokeWithKeymappings: aKeystrokeEvent [
 
 	self allowsKeymapping ifTrue: [
 		self dispatchKeystrokeForEvent: aKeystrokeEvent.
-	].
+	]
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
 Morph >> hasKeymapCategoryNamed: aString [
 
-	^ self kmDispatcher targets anySatisfy: [ :e | e category name = aString ].
+	^ self kmDispatcher targets anySatisfy: [ :e | e category name = aString ]
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
@@ -342,15 +342,15 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 		ifTrue: [self removeHalo].
 	self formerOwner: nil.
 	self formerPosition: nil.
-	(aWindow := aMorph ownerThatIsA: SystemWindow) 
-		ifNotNil: [aWindow isActive 
+	(aWindow := aMorph ownerThatIsA: SystemWindow)
+		ifNotNil: [aWindow isActive
 			ifFalse: [aWindow activate]].
 
 	"An object launched by certain parts-launcher mechanisms should end up fully visible..."
-	(self hasProperty: #beFullyVisibleAfterDrop) 
-		ifTrue: [aMorph == self world 
+	(self hasProperty: #beFullyVisibleAfterDrop)
+		ifTrue: [aMorph == self world
 			ifTrue: [self goHome].
-			self removeProperty: #beFullyVisibleAfterDrop].
+			self removeProperty: #beFullyVisibleAfterDrop]
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
@@ -359,7 +359,7 @@ Morph >> kmDispatcher [
 
 	^ self
 		valueOfProperty: #kmDispatcher
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			| kmd |
 			kmd := KMDispatcher target: self.
 			self initializeShortcuts: kmd.
@@ -373,7 +373,7 @@ Morph >> newTransformationMorph [
 
 { #category : #'*Morphic-Base-keymapping' }
 Morph >> on: aShortcut do: anAction [
-	
+
 	^ self bindKeyCombination: aShortcut toAction: anAction
 ]
 
@@ -417,11 +417,11 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 			cellPositioning: #leftCenter;
 			cellInset: 4@0;
 			yourself.
-			
+
 	rm addMorph: self.
 	rm computeBounds.
-	
-	aColumn isFirstColumn 
+
+	aColumn isFirstColumn
 		ifTrue: [ | icon |
 			icon := aColumn container iconBlock value: aNode.
 			icon ifNotNil: [ rm addMorph: icon asMorph ].
@@ -451,7 +451,7 @@ Morph >> setShadowOffset: evt [
 	handle := HandleMorph new forEachPointDo:
 		[:newPoint | self shadowPoint: newPoint].
 	evt hand attachMorph: handle.
-	handle startStepping.
+	handle startStepping
 ]
 
 { #category : #'*Morphic-Base' }
@@ -462,7 +462,7 @@ Morph >> useBitmapFill [
 	fill := BitmapFillStyle fromForm: self defaultBitmapFillForm.
 	"Note: Must fix the origin due to global coordinates"
 	fill origin: self bounds origin.
-	self fillStyle: fill.
+	self fillStyle: fill
 ]
 
 { #category : #'*Morphic-Base' }

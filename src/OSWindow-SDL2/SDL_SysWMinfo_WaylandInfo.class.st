@@ -43,7 +43,7 @@ SDL_SysWMinfo_WaylandInfo >> display [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> display: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_DISPLAY put: anObject getHandle.
+	handle pointerAt: OFFSET_DISPLAY put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -55,7 +55,7 @@ SDL_SysWMinfo_WaylandInfo >> shell_surface [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> shell_surface: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_SHELL_SURFACE put: anObject getHandle.
+	handle pointerAt: OFFSET_SHELL_SURFACE put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -67,5 +67,5 @@ SDL_SysWMinfo_WaylandInfo >> surface [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> surface: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_SURFACE put: anObject getHandle.
+	handle pointerAt: OFFSET_SURFACE put: anObject getHandle
 ]

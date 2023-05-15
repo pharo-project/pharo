@@ -22,7 +22,7 @@ ReProperMethodProtocolNameRule class >> badMethodProtocolNames [
 { #category : #'testing - interest' }
 ReProperMethodProtocolNameRule class >> checksMethod [
 	"This one is abstract but subclasses should run as rules"
-	
+
 	^ self name ~= #ReProperMethodProtocolNameRule
 ]
 
@@ -42,7 +42,7 @@ ReProperMethodProtocolNameRule class >> isAbstract [
 ReProperMethodProtocolNameRule class >> protocolIdiom [
 	"Subclasses should override to return an association between a
 	 wished category and an array of category names that are not so good."
- 
+
 	^self subclassResponsibility
 ]
 
@@ -50,7 +50,7 @@ ReProperMethodProtocolNameRule class >> protocolIdiom [
 ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 	"Instead of directly creating an array we use this utility method for better readability
 	 in senders of this method"
-	
+
 	^valid -> arrayOfInvalid
 ]
 
@@ -64,7 +64,7 @@ ReProperMethodProtocolNameRule >> basicCheck: aMethod [
 ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
 	| proposedCategory |
 	proposedCategory := self class goodMethodProtocolName asSymbol.
-		
+
 	^ (ReRefactoringCritique
 		   withAnchor: (self anchorFor: aMethod)
 		   by: self) refactoring: (RBMethodProtocolTransformation
@@ -94,7 +94,7 @@ ReProperMethodProtocolNameRule >> methodProtocolName: anObject [
 { #category : #accessing }
 ReProperMethodProtocolNameRule >> name [
 
-	^ 'Method categorization: use ''' 
+	^ 'Method categorization: use '''
 		  	, self class goodMethodProtocolName
   	  		, ''' as protocol name instead of '''
 	  		, self methodProtocolName asString , ''''
@@ -110,6 +110,6 @@ ReProperMethodProtocolNameRule >> rationale [
 ReProperMethodProtocolNameRule >> use: valid insteadOf: arrayOfInvalid [
 	"Instead of directly creating an array we use this utility method for better readability
 	 in senders of this method"
-	
+
 	^self class use: valid insteadOf: arrayOfInvalid
 ]

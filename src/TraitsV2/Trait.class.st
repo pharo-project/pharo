@@ -57,11 +57,11 @@ Trait class >> named: aSymbol [
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName instanceVariableNames: aString package: aPackageName [
 
-	^ self named: aName 
-		uses: {} 
-		instanceVariableNames: aString 
-		package: aPackageName 
-		env: self environment 
+	^ self named: aName
+		uses: {}
+		instanceVariableNames: aString
+		package: aPackageName
+		env: self environment
 ]
 
 { #category : #'old pharo 8 syntax' }
@@ -105,18 +105,18 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aStrin
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName [
 
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		instanceVariableNames: aString 
-		package: aPackageName 
-		env: self environment 
+	^ self named: aName
+		uses: aTraitCompositionOrCollection
+		instanceVariableNames: aString
+		package: aPackageName
+		env: self environment
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName env: anEnvironment [
 	| trait |
 	trait := self classInstaller
-		make: [ :builder | 
+		make: [ :builder |
 			self
 				configureBuilder: builder
 				withName: aName
@@ -150,35 +150,35 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString
 { #category : #deprecated }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
 
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		slots: someSlots 
-		package: aCategory 
-		env: self environment 
+	^ self named: aName
+		uses: aTraitCompositionOrCollection
+		slots: someSlots
+		package: aCategory
+		env: self environment
 ]
 
 { #category : #deprecated }
-Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [ 
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [
 	"It is unclear that it is not use by low level library such as MC so we should not use it but we do not remove it for now."
-	
-	^ self named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aCategory env: anEnvironment 
+
+	^ self named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aCategory env: anEnvironment
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
 
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		slots: someSlots 
-		package: aPackageName 
-		env: self environment 
+	^ self named: aName
+		uses: aTraitCompositionOrCollection
+		slots: someSlots
+		package: aPackageName
+		env: self environment
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
 	| trait |
 	trait := self classInstaller
-		make: [ :builder | 
+		make: [ :builder |
 			self
 				configureBuilder: builder
 				withName: aName
@@ -222,7 +222,7 @@ Trait >> @@ anArray [
 ]
 
 { #category : #users }
-Trait >> addUser: aClass [ 
+Trait >> addUser: aClass [
 
 	self users add: aClass
 ]
@@ -230,10 +230,10 @@ Trait >> addUser: aClass [
 { #category : #'instance creation' }
 Trait >> basicNew [
 	"Traits should never be instantiated.
-	They are naked object: superclass = nil. 
-	They not understand any Object messages 
+	They are naked object: superclass = nil.
+	They not understand any Object messages
 	and any DNU crashes VM because there are no methods doesNotUnderstand: or cannotInterpret:"
-	
+
 	self error: 'Traits should not be instantiated!'
 ]
 
@@ -252,36 +252,35 @@ Trait >> definitionStringFor: aConfiguredPrinter [
 { #category : #fileout }
 Trait >> expandedDefinitionStringFor: aPrinter [
 
-	^ aPrinter expandedTraitDefinitionString 
+	^ aPrinter expandedTraitDefinitionString
 ]
 
 { #category : #testing }
 Trait >> isBaseTrait [
-	
+
 	^ true
 ]
 
 { #category : #testing }
 Trait >> isClass [
-	
+
 	^ false
 ]
 
 { #category : #testing }
 Trait >> isClassTrait [
-	
+
 	^ false
 ]
 
 { #category : #testing }
-Trait >> isEmpty [ 
-	"Since we can have potential an empty array in the fluid definition (to be revisited) 
+Trait >> isEmpty [
+	"Since we can have potential an empty array in the fluid definition (to be revisited)
 	when the trait composition is aTrait it received the message isEmpty and would break
-	traitComposition 
+	traitComposition
 		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]]."
 
 	^ false
-	
 ]
 
 { #category : #testing }
@@ -309,7 +308,7 @@ Trait >> isUsed [
 Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
-	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
+	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -322,27 +321,25 @@ Trait >> rebuildMethodDictionary [
 
 { #category : #initialization }
 Trait >> removeFromSystem: logged [
-	
+
 	"When a trait is removed from the system it should:
-	
+
 	- Remove it self from its trait compositions.
 	- Remove it self from its users.
 	- Remove its classTrait from its users.
 	- Do what any class does."
 	self traitComposition removeUser: self.
 	self class traitComposition removeUser: self class.
-	
+
 	self traitUsers do: [ :e | e isObsolete ifFalse: [ e removeFromComposition: self ]].
 	self class traitUsers do: [ :e | e isObsolete ifFalse: [e removeFromComposition: self class ]].
 	^ super removeFromSystem: logged
 ]
 
 { #category : #removing }
-Trait >> removeUser: aClass [ 
+Trait >> removeUser: aClass [
 
-	self users remove: aClass ifAbsent: [ ].
-	
-	
+	self users remove: aClass ifAbsent: [ ]
 ]
 
 { #category : #accessing }

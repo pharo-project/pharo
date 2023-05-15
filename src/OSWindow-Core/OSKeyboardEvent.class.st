@@ -35,10 +35,10 @@ OSKeyboardEvent >> asKeyCombination [
 	shift := self modifiers shift.
 	alt := self modifiers alt.
 	char := self modifiedCharacter.
-	
+
 	(shift | command | control | alt)
 		ifFalse: [^ KMSingleKeyCombination from: char ].
-	
+
 	modifier := KMNoShortcut new.
 	control ifTrue: [ modifier := modifier + KMModifier ctrl ].
 	command ifTrue: [ modifier := modifier + KMModifier command ].
@@ -50,20 +50,20 @@ OSKeyboardEvent >> asKeyCombination [
 
 { #category : #accessing }
 OSKeyboardEvent >> character [
-	
+
 	^ character
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> character: anObject [
-	
+
 	character := anObject
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> characterCode [
 	"answer the unicode value"
-	
+
 	^ character ifNil: [0] ifNotNil: [ character charCode ]
 ]
 
@@ -76,27 +76,27 @@ OSKeyboardEvent >> initialize [
 
 { #category : #keymapping }
 OSKeyboardEvent >> modifiedCharacter [
-	
+
 	self character ifNotNil: [ :c | ^ c ].
-	self symbol <= 16rFF ifTrue: [ ^ Character value: self symbol ]. 
+	self symbol <= 16rFF ifTrue: [ ^ Character value: self symbol ].
 	^ Character value: 0
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> modifiers [
-	
+
 	^ modifiers
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> position [
-	
+
 	^ position
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> position: anObject [
-	
+
 	position := anObject
 ]
 
@@ -106,7 +106,7 @@ OSKeyboardEvent >> printOn: stream [
 	stream space; nextPutAll: 'scanCode: '; print: scanCode.
 	stream space; nextPutAll: 'symbol '; print: symbol.
 	stream space; nextPutAll: 'character '; print: character.
-	stream space; nextPutAll: 'modifiers: '; print: modifiers.
+	stream space; nextPutAll: 'modifiers: '; print: modifiers
 ]
 
 { #category : #accessing }
@@ -121,25 +121,25 @@ OSKeyboardEvent >> repeat: anObject [
 
 { #category : #accessing }
 OSKeyboardEvent >> scanCode [
-	
+
 	^ scanCode
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> scanCode: anObject [
-	
+
 	scanCode := anObject
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> symbol [
-	
+
 	^ symbol
 ]
 
 { #category : #accessing }
 OSKeyboardEvent >> symbol: anObject [
-	
+
 	symbol := anObject
 ]
 

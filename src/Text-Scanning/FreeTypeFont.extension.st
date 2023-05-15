@@ -9,5 +9,5 @@ FreeTypeFont >> scanByteCharactersFrom: startIndex to: stopIndex in: aByteString
 { #category : #'*Text-Scanning' }
 FreeTypeFont >> scanMultibyteCharactersFrom: startIndex to: stopIndex in: aWideString with: aCharacterScanner rightX: rightX [
 	"scan a multibyte character string"
-	^aCharacterScanner scanKernableMultibyteCharactersFrom: startIndex to: stopIndex in: aWideString rightX: rightX 
+	^aCharacterScanner scanKernableMultibyteCharactersFrom: startIndex to: stopIndex in: aWideString rightX: rightX
 ]

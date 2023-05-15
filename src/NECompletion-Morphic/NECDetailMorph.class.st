@@ -42,7 +42,7 @@ NECDetailMorph >> contentBounds [
 
 { #category : #drawing }
 NECDetailMorph >> defaultColor [
-	^ NECMenuMorph backgroundColor.
+	^ NECMenuMorph backgroundColor
 ]
 
 { #category : #accessing }
@@ -72,8 +72,8 @@ NECDetailMorph >> drawMessageOn: aCanvas [
 	factor := self itemHeight.
 	rectangle := self bounds top: self bounds bottom - factor.
 	rectangle := rectangle left: self contentBounds left.
-	aCanvas 
-		line: rectangle topLeft 
+	aCanvas
+		line: rectangle topLeft
 		to: rectangle topRight
 		color: Color darkGray.
 	rectangle := rectangle top: rectangle top + 1.
@@ -92,7 +92,7 @@ NECDetailMorph >> drawMessageOn: aCanvas [
 ]
 
 { #category : #drawing }
-NECDetailMorph >> drawOn: aCanvas [ 
+NECDetailMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
 	arrowPosition ifNotNil: [
 		self drawArrowOn: aCanvas.
@@ -100,7 +100,7 @@ NECDetailMorph >> drawOn: aCanvas [
 ]
 
 { #category : #accessing }
-NECDetailMorph >> entryDescription: anECEntryDescription [ 
+NECDetailMorph >> entryDescription: anECEntryDescription [
 	| categoryContents entryDescription |
 	entryDescription := anECEntryDescription.
 	title
@@ -120,15 +120,15 @@ NECDetailMorph >> entryDescription: anECEntryDescription [
 NECDetailMorph >> initialize [
 	| childBounds |
 	super initialize.
-	
+
 	self borderStyle: (BorderStyle color: Color gray width: 1).
 	childBounds := self contentBounds.
-	label := StringMorph 
+	label := StringMorph
 		contents: ''
 		font: self messageFont.
 	label bounds: childBounds.
 	self addMorph: label.
-	title := StringMorph 
+	title := StringMorph
 		contents: ''
 		font: NECMenuMorph titleFont.
 	title bounds: self titleBounds.
@@ -151,7 +151,7 @@ NECDetailMorph >> messageFont [
 ]
 
 { #category : #drawing }
-NECDetailMorph >> position: aPoint menuWidth: anInteger [ 
+NECDetailMorph >> position: aPoint menuWidth: anInteger [
 	| y x |
 	arrowPosition := aPoint.
 	y := aPoint y + self class height.
@@ -168,7 +168,7 @@ NECDetailMorph >> position: aPoint menuWidth: anInteger [
 ]
 
 { #category : #private }
-NECDetailMorph >> positionOnLeft: anInteger [ 
+NECDetailMorph >> positionOnLeft: anInteger [
 	^ arrowPosition x - self class width - anInteger
 ]
 

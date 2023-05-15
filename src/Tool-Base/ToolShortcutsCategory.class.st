@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ToolShortcutsCategory class >> isGlobalCategory [
 
-	^ true 
+	^ true
 ]
 
 { #category : #keymaps }
@@ -69,7 +69,7 @@ ToolShortcutsCategory >> saveImage [
 	<shortcut>
 	^ KMKeymap
 		shortcut: PharoShortcuts current saveImageShortcut
-		action: [ 
+		action: [
 			(Smalltalk snapshot: true andQuit: false)
 				ifFalse: [ UIManager default inform: 'Image saved' ] ]
 ]

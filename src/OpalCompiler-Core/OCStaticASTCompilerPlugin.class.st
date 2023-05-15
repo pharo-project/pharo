@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 OCStaticASTCompilerPlugin class >> isAbstract [
-		
+
 	^ self == OCStaticASTCompilerPlugin
 ]
 
@@ -24,7 +24,7 @@ OCStaticASTCompilerPlugin class >> priority [
 { #category : #'instance creation' }
 OCStaticASTCompilerPlugin class >> transform: anAST [
 	"Return a new instance of the receiver transforming the given AST"
-	
+
 	^self new transform: anAST
 ]
 
@@ -48,9 +48,9 @@ OCStaticASTCompilerPlugin >> priority [
 
 { #category : #'private - transforming' }
 OCStaticASTCompilerPlugin >> transform [
-	"Subclasses override this method to actually provide the AST transformation. 
+	"Subclasses override this method to actually provide the AST transformation.
 	 IMPORTANT: If you modify the AST, make sure to copy it before using #copyAST!"
-	
+
 	self subclassResponsibility
 ]
 

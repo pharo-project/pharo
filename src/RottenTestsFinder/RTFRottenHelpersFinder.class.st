@@ -35,17 +35,17 @@ RTFRottenHelpersFinder >> rottenHelpers: anObject [
 
 { #category : #visiting }
 RTFRottenHelpersFinder >> visitRTFSelfCallNode: aRTFSelfCallNode [
-	
+
 	(aRTFSelfCallNode subCalls allSatisfy: #hasBeenExecuted)
-		ifTrue: [ 
+		ifTrue: [
 			aRTFSelfCallNode subCalls do: [ :selfSubCall |
 		 		selfSubCall acceptVisitor: self ].
 			^ self ].
-		
+
 	self addRottenHelper: ((RottenTestHelper compiledMethod: aRTFSelfCallNode compiledMethod)
 										callSites: (aRTFSelfCallNode subCalls reject: #hasBeenExecuted thenCollect: #astNode);
 										yourself).
 	aRTFSelfCallNode subCalls
 		select: #hasBeenExecuted
-		thenDo: [ :selfSubCall | selfSubCall acceptVisitor: self ].
+		thenDo: [ :selfSubCall | selfSubCall acceptVisitor: self ]
 ]

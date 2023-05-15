@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-TabPanelBorder class >> isDeprecated [ 
+TabPanelBorder class >> isDeprecated [
 	^ true
 ]

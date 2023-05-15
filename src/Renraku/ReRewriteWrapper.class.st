@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-ReRewriteWrapper class >> isAbstract [ 
+ReRewriteWrapper class >> isAbstract [
 
 	 ^ self = ReRewriteWrapper
 ]

@@ -22,13 +22,13 @@ Class {
 
 { #category : #accessing }
 OSJoyButtonEvent >> button [
-	
+
 	^ button
 ]
 
 { #category : #accessing }
 OSJoyButtonEvent >> button: anObject [
-	
+
 	button := anObject
 ]
 
@@ -134,24 +134,24 @@ OSJoyButtonEvent >> mapped: anObject [
 
 { #category : #accessing }
 OSJoyButtonEvent >> pressed [
-	
+
 	^ pressed
 ]
 
 { #category : #accessing }
 OSJoyButtonEvent >> pressed: anObject [
-	
+
 	pressed := anObject
 ]
 
 { #category : #accessing }
 OSJoyButtonEvent >> which [
-	
+
 	^ which
 ]
 
 { #category : #accessing }
 OSJoyButtonEvent >> which: anObject [
-	
+
 	which := anObject
 ]

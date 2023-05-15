@@ -12,7 +12,7 @@ RBSplitCascadeParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBSplitCascadeParametrizedTest >> constructor [ 
+RBSplitCascadeParametrizedTest >> constructor [
 	^ #split:from:in:
 ]
 
@@ -25,7 +25,7 @@ RBSplitCascadeParametrizedTest >> methodWithCascades [
 
 { #category : #'failure tests' }
 RBSplitCascadeParametrizedTest >> testMethodWithoutCascade [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{ (54 to: 55) . ('an', 'InstVar:') asSymbol . RBBasicLintRuleTestData })
 ]
 
@@ -40,7 +40,7 @@ RBSplitCascadeParametrizedTest >> testSplitCascadeRefactoring [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
 		{ (54 to: 55) . #methodWithCascades . self class }.
-	
+
 	self executeRefactoring: refactoring.
 
 	self assert: ((refactoring model classNamed: #RBSplitCascadeParametrizedTest) parseTreeForSelector: #methodWithCascades) equals: (self parseMethod: 'methodWithCascades

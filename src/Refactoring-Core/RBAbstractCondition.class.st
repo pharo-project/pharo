@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'logical operations' }
-RBAbstractCondition >> & aCondition [ 
+RBAbstractCondition >> & aCondition [
 	^RBConjunctiveCondition new left: self right: aCondition
 ]
 
@@ -36,7 +36,7 @@ RBAbstractCondition >> errorBlock [
 ]
 
 { #category : #private }
-RBAbstractCondition >> errorBlockFor: aBoolean [ 
+RBAbstractCondition >> errorBlockFor: aBoolean [
 	^nil
 ]
 
@@ -47,7 +47,7 @@ RBAbstractCondition >> errorMacro [
 ]
 
 { #category : #private }
-RBAbstractCondition >> errorMacro: aString [ 
+RBAbstractCondition >> errorMacro: aString [
 	errorMacro := aString
 ]
 
@@ -67,7 +67,7 @@ RBAbstractCondition >> not [
 ]
 
 { #category : #'logical operations' }
-RBAbstractCondition >> | aCondition [ 
+RBAbstractCondition >> | aCondition [
 	"(A | B) = (A not & B not) not"
 
 	^(self not & aCondition not) not

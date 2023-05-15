@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFNodeReification class >> entities [
-	^{RBProgramNode}.
+	^{RBProgramNode}
 ]
 
 { #category : #'plugin interface' }

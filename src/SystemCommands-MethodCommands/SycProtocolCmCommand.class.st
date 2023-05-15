@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #execution }
-SycProtocolCmCommand class >> activationStrategy [ 
+SycProtocolCmCommand class >> activationStrategy [
 	^ SycProtocolMenuActivation
 ]
 

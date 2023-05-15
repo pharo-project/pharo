@@ -58,13 +58,13 @@ RBMethodProtocolTransformation >> privateTransform [
 	self model
 		selector: self definingMethod selector
 		in: self definingClass
-		classified: self protocol.
+		classified: self protocol
 ]
 
 { #category : #executing }
 RBMethodProtocolTransformation >> protocol [
 
-	^ protocol ifNil: [ 
+	^ protocol ifNil: [
 		self uiManager
 			chooseOrRequestFrom: self definingClass protocols
 			title: 'Class name was not defined to perform ', self class baseClass name,
@@ -80,7 +80,7 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 ]
 
 { #category : #printing }
-RBMethodProtocolTransformation >> storeOn: aStream [ 
+RBMethodProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

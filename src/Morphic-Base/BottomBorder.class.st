@@ -31,6 +31,6 @@ Class {
 }
 
 { #category : #testing }
-BottomBorder class >> isDeprecated [ 
+BottomBorder class >> isDeprecated [
 	^ true
 ]

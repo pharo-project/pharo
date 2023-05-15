@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-Silder class >> isDeprecated [ 
+Silder class >> isDeprecated [
 	^ true
 ]

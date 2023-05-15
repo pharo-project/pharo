@@ -24,7 +24,7 @@ WeakClassVariable >> emitStore: aMethodBuilder [
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
 	aMethodBuilder popTop.
-	
+
 	"Push the weak array into the stack, then the arguments, then send"
 	aMethodBuilder pushLiteralVariable: self.
 	aMethodBuilder pushLiteral: 1.

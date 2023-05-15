@@ -97,23 +97,23 @@ EllipseMorph >> doesBevels [
 ]
 
 { #category : #drawing }
-EllipseMorph >> drawDropShadowOn: aCanvas [ 
+EllipseMorph >> drawDropShadowOn: aCanvas [
 
 	aCanvas fillOval: bounds fillStyle: self shadowColor borderWidth: 0 borderColor: nil
 ]
 
 { #category : #drawing }
-EllipseMorph >> drawOn: aCanvas [ 
-	
-	aCanvas 
-		fillOval: bounds 
-		fillStyle: self fillStyle 
-		borderWidth: borderWidth  
-		borderColor: borderColor.
+EllipseMorph >> drawOn: aCanvas [
+
+	aCanvas
+		fillOval: bounds
+		fillStyle: self fillStyle
+		borderWidth: borderWidth
+		borderColor: borderColor
 ]
 
 { #category : #geometry }
-EllipseMorph >> intersectionWithLineSegmentFromCenterTo: aPoint [ 
+EllipseMorph >> intersectionWithLineSegmentFromCenterTo: aPoint [
 	| dx aSquared bSquared m mSquared xSquared x y dy |
 	(self containsPoint: aPoint)
 		ifTrue: [ ^aPoint ].
@@ -129,7 +129,7 @@ EllipseMorph >> intersectionWithLineSegmentFromCenterTo: aPoint [
 	x := xSquared sqrt.
 	dx < 0 ifTrue: [ x := x negated ].
 	y := m * x.
-	^ self center + (x @ y) asIntegerPoint.
+	^ self center + (x @ y) asIntegerPoint
 ]
 
 { #category : #geometry }

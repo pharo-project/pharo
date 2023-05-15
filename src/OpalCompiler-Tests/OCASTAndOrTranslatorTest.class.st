@@ -30,7 +30,7 @@ OCASTAndOrTranslatorTest >> testAndWithLeftTrueEvaluatesRight [
 	{definition}.
 	true and: {argument}'
 		withBlock: '[ result := 17 ]'.
-	self assert: instance result equals: 17.
+	self assert: instance result equals: 17
 ]
 
 { #category : #'tests - and & or' }
@@ -67,7 +67,7 @@ OCASTAndOrTranslatorTest >> testOrWithLeftFalseEvaluatesRight [
 	{definition}.
 	false or: {argument}'
 		withBlock: '[ result := 17 ]'.
-	self assert: instance result equals: 17.
+	self assert: instance result equals: 17
 ]
 
 { #category : #'tests - and & or' }

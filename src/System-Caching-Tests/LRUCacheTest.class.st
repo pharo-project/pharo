@@ -26,8 +26,8 @@ LRUCacheTest >> test5kClasses [
 	data shuffled do: [ :each |
 		cache at: each name ifAbsentPut: [ each ] ].
 	self assert: cache size equals: 1024.
-	cache validateInvariantWith: self.	
-	data 
+	cache validateInvariantWith: self.
+	data
 		select: [ :each | cache includesKey: each name ]
 		thenDo: [ :each | cache at: each name ifAbsentPut: [ self fail ] ].
 	self assert: cache hits >= 1024.
@@ -78,11 +78,11 @@ LRUCacheTest >> testCustomWeight [
 		maximumWeight: 64.
 	cache at: 1 ifAbsentPut: [ ByteArray new: 1 ].
 	self assert: cache totalWeight equals: (ByteArray new: 1) sizeInMemory.
-	2 to: 10 do: [ :each | 
+	2 to: 10 do: [ :each |
 		cache at: each ifAbsentPut: [ ByteArray new: each ] ].
 	self assert: cache size equals: 3.
-	self 
-		assert: cache totalWeight 
+	self
+		assert: cache totalWeight
 		equals: ((8 to: 10) collect: [ :each | (ByteArray new: each) sizeInMemory ]) sum.
 	self assert: (cache at: 10 ifAbsentPut: [ self fail ]) equals: (ByteArray new: 10).
 	self deny: (cache includesKey: 1)
@@ -132,8 +132,8 @@ LRUCacheTest >> testEviction [
 	self assert: cache totalWeight equals: 16.
 	5 to: 20 do: [ :each |
 		self assert: (cache includesKey: each asWords).
-		self 
-			assert: (cache at: each asWords ifAbsentPut: [ self fail ]) 
+		self
+			assert: (cache at: each asWords ifAbsentPut: [ self fail ])
 			equals: each ].
 	cache validateInvariantWith: self
 ]
@@ -168,10 +168,10 @@ LRUCacheTest >> testFactoryStyle [
 LRUCacheTest >> testFibonacci [
 	"After an idea by Jan Vrany.
 	Recursively enter the cache and its access protection"
-	
+
 	| fibCache |
 	fibCache := self newCache.
-	fibCache 
+	fibCache
 		maximumWeight: 32;
 		beThreadSafe;
 		factory: [ :key |
@@ -194,7 +194,7 @@ LRUCacheTest >> testFixedAccess [
 	(#(14 15) collect: #asWords) do: [ :each |
 		cache at: each ifAbsentPut: [ each ] ].
 	self assert: cache size equals: 4.
-	cache validateInvariantWith: self.	
+	cache validateInvariantWith: self.
 	keys := data select: [ :each | cache includesKey: each ].
 	keys do: [ :each | cache at: each ifAbsentPut: [ self fail ] ].
 	self assert: cache hits >= 4.
@@ -299,7 +299,7 @@ LRUCacheTest >> testRandomAccess [
 	random do: [ :each |
 		cache at: each ifAbsentPut: [ each ] ].
 	self assert: cache size equals: 4.
-	cache validateInvariantWith: self.	
+	cache validateInvariantWith: self.
 	keys := data select: [ :each | cache includesKey: each ].
 	keys do: [ :each | cache at: each ifAbsentPut: [ self fail ] ].
 	self assert: cache hits >= 4.
@@ -361,8 +361,8 @@ LRUCacheTest >> testTen [
 	1 to: 10 do: [ :each |
 		self assert: (cache includesKey: each asWords) ].
 	1 to: 10 do: [ :each |
-		self 
-			assert: (cache at: each asWords ifAbsentPut: [ self fail ]) 
+		self
+			assert: (cache at: each asWords ifAbsentPut: [ self fail ])
 			equals: each ].
 	self assert: cache hitRatio equals: 1/2.
 	cache validateInvariantWith: self
@@ -377,8 +377,8 @@ LRUCacheTest >> testTenThreadSafe [
 		cache at: each asWords ifAbsentPut: [ each ] ].
 	self assert: cache size equals: 10.
 	1 to: 10 do: [ :each |
-		self 
-			assert: (cache at: each asWords ifAbsentPut: [ self fail ]) 
+		self
+			assert: (cache at: each asWords ifAbsentPut: [ self fail ])
 			equals: each ].
 	self assert: cache hitRatio equals: 1/2.
 	cache validateInvariantWith: self
@@ -412,7 +412,7 @@ LRUCacheTest >> testThreeHitSameOne [
 	self assert: (cache at: #x ifAbsentPut: [ self fail ]) equals: 100.
 	self assert: (cache at: #y ifAbsentPut: [ self fail ]) equals: 200.
 	self assert: (cache at: #z ifAbsentPut: [ self fail ]) equals: 300.
-	3 timesRepeat: [ 	
+	3 timesRepeat: [
 		self assert: (cache at: #x ifAbsentPut: [ self fail ]) equals: 100 ].
 	self assert: cache hits equals: 6.
 	cache validateInvariantWith: self

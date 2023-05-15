@@ -35,32 +35,32 @@ Class {
 }
 
 { #category : #'class initialization' }
-ZnCRLFReadStream class >> initialize [ 
+ZnCRLFReadStream class >> initialize [
 
 	Cr := Character cr asInteger.
-	Lf := Character lf asInteger.
+	Lf := Character lf asInteger
 ]
 
 { #category : #'instance creation' }
 ZnCRLFReadStream class >> on: aBinaryReadStream [
 
-	^self new on: aBinaryReadStream 
+	^self new on: aBinaryReadStream
 ]
 
 { #category : #accessing }
-ZnCRLFReadStream >> atEnd [ 
+ZnCRLFReadStream >> atEnd [
 
 	^stream atEnd
 ]
 
 { #category : #'open/close' }
-ZnCRLFReadStream >> close [ 
+ZnCRLFReadStream >> close [
 
 	stream close
 ]
 
 { #category : #accessing }
-ZnCRLFReadStream >> isBinary [ 
+ZnCRLFReadStream >> isBinary [
 
 	^true
 ]
@@ -100,21 +100,21 @@ ZnCRLFReadStream >> next: n into: aCollection [
 
 { #category : #accessing }
 ZnCRLFReadStream >> next: requestedCount into: aCollection startingAt: startIndex [
-	"Read requestedCount objects into the given collection. 
+	"Read requestedCount objects into the given collection.
 	Return aCollection or a partial copy if less elements have been read."
 
 	| readCount |
 	readCount := self readInto: aCollection startingAt: startIndex count: requestedCount.
 	^ readCount = requestedCount
-		ifTrue: [ ^ aCollection ]
-		ifFalse: [ ^ aCollection copyFrom: 1 to: startIndex + readCount - 1 ]
+		ifTrue: [ aCollection ]
+		ifFalse: [ aCollection copyFrom: 1 to: startIndex + readCount - 1 ]
 ]
 
 { #category : #accessing }
 ZnCRLFReadStream >> on: aBinaryReadStream [
 
 	self assert: aBinaryReadStream isBinary.
-	stream := aBinaryReadStream 
+	stream := aBinaryReadStream
 ]
 
 { #category : #accessing }
@@ -134,7 +134,7 @@ ZnCRLFReadStream >> peek [
 ZnCRLFReadStream >> readInto: collection startingAt: offset count: requestedCount [
 
 	0 to: requestedCount - 1 do: [ :count | | byte |
-		(byte := self next) ifNil: [ ^ count ].  
+		(byte := self next) ifNil: [ ^ count ].
 		collection at: offset + count put: byte ].
 	^ requestedCount
 ]
@@ -145,7 +145,7 @@ ZnCRLFReadStream >> readStream [
 ]
 
 { #category : #accessing }
-ZnCRLFReadStream >> upToEnd [ 
+ZnCRLFReadStream >> upToEnd [
 	"Answer a ByteArray of the stream from the current position to the last"
 
 	^ByteArray streamContents: [ :newStream | | nextByte |

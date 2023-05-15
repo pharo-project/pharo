@@ -17,7 +17,7 @@ EqStudent class >> instVarNamesForEqualityComparison [
 	^super instVarNamesForEqualityComparison copyWith: #level
 ]
 
-{ #category : #'initialize - release' }
+{ #category : #initialization }
 EqStudent >> initialize [
 	super initialize.
 	self level: 1

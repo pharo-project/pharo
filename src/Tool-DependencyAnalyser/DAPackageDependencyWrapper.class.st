@@ -33,7 +33,7 @@ DAPackageDependencyWrapper >> daPackage: anObject [
 { #category : #initialization }
 DAPackageDependencyWrapper >> initializeFrom: aPackage [
 	super initialize.
-	self daPackage: aPackage.
+	self daPackage: aPackage
 ]
 
 { #category : #accessing }

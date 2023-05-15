@@ -15,6 +15,6 @@ RbScriptingSetBeforeModel >> group [
 { #category : #initialization }
 RbScriptingSetBeforeModel >> initialize [
 	super initialize.
-	
+
 	self add: #(beForSmalltalkScripting beForSmalltalkCode) requiresPreSend: #model:
 ]

@@ -54,6 +54,6 @@ ZnServerTransactionTiming >> responseDuration: anObject [
 { #category : #accessing }
 ZnServerTransactionTiming >> totalDuration [
 	"requestDuration is unreliable because it contains idle wait time"
-	
-	^ handlerDuration + responseDuration 
+
+	^ handlerDuration + responseDuration
 ]

@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-InsetBorder class >> isDeprecated [ 
+InsetBorder class >> isDeprecated [
 	^ true
 ]

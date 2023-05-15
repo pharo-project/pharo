@@ -93,9 +93,9 @@ Click Here<3+4>
 		^ Array with: param with: (param ifEmpty: [nil] ifNotEmpty: [param])].
 	"Two parts"
 	trim := aString trimBoth.
-	(trim at: 1) == $< 
+	(trim at: 1) == $<
 		ifTrue: [(trim last) == $>
-			ifTrue: ["only instructions" 
+			ifTrue: ["only instructions"
 				param := self validate: (aString copyFrom: b1+1 to: b2-1).
 				show := param ifEmpty: [nil] ifNotEmpty: [param]]
 			ifFalse: ["at the front"
@@ -124,7 +124,7 @@ TextAction >> info [
 { #category : #initialization }
 TextAction >> initialize [
 	super initialize.
-	actOnClickBlock := ActOnClickBlock.
+	actOnClickBlock := ActOnClickBlock
 ]
 
 { #category : #testing }

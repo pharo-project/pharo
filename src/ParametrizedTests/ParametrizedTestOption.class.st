@@ -14,7 +14,7 @@ Class {
 { #category : #accessing }
 ParametrizedTestOption >> expand [
 	^ values
-		collect: [ :each | 
+		collect: [ :each |
 			ParametrizedTestExpandedParameter new
 				selector: selector;
 				valuable: each ]

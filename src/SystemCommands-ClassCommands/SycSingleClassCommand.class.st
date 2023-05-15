@@ -18,7 +18,7 @@ Class {
 { #category : #testing }
 SycSingleClassCommand class >> canBeExecutedInContext: aToolContext [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ 
+	^ (super canBeExecutedInContext: aToolContext) and: [
 		  aToolContext isClassSelected ]
 ]
 
@@ -30,8 +30,8 @@ SycSingleClassCommand class >> isAbstract [
 { #category : #execution }
 SycSingleClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	targetClass := aToolContext lastSelectedClass.
+
+	targetClass := aToolContext lastSelectedClass
 ]
 
 { #category : #accessing }

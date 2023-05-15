@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReGuardingClauseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'GuardingClauseRule'
 ]
 
@@ -23,14 +23,14 @@ ReGuardingClauseRule >> group [
 ReGuardingClauseRule >> initialize [
 
 	super initialize.
-	self addMatchingMethod: 
-				'`@MethodName: `@args 
-				| `@temps | 
-				`@.Statements. 
+	self addMatchingMethod:
+				'`@MethodName: `@args
+				| `@temps |
+				`@.Statements.
 				`@condition ifTrue: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]'.
-	self addMatchingMethod: 
-				'`@MethodName 
-				`@.Statements. 
+	self addMatchingMethod:
+				'`@MethodName
+				`@.Statements.
 				`@condition ifFalse: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]'
 ]
 

@@ -51,7 +51,7 @@ FTTreeItem >> childAt: anIndex [
 	tmpIndex := anIndex.
 	self children
 		do:
-			[ :item | 
+			[ :item |
 			| size |
 			size := item numberOfVisibleChildren + 1.
 			tmpIndex <= size
@@ -139,7 +139,7 @@ FTTreeItem >> selectedRowsIndexesFrom: anInteger [
 		ifFalse: [ ^ selfSelection ].
 	index := index + 1.
 	^ (self children
-		flatCollect: [ :child | 
+		flatCollect: [ :child |
 			| result |
 			result := child selectedRowsIndexesFrom: index.
 			index := index + 1 + child numberOfVisibleChildren.

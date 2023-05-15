@@ -27,8 +27,8 @@ Class {
 }
 
 { #category : #adding }
-StoredSettingsMerger >> addStoredSetting: aSettingNode [ 
-	self storedSettings withIndexDo: [ :eachStoredNode :index | 
+StoredSettingsMerger >> addStoredSetting: aSettingNode [
+	self storedSettings withIndexDo: [ :eachStoredNode :index |
 		eachStoredNode = aSettingNode ifTrue: [ ^ self storedSettings at: index put: aSettingNode ] ].
 	^ self storedSettings add: aSettingNode
 ]
@@ -43,7 +43,7 @@ StoredSettingsMerger >> addStoredSettings: aCollectionOfStoredSettings [
 { #category : #initialization }
 StoredSettingsMerger >> initialize [
 	super initialize.
-	storedSettings := OrderedCollection new.
+	storedSettings := OrderedCollection new
 ]
 
 { #category : #accessing }

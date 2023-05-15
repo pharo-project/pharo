@@ -4,22 +4,22 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBFindAndReplaceParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBFindAndReplaceRefactoring };
+		addCase: { #rbClass -> RBFindAndReplaceTransformation };
 		yourself
 ]
 
 { #category : #accessing }
-RBFindAndReplaceParametrizedTest >> constructor [ 
+RBFindAndReplaceParametrizedTest >> constructor [
 	^ #find:of:inWholeHierarchy:
 ]
 
 { #category : #running }
-RBFindAndReplaceParametrizedTest >> setUp [ 
+RBFindAndReplaceParametrizedTest >> setUp [
 	super setUp.
-	model := self extractMethodTestData.
+	model := self extractMethodTestData
 ]
 
 { #category : #'failure tests' }
@@ -34,24 +34,24 @@ RBFindAndReplaceParametrizedTest >> testBadSelector [
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesFailureInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
-	(model classNamed: #MyClassB) 
+	(model classNamed: #MyClassB)
 		compile: 'simpleMethod
 			^ nil'
 		classified: #(#accessing).
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #simpleMethod . class . true }.
-	self shouldFail: refactoring.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
@@ -62,7 +62,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 
 	| token |
 	token := (String new: 100) writeStream.
-	[ self simpleMethod ] whileTrue: [ 
+	[ self simpleMethod ] whileTrue: [
 		token nextPut: currentChar.
 		self methodWithArg: self simpleMethod.
 		self bar ].
@@ -87,7 +87,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
@@ -98,7 +98,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 
 	| token |
 	token := (String new: 100) writeStream.
-	[ self simpleMethod ] whileTrue: [ 
+	[ self simpleMethod ] whileTrue: [
 		token nextPut: currentChar.
 		self methodWithArg: self simpleMethod.
 		self bar ].
@@ -123,7 +123,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesWithArgInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	class 
+	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
@@ -131,6 +131,6 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesWithArgInHierarchy [
 		andArguments: { #methodWithArg:andArg: . class . true }.
 	self executeRefactoring: refactoring.
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeForSelector: #dummyMethod) equals: (self parseMethod: 
+	self assert: (class parseTreeForSelector: #dummyMethod) equals: (self parseMethod:
 	'dummyMethod self methodWithArg: 3 andArg: self someMethod')
 ]

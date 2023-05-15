@@ -26,7 +26,7 @@ OSTouchSwipeDetector class >> minDistToBorder [
 
 { #category : #accessing }
 OSTouchSwipeDetector class >> minDistToBorder: aFloat [
-	MinDistToBorder := aFloat .
+	MinDistToBorder := aFloat
 ]
 
 { #category : #settings }
@@ -47,7 +47,7 @@ OSTouchSwipeDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 	(aBuilder setting: #minDistanceBeforeDetection)
 		target: self;
 		label: 'Minimal fingers distance crossed (%)';
-		default: 0.05;		
+		default: 0.05;
 		description:
 				'The distance, in percentage of the screen, that both fingers needs to travel before event detection';
 		parent: #swipeGesture
@@ -66,9 +66,9 @@ OSTouchSwipeDetector >> areFingersCloseToABorder [
 	"0.5 represents half the screen in percentage"
 	| halfScreen fingersCenterTranslatedToScreenCenter |
 	halfScreen := 0.5.
-	
+
 	fingersCenterTranslatedToScreenCenter := (self centerOfAllFingers - halfScreen) abs.
-	
+
 	^ modeActivated or: [ fingersCenterTranslatedToScreenCenter x > (halfScreen - minDistToBorder)
 		or: [ fingersCenterTranslatedToScreenCenter y > (halfScreen - minDistToBorder)  ]]
 ]

@@ -56,7 +56,7 @@ RBPushDownMethodTransformation >> buildTransformations [
 
 { #category : #accessing }
 RBPushDownMethodTransformation >> classes: aCollection [
-	classes := aCollection collect: [ :cls | 
+	classes := aCollection collect: [ :cls |
 		self model classObjectFor: cls.
 	]
 ]
@@ -67,7 +67,7 @@ RBPushDownMethodTransformation >> preconditions [
 	| condition |
 	condition := selectors
 		             inject: self emptyCondition
-		             into: [ :cond :each | 
+		             into: [ :cond :each |
 			             cond & (RBCondition definesSelector: each in: class)
 			             &
 			             (RBCondition subclassesOf: class referToSelector: each)
@@ -86,12 +86,12 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
-	^ {refactoring}, (self allClasses select: [ :each | (each directlyDefinesMethod: aSelector) not ] 
+	^ {refactoring}, (self allClasses select: [ :each | (each directlyDefinesMethod: aSelector) not ]
 		thenCollect: [ :each |
 				RBAddMethodTransformation
 				model: self model
-				sourceCode: code 
-				in: each 
+				sourceCode: code
+				in: each
 				withProtocols: protocols ])
 ]
 
@@ -105,17 +105,17 @@ RBPushDownMethodTransformation >> pushDown: selectorCollection from: aClass [
 RBPushDownMethodTransformation >> pushDown: selectorCollection from: aClass in: aCollection [
 	class := self model classObjectFor: aClass.
 	selectors := selectorCollection.
-	self classes: aCollection.
+	self classes: aCollection
 ]
 
 { #category : #transforming }
 RBPushDownMethodTransformation >> pushDownSelectors [
-	^ selectors flatCollect: [:each | self pushDown: each].
+	^ selectors flatCollect: [:each | self pushDown: each]
 ]
 
 { #category : #transforming }
 RBPushDownMethodTransformation >> removeSelectors [
-	^ RBRemoveMethodTransformation 
+	^ RBRemoveMethodTransformation
 		model: self model
 		selectors: selectors
 		from: class

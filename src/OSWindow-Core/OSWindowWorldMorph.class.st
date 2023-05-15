@@ -48,7 +48,7 @@ OSWindowWorldMorph >> initialize [
 	self color: Color veryLightGray.
 	isResizeable := true.
 	self extent: 640@480.
-	self addHand: HandMorph new.
+	self addHand: HandMorph new
 ]
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ OSWindowWorldMorph >> open [
 	self worldState worldRenderer: ((OSWorldRenderer forWorld: self)
 		windowCloseAction: [self osWindowCloseButtonPressed]).
 	self changed.
-	self class addExtraWorld: self.
+	self class addExtraWorld: self
 ]
 
 { #category : #display }

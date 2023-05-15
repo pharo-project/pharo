@@ -43,7 +43,7 @@ HSVAColorSelectorMorph >> colorSelected: aColor [
 { #category : #accessing }
 HSVAColorSelectorMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver."
-	
+
 	^Color transparent
 ]
 

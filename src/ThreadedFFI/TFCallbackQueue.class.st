@@ -23,8 +23,8 @@ TFCallbackQueue class >> initialize [
 
 	SessionManager default
 		registerSystemClassNamed: self name
-		atPriority: 70.	
-		
+		atPriority: 70.
+
 	self startUp: true
 ]
 
@@ -44,8 +44,8 @@ TFCallbackQueue class >> startUp: inANewImageSession [
 ]
 
 { #category : #'instance creation' }
-TFCallbackQueue class >> uniqueInstance [ 
-	
+TFCallbackQueue class >> uniqueInstance [
+
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
@@ -56,11 +56,11 @@ TFCallbackQueue >> callbackProcess [
 
 { #category : #operations }
 TFCallbackQueue >> executeCallback: aCallbackInvocation [
-	
+
 	aCallbackInvocation ifNil: [ ^self ].
 	aCallbackInvocation getHandle isNull ifTrue: [ ^self ].
-	
-	aCallbackInvocation callback: ((self lookupCallback: aCallbackInvocation callbackData) 
+
+	aCallbackInvocation callback: ((self lookupCallback: aCallbackInvocation callbackData)
 		ifNil: [
 			Stdio stdout << 'INV: ' << aCallbackInvocation getHandle printString; lf.
 			self error: 'Callback not found.' ]).
@@ -69,7 +69,7 @@ TFCallbackQueue >> executeCallback: aCallbackInvocation [
 
 { #category : #initialization }
 TFCallbackQueue >> forkCallbackProcess [
-	
+
 	(callbackProcess notNil and: [ callbackProcess isTerminated not ])
 		ifTrue: [ ^ self ].
 
@@ -77,7 +77,7 @@ TFCallbackQueue >> forkCallbackProcess [
 		[ true ] whileTrue: [
 			semaphore wait.
 			[self executeCallback: self nextPendingCallback]
-				on: Exception fork:  [:ex | ex pass ] ] ] 
+				on: Exception fork:  [:ex | ex pass ] ] ]
 		forkAt: Processor highIOPriority
 		named: 'Callback queue'
 ]
@@ -85,7 +85,7 @@ TFCallbackQueue >> forkCallbackProcess [
 { #category : #initialization }
 TFCallbackQueue >> initialize [
 	super initialize.
-	
+
 	mutex := Mutex new.
 	semaphore := Semaphore new.
 	callbacksByAddress := WeakValueDictionary new.
@@ -95,11 +95,11 @@ TFCallbackQueue >> initialize [
 
 { #category : #initialization }
 TFCallbackQueue >> initializeQueue [
-	
+
 	| semaphoreIndex |
-	
+
 	[	semaphoreIndex := Smalltalk registerExternalObject: semaphore.
-		self primitiveInitializeQueueWith: semaphoreIndex ] 
+		self primitiveInitializeQueueWith: semaphoreIndex ]
 			onErrorDo: [ :e |
 				semaphoreIndex ifNotNil: [ Smalltalk unregisterExternalObject: semaphoreIndex ].
 				e pass]
@@ -107,17 +107,17 @@ TFCallbackQueue >> initializeQueue [
 
 { #category : #private }
 TFCallbackQueue >> lookupCallback: anExternalAddress [
-	"#registerCallback: and #lookupCallback: are protected by a mutex because I need to prevent 
-	 the execution of a collection grow while performing the lookup (this will move the elements 
+	"#registerCallback: and #lookupCallback: are protected by a mutex because I need to prevent
+	 the execution of a collection grow while performing the lookup (this will move the elements
 	 and may cause the lookup to fail).
-	 Still, I am keeping a second lookup to ensure if a movement was done, I have another oportunity 
+	 Still, I am keeping a second lookup to ensure if a movement was done, I have another oportunity
 	 to find the callback (just in case, I was not able to verify is actually needed)."
 
-	^ mutex critical: [ 
-		callbacksByAddress 
-			at: anExternalAddress 
-			ifAbsent: [ 
-				callbacksByAddress 
+	^ mutex critical: [
+		callbacksByAddress
+			at: anExternalAddress
+			ifAbsent: [
+				callbacksByAddress
 					at: anExternalAddress
 					ifAbsent: [ nil ] ] ]
 ]
@@ -125,10 +125,10 @@ TFCallbackQueue >> lookupCallback: anExternalAddress [
 { #category : #private }
 TFCallbackQueue >> nextPendingCallback [
 	| externalAddress |
-	
+
 	externalAddress := self primNextPendingCallback.
 	externalAddress ifNil: [ ^ nil ].
-	
+
 	^ TFCallbackInvocation fromHandle: externalAddress
 ]
 
@@ -140,22 +140,22 @@ TFCallbackQueue >> primNextPendingCallback [
 ]
 
 { #category : #primitives }
-TFCallbackQueue >> primitiveInitializeQueueWith: anInteger [ 
+TFCallbackQueue >> primitiveInitializeQueueWith: anInteger [
 
 	<primitive: 'primitiveInitilizeCallbacks'>
 
-	^ self primitiveFailed 
+	^ self primitiveFailed
 ]
 
 { #category : #operations }
 TFCallbackQueue >> registerCallback: aCallback [
-	"#registerCallback: and #lookupCallback: are protected by a mutex because I need to prevent 
-	 the execution of a collection grow while performing the lookup (this will move the elements 
+	"#registerCallback: and #lookupCallback: are protected by a mutex because I need to prevent
+	 the execution of a collection grow while performing the lookup (this will move the elements
 	 and may cause the lookup to fail)."
 
-	mutex critical: [ 
-		callbacksByAddress 
-			at: aCallback callbackData 
+	mutex critical: [
+		callbacksByAddress
+			at: aCallback callbackData
 			put: aCallback ]
 ]
 
@@ -171,14 +171,14 @@ TFCallbackQueue >> shutDown [
 TFCallbackQueue >> startUp [
 
 	[self initializeQueue.
-	self forkCallbackProcess] 
+	self forkCallbackProcess]
 		onErrorDo: [ self inform: 'The current VM does not support TFFI Callbacks. It will use the old implementation' ]
 ]
 
 { #category : #initialization }
 TFCallbackQueue >> terminateProcess [
-	
+
 	callbackProcess ifNil: [ ^ self ].
-	callbackProcess terminate. 
+	callbackProcess terminate.
 	callbackProcess := nil
 ]

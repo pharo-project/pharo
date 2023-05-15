@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-ProfilerCodePresenter >> initialize [ 
+ProfilerCodePresenter >> initialize [
 	super initialize.
 	self beNotEditable
 ]
@@ -16,7 +16,7 @@ ProfilerCodePresenter >> initialize [
 { #category : #initialization }
 ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 
-	methodOrBlock ifNil: [ 
+	methodOrBlock ifNil: [
 		self text: ''.
 		self clearInteractionModel.
 		^ self ].
@@ -24,7 +24,7 @@ ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 	self text: methodOrBlock sourceCode.
 	self beForMethod: methodOrBlock originMethod.
 	methodOrBlock isCompiledBlock
-		ifTrue: [ 
+		ifTrue: [
 			self addTextSegmentDecoration:
 				(SpTextPresenterDecorator forHighlight
 					 interval: (methodOrBlock sourceNode sourceInterval first to:

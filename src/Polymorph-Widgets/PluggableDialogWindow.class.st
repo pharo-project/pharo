@@ -94,7 +94,7 @@ PluggableDialogWindow >> newButtons [
 { #category : #actions }
 PluggableDialogWindow >> newContentMorph [
 	"Answer the plugged content."
-	
+
 	^self contentMorph
 ]
 
@@ -112,7 +112,7 @@ PluggableDialogWindow >> statusValue: val [
 PluggableDialogWindow >> useDefaultOKButton [
 	"Set the buttons to be just an OK button.
 	Only effective before the model is set."
-	
+
 	self buttons: {self newOKButton isDefault: true}
 ]
 
@@ -120,7 +120,7 @@ PluggableDialogWindow >> useDefaultOKButton [
 PluggableDialogWindow >> useDefaultOKCancelButton [
 	"Set the buttons to be a default OK button and a cancel button.
 	Only effective before the model is set."
-	
+
 	self buttons: super newButtons
 ]
 
@@ -128,6 +128,6 @@ PluggableDialogWindow >> useDefaultOKCancelButton [
 PluggableDialogWindow >> useOKDefaultCancelButton [
 	"Set the buttons to be an OK button and a default cancel button.
 	Only effective before the model is set."
-	
+
 	self buttons: {self newOKButton. self newCancelButton isDefault: true}
 ]

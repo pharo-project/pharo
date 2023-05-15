@@ -23,7 +23,7 @@ Class {
 RBAddMethodCommentTransformation class >> comment: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
-		comment: aString 
+		comment: aString
 		inMethod: aSelector
 		inClass: aClassName;
 		yourself
@@ -34,7 +34,7 @@ RBAddMethodCommentTransformation class >> model: aRBModel comment: aString inMet
 
 	^ self new
 		model: aRBModel;
-		comment: aString 
+		comment: aString
 		inMethod: aSelector
 		inClass: aClassName;
 		yourself
@@ -51,7 +51,7 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 { #category : #preconditions }
 RBAddMethodCommentTransformation >> preconditions [
 	"no preconditions needed"
-	
+
 	^ self emptyCondition
 ]
 

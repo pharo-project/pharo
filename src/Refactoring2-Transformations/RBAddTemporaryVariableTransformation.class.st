@@ -79,18 +79,18 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 	| methodTree parseTree |
 	methodTree := self definingMethod.
 	parseTree := methodTree body.
-	
-	interval ifNotNil: [ 
+
+	interval ifNotNil: [
 		| nodeInInterval |
 		nodeInInterval := methodTree bestNodeFor: interval.
 		nodeInInterval isSequence ifTrue: [ parseTree := nodeInInterval ] ].
-	
+
 	parseTree addTemporaryNamed: variableName.
 	class compileTree: methodTree
 ]
 
 { #category : #printing }
-RBAddTemporaryVariableTransformation >> storeOn: aStream [ 
+RBAddTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

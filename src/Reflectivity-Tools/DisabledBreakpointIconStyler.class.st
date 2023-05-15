@@ -14,7 +14,7 @@ DisabledBreakpointIconStyler >> highlightColor [
 
 { #category : #defaults }
 DisabledBreakpointIconStyler >> iconBlock: aNode [
-	 ^ [ :seg | 
+	 ^ [ :seg |
 	   aNode breakpoints do: [ :breakpoint | breakpoint enable ].
 	   seg delete ]
 ]

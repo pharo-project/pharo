@@ -32,7 +32,7 @@ OmBlock >> atLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentB
 	self checkIfMustRefreshBlock.
 
 	index := aString asInteger - self firstLocalNameAsInteger + 1.
-	
+
 	^ index > positions size
 		ifTrue: [ absentBlockClosure value ]
 		ifFalse: [presentBlockClosure value: (positions at: index) ]
@@ -40,7 +40,7 @@ OmBlock >> atLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentB
 
 { #category : #refreshing }
 OmBlock >> checkIfMustRefreshBlock [
-	
+
 	positions ifNil: [ self refresh ]
 ]
 
@@ -66,15 +66,15 @@ OmBlock >> initializeWithStore: anOmBlockFileStore startPosition: aStartPosition
 	store := anOmBlockFileStore.
 	startPosition := aStartPosition.
 	endPosition := anEndPosition.
-	firstEntryReference := anOmReference.
+	firstEntryReference := anOmReference
 ]
 
 { #category : #accessing }
 OmBlock >> lastLocalNameAsInteger [
 
 	self checkIfMustRefreshBlock.
-	
-	^ positions size + self firstLocalNameAsInteger - 1.
+
+	^ positions size + self firstLocalNameAsInteger - 1
 ]
 
 { #category : #accessing }
@@ -86,31 +86,31 @@ OmBlock >> positions [
 OmBlock >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPutAll: '(first entry: ';
 		print: self firstLocalNameAsInteger;
 		nextPutAll: ' positions: ';
 		print: startPosition;
 		nextPutAll: '..';
 		print: endPosition;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #refreshing }
 OmBlock >> refresh [
 	"Read all OmEntry instances that belong to my range of file positions"
-	
+
 	positions := store entryPositionsStartingAt: startPosition upTo: endPosition
 ]
 
 { #category : #accessing }
-OmBlock >> refreshIfNeededStartingAt: firstStreamPosition since: initialLocalName [ 
+OmBlock >> refreshIfNeededStartingAt: firstStreamPosition since: initialLocalName [
 
 	positions isEmptyOrNil ifTrue: [ ^self ]. "Initial #refresh not yet done, so let things untouched."
-	
+
 	"Then, it's only partially loaded i.e. outdated."
-	positions addAll: (store entryPositionsStartingAt: firstStreamPosition upTo: endPosition).
+	positions addAll: (store entryPositionsStartingAt: firstStreamPosition upTo: endPosition)
 ]
 
 { #category : #accessing }

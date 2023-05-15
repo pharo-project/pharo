@@ -16,22 +16,22 @@ DefaultExternalDropHandler class >> initialize [
 
 { #category : #'class initialization' }
 DefaultExternalDropHandler class >> unload [
-	
+
 	ExternalDropHandler defaultHandler: nil
 ]
 
 { #category : #private }
 DefaultExternalDropHandler >> chooseServiceFrom: aCollection [
-	"private - choose a service from aCollection asking the user if  
+	"private - choose a service from aCollection asking the user if
 	needed"
 	aCollection size = 1
 		ifTrue: [^ aCollection anyOne].
-	^ UIManager default chooseFrom: (aCollection collect: [:each | each label]) values: aCollection.
+	^ UIManager default chooseFrom: (aCollection collect: [:each | each label]) values: aCollection
 ]
 
 { #category : #private }
-DefaultExternalDropHandler >> servicesForFileNamed: aString [ 
-	"private - answer a collection of file-services for the file named  
+DefaultExternalDropHandler >> servicesForFileNamed: aString [
+	"private - answer a collection of file-services for the file named
 	aString"
 	| allServices |
 	allServices := FileServices itemsForFile: aString.

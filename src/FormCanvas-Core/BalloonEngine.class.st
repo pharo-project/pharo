@@ -50,6 +50,12 @@ BalloonEngine class >> debug: aBoolean [
 	Debug := aBoolean
 ]
 
+{ #category : #accessing }
+BalloonEngine class >> defaultBitmapWidth [
+
+	^ 2048
+]
+
 { #category : #profiling }
 BalloonEngine class >> doProfileStats: aBool [
 	"Note: On Macintosh systems turning on profiling can significantly
@@ -251,8 +257,8 @@ BalloonEngine >> bitBlt: aBitBlt [
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt
-		sourceForm: (Form extent: span size @ 1 depth: 32 bits: span);
-		sourceRect: (0@0 extent: 1@span size);
+		sourceForm: (Form extent: self span size @ 1 depth: 32 bits: self span);
+		sourceRect: (0@0 extent: 1@self span size);
 		colorMap: (Color colorMapIfNeededFrom: 32 to: bitBlt destForm depth);
 		combinationRule: (bitBlt destForm depth >= 8 ifTrue:[34] ifFalse:[Form paint])
 ]
@@ -424,18 +430,29 @@ BalloonEngine >> flush [
 
 { #category : #initialization }
 BalloonEngine >> initialize [
-	| w |
+
 	super initialize.
-	w := Display width > 2048 ifTrue: [ 4096 ] ifFalse: [ 2048 ].
+
+	self initializeSpan.
 	externals := OrderedCollection new: 100.
-	span := Bitmap new: w.
-	self
-		bitBlt:
-			((BitBlt toForm: Display)
-				destRect: Display boundingBox;
-				yourself).
+
+	self bitBlt: ((BitBlt toForm: Display)
+			destRect: Display boundingBox;
+			yourself).
+
 	forms := #().
 	deferred := false
+]
+
+{ #category : #initialization }
+BalloonEngine >> initializeSpan [
+	| width |
+
+	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a default width"
+	width := Display width.
+	width <= 0 ifTrue:[ width := self class defaultBitmapWidth ].
+
+	span := Bitmap new: width
 ]
 
 { #category : #initialize }
@@ -750,4 +767,10 @@ BalloonEngine >> resetIfNeeded [
 	self primSetColorTransform: colorTransform.
 	self primSetDepth: self primGetDepth + 1.
 	postFlushNeeded := false
+]
+
+{ #category : #accessing }
+BalloonEngine >> span [
+
+	^ span
 ]

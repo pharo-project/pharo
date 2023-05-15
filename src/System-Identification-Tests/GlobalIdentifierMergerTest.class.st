@@ -27,7 +27,7 @@ GlobalIdentifierMergerTest >> testMerge [
 	stored at: #a put: 42.
 	self assert: merger merge.
 	self assert: existing equals: stored.
-	self assert: (existing at: #a) equals: 42.
+	self assert: (existing at: #a) equals: 42
 ]
 
 { #category : #tests }

@@ -10,7 +10,7 @@ Class {
 { #category : #'tests - conversion' }
 LayoutFrameTest >> testAsLayoutFrame [
 	| frame |
-	
+
 	"do not use this method. Do not create an explicit array to create a layout
 	only use it, if you are given an array from somewhere else"
 	frame := #(0.66 0.5 1 0.77 1 2 3 25) asLayoutFrame.
@@ -18,11 +18,11 @@ LayoutFrameTest >> testAsLayoutFrame [
 	self assert: frame topFraction equals: 0.5.
 	self assert: frame leftOffset equals: 1.
 	self assert: frame topOffset equals: 2.
-	
+
 	self assert: frame rightFraction equals: 1.
 	self assert: frame bottomFraction equals: 0.77.
 	self assert: frame rightOffset equals: 3.
-	self assert: frame bottomOffset equals: 25.
+	self assert: frame bottomOffset equals: 25
 ]
 
 { #category : #'tests - conversion' }

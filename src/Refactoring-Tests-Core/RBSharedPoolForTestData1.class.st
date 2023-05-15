@@ -6,6 +6,6 @@ Class {
 
 { #category : #'tests perform' }
 RBSharedPoolForTestData1 >> msg4 [
-	
+
 	^ Var1
 ]

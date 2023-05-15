@@ -18,7 +18,7 @@ RBVariableRefactoring class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass [ 
+RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		variable: aVarName class: aClass;
@@ -32,7 +32,7 @@ RBVariableRefactoring class >> variable: aVarName class: aClass [
 ]
 
 { #category : #printing }
-RBVariableRefactoring >> storeOn: aStream [ 
+RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' variable: '.
@@ -43,7 +43,7 @@ RBVariableRefactoring >> storeOn: aStream [
 ]
 
 { #category : #initialization }
-RBVariableRefactoring >> variable: aVarName class: aClass [ 
+RBVariableRefactoring >> variable: aVarName class: aClass [
 	class := self classObjectFor: aClass.
 	variableName := aVarName
 ]

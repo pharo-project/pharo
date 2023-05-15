@@ -83,7 +83,7 @@ RFC2047MimeConverter >> readWord [
 	| strm |
 	strm := (String new: 20) writeStream.
 	dataStream skipSeparators.
-	[dataStream atEnd] whileFalse: 
+	[dataStream atEnd] whileFalse:
 		[ | c |
 		c := dataStream next.
 		strm nextPut: c.

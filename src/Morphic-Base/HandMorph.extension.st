@@ -18,15 +18,15 @@ HandMorph >> waitForClicksOrDrag: aMorph event: evt selectors: clickAndDragSelec
 		4	(startDrag) sent when the mouse moves more than threshold pixels from evt's position within DoubleClickTime.
 	Note that mouseMove: and mouseUp: events are not sent to aMorph until it becomes the mouse focus,
 	which is typically done by aMorph in its click:, doubleClick:, or drag: methods."
-	
-	mouseClickState := 
+
+	mouseClickState :=
 		MouseClickState new
-			client: aMorph 
-			click: clickAndDragSelectors first 
-			dblClick: clickAndDragSelectors second 
-			dblClickTime: DoubleClickTime 
+			client: aMorph
+			click: clickAndDragSelectors first
+			dblClick: clickAndDragSelectors second
+			dblClickTime: DoubleClickTime
 			dblClickTimeout: clickAndDragSelectors third
-			drag: clickAndDragSelectors fourth 
-			threshold: threshold 
-			event: evt.
+			drag: clickAndDragSelectors fourth
+			threshold: threshold
+			event: evt
 ]

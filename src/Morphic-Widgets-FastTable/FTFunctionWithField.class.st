@@ -29,6 +29,6 @@ Class {
 }
 
 { #category : #testing }
-FTFunctionWithField class >> isDeprecated [ 
+FTFunctionWithField class >> isDeprecated [
 	^ true
 ]

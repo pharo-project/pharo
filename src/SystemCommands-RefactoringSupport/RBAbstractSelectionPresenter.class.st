@@ -27,7 +27,7 @@ RBAbstractSelectionPresenter class >> defaultLayout [
 
 { #category : #specs }
 RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withItems: items selecting: selectedItems dropItems: dropItems acceptBlock: aBlock [
-	^ self new 
+	^ self new
 		label: aString
 		dropLabel: aString2
 		withItems: items
@@ -43,7 +43,7 @@ RBAbstractSelectionPresenter >> accept [
 ]
 
 { #category : #accessing }
-RBAbstractSelectionPresenter >> components [ 
+RBAbstractSelectionPresenter >> components [
 	^ super components , { dropList . dropLabel }
 ]
 
@@ -60,7 +60,7 @@ RBAbstractSelectionPresenter >> initializeDropList [
 RBAbstractSelectionPresenter >> initializeWidgets [
 	super initializeWidgets .
 	dropLabel := self newLabel.
-	self initializeDropList.
+	self initializeDropList
 ]
 
 { #category : #initialization }
@@ -68,7 +68,7 @@ RBAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: 
 	self label: aString withItems: items selecting: selItems.
 	dropLabel label: dropString.
 	dropList items: dropItems.
-	acceptBlock := aBlock.
+	acceptBlock := aBlock
 ]
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Extension { #name : #UndefinedObject }
 
 { #category : #'*STON-Core' }
-UndefinedObject >> stonContainSubObjects [ 
+UndefinedObject >> stonContainSubObjects [
 	^ false
 ]
 

@@ -89,10 +89,10 @@ PragmaCollector >> addPragma: aPragma [
 
 { #category : #'system changes' }
 PragmaCollector >> addedEventOccurs: anEvent [
-	"method adding event occured: if the 
-	concerned method contains a pragma then 
+	"method adding event occured: if the
+	concerned method contains a pragma then
 	try to update myself with it"
-	
+
 	anEvent method pragmas
 		do: [ :pragma | self addPragma: pragma ]
 ]
@@ -164,9 +164,9 @@ PragmaCollector >> initialize [
 { #category : #'system changes' }
 PragmaCollector >> installSystemNotifications [
 	"Allows myself to be kept up-to-date regarding system changes"
-	
+
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	
+
 	SystemAnnouncer uniqueInstance weak
 			when: ClassRemoved send: #classRemovedEventOccurs: to: self;
 			when: MethodRemoved send: #removedEventOccurs: to: self;
@@ -195,17 +195,17 @@ PragmaCollector >> modifiedEventOccurs: anEvent [
 	"
 	a method has been updated: try to update an handler:
 	1 - I already have one for the method, then
-	do nothing, 
+	do nothing,
 	2 - I do not have one but method has an acceptable
 	pragma in it, then I try to add a new handler
 	3 - I have one but changed method has no more
 	acceptable pragma in it, then the handler is removed.
 	"
 
-	anEvent methodClass pragmasDo: [ :pragma | 
+	anEvent methodClass pragmasDo: [ :pragma |
 			pragma methodSelector = anEvent selector
 				ifTrue: [ (self
-						detect: [ :oldprag | 
+						detect: [ :oldprag |
 							oldprag methodSelector = pragma methodSelector
 								and: [ oldprag methodClass = anEvent methodClass ] ])
 						ifNotNil: [ :oldprag | ^ self updatePragma: oldprag ].
@@ -221,7 +221,7 @@ PragmaCollector >> modifiedEventOccurs: anEvent [
 PragmaCollector >> noMoreAnnounceWhile: aBlock [
 	"unplug the announcer during aBlock"
 	| oldAnnouncing |
-	[oldAnnouncing := announcing. 
+	[oldAnnouncing := announcing.
 	announcing := false.
 	aBlock value]
 		ensure: [announcing := oldAnnouncing]
@@ -230,7 +230,7 @@ PragmaCollector >> noMoreAnnounceWhile: aBlock [
 { #category : #'system changes' }
 PragmaCollector >> noMoreNotifications [
 	"Do not receiver any system change notification anymore"
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #'system changes' }
@@ -255,13 +255,13 @@ PragmaCollector >> pragmaWithSelector: aSelector inClass: aClass [
 
 { #category : #accessing }
 PragmaCollector >> pragmas [
-	^ selectors 
+	^ selectors
 		ifNil: [ Pragma all ]
 		ifNotNil: [ selectors flatCollect: [:each | Pragma allNamed: each ] ]
 ]
 
 { #category : #querying }
-PragmaCollector >> pragmasOfClass: aClass [ 
+PragmaCollector >> pragmasOfClass: aClass [
 	"return all handlers of class aClass"
 	^ self	select: [:prag | prag methodClass = aClass ]
 ]
@@ -280,7 +280,7 @@ PragmaCollector >> release [
 ]
 
 { #category : #updating }
-PragmaCollector >> removePragma: aPragma [ 
+PragmaCollector >> removePragma: aPragma [
 	"remove an handler an announce it"
 	self collected remove: aPragma ifAbsent: [].
 	self announce: (PragmaRemoved pragma: aPragma)
@@ -291,7 +291,7 @@ PragmaCollector >> removedEventOccurs: anEvent [
 	"a method has been removed, remove any corresponding handler if found"
 
 	(self
-		detect: [ :prag | 
+		detect: [ :prag |
 			prag methodSelector = anEvent selector
 				and: [ prag methodClass = anEvent methodClass ] ])
 		ifNotNil: [ :found | self removePragma: found ]
@@ -345,7 +345,7 @@ PragmaCollector >> when: anAnnouncement send: aSelector to: anObject [
 { #category : #subscription }
 PragmaCollector >> whenChangedSend: aSelector to: anObject [
 	"record a change listener"
-	
+
 	self when: PragmaAnnouncement send: aSelector to: anObject
 ]
 

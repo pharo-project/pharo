@@ -18,9 +18,9 @@ ReflectivitySourceCodeAgroupation >> initialize [
 	super initialize.
 	self
  		layoutPolicy: TableLayout new;
-		hResizing: #spaceFill; 
+		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		cellInset: 10.
+		cellInset: 10
 ]
 
 { #category : #'instance creation' }

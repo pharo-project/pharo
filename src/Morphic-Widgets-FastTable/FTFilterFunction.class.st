@@ -37,7 +37,7 @@ FTFilterFunction >> filter [
 	table dataSource: (pattern ifEmpty: [ initialDataSource ] ifNotEmpty: [ initialDataSource newDataSourceMatching: (filterClass pattern: pattern) ]).
 	table refresh.
 	table deselectAll.
-		
+
 	self isExplicit
 		ifTrue: [ self resizeWidget ]
 ]
@@ -80,7 +80,7 @@ FTFilterFunction >> initializeFilter [
 { #category : #'event handling' }
 FTFilterFunction >> keyDown: anEvent [
 	self isExplicit ifTrue: [ ^false ].
-	
+
 	"If the user escape after a search, he want the full data source again so we reinitialize the table."
 	(anEvent keyCharacter = Character escape and: [ initialDataSource isNotNil ])
 		ifTrue: [ ^ self reinitializeTable ].
@@ -90,7 +90,7 @@ FTFilterFunction >> keyDown: anEvent [
 { #category : #'event handling' }
 FTFilterFunction >> keyStroke: anEvent [
 	self isExplicit ifTrue: [ ^false ].
-	
+
 	self showFilterFieldFromKeystrokeEvent: anEvent.
 	^ true
 ]
@@ -123,7 +123,7 @@ FTFilterFunction >> showFilterFieldFromKeystrokeEvent: anEvent [
 	self filterWith: text.
 	ed := RubFloatingEditorBuilder new
 		customizeEditorWith: [ :editor | editor bounds: (self table bottomLeft + (0 @ 2) corner: self table bottomRight + (0 @ (editor font height + 6))) ];
-		withEditedContentsDo: [ :contents :editor | 
+		withEditedContentsDo: [ :contents :editor |
 			self filterWith: contents.
 			editor setTextWith: (self colorText: contents) ].
 	ed autoAccept: true.

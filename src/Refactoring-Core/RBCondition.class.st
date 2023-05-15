@@ -27,14 +27,14 @@ Class {
 RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTransformation [
 
 	^ RBCondition withBlock: [ | block |
-		block := 	[ :each | 
+		block := 	[ :each |
 			(each whichSelectorsReferToClassVariable: variableName)
 				ifNotEmpty: [ aClass realClass
 					ifNil: [ RBRefactoring new
 						refactoringError: ('<1s> is referenced.' expandMacrosWith: variableName) ]
 					ifNotNil: [ RBRefactoring new
 						refactoringError: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName)
-						with: [ aTransformation openBrowserOn: (RBVariableEnvironment 
+						with: [ aTransformation openBrowserOn: (RBVariableEnvironment
 									referencesToClassVariable: variableName
 									in: aClass realClass) ] ] ] ].
 			aClass withAllSubclasses do: block.
@@ -47,11 +47,11 @@ RBCondition class >> accessesInstanceVariable: variableName in: aClass showIn: a
 
 	| references |
 	references := RBCondition referencesInstanceVariable: variableName in: aClass.
-	aClass realClass 
+	aClass realClass
 		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
 		ifNotNil: [ references
 			errorMacro: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName);
-			errorBlock: [ aTransformation openBrowserOn: 
+			errorBlock: [ aTransformation openBrowserOn:
 				(RBBrowserEnvironment new instVarRefsTo: variableName in: aClass realClass)]].
 	^ references not
 ]
@@ -65,7 +65,7 @@ RBCondition class >> canUnderstand: aSelector in: aClass [
 ]
 
 { #category : #utilities }
-RBCondition class >> checkClassVarName: aName in: aClass [ 
+RBCondition class >> checkClassVarName: aName in: aClass [
 	| string |
 	aName isString ifFalse: [^false].
 	string := aName asString.
@@ -76,7 +76,7 @@ RBCondition class >> checkClassVarName: aName in: aClass [
 ]
 
 { #category : #utilities }
-RBCondition class >> checkInstanceVariableName: aName in: aClass [ 
+RBCondition class >> checkInstanceVariableName: aName in: aClass [
 	| string |
 	aName isString ifFalse: [^false].
 	string := aName asString.
@@ -89,36 +89,36 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 { #category : #utilities }
 RBCondition class >> checkMethodName: aString [
 	"Return whether the argument aName is can represent a selector"
-	
+
 	^ aString isString and: [ aString isValidSelector ]
 ]
 
 { #category : #utilities }
-RBCondition class >> checkMethodName: aString in: aClass [ 
+RBCondition class >> checkMethodName: aString in: aClass [
 	"Return whether the argument aName is can represent a selector"
 	"You probably look for checkMethodName: since the second argument is ignored"
-	
+
 	^aString isString and: [ aString isValidSelector ]
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> definesClassVariable: aString in: aClass [ 
-	^self new 
+RBCondition class >> definesClassVariable: aString in: aClass [
+	^self new
 		block: [aClass definesClassVariable: aString]
-		errorString: aClass printString 
+		errorString: aClass printString
 				, ' <1?:does not >define<1?s:> class variable ' , aString
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> definesInstanceVariable: aString in: aClass [ 
-	^self new 
+RBCondition class >> definesInstanceVariable: aString in: aClass [
+	^self new
 		block: [aClass definesInstanceVariable: aString]
-		errorString: aClass printString 
+		errorString: aClass printString
 				, ' <1?:does not >define<1?s:> instance variable ' , aString
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> definesSelector: aSelector in: aClass [ 
+RBCondition class >> definesSelector: aSelector in: aClass [
 	^self new
 		block: [aClass directlyDefinesMethod: aSelector]
 		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString
@@ -135,58 +135,58 @@ RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMeth
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [ 
+RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
 	| condition |
 	condition := self new.
-	condition 
-		block: 
+	condition
+		block:
 			[| method |
-			method := self 
+			method := self
 						methodDefiningTemporary: aString
 						in: aClass
 						ignore: [:class :aSelector | class includesClass: subclass].
-			method notNil 
-				ifTrue: 
+			method notNil
+				ifTrue:
 					[condition errorMacro: method printString , ' defines variable ' , aString].
 			method notNil]
-		errorString: aClass printString 
+		errorString: aClass printString
 				, ' <1?:does not >define<1?s:> temporary variable ' , aString.
 	^condition
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> definesTemporaryVariable: aString in: aClass [ 
+RBCondition class >> definesTemporaryVariable: aString in: aClass [
 	| condition |
 	condition := self new.
-	condition 
-		block: 
+	condition
+		block:
 			[| method |
-			method := self 
+			method := self
 						methodDefiningTemporary: aString
 						in: aClass
 						ignore: [:class :selector | false].
-			method notNil 
-				ifTrue: 
+			method notNil
+				ifTrue:
 					[condition errorMacro: method printString , ' defines variable ' , aString].
 			method notNil]
-		errorString: aClass printString 
+		errorString: aClass printString
 				, ' <1?:does not >define<1?s:> temporary variable ' , aString.
 	^condition
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> directlyDefinesClassVariable: aString in: aClass [ 
-	^self new 
+RBCondition class >> directlyDefinesClassVariable: aString in: aClass [
+	^self new
 		block: [aClass directlyDefinesClassVariable: aString]
-		errorString: aClass printString 
+		errorString: aClass printString
 				, ' <1?:does not >directly define<1?s:> class variable ' , aString
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [ 
-	^self new 
+RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
+	^self new
 		block: [aClass directlyDefinesInstanceVariable: aString]
-		errorString: aClass printString 
+		errorString: aClass printString
 				, ' <1?:does not >directly define<1?s:> instance variable ' , aString
 ]
 
@@ -195,11 +195,11 @@ RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: 
 
 	| references |
 	references := RBCondition hierarchyOf: aClass referencesInstanceVariable: variableName.
-	aClass realClass 
+	aClass realClass
 		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
 		ifNotNil: [ references
 			errorMacro: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName);
-			errorBlock: [ aTransformation openBrowserOn: 
+			errorBlock: [ aTransformation openBrowserOn:
 				(RBBrowserEnvironment new instVarRefsTo: variableName in: aClass realClass)]].
 	^ references not
 ]
@@ -208,7 +208,7 @@ RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: 
 RBCondition class >> empty [
 	"Returns an empty condition"
 
-	^self new 
+	^self new
 		block: [true]
 		errorString: 'Empty'
 ]
@@ -221,15 +221,15 @@ RBCondition class >> hasSubclasses: aClass [
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> hasSubclasses: aClass excluding: classList [ 
+RBCondition class >> hasSubclasses: aClass excluding: classList [
 	^self new
 		block: [ ((aClass subclasses collect: [:each | each name]) copyWithoutAll: classList) isNotEmpty ]
 		errorString: aClass printString , ' has <1?:no >subclasses'
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> hasSuperclass: aClass [ 
-	^self new 
+RBCondition class >> hasSuperclass: aClass [
+	^self new
 		block: [aClass superclass isNil not]
 		errorString: aClass printString , ' has <1?a:no> superclass'
 ]
@@ -242,11 +242,11 @@ RBCondition class >> hierarchyOf: aClass canUnderstand: aSelector [
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> hierarchyOf: aClass definesVariable: aString [ 
-	^self new 
+RBCondition class >> hierarchyOf: aClass definesVariable: aString [
+	^self new
 		block: [aClass hierarchyDefinesVariable: aString]
-		errorString: aClass printString 
-				, ' or one of its subclasses <1?:does not >define<1?s:> variable ' 
+		errorString: aClass printString
+				, ' or one of its subclasses <1?:does not >define<1?s:> variable '
 					, aString
 ]
 
@@ -254,9 +254,9 @@ RBCondition class >> hierarchyOf: aClass definesVariable: aString [
 RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 
 	^ self new
-		  block: [ 
+		  block: [
 			  (aClass withAllSubclasses
-				   detect: [ :each | 
+				   detect: [ :each |
 					   (each whichSelectorsReferToInstanceVariable: aString)
 						   isNotEmpty ]
 				   ifNone: [ nil ]) notNil ]
@@ -284,9 +284,9 @@ RBCondition class >> isClass: anObject [
 RBCondition class >> isEmptyClass: anObject [
 
 	^ self new
-		  block: [ 
-			  anObject classVariableNames isEmpty and: [ 
-				  anObject instanceVariableNames isEmpty and: [ 
+		  block: [
+			  anObject classVariableNames isEmpty and: [
+				  anObject instanceVariableNames isEmpty and: [
 					  anObject selectors isEmpty ] ] ]
 		  errorString: anObject printString , ' is <1?:not > empty'
 ]
@@ -369,17 +369,17 @@ RBCondition class >> isValidMethodName: aString for: aClass [
 ]
 
 { #category : #utilities }
-RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [ 
+RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [
 	| searcher method |
 	searcher := RBParseTreeSearcher new.
 	method := nil.	"Shut-up the warning"
 	searcher matches: aString do: [:aNode :answer | ^method].
-	aClass withAllSubclasses do: 
-			[:class | 
-			class selectors do: 
-					[:each | 
-					(aBlock value: class value: each) 
-						ifFalse: 
+	aClass withAllSubclasses do:
+			[:class |
+			class selectors do:
+					[:each |
+					(aBlock value: class value: each)
+						ifFalse:
 							[| parseTree |
 							method := class methodFor: each.
 							parseTree := class parseTreeForSelector: each.
@@ -391,7 +391,7 @@ RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock 
 RBCondition class >> referencesInstanceVariable: aString in: aClass [
 
 	^ self new
-		  block: [ 
+		  block: [
 		  (aClass whichSelectorsReferToInstanceVariable: aString) isNotEmpty ]
 		  errorString: aClass printString
 			  , ' <1?:does not >reference<1?s:> instance variable ' , aString
@@ -406,11 +406,11 @@ RBCondition class >> reservedNames [
 RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 
 	^ self new
-		  block: [ 
+		  block: [
 			  (aClass subclasses
-				   detect: [ :each | 
+				   detect: [ :each |
 					   (each selectors
-						    detect: [ :sel | 
+						    detect: [ :sel |
 							    | tree |
 							    tree := each parseTreeForSelector: sel.
 							    tree notNil and: [ tree superMessages includes: aSelector ] ]
@@ -422,7 +422,7 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 ]
 
 { #category : #utilities }
-RBCondition class >> validClassName: aString [ 
+RBCondition class >> validClassName: aString [
 	"Class names and class variable names have the same restrictions"
 
 	^self checkClassVarName: aString in: self
@@ -440,7 +440,7 @@ RBCondition class >> withBlock: aBlock errorString: aString [
 ]
 
 { #category : #initialization }
-RBCondition >> block: aBlock errorString: aString [ 
+RBCondition >> block: aBlock errorString: aString [
 
 	block := aBlock.
 	self errorMacro: aString
@@ -462,6 +462,6 @@ RBCondition >> errorBlockFor: aBoolean [
 ]
 
 { #category : #initialization }
-RBCondition >> withBlock: aBlock [ 
+RBCondition >> withBlock: aBlock [
 	block := aBlock
 ]

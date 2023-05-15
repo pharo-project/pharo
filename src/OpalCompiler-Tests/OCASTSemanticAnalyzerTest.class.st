@@ -10,5 +10,5 @@ OCASTSemanticAnalyzerTest >> testWhileWithArg [
 	executing this code would lead to a runtime error, which is what we expect"
 	| ast |
 	ast := RBParser parseExpression: '[:test | ] whileTrue'.
-	self deny: ast sendNodes first isInlineWhile.
+	self deny: ast sendNodes first isInlineWhile
 ]

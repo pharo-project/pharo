@@ -43,19 +43,19 @@ DANode >> browser: anObject [
 { #category : #private }
 DANode >> buildChildren [
 	self flag: 'to remove'.
-	
-	^ self children value collect: [ :each || node | 
-		node := (each isKindOf: DANode) 
+
+	^ self children value collect: [ :each || node |
+		node := (each isKindOf: DANode)
 			ifTrue: [ each ]
 			ifFalse: [  (self childNodeClassFor: each) new
 				content: each  ].
-		node 
+		node
 			parentNode: self;
-			yourself ].
+			yourself ]
 ]
 
 { #category : #accessing }
-DANode >> children [ 
+DANode >> children [
 	^ #()
 ]
 
@@ -65,8 +65,8 @@ DANode >> content [
 ]
 
 { #category : #accessing }
-DANode >> content: aDAPackage [ 
-	content := aDAPackage 
+DANode >> content: aDAPackage [
+	content := aDAPackage
 ]
 
 { #category : #accessing }
@@ -115,7 +115,7 @@ DANode >> parentNode [
 ]
 
 { #category : #accessing }
-DANode >> parentNode: aDANode [ 
+DANode >> parentNode: aDANode [
 	parent := aDANode
 ]
 
@@ -125,16 +125,16 @@ DANode >> rootNode [
 	currentNode := self.
 	rootNode := currentNode parentNode.
 	[ rootNode isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			currentNode := rootNode.
 			rootNode := currentNode parentNode ].
-	^ currentNode.
+	^ currentNode
 ]
 
 { #category : #'browse-nautilus' }
 DANode >> selectClass: aClass [
 	| aBrowser |
-	
+
 	aBrowser := self rootNode browser.
 	aBrowser selectClass: aClass
 ]

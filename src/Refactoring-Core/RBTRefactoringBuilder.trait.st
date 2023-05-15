@@ -4,12 +4,12 @@ Trait {
 }
 
 { #category : #'defining conditions' }
-RBTRefactoringBuilder >> checkInstanceVariableName: aName in: aClass [ 
+RBTRefactoringBuilder >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
 ]
 
 { #category : #'defining conditions' }
-RBTRefactoringBuilder >> checkMethodName: aName in: aClass [ 
+RBTRefactoringBuilder >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
@@ -46,8 +46,8 @@ RBTRefactoringBuilder >> parserClass [
 { #category : #exceptions }
 RBTRefactoringBuilder >> refactoringConfirmWarning: aString [
 	| ret |
-	ret := self uiManager 
-		confirm: aString 
+	ret := self uiManager
+		confirm: aString
 		orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
 	^ ret
 ]

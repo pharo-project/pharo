@@ -9,6 +9,6 @@ Class {
 }
 
 { #category : #testing }
-Pharo3TabPanelBorder class >> isDeprecated [ 
+Pharo3TabPanelBorder class >> isDeprecated [
 	^ true
 ]

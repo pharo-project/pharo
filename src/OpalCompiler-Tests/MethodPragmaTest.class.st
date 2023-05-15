@@ -17,10 +17,10 @@ MethodPragmaTest >> assertPragma: aString givesKeyword: aSymbol arguments: anArr
 
 { #category : #utilities }
 MethodPragmaTest >> compile: aString selector: aSelector [
-	self class 
+	self class
 		compileSilently: aSelector , String lf , aString
 		classified: self methodCategory.
-	^ self class >> aSelector.
+	^ self class >> aSelector
 ]
 
 { #category : #utilities }
@@ -31,19 +31,19 @@ MethodPragmaTest >> methodCategory [
 { #category : #utilities }
 MethodPragmaTest >> pragma: aString selector: aSelector [
 	^ (self compile: '<' , aString , '>' selector: aSelector)
-		pragmas first.
+		pragmas first
 ]
 
 { #category : #utilities }
 MethodPragmaTest >> pragma: aSymbol selector: aSelector times: anInteger [
-	^ (self 
-		compile: (String streamContents: [ :stream | 
-			(1 to: anInteger) asArray shuffled do: [ :each | 
-				stream 
+	^ (self
+		compile: (String streamContents: [ :stream |
+			(1 to: anInteger) asArray shuffled do: [ :each |
+				stream
 					nextPut: $<; nextPutAll: aSymbol; space;
 					print: each; nextPut: $>; cr ] ])
 		selector: aSelector)
-			pragmas.
+			pragmas
 ]
 
 { #category : #running }
@@ -137,7 +137,7 @@ MethodPragmaTest >> testCompileArray [
 	self assertPragma: 'foo: #( foo )' givesKeyword: #foo: arguments: #( ( foo ) ).
 	self assertPragma: 'foo: #( foo: )' givesKeyword: #foo: arguments: #( ( foo: ) ).
 	self assertPragma: 'foo: #( 12 )' givesKeyword: #foo: arguments: #( ( 12 ) ).
-	self assertPragma: 'foo: #( true )' givesKeyword: #foo: arguments: #( ( true ) ).
+	self assertPragma: 'foo: #( true )' givesKeyword: #foo: arguments: #( ( true ) )
 ]
 
 { #category : #'tests - compiler' }
@@ -156,18 +156,18 @@ MethodPragmaTest >> testCompileBinary [
 { #category : #'tests - compiler' }
 MethodPragmaTest >> testCompileCharacter [
 	self assertPragma: 'foo: $a' givesKeyword: #foo: arguments: #( $a ).
-	self assertPragma: 'foo: $ ' givesKeyword: #foo: arguments: #( $  ).
+	self assertPragma: 'foo: $ ' givesKeyword: #foo: arguments: #( $  )
 ]
 
 { #category : #'tests - compiler' }
 MethodPragmaTest >> testCompileEmpty [
-	self assertPragma: 'foo' givesKeyword: #foo arguments: #().
+	self assertPragma: 'foo' givesKeyword: #foo arguments: #()
 ]
 
 { #category : #'tests - compiler' }
 MethodPragmaTest >> testCompileFull [
 	self assertPragma: 'foo: 1' givesKeyword: #foo: arguments: #( 1 ).
-	self assertPragma: 'foo: 1 bar: 2' givesKeyword: #foo:bar: arguments: #( 1 2 ).
+	self assertPragma: 'foo: 1 bar: 2' givesKeyword: #foo:bar: arguments: #( 1 2 )
 ]
 
 { #category : #'tests - compiler' }
@@ -175,20 +175,20 @@ MethodPragmaTest >> testCompileNumber [
 	self assertPragma: 'foo: 123' givesKeyword: #foo: arguments: #( 123 ).
 	self assertPragma: 'foo: -123' givesKeyword: #foo: arguments: #( -123 ).
 	self assertPragma: 'foo: 12.3' givesKeyword: #foo: arguments: #( 12.3 ).
-	self assertPragma: 'foo: -12.3' givesKeyword: #foo: arguments: #( -12.3 ).
+	self assertPragma: 'foo: -12.3' givesKeyword: #foo: arguments: #( -12.3 )
 ]
 
 { #category : #'tests - compiler' }
 MethodPragmaTest >> testCompileString [
 	self assertPragma: 'foo: ''''' givesKeyword: #foo: arguments: #( '' ).
-	self assertPragma: 'foo: ''bar''' givesKeyword: #foo: arguments: #( 'bar' ).
+	self assertPragma: 'foo: ''bar''' givesKeyword: #foo: arguments: #( 'bar' )
 ]
 
 { #category : #'tests - compiler' }
 MethodPragmaTest >> testCompileSymbol [
 	self assertPragma: 'foo: #bar' givesKeyword: #foo: arguments: #( bar ).
 	self assertPragma: 'foo: #bar:' givesKeyword: #foo: arguments: #( bar: ).
-	self assertPragma: 'foo: #bar:zork:' givesKeyword: #foo: arguments: #( bar:zork: ).
+	self assertPragma: 'foo: #bar:zork:' givesKeyword: #foo: arguments: #( bar:zork: )
 ]
 
 { #category : #'tests - compiler' }
@@ -275,7 +275,7 @@ MethodPragmaTest >> testPrimitiveNamed1 [
 	"This test useses the #primitiveDirectoryLookup primitive."
 
 	self compile: '<primitive: ''primitiveDirectoryLookup'' module: ''FilePlugin''> ^ #lookup' selector: #lookup.
-	self assert: self lookup equals: #lookup.
+	self assert: self lookup equals: #lookup
 ]
 
 { #category : #'tests - primitives' }
@@ -283,7 +283,7 @@ MethodPragmaTest >> testPrimitiveNamed2 [
 	"This test useses the #primPathNameDelimiter primitive."
 
 	self compile: '<primitive: ''primitiveDirectoryDelimitor'' module: ''FilePlugin''> ^ #delim' selector: #delim.
-	self assert: self delim equals: File delimiter.
+	self assert: self delim equals: File delimiter
 ]
 
 { #category : #'tests - primitives' }
@@ -291,7 +291,7 @@ MethodPragmaTest >> testPrimitiveNamedErrorCode2 [
 	"This test useses the #primitiveDirectoryLookup primitive."
 
 	self compile: '<primitive: ''primitiveDirectoryLookup'' module: ''FilePlugin'' error: errorCode> ^ errorCode' selector: #lookup.
-	self assert: self lookup equals: nil.
+	self assert: self lookup equals: nil
 ]
 
 { #category : #'tests - pragma' }
@@ -307,7 +307,7 @@ MethodPragmaTest >> testSendTo [
 	pragma := Pragma selector: #value:value: arguments: #(1 2).
 	self assert:
 			(pragma
-				sendTo: [ :a :b | 
+				sendTo: [ :a :b |
 					self
 						assert: a equals: 1;
 						assert: b equals: 2.
@@ -322,7 +322,7 @@ MethodPragmaTest >> testWithArgumentsDo [
 	self
 		assert:
 			(pragma
-				withArgumentsDo: [ :a :b | 
+				withArgumentsDo: [ :a :b |
 					self
 						assert: a equals: 1;
 						assert: b equals: 2.

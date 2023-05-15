@@ -20,7 +20,7 @@ Class {
 ZnRequestLine class >> empty [
 	^ self new
 		version: ZnConstants defaultHTTPVersion;
-		yourself 
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -29,7 +29,7 @@ ZnRequestLine class >> method: method uri: uri [
 		method: method;
 		uri: uri;
 		version: ZnConstants defaultHTTPVersion;
-		yourself 
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -69,9 +69,9 @@ ZnRequestLine >> method [
 
 { #category : #accessing }
 ZnRequestLine >> method: string [
-	method := ZnConstants knownHTTPMethods 
-		detect: [ :each | each = string ] 
-		ifNone: [ (ZnUnknownHttpMethod method: string) signal ] 
+	method := ZnConstants knownHTTPMethods
+		detect: [ :each | each = string ]
+		ifNone: [ (ZnUnknownHttpMethod method: string) signal ]
 ]
 
 { #category : #copying }
@@ -122,7 +122,7 @@ ZnRequestLine >> uri: anURI [
 
 { #category : #accessing }
 ZnRequestLine >> uriPathQueryFragment [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 			self uri printPathQueryFragmentOn: stream ]
 ]
 
@@ -133,9 +133,9 @@ ZnRequestLine >> version [
 
 { #category : #accessing }
 ZnRequestLine >> version: string [
-	version := ZnConstants knownHTTPVersions 
-		detect: [ :each | each = string ] 
-		ifNone: [ (ZnUnknownHttpVersion version: string) signal ] 
+	version := ZnConstants knownHTTPVersions
+		detect: [ :each | each = string ]
+		ifNone: [ (ZnUnknownHttpVersion version: string) signal ]
 ]
 
 { #category : #writing }
@@ -144,8 +144,8 @@ ZnRequestLine >> writeOn: stream [
 	writeStream := ZnBivalentWriteStream on: stream.
 	writeStream nextPutAll: self method; space.
 	(ZnNetworkingUtils shouldProxyUrl: self uri)
-		ifTrue: [ 
-			self uri hasSecureScheme 
+		ifTrue: [
+			self uri hasSecureScheme
 				ifTrue: [
 					"See also ZnClient>>#setupTLSTo:"
 					method = #CONNECT
@@ -153,5 +153,5 @@ ZnRequestLine >> writeOn: stream [
 						ifFalse: [ self uri printPathQueryFragmentOn: writeStream ] ]
 				ifFalse: [ self uri printOn: writeStream ] ]
 		ifFalse: [ self uri printPathQueryFragmentOn: writeStream ].
-	writeStream space; nextPutAll: self version; nextPutAll: String crlf 
+	writeStream space; nextPutAll: self version; nextPutAll: String crlf
 ]

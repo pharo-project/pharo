@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #testing }
-WidgetExamples class >> isDeprecated [ 
+WidgetExamples class >> isDeprecated [
 	^ true
 ]

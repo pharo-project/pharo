@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-TabSelected class >> isDeprecated [ 
+TabSelected class >> isDeprecated [
 	^ true
 ]

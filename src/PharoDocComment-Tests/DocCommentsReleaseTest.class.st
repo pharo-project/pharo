@@ -17,8 +17,8 @@ DocCommentsReleaseTest class >> buildSuite [
 	design"
 	methods := self environment allMethods reject: [ :method | method methodClass isTestCase ].
 	"for now skip all class side methods to be in sync with DrTests"
-	methods do: [ :method | 
-		method pharoDocCommentNodes do: [ :docComment | 
+	methods do: [ :method |
+		method pharoDocCommentNodes do: [ :docComment |
 			suite addTest: (CommentTestCase for: docComment) ] ].
 	"make sure to clean up the AST Cache to allow the GC to clean up"
 	ASTCache reset.

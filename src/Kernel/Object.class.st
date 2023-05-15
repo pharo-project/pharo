@@ -64,7 +64,6 @@ Object class >> flushDependents [
 	DependentsFields keysAndValuesDo:[:key :dep|
 		key ifNotNil:[key removeDependent: nil].
 	].
-	DependentsFields finalizeValues
 ]
 
 { #category : #documentation }
@@ -120,7 +119,8 @@ Object class >> howToModifyPrimitives [
 
 { #category : #'class initialization' }
 Object class >> initialize [
-	"Object initialize"
+	"Upon loading a class, this selector is not looked up.
+	If you want a class to be initialized upon loading, this class should define the selector #intialize explicitly"
 	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
@@ -157,7 +157,7 @@ Object class >> reInitializeDependentsFields [
 
 	| oldFields |
 	oldFields := DependentsFields.
-	DependentsFields := WeakIdentityKeyDictionary new.
+	self initializeDependentsFields.
 	oldFields
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
@@ -359,13 +359,6 @@ Object >> asLinkPrepend: anObject [
 ]
 
 { #category : #converting }
-Object >> asOrderedCollection [
-	"Answer an OrderedCollection with the receiver as its only element."
-
-	^ OrderedCollection with: self
-]
-
-{ #category : #converting }
 Object >> asString [
 	"Answer a string that represents the receiver."
 
@@ -386,7 +379,8 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [
+	"we do the == true check to avoid NonBooleanReceiver error for nonBoolean aBlock values"
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 
@@ -884,7 +878,11 @@ Object >> errorSubscriptBounds: index [
 Object >> executor [
 	"Return an object which can act as executor for finalization of the receiver"
 
-	^ self shallowCopy actAsExecutor
+	self
+		deprecated: 'Please use #finalizer instead. See Phep0003'
+		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
+
+	^ self finalizer
 ]
 
 { #category : #'error handling' }
@@ -917,13 +915,20 @@ Object >> explicitRequirement [
 { #category : #finalization }
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
-
-	^ WeakRegistry default
+	
+	^ FinalizationRegistry default
 ]
 
 { #category : #finalization }
 Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
+]
+
+{ #category : #finalization }
+Object >> finalizer [
+	"Return an object which can act as finalizer of the receiver"
+
+	^ self
 ]
 
 { #category : #enumerating }
@@ -1978,30 +1983,6 @@ Object >> species [
 	^self class
 ]
 
-{ #category : #stepping }
-Object >> stepAt: millisecondClockValue in: aWindow [
-
-	^ self stepIn: aWindow
-]
-
-{ #category : #stepping }
-Object >> stepIn: aWindow [
-
-	^ self step
-]
-
-{ #category : #stepping }
-Object >> stepTime [
-
-	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
-]
-
-{ #category : #stepping }
-Object >> stepTimeIn: aSystemWindow [
-
-	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
-]
-
 { #category : #private }
 Object >> storeAt: offset inTempFrame: aContext [
 	"This message had to get sent to an expression already on the stack
@@ -2058,13 +2039,16 @@ Object >> subclassResponsibility [
 Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 	"When I am finalized (e.g., garbage collected) close the associated resource handle by sending aSelector to the appropriate finalizer (the guy who knows how to get rid of the resource).
 	WARNING: Neither the finalizer nor the resource handle are allowed to reference me. If they do, then I will NEVER be garbage collected. Since this cannot be validated here, it is up to the client to make sure this invariant is not broken."
-	self == aFinalizer ifTrue:[self error: 'I cannot finalize myself'].
-	self == aResourceHandle ifTrue:[self error: 'I cannot finalize myself'].
-	^self finalizationRegistry add: self executor:
-		(ObjectFinalizer new
-			receiver: aFinalizer
-			selector: aSelector
-			argument: aResourceHandle)
+
+	self == aFinalizer ifTrue: [ self error: 'I cannot finalize myself' ].
+	self == aResourceHandle ifTrue: [
+		self error: 'I cannot finalize myself' ].
+	^ self finalizationRegistry
+		  add: self
+		  finalizer: (ObjectFinalizer new
+				   receiver: aFinalizer
+				   selector: aSelector
+				   argument: aResourceHandle)
 ]
 
 { #category : #'error handling' }
@@ -2194,20 +2178,6 @@ Object >> veryDeepInner: deepCopier [
 	"No special treatment for inst vars of my superclasses.  Override when some need to be weakly copied.  Object>>veryDeepCopyWith: will veryDeepCopy any inst var whose class does not actually define veryDeepInner:"
 
 	"avoid to use me we will deprecate it in the future"
-]
-
-{ #category : #stepping }
-Object >> wantsSteps [
-	"Overridden by morphic classes whose instances want to be stepped,
-	or by model classes who want their morphic views to be stepped."
-
-	^ false
-]
-
-{ #category : #stepping }
-Object >> wantsStepsIn: aSystemWindow [
-
-	^ self wantsSteps
 ]
 
 { #category : #'model - updating' }

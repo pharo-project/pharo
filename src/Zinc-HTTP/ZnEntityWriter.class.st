@@ -17,8 +17,8 @@ Class {
 
 { #category : #accessing }
 ZnEntityWriter >> contentType [
-	^ (self headers includesKey: 'Content-Type') 
-		ifTrue: [ self headers contentType ] 
+	^ (self headers includesKey: 'Content-Type')
+		ifTrue: [ self headers contentType ]
 		ifFalse: [ ZnMimeType default ]
 ]
 
@@ -62,20 +62,19 @@ ZnEntityWriter >> writeEntity: entity [
 	actualStream := stream.
 	chunkedStream := gzipStream := bufferedStream := nil.
 	(isChunked := self isChunked)
-		ifTrue: [ 
+		ifTrue: [
 			chunkedStream := actualStream := ZnChunkedWriteStream on: actualStream ].
-	self isGzipped 
-		ifTrue: [ 
+	self isGzipped
+		ifTrue: [
 			gzipStream := actualStream := GZipWriteStream on: actualStream ]
-		ifFalse: [ 
+		ifFalse: [
 			(isChunked and: [ self contentType isBinary not ])
 				ifTrue: [ bufferedStream := actualStream := ZnUtils bufferedWriteStreamOn: actualStream ] ].
 	entity writeOn: actualStream.
-	gzipStream 
+	gzipStream
 		ifNotNil: [ gzipStream finish ].
-	bufferedStream 
+	bufferedStream
 		ifNotNil: [ bufferedStream finish ].
 	chunkedStream
 		ifNotNil: [ chunkedStream finish ]
-	
 ]

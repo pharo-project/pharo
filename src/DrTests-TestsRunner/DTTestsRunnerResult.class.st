@@ -65,20 +65,20 @@ DTTestsRunnerResult >> buildTreeForUI [
 				name: DTTestResultType error pluralName;
 				subResults: (self buildLeavesFrom: self errors type: DTTestResultType error);
 				startExpanded;
-				displayColorIfNotEmpty: self theme testColorError;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForErrorTest;
 				yourself.
 			DTTreeNode new
 				name: DTTestResultType fail pluralName;
 				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail);
 				startExpanded;
-				displayColorIfNotEmpty:  self theme testColorFailure.
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForFailureTest.
 			DTTreeNode new
 				name: DTTestResultType skipped pluralName;
 				subResults: (self buildLeavesFrom: self skipped type: DTTestResultType skipped).
 			DTTreeNode new
 				name: DTTestResultType pass pluralName;
 				subResults: (self buildLeavesFrom: self passed type: DTTestResultType pass);
-				displayColorIfNotEmpty: self theme testColorPassing.
+				displayColorIfNotEmpty:  TestResult defaultColorBackGroundForPassingTest.
 			DTTreeNode new
 				name: DTTestResultType expectedFailure pluralName;
 				subResults: (self buildLeavesFrom: self expectedFailures type: DTTestResultType expectedFailure).

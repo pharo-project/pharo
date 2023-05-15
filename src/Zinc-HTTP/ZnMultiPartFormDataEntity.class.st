@@ -19,7 +19,7 @@ Class {
 
 { #category : #testing }
 ZnMultiPartFormDataEntity class >> designatedMimeType [
-	^ ZnMimeType multiPartFormData  
+	^ ZnMimeType multiPartFormData
 ]
 
 { #category : #testing }
@@ -35,7 +35,7 @@ ZnMultiPartFormDataEntity >> addPart: mimePart [
 
 { #category : #private }
 ZnMultiPartFormDataEntity >> computeRepresentation [
-	representation := ByteArray streamContents: [ :stream | 
+	representation := ByteArray streamContents: [ :stream |
 		self writeRepresentationOn: (ZnBivalentWriteStream on: stream) ].
 	contentLength := representation size
 ]
@@ -51,7 +51,7 @@ ZnMultiPartFormDataEntity >> contentLength [
 ZnMultiPartFormDataEntity >> contentType: object [
 	"We only allow assignment compatible with our designated mime type.
 	The main/sub must be equal but the parameters must be allowed to be different"
-	
+
 	| newType |
 	newType := object asZnMimeType.
 	(self class matches: newType)
@@ -69,7 +69,6 @@ ZnMultiPartFormDataEntity >> generateBoundary [
 			stream nextPutAll: 'Boundary-Zn-'.
 			letters := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.
 			8 timesRepeat: [ stream nextPut: letters atRandom ] ]
-	
 ]
 
 { #category : #accessing }
@@ -77,15 +76,14 @@ ZnMultiPartFormDataEntity >> getBoundary [
 	"Return the multipart/form-data MIME part boundary.
 	This should really be there, set externally or internally.
 	See #initialize and #mimeTypeWithBoundary"
-	
-	^ (self contentType parameterAt: 'boundary') withoutQuoting 
+
+	^ (self contentType parameterAt: 'boundary') withoutQuoting
 ]
 
 { #category : #initialization }
 ZnMultiPartFormDataEntity >> initialize [
 	super initialize.
-	self contentType: self mimeTypeWithBoundary  
-	
+	self contentType: self mimeTypeWithBoundary
 ]
 
 { #category : #private }
@@ -117,7 +115,7 @@ ZnMultiPartFormDataEntity >> parse: bytes boundary: boundary binary: binary [
 		startingAt: 1) + 1.
 	next := bytes
 		indexOfSubCollection: fullBoundary
-		startingAt: start 
+		startingAt: start
 		ifAbsent: [ bytes size ].
 	[ next < (bytes size - 2) ] whileTrue: [ | partReadStream |
 		partReadStream := ReadStream on: bytes from: start + 2 to: next - 3.
@@ -173,7 +171,7 @@ ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	"We have to use the contentLength instance variable instead of the accessor else a representation will be computed"
 	contentLength
 		ifNil: [ bytes := ZnUtils readUpToEnd: stream limit: ( ZnCurrentOptions at: #maximumEntitySize ) ]
-		ifNotNil: [ 
+		ifNotNil: [
 			self contentLength > ( ZnCurrentOptions at: #maximumEntitySize ) ifTrue: [ ZnEntityTooLarge signal ].
 			bytes := ByteArray ofSize: contentLength.
 			stream next: contentLength into: bytes ].
@@ -189,7 +187,7 @@ ZnMultiPartFormDataEntity >> readFrom: stream [
 	"We have to use the contentLength instance variable instead of the accessor else a representation will be computed"
 	contentLength
 		ifNil: [ bytes := ZnUtils readUpToEnd: stream limit: ( ZnCurrentOptions at: #maximumEntitySize ) ]
-		ifNotNil: [ 
+		ifNotNil: [
 			self contentLength > ( ZnCurrentOptions at: #maximumEntitySize ) ifTrue: [ ZnEntityTooLarge signal ].
 			bytes := ByteArray ofSize: contentLength.
 			stream next: contentLength into: bytes ].
@@ -214,5 +212,4 @@ ZnMultiPartFormDataEntity >> writeRepresentationOn: stream [
 		each writeOn: stream.
 		stream nextPutAll: String crlf ].
 	stream nextPutAll: '--'; nextPutAll: boundary; nextPutAll: '--'; nextPutAll: String crlf
-
 ]

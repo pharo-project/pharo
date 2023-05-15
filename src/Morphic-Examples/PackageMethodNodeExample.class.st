@@ -23,7 +23,7 @@ PackageMethodNodeExample >> compiledMethod [
 
 { #category : #private }
 PackageMethodNodeExample >> itemClass [
-	^ self parentNode parentNode item.
+	^ self parentNode parentNode item
 ]
 
 { #category : #accessing }

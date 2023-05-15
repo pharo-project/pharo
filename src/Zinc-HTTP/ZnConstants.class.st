@@ -18,7 +18,7 @@ ZnConstants class >> defaultHTTPVersion [
 ]
 
 { #category : #accessing }
-ZnConstants class >> defaultServerString [ 
+ZnConstants class >> defaultServerString [
 	^ self frameworkNameAndVersion , ' (' , self systemVersion , ')'
 ]
 
@@ -35,7 +35,7 @@ ZnConstants class >> faviconBytes [
 { #category : #accessing }
 ZnConstants class >> frameworkLicense [
 	"http://en.wikipedia.org/wiki/MIT_License"
-	
+
 	^ 'MIT License'
 ]
 
@@ -51,7 +51,7 @@ ZnConstants class >> frameworkName [
 
 { #category : #accessing }
 ZnConstants class >> frameworkNameAndVersion [
-	^ self frameworkName, ' ', self frameworkVersion 
+	^ self frameworkName, ' ', self frameworkVersion
 ]
 
 { #category : #accessing }
@@ -61,26 +61,26 @@ ZnConstants class >> frameworkVersion [
 
 { #category : #accessing }
 ZnConstants class >> httpStatusCodes [
-	^ HTTPStatusCodes 
+	^ HTTPStatusCodes
 ]
 
 { #category : #'class initialization' }
 ZnConstants class >> initialize [
 	"Forced source code change for automatic initialization: 20180921"
-	
+
 	self initializeHTTPStatusCodes
 ]
 
 { #category : #private }
-ZnConstants class >> initializeHTTPStatusCodes [ 
-	HTTPStatusCodes := Dictionary newFromPairs: self officialHTTPStatusCodesSpec 
+ZnConstants class >> initializeHTTPStatusCodes [
+	HTTPStatusCodes := Dictionary newFromPairs: self officialHTTPStatusCodesSpec
 ]
 
 { #category : #accessing }
 ZnConstants class >> knownHTTPMethods [
 	^ #(
 		"Standard HTTP 1.1 Verbs"
-		GET PUT POST DELETE HEAD 
+		GET PUT POST DELETE HEAD
 		TRACE OPTIONS CONNECT PATCH
 		"WebDAV verbs"
 		PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK)
@@ -96,12 +96,12 @@ ZnConstants class >> maximumLineLength [
 	"Return the maximum line length to accept.
 	Used by ZnLineReader and thus for reading request/status lines as well as headers.
 	This helps to protect us from malicious content."
-	
+
 	^ 4096
 ]
 
 { #category : #accessing }
-ZnConstants class >> officialHTTPStatusCodesSpec [ 
+ZnConstants class >> officialHTTPStatusCodesSpec [
 	"This is the official list from http://www.iana.org/assignments/http-status-codes (version 2018-09-21)"
 
 	^ #(
@@ -181,5 +181,5 @@ ZnConstants class >> remoteAddressHeader [
 
 { #category : #accessing }
 ZnConstants class >> systemVersion [
-	^ SystemVersion current type , '/' , SystemVersion current dottedMajorMinor 
+	^ SystemVersion current type , '/' , SystemVersion current dottedMajorMinor
 ]

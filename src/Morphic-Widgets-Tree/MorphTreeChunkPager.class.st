@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-MorphTreeChunkPager class >> isDeprecated [ 
+MorphTreeChunkPager class >> isDeprecated [
 	^ true
 ]

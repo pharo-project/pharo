@@ -11,7 +11,7 @@ Class {
 SycPushDownMethodCommand >> asRefactorings [
 	"Return push down method refactoring using method"
 	| refactoring |
-	refactoring := RBPushDownMethodRefactoring 
+	refactoring := RBPushDownMethodRefactoring
 		model: model
 		pushDown: (methods collect: [ :each | each selector ])
 		from: methods first origin.
@@ -19,7 +19,7 @@ SycPushDownMethodCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycPushDownMethodCommand >> defaultMenuIconName [ 
+SycPushDownMethodCommand >> defaultMenuIconName [
 	^ #down
 ]
 
@@ -31,17 +31,17 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	self selectMethods.
+	self selectMethods
 ]
 
 { #category : #execution }
 SycPushDownMethodCommand >> selectMethods [
 	| dialog class|
 	class := methods first origin.
-	dialog := RBMethodsSelectionPresenter 
+	dialog := RBMethodsSelectionPresenter
 		   label: 'Push down methods from ', class name
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: methods asOrderedCollection. 
+			selecting: methods asOrderedCollection.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	methods := dialog presenter selectedItems.
+	methods := dialog presenter selectedItems
 ]

@@ -108,8 +108,9 @@ RBAssignmentNode >> isAssignment [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBAssignmentNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self variable isFaulty or: [ self value isFaulty ]
 ]
 

@@ -88,8 +88,9 @@ RBLiteralArrayNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBLiteralArrayNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self contents anySatisfy: [:each | each isFaulty]
 ]
 

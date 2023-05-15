@@ -16,6 +16,6 @@ ProfilerResultsTreeSelectionChangedAnnouncement >> item [
 ]
 
 { #category : #accessing }
-ProfilerResultsTreeSelectionChangedAnnouncement >> item: aTallyModel [ 
+ProfilerResultsTreeSelectionChangedAnnouncement >> item: aTallyModel [
 	item := aTallyModel
 ]

@@ -33,6 +33,6 @@ TabDisabledState >> newStateForEnabled: aBoolean [
 { #category : #protocol }
 TabDisabledState >> newStateForSelected: aBoolean [
 	"An disabled tab can not be selected"
-	
+
 	^ self
 ]

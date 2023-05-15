@@ -29,14 +29,14 @@ FinderClassNode >> browseHierarchy [
 { #category : #private }
 FinderClassNode >> browseReferences [
 
-	self systemNavigation browseAllCallsOnClass: self item.
+	self systemNavigation browseAllCallsOnClass: self item
 ]
 
 { #category : #accessing }
-FinderClassNode >> childNodeClassFromItem: anItem [ 
+FinderClassNode >> childNodeClassFromItem: anItem [
 	"The children (if there are some) are instances of
 	FinderMethodNode (in the case of a Classes research)"
-	^ FinderMethodNode 
+	^ FinderMethodNode
 ]
 
 { #category : #accessing }

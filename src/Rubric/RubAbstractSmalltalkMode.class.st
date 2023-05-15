@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 RubAbstractSmalltalkMode >> editorClass [
-	^ RubSmalltalkEditor.
+	^ RubSmalltalkEditor
 ]
 
 { #category : #testing }

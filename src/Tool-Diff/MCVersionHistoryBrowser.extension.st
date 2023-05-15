@@ -3,7 +3,7 @@ Extension { #name : #MCVersionHistoryBrowser }
 { #category : #'*Tool-Diff' }
 MCVersionHistoryBrowser >> viewChanges [
 	"View the changes between a prior version and this version."
-	
+
 	self
 		viewChanges: (self baseSnapshot patchRelativeToBase: self selectedSnapshot)
 		from:  self selectedInfo name
@@ -13,7 +13,7 @@ MCVersionHistoryBrowser >> viewChanges [
 { #category : #'*Tool-Diff' }
 MCVersionHistoryBrowser >> viewChanges: otherInfo [
 	"View the changes between a prior version and this version."
-	
+
 	self
 		viewChanges: (self selectedSnapshot patchRelativeToBase: (self snapshotForInfo: otherInfo))
 		from: otherInfo name
@@ -23,7 +23,7 @@ MCVersionHistoryBrowser >> viewChanges: otherInfo [
 { #category : #'*Tool-Diff' }
 MCVersionHistoryBrowser >> viewChanges: patch from: fromDescription to: toDescription [
 	"Open a browser on the patch."
-	
+
 	|patchLabel|
 	patchLabel := 'Changes between {1} and {2}' translated format: {fromDescription. toDescription}.
 	PSMCPatchMorph usedByDefault

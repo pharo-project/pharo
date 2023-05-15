@@ -100,13 +100,13 @@ TreeNavigationBarMorph >> basicButton [
 	| button |
 	^ (button := SimpleButtonMorph new)
 		clipSubmorphs: true;
-		color: self pagerColor;		
+		color: self pagerColor;
 		on: #mouseEnter send: #value to: [button borderColor: self pagerColor muchDarker];
 		on: #mouseLeave send: #value to: [button borderColor: self pagerColor];
 		target: self;
-		layoutPolicy: TableLayout new; 
-		listDirection: #leftToRight; 
-		listCentering: #leftCenter; 
+		layoutPolicy: TableLayout new;
+		listDirection: #leftToRight;
+		listCentering: #leftCenter;
 		wrapCentering: #center;
 		layoutInset: 2@0;
 		cellInset: 2@0;
@@ -120,13 +120,13 @@ TreeNavigationBarMorph >> basicIcon [
 	| button |
 	^ (button := IconicButtonMorph new)
 		clipSubmorphs: true;
-		color: self pagerColor;		
+		color: self pagerColor;
 		on: #mouseEnter send: #value to: [button borderColor: self pagerColor muchDarker];
 		on: #mouseLeave send: #value to: [button borderColor: self pagerColor];
 		target: self;
-		layoutPolicy: TableLayout new; 
-		listDirection: #leftToRight; 
-		listCentering: #leftCenter; 
+		layoutPolicy: TableLayout new;
+		listDirection: #leftToRight;
+		listCentering: #leftCenter;
 		wrapCentering: #center;
 		layoutInset: 2@0;
 		cellInset: 2@0;
@@ -151,9 +151,9 @@ TreeNavigationBarMorph >> buttonLabel: aLabel actionSelector: aSelector argument
 		vResizing: #shrinkWrap;
 		setBalloonText: helpText;
 		yourself.
-		aLabel isString 
+		aLabel isString
 			ifTrue: [b label: aLabel font: self preferedFont]
-			ifFalse: [| f | 
+			ifFalse: [| f |
 				f := (enableSelector isNil or: [self perform: enableSelector])
 					ifTrue: [aLabel]
 					ifFalse: [b lock. self asDisabledForm: aLabel].
@@ -174,7 +174,7 @@ TreeNavigationBarMorph >> computedBounds [
 	tb := treeMorph bounds.
 	tbw := treeMorph borderWidth.
 	yGap := self layoutInset asPoint y + self cellInset asPoint y.
-	^ (tb bottomLeft + (tbw @ (self computedHeight + yGap) negated)) corner: (tb bottomRight - ( (tbw * 2) @ yGap )).
+	^ (tb bottomLeft + (tbw @ (self computedHeight + yGap) negated)) corner: (tb bottomRight - ( (tbw * 2) @ yGap ))
 ]
 
 { #category : #accessing }
@@ -201,7 +201,7 @@ TreeNavigationBarMorph >> initialize [
 	super initialize.
 	self hResizing: #spaceFill;
 		 vResizing: #rigid;
-		 changeTableLayout; 
+		 changeTableLayout;
 		 listDirection: #leftToRight;
 		 cellInset: 2 @ 0;
 		 layoutInset: 3 @ 0;
@@ -242,20 +242,20 @@ TreeNavigationBarMorph >> pageSearchText: aString [
 		(n includesSubstringAnywhere: pageSearchText)
 			ifTrue: [founds add: idx -> n]].
 	founds ifEmpty: [ ^ self flash ].
-	founds size > 1 
-		ifTrue: [ 
-			chosen := 
-				UIManager default 
-					chooseFrom: (founds collect: [:l | l value] ) 
-					values: (founds collect: [:l | l key] ) 
-					lines: nil 
+	founds size > 1
+		ifTrue: [
+			chosen :=
+				UIManager default
+					chooseFrom: (founds collect: [:l | l value] )
+					values: (founds collect: [:l | l key] )
+					lines: nil
 					title: ''.
 			chosen ifNil: [^self]]
 		ifFalse: [chosen := founds first key].
 	self currentPage: (self pageOfNodeIndex: chosen).
 	chosenNode := self nodeList at: chosen.
-	treeMorph scroller 
-		submorphsDo: [:sm | 
+	treeMorph scroller
+		submorphsDo: [:sm |
 			sm complexContents ==  chosenNode
 				ifTrue: [treeMorph listManager setSelectedMorph: sm.
 					^ treeMorph scrollSelectionIntoView]]
@@ -280,13 +280,13 @@ TreeNavigationBarMorph >> pageSizeFromString: aString [
 		ifTrue: [ | numberOfPages |
 			input := (input copyFrom: 2 to: input size) trimBoth.
 			numberOfPages := Integer readFromString: input.
-			numberOfPages > 0 
+			numberOfPages > 0
 				ifTrue: [self changePageSize: (self nodeList size // numberOfPages)]
 				ifFalse: [treeMorph flash.
 					^ false]]
 		ifFalse: [ | newPageSize |
 			newPageSize := Integer readFromString: input.
-			newPageSize > 0 
+			newPageSize > 0
 				ifTrue: [self changePageSize: newPageSize]
 				ifFalse: [treeMorph flash.
 					^ false]].
@@ -326,8 +326,8 @@ TreeNavigationBarMorph >> textEntryLabel: aLabel get: getSel set: setSel help: h
 ]
 
 { #category : #accessing }
-TreeNavigationBarMorph >> treeMorph: aTreeMorph [ 
-	treeMorph := aTreeMorph.
+TreeNavigationBarMorph >> treeMorph: aTreeMorph [
+	treeMorph := aTreeMorph
 ]
 
 { #category : #accessing }
@@ -339,7 +339,7 @@ TreeNavigationBarMorph >> treeMorph: aTreeMorph pageSize: anInteger [
 { #category : #accessing }
 TreeNavigationBarMorph >> updateContents [
 	self bounds: self computedBounds.
-	self color: treeMorph pagerColor.
+	self color: treeMorph pagerColor
 ]
 
 { #category : #navigation }

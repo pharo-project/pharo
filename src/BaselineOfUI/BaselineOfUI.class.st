@@ -42,8 +42,7 @@ BaselineOfUI >> baseline: spec [
 		"Spec 2 (base), using external configuration"
 		self specBase: spec.		
 		
-		spec package: 'StartupPreferences'.				
-		spec package: 'Debugger-Actions'.
+		spec package: 'StartupPreferences'.		
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 		spec package: 'Morphic-Widgets-Tree'.

@@ -17,7 +17,7 @@ IRTempAccess >> isRemoteTemp [
 
 { #category : #testing }
 IRTempAccess >> isTemp [
-	^true.
+	^true
 ]
 
 { #category : #accessing }

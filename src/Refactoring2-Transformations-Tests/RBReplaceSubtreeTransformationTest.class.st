@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBReplaceSubtreeTransformationTest >> testEmptyCode [
 
-	self shouldFail: (RBReplaceSubtreeTransformation 
+	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: ''
 							to: '^ selector'
 							inMethod: #selector:from:
@@ -18,7 +18,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 { #category : #tests }
 RBReplaceSubtreeTransformationTest >> testExtractFailure [
 
-	self shouldFail: (RBReplaceSubtreeTransformation 
+	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: ':= aSelector'
 							to: '^ selector'
 							inMethod: #selector:from:
@@ -29,7 +29,7 @@ RBReplaceSubtreeTransformationTest >> testExtractFailure [
 { #category : #tests }
 RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 
-	self shouldFail: (RBReplaceSubtreeTransformation 
+	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: 'selector := aSelector'
 							to: '^ selector'
 							inMethod: #selector:for:
@@ -40,7 +40,7 @@ RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 { #category : #tests }
 RBReplaceSubtreeTransformationTest >> testParseFailure [
 
-	self shouldFail: (RBReplaceSubtreeTransformation 
+	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: 'selector := aSelector'
 							to: ':= 123'
 							inMethod: #selector:from:
@@ -52,19 +52,19 @@ RBReplaceSubtreeTransformationTest >> testParseFailure [
 RBReplaceSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
-	transformation := (RBReplaceSubtreeTransformation 
+	transformation := (RBReplaceSubtreeTransformation
 							replace: 'selector := aSelector'
 							to: '^ selector'
 							inMethod: #selector:from:
 							inClass: #RBRemoveMethodTransformation)
-							asRefactoring transform. 
-	
+							asRefactoring transform.
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: #RBRemoveMethodTransformation.
 	self assert: (class directlyDefinesMethod: #selector:from:).
 	self assert: (class parseTreeForSelector: #selector:from:) body statements size equals: 2.
-	self assert: (class parseTreeForSelector: #selector:from:) body statements last isReturn.
+	self assert: (class parseTreeForSelector: #selector:from:) body statements last isReturn
 ]
 
 { #category : #tests }
@@ -76,10 +76,10 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 							to: '^ 123'
 							inMethod: #one
 							inClass: self changeMock name)
-							transform. 
-	
+							transform.
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: self changeMock name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
 	self assert: (class parseTreeForSelector: #one) body statements size equals: 1.
@@ -92,17 +92,17 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 
 	| transformation class |
 	transformation := (RBReplaceSubtreeTransformation
-		replace: 'self assert: (class parseTreeFor: #selector:from:) body statements size equals: 2'
-		to: 'self assert: (class parseTreeFor: #selector:from:) body statements size = 2'
+		replace: 'self assert: (class parseTreeForSelector:  #selector:from:) body statements size equals: 2'
+		to: 'self assert: (class parseTreeForSelector:  #selector:from:) body statements size = 2'
 		inMethod: #testRefactoring
 		inClass: #RBReplaceSubtreeTransformationTest)
-		asRefactoring transform. 
-	
+		asRefactoring transform.
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: #RBReplaceSubtreeTransformationTest.
 	self assert: (class directlyDefinesMethod: #testRefactoring).
 	self assert: (class parseTreeForSelector: #testRefactoring) body statements size equals: 6.
 	self assert: ((((class parseTreeForSelector: #testRefactoring) body statements at: 5) sourceCode withBlanksCondensed copyReplaceAll: String cr with: ' ')
-		includesSubstring: 'assert: (class parseTreeFor: #selector:from:) body statements size = 2').
+		includesSubstring: 'assert: (class parseTreeForSelector: #selector:from:) body statements size = 2')
 ]

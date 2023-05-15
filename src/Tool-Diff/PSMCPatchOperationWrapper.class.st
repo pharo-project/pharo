@@ -10,7 +10,7 @@ Class {
 { #category : #converting }
 PSMCPatchOperationWrapper >> asString [
 	"Answer the method name."
-	
+
 	^self item definition summary
 ]
 

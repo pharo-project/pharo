@@ -30,7 +30,7 @@ RBInsertClassRefactoring class >> addClass: aName superclass: aClass subclasses:
 ]
 
 { #category : #'instance creation' }
-RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
+RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	^ self new
 		model: aRBSmalltalk;
 		addClass: aName
@@ -53,7 +53,7 @@ RBInsertClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass
 ]
 
 { #category : #initialization }
-RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
+RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	self className: aName.
 	superclass := self classObjectFor: aClass.
 	subclasses := aCollection collect: [:each | self classObjectFor: each].
@@ -66,30 +66,30 @@ RBInsertClassRefactoring >> addClass: aName superclass: aClass subclasses: aColl
 	superclass := self classObjectFor: aClass.
 	subclasses := aCollection collect: [:each | self classObjectFor: each].
 	category := aSymbol.
-	comment := aCommentString 
+	comment := aCommentString
 ]
 
 { #category : #preconditions }
 RBInsertClassRefactoring >> preconditions [
 	| cond |
-	cond := ((RBCondition isMetaclass: superclass) 
+	cond := ((RBCondition isMetaclass: superclass)
 				errorMacro: 'Superclass must not be a metaclass') not.
 	cond := subclasses inject: cond
-				into: 
-					[:sub :each | 
-					sub 
-						& ((RBCondition isMetaclass: each) 
-								errorMacro: 'Subclass must <1?not :>be a metaclass') not 
+				into:
+					[:sub :each |
+					sub
+						& ((RBCondition isMetaclass: each)
+								errorMacro: 'Subclass must <1?not :>be a metaclass') not
 							& (RBCondition isImmediateSubclass: each of: superclass)].
-	^cond & (RBCondition isValidClassName: className) 
-		& (RBCondition isGlobal: className in: self model) not 
-			& (RBCondition isSymbol: category) 
-			& ((RBCondition withBlock: [category isNotEmpty ]) 
+	^cond & (RBCondition isValidClassName: className)
+		& (RBCondition isGlobal: className in: self model) not
+			& (RBCondition isSymbol: category)
+			& ((RBCondition withBlock: [category isNotEmpty ])
 					errorMacro: 'Invalid category name')
 ]
 
 { #category : #printing }
-RBInsertClassRefactoring >> storeOn: aStream [ 
+RBInsertClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

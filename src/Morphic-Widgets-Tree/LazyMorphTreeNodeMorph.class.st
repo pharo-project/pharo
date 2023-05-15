@@ -20,7 +20,7 @@ LazyMorphTreeNodeMorph >> drawOn: aCanvas [
 { #category : #accessing }
 LazyMorphTreeNodeMorph >> drawSubmorphsOn: aCanvas [
 	drawable ifFalse: [^ self].
-	super drawSubmorphsOn: aCanvas.
+	super drawSubmorphsOn: aCanvas
 ]
 
 { #category : #drawing }
@@ -30,7 +30,7 @@ LazyMorphTreeNodeMorph >> drawable [
 
 { #category : #drawing }
 LazyMorphTreeNodeMorph >> drawable: aBoolean [
-	drawable := aBoolean.
+	drawable := aBoolean
 ]
 
 { #category : #initialization }

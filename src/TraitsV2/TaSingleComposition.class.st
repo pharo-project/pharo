@@ -16,14 +16,14 @@ TaSingleComposition >> = another [
 ]
 
 { #category : #users }
-TaSingleComposition >> addUser: aClass [ 
+TaSingleComposition >> addUser: aClass [
 	"I propagate to the inner trait"
 	inner addUser: aClass
 ]
 
 { #category : #'transforming selectors' }
 TaSingleComposition >> aliasSelector: aSelector [
-	^ inner aliasSelector: aSelector.
+	^ inner aliasSelector: aSelector
 ]
 
 { #category : #querying }
@@ -32,8 +32,8 @@ TaSingleComposition >> allTraits [
 ]
 
 { #category : #testing }
-TaSingleComposition >> changesSourceCode: aSelector [ 
-	
+TaSingleComposition >> changesSourceCode: aSelector [
+
 	^ inner changesSourceCode: aSelector
 ]
 
@@ -44,14 +44,14 @@ TaSingleComposition >> classComposition [
 
 { #category : #accessing }
 TaSingleComposition >> compiledMethodAt: aSelector [
-	^ inner compiledMethodAt: aSelector.
+	^ inner compiledMethodAt: aSelector
 ]
 
 { #category : #copying }
 TaSingleComposition >> copyWithoutTrait: aTrait [
 	(self = aTrait or: [ inner = aTrait ])
 		ifTrue: [ ^ inner copyWithoutTrait: aTrait ].
-		
+
 	^ self copy
 ]
 
@@ -62,7 +62,7 @@ TaSingleComposition >> hash [
 
 { #category : #'transforming selectors' }
 TaSingleComposition >> initializeSelectorForMe [
-	^ inner initializeSelectorForMe.
+	^ inner initializeSelectorForMe
 ]
 
 { #category : #accessing }
@@ -77,12 +77,12 @@ TaSingleComposition >> inner: anObject [
 
 { #category : #testing }
 TaSingleComposition >> isAliasSelector: aSymbol [
-	^ inner isAliasSelector: aSymbol 
+	^ inner isAliasSelector: aSymbol
 ]
 
 { #category : #testing }
 TaSingleComposition >> isLocalAliasSelector: aSymbol [
-	^ inner isLocalAliasSelector: aSymbol 
+	^ inner isLocalAliasSelector: aSymbol
 ]
 
 { #category : #accessing }
@@ -91,7 +91,7 @@ TaSingleComposition >> methods [
 ]
 
 { #category : #accessing }
-TaSingleComposition >> name [ 
+TaSingleComposition >> name [
 	^ inner name
 ]
 
@@ -99,18 +99,17 @@ TaSingleComposition >> name [
 TaSingleComposition >> originSelectorOf: aSelector [
 
 	^ inner originSelectorOf: aSelector
-
 ]
 
 { #category : #users }
-TaSingleComposition >> removeUser: aClass [ 
+TaSingleComposition >> removeUser: aClass [
 	"I propagate to the inner trait"
 	inner removeUser: aClass
 ]
 
 { #category : #querying }
 TaSingleComposition >> reverseAlias: aSelector [
-	
+
 	^ inner reverseAlias: aSelector
 ]
 
@@ -121,7 +120,7 @@ TaSingleComposition >> selectors [
 
 { #category : #accessing }
 TaSingleComposition >> slots [
-	^ inner slots. 
+	^ inner slots.
 ]
 
 { #category : #querying }

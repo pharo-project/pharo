@@ -82,3 +82,20 @@ TSubCollectionAccess >> testLastNElements [
 		should: [ self moreThan3Elements last: self moreThan3Elements size + 1 ]
 		raise: Error
 ]
+
+{ #category : #'tests - subcollections access' }
+TSubCollectionAccess >> testTakeFirst [
+
+	| abf col |
+	col := self moreThan3Elements.
+	abf := col takeFirst: 2.
+	self assert: abf size equals: 2.
+	self 
+		assertCollection: abf
+		hasSameElements: (col first: 2).
+	abf := col takeFirst: 10.
+	self assert: abf size equals: col size.
+	
+	self assertEmpty: (col takeFirst: 0).
+	
+]

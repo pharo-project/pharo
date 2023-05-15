@@ -18,7 +18,7 @@ ClassRemoved class >> class: aClass category: aCategoryName [
 	^self new
 			classRemoved: aClass;
 			categoryName: aCategoryName;
-			yourself.
+			yourself
 ]
 
 { #category : #testing }
@@ -51,13 +51,13 @@ ClassRemoved >> affectsMethodsTaggedWith: tagName [
 
 { #category : #accessing }
 ClassRemoved >> categoryName [
-	
+
 	^ categoryName
 ]
 
 { #category : #accessing }
 ClassRemoved >> categoryName: anObject [
-	
+
 	categoryName := anObject
 ]
 
@@ -68,13 +68,13 @@ ClassRemoved >> classAffected [
 
 { #category : #accessing }
 ClassRemoved >> classRemoved [
-	
+
 	^ classRemoved
 ]
 
 { #category : #accessing }
 ClassRemoved >> classRemoved: aClass [
-	
+
 	classRemoved := aClass.
 	ownerPackage := aClass package
 ]

@@ -11,7 +11,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFOriginalMethodReification class >> entities [
-	^{RBProgramNode}.
+	^{RBProgramNode}
 ]
 
 { #category : #'plugin interface' }

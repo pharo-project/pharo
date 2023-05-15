@@ -37,7 +37,7 @@ TestAsserter class >> assert: aBoolean description: aString [
 
 	aBoolean ifFalse:
 		[self logFailure: aString.
-		self classForTestResult failure signal: aString].
+		self classForTestResult failure signal: aString]
 ]
 
 { #category : #asserting }
@@ -66,7 +66,7 @@ TestAsserter class >> isLogging [
 { #category : #logging }
 TestAsserter class >> logFailure: aString [
 	self isLogging ifTrue:
-		[self failureLog cr; nextPutAll: aString; flush].
+		[self failureLog cr; nextPutAll: aString; flush]
 ]
 
 { #category : #factory }
@@ -122,7 +122,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: r
 	| exception aString |
 	aBooleanOrBlock value
 		ifTrue: [ ^ self ].
-	
+
 	aString := aStringOrBlock value.
 	self logFailure: aString.
 	exception := resumableBoolean
@@ -136,7 +136,7 @@ TestAsserter >> assert: actual equals: expected [
 	"This method raises an AssertionFailure if actual is different (using #= message) from expected.
 	 Else it does nothing and execution continues.
 	"
-	
+
 	^ self
 		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
@@ -145,7 +145,7 @@ TestAsserter >> assert: actual equals: expected [
 { #category : #asserting }
 TestAsserter >> assert: actual identicalTo: expected [
 	"Verify whether the actual and the expected are the same object (have the same object pointer so #== returns true)."
-	
+
 	^ self
 		assert: expected == actual
 		description: [self comparingIdentityStringBetween: actual and: expected]
@@ -173,7 +173,7 @@ TestAsserter >> assertCollection: actualCollection hasSameElements: expected [
 		assert: (additionalElements isEmpty and: [ missingElements isEmpty ])
 		description:
 			(String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					stream
 						nextPutAll: 'Given Collections do not match!';
 						lf;
@@ -200,7 +200,7 @@ TestAsserter >> assertCollection: actualCollection includesAll: subcollection [
 
 { #category : #asserting }
 TestAsserter >> assertCollection: actualCollection includesAny: subcollection [
-	"Raises an AssertionFailure if actualCollection does not include any of the elements of 
+	"Raises an AssertionFailure if actualCollection does not include any of the elements of
 	 expectedCollection (using #includesAny: message).
     I also provide a specialized message for the AssertionFailure in case I fail.
  	"
@@ -226,7 +226,7 @@ TestAsserter >> classForTestResource [
 { #category : #factory }
 TestAsserter >> classForTestResult [
 	"Returns the class of the test result"
-	
+
 	"note that we did not name this method testResultClass because it is considered by tools as a test method."
 	^ self class classForTestResult
 ]
@@ -234,7 +234,7 @@ TestAsserter >> classForTestResult [
 { #category : #factory }
 TestAsserter >> classForTestSuite [
 	"Returns the class of the test suite"
-	
+
 	"note that we did not name this method testSuiteClass because it is considered by tools as a test method. it could be suiteClass"
 	^ self class classForTestSuite
 ]
@@ -249,7 +249,7 @@ TestAsserter >> comparingCollectionBetween: left and: right [
 	additionalLeft := (left difference: right) sorted: sortBlock.
 	additionalRight := (right difference: left) sorted: sortBlock.
 	^ String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			stream
 				nextPutAll: 'Given Collections do not match. Got ';
 				lf;
@@ -410,7 +410,7 @@ TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
 	 I also provide a specialized message for the AssertionFailure in case I fail.
 	"
-	
+
 	^ self
 		assert: (actualCollection includesAll: subcollection) not
 		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
@@ -418,7 +418,7 @@ TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 
 { #category : #asserting }
 TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
-	"Raises an AssertionFailure if actualCollection includes any of the elements of 
+	"Raises an AssertionFailure if actualCollection includes any of the elements of
 	 expectedCollection (by negating result of #includesAny: message).
     I also provide a specialized message for the AssertionFailure in case I fail.
  	"
@@ -440,7 +440,7 @@ TestAsserter >> denyEmpty: aCollection [
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 	"I check if the given block evaluation raises the given exception"
 
-	^ [ 
+	^ [
 	  aBlock value.
 	  false ]
 		  on: anExceptionalEvent
@@ -451,25 +451,25 @@ TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: aString [
 	"I check if the giving block (aBlock) evaluation raises the giving exception (anExceptionalEvent)"
 
-	^ [ 
+	^ [
 	  aBlock value.
 	  false ]
 		  on: anExceptionalEvent
-		  do: [ :ex | 
+		  do: [ :ex |
 		  ex return: (ex description includesSubstring: aString) not ]
 ]
 
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock [
-	"I check if the first given block (aBlock) evaluation raises the given exception 
-	(anExceptionalEvent) in which case I evaluate the second block (anotherBlock) 
+	"I check if the first given block (aBlock) evaluation raises the given exception
+	(anExceptionalEvent) in which case I evaluate the second block (anotherBlock)
 	with the exception as argument"
 
-	^ [ 
+	^ [
 	  aBlock value.
 	  false ]
 		  on: anException
-		  do: [ :exception | 
+		  do: [ :exception |
 			  anotherBlock value: exception.
 			  exception return: true ]
 ]
@@ -490,7 +490,7 @@ TestAsserter >> fail: aDescriptionString [
 
 { #category : #logging }
 TestAsserter >> logFailure: aString [
-	self class logFailure: aString.
+	self class logFailure: aString
 ]
 
 { #category : #accessing }
@@ -523,8 +523,8 @@ TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
     to run we report a test failure. "
 	<debuggerCompleteToSender>
 	^ aBlock valueWithin: aDuration onTimeout: [
-		self 
-			assert: false 
+		self
+			assert: false
 			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
 	]
 ]
@@ -533,7 +533,7 @@ TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
 TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
     "For compatibility with other Smalltalks"
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger).
+   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
 ]
 
 { #category : #asserting }
@@ -575,7 +575,7 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionInclude
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anException withExceptionDo: anotherBlock [ 
+TestAsserter >> should: aBlock raise: anException withExceptionDo: anotherBlock [
 	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock)
 ]
@@ -595,14 +595,14 @@ TestAsserter >> shouldnt: aBlock [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock description: aString [
-	"I test that block is evaluated to false. 
+	"I test that block is evaluated to false.
 	Otherwise I raise an AssertionFailure with the given description"
-	
+
 	self deny: aBlock value description: aString
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [  
+TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [
 	"To test that a particular exception is not raised during the execution of a Block"
 	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
@@ -610,9 +610,9 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
-	"To test that a particular exception is not raised during the execution of a Block. 
+	"To test that a particular exception is not raised during the execution of a Block.
 	Otherwise raise an AssertionFailure with the given description"
- 
+
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 		description: aString
@@ -630,9 +630,9 @@ TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesN
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [  
-	 
-	^self 
+TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
+
+	^self
 		assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring) not
 		description: aString
 ]

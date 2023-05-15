@@ -16,7 +16,7 @@ ErrorNodeStyler >> iconFor: aNode [
 
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
-	^ aNode errorMessage.
+	^ aNode errorMessage
 ]
 
 { #category : #hooks }
@@ -27,7 +27,7 @@ ErrorNodeStyler >> segmentMorphClass [
 
 { #category : #visiting }
 ErrorNodeStyler >> shouldStyleNode: aNode [
-	^ aNode isParseError
+	^ aNode isError
 ]
 
 { #category : #visiting }
@@ -35,7 +35,7 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |
 	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text | 
+	conf configurationBlock: [ :text |
 		| r |
 		r := self segmentMorphClass from: anEnglobingNode stop to: anEnglobingNode stop + 1.
 		text addSegment: r.
@@ -46,7 +46,7 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 		r borderColor: self borderColor ].
 	textModel announce: conf.
 
-	anEnglobingNode content do: [ :each | self visitNode: each ]
+	anEnglobingNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }

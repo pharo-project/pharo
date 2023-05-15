@@ -42,13 +42,13 @@ FFIExternalReference >> createDefaultHandle [
 { #category : #initialization }
 FFIExternalReference >> initialize [
 	super initialize.
-	self setHandle: self createDefaultHandle.
+	self setHandle: self createDefaultHandle
 ]
 
 { #category : #printing }
 FFIExternalReference >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		print: handle;
 		nextPut: $)

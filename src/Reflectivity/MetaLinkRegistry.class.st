@@ -42,7 +42,8 @@ Class {
 
 { #category : #adding }
 MetaLinkRegistry >> addMetaLink: aLink forObject: anObject [
-	(links at: aLink ifAbsentPut: WeakSet new) add: anObject
+
+	(links at: aLink ifAbsentPut: [ WeakSet new ]) add: anObject
 ]
 
 { #category : #permalinks }
@@ -105,8 +106,8 @@ MetaLinkRegistry >> permaLinksForMethod: method [
 	| class targets |
 	class := method methodClass.
 	targets := (self slotSourcesAt: class) flattened.
-	^ (permanentTargets associationsSelect: [ :assoc | 
-		   targets includes: assoc key ]) values flattened select: [ 
+	^ (permanentTargets associationsSelect: [ :assoc |
+		   targets includes: assoc key ]) values flattened select: [
 		  :permalink | permalink slotOrVarClass isInClassHierarchyOf: class ]
 ]
 
@@ -115,10 +116,10 @@ MetaLinkRegistry >> registerPermaLink: aPermaLink [
 	| registeredTargets registeredLinks registeredSlots |
 	registeredTargets := self registeredTargetsAt: aPermaLink slotOrVariable ifAbsentPut: [ Set new ].
 	registeredTargets add: aPermaLink.
-	
+
 	registeredLinks := permalinks at: aPermaLink link ifAbsentPut: [ Set new ].
 	registeredLinks add: aPermaLink.
-	
+
 	registeredSlots := self slotSourcesAt: aPermaLink slotOrVarClass ifAbsentPut: [ Set new ].
 	registeredSlots add: aPermaLink slotOrVariable
 ]
@@ -146,7 +147,7 @@ MetaLinkRegistry >> removePermaLinkFromPermanentTarget: permaLink [
 { #category : #permalinks }
 MetaLinkRegistry >> removePermalinkSlotOrVarFromClassRegistry: permaLink [
 
-	(self slotSourcesAt: permaLink slotOrVarClass) do: [ :set | 
+	(self slotSourcesAt: permaLink slotOrVarClass) do: [ :set |
 		set remove: permaLink slotOrVariable ifAbsent: [  ] ]
 ]
 
@@ -159,7 +160,7 @@ MetaLinkRegistry >> slotSourcesAt: aClass [
 MetaLinkRegistry >> slotSourcesAt: aClass ifAbsent: aBlock [
 
 	| registeredClasses |
-	registeredClasses := slotSources keys select: [ :c | 
+	registeredClasses := slotSources keys select: [ :c |
 		                     c isInClassHierarchyOf: aClass ].
 	registeredClasses isEmpty ifTrue: [ ^ aBlock value ].
 	^ registeredClasses collect: [ :c | slotSources at: c ]
@@ -175,7 +176,7 @@ MetaLinkRegistry >> unregisterPermaLinksFor: aLink [
 	| permaLinks |
 	permaLinks := (self permaLinksFor: aLink) ifEmpty: [ ^ self ].
 	permaLinks
-		do: [ :permaLink | 
+		do: [ :permaLink |
 			self removePermaLinkFromPermanentTarget: permaLink.
 			self removePermalinkSlotOrVarFromClassRegistry: permaLink ].
 	permalinks removeKey: aLink

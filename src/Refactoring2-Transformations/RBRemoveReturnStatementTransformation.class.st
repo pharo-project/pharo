@@ -66,15 +66,15 @@ RBRemoveReturnStatementTransformation >> privateTransform [
 
 	| methodTree nodesToRemove |
 	methodTree := self definingMethod.
-	
+
 	nodesToRemove := ( methodTree allChildren removeDuplicates
 		select: #isReturn )
 		select: [ :node | node sourceCode = returnValue ].
-	
+
 	nodesToRemove
 		ifEmpty: [ methodTree removeLast ]
 		ifNotEmpty: [ nodesToRemove do: [ :node | node parent removeNode: node ] ].
-	self definingClass compileTree: methodTree.
+	self definingClass compileTree: methodTree
 ]
 
 { #category : #api }
@@ -86,7 +86,7 @@ RBRemoveReturnStatementTransformation >> return: anExpression inMethod: aSelecto
 ]
 
 { #category : #printing }
-RBRemoveReturnStatementTransformation >> storeOn: aStream [ 
+RBRemoveReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

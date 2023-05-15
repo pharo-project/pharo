@@ -44,7 +44,7 @@ ZnLoggingReadStream >> atEnd [
 	| boolean |
 	boolean := stream atEnd.
 	logLevel > 1
-		ifTrue: [ 
+		ifTrue: [
 			logger value: ('{1} atEnd: {2}' format: { identifier. boolean }) ].
 	^ boolean
 ]
@@ -76,32 +76,32 @@ ZnLoggingReadStream >> isBinary [
 ZnLoggingReadStream >> logLevel: integer [
 	"logLevel 1 logs reads with next and friends
 	logLevl 2 logs peek and atEnd too"
-	
+
 	logLevel := integer
 ]
 
 { #category : #'initialize-release' }
 ZnLoggingReadStream >> logger: oneArgumentBlock [
-	logger := oneArgumentBlock 
+	logger := oneArgumentBlock
 ]
 
 { #category : #accessing }
 ZnLoggingReadStream >> next [
 	| byte |
 	byte := stream next.
-	logger value: ('{1} read 1 byte: {2}' format: { 
-		identifier. 
+	logger value: ('{1} read 1 byte: {2}' format: {
+		identifier.
 		byte ifNotNil: [ byte printStringBase: 16 length: 2 padded: true ] }).
 	^ byte
 ]
 
 { #category : #accessing }
-ZnLoggingReadStream >> next: requestedCount [ 
+ZnLoggingReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -109,7 +109,7 @@ ZnLoggingReadStream >> next: requestedCount [
 ZnLoggingReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: requestedCount
 		into: collection
@@ -120,11 +120,11 @@ ZnLoggingReadStream >> next: requestedCount into: collection [
 ZnLoggingReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| readCount |
-	readCount := self 
-		readInto: collection 
-		startingAt: offset 
+	readCount := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
 	^ requestedCount = readCount
 		ifTrue: [ collection ]
@@ -142,14 +142,14 @@ ZnLoggingReadStream >> peek [
 	byte := stream peek.
 	logLevel > 1
 		ifTrue: [
-			logger value: ('{1} peeked 1 byte: {2}' format: { 
+			logger value: ('{1} peeked 1 byte: {2}' format: {
 				identifier.
 				byte printStringBase: 16 length: 2 padded: true }) ].
 	^ byte
 ]
 
 { #category : #accessing }
-ZnLoggingReadStream >> readInto: collection startingAt: offset count: count [ 
+ZnLoggingReadStream >> readInto: collection startingAt: offset count: count [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
 
@@ -160,12 +160,12 @@ ZnLoggingReadStream >> readInto: collection startingAt: offset count: count [
 		ifFalse: [
 			String streamContents: [ :out |
 				out nextPutAll: identifier; space.
-				out nextPutAll: 'read '; print: bytesRead; 
+				out nextPutAll: 'read '; print: bytesRead;
 				nextPutAll: (bytesRead = 1 ifTrue: [ ' byte: ' ] ifFalse: [ ' bytes: ']).
 			offset to: offset + bytesRead - 1 do: [ :index |
 				(collection at: index) printOn: out base: 16 length: 2 padded: true ] ] ].
 	logger value: message.
-	^ bytesRead 
+	^ bytesRead
 ]
 
 { #category : #accessing }

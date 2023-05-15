@@ -9,14 +9,14 @@ RBAddMessageSendTransformationTest >> methodAfter [
 
 	| variable |
 	variable := 'String'.
-	variable byteAt: 1.
+	variable byteAt: 1
 ]
 
 { #category : #utilities }
 RBAddMessageSendTransformationTest >> methodBefore [
 
 	| variable |
-	variable := 'String'.
+	variable := 'String'
 ]
 
 { #category : #tests }
@@ -58,12 +58,12 @@ RBAddMessageSendTransformationTest >> testRefactoring [
 						inMethod: #methodBefore
 						inClass: #RBAddMessageSendTransformationTest)
 						asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 1.
-	
+
 	class := refactoring model classNamed: #RBAddMessageSendTransformationTest.
 	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body.
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
@@ -75,10 +75,10 @@ RBAddMessageSendTransformationTest >> testTransform [
 		inMethod: #methodBefore
 		inClass: self class name)
 		transform.
-	
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: self class name.
 	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body.
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]

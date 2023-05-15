@@ -50,7 +50,7 @@ RubTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
 		collect: [ :package | package packageName asString ].
 	^ EntryCompletion new
 		dataSourceBlock: [ :currText | applicants ];
-		filterBlock: [ :currApplicant :currText | 
+		filterBlock: [ :currApplicant :currText |
 			 currApplicant asUppercase includesSubstring: currText asString asUppercase ]
 ]
 

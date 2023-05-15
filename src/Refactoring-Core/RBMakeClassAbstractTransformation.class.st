@@ -1,3 +1,8 @@
+"
+I am a transformation that turns class into abstract class.
+
+I am responsible for adding class side method `isAbstract` to the selected class.
+"
 Class {
 	#name : #RBMakeClassAbstractTransformation,
 	#superclass : #RBClassRefactoring,
@@ -16,11 +21,11 @@ RBMakeClassAbstractTransformation class >> basicMenuItemString [
 { #category : #'instance creation' }
 RBMakeClassAbstractTransformation class >> class: targetClass [
 
-	^ self new class: targetClass 
+	^ self new class: targetClass
 ]
 
 { #category : #testing }
-RBMakeClassAbstractTransformation class >> isTransformation [ 
+RBMakeClassAbstractTransformation class >> isTransformation [
 
 	^ true
 ]
@@ -33,7 +38,7 @@ RBMakeClassAbstractTransformation >> class: class [
 
 { #category : #preconditions }
 RBMakeClassAbstractTransformation >> preconditions [
-	
+
 	^ (RBCondition isAbstractClass: targetClass) not
 ]
 

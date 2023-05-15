@@ -15,7 +15,7 @@ Class {
 DashedBorderStyle class >> width: width dashColors: cols dashLengths: lens [
 	"Answer a new instance of the receiver with the given
 	width, colours and lengths."
-	
+
 	^self new
 		width: width;
 		dashColors: cols dashLengths: lens
@@ -62,7 +62,7 @@ DashedBorderStyle >> dashLengths: anObject [
 { #category : #drawing }
 DashedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Frame the given rectangle on aCanvas"
-	
+
 	(aRectangle width < self width or: [aRectangle height < self width])
 		ifTrue: [^self]." don't do if too small"
 	aCanvas
@@ -85,6 +85,6 @@ DashedBorderStyle >> initialize [
 { #category : #accessing }
 DashedBorderStyle >> style [
 	"Answer #dashed."
-	
+
 	^#dashed
 ]

@@ -21,8 +21,8 @@ LocaleChangedTest >> germanLocale [
 LocaleChangedTest >> testInstanceCreation [
 	| instance |
 	instance := LocaleChanged from: self englishLocale to: self germanLocale.
-	
-	self 
+
+	self
 		assert: instance oldLocale equals: self englishLocale;
 		assert: instance newLocale equals: self germanLocale
 ]

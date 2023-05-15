@@ -28,13 +28,13 @@ SimplestClassListExample >> defaultTreeMorph [
 ]
 
 { #category : #view }
-SimplestClassListExample >> openDialogOn: aClass [ 
+SimplestClassListExample >> openDialogOn: aClass [
 	rootClass := aClass.
 	^ self openDialogWindowIn: self currentWorld title: 'All Object subclasses'
 ]
 
 { #category : #'instance creation' }
-SimplestClassListExample >> openOn: aClass [ 
+SimplestClassListExample >> openOn: aClass [
 	rootClass := aClass.
 	(self defaultTreeMorph buildContents embeddedInMorphicWindowLabeled: 'test') openInWorld
 	"(self dialogWindowIn: World title: 'All Object subclasses') openInWorld"
@@ -45,7 +45,7 @@ SimplestClassListExample >> plugOne [
 	| l |
 	rootClass := Object.
 	l := PluggableListMorph
-		on: self 
+		on: self
 		list: #rootItems
 		selected: #selected
 		changeSelected: #selected:.

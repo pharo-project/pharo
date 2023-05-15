@@ -33,7 +33,7 @@ MailComposition class >> setSmtpServer [
 	SmtpServer ifNil: [SmtpServer := ''].
 	SmtpServer := UIManager default
 		request: 'What is your mail server for outgoing mail?'
-		initialAnswer: SmtpServer.
+		initialAnswer: SmtpServer
 ]
 
 { #category : #'smtp server' }
@@ -61,7 +61,7 @@ MailComposition >> addAttachment [
 	fileSelected := UIManager default chooseFullFileNameMatching: nil.
 	fileSelected ifNil: [ ^ self ].
 	fileSelected
-		writeStreamDo: [ :stream | 
+		writeStreamDo: [ :stream |
 			stream binary.
 			self
 				messageText:
@@ -79,7 +79,7 @@ MailComposition >> breakLines: aString  atWidth: width [
 	result := (String new: (aString size * 50 // 49)) writeStream.
 
 	atAttachment := false.
-	aString asString linesDo: [ :line | | start end | 
+	aString asString linesDo: [ :line | | start end |
 		(line beginsWith: '====') ifTrue: [ atAttachment := true ].
 		atAttachment ifTrue: [
 			"at or after an attachment line; no more wrapping for the rest of the message"
@@ -93,7 +93,7 @@ MailComposition >> breakLines: aString  atWidth: width [
 				start := 1.
 					"output one shorter line each time through this loop"
 				[ start + width <= line size ] whileTrue: [
-	
+
 					"find the end of the line"
 					end := start + width - 1.
 					[end >= start and: [ (line at: (end+1)) isSeparator not ]] whileTrue: [
@@ -128,7 +128,7 @@ MailComposition >> breakLinesInMessage: message [
 	"multipart message; process the top-level parts.  HACK: the parts are modified in place"
 
 	message body mainType = 'text'
-		ifTrue: [ 
+		ifTrue: [
 			| newBodyText "it's a single-part text message.  reformat the text" |
 			newBodyText := self breakLines: message bodyText atWidth: 72.
 			message body: (MIMEDocument contentType: message body contentType content: newBodyText).
@@ -136,9 +136,9 @@ MailComposition >> breakLinesInMessage: message [
 	message body isMultipart
 		ifFalse: [ ^ self ].
 	message parts
-		do: [ :part | 
+		do: [ :part |
 			part body mainType = 'text'
-				ifTrue: [ 
+				ifTrue: [
 					| newBodyText |
 					newBodyText := self breakLines: part bodyText atWidth: 72.
 					part body: (MIMEDocument contentType: part body contentType content: newBodyText) ] ].
@@ -147,7 +147,7 @@ MailComposition >> breakLinesInMessage: message [
 
 { #category : #interface }
 MailComposition >> menuGet: aMenu shifted: shifted [
-	
+
 	aMenu addList: {
 		{'Find...(f)' .	#find}.
 		{'Find again (g)' . #findAgain}.
@@ -155,13 +155,13 @@ MailComposition >> menuGet: aMenu shifted: shifted [
 		#-.
 		{'Accept (s)' . #accept}.
 		{'Send message' .  #submit}}.
-	^aMenu.
+	^aMenu
 ]
 
 { #category : #accessing }
 MailComposition >> messageText [
 	"return the current text"
-	^messageText.
+	^messageText
 ]
 
 { #category : #accessing }
@@ -180,7 +180,7 @@ MailComposition >> open [
 
 { #category : #interface }
 MailComposition >> openInMorphic [
-	"open an interface for sending a mail message with the given initial 
+	"open an interface for sending a mail message with the given initial
 	text"
 
 	| textMorph buttonsList sendButton attachmentButton |

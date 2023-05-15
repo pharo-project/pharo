@@ -56,10 +56,10 @@ TextComposer >> addNullLineWithIndex: index andRectangle: r [
 
 	lines addLast: (
 		(
-			TextLine 
-				start: index 
+			TextLine
+				start: index
 				stop: index - 1
-				internalSpaces: 0 
+				internalSpaces: 0
 				paddingWidth: 0
 		)
 			rectangle: r;
@@ -93,8 +93,8 @@ TextComposer >> checkIfReadyToSlide [
 { #category : #composition }
 TextComposer >> composeAllLines [
 
-	[ currCharIndex <= theText size and: [ 
-		currentY + defaultLineHeight <= theContainer bottom ] ] whileTrue: [ 
+	[ currCharIndex <= theText size and: [
+		currentY + defaultLineHeight <= theContainer bottom ] ] whileTrue: [
 		(nowSliding
 			 ifTrue: [ self slideOneLineDown ]
 			 ifFalse: [ self composeOneLine ]) ifNil: [ ^ nil ] ]
@@ -117,7 +117,7 @@ TextComposer >> composeAllRectangles: rectangles [
 		lines size - numberOfLinesBefore timesRepeat: [lines removeLast].
 		^self
 	].
-	
+
 	"It's OK -- the line still fits."
 	maxRightX := maxRightX max: scanner rightX.
 	1 to: rectangles size - 1 do: [ :i |
@@ -130,7 +130,7 @@ TextComposer >> composeAllRectangles: rectangles [
 	reasonForStopping == #columnBreak ifTrue: [^nil].
 	currCharIndex > theText size ifTrue: [
 		^nil		"we are finished composing"
-	].
+	]
 ]
 
 { #category : #composition }
@@ -138,21 +138,21 @@ TextComposer >> composeEachRectangleIn: rectangles [
 
 	| myLine lastChar |
 
-	1 to: rectangles size do: [:i | 
+	1 to: rectangles size do: [:i |
 		currCharIndex <= theText size ifFalse: [ ^ false ].
-		myLine := scanner 
-			composeFrom: currCharIndex 
-			inRectangle: (rectangles at: i)				
-			firstLine: isFirstLine 
-			leftSide: i=1 
+		myLine := scanner
+			composeFrom: currCharIndex
+			inRectangle: (rectangles at: i)
+			firstLine: isFirstLine
+			leftSide: i=1
 			rightSide: i=rectangles size.
 		lines addLast: myLine.
 		actualHeight := actualHeight max: myLine lineHeight.  "includes font changes"
 		currCharIndex := myLine last + 1.
-		
+
 		"This happens if the text is just one line long"
 		(myLine last = 0) ifTrue: [ ^ false ].
-		
+
 		lastChar := theText at: myLine last.
 		(CharacterSet crlf includes: lastChar) ifTrue: [^#cr].
 		wantsColumnBreaks ifTrue: [
@@ -163,7 +163,7 @@ TextComposer >> composeEachRectangleIn: rectangles [
 ]
 
 { #category : #composition }
-TextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer wantsColumnBreaks: argWantsColumnBreaks [ 
+TextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer wantsColumnBreaks: argWantsColumnBreaks [
 
 	wantsColumnBreaks := argWantsColumnBreaks.
 	lines := argLinesCollection.
@@ -214,12 +214,12 @@ TextComposer >> fixupLastLineIfCR [
 "This awful bit is to ensure that if we have scanned all the text and the last character is a CR that there is a null line at the end of lines. Sometimes this was not happening which caused anomalous selections when selecting all the text. This is implemented as a post-composition fixup because I couldn't figure out where to put it in the main logic."
 
 	(theText size > 0 and: [ CharacterSet crlf includes: theText last ]) ifFalse: [ ^ self ].
-	
-	self addNullLineForIndex: theText size + 1.
+
+	self addNullLineForIndex: theText size + 1
 ]
 
 { #category : #protocol }
-TextComposer >> multiComposeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer wantsColumnBreaks: argWantsColumnBreaks [ 
+TextComposer >> multiComposeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer wantsColumnBreaks: argWantsColumnBreaks [
 	wantsColumnBreaks := argWantsColumnBreaks.
 	lines := argLinesCollection.
 	theTextStyle := argTextStyle.
@@ -274,5 +274,5 @@ TextComposer >> slideOneLineDown [
 				^nil
 			].
 		].
-	].
+	]
 ]

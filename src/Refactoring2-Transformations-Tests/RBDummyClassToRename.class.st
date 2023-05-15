@@ -15,6 +15,6 @@ RBDummyClassToRename >> method1 [
 
 { #category : #performing }
 RBDummyClassToRename >> method2 [
-	
+
 	^ self method1
 ]

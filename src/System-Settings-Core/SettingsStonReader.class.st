@@ -31,7 +31,7 @@ SettingsStonReader >> load [
 	"It loads all instances of StoredSetting from a stream."
 	stream ifNil: [ ^ #() ].
 	stream atEnd ifTrue: [ ^ #() ].
-	[ | reader | 
+	[ | reader |
 		reader := STON reader on: stream; yourself.
 		storedSettings := reader next.
 	] ensure: [ stream close ].
@@ -41,7 +41,7 @@ SettingsStonReader >> load [
 { #category : #loading }
 SettingsStonReader >> secureLoad [
 	[ self load ] on: STONReaderError do: [ :ex | "ignore" ].
-	^ self storedSettings ifNil: [ #() ].
+	^ self storedSettings ifNil: [ #() ]
 ]
 
 { #category : #accessing }

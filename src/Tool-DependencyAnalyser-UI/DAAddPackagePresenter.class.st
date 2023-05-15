@@ -17,9 +17,9 @@ Class {
 DAAddPackagePresenter >> actionOnAddPackage [
 	| relationGraph packagesToAdd |
 	buttonAddPackage
-		action: [ 
+		action: [
 			self selectedItemsFromPackageList
-				ifNotEmpty: [ 
+				ifNotEmpty: [
 					relationGraph := self dependenciesPresenter relationGraph.
 					packagesToAdd := self selectedItemsFromPackageList
 						collect: [ :packageName | (DAPackage on: (RPackageSet named: packageName)) beSeen ].
@@ -36,7 +36,7 @@ DAAddPackagePresenter >> buildList [
 	packagesAdded := self dependenciesPresenter seenPackagesName.
 	packagesNotAdded := self systemPackages.
 	packagesNotAdded removeAll: packagesAdded.
-	packageList sourceItems: packagesNotAdded.
+	packageList sourceItems: packagesNotAdded
 ]
 
 { #category : #initialization }
@@ -46,7 +46,7 @@ DAAddPackagePresenter >> connectPresenters [
 
 { #category : #layout }
 DAAddPackagePresenter >> defaultLayout [
-	
+
 	^ SpBoxLayout newTopToBottom
 			add: packageList;
 			add: buttonAddPackage expand: false;
@@ -71,14 +71,14 @@ DAAddPackagePresenter >> initialExtent [
 
 { #category : #initialization }
 DAAddPackagePresenter >> initializePresenters [
-	
+
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
 		icon: (self iconNamed: #addIcon);
 		yourself.
 
-	packageList := SpChooserPresenter new.
+	packageList := SpChooserPresenter new
 ]
 
 { #category : #initialization }

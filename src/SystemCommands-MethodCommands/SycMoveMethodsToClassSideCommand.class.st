@@ -14,7 +14,7 @@ SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassSideCommand >> defaultMenuIconName [ 
+SycMoveMethodsToClassSideCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
@@ -27,5 +27,4 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 SycMoveMethodsToClassSideCommand >> execute [
 
 	(RBMoveMethodsToClassSideDriver model: model methods: methods) execute
-
 ]

@@ -47,7 +47,7 @@ SycPromotePackageFromTagCommand >> execute [
 { #category : #execution }
 SycPromotePackageFromTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	package := aToolContext lastSelectedPackage.
 	classTag := aToolContext lastSelectedClassTag
 ]

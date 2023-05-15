@@ -26,13 +26,13 @@ ExpressionEvaluated class >> expression: theEvaluatedExpression context: anExecu
 
 { #category : #accessing }
 ExpressionEvaluated >> context [
-	
+
 	^ context
 ]
 
 { #category : #accessing }
 ExpressionEvaluated >> context: anObject [
-	
+
 	context := anObject
 ]
 
@@ -43,13 +43,13 @@ ExpressionEvaluated >> expression [
 
 { #category : #accessing }
 ExpressionEvaluated >> expressionEvaluated [
-	
+
 	^ expressionEvaluated
 ]
 
 { #category : #accessing }
 ExpressionEvaluated >> expressionEvaluated: anObject [
-	
+
 	expressionEvaluated := anObject
 ]
 

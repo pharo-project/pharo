@@ -58,7 +58,7 @@ RBMoveInstanceVariableToClassTransformation >> buildTransformations [
 ]
 
 { #category : #printing }
-RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [ 
+RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -76,5 +76,5 @@ RBMoveInstanceVariableToClassTransformation >> variable: aVariableName fromClass
 
 	variableName := aVariableName.
 	className := toClassName.
-	oldClass := fromClassName.
+	oldClass := fromClassName
 ]

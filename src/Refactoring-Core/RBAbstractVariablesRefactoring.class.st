@@ -21,8 +21,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection [ 
-	^self 
+RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection [
+	^self
 		model: aRBModel
 		abstractVariablesIn: aBRProgramNode
 		from: fromBehavior
@@ -31,7 +31,7 @@ RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBR
 ]
 
 { #category : #'instance creation' }
-RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [ 
+RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 	^ self new
 		model: aRBSmalltalk;
 		abstractVariablesIn: aBRProgramNode
@@ -54,13 +54,13 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 	self performCompositeRefactoring: refactoring.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
-		ifTrue: [ 
+		ifTrue: [
 			rewriter
 				replace: aString , ' := ``@object'
 				with:
 					('self <1s> ``@object' expandMacrosWith: refactoring setterMethod);
 				replace: aString with: 'self ' , refactoring getterMethod ]
-		ifFalse: [ 
+		ifFalse: [
 			rewriter
 				replace: aString , ' := ``@object'
 				with: ('self class <1s> ``@object' expandMacrosWith:
@@ -115,14 +115,14 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariables [
 ]
 
 { #category : #initialization }
-RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [ 
+RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 	| poolRefactoring |
 	tree := aBRProgramNode.
 	fromClass := self classObjectFor: fromBehavior.
-	toClasses := behaviorCollection 
+	toClasses := behaviorCollection
 				collect: [:each | self classObjectFor: each].
 	ignore := aVariableName.
-	poolRefactoring := RBExpandReferencedPoolsRefactoring 
+	poolRefactoring := RBExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: tree
 				fromClass: fromClass
@@ -177,26 +177,26 @@ RBAbstractVariablesRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [ 
+RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
 	ignore = varName ifTrue: [^self].
 	(aNode whoDefines: varName) ifNotNil: [^self].
-	(self instanceVariableNames includes: varName) 
+	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarWriters add: varName].
-	(self classVariableNames includes: varName) 
+	(self classVariableNames includes: varName)
 		ifTrue: [classVarWriters add: varName]
 ]
 
 { #category : #transforming }
-RBAbstractVariablesRefactoring >> processReferenceNode: aNode [ 
+RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
 	ignore = varName ifTrue: [^self].
 	(aNode whoDefines: varName) ifNotNil: [^self].
-	(self instanceVariableNames includes: varName) 
+	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarReaders add: varName].
-	(self classVariableNames includes: varName) 
+	(self classVariableNames includes: varName)
 		ifTrue: [classVarReaders add: varName]
 ]
 
@@ -204,11 +204,11 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
-	selectionBlock := 
-	[ :varName | 
-	(toClasses 
-		detect: 
-			[ :each | 
+	selectionBlock :=
+	[ :varName |
+	(toClasses
+		detect:
+			[ :each |
 			(each instanceSide includesClass: (nonMetaClass whoDefinesClassVariable: varName)) not ]
 		ifNone: [ nil ]) notNil ].
 	classVarReaders := classVarReaders select: selectionBlock.
@@ -217,10 +217,10 @@ RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
 
 { #category : #transforming }
 RBAbstractVariablesRefactoring >> transform [
-	self hasVariablesToAbstract 
-		ifTrue: 
-			[self 
-				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?' 
+	self hasVariablesToAbstract
+		ifTrue:
+			[self
+				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
 						expandMacros].
 	self abstractInstanceVariables.
 	self abstractClassVariables

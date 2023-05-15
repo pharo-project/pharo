@@ -17,11 +17,11 @@ FTMultipleSelectionStrategy >> isMultiple [
 FTMultipleSelectionStrategy >> selectAppendingIndex: index [
 	| currentSelection newSelection |
 	currentSelection := self table selectedIndexes.
-	
+
 	newSelection := (currentSelection includes: index)
 		ifTrue: [ currentSelection copyWithout: index ]
 		ifFalse: [ currentSelection copyWithFirst: index].
-		
+
 	self table selectIndexes: newSelection
 ]
 
@@ -36,8 +36,8 @@ FTMultipleSelectionStrategy >> selectIndex: index event: event [
 
 { #category : #private }
 FTMultipleSelectionStrategy >> selectIndexes: index previous: oldSelection [
-	"I ensure the selected index is the first in selection range so I can handle it better. 
-	 I do not like to assume and probably I will need the concept of 'selection', but for now 
+	"I ensure the selected index is the first in selection range so I can handle it better.
+	 I do not like to assume and probably I will need the concept of 'selection', but for now
 	 let's not abuse :)"
 
 	self table selectIndexes: (((oldSelection includes: index) ifTrue: [ oldSelection copyWithout: index ] ifFalse: [ oldSelection ]) copyWithFirst: index)
@@ -45,12 +45,12 @@ FTMultipleSelectionStrategy >> selectIndexes: index previous: oldSelection [
 
 { #category : #private }
 FTMultipleSelectionStrategy >> selectIndexesUpTo: endIndex [
-	"Selects a range of selectables, from what is already selected to a new index. 
+	"Selects a range of selectables, from what is already selected to a new index.
 	 This is used in case of multiple selections (when holding shift)"
 
 	| oldSelected firstIndex |
 	oldSelected := self table selectedIndexes.
-	firstIndex :=  oldSelected 
+	firstIndex :=  oldSelected
 		ifNotEmpty: [ oldSelected first ]
 		ifEmpty: [ endIndex ].
 

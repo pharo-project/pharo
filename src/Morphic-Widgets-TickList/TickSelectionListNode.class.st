@@ -44,7 +44,7 @@ TickSelectionListNode >> selected: aBoolean [
 { #category : #morph }
 TickSelectionListNode >> selectedMorph [
 	^ (TickSelectionCheckboxMorph basicNew index: (self model rootItems indexOf: self item);
-		initialize;	
+		initialize;
 		model: self item;
 		getStateSelector: #selected;
 		setStateSelector: #selected:;
@@ -59,6 +59,6 @@ TickSelectionListNode >> selectedMorph [
 
 { #category : #private }
 TickSelectionListNode >> toogleSelectionValue [
-	
+
 	self item toogleSelectionValue
 ]

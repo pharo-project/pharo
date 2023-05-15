@@ -33,14 +33,14 @@ DAMessageSendAnalyzer class >> on: aPackageName [
 
 { #category : #utilities }
 DAMessageSendAnalyzer class >> packagesProvidingSelector: aSelector [
-	^ aSelector implementors 
+	^ aSelector implementors
 		collect: [:each | each package name]
 		as: Set
 ]
 
 { #category : #computing }
 DAMessageSendAnalyzer >> implementedMessages [
-	^ (self packageStaticDependencies 
+	^ (self packageStaticDependencies
 		add: self packageName;
 		yourself)
 		flatCollect: [ :name | (RPackageOrganizer default packageNamed: name) selectors ]
@@ -48,7 +48,7 @@ DAMessageSendAnalyzer >> implementedMessages [
 
 { #category : #computing }
 DAMessageSendAnalyzer >> implementedMessagesWithManuallyResolvedDependencies [
-	^ (self manuallyResolvedDependencies 
+	^ (self manuallyResolvedDependencies
 		flatCollect: [ :name | (RPackageOrganizer default packageNamed: name) selectors ]
 		as: Set)
 			addAll: self implementedMessages;
@@ -62,7 +62,7 @@ DAMessageSendAnalyzer >> initializeWith: aDAPackage [
 
 { #category : #accessing }
 DAMessageSendAnalyzer >> manuallyResolvedDependencies [
-	^ self rPackage manuallyResolvedDependencies 
+	^ self rPackage manuallyResolvedDependencies
 ]
 
 { #category : #computing }
@@ -78,17 +78,22 @@ DAMessageSendAnalyzer >> missingMethods [
 
 { #category : #computing }
 DAMessageSendAnalyzer >> missingMethodsImplementedIn: aPackageName [
-	^ (RPackageOrganizer default packageNamed: aPackageName) selectors
-		intersection: self missingMethods
+
+	| rPackage |
+	rPackage := RPackageOrganizer default packageNamed: aPackageName ifAbsent: [
+		            DAUnknownManuallyResolvedPackage signalOn: aPackageName.
+		            ^ self missingMethods ].
+
+	^ rPackage selectors intersection: self missingMethods
 ]
 
 { #category : #computing }
 DAMessageSendAnalyzer >> missingMethodsWithPotentialMatch [
-	^ missingMethods ifNil: 
+	^ missingMethods ifNil:
 		[ missingMethods := Dictionary new.
 		self unimplementedCalls do: [ :selector |
 		missingMethods
-			at: selector 
+			at: selector
 			put: (self packagesProvidingSelector: selector) ].
 		missingMethods ]
 ]
@@ -96,11 +101,11 @@ DAMessageSendAnalyzer >> missingMethodsWithPotentialMatch [
 { #category : #computing }
 DAMessageSendAnalyzer >> missingMethodsWithPotentialMatchAfterManuallyResolvedDependenciesAddition [
 	| dictionary |
-	
+
 	dictionary := Dictionary new.
 	self unimplementedCallsInAllDependencies do: [ :selector |
-		dictionary 
-			at: selector 
+		dictionary
+			at: selector
 			put: (self packagesProvidingSelector: selector) ].
 	^ dictionary
 ]
@@ -111,8 +116,8 @@ DAMessageSendAnalyzer >> packageName [
 ]
 
 { #category : #accessing }
-DAMessageSendAnalyzer >> packageStaticDependencies [	
-	^ packageAnalysis dependencies 
+DAMessageSendAnalyzer >> packageStaticDependencies [
+	^ packageAnalysis dependencies
 		collect: [:each | each target packageName ]
 		as: Set
 ]
@@ -139,7 +144,7 @@ DAMessageSendAnalyzer >> rPackage [
 
 { #category : #computing }
 DAMessageSendAnalyzer >> sentMessages [
-	^ self rPackage methods 
+	^ self rPackage methods
 		flatCollect: #messages
 		as: Set
 ]

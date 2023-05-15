@@ -25,16 +25,16 @@ NaturalLanguageTranslator class >> cleanUp [
 ]
 
 { #category : #accessing }
-NaturalLanguageTranslator class >> current [ 
+NaturalLanguageTranslator class >> current [
 	"Return the currently registered translator"
-	
+
 	^Current
 ]
 
 { #category : #accessing }
 NaturalLanguageTranslator class >> current: aTranslator [
 	"Register a translator that should receiver the translation messages"
-	
+
 	Current := aTranslator
 ]
 

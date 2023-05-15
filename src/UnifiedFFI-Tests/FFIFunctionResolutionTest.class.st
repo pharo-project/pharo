@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #helpers }
-FFIFunctionResolutionTest >> pushInstVar: anInteger [ 
-	
+FFIFunctionResolutionTest >> pushInstVar: anInteger [
+
 	stack push: {#ivar . anInteger}
 ]
 
@@ -20,20 +20,20 @@ FFIFunctionResolutionTest >> pushLiteral: aLiteral [
 ]
 
 { #category : #helpers }
-FFIFunctionResolutionTest >> pushLiteralVariable: aClassVariable [ 
-	
+FFIFunctionResolutionTest >> pushLiteralVariable: aClassVariable [
+
 	stack push: { #classVariable . aClassVariable }
 ]
 
 { #category : #helpers }
 FFIFunctionResolutionTest >> pushReceiver [
-	
+
 	stack push: #( self )
 ]
 
 { #category : #helpers }
-FFIFunctionResolutionTest >> pushTemp: aString [ 
-	
+FFIFunctionResolutionTest >> pushTemp: aString [
+
 	stack push: { #temp . aString }
 ]
 
@@ -41,7 +41,7 @@ FFIFunctionResolutionTest >> pushTemp: aString [
 FFIFunctionResolutionTest >> setUp [
 
 	super setUp.
-	stack := Stack new.
+	stack := Stack new
 ]
 
 { #category : #tests }
@@ -62,7 +62,7 @@ FFIFunctionResolutionTest >> testResolveArgumentVariableShouldSetArgumentVariabl
 	resolver := FFICallout new
 		sender: context;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 
@@ -84,12 +84,12 @@ FFIFunctionResolutionTest >> testResolveArgumentVariableWithExplicitTypeResolves
 		receiver: receiver
 		method: Point>>#*
 		arguments: #().
-		
+
 	resolver := FFICallout new
 		sender: context;
 		requestor: self;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 
 	self assert: argument resolvedType class equals: intType
@@ -113,7 +113,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldBeInt32Type [
 	resolver := FFICallout new
 		sender: context;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 
 	self assert: argument resolvedType class equals: int32Type
@@ -137,7 +137,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 	resolver := FFICallout new
 		sender: context;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 
@@ -152,11 +152,11 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldBeInt32Type [
 	argument := FFIConstantArgument new
 		value: false;
 		yourself.
-	
+
 	resolver := FFICallout new
 		requestor: self;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 
 	self assert: argument resolvedType class equals: int32Type
@@ -169,11 +169,11 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 	argument := FFIConstantArgument new
 		value: false;
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 	argument loader emitArgument: self context: nil inCallout: nil.
 
-	self assert: stack pop equals: { #literal . 0 }.
+	self assert: stack pop equals: { #literal . 0 }
 ]
 
 { #category : #tests }
@@ -183,7 +183,7 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldBeInt32 [
 	argument := FFIConstantArgument new
 		value: 1;
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 
 	self assert: argument resolvedType class equals: uint32Type
@@ -196,11 +196,11 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 	argument := FFIConstantArgument new
 		value: 1;
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 	argument loader emitArgument: self context: nil inCallout: nil.
 
-	self assert: stack pop equals: { #literal . 1}.
+	self assert: stack pop equals: { #literal . 1}
 ]
 
 { #category : #tests }
@@ -210,7 +210,7 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldBeVoidPointerType [
 	argument := FFIConstantArgument new
 		value: 'NULL';
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 
 	self assert: argument resolvedType class equals: voidType.
@@ -224,11 +224,11 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader 
 	argument := FFIConstantArgument new
 		value: 'NULL';
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 	argument loader emitArgument: self context: nil inCallout: nil.
 
-	self assert: stack pop equals: { #literal . ExternalAddress null}.
+	self assert: stack pop equals: { #literal . ExternalAddress null}
 ]
 
 { #category : #tests }
@@ -238,7 +238,7 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldBeVoidPointerType [
 	argument := FFIConstantArgument new
 		value: nil;
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 
 	self assert: argument resolvedType class equals: voidType.
@@ -252,11 +252,11 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 	argument := FFIConstantArgument new
 		value: nil;
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 	argument loader emitArgument: self context: nil inCallout: nil.
 
-	self assert: stack pop equals: { #literal . ExternalAddress null }.
+	self assert: stack pop equals: { #literal . ExternalAddress null }
 ]
 
 { #category : #tests }
@@ -266,22 +266,22 @@ FFIFunctionResolutionTest >> testResolveConstantSelfOfExternalObjectShouldSetCon
 	argument := FFIConstantArgument new
 		value: #self;
 		yourself.
-		
+
 	receiver := FFIExternalObjectForTest new.
 	context := Context
 		sender: nil
 		receiver: receiver
 		method: FFIExternalObjectForTest>>#testMethod
 		arguments: #().
-		
+
 	resolver := FFICallout new
 		sender: context;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context inCallout: nil.
 
-	self assert: stack pop equals: #(#ivar 1).
+	self assert: stack pop equals: #(#ivar 1)
 ]
 
 { #category : #tests }
@@ -291,18 +291,18 @@ FFIFunctionResolutionTest >> testResolveConstantSelfShouldResolveToExternalObjec
 	argument := FFIConstantArgument new
 		value: #self;
 		yourself.
-		
+
 	receiver := FFIExternalObjectForTest new.
 	context := Context
 		sender: nil
 		receiver: receiver
 		method: FFIExternalObjectForTest>>#testMethod
 		arguments: #().
-		
+
 	resolver := FFICallout new
 		sender: context;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 
 	self assert: argument resolvedType equals: (receiver class asExternalTypeOn: nil)
@@ -333,7 +333,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfStringShouldSetConstantLoade
 	argument resolveUsing: FFICallout new.
 	argument loader emitArgument: self context: nil inCallout: nil.
 
-	self assert: stack pop equals: { #literal . 'self' }.
+	self assert: stack pop equals: { #literal . 'self' }
 ]
 
 { #category : #tests }
@@ -343,11 +343,11 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldBeInt32Type [
 	argument := FFIConstantArgument new
 		value: true;
 		yourself.
-	
+
 	resolver := FFICallout new
 		requestor: self;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 
 	self assert: argument resolvedType class equals: int32Type
@@ -360,11 +360,11 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 	argument := FFIConstantArgument new
 		value: true;
 		yourself.
-	
+
 	argument resolveUsing: FFICallout new.
 	argument loader emitArgument: self context: nil inCallout: nil.
 
-	self assert: stack pop equals: { #literal . 1 }.
+	self assert: stack pop equals: { #literal . 1 }
 ]
 
 { #category : #tests }
@@ -385,7 +385,7 @@ FFIFunctionResolutionTest >> testResolveInstanceVariableShouldSetInstanceVariabl
 	resolver := FFICallout new
 		sender: context;
 		yourself.
-	
+
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 

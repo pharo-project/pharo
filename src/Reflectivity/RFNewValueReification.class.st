@@ -19,13 +19,13 @@ RFNewValueReification class >> key [
 
 { #category : #generate }
 RFNewValueReification >> genForRBAssignmentNode [
-	^RBVariableNode named: #RFNewValueReificationVar.
+	^RBVariableNode named: #RFNewValueReificationVar
 ]
 
 { #category : #generate }
 RFNewValueReification >> genForRBVariableNode [
 	"same as #value for variableNodes"
-	^RBVariableNode named: #RFNewValueReificationVar.
+	^RBVariableNode named: #RFNewValueReificationVar
 ]
 
 { #category : #preamble }

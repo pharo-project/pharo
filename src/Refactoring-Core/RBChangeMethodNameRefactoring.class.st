@@ -50,7 +50,7 @@ RBChangeMethodNameRefactoring >> implementorsCanBePrimitives [
 ]
 
 { #category : #private }
-RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
+RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
@@ -83,18 +83,18 @@ RBChangeMethodNameRefactoring >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self myConditions 
-				& (RBCondition definesSelector: oldSelector in: class) 
+	conditions := self myConditions
+				& (RBCondition definesSelector: oldSelector in: class)
 				& (RBCondition isValidMethodName: newSelector for: class).
-					
-	conditions := self implementors 
-		inject: conditions into: [ :condition :each | 
+
+	conditions := self implementors
+		inject: conditions into: [ :condition :each |
 			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
-		
-	^conditions & (RBCondition withBlock: 
-		[self implementors size > 1 
-			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?' 
+
+	^conditions & (RBCondition withBlock:
+		[self implementors size > 1
+			ifTrue:
+				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?'
 							expandMacrosWith: self implementors size)].
 		true])
 ]
@@ -103,7 +103,7 @@ RBChangeMethodNameRefactoring >> preconditions [
 RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
-	self implementors 
+	self implementors
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
@@ -118,7 +118,7 @@ RBChangeMethodNameRefactoring >> renameArgumentsIn: parseTree [
 RBChangeMethodNameRefactoring >> renameImplementors [
 
 	self implementors
-		do: [ :each | 
+		do: [ :each |
 			| parseTree |
 
 			parseTree := each parseTreeForSelector: oldSelector.
@@ -156,11 +156,11 @@ RBChangeMethodNameRefactoring >> renameMessageSendsIn: classes [
 ]
 
 { #category : #initialization }
-RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [ 
+RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap.
+	permutation := aMap
 ]
 
 { #category : #transforming }

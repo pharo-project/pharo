@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #comparing }
-TallyModel >> <= aTallyModelAndreas [ 
+TallyModel >> <= aTallyModelAndreas [
 	^ self item tally <= aTallyModelAndreas item tally
 ]
 
 { #category : #comparing }
 TallyModel >> = aTallyModel [
 
-	^ self item tally = aTallyModel item tally and: [ 
-		  self item class = aTallyModel item class and: [ 
+	^ self item tally = aTallyModel item tally and: [
+		  self item class = aTallyModel item class and: [
 			self item method = aTallyModel item method ] ]
 ]
 
@@ -41,12 +41,12 @@ TallyModel >> browseItem [
 { #category : #accessing }
 TallyModel >> childrenItems [
 	| perCent threshold |
-	
+
 	model tallyRoot ifNil: [ ^#() ].
-	
+
 	perCent := model showNodeThreshold.
 	threshold := (perCent asFloat / 100 * model tallyRoot tally) rounded.
-	
+
 	^ (self item sonsOver: threshold) asSortedCollection reverse
 ]
 
@@ -82,14 +82,14 @@ TallyModel >> keyDown: anEvent from: aTreeMorph [
 TallyModel >> leavesInto: aCollection fromSender: anObject [
 
 	item leavesInto: aCollection fromSender: anObject.
-	aCollection associationsDo: [ :assoc | 
+	aCollection associationsDo: [ :assoc |
 		assoc value: (assoc value asTallyModel
 				 model: model;
 				 yourself) ]
 ]
 
 { #category : #menu }
-TallyModel >> menu: menu shifted: b [ 
+TallyModel >> menu: menu shifted: b [
 	(menu
 		add: 'Browse (b)'
 		target: self
@@ -101,8 +101,7 @@ TallyModel >> menu: menu shifted: b [
 	(menu
 		add: 'Explore (I)'
 		target: self
-		selector: #exploreItem) icon: (self iconNamed: #smallFind).
-
+		selector: #exploreItem) icon: (self iconNamed: #smallFind)
 ]
 
 { #category : #accessing }
@@ -125,7 +124,7 @@ TallyModel >> relativePath [
 	| rootPath |
 	rootPath := model tallyRoot path.
 
-	rootPath doWithIndex: [ :each :index | 
+	rootPath doWithIndex: [ :each :index |
 		self assert: each = (self path at: index) ].
 	^ self path copyFrom: rootPath size to: self path size
 ]
@@ -144,8 +143,8 @@ TallyModel >> sons [
 ]
 
 { #category : #accessing }
-TallyModel >> sonsOver: minTally [ 
-	^ (item sonsOver: minTally) collect: [ :each | 
+TallyModel >> sonsOver: minTally [
+	^ (item sonsOver: minTally) collect: [ :each |
 		  each asTallyModel
 			  model: model;
 			  yourself ]
@@ -158,17 +157,17 @@ TallyModel >> tally [
 
 { #category : #accessing }
 TallyModel >> time [
-	^ (self weight * self model totalTime / 100) 
+	^ (self weight * self model totalTime / 100)
 ]
 
 { #category : #accessing }
 TallyModel >> weight [
-	self tally isZero ifTrue: [ ^ 0 ]. 
+	self tally isZero ifTrue: [ ^ 0 ].
 	^ self tally asFloat / model totalTally * 100.0
 ]
 
 { #category : #accessing }
-TallyModel >> weightToRoot [  
+TallyModel >> weightToRoot [
 	self tally isZero ifTrue: [ ^ 0 ].
 	model tallyRoot tally isZero ifTrue: [ self error: 'this shouldnt happen' ].
 	^ self tally asFloat / model tallyRoot tally * 100.0

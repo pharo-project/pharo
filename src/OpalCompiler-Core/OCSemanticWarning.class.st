@@ -23,10 +23,10 @@ OCSemanticWarning >> compilationContext: anObject [
 
 { #category : #correcting }
 OCSemanticWarning >> defaultAction [
-	
+
 	compilationContext interactive ifFalse: [ ^nil ].
-	^self openMenuIn: 
-		[:labels :lines :caption | 
+	^self openMenuIn:
+		[:labels :lines :caption |
 		UIManager default chooseFrom: labels lines: lines title: caption]
 ]
 

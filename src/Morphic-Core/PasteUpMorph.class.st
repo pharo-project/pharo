@@ -97,7 +97,7 @@ PasteUpMorph >> acceptDroppingMorph: dropped event: evt [
 	aMorph := self morphToDropFrom: dropped.
 	super acceptDroppingMorph: aMorph event: evt.
 	aMorph
-		submorphsDo: [ :m | 
+		submorphsDo: [ :m |
 			m isHaloMorph
 				ifTrue: [ m delete ] ].
 	self bringTopmostsToFront
@@ -111,7 +111,7 @@ PasteUpMorph >> addMorph: aMorph centeredNear: aPoint [
 	trialRect := Rectangle center: aPoint extent: aMorph fullBounds extent.
 	delta := trialRect amountToTranslateWithin: bounds.
 	aMorph position: trialRect origin + delta.
-	self addMorph: aMorph.
+	self addMorph: aMorph
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -123,7 +123,7 @@ PasteUpMorph >> addMorphFront: aMorph [
 { #category : #'wiw support' }
 PasteUpMorph >> addMorphInLayer: aMorph [
 	super addMorphInLayer: aMorph.
-	aMorph wantsToBeTopmost ifFalse:[self bringTopmostsToFront].
+	aMorph wantsToBeTopmost ifFalse:[self bringTopmostsToFront]
 ]
 
 { #category : #'menu & halo' }
@@ -141,7 +141,7 @@ PasteUpMorph >> addWorldHaloMenuItemsTo: aMenu hand: aHandMorph [
 	self addDebuggingItemsTo: aMenu hand: aHandMorph.
 
 	aMenu addLine.
-	aMenu defaultTarget: aHandMorph.
+	aMenu defaultTarget: aHandMorph
 ]
 
 { #category : #'menu & halo' }
@@ -159,7 +159,7 @@ PasteUpMorph >> addWorldToggleItemsToHaloMenu: aMenu [
 { #category : #accessing }
 PasteUpMorph >> backgroundMorph [
 	"Answer the background morph if any."
-	
+
 	^backgroundMorph
 ]
 
@@ -181,7 +181,7 @@ PasteUpMorph >> backgroundMorph: aMorph [
 PasteUpMorph >> bringTopmostsToFront [
 	submorphs
 		select:[:m| m wantsToBeTopmost]
-		thenDo:[:m| self addMorphInLayer: m].
+		thenDo:[:m| self addMorphInLayer: m]
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -193,7 +193,7 @@ PasteUpMorph >> bringWindowsFullOnscreen [
 
 	bounds
 		allAreasOutsideList: ( self taskbars collect: [ :t | t bounds ] )
-		do: [ :e | 
+		do: [ :e |
 			r
 				ifNil: [ r := e ]
 				ifNotNil: [ r area > e area
@@ -202,7 +202,7 @@ PasteUpMorph >> bringWindowsFullOnscreen [
 					]
 			].
 	( self windowsSatisfying: [ :w | true ] )
-		do: [ :aWindow | 
+		do: [ :aWindow |
 			aWindow right: ( aWindow right min: r right ).
 			aWindow bottom: ( aWindow bottom min: r bottom ).
 			aWindow left: ( aWindow left max: r left ).
@@ -232,7 +232,7 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
-	(self confirm: 'Do you really want to close all unchanged windows ?') ifFalse: [ 
+	(self confirm: 'Do you really want to close all unchanged windows ?') ifFalse: [
 		^ self ].
 	(self  windowsSatisfying: [:w | w model canDiscardEdits])
 		do: [:w | w delete]
@@ -252,7 +252,7 @@ PasteUpMorph >> closeUnchangedWindows [
 except those with unaccepted edits?' translated)
 		ifFalse: [^ self].
 
-	self  closeAllUnchangedWindows.
+	self  closeAllUnchangedWindows
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -304,7 +304,7 @@ PasteUpMorph >> currentCursor: aCursor [
 PasteUpMorph >> currentWindow [
 
 	"Answer the top window or nil"
-	
+
 	^ self class environment at: #SystemWindow ifPresent: [:systemWindow | systemWindow topWindow]
 ]
 
@@ -360,7 +360,7 @@ PasteUpMorph >> dispatchCommandKeyInWorld: aChar event: evt [
 { #category : #'menu & halo' }
 PasteUpMorph >> dispatchKeystroke: anEvent [
 	anEvent keyCharacter == Character tab
-		ifTrue: [ 
+		ifTrue: [
 			self tabAmongFields
 				ifTrue: [ ^ self tabHitWithEvent: anEvent ] ]
 ]
@@ -377,7 +377,7 @@ PasteUpMorph >> drawBackgroundSketchOn: aCanvas [
 PasteUpMorph >> drawGridOn: aCanvas [
 
 	(self griddingOn and: [ self gridVisible ])
-		ifTrue: [ 
+		ifTrue: [
 			aCanvas
 				fillRectangle: self bounds
 				fillStyle:
@@ -389,14 +389,14 @@ PasteUpMorph >> drawGridOn: aCanvas [
 ]
 
 { #category : #drawing }
-PasteUpMorph >> drawOn: aCanvas [ 
+PasteUpMorph >> drawOn: aCanvas [
 	"Draw in order:
 	- background color
 	- grid, if any
 	- background sketch, if any
 	Later (in drawSubmorphsOn:) I will skip drawing the background sketch."
 
-	super drawOn: aCanvas.	
+	super drawOn: aCanvas.
 	self drawGridOn: aCanvas.
 	self drawBackgroundSketchOn: aCanvas
 ]
@@ -408,9 +408,9 @@ PasteUpMorph >> drawSubmorphsOn: aCanvas [
 	| drawBlock |
 	submorphs isEmpty
 		ifTrue: [ ^ self ].
-	drawBlock := [ :canvas | 
+	drawBlock := [ :canvas |
 	submorphs
-		reverseDo: [ :m | 
+		reverseDo: [ :m |
 			m ~~ backgroundMorph
 				ifTrue: [ canvas fullDrawMorph: m ] ] ].
 	self clipSubmorphs
@@ -434,7 +434,7 @@ PasteUpMorph >> dropFiles: anEvent [
 
 	| numFiles |
 	numFiles := anEvent contents.
-	1 to: numFiles do: [ :i | 
+	1 to: numFiles do: [ :i |
 		| aFileReference handler |
 		aFileReference := anEvent requestDropReference: i.
 		handler := ExternalDropHandler
@@ -463,14 +463,14 @@ PasteUpMorph >> findWindow: evt [
 		[:w | menu add: w label target: w selector: #activateAndForceLabelToShow.
 			w model canDiscardEdits ifFalse: [menu lastItem color: Color red]].
 	(expanded isEmpty or: [ collapsed isEmpty and: [ nakedMorphs isEmpty ]]) ifFalse: [menu addLine].
-	(collapsed asSortedCollection: [:w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label]) do: 
+	(collapsed asSortedCollection: [:w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label]) do:
 		[:w | menu add: w label target: w selector: #collapseOrExpand.
 		w model canDiscardEdits ifFalse: [menu lastItem color: Color red]].
 	nakedMorphs isEmpty ifFalse: [menu addLine].
 	(nakedMorphs asSortedCollection: [:w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name]) do:
 		[:w | menu add: w class name target: w selector: #comeToFrontAndAddHalo].
 	menu addTitle: 'find window'.
-	menu popUpEvent: evt in: self.
+	menu popUpEvent: evt in: self
 ]
 
 { #category : #'world state' }
@@ -488,7 +488,7 @@ PasteUpMorph >> flashRects: rectangleList color: aColor [
 		screenRect := r translateBy: self viewBox origin.
 		blt destRect: screenRect; copyBits.
 		(Delay forMilliseconds: 15) wait.
-		blt destRect: screenRect; copyBits ].
+		blt destRect: screenRect; copyBits ]
 ]
 
 { #category : #drawing }
@@ -560,7 +560,7 @@ PasteUpMorph >> gridVisibleOnOff [
 
 { #category : #gridding }
 PasteUpMorph >> gridVisibleString [
-	"Answer a string to be used in a menu offering the opportunity 
+	"Answer a string to be used in a menu offering the opportunity
 	to show or hide the grid"
 	^ (self gridVisible
 		ifTrue: ['<yes>']
@@ -583,7 +583,7 @@ PasteUpMorph >> griddingOnOff [
 
 { #category : #gridding }
 PasteUpMorph >> griddingString [
-	"Answer a string to use in a menu offering the user the 
+	"Answer a string to use in a menu offering the user the
 	opportunity to start or stop using gridding"
 	^ (self griddingOn
 		ifTrue: ['<yes>']
@@ -609,7 +609,7 @@ PasteUpMorph >> icon [
 { #category : #initialization }
 PasteUpMorph >> initialize [
 	"initialize the state of the receiver"
-	
+
 	super initialize.
 	self enableDragNDrop.
 	self clipSubmorphs: true
@@ -634,10 +634,10 @@ PasteUpMorph >> initializeDesktopCommandKeySelectors [
 PasteUpMorph >> invokeWorldMenu: evt [
 	"Put up the world menu, triggered by the passed-in event."
 	| menu |
-	
+
 	"If the user does not want a world menu, do not invoke it."
 	self class shouldShowWorldMenu ifFalse: [ ^ self ].
-	
+
 	self bringTopmostsToFront.
 	"put up screen menu"
 	(menu := self worldMenu) popUpEvent: evt in: self.
@@ -656,7 +656,7 @@ PasteUpMorph >> isCursorOwner [
 
 { #category : #testing }
 PasteUpMorph >> isEasySelecting [
-	"This is to isolate easySelection predicate. 
+	"This is to isolate easySelection predicate.
 	Selectors in holders make no sense so we are limiting easy
 	selection to the worldMorph.
 	It would also make sense in playfield so feel free to adjust this
@@ -698,14 +698,14 @@ PasteUpMorph >> keyboardNavigationHandler: aHandler [
 ]
 
 { #category : #'world menu' }
-PasteUpMorph >> lastKeystroke [	
-	"Answer the last keystroke fielded by the receiver"	
+PasteUpMorph >> lastKeystroke [
+	"Answer the last keystroke fielded by the receiver"
 	^ self valueOfProperty: #lastKeystroke ifAbsent: ['']
 ]
 
 { #category : #'world menu' }
-PasteUpMorph >> lastKeystroke: aString [	
-	"Remember the last keystroke fielded by the receiver"	
+PasteUpMorph >> lastKeystroke: aString [
+	"Remember the last keystroke fielded by the receiver"
 	^ self setProperty: #lastKeystroke toValue: aString
 ]
 
@@ -717,7 +717,7 @@ PasteUpMorph >> modalWindow: aMorph [
 ]
 
 { #category : #'Morphic-Base-Basic' }
-PasteUpMorph >> morphToDropFrom: aMorph [ 
+PasteUpMorph >> morphToDropFrom: aMorph [
 	"Given a morph being carried by the hand, which the hand is about to drop, answer the actual morph to be deposited.  Normally this would be just the morph itself, but several unusual cases arise, which this method is designed to service."
 
 	^aMorph
@@ -757,7 +757,7 @@ PasteUpMorph >> mouseDown: evt [
 		ifTrue: [ ^ self popUpContentsMenu: evt ].
 	grabbedMorph := self morphToGrab: evt.
 	grabbedMorph
-		ifNotNil: [ 
+		ifNotNil: [
 			grabbedMorph isSticky
 				ifTrue: [ ^ self ].
 			^ evt hand grabMorph: grabbedMorph ].
@@ -767,12 +767,12 @@ PasteUpMorph >> mouseDown: evt [
 	evt hand removeHalo.	"shake off halos"
 	evt hand releaseKeyboardFocus.	"shake of keyboard foci"
 	(evt shiftPressed not and: [ self isWorldMorph not and: [ self wantsEasySelection not ] ])
-		ifTrue: [ 
+		ifTrue: [
 			evt wasHandled: false.
 			^ self ].	"explicitly ignore the event if we're not the world and we'll not select,
 		so that we could be picked up if need be"
 	(evt shiftPressed or: [ self wantsEasySelection ])
-		ifTrue: [ 
+		ifTrue: [
 			| clickSelector |
 			evt shiftPressed
 				ifTrue: [ clickSelector := #popUpContentsMenu: ]
@@ -796,7 +796,7 @@ PasteUpMorph >> nonWindows [
 
 { #category : #accessing }
 PasteUpMorph >> osWindow [
-	
+
 	^ nil
 ]
 
@@ -809,7 +809,7 @@ PasteUpMorph >> popUpContentsMenu: evt [
 	menu buildTitle: [ :titleMorph |
 		titleMorph bigTitle: self contentsMenuTitle
 	];
-	popUpEvent: evt in: (self world ifNil: [self]).
+	popUpEvent: evt in: (self world ifNil: [self])
 ]
 
 { #category : #'dropping/grabbing' }
@@ -829,13 +829,13 @@ PasteUpMorph >> positionNear: aPoint forExtent: anExtent adjustmentSuggestion: a
 { #category : #private }
 PasteUpMorph >> privateRemoveMorph: aMorph [
 	backgroundMorph == aMorph ifTrue: [ backgroundMorph := nil ].
-	^super privateRemoveMorph: aMorph.
+	^super privateRemoveMorph: aMorph
 ]
 
 { #category : #caching }
 PasteUpMorph >> releaseCachedState [
 	super releaseCachedState.
-	self removeModalWindow.
+	self removeModalWindow
 ]
 
 { #category : #accessing }
@@ -866,8 +866,8 @@ PasteUpMorph >> resizeToFit [
 
 { #category : #options }
 PasteUpMorph >> resizeToFitString [
-	"Answer a string, to be used in a self-updating menu, to 
-	represent whether the receiver is currently using resize-to-fit 
+	"Answer a string, to be used in a self-updating menu, to
+	represent whether the receiver is currently using resize-to-fit
 	or not"
 	^ (self resizeToFit
 		ifTrue: ['<yes>']
@@ -908,12 +908,12 @@ PasteUpMorph >> setGridSpec [
 	result := [self class compiler evaluate: response] onErrorDo: [^ self].
 	(result isPoint and: [(result > (0@0)) ])
 		ifTrue: [self gridModulus: result]
-		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )].
+		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )]
 ]
 
 { #category : #'wiw support' }
 PasteUpMorph >> shouldGetStepsFrom: aWorld [
-	(self isWorldMorph and: [owner notNil]) 
+	(self isWorldMorph and: [owner notNil])
 		ifTrue: [ ^self outermostWorldMorph == aWorld ].
 	^super shouldGetStepsFrom: aWorld
 ]
@@ -933,16 +933,16 @@ PasteUpMorph >> useRoundedCorners [
 ]
 
 { #category : #'project state' }
-PasteUpMorph >> viewBox: newViewBox [ 
+PasteUpMorph >> viewBox: newViewBox [
 	"I am now displayed within newViewBox; react."
 
 	super position: newViewBox topLeft.
-	fullBounds := bounds := newViewBox.
+	fullBounds := bounds := newViewBox
 ]
 
 { #category : #'dropping/grabbing' }
 PasteUpMorph >> wantsDroppedMorph: aMorph event: evt [
-	
+
 	self visible ifFalse: [^ false].  "will be a call to #hidden again very soon"
 	self dropEnabled ifFalse: [^ false].
 	^ true
@@ -976,7 +976,7 @@ PasteUpMorph >> windowEvent: anEvent [
 	self windowEventHandler ifNotNil: [ ^ self windowEventHandler windowEvent: anEvent ].
 	"The window close dialog is modal, since the windowClose event originates from the system window button, we need to protect against opening multiple, otherwise we end up with the world in a locked state when one of them is cancelled"
 	(anEvent type == #windowClose and: [ self valueOfProperty: #canOpenCloseDialog ifAbsent: true ])
-		ifTrue: [ 
+		ifTrue: [
 			self setProperty: #canOpenCloseDialog toValue: false.
 			WorldState quitSession.
 			self removeProperty: #canOpenCloseDialog ]
@@ -999,12 +999,12 @@ PasteUpMorph >> windowsSatisfying: windowBlock [
 
 	| windows |
 	windows := OrderedCollection new.
-	self submorphs do: [:m | 
-		m embeddedWindowOrNil ifNotNil: [ 
-			(windowBlock value: m) 
+	self submorphs do: [:m |
+		m embeddedWindowOrNil ifNotNil: [
+			(windowBlock value: m)
 				ifTrue: [ windows addLast: m ] ] ].
-		
-	^ windows.
+
+	^ windows
 ]
 
 { #category : #'world menu' }

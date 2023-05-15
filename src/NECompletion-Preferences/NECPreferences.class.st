@@ -46,7 +46,7 @@ NECPreferences class >> backgroundColor [
 ]
 
 { #category : #accessing }
-NECPreferences class >> backgroundColor: aColor [ 
+NECPreferences class >> backgroundColor: aColor [
 	backgroundColor := aColor
 ]
 
@@ -107,7 +107,7 @@ NECPreferences class >> enabled [
 
 { #category : #accessing }
 NECPreferences class >> enabled: aBoolean [
-	enabled := aBoolean.
+	enabled := aBoolean
 ]
 
 { #category : #accessing }
@@ -187,11 +187,11 @@ NECPreferences class >> settingsOn: aBuilder [
 		default: true;
 		iconName: #smallConfiguration;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
-		with: [ 
+		with: [
 					| availableControllers availableSorters |
 					availableControllers := self availableEngines.
 					availableControllers size > 1
-						ifTrue: [ 
+						ifTrue: [
 							(aBuilder pickOne: #completionEngineClass)
 								order: -1;
 								label: 'CompletionEngine';
@@ -202,7 +202,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								domainValues: availableControllers ].
 					availableSorters := self availableSorters.
 					availableSorters size > 1
-						ifTrue: [ 
+						ifTrue: [
 							(aBuilder pickOne: #completionSorter)
 								order: -1;
 								label: 'Sorter';
@@ -211,9 +211,9 @@ NECPreferences class >> settingsOn: aBuilder [
 								setSelector: #sorterClass:;
 								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
-						default: (Color 
-							r: 0.823069403714565 
-							g: 0.823069403714565 
+						default: (Color
+							r: 0.823069403714565
+							g: 0.823069403714565
 							b: 0.823069403714565 alpha: 1.0);
 						label: 'Background Color'.
 					(aBuilder setting: #useEnterToAccept)
@@ -234,7 +234,7 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Smart Characters with Single Space';
 						default: '';
 				 		description: 'Enumerate the characters which are automatically inserted with a single space in between.'.
-					(aBuilder setting: #smartCharactersWithDoubleSpace) 
+					(aBuilder setting: #smartCharactersWithDoubleSpace)
 						label: 'Smart Characters with Double Space';
 						default: '[]{}';
 				 		description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
@@ -252,7 +252,7 @@ NECPreferences class >> settingsOn: aBuilder [
 						target: NECEntry;
 						default: self defaultSpaceAfterCompletion;
 						label: 'Put a space after completion'
-					 ].
+					 ]
 ]
 
 { #category : #accessing }
@@ -297,7 +297,7 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 
 { #category : #accessing }
 NECPreferences class >> spaceAfterCompletion [
-	
+
 	^ NECEntry spaceAfterCompletion
 ]
 

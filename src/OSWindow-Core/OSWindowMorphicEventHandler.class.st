@@ -47,7 +47,7 @@ OSWindowMorphicEventHandler class >> initialize [
 	 OSK_PAGEUP . Character pageUp.
 	 OSK_PAGEDOWN . Character pageDown.
 	 OSK_DELETE. Character delete.
-	
+
 	 OSK_KP_0 . $0.
 	 OSK_KP_1 . $1.
 	 OSK_KP_2 . $2.
@@ -68,7 +68,7 @@ OSWindowMorphicEventHandler class >> initialize [
 ]
 
 { #category : #'event testing' }
-OSWindowMorphicEventHandler class >> simulateMiddleClick [ 
+OSWindowMorphicEventHandler class >> simulateMiddleClick [
 
 	^ SimulateMiddleButton ifNil: [ SimulateMiddleButton := true ]
 ]
@@ -82,7 +82,7 @@ OSWindowMorphicEventHandler class >> simulateMiddleClick: aValue [
 { #category : #asserting }
 OSWindowMorphicEventHandler class >> simulateMiddleClickSettingOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder setting: #simulateMiddleClick)
 		target: self;
 		default: true;
@@ -101,19 +101,19 @@ OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 
 	anEvent button = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
 	anEvent button = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
-	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
+	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ]
 ]
 
 { #category : #converting }
 OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	| buttons |
 	buttons := 0.
-	
+
 	modifiers alt ifTrue: [ buttons := buttons | UserInputEvent altKeyMask ].
 	modifiers ctrl ifTrue: [ buttons := buttons | UserInputEvent ctrlKeyMask ].
 	modifiers shift ifTrue: [ buttons := buttons | UserInputEvent shiftKeyMask ].
 	modifiers cmd ifTrue: [ buttons := buttons | UserInputEvent cmdKeyMask ].
-	
+
 	modifiers buttons button1 ifTrue:  [ buttons := buttons | MouseButtonEvent redButton ].
 	modifiers buttons button2 ifTrue:  [ buttons := buttons | MouseButtonEvent blueButton ].
 	modifiers buttons button3 ifTrue:  [ buttons := buttons | MouseButtonEvent yellowButton ].
@@ -132,18 +132,18 @@ OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 		(morphicWorld activeHand isNotNil and: [ anEvent hand isNotNil ]) ifTrue: [
 			morphicWorld activeHand handleEvent: anEvent
 		]
-	].
+	]
 ]
 
 { #category : #events }
 OSWindowMorphicEventHandler >> handleEvent: anEvent [
-	
+
 	"convert the event to morphic one, and dispatch it whatever..."
 	| morphicEvent |
-	
+
 	morphicEvent := anEvent accept: self.
 	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
-		
+
 	self dispatchMorphicEvent: morphicEvent
 ]
 
@@ -202,17 +202,17 @@ OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
-	anEvent isWheel ifTrue: [ 
-		^ MouseWheelEvent new 
+	anEvent isWheel ifTrue: [
+		^ MouseWheelEvent new
 			setType: #mouseWheel
 			position: (self convertPosition: anEvent position)
 			direction: anEvent wheelDirection
 			buttons: (self convertModifiers: anEvent modifiers)
 			hand: self activeHand
 			stamp: Time millisecondClockValue ].
-			
+
 	^ MouseButtonEvent new
-		setType: #mouseDown 
+		setType: #mouseDown
 		position: (self convertPosition: anEvent position)
 		which: (self convertButtonFromEvent: anEvent)
 		buttons: (self convertModifiers: anEvent modifiers) | (self convertButtonFromEvent: anEvent)
@@ -240,9 +240,9 @@ OSWindowMorphicEventHandler >> visitMouseMoveEvent: anEvent [
 	morphicWorld beCursorOwner.
 	newPos := self convertPosition: anEvent position.
 	^ MouseMoveEvent basicNew
-		setType: #mouseMove 
+		setType: #mouseMove
 		startPoint: oldPos
-		endPoint: newPos 
+		endPoint: newPos
 		trail: { oldPos. newPos }
 		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
@@ -254,8 +254,8 @@ OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 	| vertical |
 	vertical := anEvent scrollVertical.
 	vertical = 0 ifTrue: [ ^ nil ].
-	
-	^ MouseWheelEvent new 
+
+	^ MouseWheelEvent new
 		setType: #mouseWheel
 		position: (self convertPosition: anEvent position)
 		direction: (vertical > 0 ifTrue: [Character arrowUp] ifFalse: [Character arrowDown])
@@ -266,7 +266,7 @@ OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitTextEditingEvent: anEvent [
-	
+
 	| keyEvent |
 	keyEvent := TextEditionEvent new
 		setHand: self activeHand;
@@ -282,7 +282,7 @@ OSWindowMorphicEventHandler >> visitTextEditingEvent: anEvent [
 OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 	anEvent text ifNil: [ ^ nil ].
 	(anEvent text size = 1 and: [ anEvent text first codePoint < 128 ])
-		ifTrue: [ 
+		ifTrue: [
 			| char mods |
 			char := anEvent text first.
 			char ifNil: [ ^ nil ].
@@ -298,7 +298,7 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 				  charCode: char charCode
 				  hand: self activeHand
 				  stamp: Time millisecondClockValue ]
-		ifFalse: [ 
+		ifFalse: [
 			^ TextInputEvent new
 				  setHand: self activeHand;
 				  setPosition: (self convertPosition: anEvent position);
@@ -315,7 +315,7 @@ OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
-	
+
 	morphicWorld worldState worldRenderer handleOSWindowCloseEvent: anEvent
 ]
 
@@ -323,33 +323,33 @@ OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 
 	| dropEvent |
-	
+
 	"The OSWindow drop events are generated one-per file (unlike the case the non-headless VM)"
-	
-	dropEvent := DropFilesEvent new 
+
+	dropEvent := DropFilesEvent new
 				setPosition: self activeHand position
 				contents: 1
 				hand: self activeHand;
-				fileNames: { anEvent filePath }. 
-				
+				fileNames: { anEvent filePath }.
+
 	^ dropEvent
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
 	"Completely redraw world when visible part of window changes to prevent some graphical glitches"
-    morphicWorld worldState doFullRepaint.
+    morphicWorld worldState doFullRepaint
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
-	morphicWorld worldState worldRenderer checkForNewScreenSize.
+	morphicWorld worldState worldRenderer checkForNewScreenSize
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
-	
+
 	morphicWorld worldState updateToNewResolution: anEvent
 ]

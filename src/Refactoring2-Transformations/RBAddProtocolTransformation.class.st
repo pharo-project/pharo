@@ -47,7 +47,7 @@ RBAddProtocolTransformation >> preconditions [
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]
 			errorString: 'Class named ', className, ' does not exist' )
-	  & ( RBCondition withBlock: [ (( model environment 
+	  & ( RBCondition withBlock: [ (( model environment
 			protocolsFor: self definingClass realClass )
 			includes: protocol ) not ]
 			errorString: 'Protocol named ', protocol, ' already exists' )
@@ -67,7 +67,7 @@ RBAddProtocolTransformation >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #printing }
-RBAddProtocolTransformation >> storeOn: aStream [ 
+RBAddProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

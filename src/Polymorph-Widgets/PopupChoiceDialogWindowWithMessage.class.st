@@ -45,7 +45,7 @@ PopupChoiceDialogWindowWithMessage >> iconMorph: anObject [
 PopupChoiceDialogWindowWithMessage >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/2 the display width."
-	
+
 	|ext|
 	ext := super initialExtent.
 	self textMorph width > (Display width // 2) ifTrue: [
@@ -59,13 +59,13 @@ PopupChoiceDialogWindowWithMessage >> initialExtent [
 
 { #category : #accessing }
 PopupChoiceDialogWindowWithMessage >> message [
-	
+
 	^ message
 ]
 
 { #category : #accessing }
 PopupChoiceDialogWindowWithMessage >> message: aStringOrText [
-	
+
 	message := aStringOrText
 ]
 
@@ -77,27 +77,27 @@ PopupChoiceDialogWindowWithMessage >> newContentMorph [
 	self iconMorph: self newIconMorph.
 	top := self newRow: {self iconMorph. self textMorph}.
 	bottom := super newContentMorph.
-	^ self newGroupboxFor: (self newColumn: {top. bottom}).
+	^ self newGroupboxFor: (self newColumn: {top. bottom})
 ]
 
 { #category : #actions }
 PopupChoiceDialogWindowWithMessage >> newIconMorph [
 	"Answer an icon for the receiver."
-	
+
 	^ImageMorph new form: self icon
 ]
 
 { #category : #actions }
 PopupChoiceDialogWindowWithMessage >> newTextMorph [
 	"Answer a text morph."
-	
+
 	^self newText: ''
 ]
 
 { #category : #accessing }
 PopupChoiceDialogWindowWithMessage >> text: aStringOrText [
 	"Set the text."
-	
+
 	|t|
 	t := aStringOrText isString
 		ifTrue: [aStringOrText asText addAttribute: (TextFontReference toFont: self textFont); yourself]
@@ -109,14 +109,14 @@ PopupChoiceDialogWindowWithMessage >> text: aStringOrText [
 { #category : #accessing }
 PopupChoiceDialogWindowWithMessage >> textFont [
 	"Answer the text font."
-	
+
 	^textFont
 ]
 
 { #category : #accessing }
 PopupChoiceDialogWindowWithMessage >> textFont: aFont [
 	"Set the text font."
-	
+
 	textFont :=  aFont
 ]
 

@@ -43,7 +43,7 @@ DocCommentIconStyler >> iconLabel: aNode [
 { #category : #private }
 DocCommentIconStyler >> notifySourceError: aNode [
 	"If a code in an example is faulty notify the user"
-	
+
 	^ [ | examples faultyExample |
 		examples := aNode pharoDocCommentNodes.
 		faultyExample := examples detect: [ :example | example expression isFaulty ].
@@ -56,7 +56,7 @@ DocCommentIconStyler >> runExampleBlock: aNode [
 	^ [ | examples |
 		examples := aNode pharoDocCommentNodes.
 		(examples
-			collect: [ :example | 
+			collect: [ :example |
 			{ example expression expressionNode formattedCode . example expression evaluate}]) inspect]
 ]
 

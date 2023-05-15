@@ -19,8 +19,8 @@ SycRemoveEmptyMethodTagsCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycRemoveEmptyMethodTagsCommand >> execute [
-	
-	classes do: [ :each | 
+
+	classes do: [ :each |
 		each organization removeEmptyCategories]
 ]
 

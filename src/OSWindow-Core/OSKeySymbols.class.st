@@ -19,6 +19,7 @@ Class {
 		'OSK_9',
 		'OSK_AGAIN',
 		'OSK_AMPERSAND',
+		'OSK_APPLICATION',
 		'OSK_ASTERISK',
 		'OSK_AT',
 		'OSK_BACKQUOTE',
@@ -182,11 +183,11 @@ OSKeySymbols class >> data [
 		(16r0029 OSK_RIGHTPAREN parenright)
 		(16r002A OSK_ASTERISK asterisk)
 		(16r002B OSK_PLUS plus)
-		(16r002C OSK_COMMA comma)	
+		(16r002C OSK_COMMA comma)
 		(16r002D OSK_MINUS minus)
 		(16r002E OSK_PERIOD period)
 		(16r002F OSK_SLASH slash)
-		(16r0030 OSK_0 0)	
+		(16r0030 OSK_0 0)
 		(16r0031 OSK_1 1)
 		(16r0032 OSK_2 2)
 		(16r0033 OSK_3 3)
@@ -202,7 +203,7 @@ OSKeySymbols class >> data [
 		(16r003D OSK_EQUALS equal)
 		(16r003E OSK_GREATER greater)
 		(16r003F OSK_QUESTION question)
-		(16r0040 OSK_AT at)		
+		(16r0040 OSK_AT at)
 		(16r005B OSK_LEFTBRACKET bracketleft)
 		(16r005C OSK_BACKSLASH backslash)
 		(16r005D OSK_RIGHTBRACKET bracketright)
@@ -406,7 +407,7 @@ OSKeySymbols class >> data [
 
 { #category : #'class initialization' }
 OSKeySymbols class >> initialize [
-	
+
 	OSKeySymbolValueToKeyboardKeyMap := Dictionary new.
 	OSKeySymbolNameToValueMap := Dictionary new.
 	self data do: [ :each |
@@ -421,7 +422,7 @@ OSKeySymbols class >> initialize [
 		self classVarNamed: classVarName put: symbolValue.
 		OSKeySymbolValueToKeyboardKeyMap at: symbolValue put: keyboardKey.
 		OSKeySymbolNameToValueMap at: symbolName put: symbolValue.
-	].
+	]
 ]
 
 { #category : #accessing }

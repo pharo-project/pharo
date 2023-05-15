@@ -28,8 +28,8 @@ RBTransformationDummyRuleTest class >> assignmentInIfTrue [
 { #category : #transformations }
 RBTransformationDummyRuleTest class >> atIfAbsent [
 	^self rewrite: #(
-			#('``@dictionary at: ``@key 
-					ifAbsent: [| `@temps | 
+			#('``@dictionary at: ``@key
+					ifAbsent: [| `@temps |
 							``@.Statements1.
 							``@dictionary at: ``@key put: ``@object.
 							``@.Statements2.
@@ -104,9 +104,9 @@ RBTransformationDummyRuleTest class >> detectIfNone [
 RBTransformationDummyRuleTest class >> equalNil [
 	^self
 		rewrite: #(
-			#('``@object = nil'	"->"	'``@object isNil') 
-			#('``@object == nil'	"->"	'``@object isNil') 
-			#('``@object ~= nil'	"->"	'``@object notNil') 
+			#('``@object = nil'	"->"	'``@object isNil')
+			#('``@object == nil'	"->"	'``@object isNil')
+			#('``@object ~= nil'	"->"	'``@object notNil')
 			#('``@object ~~ nil'	"->"	'``@object notNil'))
 		methods: false
 		name: '= nil -> isNil AND ~= nil -> notNil'
@@ -116,9 +116,9 @@ RBTransformationDummyRuleTest class >> equalNil [
 RBTransformationDummyRuleTest class >> guardClause [
 	^self
 		rewrite: #(
-			#('`@methodName: `@args 
-					| `@temps | 
-					`@.Statements. 
+			#('`@methodName: `@args
+					| `@temps |
+					`@.Statements.
 					`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
 			"->"
 			'`@methodName: `@args
@@ -127,10 +127,10 @@ RBTransformationDummyRuleTest class >> guardClause [
 					`@condition ifFalse: [^self].
 					`.Statement1.
 					`.Statement2.
-					`@.Statements1') 
-			#('`@methodName: `@args 
-					| `@temps | 
-					`@.Statements. 
+					`@.Statements1')
+			#('`@methodName: `@args
+					| `@temps |
+					`@.Statements.
 					`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
 			"->"
 			'`@methodName: `@args
@@ -187,9 +187,9 @@ RBTransformationDummyRuleTest class >> minMax [
 RBTransformationDummyRuleTest class >> notElimination [
 	^self
 		rewrite: #(
-			#('``@object not not'	"->"	'``@object') 
-			#('``@object not ifTrue: ``@block' 	"->"	'``@object ifFalse: ``@block') 
-			#('``@object not ifFalse: ``@block'	"->"	'``@object ifTrue: ``@block') 
+			#('``@object not not'	"->"	'``@object')
+			#('``@object not ifTrue: ``@block' 	"->"	'``@object ifFalse: ``@block')
+			#('``@object not ifFalse: ``@block'	"->"	'``@object ifTrue: ``@block')
 			#('``@collection select: [:`each | | `@temps | ``@.Statements. ``@object not]'
 				"->"	'``@collection reject: [:`each | | `@temps | ``@.Statements. ``@object]')
 			#('``@collection reject: [:`each | | `@temps | ``@.Statements. ``@object not]'
@@ -209,7 +209,7 @@ RBTransformationDummyRuleTest class >> notElimination [
 			#('(``@a ~= ``@b) not' "->" '``@a = ``@b')
 			#('(``@a ~~ ``@b) not' "->" '``@a == ``@b')
 			#('(``@a >= ``@b) not' "->" '``@a < ``@b')
-			#('(``@a > ``@b) not' "->" '``@a <= ``@b'))			
+			#('(``@a > ``@b) not' "->" '``@a <= ``@b'))
 		methods: false
 		name: 'Eliminate unnecessary not''s'
 ]
@@ -220,11 +220,11 @@ RBTransformationDummyRuleTest class >> nuke [
 ]
 
 { #category : #'instance creation' }
-RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [ 
+RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [
 	| rewriteRule |
 	rewriteRule := RBParseTreeRewriter new.
-	stringArrays do: 
-			[:each | 
+	stringArrays do:
+			[:each |
 			aBoolean
 				ifTrue: [rewriteRule addMethodSearch: each first -> each last]
 				ifFalse: [rewriteRule addSearch: each first -> each last]].
@@ -238,7 +238,7 @@ RBTransformationDummyRuleTest class >> showWhileBlocks [
 	^self
 		rewrite: #(
 			#('``@cursor showWhile: [| `@temps | ``@.Statements. `var := ``@object]'
-				"->"	'`var := ``@cursor showWhile: [| `@temps | ``@.Statements. ``@object]') 
+				"->"	'`var := ``@cursor showWhile: [| `@temps | ``@.Statements. ``@object]')
 			#('``@cursor showWhile: [| `@temps | ``@.Statements. ^``@object]'
 				"->"	'^``@cursor showWhile: [| `@temps | ``@.Statements. ``@object]'))
 		methods: false
@@ -258,11 +258,11 @@ RBTransformationDummyRuleTest class >> unwindBlocks [
 	^self
 		rewrite: #(
 			#('[| `@temps | ``@.Statements. `var := ``@object] ensure: ``@block'
-				"->"	'`var := [| `@temps | ``@.Statements. ``@object] ensure: ``@block') 
+				"->"	'`var := [| `@temps | ``@.Statements. ``@object] ensure: ``@block')
 			#('[| `@temps | ``@.Statements. ^``@object] ensure: ``@block'
-				"->"	'^[| `@temps | ``@.Statements. ``@object] ensure: ``@block') 
+				"->"	'^[| `@temps | ``@.Statements. ``@object] ensure: ``@block')
 			#('[| `@temps | ``@.Statements. `var := ``@object] ifCurtailed: ``@block'
-				"->"	'`var := [| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block') 
+				"->"	'`var := [| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block')
 			#('[| `@temps | ``@.Statements. ^``@object] ifCurtailed: ``@block'
 				"->"	'^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'))
 		methods: false
@@ -270,11 +270,11 @@ RBTransformationDummyRuleTest class >> unwindBlocks [
 ]
 
 { #category : #accessing }
-RBTransformationDummyRuleTest >> checkMethod: aSmalllintContext [ 
+RBTransformationDummyRuleTest >> checkMethod: aSmalllintContext [
 	class := aSmalllintContext selectedClass.
-	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
 			[(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
-				ifFalse: 
+				ifFalse:
 					[builder compile: rewriteRule tree printString
 						in: class
 						classified: aSmalllintContext protocols]]
@@ -310,7 +310,7 @@ RBTransformationDummyRuleTest >> resetResult [
 ]
 
 { #category : #initialization }
-RBTransformationDummyRuleTest >> rewriteUsing: searchReplacer [ 
+RBTransformationDummyRuleTest >> rewriteUsing: searchReplacer [
 	rewriteRule := searchReplacer.
 	self resetResult
 ]
@@ -323,7 +323,7 @@ RBTransformationDummyRuleTest >> superSends [
 		addSearch:
 			'super `@message: ``@args'
 				->
-					([ :aNode | 
+					([ :aNode |
 					(class withAllSubclasses
 						detect: [ :each | each includesSelector: aNode selector ]
 						ifNone: [ nil ]) isNil ] -> 'self `@message: ``@args').

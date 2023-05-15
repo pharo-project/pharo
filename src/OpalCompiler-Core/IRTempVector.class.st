@@ -45,5 +45,5 @@ IRTempVector >> vars [
 
 { #category : #accessing }
 IRTempVector >> vars: anObject [
-	vars := anObject.
+	vars := anObject
 ]

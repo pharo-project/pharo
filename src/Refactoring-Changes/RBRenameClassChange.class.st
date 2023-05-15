@@ -21,24 +21,24 @@ RBRenameClassChange >> = aRenameClassChange [
 
 	super class = aRenameClassChange class
 		ifFalse: [ ^ false ].
-	^oldName = aRenameClassChange oldName 
+	^oldName = aRenameClassChange oldName
 		and: [ newName = aRenameClassChange newName ]
 ]
 
 { #category : #accessing }
 RBRenameClassChange >> changeClass [
 
-	^ (onSystemDictionary classNamed: oldName) ifNil: [ 
+	^ (onSystemDictionary classNamed: oldName) ifNil: [
 		  onSystemDictionary classNamed: newName ]
 ]
 
 { #category : #private }
-RBRenameClassChange >> executeNotifying: aBlock [ 
+RBRenameClassChange >> executeNotifying: aBlock [
 
 	| undos |
 	self changeClass rename: newName.
-	undos := changes collect: [ :each | 
-		(each renameChangesForClass: oldName asSymbol to: newName asSymbol) 
+	undos := changes collect: [ :each |
+		(each renameChangesForClass: oldName asSymbol to: newName asSymbol)
 			executeNotifying: aBlock ].
 	^ self copy
 		changes: undos reverse;
@@ -74,7 +74,7 @@ RBRenameClassChange >> oldName [
 { #category : #accessing }
 RBRenameClassChange >> oldVersionTextToDisplay [
 
-	^ String streamContents: [ :s | 
+	^ String streamContents: [ :s |
 			self changes do: [ :c | 	s << c oldVersionTextToDisplay; cr ]]
 ]
 
@@ -100,7 +100,7 @@ RBRenameClassChange >> renameChangesForClass: oldClassName to: newClassName [
 
 	| change |
 	change := super renameChangesForClass: oldClassName to: newClassName.
-	oldName asSymbol = oldClassName ifTrue: [ 
+	oldName asSymbol = oldClassName ifTrue: [
 		change rename: newClassName to: newName ].
 	^ change
 ]
@@ -108,7 +108,7 @@ RBRenameClassChange >> renameChangesForClass: oldClassName to: newClassName [
 { #category : #accessing }
 RBRenameClassChange >> textToDisplay [
 
-	^ String streamContents: [ :s | 
+	^ String streamContents: [ :s |
          s << self printString ; cr.
          self changes do: [ :c | 	s << c textToDisplay; cr ]]
 ]

@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-FillStyleBorder class >> isDeprecated [ 
+FillStyleBorder class >> isDeprecated [
 	^ true
 ]

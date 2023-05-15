@@ -5,7 +5,6 @@ String >> asStringOrText [
 	"Answer this string."
 
 	^ self
-
 ]
 
 { #category : #'*Text-Core' }

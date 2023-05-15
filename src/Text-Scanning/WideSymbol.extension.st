@@ -8,5 +8,5 @@ WideSymbol >> scanCharactersFrom: startIndex to: stopIndex with: aCharacterScann
 	startIndex > stopIndex
 		ifTrue: [^aCharacterScanner handleEndOfRunAt: stopIndex].
 	charSet := self encodedCharSetAt: startIndex.
-	^charSet scanMultibyteCharactersFrom: startIndex to: stopIndex in: self with: aCharacterScanner rightX: rightX font: aFont	
+	^charSet scanMultibyteCharactersFrom: startIndex to: stopIndex in: self with: aCharacterScanner rightX: rightX font: aFont
 ]

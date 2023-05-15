@@ -19,11 +19,11 @@ Class {
 RTFMethodTracer class >> canInstall: aCompileMethod [
 	"Returns wether the method tracer can be installed on a given CompileMethod or not."
 	self classesBlackList do: [ :each | (aCompileMethod methodClass == each) ifTrue: [ ^ false ] ].
-	
+
 	self methodsBlackList pairsDo: [ :aClass :aSelector |
-		(aCompileMethod methodClass == aClass and: [ aCompileMethod selector == aSelector ]) 
-			ifTrue: [ ^ false ] ].		
-	
+		(aCompileMethod methodClass == aClass and: [ aCompileMethod selector == aSelector ])
+			ifTrue: [ ^ false ] ].
+
 	^ true
 ]
 
@@ -48,22 +48,22 @@ RTFMethodTracer class >> methodsBlackList [
 		MethodDictionary. #swap:with:.
 		BlockClosure. #value:.
 		HashedCollection. #fullCheck.
-		LargeInteger. #+. 
+		LargeInteger. #+.
 		Magnitude. #max:.
 		Object. #at:.
-		ProtoObject. #withArgs:executeMethod:. 
+		ProtoObject. #withArgs:executeMethod:.
 		SequenceableCollection. #do:.
-		SmallInteger. #'//'. 
-		SmallInteger. #*. 
-		SmallInteger. #-. 
+		SmallInteger. #'//'.
+		SmallInteger. #*.
+		SmallInteger. #-.
 		Symbol. #flushCache.
-		Number. #isZero. 
-		Object. #shallowCopy. 
-		OrderedCollection. #do:. 
-		ProtoObject. #initialize. 
-		SequenceableCollection. #first. 
+		Number. #isZero.
+		Object. #shallowCopy.
+		OrderedCollection. #do:.
+		ProtoObject. #initialize.
+		SequenceableCollection. #first.
 		SmallInteger. #=.
-		TraitBehavior. #methodDict. 
+		TraitBehavior. #methodDict.
 		UndefinedObject. #notNil.
 	}
 ]
@@ -95,7 +95,7 @@ RTFMethodTracer >> initializeOn: aCompiledMethod [
 	hasRun := false.
 	method := aCompiledMethod.
 	methodClass := aCompiledMethod methodClass.
-	selector := aCompiledMethod selector.
+	selector := aCompiledMethod selector
 ]
 
 { #category : #actions }
@@ -106,7 +106,7 @@ RTFMethodTracer >> install [
 	"
 	methodClass methodDict
 		at: selector
-		put: self.
+		put: self
 ]
 
 { #category : #private }
@@ -133,7 +133,7 @@ RTFMethodTracer >> uninstall [
 	"
 	methodClass methodDict
 		at: selector
-		put: method.
+		put: method
 ]
 
 { #category : #actions }

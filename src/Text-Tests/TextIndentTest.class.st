@@ -15,8 +15,7 @@ TextIndentTest >> testAmount [
 TextIndentTest >> testDominates [
 	self assert: ((TextIndent tabs: 1) dominates: (TextIndent tabs: 2)).
 	self deny: ((TextIndent tabs: 1) dominates: TextEmphasis bold).
-	self deny: ((TextIndent tabs: 1) dominates: TextFontChange font2).
-
+	self deny: ((TextIndent tabs: 1) dominates: TextFontChange font2)
 ]
 
 { #category : #tests }

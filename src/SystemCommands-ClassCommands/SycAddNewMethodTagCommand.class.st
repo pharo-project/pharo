@@ -35,16 +35,16 @@ SycAddNewMethodTagCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycAddNewMethodTagCommand >> execute [
-	
+
 	targetClass addMethodTag: tagName asSymbol
 ]
 
 { #category : #execution }
 SycAddNewMethodTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	tagName := aToolContext requestSingleMethodTag: 'New protocol name'.
-	
+
 	targetClass := self requestClassInContext: aToolContext.
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]
@@ -54,9 +54,9 @@ SycAddNewMethodTagCommand >> requestClassInContext: aToolContext [
 	| classes |
 	classes := aToolContext selectedClasses.
 	classes size = 1 ifTrue: [ ^classes first ].
-	
-	^aToolContext  
-		requestSingleClass: 'In what class you want a protocol?' 
+
+	^aToolContext
+		requestSingleClass: 'In what class you want a protocol?'
 		from: classes
 ]
 

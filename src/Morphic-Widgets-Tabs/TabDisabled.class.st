@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-TabDisabled class >> isDeprecated [ 
+TabDisabled class >> isDeprecated [
 	^ true
 ]

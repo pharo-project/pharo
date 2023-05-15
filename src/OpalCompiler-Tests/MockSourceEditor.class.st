@@ -22,8 +22,8 @@ MockSourceEditor >> contents: aText [
 MockSourceEditor >> cut [
 
 	text := (text first: selectionStart-1), (text copyFrom: selectionEnd+1 to: text size).
-		
-	selectionStart := selectionStart - 1.	
+
+	selectionStart := selectionStart - 1.
 	selectionEnd := selectionStart
 ]
 
@@ -37,16 +37,16 @@ MockSourceEditor >> editor [
 MockSourceEditor >> initialize [
 
 	super initialize.
-	selectionStart := selectionEnd := 0.
+	selectionStart := selectionEnd := 0
 ]
 
 { #category : #utilities }
 MockSourceEditor >> insertAndSelect: aString at: anInteger [
 
-	text := (text first: anInteger-1), 
-		(' ' , aString), 
+	text := (text first: anInteger-1),
+		(' ' , aString),
 		(text copyFrom: anInteger to: text size).
-		
+
 	selectionStart := anInteger.
 	selectionEnd := anInteger + aString size
 ]
@@ -65,7 +65,7 @@ MockSourceEditor >> notify: aString at: anInteger in: aStream [
 MockSourceEditor >> selectFrom: start to: end [
 
 	selectionStart := start.
-	selectionEnd := end.
+	selectionEnd := end
 ]
 
 { #category : #selection }
@@ -84,7 +84,7 @@ MockSourceEditor >> selectionAsStream [
 { #category : #selection }
 MockSourceEditor >> selectionInterval [
 
-	^ Interval from: selectionStart to: selectionEnd.
+	^ Interval from: selectionStart to: selectionEnd
 ]
 
 { #category : #accessing }

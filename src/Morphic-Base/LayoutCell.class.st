@@ -46,7 +46,7 @@ LayoutCell >> cellSize: aPoint [
 { #category : #collection }
 LayoutCell >> do: aBlock [
 	aBlock value: self.
-	nextCell ifNotNil:[nextCell do: aBlock].
+	nextCell ifNotNil:[nextCell do: aBlock]
 ]
 
 { #category : #accessing }
@@ -71,15 +71,15 @@ LayoutCell >> hSpaceFill [
 
 { #category : #accessing }
 LayoutCell >> hSpaceFill: aBool [
-	flags := aBool ifTrue:[self flags bitOr: 1] ifFalse:[self flags bitClear: 1].
+	flags := aBool ifTrue:[self flags bitOr: 1] ifFalse:[self flags bitClear: 1]
 ]
 
 { #category : #collection }
-LayoutCell >> inject: thisValue into: binaryBlock [ 
-	"Accumulate a running value associated with evaluating the argument, 
-	binaryBlock, with the current value of the argument, thisValue, and the 
-	receiver as block arguments. For instance, to sum the numeric elements 
-	of a collection, aCollection inject: 0 into: [:subTotal :next | subTotal + 
+LayoutCell >> inject: thisValue into: binaryBlock [
+	"Accumulate a running value associated with evaluating the argument,
+	binaryBlock, with the current value of the argument, thisValue, and the
+	receiver as block arguments. For instance, to sum the numeric elements
+	of a collection, aCollection inject: 0 into: [:subTotal :next | subTotal +
 	next]."
 
 	| nextValue |
@@ -103,7 +103,7 @@ LayoutCell >> size [
 	| n cell |
 	n := 0.
 	cell := self.
-	[cell isNil] whileFalse: 
+	[cell isNil] whileFalse:
 			[n := n + 1.
 			cell := cell nextCell].
 	^n
@@ -126,5 +126,5 @@ LayoutCell >> vSpaceFill [
 
 { #category : #accessing }
 LayoutCell >> vSpaceFill: aBool [
-	flags := aBool ifTrue:[self flags bitOr: 2] ifFalse:[self flags bitClear: 2].
+	flags := aBool ifTrue:[self flags bitOr: 2] ifFalse:[self flags bitClear: 2]
 ]

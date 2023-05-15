@@ -109,7 +109,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		iconName: #smallCopy;
 		withSeparatorAfter.
 	aBuilder model
-		ifNotNil: [ :mod | 
+		ifNotNil: [ :mod |
 			mod model
 				ifNotNil: [ (aBuilder item: #Accept translated)
 						keyText: 's';
@@ -170,7 +170,7 @@ RubSmalltalkCodeMode >> parseSource: aString [
 { #category : #shout }
 RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 	^ self model isNil
-		or: [ 
+		or: [
 			(self model interactionModel respondsTo: #shoutAboutToStyle:) not
 				or: [ self model interactionModel shoutAboutToStyle: self ] ]
 ]
@@ -202,7 +202,7 @@ RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 { #category : #shout }
 RubSmalltalkCodeMode >> withShoutStyler [
 	self textArea withDecoratorNamed: #shoutStyler.
-	self updateStyler.
+	self updateStyler
 ]
 
 { #category : #shout }

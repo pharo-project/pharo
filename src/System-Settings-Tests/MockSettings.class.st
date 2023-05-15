@@ -33,7 +33,7 @@ MockSettings class >> booleanSettingNode [
 MockSettings class >> booleanSettingNodeOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder setting: #booleanSetting)
-		label: 'Mock boolean setting'.
+		label: 'Mock boolean setting'
 ]
 
 { #category : #settings }
@@ -51,11 +51,11 @@ MockSettings class >> booleanSettingWithDefault: aValue [
 { #category : #settings }
 MockSettings class >> booleanSettingWithDefaultNodeOn: aBuilder [
 	<mocksystemsettings>
-	
+
 	(aBuilder setting: #booleanSettingWithDefault)
 		label: 'Mock boolean setting';
 		default: false;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -75,7 +75,7 @@ MockSettings class >> cacheDirectorySettingNode [
 
 { #category : #'setting strings' }
 MockSettings class >> changedClassStoredSettingVariable [
-	^ 
+	^
 '[
 	ClassStoredSetting {
 		#notExistingInstanceVariable : nil
@@ -107,12 +107,12 @@ MockSettings class >> defaultDirectoryName: aFileReference [
 ]
 
 { #category : #settings }
-MockSettings class >> monticelloSettingsOn: aBuilder [  
-	<mocksystemsettings>  
+MockSettings class >> monticelloSettingsOn: aBuilder [
+	<mocksystemsettings>
 	(aBuilder group: #monticello)
 		label: 'Mock Monticello';
 		description: 'All Mock Monticello settings';
-		with: [ 
+		with: [
 			(aBuilder setting: #defaultDirectoryName)
 				type: #Directory;
 				target: self;
@@ -122,8 +122,8 @@ MockSettings class >> monticelloSettingsOn: aBuilder [
 				type: #Directory;
 				target: self;
 				description: 'The path of the local repository cache';
-				label: 'Local cache directory'.	
-			].
+				label: 'Local cache directory'.
+			]
 ]
 
 { #category : #accessing }
@@ -134,7 +134,7 @@ MockSettings class >> nodeSettings [
 
 { #category : #'setting strings' }
 MockSettings class >> notExistingClassStoredSettingSTONString [
-	^ 
+	^
 '[
 	ClassStoredSetting {
 		#settingNodeIdentifier : ''#notExistingClassStoredSettingSTONString'',
@@ -145,7 +145,7 @@ MockSettings class >> notExistingClassStoredSettingSTONString [
 
 { #category : #'setting strings' }
 MockSettings class >> oneStoredSettingSTONString [
-	^ 
+	^
 '[
 	StoredSetting {
 		#settingNodeIdentifier : ''#booleanSetting'',
@@ -156,11 +156,11 @@ MockSettings class >> oneStoredSettingSTONString [
 
 { #category : #accessing }
 MockSettings class >> rangeSetting [
-	^ rangeSetting ifNil: [ rangeSetting := 10 ].
+	^ rangeSetting ifNil: [ rangeSetting := 10 ]
 ]
 
 { #category : #accessing }
-MockSettings class >> rangeSetting: anInteger [ 
+MockSettings class >> rangeSetting: anInteger [
 	rangeSetting := anInteger
 ]
 
@@ -193,7 +193,7 @@ MockSettings class >> storedSettings [
 
 { #category : #'setting strings' }
 MockSettings class >> twoStoredSettingsSTONString [
-	^ 
+	^
 '[
 	StoredSetting {
 		#settingNodeIdentifier : ''#booleanSetting'',

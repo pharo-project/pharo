@@ -21,7 +21,7 @@ Class {
 
 { #category : #initializing }
 EditorFindReplaceDialogWindow class >> cleanUp [
-	Singleton ifNotNil: [ 
+	Singleton ifNotNil: [
 			Singleton close.
 			Singleton := nil ]
 ]
@@ -59,9 +59,8 @@ EditorFindReplaceDialogWindow class >> replacements [
 ]
 
 { #category : #'instance creation' }
-EditorFindReplaceDialogWindow class >> singleton [ 
-	^ Singleton ifNil: [Singleton := self new].
-
+EditorFindReplaceDialogWindow class >> singleton [
+	^ Singleton ifNil: [Singleton := self new]
 ]
 
 { #category : #icons }
@@ -102,8 +101,7 @@ EditorFindReplaceDialogWindow >> caseSensitive [
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> caseSensitive: aBoolean [
-	self state caseSensitive: aBoolean.
-
+	self state caseSensitive: aBoolean
 ]
 
 { #category : #'user-interface' }
@@ -112,7 +110,7 @@ EditorFindReplaceDialogWindow >> defaultButton [
 	^self
 		findDeepSubmorphThat: [:m |
 			(m isKindOf: PluggableButtonMorph) and: [m actionSelector = #find]]
-		ifAbsent: [] 
+		ifAbsent: []
 ]
 
 { #category : #accessing }
@@ -133,8 +131,7 @@ EditorFindReplaceDialogWindow >> entireWordsOnly [
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> entireWordsOnly: aBoolean [
-	self state entireWordsOnly: aBoolean.
-
+	self state entireWordsOnly: aBoolean
 ]
 
 { #category : #'user-interface' }
@@ -150,7 +147,7 @@ EditorFindReplaceDialogWindow >> find [
 
 { #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> findEnabled [
-	^ self findString isEmptyOrNil not 
+	^ self findString isEmptyOrNil not
 ]
 
 { #category : #updating }
@@ -164,8 +161,7 @@ EditorFindReplaceDialogWindow >> findPolicyChanged [
 	self changed: #replaceText.
 	self changed: #replaceEnabled.
 	self changed: #replaceAllEnabled.
-	self model ifNotNil: [self model selectionChanged].
-
+	self model ifNotNil: [self model selectionChanged]
 ]
 
 { #category : #accessing }
@@ -182,7 +178,6 @@ EditorFindReplaceDialogWindow >> findText [
 EditorFindReplaceDialogWindow >> findText: aStringOrText [
 	self state findText: aStringOrText.
 	^ true
-
 ]
 
 { #category : #'user-interface' }
@@ -191,8 +186,16 @@ EditorFindReplaceDialogWindow >> findTextFieldMorph [
 ]
 
 { #category : #'user-interface' }
-EditorFindReplaceDialogWindow >> initialExtent [ 
+EditorFindReplaceDialogWindow >> initialExtent [
 	^ 400 @ super initialExtent y
+]
+
+{ #category : #initialization }
+EditorFindReplaceDialogWindow >> initialize [
+	"Set the initial position based on usable screen area."
+
+	super initialize.
+	self position: RealEstateAgent maximumUsableArea topLeft
 ]
 
 { #category : #accessing }
@@ -202,8 +205,7 @@ EditorFindReplaceDialogWindow >> isRegex [
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> isRegex: aBoolean [
-	self state isRegex: aBoolean.
-
+	self state isRegex: aBoolean
 ]
 
 { #category : #'user-interface' }
@@ -227,8 +229,8 @@ EditorFindReplaceDialogWindow >> newButtons [
 
 { #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newContentMorph [
-	^(self newColumn: {	
-			(self newGroupbox: nil for: 
+	^(self newColumn: {
+			(self newGroupbox: nil for:
 				(self newColumn: {
 					self newFindTextEntryMorph.
 					(self newRow: {
@@ -240,14 +242,12 @@ EditorFindReplaceDialogWindow >> newContentMorph [
 						(self newColumn: {
 							(self newCheckboxFor: self getSelected: #searchBackwards setSelected: #searchBackwards: getEnabled: nil label: 'Search backwards'  translated help: nil).
 							(self newCheckboxFor: self getSelected: #wrapAround setSelected: #wrapAround: getEnabled: nil label: 'Wrap around'  translated help: nil) }
-						) }	
+						) }
 					) }
 				)
 			).
 			(self newLabelGroup: {'Replace with: ' translated -> self newReplaceTextEntryMorph}) vResizing: #shrinkWrap}
-		) 
-
-
+		)
 ]
 
 { #category : #'user-interface' }
@@ -275,18 +275,17 @@ EditorFindReplaceDialogWindow >> newFindTextEntryMorph [
 	pt := (self newAutoAcceptTextEntryFor: self
 			get: #findText
 			set: #findText:
-			class: String 
+			class: String
 			getEnabled: nil
 			help: 'Enter the text to find' translated
-			entryCompletion: entryCompletion) 
+			entryCompletion: entryCompletion)
 		acceptOnCR: false;
 		ghostText: 'Text to find';
 		withDropListButton;
 		crAction: [:t | self find];
 		yourself.
-	textFieldMorph := pt. 
+	textFieldMorph := pt.
 	^ pt
-
 ]
 
 { #category : #updating }
@@ -319,7 +318,7 @@ EditorFindReplaceDialogWindow >> newReplaceButton [
 		newButtonIn: self
 		for: self
 		getState: nil
-		action: #replace 
+		action: #replace
 		arguments: nil
 		getEnabled: #replaceEnabled
 		label: 'Replace' translated
@@ -348,7 +347,6 @@ EditorFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 			withDropListButton;
 			yourself.
 	^ pt
-
 ]
 
 { #category : #updating }
@@ -369,8 +367,7 @@ EditorFindReplaceDialogWindow >> on: aTextView [
 			self changed: #findText.
 			self changed: #caseSensitive.
 			self changed: #replaceEnabled.
-			self owner ifNotNil: [self findText: self findText]].
-
+			self owner ifNotNil: [self findText: self findText]]
 ]
 
 { #category : #action }
@@ -378,7 +375,6 @@ EditorFindReplaceDialogWindow >> open [
 	self openInWorld.
 	self extent: self extent.
 	self activate
-
 ]
 
 { #category : #accessing }
@@ -425,8 +421,6 @@ EditorFindReplaceDialogWindow >> replaceText [
 EditorFindReplaceDialogWindow >> replaceText: aStringOrText [
 	self state replaceText: aStringOrText asString.
 	^ true
-
-
 ]
 
 { #category : #accessing }
@@ -450,8 +444,7 @@ EditorFindReplaceDialogWindow >> state [
 EditorFindReplaceDialogWindow >> state: aFindReplaceService [
 	state ifNotNil: [state removeDependent: self].
 	state := aFindReplaceService.
-	state ifNotNil: [state addDependent: self].
-
+	state ifNotNil: [state addDependent: self]
 ]
 
 { #category : #'user-interface' }
@@ -468,13 +461,12 @@ EditorFindReplaceDialogWindow >> taskbarIconName [
 
 { #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> title [
-	^ 'Find & Replace' translated.
-
+	^ 'Find & Replace' translated
 ]
 
 { #category : #updating }
 EditorFindReplaceDialogWindow >> update: aSymbol [
-	 
+
 	model ifNotNil: [
 		aSymbol = #regexError
 				ifTrue: [self findTextFieldMorph textColor: Color  red].
@@ -482,7 +474,7 @@ EditorFindReplaceDialogWindow >> update: aSymbol [
 				ifTrue: [^ self newFinding].
 		aSymbol = #findPolicy
 			ifTrue: [self findPolicyChanged].
-		aSymbol = #findReplaceSelection 
+		aSymbol = #findReplaceSelection
 			ifTrue: [self changed: #replaceEnabled.
 				self state updateFindStartIndexForTextMorph: self model]].
 	super update: aSymbol
@@ -490,11 +482,10 @@ EditorFindReplaceDialogWindow >> update: aSymbol [
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> wrapAround [
-	^ self state wrapAround 
+	^ self state wrapAround
 ]
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> wrapAround: aBoolean [
-	self state wrapAround: aBoolean.
-
+	self state wrapAround: aBoolean
 ]

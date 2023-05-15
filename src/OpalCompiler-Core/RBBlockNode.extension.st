@@ -21,7 +21,7 @@ RBBlockNode >> ir [
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir: aIRMethodNode [
 
-	^ self propertyAt: #ir put: aIRMethodNode.
+	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
 { #category : #'*OpalCompiler-Core' }

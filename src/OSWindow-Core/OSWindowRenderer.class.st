@@ -15,14 +15,14 @@ Class {
 
 { #category : #accessing }
 OSWindowRenderer >> backendWindow: anObject [
-	
+
 	backendWindow := anObject
 ]
 
 { #category : #deleting }
 OSWindowRenderer >> destroy [
 	"Called when the window associated with the renderer is destroyed"
-	backendWindow := nil.
+	backendWindow := nil
 ]
 
 { #category : #'updating screen' }
@@ -71,14 +71,14 @@ OSWindowRenderer >> resized [
 { #category : #'updating screen' }
 OSWindowRenderer >> updateAll [
 		"do something to update whole contents of the window"
-		
+
 		self subclassResponsibility
 ]
 
 { #category : #'updating screen' }
 OSWindowRenderer >> updateRectangle: rectangle [
 		"do something to update given portion of the window"
-		
+
 		self subclassResponsibility
 ]
 

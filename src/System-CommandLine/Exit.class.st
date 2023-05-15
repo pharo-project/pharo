@@ -33,7 +33,7 @@ Exit class >> signalSuccess [
 ]
 
 { #category : #signalling }
-Exit class >> signalSuccess: aMessage [ 
+Exit class >> signalSuccess: aMessage [
  	^self success signal: aMessage
 ]
 
@@ -68,13 +68,13 @@ Exit >> printMessage [
 	self isSuccess ifFalse: [ stderr red ].
 	stderr
 		nextPutAll: self messageText; lf;
-		clear.
+		clear
 ]
 
 { #category : #printing }
 Exit >> printOn: aStream [
 	super printOn: aStream.
-	aStream space print: self status.
+	aStream space print: self status
 ]
 
 { #category : #accessing }
@@ -84,5 +84,5 @@ Exit >> status [
 
 { #category : #accessing }
 Exit >> status: anInteger [
-	status := anInteger .
+	status := anInteger
 ]

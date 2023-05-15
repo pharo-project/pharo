@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 ReExceptionProperty class >> for: anEntity with: anException [
-	
+
 	^ self new
 		initializeSourceAnchor: (
 			ReSourceAnchor entity: anEntity);
@@ -28,7 +28,7 @@ ReExceptionProperty >> actions [
 	^ { (RePropertyAction new
 		   icon: (self iconNamed: #smallDebug);
 		   description: 'Debug the exception';
-		   action: [ :prop | 
+		   action: [ :prop |
 			   (OupsDebugRequest newForContext: prop stack)
 				   label: prop message;
 				   submit ];

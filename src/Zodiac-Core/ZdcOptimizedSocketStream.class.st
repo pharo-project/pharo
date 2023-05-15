@@ -15,7 +15,7 @@ Class {
 { #category : #'stream out' }
 ZdcOptimizedSocketStream >> next: count putAll: collection startingAt: offset [
 	"Write count bytes from collection starting at offset. Overwritten, optimized"
-	
+
 	| totalWritten |
 	totalWritten := 0.
 	[ | toWrite |
@@ -29,25 +29,25 @@ ZdcOptimizedSocketStream >> next: count putAll: collection startingAt: offset [
 ZdcOptimizedSocketStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read. Overwritten, optimized"
-	
+
 	| totalRead |
 	totalRead := 0.
 	[ | read |
 		(read := readBuffer availableForReading min: (requestedCount - totalRead)) > 0
-			ifTrue: [  
-				collection 
-					replaceFrom: offset + totalRead to: offset + totalRead + read - 1 
+			ifTrue: [
+				collection
+					replaceFrom: offset + totalRead to: offset + totalRead + read - 1
 					with: readBuffer buffer startingAt: readBuffer contentsStart.
 				readBuffer advanceReadPointer: read.
 				totalRead := totalRead + read ].
-		totalRead = requestedCount or: [ self isConnected not ] ] whileFalse: [ self fillReadBuffer ].   
+		totalRead = requestedCount or: [ self isConnected not ] ] whileFalse: [ self fillReadBuffer ].
 	^ totalRead
 ]
 
 { #category : #'stream in' }
 ZdcOptimizedSocketStream >> skip: count [
 	"Skip over count bytes. Overwritten, optimized"
-	
+
 	| skipCount |
 	skipCount := 0.
 	[ | leftToSkip skipping |
@@ -58,11 +58,11 @@ ZdcOptimizedSocketStream >> skip: count [
 ]
 
 { #category : #'stream in' }
-ZdcOptimizedSocketStream >> upTo: value [ 
+ZdcOptimizedSocketStream >> upTo: value [
 	"Read bytes upto but not including value and return them as a ByteArray.
 	If value is not found, return the entire contents of the stream. Overwritten, optimized"
-	
-	^ self collectionSpecies 
+
+	^ self collectionSpecies
 		streamContents: [ :writeStream |
 			[ | position |
 				position := 0.
@@ -71,8 +71,8 @@ ZdcOptimizedSocketStream >> upTo: value [
 					count := position = 0 ifTrue: [ readBuffer availableForReading ] ifFalse: [ position - readBuffer contentsStart ].
 					writeStream next: count putAll: readBuffer buffer startingAt: readBuffer contentsStart.
 					readBuffer advanceReadPointer: count.
-					position = 0 ifFalse: [ readBuffer advanceReadPointer: 1 ] ].   
-				position ~= 0 or: [ self atEnd ] ] whileFalse: [ 
+					position = 0 ifFalse: [ readBuffer advanceReadPointer: 1 ] ].
+				position ~= 0 or: [ self atEnd ] ] whileFalse: [
 					readBuffer isEmpty ifTrue: [ self fillReadBuffer ] ] ]
 ]
 
@@ -80,19 +80,19 @@ ZdcOptimizedSocketStream >> upTo: value [
 ZdcOptimizedSocketStream >> upToEnd [
 	"Read bytes until the stream is atEnd and return them as a ByteArray. Overwritten, optimized"
 
-	^ self collectionSpecies 
+	^ self collectionSpecies
 		streamContents: [ :writeStream |
-			[	
+			[
 				readBuffer isEmpty ifFalse: [
-					writeStream 
-						next: readBuffer availableForReading 
-						putAll: readBuffer buffer 
+					writeStream
+						next: readBuffer availableForReading
+						putAll: readBuffer buffer
 						startingAt: readBuffer contentsStart.
-					readBuffer advanceReadPointer: readBuffer availableForReading ].   
-				self atEnd ] whileFalse: [ 
-					readBuffer isEmpty 
-						ifTrue: [ 
-							[ self fillReadBuffer ] 
-								on: ConnectionClosed 
+					readBuffer advanceReadPointer: readBuffer availableForReading ].
+				self atEnd ] whileFalse: [
+					readBuffer isEmpty
+						ifTrue: [
+							[ self fillReadBuffer ]
+								on: ConnectionClosed
 								do: [ :exception | exception return ] ] ] ]
 ]

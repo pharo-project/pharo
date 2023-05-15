@@ -6612,7 +6612,7 @@ OmBlockFileStoreTest >> setUpOtherStore [
 ]
 
 { #category : #initialization }
-OmBlockFileStoreTest >> setUpStore [	
+OmBlockFileStoreTest >> setUpStore [
 
 	^ OmBlockFileStore
 		named: 'testingStore', UUID new asString36
@@ -6622,9 +6622,9 @@ OmBlockFileStoreTest >> setUpStore [
 { #category : #running }
 OmBlockFileStoreTest >> tearDown [
 
-	bigStore ifNotNil: 
+	bigStore ifNotNil:
 		[ bigStore fileReference ensureDelete ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #accessing }
@@ -6640,7 +6640,7 @@ OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 	bigStore := OmBlockFileStore
 		named: 'bigStore'
 		inDirectory: ombuFile parent.
-	targetReference := OmReference 
+	targetReference := OmReference
 		globalName: 'bigStore'
 		localName: '199'.
 	mr1 := bigStore mustRefresh.
@@ -6654,19 +6654,19 @@ OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 	self assert: entry isNotNil
 		description: 'entry not found'.
 	self assert: mr2 not
-		description: 'mustRefresh should be false after to search'.
+		description: 'mustRefresh should be false after to search'
 ]
 
 { #category : #tests }
 OmBlockFileStoreTest >> testMultibyteUnicodeCharacterCrossingTwoBlocks [
 	"Test fogbugz case 20112"
-	
+
 	| aWideString |
 	aWideString := (String streamContents: [:stream |
 		store blockSize timesRepeat: [ stream nextPut: (Character value: 266) ].
 	 ]).
-	store newEntry: (OmEntry content: aWideString).	
-	store newEntry: (OmEntry content: aWideString).	
+	store newEntry: (OmEntry content: aWideString).
+	store newEntry: (OmEntry content: aWideString).
 
 	"self shouldnt: [ "store flush" ] raise: OmFileStoreReadingError"
 ]

@@ -24,7 +24,7 @@ RBRefactoryClassChange class >> isAbstract [
 RBRefactoryClassChange >> = aRefactoryClassChange [
 
 	self class = aRefactoryClassChange class ifFalse: [ ^ false ].
-	^ className = aRefactoryClassChange changeClassName and: [ 
+	^ className = aRefactoryClassChange changeClassName and: [
 		  isMeta = aRefactoryClassChange isMeta ]
 ]
 
@@ -106,7 +106,7 @@ RBRefactoryClassChange >> isMeta [
 { #category : #accessing }
 RBRefactoryClassChange >> methodSourceFor: aSymbol [
 
-	^ (self changeClass includesSelector: aSymbol) ifTrue: [ 
+	^ (self changeClass includesSelector: aSymbol) ifTrue: [
 		  self changeClass sourceCodeAt: aSymbol ]
 ]
 
@@ -133,7 +133,7 @@ RBRefactoryClassChange >> renameChangesForClass: oldClassName to: newClassName [
 
 	^ self changeClassName = oldClassName
 		  ifFalse: [ self ]
-		  ifTrue: [ 
+		  ifTrue: [
 			  self copy
 				  changeClassName: newClassName;
 				  yourself ]

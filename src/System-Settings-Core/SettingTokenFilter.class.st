@@ -19,18 +19,18 @@ Class {
 { #category : #filtering }
 SettingTokenFilter >> keepSettingDeclaration: aSettingDeclaration [
 	| selector |
-	selector := (aSettingDeclaration respondsTo: #getSelector) 
+	selector := (aSettingDeclaration respondsTo: #getSelector)
 		ifTrue: [aSettingDeclaration getSelector] ifFalse: [''].
-	^ (({aSettingDeclaration name.  
-		aSettingDeclaration label. 
-		selector asUppercase. 
+	^ (({aSettingDeclaration name.
+		aSettingDeclaration label.
+		selector asUppercase.
 		aSettingDeclaration description}
 				collect: [:e | (e ifNil: ['']) asUppercase])
 				includesSubstringAnywhere: self token asUppercase)
 ]
 
 { #category : #filtering }
-SettingTokenFilter >> keepSettingTreeNode: aSettingNode [ 
+SettingTokenFilter >> keepSettingTreeNode: aSettingNode [
 	^ (({aSettingNode methodClass name asUppercase. aSettingNode selector asUppercase}
 			collect: [:e | e ifNil: ['']])
 			includesSubstringAnywhere: self token asUppercase)

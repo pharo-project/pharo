@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
+RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	^ self new
 		forMethod: aParseTree
 			fromClass: aClass
@@ -29,7 +29,7 @@ RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aCl
 ]
 
 { #category : #'instance creation' }
-RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
+RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	^ self new
 		model: aRBNamespace;
 		forMethod: aParseTree
@@ -47,7 +47,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			| varName pool |
 
 			varName := aNode name.
@@ -62,7 +62,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 ]
 
 { #category : #initialization }
-RBExpandReferencedPoolsRefactoring >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
+RBExpandReferencedPoolsRefactoring >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	fromClass := self model classFor: aClass.
 	parseTree := aParseTree.
 	toClasses := classCollection collect: [:each | self model classFor: each]
@@ -74,7 +74,7 @@ RBExpandReferencedPoolsRefactoring >> hasPoolsToMove [
 ]
 
 { #category : #transforming }
-RBExpandReferencedPoolsRefactoring >> movePool: aSymbol toClass: aClass [ 
+RBExpandReferencedPoolsRefactoring >> movePool: aSymbol toClass: aClass [
 	| nonMetaClass |
 	nonMetaClass := aClass instanceSide.
 	(nonMetaClass definesPoolDictionary: aSymbol) ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
@@ -82,7 +82,7 @@ RBExpandReferencedPoolsRefactoring >> movePool: aSymbol toClass: aClass [
 
 { #category : #transforming }
 RBExpandReferencedPoolsRefactoring >> movePoolVariables [
-	pools 
+	pools
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
@@ -95,20 +95,20 @@ RBExpandReferencedPoolsRefactoring >> preconditions [
 { #category : #transforming }
 RBExpandReferencedPoolsRefactoring >> transform [
 	self computePoolsToMove.
-	self hasPoolsToMove 
-		ifTrue: 
-			[self 
-				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?' 
+	self hasPoolsToMove
+		ifTrue:
+			[self
+				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
 						expandMacros].
 	self movePoolVariables
 ]
 
 { #category : #transforming }
-RBExpandReferencedPoolsRefactoring >> whichPoolDefines: varName [ 
+RBExpandReferencedPoolsRefactoring >> whichPoolDefines: varName [
 	| currentClass |
 	currentClass := fromClass.
-	[currentClass isNil] whileFalse: 
-			[currentClass allPoolDictionaryNames 
+	[currentClass isNil] whileFalse:
+			[currentClass allPoolDictionaryNames
 				do: [:each | ((self poolVariableNamesIn: each) includes: varName) ifTrue: [^each]].
 			currentClass := currentClass superclass].
 	^nil

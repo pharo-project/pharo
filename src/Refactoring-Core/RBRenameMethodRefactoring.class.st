@@ -39,7 +39,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		model: aRBSmalltalk;
 		renameMethod: aSelector
@@ -51,7 +51,7 @@ RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector i
 
 { #category : #'instance creation' }
 RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
-	^ self new 
+	^ self new
 		renameMethod: aSelector
 		in: aClass
 		to: newSelector
@@ -74,13 +74,13 @@ RBRenameMethodRefactoring >> implementorsCanBePrimitives [
 { #category : #private }
 RBRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	super modifyImplementorParseTree: parseTree in: aClass.
-	self renameArgumentsIn: parseTree.
+	self renameArgumentsIn: parseTree
 ]
 
 { #category : #preconditions }
 RBRenameMethodRefactoring >> myConditions [
 	^RBCondition withBlock: [oldSelector numArgs = newSelector numArgs]
-		errorString: newSelector printString 
+		errorString: newSelector printString
 				, ' doesn''t have the correct number of arguments.'
 ]
 
@@ -90,7 +90,7 @@ RBRenameMethodRefactoring >> parseTreeRewriter [
 	oldString := self buildSelectorString: oldSelector.
 	newString := self buildSelectorString: newSelector
 				withPermuteMap: permutation.
-	rewriteRule := self hasPermutedArguments 
+	rewriteRule := self hasPermutedArguments
 				ifTrue: [self parseTreeRewriterClass new]
 				ifFalse: [self parseTreeRewriterClass replaceLiteral: oldSelector with: newSelector].
 	rewriteRule replace: '``@object ' , oldString
@@ -101,17 +101,17 @@ RBRenameMethodRefactoring >> parseTreeRewriter [
 { #category : #preconditions }
 RBRenameMethodRefactoring >> preconditions [
 	| newCondition |
-	newCondition := (RBCondition 
+	newCondition := (RBCondition
 							withBlock: [ newSelector = oldSelector ]
-							errorString: 'The selector name has <1?not:> changed <1?:to #', newSelector, '>') 
-						& (RBCondition 
+							errorString: 'The selector name has <1?not:> changed <1?:to #', newSelector, '>')
+						& (RBCondition
 							withBlock: [permutation asArray ~= (1 to: oldSelector numArgs) asArray]
 							errorString: 'The arguments are <1?:not >permuted').
 	^newCondition | super preconditions
 ]
 
 { #category : #printing }
-RBRenameMethodRefactoring >> storeOn: aStream [ 
+RBRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

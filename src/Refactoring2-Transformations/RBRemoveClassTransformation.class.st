@@ -39,7 +39,7 @@ RBRemoveClassTransformation class >> className: aClassName [
 { #category : #api }
 RBRemoveClassTransformation class >> classNames: aCollection [
 
-	^ self 
+	^ self
 		model: RBTransformation new model
 		classNames: aCollection
 ]
@@ -65,16 +65,16 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 { #category : #preconditions }
 RBRemoveClassTransformation >> environmentWithReferencesTo: aClass [
 
-	^ RBBrowserEnvironment new 
-		referencesTo: (self environment 
-			associationAt: aClass 
+	^ RBBrowserEnvironment new
+		referencesTo: (self environment
+			associationAt: aClass
 			ifAbsent: [ aClass ])
 ]
 
 { #category : #preconditions }
 RBRemoveClassTransformation >> environmentWithUsersOf: aTrait [
 
-	^ RBClassEnvironment 
+	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		classes: aTrait realClass users
 ]
@@ -122,9 +122,9 @@ RBRemoveClassTransformation >> preconditions [
 		aClassOrTrait := self model classNamed: className asSymbol.
 		aClassOrTrait ifNil: [ self
 			refactoringError: 'No such class or trait named ', className ].
-		
-		cond 
-			& ( (self preconditionIsNotMetaclass: aClassOrTrait) 
+
+		cond
+			& ( (self preconditionIsNotMetaclass: aClassOrTrait)
 			& (self preconditionHasNoReferences: className)
 			& (self preconditionHasNoSubclasses: aClassOrTrait)
 			& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
@@ -147,13 +147,13 @@ RBRemoveClassTransformation >> removeClass [
 { #category : #private }
 RBRemoveClassTransformation >> reparentSubclasses [
 
-	self model 
-		reparentClasses: self definingClass subclasses copy 
+	self model
+		reparentClasses: self definingClass subclasses copy
 		to: self definingClass superclass
 ]
 
 { #category : #printing }
-RBRemoveClassTransformation >> storeOn: aStream [ 
+RBRemoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

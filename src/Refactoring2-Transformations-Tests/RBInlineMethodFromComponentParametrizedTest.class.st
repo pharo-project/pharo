@@ -12,25 +12,25 @@ RBInlineMethodFromComponentParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBInlineMethodFromComponentParametrizedTest >> constructor [ 
+RBInlineMethodFromComponentParametrizedTest >> constructor [
 	^ #inline:inMethod:forClass:
 ]
 
 { #category : #tests }
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |
-	self proceedThroughWarning: 
-		[ refactoring := self createRefactoringWithArguments:  
+	self proceedThroughWarning:
+		[ refactoring := self createRefactoringWithArguments:
 				{(35 to: 79) . #inlineComponent . RBRefactoryTestDataApp}.
-		(refactoring model classNamed: #Behavior) 
+		(refactoring model classNamed: #Behavior)
 			compile: 'hasImmediateInstances ^self format = 0'
 			classified: #(#accessing ).
-		self 
+		self
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
-		parseTreeForSelector: #inlineComponent) 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp)
+		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
 	| a aBehavior |
 	a := 5.
@@ -50,7 +50,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 			class := refactoring model classNamed: #Magnitude.
 			class
 				compile:
-					'max: aMagnitude 
+					'max: aMagnitude
 					"Answer the receiver or the argument, whichever has the greater magnitude."
 
 					self > aMagnitude
@@ -58,7 +58,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 						ifFalse: [^aMagnitude]'
 
 			classified: #(#accessing ).
-		self 
+		self
 			setupImplementorToInlineFor: refactoring
 			toReturn: class.
 		self executeRefactoring: refactoring ].
@@ -76,19 +76,19 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	| refactoring |
 
-	self proceedThroughWarning: 
-		[ refactoring := self createRefactoringWithArguments: 
+	self proceedThroughWarning:
+		[ refactoring := self createRefactoringWithArguments:
 			 { (35 to: 91) . #inlineComponent . RBRefactoryTestDataApp }.
-		self 
+		self
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
 		"The following line is needed because some people implement #yourself themselves."
-		self 
+		self
 			setupImplementorToInlineFor: refactoring
 			toReturn: (refactoring model classNamed: #Object).
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
-		parseTreeForSelector: #inlineComponent) 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp)
+		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
 	| a anObject |
 	a := 5.
@@ -110,16 +110,16 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
-	(model classNamed: #Object) 
+	(model classNamed: #Object)
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a a9: b b9: c'
 		classified: #(#accessing).
-	self proceedThroughWarning: 
-			[refactoring := self createRefactoringWithModel: model andArguments:  
+	self proceedThroughWarning:
+			[refactoring := self createRefactoringWithModel: model andArguments:
 				{ (72 to: 84) . #foo . (model classNamed: #Object)}.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo) 
-			equals: (self 
+	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo)
+			equals: (self
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')
 ]
 
@@ -128,20 +128,20 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: #Rectangle.
-	class 
+	class
 		compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
 		classified: #(#accessing).
-	(model classNamed: #Object) 
+	(model classNamed: #Object)
 		compile: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle rectangleRelativeTo: temp'
 		classified: #(#accessing).
-	self proceedThroughWarning: 
-			[refactoring := self createRefactoringWithModel: model andArguments:  
+	self proceedThroughWarning:
+			[refactoring := self createRefactoringWithModel: model andArguments:
 				 { (77 to: 112) . #foo . (model classNamed: #Object)}.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo) 
-			equals: (self 
+	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo)
+			equals: (self
 						parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')
 ]
 
@@ -151,15 +151,15 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
-	(model classNamed: #Object) 
+	(model classNamed: #Object)
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c a9: b b9: a'
 		classified: #(#accessing).
-	self proceedThroughWarning: 
-			[refactoring := self createRefactoringWithModel: model andArguments:  
+	self proceedThroughWarning:
+			[refactoring := self createRefactoringWithModel: model andArguments:
 				{ (72 to: 84) . #foo . (model classNamed: #Object) }.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo) 
-				equals: (self 
+	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo)
+				equals: (self
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')
 ]

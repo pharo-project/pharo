@@ -25,7 +25,7 @@ SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext 
 	aCmdMenu activationStrategyClass = self activationStrategy ifFalse: [ ^ self ].
 
 	commands := self subclasses
-		            collect: [ :e | 
+		            collect: [ :e |
 			            e new
 				            context: aClyMethodContext;
 				            yourself ]
@@ -35,12 +35,12 @@ SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext 
 ]
 
 { #category : #adding }
-SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [ 
+SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 
 	| commands |
-	
-	commands := self allSubclasses collect: [:aClass | 
-		aClass new 
+
+	commands := self allSubclasses collect: [:aClass |
+		aClass new
 			context: context;
 			yourself] thenSelect: [:aCommand | aCommand isApplicable ].
 
@@ -59,10 +59,10 @@ SycCmCommand >> applyCommandResult [
 ]
 
 { #category : #executing }
-SycCmCommand >> execute [ 
+SycCmCommand >> execute [
 	[self prepareFullExecution.
 	self executeRefactoring.
-	self applyCommandResult] 
+	self applyCommandResult]
 		on: Exception do: [ :exc | self processCommandFailure: exc ]
 ]
 
@@ -78,7 +78,7 @@ SycCmCommand >> icon [
 
 { #category : #testing }
 SycCmCommand >> isApplicable [
-	
+
 	^ true
 ]
 
@@ -90,7 +90,7 @@ SycCmCommand >> isEnabled [
 
 { #category : #accessing }
 SycCmCommand >> order [
-	
+
 	^ 10100
 ]
 
@@ -101,8 +101,8 @@ SycCmCommand >> parentGroup [
 ]
 
 { #category : #accessing }
-SycCmCommand >> parentGroup: aCmdRootMenuGroup [ 
-	
+SycCmCommand >> parentGroup: aCmdRootMenuGroup [
+
 	parentGroup := aCmdRootMenuGroup
 ]
 
@@ -112,17 +112,17 @@ SycCmCommand >> prepareFullExecution [
 
 { #category : #execution }
 SycCmCommand >> processCommandFailure: anException [
-	
+
 	context processFailure: anException of: self
 ]
 
 { #category : #'context menu' }
-SycCmCommand >> registerContextMenuItemsWithBuilder: aBuilder [ 
+SycCmCommand >> registerContextMenuItemsWithBuilder: aBuilder [
 
 	(aBuilder item: self name)
 		parent: self parentGroup name;
 		order: self parentGroup order + (self order / 100);
 		help: self description;
 		action: [self execute];
-		icon: self icon.
+		icon: self icon
 ]

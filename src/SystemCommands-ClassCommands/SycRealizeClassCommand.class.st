@@ -9,7 +9,7 @@ Class {
 
 { #category : #execution }
 SycRealizeClassCommand >> asRefactorings [
-	
+
 	^classes collect: [ :each | RBRealizeClassTransformation className: each]
 ]
 

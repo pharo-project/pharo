@@ -22,13 +22,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-OCReceiverDoItSemanticScope class >> targetingNilReceiver [ 
+OCReceiverDoItSemanticScope class >> targetingNilReceiver [
 	^self targetingReceiver: nil
 ]
 
 { #category : #'instance creation' }
 OCReceiverDoItSemanticScope class >> targetingReceiver: anObject [
-	^self new 
+	^self new
 		targetReceiver: anObject
 ]
 
@@ -45,7 +45,7 @@ OCReceiverDoItSemanticScope >> receiver: anObject [
 ]
 
 { #category : #accessing }
-OCReceiverDoItSemanticScope >> targetClass [ 
+OCReceiverDoItSemanticScope >> targetClass [
 	^targetReceiver class
 ]
 

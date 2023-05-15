@@ -73,10 +73,10 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 	| ast  assignment var |
 	ast := (OCOpalExamples>>#exampleSimpleBlockLocalIf) parseTree.
 
-	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 	
+	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
 	var := assignment variable variable.
 	self assert: var isWrite.
-	self deny: var isEscaping.
+	self deny: var isEscaping
 ]
 
 { #category : #'tests - special cases' }
@@ -282,7 +282,8 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
 
 	self assert: ast scope tempVars size equals: 1.
 	self assert: ast scope tempVector size equals: 0.
-	self deny: (ast scope lookupVar: 't1') isRemote
+	self deny: (ast scope lookupVar: 't1') isRemote.
+	self assert: (ast scope lookupVar: 't1') isTempVariable
 ]
 
 { #category : #'tests - special cases' }

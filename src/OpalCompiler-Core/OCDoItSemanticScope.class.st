@@ -16,8 +16,8 @@ Class {
 }
 
 { #category : #testing }
-OCDoItSemanticScope class >> isAbstract [ 
-	^self = OCDoItSemanticScope 
+OCDoItSemanticScope class >> isAbstract [
+	^self = OCDoItSemanticScope
 ]
 
 { #category : #converting }
@@ -37,7 +37,7 @@ OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 ]
 
 { #category : #testing }
-OCDoItSemanticScope >> isDoItScope [ 
+OCDoItSemanticScope >> isDoItScope [
 	^true
 ]
 

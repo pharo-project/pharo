@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #initialization }
-RGClassInstanceVariableDefinition >> initialize [ 
+RGClassInstanceVariableDefinition >> initialize [
 
 	super initialize.
-	self isMetaSide: true.
+	self isMetaSide: true
 ]
 
 { #category : #testing }

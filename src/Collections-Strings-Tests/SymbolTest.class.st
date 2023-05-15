@@ -492,6 +492,18 @@ SymbolTest >> testNumArgsUnary [
 ]
 
 { #category : #tests }
+SymbolTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each | each asString ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self assert: printed equals: $# asString , ('' join: allElementsAsString)
+]
+
+{ #category : #tests }
 SymbolTest >> testReadFrom [
 	self expectedBehavior do: [ :association | self assert: association key value identicalTo: association value ]
 ]

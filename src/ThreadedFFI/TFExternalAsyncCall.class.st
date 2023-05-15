@@ -20,8 +20,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-TFExternalAsyncCall class >> forFunction: aTFExternalFunction [ 
-	
+TFExternalAsyncCall class >> forFunction: aTFExternalFunction [
+
 	^ self basicNew
 		function: aTFExternalFunction;
 		initialize;
@@ -30,43 +30,43 @@ TFExternalAsyncCall class >> forFunction: aTFExternalFunction [
 
 { #category : #operations }
 TFExternalAsyncCall >> cleanUp [
-	self deregisterSemaphore.
+	self deregisterSemaphore
 ]
 
 { #category : #'private - semaphore' }
 TFExternalAsyncCall >> deregisterSemaphore [
-	
+
 	Smalltalk unregisterExternalObject: self semaphore
 ]
 
 { #category : #operations }
 TFExternalAsyncCall >> doExecuteOn: aRunner [
-	
-	| aTaskAddress | 
-	
+
+	| aTaskAddress |
+
 	aTaskAddress := aRunner
 		executeFunction: function
 		withArguments: parameterArray
 		usingSemaphore: self semaphoreIndex.
-	
-	"I check if the semaphore is already signaled, because doing it in this way 
-	is thousands of times faster than just executing the wait. 
+
+	"I check if the semaphore is already signaled, because doing it in this way
+	is thousands of times faster than just executing the wait.
 	I think is a bug in the VM"
-	
-	self semaphore isSignaled 
+
+	self semaphore isSignaled
 		ifFalse: [ self semaphore wait ].
-	
+
 	^ aRunner readReturnValueFromTask: aTaskAddress
 ]
 
 { #category : #operations }
 TFExternalAsyncCall >> executeOn: aRunner [
 	"Performs a callout using the asynchronous threaded FFI plugin.
-	 This method schedules the execution of a function in the threaded FFI plugin and 
+	 This method schedules the execution of a function in the threaded FFI plugin and
 	 then waits for its result in a semaphore.
 	 When the semaphore is signaled, the result is available in an external value holder
 	 from where the value is read.
-	 This method contains some boilerplate code to allocate and release external 
+	 This method contains some boilerplate code to allocate and release external
 	 value holders for the arguments and the return value."
 
 	^ [
@@ -88,7 +88,7 @@ TFExternalAsyncCall >> function: anObject [
 
 { #category : #initialization }
 TFExternalAsyncCall >> initialize [
-	semaphore := Semaphore new.
+	semaphore := Semaphore new
 ]
 
 { #category : #accessing }
@@ -107,13 +107,12 @@ TFExternalAsyncCall >> prepareExecution [
 
 	parameterArray := arguments asArray.
 
-	self registerSemaphore.
-
+	self registerSemaphore
 ]
 
 { #category : #'private - semaphore' }
 TFExternalAsyncCall >> registerSemaphore [
-	
+
 	index := Smalltalk registerExternalObject: self semaphore
 ]
 
@@ -130,6 +129,6 @@ TFExternalAsyncCall >> semaphoreIndex [
 
 { #category : #'private - validation' }
 TFExternalAsyncCall >> validateFunction [
-	
+
 	function validate
 ]

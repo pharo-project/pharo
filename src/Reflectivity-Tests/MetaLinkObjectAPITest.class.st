@@ -42,7 +42,7 @@ MetaLinkObjectAPITest >> tagExec: aTag [
 { #category : #running }
 MetaLinkObjectAPITest >> tearDown [
 	MetaLink uninstallAll.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'class api' }
@@ -98,7 +98,7 @@ MetaLinkObjectAPITest >> testLinkClassToSlotNamedUninstall [
 	instance := ReflectivityExamples2 new.
 	instance methodWithInstVarAccess.
 	self assert: tag size equals: 2.
-	
+
 	link uninstall.
 	instance methodWithInstVarAccess.
 	self assert: tag size equals: 2

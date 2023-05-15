@@ -11,21 +11,20 @@ Class {
 RTFSelfCallInterpreterTest >> setUp [
 	"See RTFFakeTestSuperClass comment for more information."
 	super setUp.
-	RTFFakeTestSuperClass superclass: TestCase.
+	RTFFakeTestSuperClass superclass: TestCase
 ]
 
 { #category : #running }
 RTFSelfCallInterpreterTest >> tearDown [
 	RTFFakeTestSuperClass superclass: Object.
-	super tearDown.
-
+	super tearDown
 ]
 
 { #category : #tests }
 RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
-	
+
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
 	interpreter send: #testCallingSuperHelper fromClass: RTFFakeTestClass.
@@ -38,7 +37,7 @@ RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 RTFSelfCallInterpreterTest >> testSimple [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
-	
+
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
 	interpreter send: #testFailingButNotConsideredAsRotten fromClass: RTFFakeTestClass.
@@ -51,7 +50,7 @@ RTFSelfCallInterpreterTest >> testSimple [
 RTFSelfCallInterpreterTest >> testWithHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
-	
+
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
 	interpreter send: #testWithAssertionInHelperRun fromClass: RTFFakeTestClass.
@@ -64,7 +63,7 @@ RTFSelfCallInterpreterTest >> testWithHelper [
 RTFSelfCallInterpreterTest >> testWithHelperHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
-	
+
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
 	interpreter send: #testWithHelperHelper fromClass: RTFFakeTestClass.
@@ -77,7 +76,7 @@ RTFSelfCallInterpreterTest >> testWithHelperHelper [
 RTFSelfCallInterpreterTest >> testWithSuperHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
-	
+
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
 	interpreter send: #testWithAssertionInSuperHelperRun fromClass: RTFFakeTestClass.

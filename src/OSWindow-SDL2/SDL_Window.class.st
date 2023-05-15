@@ -19,12 +19,12 @@ SDL_Window class >> destroyWindow: handle [
 { #category : #finalization }
 SDL_Window class >> finalizeResourceData: aTuple [
 	| handle windowId |
-	
+
 	handle := aTuple first.
 	handle isNull ifTrue: [ ^ self ].
 
 	windowId := aTuple second.
-	OSSDL2Driver current unregisterWindowWithId: windowId.	
+	OSSDL2Driver current unregisterWindowWithId: windowId.
 	self destroyWindow: handle.
 	handle beNull
 ]
@@ -42,7 +42,7 @@ SDL_Window >> createDefaultRenderer [
 { #category : #rendering }
 SDL_Window >> createRenderer: driverIndex flags: flags [
 
-	^ (self primCreateRenderer: driverIndex flags: flags) initialize.
+	^ (self primCreateRenderer: driverIndex flags: flags) initialize
 ]
 
 { #category : #initialize }

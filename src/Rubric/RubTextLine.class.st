@@ -26,7 +26,7 @@ Class {
 
 { #category : #'instance creation' }
 RubTextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesInteger paddingWidth: padWidthInteger [
-	"Answer an instance of me with the arguments as the start, stop points, 
+	"Answer an instance of me with the arguments as the start, stop points,
 	number of spaces in the line, and width of the padding."
 	| line |
 	line := self new firstIndex: startInteger lastIndex: stopInteger.
@@ -100,7 +100,7 @@ RubTextLine >> internalSpaces [
 ]
 
 { #category : #accessing }
-RubTextLine >> internalSpaces: spacesInteger [ 
+RubTextLine >> internalSpaces: spacesInteger [
 	"Set the number of spaces in the line to be spacesInteger."
 
 	internalSpaces := spacesInteger
@@ -142,7 +142,7 @@ RubTextLine >> justifiedPadFor: spaceIndex font: aFont [
 
 { #category : #scanning }
 RubTextLine >> justifiedTabDeltaFor: spaceIndex [
-	"Compute the delta for a tab in a line of justified text, so tab falls 
+	"Compute the delta for a tab in a line of justified text, so tab falls
 	somewhere plausible when line is justified."
 
 	| pad extraPad |
@@ -204,12 +204,12 @@ RubTextLine >> lineNumber: anInteger [
 ]
 
 { #category : #updating }
-RubTextLine >> moveBy: delta [ 
+RubTextLine >> moveBy: delta [
 	"Move my rectangle by the given delta"
 	left := left + delta x.
 	right := right + delta x.
 	top := top + delta y.
-	bottom := bottom + delta y.
+	bottom := bottom + delta y
 ]
 
 { #category : #accessing }
@@ -220,7 +220,7 @@ RubTextLine >> paddingWidth [
 ]
 
 { #category : #accessing }
-RubTextLine >> paddingWidth: padWidthInteger [ 
+RubTextLine >> paddingWidth: padWidthInteger [
 	"Set the amount of space to be added to the font to be padWidthInteger."
 
 	paddingWidth := padWidthInteger asInteger
@@ -262,7 +262,7 @@ RubTextLine >> setRight: x [
 ]
 
 { #category : #updating }
-RubTextLine >> slide: delta [ 
+RubTextLine >> slide: delta [
 	"Change the starting and stopping points of the line by delta."
 
 	firstIndex := firstIndex + delta.
@@ -277,11 +277,11 @@ RubTextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	firstIndex := firstIndex + delta.
 	lastIndex := lastIndex + delta.
 	bottom := bottom + (newTop - top).
-	top := newTop.
+	top := newTop
 ]
 
 { #category : #accessing }
-RubTextLine >> stop: stopInteger [ 
+RubTextLine >> stop: stopInteger [
 	"Set the stopping point in the string of the line to be stopInteger."
 
 	lastIndex := stopInteger

@@ -50,9 +50,8 @@ ClyMethodCreationToolMorph >> applyChanges [
 	selector ifNil: [ ^false ].
 
 	newMethod := selectedClass >> selector.
-	methodTags ifEmpty: [
-		MethodClassifier classify: newMethod.
-		methodTags := newMethod tags ].
+	MethodClassifier classify: newMethod fallbackProtocol: (methodTags ifEmpty: [ nil ] ifNotEmpty: [ :tags | tags anyOne]).
+	methodTags := newMethod tags.
 	self tagAndPackageEditingMethod: newMethod.
 
 	self removeFromBrowser.

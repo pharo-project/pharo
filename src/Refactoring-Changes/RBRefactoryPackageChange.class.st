@@ -26,9 +26,9 @@ RBRefactoryPackageChange >> executeNotifying: aBlock [
 ]
 
 { #category : #initialization }
-RBRefactoryPackageChange >> initialize [ 
+RBRefactoryPackageChange >> initialize [
 	super initialize.
-	browserEnvironment := RBBrowserEnvironment default.
+	browserEnvironment := RBBrowserEnvironment default
 ]
 
 { #category : #private }

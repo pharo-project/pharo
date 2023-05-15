@@ -1,9 +1,9 @@
 Extension { #name : #RBCreateAccessorsForVariableTransformation }
 
 { #category : #'*NautilusRefactoring' }
-RBCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [ 
+RBCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
 
-	^ (self changes changes 
-		select: [:change | {getterMethodName. setterMethodName} includes: change selector ]) 
+	^ (self changes changes
+		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])
 		flatCollect: [:change | change whatToDisplayIn: aBrowser ]
 ]

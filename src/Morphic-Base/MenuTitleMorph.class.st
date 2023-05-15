@@ -36,11 +36,11 @@ Class {
 { #category : #'construction-defined' }
 MenuTitleMorph >> bigTitle: aTitle [
 
-	self 
+	self
 	withCloseBox;
 	title: aTitle;
 	font: StandardFonts windowTitleFont;
-	withPinBox.
+	withPinBox
 ]
 
 { #category : #'private - creation' }
@@ -57,14 +57,14 @@ MenuTitleMorph >> closeBoxClicked [
 
 { #category : #initialization }
 MenuTitleMorph >> defaultBorderColor [
-	^ self theme settings flatMenu 
+	^ self theme settings flatMenu
 		ifFalse: [#inset]
 		ifTrue: [self theme settings derivedMenuColor muchDarker]
 ]
 
 { #category : #initialization }
 MenuTitleMorph >> defaultColor [
-	
+
 	^self theme menuTitleColorFor: nil
 ]
 
@@ -72,8 +72,8 @@ MenuTitleMorph >> defaultColor [
 MenuTitleMorph >> font: aFont [
 
 	titleContainer ifNil: [ ^self ]. "should really not happen!"
-	
-	titleContainer submorphsDo: [ :stringMorph | stringMorph font: aFont ].
+
+	titleContainer submorphsDo: [ :stringMorph | stringMorph font: aFont ]
 ]
 
 { #category : #construction }
@@ -103,8 +103,8 @@ MenuTitleMorph >> iconButtonCalling: aSelector withForm: aForm helpText: aText [
 { #category : #initialization }
 MenuTitleMorph >> initialize [
 	super initialize.
-	
-	self 
+
+	self
 	listDirection: #leftToRight;
 	vResizing: #shrinkWrap;
 	wrapCentering: #topLeft;
@@ -117,17 +117,17 @@ MenuTitleMorph >> initialize [
 { #category : #'construction-defined' }
 MenuTitleMorph >> onlyCloseAndPinable [
 
-	self 
+	self
 	withCloseBox;
 	title: '';
-	withPinBox.
+	withPinBox
 ]
 
 { #category : #'event handling' }
 MenuTitleMorph >> pinBoxClicked [
 
 	owner toggleStayUp.
-	
+
 	self updatePinForm
 ]
 
@@ -157,29 +157,29 @@ MenuTitleMorph >> roundedCorners [
 MenuTitleMorph >> title: aString [
 
 	titleContainer ifNotNil: [ titleContainer delete ].
-	
+
 	titleContainer := AlignmentMorph newColumn.
-	titleContainer 
+	titleContainer
 	color: Color transparent;
 	hResizing: #spaceFill;
 	vResizing: #shrinkWrap;
 	wrapCentering: #center;
 	layoutInset: 0;
 	layoutChanged.
-	
+
 	aString translated linesDo: [ :line |
 		titleContainer addMorphBack: (StringMorph contents: line font: StandardFonts menuFont)
 	].
-	
+
 	pinBox ifNotNil: [ ^self addMorph: titleContainer inFrontOf: pinBox ].
-	
+
 	self addMorphBack: titleContainer
 ]
 
 { #category : #pinning }
 MenuTitleMorph >> updatePinForm [
 
-	pinBox ifNotNil: [ pinBox labelGraphic: self pinForm; extent: self boxExtent ].
+	pinBox ifNotNil: [ pinBox labelGraphic: self pinForm; extent: self boxExtent ]
 ]
 
 { #category : #rounding }
@@ -190,25 +190,25 @@ MenuTitleMorph >> wantsRoundedCorners [
 { #category : #construction }
 MenuTitleMorph >> withCloseBox [
 
-	closeBox ifNotNil: [ closeBox delete ].	
-		
-	closeBox := self 
-		iconButtonCalling: #closeBoxClicked 
-		withForm: self theme menuCloseForm 
+	closeBox ifNotNil: [ closeBox delete ].
+
+	closeBox := self
+		iconButtonCalling: #closeBoxClicked
+		withForm: self theme menuCloseForm
 		helpText: 'Close this menu'.
-		
+
 	self addMorph: closeBox asElementNumber: 1
 ]
 
 { #category : #construction }
 MenuTitleMorph >> withPinBox [
 
-	pinBox ifNotNil: [ pinBox delete ].	
-		
-	pinBox := self 
-		iconButtonCalling: #pinBoxClicked 
+	pinBox ifNotNil: [ pinBox delete ].
+
+	pinBox := self
+		iconButtonCalling: #pinBoxClicked
 		withForm: self pinForm scaledByDisplayScaleFactor
-		helpText: 'Keep this menu up'.	
-			
+		helpText: 'Keep this menu up'.
+
 	self addMorph: pinBox asElementNumber: 4
 ]

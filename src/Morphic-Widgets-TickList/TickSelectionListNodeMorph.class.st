@@ -11,12 +11,12 @@ Class {
 TickSelectionListNodeMorph >> drawMouseDownHighlightOn: aCanvas [
 	"Draw with a dotted border."
 
-	self highlightedForMouseDown 
+	self highlightedForMouseDown
 		ifTrue: [
 			container ifNil: [^super drawMouseDownHighlightOn: aCanvas].
 			self storeValue ifNil: [ self storeValue: self complexContents selected not ].
 			self complexContents selected: self storeValue.
-			aCanvas 
+			aCanvas
 				frameRectangle: self selectionFrame
 				width: 1
 				colors: {container mouseDownHighlightColor. Color transparent}
@@ -24,7 +24,7 @@ TickSelectionListNodeMorph >> drawMouseDownHighlightOn: aCanvas [
 ]
 
 { #category : #event }
-TickSelectionListNodeMorph >> pressed: anIndex [ 
+TickSelectionListNodeMorph >> pressed: anIndex [
 
 	self complexContents pressed: anIndex
 ]

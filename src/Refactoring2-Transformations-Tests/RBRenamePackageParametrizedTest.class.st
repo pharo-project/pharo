@@ -13,7 +13,7 @@ RBRenamePackageParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBRenamePackageParametrizedTest >> constructor [ 
+RBRenamePackageParametrizedTest >> constructor [
 	^ #rename:to:
 ]
 
@@ -25,18 +25,18 @@ RBRenamePackageParametrizedTest >> testBadName [
 
 { #category : #'failure tests' }
 RBRenamePackageParametrizedTest >> testExistingPackage [
-	self shouldFail: (self createRefactoringWithArguments:  
+	self shouldFail: (self createRefactoringWithArguments:
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes' })
 ]
 
 { #category : #tests }
 RBRenamePackageParametrizedTest >> testRenamePackage [
 	| refactoring aModel |
-	
-	refactoring := (self createRefactoringWithArguments:  
+
+	refactoring := (self createRefactoringWithArguments:
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Core1' }).
 	aModel := refactoring model.
 	self executeRefactoring: refactoring.
 	self assert: (aModel packageNamed: #'Refactoring-Tests-Core') isNil.
-	self assert: (aModel packageNamed: #'Refactoring-Tests-Core1') isNotNil.
+	self assert: (aModel packageNamed: #'Refactoring-Tests-Core1') isNotNil
 ]

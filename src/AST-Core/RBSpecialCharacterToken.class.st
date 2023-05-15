@@ -14,6 +14,11 @@ RBSpecialCharacterToken >> isSpecial [
 	^true
 ]
 
+{ #category : #testing }
+RBSpecialCharacterToken >> isSpecial: aValue [
+	^self value = aValue
+]
+
 { #category : #private }
 RBSpecialCharacterToken >> length [
 	^1

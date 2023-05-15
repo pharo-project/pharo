@@ -12,14 +12,14 @@ Class {
 
 { #category : #coverage }
 RandomTest >> classToBeTested [
-	
+
 	^ Random
 ]
 
 { #category : #running }
 RandomTest >> setUp [
 	super setUp.
-	gen := Random seed: 112629.
+	gen := Random seed: 112629
 ]
 
 { #category : #tests }
@@ -35,12 +35,12 @@ RandomTest >> testDistribution [
 				out nextPut: occurrence.
 				self assert: (occurrence between: 5 and: 40) ] ].
 		self assert: occurrences average equals: 20.
-		self assert: occurrences stdev < 10].
+		self assert: occurrences stdev < 10]
 ]
 
 { #category : #tests }
 RandomTest >> testIfCompletelyBroken [
-	"If the results are not these values (accounting for precision of printing) 
+	"If the results are not these values (accounting for precision of printing)
 	then something is horribly wrong"
 
 	gen seed: 2345678901.
@@ -53,22 +53,22 @@ RandomTest >> testIfCompletelyBroken [
 { #category : #tests }
 RandomTest >> testNext [
 
-	10000 timesRepeat: [ 
-		| next | 
+	10000 timesRepeat: [
+		| next |
 		next := gen next.
 		self assert: (next >= 0).
 		self assert: (next < 1).
-	].
+	]
 ]
 
 { #category : #tests }
 RandomTest >> testNextBetweenAnd [
-	
-	10000 timesRepeat: [ 
-		| next | 
+
+	10000 timesRepeat: [
+		| next |
 		next := gen nextBetween: -10 and: 5.
 		self assert: (next >= -10).
-		self assert: (next < 5) ].
+		self assert: (next < 5) ]
 ]
 
 { #category : #tests }
@@ -81,12 +81,12 @@ RandomTest >> testNextInteger [
 
 { #category : #tests }
 RandomTest >> testNextIntegerBetweenAnd [
-	
-	10000 timesRepeat: [ 
-		| next | 
+
+	10000 timesRepeat: [
+		| next |
 		next := gen nextIntegerBetween: -3 and: 5.
 		self assert: next isInteger.
-		self assert: (next between: -3 and: 5) ].
+		self assert: (next between: -3 and: 5) ]
 ]
 
 { #category : #tests }

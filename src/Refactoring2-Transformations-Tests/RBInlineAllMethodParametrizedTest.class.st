@@ -12,7 +12,7 @@ RBInlineAllMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBInlineAllMethodParametrizedTest >> constructor [ 
+RBInlineAllMethodParametrizedTest >> constructor [
 	^ #sendersOf:in:
 ]
 
@@ -26,16 +26,16 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	class compile: 'foo: arg1 bar: arg2 ^ (super foo: arg1 bar: arg2) - arg1' classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #foo:bar: . superclass }).
-	self assert: (class parseTreeForSelector: #foo:bar:) 
+	self assert: (class parseTreeForSelector: #foo:bar:)
 			equals: (self parseMethod: 'foo: arg1 bar: arg2 ^ (arg1 + arg2) - arg1')
 ]
 
 { #category : #'failure tests' }
 RBInlineAllMethodParametrizedTest >> testInlineMethodCanNotUnderstandSelectorInClass [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ #caller3 .RBRefactoryTestDataApp }.
-	self shouldFail: refactoring.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
@@ -45,22 +45,22 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 	class := model classNamed: self class name.
 	class
 		compile: 'foo: arg1 bar: arg2 ^ arg1 + arg2' classified: #(#accessing);
-		compile: 'exampleInline | x | x := 3 + (self foo: a bar: b). ^ (self foo: 5 bar: 7)' 
+		compile: 'exampleInline | x | x := 3 + (self foo: a bar: b). ^ (self foo: 5 bar: 7)'
 		classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #foo:bar: . class }).
-	self assert: (class parseTreeForSelector: #exampleInline) 
+	self assert: (class parseTreeForSelector: #exampleInline)
 			equals: (self parseMethod: 'exampleInline
 	| x |
 	x := 3 + (a + b).
-	^ 5 + 7').
+	^ 5 + 7')
 ]
 
 { #category : #tests }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod [
 	| refactoring methodName |
 	methodName := ('caller', '2') asSymbol.
-	refactoring := self createRefactoringWithArguments:  
+	refactoring := self createRefactoringWithArguments:
 		{ methodName . RBRefactoryTestDataApp }.
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
@@ -80,8 +80,8 @@ RBInlineAllMethodParametrizedTest >> testRecursiveMethod [
 		compile: 'bar ^self foo' classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model
 		andArguments: { #foo . class }).
-	self assert: (class parseTreeForSelector: #foo) 
+	self assert: (class parseTreeForSelector: #foo)
 			equals: (self parseMethod: 'foo ^self foo').
-	self assert: (class parseTreeForSelector: #bar) 
+	self assert: (class parseTreeForSelector: #bar)
 			equals: (self parseMethod: 'bar ^self foo')
 ]

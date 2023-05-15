@@ -70,7 +70,7 @@ RBAddMessageSendTransformation >> preconditions [
 				withBlock: [ | messageNode |
 					messageNode := self parserClass parseExpression: message.
 					messageNode allVariables
-						allSatisfy: [ :e | 
+						allSatisfy: [ :e |
 							(self definingMethod hasArgumentNamed: e name)
 								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
 				errorString:

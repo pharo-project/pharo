@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-OCMethodScope >> isMethodScope [ 
+OCMethodScope >> isMethodScope [
 	^true
 ]
 

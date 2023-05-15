@@ -96,7 +96,7 @@ TabGroupMorph >> addPage: aMorph label: aStringOrMorph selected: selectedStringO
 { #category : #accessing }
 TabGroupMorph >> adoptPaneColor: paneColor [
 	"Pass on to the content morph a little lighter."
-	
+
 	paneColor ifNil: [^super adoptPaneColor: paneColor].
 	super adoptPaneColor: (self theme subgroupColorFrom: paneColor).
 	self contentMorph borderStyle: (self theme tabPanelBorderStyleFor: self)
@@ -142,7 +142,7 @@ TabGroupMorph >> font: aFont [
 { #category : #drawing }
 TabGroupMorph >> fullDrawOn: aCanvas [
 	"Patch up the selected tab visuals if required."
-	
+
 	super fullDrawOn: aCanvas.
 	self theme drawTabGroupFinishingFor: self on: aCanvas
 ]
@@ -194,7 +194,7 @@ TabGroupMorph >> newContentMorph [
 	|p|
 	p := PanelMorph new
 		roundedCorners: #(2 3 4);
-		changeTableLayout; 
+		changeTableLayout;
 		layoutInset: 4;
 		cellInset: 8;
 		vResizing: #spaceFill;
@@ -306,7 +306,7 @@ TabGroupMorph >> selectedPageIndex: index [
 { #category : #accessing }
 TabGroupMorph >> selectedTab [
 	"Answer the tab of the selected page."
-	
+
  	^self tabSelectorMorph selectedTab
 ]
 
@@ -337,8 +337,8 @@ TabGroupMorph >> update: aSymbol with: anObject [
 
 	super update: aSymbol with: anObject.
 	aSymbol == #selectedIndex ifTrue: [
-			anObject > 0 & (anObject <= self pages size) 
-				ifTrue: [ "the old selected page is available"					
+			anObject > 0 & (anObject <= self pages size)
+				ifTrue: [ "the old selected page is available"
 					self updatePageIndex: self selectedPageIndex oldIndex: anObject]
 				ifFalse: [ self updatePageIndex: self selectedPageIndex ]]
 ]
@@ -354,6 +354,6 @@ TabGroupMorph >> updatePageIndex: index [
 ]
 
 { #category : #page }
-TabGroupMorph >> updatePageIndex: index oldIndex: oldSelectedIndex [ 
+TabGroupMorph >> updatePageIndex: index oldIndex: oldSelectedIndex [
 	self updatePageIndex: index
 ]

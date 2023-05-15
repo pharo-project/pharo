@@ -39,7 +39,7 @@ RBAddVariableAccessorTransformation >> createSetterAccessor [
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
 	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
-	self definingClass 
+	self definingClass
 		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
 		classified: #(#accessing).
 	^ getterMethod
@@ -51,7 +51,7 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	self definingClass 
+	self definingClass
 		compile: (sourceCode expandMacrosWith: setterMethod with: variableName)
 		classified: #accessing.
 	^setterMethod
@@ -67,7 +67,7 @@ RBAddVariableAccessorTransformation >> preconditions [
 
 	class := self model classObjectFor: className.
 
-	^ isClassVariable 
+	^ isClassVariable
 		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
 		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
 ]
@@ -81,7 +81,7 @@ RBAddVariableAccessorTransformation >> privateTransform [
 ]
 
 { #category : #private }
-RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [ 
+RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |
@@ -89,12 +89,12 @@ RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aStrin
 	baseString at: 1 put: baseString first asLowercase.
 	newString := baseString.
 	hasParam := newString last = $:.
-	hasParam 
+	hasParam
 		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
 	i := 0.
-	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue: 
+	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue:
 			[i := i + 1.
-			newString := baseString , i printString 
+			newString := baseString , i printString
 						, (hasParam ifTrue: [':'] ifFalse: [''])].
 	^newString asSymbol
 ]

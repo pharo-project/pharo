@@ -26,23 +26,23 @@ RBNegationCondition >> check [
 ]
 
 { #category : #initialization }
-RBNegationCondition >> condition: aCondition [ 
+RBNegationCondition >> condition: aCondition [
 	condition := aCondition.
 	self errorMacro: condition errorMacro
 ]
 
 { #category : #private }
-RBNegationCondition >> errorBlockFor: aBoolean [ 
+RBNegationCondition >> errorBlockFor: aBoolean [
 	^condition errorBlockFor: aBoolean not
 ]
 
 { #category : #private }
-RBNegationCondition >> errorStringFor: aBoolean [ 
+RBNegationCondition >> errorStringFor: aBoolean [
 	^condition errorStringFor: aBoolean not
 ]
 
 { #category : #printing }
-RBNegationCondition >> printOn: aStream [ 
+RBNegationCondition >> printOn: aStream [
 	aStream nextPutAll: 'NOT ';
 		print: condition
 ]

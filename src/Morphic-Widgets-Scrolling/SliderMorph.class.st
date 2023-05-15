@@ -67,12 +67,12 @@ SliderMorph >> descending: aBoolean [
 
 { #category : #accessing }
 SliderMorph >> dragging [
-	^ dragging.
+	^ dragging
 ]
 
 { #category : #accessing }
 SliderMorph >> dragging: aBoolean [
-	dragging := aBoolean.
+	dragging := aBoolean
 ]
 
 { #category : #geometry }
@@ -87,7 +87,7 @@ SliderMorph >> extent: newExtent [
 { #category : #initialization }
 SliderMorph >> initialize [
 	"initialize the state of the receiver"
-	
+
 	super initialize.
 	value := 0.0.
 	descending := false.
@@ -103,38 +103,38 @@ SliderMorph >> initializeSlider [
 	slider on: #mouseMove send: #scrollAbsolute: to: self.
 	slider on: #mouseDown send: #mouseDownInSlider: to: self.
 	slider on: #mouseUp send: #mouseUpInSlider: to: self.
-	slider 
+	slider
 		borderWidth: 1;
 		borderColor: self theme baseColor.
 
-	sliderShadow 
+	sliderShadow
 		borderWidth: 1;
 		borderColor: #inset.
 	"(the shadow must have the pagingArea as its owner to highlight properly)"
 	self pagingArea addMorph: sliderShadow.
 	sliderShadow hide.
 	self addMorph: slider.
-	self computeSlider.
+	self computeSlider
 ]
 
 { #category : #'other events' }
 SliderMorph >> mouseDownInSlider: event [
 	"When mouse down I start dragging, and change the border colors and show a shadow
 	on the original position."
-	
+
 	"If already dragging don't update."
 	"Be aware that this situation is difficult to reproduce, but you can if start dragging
 	and the use a key combination to change the selected OS Windows (not morphic) without
 	releasing the mouse and finally make a mousedown in the slider again."
 	dragging ifTrue:[^self].
-	
+
 	slider borderColor: #inset.
-	
+
 	sliderShadow color: self sliderShadowColor.
 	sliderShadow cornerStyle: slider cornerStyle.
 	sliderShadow bounds: slider bounds.
 	sliderShadow show.
-	
+
 	self dragging: true
 ]
 
@@ -142,18 +142,18 @@ SliderMorph >> mouseDownInSlider: event [
 SliderMorph >> mouseUpInSlider: event [
 	"When mouse up, the dragging ends and the color is reseted to it's orignal
 	value and the shadow of original position is hidden."
-	
+
 	"If it's not dragging, there's nothing to do."
 	"To reproduce this, press mouse down outside the slider, then move to
 	the slider and release the mouse."
-	
+
 	dragging ifFalse:[^self].
 
 	slider borderColor: #raised.
-				
+
 	sliderShadow hide.
-	
-	self dragging: false.
+
+	self dragging: false
 ]
 
 { #category : #accessing }
@@ -194,7 +194,7 @@ SliderMorph >> scrollAbsolute: event [
 
 { #category : #initialization }
 SliderMorph >> setSlider: aMorph withShadow: anotherMorph [
-	
+
 
 	slider ifNotNil: [ self removeMorph: slider ].
 	sliderShadow ifNotNil: [ self pagingArea removeMorph: sliderShadow ].
@@ -209,7 +209,7 @@ SliderMorph >> setSlider: aMorph withShadow: anotherMorph [
 	self pagingArea addMorph: sliderShadow.
 	sliderShadow hide.
 	self addMorph: slider.
-	self computeSlider.
+	self computeSlider
 ]
 
 { #category : #'model access' }
@@ -218,13 +218,13 @@ SliderMorph >> setValue: newValue [
 	self value: newValue.
 	setValueSelector ifNotNil: [
 		^model perform: setValueSelector with: value
-		].
+		]
 ]
 
 { #category : #accessing }
 SliderMorph >> setValueSelector: aSymbol [
 	"Directly set the selector to make more flexible."
-	
+
 	setValueSelector := aSymbol
 ]
 
@@ -232,10 +232,10 @@ SliderMorph >> setValueSelector: aSymbol [
 SliderMorph >> simulateScrollAbsolute: aPointStart to: aPointEnd [
 	"Simulates a mouse moving from a given point to a destinationpoint"
 	| event |
-	event := MouseMoveEvent  new 
-		setType: #mouseMove  
-		startPoint: aPointStart 
-		endPoint: aPointEnd 
+	event := MouseMoveEvent  new
+		setType: #mouseMove
+		startPoint: aPointStart
+		endPoint: aPointEnd
 		trail: nil
 		buttons: 0
 		hand: self currentHand
@@ -331,8 +331,8 @@ SliderMorph >> totalSliderArea [
 SliderMorph >> updateSliderBounds [
 	slider bounds: self totalSliderArea.
 	sliderShadow bounds: self totalSliderArea.
-	
-	self computeSlider.
+
+	self computeSlider
 ]
 
 { #category : #accessing }

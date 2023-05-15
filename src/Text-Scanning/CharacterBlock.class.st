@@ -30,16 +30,16 @@ Class {
 }
 
 { #category : #comparing }
-CharacterBlock >> < aCharacterBlock [ 
-	"Answer whether the string index of the receiver precedes that of 
+CharacterBlock >> < aCharacterBlock [
+	"Answer whether the string index of the receiver precedes that of
 	aCharacterBlock."
 
 	^stringIndex < aCharacterBlock stringIndex
 ]
 
 { #category : #comparing }
-CharacterBlock >> <= aCharacterBlock [ 
-	"Answer whether the string index of the receiver does not come after that 
+CharacterBlock >> <= aCharacterBlock [
+	"Answer whether the string index of the receiver does not come after that
 	of aCharacterBlock."
 
 	^(self > aCharacterBlock) not
@@ -54,16 +54,16 @@ CharacterBlock >> = aCharacterBlock [
 ]
 
 { #category : #comparing }
-CharacterBlock >> > aCharacterBlock [ 
-	"Answer whether the string index of the receiver comes after that of 
+CharacterBlock >> > aCharacterBlock [
+	"Answer whether the string index of the receiver comes after that of
 	aCharacterBlock."
 
 	^aCharacterBlock < self
 ]
 
 { #category : #comparing }
-CharacterBlock >> >= aCharacterBlock [ 
-	"Answer whether the string index of the receiver does not precede that of 
+CharacterBlock >> >= aCharacterBlock [
+	"Answer whether the string index of the receiver does not precede that of
 	aCharacterBlock."
 
 	^(self < aCharacterBlock) not
@@ -74,7 +74,7 @@ CharacterBlock >> max: aCharacterBlock [
 	aCharacterBlock ifNil:[^self].
 	^aCharacterBlock > self
 		ifTrue:[ aCharacterBlock]
-		ifFalse:[self].
+		ifFalse:[self]
 ]
 
 { #category : #comparing }
@@ -82,12 +82,12 @@ CharacterBlock >> min: aCharacterBlock [
 	aCharacterBlock ifNil:[^self].
 	^aCharacterBlock < self
 		ifTrue:[ aCharacterBlock]
-		ifFalse:[self].
+		ifFalse:[self]
 ]
 
 { #category : #private }
-CharacterBlock >> moveBy: aPoint [ 
-	"Change the corner positions of the receiver so that its area translates by 
+CharacterBlock >> moveBy: aPoint [
+	"Change the corner positions of the receiver so that its area translates by
 	the amount defined by the argument, aPoint."
 	origin := origin + aPoint.
 	corner := corner + aPoint
@@ -104,8 +104,7 @@ CharacterBlock >> printOn: aStream [
 	aStream nextPutAll: ' and rectangle '.
 	super printOn: aStream.
 	textLine ifNotNil: [aStream cr; nextPutAll: ' in '.
-				textLine printOn: aStream].
-
+				textLine printOn: aStream]
 ]
 
 { #category : #accessing }
@@ -116,10 +115,10 @@ CharacterBlock >> stringIndex [
 ]
 
 { #category : #private }
-CharacterBlock >> stringIndex: anInteger text: aText topLeft: topLeft extent: extent [ 
+CharacterBlock >> stringIndex: anInteger text: aText topLeft: topLeft extent: extent [
 	stringIndex := anInteger.
 	text := aText.
-	super 
+	super
 		setPoint: topLeft
 		point: topLeft + extent
 ]
@@ -130,6 +129,6 @@ CharacterBlock >> textLine [
 ]
 
 { #category : #accessing }
-CharacterBlock >> textLine: aLine [ 
+CharacterBlock >> textLine: aLine [
 	textLine := aLine
 ]

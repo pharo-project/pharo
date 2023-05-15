@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIUInt8 class >> externalType [ 
+FFIUInt8 class >> externalType [
 	^ ExternalType unsignedByte
 ]
 

@@ -45,7 +45,7 @@ SystemProgressMorph class >> cleanUp [
 { #category : #'enabling/disabling' }
 SystemProgressMorph class >> disable [
 
-	Job jobAnnouncer unsubscribe: self.
+	Job jobAnnouncer unsubscribe: self
 ]
 
 { #category : #'enabling/disabling' }
@@ -53,7 +53,7 @@ SystemProgressMorph class >> enable [
 
 	Job jobAnnouncer when: JobStart send: #startJob: to: self.
 	Job jobAnnouncer when: JobEnd send: #endJob: to: self.
-	Job jobAnnouncer when: JobChange send: #updateJob: to: self.
+	Job jobAnnouncer when: JobChange send: #updateJob: to: self
 ]
 
 { #category : #'job subscription' }
@@ -65,7 +65,7 @@ SystemProgressMorph class >> endJob: aJobEnd [
 { #category : #examples }
 SystemProgressMorph class >> example [
 	"SystemProgressMorph example"
-	'Progress' 
+	'Progress'
 		displayProgressFrom: 0 to: 1000
 		during: [:bar | 0 to: 1000 do: [:i | bar current: i. (Delay forMilliseconds: 2) wait]]
 ]
@@ -75,7 +75,7 @@ SystemProgressMorph class >> exampleChangeLabel [
 	"SystemProgressMorph exampleChangeLabel"
 	| classes |
 	classes := self environment allClasses copyFrom: 1 to: 100.
-	'InitialLabel' 
+	'InitialLabel'
 		displayProgressFrom: 0 to: classes size
 		during: [:bar | 1 to: classes size do: [:i |
 				bar current: i.
@@ -91,7 +91,7 @@ SystemProgressMorph class >> exampleLabelOnly [
 	UIManager default informUserDuring: [:bar |
 		words do: [:each|
 			bar label: 'Countdown: ', each.
-			(Delay forSeconds: 0.2) wait]].
+			(Delay forSeconds: 0.2) wait]]
 ]
 
 { #category : #accessing }
@@ -103,14 +103,14 @@ SystemProgressMorph class >> horizontalPosition [
 SystemProgressMorph class >> horizontalPosition: aFloat [
 	"0.0: left ... 1.0: right"
 	horizontalPosition := aFloat.
-	self uniqueInstance reposition.
+	self uniqueInstance reposition
 ]
 
 { #category : #'class initialization' }
 SystemProgressMorph class >> initialize [
 	"SystemProgressMorph initialize"
 
-	self reset.
+	self reset
 ]
 
 { #category : #'class initialization' }
@@ -135,7 +135,7 @@ SystemProgressMorph class >> settingOn: aBuilder [
 				setSelector: #horizontalPosition:;
 				label: 'Horizontal progress indicator position';
 				domainValues: {'left'->0 . 'middle'->0.5 . 'right'->0.88}.
-							
+
 			(aBuilder pickOne: #verticalPosition)
 				target: self;
 				getSelector: #verticalPosition;
@@ -148,12 +148,12 @@ SystemProgressMorph class >> settingOn: aBuilder [
 { #category : #'instance creation' }
 SystemProgressMorph class >> show: aJob [
 
-	^ self uniqueInstance show: aJob.
+	^ self uniqueInstance show: aJob
 ]
 
 { #category : #'instance creation' }
 SystemProgressMorph class >> show: aString from: startNumber to: endNumber [
-	self flag: #pharoFixMe.	
+	self flag: #pharoFixMe.
 	"When we go from Exceptions to announcements, delete this and use show:from:to:during:"
 
 	^ self uniqueInstance show: aString from: startNumber to: endNumber
@@ -161,7 +161,7 @@ SystemProgressMorph class >> show: aString from: startNumber to: endNumber [
 
 { #category : #'instance creation' }
 SystemProgressMorph class >> show: aString from: startNumber to: endNumber during: aBlock [
-	self flag: #pharoFixMe.	
+	self flag: #pharoFixMe.
 	"When we go from Exceptions to announcements, this will be the primary entry point"
 
 	^ self uniqueInstance
@@ -180,16 +180,16 @@ SystemProgressMorph class >> startJob: aJobStart [
 { #category : #'instance creation' }
 SystemProgressMorph class >> uniqueInstance [
 
-	^ UniqueInstance ifNil: [ UniqueInstance := self new ].
+	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
 { #category : #'job subscription' }
 SystemProgressMorph class >> updateJob: aJobChange [
 	| bars |
 	bars := self uniqueInstance bars.
-	bars isEmpty 
-		ifFalse: [ 
-			bars last 
+	bars isEmpty
+		ifFalse: [
+			bars last
 				label: aJobChange title;
 				progress: aJobChange progress ]
 ]
@@ -203,57 +203,57 @@ SystemProgressMorph class >> verticalPosition [
 SystemProgressMorph class >> verticalPosition: fraction [
 	"0.0: top ... 1.0: bottom"
 	verticalPosition := fraction.
-	self uniqueInstance reposition.
+	self uniqueInstance reposition
 ]
 
 { #category : #private }
 SystemProgressMorph >> addItemShowing: aJob [
-	
+
 	lock critical: [ | item items |
 		item := JobProgressMorph job: aJob.
 		items := self bars size.
-		items < 10 ifTrue: [ 
+		items < 10 ifTrue: [
 			self addMorphBack: item.
 			self resize ].
-		^ item ].
+		^ item ]
 ]
 
 { #category : #private }
 SystemProgressMorph >> addItemShowing: aString from: startNumber to: endNumber [
-	
+
 	lock critical: [ | item items |
 		item := SystemProgressItemMorph labeled: aString from: startNumber to: endNumber.
 		items := self bars size.
-		items < 10 ifTrue: [ 
+		items < 10 ifTrue: [
 			self addMorphBack: item.
 			self recenter ].
-		^ item ].
+		^ item ]
 ]
 
 { #category : #private }
 SystemProgressMorph >> bars [
-	
-	^ self submorphs.
+
+	^ self submorphs
 ]
 
 { #category : #private }
 SystemProgressMorph >> close: aSystemProgressItemMorph [
 
 	self bars isEmpty ifTrue: [ ^ self ].
-	
+
 	lock critical: [
 		aSystemProgressItemMorph delete.
-		self bars size = 0 ifTrue: [ 
+		self bars size = 0 ifTrue: [
 			self width: 0.
 			self delete ] ].
 
-	self refresh.
+	self refresh
 ]
 
 { #category : #'submorphs - add/remove' }
 SystemProgressMorph >> dismissViaHalo [
 
-	self class reset.
+	self class reset
 ]
 
 { #category : #initialization }
@@ -286,20 +286,20 @@ SystemProgressMorph >> lastRefresh [
 { #category : #private }
 SystemProgressMorph >> maxBarWidth [
 
-	^ self bars inject: 0 into: [ :max :next | next minExtent x max: max ].
+	^ self bars inject: 0 into: [ :max :next | next minExtent x max: max ]
 ]
 
 { #category : #initialization }
 SystemProgressMorph >> morphicLayerNumber [
 	"progress morphs are behind menus and balloons, but in front of most other stuff"
-	^self valueOfProperty: #morphicLayerNumber ifAbsent: [ 12 ].
+	^self valueOfProperty: #morphicLayerNumber ifAbsent: [ 12 ]
 ]
 
 { #category : #opening }
 SystemProgressMorph >> preOpenInWorld: aWorld [
 
 	self width: 200.
-	self resize.
+	self resize
 ]
 
 { #category : #updating }
@@ -319,7 +319,7 @@ SystemProgressMorph >> refresh [
 SystemProgressMorph >> reposition [
 	"Calculate the proper position.
 	Pay attention this repositioning only works when the morph is already been displayed."
-	
+
 	| xPos yPos margin |
 	margin := 20.
 	xPos := Display boundingBox width - self fullBounds width - (2*margin).
@@ -327,7 +327,7 @@ SystemProgressMorph >> reposition [
 	yPos := Display boundingBox height - self fullBounds height - (2*margin).
 	yPos := yPos * self class verticalPosition + margin.
 	self align: self fullBounds topLeft with: Display boundingBox topLeft + (5@20) + (xPos @ yPos).
-	self refresh.
+	self refresh
 ]
 
 { #category : #updating }
@@ -335,7 +335,7 @@ SystemProgressMorph >> resize [
 
 	| newWidth |
 	newWidth := self maxBarWidth + 50 max: self width.
-	self width: newWidth.
+	self width: newWidth
 ]
 
 { #category : #initialization }
@@ -375,35 +375,35 @@ SystemProgressMorph >> show: aString from: startNumber to: endNumber during: aBl
 	| progressMorph result |
 	self openInWorld.
 	progressMorph := self addItemShowing: aString from: startNumber to: endNumber.
-		
-	self 
+
+	self
 		refresh;
 		reposition.
 
 	[ result := progressMorph do: aBlock ] ensure: [ self close: progressMorph ].
-	^ result.
+	^ result
 ]
 
 { #category : #updating }
 SystemProgressMorph >> update: aSymbol [
-	
+
 	| msRefreshRate isTimeForRefresh |
-	
+
 	aSymbol == #width
 		ifTrue: [ self updateWidth ].
-		
-	
+
+
 	msRefreshRate := 60 "roughly 16 times per second".
 	isTimeForRefresh := Time millisecondClockValue - self lastRefresh >= msRefreshRate.
 	(self isInWorld and: [ isTimeForRefresh ]) ifFalse: [ ^ self ].
-	
+
 	self refresh
 ]
 
 { #category : #updating }
 SystemProgressMorph >> updateColor [
 	"Callback from theme"
-	
+
 	self theme preferGradientFill ifFalse: [^ self].
 	self fillStyle: (self theme progressFillStyleFor: self)
 ]

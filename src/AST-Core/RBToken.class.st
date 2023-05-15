@@ -115,6 +115,11 @@ RBToken >> isSpecial [
 	^false
 ]
 
+{ #category : #testing }
+RBToken >> isSpecial: aValue [
+	^false
+]
+
 { #category : #accessing }
 RBToken >> length [
 	^self subclassResponsibility

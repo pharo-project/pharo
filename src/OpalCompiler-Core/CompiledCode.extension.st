@@ -12,9 +12,9 @@ CompiledCode >> compiler [
 
 { #category : #'*OpalCompiler-Core' }
 CompiledCode >> compilerClass [
-	^self methodClass 
-		ifNil: [Smalltalk compilerClass] 
-		ifNotNil: [:class | class compilerClass].
+	^self methodClass
+		ifNil: [Smalltalk compilerClass]
+		ifNotNil: [:class | class compilerClass]
 ]
 
 { #category : #'*OpalCompiler-Core' }

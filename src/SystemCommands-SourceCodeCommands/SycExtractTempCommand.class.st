@@ -24,7 +24,7 @@ SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 { #category : #execution }
 SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
-	
+
 	aSourceCodeContext showVariableNamed: tempName
 ]
 
@@ -39,7 +39,7 @@ SycExtractTempCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycExtractTempCommand >> defaultMenuIconName [ 
+SycExtractTempCommand >> defaultMenuIconName [
 	^ ##smallUpdate
 ]
 
@@ -51,9 +51,9 @@ SycExtractTempCommand >> defaultMenuItemName [
 { #category : #execution }
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
-	
-	tempName := UIManager default 
-		request: 'New temp name' 
+
+	tempName := UIManager default
+		request: 'New temp name'
 		initialAnswer: ''
 		title: 'Extract code to temp variable'.
 	tempName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]

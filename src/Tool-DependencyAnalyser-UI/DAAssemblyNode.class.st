@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-DAAssemblyNode class >> newWith: aCollection [ 
+DAAssemblyNode class >> newWith: aCollection [
 	^ self basicNew
 		initializeWith: aCollection;
 		yourself
@@ -54,7 +54,7 @@ DAAssemblyNode >> includes: aPackageName [
 ]
 
 { #category : #initialization }
-DAAssemblyNode >> initializeWith: aCollection [ 
+DAAssemblyNode >> initializeWith: aCollection [
 	self initialize.
 	dependencies := aCollection
 ]

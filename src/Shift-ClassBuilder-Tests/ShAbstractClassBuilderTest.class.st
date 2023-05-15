@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #testing }
-ShAbstractClassBuilderTest class >> isAbstract [ 
+ShAbstractClassBuilderTest class >> isAbstract [
 	^ self == ShAbstractClassBuilderTest
 ]
 
@@ -24,7 +24,7 @@ ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
 			class methods do: [ :method | method classBinding == association ] ].
 
 	selectors
-		do: [ :selector | 
+		do: [ :selector |
 			self assert: (class canUnderstand: selector).
 			self assert: (class >> selector) classBinding value identicalTo: class ]
 ]
@@ -53,7 +53,7 @@ ShAbstractClassBuilderTest >> validateClassSlots: addedSlots superclass: aSuperC
 
 	allSlots
 		with: resultSlots
-		do: [ :a :b | 
+		do: [ :a :b |
 			self assert: a name equals: b name.
 			self assert: a class equals: b class ]
 ]
@@ -85,7 +85,7 @@ ShAbstractClassBuilderTest >> validateSharedVariables: allVariables [
 	resultVariables  := result classVarNames.
 
 	self assertCollection: resultVariables equals: allVariables.
-	allVariables do: [ :each | 
+	allVariables do: [ :each |
 		classVar := result classVariableNamed: each.
 		self assert: classVar definingClass equals: result  ]
 ]
@@ -101,7 +101,7 @@ ShAbstractClassBuilderTest >> validateSlots: allSlots [
 
 	allSlots
 		with: resultSlots
-		do: [ :a :b | 
+		do: [ :a :b |
 			self assert: a name equals: b name.
 			self assert: a class equals: b class ]
 ]

@@ -27,8 +27,7 @@ TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMetho
 		withMethod: compiledMethod
 		inProtocol: aCategory.
 
-	self propagateChangeOf: selector.
-	
+	self propagateChangeOf: selector
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -40,7 +39,7 @@ TraitedClass class >> addSelector: selector withMethod: compiledMethod [
 { #category : #users }
 TraitedClass class >> addUser: aClass [
 
-	self basicUsers add: aClass.
+	self basicUsers add: aClass
 ]
 
 { #category : #users }
@@ -65,14 +64,14 @@ TraitedClass class >> propagateChangeOf: aSelector [
 	change := TraitChange new
 		updatedSelectors: {aSelector};
 		yourself.
-		
+
 	self basicUsers do: [ :e | change applyOn: e ]
 ]
 
 { #category : #users }
 TraitedClass class >> removeUser: aClass [
 
-	self basicUsers remove: aClass ifAbsent: [ ].
+	self basicUsers remove: aClass ifAbsent: [ ]
 ]
 
 { #category : #users }
@@ -82,34 +81,34 @@ TraitedClass class >> traitUsers [
 
 { #category : #'accessing - method dictionary' }
 TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
-	
+
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
 	self localMethodDict at: selector put: compiledMethod.
-	
+
 	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
 		inProtocol: aCategory.
 
-	TraitChange addSelector: selector on: self.	
+	TraitChange addSelector: selector on: self.
 ]
 
 { #category : #'accessing - method dictionary' }
 TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
-	
+
 	self localMethodDict at: selector put: compiledMethod.
 	super addSelector: selector withMethod: compiledMethod.
 	TraitChange addSelector: selector on: self
 ]
 
 { #category : #'accessing - method dictionary' }
-TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [ 
+TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 
-	compiledMethod isFromTrait 
+	compiledMethod isFromTrait
 		ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
-	
+
 	self localMethodDict at: selector put: compiledMethod.
 	super addSelector: selector withRecompiledMethod: compiledMethod.
 	TraitChange addSelector: selector on: self
@@ -154,8 +153,8 @@ TraitedClass >> findOriginClassOf: aMethod [
 	"I return the myself or the trait that has the original implementation of a method.
 	If the method is an alias, the returned class includes the original aliased method"
 
-	(aMethod hasProperty: #traitSource) 
-		ifTrue: [ ^ aMethod traitSource innerClass ]. 
+	(aMethod hasProperty: #traitSource)
+		ifTrue: [ ^ aMethod traitSource innerClass ].
 
 	(self includesLocalSelector: aMethod selector)
 		ifTrue: [ ^ self ].
@@ -169,7 +168,7 @@ TraitedClass >> findOriginMethodOf: aMethod [
 	"I return the original method for a aMethod.
 	If this is a local method, the original method is itself.
 	If it cames from a trait composition I look for the method in the trait composition.
-	First I try with the trait stored in the traitSource. 
+	First I try with the trait stored in the traitSource.
 	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
 
 	(self includesLocalSelector: aMethod selector)
@@ -181,13 +180,12 @@ TraitedClass >> findOriginMethodOf: aMethod [
 			^ aMethod traitSource compiledMethodAt: newSelector ifAbsent: [aMethod] ].
 
 	^ (self traitComposition traitDefining: aMethod selector ifNone: [ self ])
-		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]		
-
+		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]
 ]
 
 { #category : #testing }
 TraitedClass >> hasTraitComposition [
-	
+
 	^ self traitComposition isEmpty not
 ]
 
@@ -199,7 +197,7 @@ TraitedClass >> includesLocalSelector: aSymbol [
 { #category : #testing }
 TraitedClass >> isAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
-	in my or in another composition somewhere deeper in 
+	in my or in another composition somewhere deeper in
 	the tree of traits compositions."
 
 	^ self traitComposition isAliasSelector: aSymbol
@@ -223,7 +221,7 @@ TraitedClass >> isLocalMethodsProtocol: aProtocol [
 
 { #category : #testing }
 TraitedClass >> isLocalSelector: aSelector [
-	
+
 	^ self localMethodDict includesKey: aSelector
 ]
 
@@ -235,19 +233,19 @@ TraitedClass >> localMethodDict [
 
 { #category : #accessing }
 TraitedClass >> localMethodDict: aMethodDictionary [
-	^ self class baseLocalMethods: aMethodDictionary 
+	^ self class baseLocalMethods: aMethodDictionary
 ]
 
 { #category : #accessing }
 TraitedClass >> localMethods [
-	"returns the methods of classes excluding the ones of the traits that the class uses" 
-	 
+	"returns the methods of classes excluding the ones of the traits that the class uses"
+
 	^ self localMethodDict values
 ]
 
 { #category : #'accessing - method dictionary' }
 TraitedClass >> localSelectors [
-	
+
 	^ self localMethodDict keys
 ]
 
@@ -255,16 +253,15 @@ TraitedClass >> localSelectors [
 TraitedClass >> rebuildMethodDictionary [
 
 	"Useful to be rewritten in Traits"
-	^ self doRebuildMethodDictionary.
-
+	^ self doRebuildMethodDictionary
 ]
 
 { #category : #categories }
 TraitedClass >> recategorizeSelector: selector from: oldCategory to: newCategory [
 	| original |
-	
+
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
-	
+
 	original := self organization categoryOfElement: selector ifAbsent: [ ^ self ].
 
 	"If it is nil is because it is a removal. It will removed when the method is removed."
@@ -273,10 +270,10 @@ TraitedClass >> recategorizeSelector: selector from: oldCategory to: newCategory
 	original = oldCategory
 		ifTrue: [ self organization classify: selector under: newCategory suppressIfDefault: true ].
 
-	(self traitComposition reverseAlias: selector) do: [ :e | 
-		self recategorizeSelector: e from: oldCategory to: newCategory. 
+	(self traitComposition reverseAlias: selector) do: [ :e |
+		self recategorizeSelector: e from: oldCategory to: newCategory.
 		self notifyOfRecategorizedSelector: e from: oldCategory to: newCategory ].
-	
+
 	self organization removeEmptyCategories
 ]
 
@@ -293,12 +290,12 @@ TraitedClass >> recompile: selector from: oldClass [
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	
-	method properties 
-		at: #traitSource 
+
+	method properties
+		at: #traitSource
 		ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource].
-	
-	self addSelector: selector withRecompiledMethod: newMethod.
+
+	self addSelector: selector withRecompiledMethod: newMethod
 ]
 
 { #category : #'trait-composition' }
@@ -309,22 +306,21 @@ TraitedClass >> removeFromComposition: aTrait [
 
 { #category : #removing }
 TraitedClass >> removeFromSystem: logged [
-	
+
 	"When a traited class is removed the traits it is using should be updated"
 	| mySubclasses |
 	self traitComposition removeUser: self.
 	self class traitComposition removeUser: self class.
 
 	TraitedClass removeUser: self class.
-	
-	mySubclasses := self subclasses.
-	
-	super removeFromSystem: logged.
-	
-	"As I am a traited class my subclasses does not have the basic traited class 
-	methods, so I add them."
-	mySubclasses do: [ :each | each class initializeBasicMethods ].
 
+	mySubclasses := self subclasses.
+
+	super removeFromSystem: logged.
+
+	"As I am a traited class my subclasses does not have the basic traited class
+	methods, so I add them."
+	mySubclasses do: [ :each | each class initializeBasicMethods ]
 ]
 
 { #category : #removing }
@@ -335,7 +331,7 @@ TraitedClass >> removeSelector: aSelector [
 	super removeSelector: aSelector.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
-	TraitChange removeSelector: aSelector on: self.
+	TraitChange removeSelector: aSelector on: self
 ]
 
 { #category : #accessing }
@@ -346,11 +342,11 @@ TraitedClass >> traitComposition [
 
 { #category : #accessing }
 TraitedClass >> traitComposition: aComposition [
-	
+
 	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
-		aMaybeTrait isTrait ifFalse: [ 
+		aMaybeTrait isTrait ifFalse: [
 			self error: 'All the members of the trait composition should be traits' ]].
-		
+
 	self class baseComposition: aComposition
 ]
 

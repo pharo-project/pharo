@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-IconicButton class >> isDeprecated [ 
+IconicButton class >> isDeprecated [
 	^ true
 ]

@@ -23,12 +23,12 @@ Class {
 ZnStaticFileDecoratorDelegate class >> decorate: aDelegate servingFilesFrom: aPathString [
 	^ self new
 		delegate: aDelegate;
-		path: aPathString 
+		path: aPathString
 ]
 
 { #category : #accessing }
-ZnStaticFileDecoratorDelegate >> delegate: aServerDelegate [ 
-	delegate := aServerDelegate 
+ZnStaticFileDecoratorDelegate >> delegate: aServerDelegate [
+	delegate := aServerDelegate
 ]
 
 { #category : #public }
@@ -37,15 +37,15 @@ ZnStaticFileDecoratorDelegate >> handleRequest: znRequest [
 	request to the given delegate"
 	| response |
 	(znRequest method = 'GET')
-		ifTrue: [  
+		ifTrue: [
 			response := (staticDelegate handleRequest: znRequest).
-			response isSuccess ifTrue: [ 
+			response isSuccess ifTrue: [
 				^ response  ] ].
 	^ delegate handleRequest: znRequest
 ]
 
 { #category : #accessing }
-ZnStaticFileDecoratorDelegate >> path: aString [ 
+ZnStaticFileDecoratorDelegate >> path: aString [
 	staticDelegate := ZnStaticFileServerDelegate new
-		directory: aString asFileReference 
+		directory: aString asFileReference
 ]

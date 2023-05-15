@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #helpers }
-CNSelectorExtractionOnSelectionTest >> select: someText [ 
-	
-	sourceCode := someText.
+CNSelectorExtractionOnSelectionTest >> select: someText [
+
+	sourceCode := someText
 ]
 
 { #category : #helpers }
@@ -23,7 +23,7 @@ CNSelectorExtractionOnSelectionTest >> selectedSelector [
 CNSelectorExtractionOnSelectionTest >> testSelectCascadeFirstMessageShouldMatchFirstMessageSelector [
 
 	self select: 'foo bar: 7; fum'.
-	
+
 	self assert: self selectedSelector equals: #bar:
 ]
 
@@ -39,7 +39,7 @@ CNSelectorExtractionOnSelectionTest >> testSelectCascadeFirstMessageWithoutRecei
 CNSelectorExtractionOnSelectionTest >> testSelectInvalidCode [
 
 	self select: 'even : 2'.
-	
+
 	self assert: self selectedSelector equals: #even
 ]
 
@@ -54,7 +54,7 @@ CNSelectorExtractionOnSelectionTest >> testSelectInvalidCodeWithPossibleSelector
 CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageShouldMatchKeywordSelector [
 
 	self select: 'a foo: 17 bar: (some message: #toto) fum: [ :will | it break ]'.
-	
+
 	self assert: self selectedSelector equals: #foo:bar:fum:
 ]
 
@@ -62,7 +62,7 @@ CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageShouldMatchKeywor
 CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageWithBrokenLastArgumentShouldMatchKeywordSelector [
 
 	self select: 'a foo: 17 bar: (some message: #toto) fum: [ :will | it b'.
-	
+
 	self assert: self selectedSelector equals: #foo:bar:fum:
 ]
 
@@ -70,7 +70,7 @@ CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageWithBrokenLastArg
 CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageWithBrokenMiddleArgumentShouldMatchKeywordSelector [
 
 	self select: 'a foo: 17 bar: (some message: # fum: [ :will | it break ]'.
-	
+
 	self assert: self selectedSelector equals: #foo:bar:
 ]
 
@@ -94,7 +94,7 @@ CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageWithoutReceiverSh
 CNSelectorExtractionOnSelectionTest >> testSelectMultipleStatementsShouldMatchFirstStatement [
 
 	self select: 'foo. second statement'.
-	
+
 	self assert: self selectedSelector equals: #foo
 ]
 
@@ -102,7 +102,7 @@ CNSelectorExtractionOnSelectionTest >> testSelectMultipleStatementsShouldMatchFi
 CNSelectorExtractionOnSelectionTest >> testSelectReturnShouldMatchToken [
 
 	self select: '^ foo'.
-	
+
 	self assert: self selectedSelector equals: #foo
 ]
 
@@ -110,6 +110,6 @@ CNSelectorExtractionOnSelectionTest >> testSelectReturnShouldMatchToken [
 CNSelectorExtractionOnSelectionTest >> testSelectTokenShouldMatchToken [
 
 	self select: 'foo'.
-	
+
 	self assert: self selectedSelector equals: #foo
 ]

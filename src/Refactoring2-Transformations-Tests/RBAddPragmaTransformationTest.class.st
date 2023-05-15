@@ -9,14 +9,14 @@ RBAddPragmaTransformationTest >> methodAfter [
 	<pragmaForTesting: 56>
 
 	| variable |
-	variable := 'String'.
+	variable := 'String'
 ]
 
 { #category : #utilities }
 RBAddPragmaTransformationTest >> methodBefore [
 
 	| variable |
-	variable := 'String'.
+	variable := 'String'
 ]
 
 { #category : #tests }
@@ -58,12 +58,12 @@ RBAddPragmaTransformationTest >> testRefactoring [
 						inMethod: #methodBefore
 						inClass: #RBAddPragmaTransformationTest)
 						asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 1.
-	
+
 	class := refactoring model classNamed: #RBAddPragmaTransformationTest.
 	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body.
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
@@ -75,10 +75,10 @@ RBAddPragmaTransformationTest >> testTransform [
 		inMethod: #methodBefore
 		inClass: self class name)
 		transform.
-	
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: self class name.
 	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body.
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]

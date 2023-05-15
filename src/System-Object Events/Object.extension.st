@@ -16,7 +16,7 @@ ifAbsent: anExceptionBlock [
 	actions := self actionMap
 		at: anEventSelector asSymbol
 		ifAbsent: [nil].
-	^actions 
+	^actions
 		ifNil: [anExceptionBlock value]
 		ifNotNil: [:act | act asMinimalRepresentation ]
 ]
@@ -106,7 +106,7 @@ Object >> removeActionsSatisfying: aBlock [
 ]
 
 { #category : #'*System-Object Events' }
-Object >> removeActionsSatisfying: aOneArgBlock 
+Object >> removeActionsSatisfying: aOneArgBlock
 forEvent: anEventSelector [
 
     self
@@ -143,7 +143,7 @@ Object >> setActionSequence: actionSequence forEvent: anEventSelector [
 
 	actionSequence asMinimalRepresentation
 		ifNil: [ self removeActionsForEvent: anEventSelector ]
-		ifNotNil: [ :action | 
+		ifNotNil: [ :action |
 			self updateableActionMap at: anEventSelector asSymbol put: action ]
 ]
 
@@ -158,7 +158,7 @@ Object >> triggerEvent: anEventSelector [
 Object >> triggerEvent: anEventSelector
 with: anObject [
 
-    ^self 
+    ^self
 		triggerEvent: anEventSelector
 		withArguments: { anObject }
 ]
@@ -178,13 +178,13 @@ Object >> updateableActionMap [
 ]
 
 { #category : #'*System-Object Events' }
-Object >> when: anEventSelector evaluate: anAction [ 
+Object >> when: anEventSelector evaluate: anAction [
 
 	| actions |
 	actions := self actionSequenceForEvent: anEventSelector.
 	(actions includes: anAction)
 		ifTrue: [^ self].
-	self 
+	self
 		setActionSequence: (actions copyWith: anAction)
 		forEvent: anEventSelector
 ]
@@ -193,7 +193,7 @@ Object >> when: anEventSelector evaluate: anAction [
 Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject [
- 
+
     self
         when: anEventSelector
         evaluate: (WeakMessageSend
@@ -206,7 +206,7 @@ Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject
 with: anArg [
- 
+
     self
         when: anEventSelector
         evaluate: (WeakMessageSend
@@ -220,7 +220,7 @@ Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject
 withArguments: anArgArray [
- 
+
     self
         when: anEventSelector
         evaluate: (WeakMessageSend

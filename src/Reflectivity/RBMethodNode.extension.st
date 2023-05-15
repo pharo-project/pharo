@@ -3,7 +3,7 @@ Extension { #name : #RBMethodNode }
 { #category : #'*Reflectivity' }
 RBMethodNode >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
-	^(self optionsFor: aLink) includes: aSymbol.
+	^(self optionsFor: aLink) includes: aSymbol
 ]
 
 { #category : #'*Reflectivity' }
@@ -20,7 +20,7 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 	options := Set new.
 	self methodClass
 		compiledMethodAt: #metaLinkOptions
-		ifPresent: [ :method | 
+		ifPresent: [ :method |
 			options
 				parseOptions:
 					((method valueWithReceiver: nil arguments: #()) asDictionary

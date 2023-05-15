@@ -166,8 +166,9 @@ RBMessageNode >> isContainmentReplacement: aNode [
 		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBMessageNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self receiver isFaulty or: [self arguments anySatisfy: [:each | each isFaulty]]
 ]
 
@@ -472,6 +473,15 @@ RBMessageNode >> sentMessages [
 	^ super sentMessages
 		add: self selector;
 		yourself
+]
+
+{ #category : #accessing }
+RBMessageNode >> start: newStart [
+	| oldStart |
+
+	oldStart := self start.
+ 	keywordsPositions := keywordsPositions collect: [ :each | each - oldStart + newStart ].
+	receiver start: newStart
 ]
 
 { #category : #accessing }

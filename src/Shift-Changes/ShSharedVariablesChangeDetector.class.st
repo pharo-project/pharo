@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #initialization }
-ShSharedVariablesChangeDetector >> compareFrom: a to: b [	
-	^ a asDictionary = b asDictionary.
+ShSharedVariablesChangeDetector >> compareFrom: a to: b [
+	^ a asDictionary = b asDictionary
 ]
 
 { #category : #initialization }

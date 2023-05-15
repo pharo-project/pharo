@@ -10,21 +10,21 @@ Class {
 { #category : #activation }
 SycPushUpVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
 ]
 
 { #category : #execution }
 SycPushUpVariableCommand >> asRefactorings [
 
-	^self 
-		createRefactorings: RBPullUpInstanceVariableRefactoring 
+	^self
+		createRefactorings: RBPullUpInstanceVariableRefactoring
 		using: [ :refactoring :var |
 			refactoring variable: var name class: var definingClass superclass]
 ]
 
 { #category : #accessing }
-SycPushUpVariableCommand >> defaultMenuIconName [ 
+SycPushUpVariableCommand >> defaultMenuIconName [
 	^ #up
 ]
 

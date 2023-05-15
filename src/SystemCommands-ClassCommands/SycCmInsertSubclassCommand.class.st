@@ -10,7 +10,7 @@ Class {
 
 { #category : #executing }
 SycCmInsertSubclassCommand >> executeRefactoring [
-	
+
 	| refactoring |
 	refactoring := RBInsertClassTransformation
 		addClass: newClassName
@@ -27,7 +27,7 @@ SycCmInsertSubclassCommand >> icon [
 
 { #category : #testing }
 SycCmInsertSubclassCommand >> isApplicable [
-	
+
 	^ true
 ]
 
@@ -37,6 +37,6 @@ SycCmInsertSubclassCommand >> name [
 ]
 
 { #category : #accessing }
-SycCmInsertSubclassCommand >> order [ 
+SycCmInsertSubclassCommand >> order [
 	^ 20
 ]

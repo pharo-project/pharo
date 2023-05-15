@@ -2,16 +2,16 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> decompile [
-	^Smalltalk globals 
+	^Smalltalk globals
 		at: #FBDDecompiler
-		ifPresent: [ :decompiler | decompiler new  decompile: self]  
+		ifPresent: [ :decompiler | decompiler new  decompile: self]
 		ifAbsent: [ RBParser parseMethod: self selector asMethodPreamble, '
 	self noSourceAvailable' ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> decompileIR [
-	
+
 	^ IRBytecodeDecompiler new decompile: self
 ]
 
@@ -28,7 +28,7 @@ CompiledMethod >> recompile [
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> reformat [
-	self methodClass compile: self ast formattedCode classified:  self category.
+	self methodClass compile: self ast formattedCode classified:  self category
 ]
 
 { #category : #'*OpalCompiler-Core' }

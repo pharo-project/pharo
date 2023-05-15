@@ -7,18 +7,18 @@ Class {
 { #category : #examples }
 RBMethodsSelectionPresenter class >> example [
 	<script>
-	^ (self label: 'example ...' 
+	^ (self label: 'example ...'
 		withItems: SycExtractMethodCommand methods
 		selecting: {} )
 ]
 
 { #category : #specs }
-RBMethodsSelectionPresenter class >> title [ 
+RBMethodsSelectionPresenter class >> title [
 	^ 'Methods'
 ]
 
 { #category : #attributes }
-RBMethodsSelectionPresenter >> columnName [ 
+RBMethodsSelectionPresenter >> columnName [
 	^ 'Methods'
 ]
 

@@ -27,9 +27,9 @@ FinderPragmaNode >> browseReferences [
 ]
 
 { #category : #accessing }
-FinderPragmaNode >> childNodeClassFromItem: anItem [ 
-	
-	^ FinderPragmaMethodNode 
+FinderPragmaNode >> childNodeClassFromItem: anItem [
+
+	^ FinderPragmaMethodNode
 ]
 
 { #category : #accessing }

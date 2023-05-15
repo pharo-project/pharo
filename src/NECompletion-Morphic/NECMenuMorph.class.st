@@ -41,7 +41,7 @@ NECMenuMorph class >> convertToSHSymbol: aSymbol [
 ]
 
 { #category : #'instance creation' }
-NECMenuMorph class >> engine: aCompletionEngine position: aPoint [ 
+NECMenuMorph class >> engine: aCompletionEngine position: aPoint [
 	^ self new engine: aCompletionEngine position: aPoint
 ]
 
@@ -54,89 +54,89 @@ NECMenuMorph class >> explanationAttributes [
 NECMenuMorph class >> helpText [
 	| stream |
 	stream := TextStream on: Text new.
-	self 
+	self
 		section: 'character completion'
 		on: stream.
-	self 
+	self
 		shortcut: 'works on'
 		text: ' [] {} () <> '''' ""'
 		on: stream.
-	self 
+	self
 		shortcut: 'usage 1'
 		text: 'enter open character - closing character is entered as well'
 		on: stream.
-	self 
+	self
 		shortcut: 'usage 2'
 		text: 'select some text, enter a smart character and the selected text get surrounded by the opening and closing character.'
 		on: stream.
-	self 
+	self
 		section: 'open/close menu'
 		on: stream.
-	self 
+	self
 		shortcut: 'ctrl-space or tab'
 		text: 'open the completion menu'
 		on: stream.
-	self 
+	self
 		shortcut: 'ESC'
 		text: 'close menu'
 		on: stream.
-	self 
+	self
 		shortcut: 'ctrl-h'
 		text: 'open this help'
 		on: stream.
-	self 
+	self
 		section: 'menu navigation'
 		on: stream.
-	self 
+	self
 		shortcut: 'Arrows up/down'
 		text: 'move the selection up and down'
 		on: stream.
-	self 
+	self
 		shortcut: 'Page up/down'
 		text: 'page up and down'
 		on: stream.
-	self 
+	self
 		shortcut: 'Home/End'
 		text: 'move to first or last page of the menu'
 		on: stream.
-	self 
+	self
 		section: 'show details and browse'
 		on: stream.
-	self 
+	self
 		shortcut: 'right arrow (detail closed)'
 		text: 'show details about the selected item. This may be the type of the variable, the source of a method or the implementors of the selector.'
 		on: stream.
-	self 
+	self
 		shortcut: 'right arrow (detail open)'
 		text: 'open a new browser for the selected item.'
 		on: stream.
-	self 
+	self
 		shortcut: 'left arrow'
 		text: 'close the details'
 		on: stream.
-	self 
+	self
 		section: 'changing menu contents'
 		on: stream.
-	self 
+	self
 		shortcut: 'ctrl-u'
 		text: 'switch to untyped mode in a typed menu'
 		on: stream.
-	self 
+	self
 		shortcut: 'ctrl-t'
 		text: 'filter out methods of class Object in a typed menu. press again to make the reappear.'
 		on: stream.
-	self 
+	self
 		shortcut: 'alphanumeric character'
 		text: 'filter the menu to the given input'
 		on: stream.
-	self 
+	self
 		shortcut: 'backspace'
 		text: 'delete an input character, adjust menu to the new input.'
 		on: stream.
-	self 
+	self
 		section: 'inserting completion'
 		on: stream.
-	self 
+	self
 		shortcut: 'ctrl-space or tab'
 		text: 'close the menu and insert selected completion. if there only one item left in the menu this done automaticly.'
 		on: stream.
@@ -180,7 +180,7 @@ NECMenuMorph class >> scrollColor [
 ]
 
 { #category : #'help text' }
-NECMenuMorph class >> section: aString on: aTextStream [ 
+NECMenuMorph class >> section: aString on: aTextStream [
 	aTextStream
 		withAttributes: self sectionAttributes
 		do: [aTextStream nextPutAll: aString].
@@ -193,18 +193,18 @@ NECMenuMorph class >> sectionAttributes [
 ]
 
 { #category : #preferences }
-NECMenuMorph class >> selectColorFor: aSymbol [ 
+NECMenuMorph class >> selectColorFor: aSymbol [
 	| attribute |
 	attribute := self convertToSHSymbol: aSymbol.
 	^ (SHRBTextStyler new attributesFor: attribute) first color
 ]
 
 { #category : #'preferences-fonts' }
-NECMenuMorph class >> selectFontFor: aSymbol [ 
+NECMenuMorph class >> selectFontFor: aSymbol [
 	| emphasized attributes |
-	attributes := SHRBTextStyler new 
+	attributes := SHRBTextStyler new
 		attributesFor: (self convertToSHSymbol: aSymbol).
-	emphasized := attributes size > 1 
+	emphasized := attributes size > 1
 		ifTrue: [ attributes second emphasisCode ]
 		ifFalse: [ 0 ].
 	^ StandardFonts codeFont
@@ -212,7 +212,7 @@ NECMenuMorph class >> selectFontFor: aSymbol [
 ]
 
 { #category : #'help text' }
-NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [ 
+NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 	aTextStream
 		withAttributes: self shortcutAttributes
 		do: [aTextStream nextPutAll: aString;
@@ -220,7 +220,7 @@ NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 	aTextStream
 		withAttributes: self explanationAttributes
 		do: [aTextStream nextPutAll: secondString;
-				 cr].
+				 cr]
 ]
 
 { #category : #'help text' }
@@ -241,31 +241,31 @@ NECMenuMorph >> browse [
 
 { #category : #actions }
 NECMenuMorph >> close [
-	self delete.
+	self delete
 ]
 
 { #category : #initialization }
 NECMenuMorph >> createTitle [
 	| titleString transformationMorph |
 	titleString := context title ifNil: [ ^ self ].
-	
+
 	titleStringMorph := StringMorph new.
-	titleStringMorph 
+	titleStringMorph
 		contents: titleString;
 		font: self class messageFont.
-		
+
 	transformationMorph := TransformationMorph new.
 	transformationMorph rotationDegrees: -90.0;
 		offset: self position negated - (0 @ (titleStringMorph width + 12));
 		addMorph: titleStringMorph.
 
 	self addMorph: transformationMorph.
-	self resize.
+	self resize
 ]
 
 { #category : #paging }
 NECMenuMorph >> currentPage [
-	^(self selected - 1 // self pageHeight ) + 1.
+	^(self selected - 1 // self pageHeight ) + 1
 ]
 
 { #category : #private }
@@ -285,22 +285,22 @@ NECMenuMorph >> detailMessage [
 ]
 
 { #category : #accessing }
-NECMenuMorph >> detailPosition: aPoint [ 
+NECMenuMorph >> detailPosition: aPoint [
 	detailPosition := aPoint.
-	
-	self updateDetail.
+
+	self updateDetail
 ]
 
 { #category : #drawing }
-NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [ 
+NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 	| aPoligon point arrowHeight |
 	point := self bounds bottomLeft translateBy: 6 @ -12.
 	arrowHeight := self class scrollArrowSize.
-	aPoligon := Array 
+	aPoligon := Array
 		with: point
 		with: (point translateBy: arrowHeight @ 0)
 		with: (point translateBy: (arrowHeight / 2) @ arrowHeight).
-	aCanvas 
+	aCanvas
 		drawPolygon: aPoligon
 		fillStyle: Color black
 ]
@@ -308,7 +308,7 @@ NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 { #category : #drawing }
 NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 	| necEntry font type string preString highlightRectangle |
-	
+
 	necEntry := context entries at: index.
 	string := necEntry contents.
 	preString := string asLowercase findString: context completionToken asLowercase.
@@ -318,15 +318,15 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 	type := necEntry hightlightSymbol.
 	font := self selectFont: type.
 	index = self selected
-		ifTrue: [ 
+		ifTrue: [
 			| rect |
 			rect := rectangle withBottom: rectangle top + self class itemHeight.
 			aCanvas fillRectangle: rect color: self class scrollColor.
 			self detailPosition: rect topRight ].
 	highlightRectangle := rectangle translateBy: (font widthOfString: preString) @ 0.
 	highlightRectangle := highlightRectangle withWidth: (font widthOfString: context completionToken).
-	aCanvas 
-		clipBy: rectangle 
+	aCanvas
+		clipBy: rectangle
 		during: [ :c | c fillRectangle: highlightRectangle color: (Color gray alpha: 0.3) ].
 	aCanvas
 		drawString: string
@@ -336,25 +336,25 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 ]
 
 { #category : #drawing }
-NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [ 
+NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [
 	self hasMessage ifFalse: [ ^ self ].
-	context hasEntries ifTrue: [ 
-		aCanvas 
+	context hasEntries ifTrue: [
+		aCanvas
 			line: rectangle topLeft
 			to: rectangle topRight
 			color: Color gray ].
-	self 
+	self
 		drawModelMessageOn: aCanvas
-		in: rectangle.
+		in: rectangle
 ]
 
 { #category : #drawing }
-NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [ 
+NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [
 	| message |
-	message := context hasMessage 
+	message := context hasMessage
 		ifTrue: [ context message ]
 		ifFalse: [ self detailMessage ].
-	aCanvas 
+	aCanvas
 		drawString: message
 		in: rectangle
 		font: self class messageFont
@@ -362,49 +362,49 @@ NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [
 ]
 
 { #category : #drawing }
-NECMenuMorph >> drawOn: aCanvas [ 
+NECMenuMorph >> drawOn: aCanvas [
 	| rectangle |
 	"draw background"
 	super drawOn: aCanvas.
-	
+
 	rectangle := self bounds insetBy: 1.
 	rectangle := rectangle bottom: rectangle top + self class itemHeight.
 	rectangle := rectangle left: rectangle left + 20.
-	
+
 	self extent: self extent.
-	self firstVisible > 1 
+	self firstVisible > 1
 		ifTrue: [ self drawTopScrollArrowOn: aCanvas ].
-	self lastVisible ~= self itemsCount 
+	self lastVisible ~= self itemsCount
 		ifTrue: [ self drawBottomScrollArrowOn: aCanvas ].
-		
-	context hasEntries ifTrue: [ 
-		self firstVisible to: self lastVisible do: [ :index | 
+
+	context hasEntries ifTrue: [
+		self firstVisible to: self lastVisible do: [ :index |
 			self drawLine: index on: aCanvas rectangle: rectangle.
 			rectangle := self prepareRectForNextRow: rectangle ]].
-		
-	self 
+
+	self
 		drawMessageOn: aCanvas
 		in: rectangle
 ]
 
 { #category : #drawing }
-NECMenuMorph >> drawTopScrollArrowOn: aCanvas [ 
+NECMenuMorph >> drawTopScrollArrowOn: aCanvas [
 	| aPolygon point arrowHeight |
 	arrowHeight := self class scrollArrowSize.
 	point := self bounds topLeft translateBy: 6 @ 11.
-	aPolygon := Array 
+	aPolygon := Array
 				with: point
 				with: (point translateBy: arrowHeight @ 0)
 				with: (point translateBy: arrowHeight / 2 @ arrowHeight negated).
-	aCanvas 
-		drawPolygon: aPolygon 
-		fillStyle: Color black.
+	aCanvas
+		drawPolygon: aPolygon
+		fillStyle: Color black
 ]
 
 { #category : #actions }
 NECMenuMorph >> end [
 	self gotoPage: self pageCount.
-	self changed.
+	self changed
 ]
 
 { #category : #initialization }
@@ -436,6 +436,12 @@ NECMenuMorph >> gotoPage: anInteger [
 { #category : #'event handling' }
 NECMenuMorph >> handlesMouseDown: anEvent [
 	^ true
+]
+
+{ #category : #actions }
+NECMenuMorph >> hasDetail [
+
+	^ detailMorph notNil
 ]
 
 { #category : #drawing }
@@ -473,7 +479,7 @@ NECMenuMorph >> home [
 NECMenuMorph >> initialize [
 	super initialize.
 	self color: self class backgroundColor.
-	self borderStyle: (BorderStyle color: Color gray width: 1).
+	self borderStyle: (BorderStyle color: Color gray width: 1)
 ]
 
 { #category : #actions }
@@ -497,25 +503,25 @@ NECMenuMorph >> itemsCount [
 { #category : #private }
 NECMenuMorph >> lastVisible [
 
-	^ (self firstVisible + self height-1)  min: (self itemsCount).
+	^ (self firstVisible + self height-1)  min: (self itemsCount)
 ]
 
 { #category : #'event handling' }
 NECMenuMorph >> mouseDown: evt [
 	(self bounds containsPoint: evt cursorPoint)
-		ifTrue: [	
+		ifTrue: [
 			evt wasHandled: true.
-			^ self 
+			^ self
 				selectIndexAtPoint: evt cursorPoint;
 				insertSelected ].
-			
+
 	super mouseDown: evt.
 	evt wasHandled: false.
 	self flag: #pharoFixMe "ugly hack".
 	engine editor morph owner owner
 		takeKeyboardFocus;
 		handleMouseDown: evt.
-	self close.
+	self close
 ]
 
 { #category : #actions }
@@ -535,7 +541,7 @@ NECMenuMorph >> moveUp [
 	self selected: self selected - 1.
 	self selected < self firstVisible
 		ifTrue: [firstVisible := firstVisible - 1].
-	self changed.
+	self changed
 ]
 
 { #category : #paging }
@@ -544,7 +550,7 @@ NECMenuMorph >> pageCount [
 	self itemsCount == self pageHeight
 		ifTrue: [^ 1].
 	count := self itemsCount // self pageHeight.
-	(self itemsCount \\ self pageHeight) > 0 
+	(self itemsCount \\ self pageHeight) > 0
 		ifTrue:[count := count + 1].
 	^count
 ]
@@ -552,22 +558,22 @@ NECMenuMorph >> pageCount [
 { #category : #actions }
 NECMenuMorph >> pageDown [
 	self gotoPage: self currentPage + 1.
-	self changed.
+	self changed
 ]
 
 { #category : #paging }
 NECMenuMorph >> pageHeight [
-	^pageHeight.
+	^pageHeight
 ]
 
 { #category : #actions }
 NECMenuMorph >> pageUp [
 	self gotoPage: self currentPage - 1.
-	self changed.
+	self changed
 ]
 
 { #category : #drawing }
-NECMenuMorph >> prepareRectForNextRow: aRectangle [ 
+NECMenuMorph >> prepareRectForNextRow: aRectangle [
 	^aRectangle translateBy: 0 @ self class itemHeight
 ]
 
@@ -592,7 +598,7 @@ NECMenuMorph >> resize [
 		"titleStringMorph width: (titleStringMorph width min: 100)."
 		height := height max: titleStringMorph width + 30 ].
 	extent := self class itemWidth @ height.
-	self extent: extent.
+	self extent: extent
 ]
 
 { #category : #drawing }
@@ -601,7 +607,7 @@ NECMenuMorph >> selectColor: type [
 ]
 
 { #category : #drawing }
-NECMenuMorph >> selectFont: aSymbol [ 
+NECMenuMorph >> selectFont: aSymbol [
 	^ self class selectFontFor: aSymbol
 ]
 
@@ -610,7 +616,7 @@ NECMenuMorph >> selectIndexAtPoint: aPoint [
 	| yPos  |
 	yPos := aPoint y - self bounds top.
 	selected := firstVisible + (yPos / self class itemHeight) floor.
-	selected := selected min: context entries size max: 1.
+	selected := selected min: context entries size max: 1
 ]
 
 { #category : #accessing }
@@ -621,9 +627,9 @@ NECMenuMorph >> selected [
 ]
 
 { #category : #accessing }
-NECMenuMorph >> selected: aNumber [ 
+NECMenuMorph >> selected: aNumber [
 	"Set the value of selected"
-	context hasEntries ifTrue: 
+	context hasEntries ifTrue:
 		[ ((1 to: self itemsCount) includes: aNumber) ifTrue: [ aNumber ~= selected ifTrue: [ selected := aNumber ] ] ]
 ]
 
@@ -636,7 +642,7 @@ NECMenuMorph >> selectedEntry [
 NECMenuMorph >> show [
 	self resize.
 	self activeHand ifNotNil: [ :hand | hand newMouseFocus: self ].
-	self changed.
+	self changed
 ]
 
 { #category : #actions }

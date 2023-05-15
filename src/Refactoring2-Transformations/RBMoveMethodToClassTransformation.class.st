@@ -34,7 +34,7 @@ RBMoveMethodToClassTransformation class >> model: aRBSmalltalk method: aMethod c
 { #category : #transforming }
 RBMoveMethodToClassTransformation >> classModelOf: aClass [
 	| classModel |
-	classModel := aClass isMeta 
+	classModel := aClass isMeta
 		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
 		ifFalse: [ RBClassModelFactory rbClass named: aClass name ].
 	classModel model: self model.
@@ -44,7 +44,7 @@ RBMoveMethodToClassTransformation >> classModelOf: aClass [
 { #category : #transforming }
 RBMoveMethodToClassTransformation >> method: aMethod class: aClass [
 	method := aMethod.
-	class := self model classObjectFor: aClass.
+	class := self model classObjectFor: aClass
 ]
 
 { #category : #transforming }
@@ -65,7 +65,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBMoveMethodToClassTransformation >> storeOn: aStream [ 
+RBMoveMethodToClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

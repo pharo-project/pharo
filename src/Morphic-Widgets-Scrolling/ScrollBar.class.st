@@ -12,6 +12,6 @@ Class {
 }
 
 { #category : #testing }
-ScrollBar class >> isDeprecated [ 
+ScrollBar class >> isDeprecated [
 	^ true
 ]

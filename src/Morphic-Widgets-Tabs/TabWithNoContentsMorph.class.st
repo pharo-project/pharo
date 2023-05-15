@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-TabWithNoContentsMorph class >> signalTab: aTab [ 
-	
+TabWithNoContentsMorph class >> signalTab: aTab [
+
 	^ self new
 		tab: aTab;
 		signal
@@ -24,7 +24,7 @@ TabWithNoContentsMorph >> tab [
 ]
 
 { #category : #accessing }
-TabWithNoContentsMorph >> tab: aTab [ 
+TabWithNoContentsMorph >> tab: aTab [
 
 	tab := aTab
 ]

@@ -31,7 +31,7 @@ RBRemoveVariableTransformation >> preconditions [
 
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditionsForClassVariable [
-	
+
 	^ (RBCondition isMetaclass: class) not
 		& (RBCondition definesClassVariable: variableName in: class)
 		& (RBCondition accessesClassVariable: variableName in: class showIn: self)
@@ -40,7 +40,7 @@ RBRemoveVariableTransformation >> preconditionsForClassVariable [
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
 
-	^ (RBCondition definesInstanceVariable: variableName asString in: class) 
+	^ (RBCondition definesInstanceVariable: variableName asString in: class)
 		& (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
 ]
 

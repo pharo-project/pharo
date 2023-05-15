@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIULong class >> externalType [ 
+FFIULong class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalULongType
 ]
 
@@ -32,14 +32,12 @@ FFIULong class >> externalTypeSize [
 
 { #category : #private }
 FFIULong >> basicHandle: aHandle at: index [
-	^ aHandle platformUnsignedLongAt: index	
-
+	^ aHandle platformUnsignedLongAt: index
 ]
 
 { #category : #private }
-FFIULong >> basicHandle: aHandle at: index put: value [ 
+FFIULong >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformUnsignedLongAt: index put: value
-
 ]
 
 { #category : #'private - emitting code' }
@@ -49,63 +47,61 @@ FFIULong >> emitSelector [
 
 { #category : #'private - emitting code' }
 FFIULong >> offsetPointerReadFieldAt: offsetVariableName [
-	^ '^ExternalData 
+	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
 		type: FFIArchitecture forCurrentArchitecture externalULongType asPointerType'
-	format: { 
+	format: {
 		self emitSelector.
 		offsetVariableName }
 ]
 
 { #category : #'emitting code' }
 FFIULong >> offsetReadFieldAt: offsetVariableName [
-	self isPointer ifTrue: [ 
+	self isPointer ifTrue: [
 		^ self offsetPointerReadFieldAt: offsetVariableName ].
-	
+
 	^ String streamContents: [ :stream |
 		stream << '^handle ' << self emitSelector << ': ' << offsetVariableName ]
 ]
 
 { #category : #'emitting code' }
 FFIULong >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	self isPointer ifTrue: [ 
-		^ self externalTypeWithArity 
-			offsetWriteFieldAt: offsetVariableName 
+	self isPointer ifTrue: [
+		^ self externalTypeWithArity
+			offsetWriteFieldAt: offsetVariableName
 			with: valueName ].
 
 	^ String streamContents: [ :stream |
-		stream 
-			<< '^handle ' << self emitSelector << ': ' << offsetVariableName 
+		stream
+			<< '^handle ' << self emitSelector << ': ' << offsetVariableName
 			<< ' put: ' << valueName ]
 ]
 
 { #category : #'private - emitting code' }
 FFIULong >> pointerReadFieldAt: byteOffset [
-	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of 
+	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of
 	 just passing the offset as a string... it will work :)"
 	^ self offsetPointerReadFieldAt: byteOffset asString
 ]
 
 { #category : #'emitting code' }
 FFIULong >> readFieldAt: byteOffset [
-	self isPointer ifTrue: [ 
+	self isPointer ifTrue: [
 		^ self pointerReadFieldAt: byteOffset ].
 
 	^ String streamContents: [ :stream |
-		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ].
-
+		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
 { #category : #'emitting code' }
 FFIULong >> writeFieldAt: byteOffset with: valueName [
-	self isPointer ifTrue: [ 
-		^ self externalTypeWithArity 
+	self isPointer ifTrue: [
+		^ self externalTypeWithArity
 			writeFieldAt: byteOffset
 			with: valueName ].
 
 	^ String streamContents: [ :stream |
-		stream 
+		stream
 			<< '^handle ' << self emitSelector << ': ' << byteOffset asString
 			<< ' put: ' << valueName ]
-
 ]

@@ -509,7 +509,7 @@ TextConstants class >> TextSharedInformation [
 
 { #category : #'backward compatibility' }
 TextConstants class >> at: aSymbol [
-	
+
 	^ self classPool at: aSymbol ifAbsent: [self TextSharedInformation at: aSymbol]
 ]
 
@@ -598,5 +598,5 @@ TextConstants class >> initialize [
 	Ctrlt := Character value: 11.
 	CtrlA := Character value: 212.
 	Ctrlp := Character value: 138.
-	DefaultBaseline := 12.
+	DefaultBaseline := 12
 ]

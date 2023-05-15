@@ -25,12 +25,10 @@ Class {
 ReImplementedNotSentRule class >> allMessages [
 	"return all 'message sends' in the system and cache them"
 
-	^allMessages ifNil: [
-		allMessages := IdentitySet new.
-		Smalltalk globals allBehaviors do: [ :behavior |
-				behavior methodsDo: [ :method |
-						allMessages addAll: method messages ] ].
-		allMessages	]
+	^ allMessages ifNil: [
+		  allMessages := IdentitySet new.
+		  Smalltalk globals allBehaviors do: [ :behavior | behavior methodsDo: [ :method | allMessages addAll: method messages ] ].
+		  allMessages ]
 ]
 
 { #category : #testing }
@@ -117,10 +115,23 @@ ReImplementedNotSentRule class >> unsubscribe [
 ReImplementedNotSentRule >> basicCheck: aMethod [
 	"Check if there are any senders. Furthermore methods with pragmas are likely to be sent through reflection, thus do not report those."
 
+	| occurrencesToFind |
 	aMethod pragmas ifNotEmpty: [ ^ false ].
 	aMethod isTestMethod ifTrue: [ ^ false ].
 
-	^ (self class allMessages includes: aMethod selector) not
+	"In the case the method is calling itself, we want to ignore this number of calls from the check.
+	For example, if a method calls itself 3 times, we consider that it is sent only if 4 messages in the system send them."
+	occurrencesToFind := aMethod messages occurrencesOf: aMethod selector.
+
+	^ self class allMessages noneSatisfy: [ :message |
+		  message = aMethod selector
+			  ifTrue: [
+				  occurrencesToFind = 0
+					  ifTrue: [ true ]
+					  ifFalse: [
+						  occurrencesToFind := occurrencesToFind - 1.
+						  false ] ]
+			  ifFalse: [ false ] ]
 ]
 
 { #category : #accessing }

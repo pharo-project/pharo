@@ -66,15 +66,15 @@ more; go get coffee.
 	self
 		trace:
 			(String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					stream cr.
-					1 to: nbuckets do: [ :nb | 
+					1 to: nbuckets do: [ :nb |
 						(buckets at: nb) printOn: stream.
 						stream space ] ])
 ]
 
 { #category : #'instance creation' }
-Random class >> seed: anInteger [ 
+Random class >> seed: anInteger [
 	^self new seed: anInteger
 ]
 
@@ -84,7 +84,7 @@ Random >> initialize [
 	a := 16r000041A7 asFloat.    " magic constant =      16807 = 7^5"
 	m := 16r7FFFFFFF asFloat.    " magic constant = 2147483647 = 2^31 - 1"
 	q := (m quo: a) asFloat.
-	r  := (m \\ a) asFloat.
+	r  := (m \\ a) asFloat
 ]
 
 { #category : #accessing }
@@ -136,11 +136,11 @@ Random >> privateNextSeed [
 
 	| lo hi aLoRHi |
 	hi := (seed quo: q) asFloat.
-	lo := seed - (hi * q).  " = seed rem: q"  
+	lo := seed - (hi * q).  " = seed rem: q"
 	aLoRHi := (a * lo) - (r * hi).
 	^(aLoRHi > 0.0)
 		ifTrue:  [aLoRHi]
-		ifFalse: [aLoRHi + m].
+		ifFalse: [aLoRHi + m]
 ]
 
 { #category : #private }
@@ -152,7 +152,7 @@ Random >> privateNextValue [
 
 { #category : #private }
 Random >> seed [
-	"Since [1] says... 
+	"Since [1] says...
 	    'After initialization the ideal solution is to hide seed from the user'
 	...this method is placed in the 'private' protocol. Perhaps it sould even be deleted."
 	^ seed
@@ -163,11 +163,11 @@ Random >> seed: aNumber [
 	"Refer #privateNextSeed and [1], seed should be positive and less than m"
 	| newSeed |
 	newSeed := aNumber.
-	[ newSeed > 0 ] whileFalse: 
+	[ newSeed > 0 ] whileFalse:
 		[ newSeed := newSeed + m ].
 	[ newSeed < m ] whileFalse:
 		[ newSeed := newSeed - m ].
-	seed := newSeed.
+	seed := newSeed
 ]
 
 { #category : #initialization }
@@ -184,7 +184,7 @@ Random >> useUnixRandomGeneratorSeed [
 	Return true if we succeeded, false otherwise.
 	Note that this might block until the OS thinks it has enough entropy."
 
-	^ [ (File named: '/dev/random') readStreamDo: [ :in | 
+	^ [ (File named: '/dev/random') readStreamDo: [ :in |
 			[ seed := (in next: 4) asInteger.
 			seed isZero ] whileTrue. "Try again if we ever get a zero value"
 			true ] ]

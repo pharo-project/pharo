@@ -23,7 +23,7 @@ TaClassCompositionElement >> selectors [
 	| innerClassLocalMethods |
 	innerClassLocalMethods := innerClass localMethods collect: [:each | each selector].
 	^ super selectors
-		reject: [ :e | 
+		reject: [ :e |
 			(innerClassLocalMethods includes: e) not
 				and: [ TraitedClass selectors includes: e ] ]
 ]
@@ -31,14 +31,13 @@ TaClassCompositionElement >> selectors [
 { #category : #accessing }
 TaClassCompositionElement >> slots [
 	^ innerClass allSlots
-		reject: [ :e | 
-			(Trait slots , 
+		reject: [ :e |
+			(Trait slots ,
 			TraitedClass allSlots) anySatisfy: [ :x | x name = e name ] ]
-		
 ]
 
 { #category : #printing }
 TaClassCompositionElement >> traitCompositionExpression [
-	
+
 	^ innerClass instanceSide name , ' classTrait'
 ]

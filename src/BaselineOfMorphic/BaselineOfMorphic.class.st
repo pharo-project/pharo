@@ -115,8 +115,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
-		spec package: 'Unicode-Initialization'.
-
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
@@ -138,7 +136,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
 	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
-	Behavior flushObsoleteSubclasses.
 	World cleanseOtherworldlySteppers.
 	Smalltalk organization removeEmptyCategories.
 	MCFileBasedRepository flushAllCaches.

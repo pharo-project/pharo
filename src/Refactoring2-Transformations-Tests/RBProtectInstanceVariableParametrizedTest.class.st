@@ -19,13 +19,13 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self abstractVariableTestData
 ]
 
 { #category : #tests }
 RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:  
+	refactoring := self createRefactoringWithArguments:
 		{('rewrite' , 'Rule1') . #RBSubclassOfClassToRename}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBSubclassOfClassToRename.
@@ -41,6 +41,6 @@ RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 RBProtectInstanceVariableParametrizedTest >> testVariableNotDefined [
 	self shouldFail:
 		(self createRefactoringWithArguments: {'rewrite' . #RBSubclassOfClassToRename}).
-	self shouldFail: 
-		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData}).
+	self shouldFail:
+		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData})
 ]

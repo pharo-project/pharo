@@ -53,8 +53,8 @@ TObservable >> property: aName rawValue: anObject [
 ]
 
 { #category : #events }
-TObservable >> property: aName whenChangedDo: aBlockClosure [ 
-	
+TObservable >> property: aName whenChangedDo: aBlockClosure [
+
 	"Obtain the raw value.
 	We need to access the underlying value holder to subscribe to it"
 	(self observablePropertyNamed: aName) whenChangedDo: aBlockClosure

@@ -16,18 +16,18 @@ Trait {
 TShowInTaskbar >> customizeTaskbarButton: aButton [
 
 	self taskbarCanShowThumbnail ifFalse: [ ^ self ].
-	
-	aButton 
-	
-		on: #mouseEnter 
-		send: #taskbarButtonEntered:event:in: 
-		to: self 
+
+	aButton
+
+		on: #mouseEnter
+		send: #taskbarButtonEntered:event:in:
+		to: self
 		withValue: aButton;
-		
-		on: #mouseLeave 
-		send: #taskbarButtonLeft:event:in: 
-		to: self  
-		withValue: aButton.
+
+		on: #mouseLeave
+		send: #taskbarButtonLeft:event:in:
+		to: self
+		withValue: aButton
 ]
 
 { #category : #'taskbar-public' }
@@ -46,15 +46,15 @@ TShowInTaskbar >> taskbarButtonEntered: aButton event: evt in: aMorph [
 TShowInTaskbar >> taskbarButtonFor: aTaskbar [
 	"Answer a new task bar button for the receiver.
 	Answer nil if not required."
-	
+
 	| taskbarButton |
-	
+
 	taskbarButton := aTaskbar theme
 		newBasicTaskbarButtonIn: aTaskbar
 		for: self.
-		
+
 	self customizeTaskbarButton: taskbarButton.
-	
+
 	^ taskbarButton
 ]
 
@@ -62,7 +62,7 @@ TShowInTaskbar >> taskbarButtonFor: aTaskbar [
 TShowInTaskbar >> taskbarButtonIsActive [
 
 	"true/false"
-	
+
 	^self explicitRequirement
 ]
 
@@ -76,7 +76,7 @@ TShowInTaskbar >> taskbarButtonLeft: aButton event: evt in: aMorph [
 TShowInTaskbar >> taskbarButtonMenu: aMenu [
 
 	"default is to show no menu"
-		
+
 	^aMenu
 ]
 
@@ -89,14 +89,14 @@ TShowInTaskbar >> taskbarCanShowThumbnail [
 { #category : #'taskbar-required' }
 TShowInTaskbar >> taskbarLabel [
 	"Answer the label to use for a taskbar button for the receiver."
-	
+
 	^self explicitRequirement
 ]
 
 { #category : #'taskbar-required' }
 TShowInTaskbar >> taskbarState [
 	"Answer one of #minimized, #restored, #maximized or #active."
-	
+
 	^self explicitRequirement
 ]
 

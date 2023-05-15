@@ -24,7 +24,7 @@ NautilusRefactoring class >> model: model [
 ]
 
 { #category : #display }
-NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [ 
+NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 	anArray isEmpty
 		ifTrue: [ ^ nil ].
 	anArray size = 1
@@ -35,10 +35,10 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 { #category : #display }
 NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
-	dialog := SycMethodNameEditorPresenter 
-		openOn: aMethodName 
-		canRenameArgs: false 
-		canRemoveArgs: false 
+	dialog := SycMethodNameEditorPresenter
+		openOn: aMethodName
+		canRenameArgs: false
+		canRemoveArgs: false
 		canAddArgs: false.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	^ aMethodName
@@ -156,20 +156,20 @@ NautilusRefactoring >> shouldExtractAssignmentTo: aString [
 NautilusRefactoring >> shouldInlineExpression: aString [
 
 	^ (self confirm:
-		   ('Do you want to extract the expression ''<1s>'' into a variable in the current method?' 
+		   ('Do you want to extract the expression ''<1s>'' into a variable in the current method?'
 			    expandMacrosWith: aString)) not
 ]
 
 { #category : #option }
-NautilusRefactoring >> shouldOverride: aSelector in: aClass [ 
+NautilusRefactoring >> shouldOverride: aSelector in: aClass [
 	^ self confirm: ('<1s> is already defined in the <2p> hierarchy. Extracting it to an existing selector may change behavior. Do you wish to use <1s> anyway?' expandMacrosWith: aSelector with: aClass)
 ]
 
 { #category : #option }
 NautilusRefactoring >> shouldSearchInHierarchy: class [
-	^ class subclasses 
-		ifNotEmpty: [ 
-			UIManager default 
+	^ class subclasses
+		ifNotEmpty: [
+			UIManager default
 				confirm: 'Do you want to search occurrences in the whole hierarchy?'
 				label: 'Warning'
 		] ifEmpty: [ false ]

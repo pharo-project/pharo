@@ -32,7 +32,7 @@ OSSDL2ExternalForm >> allocateSpace [
 	| addr |
 	pointer ifNotNil: [self error: 'space is already allocated'].
 	addr := ExternalAddress gcallocate: width*height * depth/8. "area times bytes/pixel"
-	self setManualSurfacePointer: addr.
+	self setManualSurfacePointer: addr
 ]
 
 { #category : #initialize }
@@ -41,7 +41,7 @@ OSSDL2ExternalForm >> destroySurface [
 	bits ifNotNil: [:surfaceID |
 		bits := nil.
 		self primDestroyManualSurface: surfaceID
-	].
+	]
 ]
 
 { #category : #'old - ffi backend support' }
@@ -71,7 +71,7 @@ OSSDL2ExternalForm >> pointer [
 { #category : #primitives }
 OSSDL2ExternalForm >> primCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
 	<primitive: 'primitiveCreateManualSurface' module: 'SurfacePlugin'>
-	
+
 	^ self oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB
 ]
 
@@ -99,18 +99,18 @@ OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 	height := extent y asInteger.
 	height < 0 ifTrue: [height := 0].
 	depth := bitsPerPixel.
-	bits := self 
-		primCreateManualSurfaceWidth: width 
-		height: height 
+	bits := self
+		primCreateManualSurfaceWidth: width
+		height: height
 		rowPitch: width * 4
 		depth: bitsPerPixel
-		isMSB: true.
+		isMSB: true
 ]
 
 { #category : #initialize }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel bits: aPointer [
 	self setExtent: extent depth: bitsPerPixel.
-	self setManualSurfacePointer: aPointer.
+	self setManualSurfacePointer: aPointer
 ]
 
 { #category : #initialize }
@@ -121,12 +121,12 @@ OSSDL2ExternalForm >> setManualSurfacePointer: newPointer [ "ExternalStructure, 
 	pointer ifNil: [^self primManualSurface: bits setPointer: 0].
 	pointer isExternalAddress
 		ifFalse: ["must already be ExternalStructure, so nothing to do"]
-		ifTrue: [pointer := ExternalData 
-							fromHandle: newPointer 
+		ifTrue: [pointer := ExternalData
+							fromHandle: newPointer
 							type: ExternalType void asPointerType].
 	"The primitive expects an unsigned integer arg, not an ExternalAddress."
-	"NOTE: it used to be acceptable for 'newPointer' to be an Integer... 
-	 if you get a MNU for #getHandle here, you should update your code 
+	"NOTE: it used to be acceptable for 'newPointer' to be an Integer...
+	 if you get a MNU for #getHandle here, you should update your code
 	 to pass in either an ExternalStructure or an ExternalAddress."
 	self primManualSurface: bits setPointer: pointer getHandle asInteger
 ]

@@ -15,13 +15,13 @@ TAbleToRotate >> forwardDirection [
 { #category : #'t - rotating' }
 TAbleToRotate >> forwardDirection: newDirection [
 	"Set the receiver's forward direction (in eToy terms)"
-	self setProperty: #forwardDirection toValue: newDirection.
+	self setProperty: #forwardDirection toValue: newDirection
 ]
 
 { #category : #'t - rotating' }
 TAbleToRotate >> heading [
 	"Return the receiver's heading"
-	^ self owner 
+	^ self owner
 		ifNil: [self forwardDirection]
 		ifNotNil: [self forwardDirection + self owner degreesOfFlex]
 ]
@@ -43,7 +43,7 @@ TAbleToRotate >> rotationDegrees [
 ]
 
 { #category : #'t - rotating' }
-TAbleToRotate >> rotationDegrees: degrees [	
+TAbleToRotate >> rotationDegrees: degrees [
 	"redefined in all morphs which are using myself"
 ]
 
@@ -52,5 +52,5 @@ TAbleToRotate >> setDirectionFrom: aPoint [
 	| delta degrees |
 	delta := (self transformFromWorld globalPointToLocal: aPoint) - self referencePosition.
 	degrees := delta degrees + 90.0.
-	self forwardDirection: (degrees \\ 360) rounded.
+	self forwardDirection: (degrees \\ 360) rounded
 ]

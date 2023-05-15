@@ -34,7 +34,7 @@ SDL_SysWMinfo_InfoUnion >> android [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> android: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 16.
+	handle structAt: 1 put: anObject getHandle length: 16
 ]
 
 { #category : #'accessing - structure variables' }
@@ -46,7 +46,7 @@ SDL_SysWMinfo_InfoUnion >> cocoa [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> cocoa: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 8.
+	handle structAt: 1 put: anObject getHandle length: 8
 ]
 
 { #category : #'accessing - structure variables' }
@@ -58,7 +58,7 @@ SDL_SysWMinfo_InfoUnion >> dfb [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> dfb: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 24.
+	handle structAt: 1 put: anObject getHandle length: 24
 ]
 
 { #category : #'accessing - structure variables' }
@@ -70,7 +70,7 @@ SDL_SysWMinfo_InfoUnion >> mir [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> mir: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 16.
+	handle structAt: 1 put: anObject getHandle length: 16
 ]
 
 { #category : #'accessing - structure variables' }
@@ -82,7 +82,7 @@ SDL_SysWMinfo_InfoUnion >> uikit [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> uikit: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 24.
+	handle structAt: 1 put: anObject getHandle length: 24
 ]
 
 { #category : #'accessing - structure variables' }
@@ -94,7 +94,7 @@ SDL_SysWMinfo_InfoUnion >> win [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> win: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 16.
+	handle structAt: 1 put: anObject getHandle length: 16
 ]
 
 { #category : #'accessing - structure variables' }
@@ -106,7 +106,7 @@ SDL_SysWMinfo_InfoUnion >> winrt [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> winrt: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 8.
+	handle structAt: 1 put: anObject getHandle length: 8
 ]
 
 { #category : #'accessing - structure variables' }
@@ -118,7 +118,7 @@ SDL_SysWMinfo_InfoUnion >> wl [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> wl: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 24.
+	handle structAt: 1 put: anObject getHandle length: 24
 ]
 
 { #category : #'accessing - structure variables' }
@@ -130,5 +130,5 @@ SDL_SysWMinfo_InfoUnion >> x11 [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> x11: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 16.
+	handle structAt: 1 put: anObject getHandle length: 16
 ]

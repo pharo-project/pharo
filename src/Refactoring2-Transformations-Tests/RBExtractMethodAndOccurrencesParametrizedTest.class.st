@@ -12,14 +12,14 @@ RBExtractMethodAndOccurrencesParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractMethodAndOccurrencesParametrizedTest >> constructor [ 
+RBExtractMethodAndOccurrencesParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
 { #category : #running }
-RBExtractMethodAndOccurrencesParametrizedTest >> setUp [ 
+RBExtractMethodAndOccurrencesParametrizedTest >> setUp [
 	super setUp.
-	model := self extractMethodTestData.
+	model := self extractMethodTestData
 ]
 
 { #category : #'failure tests' }
@@ -58,7 +58,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 
 	| aStream |
 	aStream := WriteStream on: (String new: 128).
-	self stringArg: ''dfgdf'' streamArg: aStream').
+	self stringArg: ''dfgdf'' streamArg: aStream')
 ]
 
 { #category : #tests }
@@ -66,7 +66,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	refactoring := self createRefactoringWithModel: model
-		andArguments: { (282 to: 302) . #myMethod . class }.
+		andArguments: { (281 to: 301) . #myMethod . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.
@@ -76,7 +76,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 
 	| token |
 	token := (String new: 100) writeStream.
-	[ self extractedMethod ] whileTrue: [ 
+	[ self extractedMethod ] whileTrue: [
 		token nextPut: currentChar.
 		self methodWithArg: self extractedMethod.
 		self bar ].

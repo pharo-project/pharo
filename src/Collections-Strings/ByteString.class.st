@@ -184,6 +184,35 @@ ByteString >> byteSize [
 	^self size
 ]
 
+{ #category : #comparing }
+ByteString >> compareWith: anotherString [
+	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
+
+	<primitive: 158>
+	^ self compareWith: anotherString collated: AsciiOrder
+]
+
+{ #category : #comparing }
+ByteString >> compareWith: anotherString collated: order [
+	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
+
+	<primitive: 158>
+	| len1 len2 c1 c2 |
+	len1 := self size.
+	len2 := anotherString size.
+	1 to: (len1 min: len2) do: [ :i |
+		c1 := order at: (self basicAt: i) + 1.
+		c2 := order at: (anotherString basicAt: i) + 1.
+		c1 = c2 ifFalse: [
+			^ c1 < c2
+				  ifTrue: [ -1 ]
+				  ifFalse: [ 1 ] ] ].
+	len1 = len2 ifTrue: [ ^ 0 ].
+	^ len1 < len2
+		  ifTrue: [ -1 ]
+		  ifFalse: [ 1 ]
+]
+
 { #category : #converting }
 ByteString >> createSymbol [
 

@@ -14,6 +14,6 @@ ReTrivialCritique >> change [
 
 { #category : #testing }
 ReTrivialCritique >> providesChange [
-	
+
 	^ false
 ]

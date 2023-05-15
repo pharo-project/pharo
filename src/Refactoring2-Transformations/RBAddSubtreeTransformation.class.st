@@ -52,7 +52,7 @@ RBAddSubtreeTransformation class >> model: aRBModel interval: anInterval with: a
 RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 	"Searches for the statement before which the new code should be added.
 	 If not found, it just adds the new code at the end of the block"
-	
+
 	aSequenceNode statements
 		detect: [ :node | node intersectsInterval: interval ]
 		ifFound: [ :node |
@@ -68,7 +68,7 @@ RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector
 	self className: aClass.
 	selector := aSelector.
 	interval := anInterval.
-	sourceCode := aString.
+	sourceCode := aString
 ]
 
 { #category : #preconditions }
@@ -108,7 +108,7 @@ RBAddSubtreeTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddSubtreeTransformation >> storeOn: aStream [ 
+RBAddSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -170,8 +170,7 @@ Duration >> / operand [
 { #category : #operations }
 Duration >> // operand [
 
- 	"operand is a Duration or a Number"
-
+ 	"operand is a Duration or a Number (count of nanoseconds)"
 
  	^ operand isNumber
  		ifTrue: [ self class nanoSeconds: (self asNanoSeconds // operand) asInteger ]

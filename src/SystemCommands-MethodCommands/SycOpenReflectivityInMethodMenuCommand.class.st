@@ -11,7 +11,7 @@ Class {
 { #category : #activation }
 SycOpenReflectivityInMethodMenuCommand class >> methodContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyMethod asCalypsoItemContext
 ]
 

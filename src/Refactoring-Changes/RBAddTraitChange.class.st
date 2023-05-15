@@ -16,13 +16,13 @@ Class {
 RBAddTraitChange class >> definitionPatterns [
 
 	^ #('Trait named: `#traitName uses: `@traitComposition package: `#package' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition package: `#package'
-	
+
  'Trait named: `#traitName uses: `@traitComposition instanceVariableNamed: `@instanceVars package: `#package'
-	
+
 'Trait named: `#traitName instanceVariableNames: `@instanceVars package: `#package'
-	
+
 	'Trait named: `#traitName package: `#package'
-	
+
 	'Trait << `#traitName package: `#package'
 	'Trait << `#traitName uses: `@traitComposition package: `#package'
 	'Trait << `#traitName slots: `@slotDefinition package: `#package'
@@ -55,9 +55,9 @@ RBAddTraitChange >> definitionClass [
 { #category : #initialization }
 RBAddTraitChange >> fillOutDefinition: aDictionary [
 	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
-	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined 
+	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined
 	in the expressions defined in the definitionPatterns method!"
-	
+
 	className := (aDictionary at: '`#traitName') asSymbol.
 	category := (aDictionary at: '`#package' ifAbsent: [ #Unclassified ]) asSymbol
 ]

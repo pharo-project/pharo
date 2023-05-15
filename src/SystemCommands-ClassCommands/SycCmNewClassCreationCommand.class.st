@@ -18,22 +18,22 @@ Class {
 
 { #category : #execution }
 SycCmNewClassCreationCommand >> applyCommandResult [
-	
+
 	| newClass |
 	newClass := context system classNamed: newClassName.
-	
+
 	context showClass: newClass
 ]
 
 { #category : #testing }
 SycCmNewClassCreationCommand >> isApplicable [
-	
+
 	^ false
 ]
 
 { #category : #preparation }
 SycCmNewClassCreationCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	newClassName := UIManager default request: 'Name of new class'.	
-	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal].
+	newClassName := UIManager default request: 'Name of new class'.
+	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal]
 ]

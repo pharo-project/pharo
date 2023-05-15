@@ -32,95 +32,95 @@ Class {
 }
 
 { #category : #settings }
-TextEditor class >> blinkingCursor [	
+TextEditor class >> blinkingCursor [
 	^ BlinkingCursor ifNil: [ BlinkingCursor := true ]
 ]
 
 { #category : #settings }
-TextEditor class >> blinkingCursor: aBoolean [	
+TextEditor class >> blinkingCursor: aBoolean [
 	BlinkingCursor := aBoolean
 ]
 
 { #category : #shortcuts }
 TextEditor class >> buildTextEditorShortcutsOn: aBuilder [
 	<keymap>
-	
+
 	(aBuilder shortcut: #toggleCommentOnSelectionOrLine)
 		category: #TextEditor
 		default: PharoShortcuts current toggleCommentOnSelectionOrLine
 		do: [ :target  | target handleEdit: [ target toggleCommentOnSelectionOrLine ] ].
-		
-	(aBuilder shortcut: #selectAll) 
+
+	(aBuilder shortcut: #selectAll)
 		category: #TextEditor
 		default: PharoShortcuts current selectAllShortcut
 		do: [ :target | target handleEdit: [ target selectAll ] ].
 
-	(aBuilder shortcut: #copySelection) 
+	(aBuilder shortcut: #copySelection)
 		category: #TextEditor
 		default: PharoShortcuts current copySelectionShortcut
 		do: [ :target | target copySelection ].
-		
-	(aBuilder shortcut: #find) 
+
+	(aBuilder shortcut: #find)
 		category: #TextEditor
 		default: PharoShortcuts current findShortcut
 		do: [ :target | target find ].
-		
-	(aBuilder shortcut: #findAgain) 
+
+	(aBuilder shortcut: #findAgain)
 		category: #TextEditor
 		default: PharoShortcuts current findAgainShortcut
 		do: [ :target | target findAgain ].
-		
+
 	(aBuilder shortcut: #setSearchString)
 		category: #TextEditor
 		default: PharoShortcuts current setSearchStringShortcut
 		do: [ :target | target setSearchString ].
-		
-	(aBuilder shortcut: #cancel) 
+
+	(aBuilder shortcut: #cancel)
 		category: #TextEditor
 		default: PharoShortcuts current cancelShortcut
 		do: [ :target | target cancelWithoutConfirmation ].
-		
-	(aBuilder shortcut: #paste) 
+
+	(aBuilder shortcut: #paste)
 		category: #TextEditor
 		default: PharoShortcuts current pasteShortcut
 		do: [ :target | target paste ].
-		
-	(aBuilder shortcut: #cut) 
+
+	(aBuilder shortcut: #cut)
 		category: #TextEditor
 		default: PharoShortcuts current cutShortcut
 		do: [ :target | target cut ].
-				
-	(aBuilder shortcut: #undo) 
+
+	(aBuilder shortcut: #undo)
 		category: #TextEditor
 		default: PharoShortcuts current undoShortcut
 		do: [ :target | target undo ].
-		
-	(aBuilder shortcut: #redo) 
+
+	(aBuilder shortcut: #redo)
 		category: #TextEditor
 		default: PharoShortcuts current redoShortcut
 		do: [ :target | target redo ].
-	
+
 	(aBuilder shortcut: #cursorHome)
 		category: #TextEditor
 		default: PharoShortcuts current cursorHomeShortcut
 		do: [ :target :morph :event | target cursorHome: event ].
-	
+
 	(aBuilder shortcut: #cursorEnd)
 		category: #TextEditor
 		default: PharoShortcuts current cursorEndShortcut
-		do: [ :target :morph :event | target cursorEnd: event ].
+		do: [ :target :morph :event | target cursorEnd: event ]
 ]
 
 { #category : #shortcuts }
 TextEditor class >> buildTextEditorTabKeymapOn: aBuilder [
 	"This is to mask the tab or shift tab character at the system window level."
 	<keymap>
-	
-	(aBuilder shortcut: #doTab) 
+
+	(aBuilder shortcut: #doTab)
 		category: #TextEditorTab
 		default: Character tab asKeyCombination
 		do: [ :target | target handleEdit: [ target
-				handleEdit: [ 
+				handleEdit: [
 					target replaceSelectionWith: '	'.
 					target selectInvisiblyFrom: target selectionInterval last + 1 to: target selectionInterval last ] ] ]
 ]
@@ -167,13 +167,13 @@ TextEditor class >> dumbbellCursor: aBoolean [
 ]
 
 { #category : #settings }
-TextEditor class >> editingSettingsOn: aBuilder [ 
-	<systemsettings> 
-	(aBuilder group: #codeEditing) 
+TextEditor class >> editingSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #codeEditing)
 		label: 'Text Editing';
 		noOrdering;
 		description: 'All settings concerned with text editing' ;
-		with: [	
+		with: [
 			(aBuilder setting: #selectionColor)
 				target: UITheme;
 				default: (Color r: 0.6862170087976539 g: 0.8347996089931574 b: 0.9794721407624634 alpha: 1.0);
@@ -226,33 +226,32 @@ TextEditor class >> editingSettingsOn: aBuilder [
 						targetSelector: #currentSettings;
 						default: Color black;
 						label: 'Find replace selection text color'].
-			(aBuilder setting: #caseSensitiveFinds) 
+			(aBuilder setting: #caseSensitiveFinds)
 				label: 'Case sensitive search';
 				target: TextEditor;
 				default: false;
 		 		description: 'If true, then the "find" command in text will always make its searches in a case-sensitive fashion'.
-			(aBuilder setting: #blinkingCursor) 
+			(aBuilder setting: #blinkingCursor)
 				label: 'Blinking text cursor';
 				target: TextEditor;
 				default: true;
 		 		description: 'When true, the text cursor will blink.'.
-			(aBuilder setting: #dumbbellCursor) 
+			(aBuilder setting: #dumbbellCursor)
 				label: 'Dumbbell-shaped text cursor';
 				target: TextEditor;
 				default: false;
 		 		description: 'When true, the text cursor assumes the shape of a dumbbell, otherwise a vertical bar.'.
-			(aBuilder setting: #skipOverMultipleSpaces) 
+			(aBuilder setting: #skipOverMultipleSpaces)
 				label: 'Skip over white space';
 				target: TextEditor;
 				default: false;
 		 		description: 'When true, the text cursor treats multiple white-space characters as a single space for navigating (moving left/right).'.
-			(aBuilder setting: #walkAlongDisplayedLine) 
+			(aBuilder setting: #walkAlongDisplayedLine)
 				label: 'Walk along displayed line';
 				target: TextEditor;
 				default: true;
 		 		description: 'If set to true cursor movement will move along displayed lines rather than logical lines'.
 		]
-
 ]
 
 { #category : #'instance creation' }
@@ -262,27 +261,26 @@ TextEditor class >> forMorph: aMorph [
 ]
 
 { #category : #'class initialization' }
-TextEditor class >> initialize [ 
+TextEditor class >> initialize [
 	"Initialize the keyboard shortcut maps and the shared buffers
-	for copying text across views and managing again and undo." 
- 
+	for copying text across views and managing again and undo."
+
 	"
 	TextEditor initialize
-	" 
+	"
 
 	self initializeCmdKeyShortcuts.
-	self initializeShiftCmdKeyShortcuts.
-
+	self initializeShiftCmdKeyShortcuts
 ]
 
 { #category : #'keyboard shortcut tables' }
 TextEditor class >> initializeBasicCmdKeyShortcuts [
 	"Initialize the (unshifted) command-key (or alt-key) shortcut table.
-	
+
 	TextEditor initialize
 	"
 	| cmdMap |
-	
+
 	cmdMap := Array new: 256 withAll: #noop:.		"use temp in case of a crash"
 	cmdMap at: 1 + 1 put: #cursorHome:.				"home key"
 	cmdMap at: 4 + 1 put: #cursorEnd:.				"end key"
@@ -297,34 +295,34 @@ TextEditor class >> initializeBasicCmdKeyShortcuts [
 	cmdMap at: 31 + 1 put: #cursorDown:.			"down arrow key"
 	"cmdMap at: 32 + 1 put: #selectWord:."			"space bar key"
 	cmdMap at: 127 + 1 put: #forwardDelete:.		"del key"
-	"cmdMap at: 115 + 1 put:#accept:".	
-		
+	"cmdMap at: 115 + 1 put:#accept:".
+
 	#(
-		$a #selectAll: 
-		"$c #copySelection:" 
-		$e #exchange: 
+		$a #selectAll:
+		"$c #copySelection:"
+		$e #exchange:
 		"$f #find: "
 		"$g #findAgain: "
 		"$h #setSearchString: "
 		"$v #paste: "
-		$w #backWord: 
-		"$x #cut:" 
-		$y #swapChars: 
-		"$z #undo:" 
-		$j #redo: 
+		$w #backWord:
+		"$x #cut:"
+		$y #swapChars:
+		"$z #undo:"
+		$j #redo:
 		"$u #exploreUndoManager: ")
 	pairsDo: [ :char :symbol|
 		cmdMap at: char asciiValue + 1 put: symbol].
-		
+
 	cmdActions := cmdMap
 ]
 
 { #category : #'keyboard shortcut tables' }
-TextEditor class >> initializeBasicShiftCmdKeyShortcuts [ 
+TextEditor class >> initializeBasicShiftCmdKeyShortcuts [
 	"Initialize the shift-command-key (or control-key) shortcut table."
 
 	"TextEditor initialize"
-	
+
 	| cmdMap |
 
 	"shift-command and control shortcuts"
@@ -380,10 +378,10 @@ TextEditor class >> initializeCmdKeyShortcuts [
 
 	| cmds |
 	self initializeBasicCmdKeyShortcuts.
-			
-	'0123456789-=' 
+
+	'0123456789-='
 		do: [:char | cmdActions at: char asciiValue + 1 put: #changeEmphasis:].
-	
+
 	cmds := #($k #offerFontMenu: $u #align: ).
 	1 to: cmds size
 		by: 2
@@ -391,14 +389,14 @@ TextEditor class >> initializeCmdKeyShortcuts [
 ]
 
 { #category : #'keyboard shortcut tables' }
-TextEditor class >> initializeShiftCmdKeyShortcuts [ 
+TextEditor class >> initializeShiftCmdKeyShortcuts [
 	"Initialize the shift-command-key (or control-key) shortcut table."
-	"wod 11/3/1998: Fix setting of cmdMap for shifted keys to actually use the 
+	"wod 11/3/1998: Fix setting of cmdMap for shifted keys to actually use the
 	capitalized versions of the letters.
 	TPR 2/18/99: add the plain ascii values back in for those VMs that don't return the shifted values."
 
 	"TextEditor initialize"
-	
+
 	| cmds |
 
 	self initializeBasicShiftCmdKeyShortcuts.
@@ -413,7 +411,7 @@ TextEditor class >> initializeShiftCmdKeyShortcuts [
 		self shiftCmdActions at: ((cmds at: i) asciiValue + 1) put: (cmds at: i + 1).			"plain keys"
 		self shiftCmdActions at: ((cmds at: i) asciiValue - 32 + 1) put: (cmds at: i + 1).		"shifted keys"
 		self shiftCmdActions at: ((cmds at: i) asciiValue - 96 + 1) put: (cmds at: i + 1).		"ctrl keys"
-	].
+	]
 ]
 
 { #category : #accessing }
@@ -456,7 +454,7 @@ as if shift-command were also being pressed"
 { #category : #'menu declaration' }
 TextEditor class >> textEditorMenuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'textEditorMenu'
 		model: nil) menu popUpInWorld"
 
@@ -514,25 +512,24 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 ]
 
 { #category : #'menu declaration' }
-TextEditor class >> textEditorShiftedMenuOn: aBuilder [ 
+TextEditor class >> textEditorShiftedMenuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'textEditorShiftedMenu'
 		model: nil) menu popUpInWorld"
 
 	<contextMenu>
 	<textEditorShiftedMenu>
-	(aBuilder item: #'Set font...' translated) 
+	(aBuilder item: #'Set font...' translated)
 		keyText: 'k';
 		selector: #offerFontMenu.
-	(aBuilder item: #'Set style... (K)' translated) 
+	(aBuilder item: #'Set style... (K)' translated)
 		keyText: 'K';
 		selector: #changeStyle.
-	(aBuilder item: #'Set alignment...' translated) 
+	(aBuilder item: #'Set alignment...' translated)
 		selector: #chooseAlignment.
-	(aBuilder item: #'More...' translated) 
-		selector: #yellowButtonActivity.
-
+	(aBuilder item: #'More...' translated)
+		selector: #yellowButtonActivity
 ]
 
 { #category : #settings }
@@ -578,12 +575,12 @@ TextEditor class >> walkAlongDisplayedLine: aBoolean [
 { #category : #'menu messages' }
 TextEditor >> accept [
 	"Save the current text of the text being edited as the current acceptable version for purposes of canceling.  Allow my morph to take appropriate action"
-	morph canChangeText 
+	morph canChangeText
 		ifTrue: [morph acceptContents]
 ]
 
 { #category : #'menu messages' }
-TextEditor >> accept: aKeyboardEvent [ 
+TextEditor >> accept: aKeyboardEvent [
 	"Save the current text of the text being edited as the current acceptable version for purposes of canceling.  Allow my morph to take appropriate action"
 	self accept.
 	^ true
@@ -594,7 +591,7 @@ TextEditor >> acceptCR: aKeyboardEvent return: return [
 	((aKeyboardEvent keyValue = Character cr asciiValue) and: [morph acceptOnCR])
 		ifTrue: [
 			self closeTypeIn.
-			return value: true].
+			return value: true]
 ]
 
 { #category : #'undo - redo private' }
@@ -603,9 +600,8 @@ TextEditor >> addDeleteSelectionUndoRecord [
 	undoText := self selection.
 	redoText := self nullText.
 	self editingState
-		redoArray: { morph. #undoTypeIn:interval:.  {redoText. self selectionInterval} } 
-		undoArray: {morph. #redoTypeIn:interval:.  {undoText. self selectionInterval first to: self selectionInterval first - 1} }.
-
+		redoArray: { morph. #undoTypeIn:interval:.  {redoText. self selectionInterval} }
+		undoArray: {morph. #redoTypeIn:interval:.  {undoText. self selectionInterval first to: self selectionInterval first - 1} }
 ]
 
 { #category : #'typing support' }
@@ -617,27 +613,25 @@ TextEditor >> addString: aString [
 { #category : #'undo - redo private' }
 TextEditor >> addTypeInUndoRecord [
 	| begin stop undoText redoText |
-	begin := self startOfTyping min: self stopIndex. 
+	begin := self startOfTyping min: self stopIndex.
 	stop := self stopIndex max: self startOfTyping.
-	self editingState 
-		previousInterval: (begin to: stop - 1) 
-		selection: (self text copyFrom: begin to: stop - 1). 
+	self editingState
+		previousInterval: (begin to: stop - 1)
+		selection: (self text copyFrom: begin to: stop - 1).
 	undoText := self nullText.
 	redoText := stop > begin
 			ifTrue: [self text copyFrom: begin to: stop - 1]
 			ifFalse: [self nullText].
 	((undoText isEmpty and: [redoText isEmpty]) and: [self editingState previousInterval size < 1])
 			ifFalse: [self editingState
-				redoArray: { morph. #redoTypeIn:interval:.  {redoText. begin to: begin + self selection size - 1} } 
-				undoArray: {morph. #undoTypeIn:interval:.  {undoText. begin to: stop - 1} }].
-	
-
+				redoArray: { morph. #redoTypeIn:interval:.  {redoText. begin to: begin + self selection size - 1} }
+				undoArray: {morph. #undoTypeIn:interval:.  {undoText. begin to: stop - 1} }]
 ]
 
 { #category : #'new selection' }
 TextEditor >> afterSelectionInsertAndSelect: aString [
 
-	self insertAndSelect: aString at: self stopIndex 
+	self insertAndSelect: aString at: self stopIndex
 ]
 
 { #category : #'menu messages' }
@@ -659,7 +653,7 @@ TextEditor >> align: aKeyboardEvent [
 { #category : #constants }
 TextEditor >> alignmentChoices [
 	"Return the symbols representing the TextAlignment operations to get a text aligned."
-	
+
 	^ #(leftFlush centered justified rightFlush)
 ]
 
@@ -685,9 +679,6 @@ TextEditor >> backTo: startIndex [
 		self addDeleteSelectionUndoRecord.
 		self zapSelectionWith: self nullText].
 	^ false
-
-
-	
 ]
 
 { #category : #'typing/selecting keys' }
@@ -713,7 +704,7 @@ TextEditor >> backspace: aKeyboardEvent [
 	"Backspace over the last character."
 	| result startIndex |
 	self closeTypeIn.
-	result := aKeyboardEvent controlKeyPressed 
+	result := aKeyboardEvent controlKeyPressed
 		ifTrue: [self backWord: aKeyboardEvent keyCharacter]
 		ifFalse: [self hasSelection
 			ifTrue: [self replaceSelectionWith: self nullText]
@@ -734,12 +725,12 @@ TextEditor >> bindingOf: aString [
 TextEditor >> blankParagraph [
 	| blankParagraph |
 	blankParagraph  := Paragraph new.
-	blankParagraph 
-		compose:  '' asText 
-		style:  TextStyle default copy    
+	blankParagraph
+		compose:  '' asText
+		style:  TextStyle default copy
 		from: 1
 		in:  (0@0 extent: 10@10) .
-	^ blankParagraph	
+	^ blankParagraph
 ]
 
 { #category : #parenblinking }
@@ -754,12 +745,12 @@ TextEditor >> blinkParen [
 ]
 
 { #category : #parenblinking }
-TextEditor >> blinkParenAt: parenLocation [ 
+TextEditor >> blinkParenAt: parenLocation [
 	self text
 		addAttribute: TextEmphasis bold
 		from: parenLocation
 		to: parenLocation.
-	self editingState lastParenLocation: parenLocation.
+	self editingState lastParenLocation: parenLocation
 ]
 
 { #category : #parenblinking }
@@ -809,9 +800,9 @@ TextEditor >> caseSensitiveFinds [
 TextEditor >> changeAlignment [
 	"Interactively change the alignment of the text currently being edited."
 	| reply  |
-	reply := UIManager default 
-				chooseFrom:  self alignmentChoices 
-				values:  self alignmentChoices.	
+	reply := UIManager default
+				chooseFrom:  self alignmentChoices
+				values:  self alignmentChoices.
 	reply ifNil: [^self].
 	self applyAttribute: (TextAlignment perform: reply).
 	^ true
@@ -830,11 +821,11 @@ TextEditor >> changeEmphasis [
 	menuList nextPutAll: (choices  collect: [:emph|
 							(code anyMask: (TextEmphasis perform: emph) emphasisCode)
 								-> emph asString translated ]).
-						
+
 	menuList nextPut: ((self text attributesAt: startIndex)
 							anySatisfy: [ :attr | attr isKern and: [attr kern < 0 ]]) -> 'narrow' translated.
 	reply := UIManager default chooseFrom:  choices values: choices.
-	reply notNil 
+	reply notNil
 		ifTrue: [ attribute := TextEmphasis perform: reply.
 				self applyAttribute:  attribute].
 	^ true
@@ -853,30 +844,30 @@ TextEditor >> changeEmphasis: aKeyboardEvent [
 
 	"Decipher keyCodes for Command 0-9..."
 	"
-	(keyCode between: 1 and: 5) 
+	(keyCode between: 1 and: 5)
 		ifTrue: [attribute := TextFontChange fontNumber: keyCode].
 	"
-	keyCode = 6 
+	keyCode = 6
 		ifTrue: [
 			colors := #(#black #magenta #red #yellow #green #blue #cyan #white).
 			index := UIManager default chooseFrom:  colors title: 'choose color...'.
 			index = 0 ifTrue: [^true].
-			index <= colors size 
+			index <= colors size
 				ifTrue: [attribute := TextColor color: (Color perform: (colors at: index))]
 				ifFalse: [
 					index := index - colors size - 1.	"Re-number!!!"
 					index = 0 ifTrue: [attribute := self chooseColor].
 					thisSel ifNil: [^true]	"Could not figure out what to link to"]].
-	(keyCode between: 7 and: 11) 
+	(keyCode between: 7 and: 11)
 		ifTrue: [
-			aKeyboardEvent shiftPressed 
+			aKeyboardEvent shiftPressed
 				ifTrue: [
 					keyCode = 10 ifTrue: [attribute := TextKern kern: -1].
 					keyCode = 11 ifTrue: [attribute := TextKern kern: 1]]
 				ifFalse: [
-					attribute := TextEmphasis 
+					attribute := TextEmphasis
 								perform: (#(#bold #italic #narrow #underlined #struckOut) at: keyCode - 6).
-					oldAttributes 
+					oldAttributes
 						do: [:att | (att dominates: attribute) ifTrue: [attribute turnOff]]]].
 	keyCode = 0 ifTrue: [ attribute := TextEmphasis normal ].
 	attribute ifNotNil: [
@@ -894,13 +885,13 @@ TextEditor >> changeEmphasisOrAlignment [
 	menuList nextPut: (code isZero -> 'normal' translated).
 	menuList nextPutAll: (#(bold italic underlined struckOut) collect: [:emph|
 		(code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated]).
-	
+
 	menuList nextPut: ((self text attributesAt: startIndex)
 		anySatisfy: [ :attr | attr isKern and: [attr kern < 0 ]]) -> 'narrow' translated.
-		
+
 	self alignmentChoices collectWithIndex: [ :type :i |
 		menuList nextPut: (align = (i-1)) -> type asString translated ].
-	
+
 	aList := #(normal bold italic underlined struckOut narrow leftFlush centered rightFlush justified).
 	reply := UIManager default chooseFrom:  aList values: aList.
 	reply notNil ifTrue: [
@@ -916,11 +907,11 @@ TextEditor >> changeLfToCr: aKeyboardEvent [
 	"Replace all LFs by CRs.
 	Triggered by Cmd-U -- useful when getting code from FTP sites
 	jmv- Modified to als change crlf by cr"
-	
+
 	| fixed |
 	fixed := self selection string.
 	fixed := fixed copyReplaceAll: String crlf with: String cr.
-	fixed := fixed copyReplaceAll: String lf with: String cr. 
+	fixed := fixed copyReplaceAll: String lf with: String cr.
 	self replaceSelectionWith: (Text fromString: fixed).
 	^ true
 ]
@@ -934,7 +925,7 @@ TextEditor >> changeStyle [
 	names := TextStyle actualTextStyles keys.
 	menuList := names collect: [ :styleName |
 		(styleName = current printString) -> styleName ].
-	reply := UIManager default chooseFrom:  menuList values: names.	
+	reply := UIManager default chooseFrom:  menuList values: names.
 	reply ifNotNil: [
 		(style := TextStyle named: reply) ifNil: [ ^ true].
 		self text style: style.
@@ -945,7 +936,7 @@ TextEditor >> changeStyle [
 ]
 
 { #category : #'typing/selecting keys' }
-TextEditor >> changeStyle: aKeyboardEvent [ 
+TextEditor >> changeStyle: aKeyboardEvent [
 	"Put up the style-change menu"
 
 	self closeTypeIn.
@@ -956,7 +947,7 @@ TextEditor >> changeStyle: aKeyboardEvent [
 { #category : #'menu messages' }
 TextEditor >> changeTextFont [
 	"Present a menu of available fonts, and if one is chosen, apply it to the current selection."
-	
+
 	| curFont newFont attr startIndex |
 	startIndex := self startIndex.
 	curFont := self text fontAt: startIndex.
@@ -975,20 +966,19 @@ TextEditor >> chooseAlignment [
 TextEditor >> chooseColor [
 	"Make a new Text Color Attribute, let the user pick a color, and return the attribute"
 
-	| attribute |	
+	| attribute |
 	attribute := TextColor color: Color black "default".
 	UIManager default chooseColor
 		ifNotNil: [:nc | attribute color: nc].
 	^ attribute
-
 ]
 
 { #category : #parenblinking }
 TextEditor >> clearParens [
 	| lastLocation |
-	(lastLocation := self editingState lastParenLocation) 
+	(lastLocation := self editingState lastParenLocation)
 		ifNil: [^ self].
-	self text size >= lastLocation 
+	self text size >= lastLocation
 		ifTrue: [ self text
 			removeAttribute: TextEmphasis bold
 			from: lastLocation
@@ -998,8 +988,7 @@ TextEditor >> clearParens [
 
 { #category : #'undo - redo private' }
 TextEditor >> clearUndoManager: aKeyboardEvent [
-	^ self editingState clearUndoManager: aKeyboardEvent.
-
+	^ self editingState clearUndoManager: aKeyboardEvent
 ]
 
 { #category : #'menu messages' }
@@ -1019,7 +1008,7 @@ TextEditor >> closeTypeIn [
 	"See comment in openTypeIn. It is important to call
 	closeTypeIn before executing any non-typing key, making a new selection, etc. It is
 	called automatically for menu commands."
-	self startOfTyping 
+	self startOfTyping
 		ifNotNil: [self addTypeInUndoRecord.
 			self doneTyping]
 ]
@@ -1036,10 +1025,9 @@ TextEditor >> compareToClipboard [
 	s1 := self clipboardText string.
 	s2 := self string.
 	s1 = s2 ifTrue: [^ self inform: 'Exact match'].
-	UIManager default  
+	UIManager default
 		longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2)
 		title: 'Comparison to Clipboard Text'
-		
 ]
 
 { #category : #'editing keys' }
@@ -1056,8 +1044,7 @@ TextEditor >> copySelection [
 
 	self lineSelectAndEmptyCheck: [^ self].
 	self clipboardTextPut: self selection.
-	self editingState previousInterval: self selectionInterval selection: self selection.
-
+	self editingState previousInterval: self selectionInterval selection: self selection
 ]
 
 { #category : #'editing keys' }
@@ -1070,18 +1057,17 @@ TextEditor >> copySelection: aKeyboardEvent [
 
 { #category : #'new selection' }
 TextEditor >> correctFrom: start to: stop with: aString [
-	"Make a correction in the model that the user has authorised from somewhere else in the system (such as from the compilier).  
+	"Make a correction in the model that the user has authorised from somewhere else in the system (such as from the compilier).
 	The user's selection is not changed, only corrected."
 	| userSelection delta |
-	
+
 	userSelection := self selectionInterval.
 	self selectInvisiblyFrom: start to: stop.
 	self replaceSelectionWith: aString asText.
 	delta := aString size - (stop - start + 1).
 	self selectInvisiblyFrom:
 		userSelection first + (userSelection first > start ifFalse: [ 0 ] ifTrue: [ delta ])
-		to: userSelection last + (userSelection last > start ifFalse: [ 0 ] ifTrue: [ delta ]).
-
+		to: userSelection last + (userSelection last > start ifFalse: [ 0 ] ifTrue: [ delta ])
 ]
 
 { #category : #'typing/selecting keys' }
@@ -1119,14 +1105,14 @@ TextEditor >> currentAttributes [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorDown: aKeyboardEvent [ 
+TextEditor >> cursorDown: aKeyboardEvent [
 
 	"Private - Move cursor from position in current line to same position in
 	next line. If next line too short, put at end. If shift key down,
 	select."
 
 	self closeTypeIn.
-	self 
+	self
 		moveCursor:[:position | self
 				sameColumn: position
 				newLine:[:line | line + 1]
@@ -1138,7 +1124,7 @@ TextEditor >> cursorDown: aKeyboardEvent [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorEnd: aKeyboardEvent [ 
+TextEditor >> cursorEnd: aKeyboardEvent [
 
 	"Private - Move cursor end of current line."
 	| string |
@@ -1149,7 +1135,7 @@ TextEditor >> cursorEnd: aKeyboardEvent [
 			[:position | self walkAlongDisplayedLine
 				ifTrue:[| targetLine |
 					targetLine := self paragraph lines at: (self paragraph lineIndexOfCharacterIndex: position).
-					targetLine = self paragraph lines  last 
+					targetLine = self paragraph lines  last
 						ifTrue:[targetLine last + 1]
 						ifFalse:[targetLine last]]
 				ifFalse:[
@@ -1186,16 +1172,16 @@ TextEditor >> cursorHome: aKeyboardEvent [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorLeft: aKeyboardEvent [ 
-	"Private - Move cursor left one character if nothing selected, otherwise 
-	move cursor to beginning of selection. If the shift key is down, start 
-	selecting or extending current selection. Don't allow cursor past 
+TextEditor >> cursorLeft: aKeyboardEvent [
+	"Private - Move cursor left one character if nothing selected, otherwise
+	move cursor to beginning of selection. If the shift key is down, start
+	selecting or extending current selection. Don't allow cursor past
 	beginning of text"
 
 	self closeTypeIn.
-	self      
-		moveCursor:[:position | 
-			self class skipOverMultipleSpaces 
+	self
+		moveCursor:[:position |
+			self class skipOverMultipleSpaces
 				ifTrue: [ self previousNonBlank: position ]
 				ifFalse: [ position - 1 max: 1 ]
 			 ]
@@ -1206,10 +1192,10 @@ TextEditor >> cursorLeft: aKeyboardEvent [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorPageDown: aKeyboardEvent [ 
+TextEditor >> cursorPageDown: aKeyboardEvent [
 
 	self closeTypeIn.
-	self 
+	self
 		moveCursor: [:position |
 			self
 				sameColumn: position
@@ -1222,10 +1208,10 @@ TextEditor >> cursorPageDown: aKeyboardEvent [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorPageUp: aKeyboardEvent [ 
+TextEditor >> cursorPageUp: aKeyboardEvent [
 
 	self closeTypeIn.
-	self 
+	self
 		moveCursor: [:position |
 			self
 				sameColumn: position
@@ -1238,17 +1224,17 @@ TextEditor >> cursorPageUp: aKeyboardEvent [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorRight: aKeyboardEvent [ 
-	"Private - Move cursor right one character if nothing selected, 
-	otherwise move cursor to end of selection. If the shift key is down, 
-	start selecting characters or extending already selected characters. 
+TextEditor >> cursorRight: aKeyboardEvent [
+	"Private - Move cursor right one character if nothing selected,
+	otherwise move cursor to end of selection. If the shift key is down,
+	start selecting characters or extending already selected characters.
 	Don't allow cursor past end of text"
 
 	self closeTypeIn.
 	self
 		moveCursor: [:position |
-			self class skipOverMultipleSpaces 
-				ifTrue: [ self nextNonBlank: position ] 
+			self class skipOverMultipleSpaces
+				ifTrue: [ self nextNonBlank: position ]
 				ifFalse: [ position + 1 ]
 			]
 		forward: true
@@ -1266,7 +1252,7 @@ TextEditor >> cursorTopHome: aKeyboardEvent [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> cursorUp: aKeyboardEvent [ 
+TextEditor >> cursorUp: aKeyboardEvent [
 "Private - Move cursor from position in current line to same position in
 prior line. If prior line too short, put at end"
 
@@ -1288,12 +1274,11 @@ TextEditor >> cut [
 
 	self lineSelectAndEmptyCheck: [^ self].
 	self clipboardTextPut: self selection.
-	self replaceSelectionWith: self nullText.
-
+	self replaceSelectionWith: self nullText
 ]
 
 { #category : #'editing keys' }
-TextEditor >> cut: aKeyboardEvent [ 
+TextEditor >> cut: aKeyboardEvent [
 	"Cut out the current text selection."
 
 	self cut.
@@ -1319,17 +1304,17 @@ TextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
 	asciiValue := aKeyboardEvent keyValue.
 	honorCommandKeys := self cmdKeysInText.
 	"Special keys overwrite crtl+key combinations - at least on Windows. To resolve this
-	conflict, assume that keys other than cursor keys aren't used together with Crtl." 
+	conflict, assume that keys other than cursor keys aren't used together with Crtl."
 	((self class specialShiftCmdKeys includes: asciiValue) and: [ asciiValue < 27])
 		ifTrue: [
-			^ self performCmdActionsWith: aKeyboardEvent 
+			^ self performCmdActionsWith: aKeyboardEvent
 				shifted: aKeyboardEvent controlKeyPressed
 				return: return].
 
 	"backspace, and escape keys (ascii 8 and 27) are command keys"
-	((honorCommandKeys and: [aKeyboardEvent commandKeyPressed]) or: [self class specialShiftCmdKeys includes: asciiValue]) 
+	((honorCommandKeys and: [aKeyboardEvent commandKeyPressed]) or: [self class specialShiftCmdKeys includes: asciiValue])
 		ifTrue: [
-			^ self performCmdActionsWith: aKeyboardEvent 
+			^ self performCmdActionsWith: aKeyboardEvent
 				shifted: aKeyboardEvent shiftPressed
 				return: return].
 
@@ -1337,20 +1322,19 @@ TextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
 	(honorCommandKeys and: [aKeyboardEvent controlKeyPressed])
 		ifTrue: [
 			^ self performCmdActionsWith: aKeyboardEvent shifted: true return: return].
-			
-	^ false
 
+	^ false
 ]
 
 { #category : #'typing support' }
 TextEditor >> dispatchEnterOn: aKeyboardEvent return: aBlock [
 	aKeyboardEvent keyValue = 13
 		 ifFalse: [ ^ false ].
-	aKeyboardEvent controlKeyPressed 
+	aKeyboardEvent controlKeyPressed
 		ifTrue: [ aBlock value: (self normalCharacter: aKeyboardEvent) ].
-	aKeyboardEvent shiftPressed 
+	aKeyboardEvent shiftPressed
 		ifTrue: [  aBlock value:  (self lf: aKeyboardEvent) ].
-	aKeyboardEvent commandKeyPressed 
+	aKeyboardEvent commandKeyPressed
 		ifTrue: [  aBlock value:  (self crlf: aKeyboardEvent) ].
 	 aBlock value:  (self crWithIndent: aKeyboardEvent)
 ]
@@ -1360,7 +1344,7 @@ TextEditor >> dispatchOn: aKeyboardEvent [
 	"Carry out the action associated with this character, if any.
 	Type-ahead is passed so some routines can flush or use it."
 	"TODO rename to dispatch: "
-	
+
 	| char return |
  	return := [:val| ^ val].
 
@@ -1368,17 +1352,16 @@ TextEditor >> dispatchOn: aKeyboardEvent [
 	self clearParens.
 	self dispatchEnterOn: aKeyboardEvent return: return.
 	self dispatchCommandOn: aKeyboardEvent return: return.
-			
-	char := aKeyboardEvent keyCharacter.
-      ( ')]}'  includes: char) 
-		ifTrue: [ self blinkPrevParen: char ].
-		
-       ^ self normalCharacter: aKeyboardEvent.
 
+	char := aKeyboardEvent keyCharacter.
+      ( ')]}'  includes: char)
+		ifTrue: [ self blinkPrevParen: char ].
+
+       ^ self normalCharacter: aKeyboardEvent
 ]
 
 { #category : #'typing/selecting keys' }
-TextEditor >> doAgainMany: aKeyboardEvent [ 
+TextEditor >> doAgainMany: aKeyboardEvent [
 	"Do the previous thing again repeatedly."
 
 	self closeTypeIn.
@@ -1424,15 +1407,13 @@ TextEditor >> editingStateClass [
 { #category : #'menu declaration' }
 TextEditor >> editorMenuKeyword [
 	^'textEditorMenu'
-
 ]
 
 { #category : #constants }
 TextEditor >> emphasisChoices [
 	"Return the list of emphasis that are possible to apply on the currently edited text morph"
-	
-	^  #(normal bold italic narrow underlined struckOut).	
-	
+
+	^  #(normal bold italic narrow underlined struckOut).
 ]
 
 { #category : #accessing }
@@ -1470,17 +1451,17 @@ TextEditor >> enclose: aKeyboardEvent [
 { #category : #'editing keys' }
 TextEditor >> encloseWith: aMatchingPair [
 	"Insert or remove bracket characters around the current selection. Provided for protocol compatibility, but not completely sure this is ever called"
-	| event |  
+	| event |
 	event := KeyboardEvent new.
-	event 
+	event
 		setType: #keystroke
 		buttons: nil
 		position:  0@0
-		keyValue: aMatchingPair key asciiValue 
+		keyValue: aMatchingPair key asciiValue
 		charCode: aMatchingPair key asciiValue
-		hand: nil 
+		hand: nil
 		stamp: Time now.
-	^self enclose: event 
+	^self enclose: event
 ]
 
 { #category : #private }
@@ -1488,19 +1469,17 @@ TextEditor >> encompassParagraph: anInterval [
 	"Return an interval that includes anInterval, and that comprises one or several whole paragraphs in the receiver.
 	Answer starts at the position following a cr (or eventually 1) and ends at a cr (or eventually at self size)"
 	^ self string encompassParagraph: anInterval
-
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> escape [ 
-	self morph escapePressed .
-	
+TextEditor >> escape [
+	self morph escapePressed
 ]
 
 { #category : #'nonediting/nontyping keys' }
 TextEditor >> escape: aKeyboardEvent [
 	self morph escapePressed.
-	^ false  
+	^ false
 ]
 
 { #category : #'do-its' }
@@ -1509,7 +1488,7 @@ TextEditor >> evaluateSelectionAndDo: aBlock [
 	| result rcvr ctxt |
 	self lineSelectAndEmptyCheck: [^ nil].
 
-	(model respondsTo: #doItReceiver) 
+	(model respondsTo: #doItReceiver)
 		ifTrue: [ rcvr := model doItReceiver.
 				ctxt := model doItContext]
 		ifFalse: [rcvr := ctxt := nil].
@@ -1519,7 +1498,7 @@ TextEditor >> evaluateSelectionAndDo: aBlock [
 			receiver: rcvr;
 			requestor: self;
 			failBlock:  [morph flash. ^ nil];
-			evaluate.		
+			evaluate.
 	^aBlock value: result
 ]
 
@@ -1559,17 +1538,17 @@ TextEditor >> exchangeWith: prior [
 			delta := before ifTrue: [0] ifFalse: [priorSelection size - currSelection size].
 			self zapSelectionWith: priorSelection.
 			redoArgs := { prior. start to: stop}.
-						
+
 			self selectFrom: prior first + delta to: prior last + delta.
 			delta := before ifTrue: [stop - prior last] ifFalse: [start - prior first].
 			self zapSelectionWith: currSelection.
-			
+
 			altInterval := prior first + delta to: prior last + delta.
 			undoArgs := {altInterval. self startIndex to: self stopIndex - 1}.
 			"self undoer: #exchangeWith: with: altInterval."
 			prior first > prior last ifTrue: [self selectAt: self editingState previousInterval last + 1].
 			self editingState
-				redoArray: { morph. #undoRedoExchange:with:. redoArgs} 
+				redoArray: { morph. #undoRedoExchange:with:. redoArgs}
 				undoArray: {morph. #undoRedoExchange:with:. undoArgs}]
 		ifFalse:
 			[morph flash]
@@ -1610,7 +1589,7 @@ TextEditor >> findAgain [
 ]
 
 { #category : #'typing/selecting keys' }
-TextEditor >> findAgain: aKeyboardEvent [ 
+TextEditor >> findAgain: aKeyboardEvent [
 	"Find the desired text again."
 	self closeTypeIn.
 	self findAgain.
@@ -1630,19 +1609,17 @@ TextEditor >> findAgainAndReplace [
 ]
 
 { #category : #'find-select' }
-TextEditor >> findAll: aRegex endingAt: searchIdx [ 
+TextEditor >> findAll: aRegex endingAt: searchIdx [
 	| ranges |
 	ranges := aRegex matchingRangesIn: (self string copyFrom: 1 to: searchIdx).
-	^ ranges 
-			
+	^ ranges
 ]
 
 { #category : #'find-select' }
-TextEditor >> findAll: aRegex startingAt: searchIdx [ 
+TextEditor >> findAll: aRegex startingAt: searchIdx [
 	| ranges |
 	ranges := aRegex matchingRangesIn: (self string copyFrom: searchIdx to: self string size).
 	^ ranges collect: [:i | i + searchIdx - 1]
-			
 ]
 
 { #category : #'find-select' }
@@ -1680,7 +1657,7 @@ TextEditor >> findAndSelectPreviousOccurrenceOf: aRegex [
 ]
 
 { #category : #'find-select' }
-TextEditor >> findNext: aRegex startingAt: searchIdx [ 
+TextEditor >> findNext: aRegex startingAt: searchIdx [
 	| strm match range |
 	strm := (self string copyFrom: searchIdx to: self string size) readStream.
 	aRegex searchStream: strm.
@@ -1690,19 +1667,18 @@ TextEditor >> findNext: aRegex startingAt: searchIdx [
 ]
 
 { #category : #'find-select' }
-TextEditor >> findNextString: aSubstring startingAt: searchIdx [ 
+TextEditor >> findNextString: aSubstring startingAt: searchIdx [
 	| idx |
 	idx := self string findString: aSubstring startingAt: searchIdx.
 	^ idx isZero ifFalse: [idx to: idx + aSubstring size - 1]
 ]
 
 { #category : #'find-select' }
-TextEditor >> findPrevious: aRegex startingAt: searchIdx [ 
+TextEditor >> findPrevious: aRegex startingAt: searchIdx [
 	| allRanges |
 	allRanges := self findAll: aRegex endingAt: searchIdx.
 	^ allRanges notEmpty
-		ifTrue: [allRanges last].
-
+		ifTrue: [allRanges last]
 ]
 
 { #category : #accessing }
@@ -1722,26 +1698,23 @@ TextEditor >> findText [
 
 { #category : #'find-select' }
 TextEditor >> findText: aStringOrText [
-	self findReplaceService findText: aStringOrText 
+	self findReplaceService findText: aStringOrText
 ]
 
 { #category : #accessing }
 TextEditor >> findText: aString isRegex: aBoolean [
 	self findReplaceService findText: aString isRegex: aBoolean.
 	self findReplaceService changed: #newFinding
-
 ]
 
 { #category : #private }
 TextEditor >> findText: aString isRegex: isRegex caseSensitive: caseSensitive entireWordsOnly: entireWordsOnly [
 	self findReplaceService findText: aString isRegex: isRegex caseSensitive: caseSensitive entireWordsOnly: entireWordsOnly
-
 ]
 
 { #category : #private }
 TextEditor >> findText: aString isRegex: isRegex entireWordsOnly: entireWordsOnly [
 	self findReplaceService findText: aString isRegex: isRegex entireWordsOnly: entireWordsOnly
-
 ]
 
 { #category : #displaying }
@@ -1751,15 +1724,14 @@ TextEditor >> flash [
 
 { #category : #events }
 TextEditor >> focused: aBoolean [
-	self editingState focused: aBoolean from: morph.
-
+	self editingState focused: aBoolean from: morph
 ]
 
 { #category : #'typing/selecting keys' }
 TextEditor >> forwardDelete: aKeyboardEvent [
 	"Delete forward over the next character"
 	self closeTypeIn.
-	self hasSelection 
+	self hasSelection
 		ifFalse: [	| idx1 idx2 |
 				idx1 := self startIndex min: self stopIndex.
 				idx2 := self stopIndex max: self startIndex.
@@ -1770,7 +1742,6 @@ TextEditor >> forwardDelete: aKeyboardEvent [
 	self addDeleteSelectionUndoRecord.
 	self zapSelectionWith: self nullText.
 	^ false
-
 ]
 
 { #category : #private }
@@ -1790,7 +1761,7 @@ TextEditor >> handleDownOnUnselectedText: event [
 		ifTrue: [ ^ self mouseMove: event ].
 	event yellowButtonPressed
 		ifTrue: [ self yellowButtonDown: event ]
-		ifFalse: [ 
+		ifFalse: [
 			"no right/yellowbutton click just reposoition the cursor"
 			self updateSelectionFromEvent: event ]
 ]
@@ -1799,7 +1770,7 @@ TextEditor >> handleDownOnUnselectedText: event [
 TextEditor >> handleEditionAction: anAction fromKeyboardEvent: aKeyboardEvent [
 	(self editingState handlesKeyboard: aKeyboardEvent from: morph)
 		ifFalse: [self handleKeystrokeAction: anAction ].
-	self editingState keystroke: aKeyboardEvent from: morph.
+	self editingState keystroke: aKeyboardEvent from: morph
 ]
 
 { #category : #'typing support' }
@@ -1809,7 +1780,7 @@ TextEditor >> handleKeystrokeAction: aBlock [
 			self storeSelectionInParagraph.
 			^self].
 	self openTypeIn.
-	self hasSelection 
+	self hasSelection
 		ifTrue: [ "save highlighted characters"
 			self editingState previousInterval: self selectionInterval selection: self selection].
 	self editingState unselect.
@@ -1823,7 +1794,7 @@ TextEditor >> hasCaret [
 
 { #category : #testing }
 TextEditor >> hasError [
-	^ false 
+	^ false
 ]
 
 { #category : #'accessing - selection' }
@@ -1833,7 +1804,7 @@ TextEditor >> hasSelection [
 
 { #category : #'editing keys' }
 TextEditor >> inOutdent: aKeyboardEvent delta: delta [
-	"Add/remove a tab at the front of every line occupied by the selection. 
+	"Add/remove a tab at the front of every line occupied by the selection.
 	Derived from work by Larry Tesler back in December 1985."
 
 	| cr realStart realStop lines startLine stopLine start stop adjustStart indentation size numLines inStream newString outStream |
@@ -1860,13 +1831,13 @@ TextEditor >> inOutdent: aKeyboardEvent delta: delta [
 	stopLine := self paragraph lineIndexOfCharacterIndex: (realStart max: realStop).
 	start := (lines at: startLine) first.
 	stop := (lines at: stopLine) last.
-	
+
 	"Pin the start of highlighting unless the selection starts a line"
 	adjustStart := realStart > start.
 
 	"Find the indentation of the least-indented non-blank line; never outdent more"
 	indentation := (startLine to: stopLine) inject: 1000 into: [ :previousValue :each |
-		previousValue min: (self paragraph indentationOfLineIndex: each ifBlank: [ :tabs | 1000 ])].			
+		previousValue min: (self paragraph indentationOfLineIndex: each ifBlank: [ :tabs | 1000 ])].
 
 	size :=  stop + 1 - start.
 	numLines := stopLine + 1 - startLine.
@@ -1935,7 +1906,7 @@ TextEditor >> indent: delta fromStream: inStream toStream: outStream [
 { #category : #initialization }
 TextEditor >> initWithMorph: aMorph [
 	morph := aMorph.
-	self resetState 
+	self resetState
 ]
 
 { #category : #'new selection' }
@@ -1973,17 +1944,16 @@ TextEditor >> isDisjointFrom: anInterval [
 	fudge := anInterval size = 0 ifTrue: [1] ifFalse: [0].
 	^(anInterval last + fudge < self startIndex or:
 			[anInterval first - fudge >= self stopIndex])
-
 ]
 
 { #category : #testing }
 TextEditor >> isSmalltalkEditor [
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
 TextEditor >> isTextEditor [
-	^ true 
+	^ true
 ]
 
 { #category : #'typing support' }
@@ -1992,15 +1962,15 @@ TextEditor >> keystroke: aKeyboardEvent [
 ]
 
 { #category : #accessing }
-TextEditor >> lastFont [	
+TextEditor >> lastFont [
 	"Answer the Font for to be used if positioned at the end of the text"
-	| t |	
-	t := self text.	
+	| t |
+	t := self text.
 	^ t fontAt: t size + 1
 ]
 
 { #category : #'typing/selecting keys' }
-TextEditor >> lf: aKeyboardEvent [ 
+TextEditor >> lf: aKeyboardEvent [
 	"Append a line feed character to the stream of characters."
 
 	self addString: Character lf asString.
@@ -2076,7 +2046,7 @@ TextEditor >> markBlock [
 ]
 
 { #category : #accessing }
-TextEditor >> markBlock: aCharacterBlock [ 
+TextEditor >> markBlock: aCharacterBlock [
 	self editingState markBlock:  aCharacterBlock
 ]
 
@@ -2088,7 +2058,6 @@ TextEditor >> markIndex [
 { #category : #'accessing - selection' }
 TextEditor >> markIndex: anIndex [
 	self editingState markBlock: (self paragraph characterBlockForIndex: anIndex)
-
 ]
 
 { #category : #accessing }
@@ -2097,11 +2066,11 @@ TextEditor >> model [
 ]
 
 { #category : #accessing }
-TextEditor >> model: aModel [ 
-	"Controller|model: and Controller|view: are sent by View|controller: in 
-	order to coordinate the links between the model, view, and controller. In 
-	ordinary usage, the receiver is created and passed as the parameter to 
-	View|controller: so that the receiver's model and view links can be set 
+TextEditor >> model: aModel [
+	"Controller|model: and Controller|view: are sent by View|controller: in
+	order to coordinate the links between the model, view, and controller. In
+	ordinary usage, the receiver is created and passed as the parameter to
+	View|controller: so that the receiver's model and view links can be set
 	up by the view."
 
 	model := aModel
@@ -2115,7 +2084,7 @@ TextEditor >> morph [
 { #category : #accessing }
 TextEditor >> morph: aMorph [
 	"Install a link back to the morph being edited (esp for text links)"
-	morph := aMorph 
+	morph := aMorph
 ]
 
 { #category : #events }
@@ -2151,7 +2120,7 @@ TextEditor >> mouseDownOnSelectedText: event [
 TextEditor >> mouseDownOnUnselectedText: event [
 	self editingState mouseDown: event from: morph.
 	self closeTypeIn.	"no matter what, if shift is pressed extend the selection"
-	"make sure our view knows about selection change"	
+	"make sure our view knows about selection change"
 	self morph handleInteraction: [ self handleDownOnUnselectedText: event ]
 ]
 
@@ -2159,7 +2128,7 @@ TextEditor >> mouseDownOnUnselectedText: event [
 TextEditor >> mouseMove: evt [
 	"Change the selection in response to mouse-down drag"
 	| characterBlock |
-	
+
 	characterBlock := self paragraph characterBlockAtPoint: evt cursorPoint.
 
 	self editingState pointBlock: characterBlock.
@@ -2169,27 +2138,27 @@ TextEditor >> mouseMove: evt [
 
 { #category : #events }
 TextEditor >> mouseUp: evt [
-	"An attempt to break up the old processRedButton 
+	"An attempt to break up the old processRedButton
 	code into three phases"
 	| mouseDownInterval |
-	
+
 	(mouseDownInterval := self editingState mouseDownInterval)
-		ifNil: [^ self]. 
-		
-	(self paragraph click: evt for: model controller: self ) 
+		ifNil: [^ self].
+
+	(self paragraph click: evt for: model controller: self )
 		ifTrue: [
 			self updateSelectionFromEvent: evt.
 			evt hand releaseKeyboardFocus: self.
 			^ self ].
 
-	(evt yellowButtonChanged or: [ evt commandKeyPressed]) 
+	(evt yellowButtonChanged or: [ evt commandKeyPressed])
 		ifTrue: [
-			(self morph yellowButtonActivity: evt shiftPressed) 
+			(self morph yellowButtonActivity: evt shiftPressed)
 				ifTrue: [ ^ self ]].
-		
+
 	(self hasCaret and: [mouseDownInterval = self selectionInterval])
 		ifTrue: [self selectWord].
-		
+
 	self setEmphasisHereFromText.
 	self storeSelectionInParagraph
 ]
@@ -2223,12 +2192,12 @@ TextEditor >> nextCharacterIfAbsent: aBlock [
 TextEditor >> nextNonBlank: position [
 
 "if current position is not separator, advance by 1, otherwise advance up until non-separator char found or new line"
-	
+
 	| string index |
 	string := self string.
 	index := position.
 	index >= string size ifTrue: [ ^ string size+1 ].
-	
+
 	(string at: index) isSeparator ifFalse: [ ^ index + 1 ].
 	index := index + 1.
 	[ index <= string size and: [(string at: index) isSeparator and: [(string at:index) ~= Character cr]]]
@@ -2249,21 +2218,20 @@ TextEditor >> nextWord: position [
 ]
 
 { #category : #'editing keys' }
-TextEditor >> noop: aKeyboardEvent [ 
+TextEditor >> noop: aKeyboardEvent [
 	"Unimplemented keyboard command; just ignore it."
 
 	^ true
 ]
 
 { #category : #'typing/selecting keys' }
-TextEditor >> normalCharacter: aKeyboardEvent [ 
+TextEditor >> normalCharacter: aKeyboardEvent [
 	"A nonspecial character is to be added to the stream of characters."
 
-	self hasSelection 
+	self hasSelection
 		ifTrue: [self addDeleteSelectionUndoRecord].
 	self addString: aKeyboardEvent keyCharacter asString.
 	^false
-
 ]
 
 { #category : #private }
@@ -2274,14 +2242,14 @@ TextEditor >> nullText [
 
 { #category : #'menu messages' }
 TextEditor >> offerFontMenu [
-	"Present a menu of available fonts, and if one is chosen, apply it to the current selection.  
+	"Present a menu of available fonts, and if one is chosen, apply it to the current selection.
 	Use only names of Fonts of this paragraph  "
-	
+
 	^self changeTextFont
 ]
 
 { #category : #'editing keys' }
-TextEditor >> offerFontMenu: aKeyboardEvent [ 
+TextEditor >> offerFontMenu: aKeyboardEvent [
 	"The user typed the command key that requests a font change; Offer the font menu."
 
 	self closeTypeIn.
@@ -2294,7 +2262,7 @@ TextEditor >> openTypeIn [
 	"Set up startOfTyping to keep track of the leftmost backspace.
 	 You can't undo typing until after closeTypeIn."
 
-	self startOfTyping 
+	self startOfTyping
 		ifNil: [self editingState previousInterval: (1 to: 0) selection: self nullText.
 			self startOfTyping: self startIndex]
 ]
@@ -2318,14 +2286,14 @@ TextEditor >> pageHeight [
 
 { #category : #private }
 TextEditor >> paragraph [
-	^ morph 
+	^ morph
 		ifNotNil: [morph paragraph]
 		ifNil: [self error: 'paragraph is not available']
 ]
 
 { #category : #'menu messages' }
 TextEditor >> paste [
-	"Paste the text from the shared buffer over the current selection and 
+	"Paste the text from the shared buffer over the current selection and
 	redisplay if necessary.  Undoer & Redoer: undoAndReselect."
 
 	self replace: self selectionInterval with: self clipboardText and:
@@ -2333,7 +2301,7 @@ TextEditor >> paste [
 ]
 
 { #category : #'editing keys' }
-TextEditor >> paste: aKeyboardEvent [ 
+TextEditor >> paste: aKeyboardEvent [
 	"Replace the current text selection by the text in the shared buffer."
 
 	self closeTypeIn.
@@ -2360,7 +2328,7 @@ TextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return: re
 				ifFalse: [self class cmdActions].
 	action := (actions at: asciiValue).
 	action == #noop: ifTrue: [ ^ false ].
-	return value: ( self perform: action with: aKeyboardEvent).
+	return value: ( self perform: action with: aKeyboardEvent)
 ]
 
 { #category : #'pluggable menus' }
@@ -2386,7 +2354,6 @@ TextEditor >> pointIndex [
 { #category : #'accessing - selection' }
 TextEditor >> pointIndex: anIndex [
 	self editingState pointBlock: (self paragraph characterBlockForIndex: anIndex)
-
 ]
 
 { #category : #accessing }
@@ -2400,11 +2367,11 @@ TextEditor >> previousNonBlank: position [
 	"decrement position up until any non-blank character found, or end of line"
 	| string index |
 	position <= 1 ifTrue: [ ^ 1 ].
-	
+
 	string := self string.
 	index := position.
 	index := index -1.
-	(string at: index) isSeparator ifFalse: [ ^ index ]. 
+	(string at: index) isSeparator ifFalse: [ ^ index ].
 
 	[ index > 1 and: [(string at: index-1) isSeparator and: [(string at:index-1) ~= Character cr]]]
 		whileTrue: [index := index - 1].
@@ -2425,11 +2392,11 @@ TextEditor >> previousWord: position [
 
 { #category : #'typing support' }
 TextEditor >> processKeyStroke: aKeyboardEvent [
-	"Key struck on the keyboard. Find out which one and, if special, carry 
-	out the associated special action. Otherwise, add the character to the 
+	"Key struck on the keyboard. Find out which one and, if special, carry
+	out the associated special action. Otherwise, add the character to the
 	stream of characters.  Undoer & Redoer: see closeTypeIn."
-	
-	^self handleKeystrokeAction: [self dispatchOn: aKeyboardEvent].
+
+	^self handleKeystrokeAction: [self dispatchOn: aKeyboardEvent]
 ]
 
 { #category : #'nonediting/nontyping keys' }
@@ -2449,7 +2416,7 @@ TextEditor >> recomputeInterval [
 
 { #category : #'current selection' }
 TextEditor >> recomputeSelection [
-	"Redetermine the selection according to the start and stop block indices; 
+	"Redetermine the selection according to the start and stop block indices;
 	do not highlight."
 
 	self recomputeInterval
@@ -2459,12 +2426,11 @@ TextEditor >> recomputeSelection [
 TextEditor >> redo [
 	"redo previous edit"
 
-	self editingState redo ifFalse: [morph flash]. 
-
+	self editingState redo ifFalse: [morph flash].
 ]
 
 { #category : #'editing keys' }
-TextEditor >> redo: aKeyboardEvent [ 
+TextEditor >> redo: aKeyboardEvent [
 	"Redo the last edit."
 
 	self redo.
@@ -2475,12 +2441,11 @@ TextEditor >> redo: aKeyboardEvent [
 TextEditor >> redoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: self selectionInterval with: aText and:
-		[self selectInterval: (anInterval first to: anInterval first + aText size - 1)].
-
+		[self selectInterval: (anInterval first to: anInterval first + aText size - 1)]
 ]
 
 { #category : #accessing }
-TextEditor >> replace: xoldInterval with: newText and: selectingBlock [ 
+TextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 	"Replace the text in oldInterval with newText and
 	execute selectingBlock to establish the new selection.
 	Create an UndoRecord to allow perfect undoing."
@@ -2491,9 +2456,9 @@ TextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 	self editingState previousInterval: currInterval selection: self selection.
 	self zapSelectionWith: newText.
 	selectingBlock value.
-	((prevSel isEmpty and: [newText isEmpty]) and: [currInterval size < 1]) 
+	((prevSel isEmpty and: [newText isEmpty]) and: [currInterval size < 1])
 		ifFalse: [self editingState
-			redoArray: {morph. #redoTypeIn:interval:. {newText. currInterval}} 
+			redoArray: {morph. #redoTypeIn:interval:. {newText. currInterval}}
 			undoArray: {morph. #undoTypeIn:interval:. {prevSel. currInterval first to: currInterval first + newText size - 1}}]
 ]
 
@@ -2502,12 +2467,11 @@ TextEditor >> replaceAll: aRegex with: aText [
 	| selec ranges |
 	self editingState undoManager openRecordGroup.
 	selec := self selectionInterval.
-	ranges := self findAll: aRegex startingAt: selec first. 
+	ranges := self findAll: aRegex startingAt: selec first.
 	ranges reverseDo: [:r | self selectInvisiblyFrom: r first to: r last.
 		self replaceSelectionWith: aText].
 	self selectInterval: selec.
-	self editingState undoManager closeRecordGroup.
-
+	self editingState undoManager closeRecordGroup
 ]
 
 { #category : #'find-select' }
@@ -2515,26 +2479,24 @@ TextEditor >> replaceAll: aRegex with: aText startingAt: startIdx [
 	| selec ranges |
 	self editingState undoManager openRecordGroup.
 	selec := self selectionInterval.
-	ranges := self findAll: aRegex startingAt: startIdx. 
+	ranges := self findAll: aRegex startingAt: startIdx.
 	ranges reverseDo: [:r | self selectInvisiblyFrom: r first to: r last.
 		self replaceSelectionWith: aText].
 	self selectInterval: selec.
-	self editingState undoManager closeRecordGroup.
-
+	self editingState undoManager closeRecordGroup
 ]
 
 { #category : #accessing }
 TextEditor >> replaceSelectionWith: aText [
 	self replace: self selectionInterval with: aText and: []
-
 ]
 
 { #category : #initialization }
-TextEditor >> resetState [ 
-	"Establish the initial conditions for editing the paragraph: place caret 
+TextEditor >> resetState [
+	"Establish the initial conditions for editing the paragraph: place caret
 	before first character, set the emphasis to that of the first character,
 	and save the paragraph for purposes of canceling."
- 
+
 	self editingState markBlock: self paragraph defaultCharacterBlock.
 	self editingState pointBlock: self editingState markBlock copy.
 	self startOfTyping: nil.
@@ -2572,7 +2534,7 @@ TextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 		ifTrue:[^isForward
 			ifTrue:[targetEOL]
 			ifFalse:[offsetAtTargetLine]].
-	^offsetAtTargetLine + column min: targetEOL.
+	^offsetAtTargetLine + column min: targetEOL
 ]
 
 { #category : #'menu messages' }
@@ -2585,7 +2547,7 @@ TextEditor >> saveContentsInFile [
 	labelToUse :=  model dependents detect: [ :dep | dep isKindOf: SystemWindow ] ifFound: [:parentWindow | parentWindow label] ifNone: [ 'Untitled' ].
 	suggestedName := nil.
 	#(#('Decompressed contents of: ' '.gz'))
-		do: [ :leaderTrailer | 
+		do: [ :leaderTrailer |
 			"can add more here..."
 			(labelToUse beginsWith: leaderTrailer first)
 				ifTrue: [ suggestedName := labelToUse copyFrom: leaderTrailer first size + 1 to: labelToUse size.
@@ -2601,9 +2563,8 @@ TextEditor >> saveContentsInFile [
 ]
 
 { #category : #scrolling }
-TextEditor >> scrollBy: ignore [ 
+TextEditor >> scrollBy: ignore [
 	"Ignore scroll requests."
-
 ]
 
 { #category : #'typing/selecting keys' }
@@ -2631,7 +2592,7 @@ TextEditor >> selectAll [
 ]
 
 { #category : #'typing/selecting keys' }
-TextEditor >> selectAll: aKeyboardEvent [ 
+TextEditor >> selectAll: aKeyboardEvent [
 	"select everything"
 
 	self closeTypeIn.
@@ -2640,7 +2601,7 @@ TextEditor >> selectAll: aKeyboardEvent [
 ]
 
 { #category : #'new selection' }
-TextEditor >> selectAt: characterIndex [ 
+TextEditor >> selectAt: characterIndex [
 	"Place the caret before the character at characterIndex.
 	 Be sure it is in view."
 
@@ -2648,7 +2609,7 @@ TextEditor >> selectAt: characterIndex [
 ]
 
 { #category : #'nonediting/nontyping keys' }
-TextEditor >> selectCurrentTypeIn: aKeyboardEvent [ 
+TextEditor >> selectCurrentTypeIn: aKeyboardEvent [
 	"Select what would be replaced by an undo (e.g., the last typeIn)."
 
 	self closeTypeIn.
@@ -2663,7 +2624,7 @@ TextEditor >> selectFrom: start to: stop [
 	self closeTypeIn.
 	self storeSelectionInParagraph.
 	"Preserve current emphasis if selection is empty"
-	stop > start 
+	stop > start
 		ifTrue: [self setEmphasisHereFromTextForward: true ]
 ]
 
@@ -2676,12 +2637,11 @@ TextEditor >> selectInterval: anInterval [
 ]
 
 { #category : #'new selection' }
-TextEditor >> selectInvisiblyAt: characterIndex [ 
+TextEditor >> selectInvisiblyAt: characterIndex [
 	"Place the caret before the character at characterIndex.
 	 Be sure it is in view but vithout any further action."
-	
-	self selectInvisiblyFrom: characterIndex to:  characterIndex - 1
 
+	self selectInvisiblyFrom: characterIndex to:  characterIndex - 1
 ]
 
 { #category : #'new selection' }
@@ -2733,17 +2693,17 @@ TextEditor >> selectWord [
 	openDelimiter := string at: here - 1.
 	match := leftDelimiters indexOf: openDelimiter.
 	match > 0
-		ifTrue: 
+		ifTrue:
 			["delimiter is on left -- match to the right"
 			start := here.
 			direction := 1.
 			here := here - 1.
 			closeDelimiter := rightDelimiters at: match]
-		ifFalse: 
+		ifFalse:
 			[openDelimiter := string at: here.
 			match := rightDelimiters indexOf: openDelimiter.
 			match > 0
-				ifTrue: 
+				ifTrue:
 					["delimiter is on right -- match to the left"
 					stop := here - 1.
 					direction := -1.
@@ -2754,18 +2714,18 @@ TextEditor >> selectWord [
 	[level > 0 and: [direction > 0
 			ifTrue: [here < string size]
 			ifFalse: [here > 1]]]
-		whileTrue: 
+		whileTrue:
 			[hereChar := string at: (here := here + direction).
 			match = 0
 				ifTrue: ["token scan goes left, then right"
 					hereChar tokenish
 						ifTrue: [here = 1
-								ifTrue: 
+								ifTrue:
 									[start := 1.
 									"go right if hit string start"
 									direction := 1]]
 						ifFalse: [direction < 0
-								ifTrue: 
+								ifTrue:
 									[start := here + 1.
 									"go right if hit non-token"
 									direction := 1]
@@ -2773,7 +2733,7 @@ TextEditor >> selectWord [
 				ifFalse: ["bracket match just counts nesting level"
 					hereChar = closeDelimiter
 						ifTrue: [level := level - 1"leaving nest"]
-						ifFalse: [hereChar = openDelimiter 
+						ifFalse: [hereChar = openDelimiter
 									ifTrue: [level := level + 1"entering deeper nest"]]]].
 
 	level > 0 ifTrue: ["in case ran off string end"	here := here + direction].
@@ -2794,12 +2754,12 @@ TextEditor >> selectWord: aKeyboardEvent [
 TextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 
-	^self text copyFrom: self startIndex to: self stopIndex - 1 
+	^self text copyFrom: self startIndex to: self stopIndex - 1
 ]
 
 { #category : #'accessing - selection' }
 TextEditor >> selectionAsStream [
-	"Answer a ReadStream on the text in the paragraph that is currently 
+	"Answer a ReadStream on the text in the paragraph that is currently
 	selected."
 
 	^ReadStream
@@ -2810,7 +2770,7 @@ TextEditor >> selectionAsStream [
 TextEditor >> selectionInterval [
 	"Answer the interval that is currently selected."
 
-	^self startIndex to: self stopIndex - 1 
+	^self startIndex to: self stopIndex - 1
 ]
 
 { #category : #accessing }
@@ -2848,18 +2808,17 @@ TextEditor >> setEmphasisHereFromTextForward: f [
 	t := self text.
 	"Try to set emphasisHere correctly after whitespace.
 	Most important after a cr, i.e. at the start of a new line"
-	t ifEmpty: [ 
+	t ifEmpty: [
 		prevIsSeparator := false.
 		nextIsSeparator := false ]
-	ifNotEmpty: [  
+	ifNotEmpty: [
 		prevIsSeparator :=  i > 1 and: [ (t at: i-1) isSeparator ].
 		nextIsSeparator := i <= t size and: [ (t at: i) isSeparator ]].
 	forward := prevIsSeparator = nextIsSeparator
 		ifTrue: [ f ]
 		ifFalse: [ nextIsSeparator ].
 	delta := forward ifTrue: [ 1 ] ifFalse: [ 0 ].
-	self editingState emphasisHere: ((t attributesAt: (i - delta max: 1)) select: [:att | att mayBeExtended]).
-	
+	self editingState emphasisHere: ((t attributesAt: (i - delta max: 1)) select: [:att | att mayBeExtended])
 ]
 
 { #category : #private }
@@ -2907,7 +2866,7 @@ TextEditor >> setSearchString: aKeyboardEvent [
 ]
 
 { #category : #'menu messages' }
-TextEditor >> setSelectorSearch: aStringOrText [ 
+TextEditor >> setSelectorSearch: aStringOrText [
 	"Make the current selection as a selector search in current FindReplaceService."
 	| regex |
 	regex := aStringOrText asString trimBoth.
@@ -2920,7 +2879,6 @@ TextEditor >> setSelectorSearch: aStringOrText [
 { #category : #'menu declaration' }
 TextEditor >> shiftedMenuKeyword [
 	^ #textEditorShiftedMenu
-
 ]
 
 { #category : #'pluggable menus' }
@@ -2932,10 +2890,9 @@ TextEditor >> shiftedTextPaneMenuRequest [
 
 { #category : #'menu declaration' }
 TextEditor >> shiftedYellowButtonMenu [
-	^ (PragmaMenuBuilder 
+	^ (PragmaMenuBuilder
 			pragmaKeyword: self shiftedMenuKeyword
-			model: nil) menu.
-
+			model: nil) menu
 ]
 
 { #category : #'accessing - selection' }
@@ -2945,7 +2902,7 @@ TextEditor >> startBlock [
 
 { #category : #events }
 TextEditor >> startDrag: event [
-	
+
 	self morph startDrag: (event translatedBy: self morph editView topLeft)
 ]
 
@@ -2956,7 +2913,7 @@ TextEditor >> startIndex [
 
 { #category : #'typing support' }
 TextEditor >> startOfTyping [
-	^ self editingState startOfTyping  
+	^ self editingState startOfTyping
 ]
 
 { #category : #'typing support' }
@@ -2971,8 +2928,7 @@ TextEditor >> stateArray [
 
 { #category : #initialization }
 TextEditor >> stateArrayPut: stateArray [
-	editingState := stateArray at: 1.
-
+	editingState := stateArray at: 1
 ]
 
 { #category : #'accessing - selection' }
@@ -2987,7 +2943,7 @@ TextEditor >> stopIndex [
 
 { #category : #'mvc compatibility' }
 TextEditor >> storeSelectionInParagraph [
-	self theme currentSettings haveSelectionTextColor 
+	self theme currentSettings haveSelectionTextColor
 		ifTrue: [
 			self text removeAttribute: TextSelectionColor primarySelection.
 			self text addAttribute: TextSelectionColor primarySelection from: self startIndex to: self stopIndex - 1].
@@ -3035,7 +2991,7 @@ TextEditor >> textStyle [
 
 { #category : #accessing }
 TextEditor >> theme [
-	^ Smalltalk ui theme 
+	^ Smalltalk ui theme
 ]
 
 { #category : #accessing }
@@ -3059,12 +3015,11 @@ TextEditor >> transformedFrom: uberMorph [
 TextEditor >> undo [
 	"Undo  previous edit."
 	self closeTypeIn.
-	self editingState undo ifFalse: [morph flash]. 
-
+	self editingState undo ifFalse: [morph flash].
 ]
 
 { #category : #'editing keys' }
-TextEditor >> undo: aKeyboardEvent [ 
+TextEditor >> undo: aKeyboardEvent [
 	"Undo the last edit."
 
 	self undo.
@@ -3075,15 +3030,13 @@ TextEditor >> undo: aKeyboardEvent [
 TextEditor >> undoRedoExchange: aninterval with: anotherInterval [
 	self selectInvisiblyFrom: aninterval first to: aninterval last.
 	self exchangeWith: anotherInterval
-
 ]
 
 { #category : #'undoers - redoers' }
 TextEditor >> undoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: anInterval with: aText and:
-		[self selectInterval: (anInterval first to: anInterval first - 1)].
-
+		[self selectInterval: (anInterval first to: anInterval first - 1)]
 ]
 
 { #category : #'accessing - selection' }
@@ -3094,14 +3047,14 @@ TextEditor >> unselect [
 { #category : #private }
 TextEditor >> updateSelectionFromEvent: event [
 
-	| clickPoint b | 
+	| clickPoint b |
 
 	clickPoint := event cursorPoint.
 	b := self paragraph characterBlockAtPoint: clickPoint.
-	
+
 	self editingState markBlock: b.
 	self editingState pointBlock: b.
-	
+
 	self storeSelectionInParagraph
 ]
 
@@ -3115,7 +3068,6 @@ TextEditor >> userHasEdited [
 TextEditor >> visibleHeight [
 
 	^morph owner bounds height
-
 ]
 
 { #category : #settings }
@@ -3127,7 +3079,6 @@ TextEditor >> walkAlongDisplayedLine [
 TextEditor >> wordAtCaret [
 
 	^self paragraph text asString wordBefore: self startIndex - 1
-
 ]
 
 { #category : #'menu messages' }
@@ -3146,14 +3097,14 @@ TextEditor >> yellowButtonDown: anEvent [
 	(self paragraph selectionContainsPoint: anEvent cursorPoint)
 		ifFalse: [
 			self mouseMove: anEvent.
-			self selectWord ].
+			self selectWord ]
 ]
 
 { #category : #'menu declaration' }
 TextEditor >> yellowButtonMenu [
-	^ (PragmaMenuBuilder 
+	^ (PragmaMenuBuilder
 			pragmaKeyword: self editorMenuKeyword
-			model: nil) menu.
+			model: nil) menu
 ]
 
 { #category : #'mvc compatibility' }
@@ -3169,6 +3120,5 @@ TextEditor >> zapSelectionWith: aText [
 		self paragraph replaceFrom: start to: stop - 1 with: aText.
 		self markIndex: start; pointIndex: start + aText size.
 		self editingState previousInterval: self selectionInterval selection: self selection.
-		self userHasEdited  " -- note text now dirty" ].
-
+		self userHasEdited  " -- note text now dirty" ]
 ]

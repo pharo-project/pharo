@@ -7,5 +7,5 @@ LRUCache >> testSupportGetCachedAssociations [
 	self keysAndValuesDo: [ :key :value |
 		result add: (key -> value)
 		].
-	^result asArray.
+	^result asArray
 ]

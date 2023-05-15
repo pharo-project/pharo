@@ -303,7 +303,7 @@ OCClosureCompilerTest >> doTestDebuggerTempAccessWith: one with: two [
 	self evaluate: 'local1 := -3.0' in: thisContext to: self.
 	self assert: local1 equals: -3.0.
 	(1 to: 2)
-		do: [ :i | 
+		do: [ :i |
 			| local2 r1 r2 r3 r4 |
 			local2 := i * 3.
 			remote1 := local2 / 7.
@@ -337,7 +337,7 @@ OCClosureCompilerTest >> evaluate: aString in: aContext to: anObject [
 OCClosureCompilerTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
-	SmalltalkImage compilerClass: OpalCompiler.
+	SmalltalkImage compilerClass: OpalCompiler
 ]
 
 { #category : #running }
@@ -396,7 +396,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionLR2 [
 OCClosureCompilerTest >> testInlineBlockCollectionLR3 [
 	| col |
 	col := OrderedCollection new.
-	1 to: 11 do: [ :each | 
+	1 to: 11 do: [ :each |
 		| i |
 		i := each.
 		col add: [ i ].
@@ -408,13 +408,13 @@ OCClosureCompilerTest >> testInlineBlockCollectionLR3 [
 OCClosureCompilerTest >> testInlineBlockCollectionSD1 [
 	| a1 b1 a2 b2 |
 	b1 := OrderedCollection new.
-	1 to: 3 do: [ :i | 
+	1 to: 3 do: [ :i |
 		a1 := i.
 		b1 add: [ a1 ] ].
 	b1 := b1 asArray collect: [ :b | b value ].
 	b2 := OrderedCollection new.
 	1 to: 3 do:
-		[ :i | 
+		[ :i |
 		a2 := i.
 		b2 add: [ a2 ] ] yourself.	"defeat optimization"
 	b2 := b2 asArray collect: [ :b | b value ].

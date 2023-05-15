@@ -66,7 +66,7 @@ DAPackage >> asDependentPackageWrapperOn: relationGraph [
 
 { #category : #converting }
 DAPackage >> asPackageDependencyWrapper [
-	^ DAPackageDependencyWrapper newWith: self.
+	^ DAPackageDependencyWrapper newWith: self
 ]
 
 { #category : #accessing }
@@ -114,7 +114,7 @@ DAPackage >> dependenciesFrom: aClass [
 	| dependenciesFrom |
 	dependenciesFrom := OrderedCollection new.
 	self dependencies
-		do: [ :compositeDependency | 
+		do: [ :compositeDependency |
 				dependenciesFrom addAll: (compositeDependency dependenciesFrom: aClass) ].
 	^ dependenciesFrom
 ]
@@ -122,7 +122,7 @@ DAPackage >> dependenciesFrom: aClass [
 { #category : #accessing }
 DAPackage >> dependenciesSize [
 
-	^ self dependencies 
+	^ self dependencies
 			inject: 0
 			into: [ :sum :dependency |
 					sum + dependency numberOfDependencies
@@ -138,14 +138,14 @@ DAPackage >> dependenciesSizeTo: aPackage [
 
 { #category : #dependencies }
 DAPackage >> dependenciesTo: aPackage [
-	^ dependencies select: [ :each | each target packageName = aPackage ].
+	^ dependencies select: [ :each | each target packageName = aPackage ]
 ]
 
 { #category : #dependencies }
 DAPackage >> dependentPackages [
-	^ self dependencies 
-			inject: Set new 
-			into: [ :dependents :each | dependents add: each target; yourself ].
+	^ self dependencies
+			inject: Set new
+			into: [ :dependents :each | dependents add: each target; yourself ]
 ]
 
 { #category : #dependencies }
@@ -157,7 +157,7 @@ DAPackage >> dependentPackagesSize [
 DAPackage >> displayString [
 	| numberOfExtension |
 	numberOfExtension := self extensionDependenciesSize.
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream
 			nextPutAll: self packageName;
 			nextPutAll: ' --> Dependent packages : ';
@@ -178,7 +178,7 @@ DAPackage >> extensionDependenciesSize [
 
 { #category : #dependencies }
 DAPackage >> extensionDependenciesSizeTo: aPackage [
-	^ (self compositeDependencyTo: aPackage) extensionDependenciesSize 
+	^ (self compositeDependencyTo: aPackage) extensionDependenciesSize
 ]
 
 { #category : #comparing }
@@ -205,8 +205,7 @@ DAPackage >> initializeWithPackage: aRPackageSet [
 	inStack := false.
 	seen := false.
 	tarjanIndex := -1.
-	tarjanLowLink := -1.
-
+	tarjanLowLink := -1
 ]
 
 { #category : #testing }
@@ -275,7 +274,7 @@ DAPackage >> removeAllInternal [
 
 { #category : #tarjan }
 DAPackage >> tarjanIndex [
-	^ tarjanIndex 
+	^ tarjanIndex
 ]
 
 { #category : #tarjan }
@@ -290,5 +289,5 @@ DAPackage >> tarjanLowLink [
 
 { #category : #tarjan }
 DAPackage >> tarjanLowLink: aTarjanLowLink [
-	tarjanLowLink := aTarjanLowLink.
+	tarjanLowLink := aTarjanLowLink
 ]

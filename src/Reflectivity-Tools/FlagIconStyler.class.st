@@ -18,7 +18,7 @@ FlagIconStyler >> highlightColor [
 
 { #category : #defaults }
 FlagIconStyler >> iconFor: aNode [
-	^ self iconNamed: #flag.
+	^ self iconNamed: #flag
 ]
 
 { #category : #testing }

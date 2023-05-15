@@ -60,9 +60,9 @@ RubPluggableTextMorphExample >> checkMethodName [
 	conf := RubConfigurationChange new.
 	self selectedClass
 		ifNil: [ conf configurationBlock: [ :textField | textField textColor: Color red ] ]
-		ifNotNil: [ 
+		ifNotNil: [
 			conf
-				configurationBlock: [ :textField | 
+				configurationBlock: [ :textField |
 					(self selectedClass canUnderstand: self selectedMethodName getString asSymbol)
 						ifFalse: [ textField textColor: Color red ]
 						ifTrue: [ textField textColor: Color black ] ] ].
@@ -91,8 +91,8 @@ RubPluggableTextMorphExample >> classSelectorMorph [
 
 { #category : #menu }
 RubPluggableTextMorphExample >> codePaneMenu: aMenu shifted: shifted [
-	"Note that unless we override perform:orSendTo:, 
-	PluggableTextController will respond to all menu items in a 
+	"Note that unless we override perform:orSendTo:,
+	PluggableTextController will respond to all menu items in a
 	text pane"
 	"You should not use this way of getting menu. Because when you create a text area, you have a menu"
 
@@ -251,9 +251,9 @@ RubPluggableTextMorphExample >> promptForCancel [
 		cancelChoice: 'Cancel' translated
 		default: nil.
 	choice
-		ifNotNil: [ 
+		ifNotNil: [
 			choice
-				ifTrue: [ 
+				ifTrue: [
 					self changed: #getText.
 					self changed: #clearUserEdits ]
 				ifFalse: [ self changed: #clearUserEdits ] ].
@@ -271,7 +271,7 @@ RubPluggableTextMorphExample >> scrollValue: aPoint [
 ]
 
 { #category : #accessing }
-RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [ 
+RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [
 	scrollValue := anAnnouncement step
 ]
 

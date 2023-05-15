@@ -15,14 +15,14 @@ Class {
 { #category : #style }
 IconStyler class >> withStaticStylers [
 	"Configure the receiver to invoke several static stylers. Now it is probably better to use the instance API:
-	
+
 	IconStyler new
 		stylerClasses: { YourLovelyStyler };
 		styleText: aTextModel withAST: anAST
 	"
-	
-	^ self new 
-		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DisabledBreakpointIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler}; 
+
+	^ self new
+		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DisabledBreakpointIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler};
 		yourself
 ]
 
@@ -33,12 +33,12 @@ IconStyler >> addIconMethodStyle: aMethodNode [
 
 { #category : #styling }
 IconStyler >> addIconStyle: aNode [
-	self addIconStyle: aNode from: aNode start to: aNode stop.
+	self addIconStyle: aNode from: aNode start to: aNode stop
 ]
 
 { #category : #styling }
 IconStyler >> addIconStyle: aNode from: start to: stop [
-	
+
 	self addIconStyle: aNode from: start to: stop color: self highlightColor
 ]
 
@@ -48,7 +48,7 @@ IconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 	| conf |
 	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
 	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text | 
+	conf configurationBlock: [ :text |
 		| r |
 		r := self segmentMorphClass from: start to: stop + 1.
 		text addSegment: r.
@@ -61,7 +61,7 @@ IconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 ]
 
 { #category : #defaults }
-IconStyler >> borderColor [ 
+IconStyler >> borderColor [
 	^Color gray
 ]
 
@@ -115,16 +115,16 @@ IconStyler >> shouldStyleNode: aNode [
 { #category : #styling }
 IconStyler >> styleAst: ast [
 	"Style the AST using the textmodel of the receiver. Ask all the registered stylers to act."
-	
-	stylerClasses do: [ :styleClass | 
+
+	stylerClasses do: [ :styleClass |
 			ast acceptVisitor: (styleClass new textModel: textModel) ]
 ]
 
 { #category : #styling }
 IconStyler >> styleText: aTextModel withAst: ast [
 	"style the AST using the textmodel passed as first argument. Ask all the registered stylers to act."
-	
-	stylerClasses do: [ :styleClass | 
+
+	stylerClasses do: [ :styleClass |
 		 ast acceptVisitor: (styleClass new textModel: aTextModel) ]
 ]
 
@@ -149,121 +149,121 @@ IconStyler >> textModel: anObject [
 ]
 
 { #category : #visiting }
-IconStyler >> visitArgumentNode: anArgumentNode [ 
+IconStyler >> visitArgumentNode: anArgumentNode [
 	self addIconStyle: anArgumentNode.
-	super visitArgumentNode: anArgumentNode.
+	super visitArgumentNode: anArgumentNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitArrayNode: anArrayNode [ 
+IconStyler >> visitArrayNode: anArrayNode [
 	self addIconStyle: anArrayNode.
-	super visitArrayNode: anArrayNode.
+	super visitArrayNode: anArrayNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitAssignmentNode: anAssignmentNode [ 
+IconStyler >> visitAssignmentNode: anAssignmentNode [
 	self addIconStyle: anAssignmentNode.
-	super visitAssignmentNode: anAssignmentNode.
+	super visitAssignmentNode: anAssignmentNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitBlockNode: aBlockNode [ 
+IconStyler >> visitBlockNode: aBlockNode [
 	self addIconStyle: aBlockNode.
-	super visitBlockNode: aBlockNode.
+	super visitBlockNode: aBlockNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitCascadeNode: aCascadeNode [ 
+IconStyler >> visitCascadeNode: aCascadeNode [
 	self addIconStyle: aCascadeNode.
-	super visitCascadeNode: aCascadeNode.
+	super visitCascadeNode: aCascadeNode
 ]
 
 { #category : #visiting }
 IconStyler >> visitEnglobingErrorNode: anEnglobingNode [
 	self addIconStyle: anEnglobingNode.
-	anEnglobingNode content do: [ :each | self visitNode: each ]
+	anEnglobingNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
-IconStyler >> visitGlobalNode: aSelfNode [ 
+IconStyler >> visitGlobalNode: aSelfNode [
 	self addIconStyle: aSelfNode.
-	super visitGlobalNode: aSelfNode.
+	super visitGlobalNode: aSelfNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitInstanceVariableNode: aSelfNode [ 
+IconStyler >> visitInstanceVariableNode: aSelfNode [
 	self addIconStyle: aSelfNode.
-	super visitInstanceVariableNode: aSelfNode.
+	super visitInstanceVariableNode: aSelfNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
+IconStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	self addIconStyle: aRBLiteralArrayNode.
-	super visitLiteralArrayNode: aRBLiteralArrayNode.
+	super visitLiteralArrayNode: aRBLiteralArrayNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitLiteralNode: aLiteralNode [ 
+IconStyler >> visitLiteralNode: aLiteralNode [
 	self addIconStyle: aLiteralNode.
-	super visitLiteralNode: aLiteralNode.
+	super visitLiteralNode: aLiteralNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitMessageNode: aMessageNode [ 
+IconStyler >> visitMessageNode: aMessageNode [
 	self addIconStyle: aMessageNode.
-	super visitMessageNode: aMessageNode.
+	super visitMessageNode: aMessageNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitMethodNode: aMethodNode [ 
+IconStyler >> visitMethodNode: aMethodNode [
 	self addIconMethodStyle: aMethodNode.
-	super visitMethodNode: aMethodNode.
+	super visitMethodNode: aMethodNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitParseErrorNode: anErrorNode [ 
+IconStyler >> visitParseErrorNode: anErrorNode [
 	self addIconStyle: anErrorNode.
-	super visitParseErrorNode: anErrorNode.
+	super visitParseErrorNode: anErrorNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitPragmaNode: aPragmaNode [ 
+IconStyler >> visitPragmaNode: aPragmaNode [
 	self addIconStyle: aPragmaNode.
-	super visitPragmaNode: aPragmaNode.
+	super visitPragmaNode: aPragmaNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitReturnNode: aReturnNode [ 
+IconStyler >> visitReturnNode: aReturnNode [
 	self addIconStyle: aReturnNode.
 	super visitReturnNode: aReturnNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitSelfNode: aSelfNode [ 
+IconStyler >> visitSelfNode: aSelfNode [
 	self addIconStyle: aSelfNode.
 	super visitSelfNode: aSelfNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitSequenceNode: aSequenceNode [ 
+IconStyler >> visitSequenceNode: aSequenceNode [
 	self addIconStyle: aSequenceNode.
-	super visitSequenceNode: aSequenceNode.
+	super visitSequenceNode: aSequenceNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitSuperNode: aSuperNode [ 
+IconStyler >> visitSuperNode: aSuperNode [
 	self addIconStyle: aSuperNode.
-	super visitSuperNode: aSuperNode.
+	super visitSuperNode: aSuperNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitTemporaryNode: aNode [ 
+IconStyler >> visitTemporaryNode: aNode [
 	self addIconStyle: aNode.
-	super visitTemporaryNode: aNode.
+	super visitTemporaryNode: aNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitThisContextNode: aThisContextNode [ 
+IconStyler >> visitThisContextNode: aThisContextNode [
 	self addIconStyle: aThisContextNode.
-	super visitThisContextNode: aThisContextNode.
+	super visitThisContextNode: aThisContextNode
 ]

@@ -28,14 +28,14 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController [
 	| parseTree context |
 	parseTree := RBParser
 		             parseExpression: aString
-		             onError: [ :err :pos | 
+		             onError: [ :err :pos |
 		             ^ self error: 'Invalid definition string' ].
 	context := SmallDictionary new.
-	RBRefactoryDefinitionChange allSubclassesDo: [ :class | 
-		class definitionPatterns do: [ :pattern | 
+	RBRefactoryDefinitionChange allSubclassesDo: [ :class |
+		class definitionPatterns do: [ :pattern |
 			((RBParser parseRewriteExpression: pattern)
 				 match: parseTree
-				 inContext: context empty) ifTrue: [ 
+				 inContext: context empty) ifTrue: [
 				^ class definition: aString for: aController context: context ] ] ].
 	^ self error: 'Invalid definition:' , aString
 ]
@@ -45,10 +45,10 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController contex
 
 	| dictionary |
 	dictionary := SmallDictionary new.
-	aDictionary keysAndValuesDo: [ :key :node | 
+	aDictionary keysAndValuesDo: [ :key :node |
 		dictionary at: key formattedCode put: (node isVariable
 				 ifTrue: [ node name ]
-				 ifFalse: [ 
+				 ifFalse: [
 					 node isLiteralNode
 						 ifTrue: [ node value ]
 						 ifFalse: [ node ] ]) ].
@@ -67,7 +67,7 @@ RBRefactoryDefinitionChange class >> definitionPatterns [
 { #category : #comparing }
 RBRefactoryDefinitionChange >> = aDefinitionChange [
 
-	^ self class = aDefinitionChange class and: [ 
+	^ self class = aDefinitionChange class and: [
 		  self definition = aDefinitionChange definition ]
 ]
 
@@ -126,10 +126,8 @@ RBRefactoryDefinitionChange >> namesIn: aString [
 
 	| names scanner token |
 	names := OrderedCollection new.
-	scanner := RBScanner
-		           on: (ReadStream on: aString)
-		           errorBlock: [ :msg :pos | ^ names ].
-	[ scanner atEnd ] whileFalse: [ 
+	scanner := RBScanner on: (ReadStream on: aString).
+	[ scanner atEnd ] whileFalse: [
 		token := scanner next.
 		token isIdentifier ifTrue: [ names add: token value ] ].
 	^ names asArray

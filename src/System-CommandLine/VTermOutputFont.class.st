@@ -21,5 +21,5 @@ VTermOutputFont >> hash [
 
 { #category : #styling }
 VTermOutputFont >> setInDriver: aVTermOutputDriver [
-	aVTermOutputDriver setFontColor: color.
+	aVTermOutputDriver setFontColor: color
 ]

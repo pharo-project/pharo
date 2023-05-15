@@ -10,5 +10,5 @@ Class {
 { #category : #accessing }
 TFUFFIAbstractCallback >> calloutAPIClass [
 
-	^ TFCalloutAPI 
+	^ TFCalloutAPI
 ]

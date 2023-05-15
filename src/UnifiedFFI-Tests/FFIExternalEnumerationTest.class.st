@@ -14,7 +14,7 @@ FFIExternalEnumerationTest >> enumClass [
 
 { #category : #primitives }
 FFIExternalEnumerationTest >> ffiTestCall: enumValue format: format to: buffer [
-	^ self 
+	^ self
 		ffiCall: #( int sprintf ( void* buffer, String format, FFITestEnumeration enumValue ) )
 		library: LibC
 		fixedArgumentCount: 2
@@ -22,7 +22,7 @@ FFIExternalEnumerationTest >> ffiTestCall: enumValue format: format to: buffer [
 
 { #category : #primitives }
 FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
-	^ self 
+	^ self
 		ffiCall: #( FFITestEnumeration sprintf ( void* buffer, String format, int aNumber ) )
 		library: LibC
 		fixedArgumentCount: 2
@@ -32,10 +32,10 @@ FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
 FFIExternalEnumerationTest >> testCall [
 	| result buffer |
 
-	buffer := ByteArray new: 100. 
+	buffer := ByteArray new: 100.
 	result := self ffiTestCall: self enumClass DDD format: '%d' to: buffer.
 	self assert: result equals: 4.
-	self assert: (buffer first: result) asString equals: '2400'	
+	self assert: (buffer first: result) asString equals: '2400'
 ]
 
 { #category : #tests }
@@ -68,8 +68,8 @@ FFIExternalEnumerationTest >> testNewError [
 FFIExternalEnumerationTest >> testReturn [
 	| result buffer |
 
-	buffer := ByteArray new: 100. 
+	buffer := ByteArray new: 100.
 	result := self ffiTestReturn: 123 format: '%d' to: buffer.
 	self assert: result equals: self enumClass CCC.
-	self assert: (buffer first: result value) asString equals: '123'	
+	self assert: (buffer first: result value) asString equals: '123'
 ]

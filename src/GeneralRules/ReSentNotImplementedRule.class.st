@@ -24,6 +24,7 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| ignored problemSends |
 
 	ignored := aMethod allIgnoredNotImplementedSelectors.
+	ignored := ignored , #(!= !== <>). "See ReNotEqualityOperatorsRule"
 
 	problemSends := aMethod sendNodes reject: [ :msgSend |
 		                msgSend selector isSelectorSymbol ].

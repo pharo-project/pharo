@@ -81,16 +81,16 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	"suggest remove similar code here"
 	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
-	
+
 	"Halt now."
 	(parseTree extractSubtreeWith: sourceCode)
 		ifNotNil: [ :subtree |
 			parseTree removeSubtree: subtree.
 			self definingClass compileTree: parseTree ]
 		ifNil: [ ^ self ].
-	
-	
-	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].	
+
+
+	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].
 	parseTree := parseTree removeSubtree: subtree.
 	self definingClass compileTree: parseTree"
 ]
@@ -111,7 +111,7 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 ]
 
 { #category : #printing }
-RBRemoveSubtreeTransformation >> storeOn: aStream [ 
+RBRemoveSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

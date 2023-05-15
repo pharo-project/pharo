@@ -7,7 +7,7 @@ RBMethodNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	compilationContext compiledMethod 
+	compilationContext compiledMethod
 		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
 	^compilationContext compiledMethod
 ]
@@ -35,15 +35,15 @@ RBMethodNode >> ensureCachedArgumentNames [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [	
+RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	| message |
-	message := RBMessageNode 
+	message := RBMessageNode
 		receiver: RBVariableNode selfNode
-		selector: #error: 
+		selector: #error:
 		arguments: {RBLiteralNode value: messageText}.
-	^ self 
-		selector: selector 
-		arguments: ((1 to: selector numArgs) collect: [ :i | RBVariableNode named: 't' , i asString ]) 
+	^ self
+		selector: selector
+		arguments: ((1 to: selector numArgs) collect: [ :i | RBVariableNode named: 't' , i asString ])
 		body: (RBSequenceNode statements: {message})
 ]
 
@@ -56,7 +56,7 @@ RBMethodNode >> firstPcForNode: aNode [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate [
 	"The receiver is the root of a parse tree. Answer a CompiledMethod. The
-	argument, trailer, is the references to the source code that is stored with 
+	argument, trailer, is the references to the source code that is stored with
 	every CompiledMethod."
 
 	^ self generate: CompiledMethodTrailer empty
@@ -66,14 +66,14 @@ RBMethodNode >> generate [
 RBMethodNode >> generate: trailer [
 	"if the bytecode is regenerated, we need to reset the cache"
 	bcToASTCache := nil.
-	^ self generateIR compiledMethodWith: trailer.
+	^ self generateIR compiledMethodWith: trailer
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	| ir |
 	scope ifNil: [self doSemanticAnalysis].
-	
+
 	self pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
 		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
 		copy := self copy.
@@ -82,7 +82,7 @@ RBMethodNode >> generateIR [
 		ir sourceNode: self.
 		^ ir
 	].
-	
+
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
@@ -101,19 +101,19 @@ RBMethodNode >> generateMethod [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateWithSource [
 	"Answer a CompiledMethod with source encoded in trailer."
-	^self generate: (CompiledMethodTrailer new sourceCode: source).
+	^self generate: (CompiledMethodTrailer new sourceCode: source)
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> ir [
 
-	^ self propertyAt: #ir ifAbsent: [self generateIR].
+	^ self propertyAt: #ir ifAbsent: [self generateIR]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> ir: aIRMethodNode [
 
-	^ self propertyAt: #ir put: aIRMethodNode.
+	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -134,7 +134,7 @@ RBMethodNode >> methodProperties [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey [
-	
+
 	^self methodPropertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
@@ -142,20 +142,20 @@ RBMethodNode >> methodPropertyAt: aKey [
 RBMethodNode >> methodPropertyAt: aKey ifAbsent: absentBlock [
 	| existingProperties |
 	existingProperties := self propertyAt: #methodProperties ifAbsent: absentBlock.
-	
+
 	^existingProperties propertyAt: aKey ifAbsent: absentBlock
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey put: anObject [
 	| existingProperties newProperties |
-	existingProperties := self propertyAt: #methodProperties ifAbsentPut: [ 
+	existingProperties := self propertyAt: #methodProperties ifAbsentPut: [
 		AdditionalMethodState forSelector: self selector].
-	
+
 	existingProperties at: aKey ifPresent: [:existingValue |
 		existingProperties at: aKey put: anObject.
 		^self].
-	
+
 	newProperties := existingProperties copyWith: aKey -> anObject.
 	self propertyAt: #methodProperties put: newProperties
 ]

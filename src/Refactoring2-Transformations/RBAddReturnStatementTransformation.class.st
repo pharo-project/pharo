@@ -66,7 +66,7 @@ RBAddReturnStatementTransformation >> preconditions [
 				withBlock: [ | returnNode |
 					returnNode := self parserClass parseExpression: returnValue.
 					returnNode allVariables
-						allSatisfy: [ :e | 
+						allSatisfy: [ :e |
 							(self definingMethod hasArgumentNamed: e name)
 								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
 				errorString:
@@ -95,7 +95,7 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 ]
 
 { #category : #printing }
-RBAddReturnStatementTransformation >> storeOn: aStream [ 
+RBAddReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

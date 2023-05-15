@@ -42,7 +42,7 @@ PluggableMenuItemSpec >> checked [
 { #category : #accessing }
 PluggableMenuItemSpec >> checked: aBool [
 	"Indicate whether the receiver is checked"
-	checked := aBool.
+	checked := aBool
 ]
 
 { #category : #accessing }
@@ -72,7 +72,7 @@ PluggableMenuItemSpec >> enabledBlock: aBlock [
 ]
 
 { #category : #accessing }
-PluggableMenuItemSpec >> hasCheckBox [	
+PluggableMenuItemSpec >> hasCheckBox [
 	^ checked notNil
 ]
 
@@ -83,7 +83,7 @@ PluggableMenuItemSpec >> help [
 ]
 
 { #category : #accessing }
-PluggableMenuItemSpec >> help: aSymbol [ 
+PluggableMenuItemSpec >> help: aSymbol [
 	"Indicate the message to retrieve the help texts of this element."
 	help := aSymbol
 ]
@@ -105,7 +105,7 @@ PluggableMenuItemSpec >> keyText [
 
 { #category : #accessing }
 PluggableMenuItemSpec >> keyText: aString [
-	keyText := aString.
+	keyText := aString
 ]
 
 { #category : #accessing }
@@ -139,7 +139,7 @@ PluggableMenuItemSpec >> separator [
 { #category : #accessing }
 PluggableMenuItemSpec >> separator: aBool [
 	"Indicate whether the receiver should be followed by a separator"
-	separator := aBool.
+	separator := aBool
 ]
 
 { #category : #accessing }

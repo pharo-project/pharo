@@ -25,7 +25,7 @@ PluggableTabButtonMorph class >> on: anObject label: getTextSelector [
 	^self new
 	      model: anObject;
 		textSelector: getTextSelector;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -37,7 +37,7 @@ PluggableTabButtonMorph >> active [
 { #category : #accessing }
 PluggableTabButtonMorph >> active: aBoolean [
 	active := aBoolean.
-	self changed.
+	self changed
 ]
 
 { #category : #'private - access' }
@@ -56,12 +56,12 @@ PluggableTabButtonMorph >> calculateArcLengths [
 	| array radius |
 	radius := self cornerRadius.
 	array := Array new: radius.
-	
+
 	1 to: radius do: [ :i | | x |
 		x := i - 0.5.
 		array at: i
 		 	put: (radius - ((2 * x * radius) - (x * x)) sqrt) asInteger].
-		
+
 	self arcLengths: array
 ]
 
@@ -92,7 +92,7 @@ PluggableTabButtonMorph >> drawSubMorphOn: aCanvas [
 			morphBounds := morphBounds
 				insetBy: ((morphBounds width - self subMorph bounds width) // 2)@0].
 
-	self subMorph bounds: morphBounds.			
+	self subMorph bounds: morphBounds.
 	aCanvas drawMorph: self subMorph
 ]
 
@@ -142,7 +142,7 @@ PluggableTabButtonMorph >> drawTabOn: aCanvas [
 { #category : #event }
 PluggableTabButtonMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
-	
+
 	^true
 ]
 
@@ -185,7 +185,7 @@ PluggableTabButtonMorph >> outerGap [
 { #category : #stepping }
 PluggableTabButtonMorph >> step [
 	self subMorph step.
-	self changed.
+	self changed
 ]
 
 { #category : #stepping }
@@ -234,9 +234,9 @@ PluggableTabButtonMorph >> topInactiveGap [
 { #category : #updating }
 PluggableTabButtonMorph >> update: aSelector [
 	self textSelector
-		ifNotNil: [ 
+		ifNotNil: [
 			aSelector = self textSelector
-				ifTrue: [ 
+				ifTrue: [
 					| morph |
 					morph := (aSelector isSymbol and: [ model notNil ])
 						ifTrue: [ (self model perform: aSelector) asMorph ]

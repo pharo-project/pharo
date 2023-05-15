@@ -26,13 +26,15 @@ OCASTTranslatorTest >> compilationContext [
 	context := CompilationContext new
 		encoderClass: self encoder;
 		bindings: globals;
-		yourself.
+		parseOptions: { #'+' . optimization };
+		yourself.	
+	
 	^ context
 ]
 
 { #category : #support }
 OCASTTranslatorTest >> compileExample: aSelector [
-	
+
 	^ self compileSource: (OCOpalExamples>> aSelector) sourceCode
 ]
 
@@ -132,7 +134,7 @@ OCASTTranslatorTest >> setUp [
 
 	super setUp.
 	instance := OCOpalExamples new.
-	globals := SystemDictionary new.
+	globals := SystemDictionary new
 ]
 
 { #category : #running }

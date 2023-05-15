@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [ 
+RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		pushDown: selectorCollection from: aClass;
@@ -32,7 +32,7 @@ RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorColle
 ]
 
 { #category : #'instance creation' }
-RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [ 
+RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [
 	^ self new
 		pushDown: selectorCollection from: aClass
 ]
@@ -51,7 +51,7 @@ RBPushDownMethodRefactoring >> allClasses [
 
 { #category : #transforming }
 RBPushDownMethodRefactoring >> classes: aCollection [
-	classes := aCollection collect: [ :cls | 
+	classes := aCollection collect: [ :cls |
 		self classObjectFor: cls.
 	]
 ]
@@ -62,7 +62,7 @@ RBPushDownMethodRefactoring >> preconditions [
 	| condition |
 	condition := selectors
 		             inject: self emptyCondition
-		             into: [ :cond :each | 
+		             into: [ :cond :each |
 			             cond & (RBCondition definesSelector: each in: class)
 			             &
 			             (RBCondition subclassesOf: class referToSelector: each)
@@ -82,13 +82,13 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 		               fromClass: class
 		               toClasses: self allClasses.
 	self performCompositeRefactoring: refactoring.
-	self allClasses do: [ :each | 
-		(each directlyDefinesMethod: aSelector) ifFalse: [ 
+	self allClasses do: [ :each |
+		(each directlyDefinesMethod: aSelector) ifFalse: [
 			each compile: code classified: protocols ] ]
 ]
 
 { #category : #initialization }
-RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [ 
+RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection
 ]
@@ -97,7 +97,7 @@ RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
 RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass in: aCollection [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection.
-	self classes: aCollection.
+	self classes: aCollection
 ]
 
 { #category : #transforming }
@@ -111,7 +111,7 @@ RBPushDownMethodRefactoring >> selectors: aList [
 ]
 
 { #category : #printing }
-RBPushDownMethodRefactoring >> storeOn: aStream [ 
+RBPushDownMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' pushDown: '.

@@ -9,9 +9,9 @@ Class {
 
 { #category : #'inline messages' }
 OCASTTranslatorForEffect >> emitAnd: aMessageNode [
-	
+
 	super emitAnd: aMessageNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'inline messages' }
@@ -20,7 +20,7 @@ OCASTTranslatorForEffect >> emitIfFalse: aMessageNode [
 	valueTranslator visitNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #else if: true.
 		self visitInlinedBlockNode: aMessageNode arguments first.
-	methodBuilder jumpAheadTarget: #else.
+	methodBuilder jumpAheadTarget: #else
 ]
 
 { #category : #'inline messages' }
@@ -33,50 +33,50 @@ OCASTTranslatorForEffect >> emitIfNotNil: aMessageNode [
 	methodBuilder send: #==.
 	methodBuilder jumpAheadTo: #end if: true.
 	self visitInlinedBlockNode: args first.
-	methodBuilder jumpAheadTarget: #end.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
 OCASTTranslatorForEffect >> emitIfTrue: aMessageNode [
 
 	valueTranslator visitNode: aMessageNode receiver.
-	methodBuilder jumpAheadTo: #else if: false.	
+	methodBuilder jumpAheadTo: #else if: false.
 		self visitInlinedBlockNode: aMessageNode arguments first.
-	methodBuilder jumpAheadTarget: #else.
+	methodBuilder jumpAheadTarget: #else
 ]
 
 { #category : #'visitor - double dispatching' }
-OCASTTranslatorForEffect >> emitMessageNode: aMessageNode [ 
+OCASTTranslatorForEffect >> emitMessageNode: aMessageNode [
 
 	super emitMessageNode: aMessageNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'inline messages' }
 OCASTTranslatorForEffect >> emitOr: aMessageNode [
 
 	super emitOr: aMessageNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-OCASTTranslatorForEffect >> visitArrayNode: anArrayNode [ 
+OCASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 	"An arrayNode may have side effect, for example: '{self foo}'. So we cannot just generate nothing for this node."
 
 	super visitArrayNode: anArrayNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-OCASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [ 
+OCASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [
 
 	super visitAssignmentNode: anAssignmentNode .
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-OCASTTranslatorForEffect >> visitBlockNode: aBlockNode [ 
-	"even though the code is never executed, we generate it to make sure that we 
+OCASTTranslatorForEffect >> visitBlockNode: aBlockNode [
+	"even though the code is never executed, we generate it to make sure that we
 	can map bytecode and access temps"
 	super visitBlockNode: aBlockNode.
 	methodBuilder popTop
@@ -97,22 +97,19 @@ OCASTTranslatorForEffect >> visitLiteralNode: aLiteralNode [
 ]
 
 { #category : #'visitor - double dispatching' }
-OCASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [  
+OCASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 	super visitParseErrorNode: anErrorNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-OCASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [ 
-	aSequenceNode statements do: [:each | self visitNode: each].
+OCASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
+	aSequenceNode statements do: [:each | self visitNode: each]
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslatorForEffect >> visitVariableNode: aVariableNode [
-	"when visiting a variable for effect, we could push it and then pop it, but we do nothing"
-	| variable |
-	variable := aVariableNode variable.
-	(variable isLiteralVariable or: [ variable isUndeclaredVariable ])
-		ifTrue: [ methodBuilder addLiteral: variable ]
+	super visitVariableNode: aVariableNode.
+	methodBuilder popTop
 ]

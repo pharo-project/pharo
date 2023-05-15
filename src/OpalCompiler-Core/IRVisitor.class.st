@@ -25,7 +25,7 @@ IRVisitor >> visitJumpIf: jumpIf [
 
 { #category : #visiting }
 IRVisitor >> visitMethod: method [
-	self visitNodes: method allSequences.
+	self visitNodes: method allSequences
 ]
 
 { #category : #visiting }
@@ -124,7 +124,7 @@ IRVisitor >> visitSend: send [
 
 { #category : #visiting }
 IRVisitor >> visitSequence: sequence [
-	sequence do: [ :instr | self visitInstruction: instr].
+	sequence do: [ :instr | self visitInstruction: instr]
 ]
 
 { #category : #visiting }

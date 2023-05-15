@@ -52,7 +52,7 @@ DigitalSignatureAlgorithm class >> example [
 	self inform: 'Signature created'.
 	(self verify: sig isSignatureOf: msg publicKey: keys last)
 		ifTrue: [self inform: 'Signature verified.']
-		ifFalse: [self error: 'ERROR! Signature verification failed'].
+		ifFalse: [self error: 'ERROR! Signature verification failed']
 ]
 
 { #category : #public }
@@ -61,7 +61,7 @@ DigitalSignatureAlgorithm class >> generateKeySet [
  	"Note: Key generation can take some time. Open a transcript so you can see what's happening and take a coffee break!"
  	"Note: Unguessable random numbers are needed for key generation. The user will be prompted to type a really long random string (two or three lines) to initialize the random number generator before generating a key set. A different random string should be typed for every session; it is not a password and we wish to produce different random number streams."
  	"DigitalSignatureAlgorithm generateKeySet"
- 
+
  	| dsa |
  	dsa := self new.
  	(self confirm: 'Shall I seed the random generator from the current time?')
@@ -79,36 +79,36 @@ DigitalSignatureAlgorithm class >> initialize [
 	SmallPrimes := SmallPrimes copyFrom: 2 to: SmallPrimes size.
 
 	"HighBitOfByte maps a byte to the index of its top non-zero bit."
-	HighBitOfByte := (0 to: 255) collect: [:byte | byte highBit].
+	HighBitOfByte := (0 to: 255) collect: [:byte | byte highBit]
 ]
 
 { #category : #public }
-DigitalSignatureAlgorithm class >> sign: aStringOrStream privateKey: privateKey [ 
+DigitalSignatureAlgorithm class >> sign: aStringOrStream privateKey: privateKey [
 	"Sign the given message (a stream or string) and answer a signature string."
 	"Note: Unguessable random numbers are needed for message signing. The user will be prompted to type a really long random string (two or three lines) to initialize the random number generator before signing a message. A different random string should be typed for every session; it is not a password and we wish to produce different random number streams."
 	| dsa hasher h sig |
 	dsa := self new.
 	dsa initRandomFromUser.
 	hasher := SHA1 new.
-	h := aStringOrStream class isBytes 
+	h := aStringOrStream class isBytes
 		ifTrue: [ hasher hashMessage: aStringOrStream ]
 		ifFalse: [ hasher hashStream: aStringOrStream ].
-	sig := dsa 
+	sig := dsa
 		computeSignatureForMessageHash: h
 		privateKey: privateKey.
 	^ dsa signatureToString: sig
 ]
 
 { #category : #public }
-DigitalSignatureAlgorithm class >> sign: aStringOrStream privateKey: privateKey dsa: dsa [ 
+DigitalSignatureAlgorithm class >> sign: aStringOrStream privateKey: privateKey dsa: dsa [
 	"Sign the given message (a stream or string) and answer a signature string."
 	"Note: Unguessable random numbers are needed for message signing. The user will be prompted to type a really long random string (two or three lines) to initialize the random number generator before signing a message. A different random string should be typed for every session; it is not a password and we wish to produce different random number streams."
 	| hasher h sig |
 	hasher := SHA1 new.
-	h := aStringOrStream class isBytes 
+	h := aStringOrStream class isBytes
 		ifTrue: [ hasher hashMessage: aStringOrStream ]
 		ifFalse: [ hasher hashStream: aStringOrStream ].
-	sig := dsa 
+	sig := dsa
 		computeSignatureForMessageHash: h
 		privateKey: privateKey.
 	^ dsa signatureToString: sig
@@ -154,12 +154,12 @@ DigitalSignatureAlgorithm class >> timeDecode: count [
 					ifFalse: [self error: 'ERROR! Signature verification failed'].
 			].
 		] as: 'verify msgLen = ',msg size printString count: count
-	].
+	]
 ]
 
 { #category : #testing }
 DigitalSignatureAlgorithm class >> timeDirect: aBlock as: aString count: anInteger [
-	self trace: (String streamContents: [ :stream | 
+	self trace: (String streamContents: [ :stream |
 			 stream
 				 nextPutAll: anInteger asStringWithCommas;
 				 nextPutAll: '  ';
@@ -171,17 +171,17 @@ DigitalSignatureAlgorithm class >> timeDirect: aBlock as: aString count: anInteg
 ]
 
 { #category : #public }
-DigitalSignatureAlgorithm class >> verify: signatureString isSignatureOf: aStringOrStream publicKey: publicKey [ 
+DigitalSignatureAlgorithm class >> verify: signatureString isSignatureOf: aStringOrStream publicKey: publicKey [
 	"Answer true if the given signature string signs the given message (a stream or string)."
 	"Note: Random numbers are not needed for signature verification; thus, there is no need to call initRandomFromUser before verifying a signature."
 	| dsa hasher h sig |
 	dsa := self new.
 	hasher := SHA1 new.
-	h := aStringOrStream class isBytes 
+	h := aStringOrStream class isBytes
 		ifTrue: [ hasher hashMessage: aStringOrStream ]
 		ifFalse: [ hasher hashStream: aStringOrStream ].
 	sig := dsa stringToSignature: signatureString.
-	^ dsa 
+	^ dsa
 		verifySignature: sig
 		ofMessageHash: h
 		publicKey: publicKey
@@ -228,7 +228,7 @@ DigitalSignatureAlgorithm >> generateKeySet [
 	Transcript show: 'Key generation complete!'; cr."
 	^ Array
 		with: (Array with: p with: q with: g with: x)
-		with: (Array with: p with: q with: g with: y).
+		with: (Array with: p with: q with: g with: y)
 ]
 
 { #category : #private }
@@ -259,7 +259,7 @@ DigitalSignatureAlgorithm >> generateQandP [
 					"Transcript show: '  Found p!'; cr."
 					^ Array with: q with: p with: s]].
 			n := n + chunkCount + 1.
-			c := c + 1]].
+			c := c + 1]]
 ]
 
 { #category : #private }
@@ -291,7 +291,7 @@ DigitalSignatureAlgorithm >> generateSandQ [
 		sPlusOne highBit > 160 ifTrue: [sPlusOne := sPlusOne \\ (2 raisedTo: 160)].
 		u := (hasher hashInteger: s) bitXor: (hasher hashInteger: sPlusOne).
 		q := u bitOr: ((1 bitShift: 159) bitOr: 1).
-		(self isProbablyPrime: q) ifTrue: [^ Array with: s with: q]].
+		(self isProbablyPrime: q) ifTrue: [^ Array with: s with: q]]
 ]
 
 { #category : #initialization }
@@ -316,7 +316,7 @@ DigitalSignatureAlgorithm >> initRandomFromString: aString [
 		k byteAt: i put: (s at: (srcIndex := srcIndex + 1)) asciiValue].
 	k := k normalize + (Random new next * 16r7FFFFFFF) asInteger.  "a few additional bits randomness"
 	k highBit > 512 ifTrue: [k := k bitShift: k highBit - 512].
-	self initRandom: k.
+	self initRandom: k
 ]
 
 { #category : #initialization }
@@ -325,16 +325,16 @@ DigitalSignatureAlgorithm >> initRandomFromUser [
 
 	| s |
 	s := UIManager default request: 'Enter a long random string to seed the random generator.'.
-	s ifNil: [s := '']. 
+	s ifNil: [s := ''].
 	^self initRandomFromString: s
 ]
 
 { #category : #initialization }
 DigitalSignatureAlgorithm >> initRandomNonInteractively [
 
- 	self initRandomFromString: 
- 		Time millisecondClockValue printString, 
- 		Date today printString, 
+ 	self initRandomFromString:
+ 		Time millisecondClockValue printString,
+ 		Date today printString,
  		Smalltalk os platformName printString
 ]
 
@@ -369,7 +369,7 @@ DigitalSignatureAlgorithm >> inverseOf: x mod: n [
 		[((u1 < t1) or: [u2 < t2]) and: [u1 > 0]] whileTrue: [
 			u1 := u1 + v.
 			u2 := u2 + u].
-	
+
 		u1 := u1 - t1.
 		u2 := u2 - t2.
 		u3 := u3 - t3.
@@ -388,38 +388,38 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 	"Answer true if p is prime with very high probability. Such a number is sometimes called an 'industrial grade prime'--a large number that is so extremely likely to be prime that it can assumed that it actually is prime for all practical purposes. This implementation uses the Rabin-Miller algorithm (Schneier, p. 159)."
 
 	| iterations pMinusOne b m r a j z couldBePrime |
-	iterations := 50.	
+	iterations := 50.
 	"Note: The DSA spec requires >50 iterations; Schneier says 5 are enough (p. 260)"	"quick elimination: check for p divisible by a small prime"
 	SmallPrimes
-		ifNil: [ 
+		ifNil: [
 			"generate list of small primes > 2"
 			SmallPrimes := Integer primesUpTo: 2000.
 			SmallPrimes := SmallPrimes copyFrom: 2 to: SmallPrimes size ].
 	SmallPrimes detect: [ :f | p \\ f = 0 ] ifFound: [ :factor | ^ p = factor ].
 	pMinusOne := p - 1.
 	b := self logOfLargestPowerOfTwoDividing: pMinusOne.
-	m := pMinusOne bitShift: b negated.	
+	m := pMinusOne bitShift: b negated.
 	"Assert: pMinusOne = m * (2 raisedTo: b) and m is odd"
 	"Transcript show: '      Prime test pass '."
 	r := Random new.
-	1 to: iterations do: [ :i | 
+	1 to: iterations do: [ :i |
 		"Transcript show: i printString; space."
 		a := (r next * 16rFFFFFF) truncated.
 		j := 0.
 		z := (a raisedTo: m modulo: p) normalize.
 		couldBePrime := z = 1.
 		[ couldBePrime ]
-			whileFalse: [ 
+			whileFalse: [
 				z = 1
-					ifTrue: [ 
+					ifTrue: [
 						"Transcript show: 'failed!'; cr."
 						^ false ].	"not prime"
 				z = pMinusOne
 					ifTrue: [ couldBePrime := true ]
-					ifFalse: [ 
+					ifFalse: [
 						(j := j + 1) < b
 							ifTrue: [ z := z * z \\ p ]
-							ifFalse: [ 
+							ifFalse: [
 								"Transcript show: 'failed!'; cr."
 								^ false ] ] ] ].	"not prime"
 	"Transcript show: 'passed!'; cr."
@@ -462,7 +462,7 @@ DigitalSignatureAlgorithm >> signatureToString: aSignature [
 ]
 
 { #category : #public }
-DigitalSignatureAlgorithm >> stringToSignature: aString [ 
+DigitalSignatureAlgorithm >> stringToSignature: aString [
 	"Answer the signature stored in the given string. A signature string has the format:
 
 		 '[DSA digital signature <r> <s>]'
@@ -473,14 +473,14 @@ DigitalSignatureAlgorithm >> stringToSignature: aString [
 	(aString beginsWith: prefix) ifFalse: [ self error: 'bad signature prefix' ].
 	stream := aString readStream.
 	stream position: prefix size.
-	r := Integer 
+	r := Integer
 		readFrom: stream
 		base: 16.
 	stream next.
-	s := Integer 
+	s := Integer
 		readFrom: stream
 		base: 16.
-	^ Array 
+	^ Array
 		with: r
 		with: s
 ]

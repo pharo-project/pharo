@@ -65,7 +65,7 @@ ZnServerSession >> id: anObject [
 
 { #category : #accessing }
 ZnServerSession >> inactivity [
-	^ DateAndTime now - modified 
+	^ DateAndTime now - modified
 ]
 
 { #category : #initialization }
@@ -89,7 +89,7 @@ ZnServerSession >> modified [
 ZnServerSession >> printOn: stream [
 	super printOn: stream.
 	id
-		ifNotNil: [ 
+		ifNotNil: [
 			stream
 				nextPut: $(;
 				print: id;
@@ -98,7 +98,7 @@ ZnServerSession >> printOn: stream [
 
 { #category : #accessing }
 ZnServerSession >> removeAttribute: key [
-	attributes removeKey: key ifAbsent: [ ] 
+	attributes removeKey: key ifAbsent: [ ]
 ]
 
 { #category : #accessing }

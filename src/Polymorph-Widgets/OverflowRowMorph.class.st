@@ -34,7 +34,7 @@ Class {
 { #category : #accessing }
 OverflowRowMorph >> adoptPaneColor: paneColor [
 	"Pass on to the list morph and border too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self moreButton cornerStyle: self cornerStyle.
@@ -47,7 +47,7 @@ OverflowRowMorph >> adoptPaneColor: paneColor [
 OverflowRowMorph >> baseMorph: aRowMorph [
 	"Configure the receiver to match the specifications for the given morph and
 	store the given morph's submorphs for later reallocation."
-	
+
 	self baseMorphs: aRowMorph submorphs.
 	self
 		cellInset: aRowMorph cellInset;

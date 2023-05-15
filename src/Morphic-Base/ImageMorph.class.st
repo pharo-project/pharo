@@ -41,7 +41,7 @@ ImageMorph class >> fromStream: aStream [
 ]
 
 { #category : #'instance creation' }
-ImageMorph class >> fromString: aString [ 
+ImageMorph class >> fromString: aString [
 	"Create a new ImageMorph which displays the input string in the standard button font"
 
 	^ self fromString: aString font: StandardFonts buttonFont
@@ -65,7 +65,7 @@ ImageMorph class >> initialize [
 		d := i asFloat / h asFloat.
 		DefaultForm fill:
 			(p corner: DefaultForm extent - p)
-			fillColor: (Color r: d g: 0.5 b: 1.0 - d)].
+			fillColor: (Color r: d g: 0.5 b: 1.0 - d)]
 ]
 
 { #category : #'instance creation' }
@@ -83,7 +83,7 @@ ImageMorph >> addCustomMenuItems: aMenu hand: aHand [
 { #category : #geometry }
 ImageMorph >> adoptPaneColor: paneColor [
 	"Change our border color too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self borderStyle baseColor: paneColor twiceDarker
@@ -101,14 +101,14 @@ ImageMorph >> areasRemainingToFill: aRectangle [
 ImageMorph >> basicExtent: aPoint [
 
 	"For sublcasses which need to use Morph>>#extent:"
-	
+
 	^super extent: aPoint
 ]
 
 { #category : #accessing }
 ImageMorph >> borderStyle: newStyle [
 	"Set the extent to include border width."
-	
+
 	| newExtent |
 	self borderStyle = newStyle ifTrue: [^self].
 	newExtent := 2 * newStyle width + image extent.
@@ -134,7 +134,7 @@ ImageMorph >> changeOpacity [
 ImageMorph >> color: aColor [
 	"Set the color.
 	Change to a ColorForm here if depth 1."
-	
+
 	super color: aColor.
     (image depth = 1 and: [aColor isColor]) ifTrue: [
 		image isColorForm ifFalse: [
@@ -153,7 +153,7 @@ ImageMorph >> defaultImage [
 { #category : #drawing }
 ImageMorph >> drawOn: aCanvas [
 	"Draw the border after the image."
-	
+
 	| style |
 	self isOpaque
 		ifTrue: [aCanvas drawImage: image at: self innerBounds origin]
@@ -163,8 +163,8 @@ ImageMorph >> drawOn: aCanvas [
 
 { #category : #geometry }
 ImageMorph >> extent: aPoint [
-	"Do nothing; 
-		My extent is determined by my image Form. 
+	"Do nothing;
+		My extent is determined by my image Form.
 		For subclasses which need to set the extent, use #basicExtent:"
 ]
 
@@ -175,7 +175,7 @@ ImageMorph >> form [
 
 { #category : #accessing }
 ImageMorph >> form: aForm [
-	image := aForm. 
+	image := aForm.
 	super extent: (2 * self borderWidth) asPoint + image extent.
 	self changed
 ]
@@ -183,20 +183,20 @@ ImageMorph >> form: aForm [
 { #category : #'menu commands' }
 ImageMorph >> grabFromScreen [
 
-	self form: Screenshot new formScreenshotFromUserSelection.
+	self form: Screenshot new formScreenshotFromUserSelection
 ]
 
 { #category : #accessing }
-ImageMorph >> image: anImage [ 
-	
-	image := anImage. 
+ImageMorph >> image: anImage [
+
+	image := anImage.
 	super extent: (2 * self borderWidth) asPoint + image extent.
 	self changed
 ]
 
 { #category : #other }
 ImageMorph >> imageExport [
-	
+
 	^ self form bits asArray
 ]
 
@@ -204,13 +204,13 @@ ImageMorph >> imageExport [
 ImageMorph >> initialize [
 
 	super initialize.
-	self form: self defaultImage.
+	self form: self defaultImage
 ]
 
 { #category : #accessing }
 ImageMorph >> isOpaque [
 	"Return true if the receiver is marked as being completely opaque"
-	
+
 	^ self
 		valueOfProperty: #isOpaque
 		ifAbsent: [false]
@@ -219,7 +219,7 @@ ImageMorph >> isOpaque [
 { #category : #accessing }
 ImageMorph >> isOpaque: aBool [
 	"Mark the receiver as being completely opaque or not"
-	
+
 	aBool == false
 		ifTrue: [self removeProperty: #isOpaque]
 		ifFalse: [self setProperty: #isOpaque toValue: aBool].
@@ -238,14 +238,14 @@ ImageMorph >> readFromFile [
 		request: 'Please enter the image file name' translated
 		initialAnswer: 'fileName'.
 	fileName isEmptyOrNil ifTrue: [^ self].
-	self form: (Form fromFileNamed: fileName).
+	self form: (Form fromFileNamed: fileName)
 ]
 
 { #category : #caching }
 ImageMorph >> releaseCachedState [
 
 	super releaseCachedState.
-	image hibernate.
+	image hibernate
 ]
 
 { #category : #other }
@@ -256,7 +256,7 @@ ImageMorph >> resize: newSize [
 
 { #category : #testing }
 ImageMorph >> shouldFlex [
-	^ true.
+	^ true
 ]
 
 { #category : #testing }
@@ -266,7 +266,7 @@ ImageMorph >> wantsRecolorHandle [
 
 { #category : #accessing }
 ImageMorph >> withSnapshotBorder [
-	self 
+	self
 		borderStyle:
 			((ComplexBorderStyle style: #complexFramed)
 				color: (Color r: 0.613 g: 1.0 b: 0.516);

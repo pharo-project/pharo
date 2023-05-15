@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 FTExampleMethodModel class >> method: aMethod [
-	^ self basicNew 
+	^ self basicNew
 		initializeMethod: aMethod;
 		yourself
 ]

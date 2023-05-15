@@ -28,8 +28,8 @@ ZnMultiThreadedServer >> augmentResponse: response forRequest: request [
 
 { #category : #private }
 ZnMultiThreadedServer >> closeSocketStream: socketStream [
-	[ socketStream close ] 
-		on: Exception 
+	[ socketStream close ]
+		on: Exception
 		do: [ ]
 ]
 
@@ -53,7 +53,7 @@ ZnMultiThreadedServer >> executeOneRequestResponseOn: stream [
 	timing := ZnServerTransactionTiming new.
 	^ (request := self readRequestSafely: stream timing: timing)
 		ifNil: [ true ]
-		ifNotNil: [ 
+		ifNotNil: [
 			response := self handleRequest: request timing: timing.
 			self augmentResponse: response forRequest: request.
 			self writeResponseSafely: response on: stream timing: timing.
@@ -67,19 +67,19 @@ ZnMultiThreadedServer >> executeRequestResponseLoopOn: stream [
 	"Execute the HTTP request / response loop on stream one cycle at a time
 	until the other end indicates it wants to stop or times out"
 
-	self withDynamicVariablesDo: [ 
+	self withDynamicVariablesDo: [
 		[ self executeOneRequestResponseOn: stream ] whileFalse ]
 ]
 
 { #category : #'request handling' }
 ZnMultiThreadedServer >> listenLoop [
 	"We create a listening Socket, then wait for a connection.
-	After each connection we also check that the listening Socket is still valid 
+	After each connection we also check that the listening Socket is still valid
 	- if not we just make a recursive call to this method to start over."
 
 	self initializeServerSocket.
-	[ [ 
-		serverSocket isValid 
+	[ [
+		serverSocket isValid
 			ifFalse: [
 				"will trigger #ifCurtailed: block and destroy socket"
 				^ self listenLoop ].
@@ -102,15 +102,15 @@ ZnMultiThreadedServer >> readRequestBadExceptionSet [
 ZnMultiThreadedServer >> readRequestSafely: stream timing: timing [
 	"Read request from stream, returning nil when the connection is closed or times out"
 
-	^ [ 
+	^ [
 		[ self readRequest: stream timing: timing ]
 			on: self readRequestBadExceptionSet
-			do: [ :exception | 
+			do: [ :exception |
 				self logServerReadError: exception.
 				self writeResponseBad: exception on: stream timing: timing.
 				nil ] ]
 			on: self readRequestTerminationExceptionSet
-			do: [ :exception | 
+			do: [ :exception |
 				self logServerReadError: exception.
 				nil ]
 ]

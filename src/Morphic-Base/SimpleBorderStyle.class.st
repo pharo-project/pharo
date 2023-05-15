@@ -24,7 +24,7 @@ SimpleBorderStyle >> baseColor: aColor [
 	baseColor = cc ifTrue:[^self].
 	baseColor := cc.
 	self releaseCachedState.
-	self color: cc.
+	self color: cc
 ]
 
 { #category : #accessing }
@@ -44,18 +44,18 @@ SimpleBorderStyle >> color [
 SimpleBorderStyle >> color: aColor [
 	color = aColor ifTrue:[^self].
 	color := aColor.
-	self releaseCachedState.
+	self releaseCachedState
 ]
 
 { #category : #drawing }
-SimpleBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [ 
+SimpleBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	| lineColor |
-	lineColor := (stopPoint truncated quadrantOf: startPoint truncated) > 2 
+	lineColor := (stopPoint truncated quadrantOf: startPoint truncated) > 2
 				ifTrue: [self topLeftColor]
 				ifFalse: [self bottomRightColor].
-	aCanvas 
+	aCanvas
 		line: startPoint
-		to: stopPoint 
+		to: stopPoint
 		width: self width
 		color: lineColor
 ]
@@ -66,7 +66,7 @@ SimpleBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 		fillColor: Color transparent
 		borderWidth: self width
 		topLeftColor: self topLeftColor
-		bottomRightColor: self bottomRightColor.
+		bottomRightColor: self bottomRightColor
 ]
 
 { #category : #initialization }
@@ -99,5 +99,5 @@ SimpleBorderStyle >> width [
 SimpleBorderStyle >> width: aNumber [
 	width = aNumber ifTrue:[^self].
 	width := aNumber truncated max: (width isPoint ifTrue:[0@0] ifFalse:[0]).
-	self releaseCachedState.
+	self releaseCachedState
 ]

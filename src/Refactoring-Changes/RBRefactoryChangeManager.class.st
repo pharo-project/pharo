@@ -115,7 +115,7 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 	undo := Stack new.
 	redo := OrderedCollection new.
 	undoPointers := Stack new.
-	self class resetCounter.
+	self class resetCounter
 ]
 
 { #category : #initialization }
@@ -135,7 +135,7 @@ RBRefactoryChangeManager >> connectToChanges [
 			ProtocolAdded,
 			ProtocolRemoved
 		send: #update:
-		to: self.
+		to: self
 ]
 
 { #category : #initialization }
@@ -190,7 +190,7 @@ RBRefactoryChangeManager >> redoChange [
 { #category : #'public access' }
 RBRefactoryChangeManager >> redoOperation [
 	redo ifEmpty: [ ^ self ].
-	self ignoreChangesWhile: [ 
+	self ignoreChangesWhile: [
 		| change |
 		change := redo removeLast.
 		undo add: change execute ]
@@ -213,7 +213,7 @@ RBRefactoryChangeManager >> undoChange [
 RBRefactoryChangeManager >> undoOperation [
 
 	undo ifEmpty: [ ^ self ].
-	self ignoreChangesWhile: [ 
+	self ignoreChangesWhile: [
 		| change |
 		change := undo removeLast.
 		redo add: change execute ]

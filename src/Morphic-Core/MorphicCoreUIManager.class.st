@@ -50,13 +50,13 @@ MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 
   aBlock value.
   self currentWorld activeHand waitButton.
-  self currentWorld fullRepaintNeeded.
+  self currentWorld fullRepaintNeeded
 ]
 
 { #category : #'ui process' }
 MorphicCoreUIManager >> resumeUIProcess: aProcess [
   "Adopt aProcess as the project process -- probably because of proceeding from a debugger"
-      
+
   UIProcess := aProcess.
   UIProcess resume
 ]

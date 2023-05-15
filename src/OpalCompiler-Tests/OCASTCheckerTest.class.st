@@ -10,7 +10,7 @@ OCASTCheckerTest >> nameAnalysisNoClosureIn: class for: ast [
 
 	OCASTSemanticAnalyzer new
 		compilationContext: class compiler compilationContext;
-		visitNode: ast.
+		visitNode: ast
 ]
 
 { #category : #'tests - variables' }
@@ -59,7 +59,7 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 
 	self assert: (ast scope lookupVar: 'code') isLocalVariable.
-	self deny: (ast scope lookupVar: 'code') isUninitialized.
+	self deny: (ast scope lookupVar: 'code') isUninitialized
 ]
 
 { #category : #'tests - variables' }
@@ -70,16 +70,16 @@ OCASTCheckerTest >> testExampleSelf [
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'self') isSelfVariable.
-	
-	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
-	self assert: assignment arguments first variable isSelfVariable.
+
+	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast.
+	self assert: assignment arguments first variable isSelfVariable
 ]
 
 { #category : #'tests - variables' }
 OCASTCheckerTest >> testExampleSelfReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSelfReceiver) parseTree.
-	self assert: ast body statements first receiver isSelfVariable.
+	self assert: ast body statements first receiver isSelfVariable
 ]
 
 { #category : #'tests - variables' }
@@ -90,9 +90,9 @@ OCASTCheckerTest >> testExampleSuper [
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'super') isSuperVariable.
-	
-	assignment := RBParseTreeSearcher treeMatching: 'self result:``@anything' in: ast. 
-	self assert: assignment arguments first variable isSuperVariable.
+
+	assignment := RBParseTreeSearcher treeMatching: 'self result:``@anything' in: ast.
+	self assert: assignment arguments first variable isSuperVariable
 ]
 
 { #category : #'tests - variables' }
@@ -103,16 +103,16 @@ OCASTCheckerTest >> testExampleSuperReceiver [
 ]
 
 { #category : #'tests - variables' }
-OCASTCheckerTest >> testExampleThisContext [ 
+OCASTCheckerTest >> testExampleThisContext [
 	| ast assignment |
 	ast := (OCOpalExamples>>#exampleThisContext) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'thisContext') isThisContextVariable.
-	
-	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
-	self assert: assignment arguments first variable isThisContextVariable.
+
+	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast.
+	self assert: assignment arguments first variable isThisContextVariable
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -251,10 +251,10 @@ OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 	{[ 1 + 2 ].
 	thisContext.
 	(OCOpalExamples >> #exampleReturn42)}
-		do: [ :object | 
+		do: [ :object |
 			ast := object sourceNode].
 	#('1' 'true' 'nil' '1 + 2' '^1' '1 + 2. 2 + 3' '#(1 true)' '{ #foo . 1 }' '1+2;+3')
-		do: [ :source | 
+		do: [ :source |
 			ast := RBParser parseExpression: source.
 			ast doSemanticAnalysis ].
 	ast := RBParser parseMethod: 'foo 1 + 2'.

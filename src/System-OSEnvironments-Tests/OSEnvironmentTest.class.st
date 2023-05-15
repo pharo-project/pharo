@@ -29,37 +29,37 @@ OSEnvironmentTest >> testAssociations [
 { #category : #tests }
 OSEnvironmentTest >> testAtPut [
 	| key value env |
-	
+
 	env := self instance.
 	value := 1000 atRandom asString.
 	key := 'OSEnvironmentTest >> #testAtPut >> ', value.
-	
+
 	env at: key put: value.
 	self assert: (env at: key) equals: value.
-	
+
 	env removeKey: key.
 	self deny: (env includesKey: key)
 ]
 
 { #category : #tests }
 OSEnvironmentTest >> testEnvironmentFor [
-	
+
 	| compareDictionary |
-	
+
 	compareDictionary := ((Smalltalk hasClassNamed: #UnixEnvironment) and: [Smalltalk hasClassNamed: #Win32Environment])
 		ifTrue: [ "NativeBoost is present in the image"
-			{ 	MacOSPlatform -> #UnixEnvironment. 
-	 		  	MacOSXPlatform -> #UnixEnvironment. 
-				UnixPlatform -> #UnixEnvironment. 
+			{ 	MacOSPlatform -> #UnixEnvironment.
+	 		  	MacOSXPlatform -> #UnixEnvironment.
+				UnixPlatform -> #UnixEnvironment.
 				Win32Platform -> #Win32Environment  } asDictionary ]
 		ifFalse: [ "NativeBoost is NOT present in the image"
-			{ 	MacOSPlatform -> #PlatformIndependentEnvironment. 
-	 		  	MacOSXPlatform -> #PlatformIndependentEnvironment. 
-				UnixPlatform -> #PlatformIndependentEnvironment. 
-				Win32Platform -> #PlatformIndependentEnvironment  } asDictionary ].
+			{ 	MacOSPlatform -> #NullOSEnvironment.
+	 		  	MacOSXPlatform -> #NullOSEnvironment.
+				UnixPlatform -> #NullOSEnvironment.
+				Win32Platform -> #NullOSEnvironment  } asDictionary ].
 
 	compareDictionary keysAndValuesDo: [ :platformClass :envClassName |
-		self 
+		self
 			assert:  (OSEnvironment environmentFor: platformClass new) class name
 			equals: envClassName ]
 ]

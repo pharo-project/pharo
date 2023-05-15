@@ -18,7 +18,7 @@ RPackageAnnouncement class >> to: aPackage [
 
 { #category : #testing }
 RPackageAnnouncement >> affectsPackages [
-	 
+
 	^true
 ]
 

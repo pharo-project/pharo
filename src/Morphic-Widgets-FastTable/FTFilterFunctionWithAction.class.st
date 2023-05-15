@@ -31,6 +31,6 @@ Class {
 }
 
 { #category : #testing }
-FTFilterFunctionWithAction class >> isDeprecated [ 
+FTFilterFunctionWithAction class >> isDeprecated [
 	^ true
 ]

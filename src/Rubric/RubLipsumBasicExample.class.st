@@ -19,7 +19,7 @@ Class {
 RubLipsumBasicExample class >> openNotWrapped [
 	"self openNotWrapped"
 
-	self openScrolledText: self new newScrolledTextNotWrapped.
+	self openScrolledText: self new newScrolledTextNotWrapped
 ]
 
 { #category : #examples }
@@ -35,7 +35,7 @@ RubLipsumBasicExample class >> openScrolledText: aScrolledText [
 { #category : #examples }
 RubLipsumBasicExample class >> openWrapped [
 	"self openWrapped"
-	self openScrolledText: self new newScrolledTextWrapped.
+	self openScrolledText: self new newScrolledTextWrapped
 ]
 
 { #category : #examples }

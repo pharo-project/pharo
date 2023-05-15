@@ -320,7 +320,8 @@ Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 
 { #category : #'instance creation' }
 Symbol class >> with: aCharacter [
-	^self newFrom: aCharacter asOrderedCollection
+
+	^ self newFrom: (OrderedCollection with: aCharacter)
 ]
 
 { #category : #'instance creation' }

@@ -33,7 +33,7 @@ SycAddMessageArgumentCommand >> canEditName [
 ]
 
 { #category : #requesting }
-SycAddMessageArgumentCommand >> canRemoveArgs [ 
+SycAddMessageArgumentCommand >> canRemoveArgs [
 	^ false
 ]
 
@@ -73,8 +73,8 @@ SycAddMessageArgumentCommand >> newSelector: anObject [
 { #category : #execution }
 SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	newSelector := self requestNewMessageIn: aToolContext.
+
+	newSelector := self requestNewMessageIn: aToolContext
 ]
 
 { #category : #execution }

@@ -11,7 +11,7 @@ Class {
 DummySoundSystem >> beep [
 	"Make a primitive beep if possible."
 
-	self soundEnabled 
+	self soundEnabled
 		ifTrue: [ self beepPrimitive ]
 ]
 
@@ -41,7 +41,7 @@ DummySoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 ]
 
 { #category : #playing }
-DummySoundSystem >> playSoundNamedOrBeep: soundName [ 
+DummySoundSystem >> playSoundNamedOrBeep: soundName [
 	"There is no sound support, so we make the beep."
 
 	self beep
@@ -52,7 +52,7 @@ DummySoundSystem >> randomBitsFromSoundInput: bitCount [
  	"I'm not sure what the right thing to do here is."
 
  	self error: 'Can not provide random data.'
-	"in the future we should propose a simple random generator to be 
+	"in the future we should propose a simple random generator to be
 	for the DummySoundSystem."
 ]
 

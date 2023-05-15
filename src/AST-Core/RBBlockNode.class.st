@@ -11,7 +11,34 @@ Instance Variables:
 	left	<Integer>	position of [
 	right	<Integer>	position of ]
 	scope	<OCBlockScope | OCOptimizedBlockScope | nil> the scope associated with this code of this block
+		
+		
+To get numbers of block usage in the system:
 
+```
+""Lots of Methods""
+ Smalltalk globals methods size ""121357""
+
+""there are quite some blocks""
+allBlocks := Smalltalk globals methods flatCollect: [:meth | meth ast blockNodes ].
+allBlocks size ""86028"". 
+
+""but many are compiled inline (eg ifTrue:)""
+currentFullBlocks := allBlocks select: [:blockNode | blockNode isInlined not].
+currentFullBlocks size. ""36407""
+
+""What we can compile as CleanBlockClosure""
+cleanBlocks := currentFullBlocks select: [:blockNode | blockNode isClean].
+cleanBlocks size. ""10097"" 
+
+""the clean blocks are actually just constant""
+constantBlocks := cleanBlocks select: [:blockNode | blockNode isConstant].
+constantBlocks size. ""2540"" 
+
+""FullBlocks that need the outerContext to return""
+fullBocksWithReturn := currentFullBlocks select: [ :each  | each hasNonLocalReturn ].
+fullBocksWithReturn size  ""2198""
+```
 
 "
 Class {
@@ -242,8 +269,9 @@ RBBlockNode >> isConstant [
 		ifNotEmpty: [:statements | statements first isLiteralNode ]
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBBlockNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^(self arguments anySatisfy: [:each | each isFaulty] ) or: [ self body isFaulty]
 ]
 

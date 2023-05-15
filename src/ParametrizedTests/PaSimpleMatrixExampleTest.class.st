@@ -62,42 +62,42 @@ PaSimpleMatrixExampleTest >> item2: anObject [
 	item2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaSimpleMatrixExampleTest >> testAdd [
-	
+
 	| aCollection |
 	aCollection := collectionClass new.
 	aCollection add: item1.
-	
+
 	self assert: (aCollection includes: item1).
-	self assert: aCollection size equals: 1.
+	self assert: aCollection size equals: 1
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaSimpleMatrixExampleTest >> testAddAndRemove [
-	
+
 	| aCollection |
 	aCollection := collectionClass new.
 	aCollection add: item1.
 	aCollection add: item2.
-	
+
 	self assert: (aCollection includes: item1).
 	self assert: aCollection size equals: 2.
 
 	aCollection remove: item1.
-	
+
 	self deny: (aCollection includes: item1).
-	self assert: aCollection size equals: 1.
+	self assert: aCollection size equals: 1
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaSimpleMatrixExampleTest >> testIncludes [
-	
+
 	| aCollection |
 	aCollection := collectionClass new.
 	aCollection add: item1.
 	aCollection add: item2.
-	
+
 	self assert: (aCollection includes: item1).
-	self assert: (aCollection includes: item2).
+	self assert: (aCollection includes: item2)
 ]

@@ -112,11 +112,11 @@ SmalltalkImageTest >> testOpenLog [
 	self writeToLogWithFileNamed: 'file.log'.
 
 	"Other cases where a file with the given name can not be created."
-	self 
+	self
 		writeToLogWithFileNamed: '';
 		writeToLogWithFileNamed: '.'.
-		
-	"clean the created log file"	
+
+	"clean the created log file"
 	'file.log' asFileReference ensureDelete
 ]
 
@@ -125,7 +125,7 @@ SmalltalkImageTest >> writeToLogWithFileNamed: filename [
 	| oldLogFileName |
 	oldLogFileName := Smalltalk logFileName.
 	Smalltalk logFileName: filename.
-	[ 
+	[
 	| stream |
 	stream := Smalltalk image openLog.
 	stream nextPutAll: 'foobar'."We just make sure we can write something. I don't know any reliable way to check if it has really been written"

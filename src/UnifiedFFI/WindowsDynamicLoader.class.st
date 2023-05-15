@@ -25,7 +25,6 @@ WindowsDynamicLoader >> loadLibrary: lpFileName [
 { #category : #misc }
 WindowsDynamicLoader >> loadSymbolFrom: hModule name: lpProcName [
 	^ self ffiCall: #(void *GetProcAddress(void *hModule, String lpProcName))
-
 ]
 
 { #category : #'accessing - platform' }

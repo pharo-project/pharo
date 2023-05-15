@@ -51,12 +51,12 @@ OCShadowVariableWarning >> stringMessage [
 OCShadowVariableWarning >> warningMessage [
 
 	^ String streamContents: [ :stream |
-		stream	 
+		stream
 			nextPutAll: self methodClass name;
 			nextPutAll: '>>';
 			nextPutAll: self node methodNode selector;
 			nextPutAll: '(';
 			nextPutAll: self node name;
-			nextPutAll: ' is shadowed)'	
+			nextPutAll: ' is shadowed)'
 	]
 ]

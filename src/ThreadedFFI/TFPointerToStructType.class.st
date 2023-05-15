@@ -18,26 +18,25 @@ TFPointerToStructType >> callbackReadValue: anExternalAddress [
 ]
 
 { #category : #marshalling }
-TFPointerToStructType >> emitMarshallFromPrimitive: anIRBuilder [ 
-	
+TFPointerToStructType >> emitMarshallFromPrimitive: anIRBuilder [
+
 	anIRBuilder addTemp: #__structHandler.
 	anIRBuilder storeTemp: #__structHandler.
 	anIRBuilder popTop.
 	anIRBuilder pushLiteral: targetClass.
 	anIRBuilder pushTemp: #__structHandler.
 	anIRBuilder send: #fromHandle:
-	
 ]
 
 { #category : #marshalling }
-TFPointerToStructType >> emitMarshallToPrimitive: anIRBuilder [ 
-	
-	self basicType emitMarshallToPrimitive: anIRBuilder.
+TFPointerToStructType >> emitMarshallToPrimitive: anIRBuilder [
+
+	self basicType emitMarshallToPrimitive: anIRBuilder
 ]
 
 { #category : #'reading-writing' }
 TFPointerToStructType >> readValue: anExternalAddress [
-	
+
 	^ self basicType readValue: anExternalAddress
 ]
 

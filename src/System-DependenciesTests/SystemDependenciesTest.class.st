@@ -43,12 +43,12 @@ SystemDependenciesTest >> dependenciesReport [
 { #category : #accessing }
 SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	dependencies := packagesCollection flatCollect: [ :aPackage | self dependenciesReport dependenciesOf: aPackage ] as: Set.
-	
+
 	dependencies := dependencies copyWithoutAll: packagesCollection.
-	
+
 	^ dependencies sorted
 ]
 
@@ -66,7 +66,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownCompilerDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'FileSystem-Core')
 ]
@@ -74,7 +74,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownDisplayDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets')
 ]
@@ -82,15 +82,15 @@ SystemDependenciesTest >> knownDisplayDependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownIDEDependencies [
 
-	"ideally this list should be empty"	
-	
+	"ideally this list should be empty"
+
 	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph')
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownKernelDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'FileSystem-Core')
 ]
@@ -98,7 +98,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
 ]
@@ -107,14 +107,14 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownSUnitDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
@@ -122,14 +122,14 @@ SystemDependenciesTest >> knownSUnitDependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownSUnitKernelDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownSpec2Dependencies [
-	
+
 	^ #(
 		'WebBrowser-Core' "Spec's Link adapter"
 		)
@@ -138,7 +138,7 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownUFFIDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
 	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
@@ -146,16 +146,16 @@ SystemDependenciesTest >> knownUFFIDependencies [
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownUIDependencies [
 
-	"ideally this list should be empty"	
+	"ideally this list should be empty"
 
-	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
+	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core'
 	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
 { #category : #utilities }
 SystemDependenciesTest >> longTestCase [
 
-	self timeLimit: 60 seconds.
+	self timeLimit: 60 seconds
 ]
 
 { #category : #accessing }
@@ -172,23 +172,23 @@ SystemDependenciesTest >> metacelloPackageNames [
 ]
 
 { #category : #accessing }
-SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [ 
+SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	| allMembers allPackagesInBaseline packages groups |
-	
-	allMembers := aBaseline version groups 
+
+	allMembers := aBaseline version groups
 		detect: [ :g | g name = aGroupName ]
 		ifNone: [ ^#() ].
 	allPackagesInBaseline := aBaseline version packages collect: [:each | each name].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
-	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ]).
+	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ])
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalBasicToolsDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
 
 	dependencies := self externalDependendiesOf: (
@@ -217,57 +217,57 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 			'Fuel-Platform-Pharo-Core'.
 			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames ).
-	
-	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalCompilerDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
-		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,				
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfPharoBootstrap compilerPackageNames).
-	
-	self assertCollection: dependencies hasSameElements: self knownCompilerDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownCompilerDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalDisplayDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,		
+		BaselineOfTraits corePackages,
 		BaselineOfDisplay allPackageNames).
-	
-	self assert: dependencies isEmpty.
+
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalFileSystemDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
-		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,		
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
-	
-	self assert: dependencies isEmpty.
+
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
@@ -333,7 +333,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
-	packages := packages , {BaselineOfThreadedFFI name} ,  
+	packages := packages , {BaselineOfThreadedFFI name} ,
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
@@ -348,12 +348,12 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 SystemDependenciesTest >> testExternalKernelDependencies [
 
 "
-If you will break or weaken this test, a puppy will die!!! 
+If you will break or weaken this test, a puppy will die!!!
      _ _      _
     o'')}____//
      `_/      )
      (_(_/-(_/
-" 
+"
 	| dependencies |
 	self longTestCase.
 
@@ -366,12 +366,12 @@ If you will break or weaken this test, a puppy will die!!!
 { #category : #tests }
 SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits corePackages,	
+		BaselineOfTraits corePackages,
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
@@ -381,30 +381,30 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 
 	self flag: 'TODO: remove next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP.'.
 	dependencies := dependencies copyWithout: #'Zinc-HTTP'.
-	self assert: dependencies isEmpty.
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalMetacelloDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
-	
+
 	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalMonticelloDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits corePackages,		
+		BaselineOfTraits corePackages,
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
@@ -412,37 +412,37 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
-	
-	self assert: dependencies isEmpty.
+
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,			
+		BaselineOfTraits corePackages,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfThreadedFFI corePackageNames ).
-	
-	self assertCollection: dependencies hasSameElements: self knownMorphicCoreDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownMorphicCoreDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalMorphicDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -461,33 +461,33 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
-	
-	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalSUnitDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits corePackages,			
+		BaselineOfTraits corePackages,
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames).
-	
-	self assertCollection: dependencies hasSameElements: self knownSUnitDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownSUnitDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfTraits corePackages,
@@ -495,17 +495,17 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfPharoBootstrap sUnitPackageNames).
-	
-	self assertCollection: dependencies hasSameElements: self knownSUnitKernelDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownSUnitKernelDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalSpec2Dependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := (self externalDependendiesOf: (
 		"Language"
 		self metacelloPackageNames,
@@ -526,12 +526,12 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
-		
+
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		BaselineOfThreadedFFI corePackageNames,
-	
+
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfParametrizedTests allPackageNames))
@@ -543,28 +543,28 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 { #category : #tests }
 SystemDependenciesTest >> testExternalUFFIDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,				
+		BaselineOfTraits corePackages,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfThreadedFFI corePackageNames).
-	
-	self assertCollection: dependencies hasSameElements: self knownUFFIDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownUFFIDependencies
 ]
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalUIDependencies [
 
-	| dependencies | 
-	
+	| dependencies |
+
 	self longTestCase.
-	
+
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -589,8 +589,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 			'Fuel-Platform-Pharo-Core'.
 			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames )).
-	
-	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
+
+	self assertCollection: dependencies hasSameElements: self knownUIDependencies
 ]
 
 { #category : #accessing }

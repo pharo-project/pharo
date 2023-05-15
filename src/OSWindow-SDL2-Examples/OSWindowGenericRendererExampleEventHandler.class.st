@@ -29,7 +29,7 @@ OSWindowGenericRendererExampleEventHandler >> visitWindowCloseEvent: anEvent [
 { #category : #visiting }
 OSWindowGenericRendererExampleEventHandler >> visitWindowExposeEvent: anEvent [
 	example enqueueRender.
-	anEvent suppressDefaultAction.
+	anEvent suppressDefaultAction
 ]
 
 { #category : #visiting }

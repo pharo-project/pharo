@@ -20,7 +20,7 @@ Class {
 
 { #category : #examples }
 TickDialogWindow class >> example [
-	
+
 	(self itemsList: Morph methods itemsHeaderName: 'Plop' wrapBlockOrSelector: #selector title: 'Example') choose
 ]
 
@@ -72,7 +72,7 @@ TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName wrapBlockO
 { #category : #actions }
 TickDialogWindow >> accept [
 
-	self resultStorage: self listModel selectedItems.
+	self resultStorage: self listModel selectedItems
 ]
 
 { #category : #display }
@@ -91,7 +91,7 @@ TickDialogWindow >> chooseFromOwner: aMorph [
 { #category : #'focus handling' }
 TickDialogWindow >> defaultFocusMorph [
 
-	^ self listMorph 
+	^ self listMorph
 		ifNil: [ super defaultFocusMorph ]
 		ifNotNil: [:morph | morph ]
 ]
@@ -116,11 +116,11 @@ TickDialogWindow >> hasUnacceptedEdits [
 
 { #category : #display }
 TickDialogWindow >> initialExtent [
-	
+
 	| width |
 	width := (self listMorph allNodeMorphs detectMax: [:e | e width]) width.
 	width := width+ 50.
-	
+
 	^width@400
 ]
 
@@ -138,7 +138,7 @@ TickDialogWindow >> itemsHeaderName [
 
 { #category : #accessing }
 TickDialogWindow >> itemsHeaderName: anObject [
-	
+
 	itemsHeaderName := anObject
 ]
 
@@ -150,7 +150,7 @@ TickDialogWindow >> itemsList [
 
 { #category : #accessing }
 TickDialogWindow >> itemsList: anObject [
-	
+
 	itemsList := anObject
 ]
 
@@ -174,27 +174,27 @@ TickDialogWindow >> listMorph [
 
 { #category : #accessing }
 TickDialogWindow >> listMorph: anObject [
-	
+
 	listMorph := anObject
 ]
 
 { #category : #display }
 TickDialogWindow >> newContentMorph [
 
-	self listModel: ((self tickListClass 
-						itemsList: self itemsList 
-						itemsHeaderName: self itemsHeaderName 
+	self listModel: ((self tickListClass
+						itemsList: self itemsList
+						itemsHeaderName: self itemsHeaderName
 						wrapBlockOrSelector: self wrapBlockOrSelector)
 						autoMultiSelection: true;
 						beCheckList;
 						yourself).
-	
+
 	self listMorph: (self listModel defaultTreeMorph
 								buildContents;
 								vResizing: #spaceFill;
 								hResizing: #spaceFill).
-								
-	self defaultValue ifTrue: [ self listMorph selectAll ].							
+
+	self defaultValue ifTrue: [ self listMorph selectAll ].
 	^ self listMorph
 ]
 
@@ -206,17 +206,17 @@ TickDialogWindow >> resultStorage [
 
 { #category : #accessing }
 TickDialogWindow >> resultStorage: anObject [
-	
+
 	resultStorage := anObject
 ]
 
 { #category : #accessing }
-TickDialogWindow >> selectItems: aCollection [ 
+TickDialogWindow >> selectItems: aCollection [
 	self listModel selectItems: aCollection
 ]
 
 { #category : #accessing }
-TickDialogWindow >> selectedItems [ 
+TickDialogWindow >> selectedItems [
 	^ self listModel selectedItems
 ]
 
@@ -234,6 +234,6 @@ TickDialogWindow >> wrapBlockOrSelector [
 
 { #category : #accessing }
 TickDialogWindow >> wrapBlockOrSelector: anObject [
-	
+
 	wrapBlockOrSelector := anObject
 ]

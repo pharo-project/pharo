@@ -8,47 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-SourceCodeFonts class >> codeFontName [
-	^ 'Source Code Pro'
-]
-
-{ #category : #accessing }
 SourceCodeFonts class >> defaultFontName [
 	^ 'Source Sans Pro'
 ]
 
 { #category : #accessing }
-SourceCodeFonts class >> fontButton: aString size: size [
-	^ (Smalltalk ui theme
-		newButtonIn: self
-			for: self
-			getState: nil
-			action: #setSourceCodeFonts:
-			arguments: { size }
-			getEnabled: nil
-			getLabel: nil
-			help: 'Change font style to Source Code Pro' translated)
-		label: aString;
-		yourself
-]
-
-{ #category : #accessing }
 SourceCodeFonts class >> fontName [
 	^ 'Source Code Pro'
-]
-
-{ #category : #settings }
-SourceCodeFonts class >> fontSourceCodeRow [
-	| theme |
-
-	theme := Smalltalk ui theme.
-	^ theme newRowIn: self for: {
-		theme buttonLabelForText: 'Predefined styles: ' translated.
-		self fontButton: 'Small' size: self sizeSmall.
-		self fontButton: 'Medium' size: self sizeMedium.
-		self fontButton: 'Large' size: self sizeLarge.
-		self fontButton: 'Very Large' size: self sizeVeryLarge.
-		self fontButton: 'Huge' size: self sizeHuge	}
 ]
 
 { #category : #'font registration' }
@@ -79,26 +45,6 @@ SourceCodeFonts class >> setSourceCodeFonts: pointSize [
 		listFont: (LogicalFont familyName: self defaultFontName pointSize: pointSize);
 		menuFont: (LogicalFont familyName: self defaultFontName pointSize: pointSize);
 		codeFont: (LogicalFont familyName: self fontName pointSize: pointSize)
-]
-
-{ #category : #accessing }
-SourceCodeFonts class >> setSourceCodeFontsDefault [
-	self setSourceCodeFonts: self sizeSmall
-]
-
-{ #category : #settings }
-SourceCodeFonts class >> settingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #useSourceCode)
-		parent: #appearance;
-		order: 4;
-		target: self;
-		iconName: #smallConfiguration;
-		label: 'Source Code Fonts';
-		description: 'Use Source Code Pro Fonts';
-		default: SourceCodeFonts;
-		precondition: [ FT2Library current isAvailable not ];
-		dialog: [ self fontSourceCodeRow ]
 ]
 
 { #category : #accessing }
@@ -148,14 +94,6 @@ SourceCodeFonts class >> sizeVeryLarge [
 
 	<styleName: #veryLarge>
 	^ 18
-]
-
-{ #category : #accessing }
-SourceCodeFonts class >> useSourceCode [
-]
-
-{ #category : #accessing }
-SourceCodeFonts class >> useSourceCode: aBoolean [
 ]
 
 { #category : #notes }

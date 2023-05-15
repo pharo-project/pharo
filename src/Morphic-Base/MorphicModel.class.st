@@ -12,6 +12,6 @@ Class {
 }
 
 { #category : #testing }
-MorphicModel class >> isDeprecated [ 
+MorphicModel class >> isDeprecated [
 	^ true
 ]

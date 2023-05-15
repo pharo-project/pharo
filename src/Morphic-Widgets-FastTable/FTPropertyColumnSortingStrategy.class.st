@@ -46,6 +46,6 @@ FTPropertyColumnSortingStrategy >> property [
 ]
 
 { #category : #accessing }
-FTPropertyColumnSortingStrategy >> property: aString [ 
+FTPropertyColumnSortingStrategy >> property: aString [
 	property := aString
 ]

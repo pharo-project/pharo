@@ -32,8 +32,29 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
+	#classInstVars : [
+		'contextModelClass'
+	],
 	#category : #'Debugger-Model-Core'
 }
+
+{ #category : #accessing }
+DebugSession class >> contextModelClass [
+
+	^ contextModelClass ifNil: [ self defaultContextModelClass ]
+]
+
+{ #category : #accessing }
+DebugSession class >> contextModelClass: anObject [
+
+	contextModelClass := anObject
+]
+
+{ #category : #accessing }
+DebugSession class >> defaultContextModelClass [
+
+	^ DebugContext
+]
 
 { #category : #settings }
 DebugSession class >> logDebuggerStackToFile [
@@ -77,7 +98,7 @@ DebugSession >> contextChanged [
 { #category : #accessing }
 DebugSession >> createModelForContext: aContext [
 
-	^ (DebugContext forContext: aContext) topContext: interruptedContext
+	^ (self class contextModelClass forContext: aContext)
 ]
 
 { #category : #initialization }
@@ -123,6 +144,25 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 
 	self updateContextTo: aContext.
 	self contextChanged
+]
+
+{ #category : #'debug - session' }
+DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
+	| method |
+	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
+	method := aClass lookupSelector: aMessage selector.
+
+	MethodClassifier classify: method.
+
+	aContext privRefreshWith: method.
+	aContext method numArgs > 0 ifTrue:
+		[aMessage arguments withIndexDo:
+			[:arg :index|
+				aContext tempAt: index put: arg]].
+
+	self updateContextTo: aContext.
+	self contextChanged.
+	^ method
 ]
 
 { #category : #private }
@@ -267,7 +307,7 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	| newMethod recompilationContext canRewind |
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
 	"Do not try to recompile a doIt method"
-	aContext method isDoIt
+	aContext homeMethod isDoIt
 		ifTrue: [ UIManager default alert:  'Can not modify a DoIt-Method.'.
 			^ false ].
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].

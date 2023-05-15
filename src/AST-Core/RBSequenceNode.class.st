@@ -327,8 +327,9 @@ RBSequenceNode >> initialize [
 	temporaries := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBSequenceNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 

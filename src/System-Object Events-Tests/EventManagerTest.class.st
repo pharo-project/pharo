@@ -20,7 +20,7 @@ addArg2: arg2 [
 
 { #category : #coverage }
 EventManagerTest >> classToBeTested [
-	
+
 	^ EventManager
 ]
 
@@ -69,7 +69,7 @@ EventManagerTest >> tearDown [
 	eventSource releaseActionMap.
 	eventSource := nil.
 	eventListener := nil.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'running - dependent action' }
@@ -152,10 +152,10 @@ EventManagerTest >> testNoArgumentEventDependentSuppliedArgument [
 { #category : #'running - dependent action supplied arguments' }
 EventManagerTest >> testNoArgumentEventDependentSuppliedArguments [
 
-	eventSource 
-		when: #anEvent 
-		send: #addArg1:addArg2: 
-		to: self 
+	eventSource
+		when: #anEvent
+		send: #addArg1:addArg2:
+		to: self
 		withArguments: #('hello' 'world').
 	eventSource triggerEvent: #anEvent.
 	self should: [(eventListener includes: 'hello') and: [eventListener includes: 'world']]
@@ -190,7 +190,7 @@ EventManagerTest >> testRemoveActionsTwiceForEvent [
 	eventSource removeActionsForEvent: #anEvent.
 	self assert: (eventSource hasActionForEvent: #anEvent) not.
 	eventSource removeActionsForEvent: #anEvent.
-	self assert: (eventSource hasActionForEvent: #anEvent) not.
+	self assert: (eventSource hasActionForEvent: #anEvent) not
 ]
 
 { #category : #'running - remove actions' }

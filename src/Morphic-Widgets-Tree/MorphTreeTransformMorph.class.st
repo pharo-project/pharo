@@ -9,21 +9,21 @@ Class {
 
 { #category : #'submorphs - add/remove' }
 MorphTreeTransformMorph >> addAllMorphs: aCollection after: anotherMorph [
-	^self privateAddAllMorphs: aCollection 
+	^self privateAddAllMorphs: aCollection
 			atIndex: (anotherMorph index ifNil: [submorphs size])
 ]
 
 { #category : #drawing }
 MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas [
      "return the bottom visible row in aCanvas's clip rectangle"
-	
-	^ self rowAtLocation: (aCanvas clipRect  bottomRight).
+
+	^ self rowAtLocation: (aCanvas clipRect  bottomRight)
 ]
 
 { #category : #drawing }
 MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas startingAt: aPos [
      "return the bottom visible row in aCanvas's clip rectangle"
-	
+
 	^ self rowAtLocation: (aCanvas clipRect  bottomRight)  startingAt: aPos
 ]
 
@@ -32,30 +32,30 @@ MorphTreeTransformMorph >> drawRawColorOn: aCanvas forSubmorph: aSubMorph [
 	| c frame |
 	frame := (aSubMorph fullBounds withWidth: owner scroller innerBounds width) translateBy:(owner scroller offset x)@0.
 	aSubMorph = owner listManager searchedElement
-		ifTrue: [ 
+		ifTrue: [
 			aCanvas fillRectangle: frame color: owner secondarySelectionColor.
 			^ self ].
 	owner listManager isCheckList
-		ifTrue: [ 
+		ifTrue: [
 			aSubMorph = owner listManager lastClickedMorph
-				ifTrue: [ 
+				ifTrue: [
 					aCanvas fillRectangle: frame color: owner selectionColorToUse.
 					^ self ] ]
-		ifFalse: [ 
+		ifFalse: [
 			aSubMorph selected
-				ifTrue: [ 
+				ifTrue: [
 					aCanvas fillRectangle: frame color: owner selectionColorToUse.
 					^ self ] ].
 	(c := aSubMorph color) notNil
-		ifTrue: [ 
+		ifTrue: [
 			c isColor
-				ifTrue: [ 
+				ifTrue: [
 					aCanvas
 						frameAndFillRectangle: frame
 						fillColor: c
 						borderWidth: 0
 						borderColor: Color transparent ]
-				ifFalse: [ 
+				ifFalse: [
 					c origin: aSubMorph bounds topLeft.
 					c direction: aSubMorph bounds width @ 0.
 					aCanvas fillRectangle: frame basicFillStyle: c ] ]
@@ -69,9 +69,9 @@ MorphTreeTransformMorph >> drawSubmorphsOn: aCanvas [
 		during: [:myCanvas |  | top bottom |
 			top := self topVisibleRowForCanvas: myCanvas.
 			bottom := self bottomVisibleRowForCanvas: myCanvas startingAt: top.
-			bottom 
+			bottom
 				to: top
-				by: -1			
+				by: -1
 				do: [:row | | m |
 					m := submorphs basicAt: row.
 					self drawRawColorOn: myCanvas forSubmorph: m.
@@ -100,7 +100,7 @@ MorphTreeTransformMorph >> initialize [
 { #category : #layout }
 MorphTreeTransformMorph >> localSubmorphBounds [
 	"Answer, in my coordinate system, the bounds of all my visible submorphs (or nil if no visible submorphs)"
-	localBounds ifNil: [ 
+	localBounds ifNil: [
 		self hasSubmorphs ifFalse: [^ nil].
 		localBounds :=  self firstSubmorph fullBounds topLeft corner: owner maxNodeWidth @ (self lastSubmorph fullBounds bottom + owner extraScrollRange)].
 	^ localBounds
@@ -109,16 +109,16 @@ MorphTreeTransformMorph >> localSubmorphBounds [
 { #category : #private }
 MorphTreeTransformMorph >> privateAddAllMorphs: aCollection atIndex: index [
 	"Private. Add aCollection of morphs to the receiver"
-	submorphs := Array 
+	submorphs := Array
 		new: submorphs size + aCollection size
 		streamContents: [:str |
 			1 to: index do: [:p | str nextPut: (submorphs atWrap: p)].
 			str nextPutAll: aCollection.
 			index + 1 to: submorphs size do: [:p | str nextPut: (submorphs atWrap: p)]].
-	aCollection do: [:m |  
-		m fullBounds. 
+	aCollection do: [:m |
+		m fullBounds.
 		m privateOwner: self].
-	self layoutChanged.
+	self layoutChanged
 ]
 
 { #category : #'change reporting' }
@@ -158,14 +158,14 @@ MorphTreeTransformMorph >> submorphBounds [
 MorphTreeTransformMorph >> topVisibleRowForCanvas: aCanvas [
      "return the top visible row in aCanvas's clip rectangle"
 
-        ^ self rowAtLocation: (aCanvas clipRect topLeft).
+        ^ self rowAtLocation: (aCanvas clipRect topLeft)
 ]
 
 { #category : #drawing }
 MorphTreeTransformMorph >> topVisibleRowForCanvas: aCanvas startingAt: aPos [
      "return the top visible row in aCanvas's clip rectangle"
 
-        ^ self rowAtLocation: (aCanvas clipRect topLeft) startingAt: aPos.
+        ^ self rowAtLocation: (aCanvas clipRect topLeft) startingAt: aPos
 ]
 
 { #category : #testing }

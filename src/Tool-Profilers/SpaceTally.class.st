@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : #fileout }
-SpaceTally class >> printSpaceAnalysis [	
+SpaceTally class >> printSpaceAnalysis [
 	<script>
 	self new printSpaceAnalysis
 ]
@@ -48,7 +48,7 @@ SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 			a := Array readFrom: s nextLine.
 			beforeDict at: a first put: a allButFirst ]].
 	afterDict := Dictionary new.
-	
+
 	afterFileName asFileReference readStreamDo: [ :s|
 		[s atEnd] whileFalse: [
 			a := Array readFrom: s nextLine.
@@ -68,10 +68,6 @@ SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 		withText: answer contents
 		label: 'space diffs';
 		openInWorld
-	
-
-
-
 ]
 
 { #category : #fileout }
@@ -94,7 +90,7 @@ SpaceTally >> computeSpaceForClass: cl [
 SpaceTally >> computeSpaceUsage [
 	| c instanceCount |
 	results items
-		do: [ :entry | 
+		do: [ :entry |
 			c := self class environment at: entry analyzedClassName.
 			instanceCount := c instanceCount.
 			entry codeSize: c spaceUsed.
@@ -107,7 +103,7 @@ SpaceTally >> computeSpaceUsage [
 SpaceTally >> computeSpaceUsageResultsForClassesInstancesAssociations: aCollectionOfClasses [
 	results := SpaceTallyResult new: aCollectionOfClasses size.
 	aCollectionOfClasses associations
-		do: [ :assoc | 
+		do: [ :assoc |
 			| instances class |
 			instances := assoc value.
 			class := assoc key.
@@ -161,7 +157,7 @@ SpaceTally >> printSpaceAnalysis: threshold on: aStream [
 	items :=  results itemsForThreshold: threshold.
 	self printHeader: aStream.
 	items
-		do: [ :s | 
+		do: [ :s |
 			| percent |
 			percent := s spaceForInstances * 100.0
 				/  results totalInstSpace roundTo: 0.1.
@@ -198,9 +194,9 @@ SpaceTally >> printSpaceDifferenceFrom: fileName1 to: fileName2 [
 			ifTrue: [coll1 remove: item]
 			ifFalse: [coll2 add: item]].
 	f close.
-	StandardWindow new 
-		withText: (String streamContents: 
-			[:s | 
+	StandardWindow new
+		withText: (String streamContents:
+			[:s |
 			s nextPutAll: fileName1; cr.
 			coll1 do: [:x | s nextPutAll: x; cr].
 			s cr; cr.
@@ -217,7 +213,7 @@ SpaceTally >> printSpaceTallyItem: aSpaceTallyItem percent: percent on: aStream 
 		nextPutAll: (aSpaceTallyItem codeSize printString padLeftTo: 12);
 		nextPutAll: (aSpaceTallyItem instanceCount printString padLeftTo: 12);
 		nextPutAll: (aSpaceTallyItem spaceForInstances printString padLeftTo: 14).
-	aStream 
+	aStream
 		nextPutAll: ((percent printShowingDecimalPlaces: 2) padLeftTo: 12);
 		nextPutAll: (((aSpaceTallyItem spaceForInstances / (aSpaceTallyItem instanceCount max: 1)) asFloat printShowingDecimalPlaces: 2) padLeftTo: 20);
 		cr
@@ -244,12 +240,12 @@ SpaceTally >> saveTo: aFileName [
 	| file |
 	file := aFileName asFileReference.
 	file exists ifTrue: [ file delete ].
-	
+
 	file writeStreamDo: [ :s|
-		results items do: [:each | s nextPutAll: each analyzedClassName asString ; 
-						nextPutAll: ' '; nextPutAll: each codeSize printString; 
-						nextPutAll: ' '; nextPutAll: each instanceCount printString; 
-						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; cr]].
+		results items do: [:each | s nextPutAll: each analyzedClassName asString ;
+						nextPutAll: ' '; nextPutAll: each codeSize printString;
+						nextPutAll: ' '; nextPutAll: each instanceCount printString;
+						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; cr]]
 ]
 
 { #category : #utilities }
@@ -282,7 +278,6 @@ SpaceTally >> spaceTally: classes [
 	Smalltalk garbageCollect.
 	self computeSpaceUsage.
 	^ results
-
 ]
 
 { #category : #'class analysis' }

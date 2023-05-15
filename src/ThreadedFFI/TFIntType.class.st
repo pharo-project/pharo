@@ -15,13 +15,13 @@ Class {
 
 { #category : #marshalling }
 TFIntType >> emitMarshallToPrimitive: builder [
-	
+
 	builder send: #asInteger
 ]
 
 { #category : #reading }
 TFIntType >> readValue: anExternalAddress offset: offset [
-	
+
 	^ anExternalAddress integerAt: offset size: self byteSize signed: signed
 ]
 

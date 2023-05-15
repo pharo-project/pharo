@@ -24,7 +24,7 @@ DAPackageRelationGraphDiffTest >> setUp [
 		onPackages: (Array with: (DAPackage on: (RPackageSet named: 'Collections-Abstract')) with: (DAPackage on: (RPackageSet named: 'Collections-Strings'))).
 	oldRelationGraph build.
 	newRelationGraph build.
-	
+
 	packageRelationGraphDiff := DAPackageRelationGraphDiff new
 		oldRelationGraph: oldRelationGraph;
 		newRelationGraph: newRelationGraph
@@ -35,14 +35,13 @@ DAPackageRelationGraphDiffTest >> testHasChangedForPackageItemDiff [
 	| first second |
 	first := newRelationGraph seenPackages first.
 	second := newRelationGraph seenPackages last.
-	
-	first clearDependencies.
-	
-	packageRelationGraphDiff make.
-			
-	self assert: ((packageRelationGraphDiff packageDiffNamed: first packageName) hasChanged).
-	self deny: ((packageRelationGraphDiff packageDiffNamed: second packageName) hasChanged).
 
+	first clearDependencies.
+
+	packageRelationGraphDiff make.
+
+	self assert: ((packageRelationGraphDiff packageDiffNamed: first packageName) hasChanged).
+	self deny: ((packageRelationGraphDiff packageDiffNamed: second packageName) hasChanged)
 ]
 
 { #category : #running }
@@ -50,11 +49,10 @@ DAPackageRelationGraphDiffTest >> testHasChangedForPackageItemDiffOnOneDependent
 	| first |
 	first := newRelationGraph seenPackages first.
 	first dependencies remove: (first dependencies anyOne).
-	
+
 	packageRelationGraphDiff make.
-			
-	self assert: ((packageRelationGraphDiff packageDiffNamed: first packageName) hasChanged).
-	
+
+	self assert: ((packageRelationGraphDiff packageDiffNamed: first packageName) hasChanged)
 ]
 
 { #category : #running }
@@ -126,24 +124,19 @@ DAPackageRelationGraphDiffTest >> testRemovedDependentPackagesIncludesFrom [
 	| dependentPackages package |
 	package := newRelationGraph seenPackages first.
 	dependentPackages := package dependentPackages.
-	
-	package clearDependencies.
-	
-	packageRelationGraphDiff make.
-			
-	self assert: (packageRelationGraphDiff removedDependentPackagesIncludes: dependentPackages anyOne from: package).
-			
-	
-	
 
+	package clearDependencies.
+
+	packageRelationGraphDiff make.
+
+	self assert: (packageRelationGraphDiff removedDependentPackagesIncludes: dependentPackages anyOne from: package)
 ]
 
 { #category : #running }
 DAPackageRelationGraphDiffTest >> testRemovedPackagesIncludes [
 	newRelationGraph clearPackages .
 	packageRelationGraphDiff makePackagesDiff.
-	
+
 	self assert: (packageRelationGraphDiff removedPackagesIncludes: (DAPackage on: (RPackageSet named: 'Collections-Abstract'))).
-	self assert: (packageRelationGraphDiff removedPackagesIncludes: (DAPackage on: (RPackageSet named: 'Collections-Strings'))).
-	
+	self assert: (packageRelationGraphDiff removedPackagesIncludes: (DAPackage on: (RPackageSet named: 'Collections-Strings')))
 ]

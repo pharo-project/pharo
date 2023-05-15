@@ -32,7 +32,7 @@ SDL2TouchExample >> beginMove: touchId at: position [
 SDL2TouchExample >> clearSurface [
 	renderer athensSurface
 		drawDuring:
-			[ :canvas | 
+			[ :canvas |
 			canvas setPaint: self backgroundColor.
 			canvas drawShape: (0 @ 0 extent: self defaultExtent) ]
 ]
@@ -47,7 +47,7 @@ SDL2TouchExample >> createEventHandler [
 { #category : #drawing }
 SDL2TouchExample >> drawCircleAt: point color: color [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas pathTransform translateBy: point.
 			canvas
 				setPaint: color;
@@ -59,7 +59,7 @@ SDL2TouchExample >> drawCircleAt: point color: color [
 SDL2TouchExample >> drawMoves [
 	moveToDraw
 		do:
-			[ :each | 
+			[ :each |
 			| first last moves color path |
 			first := each first.
 			last := each finish.
@@ -67,14 +67,14 @@ SDL2TouchExample >> drawMoves [
 			color := each color.
 			path := renderer athensSurface
 				createPath:
-					[ :builder | 
+					[ :builder |
 					builder
 						absolute;
 						moveTo: first.
 					moves do: [ :move | builder lineTo: move ] ].
 			self drawCircleAt: first color: color.
 			renderer athensSurface
-				drawDuring: [ :canvas | 
+				drawDuring: [ :canvas |
 					canvas
 						setStrokePaint: color;
 						setShape: path;
@@ -85,7 +85,7 @@ SDL2TouchExample >> drawMoves [
 { #category : #'manage move' }
 SDL2TouchExample >> endMove: touchId at: position [
 	(moveToDraw at: touchId) finish: position * self defaultExtent.
-	[ 
+	[
 	| d |
 	d := Delay forMilliseconds: 3000.
 	d wait.
@@ -95,14 +95,14 @@ SDL2TouchExample >> endMove: touchId at: position [
 { #category : #initialization }
 SDL2TouchExample >> initialize [
 	super initialize.
-	moveToDraw := Dictionary new.
+	moveToDraw := Dictionary new
 ]
 
 { #category : #initialization }
 SDL2TouchExample >> initializeFromSurface [
 	circle := renderer athensSurface
 		createPath:
-			[ :builder | 
+			[ :builder |
 			builder
 				absolute;
 				moveTo: -5 @ 0;

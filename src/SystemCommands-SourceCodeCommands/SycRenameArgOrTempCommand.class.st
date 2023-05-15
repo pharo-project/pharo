@@ -18,20 +18,20 @@ Class {
 { #category : #testing }
 SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isArgOrTempVariableSelected ]
 ]
 
 { #category : #execution }
 SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
-	
+
 	aSourceCodeContext showVariableNamed: newName
 ]
 
 { #category : #execution }
-SycRenameArgOrTempCommand >> asRefactorings [ 
-	^ {RBRenameArgumentOrTemporaryRefactoring	
+SycRenameArgOrTempCommand >> asRefactorings [
+	^ {RBRenameArgumentOrTemporaryRefactoring
 		renameTemporaryFrom: sourceNode sourceInterval
 		to: newName
 		in: method origin
@@ -39,7 +39,7 @@ SycRenameArgOrTempCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycRenameArgOrTempCommand >> defaultMenuIconName [ 
+SycRenameArgOrTempCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
@@ -51,9 +51,9 @@ SycRenameArgOrTempCommand >> defaultMenuItemName [
 { #category : #execution }
 SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
-	
-	newName := UIManager default 
-		request: 'New name of the variable' 
+
+	newName := UIManager default
+		request: 'New name of the variable'
 		initialAnswer: sourceNode name
 		title: 'Rename a temp variable'.
 	newName isEmptyOrNil | (newName = sourceNode name) ifTrue: [ CmdCommandAborted signal ]

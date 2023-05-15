@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameClassVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [ 
+RBRenameClassVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		rename: aVarName
@@ -44,10 +44,10 @@ RBRenameClassVariableRefactoring >> newName: anObject [
 
 { #category : #preconditions }
 RBRenameClassVariableRefactoring >> preconditions [
-	^(RBCondition isMetaclass: class) not 
-		& (RBCondition isValidClassVarName: newName asString for: class) 
-			& (RBCondition definesClassVariable: variableName asString in: class) 
-			& (RBCondition hierarchyOf: class definesVariable: newName asString) not 
+	^(RBCondition isMetaclass: class) not
+		& (RBCondition isValidClassVarName: newName asString for: class)
+			& (RBCondition definesClassVariable: variableName asString in: class)
+			& (RBCondition hierarchyOf: class definesVariable: newName asString) not
 			& (RBCondition isGlobal: newName asString in: self model) not
 ]
 
@@ -60,18 +60,18 @@ RBRenameClassVariableRefactoring >> rename: aVarName to: aName in: aClass [
 { #category : #transforming }
 RBRenameClassVariableRefactoring >> renameReferences [
 	| replacer methods |
-	replacer := self parseTreeRewriterClass 
+	replacer := self parseTreeRewriterClass
 		rename: variableName
 		to: newName
-		handler: 
+		handler:
 			[ self refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses' expandMacrosWith: newName) ].
 
-	methods := class methodsUsingClassVariableNamed: variableName.	
+	methods := class methodsUsingClassVariableNamed: variableName.
 	methods do: [ :method | self convertMethod: method selector for: method modelClass using: replacer ]
 ]
 
 { #category : #printing }
-RBRenameClassVariableRefactoring >> storeOn: aStream [ 
+RBRenameClassVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -86,7 +86,7 @@ RBRenameClassVariableRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBRenameClassVariableRefactoring >> transform [
-	class 
+	class
 		renameClassVariable: variableName
 		to: newName
 		around: [self renameReferences]

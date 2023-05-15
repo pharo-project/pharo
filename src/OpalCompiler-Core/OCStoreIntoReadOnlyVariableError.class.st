@@ -13,7 +13,7 @@ OCStoreIntoReadOnlyVariableError >> description [
 	"Return a textual description of the exception."
 
 	^ String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			stream << super description asString.
 			stream cr.
 			stream << self methodClass asString.

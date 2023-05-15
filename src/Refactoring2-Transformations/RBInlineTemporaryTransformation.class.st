@@ -12,7 +12,7 @@ Class {
 
 { #category : #api }
 RBInlineTemporaryTransformation class >> inline: anInterval from: aSelector in: aClass [
-	^ self new 
+	^ self new
 		inline: anInterval
 		from: aSelector
 		in: aClass
@@ -30,7 +30,7 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 
 { #category : #executing }
 RBInlineTemporaryTransformation >> buildTransformations [
-	^ OrderedCollection 
+	^ OrderedCollection
 		with: self replaceAssignment
 		with: self replaceReferences
 ]
@@ -54,8 +54,8 @@ RBInlineTemporaryTransformation >> inline: anInterval from: aSelector in: aClass
 
 { #category : #preconditions }
 RBInlineTemporaryTransformation >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition withBlock: 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
 					[self verifySelectedInterval.
 					true])
 ]
@@ -63,7 +63,7 @@ RBInlineTemporaryTransformation >> preconditions [
 { #category : #executing }
 RBInlineTemporaryTransformation >> replaceAssignment [
 	^ RBCustomTransformation model: self model with: [ :rbModel |
-		assignmentNode parent isSequence 
+		assignmentNode parent isSequence
 		ifTrue: [assignmentNode parent removeNode: assignmentNode]
 		ifFalse: [assignmentNode replaceWith: assignmentNode value]]
 ]

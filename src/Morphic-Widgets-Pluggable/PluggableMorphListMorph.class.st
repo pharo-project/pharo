@@ -13,7 +13,7 @@ PluggableMorphListMorph >> extent: newExtent [
 	of the widest list item, or the size of self, whatever is bigger"
 
 	super extent: newExtent.
-	self listMorph width: (self innerBounds width max: listMorph hUnadjustedScrollRange).
+	self listMorph width: (self innerBounds width max: listMorph hUnadjustedScrollRange)
 ]
 
 { #category : #'model access' }

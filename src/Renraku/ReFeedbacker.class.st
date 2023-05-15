@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #actions }
-ReFeedbacker class >> feedback: aComment positive: aBoolean about: aReCritic [ 
-	[ 
+ReFeedbacker class >> feedback: aComment positive: aBoolean about: aReCritic [
+	[
 	ZnClient new
 		beOneShot;
 		http;
@@ -29,19 +29,19 @@ ReFeedbacker class >> feedback: aComment positive: aBoolean about: aReCritic [
 		post ]
 		on: NetworkError
 		do: [ :ex | ^ false ].
-		
+
 	^ true
 ]
 
 { #category : #actions }
 ReFeedbacker class >> negativeFeedback: aComment about: aReCritic [
-	
+
 	^ self feedback: aComment positive: false about: aReCritic
 ]
 
 { #category : #actions }
 ReFeedbacker class >> positiveFeedback: aComment about: aReCritic [
-	
+
 	^ self feedback: aComment positive: true about: aReCritic
 ]
 

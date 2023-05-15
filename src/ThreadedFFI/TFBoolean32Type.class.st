@@ -9,6 +9,6 @@ Class {
 
 { #category : #accessing }
 TFBoolean32Type >> basicType [
-	
+
 	^ TFBasicType uint32
 ]

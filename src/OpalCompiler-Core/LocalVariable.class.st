@@ -14,17 +14,17 @@ Class {
 }
 
 { #category : #testing }
-LocalVariable class >> isAbstract [ 
+LocalVariable class >> isAbstract [
 	^ self = LocalVariable
 ]
 
 { #category : #comparing }
 LocalVariable >> = aTempVar [
 
-	^aTempVar class = self class 
-		and: [aTempVar scope = self scope 
+	^aTempVar class = self class
+		and: [aTempVar scope = self scope
 		and: [aTempVar name = self name
-		and: [aTempVar usage = self usage]]].
+		and: [aTempVar usage = self usage]]]
 ]
 
 { #category : #visiting }
@@ -75,13 +75,13 @@ LocalVariable >> createCopiedVariableFor: aScope [
 { #category : #emitting }
 LocalVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeTemp: name.
+	methodBuilder storeTemp: name
 ]
 
 { #category : #emitting }
 LocalVariable >> emitValue: methodBuilder [
 
-	methodBuilder pushTemp: name.
+	methodBuilder pushTemp: name
 ]
 
 { #category : #escaping }
@@ -97,15 +97,15 @@ LocalVariable >> escaping: anObject [
 { #category : #comparing }
 LocalVariable >> hash [
 
-	^ name hash bitXor: (usage hash bitXor: scope hash).
+	^ name hash bitXor: (usage hash bitXor: scope hash)
 ]
 
 { #category : #accessing }
 LocalVariable >> index [
-	^ index ifNil: [ 
+	^ index ifNil: [
 		"if the index is nil, we are in an AST after name analysis but before
 		IR generation. To fill the the index, we generate the ir."
-		scope node methodNode ir. 
+		scope node methodNode ir.
 		index ifNil: [ self error: 'no temp index, should never happen' ] ]
 ]
 
@@ -117,7 +117,7 @@ LocalVariable >> index: anObject [
 { #category : #initialization }
 LocalVariable >> initialize [
 	super initialize.
-	escaping := false.
+	escaping := false
 ]
 
 { #category : #testing }
@@ -181,7 +181,7 @@ LocalVariable >> isRepeatedWrite [
 { #category : #testing }
 LocalVariable >> isStoringTempVector [
 	"I am a temp that stores a temp vector. Those generated temps have a invalid name starting with 0"
-	^name first = $0.
+	^name first = $0
 ]
 
 { #category : #testing }
@@ -234,10 +234,10 @@ LocalVariable >> markRepeatedWrite [
 LocalVariable >> markWrite [
 
 	"if an escaping var is wrote to later, it needs to be remote"
-	self isEscaping 
+	self isEscaping
 		ifTrue: [self markEscapingWrite].
 	"write is the strongest use: a read is turned into a write"
-	usage := #write.
+	usage := #write
 ]
 
 { #category : #queries }

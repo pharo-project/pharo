@@ -11,9 +11,9 @@ Class {
 
 { #category : #'inline messages' }
 RFASTTranslatorForEffect >> emitAnd: aMessageNode [
-	
+
 	super emitAnd: aMessageNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'inline messages' }
@@ -22,7 +22,7 @@ RFASTTranslatorForEffect >> emitIfFalse: aMessageNode [
 	valueTranslator visitNode: aMessageNode receiver.
 	methodBuilder jumpAheadTo: #else if: true.
 		self visitInlinedBlockNode: aMessageNode arguments first.
-	methodBuilder jumpAheadTarget: #else.
+	methodBuilder jumpAheadTarget: #else
 ]
 
 { #category : #'inline messages' }
@@ -35,50 +35,50 @@ RFASTTranslatorForEffect >> emitIfNotNil: aMessageNode [
 	methodBuilder send: #==.
 	methodBuilder jumpAheadTo: #end if: true.
 	self visitInlinedBlockNode: args first.
-	methodBuilder jumpAheadTarget: #end.
+	methodBuilder jumpAheadTarget: #end
 ]
 
 { #category : #'inline messages' }
 RFASTTranslatorForEffect >> emitIfTrue: aMessageNode [
 
 	valueTranslator visitNode: aMessageNode receiver.
-	methodBuilder jumpAheadTo: #else if: false.	
+	methodBuilder jumpAheadTo: #else if: false.
 		self visitInlinedBlockNode: aMessageNode arguments first.
-	methodBuilder jumpAheadTarget: #else.
+	methodBuilder jumpAheadTarget: #else
 ]
 
 { #category : #'visitor - double dispatching' }
-RFASTTranslatorForEffect >> emitMessageNode: aMessageNode [ 
+RFASTTranslatorForEffect >> emitMessageNode: aMessageNode [
 
 	super emitMessageNode: aMessageNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'inline messages' }
 RFASTTranslatorForEffect >> emitOr: aMessageNode [
 
 	super emitOr: aMessageNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-RFASTTranslatorForEffect >> visitArrayNode: anArrayNode [ 
+RFASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 	"An arrayNode may have side effect, for example: '{self foo}'. So we cannot just generate nothing for this node."
 
 	super visitArrayNode: anArrayNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-RFASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [ 
+RFASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [
 
 	super visitAssignmentNode: anAssignmentNode .
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
-RFASTTranslatorForEffect >> visitBlockNode: aBlockNode [ 
-	"even though the code is never executed, we generate it to make sure that we 
+RFASTTranslatorForEffect >> visitBlockNode: aBlockNode [
+	"even though the code is never executed, we generate it to make sure that we
 	can map bytecode and access temps"
 	super visitBlockNode: aBlockNode.
 	methodBuilder popTop
@@ -97,43 +97,38 @@ RFASTTranslatorForEffect >> visitLiteralNode: aLiteralNode [
 ]
 
 { #category : #'visitor - double dispatching' }
-RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [  
+RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 	super visitParseErrorNode: anErrorNode.
-	methodBuilder popTop.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
-	
+
 	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
-		
+
 	aSequenceNode hasMetalinkAfter ifTrue: [ ^ self visitSequenceWithAfter: aSequenceNode  ].
-	
+
 	aSequenceNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aSequenceNode ]
 		ifFalse: [ aSequenceNode statements do: [:each | self visitNode: each]. ].
-	aSequenceNode hasMetalinkInstead ifTrue: [aSequenceNode parent isMethod 
+	aSequenceNode hasMetalinkInstead ifTrue: [aSequenceNode parent isMethod
 			ifTrue: [methodBuilder returnTop]
 			ifFalse: [methodBuilder popTop]]
 ]
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitVariableNode: aVariableNode [
-	
-	| binding |
-	
+
 	self emitPreamble: aVariableNode.
 	self emitMetaLinkBefore: aVariableNode.
-	
+
 	aVariableNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aVariableNode ].
-		
-	"when visiting a variable for effect, we could push it and then pop it, but we do nothing"
-	binding := aVariableNode binding.
-	(binding isLiteralVariable or: [ binding isUndeclaredVariable ])
-		ifTrue: [ methodBuilder addLiteral: binding ].
-		
-	self emitMetaLinkAfterNoEnsure: aVariableNode.
+
+	aVariableNode variable emitValue: methodBuilder.
+
+	self emitMetaLinkAfterNoEnsure: aVariableNode
 ]

@@ -15,7 +15,7 @@ SlotDeprecation >> explanationString [
 { #category : #accessing }
 SlotDeprecation >> messageText [
 	^ String
-		streamContents: [ :str | 
+		streamContents: [ :str |
 			str
 				nextPutAll: 'The instance variable ';
 				nextPutAll: context receiver name;

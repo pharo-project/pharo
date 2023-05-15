@@ -14,12 +14,12 @@ Class {
 { #category : #running }
 DAPackageTest >> setUp [
 	super setUp.
-	aPackage := DAPackage on: (RPackageSet named: 'Collections-Abstract'). 
+	aPackage := DAPackage on: (RPackageSet named: 'Collections-Abstract').
 	aSecondPackage := DAPackage on: (RPackageSet named: 'Collections-Arithmetic').
 	packageA := DAPackage on: (RPackageSet named: 'A').
 	packageB := DAPackage on: (RPackageSet named: 'B').
 	packageC := DAPackage on: (RPackageSet named: 'C').
-	aPackage add: (DAInheritanceDependency from:aPackage to:aSecondPackage).
+	aPackage add: (DAInheritanceDependency from:aPackage to:aSecondPackage)
 ]
 
 { #category : #tests }
@@ -62,7 +62,7 @@ DAPackageTest >> testDependenciesFrom [
 	[ aRelationGraph
 		computeStaticDependencies: aPackage;
 		combineDependencies: aPackage ]
-		on: PotentialOutDatedDependencyWarning
+		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | ex resume "ignore" ].
 	self
 		assert:
@@ -129,7 +129,7 @@ DAPackageTest >> testReferenceDependenciesFrom [
 	[ aRelationGraph
 		computeStaticDependencies: aPackage;
 		combineDependencies: aPackage ]
-	on: PotentialOutDatedDependencyWarning
+	on: DAPotentialOutDatedDependencyWarning
 	do: [ :ex | ex resume "ignore" ].
 	self
 		assert:

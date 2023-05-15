@@ -29,7 +29,7 @@ RubEncryptedDisplayScanner >> displayLine: textLine offset: offset leftInRun: le
 	destY := baselineY - font ascent.
 	runStopIndex := lastIndex + (nowLeftInRun - 1) min: line last.
 	spaceCount := 0.
-	string := String streamContents: [:s | 
+	string := String streamContents: [:s |
 		1 to: text string size do: [:i | s << '*']].
 	[
 		startIndex := lastIndex.
@@ -38,8 +38,8 @@ RubEncryptedDisplayScanner >> displayLine: textLine offset: offset leftInRun: le
 						in: string rightX: rightMargin stopConditions: stopConditions
 						kern: kern.
 		lastIndex >= startIndex ifTrue:[
-			bitBlt displayString: string 
-				from: startIndex 
+			bitBlt displayString: string
+				from: startIndex
 	"XXXX: The following is an interesting bug. All stopConditions exept #endOfRun
 		have lastIndex past the last character displayed. #endOfRun sets it *on* the character.
 		If we display up until lastIndex then we will also display invisible characters like

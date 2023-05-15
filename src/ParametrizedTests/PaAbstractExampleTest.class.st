@@ -22,7 +22,7 @@ PaAbstractExampleTest >> option1 [
 ]
 
 { #category : #accessing }
-PaAbstractExampleTest >> option1: aString [ 
+PaAbstractExampleTest >> option1: aString [
 	option1 := aString
 ]
 
@@ -32,12 +32,12 @@ PaAbstractExampleTest >> option2 [
 ]
 
 { #category : #accessing }
-PaAbstractExampleTest >> option2: anInteger [ 
+PaAbstractExampleTest >> option2: anInteger [
 	option2 := anInteger
 ]
 
 { #category : #tests }
 PaAbstractExampleTest >> testParametersHaveValue [
 	self assert: option1 isNotNil.
-	self assert: option2 isNotNil.
+	self assert: option2 isNotNil
 ]

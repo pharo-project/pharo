@@ -36,8 +36,8 @@ RxsRange >> enumerateTo: aSet ignoringCase: aBoolean [
 		[:charCode | | character |
 		character := charCode asCharacter.
 		aBoolean
-		ifTrue: 
-			[aSet 
+		ifTrue:
+			[aSet
 				add: character asUppercase;
 				add: character asLowercase]
 		ifFalse: [aSet add: character]]

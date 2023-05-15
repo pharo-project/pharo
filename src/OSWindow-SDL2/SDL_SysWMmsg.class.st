@@ -25,7 +25,7 @@ SDL_SysWMmsg class >> fieldsDesc [
 ]
 
 { #category : #testing }
-SDL_SysWMmsg >> isWindows [ 
+SDL_SysWMmsg >> isWindows [
 
 	^ self subsystem = SDL_SYSWM_WINDOWS
 ]
@@ -46,13 +46,13 @@ SDL_SysWMmsg >> msg: anObject [
 SDL_SysWMmsg >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: ' subsystem: ';
 		print: self subsystem.
-	
-	self isWindows ifTrue: [ 
-		aStream 
+
+	self isWindows ifTrue: [
+		aStream
 			nextPutAll: ' Windows: ';
 			print: self msg win
 	].

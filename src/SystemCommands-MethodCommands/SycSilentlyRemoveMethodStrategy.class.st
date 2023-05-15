@@ -12,7 +12,7 @@ SycSilentlyRemoveMethodStrategy >> collectMethodTagsFrom: methods [
 	"It will return map class->tags where tags are related to given methods"
 	| result tags |
 	result := IdentityDictionary new.
-	methods do: [ :each | 
+	methods do: [ :each |
 		tags := result at: each origin ifAbsentPut: [IdentitySet new].
 		tags addAll: each tags].
 	^result
@@ -20,14 +20,14 @@ SycSilentlyRemoveMethodStrategy >> collectMethodTagsFrom: methods [
 
 { #category : #removing }
 SycSilentlyRemoveMethodStrategy >> removeMethods: methods [
-	
+
 	| methodTags |
 	methodTags := self collectMethodTagsFrom: methods. "we will remove empty tags of removed methods".
-	
+
 	methods do: [ :each | each removeFromSystem ].
-	
-	methodTags keysAndValuesDo: [:class :tags | tags do: [ :eachTag | 
-		(class methodsTaggedWith: eachTag) 
+
+	methodTags keysAndValuesDo: [:class :tags | tags do: [ :eachTag |
+		(class methodsTaggedWith: eachTag)
 			ifEmpty: [class removeMethodTag: eachTag] ]]
 ]
 

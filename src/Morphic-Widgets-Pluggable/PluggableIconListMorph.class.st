@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #event }
-PluggableIconListMorph >> basicKeyPressed: aChar [ 
-	
+PluggableIconListMorph >> basicKeyPressed: aChar [
+
 	^ aChar == Character space
 		ifTrue: [ self interactWithSelectedItem ]
 		ifFalse: [ super basicKeyPressed: aChar ]
@@ -69,7 +69,7 @@ PluggableIconListMorph >> itemMorphFor: anObject index: anIndex [
 	item := IconicListItemMorph new
 		originalObject: anObject;
 		yourself.
-		
+
 	icon := self getIconSelector ifNotNil: [self model perform: self getIconSelector withEnoughArguments: {anObject. anIndex}].
 	icon ifNotNil: [
 		item icon: icon asMorph].

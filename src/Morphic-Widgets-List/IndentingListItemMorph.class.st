@@ -39,7 +39,7 @@ Class {
 IndentingListItemMorph >> acceptDroppingMorph: toDrop event: evt [
 	complexContents acceptDroppingObject: toDrop complexContents.
 	toDrop delete.
-	self highlightForDrop: false.
+	self highlightForDrop: false
 ]
 
 { #category : #'private - container protocol' }
@@ -50,12 +50,12 @@ IndentingListItemMorph >> addChildrenForList: hostList addingTo: morphList withE
 	].
 	firstChild := nil.
 	complexContents hasContents ifFalse: [^self].
-	firstChild := hostList 
+	firstChild := hostList
 		addMorphsTo: morphList
-		from: complexContents contents 
+		from: complexContents contents
 		allowSorting: true
 		withExpandedItems: expandedItems
-		atLevel: indentLevel + 1.
+		atLevel: indentLevel + 1
 ]
 
 { #category : #accessing }
@@ -124,7 +124,7 @@ IndentingListItemMorph >> drawLineToggleToTextOn: aCanvas lineColor: lineColor h
 ]
 
 { #category : #drawing }
-IndentingListItemMorph >> drawLinesOn: aCanvas lineColor: lineColor [ 
+IndentingListItemMorph >> drawLinesOn: aCanvas lineColor: lineColor [
 	| hasToggle |
 	hasToggle := self hasToggle.
 	"Draw line from toggle to text"
@@ -164,7 +164,7 @@ IndentingListItemMorph >> drawLinesToFirstChildOn: aCanvas lineColor: lineColor 
 { #category : #drawing }
 IndentingListItemMorph >> drawLinesToNextSiblingOn: aCanvas lineColor: lineColor hasToggle: hasToggle [
 	"Draw line from me to next sibling"
-	
+
 	| myBounds nextSibBounds vLineX myCenter vLineTop vLineBottom myTheme|
 	myBounds := self toggleBounds.
 	nextSibBounds := self nextSibling toggleBounds.
@@ -209,7 +209,7 @@ IndentingListItemMorph >> drawOn: aCanvas [
 		ifFalse: [ columnLeft := sRect left.
 			columnScanner := contents asString readStream.
 			container columns
-				do: [ :width | 
+				do: [ :width |
 					| columnData columnRect |
 
 					columnRect := columnLeft @ sRect top extent: width @ sRect height.
@@ -231,17 +231,17 @@ IndentingListItemMorph >> drawToggleOn: aCanvas in: aRectangle [
 
 	| aForm centeringOffset |
 	complexContents hasContents ifFalse: [^self].
-	aForm := isExpanded 
+	aForm := isExpanded
 		ifTrue: [container expandedFormForMorph: self]
 		ifFalse: [container notExpandedFormForMorph: self].
 	centeringOffset := ((aRectangle height - aForm extent y) / 2.0) truncated.
-	^aCanvas 
-		translucentImage: aForm 
-		at: (aRectangle topLeft translateBy: 0 @ centeringOffset).
+	^aCanvas
+		translucentImage: aForm
+		at: (aRectangle topLeft translateBy: 0 @ centeringOffset)
 ]
 
 { #category : #private }
-IndentingListItemMorph >> findExactPathMatchIn: anArray [ 
+IndentingListItemMorph >> findExactPathMatchIn: anArray [
 	self
 		withSiblingsDo: [:each | (each complexContents asString = anArray first
 					or: [anArray first isNil])
@@ -250,7 +250,7 @@ IndentingListItemMorph >> findExactPathMatchIn: anArray [
 ]
 
 { #category : #private }
-IndentingListItemMorph >> findPathIn: anArray [ 
+IndentingListItemMorph >> findPathIn: anArray [
 	| found |
 	found := self findExactPathMatchIn: anArray.
 	found
@@ -260,7 +260,7 @@ IndentingListItemMorph >> findPathIn: anArray [
 ]
 
 { #category : #private }
-IndentingListItemMorph >> findSimilarPathMatchIn: anArray [ 
+IndentingListItemMorph >> findSimilarPathMatchIn: anArray [
 	self
 		withSiblingsDo: [:each | (each complexContents asString sameAs: anArray first)
 				ifTrue: [^ each]].
@@ -288,7 +288,7 @@ IndentingListItemMorph >> hasToggle [
 IndentingListItemMorph >> highlight [
 
 	complexContents highlightingColor ifNotNil: [self color: complexContents highlightingColor].
-	self changed.
+	self changed
 ]
 
 { #category : #accessing }
@@ -349,7 +349,7 @@ IndentingListItemMorph >> isExpanded: aBoolean [
 { #category : #accessing }
 IndentingListItemMorph >> isFirstItem [
 	"I have no idea why the owner of the list can get nil but it happens when the packages are published with the Monticello Browser."
-	
+
 	^ owner notNil and: [owner submorphs first == self]
 ]
 
@@ -361,7 +361,7 @@ IndentingListItemMorph >> isSoleItem [
 { #category : #accessing }
 IndentingListItemMorph >> minHeight [
 	"Answer the minimum height of the receiver."
-	
+
 	| iconHeight |
 	iconHeight := self hasIcon
 				ifTrue: [self icon height + 2]
@@ -444,11 +444,11 @@ IndentingListItemMorph >> refreshExpandedState [
 		^self changed
 	].
 	(c := complexContents contents) isEmpty ifTrue: [^self changed].
-	newChildren := container 
-		addSubmorphsAfter: self 
-		fromCollection: c 
+	newChildren := container
+		addSubmorphsAfter: self
+		fromCollection: c
 		allowSorting: true.
-	firstChild := newChildren first.
+	firstChild := newChildren first
 ]
 
 { #category : #search }
@@ -467,7 +467,7 @@ IndentingListItemMorph >> toggleBounds [
 IndentingListItemMorph >> toggleExpandedState [
 
 	isExpanded := isExpanded not.
-	self refreshExpandedState.
+	self refreshExpandedState
 ]
 
 { #category : #action }
@@ -481,7 +481,7 @@ IndentingListItemMorph >> toggleRectangle [
 { #category : #drawing }
 IndentingListItemMorph >> unhighlight [
 	complexContents highlightingColor ifNotNil: [ self color: self theme textColor ].
-	self changed.
+	self changed
 ]
 
 { #category : #accessing }
@@ -498,7 +498,7 @@ IndentingListItemMorph >> withSiblingsDo: aBlock [
 	[node isNil] whileFalse: [
 		aBlock value: node.
 		node := node nextSibling
-	].
+	]
 ]
 
 { #category : #converting }

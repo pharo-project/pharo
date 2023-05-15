@@ -18,8 +18,8 @@ FFIMockCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 ]
 
 { #category : #accessing }
-FFIMockCalloutMethodBuilder >> doing: aBlockClosure [ 
-	
+FFIMockCalloutMethodBuilder >> doing: aBlockClosure [
+
 	block := aBlockClosure
 ]
 
@@ -30,14 +30,14 @@ FFIMockCalloutMethodBuilder >> extractLibrary [
 ]
 
 { #category : #'type-resolution' }
-FFIMockCalloutMethodBuilder >> ffiBindingOf: aString [ 
-	
+FFIMockCalloutMethodBuilder >> ffiBindingOf: aString [
+
 	^ self class ffiBindingOf: aString
 ]
 
 { #category : #invoking }
-FFIMockCalloutMethodBuilder >> invokeWithArguments: aCollection [ 
-	
+FFIMockCalloutMethodBuilder >> invokeWithArguments: aCollection [
+
 	^ block valueWithArguments: aCollection
 ]
 

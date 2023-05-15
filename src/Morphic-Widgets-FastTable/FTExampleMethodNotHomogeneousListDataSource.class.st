@@ -6,11 +6,11 @@ Class {
 
 { #category : #accessing }
 FTExampleMethodNotHomogeneousListDataSource >> cellColumn: column row: rowIndex [
- 
+
 	^ FTCellMorph new
 		cellInset: 5;
 		addMorphBack: (self iconFor: rowIndex) asMorph;
-		addMorphBack: (Morph new 
+		addMorphBack: (Morph new
 			changeTableLayout;
 			hResizing: #shrinkWrap;
 			listDirection: #topToBottom;

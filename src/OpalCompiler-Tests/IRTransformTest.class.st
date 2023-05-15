@@ -103,7 +103,7 @@ IRTransformTest >> testAllInstructions [
 		| ir |
 
 		ir := IRBuilderTest new testPushTempTemp.
-		self assert: ir allInstructions last isReturn.
+		self assert: ir allInstructions last isReturn
 ]
 
 { #category : #'tests - enumeration' }

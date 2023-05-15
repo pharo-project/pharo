@@ -157,5 +157,5 @@ OSTouchPinchDetector >> fingersDistanceFromCenter [
 { #category : #initialization }
 OSTouchPinchDetector >> initialize [
 	super initialize.
-	maxDistanceBetweenFingersLine := self class maxDistanceBetweenFingersLine.
+	maxDistanceBetweenFingersLine := self class maxDistanceBetweenFingersLine
 ]

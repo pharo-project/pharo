@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-GeneralScrollPane class >> isDeprecated [ 
+GeneralScrollPane class >> isDeprecated [
 	^ true
 ]

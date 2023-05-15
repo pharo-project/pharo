@@ -157,8 +157,9 @@ RBArrayNode >> isEmpty [
 	^ statements isEmpty
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBArrayNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 

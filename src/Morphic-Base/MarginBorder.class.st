@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-MarginBorder class >> isDeprecated [ 	
+MarginBorder class >> isDeprecated [
 	^ true
 ]

@@ -17,13 +17,13 @@ RBAbstractInstanceVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAbstractInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self abstractVariableTestData
 ]
 
 { #category : #tests }
 RBAbstractInstanceVariableParametrizedTest >> testAbstractInstanceVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ 'name' . #RBLintRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
@@ -44,22 +44,22 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithAssignmentUsed [
 				andArguments: { 'instVarName2' . #Foo}.
 	self flag: 'Transformation has another result, reusing existing accessors'.
 	self executeRefactoring: refactoring.
-"	self assert: (class parseTreeFor: #foo) 
+"	self assert: (class parseTreeFor: #foo)
 		equals: (self parseMethod: 'foo
 						^self instVarName21: 3').
-	self 
-		assert: (class parseTreeFor: #instVarName2:) equals: (self 
+	self
+		assert: (class parseTreeFor: #instVarName2:) equals: (self
 						parseMethod: 'instVarName2: anObject
 						self instVarName21: anObject').
-	self 
-		assert: (class parseTreeFor: #instVarName21:) equals: (self 
+	self
+		assert: (class parseTreeFor: #instVarName21:) equals: (self
 						parseMethod: 'instVarName21: anObject
 						^instVarName2 := anObject').
-	self assert: (class parseTreeFor: #instVarName2) 
+	self assert: (class parseTreeFor: #instVarName2)
 				equals: (self parseMethod: 'instVarName2
 						^instVarName2').
-	self 
-		assert: ((model classNamed: #Bar) parseTreeFor: #foo) equals: (self 
+	self
+		assert: ((model classNamed: #Bar) parseTreeFor: #foo) equals: (self
 						parseMethod: 'foo
 						instVarName1 := instVarName1 + self instVarName2 + ClassVarName1')"
 ]
@@ -68,32 +68,32 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithAssignmentUsed [
 RBAbstractInstanceVariableParametrizedTest >> testAbstractWithDefaultNamesUsed [
 	| refactoring class |
 	class := model classNamed: #Foo.
-	refactoring := self createRefactoringWithModel: model andArguments: 
+	refactoring := self createRefactoringWithModel: model andArguments:
 				{'instVarName1' . #Foo}.
 	self flag: 'There is an error using RBClass2 with pools'.
 	"self executeRefactoring: refactoring.
-	self 
-		assert: (class parseTreeFor: #bar) equals: (self 
+	self
+		assert: (class parseTreeFor: #bar) equals: (self
 						parseMethod: 'bar
 						""Add one to instVarName1""
 
 						self instVarName11: self instVarName11 + 1').
-	self 
-		assert: (class parseTreeFor: #instVarName11:) equals: (self 
+	self
+		assert: (class parseTreeFor: #instVarName11:) equals: (self
 						parseMethod: 'instVarName11: anObject
 						instVarName1 := anObject').
-	self assert: (class parseTreeFor: #instVarName11) 
+	self assert: (class parseTreeFor: #instVarName11)
 			equals: (self parseMethod: 'instVarName11
 						^instVarName1').
-	self 
-		assert: ((model classNamed: #Bar) parseTreeFor: #foo) equals: (self 
+	self
+		assert: ((model classNamed: #Bar) parseTreeFor: #foo) equals: (self
 						parseMethod: 'foo
 						self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')"
 ]
 
 { #category : #'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testInheritedName [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{'name' . #RBBasicLintRuleTestData})
 ]
 
@@ -103,22 +103,22 @@ RBAbstractInstanceVariableParametrizedTest >> testMetaclassInstanceVariables [
 	class := model metaclassNamed: #Foo.
 	class addInstanceVariable: 'foo'.
 	class compile: 'zzz ^foo := foo + foo * 2' classified: #(#testing).
-	refactoring := self createRefactoringWithModel: model andArguments: 
+	refactoring := self createRefactoringWithModel: model andArguments:
 				{ 'foo' . #'Foo class'}.
 	self flag: 'There is a transformation error'.
 "	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #foo1) 
+	self assert: (class parseTreeFor: #foo1)
 		  equals: (self parseMethod: 'foo1
 						^foo').
-	self assert: (class parseTreeFor: #foo:) 
+	self assert: (class parseTreeFor: #foo:)
 		  equals: (self parseMethod: 'foo: anObject
 						^foo := anObject').
-	self assert: (class parseTreeFor: #zzz) 
+	self assert: (class parseTreeFor: #zzz)
 		  equals: (self parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')"
 ]
 
 { #category : #'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments: 
+	self shouldFail: (self createRefactoringWithArguments:
 		{'foo' . #RBBasicLintRuleTestData})
 ]

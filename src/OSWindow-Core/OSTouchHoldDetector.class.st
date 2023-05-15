@@ -82,7 +82,7 @@ OSTouchHoldDetector >> createHoldEvent [
 
 { #category : #creation }
 OSTouchHoldDetector >> createWaitingProcess [
-	^ [ 
+	^ [
 	(Delay forMilliseconds: waitingTime) wait.
 	(self activeFingers allSatisfy: [ :each | each totalDistanceTravelled < maxDistanceTravelled ])
 		ifTrue: [ self sendToEventHandler: self createHoldEvent ] ] fork
@@ -93,7 +93,7 @@ OSTouchHoldDetector >> initialize [
 	super initialize.
 	waitingTime := self class waitingTime.
 	maxDistanceTravelled := self class maxDistanceTravelled.
-	process := Process new terminate.
+	process := Process new terminate
 ]
 
 { #category : #preconditions }

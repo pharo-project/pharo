@@ -20,7 +20,7 @@ ToggleMenuItemMorph >> adjacentTo [
 { #category : #accessing }
 ToggleMenuItemMorph >> adoptPaneColor: paneColor [
 	"Pass on to submenu too."
-	
+
 	super adoptPaneColor: paneColor.
 	self hasSubMenu ifTrue: [self subMenu adoptPaneColor: paneColor]
 ]
@@ -38,9 +38,9 @@ ToggleMenuItemMorph >> balloonText: aText [
 ]
 
 { #category : #'private - drawing' }
-ToggleMenuItemMorph >> basicDrawOn: aCanvas [ 
+ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 	"Draw on the canvas. Taken from MenuItemMorph for minor refactoring."
-	
+
 	| stringColor stringBounds|
 	stringColor := self stringColorToUse.
 	stringBounds := self stringBoundsToUse.
@@ -58,7 +58,7 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
 	stringBounds := stringBounds bottom: stringBounds top + self fontToUse height.
 	self drawText: contents on: aCanvas in: stringBounds.
-	self hasSubMenu ifTrue: [ |subMenuMarker| 
+	self hasSubMenu ifTrue: [ |subMenuMarker|
 		subMenuMarker := self subMenuMarker deepCopy mapColor: Color black to: stringColor.
 		self drawSubMenuMarker: subMenuMarker on: aCanvas in: stringBounds]
 ]
@@ -66,7 +66,7 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 { #category : #'private - drawing' }
 ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
 	"Draw the icon on the canvas within the given bounds."
-	
+
 	|iconForm|
 	self isEnabled
 		ifTrue: [iconForm := aForm]
@@ -81,17 +81,17 @@ ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
 ]
 
 { #category : #'private - drawing' }
-ToggleMenuItemMorph >> drawKeyTextOn: aCanvas [ 
+ToggleMenuItemMorph >> drawKeyTextOn: aCanvas [
 	"Draw the key text on the canvas."
-	
+
 	self keyText ifNil: [^self].
 	self itemShortcut drawOn: aCanvas
 ]
 
 { #category : #drawing }
-ToggleMenuItemMorph >> drawOn: aCanvas [ 
+ToggleMenuItemMorph >> drawOn: aCanvas [
 	"Need to check isEnabled here."
-	
+
 	self
 		isEnabled;
 		basicDrawOn: aCanvas;
@@ -101,30 +101,30 @@ ToggleMenuItemMorph >> drawOn: aCanvas [
 { #category : #'private - drawing' }
 ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
-	
-	|markerRect| 
+
+	|markerRect|
 	markerRect := aRectangle topRight + ((aForm width * self displayScaleFactor) negated @ (aRectangle height - (aForm height * self displayScaleFactor) // 2)) extent: aForm extent * self displayScaleFactor.
 	self drawIcon: aForm scaledByDisplayScaleFactor on: aCanvas in: markerRect
 ]
 
 { #category : #'private - drawing' }
 ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle [
-	^ self 
-		drawText: aStringOrText 
-		on: aCanvas 
-		in: aRectangle 
-		color: self stringColorToUse.
+	^ self
+		drawText: aStringOrText
+		on: aCanvas
+		in: aRectangle
+		color: self stringColorToUse
 ]
 
 { #category : #'private - drawing' }
-ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle color: stringColor [ 
+ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle color: stringColor [
 	"Draw the text on the canvas within the given bounds."
-	
+
 	(self enabled not and: [self theme disabledItemStyle = #inset])
 		ifTrue: [
 				aCanvas
 					drawString: aStringOrText
-					in: aRectangle 
+					in: aRectangle
 					font: self fontToUse
 					color: stringColor muchLighter lighter;
 					drawString: aStringOrText
@@ -133,7 +133,7 @@ ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle color:
 					color: stringColor]
 		ifFalse: [aCanvas
 					drawString: aStringOrText
-					in: aRectangle 
+					in: aRectangle
 					font: self fontToUse
 					color: stringColor ]
 ]
@@ -170,8 +170,8 @@ ToggleMenuItemMorph >> getStateSelector: anObject [
 ToggleMenuItemMorph >> icon [
 	"Answer the receiver's icon. Handle legacy case
 	of wording-based mechanism."
-	
-	|state| 
+
+	|state|
 	self getStateSelector ifNil: [^super icon].
 	state := (MessageSend receiver: self target selector: self getStateSelector)
 		valueWithEnoughArguments: self arguments .
@@ -189,7 +189,7 @@ ToggleMenuItemMorph >> icon [
 { #category : #accessing }
 ToggleMenuItemMorph >> isEnabled [
 	"Answer whether the item is enabled."
-	
+
 	|state|
 	self enablementSelector ifNil: [^super isEnabled].
 	state := self enablementSelector isSymbol
@@ -210,8 +210,8 @@ ToggleMenuItemMorph >> isEnabled: aBoolean [
 { #category : #'private - drawing' }
 ToggleMenuItemMorph >> itemShortcut [
 
-	^ ToggleMenuItemShortcut 
-		owner: self 
+	^ ToggleMenuItemShortcut
+		owner: self
 		keyText: self keyText
 ]
 
@@ -223,7 +223,7 @@ ToggleMenuItemMorph >> keyTextExpanded [
 { #category : #layout }
 ToggleMenuItemMorph >> minWidth [
 	"Plus the key text if any."
-	
+
 	|w|
 	w := super minWidth.
 	self keyText ifNotNil: [w := w + (self fontToUse widthOfString: self keyTextExpanded) + 12].
@@ -255,7 +255,7 @@ ToggleMenuItemMorph >> mouseLeave: evt [
 { #category : #private }
 ToggleMenuItemMorph >> offImage [
 	"Return the form to be used for indicating an '<off>' marker."
-	
+
 	|m form|
 	m := CheckboxButtonMorph new
 		privateOwner: self owner;
@@ -270,7 +270,7 @@ ToggleMenuItemMorph >> offImage [
 { #category : #private }
 ToggleMenuItemMorph >> onImage [
 	"Return the form to be used for indicating an '<on>' marker."
-	
+
 	|m form|
 	m := CheckboxButtonMorph new
 		privateOwner: self owner;
@@ -285,7 +285,7 @@ ToggleMenuItemMorph >> onImage [
 { #category : #selecting }
 ToggleMenuItemMorph >> select: evt [
 	"Don't if not enabled."
-	
+
 	self isEnabled ifFalse: [^self].
 	^super select: evt
 ]
@@ -293,28 +293,28 @@ ToggleMenuItemMorph >> select: evt [
 { #category : #accessing }
 ToggleMenuItemMorph >> selectionBorderStyle [
 	"Answer the border style to use with the receiver is the selected element."
-	
+
 	^ self theme menuItemSelectedBorderStyleFor: self
 ]
 
 { #category : #private }
 ToggleMenuItemMorph >> selectionFillStyle [
 	"Answer the fill style to use with the receiver is the selected element."
-	
+
 	^ self theme menuItemSelectedFillStyleFor: self
 ]
 
 { #category : #accessing }
 ToggleMenuItemMorph >> stringBoundsToUse [
 	"Answer the bounds to use when drawing the item text."
-	
+
 	^ self bounds
 ]
 
 { #category : #accessing }
 ToggleMenuItemMorph >> stringColorToUse [
 	"Answer the state dependent color to use for drawing text."
-	
+
 	^self isEnabled
 		ifTrue: [
 			self isSelected

@@ -13,15 +13,15 @@ SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeConte
 ]
 
 { #category : #execution }
-SycConvertTempToInstVarCommand >> asRefactorings [ 
-	^ { RBTemporaryToInstanceVariableRefactoring 
+SycConvertTempToInstVarCommand >> asRefactorings [
+	^ { RBTemporaryToInstanceVariableRefactoring
 		class: method origin
 		selector: method selector
 		variable: sourceNode name }
 ]
 
 { #category : #execution }
-SycConvertTempToInstVarCommand >> defaultMenuIconName [ 
+SycConvertTempToInstVarCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 

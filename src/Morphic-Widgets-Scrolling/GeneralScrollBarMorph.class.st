@@ -21,7 +21,7 @@ GeneralScrollBarMorph >> initialize [
 { #category : #'model access' }
 GeneralScrollBarMorph >> setValue: newValue [
 	"Bypass screwed up scrollbar!"
-	
+
 	^self perform: #setValue: withArguments: {newValue} inSuperclass: SliderMorph
 ]
 

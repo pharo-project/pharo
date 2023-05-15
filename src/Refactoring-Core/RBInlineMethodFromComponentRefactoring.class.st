@@ -14,7 +14,7 @@ Class {
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 	| refactoring |
-	refactoring := RBAbstractVariablesRefactoring 
+	refactoring := RBAbstractVariablesRefactoring
 				model: self model
 				abstractVariablesIn: inlineParseTree
 				from: self classOfTheMethodToInline
@@ -24,8 +24,8 @@ RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 ]
 
 { #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> addArgumentToSelector: aSymbol [ 
-	^aSymbol isInfix 
+RBInlineMethodFromComponentRefactoring >> addArgumentToSelector: aSymbol [
+	^aSymbol isInfix
 		ifTrue: [#value:value:]
 		ifFalse: [(aSymbol , 'value:') asSymbol]
 ]
@@ -33,10 +33,10 @@ RBInlineMethodFromComponentRefactoring >> addArgumentToSelector: aSymbol [
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> addSelfReferenceToInlineParseTree [
 	| variableName rewriter newArguments |
-	
+
 	variableName := self newNameForSelf.
 	rewriter := self parseTreeRewriterClass rename: 'self' to: variableName.
-	(rewriter executeTree: inlineParseTree) 
+	(rewriter executeTree: inlineParseTree)
 		ifTrue: [inlineParseTree := rewriter tree].
 	newArguments := inlineParseTree arguments asOrderedCollection.
 	newArguments addFirst: (RBVariableNode named: variableName).
@@ -57,9 +57,9 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
-	inlineParseTree superMessages isEmpty 
-		ifFalse: 
-			[self 
+	inlineParseTree superMessages isEmpty
+		ifFalse:
+			[self
 				refactoringError: 'Cannot inline method since it sends a super message']
 ]
 
@@ -94,9 +94,9 @@ RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 
 { #category : #testing }
 RBInlineMethodFromComponentRefactoring >> isOverridden [
-	| selector| 
+	| selector|
 	selector := self inlineSelector.
-	self classOfTheMethodToInline allSubclassesDo: [:each | 
+	self classOfTheMethodToInline allSubclassesDo: [:each |
 		(each directlyDefinesMethod: selector)
 			ifTrue: [ ^ true ]].
 	^ false
@@ -119,10 +119,10 @@ RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 	                                , nonMetaClass.
 	index := 1.
 
-	[ 
+	[
 	variableName := self safeVariableNameBasedOn: variableName.
-	inlineParseTree allDefinedVariables includes: variableName ] 
-		whileTrue: [ 
+	inlineParseTree allDefinedVariables includes: variableName ]
+		whileTrue: [
 			variableName := originalName , index printString.
 			index := index + 1 ].
 	^ variableName
@@ -131,11 +131,11 @@ RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> renameSelfReferences [
 	self addSelfReferenceToSourceMessage.
-	self addSelfReferenceToInlineParseTree.
+	self addSelfReferenceToInlineParseTree
 ]
 
 { #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> safeVariableNameBasedOn: aString [ 
+RBInlineMethodFromComponentRefactoring >> safeVariableNameBasedOn: aString [
 	"Creates an unused variable name containing aString"
 
 	| baseString newString i allTempsInline allTempsSource |
@@ -145,11 +145,11 @@ RBInlineMethodFromComponentRefactoring >> safeVariableNameBasedOn: aString [
 	baseString at: 1 put: baseString first asLowercase.
 	newString := baseString.
 	i := 0.
-	
-	[(allTempsInline includes: newString) 
-		or: [ (allTempsSource includes: newString) 
-			or: [class definesInstanceVariable: newString]]] 
-			whileTrue: 
+
+	[(allTempsInline includes: newString)
+		or: [ (allTempsSource includes: newString)
+			or: [class definesInstanceVariable: newString]]]
+			whileTrue:
 				[i := i + 1.
 				newString := baseString , i printString].
 	^newString

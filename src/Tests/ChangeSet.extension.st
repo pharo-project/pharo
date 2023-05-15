@@ -3,7 +3,7 @@ Extension { #name : #ChangeSet }
 { #category : #'*Tests' }
 ChangeSet class >> newTestChangeSet [
 
-	^ self basicNewChangeSet: self testName
+	^ self newChangeSet: self testName
 ]
 
 { #category : #'*Tests' }

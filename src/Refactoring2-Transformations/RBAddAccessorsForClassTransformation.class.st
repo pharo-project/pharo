@@ -55,7 +55,7 @@ RBAddAccessorsForClassTransformation >> className: aClassName [
 ]
 
 { #category : #printing }
-RBAddAccessorsForClassTransformation >> storeOn: aStream [ 
+RBAddAccessorsForClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -16,27 +16,26 @@ TFPooledExternalAsyncCall >> deregisterSemaphore [
 { #category : #operations }
 TFPooledExternalAsyncCall >> executeOn: aRunner [
 	"Performs a callout using the asynchronous threaded FFI plugin.
-	 This method schedules the execution of a function in the threaded FFI plugin and 
+	 This method schedules the execution of a function in the threaded FFI plugin and
 	 then waits for its result in a semaphore.
 	 When the semaphore is signaled, the result is available in an external value holder
 	 from where the value is read.
-	 This method contains some boilerplate code to allocate and release external 
+	 This method contains some boilerplate code to allocate and release external
 	 value holders for the arguments and the return value."
-	
+
 	^ [
 			semaphore := aRunner semaphorePool takeOne.
 			self prepareExecution.
 			self doExecuteOn: aRunner ]
 		ensure: [
 			self cleanUp.
-			semaphore ifNotNil: [  
+			semaphore ifNotNil: [
 				semaphore reset.
 				aRunner semaphorePool returnOne: semaphore] ]
 ]
 
 { #category : #initialization }
 TFPooledExternalAsyncCall >> initialize [
-
 ]
 
 { #category : #'private - semaphore' }

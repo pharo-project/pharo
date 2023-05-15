@@ -68,14 +68,14 @@ Class {
 PolygonMorph class >> arrowPrototype [
 	"Answer an instance of the receiver that will serve as a prototypical arrow"
 	"PolygonMorph arrowPrototype openInWorld"
-	
+
 	| aa |
-	aa := self new. 
-	aa vertices: (Array with: 0@0 with: 40@40) 
-		color: Color black 
-		borderWidth: 2 
+	aa := self new.
+	aa vertices: (Array with: 0@0 with: 40@40)
+		color: Color black
+		borderWidth: 2
 		borderColor: Color black.
-	aa makeForwardArrow.	
+	aa makeForwardArrow.
 	aa computeBounds.
 	^ aa
 ]
@@ -99,7 +99,7 @@ PolygonMorph class >> example1 [
 { #category : #examples }
 PolygonMorph class >> example2 [
 	"self example2"
-	| poly | 
+	| poly |
 	poly := PolygonMorph
 		vertices: {261@400. 388@519. 302@595. 	222@500.	141@583. 34@444}
 		color: Color blue
@@ -112,7 +112,7 @@ PolygonMorph class >> example2 [
 { #category : #examples }
 PolygonMorph class >> example3 [
 	"self example3"
-	| poly | 
+	| poly |
 	poly := PolygonMorph
 				vertices: {261@400. 388@519. 302@595. 	222@500.	141@583. 34@444}
 				color: Color blue
@@ -125,7 +125,7 @@ PolygonMorph class >> example3 [
 { #category : #examples }
 PolygonMorph class >> example4 [
 	"self example4"
-	| poly | 
+	| poly |
 	poly :=  (PolygonMorph
 		vertices: {261@400. 388@519. 302@595. 	222@500.	141@583. 34@444}
 		color: Color blue
@@ -143,38 +143,38 @@ PolygonMorph class >> example4 [
 PolygonMorph class >> fromHand: hand [
 	"Let the user draw a polygon, clicking at each vertex, and ending by clicking within 5 of the first point..."
 	"self fromHand: ActiveHand"
-	
+
 	| p1 poly oldVerts pN opposite |
 	"wait till guy will press the mouse button"
 	hand captureEventsUntil: [:evt |
 		evt isMouse ifTrue: [ p1 := evt cursorPoint].
 		(evt isMouse and: [ evt anyButtonPressed ]) not ].
-	
+
 	opposite := (Display colorAt: p1) negated.
 	opposite = Color transparent ifTrue: [opposite := Color red].
 	(poly := LineMorph from: p1 to: p1 color: opposite width: 2) openInWorld.
 	oldVerts := {p1}.
-	
+
 	[true] whileTrue: [
 		"wait till button release"
 		hand captureEventsWhile: [:evt |
-			evt isMouse 
-				ifTrue: [ 
+			evt isMouse
+				ifTrue: [
 					pN := evt cursorPoint.
 					poly setVertices: (oldVerts copyWith: pN).
-					evt anyButtonPressed ] 
+					evt anyButtonPressed ]
 				ifFalse: [ true ] ].
 
-		(oldVerts size > 1 and: [(pN distanceTo: p1) < 5]) 
+		(oldVerts size > 1 and: [(pN distanceTo: p1) < 5])
 			ifFalse: [
 				oldVerts := poly vertices.
 				"loop till button will be pressed"
-				hand captureEventsUntil: [:evt | 		
-					evt isMouse 
-						ifTrue: [ 
+				hand captureEventsUntil: [:evt |
+					evt isMouse
+						ifTrue: [
 							pN := evt cursorPoint.
 							poly setVertices: (oldVerts copyWith: pN).
-							evt anyButtonPressed ] 
+							evt anyButtonPressed ]
 					ifFalse: [ false ]]]
 			ifTrue: [ ^ (poly setVertices: (poly vertices copyWith: p1)) delete].
 	]
@@ -184,25 +184,25 @@ PolygonMorph class >> fromHand: hand [
 PolygonMorph class >> fromHandFreehand: hand [
 	"Let the user draw a polygon, holding the mouse down, and ending by clicking within 5 of the first point..."
 	"self fromHandFreehand: ActiveHand"
-	
+
 	| p1 poly pN opposite |
 	"wait till guy will press the mouse button"
 	hand captureEventsUntil: [:evt |
 		evt isMouse ifTrue: [ p1 := evt cursorPoint].
 		(evt isMouse and: [ evt anyButtonPressed ])  ].
-	
+
 	opposite := (Display colorAt: p1) negated.
 	opposite = Color transparent ifTrue: [opposite := Color red].
 	(poly := LineMorph from: p1 to: p1 color: opposite width: 2) openInWorld.
-	
+
 	hand captureEventsWhile: [:evt |
-		
-		evt isMouse ifTrue:[ 
+
+		evt isMouse ifTrue:[
 			pN := evt cursorPoint.
 			(pN distanceTo: poly vertices last) > 3 ifTrue:
 				[poly setVertices: (poly vertices copyWith: pN) ].
-			
-			evt anyButtonPressed 
+
+			evt anyButtonPressed
 			]
 		ifFalse: [ true ]
 	].
@@ -220,7 +220,7 @@ PolygonMorph class >> vertices: verts color: c borderWidth: bw borderColor: bc [
 ]
 
 { #category : #menu }
-PolygonMorph >> addCustomMenuItems: aMenu hand: aHandMorph [ 
+PolygonMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
 	| |
 	super addCustomMenuItems: aMenu hand: aHandMorph.
 	aMenu
@@ -249,7 +249,7 @@ PolygonMorph >> addHandles [
 				with: 4 @ 3
 				with: -3 @ 3.
 	vertices
-		withIndexDo: [:vertPt :vertIndex | | handle newVert | 
+		withIndexDo: [:vertPt :vertIndex | | handle newVert |
 			handle := EllipseMorph
 						newBounds: (Rectangle center: vertPt extent: 8 @ 8)
 						color: (self handleColorAt: vertIndex) .
@@ -272,7 +272,7 @@ PolygonMorph >> addHandles [
 			handles addLast: handle.
 			(closed
 					or: [1 = vertices size
-						"Give a small polygon a chance to grow. 
+						"Give a small polygon a chance to grow.
 						-wiz"
 					or: [vertIndex < vertices size]])
 				ifTrue: [newVert := PolygonMorph
@@ -307,17 +307,17 @@ PolygonMorph >> addPolyArrowMenuItems: aMenu hand: aHandMorph [
 ]
 
 { #category : #menu }
-PolygonMorph >> addPolyLIneCurveMenuItems: aMenu hand: aHandMorph [ 
+PolygonMorph >> addPolyLIneCurveMenuItems: aMenu hand: aHandMorph [
 
 	aMenu addLine;
 				addUpdating: #openOrClosePhrase
 				target: self
 				selector: #toggleOpenOrClosed.
-			
+
 			aMenu
 				addUpdating: #smoothOrSegmentedPhrase
 				target: self
-				selector: #toggleSmoothing.
+				selector: #toggleSmoothing
 ]
 
 { #category : #menu }
@@ -419,7 +419,7 @@ PolygonMorph >> arrowsContainPoint: aPoint [
 		f := self arrowForms last.
 		retval at: 1 put: ((f pixelValueAt: aPoint - f offset) > 0)
 	].
-	^retval.
+	^retval
 ]
 
 { #category : #initialization }
@@ -439,12 +439,12 @@ PolygonMorph >> beStraightSegments [
 ]
 
 { #category : #accessing }
-PolygonMorph >> borderColor: aColor [ 
+PolygonMorph >> borderColor: aColor [
 
 	super borderColor: aColor.
-	(borderColor isColor and: [borderColor isTranslucentButNotTransparent]) 
-		== (aColor isColor and: [aColor isTranslucentButNotTransparent]) 
-			ifFalse: 
+	(borderColor isColor and: [borderColor isTranslucentButNotTransparent])
+		== (aColor isColor and: [aColor isTranslucentButNotTransparent])
+			ifFalse:
 				["Need to recompute fillForm and borderForm
 					if translucency of border changes."
 
@@ -487,12 +487,12 @@ PolygonMorph >> bounds: newBounds [
 	"This method has to be reimplemented since self extent: will also change self bounds origin,
 	super bounds would leave me in wrong position when container is growing.
 	Always change extent first then position"
-	
+
 	self extent: newBounds extent; position: newBounds topLeft
 ]
 
 { #category : #'cubic support' }
-PolygonMorph >> changeInSlopes: slopes of: verts [ 
+PolygonMorph >> changeInSlopes: slopes of: verts [
 	"A message to knots of a spline. Returns an array with the 3rd cubic coeff."
 	"The last nth item is correct iff this is a closed cubic.
 	Presumably that is the only time we care.
@@ -509,10 +509,10 @@ PolygonMorph >> changeInSlopes: slopes of: verts [
 
 { #category : #'cubic support' }
 PolygonMorph >> changeOfChangesInSlopes: slopes of: verts [
-	"A message to knots of a spline. Returns an array with the 4rd 
+	"A message to knots of a spline. Returns an array with the 4rd
 	cubic coeff."
-	"The last nth item is correct iff this is a closed cubic. 
-	Presumably that is the only time we care. 
+	"The last nth item is correct iff this is a closed cubic.
+	Presumably that is the only time we care.
 	We always return the same sized array as self."
 	| n changes |
 	n := verts size.
@@ -531,20 +531,20 @@ PolygonMorph >> clickVertex: ix event: evt fromHandle: handle [
 ]
 
 { #category : #'cubic support' }
-PolygonMorph >> closedCubicSlopesOf: knots [ 
+PolygonMorph >> closedCubicSlopesOf: knots [
 	"Sent to knots returns the slopes of a closed cubic spline.
-	From the same set of java sources as naturalCubic. This is a smalltalk  
+	From the same set of java sources as naturalCubic. This is a smalltalk
 	transliteration of the java code."
-	"from java code NatCubicClosed extends NatCubic  
-	solves for the set of equations for all knots: 
+	"from java code NatCubicClosed extends NatCubic
+	solves for the set of equations for all knots:
 	b1+4*b2+b3=3*(a3-a1)
 	where a1 is (knots atWrap: index + 1) etc.
 	and the b's are the slopes .
-	by decomposing the matrix into upper triangular and lower matrices  
-	and then back sustitution. See Spath 'Spline Algorithms for Curves  
-	and Surfaces' pp 19--21. The D[i] are the derivatives at the knots.  
+	by decomposing the matrix into upper triangular and lower matrices
+	and then back sustitution. See Spath 'Spline Algorithms for Curves
+	and Surfaces' pp 19--21. The D[i] are the derivatives at the knots.
 	"
-	
+
 	| v w x y z n1  D F G H |
 	n1 := knots size.
 	n1 < 3
@@ -552,7 +552,7 @@ PolygonMorph >> closedCubicSlopesOf: knots [
 	v := Array new: n1.
 	w := Array new: n1.
 	y := Array new: n1.
-	
+
 	D := Array new: n1.
 	x := knots.
 	z := 1.0 / 4.0.
@@ -562,7 +562,7 @@ PolygonMorph >> closedCubicSlopesOf: knots [
 	H := 4.0.
 	F := 3 * ((x at: 1) - (x at: n1 - 1)).
 	G := 1.
-	2 to: n1 - 1 do: [:k | 
+	2 to: n1 - 1 do: [:k |
 			z := 1.0 / (4.0 - (v at: k)).
 			v at: k + 1 put: z.
 			w at: k + 1 put: z negated
@@ -582,15 +582,15 @@ PolygonMorph >> closedCubicSlopesOf: knots [
 ]
 
 { #category : #geometry }
-PolygonMorph >> closestPointTo: aPoint [ 
+PolygonMorph >> closestPointTo: aPoint [
 	| closestPoint minDist |
 	closestPoint := minDist := nil.
-	self lineSegmentsDo: 
-			[:p1 :p2 | | dist curvePoint | 
+	self lineSegmentsDo:
+			[:p1 :p2 | | dist curvePoint |
 			curvePoint := aPoint nearestPointOnLineFrom: p1 to: p2.
 			dist := curvePoint distanceTo: aPoint.
-			(closestPoint isNil or: [dist < minDist]) 
-				ifTrue: 
+			(closestPoint isNil or: [dist < minDist])
+				ifTrue:
 					[closestPoint := curvePoint.
 					minDist := dist]].
 	^closestPoint
@@ -604,7 +604,7 @@ PolygonMorph >> closestSegmentTo: aPoint [
 	closestVertexIndex := 0.
 	closestPoint := minDist := nil.
 	self lineSegmentsDo:
-		[:p1 :p2 | | curvePoint dist | 
+		[:p1 :p2 | | curvePoint dist |
 		(p1 = (self vertices at: vertexIndex + 1))
 			ifTrue: [ vertexIndex := vertexIndex + 1 ].
 		curvePoint := aPoint nearestPointOnLineFrom: p1 to: p2.
@@ -619,40 +619,40 @@ PolygonMorph >> closestSegmentTo: aPoint [
 { #category : #smoothing }
 PolygonMorph >> coefficients [
 	curveState ifNotNil: [^ curveState at: 1].
-	^ self vertices size < 1 
+	^ self vertices size < 1
 		ifTrue: [ self  ]
-		ifFalse: [ self coefficientsForMoreThanThreePoints ].
+		ifFalse: [ self coefficientsForMoreThanThreePoints ]
 ]
 
 { #category : #smoothing }
-PolygonMorph >> coefficientsForMoreThanThreePoints [ 
+PolygonMorph >> coefficientsForMoreThanThreePoints [
 	"Less than three points handled as segments by our lineSegmentsDo:"
 	| verts coefficients vertXs slopeXs vertYs slopeYs bestSegments |
-	verts := self vertices. 
+	verts := self vertices.
 	coefficients := {
 		vertXs := verts collect: [:p | p x asFloat].
-		slopeXs := self slopes: vertXs. 
+		slopeXs := self slopes: vertXs.
 		self changeInSlopes: slopeXs of: vertXs .
-		self changeOfChangesInSlopes: slopeXs of: vertXs. 
+		self changeOfChangesInSlopes: slopeXs of: vertXs.
 		vertYs := verts collect: [:p | p y asFloat].
 		slopeYs := self slopes: vertYs.
 		self changeInSlopes: slopeYs of: vertYs.
-		self changeOfChangesInSlopes: slopeYs of: vertYs. 
+		self changeOfChangesInSlopes: slopeYs of: vertYs.
 		Array new: verts size withAll: 12}.
-		
-		
+
+
 	bestSegments := (1 to: verts size) collect: [:i | (self transform: coefficients toCubicPointPolynomialAt: i) bestSegments].
 	coefficients at: 9 put:bestSegments.
-	
+
 	curveState := {coefficients. nil. nil}.
 	self computeNextToEndPoints.
 	^ coefficients
 ]
 
 { #category : #private }
-PolygonMorph >> computeArrowFormAt: endPoint from: priorPoint [ 
-	"Compute a triangle oriented along the line from priorPoint to  
-	endPoint. Then draw those lines in a form and return that  
+PolygonMorph >> computeArrowFormAt: endPoint from: priorPoint [
+	"Compute a triangle oriented along the line from priorPoint to
+	endPoint. Then draw those lines in a form and return that
 	form, with appropriate offset"
 
 	| p1 pts box arrowForm bb origin |
@@ -667,8 +667,8 @@ PolygonMorph >> computeArrowFormAt: endPoint from: priorPoint [
 				height: 1.
 	origin := box topLeft.
 	p1 := pts last - origin.
-	pts do: 
-			[:p | 
+	pts do:
+			[:p |
 			bb drawFrom: p1 to: p - origin.
 			p1 := p - origin].
 	arrowForm convexShapeFill: Color black.
@@ -699,15 +699,15 @@ PolygonMorph >> computeBounds [
 		].
 	].
 	self layoutChanged.
-	self changed.
+	self changed
 ]
 
 { #category : #smoothing }
 PolygonMorph >> computeNextToEndPoints [
 	| pointAfterFirst pointBeforeLast |
 	pointAfterFirst := nil.
-	self lineSegmentsDo: 
-			[:p1 :p2 | 
+	self lineSegmentsDo:
+			[:p1 :p2 |
 			pointAfterFirst ifNil: [pointAfterFirst := p2 asIntegerPoint].
 			pointBeforeLast := p1 asIntegerPoint].
 	curveState at: 2 put: pointAfterFirst.
@@ -749,9 +749,9 @@ PolygonMorph >> couldHaveRoundedCorners [
 { #category : #private }
 PolygonMorph >> curveBounds [
 
-	"Compute the bounds from actual curve traversal, with 
-	leeway for borderWidth. 
-	Also note the next-to-first and next-to-last points for arrow 
+	"Compute the bounds from actual curve traversal, with
+	leeway for borderWidth.
+	Also note the next-to-first and next-to-last points for arrow
 	directions."
 
 	"wiz - to avoid roundoff errors we return unrounded curvebounds."
@@ -767,7 +767,7 @@ PolygonMorph >> curveBounds [
 	curveState := nil.	"Force recomputation"	"curveBounds := vertices first corner: vertices last."
 	pointAfterFirst := nil.
 	self
-		lineSegmentsDo: [ :p1 :p2 | 
+		lineSegmentsDo: [ :p1 :p2 |
 			pointAfterFirst
 				ifNil: [ pointAfterFirst := p2 floor.
 					oX := cX := p1 x.
@@ -835,7 +835,7 @@ PolygonMorph >> dashedBorder: dashSpec [
 
 { #category : #attachments }
 PolygonMorph >> defaultAttachmentPointSpecs [
-	^{ 
+	^{
 		{ #firstVertex } .
 		{ #midpoint } .
 		{ #lastVertex }
@@ -863,43 +863,43 @@ PolygonMorph >> deleteVertexAt: anIndex [
 	self setVertices: (vertices
 						copyReplaceFrom: anIndex
 						to: anIndex
-						with: #()).
+						with: #())
 ]
 
 { #category : #smoothing }
-PolygonMorph >> derivs: a first: point1 second: point2 third: point3 [ 
+PolygonMorph >> derivs: a first: point1 second: point2 third: point3 [
 	"Compute the first, second and third derivitives (in coeffs) from
 	the Points in this Path (coeffs at: 1 and coeffs at: 5)."
 
 	| len v anArray |
 	len := a size.
 	len < 2 ifTrue: [^self].
-	len > 2 
-		ifTrue: 
+	len > 2
+		ifTrue:
 			[v := Array new: len.
 			v at: 1 put: 4.0.
 			anArray := Array new: len.
 			anArray at: 1 put: 6.0 * (a first - (a second * 2.0) + (a third)).
 			2 to: len - 2
-				do: 
-					[:i | 
+				do:
+					[:i |
 					v at: i put: 4.0 - (1.0 / (v at: i - 1)).
 					anArray at: i
-						put: 6.0 * ((a at: i) - ((a at: i + 1) * 2.0) + (a at: i + 2)) 
+						put: 6.0 * ((a at: i) - ((a at: i + 1) * 2.0) + (a at: i + 2))
 								- ((anArray at: i - 1) / (v at: i - 1))].
 			point2 at: len - 1 put: (anArray at: len - 2) / (v at: len - 2).
 			len - 2 to: 2
 				by: 0 - 1
-				do: 
-					[:i | 
+				do:
+					[:i |
 					point2 at: i
 						put: ((anArray at: i - 1) - (point2 at: i + 1)) / (v at: i - 1)]].
 	point2 at: 1 put: (point2 at: len put: 0.0).
 	1 to: len - 1
-		do: 
-			[:i | 
+		do:
+			[:i |
 			point1 at: i
-				put: (a at: i + 1) - (a at: i) 
+				put: (a at: i + 1) - (a at: i)
 						- (((point2 at: i) * 2.0 + (point2 at: i + 1)) / 6.0).
 			point3 at: i put: (point2 at: i + 1) - (point2 at: i)]
 ]
@@ -907,7 +907,7 @@ PolygonMorph >> derivs: a first: point1 second: point2 third: point3 [
 { #category : #shaping }
 PolygonMorph >> diamondOval [
 	"Set my vertices to an array of edge midpoint vertices. Order of vertices is in the tradion of warpblt quads."
-	
+
 	| b |
 	b := self bounds.
 	self setVertices: { b leftCenter. b bottomCenter. b rightCenter. b topCenter }
@@ -922,20 +922,20 @@ PolygonMorph >> dragVertex: ix event: evt fromHandle: handle [
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawArrowOn: aCanvas at: endPoint from: priorPoint [ 
-	"Draw a triangle oriented along the line from priorPoint to  
+PolygonMorph >> drawArrowOn: aCanvas at: endPoint from: priorPoint [
+	"Draw a triangle oriented along the line from priorPoint to
 	endPoint. Answer the wingBase."
 
 	| pts spec wingBase |
 	pts := self arrowBoundsAt: endPoint from: priorPoint.
-	wingBase := pts size = 4 
+	wingBase := pts size = 4
 				ifTrue: [pts third]
 				ifFalse: [(pts copyFrom: 2 to: 3) average].
 	spec := self valueOfProperty: #arrowSpec ifAbsent: [PolygonMorph defaultArrowSpec].
-	spec x sign = spec y sign 
+	spec x sign = spec y sign
 		ifTrue: [aCanvas drawPolygon: pts fillStyle: borderColor]
-		ifFalse: 
-			[aCanvas 
+		ifFalse:
+			[aCanvas
 				drawPolygon: pts
 				fillStyle: Color transparent
 				borderWidth: (borderWidth + 1) // 2
@@ -944,7 +944,7 @@ PolygonMorph >> drawArrowOn: aCanvas at: endPoint from: priorPoint [
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawArrowsOn: aCanvas [ 
+PolygonMorph >> drawArrowsOn: aCanvas [
 	"Answer (possibly modified) endpoints for border drawing"
 	"ArrowForms are computed only upon demand"
 	| array |
@@ -975,17 +975,17 @@ PolygonMorph >> drawArrowsOn: aCanvas [
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawBorderOn: aCanvas [ 
+PolygonMorph >> drawBorderOn: aCanvas [
 	self
 		drawClippedBorderOn: aCanvas
 		usingEnds: (Array with: vertices first with: vertices last)
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawBorderOn: aCanvas usingEnds: anArray [ 
+PolygonMorph >> drawBorderOn: aCanvas usingEnds: anArray [
 	"Display my border on the canvas."
-	"NOTE: Much of this code is also copied in  
-	drawDashedBorderOn:  
+	"NOTE: Much of this code is also copied in
+	drawDashedBorderOn:
 	(should be factored)"
 	| bigClipRect style |
 	borderDashSpec
@@ -993,11 +993,11 @@ PolygonMorph >> drawBorderOn: aCanvas usingEnds: anArray [
 	style := self borderStyle.
 	bigClipRect := aCanvas clipRect expandBy: self borderWidth + 1 // 2.
 	self
-		lineSegmentsDo: [:p1 :p2 | | p1i p2i | 
+		lineSegmentsDo: [:p1 :p2 | | p1i p2i |
 			p1i := p1 asIntegerPoint.
 			p2i := p2 asIntegerPoint.
 			self hasArrows
-				ifTrue: ["Shorten line ends so as not to interfere with tip  
+				ifTrue: ["Shorten line ends so as not to interfere with tip
 					of arrow."
 					((arrows == #back
 								or: [arrows == #both])
@@ -1008,7 +1008,7 @@ PolygonMorph >> drawBorderOn: aCanvas usingEnds: anArray [
 							and: [p2 = vertices last])
 						ifTrue: [p2i := anArray last asIntegerPoint]].
 			(closed
-					or: ["bigClipRect intersects: (p1i rect: p2i)  
+					or: ["bigClipRect intersects: (p1i rect: p2i)
 						optimized:"
 						((p1i min: p2i)
 							max: bigClipRect origin)
@@ -1021,20 +1021,20 @@ PolygonMorph >> drawBorderOn: aCanvas usingEnds: anArray [
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawClippedBorderOn: aCanvas usingEnds: anArray [ 
-	aCanvas clipBy: self bounds during:[:cc| self drawBorderOn: cc usingEnds: anArray].
+PolygonMorph >> drawClippedBorderOn: aCanvas usingEnds: anArray [
+	aCanvas clipBy: self bounds during:[:cc| self drawBorderOn: cc usingEnds: anArray]
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawDashedBorderOn: aCanvas [ 
+PolygonMorph >> drawDashedBorderOn: aCanvas [
 	self
 		drawDashedBorderOn: aCanvas
 		usingEnds: (Array with: vertices first with: vertices last)
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [ 
-	"Display my border on the canvas. NOTE: mostly copied from  
+PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [
+	"Display my border on the canvas. NOTE: mostly copied from
 	drawBorderOn:"
 	| bevel topLeftColor bottomRightColor bigClipRect lineColor segmentOffset |
 	(borderColor isNil
@@ -1043,7 +1043,7 @@ PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [
 		ifTrue: [^ self].
 	lineColor := borderColor.
 	bevel := false.
-	"Border colors for bevelled effects depend on CW ordering of  
+	"Border colors for bevelled effects depend on CW ordering of
 	vertices"
 	borderColor == #raised
 		ifTrue: [topLeftColor := color lighter.
@@ -1056,11 +1056,11 @@ PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [
 	bigClipRect := aCanvas clipRect expandBy: self borderWidth + 1 // 2.
 	segmentOffset := self borderDashOffset.
 	self
-		lineSegmentsDo: [:p1 :p2 | | p2i p1i | 
+		lineSegmentsDo: [:p1 :p2 | | p2i p1i |
 			p1i := p1 asIntegerPoint.
 			p2i := p2 asIntegerPoint.
 			self hasArrows
-				ifTrue: ["Shorten line ends so as not to interfere with tip  
+				ifTrue: ["Shorten line ends so as not to interfere with tip
 					of arrow."
 					((arrows == #back
 								or: [arrows == #both])
@@ -1071,7 +1071,7 @@ PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [
 							and: [p2 = vertices last])
 						ifTrue: [p2i := anArray last asIntegerPoint]].
 			(closed
-					or: ["bigClipRect intersects: (p1i rect: p2i)  
+					or: ["bigClipRect intersects: (p1i rect: p2i)
 						optimized:"
 						((p1i min: p2i)
 							max: bigClipRect origin)
@@ -1094,17 +1094,17 @@ PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawDropShadowOn: aCanvas [ 
-	"Display the receiver, a spline curve, approximated by straight 
+PolygonMorph >> drawDropShadowOn: aCanvas [
+	"Display the receiver, a spline curve, approximated by straight
 	line segments."
 	self assert: [vertices notEmpty] description: 'a polygon must have at least one point'.
-	closed 
-		ifTrue: [aCanvas drawPolygon: self getVertices fillStyle: self shadowColor].
+	closed
+		ifTrue: [aCanvas drawPolygon: self getVertices fillStyle: self shadowColor]
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawOn: aCanvas [ 
-	"Display the receiver, a spline curve, approximated by straight 
+PolygonMorph >> drawOn: aCanvas [
+	"Display the receiver, a spline curve, approximated by straight
 	line segments."
 	| array |
 	vertices size < 1
@@ -1112,11 +1112,11 @@ PolygonMorph >> drawOn: aCanvas [
 	closed ifTrue:
 		[aCanvas drawPolygon: self getVertices fillStyle: self fillStyle ].
 	array := self drawArrowsOn: aCanvas.
-	self drawClippedBorderOn: aCanvas usingEnds: array.
+	self drawClippedBorderOn: aCanvas usingEnds: array
 ]
 
 { #category : #drawing }
-PolygonMorph >> drawOnFormCanvas: aCanvas [ 
+PolygonMorph >> drawOnFormCanvas: aCanvas [
 	"Display the receiver, a spline curve, approximated by straight line segments."
 
 	vertices size < 1 ifTrue: [self error: 'a polygon must have at least one point'].
@@ -1126,8 +1126,8 @@ PolygonMorph >> drawOnFormCanvas: aCanvas [
 		ifTrue: [aCanvas stencil: self borderForm at: bounds topLeft color: borderColor]
 		ifFalse: [self drawBorderOn: aCanvas].
 	self arrowForms do:
-		[:f | aCanvas 
-				stencil: f 
+		[:f | aCanvas
+				stencil: f
 				at: f offset
 				color: (borderColor isColor ifTrue: [borderColor] ifFalse: [color])]
 ]
@@ -1135,11 +1135,11 @@ PolygonMorph >> drawOnFormCanvas: aCanvas [
 { #category : #editing }
 PolygonMorph >> dropVertex: ix event: evt fromHandle: handle [
 	"Leave vertex in new position. If dropped ontop another vertex delete this one. Check for too few vertices before deleting. The alternative is not pretty"
-	
+
 	| p |
 	p := vertices at: ix.
 	(vertices size >= 2
-			and: ["check for too few vertices before deleting. The alternative 
+			and: ["check for too few vertices before deleting. The alternative
 				is not pretty -wiz"
 				((vertices atWrap: ix - 1)
 						distanceTo: p)
@@ -1158,7 +1158,7 @@ PolygonMorph >> dropVertex: ix event: evt fromHandle: handle [
 { #category : #attachments }
 PolygonMorph >> endShapeColor: aColor [
 	self borderColor: aColor.
-	self isClosed ifTrue: [ self color: aColor ].
+	self isClosed ifTrue: [ self color: aColor ]
 ]
 
 { #category : #attachments }
@@ -1173,11 +1173,11 @@ PolygonMorph >> endShapeWidth: aWidth [
 	self setVertices: (originalVertices collect: [ :ea |
 		((transform transform: ea) + self referencePosition) asIntegerPoint
 	]).
-	self computeBounds.
+	self computeBounds
 ]
 
 { #category : #geometry }
-PolygonMorph >> extent: newExtent [ 
+PolygonMorph >> extent: newExtent [
 	"Not really advisable, but we can preserve most of the geometry if we don't
 	shrink things too small."
 	| safeExtent center |
@@ -1239,10 +1239,10 @@ PolygonMorph >> flipHAroundX: centerX [
 	"Flip me horizontally around the center.  If centerX is nil, compute my center of gravity."
 
 	| cent |
-	cent := centerX 
+	cent := centerX
 		ifNil: [ bounds center x ] "average is the center"
 		ifNotNil: [ centerX ].
-	self setVertices: (vertices collect: [ :vv | ((vv x - cent) * -1 + cent) @ vv y ]) reversed.
+	self setVertices: (vertices collect: [ :vv | ((vv x - cent) * -1 + cent) @ vv y ]) reversed
 ]
 
 { #category : #geometry }
@@ -1250,11 +1250,11 @@ PolygonMorph >> flipVAroundY: centerY [
 	"Flip me vertically around the center.  If centerY is nil, compute my center of gravity."
 
 	| cent |
-	cent := centerY 
+	cent := centerY
 		ifNil: [ bounds center y ]		"average is the center"
 		ifNotNil: [ centerY ].
 	self setVertices: (vertices collect: [:vv |
-			vv x @ ((vv y - cent) * -1 + cent)]) reversed.
+			vv x @ ((vv y - cent) * -1 + cent)]) reversed
 ]
 
 { #category : #private }
@@ -1302,7 +1302,7 @@ PolygonMorph >> includesHandle: aMorph [
 
 { #category : #initialization }
 PolygonMorph >> initialize [
-	
+
 	super initialize.
 	vertices := Array
 				with: 5 @ 0
@@ -1313,13 +1313,13 @@ PolygonMorph >> initialize [
 	arrows := #none.
 	self computeBounds.
 	self beSmoothCurve.
-	self diamondOval.
+	self diamondOval
 ]
 
 { #category : #editing }
 PolygonMorph >> insertVertexAt: anIndex put: aValue [
 	"This serves as a hook and a backstop for MixedCurveMorph."
-	self setVertices: (vertices copyReplaceFrom: anIndex + 1 to: anIndex with: (Array with: aValue)).
+	self setVertices: (vertices copyReplaceFrom: anIndex + 1 to: anIndex with: (Array with: aValue))
 ]
 
 { #category : #geometry }
@@ -1344,7 +1344,7 @@ PolygonMorph >> intersectionsWith: aRectangle [
 ]
 
 { #category : #geometry }
-PolygonMorph >> intersects: aRectangle [ 
+PolygonMorph >> intersects: aRectangle [
 	"Answer whether any of my segments intersects aRectangle, which is in World coordinates."
 	| rect |
 	(super intersects: aRectangle) ifFalse: [ ^false ].
@@ -1379,7 +1379,7 @@ PolygonMorph >> isCurve [
 
 { #category : #testing }
 PolygonMorph >> isCurvy [
-	"Test for significant curves.  
+	"Test for significant curves.
 	Small smoothcurves in practice are straight."
 	^ smoothCurve
 		and: [vertices size > 2]
@@ -1441,14 +1441,14 @@ PolygonMorph >> lineSegments [
 ]
 
 { #category : #smoothing }
-PolygonMorph >> lineSegmentsDo: endPointsBlock [ 
+PolygonMorph >> lineSegmentsDo: endPointsBlock [
 	"Emit a sequence of segment endpoints into endPointsBlock."
-	"Unlike the method this one replaces we expect the curve 
+	"Unlike the method this one replaces we expect the curve
 	coefficents not the dirivatives"
 	"Also unlike the replaced method the smooth closed curve
-	does 
-	not need an extra vertex. 
-	We take care of the extra endpoint here. Just like for 
+	does
+	not need an extra vertex.
+	We take care of the extra endpoint here. Just like for
 	segmented curves."
 	| cs x y beginPoint |
 	vertices size < 1
@@ -1456,12 +1456,12 @@ PolygonMorph >> lineSegmentsDo: endPointsBlock [
 	"test too few vertices first"
 	self isCurvy
 		ifFalse: [beginPoint := nil.
-			"smoothCurve 
+			"smoothCurve
 			ifTrue: [cs := self coefficients]."
-			"some things still depend on smoothCurves having 
+			"some things still depend on smoothCurves having
 			curveState"
 			vertices
-				do: [:vert | 
+				do: [:vert |
 					beginPoint
 						ifNotNil: [endPointsBlock value: beginPoint value: vert].
 					beginPoint := vert].
@@ -1476,7 +1476,7 @@ PolygonMorph >> lineSegmentsDo: endPointsBlock [
 	(closed
 		ifTrue: [1 to: cs first size]
 		ifFalse: [1 to: cs first size - 1])
-		do: [:i | | t n x3 y3 x1 endPoint x2 y1 y2 | 
+		do: [:i | | t n x3 y3 x1 endPoint x2 y1 y2 |
 			"taylor series coefficients"
 			x1 := cs second at: i.
 			y1 := cs sixth at: i.
@@ -1485,14 +1485,14 @@ PolygonMorph >> lineSegmentsDo: endPointsBlock [
 			x3 := cs fourth at: i.
 			y3 := cs eighth at: i.
 			n := cs ninth at: i.
-			"guess n 
+			"guess n
 			n := 5 max: (x2 abs + y2 abs * 2.0 + (cs third atWrap:
-			i 
-			+ 1) abs + (cs seventh atWrap: i + 1) abs / 100.0) 
+			i
+			+ 1) abs + (cs seventh atWrap: i + 1) abs / 100.0)
 			rounded."
 			1
 				to: n - 1
-				do: [:j | 
+				do: [:j |
 					t := j asFloat / n asFloat.
 					endPoint := x3 * t + x2 * t + x1 * t + x @ (y3 * t + y2 * t + y1 * t + y).
 					endPointsBlock value: beginPoint value: endPoint.
@@ -1553,51 +1553,51 @@ PolygonMorph >> makeOpen [
 ]
 
 { #category : #geometry }
-PolygonMorph >> merge: aPolygon [ 
+PolygonMorph >> merge: aPolygon [
 	"Expand myself to enclose the other polygon.  (Later merge overlapping or disjoint in a smart way.)  For now, the two polygons must share at least two vertices.  Shared vertices must come one after the other in each polygon.  Polygons must not overlap."
 
 	| shared mv vv hv xx |
 	shared := vertices select: [:mine | aPolygon vertices includes: mine].
 	shared size < 2 ifTrue: [^nil].	"not sharing a segment"
 	mv := vertices asOrderedCollection.
-	[shared includes: mv first] whileFalse: 
+	[shared includes: mv first] whileFalse:
 			["rotate them"
 
 			vv := mv removeFirst.
 			mv addLast: vv].
 	hv := aPolygon vertices asOrderedCollection.
-	[mv first = hv first] whileFalse: 
+	[mv first = hv first] whileFalse:
 			["rotate him until same shared vertex is first"
 
 			vv := hv removeFirst.
 			hv addLast: vv].
-	[shared size > 2] whileTrue: 
+	[shared size > 2] whileTrue:
 			[shared := shared asOrderedCollection.
-			(self 
+			(self
 				mergeDropThird: mv
 				in: hv
 				from: shared) ifNil: [^nil]].
 	"works by side effect on the lists"
-	(mv second) = hv last 
-		ifTrue: 
+	(mv second) = hv last
+		ifTrue:
 			[mv
 				removeFirst;
 				removeFirst.
 			^self setVertices: (hv , mv) asArray].
-	(hv second) = mv last 
-		ifTrue: 
+	(hv second) = mv last
+		ifTrue:
 			[hv
 				removeFirst;
 				removeFirst.
 			^self setVertices: (mv , hv) asArray].
-	(mv second) = (hv second) 
-		ifTrue: 
+	(mv second) = (hv second)
+		ifTrue:
 			[hv removeFirst.
 			mv remove: (mv second).
 			xx := mv removeFirst.
 			^self setVertices: (hv , (Array with: xx) , mv reversed) asArray].
-	mv last = hv last 
-		ifTrue: 
+	mv last = hv last
+		ifTrue:
 			[mv removeLast.
 			hv removeFirst.
 			^self setVertices: (mv , hv reversed) asArray].
@@ -1605,29 +1605,29 @@ PolygonMorph >> merge: aPolygon [
 ]
 
 { #category : #geometry }
-PolygonMorph >> mergeDropThird: mv in: hv from: shared [ 
+PolygonMorph >> mergeDropThird: mv in: hv from: shared [
 	"We are merging two polygons.  In this case, they have at least three identical shared vertices.  Make sure they are sequential in each, and drop the middle one from vertex lists mv, hv, and shared.  First vertices on lists are identical already."
 
 	"know (mv first = hv first)"
 
 	| mdrop vv |
-	(shared includes: (mv at: mv size - 2)) 
+	(shared includes: (mv at: mv size - 2))
 		ifTrue: [(shared includes: mv last) ifTrue: [mdrop := mv last]]
-		ifFalse: 
-			[(shared includes: mv last) 
+		ifFalse:
+			[(shared includes: mv last)
 				ifTrue: [(shared includes: mv second) ifTrue: [mdrop := mv first]]].
-	(shared includes: (mv third)) 
+	(shared includes: (mv third))
 		ifTrue: [(shared includes: mv second) ifTrue: [mdrop := mv second]].
 	mdrop ifNil: [^nil].
 	mv remove: mdrop.
 	hv remove: mdrop.
 	shared remove: mdrop.
-	[shared includes: mv first] whileFalse: 
+	[shared includes: mv first] whileFalse:
 			["rotate them"
 
 			vv := mv removeFirst.
 			mv addLast: vv].
-	[mv first = hv first] whileFalse: 
+	[mv first = hv first] whileFalse:
 			["rotate him until same shared vertex is first"
 
 			vv := hv removeFirst.
@@ -1646,7 +1646,7 @@ PolygonMorph >> midVertices [
 	tweens add: vertices first asIntegerPoint.
 	"guarantee at least two points."
 	self
-		lineSegmentsDo: [:p1 :p2 | 
+		lineSegmentsDo: [:p1 :p2 |
 			tweens addLast: p2 asIntegerPoint.
 			p2 = (vertices atWrap: nextVertIx)
 				ifTrue: ["Found endPoint."
@@ -1693,10 +1693,10 @@ PolygonMorph >> mouseDown: evt [
 ]
 
 { #category : #'cubic support' }
-PolygonMorph >> naturalCubicSlopesOf: knots [ 
+PolygonMorph >> naturalCubicSlopesOf: knots [
 	"Sent to knots returns the slopes of a natural cubic curve fit."
-	"We solve the equation for knots with end conditions:  
-	2*b1+b2 = 3(a1 - a0) 
+	"We solve the equation for knots with end conditions:
+	2*b1+b2 = 3(a1 - a0)
 	bN1+2*bN = 3*(aN-aN1)
 	and inbetween:
 	b2+4*b3+b4=3*(a4-a2)
@@ -1704,11 +1704,11 @@ PolygonMorph >> naturalCubicSlopesOf: knots [
 	and the b's are the slopes .
 	N is the last index (knots size)
 	N1 is N-1.
-	 
-	by using row operations to convert the matrix to upper  
-	triangular and then back sustitution. The D[i] are the derivatives at the  
+
+	by using row operations to convert the matrix to upper
+	triangular and then back sustitution. The D[i] are the derivatives at the
 	knots."
-	
+
 	| x gamma delta D n1 |
 	n1 := knots size.
 	n1 < 3
@@ -1716,7 +1716,7 @@ PolygonMorph >> naturalCubicSlopesOf: knots [
 	x := knots.
 	gamma := Array new: n1.
 	delta := Array new: n1.
-	
+
 	D := Array new: n1.
 	gamma at: 1 put: 1.0 / 2.0.
 	2 to: n1 - 1 do: [:i | gamma at: i put: 1.0 / (4.0
@@ -1763,7 +1763,7 @@ PolygonMorph >> newVertex: ix event: evt fromHandle: handle [
 PolygonMorph >> nextDuplicateVertexIndex [
 	vertices
 		doWithIndex: [:vert :index | ((index between: 2 and: vertices size - 1)
-					and: [| epsilon v1 v2 | 
+					and: [| epsilon v1 v2 |
 						v1 := vertices at: index - 1.
 						v2 := vertices at: index + 1.
 						epsilon := ((v1 x - v2 x) abs max: (v1 y - v2 y) abs)
@@ -1807,7 +1807,7 @@ PolygonMorph >> nudgeForLabel: aRectangle [
 	i := 1.
 	aRectangle lineSegmentsDo: [ :rp1 :rp2 | | rectSeg |
 		rectSeg := LineSegment from: rp1 to: rp2.
-		self straightLineSegmentsDo: [ :lp1 :lp2 | 
+		self straightLineSegmentsDo: [ :lp1 :lp2 |
 			| polySeg int |
 			polySeg := LineSegment from: lp1 to: lp2.
 			int := polySeg intersectionWith: rectSeg.
@@ -1819,25 +1819,25 @@ PolygonMorph >> nudgeForLabel: aRectangle [
 	nudge := flags caseOf: {
 	"no intersection"
 		[ 0 ] -> [ 0 @ 0 ].
-		"2 adjacent sides only" 
+		"2 adjacent sides only"
 		[ 9 ] -> [ 1 @ 1 ].
 		[ 3 ] -> [ -1 @ 1 ].
 		[ 12 ] -> [ 1 @ -1 ].
 		[ 6 ] -> [ -1 @ -1 ].
-		"2 opposite sides only" 
+		"2 opposite sides only"
 		[ 10 ] -> [ 0 @ -1 ].
 		[ 5 ] -> [ 1 @ 0 ].
-		"only 1 side" 
+		"only 1 side"
 		[ 8 ] -> [ -1 @ 0 ].
 		[ 1 ] -> [ 0 @ -1 ].
 		[ 2 ] -> [ 1 @ 0 ].
 		[ 4 ] -> [ 0 @ 1 ].
-		"3 sides" 
+		"3 sides"
 		[ 11 ] -> [ 0 @ 1 ].
 		[ 13 ] -> [ 1 @ 0 ].
 		[ 14 ] -> [ 0 @ -1 ].
 		[ 7 ] -> [ -1 @ 0 ].
- 		"all sides" 
+ 		"all sides"
 		[ 15 ] -> [ 1 @ -1 "move up and to the right" ].
 	}.
 	^nudge
@@ -1883,7 +1883,7 @@ PolygonMorph >> rectangleOval [
 	"Set my vertices to an array of corner vertices.
 	Order of vertices is in the tradion of warpblt quads."
 
-	self setVertices: self bounds corners.
+	self setVertices: self bounds corners
 ]
 
 { #category : #geometry }
@@ -1893,11 +1893,11 @@ PolygonMorph >> reduceVertices [
 	[ (dup := self nextDuplicateVertexIndex) > 0 ] whileTrue: [
 		self setVertices: (vertices copyWithoutIndex: dup)
 	].
-	^vertices size.
+	^vertices size
 ]
 
 { #category : #geometry }
-PolygonMorph >> referencePosition [ 
+PolygonMorph >> referencePosition [
 	"Return the current reference position of the receiver"
 	^ self valueOfProperty: #referencePosition ifAbsent: [super referencePosition]
 ]
@@ -1911,14 +1911,14 @@ PolygonMorph >> releaseCachedState [
 	borderForm := nil.
 	curveState := nil.
 	(self hasProperty: #flex) ifTrue:
-		[self removeProperty: #flex].
+		[self removeProperty: #flex]
 ]
 
 { #category : #menu }
 PolygonMorph >> removeHandles [
 	handles ifNotNil: [
 		handles do: [:h | h delete].
-		handles := nil].
+		handles := nil]
 ]
 
 { #category : #dashes }
@@ -1963,32 +1963,32 @@ PolygonMorph >> rotationDegrees [
 ]
 
 { #category : #geometry }
-PolygonMorph >> rotationDegrees: degrees [ 
+PolygonMorph >> rotationDegrees: degrees [
 	| flex center |
 	(center := self valueOfProperty: #referencePosition) ifNil:
 		[self setProperty: #referencePosition toValue: (center := self bounds center)].
 	flex := (MorphicTransform offset: center negated)
 			withAngle: (degrees - self forwardDirection) degreesToRadians.
 	self setVertices: (vertices collect: [:v | (flex transform: v) - flex offset]).
-	self forwardDirection: degrees.
+	self forwardDirection: degrees
 ]
 
 { #category : #geometry }
-PolygonMorph >> scale: scaleFactor [ 
+PolygonMorph >> scale: scaleFactor [
 	| flex center ratio |
 	ratio := self scaleFactor / scaleFactor.
 	self borderWidth: ((self borderWidth / ratio) rounded max: 0).
 	center := self referencePosition.
 	flex := (MorphicTransform offset: center negated) withScale: ratio.
 	self setVertices: (vertices collect: [:v | (flex transform: v) - flex offset]).
-	super scale: scaleFactor.
+	super scale: scaleFactor
 ]
 
 { #category : #'cubic support' }
-PolygonMorph >> segmentedSlopesOf: knots [ 
-	"For a collection of floats. Returns the slopes for straight 
+PolygonMorph >> segmentedSlopesOf: knots [
+	"For a collection of floats. Returns the slopes for straight
 	segments between vertices."
-	"last slope closes the polygon. Always return same size as 
+	"last slope closes the polygon. Always return same size as
 	self. "
 	^ knots collectWithIndex: [:x :i | (knots atWrap: i + 1) - x]
 ]
@@ -2019,7 +2019,7 @@ PolygonMorph >> showingHandles [
 ]
 
 { #category : #smoothing }
-PolygonMorph >> slopes: knots [ 
+PolygonMorph >> slopes: knots [
 	"Choose slopes according to state of polygon"
 	self isCurvy ifFalse: [^ self segmentedSlopesOf: knots ].
 	^ closed
@@ -2035,7 +2035,7 @@ PolygonMorph >> smoothOrSegmentedPhrase [
 					ifFalse: ['line']) translated.
 	^ self isCurve
 		ifTrue: [ 'make segmented {1}' translated format: {lineName} ]
-		ifFalse: [ 'make smooth {1}' translated format: {lineName} ].
+		ifFalse: [ 'make smooth {1}' translated format: {lineName} ]
 ]
 
 { #category : #menu }
@@ -2061,7 +2061,7 @@ by which the dashes will move in each step of animation]' translated
 	newSpec size = 3 ifTrue:
 		[^ self stopStepping; dashedBorder: newSpec].
 	(newSpec size = 5 and: [newSpec fourth isNumber and: [newSpec fifth isNumber]]) ifTrue:
-		[^ self dashedBorder: newSpec; startStepping].
+		[^ self dashedBorder: newSpec; startStepping]
 ]
 
 { #category : #menu }
@@ -2101,7 +2101,7 @@ PolygonMorph >> straightLineSegmentsDo: endPointsBlock [
 			beginPoint := vert].
 		(closed or: [vertices size = 1])
 			ifTrue: [endPointsBlock value: beginPoint
-									value: vertices first].
+									value: vertices first]
 ]
 
 { #category : #geometry }
@@ -2112,7 +2112,7 @@ PolygonMorph >> straighten [
 { #category : #menu }
 PolygonMorph >> toggleHandles [
 
-	handles ifNil: [self addHandles] ifNotNil: [self removeHandles].
+	handles ifNil: [self addHandles] ifNotNil: [self removeHandles]
 ]
 
 { #category : #accessing }
@@ -2135,14 +2135,14 @@ PolygonMorph >> totalLength [
 	| length |
 	length := 0.
 	self lineSegmentsDo: [ :a :b | length := length + (a distanceTo: b) ].
-	^ length.
+	^ length
 ]
 
 { #category : #'cubic support' }
-PolygonMorph >> transform: coefficients toCubicPointPolynomialAt: vIndex [ 
-	"From curve information assemble a 4-array of points representing the coefficents for curve segment between to points. Beginning point is first point in array endpoint is the pointSum of the array. Meant to be sent to newcurves idea of curve coefficents." 
+PolygonMorph >> transform: coefficients toCubicPointPolynomialAt: vIndex [
+	"From curve information assemble a 4-array of points representing the coefficents for curve segment between to points. Beginning point is first point in array endpoint is the pointSum of the array. Meant to be sent to newcurves idea of curve coefficents."
 	| transformed |
-	transformed := (1 to: 4) collect: [:i | 
+	transformed := (1 to: 4) collect: [:i |
 			((coefficients at: i) at: vIndex) @ ((coefficients at: 4 + i) at: vIndex)].
 	^ Cubic withAll: transformed
 ]
@@ -2159,7 +2159,7 @@ PolygonMorph >> transformVerticesFrom: oldOwner to: newOwner [
 		ifNotNil: [ newOwner transformFrom: world ].
 	newVertices := vertices collect: [ :ea | newTransform globalPointToLocal:
 		(oldTransform localPointToGlobal: ea) ].
-	self setVertices: newVertices.
+	self setVertices: newVertices
 ]
 
 { #category : #geometry }
@@ -2189,7 +2189,7 @@ PolygonMorph >> unrotatedLength: aLength [
 { #category : #menu }
 PolygonMorph >> unrotatedWidth [
 	"If the receiver bears rotation without a transformation morph, answer what its length in the direction it is headed is"
-	
+
 	vertices size = 2 ifTrue: [^ self borderWidth].
 	^ ((PolygonMorph new setVertices: vertices) rotationDegrees: self rotationDegrees negated) width
 ]
@@ -2213,7 +2213,7 @@ PolygonMorph >> updateHandles [
 						ifTrue: [newVert := handles atWrap: vertIndex * 2.
 							newVert position: midPt - (newVert extent // 2)]]]
 		ifFalse: [vertices
-				withIndexDo: [:vertPt :vertIndex | | oldVert | 
+				withIndexDo: [:vertPt :vertIndex | | oldVert |
 					oldVert := handles at: vertIndex * 2 - 1.
 					oldVert position: vertPt - (oldVert extent // 2).
 					(closed
@@ -2225,7 +2225,7 @@ PolygonMorph >> updateHandles [
 
 { #category : #dashes }
 PolygonMorph >> vertexAt: n [
-	^vertices at: (n min: vertices size).
+	^vertices at: (n min: vertices size)
 ]
 
 { #category : #accessing }
@@ -2234,7 +2234,7 @@ PolygonMorph >> vertices [
 ]
 
 { #category : #initialization }
-PolygonMorph >> vertices: verts color: aColor borderWidth: borderWidthInteger borderColor: anotherColor [ 
+PolygonMorph >> vertices: verts color: aColor borderWidth: borderWidthInteger borderColor: anotherColor [
 	super initialize.
 	vertices := verts.
 	color := aColor.

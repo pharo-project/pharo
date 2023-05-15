@@ -47,9 +47,9 @@ ZnUrlShortenerDelegate class >> reset [
 { #category : #utilities }
 ZnUrlShortenerDelegate class >> shorten: urlOrString [
 	"Shorten urlOrString, store it in our database and return the key"
-	
+
 	"self shorten: 'https://pharo.org'."
-	
+
 	| key url |
 	url := urlOrString asUrl.
 	key := MD5 hashMessage: url printString.
@@ -61,7 +61,7 @@ ZnUrlShortenerDelegate class >> shorten: urlOrString [
 { #category : #'request handling' }
 ZnUrlShortenerDelegate >> handleGetRequest: request [
 	^ request uri lastPathSegment
-			ifNotNil: [ :key | 
+			ifNotNil: [ :key |
 				self class database
 					at: key
 					ifPresent: [ :url | ZnResponse redirect: url ]
@@ -85,12 +85,12 @@ ZnUrlShortenerDelegate >> handleRequest: request [
 { #category : #accessing }
 ZnUrlShortenerDelegate >> welcomeHTML [
 	^ ZnHtmlOutputStream streamContents: [ :html |
-		html page: 'Zn URL Shortener' do: [ 
-			html 
-				tag: #form 
-				attributes: #(action '/' 'accept-charset' 'utf-8' method GET) 
-				do: [ 
-					html 
+		html page: 'Zn URL Shortener' do: [
+			html
+				tag: #form
+				attributes: #(action '/' 'accept-charset' 'utf-8' method GET)
+				do: [
+					html
 						str: 'URL'; space;
 						tag: #input attributes: #(type input name url value 'https://pharo.org' size 100); space;
 						tag: #input attributes: #(type submit value 'Shorten') ] ] ]

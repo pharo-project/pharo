@@ -31,7 +31,6 @@ ZnMagicCookieTest >> testInDomain [
 	self assert: (cookie isInDomain: 'http://www.google.com' asZnUrl).
 	self assert: (cookie isInDomain: 'http://google.com' asZnUrl).
 	self assert: ((cookie isInDomain: 'http://pharo-project.org' asZnUrl) not)
-	
 ]
 
 { #category : #testing }
@@ -40,5 +39,4 @@ ZnMagicCookieTest >> testInPath [
 	cookie := ZnCookie fromString: self cookieStringSubpath for: 'www.google.com' asZnUrl.
 	self assert: (cookie isInPath: 'www.google.com/test/' asZnUrl).
 	self assert: ((cookie isInPath: 'www.google.com' asZnUrl) not)
-	
 ]

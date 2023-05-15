@@ -35,7 +35,7 @@ DockingBarMenuItemMorph >> deselectTimeOut: evt [
 	"Deselect timout. Now really deselect"
 
 	owner selectedItem == self
-		ifTrue: [ 
+		ifTrue: [
 			evt hand releaseMouseFocus: owner.
 			owner selectItem: nil event: evt ]
 ]
@@ -59,24 +59,24 @@ DockingBarMenuItemMorph >> mouseEnter: evt [
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]].
 	(owner selectedItem notNil
 				and: [owner selectedItem ~~ self])
-			ifTrue: [owner selectItem: self event: evt.].
+			ifTrue: [owner selectItem: self event: evt.]
 ]
 
 { #category : #events }
 DockingBarMenuItemMorph >> mouseUp: evt [
 	"Handle a mouse up event. Menu items get activated when the mouse is over them. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifFalse: [^self].
-	
+
 	self contentString ifNotNil:[
 		self contents: self contentString withMarkers: true inverse: true.
 		self refreshWorld.
 		(Delay forMilliseconds: 200) wait].
 	owner rootMenu selectItem: nil event: evt.
-	self invokeWithEvent: evt.
+	self invokeWithEvent: evt
 ]
 
 { #category : #'submorphs - accessing' }
-DockingBarMenuItemMorph >> noteNewOwner: aMorph [ 
+DockingBarMenuItemMorph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
 
@@ -85,7 +85,7 @@ DockingBarMenuItemMorph >> noteNewOwner: aMorph [
 
 { #category : #'change reporting' }
 DockingBarMenuItemMorph >> ownerChanged [
-	"The receiver's owner, some kind of a pasteup, has changed its 
+	"The receiver's owner, some kind of a pasteup, has changed its
 	layout."
 	super ownerChanged.
 	self updateLayoutInDockingBar

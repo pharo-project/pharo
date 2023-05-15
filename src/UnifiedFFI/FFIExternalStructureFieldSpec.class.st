@@ -16,9 +16,9 @@ FFIExternalStructureFieldSpec >> addField: aName type: anExternalType [
 ]
 
 { #category : #compiling }
-FFIExternalStructureFieldSpec >> compileSpec [ 
+FFIExternalStructureFieldSpec >> compileSpec [
 	"This will compile the structure spec into something ExternalStructure can understand"
-	^ fields values 
+	^ fields values
 		inject: WordArray new
 		into: [ :all :each | all, (each externalTypeWithArity embeddedSpecWithSize: each externalTypeSize) ]
 ]
@@ -34,13 +34,13 @@ FFIExternalStructureFieldSpec >> fieldsAndTypesDo: aBlock [
 ]
 
 { #category : #initialization }
-FFIExternalStructureFieldSpec >> initialize [ 
+FFIExternalStructureFieldSpec >> initialize [
 	super initialize.
 	fields := OrderedDictionary new
 ]
 
 { #category : #accessing }
-FFIExternalStructureFieldSpec >> typeFor: aString [ 
+FFIExternalStructureFieldSpec >> typeFor: aString [
 	^ fields at: aString
 ]
 

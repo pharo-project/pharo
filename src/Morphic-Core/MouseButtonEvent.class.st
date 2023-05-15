@@ -46,14 +46,14 @@ MouseButtonEvent >> setType: evtType position: evtPos which: button buttons: evt
 	source := evtHand.
 	wasHandled := false.
 	whichButton := button.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #printing }
 MouseButtonEvent >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream space.
-	whichButton storeOn: aStream.
+	whichButton storeOn: aStream
 ]
 
 { #category : #accessing }

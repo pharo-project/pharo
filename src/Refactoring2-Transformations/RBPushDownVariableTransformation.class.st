@@ -35,7 +35,7 @@ RBPushDownVariableTransformation >> buildTransformations [
 				class: className
 				classVariable: isClassVariable);
 		addAll: (self variableDefinitionsInHierarchy
-			collect: [ :each | 
+			collect: [ :each |
 				RBAddVariableTransformation
 				model: self model
 				variable: variableName
@@ -71,12 +71,12 @@ RBPushDownVariableTransformation >> preconditionsForClassVariable [
 { #category : #preconditions }
 RBPushDownVariableTransformation >> preconditionsForInstanceVariable [
 
-	^ (RBCondition definesInstanceVariable: variableName in: self definingClass) 
+	^ (RBCondition definesInstanceVariable: variableName in: self definingClass)
 		& (RBCondition accessesInstanceVariable: variableName in: self definingClass showIn: self)
 ]
 
 { #category : #printing }
-RBPushDownVariableTransformation >> storeOn: aStream [ 
+RBPushDownVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -94,7 +94,7 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]
 
 { #category : #private }

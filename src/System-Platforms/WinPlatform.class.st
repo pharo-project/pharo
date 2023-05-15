@@ -22,7 +22,7 @@ WinPlatform >> accept: aVisitor [
 { #category : #accessing }
 WinPlatform >> defaultMaximumPathLength [
 		"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. Windows default PATH_MAX is 260.  PATH_MAX is needed to avoid buffer overflow.  In case PATH_MAX is not sufficient the method currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size. The path can include unicode characters, so it can be longer than 260, doubling it should be enough"
-		
+
 	 ^ 260 * 2
 ]
 
@@ -38,8 +38,8 @@ WinPlatform >> ffiLibraryName [
 ]
 
 { #category : #'error handling' }
-WinPlatform >> formatMessage: dwFlags _: lpSource _: dwMessageId _: dwLanguageId _: lpBuffer _: nSize _: arguments [ 
-    
+WinPlatform >> formatMessage: dwFlags _: lpSource _: dwMessageId _: dwLanguageId _: lpBuffer _: nSize _: arguments [
+
     self ffiCall: #(long FormatMessageW(long   dwFlags,
                             void* lpSource,
                             long   dwMessageId,
@@ -67,7 +67,7 @@ WinPlatform >> getErrorMessage: anInteger [
                         _: buffer
                         _: 500
                         _: ExternalAddress null.
-    
+
     ^ buffer asString
 ]
 
@@ -78,7 +78,7 @@ WinPlatform >> isWindows [
 
 { #category : #accessing }
 WinPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForWindowsPlatform: aKeyValue.
+	^KeyboardKey valueForWindowsPlatform: aKeyValue
 ]
 
 { #category : #accessing }
@@ -123,7 +123,7 @@ WinPlatform >> virtualKey: virtualKeyCode [
 	(virtualKeyCode between: 65 "$A charCode" and: 90 "$Z")
 		ifFalse: [^nil].
 	"#($a $b $c $d $e $f $g $h $i $j $k $l $m $n $o $p $q $r $s $t $u $v $w $x $y $z)"
-	
+
 	^(#($a nil $c $d nil $f $g nil nil nil nil $l $m $n nil $p nil nil $s nil nil $v nil $x nil $z)
 		at: virtualKeyCode-64) ifNotNil: [:char | char charCode]
 ]

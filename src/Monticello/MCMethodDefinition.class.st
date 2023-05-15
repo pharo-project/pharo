@@ -203,11 +203,12 @@ timeStamp: timeString
 source: sourceString [
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := (catString asSymbol) ifEmpty: [#'as yet unclassified'].
+	category := catString
+		ifNil: [ #'as yet unclassified']
+		ifNotNil: [ (catString asSymbol) ifEmpty: [#'as yet unclassified']].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
-	source := sourceString withInternalLineEndings.
-
+	source := sourceString withInternalLineEndings
 ]
 
 { #category : #testing }

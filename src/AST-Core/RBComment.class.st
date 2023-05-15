@@ -18,8 +18,14 @@ self firstStatement.
 The ""method comment"" is assigned to the method node, the ""comment about the return"" is assigned
 to the ""self firstStatement"" node!
 
+Note that comments can be escaped by doubling the quotation (like in a string).
+Therefore `""This is """"a single"""" comment""` is a single comment.
+Whereas `""This is "" ""three"" "" comments""` is three comments.
+
 instance variables
-	contents 	<String> the comment text
+	contents 	<String> the comment text without the quotes.
+		Note double quotes are unescaped, so you get single quotes here.
+		You can use `sourceCode` to get the original text with all verbatim quotes. 
 	start	<Number> (start-) position within the method source
 
 "
