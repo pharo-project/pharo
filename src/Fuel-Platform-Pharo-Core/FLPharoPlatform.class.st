@@ -110,16 +110,6 @@ FLPharoPlatform >> isBigEndian [
 	^ (Smalltalk at: #EndianDetector) isBigEndian
 ]
 
-{ #category : #testing }
-FLPharoPlatform >> isPharo [
-	^ true
-]
-
-{ #category : #testing }
-FLPharoPlatform >> isSpur [
-	^ true
-]
-
 { #category : #'accessing-files' }
 FLPharoPlatform >> joinPath: aPathString with: anotherPathString [
 	^ (aPathString asFileReference / anotherPathString) pathString

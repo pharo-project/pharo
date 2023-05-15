@@ -165,21 +165,6 @@ FLPlatform >> isBigEndian [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-FLPlatform >> isPharo [
-	^ false
-]
-
-{ #category : #testing }
-FLPlatform >> isSpur [
-	^ true
-]
-
-{ #category : #testing }
-FLPlatform >> isSqueak [
-	^ false
-]
-
 { #category : #'accessing-files' }
 FLPlatform >> joinPath: aPathString with: anotherPathString [
 	^ self subclassResponsibility

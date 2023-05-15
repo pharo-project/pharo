@@ -107,11 +107,7 @@ FLBasicSerializationTest >> testCharacter [
 
 	self assertSerializationIdentityOf: $a.
 	
-	FLPlatform current isSpur 
-		ifTrue: [
-			self assertSerializationIdentityOf: (Character value: 12345). "Japanese Hiragana 'A' " ]
-		ifFalse: [
-			self assertSerializationEqualityOf: (Character value: 12345). "Japanese Hiragana 'A' " ].
+	self assertSerializationIdentityOf: (Character value: 12345). "Japanese Hiragana 'A' "
 		
 	self assertSerializationEqualityOf: Character allByteCharacters.
 	self assertSerializationEqualityOf: (Array with: $a with: (Character value: 12345)).
