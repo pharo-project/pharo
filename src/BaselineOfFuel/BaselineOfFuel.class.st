@@ -10,13 +10,6 @@ Class {
 	#category : #BaselineOfFuel
 }
 
-{ #category : #adding }
-BaselineOfFuel >> addPostloadHacks [
-	"Simply perform #addHacks again. We've now loaded classes that weren't
-	there before and some of those also need extensions" 
-	(Smalltalk at: #FLPlatform) current addHacks
-]
-
 { #category : #baselines }
 BaselineOfFuel >> baseline: spec [
 
@@ -24,7 +17,6 @@ BaselineOfFuel >> baseline: spec [
 	| repository |
 	repository := self packageRepositoryURL.
 	spec for: #common do: [
-		spec postLoadDoIt: #addPostloadHacks.
 
 		spec baseline: 'FuelPlatform' with: [ spec repository: repository ].
 

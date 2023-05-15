@@ -7,18 +7,6 @@ Class {
 	#category : #'Fuel-Platform-Core'
 }
 
-{ #category : #'private-extensions' }
-FLPlatform class >> addExtensions [
-	self extensionPragmas do: [ :pragma |
-		(FLExtensionWrapper fromPragma: pragma) install ]
-]
-
-{ #category : #operations }
-FLPlatform class >> addHacks [
-
-	self current useAuthor: 'Fuel' during: [ self addExtensions ]
-]
-
 { #category : #accessing }
 FLPlatform class >> current [
 	^ Current ifNil: [ Current := self detectPlatform ]
@@ -40,42 +28,6 @@ FLPlatform class >> detectPlatform [
 { #category : #accessing }
 FLPlatform class >> extensionCategoryName [
 	^ 'FuelPlatformExtensions'
-]
-
-{ #category : #'private-extensions' }
-FLPlatform class >> extensionPragmaSelectors [
-	^ #(
-		flExtensionOf:
-		flExtensionOf:selector:
-		flExtensionOf:selector:isSource:
-		flExtensionOf:isSource:
-		flExtensionOf:isClassSide:
-		flExtensionOf:isClassSide:selector:
-		flExtensionOf:isClassSide:selector:isSource:
-		flExtensionOf:isClassSide:isSource:)
-]
-
-{ #category : #'private-extensions' }
-FLPlatform class >> extensionPragmas [
-	| pragmas |
-	pragmas := Dictionary new.
-	self extensionPragmaSelectors do: [ :selector |
-			| stop |
-			stop := false.
-			self class withAllSuperclassesDo: [ :class |
-				stop ifFalse: [
-					self current
-						withPragmasIn: class
-						do: [ :pragma |
-							(pragma selector = selector and: [
-								"don't collect overridden methods"
-								(pragmas includesKey: pragma methodSelector) not ]) ifTrue: [
-									pragmas
-										at: pragma methodSelector
-										put: pragma ] ].
-							FLPlatform class = class ifTrue: [ stop := true ] ] ] ].
-			
-	^ pragmas values
 ]
 
 { #category : #accessing }
@@ -101,11 +53,6 @@ FLPlatform >> absolutePathOf: aString [
 { #category : #'accessing-compiler' }
 FLPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 	self subclassResponsibility
-]
-
-{ #category : #operations }
-FLPlatform >> addHacks [
-	self class addHacks
 ]
 
 { #category : #'accessing-tests' }
