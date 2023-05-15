@@ -816,7 +816,7 @@ ClassDescription >> removeSelector: selector [
 	| priorMethod priorProtocol origin |
 	priorMethod := self compiledMethodAt: selector ifAbsent: [^ nil].
 	origin := priorMethod origin.
-	priorProtocol := self whichCategoryIncludesSelector: selector.
+	priorProtocol := self protocolNameOfSelector: selector.
 	self organization removeElement: selector.
 
 	super removeSelector: selector.
@@ -1079,9 +1079,8 @@ ClassDescription >> wantsChangeSetLogging [
 
 { #category : #organization }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [
-	"Answer the category of the argument, aSelector, in the organization of
-	the receiver, or answer nil if the receiver does not inlcude this selector."
 
+	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
 	^ self protocolNameOfSelector: aSelector
 ]
 
