@@ -71,7 +71,7 @@ MethodAddition >> notifyObservers [
 		ifNotNil: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: priorCategoryOrNil.
 			priorCategoryOrNil name = category ifFalse: [
-       			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorCategoryOrNil name ] ].
+       			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorCategoryOrNil ] ].
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
 

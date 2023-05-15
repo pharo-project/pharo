@@ -675,9 +675,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self
-		compiledMethodAt: selector
-		ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
+	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
 ]
 
 { #category : #private }
@@ -694,7 +692,7 @@ ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol
 		"Announce recategorization"
 		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
 
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol name
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : #private }

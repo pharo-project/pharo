@@ -494,16 +494,19 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 		| oldMethod newMethod |
 		"Workaround: When a trait is removed from the trait composition,
 		then this announcement is wrongly announced."
-
 		aMethodRecategorized methodRecategorized ifNil: [ ^ self ].
 		oldMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized oldProtocol;
-			yourself.
+			             protocol: ((aMethodRecategorized oldProtocol isKindOf: Protocol)
+					              ifTrue: [ aMethodRecategorized oldProtocol name ]
+					              ifFalse: [ aMethodRecategorized oldProtocol ]);
+			             yourself.
 		newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized newProtocol;
-			yourself.
+			             protocol: ((aMethodRecategorized newProtocol isKindOf: Protocol)
+					              ifTrue: [ aMethodRecategorized newProtocol name ]
+					              ifFalse: [ aMethodRecategorized newProtocol ]);
+			             yourself.
 
-		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)]
+		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod) ]
 ]
 
 { #category : #'announcement handling' }
