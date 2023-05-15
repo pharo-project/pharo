@@ -162,7 +162,8 @@ RBSmalllintContext >> printOn: aStream [
 
 { #category : #accessing }
 RBSmalllintContext >> protocol [
-	^self selectedClass whichCategoryIncludesSelector: self selector
+
+	^ self selectedClass protocolNameOfSelector: self selector
 ]
 
 { #category : #accessing }

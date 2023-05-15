@@ -385,7 +385,7 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : #'accessing - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -753,14 +753,24 @@ ClassDescription >> printOn: aStream [
 ]
 
 { #category : #'accessing - protocols' }
+ClassDescription >> protocolNameOfSelector: aSelector [
+	"Return the protocol name including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
+
+	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
+]
+
+{ #category : #'accessing - protocols' }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
 	^ self organization protocolNames copy
 ]
 
-{ #category : #protocol }
+{ #category : #'accessing - protocols' }
 ClassDescription >> protocolOfSelector: aSelector [
+	"Return the protocol including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
 
 	^ self organization protocols
 		  detect: [ :each | each includesSelector: aSelector ]
@@ -1071,10 +1081,9 @@ ClassDescription >> wantsChangeSetLogging [
 
 { #category : #organization }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [
-	"Answer the category of the argument, aSelector, in the organization of
-	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	^ self organization protocolNameOfElement: aSelector
+	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
+	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #queries }

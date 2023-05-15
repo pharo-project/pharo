@@ -229,7 +229,7 @@ CompiledMethod >> cachePragmas [
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 
-	^ self methodClass organization protocolNameOfElement: self selector
+	^ self methodClass protocolNameOfSelector: self selector
 ]
 
 { #category : #accessing }

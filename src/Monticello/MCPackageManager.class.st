@@ -166,7 +166,7 @@ MCPackageManager class >> managersForClass: aClass do: aBlock [
 { #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass selector: aSelector do: aBlock [
 
-	^ self managersForClass: aClass category: (aClass organization protocolNameOfElement: aSelector) do: aBlock
+	^ self managersForClass: aClass category: (aClass protocolNameOfSelector: aSelector) do: aBlock
 ]
 
 { #category : #'system changes' }
