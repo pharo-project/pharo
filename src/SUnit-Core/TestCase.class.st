@@ -393,7 +393,7 @@ TestCase class >> isUnitTest [
 { #category : #testing }
 TestCase class >> isUsed [
 	"all my subclasses are used by me"
-	^self name = 'TestCase'
+	^self name = #'TestCase'
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
 ]

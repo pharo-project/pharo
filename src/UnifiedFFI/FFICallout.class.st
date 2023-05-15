@@ -108,7 +108,7 @@ FFICallout class >> typeAliases [
 FFICallout >> aliasForType: aTypeName [
 	| alias |
 
-	alias := aTypeName.
+	alias := aTypeName asSymbol.
 	(requestor notNil and: [ requestor respondsTo: #externalTypeAlias: ])
 		ifTrue: [
 			alias := requestor externalTypeAlias: aTypeName.

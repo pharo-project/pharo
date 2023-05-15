@@ -48,7 +48,7 @@ FLEnvironmentProtectingWrapper >> associationAt: key ifAbsent: aBlock [
 { #category : #accessing }
 FLEnvironmentProtectingWrapper >> at: key [
 	^ overlay
-		at: key
+		at: key asSymbol
 		ifPresent: [ :value |
 			self
 				checkReturn: value

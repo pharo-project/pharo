@@ -97,10 +97,10 @@ IRBuilder >> addTemp: tempKey [
 	tempMap := self currentScope tempMap.
 
 	"adding the same var multiple times reuses the same offset"
-	(tempMap includesKey: tempKey) ifTrue: [ ^ 	self cacheIndex: tempKey ].
+	(tempMap includesKey: tempKey asSymbol) ifTrue: [ ^ 	self cacheIndex: tempKey asSymbol ].
 
-	tempMap at: tempKey put: tempMap size + 1.
-	self cacheIndex: tempKey
+	tempMap at: tempKey asSymbol put: tempMap size + 1.
+	self cacheIndex: tempKey asSymbol
 ]
 
 { #category : #initialize }
