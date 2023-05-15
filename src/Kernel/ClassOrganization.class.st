@@ -140,12 +140,6 @@ ClassOrganization >> printOn: aStream [
 ]
 
 { #category : #accessing }
-ClassOrganization >> protocolNameOfElement: aSelector [
-
-	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
-]
-
-{ #category : #accessing }
 ClassOrganization >> protocolNamed: aString [
 
 	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
