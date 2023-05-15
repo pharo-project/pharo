@@ -19,3 +19,10 @@ MethodAdded class >> method: aCompiledMethod [
 MethodAdded >> methodAdded [
 	^ method
 ]
+
+{ #category : #accessing }
+MethodAdded >> protocol [
+	"This should just be `method protocol` when #protocol will return an actual protocol."
+
+	^ method methodClass protocolOfSelector: method selector
+]
