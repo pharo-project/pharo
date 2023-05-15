@@ -545,6 +545,15 @@ Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	self errorNoModification
 ]
 
+{ #category : #comparing }
+Symbol >> sameContents: aSymbol [
+	"Compare the receiver and aSymbol."
+	self == aSymbol ifTrue: [^ true].
+	self class == aSymbol class ifTrue: [^ false].
+	"Use String comparison otherwise"
+	^ super = aSymbol
+]
+
 { #category : #converting }
 Symbol >> separateKeywords [
 	"#'foo:zork:' separateKeywords -> 'foo:  zork:'"
