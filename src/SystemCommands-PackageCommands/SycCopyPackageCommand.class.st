@@ -17,7 +17,6 @@ Class {
 SycCopyPackageCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ aToolContext isPackageSelected
-
 ]
 
 { #category : #accessing }

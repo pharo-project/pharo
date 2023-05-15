@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-TFUFFIIncrementCallback >> initialize [ 
-	
+TFUFFIIncrementCallback >> initialize [
+
 	self signature: #(int (int)) block: [ :a | a + 1 ]
 ]

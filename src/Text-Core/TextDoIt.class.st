@@ -52,7 +52,7 @@ TextDoIt >> analyze: aString [
 
 { #category : #accessing }
 TextDoIt >> evalString: str [
-	evalString := str 
+	evalString := str
 ]
 
 { #category : #accessing }

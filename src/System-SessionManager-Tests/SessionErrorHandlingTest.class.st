@@ -23,23 +23,23 @@ SessionErrorHandlingTest >> setUp [
 	super setUp.
 	manager := SessionManager new.
 	session := self newTestSessionfor: manager.
-	manager installSession: session.
+	manager installSession: session
 ]
 
 { #category : #tests }
 SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStartupWhenStartupUiManagerActive [
 	<haltOrBreakpointForTesting>
-	UIManager nonInteractiveDuring: [	manager register: (TestSessionHandler onStartup: [ Halt now ]).	
-		session errorHandler: 
+	UIManager nonInteractiveDuring: [	manager register: (TestSessionHandler onStartup: [ Halt now ]).
+		session errorHandler:
 			(TestStartupUIManager new
 				sessionManager: manager;
 				yourself).
-		
-		self 
+
+		self
 			shouldnt: [ session start: false ]
 			raise: Halt.
 		self
-			assert: (session instVarNamed: 'deferredStartupActions') size 
+			assert: (session instVarNamed: 'deferredStartupActions') size
 			equals: 1]
 ]
 
@@ -60,17 +60,17 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 { #category : #tests }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenStartupUiManagerActive [
 	<haltOrBreakpointForTesting>
-	manager register: (TestSessionHandler onShutdown: [ ZeroDivide signal ]).	
-	session errorHandler: 
+	manager register: (TestSessionHandler onShutdown: [ ZeroDivide signal ]).
+	session errorHandler:
 		(TestStartupUIManager new
 			sessionManager: manager;
 			yourself).
-	
-	self 
+
+	self
 		shouldnt: [ session stop: false ]
 		raise: ZeroDivide.
 	self
-		assert: (session instVarNamed: 'deferredStartupActions') size 
+		assert: (session instVarNamed: 'deferredStartupActions') size
 		equals: 1
 ]
 

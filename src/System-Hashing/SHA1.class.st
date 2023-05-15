@@ -61,32 +61,32 @@ SHA1 >> constantForStep: i [
 ]
 
 { #category : #private }
-SHA1 >> expandedBlock: aByteArray [ 
+SHA1 >> expandedBlock: aByteArray [
 	"Convert the given 64 byte buffer into 80 32-bit registers and answer the result."
 	| out src v |
 	out := Array new: 80.
 	src := 1.
-	1 
+	1
 		to: 16
-		do: 
-			[ :i | 
-			out 
+		do:
+			[ :i |
+			out
 				at: i
-				put: (ThirtyTwoBitRegister new 
+				put: (ThirtyTwoBitRegister new
 						loadFrom: aByteArray
 						at: src).
 			src := src + 4 ].
-	17 
+	17
 		to: 80
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			v := (out at: i - 3) copy.
 			v
 				bitXor: (out at: i - 8);
 				bitXor: (out at: i - 14);
 				bitXor: (out at: i - 16);
 				leftRotateBy: 1.
-			out 
+			out
 				at: i
 				put: v ].
 	^ out
@@ -97,13 +97,13 @@ SHA1 >> finalHash [
 	"Concatenate the final totals to build the 160-bit integer result."
 	"Details: If the primitives are supported, the results are in the totals array. Otherwise, they are in the instance variables totalA through totalE."
 	| r |
-	totals ifNil: 
+	totals ifNil:
 		[ "compute final hash when not using primitives"
 		^ (totalA asInteger bitShift: 128) + (totalB asInteger bitShift: 96) + (totalC asInteger bitShift: 64) + (totalD asInteger bitShift: 32) + totalE asInteger ].
 
 	"compute final hash when using primitives"
 	r := 0.
-	1 
+	1
 		to: 5
 		do: [ :i | r := r bitOr: ((totals at: i) bitShift: 32 * (5 - i)) ].
 	^ r
@@ -121,7 +121,7 @@ SHA1 >> hashFunction: i of: x with: y with: z [
 ]
 
 { #category : #accessing }
-SHA1 >> hashInteger: aPositiveInteger [ 
+SHA1 >> hashInteger: aPositiveInteger [
 	"Hash the given positive integer. The integer to be hashed should have 512 or fewer bits. This entry point is used in key generation."
 	| buffer dstIndex |
 	self initializeTotals.
@@ -130,12 +130,12 @@ SHA1 >> hashInteger: aPositiveInteger [
 	aPositiveInteger highBit <= 512 ifFalse: [ self error: 'integer cannot exceed 512 bits' ].
 	buffer := ByteArray new: 64.
 	dstIndex := 0.
-	aPositiveInteger bytesCount 
+	aPositiveInteger bytesCount
 		to: 1
 		by: -1
-		do: 
-			[ :i | 
-			buffer 
+		do:
+			[ :i |
+			buffer
 				at: (dstIndex := dstIndex + 1)
 				put: (aPositiveInteger byteAt: i) ].
 
@@ -145,7 +145,7 @@ SHA1 >> hashInteger: aPositiveInteger [
 ]
 
 { #category : #accessing }
-SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [ 
+SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [
 	"Hash the given positive integer. The integer to be hashed should have 512 or fewer bits. This entry point is used in the production of random numbers"
 	"Initialize totalA through totalE to their seed values."
 	| buffer dstIndex |
@@ -159,12 +159,12 @@ SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [
 	"pad integer with zeros"
 	buffer := ByteArray new: 64.
 	dstIndex := 0.
-	aPositiveInteger bytesCount 
+	aPositiveInteger bytesCount
 		to: 1
 		by: -1
-		do: 
-			[ :i | 
-			buffer 
+		do:
+			[ :i |
+			buffer
 				at: (dstIndex := dstIndex + 1)
 				put: (aPositiveInteger byteAt: i) ].
 
@@ -176,16 +176,16 @@ SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [
 { #category : #public }
 SHA1 >> hashStream: aPositionableStream [
 	"Hash the contents of the given stream from the current position to the end using the Secure Hash Algorithm. The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Schneier, Wiley, 1996."
-	"http://en.wikipedia.org/wiki/Sha1#Example_hashes" 
+	"http://en.wikipedia.org/wiki/Sha1#Example_hashes"
 	"(SHA1 new hashStream: 'The quick brown fox jumps over the lazy dog' readStream) hex."
-	
+
 	| startPosition buf bitLength |
 	self initializeTotals.
-  	
+
 	aPositionableStream atEnd ifTrue: [self processFinalBuffer: #() bitLength: 0].
 
 	startPosition := aPositionableStream position.
-	[aPositionableStream atEnd] whileFalse: 
+	[aPositionableStream atEnd] whileFalse:
 		[ buf := aPositionableStream next: 64.
 		(aPositionableStream atEnd not and: [buf size = 64])
 			ifTrue: [self processBuffer: buf]
@@ -210,19 +210,19 @@ SHA1 >> initializeTotals [
 SHA1 >> initializeTotalsArray [
 	"Initialize the totals array from the registers for use with the primitives."
 	totals := WordArray new: 5.
-	totals 
+	totals
 		at: 1
 		put: totalA asInteger.
-	totals 
+	totals
 		at: 2
 		put: totalB asInteger.
-	totals 
+	totals
 		at: 3
 		put: totalC asInteger.
-	totals 
+	totals
 		at: 4
 		put: totalD asInteger.
-	totals 
+	totals
 		at: 5
 		put: totalE asInteger
 ]
@@ -252,10 +252,10 @@ SHA1 >> primHashBlock: blockBitmap using: workingTotalsBitmap [
 ]
 
 { #category : #private }
-SHA1 >> processBuffer: aByteArray [ 
+SHA1 >> processBuffer: aByteArray [
 	"Process given 64-byte buffer, accumulating the results in totalA through totalE."
 	| a b c d e w tmp |
-	self primHasSecureHashPrimitive 
+	self primHasSecureHashPrimitive
 		ifTrue: [ ^ self processBufferUsingPrimitives: aByteArray ]
 		ifFalse: [ totals := nil ].
 
@@ -268,12 +268,12 @@ SHA1 >> processBuffer: aByteArray [
 
 	"expand and process the buffer"
 	w := self expandedBlock: aByteArray.
-	1 
+	1
 		to: 80
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			tmp := (a copy leftRotateBy: 5)
-				+= (self 
+				+= (self
 						hashFunction: i
 						of: b
 						with: c
@@ -296,68 +296,68 @@ SHA1 >> processBuffer: aByteArray [
 ]
 
 { #category : #private }
-SHA1 >> processBufferUsingPrimitives: aByteArray [ 
+SHA1 >> processBufferUsingPrimitives: aByteArray [
 	"Process given 64-byte buffer using the primitives, accumulating the results in totals."
 	"expand and process the buffer"
 	| w |
 	w := WordArray new: 80.
-	self 
+	self
 		primExpandBlock: aByteArray
 		into: w.
-	self 
+	self
 		primHashBlock: w
 		using: totals
 ]
 
 { #category : #private }
-SHA1 >> processFinalBuffer: buffer bitLength: bitLength [ 
+SHA1 >> processFinalBuffer: buffer bitLength: bitLength [
 	"Process given buffer, whose length may be <= 64 bytes, accumulating the results in totalA through totalE. Also process the final padding bits and length."
 	| out |
 	out := ByteArray new: 64.
-	out 
+	out
 		replaceFrom: 1
 		to: buffer size
 		with: buffer
 		startingAt: 1.
-	buffer size < 56 ifTrue: 
+	buffer size < 56 ifTrue:
 		[ "padding and length fit in last data block"
-		out 
+		out
 			at: buffer size + 1
 			put: 128.	"trailing one bit"
-		self 
+		self
 			storeLength: bitLength
 			in: out.	"end with length"
 		self processBuffer: out.
 		^ self ].
 
 	"process the final data block"
-	buffer size < 64 ifTrue: 
-		[ out 
+	buffer size < 64 ifTrue:
+		[ out
 			at: buffer size + 1
 			put: 128 ].	"trailing one bit"
 	self processBuffer: out.
 
 	"process one additional block of padding ending with the length"
 	out := ByteArray new: 64.	"filled with zeros"
-	buffer size = 64 ifTrue: 
+	buffer size = 64 ifTrue:
 		[ "add trailing one bit that didn't fit in final data block"
-		out 
+		out
 			at: 1
 			put: 128 ].
-	self 
+	self
 		storeLength: bitLength
 		in: out.
 	self processBuffer: out
 ]
 
 { #category : #private }
-SHA1 >> storeLength: bitLength in: aByteArray [ 
+SHA1 >> storeLength: bitLength in: aByteArray [
 	"Fill in the final 8 bytes of the given ByteArray with a 64-bit big-endian representation of the original message length in bits."
 	| n i |
 	n := bitLength.
 	i := aByteArray size.
-	[ n > 0 ] whileTrue: 
-		[ aByteArray 
+	[ n > 0 ] whileTrue:
+		[ aByteArray
 			at: i
 			put: (n bitAnd: 255).
 		n := n bitShift: -8.

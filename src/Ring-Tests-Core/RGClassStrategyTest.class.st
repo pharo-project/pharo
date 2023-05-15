@@ -56,10 +56,10 @@ RGClassStrategyTest >> testCopying [
 RGClassStrategyTest >> testDefinition [
 
 	| aClass |
-	
+
 	aClass := RGClass named: #SomeClass.
 	aClass superclass name: #Object.
-	
+
 	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass')
 ]
 
@@ -67,43 +67,43 @@ RGClassStrategyTest >> testDefinition [
 RGClassStrategyTest >> testDefinitionWithSlots [
 
 	| aClass slot expression |
-	
+
 	aClass := RGClass named: #SomeClass.
 	aClass superclass name: #Object.
 	slot  := RGUnknownSlot named: #iVar parent: aClass layout.
 	aClass layout addSlot: slot.
 	expression := 'ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie'.
 	slot expression: expression.
-	
+
 	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass').
-	self assert: (aClass definition includesSubstring: ('#iVar => ', expression)).
+	self assert: (aClass definition includesSubstring: ('#iVar => ', expression))
 ]
 
 { #category : #tests }
 RGClassStrategyTest >> testIncompatibleBehavior [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newClass.
-	
-	self checkIncompatible: [ 
+
+	self checkIncompatible: [
 		anRGBehavior baseClass: (anRGBehavior environment ensureClassNamed: #SomeOtherClass) ].
-	self checkIncompatible: [ 
+	self checkIncompatible: [
 		anRGBehavior baseTrait ].
-	self checkIncompatible: [ 
-		anRGBehavior baseTrait: (anRGBehavior environment ensureTraitNamed: #SomeTrait) ].
+	self checkIncompatible: [
+		anRGBehavior baseTrait: (anRGBehavior environment ensureTraitNamed: #SomeTrait) ]
 ]
 
 { #category : #tests }
 RGClassStrategyTest >> testKind [
 
 	| strategy |
-	
+
 	strategy := RGBehavior newClass behaviorStrategy.
 	self assert: strategy isClassStrategy.
 	self deny: strategy isMetaclassStrategy.
 	self deny: strategy isTraitStrategy.
-	self deny: strategy isMetaclassTraitStrategy.
+	self deny: strategy isMetaclassTraitStrategy
 ]
 
 { #category : #tests }
@@ -128,10 +128,10 @@ RGClassStrategyTest >> testResolvingConsistency [
 RGClassStrategyTest >> testStoreString [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newClass.
 	self assert: anRGBehavior storeString equals: '(RGClass named: #unresolved)'.
 
 	anRGBehavior := RGClass named: #SomeClass.
-	self assert: anRGBehavior storeString equals: '(RGClass named: #SomeClass)'.
+	self assert: anRGBehavior storeString equals: '(RGClass named: #SomeClass)'
 ]

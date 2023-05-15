@@ -1009,7 +1009,7 @@ EFFormatter >> areArgumentsTooLong: anArray [
 EFFormatter >> basicFormatCommentFor: aComment [
 	codeStream
 		nextPut: $";
-		nextPutAll: aComment contents;
+		nextPutAll: (aComment contents escapeCharacter: $");
 		nextPut: $"
 ]
 
@@ -1187,8 +1187,8 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 	onAnotherLine := self areArgumentsTooLong: args.
 	args do: [ :each |
 		onAnotherLine ifTrue: [ self newLine ].
-		codeStream nextPut: $:.
-		self visitVariableNode: each.
+		each isParseError ifFalse: [ codeStream nextPut: $: ].
+		each acceptVisitor: self.
 		self formatCommentCloseToStatements ifTrue: [
 			self spaceAndFormatComments: each ].
 		self space ].
@@ -1258,8 +1258,10 @@ EFFormatter >> formatMethodPatternFor: aMethodNode [
 
 { #category : #'private - formatting' }
 EFFormatter >> formatPragmasFor: aMethodNode [
-	
-	aMethodNode pragmas do: [ :each | self visitPragmaNode: each; newLine ]
+
+	aMethodNode pragmas do: [ :each |
+		each acceptVisitor: self.
+		self newLine ]
 ]
 
 { #category : #'private - formatting' }
@@ -1678,7 +1680,7 @@ EFFormatter >> needsParenthesisFor: aNode [
 	aNode isValue
 		ifFalse: [ ^ false ].
 	aNode isParseError
-		ifTrue: [ ^ false ].
+		ifTrue: [ ^ aNode hasParentheses ].
 	parent := aNode parent ifNil: [ ^ false ].
 	(aNode isMessage
 		and: [ parent isMessage
@@ -1958,17 +1960,18 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 
 { #category : #utilities }
 EFFormatter >> resizeComment: aComment withFirstLineShorterOf: anIndex [
-	| cutComment firstLine currentCharPos |
+	| cutComment firstLine currentCharPos contents |
 	currentCharPos := 1.
-	firstLine := (aComment contents
+	contents := aComment contents escapeCharacter: $".
+	firstLine := (contents
 		withNoLineLongerThan: self maxLineLength - anIndex) lineNumber: 1.
 	[ currentCharPos > firstLine size ]
 		whileFalse: [ codeStream nextPut: (firstLine at: currentCharPos).
 			currentCharPos := currentCharPos + 1 ].
-	currentCharPos > aComment contents size
+	currentCharPos > contents size
 		ifTrue: [ ^ self ].
 	self newLine.
-	cutComment := aComment contents allButFirst: currentCharPos.
+	cutComment := contents allButFirst: currentCharPos.
 	self resizeStringDependingOnWindowSizeFor: cutComment
 ]
 
@@ -1977,7 +1980,7 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	codeStream nextPut: $".
 	"Hack to keep the right comment in pop up like cmd n, cmd m..."
 	self maxLineLength < 50
-		ifTrue: [ codeStream nextPutAll: aComment contents ]
+		ifTrue: [ codeStream nextPutAll: (aComment contents escapeCharacter: $") ]
 		ifFalse:
 			[ 
 			aComment contents
@@ -1992,7 +1995,7 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 { #category : #utilities }
 EFFormatter >> resizeStringDependingOnWindowSizeFor: aComment [
 	| resizedComment |
-	resizedComment := aComment contents withNoLineLongerThan: self maxLineLength.
+	resizedComment := (aComment contents escapeCharacter: $") withNoLineLongerThan: self maxLineLength.
 	resizedComment do: [ :each | 
 		codeStream nextPut: each.
 		each = Character cr
@@ -2133,10 +2136,17 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 
 { #category : #visiting }
 EFFormatter >> visitEnglobingErrorNode: aNode [
-	self writeString: aNode value.
-	aNode children do: [ :e |
+
+	aNode value = '' ifFalse: [
+		self writeString: aNode value.
+		codeStream space ].
+	self formatBlockArgumentsFor: aNode.
+	aNode children
+		do: [ :e | self visitNode: e ]
+		separatedBy: [ codeStream space ].
+	aNode valueAfter = '' ifFalse: [
 		codeStream space.
-		self visitNode: e ]
+		self writeString: aNode valueAfter ]
 ]
 
 { #category : #visiting }
@@ -2224,15 +2234,20 @@ EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 
 { #category : #visiting }
 EFFormatter >> visitPragmaNode: aPragmaNode [
-	codeStream nextPut: $<.
-	self 
-		formatSelectorAndArguments: aPragmaNode 
-		firstSeparator: [ 
+
+	| hackNoBrackets |
+	"If the parent is an error, the '<' and '>' are already taken care of."
+	hackNoBrackets := aPragmaNode parent isNotNil and: [ aPragmaNode parent isEnglobingError ].
+
+	hackNoBrackets ifFalse: [ codeStream nextPut: $< ].
+	self
+		formatSelectorAndArguments: aPragmaNode
+		firstSeparator: [
 			aPragmaNode selector isInfix
 				ifTrue: [ self space ] ]
 		restSeparator: [ self space ].
 	self addSpaceIfNeededForLastArgument: aPragmaNode.
-	codeStream nextPut: $>
+	hackNoBrackets ifFalse: [ codeStream nextPut: $> ]
 ]
 
 { #category : #visiting }

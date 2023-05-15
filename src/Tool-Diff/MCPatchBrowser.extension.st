@@ -3,7 +3,7 @@ Extension { #name : #MCPatchBrowser }
 { #category : #'*Tool-Diff' }
 MCPatchBrowser >> diffSelection [
 	"Open a diff browser on the selection."
-	
+
 	selection ifNotNil:
 		[selection diff]
 ]
@@ -11,8 +11,8 @@ MCPatchBrowser >> diffSelection [
 { #category : #'*Tool-Diff' }
 MCPatchBrowser >> methodListMenu: aMenu [
 
-	selection 
-		ifNotNil: [ 
+	selection
+		ifNotNil: [
 			aMenu addList: #(
 				('Install'	 installSelection)
 				('Diff'	diffSelection)
@@ -20,5 +20,4 @@ MCPatchBrowser >> methodListMenu: aMenu [
 				-)].
 	super methodListMenu: aMenu.
 	^ aMenu
-
 ]

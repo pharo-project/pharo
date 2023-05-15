@@ -39,8 +39,8 @@ RxsCharacter >> dispatchTo: aMatcher [
 RxsCharacter >> enumerateTo: aSet ignoringCase: aBoolean [
 
 	aBoolean
-		ifTrue: 
-			[aSet 
+		ifTrue:
+			[aSet
 				add: character asUppercase;
 				add: character asLowercase]
 		ifFalse: [aSet add: character]

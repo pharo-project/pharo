@@ -20,7 +20,9 @@ Class {
 	#instVars : [
 		'methodBuilder',
 		'effectTranslator',
-		'valueTranslator'
+		'valueTranslator',
+		'nextUniqueInlineID',
+		'parentTranslator'
 	],
 	#classVars : [
 		'OptimizedMessages'
@@ -52,17 +54,6 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue: -> #emitWhileTrue:).
 		                     (#whileFalse -> #emitWhileFalse:).
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
-]
-
-{ #category : #errors }
-OCASTTranslator >> backendError: aMessage forNode: aNode [
-
-	SyntaxErrorNotification
-		inClass: Object
-		withCode: aNode methodNode source
-		doitFlag: false
-		errorMessage: aMessage
-		location: aNode startWithoutParentheses
 ]
 
 { #category : #initialization }
@@ -280,42 +271,59 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	self isValueTranslator ifTrue: [ methodBuilder pushLiteral: nil ]
 ]
 
+{ #category : #errors }
+OCASTTranslator >> emitRuntimeError: aNode [
+	"Runtime errors should only be emited on faulty code"
+
+	methodBuilder
+		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteral: aNode;
+		send: #signalSyntaxError:
+]
+
 { #category : #'inline messages' }
 OCASTTranslator >> emitTimesRepeat: aMessageNode [
-	| limit block limitEmit |
 
+	| limit block limitEmit limitVariableName iteratorVariableName uniqueInlineID startLabelName doneLabelName |
 	limit := aMessageNode receiver.
 	block := aMessageNode arguments last.
+	uniqueInlineID := self nextUniqueInlineID.
+	limitVariableName := uniqueInlineID , #limit.
+	iteratorVariableName := uniqueInlineID , #iterator.
+	startLabelName := uniqueInlineID , #start.
+	doneLabelName := uniqueInlineID , #done.
 
-	limitEmit := [valueTranslator visitNode: limit].
+	limitEmit := [ valueTranslator visitNode: limit ].
 	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
-	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
-		valueTranslator visitNode: limit.
-		methodBuilder addTemp: #'0limit'.
-		methodBuilder storeTemp: #'0limit'.
-		methodBuilder popTop.
-		limitEmit := [methodBuilder pushTemp: #'0limit']].
+	(limit isLiteralNode or: [
+		 limit isVariable and: [ limit variable isWritable not ] ])
+		ifFalse: [
+			valueTranslator visitNode: limit.
+			methodBuilder addTemp: limitVariableName.
+			methodBuilder storeTemp: limitVariableName.
+			methodBuilder popTop.
+			limitEmit := [ methodBuilder pushTemp: limitVariableName ] ].
 
 	"push start. allocate and initialize iterator"
 	self isValueTranslator ifTrue: [ limitEmit value ].
 	methodBuilder pushLiteral: 1.
-	methodBuilder addTemp: #'0iterator'.
-	methodBuilder storeTemp: #'0iterator'.
+	methodBuilder addTemp: iteratorVariableName.
+	methodBuilder storeTemp: iteratorVariableName.
 	methodBuilder popTop.
-	methodBuilder jumpBackTarget: #start.
-	methodBuilder pushTemp: #'0iterator'.
+	methodBuilder jumpBackTarget: startLabelName.
+	methodBuilder pushTemp: iteratorVariableName.
 	limitEmit value.
-	methodBuilder send: #<=.
-	methodBuilder jumpAheadTo: #done if: false.
+	methodBuilder send: #'<='.
+	methodBuilder jumpAheadTo: doneLabelName if: false.
 
 	effectTranslator visitInlinedBlockNode: block.
-	methodBuilder pushTemp: #'0iterator'.
+	methodBuilder pushTemp: iteratorVariableName.
 	methodBuilder pushLiteral: 1.
 	methodBuilder send: #+.
-	methodBuilder storeTemp: #'0iterator'.
+	methodBuilder storeTemp: iteratorVariableName.
 	methodBuilder popTop.
-	methodBuilder jumpBackTo: #start.
-	methodBuilder jumpAheadTarget: #done
+	methodBuilder jumpBackTo: startLabelName.
+	methodBuilder jumpAheadTarget: doneLabelName
 ]
 
 { #category : #'inline messages' }
@@ -400,11 +408,14 @@ OCASTTranslator >> emitWhileTrue: aMessageNode [
 { #category : #initialization }
 OCASTTranslator >> initialize [
 
+	super initialize.
+	
 	methodBuilder := IRBuilder new.
 	effectTranslator := self classForEffect basicNew.
 	valueTranslator := self classForValue basicNew.
 	effectTranslator setFromSimilar: self.
-	valueTranslator setFromSimilar: self
+	valueTranslator setFromSimilar: self.
+	nextUniqueInlineID := 0
 ]
 
 { #category : #accessing }
@@ -423,6 +434,17 @@ OCASTTranslator >> isValueTranslator [
 	^self == valueTranslator
 ]
 
+{ #category : #'inline messages' }
+OCASTTranslator >> nextUniqueInlineID [
+
+	"The UniqueID has to be shared between the hierarchy of OCASTTranslators.
+	The OCASTTranslator has inside one for Effect and one for value. They should share ID values."
+	parentTranslator ifNotNil: [ ^ parentTranslator nextUniqueInlineID ].
+
+	nextUniqueInlineID := nextUniqueInlineID + 1.
+	^ '0', nextUniqueInlineID asString asSymbol
+]
+
 { #category : #private }
 OCASTTranslator >> privateEffectTranslator [
 	^ effectTranslator
@@ -439,10 +461,11 @@ OCASTTranslator >> privateValueTranslator [
 ]
 
 { #category : #initialization }
-OCASTTranslator >> setFromSimilar: aSimilarTranslator [
-	methodBuilder := aSimilarTranslator privateMethodBuilder.
-	effectTranslator := aSimilarTranslator privateEffectTranslator.
-	valueTranslator := aSimilarTranslator privateValueTranslator
+OCASTTranslator >> setFromSimilar: aParentTranslator [
+	methodBuilder := aParentTranslator privateMethodBuilder.
+	effectTranslator := aParentTranslator privateEffectTranslator.
+	valueTranslator := aParentTranslator privateValueTranslator.
+	parentTranslator := aParentTranslator.
 ]
 
 { #category : #errors }
@@ -506,13 +529,15 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	valueTranslator visitNode: anAssignmentNode value.
+	"Even in faulty mode, do not baspass the isWritable semantic to avoid very bad consequences on the image"
+	anAssignmentNode variable variable isWritable ifFalse: [ ^ self emitRuntimeError: anAssignmentNode variable ].
 	anAssignmentNode variable variable emitStore: methodBuilder
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
-	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	aBlockNode isError ifTrue: [ ^ self emitRuntimeError: aBlockNode ].
 
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	(self compilationContext optionConstantBlockClosure and: [aBlockNode isConstant and: [ aBlockNode numArgs < 4  ]]) ifTrue: [ ^ self visitConstantBlockNode: aBlockNode].
@@ -638,7 +663,7 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 
-	aMethodNode arguments size > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
+	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
 	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
@@ -666,16 +691,15 @@ OCASTTranslator >> visitNode: aNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [
-	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
-		pushLiteral: anErrorNode;
-		send: #signalSyntaxError:
+
+	self emitRuntimeError: anErrorNode
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	| var |
+	aPragmaNode isParseError ifTrue: [ ^self ].
 	methodBuilder addPragma: aPragmaNode asPragma.
 
 	"if the pragma is a primitive that defines an error variable, we need to store error value

@@ -43,10 +43,10 @@ ReCriticEngine class >> uniqueInstance [
 { #category : #running }
 ReCriticEngine >> critiquesOf: anEntity [
 	| rules critiques manifest builder |
-	
+
 	builder := TheManifestBuilder new.
 	manifest := builder manifestOf: anEntity.
-		
+
 	rules := anEntity suitableRulesFrom: (ReRuleManager managerFor: anEntity).
 	critiques := Set new.
 	rules
@@ -69,9 +69,9 @@ ReCriticEngine >> critiquesOf: anEntity [
 					forPropertiesDo: [ :prop |
 						critiques add: prop ] ].
 			Processor yield ].
-	
+
 	ReSystemAnnouncer uniqueInstance notifyEntity: anEntity criticizedWith: critiques.
-	
+
 	^ critiques
 ]
 
@@ -79,9 +79,9 @@ ReCriticEngine >> critiquesOf: anEntity [
 ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 
 	| candidates |
-		
+
 	candidates := anEntity banLevelCandidates.
-	
+
 	(UIManager default
 		chooseFrom: (candidates collect: [:each | each reBanName])
 		values: candidates
@@ -100,10 +100,10 @@ ReCriticEngine >> nodeCritiquesOf: aMethod [
 
 
 	| rules critiques manifest builder |
-	
+
 	builder := TheManifestBuilder new.
 	manifest := builder manifestOf: aMethod.
-		
+
 	rules := (ReRuleManager managerFor: aMethod) nodeRules.
 	critiques := Set new.
 	rules := rules
@@ -132,8 +132,8 @@ ReCriticEngine >> nodeCritiquesOf: aMethod [
 					forPropertiesDo: [ :prop |
 						critiques add: prop ] ].
 			Processor yield ] ].
-	
+
 	ReSystemAnnouncer uniqueInstance notifyEntity: aMethod criticizedWith: critiques.
-	
+
 	^ critiques
 ]

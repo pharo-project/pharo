@@ -9,7 +9,7 @@ Class {
 
 { #category : #printing }
 TimeProfilerNode >> asString [
-	^ String streamContents: [:s | self item printOn: s total: model tally totalTime: model time tallyExact: false] 
+	^ String streamContents: [:s | self item printOn: s total: model tally totalTime: model time tallyExact: false]
 ]
 
 { #category : #actions }
@@ -44,11 +44,10 @@ TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 	c = $I
 		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #'ui specific' }
-TimeProfilerNode >> menu: menu shifted: b [ 
+TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'
 		target: self
@@ -60,24 +59,20 @@ TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Explore (I)'
 		target: self
-		selector: #exploreItem.
-
+		selector: #exploreItem
 ]
 
 { #category : #'accessing - computed' }
 TimeProfilerNode >> methodClass [
-	^self item method methodClass 
-	
+	^self item method methodClass
 ]
 
 { #category : #'accessing - computed' }
-TimeProfilerNode >> percentage [ 
-	^ self item tally asFloat / model time * 100.0 roundTo: 0.1.
-
+TimeProfilerNode >> percentage [
+	^ self item tally asFloat / model time * 100.0 roundTo: 0.1
 ]
 
 { #category : #'accessing - computed' }
 TimeProfilerNode >> selector [
-	^self item method selector 
-	
+	^self item method selector
 ]

@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [ 
+MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
 	^ self new
 		method: newMethod;
 		oldMethod: oldMethod;
@@ -30,7 +30,7 @@ MethodModified >> affectsMethod: aMethod [
 { #category : #testing }
 MethodModified >> affectsMethodsDefinedInPackage: aPackage [
 
-	^(super affectsMethodsDefinedInPackage: aPackage) or: [ 
+	^(super affectsMethodsDefinedInPackage: aPackage) or: [
 		oldMethod package == aPackage ]
 ]
 
@@ -47,7 +47,7 @@ MethodModified >> newMethod [
 
 { #category : #accessing }
 MethodModified >> newProtocol [
-	
+
 	^ self protocol
 ]
 
@@ -58,17 +58,17 @@ MethodModified >> oldMethod [
 
 { #category : #accessing }
 MethodModified >> oldMethod: aCompiledMethod [
-	oldMethod := aCompiledMethod.
+	oldMethod := aCompiledMethod
 ]
 
 { #category : #accessing }
 MethodModified >> oldProtocol [
-	
+
 	^ oldProtocol
 ]
 
 { #category : #accessing }
 MethodModified >> oldProtocol: anObject [
-	
+
 	oldProtocol := anObject
 ]

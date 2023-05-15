@@ -23,6 +23,6 @@ VTermDefaultColor >> asTerminfoCharacterFont [
 { #category : #testing }
 VTermDefaultColor >> isVTermDefaultColor [
 	"A default color is a default color in anycase"
-	
+
 	^ true
 ]

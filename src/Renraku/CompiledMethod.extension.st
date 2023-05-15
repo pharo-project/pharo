@@ -9,7 +9,7 @@ CompiledMethod >> ban: aCritique [
 		bannedOn: self.
 
 	(TheManifestBuilder of: self)
-		banRule: aCritique rule for: self.
+		banRule: aCritique rule for: self
 ]
 
 { #category : #'*Renraku' }
@@ -29,12 +29,12 @@ CompiledMethod >> banLevelCandidates [
 { #category : #'*Renraku' }
 CompiledMethod >> critiques [
 	| critiques |
-	
+
 	critiques := ReCriticEngine critiquesOf: self.
 	critiques :=
 		critiques,
 		(ReCriticEngine nodeCritiquesOf: self).
-	
+
 	^ critiques
 ]
 
@@ -55,6 +55,6 @@ CompiledMethod >> reBanName [
 ]
 
 { #category : #'*Renraku' }
-CompiledMethod >> suitableRulesFrom: aReRuleManager [ 
+CompiledMethod >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager methodRules
 ]

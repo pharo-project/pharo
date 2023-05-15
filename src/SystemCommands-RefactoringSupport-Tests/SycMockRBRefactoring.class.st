@@ -17,8 +17,8 @@ SycMockRBRefactoring >> environment [
 
 { #category : #accessing }
 SycMockRBRefactoring >> environment: anEnvironement [
-	
-	environment := anEnvironement 
+
+	environment := anEnvironement
 ]
 
 { #category : #accessing }
@@ -27,16 +27,16 @@ SycMockRBRefactoring >> model [
 ]
 
 { #category : #accessing }
-SycMockRBRefactoring >> model: aRBNamespace [ 
+SycMockRBRefactoring >> model: aRBNamespace [
 	^ self
 ]
 
 { #category : #accessing }
-SycMockRBRefactoring >> primitiveExecute [ 
+SycMockRBRefactoring >> primitiveExecute [
 	^self
 ]
 
 { #category : #accessing }
-SycMockRBRefactoring >> whatToDisplayIn: aBrowser [ 
+SycMockRBRefactoring >> whatToDisplayIn: aBrowser [
 	^ aBrowser scopeDropList selectedItem content
 ]

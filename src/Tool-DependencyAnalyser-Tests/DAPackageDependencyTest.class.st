@@ -37,7 +37,7 @@ DAPackageDependencyTest >> setUp [
 	aPackageDependency := DAPackageDependency from:source to:target.
 	anInternalPackageDependency := DAPackageDependency from:source to:source.
 	packageA := DAPackage on: (RPackageSet named:'A').
-	packageB := DAPackage on: (RPackageSet named:'B').
+	packageB := DAPackage on: (RPackageSet named:'B')
 ]
 
 { #category : #tests }
@@ -58,8 +58,7 @@ DAPackageDependencyTest >> testContainsOnlyExtensionDependency [
 			(DAExtensionDependency from: (packageA) to: (packageB));
 		add:
 			(DAExtensionDependency from: (packageA) to: (packageB)).
-	self assert: (aCompositeDependency containsOnlyExtensionDependency).
-		
+	self assert: (aCompositeDependency containsOnlyExtensionDependency)
 ]
 
 { #category : #tests }
@@ -113,7 +112,7 @@ DAPackageDependencyTest >> testExtensionDependencies [
 			(DAExtensionDependency from: (packageA) to: (packageB));
 		add:
 			(DAInheritanceDependency from: (packageA) to: (packageB)).
-	self assert: (aCompositeDependency extensionDependencies allSatisfy: [ :each | each isExtensionDependency ]).
+	self assert: (aCompositeDependency extensionDependencies allSatisfy: [ :each | each isExtensionDependency ])
 ]
 
 { #category : #tests }

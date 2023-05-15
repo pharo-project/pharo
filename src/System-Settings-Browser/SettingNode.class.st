@@ -58,7 +58,7 @@ SettingNode >> contents [
 ]
 
 { #category : #menu }
-SettingNode >> deeplyDetect: aBlock [ 
+SettingNode >> deeplyDetect: aBlock [
 	(aBlock value: self) ifTrue: [^ self].
 	self contents do: [:sub | (sub deeplyDetect: aBlock) ifNotNil: [:found | ^ found]].
 	^ nil
@@ -99,7 +99,7 @@ SettingNode >> icon [
 { #category : #accessing }
 SettingNode >> inputMorphFor: aContainer [
 	^ self settingDeclaration
-		ifNotNil: [:v | 
+		ifNotNil: [:v |
 			(v inputMorphFor: aContainer) ifNil: [ '' ]]
 ]
 
@@ -135,7 +135,7 @@ SettingNode >> isNotCurrentValueStored [
 
 { #category : #testing }
 SettingNode >> isStored [
-	"Return true if this setting node has stored value. 
+	"Return true if this setting node has stored value.
 	The stored value can differ from the current value."
 	^ self storedValue notNil
 ]
@@ -155,7 +155,7 @@ SettingNode >> keyDown: anEvent from: aTreeMorph [
 
 { #category : #accessing }
 SettingNode >> labelMorphFor: aContainer [
-	^ self settingDeclaration 
+	^ self settingDeclaration
 		ifNotNil: [:v | v labelMorphFor: aContainer]
 ]
 
@@ -165,11 +165,11 @@ SettingNode >> loadFromDisk [
 ]
 
 { #category : #menu }
-SettingNode >> menu: menu shifted: b [ 
+SettingNode >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'
 		target: self
-		selector: #browseDeclaration.		
+		selector: #browseDeclaration.
 	self item isExportable ifFalse: [ ^self ].
 	(menu
 		add: 'Save to disk'
@@ -185,7 +185,7 @@ SettingNode >> menu: menu shifted: b [
 		add: 'Delete stored value'
 		target: self
 		selector: #deleteStoredValue)
-			enablementSelector: #isStored.
+			enablementSelector: #isStored
 ]
 
 { #category : #menu }
@@ -281,8 +281,8 @@ SettingNode >> settingNodeIdentifier [
 ]
 
 { #category : #printing }
-SettingNode >> settingNodeIdentifierOn: aWriteStream [ 
-	parentNode 
+SettingNode >> settingNodeIdentifierOn: aWriteStream [
+	parentNode
 		ifNotNil: [ parentName settingNodeIdentifierOn: aWriteStream ]
 		ifNil: [ parentName ifNotNil: [ aWriteStream print: parentName ] ].
 	aWriteStream print: self settingDeclaration name
@@ -301,13 +301,13 @@ SettingNode >> settingValue [
 { #category : #accessing }
 SettingNode >> storedValue [
 	"It returns a stored value for the setting node.
-	It returns nil value when there is no stored value."	
+	It returns nil value when there is no stored value."
 	^ self persistence storedValueForSettingNode: self
 ]
 
 { #category : #updating }
-SettingNode >> updateAccordingTo: aFilter [ 
-	(aFilter keepSettingTreeNode: self) 
+SettingNode >> updateAccordingTo: aFilter [
+	(aFilter keepSettingTreeNode: self)
 		ifFalse: [
 			self contents do: [ :n | n updateAccordingTo: aFilter].
 			self contents removeAllSuchThat: [ :n | (aFilter keepSettingTreeNode: n) not  and: [n isEmpty]]]

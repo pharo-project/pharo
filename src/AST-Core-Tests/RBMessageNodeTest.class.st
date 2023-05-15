@@ -134,3 +134,19 @@ RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
 		message := tree sendNodes first.
 		self assert: message selectorParts equals: #(#doit)
 ]
+
+{ #category : #tests }
+RBMessageNodeTest >> testStart [
+	| tree message delta |
+
+	tree := self parseMethod: 'test self doit.'.
+	message := tree sendNodes first.
+
+	self assert: message start equals: 6.
+	self assert: message stop equals: 14.
+	delta := message stop - message start.
+
+	message start: 20.
+	self assert: message start equals: 20.
+	self assert: message stop equals: 20 + delta
+]

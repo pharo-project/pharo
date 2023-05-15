@@ -41,7 +41,7 @@ RBFindAndReplacePreviewPresenter class >> defaultLayout [
 				add: #changeList;
 				yourself);
 		add: #dropList withConstraints: [ :constraints | constraints height: self toolbarHeight ];
-		yourself.
+		yourself
 ]
 
 { #category : #specs }
@@ -66,14 +66,14 @@ RBFindAndReplacePreviewPresenter class >> title [
 RBFindAndReplacePreviewPresenter >> initializeChangeList [
 	changeList
 		addColumn:
-			((SpCheckBoxTableColumn title: ' ' evaluated: [ :x | 
+			((SpCheckBoxTableColumn title: ' ' evaluated: [ :x |
 				selectedRefactorings includes: x ])
 				onActivation: [ :class |  selectedRefactorings add: class ];
 				onDeactivation: [ :class | selectedRefactorings remove: class ];
 				width: 20;
 				yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: #selector);
-		beResizable.
+		beResizable
 ]
 
 { #category : #initialization }
@@ -84,7 +84,7 @@ RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
 			presenter
 				beOk;
 				close];
-		addButton: 'Cancel' do: [ :presenter | 
+		addButton: 'Cancel' do: [ :presenter |
 			presenter
 				beCancel;
 				close ]
@@ -108,7 +108,7 @@ RBFindAndReplacePreviewPresenter >> initializeDropList [
 
 { #category : #initialization }
 RBFindAndReplacePreviewPresenter >> initializePresenter [
-	super initializePresenter.
+	super initializePresenter
 ]
 
 { #category : #initialization }
@@ -118,16 +118,16 @@ RBFindAndReplacePreviewPresenter >> initializeWidgets [
 	dropList := self newDropList.
 	selectedRefactorings := OrderedCollection new.
 	self initializeDropList.
-	self initializeChangeList.
+	self initializeChangeList
 ]
 
 { #category : #initialization }
 RBFindAndReplacePreviewPresenter >> method: aMethod [
 	method := aMethod.
-	
-	selectedRefactorings := OrderedCollection newFrom: 
+
+	selectedRefactorings := OrderedCollection newFrom:
 		(method origin methods select: [:each | each ~= method]).
-	changeList items: selectedRefactorings.
+	changeList items: selectedRefactorings
 ]
 
 { #category : #initialization }

@@ -22,7 +22,7 @@ Model >> addDependent: anObject [
 
 	(self dependents includes: anObject) ifFalse:
 		[self myDependents: (self dependents copyWithDependent: anObject)].
-	
+
 	^ anObject
 ]
 
@@ -48,26 +48,26 @@ Model >> canDiscardEdits [
 	"Answer true if none of the views on this model has unaccepted edits that matter."
 
 	dependents ifNil: [ ^ true ].
-	
+
 	self dependents
 		do: [:each | each canDiscardEdits ifFalse: [ ^ false ] ]
 		without: self.
-		
+
 	^ true
 ]
 
 { #category : #updating }
 Model >> changed [
-	"Receiver changed in a general way; inform all the dependents by 
+	"Receiver changed in a general way; inform all the dependents by
 	sending each dependent an update: message."
 
 	self changed: self
 ]
 
 { #category : #updating }
-Model >> changed: aParameter [ 
-	"Receiver changed. The change is denoted by the argument aParameter. 
-	Usually the argument is a Symbol that is part of the dependent's change 
+Model >> changed: aParameter [
+	"Receiver changed. The change is denoted by the argument aParameter.
+	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents."
 
 	self dependents do: [:aDependent | aDependent update: aParameter]
@@ -75,8 +75,8 @@ Model >> changed: aParameter [
 
 { #category : #updating }
 Model >> changed: anAspect with: anObject [
-	"Receiver changed. The change is denoted by the argument anAspect. 
-	Usually the argument is a Symbol that is part of the dependent's change 
+	"Receiver changed. The change is denoted by the argument anAspect.
+	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents. Also pass anObject for additional information."
 
 	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
@@ -93,7 +93,7 @@ Model >> dependents [
 { #category : #announcing }
 Model >> destroyAnnouncer [
 
-	announcer := nil.
+	announcer := nil
 ]
 
 { #category : #edits }
@@ -102,10 +102,10 @@ Model >> hasUnacceptedEdits [
 
 	dependents ifNil: [^ false].
 	self dependents
-		do: [:each | 
+		do: [:each |
 			self flag: #pharoFixMe. "The check for #respondsTo: is a hack necessary just because the old
 			Browser uses it wrong. We need to change this after old Browser removal"
-			((each respondsTo: #hasUnacceptedEdits) and: [ each hasUnacceptedEdits ]) 
+			((each respondsTo: #hasUnacceptedEdits) and: [ each hasUnacceptedEdits ])
 				ifTrue: [^ true]]
 		without: self.
 	^ false
@@ -141,7 +141,7 @@ Model >> removeDependent: anObject [
 	| newDependents |
 	newDependents := self dependents reject: [:each | each == anObject].
 	self myDependents: (newDependents isEmpty ifFalse: [ newDependents ]).
-	
+
 	^ anObject
 ]
 
@@ -170,13 +170,13 @@ Model >> stepIn: aWindow [
 
 { #category : #stepping }
 Model >> stepTime [
-	
+
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
 { #category : #stepping }
 Model >> stepTimeIn: aSystemWindow [
-	
+
 	^ self stepTime
 ]
 
@@ -188,9 +188,9 @@ Model >> update: anAspect [
 
 { #category : #updating }
 Model >> update: anAspect with: anObject [
-	"Receive a change notice from an object of whom the receiver is a 
+	"Receive a change notice from an object of whom the receiver is a
 	dependent. The default behavior is to call update:,
-	which by default does nothing; a subclass might want 
+	which by default does nothing; a subclass might want
 	to change itself in some way."
 
 	^ self update: anAspect
@@ -198,13 +198,13 @@ Model >> update: anAspect with: anObject [
 
 { #category : #announcing }
 Model >> valueChanged [
-	
+
 	"compatibility with the NewValueHolder"
 	self announcer announce: (ValueChanged newValue: self)
 ]
 
 { #category : #copying }
-Model >> veryDeepFixupWith: deepCopier [ 
+Model >> veryDeepFixupWith: deepCopier [
 	"See if the dependents are being copied also.  If so, point at the new copies.  (The dependent has self as its model.)
 	Dependents handled in class Object, when the model is not a Model, are fixed up in Object veryDeepCopy."
 
@@ -217,7 +217,7 @@ Model >> veryDeepFixupWith: deepCopier [
 	dependents := nil.
 	refs := deepCopier references.
 	originalDependents
-		do: [:originalDependent | | newDependent | 
+		do: [:originalDependent | | newDependent |
 			newDependent := refs
 						at: originalDependent
 						ifAbsent: [].
@@ -244,7 +244,7 @@ Model >> whenChangedDo: aBlock [
 	"Culled block [ :newValue :oldValue :announcement :announcer | ]"
 
 	| block |
-	block := [ :announcement :ann | 
+	block := [ :announcement :ann |
 	aBlock
 		cull: announcement newValue
 		cull: announcement oldValue

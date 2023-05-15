@@ -10,17 +10,16 @@ Class {
 
 { #category : #debugging }
 TimeMeasuringTest >> debug [
-	self resources do: [:res | 
+	self resources do: [:res |
 		res isAvailable ifFalse: [^res signalInitializationError]].
-	[(self class selector: testSelector) setToDebug; runCase] 
+	[(self class selector: testSelector) setToDebug; runCase]
 		ensure: [self resources do: [:each | each reset]]
-			
 ]
 
 { #category : #initialization }
 TimeMeasuringTest >> initialize [
 	super initialize.
-	shouldProfile := false.
+	shouldProfile := false
 ]
 
 { #category : #private }
@@ -30,8 +29,8 @@ TimeMeasuringTest >> instanceVariablesToKeep [
 ]
 
 { #category : #performance }
-TimeMeasuringTest >> measure: measuredBlock [ 
-	shouldProfile 
+TimeMeasuringTest >> measure: measuredBlock [
+	shouldProfile
 		ifTrue: [Smalltalk tools timeProfiler onBlock: [10 timesRepeat: measuredBlock]].
 	realTime := measuredBlock timeToRun
 ]
@@ -47,12 +46,12 @@ TimeMeasuringTest >> reportPerformance [
 	str := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: (File openForWriteFileNamed: 'performanceReports.txt')
 			encoding: 'utf8').
-	
+
 	str setToEnd;
 		nextPutAll: ' test: ', testSelector;
-		nextPutAll: ' time: ', realTime asString; 
+		nextPutAll: ' time: ', realTime asString;
 		nextPutAll: ' version: ', self versionInformation;
-		cr; 
+		cr;
 		close
 ]
 
@@ -64,11 +63,10 @@ TimeMeasuringTest >> runCase [
 { #category : #debugging }
 TimeMeasuringTest >> setToDebug [
 	shouldProfile := true
-
 ]
 
 { #category : #utilities }
-TimeMeasuringTest >> versionInfoForWorkingCopiesThat: wcPredicate [ 
+TimeMeasuringTest >> versionInfoForWorkingCopiesThat: wcPredicate [
 	^(MCWorkingCopy allManagers select: wcPredicate) inject: ''
 		into: [:s :e | s , e description]
 ]

@@ -18,7 +18,7 @@ Class {
 { #category : #accessing }
 FFILibraryFinder class >> findAnyLibrary: aCollection [
 	"When there are different versions/names of libraries we want to use."
-	
+
 	^ self new findAnyLibrary: aCollection
 ]
 
@@ -36,30 +36,30 @@ FFILibraryFinder >> basePaths [
 
 { #category : #accessing }
 FFILibraryFinder >> findAnyLibrary: aCollection [
-	
-	aCollection do: [ :eachName | 
+
+	aCollection do: [ :eachName |
 		self paths do: [ :each | | path |
 			path := each / eachName.
-			path exists 
+			path exists
 				ifTrue: [ ^ path fullName ] ] ].
-	
+
 	self error: ('Cannot locate any of {1}. Please check if it installed on your system' format: { aCollection asString })
 ]
 
 { #category : #accessing }
 FFILibraryFinder >> findLibrary: aString [
-	
+
 	self paths do: [ :each | | path |
 		path := each / aString.
-		path exists 
+		path exists
 			ifTrue: [ ^ path fullName ] ].
-	
+
 	self error: ('Cannot locate {1}. Please check if it installed on your system' format: { aString })
 ]
 
 { #category : #accessing }
 FFILibraryFinder >> knownPaths [
-		
+
 	^ self subclassResponsibility
 ]
 
@@ -72,8 +72,8 @@ FFILibraryFinder >> ldLibraryPaths [
 { #category : #accessing }
 FFILibraryFinder >> paths [
 
-	^ (Array streamContents: [ :stream | 
-		stream 
+	^ (Array streamContents: [ :stream |
+		stream
 			nextPutAll: self userPaths;
 			nextPutAll: self basePaths;
 			nextPutAll: self ldLibraryPaths;

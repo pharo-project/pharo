@@ -27,11 +27,11 @@ ClassQueryTest >> testAllCallsOnASymbol [
 
 { #category : #tests }
 ClassQueryTest >> testReferencedClasses [
-	
+
 	| refs |
 	refs := Metaclass referencedClasses.
 	self assert: (refs includesAll: { LiteralVariable. String. Class }).
-	
+
 	refs := self class referencedClasses.
 	self assert: (refs includesAll: { Metaclass. Object. LiteralVariable. String. OrderedCollection. Class. })
 ]

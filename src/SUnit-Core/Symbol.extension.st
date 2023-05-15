@@ -11,15 +11,15 @@ Symbol >> asTestSelector [
 	"#mySelector asTestSelector >>> #testMySelector"
 	"#at:putNext: asTestSelector >>> #testAtPutNext"
 
-	self isBinary ifTrue: [ 
+	self isBinary ifTrue: [
 		^ (#test, (self flatCollect: [ :each | (((Character specialCharacterNames at: each) copyReplaceAll: '-' with: ' ') substrings collect: #capitalized) joinUsing: ''])) asSymbol ].
-	
+
 	^ (#test, (((self copyReplaceAll: ':' with: ' ') substrings collect: #capitalized) joinUsing: '')) asSymbol
 ]
 
 { #category : #'*SUnit-Core' }
 Symbol >> isTestSelector [
 
-	^ self isUnary and: [ 
+	^ self isUnary and: [
 		  (self beginsWith: 'test') or: [ self beginsWith: 'should' ] ]
 ]

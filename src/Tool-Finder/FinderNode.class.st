@@ -30,7 +30,7 @@ FinderNode >> browseClass [
 
 { #category : #displaying }
 FinderNode >> displayString [
-	
+
 	^ self item asString
 ]
 
@@ -63,7 +63,7 @@ FinderNode >> menu: menu shifted: aBoolean [
 		target: self
 		selector: #browse.
 	self addInspectMenuItem: menu.
-		
+
 	menu addLine.
 	menu
 		add: 'Expand All'

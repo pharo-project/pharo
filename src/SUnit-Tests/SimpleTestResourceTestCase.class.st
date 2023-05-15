@@ -23,7 +23,7 @@ SimpleTestResourceTestCase class >> resources [
 { #category : #utilities }
 SimpleTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 	"This self-testing test must clear the outer state of its resources before starting and after finishing, so that it can construct test cases and suites of itself and test them."
-	
+
 	self
 		assert: SimpleTestResource isAlreadyAvailable
 		description: 'The resource was not set up for the test'.
@@ -48,7 +48,7 @@ SimpleTestResourceTestCase >> dummy [
 		description: 'This test uses a resource but it was not set up'.
 	self setRun.
 	self assert: resource hasRun
-		description: 'This test uses a resource but we could not interact with it'.
+		description: 'This test uses a resource but we could not interact with it'
 ]
 
 { #category : #private }
@@ -80,7 +80,7 @@ SimpleTestResourceTestCase >> setUp [
 { #category : #tests }
 SimpleTestResourceTestCase >> testDebugTestWithResource [
 	"The debug will raise an error if the resource is not set up properly."
-	
+
 	self clearOuterResourceStateDuring: [(self class selector: #setRun) debug]
 ]
 
@@ -91,7 +91,7 @@ SimpleTestResourceTestCase >> testResourceCollection [
 	self class buildSuiteFromSelectors resources do:
 		[:each |
 		self assert: (self resources includes: each)
-			description: each name , ':  I have this resource but my suite does not'].
+			description: each name , ':  I have this resource but my suite does not']
 ]
 
 { #category : #tests }
@@ -115,7 +115,7 @@ SimpleTestResourceTestCase >> testRunSuiteWithResource [
 	self clearOuterResourceStateDuring:
 		[self
 			assert: suite run printString = '3 ran, 1 passed, 0 skipped, 0 expected failures, 1 failure, 1 error, 0 passed unexpected'
-			description: 'A suite of tests needing SimpleTestResource did not run as expected'].
+			description: 'A suite of tests needing SimpleTestResource did not run as expected']
 ]
 
 { #category : #tests }

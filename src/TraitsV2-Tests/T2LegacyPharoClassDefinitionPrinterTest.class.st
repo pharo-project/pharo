@@ -6,9 +6,7 @@ Class {
 
 { #category : #helpers }
 T2LegacyPharoClassDefinitionPrinterTest >> forClass: aClass [
-	^ (ClassDefinitionPrinter legacy for: aClass) definitionString 
-
-
+	^ (ClassDefinitionPrinter legacy for: aClass) definitionString
 ]
 
 { #category : #running }
@@ -21,7 +19,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> setUp [
 { #category : #'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
-	self 
+	self
 		assert: (self forClass: AlignmentMorph class) equals: 'AlignmentMorph class
 	instanceVariableNames: '''''
 ]
@@ -64,7 +62,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testMultiPools [
 { #category : #'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTBehavior [
 	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
-	self 
+	self
 		assert: (self forClass: TBehavior)  equals: 'Trait named: #TBehavior
 	 uses: {}
 	 package: ''TraitsV2-Compatibility-Traits'''
@@ -93,7 +91,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testTSortable [
 
 { #category : #'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait [
-	
+
 	self assert: (self forClass: RubScrolledTextModel) equals: 'Object subclass: #RubScrolledTextModel
 	uses: TViewModel
 	instanceVariableNames: ''hasUnacceptedEdits announcer text primarySelectionInterval interactionModel''
@@ -112,8 +110,8 @@ T2LegacyPharoClassDefinitionPrinterTest >> testTrait3 [
 { #category : #'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
-	self 
-		assert: (self forClass: Trait3) 
+	self
+		assert: (self forClass: Trait3)
 		equals: 'Trait named: #Trait3
 	 uses: Trait2
 	 package: ''Tests-Traits-MOP'''

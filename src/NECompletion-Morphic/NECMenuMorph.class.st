@@ -438,6 +438,12 @@ NECMenuMorph >> handlesMouseDown: anEvent [
 	^ true
 ]
 
+{ #category : #actions }
+NECMenuMorph >> hasDetail [
+
+	^ detailMorph notNil
+]
+
 { #category : #drawing }
 NECMenuMorph >> hasMessage [
 	^ true

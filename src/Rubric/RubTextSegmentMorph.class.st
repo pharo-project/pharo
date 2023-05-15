@@ -34,7 +34,7 @@ RubTextSegmentMorph >> addItemToMenu: aMenu [
 		arguments: {self};
 		icon: self icon;
 		segment: self.
-		
+
 		^ aMenu addMenuItem: item
 ]
 
@@ -51,7 +51,7 @@ RubTextSegmentMorph >> beExtendable [
 { #category : #initialization }
 RubTextSegmentMorph >> beSmoothCurve [
 	super beSmoothCurve.
-	self textArea ifNotNil: [ self computeVertices ].
+	self textArea ifNotNil: [ self computeVertices ]
 ]
 
 { #category : #accessing }
@@ -78,21 +78,21 @@ RubTextSegmentMorph >> computeSmoothVertices [
 	lastLine := self lines at: lastLineIndex.
 	verts := OrderedCollection new.
 	firstLine = lastLine
-		ifTrue: [ 
+		ifTrue: [
 			firstCB := self textArea paragraph firstNonBlankCharacterBlockInLine: firstLine.
 			verts add: firstCB bottomLeft.
 			verts add: firstCB topLeft.
 			firstIndex ~= lastIndex
-				ifTrue: [ 
+				ifTrue: [
 					lastCB := self textArea paragraph lastNonBlankCharacterBlockInLine: firstLine.
 					verts add: lastCB topLeft.
 					verts add: lastCB bottomLeft.
 					verts add: firstCB bottomLeft ] ]
-		ifFalse: [ 
+		ifFalse: [
 			| currLine currIdx cb |
 			currIdx := firstLineIndex.
 			currLine := firstLine.
-			[ 
+			[
 			cb := self textArea paragraph lastNonBlankCharacterBlockInLine: currLine.
 			verts add: cb topRight.
 			verts add: cb bottomRight.
@@ -101,7 +101,7 @@ RubTextSegmentMorph >> computeSmoothVertices [
 			cb := self textArea paragraph lastNonBlankCharacterBlockInLine: currLine.
 			verts add: cb topRight.
 			verts add: cb bottomRight.
-			[ 
+			[
 			cb := self textArea paragraph firstNonBlankCharacterBlockInLine: currLine.
 			verts add: cb bottomLeft - (1 @ 0).
 			verts add: cb topLeft - (1 @ 0).
@@ -115,35 +115,44 @@ RubTextSegmentMorph >> computeSmoothVertices [
 
 { #category : #private }
 RubTextSegmentMorph >> computeStraightVertices [
-	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine verts secondLine thirdLine |
+	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine 
+	verts lines textarea margins segmentGap textAreaLeft |
 	firstCB := self characterBlockForIndex: firstIndex.
 	lastCB := self characterBlockForIndex: lastIndex.
+	lines := self lines.
+	textarea := self textArea.
+	margins := self margins.
 	firstLineIndex := self lineIndexOfCharacterIndex: firstIndex.
 	lastLineIndex := self lineIndexOfCharacterIndex: lastIndex.
-	firstLine := self lines at: firstLineIndex.
-	lastLine := self lines at: lastLineIndex.
+	firstLine := lines at: firstLineIndex.
+	lastLine := lines at: lastLineIndex.
 	verts := OrderedCollection new.
-	firstLine = lastLine
-		ifTrue: [ 
-			verts add: firstCB bottomLeft.
-			verts add: firstCB topLeft.
-			firstIndex ~= lastIndex
-				ifTrue: [ 
-					verts add: lastCB topLeft.
-					verts add: lastCB bottomLeft.
-					verts add: firstCB bottomLeft ] ]
-		ifFalse: [ 
-			secondLine := self lines at: firstLineIndex + 1.
-			thirdLine := self lines at: lastLineIndex - 1.
-			verts add: firstCB bottomLeft - (1 @ 0).
-			verts add: firstCB topLeft - (1 @ 0).
-			verts add: (self textArea right - self margins right) @ firstLine top.
-			verts add: (self textArea right - self margins right) @ thirdLine bottom.
+	segmentGap := 1@0.
+	firstLine = lastLine ifTrue: [
+		verts add: firstCB bottomLeft.
+		verts add: firstCB topLeft.
+		firstIndex ~= lastIndex ifTrue: [
 			verts add: lastCB topLeft.
 			verts add: lastCB bottomLeft.
-			verts add: lastLine bottomLeft - (1 @ 0).
-			verts add: secondLine topLeft - (1 @ 0).
-			verts add: firstCB bottomLeft - (1 @ 0) ].
+			verts add: firstCB bottomLeft ] ]
+	ifFalse: [ 
+		textAreaLeft := textArea left + margins left.
+		verts 
+			add: firstCB bottomLeft - segmentGap;
+			add: firstCB topLeft - segmentGap.
+		firstLineIndex to: lastLineIndex - 1 do: [ :index | | line |
+			line := lines at: index.
+			verts 
+				add: line actualWidth + margins left @ line top + segmentGap;
+				add: line actualWidth + margins left @ line bottom + segmentGap.
+		].
+		
+		verts
+			add: lastCB topLeft + segmentGap;
+			add: lastCB bottomLeft + segmentGap;
+			add: textAreaLeft @ lastLine bottom - segmentGap;
+			add: textAreaLeft @ firstLine bottom - segmentGap.
+	].
 	self setVertices: verts
 ]
 
@@ -176,7 +185,7 @@ RubTextSegmentMorph >> displayIconAt: aPosition on: aCanvas [
 RubTextSegmentMorph >> displayIconAt: aPosition onAthensCanvas: aCanvas [
 	self icon ifNil: [ ^self ].
 	aCanvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			aCanvas paintOptions composeOver.
 			aCanvas setPaint: self icon.
 			aCanvas pathTransform translateBy: aPosition.
@@ -206,7 +215,7 @@ RubTextSegmentMorph >> from: aFirstCharIndex to: aLastCharIndex [
 ]
 
 { #category : #accessing }
-RubTextSegmentMorph >> getText [ 
+RubTextSegmentMorph >> getText [
 	^ self textArea text copyFrom: self firstIndex to: self lastIndex - 1
 ]
 
@@ -236,7 +245,7 @@ RubTextSegmentMorph >> iconBlock: aBlock [
 ]
 
 { #category : #accessing }
-RubTextSegmentMorph >> inTextArea: aTextArea [ 
+RubTextSegmentMorph >> inTextArea: aTextArea [
 	textArea := aTextArea.
 	self computeVertices
 ]
@@ -345,8 +354,8 @@ RubTextSegmentMorph >> readWriteView [
 ]
 
 { #category : #'event handling' }
-RubTextSegmentMorph >> registerTextArea [ 
-	textArea announcer  
+RubTextSegmentMorph >> registerTextArea [
+	textArea announcer
 	when: RubExtentChanged send: #whenExtentChanged: to: self;
 	when: RubTextChanged send: #whenTextChanged: to: self
 ]
@@ -365,12 +374,12 @@ RubTextSegmentMorph >> setText: aText from: aView [
 
 { #category : #'event handling' }
 RubTextSegmentMorph >> showMouseHasEntered [
-	self borderWidth: 1.
+	self borderWidth: 1
 ]
 
 { #category : #'event handling' }
 RubTextSegmentMorph >> showMouseHasLeaved [
-	self borderWidth: 0.
+	self borderWidth: 0
 ]
 
 { #category : #accessing }
@@ -410,12 +419,12 @@ RubTextSegmentMorph >> topRendererOrSelf [
 ]
 
 { #category : #'event handling' }
-RubTextSegmentMorph >> whenExtentChanged: anAnnouncement [ 
-	self computeVertices.
+RubTextSegmentMorph >> whenExtentChanged: anAnnouncement [
+	self computeVertices
 ]
 
 { #category : #'event handling' }
-RubTextSegmentMorph >> whenTextChanged: anAnnouncement [ 
+RubTextSegmentMorph >> whenTextChanged: anAnnouncement [
 	| beg end delta |
 	textArea ifNil: [ ^self ].
 	beg := anAnnouncement start.

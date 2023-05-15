@@ -374,7 +374,7 @@ OmFileStore >> readEntriesWith: aBlockClosure [
 			on: Error
 			do: [ :error |
 				(OmFileStoreReadingError
-					readingError: error
+					readingError: error freeze
 					on: self fileReference
 					position: readStream position) signal ] ]
 ]

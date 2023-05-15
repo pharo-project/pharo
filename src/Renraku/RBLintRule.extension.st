@@ -23,20 +23,20 @@ RBLintRule >> check: anEntity forCritiquesDo: aCriticBlock [
 { #category : #'*Renraku' }
 RBLintRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternativeBlock [
 	| encounteredCritique |
-	
+
 	encounteredCritique := false.
 
 	self check: anEntity forCritiquesDo: [ :crit |
 		encounteredCritique := true.
 		aCriticBlock cull: crit ].
-	
+
 	encounteredCritique ifFalse: [ alternativeBlock value ]
 ]
 
 { #category : #'*Renraku' }
 RBLintRule >> check: anEntity ifNoCritiques: alternativeBlock [
 	| critics |
-	
+
 	critics := OrderedCollection new.
 	self check: anEntity forCritiquesDo: [ :critic | critics add: critic ] ifNone: alternativeBlock.
 	^ critics

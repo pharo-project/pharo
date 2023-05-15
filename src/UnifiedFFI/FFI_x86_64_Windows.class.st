@@ -48,9 +48,9 @@ FFI_x86_64_Windows >> externalULongType [
 ]
 
 { #category : #'instance creation' }
-FFI_x86_64_Windows >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [ 
+FFI_x86_64_Windows >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
 
-	^ FFIWin64CallbackArgumentReader 
+	^ FFIWin64CallbackArgumentReader
 		forCallback: aCallback
 		inContext: aCallbackContext
 ]

@@ -24,13 +24,8 @@ SystemAnnouncer class >> announcer: anAnnouncer [
 
 { #category : #'class initialization' }
 SystemAnnouncer class >> reset [
-
 	"unregister all current weak subscriptions because it can cause a memory leak"
-	announcer subscriptions subscriptions
- 		select: [:each | each isKindOf: WeakAnnouncementSubscription] 
-		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 
-	Smalltalk garbageCollect.
-		
+
 	self announcer: nil.
 ]
 
@@ -40,14 +35,14 @@ SystemAnnouncer class >> restoreAllNotifications [
 	"self restoreAllNotifications"
 
 	self reset.
-	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | 
+	(Pragma allNamed: #systemEventRegistration) do: [ :pragma |
 		pragma methodClass instanceSide perform: pragma methodSelector ]
 ]
 
 { #category : #'instance creation' }
 SystemAnnouncer class >> uniqueInstance [
 	"Answer a system annoncer."
-	
+
 	^ announcer ifNil: [ announcer := self new ]
 ]
 
@@ -58,13 +53,13 @@ SystemAnnouncer class >> unload [
 
 { #category : #announce }
 SystemAnnouncer >> announce: anAnnouncement [
-	self isSuspended 
-		ifFalse: [ 
+	self isSuspended
+		ifFalse: [
 			self private announce: anAnnouncement.
 			super announce: anAnnouncement ]
 		ifTrue:[
 			storedAnnouncements ifNotNil:[ storedAnnouncements add: anAnnouncement ]
-		].
+		]
 ]
 
 { #category : #triggering }
@@ -75,15 +70,15 @@ SystemAnnouncer >> class: aClass oldComment: oldComment newComment: newComment o
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> class: aClass recategorizedFrom: oldCategory to: newCategory [ 
-	self announce: (ClassRecategorized 
+SystemAnnouncer >> class: aClass recategorizedFrom: oldCategory to: newCategory [
+	self announce: (ClassRecategorized
 						class: aClass
 						recategorizedFrom: oldCategory
 						to: newCategory)
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classAdded: aClass inCategory: aCategoryName [ 
+SystemAnnouncer >> classAdded: aClass inCategory: aCategoryName [
 	self announce: (ClassAdded class: aClass category: aCategoryName)
 ]
 
@@ -103,7 +98,7 @@ SystemAnnouncer >> classCategoryRemoved: aClassCategoryName [
 SystemAnnouncer >> classCategoryRenamedFrom: anOldClassCategoryName to: aNewClassCategoryName [
 
 	self announce: (CategoryRenamed
-					classCategoryRenamedFrom: anOldClassCategoryName 
+					classCategoryRenamedFrom: anOldClassCategoryName
 					to: aNewClassCategoryName)
 ]
 
@@ -130,13 +125,13 @@ SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classRemoved: aClass fromCategory: aCategoryName [ 
+SystemAnnouncer >> classRemoved: aClass fromCategory: aCategoryName [
 	self announce: (ClassRemoved class: aClass category: aCategoryName)
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCategory: aCategoryName [ 
-	self announce: (ClassRenamed 
+SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCategory: aCategoryName [
+	self announce: (ClassRenamed
 				class: aClass
 				category: aCategoryName
 				oldName: oldClassName
@@ -152,7 +147,7 @@ SystemAnnouncer >> classReorganized: aClass [
 SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
 	self announce: (ClassRepackaged
 						classRepackaged: aClass
-						oldPackage: aPackage 
+						oldPackage: aPackage
 						newPackage: anotherPackage)
 ]
 
@@ -176,12 +171,12 @@ SystemAnnouncer >> classTagRenamed: tagName inPackage: aPackage to: newTagName [
 
 { #category : #triggering }
 SystemAnnouncer >> evaluated: textOrStream [
-	^ self evaluated: textOrStream context: nil.
+	^ self evaluated: textOrStream context: nil
 ]
 
 { #category : #triggering }
 SystemAnnouncer >> evaluated: expression context: aContext [
-	self announce: (ExpressionEvaluated 
+	self announce: (ExpressionEvaluated
 				expression: expression
 				context: aContext)
 ]
@@ -192,7 +187,7 @@ SystemAnnouncer >> isSuspended [
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> methodAdded: aMethod [ 
+SystemAnnouncer >> methodAdded: aMethod [
 	"A method with the given selector was added to aClass, but not put in a protocol."
 
 	^ self methodAdded: aMethod configuredWith: [ :method | ]
@@ -205,7 +200,7 @@ SystemAnnouncer >> methodAdded: aMethod configuredWith: aBlock [
 	| event |
 	event := MethodAdded method: aMethod.
 	aBlock value: event.
-	self announce: event.
+	self announce: event
 ]
 
 { #category : #triggering }
@@ -231,7 +226,7 @@ SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior [
 SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 	self announce: (MethodRepackaged
 						methodRepackaged: aMethod
-						oldPackage: aPackage 
+						oldPackage: aPackage
 						newPackage: anotherPackage)
 ]
 
@@ -242,7 +237,7 @@ SystemAnnouncer >> private [
 
 { #category : #triggering }
 SystemAnnouncer >> protocolAdded: aString inClass: aClass [
-	self announce: (ProtocolAdded new 
+	self announce: (ProtocolAdded new
 		classReorganized: aClass;
 		protocol: aString;
 		yourself)
@@ -250,7 +245,7 @@ SystemAnnouncer >> protocolAdded: aString inClass: aClass [
 
 { #category : #triggering }
 SystemAnnouncer >> protocolRemoved: aString inClass: aClass [
-	self announce: (ProtocolRemoved new 
+	self announce: (ProtocolRemoved new
 		classReorganized: aClass;
 		protocol: aString;
 		yourself)
@@ -285,14 +280,14 @@ SystemAnnouncer >> suspendAllWhile: aBlock [
 SystemAnnouncer >> suspendAllWhileStoring: aBlock [
 	| reentring |
 	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
-	
+
 	reentring := storedAnnouncements isNotNil.
-	
+
 	reentring ifFalse:[
 		storedAnnouncements := OrderedCollection new.
 	].
 
-	[ 
+	[
 		self suspendAllWhile: aBlock.
 		^ storedAnnouncements.
 	] ensure:[
@@ -309,6 +304,6 @@ SystemAnnouncer >> traitDefinitionChangedFrom: oldTrait to: newTrait [
 
 { #category : #subscription }
 SystemAnnouncer >> unsubscribe: anObject [
-	self private unsubscribe: anObject.	
-	super unsubscribe: anObject.
+	self private unsubscribe: anObject.
+	super unsubscribe: anObject
 ]

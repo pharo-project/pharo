@@ -19,12 +19,12 @@ Class {
 
 { #category : #'instance creation' }
 SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
-	^(self for: methods) 
+	^(self for: methods)
 		package: aPackage
 ]
 
 { #category : #accessing }
-SycMoveMethodsToPackageCommand >> defaultMenuIconName [ 
+SycMoveMethodsToPackageCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
@@ -35,8 +35,8 @@ SycMoveMethodsToPackageCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToPackageCommand >> execute [
-	
-	methods do: [ :each | 
+
+	methods do: [ :each |
 		self moveMethod: each toPackage: package.
 		each origin organization removeEmptyCategories ]
 ]
@@ -60,6 +60,6 @@ SycMoveMethodsToPackageCommand >> prepareExecutionInDropContext: aToolContext [
 { #category : #execution }
 SycMoveMethodsToPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	package := aToolContext requestSinglePackage: 'Choose package'
 ]

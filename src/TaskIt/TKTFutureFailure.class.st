@@ -20,13 +20,13 @@ TKTFutureFailure >> isFailure [
 
 { #category : #accessing }
 TKTFutureFailure >> onFailureDo: aBlockClosure inFuture: aFuture [
-	
+
 	aFuture scheduleCallbackTask: [ aBlockClosure value: value ]
 ]
 
 { #category : #accessing }
 TKTFutureFailure >> value [
-	
+
 	value signal
 ]
 
@@ -38,6 +38,6 @@ TKTFutureFailure >> value: aValue [
 
 { #category : #accessing }
 TKTFutureFailure >> valueForFuture: aFuture [
-	
+
 	 value signal
 ]

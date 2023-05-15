@@ -36,18 +36,18 @@ FFIExternalReferenceType >> = anExternalReferenceType [
 { #category : #'emitting code' }
 FFIExternalReferenceType >> basicEmitArgument: aBuilder context: aContext [
  	self loader
-		emitArgument: aBuilder 
-		context: aContext 
-		objectClass: self objectClass	
+		emitArgument: aBuilder
+		context: aContext
+		objectClass: self objectClass
 		instVarName: self instanceVariableName
 ]
 
 { #category : #'emitting code' }
 FFIExternalReferenceType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
  	self loader
-		emitArgument: aBuilder 
-		context: aContext 
-		objectClass: self objectClass	
+		emitArgument: aBuilder
+		context: aContext
+		objectClass: self objectClass
 		instVarName: self instanceVariableName
 ]
 
@@ -58,10 +58,9 @@ FFIExternalReferenceType >> basicHandle: aHandle at: index [
 
 { #category : #private }
 FFIExternalReferenceType >> basicHandle: aHandle at: index put: value [
-	value getHandle isExternalAddress 
+	value getHandle isExternalAddress
 		ifFalse: [ self error: 'value needs to be an ExternalAddress' ].
 	^ aHandle pointerAt: index put: value getHandle
-
 ]
 
 { #category : #accessing }
@@ -72,7 +71,7 @@ FFIExternalReferenceType >> defaultReturnOnError [
 
 { #category : #'emitting code' }
 FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
-	^ aBuilder 
+	^ aBuilder
 		addTemp: #tmpResult;
 		"keep invoke result into the tmpResult var"
 		storeTemp: resultVar;
@@ -84,19 +83,19 @@ FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar contex
 		popTop;
 		"return instVarAt: (index of argName) put: result"
 		pushTemp: #tmpResult;
-		pushLiteral: (self objectClass 
-			instVarIndexFor: self instanceVariableName 
+		pushLiteral: (self objectClass
+			instVarIndexFor: self instanceVariableName
 			ifAbsent: [ self error: 'No handle instVar' ]);
 		pushTemp: resultVar;
 		send: #instVarAt:put:;
 		popTop;
 		pushTemp: #tmpResult;
-		returnTop	
+		returnTop
 ]
 
 { #category : #'emitting code' }
 FFIExternalReferenceType >> emitReturnArgument: builder context: aContext [
-	self loader 
+	self loader
 		emitPointerArityUnpack: builder
 		type: self
 		context: aContext

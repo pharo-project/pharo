@@ -14,7 +14,7 @@ Class {
 { #category : #'instance creation' }
 ReReplaceNodeCritique class >> rule: aRule achor: anAnchor oldNode: aNode newNode: anotherNode [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeRule: aRule
 		sourceAnchor: anAnchor
 		oldNode: aNode

@@ -42,14 +42,14 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 	self
 		assert: results isEmpty
 		description: [ String
-				streamContents: [ :s | 
+				streamContents: [ :s |
 					s
 						<< aLintRule rationale;
 						lf;
 						<< 'Violations: ';
 						lf.
 					results
-						do: [ :e | 
+						do: [ :e |
 							s
 								<< '- ';
 								print: e entity ]
@@ -67,11 +67,11 @@ ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 { #category : #accessing }
 ReleaseTest >> knownProcesses [
 	"Return a dynamic list of know processes"
-	
+
 	"(self actualProcesses difference: self knownProcesses) do: [ :each | each suspend; terminate ]."
-	
+
 	^ {
-		Processor activeProcess.	
+		Processor activeProcess.
 		Processor backgroundProcess.
 		WeakArray runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
@@ -111,11 +111,11 @@ ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	"Make sure that all class instance variable names start with a lowercase letter"
 	| violating |
 
-	violating := Smalltalk globals allBehaviors select: [ :class | 
+	violating := Smalltalk globals allBehaviors select: [ :class |
 		class slots anySatisfy: [:var | var name first isUppercase]].
 
-	self 
-		assert: violating isEmpty 
+	self
+		assert: violating isEmpty
 		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
 ]
 
@@ -123,8 +123,8 @@ ReleaseTest >> testAllInstanceVariablesStartLowercase [
 ReleaseTest >> testClassesShadow [
 
 	| classes |
-	classes := Smalltalk globals allBehaviors select: [ :class | 
-		           class definedVariables anySatisfy: [ :var | 
+	classes := Smalltalk globals allBehaviors select: [ :class |
+		           class definedVariables anySatisfy: [ :var |
 			           var isShadowing ] ].
 
 	self assert: classes isEmpty description: classes asArray asString
@@ -133,36 +133,36 @@ ReleaseTest >> testClassesShadow [
 { #category : #tests }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
-	
+
 	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 ]
 
 { #category : #tests }
 ReleaseTest >> testInstalledMethodsWithIncorrectTrailerKind [
 	| incorrectMethods |
-	
+
 	incorrectMethods := SystemNavigation new installedMethodsWithIncorrectTrailerKind.
-	
-	self 
+
+	self
 		assert: incorrectMethods isEmpty
 		description: [ String streamContents: [ :s|
-			s 
+			s
 				nextPutAll: 'Found methods with incorrect trailer kind: ';
-				print: incorrectMethods ]].
+				print: incorrectMethods ]]
 ]
 
 { #category : #tests }
 ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	| instanceSideMethodsWithNilKeyInLastLiteral |
-	
+
 	instanceSideMethodsWithNilKeyInLastLiteral := SystemNavigation new instanceSideMethodsWithNilKeyInLastLiteral.
-	
-	self 
+
+	self
 		assert: instanceSideMethodsWithNilKeyInLastLiteral isEmpty
 		description: [ String streamContents: [ :s|
-			s 
+			s
 				nextPutAll: 'Found methods with nil as last literal: ';
-				print: instanceSideMethodsWithNilKeyInLastLiteral ]].
+				print: instanceSideMethodsWithNilKeyInLastLiteral ]]
 ]
 
 { #category : #tests }
@@ -171,12 +171,12 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
 	registeredHandlers := SessionManager default startupList
 		collect: [:each | each handledId].
-	
+
 	keyClasses do:	[ :className |
 		self assert: (registeredHandlers includes: className).
 		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
-	
-	self assert: (registeredHandlers includes: #UIManagerSessionHandler).
+
+	self assert: (registeredHandlers includes: #UIManagerSessionHandler)
 ]
 
 { #category : #tests }
@@ -189,23 +189,23 @@ ReleaseTest >> testLayoutIntegrity [
 { #category : #tests }
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
-	
-	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
+
+	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject)
 ]
 
 { #category : #tests }
 ReleaseTest >> testManifestNamesAccordingToPackageNames [
 	"Make sure package name and manifest name are in synch"
-	
+
 	|manifestClasses actualManifestNames expectedManifestNames |
 	manifestClasses := self class environment allClasses select: [:each | each isManifest ].
 	actualManifestNames := (manifestClasses collect: [:each | each name ]) sorted.
 	expectedManifestNames := (manifestClasses collect: [:each | TheManifestBuilder manifestClassNameFor: each package name ]) sorted.
-	
-	self 
-		assert: actualManifestNames size 
+
+	self
+		assert: actualManifestNames size
 		equals: expectedManifestNames size.
-	
+
 	actualManifestNames do: [:each |
 		 self assert: (expectedManifestNames includes: each)]
 ]
@@ -216,15 +216,15 @@ ReleaseTest >> testMethodsContainNoHalt [
 	| methods |
 	methods := SystemNavigation new allMethods select: [ :method | method containsHalt ].
 	"these methods are using halt for testing something"
-	methods := methods reject: [ :method | 
+	methods := methods reject: [ :method |
 		           method hasPragmaNamed: #haltOrBreakpointForTesting ].
 	"these methods are implementing halt, we are not interested"
-	methods := methods reject: [ :method | 
+	methods := methods reject: [ :method |
 		           method hasPragmaNamed: #debuggerCompleteToSender ].
 
 	"there should be no method left"
-	self assert: methods isEmpty description: [ 
-		String streamContents: [ :stream | 
+	self assert: methods isEmpty description: [
+		String streamContents: [ :stream |
 			stream
 				nextPutAll: 'Found methods with halt';
 				print: methods ] ]
@@ -235,15 +235,15 @@ ReleaseTest >> testMethodsWithUnboundGlobals [
 	| methodsWithUnboundGlobals |
 	"Ensure the environment is clean"
 	3 timesRepeat: [ Smalltalk garbageCollect ].
-	
-	Smalltalk cleanOutUndeclared. 
+
+	Smalltalk cleanOutUndeclared.
 	methodsWithUnboundGlobals := SystemNavigation new methodsWithUnboundGlobals.
-	
-	self 
+
+	self
 		assert: methodsWithUnboundGlobals isEmpty
 		description: [ String streamContents: [ :s |
-			s 
-				nextPutAll: 'Found methods with unbound globals: '; 
+			s
+				nextPutAll: 'Found methods with unbound globals: ';
 				print: methodsWithUnboundGlobals ]]
 ]
 
@@ -262,7 +262,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 	| methods |
 	"we do not care about methods that are installed from traits"
 	methods := SystemNavigation new allMethods reject: [:method | method isFromTrait].
-	
+
 	methods := methods select: [:method |
 	method methodClass superclass
 		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
@@ -274,8 +274,8 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 
 
 	"there should be no method left"
-	"self assert: methods isEmpty description: [ 
-		String streamContents: [ :stream | 
+	"self assert: methods isEmpty description: [
+		String streamContents: [ :stream |
 			stream
 				nextPutAll: 'Found methods that are the same as in a superclass';
 				print: methods ] ]"
@@ -284,26 +284,25 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 { #category : #'tests - variables' }
 ReleaseTest >> testNoLiteralIsPinnedInMemory [
 	| methodsWithPinnedLiterals |
-	
-	methodsWithPinnedLiterals := SystemNavigation default allMethods flatCollect: [ :each | 
+
+	methodsWithPinnedLiterals := SystemNavigation default allMethods flatCollect: [ :each |
 	(each allLiterals select: [ :eachLiteral | eachLiteral isPinnedInMemory ])
 		ifNotEmpty: [ { each } ]
 		ifEmpty: [ #() ] ].
-	
+
 	self assertEmpty: methodsWithPinnedLiterals
-	
 ]
 
 { #category : #tests }
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
-	
+
 	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
 ]
 
 { #category : #'tests - source' }
 ReleaseTest >> testNoNullCharacter [
 	"Check that we do not have NULL in sources - see https://github.com/pharo-project/pharo/issues/9631"
-	
+
 	| violations |
 	violations := SystemNavigation default allMethods select: [ :m | m sourceCode includes: Character null ].
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
@@ -312,11 +311,11 @@ ReleaseTest >> testNoNullCharacter [
 { #category : #'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
-	methods := SystemNavigation new allMethods select: [ :method | 
+	methods := SystemNavigation new allMethods select: [ :method |
  		method sourceCode lines first trimRight last == $..].
-	
-	self assert: methods isEmpty description: [ 
-		String streamContents: [ :stream | 
+
+	self assert: methods isEmpty description: [
+		String streamContents: [ :stream |
 			stream
 				nextPutAll: 'Found methods with period in signature:';
 				print: methods ] ]
@@ -334,40 +333,40 @@ ReleaseTest >> testNoSentNotImplementedSelectors [
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
-	found := SystemNavigation default allMethodsSelect: [ :m | 
+	found := SystemNavigation default allMethodsSelect: [ :m |
 		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
 	"Make sure to not waste memory with all the ASTs"
 	ASTCache reset.
-	"No other exceptions beside the ones mentioned here should be allowed"	
-	validExceptions := { 
+	"No other exceptions beside the ones mentioned here should be allowed"
+	validExceptions := {
 		RBDummyRefactoryTestDataApp>>#tempVarOverridesInstVar.
 		RBRefactoryTestDataApp>>#tempVarOverridesInstVar.
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
-		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.	
-	
-	remaining := found asOrderedCollection 
+		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.
+
+	remaining := found asOrderedCollection
 								removeAll: validExceptions;
 								yourself.
-								
-	self 
-		assert: remaining isEmpty 
+
+	self
+		assert: remaining isEmpty
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
 ]
 
 { #category : #tests }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
-	
+
 	Smalltalk fixObsoleteReferences.
 	Smalltalk garbageCollect.
 	obsoleteClasses := SystemNavigation new obsoleteClasses
 		select: [ :each | each isAnonymous not ].
-	
-	self 
+
+	self
 		assert: obsoleteClasses isEmpty
 		description: [
 			String streamContents: [ :s|
-				s 
+				s
 					nextPutAll: 'Obsolete classes remaining: ';
 					print: obsoleteClasses ]]
 ]
@@ -377,7 +376,7 @@ ReleaseTest >> testPharoVersionFileExists [
 
 	"Test there is a pharo.version file next to this image containing the short version of this pharo image.
 	This file is required by the Pharo launcher to correctly detect the Pharo version we are running on."
-	
+
 	| pharoVersionFile |
 	pharoVersionFile := FileLocator imageDirectory / 'pharo.version'.
 	self assert: pharoVersionFile exists.
@@ -392,7 +391,7 @@ ReleaseTest >> testProperManifestClasses [
 	|manifests|
 	manifests := self class environment allClasses select: [:each | each isManifest ].
 	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
-	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ]).
+	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ])
 ]
 
 { #category : #'tests - rpackage' }
@@ -401,19 +400,19 @@ ReleaseTest >> testRPackageOrganizer [
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 
 	"Now check :)"
-	self 
+	self
 		assert: RPackageOrganizer allInstances size = 1
 		description: 'There are multiple (', RPackageOrganizer allInstances size asString, ') instances of RPackageOrganizer'.
-		  
-	self 
-		assert: RPackageOrganizer allInstances first == RPackageOrganizer default 
-		description: 'The default package organizer is the not the only instance of RPackageOrganizer'.
+
+	self
+		assert: RPackageOrganizer allInstances first == RPackageOrganizer default
+		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
 { #category : #tests }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
-	
+
 	| startupList settingsIndex |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	settingsIndex := startupList indexOf: #SystemSettingsPersistence.
@@ -427,7 +426,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
-	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache) 
+	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache)
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
@@ -451,24 +450,24 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 { #category : #'tests - variables' }
 ReleaseTest >> testUndeclared [
 	| undeclaredVariables validExceptions remaining description |
-	
-	Smalltalk cleanOutUndeclared. 
+
+	Smalltalk cleanOutUndeclared.
 	undeclaredVariables := Undeclared associations select: [:each |
 			each isUndeclaredVariable].
-	
+
 	validExceptions := { #undeclaredStubInstVar1 . #undeclaredStubInstVar2 }.
-	
+
 	"for now we filter by name, maybe filtering by variable would be better"
 	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name  ].
-	
-	"we look for one of the using methods of the undeclared var and report that, 
-	this should be enough to fix it quickly"							
+
+	"we look for one of the using methods of the undeclared var and report that,
+	this should be enough to fix it quickly"
 	description := String streamContents: [ :stream |
 			stream nextPutAll: 'Found undeclared Variables: '.
 			remaining do: [ :variable  |
 				| method |
 				method := variable usingMethods first.
-				stream 
+				stream
 					cr
 					nextPutAll: variable name;
 					nextPutAll: ' in: ';
@@ -482,29 +481,29 @@ ReleaseTest >> testUndeclared [
 { #category : #tests }
 ReleaseTest >> testUnknownProcesses [
 	"Make sure that there are no other processes running except the known processes"
-	
+
 	| unknownProcesses |
 	unknownProcesses := self actualProcesses difference: self knownProcesses.
-	self 
+	self
 		assert: unknownProcesses isEmpty
 		description: (String streamContents: [ :out |
 			out << 'Found unknown processes: '.
-			unknownProcesses 
-				do: [ :each | 
-					out 
+			unknownProcesses
+				do: [ :each |
+					out
 						print: each name;
 						print: ':';
-						print: each ] 
+						print: each ]
 				separatedBy: [ out << String crlf ] ])
 ]
 
 { #category : #'tests - rpackage' }
 ReleaseTest >> testUnpackagedClasses [
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [:each | 
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [:each |
 		(RPackageOrganizer default packageOf: each) packageName = RPackage defaultPackageName ].
-	self 
-		assert: unpackagedClasses isEmpty 
+	self
+		assert: unpackagedClasses isEmpty
 		description: (String streamContents: [ :s|
 			s nextPutAll: 'Found the following unpackaged classes: '.
 			unpackagedClasses
@@ -521,6 +520,17 @@ ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 ]
 
 { #category : #tests }
+ReleaseTest >> testVersionInImageHeaderIsCorrect [
+
+	| currentVersion |
+	currentVersion := SystemVersion current.
+
+	self
+		assert: Smalltalk vm imageVersionInImageHeader
+		equals: currentVersion major * 10 + currentVersion minor
+]
+
+{ #category : #tests }
 ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"In this test we check that at least every terminal menu entry of the world menu has an help."
 
@@ -530,6 +540,6 @@ ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"Here we have the roots of the menu. We want the terminal menu entries."
 	[ menuElements allSatisfy: [ :each | each itemList isNil ] ]
 		whileFalse: [ menuElements := menuElements inject: OrderedCollection new into: [ :coll :each | each itemList ifNil: [ coll add: each ] ifNotNil: [ :items | coll addAll: items ]. coll ] ].
-			
+
 	menuElements collect: #spec thenDo: [ :item | self assert: item help isNotNil description: item label , ' menu entry in world menu should have an help.' ]
 ]

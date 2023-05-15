@@ -32,14 +32,14 @@ ImageCleanerCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
 	self cleanUpImage.
-	Smalltalk snapshot: true andQuit: true.
+	Smalltalk snapshot: true andQuit: true
 ]
 
 { #category : #actions }
 ImageCleanerCommandLineHandler >> cleanUpImage [
 	(self hasOption: 'release')
 		ifTrue: [^ImageCleaner cleanUpForRelease].
-	(self hasOption: 'production')	
+	(self hasOption: 'production')
 		ifTrue: [ ^ImageCleaner cleanUpForProduction].
-	Smalltalk cleanUp: true except: #() confirming: false.	
+	Smalltalk cleanUp: true except: #() confirming: false.
 ]

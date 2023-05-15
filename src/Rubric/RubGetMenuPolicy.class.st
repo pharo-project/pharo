@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : #'accessing - menu' }
-RubGetMenuPolicy >> lookupMenu [ 
+RubGetMenuPolicy >> lookupMenu [
 	^ textArea lookupMenu
 ]
 
 { #category : #'accessing - menu' }
-RubGetMenuPolicy >> lookupShiftMenu [ 
+RubGetMenuPolicy >> lookupShiftMenu [
 	^ textArea lookupShiftMenu
 ]
 

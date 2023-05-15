@@ -17,6 +17,6 @@ Metaclass >> stonName [
 { #category : #'*STON-Core' }
 Metaclass >> stonOn: stonWriter [
 	stonWriter
-		writeObject: self 
+		writeObject: self
 		listSingleton: self instanceSide name asSymbol
 ]

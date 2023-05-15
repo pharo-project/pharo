@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIFloat64 class >> externalType [ 
+FFIFloat64 class >> externalType [
 	^ ExternalType double
 ]
 
@@ -35,15 +35,15 @@ FFIFloat64 >> basicHandle: aHandle at: index put: value [
 
 { #category : #'emitting code' }
 FFIFloat64 >> emitPointerArityRoll: aBuilder context: aContext [
-	self loader 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
+	self loader
+		emitPointerArityPack: aBuilder
+		context: aContext
 		arity: self pointerArity
 		selector: #packAsDoubleToArity:
 ]
 
 { #category : #callbacks }
-FFIFloat64 >> extractFromCallbackOn: aCallbackArgumentReader [ 
-	
+FFIFloat64 >> extractFromCallbackOn: aCallbackArgumentReader [
+
 	aCallbackArgumentReader extractDouble
 ]

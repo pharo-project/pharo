@@ -11,7 +11,7 @@ RGObjectLayout >> isObjectLayout [
 ]
 
 { #category : #accessing }
-RGObjectLayout >> slots [ 
+RGObjectLayout >> slots [
 
 	"only for API compatibility purposes"
 	^ Array new

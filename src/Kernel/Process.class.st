@@ -231,7 +231,6 @@ Process >> doTerminationFromAnotherProcess [
 		self priority: Processor activePriority; resume.
 		terminator wait
 	]
-
 ]
 
 { #category : #private }

@@ -27,9 +27,9 @@ NavigationHistory >> add: anEntry [
 
 { #category : #protocol }
 NavigationHistory >> addEntry: anEntry [
-	
+
 	self isPaused ifTrue: [ ^ self ].
-	
+
 	self basicAdd: anEntry
 ]
 
@@ -41,25 +41,25 @@ NavigationHistory >> back [
 
 { #category : #protocol }
 NavigationHistory >> basicAdd: anEntry [
-	
+
 	( storage isNotEmpty and: [ storage last = anEntry ] ) ifTrue: [ ^ self ].
 	anEntry = self current key ifTrue: [ ^ self ].
 	self checkSize.
 	index := index +1.
 	index > storage size
 		ifTrue: [ storage addLast:  (anEntry -> DateAndTime now)]
-		ifFalse: [ 
+		ifFalse: [
 			storage := storage copyFrom: 1 to: index.
 			storage at: index put: (anEntry -> DateAndTime now)]
 ]
 
 { #category : #private }
 NavigationHistory >> checkSize [
-	
+
 	[ storage size >= self maxSize ]
-		whileTrue: [ 
+		whileTrue: [
 			storage removeFirst.
-			index := index -1].
+			index := index -1]
 ]
 
 { #category : #protocol }
@@ -91,7 +91,7 @@ NavigationHistory >> initialize [
 
 	storage := OrderedCollection new.
 	index := 0.
-	paused := false.
+	paused := false
 ]
 
 { #category : #testing }
@@ -108,7 +108,7 @@ NavigationHistory >> last [
 { #category : #protocol }
 NavigationHistory >> maxSize [
 
-	^ maxSize ifNil: [ maxSize := self class defaultMaxSize ].
+	^ maxSize ifNil: [ maxSize := self class defaultMaxSize ]
 ]
 
 { #category : #protocol }
@@ -143,7 +143,7 @@ NavigationHistory >> previous [
 { #category : #protocol }
 NavigationHistory >> removeEntry: anEntry [
 	| toRemove |
-	
+
 	"we know that toRemove will always contains one element"
 	toRemove := (storage select: [:e | e key == anEntry ]).
 	toRemove ifEmpty: [ ^ self ].
@@ -157,8 +157,8 @@ NavigationHistory >> removeLastEntry [
 
 	self isPaused ifTrue: [ ^ self ].
 	storage ifEmpty: [ ^ self ].
-	
-	storage remove: storage last.	
+
+	storage remove: storage last.
 	index := index -1
 ]
 

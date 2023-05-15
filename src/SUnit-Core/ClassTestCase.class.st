@@ -36,41 +36,41 @@ ClassTestCase class >> mustTestCoverage [
 { #category : #private }
 ClassTestCase >> categoriesForClass: aClass [
 
-	^ aClass organization allMethodSelectors collect: [ :each | 
+	^ aClass organization allMethodSelectors collect: [ :each |
 		  aClass organization categoryOfElement: each ]
 ]
 
 { #category : #coverage }
 ClassTestCase >> classToBeTested [
-	
+
 	^ self subclassResponsibility
 ]
 
 { #category : #utilities }
 ClassTestCase >> differentMethodsWithSameSelectorBetween: firstClass and: secondClass [
 
-	| repeatedSelectors differentMethodsWithSameSelector |	
+	| repeatedSelectors differentMethodsWithSameSelector |
 	repeatedSelectors := firstClass localSelectors intersection: secondClass localSelectors.
-	
-	differentMethodsWithSameSelector := repeatedSelectors select: [ :selector | | m1 m2| 
-										 m1 := firstClass>>selector. 
+
+	differentMethodsWithSameSelector := repeatedSelectors select: [ :selector | | m1 m2|
+										 m1 := firstClass>>selector.
 										 m2 := secondClass>>selector.
 										 m1 sourceCode ~= m2 sourceCode].
-									
+
 	^ differentMethodsWithSameSelector
 ]
 
 { #category : #utilities }
 ClassTestCase >> repeatedMethodsThatDoNotAccessInstanceVariablesBetween: firstClass and: secondClass [
 
-	| repeatedSelectors repeatedMethodsThatDoNotAccessInstanceVariables |	
+	| repeatedSelectors repeatedMethodsThatDoNotAccessInstanceVariables |
 	repeatedSelectors := firstClass localSelectors intersection: secondClass localSelectors.
-	
-	repeatedMethodsThatDoNotAccessInstanceVariables := repeatedSelectors select: [ :selector | | m1 m2| 
-										 m1 := firstClass>>selector. 
+
+	repeatedMethodsThatDoNotAccessInstanceVariables := repeatedSelectors select: [ :selector | | m1 m2|
+										 m1 := firstClass>>selector.
 										 m2 := secondClass>>selector.
 										((m1 sourceCode = m2 sourceCode) and: [ m1 hasInstVarRef not ]) and: [ m2 hasInstVarRef not ]].
-									
+
 	^ repeatedMethodsThatDoNotAccessInstanceVariables
 ]
 
@@ -85,7 +85,7 @@ ClassTestCase >> selectorsTested [
 
 	| literals |
 	literals := Set new.
-	self class selectorsAndMethodsDo: [ :s :m | 
+	self class selectorsAndMethodsDo: [ :s :m |
 		(s beginsWith: 'test') ifTrue: [ literals addAll: m messages ] ].
 	^ literals asArray sort
 ]
@@ -99,9 +99,9 @@ ClassTestCase >> selectorsToBeIgnored [
 { #category : #coverage }
 ClassTestCase >> selectorsToBeTested [
 
-	^ ({ 
+	^ ({
 		   self classToBeTested.
-		   self classToBeTested class } flatCollect: [ :c | c selectors ]) 
+		   self classToBeTested class } flatCollect: [ :c | c selectors ])
 		  difference: self selectorsToBeIgnored
 ]
 
@@ -110,7 +110,7 @@ ClassTestCase >> targetClass [
 
 	[ ^ self classToBeTested ]
 		on: Error
-		do: [ 
+		do: [
 			| className |
 			className := self class name asString
 				             copyFrom: 1
@@ -122,7 +122,7 @@ ClassTestCase >> targetClass [
 ClassTestCase >> testCoverage [
 
 	| untested |
-	self class mustTestCoverage ifTrue: [ 
+	self class mustTestCoverage ifTrue: [
 		untested := self selectorsNotTested.
 		self
 			assert: untested isEmpty

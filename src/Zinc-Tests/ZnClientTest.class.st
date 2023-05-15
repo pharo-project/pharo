@@ -34,13 +34,13 @@ ZnClientTest >> testConnectionCloseOnReuseTimeout [
 	| client firstSocket secondSocket|
 	client := ZnClient new.
 	client connectionReuseTimeout: 0.
-	self withServerDo: [ :server | 
-		client 
+	self withServerDo: [ :server |
+		client
 			url: server localUrl;
 			get.
 		firstSocket := client connection.
 		client get.
-		secondSocket := client connection.		
+		secondSocket := client connection.
 		self assert: (firstSocket = secondSocket) not.
 		self deny: firstSocket isConnected.
 		firstSocket close.
@@ -69,9 +69,9 @@ ZnClientTest >> testConstruction [
 ZnClientTest >> testCookies [
 	| client |
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			server
-				onRequestRespond: [ :request | 
+				onRequestRespond: [ :request |
 					| cookie1 cookie2 response |
 					cookie1 := request cookies detect: [ :each | each name = 'x' ] ifNone: [ ZnCookie name: 'x' value: '0' ].
 					cookie2 := request cookies detect: [ :each | each name = 'y' ] ifNone: [ ZnCookie name: 'y' value: '100' ].
@@ -103,7 +103,7 @@ ZnClientTest >> testCustomUserAgentString [
 	self withServerDo: [ :server | | client |
 		"change ZnClient's local options"
 		(client := ZnClient new)
-			withOptions: [ :options | 
+			withOptions: [ :options |
 				options at: #userAgentString put: 'foobar client' ];
 			url: server localUrl;
 			addPathSegment: #echo;
@@ -113,7 +113,7 @@ ZnClientTest >> testCustomUserAgentString [
 		"dynamically change an option starting from the global default"
 		ZnOptions globalDefault clone
 			at: #userAgentString put: 'foobar client';
-			during: [ 
+			during: [
 				(client := ZnClient new)
 					url: server localUrl;
 					addPathSegment: #echo;
@@ -124,7 +124,7 @@ ZnClientTest >> testCustomUserAgentString [
 		client := ZnClient new.
 		client localOptions clone
 			at: #userAgentString put: 'foobar client';
-			during: [ 
+			during: [
 				(client := ZnClient new)
 					url: server localUrl;
 					addPathSegment: #echo;
@@ -144,28 +144,27 @@ ZnClientTest >> testDownloadSmallHTML [
 		downloadTo: ZnFileSystemUtils defaultDirectoryPath.
 	self assert: client isSuccess.
 	self assert: client response contentType equals: ZnMimeType textHtml.
-	ZnFileSystemUtils 
+	ZnFileSystemUtils
 		readStreamFor: self smallHtmlUrl pathSegments last
 		do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last.
 	"Second download to an explicitly named file"
-	client 
+	client
 		url: self smallHtmlUrl;
 		downloadTo: self smallHtmlUrl pathSegments last.
 	self assert: client isSuccess.
 	self assert: client response contentType equals: ZnMimeType textHtml.
-	ZnFileSystemUtils 
+	ZnFileSystemUtils
 		readStreamFor: self smallHtmlUrl pathSegments last
-		do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].	
+		do: [ :stream | self assert: (stream upToEnd includesSubstring: 'Small') ].
 	client close.
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last
-
 ]
 
 { #category : #testing }
 ZnClientTest >> testGetAfterPost [
 	self withServerDo: [ :server | | client |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request uri firstPathSegment = 'one'
 				ifTrue: [
 					(request method = #POST and: [ request hasEntity ])
@@ -173,12 +172,12 @@ ZnClientTest >> testGetAfterPost [
 						ifFalse: [ ZnResponse badRequest: request ] ]
 				ifFalse: [
 					request uri firstPathSegment = 'two'
-						ifTrue: [ 
+						ifTrue: [
 							(request method = #GET and: [ request hasEntity not ])
 								ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK for two') ]
 								ifFalse: [ ZnResponse badRequest: request ] ]
 		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
-		(client := ZnClient new) 
+		(client := ZnClient new)
 			autoResetEntityMethods: #(HEAD DELETE GET);
 			url: server localUrl;
 			url: 'one';
@@ -217,7 +216,7 @@ ZnClientTest >> testGetGeoIP [
 		url: self t3EasyGeoIPUrl;
 		queryAt: 'address' put: '81.83.7.35';
 		accept: ZnMimeType applicationJson;
-		contentReader: [ :entity | 
+		contentReader: [ :entity |
 					self class environment
 						at: #NeoJSONReader
 						ifPresent: [ :parserClass | parserClass fromString: entity contents ]
@@ -232,10 +231,10 @@ ZnClientTest >> testGetGeoIP [
 { #category : #testing }
 ZnClientTest >> testGetLargeWideStringHTML [
 	| client text |
-	text := '<html>{1}<h1>Czech in Czech is {2}e{3}tina.</h1>{1}</html>' 
-		format: { 
+	text := '<html>{1}<h1>Czech in Czech is {2}e{3}tina.</h1>{1}</html>'
+		format: {
 			String new: ZnUtils streamingBufferSize withAll: $X.
-			269 asCharacter. 
+			269 asCharacter.
 			353 asCharacter }.
 	self assert: text isWideString.
 	self withServerDo: [ :server |
@@ -349,7 +348,7 @@ ZnClientTest >> testGetSmallHTMLUrlConstruction [
 
 { #category : #testing }
 ZnClientTest >> testGetStreamingConnectionClose [
-	self withServerDo: [ :server | 
+	self withServerDo: [ :server |
 		| client result contents |
 		server onRequestRespond: [ :request |
 			(ZnResponse ok: (ZnEntity textCRLF: 'OK'))
@@ -448,10 +447,10 @@ ZnClientTest >> testIfModifiedSinceNotModified [
 	| client  response |
 	(client := ZnClient new) host: 'stfx.eu'.
 	[
-		response := client 
-			url: '/small.html'; 
+		response := client
+			url: '/small.html';
 			setIfModifiedSince: (Date year: 2012 month: 9 day: 1);
-			get; 
+			get;
 			response.
 		self assert: response isNotModified.
 		self assert: response hasEntity not ] ensure: [ client close ]
@@ -462,7 +461,7 @@ ZnClientTest >> testJsonRESTGet [
 	| client |
 	self class environment at: #STONJSON ifAbsent: [ ^ self skip ].
 	self withServerDo: [ :server |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request method = #GET
 				ifTrue: [ ZnResponse ok: (ZnEntity json: '{"name":"pi","symbol":"π","value":3.141592653589793}') ]
 				ifFalse: [ ZnResponse badRequest: request ] ].
@@ -479,10 +478,10 @@ ZnClientTest >> testJsonRESTPost [
 	| client |
 	self class environment at: #STONJSON ifAbsent: [ ^ self skip ].
 	self withServerDo: [ :server |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request method = #POST
 				ifTrue: [
-					self assert: request contentType equals: ZnMimeType applicationJson.  
+					self assert: request contentType equals: ZnMimeType applicationJson.
 					ZnResponse ok: request entity ]
 				ifFalse: [ ZnResponse badRequest: request ] ].
 		(client := ZnClient new)
@@ -497,15 +496,15 @@ ZnClientTest >> testJsonRESTPost [
 ZnClientTest >> testLogging [
 	| client logEventCollection count |
 	logEventCollection := OrderedCollection new.
-	ZnLogEvent announcer 
-		when: ZnLogEvent do: [ :event | logEventCollection add: event ]. 
+	ZnLogEvent announcer
+		when: ZnLogEvent do: [ :event | logEventCollection add: event ].
 	(client := ZnClient new)
 		clientId: #C1;
 		beOneShot.
 	client get: self smallHtmlUrl.
 	client close.
 	count := ZnLogEvent announcer numberOfSubscriptions.
-	ZnLogEvent announcer 
+	ZnLogEvent announcer
 		unsubscribe: self.
 	self assert: ZnLogEvent announcer numberOfSubscriptions equals: count -1.
 	self deny: logEventCollection isEmpty.
@@ -516,7 +515,7 @@ ZnClientTest >> testLogging [
 ZnClientTest >> testOptions [
 	| client |
 	self withServerDo: [ :server |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request method = #OPTIONS
 				ifTrue: [ | response |
 					response := ZnResponse noContent.
@@ -535,7 +534,7 @@ ZnClientTest >> testOptions [
 ZnClientTest >> testPatch [
 	| client |
 	self withServerDo: [ :server |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request method = #PATCH
 				ifTrue: [| response |
 					response := ZnResponse noContent.
@@ -581,8 +580,7 @@ ZnClientTest >> testPostMultipart [
 			post.
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'multipart') ].
-	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
-
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'
 ]
 
 { #category : #testing }
@@ -601,8 +599,7 @@ ZnClientTest >> testPostMultipartBinary [
 			post.
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'multipart') ].
-	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.bin'.
-
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.bin'
 ]
 
 { #category : #testing }
@@ -621,8 +618,7 @@ ZnClientTest >> testPostMultipartNonASCII [
 			post.
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'multipart') ].
-	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
-
+	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'
 ]
 
 { #category : #testing }
@@ -669,36 +665,34 @@ ZnClientTest >> testProgress [
 	"[ :bar |
 		bar title: 'Downloading Sources...'.
 		[
-			ZnClient new 
-				url: 'http://files.pharo.org/sources/PharoV30.sources'; 
-				signalProgress: true;	
+			ZnClient new
+				url: 'http://files.pharo.org/sources/PharoV30.sources';
+				signalProgress: true;
 				downloadTo: FileLocator temp ]
-			on: HTTPProgress 
+			on: HTTPProgress
 			do: [ :progress |
-				progress isEmpty ifFalse: [ bar current: progress percentage ]. 
+				progress isEmpty ifFalse: [ bar current: progress percentage ].
 				progress resume ] ] asJob run."
-		
-	self 
-		should: [ 
+
+	self
+		should: [
 			ZnClient new
 				beOneShot;
 				signalProgress: true;
-				get: self smallHtmlUrl ] 
+				get: self smallHtmlUrl ]
 		raise: HTTPProgress
-
 ]
 
 { #category : #testing }
 ZnClientTest >> testProgressNoIfFail [
-	self 
-		should: [ 
+	self
+		should: [
 			ZnClient new
 				beOneShot;
 				signalProgress: true;
 				ifFail: [ self fail ];
-				get: self smallHtmlUrl ] 
+				get: self smallHtmlUrl ]
 		raise: HTTPProgress
-
 ]
 
 { #category : #testing }
@@ -729,7 +723,7 @@ ZnClientTest >> testRedirect [
 		url: target.
 	self should: [ client get ] raise: ZnTooManyRedirects.
 	client close.
-	response := [ 
+	response := [
 		ZnClient new
 			beOneShot;
 			maxNumberOfRedirects: 0;
@@ -742,7 +736,7 @@ ZnClientTest >> testRedirect [
 ZnClientTest >> testRedirectDontFollow [
 	| client target |
 	target := 'http://zn.stfx.eu'.
-	(client := ZnClient new) 
+	(client := ZnClient new)
 		dontFollowRedirects;
 		get: target.
 	self assert: client response isRedirect.
@@ -756,9 +750,9 @@ ZnClientTest >> testRedirectDontFollow [
 { #category : #testing }
 ZnClientTest >> testRedirectWithCookies [
 	self withServerDo: [ :server | | client cookie |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request uri firstPathSegment = 'one'
-				ifTrue: [ 
+				ifTrue: [
 					(ZnResponse redirect: 'two')
 						addCookie: (ZnCookie name: 'session' value: '123456');
 						yourself ]
@@ -767,8 +761,8 @@ ZnClientTest >> testRedirectWithCookies [
 					(request uri firstPathSegment = 'two' and: [ cookie notNil and: [ cookie value = '123456' ] ])
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse badRequest: request ] ] ].
-		(client := ZnClient new) 
-			url: server localUrl; addPath: 'one'; 
+		(client := ZnClient new)
+			url: server localUrl; addPath: 'one';
 			post.
 		self assert: client isSuccess.
 		self assert: client contents equals: 'OK!'.
@@ -778,7 +772,7 @@ ZnClientTest >> testRedirectWithCookies [
 { #category : #testing }
 ZnClientTest >> testRedirectWithCustomHeader [
 	self withServerDo: [ :server | | client |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			(request headers at: 'X-Custom' ifAbsent: [ nil ]) = 'The Secret'
 				ifFalse: [ ZnResponse badRequest: request ]
 				ifTrue: [
@@ -788,10 +782,10 @@ ZnClientTest >> testRedirectWithCustomHeader [
 							request uri firstPathSegment = 'two'
 								ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 						ifFalse: [ ZnResponse badRequest: request ] ] ] ].
-		(client := ZnClient new) 
-			url: server localUrl; 
+		(client := ZnClient new)
+			url: server localUrl;
 			addPath: 'one';
-			headerAt: 'X-Custom' put: 'The Secret'; 
+			headerAt: 'X-Custom' put: 'The Secret';
 			get.
 		self assert: client isSuccess.
 		self assert: client contents equals: 'OK!'.
@@ -801,15 +795,15 @@ ZnClientTest >> testRedirectWithCustomHeader [
 { #category : #testing }
 ZnClientTest >> testRelativeRedirect [
 	self withServerDo: [ :server | | client |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request uri firstPathSegment = 'one'
 				ifTrue: [ ZnResponse redirect: 'two' ]
 				ifFalse: [
 					request uri firstPathSegment = 'two'
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
-		(client := ZnClient new) 
-			url: server localUrl; addPath: 'one'; 
+		(client := ZnClient new)
+			url: server localUrl; addPath: 'one';
 			post.
 		self assert: client isSuccess.
 		self assert: client contents equals: 'OK!'.
@@ -819,16 +813,16 @@ ZnClientTest >> testRelativeRedirect [
 { #category : #testing }
 ZnClientTest >> testRelativeRedirect307 [
 	self withServerDo: [ :server | | client |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request uri firstPathSegment = 'one'
 				ifTrue: [ (ZnResponse redirect: 'two') statusLine: (ZnStatusLine code: 307); yourself ]
 				ifFalse: [
-					((request uri firstPathSegment = 'two') 
+					((request uri firstPathSegment = 'two')
 							and: [ request method = #POST and: [ request contents = 'BODY' ] ])
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
-		(client := ZnClient new) 
-			url: server localUrl; addPath: 'one'; 
+		(client := ZnClient new)
+			url: server localUrl; addPath: 'one';
 			entity: (ZnEntity text: 'BODY');
 			post.
 		self assert: client isSuccess.
@@ -839,15 +833,15 @@ ZnClientTest >> testRelativeRedirect307 [
 { #category : #testing }
 ZnClientTest >> testRelativeRedirectUp [
 	self withServerDo: [ :server | | client |
-		server onRequestRespond: [ :request | 
+		server onRequestRespond: [ :request |
 			request uri pathSegments asArray = #('a' 'b' 'c.txt')
 				ifTrue: [ ZnResponse redirect: '../d.txt' ]
 				ifFalse: [
 					request uri pathSegments asArray = #('a' 'd.txt')
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
-		(client := ZnClient new) 
-			url: server localUrl; addPath: #('a' 'b' 'c.txt'); 
+		(client := ZnClient new)
+			url: server localUrl; addPath: #('a' 'b' 'c.txt');
 			post.
 		self assert: client isSuccess.
 		self assert: client contents equals: 'OK!'.
@@ -856,9 +850,8 @@ ZnClientTest >> testRelativeRedirectUp [
 
 { #category : #testing }
 ZnClientTest >> testSpecialPosts [
-	self skip.
 	self withServerDo: [ :server |
-		{ ZnEntity with: 'A'. ZnEntity with: #[ 42 ]. ZnEntity with: ''. ZnEntity with: #[ ] } 
+		{ ZnEntity with: 'A'. ZnEntity with: #[ 42 ]. ZnEntity with: ''. ZnEntity with: #[ ] }
 			do: [ :each |
 				| client |
 				(client := ZnClient new)
@@ -882,13 +875,13 @@ ZnClientTest >> testSpecialPosts [
 { #category : #testing }
 ZnClientTest >> testTimeout [
 	self withServerDo: [ :server |
-		self 
-			should: [ 
-				ZnClient new 
-					timeout: 1; 
+		self
+			should: [
+				ZnClient new
+					timeout: 1;
 					url: server localUrl;
 					addPath: 'echo';
-					queryAt: 'delay' put: '2'; 
+					queryAt: 'delay' put: '2';
 					get ]
 			raise: ConnectionTimedOut ]
 ]
@@ -920,14 +913,14 @@ ZnClientTest >> testUploadSmallDocument [
 ZnClientTest >> testUsernamePassword [
 	self withServerDo: [ :server | | client |
 		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
-		(client := ZnClient new) 
+		(client := ZnClient new)
 			url: server localUrl;
 			addPathSegment: 'echo';
 			get.
 		self deny: client isSuccess.
 		self assert: client response isAuthenticationRequired.
-		client 
-			username: 'foo' password: 'secret'; 
+		client
+			username: 'foo' password: 'secret';
 			get.
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'Zinc').
@@ -940,7 +933,7 @@ ZnClientTest >> testUsernamePasswordInUserInfo [
 		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
 		url := server localUrl.
 		url username: 'foo'; password: 'secret'; addPathSegment: 'echo'.
-		(client := ZnClient new) 
+		(client := ZnClient new)
 			get: url.
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'Zinc').
@@ -951,10 +944,10 @@ ZnClientTest >> testUsernamePasswordInUserInfo [
 ZnClientTest >> testUsernamePasswordTwice [
 	self withServerDo: [ :server | | client |
 		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
-		(client := ZnClient new) 
+		(client := ZnClient new)
 			url: server localUrl;
 			addPathSegment: 'echo';
-			username: 'foo' password: 'secret'; 
+			username: 'foo' password: 'secret';
 			get.
 		self assert: client isSuccess.
 		self assert: (client contents includesSubstring: 'Zinc').
@@ -966,14 +959,5 @@ ZnClientTest >> testUsernamePasswordTwice [
 
 { #category : #private }
 ZnClientTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		block cull: server
-	] 
-		ensure: [ server stop ]
+	ZnServer withOSAssignedPortDo: block
 ]

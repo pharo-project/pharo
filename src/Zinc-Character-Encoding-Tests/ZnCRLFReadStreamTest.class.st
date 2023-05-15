@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #tests }
-ZnCRLFReadStreamTest >> testBasicStream [ 
+ZnCRLFReadStreamTest >> testBasicStream [
 
 	| lines input output |
 
@@ -26,9 +26,9 @@ ZnCRLFReadStreamTest >> testBasicStream [
 			<< String crlf;
 			<< lines third;
 			<< String crlf ].
-	self 
-		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd 
-		equals: output asByteArray.
+	self
+		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd
+		equals: output asByteArray
 ]
 
 { #category : #tests }
@@ -59,9 +59,9 @@ ZnCRLFReadStreamTest >> testDoubleEnding [
 			<< lines third;
 			<< String crlf;
 			<< String crlf ].
-	self 
-		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd 
-		equals: output asByteArray.
+	self
+		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd
+		equals: output asByteArray
 ]
 
 { #category : #tests }
@@ -78,14 +78,14 @@ ZnCRLFReadStreamTest >> testPeek [
 			<< 'c';
 			<< String crlf ].
 	stream := ZnCRLFReadStream on: input asByteArray readStream.
-	self 
+	self
 		assert: stream peek
 		equals: $a asInteger.
 	self
-		assert: stream next 
+		assert: stream next
 		equals: $a asInteger.
 	self
-		assert: stream next 
+		assert: stream next
 		equals: Character cr asInteger.
 	self
 		assert: stream peek
@@ -98,6 +98,5 @@ ZnCRLFReadStreamTest >> testPeek [
 		equals: $b asInteger.
 	self
 		assert: stream next
-		equals: $b asInteger.
-
+		equals: $b asInteger
 ]

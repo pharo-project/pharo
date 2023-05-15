@@ -4,7 +4,7 @@ Extension { #name : #RGEnvironment }
 RGEnvironment >> addGlobalsNamed: anArrayOfSymbols [
 
 	anArrayOfSymbols do: [ :each |
-		self addGlobalVariable: (RGGlobalVariable named: each parent: self)].
+		self addGlobalVariable: (RGGlobalVariable named: each parent: self)]
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
@@ -19,11 +19,11 @@ RGEnvironment >> hasBindingThatBeginsWith: aString [
 				aString < element
 					ifTrue: [ -1 ]
 					ifFalse: [ 1 ] ] ].
-	aName := self classNames 
+	aName := self classNames
 		findBinary: searchBlock
 		ifNone: [nil].
 	aName ifNotNil: [ ^true ].
-	aName := self nonClassNames 
+	aName := self nonClassNames
 		findBinary: searchBlock
 		ifNone: [nil].
 	^aName notNil

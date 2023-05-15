@@ -6,11 +6,11 @@ Class {
 
 { #category : #utilities }
 TraitTest >> createClassUsing: aTrait [
-	
+
 	^ self class classInstaller make: [ :aBuilder |
 		aBuilder name: #AClassForTests;
 			traitComposition: aTrait asTraitComposition;
-			package: 'AAA' ].
+			package: 'AAA' ]
 ]
 
 { #category : #utilities }
@@ -18,7 +18,7 @@ TraitTest >> createTrait [
 	| trait |
 
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: #ATraitForTests;
 			package: 'AAA';
 			beTrait ].
@@ -63,65 +63,64 @@ TraitTest >> testAllClassVarNames [
 { #category : #tests }
 TraitTest >> testComposedBy [
 	"tests the #isComposedBy: aTrait method"
-	
+
 	self assert: (Trait3 isComposedBy: Trait2).
 	self deny: (Trait2 isComposedBy: Trait3).
-	self deny: (Trait3 isComposedBy: Object).
-	
+	self deny: (Trait3 isComposedBy: Object)
 ]
 
 { #category : #tests }
 TraitTest >> testCompositionCopy [
- 
-	self assert: (self t1 + self t2) allTraits 
+
+	self assert: (self t1 + self t2) allTraits
 				equals: (self t1 + self t2) copyTraitExpression allTraits.
-	self assert: (self t1 classTrait + self t2 classTrait) allTraits 
+	self assert: (self t1 classTrait + self t2 classTrait) allTraits
 				equals: (self t1 classTrait + self t2 classTrait) copyTraitExpression allTraits.
-	self assert: self t6 traitComposition allTraits 
+	self assert: self t6 traitComposition allTraits
 				equals: self t6 traitComposition copyTraitExpression allTraits.
-	self assert: (self t6 asTraitComposition copyTraitExpression allTraits 
-				includesAll: { (self t1). (self t2). (self t6) }).
+	self assert: (self t6 asTraitComposition copyTraitExpression allTraits
+				includesAll: { (self t1). (self t2). (self t6) })
 ]
 
 { #category : #tests }
 TraitTest >> testErrorClassCreation [
     | tmpCategory trait aSubclass aClass |
-	
+
     tmpCategory := 'TemporaryGeneratedClasses'.
 
 	 trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: #TMyTrait;
 			package: tmpCategory;
 			beTrait ].
 
-    
-    [ 
-		aClass := self class classInstaller make: [ :aClassBuilder | 
-			aClassBuilder 
+
+    [
+		aClass := self class classInstaller make: [ :aClassBuilder |
+			aClassBuilder
 				name: #AClass;
 				superclass: nil;
 				package: tmpCategory ].
 
 	"----------------"
-		aSubclass := self class classInstaller make: [ :aClassBuilder | 
-			aClassBuilder 
+		aSubclass := self class classInstaller make: [ :aClassBuilder |
+			aClassBuilder
 				name: #AClass2;
 				traitComposition: trait asTraitComposition;
 				superclass: aClass;
 				package: tmpCategory ].
- 
+
 	"----------------"
 
     "Change the superclass of AClass"
-		aClass := self class classInstaller make: [ :aClassBuilder | 
-			aClassBuilder 
+		aClass := self class classInstaller make: [ :aClassBuilder |
+			aClassBuilder
 				name: #AClass;
 				superclass: Object;
 				package: tmpCategory ].
-        
+
     self assert: trait traitUsers asArray equals: {aSubclass}.
-    self assert: aSubclass traits asArray equals: {trait}. 
+    self assert: aSubclass traits asArray equals: {trait}.
 
     ] ensure: [
         #(AClass AClass2 TMyTrait) do: [ :aClassName |
@@ -182,15 +181,13 @@ TraitTest >> testExplicitRequirementTakesPrecedenceOverTraitImplementation [
 	"If i create an explicit requirement method on a trait, the method has to be explicit requirement "
 	self t12 compile: 'm ^11'.
 	self t11 compile: 'm ^self explicitRequirement'.
-	
+
 	self should: [ self c11 new m ] raise: Error.
-	
+
 	"If i create an explicit requirement method on a class, and the superclass already have the method (non explicit requirement), the class should raise an exception"
 	self c10 compile: 'm ^111'.
 	self c11 compile: 'm ^self explicitRequirement'.
-	self should: [ self c11 new m ] raise: Error.
-	
-	
+	self should: [ self c11 new m ] raise: Error
 ]
 
 { #category : #tests }
@@ -239,9 +236,9 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 	self t10 compile: 'm2 self explicitRequirement'.
 	self t9 compile: 'm1 ^2'.
 	self t9 compile: 'm2 ^2'.
-	
+
 	self assert: self c10 new m1 equals: 2.
-	self assert: self c10 new m2 equals: 2.
+	self assert: self c10 new m2 equals: 2
 ]
 
 { #category : #tests }
@@ -250,12 +247,12 @@ TraitTest >> testForbidInstantiation [
 	tmpCategory := 'TemporaryGeneratedClasses'.
 
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: #TMyTrait;
 			package: tmpCategory;
 			beTrait ].
 
-	self should: [ trait basicNew ] raise: Error 
+	self should: [ trait basicNew ] raise: Error
 ]
 
 { #category : #tests }
@@ -268,8 +265,7 @@ TraitTest >> testIsRootInEnvironment [
 TraitTest >> testIsUsed [
 
 	self assert: Trait1 isUsed.
-	self assert: Trait1 classTrait isUsed.
-
+	self assert: Trait1 classTrait isUsed
 ]
 
 { #category : #tests }
@@ -277,10 +273,10 @@ TraitTest >> testLocalMethodWithSameCodeInTrait [
 	"Test whether there are no unintentional overridden traits methods"
 
 	SystemNavigation new
-		allBehaviorsDo: [ :each | 
+		allBehaviorsDo: [ :each |
 			each hasTraitComposition
 				ifTrue: [ each
-						selectorsDo: [ :selector | 
+						selectorsDo: [ :selector |
 							(each includesLocalSelector: selector)
 								ifTrue: [ (each traitComposition traitDefining: selector ifNone: [ nil ])
 										ifNotNil: [ :trait | (trait selectors includes: selector) ifTrue: [ self deny: (trait compiledMethodAt: selector) equals: each >> selector ] ] ] ] ] ]
@@ -360,20 +356,19 @@ TraitTest >> testPrinting [
 
 { #category : #tests }
 TraitTest >> testPrintingClassSide [
-	
-	self 
+
+	self
 		assertPrints: (ClassDefinitionPrinter oldPharo for: self t6 classSide) definitionString like: 'T6 classTrait
 	uses: T1 classTrait + T2 classTrait
 	instanceVariableNames: '''''
-
 ]
 
 { #category : #tests }
 TraitTest >> testRemoveFromSystem [
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ 
+		suspendAllWhile: [
 			| aClass aTrait |
-			[ 
+			[
 			aTrait := self createTrait.
 			aClass := self createClassUsing: aTrait.
 			aTrait removeFromSystem: false.
@@ -411,7 +406,7 @@ TraitTest >> testTraitRemoval [
 
 { #category : #tests }
 TraitTest >> testTraitsMethodClassSanity [
-		
+
 	(testingEnvironment allTraits flatCollect: #traitUsers) asSet do: [ :each |
 		each selectorsDo: [ :selector |
 			self should: [ (each >> selector) methodClass == each ] ] ]
@@ -420,7 +415,7 @@ TraitTest >> testTraitsMethodClassSanity [
 { #category : #tests }
 TraitTest >> testTraitsUsersSanity [
 	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
-		
+
 	Smalltalk allClassesAndTraits do: [ :each |
 		self assert: (each traits allSatisfy: [ :t | t traitUsers includes: each  ]) ].
 

@@ -11,13 +11,13 @@ CommandLineHandlerTest >> argumentsWith: aCollection [
 
 { #category : #tests }
 CommandLineHandlerTest >> testBasicCommandlineHandler [
-	
+
 	| args |
 	args := self argumentsWith: #().
 	"BasicCommandLineHandler gets activated by default on image startup, so there is no need to activate it in a nother case"
 	self deny: (BasicCommandLineHandler isResponsibleFor: args).
 	"The BasicCommandLineHandler should always delegate to the PharoCommandLineHandler if it is present"
-	self 
+	self
 		assert: BasicCommandLineHandler new selectedHandler
 		equals: PharoCommandLineHandler
 ]
@@ -38,12 +38,12 @@ CommandLineHandlerTest >> testResponsibilityEval [
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self deny: (STCommandLineHandler isResponsibleFor: args).
 	self assert: (EvaluateCommandLineHandler isResponsibleFor: args).
-	
+
 	args := self argumentsWith: #('-e' '1+2').
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self deny: (STCommandLineHandler isResponsibleFor: args).
 	self assert: (EvaluateCommandLineHandler isResponsibleFor: args).
-	
+
 	args := self argumentsWith: #('--evaluate' '1+2').
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self deny: (STCommandLineHandler isResponsibleFor: args).
@@ -57,7 +57,7 @@ CommandLineHandlerTest >> testResponsibilitySt [
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self assert: (STCommandLineHandler isResponsibleFor: args).
 	self deny: (EvaluateCommandLineHandler isResponsibleFor: args).
-	
+
 	args := self argumentsWith: #('st' '/foo/bar/myScript.st').
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self assert: (STCommandLineHandler isResponsibleFor: args).
@@ -70,7 +70,7 @@ CommandLineHandlerTest >> testSelectHandlersCodeLoader [
 	args := self argumentsWith: #('/foo/bar/myScript.st').
 	handlers := CommandLineHandler selectHandlersFor: args.
 	self assert: handlers first equals: STCommandLineHandler.
-	
+
 	args := self argumentsWith: #('/foo/bar/myScript.st' '--verbose').
 	handlers := CommandLineHandler selectHandlersFor: args.
 	self assert: handlers first equals: STCommandLineHandler

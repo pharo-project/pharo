@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #'accessing - backend' }
-RGPointerLayout >> addSlot: anRGSlot [ 
+RGPointerLayout >> addSlot: anRGSlot [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior addSlot: anRGSlot to: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior addSlot: anRGSlot to: self ]
 ]
 
 { #category : #'queries - slots' }
-RGPointerLayout >> allSlots [ 
+RGPointerLayout >> allSlots [
 
 	^ self slots
 ]
@@ -23,8 +23,8 @@ RGPointerLayout >> allSlots [
 { #category : #'accessing - backend' }
 RGPointerLayout >> cleanSlots [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior cleanSlotsFor: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior cleanSlotsFor: self ]
 ]
 
 { #category : #'default model values' }
@@ -37,14 +37,14 @@ RGPointerLayout >> defaultSlots [
 RGPointerLayout >> initialize [
 
 	super initialize.
-	slots := self unresolvedValue: self defaultSlots.
+	slots := self unresolvedValue: self defaultSlots
 ]
 
 { #category : #initialization }
 RGPointerLayout >> initializeUnresolved [
 
 	super initializeUnresolved.
-	slots := self unresolvedValue: self defaultSlots.
+	slots := self unresolvedValue: self defaultSlots
 ]
 
 { #category : #'queries - slots' }
@@ -62,40 +62,40 @@ RGPointerLayout >> isPointerLayout [
 RGPointerLayout >> makeResolved [
 
 	super makeResolved.
-	
-	slots := self slots asOrderedCollection markAsRingResolved.
+
+	slots := self slots asOrderedCollection markAsRingResolved
 ]
 
 { #category : #'private - backend access' }
 RGPointerLayout >> pvtAddSlot: anRGSlot [
 
 	self environment verifyOwnership: anRGSlot.
-	
-	slots isRingResolved ifFalse: [ 
+
+	slots isRingResolved ifFalse: [
 		self pvtCleanSlots  ].
-	
-	slots add: anRGSlot.
+
+	slots add: anRGSlot
 ]
 
 { #category : #'private - backend access' }
 RGPointerLayout >> pvtCleanSlots [
 
-	slots := self defaultSlots.
+	slots := self defaultSlots
 ]
 
 { #category : #'private - backend access' }
 RGPointerLayout >> pvtRemoveSlot: anRGSlot [
 
 	self environment verifyOwnership: anRGSlot.
-	
-	slots remove: anRGSlot.
+
+	slots remove: anRGSlot
 ]
 
 { #category : #'private - backend access' }
 RGPointerLayout >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#slots -> slots. 
+	^ super pvtResolvableProperties, {
+		#slots -> slots.
 	}
 ]
 
@@ -108,14 +108,14 @@ RGPointerLayout >> pvtSlotsDo: aBlock [
 { #category : #'accessing - backend' }
 RGPointerLayout >> removeSlot: anRGSlot [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior removeSlot: anRGSlot from: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior removeSlot: anRGSlot from: self ]
 ]
 
 { #category : #accessing }
 RGPointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
 
-	self allSlots do: [ :slot | 
+	self allSlots do: [ :slot |
 		slot name = aName ifTrue: [ ^ foundBlock cull: slot ] ].
 	^ noneBlock value
 ]

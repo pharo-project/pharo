@@ -17,7 +17,7 @@ RubExtraSelectionDecorator class >> key [
 { #category : #computation }
 RubExtraSelectionDecorator >> cleanUpText [
 	self text removeAttribute: RubTextSelectionColor findReplaceSelection.
-	self text removeAttribute: RubTextSelectionColor secondarySelection.
+	self text removeAttribute: RubTextSelectionColor secondarySelection
 ]
 
 { #category : #computation }
@@ -30,7 +30,7 @@ RubExtraSelectionDecorator >> computeFindReplaceShapesFrom: topLeft to: bottomRi
 		collect: [ :r | r + topLeftBlk stringIndex - 1 ]).
 	findReplaceRanges do: [ :r | self text addAttribute: RubTextSelectionColor findReplaceSelection from: r first to: r last ].
 	findReplaceShapes := findReplaceRanges
-		collect: [ :r | 
+		collect: [ :r |
 			RubSurfaceSelectionShape
 				vertices: (self verticesFrom: r first to: r last + 1)
 				firstIndex: r first
@@ -50,13 +50,13 @@ RubExtraSelectionDecorator >> computeSecondarySelectionShapesFrom: topLeft to: b
 	self selection asString trimBoth ifEmpty: [ ^secondarySelectionShapes := #() ].
 	(secondarySelRanges := (((self visibleStringFrom: topLeft to: bottomRight) allRangesOfSubstring: self selection asString)
 		collect: [ :r | r + topLeftBlk stringIndex - 1 ])
-		reject: [ :i | 
+		reject: [ :i |
 			(otherRanges anySatisfy: [ :r | (r rangeIncludes: i first) or: [ r rangeIncludes: i last ] ])
 				or: [ i = primary or: [ i first > self text size ] ] ]) collect: [ :i | i first to: (i last min: self text size) ].
 	secondarySelRanges
 		do: [ :r | self text addAttribute: RubTextSelectionColor secondarySelection from: r first to: r last ].
 	^ secondarySelectionShapes := secondarySelRanges
-		collect: [ :r | 
+		collect: [ :r |
 			RubSurfaceSelectionShape
 				vertices: (self verticesFrom: r first to: r last + 1)
 				firstIndex: r first
@@ -75,16 +75,16 @@ RubExtraSelectionDecorator >> computeSelectionShapesFor: aRectangle [
 { #category : #drawing }
 RubExtraSelectionDecorator >> drawAllSelectionShapesOn: aCanvas [
 
-	findReplaceShapes ifNotNil: [ 
-		findReplaceShapes do: [ :selblock | 
+	findReplaceShapes ifNotNil: [
+		findReplaceShapes do: [ :selblock |
 			self drawSelectionShape: selblock on: aCanvas
-		] 
+		]
 	].
 
-	secondarySelectionShapes ifNotNil: [ 
-		secondarySelectionShapes do: [ :selblock | 
-				self drawSelectionShape: selblock on: aCanvas 
-		] 
+	secondarySelectionShapes ifNotNil: [
+		secondarySelectionShapes do: [ :selblock |
+				self drawSelectionShape: selblock on: aCanvas
+		]
 	]
 ]
 
@@ -97,8 +97,8 @@ RubExtraSelectionDecorator >> drawAllSelectionShapesOnAthensCanvas: anAthensCanv
 { #category : #drawing }
 RubExtraSelectionDecorator >> drawOn: aCanvas [
 
-	(Display depth < 3 or: [ aCanvas isShadowDrawing ]) ifTrue: [ ^ self ].		
-	
+	(Display depth < 3 or: [ aCanvas isShadowDrawing ]) ifTrue: [ ^ self ].
+
 	self computeSelectionShapesFor: aCanvas clipRect.
 	self cleanUpText.
 	self drawAllSelectionShapesOn: aCanvas
@@ -115,24 +115,24 @@ RubExtraSelectionDecorator >> drawOnAthensCanvas: anAthensCanvas [
 { #category : #drawing }
 RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock on: aCanvas [
 	"Display a SelectionShape if it does not overlap vith the regular selection"
-	
+
 	| startIdx stopIdx  |
-	
+
 	startIdx := aSelBlock firstIndex.
 	stopIdx := aSelBlock lastIndex.
-	(self hasValidSelection) ifTrue: [ 
+	(self hasValidSelection) ifTrue: [
 			| selSartIdx selStopIdx selBlockRange selRange |
 			selSartIdx := self paragraph selectionStart stringIndex.
 			selStopIdx := self paragraph selectionStop stringIndex.
 			selBlockRange := startIdx to: stopIdx.
 			selRange := selSartIdx to: selStopIdx.
-			((selBlockRange rangeIncludes: selSartIdx + 1) or: [ 
-					(selBlockRange rangeIncludes: selStopIdx - 1) 	or: [ 
-							(selRange rangeIncludes: startIdx + 1) or: [ 
-								selRange rangeIncludes: stopIdx - 1 ] 
-							] 
+			((selBlockRange rangeIncludes: selSartIdx + 1) or: [
+					(selBlockRange rangeIncludes: selStopIdx - 1) 	or: [
+							(selRange rangeIncludes: startIdx + 1) or: [
+								selRange rangeIncludes: stopIdx - 1 ]
+							]
 					]
-			)ifTrue: [ ^ self ] 
+			)ifTrue: [ ^ self ]
 		].	"regular selection and this selection block overlap"
 	aSelBlock drawOn: aCanvas
 ]
@@ -143,15 +143,15 @@ RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock onAthensCanvas: anAt
 	| startIdx stopIdx  |
 	startIdx := aSelBlock firstIndex.
 	stopIdx := aSelBlock lastIndex.
-	self hasValidSelection ifTrue: [ 
+	self hasValidSelection ifTrue: [
 		| selSartIdx selStopIdx selBlockRange selRange |
-		
+
 		selSartIdx := self selectionStart stringIndex.
 		selStopIdx := self selectionStop stringIndex.
 		selBlockRange := startIdx to: stopIdx.
 		selRange := selSartIdx to: selStopIdx.
 		((selBlockRange rangeIncludes: selSartIdx + 1)
-				or: [ 
+				or: [
 					(selBlockRange rangeIncludes: selStopIdx - 1)
 						or: [ (selRange rangeIncludes: startIdx + 1) or: [ selRange rangeIncludes: stopIdx - 1 ] ] ])
 				ifTrue: [ ^ self ] ].	"regular selection and this selection block overlap"
@@ -167,27 +167,27 @@ RubExtraSelectionDecorator >> findRegex [
 RubExtraSelectionDecorator >> hasValidSelection [
 
 	| paragraph |
-	
+
 	paragraph := self paragraph ifNil: [ ^false ].
-	
-	^paragraph selectionStart notNil and: [ 
-		paragraph selectionStop notNil and: [ 
-			paragraph selectionStart ~= paragraph selectionStop 
-		] 
+
+	^paragraph selectionStart notNil and: [
+		paragraph selectionStop notNil and: [
+			paragraph selectionStart ~= paragraph selectionStop
+		]
 	]
 ]
 
 { #category : #accessing }
 RubExtraSelectionDecorator >> primarySelectionInterval [
-	
-	self paragraph ifNotNil: [ :paragraph | 
-		paragraph textArea ifNotNil: [ :textArea | 
-			(textArea selectionStart isNotNil and: [ 
-				textArea selectionStop isNotNil  		
-			]) ifTrue: [ 
+
+	self paragraph ifNotNil: [ :paragraph |
+		paragraph textArea ifNotNil: [ :textArea |
+			(textArea selectionStart isNotNil and: [
+				textArea selectionStop isNotNil
+			]) ifTrue: [
 				^textArea selectionStart stringIndex to: textArea selectionStop stringIndex - 1
 			]
-		]	
+		]
 	].
 
    ^0 to: -1

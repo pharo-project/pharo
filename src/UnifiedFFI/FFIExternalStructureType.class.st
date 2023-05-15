@@ -17,7 +17,7 @@ FFIExternalStructureType class >> naturalPointerArity [
 
 { #category : #'instance creation' }
 FFIExternalStructureType class >> objectClass: aClass [
-	^ self basicNew 
+	^ self basicNew
 		initializeObjectClass: aClass;
 		yourself
 ]
@@ -26,7 +26,6 @@ FFIExternalStructureType class >> objectClass: aClass [
 FFIExternalStructureType >> basicHandle: aHandle at: index [
 
 	^ self objectClass fromHandle: (aHandle referenceStructAt: index length: self externalTypeSize)
-
 ]
 
 { #category : #private }
@@ -43,7 +42,7 @@ FFIExternalStructureType >> callbackReturnOn: callbackContext for: anObject [
 { #category : #accessing }
 FFIExternalStructureType >> callbackValueFor: anAlien at: index [
 	"This is the value for a callback.
-	since the callbacks comunicates as Aliens, I receive the struct, but with an Alien 
+	since the callbacks comunicates as Aliens, I receive the struct, but with an Alien
 	reference (which does not work for UFFI structires, they needs to be ExternalAddress)"
 	self isPointer ifTrue: [ ^ anAlien pointerAt: index ].
 	^ self objectClass fromHandle: anAlien asExternalAddress
@@ -55,22 +54,22 @@ FFIExternalStructureType >> emitFlatStructureLayoutFieldInto: flatStructureLayou
 ]
 
 { #category : #accessing }
-FFIExternalStructureType >> externalType [ 
+FFIExternalStructureType >> externalType [
 	^ ExternalType structTypeNamed: self objectClass name
 ]
 
 { #category : #accessing }
-FFIExternalStructureType >> externalTypeAlignment [ 
+FFIExternalStructureType >> externalTypeAlignment [
 	^ self objectClass structureAlignment
 ]
 
 { #category : #accessing }
-FFIExternalStructureType >> externalTypeSize [ 
+FFIExternalStructureType >> externalTypeSize [
 	^ self objectClass structureSize
 ]
 
 { #category : #extracting }
-FFIExternalStructureType >> extractFromCallbackOn: aCallbackArgumentReader [ 
+FFIExternalStructureType >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractStructType: self
 ]
@@ -121,7 +120,7 @@ FFIExternalStructureType >> readFieldAt: byteOffset [
 { #category : #'emitting code' }
 FFIExternalStructureType >> readReferenceAt: byteOffset [
 	^ '^ {1} fromHandle: (handle referenceStructAt: {2} length: {1} byteSize)'
-		format: { 
+		format: {
 			self objectClass name.
 			byteOffset }
 ]

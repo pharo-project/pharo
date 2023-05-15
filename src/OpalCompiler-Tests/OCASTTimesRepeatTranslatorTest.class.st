@@ -11,6 +11,42 @@ OCASTTimesRepeatTranslatorTest class >> testParameters [
 			forSelector: #optimization addOptions: { #optionInlineTimesRepeat . #optionInlineNone })
 ]
 
+{ #category : #tests }
+OCASTTimesRepeatTranslatorTest >> testNestedTimesRepeat [
+
+	| result |
+
+	result := self testSource: 'example
+		| s |
+		s := OrderedCollection new.
+		
+			3 timesRepeat: [ 
+			  s add: #outer.
+			4 timesRepeat: [ 
+		     s add: #inner ] ].
+		^ s'.
+		
+	self assert: result equals: #(#outer #inner #inner #inner #inner #outer #inner #inner #inner #inner #outer #inner #inner #inner #inner) asOrderedCollection.
+]
+
+{ #category : #tests }
+OCASTTimesRepeatTranslatorTest >> testSequencedTimesRepeat [
+
+	| result |
+
+	result := self testSource: 'example
+		| s |
+		s := OrderedCollection new.
+		
+			3 timesRepeat: [ 
+			  s add: #first ].
+			4 timesRepeat: [ 
+		     s add: #second ].
+		^ s'.
+		
+	self assert: result equals: #(#first #first #first #second #second #second #second) asOrderedCollection.
+]
+
 { #category : #'tests - blocks - optimized' }
 OCASTTimesRepeatTranslatorTest >> testTimesRepeatExecutesBlock [
 

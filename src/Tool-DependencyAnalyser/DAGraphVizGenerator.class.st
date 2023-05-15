@@ -30,11 +30,11 @@ DAGraphVizGenerator >> buildGraphViz [
 		beDirected;
 		name: self nameOfGraph.
 	graphviz add: #node with: {(#shape -> #box)}.
-	graphviz add: #graph with: { (#label -> self nameOfGraph). (#fontsize -> 20) }.	
-	
+	graphviz add: #graph with: { (#label -> self nameOfGraph). (#fontsize -> 20) }.
+
 	self
 		buildNodes;
-		buildEdges.
+		buildEdges
 ]
 
 { #category : #accessing }
@@ -65,5 +65,5 @@ DAGraphVizGenerator >> openWith: extension [
 
 { #category : #saving }
 DAGraphVizGenerator >> saveDotFileAndGenerateForType: extension [
-	^ graphviz generator makeNoWait: extension.
+	^ graphviz generator makeNoWait: extension
 ]

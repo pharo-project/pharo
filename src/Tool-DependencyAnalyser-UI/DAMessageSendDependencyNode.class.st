@@ -23,6 +23,6 @@ DAMessageSendDependencyNode >> label [
 ]
 
 { #category : #setting }
-DAMessageSendDependencyNode >> sentMessages: aListOfSelectors [ 
+DAMessageSendDependencyNode >> sentMessages: aListOfSelectors [
 	sentMessages := aListOfSelectors
 ]

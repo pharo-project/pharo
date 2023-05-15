@@ -36,7 +36,7 @@ HMAC >> digestSize [
 ]
 
 { #category : #accessing }
-HMAC >> key: aByteArray [ 
+HMAC >> key: aByteArray [
 	key := aByteArray.
 	key size > hash blockSize ifTrue: [ key := hash hashMessage: key ].
 	key size < hash blockSize ifTrue: [ key := key , (ByteArray new: hash blockSize - key size) ]
@@ -48,12 +48,12 @@ HMAC >> printOn: aStream [
 ]
 
 { #category : #initialization }
-HMAC >> setHash: aHash [ 
+HMAC >> setHash: aHash [
 	hash := aHash.
-	ipad := ByteArray 
+	ipad := ByteArray
 		new: aHash blockSize
 		withAll: 54.
-	epad := ByteArray 
+	epad := ByteArray
 		new: aHash blockSize
 		withAll: 92
 ]

@@ -21,13 +21,13 @@ SourceFileCharacterReadWriteStream class >> on: wrappedStream encoding: encoding
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> atEnd [
-	
+
 	^ readStream atEnd
 ]
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> close [
-	
+
 	writeStream close
 ]
 
@@ -43,7 +43,7 @@ SourceFileCharacterReadWriteStream >> collectionSpecies [
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> cr [
-	
+
 	writeStream cr
 ]
 
@@ -60,19 +60,19 @@ SourceFileCharacterReadWriteStream >> flush [
 
 { #category : #testing }
 SourceFileCharacterReadWriteStream >> isReadOnly [
-	
+
 	^ false
 ]
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> next [
-	
+
 	^ readStream next
 ]
 
 { #category : #accessing }
-SourceFileCharacterReadWriteStream >> next: anInteger [ 
-	
+SourceFileCharacterReadWriteStream >> next: anInteger [
+
 	^ readStream next: anInteger
 ]
 
@@ -104,7 +104,7 @@ SourceFileCharacterReadWriteStream >> on: aStream encoding: encoding [
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> peek [
-	
+
 	^ readStream peek
 ]
 
@@ -115,8 +115,8 @@ SourceFileCharacterReadWriteStream >> position [
 ]
 
 { #category : #accessing }
-SourceFileCharacterReadWriteStream >> position: anInteger [ 
-	
+SourceFileCharacterReadWriteStream >> position: anInteger [
+
 	readStream position: anInteger
 ]
 
@@ -144,27 +144,27 @@ SourceFileCharacterReadWriteStream >> size [
 ]
 
 { #category : #accessing }
-SourceFileCharacterReadWriteStream >> skip: anInteger [ 
-	
+SourceFileCharacterReadWriteStream >> skip: anInteger [
+
 	readStream skip: anInteger
 ]
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> space [
-	
+
 	writeStream space
 ]
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> tab [
-	
+
 	writeStream tab
 ]
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
-	
+
 	^ self collectionSpecies streamContents: [ :out |
 		| partialMatch pattern matched |
 		partialMatch := (self collectionSpecies new: aCollection size) writeStream.
@@ -187,6 +187,6 @@ SourceFileCharacterReadWriteStream >> upToAll: aCollection [
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> upToEnd [
-	
+
 	^ readStream upToEnd
 ]

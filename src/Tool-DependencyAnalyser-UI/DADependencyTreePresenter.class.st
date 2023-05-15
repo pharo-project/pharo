@@ -25,17 +25,17 @@ Class {
 { #category : #layout }
 DADependencyTreePresenter class >> defaultLayout [
 	<spec: #default>
-	^ SpBoxLayout newVertical 
-		add: ( SpBoxLayout newHorizontal 
+	^ SpBoxLayout newVertical
+		add: ( SpBoxLayout newHorizontal
 					add: #textPackageField;
 					add: #buttonBrowseCycles;
 					add: #buttonRefresh;
 					add: #buttonDefault;
-					yourself) 
+					yourself)
 			expand: false;
 		add: #packageLabel expand: false;
 		add: #tree;
-		add: (SpBoxLayout newHorizontal 
+		add: (SpBoxLayout newHorizontal
 				add: #buttonAddPackage;
 				add: #buttonRemovePackage;
 				add: #buttonReverseAnalysis;
@@ -66,8 +66,8 @@ DADependencyTreePresenter class >> onPackagesNamed: aCollection [
 
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnAddPackage [
-	buttonAddPackage action: [ (DAAddPackagePresenter 
-					new 
+	buttonAddPackage action: [ (DAAddPackagePresenter
+					new
 					dependenciesPresenter: self)
 					open ]
 ]
@@ -88,13 +88,13 @@ DADependencyTreePresenter >> actionOnButtons [
 		actionOnAddPackage;
 		 actionOnGenerateGraphViz;
 		actionOnReverseAnalysis;
-		actionOnSave.
+		actionOnSave
 ]
 
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnDefaultSettings [
 	buttonDefault
-		action: [ 
+		action: [
 			self resetDefaultSettings.
 			self buildRoots ]
 ]
@@ -105,7 +105,7 @@ DADependencyTreePresenter >> actionOnFindCycles [
 	| selectedPackages selectedItems |
 	selectedItems := self selectedItemsFromTree.
 	(self arePackageNodes: selectedItems) ifFalse: [ ^ self ].
-	
+
 	self notify: 'This could take a while, confirm?'.
 	selectedPackages := self pdPackagesFrom: selectedItems.
 	systemCycles ifNil: [ systemCycles := DACycleDetectionPresenter system ].
@@ -118,7 +118,7 @@ DADependencyTreePresenter >> actionOnFindCycles [
 DADependencyTreePresenter >> actionOnGenerateGraphViz [
 	| graphvizGenerator |
 	buttonGenerateGraphViz
-		action: [  
+		action: [
 			self ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
 			graphvizGenerator := DAPackageRelationGraphGenerator newWith: self relationGraph named: 'PackageDependencyGraph'.
 			self saveGraphAndOpenWith: graphvizGenerator ]
@@ -128,9 +128,9 @@ DADependencyTreePresenter >> actionOnGenerateGraphViz [
 DADependencyTreePresenter >> actionOnRemovePackage [
 	| packagesToRemove |
 	buttonRemovePackage
-		action: [ 
+		action: [
 			self selectedItemsFromTree
-				ifNotEmpty: [ 
+				ifNotEmpty: [
 					packagesToRemove := self selectedItemsFromTree.
 					packagesToRemove do: [ :item | self relationGraph removePackage: item content packageName ].
 					self buildRoots ] ]
@@ -139,14 +139,14 @@ DADependencyTreePresenter >> actionOnRemovePackage [
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnReverseAnalysis [
 
-	buttonReverseAnalysis action: [ 
+	buttonReverseAnalysis action: [
 		(DAPackageDependenciesPresenter on:
 			 (DAReverseTreePresenter onRelationGraph: self relationGraph)) open ]
 ]
 
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnSave [
-	buttonSave 
+	buttonSave
 		action: [ self saveCurrentRelationGraph ]
 ]
 
@@ -163,7 +163,7 @@ DADependencyTreePresenter >> actionWhenTextFieldChanged [
 DADependencyTreePresenter >> buildRoots [
 	| matching roots |
 	roots := self filter
-		ifNotNil: [ :f | 
+		ifNotNil: [ :f |
 			matching := '*' , f , '*'.
 			self nodesFor: (relationGraph seenPackagesWithFilter: matching) ]
 		ifNil: [ self nodesFor: relationGraph seenPackages ].
@@ -179,7 +179,7 @@ DADependencyTreePresenter >> connectPresenters [
 		whenSelectedItemChangedDo: [ :item |
 			item
 				ifNil: [ buttonBrowseCycles enabled: false ]
-				ifNotNil: [ 
+				ifNotNil: [
 					buttonBrowseCycles enabled: true.
 					tree contextMenu: [ self loadMenuForSelectedItem ].
 					self tree selectedItem selectInBrowser ] ]
@@ -242,7 +242,7 @@ DADependencyTreePresenter >> initializeButtons [
 	buttonSave := self newButton
 		help: 'Serialize the current object relation graph dependencies';
 		label: 'Save current analysis'.
-	buttonMakeDiff := self newButton 
+	buttonMakeDiff := self newButton
 		label: 'Make diff'
 ]
 
@@ -262,9 +262,9 @@ DADependencyTreePresenter >> initializeWithRPackageSet: aCollection [
 ]
 
 { #category : #private }
-DADependencyTreePresenter >> nodesFor: anItemList [ 
-	^ anItemList sorted collect: 
-		[ :each | 
+DADependencyTreePresenter >> nodesFor: anItemList [
+	^ anItemList sorted collect:
+		[ :each |
 		DAPackageUnderAnalysisNode new
 			content: each;
 			cycle: false;
@@ -281,7 +281,7 @@ DADependencyTreePresenter >> packagesEntryCompletion [
 	^ EntryCompletion new
 				dataSourceBlock: [:currText | applicants];
 				filterBlock: [:currApplicant :currText | currText size > 3
-						and: [currApplicant asUppercase includesSubstring: currText asString asUppercase]].
+						and: [currApplicant asUppercase includesSubstring: currText asString asUppercase]]
 ]
 
 { #category : #accessing }
@@ -292,8 +292,7 @@ DADependencyTreePresenter >> pdPackagesFrom: selectedItems [
 { #category : #actions }
 DADependencyTreePresenter >> refresh [
 	self relationGraph refreshGraph.
-	self buildRoots.
-		
+	self buildRoots
 ]
 
 { #category : #accessing }

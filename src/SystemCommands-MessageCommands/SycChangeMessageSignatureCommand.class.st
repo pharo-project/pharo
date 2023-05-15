@@ -75,7 +75,7 @@ SycChangeMessageSignatureCommand >> createRefactoring [
 
 { #category : #execution }
 SycChangeMessageSignatureCommand >> execute [
-	
+
 	self executeRefactorings
 ]
 
@@ -120,7 +120,7 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 
 	originalMessage selector = methodName selector
-	& (originalMessage argumentNames = methodName arguments) ifTrue: [ 
+	& (originalMessage argumentNames = methodName arguments) ifTrue: [
 		CmdCommandAborted signal ].
 	^ methodName
 ]

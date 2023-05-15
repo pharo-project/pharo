@@ -39,6 +39,6 @@ TKTQueueTaskScheduler >> queue: aTaskQueue [
 
 { #category : #schedulling }
 TKTQueueTaskScheduler >> scheduleTaskExecution: aTask [
-	
+
 	queue nextPut: aTask
 ]

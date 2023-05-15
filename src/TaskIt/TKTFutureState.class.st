@@ -31,7 +31,7 @@ TKTFutureState >> isFailure [
 
 { #category : #testing }
 TKTFutureState >> isFinished [
-	
+
 	^ true
 ]
 
@@ -49,6 +49,6 @@ TKTFutureState >> onFailureDo: aBlockClosure inFuture: aFuture [
 
 { #category : #callbacks }
 TKTFutureState >> onSuccessDo: aBlockClosure inFuture: aFuture [
-	
+
 	"nothing"
 ]

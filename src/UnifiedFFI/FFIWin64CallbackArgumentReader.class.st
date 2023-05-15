@@ -27,7 +27,7 @@ Class {
 
 { #category : #accessing }
 FFIWin64CallbackArgumentReader >> currentParameterIndex [
-	
+
 	^ currentParameterIndex
 ]
 
@@ -35,23 +35,23 @@ FFIWin64CallbackArgumentReader >> currentParameterIndex [
 FFIWin64CallbackArgumentReader >> extractNext: aType [
 
 	super extractNext: aType.
-	currentParameterIndex := currentParameterIndex + 1.
+	currentParameterIndex := currentParameterIndex + 1
 ]
 
 { #category : #extracting }
-FFIWin64CallbackArgumentReader >> extractStructType: type [ 
-	
+FFIWin64CallbackArgumentReader >> extractStructType: type [
+
 	| pointer |
-	
+
 	"The struct are always preallocated by the caller and they pass as a pointer."
-	
+
 	pointer := self basicExtractPointer.
-	self addArgument: (type handle: pointer at: 1).
+	self addArgument: (type handle: pointer at: 1)
 ]
 
 { #category : #accessing }
 FFIWin64CallbackArgumentReader >> floatRegisterPointer [
-	
+
 	^ callbackContext floatregargsp
 ]
 
@@ -59,30 +59,28 @@ FFIWin64CallbackArgumentReader >> floatRegisterPointer [
 FFIWin64CallbackArgumentReader >> initialize [
 
 	super initialize.
-	currentParameterIndex := 1.
+	currentParameterIndex := 1
 ]
 
 { #category : #accessing }
 FFIWin64CallbackArgumentReader >> integerRegisterPointer [
-	
+
 	^ callbackContext intregargsp
 ]
 
 { #category : #'calculating-offsets' }
 FFIWin64CallbackArgumentReader >> nextBaseAddressFor: type [
-	
+
 	| baseAddressToRead offsetOfBaseAddress |
-	
+
 	^ (self currentParameterIndex <= self numberOfRegisters and: [ type typeSize <= 8])
-		ifTrue:[ 
+		ifTrue:[
 				"If the parameter is a floating point parameter it comes in the floating point set of registers, not in the general purpose ones."
 				baseAddressToRead := type isFloatType ifTrue: [self floatRegisterPointer] ifFalse: [self integerRegisterPointer].
 				offsetOfBaseAddress := (self currentParameterIndex - 1) * Smalltalk wordSize + 1.
 				currentStackOffset := currentStackOffset + Smalltalk wordSize.
-				{ baseAddressToRead. offsetOfBaseAddress }] 
-		ifFalse:[ super nextBaseAddressFor: type ].
-
-
+				{ baseAddressToRead. offsetOfBaseAddress }]
+		ifFalse:[ super nextBaseAddressFor: type ]
 ]
 
 { #category : #'calculating-offsets' }
@@ -93,19 +91,19 @@ FFIWin64CallbackArgumentReader >> nextBaseAddressForStructure: type [
 
 { #category : #accessing }
 FFIWin64CallbackArgumentReader >> numberOfRegisters [
-	
+
 	"Win64 only uses 4 registers (integer or float), but never more"
 	^ 4
 ]
 
 { #category : #types }
 FFIWin64CallbackArgumentReader >> stackIntegerType [
-	
+
 	^ FFIInt64 new
 ]
 
 { #category : #types }
 FFIWin64CallbackArgumentReader >> stackUnsignedIntegerType [
-	
+
 	^ FFIUInt64 new
 ]

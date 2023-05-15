@@ -19,7 +19,7 @@ ChunkWriteStream >> afterNexPut [
 
 { #category : #writing }
 ChunkWriteStream >> bang [
-	
+
 	decoratedStream nextPut: self terminatorMark
 ]
 

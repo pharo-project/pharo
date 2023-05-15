@@ -30,7 +30,7 @@ ComputedSlotTest >> testReadComputedSlotReflective [
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
-	
+
 	self assert: (slot read: object) equals: 5
 ]
 
@@ -42,7 +42,7 @@ ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 	self assert: (aClass hasSlotNamed: #slot1).
 
 	object := aClass new.
-	
+
 	self assert: (slot read: object) equals: 5
 ]
 
@@ -52,9 +52,9 @@ ComputedSlotTest >> testWriteComputedSlotCompiled [
 	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	object := aClass new.
-	
+
 	"now compile an accessor and write"
 	self compileAccessorsFor: slot.
 	object slot1: 10.

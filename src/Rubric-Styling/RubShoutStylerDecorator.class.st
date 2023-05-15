@@ -46,7 +46,7 @@ RubShoutStylerDecorator class >> rubricSettingsOn: aBuilder [
 RubShoutStylerDecorator >> aboutToBeUnplugged [
 
 	self paragraph ifNotNil: [ :paragraph |
-		paragraph textArea announcer unsubscribe: self 
+		paragraph textArea announcer unsubscribe: self
 	]
 ]
 
@@ -58,7 +58,7 @@ RubShoutStylerDecorator >> beForSmalltalkScripting [
 { #category : #accessing }
 RubShoutStylerDecorator >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
-		
+
 	self styler classOrMetaClass: aBehavior
 ]
 
@@ -75,11 +75,11 @@ RubShoutStylerDecorator >> minTextSizeForStylingInBackground [
 { #category : #accessing }
 RubShoutStylerDecorator >> next: aDecorator [
 	super next: aDecorator.
-	aDecorator ifNotNil: [ 
+	aDecorator ifNotNil: [
 		self paragraph textArea announcer
 			when: RubTextAcceptRequest
 			send: #whenTextAcceptRequest:
-			to: self 
+			to: self
 	]
 ]
 
@@ -100,9 +100,9 @@ RubShoutStylerDecorator >> refreshStyling [
 RubShoutStylerDecorator >> replaceFrom: start to: stop with: aText [
 	self okToStyle
 		ifFalse: [ ^ next replaceFrom: start to: stop with: aText ].
-		
+
 	self paragraph disableDrawingWhile: [
-		
+
 		aText addAttribute: self paragraph defaultFontChange.
 		text ifNil: [ text := self text ].
 		text replaceFrom: start to: stop with: (self styler format: aText).
@@ -110,18 +110,18 @@ RubShoutStylerDecorator >> replaceFrom: start to: stop with: aText [
 		replaceStop := stop.
 		self style: text.
 		next text: text.
-		
+
 		self paragraph ifNotNil: [ :paragraph |
 			paragraph recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1).
 			paragraph textArea paragraphWasComposedFrom: start to: start + aText size - 1.
-			paragraph textArea paragraphReplacedTextFrom: start to: stop with: aText 
+			paragraph textArea paragraphReplacedTextFrom: start to: stop with: aText
 		]
-	
+
 	]
 ]
 
 { #category : #shout }
-RubShoutStylerDecorator >> shoutAboutToStyle: myself [ 
+RubShoutStylerDecorator >> shoutAboutToStyle: myself [
 	^ self paragraph textArea shoutAboutToStyle: myself
 ]
 
@@ -139,7 +139,7 @@ RubShoutStylerDecorator >> style: aText [
 
 	[ ^ self styler style: aText ]
 		on: Error
-		do: [ :ex | 
+		do: [ :ex |
 			ex traceCr.
 			^ aText ]
 ]
@@ -147,14 +147,21 @@ RubShoutStylerDecorator >> style: aText [
 { #category : #accessing }
 RubShoutStylerDecorator >> styler [
 	"The styler responsible for highlighting text in the receiver"
-	^ styler ifNil: [styler := self defaultStyler]
+
+	^ styler ifNil: [
+		styler := (self model notNil and: [  self model selectedClassOrMetaClass notNil ])
+			ifTrue: [
+				self model selectedClassOrMetaClass syntaxHighlighter
+					view: self;
+					yourself ]
+			ifFalse: [ self defaultStyler ] ]
 ]
 
 { #category : #accessing }
 RubShoutStylerDecorator >> styler: aTextStyler [
 
 	styler := aTextStyler.
-	styler view: self.
+	styler view: self
 ]
 
 { #category : #editing }
@@ -163,23 +170,23 @@ RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	(text notNil and:[text string = styledCopyOfText string])
 		ifFalse: [ ^ self ].
 	text runs: styledCopyOfText runs.
-	"must take care to recompose. If not, the textArea 
+	"must take care to recompose. If not, the textArea
 	markIndex and pointIndex may be inconsistent"
-	self paragraph 
-		recomposeFrom: replaceStart 
-		to: replaceStart + text size - 1 
-		delta: text size - (replaceStop - replaceStart + 1).	
-			
-	"The selection and then the cursor bounds has to be updated 
+	self paragraph
+		recomposeFrom: replaceStart
+		to: replaceStart + text size - 1
+		delta: text size - (replaceStop - replaceStart + 1).
+
+	"The selection and then the cursor bounds has to be updated
 	to take possible text attribute changes into account"
-	
+
 	self updateTextArea
 ]
 
 { #category : #editing }
 RubShoutStylerDecorator >> stylerStyledInBackground: styledCopyOfText [
 	text ifNil: [ ^self ].
-	self stylerStyled: styledCopyOfText.
+	self stylerStyled: styledCopyOfText
 ]
 
 { #category : #accessing }
@@ -204,12 +211,12 @@ RubShoutStylerDecorator >> text: aText [
 RubShoutStylerDecorator >> updateTextArea [
 
 	| textArea |
-	
+
 	textArea := self paragraph textArea.
-	
+
 	textArea recomputeSelection.
 	textArea cursor updateBounds.
-	
+
 	(textArea scrollPane ifNil: [ textArea ]) changed
 ]
 

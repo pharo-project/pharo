@@ -22,8 +22,7 @@ ZnDigestAuthenticatorTest >> testParseEmpty [
 	self assert: (keys at: 'qop') equals: ''.
 	self assert: (keys at: 'nc') equals: ''.
 	self assert: (keys at: 'cnonce') equals: '0a4f113b'.
-	self assert: (keys at: 'response') equals: '6629fae49393a05397450978507c4ef1'.
-	
+	self assert: (keys at: 'response') equals: '6629fae49393a05397450978507c4ef1'
 ]
 
 { #category : #testing }
@@ -44,6 +43,5 @@ ZnDigestAuthenticatorTest >> testParseOK [
 	self assert: (keys at: 'qop') equals: 'auth'.
 	self assert: (keys at: 'nc') equals: '00000001'.
 	self assert: (keys at: 'cnonce') equals: '0a4f113b'.
-	self assert: (keys at: 'response') equals: '6629fae49393a05397450978507c4ef1'.
-	
+	self assert: (keys at: 'response') equals: '6629fae49393a05397450978507c4ef1'
 ]

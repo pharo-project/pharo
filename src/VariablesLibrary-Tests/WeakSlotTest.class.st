@@ -10,9 +10,9 @@ WeakSlotTest >> testReadWeakSlotCompiled [
 	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	object := aClass new.
-	
+
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
 	self assert: object slot1 equals: nil
@@ -25,7 +25,7 @@ WeakSlotTest >> testReadWriteWeakSlotReflective [
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
-	
+
 	slot write: 5 to: object.
 	self assert: (slot read: object) equals: 5
 ]
@@ -37,7 +37,7 @@ WeakSlotTest >> testWeakSlotIsWeak [
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
-	
+
 	slot write: Object new to: object.
 	Smalltalk garbageCollect.
 	"the value is GCed and we get nil"
@@ -50,9 +50,9 @@ WeakSlotTest >> testWriteWeakSlotCompiled [
 	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	object := aClass new.
-	
+
 	"now compile an accessor and write"
 	self compileAccessorsFor: slot.
 	object slot1: 10.

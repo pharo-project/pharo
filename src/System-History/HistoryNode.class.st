@@ -81,7 +81,7 @@ Class {
 }
 
 { #category : #adding }
-HistoryNode >> addItem: anHistoryItem [ 
+HistoryNode >> addItem: anHistoryItem [
 	self current notNil
 		ifTrue: [(self current addItem: anHistoryItem)
 				ifTrue: [^ true]].

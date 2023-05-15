@@ -16,5 +16,5 @@ SourceMethodConverter >> internalGetText [
 { #category : #initialization }
 SourceMethodConverter >> shouldShout [
 
-	^ true.
+	^ true
 ]

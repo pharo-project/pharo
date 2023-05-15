@@ -24,7 +24,7 @@ DTCommentToTestResult >> buildTreeForUI [
 				name: 'Errors';
 				subResults: (self testResults errors collect: [:each | each asResultForDrTest ]);
 				startExpanded;
-				displayColorIfNotEmpty: self theme testColorError;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForErrorTest;
 				yourself).
 			(DTTreeNode new
 				name: 'Failures';
@@ -32,12 +32,12 @@ DTCommentToTestResult >> buildTreeForUI [
 					collect:  [:each | each asResultForDrTest]
 					as: OrderedCollection);
 				startExpanded;
-				displayColorIfNotEmpty: self theme testColorFailure;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForFailureTest;
 				yourself).
 			(DTTreeNode new
 				name: 'Passed tests';
 				subResults: (self testResults passed collect:  [:each | each asResultForDrTest] );
-				displayColorIfNotEmpty: self theme testColorPassing;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForPassingTest;
 				yourself) };
 		yourself
 ]

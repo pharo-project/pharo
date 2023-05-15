@@ -10,7 +10,7 @@ Class {
 
 { #category : #size }
 TFAbstractType >> byteSize [
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -27,7 +27,7 @@ TFAbstractType >> callbackWrite: aNumber into: anExternalAddress [
 ]
 
 { #category : #accessing }
-TFAbstractType >> isValid [ 
+TFAbstractType >> isValid [
 
 	^ handle isNull not
 ]
@@ -52,7 +52,7 @@ TFAbstractType >> readValue: anExternalAddress offset: offset [
 
 { #category : #private }
 TFAbstractType >> validate [
-	
+
 	^ self subclassResponsibility
 ]
 

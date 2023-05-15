@@ -6,7 +6,7 @@ LogicalFont >> acceptSettings: aVisitor [
 ]
 
 { #category : #'*System-Settings-Browser' }
-LogicalFont >> settingStoreOn: aStream [ 
+LogicalFont >> settingStoreOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.
 	aStream nextPut: Character space.
@@ -32,8 +32,8 @@ LogicalFont >> settingStoreOn: aStream [
 
 { #category : #'*System-Settings-Browser' }
 LogicalFont >> withSizeIncrementedBy: anInteger [
-	^ self class 
-		familyName: self familyName 
+	^ self class
+		familyName: self familyName
 		fallbackFamilyNames: self fallbackFamilyNames
 		pointSize: self pointSize + anInteger
 		stretchValue: self stretchValue

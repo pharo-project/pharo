@@ -13,5 +13,5 @@ RBUnfinishedStatementErrorNode >> isUnfinishedStatement [
 { #category : #accessing }
 RBUnfinishedStatementErrorNode >> statement [
 
-	^ content first
+	^ contents first
 ]

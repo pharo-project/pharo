@@ -81,57 +81,57 @@ MD5 >> primProcessBuffer: aByteArray withState: s [
 { #category : #'private - buffers' }
 MD5 >> processBuffer: aByteArray [
 
-	self primProcessBuffer: aByteArray withState: state.
+	self primProcessBuffer: aByteArray withState: state
 ]
 
 { #category : #'private - buffers' }
-MD5 >> processFinalBuffer: aByteArray bitLength: bitLength [ 
+MD5 >> processFinalBuffer: aByteArray bitLength: bitLength [
 	"Pad the buffer until we have an even 64 bytes, then transform"
 	| out |
 	out := ByteArray new: 64.
-	out 
+	out
 		replaceFrom: 1
 		to: aByteArray size
 		with: aByteArray
 		startingAt: 1.
-	aByteArray size < 56 ifTrue: 
-		[ out 
+	aByteArray size < 56 ifTrue:
+		[ out
 			at: aByteArray size + 1
 			put: 128.	"trailing bit"
-		self 
+		self
 			storeLength: bitLength
 			in: out.
 		self processBuffer: out.
 		^ self ].
 
 	"not enough room for the length, so just pad this one, then..."
-	aByteArray size < 64 ifTrue: 
-		[ out 
+	aByteArray size < 64 ifTrue:
+		[ out
 			at: aByteArray size + 1
 			put: 128 ].
 	self processBuffer: out.
 
 	"process one additional block of padding ending with the length"
 	out := ByteArray new: 64.	"filled with zeros"
-	aByteArray size = 64 ifTrue: 
-		[ out 
+	aByteArray size = 64 ifTrue:
+		[ out
 			at: 1
 			put: 128 ].
-	self 
+	self
 		storeLength: bitLength
 		in: out.
 	self processBuffer: out
 ]
 
 { #category : #'private - buffers' }
-MD5 >> storeLength: bitLength in: aByteArray [ 
+MD5 >> storeLength: bitLength in: aByteArray [
 	"Fill in the final 8 bytes of the given ByteArray with a 64-bit
 	little-endian representation of the original message length in bits."
 	| n i |
 	n := bitLength.
 	i := aByteArray size - 8 + 1.
-	[ n > 0 ] whileTrue: 
-		[ aByteArray 
+	[ n > 0 ] whileTrue:
+		[ aByteArray
 			at: i
 			put: (n bitAnd: 255).
 		n := n bitShift: -8.

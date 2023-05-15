@@ -20,5 +20,5 @@ ZnUrlTest >> testSaveContentsToFile [
 	numbers := result readStreamDo: [ :in | in upToEnd ].
 	numbers := numbers lines collect: [ :each | each asInteger ].
 	self assert: (numbers allSatisfy: [ :each | each isInteger ]).
-	ZnFileSystemUtils deleteIfExists: result 
+	ZnFileSystemUtils deleteIfExists: result
 ]

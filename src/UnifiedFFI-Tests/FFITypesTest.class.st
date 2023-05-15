@@ -9,7 +9,7 @@ Class {
 
 { #category : #ranges }
 FFITypesTest >> signed1ByteNumbers [
-	^ { 
+	^ {
 		-128.
 		-127.
 		0.
@@ -20,7 +20,7 @@ FFITypesTest >> signed1ByteNumbers [
 
 { #category : #ranges }
 FFITypesTest >> signed2ByteNumbers [
-	^ { 
+	^ {
 		-32768.
 		-32767.
 		-129.
@@ -40,7 +40,7 @@ FFITypesTest >> signed2ByteNumbers [
 
 { #category : #ranges }
 FFITypesTest >> signed4ByteNumbers [
-	^ { 
+	^ {
 		-2147483648.
 		-2147483647.
 		-32769.
@@ -131,17 +131,17 @@ FFITypesTest >> testSigned4ByteIntegers [
 
 { #category : #tests }
 FFITypesTest >> testSignedAtWithDiferentSizes [
-	"This is tests for issue 17757" 
+	"This is tests for issue 17757"
 	| ref|
-	
+
 	ref := ByteArray new: 4.
 	ref integerAt: 1 put: -10 size: 1 signed: true.
 	self assert: (ref integerAt: 1 size: 1 signed: true) equals: -10.
-	
+
 	ref := ByteArray new: 4.
 	ref integerAt: 1 put: -10 size: 4 signed: true.
 	self assert: (ref integerAt: 1 size: 4 signed: true) equals: -10.
-	
+
 	ref := ByteArray new: 8.
 	ref integerAt: 1 put: -10 size: 8 signed: true.
 	self assert: (ref integerAt: 1 size: 8 signed: true) equals: -10
@@ -248,7 +248,7 @@ FFITypesTest >> testUnsignedShortAtPutIntegers [
 
 { #category : #ranges }
 FFITypesTest >> unsigned1ByteNumbers [
-	^ { 
+	^ {
 		0.
 		126.
 		127.
@@ -260,7 +260,7 @@ FFITypesTest >> unsigned1ByteNumbers [
 
 { #category : #ranges }
 FFITypesTest >> unsigned2ByteNumbers [
-	^ { 
+	^ {
 		0.
 		126.
 		127.
@@ -278,7 +278,7 @@ FFITypesTest >> unsigned2ByteNumbers [
 
 { #category : #ranges }
 FFITypesTest >> unsigned4ByteNumbers [
-	^ { 
+	^ {
 		0.
 		126.
 		127.
@@ -302,7 +302,7 @@ FFITypesTest >> unsigned4ByteNumbers [
 
 { #category : #ranges }
 FFITypesTest >> unsigned8ByteNumbers [
-	^ { 
+	^ {
 		0.
 		126.
 		127.

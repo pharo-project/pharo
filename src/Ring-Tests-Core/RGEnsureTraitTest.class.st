@@ -12,19 +12,19 @@ Class {
 RGEnsureTraitTest >> setUp [
 
 	super setUp.
-	environment := RGEnvironment new.
+	environment := RGEnvironment new
 ]
 
 { #category : #running }
 RGEnsureTraitTest >> testClassTrait [
-		
+
 	"test creation of named class trait on empty environment"
 
 	definition := environment ensureTraitNamed: 'SomeTrait classTrait'.
-	self assert: definition isClass not. 
-	self assert: definition isMetaclass not. 	
-	self assert: definition isTrait. 	
-	self assert: definition isMetaclassTrait.
+	self assert: definition isClass not.
+	self assert: definition isMetaclass not.
+	self assert: definition isTrait.
+	self assert: definition isMetaclassTrait
 ]
 
 { #category : #running }
@@ -67,12 +67,12 @@ RGEnsureTraitTest >> testClassTraitIfTraitAlreadyExists [
 RGEnsureTraitTest >> testTrait [
 
 	"test creation of named trait on empty environment"
-		
+
 	definition := environment ensureTraitNamed: 'SomeTrait'.
-	self assert: definition isClass not. 
-	self assert: definition isMetaclass not. 	
-	self assert: definition isTrait. 	
-	self assert: definition isMetaclassTrait not.
+	self assert: definition isClass not.
+	self assert: definition isMetaclass not.
+	self assert: definition isTrait.
+	self assert: definition isMetaclassTrait not
 ]
 
 { #category : #running }

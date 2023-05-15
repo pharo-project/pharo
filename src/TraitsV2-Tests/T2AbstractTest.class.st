@@ -17,56 +17,56 @@ T2AbstractTest class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-T2AbstractTest >> newClass: aName [ 
+T2AbstractTest >> newClass: aName [
 	^self newClass: aName with: #() trait: TEmpty
 ]
 
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition [
-	
-	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses' 
+
+	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses'
 ]
 
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition category: category [
-	
+
 	| class |
 
-	class := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	class := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: aName;
 			superclass: aSuperclass;
 			slots: slots;
 			traitComposition: aComposition asTraitComposition;
 			package: category ].
-	
+
 	createdClasses add:class.
-	
-	^class.
+
+	^class
 ]
 
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
-	
-	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses' 
+
+	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses'
 ]
 
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition category: category [
-	
+
 	| class |
 
-	class := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	class := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: aName;
 			superclass: aSuperclass;
 			slots: slots;
 			traitComposition: aComposition asTraitComposition;
 			package: category ].
-	
+
 	createdClasses add:class.
-	
-	^class.
+
+	^class
 ]
 
 { #category : #'instance creation' }
@@ -93,16 +93,16 @@ T2AbstractTest >> newTrait: aName with: slots trait: aComposition [
 T2AbstractTest >> newTrait: aName with: slots trait: aComposition category: category [
 	| class |
 	class := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: aName;
 			traitComposition: aComposition asTraitComposition;
 			slots: slots;
 			package: category;
-			beTrait ].			
-	
+			beTrait ].
+
 	createdClasses add:class.
-	
-	^class.
+
+	^class
 ]
 
 { #category : #'instance creation' }
@@ -114,16 +114,16 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition [
 T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: category [
 	| class |
 	class := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: aName;
 			traitComposition: aComposition asTraitComposition;
 			slots: slots;
 			package: category;
-			beTrait ].			
-	
+			beTrait ].
+
 	createdClasses add:class.
-	
-	^class.
+
+	^class
 ]
 
 { #category : #running }

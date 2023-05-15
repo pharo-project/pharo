@@ -16,7 +16,7 @@ RubUnderlinedSegmentMorph >> computeVertices [
 	fln := self firstLineIndex.
 	lln := self lastLineIndex.
 	underlineShape := OrderedCollection new.
-	fln to: lln do: [ :idx | 
+	fln to: lln do: [ :idx |
 		| line cidx |
 		line := self lines at: idx.
 		cidx := idx = fln
@@ -32,7 +32,7 @@ RubUnderlinedSegmentMorph >> computeVertices [
 
 { #category : #initialization }
 RubUnderlinedSegmentMorph >> defaultBorderColor [
-	^ super defaultColor alpha: 0.5.
+	^ super defaultColor alpha: 0.5
 ]
 
 { #category : #initialization }
@@ -60,12 +60,12 @@ RubUnderlinedSegmentMorph >> drawOnAthensCanvas: anAthensCanvas [
 { #category : #drawing }
 RubUnderlinedSegmentMorph >> drawUnderlineOn: aCanvas [
 	underlineShape
-		do: [ :s | 
+		do: [ :s |
 			(1 to: s size - 1 by:
 				(self straight
 					ifTrue: [ 2 ]
 					ifFalse: [ 1 ]))
-				do: [ :p | 
+				do: [ :p |
 					| s1 s2 |
 					s1 := s at: p.
 					s2 := s at: p + 1.
@@ -79,18 +79,18 @@ RubUnderlinedSegmentMorph >> drawUnderlineOn: aCanvas [
 { #category : #drawing }
 RubUnderlinedSegmentMorph >> drawUnderlineOnAthensCanvas: aCanvas [
 	underlineShape
-		do: [ :s | 
+		do: [ :s |
 			| path |
 			(1 to: s size - 1 by:
 				(self straight
 					ifTrue: [ 2 ]
 					ifFalse: [ 1 ]))
-				do: [ :p | 
+				do: [ :p |
 					| s1 s2 |
 					s1 := s at: p.
 					s2 := s at: p + 1.
 					path := aCanvas
-						createPath: [ :builder | 
+						createPath: [ :builder |
 							builder absolute.
 							builder moveTo: s1.
 							builder lineTo: s2 ].
@@ -133,7 +133,7 @@ RubUnderlinedSegmentMorph >> underlineShapeFromPosition: firstPos toPosition: la
 		ifFalse: [ 1 ].
 	shape add: (pos := firstPos x @ (firstPos y + (ygap // 2))).
 	[ pos x < (lastPos x min: self right) ]
-		whileTrue: [ 
+		whileTrue: [
 			ygap := ygap negated.
 			pos := (pos x + 2 min: self right) @ (pos y + ygap).
 			shape add: pos.

@@ -36,20 +36,20 @@ RGClassDefinition >> addClassVarNamed: aString [
 { #category : #'class variables' }
 RGClassDefinition >> addClassVariable: aRCClassVariable [
 
-	self addVariable: (aRCClassVariable parent: self) 
+	self addVariable: (aRCClassVariable parent: self)
 		in: classVariables
 ]
 
 { #category : #'class variables' }
 RGClassDefinition >> addClassVariables: aCollection [
-	
+
 	aCollection do: [:var | self addClassVarNamed: var ]
 ]
 
 { #category : #'shared pools' }
 RGClassDefinition >> addSharedPool: aRGPoolVariableDefinition [
-	self 
-		addVariable: (aRGPoolVariableDefinition parent: self) 
+	self
+		addVariable: (aRGPoolVariableDefinition parent: self)
 		in: sharedPools
 ]
 
@@ -89,7 +89,7 @@ RGClassDefinition >> allClassVarNames [
 RGClassDefinition >> allClassVariables [
 	"Answer a collection of the receiver's classVariables, including those defined its superclasses"
 
-	^self hasSuperclass 
+	^self hasSuperclass
 		ifFalse:[ classVariables ]
 		ifTrue:[ self superclass allClassVariables, classVariables ]
 ]
@@ -101,7 +101,7 @@ RGClassDefinition >> allSharedPoolNames [
 
 { #category : #'shared pools' }
 RGClassDefinition >> allSharedPools [
-	"Answer a collection of the pools the receiver shares, including those defined  
+	"Answer a collection of the pools the receiver shares, including those defined
 	in the superclasses of the receiver."
 
 	^ self hasSuperclass
@@ -112,7 +112,7 @@ RGClassDefinition >> allSharedPools [
 { #category : #accessing }
 RGClassDefinition >> category [
 	"retrieves a tag for its package"
-	
+
 	^category
 ]
 
@@ -138,7 +138,7 @@ RGClassDefinition >> classVarNamed: aString [
 { #category : #'class variables' }
 RGClassDefinition >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
-	
+
 	^classVariables collect:[ :cvar| cvar name ]
 ]
 
@@ -164,12 +164,12 @@ RGClassDefinition >> comment [
 { #category : #accessing }
 RGClassDefinition >> comment: anObject [
 	"Sets a RGCommentDefinition object based on the argument"
-	
-	comment := anObject isRingObject 
-		ifFalse: [ 
+
+	comment := anObject isRingObject
+		ifFalse: [
 			RGCommentDefinition new
 				parent: self;
-				content: anObject; 
+				content: anObject;
 				yourself ]
 		ifTrue: [anObject ]
 ]
@@ -215,7 +215,7 @@ RGClassDefinition >> initialize [
 
 	super initialize.
 	classVariables:= OrderedCollection new.
-	sharedPools:= OrderedCollection new.
+	sharedPools:= OrderedCollection new
 ]
 
 { #category : #'accessing - parallel hierarchy' }
@@ -227,14 +227,14 @@ RGClassDefinition >> instanceSide [
 { #category : #'managing pool users' }
 RGClassDefinition >> isPool [
 	"The receiver is a shared pool if it inherits from SharedPool"
-	
-	^self annotationNamed: self class isPoolKey 
+
+	^self annotationNamed: self class isPoolKey
 		ifAbsent: [ self superclassName == #SharedPool ]
 ]
 
 { #category : #'managing pool users' }
 RGClassDefinition >> isPool: aBoolean [
-	
+
 	^self annotationNamed: self class isPoolKey put: aBoolean
 ]
 
@@ -244,10 +244,10 @@ RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 
 	^(super isSameRevisionAs: aRGClassDefinition)
 		and:[ self superclassName == aRGClassDefinition superclassName
-		and:[ self category = aRGClassDefinition category 
-		and:[ self classVarNames sorted = aRGClassDefinition classVarNames sorted 
-		and:[ self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted  
-		and:[ self traitCompositionSource = aRGClassDefinition traitCompositionSource 
+		and:[ self category = aRGClassDefinition category
+		and:[ self classVarNames sorted = aRGClassDefinition classVarNames sorted
+		and:[ self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted
+		and:[ self traitCompositionSource = aRGClassDefinition traitCompositionSource
 		and:[ ((self hasComment and:[ self comment isSameRevisionAs: aRGClassDefinition comment ]) or:[ self hasComment not ])
 		and:[ (self classSide isSameRevisionAs: aRGClassDefinition classSide) ] ] ] ] ] ] ]
 ]
@@ -255,14 +255,14 @@ RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 { #category : #accessing }
 RGClassDefinition >> package [
 	"Retrieves the package in which this class is contained, if exists"
-	
+
 	^package
 ]
 
 { #category : #accessing }
 RGClassDefinition >> package: aRGPackage [
 	"Sets the package in which this class is contained"
-	
+
 	package:= aRGPackage
 ]
 
@@ -293,7 +293,7 @@ RGClassDefinition >> removeSharedPoolNamed: poolName [
 { #category : #'managing pool users' }
 RGClassDefinition >> removeUser: aRGClassDefinition [
 	"Removes this RGClassDefinition from the users of the receiver"
-	
+
 	aRGClassDefinition isClass ifFalse:[ ^self ].
 	aRGClassDefinition instanceSide removeSharedPoolNamed: self name.
 	self users remove: aRGClassDefinition instanceSide ifAbsent:[ ]
@@ -307,7 +307,7 @@ RGClassDefinition >> sharedPoolNamed: poolName [
 
 { #category : #'shared pools' }
 RGClassDefinition >> sharedPoolNames [
-	
+
 	^sharedPools collect:[ :pool| pool name ]
 ]
 
@@ -335,14 +335,14 @@ RGClassDefinition >> stamp: aString [
 	self hasComment
 	ifTrue: [ self comment stamp: aString ]
 	ifFalse:[ RGCommentDefinition new
-						 parent: self; 
+						 parent: self;
 						 stamp: aString ]
 ]
 
 { #category : #'managing pool users' }
 RGClassDefinition >> users [
 	"If the reciever is a SharedPool then retrieves its users"
-	
+
 	^self isPool
 		ifTrue: [ self annotationNamed: self class usersKey ifAbsentPut: [ OrderedCollection new ] ]
 		ifFalse:[ #() ]
@@ -360,5 +360,5 @@ RGClassDefinition >> withMetaclass: aRGMetaclassDefinition [
 	"Registers explicitly the metaclass of a class"
 
 	metaClass:= aRGMetaclassDefinition.
-	metaClass baseClass: self.
+	metaClass baseClass: self
 ]

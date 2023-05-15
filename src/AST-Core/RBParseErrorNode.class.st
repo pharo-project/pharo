@@ -76,7 +76,12 @@ RBParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
 ]
 
-{ #category : #testing }
+{ #category : #errors }
+RBParseErrorNode >> isError [
+	^true
+]
+
+{ #category : #errors }
 RBParseErrorNode >> isFaulty [
 	^true
 ]

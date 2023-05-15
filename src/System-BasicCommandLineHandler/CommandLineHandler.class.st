@@ -29,9 +29,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-CommandLineHandler class >> activateWith: aCommandLine [ 
-	
-	^ self new 
+CommandLineHandler class >> activateWith: aCommandLine [
+
+	^ self new
 		commandLine: (self prepareSubcommand: aCommandLine);
 		activate
 ]
@@ -42,9 +42,9 @@ CommandLineHandler class >> allHandlers [
 ]
 
 { #category : #'instance creation' }
-CommandLineHandler class >> commandLine: aCommandLine [ 
-	
-	^ self new 
+CommandLineHandler class >> commandLine: aCommandLine [
+
+	^ self new
 		commandLine: aCommandLine;
 		yourself
 ]
@@ -77,9 +77,9 @@ CommandLineHandler class >> prepareSubcommand: commandLineArguments [
 
 	"strip the subcommand name from the arguments"
 	commandLineArguments withFirstArgument: [ :arg|
-		arg = self commandName 
+		arg = self commandName
 			ifTrue: [ ^ commandLineArguments copySubcommand ]].
-	
+
 	"not a subcommand hence we keep the same args"
 	^ commandLineArguments
 ]
@@ -107,7 +107,7 @@ CommandLineHandler class >> selectHandlersFor: aCommandLine [
 
 { #category : #utilities }
 CommandLineHandler >> << aString [
-	^ self stdout 
+	^ self stdout
 		nextPutAll: aString;
 		yourself
 ]
@@ -121,7 +121,7 @@ CommandLineHandler >> activate [
 CommandLineHandler >> activateHelp [
 	"Default help implementation, running #help if the only argument is --help "
 	((self hasOption: 'help') and: [ self arguments size = 1 ])
-		ifTrue: [ 
+		ifTrue: [
 			self help.
 			^ true ].
 	^ false
@@ -131,14 +131,14 @@ CommandLineHandler >> activateHelp [
 CommandLineHandler >> activateHelpWithoutArguments [
 	"Default help implementation, running #help if the there is no argument or a single one which is --help "
 	((self hasOption: 'help') or: [ self arguments isEmpty ])
-		ifTrue: [ 
+		ifTrue: [
 			self help.
 			^ true ].
 	^ false
 ]
 
 { #category : #accessing }
-CommandLineHandler >> allHandlers [ 
+CommandLineHandler >> allHandlers [
 	^ CommandLineHandler allHandlers
 ]
 
@@ -158,7 +158,7 @@ CommandLineHandler >> commandLine [
 ]
 
 { #category : #accessing }
-CommandLineHandler >> commandLine: aCommandLine [ 
+CommandLineHandler >> commandLine: aCommandLine [
 	commandLine := aCommandLine
 ]
 
@@ -178,7 +178,7 @@ CommandLineHandler >> exitFailure [
 ]
 
 { #category : #utilities }
-CommandLineHandler >> exitFailure: aMessage [ 
+CommandLineHandler >> exitFailure: aMessage [
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
 	Exit signalFailure: aMessage
@@ -212,7 +212,7 @@ CommandLineHandler >> hasSessionChanged [
 CommandLineHandler >> help [
 	"This is a crude default help implementation."
 	self printHelp.
-	Smalltalk isInteractive 
+	Smalltalk isInteractive
 		ifFalse: [ self exitSuccess ]
 ]
 
@@ -220,21 +220,21 @@ CommandLineHandler >> help [
 CommandLineHandler >> initialize [
 	super initialize.
 	session := Smalltalk session.
-	self 
+	self
 		initializeStdout;
-		initializeStderr.
+		initializeStderr
 ]
 
 { #category : #initialization }
 CommandLineHandler >> initializeStderr [
 	"install the line end conversion and initialize the converter"
-	stderr := VTermOutputDriver stderr.
+	stderr := VTermOutputDriver stderr
 ]
 
 { #category : #initialization }
 CommandLineHandler >> initializeStdout [
 	"install the line end conversion and initialize the converter"
-	stdout := VTermOutputDriver stdout.
+	stdout := VTermOutputDriver stdout
 ]
 
 { #category : #accessing }
@@ -249,19 +249,19 @@ CommandLineHandler >> optionAt: aString [
 
 { #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifAbsent: absentBlock [
-	^ self commandLine 
+	^ self commandLine
 		optionAt: aString ifAbsent: absentBlock
 ]
 
 { #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: absentBlock [
-	^ self commandLine 
+	^ self commandLine
 		optionAt: aString ifPresent: absentBlock
 ]
 
 { #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock [
-	^ self commandLine 
+	^ self commandLine
 		optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock
 ]
 

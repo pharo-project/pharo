@@ -18,7 +18,7 @@ Class {
 { #category : #testing }
 SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ 
+	^ (super canBeExecutedInContext: aToolContext) and: [
 		  aToolContext lastSelectedClass isDeprecated not ]
 ]
 
@@ -30,7 +30,7 @@ SycDeprecateClassCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycDeprecateClassCommand >> defaultMenuIconName [ 
+SycDeprecateClassCommand >> defaultMenuIconName [
 	^ #bug
 ]
 
@@ -41,12 +41,12 @@ SycDeprecateClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycDeprecateClassCommand >> execute [
-	
+
 	self asRefactorings do: [ :ref | ref execute ]
 ]
 
 { #category : #testing }
-SycDeprecateClassCommand >> isComplexRefactoring [ 
+SycDeprecateClassCommand >> isComplexRefactoring [
 	^ true
 ]
 

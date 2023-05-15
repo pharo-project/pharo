@@ -49,14 +49,14 @@ ZdcByteArrayManager >> byteArrayOfSize: size zero: zero [
 	"Return a ByteArray of size. If zero is true, make sure all bytes equal zero.
 	When the byte array is no longer needed, #recycle can be used to return it to the reciever.
 	It is possible that the byte array returned was previously recycled."
-	
+
 	limit = 0 ifTrue: [ ^ ByteArray new: size ].
-	access critical: [ 
+	access critical: [
 		| pool |
 		pool := self poolForSize: size.
 		"Look for an instance to reuse without allocation"
-		pool withIndexDo: [ :value :index | 
-			value ifNotNil: [ 
+		pool withIndexDo: [ :value :index |
+			value ifNotNil: [
 				pool at: index put: nil.
 				zero ifTrue: [ value atAllPut: 0 ].
 				^ value ] ].
@@ -73,7 +73,7 @@ ZdcByteArrayManager >> initialize [
 
 { #category : #initialize }
 ZdcByteArrayManager >> limit: newLimit [
-	access critical: [ 
+	access critical: [
 		limit := newLimit.
 		limit = 0 ifTrue: [ ^ resources := nil ].
 		resources ifNotNil: [ resources removeAll ] ]
@@ -86,16 +86,16 @@ ZdcByteArrayManager >> poolForSize: size [
 
 { #category : #accessing }
 ZdcByteArrayManager >> recycle: byteArray [
-	"Return byteArray, which is no longer needed, to the receiver to be recyled 
+	"Return byteArray, which is no longer needed, to the receiver to be recyled
 	and reused when #byteArrayOfSize:zero: is called."
-	
+
 	limit = 0 ifTrue: [ ^ self ].
-	access critical: [ 
+	access critical: [
 		| pool |
 		pool := self poolForSize: byteArray size.
 		"Find an empty slot in the pool"
-		pool withIndexDo: [ :value :index | 
-			value ifNil: [ 
+		pool withIndexDo: [ :value :index |
+			value ifNil: [
 				^ pool at: index put: byteArray ] ]
 		"If the pool is full, don't hold onto it" ]
 ]
@@ -107,12 +107,12 @@ ZdcByteArrayManager >> resources [
 
 { #category : #accessing }
 ZdcByteArrayManager >> totalSize [
-	^ resources 
-		ifNil: [ 0 ] 
-		ifNotNil: [ 
-			(resources values collect: [ :pool | 
+	^ resources
+		ifNil: [ 0 ]
+		ifNotNil: [
+			(resources values collect: [ :pool |
 				pool
 					inject: 0
-					into: [ :sum :each | 
+					into: [ :sum :each |
 						sum + (each ifNil: [ 0 ] ifNotNil: [ each size ]) ] ]) sum ]
 ]

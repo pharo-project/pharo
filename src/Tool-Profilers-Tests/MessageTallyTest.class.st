@@ -12,12 +12,12 @@ MessageTallyTest >> testClosedTally [
 
 	| tally |
 	tally := MessageTally
-				tallySendsTo: nil 
-				inBlock:  [ 3.14159 printString ] 
-				showTree: true 
-				closeAfter: true 
+				tallySendsTo: nil
+				inBlock:  [ 3.14159 printString ]
+				showTree: true
+				closeAfter: true
 				openResultWindow: false.
-				
+
 	"The tally is closed, therefore nothing may be accessed"
 	self assert: tally receivers isNil
 ]
@@ -36,16 +36,14 @@ MessageTallyTest >> testSampling1 [
 
 	| tally |
 	tally := MessageTally
-				spyOn: [ 1000  timesRepeat: [ 3.14159 printString  ] ]  
-				reportOtherProcesses: false 
-				cutoff: 1 
+				spyOn: [ 1000  timesRepeat: [ 3.14159 printString  ] ]
+				reportOtherProcesses: false
+				cutoff: 1
 				openResultWindow: false
 				closeAfter: false.
 
 	"No process is accessible from the tally, the reason is that using the sampling method execute the block in the current process"
 	self assert: tally process isNil
-
-
 ]
 
 { #category : #tallying }
@@ -107,13 +105,12 @@ MessageTallyTest >> testTallySends [
 MessageTallyTest >> testTallyShouldNotContainsAReturn [
 
 	"The block passed to MessageTally should not have a ^ "
-	
+
 	self should: [ MessageTally
-						tallySendsTo: nil 
-						inBlock:  [ ^ 3.14159 printString ] 
-						showTree: true 
-						closeAfter: false 
-						openResultWindow: false ] 
+						tallySendsTo: nil
+						inBlock:  [ ^ 3.14159 printString ]
+						showTree: true
+						closeAfter: false
+						openResultWindow: false ]
 		 raise: Error
-	
 ]

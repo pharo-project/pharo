@@ -13,7 +13,7 @@ Class {
 { #category : #execution }
 SycPushUpMethodCommand >> asRefactorings [
 	| refactoring |
-	refactoring :=  RBPullUpMethodRefactoring 
+	refactoring :=  RBPullUpMethodRefactoring
 		model: model
 		pullUp: (methods collect: [ :each | each selector ])
 		from: methods first origin.
@@ -22,7 +22,7 @@ SycPushUpMethodCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycPushUpMethodCommand >> defaultMenuIconName [ 
+SycPushUpMethodCommand >> defaultMenuIconName [
 	^ #up
 ]
 
@@ -34,7 +34,7 @@ SycPushUpMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	self selectMethodsAndSuperclass.
+	self selectMethodsAndSuperclass
 ]
 
 { #category : #execution }
@@ -42,7 +42,7 @@ SycPushUpMethodCommand >> selectMethodsAndSuperclass [
 	| dialog class classes |
 	class := methods first origin.
 	classes := class allSuperclasses removeAllSuchThat: [ :each | each == Object or: [ each == ProtoObject ] ].
-	dialog := RBSelectClassAndMethodsPresenter 
+	dialog := RBSelectClassAndMethodsPresenter
 			label: 'Methods to be pull up'
 			dropLabel: 'Pull up methods of ', class name, ' to:'
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
@@ -50,5 +50,5 @@ SycPushUpMethodCommand >> selectMethodsAndSuperclass [
 			dropItems: classes
 			acceptBlock: [ :item :items | superclass := item.
 				methods := items ].
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+	dialog cancelled ifTrue: [ CmdCommandAborted signal ]
 ]

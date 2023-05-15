@@ -25,7 +25,7 @@ SycMessageCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #'instance creation' }
 SycMessageCommand class >> for: messages [
-	^self new 
+	^self new
 		messages: messages
 ]
 
@@ -52,6 +52,6 @@ SycMessageCommand >> messages: anObject [
 { #category : #execution }
 SycMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	messages := aToolContext selectedMessages
 ]

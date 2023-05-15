@@ -26,7 +26,7 @@ SycMigrateReferencesOfClassCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycMigrateReferencesOfClassCommand >> defaultMenuIconName [ 
+SycMigrateReferencesOfClassCommand >> defaultMenuIconName [
 	^ #source
 ]
 
@@ -37,12 +37,12 @@ SycMigrateReferencesOfClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMigrateReferencesOfClassCommand >> execute [
-	
+
 	self asRefactorings do: [ :ref | ref execute ]
 ]
 
 { #category : #testing }
-SycMigrateReferencesOfClassCommand >> isComplexRefactoring [ 
+SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 	^ true
 ]
 
@@ -50,8 +50,8 @@ SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 SycMigrateReferencesOfClassCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext browser searchDialog 
-		requestSingleObject: 'Choose new class' 
+	newName := aToolContext browser searchDialog
+		requestSingleObject: 'Choose new class'
 		from: ClyAllClassesQuery sorted.
 	newName ifNil: [ CmdCommandAborted signal]
 ]

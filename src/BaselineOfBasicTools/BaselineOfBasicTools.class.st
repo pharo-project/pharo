@@ -79,6 +79,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'ProfStef-Core'.
 		spec package: 'Refactoring-Changes'.
 		spec package: 'Refactoring-Core'.
+		spec package: 'Refactoring-UI'.
 		spec package: 'Refactoring-Environment'.
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.

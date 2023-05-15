@@ -135,7 +135,7 @@ ExternalDropHandler >> matchesExtension: aExtension [
 ExternalDropHandler >> matchesTypes: types [
 	(self type isNil or: [types isNil])
 		ifTrue: [^false].
-	^types anySatisfy: [:mimeType | mimeType beginsWith: self type]
+	^types anySatisfy: [:mimeType | mimeType main beginsWith: self type]
 ]
 
 { #category : #accessing }

@@ -35,7 +35,7 @@ FileServices class >> itemsForFile: fullName [
 	suffix := self suffixOf: fullName.
 	services := OrderedCollection new.
 	(Pragma allNamed: #fileService)
-		do: [ :each | 
+		do: [ :each |
 			services
 				addAll:
 					(each methodClass soleInstance

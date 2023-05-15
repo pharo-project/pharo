@@ -114,7 +114,7 @@ RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
 { #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
-	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
+	aBlockNode isError ifTrue: [self emitRuntimeError: aBlockNode ].
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 
 	self emitPreamble: aBlockNode.
@@ -222,7 +222,7 @@ RFASTTranslator >> visitMessageNode: aMessageNode [
 RFASTTranslator >> visitMethodNode: aMethodNode [
 	"I ignore all links when I am primitive as ReflectiveMethod compiles a wrapper"
 
-	aMethodNode arguments size > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
+	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
 
 	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.

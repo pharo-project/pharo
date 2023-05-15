@@ -14,18 +14,18 @@ PharoSourcesCondenser class >> condenseNewSources [
 	| fileName condenser arch |
 
 	arch := (Smalltalk vm wordSize = 4) ifTrue: [32] ifFalse: [64].
-	
+
 	fileName := 'Pharo{1}.{2}-{3}bit-{4}' format: {SystemVersion current major asString. SystemVersion current minor asString. arch. SystemVersion current commitHashShort asString}.
-	
+
 	condenser := self new.
 	condenser newSourceNamed: fileName.
-	condenser condense.
+	condenser condense
 ]
 
 { #category : #'private - 3 installing' }
 PharoSourcesCondenser >> backupOldChanges [
 	super backupOldChanges.
-	self installFreshChangesFile.
+	self installFreshChangesFile
 ]
 
 { #category : #accessing }
@@ -37,21 +37,21 @@ PharoSourcesCondenser >> fileIndex [
 { #category : #'private - 3 installing' }
 PharoSourcesCondenser >> installFreshChangesFile [
 	| changesFile |
-	
+
 	"install a new .changes file"
 	changesFile := Smalltalk changesFile.
 	changesFile moveTo: (changesFile , 'bak') nextVersion.
-	
+
 	"Force the creation of a fresh changes file "
 	changesFile writeStreamDo: [ :strm |
-		 "Nothing, just create the file" ].
+		 "Nothing, just create the file" ]
 ]
 
 { #category : #public }
 PharoSourcesCondenser >> newSourceNamed: aString [
 	"Create a new version of the .sources file by copying the existing file to a new location"
 	| originalSourcesFile newSourcesFile |
-	
+
 	"Create a copy with the new name"
 	originalSourcesFile := self originalFile resolve asFileReference.
 	Smalltalk sourceFileVersionString: aString.
@@ -59,7 +59,7 @@ PharoSourcesCondenser >> newSourceNamed: aString [
 
 	originalSourcesFile copyTo: newSourcesFile.
 	"Use the new sources file"
-	Smalltalk openSourceFiles.
+	Smalltalk openSourceFiles
 ]
 
 { #category : #accessing }
@@ -80,10 +80,10 @@ PharoSourcesCondenser >> temporaryFile [
 
 { #category : #'private - 3 installing' }
 PharoSourcesCondenser >> updateQuitPosition [
-	
+
 	"We use an empty .changes file, hence the last quit position is 0"
-	
-	Smalltalk lastQuitLogPosition: 0.
+
+	Smalltalk lastQuitLogPosition: 0
 ]
 
 { #category : #writing }
@@ -97,7 +97,7 @@ PharoSourcesCondenser >> writeClassComment: aClass [
 	commentRemoteString ifNil: [ ^ self ].
 
 	self
-		nextCommentChunkDo: [ :strm | 
+		nextCommentChunkDo: [ :strm |
 			strm
 				nextPutAll: aClass name;
 				nextPutAll: ' commentStamp: '.

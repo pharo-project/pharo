@@ -19,27 +19,27 @@ VTermTestRunner >> createStdout [
 ]
 
 { #category : #helper }
-VTermTestRunner >> print: aLongErrorMesssage short: aShortErrorMesssage of: aTestCase [ 
+VTermTestRunner >> print: aLongErrorMesssage short: aShortErrorMesssage of: aTestCase [
 	| testCaseString longMessage shortMessage offset cr |
-	
+
 	cr := OSPlatform current lineEnding.
 	shortMessage := aShortErrorMesssage ifNil: [ '' ].
 	longMessage := aLongErrorMesssage ifNil: [ '' ].
-	
+
 	testCaseString := aTestCase printString.
-	self stdout 
+	self stdout
 		startOfLine; clearToEnd; nextPutAll: testCaseString.
-	
+
 	"Let's see if we have enough space to print the error"
 	offset := 80 - testCaseString size - longMessage size.
 	offset < 1
-		ifTrue: [ 
-			self stdout startOfLine; right: (80 - shortMessage size); 
+		ifTrue: [
+			self stdout startOfLine; right: (80 - shortMessage size);
 				nextPutAll: shortMessage ]
-		ifFalse: [ 
+		ifFalse: [
 			self stdout right: offset;
 				nextPutAll: longMessage ].
-		
+
 	self stdout clear.
 	self stdout << cr
 ]
@@ -48,16 +48,16 @@ VTermTestRunner >> print: aLongErrorMesssage short: aShortErrorMesssage of: aTes
 VTermTestRunner >> printProgress [
 	| string |
 	string := '[',currentTest asString, '/', maxTest asString,']'.
-	self stderr 
-		startOfLine; right: (80 - string size); nextPutAll: string.
+	self stderr
+		startOfLine; right: (80 - string size); nextPutAll: string
 ]
 
 { #category : #printing }
-VTermTestRunner >> printTestCase: aTestCase [ 
-	self stderr 
-		startOfLine; clearToEnd; green; 
+VTermTestRunner >> printTestCase: aTestCase [
+	self stderr
+		startOfLine; clearToEnd; green;
 		print: aTestCase; clear.
-	self printProgress.
+	self printProgress
 ]
 
 { #category : #helper }
@@ -65,13 +65,13 @@ VTermTestRunner >> recordPassOf: aTestCase [
 ]
 
 { #category : #helper }
-VTermTestRunner >> writeError: anError of: aTestCase [ 
+VTermTestRunner >> writeError: anError of: aTestCase [
 	self stderr red.
 	super writeError: anError of: aTestCase
 ]
 
 { #category : #helper }
-VTermTestRunner >> writeFailure: anError of: aTestCase [ 
+VTermTestRunner >> writeFailure: anError of: aTestCase [
 	self stderr yellow.
 	^ super writeFailure: anError of: aTestCase
 ]

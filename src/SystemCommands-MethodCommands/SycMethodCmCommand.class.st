@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #execution }
-SycMethodCmCommand class >> activationStrategy [ 
+SycMethodCmCommand class >> activationStrategy [
 	^ SycMethodMenuActivation
 ]
 

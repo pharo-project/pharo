@@ -23,13 +23,13 @@ ReNoPrintStringInPrintOnRule class >> initialize [
 ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemPrintStrings |
 	aMethod selector = #printOn: ifFalse: [ ^self ].
-	problemPrintStrings := 
+	problemPrintStrings :=
 		aMethod sendNodes select: [ :msgSend | msgSend selector = #printString].
-	
+
 	problemPrintStrings do: [ :msgSend |
-			aCriticBlock cull: (self 
-				createTrivialCritiqueOn: aMethod 
-				intervalOf: msgSend 
+			aCriticBlock cull: (self
+				createTrivialCritiqueOn: aMethod
+				intervalOf: msgSend
 				hint: msgSend selector asString )]
 ]
 

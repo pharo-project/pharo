@@ -10,8 +10,8 @@ Class {
 { #category : #testing }
 SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
-		  aSourceCodeContext isMethodSelected not and: [ 
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
+		  aSourceCodeContext isMethodSelected not and: [
 			  aSourceCodeContext isMessageSelected ] ]
 ]
 
@@ -30,7 +30,7 @@ SycInlineMethodCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
-SycInlineMethodCommand >> defaultMenuIconName [ 
+SycInlineMethodCommand >> defaultMenuIconName [
 	^ #smallRightFlushIcon
 ]
 

@@ -41,13 +41,13 @@ Class {
 
 { #category : #'instance creation' }
 SycMessageDescription class >> fromContextOf: messageUserObject [
-	^self new 
+	^self new
 		contextUser: messageUserObject
 ]
 
 { #category : #'instance creation' }
 SycMessageDescription class >> ofMessageNode: astMessageNode [
-	^(self fromContextOf: astMessageNode) 
+	^(self fromContextOf: astMessageNode)
 		selector: astMessageNode selector;
 		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode])
 ]
@@ -71,7 +71,7 @@ SycMessageDescription >> argumentNames: anObject [
 
 { #category : #operations }
 SycMessageDescription >> computeArgumentPermutationsFor: modifiedMessageDescription [
-	^modifiedMessageDescription argumentNames 
+	^modifiedMessageDescription argumentNames
 		collect: [ :each | argumentNames indexOf: each ]
 ]
 
@@ -86,7 +86,7 @@ SycMessageDescription >> contextUser: anObject [
 ]
 
 { #category : #testing }
-SycMessageDescription >> describesSelector: someSelector withArguments: someArgumentNames [ 
+SycMessageDescription >> describesSelector: someSelector withArguments: someArgumentNames [
 	^selector = someSelector & (argumentNames = someArgumentNames)
 ]
 
@@ -102,10 +102,10 @@ SycMessageDescription >> requestNewSignature [
 	methodName := RBMethodName selector: selector arguments: argumentNames copy.
 	dialog := SycMethodNameEditorPresenter openOn: methodName.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
-	
+
 	selector = methodName selector & (argumentNames = methodName arguments)
 		ifTrue: [ CmdCommandAborted signal].
-	
+
 	^(SycMessageDescription fromContextOf: contextUser)
 		selector: methodName selector;
 		argumentNames: methodName arguments

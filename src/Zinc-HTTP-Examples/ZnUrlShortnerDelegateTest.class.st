@@ -14,7 +14,7 @@ ZnUrlShortnerDelegateTest >> testCreate [
 	self withServerDo: [ :server | | client shortUrl |
 		client := ZnClient new url: server url; queryAt: #url put: url.
 		client get.
-		shortUrl := client response contents.  
+		shortUrl := client response contents.
 		client followRedirects: false.
 		client get: shortUrl.
 		self assert: client response isRedirect.
@@ -27,9 +27,9 @@ ZnUrlShortnerDelegateTest >> testDatabase [
 	| url key |
 	url := 'https://pharo.org' asUrl.
 	key := ZnUrlShortenerDelegate shorten: url.
-	self 
-		assert: (ZnUrlShortenerDelegate database at: key) 
-		equals: url. 
+	self
+		assert: (ZnUrlShortenerDelegate database at: key)
+		equals: url.
 ]
 
 { #category : #tests }
@@ -48,15 +48,7 @@ ZnUrlShortnerDelegateTest >> testRedirect [
 
 { #category : #enumerating }
 ZnUrlShortnerDelegateTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
+	ZnServer withOSAssignedPortDo: [ :server |
 		server delegate: ZnUrlShortenerDelegate new.
-		block cull: server
-	] 
-		ensure: [ server stop ]
+		block cull: server ]
 ]

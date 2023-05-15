@@ -28,8 +28,7 @@ TFUFFIBasicTypeMarshallingTest >> externalFunction: name ofType: type [
 		moduleName: self ffiLibrary libraryName
 		definition: (TFFunctionDefinition
 			parameterTypes: {type. type}
-			returnType: type).
-
+			returnType: type)
 ]
 
 { #category : #'ffi-calls' }
@@ -234,13 +233,13 @@ TFUFFIBasicTypeMarshallingTest >> testUnrefPointer [
 	| holder pointerToHolder return |
 	holder := ExternalAddress allocate: TFBasicType sshort byteSize.
 	TFBasicType sshort write: 17 into: holder.
-	
+
 	pointerToHolder := ExternalAddress allocate: TFBasicType pointer byteSize.
 	TFBasicType pointer write: holder into: pointerToHolder.
-	
+
 	return := self unrefPointer: pointerToHolder.
 	self assert: return equals: holder.
-	self assert: (TFBasicType sshort readValue: return) equals: 17.
+	self assert: (TFBasicType sshort readValue: return) equals: 17
 ]
 
 { #category : #'ffi-calls' }

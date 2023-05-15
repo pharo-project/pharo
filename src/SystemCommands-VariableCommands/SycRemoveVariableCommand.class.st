@@ -10,13 +10,13 @@ Class {
 { #category : #activation }
 SycRemoveVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.5 for: ClySourceCodeContext
 ]
 
 { #category : #execution }
 SycRemoveVariableCommand >> asRefactorings [
-	
+
 	^self createRefactorings: RBRemoveInstanceVariableRefactoring
 ]
 

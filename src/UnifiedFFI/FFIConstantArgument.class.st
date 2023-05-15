@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 FFIConstantArgument class >> value: aValue typeName: aTypeName arity: anInteger [
-	
+
 	^ self new
 		value: aValue;
 		type: (FFITypeDeclaration typeName: aTypeName arity: anInteger);
@@ -37,7 +37,7 @@ FFIConstantArgument >> asOldArraySpec [
 
 { #category : #'emitting code' }
 FFIConstantArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
-	
+
 	self shouldNotImplement
 ]
 
@@ -51,23 +51,23 @@ FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aCont
 FFIConstantArgument >> initialize [
 
 	super initialize.
-	type := FFIUndefinedTypeDeclaration new.
+	type := FFIUndefinedTypeDeclaration new
 ]
 
 { #category : #resolving }
 FFIConstantArgument >> resolveUsing: aResolver [
 
-	value = false ifTrue: [ 
+	value = false ifTrue: [
 		loader := FFILiteralArgument value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	value = true ifTrue: [ 
+	value = true ifTrue: [
 		loader := FFILiteralArgument value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	(value isNil or: [ value = 'NULL' ]) ifTrue: [ 
+	(value isNil or: [ value = 'NULL' ]) ifTrue: [
 		loader := FFILiteralArgument value: ExternalAddress null type: (aResolver resolveType: #'void *').
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
@@ -78,11 +78,11 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		^ self ].
 	loader := FFILiteralArgument value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
-	resolvedType loader: loader.
+	resolvedType loader: loader
 ]
 
 { #category : #accessing }
-FFIConstantArgument >> value [ 
+FFIConstantArgument >> value [
 
 	^ value
 ]

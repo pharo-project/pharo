@@ -27,7 +27,7 @@ ExternalSemaphoreTable class >> clearExternalObjects [
 	"Only lock additions, removals executing in parallel would have little effect on the resulting array"
 
 	ProtectAdd critical: [
-		self unprotectedExternalObjects: Array new].
+		self unprotectedExternalObjects: Array new]
 ]
 
 { #category : #private }
@@ -37,18 +37,18 @@ ExternalSemaphoreTable class >> collectionBasedOn: externalObjects withRoomFor: 
 		- Same collection with some slots freed up by finalization logic
 		- A larger array, which has replaced the parameter as canonical externalObject array.
 	An error must be raised if this method is incapable of fulfilling its duties"
-	
+
 	| newObjects newSize |
 	"grow linearly"
 	newSize :=  externalObjects size +20.
-	(self freedSlotsIn: externalObjects ratherThanIncreaseSizeTo: newSize) 
+	(self freedSlotsIn: externalObjects ratherThanIncreaseSizeTo: newSize)
 		ifTrue: [newObjects := externalObjects]
 		ifFalse: [
-			newObjects := externalObjects species new: newSize. 
+			newObjects := externalObjects species new: newSize.
 			"This is only called when adding objects, so caller is responsible for holding ProtectAdd lock.
 			Obtain the remove lock as well while swapping the list with a new one, so we don't end up with dead semaphores in newObjects that are removed from externalObjects simultaneously by other threads."
 			ProtectRemove critical: [
-				newObjects replaceFrom: 1 to:  externalObjects size with: externalObjects startingAt: 1.	
+				newObjects replaceFrom: 1 to:  externalObjects size with: externalObjects startingAt: 1.
 			self unprotectedExternalObjects: newObjects].].
 	^newObjects
 ]
@@ -57,7 +57,7 @@ ExternalSemaphoreTable class >> collectionBasedOn: externalObjects withRoomFor: 
 ExternalSemaphoreTable class >> externalObjects [
 	"Not really sure why this is protected, once called you are out of protection of the locks anyways, and any use of the object is dangerous...
 	Only additions can potentially change the actual array in use though, so only lock that."
-	^ProtectAdd critical: [self unprotectedExternalObjects].
+	^ProtectAdd critical: [self unprotectedExternalObjects]
 ]
 
 { #category : #private }
@@ -67,13 +67,13 @@ ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncrease
 	"Return whether I ended up freeing slots by GC'ing, or one should increase the size of "
 	^Smalltalk vm maxExternalSemaphores
 		ifNotNil: [:maxSize |
-			(maxSize < newSize) and: 
+			(maxSize < newSize) and:
 				[| needToGrow |
 				Smalltalk garbageCollect.
 				"Do we have free slots now? If not, performing the GC didn't help and we still have to grow."
 				needToGrow := externalObjects includes: nil.
-				
-				needToGrow 
+
+				needToGrow
 					ifTrue: ["If we did GC, warn we had to gc so actions could be taken if appropriate."
 						self traceCr: DateAndTime now printString;
 							traceCr:  'WARNING:  Had to GC to make room for more external objects.';
@@ -100,8 +100,8 @@ ExternalSemaphoreTable class >> privateRegisterExternalObject: anObject [
 	objects := self unprotectedExternalObjects.
 
 	"find the first empty slot"
-	firstEmptyIndex := 
-		(self slotFor: anObject in: objects) 
+	firstEmptyIndex :=
+		(self slotFor: anObject in: objects)
 			ifNil: ["if object has no empty slots,  we need to get a collection which does"
 				objects := self collectionBasedOn: objects withRoomFor: anObject.
 				self slotFor: anObject in: objects.].
@@ -118,9 +118,9 @@ ExternalSemaphoreTable class >> privateUnregisterExternalObject: anObject [
 	anObject ifNil: [^ self].
 	objects := self unprotectedExternalObjects.
 	1 to: objects size do: [:i |
-		(objects at: i) == anObject ifTrue: 
+		(objects at: i) == anObject ifTrue:
 		[objects at: i put: nil.
-		^self]].
+		^self]]
 ]
 
 { #category : #accessing }
@@ -136,7 +136,7 @@ ExternalSemaphoreTable class >> slotFor: anObject in: aCollection [
 	Uses should be protected by the ProtectTable semaphore anyhow, but... it's too much work to reason 100% about it"
 
 	| firstEmptyIndex |
-	1 to: aCollection size do: [ :i | 
+	1 to: aCollection size do: [ :i |
 		| obj |
 		obj := aCollection at: i.
 		obj == anObject

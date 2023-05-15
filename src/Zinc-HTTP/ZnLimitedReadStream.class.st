@@ -39,16 +39,16 @@ ZnLimitedReadStream >> close [
 { #category : #accessing }
 ZnLimitedReadStream >> collectionSpecies [
 	"Delegate to our wrapped stream if possible."
-	
+
 	^ (stream respondsTo: #collectionSpecies)
-			ifTrue: [ stream collectionSpecies ]  
+			ifTrue: [ stream collectionSpecies ]
 			ifFalse: [ stream isBinary ifTrue: [ ByteArray ] ifFalse: [ ByteString ] ]
 ]
 
 { #category : #accessing }
 ZnLimitedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
-	
+
 	^ self upToEnd
 ]
 
@@ -69,10 +69,10 @@ ZnLimitedReadStream >> isStream [
 
 { #category : #accessing }
 ZnLimitedReadStream >> match: subCollection [
-	"Try to read and match the elements of subCollection. 
+	"Try to read and match the elements of subCollection.
 	If successful return true and leave the me positioned after the match.
 	If unsuccesful return false and leave me at end."
-	
+
 	| buffer pattern bufferPosition bufferLimit |
 	pattern := subCollection readStream.
 	"we have to use an internal buffer because we are not positionable"
@@ -81,8 +81,8 @@ ZnLimitedReadStream >> match: subCollection [
 	[ pattern atEnd ] whileFalse: [ | nextElement |
 		self atEnd ifTrue: [ ^ false ].
 		"get the next char to match either from the buffer or from the stream while buffering it"
-		(bufferPosition < bufferLimit) 
-			ifTrue: [ 
+		(bufferPosition < bufferLimit)
+			ifTrue: [
 				nextElement := buffer at: bufferPosition + 1 ]
 			ifFalse: [
 				nextElement := buffer at: bufferPosition + 1 put: self next.
@@ -103,18 +103,18 @@ ZnLimitedReadStream >> match: subCollection [
 ZnLimitedReadStream >> next [
 	^ self atEnd
 		ifTrue: [ nil ]
-		ifFalse: [ 
+		ifFalse: [
 			position := position + 1.
 			stream next ]
 ]
 
 { #category : #accessing }
-ZnLimitedReadStream >> next: requestedCount [ 
+ZnLimitedReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
@@ -122,7 +122,7 @@ ZnLimitedReadStream >> next: requestedCount [
 ZnLimitedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: requestedCount
 		into: collection
@@ -133,11 +133,11 @@ ZnLimitedReadStream >> next: requestedCount into: collection [
 ZnLimitedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| readCount |
-	readCount := self 
-		readInto: collection 
-		startingAt: offset 
+	readCount := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
 	^ requestedCount = readCount
 		ifTrue: [ collection ]
@@ -148,7 +148,7 @@ ZnLimitedReadStream >> next: requestedCount into: collection startingAt: offset 
 ZnLimitedReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: collection size
 		into: collection
@@ -179,15 +179,15 @@ ZnLimitedReadStream >> position [
 ]
 
 { #category : #accessing }
-ZnLimitedReadStream >> readInto: collection startingAt: offset count: count [ 
+ZnLimitedReadStream >> readInto: collection startingAt: offset count: count [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
-	
+
 	| target actual |
 	target := count min: (limit - position).
-	actual := stream 
-		readInto: collection 
-		startingAt: offset 
+	actual := stream
+		readInto: collection
+		startingAt: offset
 		count: target.
 	position := position + actual.
 	^ actual
@@ -204,11 +204,11 @@ ZnLimitedReadStream >> skip: count [
 ]
 
 { #category : #accessing }
-ZnLimitedReadStream >> upTo: anObject [ 
+ZnLimitedReadStream >> upTo: anObject [
 	"We use our own collectionSpecies."
-	
+
 	^ self collectionSpecies streamContents: [ :out | | element |
-		[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [ 
+		[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [
 			out nextPut: element ] ]
 ]
 

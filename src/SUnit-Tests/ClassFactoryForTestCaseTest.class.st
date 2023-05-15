@@ -23,7 +23,7 @@ ClassFactoryForTestCaseTest >> setUp [
 
 { #category : #running }
 ClassFactoryForTestCaseTest >> tearDown [
-	
+
 	factory cleanUp.
 	super tearDown
 ]
@@ -38,7 +38,7 @@ ClassFactoryForTestCaseTest >> testClassCreationInDifferentCategories [
 		factory newSubclassOf: Object instanceVariableNames: '' classVariableNames: '' category: #Two].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
 	self assert: (firstThreeClasses allSatisfy: [:class| class category = (factory packageName, '-', #One) asSymbol]).
-	self assert: (lastTwoClasses allSatisfy: [:class| class category = (factory packageName, '-', #Two) asSymbol]).
+	self assert: (lastTwoClasses allSatisfy: [:class| class category = (factory packageName, '-', #Two) asSymbol])
 ]
 
 { #category : #testing }
@@ -51,41 +51,41 @@ ClassFactoryForTestCaseTest >> testClassFastCreationInDifferentCategories [
 		factory newClassInCategory: #Two].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
 	self assert: (firstThreeClasses allSatisfy: [:class| class category = (factory packageName, '-', #One) asSymbol]).
-	self assert: (lastTwoClasses allSatisfy: [:class| class category = (factory packageName, '-', #Two) asSymbol]).
+	self assert: (lastTwoClasses allSatisfy: [:class| class category = (factory packageName, '-', #Two) asSymbol])
 ]
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
 	| createdClassNames allClasses allTraits |
-	
+
 	3 timesRepeat: [
 		factory newClass.
 		factory newTrait].
-	
+
 	createdClassNames := factory createdClassNames.
-	
-	factory cleanUp.	
-	
-	self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]). 
-	self assert: (factory createdTraits allSatisfy: [:trait| trait isObsolete]). 
-	
+
+	factory cleanUp.
+
+	self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]).
+	self assert: (factory createdTraits allSatisfy: [:trait| trait isObsolete]).
+
 	allClasses := SystemNavigation new allClasses.
 	allTraits := testingEnvironment allTraits.
-	
+
 	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
 	self assert: (factory createdTraits noneSatisfy: [:trait| allTraits includes: trait]).
-	self deny: (SystemOrganization categories includes: factory defaultCategory). 
+	self deny: (SystemOrganization categories includes: factory defaultCategory).
 	self class environment at: #ChangeSet ifPresent: [:changeSet |
-		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ].
+		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testDuplicateClassWithNewName [
 	| createdClass |
-	
+
 	"Skip this tests if no compiler is available. Do not use #skip because it breaks an announcements tests"
-	
-	Smalltalk compilerClass ifNotNil: [ 	
+
+	Smalltalk compilerClass ifNotNil: [
 		createdClass := factory duplicateClass: TestCase withNewName: #MyTestClass.
 		self assert: (factory createdClasses allSatisfy: [:class| self class environment includesKey: class name ]).
 		factory cleanUp.
@@ -155,5 +155,5 @@ ClassFactoryForTestCaseTest >> testTraitCreationInDifferentCategories [
 		factory newTraitInTag: #Two].
 	lastTwoTraits := factory createdTraits copyWithoutAll: firstThreeTraits.
 	self assert: (firstThreeTraits allSatisfy: [:trait| trait category = (factory packageName, '-', #One) asSymbol]).
-	self assert: (lastTwoTraits allSatisfy: [:trait| trait category = (factory packageName, '-', #Two) asSymbol]).
+	self assert: (lastTwoTraits allSatisfy: [:trait| trait category = (factory packageName, '-', #Two) asSymbol])
 ]

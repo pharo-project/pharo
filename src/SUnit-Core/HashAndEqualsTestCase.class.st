@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #tests }
-HashAndEqualsTestCase class >> isAbstract [ 
+HashAndEqualsTestCase class >> isAbstract [
 
 	^self == HashAndEqualsTestCase
 ]

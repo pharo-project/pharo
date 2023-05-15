@@ -17,7 +17,7 @@ DAMessageSendDependency >> implementedMethods: aListOfSelectors [
 
 { #category : #testing }
 DAMessageSendDependency >> isMessageSendDependency [
-	^ true 
+	^ true
 ]
 
 { #category : #accessing }

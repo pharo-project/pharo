@@ -23,8 +23,7 @@ TextURL class >> scanFrom: strm [
 
 { #category : #evaluating }
 TextURL >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
-	self notify: 'Please configure the actOnClickBlock to invoke the computation you need. In Pharo by default there is no external web browser'.
-
+	self notify: 'Please configure the actOnClickBlock to invoke the computation you need. In Pharo by default there is no external web browser'
 ]
 
 { #category : #testing }

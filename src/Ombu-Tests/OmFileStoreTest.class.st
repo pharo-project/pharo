@@ -138,42 +138,50 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 	store newEntry: (OmEntry content: 42).
 	store flush.
 
-	"Override first characters"
-	stream := store fileReference binaryWriteStream.
-	[
-		(ZnCharacterWriteStream on: stream encoding: 'utf8')
-			position: 50;
-			nextPutAll: '**'.
+	"Override some characters"
+	stream := store fileReference binaryWriteStreamDo: [ :writeStream |
+		          writeStream
+			          position: 50;
+			          nextPutAll: '**' utf8Encoded ].
 
-		"Apparently, in Linux it can randomly fail if not explicitly flush"
-		stream flush.
-	] ensure: [ stream close ].
-
-	loadedStore :=
-		(OmFileStore
-			named: store globalName
-			inDirectory: self directoryForTests)
-			yourself.
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests) yourself.
 
 	self
-		should: [ loadedStore refresh; entries ]
+		should: [
+			loadedStore
+				refresh;
+				entries ]
 		raise: OmFileStoreReadingError
 ]
 
 { #category : #tests }
 OmFileStoreTest >> testLoadFromFile [
+
 	| loadedStore |
 	store newEntry: (OmEntry content: 42).
 	store flush.
 
-	loadedStore :=
-		(OmFileStore
-			named: store globalName
-			inDirectory: self directoryForTests)
-			refresh;
-			yourself.
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests)
+		               refresh;
+		               yourself.
 
-	self
-		assert: (loadedStore entries collect: #content as: Array)
-		equals: #(42)
+	self assert: store entriesCount equals: 1.
+
+	self assert: (loadedStore entries collect: #content as: Array) equals: #( 42 )
+]
+
+{ #category : #tests }
+OmFileStoreTest >> testLoadFromFileTrickyCase [
+
+	| loadedStore |
+	store newEntry: (OmEntry content: 'OmEntry {').
+	store flush.
+
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests)
+		               refresh;
+		               yourself.
+
+	self assert: store entriesCount equals: 1.
+
+	self assert: (loadedStore entries collect: #content as: Array) equals: #( 'OmEntry {' )
 ]

@@ -123,13 +123,11 @@ Float >> closeTo: num [
 
 { #category : #'*Math-Operations-Extensions' }
 Float >> closeTo: num precision: aPrecision [
- 	"Tell whether the receiver and arguments are close from each other given a precision"
+	"Tell whether the receiver and arguments are close from each other given a precision"
 
-	num isNumber ifFalse: [ ^ [self = num] onErrorDo: [false]].
-	self = 0.0 ifTrue: [^ num abs < aPrecision].
-	num = 0 ifTrue: [^self abs < aPrecision].
-	^self = num asFloat
-		or: [(self - num) abs / (self abs max: num abs) < aPrecision]
+	num isNumber ifFalse: [ ^ false ].
+
+	^ self = num asFloat or: [ (self - num) abs <= aPrecision ]
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -225,6 +223,13 @@ Float class >> machineEpsilon [
 	Compute it as the difference between 1.0 and previous representable value"
 
 	^1.0 timesTwoPower: 1 - self precision
+]
+
+{ #category : #'*Math-Operations-Extensions' }
+Float class >> maxLog [
+	"Answer maximum log value representable"
+
+	^ MaxValLn
 ]
 
 { #category : #'*Math-Operations-Extensions' }

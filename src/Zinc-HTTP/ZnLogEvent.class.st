@@ -29,8 +29,8 @@ ZnLogEvent class >> announcer [
 { #category : #'class initialization' }
 ZnLogEvent class >> initialize [
 	IdCounter := 0.
-	self environment 
-		at: #SessionManager 
+	self environment
+		at: #SessionManager
 		ifPresent: [ :manager | manager default registerNetworkClassNamed: self name ]
 		ifAbsent: [ Smalltalk addToStartUpList: self ]
 ]
@@ -38,14 +38,14 @@ ZnLogEvent class >> initialize [
 { #category : #convenience }
 ZnLogEvent class >> logToTranscript [
 	self stopLoggingToTranscript.
-	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ].
+	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ]
 ]
 
 { #category : #accessing }
 ZnLogEvent class >> nextId [
-	"This should be thread safe because SmallInteger 
+	"This should be thread safe because SmallInteger
 	arithmetic primitives cannot be interrupted"
-	
+
 	^ IdCounter := IdCounter + 1
 ]
 
@@ -57,7 +57,7 @@ ZnLogEvent class >> open [
 { #category : #'system startup' }
 ZnLogEvent class >> startUp [
 	"Reset the id counter"
-	
+
 	IdCounter := 0
 ]
 
@@ -102,7 +102,7 @@ ZnLogEvent >> printContentsOn: stream [
 ZnLogEvent >> printOn: stream [
 	timestamp printYMDOn: stream.
 	stream space.
-	timestamp printHMSOn: stream. 
+	timestamp printHMSOn: stream.
 	stream space.
 	id \\ 1000 printOn: stream base: 10 length: 3 padded: true.
 	self printContentsOn: stream

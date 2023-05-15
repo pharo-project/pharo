@@ -30,12 +30,12 @@ TFFunctionDefinition class >> finalizeResourceData: handle [
 
 	self new
 		setHandle: handle;
-		primFreeDefinition.
+		primFreeDefinition
 ]
 
 { #category : #'instance creation' }
 TFFunctionDefinition class >> fromHandle: aHandle [
-	
+
 	^ self error: 'should not be used'
 ]
 
@@ -72,13 +72,13 @@ TFFunctionDefinition >> abi: anObject [
 TFFunctionDefinition >> doValidate: parameterHandlers [
 
 	"As we maybe keep the function definition when we are saving the image, we cannot put a default value to the ABI, as the default value changes from platform to platform"
-	
+
 	abi
-		ifNil: [ 
+		ifNil: [
 			self
 				primDefineFunctionWith: parameterHandlers
 				returnType: returnType getHandle ]
-		ifNotNil: [ 
+		ifNotNil: [
 			self
 				primDefineFunctionWith: parameterHandlers
 				returnType: returnType getHandle
@@ -96,27 +96,27 @@ TFFunctionDefinition >> parameterTypes: anObject [
 ]
 
 { #category : #primitives }
-TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler [ 
-	
+TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler [
+
 	<primitive: 'primitiveDefineFunction' error: ec>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #primitives }
 TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler abi: abiType [
-	
+
 	<primitive: 'primitiveDefineFunction' error: ec>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #primitives }
 TFFunctionDefinition >> primFreeDefinition [
-	
+
 	<primitive: 'primitiveFreeDefinition'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #accessing }
@@ -138,9 +138,8 @@ TFFunctionDefinition >> validate [
 	"First, we get valid parameter handles."
 	parameterTypes do: [ :e | e validate ].
 	returnType validate.
-	
-	parameterHandlers := parameterTypes collect: [ :e | e getHandle ] as: Array.
-	
-	self doValidate: parameterHandlers.
 
+	parameterHandlers := parameterTypes collect: [ :e | e getHandle ] as: Array.
+
+	self doValidate: parameterHandlers
 ]

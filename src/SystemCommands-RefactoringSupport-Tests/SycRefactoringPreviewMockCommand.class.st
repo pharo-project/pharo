@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #converting }
-SycRefactoringPreviewMockCommand >> asRefactorings [ 
+SycRefactoringPreviewMockCommand >> asRefactorings [
 	^ { SycMockRBRefactoring new  }
 ]

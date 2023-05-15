@@ -27,9 +27,9 @@ Class {
 { #category : #accessing }
 ZnKeyValueStoreClient >> at: key [
 	"Return the value of key as stored on the server, raising a KeyNotFound when necessary"
-	
-	^ [ self httpClient get: 'kvstore/', key asString ] 
-			on: ZnHttpUnsuccessful 
+
+	^ [ self httpClient get: 'kvstore/', key asString ]
+			on: ZnHttpUnsuccessful
 			do: [ :exception |
 				exception response isNotFound
 					ifTrue: [ KeyNotFound signalFor: key ]
@@ -40,8 +40,8 @@ ZnKeyValueStoreClient >> at: key [
 ZnKeyValueStoreClient >> at: key ifAbsent: block [
 	"Return the value of key as stored on the server, evaluating block when not found"
 
-	^ [ self httpClient get: 'kvstore/', key asString ] 
-			on: ZnHttpUnsuccessful 
+	^ [ self httpClient get: 'kvstore/', key asString ]
+			on: ZnHttpUnsuccessful
 			do: [ :exception |
 				exception response isNotFound
 					ifTrue: block
@@ -51,15 +51,15 @@ ZnKeyValueStoreClient >> at: key ifAbsent: block [
 { #category : #accessing }
 ZnKeyValueStoreClient >> at: key put: value [
 	"Store value under key on the server, returning the URI"
-	
-	^ self httpClient 
+
+	^ self httpClient
 		put: 'kvstore/', key asString
 		contents: value asString
 ]
 
 { #category : #'initialize-release' }
 ZnKeyValueStoreClient >> close [
-	httpClient ifNotNil: [ 
+	httpClient ifNotNil: [
 		httpClient close.
 		httpClient := nil ]
 ]
@@ -67,15 +67,15 @@ ZnKeyValueStoreClient >> close [
 { #category : #accessing }
 ZnKeyValueStoreClient >> contents [
 	"Return a Dictionary containing the full contents of the key-value store of the server"
-	
+
 	| dictionary dump position |
 	dictionary := Dictionary new.
 	dump := self httpClient get: 'kvstore'.
 	(dump includes: $=) ifFalse: [ ^ dictionary ].
 	dump lines do: [ :each |
 		position := each indexOf: $=.
-		dictionary 
-			at: (each copyFrom: 1 to: position -1) 
+		dictionary
+			at: (each copyFrom: 1 to: position -1)
 			put: (each copyFrom: position + 1 to: each size) ].
 	^ dictionary
 ]
@@ -84,7 +84,7 @@ ZnKeyValueStoreClient >> contents [
 ZnKeyValueStoreClient >> httpClient [
 	"Return the HTTP client that I (re)use.
 	This ZnClient instance can be customized."
-	
+
 	^ httpClient ifNil: [ httpClient := self makeHttpClient ]
 ]
 
@@ -103,6 +103,6 @@ ZnKeyValueStoreClient >> makeHttpClient [
 { #category : #accessing }
 ZnKeyValueStoreClient >> removeKey: key [
 	"Remove key from the server, if present, returning the URI"
-	
+
 	^ self httpClient delete: 'kvstore/', key asString
 ]

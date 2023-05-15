@@ -31,7 +31,7 @@ VTermOutputStyle >> background [
 
 { #category : #accessing }
 VTermOutputStyle >> font [
-	
+
 	^ font
 ]
 
@@ -40,14 +40,14 @@ VTermOutputStyle >> initialize [
 
 	styles := Set new.
 	font := VTermOutputFont new style: self.
-	background := VTermOutputBackground new style: self.
+	background := VTermOutputBackground new style: self
 ]
 
 { #category : #copying }
 VTermOutputStyle >> postCopy [
 	font := self font copy.
 	background := self background copy.
-	styles :=  self styles copy.
+	styles :=  self styles copy
 ]
 
 { #category : #styling }
@@ -55,7 +55,7 @@ VTermOutputStyle >> setInDriver: aVTermOutputDriver [
 	font setInDriver: aVTermOutputDriver.
 	background setInDriver: aVTermOutputDriver.
 	self styles do: [ :each | aVTermOutputDriver set: each ].
-	aVTermOutputDriver installedStyle: self.
+	aVTermOutputDriver installedStyle: self
 ]
 
 { #category : #styling }

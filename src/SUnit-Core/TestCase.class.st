@@ -101,9 +101,9 @@ TestCase class >> addTestsFor: classNameString toSuite: suite [
 	| cls |
 	cls := self environment at: classNameString ifAbsent: [ ^ suite ].
 	^ cls isAbstract
-		ifTrue: [ 
+		ifTrue: [
 			cls allSubclasses
-				do: [ :each | 
+				do: [ :each |
 					each isAbstract
 						ifFalse: [ each addToSuiteFromSelectors: suite ] ].
 			suite ]
@@ -111,8 +111,8 @@ TestCase class >> addTestsFor: classNameString toSuite: suite [
 ]
 
 { #category : #'building suites' }
-TestCase class >> addToSuite: suite fromMethods: testMethods [ 
-	testMethods do:  [ :selector | 
+TestCase class >> addToSuite: suite fromMethods: testMethods [
+	testMethods do:  [ :selector |
 			suite addTest: (self selector: selector) ].
 	^suite
 ]
@@ -140,7 +140,7 @@ TestCase class >> allTestSelectors [
 ]
 
 { #category : #events }
-TestCase class >> announcer [ 
+TestCase class >> announcer [
 	^ self announcers at: self ifAbsentPut: [ Announcer new ]
 ]
 
@@ -154,9 +154,9 @@ TestCase class >> buildSuite [
 	"Returns a suite of test case. This suite can be composed of local and inherited methods if the superclass is declared as abstract."
 	| suite |
 	^self isAbstract
-		ifTrue: 
+		ifTrue:
 			[suite := self suiteClass named: self name asString.
-			self allSubclasses 
+			self allSubclasses
 				do: [:each | each isAbstract ifFalse: [suite addTest: each buildSuiteFromSelectors]].
 			suite]
 		ifFalse: [self buildSuiteFromSelectors]
@@ -197,7 +197,7 @@ TestCase class >> classCommentBlank [
 
 { #category : #coverage }
 TestCase class >> coverage [
-	"returns the coverage determined by a simple static analysis of test coverage 
+	"returns the coverage determined by a simple static analysis of test coverage
 	made by the receiver on a class that is identified by the name of the receiver.
 	We assume that SetTest test Set."
 
@@ -214,11 +214,11 @@ TestCase class >> coverage [
 { #category : #coverage }
 TestCase class >> coverageAsString [
 	| cov className |
-	cov := self coverage first asInteger. 
+	cov := self coverage first asInteger.
 	"coverage already checks that the name is ends with 'Test' and if the class tested exists"
-	
+
 	className := self name copyFrom: 1 to: (self name size - 'Test' size).
-	^ self name asString, ' covers ', cov asString, '% of ', className.
+	^ self name asString, ' covers ', cov asString, '% of ', className
 ]
 
 { #category : #coverage }
@@ -230,13 +230,13 @@ TestCase class >> coverageForClass: cls [
 { #category : #coverage }
 TestCase class >> coverageForClass: cls until: aRootClass [
 	"returns the test coverage of all the methods included inherited ones but stopping at aRootClass included"
-	
+
 	| definedMethods testedMethods untestedMethods |
 	definedMethods := cls allSelectorsAboveUntil: aRootClass.
 	definedMethods size = 0
 		ifTrue: [^ {0. Set new}].
-	testedMethods := 
-		self methods inject: Set new into: 
+	testedMethods :=
+		self methods inject: Set new into:
 							[:sums :cm | sums union: cm messages].
 	testedMethods := testedMethods reject: [:sel | (definedMethods includes: sel) not].
 	untestedMethods := definedMethods select: [:selector | (testedMethods includes: selector) not].
@@ -277,12 +277,12 @@ TestCase class >> defaultTimeLimitSecs: aNumber [
 { #category : #settings }
 TestCase class >> defaultTimeLimitSettingOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder group: #sunit)
 		label: 'SUnit';
 		parent: #pharoSystem;
 		description: 'SUnit';
-		with: [  
+		with: [
 			(aBuilder setting: #defaultTimeLimitSecs)
 				target: self;
 				default: 10.0;
@@ -333,14 +333,14 @@ TestCase class >> hasPassedTest [
 { #category : #testing }
 TestCase class >> hasTestSelectors [
 
-	^(self selectors anySatisfy: [ :each | 
+	^(self selectors anySatisfy: [ :each |
 		(each beginsWith: 'test') and: [
-				each numArgs isZero 
+				each numArgs isZero
 			]
-		]) or: [ 
-			self superclass isTestCase and: [ 
-				self shouldInheritSelectors and: [ 
-						self superclass hasTestSelectors	
+		]) or: [
+			self superclass isTestCase and: [
+				self shouldInheritSelectors and: [
+						self superclass hasTestSelectors
 				]
 			]
 		]
@@ -367,8 +367,8 @@ TestCase class >> historyAnnouncer [
 TestCase class >> initialize [
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak
-		when: MethodAdded, MethodModified, MethodRemoved 
-		send: #methodChanged: 
+		when: MethodAdded, MethodModified, MethodRemoved
+		send: #methodChanged:
 		to: self
 ]
 
@@ -405,7 +405,7 @@ TestCase class >> lastRun [
 
 { #category : #history }
 TestCase class >> lastRunMethodNamed: aSelector [
-	
+
 	^ String streamContents: [:str |
 		str nextPutAll: aSelector asString ;cr.
 		str tab; nextPutAll: '^ ', (self lastRun) storeString]
@@ -418,10 +418,10 @@ TestCase class >> lastStoredRun [
 
 { #category : #coverage }
 TestCase class >> localCoverage [
-	"returns the coverage determined by a simple static analysis of test coverage 
+	"returns the coverage determined by a simple static analysis of test coverage
 	made by the receiver on a class that is identified by the name of the receiver.
 	We assume that SetTest test Set. The computation of the coverage takes only into
-	account the methods defined locally in the tested class. See coverage for a more global 
+	account the methods defined locally in the tested class. See coverage for a more global
 	coverage"
 
 	| cls className |
@@ -437,26 +437,26 @@ TestCase class >> localCoverage [
 { #category : #coverage }
 TestCase class >> localCoverageAsString [
 	| cov className |
-	cov := self localCoverage first asInteger. 
+	cov := self localCoverage first asInteger.
 	"coverage already checks that the name is ends with 'Test' and if the class tested exists"
-	
+
 	className := self name copyFrom: 1 to: (self name size - 'Test' size).
-	^ self name asString, ' covers ', cov asString, '% of ', className.
+	^ self name asString, ' covers ', cov asString, '% of ', className
 ]
 
 { #category : #coverage }
 TestCase class >> localCoverageForClass: cls [
-	
+
 	| definedMethods testedMethods untestedMethods |
 	definedMethods := cls selectors.
 	"It happens for IdentityBag / IdentityBagTest"
 	definedMethods size = 0
 		ifTrue: [^ {0. Set new}].
 
-	testedMethods := 
-		self methods inject: Set new into: 
+	testedMethods :=
+		self methods inject: Set new into:
 							[:sums :cm | sums union: cm messages].
-					
+
 	"testedMethods contains all the methods send in test methods, which probably contains methods that have nothing to do with collection"
 	testedMethods := testedMethods reject: [:sel | (definedMethods includes: sel) not].
 
@@ -478,7 +478,7 @@ TestCase class >> lookupHierarchyRoot [
 { #category : #updating }
 TestCase class >> methodChanged: anEvent [
 	"Remove the changed method from the known test results."
-	
+
 	anEvent method isTestMethod ifFalse: [ ^ self ].
 	self classForTestResult removeFromTestHistory: anEvent selector in: anEvent methodClass
 ]
@@ -538,7 +538,7 @@ TestCase class >> resources [
 { #category : #'instance creation' }
 TestCase class >> run: aSymbol [
 	"Execute a testcase name, aSymbol, and return a test result."
-	
+
 	^(self selector: aSymbol) run
 ]
 
@@ -564,10 +564,10 @@ TestCase class >> shouldAnnounce [
 { #category : #history }
 TestCase class >> shouldGenerateLastStoredRunMethod [
 	| sameRun |
-	
+
 	(self class includesSelector: #lastStoredRun)
 		ifFalse: [^ true].
-	sameRun := #(#passed #failures #errors) inject: true into: 
+	sameRun := #(#passed #failures #errors) inject: true into:
 		[ :ok :set | ok and: [(self lastRun at: set) = (self lastStoredRun at: set) ]].
 	^ sameRun not
 ]
@@ -575,7 +575,7 @@ TestCase class >> shouldGenerateLastStoredRunMethod [
 { #category : #testing }
 TestCase class >> shouldInheritSelectors [
 	"I should inherit from an Abstract superclass but not from a concrete one by default, unless I have no testSelectors in which case I must be expecting to inherit them from my superclass.  If a test case with selectors wants to inherit selectors from a concrete superclass, override this to true in that subclass."
-	
+
 	^self ~~ self lookupHierarchyRoot
 		and: [self superclass isAbstract or: [self testSelectors isEmpty]]
 ]
@@ -617,7 +617,7 @@ TestCase class >> whichClassIncludesTestSelector: aSymbol [
 ]
 
 { #category : #dependencies }
-TestCase >> addDependentToHierachy: anObject [ 
+TestCase >> addDependentToHierachy: anObject [
 	"an empty method. for Composite compatibility with TestSuite"
 ]
 
@@ -630,12 +630,12 @@ TestCase >> announce: anAnnouncementClass [
 TestCase >> announce: anAnnouncementClass withResult: result [
 	| event |
 	self shouldAnnounce ifFalse: [ ^ self ].
-	
+
 	event := anAnnouncementClass asAnnouncement.
 	event testCase: self.
 	event testSelector: testSelector.
 	event testResult: result.
-	self announcer announce: event.
+	self announcer announce: event
 ]
 
 { #category : #events }
@@ -652,13 +652,13 @@ TestCase >> cleanUpInstanceVariables [
 
 { #category : #running }
 TestCase >> debug [
-	"During the execution, if the receiver fails 
+	"During the execution, if the receiver fails
 	due to an error or an assertion failure,
 	I open the debuger so user can see the context of failure"
 
 	| result |
 	result := self classForTestResult new.
-	[ result runCaseForDebug: self ] ensure: [ 
+	[ result runCaseForDebug: self ] ensure: [
 		self classForTestResource resetResources: self resources.
 		result updateResultsInHistory ].
 	^ result
@@ -668,7 +668,7 @@ TestCase >> debug [
 TestCase >> debugAsFailure [
 	| semaphore |
 	semaphore := Semaphore new.
-	[ 
+	[
 	semaphore wait.
 	self classForTestResource resetResources: self resources ] fork.
 	(self class selector: testSelector) runCaseAsFailure: semaphore
@@ -677,14 +677,14 @@ TestCase >> debugAsFailure [
 { #category : #accessing }
 TestCase >> defaultTimeLimit [
 	"I define the limit that any testcase should not exceed."
-	
+
 	^self class defaultTimeLimit
 ]
 
 { #category : #private }
 TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
 
-	^ [ 
+	^ [
 	  aBlock value.
 	  false ]
 		  on: anExceptionalEvent
@@ -705,17 +705,17 @@ TestCase >> executionProcessMonitor [
 TestCase >> expectedFailures [
 	"I return the collection of tests which are expected to fail.
 	A Test which is expected to fail includes <expectedFailure> pragma in its body"
-	
+
 	| pragmas |
 	^ expectedFails ifNil: [
-		
+
 		pragmas := Pragma allNamed: #expectedFailure from: self class to: TestCase.
 		expectedFails := pragmas collect: [:each | each method selector  ].
 	]
 ]
 
 { #category : #running }
-TestCase >> failureLog [	
+TestCase >> failureLog [
 	^Transcript
 ]
 
@@ -728,13 +728,13 @@ TestCase >> instanceVariablesToKeep [
 TestCase >> isExpectedFailure [
 	"I tell if my receiver is expected to fail.
 	It is the case if it has the pragma <expectedFailure>"
-	
+
 	^self expectedFailures includes: testSelector
 ]
 
 { #category : #running }
 TestCase >> isLogging [
-	"By default, we're not logging failures. If you override this in 
+	"By default, we're not logging failures. If you override this in
 	a subclass, make sure that you override #failureLog"
 	^false
 ]
@@ -742,9 +742,9 @@ TestCase >> isLogging [
 { #category : #running }
 TestCase >> logFailure: aString [
 	self isLogging ifTrue: [
-		self failureLog 
-			cr; 
-			nextPutAll: aString; 
+		self failureLog
+			cr;
+			nextPutAll: aString;
 			flush]
 ]
 
@@ -756,14 +756,14 @@ TestCase >> nameForReport [
 
 { #category : #'CI support' }
 TestCase >> onPharoCITestingEnvironment [
-	
+
 	^ Smalltalk os environment at: 'PHARO_CI_TESTING_ENVIRONMENT' ifPresent: [ true ] ifAbsent: [ false ]
 ]
 
 { #category : #running }
 TestCase >> openDebuggerOnFailingTestMethod [
 	<haltOrBreakpointForTesting>
-	"SUnit has halted one step in front of the failing test method. Step over the 'self halt' and 
+	"SUnit has halted one step in front of the failing test method. Step over the 'self halt' and
 	 send into 'self perform: testSelector' to see the failure from the beginning"
 
 	self
@@ -777,12 +777,12 @@ TestCase >> performTest [
 ]
 
 { #category : #running }
-TestCase >> prepareToRunAgain [ 	
+TestCase >> prepareToRunAgain [
 
 	"Used by the debugger when a test is restarted
 	I'm not 'hidding'' possible exceptions because I think it is best to popup a new debugger
 	if some one occurs and let the programmer decide what to do - Hernan"
-	self 
+	self
 		tearDown;
 		setUp
 ]
@@ -803,7 +803,7 @@ TestCase >> printTestSelectorDefiningClass: aClass on: aStream [
 { #category : #printing }
 TestCase >> printTestSelectorOn: aStream [
 	testSelector
-		ifNotNil: [ 
+		ifNotNil: [
 			| class |
 			class := self class whichClassIncludesTestSelector: testSelector.
 			class ~= self class
@@ -814,7 +814,7 @@ TestCase >> printTestSelectorOn: aStream [
 ]
 
 { #category : #dependencies }
-TestCase >> removeDependentFromHierachy: anObject [ 
+TestCase >> removeDependentFromHierachy: anObject [
 	"an empty method. for Composite compatibility with TestSuite"
 ]
 
@@ -838,7 +838,7 @@ TestCase >> run [
 { #category : #running }
 TestCase >> run: aResult [
 	"run the testcase (receiver) by using the given object to store the result"
-	
+
 	aResult runCase: self
 ]
 
@@ -889,15 +889,15 @@ TestCase >> shouldAnnounce [
 { #category : #testing }
 TestCase >> shouldPass [
 	"I check if the test is not expected to fail. See (<expectedFailure> pragma)"
-	
+
 	^self isExpectedFailure not
 ]
 
 { #category : #'CI support' }
 TestCase >> skipOnPharoCITestingEnvironment [
-	
-	self onPharoCITestingEnvironment 
-		ifTrue: [ self skip ].
+
+	self onPharoCITestingEnvironment
+		ifTrue: [ self skip ]
 ]
 
 { #category : #running }

@@ -283,6 +283,25 @@ CompletionEngineTest >> testReplaceTokenAfterMovingCaretToMiddleOfWordWithFollow
 	self assert: editor text equals: 'self toto something that follows'
 ]
 
+{ #category : #tests }
+CompletionEngineTest >> testReplaceTokenWithCaretBeforeEndOfTextWithSpecialCharacterReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+
+	| text |
+	text := '(self mEthOdThatDoesNotExist)'.
+	self
+		setEditorText: text;
+		selectAt: text size "just before the closing parenthesis".
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+
+	self assert: editor text equals: '(self toto)'
+]
+
 { #category : #'tests - interaction' }
 CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordReplacesEntireWord [
 

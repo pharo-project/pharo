@@ -22,7 +22,7 @@ VTermOutputBackground >> hash [
 ]
 
 { #category : #styling }
-VTermOutputBackground >> setInDriver: aVTermOutputDriver [ 
-	
+VTermOutputBackground >> setInDriver: aVTermOutputDriver [
+
 	aVTermOutputDriver setBackgroundColor: color
 ]

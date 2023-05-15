@@ -53,7 +53,7 @@ RxCharSetParser >> match: aCharacter [
 
 	aCharacter = lookahead
 		ifFalse: [
-			RxParser 
+			RxParser
 				signalSyntaxException: 'unexpected character: ', (String with: lookahead)
 				at: source position].
 	^source atEnd

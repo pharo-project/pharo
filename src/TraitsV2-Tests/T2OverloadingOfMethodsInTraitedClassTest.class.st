@@ -62,7 +62,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 		newClass: #C2Superclass
 		with: '' asSlotCollection
 		uses: t2.
-		
+
 	subclass := self
 		newClass: #C1Subclass
 		superclass: superclass

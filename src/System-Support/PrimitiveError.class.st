@@ -31,25 +31,25 @@ Class {
 
 { #category : #accessing }
 PrimitiveError >> errorCode [
-	
+
 	^errorCode
 ]
 
 { #category : #accessing }
 PrimitiveError >> errorCode: anInteger [
-	
+
 	errorCode := anInteger
 ]
 
 { #category : #accessing }
 PrimitiveError >> errorName [
-	
+
 	^errorName
 ]
 
 { #category : #accessing }
 PrimitiveError >> errorName: aSymbol [
-	
+
 	errorName := aSymbol
 ]
 

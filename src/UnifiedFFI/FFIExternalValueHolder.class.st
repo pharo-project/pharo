@@ -57,14 +57,14 @@ Class {
 
 { #category : #converting }
 FFIExternalValueHolder class >> asExternalTypeOn: generator [
-	^ FFIExternalValueHolderType 
-		objectClass: self 
+	^ FFIExternalValueHolderType
+		objectClass: self
 		representationType: self type
 ]
 
 { #category : #'class factory' }
 FFIExternalValueHolder class >> ofType: aTypeName [
-	^ FFIExternalValueHolder newAnonymousSubclass 
+	^ FFIExternalValueHolder newAnonymousSubclass
 		type: (FFIExternalType resolveType: aTypeName)
 ]
 
@@ -79,14 +79,14 @@ FFIExternalValueHolder class >> type [
 ]
 
 { #category : #private }
-FFIExternalValueHolder class >> type: aType [ 
+FFIExternalValueHolder class >> type: aType [
 	type := aType
 ]
 
 { #category : #accessing }
 FFIExternalValueHolder class >> typeDecl [
-	"Define the type for this value holder. 
-	 It can be anything that FFIExternalType class>>resolveType: can resolve. 
+	"Define the type for this value holder.
+	 It can be anything that FFIExternalType class>>resolveType: can resolve.
 	 If you need something different, you can override #representationType"
 	^ self subclassResponsibility
 ]
@@ -99,27 +99,26 @@ FFIExternalValueHolder >> initialize [
 
 { #category : #converting }
 FFIExternalValueHolder >> tfPointerAddress [
-	
+
 	^ data tfPointerAddress
 ]
 
 { #category : #accessing }
-FFIExternalValueHolder >> type [ 
+FFIExternalValueHolder >> type [
 	^ self class type
 ]
 
 { #category : #accessing }
-FFIExternalValueHolder >> value [ 
-	^ self type 
-		handle: data 
+FFIExternalValueHolder >> value [
+	^ self type
+		handle: data
 		at: 1
-		
 ]
 
 { #category : #accessing }
-FFIExternalValueHolder >> value: anObject [ 
-	self type 
-		handle: data 
+FFIExternalValueHolder >> value: anObject [
+	self type
+		handle: data
 		at: 1
 		put: anObject
 ]

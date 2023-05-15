@@ -70,7 +70,7 @@ String >> matchesRegexIgnoringCase: regexString [
 
 { #category : #'*Regex-Core' }
 String >> prefixMatchesRegex: regexString [
-	"Test if the receiver's prefix matches a regex.	
+	"Test if the receiver's prefix matches a regex.
 	May raise RxParser class>>regexErrorSignal or child signals.
 	This is a part of the Regular Expression Matcher package, (c) 1996, 1999 Vassili Bykov.
 	Refer to `documentation' protocol of RxParser class for details."
@@ -80,7 +80,7 @@ String >> prefixMatchesRegex: regexString [
 
 { #category : #'*Regex-Core' }
 String >> prefixMatchesRegexIgnoringCase: regexString [
-	"Test if the receiver's prefix matches a regex.	
+	"Test if the receiver's prefix matches a regex.
 	May raise RxParser class>>regexErrorSignal or child signals.
 	This is a part of the Regular Expression Matcher package, (c) 1996, 1999 Vassili Bykov.
 	Refer to `documentation' protocol of RxParser class for details."

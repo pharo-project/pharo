@@ -181,7 +181,7 @@ IconStyler >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 IconStyler >> visitEnglobingErrorNode: anEnglobingNode [
 	self addIconStyle: anEnglobingNode.
-	anEnglobingNode content do: [ :each | self visitNode: each ]
+	anEnglobingNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }

@@ -12,7 +12,7 @@ TestAsserterTest >> testAssertCollectionHasSameElements [
 	self shouldnt: [ self assertCollection: c1 hasSameElements: c2 ] raise: TestFailure.
 
 	c2 := Set with: 2 with: 3 with: 1 with: 4.
-	self should: [ self assertCollection: c1 hasSameElements: c2 ] raise: TestFailure.
+	self should: [ self assertCollection: c1 hasSameElements: c2 ] raise: TestFailure
 ]
 
 { #category : #tests }
@@ -23,5 +23,5 @@ TestAsserterTest >> testDenyCollectionHasSameElements [
 	self should: [ self denyCollection: c1 hasSameElements: c2 ] raise: TestFailure.
 
 	c2 := Set with: 2 with: 3 with: 1 with: 4.
-	self shouldnt: [ self denyCollection: c1 hasSameElements: c2 ] raise: TestFailure.
+	self shouldnt: [ self denyCollection: c1 hasSameElements: c2 ] raise: TestFailure
 ]

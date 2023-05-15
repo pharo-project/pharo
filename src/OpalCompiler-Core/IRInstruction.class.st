@@ -125,7 +125,7 @@ IRInstruction class >> pushRemoteTemp: aName inVectorAt: nameOfVector [
 
 { #category : #'instance creation' }
 IRInstruction class >> pushTemp: aName [
-	aName = 'self' ifTrue: [self error: 'use pushReceiver'].
+
 	^ IRPushTemp new
 		name: aName;
 		yourself

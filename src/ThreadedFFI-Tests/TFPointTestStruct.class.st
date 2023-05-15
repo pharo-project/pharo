@@ -13,9 +13,9 @@ Class {
 
 { #category : #'field definition' }
 TFPointTestStruct class >> fieldsDesc [
-	
+
 	"self rebuildFieldAccessors"
-	
+
 	^ #(
 		int x
 		int y

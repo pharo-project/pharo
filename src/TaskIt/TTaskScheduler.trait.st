@@ -23,17 +23,17 @@ TTaskScheduler >> isDebuggingCompatible [
 
 { #category : #schedulling }
 TTaskScheduler >> isLocalThreadRunner [
-	^ false 
+	^ false
 ]
 
 { #category : #schedulling }
 TTaskScheduler >> isUIRunner [
-	^ false 
+	^ false
 ]
 
 { #category : #schedulling }
 TTaskScheduler >> isWorker [
-	^ false 
+	^ false
 ]
 
 { #category : #schedulling }
@@ -49,7 +49,6 @@ TTaskScheduler >> privateSchedule: aTask [
 	| execution |
 	execution := aTask asTask scheduleTaskExecutionFor: self.
 	self scheduleTaskExecution: execution
-	
 ]
 
 { #category : #schedulling }
@@ -72,8 +71,8 @@ TTaskScheduler >> schedule: aTask timeout: aTimeout [
 	execution runner: self.
 	execution task: aTask.
 	execution timeout: aTimeout.
-	
-	self scheduleTaskExecution: execution.
+
+	self scheduleTaskExecution: execution
 ]
 
 { #category : #schedulling }

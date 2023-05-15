@@ -33,9 +33,9 @@ SystemNavigationTest >> createClassFactory [
 { #category : #running }
 SystemNavigationTest >> setUp [
 
-	super setUp. 	
+	super setUp.
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.	
+	SystemAnnouncer announcer: nil.
 	classFactory := self createClassFactory
 ]
 
@@ -47,8 +47,8 @@ SystemNavigationTest >> systemNavigationToTest [
 
 { #category : #running }
 SystemNavigationTest >> tearDown [
-	
-	self classFactory cleanUp. 
+
+	self classFactory cleanUp.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	super tearDown
 ]
@@ -69,10 +69,10 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 
 	| instSideProtocols classSideProtocols |
 
-	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true. 
+	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true.
 	classSideProtocols := self systemNavigationToTest allExistingProtocolsFor: false.
-	 
-	self assert: (instSideProtocols allSatisfy: #isSymbol).	
+
+	self assert: (instSideProtocols allSatisfy: #isSymbol).
 	self assert: (classSideProtocols allSatisfy: #isSymbol).
 	self assert: (instSideProtocols includesAll: (Object protocols)).
 	self assert: (classSideProtocols includesAll: (Object class protocols))

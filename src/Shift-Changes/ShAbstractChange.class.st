@@ -42,27 +42,27 @@ ShAbstractChange >> builder [
 
 { #category : #accessing }
 ShAbstractChange >> builder: anObject [
-	builder := anObject.
+	builder := anObject
 ]
 
 { #category : #testing }
 ShAbstractChange >> hasChangeClassSideShape [
-	^ false.
+	^ false
 ]
 
 { #category : #testing }
 ShAbstractChange >> hasChangeInstanceSideShape [
-	^ false.
+	^ false
 ]
 
 { #category : #testing }
 ShAbstractChange >> hasToMigrateInstances [
-	^ false.
+	^ false
 ]
 
 { #category : #comparing }
 ShAbstractChange >> hash [
-	^ builder hash.
+	^ builder hash
 ]
 
 { #category : #accessing }

@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #tests }
-MOPTraitTest >> testClass [	
+MOPTraitTest >> testClass [
 	"The class of a compiled method is the class that contains it.
 	A compiled method is shared."
-	"methodClass could call 
+	"methodClass could call
 		-> methodClassOrTrait"
-	
+
 	self assert: (Trait1>>#c) methodClass equals: Trait1.
 	self assert: (Trait2>>#c) methodClass equals: Trait2.
 	self assert: (MOPTestClassC>>#c) methodClass equals: MOPTestClassC.
@@ -18,8 +18,7 @@ MOPTraitTest >> testClass [
 	self assert: (MOPTestClassD>>#c) methodClass equals: MOPTestClassD.
 	self assert: (MOPTestClassD>>#c2) methodClass equals: MOPTestClassD.
 	self assert: (MOPTestClassD>>#c3) methodClass equals: MOPTestClassD.
-	self assert: (MOPTestClassA>>#c2) methodClass equals: MOPTestClassA.
-	
+	self assert: (MOPTestClassA>>#c2) methodClass equals: MOPTestClassA
 ]
 
 { #category : #tests }
@@ -40,13 +39,13 @@ MOPTraitTest >> testOrigin [
 ]
 
 { #category : #tests }
-MOPTraitTest >> testSelector [	
-	"The selector of a compiled method should be its name. 
+MOPTraitTest >> testSelector [
+	"The selector of a compiled method should be its name.
 	An aliased method should have the name of its alias name."
-	
+
 	self assert: (MOPTestClassA>>#c) selector equals: #c.
 	self assert: (MOPTestClassC>>#c) selector equals: #c.
 	self assert: (Trait3>>#c) selector equals: #c.
 	self assert: (Trait3>>#c2) selector equals: #c2.
-	self assert: (MOPTestClassD>>#c3) selector equals: #c3.
+	self assert: (MOPTestClassD>>#c3) selector equals: #c3
 ]

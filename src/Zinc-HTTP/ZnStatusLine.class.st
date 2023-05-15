@@ -119,7 +119,7 @@ ZnStatusLine class >> unauthorized [
 { #category : #comparing }
 ZnStatusLine >> = other [
 	self class = other class ifFalse: [ ^ false ].
-	^ self code = other code 
+	^ self code = other code
 		and: [ self version = other version
 			and: [ self reason = other reason ] ]
 ]
@@ -131,7 +131,7 @@ ZnStatusLine >> code [
 
 { #category : #accessing }
 ZnStatusLine >> code: integer [
-	(ZnConstants httpStatusCodes includesKey: integer) 
+	(ZnConstants httpStatusCodes includesKey: integer)
 		ifFalse: [
 			(integer between: 100 and: 599)
 				ifFalse: [
@@ -170,14 +170,13 @@ ZnStatusLine >> readFrom: stream [
 	httpCode := Integer readFrom: httpCode ifFail: [ (ZnUnknownHttpStatusCode code: httpCode) signal ].
 	self code: httpCode.
 	self reason: (lineStream upToEnd)
-
 ]
 
 { #category : #accessing }
 ZnStatusLine >> reason [
-	reason ifNil: [ 
-		reason := ZnConstants httpStatusCodes 
-			at: self code 
+	reason ifNil: [
+		reason := ZnConstants httpStatusCodes
+			at: self code
 			ifAbsent: [ 'Unknown Status Code' ] ].
 	^ reason
 ]
@@ -194,9 +193,9 @@ ZnStatusLine >> version [
 
 { #category : #accessing }
 ZnStatusLine >> version: string [
-	version := ZnConstants knownHTTPVersions 
-		detect: [ :each | each = string ] 
-		ifNone: [ (ZnUnknownHttpVersion version: string) signal ] 
+	version := ZnConstants knownHTTPVersions
+		detect: [ :each | each = string ]
+		ifNone: [ (ZnUnknownHttpVersion version: string) signal ]
 ]
 
 { #category : #writing }
@@ -205,5 +204,5 @@ ZnStatusLine >> writeOn: stream [
 	writeStream := ZnBivalentWriteStream on: stream.
 	writeStream nextPutAll: self version; space.
 	self code printOn: writeStream.
-	writeStream space; nextPutAll: self reason; nextPutAll: String crlf 
+	writeStream space; nextPutAll: self reason; nextPutAll: String crlf
 ]

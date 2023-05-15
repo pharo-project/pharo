@@ -12,18 +12,18 @@ Class {
 
 { #category : #writing }
 TFDoubleType >> emitMarshallToPrimitive: builder [
-	
+
 	builder send: #asFloat
 ]
 
 { #category : #reading }
 TFDoubleType >> readValue: anExternalAddress offset: offset [
-	
+
 	^ anExternalAddress doubleAt: offset
 ]
 
 { #category : #writing }
-TFDoubleType >> write: aNumber into: anExternalAddress [ 
+TFDoubleType >> write: aNumber into: anExternalAddress [
 
 	anExternalAddress doubleAt: 1 put: aNumber asFloat
 ]

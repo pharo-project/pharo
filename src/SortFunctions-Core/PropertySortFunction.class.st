@@ -24,13 +24,13 @@ Class {
 
 { #category : #'instance creation' }
 PropertySortFunction class >> property: selectorOrOneArgBlock [
-	^self new 
+	^self new
 		property: selectorOrOneArgBlock
 ]
 
 { #category : #'instance creation' }
 PropertySortFunction class >> property: selectorOrOneArgBlock collatedWith: aSortFunction [
-	^self new 
+	^self new
 		property: selectorOrOneArgBlock;
 		baseSortFunction: aSortFunction
 ]

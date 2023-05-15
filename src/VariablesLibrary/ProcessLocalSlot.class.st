@@ -38,7 +38,7 @@ ProcessLocalSlot >> emitStore: aMethodBuilder [
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
 	aMethodBuilder popTop.
-	
+
 	"Push the process local variable into the stack, then the value again, then send"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder pushTemp: temp.
@@ -60,7 +60,7 @@ ProcessLocalSlot >> initialize: anObject [
 { #category : #'meta-object-protocol' }
 ProcessLocalSlot >> read: anObject [
 
-	^ (super read: anObject) value.
+	^ (super read: anObject) value
 ]
 
 { #category : #'meta-object-protocol' }

@@ -22,7 +22,7 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 	(aBuilder item: #'extendedSearch' translated)
 		label: 'Code search...' translated;
 		withSeparatorAfter;
-		with: [ 
+		with: [
 					(aBuilder item: #'Browse full class' translated)
 						keyText: 'b';
 						selector: #browseFullClass.
@@ -43,8 +43,8 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 						keyText: 'E';
 						selector: #methodStringsContainingit.
 					(aBuilder item: #'Case sensitive method literal strings with it' translated)
-						keyText: 'E';
-						selector: #methodCaseSensitiveStringsContainingit.
+						keyText: 'U';
+						selector: #methodCaseSensitiveStringsContainingIt.
 					(aBuilder item: #'Method source with it' translated)
 						selector: #methodSourceContainingIt;
 						withSeparatorAfter.
@@ -95,7 +95,7 @@ RubEditingMode >> label [
 ]
 
 { #category : #menu }
-RubEditingMode >> menu [ 
+RubEditingMode >> menu [
 		"Answer the menu to be presented "
 
 	^ (PragmaMenuBuilder pragmaKeyword: self menuKeyword  model: self textArea ) menu
@@ -112,18 +112,18 @@ RubEditingMode >> model [
 ]
 
 { #category : #initialization }
-RubEditingMode >> plugin: aTextArea [ 
+RubEditingMode >> plugin: aTextArea [
 	textArea := aTextArea.
 	previousEditorClass := self textArea editorClass.
 	previousEditorClass = self editorClass
-		ifFalse: [ 
+		ifFalse: [
 			self textArea editorClass: self editorClass.
 			self textArea releaseEditor].
 	self updateTextAreaWhenPlugged
 ]
 
 { #category : #menu }
-RubEditingMode >> shiftMenu [ 
+RubEditingMode >> shiftMenu [
 		"Answer the menu to be presented with the shift key pressed"
 
 	^ self menu
@@ -147,17 +147,17 @@ RubEditingMode >> textStyle [
 { #category : #initialization }
 RubEditingMode >> unplug [
 	previousEditorClass = self textArea editor class
-		ifFalse: [ 
+		ifFalse: [
 			self textArea editorClass: previousEditorClass.
 			self textArea releaseEditor ].
 	self updateTextAreaWhenUnplugged.
-	textArea := nil.
+	textArea := nil
 ]
 
 { #category : #initialization }
 RubEditingMode >> updateTextAreaWhenPlugged [
 	self textArea
-		restoreSelectionIndexesAfter: [ 
+		restoreSelectionIndexesAfter: [
 			| t |
 			t := self textArea text copy.
 			self textArea updateTextWith: ''.

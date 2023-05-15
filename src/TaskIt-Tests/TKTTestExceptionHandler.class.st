@@ -17,6 +17,6 @@ TKTTestExceptionHandler >> error [
 ]
 
 { #category : #handling }
-TKTTestExceptionHandler >> handleException: anError [ 
+TKTTestExceptionHandler >> handleException: anError [
 	error := anError
 ]

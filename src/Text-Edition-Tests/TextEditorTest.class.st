@@ -17,40 +17,40 @@ TextEditorTest >> createEditor [
 ]
 
 { #category : #'private - accessing' }
-TextEditorTest >> keyboardEvent [ 
+TextEditorTest >> keyboardEvent [
 	| event |
 	event := KeyboardEvent new.
-	event 
+	event
 		setType: #keystroke
 		buttons: 0
 		position: 0@0
 		keyValue: 0
 		charCode: 0
-		hand: nil 
+		hand: nil
 		stamp: Time now.
-	^ event 	
+	^ event
 ]
 
 { #category : #running }
 TextEditorTest >> setUp [
-	super setUp.	
+	super setUp.
 	editor := self createEditor
 ]
 
 { #category : #running }
 TextEditorTest >> tearDown [
 	editor := nil.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
 TextEditorTest >> testCursorEnd [
-	
+
 	editor cursorEnd: self keyboardEvent
 ]
 
 { #category : #tests }
 TextEditorTest >> testSetSearchString [
-	 
+
 	editor setSearchString
 ]

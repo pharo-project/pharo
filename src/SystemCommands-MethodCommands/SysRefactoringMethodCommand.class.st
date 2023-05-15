@@ -18,5 +18,5 @@ SysRefactoringMethodCommand >> isComplexRefactoring [
 { #category : #execution }
 SysRefactoringMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	self setUpModelFromContext: aToolContext.
+	self setUpModelFromContext: aToolContext
 ]

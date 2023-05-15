@@ -62,7 +62,7 @@ PaSimpleMatrixExampleTest >> item2: anObject [
 	item2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaSimpleMatrixExampleTest >> testAdd [
 
 	| aCollection |
@@ -73,7 +73,7 @@ PaSimpleMatrixExampleTest >> testAdd [
 	self assert: aCollection size equals: 1
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaSimpleMatrixExampleTest >> testAddAndRemove [
 
 	| aCollection |
@@ -90,7 +90,7 @@ PaSimpleMatrixExampleTest >> testAddAndRemove [
 	self assert: aCollection size equals: 1
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaSimpleMatrixExampleTest >> testIncludes [
 
 	| aCollection |

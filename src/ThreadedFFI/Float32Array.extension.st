@@ -5,5 +5,4 @@ Float32Array >> tfPointerAddress [
 
 	self pinInMemory.
 	^ PointerUtils oopForObject: self
-
 ]

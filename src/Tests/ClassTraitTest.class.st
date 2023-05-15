@@ -70,12 +70,12 @@ ClassTraitTest >> testInitialization [
 { #category : #tests }
 ClassTraitTest >> testIsClassOrTrait [
 
-	self 
+	self
 		assert: TSortable isClassOrTrait;
 		assert: Class isClassOrTrait;
 		assert: Class class isClassOrTrait;
 		deny: Object new isClassOrTrait;
-		assert: TSortable classTrait isClassOrTrait.
+		assert: TSortable classTrait isClassOrTrait
 ]
 
 { #category : #tests }

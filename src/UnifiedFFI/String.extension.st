@@ -1,7 +1,7 @@
 Extension { #name : #String }
 
 { #category : #'*UnifiedFFI' }
-String class >> asExternalTypeOn: generator [ 
+String class >> asExternalTypeOn: generator [
 	^ generator resolveType: #FFIExternalString
 ]
 
@@ -11,7 +11,7 @@ String >> asExternalTypeOn: generator [
 ]
 
 { #category : #'*UnifiedFFI' }
-String >> asFFILibrary [ 
+String >> asFFILibrary [
 	^ FFIUnknownLibrary name: self
 ]
 
@@ -20,9 +20,9 @@ String >> nullTerminatedEncodeWith: encoding [
 	"Produce a ByteArray that encodes the receiver, using a specified encoding and adding a null terminator.
 	Encoding is either a ZnCharacterEncoder instance or an identifier for one.
 	Useful extension for FFI and C integration"
-	
+
 	" 'Les élèves français' nullTerminatedEncodeWith: #utf8 "
-	
+
 	^ ByteArray streamContents: [ :stream |
 		encoding asZnCharacterEncoder next: self size putAll: self startingAt: 1 toStream: stream.
 		stream nextPut: 0 "Null terminator" ]

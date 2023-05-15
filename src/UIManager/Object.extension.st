@@ -2,8 +2,8 @@ Extension { #name : #Object }
 
 { #category : #'*UIManager' }
 Object >> confirm: queryString [
-	"Put up a yes/no menu with caption queryString. Answer true if the 
-	response is yes, false if no. This is a modal question--the user must 
+	"Put up a yes/no menu with caption queryString. Answer true if the
+	response is yes, false if no. This is a modal question--the user must
 	respond yes or no."
 
 	"nil confirm: 'Are you hungry?'"
@@ -20,8 +20,8 @@ Object >> inform: aString [
 ]
 
 { #category : #'*UIManager' }
-Object >> primitiveError: aString [ 
-	"This method is called when the error handling results in a recursion in 
+Object >> primitiveError: aString [
+	"This method is called when the error handling results in a recursion in
 	calling on error: or halt or halt:."
 
 	UIManager default onPrimitiveError: aString

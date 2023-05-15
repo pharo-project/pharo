@@ -22,12 +22,12 @@ Class {
 
 { #category : #'instance creation' }
 DAPackageCycleDetector class >> collections [
-	^ (self onPackagesNamed: #('Collections-Abstract' 'Collections-Arithmetic' 'Collections-Arrayed' 'Collections-Atomic' 'Collections-Native' 'Collections-Sequenceable' 'Collections-Stack' 'Collections-Streams' 'Collections-Strings' 'Collections-Support' 'Collections-Traits' 'Collections-Unordered' 'Collections-Weak')) runAlgorithm.
+	^ (self onPackagesNamed: #('Collections-Abstract' 'Collections-Arithmetic' 'Collections-Arrayed' 'Collections-Atomic' 'Collections-Native' 'Collections-Sequenceable' 'Collections-Stack' 'Collections-Streams' 'Collections-Strings' 'Collections-Support' 'Collections-Traits' 'Collections-Unordered' 'Collections-Weak')) runAlgorithm
 ]
 
 { #category : #'instance creation' }
 DAPackageCycleDetector class >> morphic [
-	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' 'MorphicTests' 'Spec-MorphicAdapters')) runAlgorithm.
+	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' 'MorphicTests' 'Spec-MorphicAdapters')) runAlgorithm
 ]
 
 { #category : #'instance creation' }
@@ -37,7 +37,7 @@ DAPackageCycleDetector class >> new [
 
 { #category : #'instance creation' }
 DAPackageCycleDetector class >> onPackages: aCollection [
-	^ self basicNew 
+	^ self basicNew
 		initializeWithRPackageSet: aCollection;
 		yourself
 ]
@@ -49,8 +49,8 @@ DAPackageCycleDetector class >> onPackagesNamed: aCollection [
 
 { #category : #'instance creation' }
 DAPackageCycleDetector class >> system [
-	^ (self onPackagesNamed: 
-		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])) runAlgorithm.
+	^ (self onPackagesNamed:
+		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])) runAlgorithm
 ]
 
 { #category : #adding }
@@ -59,7 +59,7 @@ DAPackageCycleDetector >> addCycle: aPDPackageCycle [
 ]
 
 { #category : #adding }
-DAPackageCycleDetector >> addVisitedNodes: aNode [ 
+DAPackageCycleDetector >> addVisitedNodes: aNode [
 	visitedNodes add: aNode
 ]
 
@@ -69,11 +69,11 @@ DAPackageCycleDetector >> buildCycleUntil: children [
 	aPackageCycle := DAPackageCycle new.
 	currentNode := children.
 	[ currentNode isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			aPackageCycle addPackage: currentNode.
 			currentNode := currentNode bfsParent ].
 	(self cycleAlreadyFound: aPackageCycle)
-		ifFalse: [ 
+		ifFalse: [
 			aPackageCycle reversedCycle.
 			self addCycle: aPackageCycle ]
 ]
@@ -135,8 +135,8 @@ DAPackageCycleDetector >> findAllCyclesFrom: stronglyConnectedComponents for: pa
 { #category : #actions }
 DAPackageCycleDetector >> findCycles: stronglyConnectedComponents [
 	stronglyConnectedComponents packages
-		do: [ :package | 
-			self findAllCyclesFrom: stronglyConnectedComponents for: package 
+		do: [ :package |
+			self findAllCyclesFrom: stronglyConnectedComponents for: package
 			]
 ]
 
@@ -144,13 +144,13 @@ DAPackageCycleDetector >> findCycles: stronglyConnectedComponents [
 DAPackageCycleDetector >> initialize [
 	super initialize.
 	cycles := SortedCollection new.
-	sccs := OrderedCollection new.
+	sccs := OrderedCollection new
 ]
 
 { #category : #initialization }
 DAPackageCycleDetector >> initializeQueueWith: package [
 
-	package bfsParent: nil.	
+	package bfsParent: nil.
 	package inStack: true.
 	queue := WaitfreeQueue new.
 	queue nextPut: package
@@ -158,9 +158,8 @@ DAPackageCycleDetector >> initializeQueueWith: package [
 
 { #category : #initialization }
 DAPackageCycleDetector >> initializeVisitedNodes [
-	
-	visitedNodes := Set new.
 
+	visitedNodes := Set new
 ]
 
 { #category : #initialization }
@@ -168,7 +167,7 @@ DAPackageCycleDetector >> initializeWithRPackageSet: aCollection [
 	relationGraph := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: each ]).
 	cycles := OrderedCollection new.
 	self relationGraph build.
-	sccs := self runTarjan.
+	sccs := self runTarjan
 ]
 
 { #category : #testing }
@@ -184,9 +183,9 @@ DAPackageCycleDetector >> parentsFrom: stronglyConnectedComponents For: aNode [
 { #category : #accessing }
 DAPackageCycleDetector >> refresh [
 	self relationGraph refreshGraph.
-	self 
+	self
 		reset;
-		runAlgorithm.
+		runAlgorithm
 ]
 
 { #category : #accessing }
@@ -220,13 +219,13 @@ DAPackageCycleDetector >> startBfsFrom: stronglyConnectedComponents For: parents
 	dequeue := self dequeue.
 	childrens := self childrensFrom: stronglyConnectedComponents for: dequeue.
 	childrens
-		do: [ :children | 
+		do: [ :children |
 			(self isVisitedOrInQueue: children)
-				ifFalse: [ 
+				ifFalse: [
 					children bfsParent: dequeue.
 					self enqueue: children ].
 			(parents includes: children)
-				ifTrue: [ 
+				ifTrue: [
 					self buildCycleUntil: children.
 					parents remove: children ] ].
 	self addVisitedNodes: dequeue

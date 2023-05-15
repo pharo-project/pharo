@@ -26,8 +26,7 @@ ZnKeyValueStoreTest >> setUp [
 ZnKeyValueStoreTest >> tearDown [
 	server stop.
 	client close.
-	super tearDown.
-
+	super tearDown
 ]
 
 { #category : #tests }
@@ -37,10 +36,10 @@ ZnKeyValueStoreTest >> testUsage [
 	value := 'value-' , 100 atRandom asString.
 
 	self assert: client contents isEmpty.
-	self should: [ client at: key ] raise: KeyNotFound. 
+	self should: [ client at: key ] raise: KeyNotFound.
 
 	client at: key put: value.
-	self assert: (client at: key) equals: value. 
+	self assert: (client at: key) equals: value.
 
 	client removeKey: key.
 	self should: [ client at: key ] raise: KeyNotFound

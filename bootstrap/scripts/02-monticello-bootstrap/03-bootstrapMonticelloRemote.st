@@ -6,7 +6,6 @@ mcPackages := #(
  'MonticelloRemoteRepositories'
 
  'Zinc-HTTP'
- 'Zinc-FileSystem'
  'Zodiac-Core'
  ).
 

@@ -63,7 +63,7 @@ Class {
 ClassChangeRecord >> allChangeTypes [
 	| chgs |
 	(priorName notNil and: [ changeTypes includes: #rename ])
-		ifTrue: [ 
+		ifTrue: [
 			(chgs := changeTypes copy) add: 'oldName: ' , priorName.
 			^ chgs ].
 	^ changeTypes
@@ -72,7 +72,7 @@ ClassChangeRecord >> allChangeTypes [
 { #category : #'all changes' }
 ClassChangeRecord >> assimilateAllChangesIn: otherRecord [
 
-	
+
 	otherRecord isClassRemoval ifTrue: [^ self noteChangeType: #remove].
 
 	otherRecord allChangeTypes do:
@@ -87,8 +87,8 @@ ClassChangeRecord >> assimilateAllChangesIn: otherRecord [
 					ifTrue: [self atSelector: selector put: #add].
 				self noteRemoveSelector: selector priorMethod: nil
 						lastMethodInfo: changeRecord methodInfoFromRemoval]
-			ifFalse: 
-				[self atSelector: selector put: changeType]].
+			ifFalse:
+				[self atSelector: selector put: changeType]]
 ]
 
 { #category : #'method changes' }
@@ -117,7 +117,7 @@ ClassChangeRecord >> checkCoherence [
 	"If I recreate the class then don't remove it"
 
 	(changeTypes includes: #remove)
-		ifTrue: [ 
+		ifTrue: [
 			changeTypes remove: #remove.
 			changeTypes add: #change ].
 	(changeTypes includes: #addedThenRemoved)
@@ -127,7 +127,7 @@ ClassChangeRecord >> checkCoherence [
 ]
 
 { #category : #'method changes' }
-ClassChangeRecord >> findOrMakeMethodChangeAt: selector priorMethod: priorMethod [ 
+ClassChangeRecord >> findOrMakeMethodChangeAt: selector priorMethod: priorMethod [
 	^methodChanges at: selector
 		ifAbsentPut: [MethodChangeRecord new]
 ]
@@ -140,15 +140,15 @@ ClassChangeRecord >> forgetChangesIn: otherRecord [
 	(cls := self realClass) ifNil: [ ^ self ].	"We can do better now, though..."
 	otherMethodChanges := otherRecord methodChangeTypes.
 	otherMethodChanges
-		associationsDo: [ :assoc | 
+		associationsDo: [ :assoc |
 			| selector actionToSubtract |
 			selector := assoc key.
 			actionToSubtract := assoc value.
 			(cls includesSelector: selector)
-				ifTrue: [ 
+				ifTrue: [
 					(#(#add #change) includes: actionToSubtract)
 						ifTrue: [ methodChanges removeKey: selector ifAbsent: [  ] ] ]
-				ifFalse: [ 
+				ifFalse: [
 					(#(#remove #addedThenRemoved) includes: actionToSubtract)
 						ifTrue: [ methodChanges removeKey: selector ifAbsent: [  ] ] ] ].
 	changeTypes isEmpty
@@ -176,7 +176,7 @@ ClassChangeRecord >> initFor: className [
 
 	changeTypes := IdentitySet new.
 	methodChanges := IdentityDictionary new.
-	priorName := thisName := className.
+	priorName := thisName := className
 ]
 
 { #category : #removing }
@@ -250,9 +250,9 @@ ClassChangeRecord >> noteChangeType: changeSymbol fromClass: class [
 ClassChangeRecord >> noteNewMethod: newMethod selector: selector priorMethod: methodOrNil [
 	| methodChange |
 	methodChange := self findOrMakeMethodChangeAt: selector priorMethod: methodOrNil.
-	methodOrNil 
+	methodOrNil
 		ifNil: [ methodChange noteChangeType: #add ]
-		ifNotNil: [ methodChange noteChangeType: #change ].
+		ifNotNil: [ methodChange noteChangeType: #change ]
 ]
 
 { #category : #rename }
@@ -331,5 +331,5 @@ ClassChangeRecord >> trimHistory [
 
 	"Forget renaming and reorganization of newly-added classes."
 	(changeTypes includes: #add) ifTrue:
-		[changeTypes removeAllFoundIn: #(rename reorganize)].
+		[changeTypes removeAllFoundIn: #(rename reorganize)]
 ]

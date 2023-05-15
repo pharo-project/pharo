@@ -21,9 +21,9 @@ Some classes are violating this convention:
 {3}'
 				format:
 					{aProtocolName . aCollectionOfSelectors asString . (String
-						streamContents: [ :s | 
+						streamContents: [ :s |
 							violations
-								do: [ :c | 
+								do: [ :c |
 									s
 										<< '- ';
 										print: c ]
@@ -42,9 +42,9 @@ Some classes are violating this convention:
 {3}'
 				format:
 					{aProtocolName . aCollectionOfSelectors asString . (String
-						streamContents: [ :s | 
+						streamContents: [ :s |
 							violations
-								do: [ :c | 
+								do: [ :c |
 									s
 										<< '- ';
 										print: c ]
@@ -62,7 +62,7 @@ ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass notMoreViolationsT
 
 	| idiom |
 	idiom := aRuleClass protocolIdiom.
-	
+
 	self
 		assertProtocolName: idiom key
 		notAcceptingProtocolNamesLike: idiom value

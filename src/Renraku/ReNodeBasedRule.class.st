@@ -14,7 +14,7 @@ ReNodeBasedRule class >> checksNode [
 ]
 
 { #category : #testing }
-ReNodeBasedRule class >> isAbstract [ 
+ReNodeBasedRule class >> isAbstract [
 
 	 ^ self = ReNodeBasedRule
 ]
@@ -30,5 +30,5 @@ ReNodeBasedRule >> anchorFor: aNode [
 
 	^ ReIntervalSourceAnchor
 			entity: aNode
-			interval: aNode sourceInterval.
+			interval: aNode sourceInterval
 ]

@@ -58,6 +58,7 @@ LongMessageDialogWindow >> newTextMorph [
 			beForPlainText;
 			minWidth: Display width // 4;
 			minHeight: Display height // 4;
+			wrapped: true;
 			beReadOnly.
 	^tm
 ]

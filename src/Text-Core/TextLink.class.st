@@ -75,7 +75,7 @@ TextLink >> classAndMethod: aString [
 { #category : #comparing }
 TextLink >> hash [
 
-	^(self class hash + classAndMethod hash) hashMultiply 
+	^(self class hash + classAndMethod hash) hashMultiply
 ]
 
 { #category : #accessing }
@@ -98,7 +98,7 @@ TextLink >> validate: specString [
 	list ifEmpty: [ ^ nil ].
 	last := list last.
 	last first isUppercase
-		ifTrue: [ 
+		ifTrue: [
 			(#('Comment' 'Definition' 'Hierarchy') includes: last)
 				ifFalse: [ ^ nil ].	"Check for 'Rectangle Comment Comment' and remove last one"
 			(list at: list size - 1 ifAbsent: [ ^ nil ]) = last
@@ -111,7 +111,7 @@ TextLink >> validate: specString [
 	first ifNil: [ ^ nil ].
 	Smalltalk globals at: first ifAbsent: [ ^ nil ].
 	mid := list size = 3
-		ifTrue: [ 
+		ifTrue: [
 			(list at: 2) = 'class'
 				ifTrue: [ 'class ' ]
 				ifFalse: [ ^ nil ] ]

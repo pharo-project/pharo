@@ -12,7 +12,7 @@ FFIVariableNameNotFound >> standardMessageText [
 	"Generate a standard textual description"
 
 	^ String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			stream << 'Could not find accessor for variable named "'.
 			stream print: self object.
 			stream << '"' ]

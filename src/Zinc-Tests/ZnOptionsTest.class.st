@@ -7,18 +7,18 @@ Class {
 { #category : #options }
 ZnOptionsTest class >> bar [
 	"Test option bar"
-	
+
 	<znOption>
-	
+
 	^ 2
 ]
 
 { #category : #options }
 ZnOptionsTest class >> foo [
 	"Test option foo"
-	
+
 	<znOption>
-	
+
 	^ 1
 ]
 
@@ -26,13 +26,12 @@ ZnOptionsTest class >> foo [
 ZnOptionsTest >> testAllBindings [
 	| options |
 	options := (ZnOptions onClass: self class) clone.
-	self assert: options allBindings equals: { #foo -> 1. #bar -> 2 } asDictionary. 
+	self assert: options allBindings equals: { #foo -> 1. #bar -> 2 } asDictionary.
 	options at: #foo put: -1.
-	self assert: options allBindings equals: { #foo -> -1. #bar -> 2 } asDictionary. 
+	self assert: options allBindings equals: { #foo -> -1. #bar -> 2 } asDictionary.
 	options := options clone.
 	options at: #bar put: -2.
-	self assert: options allBindings equals: { #foo -> -1. #bar -> -2 } asDictionary. 
-	
+	self assert: options allBindings equals: { #foo -> -1. #bar -> -2 } asDictionary.
 ]
 
 { #category : #tests }
@@ -46,7 +45,7 @@ ZnOptionsTest >> testClone [
 	self should: [ options at: #xyz ] raise: KeyNotFound.
 	self should: [ options at: #xyz put: -1 ] raise: KeyNotFound.
 	options reset.
-	self assert: (options at: #foo) equals: 1.	
+	self assert: (options at: #foo) equals: 1.
 ]
 
 { #category : #tests }
@@ -59,44 +58,44 @@ ZnOptionsTest >> testCreate [
 	self should: [ options at: #foo put: 0 ] raise: ModificationForbidden.
 	self should: [ options at: #xyz ] raise: KeyNotFound.
 	self should: [ options at: #xyz put: -1 ] raise: ModificationForbidden.
-	self should: [ options writable: true ] raise: ModificationForbidden.
+	self should: [ options writable: true ] raise: ModificationForbidden
 ]
 
 { #category : #tests }
 ZnOptionsTest >> testCurrent [
 	| options |
-	self should: [ ZnCurrentOptions at: #foo ] raise: KeyNotFound. 
+	self should: [ ZnCurrentOptions at: #foo ] raise: KeyNotFound.
 	options := (ZnOptions onClass: self class) clone.
-	self assert: (options at: #foo) equals: 1. 
-	options during: [ 
-		self assert: (ZnCurrentOptions at: #foo) equals: 1 ].
-	options clone 
-		at: #foo put: -1;
-		during: [ 
-			self assert: (ZnCurrentOptions at: #foo) equals: -1 ].
 	self assert: (options at: #foo) equals: 1.
+	options during: [
+		self assert: (ZnCurrentOptions at: #foo) equals: 1 ].
+	options clone
+		at: #foo put: -1;
+		during: [
+			self assert: (ZnCurrentOptions at: #foo) equals: -1 ].
+	self assert: (options at: #foo) equals: 1
 ]
 
 { #category : #tests }
 ZnOptionsTest >> testCurrentConditionally [
 	| options |
-	self should: [ ZnCurrentOptions at: #foo ] raise: KeyNotFound. 
+	self should: [ ZnCurrentOptions at: #foo ] raise: KeyNotFound.
 	options := (ZnOptions onClass: self class) clone.
-	self assert: (options at: #foo) equals: 1. 
-	options conditionallyDuring: [ 
+	self assert: (options at: #foo) equals: 1.
+	options conditionallyDuring: [
 		self assert: (ZnCurrentOptions at: #foo) equals: 1 ].
-	options clone 
+	options clone
 		at: #foo put: -1;
-		conditionallyDuring: [ 
+		conditionallyDuring: [
 			self assert: (ZnCurrentOptions at: #foo) equals: -1 ].
-	options clone 
+	options clone
 		at: #foo put: -1;
-		conditionallyDuring: [ 
-			options clone 
+		conditionallyDuring: [
+			options clone
 				at: #foo put: 0;
-				conditionallyDuring: [ 
+				conditionallyDuring: [
 					self assert: (ZnCurrentOptions at: #foo) equals: -1 ] ].
-	self assert: (options at: #foo) equals: 1. 
+	self assert: (options at: #foo) equals: 1.
 ]
 
 { #category : #tests }
@@ -111,11 +110,11 @@ ZnOptionsTest >> testPublicAPI [
 	self assert: (ZnCurrentOptions at: #signalProgress) equals: originalValue not.
 	ZnOptions globalDefault at: #signalProgress put: originalValue.
 	"Access an option, using local option, unless set dynamically"
-	localOptions conditionallyDuring: [ 
+	localOptions conditionallyDuring: [
 		self assert: (ZnCurrentOptions at: #signalProgress) equals: originalValue ].
 	"Access an option, using local option, unless set dynamically, when set locally"
 	localOptions at: #signalProgress put: originalValue not.
-	localOptions conditionallyDuring: [ 
+	localOptions conditionallyDuring: [
 		self assert: (ZnCurrentOptions at: #signalProgress) equals: originalValue not ].
 	"Access an option, using local option, unless set dynamically, when set locally,
 	but again overwritten dynamically"
@@ -123,6 +122,6 @@ ZnOptionsTest >> testPublicAPI [
 	localOptions clone
 		at: #signalProgress put: originalValue;
 		during: [
-			localOptions conditionallyDuring: [ 
-				self assert: (ZnCurrentOptions at: #signalProgress) equals: originalValue ] ].
+			localOptions conditionallyDuring: [
+				self assert: (ZnCurrentOptions at: #signalProgress) equals: originalValue ] ]
 ]

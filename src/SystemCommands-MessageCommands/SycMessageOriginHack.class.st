@@ -17,7 +17,7 @@ Class {
 { #category : #'instance creation' }
 SycMessageOriginHack class >> of: aMessageDescription [
 
-	^self new 
+	^self new
 		message: aMessageDescription
 ]
 

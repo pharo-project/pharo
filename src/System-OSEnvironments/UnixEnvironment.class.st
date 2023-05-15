@@ -25,9 +25,9 @@ Class {
 }
 
 { #category : #testing }
-UnixEnvironment class >> isDefaultFor: aPlatform [ 
-	^  aPlatform isUnix 
-		or: [ aPlatform isMacOSX 
+UnixEnvironment class >> isDefaultFor: aPlatform [
+	^  aPlatform isUnix
+		or: [ aPlatform isMacOSX
 		or: [ aPlatform isMacOS ] ]
 ]
 
@@ -36,10 +36,10 @@ UnixEnvironment >> at: aKey encoding: anEncoding [
 	"Gets the value of an environment variable called `aKey`.
 	Throws a KeyNotFound exception if not found.
 	Use `anEncoding` to encode the arguments and return values.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	^ self at: aKey encoding: anEncoding ifAbsent: [ KeyNotFound signalFor: aKey ]
 ]
 
@@ -48,10 +48,10 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
 	Use `anEncoding` to encode the arguments and return values.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	| result |
 	result := self
 		rawAt: (aKey encodeWith: anEncoding)
@@ -64,10 +64,10 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifAbsentPut: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	If absent, insert the value given by aBlock.
 	Use `anEncoding` to encode the arguments and return values.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	^ self at: aKey encoding: anEncoding ifAbsent: [ self at: aKey put: aBlock value encoding: anEncoding ]
 ]
 
@@ -76,10 +76,10 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: aBlock [
 	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
 	Return nil if absent.
 	Use `anEncoding` to encode the arguments and return values.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	^ aBlock value: (self at: aKey encoding: anEncoding ifAbsent: [ ^ nil ])
 ]
 
@@ -89,10 +89,10 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: presentBlock ifAbsen
 	Call presentBlock with it if present.
 	Execute absentBlock if absent.
 	Use `anEncoding` to encode the arguments and return values.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	self at: aKey encoding: anEncoding ifPresent: [ :v | ^ presentBlock cull: v ].
 	^absentBlock value
 ]
@@ -117,7 +117,7 @@ UnixEnvironment >> at: aKey put: aValue [
 UnixEnvironment >> at: aKey put: aValue encoding: anEncoding [
 	"Sets the value of an environment variable called `aKey` to `aValue`.
 	Use `anEncoding` to encode both arguments.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
 
@@ -131,9 +131,9 @@ UnixEnvironment >> basicGetEnvRaw: encodedVariableName [
 
 	"PRIVATE: This primitive call works on Strings, while the correct way to manage encodings is with raw data.
 	Use me through #rawAt: to correctly marshall data."
-	
+
 	"Gets the value of an environment variable called `anEncodedVariableName` already encoded but in ByteString form."
-	
+
 	<primitive: 'primitiveGetenv' module: '' error: ec>
 	ec ifNil: [ ^ (self basicGetEnvRawViaFFI: encodedVariableName asString) asByteArray].
 	self primitiveFail
@@ -147,7 +147,7 @@ UnixEnvironment >> basicGetEnvRawViaFFI: arg1 [
 
 	"This method calls the Standard C Library getenv() function.
 	The name of the argument (arg1) should fit decompiled version."
-	
+
 	 ^ self ffiCall: #( String getenv (String arg1) ) module: LibC
 ]
 
@@ -160,7 +160,7 @@ UnixEnvironment >> defaultEncoding [
 { #category : #private }
 UnixEnvironment >> environ [
 	"Return the address of the array holding the environment variables"
-	^ FFIExternalArray 
+	^ FFIExternalArray
 		fromPointer: (ExternalAddress loadSymbol: 'environ' from: LibC)
 		type: String
 ]
@@ -174,22 +174,22 @@ UnixEnvironment >> environAt: index [
 UnixEnvironment >> keysAndValuesDo: aBlock [
 	| index associationString  |
 	index := 1	.
-	[ 
+	[
 		associationString := self environAt: index.
 		associationString ifNil: [ ^ self ].
 		self keysAndValuesDo: aBlock withAssociationString: associationString.
 		index := index + 1
-	] repeat.
+	] repeat
 ]
 
 { #category : #accessing }
 UnixEnvironment >> rawAt: anEncodedKey [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Throws a KeyNotFound exception if not found.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	^ self rawAt: anEncodedKey ifAbsent: [ KeyNotFound signalFor: anEncodedKey ]
 ]
 
@@ -197,25 +197,25 @@ UnixEnvironment >> rawAt: anEncodedKey [
 UnixEnvironment >> rawAt: anEncodedKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Execute aBlock if absent.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	| rawValue |
 	rawValue := self basicGetEnvRaw: anEncodedKey asString.
 	^ rawValue
 		ifNil: [ aBlock value ]
-		ifNotNil: [ rawValue asByteArray ].
+		ifNotNil: [ rawValue asByteArray ]
 ]
 
 { #category : #accessing }
 UnixEnvironment >> rawAt: anEncodedKey ifAbsentPut: aBlock [
 	"Gets the value of an environment variable called `aKey` that is already encoded (i.e., it is a byte array).
 	If absent, insert the value given by aBlock.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	^ self rawAt: anEncodedKey ifAbsent: [ self rawAt: anEncodedKey put: aBlock value ]
 ]
 
@@ -223,10 +223,10 @@ UnixEnvironment >> rawAt: anEncodedKey ifAbsentPut: aBlock [
 UnixEnvironment >> rawAt: anEncodedKey ifPresent: aBlock [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array) and invoke aBlock with it.
 	Return nil if absent.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	^ aBlock value: (self rawAt: anEncodedKey ifAbsent: [ ^ nil ])
 ]
 
@@ -235,10 +235,10 @@ UnixEnvironment >> rawAt: anEncodedKey ifPresent: presentBlock ifAbsent: absentB
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Call presentBlock with it if present.
 	Execute absentBlock if absent.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
-	
+
 	self rawAt: anEncodedKey ifPresent: [ :v | ^ presentBlock cull: v ].
 	^absentBlock value
 ]
@@ -247,7 +247,7 @@ UnixEnvironment >> rawAt: anEncodedKey ifPresent: presentBlock ifAbsent: absentB
 UnixEnvironment >> rawAt: anEncodedKey put: someBytes [
 	"Sets the value of an environment variable called `anEncodedKey` to `someBytes`.
 	Both arguments should be already encoded (i.e., they are byte arrays).
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
 
@@ -257,7 +257,7 @@ UnixEnvironment >> rawAt: anEncodedKey put: someBytes [
 { #category : #accessing }
 UnixEnvironment >> rawRemoveKey: anEncodedKey [
 	"Removes an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
 
@@ -268,7 +268,7 @@ UnixEnvironment >> rawRemoveKey: anEncodedKey [
 UnixEnvironment >> removeKey: key [
 	"See super>>removeKey:.
 	Uses a single encoding determined dynamically"
-	
+
 	^ self removeKey: key encoded: self defaultEncoding
 ]
 
@@ -276,7 +276,7 @@ UnixEnvironment >> removeKey: key [
 UnixEnvironment >> removeKey: key encoded: anEncoding [
 	"Removes the entry `aKey` from the environment variables.
 	Use `anEncoding` to encode the arguments.
-	
+
 	This is a *nix specific API.
 	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
 

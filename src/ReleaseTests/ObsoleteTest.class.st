@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-ObsoleteTest class >> defaultTimeLimit [ 
+ObsoleteTest class >> defaultTimeLimit [
 
 	^ 30 seconds
 ]
@@ -34,13 +34,13 @@ ObsoleteTest >> tearDown [
 ObsoleteTest >> testClassObsolete [
 	| aClass |
 	aClass := classFactory newClass.
-	
+
 	self deny: aClass isObsolete.
 	self deny: aClass class isObsolete.
 	aClass removeFromSystem.
 	self assert: aClass isObsolete.
 	self assert: aClass class isObsolete.
-	self assert: (aClass originalName beginsWith: #ClassForTestToBeDeleted).
+	self assert: (aClass originalName beginsWith: #ClassForTestToBeDeleted)
 ]
 
 { #category : #tests }
@@ -78,7 +78,7 @@ ObsoleteTest >> testTraitObsolete [
 	| aClass aTrait |
 	aTrait := classFactory newTrait.
 	aClass := classFactory newClassUsing: aTrait.
- 
+
 	self deny: aTrait isObsolete.
 	aTrait removeFromSystem.
 	self assert: aTrait isObsolete.

@@ -11,7 +11,7 @@ Class {
 { #category : #'instance creation' }
 RGEnvironmentBackend class >> for: anRGEnvironment [
 
-	^ self new 
+	^ self new
 		environment: anRGEnvironment;
 		yourself
 ]
@@ -169,13 +169,13 @@ RGEnvironmentBackend >> cleanAliasesFor: anRGTraitAlias [
 { #category : #environment }
 RGEnvironmentBackend >> cleanBehaviorsFor: anRGEnvironment [
 
-	anRGEnvironment pvtCleanBehaviors.
+	anRGEnvironment pvtCleanBehaviors
 ]
 
 { #category : #class }
 RGEnvironmentBackend >> cleanClassTagsFor: anRGBehavior [
 
-	anRGBehavior pvtCleanTags.
+	anRGBehavior pvtCleanTags
 ]
 
 { #category : #class }
@@ -187,7 +187,7 @@ RGEnvironmentBackend >> cleanClassVariablesFor: anRGBehavior [
 { #category : #package }
 RGEnvironmentBackend >> cleanDefinedBehaviorsFor: anRGPackage [
 
-	anRGPackage pvtCleanDefinedBehaviors.
+	anRGPackage pvtCleanDefinedBehaviors
 ]
 
 { #category : #'trait exclusion' }
@@ -217,7 +217,7 @@ RGEnvironmentBackend >> cleanLocalMethodsFor: anRGBehavior [
 { #category : #method }
 RGEnvironmentBackend >> cleanMethodTagsFor: anRGMethod [
 
-	anRGMethod pvtCleanTags.
+	anRGMethod pvtCleanTags
 ]
 
 { #category : #environment }
@@ -241,13 +241,13 @@ RGEnvironmentBackend >> cleanSlotsFor: anRGLayout [
 { #category : #package }
 RGEnvironmentBackend >> cleanTagsForClassesFor: anRGPackage [
 
-	anRGPackage pvtCleanTagsForClasses.
+	anRGPackage pvtCleanTagsForClasses
 ]
 
 { #category : #class }
 RGEnvironmentBackend >> cleanTagsForMethodsFor: anRGBehavior [
 
-	anRGBehavior pvtCleanTagsForMethods.
+	anRGBehavior pvtCleanTagsForMethods
 ]
 
 { #category : #'trait composition' }
@@ -266,7 +266,7 @@ RGEnvironmentBackend >> commentFor: anRGBehavior [
 RGEnvironmentBackend >> createNewUnresolvedClass [
 
 	| classStub metaclassStub packageStub |
-	
+
 	classStub := RGClass unresolvedWithParent: self environment.
 	packageStub := RGPackage unresolvedWithParent: self environment.
 	classStub behaviorStrategy pvtPackage: packageStub.
@@ -287,15 +287,15 @@ RGEnvironmentBackend >> createNewUnresolvedClass [
 RGEnvironmentBackend >> createNewUnresolvedMetaclassFor: anRGBehavior [
 
 	| metaclassStub superclassMetaclass |
-	
+
 	metaclassStub := RGMetaclass unresolvedWithParent: self environment.
 
 	superclassMetaclass := anRGBehavior pvtSuperclass pvtMetaclass.
-	superclassMetaclass 
-		ifNotNil: [ 
+	superclassMetaclass
+		ifNotNil: [
 			metaclassStub pvtSuperclass: superclassMetaclass.
 			metaclassStub pvtMetaclass: superclassMetaclass ]
-		ifNil: [ 
+		ifNil: [
 			metaclassStub pvtSuperclass: metaclassStub.
 			metaclassStub pvtMetaclass: metaclassStub ].
 	self environment pvtAddBehavior: metaclassStub.
@@ -304,7 +304,7 @@ RGEnvironmentBackend >> createNewUnresolvedMetaclassFor: anRGBehavior [
 ]
 
 { #category : #'unresolved objects' }
-RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [ 
+RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 
 	| classStub metaclassStub superclassStub superclassMetaclassStub packageStub1 packageStub2 |
 
@@ -313,7 +313,7 @@ RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 		ifTrue: [ RGClass unresolvedWithParent: self environment ].
 	classStub propertyNamed: #creator put: anRGBehavior.
 	classStub propertyNamed: #role put: #class.
-		
+
 	metaclassStub := anRGBehavior isMeta
 		ifFalse: [ RGMetaclass unresolvedWithParent: self environment ]
 		ifTrue: [ anRGBehavior ].
@@ -327,14 +327,14 @@ RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 	superclassMetaclassStub := RGMetaclass unresolvedWithParent: self environment.
 	superclassMetaclassStub propertyNamed: #creator put: anRGBehavior.
 	superclassMetaclassStub propertyNamed: #role put: #superclassMetaclass.
-	
+
 	packageStub1 := RGPackage unresolvedWithParent: self environment.
 	classStub behaviorStrategy pvtPackage: packageStub1.
 	self environment pvtAddPackage: packageStub1.
 	packageStub1 pvtAddDefinedBehavior: classStub.
 	packageStub1 propertyNamed: #creator put: anRGBehavior.
 	packageStub1 propertyNamed: #role put: #package.
-	
+
 	packageStub2 := RGPackage unresolvedWithParent: self environment.
 	superclassStub behaviorStrategy pvtPackage: packageStub2.
 	self environment pvtAddPackage: packageStub2.
@@ -344,31 +344,31 @@ RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 
 	classStub pvtSuperclass: superclassStub.
 	classStub pvtMetaclass: metaclassStub.
-	
+
 	superclassStub pvtSuperclass: superclassStub.
 	superclassStub pvtMetaclass: superclassMetaclassStub.
-	
+
 	metaclassStub pvtSuperclass: superclassMetaclassStub.
 	metaclassStub pvtMetaclass: superclassMetaclassStub.
 	metaclassStub behaviorStrategy pvtBaseClass: classStub.
-	
+
 	superclassMetaclassStub pvtSuperclass: superclassMetaclassStub.
 	superclassMetaclassStub pvtMetaclass: superclassMetaclassStub.
 	superclassMetaclassStub behaviorStrategy pvtBaseClass: superclassStub.
-	
+
 	self environment pvtAddBehavior: classStub.
-	self environment pvtAddBehavior: metaclassStub. 	
+	self environment pvtAddBehavior: metaclassStub.
 	self environment pvtAddBehavior: superclassStub.
 	self environment pvtAddBehavior: superclassMetaclassStub.
-	
+
 
 	^ 	anRGBehavior isMeta
 		ifFalse: [ metaclassStub ]
-		ifTrue: [ classStub ].
+		ifTrue: [ classStub ]
 ]
 
 { #category : #'unresolved objects' }
-RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [ 
+RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 
 	| traitStub classTraitStub traitMetaclassStub classTraitMetaclassStub packageStub1  |
 
@@ -377,7 +377,7 @@ RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 		ifTrue: [ RGTrait unresolvedWithParent: self environment ].
 	traitStub propertyNamed: #creator put: anRGBehavior.
 	traitStub propertyNamed: #role put: #trait.
-		
+
 	classTraitStub := anRGBehavior isMeta
 		ifFalse: [ RGMetaclassTrait unresolvedWithParent: self environment ]
 		ifTrue: [ anRGBehavior ].
@@ -389,7 +389,7 @@ RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 	self createUnresolvedClassGroupFor: traitMetaclassStub.
 	traitMetaclassStub propertyNamed: #creator put: anRGBehavior.
 	traitMetaclassStub propertyNamed: #role put: #traitMetaclass.
-	
+
 	"ClassTrait"
 	classTraitMetaclassStub := RGClass unresolvedWithParent: self environment.
 	self createUnresolvedClassGroupFor: classTraitMetaclassStub.
@@ -409,16 +409,16 @@ RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 	classTraitStub pvtSuperclass: classTraitStub.
 	classTraitStub pvtMetaclass: classTraitMetaclassStub.
 	classTraitStub behaviorStrategy pvtBaseTrait: traitStub.
-	
-	self environment pvtAddBehavior: traitStub.		
-	self environment pvtAddBehavior: classTraitStub.	
+
+	self environment pvtAddBehavior: traitStub.
+	self environment pvtAddBehavior: classTraitStub.
 	self environment pvtAddBehavior: traitMetaclassStub.
 	self environment pvtAddBehavior: classTraitMetaclassStub.
 	self environment pvtAddPackage: packageStub1.
 
 	^ 	anRGBehavior isMeta
 		ifFalse: [ traitStub ]
-		ifTrue: [ classTraitStub ].
+		ifTrue: [ classTraitStub ]
 ]
 
 { #category : #package }
@@ -428,7 +428,7 @@ RGEnvironmentBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 ]
 
 { #category : #accessing }
-RGEnvironmentBackend >> definitionFor: anObject [ 
+RGEnvironmentBackend >> definitionFor: anObject [
 
 	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
 ]
@@ -436,20 +436,20 @@ RGEnvironmentBackend >> definitionFor: anObject [
 { #category : #accessing }
 RGEnvironmentBackend >> definitionFor: anObject ifAbsentRegister: aDefinitionOrBlock [
 
-	^ providedDefinitions at: anObject 
+	^ providedDefinitions at: anObject
 		ifPresent: [:definition | definition ]
-		ifAbsentPut: [ aDefinitionOrBlock value ].
+		ifAbsentPut: [ aDefinitionOrBlock value ]
 ]
 
 { #category : #accessing }
 RGEnvironmentBackend >> environment [
-		
+
 	^ environment
 ]
 
 { #category : #accessing }
 RGEnvironmentBackend >> environment: anRGEnironment [
-		
+
 	environment := anRGEnironment
 ]
 
@@ -508,13 +508,13 @@ RGEnvironmentBackend >> hasFullyResolved: anRGObject [
 ]
 
 { #category : #resolving }
-RGEnvironmentBackend >> hasFullyUnresolved: anRGObject [		
-		
+RGEnvironmentBackend >> hasFullyUnresolved: anRGObject [
+
 	^ anRGObject pvtFullyUnresolved
 ]
 
 { #category : #method }
-RGEnvironmentBackend >> hasSourceCodeFor: anRGMethod [ 
+RGEnvironmentBackend >> hasSourceCodeFor: anRGMethod [
 
 	^ anRGMethod pvtSourceCode notNil
 ]
@@ -523,8 +523,8 @@ RGEnvironmentBackend >> hasSourceCodeFor: anRGMethod [
 RGEnvironmentBackend >> initialize [
 
 	super initialize.
-	
-	providedDefinitions := IdentityDictionary new.
+
+	providedDefinitions := IdentityDictionary new
 ]
 
 { #category : #behavior }
@@ -584,7 +584,7 @@ RGEnvironmentBackend >> removeAlias: aSymbol from: anRGTraitAlias [
 { #category : #environment }
 RGEnvironmentBackend >> removeBehavior: anRGBehavior from: anRGEnvironment [
 
-	anRGEnvironment pvtRemoveBehavior: anRGBehavior.
+	anRGEnvironment pvtRemoveBehavior: anRGBehavior
 ]
 
 { #category : #package }
@@ -686,7 +686,7 @@ RGEnvironmentBackend >> setClassCommentAuthorFor: anRGComment to: aString [
 { #category : #'class comment' }
 RGEnvironmentBackend >> setClassCommentContentFor: anRGComment to: anObject [
 
-	anRGComment pvtContent: anObject.
+	anRGComment pvtContent: anObject
 ]
 
 { #category : #'class comment' }
@@ -804,7 +804,7 @@ RGEnvironmentBackend >> slotsFor: anRGLayout do: aBlock [
 ]
 
 { #category : #method }
-RGEnvironmentBackend >> sourceCodeFor: anRGMethod [ 
+RGEnvironmentBackend >> sourceCodeFor: anRGMethod [
 
 	^ anRGMethod pvtSafeSourceCode
 ]

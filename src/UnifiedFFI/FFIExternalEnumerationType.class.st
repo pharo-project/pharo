@@ -29,14 +29,14 @@ FFIExternalEnumerationType class >> objectClass: aClass representationType: anIn
 
 { #category : #private }
 FFIExternalEnumerationType >> basicHandle: aHandle at: index [
-	^ self objectClass fromInteger: (aHandle 
-		perform: self externalType atomicSelector 
+	^ self objectClass fromInteger: (aHandle
+		perform: self externalType atomicSelector
 		with: index)
 ]
 
 { #category : #private }
 FFIExternalEnumerationType >> basicHandle: aHandle at: index put: value [
-	^ aHandle 
+	^ aHandle
 		perform: (self externalType atomicSelector,#put:) asSymbol
 		with: index
 		with: value getHandle
@@ -50,19 +50,19 @@ FFIExternalEnumerationType >> callbackReturnOn: callbackContext for: anObject [
 { #category : #'emitting code' }
 FFIExternalEnumerationType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	"| tmpResult |
-	
+
 	tmpResult := <returnValue>.
 	^ self objectClass itemAt: tmpResult
 	"
 
-	^ aBuilder 
+	^ aBuilder
 		"keep invoke result into the tmpResult var"
 		storeTemp: resultVar;
 		"return := self objectClass itemAt: tmpResult"
 		pushLiteralVariable: self objectClass binding;
 		pushTemp: resultVar;
 		send: #fromInteger:;
-		returnTop	
+		returnTop
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ FFIExternalEnumerationType >> externalTypeAlignment [
 ]
 
 { #category : #accessing }
-FFIExternalEnumerationType >> externalTypeSize [ 
+FFIExternalEnumerationType >> externalTypeSize [
 	^ self representationType externalTypeSize
 ]
 
@@ -88,13 +88,12 @@ FFIExternalEnumerationType >> instanceVariableName [
 { #category : #'emitting code' }
 FFIExternalEnumerationType >> offsetReadEnumAt: offsetVariableName [
 	^ String streamContents:[ :stream|
-		stream 
+		stream
 			nextPutAll:'^';
 			print: self objectClass;
 			nextPutAll:' fromInteger: (handle ', self externalType atomicSelector,' ';
 			nextPutAll: offsetVariableName;
-			nextPutAll:')' ].
-
+			nextPutAll:')' ]
 ]
 
 { #category : #'emitting code' }
@@ -106,20 +105,19 @@ FFIExternalEnumerationType >> offsetReadFieldAt: offsetVariableName [
 
 { #category : #'emitting code' }
 FFIExternalEnumerationType >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream << 'handle ' << self externalType atomicSelector << ' ' << offsetVariableName << ' put: anObject value' ]
 ]
 
 { #category : #'emitting code' }
 FFIExternalEnumerationType >> readEnumAt: byteOffset [
 	^ String streamContents:[ :stream|
-		stream 
+		stream
 			nextPutAll:'^';
 			print: self objectClass;
 			nextPutAll:' fromInteger: (handle ', self externalType atomicSelector,' ';
 			print: byteOffset;
-			nextPutAll:')' ].
-
+			nextPutAll:')' ]
 ]
 
 { #category : #'emitting code' }
@@ -141,6 +139,6 @@ FFIExternalEnumerationType >> representationType: anObject [
 
 { #category : #'emitting code' }
 FFIExternalEnumerationType >> writeFieldAt: byteOffset with: valueName [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream << 'handle ' << self externalType atomicSelector << ' ' << byteOffset asString << ' put: anObject value' ]
 ]

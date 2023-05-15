@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'building suites' }
-TFTestCase class >> testParameters [ 
+TFTestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
 		forSelector: #runner addOptions: { [ TFSameThreadRunner uniqueInstance ]. [ TFWorker named: 'fortest' ]. }
@@ -25,12 +25,12 @@ TFTestCase >> libraryPath [
 ]
 
 { #category : #running }
-TFTestCase >> runCaseManaged [ 
-	
+TFTestCase >> runCaseManaged [
+
 	"Skipping in running on an old VM"
 	TFFIBackend isAvailable ifFalse: [ ^ self skip ].
-	
-	super runCaseManaged.
+
+	super runCaseManaged
 ]
 
 { #category : #accessing }
@@ -54,5 +54,5 @@ TFTestCase >> shortCallout [
 				parameterTypes: {}
 				returnType: TFBasicType sint32).
 
-	^ runner invokeFunction: fun 
+	^ runner invokeFunction: fun
 ]

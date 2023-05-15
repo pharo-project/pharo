@@ -14,8 +14,8 @@ Class {
 
 { #category : #'instance creation' }
 ZnLineTooLong class >> limit: limit [
-	^ self new 
-		limit: limit; 
+	^ self new
+		limit: limit;
 		yourself
 ]
 

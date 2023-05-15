@@ -186,7 +186,7 @@ EpMonitor >> behaviorModified: aClassModifiedClassDefinitionAnnouncement [
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
-
+	| toReplace |
 	self handleAnyErrorDuring: [
 		"Workaround: the announcement occurs after class is renamed to AnObsolete
 		and removed from package."
@@ -197,8 +197,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 		"Fix class name (remove AnObsolete prefix)"
 		classRemoved definitionSource:
 			(classRemoved definitionSource
-				copyReplaceAll: aClassRemovedAnnouncement classRemoved name printString
-				with: aClassRemovedAnnouncement classRemoved originalName printString).
+				copyReplaceAll: aClassRemovedAnnouncement classRemoved name asString
+				with: aClassRemovedAnnouncement classRemoved originalName asString).
 
 		"Fix class name in the metaclass"
 		classRemoved classSide definitionSource:
@@ -207,10 +207,15 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 				with: aClassRemovedAnnouncement classRemoved originalName).
 
 		"Fix category"
+		toReplace := (classRemoved definitionSource includesSubstring: '_UnpackagedPackage')
+			ifTrue: [  'package: ', '_UnpackagedPackage' printString ]
+			ifFalse: [ 'package: ', 'Unclassified' printString].
+			
 		classRemoved definitionSource:
 			(classRemoved definitionSource
-				copyReplaceAll: 'package: ', 'Unclassified' printString
+				copyReplaceAll: toReplace
 				with: 'package: ', aClassRemovedAnnouncement categoryName printString).
+	
 
 		classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
 		classRemoved category: aClassRemovedAnnouncement categoryName.
