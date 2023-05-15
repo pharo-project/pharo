@@ -345,7 +345,11 @@ FLSerializer >> serialize [
 
 { #category : #private }
 FLSerializer >> streamFactoryForFilePath: aString [
-	^ [ FLPlatform current writeStreamForFilePath: aString ]
+
+	^ [
+	  (File named: aString) writeStream
+		  binary;
+		  yourself ]
 ]
 
 { #category : #accessing }

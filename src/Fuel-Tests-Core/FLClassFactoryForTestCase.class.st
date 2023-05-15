@@ -183,14 +183,17 @@ FLClassFactoryForTestCase >> initializeWithEnvironment: anEnvironment [
 
 { #category : #'creating-anonymous' }
 FLClassFactoryForTestCase >> newAnonymousClass [
-	^ FLPlatform current
-		newAnonymousSubclassOf: self defaultSuperclass
-		named: 'ignored'
+
+	^ self defaultSuperclass newAnonymousSubclass
 ]
 
 { #category : #'creating-traits-anonymous' }
 FLClassFactoryForTestCase >> newAnonymousTrait [
-	^ FLPlatform current newAnonymousTraitNamed: self defaultNewTraitName
+	^Smalltalk anonymousClassInstaller make: [ :builder |
+		builder
+			"The name is necessary to not break Pharo"
+			name:  self defaultNewTraitName;
+			beTrait ]
 ]
 
 { #category : #creating }
@@ -273,17 +276,20 @@ FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition insta
 
 { #category : #creating }
 FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString [
-	| newClass |		
-	newClass := FLPlatform current
-		newSubclassOf: aClass
-		named: self defaultNewClassName
-		uses: aTraitComposition
-		instanceVariableNames: ivNamesString
-		classVariableNames: classVarsString
-		poolDictionaries: poolNamesString
-		environment: self environment
-		package: self defaultPackageAndTag.
-		
+
+	| newClass |
+	newClass := self class classInstaller make: [ :aBuilder |
+		            aBuilder
+			            environment: self environment;
+			            name: self defaultNewClassName;
+			            superclass: aClass;
+			            traitComposition: aTraitComposition asTraitComposition;
+			            classTraitComposition: aTraitComposition asTraitComposition classComposition;
+			            slots: ivNamesString asSlotCollection;
+			            sharedVariablesFromString: classVarsString;
+			            sharedPools: poolNamesString;
+			            package: self defaultPackageAndTag ].
+
 	self createdClasses add: newClass.
 	^ newClass
 ]
@@ -298,14 +304,17 @@ FLClassFactoryForTestCase >> newTrait [
 
 { #category : #'creating-traits' }
 FLClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition instanceVariableNames: aString [
-	| newTrait |					
-	newTrait := FLPlatform current
-		newTraitNamed: aTraitName
-		uses: aTraitComposition
-		instanceVariableNames: aString
-		environment: self environment
-		package: self defaultPackageAndTag.
-	
+
+	| newTrait |
+	newTrait := self class classInstaller make: [ :aBuilder |
+		            aBuilder
+			            environment: self environment;
+			            name: aTraitName;
+			            slots: aString asSlotCollection;
+			            traitComposition: aTraitComposition asTraitComposition;
+			            package: self defaultPackageAndTag;
+			            beTrait ].
+
 	self createdTraits add: newTrait.
 	^ newTrait
 ]
@@ -360,16 +369,15 @@ FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior category: an
 
 { #category : #'compiling-silently' }
 FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior category: anotherString storingSource: aBoolean [
+
 	^ self silentlyDo: [
-		FLPlatform current 
-			useAuthor: 'TestsAuthor'
-			during: [
-				aBehavior
-					compile: aString
-					classified: anotherString
-					withStamp: nil 
-					notifying: nil 
-					logSource: aBoolean ] ]
+		  Author useAuthor: 'TestsAuthor' during: [
+			  aBehavior
+				  compile: aString
+				  classified: anotherString
+				  withStamp: nil
+				  notifying: nil
+				  logSource: aBoolean ] ]
 ]
 
 { #category : #'compiling-silently' }
@@ -383,7 +391,8 @@ FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSourc
 
 { #category : #private }
 FLClassFactoryForTestCase >> silentlyDo: aBlock [
-	^ FLPlatform current silentlyDo: aBlock
+
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
 ]
 
 { #category : #'creating-silently' }

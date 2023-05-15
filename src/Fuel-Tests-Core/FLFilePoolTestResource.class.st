@@ -9,36 +9,43 @@ Class {
 
 { #category : #testing }
 FLFilePoolTestResource >> fileExists: aString [
-	^ FLPlatform current filePathExists: (self filePathString: aString)
+
+	^ (self filePathString: aString) asFileReference exists
 ]
 
 { #category : #'accessing-files' }
 FLFilePoolTestResource >> filePathString: aString [
-	^ FLPlatform current
-		joinPath: directoryPath
-		with: aString
+
+	^ (directoryPath asFileReference / aString) pathString
 ]
 
 { #category : #'accessing-files' }
 FLFilePoolTestResource >> readStreamForFilePath: aString [
-	^ FLPlatform current readStreamForFilePath: (self filePathString: aString)
+
+	^ (File named: (self filePathString: aString)) readStream
+		  binary;
+		  yourself
 ]
 
 { #category : #running }
 FLFilePoolTestResource >> setUp [
 	super setUp.
 	
-	directoryPath := FLPlatform current createTemporaryDirectoryPathNamed: UUID new asString
+	directoryPath := (FileLocator temp / UUID new asString) ensureCreateDirectory pathString
 ]
 
 { #category : #running }
 FLFilePoolTestResource >> tearDown [
-	FLPlatform current deleteAllInDirectoryPath: directoryPath.
-	
+
+	directoryPath asFileReference deleteAll.
+
 	super tearDown
 ]
 
 { #category : #'accessing-files' }
 FLFilePoolTestResource >> writeStreamForFilePath: aString [
-	^ FLPlatform current writeStreamForFilePath: (self filePathString: aString)
+
+	^ (File named: (self filePathString: aString)) writeStream
+		  binary;
+		  yourself
 ]

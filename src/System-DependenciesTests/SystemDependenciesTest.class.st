@@ -266,9 +266,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
 		{ BaselineOfFuelPlatform name.
-			'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
+			'Fuel-Platform-Core' },
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
@@ -480,9 +478,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
+		{'Fuel-Platform-Core'},
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
 
@@ -539,9 +535,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
+		{ 'Fuel-Platform-Core'},
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 
@@ -599,9 +593,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
+		{ 'Fuel-Platform-Core' },
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies

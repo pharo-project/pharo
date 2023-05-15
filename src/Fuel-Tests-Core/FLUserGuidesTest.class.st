@@ -9,8 +9,8 @@ Class {
 
 { #category : #running }
 FLUserGuidesTest >> tearDown [
-	#('demo.fuel' 'numbers.fuel' 'number.fuel.zip' 'example.FL')
-		do: [ :each | self deleteFilePath: each ].
+
+	#( 'demo.fuel' 'numbers.fuel' 'number.fuel.zip' 'example.FL' ) do: [ :aFilename | (File named: aFilename) delete ].
 
 	super tearDown
 ]

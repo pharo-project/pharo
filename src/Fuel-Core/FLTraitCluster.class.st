@@ -47,6 +47,7 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 
 { #category : #analyzing }
 FLTraitCluster >> referencesOf: aTrait do: aBlock [
+
 	super referencesOf: aTrait do: aBlock.
 
 	aBlock
@@ -55,9 +56,7 @@ FLTraitCluster >> referencesOf: aTrait do: aBlock [
 		value: aTrait category;
 		value: aTrait name;
 		value: aTrait format;
-		value: (FLPlatform current hasStatefulTraits
-			ifTrue: [ aTrait classLayout class ]
-			ifFalse: [ nil ])
+		value: aTrait classLayout class
 ]
 
 { #category : #'serialize/materialize' }
@@ -67,17 +66,14 @@ FLTraitCluster >> serializeInstance: aTrait with: anEncoder [
 
 { #category : #'serialize/materialize' }
 FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
-		"Do not use #basicCategory because since it may be lazily computed it may happen that it is still in nil. "
+	"Do not use #basicCategory because since it may be lazily computed it may happen that it is still in nil. "
+
 	anEncoder
 		encodeReferenceTo: aTrait category;
 		encodeReferenceTo: aTrait name;
 		encodeReferenceTo: aTrait basicEnvironment;
 		encodeReferenceTo: aTrait format.
-	FLPlatform current hasStatefulTraits
-		ifTrue: [
-			self
-				serializeLayout: aTrait classLayout
-				with: anEncoder ]
-		ifFalse: [ anEncoder encodeReferenceTo: nil ].
+
+	self serializeLayout: aTrait classLayout with: anEncoder.
 	anEncoder encodeString: aTrait instanceVariablesString
 ]

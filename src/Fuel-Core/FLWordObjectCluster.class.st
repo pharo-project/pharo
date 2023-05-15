@@ -30,7 +30,7 @@ FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 
 	aDecoder nextEncodedWordsInto: inst.
 
-	^ aDecoder isBigEndian = FLPlatform current isBigEndian asBit
+	^ aDecoder isBigEndian = EndianDetector isBigEndian asBit
 		  ifTrue: [ inst ]
 		  ifFalse: [ self swapBytesOf: inst ]
 ]

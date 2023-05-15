@@ -23,7 +23,5 @@ BaselineOfFuelPlatform >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #addPostloadHacks.
 
-		spec
-			package: 'Fuel-Platform-Core';
-			package: 'Fuel-Platform-Pharo-Core' with: [ spec requires: 'Fuel-Platform-Core' ] ]
+		spec package: 'Fuel-Platform-Core' ]
 ]
