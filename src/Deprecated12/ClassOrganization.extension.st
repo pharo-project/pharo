@@ -24,17 +24,19 @@ ClassOrganization >> categories [
 { #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector [
 
-	self deprecated: 'Use #protocolNameOfElement: instead.' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv protocolNameOfElement: `@arg'.
-	^ self protocolNameOfElement: aSelector
+	self
+		deprecated: 'Use #protocolNameOfSelector: on the organized class instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv organizedClass protocolNameOfSelector: `@arg'.
+	^ self organizedClass protocolNameOfSelector: aSelector
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self
-		deprecated: 'Use #protocolNameOfElement: instead.'
-		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfElement: `@arg1) ifNil: `@arg2'.
-	^ (self protocolNameOfElement: aSelector) ifNil: aBlock
+		deprecated: 'Use #protocolNameOfSelector: on the organized class instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv organizedClass protocolNameOfSelector: `@arg1) ifNil: `@arg2'.
+	^ (self organizedClass protocolNameOfSelector: aSelector) ifNil: aBlock
 ]
 
 { #category : #'*Deprecated12' }

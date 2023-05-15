@@ -755,6 +755,12 @@ ClassDescription >> printOn: aStream [
 ]
 
 { #category : #'accessing - protocols' }
+ClassDescription >> protocolNameOfSelector: aSelector [
+
+	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
+]
+
+{ #category : #'accessing - protocols' }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
@@ -1076,7 +1082,7 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 	"Answer the category of the argument, aSelector, in the organization of
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	^ self organization protocolNameOfElement: aSelector
+	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #queries }
