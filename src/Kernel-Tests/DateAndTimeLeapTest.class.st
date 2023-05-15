@@ -88,7 +88,7 @@ DateAndTimeLeapTest >> testDayOfMonth [
 DateAndTimeLeapTest >> testDayOfWeek [
 	self assert: aDateAndTime dayOfWeek equals: 1.
 	self assert: aDateAndTime dayOfWeekAbbreviation equals: 'Sun'.
-	self assert: aDateAndTime dayOfWeekName equals: 'Sunday'
+	self assert: aDateAndTime dayOfWeekName equals: #'Sunday'
 ]
 
 { #category : #tests }
