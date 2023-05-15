@@ -587,7 +587,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests)
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies
