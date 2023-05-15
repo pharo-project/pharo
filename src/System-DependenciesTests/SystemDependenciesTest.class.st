@@ -40,6 +40,36 @@ SystemDependenciesTest class >> resetDependenciesReport [
 	dependenciesReport := nil
 ]
 
+{ #category : #tests }
+SystemDependenciesTest >> ,testExternalUIDependencies [
+
+	| dependencies |
+
+	dependencies := (self externalDependendiesOf: (
+		self metacelloPackageNames,
+		self tonelCorePackageNames,
+		BaselineOfTraits corePackages,
+		BaselineOfParametrizedTests allPackageNames,
+		BaselineOfSUnit defaultPackageNames,
+		BaselineOfDisplay allPackageNames,
+		BaselineOfUnifiedFFI allPackageNames,
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
+		BaselineOfMorphicCore allPackageNames,
+		BaselineOfMorphic allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
+		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
+		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
+		BaselineOfUI allPackageNames,
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		BaselineOfThreadedFFI corePackageNames )).
+
+	self assertCollection: dependencies hasSameElements: self knownUIDependencies
+]
+
 { #category : #accessing }
 SystemDependenciesTest >> dependenciesReport [
 
@@ -265,8 +295,6 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ BaselineOfFuelPlatform name.
-			'Fuel-Platform-Core' },
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
@@ -378,7 +406,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
-	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
 	dependencies := self externalDependendiesOf: packages.
@@ -478,7 +505,6 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{'Fuel-Platform-Core'},
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
 
@@ -535,7 +561,6 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'},
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 
@@ -592,8 +617,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core' },
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests)
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies
