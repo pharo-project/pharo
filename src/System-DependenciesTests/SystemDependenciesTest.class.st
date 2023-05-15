@@ -40,36 +40,6 @@ SystemDependenciesTest class >> resetDependenciesReport [
 	dependenciesReport := nil
 ]
 
-{ #category : #tests }
-SystemDependenciesTest >> ,testExternalUIDependencies [
-
-	| dependencies |
-
-	dependencies := (self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,
-		BaselineOfParametrizedTests allPackageNames,
-		BaselineOfSUnit defaultPackageNames,
-		BaselineOfDisplay allPackageNames,
-		BaselineOfUnifiedFFI allPackageNames,
-		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
-		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames,
-		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
-		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
-		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
-		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
-		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
-		BaselineOfUI allPackageNames,
-		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		BaselineOfThreadedFFI corePackageNames )).
-
-	self assertCollection: dependencies hasSameElements: self knownUIDependencies
-]
-
 { #category : #accessing }
 SystemDependenciesTest >> dependenciesReport [
 
