@@ -1243,13 +1243,6 @@ Behavior >> obsolete [
 	"nothing to be done"
 ]
 
-{ #category : #'obsolete subclasses' }
-Behavior >> obsoleteSubclasses [
-	"Return all the weakly remembered obsolete subclasses of the receiver"
-
-	^ self basicObsoleteSubclasses at: self ifAbsent: [ #(  ) ]
-]
-
 { #category : #initialization }
 Behavior >> originalName [
 	| obsName |
