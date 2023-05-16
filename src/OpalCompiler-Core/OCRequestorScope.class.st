@@ -54,7 +54,7 @@ OCRequestorScope >> registerVariables [
 		"Force the declaraction, if needed"
 		var := requestor bindingOf: each name.
 		"Because we no non control how requestor handle its variables, just update the one we used locally"
-		(var isNotNil and: [ var ~= each ]) ifTrue: [ each becomeForward: var ] ].
+		(var isNotNil and: [ var ~~ each ]) ifTrue: [ each becomeForward: var ] ].
 	super registerVariables
 ]
 
