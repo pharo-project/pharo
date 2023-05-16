@@ -59,9 +59,9 @@ AbstractFont >> approxWidthOfText: aText [
 
 	"If the text has no emphasis, just return the string size.  If it is empasized,
     just approximate the width by adding about 20% to the width"
-	((aText runLengthFor: 1) = aText size and: [ (aText emphasisAt: 1) = 0 ])
-		ifTrue: [ ^ w ]
-		ifFalse: [ ^ w * 6 // 5 ]
+	^ ((aText runLengthFor: 1) = aText size and: [ (aText emphasisAt: 1) = 0 ])
+		ifTrue: [ w ]
+		ifFalse: [ w * 6 // 5 ]
 ]
 
 { #category : #accessing }

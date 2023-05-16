@@ -32,6 +32,7 @@ RBSmalllintContext >> buildParseTree [
 
 	tree := self selectedClass parseTreeForSelector: self selector.
 	tree ifNil: [ ^ RBParser parseMethod: 'method' ].
+	tree doSemanticAnalysis.
 	^ tree
 ]
 
@@ -68,11 +69,7 @@ RBSmalllintContext >> computeLiteralsForClass: aClass [
 { #category : #private }
 RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
 
-	| method |
-
-	method := aClass compiledMethodAt: aSelector ifAbsent: [ nil ].
-	method ifNil: [ ^ self ].
-	self addLiteralsFor: method
+	aClass compiledMethodAt: aSelector ifPresent: [ :method | self addLiteralsFor: method ]
 ]
 
 { #category : #testing }
@@ -165,7 +162,8 @@ RBSmalllintContext >> printOn: aStream [
 
 { #category : #accessing }
 RBSmalllintContext >> protocol [
-	^self selectedClass whichCategoryIncludesSelector: self selector
+
+	^ self selectedClass protocolNameOfSelector: self selector
 ]
 
 { #category : #accessing }

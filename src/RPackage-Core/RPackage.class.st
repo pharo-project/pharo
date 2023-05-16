@@ -117,7 +117,8 @@ RPackage class >> named: aString [
 
 { #category : #'protected only for tests' }
 RPackage class >> organizer [
-	^ PackageGlobalOrganizer ifNil: [ RPackageOrganizer default ]
+
+	^ PackageGlobalOrganizer ifNil: [ Smalltalk organization ]
 ]
 
 { #category : #'protected only for tests' }
@@ -1255,7 +1256,7 @@ RPackage >> removeFromSystem [
 	extendedClasses do: [ :each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol ].
 	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
 	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
-	categories do: [ :cat | self organizer systemOrganizer removeCategory: cat ].
+	categories do: [ :cat | self organizer removeCategory: cat ].
 	self unregister
 ]
 
@@ -1390,7 +1391,7 @@ RPackage >> renameTo: aSymbol [
 				do:
 					[ :each | each category: newName , (each category allButFirst: oldName size) ].
 			oldCategoryNames
-				do: [ :each | self systemOrganization removeCategory: each ] ].
+				do: [ :each | self organizer removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
 	self organizer
@@ -1441,18 +1442,12 @@ RPackage >> selectorsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> systemCategories [
 
-	^ self systemOrganization categories select: [:cat | self includesSystemCategory: cat]
+	^ self organizer categories select: [:cat | self includesSystemCategory: cat]
 ]
 
 { #category : #'system compatibility' }
 RPackage >> systemCategoryPrefix [
 	^ self name
-]
-
-{ #category : #'system compatibility' }
-RPackage >> systemOrganization [
-
-	^ self organizer systemOrganizer
 ]
 
 { #category : #queries }

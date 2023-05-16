@@ -212,7 +212,7 @@ ExternalBrowser >> protocols [
 { #category : #'structure accessing' }
 ExternalBrowser >> protocolsOfClass: aClass [
 
-	^ aClass protocols
+	^ aClass protocolNames
 ]
 
 { #category : #refresh }
@@ -258,8 +258,7 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 { #category : #'structure accessing' }
 ExternalBrowser >> showClassDefinition [
 
-	method text:
-		(self classes selectedItem definition ifNil: [ '' ])
+	method text: (self classes selectedItem definitionString ifNil: [ '' ])
 ]
 
 { #category : #accessing }

@@ -231,22 +231,18 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
+
 	| packageName |
-	packageName := (RPackageOrganizer default
-		packageForProtocol: aMethodInAnObsoleteBehavior protocol
-		inClass: aMethodInAnObsoleteBehavior methodClass) name.
+	packageName := (Smalltalk organization packageForProtocol: aMethodInAnObsoleteBehavior protocol inClass: aMethodInAnObsoleteBehavior methodClass) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
-	packageName = RPackage defaultPackageName
-		ifTrue: [ packageName := aSymbol ].
+	packageName = RPackage defaultPackageName ifTrue: [ packageName := aSymbol ].
 
-	self addEvent:
-		(EpMethodRemoval method:
-			(aMethodInAnObsoleteBehavior asEpiceaRingDefinition
-				parentName: aMethodInAnObsoleteBehavior methodClass originalName;
-				protocol: aMethodInAnObsoleteBehavior protocol;
-				package: packageName;
-				yourself))
+	self addEvent: (EpMethodRemoval method: (aMethodInAnObsoleteBehavior asEpiceaRingDefinition
+				  parentName: aMethodInAnObsoleteBehavior methodClass originalName;
+				  protocol: aMethodInAnObsoleteBehavior protocol;
+				  package: packageName;
+				  yourself))
 ]
 
 { #category : #'announcement handling' }
@@ -515,14 +511,11 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 	"RPackage already unregistered the method so we have to workaround protocol and package."
 
 	self handleAnyErrorDuring: [
-		self addEvent:
-			(EpMethodRemoval method:
-				(aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
-					protocol: aMethodRemovedAnnouncement protocol;
-					package: (RPackageOrganizer default
-						packageForProtocol: aMethodRemovedAnnouncement protocol
-						inClass: aMethodRemovedAnnouncement methodAffected methodClass) name;
-					yourself))]
+		self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
+					  protocol: aMethodRemovedAnnouncement protocol;
+					  package:
+						  (Smalltalk organization packageForProtocol: aMethodRemovedAnnouncement protocol inClass: aMethodRemovedAnnouncement methodAffected methodClass) name;
+					  yourself)) ]
 ]
 
 { #category : #'announcement handling' }

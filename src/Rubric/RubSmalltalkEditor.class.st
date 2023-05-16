@@ -27,7 +27,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #browseFullClass)
 		category: RubSmalltalkEditor name
 		default: $b meta
-		do: [ :target | target editor browseFullClass ]
+		do: [ :target | target editor browseIt: nil ]
 		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
@@ -139,7 +139,7 @@ RubSmalltalkEditor >> atCompletionPosition [
 	| cursorPosition |
 	cursorPosition := self startIndex.
 	cursorPosition < 2 ifTrue: [ ^ false ].
-	^ (self text at: cursorPosition - 1) isCompletionCharacter
+	^ (self lineIndentationStart: cursorPosition) < cursorPosition
 ]
 
 { #category : #'do-its' }
@@ -268,28 +268,22 @@ RubSmalltalkEditor >> browseClassFrom: aClassString [
 	self tools browser openOnClass: selectedClass
 ]
 
-{ #category : #'editing keys' }
-RubSmalltalkEditor >> browseClassOfExpression [
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> browseFullClass [
  	"Launch a browser for the class of the current selection, i.e. if you select 1+2 then you will get a class browser on class Point. Notice that this method handles also when the expression is a class."
 
  	self evaluateSelectionAndDo: [:result | result class instanceSide browse ].
-	^ true
-]
-
-{ #category : #'menu messages' }
-RubSmalltalkEditor >> browseFullClass [
-	"Launch a browser for the class indicated by the current selection. Note that if the selection is a valid expression it will browse the class of the result. If multiple classes matching the selection exist, let the user choose among them."
-
-
-	"previous code was: self browseClassFrom: self findClassFromAST"
-	self browseClassOfExpression
 ]
 
 { #category : #'editing keys' }
-RubSmalltalkEditor >> browseFullClassIt: t1 [
+RubSmalltalkEditor >> browseIt: aKeyboardEvent [
+ 	"Browse the current selection.
+	If a completion menu is open, the current item is browsed instead"
 
-	self browseFullClass.
-	^ true
+	completionEngine isMenuOpen ifTrue: [ ^ completionEngine browse ].
+
+ 	self browseFullClass.
+	^true
 ]
 
 { #category : #'menu messages' }
@@ -811,8 +805,8 @@ RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
 		 - but not by an assignment "
 		(character = $_) or: [
 			(character = $:) and: [
-				aString size > index
-					and: [  (aString at: index + 1) ~= $= ] ] ] ]
+				aString size = index
+					or: [  (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : #'menu messages' }

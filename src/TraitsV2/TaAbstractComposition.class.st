@@ -155,7 +155,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 
-	aClass organization silentlyClassify: selector under: (self categoryOfMethod: method withSelector: method selector).
+	aClass organization classify: selector under: (self categoryOfMethod: method withSelector: method selector).
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
@@ -213,7 +213,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
-	aClass organization silentlyClassify: aSelector under: aCompiledMethod protocol.
+	aClass organization classify: aSelector under: aCompiledMethod protocol.
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
