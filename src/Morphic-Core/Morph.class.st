@@ -4508,6 +4508,11 @@ Morph >> openInHand [
 ]
 
 { #category : #opening }
+Morph >> openInWindowOnWorld: aWorld [
+	^ self openInWindowLabeled: self defaultLabel inWorld: aWorld
+]
+
+{ #category : #opening }
 Morph >> openInWorld [
 	self openInWorld: self currentWorld
 ]
