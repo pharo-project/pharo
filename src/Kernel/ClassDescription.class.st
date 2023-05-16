@@ -33,7 +33,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorMethod := method.
 		priorOrigin := method origin ].
 
-	oldProtocol := self organization protocolOfSelector: selector.
+	oldProtocol := self protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self organization classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
@@ -78,7 +78,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 	| priorMethodOrNil oldProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	oldProtocol := self organization protocolOfSelector: selector.
+	oldProtocol := self protocolOfSelector: selector.
 
 	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
 	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: nil ] ].
@@ -385,7 +385,7 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : #'accessing - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -755,10 +755,28 @@ ClassDescription >> printOn: aStream [
 ]
 
 { #category : #'accessing - protocols' }
+ClassDescription >> protocolNameOfSelector: aSelector [
+	"Return the protocol name including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
+
+	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
+]
+
+{ #category : #'accessing - protocols' }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
 	^ self organization protocolNames copy
+]
+
+{ #category : #'accessing - protocols' }
+ClassDescription >> protocolOfSelector: aSelector [
+	"Return the protocol including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
+
+	^ self organization protocols
+		  detect: [ :each | each includesSelector: aSelector ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #compiling }
@@ -775,13 +793,16 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> removeProtocol: protocolName [
-	"Remove each of the messages categorized under aString in the method
-	dictionary of the receiver. Then remove the category aString."
+{ #category : #'accessing - protocols' }
+ClassDescription >> removeProtocol: aProtocol [
+	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
+	Does nothing if the protocol does not exists."
 
-	(self organization methodSelectorsInProtocol: protocolName) do: [ :sel | self removeSelector: sel ].
-	self organization removeProtocolIfEmpty: protocolName
+	(self organization hasProtocol: aProtocol) ifFalse: [ ^ self ].
+
+	(self ensureProtocol: aProtocol) in: [ :protocol |
+		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
+		self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : #'accessing - protocols' }
@@ -799,7 +820,7 @@ ClassDescription >> removeSelector: selector [
 	| priorMethod priorProtocol origin |
 	priorMethod := self compiledMethodAt: selector ifAbsent: [^ nil].
 	origin := priorMethod origin.
-	priorProtocol := self whichCategoryIncludesSelector: selector.
+	priorProtocol := self protocolNameOfSelector: selector.
 	self organization removeElement: selector.
 
 	super removeSelector: selector.
@@ -1062,10 +1083,9 @@ ClassDescription >> wantsChangeSetLogging [
 
 { #category : #organization }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [
-	"Answer the category of the argument, aSelector, in the organization of
-	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	^ self organization protocolNameOfElement: aSelector
+	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
+	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #queries }
