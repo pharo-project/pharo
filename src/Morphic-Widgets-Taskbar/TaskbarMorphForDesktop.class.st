@@ -1,3 +1,6 @@
+"
+I am the desktop taskbar, my interest is not to ask my world what these submorphs are but my desktop
+"
 Class {
 	#name : #TaskbarMorphForDesktop,
 	#superclass : #TaskbarMorph,
