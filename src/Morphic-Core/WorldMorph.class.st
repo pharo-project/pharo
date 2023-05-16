@@ -563,6 +563,12 @@ WorldMorph >> stopStepping: aMorph selector: aSelector [
 	worldState stopStepping: aMorph selector: aSelector
 ]
 
+{ #category : #accessing }
+WorldMorph >> tools [ 
+
+	^ Smalltalk tools
+]
+
 { #category : #'menu & halo' }
 WorldMorph >> truncatedMenuLabelFor: aWindowLabel [
 	^ aWindowLabel truncateWithElipsisTo: 47

@@ -30,6 +30,12 @@ ExternalChangesBrowser class >> browseRecentLog [
 	^ self openOnStream: SourceFiles changesFileStream
 ]
 
+{ #category : #examples }
+ExternalChangesBrowser class >> browseRecentLogInWorld: aWorld [
+
+	^ self openOnStream: SourceFiles changesFileStream inWorld: aWorld
+]
+
 { #category : #layout }
 ExternalChangesBrowser class >> defaultLayout [
 	<spec: #default>
@@ -97,6 +103,15 @@ ExternalChangesBrowser class >> openOnStream: aStream [
 	widget := self new.
 	widget changes items: (CodeImporter chunksFromStream: aStream).
 	widget open
+]
+
+{ #category : #'instance creation' }
+ExternalChangesBrowser class >> openOnStream: aStream inWorld: aWorld [
+
+	| widget |
+	widget := self new.
+	widget changes items: (CodeImporter chunksFromStream: aStream).
+	widget openInWorld: aWorld
 ]
 
 { #category : #'tool registry' }

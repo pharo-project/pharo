@@ -6698,7 +6698,9 @@ Morph >> veryDeepInner: deepCopier [
 
 { #category : #'base - worlds' }
 Morph >> viewBox [
-	^ self pasteUpMorph viewBox
+
+	owner ifNil: [ ^ nil ].
+	^ owner viewBox
 ]
 
 { #category : #drawing }

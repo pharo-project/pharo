@@ -152,6 +152,7 @@ ProcessBrowser class >> isUIProcess: aProcess [
 { #category : #'world menu' }
 ProcessBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
+
 	(aBuilder item: #'Process Browser')
 		parent: #SystemTools;
 		order: 3;
@@ -180,6 +181,14 @@ ProcessBrowser class >> open [
 
 	Smalltalk garbageCollect.
 	^ self new build
+]
+
+{ #category : #'instance creation' }
+ProcessBrowser class >> openInWorld: aWorld [
+	"Create and schedule a ProcessBrowser."
+
+	Smalltalk garbageCollect.
+	^ self new buildInWorld: aWorld
 ]
 
 { #category : #settings }
@@ -379,38 +388,20 @@ ProcessBrowser >> browsedEnvironment [
 
 { #category : #views }
 ProcessBrowser >> build [
-	| window  scrolledText |
-	window := (SystemWindow labelled: 'later') model: self.
-	self deferredMessageRecipient: window currentWorld.
-	window
-		addMorph: ((PluggableListMorph
-				on: self
-				list: #processNameList
-				selected: #processListIndex
-				changeSelected: #processListIndex:
-				menu: #menuProcessList:
-				keystroke: #processListKey:from:)
-				enableDragNDrop: false)
-		frame: (0 @ 0 extent: 0.5 @ 0.5).
-	window
-		addMorph: ((PluggableListMorph
-				on: self
-				list: #stackNameList
-				selected: #stackListIndex
-				changeSelected: #stackListIndex:
-				menu: #stackListMenu:
-				keystroke: #stackListKey:from:)
-				enableDragNDrop: false)
-		frame: (0.5 @ 0.0 extent: 0.5 @ 0.5).
 
-	textModel setText: self methodText.
-	textModel clearUserEdits.
-	scrolledText := textModel newScrolledText beForSmalltalkScripting; yourself.
-	window
-		addMorph:  scrolledText
-		frame: (0 @ 0.5 corner: 1 @ 1).
-	window setUpdatablePanesFrom: #(#processNameList #stackNameList ).
-	(window setLabel: 'Process Browser') openInWorld.
+	| window |
+	window := self createWindow.
+	window openInWorld.
+	self mayBeStartCPUWatcher.
+	^ window
+]
+
+{ #category : #views }
+ProcessBrowser >> buildInWorld: aWorld [
+	| window |
+	
+	window := self createWindow .
+	 window openInWorld: aWorld.
 	self mayBeStartCPUWatcher.
 	^ window
 ]
@@ -444,6 +435,43 @@ ProcessBrowser >> changeStackListTo: aCollection [
         self changed: #stackNameList.
         self stackListIndex: 0.
 	textModel setText: self methodText.
+]
+
+{ #category : #private }
+ProcessBrowser >> createWindow [
+
+	| window scrolledText |
+	window := (SystemWindow labelled: 'later') model: self.
+	self deferredMessageRecipient: window currentWorld.
+	window
+		addMorph: ((PluggableListMorph
+				  on: self
+				  list: #processNameList
+				  selected: #processListIndex
+				  changeSelected: #processListIndex:
+				  menu: #menuProcessList:
+				  keystroke: #processListKey:from:) enableDragNDrop: false)
+		frame: (0 @ 0 extent: 0.5 @ 0.5).
+	window
+		addMorph: ((PluggableListMorph
+				  on: self
+				  list: #stackNameList
+				  selected: #stackListIndex
+				  changeSelected: #stackListIndex:
+				  menu: #stackListMenu:
+				  keystroke: #stackListKey:from:) enableDragNDrop: false)
+		frame: (0.5 @ 0.0 extent: 0.5 @ 0.5).
+
+	textModel setText: self methodText.
+	textModel clearUserEdits.
+	scrolledText := textModel newScrolledText
+		                beForSmalltalkScripting;
+		                yourself.
+	window addMorph: scrolledText frame: (0 @ 0.5 corner: 1 @ 1).
+	window setUpdatablePanesFrom: #( #processNameList #stackNameList ).
+	window setLabel: 'Process Browser'.
+
+	^ window
 ]
 
 { #category : #'process actions' }

@@ -146,23 +146,32 @@ ToolRegistry >> menuItems [
 
 { #category : #menu }
 ToolRegistry >> openClassBrowser [
-	^ self browser open
+	^ self browser openInWorld: self world
 ]
 
 { #category : #menu }
 ToolRegistry >> openFileList [
-	self fileList open
+
+	self fileList openInWorld: self world
+]
+
+{ #category : #menu }
+ToolRegistry >> openFinder [
+
+	self finder openInWorld: self world
 ]
 
 { #category : #menu }
 ToolRegistry >> openMonticelloBrowser [
-	self monticelloBrowser open
+
+	self monticelloBrowser openInWorld: self world
 ]
 
 { #category : #menu }
 ToolRegistry >> openProcessBrowser [
+
 	self using: #processBrowser do: [:tool |
-		tool open
+		tool openInWorld: self world
 		]
 ]
 
@@ -172,18 +181,26 @@ ToolRegistry >> openRecentChangesLog [
 ]
 
 { #category : #menu }
+ToolRegistry >> openSpotter [
+
+	^ self spotter openInWorld: self world
+]
+
+{ #category : #menu }
 ToolRegistry >> openTestRunner [
-	self using: #testRunner do: [:tool | tool open ]
+	self using: #testRunner do: [:tool | tool openInWorld: self world]
 ]
 
 { #category : #menu }
 ToolRegistry >> openTranscript [
-	^ self transcript open
+
+	^ self transcript openInWorld: self world
 ]
 
 { #category : #menu }
 ToolRegistry >> openWorkspace [
-	^ self workspace open
+
+	^ self workspace openInWorld: self world
 ]
 
 { #category : #registration }
