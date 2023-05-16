@@ -87,6 +87,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(#false 									(red muchDarker))
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
+			(#thisProcess 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
 			(patternArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
@@ -94,13 +95,13 @@ SHRBTextStyler class >> blueStyleTable [
 			(argument 								(blue muchDarker))
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
-			(instVar 								(blue muchDarker))
+			(instVar 								(cyan muchDarker))
 
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
-			(poolConstant 							(blue muchDarker))
-			(classVar 								(blue muchDarker))
-			(globalVar 								(blue muchDarker))
+			(poolConstant 							(cyan muchDarker))
+			(classVar 								(cyan muchDarker))
+			(globalVar 								(purple muchDarker))
 
 			(incompleteIdentifier 					blue italic)
 			(incompleteSelector 					nil  italic)
@@ -176,6 +177,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(#self 								'00CC6E')
 			(#super								'00CC6E')
 			(#thisContext 						'00CC6E')
+			(#thisProcess 						'00CC6E')
 			(#return 								'00CC6E' bold)
 
 			(patternArg 							'A7E2ED')
@@ -351,6 +353,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(#self 									'B58900')
 			(#super								'B58900')
 			(#thisContext 							'B58900')
+			(#thisProcess 							'B58900')
 			(#return 								'B58900' bold)
 
 			(patternArg 							('D33682'))
@@ -455,6 +458,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(#self 									'4d9a06')
 			(#super 								'4d9a06')
 			(#thisContext 							'4d9a06')
+			(#thisProcess 							'4d9a06')
 			(#return 								black bold)
 
 			(patternArg 							'2e3426' italic)
@@ -554,6 +558,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(#self 									'A31515')
 			(#super								'A31515')
 			(#thisContext 							'A31515')
+			(#thisProcess 							'A31515')
 			(#return 								'A31515' bold)
 
 			(patternArg 							(blue muchDarker))
@@ -791,7 +796,7 @@ SHRBTextStyler >> privateStyle: aText [
 	aText ifEmpty: [ ^ self ].
 	compiler := classOrMetaClass compiler
 		source: aText asString;
-		noPattern: self isForWorkspace ;
+		isScripting: self isForWorkspace;
 		requestor: workspace.
 
 	self plugins do: [ :each | compiler addParsePlugin: each ].
@@ -816,14 +821,16 @@ SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
-	| textLink global |
+
+	| textLink |
 	textLink := self resolveTextLinkFor: aVariableNode.
-	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink} ].
+	aVariableNode binding isGlobalVariable ifFalse: [ ^ { textLink } ].
 
-	global :=	 aVariableNode binding value.
-	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
+	aVariableNode binding isDeprecated ifFalse: [ ^ { textLink } ].
 
-	^{ textLink. TextEmphasis struckOut }
+	^ {
+		  textLink.
+		  TextEmphasis struckOut }
 ]
 
 { #category : #private }
@@ -934,6 +941,12 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+
+	self addStyle: #pragma from: aRBAnnotationMarkNode start to: aRBAnnotationMarkNode start.
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitArrayNode: anArrayNode [
 
 	anArrayNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
@@ -983,18 +996,32 @@ SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	"In a (valid) byte array all elements are of the same type, style the whole contents
-at once, but for ordinary literal arrays, style every node"
+	"We reuse the nested brackets/parenthesis style.
+	The main point it to easyly match opener and closer, nor necesarily to add type semanting"
 
-	(aRBLiteralArrayNode isForByteArray and: [
-		aRBLiteralArrayNode isFaulty not and: [
-			aRBLiteralArrayNode contents isNotEmpty
-		]
-	]) ifTrue: [
-			self addStyle: #number
-				from: aRBLiteralArrayNode start + 2
-				to: aRBLiteralArrayNode stop - 1 ]
-		ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]]
+	| style |
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [
+			style := self bracketStyleName.
+			bracketLevel := bracketLevel + 1 ]
+		ifFalse: [
+			style := self parenthesisStyleName.
+			parentheseLevel := parentheseLevel + 1 ].
+
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode startWithoutParentheses
+		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode stopWithoutParentheses
+		to: aRBLiteralArrayNode stopWithoutParentheses.
+
+	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
+
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [ bracketLevel := bracketLevel - 1 ]
+		ifFalse: [ parentheseLevel := parentheseLevel - 1 ]
 ]
 
 { #category : #visiting }
@@ -1023,9 +1050,11 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 
-	| style link |
+	| style link styleName |
+	
+	styleName := aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ].
 	style := aMessageNode selector isSelectorSymbol
-		         ifTrue: [ #selector ]
+		         ifTrue: [ styleName ]
 		         ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
@@ -1046,7 +1075,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
 	self visitMethodComments: aMethodNode.
-	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
+	aMethodNode arguments do: [ :argument | self visitNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
 	aMethodNode isDoIt ifFalse: [
 		aMethodNode selectorParts

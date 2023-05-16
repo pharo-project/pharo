@@ -44,11 +44,6 @@ RBPullUpMethodParametrizedTest >> constructor [
 	^ #pullUp:from:
 ]
 
-{ #category : #accessing }
-RBPullUpMethodParametrizedTest >> defaultNamespace [
-	^RBNamespace
-]
-
 { #category : #'failure tests' }
 RBPullUpMethodParametrizedTest >> testDoesntPullUpReferencesInstVar [
 	| refactoring class |

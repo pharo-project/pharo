@@ -7,5 +7,6 @@ String >> asPackage [
 
 { #category : #'*RPackage-Core' }
 String >> asPackageIfAbsent: aBlock [
-	^ RPackageOrganizer default packageNamed: self ifAbsent: aBlock
+
+	^ Smalltalk organization packageNamed: self ifAbsent: aBlock
 ]

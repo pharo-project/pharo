@@ -81,12 +81,6 @@ WeakKeyDictionaryTest >> size [
 	^1000
 ]
 
-{ #category : #requirements }
-WeakKeyDictionaryTest >> supportsNilKey [
-
-	^ true
-]
-
 { #category : #tests }
 WeakKeyDictionaryTest >> testClearing [
 	keys := nil.
@@ -111,14 +105,4 @@ WeakKeyDictionaryTest >> testGrow [
 
 	"Keys are gone but not yet finalized."
 	dict grow
-]
-
-{ #category : #'tests - printing' }
-WeakKeyDictionaryTest >> testStoreOnWithNegativeInteger [
-	| dictionary |
-	dictionary := { 'x' -> -1 } as: self classToBeTested.
-
-	self
-		assert: (String streamContents: [ :s | dictionary storeOn: s ])
-		equals: '((',self classToBeTested name,' new) add: (''x''-> -1); yourself)'
 ]

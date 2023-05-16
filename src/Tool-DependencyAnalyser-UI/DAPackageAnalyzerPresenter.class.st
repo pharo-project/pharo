@@ -35,7 +35,7 @@ DAPackageAnalyzerPresenter class >> selectedPackagesFrom: aBuilder [
 
 { #category : #examples }
 DAPackageAnalyzerPresenter class >> systemPackages [
-	^ RPackageOrganizer default packages collect: [ :package | package packageName asString ]
+	^ Smalltalk organization packages collect: [ :package | package packageName asString ]
 ]
 
 { #category : #accessing }

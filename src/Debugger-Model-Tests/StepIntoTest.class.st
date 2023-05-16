@@ -42,7 +42,7 @@ StepIntoTest >> testStepIntoDoIt [
 
 	| method node |
 	method := nil compiler
-		          noPattern: true;
+		          isScripting: true;
 		          compile: '| a b | a := 40. b := a + 2. ^ b'.
 	self settingUpSessionAndProcessAndContextForBlock: [
 		nil executeMethod: method ].

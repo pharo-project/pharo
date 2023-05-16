@@ -156,7 +156,7 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 	self context method isInstalled ifFalse: [
 		^ self selectedClass compiler
 			protocol: self selectedMessageCategoryName;
-			noPattern: self selectedMessageName isDoIt;
+			isScripting: self selectedMessageName isDoIt;
 			requestor: aNotifyer;
 			compile: aText.
 	].
@@ -166,7 +166,7 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 
 	^ classOrTraitOfMethod compiler
 		protocol: self selectedMessageCategoryName;
-		noPattern: self selectedMessageName isDoIt;
+		isScripting: self selectedMessageName isDoIt;
 		requestor: aNotifyer;
 		install: aText.
 
@@ -183,7 +183,7 @@ DebugContext >> selectedClass [
 DebugContext >> selectedMessageCategoryName [
 	"Answer the name of the message category of the message of the current context."
 
-	^ self selectedClass organization protocolNameOfElement: self selectedMessageName
+	^ self selectedClass protocolNameOfSelector: self selectedMessageName
 ]
 
 { #category : #accessing }

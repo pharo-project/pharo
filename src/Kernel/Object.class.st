@@ -441,7 +441,12 @@ Object >> basicAt: index [
 	Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
-	index isInteger ifTrue: [self errorSubscriptBounds: index].
+	index isInteger ifTrue: [
+		SubscriptOutOfBounds
+			signalFor: index
+			lowerBound: 1
+			upperBound: self basicSize
+			in: self ].
 	self errorNonIntegerIndex
 ]
 
@@ -632,7 +637,7 @@ Object >> clone [
 					ifTrue:
 						[class isCompiledMethodClass
 							ifTrue:
-								[class newMethod: self basicSize - self initialPC + 1 header: self header]
+								[class newMethod: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
 							ifFalse:
 								[class basicNew: self basicSize]]
 					ifFalse:

@@ -877,8 +877,11 @@ RBBrowserEnvironment >> whichCategoryIncludes: aClassName [
 
 { #category : #accessing }
 RBBrowserEnvironment >> whichProtocolIncludes: aSelector in: aClass [
+	"CyrilFerlicot: We should check if it is not better to return a protocol instead of a protocol name here and adapt the clients."
 
-	^ aClass organization protocolNameOfElement: aSelector ifAbsent: [ Protocol unclassified ]
+	^ (aClass protocolOfSelector: aSelector)
+		  ifNotNil: [ :protocol | protocol name ]
+		  ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #environments }

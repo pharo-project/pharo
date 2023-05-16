@@ -80,11 +80,6 @@ Behavior >> lookupVar: aName [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Behavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName
-]
-
-{ #category : #'*OpalCompiler-Core' }
 Behavior >> outerScope [
 	^self environment
 ]
@@ -121,8 +116,8 @@ Behavior >> recompileBasic: selector from: oldClass [
 				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				permitFaulty: true;
-				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
+	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod
 ]

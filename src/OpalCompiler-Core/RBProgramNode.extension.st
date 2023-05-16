@@ -1,14 +1,6 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoItForContext: aContext [
-	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
-
-	^ self asDoit semanticScope:
-		  (OCContextualDoItSemanticScope targetingContext: aContext)
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysis

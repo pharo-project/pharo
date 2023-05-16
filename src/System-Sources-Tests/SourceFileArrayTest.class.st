@@ -39,46 +39,6 @@ SourceFileArrayTest >> testAddressRange [
 ]
 
 { #category : #tests }
-SourceFileArrayTest >> testChangesFileAddressRange [
-	"Test file position to source pointer address translation for the changes file"
-
-	| sf i p a a2 |
-	sf := SourceFileArray new.
-	0 to: 16r1FFFFFFF by: 4093 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		i := sf fileIndexFromSourcePointer: a.
-		self assert: i equals: 2.
-		p := sf filePositionFromSourcePointer: a.
-		self assert: p equals: e.
-		a2 := sf sourcePointerFromFileIndex: 2 andPosition: p.
-		self assert: a2 equals: a ].
-	0 to: 16rFFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16r2000000 and: 16r2FFFFFF) ].
-	16r1000000 to: 16r1FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16r4000000 and: 16r4FFFFFF) ].
-	16r2000000 to: 16r2FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16r6000000 and: 16r6FFFFFF) ].
-	16r3000000 to: 16r3FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16r8000000 and: 16r8FFFFFF) ].
-	16r4000000 to: 16r4FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16rA000000 and: 16rAFFFFFF) ].
-	16r5000000 to: 16r5FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16rC000000 and: 16rCFFFFFF) ].
-	16r6000000 to: 16r6FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16rE000000 and: 16rEFFFFFF) ].
-	16r7000000 to: 16r7FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 2 andPosition: e.
-		self assert: (a between: 16r10000000 and: 16r10FFFFFF) ]
-]
-
-{ #category : #tests }
 SourceFileArrayTest >> testChangesFileStream [
 
 	self assert: SourceFiles changesFileStream isNotNil
@@ -86,69 +46,28 @@ SourceFileArrayTest >> testChangesFileStream [
 
 { #category : #tests }
 SourceFileArrayTest >> testFileIndexFromSourcePointer [
-	"Test derivation of file index for sources or changes file from source pointers"
 
 	| sf |
 	sf := SourceFileArray new.
 	"sources file mapping"
 	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r1000000).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r1000013).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r1FFFFFF).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r3000000).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r3000013).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r3FFFFFF).
-
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r5000000).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r5000013).
-	self assert: 1 equals: (sf fileIndexFromSourcePointer: 16r5FFFFFF).
-
-	(16r1000000 to: 16r1FFFFFF by: 811) do: [ :e | self assert: 1 equals: (sf fileIndexFromSourcePointer: e) ].
-	(16r3000000 to: 16r3FFFFFF by: 811) do: [ :e | self assert: 1 equals: (sf fileIndexFromSourcePointer: e) ].
 	"changes file mapping"
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r2000000).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r2000013).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r2FFFFFF).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r4000000).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r4000013).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r4FFFFFF).
-
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r6000000).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r6000013).
-	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r6FFFFFF).
-
-	(16r2000000 to: 16r2FFFFFF by: 811) do: [ :e | self assert: 2 equals: (sf fileIndexFromSourcePointer: e) ].
-	(16r4000000 to: 16r4FFFFFF by: 811) do: [ :e | self assert: 2 equals: (sf fileIndexFromSourcePointer: e) ].
-
-	"the following numeric ranges are unused but currently produces results as follows"
-	self assert: 0 equals: (sf fileIndexFromSourcePointer: 16r0000000).
-	self assert: 0 equals: (sf fileIndexFromSourcePointer: 16r0000013).
-	self assert: 0 equals: (sf fileIndexFromSourcePointer: 16r0FFFFFF)
+	self assert: 2 equals: (sf fileIndexFromSourcePointer: 16r2000001)
 ]
 
 { #category : #tests }
 SourceFileArrayTest >> testFilePositionFromSourcePointer [
 	"Test derivation of file position for sources or changes file from source pointers"
-
+	
 	| sf |
 	sf := SourceFileArray new.
 	"sources file"
-	self assert: 0 equals: (sf filePositionFromSourcePointer: 16r1000000).
-	self assert: 16r13 equals: (sf filePositionFromSourcePointer: 16r1000013).
-	self assert: 16rFFFFFF equals: (sf filePositionFromSourcePointer: 16r1FFFFFF).
-	self assert: 16r1000000 equals: (sf filePositionFromSourcePointer: 16r3000000).
-	self assert: 16r1000013 equals: (sf filePositionFromSourcePointer: 16r3000013).
-	self assert: 16r1FFFFFF equals: (sf filePositionFromSourcePointer: 16r3FFFFFF).
+	self assert: 0 equals: (sf filePositionFromSourcePointer: 0).
+	self assert: 16r80000 equals: (sf filePositionFromSourcePointer: 16r100000).
 	"changes file"
-	self assert: 0 equals: (sf filePositionFromSourcePointer: 16r2000000).
-	self assert: 16r13 equals: (sf filePositionFromSourcePointer: 16r2000013).
-	self assert: 16rFFFFFF equals: (sf filePositionFromSourcePointer: 16r2FFFFFF).
-	self assert: 16r1000000 equals: (sf filePositionFromSourcePointer: 16r4000000).
-	self assert: 16r1000013 equals: (sf filePositionFromSourcePointer: 16r4000013).
-	self assert: 16r1FFFFFF equals: (sf filePositionFromSourcePointer: 16r4FFFFFF).
-	"the following numeric ranges are unused but currently produces results as follows"
-	self assert: 0 equals: (sf filePositionFromSourcePointer: 16r0000000).
-	self assert: 16r13 equals: (sf filePositionFromSourcePointer: 16r0000013).
-	self assert: 16rFFFFFF equals: (sf filePositionFromSourcePointer: 16r0FFFFFF)
+	self assert: 0 equals: (sf filePositionFromSourcePointer: 1).
+	self assert: 16r800009 equals: (sf filePositionFromSourcePointer: 16r1000013).
+	
 ]
 
 { #category : #tests }
@@ -257,72 +176,19 @@ test!'
 
 { #category : #tests }
 SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
-	"Test valid input ranges"
 
 	| sf |
 	sf := SourceFileArray new.
 	self should: [ sf sourcePointerFromFileIndex: 0 andPosition: 0 ] raise: Error.
-	sf sourcePointerFromFileIndex: 1 andPosition: 0.
-	sf sourcePointerFromFileIndex: 2 andPosition: 0.
+	self assert: (sf sourcePointerFromFileIndex: 1 andPosition: 0) equals: 0.
+	self assert: (sf sourcePointerFromFileIndex: 2 andPosition: 0) equals: 1.
 	self should: [ sf sourcePointerFromFileIndex: 0 andPosition: 3 ] raise: Error.
 	self should: [ sf sourcePointerFromFileIndex: 1 andPosition: -1 ] raise: Error.
-	sf sourcePointerFromFileIndex: 1 andPosition: 16r1FFFFFF.
-	sf sourcePointerFromFileIndex: 1 andPosition: 16r2000000.
+	self assert: (sf sourcePointerFromFileIndex: 1 andPosition: 16r1FFFFFF) equals: 67108862.
+	self assert: (sf sourcePointerFromFileIndex: 1 andPosition: 16r2000000) equals:  67108864.
 	self should: [ sf sourcePointerFromFileIndex: 3 andPosition: 0 ] raise: Error.
 	self should: [ sf sourcePointerFromFileIndex: 4 andPosition: 0 ] raise: Error.
-	self assert: 16r1000000 equals: (sf sourcePointerFromFileIndex: 1 andPosition: 0).
-	self assert: 16r1000013 equals: (sf sourcePointerFromFileIndex: 1 andPosition: 16r13).
-	self assert: 16r1FFFFFF equals: (sf sourcePointerFromFileIndex: 1 andPosition: 16rFFFFFF).
-	self assert: 16r2000000 equals: (sf sourcePointerFromFileIndex: 2 andPosition: 0).
-	self assert: 16r2000013 equals: (sf sourcePointerFromFileIndex: 2 andPosition: 16r13).
-	self assert: 16r2FFFFFF equals: (sf sourcePointerFromFileIndex: 2 andPosition: 16rFFFFFF).
-	self assert: 16r3000000 equals: (sf sourcePointerFromFileIndex: 1 andPosition: 16r1000000).
-	self assert: 16r3000013 equals: (sf sourcePointerFromFileIndex: 1 andPosition: 16r1000013).
-	self assert: 16r3FFFFFF equals: (sf sourcePointerFromFileIndex: 1 andPosition: 16r1FFFFFF).
-	self assert: 16r4000000 equals: (sf sourcePointerFromFileIndex: 2 andPosition: 16r1000000).
-	self assert: 16r4000013 equals: (sf sourcePointerFromFileIndex: 2 andPosition: 16r1000013).
-	self assert: 16r4FFFFFF equals: (sf sourcePointerFromFileIndex: 2 andPosition: 16r1FFFFFF)
-]
 
-{ #category : #tests }
-SourceFileArrayTest >> testSourcesFileAddressRange [
-	"Test file position to source pointer address translation for the sources file"
-
-	| sf i p a a2 |
-	sf := SourceFileArray new.
-	0 to: 16r1FFFFFFF by: 4093 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		i := sf fileIndexFromSourcePointer: a.
-		self assert: i equals: 1.
-		p := sf filePositionFromSourcePointer: a.
-		self assert: p equals: e.
-		a2 := sf sourcePointerFromFileIndex: 1 andPosition: p.
-		self assert: a2 equals: a ].
-	0 to: 16rFFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16r1000000 and: 16r1FFFFFF) ].
-	16r1000000 to: 16r1FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16r3000000 and: 16r3FFFFFF) ].
-
-	16r2000000 to: 16r2FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16r5000000 and: 16r5FFFFFF) ].
-	16r3000000 to: 16r3FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16r7000000 and: 16r7FFFFFF) ].
-	16r4000000 to: 16r4FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16r9000000 and: 16r9FFFFFF) ].
-	16r5000000 to: 16r5FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16rB000000 and: 16rBFFFFFF) ].
-	16r6000000 to: 16r6FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16rD000000 and: 16rDFFFFFF) ].
-	16r7000000 to: 16r7FFFFFF by: 811 do: [ :e |
-		a := sf sourcePointerFromFileIndex: 1 andPosition: e.
-		self assert: (a between: 16rF000000 and: 16rFFFFFFF) ]
 ]
 
 { #category : #tests }

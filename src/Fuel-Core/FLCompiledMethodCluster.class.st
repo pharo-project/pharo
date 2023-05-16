@@ -30,20 +30,11 @@ FLCompiledMethodCluster class >> setTrailerWithNoChange [
 ]
 
 { #category : #configuring }
-FLCompiledMethodCluster class >> setTrailerWithNoSource [
+FLCompiledMethodCluster class >> setTrailerWithSourceCode [
 	"Make compiled methods be serialized without source code."
 
 	^ self transformationForSerializing: [:aCompiledMethod |
-		aCompiledMethod copyWithTrailerBytes: CompiledMethodTrailer empty ]
-]
-
-{ #category : #configuring }
-FLCompiledMethodCluster class >> setTrailerWithSourceCode [
-	"Make compiled methods be serialized with embedded source code."
-
-	^ self transformationForSerializing: [:aCompiledMethod | 
-		aCompiledMethod copyWithTrailerBytes: 
-			(CompiledMethodTrailer new sourceCode: aCompiledMethod sourceCode) ]
+		aCompiledMethod copy clearSourcePointer ]
 ]
 
 { #category : #accessing }

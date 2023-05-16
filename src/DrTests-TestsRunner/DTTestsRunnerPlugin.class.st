@@ -124,7 +124,8 @@ DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
 		self flag: #TODO. "Dirty"
 		testAnnouncement test class = TestSuite ifTrue: [
 			self announceStatusChanged:
-				('Running test {1}.' format: { testAnnouncement test name }) ] ].
+				('Running test {1}.' format: { testAnnouncement test name }) ] ]
+		for: self.
 	[ aResult mergeWith: (aTestSuite run) ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]

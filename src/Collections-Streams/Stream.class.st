@@ -135,8 +135,6 @@ Stream >> next: anInteger [
 
 { #category : #accessing }
 Stream >> next: anInteger put: anObject [
-	<compilerOptions: #(+ optionInlineTimesRepeat)>
-
 	"Make anObject be the next anInteger number of objects accessible by the
 	receiver. Answer anObject."
 
