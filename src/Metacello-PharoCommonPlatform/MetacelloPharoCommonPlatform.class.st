@@ -17,6 +17,12 @@ MetacelloPharoCommonPlatform >> authorName [
 	^ Author fullName
 ]
 
+{ #category : #utilities }
+MetacelloPharoCommonPlatform >> authorName: aString [
+
+	Author fullName: aString
+]
+
 { #category : #'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
 	
