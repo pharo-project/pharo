@@ -26,6 +26,16 @@ Class {
 	#category : #'Morphic-Base'
 }
 
+{ #category : #'instance creation' }
+MorphicWindowManager class >> open [
+
+	<script>
+	| manager |
+	manager := self new.
+	manager open.
+	^ manager
+]
+
 { #category : #accessing }
 MorphicWindowManager >> allAttributes [
 
@@ -50,7 +60,7 @@ MorphicWindowManager >> closeAllWindowToLeft: aWindow [
 	| index |
 	index := windows indexOf: aWindow.
 	index - 1 to: 1 by: -1 do: [ :m | (windows at: m) delete ].
-	taskBar updateTasks
+	self updateTasksBar
 ]
 
 { #category : #accessing }
@@ -58,9 +68,8 @@ MorphicWindowManager >> closeAllWindowToRight: aWindow [
 
 	| index |
 	index := windows indexOf: aWindow.
-	windows size to: index + 1 by: -1 do: [ :m | 
-	(windows at: m) delete ].
-	taskBar updateTasks
+	windows size to: index + 1 by: -1 do: [ :m | (windows at: m) delete ].
+	self updateTasksBar
 ]
 
 { #category : #accessing }
@@ -91,9 +100,8 @@ MorphicWindowManager >> deleteAll [
 { #category : #accessing }
 MorphicWindowManager >> ensureCloseAllWindows [
 
-	windows size to: 1 by: -1 do: [ :m | 
-		(windows at: m) ensureDelete ].
-	taskBar updateTasks
+	windows size to: 1 by: -1 do: [ :m | (windows at: m) ensureDelete ].
+	self updateTasksBar
 ]
 
 { #category : #closing }
@@ -151,6 +159,12 @@ MorphicWindowManager >> numberOfWindows [
 	^ windows size
 ]
 
+{ #category : #'instance creation' }
+MorphicWindowManager >> open [
+
+	self startupTaskbar
+]
+
 { #category : #accessing }
 MorphicWindowManager >> openNewWindowWithRoot: aMorph [
 
@@ -193,4 +207,10 @@ MorphicWindowManager >> startupTaskbar [
 MorphicWindowManager >> taskBar [
 
 	^ taskBar 
+]
+
+{ #category : #update }
+MorphicWindowManager >> updateTasksBar [
+
+	taskBarWindow ifNotNil: [taskBar ifNotNil: [ taskBar updateTasks ]]
 ]
