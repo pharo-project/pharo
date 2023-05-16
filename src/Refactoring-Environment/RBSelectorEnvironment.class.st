@@ -7,8 +7,8 @@ Class {
 	#name : #RBSelectorEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'classSelectors',
-		'metaClassSelectors'
+		#classSelectors,
+		#metaClassSelectors
 	],
 	#category : #'Refactoring-Environment'
 }

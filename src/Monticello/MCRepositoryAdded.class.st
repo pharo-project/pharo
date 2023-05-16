@@ -5,7 +5,7 @@ Class {
 	#name : #MCRepositoryAdded,
 	#superclass : #Announcement,
 	#instVars : [
-		'repository'
+		#repository
 	],
 	#category : #'Monticello-Announcements'
 }

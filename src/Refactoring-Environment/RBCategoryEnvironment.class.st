@@ -12,7 +12,7 @@ Class {
 	#name : #RBCategoryEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'categories'
+		#categories
 	],
 	#category : #'Refactoring-Environment'
 }

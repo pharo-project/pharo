@@ -10,10 +10,10 @@ Class {
 	#name : #ClyTextLineNumbersSwitchMorph,
 	#superclass : #ClyTextMorphToolMorph,
 	#instVars : [
-		'label'
+		#label
 	],
 	#classInstVars : [
-		'showLineNumbers'
+		#showLineNumbers
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }

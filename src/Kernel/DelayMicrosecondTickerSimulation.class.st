@@ -6,9 +6,9 @@ Class {
 	#name : #DelayMicrosecondTickerSimulation,
 	#superclass : #DelayMicrosecondTicker,
 	#instVars : [
-		'vmSimNow',
-		'vmSimTheTimerSemaphore',
-		'vmSimNextWakeupTick'
+		#vmSimNow,
+		#vmSimTheTimerSemaphore,
+		#vmSimNextWakeupTick
 	],
 	#category : #'Kernel-Delays'
 }

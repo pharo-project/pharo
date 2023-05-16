@@ -7,7 +7,7 @@ Class {
 	#name : #HashAndEqualsTestCase,
 	#superclass : #TestCase,
 	#instVars : [
-		'prototypes'
+		#prototypes
 	],
 	#category : #'SUnit-Core-Utilities'
 }

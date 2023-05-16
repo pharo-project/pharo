@@ -5,7 +5,7 @@ Class {
 	#name : #MCDefinitionIndex,
 	#superclass : #Object,
 	#instVars : [
-		'definitions'
+		#definitions
 	],
 	#category : #'Monticello-Patching'
 }

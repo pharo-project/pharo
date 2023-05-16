@@ -9,7 +9,7 @@ Class {
 	#name : #MCScanner,
 	#superclass : #Object,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'Monticello-Chunk Format'
 }

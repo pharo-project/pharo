@@ -5,7 +5,7 @@ Class {
 	#name : #CopiedLocalVariable,
 	#superclass : #LocalVariable,
 	#instVars : [
-		'originalVar'
+		#originalVar
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

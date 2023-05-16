@@ -59,8 +59,8 @@ Class {
 	#name : #FFIArray,
 	#superclass : #FFIExternalArray,
 	#classInstVars : [
-		'type',
-		'numberOfElements'
+		#type,
+		#numberOfElements
 	],
 	#category : #'UnifiedFFI-Objects'
 }

@@ -9,8 +9,8 @@ Class {
 	#name : #RBPatternMessageNode,
 	#superclass : #RBMessageNode,
 	#instVars : [
-		'isList',
-		'isCascadeList'
+		#isList,
+		#isCascadeList
 	],
 	#category : #'AST-Core-Pattern'
 }

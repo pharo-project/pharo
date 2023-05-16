@@ -25,10 +25,10 @@ Class {
 	#name : #Variable,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		#name
 	],
 	#classVars : [
-		'Properties'
+		#Properties
 	],
 	#category : #'Kernel-Variables'
 }
@@ -268,6 +268,7 @@ Variable >> name [
 
 { #category : #accessing }
 Variable >> name: aSymbol [
+	self assert: aSymbol isSymbol.
 	name := aSymbol
 ]
 

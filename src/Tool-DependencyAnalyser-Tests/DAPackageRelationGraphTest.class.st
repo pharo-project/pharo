@@ -2,19 +2,19 @@ Class {
 	#name : #DAPackageRelationGraphTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'packageCollectionAbstract',
-		'packageCollectionsSequenceable',
-		'packageKernel',
-		'packageRegexCore',
-		'packageStrings',
-		'aPackageRelationGraph',
-		'packagePackageDependencies',
-		'packageA',
-		'packageB',
-		'packageC',
-		'packageD',
-		'packageMorphicBase',
-		'packageTextCore'
+		#packageCollectionAbstract,
+		#packageCollectionsSequenceable,
+		#packageKernel,
+		#packageRegexCore,
+		#packageStrings,
+		#aPackageRelationGraph,
+		#packagePackageDependencies,
+		#packageA,
+		#packageB,
+		#packageC,
+		#packageD,
+		#packageMorphicBase,
+		#packageTextCore
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }
@@ -173,9 +173,9 @@ DAPackageRelationGraphTest >> testDependenciesFrom [
 	(aCollection at: 1) add: (DAPackageDependency from: packageA to: packageC).
 	(aCollection at: 2) add: (DAPackageDependency from: packageB to: packageC).
 	aCollection do: [ :package | aPackageRelationGraph addPackage: package ].
-	self assert: (aPackageRelationGraph dependenciesFrom: 'A') size equals: 2.
-	self assert: (aPackageRelationGraph dependenciesFrom: 'B') size equals: 1.
-	self assertEmpty: (aPackageRelationGraph dependenciesFrom: 'C')
+	self assert: (aPackageRelationGraph dependenciesFrom: #'A') size equals: 2.
+	self assert: (aPackageRelationGraph dependenciesFrom: #'B') size equals: 1.
+	self assertEmpty: (aPackageRelationGraph dependenciesFrom: #'C')
 ]
 
 { #category : #tests }

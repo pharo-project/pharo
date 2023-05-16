@@ -5,8 +5,8 @@ Class {
 	#name : #MCVersionDependency,
 	#superclass : #Object,
 	#instVars : [
-		'package',
-		'versionInfo'
+		#package,
+		#versionInfo
 	],
 	#category : #'Monticello-Versioning'
 }

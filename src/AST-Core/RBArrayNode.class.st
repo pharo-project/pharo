@@ -11,10 +11,10 @@ Class {
 	#name : #RBArrayNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'left',
-		'right',
-		'statements',
-		'periods'
+		#left,
+		#right,
+		#statements,
+		#periods
 	],
 	#category : #'AST-Core-Nodes'
 }

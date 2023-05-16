@@ -5,11 +5,11 @@ Class {
 	#name : #IRTranslator,
 	#superclass : #IRVisitor,
 	#instVars : [
-		'gen',
-		'currentScope',
-		'trailer',
-		'tempVectorStack',
-		'compilationContext'
+		#gen,
+		#currentScope,
+		#trailer,
+		#tempVectorStack,
+		#compilationContext
 	],
 	#category : #'OpalCompiler-Core-IR-Manipulation'
 }

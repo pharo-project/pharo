@@ -5,8 +5,8 @@ Class {
 	#name : #MCVersionSaved,
 	#superclass : #Announcement,
 	#instVars : [
-		'version',
-		'repository'
+		#version,
+		#repository
 	],
 	#category : #'Monticello-Announcements'
 }

@@ -7,7 +7,7 @@ Class {
 	#name : #UnresolvedVariable,
 	#superclass : #Variable,
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'AST-Core-Nodes'
 }

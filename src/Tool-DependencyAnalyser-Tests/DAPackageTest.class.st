@@ -2,11 +2,11 @@ Class {
 	#name : #DAPackageTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'aPackage',
-		'aSecondPackage',
-		'packageA',
-		'packageB',
-		'packageC'
+		#aPackage,
+		#aSecondPackage,
+		#packageA,
+		#packageB,
+		#packageC
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }

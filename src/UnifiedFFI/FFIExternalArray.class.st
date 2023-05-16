@@ -6,9 +6,9 @@ Class {
 	#name : #FFIExternalArray,
 	#superclass : #ArrayedCollection,
 	#instVars : [
-		'handle',
-		'type',
-		'size'
+		#handle,
+		#type,
+		#size
 	],
 	#category : #'UnifiedFFI-Deprecated'
 }

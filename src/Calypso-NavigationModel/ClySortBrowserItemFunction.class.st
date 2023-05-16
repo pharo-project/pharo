@@ -19,7 +19,7 @@ Class {
 	#name : #ClySortBrowserItemFunction,
 	#superclass : #ClySortFunction,
 	#instVars : [
-		'actualObjectSortFunction'
+		#actualObjectSortFunction
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

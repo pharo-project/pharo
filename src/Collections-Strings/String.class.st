@@ -92,16 +92,16 @@ Class {
 	#name : #String,
 	#superclass : #ArrayedCollection,
 	#classVars : [
-		'AsciiOrder',
-		'CSLineEnders',
-		'CSNonSeparators',
-		'CSSeparators',
-		'CaseInsensitiveOrder',
-		'CaseSensitiveOrder',
-		'LowercasingTable',
-		'Tokenish',
-		'TypeTable',
-		'UppercasingTable'
+		#AsciiOrder,
+		#CSLineEnders,
+		#CSNonSeparators,
+		#CSSeparators,
+		#CaseInsensitiveOrder,
+		#CaseSensitiveOrder,
+		#LowercasingTable,
+		#Tokenish,
+		#TypeTable,
+		#UppercasingTable
 	],
 	#category : #'Collections-Strings-Base'
 }

@@ -36,9 +36,9 @@ Class {
 	#name : #ClyBrowserQueryCache,
 	#superclass : #Object,
 	#instVars : [
-		'startPosition',
-		'items',
-		'sizeLimit'
+		#startPosition,
+		#items,
+		#sizeLimit
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

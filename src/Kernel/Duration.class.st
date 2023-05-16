@@ -5,11 +5,11 @@ Class {
 	#name : #Duration,
 	#superclass : #Magnitude,
 	#instVars : [
-		'nanos',
-		'seconds'
+		#nanos,
+		#seconds
 	],
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : #'Kernel-Chronology'
 }

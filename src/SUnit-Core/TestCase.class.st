@@ -82,16 +82,16 @@ Class {
 	#name : #TestCase,
 	#superclass : #TestAsserter,
 	#instVars : [
-		'testSelector',
-		'expectedFails'
+		#testSelector,
+		#expectedFails
 	],
 	#classVars : [
-		'Announcers',
-		'DefaultTimeLimit',
-		'HistoryAnnouncer'
+		#Announcers,
+		#DefaultTimeLimit,
+		#HistoryAnnouncer
 	],
 	#classInstVars : [
-		'history'
+		#history
 	],
 	#category : #'SUnit-Core-Kernel'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #MCPackageModified,
 	#superclass : #Announcement,
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : #'Monticello-Announcements'
 }

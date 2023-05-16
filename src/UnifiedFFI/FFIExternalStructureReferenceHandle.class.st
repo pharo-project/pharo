@@ -23,8 +23,8 @@ Class {
 	#name : #FFIExternalStructureReferenceHandle,
 	#superclass : #Object,
 	#instVars : [
-		'handle',
-		'startOffset'
+		#handle,
+		#startOffset
 	],
 	#category : #'UnifiedFFI-External-StructureHandling'
 }

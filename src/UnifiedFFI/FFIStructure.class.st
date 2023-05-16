@@ -109,10 +109,10 @@ Class {
 	#name : #FFIStructure,
 	#superclass : #ExternalStructure,
 	#classVars : [
-		'LastCompilationPlatform'
+		#LastCompilationPlatform
 	],
 	#classInstVars : [
-		'externalStructureAlignment'
+		#externalStructureAlignment
 	],
 	#category : #'UnifiedFFI-Objects'
 }

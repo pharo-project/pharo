@@ -6,8 +6,8 @@ Class {
 	#name : #ArgumentsCountMismatch,
 	#superclass : #Error,
 	#instVars : [
-		'expectedArgumentsCount',
-		'calledArgumentsCount'
+		#expectedArgumentsCount,
+		#calledArgumentsCount
 	],
 	#category : #'Kernel-Exceptions'
 }

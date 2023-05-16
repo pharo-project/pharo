@@ -19,10 +19,10 @@ Class {
 	#name : #ASTCache,
 	#superclass : #WeakIdentityKeyDictionary,
 	#classVars : [
-		'CacheMissStrategy'
+		#CacheMissStrategy
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : #'AST-Core-Parser'
 }

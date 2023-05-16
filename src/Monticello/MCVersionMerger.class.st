@@ -5,8 +5,8 @@ Class {
 	#name : #MCVersionMerger,
 	#superclass : #Object,
 	#instVars : [
-		'records',
-		'merger'
+		#records,
+		#merger
 	],
 	#category : #'Monticello-Versioning'
 }

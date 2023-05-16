@@ -10,7 +10,7 @@ Class {
 	#name : #RBPatternBlockNode,
 	#superclass : #RBBlockNode,
 	#instVars : [
-		'valueBlock'
+		#valueBlock
 	],
 	#category : #'AST-Core-Pattern'
 }
@@ -23,7 +23,7 @@ RBPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [
 { #category : #matching }
 RBPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
 	| name index vars |
-	name := aString.
+	name := aString asSymbol.
 	vars := aRBBlockNode allDefinedVariables.
 	index := 0.
 	[vars includes: name] whileTrue:

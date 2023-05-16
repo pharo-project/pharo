@@ -5,7 +5,7 @@ Class {
 	#name : #PluggableTextAttribute,
 	#superclass : #TextAction,
 	#instVars : [
-		'evalBlock'
+		#evalBlock
 	],
 	#category : #'Text-Core-Attributes'
 }

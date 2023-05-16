@@ -13,10 +13,10 @@ Class {
 	#name : #RBMessageNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'receiver',
-		'selector',
-		'keywordsPositions',
-		'arguments'
+		#receiver,
+		#selector,
+		#keywordsPositions,
+		#arguments
 	],
 	#category : #'AST-Core-Nodes'
 }

@@ -10,7 +10,7 @@ Class {
 	#name : #FFIVariableArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

@@ -5,10 +5,10 @@ Class {
 	#name : #FFIExternalStructureFlatLayoutField,
 	#superclass : #Object,
 	#instVars : [
-		'registerClass',
-		'offset',
-		'size',
-		'alignment'
+		#registerClass,
+		#offset,
+		#size,
+		#alignment
 	],
 	#category : #'UnifiedFFI-External-StructureHandling'
 }

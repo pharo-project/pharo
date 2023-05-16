@@ -7,9 +7,9 @@ Class {
 	#name : #IRPushFullClosure,
 	#superclass : #IRInstruction,
 	#instVars : [
-		'compiledBlock',
-		'copiedValues',
-		'outerContextNeeded'
+		#compiledBlock,
+		#copiedValues,
+		#outerContextNeeded
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

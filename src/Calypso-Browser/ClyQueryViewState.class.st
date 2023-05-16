@@ -28,8 +28,8 @@ Class {
 	#name : #ClyQueryViewState,
 	#superclass : #Object,
 	#instVars : [
-		'dataSource',
-		'selection'
+		#dataSource,
+		#selection
 	],
 	#category : #'Calypso-Browser-NavigationHistory'
 }

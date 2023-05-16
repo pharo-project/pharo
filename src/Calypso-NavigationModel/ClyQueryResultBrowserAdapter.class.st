@@ -21,7 +21,7 @@ Class {
 	#name : #ClyQueryResultBrowserAdapter,
 	#superclass : #Object,
 	#instVars : [
-		'actualResult'
+		#actualResult
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

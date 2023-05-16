@@ -5,14 +5,14 @@ Class {
 	#name : #Behavior,
 	#superclass : #Object,
 	#instVars : [
-		'superclass',
-		'methodDict',
-		'format',
-		'layout'
+		#superclass,
+		#methodDict,
+		#format,
+		#layout
 	],
 	#classVars : [
-		'ClassProperties',
-		'ObsoleteSubclasses'
+		#ClassProperties,
+		#ObsoleteSubclasses
 	],
 	#category : #'Kernel-Classes'
 }
@@ -1673,7 +1673,7 @@ Behavior >> whichClassDefinesClassVar: aString [
 { #category : #queries }
 Behavior >> whichClassDefinesInstVar: aString [
 	^self
-		whichSuperclassSatisfies: [:aClass | aClass instVarNames includes: aString]
+		whichSuperclassSatisfies: [:aClass | aClass instVarNames includes: aString asSymbol]
 ]
 
 { #category : #'testing - method dictionary' }

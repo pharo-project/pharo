@@ -9,11 +9,11 @@ Class {
 	#name : #InstructionStream,
 	#superclass : #Object,
 	#instVars : [
-		'sender',
-		'pc'
+		#sender,
+		#pc
 	],
 	#classVars : [
-		'SpecialConstants'
+		#SpecialConstants
 	],
 	#category : #'Kernel-Methods'
 }

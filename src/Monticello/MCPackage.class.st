@@ -9,7 +9,7 @@ Class {
 	#name : #MCPackage,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : #'Monticello-Base'
 }

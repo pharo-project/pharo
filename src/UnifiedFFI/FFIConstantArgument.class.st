@@ -9,7 +9,7 @@ Class {
 	#name : #FFIConstantArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

@@ -21,17 +21,17 @@ Class {
 	#name : #RBMethodNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'scope',
-		'selector',
-		'keywordsPositions',
-		'body',
-		'source',
-		'arguments',
-		'pragmas',
-		'replacements',
-		'nodeReplacements',
-		'compilationContext',
-		'bcToASTCache'
+		#scope,
+		#selector,
+		#keywordsPositions,
+		#body,
+		#source,
+		#arguments,
+		#pragmas,
+		#replacements,
+		#nodeReplacements,
+		#compilationContext,
+		#bcToASTCache
 	],
 	#category : #'AST-Core-Nodes'
 }

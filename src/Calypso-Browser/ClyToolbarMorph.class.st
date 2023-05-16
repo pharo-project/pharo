@@ -23,7 +23,7 @@ Class {
 	#name : #ClyToolbarMorph,
 	#superclass : #PanelMorph,
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : #'Calypso-Browser-Toolbar'
 }

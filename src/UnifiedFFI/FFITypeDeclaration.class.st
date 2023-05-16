@@ -6,9 +6,9 @@ Class {
 	#name : #FFITypeDeclaration,
 	#superclass : #Object,
 	#instVars : [
-		'name',
-		'arity',
-		'resolvedType'
+		#name,
+		#arity,
+		#resolvedType
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

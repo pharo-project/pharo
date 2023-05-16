@@ -9,12 +9,12 @@ Class {
 	#name : #RBSimpleFormatter,
 	#superclass : #RBAbstractFormatter,
 	#instVars : [
-		'codeStream',
-		'indent',
-		'lineStart'
+		#codeStream,
+		#indent,
+		#lineStart
 	],
 	#classVars : [
-		'FormatAsYouReadPolicy'
+		#FormatAsYouReadPolicy
 	],
 	#category : #'AST-Core-Formatter'
 }

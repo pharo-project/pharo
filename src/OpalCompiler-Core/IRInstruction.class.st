@@ -21,9 +21,9 @@ Class {
 	#name : #IRInstruction,
 	#superclass : #Object,
 	#instVars : [
-		'sourceNode',
-		'bytecodeIndex',
-		'sequence'
+		#sourceNode,
+		#bytecodeIndex,
+		#sequence
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

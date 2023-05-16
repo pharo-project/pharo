@@ -19,16 +19,16 @@ Class {
 	#name : #FFICallout,
 	#superclass : #Object,
 	#instVars : [
-		'fnSpec',
-		'options',
-		'requestor',
-		'methodArgs',
-		'receiver',
-		'method',
-		'stringEncodingStrategy'
+		#fnSpec,
+		#options,
+		#requestor,
+		#methodArgs,
+		#receiver,
+		#method,
+		#stringEncodingStrategy
 	],
 	#classVars : [
-		'TypeAliases'
+		#TypeAliases
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -197,7 +197,7 @@ FFICallout >> loaderForArgNamed: argName indirectIndex: anIndex [
 FFICallout >> loaderFromMethodArgsNamed: argName [
 	| index |
 	methodArgs ifNil: [ ^ nil ].
-	index := methodArgs indexOf: argName ifAbsent: [ nil ].
+	index := methodArgs indexOf: argName asSymbol ifAbsent: [ nil ].
 	^ index ifNotNil: [
 		"ok, this is a method argument"
 		^ FFIMethodArgument new

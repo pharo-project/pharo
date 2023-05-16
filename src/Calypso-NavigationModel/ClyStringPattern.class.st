@@ -18,7 +18,7 @@ Class {
 	#name : #ClyStringPattern,
 	#superclass : #Object,
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

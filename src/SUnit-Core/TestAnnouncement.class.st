@@ -5,7 +5,7 @@ Class {
 	#name : #TestAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
-		'test'
+		#test
 	],
 	#category : #'SUnit-Core-Kernel'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #FFIExternalValueHolderType,
 	#superclass : #FFIExternalReferenceType,
 	#instVars : [
-		'representationType'
+		#representationType
 	],
 	#category : #'UnifiedFFI-Types'
 }

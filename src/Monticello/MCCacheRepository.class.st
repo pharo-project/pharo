@@ -7,12 +7,12 @@ Class {
 	#name : #MCCacheRepository,
 	#superclass : #MCDirectoryRepository,
 	#instVars : [
-		'packageCaches',
-		'seenFiles',
-		'cacheEnabled'
+		#packageCaches,
+		#seenFiles,
+		#cacheEnabled
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : #'Monticello-Repositories'
 }

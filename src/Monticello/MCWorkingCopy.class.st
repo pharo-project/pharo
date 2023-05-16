@@ -12,10 +12,10 @@ Class {
 	#name : #MCWorkingCopy,
 	#superclass : #MCPackageManager,
 	#instVars : [
-		'ancestry',
-		'counter',
-		'repositoryGroup',
-		'requiredPackages'
+		#ancestry,
+		#counter,
+		#repositoryGroup,
+		#requiredPackages
 	],
 	#category : #'Monticello-Versioning'
 }

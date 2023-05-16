@@ -9,7 +9,7 @@ Class {
 	#name : #FFIAbstract64BitsArgumentReader,
 	#superclass : #FFICallbackArgumentReader,
 	#instVars : [
-		'currentRegisterIndex'
+		#currentRegisterIndex
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }

@@ -13,14 +13,14 @@ Class {
 	#name : #MCPackageManager,
 	#superclass : #Model,
 	#instVars : [
-		'package',
-		'modified'
+		#package,
+		#modified
 	],
 	#classVars : [
-		'PrivateAnnouncer'
+		#PrivateAnnouncer
 	],
 	#classInstVars : [
-		'registry'
+		#registry
 	],
 	#category : #'Monticello-Versioning'
 }

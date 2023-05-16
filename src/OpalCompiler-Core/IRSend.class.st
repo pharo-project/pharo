@@ -5,8 +5,8 @@ Class {
 	#name : #IRSend,
 	#superclass : #IRInstruction,
 	#instVars : [
-		'selector',
-		'superOf'
+		#selector,
+		#superOf
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

@@ -13,8 +13,8 @@ Class {
 	#name : #OCDynamicASTCompilerPlugin,
 	#superclass : #OCASTCompilerPlugin,
 	#instVars : [
-		'priority',
-		'transformBlock'
+		#priority,
+		#transformBlock
 	],
 	#category : #'OpalCompiler-Core-Plugins'
 }

@@ -25,17 +25,17 @@ Class {
 	#name : #DateAndTime,
 	#superclass : #Magnitude,
 	#instVars : [
-		'seconds',
-		'offset',
-		'julianDayNumber',
-		'nanos'
+		#seconds,
+		#offset,
+		#julianDayNumber,
+		#nanos
 	],
 	#classVars : [
-		'ClockProvider',
-		'LocalTimeZoneCache'
+		#ClockProvider,
+		#LocalTimeZoneCache
 	],
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : #'Kernel-Chronology'
 }

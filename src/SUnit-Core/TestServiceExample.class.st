@@ -17,10 +17,10 @@ Class {
 	#name : #TestServiceExample,
 	#superclass : #TestExecutionService,
 	#instVars : [
-		'forkedProcesses',
-		'isCleanUpDone',
-		'isCompletedTestHandled',
-		'signaledExceptions'
+		#forkedProcesses,
+		#isCleanUpDone,
+		#isCompletedTestHandled,
+		#signaledExceptions
 	],
 	#category : #'SUnit-Core-Kernel'
 }

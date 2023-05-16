@@ -5,11 +5,11 @@ Class {
 	#name : #MCVersion,
 	#superclass : #Object,
 	#instVars : [
-		'package',
-		'info',
-		'snapshot',
-		'dependencies',
-		'completeSnapshot'
+		#package,
+		#info,
+		#snapshot,
+		#dependencies,
+		#completeSnapshot
 	],
 	#category : #'Monticello-Versioning'
 }

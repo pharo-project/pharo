@@ -5,12 +5,12 @@ Class {
 	#name : #MCVersionInfo,
 	#superclass : #MCAncestry,
 	#instVars : [
-		'id',
-		'name',
-		'message',
-		'date',
-		'time',
-		'author'
+		#id,
+		#name,
+		#message,
+		#date,
+		#time,
+		#author
 	],
 	#category : #'Monticello-Versioning'
 }

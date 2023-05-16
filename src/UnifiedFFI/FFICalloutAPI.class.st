@@ -5,14 +5,14 @@ Class {
 	#name : #FFICalloutAPI,
 	#superclass : #Object,
 	#instVars : [
-		'options',
-		'callingConvention',
-		'senderContext',
-		'uFFIEntryPointContext',
-		'fixedArgumentCount'
+		#options,
+		#callingConvention,
+		#senderContext,
+		#uFFIEntryPointContext,
+		#fixedArgumentCount
 	],
 	#classVars : [
-		'CalloutAPIClass'
+		#CalloutAPIClass
 	],
 	#category : #'UnifiedFFI-Callouts'
 }

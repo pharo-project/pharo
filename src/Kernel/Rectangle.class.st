@@ -24,8 +24,8 @@ Class {
 	#name : #Rectangle,
 	#superclass : #Object,
 	#instVars : [
-		'origin',
-		'corner'
+		#origin,
+		#corner
 	],
 	#category : #'Kernel-BasicObjects'
 }

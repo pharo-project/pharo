@@ -13,8 +13,8 @@ Class {
 	#name : #RBToken,
 	#superclass : #Object,
 	#instVars : [
-		'sourcePointer',
-		'comments'
+		#sourcePointer,
+		#comments
 	],
 	#category : #'AST-Core-Tokens'
 }

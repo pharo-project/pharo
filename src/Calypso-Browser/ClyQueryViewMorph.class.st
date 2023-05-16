@@ -105,21 +105,21 @@ Class {
 	#name : #ClyQueryViewMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'table',
-		'browser',
-		'treeStructure',
-		'selection',
-		'desiredSelection',
-		'shouldRestoreSelection',
-		'highlighting',
-		'changesWasInitiatedByUser',
-		'navigationSelector',
-		'dataSourceClass',
-		'hoverOverDropItemStartTime',
-		'targetDropItem'
+		#table,
+		#browser,
+		#treeStructure,
+		#selection,
+		#desiredSelection,
+		#shouldRestoreSelection,
+		#highlighting,
+		#changesWasInitiatedByUser,
+		#navigationSelector,
+		#dataSourceClass,
+		#hoverOverDropItemStartTime,
+		#targetDropItem
 	],
 	#classVars : [
-		'DragAndDropDelay'
+		#DragAndDropDelay
 	],
 	#category : #'Calypso-Browser-Table'
 }

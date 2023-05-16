@@ -18,8 +18,8 @@ Class {
 	#name : #ClyItemGroup,
 	#superclass : #Object,
 	#instVars : [
-		'name',
-		'priority'
+		#name,
+		#priority
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

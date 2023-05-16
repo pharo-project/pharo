@@ -45,14 +45,14 @@ Class {
 	#name : #RBBlockNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'left',
-		'right',
-		'colons',
-		'arguments',
-		'bar',
-		'body',
-		'scope',
-		'bcToASTCache'
+		#left,
+		#right,
+		#colons,
+		#arguments,
+		#bar,
+		#body,
+		#scope,
+		#bcToASTCache
 	],
 	#category : #'AST-Core-Nodes'
 }

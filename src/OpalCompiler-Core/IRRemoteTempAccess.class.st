@@ -5,7 +5,7 @@ Class {
 	#name : #IRRemoteTempAccess,
 	#superclass : #IRTempAccess,
 	#instVars : [
-		'tempVectorName'
+		#tempVectorName
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

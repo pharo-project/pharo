@@ -11,7 +11,7 @@ Class {
 	#name : #ClyFullEnvironmentUpdateStrategy,
 	#superclass : #ClyEnvironmentUpdateStrategy,
 	#instVars : [
-		'changes'
+		#changes
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

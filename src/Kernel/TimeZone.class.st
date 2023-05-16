@@ -12,12 +12,12 @@ Class {
 	#name : #TimeZone,
 	#superclass : #AbstractTimeZone,
 	#instVars : [
-		'offset',
-		'abbreviation',
-		'name'
+		#offset,
+		#abbreviation,
+		#name
 	],
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : #'Kernel-Chronology'
 }

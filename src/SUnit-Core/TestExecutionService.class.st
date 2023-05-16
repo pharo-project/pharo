@@ -43,11 +43,11 @@ Class {
 	#name : #TestExecutionService,
 	#superclass : #Object,
 	#instVars : [
-		'executionEnvironment',
-		'isEnabled'
+		#executionEnvironment,
+		#isEnabled
 	],
 	#classInstVars : [
-		'isEnabled'
+		#isEnabled
 	],
 	#category : #'SUnit-Core-Kernel'
 }

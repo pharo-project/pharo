@@ -12,7 +12,7 @@ Class {
 	#name : #Metaclass,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'thisClass'
+		#thisClass
 	],
 	#category : #'Kernel-Classes'
 }

@@ -37,9 +37,9 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'outerContext',
-		'compiledBlock',
-		'numArgs'
+		#outerContext,
+		#compiledBlock,
+		#numArgs
 	],
 	#category : #'Kernel-Methods'
 }

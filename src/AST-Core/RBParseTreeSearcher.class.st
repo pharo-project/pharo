@@ -65,11 +65,11 @@ Class {
 	#name : #RBParseTreeSearcher,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'searches',
-		'answer',
-		'argumentSearches',
-		'context',
-		'messages'
+		#searches,
+		#answer,
+		#argumentSearches,
+		#context,
+		#messages
 	],
 	#category : #'AST-Core-Matching'
 }

@@ -15,11 +15,11 @@ Class {
 	#name : #RBPragmaNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'selector',
-		'keywordsPositions',
-		'arguments',
-		'left',
-		'right'
+		#selector,
+		#keywordsPositions,
+		#arguments,
+		#left,
+		#right
 	],
 	#category : #'AST-Core-Nodes'
 }

@@ -54,7 +54,7 @@ Class {
 	#name : #Object,
 	#superclass : #ProtoObject,
 	#classVars : [
-		'DependentsFields'
+		#DependentsFields
 	],
 	#category : #'Kernel-Objects'
 }

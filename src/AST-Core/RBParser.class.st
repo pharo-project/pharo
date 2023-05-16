@@ -17,13 +17,13 @@ Class {
 	#name : #RBParser,
 	#superclass : #Object,
 	#instVars : [
-		'scanner',
-		'currentToken',
-		'nextToken',
-		'errorBlock',
-		'source',
-		'comments',
-		'pragmas'
+		#scanner,
+		#currentToken,
+		#nextToken,
+		#errorBlock,
+		#source,
+		#comments,
+		#pragmas
 	],
 	#category : #'AST-Core-Parser'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #FFIInstVarArgument,
 	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
-		'argName'
+		#argName
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

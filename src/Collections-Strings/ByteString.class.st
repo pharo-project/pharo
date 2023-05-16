@@ -7,7 +7,7 @@ Class {
 	#superclass : #String,
 	#type : #bytes,
 	#classVars : [
-		'NonAsciiMap'
+		#NonAsciiMap
 	],
 	#category : #'Collections-Strings-Base'
 }

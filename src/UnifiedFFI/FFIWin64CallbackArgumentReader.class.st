@@ -20,7 +20,7 @@ Class {
 	#name : #FFIWin64CallbackArgumentReader,
 	#superclass : #FFIAbstract64BitsArgumentReader,
 	#instVars : [
-		'currentParameterIndex'
+		#currentParameterIndex
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }

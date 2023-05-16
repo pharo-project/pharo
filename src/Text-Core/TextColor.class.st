@@ -5,7 +5,7 @@ Class {
 	#name : #TextColor,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'color'
+		#color
 	],
 	#category : #'Text-Core-Attributes'
 }

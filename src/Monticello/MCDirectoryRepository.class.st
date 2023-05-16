@@ -5,10 +5,10 @@ Class {
 	#name : #MCDirectoryRepository,
 	#superclass : #MCFileBasedRepository,
 	#instVars : [
-		'directory'
+		#directory
 	],
 	#classVars : [
-		'DefaultDirectoryName'
+		#DefaultDirectoryName
 	],
 	#category : #'Monticello-Repositories'
 }

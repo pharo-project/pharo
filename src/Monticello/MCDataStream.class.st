@@ -24,14 +24,14 @@ Class {
 	#name : #MCDataStream,
 	#superclass : #Stream,
 	#instVars : [
-		'byteStream',
-		'topCall',
-		'basePos'
+		#byteStream,
+		#topCall,
+		#basePos
 	],
 	#classVars : [
-		'ReadSelectors',
-		'TypeMap',
-		'WriteSelectors'
+		#ReadSelectors,
+		#TypeMap,
+		#WriteSelectors
 	],
 	#category : #'Monticello-Storing'
 }

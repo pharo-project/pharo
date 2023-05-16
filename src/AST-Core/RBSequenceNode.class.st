@@ -14,11 +14,11 @@ Class {
 	#name : #RBSequenceNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'leftBar',
-		'rightBar',
-		'statements',
-		'periods',
-		'temporaries'
+		#leftBar,
+		#rightBar,
+		#statements,
+		#periods,
+		#temporaries
 	],
 	#category : #'AST-Core-Nodes'
 }

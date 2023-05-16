@@ -7,9 +7,9 @@ Class {
 	#name : #Message,
 	#superclass : #Object,
 	#instVars : [
-		'selector',
-		'args',
-		'lookupClass'
+		#selector,
+		#args,
+		#lookupClass
 	],
 	#category : #'Kernel-Methods'
 }

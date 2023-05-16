@@ -19,7 +19,7 @@ Class {
 	#name : #Trait,
 	#superclass : #Class,
 	#instVars : [
-		'users'
+		#users
 	],
 	#category : #'TraitsV2-Base'
 }

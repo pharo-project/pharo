@@ -9,7 +9,7 @@ Class {
 	#name : #ClyDynamicBallonTooltip,
 	#superclass : #Object,
 	#instVars : [
-		'block'
+		#block
 	],
 	#category : #'Calypso-Browser-UI'
 }

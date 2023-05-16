@@ -7,7 +7,7 @@ Class {
 	#name : #TaRemoveSlot,
 	#superclass : #TaSingleComposition,
 	#instVars : [
-		'removedSlots'
+		#removedSlots
 	],
 	#category : #'TraitsV2-Compositions'
 }

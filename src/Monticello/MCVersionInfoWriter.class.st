@@ -7,7 +7,7 @@ Class {
 	#name : #MCVersionInfoWriter,
 	#superclass : #MCWriter,
 	#instVars : [
-		'written'
+		#written
 	],
 	#category : #'Monticello-Storing'
 }

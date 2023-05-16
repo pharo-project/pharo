@@ -6,9 +6,9 @@ Class {
 	#name : #FFIFunctionArgument,
 	#superclass : #Object,
 	#instVars : [
-		'loader',
-		'resolvedType',
-		'type'
+		#loader,
+		#resolvedType,
+		#type
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

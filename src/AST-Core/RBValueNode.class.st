@@ -17,7 +17,7 @@ Class {
 	#name : #RBValueNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'parentheses'
+		#parentheses
 	],
 	#category : #'AST-Core-Nodes'
 }

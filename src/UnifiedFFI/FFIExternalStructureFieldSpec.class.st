@@ -5,7 +5,7 @@ Class {
 	#name : #FFIExternalStructureFieldSpec,
 	#superclass : #Object,
 	#instVars : [
-		'fields'
+		#fields
 	],
 	#category : #'UnifiedFFI-External-StructureHandling'
 }

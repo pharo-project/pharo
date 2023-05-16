@@ -9,9 +9,9 @@ Class {
 	#name : #ClyNotebookPageAction,
 	#superclass : #Object,
 	#instVars : [
-		'action',
-		'icon',
-		'label'
+		#action,
+		#icon,
+		#label
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

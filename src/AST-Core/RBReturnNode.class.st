@@ -11,8 +11,8 @@ Class {
 	#name : #RBReturnNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'value',
-		'start'
+		#value,
+		#start
 	],
 	#category : #'AST-Core-Nodes'
 }

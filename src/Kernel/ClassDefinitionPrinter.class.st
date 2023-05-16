@@ -56,11 +56,11 @@ Class {
 	#name : #ClassDefinitionPrinter,
 	#superclass : #Object,
 	#instVars : [
-		'forClass'
+		#forClass
 	],
 	#classVars : [
-		'DisplayEmptySlots',
-		'ShowFluidClassDefinition'
+		#DisplayEmptySlots,
+		#ShowFluidClassDefinition
 	],
 	#category : #'Kernel-ClassDefinitionPrinter'
 }

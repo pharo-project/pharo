@@ -22,19 +22,19 @@ Class {
 	#name : #Process,
 	#superclass : #Link,
 	#instVars : [
-		'suspendedContext',
-		'priority',
-		'myList',
-		'name',
-		'env',
-		'effectiveProcess',
-		'terminating',
-		'level'
+		#suspendedContext,
+		#priority,
+		#myList,
+		#name,
+		#env,
+		#effectiveProcess,
+		#terminating,
+		#level
 	],
 	#classVars : [
-		'InheritablePSKeys',
-		'PSKeys',
-		'PSKeysSema'
+		#InheritablePSKeys,
+		#PSKeys,
+		#PSKeysSema
 	],
 	#category : #'Kernel-Processes'
 }

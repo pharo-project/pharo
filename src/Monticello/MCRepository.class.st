@@ -5,10 +5,10 @@ Class {
 	#name : #MCRepository,
 	#superclass : #Object,
 	#instVars : [
-		'creationTemplate'
+		#creationTemplate
 	],
 	#classVars : [
-		'Settings'
+		#Settings
 	],
 	#category : #'Monticello-Repositories'
 }

@@ -19,8 +19,8 @@ Class {
 	#name : #ClyBrowserDialogContext,
 	#superclass : #AnnotationContext,
 	#instVars : [
-		'dialogClass',
-		'browserClass'
+		#dialogClass,
+		#browserClass
 	],
 	#category : #'Calypso-Browser-Contexts'
 }

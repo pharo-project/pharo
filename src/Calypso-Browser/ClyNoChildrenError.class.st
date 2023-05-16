@@ -5,7 +5,7 @@ Class {
 	#name : #ClyNoChildrenError,
 	#superclass : #Error,
 	#instVars : [
-		'parent'
+		#parent
 	],
 	#category : #'Calypso-Browser-Exceptions'
 }

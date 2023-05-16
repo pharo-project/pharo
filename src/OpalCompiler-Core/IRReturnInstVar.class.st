@@ -5,7 +5,7 @@ Class {
 	#name : #IRReturnInstVar,
 	#superclass : #IRReturn,
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

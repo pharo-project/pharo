@@ -20,9 +20,9 @@ Class {
 	#name : #MissingClassError,
 	#superclass : #Error,
 	#instVars : [
-		'resumable',
-		'className',
-		'superclassName'
+		#resumable,
+		#className,
+		#superclassName
 	],
 	#category : #'CodeImport-Errors'
 }

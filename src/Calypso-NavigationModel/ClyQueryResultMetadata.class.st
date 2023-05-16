@@ -35,7 +35,7 @@ Class {
 	#name : #ClyQueryResultMetadata,
 	#superclass : #Object,
 	#instVars : [
-		'properties'
+		#properties
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

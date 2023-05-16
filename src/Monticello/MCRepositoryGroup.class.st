@@ -5,11 +5,11 @@ Class {
 	#name : #MCRepositoryGroup,
 	#superclass : #Object,
 	#instVars : [
-		'repositories',
-		'useCache'
+		#repositories,
+		#useCache
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : #'Monticello-Versioning'
 }

@@ -47,11 +47,11 @@ Class {
 	#name : #ClyNavigationHistory,
 	#superclass : #Object,
 	#instVars : [
-		'undoList',
-		'redoList',
-		'undoExecuting',
-		'redoExecuting',
-		'waitingNewState'
+		#undoList,
+		#redoList,
+		#undoExecuting,
+		#redoExecuting,
+		#waitingNewState
 	],
 	#category : #'Calypso-Browser-NavigationHistory'
 }

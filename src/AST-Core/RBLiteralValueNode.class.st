@@ -12,8 +12,8 @@ Class {
 	#name : #RBLiteralValueNode,
 	#superclass : #RBLiteralNode,
 	#instVars : [
-		'value',
-		'sourceText'
+		#value,
+		#sourceText
 	],
 	#category : #'AST-Core-Nodes'
 }

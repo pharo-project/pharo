@@ -67,12 +67,12 @@ Class {
 	#name : #ClyBrowserQueryCursor,
 	#superclass : #Object,
 	#instVars : [
-		'queryResult',
-		'cache',
-		'position',
-		'metadata',
-		'itemObserver',
-		'itemCount'
+		#queryResult,
+		#cache,
+		#position,
+		#metadata,
+		#itemObserver,
+		#itemCount
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

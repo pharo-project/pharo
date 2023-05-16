@@ -5,8 +5,8 @@ Class {
 	#name : #MCDiffyVersion,
 	#superclass : #MCVersion,
 	#instVars : [
-		'base',
-		'patch'
+		#base,
+		#patch
 	],
 	#category : #'Monticello-Versioning'
 }

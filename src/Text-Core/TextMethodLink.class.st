@@ -5,9 +5,9 @@ Class {
 	#name : #TextMethodLink,
 	#superclass : #TextLink,
 	#instVars : [
-		'selector',
-		'browseSenders',
-		'sourceNode'
+		#selector,
+		#browseSenders,
+		#sourceNode
 	],
 	#category : #'Text-Core-Attributes'
 }

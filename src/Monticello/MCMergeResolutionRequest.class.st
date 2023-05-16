@@ -5,7 +5,7 @@ Class {
 	#name : #MCMergeResolutionRequest,
 	#superclass : #Notification,
 	#instVars : [
-		'merger'
+		#merger
 	],
 	#category : #'Monticello-Versioning'
 }

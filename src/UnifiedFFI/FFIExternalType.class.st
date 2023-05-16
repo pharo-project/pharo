@@ -5,8 +5,8 @@ Class {
 	#name : #FFIExternalType,
 	#superclass : #Object,
 	#instVars : [
-		'pointerArity',
-		'loader'
+		#pointerArity,
+		#loader
 	],
 	#category : #'UnifiedFFI-Types'
 }

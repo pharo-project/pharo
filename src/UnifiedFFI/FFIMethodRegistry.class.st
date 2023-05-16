@@ -6,10 +6,10 @@ Class {
 	#name : #FFIMethodRegistry,
 	#superclass : #Object,
 	#instVars : [
-		'compiledMethods'
+		#compiledMethods
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'UnifiedFFI-Base'
 }

@@ -104,8 +104,8 @@ Class {
 	#name : #ClyQuery,
 	#superclass : #Object,
 	#instVars : [
-		'requiredResult',
-		'scope'
+		#requiredResult,
+		#scope
 	],
 	#category : #'Calypso-NavigationModel-Query'
 }

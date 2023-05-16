@@ -2,10 +2,10 @@ Class {
 	#name : #DAPackageCycleTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'aPDPackageCycle',
-		'packageA',
-		'packageB',
-		'packageC'
+		#aPDPackageCycle,
+		#packageA,
+		#packageB,
+		#packageC
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }
