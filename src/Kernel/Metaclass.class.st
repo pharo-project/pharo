@@ -292,6 +292,14 @@ Metaclass >> newAnonymousSubclass [
 	^self instanceSide newAnonymousSubclass class
 ]
 
+{ #category : #'class hierarchy' }
+Metaclass >> obsoleteSubclasses [
+	"Answer the receiver's subclasses."
+
+	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
+	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
+]
+
 { #category : #compiling }
 Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
