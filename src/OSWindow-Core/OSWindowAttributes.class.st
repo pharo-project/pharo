@@ -136,6 +136,7 @@ OSWindowAttributes >> borderless [
 OSWindowAttributes >> borderless: anObject [
 
 	borderless := anObject
+
 ]
 
 { #category : #accessing }
@@ -149,6 +150,7 @@ OSWindowAttributes >> bounds: aRectangle [
 	self position: aRectangle origin.
 	extent := aRectangle extent.
 	self windowCentered: false
+
 ]
 
 { #category : #private }

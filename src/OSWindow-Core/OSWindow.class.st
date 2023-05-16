@@ -198,13 +198,13 @@ OSWindow >> diagonalDPI [
 
 { #category : #accessing }
 OSWindow >> eventHandler [
-
+	
 	^ eventHandler
 ]
 
 { #category : #accessing }
 OSWindow >> eventHandler: anObject [
-
+	
 	eventHandler := anObject
 ]
 
@@ -221,7 +221,7 @@ OSWindow >> extent: newExtent [
 { #category : #'window management' }
 OSWindow >> focus [
 
-	self validHandle raise
+	self validHandle raise.
 ]
 
 { #category : #accessing }
@@ -465,18 +465,18 @@ OSWindow >> title: aString [
 { #category : #'window management' }
 OSWindow >> toggleBorderOff [
 
-	self validHandle toggleBorderOff
+	self validHandle toggleBorderOff.
 ]
 
 { #category : #'window management' }
 OSWindow >> toggleBorderOn [
 
-	self validHandle toggleBorderOn
+	self validHandle toggleBorderOn.
 ]
 
 { #category : #events }
 OSWindow >> updateToNewResolution [
-
+	
 	self backendWindow updateToNewResolution
 ]
 

@@ -664,11 +664,6 @@ RGBehavior >> lookupVar: aName [
 		  ifNone: [ self bindingOf: aName ]
 ]
 
-{ #category : #lookup }
-RGBehavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName
-]
-
 { #category : #resolving }
 RGBehavior >> makeResolved [
 

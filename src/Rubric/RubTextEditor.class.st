@@ -1318,6 +1318,13 @@ RubTextEditor >> inOutdent: aKeyboardEvent delta: delta [
 	^ true
 ]
 
+{ #category : #'menu messages' }
+RubTextEditor >> indent [
+
+	^ self indent: nil
+
+]
+
 { #category : #'editing keys' }
 RubTextEditor >> indent: aKeyboardEvent [
 	"Add a tab at the front of every line occupied by the selection."
@@ -1447,12 +1454,37 @@ RubTextEditor >> lf: aKeyboardEvent [
 	^false
 ]
 
+{ #category : #private }
+RubTextEditor >> lineIndentationStart: aPosition [
+	"The offset of the start of the line of `aPostion`, but skip leading spaces and tabs"
+
+	| string position spaces |
+	string := self string.
+	position := self lineStart: aPosition.
+	spaces := {Character tab. Character space}. "Only space and tab, so do not skip `Character cr` ending the line"
+	[ position <= string size and: [
+		spaces includes: (string at: position) ] ] whileTrue: [
+		position := position + 1 ].
+
+	^ position
+]
+
 { #category : #'menu messages' }
 RubTextEditor >> lineSelectAndEmptyCheck: returnBlock [
 	"If the current selection is an insertion point, expand it to be the entire current line; if after that's done the selection is still empty, then evaluate the returnBlock, which will typically consist of '[^ self]' in the caller -- check senders of this method to understand this."
 
 	self selectLine.  "if current selection is an insertion point, then first select the entire line in which occurs before proceeding"
 	self hasSelection ifFalse: [textArea flash.  ^ returnBlock value]
+]
+
+{ #category : #private }
+RubTextEditor >> lineStart: position [
+	"The offset of the start of the line of `postion`"
+
+	^ (self string
+		   lastIndexOf: Character cr
+		   startingAt: position - 1
+		   ifAbsent: [ 0 ]) + 1
 ]
 
 { #category : #private }
@@ -1669,6 +1701,13 @@ RubTextEditor >> openingDelimiters [
 { #category : #'accessing - selection' }
 RubTextEditor >> oppositeDelimiterSelection [
 	^ RubTextSelectionColor oppositeDelimiterSelection
+]
+
+{ #category : #'menu messages' }
+RubTextEditor >> outdent [
+
+	^ self outdent: nil
+
 ]
 
 { #category : #'editing keys' }

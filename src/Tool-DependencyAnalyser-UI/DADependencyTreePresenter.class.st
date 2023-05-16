@@ -53,10 +53,10 @@ DADependencyTreePresenter class >> onPackages: aCollection [
 
 { #category : #examples }
 DADependencyTreePresenter class >> onPackagesMatch: match [
-	^ (self onPackagesNamed:
-			(RPackageOrganizer default packages
-				select: [ :package | match match: package packageName asString ]
-				thenCollect: [ :package | package packageName ]) )
+
+	^ self onPackagesNamed: (Smalltalk organization packages
+			   select: [ :package | match match: package packageName asString ]
+			   thenCollect: [ :package | package packageName ])
 ]
 
 { #category : #'instance creation' }
@@ -276,7 +276,7 @@ DADependencyTreePresenter >> nodesFor: anItemList [
 { #category : #accessing }
 DADependencyTreePresenter >> packagesEntryCompletion [
 	| applicants |
-	applicants := (RPackageOrganizer default packages collect: [ :package | package packageName asString ]).
+	applicants := (Smalltalk organization packages collect: [ :package | package packageName asString ]).
 
 	^ EntryCompletion new
 				dataSourceBlock: [:currText | applicants];

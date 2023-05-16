@@ -14,7 +14,6 @@ Class {
 		'smartCharactersMapping',
 		'backgroundColor',
 		'expandPrefixes',
-		'captureNavigationKeys',
 		'useEnterToAccept',
 		'popupShowAutomatic',
 		'popupAutomaticDelay',
@@ -48,16 +47,6 @@ NECPreferences class >> backgroundColor [
 { #category : #accessing }
 NECPreferences class >> backgroundColor: aColor [
 	backgroundColor := aColor
-]
-
-{ #category : #accessing }
-NECPreferences class >> captureNavigationKeys [
-	^ captureNavigationKeys
-]
-
-{ #category : #accessing }
-NECPreferences class >> captureNavigationKeys: aBoolean [
-	captureNavigationKeys := aBoolean
 ]
 
 { #category : #accessing }
@@ -126,7 +115,6 @@ NECPreferences class >> initialize [
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
-	captureNavigationKeys := true.
 	useEnterToAccept := self defaultUseEnterToAccept.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
@@ -219,9 +207,6 @@ NECPreferences class >> settingsOn: aBuilder [
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.
-					(aBuilder setting: #captureNavigationKeys)
-						default: true;
-						label: 'Use navigation keys for extended completion functionality'.
 					(aBuilder setting: #caseSensitive)
 						label: 'Case Sensitive';
 						default: true;

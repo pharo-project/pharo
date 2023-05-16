@@ -441,7 +441,12 @@ Object >> basicAt: index [
 	Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
-	index isInteger ifTrue: [self errorSubscriptBounds: index].
+	index isInteger ifTrue: [
+		SubscriptOutOfBounds
+			signalFor: index
+			lowerBound: 1
+			upperBound: self basicSize
+			in: self ].
 	self errorNonIntegerIndex
 ]
 

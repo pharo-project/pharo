@@ -1492,7 +1492,7 @@ SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
 	authors at: 'OK' put: Set new.
 	self systemNavigation
 		allBehaviorsDo: [:cls | cls selectorsAndMethodsDo: [:selector :method |
-					| oldStamp newCodeString oldCodeString oldCategory nameString |
+					| oldStamp newCodeString oldCodeString oldProtocolName nameString |
 					aBlock cull: cls cull: selector.
 					oldCodeString := cls sourceCodeAt: selector.
 					(oldCodeString includes: Character lf)
@@ -1509,10 +1509,10 @@ SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
 										at: (oldStamp copyFrom: 1 to: (oldStamp findFirst: [ :c | c isAlphaNumeric not ]))
 										ifAbsentPut: [Set new])
 										add: nameString.
-									oldCategory := cls whichCategoryIncludesSelector: selector.
+									oldProtocolName := cls protocolNameOfSelector: selector.
 									cls
 										compile: newCodeString
-										classified: oldCategory
+										classified: oldProtocolName
 										withStamp: oldStamp
 										notifying: nil ]]]].
 	^ authors

@@ -41,7 +41,7 @@ ToggleMenuItemMorph >> balloonText: aText [
 ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 	"Draw on the canvas. Taken from MenuItemMorph for minor refactoring."
 
-	| stringColor stringBounds|
+	| stringColor stringBounds maxItemsIconWidth |
 	stringColor := self stringColorToUse.
 	stringBounds := self stringBoundsToUse.
 	(self isSelected and: [self isEnabled]) ifTrue: [
@@ -51,8 +51,10 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 			borderStyle: self selectionBorderStyle].
 	self hasIcon ifTrue: [ |iconForm|
 		iconForm := self icon.
-		self drawIcon: iconForm on: aCanvas in: stringBounds.
-		stringBounds := stringBounds left: stringBounds left + (iconForm width) + (2*self displayScaleFactor)].
+		self drawIcon: iconForm on: aCanvas in: stringBounds ].
+	maxItemsIconWidth := self owner maxItemsIconWidth.
+	maxItemsIconWidth > 0 ifTrue: [
+		stringBounds := stringBounds left: stringBounds left + maxItemsIconWidth + (2*self displayScaleFactor) ].
 	self hasMarker ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + (8 * self displayScaleFactor)].
 	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
