@@ -5,7 +5,7 @@ Class {
 	#name : #FLFileReferenceStreamStrategy,
 	#superclass : #FLStreamStrategy,
 	#instVars : [
-		'fileReference'
+		#fileReference
 	],
 	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }

@@ -48,14 +48,14 @@ Class {
 	#name : #RBRefactoryTyper,
 	#superclass : #Object,
 	#instVars : [
-		'model',
-		'class',
-		'variableTypes',
-		'bestGuesses',
-		'variableMessages',
-		'backpointers',
-		'methodName',
-		'selectorLookup'
+		#model,
+		#class,
+		#variableTypes,
+		#bestGuesses,
+		#variableMessages,
+		#backpointers,
+		#methodName,
+		#selectorLookup
 	],
 	#category : #'Refactoring-Core-Support'
 }
@@ -448,7 +448,7 @@ RBRefactoryTyper >> refineTypesByLookingAtAssignments [
 	searcher := self parseTreeSearcher.
 	variableTypes
 		keysAndValuesDo: [ :key :value |
-			key first = $-
+			key first = $- asSymbol
 				ifFalse: [ needsSearch := true.
 					searcher
 						matches: key , ' := ``@object'

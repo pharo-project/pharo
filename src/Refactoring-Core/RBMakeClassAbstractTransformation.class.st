@@ -7,7 +7,7 @@ Class {
 	#name : #RBMakeClassAbstractTransformation,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'targetClass'
+		#targetClass
 	],
 	#category : #'Refactoring-Core-Transformation'
 }

@@ -9,7 +9,7 @@ Class {
 	#name : #RBRenameClassVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
-		'newName'
+		#newName
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

@@ -8,9 +8,9 @@ Class {
 	#name : #ZnServerTransactionTiming,
 	#superclass : #Object,
 	#instVars : [
-		'requestDuration',
-		'handlerDuration',
-		'responseDuration'
+		#requestDuration,
+		#handlerDuration,
+		#responseDuration
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

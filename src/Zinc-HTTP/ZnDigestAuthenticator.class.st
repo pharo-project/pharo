@@ -11,7 +11,7 @@ Class {
 	#name : #ZnDigestAuthenticator,
 	#superclass : #ZnBasicAuthenticator,
 	#instVars : [
-		'nonces'
+		#nonces
 	],
 	#category : #'Zinc-HTTP-Support'
 }

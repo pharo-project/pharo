@@ -2,9 +2,9 @@ Class {
 	#name : #MCMethodDefinitionTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'navigation',
-		'isModified',
-		'extensionPackage'
+		#navigation,
+		#isModified,
+		#extensionPackage
 	],
 	#category : #'Monticello-Tests-Base'
 }

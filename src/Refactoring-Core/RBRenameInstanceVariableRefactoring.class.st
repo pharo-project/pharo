@@ -9,9 +9,9 @@ Class {
 	#name : #RBRenameInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
-		'newName',
-		'browsedEnvironment',
-		'renameAccessors'
+		#newName,
+		#browsedEnvironment,
+		#renameAccessors
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

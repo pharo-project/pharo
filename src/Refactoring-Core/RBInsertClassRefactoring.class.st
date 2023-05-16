@@ -12,10 +12,10 @@ Class {
 	#name : #RBInsertClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'category',
-		'superclass',
-		'subclasses',
-		'comment'
+		#category,
+		#superclass,
+		#subclasses,
+		#comment
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

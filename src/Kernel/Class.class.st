@@ -970,7 +970,7 @@ from Undeclared. Check them after this change.']
 { #category : #private }
 Class >> setName: aSymbol [
 
-	name := aSymbol
+	name := aSymbol asSymbol
 ]
 
 { #category : #'pool variables' }

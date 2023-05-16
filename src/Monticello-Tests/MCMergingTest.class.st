@@ -2,7 +2,7 @@ Class {
 	#name : #MCMergingTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'conflicts'
+		#conflicts
 	],
 	#category : #'Monticello-Tests-Base'
 }

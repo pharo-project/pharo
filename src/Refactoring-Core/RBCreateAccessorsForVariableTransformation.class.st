@@ -32,11 +32,11 @@ Class {
 	#name : #RBCreateAccessorsForVariableTransformation,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
-		'classVariable',
-		'needsReturn',
-		'selector',
-		'getterMethodName',
-		'setterMethodName'
+		#classVariable,
+		#needsReturn,
+		#selector,
+		#getterMethodName,
+		#setterMethodName
 	],
 	#category : #'Refactoring-Core-Transformation'
 }

@@ -22,17 +22,17 @@ Class {
 	#name : #RBAbstractClass,
 	#superclass : #RBEntity,
 	#instVars : [
-		'name',
-		'newMethods',
-		'instanceVariableNames',
-		'model',
-		'superclass',
-		'subclasses',
-		'removedMethods',
-		'realClass'
+		#name,
+		#newMethods,
+		#instanceVariableNames,
+		#model,
+		#superclass,
+		#subclasses,
+		#removedMethods,
+		#realClass
 	],
 	#classVars : [
-		'LookupSuperclass'
+		#LookupSuperclass
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -60,7 +60,7 @@ RBAbstractClass >> = aRBClass [
 
 { #category : #'variable accessing' }
 RBAbstractClass >> addInstanceVariable: aString [
-	self privateInstanceVariableNames add: aString.
+	self privateInstanceVariableNames add: aString asSymbol.
 	model addInstanceVariable: aString to: self
 ]
 
@@ -454,7 +454,9 @@ RBAbstractClass >> instanceVariableNames [
 
 { #category : #accessing }
 RBAbstractClass >> instanceVariableNames: aCollectionOfStrings [
+
 	instanceVariableNames := aCollectionOfStrings asOrderedCollection
+		                         collect: [ :var | var asSymbol ]
 ]
 
 { #category : #testing }

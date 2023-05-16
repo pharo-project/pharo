@@ -5,7 +5,7 @@ Class {
 	#name : #MCRepositoryTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'repository'
+		#repository
 	],
 	#category : #'Monticello-Tests-Repository'
 }

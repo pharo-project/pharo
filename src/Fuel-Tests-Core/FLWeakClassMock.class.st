@@ -6,7 +6,7 @@ Class {
 	#superclass : #FLPair,
 	#type : #weak,
 	#instVars : [
-		'instVar1'
+		#instVar1
 	],
 	#category : #'Fuel-Tests-Core-Support-Mocks'
 }

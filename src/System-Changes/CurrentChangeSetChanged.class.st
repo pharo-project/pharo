@@ -5,8 +5,8 @@ Class {
 	#name : #CurrentChangeSetChanged,
 	#superclass : #Announcement,
 	#instVars : [
-		'new',
-		'old'
+		#new,
+		#old
 	],
 	#category : #'System-Changes-Announcements'
 }

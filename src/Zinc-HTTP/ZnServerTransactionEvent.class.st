@@ -12,9 +12,9 @@ Class {
 	#name : #ZnServerTransactionEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'request',
-		'response',
-		'timing'
+		#request,
+		#response,
+		#timing
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

@@ -2,11 +2,11 @@ Class {
 	#name : #RBArgumentName,
 	#superclass : #Object,
 	#instVars : [
-		'name',
-		'newName',
-		'value',
-		'canBeRemoved',
-		'canBeRenamed'
+		#name,
+		#newName,
+		#value,
+		#canBeRemoved,
+		#canBeRenamed
 	],
 	#category : #'Refactoring-Core-Support'
 }

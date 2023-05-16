@@ -15,8 +15,8 @@ Class {
 	#name : #RBAddParameterRefactoring,
 	#superclass : #RBChangeMethodNameRefactoring,
 	#instVars : [
-		'newArgs',
-		'senders'
+		#newArgs,
+		#senders
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

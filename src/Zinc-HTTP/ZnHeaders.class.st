@@ -12,10 +12,10 @@ Class {
 	#name : #ZnHeaders,
 	#superclass : #Object,
 	#instVars : [
-		'headers'
+		#headers
 	],
 	#classVars : [
-		'CommonHeaders'
+		#CommonHeaders
 	],
 	#category : #'Zinc-HTTP-Core'
 }

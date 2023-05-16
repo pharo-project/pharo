@@ -14,7 +14,7 @@ Class {
 	#name : #RBMoveMethodToClassRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'method'
+		#method
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

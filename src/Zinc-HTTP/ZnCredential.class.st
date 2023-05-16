@@ -7,8 +7,8 @@ Class {
 	#name : #ZnCredential,
 	#superclass : #Object,
 	#instVars : [
-		'domain',
-		'realm'
+		#domain,
+		#realm
 	],
 	#category : #'Zinc-HTTP-Support'
 }

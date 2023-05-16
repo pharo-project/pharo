@@ -26,8 +26,8 @@ Class {
 	#name : #ZnDefaultServerDelegate,
 	#superclass : #Object,
 	#instVars : [
-		'prefixMap',
-		'byteArray'
+		#prefixMap,
+		#byteArray
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

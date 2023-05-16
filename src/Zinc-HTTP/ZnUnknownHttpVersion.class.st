@@ -7,7 +7,7 @@ Class {
 	#name : #ZnUnknownHttpVersion,
 	#superclass : #ZnParseError,
 	#instVars : [
-		'version'
+		#version
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

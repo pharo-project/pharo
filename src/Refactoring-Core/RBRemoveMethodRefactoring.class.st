@@ -7,7 +7,7 @@ Class {
 	#name : #RBRemoveMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selectors'
+		#selectors
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

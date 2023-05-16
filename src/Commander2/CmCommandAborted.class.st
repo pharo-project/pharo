@@ -5,7 +5,7 @@ Class {
 	#name : #CmCommandAborted,
 	#superclass : #CmCommandError,
 	#instVars : [
-		'reason'
+		#reason
 	],
 	#category : #'Commander2-Errors'
 }

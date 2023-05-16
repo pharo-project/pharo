@@ -6,8 +6,8 @@ I also define #description and #name that are hook to be overrided by my users i
 Trait {
 	#name : #CmTWithBasicNameAndDescription,
 	#instVars : [
-		'basicName',
-		'basicDescription'
+		#basicName,
+		#basicDescription
 	],
 	#category : #'Commander2-Traits'
 }

@@ -11,8 +11,8 @@ Class {
 	#name : #ZnEntity,
 	#superclass : #Object,
 	#instVars : [
-		'contentType',
-		'contentLength'
+		#contentType,
+		#contentLength
 	],
 	#category : #'Zinc-HTTP-Core'
 }

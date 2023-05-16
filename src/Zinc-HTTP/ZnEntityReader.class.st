@@ -14,11 +14,11 @@ Class {
 	#name : #ZnEntityReader,
 	#superclass : #Object,
 	#instVars : [
-		'headers',
-		'stream',
-		'streaming',
-		'binary',
-		'allowReadingUpToEnd'
+		#headers,
+		#stream,
+		#streaming,
+		#binary,
+		#allowReadingUpToEnd
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

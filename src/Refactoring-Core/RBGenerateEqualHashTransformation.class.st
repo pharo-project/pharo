@@ -42,7 +42,7 @@ Class {
 	#name : #RBGenerateEqualHashTransformation,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'variables'
+		#variables
 	],
 	#category : #'Refactoring-Core-Transformation'
 }

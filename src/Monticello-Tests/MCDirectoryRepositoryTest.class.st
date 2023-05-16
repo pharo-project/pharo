@@ -2,7 +2,7 @@ Class {
 	#name : #MCDirectoryRepositoryTest,
 	#superclass : #MCRepositoryTest,
 	#instVars : [
-		'directory'
+		#directory
 	],
 	#category : #'Monticello-Tests-Repository'
 }

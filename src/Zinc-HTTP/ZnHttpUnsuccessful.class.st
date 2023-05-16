@@ -11,7 +11,7 @@ Class {
 	#name : #ZnHttpUnsuccessful,
 	#superclass : #Error,
 	#instVars : [
-		'response'
+		#response
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

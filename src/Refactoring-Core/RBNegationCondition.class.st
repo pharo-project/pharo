@@ -10,7 +10,7 @@ Class {
 	#name : #RBNegationCondition,
 	#superclass : #RBAbstractCondition,
 	#instVars : [
-		'condition'
+		#condition
 	],
 	#category : #'Refactoring-Core-Conditions'
 }

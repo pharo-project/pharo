@@ -5,7 +5,7 @@ Class {
 	#name : #RBCombinatorVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'combinations'
+		#combinations
 	],
 	#category : #'Refactoring-Core-Base'
 }

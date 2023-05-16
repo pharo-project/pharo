@@ -10,11 +10,11 @@ Class {
 	#name : #RBRenameArgumentOrTemporaryRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'interval',
-		'oldName',
-		'newName',
-		'parseTree'
+		#selector,
+		#interval,
+		#oldName,
+		#newName,
+		#parseTree
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

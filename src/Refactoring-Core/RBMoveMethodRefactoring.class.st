@@ -33,12 +33,12 @@ Class {
 	#name : #RBMoveMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'variable',
-		'moveToClasses',
-		'parseTree',
-		'hasOnlySelfReturns',
-		'selfVariableName'
+		#selector,
+		#variable,
+		#moveToClasses,
+		#parseTree,
+		#hasOnlySelfReturns,
+		#selfVariableName
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

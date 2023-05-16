@@ -16,12 +16,12 @@ Class {
 	#name : #ZnSingleThreadedServer,
 	#superclass : #ZnServer,
 	#instVars : [
-		'process',
-		'serverSocket',
-		'logLevel'
+		#process,
+		#serverSocket,
+		#logLevel
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

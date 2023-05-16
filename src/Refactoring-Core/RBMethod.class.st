@@ -14,11 +14,11 @@ Class {
 	#name : #RBMethod,
 	#superclass : #RBEntity,
 	#instVars : [
-		'compiledMethod',
-		'class',
-		'selector',
-		'source',
-		'isFromTrait'
+		#compiledMethod,
+		#class,
+		#selector,
+		#source,
+		#isFromTrait
 	],
 	#category : #'Refactoring-Core-Model'
 }

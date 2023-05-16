@@ -25,9 +25,9 @@ Class {
 	#name : #RBConjunctiveCondition,
 	#superclass : #RBAbstractCondition,
 	#instVars : [
-		'left',
-		'right',
-		'failed'
+		#left,
+		#right,
+		#failed
 	],
 	#category : #'Refactoring-Core-Conditions'
 }

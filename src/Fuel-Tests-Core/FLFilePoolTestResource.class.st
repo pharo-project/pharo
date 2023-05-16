@@ -2,7 +2,7 @@ Class {
 	#name : #FLFilePoolTestResource,
 	#superclass : #TestResource,
 	#instVars : [
-		'directoryPath'
+		#directoryPath
 	],
 	#category : #'Fuel-Tests-Core-Support-Resources'
 }

@@ -11,8 +11,8 @@ Class {
 	#name : #ZnMultiPartFormDataEntity,
 	#superclass : #ZnEntity,
 	#instVars : [
-		'parts',
-		'representation'
+		#parts,
+		#representation
 	],
 	#category : #'Zinc-HTTP-Core'
 }

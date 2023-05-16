@@ -5,7 +5,7 @@ Class {
 	#name : #ZnClientFollowingRedirectEvent,
 	#superclass : #ZnClientLogEvent,
 	#instVars : [
-		'target'
+		#target
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

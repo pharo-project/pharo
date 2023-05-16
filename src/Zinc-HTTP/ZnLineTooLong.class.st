@@ -7,7 +7,7 @@ Class {
 	#name : #ZnLineTooLong,
 	#superclass : #ZnParseError,
 	#instVars : [
-		'limit'
+		#limit
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

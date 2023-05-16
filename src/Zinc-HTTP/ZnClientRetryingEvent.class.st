@@ -6,7 +6,7 @@ Class {
 	#name : #ZnClientRetryingEvent,
 	#superclass : #ZnClientLogEvent,
 	#instVars : [
-		'exception'
+		#exception
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

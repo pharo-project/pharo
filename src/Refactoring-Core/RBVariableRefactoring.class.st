@@ -5,8 +5,8 @@ Class {
 	#name : #RBVariableRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'class',
-		'variableName'
+		#class,
+		#variableName
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

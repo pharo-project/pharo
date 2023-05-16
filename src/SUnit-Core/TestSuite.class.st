@@ -92,7 +92,7 @@ TestSuite >> name [
 { #category : #accessing }
 TestSuite >> name: aString [
 
-	name := aString
+	name := aString asSymbol
 ]
 
 { #category : #dependencies }

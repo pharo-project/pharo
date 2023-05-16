@@ -17,8 +17,8 @@ Class {
 	#name : #RBCopyClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'aClass',
-		'category'
+		#aClass,
+		#category
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

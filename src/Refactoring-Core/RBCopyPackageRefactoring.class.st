@@ -20,8 +20,8 @@ Class {
 	#name : #RBCopyPackageRefactoring,
 	#superclass : #RBPackageRefactoring,
 	#instVars : [
-		'package',
-		'classMappings'
+		#package,
+		#classMappings
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

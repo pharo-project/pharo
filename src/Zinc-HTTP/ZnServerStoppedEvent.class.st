@@ -5,7 +5,7 @@ Class {
 	#name : #ZnServerStoppedEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'description'
+		#description
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

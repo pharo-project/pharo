@@ -9,8 +9,8 @@ Class {
 	#name : #RBPushDownMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selectors',
-		'classes'
+		#selectors,
+		#classes
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

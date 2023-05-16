@@ -2,9 +2,9 @@ Class {
 	#name : #FLEnvironmentProtectingWrapper,
 	#superclass : #Object,
 	#instVars : [
-		'overlay',
-		'environment',
-		'sentinel'
+		#overlay,
+		#environment,
+		#sentinel
 	],
 	#category : #'Fuel-Tests-Core-Support-Environment'
 }

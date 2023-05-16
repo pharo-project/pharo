@@ -10,8 +10,8 @@ Class {
 	#name : #RBRemoveParameterRefactoring,
 	#superclass : #RBChangeMethodNameRefactoring,
 	#instVars : [
-		'parameterIndex',
-		'argument'
+		#parameterIndex,
+		#argument
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

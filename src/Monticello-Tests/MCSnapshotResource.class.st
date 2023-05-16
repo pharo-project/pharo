@@ -5,7 +5,7 @@ Class {
 	#name : #MCSnapshotResource,
 	#superclass : #TestResource,
 	#instVars : [
-		'snapshot'
+		#snapshot
 	],
 	#category : #'Monticello-Tests-Resources'
 }

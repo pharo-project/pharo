@@ -7,7 +7,7 @@ Class {
 	#name : #ZnCookieJar,
 	#superclass : #Object,
 	#instVars : [
-		'cookies'
+		#cookies
 	],
 	#category : #'Zinc-HTTP-Support'
 }

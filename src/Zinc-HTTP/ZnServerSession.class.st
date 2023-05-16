@@ -10,10 +10,10 @@ Class {
 	#name : #ZnServerSession,
 	#superclass : #Object,
 	#instVars : [
-		'id',
-		'attributes',
-		'created',
-		'modified'
+		#id,
+		#attributes,
+		#created,
+		#modified
 	],
 	#category : #'Zinc-HTTP-Support'
 }

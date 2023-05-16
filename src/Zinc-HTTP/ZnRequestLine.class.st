@@ -9,9 +9,9 @@ Class {
 	#name : #ZnRequestLine,
 	#superclass : #Object,
 	#instVars : [
-		'method',
-		'uri',
-		'version'
+		#method,
+		#uri,
+		#version
 	],
 	#category : #'Zinc-HTTP-Core'
 }
@@ -70,7 +70,7 @@ ZnRequestLine >> method [
 { #category : #accessing }
 ZnRequestLine >> method: string [
 	method := ZnConstants knownHTTPMethods
-		detect: [ :each | each = string ]
+		detect: [ :each | each sameContents: string ]
 		ifNone: [ (ZnUnknownHttpMethod method: string) signal ]
 ]
 

@@ -12,13 +12,13 @@ Class {
 	#name : #RBInlineMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'sourceInterval',
-		'inlineParseTree',
-		'sourceParseTree',
-		'sourceSelector',
-		'sourceMessage',
-		'checkOverridden',
-		'classOfTheMethodToInline'
+		#sourceInterval,
+		#inlineParseTree,
+		#sourceParseTree,
+		#sourceSelector,
+		#sourceMessage,
+		#checkOverridden,
+		#classOfTheMethodToInline
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

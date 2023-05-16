@@ -19,7 +19,7 @@ Class {
 	#name : #ZnStreamingEntity,
 	#superclass : #ZnEntity,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'Zinc-HTTP-Core'
 }

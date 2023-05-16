@@ -12,9 +12,9 @@ Class {
 	#name : #ZnLimitedReadStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'position',
-		'limit'
+		#stream,
+		#position,
+		#limit
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

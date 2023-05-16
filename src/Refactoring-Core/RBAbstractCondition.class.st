@@ -15,7 +15,7 @@ Class {
 	#name : #RBAbstractCondition,
 	#superclass : #Object,
 	#instVars : [
-		'errorMacro'
+		#errorMacro
 	],
 	#category : #'Refactoring-Core-Conditions'
 }

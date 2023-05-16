@@ -9,8 +9,8 @@ Class {
 	#name : #ZnDigestCredential,
 	#superclass : #ZnBasicCredential,
 	#instVars : [
-		'nonce',
-		'opaque'
+		#nonce,
+		#opaque
 	],
 	#category : #'Zinc-HTTP-Support'
 }
