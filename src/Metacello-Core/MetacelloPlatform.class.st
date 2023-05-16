@@ -41,6 +41,13 @@ MetacelloPlatform >> authorName [
 	^'no developer initials'
 ]
 
+{ #category : #utilities }
+MetacelloPlatform >> authorName: aString [
+	"Used by SmalltalkCI"
+
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 MetacelloPlatform >> bypassGoferLoadUpdateCategories [
 
