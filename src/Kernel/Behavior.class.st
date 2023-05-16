@@ -759,6 +759,11 @@ Behavior >> hasAbstractMethods [
 	^false
 ]
 
+{ #category : #binding }
+Behavior >> hasBindingOf: aString [
+	^ (self bindingOf: aString) notNil
+]
+
 { #category : #'testing - method dictionary' }
 Behavior >> hasMethodAccessingVariable: aVariable [
 	"Answer true if any of my methods access the variable"
