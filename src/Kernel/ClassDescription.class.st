@@ -787,6 +787,13 @@ ClassDescription >> reformatAll [
 ]
 
 { #category : #protocols }
+ClassDescription >> removeEmptyProtocols [
+
+	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+]
+
+{ #category : #protocols }
 ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |

@@ -177,13 +177,6 @@ ClassOrganization >> removeElement: aSelector [
 	^ self organizedClass removeFromProtocols: aSelector
 ]
 
-{ #category : #removing }
-ClassOrganization >> removeEmptyProtocols [
-
-	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
-	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
-]
-
 { #category : #inlined }
 ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."

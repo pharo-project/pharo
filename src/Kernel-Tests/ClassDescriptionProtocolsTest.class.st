@@ -103,7 +103,7 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 		protocol: #titan;
 		install: 'king ^ 2'.
 
-	class organization removeEmptyProtocols.
+	class removeEmptyProtocols.
 
 	self assertCollection: class protocolNames hasSameElements: #( human titan ).
 	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz camila ).
