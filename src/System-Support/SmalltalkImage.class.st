@@ -1530,7 +1530,7 @@ SmalltalkImage >> removeEmptyMessageCategories [
 	"Smalltalk removeEmptyMessageCategories"
 
 	self garbageCollect.
-	ClassOrganization allInstancesDo: [ :org | org removeEmptyProtocols ].
+	SystemNavigation default allBehaviorsDo: [ :class | class removeEmptyProtocols ].
 	Smalltalk organization removeEmptyPackages
 ]
 

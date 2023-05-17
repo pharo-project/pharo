@@ -137,8 +137,8 @@ ClassOrganization >> removeCategory: protocolName [
 { #category : #'*Deprecated12' }
 ClassOrganization >> removeEmptyCategories [
 
-	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
-	self removeEmptyProtocols
+	self deprecated: 'Use #removeEmptyProtocols on the organized class instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv organizedClass removeEmptyProtocols'.
+	self organizedClass removeEmptyProtocols
 ]
 
 { #category : #'*Deprecated12' }

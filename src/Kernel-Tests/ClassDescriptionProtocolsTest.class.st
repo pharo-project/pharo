@@ -89,6 +89,37 @@ ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
+
+	class compiler
+		protocol: #human;
+		install: 'luz ^ 1'.
+
+	class compiler
+		protocol: #human;
+		install: 'camila ^ 1'.
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 2'.
+
+	class removeEmptyProtocols.
+
+	self assertCollection: class protocolNames hasSameElements: #( human titan ).
+	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz camila ).
+	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( king ).
+
+	"Now that we asserted the actual state is good, we can test the actual method."
+	class methodDict
+		removeKey: #camila;
+		removeKey: #king.
+	class removeNonexistentSelectorsFromProtocols.
+
+	self assertCollection: class protocolNames hasSameElements: #( human ).
+	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz )
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocol [
 
 	class organization addProtocol: #titan.
