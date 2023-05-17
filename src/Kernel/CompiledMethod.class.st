@@ -804,8 +804,8 @@ CompiledMethod >> protocol [
 ]
 
 { #category : #accessing }
-CompiledMethod >> protocol: aString [
-	^ self methodClass organization classify: self selector under: aString
+CompiledMethod >> protocol: aProtocol [
+	^ self methodClass organization classify: self selector under: aProtocol
 ]
 
 { #category : #scanning }
