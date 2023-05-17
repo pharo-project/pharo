@@ -308,6 +308,12 @@ ClyQuery >> isExecutedFromSingleScope [
 	^scope isBasedOnSingleBasis
 ]
 
+{ #category : #testing }
+ClyQuery >> isMethodQuery [
+
+	^ false
+]
+
 { #category : #'system changes' }
 ClyQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 

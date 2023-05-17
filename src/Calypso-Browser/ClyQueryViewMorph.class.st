@@ -343,7 +343,11 @@ ClyQueryViewMorph >> enableFilter: anItemStringFilterClass using: aStringPattern
 { #category : #controlling }
 ClyQueryViewMorph >> enableFilterUsing: aStringPattern [
 
-	self enableFilter: ClyItemNameFilter using: aStringPattern
+	self
+		enableFilter: (selection rootDataSource query isMethodQuery
+				 ifTrue: [ ClyItemSelectorFilter ]
+				 ifFalse: [ ClyItemNameFilter ])
+		using: aStringPattern
 ]
 
 { #category : #controlling }

@@ -99,6 +99,12 @@ ClyCompositeQuery >> hash [
 	^super hash bitXor: subqueries hash
 ]
 
+{ #category : #testing }
+ClyCompositeQuery >> isMethodQuery [
+
+	^ subqueries allSatisfy: #isMethodQuery
+]
+
 { #category : #'system changes' }
 ClyCompositeQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
