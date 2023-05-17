@@ -16,6 +16,11 @@ CoCompletionEngineTest >> doItContext [
 	^ nil
 ]
 
+{ #category : #testing }
+CoCompletionEngineTest >> hasBindingOf: aSymbol [
+	^ false
+]
+
 { #category : #running }
 CoCompletionEngineTest >> newCompletionEngine [
 

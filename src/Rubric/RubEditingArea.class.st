@@ -130,6 +130,11 @@ RubEditingArea >> getSegmentOfClass: aClass [
 	^ self segments detect: [ :each | each class = aClass ] ifNone: [ nil ]
 ]
 
+{ #category : #binding }
+RubEditingArea >> hasBindingOf: aString [
+	^ self editingMode hasBindingOf: aString
+]
+
 { #category : #highlighting }
 RubEditingArea >> hasHighlightSegment [
 

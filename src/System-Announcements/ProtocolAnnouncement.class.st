@@ -12,11 +12,11 @@ Class {
 }
 
 { #category : #'class initialization' }
-ProtocolAnnouncement class >> in: aClass protocol: aProtocolName [
+ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
 
 	^ self new
 		  classReorganized: aClass;
-		  protocol: aProtocolName;
+		  protocol: aProtocol;
 		  yourself
 ]
 

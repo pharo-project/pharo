@@ -316,46 +316,18 @@ Class >> classBuilder [
 
 { #category : #'accessing - comment' }
 Class >> classComment: aString [
-	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
-	^ self comment: aString stamp: '<historical>'
+	self
+		deprecated: 'use comment:'
+		transformWith: '`@rcv classComment: `@arg' -> '`@rcv comment: `@arg'.
+	self comment: aString
 ]
 
 { #category : #'accessing - comment' }
 Class >> classComment: aString stamp: aStamp [
-	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
-
-	| pointer header oldComment oldStamp preamble |
-	oldComment := self comment.
-	oldStamp := self commentStamp.
-
-	aString string = oldComment string ifTrue: [ ^ self ].
-
-	pointer := self commentSourcePointer ifNil: [0].
-
-
-	preamble := String streamContents: [ :file |
-		file cr; nextPut: $!.
-		header := String streamContents: [:strm |
-			strm
-				nextPutAll: self name;
-				nextPutAll: ' commentStamp: '.
-			aStamp storeOn: strm.
-			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
-		file nextChunkPut: header; cr ].
-
-	SourceFiles
-		writeSource: aString
-		preamble: preamble
-		onSuccess: [ :newSourcePointer |
-			self commentSourcePointer: newSourcePointer]
-		onFail: [ "ignore" ].
-
-	SystemAnnouncer uniqueInstance
-		class: self
-		oldComment: oldComment
-		newComment: aString
-		oldStamp: oldStamp
-		newStamp: aStamp
+		self
+		deprecated: 'Use #comment:stamp: instead.'
+		transformWith: '`@rcv classComment: `@arg1 classComment: aString stamp: aStamp `@arg2' -> '`@rcv comment: `@arg1 stamp: `@arg2'.
+	^self comment: aString stamp: aStamp
 ]
 
 { #category : #'subclass creation' }
@@ -459,17 +431,47 @@ Class >> comment [
 ]
 
 { #category : #'accessing - comment' }
-Class >> comment: aStringOrText [
+Class >> comment: aString [
 	"Set the receiver's comment to be the argument, aStringOrText."
-
-	self classComment: aStringOrText
+	^ self comment: aString stamp: '<historical>'
 ]
 
 { #category : #'accessing - comment' }
-Class >> comment: aStringOrText stamp: aStamp [
-	"Set the receiver's comment to be the argument, aStringOrText."
+Class >> comment: aString stamp: aStamp [
+	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
-	self classComment: aStringOrText stamp: aStamp
+	| pointer header oldComment oldStamp preamble |
+	oldComment := self comment.
+	oldStamp := self commentStamp.
+
+	aString string = oldComment string ifTrue: [ ^ self ].
+
+	pointer := self commentSourcePointer ifNil: [0].
+
+
+	preamble := String streamContents: [ :file |
+		file cr; nextPut: $!.
+		header := String streamContents: [:strm |
+			strm
+				nextPutAll: self name;
+				nextPutAll: ' commentStamp: '.
+			aStamp storeOn: strm.
+			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
+		file nextChunkPut: header; cr ].
+
+	SourceFiles
+		writeSource: aString
+		preamble: preamble
+		onSuccess: [ :newSourcePointer |
+			self commentSourcePointer: newSourcePointer]
+		onFail: [ "ignore" ].
+
+	SystemAnnouncer uniqueInstance
+		class: self
+		oldComment: oldComment
+		newComment: aString
+		oldStamp: oldStamp
+		newStamp: aStamp
 ]
 
 { #category : #'accessing - comment' }

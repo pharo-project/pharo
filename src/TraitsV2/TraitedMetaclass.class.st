@@ -261,8 +261,9 @@ TraitedMetaclass >> rebuildMethodDictionary [
 
 	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
-	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ].
+	removedSelectors do: [ :aSelector |
+		self methodDict removeKey: aSelector.
+		self removeFromProtocols: aSelector  ].
 
 	^ modified
 ]

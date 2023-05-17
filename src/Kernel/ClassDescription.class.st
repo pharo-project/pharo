@@ -385,7 +385,7 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -752,7 +752,7 @@ ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> protocolNameOfSelector: aSelector [
 	"Return the protocol name including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
@@ -760,14 +760,14 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
 	^ self organization protocolNames copy
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> protocolOfSelector: aSelector [
 	"Return the protocol including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
@@ -784,6 +784,15 @@ ClassDescription >> reformatAll [
 	self methods do: [ :method | method reformat ]
 ]
 
+{ #category : #protocols }
+ClassDescription >> removeFromProtocols: aSelector [
+
+	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
+		protocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: protocol.
+		self notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+]
+
 { #category : #'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [
 	"Remove the argument, aString, as one of the receiver's instance variables."
@@ -791,7 +800,7 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
@@ -803,7 +812,7 @@ ClassDescription >> removeProtocol: aProtocol [
 		self removeProtocolIfEmpty: protocol ]
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> removeProtocolIfEmpty: aProtocol [
 	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
 
@@ -819,7 +828,7 @@ ClassDescription >> removeSelector: selector [
 	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
 	priorProtocol := self protocolOfSelector: selector.
-	self organization removeElement: selector.
+	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 

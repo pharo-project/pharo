@@ -80,11 +80,6 @@ Behavior >> lookupVar: aName [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Behavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName
-]
-
-{ #category : #'*OpalCompiler-Core' }
 Behavior >> outerScope [
 	^self environment
 ]
