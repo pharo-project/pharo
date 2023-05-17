@@ -34,30 +34,6 @@ ClassDescriptionProtocolsTest >> tearDown [
 ]
 
 { #category : #tests }
-ClassDescriptionProtocolsTest >> testMethodSelectorsInProtocol [
-
-	self assertEmpty: (class methodSelectorsInProtocol: #titan).
-
-	class compiler
-		protocol: #titan;
-		install: 'king ^ 1'.
-
-	self assertCollection: (class methodSelectorsInProtocol: #titan) hasSameElements: #( #king )
-]
-
-{ #category : #tests }
-ClassDescriptionProtocolsTest >> testMethodSelectorsInProtocolWithRealProtocol [
-
-	self assertEmpty: (Protocol named: #titan).
-
-	class compiler
-		protocol: #titan;
-		install: 'king ^ 1'.
-
-	self assertCollection: (class methodSelectorsInProtocol: (class organization protocolNamed: #titan)) hasSameElements: #( #king )
-]
-
-{ #category : #tests }
 ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
 
 	class compiler
@@ -210,4 +186,28 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 	class removeProtocol: (class organization protocolNamed: #titan).
 	self assert: class protocolNames size equals: 1.
 	self deny: (class isLocalSelector: #king)
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testSelectorsInProtocol [
+
+	self assertEmpty: (class selectorsInProtocol: #titan).
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testSelectorsInProtocolWithRealProtocol [
+
+	self assertEmpty: (Protocol named: #titan).
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assertCollection: (class selectorsInProtocol: (class organization protocolNamed: #titan)) hasSameElements: #( #king )
 ]

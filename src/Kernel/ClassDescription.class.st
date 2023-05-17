@@ -128,7 +128,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class methodSelectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -603,7 +603,7 @@ ClassDescription >> methodSelectorsInProtocol: aProtocol [
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self methodSelectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self selectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -867,10 +867,12 @@ ClassDescription >> selectorsInCategory: aName [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInProtocol: aName [
+ClassDescription >> selectorsInProtocol: aProtocol [
 	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
-	^ (self methodSelectorsInProtocol: aName) asSet asArray sort
+	(self organization hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
+
+	^ (self organization ensureProtocol: aProtocol) methodSelectors
 ]
 
 { #category : #'pool variable' }
@@ -1063,6 +1065,7 @@ ClassDescription >> theNonMetaClass [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> uncategorizedSelectors [
+
 	^ self selectorsInProtocol: Protocol unclassified
 ]
 

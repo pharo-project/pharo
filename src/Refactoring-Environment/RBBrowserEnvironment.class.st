@@ -774,7 +774,7 @@ RBBrowserEnvironment >> selectorsDo: aBlock [
 { #category : #accessing }
 RBBrowserEnvironment >> selectorsFor: aProtocol in: aClass [
 
-	^ (aClass methodSelectorsInProtocol: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
+	^ (aClass selectorsInProtocol: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
 ]
 
 { #category : #accessing }
