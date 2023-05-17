@@ -803,6 +803,15 @@ ClassDescription >> removeInstVarNamed: aString [
 ]
 
 { #category : #protocols }
+ClassDescription >> removeNonexistentSelectorsFromProtocols [
+	"For each protocol, remove the selectors that are not present in the class."
+
+	self organization allMethodSelectors
+		reject: [ :selector | self includesSelector: selector ]
+		thenDo: [ :selector | self removeFromProtocols: selector ]
+]
+
+{ #category : #protocols }
 ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
