@@ -190,7 +190,7 @@ RBMessageNode >> isHaltNode [
 		   includes: self selector) or: [
 		  self receiver isGlobalVariable and: [
 			  self receiver variable value = Halt and: [
-				  (Halt class selectorsInCategory: #halting) includes:
+				  (Halt class selectorsInProtocol: #halting) includes:
 					  self selector ] ] ]
 ]
 

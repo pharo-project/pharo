@@ -860,14 +860,15 @@ ClassDescription >> reorganize [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInCategory: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self methodSelectorsInProtocol: aName) asSet asArray sort
+	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
+
+	^ self selectorsInProtocol: aName
 ]
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInProtocol: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
+	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
 	^ (self methodSelectorsInProtocol: aName) asSet asArray sort
 ]
