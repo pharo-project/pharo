@@ -204,28 +204,6 @@ ClassOrganizationTest >> testProtocolNamed [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testProtocolNames [
-
-	self assertCollection: self organization protocolNames hasSameElements: #( #empty #one )
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testRemoveElement [
-
-	organization classify: #king under: #owl.
-	organization classify: #luz under: #owl.
-	self assert: (organization hasProtocol: #owl).
-	self assertCollection: (organization protocolNamed: #owl) methodSelectors hasSameElements: #( #king #luz ).
-
-	organization removeElement: #king.
-	self assert: (organization hasProtocol: #owl).
-	self assertCollection: (organization protocolNamed: #owl) methodSelectors hasSameElements: #( #luz ).
-
-	organization removeElement: #luz.
-	self deny: (organization hasProtocol: #owl)
-]
-
-{ #category : #tests }
 ClassOrganizationTest >> testRemoveNonexistentSelectorsFromProtocols [
 
 	class compiler

@@ -173,11 +173,8 @@ ClassOrganization >> protocols [
 
 { #category : #removing }
 ClassOrganization >> removeElement: aSelector [
-
-	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
-		protocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: protocol.
-		self organizedClass notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+	self deprecated: 'Use #removeFromProtocols: from the organized class instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv organizedClass removeFromProtocols: `@arg'. 
+	^ self organizedClass removeFromProtocols: aSelector
 ]
 
 { #category : #removing }
@@ -193,7 +190,7 @@ ClassOrganization >> removeNonexistentSelectorsFromProtocols [
 
 	self allMethodSelectors
 		reject: [ :selector | self organizedClass includesSelector: selector ]
-		thenDo: [ :selector | self removeElement: selector ]
+		thenDo: [ :selector | self organizedClass removeFromProtocols: selector ]
 ]
 
 { #category : #removing }
