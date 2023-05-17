@@ -592,14 +592,6 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
-{ #category : #protocols }
-ClassDescription >> methodSelectorsInProtocol: aProtocol [
-
-	(self organization hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
-
-	^ (self organization ensureProtocol: aProtocol) methodSelectors
-]
-
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
@@ -866,7 +858,7 @@ ClassDescription >> selectorsInCategory: aName [
 	^ self selectorsInProtocol: aName
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : #protocols }
 ClassDescription >> selectorsInProtocol: aProtocol [
 	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
