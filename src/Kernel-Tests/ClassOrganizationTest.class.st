@@ -192,6 +192,7 @@ ClassOrganizationTest >> testProtocolNamed [
 ]
 
 { #category : #tests }
+<<<<<<< HEAD
 ClassOrganizationTest >> testRemoveNonexistentSelectorsFromProtocols [
 
 	class compiler
@@ -223,6 +224,8 @@ ClassOrganizationTest >> testRemoveNonexistentSelectorsFromProtocols [
 ]
 
 { #category : #tests }
+=======
+>>>>>>> Pharo12
 ClassOrganizationTest >> testRenameProtocolAs [
 
 	self assert: (self organization hasProtocol: #one).

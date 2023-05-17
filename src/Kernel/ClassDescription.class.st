@@ -787,6 +787,13 @@ ClassDescription >> reformatAll [
 ]
 
 { #category : #protocols }
+ClassDescription >> removeEmptyProtocols [
+
+	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+]
+
+{ #category : #protocols }
 ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
@@ -800,6 +807,15 @@ ClassDescription >> removeInstVarNamed: aString [
 	"Remove the argument, aString, as one of the receiver's instance variables."
 
 	^self removeSlot: (self slotNamed: aString)
+]
+
+{ #category : #protocols }
+ClassDescription >> removeNonexistentSelectorsFromProtocols [
+	"For each protocol, remove the selectors that are not present in the class."
+
+	self organization allMethodSelectors
+		reject: [ :selector | self includesSelector: selector ]
+		thenDo: [ :selector | self removeFromProtocols: selector ]
 ]
 
 { #category : #protocols }

@@ -37,7 +37,7 @@ SycMoveMethodsToClassCommand >> execute [
 	methods
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ].
-	methods do: [ :each | each origin organization removeEmptyProtocols ]
+	methods do: [ :each | each origin removeEmptyProtocols ]
 ]
 
 { #category : #'drag and drop support' }
