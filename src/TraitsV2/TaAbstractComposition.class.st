@@ -112,15 +112,6 @@ TaAbstractComposition >> asTraitComposition [
 	^ self
 ]
 
-{ #category : #accessing }
-TaAbstractComposition >> categoryOfMethod: method withSelector: selector [
-	"I return the protocol of the method with the selector.
-	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
-	The basic implementation returns the protocol of the method"
-
-	^ method protocol
-]
-
 { #category : #testing }
 TaAbstractComposition >> changesSourceCode: aSelector [
 	"Checks if a selector should be compiled because its code has been rewritten."
@@ -143,7 +134,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
-	
+
 	newMethod := aClass compiler
 		             source: sourceCode;
 		             permitUndeclared: true;
@@ -155,7 +146,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 
-	aClass organization classify: selector under: (self categoryOfMethod: method withSelector: method selector).
+	aClass organization classify: selector under: (self protocolForMethod: method).
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
@@ -371,6 +362,15 @@ TaAbstractComposition >> originSelectorOf: aSelector [
 TaAbstractComposition >> printOn: aStream [
 
 	aStream nextPutAll: self traitCompositionExpression
+]
+
+{ #category : #accessing }
+TaAbstractComposition >> protocolForMethod: method [
+	"I return the protocol of the method given as parameter.
+	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
+	The basic implementation returns the protocol of the method"
+
+	^ method protocol
 ]
 
 { #category : #querying }
