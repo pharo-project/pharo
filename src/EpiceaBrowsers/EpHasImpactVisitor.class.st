@@ -166,7 +166,7 @@ EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 
 	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior |
 		(behavior organization hasProtocol: aProtocolRemoved) ifFalse: [ ^ false ].
-		((behavior selectorsInProtocol: aProtocolRemoved) allSatisfy: [ :each | (behavior compiledMethodAt: each) isFromTrait ]) ifTrue: [ ^ false ] ].
+		((behavior methodsInProtocol: aProtocolRemoved) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
 
 	^ true
 ]
