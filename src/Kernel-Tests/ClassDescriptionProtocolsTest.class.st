@@ -73,6 +73,22 @@ ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
+
+	class organization classify: #amity under: #witch.
+	class organization classify: #edalyn under: #witch.
+	self assert: (class organization hasProtocol: #witch).
+	self assertCollection: (class organization protocolNamed: #witch) methodSelectors hasSameElements: #( #amity #edalyn ).
+
+	class removeFromProtocols: #amity.
+	self assert: (class organization hasProtocol: #witch).
+	self assertCollection: (class organization protocolNamed: #witch) methodSelectors hasSameElements: #( #edalyn ).
+
+	class removeFromProtocols: #edalyn.
+	self deny: (class organization hasProtocol: #witch)
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocol [
 
 	class organization addProtocol: #titan.
