@@ -47,6 +47,12 @@ ClyMethodQuery >> isAffectedByChangedMethod: aMethod [
 	^self selectsMethod: aMethod
 ]
 
+{ #category : #testing }
+ClyMethodQuery >> isMethodQuery [
+
+	^ true
+]
+
 { #category : #'system changes' }
 ClyMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
