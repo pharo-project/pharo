@@ -42,7 +42,7 @@ ClassDescription >> copy: selector from: originClass classified: protocolName [
 
 	sourceCode ifNil: [ ^ self ].
 
-	protocol := protocolName ifNil: [ originClass organization protocolNameOfElement: selector ].
+	protocol := protocolName ifNil: [ originClass protocolNameOfSelector: selector ].
 
 	(self includesLocalSelector: selector) ifTrue: [
 		sourceCode asString = (self sourceCodeAt: selector) asString ifFalse: [ self error: self name , ' ' , selector , ' will be redefined if you proceed.' ] ].

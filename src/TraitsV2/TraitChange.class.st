@@ -123,7 +123,7 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 
 	(aClass methodDict includesKey: aSelector) ifTrue:[
 		priorMethod := aClass methodDict at: aSelector.
-		priorProtocol := aClass whichCategoryIncludesSelector: aSelector.
+		priorProtocol := aClass protocolNameOfSelector: aSelector.
 
 		aClass methodDict removeKey: aSelector.
 		aClass organization removeElement: aSelector.

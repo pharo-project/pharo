@@ -1887,7 +1887,7 @@ MetacelloToolBox >> modifyBaselineOf [
   methodSpec := MetacelloBaselineOfMethodSpec new
     project: project;
     selector: (MetacelloPlatform current selectorForPragma: pragma);
-    category: (baselineClass whichCategoryIncludesSelector: (MetacelloPlatform current selectorForPragma: pragma));
+    category: (baselineClass protocolNameOfSelector: (MetacelloPlatform current selectorForPragma: pragma));
     yourself.
   constructor methodSections
     do: [ :methodSection | self methodSpec methodSections add: methodSection ]
@@ -2026,7 +2026,7 @@ MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol symbolicVersio
     methodSpec := MetacelloSymbolicVersionMethodSpec new
         project: project;
         selector: (MetacelloPlatform current selectorForPragma: pragma);
-        category: (project configuration class whichCategoryIncludesSelector: (MetacelloPlatform current selectorForPragma: pragma));
+        category: (project configuration class protocolNameOfSelector: (MetacelloPlatform current selectorForPragma: pragma));
         versionString: versionSymbol;
         yourself.
     (constructor extractSymbolicVersionSpecsFor: versionSymbol)
@@ -2095,7 +2095,7 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol pr
     methodSpec := MetacelloVersionMethodSpec new
         project: project;
         selector: (MetacelloPlatform current selectorForPragma: pragma);
-        category: (project configuration class whichCategoryIncludesSelector: (MetacelloPlatform current selectorForPragma:  pragma));
+        category: (project configuration class protocolNameOfSelector: (MetacelloPlatform current selectorForPragma:  pragma));
         versionString: sourceVersionString;
         imports: imports;
         yourself.

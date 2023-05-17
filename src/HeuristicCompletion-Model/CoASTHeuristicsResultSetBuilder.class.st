@@ -24,6 +24,7 @@ CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
 		add: CoSelfMessageHeuristic new;
 		add: CoSuperMessageHeuristic new;
+		add: CoTypedReceiverMessageHeuristic new;
 		add: CoInitializeInferencedMessageHeuristic new;
 		add: CoLiteralMessageHeuristic new;
 		add: CoGlobalVariableMessageHeuristic new;

@@ -178,12 +178,14 @@ ImageCleaner >> detroyLiteralTable [
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
+
+	^ self class examplePackages
 ]
 
 { #category : #cleaning }
 ImageCleaner >> helpPackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+
+	^ self class helpPackages
 ]
 
 { #category : #'literal sharing' }

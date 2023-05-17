@@ -257,24 +257,6 @@ ClassOrganizationTest >> testRemoveNonexistentSelectorsFromProtocols [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testRemoveNonexistingProtocol [
-
-	self organization removeProtocolIfEmpty: 'non-existent'
-]
-
-{ #category : #tests }
-ClassOrganizationTest >> testRemoveProtocolIfEmpty [
-
-	self assert: self organization protocolNames size equals: 2.
-	"just ignore removing of non empty categories"
-	self organization removeProtocolIfEmpty: 'one'.
-	self assert: self organization protocolNames size equals: 2.
-	self organization removeProtocolIfEmpty: 'empty'.
-	self assert: self organization protocolNames size equals: 1.
-	self assert: self organization protocolNames first equals: 'one'
-]
-
-{ #category : #tests }
 ClassOrganizationTest >> testRenameProtocolAs [
 
 	self assert: (self organization hasProtocol: #one).

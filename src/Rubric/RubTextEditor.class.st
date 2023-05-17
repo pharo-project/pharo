@@ -1318,6 +1318,13 @@ RubTextEditor >> inOutdent: aKeyboardEvent delta: delta [
 	^ true
 ]
 
+{ #category : #'menu messages' }
+RubTextEditor >> indent [
+
+	^ self indent: nil
+
+]
+
 { #category : #'editing keys' }
 RubTextEditor >> indent: aKeyboardEvent [
 	"Add a tab at the front of every line occupied by the selection."
@@ -1694,6 +1701,13 @@ RubTextEditor >> openingDelimiters [
 { #category : #'accessing - selection' }
 RubTextEditor >> oppositeDelimiterSelection [
 	^ RubTextSelectionColor oppositeDelimiterSelection
+]
+
+{ #category : #'menu messages' }
+RubTextEditor >> outdent [
+
+	^ self outdent: nil
+
 ]
 
 { #category : #'editing keys' }
