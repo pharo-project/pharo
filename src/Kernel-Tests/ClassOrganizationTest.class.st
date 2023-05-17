@@ -192,40 +192,6 @@ ClassOrganizationTest >> testProtocolNamed [
 ]
 
 { #category : #tests }
-<<<<<<< HEAD
-ClassOrganizationTest >> testRemoveNonexistentSelectorsFromProtocols [
-
-	class compiler
-		protocol: #one;
-		install: 'one 1'.
-
-	class compiler
-		protocol: #one;
-		install: 'oneBis 1'.
-
-	class compiler
-		protocol: #two;
-		install: 'two 2'.
-
-	organization removeEmptyProtocols.
-
-	self assertCollection: organization protocolNames hasSameElements: #( one two ).
-	self assertCollection: (class selectorsInProtocol: #one) hasSameElements: #( one oneBis ).
-	self assertCollection: (class selectorsInProtocol: #two) hasSameElements: #( two ).
-
-	"Now that we asserted the actual state is good, we can test the actual method."
-	class methodDict
-		removeKey: #oneBis;
-		removeKey: #two.
-	organization removeNonexistentSelectorsFromProtocols.
-
-	self assertCollection: organization protocolNames hasSameElements: #( one ).
-	self assertCollection: (class selectorsInProtocol: #one) hasSameElements: #( one )
-]
-
-{ #category : #tests }
-=======
->>>>>>> Pharo12
 ClassOrganizationTest >> testRenameProtocolAs [
 
 	self assert: (self organization hasProtocol: #one).
