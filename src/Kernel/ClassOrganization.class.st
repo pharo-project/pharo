@@ -117,12 +117,6 @@ ClassOrganization >> initializeClass: aClass [
 ]
 
 { #category : #accessing }
-ClassOrganization >> methodSelectorsInProtocol: aName [
-
-	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
-]
-
-{ #category : #accessing }
 ClassOrganization >> organizedClass [
 
 	^ organizedClass ifNil: [ self error: 'ClassOrganization should always have an organized class associated.' ]

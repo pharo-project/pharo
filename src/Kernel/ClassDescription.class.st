@@ -128,7 +128,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodSelectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class methodSelectorsInProtocol: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -592,10 +592,18 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
+{ #category : #protocols }
+ClassDescription >> methodSelectorsInProtocol: aProtocol [
+
+	(self organization hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
+
+	^ (self organization ensureProtocol: aProtocol) methodSelectors
+]
+
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self organization methodSelectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self methodSelectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -854,14 +862,14 @@ ClassDescription >> reorganize [
 ClassDescription >> selectorsInCategory: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
+	^ (self methodSelectorsInProtocol: aName) asSet asArray sort
 ]
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInProtocol: aName [
 	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
+	^ (self methodSelectorsInProtocol: aName) asSet asArray sort
 ]
 
 { #category : #'pool variable' }

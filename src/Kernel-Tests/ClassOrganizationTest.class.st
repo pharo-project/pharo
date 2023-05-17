@@ -185,18 +185,6 @@ ClassOrganizationTest >> testHasProtocol [
 ]
 
 { #category : #tests }
-ClassOrganizationTest >> testMethodSelectorsInProtocol [
-
-	| methods |
-	methods := self organization methodSelectorsInProtocol: 'empty'.
-	self assertEmpty: methods.
-
-	methods := self organization methodSelectorsInProtocol: 'one'.
-	self assert: methods size equals: 1.
-	self assert: methods first equals: #one
-]
-
-{ #category : #tests }
 ClassOrganizationTest >> testProtocolNamed [
 
 	self assert: (self organization protocolNamed: 'empty') name equals: 'empty'.
