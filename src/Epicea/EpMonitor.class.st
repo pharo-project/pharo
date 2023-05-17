@@ -496,14 +496,10 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 		then this announcement is wrongly announced."
 		aMethodRecategorized methodRecategorized ifNil: [ ^ self ].
 		oldMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			             protocol: ((aMethodRecategorized oldProtocol isKindOf: Protocol)
-					              ifTrue: [ aMethodRecategorized oldProtocol name ]
-					              ifFalse: [ aMethodRecategorized oldProtocol ]);
+			             protocol: aMethodRecategorized oldProtocol name;
 			             yourself.
 		newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			             protocol: ((aMethodRecategorized newProtocol isKindOf: Protocol)
-					              ifTrue: [ aMethodRecategorized newProtocol name ]
-					              ifFalse: [ aMethodRecategorized newProtocol ]);
+			             protocol: aMethodRecategorized newProtocol name;
 			             yourself.
 
 		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod) ]
