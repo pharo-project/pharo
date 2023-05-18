@@ -1970,17 +1970,17 @@ UITheme >> initializeForms [
 
 	self forms: Dictionary new.
 	self forms
-		at: #checkboxMarker put: self newCheckboxMarkerForm;
-		at: #radioButtonMarker put: self newRadioButtonMarkerForm;
+		at: #checkboxMarker put: (self iconNamed: #checkboxMarkerForm);
+		at: #radioButtonMarker put: (self iconNamed: #radioButtonMarkerForm);
 		at: #treeExpanded put: self newTreeExpandedForm;
 		at: #treeUnexpanded put: self newTreeUnexpandedForm;
-		at: #windowClose put: self newWindowCloseForm;
-		at: #windowMinimize put: self newWindowMinimizeForm;
-		at: #windowMaximize put: self newWindowMaximizeForm;
-		at: #windowMenu put: self newWindowMenuForm;
-		at: #windowCloseOver put: self newWindowCloseOverForm;
-		at: #windowMinimizeOver put: self newWindowMinimizeOverForm;
-		at: #windowMaximizeOver put: self newWindowMaximizeOverForm
+		at: #windowClose put: (self iconNamed: #windowCloseForm);
+		at: #windowMinimize put: (self iconNamed: #windowMinimizeForm);
+		at: #windowMaximize put: (self iconNamed: #windowMaximizeForm);
+		at: #windowMenu put: (self iconNamed: #windowMenuForm);
+		at: #windowCloseOver put: (self iconNamed: #windowCloseForm);
+		at: #windowMinimizeOver put: (self iconNamed: #windowMinimizeForm);
+		at: #windowMaximizeOver put: (self iconNamed: #windowMaximizeForm)
 ]
 
 { #category : #accessing }
@@ -2635,13 +2635,6 @@ UITheme >> newCheckboxIn: aThemedMorph for: aModel getSelected: getSel setSelect
 	^answer
 ]
 
-{ #category : #initialization }
-UITheme >> newCheckboxMarkerForm [
-	"Answer a new checkbox marker form."
-
-	^ self iconNamed: #checkboxMarkerForm
-]
-
 { #category : #'morph creation' }
 UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 	"Answer a new close button."
@@ -3243,13 +3236,6 @@ UITheme >> newRadioButtonIn: aThemedMorph for: aModel getSelected: getSel setSel
 	^answer
 ]
 
-{ #category : #initialization }
-UITheme >> newRadioButtonMarkerForm [
-	"Answer a new radio button marker form. We make it empty because we already have the selected radio button take care of the state."
-
-	^ self iconNamed: #radioButtonMarkerForm
-]
-
 { #category : #'morph creation' }
 UITheme >> newRowIn: aThemedMorph for: controls [
 	"Answer a morph laid out with a row of controls."
@@ -3634,20 +3620,6 @@ UITheme >> newVerticalSeparatorIn: aThemedMorph [
 		vResizing: #spaceFill
 ]
 
-{ #category : #initialization }
-UITheme >> newWindowCloseForm [
-	"Answer a new form for a window close box."
-
-	^ self iconNamed: #windowCloseForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowCloseOverForm [
-	"Answer a new form for a window menu box."
-
-	^ self newWindowCloseForm
-]
-
 { #category : #'morph creation' }
 UITheme >> newWindowHeaderFor: aWindow [
 
@@ -3667,45 +3639,10 @@ UITheme >> newWindowIn: aThemedMorph for: aModel title: titleString [
 ]
 
 { #category : #initialization }
-UITheme >> newWindowMaximizeForm [
-	"Answer a new form for a window maximize box."
-
-	^ self iconNamed: #windowMaximizeForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMaximizeOverForm [
-	"Answer a new form for a window menu box."
-
-	^ self newWindowMaximizeForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMenuForm [
-	"Answer a new form for a window menu box."
-
-	^ self iconNamed: #windowMenuForm
-]
-
-{ #category : #initialization }
 UITheme >> newWindowMenuPassiveForm [
 	"Answer a new form for a window menu box."
 
 	^ self iconNamed: #windowMenuInactive
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMinimizeForm [
-	"Answer a new form for a window minimize box."
-
-	^ self iconNamed: #windowMinimizeForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMinimizeOverForm [
-	"Answer a new form for a window menu box."
-
-	^ self newWindowMinimizeForm
 ]
 
 { #category : #'morph creation' }
