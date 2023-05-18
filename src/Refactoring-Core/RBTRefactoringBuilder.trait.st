@@ -48,7 +48,7 @@ RBTRefactoringBuilder >> refactoringConfirmWarning: aString [
 	| ret |
 	ret := self uiManager
 		confirm: aString
-		orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
+		orCancel: [ ^ RBRefactoringError signal: 'aborted' ].
 	^ ret
 ]
 
@@ -58,21 +58,11 @@ RBTRefactoringBuilder >> refactoringError: aString [
 ]
 
 { #category : #exceptions }
-RBTRefactoringBuilder >> refactoringError: aString with: aBlock [
-	^ RBRefactoringError signal: aString with: aBlock
-]
-
-{ #category : #exceptions }
-RBTRefactoringBuilder >> refactoringFailure: aString [
-	^ RBRefactoringFailure signal: aString
-]
-
-{ #category : #exceptions }
-RBTRefactoringBuilder >> refactoringFailure: aString with: aBlock [
-	^ RBRefactoringFailure signal: aString with: aBlock
-]
-
-{ #category : #exceptions }
 RBTRefactoringBuilder >> refactoringWarning: aString [
 	^ RBRefactoringWarning signal: aString
+]
+
+{ #category : #exceptions }
+RBTRefactoringBuilder >> refactoringWarning: aString with: aBlock [
+	^ RBRefactoringWarning signal: aString with: aBlock
 ]
