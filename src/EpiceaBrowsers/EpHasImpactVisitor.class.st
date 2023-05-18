@@ -165,8 +165,8 @@ EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 	- there are methods in the protocol that are not trait methods"
 
 	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior |
-		(behavior organization hasProtocol: aProtocolRemoved) ifFalse: [ ^ false ].
-		((behavior methodsInProtocol: aProtocolRemoved) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
+		(behavior organization hasProtocol: aProtocolRemoved protocol) ifFalse: [ ^ false ].
+		((behavior methodsInProtocol: aProtocolRemoved protocol) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
 
 	^ true
 ]
