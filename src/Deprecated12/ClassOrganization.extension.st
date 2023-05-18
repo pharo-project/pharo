@@ -123,8 +123,8 @@ ClassOrganization >> hasComment [
 { #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
-	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodSelectorsInProtocol: `@arg'.
-	^ self methodSelectorsInProtocol: aName
+	self deprecated: 'Use #selectorsInProtocol: on organized class instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv organizedClass selectorsInProtocol: `@arg'.
+	^ self organizedClass selectorsInProtocol: aName
 ]
 
 { #category : #'*Deprecated12' }
