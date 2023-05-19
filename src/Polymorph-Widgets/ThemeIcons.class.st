@@ -300,20 +300,20 @@ ThemeIcons >> iconNamed: aSymbol [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon ]
-				ifFalse: [ self blankIcon ]]) scaledByDisplayScaleFactor
+					self notFoundIcon scaledByDisplayScaleFactor ]
+				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
 ]
 
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon ].
+	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledByDisplayScaleFactor ].
 	"Trying the old way"
 
 	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
 		self icons
 			at: (aSymbol allButLast: 4) asSymbol
-			ifPresent: [ :icon | ^ icon ]
+			ifPresent: [ :icon | ^ icon scaledByDisplayScaleFactor ]
 	].
 
 	^ aBlock value
