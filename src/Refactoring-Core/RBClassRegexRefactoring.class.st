@@ -85,7 +85,7 @@ RBClassRegexRefactoring >> initialize [
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
 	^ RBRenameClassRefactoring
 		model: self model
-		rename: aClass
+		rename: aClass name
 		to: aSymbol
 ]
 
