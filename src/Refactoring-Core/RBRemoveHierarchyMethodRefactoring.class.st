@@ -33,7 +33,7 @@ RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
 									model: self model
 									removeMethods: { selector }
 									from: aClass) ]
-		on: RBRefactoringError
+		on: RBRefactoringWarning
 			do: [ :ex | ( self confirm:
 				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
 				ifTrue:[ ex resume ] ] ]

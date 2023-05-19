@@ -57,7 +57,7 @@ RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
 			error := '<1s><n>Browse references?' expandMacrosWith: errorString.
 			classVarName := variableName asSymbol.
 			self
-				refactoringError: error
+				refactoringWarning: error
 				with: [ self
 						openBrowserOn: ( RBVariableEnvironment referencesToClassVariable: classVarName in: class realClass )
 					]

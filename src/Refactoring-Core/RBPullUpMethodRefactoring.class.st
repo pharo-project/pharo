@@ -212,7 +212,7 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
 	oldSource ifNil:
 			[ self
-				refactoringFailure: ('Source code for <1s> superclass method not available'
+				refactoringError: ('Source code for <1s> superclass method not available'
 						expandMacrosWith: aSelector)].
 	oldProtocol := superclassDefiner protocolsFor: aSelector.
 	subclasses := targetSuperclass subclasses
@@ -267,7 +267,7 @@ RBPullUpMethodRefactoring >> preconditions [
 RBPullUpMethodRefactoring >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
-	source ifNil: [self refactoringFailure: 'Source for method not available'].
+	source ifNil: [self refactoringError: 'Source for method not available'].
 	refactoring := RBExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (class parseTreeForSelector: aSelector)

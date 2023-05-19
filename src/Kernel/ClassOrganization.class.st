@@ -117,12 +117,6 @@ ClassOrganization >> initializeClass: aClass [
 ]
 
 { #category : #accessing }
-ClassOrganization >> methodSelectorsInProtocol: aName [
-
-	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
-]
-
-{ #category : #accessing }
 ClassOrganization >> organizedClass [
 
 	^ organizedClass ifNil: [ self error: 'ClassOrganization should always have an organized class associated.' ]
@@ -153,13 +147,13 @@ ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 		  ifNone: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #inlined }
 ClassOrganization >> protocolNames [
 
 	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
-{ #category : #protocol }
+{ #category : #inlined }
 ClassOrganization >> protocolOfSelector: aSelector [
 
 	^ self organizedClass protocolOfSelector: aSelector
@@ -171,29 +165,13 @@ ClassOrganization >> protocols [
 	^ protocols
 ]
 
-{ #category : #removing }
+{ #category : #inlined }
 ClassOrganization >> removeElement: aSelector [
 	self deprecated: 'Use #removeFromProtocols: from the organized class instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv organizedClass removeFromProtocols: `@arg'. 
 	^ self organizedClass removeFromProtocols: aSelector
 ]
 
-{ #category : #removing }
-ClassOrganization >> removeEmptyProtocols [
-
-	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
-	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
-]
-
-{ #category : #cleanup }
-ClassOrganization >> removeNonexistentSelectorsFromProtocols [
-	"For each protocol, remove the selectors that are not present in the class."
-
-	self allMethodSelectors
-		reject: [ :selector | self organizedClass includesSelector: selector ]
-		thenDo: [ :selector | self organizedClass removeFromProtocols: selector ]
-]
-
-{ #category : #removing }
+{ #category : #inlined }
 ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
 

@@ -128,7 +128,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodSelectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -595,7 +595,7 @@ ClassDescription >> localSlots [
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self organization methodSelectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self selectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -785,6 +785,13 @@ ClassDescription >> reformatAll [
 ]
 
 { #category : #protocols }
+ClassDescription >> removeEmptyProtocols [
+
+	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+]
+
+{ #category : #protocols }
 ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
@@ -798,6 +805,15 @@ ClassDescription >> removeInstVarNamed: aString [
 	"Remove the argument, aString, as one of the receiver's instance variables."
 
 	^self removeSlot: (self slotNamed: aString)
+]
+
+{ #category : #protocols }
+ClassDescription >> removeNonexistentSelectorsFromProtocols [
+	"For each protocol, remove the selectors that are not present in the class."
+
+	self organization allMethodSelectors
+		reject: [ :selector | self includesSelector: selector ]
+		thenDo: [ :selector | self removeFromProtocols: selector ]
 ]
 
 { #category : #protocols }
@@ -850,16 +866,19 @@ ClassDescription >> reorganize [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInCategory: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
+	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
+
+	^ self selectorsInProtocol: aName
 ]
 
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInProtocol: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
+{ #category : #protocols }
+ClassDescription >> selectorsInProtocol: aProtocol [
+	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
-	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
+	(self organization hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
+
+	^ (self organization ensureProtocol: aProtocol) methodSelectors
 ]
 
 { #category : #'pool variable' }
@@ -1052,6 +1071,7 @@ ClassDescription >> theNonMetaClass [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> uncategorizedSelectors [
+
 	^ self selectorsInProtocol: Protocol unclassified
 ]
 

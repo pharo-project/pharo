@@ -131,7 +131,5 @@ ClassTestCase >> testNew [
 { #category : #tests }
 ClassTestCase >> testUnCategorizedMethods [
 
-	| uncategorizedMethods |
-	uncategorizedMethods := self targetClass selectorsInProtocol: Protocol unclassified.
-	self assertEmpty: uncategorizedMethods
+	self assertEmpty: self targetClass uncategorizedSelectors
 ]

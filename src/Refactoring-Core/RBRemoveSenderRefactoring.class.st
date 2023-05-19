@@ -68,7 +68,7 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 RBRemoveSenderRefactoring >> findSelectedMessage [
 	super findSelectedMessage.
 	sourceMessage isDirectlyUsed
-		ifTrue: [ self refactoringFailure: 'The sender is directly used' ]
+		ifTrue: [ self refactoringError: 'The sender is directly used' ]
 ]
 
 { #category : #accessing }

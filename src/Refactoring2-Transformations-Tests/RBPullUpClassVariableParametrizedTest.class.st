@@ -35,7 +35,7 @@ RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
 	refactoring := self createRefactoringWithArguments:
 		{ #RecursiveSelfRule . #RBLintRuleTestData }.
 	[ self executeRefactoring: refactoring ]
-		on: RBRefactoringError
+		on: RBRefactoringWarning 
 		do: [ :e | e resume ].
 	self assert: ((refactoring model classNamed: #RBLintRuleTestData)
 		directlyDefinesClassVariable: #RecursiveSelfRule).
