@@ -686,7 +686,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 UITheme >> checkboxMarkerForm [
 	"Answer the form to use for a checkbox marker."
 
-	^self forms at: #checkboxMarker
+	^ self iconNamed: #checkboxMarkerForm
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -1970,19 +1970,10 @@ UITheme >> initializeForms [
 
 	self forms: Dictionary new.
 	self forms
-		at: #checkboxMarker put: (self iconNamed: #checkboxMarkerForm);
-		at: #radioButtonMarker put: (self iconNamed: #radioButtonMarkerForm);
 		at: #treeExpanded put: self newTreeExpandedForm;
 		at: #treeUnexpanded put: self newTreeUnexpandedForm;
 		at: #whiteTreeExpanded put: self newWhiteTreeExpandedForm;
-		at: #whiteTreeUnexpanded put: self newWhiteTreeUnexpandedForm;
-		at: #windowClose put: (self iconNamed: #windowCloseForm);
-		at: #windowMinimize put: (self iconNamed: #windowMinimizeForm);
-		at: #windowMaximize put: (self iconNamed: #windowMaximizeForm);
-		at: #windowMenu put: (self iconNamed: #windowMenuForm);
-		at: #windowCloseOver put: (self iconNamed: #windowCloseForm);
-		at: #windowMinimizeOver put: (self iconNamed: #windowMinimizeForm);
-		at: #windowMaximizeOver put: (self iconNamed: #windowMaximizeForm)
+		at: #whiteTreeUnexpanded put: self newWhiteTreeUnexpandedForm
 ]
 
 { #category : #accessing }
@@ -3877,7 +3868,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^(self forms at: #radioButtonMarker) scaledByDisplayScaleFactor
+	^ self iconNamed: #radioButtonMarkerForm
 ]
 
 { #category : #'border-styles - buttons' }
@@ -4960,14 +4951,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^(self forms at: #windowClose) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowCloseForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^(self forms at: #windowCloseOver) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowCloseForm
 ]
 
 { #category : #'label-styles - windows' }
@@ -5081,14 +5072,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^(self forms at: #windowMaximize) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMaximizeForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^(self forms at: #windowMaximizeOver) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMaximizeForm
 ]
 
 { #category : #'label-styles - windows' }
@@ -5109,7 +5100,7 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^(self forms at: #windowMenu) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMenuForm
 ]
 
 { #category : #'label-styles - windows' }
@@ -5130,14 +5121,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^(self forms at: #windowMinimize) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMinimizeForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^(self forms at: #windowMinimizeOver) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMinimizeForm
 ]
 
 { #category : #'label-styles - windows' }
