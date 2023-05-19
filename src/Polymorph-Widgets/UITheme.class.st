@@ -1974,6 +1974,8 @@ UITheme >> initializeForms [
 		at: #radioButtonMarker put: (self iconNamed: #radioButtonMarkerForm);
 		at: #treeExpanded put: self newTreeExpandedForm;
 		at: #treeUnexpanded put: self newTreeUnexpandedForm;
+		at: #whiteTreeExpanded put: self newWhiteTreeExpandedForm;
+		at: #whiteTreeUnexpanded put: self newWhiteTreeUnexpandedForm;
 		at: #windowClose put: (self iconNamed: #windowCloseForm);
 		at: #windowMinimize put: (self iconNamed: #windowMinimizeForm);
 		at: #windowMaximize put: (self iconNamed: #windowMaximizeForm);
@@ -3620,6 +3622,30 @@ UITheme >> newVerticalSeparatorIn: aThemedMorph [
 		vResizing: #spaceFill
 ]
 
+{ #category : #initialization }
+UITheme >> newWhiteTreeExpandedForm [
+
+	| form |
+	
+	form := self newTreeExpandedForm.
+	form replaceColor: Color white withColor: Color transparent.
+	(form colorsUsed reject: [ :color | color isTransparent ]) do: [ :color |
+		form replaceColor: color withColor: color whiter whiter whiter whiter whiter whiter ].
+	^ form
+]
+
+{ #category : #initialization }
+UITheme >> newWhiteTreeUnexpandedForm [
+
+	| form |
+	
+	form := self newTreeUnexpandedForm.
+	form replaceColor: Color white withColor: Color transparent.
+	(form colorsUsed reject: [ :color | color isTransparent ]) do: [ :color |
+		form replaceColor: color withColor: color whiter whiter whiter whiter whiter whiter ].
+	^ form
+]
+
 { #category : #'morph creation' }
 UITheme >> newWindowHeaderFor: aWindow [
 
@@ -4865,28 +4891,14 @@ UITheme >> warningTextColor [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^ self forms
-		at: #whiteTreeExpanded
-		ifAbsent: [ | f |
-			f := self treeExpandedForm deepCopy.
-			f replaceColor: Color white withColor: Color transparent.
-			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
-			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]
+	^ (self forms at: #whiteTreeExpanded) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^ self forms
-		at: #whiteTreeUnexpanded
-		ifAbsent: [ | f |
-			f := self treeUnexpandedForm deepCopy.
-			f replaceColor: Color white withColor: Color transparent.
-			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
-			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]
+	^ (self forms at: #whiteTreeUnexpanded) scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles' }
