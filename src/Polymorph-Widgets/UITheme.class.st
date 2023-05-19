@@ -686,7 +686,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 UITheme >> checkboxMarkerForm [
 	"Answer the form to use for a checkbox marker."
 
-	^self forms at: #checkboxMarker ifAbsent: [Form extent: 12@12 depth: Display depth]
+	^self forms at: #checkboxMarker
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -3877,7 +3877,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^(self forms at: #radioButtonMarker ifAbsent: [Form extent: 12@12 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #radioButtonMarker) scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles - buttons' }
@@ -4761,7 +4761,7 @@ UITheme >> textFont [
 UITheme >> treeExpandedForm [
 	"Answer the form to use for an expanded tree item."
 
-	^(self forms at: #treeExpanded ifAbsent: [Form extent: 10@9 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #treeExpanded) scaledByDisplayScaleFactor
 ]
 
 { #category : #'basic-colors' }
@@ -4791,7 +4791,7 @@ UITheme >> treeLineWidth [
 UITheme >> treeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item."
 
-	^(self forms at: #treeUnexpanded ifAbsent: [Form extent: 10@9 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #treeUnexpanded) scaledByDisplayScaleFactor
 ]
 
 { #category : #'accessing - colors' }
@@ -4960,14 +4960,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^(self forms at: #windowClose ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowClose) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^(self forms at: #windowCloseOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowCloseOver) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
@@ -5081,14 +5081,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^(self forms at: #windowMaximize ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowMaximize) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^(self forms at: #windowMaximizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowMaximizeOver) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
@@ -5109,7 +5109,7 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^(self forms at: #windowMenu ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowMenu) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
@@ -5130,14 +5130,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^(self forms at: #windowMinimize ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowMinimize) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^(self forms at: #windowMinimizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
+	^(self forms at: #windowMinimizeOver) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
