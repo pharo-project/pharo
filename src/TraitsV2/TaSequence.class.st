@@ -83,19 +83,6 @@ TaSequence >> allTraits [
 	^ members flatCollect: #allTraits
 ]
 
-{ #category : #accessing }
-TaSequence >> categoryOfMethod: aMethod withSelector: selector [
-
-	| protocols |
-	protocols := (self methods
-		              select: [ :method | method selector = selector ]
-		              thenCollect: #protocol) asSet.
-
-	^ protocols size = 1
-		  ifTrue: [ protocols anyOne ]
-		  ifFalse: [ Protocol traitConflictName ]
-]
-
 { #category : #testing }
 TaSequence >> changesSourceCode: aSelector [
 	"If the selector has conflicts it should be recompiled"
@@ -199,6 +186,21 @@ TaSequence >> name [
 TaSequence >> originSelectorOf: aSelector [
 
 	^ (self traitDefining: aSelector ifNone: [ ^aSelector ]) originSelectorOf: aSelector
+]
+
+{ #category : #accessing }
+TaSequence >> protocolForMethod: aMethod [
+
+	| protocols originalSelector |
+	originalSelector := aMethod selector.
+	protocols := (self methods
+		              select: [ :method | method selector = originalSelector ]
+		              thenCollect: #protocol) asSet.
+
+	"If we have more than a protocol, for example if there is an alias or if multiple traits have the same method, we return a conflicting protocol name."
+	^ protocols size = 1
+		  ifTrue: [ protocols anyOne ]
+		  ifFalse: [ Protocol traitConflictName ]
 ]
 
 { #category : #users }

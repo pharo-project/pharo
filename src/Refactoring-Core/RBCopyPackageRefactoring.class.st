@@ -122,14 +122,14 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 					withValueFrom:
 						[:aNode |
 						self
-							refactoringFailure: aClass2 , ' already exists within the reference scope'];
+							refactoringError: aClass2 , ' already exists within the reference scope'];
 				yourself.
 	self model allReferencesToClass: aClass1 inPackages: { newName }
 		do:
 			[:method |
 			(method modelClass hierarchyDefinesVariable: aClass2)
 				ifTrue:
-					[self refactoringFailure: aClass2 , ' is already defined in hierarchy of '
+					[self refactoringError: aClass2 , ' is already defined in hierarchy of '
 								, method modelClass printString].
 			self
 				convertMethod: method selector

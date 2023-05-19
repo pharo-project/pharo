@@ -59,7 +59,7 @@ RBTransformationTest >> perform: aChange do: aBlock [
 RBTransformationTest >> proceedThroughWarning: aBlock [
 
 	aBlock
-		on: RBRefactoringError
+		on: RBRefactoringWarning
 		do: [ :ex | ex resume ]
 ]
 

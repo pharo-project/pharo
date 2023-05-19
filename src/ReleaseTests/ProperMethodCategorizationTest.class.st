@@ -58,7 +58,7 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
-	| violating classSideInitializeMethods todo |
+	| violating classSideInitializeMethods |
 	violating := OrderedCollection new.
 	classSideInitializeMethods := OrderedCollection new.
 
@@ -67,10 +67,6 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
 				ifTrue: [ classSideInitializeMethods add: method ]]].
 	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
-
-	todo := #(#LGitDiffHunk #TonelFileSystemUtils #MicHTTPResourceReference).
-
-	violating := violating reject: [ :each | todo includes: each methodClass instanceSide name  ].
 
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]

@@ -151,8 +151,8 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	"Remove empty packages and protocols"
 	Smalltalk organization removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
-		class organization removeEmptyProtocols.
-    class class organization removeEmptyProtocols  ].
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols  ].
   
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.

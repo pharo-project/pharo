@@ -133,11 +133,11 @@ RBChangeMethodNameTransformation >> renameImplementors [
 			| parseTree |
 
 			parseTree := each parseTreeForSelector: oldSelector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse source code.' ].
+			parseTree ifNil: [ self refactoringError: 'Could not parse source code.' ].
 			self implementorsCanBePrimitives
 				ifFalse: [ parseTree isPrimitive
 						ifTrue: [ self
-								refactoringFailure:
+								refactoringError:
 									( '<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each with: oldSelector )
 							]
 					].

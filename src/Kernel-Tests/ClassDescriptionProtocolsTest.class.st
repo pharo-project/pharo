@@ -87,6 +87,53 @@ ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
+
+	class organization classify: #amity under: #witch.
+	class organization classify: #edalyn under: #witch.
+	self assert: (class organization hasProtocol: #witch).
+	self assertCollection: (class selectorsInProtocol: #witch) hasSameElements: #( #amity #edalyn ).
+
+	class removeFromProtocols: #amity.
+	self assert: (class organization hasProtocol: #witch).
+	self assertCollection: (class selectorsInProtocol: #witch) hasSameElements: #( #edalyn ).
+
+	class removeFromProtocols: #edalyn.
+	self deny: (class organization hasProtocol: #witch)
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
+
+	class compiler
+		protocol: #human;
+		install: 'luz ^ 1'.
+
+	class compiler
+		protocol: #human;
+		install: 'camila ^ 1'.
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 2'.
+
+	class removeEmptyProtocols.
+
+	self assertCollection: class protocolNames hasSameElements: #( human titan ).
+	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz camila ).
+	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( king ).
+
+	"Now that we asserted the actual state is good, we can test the actual method."
+	class methodDict
+		removeKey: #camila;
+		removeKey: #king.
+	class removeNonexistentSelectorsFromProtocols.
+
+	self assertCollection: class protocolNames hasSameElements: #( human ).
+	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz )
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocol [
 
 	class organization addProtocol: #titan.
@@ -96,7 +143,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocol [
 		protocol: #titan;
 		install: 'king ^1'.
 	self assert: class protocolNames size equals: 3.
-	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
 
 	class removeProtocol: #human.
 	self assert: class protocolNames size equals: 2.
@@ -118,7 +165,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmpty [
 		protocol: #titan;
 		install: 'king ^1'.
 	self assert: class protocolNames size equals: 3.
-	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
 
 	"just ignore removing of non empty categories"
 	class removeProtocolIfEmpty: #titan.
@@ -146,7 +193,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithRealProtocol [
 		protocol: #titan;
 		install: 'king ^1'.
 	self assert: class protocolNames size equals: 3.
-	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
 
 	"just ignore removing of non empty categories"
 	class removeProtocolIfEmpty: (class organization protocolNamed: #titan).
@@ -174,7 +221,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 		protocol: #titan;
 		install: 'king ^1'.
 	self assert: class protocolNames size equals: 3.
-	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
 
 	class removeProtocol: (class organization protocolNamed: #human).
 	self assert: class protocolNames size equals: 2.
@@ -184,4 +231,28 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 	class removeProtocol: (class organization protocolNamed: #titan).
 	self assert: class protocolNames size equals: 1.
 	self deny: (class isLocalSelector: #king)
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testSelectorsInProtocol [
+
+	self assertEmpty: (class selectorsInProtocol: #titan).
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testSelectorsInProtocolWithRealProtocol [
+
+	self assertEmpty: (Protocol named: #titan).
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assertCollection: (class selectorsInProtocol: (class organization protocolNamed: #titan)) hasSameElements: #( #king )
 ]
