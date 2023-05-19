@@ -8,8 +8,8 @@ Class {
 MCPackageTest >> aMethodRemoved: anEvent [
 	"Force cleaning of the protocol."
 
-	(anEvent protocol = self mockExtensionMethodCategory and: [ anEvent methodClass == MCSnapshotTest ])
-		ifTrue: [ anEvent methodClass organization removeProtocolIfEmpty: self mockExtensionMethodCategory ]
+	(anEvent protocol name = self mockExtensionMethodCategory and: [ anEvent methodClass == MCSnapshotTest ]) ifTrue: [
+		anEvent methodClass removeProtocolIfEmpty: self mockExtensionMethodCategory ]
 ]
 
 { #category : #running }
