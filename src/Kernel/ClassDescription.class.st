@@ -439,6 +439,12 @@ ClassDescription >> hasInstVarNamed: aString [
 	^ self instVarNames includes: aString
 ]
 
+{ #category : #protocols }
+ClassDescription >> hasProtocol: aProtocol [
+
+	^ self protocolNames includes: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ])
+]
+
 { #category : #'pool variable' }
 ClassDescription >> hasSharedPools [
 	"Only a class may have shared pools"
@@ -786,9 +792,9 @@ ClassDescription >> reformatAll [
 
 { #category : #protocols }
 ClassDescription >> removeEmptyProtocols [
-
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
-	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+
+	self protocolNames copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : #protocols }
@@ -821,7 +827,7 @@ ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
-	(self organization hasProtocol: aProtocol) ifFalse: [ ^ self ].
+	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
 	(self ensureProtocol: aProtocol) in: [ :protocol |
 		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
@@ -876,9 +882,9 @@ ClassDescription >> selectorsInCategory: aName [
 ClassDescription >> selectorsInProtocol: aProtocol [
 	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
-	(self organization hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
+	(self hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
 
-	^ (self organization ensureProtocol: aProtocol) methodSelectors
+	^ (self ensureProtocol: aProtocol) methodSelectors
 ]
 
 { #category : #'pool variable' }
