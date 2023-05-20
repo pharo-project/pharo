@@ -794,7 +794,7 @@ ClassDescription >> reformatAll [
 ClassDescription >> removeEmptyProtocols [
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
 
-	self protocolNames copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+	self organization protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : #protocols }
