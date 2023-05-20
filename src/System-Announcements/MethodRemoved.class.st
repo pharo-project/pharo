@@ -24,7 +24,8 @@ MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin
 
 { #category : #testing }
 MethodRemoved >> affectsMethodsTaggedWith: tagName [
-	^(super affectsMethodsTaggedWith: tagName) or: [ protocol = tagName ]
+
+	^ (super affectsMethodsTaggedWith: tagName) or: [ self protocol name = tagName ]
 ]
 
 { #category : #accessing }

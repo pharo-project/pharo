@@ -55,7 +55,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol name ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -86,7 +86,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 	self addSelectorSilently: selector withMethod: compiledMethod.
 	priorMethodOrNil
 		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
+		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -675,9 +675,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self
-		compiledMethodAt: selector
-		ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
+	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
 ]
 
 { #category : #private }
@@ -694,7 +692,7 @@ ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol
 		"Announce recategorization"
 		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
 
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol name
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : #private }
@@ -854,7 +852,7 @@ ClassDescription >> removeSelector: selector [
 	| priorMethod priorProtocol origin |
 	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
-	priorProtocol := self protocolNameOfSelector: selector.
+	priorProtocol := self protocolOfSelector: selector.
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
