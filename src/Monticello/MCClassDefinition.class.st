@@ -165,38 +165,38 @@ MCClassDefinition >> commentStamp [
 
 { #category : #installing }
 MCClassDefinition >> createClass [
+
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #Context
-		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: commentStamp ].
-					^ self ].
+	name = #Context ifTrue: [
+		Context comment = comment ifFalse: [ Context comment: comment stamp: commentStamp ].
+		^ self ].
+
+	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
 
 	"Ignore CompiledBlock definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #CompiledBlock
-		ifTrue: [ CompiledBlock comment = comment 
-						ifFalse: [ CompiledBlock comment: comment stamp: commentStamp ].
-					^ self ].
+	name = #CompiledBlock ifTrue: [
+		CompiledBlock comment = comment ifFalse: [ CompiledBlock comment: comment stamp: commentStamp ].
+		CompiledBlock superclass = superClass ifFalse: [ CompiledBlock superclass = superClass ].
+		^ self ].
 
-	superClass := superclassName = #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
-	^ [ Smalltalk classInstaller
-		make: [ :builder | 
-			builder
-				superclass: superClass;
-				name: name;
-				layoutClass: (ObjectLayout layoutForType: type);
-				slots: self instanceVariables;
-				sharedVariables: self classVariables;
-				sharedPools: self sharedPoolsString;
-				classSlots: self classInstanceVariables;
-				traitComposition: self traitCompositionCompiled;
-				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: commentStamp;
-				category: category;
-				environment: superClass environment ] ]
-		on: Warning , DuplicatedVariableError
-		do: [ :ex | ex resume ]
+	^ [
+	  Smalltalk classInstaller make: [ :builder |
+		  builder
+			  superclass: superClass;
+			  name: name;
+			  layoutClass: (ObjectLayout layoutForType: type);
+			  slots: self instanceVariables;
+			  sharedVariables: self classVariables;
+			  sharedPools: self sharedPoolsString;
+			  classSlots: self classInstanceVariables;
+			  traitComposition: self traitCompositionCompiled;
+			  classTraitComposition: self classTraitCompositionCompiled;
+			  comment: comment stamp: commentStamp;
+			  category: category;
+			  environment: superClass environment ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
 { #category : #installing }
