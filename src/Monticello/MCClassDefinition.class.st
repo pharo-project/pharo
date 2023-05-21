@@ -171,6 +171,13 @@ MCClassDefinition >> createClass [
 		ifTrue: [ Context comment = comment 
 						ifFalse: [ Context comment: comment stamp: commentStamp ].
 					^ self ].
+
+	"Ignore CompiledBlock definition because of troubles with class migration on bootstrapped image. Temporary solution."
+	name = #CompiledBlock
+		ifTrue: [ CompiledBlock comment = comment 
+						ifFalse: [ CompiledBlock comment: comment stamp: commentStamp ].
+					^ self ].
+
 	superClass := superclassName = #nil
 		ifFalse: [ Smalltalk globals at: superclassName ].
 	^ [ Smalltalk classInstaller
