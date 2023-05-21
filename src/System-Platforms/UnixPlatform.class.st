@@ -37,6 +37,14 @@ UnixPlatform >> getErrorMessage: errnum [
 	^ self ffiCall: #(char *strerror(int errnum)) module: #LibC
 ]
 
+{ #category : #accessing }
+UnixPlatform >> getTemporaryDirectory [
+
+	| tmpDir |
+	tmpDir := self environment at: 'TMPDIR' ifAbsent: [ '/tmp' ].
+	^ (tmpDir endsWith: $/) ifTrue: [ tmpDir ] ifFalse: [ tmpDir , '/' ]
+]
+
 { #category : #testing }
 UnixPlatform >> isLinux [
 	"Some Linux versions return linux, some linux-gnu, ..."

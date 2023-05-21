@@ -71,6 +71,29 @@ WinPlatform >> getErrorMessage: anInteger [
     ^ buffer asString
 ]
 
+{ #category : #'file paths' }
+WinPlatform >> getTempPath [
+
+  | buffer length |
+	length := self defaultMaximumPathLength.
+	buffer := (String new: length) asWin32WideString.
+	self getTempPath: length buffer: buffer.
+	^buffer asString
+]
+
+{ #category : #'file paths' }
+WinPlatform >> getTempPath: bufferLength buffer: buffer [
+
+    self ffiCall: #(long GetTempPath2W(long bufferLength,
+                            void*  buffer))
+]
+
+{ #category : #accessing }
+WinPlatform >> getTemporaryDirectory [
+
+	^ self getTempPath 
+]
+
 { #category : #testing }
 WinPlatform >> isWindows [
 	^ true
