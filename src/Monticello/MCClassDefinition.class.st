@@ -172,10 +172,10 @@ MCClassDefinition >> createClass [
 						ifFalse: [ Context comment: comment stamp: commentStamp ].
 					^ self ].
 
-	"Ignore FullBlockClosure definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #FullBlockClosure
-		ifTrue: [ FullBlockClosure comment = comment 
-						ifFalse: [ FullBlockClosure comment: comment stamp: commentStamp ].
+	"Ignore CompiledBlock definition because of troubles with class migration on bootstrapped image. Temporary solution."
+	name = #CompiledBlock
+		ifTrue: [ CompiledBlock comment = comment 
+						ifFalse: [ CompiledBlock comment: comment stamp: commentStamp ].
 					^ self ].
 
 	superClass := superclassName = #nil
