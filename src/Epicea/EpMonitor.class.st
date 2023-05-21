@@ -494,16 +494,15 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 		| oldMethod newMethod |
 		"Workaround: When a trait is removed from the trait composition,
 		then this announcement is wrongly announced."
-
 		aMethodRecategorized methodRecategorized ifNil: [ ^ self ].
 		oldMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized oldProtocol;
-			yourself.
+			             protocol: aMethodRecategorized oldProtocol name;
+			             yourself.
 		newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized newProtocol;
-			yourself.
+			             protocol: aMethodRecategorized newProtocol name;
+			             yourself.
 
-		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)]
+		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod) ]
 ]
 
 { #category : #'announcement handling' }
@@ -512,9 +511,10 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 
 	self handleAnyErrorDuring: [
 		self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
-					  protocol: aMethodRemovedAnnouncement protocol;
+					  protocol: aMethodRemovedAnnouncement protocol name;
 					  package:
-						  (Smalltalk organization packageForProtocol: aMethodRemovedAnnouncement protocol inClass: aMethodRemovedAnnouncement methodAffected methodClass) name;
+						  (Smalltalk organization packageForProtocol: aMethodRemovedAnnouncement protocol name inClass: aMethodRemovedAnnouncement methodAffected methodClass)
+							  name;
 					  yourself)) ]
 ]
 

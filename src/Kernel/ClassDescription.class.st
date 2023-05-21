@@ -55,7 +55,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol
 				newProtocol: newProtocol.
 
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol name ]
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -86,7 +86,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 	self addSelectorSilently: selector withMethod: compiledMethod.
 	priorMethodOrNil
 		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
+		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -128,7 +128,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its
 	superclasses that are in the protocol named aName"
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class organization methodSelectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: aName ]
 ]
 
 { #category : #'pool variable' }
@@ -385,7 +385,7 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -437,6 +437,12 @@ ClassDescription >> hasInstVarNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString."
 
 	^ self instVarNames includes: aString
+]
+
+{ #category : #protocols }
+ClassDescription >> hasProtocol: aProtocol [
+
+	^ self protocolNames includes: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ])
 ]
 
 { #category : #'pool variable' }
@@ -595,7 +601,7 @@ ClassDescription >> localSlots [
 { #category : #organization }
 ClassDescription >> methodsInProtocol: aString [
 
-	^ (self organization methodSelectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self selectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
 ]
 
 { #category : #'accessing - tags' }
@@ -675,9 +681,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self
-		compiledMethodAt: selector
-		ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: (oldProtocol ifNotNil: [ oldProtocol name ]) ]
+	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
 ]
 
 { #category : #private }
@@ -694,7 +698,7 @@ ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol
 		"Announce recategorization"
 		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
 
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol name
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : #private }
@@ -754,7 +758,7 @@ ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> protocolNameOfSelector: aSelector [
 	"Return the protocol name including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
@@ -762,14 +766,14 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
 	^ self organization protocolNames copy
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> protocolOfSelector: aSelector [
 	"Return the protocol including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
@@ -786,6 +790,22 @@ ClassDescription >> reformatAll [
 	self methods do: [ :method | method reformat ]
 ]
 
+{ #category : #protocols }
+ClassDescription >> removeEmptyProtocols [
+	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
+
+	self organization protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+]
+
+{ #category : #protocols }
+ClassDescription >> removeFromProtocols: aSelector [
+
+	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
+		protocol removeMethodSelector: aSelector.
+		self removeProtocolIfEmpty: protocol.
+		self notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+]
+
 { #category : #'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [
 	"Remove the argument, aString, as one of the receiver's instance variables."
@@ -793,19 +813,28 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
+ClassDescription >> removeNonexistentSelectorsFromProtocols [
+	"For each protocol, remove the selectors that are not present in the class."
+
+	self organization allMethodSelectors
+		reject: [ :selector | self includesSelector: selector ]
+		thenDo: [ :selector | self removeFromProtocols: selector ]
+]
+
+{ #category : #protocols }
 ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
-	(self organization hasProtocol: aProtocol) ifFalse: [ ^ self ].
+	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
 	(self ensureProtocol: aProtocol) in: [ :protocol |
 		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
 		self removeProtocolIfEmpty: protocol ]
 ]
 
-{ #category : #'accessing - protocols' }
+{ #category : #protocols }
 ClassDescription >> removeProtocolIfEmpty: aProtocol [
 	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
 
@@ -818,10 +847,10 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
 	| priorMethod priorProtocol origin |
-	priorMethod := self compiledMethodAt: selector ifAbsent: [^ nil].
+	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
-	priorProtocol := self protocolNameOfSelector: selector.
-	self organization removeElement: selector.
+	priorProtocol := self protocolOfSelector: selector.
+	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
@@ -843,16 +872,19 @@ ClassDescription >> reorganize [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInCategory: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
 
-	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
+	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
+
+	^ self selectorsInProtocol: aName
 ]
 
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInProtocol: aName [
-	"Answer a list of the selectors of the receiver that are in category named aName"
+{ #category : #protocols }
+ClassDescription >> selectorsInProtocol: aProtocol [
+	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
-	^ (self organization methodSelectorsInProtocol: aName) asSet asArray sort
+	(self hasProtocol: aProtocol) ifFalse: [ ^ #(  ) ].
+
+	^ (self ensureProtocol: aProtocol) methodSelectors
 ]
 
 { #category : #'pool variable' }
@@ -1045,6 +1077,7 @@ ClassDescription >> theNonMetaClass [
 
 { #category : #'accessing - method dictionary' }
 ClassDescription >> uncategorizedSelectors [
+
 	^ self selectorsInProtocol: Protocol unclassified
 ]
 
@@ -1116,14 +1149,4 @@ ClassDescription >> whichSelectorsWrite: instVarName [
 		slotNamed: instVarName
 		ifFound: [ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
 		ifNone: [ #() ]
-]
-
-{ #category : #organization }
-ClassDescription >> zapOrganization [
-	"Remove the organization of this class by message categories.
-	This is typically done to save space in small systems.  Classes and methods
-	created or filed in subsequently will, nonetheless, be organized"
-
-	self organization: nil.
-	self isClassSide ifFalse: [self classSide zapOrganization]
 ]

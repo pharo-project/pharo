@@ -123,10 +123,10 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 
 	(aClass methodDict includesKey: aSelector) ifTrue:[
 		priorMethod := aClass methodDict at: aSelector.
-		priorProtocol := aClass protocolNameOfSelector: aSelector.
+		priorProtocol := aClass protocolOfSelector: aSelector.
 
 		aClass methodDict removeKey: aSelector.
-		aClass organization removeElement: aSelector.
+		aClass removeFromProtocols: aSelector.
 
 		SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: aClass
 	].

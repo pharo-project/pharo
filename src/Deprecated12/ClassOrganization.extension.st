@@ -123,8 +123,8 @@ ClassOrganization >> hasComment [
 { #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
-	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodSelectorsInProtocol: `@arg'.
-	^ self methodSelectorsInProtocol: aName
+	self deprecated: 'Use #selectorsInProtocol: on organized class instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv organizedClass selectorsInProtocol: `@arg'.
+	^ self organizedClass selectorsInProtocol: aName
 ]
 
 { #category : #'*Deprecated12' }
@@ -137,8 +137,8 @@ ClassOrganization >> removeCategory: protocolName [
 { #category : #'*Deprecated12' }
 ClassOrganization >> removeEmptyCategories [
 
-	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
-	self removeEmptyProtocols
+	self deprecated: 'Use #removeEmptyProtocols on the organized class instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv organizedClass removeEmptyProtocols'.
+	self organizedClass removeEmptyProtocols
 ]
 
 { #category : #'*Deprecated12' }

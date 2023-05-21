@@ -23,7 +23,7 @@ ClassOrganization >> addProtocol: aProtocol [
 
 	| oldProtocols protocol |
 	
-	(self hasProtocol: aProtocol) ifTrue: [
+	(self organizedClass hasProtocol: aProtocol) ifTrue: [
 		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
 
 	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
@@ -88,14 +88,6 @@ ClassOrganization >> extensionProtocols [
 ]
 
 { #category : #testing }
-ClassOrganization >> hasProtocol: aProtocol [
-
-	| protocolName |
-	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
-	^ self protocols anySatisfy: [ :each | each name = protocolName ]
-]
-
-{ #category : #testing }
 ClassOrganization >> includesSelector: selector [
 
 	^ self protocols anySatisfy: [ :each | each includesSelector: selector ]
@@ -114,12 +106,6 @@ ClassOrganization >> initializeClass: aClass [
 	self initialize.
 	organizedClass := aClass.
 	organizedClass selectors do: [ :each | self classify: each under: Protocol unclassified ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> methodSelectorsInProtocol: aName [
-
-	^ (self protocolNamed: aName ifAbsent: [ ^ #(  ) ]) methodSelectors asArray
 ]
 
 { #category : #accessing }
@@ -153,13 +139,13 @@ ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 		  ifNone: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #inlined }
 ClassOrganization >> protocolNames [
 
 	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
-{ #category : #protocol }
+{ #category : #inlined }
 ClassOrganization >> protocolOfSelector: aSelector [
 
 	^ self organizedClass protocolOfSelector: aSelector
@@ -171,37 +157,18 @@ ClassOrganization >> protocols [
 	^ protocols
 ]
 
-{ #category : #removing }
+{ #category : #inlined }
 ClassOrganization >> removeElement: aSelector [
-
-	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
-		protocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: protocol.
-		self organizedClass notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+	self deprecated: 'Use #removeFromProtocols: from the organized class instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv organizedClass removeFromProtocols: `@arg'. 
+	^ self organizedClass removeFromProtocols: aSelector
 ]
 
-{ #category : #removing }
-ClassOrganization >> removeEmptyProtocols [
-
-	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
-	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
-]
-
-{ #category : #cleanup }
-ClassOrganization >> removeNonexistentSelectorsFromProtocols [
-	"For each protocol, remove the selectors that are not present in the class."
-
-	self allMethodSelectors
-		reject: [ :selector | self organizedClass includesSelector: selector ]
-		thenDo: [ :selector | self removeElement: selector ]
-]
-
-{ #category : #removing }
+{ #category : #inlined }
 ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
 
 	| protocol oldProtocolNames |
-	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
+	(self organizedClass hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
 	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
 
@@ -219,7 +186,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 	| oldProtocol newProtocol |
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
-	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+	(self organizedClass hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
 	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
 	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
@@ -227,7 +194,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
 	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-		(self hasProtocol: aNewProtocol)
+		(self organizedClass hasProtocol: aNewProtocol)
 			ifTrue: [
 				newProtocol := self ensureProtocol: aNewProtocol.
 

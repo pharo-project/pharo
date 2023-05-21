@@ -14,5 +14,6 @@ PackageMethodCategoryNodeExample >> childNodeClassFromItem: anItem [
 
 { #category : #accessing }
 PackageMethodCategoryNodeExample >> childrenItems [
+
 	^ self parentNode item selectorsInProtocol: self item
 ]

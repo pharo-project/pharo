@@ -46,7 +46,7 @@ ProtocolRenamed >> oldProtocol [
 ]
 
 { #category : #accessing }
-ProtocolRenamed >> oldProtocol: aString [
+ProtocolRenamed >> oldProtocol: aProtocol [
 
-	self protocol: aString
+	self protocol: aProtocol
 ]

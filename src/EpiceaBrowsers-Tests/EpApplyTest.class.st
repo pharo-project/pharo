@@ -353,9 +353,9 @@ EpApplyTest >> testProtocolAddition [
 	aClass removeProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self deny: (aClass organization hasProtocol: 'protocol').
+	self deny: (aClass hasProtocol: 'protocol').
 	self applyInputEntry.
-	self assert: (aClass organization hasProtocol: 'protocol')
+	self assert: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }
@@ -369,9 +369,9 @@ EpApplyTest >> testProtocolRemoval [
 	aClass organization addProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self assert: (aClass organization hasProtocol: 'protocol').
+	self assert: (aClass hasProtocol: 'protocol').
 	self applyInputEntry.
-	self deny: (aClass organization hasProtocol: 'protocol')
+	self deny: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }

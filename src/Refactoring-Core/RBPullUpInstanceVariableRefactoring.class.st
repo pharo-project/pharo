@@ -11,7 +11,7 @@ Class {
 RBPullUpInstanceVariableRefactoring >> preconditions [
 	^RBCondition withBlock:
 			[(class hierarchyDefinesInstanceVariable: variableName)
-				ifFalse: [self refactoringFailure: 'No subclass defines ' , variableName].
+				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
 			(class subclasses
 				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
 				ifTrue:

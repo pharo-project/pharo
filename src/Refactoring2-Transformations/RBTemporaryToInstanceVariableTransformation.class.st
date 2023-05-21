@@ -106,11 +106,11 @@ RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	parseTree := class parseTreeForSelector: selector.
 	(parseTree allTemporaryVariables includes: temporaryVariableName)
 		ifFalse:
-			[self refactoringFailure: temporaryVariableName
+			[self refactoringError: temporaryVariableName
 						, ' isn''t a valid temporary variable name'].
 	(parseTree allArgumentVariables includes: temporaryVariableName)
 		ifTrue:
-			[self refactoringFailure: temporaryVariableName , ' is a block parameter'].
+			[self refactoringError: temporaryVariableName , ' is a block parameter'].
 	(RBReadBeforeWrittenTester isVariable: temporaryVariableName
 		readBeforeWrittenIn: parseTree)
 			ifTrue:
@@ -161,7 +161,7 @@ RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelecto
 	| parseTree matcher aMethod |
 	aMethod := aClass methodFor: aSelector.
 	parseTree := aMethod parseTree.
-	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ].
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
 	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
 		executeTree: parseTree.
 	aMethod compileTree: matcher tree

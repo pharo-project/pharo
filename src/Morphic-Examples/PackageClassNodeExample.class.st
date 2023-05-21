@@ -23,6 +23,7 @@ PackageClassNodeExample >> childrenItems [
 ]
 
 { #category : #menu }
-PackageClassNodeExample >> methodsInCategory: aCat [
-	^ self item  selectorsInProtocol: aCat
+PackageClassNodeExample >> methodsInCategory: aProtocol [
+
+	^ self item selectorsInProtocol: aProtocol
 ]

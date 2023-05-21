@@ -409,7 +409,7 @@ ReleaseTest >> testRatioOfCommentedClasses [
 	stereotypes removeAll: TestCase allSubclasses.
 	stereotypes removeAll: BaselineOf allSubclasses.
 	violating := stereotypes select: [ :each | each comment isEmpty ].
-	self assert: violating size <= 914
+	self assert: violating size <= 876
 ]
 
 { #category : #tests }

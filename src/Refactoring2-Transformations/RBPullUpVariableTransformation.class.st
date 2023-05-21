@@ -42,7 +42,7 @@ RBPullUpVariableTransformation >> preconditions [
 		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
 		ifFalse: [ RBCondition withBlock:
 			[(self definingClass hierarchyDefinesInstanceVariable: variableName)
-				ifFalse: [self refactoringFailure: 'No subclass defines ' , variableName].
+				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
 			(self definingClass subclasses
 				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
 				ifTrue:
