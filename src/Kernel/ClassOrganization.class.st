@@ -23,7 +23,7 @@ ClassOrganization >> addProtocol: aProtocol [
 
 	| oldProtocols protocol |
 	
-	(self hasProtocol: aProtocol) ifTrue: [
+	(self organizedClass hasProtocol: aProtocol) ifTrue: [
 		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
 
 	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
@@ -85,14 +85,6 @@ ClassOrganization >> ensureProtocol: aProtocol [
 { #category : #accessing }
 ClassOrganization >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
-]
-
-{ #category : #testing }
-ClassOrganization >> hasProtocol: aProtocol [
-
-	| protocolName |
-	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
-	^ self protocols anySatisfy: [ :each | each name = protocolName ]
 ]
 
 { #category : #testing }
@@ -176,7 +168,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
 
 	| protocol oldProtocolNames |
-	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
+	(self organizedClass hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
 	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
 
@@ -194,7 +186,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 	| oldProtocol newProtocol |
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
-	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+	(self organizedClass hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
 	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
 	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
@@ -202,7 +194,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
 	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-		(self hasProtocol: aNewProtocol)
+		(self organizedClass hasProtocol: aNewProtocol)
 			ifTrue: [
 				newProtocol := self ensureProtocol: aNewProtocol.
 
