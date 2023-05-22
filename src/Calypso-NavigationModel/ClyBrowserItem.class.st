@@ -162,6 +162,12 @@ ClyBrowserItem >> asCalypsoBrowserItem [
 	^self
 ]
 
+{ #category : #accessing }
+ClyBrowserItem >> calypsoName [
+
+	^ name
+]
+
 { #category : #copying }
 ClyBrowserItem >> copy [
 	| copy |
