@@ -52,7 +52,7 @@ ClassOrganizationTest >> testClassifyUnder [
 
 	"Move last method"
 	organization classify: #king under: #two.
-	self assertCollection: organization protocolNames hasSameElements: #( #empty #one #two ).
+	self assertCollection: class protocolNames hasSameElements: #( #empty #one #two ).
 	self assertCollection: (class selectorsInProtocol: #one) hasSameElements: #( #one #luz ).
 	self assertCollection: (class selectorsInProtocol: #two) hasSameElements: #( #king ).
 
@@ -163,7 +163,7 @@ ClassOrganizationTest >> testCopyFrom [
     self assertEmpty: (class selectorsInProtocol: #empty).
     self assertEmpty: (class selectorsInProtocol: #two).
 
-    self assertCollection: newOrganization organizedClass protocolNames hasSameElements: #( 'empty' 'one' 'init' ).
+    self assertCollection: (newOrganization protocols collect: #name) hasSameElements: #( 'empty' 'one' 'init' ).
     self assertCollection: (newOrganization protocolNamed: #one) methodSelectors hasSameElements: #( 'one' ).
     self assertEmpty: (newOrganization protocolNamed: #empty) methodSelectors.
     self assertCollection: (newOrganization protocolNamed: #init) methodSelectors hasSameElements: #( 'new' )

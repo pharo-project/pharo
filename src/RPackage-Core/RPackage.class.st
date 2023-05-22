@@ -304,7 +304,7 @@ RPackage >> basicImportClass: aClass [
 
 	self addClassDefinition: aClass.
 	aClass protocolNames do: [ :each | (self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
-	aClass protocols
+	aClass organization protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
 		thenDo: [ :protocol | self importProtocol: protocol name forClass: aClass ]
 ]
