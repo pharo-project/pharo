@@ -99,7 +99,7 @@ RBAddParameterTransformation >> myConditions [
 	^RBCondition withBlock:
 		[oldSelector numArgs < newSelector numArgs
 			ifFalse:
-				[self refactoringFailure: newSelector printString,
+				[self refactoringError: newSelector printString,
 				' doesn''t have the proper number of arguments.'].
 		self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
 		true]
@@ -221,8 +221,8 @@ RBAddParameterTransformation >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because:.', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
 	self checkVariableReferencesIn: tree
 ]

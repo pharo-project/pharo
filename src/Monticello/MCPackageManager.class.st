@@ -204,8 +204,8 @@ MCPackageManager class >> methodMoved: anEvent [
 
 { #category : #'system changes' }
 MCPackageManager class >> methodRemoved: anEvent [
-	self managersForClass: anEvent methodClass category: anEvent protocol do:[:mgr| mgr modified: true].
 
+	self managersForClass: anEvent methodClass category: anEvent protocol name do: [ :mgr | mgr modified: true ]
 ]
 
 { #category : #'system changes' }

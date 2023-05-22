@@ -20,7 +20,7 @@ SycRemoveEmptyMethodTagsCommand >> defaultMenuItemName [
 { #category : #execution }
 SycRemoveEmptyMethodTagsCommand >> execute [
 
-	classes do: [ :each | each organization removeEmptyProtocols ]
+	classes do: [ :class | class removeEmptyProtocols ]
 ]
 
 { #category : #execution }

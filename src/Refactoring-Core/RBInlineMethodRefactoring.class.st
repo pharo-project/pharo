@@ -104,14 +104,14 @@ RBInlineMethodRefactoring >> compileMethod [
 RBInlineMethodRefactoring >> findSelectedMessage [
 
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
+	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage
-		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
 	sourceMessage isCascade
 		ifTrue: [ sourceMessage := sourceMessage messages last ].
 	sourceMessage isMessage
-		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
 	(sourceMessage receiver isSelfVariable or: [ sourceMessage receiver isSuperVariable ])
 		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
 ]
@@ -262,13 +262,13 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 
 	self classOfTheMethodToInline
 		ifNil: [ self
-				refactoringFailure:
+				refactoringError:
 					( '<1p> or its superclasses don''t contain method <2s>'
 						expandMacrosWith: class
 						with: self inlineSelector )
 			].
 	inlineParseTree := self classOfTheMethodToInline parseTreeForSelector: self inlineSelector.
-	inlineParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
+	inlineParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	inlineParseTree lastIsReturn
 		ifFalse: [ inlineParseTree addSelfReturn ]
 ]

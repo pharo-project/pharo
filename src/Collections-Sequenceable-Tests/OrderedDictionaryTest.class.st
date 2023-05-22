@@ -742,7 +742,7 @@ OrderedDictionaryTest >> testDictionaryPublicProtocolCompatibility [
 		(dictionary -> Dictionary).
 		(dictionary class -> Dictionary class) } do: [ :assoc |
 		assoc value protocolNames
-			reject: [ :protocol | #( 'private' 'print' 'undeclared' 'copy' 'compar' '*' ) anySatisfy: [ :each | protocol asString beginsWith: each ] ]
+			reject: [ :protocol | #( 'private' 'print' 'undeclared' 'copy' 'compar' '*' ) anySatisfy: [ :each | protocol beginsWith: each ] ]
 			thenDo: [ :protocol | (assoc value selectorsInProtocol: protocol) do: [ :each | self assert: (assoc key respondsTo: each) ] ] ]
 ]
 
