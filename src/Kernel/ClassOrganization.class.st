@@ -40,7 +40,8 @@ ClassOrganization >> addProtocol: aProtocol [
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
 
-	^ self protocols flatCollect: [ :p | p methodSelectors ]
+	self deprecated: 'Use #selectors on the organized class' transformWith: '`@rcv allMethodSelectors' -> '`@rcv organizedClass selectors'.
+	^ self organizedClass selectors
 ]
 
 { #category : #classification }
