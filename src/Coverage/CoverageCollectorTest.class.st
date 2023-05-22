@@ -69,15 +69,10 @@ CoverageCollectorTest >> testBasicCoverage [
 
 	| cov res |
 	cov := CoverageCollector new.
-	cov methods: {
-			(Rectangle >> #width).
-			(Rectangle >> #area).
-			(Rectangle >> #intersect:) }.
+	cov methods: { (Rectangle >> #width) . (Rectangle >> #area) . (Rectangle >> #intersect:) }.
 	res := cov runOn: [ (1 @ 1 corner: 2 @ 2) area ].
-	self assert: cov metalink hasNodes not. "metaliks where removed"
-	self assertCollection: res methods hasSameElements: {
-			(Rectangle >> #width).
-			(Rectangle >> #area) }.
+	self deny: cov metalink hasNodes. "metaliks where removed"
+	self assertCollection: res methods hasSameElements: { (Rectangle >> #width) . (Rectangle >> #area) }.
 	self assert: res uncoveredMethods asArray equals: { (Rectangle >> #intersect:) }
 ]
 
