@@ -82,14 +82,9 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForUsedTrait [
 
 	| browser strategies |
 	browser := ClyFullBrowserMorph onDefaultEnvironment.
-	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { TRBProgramNodeVisitor }.
+	strategies := SycRemoveClassStrategy createForBrowser: browser classes: { TRefactoringCommandSupport }.
 	self
 		assert: strategies size > 2;
-		assert: (strategies anySatisfy: [ :each |
-					 each userRequestString
-					 = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
-		assert: strategies last userRequestString
-		equals: SycNotRemoveClassStrategy new userRequestString
+		assert: (strategies anySatisfy: [ :each | each userRequestString = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
+		assert: strategies last userRequestString equals: SycNotRemoveClassStrategy new userRequestString
 ]
