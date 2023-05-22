@@ -40,6 +40,7 @@ BaselineOfIDE >> additionalInitialization [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
+	Smalltalk tools register: SyntaxErrorDebugger as: #syntaxErrorDebugger.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
 	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
@@ -200,6 +201,7 @@ BaselineOfIDE >> baseline: spec [
 		self microdown: spec.
 		self beautifulComments: spec.
 		self documentBrowserCore: spec.
+		self welcomeBrowser: spec.
 		self roassal3: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
@@ -280,12 +282,13 @@ BaselineOfIDE >> loadIceberg [
 		'Using authentification for Github API' traceCr ].
 
 	self registerPharo.
-	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #( 'SpecCore' ).
+	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
 	self registerProject: 'NewTools'.
 	self registerProject: 'Roassal3'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.
-	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #(  ).
+	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
+	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
@@ -460,4 +463,11 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
+]
+
+{ #category : #baselines }
+BaselineOfIDE >> welcomeBrowser: spec [
+
+	spec baseline: 'WelcomeBrowser' with: [
+		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

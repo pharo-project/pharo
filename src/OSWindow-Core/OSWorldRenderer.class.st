@@ -15,6 +15,12 @@ Class {
 }
 
 { #category : #accessing }
+OSWorldRenderer class >> defaultExtent [
+
+	^ 976@665
+]
+
+{ #category : #accessing }
 OSWorldRenderer class >> isApplicableFor: aWorld [
 
 	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive' ]
@@ -109,7 +115,7 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 OSWorldRenderer >> doActivate [
 	| attributes initialExtent |
 
-	initialExtent := world worldState realWindowExtent ifNil: [976@665].
+	initialExtent := world worldState realWindowExtent ifNil: [ self class defaultExtent ].
 
 	attributes := OSWindowAttributes new.
 	attributes

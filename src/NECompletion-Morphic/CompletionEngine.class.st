@@ -47,10 +47,9 @@ CompletionEngine class >> isCompletionEnabled [
 	^NECPreferences enabled
 ]
 
-{ #category : #private }
-CompletionEngine >> browse [
-
-	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
+{ #category : #testing }
+CompletionEngine >> captureNavigationKeys [
+	^ NECPreferences captureNavigationKeys
 ]
 
 { #category : #'menu morph' }
@@ -71,9 +70,7 @@ CompletionEngine >> completionToken [
 { #category : #replacement }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
-	self editor caret <= 1 ifTrue: [ ^ self editor caret ].
-	(self editor isWordCharacterAt: self editor caret - 1 in: self editor text) ifFalse: [^ self editor caret ].	
-	^ self editor previousWord: self editor caret
+	^ self editor previousWord: self editor caret - 1
 ]
 
 { #category : #accessing }
@@ -140,6 +137,11 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
+
+	aKeyboardEvent asShortcut = KeyboardKey right meta ifTrue: [
+		menuMorph showDetail.
+		^ true ].
+
 
 	({
 		 KeyboardKey left.
@@ -235,12 +237,6 @@ CompletionEngine >> hasDetail [
 	^ self isMenuOpen and: [ menuMorph hasDetail ]
 ]
 
-{ #category : #actions }
-CompletionEngine >> hideDetail [
-
-	menuMorph hideDetail
-]
-
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds
@@ -299,69 +295,53 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 
 { #category : #'menu morph' }
 CompletionEngine >> openMenu [
-
-	self openMenuForced: true
-
-]
-
-{ #category : #'menu morph' }
-CompletionEngine >> openMenuForced: forced [
-
-	| theMenu theContext |
+	| theMenu |
 	self stopCompletionDelay.
 
-	theContext := self createContext.
-	(forced or: [ theContext hasEntries ]) ifFalse: [ ^ self ].
-	context := theContext.
-	
+	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
-				position: (editor selectionPosition: self completionToken).
+				position: (editor selectionPosition: context completionToken).
 
-	theMenu isClosed ifFalse: [ 
-		menuMorph := theMenu.
-		theMenu showDetail ]
+	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
 ]
 
 { #category : #replacement }
 CompletionEngine >> replaceTokenInEditorWith: aString [
 	"Main API with the completion context.
-
 	Replace the current completion token (as it was extracted by the completion context) by aString.
-	aString content is free and will inserted as a replacement as is, except for a possible ending space that will not be inserted if there is already a space in the text.
-
-	The caret will be moved at the end of the inserted string, or between the first double spaces.
-	This rule allows to put the cursor inside an inserted keyword selector where each keyword is separated by two spaces.
-	e.g. after replacing with `'between:  and:'`, the caret is set after the first keyword.
-
+	aString may contain a keyword selector string where each keyword is separated by two spaces (between:  and:)
+	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| newString wordEnd old doubleSpace wordStart |
-
-	newString := aString.
-	wordStart := self completionTokenStart.
-
-	"If completionToken is not empty, the end is the end of the whole word (according to the editor)"
-	wordEnd := wordStart = editor caret
-		ifTrue: [ wordStart ]
-		ifFalse: [ self editor nextWord: self editor caret - 1].
-
-	"Do not insert an aditional space if there is already one"
-	(newString last = $  and: [
-		wordEnd <= self editor text size and: [
-			(self editor text at: wordEnd) = $ ]]) ifTrue: [ newString := newString copyWithoutIndex: newString size ].
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword wordStart rest |
+	"Try to correctly replace the current token in the word.
+	The code editor should be able to do it by himself"
+	wordEnd := (self editor nextWord: self editor caret - 1).
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
+
+	wordStart := self editor previousWord: (self editor caret - 1).
 
 	self editor
 		selectInvisiblyFrom: wordStart
 		to: wordEnd - 1.
 	old := self editor selection.
 
-	self editor replaceSelectionWith: newString.
+	( NECPreferences caseSensitive not or: [ old size >= aString size ] )
+		ifTrue:[
+				self editor replaceSelectionWith: aString. ]
+		ifFalse: [
+				self editor selectInvisiblyFrom: wordEnd	to: wordEnd - 1.
+				rest := aString asString copyFrom: old size + 1 to: aString size.
+				self editor replaceSelectionWith: rest ].
 
-	doubleSpace := newString indexOfSubCollection: '  ' startingAt: 1 ifAbsent: [ newString size ].
-	self editor selectAt: wordStart + doubleSpace.
+	offset := NECPreferences spaceAfterCompletion
+		ifTrue: [ 1 ]
+		ifFalse: [ 0 ].
+	firstKeyword := (aString copyUpTo: $ ) size.
+	positionAfterFirstKeyword := wordEnd + firstKeyword + offset - old size.
+	self editor selectAt: positionAfterFirstKeyword.
 
 	self editor morph invalidRect: self editor morph bounds
 ]
@@ -376,7 +356,7 @@ CompletionEngine >> resetCompletionDelay [
 	completionDelay := [
 			(Delay forMilliseconds: NECPreferences popupAutomaticDelay) wait.
 			UIManager default defer:  [
-				editor atCompletionPosition ifTrue: [ self openMenuForced: false ]]
+				editor atCompletionPosition ifTrue: [ self openMenu ]]
 		] fork
 ]
 
@@ -388,12 +368,6 @@ CompletionEngine >> setEditor: anObject [
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self
-]
-
-{ #category : #actions }
-CompletionEngine >> showDetail [
-
-	menuMorph showDetail
 ]
 
 { #category : #keyboard }
@@ -608,11 +582,8 @@ CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 	(aParagraphEditor isNil or: [ self isMenuOpen not ]) ifTrue: [
 		^ self ].
 
-	context completionTokenStart = self completionTokenStart ifFalse: [ ^ self closeMenu ].
+	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
 
-	"Do not update the content nor refresh the menu if the context token is the same"
-	context completionToken = self completionToken ifTrue: [ ^self ].
-
-	context narrowWith: self completionToken.
+	context narrowWith: aParagraphEditor wordAtCaret.
 	menuMorph refreshSelection
 ]
