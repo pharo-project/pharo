@@ -88,12 +88,6 @@ WinPlatform >> getTempPath: bufferLength buffer: buffer [
                             void*  buffer))
 ]
 
-{ #category : #accessing }
-WinPlatform >> getTemporaryDirectory [
-
-	^ self getTempPath 
-]
-
 { #category : #testing }
 WinPlatform >> isWindows [
 	^ true

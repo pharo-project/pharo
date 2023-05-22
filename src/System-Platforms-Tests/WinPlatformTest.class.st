@@ -5,17 +5,17 @@ Class {
 }
 
 { #category : #tests }
-WinPlatformTest >> testGetTemporaryDirectoryFromTMP [
+WinPlatformTest >> testGetTempPathFromTMP [
 
 	| value |
 	OSPlatform current isWindows ifFalse: [ ^ self skip ].
 
-	value := OSEnvironment current at: 'TMP' ifAbsent: [  ].
+	value := OSEnvironment current at: 'TMP' ifAbsent: [ nil ].
 	[
 	| actual expected |
 	expected := 'X:\Temp\'.
 	OSEnvironment current at: 'TMP' put: expected.
-	actual := OSPlatform current getTemporaryDirectory.
+	actual := OSPlatform current getTempPath.
 	self assert: actual equals: expected ] ensure: [
 		value ifNotNil: [ OSEnvironment current at: 'TMP' put: value ] ]
 ]
