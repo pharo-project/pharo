@@ -28,7 +28,7 @@ ClassOrganization >> addProtocol: aProtocol [
 
 	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
 
-	oldProtocols := self protocolNames copy.
+	oldProtocols := self organizedClass protocolNames copy.
 
 	protocols := protocols copyWith: protocol.
 
@@ -140,12 +140,6 @@ ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
 ]
 
 { #category : #inlined }
-ClassOrganization >> protocolNames [
-
-	^ self protocols collect: [ :protocol | protocol name ]
-]
-
-{ #category : #inlined }
 ClassOrganization >> protocolOfSelector: aSelector [
 
 	^ self organizedClass protocolOfSelector: aSelector
@@ -174,7 +168,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 
 	protocol isEmpty ifFalse: [ ^ self ].
 
-	oldProtocolNames := self protocolNames copy.
+	oldProtocolNames := self organizedClass protocolNames.
 	protocols := protocols copyWithout: protocol.
 	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
 	SystemAnnouncer announce: (ClassReorganized class: self organizedClass)

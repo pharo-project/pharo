@@ -770,7 +770,7 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
-	^ self organization protocolNames copy
+	^ self organization protocols collect: [ :protocol | protocol name ]
 ]
 
 { #category : #protocols }

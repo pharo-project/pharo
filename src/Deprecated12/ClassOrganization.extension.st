@@ -10,15 +10,15 @@ ClassOrganization >> addCategory: aString [
 { #category : #'*Deprecated12' }
 ClassOrganization >> allCategories [
 
-	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolNames'.
-	^ self protocolNames
+	self deprecated: 'Use #protocolNames on the organized class instead.' transformWith: '`@rcv allCategories' -> '`@rcv organizedClass protocolNames'.
+	^ self organizedClass protocolNames
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categories [
 
-	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
-	^ self protocolNames
+	self deprecated: 'Use #protocolNames on the organized class instead.' transformWith: '`@rcv categories' -> '`@rcv organizedClass protocolNames'.
+	^ self organizedClass protocolNames
 ]
 
 { #category : #'*Deprecated12' }

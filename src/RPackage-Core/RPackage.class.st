@@ -302,12 +302,11 @@ RPackage >> basicImportClass: aClass [
 
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
-	| protocols |
 	self addClassDefinition: aClass.
-	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
-	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
-	protocols do: [ :each | self importProtocol: each forClass: aClass ]
+	aClass protocolNames do: [ :each | (self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
+	aClass protocols
+		reject: [ :protocol | protocol isExtensionProtocol ]
+		thenDo: [ :protocol | self importProtocol: protocol name forClass: aClass ]
 ]
 
 { #category : #'add method - selector' }
@@ -651,7 +650,7 @@ RPackage >> extendsClass: aClass [
 RPackage >> extensionCategoriesForClass: aClass [
 
 	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass organization protocolNames select: [ :cat | self isYourClassExtension: cat ]
+	^ aClass protocolNames select: [ :cat | self isYourClassExtension: cat ]
 ]
 
 { #category : #accessing }
@@ -1134,7 +1133,7 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
-	aClass organization protocolNames do: [ :each |
+	aClass protocolNames do: [ :each |
 		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"
