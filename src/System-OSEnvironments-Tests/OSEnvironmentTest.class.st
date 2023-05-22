@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #helper }
+OSEnvironmentTest >> envNameForTest [
+
+	^ 'PHAROTEST'
+]
+
+{ #category : #helper }
 OSEnvironmentTest >> instance [
 	^ Smalltalk os environment
 ]
@@ -15,7 +21,7 @@ OSEnvironmentTest >> instance [
 { #category : #running }
 OSEnvironmentTest >> tearDown [
 
-	self instance removeKey: 'PHAROTEST'.
+	self instance removeKey: self envNameForTest.
 	super tearDown
 ]
 
@@ -86,7 +92,7 @@ OSEnvironmentTest >> testKeys [
 OSEnvironmentTest >> testSettingEnvValueDuringChangesValueInDuringBlock [
 
 	| envName expected |
-	envName := 'PHAROTEST'.
+	envName := self envNameForTest.
 	self instance setEnv: envName value: 'Before'.
 	expected := 'After'.
 	self instance setEnv: envName value: expected during: [
@@ -99,7 +105,7 @@ OSEnvironmentTest >> testSettingEnvValueDuringChangesValueInDuringBlock [
 OSEnvironmentTest >> testSettingEnvValueDuringRevertsValueAfterDuringBlock [
 
 	| actual envName expected |
-	envName := 'PHAROTEST'.
+	envName := self envNameForTest.
 	self instance setEnv: envName value: 'Before'.
 	expected := 'After'.
 	self instance setEnv: envName value: expected during: [  ].
@@ -111,7 +117,7 @@ OSEnvironmentTest >> testSettingEnvValueDuringRevertsValueAfterDuringBlock [
 OSEnvironmentTest >> testSettingNewEnvValueDuringRemovesItAfterDuringBlock [
 
 	| envName |
-	envName := 'PHAROTEST'.
+	envName := self envNameForTest.
 	self instance setEnv: envName value: 'During' during: [  ].
 	self deny: (self instance includesKey: envName)
 ]
