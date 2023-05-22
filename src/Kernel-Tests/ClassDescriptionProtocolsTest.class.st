@@ -34,6 +34,25 @@ ClassDescriptionProtocolsTest >> tearDown [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testHasProtocol [
+
+	class organization addProtocol: #titan.
+	self assert: (class hasProtocol: #titan).
+	self deny: (class hasProtocol: #human).
+
+	self assert: (class hasProtocol: (class organization protocolNamed: #titan)).
+	self deny: (class hasProtocol: (Protocol named: #human))
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testHasProtocolWithRealProtocol [
+
+	class organization addProtocol: #titan.
+	self assert: (class hasProtocol: (class organization protocolNamed: #titan)).
+	self deny: (class hasProtocol: (Protocol named: #human))
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
 
 	class compiler
@@ -77,15 +96,15 @@ ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
 
 	class organization classify: #amity under: #witch.
 	class organization classify: #edalyn under: #witch.
-	self assert: (class organization hasProtocol: #witch).
+	self assert: (class hasProtocol: #witch).
 	self assertCollection: (class selectorsInProtocol: #witch) hasSameElements: #( #amity #edalyn ).
 
 	class removeFromProtocols: #amity.
-	self assert: (class organization hasProtocol: #witch).
+	self assert: (class hasProtocol: #witch).
 	self assertCollection: (class selectorsInProtocol: #witch) hasSameElements: #( #edalyn ).
 
 	class removeFromProtocols: #edalyn.
-	self deny: (class organization hasProtocol: #witch)
+	self deny: (class hasProtocol: #witch)
 ]
 
 { #category : #tests }
@@ -165,7 +184,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmpty [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyOnNonExistingProtocol [
 
-	self deny: (class organization hasProtocol: #titan).
+	self deny: (class hasProtocol: #titan).
 	self shouldnt: [ class removeProtocolIfEmpty: #titan ] raise: Error
 ]
 
@@ -193,7 +212,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithRealProtocol [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocolOnNonExistingProtocol [
 
-	self deny: (class organization hasProtocol: #titan).
+	self deny: (class hasProtocol: #titan).
 	self shouldnt: [ class removeProtocol: #titan ] raise: Error
 ]
 

@@ -40,7 +40,7 @@ RBNotEnvironment >> includesPackage: aRPackage [
 { #category : #testing }
 RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
 
-	(aClass organization hasProtocol: aProtocol) ifFalse: [ ^ false ].
+	(aClass hasProtocol: aProtocol) ifFalse: [ ^ false ].
 
 	^ (aClass selectorsInProtocol: aProtocol) anySatisfy: [ :selector | self includesSelector: selector in: aClass ]
 ]

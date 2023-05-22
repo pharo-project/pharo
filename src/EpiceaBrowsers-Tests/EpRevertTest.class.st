@@ -298,9 +298,9 @@ EpRevertTest >> testProtocolAddition [
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self assert: (aClass organization hasProtocol: 'protocol').
+	self assert: (aClass hasProtocol: 'protocol').
 	self revertInputEntry.
-	self deny: (aClass organization hasProtocol: 'protocol')
+	self deny: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }
@@ -313,9 +313,9 @@ EpRevertTest >> testProtocolRemoval [
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self deny: (aClass organization hasProtocol: 'protocol').
+	self deny: (aClass hasProtocol: 'protocol').
 	self revertInputEntry.
-	self assert: (aClass organization hasProtocol: 'protocol')
+	self assert: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }
