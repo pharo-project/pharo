@@ -75,7 +75,7 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
-	| newObject hiddenSlots |
+	| newObject |
 	newObject := (newClass isVariable and: [ oldClass isVariable ])
 		             ifTrue: [
 			             | createdObject |
@@ -86,10 +86,11 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 		             ifFalse: [ newClass basicNew ].
 
 	"first initialize all hidden slots"
-	hiddenSlots := newClass classLayout allSlots reject: [ :each | each isVisible ].
-	hiddenSlots do: [ :newSlot |
-		newSlot initialize: newObject.
-		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldObject) to: newObject ] ].
+	newClass classLayout allSlots
+		reject: [ :aSlot | aSlot isVisible ]
+		thenDo: [ :newHiddenSlot |
+			newHiddenSlot initialize: newObject.
+			oldObject class slotNamed: newHiddenSlot name ifFound: [ :oldSlot | newHiddenSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"the initialize all visible slots"
 	newClass allSlots do: [ :newSlot |
