@@ -767,6 +767,20 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 ]
 
 { #category : #protocols }
+ClassDescription >> protocolNamed: aString [
+
+	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
+]
+
+{ #category : #protocols }
+ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
+
+	^ self organization protocols
+		  detect: [ :e | e name = aString ]
+		  ifNone: aBlock
+]
+
+{ #category : #protocols }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
