@@ -74,26 +74,28 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-	| newObject hiddenSlots |
 
-	newObject := (newClass isVariable and: [oldClass isVariable])
-		ifTrue: [ newClass basicNew: oldObject basicSize ]
-		ifFalse: [ newClass basicNew ].
+	| newObject hiddenSlots |
+	newObject := (newClass isVariable and: [ oldClass isVariable ])
+		             ifTrue: [
+			             | createdObject |
+			             createdObject := newClass basicNew: oldObject basicSize.
+			             "Copying the variabls"
+			             1 to: oldObject basicSize do: [ :offset | createdObject basicAt: offset put: (oldObject basicAt: offset) ].
+			             createdObject ]
+		             ifFalse: [ newClass basicNew ].
 
 	"first initialize all hidden slots"
-	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
+	hiddenSlots := newClass classLayout allSlots reject: [ :each | each isVisible ].
 	hiddenSlots do: [ :newSlot |
-			newSlot initialize: newObject.
-			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
-				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
+		newSlot initialize: newObject.
+		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"the initialize all visible slots"
-	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
+	newClass allSlots do: [ :newSlot |
+		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
 			newSlot initialize: newObject.
-		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
-
-	newClass isVariable
-		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
+			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
 	oldObject setIsReadOnlyObject: false.
