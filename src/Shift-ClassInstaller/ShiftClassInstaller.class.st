@@ -270,15 +270,23 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 
 { #category : #migrating }
 ShiftClassInstaller >> migrateInstancesTo: newClass [
+
 	| oldObjects newObjects readOnlyOldObjectsFlags |
+	Stdio stdout
+		nextPutAll: 'Migrating instances of ' , newClass name;
+		lf.
 	oldObjects := oldClass allInstances.
+	newClass name = #CompliedBlock ifTrue: [
+		Stdio stdout
+			nextPutAll: 'Migrating CompiledBlock. Number of instances: ' , oldObjects size asString;
+			lf ].
 	oldObjects ifEmpty: [ ^ self ].
 
 	readOnlyOldObjectsFlags := OrderedCollection new: oldObjects size.
 
 	newObjects := oldObjects collect: [ :e |
-		(readOnlyOldObjectsFlags add: e isReadOnlyObject).
-		self copyObject: e to: newClass ].
+		              readOnlyOldObjectsFlags add: e isReadOnlyObject.
+		              self copyObject: e to: newClass ].
 
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true.
 
