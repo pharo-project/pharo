@@ -76,7 +76,7 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	| newObject |
-	newClass name = #CompliedBlock ifTrue: [
+	newClass name = #CompiledBlock ifTrue: [
 		Stdio stdout
 			nextPutAll: 'New class instance spec: ' , newClass instSpec asString;
 			lf;
@@ -85,7 +85,7 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	newObject := (newClass isVariable and: [ oldClass isVariable ])
 		             ifTrue: [
 			             | createdObject |
-			             newClass name = #CompliedBlock ifTrue: [
+			             newClass name = #CompiledBlock ifTrue: [
 				             Stdio stdout
 					             nextPutAll: 'Going for #basicNew:';
 					             lf ].
@@ -94,7 +94,7 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 			             1 to: oldObject basicSize do: [ :offset | createdObject basicAt: offset put: (oldObject basicAt: offset) ].
 			             createdObject ]
 		             ifFalse: [
-			             newClass name = #CompliedBlock ifTrue: [
+			             newClass name = #CompiledBlock ifTrue: [
 				             Stdio stdout
 					             nextPutAll: 'Going for #basicNew';
 					             lf ].
@@ -276,7 +276,7 @@ ShiftClassInstaller >> migrateInstancesTo: newClass [
 		nextPutAll: 'Migrating instances of ' , newClass name;
 		lf.
 	oldObjects := oldClass allInstances.
-	newClass name = #CompliedBlock ifTrue: [
+	newClass name = #CompiledBlock ifTrue: [
 		Stdio stdout
 			nextPutAll: 'Migrating CompiledBlock. Number of instances: ' , oldObjects size asString;
 			lf ].
