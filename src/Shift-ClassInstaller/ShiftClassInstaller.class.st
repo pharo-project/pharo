@@ -76,14 +76,29 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	| newObject |
+	newClass name = #CompliedBlock ifTrue: [
+		Stdio stdout
+			nextPutAll: 'New class instance spec: ' , newClass instSpec asString;
+			lf;
+			nextPutAll: 'Old class instance spec: ' , oldClass instSpec asString;
+			lf ].
 	newObject := (newClass isVariable and: [ oldClass isVariable ])
 		             ifTrue: [
 			             | createdObject |
+			             newClass name = #CompliedBlock ifTrue: [
+				             Stdio stdout
+					             nextPutAll: 'Going for #basicNew:';
+					             lf ].
 			             createdObject := newClass basicNew: oldObject basicSize.
 			             "Copying the variabls"
 			             1 to: oldObject basicSize do: [ :offset | createdObject basicAt: offset put: (oldObject basicAt: offset) ].
 			             createdObject ]
-		             ifFalse: [ newClass basicNew ].
+		             ifFalse: [
+			             newClass name = #CompliedBlock ifTrue: [
+				             Stdio stdout
+					             nextPutAll: 'Going for #basicNew';
+					             lf ].
+			             newClass basicNew ].
 
 	"first initialize all hidden slots"
 	newClass classLayout allSlots
