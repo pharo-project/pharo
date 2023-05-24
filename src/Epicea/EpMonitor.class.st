@@ -402,7 +402,9 @@ EpMonitor >> handleAnyErrorDuring: aBlock [
 { #category : #private }
 EpMonitor >> handleError: error [
 
-	self debugMode
+	"We let the error pass if we are in debug mode but also if we are currently in a test because we always want to debug tests.
+	In the future maybe we should enable the debug mode only in releases of Pharo and turn it off during development but that requires to update the bootstrap to get the release/development info in Pharo."
+	(self debugMode or: [ CurrentExecutionEnvironment value isTest ])
 		ifTrue: [ error pass ]
 		ifFalse: [ 'EpMonitor could not log a change. You can enable debugging with "EpMonitor current debugMode: true".' traceCr ]
 ]
