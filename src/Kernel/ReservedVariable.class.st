@@ -37,6 +37,11 @@ ReservedVariable class >> variableName [
 ]
 
 { #category : #converting }
+ReservedVariable >> asDoItVariableFrom: aContext [
+	^ DoItVariable fromContext: aContext variable: self
+]
+
+{ #category : #converting }
 ReservedVariable >> asString [
 
 	^ self name
