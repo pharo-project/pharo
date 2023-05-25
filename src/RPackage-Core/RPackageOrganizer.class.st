@@ -213,32 +213,21 @@ RPackageOrganizer >> announcer [
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
-		do: [ :packageName |
-		  | package |
-		  package := (self packageClass named: packageName).
-		  packages at: packageName asSymbol put: package. ]
+		do: [ :packageName | packages at: packageName asSymbol put: (self packageClass named: packageName) ]
 		displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior | self initializeFor: eachBehavior ]
-		displayingProgress: 'Importing behaviors'.
+	Smalltalk allClassesAndTraits do: [ :behavior | self initializeFor: behavior ] displayingProgress: 'Importing behaviors'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			self initializeMethodsFor: eachBehavior.
-			self initializeMethodsFor: eachBehavior classSide ]
+		do: [ :behavior |
+			self initializeMethodsFor: behavior.
+			self initializeMethodsFor: behavior classSide ]
 		displayingProgress: 'Importing methods'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			eachBehavior organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior
-					protocol: eachProtocol ].
-			eachBehavior classSide organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior classSide
-					protocol: eachProtocol ] ]
+		do: [ :behavior |
+			behavior extensionProtocols do: [ :extensionProtocol | self initializeExtensionsFor: behavior protocol: extensionProtocol ].
+			behavior classSide extensionProtocols do: [ :extensionProtocol | self initializeExtensionsFor: behavior classSide protocol: extensionProtocol ] ]
 		displayingProgress: 'Importing extensions'.
 
 	"I reset the cache of names"

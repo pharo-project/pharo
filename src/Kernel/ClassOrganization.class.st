@@ -83,11 +83,6 @@ ClassOrganization >> ensureProtocol: aProtocol [
 	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> extensionProtocols [
-	^ self protocols select: #isExtensionProtocol
-]
-
 { #category : #testing }
 ClassOrganization >> includesSelector: selector [
 
