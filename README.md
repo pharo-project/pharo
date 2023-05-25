@@ -2,7 +2,7 @@
 
 This repository contains sources of the [Pharo language](http://pharo.org/). Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
 
-![Pharo 6 screenshot](https://pbs.twimg.com/media/DBpdIGrXkAA8SJ1.jpg)
+![Pharo screenshot](https://pbs.twimg.com/media/DBpdIGrXkAA8SJ1.jpg)
 
 ## Download Pharo
 

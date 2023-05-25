@@ -152,8 +152,8 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	| violations |
 	violations := OrderedCollection new.
 
-	Object allSubclasses do: [ :each |
-		each organization protocolNames do: [ :cat | ((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ violations add: each -> cat ] ] ].
+	Object allSubclasses do: [ :subclass |
+		subclass protocolNames do: [ :protocolName | ((protocolName endsWith: ' ') or: [ protocolName endsWith: ' ' ]) ifTrue: [ violations add: subclass -> protocolName ] ] ].
 
 	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ' , violations asString
 ]

@@ -648,7 +648,7 @@ RBBrowserEnvironment >> problemCount [
 { #category : #accessing }
 RBBrowserEnvironment >> protocolsFor: aClass [
 
-	^ aClass organization protocolNames select: [ :each | self includesProtocol: each in: aClass ]
+	^ aClass protocolNames select: [ :protocolName | self includesProtocol: protocolName in: aClass ]
 ]
 
 { #category : #queries }

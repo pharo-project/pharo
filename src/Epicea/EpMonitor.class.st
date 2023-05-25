@@ -501,7 +501,7 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 			             protocol: aMethodRecategorized oldProtocol name;
 			             yourself.
 		newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			             protocol: aMethodRecategorized newProtocol name;
+			             protocol: (aMethodRecategorized newProtocol ifNotNil: [ :protocol | protocol name ]);
 			             yourself.
 
 		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod) ]

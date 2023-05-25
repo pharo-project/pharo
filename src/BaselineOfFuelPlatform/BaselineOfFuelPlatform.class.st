@@ -31,9 +31,7 @@ BaselineOfFuelPlatform >> baseline: spec [
 
 		spec
 			package: 'Fuel-Platform-Core';
-			package: 'Fuel-Platform-Pharo-Core' with: [ spec requires: 'Fuel-Platform-Core' ] ].
-
-	spec for: #'pharo12.x' do: [
-		spec package: 'Fuel-Platform-Pharo-12' with: [ spec requires: 'Fuel-Platform-Pharo-Core' ].
+			package: 'Fuel-Platform-Pharo-Core' with: [ spec requires: 'Fuel-Platform-Core' ];
+			package: 'Fuel-Platform-Pharo-12' with: [ spec requires: 'Fuel-Platform-Pharo-Core' ].
 		spec group: 'FuelPlatformCurrentGroup' with: #( 'Fuel-Platform-Pharo-12' ) ]
 ]
