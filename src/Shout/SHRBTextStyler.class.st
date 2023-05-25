@@ -3,9 +3,7 @@ I'm the one who visits node to coloring the code
 "
 Class {
 	#name : #SHRBTextStyler,
-	#superclass : #SHTextStyler,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -16,7 +14,10 @@ Class {
 		'pixelHeight',
 		'workspace',
 		'plugins',
-		'braceLevel'
+		'braceLevel',
+		'view',
+		'stylingEnabled',
+		'text'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -715,6 +716,12 @@ SHRBTextStyler >> font: aFont [
 	font := aFont
 ]
 
+{ #category : #formatting }
+SHRBTextStyler >> format: aText [
+
+	^ aText
+]
+
 { #category : #visiting }
 SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
@@ -725,8 +732,9 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
 { #category : #initialization }
 SHRBTextStyler >> initialize [
-	super initialize.
 
+	super initialize.
+	stylingEnabled := true.
 	isForWorkspace := false
 ]
 
@@ -833,6 +841,16 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 		  TextEmphasis struckOut }
 ]
 
+{ #category : #styling }
+SHRBTextStyler >> style: aText [
+
+	aText ifEmpty: [ ^ self ].
+	stylingEnabled ifFalse: [ ^ self ].
+	text := aText copy.
+	self privateStyle: text.
+	view ifNotNil: [ :view2 | view2 stylerStyled: text ]
+]
+
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
 
@@ -929,15 +947,37 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 ]
 
 { #category : #styling }
+SHRBTextStyler >> styledTextFor: aText [
+
+	^ self privateStyle: aText
+]
+
+{ #category : #private }
+SHRBTextStyler >> stylingEnabled [
+
+	^ stylingEnabled
+]
+
+{ #category : #private }
+SHRBTextStyler >> stylingEnabled: aBoolean [
+
+	stylingEnabled := aBoolean
+]
+
+{ #category : #styling }
 SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
+
 	| answer |
-	answer := super unstyledTextFrom: aText.
-	self
-		addAttributesFrom: aText runs
-		satisfying: [ :each| each isKindOf: TextAction ]
-		to: answer.
+	answer := Text fromString: aText string.
+	self addAttributesFrom: aText runs satisfying: [ :each | each isKindOf: TextAction ] to: answer.
 	^ answer
+]
+
+{ #category : #accessing }
+SHRBTextStyler >> view: aViewOrMorph [
+
+	view := aViewOrMorph
 ]
 
 { #category : #visiting }
