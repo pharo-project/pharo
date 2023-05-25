@@ -1,39 +1,39 @@
 Class {
-	#name : #FLPharo12Platform,
+	#name : #FLPharo11Platform,
 	#superclass : #FLPharoPlatform,
 	#category : #'Fuel-Platform-Pharo-12'
 }
 
 { #category : #operations }
-FLPharo12Platform class >> addHacks [
+FLPharo11Platform class >> addHacks [
 	"no hacks for development platform"
 ]
 
 { #category : #testing }
-FLPharo12Platform class >> isResponsibleForCurrentPlatform [
+FLPharo11Platform class >> isResponsibleForCurrentPlatform [
 
 	^ super isResponsibleForCurrentPlatform 
 		and: [ SystemVersion current type = 'Pharo' 
-		and: [ SystemVersion current major = 12 ] ]
+		and: [ SystemVersion current major = 11 ] ]
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> createTemporaryDirectoryPathNamed: aString [
+FLPharo11Platform >> createTemporaryDirectoryPathNamed: aString [
 	^ (FileLocator temp / aString) ensureCreateDirectory pathString
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> deleteAllInDirectoryPath: aPathString [
+FLPharo11Platform >> deleteAllInDirectoryPath: aPathString [
 	aPathString asFileReference deleteAll
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> deleteFilePath: aFilename [
+FLPharo11Platform >> deleteFilePath: aFilename [
 	((Smalltalk at: #File) named: aFilename) delete
 ]
 
 { #category : #'tests-testing' }
-FLPharo12Platform >> expectedFailuresOf: aClass [
+FLPharo11Platform >> expectedFailuresOf: aClass [
 	| inherited |
 	inherited := super expectedFailuresOf: aClass.
 	(aClass includesBehavior: (Smalltalk at: #FLBasicSerializationTest)) ifTrue: [
@@ -63,29 +63,29 @@ FLPharo12Platform >> expectedFailuresOf: aClass [
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> filePathExists: aPathString [
+FLPharo11Platform >> filePathExists: aPathString [
 	^ aPathString asFileReference exists
 ]
 
 { #category : #testing }
-FLPharo12Platform >> isBigEndian [
+FLPharo11Platform >> isBigEndian [
 	^ (Smalltalk at: #EndianDetector) isBigEndian
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> joinPath: aPathString with: anotherPathString [
+FLPharo11Platform >> joinPath: aPathString with: anotherPathString [
 	^ (aPathString asFileReference / anotherPathString) pathString
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> readStreamForFilePath: aString [
+FLPharo11Platform >> readStreamForFilePath: aString [
 	^ ((Smalltalk at: #File) named: aString) readStream
 		binary;
 		yourself
 ]
 
 { #category : #'accessing-compiler' }
-FLPharo12Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
+FLPharo11Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 	aClass
 		addSelector: aSymbol
 		withMethod: aCompiledMethod.
@@ -95,12 +95,12 @@ FLPharo12Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass wit
 ]
 
 { #category : #'accessing-kernel' }
-FLPharo12Platform >> withPragmasIn: aClass do: aBlock [
+FLPharo11Platform >> withPragmasIn: aClass do: aBlock [
 	aClass pragmasDo: aBlock
 ]
 
 { #category : #'accessing-files' }
-FLPharo12Platform >> writeStreamForFilePath: aString [
+FLPharo11Platform >> writeStreamForFilePath: aString [
 	^ ((Smalltalk at: #File) named: aString) writeStream
 		binary;
 		yourself
