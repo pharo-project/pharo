@@ -24,7 +24,7 @@ ClassOrganization >> addProtocol: aProtocol [
 	| oldProtocols protocol |
 	
 	(self organizedClass hasProtocol: aProtocol) ifTrue: [
-		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+		^ self organizedClass protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
 
 	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
 
@@ -80,7 +80,7 @@ ClassOrganization >> ensureProtocol: aProtocol [
 		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
+	^ self organizedClass protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #testing }
@@ -121,20 +121,6 @@ ClassOrganization >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
-ClassOrganization >> protocolNamed: aString [
-
-	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
-
-	^ self protocols
-		  detect: [ :e | e name = aString ]
-		  ifNone: aBlock
-]
-
 { #category : #inlined }
 ClassOrganization >> protocolOfSelector: aSelector [
 
@@ -160,7 +146,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	| protocol oldProtocolNames |
 	(self organizedClass hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
-	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
+	protocol := aProtocol isString ifTrue: [ self organizedClass protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
 
 	protocol isEmpty ifFalse: [ ^ self ].
 

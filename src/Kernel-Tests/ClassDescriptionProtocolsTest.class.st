@@ -53,7 +53,7 @@ ClassDescriptionProtocolsTest >> testHasProtocol [
 	self assert: (class hasProtocol: #titan).
 	self deny: (class hasProtocol: #human).
 
-	self assert: (class hasProtocol: (class organization protocolNamed: #titan)).
+	self assert: (class hasProtocol: (class protocolNamed: #titan)).
 	self deny: (class hasProtocol: (Protocol named: #human))
 ]
 
@@ -61,7 +61,7 @@ ClassDescriptionProtocolsTest >> testHasProtocol [
 ClassDescriptionProtocolsTest >> testHasProtocolWithRealProtocol [
 
 	class organization addProtocol: #titan.
-	self assert: (class hasProtocol: (class organization protocolNamed: #titan)).
+	self assert: (class hasProtocol: (class protocolNamed: #titan)).
 	self deny: (class hasProtocol: (Protocol named: #human))
 ]
 
@@ -75,6 +75,24 @@ ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
 	self assert: (class protocolNameOfSelector: #king) equals: #titan.
 	"In the future this should maybe be an error?"
 	self assert: (class protocolNameOfSelector: #luz) isNil
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testProtocolNamed [
+
+	| titanProtocol |
+	titanProtocol := class organization addProtocol: #titan.
+	self assert: (class protocolNamed: #titan) identicalTo: titanProtocol.
+	self should: [ class protocolNamed: #human ] raise: NotFound
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testProtocolNamedIfAbsent [
+
+	| titanProtocol |
+	titanProtocol := class organization addProtocol: #titan.
+	self assert: (class protocolNamed: #titan ifAbsent: [ self fail ]) identicalTo: titanProtocol.
+	self assert: [ class protocolNamed: #human ifAbsent: [ true ] ]
 ]
 
 { #category : #tests }
@@ -98,7 +116,7 @@ ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 		protocol: #titan;
 		install: 'king ^ 1'.
 
-	self assert: (class protocolOfSelector: #king) identicalTo: (class organization protocolNamed: #titan).
+	self assert: (class protocolOfSelector: #king) identicalTo: (class protocolNamed: #titan).
 	self assert: (class protocolOfSelector: #king) name equals: #titan.
 	"In the future this should maybe be an error?"
 	self assert: (class protocolOfSelector: #luz) isNil
@@ -138,8 +156,8 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 	class removeEmptyProtocols.
 
 	self assertCollection: class protocolNames hasSameElements: #( human titan ).
-	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz camila ).
-	self assertCollection: (class organization protocolNamed: #titan) methodSelectors hasSameElements: #( king ).
+	self assertCollection: (class protocolNamed: #human) methodSelectors hasSameElements: #( luz camila ).
+	self assertCollection: (class protocolNamed: #titan) methodSelectors hasSameElements: #( king ).
 
 	"Now that we asserted the actual state is good, we can test the actual method."
 	class methodDict
@@ -148,7 +166,7 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 	class removeNonexistentSelectorsFromProtocols.
 
 	self assertCollection: class protocolNames hasSameElements: #( human ).
-	self assertCollection: (class organization protocolNamed: #human) methodSelectors hasSameElements: #( luz )
+	self assertCollection: (class protocolNamed: #human) methodSelectors hasSameElements: #( luz )
 ]
 
 { #category : #tests }
@@ -214,10 +232,10 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithRealProtocol [
 	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
 
 	"just ignore removing of non empty categories"
-	class removeProtocolIfEmpty: (class organization protocolNamed: #titan).
+	class removeProtocolIfEmpty: (class protocolNamed: #titan).
 	self assert: class protocolNames size equals: 3.
 
-	class removeProtocolIfEmpty: (class organization protocolNamed: #human).
+	class removeProtocolIfEmpty: (class protocolNamed: #human).
 	self assert: class protocolNames size equals: 2.
 	self assertCollection: class protocolNames hasSameElements: #( #titan #witch )
 ]
@@ -241,12 +259,12 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 	self assert: class protocolNames size equals: 3.
 	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
 
-	class removeProtocol: (class organization protocolNamed: #human).
+	class removeProtocol: (class protocolNamed: #human).
 	self assert: class protocolNames size equals: 2.
 	self assertCollection: class protocolNames hasSameElements: #( #titan #witch ).
 
 	"Removing a protocol with methods inside."
-	class removeProtocol: (class organization protocolNamed: #titan).
+	class removeProtocol: (class protocolNamed: #titan).
 	self assert: class protocolNames size equals: 1.
 	self deny: (class isLocalSelector: #king)
 ]
@@ -272,5 +290,5 @@ ClassDescriptionProtocolsTest >> testSelectorsInProtocolWithRealProtocol [
 		protocol: #titan;
 		install: 'king ^ 1'.
 
-	self assertCollection: (class selectorsInProtocol: (class organization protocolNamed: #titan)) hasSameElements: #( #king )
+	self assertCollection: (class selectorsInProtocol: (class protocolNamed: #titan)) hasSameElements: #( #king )
 ]
