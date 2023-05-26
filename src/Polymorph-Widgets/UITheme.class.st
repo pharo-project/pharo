@@ -307,8 +307,7 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 		color: (aColor alphaMixed: 0.7 with: Color black).
 	arrow fullDrawOn: form getCanvas.
 	resizedForm := form
-		magnify: form boundingBox
-		by: 1 / resizeFactor
+		magnifyBy: 1 / resizeFactor
 		smoothing: 4.
 	^resizedForm trimBordersOfColor: Color transparent
 ]
@@ -1176,8 +1175,7 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 	outerBox addMorphCentered: innerBox.
 	""
 	resizedForm := outerBox imageForm
-				magnify: outerBox imageForm boundingBox
-				by: 1 / resizeFactor
+				magnifyBy: 1 / resizeFactor
 				smoothing: 4.
 	""
 	^ (resizedForm replaceColor: aColor withColor: Color transparent)
