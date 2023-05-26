@@ -15,11 +15,10 @@ ReTempsReadBeforeWrittenRuleTest >> mockMethod [
 { #category : #tests }
 ReTempsReadBeforeWrittenRuleTest >> testFoundTemporaries [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #mockMethod.
+	| temporaries |
+	temporaries := self subjectUnderTest new
+		               findReadsBeforeWrittenTemporariesIn:
+		               self class >> #mockMethod.
 
-	self assert: critiques size equals: 1.
-	self
-		assertCollection: critiques first rule temps
-		hasSameElements: #( temp1 temp2 )
+	self assertCollection: temporaries hasSameElements: #( temp1 temp2 )
 ]

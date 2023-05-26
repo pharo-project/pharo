@@ -16,9 +16,6 @@ NOTE: This rule detects *many* false positives.
 Class {
 	#name : #ReTempsReadBeforeWrittenRule,
 	#superclass : #ReAbstractRule,
-	#instVars : [
-		'temps'
-	],
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -35,9 +32,23 @@ ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-ReTempsReadBeforeWrittenRule >> basicCheck: aMethod [
-	self temps: ((RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) array select: #isNotNil).
-	^ temps isNotEmpty
+ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
+
+	(self findReadsBeforeWrittenTemporariesIn: aMethod) ifNotEmpty: [
+		:temps |
+		aCriticBlock cull: ((self critiqueFor: aMethod)
+				 tinyHint: (String streamContents: [ :stream |
+							  temps
+								  do: [ :temporary | stream nextPutAll: temporary ]
+								  separatedBy: [ stream nextPutAll: ', ' ] ]);
+				 yourself) ]
+]
+
+{ #category : #running }
+ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
+
+	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
+		   aMethod ast) array select: #isNotNil
 ]
 
 { #category : #accessing }
@@ -48,20 +59,5 @@ ReTempsReadBeforeWrittenRule >> group [
 { #category : #accessing }
 ReTempsReadBeforeWrittenRule >> name [
 
-	^ String streamContents: [ :stream |
-		  stream nextPutAll: 'Temporaries may be read before written ('.
-		  self temps
-			  do: [ :temporary | stream nextPutAll: temporary ]
-			  separatedBy: [ stream nextPutAll: ', ' ].
-		  stream nextPut: $) ]
-]
-
-{ #category : #accessing }
-ReTempsReadBeforeWrittenRule >> temps [
-	^ temps
-]
-
-{ #category : #accessing }
-ReTempsReadBeforeWrittenRule >> temps: anArray [
-	temps:= anArray
+	^ 'Temporaries may be read before written'
 ]
