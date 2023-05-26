@@ -11,7 +11,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	rgMethod := (Class >> #asRingDefinition) asFullRingDefinition.
 	self assert: rgMethod parent notNil.
 	self assert: rgMethod parentName equals: #Class.
-	self assert: rgMethod parent methods size equals: 1.
+	self assert: rgMethod parent methods size equals: 240.
 	self assert: rgMethod parent package name equals: #Kernel.
 	self assert: rgMethod package notNil.
 	self assert: rgMethod package name equals: #'Ring-Definitions-Core'.
@@ -20,7 +20,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	rgMethod := (Class >> #name) asFullRingDefinition.
 	self assert: rgMethod parent notNil.
 	self assert: rgMethod parentName equals: #Class.
-	self assert: rgMethod parent methods size equals: 1.
+	self assert: rgMethod parent methods size equals: 240.
 	self assert: rgMethod parent package name equals: #Kernel.
 	self assert: rgMethod package notNil.
 	self assert: rgMethod package name equals: #Kernel
