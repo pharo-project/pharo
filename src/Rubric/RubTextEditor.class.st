@@ -1373,6 +1373,16 @@ RubTextEditor >> insertAndSelect: aString at: anInteger [
 		and: [self ]
 ]
 
+{ #category : #api }
+RubTextEditor >> insertAndSelectAfterCurrentSelection: aString [ 
+	
+	| selectionInterval |
+	selectionInterval := self selectionInterval.
+	self insertAndSelect: aString at: selectionInterval last + 1.
+	"self insert: aString at: selectionInterval last.
+	self selectionInterval: (selectionInterval last + 1 to: selectionInterval last + aString size)"
+]
+
 { #category : #testing }
 RubTextEditor >> isCaretBehindChar [
 	"Return true if the cursor position is after an alphanumeric character, otherwise false."
@@ -2460,6 +2470,12 @@ RubTextEditor >> tab: aKeyboardEvent [
 	self addString: String tab.
 	self unselect.
 	^false
+]
+
+{ #category : #protocol }
+RubTextEditor >> takeKeyboardFocus [
+	
+	textArea takesKeyboardFocus
 ]
 
 { #category : #accessing }
