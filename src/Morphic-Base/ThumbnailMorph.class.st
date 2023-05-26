@@ -94,7 +94,7 @@ ThumbnailMorph >> drawForForm: aForm on: aCanvas [
 	interimCanvas := Display defaultCanvasClass extent: viewedObjectBox extent depth: aCanvas depth.
 	interimCanvas translateBy: viewedObjectBox topLeft negated
 				during: [:tempCanvas | tempCanvas drawImage: aForm at: 0@0].
-	shrunkForm := interimCanvas form magnify: interimCanvas form boundingBox by: scale smoothing: 1.
+	shrunkForm := interimCanvas form magnifyBy: scale smoothing: 1.
 	lastFormShown := shrunkForm.
 
 	aCanvas paintImage: shrunkForm at: self center - shrunkForm boundingBox center
@@ -123,8 +123,7 @@ ThumbnailMorph >> drawMeOn: aCanvas [
 						"recursion happens here"
 						tempCanvas fullDrawMorph: aFormOrMorph].
 				shrunkForm := c form
-							magnify: c form boundingBox
-							by: scale
+							magnifyBy: scale
 							smoothing: 1.
 				lastFormShown := shrunkForm.
 				RecursionDepth := RecursionDepth - 1]
