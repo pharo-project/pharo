@@ -16,6 +16,9 @@ NOTE: This rule detects *many* false positives.
 Class {
 	#name : #ReTempsReadBeforeWrittenRule,
 	#superclass : #ReAbstractRule,
+	#instVars : [
+		'temps'
+	],
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -33,7 +36,8 @@ ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReTempsReadBeforeWrittenRule >> basicCheck: aMethod [
-	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) isNotEmpty
+	self temps: ((RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) array select: #isNotNil).
+	^ temps isNotEmpty
 ]
 
 { #category : #accessing }
@@ -43,5 +47,21 @@ ReTempsReadBeforeWrittenRule >> group [
 
 { #category : #accessing }
 ReTempsReadBeforeWrittenRule >> name [
-	^ 'Temporaries may be read before written'
+
+	^ String streamContents: [ :stream |
+		  stream nextPutAll: 'Temporaries may be read before written ('.
+		  self temps
+			  do: [ :temporary | stream nextPutAll: temporary ]
+			  separatedBy: [ stream nextPutAll: ', ' ].
+		  stream nextPut: $) ]
+]
+
+{ #category : #accessing }
+ReTempsReadBeforeWrittenRule >> temps [
+	^ temps
+]
+
+{ #category : #accessing }
+ReTempsReadBeforeWrittenRule >> temps: anArray [
+	temps:= anArray
 ]
