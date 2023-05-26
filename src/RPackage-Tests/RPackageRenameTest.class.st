@@ -194,24 +194,14 @@ RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 	package := Smalltalk organization registerPackageNamed: 'OriginalPackage'.
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'OriginalPackage').
 
-	class := Object
-		         subclass: #TestClass
-		         instanceVariableNames: ''
-		         classVariableNames: ''
-		         poolDictionaries: ''
-		         category: 'OriginalPackage-TAG'.
+	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
 
 	extendedPackage := Smalltalk organization registerPackageNamed: 'ExtendedPackage'.
 	extendedPackageWorkingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'ExtendedPackage').
 
 	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
-	class := Object
-		         subclass: #TestExtendedClass
-		         instanceVariableNames: ''
-		         classVariableNames: ''
-		         poolDictionaries: ''
-		         category: 'ExtendedPackage'.
+	class := (Object << #TestExtendedClass package: 'ExtendedPackage') install.
 
 	class := class class.
 
@@ -240,12 +230,7 @@ RPackageRenameTest >> testUnregisterPackage [
 	| package workingCopy class |
 	package := Smalltalk organization registerPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackage: (MCPackage new name: 'Test1').
-	class := Object
-		         subclass: #TestClass
-		         instanceVariableNames: ''
-		         classVariableNames: ''
-		         poolDictionaries: ''
-		         category: 'Test1-TAG'.
+	class := (Object << #TestClass package: 'Test1-TAG') install.
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
