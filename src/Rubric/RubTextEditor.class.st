@@ -1378,9 +1378,7 @@ RubTextEditor >> insertAndSelectAfterCurrentSelection: aString [
 	
 	| selectionInterval |
 	selectionInterval := self selectionInterval.
-	self insertAndSelect: aString at: selectionInterval last + 1.
-	"self insert: aString at: selectionInterval last.
-	self selectionInterval: (selectionInterval last + 1 to: selectionInterval last + aString size)"
+	self insertAndSelect: aString at: selectionInterval last + 1
 ]
 
 { #category : #testing }
