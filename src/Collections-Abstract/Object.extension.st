@@ -28,7 +28,7 @@ Object >> split: aSequenceableCollection [
 	"([:c| c isSeparator] split: 'aa bb cc dd')>>> #('aa' 'bb' 'cc' 'dd') asOrderedCollection"
 
 	| result |
-	result := OrderedCollection new: (aSequenceableCollection size / 2) asInteger.
+	result := OrderedCollection new: aSequenceableCollection size //2.
 	self split: aSequenceableCollection do: [ :item |
 		result add: item ].
 	^ result
