@@ -212,7 +212,7 @@ ColorMap >> inverseMap [
 			[ :mask :shift |
 			newMasks nextPut: (mask bitShift: shift).
 			newShifts nextPut: shift negated ].
-	^ ColorMap
+	^ self class
 		shifts: newShifts contents
 		masks: newMasks contents
 ]
@@ -237,11 +237,19 @@ ColorMap >> isIndexed [
 { #category : #'pixel mapping' }
 ColorMap >> mapPixel: pixelValue [
 	"Perform a forward pixel mapping operation"
+
 	| pv |
-	(shifts == nil and: [ masks == nil ])
-		ifFalse:
-			[ pv := (((pixelValue bitAnd: self redMask) bitShift: self redShift) bitOr: ((pixelValue bitAnd: self greenMask) bitShift: self greenShift)) bitOr: (((pixelValue bitAnd: self blueMask) bitShift: self blueShift) bitOr: ((pixelValue bitAnd: self alphaMask) bitShift: self alphaShift)) ]
-		ifTrue: [ pv := pixelValue ].
+	pv := (shifts isNil and: [ masks isNil ])
+		      ifFalse: [
+			      (((pixelValue bitAnd: self redMask) bitShift: self redShift)
+				       bitOr:
+				       ((pixelValue bitAnd: self greenMask) bitShift:
+					        self greenShift)) bitOr:
+				      (((pixelValue bitAnd: self blueMask) bitShift:
+					        self blueShift) bitOr:
+					       ((pixelValue bitAnd: self alphaMask) bitShift:
+						        self alphaShift)) ]
+		      ifTrue: [ pixelValue ].
 	colors ifNotNil: [ pv := colors at: pv ].
 	"Need to check for translucency else Form>>paint goes gaga"
 	pv = 0 ifTrue: [ pixelValue = 0 ifFalse: [ pv := 1 ] ].
@@ -261,7 +269,7 @@ ColorMap >> mappingTo: aColorMap [
 	self isIndexed ifFalse: [ ^ fixedMap ].
 	"If the receiver is indexed then we need to map the colors as well"
 	self flag: #untested.
-	^ ColorMap
+	^ self class
 		shifts: fixedMap shifts
 		masks: fixedMap masks
 		colors: (colors collect: [ :pv | aColorMap pixelMap: pv ])
@@ -275,12 +283,18 @@ ColorMap >> masks [
 { #category : #'pixel mapping' }
 ColorMap >> pixelMap: pixelValue [
 	"Perform a reverse pixel mapping operation"
+
 	| pv |
-	colors == nil
-		ifTrue: [ pv := pixelValue ]
-		ifFalse: [ pv := colors at: pixelValue ].
-	(shifts == nil and: [ masks == nil ]) ifFalse:
-		[ pv := (((pv bitAnd: self redMask) bitShift: self redShift) bitOr: ((pv bitAnd: self greenMask) bitShift: self greenShift)) bitOr: (((pv bitAnd: self blueMask) bitShift: self blueShift) bitOr: ((pv bitAnd: self alphaMask) bitShift: self alphaShift)) ].
+	pv := colors
+		      ifNil: [ pixelValue ]
+		      ifNotNil: [ colors at: pixelValue ].
+	(shifts isNil and: [ masks isNil ]) ifFalse: [
+		pv := (((pv bitAnd: self redMask) bitShift: self redShift) bitOr:
+			       ((pv bitAnd: self greenMask) bitShift: self greenShift))
+			      bitOr:
+				      (((pv bitAnd: self blueMask) bitShift: self blueShift)
+					       bitOr:
+					       ((pv bitAnd: self alphaMask) bitShift: self alphaShift)) ].
 	"Need to check for translucency else Form>>paint goes gaga"
 	pv = 0 ifTrue: [ pixelValue = 0 ifFalse: [ pv := 1 ] ].
 	^ pv
