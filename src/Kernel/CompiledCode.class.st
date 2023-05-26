@@ -38,13 +38,13 @@ Class {
 { #category : #'instance creation' }
 CompiledCode class >> basicNew [
 
-	self error: 'CompiledMethods may only be created with newMethod:header:'
+	self error: 'CompiledMethods and CompiledBlocks may only be created with newMethod:header:'
 ]
 
 { #category : #'instance creation' }
 CompiledCode class >> basicNew: size [
 
-	self error: 'CompiledMethods may only be created with newMethod:header:'
+	self error: 'CompiledMethods and CompiledBlocks may only be created with newMethod:header:'
 ]
 
 { #category : #'instance creation' }
