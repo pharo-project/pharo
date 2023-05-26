@@ -36,6 +36,18 @@ Class {
 }
 
 { #category : #'instance creation' }
+CompiledCode class >> basicNew [
+
+	self error: 'CompiledMethods may only be created with newMethod:header:'
+]
+
+{ #category : #'instance creation' }
+CompiledCode class >> basicNew: size [
+
+	self error: 'CompiledMethods may only be created with newMethod:header:'
+]
+
+{ #category : #'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	"Primitive. Answer an instance of me. The number of literals (and other
 	 information) is specified by the headerWord (see my class comment).
