@@ -45,14 +45,14 @@ OCCompilerNotifyingTest >> enumerateAllSelections [
 	1 to: self numberOfSelections do: [ :n |
 		self assert: (self evaluateSelectionNumber: n) identicalTo: failure.
 		self assert: morph editor selection asString equals: (expectedErrors at: n).
-		self assert: (expectedErrorPositions at: n) equals: morph editor startIndex.
+		self assert: morph editor startIndex equals: (expectedErrorPositions at: n).
 		morph editor cut ]
 ]
 
 { #category : #private }
 OCCompilerNotifyingTest >> evaluateSelection [
 	^ OpalCompiler new
-		source: morph editor selectionAsStream;
+		source: morph editor selection;
 		requestor: morph editor;
 		failBlock: [^failure];
 		evaluate
@@ -115,7 +115,7 @@ OCCompilerNotifyingTest >> setUpForErrorsIn: aTextWithErrorsEnclosedInBackQuote 
 { #category : #tests }
 OCCompilerNotifyingTest >> testAssignmentOfSelf [
 
-	self setUpForErrorsIn: '` Cannot store into ->`self := 1. ^self'.
+	self setUpForErrorsIn: '` Assigment to reserved variable ->`self := 1. ^self'.
 	self enumerateAllSelections
 ]
 

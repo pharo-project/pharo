@@ -155,7 +155,7 @@ IRBytecodeGenerator >> compilationContext: aCompilationContext [
 ]
 
 { #category : #results }
-IRBytecodeGenerator >> compiledBlockWith: trailer [
+IRBytecodeGenerator >> compiledBlock [
 	| lits quickPrimitive header cb |
 	lits := self literals allButLast "1 free only for compiledBlock".
 	quickPrimitive := self quickMethodPrim.
@@ -180,12 +180,6 @@ IRBytecodeGenerator >> compiledBlockWith: trailer [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledMethod [
-
-	^ self compiledMethodWith: CompiledMethodTrailer empty
-]
-
-{ #category : #results }
-IRBytecodeGenerator >> compiledMethodWith: trailer [
 	| lits quickPrimitive |
 	lits := self literals.
 	quickPrimitive := self quickMethodPrim.
@@ -196,15 +190,15 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 		encoder stream: primitiveBytes.
 		encoder genCallPrimitive: quickPrimitive.
 	].
-	^ self compiledMethodWith: trailer header: (self spurVMHeader: lits size) literals: lits
+	^ self compiledMethodHeader: (self spurVMHeader: lits size) literals: lits
 ]
 
 { #category : #results }
-IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits [
+IRBytecodeGenerator >> compiledMethodHeader: header literals: lits [
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
 	cmClass := self compilationContext compiledMethodClass.
-	cm := trailer createMethod: self bytecodes size class: cmClass header: header.
+	cm := cmClass newMethod: self bytecodes size + CompiledMethod trailerSize header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
 		nextPutAll: self bytecodes.
@@ -639,11 +633,16 @@ IRBytecodeGenerator >> saveLastJump: message [
 
 { #category : #instructions }
 IRBytecodeGenerator >> send: selector [
+
 	| nArgs |
 	nArgs := selector numArgs.
 	stack pop: nArgs.
-	(self encoderClass specialSelectors includes: selector)
-		ifTrue: [ ^ encoder genSendSpecial: (self encoderClass specialSelectors indexOf: selector) numArgs: nArgs ].
+	(compilationContext optionOptimiseSpecialSends and: [
+		 self encoderClass specialSelectors includes: selector ]) ifTrue: [
+		^ encoder
+			  genSendSpecial:
+			  (self encoderClass specialSelectors indexOf: selector)
+			  numArgs: nArgs ].
 	encoder genSend: (self literalIndexOf: selector) numArgs: nArgs
 ]
 

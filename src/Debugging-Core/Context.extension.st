@@ -63,11 +63,6 @@ Context >> lookupVar: aSymbol [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> lookupVar: aSymbol declare: aBoolean [
-	^ self astScope lookupVar: aSymbol declare: aBoolean
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."
@@ -343,7 +338,7 @@ Context class >> tallyInstructions: aBlock [
 	
 	This method uses the in-image bytecode interpreter to evaluate and count the instructions."
 	
-	"(Context tallyInstructions: [3.14159 printString]) size >>> 122"
+	"(Context tallyInstructions: [3.14159 printString]) size >>> 120"
 	
 	| tallies |
 	tallies := Bag new.

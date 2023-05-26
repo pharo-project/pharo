@@ -12,7 +12,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-UndeclaredVariable class >> registeredWithName: aString [
+UndeclaredVariable class >> possiblyRegisteredWithName: aString [
+
+	"Get a registered undeclared variable if any, or a new unregistered undeclared variable"
+
 	| varName |
 	varName := aString asSymbol.
 
@@ -23,9 +26,16 @@ UndeclaredVariable class >> registeredWithName: aString [
 			found becomeForward: (self named: varName)].
 		^found	].
 
-	^(self named: varName)
-		register;
-		yourself
+	^self named: varName
+]
+
+{ #category : #'instance creation' }
+UndeclaredVariable class >> registeredWithName: aString [
+
+	| var |
+	var := self possiblyRegisteredWithName: aString.
+	(var isUndeclaredVariable and: [ var isRegistered not ]) ifTrue: [ var register ].
+	^ var
 ]
 
 { #category : #queries }
@@ -35,14 +45,24 @@ UndeclaredVariable >> definingClass [
 ]
 
 { #category : #'code generation' }
-UndeclaredVariable >> emitStore: methodBuilder [
-
-	methodBuilder storeIntoLiteralVariable: self
+UndeclaredVariable >> emitStore: aMethodBuilder [
+	| tempName |
+	"Swap implementation comes from the superclass"
+	tempName := '0TempForStackManipulation'.
+	aMethodBuilder
+		addTemp: tempName;
+		storeTemp: tempName;
+		popTop;
+		pushLiteral: self;
+		pushTemp: tempName;
+		send: #runtimeUndeclaredWrite:
 ]
 
 { #category : #'code generation' }
-UndeclaredVariable >> emitValue: methodBuilder [
-	methodBuilder pushLiteralVariable: self
+UndeclaredVariable >> emitValue: aMethodBuilder [
+	aMethodBuilder
+		pushLiteral: self;
+		send: #runtimeUndeclaredRead
 ]
 
 { #category : #registry }
@@ -59,6 +79,27 @@ UndeclaredVariable >> isUndeclaredVariable [
 { #category : #registry }
 UndeclaredVariable >> register [
 	Undeclared add: self
+]
+
+{ #category : #'code generation' }
+UndeclaredVariable >> runtimeUndeclaredRead [
+
+	<debuggerCompleteToSender>
+	^ UndeclaredVariableRead new
+		messageText: 'Attempt to read undeclared variable ' , self name;
+		variable: self;
+		signal
+]
+
+{ #category : #'code generation' }
+UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
+
+	<debuggerCompleteToSender>
+	^ UndeclaredVariableWrite new
+		messageText: 'Attempt to write to undeclared variable ' , self name;
+		variable: self;
+		value: anObject;
+		signal
 ]
 
 { #category : #registry }

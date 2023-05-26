@@ -62,7 +62,7 @@ EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
 			^ aClass comment ~= aChange newComment or: [
-			aClass organization commentStamp ~= aChange newStamp ] ].
+			aClass commentStamp ~= aChange newStamp ] ].
 
 	^ true
 ]
@@ -153,8 +153,7 @@ EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior |
-			^ (behavior organization protocolOrganizer hasProtocolNamed: aProtocolAddition protocol) not ].
+		ifPresent: [ :behavior | ^ (behavior hasProtocol: aProtocolAddition protocol) not ].
 
 	^ true
 ]
@@ -165,15 +164,9 @@ EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 	- the protocl exists, and
 	- there are methods in the protocol that are not trait methods"
 
-	self
-		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior | | selectors |
-			selectors := (behavior organization protocolOrganizer
-				getProtocolNamed: aProtocolRemoved protocol
-				ifNone: [ ^ false ]) methodSelectors.
-			(selectors allSatisfy: [ :each |
-					(behavior compiledMethodAt: each) isFromTrait ]) ifTrue:
-						[ ^ false ] ].
+	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior |
+		(behavior hasProtocol: aProtocolRemoved protocol) ifFalse: [ ^ false ].
+		((behavior methodsInProtocol: aProtocolRemoved protocol) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
 
 	^ true
 ]

@@ -47,19 +47,19 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	inputSource := 'foo  <selector: #= > ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
+	self shouldnt: [self parseMethod: outputSource] raise: CodeError.
 
 	"already worked and still should for non-symbol arguments"
 	inputSource := 'foo  <selector: 0 > ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
+	self shouldnt: [self parseMethod: outputSource] raise: CodeError.
 
 	"already worked and should still work for pragmas without arguments"
 	inputSource := 'foo  <selector> ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification
+	self shouldnt: [self parseMethod: outputSource] raise: CodeError
 ]
 
 { #category : #tests }

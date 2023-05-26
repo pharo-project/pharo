@@ -70,12 +70,10 @@ FLClassFactoryForTestCase >> cleanUpSystemOrganization [
 	"This method is necessary because we create classes in a non-default environment. The
 	SystemOrganization is global and ClassFactoryForTestCase interacts with it to clean out
 	categories."
-	| categoriesMatchString categories |
-	categoriesMatchString := self defaultPackageName, '-*'.
-	categories := SystemOrganization categoriesMatching: categoriesMatchString.
-	categories do: [ :category |
-		(SystemOrganization listAtCategoryNamed: category) do: [ :behavior |
-			SystemOrganization removeElement: behavior ] ]
+
+	| categories |
+	categories := self packageOrganizer categoriesMatching: self defaultPackageName , '-*'.
+	categories do: [ :category | (self packageOrganizer listAtCategoryNamed: category) do: [ :behaviorName | self packageOrganizer removeBehavior: behaviorName ] ]
 ]
 
 { #category : #accessing }
@@ -154,9 +152,8 @@ FLClassFactoryForTestCase >> deleteClasses [
 
 { #category : #'private-cleaning' }
 FLClassFactoryForTestCase >> deletePackage [
-	| categoriesMatchString |
-	categoriesMatchString := self defaultPackageName, '-*'.
-	SystemOrganization removeCategoriesMatching: categoriesMatchString
+
+	self packageOrganizer removeCategoriesMatching: self defaultPackageName , '-*'
 ]
 
 { #category : #'private-cleaning' }
@@ -317,6 +314,12 @@ FLClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition i
 FLClassFactoryForTestCase >> nextCount [
 	"Global counter to avoid name clash between test runs, in case of some previous failure."
 	^ Counter := (Counter ifNil: [ 0 ]) + 1.
+]
+
+{ #category : #accessing }
+FLClassFactoryForTestCase >> packageOrganizer [
+
+	^ Smalltalk organization
 ]
 
 { #category : #accessing }

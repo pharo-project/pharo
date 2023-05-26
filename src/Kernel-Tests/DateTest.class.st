@@ -220,7 +220,6 @@ DateTest >> testEqual [
 DateTest >> testEquals [
 
 	| tzm8 tzp10 |
-
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
 
@@ -228,7 +227,7 @@ DateTest >> testEquals [
 		assert: (january23rd2004 equals: tzm8);
 		assert: (january23rd2004 equals: tzp10);
 		assert: (tzm8 equals: tzp10);
-		assert: (january23rd2004 equals: june2nd1973) not
+		deny: (january23rd2004 equals: june2nd1973)
 ]
 
 { #category : #tests }
@@ -304,28 +303,24 @@ DateTest >> testInquiries [
 DateTest >> testIsAfter [
 
 	| tzm8 tzp10 |
-
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
-
 	self
-		assert: (tzp10 isAfter: tzm8) not;
+		deny: (tzp10 isAfter: tzm8);
 		assert: (january23rd2004 isAfter: june2nd1973);
-		assert: (june2nd1973 isAfter: june2nd1973) not
+		deny: (june2nd1973 isAfter: june2nd1973)
 ]
 
 { #category : #tests }
 DateTest >> testIsBefore [
 
 	| tzm8 tzp10 |
-
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
-
 	self
-		assert: (tzm8 isBefore: tzp10) not;
+		deny: (tzm8 isBefore: tzp10);
 		assert: (june2nd1973 isBefore: january23rd2004);
-		assert: (june2nd1973 isBefore: june2nd1973) not
+		deny: (june2nd1973 isBefore: june2nd1973)
 ]
 
 { #category : #tests }
@@ -342,13 +337,12 @@ DateTest >> testIsLeapYear [
 DateTest >> testIsOnOrAfter [
 
 	| tzm8 tzp10 |
-
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
 
 	self
 		assert: (tzp10 isOnOrAfter: tzm8);
-		assert: (june2nd1973 isOnOrAfter: january23rd2004) not;
+		deny: (june2nd1973 isOnOrAfter: january23rd2004);
 		assert: (june2nd1973 isOnOrAfter: june2nd1973);
 		assert: (january23rd2004 isOnOrAfter: june2nd1973)
 ]
@@ -357,7 +351,6 @@ DateTest >> testIsOnOrAfter [
 DateTest >> testIsOnOrBefore [
 
 	| tzm8 tzp10 |
-
 	tzm8 := january23rd2004 translateTo: -8.
 	tzp10 := january23rd2004 translateTo: 10.
 
@@ -365,7 +358,7 @@ DateTest >> testIsOnOrBefore [
 		assert: (tzm8 isOnOrBefore: tzp10);
 		assert: (june2nd1973 isOnOrBefore: january23rd2004);
 		assert: (june2nd1973 isOnOrBefore: june2nd1973);
-		assert: (january23rd2004 isOnOrBefore: june2nd1973) not
+		deny: (january23rd2004 isOnOrBefore: june2nd1973)
 ]
 
 { #category : #tests }

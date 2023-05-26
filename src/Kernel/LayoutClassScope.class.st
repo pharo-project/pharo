@@ -54,11 +54,11 @@ LayoutClassScope >> fieldSize [
 ]
 
 { #category : #flattening }
-LayoutClassScope >> flatten [
-	| result |
-	result := parentScope flatten.
-	result addAll: self.
-	^ result
+LayoutClassScope >> flattenIn: aCollection [
+
+	parentScope flattenIn: aCollection.
+	aCollection addAll: self.
+	^ aCollection
 ]
 
 { #category : #enumerating }

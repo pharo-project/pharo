@@ -7,6 +7,12 @@ Class {
 	#category : #'PharoDocComment-Styling'
 }
 
+{ #category : #testing }
+DocCommentIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #private }
 DocCommentIconStyler >> exampleIsFaulty: aNode [
 	^ aNode comments

@@ -401,9 +401,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 
 { #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeClass [
-	<skip>
 	| change |
-	self skip.
 	change := changes
 		defineClass:
 			self class name , ' << #' , self changeMock name
@@ -423,21 +421,19 @@ RBRefactoringChangeTest >> testPerformChangeClass [
 RBRefactoringChangeTest >> testPerformChangeComment [
 	| change comment |
 	change := changes comment: 'Some Comment' in: self changeMock.
-	comment := change changeClass organization classComment.
+	comment := change changeClass comment.
 	self perform: change do: [ self assert: change changeClass comment equals: 'Some Comment' ].
-	self assert: change changeClass organization classComment equals: comment
+	self assert: change changeClass comment equals: comment
 ]
 
 { #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeMetaclass [
-	<skip>
 	| change |
-	self skip.
 	change := changes
 		defineClass:
 			self changeMock name
 				,
-					' class '.
+					' class instanceVariableNames: '''''.
 	self perform: change do: [ self assertEmpty: change changeClass class instVarNames ].
 	self denyEmpty: change changeClass class instVarNames.
 	self assert: change definedClass equals: self changeMock class

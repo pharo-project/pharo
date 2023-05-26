@@ -78,15 +78,15 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsOverriden [
 
 { #category : #tests }
 T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsRenamedCategory [
-	| t1 t2 |
 
-	t1 := self newTrait: #T1 with: #() uses: {}.
+	| t1 t2 |
+	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 	t1 compile: 'm2 ^42.' classified: 'aProtocol'.
 
-	t2 := self newTrait: #T2 with: #() uses: t1.
+	t2 := self newTrait: #T2 with: #(  ) uses: t1.
 
-	t1 organization renameCategory: 'aProtocol' toBe: 'anotherProtocol'.
+	t1 organization renameProtocol: 'aProtocol' as: 'anotherProtocol'.
 
 	self assert: (t1 >> #m1) protocol equals: 'anotherProtocol'.
 	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'.

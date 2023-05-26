@@ -40,19 +40,19 @@ RGReadOnlyImageBackend >> categoryFor: anRGBehavior [
 { #category : #'class comment' }
 RGReadOnlyImageBackend >> classCommentAuthorFor: anRGComment [
 
-	^ RGStampParser authorForStamp: (self realBehaviorFor: anRGComment parent) organization commentStamp
+	^ RGStampParser authorForStamp: (self realBehaviorFor: anRGComment parent) commentStamp
 ]
 
 { #category : #'class comment' }
 RGReadOnlyImageBackend >> classCommentContentFor: anRGComment [
 
-	^ (self realBehaviorFor: anRGComment parent) organization classComment
+	^ (self realBehaviorFor: anRGComment parent) comment
 ]
 
 { #category : #'class comment' }
 RGReadOnlyImageBackend >> classCommentTimeFor: anRGComment [
 
-	^ RGStampParser timeForStamp: (self realBehaviorFor: anRGComment parent) organization commentStamp
+	^ RGStampParser timeForStamp: (self realBehaviorFor: anRGComment parent) commentStamp
 ]
 
 { #category : #trait }
@@ -320,7 +320,7 @@ RGReadOnlyImageBackend >> tagsForMethod: anRGMethod do: aBlock [
 { #category : #method }
 RGReadOnlyImageBackend >> tagsForMethodsFor: anRGBehavior do: aBlock [
 
-	(self realBehaviorFor: anRGBehavior) protocols do: aBlock
+	(self realBehaviorFor: anRGBehavior) protocolNames do: aBlock
 ]
 
 { #category : #method }

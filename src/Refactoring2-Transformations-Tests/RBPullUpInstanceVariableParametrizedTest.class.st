@@ -1,7 +1,7 @@
 Class {
 	#name : #RBPullUpInstanceVariableParametrizedTest,
 	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -9,8 +9,6 @@ RBPullUpInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPullUpInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
-		addCase: { #rbClass -> RBPullUpVariableTransformation .
-					  #constructor -> #instanceVariable:class: };
 		yourself
 ]
 
@@ -20,7 +18,7 @@ RBPullUpInstanceVariableParametrizedTest >> testPullUpInstVar [
 	refactoring := self createRefactoringWithArguments:
 			{'result' . #RBLintRuleTestData}.
 	[self executeRefactoring: refactoring]
-		on: RBRefactoringError, RBRefactoringWarning
+		on: RBRefactoringWarning
 		do: [ :e | e resume ].
 	self assert: ((refactoring model classNamed: #RBLintRuleTestData)
 		directlyDefinesInstanceVariable: 'result').

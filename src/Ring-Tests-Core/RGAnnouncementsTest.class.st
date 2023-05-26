@@ -4,6 +4,32 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
+{ #category : #announcements }
+RGAnnouncementsTest >> installAnnouncementsFor: aRGClass in: aRGEnvironment when: anEvent [
+
+	| announcements |
+	announcements := OrderedCollection new.
+	aRGEnvironment announcer
+		when: anEvent
+		do: [ :announcement |
+			announcement classAffected == aRGClass ifTrue: [
+				announcements add: announcement ] ]
+		for: self.
+	^ announcements
+]
+
+{ #category : #announcements }
+RGAnnouncementsTest >> installAnnouncementsIn: aRGEnvironment when: anEvent [
+
+	| announcements |
+	announcements := OrderedCollection new.
+	aRGEnvironment announcer
+		when: anEvent
+		do: [ :announcement | announcements add: announcement ]
+		for: self.
+	^ announcements
+]
+
 { #category : #tests }
 RGAnnouncementsTest >> testAnnouncementTimestamps [
 
@@ -11,8 +37,7 @@ RGAnnouncementsTest >> testAnnouncementTimestamps [
 
 	start := DateAndTime now.
 	env := RGEnvironment new.
-	announcements := OrderedCollection new.
-	env announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: env when: ClassAdded. 
 
 	env ensureClassNamed: #SomeClass1.
 	10 milliSeconds wait.
@@ -35,8 +60,7 @@ RGAnnouncementsTest >> testAnnouncerSuspending [
 	| env announcements behavior |
 
 	env := RGEnvironment new.
-	announcements := OrderedCollection new.
-	env announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: env when: ClassAdded. 
 
 	env announcer suspendAllWhile: [
 		behavior := env ensureClassNamed: #SomeClass.].
@@ -50,8 +74,7 @@ RGAnnouncementsTest >> testAnnouncerSuspendingWithStoring [
 	| env announcements behavior stored |
 
 	env := RGEnvironment new.
-	announcements := OrderedCollection new.
-	env announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: env when: ClassAdded. 
 
 	stored := env announcer suspendAllWhileStoring: [
 		behavior := env ensureClassNamed: #SomeClass.].
@@ -65,8 +88,7 @@ RGAnnouncementsTest >> testAnnouncerSuspendingWithStoring [
 RGAnnouncementsTest >> testBehaviorAdded [
 	| env announcements behavior |
 	env := RGEnvironment new.
-	announcements := OrderedCollection new.
-	env announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: env when: ClassAdded. 
 
 	behavior := env ensureClassNamed: #SomeClass.
 	self assert: announcements size equals: 4.
@@ -81,8 +103,7 @@ RGAnnouncementsTest >> testBehaviorCommentModified [
 	| env announcements behavior |
 
 	env := RGEnvironment new.
-	announcements := OrderedCollection new.
-	env announcer when: ClassCommented do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: env when: ClassCommented. 
 
 	behavior := env ensureClassNamed: #SomeClass.
 	self assert: announcements isEmpty.
@@ -102,10 +123,7 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForCategory [
 	env := RGEnvironment new.
 	class := env ensureClassNamed: #SomeClass.
 
-	announcements := OrderedCollection new.
-	env announcer when: ClassModifiedClassDefinition do: [ :announcement |
-		(announcement classAffected == class) ifTrue: [
-			announcements add: announcement]].
+	announcements := self installAnnouncementsFor: class in: env when: ClassModifiedClassDefinition. 
 
 	class category: 'some category'.
 	self assert: announcements size equals: 1
@@ -123,10 +141,7 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForSuperclass [
 
 	class superclass: superclass1.
 
-	announcements := OrderedCollection new.
-	env announcer when: ClassModifiedClassDefinition do: [ :announcement |
-		(announcement classAffected == class) ifTrue: [
-			announcements add: announcement]].
+	announcements := self installAnnouncementsFor: class in: env when: ClassModifiedClassDefinition.  
 
 	class name: #NewName.
 	self assert: announcements size equals: 1.
@@ -147,10 +162,7 @@ RGAnnouncementsTest >> testBehaviorParentRenamed [
 
 	class superclass: superclass.
 
-	announcements := OrderedCollection new.
-	env announcer when: ClassParentRenamed do: [ :announcement |
-		(announcement classAffected == class) ifTrue: [
-			announcements add: announcement]].
+	announcements := self installAnnouncementsFor: class in: env when: ClassParentRenamed. 
 
 	class name: #NewName.
 	self assert: announcements size equals: 0.
@@ -162,8 +174,7 @@ RGAnnouncementsTest >> testBehaviorParentRenamed [
 RGAnnouncementsTest >> testDirectAnnouncement [
 	| def announcements |
 	def := RGBehavior new.
-	announcements := OrderedCollection new.
-	def environment announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: def when: ClassAdded. 
 	def announce: (ClassAdded class: def category: nil).
 
 	self assert: announcements size equals: 1.
@@ -176,8 +187,7 @@ RGAnnouncementsTest >> testUnsubscribe [
 	| env announcements behavior |
 
 	env := RGEnvironment new.
-	announcements := OrderedCollection new.
-	env announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
+	announcements := self installAnnouncementsIn: env when: ClassAdded. 
 	env announcer unsubscribe: self.
 
 	behavior := env ensureClassNamed: #SomeClass.

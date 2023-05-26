@@ -22,7 +22,7 @@ ReUnaryAccessingMethodWithoutReturnRule class >> uniqueIdentifierName [
 ReUnaryAccessingMethodWithoutReturnRule >> basicCheck: aMethod [
 
 	(aMethod numArgs > 0 or: [ aMethod isAbstract ]) ifTrue: [ ^ false ].
-	(aMethod category beginsWith: 'accessing') ifFalse: [ ^ false ].
+	(aMethod protocol beginsWith: 'accessing') ifFalse: [ ^ false ].
 	^ aMethod ast allChildren noneSatisfy: [ :each | each isReturn ]
 ]
 

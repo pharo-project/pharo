@@ -87,11 +87,10 @@ forEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsForEvent: anEventSelector [
 
-    | map |
-    map := self actionMap.
-    map removeKey: anEventSelector asSymbol ifAbsent: [].
-    map isEmpty
-        ifTrue: [self releaseActionMap]
+	| map |
+	map := self actionMap.
+	map removeKey: anEventSelector asSymbol ifAbsent: [  ].
+	map ifEmpty: [ self releaseActionMap ]
 ]
 
 { #category : #'*System-Object Events' }

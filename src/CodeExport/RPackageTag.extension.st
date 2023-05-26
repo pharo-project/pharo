@@ -6,7 +6,7 @@ RPackageTag >> fileOut [
 
 	internalStream := (String new: 1000) writeStream.
 
-	SystemOrganization
+	Smalltalk organization
 		fileOutCategory: self categoryName
 		on: internalStream.
 

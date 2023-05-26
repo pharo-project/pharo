@@ -104,19 +104,19 @@ RBParserTest >> testArrayNodesContainRightAmountOfStatementsAndPeriods [
 { #category : #'garbage tests' }
 RBParserTest >> testAssignToMessageRaisesSyntaxError [
 	"Raising a syntax exception when trying to do an assignement on a message."
-	self should: [self parserClass parseExpression: 'receiver selector := 1 + 2'] raise: SyntaxErrorNotification
+	self should: [self parserClass parseExpression: 'receiver selector := 1 + 2'] raise: CodeError
 ]
 
 { #category : #'garbage tests' }
 RBParserTest >> testAssignementRightValueWithUnfortunatePontuationRaisesSyntaxError [
 	"The idea is for the parser to realise the first dot isn't supposed to be here and select it. Also add a side note to give suggestion     on the provenance of the error."
-	self should: [self parserClass parseExpression: 'temp := .1 + 2.'] raise: SyntaxErrorNotification.
-	self should: [self parserClass parseExpression: 'temp := 1. + 2.'] raise: SyntaxErrorNotification.
-	self should: [self parserClass parseExpression: 'temp := 1 +. 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := .1 + 2.'] raise: CodeError.
+	self should: [self parserClass parseExpression: 'temp := 1. + 2.'] raise: CodeError.
+	self should: [self parserClass parseExpression: 'temp := 1 +. 2.'] raise: CodeError.
 
 	"The same could be made for other special characters."
-	self should: [self parserClass parseExpression: 'temp := ;1 + 2.'] raise: SyntaxErrorNotification.
-	self should: [self parserClass parseExpression: 'temp := ,1 + 2.'] raise: SyntaxErrorNotification
+	self should: [self parserClass parseExpression: 'temp := ;1 + 2.'] raise: CodeError.
+	self should: [self parserClass parseExpression: 'temp := ,1 + 2.'] raise: CodeError
 ]
 
 { #category : #'error testing' }
@@ -124,16 +124,16 @@ RBParserTest >> testBadlyPlacedPragmaRaiseError [
 	"The placement in the string will have an impact on the parsing methods involved.
 	 Pragmas are supposed to be written in the beginning of a method."
 	self shouldnt: [(self parserClass parseMethod: 'foo | token | <some: #tag> ^true')]
-		  raise: SyntaxErrorNotification.
+		  raise: CodeError.
 
 	self should: [(self parserClass parseMethod: 'foo | token | ^true <some: #tag>')]
-		  raise: 	SyntaxErrorNotification.
+		  raise: 	CodeError.
 
 	self should: [(self parserClass parseMethod: 'foo | token | token:= 5 <some: #tag> ^token')]
-		  raise: 	SyntaxErrorNotification.
+		  raise: 	CodeError.
 
 	self should: [(self parserClass parseMethod: 'foo | token |  token messaged <some: #tag> ^token')]
-		  raise: 	SyntaxErrorNotification
+		  raise: 	CodeError
 ]
 
 { #category : #'tests - Interval' }
@@ -224,9 +224,9 @@ RBParserTest >> testBlockReturnNode [
 RBParserTest >> testCascade [
 	self assert: (self parserClass parseExpression: ' self msg; yourself') isCascade.
 	self assert: (self parserClass parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
-	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: SyntaxErrorNotification.
-	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: SyntaxErrorNotification.
-	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: SyntaxErrorNotification
+	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: CodeError.
+	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: CodeError.
+	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: CodeError
 ]
 
 { #category : #'tests - Cascade' }
@@ -328,10 +328,10 @@ RBParserTest >> testCascadeWithMissingSelectorRaisesError [
 
 { #category : #'error testing' }
 RBParserTest >> testCascadeWithNoMessageRaiseError [
-	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: SyntaxErrorNotification.
-	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: SyntaxErrorNotification.
-	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: SyntaxErrorNotification.
-	self should: [ self parserClass parseExpression: ' self msg ;  ; yourself' ] raise: SyntaxErrorNotification
+	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: CodeError.
+	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: CodeError.
+	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: CodeError.
+	self should: [ self parserClass parseExpression: ' self msg ;  ; yourself' ] raise: CodeError
 ]
 
 { #category : #'tests - comparing' }
@@ -468,6 +468,12 @@ RBParserTest >> testCreationThisContexNodeWithExpression [
 ]
 
 { #category : #'tests - CreationProtocol' }
+RBParserTest >> testCreationThisProcessNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'thisProcess')
+		  to: RBVariableNode thisProcessNode 
+]
+
+{ #category : #'tests - CreationProtocol' }
 RBParserTest >> testCreationVariableNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'variable')
 		  to: (RBVariableNode named: #variable start: 1)
@@ -561,7 +567,7 @@ RBParserTest >> testErrorNodeForBadParenthesesStopAtEnd [
 RBParserTest >> testFaultyLiteralRaiseSyntaxError [
 	#('#"bar"foo' '# foo' '#1' '#12' '#12.3' '# 1' '##1' '#"bar"1')
 		do: [ :expr |
-		self should: [self parserClass parseExpression: expr] raise: SyntaxErrorNotification ]
+		self should: [self parserClass parseExpression: expr] raise: CodeError ]
 ]
 
 { #category : #tests }
@@ -576,7 +582,7 @@ RBParserTest >> testFormatter [
 { #category : #'garbage tests' }
 RBParserTest >> testGarbageForgottenDotAfterAssignement [
 	| tree child error |
-	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: SyntaxErrorNotification.
+	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: CodeError.
 
 	tree := self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'.
 	self assert: tree isSequence.
@@ -598,7 +604,7 @@ RBParserTest >> testGarbageForgottenReceiver [
 	"Test made in sight of implementing the search of previous litterals when encountering an unknown
 	 variable in case it is, in fact, a selector. This works for cascade (forgotten ;) or missing
 	 receiver like self ..."
-	self should: [self parserClass parseExpression: '|temp | temp := 1 + 2. + 3'] raise: SyntaxErrorNotification
+	self should: [self parserClass parseExpression: '|temp | temp := 1 + 2. + 3'] raise: CodeError
 ]
 
 { #category : #'garbage tests' }
@@ -606,7 +612,7 @@ RBParserTest >> testGarbageTemporaryVariable [
 	| tree |
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
-	self assert: tree errorMessage equals: '''|'' expected'
+	self assert: tree errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'garbage tests' }
@@ -614,7 +620,7 @@ RBParserTest >> testGarbageTemporaryVariableHasMissingClosure [
 	| tree |
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
-	self assert: tree errorMessage equals: '''|'' expected'
+	self assert: tree errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'garbage tests' }
@@ -627,7 +633,7 @@ RBParserTest >> testGarbageTemporaryVariableIsWrong [
 
 	errorNode := tree statements first.
 	self assert: errorNode isParseError.
-	self assert: errorNode errorMessage equals: '''|'' expected'
+	self assert: errorNode errorMessage equals: '''|'' or variable expected'
 ]
 
 { #category : #'tests - Interval' }
@@ -880,13 +886,13 @@ RBParserTest >> testInvalidPragmaPosition [
 	'foo [:x | <foo: $a> ] value'
 	'foo ^ <foo: $a>'
 	)
-	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: SyntaxErrorNotification ]
+	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: CodeError ]
 ]
 
 { #category : #'garbage tests' }
 RBParserTest >> testInvalidSelectorRaisesSyntaxError [
 	"Could propose multiple reparations like assignement, period, array..."
-	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: SyntaxErrorNotification
+	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: CodeError
 ]
 
 { #category : #tests }
@@ -1013,8 +1019,9 @@ RBParserTest >> testMethodNodeStartAtOne [
 	tree := (self parserClass parseExpression: 'foo koong. ^foo').
 	self assert: tree parent start equals: 1.
 
+	"DoItMethod do not start at 1"
 	tree := (self parserClass parseExpression: '  foo koong. ^foo').
-	self assert: tree parent start equals: 1.
+	self assert: tree parent start equals: 3.
 
 	"parseMethod always return a method node."
 	tree := (self parserClass parseMethod: 'foo koong. ^foo').
@@ -1067,7 +1074,7 @@ RBParserTest >> testModifying [
 
 { #category : #'error testing' }
 RBParserTest >> testNegativeNumberError [
-	self should: [ self parserClass parseExpression: '- 2' ] raise: SyntaxErrorNotification
+	self should: [ self parserClass parseExpression: '- 2' ] raise: CodeError
 ]
 
 { #category : #'error testing' }
@@ -1152,6 +1159,18 @@ RBParserTest >> testParents [
 											self assert: each methodNode identicalTo: root ] ] ] ] ]
 ]
 
+{ #category : #tests }
+RBParserTest >> testParseExpressionDontFreeze [
+
+	"This test is here to chark that CI does not freeze or crash on code error."
+	"The test sould just 'fail' gracefully."
+	<expectedFailure>
+
+	"Force a parse error (from a simple tool class).
+	The image (and CI) should not freeze :)"
+	self parserClass parseExpression: '#'
+]
+
 { #category : #'tests - parsing' }
 RBParserTest >> testParseExpressionGivesTheWriteAmountOfStatements [
 	"Testing with a list of triplets.
@@ -1203,7 +1222,6 @@ RBParserTest >> testParseFaultyMethod [
 		add: 'method: asd  [  ] ,';"binary message without second argument"
 		add: 'method:  ^^'; "returning twice"
 		add: 'method: asd  ['; "opening a block"
-		add: 'method: asd  ^ asd. n'; "invalid expresion after return"
 		add: 'method: asd  ^ {'; "Only Open a literal array"
 		add: 'selector ''';
 		add: 'selector ''part1''''part2'; "string with escaped ' does not end"
@@ -1220,19 +1238,6 @@ RBParserTest >> testParseFaultyMethod [
 ]
 
 { #category : #'tests - parsing faulty' }
-RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
-	| node strangeExpression |
-
-	strangeExpression := 'method: asd  ^ asd. n'.
-	node := self parseFaultyMethod: strangeExpression.
-
-	self assert: node isMethod.
-	self assert: node isFaulty.
-	self assert: node statements size equals: 2.
-	self assert: node statements last isFaulty
-]
-
-{ #category : #'tests - parsing faulty' }
 RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	| node strangeExpression |
 
@@ -1240,9 +1245,9 @@ RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	node := self parseFaultyMethod: strangeExpression.
 
 	self assert: node isMethod.
-	self assert: node isFaulty.
+	self deny: node isFaulty.
 	self assert: node statements size equals: 2.
-	self assert: node statements last isFaulty
+	self assert: (node statements last warningNotices last messageText) equals: 'Unreachable statement'
 ]
 
 { #category : #'tests - parsing faulty' }
@@ -1295,6 +1300,44 @@ RBParserTest >> testParseGivesMethod [
 
 	tree := (self parserClass parseMethod: 'foo koong foo').
 	self assert: tree isMethod
+]
+
+{ #category : #tests }
+RBParserTest >> testParseLiterals [
+
+	self assert: (RBParser parseLiterals: '') equals: #(  ).
+	self
+		assert: (RBParser parseLiterals: '10 1.1 true nil false')
+		equals: #( 10 1.1 true nil false ).
+	self
+		assert: (RBParser parseLiterals: '#foo #foo: #foo:bar:baz')
+		equals: #( #foo #foo: #'foo:bar:baz' ).
+	self
+		assert: (RBParser parseLiterals: 'foo foo: foo:bar:baz')
+		equals: #( #foo #foo: #'foo:bar:baz' ).
+	self
+		assert: (RBParser parseLiterals:
+				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
+		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
+	self
+		assert: (RBParser parseLiterals: '(1 2) #(1 2) #[1 2]')
+		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
+	self
+		assert: (RBParser parseLiterals: '.[];::=^')
+		equals: #( #'.' #'[' #']' #';' #':' #':=' #'^' ).
+
+	self
+		should: [ RBParser parseLiterals: '#( unclosed' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: ') unopened' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: 'syntax¿error' ]
+		raise: CodeError
 ]
 
 { #category : #'tests - Pattern' }
@@ -1441,9 +1484,9 @@ RBParserTest >> testParserErrorsWithErrorBlock [
 
 	#(#('self foo. + 3' 1) #('self 0' 1) #('self asdf;;asfd' 1))
 		do: [:each | |ast errorCount|
-			   [ ast := self parseError: each first onError:
-					[:msg :pos :parser | parser parseErrorNode: msg]]
-						on: ReparseAfterSourceEditing do: [].
+			    ast := self parserClass new
+					initializeParserWith: each first;
+					parseExpression.
 
 				errorCount := 0.
 				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
@@ -1582,9 +1625,9 @@ RBParserTest >> testPragmaConstantLiteralArgument [
 	validPragma := 'foo <return: #Point> ^ 0@0'.
 	"Point as argument is not allowed"
 	invalidPragma := 'foo <return: Point> ^ 0@0'.
-	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: SyntaxErrorNotification.
-	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: SyntaxErrorNotification.
-	self should:[self parserClass parseMethod: invalidPragma] raise: SyntaxErrorNotification
+	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: CodeError.
+	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: CodeError.
+	self should:[self parserClass parseMethod: invalidPragma] raise: CodeError
 ]
 
 { #category : #'error testing' }
@@ -1596,21 +1639,21 @@ RBParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	pragmaWithExpressionAsArgument := 'foo
 	<func: (3+4) res: 7>
 	^ self'.
-	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: SyntaxErrorNotification.
+	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: CodeError.
 
 	"an explicit literal array is allowed"
 	pragmaWithLiteralArrayAsArgument := 'foo
 	<func: #(3+4) res: 7>
 	^ self'.
 	"Should work"
-	self shouldnt: [self parserClass parseMethod: pragmaWithLiteralArrayAsArgument] raise: SyntaxErrorNotification.
+	self shouldnt: [self parserClass parseMethod: pragmaWithLiteralArrayAsArgument] raise: CodeError.
 
 	"and of course a string literal"
 	pragmaWithStringAsArgument := 'foo
 	<func: ''(3+4)'' res: 7>
 	^ self'.
 	"should work"
-	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: SyntaxErrorNotification
+	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: CodeError
 ]
 
 { #category : #tests }
@@ -1624,7 +1667,7 @@ RBParserTest >> testPragmaInExpression [
 	self assert: (node methodNode hasPragmaNamed: #some:).
 
 	self should: [(self parserClass parseExpression: '| token | 1+2. <some: #tag> true')]
-		  raise: SyntaxErrorNotification
+		  raise: CodeError
 ]
 
 { #category : #'error testing' }
@@ -1686,7 +1729,7 @@ RBParserTest >> testPragmas [
 		"comment2"
 		<a>
 		<.
-		^1'] raise: SyntaxErrorNotification
+		^1'] raise: CodeError
 ]
 
 { #category : #'tests - parsing' }
@@ -1877,7 +1920,7 @@ RBParserTest >> testSymbolLiteral [
 	('# 1' 1)
 	('##1' 1)
 	('#"bar"1' 1)) do: [ :pair |
-		self should: [self parserClass parseExpression: pair first] raise: SyntaxErrorNotification ]
+		self should: [self parserClass parseExpression: pair first] raise: CodeError ]
 ]
 
 { #category : #'tests - Literal' }
@@ -1929,7 +1972,7 @@ RBParserTest >> testUnclosedParenthesesErrorNodeContainsRightValue [
 { #category : #'garbage tests' }
 RBParserTest >> testUnclosedParenthesesRaiseSyntaxError [
 	"Should propose a closing parenthese before the end of the statement. Should also offer possibility to quickly erase it."
-	self should: [self parserClass parseExpression: '(temp := 1 + 3 .'] raise: SyntaxErrorNotification
+	self should: [self parserClass parseExpression: '(temp := 1 + 3 .'] raise: CodeError
 ]
 
 { #category : #'error testing' }
@@ -1937,28 +1980,28 @@ RBParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '| faulty temporaries'.
 	self assert: tree isEnglobingError.
-	self assert: tree formattedCode equals: '| faulty temporaries'
+	self assert: tree formattedCode equals: '| faulty temporaries |', String cr
 ]
 
 { #category : #'error testing' }
 RBParserTest >> testUnfinishedStatementWithLeadingBracesRaisesError [
 
 	self should: [(self parserClass parseExpression: '[]}')]
-		  raise: SyntaxErrorNotification
+		  raise: CodeError
 ]
 
 { #category : #'error testing' }
 RBParserTest >> testUnfinishedStatementWithLeadingBracketRaisesError [
 
 	self should: [(self parserClass parseExpression: '[]]')]
-		  raise: SyntaxErrorNotification
+		  raise: CodeError
 ]
 
 { #category : #'error testing' }
 RBParserTest >> testUnfinishedStatementWithLeadingParenthesisRaisesError [
 
 	self should: [(self parserClass parseExpression: '[])')]
-		  raise: SyntaxErrorNotification
+		  raise: CodeError
 ]
 
 { #category : #private }

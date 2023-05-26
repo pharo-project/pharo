@@ -3,9 +3,7 @@ I'm the one who visits node to coloring the code
 "
 Class {
 	#name : #SHRBTextStyler,
-	#superclass : #SHTextStyler,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -16,7 +14,10 @@ Class {
 		'pixelHeight',
 		'workspace',
 		'plugins',
-		'braceLevel'
+		'braceLevel',
+		'view',
+		'stylingEnabled',
+		'text'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -87,6 +88,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(#false 									(red muchDarker))
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
+			(#thisProcess 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
 			(patternArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
@@ -94,13 +96,13 @@ SHRBTextStyler class >> blueStyleTable [
 			(argument 								(blue muchDarker))
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
-			(instVar 								(blue muchDarker))
+			(instVar 								(cyan muchDarker))
 
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
-			(poolConstant 							(blue muchDarker))
-			(classVar 								(blue muchDarker))
-			(globalVar 								(blue muchDarker))
+			(poolConstant 							(cyan muchDarker))
+			(classVar 								(cyan muchDarker))
+			(globalVar 								(purple muchDarker))
 
 			(incompleteIdentifier 					blue italic)
 			(incompleteSelector 					nil  italic)
@@ -176,6 +178,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(#self 								'00CC6E')
 			(#super								'00CC6E')
 			(#thisContext 						'00CC6E')
+			(#thisProcess 						'00CC6E')
 			(#return 								'00CC6E' bold)
 
 			(patternArg 							'A7E2ED')
@@ -351,6 +354,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(#self 									'B58900')
 			(#super								'B58900')
 			(#thisContext 							'B58900')
+			(#thisProcess 							'B58900')
 			(#return 								'B58900' bold)
 
 			(patternArg 							('D33682'))
@@ -455,6 +459,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(#self 									'4d9a06')
 			(#super 								'4d9a06')
 			(#thisContext 							'4d9a06')
+			(#thisProcess 							'4d9a06')
 			(#return 								black bold)
 
 			(patternArg 							'2e3426' italic)
@@ -554,6 +559,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(#self 									'A31515')
 			(#super								'A31515')
 			(#thisContext 							'A31515')
+			(#thisProcess 							'A31515')
 			(#return 								'A31515' bold)
 
 			(patternArg 							(blue muchDarker))
@@ -622,18 +628,14 @@ SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
 
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
-	self
-		addAttributes: attributes
-		from: anRBNode start
-		to: anRBNode stop
+
+	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
 ]
 
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes from: start to: stop [
-	charAttr
-		from: (start max: 1)
-		to: (stop min: charAttr size)
-		put: attributes
+
+	charAttr from: (start max: 1) to: (stop min: charAttr size) put: attributes
 ]
 
 { #category : #converting }
@@ -714,6 +716,12 @@ SHRBTextStyler >> font: aFont [
 	font := aFont
 ]
 
+{ #category : #formatting }
+SHRBTextStyler >> format: aText [
+
+	^ aText
+]
+
 { #category : #visiting }
 SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
@@ -724,8 +732,9 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
 { #category : #initialization }
 SHRBTextStyler >> initialize [
-	super initialize.
 
+	super initialize.
+	stylingEnabled := true.
 	isForWorkspace := false
 ]
 
@@ -795,8 +804,7 @@ SHRBTextStyler >> privateStyle: aText [
 	aText ifEmpty: [ ^ self ].
 	compiler := classOrMetaClass compiler
 		source: aText asString;
-		noPattern: self isForWorkspace ;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		isScripting: self isForWorkspace;
 		requestor: workspace.
 
 	self plugins do: [ :each | compiler addParsePlugin: each ].
@@ -821,14 +829,26 @@ SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
-	| textLink global |
+
+	| textLink |
 	textLink := self resolveTextLinkFor: aVariableNode.
-	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink} ].
+	aVariableNode binding isGlobalVariable ifFalse: [ ^ { textLink } ].
 
-	global :=	 aVariableNode binding value.
-	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
+	aVariableNode binding isDeprecated ifFalse: [ ^ { textLink } ].
 
-	^{ textLink. TextEmphasis struckOut }
+	^ {
+		  textLink.
+		  TextEmphasis struckOut }
+]
+
+{ #category : #styling }
+SHRBTextStyler >> style: aText [
+
+	aText ifEmpty: [ ^ self ].
+	stylingEnabled ifFalse: [ ^ self ].
+	text := aText copy.
+	self privateStyle: text.
+	view ifNotNil: [ :view2 | view2 stylerStyled: text ]
 ]
 
 { #category : #private }
@@ -841,6 +861,10 @@ SHRBTextStyler >> style: aText ast: ast [
 	parentheseLevel := 0.
 	braceLevel := 0.
 	self visitNode: ast.
+	"Second pass to ensure that all syntax errors are visible"
+	ast allErrorNotices do: [ :notice | 
+		notice isSyntaxError ifTrue: [
+			self addStyle: #invalid from: notice position to: notice position ] ].
 	^ aText runs: (RunArray newFrom: charAttr)
 ]
 
@@ -864,7 +888,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				reverseDo: [:interval |
+				do: [:interval |
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
@@ -875,9 +899,7 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 SHRBTextStyler >> styleOpenBrace: anArrayNode [
 
 	| style |
-	style := anArrayNode isFaulty
-		         ifTrue: [ #invalid ]
-		         ifFalse: [ self braceStyleName ].
+	style := self braceStyleName.
 	self addStyle: style from: anArrayNode left to: anArrayNode left.
 	braceLevel := braceLevel + 1
 ]
@@ -885,9 +907,7 @@ SHRBTextStyler >> styleOpenBrace: anArrayNode [
 { #category : #private }
 SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
-	style := aBlockNode isFaulty
-		ifTrue: [ #invalid ]
-		ifFalse: [ self bracketStyleName ].
+	style := self bracketStyleName.
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
@@ -897,11 +917,21 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [
 			aMessageNode parentheses
-				do: [ :interval |
+				reverseDo: [ :interval |
 					| pos |
 					pos := interval first.
 					self addStyle:  self parenthesisStyleName from: pos to: pos.
 					parentheseLevel := parentheseLevel + 1 ]]
+]
+
+{ #category : #visiting }
+SHRBTextStyler >> styleParenthesisOf: aNode around: aBlock [
+
+	aNode isValue ifFalse: [ ^ aBlock value ].
+
+	self styleOpenParenthese: aNode.
+	aBlock value.
+	self styleCloseParenthese: aNode
 ]
 
 { #category : #private }
@@ -917,15 +947,43 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 ]
 
 { #category : #styling }
+SHRBTextStyler >> styledTextFor: aText [
+
+	^ self privateStyle: aText
+]
+
+{ #category : #private }
+SHRBTextStyler >> stylingEnabled [
+
+	^ stylingEnabled
+]
+
+{ #category : #private }
+SHRBTextStyler >> stylingEnabled: aBoolean [
+
+	stylingEnabled := aBoolean
+]
+
+{ #category : #styling }
 SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
+
 	| answer |
-	answer := super unstyledTextFrom: aText.
-	self
-		addAttributesFrom: aText runs
-		satisfying: [ :each| each isKindOf: TextAction ]
-		to: answer.
+	answer := Text fromString: aText string.
+	self addAttributesFrom: aText runs satisfying: [ :each | each isKindOf: TextAction ] to: answer.
 	^ answer
+]
+
+{ #category : #accessing }
+SHRBTextStyler >> view: aViewOrMorph [
+
+	view := aViewOrMorph
+]
+
+{ #category : #visiting }
+SHRBTextStyler >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+
+	self addStyle: #pragma from: aRBAnnotationMarkNode start to: aRBAnnotationMarkNode start.
 ]
 
 { #category : #visiting }
@@ -969,89 +1027,106 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
-	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
+	anEnglobingErrorNode value ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode startWithoutParentheses to: anEnglobingErrorNode startWithoutParentheses + anEnglobingErrorNode value size - 1 ].
+	anEnglobingErrorNode valueAfter ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode stopWithoutParentheses to: anEnglobingErrorNode stopWithoutParentheses + anEnglobingErrorNode valueAfter size - 1 ].
 	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	"In a (valid) byte array all elements are of the same type, style the whole contents
-at once, but for ordinary literal arrays, style every node"
+	"We reuse the nested brackets/parenthesis style.
+	The main point it to easyly match opener and closer, nor necesarily to add type semanting"
 
-	(aRBLiteralArrayNode isForByteArray and: [
-		aRBLiteralArrayNode isFaulty not and: [
-			aRBLiteralArrayNode contents isNotEmpty
-		]
-	]) ifTrue: [
-			self addStyle: #number
-				from: aRBLiteralArrayNode start + 2
-				to: aRBLiteralArrayNode stop - 1 ]
-		ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]]
+	| style |
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [
+			style := self bracketStyleName.
+			bracketLevel := bracketLevel + 1 ]
+		ifFalse: [
+			style := self parenthesisStyleName.
+			parentheseLevel := parentheseLevel + 1 ].
+
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode startWithoutParentheses
+		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode stopWithoutParentheses
+		to: aRBLiteralArrayNode stopWithoutParentheses.
+
+	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
+
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [ bracketLevel := bracketLevel - 1 ]
+		ifFalse: [ parentheseLevel := parentheseLevel - 1 ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
-	| value link |
+	| value attributes |
 	value := aLiteralValueNode value.
-
+	attributes := OrderedCollection new.
 
 	"We can have 3 different kind of links from a literal:
 	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
-	link := value isSymbol
-		        ifTrue: [
-			        self class environment
-				        at: value
-				        ifPresent: [ :aGlobal | TextClassLink className: value ]
-				        ifAbsent: [ TextMethodLink selector: value ] ]
-		        ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attributes: { link } forNode: aLiteralValueNode
+	value isSymbol
+		ifTrue: [
+			self class environment
+				at: value
+				ifPresent: [ :aGlobal |
+					attributes add: (TextClassLink className: value).
+					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
+				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
+		ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
-	| style link |
 
+	| style link styleName |
+	
+	styleName := aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ].
 	style := aMessageNode selector isSelectorSymbol
-		ifTrue: [ #selector ]
-		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
+		         ifTrue: [ styleName ]
+		         ifFalse: [ self formatIncompleteSelector: aMessageNode ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
-	self styleOpenParenthese: aMessageNode.
 
-	aMessageNode selectorParts
-		with: aMessageNode keywordsPositions
-		do: [ :keyword :position |
-			self
-				addStyle: style
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
+		self
+			addStyle: style
+			attribute: link
+			from: position
+			to: position + keyword size - 1.
 
-	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
-		ifTrue: [ self visitNode: aMessageNode receiver ].
+		(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) ifTrue: [ self visitNode: aMessageNode receiver ].
 
-	aMessageNode arguments do: [ :each | self visitNode: each ].
-	self styleCloseParenthese: aMessageNode
+		aMessageNode arguments do: [ :each | self visitNode: each ] ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
-	self visitMethodComments: aMethodNode comments.
-	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
+	self visitMethodComments: aMethodNode.
+	aMethodNode arguments do: [ :argument | self visitNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
-	aMethodNode selectorParts
-		with: aMethodNode keywordsPositions
-		do:
-			[ :keyword :position |
-			self
-				addStyle: #patternSelector
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMethodNode isDoIt ifFalse: [
+		aMethodNode selectorParts
+			with: aMethodNode keywordsPositions
+			do:
+				[ :keyword :position |
+				self
+					addStyle: #patternSelector
+					attribute: link
+					from: position
+					to: position + keyword size - 1 ] ].
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
@@ -1061,7 +1136,7 @@ SHRBTextStyler >> visitNode: aNode [
 
 	aNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
 
-	^ aNode acceptVisitor: self
+	^ self styleParenthesisOf: aNode around: [ aNode acceptVisitor: self ]
 ]
 
 { #category : #visiting }
@@ -1072,8 +1147,13 @@ SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
+	"Lets imagin this pragma: `<  test: #toto test2: 2 >`
 
-	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword :position | self addStyle: #pragma from: position to: position + keyword size ].
+	We want to highlight the `<`, the `test:`, the `test2:` and the `>` but we do not want to highlight the arguments."
+
+	self addStyle: #pragma from: aPragmaNode left to: aPragmaNode left.
+	aPragmaNode keywordsIntervals do: [ :i | self addStyle: #pragma from: i first to: i last ].
+	self addStyle: #pragma from: aPragmaNode right to: aPragmaNode right.
 
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
@@ -1081,7 +1161,7 @@ SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 SHRBTextStyler >> visitReturnNode: aReturnNode [
 
-	self addStyle: #return from: aReturnNode start to: aReturnNode stop.
+	self addStyle: #return from: aReturnNode start to: aReturnNode start.
 
 	self visitNode: aReturnNode value
 ]
@@ -1097,10 +1177,8 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
-	self
-		addStyle: (self resolveStyleFor: aVariableNode)
-		attributes: (self resolveVariableAttributesFor: aVariableNode)
-		forNode: aVariableNode
+
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
 ]
 
 { #category : #accessing }

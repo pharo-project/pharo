@@ -23,17 +23,9 @@ Class {
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'instance creation' }
-RBEnglobingErrorNode class >> contents: aCollection start: aStart stop: aStop errorMessage: message [
-	^self new
-		contents: aCollection;
-		start: aStart;
-		stop: aStop;
-		errorMessage: message
-]
-
 { #category : #construction }
 RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
+
 	"Realise a selection between the different englobing error node classes possible according to the
 	 received token. If the value of the token is not recognised, we create an undetermined one."
 	('()' includes: aToken value)
@@ -50,7 +42,31 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 		ifTrue: [ ^RBTemporariesErrorNode error: aToken withNodes: aCollection ].
 	('<' = aToken value asString)
 		ifTrue: [ ^RBPragmaErrorNode error: aToken withNodes: aCollection ].
-	^self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: 'complementary of''',aToken value,''' expected'
+	^self new
+		contents: aCollection;
+		start: aCollection first start;
+		stop: aToken stop;
+		errorMessage: 'complementary of''',aToken value,''' expected'
+]
+
+{ #category : #'instance creation' }
+RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
+	"Transform a simple error node into a englobing one while preserving most information"
+
+	| start stop |
+	start := aParseErrorNode start.
+	stop := aParseErrorNode stop.
+	anArrayOfNodes ifNotEmpty: [
+		start := start min: (anArrayOfNodes min: #start).
+		stop := stop max: (anArrayOfNodes max: #stop) ].
+
+	^ self new
+		start: start;
+		stop: stop;
+		errorPosition: aParseErrorNode errorPosition;
+		errorMessage: aParseErrorNode errorMessage;
+		valueAfter: aParseErrorNode value;
+		contents: anArrayOfNodes
 ]
 
 { #category : #visiting }
@@ -87,6 +103,15 @@ RBEnglobingErrorNode >> initialize [
 { #category : #testing }
 RBEnglobingErrorNode >> isEnglobingError [
 	^true
+]
+
+{ #category : #replacing }
+RBEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
+
+	self contents: (contents collect: [ :each |
+			 each == aNode
+				 ifTrue: [ anotherNode ]
+				 ifFalse: [ each ] ])
 ]
 
 { #category : #accessing }

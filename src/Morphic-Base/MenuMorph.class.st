@@ -1040,6 +1040,15 @@ MenuMorph >> leftArrowStroked: evt [
 ]
 
 { #category : #accessing }
+MenuMorph >> maxItemsIconWidth [
+
+	^ self menuItems inject: 0 into: [ :maxWidth :menuItemMorph |
+		menuItemMorph hasIcon
+			ifTrue: [ maxWidth max: menuItemMorph iconForm width ]
+			ifFalse: [ maxWidth ] ]
+]
+
+{ #category : #accessing }
 MenuMorph >> menuItems [
 	^submorphs select: [ :m | m isMenuItemMorph ]
 ]

@@ -36,7 +36,7 @@ ClyMethodCodeEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContex
 ClyMethodCodeEditorToolMorph >> applyChanges [
 	| selector methodClass currentMethod |
 	methodClass := self chooseClassForNewMethodIfNone: [^false].
-	selector := methodClass compile: self pendingText classified: editingMethod protocol notifying: textMorph.
+	selector := methodClass compile: self pendingText asString classified: editingMethod protocol notifying: textMorph.
 	selector ifNil: [^false ].
 	currentMethod := methodClass >> selector.
 	self setMethodProtocol: currentMethod.
@@ -275,7 +275,10 @@ ClyMethodCodeEditorToolMorph >> printContext [
 { #category : #initialization }
 ClyMethodCodeEditorToolMorph >> resetASTCache [
 	"when the AST cache is cleared, we have to rescue the AST we are looking at"
-	ASTCache default at: ast compiledMethod ifAbsentPut: ast
+	| cm |
+	cm := ast compiledMethod.
+	cm ifNil: [  ^ self ].
+	ASTCache default at: cm ifAbsentPut: ast
 ]
 
 { #category : #'selecting text' }

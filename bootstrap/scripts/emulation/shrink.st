@@ -248,7 +248,7 @@
 	array at: 5 put: nil.
 	Smalltalk specialObjectsArray becomeForward: array.
 	ClassOrganization allInstancesDo: [ :org | org removeEmptyCategories ].
-	SystemOrganization removeEmptyCategories.
+	Smalltalk organization removeEmptyCategories.
 
 
 	" clean object memory, maybe can be simpler"

@@ -312,16 +312,6 @@ FFIStructure class >> rebuildFieldAccessors [
 ]
 
 { #category : #private }
-FFIStructure class >> removeAllMethodsInProtocol: protocolName [
-	| protocol |
-
-	protocol := self organization protocolNamed: protocolName.
-	protocol ifNil: [ ^ self ].
-
-	protocol methods do: [ :each | self removeSelector: each ]
-]
-
-{ #category : #private }
 FFIStructure class >> removeAllOffsetVariables [
 	self classPool keys
 		select: [ :each | each beginsWith: 'OFFSET_' ]

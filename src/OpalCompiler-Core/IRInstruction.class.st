@@ -305,6 +305,12 @@ IRInstruction >> isRead [
 ]
 
 { #category : #testing }
+IRInstruction >> isRemovableByPop [
+
+	^ false
+]
+
+{ #category : #testing }
 IRInstruction >> isReturn [
 
 	^ false

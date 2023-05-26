@@ -17,11 +17,6 @@ RBAddParameterParametrizedTest >> constructor [
 	^ #addParameterToMethod:in:newSelector:permutation:newArgs:
 ]
 
-{ #category : #accessing }
-RBAddParameterParametrizedTest >> defaultNamespace [
-	^ RBNamespace
-]
-
 { #category : #running }
 RBAddParameterParametrizedTest >> setUp [
 	super setUp.

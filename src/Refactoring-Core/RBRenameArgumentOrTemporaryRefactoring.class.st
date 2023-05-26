@@ -52,10 +52,10 @@ RBRenameArgumentOrTemporaryRefactoring >> preconditions [
 	^ (RBCondition
 		withBlock: [ | methodSource |
 			interval first > interval last
-				ifTrue: [ self refactoringFailure: 'You must select a variable name' ].
+				ifTrue: [ self refactoringError: 'You must select a variable name' ].
 			methodSource := class sourceCodeFor: selector.
 			methodSource size >= interval last
-				ifFalse: [ self refactoringFailure: 'Invalid range for variable' ].
+				ifFalse: [ self refactoringError: 'Invalid range for variable' ].
 			oldName := methodSource copyFrom: interval first to: interval last.
 			true ]) & (RBCondition isValidInstanceVariableName: newName for: class) & (RBCondition definesSelector: selector in: class)
 		& (RBCondition definesInstanceVariable: newName in: class) not & (RBCondition definesClassVariable: newName in: class) not
@@ -93,11 +93,11 @@ RBRenameArgumentOrTemporaryRefactoring >> transform [
 	parseTree := class parseTreeForSelector: selector.
 	variableNode := self whichVariableNode: parseTree inInterval: interval name: oldName.
 	(variableNode isNil or: [ variableNode isVariable not ])
-		ifTrue: [ self refactoringFailure: oldName asString , ' isn''t a valid variable' ].
+		ifTrue: [ self refactoringError: oldName asString , ' isn''t a valid variable' ].
 	variableNode name = oldName
-		ifFalse: [ self refactoringFailure: 'Invalid selection' ].
+		ifFalse: [ self refactoringError: 'Invalid selection' ].
 	definingNode := variableNode whoDefines: oldName.
-	definingNode ifNil: [ self refactoringFailure: oldName asString , ' isn''t defined by the method' ].
+	definingNode ifNil: [ self refactoringError: oldName asString , ' isn''t defined by the method' ].
 	self renameNode: definingNode.
 	class compileTree: parseTree
 ]

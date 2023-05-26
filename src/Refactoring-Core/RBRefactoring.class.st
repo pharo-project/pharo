@@ -172,7 +172,7 @@ RBRefactoring >> checkPreconditions [
 	block := conditions errorBlock.
 	block
 		ifNotNil: [
-		self refactoringError: conditions errorString with: block ]
+		self refactoringWarning: conditions errorString with: block ]
 		ifNil: [ self refactoringError: conditions errorString ]
 ]
 
@@ -199,13 +199,13 @@ RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplac
 
 { #category : #support }
 RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
-	|aBlock|
-	aBlock := [:method |
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer].
-	self model allReferencesTo: aSymbol do: aBlock
+
+	(self model allReferencesTo: aSymbol)
+		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
+			rbMethod method
+				ifNil: [ false ]
+				ifNotNil: #isFromTrait ]
+		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
 ]
 
 { #category : #support }
@@ -331,7 +331,7 @@ RBRefactoring >> performCompositeRefactoring: aRefactoring [
 RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
 	[ aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute ]
-	on: RBRefactoringError do: [ :ex | ex resume ]
+	on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]
 
 { #category : #utilities }

@@ -156,7 +156,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 	secondPackage addClass: class.
 
 	"Everything should now be in second package (and not listed as an extension)."
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage
@@ -175,7 +175,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 	secondPackage addClass: class.
 
 	"Everything should now be in second package (and not listed as an extension)."
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage
@@ -196,7 +196,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 
 	"Everything should now be in second package (and not listed as an extension, but instead as 'as yet unclassified')."
 
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage.
@@ -205,7 +205,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 
 	firstPackage addClass: class.
 
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]

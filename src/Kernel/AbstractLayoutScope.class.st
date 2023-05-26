@@ -66,6 +66,12 @@ AbstractLayoutScope >> firstFieldIndex [
 
 { #category : #flattening }
 AbstractLayoutScope >> flatten [
+
+	^ self flattenIn: OrderedCollection new
+]
+
+{ #category : #flattening }
+AbstractLayoutScope >> flattenIn: aCollection [
 	self subclassResponsibility
 ]
 

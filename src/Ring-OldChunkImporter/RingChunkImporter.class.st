@@ -19,7 +19,7 @@ Class {
 RingChunkImporter class >> example [
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
-	SystemOrganization
+	Smalltalk organization
 		fileOutCategory: 'Ring-Deprecated-ChunkImporter-Base'
 		on: internalStream.
 	(RingChunkImporter fromStream: internalStream contents readStream)

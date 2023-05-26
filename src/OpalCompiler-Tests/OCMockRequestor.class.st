@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'notifyList',
 		'interactive',
-		'isScripting'
+		'isScripting',
+		'text'
 	],
 	#category : #'OpalCompiler-Tests-Misc'
 }
@@ -21,7 +22,7 @@ OCMockRequestor >> bindingOf: aSymbol [
 { #category : #'interactive error protocol' }
 OCMockRequestor >> correctFrom: anInteger to: anInteger2 with: aString [
 
-	self error: 'I do not want to mock this one'
+	text := (text first: anInteger - 1) , aString , (text copyFrom: anInteger2 + 1 to: text size)
 ]
 
 { #category : #binding }
@@ -74,7 +75,13 @@ OCMockRequestor >> notifyList [
 { #category : #accessing }
 OCMockRequestor >> text [
 
-	^ 'I do not really care'
+	^ text
+]
+
+{ #category : #accessing }
+OCMockRequestor >> text: aString [
+
+	text := aString
 ]
 
 { #category : #accessing }

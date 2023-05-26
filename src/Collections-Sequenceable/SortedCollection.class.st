@@ -104,9 +104,7 @@ SortedCollection >> = aSortedCollection [
 	and if our blocks are the same, and if our elements are the same."
 
 	self species = aSortedCollection species ifFalse: [ ^ false ].
-	^ sortBlock = aSortedCollection sortBlock
-		ifTrue: [ super = aSortedCollection ]
-		ifFalse: [ false ]
+	^ sortBlock = aSortedCollection sortBlock and: [ super = aSortedCollection ]
 ]
 
 { #category : #adding }

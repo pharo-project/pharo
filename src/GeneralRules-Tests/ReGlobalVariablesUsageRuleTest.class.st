@@ -26,7 +26,7 @@ ReGlobalVariablesUsageRuleTest >> setUp [
 		at: #MyGlobal
 		put: (self class >> #sampleMethod) sourceCode.
 
-	self class compile: 'sampleMethod
+	self class compiler permitFaulty: true; install: 'sampleMethod
 	sampleMethod
 		Smalltalk value.
 		MyGlobal value'

@@ -27,14 +27,10 @@ GoferCleanup >> cleanupCategories: aWorkingCopy [
 GoferCleanup >> cleanupProtocols: aWorkingCopy [
 
 	aWorkingCopy packageSet extendedClasses do: [ :class |
-		(aWorkingCopy packageSet extensionCategoriesForClass: class) do: [ :category |
-			(class organization listAtCategoryNamed: category) isEmpty
-				ifTrue: [ class organization removeCategory: category ] ] ].
+		(aWorkingCopy packageSet extensionCategoriesForClass: class) do: [ :protocolName | class removeProtocolIfEmpty: protocolName ] ].
 
 	aWorkingCopy packageSet classesAndMetaClasses do: [ :class |
-		(aWorkingCopy packageSet coreCategoriesForClass: class) do: [ :category |
-			(class organization listAtCategoryNamed: category) isEmpty
-				ifTrue: [ class organization removeCategory: category ] ] ]
+		(aWorkingCopy packageSet coreCategoriesForClass: class) do: [ :category | class removeProtocolIfEmpty: category ] ]
 ]
 
 { #category : #running }

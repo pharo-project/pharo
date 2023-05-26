@@ -1,3 +1,4 @@
+| mcPackages |
 mcPackages := #(
  'ScriptingExtensions'
  'System-FileRegistry'
@@ -30,7 +31,7 @@ mcPackages := #(
 MCMethodDefinition initializersEnabled: false.
 
 (MonticelloBootstrap inDirectory: (MCCacheRepository uniqueInstance directory))
-  loadPackagesNamed: mcPackages.
+  loadPackagesNamed: mcPackages!
 
 MCMethodDefinition initializersEnabled: true.
 
@@ -40,12 +41,9 @@ RxsPredicate initialize.
 
 MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
-MCMockASubclass initialize.
-MCMockClassA initialize.
 
 MetacelloPlatform initialize.
-MetacelloPharoPlatform initialize.
-MetacelloPharo30Platform initialize.
+MetacelloPharoCommonPlatform initialize.
 
 STONWriter initialize.
 

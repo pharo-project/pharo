@@ -169,14 +169,12 @@ Monitor >> isOwnerProcess [
 
 { #category : #private }
 Monitor >> privateCleanup [
+
 	queuesMutex critical: [
-		defaultQueue isEmpty ifTrue: [defaultQueue := nil].
+		defaultQueue ifEmpty: [ defaultQueue := nil ].
 		queueDict ifNotNil: [
-			queueDict copy keysAndValuesDo: [:id :queue |
-				queue isEmpty ifTrue: [queueDict removeKey: id]].
-			queueDict isEmpty ifTrue: [queueDict := nil].
-		].
-	]
+			queueDict copy keysAndValuesDo: [ :id :queue | queue ifEmpty: [ queueDict removeKey: id ] ].
+			queueDict ifEmpty: [ queueDict := nil ] ] ]
 ]
 
 { #category : #private }
@@ -205,7 +203,7 @@ Monitor >> signal: aSymbolOrNil [
 	| queue |
 	self checkOwnerProcess.
 	queue := self queueFor: aSymbolOrNil.
-	queue isEmpty ifTrue: [queue := self defaultQueue].
+	queue ifEmpty: [ queue := self defaultQueue ].
 	self signalQueue: queue
 ]
 
@@ -245,9 +243,8 @@ Monitor >> signalLock: aSemaphore inQueue: anOrderedCollection [
 
 { #category : #private }
 Monitor >> signalQueue: anOrderedCollection [
-	queuesMutex critical: [
-	 anOrderedCollection isEmpty ifFalse: [
-			anOrderedCollection removeFirst signal ] ]
+
+	queuesMutex critical: [ anOrderedCollection ifNotEmpty: [ anOrderedCollection removeFirst signal ] ]
 ]
 
 { #category : #'signaling-specific' }

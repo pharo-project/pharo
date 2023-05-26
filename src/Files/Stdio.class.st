@@ -43,13 +43,14 @@ Stdio class >> cleanStdioHandles [
 
 { #category : #private }
 Stdio class >> createStdioFileFor: moniker [
-	^ [[ self createWriteStreamBlock cull: moniker asString ]
-		on: CannotDeleteFileException
-		do:
-			[ "HACK: if the image is opened a second time windows barks about the already opened locked file"
-			 self createWriteStreamBlock
-				cull: moniker asString , '_' , (Random new nextInteger: SmallInteger maxVal) asString ]
-	 ] on: FileException do: [ NullStream new ]
+
+	^ [
+	  [ self createWriteStreamBlock cull: moniker asString ]
+		  on: CannotDeleteFileException
+		  do: [ "HACK: if the image is opened a second time windows barks about the already opened locked file"
+			  self createWriteStreamBlock cull: moniker asString , '_' , DateAndTime now asFileNameCompatibleString ] ]
+		  on: FileException
+		  do: [ NullStream new ]
 ]
 
 { #category : #accessing }

@@ -141,7 +141,7 @@ PharoChangesCondenser >> swapClassComment: classOrTrait [
 	remoteStringMap
 		at: classOrTrait
 		ifPresent: [ :remoteString |
-			classOrTrait organization commentSourcePointer:  remoteString sourcePointer]
+			classOrTrait commentSourcePointer: remoteString sourcePointer]
 ]
 
 { #category : #'private - 2 swapping' }
@@ -187,10 +187,9 @@ PharoChangesCondenser >> updateQuitPosition [
 
 { #category : #'private - 1 writing' }
 PharoChangesCondenser >> writeClassComment: aClass [
-	| organizer commentRemoteString stamp |
+	| commentRemoteString stamp |
 
-	organizer := aClass organization.
-	commentRemoteString := self commentRemoteStringFor: organizer.
+	commentRemoteString := self commentRemoteStringFor: aClass.
 
 	(commentRemoteString isNil or: [ commentRemoteString sourceFileNumber = 1 ])
 		ifTrue: [ ^ self ].
@@ -199,12 +198,12 @@ PharoChangesCondenser >> writeClassComment: aClass [
 		strm
 			nextPutAll: aClass name;
 			nextPutAll: ' commentStamp: '.
-		stamp := organizer commentStamp
+		stamp := aClass commentStamp
 			ifNil: ['<historical>'].
 		stamp storeOn: strm ].
 
 	self
-		writeRemoteString: organizer classComment
+		writeRemoteString: aClass comment
 		for: aClass
 ]
 

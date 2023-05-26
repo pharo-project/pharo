@@ -551,11 +551,14 @@ RBBrowserEnvironment >> methods [
 RBBrowserEnvironment >> methodsDo: aBlock [
 
 	self classesDo: [ :aClass |
+		self methodsForClass: aClass do: [ :method | aBlock value: method ].
+		self methodsForClass: aClass class do: [ :method | aBlock value: method ] ]
+]
 
-		self selectorsForClass: aClass do: [ :selector |
-			aBlock value: (aClass >> selector) ].
-		self selectorsForClass: aClass class do: [ :selector |
-			aBlock value: (aClass class >> selector) ] ]
+{ #category : #accessing }
+RBBrowserEnvironment >> methodsForClass: aClass do: aBlock [
+
+	aClass selectorsAndMethodsDo: [ :each :meth | (self includesSelector: each in: aClass) ifTrue: [ aBlock value: meth ] ]
 ]
 
 { #category : #environments }
@@ -644,8 +647,8 @@ RBBrowserEnvironment >> problemCount [
 
 { #category : #accessing }
 RBBrowserEnvironment >> protocolsFor: aClass [
-	^aClass organization categories
-		select: [ :each | self includesProtocol: each in: aClass ]
+
+	^ aClass protocolNames select: [ :protocolName | self includesProtocol: protocolName in: aClass ]
 ]
 
 { #category : #queries }
@@ -770,8 +773,8 @@ RBBrowserEnvironment >> selectorsDo: aBlock [
 
 { #category : #accessing }
 RBBrowserEnvironment >> selectorsFor: aProtocol in: aClass [
-	^(aClass organization listAtCategoryNamed: aProtocol)
-		select: [:each | self includesSelector: each in: aClass]
+
+	^ (aClass selectorsInProtocol: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
 ]
 
 { #category : #accessing }
@@ -869,12 +872,16 @@ RBBrowserEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 
 { #category : #accessing }
 RBBrowserEnvironment >> whichCategoryIncludes: aClassName [
-	^ self systemDictionary organization categoryOfElement: aClassName
+	^ self systemDictionary organization categoryOfBehavior: aClassName
 ]
 
 { #category : #accessing }
 RBBrowserEnvironment >> whichProtocolIncludes: aSelector in: aClass [
-	^aClass organization categoryOfElement: aSelector ifAbsent: [ Protocol unclassified ]
+	"CyrilFerlicot: We should check if it is not better to return a protocol instead of a protocol name here and adapt the clients."
+
+	^ (aClass protocolOfSelector: aSelector)
+		  ifNotNil: [ :protocol | protocol name ]
+		  ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #environments }

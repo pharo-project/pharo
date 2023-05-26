@@ -16,17 +16,71 @@ ClassDescriptionTest >> classToBeTested [
 	^ ClassDescription
 ]
 
-{ #category : #tests }
-ClassDescriptionTest >> testAllMethodCategoriesIntegratedThrough [
-	"If this test fails, it may be because method protocols are sorted in #allMethodCategoriesIntegratedThrough. Take care that if the protocols of the class under test are already sorted, you won't see any problem."
-	self assert: ((CompiledMethod selectorsInProtocol: 'testing') includes: #isAbstract).
-	CompiledMethod allProtocolsUpTo: Object.
-	self assert: ((CompiledMethod selectorsInProtocol: 'testing') includes: #isAbstract)
+{ #category : #helpers }
+ClassDescriptionTest >> compilationTestPackageName [
+	^ 'Kernel-TemporaryTestPackageForTest'
+]
+
+{ #category : #helpers }
+ClassDescriptionTest >> createTestClass [
+
+	^ ((Object << #TemporaryMockClass)
+		   slots: {  };
+		   package: self compilationTestPackageName) build
+]
+
+{ #category : #running }
+ClassDescriptionTest >> tearDown [
+
+	(RPackageOrganizer default packageNamed: self compilationTestPackageName ifAbsent: [ nil ])
+		ifNotNil: [ :package | package removeFromSystem ].
+
+	super tearDown
+]
+
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
+
+	| class method |
+	class := self createTestClass.
+	class addSelector: #wammawink withMethod: (class compiler compile: 'wammawink ^ self').
+	method := class >> #wammawink.
+
+	self assert: method sourceCode equals: 'wammawink ^ self'.
+	self assert: method protocol equals: Protocol unclassified.
+	self assert: (class protocolOfSelector: #wammawink) name equals: Protocol unclassified
 ]
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testAllSlots [
 	self assert: Context allSlots size equals: 6
+]
+
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testCompileClassified [
+
+	| class method |
+	class := self createTestClass.
+
+	class compile: 'foo ^3' classified: #protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocol equals: #protocol
+]
+
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
+
+	| class method protocol |
+	class := self createTestClass.
+
+	protocol := class organization ensureProtocol: #protocol.
+	class compile: 'foo ^3' classified: protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocol equals: protocol name
 ]
 
 { #category : #'tests - slots' }
@@ -81,12 +135,6 @@ ClassDescriptionTest >> testSlotNames [
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlots [
 	self assert: Context slots size equals: 6
-]
-
-{ #category : #tests }
-ClassDescriptionTest >> testWhichCategoryIncludesSelector [
-	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing - comment'.
-	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil
 ]
 
 { #category : #'tests - instance variables' }

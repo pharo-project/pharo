@@ -302,10 +302,12 @@ RGMethod >> package: anRGPackage [
 
 { #category : #accessing }
 RGMethod >> parseTree [
-
-	^(RBParser
-		parseMethod: self sourceCode
-		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass
+	| tree |
+	tree := RBParser
+		  parseMethod: self sourceCode
+		  onError: [ :str :pos | ^ nil ].
+	tree ifNotNil: [ tree doSemanticAnalysis ].
+	^ tree
 ]
 
 { #category : #printing }

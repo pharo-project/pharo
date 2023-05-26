@@ -101,8 +101,6 @@ ImageCleaner >> cleanUpForRelease [
 		removeEmptyCategories;
 		removeEmptyPackages.
 
-	Smalltalk organization sortCategories.
-
 	Smalltalk
 		garbageCollect;
 		cleanOutUndeclared;
@@ -180,12 +178,14 @@ ImageCleaner >> detroyLiteralTable [
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
+
+	^ self class examplePackages
 ]
 
 { #category : #cleaning }
 ImageCleaner >> helpPackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+
+	^ self class helpPackages
 ]
 
 { #category : #'literal sharing' }
@@ -208,18 +208,13 @@ ImageCleaner >> packagesForCleanUpInProduction [
 
 { #category : #cleaning }
 ImageCleaner >> removeEmptyCategories [
-
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
-	Smalltalk organization removeEmptyCategories.
-	Smalltalk
-		allClassesAndTraitsDo: [ :class |
-			[ :each |
-				each
-					removeEmptyCategories;
-					sortCategories ]
-						value: class organization;
-						value: class class organization ]
+
+	Smalltalk organization removeEmptyPackages.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols ]
 ]
 
 { #category : #cleaning }

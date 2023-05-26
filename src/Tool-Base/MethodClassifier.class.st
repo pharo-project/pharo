@@ -293,7 +293,7 @@ MethodClassifier >> protocolByOtherImplementors: aMethod [
 		ifNotEmpty: [ :methods |
 			methods
 				do: [ :method |
-					((method protocol beginsWith: '*') or: [ method protocol = Protocol unclassified ])
+					((method protocol beginsWith: '*') or: [ method isClassified not ])
 						ifFalse: [ protocolBag add: method protocol ]]
 				without: aMethod ].
 

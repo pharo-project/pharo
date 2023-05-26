@@ -38,6 +38,48 @@ StepIntoTest >> testStepIntoDeadContext [
 ]
 
 { #category : #tests }
+StepIntoTest >> testStepIntoDoIt [
+
+	| method node |
+	method := nil compiler
+		          isScripting: true;
+		          compile: '| a b | a := 40. b := a + 2. ^ b'.
+	self settingUpSessionAndProcessAndContextForBlock: [
+		nil executeMethod: method ].
+	[ session interruptedContext compiledCode = method ] whileFalse: [
+		session stepInto ].
+
+	node := method sourceNodeForPC: session interruptedContext pc.
+	self assert: node isAssignment.
+	self assert: node variable name equals: #a.
+
+	session stepInto.
+
+	node := method sourceNodeForPC: session interruptedContext pc.
+	self assert: node isMessage.
+	self assert: node selector equals: #+.
+
+	session stepInto.
+
+	node := method sourceNodeForPC: session interruptedContext pc.
+	self assert: node isAssignment.
+	self assert: node variable name equals: #b.
+
+	session stepInto.
+
+	node := method sourceNodeForPC: session interruptedContext pc.
+	self assert: node isReturn.
+
+	session stepInto.
+
+	self deny: session interruptedContext method equals: method.
+
+	[ session interruptedProcess isTerminated ] whileFalse: [
+		session stepInto ].
+	self assert: session interruptedProcess isTerminated
+]
+
+{ #category : #tests }
 StepIntoTest >> testStepIntoMethodCallShouldActivateIt [
 	"Stepping into a method call should create a context for it at the top of the context stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].

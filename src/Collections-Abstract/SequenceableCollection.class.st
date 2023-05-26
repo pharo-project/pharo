@@ -2110,28 +2110,6 @@ SequenceableCollection >> seventh [
 	^ self at: 7
 ]
 
-{ #category : #shuffling }
-SequenceableCollection >> shuffle [
-	"Modify the receiver but with its elements in random positions.
-	This method use Random class as random generator"
-
-	^ self shuffleBy: Random new
-]
-
-{ #category : #shuffling }
-SequenceableCollection >> shuffleBy: aRandom [
-	"Durstenfeld's version of the Fisher-Yates shuffle"
-	"({1. 2. 3. 4. 5} shuffleBy: (Random seed: 42)) >>> #(2 5 4 3 1)"
-
-	self size to: 2 by: -1 do: [ :i |
-		self swap: i with: (aRandom nextInteger: i) ]
-]
-
-{ #category : #copying }
-SequenceableCollection >> shuffled [
-	^ self copy shuffle
-]
-
 { #category : #accessing }
 SequenceableCollection >> sixth [
 	"Answer the sixth element of the receiver.

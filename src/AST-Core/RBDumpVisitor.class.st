@@ -37,6 +37,13 @@ RBDumpVisitor >> stream [
 ]
 
 { #category : #visiting }
+RBDumpVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+	stream
+		nextPutAll: aRBAnnotationValueNode class name;
+		nextPutAll: ' new'
+]
+
+{ #category : #visiting }
 RBDumpVisitor >> visitArrayNode: anArrayNode [
 	stream
 		nextPutAll: anArrayNode class name;
@@ -88,27 +95,28 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 
 { #category : #visiting }
 RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+
 	stream
 		nextPutAll: '(';
 		nextPutAll: anEnglobingErrorNode class name;
-		nextPutAll: ' contents: {'.
-	anEnglobingErrorNode contents
-		do: [ :each |
-			each acceptVisitor: self.
-			stream nextPutAll: '. ' ].
-	stream nextPut: $}.
-	stream nextPutAll: ' start: '.
-	anEnglobingErrorNode start printOn: stream.
-	stream nextPutAll: ' stop: '.
-	anEnglobingErrorNode stop printOn: stream.
-	stream nextPutAll: ' errorMessage: '.
-	anEnglobingErrorNode errorMessage printOn: stream.
+		nextPutAll: ' new contents: {'.
+	anEnglobingErrorNode contents do: [ :each |
+		each acceptVisitor: self.
+		stream nextPutAll: '. ' ].
 	stream
-		nextPutAll: ') value: ';
-		nextPutAll: anEnglobingErrorNode value printString;
+		nextPutAll: '}; start: ';
+		print: anEnglobingErrorNode start;
+		nextPutAll: '; stop: ';
+		print: anEnglobingErrorNode stop;
+		nextPutAll: '; errorPosition: ';
+		print: anEnglobingErrorNode errorPosition;
+		nextPutAll: '; errorMessage: ';
+		print: anEnglobingErrorNode errorMessage;
+		nextPutAll: '; value: ';
+		print: anEnglobingErrorNode value;
 		nextPutAll: '; valueAfter: ';
-		nextPutAll: anEnglobingErrorNode valueAfter printString;
-		nextPutAll: '; yourself'
+		print: anEnglobingErrorNode valueAfter;
+		nextPutAll: '; yourself)'
 ]
 
 { #category : #visiting }
@@ -193,12 +201,16 @@ RBDumpVisitor >> visitMethodNode: aMethodNode [
 RBDumpVisitor >> visitParseErrorNode: aParseErrorNode [
 	stream
 		nextPutAll: aParseErrorNode class name;
-		nextPutAll: ' errorMessage: '.
-	aParseErrorNode errorMessage printOn: stream.
-	stream nextPutAll: ' value: '.
-	aParseErrorNode value printOn: stream.
-	stream nextPutAll: ' at: '.
-	aParseErrorNode start printOn: stream
+		nextPutAll: ' new errorMessage: ';
+		print: aParseErrorNode errorMessage;
+		nextPutAll: '; value: ';
+		print: aParseErrorNode value;
+		nextPutAll: '; start: ';
+		print: aParseErrorNode start;
+		nextPutAll: '; stop: ';
+		print: aParseErrorNode stop;
+		nextPutAll: '; errorPosition: ';
+		print: aParseErrorNode errorPosition
 ]
 
 { #category : #visiting }

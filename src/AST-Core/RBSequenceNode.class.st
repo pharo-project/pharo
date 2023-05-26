@@ -234,9 +234,9 @@ RBSequenceNode >> bestNodeFor: anInterval [
 	intersectingStatements size > 1 ifTrue: [ ^ self ].
 
 	intersectingStatements do: [ :statement |
-		(statement intersectsInterval: anInterval)
-			ifTrue: [ ^ statement bestNodeFor: anInterval ]
-			ifFalse: [ ^ statement ] ]. "anInterval intersects the statement's final period"
+		^ (statement intersectsInterval: anInterval)
+			ifTrue: [ statement bestNodeFor: anInterval ]
+			ifFalse: [ statement ] ]. "anInterval intersects the statement's final period"
 
 	node := super bestNodeFor: anInterval.
 	node == self ifTrue: [
@@ -330,6 +330,7 @@ RBSequenceNode >> initialize [
 { #category : #errors }
 RBSequenceNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
+	(self temporaries anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 

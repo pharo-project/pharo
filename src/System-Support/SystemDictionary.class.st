@@ -31,15 +31,6 @@ Class {
 	#category : #'System-Support-Utilities'
 }
 
-{ #category : #'instance creation' }
-SystemDictionary class >> withOrganizer: anOrganizer [
-
-	| dictionary |
-	dictionary := self new.
-	dictionary organization: anOrganizer. "update too the back pointer"
-	^ dictionary
-]
-
 { #category : #'accessing - classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
@@ -217,7 +208,7 @@ SystemDictionary >> forgetClass: aClass logged: aBool [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
-	self organization removeElement: aClass name.
+	self organization removeBehavior: aClass.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
@@ -269,11 +260,6 @@ SystemDictionary >> lookupVar: name [
 	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
-{ #category : #'accessing - variable lookup' }
-SystemDictionary >> lookupVar: name declare: aBoolean [
-	^ self lookupVar: name
-]
-
 { #category : #'accessing - system attributes' }
 SystemDictionary >> maxIdentityHash [
 	"Answer the maximum identityHash value supported by the VM."
@@ -299,7 +285,9 @@ SystemDictionary >> nonClassNames [
 SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
-	^ self at: #SystemOrganization ifAbsent: nil
+	^ self at: #SystemOrganization ifAbsent: [
+		  self organization: RPackageOrganizer new.
+		  self at: #SystemOrganization ]
 ]
 
 { #category : #accessing }
@@ -390,9 +378,9 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
-	category := self organization categoryOfElement: oldName.
+	category := self organization categoryOfBehavior: oldName.
 	self organization classify: newName under: category.
-	self organization removeElement: oldName.
+	self organization removeBehavior: oldName.
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.

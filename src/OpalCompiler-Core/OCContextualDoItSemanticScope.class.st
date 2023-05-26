@@ -37,14 +37,6 @@ OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSyst
 	aSystemAnnouncer evaluated: aSourceString context: targetContext
 ]
 
-{ #category : #converting }
-OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [
-	anObject == targetContext receiver ifFalse: [
-		self error: 'Receiver is not same as context receiver' ].
-
-	^self
-]
-
 { #category : #testing }
 OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
 
@@ -81,11 +73,11 @@ OCContextualDoItSemanticScope >> initialize [
 ]
 
 { #category : #lookup }
-OCContextualDoItSemanticScope >> lookupVar: name declare: aBoolean [
+OCContextualDoItSemanticScope >> lookupVar: name [
 
-	(targetContext lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^self importVariable: v].
+	(targetContext lookupVar: name) ifNotNil: [ :v | ^self importVariable: v].
 
-	^super lookupVar: name declare: aBoolean
+	^super lookupVar: name
 ]
 
 { #category : #accessing }

@@ -1,11 +1,15 @@
 "
 The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
+
+
+The method #prevent:during: allows one to prevent the firing of some announcements during the execution of a block wile letting the other announcements go throuht.
 "
 Class {
 	#name : #Announcer,
 	#superclass : #Object,
 	#instVars : [
-		'registry'
+		'registry',
+		'preventedAnnouncements'
 	],
 	#category : #'Announcements-Core-Base'
 }
@@ -15,9 +19,11 @@ Announcer >> announce: anAnnouncement [
 
 	| announcement |
 	announcement := anAnnouncement asAnnouncement.
-	registry ifNotNil: [
-		registry deliver: announcement
-		].
+
+	"If the user required to prevent the current announcement, we stop here."
+	(self preventedAnnouncements handlesAnnouncement: announcement) ifTrue: [ ^ self ].
+
+	registry ifNotNil: [ registry deliver: announcement ].
 	^ announcement
 ]
 
@@ -49,6 +55,24 @@ Announcer >> initialize [
 { #category : #statistics }
 Announcer >> numberOfSubscriptions [
 	^ registry numberOfSubscriptions
+]
+
+{ #category : #announce }
+Announcer >> prevent: anAnnouncementClass during: aBlock [
+	"This method allows one to ensure that an Announcement class or an AnnouncementSet will never be announced during the execution of a block.
+	One of the goal can be for example to allow to send messages that should announce something without doing the announcement multiple times while letting the other announcements pass throught."
+
+	| previousValue |
+	previousValue := self preventedAnnouncements copy.
+	[
+	preventedAnnouncements := self preventedAnnouncements , anAnnouncementClass.
+	aBlock value ] ensure: [ preventedAnnouncements := previousValue ]
+]
+
+{ #category : #accessing }
+Announcer >> preventedAnnouncements [
+
+	^ preventedAnnouncements ifNil: [ preventedAnnouncements := AnnouncementSet new ]
 ]
 
 { #category : #subscription }
@@ -88,22 +112,17 @@ Announcer >> weak [
 	^ WeakSubscriptionBuilder on: self
 ]
 
-{ #category : #'registration api' }
-Announcer >> when: anAnnouncementClass do: aValuable [
-	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that such method as well as #when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
-
-	^ registry add: (
-		AnnouncementSubscription new
-			announcer: self;
-			announcementClass: anAnnouncementClass;
-			valuable: aValuable)
-]
-
 { #category : #subscription }
 Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
-	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber."
+	"Subscribe aSubscriber to announcements of anAnnouncementClass class. 
+	 When the announcement is raised, aValuable is executed."
 
-    ^ (self when: anAnnouncementClass do: aValuable) subscriber: aSubscriber; yourself
+	^ registry add: (AnnouncementSubscription new
+			   announcer: self;
+			   announcementClass: anAnnouncementClass;
+			   action: aValuable;
+			   subscriber: aSubscriber;
+			   yourself)
 ]
 
 { #category : #'registration api' }
@@ -116,4 +135,5 @@ Announcer >> when: anAnnouncementClass send: aSelector to: anObject [
 	^ self
 		when: anAnnouncementClass
 		do: (MessageSend receiver: anObject selector: aSelector)
+		for: anObject
 ]

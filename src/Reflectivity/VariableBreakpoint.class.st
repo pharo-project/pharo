@@ -46,7 +46,7 @@ VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext
 		on: aBreakpoint
 		nodes: {node}.
 	announcement valueOrNil: (node variableValueInContext: aContext).
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #API }
@@ -220,8 +220,10 @@ VariableBreakpoint >> removeFromClass: aClass [
 
 { #category : #removing }
 VariableBreakpoint >> removeFromMethod: aMethod [
-	(self link nodes select: [ :n | n methodNode method == aMethod ])
-		do: [ :n | self link removeNode: n ]
+
+	(self link nodes select: [ :n |
+		 n methodNode compiledMethod == aMethod ]) do: [ :n |
+		self link removeNode: n ]
 ]
 
 { #category : #removing }

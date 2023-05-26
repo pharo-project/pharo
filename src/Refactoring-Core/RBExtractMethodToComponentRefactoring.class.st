@@ -78,7 +78,7 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 	| variable refactoring |
 
 	variable := self selectVariableToMoveMethodTo: extractedMethodSelector class: class.
-	variable ifNil: [ self refactoringFailure: 'Did not extract method' ].
+	variable ifNil: [ self refactoringError: 'Did not extract method' ].
 	refactoring := RBMoveMethodRefactoring
 		model: self model
 		selector: extractedMethodSelector

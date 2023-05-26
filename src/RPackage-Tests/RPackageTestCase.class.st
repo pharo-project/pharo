@@ -5,8 +5,6 @@ Class {
 	#name : #RPackageTestCase,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'announcerForTest',
-		'oldSystemAnnouncer',
 		'createdClasses',
 		'createdPackages',
 		'createdCategories'
@@ -93,13 +91,6 @@ RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 	^ cls
 ]
 
-{ #category : #'announcer handling' }
-RPackageTestCase >> initializeAnnouncers [
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-
-	SystemAnnouncer announcer: (announcerForTest := SystemAnnouncer new)
-]
-
 { #category : #utilities }
 RPackageTestCase >> namesOfMockTestPackages [
 
@@ -129,28 +120,16 @@ RPackageTestCase >> removePackage: aName [
 	self packageClass organizer basicUnregisterPackageNamed: aName
 ]
 
-{ #category : #'announcer handling' }
-RPackageTestCase >> restoreAnnouncers [
-	SystemAnnouncer announcer: oldSystemAnnouncer
-]
-
 { #category : #running }
 RPackageTestCase >> runCase [
-	[
-	self initializeAnnouncers.
 
-	^ self packageClass
-		withOrganizer: self setupOrganizer
-		do: [
-			self resources do: [:each | each availableFor: self].
-			self setUp.
-			self performTest
-			]
-	] ensure: [
+	[
+	^ self packageClass withOrganizer: self setupOrganizer do: [
+		  self resources do: [ :each | each availableFor: self ].
+		  self setUp.
+		  self performTest ] ] ensure: [
 		self tearDown.
-		self restoreAnnouncers.
-		self cleanUpInstanceVariables
-	]
+		self cleanUpInstanceVariables ]
 ]
 
 { #category : #running }

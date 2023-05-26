@@ -190,13 +190,3 @@ NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer t
 NonInteractiveUIManager >> requestPassword: queryString [
 	^self nonInteractiveWarning: 'Requesting Password'
 ]
-
-{ #category : #'ui requests' }
-NonInteractiveUIManager >> syntaxErrorNotificationDefaultAction: aSyntaxErrorNotification [
-
-	"display and log the syntax error"
-	super syntaxErrorNotificationDefaultAction: aSyntaxErrorNotification.
-
-	"in noninteractive mode simply quit"
-	^ self exitFailure
-]

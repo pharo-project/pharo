@@ -25,5 +25,5 @@ RFMethodReification class >> key [
 RFMethodReification >> genForRBProgramNode [
 	^RBMessageNode
 		receiver: (RBMessageNode receiver: (RBLiteralNode value: entity) selector: #methodNode)
-		selector: #method
+		selector: #compiledMethod
 ]

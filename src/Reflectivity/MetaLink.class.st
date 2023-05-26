@@ -94,17 +94,17 @@ MetaLink >> allReifications [
 
 { #category : #installing }
 MetaLink >> announceChange [
-	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)]
+	self optionAnnounce ifTrue: [SystemAnnouncer announce: (MetalinkChanged new link: self)]
 ]
 
 { #category : #installing }
 MetaLink >> announceInstall: node [
-	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkAdded: self toNode: node)]
+	self optionAnnounce ifTrue: [SystemAnnouncer announce: (MetalinkChanged linkAdded: self toNode: node)]
 ]
 
 { #category : #installing }
 MetaLink >> announceRemove: node [
-	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkRemoved: self fromNode: node)]
+	self optionAnnounce ifTrue: [SystemAnnouncer announce: (MetalinkChanged linkRemoved: self fromNode: node)]
 ]
 
 { #category : #accessing }

@@ -111,8 +111,8 @@ RBSmalllintTestObject >> consistencyCheck [
 ]
 
 { #category : #methods }
-RBSmalllintTestObject >> debbuggingMessageSent [
-	self rearmOneShot
+RBSmalllintTestObject >> debuggingMessageSent [
+	self isThisEverCalled
 ]
 
 { #category : #methods }

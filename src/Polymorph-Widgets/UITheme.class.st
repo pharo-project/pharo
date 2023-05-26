@@ -106,7 +106,7 @@ UITheme class >> current: aUITheme [
 	self currentWorld themeChanged.
 	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
 
-	SystemAnnouncer uniqueInstance announce: UIThemeChanged
+	SystemAnnouncer announce: UIThemeChanged
 ]
 
 { #category : #accessing }
@@ -1933,6 +1933,13 @@ UITheme >> handlesWindowDropShadowInHandFor: aSystemWindow [
 
 	^self windowActiveDropShadowStyle == #diffuse and: [
 		aSystemWindow isActive]
+]
+
+{ #category : #'basic-colors' }
+UITheme >> highlightTextColor [
+	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
+
+	^ colorPalette highlightTextColor
 ]
 
 { #category : #'icons-utilities' }

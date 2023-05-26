@@ -211,11 +211,9 @@ Text >> attributesAt: characterIndex do: aBlock [
 { #category : #emphasis }
 Text >> attributesAt: characterIndex forStyle: aTextStyle [
 	"Answer the code for characters in the run beginning at characterIndex."
-	| attributes |
 	self size = 0
-		ifTrue: [^ Array with: (TextFontChange new fontNumber: aTextStyle defaultFontIndex)].  "null text tolerates access"
-	attributes := runs at: characterIndex.
-	^ attributes
+		ifTrue: [^ {TextFontChange new fontNumber: aTextStyle defaultFontIndex}].  "null text tolerates access"
+	^ runs at: characterIndex
 ]
 
 { #category : #copying }
@@ -546,20 +544,6 @@ Text >> setString: aString setRuns: anArray [
 
 	string := aString.
 	runs := anArray
-]
-
-{ #category : #private }
-Text >> setString: aString setRunsChecking: aRunArray [
-	"Check runs and do the best you can to make them fit..."
-
-	string := aString.
-	"check the runs"
-	aRunArray ifNil: [^ aString asText].
-	(aRunArray isKindOf: RunArray) ifFalse: [^ aString asText].
-	aRunArray runs size = aRunArray values size ifFalse: [^ aString asText].
-	aRunArray size = aString size ifFalse: [^ aString asText].
-
-	runs := aRunArray
 ]
 
 { #category : #accessing }

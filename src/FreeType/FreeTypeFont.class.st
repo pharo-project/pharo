@@ -15,7 +15,8 @@ Class {
 		'cachedDescent',
 		'subPixelPositioned',
 		'symbolFont',
-		'mutex'
+		'mutex',
+		'characterWidthCache'
 	],
 	#pools : [
 		'FT2Constants',
@@ -107,8 +108,15 @@ FreeTypeFont >> characterRenderingOptimizedFormAt: aCharacter [
 ]
 
 { #category : #accessing }
+FreeTypeFont >> characterWidthCache [
+
+	^ characterWidthCache ifNil: [ characterWidthCache := IdentityDictionary new ]
+]
+
+{ #category : #accessing }
 FreeTypeFont >> clearCachedMetrics [
-	widthAndKernedWidthCache := cachedHeight := cachedAscent := cachedDescent := subPixelPositioned := nil
+
+	widthAndKernedWidthCache := characterWidthCache := cachedHeight := cachedAscent := cachedDescent := subPixelPositioned := nil
 ]
 
 { #category : #accessing }
@@ -822,9 +830,11 @@ FreeTypeFont >> widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOr
 { #category : #measuring }
 FreeTypeFont >> widthOf: aCharacter [
 	"retrieve advance width for character. try to use cached glyph if possible"
-	^self isSubPixelPositioned
-		ifTrue:[self linearWidthOf: aCharacter]
-		ifFalse: [self hintedWidthOf: aCharacter]
+
+	^ self characterWidthCache at: aCharacter ifAbsentPut: [
+		  self isSubPixelPositioned
+			  ifTrue: [ self linearWidthOf: aCharacter ]
+			  ifFalse: [ self hintedWidthOf: aCharacter ] ]
 ]
 
 { #category : #measuring }

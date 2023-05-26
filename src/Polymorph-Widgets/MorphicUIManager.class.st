@@ -314,7 +314,7 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 				setText: aText asString;
 				yourself.
 	aBlockOrNil ifNotNil: [
-		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].
+		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text] for: self].
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
 ]
@@ -653,14 +653,6 @@ MorphicUIManager >> spawnNewProcess [
 	UIProcess
 		name: 'Morphic UI Process';
 		resume
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> syntaxErrorNotificationDefaultAction: anException [
-	"Handle a syntax error.
-	Note, if there is no #syntaxErrorDebugger registered, it will be silently ignored"
-	^Smalltalk tools using: #syntaxErrorDebugger do: [:tool |
-			tool open: (tool syntaxError: anException)]
 ]
 
 { #category : #'ui requests' }

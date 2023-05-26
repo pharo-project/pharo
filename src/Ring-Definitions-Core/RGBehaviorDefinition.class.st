@@ -77,12 +77,6 @@ RGBehaviorDefinition class >> usersKey [
 	^#users
 ]
 
-{ #category : #operations }
-RGBehaviorDefinition >> addCategory: newName before: aCategory [
-
-	^ self addProtocol: newName
-]
-
 { #category : #'managing container' }
 RGBehaviorDefinition >> addInContainer: aRGContainer [
 

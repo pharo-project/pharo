@@ -19,12 +19,14 @@ T2TraitWithPackagesTest >> packageName2 [
 
 { #category : #tests }
 T2TraitWithPackagesTest >> packageUnderTest [
-	^ RPackageOrganizer default packageNamed: self packageName
+
+	^ Smalltalk organization packageNamed: self packageName
 ]
 
 { #category : #tests }
 T2TraitWithPackagesTest >> packageUnderTest2 [
-	^ RPackageOrganizer default packageNamed: self packageName2
+
+	^ Smalltalk organization packageNamed: self packageName2
 ]
 
 { #category : #tests }
@@ -135,48 +137,66 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenModifiedKeepPac
 
 { #category : #tests }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
+
 	| t1 t2 |
-	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
+	t1 := self
+		      newTrait: #T1
+		      with: #(  )
+		      uses: {  }
+		      category: self packageName.
 
 	t1 compile: 'm1 ^42.'.
 
-	t2 := self newTrait: #T2 with: #() uses: t1 category: self packageName2.
+	t2 := self
+		      newTrait: #T2
+		      with: #(  )
+		      uses: t1
+		      category: self packageName2.
 
 	self assert: (t1 >> #m1) package equals: self packageUnderTest.
 	self assert: (t2 >> #m1) package equals: self packageUnderTest.
 
-	self assert: (RPackageOrganizer default packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) equals: self packageUnderTest.
+	self assert: (Smalltalk organization packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) equals: self packageUnderTest.
 
 	t1 removeSelector: #m1.
 
-	self assert: (t1 organization categoryOfElement: #m1) isNil.
-	self assert: (t2 organization categoryOfElement: #m1) isNil.
+	self assert: (t1 protocolOfSelector: #m1) isNil.
+	self assert: (t2 protocolOfSelector: #m1) isNil.
 
-	self assert: (RPackageOrganizer default packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) isNil.
-	self assert: (RPackageOrganizer default packageDefiningOrExtendingSelector: #m1 inClassNamed: #T2) isNil.
+	self assert: (Smalltalk organization packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) isNil.
+	self assert: (Smalltalk organization packageDefiningOrExtendingSelector: #m1 inClassNamed: #T2) isNil
 ]
 
 { #category : #tests }
 T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
+
 	| t1 t2 |
-	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
-	t2 := self newTrait: #T2 with: #() uses: t1 category: self packageName2.
+	t1 := self
+		      newTrait: #T1
+		      with: #(  )
+		      uses: {  }
+		      category: self packageName.
+	t2 := self
+		      newTrait: #T2
+		      with: #(  )
+		      uses: t1
+		      category: self packageName2.
 
 	self assert: t1 package equals: self packageUnderTest.
 	self assert: t2 package equals: self packageUnderTest2.
 
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T1) equals: self packageUnderTest.
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) equals: self packageUnderTest2.
+	self assert: (Smalltalk organization packageOfClassNamed: #T1) equals: self packageUnderTest.
+	self assert: (Smalltalk organization packageOfClassNamed: #T2) equals: self packageUnderTest2.
 
 	t2 removeFromSystem.
 
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T1) equals: self packageUnderTest.
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) isNil.
+	self assert: (Smalltalk organization packageOfClassNamed: #T1) equals: self packageUnderTest.
+	self assert: (Smalltalk organization packageOfClassNamed: #T2) isNil.
 
 	t1 removeFromSystem.
 
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T1) isNil.
-	self assert: (RPackageOrganizer default packageOfClassNamed: #T2) isNil
+	self assert: (Smalltalk organization packageOfClassNamed: #T1) isNil.
+	self assert: (Smalltalk organization packageOfClassNamed: #T2) isNil
 ]
 
 { #category : #tests }

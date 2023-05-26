@@ -7,7 +7,7 @@ If the refactoring can not be applied, because one of its preconditions aren't m
 
 Example:
 
-```
+```st
 (RBBrowserEnvironment default forPackageNames: {'Kernel'}) browse. 
 ```
 
@@ -26,7 +26,7 @@ The refactoring transformation will replace the current class and its definition
 
 Example
 
-```
+```st
 (RBRenameClassRefactoring 
 	rename: 'RBRenameClassRefactoring' 
 	to: 'RBRenameClassRefactoring2') execute
@@ -47,7 +47,7 @@ My precondition verifies that the class name exists in this namespace and the cl
 If this class is "not empty" (has methods and variables), any subclass is reparented to the superclass of this class, and all its methods and variables (instance and class) are push down in its subclasses.
 
 Example
-```
+```st
 (RBRemoveClassKeepingSubclassesRefactoring classNames: { #RBTransformationRuleTestData1 }) execute. 
 ```
 
@@ -90,7 +90,7 @@ My precondition verifies that the new instance variable is a valid variable name
 Example:
 In the following class the variables color/font/style should be moved to a new `TextAttributesClass`.
 
-```
+```st
 Object subclass: #TextKlass
 	instanceVariableNames: 'text color font style'
 	classVariableNames: ''
@@ -100,7 +100,7 @@ Object subclass: #TextKlass
 We apply the Split Refactoring with this three variables and select a new class name TextAttributes used as variable new "textAttributes".
 The class definition will be changed to:
 
-```
+```st
 Object subclass: #TextKlass
 	instanceVariableNames: 'text textAttributes'
 	classVariableNames: ''
@@ -144,7 +144,7 @@ My precondition is that the variable name is defined for this class.
 
 Example
 
-```
+```st
 (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
 	variable: 'foo1' 
 	class: RBLintRuleTestData 
@@ -153,7 +153,7 @@ Example
 ```
 
 After refactoring we get:
-```
+```st
 RBLintRuleTestData >> foo1 
 	^ foo1 ifNil: [foo1 := 123]
 	
@@ -184,13 +184,13 @@ My precondition verifies that the new variable is a defined instance variable in
 
 Example
 
-```
+```st
 (RBMergeInstanceVariableIntoAnother rename: 'x' to: 'y' in: Foo) execute.
 ```
 
 Before refactoring:
 
-```
+```st
 Class Foo -> inst vars: x, y 
 
 Foo >> foobar
@@ -202,7 +202,7 @@ Foo >> foo
 
 After refactoring merging X into Y
 
-```
+```st
 Class Foo -> inst vars: y 
 
 Foo >> foobar
@@ -236,7 +236,7 @@ The refactoring transformation will add the call to the #deprecated:on:in: metho
 
 ##### Example
 
-```
+```st
 (RBDeprecateMethodRefactoring 
 	deprecateMethod: #called:on: 
 	in: RBRefactoryTestDataApp 
@@ -245,7 +245,7 @@ The refactoring transformation will add the call to the #deprecated:on:in: metho
 
 Before refactoring:
 
-```
+```st
 RBRefactoryTestDataApp >> called: anObject on: aBlock 
 	Transcript
 		show: anObject printString;
@@ -255,7 +255,7 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock
 
 After refactoring:
 
-```
+```st
 RBRefactoryTestDataApp >> called: anObject on: aBlock 
 	self
 		deprecated: 'Use #callFoo instead'
@@ -276,14 +276,14 @@ My precondition verifies that the method name without that argument isn't alread
 
 For example, a method `foo: anArg`
 
-```
+```st
 foo: anArg
 	anArg doSomething.
 ```
 
 and all senders supply the same argument: 	     
 
-```
+```st
 method1
 	anObject foo: 'text'.
 
@@ -292,7 +292,7 @@ method2
 ```	
 the method argument can be inlined:
 
-```
+```st
 foo
  | anArg |
  anArg := 'text'.
@@ -301,7 +301,7 @@ foo
 
 and the callers just call the method without any arguments:
 
-```
+```st
 method1
 	anObject foo.
 ```
@@ -313,13 +313,13 @@ The call to this method in all other methods of this class is replaced by its im
 
 For example, a method 
 
-```
+```st
 foo
 	^ 'text'
 ```	
 is called in
 
-```
+```st
 baz
 	| a |
 	a := self foo.
@@ -327,7 +327,7 @@ baz
 ```	
 inlining in all senders replaces the call to method foo, with its code:
 
-```
+```st
 baz
 	| a |
 	a := 'text'.
@@ -348,20 +348,20 @@ For all selected classes a method implementing the original method is created, a
 For example, moving the method #isBlack from class Color to its instvar #rgb for the type "Integer" creates a method 
 
 
-```
+```st
 Integer >> isBlack
 	 ^ self = 0
 ```
 and changes Colors implementation from: 
 
-```
+```st
 Color >> isBlack
 	^ rgb = 0
 ```
 
 to:
 
-``` 
+```st
 Color >> isBlack
 	^ rgb isBlack
 ```
@@ -380,19 +380,23 @@ I catch broken references (method senders and direct access to instVar) and fix 
 
 Example
 
-```
+```st
 (RBMoveMethodToClassSideRefactoring 
 	method: (RBTransformationRuleTestData >> #rewriteUsing:) 
 	class: RBTransformationRuleTestData) execute.
 ```
+
 Before refactoring:
-```
+
+```st
 RBTransformationRuleTestData >> rewriteUsing: searchReplacer 
      rewriteRule := searchReplacer.
      self resetResult.
 ```
+
 After refactoring:
-```
+
+```st
 RBTransformationRuleTestData >> rewriteUsing: searchReplacer
      ^ self class rewriteUsing: searchReplace.
 
@@ -431,7 +435,7 @@ I am a refactoring to remove all possible senders from a method (you cannot remo
 
 #### Example
 
-```
+```st
 | refactoring options |
 refactoring := RBRemoveSenderRefactoring 
 			remove: (90 to: 105) "node position to be removed "
@@ -445,7 +449,7 @@ refactoring execute.
 
 Before refactoring:
 
-```
+```st
 RBRefactoryTestDataApp >> caller1
 	| anObject |
 	anObject := 5.
@@ -458,7 +462,7 @@ RBRefactoryTestDataApp >> caller1
 
 After refactoring (notice that the call to printstring was removed):
 
-```
+```st
 RBRefactoryTestDataApp >> caller1
 	| anObject |
 	anObject := 5.
@@ -481,7 +485,7 @@ All references in senders of the old method are changed, either the method name 
 
 There are two ways to rename a method, one of them is rename all senders of method:
 
-```
+```st
 (RBRenameMethodRefactoring 
 		renameMethod: ('check', 'Class:') asSymbol
 		in: RBBasicLintRuleTestData
@@ -490,7 +494,7 @@ There are two ways to rename a method, one of them is rename all senders of meth
 ```
 And the other is rename the method only in specific packages:
 
-```
+```st
 |refactoring|
 refactoring :=RBRenameMethodRefactoring 
 		renameMethod: ('check', 'Class:') asSymbol
@@ -510,7 +514,7 @@ All senders of this method are changed by the other.
 
 #### Example
 
-```
+```st
 (RBReplaceMethodRefactoring  
 	model: model
 	replaceMethod: #anInstVar:
@@ -605,7 +609,7 @@ The temporary variables with the same name in hierarchy will be removed, and rep
 
 Script refactoring:
 
-```
+```st
 (RBTemporaryToInstanceVariableRefactoring 
     class: MyClassA
     selector: #someMethod
@@ -614,7 +618,7 @@ Script refactoring:
 
 Before refactoring:
 
-```
+```st
 Object subclass: #MyClassA
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -638,7 +642,7 @@ MyClassA subclass: #MyClassB
 
 After refactoring:
 
-```
+```st
 Object subclass: #MyClassA
 	instanceVariableNames: 'log'
 	classVariableNames: ''
@@ -670,7 +674,7 @@ I change all the references of the classes that are defined within the package, 
 
 Example
 
-```
+```st
 (RBRenamePackageRefactoring 
 				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
 				to: #'Refactoring-Tests-Core1') execute.

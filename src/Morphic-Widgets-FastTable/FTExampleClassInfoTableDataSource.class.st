@@ -39,8 +39,8 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass].
+	class hasComment 
+		ifFalse: [ ^ self iconNamed: #uncommentedClass].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
@@ -51,8 +51,6 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
 	^ self iconNamed: class systemIconName
 ]
 

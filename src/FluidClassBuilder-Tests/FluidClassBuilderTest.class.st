@@ -38,12 +38,13 @@ FluidClassBuilderTest >> setUp [
 { #category : #running }
 FluidClassBuilderTest >> tearDown [
 
-	self class environment
-		at: #Point2
-		ifPresent: [ :cl | cl removeFromSystem  ].
+	self class environment at: #Point2 ifPresent: [ :cl | cl removeFromSystem ].
 
-	(RPackageOrganizer default packageNamed: #'Mock' ifAbsent: [ nil ])
-		ifNotNil: [:x | x removeFromSystem ].
+	(Smalltalk organization packageNamed: #Mock ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
+
+	(Smalltalk organization packageNamed: #FakedCore ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
+
+
 
 	super tearDown
 ]
@@ -185,25 +186,23 @@ FluidClassBuilderTest >> testBuilderWithTag [
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
+	Smalltalk organization registerPackageNamed: #Mock.
 
-	RPackageOrganizer default registerPackageNamed: #'Mock'.
-
-	instBuilder := (Object << #Point2
-		slots: { #a. #b };
-		layout: WeakLayout;
-		traits: {TViewModelMock };
-		sharedVariables: { #AAA};
-		sharedPools: { #TextConstants};
-		tag: 'boring' ;
-		package: 'Mock').
+	instBuilder := (Object << #Point2)
+		               slots: { #a. #b };
+		               layout: WeakLayout;
+		               traits: { TViewModelMock };
+		               sharedVariables: { #AAA };
+		               sharedPools: { #TextConstants };
+		               tag: 'boring';
+		               package: 'Mock'.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
 	Hence we cannot test for real."
 	newClass := instBuilder install.
 
-	clasBuilder := Object class << newClass class
-		traits: {TViewModelMock classTrait}.
+	clasBuilder := Object class << newClass class traits: { TViewModelMock classTrait }.
 
 	self assert: clasBuilder packageToBuild equals: instBuilder packageToBuild.
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
@@ -295,7 +294,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	sharedVariables: {};
 	tag: '''' ;
 	sharedPools: {};
-	package: ''MyPackage'''.
+	package: ''Mock'''.
 	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 
@@ -486,10 +485,11 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 { #category : #'tests - classBuilder generation' }
 FluidClassBuilderTest >> testInstallSimplePoint2 [
 
-	[ | pt2Class |
+	[
+	| pt2Class |
 	self assert: (self class environment at: #Point2 ifAbsent: [ true ]).
 	builder := Object << #Point2.
-	builder slots: { #x . #y }.
+	builder slots: { #x. #y }.
 	builder package: 'FakedCore'.
 	builder install.
 
@@ -497,6 +497,6 @@ FluidClassBuilderTest >> testInstallSimplePoint2 [
 	self assert: pt2Class superclass equals: Object.
 	self assert: pt2Class name equals: #Point2.
 	self assert: pt2Class slots size equals: 2 ] ensure: [
-			self class environment removeKey: #Point2 ifAbsent: [self fail].
-			self assert: (self class environment at: #Point2 ifAbsent: [ true ])]
+		(self class environment at: #Point2 ifAbsent: [ self fail ]) removeFromSystem.
+		self assert: (self class environment at: #Point2 ifAbsent: [ true ]) ]
 ]
