@@ -943,10 +943,10 @@ CompiledMethodTest >> testUndeclaredReparationWithShared [
 		          compile:
 			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	"Add and initialize a shared"
-	class := Object
+	class := (Object
 		         << #TestUndeclaredVariableClass
 		         sharedVariables:  {#TestUndeclaredVariable};
-		         package: ''.
+		         package: '') install.
 
 	nil executeMethod: method.
 	nil executeMethod: method
