@@ -51,10 +51,12 @@ Context >> instructionStream [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
-	| var |
-	var := self lookupVar: aSymbol.
-	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
-	^var
+
+	self
+		deprecated: 'Use lookupVar: instead'
+		transformWith: '`@receiver lookupTempVar: `@argument'
+			-> '`@receiver lookupVar: `@argument'.
+	^ self lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
@@ -373,14 +375,14 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	^(self lookupTempVar: aName) readInContext: self
+	^(self lookupVar: aName) readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	^(self lookupTempVar: aName) write: anObject inContext: self
+	^(self lookupVar: aName) write: anObject inContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -400,7 +402,7 @@ Context >> tempNames [
 Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
-	^self lookupTempVar: aName
+	^self lookupVar: aName
 ]
 
 { #category : #'*Debugging-Core' }
