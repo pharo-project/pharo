@@ -8,7 +8,7 @@ Class {
 	#name : #RBCodeSnippetTest,
 	#superclass : #ParametrizedTestCase,
 	#instVars : [
-		'snippet'
+		#snippet
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }

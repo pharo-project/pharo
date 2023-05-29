@@ -9,7 +9,7 @@ Class {
 	#name : #MCVersionInspector,
 	#superclass : #MCTool,
 	#instVars : [
-		'version'
+		#version
 	],
 	#category : #'MonticelloGUI-Tools'
 }

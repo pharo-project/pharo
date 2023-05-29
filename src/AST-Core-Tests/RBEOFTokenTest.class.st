@@ -2,7 +2,7 @@ Class {
 	#name : #RBEOFTokenTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'token'
+		#token
 	],
 	#category : #'AST-Core-Tests-Tokens'
 }

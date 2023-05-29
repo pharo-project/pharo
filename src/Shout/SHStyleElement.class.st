@@ -5,9 +5,9 @@ Class {
 	#name : #SHStyleElement,
 	#superclass : #Object,
 	#instVars : [
-		'tokens',
-		'color',
-		'emphasis'
+		#tokens,
+		#color,
+		#emphasis
 	],
 	#category : #'Shout-Styling'
 }
@@ -113,7 +113,7 @@ SHStyleElement >> emphasis: anObject [
 
 { #category : #styling }
 SHStyleElement >> emphasisAsArray [
-	^ self emphasis = 'bold italic'
+	^ self emphasis = #'bold italic'
 		ifTrue: [#(#bold #italic )]
 		ifFalse: [self emphasis]
 ]

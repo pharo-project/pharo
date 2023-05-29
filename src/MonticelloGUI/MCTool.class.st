@@ -7,13 +7,13 @@ Class {
 	#name : #MCTool,
 	#superclass : #Model,
 	#instVars : [
-		'morph',
-		'label',
-		'modal',
-		'modalValue'
+		#morph,
+		#label,
+		#modal,
+		#modalValue
 	],
 	#classVars : [
-		'MCVersionCache'
+		#MCVersionCache
 	],
 	#category : #'MonticelloGUI-Tools'
 }

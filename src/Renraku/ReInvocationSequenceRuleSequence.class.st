@@ -5,8 +5,8 @@ Class {
 	#name : #ReInvocationSequenceRuleSequence,
 	#superclass : #Object,
 	#instVars : [
-		'before',
-		'after'
+		#before,
+		#after
 	],
 	#category : #'Renraku-Rules'
 }

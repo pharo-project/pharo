@@ -545,6 +545,11 @@ Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	self errorNoModification
 ]
 
+{ #category : #converting }
+Symbol >> reversed [
+	^ super reversed asSymbol
+]
+
 { #category : #comparing }
 Symbol >> sameContents: aSymbol [
 	"Compare the receiver and aSymbol."

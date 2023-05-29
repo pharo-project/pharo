@@ -19,7 +19,7 @@ ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingD
 	| collectionGetter collectionOwner |
 	collectionGetter := mappingDict at: #'`@collectionGetter:'.
 	"Check selectors that assumes unowned result"
-	collectionGetter = 'copy' ifTrue: [ ^ false ].
+	collectionGetter = #'copy' ifTrue: [ ^ false ].
 	(collectionGetter beginsWith: 'as') ifTrue: [ ^ false ].
 	collectionOwner := mappingDict at: (RBPatternVariableNode named: #'`@collectionOwner').
 	 collectionOwner isVariable ifFalse: [ ^ true ].

@@ -144,7 +144,7 @@ RBMoveMethodRefactoring >> compileDelegatorMethod [
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions
 		                 arguments: (parseTree argumentNames collect: [ :each |
-				                  each = selfVariableName
+				                  (each sameContents: selfVariableName)
 					                  ifTrue: [ RBVariableNode selfNode ]
 					                  ifFalse: [ RBVariableNode named: each ] ]).
 	self hasOnlySelfReturns ifFalse: [ delegatorNode := RBReturnNode value: delegatorNode ].

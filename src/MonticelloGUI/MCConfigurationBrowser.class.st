@@ -5,9 +5,9 @@ Class {
 	#name : #MCConfigurationBrowser,
 	#superclass : #MCTool,
 	#instVars : [
-		'configuration',
-		'dependencyIndex',
-		'repositoryIndex'
+		#configuration,
+		#dependencyIndex,
+		#repositoryIndex
 	],
 	#category : #'MonticelloGUI-Tools'
 }

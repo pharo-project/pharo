@@ -5,7 +5,7 @@ Class {
 	#name : #RBProgramNodeTest,
 	#superclass : #RBParseTreeTest,
 	#instVars : [
-		'node'
+		#node
 	],
 	#category : #'AST-Core-Tests-Nodes'
 }

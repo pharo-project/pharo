@@ -5,7 +5,7 @@ Class {
 	#name : #ReSettings,
 	#superclass : #Object,
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'Renraku-Utility'
 }

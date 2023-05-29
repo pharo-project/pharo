@@ -5,7 +5,7 @@ Class {
 	#name : #ReCompactSourceCodeRule,
 	#superclass : #ReAbstractRule,
 	#classVars : [
-		'CriticizeFinalDotInMethodBody'
+		#CriticizeFinalDotInMethodBody
 	],
 	#category : #'Renraku-Rules'
 }

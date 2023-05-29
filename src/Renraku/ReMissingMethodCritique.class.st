@@ -5,9 +5,9 @@ Class {
 	#name : #ReMissingMethodCritique,
 	#superclass : #ReAbstractCritique,
 	#instVars : [
-		'selector',
-		'class',
-		'source'
+		#selector,
+		#class,
+		#source
 	],
 	#category : #'Renraku-Critiques'
 }

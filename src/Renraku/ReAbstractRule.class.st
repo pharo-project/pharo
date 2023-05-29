@@ -30,7 +30,7 @@ Class {
 	#name : #ReAbstractRule,
 	#superclass : #Object,
 	#classInstVars : [
-		'enabled'
+		#enabled
 	],
 	#category : #'Renraku-Rules'
 }

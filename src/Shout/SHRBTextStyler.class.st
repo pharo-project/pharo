@@ -7,21 +7,21 @@ Class {
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
-		'charAttr',
-		'parentheseLevel',
-		'bracketLevel',
-		'classOrMetaClass',
-		'font',
-		'isForWorkspace',
-		'pixelHeight',
-		'workspace',
-		'plugins',
-		'braceLevel'
+		#charAttr,
+		#parentheseLevel,
+		#bracketLevel,
+		#classOrMetaClass,
+		#font,
+		#isForWorkspace,
+		#pixelHeight,
+		#workspace,
+		#plugins,
+		#braceLevel
 	],
 	#classInstVars : [
-		'styleTable',
-		'textAttributesByPixelHeight',
-		'formatIncompleteIdentifiers'
+		#styleTable,
+		#textAttributesByPixelHeight,
+		#formatIncompleteIdentifiers
 	],
 	#category : #'Shout-Styling'
 }

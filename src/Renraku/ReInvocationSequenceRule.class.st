@@ -13,8 +13,8 @@ Class {
 	#name : #ReInvocationSequenceRule,
 	#superclass : #ReAbstractRule,
 	#instVars : [
-		'preConditions',
-		'postConditions'
+		#preConditions,
+		#postConditions
 	],
 	#category : #'Renraku-Rules'
 }

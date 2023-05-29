@@ -5,11 +5,11 @@ Class {
 	#name : #ReflectivityExamples2,
 	#superclass : #Object,
 	#instVars : [
-		'instVar',
-		'instVar2'
+		#instVar,
+		#instVar2
 	],
 	#classVars : [
-		'classVar'
+		#classVar
 	],
 	#category : #'Reflectivity-Tests-Data'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #RBParseTreeSearcherTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'searcher'
+		#searcher
 	],
 	#category : #'AST-Core-Tests-Matching'
 }

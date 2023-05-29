@@ -5,8 +5,8 @@ Class {
 	#name : #ReSourceCodeLine,
 	#superclass : #Object,
 	#instVars : [
-		'lineNumber',
-		'contents'
+		#lineNumber,
+		#contents
 	],
 	#category : #'Renraku-Utility'
 }

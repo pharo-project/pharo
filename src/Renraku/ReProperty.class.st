@@ -8,7 +8,7 @@ Class {
 	#name : #ReProperty,
 	#superclass : #Model,
 	#instVars : [
-		'sourceAnchor'
+		#sourceAnchor
 	],
 	#category : #'Renraku-Critiques'
 }

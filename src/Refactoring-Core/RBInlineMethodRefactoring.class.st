@@ -87,7 +87,7 @@ RBInlineMethodRefactoring >> checkSuperMessages [
 RBInlineMethodRefactoring >> classOfTheMethodToInline [
 
 	^ classOfTheMethodToInline
-		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = 'super'
+		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = #'super'
 				ifTrue: [ class superclass ]
 				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
 			]

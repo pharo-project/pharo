@@ -5,8 +5,8 @@ Class {
 	#name : #ReReplaceNodeCritique,
 	#superclass : #ReAbstractCritique,
 	#instVars : [
-		'oldNode',
-		'newNode'
+		#oldNode,
+		#newNode
 	],
 	#category : #'Renraku-Critiques'
 }
