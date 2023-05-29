@@ -5,12 +5,12 @@ Class {
 	#name : #FFITestPackedStructure,
 	#superclass : #FFIExternalPackedStructure,
 	#classVars : [
-		'OFFSET_BYTE',
-		'OFFSET_DOUBLE',
-		'OFFSET_FLOAT',
-		'OFFSET_INT64',
-		'OFFSET_LONG',
-		'OFFSET_SHORT'
+		#'OFFSET_BYTE',
+		#'OFFSET_DOUBLE',
+		#'OFFSET_FLOAT',
+		#'OFFSET_INT64',
+		#'OFFSET_LONG',
+		#'OFFSET_SHORT'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

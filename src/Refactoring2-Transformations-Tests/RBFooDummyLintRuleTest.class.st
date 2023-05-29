@@ -2,7 +2,7 @@ Class {
 	#name : #RBFooDummyLintRuleTest,
 	#superclass : #RBDummyLintRuleTest,
 	#instVars : [
-		'result'
+		#result
 	],
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }

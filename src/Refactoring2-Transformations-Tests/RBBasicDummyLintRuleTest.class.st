@@ -2,10 +2,10 @@ Class {
 	#name : #RBBasicDummyLintRuleTest,
 	#superclass : #RBDummyLintRuleTest,
 	#instVars : [
-		'methodBlock',
-		'result',
-		'classBlock',
-		'anInstVar'
+		#methodBlock,
+		#result,
+		#classBlock,
+		#anInstVar
 	],
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }

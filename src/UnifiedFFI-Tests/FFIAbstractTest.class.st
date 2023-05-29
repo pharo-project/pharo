@@ -2,11 +2,11 @@ Class {
 	#name : #FFIAbstractTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'intType',
-		'int32Type',
-		'voidType',
-		'charType',
-		'uint32Type'
+		#intType,
+		#int32Type,
+		#voidType,
+		#charType,
+		#uint32Type
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

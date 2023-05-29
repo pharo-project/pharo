@@ -9,7 +9,7 @@ Class {
 	#name : #DATraitDependency,
 	#superclass : #DADependencyFromClass,
 	#instVars : [
-		'trait'
+		#trait
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

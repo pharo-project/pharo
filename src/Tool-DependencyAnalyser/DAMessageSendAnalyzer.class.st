@@ -13,8 +13,8 @@ Class {
 	#name : #DAMessageSendAnalyzer,
 	#superclass : #Object,
 	#instVars : [
-		'packageAnalysis',
-		'missingMethods'
+		#packageAnalysis,
+		#missingMethods
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

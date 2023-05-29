@@ -5,11 +5,11 @@ Class {
 	#name : #DAAbstractItemDiff,
 	#superclass : #Object,
 	#instVars : [
-		'new',
-		'underteminate',
-		'content',
-		'diff',
-		'removed'
+		#new,
+		#underteminate,
+		#content,
+		#diff,
+		#removed
 	],
 	#category : #'Tool-DependencyAnalyser-Diff'
 }

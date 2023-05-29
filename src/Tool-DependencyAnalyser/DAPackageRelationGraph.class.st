@@ -10,8 +10,8 @@ Class {
 	#name : #DAPackageRelationGraph,
 	#superclass : #Object,
 	#instVars : [
-		'packages',
-		'classMapping'
+		#packages,
+		#classMapping
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

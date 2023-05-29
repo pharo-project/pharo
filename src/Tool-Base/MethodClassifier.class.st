@@ -8,13 +8,13 @@ Class {
 	#name : #MethodClassifier,
 	#superclass : #Object,
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#classInstVars : [
-		'prefixMapping',
-		'keywordSuffixMapping',
-		'pragmaMapping',
-		'exactMapping'
+		#prefixMapping,
+		#keywordSuffixMapping,
+		#pragmaMapping,
+		#exactMapping
 	],
 	#category : #'Tool-Base-Utilities'
 }
@@ -228,7 +228,7 @@ MethodClassifier >> protocolByKnownKeywordSuffix: aMethod [
 { #category : #'classification-rules' }
 MethodClassifier >> protocolByKnownMapping: aMethod [
 
-	self class exactMapping keysAndValuesDo: [ :selector :p | aMethod selector = selector ifTrue: [ protocol := p ] ]
+	self class exactMapping keysAndValuesDo: [ :selector :p | (aMethod selector sameContents: selector) ifTrue: [ protocol := p ] ]
 ]
 
 { #category : #'classification-rules' }

@@ -2,7 +2,7 @@ Class {
 	#name : #RGPointerLayout,
 	#superclass : #RGLayout,
 	#instVars : [
-		'slots'
+		#slots
 	],
 	#category : #'Ring-Core-Kernel'
 }

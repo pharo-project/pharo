@@ -9,8 +9,8 @@ Class {
 	#name : #DAPackageDependency,
 	#superclass : #Object,
 	#instVars : [
-		'source',
-		'target'
+		#source,
+		#target
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

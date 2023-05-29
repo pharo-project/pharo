@@ -5,7 +5,7 @@ Class {
 	#name : #FFICalloutObjectForTest,
 	#superclass : #Object,
 	#instVars : [
-		'handle'
+		#handle
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

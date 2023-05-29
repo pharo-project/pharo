@@ -5,10 +5,10 @@ Class {
 	#name : #FFITestEnumeration,
 	#superclass : #FFIExternalEnumeration,
 	#classVars : [
-		'AAA',
-		'BBB',
-		'CCC',
-		'DDD'
+		#AAA,
+		#BBB,
+		#CCC,
+		#DDD
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

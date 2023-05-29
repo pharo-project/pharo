@@ -8,7 +8,7 @@ Class {
 	#name : #DAInheritanceDependency,
 	#superclass : #DADependencyFromClass,
 	#instVars : [
-		'superclass'
+		#superclass
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

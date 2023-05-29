@@ -2,7 +2,7 @@ Class {
 	#name : #RGTraitExclusion,
 	#superclass : #RGTraitTransformation,
 	#instVars : [
-		'exclusions'
+		#exclusions
 	],
 	#category : #'Ring-Core-Kernel'
 }

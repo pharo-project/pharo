@@ -2,7 +2,7 @@ Class {
 	#name : #SlotMethodRecompilationTest,
 	#superclass : #SlotSilentTest,
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : #'Slot-Tests-ClassBuilder'
 }

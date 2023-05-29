@@ -5,8 +5,8 @@ Class {
 	#name : #FFITestStructureByPlatform,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
-		'OFFSET_LONG',
-		'OFFSET_POINTER'
+		#'OFFSET_LONG',
+		#'OFFSET_POINTER'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

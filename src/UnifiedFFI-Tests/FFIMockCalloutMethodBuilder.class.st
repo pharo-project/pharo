@@ -6,7 +6,7 @@ Class {
 	#name : #FFIMockCalloutMethodBuilder,
 	#superclass : #FFICalloutMethodBuilder,
 	#instVars : [
-		'block'
+		#block
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

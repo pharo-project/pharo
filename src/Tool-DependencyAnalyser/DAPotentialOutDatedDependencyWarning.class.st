@@ -5,8 +5,8 @@ Class {
 	#name : #DAPotentialOutDatedDependencyWarning,
 	#superclass : #Warning,
 	#instVars : [
-		'package',
-		'dependency'
+		#package,
+		#dependency
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

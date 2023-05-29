@@ -2,9 +2,9 @@ Class {
 	#name : #RGMergeError,
 	#superclass : #Error,
 	#instVars : [
-		'property',
-		'target',
-		'source'
+		#property,
+		#target,
+		#source
 	],
 	#category : #'Ring-Core-Kernel'
 }

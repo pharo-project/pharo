@@ -7,7 +7,7 @@ Class {
 	#name : #AbstractMethodConverter,
 	#superclass : #Object,
 	#instVars : [
-		'method'
+		#method
 	],
 	#category : #'Tool-Base-Converter'
 }

@@ -2,10 +2,10 @@ Class {
 	#name : #RGClassStrategy,
 	#superclass : #RGClassDescriptionStrategy,
 	#instVars : [
-		'comment',
-		'classVariables',
-		'package',
-		'sharedPools'
+		#comment,
+		#classVariables,
+		#package,
+		#sharedPools
 	],
 	#category : #'Ring-Core-Kernel'
 }

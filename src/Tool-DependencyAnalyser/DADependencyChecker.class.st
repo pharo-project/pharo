@@ -12,7 +12,7 @@ Class {
 	#name : #DADependencyChecker,
 	#superclass : #Object,
 	#instVars : [
-		'report'
+		#report
 	],
 	#category : #'Tool-DependencyAnalyser-Report'
 }

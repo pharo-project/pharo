@@ -2,12 +2,12 @@ Class {
 	#name : #TraitFileOutTest,
 	#superclass : #TraitsTestCase,
 	#instVars : [
-		'ca',
-		'cb',
-		'ta',
-		'tb',
-		'tc',
-		'td'
+		#ca,
+		#cb,
+		#ta,
+		#tb,
+		#tc,
+		#td
 	],
 	#category : #'Tests-Traits'
 }

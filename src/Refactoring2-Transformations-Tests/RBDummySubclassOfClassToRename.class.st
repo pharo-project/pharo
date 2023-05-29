@@ -5,7 +5,7 @@ Class {
 	#name : #RBDummySubclassOfClassToRename,
 	#superclass : #RBDummyClassToRename,
 	#instVars : [
-		'rewriteRule10'
+		#rewriteRule10
 	],
 	#category : #'Refactoring2-Transformations-Tests-Data'
 }

@@ -2,7 +2,7 @@ Class {
 	#name : #RGUnknownSlot,
 	#superclass : #RGSlot,
 	#instVars : [
-		'expression'
+		#expression
 	],
 	#category : #'Ring-Core-Kernel'
 }

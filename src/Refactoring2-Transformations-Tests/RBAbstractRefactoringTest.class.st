@@ -4,8 +4,8 @@ Class {
 	#traits : 'TModelBuilder + TSetUpRefactorings',
 	#classTraits : 'TModelBuilder classTrait + TSetUpRefactorings classTrait',
 	#instVars : [
-		'model',
-		'rbClass'
+		#model,
+		#rbClass
 	],
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }

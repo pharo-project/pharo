@@ -5,8 +5,8 @@ Class {
 	#name : #AbstractFontFamilyMember,
 	#superclass : #Object,
 	#instVars : [
-		'family',
-		'styleName'
+		#family,
+		#styleName
 	],
 	#category : #'Fonts-Infrastructure-Base'
 }
