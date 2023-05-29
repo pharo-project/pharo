@@ -256,6 +256,22 @@ ClassDescription >> classVariablesString [
 	^ String streamContents: [ :stream | self classVariablesOn: stream ]
 ]
 
+{ #category : #protocols }
+ClassDescription >> classify: selector under: aProtocol [
+
+	| oldProtocol newProtocol |
+	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+
+	oldProtocol ifNotNil: [
+		oldProtocol removeMethodSelector: selector.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+	newProtocol addMethodSelector: selector.
+
+	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
+	oldProtocol ifNotNil: [ self notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
+]
+
 { #category : #compiling }
 ClassDescription >> compile: sourceCode classified: protocol [
 	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
