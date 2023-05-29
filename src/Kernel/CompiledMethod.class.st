@@ -793,7 +793,7 @@ CompiledMethod >> protocol [
 
 { #category : #accessing }
 CompiledMethod >> protocol: aProtocol [
-	^ self methodClass organization classify: self selector under: aProtocol
+	^ self methodClass classify: self selector under: aProtocol
 ]
 
 { #category : #scanning }

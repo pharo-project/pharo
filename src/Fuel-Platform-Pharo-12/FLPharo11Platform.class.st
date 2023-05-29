@@ -86,12 +86,9 @@ FLPharo11Platform >> readStreamForFilePath: aString [
 
 { #category : #'accessing-compiler' }
 FLPharo11Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
-	aClass
-		addSelector: aSymbol
-		withMethod: aCompiledMethod.
-	aClass organization
-		classify: aSymbol
-		under: aString
+
+	aClass addSelector: aSymbol withMethod: aCompiledMethod.
+	aClass classify: aSymbol under: aString
 ]
 
 { #category : #'accessing-kernel' }
