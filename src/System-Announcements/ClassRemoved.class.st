@@ -6,9 +6,9 @@ Class {
 	#name : #ClassRemoved,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'categoryName',
-		'classRemoved',
-		'ownerPackage'
+		#categoryName,
+		#classRemoved,
+		#ownerPackage
 	],
 	#category : #'System-Announcements-System-Classes'
 }
@@ -17,7 +17,7 @@ Class {
 ClassRemoved class >> class: aClass category: aCategoryName [
 	^self new
 			classRemoved: aClass;
-			categoryName: aCategoryName asSymbol;
+			categoryName: aCategoryName;
 			yourself
 ]
 

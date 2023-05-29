@@ -20,8 +20,8 @@ Class {
 	#name : #RBAddTemporaryVariableTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'variableName',
-		'interval'
+		#variableName,
+		#interval
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

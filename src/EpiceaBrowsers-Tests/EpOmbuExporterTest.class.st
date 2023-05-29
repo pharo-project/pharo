@@ -2,12 +2,12 @@ Class {
 	#name : #EpOmbuExporterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'outputLog',
-		'inputLog1',
-		'inputLog2',
-		'outputDirectory',
-		'logBuilder1',
-		'logBuilder2'
+		#outputLog,
+		#inputLog1,
+		#inputLog2,
+		#outputDirectory,
+		#logBuilder1,
+		#logBuilder2
 	],
 	#category : #'EpiceaBrowsers-Tests-Exporter'
 }

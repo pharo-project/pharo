@@ -5,8 +5,8 @@ Class {
 	#name : #MethodAnnouncement,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'method',
-		'methodPackage'
+		#method,
+		#methodPackage
 	],
 	#category : #'System-Announcements-System-Methods'
 }

@@ -2,14 +2,14 @@ Class {
 	#name : #RBAbstractVariablesTransformation,
 	#superclass : #RBTransformation,
 	#instVars : [
-		'tree',
-		'fromClass',
-		'instVarReaders',
-		'instVarWriters',
-		'classVarReaders',
-		'classVarWriters',
-		'toClasses',
-		'ignore'
+		#tree,
+		#fromClass,
+		#instVarReaders,
+		#instVarWriters,
+		#classVarReaders,
+		#classVarWriters,
+		#toClasses,
+		#ignore
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

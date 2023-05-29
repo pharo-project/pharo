@@ -5,7 +5,7 @@ Class {
 	#name : #EpLostChangesDetectorTest,
 	#superclass : #EpEnabledIntegrationTest,
 	#instVars : [
-		'detector'
+		#detector
 	],
 	#category : #'EpiceaBrowsers-Tests-Integration'
 }

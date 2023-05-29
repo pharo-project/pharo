@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloProjectRegistrationVersionInfo,
 	#superclass : #Object,
 	#instVars : [
-		'versionString',
-		'projectVersion'
+		#versionString,
+		#projectVersion
 	],
 	#category : #'Metacello-Core-Scripts'
 }

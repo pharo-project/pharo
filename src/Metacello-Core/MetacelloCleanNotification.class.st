@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloCleanNotification,
 	#superclass : #Notification,
 	#instVars : [
-		'version'
+		#version
 	],
 	#category : #'Metacello-Core-Exceptions-Notifications'
 }

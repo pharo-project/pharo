@@ -22,7 +22,7 @@ Class {
 	#name : #RBRemovePragmaTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'pragma'
+		#pragma
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

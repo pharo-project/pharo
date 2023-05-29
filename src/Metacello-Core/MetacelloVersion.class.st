@@ -2,10 +2,10 @@ Class {
 	#name : #MetacelloVersion,
 	#superclass : #Magnitude,
 	#instVars : [
-		'spec',
-		'versionNumber',
-		'importedVersions',
-		'versionStatus'
+		#spec,
+		#versionNumber,
+		#importedVersions,
+		#versionStatus
 	],
 	#category : #'Metacello-Core-Model'
 }

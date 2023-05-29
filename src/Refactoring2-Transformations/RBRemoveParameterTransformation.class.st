@@ -2,8 +2,8 @@ Class {
 	#name : #RBRemoveParameterTransformation,
 	#superclass : #RBChangeMethodNameTransformation,
 	#instVars : [
-		'parameterIndex',
-		'argument'
+		#parameterIndex,
+		#argument
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
@@ -80,7 +80,7 @@ RBRemoveParameterTransformation >> myConditions [
 RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self model classObjectFor: aClass.
-	argument := aString
+	argument := aString asSymbol
 ]
 
 { #category : #private }

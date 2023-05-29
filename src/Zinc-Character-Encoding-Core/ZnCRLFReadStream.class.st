@@ -24,12 +24,12 @@ Class {
 	#name : #ZnCRLFReadStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'next'
+		#stream,
+		#next
 	],
 	#classVars : [
-		'Cr',
-		'Lf'
+		#Cr,
+		#Lf
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

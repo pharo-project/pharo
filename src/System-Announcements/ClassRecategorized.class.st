@@ -9,9 +9,9 @@ Class {
 	#name : #ClassRecategorized,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'newCategory',
-		'oldCategory',
-		'classRecategorized'
+		#newCategory,
+		#oldCategory,
+		#classRecategorized
 	],
 	#category : #'System-Announcements-System-Classes'
 }

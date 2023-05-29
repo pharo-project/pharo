@@ -7,8 +7,8 @@ Class {
 	#name : #ClassModifiedClassDefinition,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'newClassDefinition',
-		'oldClassDefinition'
+		#newClassDefinition,
+		#oldClassDefinition
 	],
 	#category : #'System-Announcements-System-Classes'
 }

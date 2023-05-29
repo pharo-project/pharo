@@ -8,11 +8,11 @@ Class {
 	#name : #RBMethodNameEditor,
 	#superclass : #DialogWindowMorph,
 	#instVars : [
-		'argumentIndex',
-		'labelMorph',
-		'methodName',
-		'selectorField',
-		'labelGroup'
+		#argumentIndex,
+		#labelMorph,
+		#methodName,
+		#selectorField,
+		#labelGroup
 	],
 	#category : #'Refactoring2-Transformations-Utilities'
 }

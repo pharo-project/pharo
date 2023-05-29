@@ -5,10 +5,10 @@ Class {
 	#name : #ZnCrPortableWriteStream,
 	#superclass : #WriteStream,
 	#instVars : [
-		'stream',
-		'cr',
-		'lf',
-		'previous'
+		#stream,
+		#cr,
+		#lf,
+		#previous
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

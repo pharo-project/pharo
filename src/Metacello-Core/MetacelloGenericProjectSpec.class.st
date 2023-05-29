@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloGenericProjectSpec,
 	#superclass : #MetacelloProjectSpec,
 	#instVars : [
-		'projectPackage',
-		'repositories'
+		#projectPackage,
+		#repositories
 	],
 	#category : #'Metacello-Core-Specs'
 }

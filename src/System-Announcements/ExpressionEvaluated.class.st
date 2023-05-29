@@ -5,8 +5,8 @@ Class {
 	#name : #ExpressionEvaluated,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'context',
-		'expressionEvaluated'
+		#context,
+		#expressionEvaluated
 	],
 	#category : #'System-Announcements-System-Base'
 }

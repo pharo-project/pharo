@@ -7,12 +7,12 @@ Class {
 	#name : #SystemAnnouncer,
 	#superclass : #Announcer,
 	#instVars : [
-		'suspended',
-		'private',
-		'storedAnnouncements'
+		#suspended,
+		#private,
+		#storedAnnouncements
 	],
 	#classInstVars : [
-		'announcer'
+		#announcer
 	],
 	#category : #'System-Announcements-Core'
 }

@@ -16,7 +16,7 @@ Class {
 	#name : #RBRenamePackageTransformation,
 	#superclass : #RBPackageTransformation,
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

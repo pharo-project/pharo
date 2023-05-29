@@ -69,6 +69,7 @@ MCVariableDefinition >> name [
 
 { #category : #accessing }
 MCVariableDefinition >> name: aStringOrSymbol [
+
 	name := aStringOrSymbol asSymbol
 ]
 

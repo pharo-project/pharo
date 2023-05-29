@@ -17,9 +17,9 @@ Class {
 	#name : #ZnPercentEncoder,
 	#superclass : #Object,
 	#instVars : [
-		'characterEncoder',
-		'safeSet',
-		'decodePlusAsSpace'
+		#characterEncoder,
+		#safeSet,
+		#decodePlusAsSpace
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

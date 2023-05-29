@@ -79,7 +79,7 @@ MCClassDefinition >> actualClass [
 
 { #category : #initializing }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
-	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
+	variables addAll: (aCollection collect: [:var | aClass name: var]).
 ]
 
 { #category : #accessing }
@@ -302,7 +302,7 @@ type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
 	name := nameString asSymbol.
-	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
+	superclassName := superclassString ifNil: [#'nil'] ifNotNil: [superclassString asSymbol].
 	traitComposition := traitCompositionString.
 	classTraitComposition := classTraitCompositionString.
 	category := categoryString.

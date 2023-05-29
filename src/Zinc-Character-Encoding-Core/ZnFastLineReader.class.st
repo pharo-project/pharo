@@ -5,10 +5,10 @@ Class {
 	#name : #ZnFastLineReader,
 	#superclass : #Object,
 	#instVars : [
-		'readStream',
-		'cr',
-		'lf',
-		'bufferStream'
+		#readStream,
+		#cr,
+		#lf,
+		#bufferStream
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

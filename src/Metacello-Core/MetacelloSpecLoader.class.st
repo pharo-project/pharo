@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloSpecLoader,
 	#superclass : #Object,
 	#instVars : [
-		'spec'
+		#spec
 	],
 	#category : #'Metacello-Core-Loaders'
 }

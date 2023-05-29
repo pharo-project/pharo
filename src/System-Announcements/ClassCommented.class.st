@@ -5,11 +5,11 @@ Class {
 	#name : #ClassCommented,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'newStamp',
-		'newComment',
-		'classCommented',
-		'oldComment',
-		'oldStamp'
+		#newStamp,
+		#newComment,
+		#classCommented,
+		#oldComment,
+		#oldStamp
 	],
 	#category : #'System-Announcements-System-Classes'
 }

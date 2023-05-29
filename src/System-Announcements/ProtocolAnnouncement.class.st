@@ -5,8 +5,8 @@ Class {
 	#name : #ProtocolAnnouncement,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'protocol',
-		'classReorganized'
+		#protocol,
+		#classReorganized
 	],
 	#category : #'System-Announcements-System-Protocols'
 }

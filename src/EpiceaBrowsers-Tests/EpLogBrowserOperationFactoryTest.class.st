@@ -5,8 +5,8 @@ Class {
 	#name : #EpLogBrowserOperationFactoryTest,
 	#superclass : #EpEnabledIntegrationTest,
 	#instVars : [
-		'inputEntry',
-		'inputEntries'
+		#inputEntry,
+		#inputEntries
 	],
 	#category : #'EpiceaBrowsers-Tests-Integration'
 }

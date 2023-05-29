@@ -67,7 +67,7 @@ ZnCharacterEncoder class >> detectEncoding: bytes [
 
 	| candidates |
 	"Set up an ordered candidates list, 7-bit ascii and utf8 are reasonably reliable, iso88591 is a reasonable default"
-	candidates := #(ascii utf8 iso88591).
+	candidates := #('ascii' 'utf8' 'iso88591').
 	candidates := candidates , (ZnByteEncoder knownEncodingIdentifiers difference: candidates).
 	candidates := candidates , (self knownEncodingIdentifiers difference: candidates).
 	"Try each and return the first one that succeeeds."

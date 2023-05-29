@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloSkipDirtyPackageLoad,
 	#superclass : #Notification,
 	#instVars : [
-		'packageSpec'
+		#packageSpec
 	],
 	#category : #'Metacello-Core-Exceptions-Notifications'
 }

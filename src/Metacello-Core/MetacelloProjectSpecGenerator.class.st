@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloProjectSpecGenerator,
 	#superclass : #Object,
 	#instVars : [
-		'target'
+		#target
 	],
 	#category : #'Metacello-Core-Scripts'
 }

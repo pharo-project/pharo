@@ -12,7 +12,7 @@ Class >> asClassDefinition [
 	^ self needsSlotClassDefinition 
 		ifTrue: [ MCClassDefinition
 						name: self name
-						superclassName: (self superclass ifNil: [ nil asString ] ifNotNil: [ self superclass name ])
+						superclassName: (self superclass ifNil: [ nil asString asSymbol ] ifNotNil: [ self superclass name ])
 						traitComposition: self traitCompositionString
 						classTraitComposition: self class traitCompositionString
 						category: self category 
@@ -27,7 +27,7 @@ Class >> asClassDefinition [
 		ifFalse: [  
 				 MCClassDefinition
 						name: self name
-						superclassName: (self superclass ifNil: [ nil asString ] ifNotNil: [ self superclass name ])
+						superclassName: (self superclass ifNil: [ nil asString asSymbol ] ifNotNil: [ self superclass name ])
 						traitComposition: self traitCompositionString
 						classTraitComposition: self class traitCompositionString
 						category: self category 
