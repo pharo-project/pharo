@@ -88,12 +88,6 @@ ClassOrganization >> extensionProtocols [
 	^ self protocols select: #isExtensionProtocol
 ]
 
-{ #category : #testing }
-ClassOrganization >> includesSelector: selector [
-
-	^ self protocols anySatisfy: [ :each | each includesSelector: selector ]
-]
-
 { #category : #initialization }
 ClassOrganization >> initialize [
 
