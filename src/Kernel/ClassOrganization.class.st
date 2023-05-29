@@ -143,7 +143,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
 		(self organizedClass hasProtocol: aNewProtocol)
 			ifTrue: [
-				newProtocol := self ensureProtocol: aNewProtocol.
+				newProtocol := self organizedClass ensureProtocol: aNewProtocol.
 
 				oldProtocol = newProtocol ifTrue: [ ^ self ].
 
