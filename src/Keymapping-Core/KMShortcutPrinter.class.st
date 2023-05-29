@@ -33,7 +33,7 @@ KMShortcutPrinter class >> symbolTable [
 KMShortcutPrinter class >> symbolTableAt: anObject ifAbsent: aBlock [
 
 	^ self symbolTable
-		at: anObject asSymbol
+		at: anObject
 		ifAbsent: aBlock
 ]
 

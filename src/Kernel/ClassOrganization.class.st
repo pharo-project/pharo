@@ -109,10 +109,8 @@ ClassOrganization >> classify: aSymbol under: aProtocolName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: aSelector under: aProtocol suppressIfDefault: aBoolean [
-	| oldCategory forceNotify oldProtocols selector aProtocolName |
-	selector := aSelector asSymbol.
-	aProtocolName := aProtocol asSymbol.
+ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: aBoolean [
+	| oldCategory forceNotify oldProtocols |
 	forceNotify := (self protocolOrganizer includesSelector: selector) not.
 	oldCategory := self categoryOfElement: selector.
 	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ])

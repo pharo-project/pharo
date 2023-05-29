@@ -33,7 +33,7 @@ ClyTestSetUpEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext
 	(aBrowserContext lastSelectedClass lookupSelector: #setUp) ifNil: [ ^false ].
 	"last condition is to not show this tool if user selects #setUp method manually"
 	aBrowserContext isMethodSelected ifFalse: [ ^true ].
-	^aBrowserContext browser methodSelection lastSelectedItem name asSymbol ~= #'setUp'
+	^aBrowserContext browser methodSelection lastSelectedItem name ~= 'setUp'
 ]
 
 { #category : #accessing }

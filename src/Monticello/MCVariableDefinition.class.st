@@ -5,7 +5,7 @@ Class {
 	#name : #MCVariableDefinition,
 	#superclass : #Object,
 	#instVars : [
-		#name
+		'name'
 	],
 	#category : #'Monticello-Modeling'
 }
@@ -68,9 +68,8 @@ MCVariableDefinition >> name [
 ]
 
 { #category : #accessing }
-MCVariableDefinition >> name: aStringOrSymbol [
-
-	name := aStringOrSymbol asSymbol
+MCVariableDefinition >> name: aString [
+	name := aString
 ]
 
 { #category : #printing }

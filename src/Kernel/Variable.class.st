@@ -50,9 +50,7 @@ Variable class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-Variable class >> named: aString [
-	| aSymbol |
-	aSymbol := aString asSymbol.
+Variable class >> named: aSymbol [
 	self checkValidName: aSymbol.
 	^ self new
 		name: aSymbol;
@@ -268,7 +266,6 @@ Variable >> name [
 
 { #category : #accessing }
 Variable >> name: aSymbol [
-	self assert: aSymbol isSymbol.
 	name := aSymbol
 ]
 

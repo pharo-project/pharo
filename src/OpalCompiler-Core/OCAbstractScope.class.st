@@ -48,7 +48,7 @@ OCAbstractScope >> isMethodScope [
 { #category : #lookup }
 OCAbstractScope >> lookupVar: name [
 	"search the scope (and the outer scopes) for a variable 'name' and return it"
-	^ self lookupVar: name asSymbol declare: true
+	^ self lookupVar: name declare: true
 ]
 
 { #category : #lookup }
@@ -63,7 +63,7 @@ OCAbstractScope >> lookupVarForDeclaration: name [
 	When looking temp var declarations, we do not want the Requestor scope to automatically
 	create that variable. Subclasses override if they do not skip but do a lookup"
 
-	^ self lookupVar: name asSymbol declare: false
+	^ self lookupVar: name declare: false
 ]
 
 { #category : #lookup }

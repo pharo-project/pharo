@@ -9,7 +9,7 @@ Class {
 	#name : #MCPackage,
 	#superclass : #Object,
 	#instVars : [
-		#name
+		'name'
 	],
 	#category : #'Monticello-Base'
 }
@@ -21,7 +21,7 @@ MCPackage class >> named: aString [
 
 { #category : #comparing }
 MCPackage >> = other [
-	^ other species = self species and: [other name asSymbol = name asSymbol]
+	^ other species = self species and: [other name = name]
 ]
 
 { #category : #accessing }

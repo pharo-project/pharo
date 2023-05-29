@@ -138,7 +138,7 @@ TestAsserter >> assert: actual equals: expected [
 	"
 
 	^ self
-		assert: (actual sameContents: expected)
+		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
 ]
 

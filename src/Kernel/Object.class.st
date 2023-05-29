@@ -616,7 +616,7 @@ Object >> changed: anAspect with: anObject [
 Object >> className [
 	"Answer a string characterizing the receiver's class, for use in list views for example"
 
-	^ self class name
+	^ self class name asString
 ]
 
 { #category : #copying }
@@ -1092,9 +1092,9 @@ Object >> instVarNamed: aStringOrSymbol [
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aStringOrSymbol asSymbol
+		slotNamed: aStringOrSymbol
 		ifFound: [ :slot | slot read: self ]
-		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asSymbol ]
+		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asString ]
 ]
 
 { #category : #introspection }
@@ -1103,7 +1103,7 @@ Object >> instVarNamed: aString put: aValue [
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aString asSymbol
+		slotNamed: aString
 		ifFound: [ :slot | slot write: aValue to: self ]
 		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
@@ -1838,11 +1838,6 @@ Object >> retryWithGC: execBlock until: testBlock [
 	(testBlock value: blockValue) ifTrue:[^blockValue].
 	Smalltalk garbageCollect.
 	^execBlock value
-]
-
-{ #category : #comparing }
-Object >> sameContents: anObject [
-	^ self = anObject
 ]
 
 { #category : #'write barrier' }

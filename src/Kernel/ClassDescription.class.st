@@ -306,7 +306,7 @@ ClassDescription >> classThatDefinesClassVariable: classVarName [
 { #category : #'instance variables' }
 ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 	^self
-		slotNamed: instVarName asSymbol
+		slotNamed: instVarName
 		 ifFound: [ :slot | slot definingClass  ]
 		 ifNone: nil
 ]
@@ -1295,7 +1295,7 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
 
 	^ self
-		slotNamed: instVarName asSymbol
+		slotNamed: instVarName
 		ifFound: [ :slot | self selectors select: [ :sel | slot isAccessedIn: self>>sel ] ]
 		ifNone: [ #() ]
 ]

@@ -2,9 +2,9 @@ Class {
 	#name : #FLEnvironmentProtectingWrapper,
 	#superclass : #Object,
 	#instVars : [
-		#overlay,
-		#environment,
-		#sentinel
+		'overlay',
+		'environment',
+		'sentinel'
 	],
 	#category : #'Fuel-Tests-Core-Support-Environment'
 }
@@ -48,7 +48,7 @@ FLEnvironmentProtectingWrapper >> associationAt: key ifAbsent: aBlock [
 { #category : #accessing }
 FLEnvironmentProtectingWrapper >> at: key [
 	^ overlay
-		at: key asSymbol
+		at: key
 		ifPresent: [ :value |
 			self
 				checkReturn: value

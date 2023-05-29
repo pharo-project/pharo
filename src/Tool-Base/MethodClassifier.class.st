@@ -265,7 +265,7 @@ MethodClassifier >> protocolByKnownKeywordSuffix: aMethod [
 { #category : #'classification-rules' }
 MethodClassifier >> protocolByKnownMapping: aMethod [
 
-	self class exactMapping keysAndValuesDo: [ :selector :p | (aMethod selector sameContents: selector) ifTrue: [ protocol := p ] ]
+	self class exactMapping keysAndValuesDo: [ :selector :p | aMethod selector = selector ifTrue: [ protocol := p ] ]
 ]
 
 { #category : #'classification-rules' }

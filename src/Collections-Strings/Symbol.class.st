@@ -30,10 +30,9 @@ Class {
 	#name : #Symbol,
 	#superclass : #String,
 	#classVars : [
-		#NewSymbols,
-		#SelectorTable,
-		#StrictComparison,
-		#SymbolTable
+		'NewSymbols',
+		'SelectorTable',
+		'SymbolTable'
 	],
 	#category : #'Collections-Strings-Base'
 }
@@ -214,8 +213,8 @@ Symbol class >> rehash [
    "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
 
-	SymbolTable := WeakSetOfSymbols  withAll: self allSubInstances.
-	NewSymbols := WeakSetOfSymbols  new.
+	SymbolTable := WeakSet withAll: self allSubInstances.
+	NewSymbols := WeakSet new.
 	self resetSelectorTable
 ]
 
@@ -255,36 +254,12 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.
-	NewSymbols := WeakSetOfSymbols  new
+	NewSymbols := WeakSet new
 ]
 
 { #category : #accessing }
 Symbol class >> streamSpecies [
 	^ String
-]
-
-{ #category : #setting }
-Symbol class >> strictComparison [
-
-	^ StrictComparison ifNil: [ StrictComparison := false ]
-]
-
-{ #category : #setting }
-Symbol class >> strictComparison: aBoolean [
-
-	StrictComparison := aBoolean
-]
-
-{ #category : #setting }
-Symbol class >> symbolComparisonSettingOn: aBuilder [
-
-	<systemsettings>
-	(aBuilder setting: #strictComparison)
-		parent: #pharoSystem;
-		label: 'Strict comparison of Symbols';
-		default: false;
-		target: self;
-		description: 'Symbols and Strings having the same contents return false when compared using ='
 ]
 
 { #category : #'symbol table' }
@@ -366,8 +341,6 @@ Symbol >> , otherSymbolOrString [
 { #category : #comparing }
 Symbol >> = aSymbol [
 	"Compare the receiver and aSymbol."
-	Symbol strictComparison ifTrue: [ ^ self == aSymbol ].
-	
 	self == aSymbol ifTrue: [^ true].
 	self class == aSymbol class ifTrue: [^ false].
 	"Use String comparison otherwise"
@@ -570,20 +543,6 @@ Symbol >> prepareForDelivery [
 Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 
 	self errorNoModification
-]
-
-{ #category : #converting }
-Symbol >> reversed [
-	^ super reversed asSymbol
-]
-
-{ #category : #comparing }
-Symbol >> sameContents: aSymbol [
-	"Compare the receiver and aSymbol."
-	self == aSymbol ifTrue: [^ true].
-	self class == aSymbol class ifTrue: [^ false].
-	"Use String comparison otherwise"
-	^ super = aSymbol
 ]
 
 { #category : #converting }

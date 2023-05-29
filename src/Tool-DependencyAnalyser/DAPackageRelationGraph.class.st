@@ -429,7 +429,7 @@ DAPackageRelationGraph >> removeOutgoingDependencies: aPackage [
 
 { #category : #removing }
 DAPackageRelationGraph >> removePackage: packageName [
-	^ packages removeKey: packageName asSymbol
+	^ packages removeKey: packageName
 ]
 
 { #category : #actions }

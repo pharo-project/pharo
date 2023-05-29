@@ -558,7 +558,7 @@ BlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
 ]
 
-{ #category : #'not defined category' }
+{ #category : #printing }
 BlockClosure >> printOn: aStream [
 
 	[self doPrintOn: aStream]

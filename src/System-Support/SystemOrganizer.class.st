@@ -62,7 +62,7 @@ SystemOrganizer >> includesCategory: aString [
 
 	^ self categories
 		ifNil: [ false ]
-		ifNotNil: [ :categories | categories includes: aString asSymbol ]
+		ifNotNil: [ :categories | categories includes: aString ]
 ]
 
 { #category : #initialization }

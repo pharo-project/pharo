@@ -138,7 +138,7 @@ DAPackage >> dependenciesSizeTo: aPackage [
 
 { #category : #dependencies }
 DAPackage >> dependenciesTo: aPackage [
-	^ dependencies select: [ :each | each target packageName sameContents: aPackage ]
+	^ dependencies select: [ :each | each target packageName = aPackage ]
 ]
 
 { #category : #dependencies }

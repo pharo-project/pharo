@@ -92,16 +92,16 @@ Class {
 	#name : #String,
 	#superclass : #ArrayedCollection,
 	#classVars : [
-		#AsciiOrder,
-		#CSLineEnders,
-		#CSNonSeparators,
-		#CSSeparators,
-		#CaseInsensitiveOrder,
-		#CaseSensitiveOrder,
-		#LowercasingTable,
-		#Tokenish,
-		#TypeTable,
-		#UppercasingTable
+		'AsciiOrder',
+		'CSLineEnders',
+		'CSNonSeparators',
+		'CSSeparators',
+		'CaseInsensitiveOrder',
+		'CaseSensitiveOrder',
+		'LowercasingTable',
+		'Tokenish',
+		'TypeTable',
+		'UppercasingTable'
 	],
 	#category : #'Collections-Strings-Base'
 }
@@ -501,9 +501,7 @@ String >> = aString [
 	" 'abc' = 'def' >>> false"
 	" 'abc' = 'abc' >>> true"
 	" 'def' = 'abc' >>> false"
-	
-	(Symbol strictComparison and: [ aString isSymbol ]) ifTrue: [ ^ false ].
-	
+
 	(aString isString and: [self size = aString size]) ifFalse: [^false].
 	^ (self compare: self with: aString collated: AsciiOrder) = 2
 ]
@@ -1004,7 +1002,7 @@ String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
 	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
     | idx |
-    (self sameContents: oldSubstring) ifTrue: [ ^ newSubstring copy ].
+    self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
     ^ self species new: self size streamContents: [ :stream | | foundIdx |
@@ -1730,7 +1728,7 @@ String >> format: collection [
 					(currentChar := stream next) == ${
 						ifTrue: [ | expression index |
 							expression := stream upTo: $}.
-							index := Integer readFrom: expression ifFail: [ expression asSymbol ].
+							index := Integer readFrom: expression ifFail: [ expression ].
 							result nextPutAll: (collection at: index) asString ]
 						ifFalse: [ currentChar == $\
 								ifTrue: [ stream atEnd
@@ -2027,8 +2025,8 @@ String >> isValidGlobalName [
 	self ifEmpty: [ ^ false ].
 
 	"reserverd default names"
-	self = #'NameOfSubclass' ifTrue: [ ^ false ].
-	self = #'TNameOfTrait' ifTrue: [ ^ false ].
+	self = 'NameOfSubclass' ifTrue: [ ^ false ].
+	self = 'TNameOfTrait' ifTrue: [ ^ false ].
 
 	^ (self first isLetter
 				and: [self first isUppercase])
@@ -2365,11 +2363,6 @@ String >> sameAs: aString [
 	"Answer whether the receiver sorts equal to aString. The
 	collation sequence is ascii with case differences ignored."
 	^(self compare: aString caseSensitive: false) = 2
-]
-
-{ #category : #comparing }
-String >> sameContents: aSymborOrString [
-	^ self = aSymborOrString
 ]
 
 { #category : #accessing }

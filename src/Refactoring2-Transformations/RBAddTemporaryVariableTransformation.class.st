@@ -20,8 +20,8 @@ Class {
 	#name : #RBAddTemporaryVariableTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		#variableName,
-		#interval
+		'variableName',
+		'interval'
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
@@ -41,9 +41,9 @@ RBAddTemporaryVariableTransformation class >> model: aRBModel variable: aString 
 RBAddTemporaryVariableTransformation class >> variable: aString inInterval: anInterval inMethod: aSelector inClass: aClass [
 
 	^ self new
-		variable: aString asSymbol
+		variable: aString
 		inInterval: anInterval
-		inMethod: aSelector asSymbol
+		inMethod: aSelector
 		inClass: aClass;
 		yourself
 ]
@@ -111,16 +111,16 @@ RBAddTemporaryVariableTransformation >> variable: aVariableName inInterval: anIn
 
 	self className: aClass.
 	interval := anInterval.
-	selector := aSelector asSymbol.
-	variableName := aVariableName asSymbol
+	selector := aSelector.
+	variableName := aVariableName
 ]
 
 { #category : #api }
 RBAddTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	self
-		variable: aVariableName asSymbol
+		variable: aVariableName
 		inInterval: nil
-		inMethod: aSelector asSymbol
+		inMethod: aSelector
 		inClass: aClass
 ]

@@ -22,17 +22,17 @@ Class {
 	#name : #RBAbstractClass,
 	#superclass : #RBEntity,
 	#instVars : [
-		#name,
-		#newMethods,
-		#instanceVariableNames,
-		#model,
-		#superclass,
-		#subclasses,
-		#removedMethods,
-		#realClass
+		'name',
+		'newMethods',
+		'instanceVariableNames',
+		'model',
+		'superclass',
+		'subclasses',
+		'removedMethods',
+		'realClass'
 	],
 	#classVars : [
-		#LookupSuperclass
+		'LookupSuperclass'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -60,7 +60,7 @@ RBAbstractClass >> = aRBClass [
 
 { #category : #'variable accessing' }
 RBAbstractClass >> addInstanceVariable: aString [
-	self privateInstanceVariableNames add: aString asSymbol.
+	self privateInstanceVariableNames add: aString.
 	model addInstanceVariable: aString to: self
 ]
 
@@ -288,7 +288,7 @@ RBAbstractClass >> directlyDefinesClassVariable: aString [
 
 { #category : #testing }
 RBAbstractClass >> directlyDefinesInstanceVariable: aString [
-	^self instanceVariableNames includes: aString asSymbol
+	^self instanceVariableNames includes: aString
 ]
 
 { #category : #testing }
@@ -454,9 +454,7 @@ RBAbstractClass >> instanceVariableNames [
 
 { #category : #accessing }
 RBAbstractClass >> instanceVariableNames: aCollectionOfStrings [
-
 	instanceVariableNames := aCollectionOfStrings asOrderedCollection
-		                         collect: [ :var | var asSymbol ]
 ]
 
 { #category : #testing }
@@ -647,8 +645,8 @@ RBAbstractClass >> removedMethods [
 { #category : #'variable accessing' }
 RBAbstractClass >> renameInstanceVariable: oldName to: newName around: aBlock [
 	self privateInstanceVariableNames
-		at: (self privateInstanceVariableNames indexOf: oldName asSymbol)
-		put: newName asSymbol.
+		at: (self privateInstanceVariableNames indexOf: oldName asString)
+		put: newName asString.
 	^ self model
 		performChange: (changeFactory
 							renameInstanceVariable: oldName

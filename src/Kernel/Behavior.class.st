@@ -1673,7 +1673,7 @@ Behavior >> whichClassDefinesClassVar: aString [
 { #category : #queries }
 Behavior >> whichClassDefinesInstVar: aString [
 	^self
-		whichSuperclassSatisfies: [:aClass | aClass instVarNames includes: aString asSymbol]
+		whichSuperclassSatisfies: [:aClass | aClass instVarNames includes: aString]
 ]
 
 { #category : #'testing - method dictionary' }

@@ -426,7 +426,7 @@ RPackage >> classTagNamed: aSymbol [
 { #category : #'class tags' }
 RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
 	^ classTags
-		detect: [ :each | each name = aSymbol asSymbol ]
+		detect: [ :each | each name = aSymbol ]
 		ifNone: aBlock
 ]
 
@@ -782,7 +782,7 @@ RPackage >> includesClassNamed: aSymbol [
 
 { #category : #testing }
 RPackage >> includesClassTagNamed: aString [
-	^ self classTags anySatisfy: [ :each | each name = aString asSymbol ]
+	^ self classTags anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : #testing }

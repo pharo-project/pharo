@@ -17,9 +17,9 @@ ReVarSearchSourceAnchor >> modify: aString for: aStringCollection [
 
 	aStringCollection size = 1 ifTrue: [
 		^ aString surroundedBySingleQuotes ].
-	(aStringCollection first sameContents: aString) ifTrue: [
+	aStringCollection first = aString ifTrue: [
 		^ '''', aString, String space ].
-	(aStringCollection last sameContents: aString) ifTrue: [
+	aStringCollection last = aString ifTrue: [
 		^ String space, aString, '''' ].
 	^ aString surroundedBy: String space
 ]
