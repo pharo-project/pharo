@@ -44,8 +44,8 @@ Class {
 	#name : #PluggableSet,
 	#superclass : #Set,
 	#instVars : [
-		'hashBlock',
-		'equalBlock'
+		#hashBlock,
+		#equalBlock
 	],
 	#category : #'Collections-Unordered-Sets'
 }
