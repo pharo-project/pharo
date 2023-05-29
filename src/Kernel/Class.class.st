@@ -862,14 +862,17 @@ Class >> newSubclass [
 	i := 1.
 	[ className := (self name , i printString) asSymbol.
 	self environment includesKey: className ] whileTrue: [ i := i + 1 ].
-	^ self
-		subclass: className
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: className;
+				category: 'Unclassified';
+				environment: self environment ]
 
 	"Point newSubclass new"
+	
+
 ]
 
 { #category : #initialization }
@@ -1125,56 +1128,71 @@ Class >> sharing: poolString [
 
 { #category : #'subclass creation' }
 Class >> subclass: t [
-	^ self
-		subclass: t
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: t;
+				category: 'Unclassified';
+				environment: self environment ]
+
+	
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
-	^ self
-		subclass: t
-		instanceVariableNames: ins
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: t;
+				slots: ins asSlotCollection;
+				category: 'Unclassified';
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aCategorySymbol
+		^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: aSubclassSymbol;
+				sharedVariablesFromString: classVarNames;
+				slots: instVarNameList asSlotCollection;
+				category: 'Unclassified';
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aPackageSymbol
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: aSubclassSymbol;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
+				category: aPackageSymbol;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		subclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: t;
+				slots: f asSlotCollection;
+				sharedVariablesFromString: d;
+				sharedPools: s;
+				category: cat;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation' }
