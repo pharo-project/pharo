@@ -5,7 +5,7 @@ Class {
 	#name : #OCAbstractScope,
 	#superclass : #Object,
 	#instVars : [
-		#outerScope
+		'outerScope'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

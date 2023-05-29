@@ -111,13 +111,13 @@ Class {
 	#name : #ClyBrowserItem,
 	#superclass : #Object,
 	#instVars : [
-		#position,
-		#name,
-		#depth,
-		#properties,
-		#actualObject,
-		#type,
-		#isPrepared
+		'position',
+		'name',
+		'depth',
+		'properties',
+		'actualObject',
+		'type',
+		'isPrepared'
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }
@@ -160,6 +160,12 @@ ClyBrowserItem >> adoptForNewCalypsoQuery [
 { #category : #preparation }
 ClyBrowserItem >> asCalypsoBrowserItem [
 	^self
+]
+
+{ #category : #accessing }
+ClyBrowserItem >> calypsoName [
+
+	^ name
 ]
 
 { #category : #copying }

@@ -5,9 +5,9 @@ Class {
 	#name : #FFIFunctionParser,
 	#superclass : #Object,
 	#instVars : [
-		#requestor,
-		#stream,
-		#fnSpec
+		'requestor',
+		'stream',
+		'fnSpec'
 	],
 	#category : #'UnifiedFFI-Base'
 }

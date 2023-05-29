@@ -54,7 +54,7 @@ Class {
 	#name : #Object,
 	#superclass : #ProtoObject,
 	#classVars : [
-		#DependentsFields
+		'DependentsFields'
 	],
 	#category : #'Kernel-Objects'
 }
@@ -379,7 +379,8 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [
+	"we do the == true check to avoid NonBooleanReceiver error for nonBoolean aBlock values"
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 

@@ -5,12 +5,12 @@ Class {
 	#name : #OCAbstractMethodScope,
 	#superclass : #OCAbstractScope,
 	#instVars : [
-		#tempVars,
-		#copiedVars,
-		#tempVector,
-		#id,
-		#tempVectorVar,
-		#node
+		'tempVars',
+		'copiedVars',
+		'tempVector',
+		'id',
+		'tempVectorVar',
+		'node'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

@@ -18,14 +18,14 @@ Class {
 	#name : #OCASTTranslator,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		#methodBuilder,
-		#effectTranslator,
-		#valueTranslator,
-		#nextUniqueInlineID,
-		#parentTranslator
+		'methodBuilder',
+		'effectTranslator',
+		'valueTranslator',
+		'nextUniqueInlineID',
+		'parentTranslator'
 	],
 	#classVars : [
-		#OptimizedMessages
+		'OptimizedMessages'
 	],
 	#category : #'OpalCompiler-Core-Translator'
 }
@@ -442,7 +442,7 @@ OCASTTranslator >> nextUniqueInlineID [
 	parentTranslator ifNotNil: [ ^ parentTranslator nextUniqueInlineID ].
 
 	nextUniqueInlineID := nextUniqueInlineID + 1.
-	^ nextUniqueInlineID asString asSymbol
+	^ '0', nextUniqueInlineID asString asSymbol
 ]
 
 { #category : #private }

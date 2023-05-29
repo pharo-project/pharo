@@ -15,14 +15,14 @@ Class {
 	#name : #DAPackage,
 	#superclass : #Object,
 	#instVars : [
-		#dependencies,
-		#included,
-		#inStack,
-		#tarjanIndex,
-		#tarjanLowLink,
-		#bfsParent,
-		#seen,
-		#rPackageSet
+		'dependencies',
+		'included',
+		'inStack',
+		'tarjanIndex',
+		'tarjanLowLink',
+		'bfsParent',
+		'seen',
+		'rPackageSet'
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

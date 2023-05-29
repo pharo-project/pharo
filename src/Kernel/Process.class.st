@@ -22,19 +22,19 @@ Class {
 	#name : #Process,
 	#superclass : #Link,
 	#instVars : [
-		#suspendedContext,
-		#priority,
-		#myList,
-		#name,
-		#env,
-		#effectiveProcess,
-		#terminating,
-		#level
+		'suspendedContext',
+		'priority',
+		'myList',
+		'name',
+		'env',
+		'effectiveProcess',
+		'terminating',
+		'level'
 	],
 	#classVars : [
-		#InheritablePSKeys,
-		#PSKeys,
-		#PSKeysSema
+		'InheritablePSKeys',
+		'PSKeys',
+		'PSKeysSema'
 	],
 	#category : #'Kernel-Processes'
 }
@@ -260,11 +260,7 @@ Process >> doTerminationFromAnotherProcess [
 		ctxt unwindComplete ifNil: [
 			ctxt unwindComplete: true.
 			unwindBlock := ctxt unwindBlock.
-			"Create a context for the unwind block and execute it on the unwind block's stack.
-			Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
-			the unwind on the wrong stack preventing the correct execution of non-local returns."
-			suspendedContext := unwindBlock asContextWithSender: ctxt.
-			suspendedContext runUntilErrorOrReturnFrom: suspendedContext].
+			unwindBlock valueUnwindInContext: ctxt ].
 		ctxt := ctxt findNextUnwindContextUpTo: nil].
 
 	"Mark the context as terminated"

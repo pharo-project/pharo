@@ -37,9 +37,9 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		#outerContext,
-		#compiledBlock,
-		#numArgs
+		'outerContext',
+		'compiledBlock',
+		'numArgs'
 	],
 	#category : #'Kernel-Methods'
 }
@@ -843,6 +843,18 @@ BlockClosure >> valueUnpreemptively [
 	[semaphore signal] fork.
 	semaphore wait.
 	^result
+]
+
+{ #category : #scheduling }
+BlockClosure >> valueUnwindInContext: ctxt [ 
+	"Create a context for the unwind block and execute it on the unwind block's stack.
+	Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
+	the unwind on the wrong stack preventing the correct execution of non-local returns."
+			
+	| ensureContext |
+	ensureContext := self asContextWithSender: ctxt.
+	ensureContext runUntilErrorOrReturnFrom: ensureContext
+
 ]
 
 { #category : #evaluating }

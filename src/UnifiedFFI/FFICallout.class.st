@@ -19,16 +19,16 @@ Class {
 	#name : #FFICallout,
 	#superclass : #Object,
 	#instVars : [
-		#fnSpec,
-		#options,
-		#requestor,
-		#methodArgs,
-		#receiver,
-		#method,
-		#stringEncodingStrategy
+		'fnSpec',
+		'options',
+		'requestor',
+		'methodArgs',
+		'receiver',
+		'method',
+		'stringEncodingStrategy'
 	],
 	#classVars : [
-		#TypeAliases
+		'TypeAliases'
 	],
 	#category : #'UnifiedFFI-Callouts'
 }

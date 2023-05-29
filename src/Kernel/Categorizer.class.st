@@ -32,13 +32,13 @@ Class {
 	#name : #Categorizer,
 	#superclass : #Object,
 	#instVars : [
-		#categoryArray,
-		#categoryStops,
-		#elementArray
+		'categoryArray',
+		'categoryStops',
+		'elementArray'
 	],
 	#classVars : [
-		#Default,
-		#NullCategory
+		'Default',
+		'NullCategory'
 	],
 	#category : #'Kernel-Classes'
 }

@@ -10,10 +10,10 @@ Class {
 	#name : #ClyTextLineNumbersSwitchMorph,
 	#superclass : #ClyTextMorphToolMorph,
 	#instVars : [
-		#label
+		'label'
 	],
 	#classInstVars : [
-		#showLineNumbers
+		'showLineNumbers'
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }
@@ -58,7 +58,7 @@ ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 	self updateLabel.
 	self addMorph: label.
 	self class showLineNumbers
-		ifTrue: [ self toggle ]
+		ifTrue: [ textMorph withLineNumbers ]
 ]
 
 { #category : #operations }
