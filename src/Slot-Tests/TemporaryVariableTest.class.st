@@ -50,7 +50,7 @@ TemporaryVariableTest >> testPropertyAtPut [
 	| testValue temp |
 
 	testValue := Date today.
-	temp := thisContext temporaryVariableNamed:  #testValue.
+	temp := thisContext lookupVar:  #testValue.
 
 	temp propertyAt: #testKeySelector put: testValue.
 	self
@@ -66,15 +66,15 @@ TemporaryVariableTest >> testReadNodes [
 	| method |
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
 	method := OrderedCollection >> #do:.
-	self assert: (method temporaryVariableNamed: #aBlock) astNodes notEmpty
+	self assert: (method lookupVar: #aBlock) astNodes notEmpty
 ]
 
 { #category : #tests }
 TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
-	tempVar := thisContext temporaryVariableNamed: #tempVar.
+	tempVar := thisContext lookupVar: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
+	self assert: (tempVar readInContext: thisContext) equals: tempVar
 ]
 
 { #category : #tests }
@@ -104,13 +104,13 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 	method := OrderedCollection >> #do:.
 	self assert: method temporaryVariables first name equals: #aBlock.
 	self assert: (method hasTemporaryVariableNamed: #aBlock).
-	self assert: (method temporaryVariableNamed: #aBlock) class equals: ArgumentVariable
+	self assert: (method lookupVar: #aBlock) class equals: ArgumentVariable
 ]
 
 { #category : #tests }
 TemporaryVariableTest >> testWriteTemporaryVariablesMethod [
 	| tempVar |
-	tempVar := thisContext temporaryVariableNamed: #tempVar.
+	tempVar := thisContext lookupVar: #tempVar.
 
 	tempVar write: 5 inContext: thisContext.
 	self assert: tempVar equals: 5
