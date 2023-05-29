@@ -107,7 +107,7 @@ RPackageTest >> testAnonymousClassAndSelector [
 	ghost addSelector: #rpackagetest withMethod: method.
 	self deny: (uPackage includesDefinedSelector: #rpackagetest ofClass: ghost).
 	self deny: (self organizer packageOfClassNamed: ghost name) notNil.
-	ghost organization classify: #rpackagetest under: '*rpackagetest'
+	ghost classify: #rpackagetest under: '*rpackagetest'
 ]
 
 { #category : #tests }
