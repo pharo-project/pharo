@@ -443,7 +443,7 @@ DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 	{(dict -> Dictionary).
 	(dict class -> Dictionary class)}
 		do: [ :assoc |
-			assoc value protocols
+			assoc value protocolNames
 				reject: [ :protocol |
 					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
 						anySatisfy: [ :each | protocol asString beginsWith: each ] ]

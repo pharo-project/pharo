@@ -100,12 +100,12 @@ SystemDictionaryTest >> testPrintOn [
 { #category : #tests }
 SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 
-	| sd so |
-	sd := SystemDictionary new.
-	so := SystemOrganizer new.
-	sd organization: so.
-	self assert: so environment identicalTo: sd.
-	self assert: sd organization identicalTo: so
+	| systemDictionary packageOrganizer |
+	systemDictionary := SystemDictionary new.
+	packageOrganizer := RPackageOrganizer new.
+	systemDictionary organization: packageOrganizer.
+	self assert: packageOrganizer environment identicalTo: systemDictionary.
+	self assert: systemDictionary organization identicalTo: packageOrganizer
 ]
 
 { #category : #tests }

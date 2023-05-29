@@ -64,12 +64,12 @@ ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
 	newClass := self newClass: #ShCITestClass slots: { (#anInstanceVariable => BooleanSlot) }.
 
 	self assertCollection: newClass selectors hasSameElements: { #initialize }.
-	self assert: (newClass organization protocolOfSelector: #initialize) isNotNil.
+	self assert: (newClass protocolOfSelector: #initialize) isNotNil.
 
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 
 	self assertCollection: newClass2 selectors hasSameElements: { #initialize }.
-	self assert: (newClass2 organization protocolOfSelector: #initialize) isNotNil
+	self assert: (newClass2 protocolOfSelector: #initialize) isNotNil
 ]
 
 { #category : #tests }

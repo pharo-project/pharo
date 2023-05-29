@@ -10,6 +10,11 @@ MCBitbucketRepository class >> basicDescription [
 ]
 
 { #category : #'instance creation' }
+MCBitbucketRepository class >> basicFromUrl: aZnUrl [ 
+	^ self location: aZnUrl asString
+]
+
+{ #category : #'instance creation' }
 MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createBitbucketRepository: aRepositorySpec
 ]
@@ -27,6 +32,11 @@ MCBitbucketRepository class >> isAvailableFor: type [
 { #category : #private }
 MCBitbucketRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   ^ 'https://bitbucket.org/' , projectPath , '/get/' , versionString , '.zip'
+]
+
+{ #category : #accessing }
+MCBitbucketRepository class >> urlSchemes [
+	^ #(bitbucket)
 ]
 
 { #category : #private }

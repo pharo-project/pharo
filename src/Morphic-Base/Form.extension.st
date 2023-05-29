@@ -47,8 +47,7 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 
 	scale := extent y / self height min: extent x / self width.
 	scaledForm := self
-				magnify: self boundingBox
-				by: scale
+				magnifyBy: scale
 				smoothing: 8.
 
 	result := Form extent: extent depth: 32.

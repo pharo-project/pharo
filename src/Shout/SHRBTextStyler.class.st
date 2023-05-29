@@ -3,9 +3,7 @@ I'm the one who visits node to coloring the code
 "
 Class {
 	#name : #SHRBTextStyler,
-	#superclass : #SHTextStyler,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -16,7 +14,10 @@ Class {
 		'pixelHeight',
 		'workspace',
 		'plugins',
-		'braceLevel'
+		'braceLevel',
+		'view',
+		'stylingEnabled',
+		'text'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -87,6 +88,7 @@ SHRBTextStyler class >> blueStyleTable [
 			(#false 									(red muchDarker))
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
+			(#thisProcess 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
 			(patternArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
@@ -176,6 +178,7 @@ SHRBTextStyler class >> darkStyleTable [
 			(#self 								'00CC6E')
 			(#super								'00CC6E')
 			(#thisContext 						'00CC6E')
+			(#thisProcess 						'00CC6E')
 			(#return 								'00CC6E' bold)
 
 			(patternArg 							'A7E2ED')
@@ -351,6 +354,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 			(#self 									'B58900')
 			(#super								'B58900')
 			(#thisContext 							'B58900')
+			(#thisProcess 							'B58900')
 			(#return 								'B58900' bold)
 
 			(patternArg 							('D33682'))
@@ -455,6 +459,7 @@ SHRBTextStyler class >> tangoStyleTable [
 			(#self 									'4d9a06')
 			(#super 								'4d9a06')
 			(#thisContext 							'4d9a06')
+			(#thisProcess 							'4d9a06')
 			(#return 								black bold)
 
 			(patternArg 							'2e3426' italic)
@@ -554,6 +559,7 @@ SHRBTextStyler class >> vintageStyleTable [
 			(#self 									'A31515')
 			(#super								'A31515')
 			(#thisContext 							'A31515')
+			(#thisProcess 							'A31515')
 			(#return 								'A31515' bold)
 
 			(patternArg 							(blue muchDarker))
@@ -710,6 +716,12 @@ SHRBTextStyler >> font: aFont [
 	font := aFont
 ]
 
+{ #category : #formatting }
+SHRBTextStyler >> format: aText [
+
+	^ aText
+]
+
 { #category : #visiting }
 SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
@@ -720,8 +732,9 @@ SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
 { #category : #initialization }
 SHRBTextStyler >> initialize [
-	super initialize.
 
+	super initialize.
+	stylingEnabled := true.
 	isForWorkspace := false
 ]
 
@@ -828,6 +841,16 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 		  TextEmphasis struckOut }
 ]
 
+{ #category : #styling }
+SHRBTextStyler >> style: aText [
+
+	aText ifEmpty: [ ^ self ].
+	stylingEnabled ifFalse: [ ^ self ].
+	text := aText copy.
+	self privateStyle: text.
+	view ifNotNil: [ :view2 | view2 stylerStyled: text ]
+]
+
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
 
@@ -924,15 +947,37 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 ]
 
 { #category : #styling }
+SHRBTextStyler >> styledTextFor: aText [
+
+	^ self privateStyle: aText
+]
+
+{ #category : #private }
+SHRBTextStyler >> stylingEnabled [
+
+	^ stylingEnabled
+]
+
+{ #category : #private }
+SHRBTextStyler >> stylingEnabled: aBoolean [
+
+	stylingEnabled := aBoolean
+]
+
+{ #category : #styling }
 SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
+
 	| answer |
-	answer := super unstyledTextFrom: aText.
-	self
-		addAttributesFrom: aText runs
-		satisfying: [ :each| each isKindOf: TextAction ]
-		to: answer.
+	answer := Text fromString: aText string.
+	self addAttributesFrom: aText runs satisfying: [ :each | each isKindOf: TextAction ] to: answer.
 	^ answer
+]
+
+{ #category : #accessing }
+SHRBTextStyler >> view: aViewOrMorph [
+
+	view := aViewOrMorph
 ]
 
 { #category : #visiting }

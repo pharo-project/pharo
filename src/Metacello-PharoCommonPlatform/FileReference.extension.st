@@ -1,6 +1,6 @@
 Extension { #name : #FileReference }
 
-{ #category : #'*Metacello-Platform' }
+{ #category : #'*Metacello-PharoCommonPlatform' }
 FileReference >> asRepositorySpecFor: aMetacelloMCProject [
   ^ aMetacelloMCProject repositorySpec
     description: self fullName;

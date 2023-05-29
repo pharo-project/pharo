@@ -245,11 +245,6 @@ LocalVariable >> method [
 	^scope node methodNode compiledMethod
 ]
 
-{ #category : #accessing }
-LocalVariable >> originalVar [
-	^ self
-]
-
 { #category : #printing }
 LocalVariable >> printOn: stream [
 

@@ -91,8 +91,6 @@ BenchmarkResult >> printFrequenceOn: stream [
 
 { #category : #printing }
 BenchmarkResult >> printOn: stream [
-	super printOn: stream.
-	stream nextPut: $(.
 	self isEmpty
 		ifTrue: [
 			stream << ' empty' ]
@@ -102,8 +100,7 @@ BenchmarkResult >> printOn: stream [
 			stream << ' in '.
 			elapsedTime printHumanReadableOn: stream.
 			stream << '. '.
-			self printFrequenceOn: stream ].
-	stream nextPut: $)
+			self printFrequenceOn: stream ]
 ]
 
 { #category : #printing }

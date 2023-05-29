@@ -200,11 +200,10 @@ ShiftClassBuilder >> compareWithOldClass [
 
 { #category : #compiling }
 ShiftClassBuilder >> compileMethods [
-	| toRemove |
-	newClass compileAllFrom: self oldClass.
 
-	toRemove := newClass organization allMethodSelectors reject: [ :aSelector | newClass includesSelector: aSelector ].
-	toRemove do: [ :aSelector | newClass organization removeElement: aSelector  ]
+	newClass
+		compileAllFrom: self oldClass;
+		removeNonexistentSelectorsFromProtocols
 ]
 
 { #category : #building }

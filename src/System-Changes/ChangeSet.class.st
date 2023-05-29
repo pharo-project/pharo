@@ -511,8 +511,11 @@ ChangeSet >> addCoherency: className [
 ChangeSet >> adoptSelector: aSelector forClass: aClass [
 	"Adopt the given selector/class combination as a change in the receiver"
 
-	self noteNewMethod: (aClass compiledMethodAt: aSelector)
-			forClass: aClass selector: aSelector priorMethod: nil
+	self
+		noteNewMethod: (aClass compiledMethodAt: aSelector)
+		forClass: aClass
+		selector: aSelector
+		priorMethod: nil
 ]
 
 { #category : #'moving changes' }
@@ -657,16 +660,13 @@ ChangeSet >> changedMessageList [
 { #category : #'file in/out' }
 ChangeSet >> checkForSlips [
 	"Return a collection of method refs with possible debugging code in them."
+
 	| slips |
 	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | | method | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
-					[method := aClass compiledMethodAt: mAssoc key ifAbsent: [nil].
-					method ifNotNil:
-						[(self hasReportableSlip: method)
-							ifTrue: [ slips add: (aClass >> mAssoc key) ]]]]].
+	self changedClasses do: [ :aClass |
+		(self methodChangesAtClass: aClass name) associationsDo: [ :mAssoc |
+			(#( remove addedThenRemoved ) includes: mAssoc value) ifFalse: [
+				aClass compiledMethodAt: mAssoc key ifPresent: [ :method | (self hasReportableSlip: method) ifTrue: [ slips add: aClass >> mAssoc key ] ] ] ] ].
 	^ slips
 ]
 
@@ -1108,39 +1108,6 @@ ChangeSet >> methodRemoved: anEvent [
 		class: anEvent methodClass
 		priorMethod: anEvent method
 		lastSourcePointer: anEvent method sourcePointer
-]
-
-{ #category : #testing }
-ChangeSet >> methodsWithoutClassifications [
-	"Return a collection representing methods in the receiver which have not been categorized"
-
-	| slips notClassified |
-
-	notClassified := {	Protocol unclassified. #all}.
-	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | | aSelector | (aClass includesSelector:  (aSelector := mAssoc key)) ifTrue:
-						[(notClassified includes: (aClass organization protocolNameOfElement: aSelector))
-								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
-	^ slips
-]
-
-{ #category : #'moving changes' }
-ChangeSet >> methodsWithoutComments [
-	"Return a collection representing methods in the receiver which have no precode comments"
-
-	| slips |
-	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
-					[(aClass includesSelector:  mAssoc key) ifTrue:
-						[(aClass>>mAssoc key) hasComment
-								ifTrue: [slips add: aClass name , ' ' , mAssoc key]]]]].
-	^ slips
 ]
 
 { #category : #accessing }

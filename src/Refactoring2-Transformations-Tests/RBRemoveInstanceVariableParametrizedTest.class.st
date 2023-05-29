@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveInstanceVariableParametrizedTest,
 	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -9,8 +9,6 @@ RBRemoveInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRemoveInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
-		addCase: { #rbClass -> RBRemoveVariableTransformation .
-					  #constructor -> #instanceVariable:class: };
 		yourself
 ]
 
@@ -38,7 +36,7 @@ RBRemoveInstanceVariableParametrizedTest >> testNonExistantName [
 
 { #category : #'failure tests' }
 RBRemoveInstanceVariableParametrizedTest >> testReferencedVariable [
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldWarn: (self createRefactoringWithArguments:
 		{ 'name' . #RBLintRuleTestData })
 ]
 

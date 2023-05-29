@@ -160,6 +160,11 @@ DoItVariable >> isThisContextVariable [
 ]
 
 { #category : #testing }
+DoItVariable >> isThisProcessVariable [
+	^actualVariable isThisProcessVariable
+]
+
+{ #category : #testing }
 DoItVariable >> isUndeclaredVariable [
 	^actualVariable isUndeclaredVariable
 ]

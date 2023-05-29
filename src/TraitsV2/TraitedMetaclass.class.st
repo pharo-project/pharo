@@ -261,29 +261,27 @@ TraitedMetaclass >> rebuildMethodDictionary [
 
 	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
-	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ].
+	removedSelectors do: [ :aSelector |
+		self methodDict removeKey: aSelector.
+		self removeFromProtocols: aSelector  ].
 
 	^ modified
 ]
 
 { #category : #categories }
-TraitedMetaclass >> recategorizeSelector: selector from: oldProtocolName to: newProtocolName [
+TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
 
 	| originalProtocol |
-	originalProtocol := (self organization protocolOfSelector: selector) ifNil: [ ^ self ].
-
 	"If it is nil is because it is a removal. It will removed when the method is removed."
-	newProtocolName ifNil: [ ^ self ].
+	newProtocol ifNil: [ ^ self ].
 
-	originalProtocol name = oldProtocolName ifTrue: [ self organization classify: selector under: newProtocolName ].
+	originalProtocol := (self protocolOfSelector: selector) ifNil: [ ^ self ].
+	originalProtocol name = oldProtocol name ifTrue: [ self organization classify: selector under: newProtocol name ].
 
 	(self traitComposition reverseAlias: selector) do: [ :selectorAlias |
-		self recategorizeSelector: selectorAlias from: oldProtocolName to: newProtocolName.
-		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocolName to: newProtocolName ].
-
-	self organization removeEmptyProtocols
+		self recategorizeSelector: selectorAlias from: oldProtocol to: newProtocol.
+		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #recompilation }

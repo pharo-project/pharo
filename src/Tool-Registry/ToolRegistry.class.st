@@ -229,13 +229,20 @@ ToolRegistry >> using: aToolName do: aBlock [
 ]
 
 { #category : #announcer }
-ToolRegistry >> whenToolRegistered: aBlock [
+ToolRegistry >> whenToolRegisteredDo: aBlock for: aSubscriber [
 
-	self announcer weak when: ToolRegistryToolRegistered do: aBlock
+	self announcer weak
+		when: ToolRegistryToolRegistered
+		do: aBlock
+		for: aSubscriber
+		
 ]
 
 { #category : #announcer }
-ToolRegistry >> whenToolUnregistered: aBlock [
+ToolRegistry >> whenToolUnregisteredDo: aBlock for: aSubscriber [
 
-	self announcer weak when: ToolRegistryToolUnregistered do: aBlock
+	self announcer weak
+		when: ToolRegistryToolUnregistered
+		do: aBlock
+		for: aSubscriber
 ]

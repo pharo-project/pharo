@@ -20,6 +20,13 @@ ProtocolRenamed class >> in: aClass from: oldName to: newName [
 		  yourself
 ]
 
+{ #category : #testing }
+ProtocolRenamed class >> isDeprecated [
+	"Renaming is a composition of ProtocolAdded and ProtocolRemoved. To act on a renaming, those two are the announcements to listen to."
+
+	^ true
+]
+
 { #category : #accessing }
 ProtocolRenamed >> newProtocol [
 
@@ -39,7 +46,7 @@ ProtocolRenamed >> oldProtocol [
 ]
 
 { #category : #accessing }
-ProtocolRenamed >> oldProtocol: aString [
+ProtocolRenamed >> oldProtocol: aProtocol [
 
-	self protocol: aString
+	self protocol: aProtocol
 ]

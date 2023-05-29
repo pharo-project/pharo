@@ -1,11 +1,11 @@
 Extension { #name : #TraitedMetaclass }
 
 { #category : #'*CodeExport-Traits' }
-TraitedMetaclass >> fileOutLocalMethodsInProtocolNamed: protocolName on: aFileStream [
+TraitedMetaclass >> fileOutLocalMethodsInProtocol: protocol on: aFileStream [
 
 	aFileStream cr.
 
-	(self selectorsInProtocolNamed: protocolName)
+	protocol methodSelectors
 		select: [ :selector | self isLocalSelector: selector ]
 		thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ]
 ]

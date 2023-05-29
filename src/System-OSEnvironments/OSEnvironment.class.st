@@ -251,6 +251,19 @@ OSEnvironment >> setEnv: nameString value: valueString [
 ]
 
 { #category : #accessing }
+OSEnvironment >> setEnv: nameString value: valueString during: aBlock [
+
+	| oldValue |
+	oldValue := self at: nameString ifAbsent: [ nil ].
+	[
+	self setEnv: nameString value: valueString.
+	aBlock value ] ensure: [
+		oldValue
+			ifNil: [ self removeKey: nameString ]
+			ifNotNil: [ self setEnv: nameString value: valueString ] ]
+]
+
+{ #category : #accessing }
 OSEnvironment >> unsetEnv: string [
 	"This method calls the the platform specific unset environment routine"
 

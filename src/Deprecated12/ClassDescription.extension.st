@@ -6,7 +6,7 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 
 	self deprecated: 'This methods will be removed in the next version of Pharo. If you use it, you can inline it.'.
 
-	^ (self allSuperclassesIncluding: mostGenericClass) flatCollectAsSet: [ :aClass | aClass organization protocolNames ]
+	^ (self allSuperclassesIncluding: mostGenericClass) flatCollectAsSet: [ :aClass | aClass protocolNames ]
 ]
 
 { #category : #'*Deprecated12' }
@@ -42,7 +42,7 @@ ClassDescription >> copy: selector from: originClass classified: protocolName [
 
 	sourceCode ifNil: [ ^ self ].
 
-	protocol := protocolName ifNil: [ originClass organization protocolNameOfElement: selector ].
+	protocol := protocolName ifNil: [ originClass protocolNameOfSelector: selector ].
 
 	(self includesLocalSelector: selector) ifTrue: [
 		sourceCode asString = (self sourceCodeAt: selector) asString ifFalse: [ self error: self name , ' ' , selector , ' will be redefined if you proceed.' ] ].
@@ -92,7 +92,7 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 
-	self copyAll: (aClass organization methodSelectorsInProtocol: protocolName) from: aClass classified: newProtocolName
+	self copyAll: (aClass selectorsInProtocol: protocolName) from: aClass classified: newProtocolName
 ]
 
 { #category : #'*Deprecated12' }

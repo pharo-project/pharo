@@ -82,7 +82,7 @@ MCSnapshotBrowserTest >> classABooleanMethods [
 { #category : #private }
 MCSnapshotBrowserTest >> classAClassProtocols [
 
-	^ self protocolsForClass: self mockClassA class
+	^ self mockClassA class protocolNames
 ]
 
 { #category : #private }
@@ -98,7 +98,7 @@ MCSnapshotBrowserTest >> classADefinitionString [
 
 { #category : #private }
 MCSnapshotBrowserTest >> classAProtocols [
-	^ self protocolsForClass: self mockClassA.
+	^ self mockClassA protocolNames
 ]
 
 { #category : #private }
@@ -179,12 +179,6 @@ MCSnapshotBrowserTest >> morphsOfClass: aMorphClass [
 	morphs := OrderedCollection new.
 	morph allMorphsDo: [:m | (m isKindOf: aMorphClass) ifTrue: [morphs add: m]].
 	^ morphs
-]
-
-{ #category : #private }
-MCSnapshotBrowserTest >> protocolsForClass: aClass [
-
-	^ aClass organization protocolNames
 ]
 
 { #category : #selecting }

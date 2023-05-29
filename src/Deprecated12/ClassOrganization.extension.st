@@ -10,31 +10,33 @@ ClassOrganization >> addCategory: aString [
 { #category : #'*Deprecated12' }
 ClassOrganization >> allCategories [
 
-	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolNames'.
-	^ self protocolNames
+	self deprecated: 'Use #protocolNames on the organized class instead.' transformWith: '`@rcv allCategories' -> '`@rcv organizedClass protocolNames'.
+	^ self organizedClass protocolNames
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categories [
 
-	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
-	^ self protocolNames
+	self deprecated: 'Use #protocolNames on the organized class instead.' transformWith: '`@rcv categories' -> '`@rcv organizedClass protocolNames'.
+	^ self organizedClass protocolNames
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector [
 
-	self deprecated: 'Use #protocolNameOfElement: instead.' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv protocolNameOfElement: `@arg'.
-	^ self protocolNameOfElement: aSelector
+	self
+		deprecated: 'Use #protocolNameOfSelector: on the organized class instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv organizedClass protocolNameOfSelector: `@arg'.
+	^ self organizedClass protocolNameOfSelector: aSelector
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self
-		deprecated: 'Use #protocolNameOfElement: instead.'
-		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfElement: `@arg1) ifNil: `@arg2'.
-	^ (self protocolNameOfElement: aSelector) ifNil: aBlock
+		deprecated: 'Use #protocolNameOfSelector: on the organized class instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv organizedClass protocolNameOfSelector: `@arg1) ifNil: `@arg2'.
+	^ (self organizedClass protocolNameOfSelector: aSelector) ifNil: aBlock
 ]
 
 { #category : #'*Deprecated12' }
@@ -121,17 +123,8 @@ ClassOrganization >> hasComment [
 { #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
-	self deprecated: 'Use #methodsInProtocolNamed: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv methodSelectorsInProtocol: `@arg'.
-	^ self methodSelectorsInProtocol: aName
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> notifyOfChangedCategoriesFrom: oldProtocolName to: newProtocolName [
-
-	self
-		deprecated: 'Use #notifyOfChangedProtocolNamesFrom:to: instead.'
-		transformWith: '`@rcv notifyOfChangedCategoriesFrom: `@arg1 to: `@arg2' -> '`@rcv notifyOfChangedProtocolNamesFrom: `@arg1 to: `@arg2'.
-	self notifyOfChangedProtocolNamesFrom: oldProtocolName to: newProtocolName
+	self deprecated: 'Use #selectorsInProtocol: on organized class instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv organizedClass selectorsInProtocol: `@arg'.
+	^ self organizedClass selectorsInProtocol: aName
 ]
 
 { #category : #'*Deprecated12' }
@@ -144,8 +137,8 @@ ClassOrganization >> removeCategory: protocolName [
 { #category : #'*Deprecated12' }
 ClassOrganization >> removeEmptyCategories [
 
-	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
-	self removeEmptyProtocols
+	self deprecated: 'Use #removeEmptyProtocols on the organized class instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv organizedClass removeEmptyProtocols'.
+	self organizedClass removeEmptyProtocols
 ]
 
 { #category : #'*Deprecated12' }

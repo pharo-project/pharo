@@ -109,23 +109,17 @@ Class {
 		'classExtendingPackagesMapping',
 		'debuggingName',
 		'packageNames',
-		'systemOrganizer'
-	],
-	#classInstVars : [
-		'default'
+		'environment',
+		'categoryMap'
 	],
 	#category : #'RPackage-Core-Base'
 }
 
 { #category : #singleton }
 RPackageOrganizer class >> default [
-	"WARNING: Since this component can be changed (i.e. for testing) you should NOT use it directly.
-	  Use RPackage class>>#organizer instead"
+	"Warning: Use 'Smalltalk organization' since I will be removed in the future."
 
-	^ default ifNil: [
-		  default := self new
-			             systemOrganizer: Smalltalk organization;
-			             yourself ]
+	^ Smalltalk organization
 ]
 
 { #category : #'class initialization' }
@@ -165,32 +159,9 @@ RPackageOrganizer class >> packageClass [
 { #category : #'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
-	self default unregisterInterestToSystemAnnouncement.
+	Smalltalk organization unregisterInterestToSystemAnnouncement.
 	"To make sure that we do not have it twice registered"
-	self default registerInterestToSystemAnnouncement
-]
-
-{ #category : #singleton }
-RPackageOrganizer class >> resetDefault [
-
-	"self resetDefault"
-	default  ifNotNil: [
-		"When an Organizer is not used anymore, we should always pay attention that these two actions are corretly done."
-		default unregisterInterestToSystemAnnouncement.
-
-		self flag: #hack. "for decoupling MC"
-		self class environment at: #MCWorkingCopy ifPresent: [ :wc |
-			wc removeDependent: default]].
-	default := self new.
-	self packageClass initialize
-]
-
-{ #category : #private }
-RPackageOrganizer class >> setDefault: anOrganizer [
-	default ifNotNil: [ default unregister ].
-	default := anOrganizer.
-	default register.
-	RPackage organizer: nil
+	Smalltalk organization registerInterestToSystemAnnouncement
 ]
 
 { #category : #'class initialization' }
@@ -199,10 +170,13 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> addCategory: catString [
+	"Add a new category named catString"
 
-	^ self systemOrganizer addCategory: catString
+	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
+
+	SystemAnnouncer uniqueInstance classCategoryAdded: catString
 ]
 
 { #category : #private }
@@ -239,32 +213,21 @@ RPackageOrganizer >> announcer [
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
-		do: [ :packageName |
-		  | package |
-		  package := (self packageClass named: packageName).
-		  packages at: packageName asSymbol put: package. ]
+		do: [ :packageName | packages at: packageName asSymbol put: (self packageClass named: packageName) ]
 		displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior | self initializeFor: eachBehavior ]
-		displayingProgress: 'Importing behaviors'.
+	Smalltalk allClassesAndTraits do: [ :behavior | self initializeFor: behavior ] displayingProgress: 'Importing behaviors'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			self initializeMethodsFor: eachBehavior.
-			self initializeMethodsFor: eachBehavior classSide ]
+		do: [ :behavior |
+			self initializeMethodsFor: behavior.
+			self initializeMethodsFor: behavior classSide ]
 		displayingProgress: 'Importing methods'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			eachBehavior organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior
-					protocol: eachProtocol ].
-			eachBehavior classSide organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior classSide
-					protocol: eachProtocol ] ]
+		do: [ :behavior |
+			behavior extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior protocol: protocol ].
+			behavior classSide extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior classSide protocol: protocol ] ]
 		displayingProgress: 'Importing extensions'.
 
 	"I reset the cache of names"
@@ -306,16 +269,18 @@ RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
 	self removePackageNameFromCache: aPackageName
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categories [
 
-	^ self systemOrganizer categories
+	^ categoryMap keys
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categoriesMatching: matchString [
+	"Return all matching categories"
 
-	^ self systemOrganizer categoriesMatching: matchString
+	self categories ifNil: [ ^ #(  ) ].
+	^ self categories select: [ :c | matchString match: c ]
 ]
 
 { #category : #'system compatibility' }
@@ -331,10 +296,25 @@ RPackageOrganizer >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categoryOfBehavior: behavior [
+	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
 
-	^ self systemOrganizer categoryOfBehavior: behavior
+	| behaviorName |
+	behaviorName := behavior isBehavior
+		                ifTrue: [ behavior name ]
+		                ifFalse: [ behavior ].
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
+
+	^ nil
+]
+
+{ #category : #'deprecated - SystemOrganizer leftovers' }
+RPackageOrganizer >> categoryOfElement: behaviorName [
+
+	self deprecated: 'Use #categoryOfBehavior: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv categoryOfBehavior: `@arg'.
+	^ self categoryOfBehavior: behaviorName
 ]
 
 { #category : #'private - registration' }
@@ -344,22 +324,35 @@ RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 		ifFalse: [ (self packageClass named: packageName capitalized) register ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> classesInCategory: category [
 
-	^ self systemOrganizer classesInCategory: category
+	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> classify: behaviorName under: categoryName [
+	"Store the argument, element, in the category named heading."
 
-	^ self systemOrganizer classify: behaviorName under: categoryName
+	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
+
+	categoryMap
+		at: categoryName
+		ifPresent: [ :classes |
+		(classes includes: behaviorName) ifTrue: [ ^ self ] ]
+		ifAbsent: [ self addCategory: categoryName ].
+
+	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
+		oldCategory = categoryName ifTrue: [ ^ self ].
+		self removeBehavior: behaviorName ].
+
+	(categoryMap at: categoryName) add: behaviorName
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> classifyAll: aCollection under: categoryName [
 
-	^ self systemOrganizer classifyAll: aCollection under: categoryName
+	aCollection do: [ :element | self classify: element under: categoryName ]
 ]
 
 { #category : #registration }
@@ -413,16 +406,14 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	^ package
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> environment [
-
-	^ self systemOrganizer environment
+	 ^ environment ifNil: [ environment := Smalltalk globals]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> environment: aSystemDictionary [
-
-	^ self systemOrganizer environment: aSystemDictionary
+	 environment := aSystemDictionary
 ]
 
 { #category : #'package - access from class' }
@@ -510,10 +501,13 @@ RPackageOrganizer >> hasRegistered [
 	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> includesCategory: aString [
+	"Tests if a category is already included."
 
-	^ self systemOrganizer includesCategory: aString
+	^ self categories
+		  ifNil: [ false ]
+		  ifNotNil: [ :categories | categories includes: aString ]
 ]
 
 { #category : #testing }
@@ -536,13 +530,14 @@ RPackageOrganizer >> includesPackageNamed: aSymbol [
 
 { #category : #initialization }
 RPackageOrganizer >> initialize [
+
 	super initialize.
 
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
 	debuggingName := ''.
-	systemOrganizer := SystemOrganizer new.
+	categoryMap := Dictionary new.
 
 	self defineUnpackagedClassesPackage
 ]
@@ -585,29 +580,40 @@ RPackageOrganizer >> initializeMethodsFor: aBehavior [
 
 	package := aBehavior package.
 	(aBehavior organization protocols
-		select: [ :each | each isExtensionProtocol not ])
+		reject: [ :each | each isExtensionProtocol ])
 		do: [ :eachProtocol |
 			 (eachProtocol methodSelectors
 				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
 				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
 
-	^ self systemOrganizer isEmptyCategoryNamed: categoryName
+	^ categoryMap
+		  at: categoryName
+		  ifPresent: [ :classes | classes isEmpty ]
+		  ifAbsent: [ false ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> listAtCategoryNamed: categoryName [
+	"Answer the array of elements associated with the name, categoryName."
 
-	^ self systemOrganizer listAtCategoryNamed: categoryName
+	^ (categoryMap at: categoryName ifAbsent: [ Array new ]) asArray
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> orderedTraitsIn: category [
+	"Answer an OrderedCollection containing references to the traits in the
+	category whose name is the argument, category (a string). The traits
+	are ordered so they can be filed in."
 
-	^ self systemOrganizer orderedTraitsIn: category
+	| behaviors traits |
+	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
+	traits := behaviors select: [ :each | each isTrait ].
+	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
+	^ traits asArray
 ]
 
 { #category : #accessing }
@@ -894,28 +900,54 @@ RPackageOrganizer >> registerPackageNamed: aString [
 		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeBehavior: behavior [
+	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
 
-	^ self systemOrganizer removeBehavior: behavior
+	| behaviorName |
+	behaviorName := behavior isBehavior
+		                ifTrue: [ behavior name ]
+		                ifFalse: [ behavior ].
+
+	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeCategoriesMatching: matchString [
+	"Remove all matching categories with their classes"
 
-	^ self systemOrganizer removeCategoriesMatching: matchString
+	(self categoriesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeCategory: category [
+	"Remove the category named, cat. Create an error notificiation if the
+	category has any elements in it."
 
-	^ self systemOrganizer removeCategory: category
+	categoryMap
+		at: category
+		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , category , '. Present classes: ' , classes printString ] ]
+		ifAbsent: [ ^ self ].
+
+	categoryMap removeKey: category.
+
+	SystemAnnouncer uniqueInstance classCategoryRemoved: category
 ]
 
-{ #category : #'system organizer facade' }
-RPackageOrganizer >> removeEmptyPackages [
+{ #category : #'deprecated - SystemOrganizer leftovers' }
+RPackageOrganizer >> removeElement: behaviorName [
 
-	^ self systemOrganizer removeEmptyPackages
+	self deprecated: 'Use #removeBehavior: instead' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv removeBehavior: `@arg'.
+	^ self removeBehavior: behaviorName
+]
+
+{ #category : #'deprecated - SystemOrganizer leftovers' }
+RPackageOrganizer >> removeEmptyPackages [
+	"Remove empty packages."
+
+	(categoryMap select: [ :classes | classes isEmpty ]) keys
+		ifNotEmpty: [ :emptyPackages |
+			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
 ]
 
 { #category : #'package - names-cache' }
@@ -925,16 +957,29 @@ RPackageOrganizer >> removePackageNameFromCache: aPackageName [
 	packageNames remove: aPackageName ifAbsent: [  ]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeSystemCategory: category [
+	"remove all the classes and traits associated with the category"
 
-	^ self systemOrganizer removeSystemCategory: category
+	(self orderedTraitsIn: category) , (self superclassOrder: category) reverseDo: [ :each | each removeFromSystem ].
+
+	self removeCategory: category
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
+	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	^ self systemOrganizer renameCategory: oldCatString toBe: newCatString
+	categoryMap at: newCatString ifPresent: [ "new name exists, so no action" ^ self ].
+
+	categoryMap
+		at: oldCatString
+		ifPresent: [ :classes |
+			categoryMap at: newCatString put: classes.
+			categoryMap removeKey: oldCatString ]
+		ifAbsent: [ "old name not found, so no action" ^ self ].
+
+	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString
 ]
 
 { #category : #'system integration' }
@@ -985,10 +1030,16 @@ RPackageOrganizer >> stopNotification [
 		wc removeDependent: self]
 ]
 
-{ #category : #'system organizer facade' }
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> superclassOrder: category [
+	"Answer an OrderedCollection containing references to the classes in the
+	category whose name is the argument, category (a string). The classes
+	are ordered with superclasses first so they can be filed in."
 
-	^ self systemOrganizer superclassOrder: category
+	| behaviors classes |
+	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
+	classes := behaviors select: [ :each | each isBehavior ].
+	^ Class superclassOrder: classes
 ]
 
 { #category : #'system integration' }
@@ -1119,7 +1170,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
-	ann classReorganized organization protocolNames do: [ :each | (each beginsWith: '*') ifTrue: [ self checkPackageExistsOrRegister: each allButFirst ] ]
+	ann classReorganized extensionProtocols do: [ :protocol | self checkPackageExistsOrRegister: protocol name allButFirst ]
 ]
 
 { #category : #'system integration' }
@@ -1185,9 +1236,9 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	method origin = ann methodClass ifFalse: [ ^ self ].
 	(self packageOfClassNamed: ann methodClass instanceSide name) ifNil: [ ^ self ].
 
-	newProtocol := ann newProtocol ifNil: [ ^ self ].
+	newProtocol := ann newProtocol ifNotNil: [ :protocol | protocol name ] ifNil: [ ^ self ].
 
-	oldProtocol := ann oldProtocol ifNil: [ '' ].
+	oldProtocol := ann oldProtocol ifNotNil: [ :protocol | protocol name ] ifNil: [ '' ].
 
 	methodPackage := method packageFromOrganizer: self.
 	newProtocol asLowercase = oldProtocol asLowercase ifTrue: [ ^ self ].
@@ -1231,18 +1282,6 @@ RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 			methodPackage ifNotNil: [
 				methodPackage removeSelector: ann selector ofMetaclassName: ann methodClass instanceSide originalName].
 		]
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> systemOrganizer [
-
-	^ systemOrganizer
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> systemOrganizer: anObject [
-
-	systemOrganizer := anObject
 ]
 
 { #category : #accessing }

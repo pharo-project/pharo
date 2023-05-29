@@ -58,7 +58,7 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
-	| violating classSideInitializeMethods todo |
+	| violating classSideInitializeMethods |
 	violating := OrderedCollection new.
 	classSideInitializeMethods := OrderedCollection new.
 
@@ -67,10 +67,6 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
 				ifTrue: [ classSideInitializeMethods add: method ]]].
 	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
-
-	todo := #(#LGitDiffHunk #TonelFileSystemUtils #MicHTTPResourceReference).
-
-	violating := violating reject: [ :each | todo includes: each methodClass instanceSide name  ].
 
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
@@ -156,8 +152,8 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	| violations |
 	violations := OrderedCollection new.
 
-	Object allSubclasses do: [ :each |
-		each organization protocolNames do: [ :cat | ((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ violations add: each -> cat ] ] ].
+	Object allSubclasses do: [ :subclass |
+		subclass protocolNames do: [ :protocolName | ((protocolName endsWith: ' ') or: [ protocolName endsWith: ' ' ]) ifTrue: [ violations add: subclass -> protocolName ] ] ].
 
 	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ' , violations asString
 ]
@@ -166,16 +162,17 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
-	| violating validExceptions remaining|
-	violating := Smalltalk globals allBehaviors select: [ :class |
-		             class protocols includes: Protocol unclassified ].
+	| violating validExceptions remaining |
+	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: Protocol unclassified ].
 
 
-	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand).
+	validExceptions := #( ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class'
+	                      MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest
+	                      'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand ).
 
-	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+	remaining := violating asOrderedCollection reject: [ :each | validExceptions includes: each name ].
 
-	self assert: remaining isEmpty description: ('the following classes have uncategorized methods: ', remaining asString)
+	self assert: remaining isEmpty description: 'the following classes have uncategorized methods: ' , remaining asString
 ]
 
 { #category : #tests }
@@ -183,13 +180,10 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 	"Check that we have no #'utils' protocols left, the protocol should be 'utilities' "
 
 	| violating |
-	violating := Smalltalk globals allBehaviors select: [ :class |
-		             class protocols includes: #'utils' ].
+	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: #utils ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self 
-		assert: violating size <= 4
-		description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
+	self assert: violating size <= 4 description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
 ]
 
 { #category : #'tests - object' }

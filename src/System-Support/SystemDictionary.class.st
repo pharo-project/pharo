@@ -260,11 +260,6 @@ SystemDictionary >> lookupVar: name [
 	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
-{ #category : #'accessing - variable lookup' }
-SystemDictionary >> lookupVar: name declare: aBoolean [
-	^ self lookupVar: name
-]
-
 { #category : #'accessing - system attributes' }
 SystemDictionary >> maxIdentityHash [
 	"Answer the maximum identityHash value supported by the VM."
@@ -291,7 +286,7 @@ SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
 	^ self at: #SystemOrganization ifAbsent: [
-		  self organization: SystemOrganizer new.
+		  self organization: RPackageOrganizer new.
 		  self at: #SystemOrganization ]
 ]
 

@@ -231,22 +231,18 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
+
 	| packageName |
-	packageName := (RPackageOrganizer default
-		packageForProtocol: aMethodInAnObsoleteBehavior protocol
-		inClass: aMethodInAnObsoleteBehavior methodClass) name.
+	packageName := (Smalltalk organization packageForProtocol: aMethodInAnObsoleteBehavior protocol inClass: aMethodInAnObsoleteBehavior methodClass) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
-	packageName = RPackage defaultPackageName
-		ifTrue: [ packageName := aSymbol ].
+	packageName = RPackage defaultPackageName ifTrue: [ packageName := aSymbol ].
 
-	self addEvent:
-		(EpMethodRemoval method:
-			(aMethodInAnObsoleteBehavior asEpiceaRingDefinition
-				parentName: aMethodInAnObsoleteBehavior methodClass originalName;
-				protocol: aMethodInAnObsoleteBehavior protocol;
-				package: packageName;
-				yourself))
+	self addEvent: (EpMethodRemoval method: (aMethodInAnObsoleteBehavior asEpiceaRingDefinition
+				  parentName: aMethodInAnObsoleteBehavior methodClass originalName;
+				  protocol: aMethodInAnObsoleteBehavior protocol;
+				  package: packageName;
+				  yourself))
 ]
 
 { #category : #'announcement handling' }
@@ -498,16 +494,15 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 		| oldMethod newMethod |
 		"Workaround: When a trait is removed from the trait composition,
 		then this announcement is wrongly announced."
-
 		aMethodRecategorized methodRecategorized ifNil: [ ^ self ].
 		oldMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized oldProtocol;
-			yourself.
+			             protocol: aMethodRecategorized oldProtocol name;
+			             yourself.
 		newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized newProtocol;
-			yourself.
+			             protocol: (aMethodRecategorized newProtocol ifNotNil: [ :protocol | protocol name ]);
+			             yourself.
 
-		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)]
+		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod) ]
 ]
 
 { #category : #'announcement handling' }
@@ -515,14 +510,12 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 	"RPackage already unregistered the method so we have to workaround protocol and package."
 
 	self handleAnyErrorDuring: [
-		self addEvent:
-			(EpMethodRemoval method:
-				(aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
-					protocol: aMethodRemovedAnnouncement protocol;
-					package: (RPackageOrganizer default
-						packageForProtocol: aMethodRemovedAnnouncement protocol
-						inClass: aMethodRemovedAnnouncement methodAffected methodClass) name;
-					yourself))]
+		self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
+					  protocol: aMethodRemovedAnnouncement protocol name;
+					  package:
+						  (Smalltalk organization packageForProtocol: aMethodRemovedAnnouncement protocol name inClass: aMethodRemovedAnnouncement methodAffected methodClass)
+							  name;
+					  yourself)) ]
 ]
 
 { #category : #'announcement handling' }
