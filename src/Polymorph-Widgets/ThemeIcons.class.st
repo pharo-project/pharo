@@ -308,13 +308,13 @@ ThemeIcons >> iconNamed: aSymbol [
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / scale) ].
+	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
 	"Trying the old way"
 
 	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
 		self icons
 			at: (aSymbol allButLast: 4) asSymbol
-			ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / scale) ]
+			ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
 	].
 
 	^ aBlock value
@@ -382,6 +382,11 @@ ThemeIcons >> printOn: stream [
 ThemeIcons >> readPNGFrom: aReference [
 	^ aReference binaryReadStreamDo: [ :stream |
 		PNGReadWriter formFromStream: stream ]
+]
+
+{ #category : #accessing }
+ThemeIcons >> scale [
+	^ scale ifNil: [ scale := 1 ]
 ]
 
 { #category : #accessing }
