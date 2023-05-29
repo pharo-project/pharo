@@ -23,18 +23,6 @@ CompiledMethod class >> abstractMarker [
 	^ #subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> basicNew [
-
-	self error: 'CompiledMethods may only be created with newMethod:header:'
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> basicNew: size [
-
-	self error: 'CompiledMethods may only be created with newMethod:header:'
-]
-
 { #category : #'class initialization' }
 CompiledMethod class >> checkBytecodeSetConflictsInMethodsWith: aBlock [
 

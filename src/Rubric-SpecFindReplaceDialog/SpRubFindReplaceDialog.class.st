@@ -54,20 +54,17 @@ SpRubFindReplaceDialog class >> defaultLayout [
 
 { #category : #'morphic dependencies' }
 SpRubFindReplaceDialog >> assignEnterKeystrokeEventFor: aPresenter [
-
 	"Morphic dependent!"
 
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann |
-		self find ] ]
+	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann | self find ] for: self ]
 ]
 
 { #category : #'morphic dependencies' }
 SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
-
 	"Morphic dependent!"
 
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubKeystroke do: [ :ann |
-		ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] ]
+	aPresenter whenBuiltDo: [ :this |
+		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
 ]
 
 { #category : #operations }

@@ -1178,7 +1178,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
-	ann classReorganized organization protocolNames do: [ :each | (each beginsWith: '*') ifTrue: [ self checkPackageExistsOrRegister: each allButFirst ] ]
+	ann classReorganized organization extensionProtocols do: [ :protocol | self checkPackageExistsOrRegister: protocol name allButFirst ]
 ]
 
 { #category : #'system integration' }

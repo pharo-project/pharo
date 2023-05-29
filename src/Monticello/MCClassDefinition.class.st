@@ -275,9 +275,9 @@ MCClassDefinition >> initializeWithName: nameString superclassName: superclassSt
 	traitComposition := traitCompositionString.
 	classTraitComposition := classTraitCompositionString.
 	category := categoryString.
-	name = #CompiledMethod
-		ifTrue: [ type := #compiledMethod ]
-		ifFalse: [ type := typeSymbol ].
+	 type := (#(#CompiledMethod #CompiledBlock #CompiledCode) includes: name)
+		ifTrue: [ #compiledMethod ]
+		ifFalse: [ typeSymbol ].
 	comment := commentString withInternalLineEndings.
 	commentStamp := stampStringOrNil ifNil: [ self defaultCommentStamp ].
 	variables := OrderedCollection new.

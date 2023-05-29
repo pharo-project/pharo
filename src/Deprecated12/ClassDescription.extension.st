@@ -6,7 +6,7 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 
 	self deprecated: 'This methods will be removed in the next version of Pharo. If you use it, you can inline it.'.
 
-	^ (self allSuperclassesIncluding: mostGenericClass) flatCollectAsSet: [ :aClass | aClass organization protocolNames ]
+	^ (self allSuperclassesIncluding: mostGenericClass) flatCollectAsSet: [ :aClass | aClass protocolNames ]
 ]
 
 { #category : #'*Deprecated12' }
