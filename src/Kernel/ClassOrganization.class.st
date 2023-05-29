@@ -66,11 +66,6 @@ ClassOrganization >> copyFrom: otherOrganization [
 	protocols := otherOrganization protocols copy
 ]
 
-{ #category : #accessing }
-ClassOrganization >> extensionProtocols [
-	^ self protocols select: #isExtensionProtocol
-]
-
 { #category : #initialization }
 ClassOrganization >> initialize [
 

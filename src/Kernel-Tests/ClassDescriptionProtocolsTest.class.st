@@ -53,6 +53,19 @@ ClassDescriptionProtocolsTest >> testEnsureProtocol [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testExtensionProtocols [
+
+	| extensionPackageName |
+	extensionPackageName := class package name , '2'.
+	class organization addProtocol: #titan.
+	[
+	class organization addProtocol: '*' , extensionPackageName.
+
+	self assertCollection: class extensionProtocols hasSameElements: { (class protocolNamed: '*' , extensionPackageName) } ] ensure: [
+		(extensionPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testHasProtocol [
 
 	class organization addProtocol: #titan.
