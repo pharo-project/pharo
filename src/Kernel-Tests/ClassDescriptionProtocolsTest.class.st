@@ -34,6 +34,100 @@ ClassDescriptionProtocolsTest >> tearDown [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testClassifyUnder [
+
+	"Lets create a new protocol via classification"
+	class classify: #edalyn under: #which.
+	class classify: #luz under: #which.
+
+	self assertCollection: class protocolNames hasSameElements: #( #which ).
+	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #edalyn #luz ).
+
+	"Move a method"
+	class classify: #luz under: #human.
+	self assertCollection: class protocolNames hasSameElements: #( #human #which ).
+	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #edalyn ).
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
+
+	"Move last method"
+	class classify: #edalyn under: #beast.
+	self assertCollection: class protocolNames hasSameElements: #( #human #beast ).
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
+	self assertCollection: (class selectorsInProtocol: #beast) hasSameElements: #( #edalyn ).
+
+	"Nothing should change if the new protocol is the same than the old one"
+	class classify: #edalyn under: #beast.
+	self assertCollection: class protocolNames hasSameElements: #( #human #beast ).
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
+	self assertCollection: (class selectorsInProtocol: #beast) hasSameElements: #( #edalyn )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testClassifyUnderUnclassified [
+	"Ensure unclassified is acting as any other protocol because that was not the case in the past."
+
+	"Lets create a new protocol via classification"
+	class classify: #king under: Protocol unclassified.
+	class classify: #luz under: Protocol unclassified.
+
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz ).
+	
+	"This should do nothing."
+	class classify: #luz under: Protocol unclassified.
+
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz ).
+
+	"Now we move a method from unclassified to another protocol."
+	class classify: #luz under: #human.
+
+	self assertCollection: class protocolNames hasSameElements: { #human. Protocol unclassified }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king ).
+	
+	"Now we move back to unclassified."
+	class classify: #luz under: Protocol unclassified.
+
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testClassifyUnderWithNil [
+	"Set the base for the test"
+	| unclassified|
+	unclassified := Protocol unclassified.
+
+	class classify: #king under: nil.
+
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king ).
+	
+	class classify: #luz under: #human.
+
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
+	
+	"Now let's test the behavior if we already have a protocol.
+	The behavior should change to not change the protocol but this test will ensure that the change is intentional and not a regression."
+	class classify: #luz under: nil.
+
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz ).
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocol [
+
+	"Lets create a new protocol via classification"
+	class classify: #edalyn under: #which.
+	class classify: #luz under: (class protocolNamed: #which).
+
+	self assertCollection: class protocolNames hasSameElements: #( #which ).
+	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #edalyn #luz )
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testExtensionProtocols [
 
 	| extensionPackageName |
@@ -125,8 +219,8 @@ ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
 
-	class organization classify: #amity under: #witch.
-	class organization classify: #edalyn under: #witch.
+	class classify: #amity under: #witch.
+	class classify: #edalyn under: #witch.
 	self assert: (class hasProtocol: #witch).
 	self assertCollection: (class selectorsInProtocol: #witch) hasSameElements: #( #amity #edalyn ).
 

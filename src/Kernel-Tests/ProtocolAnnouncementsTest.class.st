@@ -59,7 +59,7 @@ ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization classify: #king under: #titan.
+	class classify: #king under: #titan.
 	self assert: numberOfAnnouncements equals: 2
 ]
 
@@ -175,7 +175,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoe
 ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceClassReorganizedOnce [
 	"This is a regerssion test because at some point the class reorganized announcement got duplicated."
 
-	organization classify: #king under: #demon.
+	class classify: #king under: #demon.
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
@@ -190,7 +190,7 @@ ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
 	self skip. "This hihglight the problem of https://github.com/pharo-project/pharo/pull/13494
 	But we still need to work on this to fix this test."
 
-	organization classify: #king under: #demon.
+	class classify: #king under: #demon.
 
 	self when: ProtocolAdded do: [ :ann |
 		self assert: ann protocol name equals: #titan.
