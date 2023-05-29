@@ -60,7 +60,7 @@ ClyMainItemCellMorph >> addBarForFullIndentation [
 	mainItemsCount := 0.
 	absentItemsCount := mainItemsCount - submorphs size.
 
-	requiredWidth := absentItemsCount * 16 + (self itemDepth * 8).
+	requiredWidth := (absentItemsCount * 16 + (self itemDepth * 8)) * self currentWorld displayScaleFactor.
 	requiredWidth = 0 ifTrue: [ ^self ].
 
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
