@@ -40,7 +40,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
-	newProtocol := self organization protocolOfSelector: selector.
+	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 

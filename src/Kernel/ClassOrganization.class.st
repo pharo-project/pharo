@@ -48,7 +48,7 @@ ClassOrganization >> allMethodSelectors [
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self organizedClass ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	(newProtocol := self organizedClass ensureProtocol: aProtocol) = (oldProtocol := self organizedClass protocolOfSelector: selector) ifTrue: [ ^ self ].
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.
@@ -96,12 +96,6 @@ ClassOrganization >> printOn: aStream [
 		nextPutAll: ' (';
 		print: self organizedClass;
 		nextPut: $)
-]
-
-{ #category : #inlined }
-ClassOrganization >> protocolOfSelector: aSelector [
-
-	^ self organizedClass protocolOfSelector: aSelector
 ]
 
 { #category : #accessing }
