@@ -1236,7 +1236,6 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 			self showOverEditableTextCursor ]
 		ifFalse: [
 			self hasFocus: false.
-			self requestStopTextEditing.
 			editing = true ifTrue: [ editing := false ].
 			self hideOverEditableTextCursor ].
 	super keyboardFocusChange: aBoolean

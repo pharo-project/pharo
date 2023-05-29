@@ -90,7 +90,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	class removeProtocolIfEmpty: (organization protocolNamed: #titan).
+	class removeProtocolIfEmpty: (class protocolNamed: #titan).
 
 	self assert: numberOfAnnouncements equals: 2
 ]

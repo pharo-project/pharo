@@ -767,10 +767,24 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 ]
 
 { #category : #protocols }
+ClassDescription >> protocolNamed: aString [
+
+	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
+]
+
+{ #category : #protocols }
+ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
+
+	^ self organization protocols
+		  detect: [ :e | e name = aString ]
+		  ifNone: aBlock
+]
+
+{ #category : #protocols }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
-	^ self organization protocolNames copy
+	^ self organization protocols collect: [ :protocol | protocol name ]
 ]
 
 { #category : #protocols }
@@ -817,9 +831,10 @@ ClassDescription >> removeInstVarNamed: aString [
 ClassDescription >> removeNonexistentSelectorsFromProtocols [
 	"For each protocol, remove the selectors that are not present in the class."
 
-	self organization allMethodSelectors
-		reject: [ :selector | self includesSelector: selector ]
-		thenDo: [ :selector | self removeFromProtocols: selector ]
+	self organization protocols do: [ :protocol |
+		protocol methodSelectors
+			reject: [ :selector | self includesSelector: selector ]
+			thenDo: [ :selector | self removeFromProtocols: selector ] ]
 ]
 
 { #category : #protocols }

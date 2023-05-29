@@ -33,7 +33,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	refactoring := (RBMethodProtocolTransformation protocol: 'empty protocol 2' inMethod: #someMethod inClass: #RBDummyEmptyClass) asRefactoring transform.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
-	self deny: (RBDummyEmptyClass organization protocolNamed: 'empty protocol 2') isEmpty.
+	self deny: (RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
 
 	refactoring := (RBMethodProtocolTransformation protocol: 'empty protocol 1' inMethod: #someMethod inClass: #RBDummyEmptyClass) asRefactoring transform.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
@@ -50,7 +50,7 @@ RBMethodProtocolTransformationTest >> testTransform [
 	transformation := (RBMethodProtocolTransformation new protocol: 'empty protocol 2' inMethod: #someMethod inClass: #RBDummyEmptyClass) transform.
 	RBRefactoryChangeManager instance performChange: transformation changes.
 
-	self deny: (RBDummyEmptyClass organization protocolNamed: 'empty protocol 2') isEmpty.
+	self deny: (RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
 
 	transformation := (RBMethodProtocolTransformation new protocol: 'empty protocol 1' inMethod: #someMethod inClass: #RBDummyEmptyClass) transform.
 	RBRefactoryChangeManager instance performChange: transformation changes.
