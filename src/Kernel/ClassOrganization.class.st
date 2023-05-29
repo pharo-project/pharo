@@ -48,7 +48,7 @@ ClassOrganization >> allMethodSelectors [
 ClassOrganization >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	(newProtocol := self organizedClass ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.
@@ -64,23 +64,6 @@ ClassOrganization >> classify: selector under: aProtocol [
 ClassOrganization >> copyFrom: otherOrganization [
 
 	protocols := otherOrganization protocols copy
-]
-
-{ #category : #accessing }
-ClassOrganization >> ensureProtocol: aProtocol [
-	"I can take a Protocol or a protocol name as paramater.
-	
-	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
-	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error.
-	If I receive nil, I return the unclassified protocol"
-
-	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
-
-	aProtocol isString ifFalse: [
-		(self protocols includes: aProtocol)
-			ifTrue: [ ^ aProtocol ]
-			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self organizedClass protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #accessing }
@@ -165,7 +148,7 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
 	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
-		oldProtocol := self ensureProtocol: anOldProtocol.
+		oldProtocol := self organizedClass ensureProtocol: anOldProtocol.
 
 		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
 	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."

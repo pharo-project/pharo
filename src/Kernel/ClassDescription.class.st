@@ -392,7 +392,13 @@ ClassDescription >> ensureProtocol: aProtocol [
 	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
 	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
 
-	^ self organization ensureProtocol: aProtocol
+	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
+
+	aProtocol isString ifFalse: [
+		(self organization protocols includes: aProtocol)
+			ifTrue: [ ^ aProtocol ]
+			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
+	^ self protocolNamed: aProtocol ifAbsent: [ self organization addProtocol: aProtocol ]
 ]
 
 { #category : #private }
