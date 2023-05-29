@@ -213,32 +213,21 @@ RPackageOrganizer >> announcer [
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
-		do: [ :packageName |
-		  | package |
-		  package := (self packageClass named: packageName).
-		  packages at: packageName asSymbol put: package. ]
+		do: [ :packageName | packages at: packageName asSymbol put: (self packageClass named: packageName) ]
 		displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior | self initializeFor: eachBehavior ]
-		displayingProgress: 'Importing behaviors'.
+	Smalltalk allClassesAndTraits do: [ :behavior | self initializeFor: behavior ] displayingProgress: 'Importing behaviors'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			self initializeMethodsFor: eachBehavior.
-			self initializeMethodsFor: eachBehavior classSide ]
+		do: [ :behavior |
+			self initializeMethodsFor: behavior.
+			self initializeMethodsFor: behavior classSide ]
 		displayingProgress: 'Importing methods'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			eachBehavior organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior
-					protocol: eachProtocol ].
-			eachBehavior classSide organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior classSide
-					protocol: eachProtocol ] ]
+		do: [ :behavior |
+			behavior extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior protocol: protocol ].
+			behavior classSide extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior classSide protocol: protocol ] ]
 		displayingProgress: 'Importing extensions'.
 
 	"I reset the cache of names"
@@ -590,9 +579,12 @@ RPackageOrganizer >> initializeMethodsFor: aBehavior [
 
 	| package |
 	package := aBehavior package.
-	(aBehavior protocols reject: [ :each | each isExtensionProtocol ]) do: [ :eachProtocol |
-		(eachProtocol methodSelectors select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ]) do: [ :eachSelector |
-			package addMethod: aBehavior >> eachSelector ] ]
+	(aBehavior protocols
+		reject: [ :each | each isExtensionProtocol ])
+		do: [ :protocol |
+			 (protocol methodSelectors
+				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
+				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -1178,7 +1170,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
-	ann classReorganized organization extensionProtocols do: [ :protocol | self checkPackageExistsOrRegister: protocol name allButFirst ]
+	ann classReorganized extensionProtocols do: [ :protocol | self checkPackageExistsOrRegister: protocol name allButFirst ]
 ]
 
 { #category : #'system integration' }

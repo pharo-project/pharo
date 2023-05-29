@@ -27,5 +27,5 @@ RFTempRead >> value [
 
 { #category : #accessing }
 RFTempRead >> variableName: aSymbol [
-	variable := context temporaryVariableNamed: aSymbol
+	variable := context lookupVar: aSymbol
 ]

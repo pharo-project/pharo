@@ -413,6 +413,12 @@ ClassDescription >> expandedDefinitionStringFor: aPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : #protocols }
+ClassDescription >> extensionProtocols [
+
+	^ self organization protocols select: [ :protocol | protocol isExtensionProtocol ]
+]
+
 { #category : #'instance variables' }
 ClassDescription >> forceNewFrom: anArray [
     "Create a new instance of the class and fill
