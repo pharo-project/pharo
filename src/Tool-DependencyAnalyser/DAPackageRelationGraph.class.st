@@ -483,11 +483,12 @@ DAPackageRelationGraph >> successors: aPackage [
 
 { #category : #queries }
 DAPackageRelationGraph >> systemPackageContaining: aClass [
+
 	| packageName |
-	packageName := (RPackageOrganizer default packageOf: aClass) packageName.
+	packageName := (Smalltalk organization packageOf: aClass) packageName.
 	^ packageName
-		ifNil: [ self error: 'Package for ' , aClass name , ' not found.' ]
-		ifNotNil: [ DAPackage on: (RPackageSet named: packageName asString) ]
+		  ifNil: [ self error: 'Package for ' , aClass name , ' not found.' ]
+		  ifNotNil: [ DAPackage on: (RPackageSet named: packageName asString) ]
 ]
 
 { #category : #computing }

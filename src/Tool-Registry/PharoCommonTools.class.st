@@ -106,7 +106,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
 		iconName: #smallSystemBrowser.
-	(aBuilder item: #Iceberg)
+	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
 		icon: (self iconNamed: #komitterSmalltalkhubRemote);
 		parent: #Browsing;

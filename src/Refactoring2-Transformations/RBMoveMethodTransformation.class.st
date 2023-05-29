@@ -91,7 +91,8 @@ RBMoveMethodTransformation >> addSelfReturn [
 RBMoveMethodTransformation >> buildParseTree [
 
 	parseTree := ( class parseTreeForSelector: selector ) copy.
-	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : #testing }
@@ -205,7 +206,7 @@ RBMoveMethodTransformation >> getClassForGlobalOrClassVariable [
 				ifNil: [ self model classNamed: #Object ] ]
 		ifNotNil: [ type := definingClass typeOfClassVariable: variable ].
 	moveToClasses := self selectVariableTypesFrom: (Array with: type) selected: (Array with: type).
-	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
+	moveToClasses ifNil: [ self refactoringError: 'Method not moved' ]
 ]
 
 { #category : #transforming }
@@ -219,7 +220,7 @@ RBMoveMethodTransformation >> getClassesForInstanceVariable [
 	types := typer typesFor: variable.
 	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: ( typer guessTypesFor: variable ).
-	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
+	moveToClasses ifNil: [ self refactoringError: 'Method not moved' ]
 ]
 
 { #category : #transforming }
@@ -230,7 +231,7 @@ RBMoveMethodTransformation >> getClassesForTemporaryVariable [
 	types := RBRefactoryTyper typesFor: variable in: parseTree model: self model.
 	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: types.
-	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
+	moveToClasses ifNil: [ self refactoringError: 'Method not moved' ]
 ]
 
 { #category : #transforming }
@@ -241,7 +242,7 @@ RBMoveMethodTransformation >> getClassesToMoveTo [
 			[self isMovingToInstVar
 				ifTrue: [self getClassesForInstanceVariable]
 				ifFalse: [self getClassForGlobalOrClassVariable]].
-	moveToClasses ifEmpty: [self refactoringFailure: 'No classes selected, method not moved.']
+	moveToClasses ifEmpty: [self refactoringError: 'No classes selected, method not moved.']
 ]
 
 { #category : #transforming }
@@ -258,7 +259,7 @@ RBMoveMethodTransformation >> getNewMethodName [
 		arguments: parameters.
 
 	[ newMethodName := self requestMethodNameFor: methodName.
-	newMethodName ifNil: [ self refactoringFailure: 'Did not move method' ].
+	newMethodName ifNil: [ self refactoringError: 'Did not move method' ].
 	newMethodName isValid
 		ifTrue: [ newSelector := newMethodName selector ]
 		ifFalse: [ self refactoringWarning: 'Invalid method name' ].

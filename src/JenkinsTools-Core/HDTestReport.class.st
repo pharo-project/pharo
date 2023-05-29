@@ -281,7 +281,8 @@ HDTestReport >> serializeError: error of: aTestCase [
 		at: #FLDebuggerStackSerializer
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
-			context := error signalerContext.
+			"we use signalContext and findMethodContextSuchThat: to find the method even with clean blocks in the middle"
+ 			context := error signalContext.
 			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
 					                         ctx selector == #performTest ] ].

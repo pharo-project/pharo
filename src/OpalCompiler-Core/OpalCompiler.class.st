@@ -38,7 +38,8 @@ Class {
 		'failBlock',
 		'logged',
 		'changeStamp',
-		'protocol'
+		'protocol',
+		'requestor'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -299,13 +300,13 @@ OpalCompiler >> checkNotice: aNotice [
 			signal.
 		^ true ].
 
-	self compilationContext requestor ifNotNil: [ :requestor |
+	self requestor ifNotNil: [
 		"A requestor is available. We are in quirks mode and are expected to do UI things."
 		"Reparation menu in quirks mode:
 		* require a requestor (because quirks mode, and also some reparations expect a requestor)
 		* require interactive mode (because GUI)
 		* require method definition becase some reparation assume it's a method body"
-		self compilationContext interactive ifTrue: [
+		self isInteractive ifTrue: [
 			aNotice reparator ifNotNil: [ :reparator |
 				| res |
 				res := reparator
@@ -362,7 +363,7 @@ OpalCompiler >> compilationContextClass: aClass [
 { #category : #'public access' }
 OpalCompiler >> compile [
 
-	| result method |
+	| result |
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
 
@@ -372,12 +373,7 @@ OpalCompiler >> compile [
 			ast ifNil: [ "some failBlock" ^ result ] ]
 		ifNotNil: [ ast scope ifNil: [ self doSemanticAnalysis ] ].
 
-	self callPlugins.
-	ast scope registerVariables.
-	method := ast generateMethod.
-	method propertyAt: #source put: source.
-	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
-	^ method
+	^ self generateMethod
 ]
 
 { #category : #'public access' }
@@ -396,7 +392,7 @@ OpalCompiler >> compiledMethodClass: aClass [
 
 { #category : #accessing }
 OpalCompiler >> compiledMethodTrailer: bytes [
-	self compilationContext compiledMethodTrailer: bytes
+	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
 ]
 
 { #category : #accessing }
@@ -427,6 +423,12 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
+
+	|scope|
+	"First thing is to attach a initial scope to the method,
+	so plugins can have something to rely on for their analysis and transformations"
+	scope := OCMethodScope new outerScope: self buildOuterScope.
+	ast scope: scope.  scope node: ast.
 
 	self callParsePlugins.
 	self compilationContext semanticAnalyzerClass new
@@ -503,6 +505,45 @@ OpalCompiler >> format: textOrString [
 		format
 ]
 
+{ #category : #private }
+OpalCompiler >> generateIR [
+	| ir |
+
+	ast pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
+		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
+		copy := ast copy.
+		copy removePragmaNamed: pragma selector.
+		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
+		ir sourceNode: ast.
+		^ ir
+	].
+
+ 	ir := (self compilationContext astTranslatorClass new
+			compilationContext: self compilationContext;
+			visitNode: ast)
+			ir.
+	ast ir: ir.
+	^ ir
+]
+
+{ #category : #private }
+OpalCompiler >> generateMethod [
+
+	| method ir |
+	self callPlugins.
+	ast scope registerVariables.
+
+	ast bcToASTCache: nil.
+	ir := self generateIR.
+	method := ir compiledMethod.
+
+	ast compiledMethod: method.	
+	method propertyAt: #source put: source.
+	self compilationContext noPattern ifTrue: [
+		method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	^ method
+]
+
 { #category : #actions }
 OpalCompiler >> install [
 	"Compile and install a method in a class"
@@ -539,14 +580,27 @@ OpalCompiler >> install: aSource [
 	^ self install
 ]
 
+{ #category : #testing }
+OpalCompiler >> isInteractive [
+
+	self requestor ifNil: [ ^ false ].
+	"we asume requestors are interactive, but they can override.
+	this should be simplified "
+	^ (self requestor respondsTo: #interactive)
+		  ifTrue: [ self requestor interactive ]
+		  ifFalse: [ true ]
+]
+
 { #category : #accessing }
 OpalCompiler >> isScripting [
-	^ self compilationContext noPattern
+	^ self semanticScope isDoItScope
 ]
 
 { #category : #accessing }
 OpalCompiler >> isScripting: aBoolean [
-	self compilationContext noPattern: aBoolean
+
+	(aBoolean and: [ self isScripting not ]) ifTrue: [
+		self semanticScope: OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #accessing }
@@ -600,7 +654,7 @@ OpalCompiler >> parse [
 
 	parser := self parserClass new.
 	parser initializeParserWith: source.
-	ast := self compilationContext noPattern ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
+	ast := self isScripting ifTrue: [ parser parseDoIt ] ifFalse: [ parser parseMethod ].
 
 	ast methodNode compilationContext: self compilationContext.
 	self doSemanticAnalysis.
@@ -705,12 +759,12 @@ OpalCompiler >> receiver: anObject [
 
 { #category : #accessing }
 OpalCompiler >> requestor [
-	^ self compilationContext requestor
+	^ requestor
 ]
 
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
-	self compilationContext requestor: aRequestor
+	requestor := aRequestor
 ]
 
 { #category : #plugins }

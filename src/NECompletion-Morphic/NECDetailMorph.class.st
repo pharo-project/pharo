@@ -36,7 +36,7 @@ NECDetailMorph >> contentBounds [
 	factor := self itemHeight.
 	rectangle := self bounds top: self bounds top + 3.
 	rectangle := rectangle left: rectangle left + (factor * 2.0).
-	rectangle := rectangle bottom: rectangle bottom - factor.
+	rectangle := rectangle bottom: rectangle bottom.
 	^ rectangle
 ]
 
@@ -67,36 +67,9 @@ NECDetailMorph >> drawArrowOn: aCanvas [
 ]
 
 { #category : #drawing }
-NECDetailMorph >> drawMessageOn: aCanvas [
-	| factor rectangle width browseMessage |
-	factor := self itemHeight.
-	rectangle := self bounds top: self bounds bottom - factor.
-	rectangle := rectangle left: self contentBounds left.
-	aCanvas
-		line: rectangle topLeft
-		to: rectangle topRight
-		color: Color darkGray.
-	rectangle := rectangle top: rectangle top + 1.
-	aCanvas
-		drawString: '<- close detail'
-		in: rectangle
-		font: self messageFont
-		color: Color darkGray.
-	browseMessage := 'browse ->'.
-	width := self messageFont widthOfString: browseMessage.
-	aCanvas
-		drawString: browseMessage
-		in: (rectangle left: rectangle right - width)
-		font: self messageFont
-		color: Color darkGray
-]
-
-{ #category : #drawing }
 NECDetailMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
-	arrowPosition ifNotNil: [
-		self drawArrowOn: aCanvas.
-		self drawMessageOn: aCanvas]
+	arrowPosition ifNotNil: [ self drawArrowOn: aCanvas ]
 ]
 
 { #category : #accessing }

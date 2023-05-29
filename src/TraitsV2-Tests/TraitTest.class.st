@@ -397,7 +397,7 @@ TraitTest >> testTraitRemoval [
 			self assertEmpty: aClass localSelectors.
 			aClass removeFromComposition: aTrait.
 			self assertEmpty: aClass localSelectors.
-			self assertEmpty: aClass organization allMethodSelectors.
+			self assertEmpty: aClass selectors.
 			self deny: aClass hasTraitComposition.
 			self deny: (aTrait traitUsers includes: aClass) ]
 				ensure: [ aClass removeFromSystem: false.

@@ -19,12 +19,12 @@ ClassTraitTest >> testChanges [
 	self assert: (self c2 class methodDict includesKey: #m1ClassSide).
 	self c2 m1ClassSide.
 	self assert: self c2 m1ClassSide equals: 17. "category"
-	self assert: (self c2 class organization protocolNameOfElement: #m1ClassSide) equals: 'mycategory'. "conflicts"
+	self assert: (self c2 class protocolOfSelector: #m1ClassSide) name equals: 'mycategory'. "conflicts"
 	self t2 classSide compile: 'm1ClassSide' classified: 'mycategory'.
 	self assert: (self c2 class methodDict includesKey: #m1ClassSide).
 	self deny: (self c2 class includesLocalSelector: #m1ClassSide).
 	self should: [ self c2 m1ClassSide ] raise: Error. "conflict category"
-	self assert: (self c2 class organization protocolNameOfElement: #m1ClassSide) equals: #mycategory
+	self assert: (self c2 class protocolOfSelector: #m1ClassSide) name equals: #mycategory
 ]
 
 { #category : #tests }

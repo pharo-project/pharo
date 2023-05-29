@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'gen',
 		'currentScope',
-		'trailer',
 		'tempVectorStack',
 		'compilationContext'
 	],
@@ -15,16 +14,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-IRTranslator class >> context: aCompilationContext trailer: aCompiledMethodTrailer [
+IRTranslator class >> context: aCompilationContext [
 	^self basicNew
 		initialize;
-		compilationContext: aCompilationContext;
-		trailer: aCompiledMethodTrailer
+		compilationContext: aCompilationContext
 ]
 
 { #category : #'instance creation' }
 IRTranslator class >> new [
-	^self context: CompilationContext default trailer: CompiledMethodTrailer empty
+	^self context: CompilationContext default
 ]
 
 { #category : #accessing }
@@ -41,18 +39,12 @@ IRTranslator >> compilationContext: aContext [
 
 { #category : #results }
 IRTranslator >> compiledBlock [
-	^ gen compiledBlockWith: trailer
+	^ gen compiledBlock
 ]
 
 { #category : #results }
 IRTranslator >> compiledMethod [
-	^ gen compiledMethodWith: trailer
-]
-
-{ #category : #results }
-IRTranslator >> compiledMethodWith: aTrailer [
-
-	^ gen compiledMethodWith: aTrailer
+	^ gen compiledMethod
 ]
 
 { #category : #private }
@@ -102,12 +94,6 @@ IRTranslator >> pushOuterVectors: scope [
 IRTranslator >> pushScope: anIRBlockOrMethod [
 
 	currentScope push: anIRBlockOrMethod
-]
-
-{ #category : #accessing }
-IRTranslator >> trailer: aTrailer [
-
-	trailer := aTrailer
 ]
 
 { #category : #visiting }

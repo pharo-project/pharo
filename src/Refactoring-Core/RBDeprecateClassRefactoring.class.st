@@ -115,7 +115,7 @@ RBDeprecateClassRefactoring >> preconditions [
 	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]])
 			& (RBCondition isValidClassName: newName)
 			& (RBCondition isGlobal: newName in: self model)) |
-			(RBCondition withBlock: [ self refactoringFailure: newName , ' is not a valid class name'])
+			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
 ]
 
 { #category : #transforming }
@@ -135,12 +135,12 @@ RBDeprecateClassRefactoring >> renameReferences [
 		replace: className with: newName;
 		replaceArgument: newName
 		withValueFrom: [:aNode |
-			self refactoringFailure: newName , ' already exists within the reference scope'];
+			self refactoringError: newName , ' already exists within the reference scope'];
 		yourself.
 
 	self model allReferencesToClass: deprecatedClass do: [ :method |
 		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
-			self refactoringFailure: newName , ' is already defined in hierarchy of ', method modelClass printString].
+			self refactoringError: newName , ' is already defined in hierarchy of ', method modelClass printString].
 
 		self convertMethod: method selector
 			for: method modelClass

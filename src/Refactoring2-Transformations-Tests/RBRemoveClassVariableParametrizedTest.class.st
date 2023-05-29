@@ -22,7 +22,7 @@ RBRemoveClassVariableParametrizedTest >> testNonExistantName [
 
 { #category : #'failure tests' }
 RBRemoveClassVariableParametrizedTest >> testReferencedVariable [
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldWarn: (self createRefactoringWithArguments:
 		{ #RecursiveSelfRule . #RBTransformationRuleTestData })
 ]
 

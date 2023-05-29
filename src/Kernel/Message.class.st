@@ -8,7 +8,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'selector',
-		'args',
+		'arguments',
 		'lookupClass'
 	],
 	#category : #'Kernel-Methods'
@@ -42,7 +42,7 @@ Message >> analogousCodeTo: anObject [
 	"For MethodPropertires comparison."
 	^self class == anObject class
 	  and: [selector == anObject selector
-	  and: [args = anObject arguments
+	  and: [arguments = anObject arguments
 	  and: [lookupClass == anObject lookupClass]]]
 ]
 
@@ -50,21 +50,21 @@ Message >> analogousCodeTo: anObject [
 Message >> argument [
 	"Answer the first (presumably sole) argument"
 
-	^args at: 1
+	^arguments at: 1
 ]
 
 { #category : #accessing }
 Message >> argument: newValue [
 	"Change the first argument to newValue and answer self"
 
-	args at: 1 put: newValue
+	arguments at: 1 put: newValue
 ]
 
 { #category : #accessing }
 Message >> arguments [
 	"Answer the arguments of the receiver."
 
-	^args
+	^arguments
 ]
 
 { #category : #converting }
@@ -74,7 +74,7 @@ Message >> asSendTo: anObject [
 
 { #category : #testing }
 Message >> hasArguments [
-	^args notEmpty
+	^arguments notEmpty
 ]
 
 { #category : #accessing }
@@ -93,14 +93,14 @@ Message >> lookupClass: aClass [
 Message >> numArgs [
 	"Answer the number of arguments in this message"
 
-	^args size
+	^arguments size
 ]
 
 { #category : #printing }
 Message >> printOn: stream [
 
-	args ifEmpty: [ ^ stream nextPutAll: selector ].
-	args with: selector keywords do: [ :arg :word |
+	arguments ifEmpty: [ ^ stream nextPutAll: selector ].
+	arguments with: selector keywords do: [ :arg :word |
 		stream nextPutAll: word.
 		stream space.
 		arg printOn: stream.
@@ -119,7 +119,7 @@ Message >> selector [
 Message >> sendTo: receiver [
 	"answer the result of sending this message to receiver"
 
-	^ receiver perform: selector withArguments: args
+	^ receiver perform: selector withArguments: arguments
 ]
 
 { #category : #accessing }
@@ -134,8 +134,8 @@ Message >> sentTo: receiver [
 	"answer the result of sending this message to receiver"
 
 	^ lookupClass
-		ifNil: [ receiver perform: selector withArguments: args]
-		ifNotNil: [ receiver perform: selector withArguments: args inSuperclass: lookupClass]
+		ifNil: [ receiver perform: selector withArguments: arguments]
+		ifNotNil: [ receiver perform: selector withArguments: arguments inSuperclass: lookupClass]
 ]
 
 { #category : #private }
@@ -148,7 +148,7 @@ Message >> setSelector: aSymbol [
 Message >> setSelector: aSymbol arguments: anArray [
 
 	selector := aSymbol.
-	args := anArray
+	arguments := anArray
 ]
 
 { #category : #printing }
@@ -160,6 +160,6 @@ Message >> storeOn: aStream [
 	 nextPutAll: ' selector: ';
 	 store: selector;
 	 nextPutAll: ' arguments: ';
-	 store: args;
+	 store: arguments;
 	 nextPut: $)
 ]

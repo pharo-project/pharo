@@ -125,6 +125,13 @@ RBToken >> isSpecial: aValue [
 	^false
 ]
 
+{ #category : #testing }
+RBToken >> isTouching: other [
+	"is self just before other token (without space or comments)"
+	
+	^ self stop + 1 = other start
+]
+
 { #category : #accessing }
 RBToken >> length [
 	^self subclassResponsibility

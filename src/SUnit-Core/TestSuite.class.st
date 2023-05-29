@@ -179,6 +179,7 @@ TestSuite >> unsubscribe: anAnnouncementClass [
 ]
 
 { #category : #announcements }
-TestSuite >> when: aAnnouncement do: aBlock [
-	self testSuiteAnnouncer when: aAnnouncement do: aBlock
+TestSuite >> when: aAnnouncement do: aBlock for: aSubscriber [
+
+	self testSuiteAnnouncer when: aAnnouncement do: aBlock for: aSubscriber
 ]

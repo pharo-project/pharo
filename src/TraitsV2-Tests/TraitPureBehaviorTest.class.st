@@ -139,17 +139,6 @@ TraitPureBehaviorTest >> testLocalSelectors [
 	self assert: (self c2 localSelectors includesAll: #(#foo #bar ))
 ]
 
-{ #category : #tests }
-TraitPureBehaviorTest >> testMethodCategoryReorganization [
-
-	self t1 compile: 'm1' classified: 'category1'.
-	self assert: (self t5 organization protocolNameOfElement: #m1) equals: #category1.
-	self assert: (self c2 organization protocolNameOfElement: #m1) equals: #category1.
-	self t1 organization classify: #m1 under: #category2.
-	self assert: (self t5 organization protocolNameOfElement: #m1) equals: #category2.
-	self assert: (self c2 organization protocolNameOfElement: #m1) equals: #category2
-]
-
 { #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testMethodClass [
 	"Test sharing of compiled methods between traits and their users. Methods are installed in exactly one behavior, however, the source pointers of methods are shared (unless sources or changes have been condensed). Verify	that methodClass properties are set correctly."
@@ -164,6 +153,17 @@ TraitPureBehaviorTest >> testMethodClass [
 	self deny: m1 identicalTo: m2.
 
 	self assert: m1 sourcePointer equals: m2 sourcePointer
+]
+
+{ #category : #tests }
+TraitPureBehaviorTest >> testMethodProtocolUpdate [
+
+	self t1 compile: 'm1' classified: 'category1'.
+	self assert: (self t5 protocolOfSelector: #m1) name equals: #category1.
+	self assert: (self c2 protocolOfSelector: #m1) name equals: #category1.
+	self t1 organization classify: #m1 under: #category2.
+	self assert: (self t5 protocolOfSelector: #m1) name equals: #category2.
+	self assert: (self c2 protocolOfSelector: #m1) name equals: #category2
 ]
 
 { #category : #'tests - applying trait composition' }

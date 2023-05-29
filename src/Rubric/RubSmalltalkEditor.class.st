@@ -27,7 +27,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #browseFullClass)
 		category: RubSmalltalkEditor name
 		default: $b meta
-		do: [ :target | target editor browseFullClass ]
+		do: [ :target | target editor browseIt: nil ]
 		description: 'Do & browse its class'.
 
 	(aBuilder shortcut: #doIt)
@@ -139,7 +139,7 @@ RubSmalltalkEditor >> atCompletionPosition [
 	| cursorPosition |
 	cursorPosition := self startIndex.
 	cursorPosition < 2 ifTrue: [ ^ false ].
-	^ (self text at: cursorPosition - 1) isCompletionCharacter
+	^ (self lineIndentationStart: cursorPosition) < cursorPosition
 ]
 
 { #category : #'do-its' }
@@ -164,7 +164,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 		(selectionInterval isEmpty and: [ isFavouringExpressions and: [
 			(source at: (stop + 1 min: source size)) isAlphaNumeric not ]]) ifTrue: [
 				"If there is white space or statement terminator, try to backup to find a better node"
-				[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
+				[stop > 0 and: [((source at: stop) = $;) or: [(source at: stop) isSeparator ]]]
 					whileTrue: [ start := stop := stop - 1 ].
 				start := stop].
 		node := ast bestNodeFor: (start to: stop).
@@ -268,28 +268,22 @@ RubSmalltalkEditor >> browseClassFrom: aClassString [
 	self tools browser openOnClass: selectedClass
 ]
 
-{ #category : #'editing keys' }
-RubSmalltalkEditor >> browseClassOfExpression [
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> browseFullClass [
  	"Launch a browser for the class of the current selection, i.e. if you select 1+2 then you will get a class browser on class Point. Notice that this method handles also when the expression is a class."
 
  	self evaluateSelectionAndDo: [:result | result class instanceSide browse ].
-	^ true
-]
-
-{ #category : #'menu messages' }
-RubSmalltalkEditor >> browseFullClass [
-	"Launch a browser for the class indicated by the current selection. Note that if the selection is a valid expression it will browse the class of the result. If multiple classes matching the selection exist, let the user choose among them."
-
-
-	"previous code was: self browseClassFrom: self findClassFromAST"
-	self browseClassOfExpression
 ]
 
 { #category : #'editing keys' }
-RubSmalltalkEditor >> browseFullClassIt: t1 [
+RubSmalltalkEditor >> browseIt: aKeyboardEvent [
+ 	"Browse the current selection.
+	If a completion menu is open, the current item is browsed instead"
 
-	self browseFullClass.
-	^ true
+	completionEngine isMenuOpen ifTrue: [ ^ completionEngine browse ].
+
+ 	self browseFullClass.
+	^true
 ]
 
 { #category : #'menu messages' }
@@ -487,7 +481,7 @@ RubSmalltalkEditor >> debugIt: aKeyboardEvent [
 RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 
-	self lineSelectAndEmptyCheck: [^self].
+	self expressionSelectAndEmptyCheck: [^self].
 	self debug: self selection
 ]
 
@@ -541,7 +535,7 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
 
-	self lineSelectAndEmptyCheck: [^ ''].
+	self expressionSelectAndEmptyCheck: [^ ''].
 	^ self
 		evaluate: self selection
 		andDo: aBlock
@@ -558,6 +552,16 @@ RubSmalltalkEditor >> exploreIt: aKeyboardEvent [
 
 	self exploreIt.
 	^ true
+]
+
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> expressionSelectAndEmptyCheck: returnBlock [
+	"If the current selection is an insertion point, expand it to be the entire current expression; if after that's done the selection is still empty, then evaluate the returnBlock, which will typically consist of '[^ self]' in the caller -- check senders of this method to understand this."
+	"Based on lineSelectAndEmptyCheck:"
+
+	self hasSelection ifTrue: [ ^ self ].
+	self widenSelectionOfIt.  "if current selection is an insertion point, then first select the entire expression in which occurs before proceeding"
+	self hasSelection ifFalse: [textArea flash.  ^ returnBlock value]
 ]
 
 { #category : #'source navigation' }
@@ -801,8 +805,8 @@ RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
 		 - but not by an assignment "
 		(character = $_) or: [
 			(character = $:) and: [
-				aString size > index
-					and: [  (aString at: index + 1) ~= $= ] ] ] ]
+				aString size = index
+					or: [  (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : #'menu messages' }
@@ -1175,7 +1179,7 @@ RubSmalltalkEditor >> tallyIt [
 RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 
-	self lineSelectAndEmptyCheck: [ ^ self ].
+	self expressionSelectAndEmptyCheck: [ ^ self ].
 	self tally: self selection
 ]
 

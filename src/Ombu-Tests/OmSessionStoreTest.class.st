@@ -92,7 +92,8 @@ OmSessionStoreTest >> testResetWithStoreNamedDoesAnnounce [
 
 	store announcer
 		when: OmSessionStoreUpdated
-		do: [ :announcement | wasAnnounced := true ].
+		do: [ :announcement | wasAnnounced := true ]
+		for: self.
 
 	[ store resetWithStoreNamed: 'new' ]
 		ensure: [ store announcer unsubscribe: self ].

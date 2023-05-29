@@ -186,12 +186,8 @@ RBMessageNode >> isFirstCascaded [
 { #category : #testing }
 RBMessageNode >> isHaltNode [
 
-	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: )
-		   includes: self selector) or: [
-		  self receiver isGlobalVariable and: [
-			  self receiver variable value = Halt and: [
-				  (Halt class selectorsInCategory: #halting) includes:
-					  self selector ] ] ]
+	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
+		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
 ]
 
 { #category : #testing }
@@ -365,7 +361,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 		ifTrue:
 			[self receiver: anotherNode.
 			(parent notNil and: [parent isCascade])
-				ifTrue: [parent messages do: [:each | each receiver: anotherNode]]].
+				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]

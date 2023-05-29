@@ -15,16 +15,24 @@ Class {
 { #category : #'instance creation' }
 Protocol class >> name: aString [
 
-	^ self new
-		name: aString asSymbol;
-		yourself
+	self deprecated: 'Use #named: instead' transformWith: '`@rcv name: `@arg' -> '`@rcv named: `@arg'.
+	^ self named: aString
 ]
 
 { #category : #'instance creation' }
 Protocol class >> name: aString methodSelectors: methods [
-	^ (self name: aString)
-		methodSelectors: methods;
-		yourself
+
+	^ (self named: aString)
+		  methodSelectors: methods;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+Protocol class >> named: aStrings [
+
+	^ self new
+		  name: aStrings;
+		  yourself
 ]
 
 { #category : #accessing }

@@ -12,7 +12,9 @@ FLPharo12Platform class >> addHacks [
 { #category : #testing }
 FLPharo12Platform class >> isResponsibleForCurrentPlatform [
 
-	^ super isResponsibleForCurrentPlatform and: [ SystemVersion current type = 'Pharo' and: [ SystemVersion current major = 12 ] ]
+	^ super isResponsibleForCurrentPlatform 
+		and: [ SystemVersion current type = 'Pharo' 
+		and: [ SystemVersion current major = 12 ] ]
 ]
 
 { #category : #'accessing-files' }

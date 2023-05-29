@@ -399,7 +399,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 			ringEnvironment removePackage: p].
 
 	ringEnvironment cleanGlobalVariables.
-	ringEnvironment addGlobalsNamed: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor #SystemOrganization).
+	ringEnvironment addGlobalsNamed: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor).
 	ringEnvironment clean
 
 ]
@@ -408,7 +408,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter ChangeSet SourceFiles Processor Display Sensor UTF8TextConverter SystemOrganization Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter ChangeSet SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
 	ringEnvironment clean
 ]
 

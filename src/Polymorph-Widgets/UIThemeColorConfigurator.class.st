@@ -60,7 +60,7 @@ UIThemeColorConfigurator >> basePassiveBackgroundColor [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'basic-colors' }
+{ #category : #scrollbars }
 UIThemeColorConfigurator >> baseScrollbarColorFor: aScrollbar [
 
 	^ aScrollbar lastPaneColor ifNil: [ self scrollbarColor ]
@@ -78,13 +78,13 @@ UIThemeColorConfigurator >> borderColor [
 	^ Color gray
 ]
 
-{ #category : #colors }
+{ #category : #buttons }
 UIThemeColorConfigurator >> buttonColor [
 
 	^ themeSettings buttonColor
 ]
 
-{ #category : #colors }
+{ #category : #buttons }
 UIThemeColorConfigurator >> buttonColorFor: aButton [
 
 	^ themeSettings standardColorsOnly
@@ -92,7 +92,7 @@ UIThemeColorConfigurator >> buttonColorFor: aButton [
 		ifFalse: [ aButton colorToUse ]
 ]
 
-{ #category : #colors }
+{ #category : #buttons }
 UIThemeColorConfigurator >> buttonColouredMiddleColor [
 
 	"Return the middle area colour for a coloured button fillStyle."
@@ -100,7 +100,7 @@ UIThemeColorConfigurator >> buttonColouredMiddleColor [
 	^ Color r: 102 g: 127 b: 168 range: 255
 ]
 
-{ #category : #colors }
+{ #category : #buttons }
 UIThemeColorConfigurator >> buttonPlainMiddleColor [
 
 	"Return the middle area colour for a plain button fillStyle."
@@ -280,6 +280,13 @@ UIThemeColorConfigurator >> growlLabelColorFor: aGrowlMorph [
 ]
 
 { #category : #colors }
+UIThemeColorConfigurator >> highlightTextColor [
+	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
+
+	^ Color fromHexString: '7C4DFF'
+]
+
+{ #category : #colors }
 UIThemeColorConfigurator >> lessConspicuousColorFrom: aColor [
 
 	^ aColor alphaMixed: 0.5 with: Color white
@@ -333,19 +340,19 @@ UIThemeColorConfigurator >> listTextColor [
 	^ Color black
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuBorderColor [
 
 	^ themeSettings menuBorderColor
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuColor [
 
 	^ themeSettings menuColor
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuItemDisabledTextColorFor: aMenuItem [
 
 	^ (aMenuItem color luminance - aMenuItem owner color luminance) abs < 0.3
@@ -353,25 +360,25 @@ UIThemeColorConfigurator >> menuItemDisabledTextColorFor: aMenuItem [
 		ifFalse: [ aMenuItem owner color muchDarker ]
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuKeyboardFocusColor [
 
 	^ themeSettings menuKeyboardFocusColor
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuSelectionColor [
 
 	^ themeSettings menuSelectionColor
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuShadowColor [
 
 	^ themeSettings menuShadowColor
 ]
 
-{ #category : #colors }
+{ #category : #menus }
 UIThemeColorConfigurator >> menuTitleColor [
 
 	^ themeSettings menuTitleColor
@@ -431,13 +438,13 @@ UIThemeColorConfigurator >> resizerGripNormalFillStyleFor: aResizer [
 	^ Color transparent
 ]
 
-{ #category : #colors }
+{ #category : #scrollbars }
 UIThemeColorConfigurator >> scrollbarColor [
 
 	^ themeSettings scrollbarColor
 ]
 
-{ #category : #colors }
+{ #category : #scrollbars }
 UIThemeColorConfigurator >> scrollbarColorFor: aScrollbar [
 
 	^ themeSettings standardColorsOnly
@@ -445,13 +452,13 @@ UIThemeColorConfigurator >> scrollbarColorFor: aScrollbar [
 		ifFalse: [ aScrollbar lastPaneColor ifNil: [ Color white ] ]
 ]
 
-{ #category : #'basic-colors' }
+{ #category : #scrollbars }
 UIThemeColorConfigurator >> scrollbarImageColorFor: aScrollbar [
 
 	^ (self baseScrollbarColorFor: aScrollbar) darker
 ]
 
-{ #category : #colors }
+{ #category : #scrollbars }
 UIThemeColorConfigurator >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 
@@ -519,19 +526,19 @@ UIThemeColorConfigurator >> successTextColor [
 	^ Color r: 0 g: 0.5 b: 0
 ]
 
-{ #category : #colors }
+{ #category : #taskbar }
 UIThemeColorConfigurator >> taskbarActiveButtonColorFor: anObject [
 
 	^ self scrollbarColor alphaMixed: 0.7 with: Color white
 ]
 
-{ #category : #colors }
+{ #category : #taskbar }
 UIThemeColorConfigurator >> taskbarButtonColorFor: aButton [
 
 	^ self windowColorFor: aButton model
 ]
 
-{ #category : #colors }
+{ #category : #taskbar }
 UIThemeColorConfigurator >> taskbarButtonLabelColorFor: aButton [
 
 	^ aButton model isActive
@@ -539,19 +546,19 @@ UIThemeColorConfigurator >> taskbarButtonLabelColorFor: aButton [
 		ifFalse: [ Color gray darker ]
 ]
 
-{ #category : #colors }
+{ #category : #taskbar }
 UIThemeColorConfigurator >> taskbarItemLabelColorForCollapsed: anObject [
 
 	^ Color darkGray
 ]
 
-{ #category : #colors }
+{ #category : #taskbar }
 UIThemeColorConfigurator >> taskbarItemLabelColorForExpanded: anObject [
 
 	^ Color black
 ]
 
-{ #category : #colors }
+{ #category : #taskbar }
 UIThemeColorConfigurator >> taskbarMinimizedButtonColorFor: anObject [
 
 	^ Color transparent
@@ -631,25 +638,25 @@ UIThemeColorConfigurator >> warningTextColor [
 	^ Color yellow muchDarker
 ]
 
-{ #category : #colors }
+{ #category : #windows }
 UIThemeColorConfigurator >> windowActiveLabelFillStyleFor: anObject [
 
 	^ Color black
 ]
 
-{ #category : #colors }
+{ #category : #windows }
 UIThemeColorConfigurator >> windowColor [
 
 	^ themeSettings windowColor
 ]
 
-{ #category : #colors }
+{ #category : #windows }
 UIThemeColorConfigurator >> windowColorFor: anObject [
 
 	^ themeSettings windowColor
 ]
 
-{ #category : #colors }
+{ #category : #windows }
 UIThemeColorConfigurator >> windowEdgeNormalFillStyleFor: anEdgeGrip [
 
 	"Return the normal window edge fillStyle for the given edge grip."
@@ -657,7 +664,7 @@ UIThemeColorConfigurator >> windowEdgeNormalFillStyleFor: anEdgeGrip [
 	^ Color transparent
 ]
 
-{ #category : #colors }
+{ #category : #windows }
 UIThemeColorConfigurator >> windowShadowColor [
 
 	^ Color gray

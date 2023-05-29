@@ -58,7 +58,7 @@ RBDeprecateMethodDriver >> execute [
 									err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
 		                   do: [ :err |
-		                   ^ RBRefactoringFailure signal: err messageText ] ]
+		                   ^ RBRefactoringError signal: err messageText ] ]
 		                   on: RBBreakingChangeChecksFailedWarning
 		                   do: [ :err |
 			                   RBRefactoringWarning signal: err messageText.

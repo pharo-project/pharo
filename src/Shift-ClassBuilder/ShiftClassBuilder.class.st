@@ -68,6 +68,7 @@ ShiftClassBuilder >> allSlots [
 
 { #category : #building }
 ShiftClassBuilder >> build [
+
 	self tryToFillOldClass.
 	self detectBuilderEnhancer.
 	self builderEnhancer validateRedefinition: self oldClass.
@@ -81,21 +82,21 @@ ShiftClassBuilder >> build [
 	We need to check if there is no conflicts with existing subclasses.
 	If we are in a remake, it have been done when building the superclass modified before."
 
-	self isInRemake
-		ifFalse: [ self layoutDefinition validate ].
+	self isInRemake ifFalse: [ self layoutDefinition validate ].
 
 	self createMetaclass.
 	self createClass.
+
+	self oldClass ifNotNil: [
+		self newClass basicCategory: self oldClass basicCategory.
+		self copyOrganization.
+		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
 	self createSharedVariables.
 
 	self installSlotsAndVariables.
 
-	self oldClass ifNotNil: [
-			self newClass basicCategory: self oldClass basicCategory.
-			self copyOrganization.
-			self newClass commentSourcePointer: self oldClass commentSourcePointer.
-			self builderEnhancer compileMethodsFor: self. ].
+	self oldClass ifNotNil: [ self builderEnhancer compileMethodsFor: self ].
 
 	self builderEnhancer afterMethodsCompiled: self.
 	^ newClass
@@ -199,11 +200,10 @@ ShiftClassBuilder >> compareWithOldClass [
 
 { #category : #compiling }
 ShiftClassBuilder >> compileMethods [
-	| toRemove |
-	newClass compileAllFrom: self oldClass.
 
-	toRemove := newClass organization allMethodSelectors reject: [ :aSelector | newClass includesSelector: aSelector ].
-	toRemove do: [ :aSelector | newClass organization removeElement: aSelector  ]
+	newClass
+		compileAllFrom: self oldClass;
+		removeNonexistentSelectorsFromProtocols
 ]
 
 { #category : #building }

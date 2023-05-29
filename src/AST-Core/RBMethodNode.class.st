@@ -470,7 +470,7 @@ RBMethodNode >> method [
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass [
 
-	^ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ]
+	^ self scope ifNotNil: [ :s | s targetClass ]
 ]
 
 { #category : #'accessing - compiled method' }
