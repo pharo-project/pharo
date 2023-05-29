@@ -32,6 +32,7 @@ Class {
 	#classVars : [
 		#NewSymbols,
 		#SelectorTable,
+		#StrictComparison,
 		#SymbolTable
 	],
 	#category : #'Collections-Strings-Base'
@@ -262,6 +263,30 @@ Symbol class >> streamSpecies [
 	^ String
 ]
 
+{ #category : #setting }
+Symbol class >> strictComparison [
+
+	^ StrictComparison ifNil: [ StrictComparison := false ]
+]
+
+{ #category : #setting }
+Symbol class >> strictComparison: aBoolean [
+
+	StrictComparison := aBoolean
+]
+
+{ #category : #setting }
+Symbol class >> symbolComparisonSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #strictComparison)
+		parent: #pharoSystem;
+		label: 'Strict comparison of Symbols';
+		default: false;
+		target: self;
+		description: 'Symbols and Strings having the same contents return false when compared using ='
+]
+
 { #category : #'symbol table' }
 Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 	"Answer a selector symbol that starts with leadingCharacters.
@@ -341,6 +366,8 @@ Symbol >> , otherSymbolOrString [
 { #category : #comparing }
 Symbol >> = aSymbol [
 	"Compare the receiver and aSymbol."
+	Symbol strictComparison ifTrue: [ ^ self == aSymbol ].
+	
 	self == aSymbol ifTrue: [^ true].
 	self class == aSymbol class ifTrue: [^ false].
 	"Use String comparison otherwise"
