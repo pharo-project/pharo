@@ -44,22 +44,6 @@ ClassOrganization >> allMethodSelectors [
 	^ self organizedClass selectors
 ]
 
-{ #category : #classification }
-ClassOrganization >> classify: selector under: aProtocol [
-
-	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
-
-	oldProtocol ifNotNil: [
-		oldProtocol removeMethodSelector: selector.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	newProtocol addMethodSelector: selector.
-
-	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
-	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
-]
-
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
