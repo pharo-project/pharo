@@ -514,8 +514,8 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 		self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
 					  protocol: aMethodRemovedAnnouncement protocol name;
 					  package:
-						  (Smalltalk organization packageForProtocol: aMethodRemovedAnnouncement protocol name inClass: aMethodRemovedAnnouncement methodAffected methodClass)
-							  name;
+						  ((Smalltalk organization packageForProtocol: aMethodRemovedAnnouncement protocol name inClass: aMethodRemovedAnnouncement methodAffected methodClass)
+							   ifNil: [ aMethodRemovedAnnouncement methodAffected methodClass package ]) name;
 					  yourself)) ]
 ]
 
