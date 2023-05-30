@@ -205,7 +205,9 @@ ClyTextEditorToolMorph >> findAnyString: strings in: text [
 
 { #category : #'rubric interaction model' }
 ClyTextEditorToolMorph >> hasBindingOf: aString [
-	^self selectedClassOrMetaClass hasBindingOf: aString
+	^self selectedClassOrMetaClass 
+		ifNil: [ false ]
+		ifNotNil: [:class | class hasBindingOf: aString]
 ]
 
 { #category : #testing }
