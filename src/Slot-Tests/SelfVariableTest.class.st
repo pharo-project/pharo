@@ -5,6 +5,29 @@ Class {
 }
 
 { #category : #tests }
+SelfVariableTest >> testReadInContext [
+
+	| var |
+	var := self class lookupVar: #self.
+	self assert: (var readInContext: thisContext) identicalTo: self.
+	"read from a block context"
+	self assert: [(var readInContext: thisContext)] value identicalTo: self
+]
+
+{ #category : #tests }
+SelfVariableTest >> testReadInContextClean [
+	<compilerOptions: #( +optionCleanBlockClosure)>
+	| var block |
+	"if context is one stack we can read"
+	block := [ (thisContext lookupVar: #self) readInContext: thisContext ].
+	self assert: block value equals: self.
+	"but no chance if not, then it it is nil"
+	var := self class lookupVar: #self.
+	block :=  [ thisContext ].
+	self assert: (var readInContext: block value ) equals: nil
+]
+
+{ #category : #tests }
 SelfVariableTest >> testUsingMethods [
 
 	|  var |
