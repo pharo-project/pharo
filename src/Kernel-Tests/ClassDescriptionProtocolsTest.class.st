@@ -223,6 +223,20 @@ ClassDescriptionProtocolsTest >> testProtocolNames [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testProtocols [
+
+	class organization addProtocol: #titan.
+	class organization addProtocol: #human.
+	class organization addProtocol: #witch.
+
+	self assertCollection: class protocols hasSameElements: (#( #titan #human #witch ) collect: [ :protocolName | class protocolNamed: protocolName ]).
+
+	class organization removeProtocolIfEmpty: #titan.
+
+	self assertCollection: class protocols hasSameElements: (#( #human #witch ) collect: [ :protocolName | class protocolNamed: protocolName ])
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 
 	class compiler
