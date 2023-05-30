@@ -128,6 +128,25 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocol [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testEnsureProtocol [
+
+	| protocol |
+	class organization addProtocol: #titan.
+	protocol := class protocolNamed: #titan.
+
+	self assertCollection: class protocolNames hasSameElements: { #titan }.
+	self assert: (class ensureProtocol: #titan) equals: protocol.
+	self assert: (class ensureProtocol: protocol) equals: protocol.
+	self should: [ class ensureProtocol: (Protocol named: #notFromClass) ] raise: Error.
+	
+	self assert: (class ensureProtocol: nil) name equals: Protocol unclassified.
+	self assertCollection: class protocolNames hasSameElements: { #titan . Protocol unclassified }.
+	
+	self assert: (class ensureProtocol: #human) equals: (class protocolNamed: #human).
+	self assertCollection: class protocolNames hasSameElements: { #titan . #human . Protocol unclassified }.
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testExtensionProtocols [
 
 	| extensionPackageName |
