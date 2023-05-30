@@ -60,7 +60,7 @@ MethodAddition >> installMethod [
 { #category : #notifying }
 MethodAddition >> notifyObservers [
 	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [myClass organization classify: selector under: category].
+		suspendAllWhile: [myClass classify: selector under: category].
 	priorMethodOrNil 
 		ifNil: [ SystemAnnouncer uniqueInstance
 				methodAdded: compiledMethod

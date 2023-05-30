@@ -1,6 +1,8 @@
 "
-A Protocol is a simple value holder representing a protocol.
-It's composed of a name and a set of method selectors
+A Protocol is a categorization of methods in Pharo. 
+A class has methods, and the methods are classified into protocols.
+A class holds my instances (for now through ClassOrganization but we want to remove this class in the future) and I hold the selectors of the methods that are inside me.
+I have a name that is used in browsers to display the different protocols.
 "
 Class {
 	#name : #Protocol,
