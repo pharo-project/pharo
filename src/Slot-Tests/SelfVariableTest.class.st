@@ -21,7 +21,7 @@ SelfVariableTest >> testReadInContextClean [
 	"if context is one stack we can read"
 	block := [ (thisContext lookupVar: #self) readInContext: thisContext ].
 	self assert: block value equals: self.
-	"but no chance if not, then it it is nil"
+	"but no chance if not, then it is nil"
 	var := self class lookupVar: #self.
 	block :=  [ thisContext ].
 	self assert: (var readInContext: block value ) equals: nil

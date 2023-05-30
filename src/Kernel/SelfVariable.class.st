@@ -18,7 +18,7 @@ SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitSelfNode: aNode
 ]
 
-{ #category : #emitting }
+{ #category : #'code generation' }
 SelfVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushReceiver
@@ -32,7 +32,7 @@ SelfVariable >> isSelfVariable [
 { #category : #debugging }
 SelfVariable >> readInContext: aContext [
 	"self in a block is the receiver of the home context
-	For clean blocks it mght not be known (nil)"
+	For clean blocks it might not be known (nil)"
 	^aContext home ifNotNil: [:home | home receiver ]
 ]
 
