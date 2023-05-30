@@ -401,7 +401,42 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocols }
+{ #category : #accessing }
+ClassDescription >> deprecatedAliases [
+	"I return a potential list of alias names for myself that are deprecated."
+
+	^ self propertyAt: #deprecatedAliases ifAbsent: [ {  } ]
+]
+
+{ #category : #accessing }
+ClassDescription >> deprecatedAliases: aCollection [
+	"I allow one to declare deperecated names for myself. Typically, in case I get renamed, I can be used to declare the old name as a deprecated name.
+	Compared to the use of #isDeprecated, I have some advantages such as:
+	- Not needing to maintain a deprecated class
+	- Keep #isKindOf: working
+	- Keep #on:do: working
+	- And more cases like the previous two.
+	
+	In the future this should be improved so that we can declare the deprecated aliases in the FluidClassBuilder. But it requires a way to persist this information in Tonel.
+	Maybe we should also do another improvement that is to remove from the system dectionary the aliases if we set some aliases while I already had some set before."
+
+	| environment |
+	environment := self class environment.
+	
+	"If a global already has the name of an alias then we should warn the user."
+	aCollection do: [ :alias |
+		environment at: alias asSymbol ifPresent: [ :class |
+			"If the global exists but points to the same class then it means that we are just reaaplying the aliases."
+			class ~= self ifTrue: [
+				self notify: alias , ' is been applied as a deprecated alias for ' , self class name , ' but a global already exists under this name.' ] ] ].
+
+	self propertyAt: #deprecatedAliases put: (aCollection collect: [ :name | name asSymbol ]).
+	self deprecatedAliases do: [ :deprecatedName |
+		environment at: deprecatedName put: self.
+		(environment lookupVar: deprecatedName) isDeprecated: true ]
+]
+
+{ #category : #'queries - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
