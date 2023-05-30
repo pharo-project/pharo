@@ -146,13 +146,15 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemovalSpecialCase
 
 	self assert: (systemDictionary includesKey: class name).
 	self assert: (systemDictionary includesKey: #TemporaryMockClass2).
-	
+
 	"Here is the trick, if someone change the global variable then we should not remove it with the class removal"
+	[
 	systemDictionary at: #TemporaryMockClass2 put: 1.
 	class removeFromSystem.
 
 	self deny: (systemDictionary includesKey: class name).
-	self assert: (systemDictionary includesKey: #TemporaryMockClass2)
+	self assert: (systemDictionary includesKey: #TemporaryMockClass2) ] ensure: [
+		systemDictionary removeKey: #TemporaryMockClass2 ifAbsent: [ "Nothing it's just cleanup." ] ]
 ]
 
 { #category : #'tests - slots' }
