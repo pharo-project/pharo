@@ -649,8 +649,10 @@ RPackage >> extendsClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> extensionCategoriesForClass: aClass [
 
-	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass protocolNames select: [ :cat | self isYourClassExtension: cat ]
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -672,6 +674,12 @@ RPackage >> extensionMethodsForClass: aClass [
 	"Change the set of extensions selectors to an Array to avoid compiled methods collisions in the resulting set."
 
 	^ (self extensionSelectorsForClass: aClass) asArray collect: [ :each | aClass >> each ]
+]
+
+{ #category : #'system compatibility' }
+RPackage >> extensionProtocolsForClass: aClass [
+
+	^ aClass organization protocols select: [ :protocol | self isYourClassExtension: protocol name ]
 ]
 
 { #category : #accessing }
@@ -929,8 +937,9 @@ RPackage >> isTestPackage [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> isYourClassExtension: categoryName [
-	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
+RPackage >> isYourClassExtension: protocolName [
+
+	^ protocolName isNotNil and: [ self category: protocolName asLowercase matches: self methodCategoryPrefix ]
 ]
 
 { #category : #queries }
