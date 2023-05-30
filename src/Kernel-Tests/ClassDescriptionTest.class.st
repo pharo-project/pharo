@@ -75,7 +75,7 @@ ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 	| class method protocol |
 	class := self createTestClass.
 
-	protocol := class organization ensureProtocol: #protocol.
+	protocol := class ensureProtocol: #protocol.
 	class compile: 'foo ^3' classified: protocol.
 	method := class >> #foo.
 
