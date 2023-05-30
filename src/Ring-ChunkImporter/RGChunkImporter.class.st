@@ -495,6 +495,28 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 	doIts add: aChunk
 ]
 
+{ #category : #visiting }
+RGChunkImporter >> visitFluidClassChunk: aChunk [
+
+	| klass contents |
+	self flag: #ToCheck.
+	"I could not check this method because I have not idea how to test it. But the logic is there
+	I'm pretty sure that the result should be added to a RingEnvironment but it requires more investigation
+	and Ring Chunk importer imports more than just a class definition since it can be followed by 
+	other messsages."
+
+	contents := aChunk contents trimBoth.
+	(contents endsWith: '!') ifTrue: [ contents := contents allButLast ].
+
+	klass := ShiftClassBuilder new
+		buildEnvironment: self class environment;
+		"this is not really correct since the environment may be something else than the current environment."
+		
+		buildFromAST: (CDFluidClassDefinitionParser parse: contents);
+		build.	
+	^  klass asRingDefinition
+]
+
 { #category : #visitor }
 RGChunkImporter >> visitMethodChunk: aChunk [
 

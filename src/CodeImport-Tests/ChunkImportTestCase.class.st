@@ -17,6 +17,14 @@ ChunkImportTestCase >> importAClass [
 			category: ''CodeImport-Tests-Garbage''!'
 ]
 
+{ #category : #auxiliar }
+ChunkImportTestCase >> importAFluidClass [
+
+	^CodeImporter evaluateString: 'Object << #CodeImportTestCaseTestClass
+			slots: {#var1 . #var2 . #var3};
+			package: ''CodeImport-Tests-Garbage''!'
+]
+
 { #category : #'importing-code' }
 ChunkImportTestCase >> testExportAMethodWithLangTag [
 	|  stream chunkWriteStream |
@@ -177,6 +185,20 @@ ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 		class := self importAClass.
 		CodeImporter evaluateString: ('!{1} commentStamp: ''<historical>'' prior: 0!{2}!' format: { class name asString . commentToWrite }).
 		self assert: comment equals: class comment.
+	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+]
+
+{ #category : #tests }
+ChunkImportTestCase >> testImportAFluidClass [
+	| class |
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
+		class := self importAFluidClass.
+		self assert: #CodeImportTestCaseTestClass equals: class name.
+		self assert: (class instVarNames includes: 'var1').
+		self assert: (class instVarNames includes: 'var2').
+		self assert: (class instVarNames includes: 'var3').
+		self assert: class packageName equals: 'CodeImport-Tests-Garbage'.
+
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 

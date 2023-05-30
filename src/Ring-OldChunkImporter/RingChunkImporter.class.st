@@ -105,6 +105,19 @@ RingChunkImporter >> fileInFrom: aStream [
 	changes do: [ :change | change accept: self ]
 ]
 
+{ #category : #private }
+RingChunkImporter >> fluidClassDefinition: aString with: chgRec [
+	| klass |
+	klass := ShiftClassBuilder new
+		buildEnvironment: self class environment;
+		"this is not really correct since the environment may be something else than the current environment."
+		
+		buildFromAST: (CDFluidClassDefinitionParser parse: aString);
+		build.
+	"klass is not a ring class but a not installed class. So it may break."	
+	package addClass: klass asRingDefinition
+]
+
 { #category : #reading }
 RingChunkImporter >> fromFileNamed: aName [
 
@@ -230,6 +243,15 @@ RingChunkImporter >> visitDoItChunk: aChunk [
 	('* initialize'
 		match: contents) ifTrue:[^self]. "Initialization is done based on class>>initialize"
 	doIts add: aChunk
+]
+
+{ #category : #visiting }
+RingChunkImporter >> visitFluidClassChunk: aFluidClassChunk [ 
+	
+	| contents |
+	contents := aFluidClassChunk contents.
+	('*<<*package:*'
+		match: contents) ifTrue:[^self fluidClassDefinition: contents with: aFluidClassChunk].
 ]
 
 { #category : #visitor }
