@@ -649,8 +649,7 @@ RPackage >> extendsClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> extensionCategoriesForClass: aClass [
 
-	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass protocolNames select: [ :cat | self isYourClassExtension: cat ]
+	^ aClass organization protocols select: [ :protocol | self isYourClassExtension: protocol name ]
 ]
 
 { #category : #accessing }
