@@ -943,7 +943,7 @@ ChangeSet >> fileOutPSFor: class on: stream [
 				cr ].
 	(classRecord includesChangeType: #reorganize)
 		ifFalse: [ ^ self ].
-	class fileOutOrganizationOn: stream.
+	class fileOutProtocolsOn: stream.
 	stream cr
 ]
 
