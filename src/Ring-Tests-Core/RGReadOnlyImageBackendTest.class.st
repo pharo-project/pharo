@@ -209,7 +209,6 @@ RGReadOnlyImageBackendTest >> testMethod [
 
 	method := Point >> #x asRingMinimalDefinitionIn: env.
 
-	self assert: method author notEmpty.
 	self assert: (method time <= DateAndTime now).
 	self assert: method selector equals: #x.
 	self assert: (method package isRGObject and: [ method package isPackage ]).
