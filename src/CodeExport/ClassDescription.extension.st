@@ -62,7 +62,7 @@ ClassDescription >> fileOutProtocolsOn: aFileStream [
 		nextChunkPut: self name , ' reorganize';
 		cr;
 		nextChunkPut: (String streamContents: [ :aStream |
-					 self organization protocols do: [ :protocol |
+					 self protocols do: [ :protocol |
 							 aStream
 								 nextPut: $(;
 								 nextPutAll: protocol name printString.
