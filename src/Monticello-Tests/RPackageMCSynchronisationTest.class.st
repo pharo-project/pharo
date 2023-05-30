@@ -247,7 +247,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 
 	self assert: ann isNil.
 
-	class organization classify: #stubMethod under: '*yyyyy-suncategory'.
+	class classify: #stubMethod under: '*yyyyy-suncategory'.
 
 	self assert: ann isNil
 ]
@@ -269,7 +269,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 
 	self assert: ann isNil.
 
-	class organization classify: #stubMethod under: 'another classic one'.
+	class classify: #stubMethod under: 'another classic one'.
 
 	self assert: ann isNil
 ]
@@ -288,7 +288,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
-	class organization classify: #stubMethod under: '*yyyyy'.
+	class classify: #stubMethod under: '*yyyyy'.
 
 	self assert: ann notNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
@@ -296,7 +296,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self assert: ann newPackage equals: secondPackage.
 	ann := nil.
 
-	class organization classify: #stubMethod under: '*yyyyy-suncategory'.
+	class classify: #stubMethod under: '*yyyyy-suncategory'.
 
 	self assert: ann isNil
 ]
@@ -317,7 +317,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
-	class organization classify: #stubMethod under: '*zzzzz'.
+	class classify: #stubMethod under: '*zzzzz'.
 
 	self assert: ann notNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
@@ -339,7 +339,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
-	class organization classify: #stubMethod under: 'classic one'.
+	class classify: #stubMethod under: 'classic one'.
 
 	self assert: ann notNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.

@@ -161,7 +161,7 @@ TraitPureBehaviorTest >> testMethodProtocolUpdate [
 	self t1 compile: 'm1' classified: 'category1'.
 	self assert: (self t5 protocolOfSelector: #m1) name equals: #category1.
 	self assert: (self c2 protocolOfSelector: #m1) name equals: #category1.
-	self t1 organization classify: #m1 under: #category2.
+	self t1 classify: #m1 under: #category2.
 	self assert: (self t5 protocolOfSelector: #m1) name equals: #category2.
 	self assert: (self c2 protocolOfSelector: #m1) name equals: #category2
 ]

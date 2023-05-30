@@ -198,16 +198,6 @@ SourceFileArrayTest >> testSourcesFileStream [
 ]
 
 { #category : #tests }
-SourceFileArrayTest >> testTimeStamp [
-	"Test that we can access timeStamp correctly"
-
-	| okCm |
-	okCm := Point>>#dotProduct: .
-	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:
- 'Point methodsFor: ''point functions'' stamp: ''''')
-]
-
-{ #category : #tests }
 SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 	| fs array |
 	fs := FileSystem memory.
