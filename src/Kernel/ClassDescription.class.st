@@ -75,7 +75,7 @@ ClassDescription >> addMethodTag: aSymbol [
 ]
 
 { #category : #protocols }
-ClassOrganization >> addProtocol: aProtocol [
+ClassDescription >> addProtocol: aProtocol [
 
 	| oldProtocols protocol |
 	
@@ -954,7 +954,7 @@ ClassDescription >> removeProtocol: aProtocol [
 ]
 
 { #category : #protocols }
-ClassOrganization >> removeProtocolIfEmpty: aProtocol [
+ClassDescription >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
 
 	| protocol oldProtocolNames |
@@ -993,7 +993,7 @@ ClassDescription >> removeSlot: aSlot [
 ]
 
 { #category : #protocols }
-ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
+ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	| oldProtocol newProtocol |
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
