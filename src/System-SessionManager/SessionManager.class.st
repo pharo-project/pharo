@@ -124,7 +124,7 @@ SessionManager class >> initializeKernelRegistrations [
 	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
 	I am here to manage those regristrations."
 
-	(Pragma allNamed: #kernelSessionManagerInitialization) do: [ :pragma | pragma methodClass perform: pragma methodSelector ]
+	(Pragma allNamed: #kernelSessionManagerInitialization) do: [ :pragma | pragma methodClass soleInstance perform: pragma methodSelector ]
 ]
 
 { #category : #'deferred startup actions' }
