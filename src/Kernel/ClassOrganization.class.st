@@ -5,8 +5,7 @@ Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'organizedClass',
-		'protocols'
+		'organizedClass'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -21,20 +20,7 @@ ClassOrganization class >> forClass: aClass [
 { #category : #accessing }
 ClassOrganization >> addProtocol: aProtocol [
 
-	| oldProtocols protocol |
-	
-	(self organizedClass hasProtocol: aProtocol) ifTrue: [
-		^ self organizedClass protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
-
-	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
-
-	oldProtocols := self organizedClass protocolNames copy.
-
-	protocols := protocols copyWith: protocol.
-
-	SystemAnnouncer announce: (ProtocolAdded in: self organizedClass protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).
-	^ protocol
+	^ self organizedClass addProtocol: aProtocol
 ]
 
 { #category : #'backward compatibility' }
@@ -47,14 +33,7 @@ ClassOrganization >> allMethodSelectors [
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
-	protocols := otherOrganization protocols copy
-]
-
-{ #category : #initialization }
-ClassOrganization >> initialize [
-
-	super initialize.
-	self reset
+	self organizedClass protocols:  otherOrganization protocols copy
 ]
 
 { #category : #initialization }
@@ -74,7 +53,7 @@ ClassOrganization >> organizedClass [
 { #category : #accessing }
 ClassOrganization >> protocols [
 
-	^ protocols
+	^ self organizedClass protocols
 ]
 
 { #category : #inlined }
@@ -85,66 +64,19 @@ ClassOrganization >> removeElement: aSelector [
 
 { #category : #inlined }
 ClassOrganization >> removeProtocolIfEmpty: aProtocol [
-	"I take a protocol or a protocol name and remvoe it if it is empty."
-
-	| protocol oldProtocolNames |
-	(self organizedClass hasProtocol: aProtocol) ifFalse: [ ^ self ].
-
-	protocol := aProtocol isString ifTrue: [ self organizedClass protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
-
-	protocol isEmpty ifFalse: [ ^ self ].
-
-	oldProtocolNames := self organizedClass protocolNames.
-	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self organizedClass protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self organizedClass)
+	^ self organizedClass removeProtocolIfEmpty: aProtocol 
 ]
 
 { #category : #removing }
 ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
-	| oldProtocol newProtocol |
-	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
-
-	(self organizedClass hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
-
-	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
-	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
-		oldProtocol := self organizedClass ensureProtocol: anOldProtocol.
-
-		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
-	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-		(self organizedClass hasProtocol: aNewProtocol)
-			ifTrue: [
-				newProtocol := self organizedClass ensureProtocol: aNewProtocol.
-
-				oldProtocol = newProtocol ifTrue: [ ^ self ].
-
-				newProtocol addAllMethodsFrom: oldProtocol ]
-			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
-				| newProtocolName |
-				newProtocolName := aNewProtocol isString
-					                   ifTrue: [ aNewProtocol ]
-					                   ifFalse: [ aNewProtocol name ].
-				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
-				newProtocol := oldProtocol copy
-					               name: newProtocolName;
-					               yourself.
-				protocols := protocols copyWith: newProtocol ].
-		oldProtocol resetMethodSelectors.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	"Announce the changes in the system"
-	SystemAnnouncer announce: (ClassReorganized class: self organizedClass).
-
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	newProtocol methodSelectors do: [ :each | self organizedClass notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
+	^ self organizedClass  renameProtocol: anOldProtocol as: aNewProtocol 
 ]
 
 { #category : #initialization }
 ClassOrganization >> reset [
 
-	protocols := Array new
+	self organizedClass resetProtocols
 ]
 
 { #category : #'backward compatibility' }
