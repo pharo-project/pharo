@@ -71,17 +71,6 @@ ClassOrganization >> organizedClass [
 	^ organizedClass ifNil: [ self error: 'ClassOrganization should always have an organized class associated.' ]
 ]
 
-{ #category : #printing }
-ClassOrganization >> printOn: aStream [
-
-	super printOn: aStream.
-
-	aStream
-		nextPutAll: ' (';
-		print: self organizedClass;
-		nextPut: $)
-]
-
 { #category : #accessing }
 ClassOrganization >> protocols [
 

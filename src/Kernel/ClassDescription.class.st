@@ -537,6 +537,13 @@ ClassDescription >> includesSharedPoolNamed:  aSharedPoolString [
 	^ self sharedPools anySatisfy: [:each | each name = aSharedPoolString]
 ]
 
+{ #category : #initialization }
+ClassDescription >> initialize [
+
+	super initialize.
+	self resetProtocols
+]
+
 { #category : #'instance variables' }
 ClassDescription >> instVarIndexFor: instVarName [
 	"Answer the index of the named instance variable."
@@ -957,6 +964,12 @@ ClassDescription >> reorganize [
 	^self organization
 ]
 
+{ #category : #protocols }
+ClassDescription >> resetProtocols [
+
+	protocols := Array new
+]
+
 { #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInCategory: aName [
 
@@ -1090,8 +1103,10 @@ ClassDescription >> superclass: aSuperclass layout: aLayout [
 { #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
+
 	super superclass: aClass methodDictionary: mDict format: fmt.
-	self organization: nil
+	self organization: nil.
+	self resetProtocols
 ]
 
 { #category : #initialization }
