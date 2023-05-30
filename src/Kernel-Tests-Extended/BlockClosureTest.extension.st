@@ -35,7 +35,7 @@ BlockClosureTest >> testCannotReturn [
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testRunSimulated [
-	self assert: (Context runSimulated: aBlockContext) class equals: Rectangle
+	self assert: (Context runSimulated: aBlock) class equals: Rectangle
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -54,11 +54,11 @@ BlockClosureTest >> testTallyInstructions [
 		            ifTrue: [ 26 ]
 		            ifFalse: [ 27 ].
 	self
-		assert: (Context tallyInstructions: aBlockContext) size
+		assert: (Context tallyInstructions: aBlock) size
 		equals: expected
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyMethods [
-	self assert: (Context tallyMethods: aBlockContext) size equals: 7
+	self assert: (Context tallyMethods: aBlock) size equals: 7
 ]
