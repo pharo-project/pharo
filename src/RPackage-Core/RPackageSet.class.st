@@ -114,7 +114,10 @@ RPackageSet >> extendedClasses [
 { #category : #'system compatibility' }
 RPackageSet >> extensionCategoriesForClass: aClass [
 
-	^ aClass protocolNames select: [ :cat | self isYourClassExtension: cat ]
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -122,6 +125,12 @@ RPackageSet >> extensionMethods [
 	^ extensionMethods ifNil: [
 		extensionMethods :=
 		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
+]
+
+{ #category : #'system compatibility' }
+RPackageSet >> extensionProtocolsForClass: aClass [
+
+	^ aClass organization protocols select: [ :protocol | self isYourClassExtension: protocol name ]
 ]
 
 { #category : #testing }
