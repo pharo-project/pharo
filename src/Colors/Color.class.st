@@ -113,7 +113,7 @@ Color class >> colorFrom: parm [
 	"(Color colorFrom: #(0.0 0.0 1.0)) >>> (Color blue)"
 
 	| aColor firstParm |
-	(parm isKindOf: self class)
+	(parm isKindOf: self)
 		ifTrue: [ ^ parm ].
 	parm isSymbol
 		ifTrue: [ ^ self perform: parm ].
@@ -621,7 +621,7 @@ Color class >> initializeIndexedColors [
 				[ grayVal := v / 32.0.
 				a
 					at: index
-					put: (self class
+					put: (self
 							r: grayVal
 							g: grayVal
 							b: grayVal).
