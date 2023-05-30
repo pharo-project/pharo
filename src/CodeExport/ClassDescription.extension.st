@@ -72,7 +72,8 @@ ClassDescription >> fileOutProtocolsOn: aFileStream [
 									 nextPutAll: selector ].
 							 aStream
 								 nextPut: $);
-								 cr ] ]) cr
+								 cr ] ]);
+		cr
 ]
 
 { #category : #'*CodeExport' }
