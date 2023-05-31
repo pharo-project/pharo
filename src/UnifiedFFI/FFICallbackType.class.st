@@ -21,7 +21,10 @@ FFICallbackType >> basicEmitArgument: aBuilder context: aContext inCallout: aCal
 ]
 
 { #category : #'emitting code' }
-FFICallbackType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
+FFICallbackType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
+
+	aCallout shouldAutoReleaseReturnedValue ifTrue: [
+		self error: 'Functions returning a callback type cannot use +optAutoReleaseReturnedValue' ].
 
 	^ aBuilder
 		addTemp: #tmpResult;

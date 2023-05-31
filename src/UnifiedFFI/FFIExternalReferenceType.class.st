@@ -70,8 +70,8 @@ FFIExternalReferenceType >> defaultReturnOnError [
 ]
 
 { #category : #'emitting code' }
-FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
-	^ aBuilder
+FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
+	aBuilder
 		addTemp: #tmpResult;
 		"keep invoke result into the tmpResult var"
 		storeTemp: resultVar;
@@ -88,7 +88,15 @@ FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar contex
 			ifAbsent: [ self error: 'No handle instVar' ]);
 		pushTemp: resultVar;
 		send: #instVarAt:put:;
-		popTop;
+		popTop.
+
+	aCallout shouldAutoReleaseReturnedValue ifTrue: [
+		aBuilder
+			pushTemp: #tmpResult;
+			send: #autoRelease;
+			popTop ].
+
+	^ aBuilder
 		pushTemp: #tmpResult;
 		returnTop
 ]
