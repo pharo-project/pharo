@@ -17,7 +17,7 @@ ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
 ]
 
-{ #category : #emitting }
+{ #category : #'code generation' }
 ThisContextVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushThisContext
