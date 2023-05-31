@@ -469,7 +469,7 @@ ClassDescription >> ensureProtocol: aProtocol [
 		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self organization addProtocol: aProtocol ]
+	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #private }
@@ -829,6 +829,7 @@ ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
 
+	self deprecated: 'Just use self instead.' transformWith: '`@rcv organization' -> '`@rcv'.
 	^ organization ifNil: [
 		  self organization: ClassOrganization new.
 		  self isTrait ifFalse: [ organization initializeClass: self ].

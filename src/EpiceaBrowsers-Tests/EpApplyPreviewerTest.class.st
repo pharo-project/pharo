@@ -365,7 +365,7 @@ EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
@@ -382,7 +382,7 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 	aClass organization addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolRemoval.
@@ -548,7 +548,7 @@ EpApplyPreviewerTest >> testRedundantProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -559,7 +559,7 @@ EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 

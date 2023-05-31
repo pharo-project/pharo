@@ -517,19 +517,17 @@ Class >> compileAllFrom: oldClass [
 Class >> copyForAnnouncement [
 	"Answer a copy of the receiver to be used in the announcement of changes.
 	You should not use this class for anything else, it is invalid."
+
 	| newClass |
-
-
 	newClass := self class copy new
-		basicSuperclass: superclass;
-		methodDict: self methodDict copy;
-		setFormat: format;
-		setName: name;
-		organization: self organization copy;
-		classPool: classPool copy;
-		sharedPools: sharedPools copy.
-	self class instSize+1 to: self class instSize do:
-		[:offset | newClass instVarAt: offset put: (self instVarAt: offset)].
+		            basicSuperclass: superclass;
+		            methodDict: self methodDict copy;
+		            setFormat: format;
+		            setName: name;
+		            organization: self copy;
+		            classPool: classPool copy;
+		            sharedPools: sharedPools copy.
+	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
 ]

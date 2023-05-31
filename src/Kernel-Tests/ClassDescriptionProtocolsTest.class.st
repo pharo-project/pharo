@@ -131,19 +131,24 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocol [
 ClassDescriptionProtocolsTest >> testEnsureProtocol [
 
 	| protocol |
-	class organization addProtocol: #titan.
+	class addProtocol: #titan.
 	protocol := class protocolNamed: #titan.
 
 	self assertCollection: class protocolNames hasSameElements: { #titan }.
 	self assert: (class ensureProtocol: #titan) equals: protocol.
 	self assert: (class ensureProtocol: protocol) equals: protocol.
 	self should: [ class ensureProtocol: (Protocol named: #notFromClass) ] raise: Error.
-	
+
 	self assert: (class ensureProtocol: nil) name equals: Protocol unclassified.
-	self assertCollection: class protocolNames hasSameElements: { #titan . Protocol unclassified }.
-	
+	self assertCollection: class protocolNames hasSameElements: {
+			#titan.
+			Protocol unclassified }.
+
 	self assert: (class ensureProtocol: #human) equals: (class protocolNamed: #human).
-	self assertCollection: class protocolNames hasSameElements: { #titan . #human . Protocol unclassified }.
+	self assertCollection: class protocolNames hasSameElements: {
+			#titan.
+			#human.
+			Protocol unclassified }
 ]
 
 { #category : #tests }
@@ -151,9 +156,9 @@ ClassDescriptionProtocolsTest >> testExtensionProtocols [
 
 	| extensionPackageName |
 	extensionPackageName := class package name , '2'.
-	class organization addProtocol: #titan.
+	class addProtocol: #titan.
 	[
-	class organization addProtocol: '*' , extensionPackageName.
+	class addProtocol: '*' , extensionPackageName.
 
 	self assertCollection: class extensionProtocols hasSameElements: { (class protocolNamed: '*' , extensionPackageName) } ] ensure: [
 		(extensionPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
@@ -162,7 +167,7 @@ ClassDescriptionProtocolsTest >> testExtensionProtocols [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testHasProtocol [
 
-	class organization addProtocol: #titan.
+	class addProtocol: #titan.
 	self assert: (class hasProtocol: #titan).
 	self deny: (class hasProtocol: #human).
 
@@ -173,7 +178,7 @@ ClassDescriptionProtocolsTest >> testHasProtocol [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testHasProtocolWithRealProtocol [
 
-	class organization addProtocol: #titan.
+	class addProtocol: #titan.
 	self assert: (class hasProtocol: (class protocolNamed: #titan)).
 	self deny: (class hasProtocol: (Protocol named: #human))
 ]
@@ -194,7 +199,7 @@ ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
 ClassDescriptionProtocolsTest >> testProtocolNamed [
 
 	| titanProtocol |
-	titanProtocol := class organization addProtocol: #titan.
+	titanProtocol := class addProtocol: #titan.
 	self assert: (class protocolNamed: #titan) identicalTo: titanProtocol.
 	self should: [ class protocolNamed: #human ] raise: NotFound
 ]
@@ -203,7 +208,7 @@ ClassDescriptionProtocolsTest >> testProtocolNamed [
 ClassDescriptionProtocolsTest >> testProtocolNamedIfAbsent [
 
 	| titanProtocol |
-	titanProtocol := class organization addProtocol: #titan.
+	titanProtocol := class addProtocol: #titan.
 	self assert: (class protocolNamed: #titan ifAbsent: [ self fail ]) identicalTo: titanProtocol.
 	self assert: [ class protocolNamed: #human ifAbsent: [ true ] ]
 ]
@@ -211,9 +216,9 @@ ClassDescriptionProtocolsTest >> testProtocolNamedIfAbsent [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testProtocolNames [
 
-	class organization addProtocol: #titan.
-	class organization addProtocol: #human.
-	class organization addProtocol: #witch.
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
 
 	self assertCollection: class protocolNames hasSameElements: #( #titan #human #witch ).
 
@@ -238,9 +243,9 @@ ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testProtocols [
 
-	class organization addProtocol: #titan.
-	class organization addProtocol: #human.
-	class organization addProtocol: #witch.
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
 
 	self assertCollection: class protocols hasSameElements: (#( #titan #human #witch ) collect: [ :protocolName | class protocolNamed: protocolName ]).
 
@@ -299,9 +304,9 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocol [
 
-	class organization addProtocol: #titan.
-	class organization addProtocol: #human.
-	class organization addProtocol: #witch.
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
 	class compiler
 		protocol: #titan;
 		install: 'king ^1'.
@@ -321,9 +326,9 @@ ClassDescriptionProtocolsTest >> testRemoveProtocol [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmpty [
 
-	class organization addProtocol: #titan.
-	class organization addProtocol: #human.
-	class organization addProtocol: #witch.
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
 	class compiler
 		protocol: #titan;
 		install: 'king ^1'.
@@ -349,9 +354,9 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyOnNonExistingProtocol 
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithRealProtocol [
 
-	class organization addProtocol: #titan.
-	class organization addProtocol: #human.
-	class organization addProtocol: #witch.
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
 	class compiler
 		protocol: #titan;
 		install: 'king ^1'.
@@ -377,9 +382,9 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolOnNonExistingProtocol [
 { #category : #tests }
 ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 
-	class organization addProtocol: #titan.
-	class organization addProtocol: #human.
-	class organization addProtocol: #witch.
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
 	class compiler
 		protocol: #titan;
 		install: 'king ^1'.

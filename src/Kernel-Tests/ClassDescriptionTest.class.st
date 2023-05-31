@@ -195,7 +195,7 @@ ClassDescriptionTest >> testNumberOfMethods [
 ClassDescriptionTest >> testOrganization [
 
 	| aClassOrganizer |
-	aClassOrganizer := ClassDescription organization.
+	aClassOrganizer := ClassDescription.
 	self assert: (aClassOrganizer isKindOf: ClassOrganization)
 ]
 
