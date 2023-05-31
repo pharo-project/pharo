@@ -16,6 +16,12 @@ ClassDescriptionProtocolsTest >> classNameForTests [
 	^ #ClassForTests
 ]
 
+{ #category : #private }
+ClassDescriptionProtocolsTest >> performTest [
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
+]
+
 { #category : #running }
 ClassDescriptionProtocolsTest >> setUp [
 
@@ -31,6 +37,14 @@ ClassDescriptionProtocolsTest >> tearDown [
 
 	class package removeFromSystem.
 	super tearDown
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocol [
+
+	class addProtocol: #titan.
+
+	self assert: (class hasProtocol: #titan)
 ]
 
 { #category : #tests }
@@ -394,6 +408,145 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 	class removeProtocol: (class protocolNamed: #titan).
 	self assert: class protocolNames size equals: 1.
 	self deny: (class isLocalSelector: #king)
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAs [
+
+	class compiler
+		protocol: #demon;
+		install: 'king ^1'.
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+	class renameProtocol: #demon as: #titan.
+
+	self assert: (class hasProtocol: #titan).
+	self deny: (class hasProtocol: #demon).
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithExistingProtocol [
+
+	class
+		addProtocol: #titan;
+		classify: #king under: #demon.
+
+	self assert: (class hasProtocol: #titan).
+	self assert: (class hasProtocol: #demon).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+	self assertEmpty: (class selectorsInProtocol: #titan).
+	class renameProtocol: #demon as: #titan.
+
+	self assert: (class hasProtocol: #titan).
+	self deny: (class hasProtocol: #demon).
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithExistingProtocolWithProtocol [
+
+	| titan demon |
+	class
+		addProtocol: #titan;
+		classify: #king under: #demon.
+
+	titan := class protocolNamed: #titan.
+	demon := class protocolNamed: #demon.
+
+	self assert: (class hasProtocol: titan).
+	self assert: (class hasProtocol: demon).
+	self assertEmpty: titan methodSelectors.
+	self assertCollection: demon methodSelectors hasSameElements: #( #king ).
+	class renameProtocol: titan as: demon.
+
+	self assert: (class hasProtocol: demon).
+	self deny: (class hasProtocol: titan).
+	self assertCollection: demon methodSelectors hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil [
+
+	class classify: #king under: #demon.
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+
+	class renameProtocol: #demon as: nil.
+	"Check that nothing changed."
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil2 [
+
+	class classify: #king under: #demon.
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+
+	class renameProtocol: nil as: #titan.
+	"Check that nothing changed."
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil3 [
+
+	class classify: #king under: #demon.
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+
+	class renameProtocol: nil as: nil.
+	"Check that nothing changed."
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNonExistingProtocol [
+
+	class classify: #king under: #demon.
+	
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+
+	class renameProtocol: #two as: #demon.
+	"Check that nothing changed."
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsWithProtocol [
+
+	| demon titan |
+	class classify: #king under: #demon.
+
+	demon := class protocolNamed: #demon.
+	self assert: (class hasProtocol: demon).
+	self deny: (class hasProtocol: #titan).
+	self assertCollection: demon methodSelectors hasSameElements: #( #king ).
+	class renameProtocol: demon as: #titan.
+
+	titan := class protocolNamed: #titan.
+	self assert: (class hasProtocol: titan).
+	self deny: (class hasProtocol: demon).
+	self assertCollection: titan methodSelectors hasSameElements: #( #king )
 ]
 
 { #category : #tests }

@@ -23,7 +23,7 @@ ProtocolTest >> setUp [
 			         name: self classNameForTests;
 			         package: 'ClassOrganizer-Tests' ].
 
-	organization := class organization
+	organization := class
 ]
 
 { #category : #running }
