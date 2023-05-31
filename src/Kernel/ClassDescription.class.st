@@ -446,7 +446,7 @@ ClassDescription >> ensureProtocol: aProtocol [
 	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
 
 	aProtocol isString ifFalse: [
-		(self organization protocols includes: aProtocol)
+		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
 	^ self protocolNamed: aProtocol ifAbsent: [ self organization addProtocol: aProtocol ]
@@ -473,7 +473,7 @@ ClassDescription >> expandedDefinitionStringFor: aPrinter [
 { #category : #protocols }
 ClassDescription >> extensionProtocols [
 
-	^ self organization protocols select: [ :protocol | protocol isExtensionProtocol ]
+	^ self protocols select: [ :protocol | protocol isExtensionProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -838,7 +838,7 @@ ClassDescription >> protocolNamed: aString [
 { #category : #protocols }
 ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
 
-	^ self organization protocols
+	^ self protocols
 		  detect: [ :e | e name = aString ]
 		  ifNone: aBlock
 ]
@@ -847,7 +847,17 @@ ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
-	^ self organization protocols collect: [ :protocol | protocol name ]
+	^ self protocols collect: [ :protocol | protocol name ]
+]
+
+{ #category : #protocols }
+ClassDescription >> protocolOfSelector: aSelector [
+	"Return the protocol including the method of the same name as the selector.
+	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
+
+	^ self protocols
+		  detect: [ :each | each includesSelector: aSelector ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #protocols }
@@ -856,17 +866,6 @@ ClassDescription >> protocols [
 	In the past I was returning the protocol names but now I am returning the instances directly. If you want to deal with the names you can use #protocolNames."
 
 	^ self organization protocols
-]
-
-
-{ #category : #protocols }
-ClassDescription >> protocolOfSelector: aSelector [
-	"Return the protocol including the method of the same name as the selector.
-	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
-
-	^ self organization protocols
-		  detect: [ :each | each includesSelector: aSelector ]
-		  ifNone: [ nil ]
 ]
 
 { #category : #compiling }
@@ -880,7 +879,7 @@ ClassDescription >> reformatAll [
 ClassDescription >> removeEmptyProtocols [
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
 
-	self organization protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : #protocols }
@@ -903,7 +902,7 @@ ClassDescription >> removeInstVarNamed: aString [
 ClassDescription >> removeNonexistentSelectorsFromProtocols [
 	"For each protocol, remove the selectors that are not present in the class."
 
-	self organization protocols do: [ :protocol |
+	self protocols do: [ :protocol |
 		protocol methodSelectors
 			reject: [ :selector | self includesSelector: selector ]
 			thenDo: [ :selector | self removeFromProtocols: selector ] ]

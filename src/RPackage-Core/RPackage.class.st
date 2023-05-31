@@ -303,8 +303,8 @@ RPackage >> basicImportClass: aClass [
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
 	self addClassDefinition: aClass.
-	aClass protocolNames do: [ :each | (self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
-	aClass organization protocols
+	aClass protocolNames do: [ :protocolName | (self isYourClassExtension: protocolName) ifTrue: [ aClass organization renameProtocol: protocolName as: Protocol unclassified ] ].
+	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
 		thenDo: [ :protocol | self importProtocol: protocol name forClass: aClass ]
 ]
@@ -679,7 +679,7 @@ RPackage >> extensionMethodsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> extensionProtocolsForClass: aClass [
 
-	^ aClass organization protocols select: [ :protocol | self isYourClassExtension: protocol name ]
+	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol name ]
 ]
 
 { #category : #accessing }
@@ -1261,7 +1261,7 @@ RPackage >> removeFromSystem [
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	extendedClasses do: [ :each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol ].
+	extendedClasses do: [ :class | class removeProtocolIfEmpty: ('*' , name) asSymbol ].
 	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
 	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
 	categories do: [ :cat | self organizer removeCategory: cat ].
