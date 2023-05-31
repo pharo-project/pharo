@@ -524,7 +524,6 @@ Class >> copyForAnnouncement [
 		            methodDict: self methodDict copy;
 		            setFormat: format;
 		            setName: name;
-		            organization: self copy;
 		            classPool: classPool copy;
 		            sharedPools: sharedPools copy.
 	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].

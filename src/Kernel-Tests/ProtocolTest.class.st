@@ -2,7 +2,6 @@ Class {
 	#name : #ProtocolTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'organization',
 		'class'
 	],
 	#category : #'Kernel-Tests-Protocols'
@@ -21,9 +20,7 @@ ProtocolTest >> setUp [
 	class := self class classInstaller make: [ :aBuilder |
 		         aBuilder
 			         name: self classNameForTests;
-			         package: 'ClassOrganizer-Tests' ].
-
-	organization := class
+			         package: 'ClassOrganizer-Tests' ]
 ]
 
 { #category : #running }
