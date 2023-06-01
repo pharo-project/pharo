@@ -12,7 +12,6 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'organization',
 		'protocols'
 	],
 	#category : #'Kernel-Classes'
