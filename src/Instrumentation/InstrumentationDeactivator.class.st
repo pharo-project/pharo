@@ -1,9 +1,6 @@
 Class {
 	#name : #InstrumentationDeactivator,
 	#superclass : #InstrumentationEnsurer,
-	#pools : [
-		'AnObsoleteMpMethodProxyPool'
-	],
 	#category : #Instrumentation
 }
 

@@ -1,7 +1,7 @@
 Extension { #name : #Process }
 
 { #category : #'*Instrumentation' }
-Process >> isActive: n [
+Process >> isActiveInMetaLevel: n [
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
 	<noInstrumentation>

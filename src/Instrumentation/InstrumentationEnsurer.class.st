@@ -6,6 +6,8 @@ Class {
 
 { #category : #'instance creation' }
 InstrumentationEnsurer class >> basicNew [
+	"Redefining basicNew on this enables us to exclude it from instrumentation and be able to 	instrument Behavior>>basicNew without creating infinite loops"
+
 	"Primitive. Answer an instance of the receiver (which is a class) with no
 	 indexable variables. Fail if the class is indexable. Essential. See Object
 	 documentation whatIsAPrimitive.
