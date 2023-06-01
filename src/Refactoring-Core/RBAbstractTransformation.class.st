@@ -85,6 +85,12 @@ RBAbstractTransformation class >> setDefaultOption: aSymbol to: aBlock [
 	self refactoringOptions at: aSymbol put: aBlock
 ]
 
+{ #category : #accessing }
+RBAbstractTransformation >> changes [
+
+	^ self model changes
+]
+
 { #category : #'defining conditions' }
 RBAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
@@ -95,9 +101,61 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
+{ #category : #private }
+RBAbstractTransformation >> convertMethod: selector for: aClass using: searchReplacer [
+	"Convert the parse tree for selector using the searchReplacer. If a
+	change is made then compile it into the changeBuilder."
+
+	| parseTree |
+	parseTree := aClass parseTreeForSelector: selector.
+	parseTree ifNil: [ ^ self ].
+	( searchReplacer executeTree: parseTree )
+		ifTrue: [ aClass compileTree: searchReplacer tree ]
+]
+
+{ #category : #initialize }
+RBAbstractTransformation >> defaultEnvironment [
+
+	^ RBBrowserEnvironment new
+]
+
 { #category : #'defining conditions' }
 RBAbstractTransformation >> emptyCondition [
 	^ RBCondition empty
+]
+
+{ #category : #accessing }
+RBAbstractTransformation >> model: aRBNamespace [
+
+	model := aRBNamespace
+]
+
+{ #category : #initialize }
+RBAbstractTransformation >> newModel [
+
+	^ (RBNamespace
+			onEnvironment: self defaultEnvironment)
+			name: self printString;
+			yourself
+]
+
+{ #category : #executing }
+RBAbstractTransformation >> openBrowserOn: anEnvironment [
+
+	^ (self options at: #openBrowser)
+		value: self value: anEnvironment
+]
+
+{ #category : #accessing }
+RBAbstractTransformation >> options [
+
+	^ options ifNil: [ options := self class refactoringOptions copy ]
+]
+
+{ #category : #accessing }
+RBAbstractTransformation >> options: aDictionary [
+
+	options := aDictionary
 ]
 
 { #category : #parsing }
@@ -125,6 +183,29 @@ RBAbstractTransformation >> parserClass [
 	^ RBParser
 ]
 
+{ #category : #accessing }
+RBAbstractTransformation >> poolVariableNamesFor: aClass [
+	| pools |
+	pools := Set new.
+	aClass withAllSuperclasses do:
+			[:each |
+			each allPoolDictionaryNames do:
+					[:pool |
+					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
+	^pools
+]
+
+{ #category : #accessing }
+RBAbstractTransformation >> poolVariableNamesIn: poolName [
+	^(model classNamed: poolName) classPool keys
+]
+
+{ #category : #preconditions }
+RBAbstractTransformation >> preconditions [
+
+	self subclassResponsibility
+]
+
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringConfirmWarning: aString [
 	| ret |
@@ -147,4 +228,64 @@ RBAbstractTransformation >> refactoringWarning: aString [
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringWarning: aString with: aBlock [
 	^ RBRefactoringWarning signal: aString with: aBlock
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> requestImplementorToInline: implementorsCollection [
+	^(self options at: #implementorToInline) value: self
+		value: implementorsCollection
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> requestMethodNameFor: aMethodName [
+	^(self options at: #methodName) cull: aMethodName cull: self
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> requestSelfArgumentName [
+	^(self options at: #selfArgumentName) value: self
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> selectVariableToMoveMethodTo: aSelector class: aClass [
+	^(self options at: #selectVariableToMoveTo)
+		value: self
+		value: aClass
+		value: aSelector
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection [
+	^ (self options at: #variableTypes)
+		value: self
+		value: initialTypeCollection
+		value: selectedTypeCollection
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> shouldExtractAssignmentTo: aString [
+	^(self options at: #extractAssignment) value: self value: aString
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> shouldInlineExpression: aString [
+	^(self options at: #inlineExpression) value: self value: aString
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> shouldOverride: aSelector in: aClass [
+	^(self options at: #alreadyDefined)
+		value: self
+		value: aClass
+		value: aSelector
+]
+
+{ #category : #requests }
+RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
+	^(self options at: #useExistingMethod) value: self value: aSelector
+]
+
+{ #category : #transforming }
+RBAbstractTransformation >> transform [
+	self subclassResponsibility
 ]

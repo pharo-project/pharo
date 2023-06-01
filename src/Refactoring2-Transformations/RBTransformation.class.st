@@ -92,12 +92,6 @@ RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerColl
 	^stream contents
 ]
 
-{ #category : #accessing }
-RBTransformation >> changes [
-
-	^ self model changes
-]
-
 { #category : #preconditions }
 RBTransformation >> checkPreconditions [
 
@@ -107,24 +101,6 @@ RBTransformation >> checkPreconditions [
 	result := conditions check.
 	result ifFalse: [ self refactoringError: conditions errorString ].
 	^ result
-]
-
-{ #category : #preconditions }
-RBTransformation >> checksPreconditions [
-
-	self preconditionChecking: true
-]
-
-{ #category : #private }
-RBTransformation >> convertMethod: selector for: aClass using: searchReplacer [
-	"Convert the parse tree for selector using the searchReplacer. If a
-	change is made then compile it into the changeBuilder."
-
-	| parseTree |
-	parseTree := aClass parseTreeForSelector: selector.
-	parseTree ifNil: [ ^ self ].
-	( searchReplacer executeTree: parseTree )
-		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
 { #category : #accessing }
@@ -138,12 +114,6 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 			value == (self class refactoringOptions at: key)
 				ifTrue: [dict at: key put: (aDictionary at: key)]].
 	self options: dict
-]
-
-{ #category : #initialize }
-RBTransformation >> defaultEnvironment [
-
-	^ RBBrowserEnvironment new
 ]
 
 { #category : #execution }
@@ -166,57 +136,6 @@ RBTransformation >> model [
 	^ model ifNil: [ model := self newModel ]
 ]
 
-{ #category : #accessing }
-RBTransformation >> model: aRBNamespace [
-
-	model := aRBNamespace
-]
-
-{ #category : #initialize }
-RBTransformation >> newModel [
-
-	^ (RBNamespace
-		onEnvironment: self defaultEnvironment)
-		name: self printString;
-		yourself
-]
-
-{ #category : #executing }
-RBTransformation >> openBrowserOn: anEnvironment [
-
-	^ (self options at: #openBrowser)
-		value: self value: anEnvironment
-]
-
-{ #category : #accessing }
-RBTransformation >> options [
-
-	^ options ifNil: [ options := self class refactoringOptions copy ]
-]
-
-{ #category : #accessing }
-RBTransformation >> options: aDictionary [
-
-	options := aDictionary
-]
-
-{ #category : #accessing }
-RBTransformation >> poolVariableNamesFor: aClass [
-	| pools |
-	pools := Set new.
-	aClass withAllSuperclasses do:
-			[:each |
-			each allPoolDictionaryNames do:
-					[:pool |
-					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
-	^pools
-]
-
-{ #category : #accessing }
-RBTransformation >> poolVariableNamesIn: poolName [
-	^(model classNamed: poolName) classPool keys
-]
-
 { #category : #preconditions }
 RBTransformation >> preconditionChecking [
 
@@ -227,12 +146,6 @@ RBTransformation >> preconditionChecking [
 RBTransformation >> preconditionChecking: aBoolean [
 
 	preconditionChecking := aBoolean
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditions [
-
-	self subclassResponsibility
 ]
 
 { #category : #executing }
