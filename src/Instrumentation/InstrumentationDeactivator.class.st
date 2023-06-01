@@ -10,6 +10,6 @@ Class {
 { #category : #accessing }
 InstrumentationDeactivator >> value [
 
-	<methodProxyCannotWrap>
+	<noInstrumentation>
 	thisProcess shiftLevelDown
 ]
