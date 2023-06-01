@@ -73,6 +73,12 @@ ClassDescription >> addMethodTag: aSymbol [
 	self organization addProtocol: aSymbol
 ]
 
+{ #category : #protocols }
+ClassDescription >> addProtocol: aProtocol [
+
+	^ self organization addProtocol: aProtocol
+]
+
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
@@ -947,6 +953,12 @@ ClassDescription >> removeSelector: selector [
 ClassDescription >> removeSlot: aSlot [
 
 	^self subclassResponsibility
+]
+
+{ #category : #protocols }
+ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
+
+	^ self organization renameProtocol: anOldProtocol as: aNewProtocol
 ]
 
 { #category : #organization }
