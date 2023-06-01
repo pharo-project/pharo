@@ -185,7 +185,7 @@ MorphicWindowManager >> openNewWindowWithRoot: aMorph [
 { #category : #saving }
 MorphicWindowManager >> saveAllAttributes [
 	
-	allAttributes := windows collect: [  :w | w attributsSave ].
+	allAttributes := windows collect: [  :w | w attributesSave ].
 ]
 
 { #category : #saving }

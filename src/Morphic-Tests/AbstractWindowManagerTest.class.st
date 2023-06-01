@@ -7,10 +7,9 @@ Class {
 	#category : #'Morphic-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 AbstractWindowManagerTest >> runCaseManaged [
 
-	super runCaseManaged .
 	self runCase
 ]
 

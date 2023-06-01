@@ -49,6 +49,29 @@ MorphicNativeWindow >> allowedToClose [
 ]
 
 { #category : #'submorphs - add/remove' }
+MorphicNativeWindow >> attributes [
+
+	^ attributes
+]
+
+{ #category : #'submorphs - add/remove' }
+MorphicNativeWindow >> attributes: aOsWindowAttributs [
+
+	attributes := aOsWindowAttributs
+]
+
+{ #category : #'submorphs - add/remove' }
+MorphicNativeWindow >> attributesSave [
+
+	"ask the os window for saves the position, the title and bounds on osWindowAttributes"
+	osWindow position.
+	osWindow title.
+	osWindow bounds.
+	
+	^ attributes 
+]
+
+{ #category : #'submorphs - add/remove' }
 MorphicNativeWindow >> attributs [
 
 	^ attributes

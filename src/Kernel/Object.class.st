@@ -1189,6 +1189,12 @@ Object >> isContext [
 ]
 
 { #category : #testing }
+Object >> isDesktop [
+
+^ false
+]
+
+{ #category : #testing }
 Object >> isDictionary [
 
 	^ false

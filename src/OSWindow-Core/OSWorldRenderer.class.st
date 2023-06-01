@@ -9,10 +9,20 @@ Class {
 		'osWindow',
 		'display',
 		'windowCloseAction',
-		'previousFrameRenderingTime'
+		'previousFrameRenderingTime',
+		'attributes'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
+
+{ #category : #'instance creation' }
+OSWorldRenderer class >> forWorld: aWorld [
+
+	^ self new
+		  world: aWorld;
+		  setAttributesDefault;
+		  yourself
+]
 
 { #category : #accessing }
 OSWorldRenderer class >> defaultExtent [
@@ -113,7 +123,7 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
 { #category : #private }
 OSWorldRenderer >> doActivate [
-	| attributes initialExtent |
+	| initialExtent |
 
 	initialExtent := world worldState realWindowExtent ifNil: [ self class defaultExtent ].
 
@@ -257,6 +267,30 @@ OSWorldRenderer >> requestTextEditingAt: aRectangle [
 OSWorldRenderer >> screenScaleFactor [
 
 	^ world scaleFactor * self windowScaleFactor
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> setAttributesDefault [
+
+	| initialExtent |
+	initialExtent := world worldState realWindowExtent ifNil: [ 
+		                 976 @ 665 ].
+
+
+	attributes := OSWindowAttributes new.
+	attributes
+		extent: initialExtent;
+		title: Smalltalk image imageFile fullName;
+		windowCentered: true;
+		icon: (self iconNamed: #pharoBig).
+
+	display := Form extent: initialExtent depth: 32.
+
+	driver := self pickMostSuitableWindowDriver.
+	attributes preferableDriver: driver.
+
+	world worldState worldRenderer: self.
+	world extent: initialExtent
 ]
 
 { #category : #'system startup' }
