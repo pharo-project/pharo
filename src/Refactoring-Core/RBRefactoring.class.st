@@ -26,73 +26,9 @@ A RBRefactoringManager  is used to collect the executed refactorings and provide
 "
 Class {
 	#name : #RBRefactoring,
-	#superclass : #Object,
-	#traits : 'RBTRefactoringBuilder',
-	#classTraits : 'RBTRefactoringBuilder classTrait',
-	#instVars : [
-		'model',
-		'options'
-	],
-	#classVars : [
-		'RefactoringOptions'
-	],
+	#superclass : #RBAbstractTransformation,
 	#category : #'Refactoring-Core-Refactorings'
 }
-
-{ #category : #displaying }
-RBRefactoring class >> basicMenuItemString [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #cleaning }
-RBRefactoring class >> cleanUp [
-	"RefactoringOptions holds on to blocks, we should make sure to recreate them so the block references the current method"
-	self initializeRefactoringOptions
-]
-
-{ #category : #'class initialization' }
-RBRefactoring class >> initialize [
-	self initializeRefactoringOptions
-]
-
-{ #category : #'private - initialization' }
-RBRefactoring class >> initializeRefactoringOptions [
-	RefactoringOptions := IdentityDictionary new.
-	RefactoringOptions
-		at: #implementorToInline
-		put: [ :ref :imps | self error: #implementorToInline ];
-
-		at: #methodName
-		put: [ :methodName :ref | self error: #methodName ];
-
-		at: #selfArgumentName
-		put: [ :ref | self error: #selfArgumentName ];
-
-		at: #selectVariableToMoveTo
-		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];
-
-		at: #variableTypes
-		put: [ :ref :types :selected | self error: #variableTypes ];
-
-		at: #extractAssignment
-		put: [ :ref :varName | self error: #extractAssignment ];
-
-		at: #inlineExpression
-		put: [ :ref :string | self error: #inlineExpression ];
-
-		at: #alreadyDefined
-		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
-
-		at: #useExistingMethod
-		put: [ :ref :selector |  self error: #useExistingMethod ];
-
-		at: #openBrowser
-		put: [ :ref :env |  self error: #openBrowser ];
-
-		at: #searchInWholeHierarchy
-		put: [ self error: #searchInWholeHierarchy ]
-]
 
 { #category : #testing }
 RBRefactoring class >> isAbstract [
@@ -107,27 +43,9 @@ RBRefactoring class >> isTransformation [
 	^ false
 ]
 
-{ #category : #displaying }
-RBRefactoring class >> menuItemString [
-
-	^ (self isTransformation
-		   ifTrue: [ '(T) ' ]
-		   ifFalse: [ '' ]) , self basicMenuItemString
-]
-
 { #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
-]
-
-{ #category : #accessing }
-RBRefactoring class >> refactoringOptions [
-	^ RefactoringOptions
-]
-
-{ #category : #accessing }
-RBRefactoring class >> setDefaultOption: aSymbol to: aBlock [
-	self refactoringOptions at: aSymbol put: aBlock
 ]
 
 { #category : #converting }

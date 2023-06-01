@@ -12,38 +12,12 @@ My main API is
 "
 Class {
 	#name : #RBTransformation,
-	#superclass : #Object,
-	#traits : 'RBTRefactoringBuilder',
-	#classTraits : 'RBTRefactoringBuilder classTrait',
+	#superclass : #RBAbstractTransformation,
 	#instVars : [
-		'model',
-		'options',
 		'preconditionChecking'
-	],
-	#classVars : [
-		'RefactoringOptions'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
-
-{ #category : #displaying }
-RBTransformation class >> basicMenuItemString [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #cleanup }
-RBTransformation class >> cleanUp [
-	"RefactoringOptions holds on to blocks, we should make sure to recreate them
-	 so the block references the current method"
-	self initializeRefactoringOptions
-]
-
-{ #category : #'class initialization' }
-RBTransformation class >> initialize [
-
-	self initializeRefactoringOptions
-]
 
 { #category : #'private - initialization' }
 RBTransformation class >> initializeRefactoringOptions [
@@ -85,20 +59,6 @@ RBTransformation class >> initializeRefactoringOptions [
 RBTransformation class >> isTransformation [
 
 	^ false
-]
-
-{ #category : #displaying }
-RBTransformation class >> menuItemString [
-
-	^ (self isTransformation
-		   ifTrue: [ '(T) ' ]
-		   ifFalse: [ '' ]) , self basicMenuItemString
-]
-
-{ #category : #accessing }
-RBTransformation class >> refactoringOptions [
-
-	^ RefactoringOptions
 ]
 
 { #category : #converting }
