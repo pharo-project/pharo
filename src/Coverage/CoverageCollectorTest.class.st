@@ -90,6 +90,8 @@ CoverageCollectorTest >> testCallgraph [
 CoverageCollectorTest >> testExample [
 
 	| collector coverage |
+	self skipOnPharoCITestingEnvironment.
+	"see https://github.com/pharo-project/pharo/issues/13746"
 	collector := CoverageCollector new. "Instantiate"
 	collector methods: Point methods , Rectangle methods. "Configure with the methods to watch."
 	coverage := collector runOn: [ (1 @ 1 corner: 2 @ 2) center ]. "Setup, execute and teardown."

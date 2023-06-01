@@ -15,6 +15,11 @@ OCDoitTest >> bindingOf: aSelector [
 ]
 
 { #category : #binding }
+OCDoitTest >> canAddBindingOf: aSymbol [
+	^ true
+]
+
+{ #category : #binding }
 OCDoitTest >> hasBindingOf: aSelector [
 	^aSelector == #requestorVarForTesting
 ]
@@ -96,6 +101,22 @@ OCDoitTest >> testDoItRequestorEvalError [
 	evaluate: '1('.
 
 	self assert: value isNil
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItRequestorOptimized [
+
+	| value  |
+	"Check optimzied to:do:, we call lookupVar: on the synthesized limit var, see canAddBindingOf:"
+	value := OpalCompiler new
+		          requestor: self;
+		          evaluate: '
+							| sum |
+							sum := 0.
+							1 to: requestorVarForTesting do: [:each | sum :=sum+1].
+							sum'.
+
+	self assert: value equals: 5
 ]
 
 { #category : #tests }

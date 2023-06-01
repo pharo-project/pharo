@@ -5,7 +5,7 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 	"File a description of the messages of this class that have been
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
-	self organization protocols do: [ :protocol |
+	self protocols do: [ :protocol |
 		protocol methodSelectors
 			select: [ :selector | aSet includes: selector ]
 			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
@@ -49,11 +49,11 @@ ClassDescription >> fileOutOn: aFileStream [
 
 	aFileStream nextChunkPut: self oldPharoDefinition.
 	self putCommentOnFile: aFileStream.
-	self organization protocols do: [ :protocol | self fileOutLocalMethodsInProtocol: protocol on: aFileStream ]
+	self protocols do: [ :protocol | self fileOutLocalMethodsInProtocol: protocol on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutOrganizationOn: aFileStream [
+ClassDescription >> fileOutProtocolsOn: aFileStream [
 	"File a description of the receiver's organization on aFileStream."
 
 	aFileStream
@@ -61,7 +61,18 @@ ClassDescription >> fileOutOrganizationOn: aFileStream [
 		nextPut: $!;
 		nextChunkPut: self name , ' reorganize';
 		cr;
-		nextChunkPut: self organization stringForFileOut;
+		nextChunkPut: (String streamContents: [ :aStream |
+					 self protocols do: [ :protocol |
+							 aStream
+								 nextPut: $(;
+								 nextPutAll: protocol name printString.
+							 protocol methodSelectors do: [ :selector |
+								 aStream
+									 space;
+									 nextPutAll: selector ].
+							 aStream
+								 nextPut: $);
+								 cr ] ]);
 		cr
 ]
 

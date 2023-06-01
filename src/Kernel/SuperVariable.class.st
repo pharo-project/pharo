@@ -17,7 +17,7 @@ SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitSuperNode: aNode
 ]
 
-{ #category : #emitting }
+{ #category : #'code generation' }
 SuperVariable >> emitValue: methodBuilder [
 	"super references the receiver, send that follows is a super send (the message lookup starts in the superclass)"
 	methodBuilder pushReceiver

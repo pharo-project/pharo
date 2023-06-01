@@ -171,6 +171,7 @@ MCClassDefinition >> createClass [
 		ifTrue: [ Context comment = comment 
 						ifFalse: [ Context comment: comment stamp: commentStamp ].
 					^ self ].
+
 	superClass := superclassName = #nil
 		ifFalse: [ Smalltalk globals at: superclassName ].
 	^ [ Smalltalk classInstaller
