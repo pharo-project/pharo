@@ -824,15 +824,6 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
-{ #category : #organization }
-ClassDescription >> organization [
-	"Answer the instance of ClassOrganizer that represents the organization
-	of the messages of the receiver."
-
-	self deprecated: 'Just use self instead.' transformWith: '`@rcv organization' -> '`@rcv'.
-	^ self
-]
-
 { #category : #printing }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
@@ -1034,14 +1025,6 @@ ClassDescription >> reorganize [
 ClassDescription >> resetProtocols [
 
 	protocols := Array new
-]
-
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInCategory: aName [
-
-	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
-
-	^ self selectorsInProtocol: aName
 ]
 
 { #category : #protocols }
@@ -1279,13 +1262,6 @@ ClassDescription >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
 
 	^ true
-]
-
-{ #category : #organization }
-ClassDescription >> whichCategoryIncludesSelector: aSelector [
-
-	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
-	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #queries }

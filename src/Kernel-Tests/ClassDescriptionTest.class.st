@@ -191,14 +191,6 @@ ClassDescriptionTest >> testNumberOfMethods [
 	self assert: Point numberOfMethods equals: Point localMethods size + Point class localMethods size
 ]
 
-{ #category : #tests }
-ClassDescriptionTest >> testOrganization [
-
-	| aClassOrganizer |
-	aClassOrganizer := ClassDescription.
-	self assert: (aClassOrganizer isKindOf: ClassOrganization)
-]
-
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlotNamed [
 	self assert: (Point slotNamed: #x) name equals: #x

@@ -22,14 +22,6 @@ ClassDescriptionProtocolsTest >> testAddProtocol [
 ]
 
 { #category : #tests }
-ClassDescriptionProtocolsTest >> testAddProtocol [
-
-	class addProtocol: #titan.
-
-	self assert: (class hasProtocol: #titan)
-]
-
-{ #category : #tests }
 ClassDescriptionProtocolsTest >> testClassifyUnder [
 
 	"Lets create a new protocol via classification"
