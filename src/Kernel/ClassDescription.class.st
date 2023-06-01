@@ -833,14 +833,6 @@ ClassDescription >> organization [
 	^ self
 ]
 
-{ #category : #organization }
-ClassDescription >> organization: aClassOrg [
-	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
-
-	aClassOrg ifNotNil: [ aClassOrg setSubject: self ].
-	organization := aClassOrg
-]
-
 { #category : #printing }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name

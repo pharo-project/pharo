@@ -10,33 +10,33 @@ ClassOrganization >> addCategory: aString [
 { #category : #'*Deprecated12' }
 ClassOrganization >> allCategories [
 
-	self deprecated: 'Use #protocolNames on the organized class instead.' transformWith: '`@rcv allCategories' -> '`@rcv organizedClass protocolNames'.
-	^ self organizedClass protocolNames
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolNames'.
+	^ self protocolNames
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categories [
 
-	self deprecated: 'Use #protocolNames on the organized class instead.' transformWith: '`@rcv categories' -> '`@rcv organizedClass protocolNames'.
-	^ self organizedClass protocolNames
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
+	^ self protocolNames
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector [
 
 	self
-		deprecated: 'Use #protocolNameOfSelector: on the organized class instead.'
-		transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv organizedClass protocolNameOfSelector: `@arg'.
-	^ self organizedClass protocolNameOfSelector: aSelector
+		deprecated: 'Use #protocolNameOfSelector: instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
+	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #'*Deprecated12' }
 ClassOrganization >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self
-		deprecated: 'Use #protocolNameOfSelector: on the organized class instead.'
-		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv organizedClass protocolNameOfSelector: `@arg1) ifNil: `@arg2'.
-	^ (self organizedClass protocolNameOfSelector: aSelector) ifNil: aBlock
+		deprecated: 'Use #protocolNameOfSelector: instead.'
+		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfSelector: `@arg1) ifNil: `@arg2'.
+	^ (self protocolNameOfSelector: aSelector) ifNil: aBlock
 ]
 
 { #category : #'*Deprecated12' }
@@ -61,70 +61,10 @@ ClassOrganization >> classComment: aString [
 ]
 
 { #category : #'*Deprecated12' }
-ClassOrganization >> comment [
-
-	self
-		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
-		on: '18 April 2023'
-		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
-	^ organizedClass comment
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> comment: aString [
-
-	self
-		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
-		on: '18 April 2023'
-		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
-	organizedClass comment: aString
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> commentSourcePointer [
-
-	self
-		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
-		on: '18 April 2023'
-		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
-	^ organizedClass commentSourcePointer
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> commentSourcePointer: anObject [
-
-	self
-		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
-		on: '18 April 2023'
-		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
-	organizedClass commentSourcePointer: anObject
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> commentStamp [
-
-	self
-		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
-		on: '18 April 2023'
-		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
-	^ organizedClass commentStamp
-]
-
-{ #category : #'*Deprecated12' }
-ClassOrganization >> hasComment [
-
-	self
-		deprecated: 'The organization is not responsible for the class comment anymore. Ask the comment to the class directly.'
-		on: '18 April 2023'
-		in: 'Pharo-12.0.0+build.183.sha.cf9b49f2a83f05bb9f02ac5831035d1bda76a14a (64 Bit)'.
-	^ organizedClass hasComment
-]
-
-{ #category : #'*Deprecated12' }
 ClassOrganization >> listAtCategoryNamed: aName [
 
-	self deprecated: 'Use #selectorsInProtocol: on organized class instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv organizedClass selectorsInProtocol: `@arg'.
-	^ self organizedClass selectorsInProtocol: aName
+	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
+	^ self selectorsInProtocol: aName
 ]
 
 { #category : #'*Deprecated12' }
@@ -137,8 +77,8 @@ ClassOrganization >> removeCategory: protocolName [
 { #category : #'*Deprecated12' }
 ClassOrganization >> removeEmptyCategories [
 
-	self deprecated: 'Use #removeEmptyProtocols on the organized class instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv organizedClass removeEmptyProtocols'.
-	self organizedClass removeEmptyProtocols
+	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
+	self removeEmptyProtocols
 ]
 
 { #category : #'*Deprecated12' }

@@ -10,32 +10,11 @@ Class {
 	#category : #'Kernel-Protocols'
 }
 
-{ #category : #'instance creation' }
-ClassOrganization class >> forClass: aClass [
-	^ self basicNew
-		initializeClass: aClass;
-		yourself
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
 
-	self deprecated: 'Use #selectors on the organized class' transformWith: '`@rcv allMethodSelectors' -> '`@rcv organizedClass selectors'.
-	^ self organizedClass selectors
-]
-
-{ #category : #copying }
-ClassOrganization >> copyFrom: otherOrganization [
-
-	self organizedClass protocols:  otherOrganization protocols copy
-]
-
-{ #category : #initialization }
-ClassOrganization >> initializeClass: aClass [
-
-	self initialize.
-	organizedClass := aClass.
-	organizedClass selectors do: [ :each | self organizedClass classify: each under: Protocol unclassified ]
+	self deprecated: 'Use #selectors instead' transformWith: '`@rcv allMethodSelectors' -> '`@rcv selectors'.
+	^ self selectors
 ]
 
 { #category : #accessing }
@@ -44,16 +23,10 @@ ClassOrganization >> organizedClass [
 	^ organizedClass ifNil: [ self error: 'ClassOrganization should always have an organized class associated.' ]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> protocols [
-
-	^ self organizedClass protocols
-]
-
 { #category : #inlined }
 ClassOrganization >> removeElement: aSelector [
-	self deprecated: 'Use #removeFromProtocols: from the organized class instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv organizedClass removeFromProtocols: `@arg'. 
-	^ self organizedClass removeFromProtocols: aSelector
+	self deprecated: 'Use #removeFromProtocols: instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv removeFromProtocols: `@arg'. 
+	^ self removeFromProtocols: aSelector
 ]
 
 { #category : #initialization }
