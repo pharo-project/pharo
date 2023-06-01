@@ -3,18 +3,9 @@ I am a test case responsible of testing ClassDescription protocol management.
 "
 Class {
 	#name : #ClassDescriptionProtocolsTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'class'
-	],
+	#superclass : #ProtocolTest,
 	#category : #'Kernel-Tests-Protocols'
 }
-
-{ #category : #helpers }
-ClassDescriptionProtocolsTest >> classNameForTests [
-
-	^ #ClassForTests
-]
 
 { #category : #private }
 ClassDescriptionProtocolsTest >> performTest [
@@ -22,21 +13,12 @@ ClassDescriptionProtocolsTest >> performTest [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
 ]
 
-{ #category : #running }
-ClassDescriptionProtocolsTest >> setUp [
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocol [
 
-	super setUp.
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: self classNameForTests;
-			         package: 'ClassOrganizer-Tests' ]
-]
+	class addProtocol: #titan.
 
-{ #category : #running }
-ClassDescriptionProtocolsTest >> tearDown [
-
-	class package removeFromSystem.
-	super tearDown
+	self assert: (class hasProtocol: #titan)
 ]
 
 { #category : #tests }
