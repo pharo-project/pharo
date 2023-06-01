@@ -44,10 +44,10 @@ ClassOrganizationChunk >> importFor: aRequestor logSource: logSource [
 	| organization protocolSpecs |
 	self existsBehavior ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString }) ].
 
-	organization := self targetClass organization.
+	organization := self targetClass.
 	protocolSpecs := contents parseLiterals.
 
-	organization reset.
+	organization resetProtocols.
 
 	"If nothing was scanned and I had no elements before, then default me"
 	(protocolSpecs isEmpty and: [ organization protocols isEmpty ]) ifTrue: [ ^ self ].

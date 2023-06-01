@@ -830,10 +830,7 @@ ClassDescription >> organization [
 	of the messages of the receiver."
 
 	self deprecated: 'Just use self instead.' transformWith: '`@rcv organization' -> '`@rcv'.
-	^ organization ifNil: [
-		  self organization: ClassOrganization new.
-		  self isTrait ifFalse: [ organization initializeClass: self ].
-		  organization ]
+	^ self
 ]
 
 { #category : #organization }
@@ -1038,7 +1035,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 ClassDescription >> reorganize [
 	"During fileIn, !Rectangle reorganize! allows Rectangle to seize control and treat the next chunk as its organization.  See the transfer of control where ReadWriteStream fileIn calls scanFrom:"
 
-	^self organization
+	^ self
 ]
 
 { #category : #protocols }
@@ -1182,7 +1179,6 @@ ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 
 	super superclass: aClass methodDictionary: mDict format: fmt.
-	self organization: nil.
 	self resetProtocols
 ]
 
