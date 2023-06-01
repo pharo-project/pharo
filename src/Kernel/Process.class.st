@@ -317,6 +317,15 @@ Process >> evaluate: aBlock onBehalfOf: aProcess [
 	^aBlock ensure: [effectiveProcess := oldEffectiveProcess]
 ]
 
+{ #category : #debugging }
+Process >> hasContext: aContext [
+	"if aContext is somewhere in this Process, return true"
+
+	^ suspendedContext
+		  ifNotNil: [ :process | process callChainAnySatisfy: [ :context | context == aContext ] ]
+		  ifNil: [ false ]
+]
+
 { #category : #initialization }
 Process >> initialize [
 	super initialize.
