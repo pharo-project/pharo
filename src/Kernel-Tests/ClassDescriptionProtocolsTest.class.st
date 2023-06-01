@@ -3,40 +3,14 @@ I am a test case responsible of testing ClassDescription protocol management.
 "
 Class {
 	#name : #ClassDescriptionProtocolsTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'class'
-	],
+	#superclass : #ProtocolTest,
 	#category : #'Kernel-Tests-Protocols'
 }
-
-{ #category : #helpers }
-ClassDescriptionProtocolsTest >> classNameForTests [
-
-	^ #ClassForTests
-]
 
 { #category : #private }
 ClassDescriptionProtocolsTest >> performTest [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
-]
-
-{ #category : #running }
-ClassDescriptionProtocolsTest >> setUp [
-
-	super setUp.
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: self classNameForTests;
-			         package: 'ClassOrganizer-Tests' ]
-]
-
-{ #category : #running }
-ClassDescriptionProtocolsTest >> tearDown [
-
-	class package removeFromSystem.
-	super tearDown
 ]
 
 { #category : #tests }
