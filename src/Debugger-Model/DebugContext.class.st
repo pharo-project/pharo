@@ -113,11 +113,7 @@ DebugContext >> context [
 
 { #category : #'evaluating actions' }
 DebugContext >> evaluate: expression [
-	^ Smalltalk compiler
-		source: expression;
-		context: context;
-		receiver: context receiver;
-		evaluate
+	^ context compiler evaluate: expression
 ]
 
 { #category : #initialization }
