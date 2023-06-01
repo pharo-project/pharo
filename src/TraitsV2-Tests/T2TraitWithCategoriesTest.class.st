@@ -86,7 +86,7 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsRenamedCategory [
 
 	t2 := self newTrait: #T2 with: #(  ) uses: t1.
 
-	t1 organization renameProtocol: 'aProtocol' as: 'anotherProtocol'.
+	t1 renameProtocol: 'aProtocol' as: 'anotherProtocol'.
 
 	self assert: (t1 >> #m1) protocol equals: 'anotherProtocol'.
 	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'.

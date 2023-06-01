@@ -303,7 +303,7 @@ RPackage >> basicImportClass: aClass [
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
 	self addClassDefinition: aClass.
-	aClass protocolNames do: [ :protocolName | (self isYourClassExtension: protocolName) ifTrue: [ aClass organization renameProtocol: protocolName as: Protocol unclassified ] ].
+	aClass protocolNames do: [ :protocolName | (self isYourClassExtension: protocolName) ifTrue: [ aClass renameProtocol: protocolName as: Protocol unclassified ] ].
 	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
 		thenDo: [ :protocol | self importProtocol: protocol name forClass: aClass ]
@@ -1143,7 +1143,7 @@ RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
 	aClass protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
+		(self isYourClassExtension: each) ifTrue: [ aClass renameProtocol: each as: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].

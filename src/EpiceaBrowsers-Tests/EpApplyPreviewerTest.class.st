@@ -379,7 +379,7 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass addProtocol: 'protocol'.

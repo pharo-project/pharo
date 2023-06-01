@@ -17,12 +17,6 @@ ClassOrganization class >> forClass: aClass [
 		yourself
 ]
 
-{ #category : #accessing }
-ClassOrganization >> addProtocol: aProtocol [
-
-	^ self organizedClass addProtocol: aProtocol
-]
-
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
 
@@ -60,17 +54,6 @@ ClassOrganization >> protocols [
 ClassOrganization >> removeElement: aSelector [
 	self deprecated: 'Use #removeFromProtocols: from the organized class instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv organizedClass removeFromProtocols: `@arg'. 
 	^ self organizedClass removeFromProtocols: aSelector
-]
-
-{ #category : #inlined }
-ClassOrganization >> removeProtocolIfEmpty: aProtocol [
-	^ self organizedClass removeProtocolIfEmpty: aProtocol 
-]
-
-{ #category : #removing }
-ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
-
-	^ self organizedClass  renameProtocol: anOldProtocol as: aNewProtocol 
 ]
 
 { #category : #initialization }
