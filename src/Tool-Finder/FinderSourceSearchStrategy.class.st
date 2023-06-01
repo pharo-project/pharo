@@ -9,3 +9,9 @@ FinderSourceSearchStrategy class >> strategyName [
 
 	^ #Source
 ]
+
+{ #category : #testing }
+FinderSourceSearchStrategy >> isSourceSearch [
+
+	^ true
+]

@@ -9,3 +9,9 @@ FinderSelectorsSearchStrategy class >> strategyName [
 
 	^ #Selectors
 ]
+
+{ #category : #testing }
+FinderSelectorsSearchStrategy >> isSelectorsSearch [
+
+	^ true
+]

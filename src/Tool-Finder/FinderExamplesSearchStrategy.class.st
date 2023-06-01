@@ -9,3 +9,9 @@ FinderExamplesSearchStrategy class >> strategyName [
 
 	^ #Examples
 ]
+
+{ #category : #testing }
+FinderExamplesSearchStrategy >> isExamplesSearch [
+
+	^ true
+]

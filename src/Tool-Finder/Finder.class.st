@@ -12,10 +12,10 @@ Class {
 		'selectedMethod',
 		'selectedClass',
 		'packagesSelection',
-		'currentSearchMode',
 		'environment',
 		'resultDictionary',
-		'useRegEx'
+		'useRegEx',
+		'searchStrategy'
 	],
 	#category : #'Tool-Finder-Base'
 }
@@ -215,24 +215,26 @@ Finder >> constructSourceDictionary [
 { #category : #accessing }
 Finder >> currentSearchMode [
 	"Getter"
+
 	"I shoud answer a Symbol in :
 		- #Selectors
 		- #Classes
 		- #Source
 		- #Examples"
 
-	 ^ currentSearchMode
+	^ self searchStrategy class strategyName
 ]
 
 { #category : #accessing }
 Finder >> currentSearchMode: aSymbol [
 	"Setter"
+
 	"If #Examples is selected, I disable the RegEx checkbo. Then I rebuild the resultDictionary"
 
-	currentSearchMode := aSymbol.
+	searchStrategy := (FinderSearchStrategy strategyNamed: aSymbol) new.
 	self isExamplesSymbol
-		ifTrue: [ self disableUseRegEx]
-		ifFalse:[ self enableUseRegEx].
+		ifTrue: [ self disableUseRegEx ]
+		ifFalse: [ self enableUseRegEx ].
 
 	self update: #sourceCode.
 	self constructDictionary
@@ -284,38 +286,38 @@ Finder >> initialize [
 	environment := self defaultEnvironment.
 	packagesSelection := self defaultPackagesSelection.
 	resultDictionary := Dictionary new.
-	currentSearchMode := #Selectors.
+	searchStrategy := FinderSelectorsSearchStrategy new.
 	useRegEx := false
 ]
 
 { #category : #checkbox }
 Finder >> isClassNamesSymbol [
-	"answer if the current mode is Classes"
-	^self currentSearchMode = #Classes
+
+	^ self searchStrategy isClassesSearch
 ]
 
 { #category : #checkbox }
 Finder >> isExamplesSymbol [
-	"Answer if the current mode is Examples"
-	^self currentSearchMode = #Examples
+
+	^ self searchStrategy isExamplesSearch
 ]
 
 { #category : #checkbox }
 Finder >> isPragmasSymbol [
-	"Answer if the current mode is Pragmas"
-	^self currentSearchMode = #Pragmas
+
+	^ self searchStrategy isPragmaSearch
 ]
 
 { #category : #checkbox }
 Finder >> isSelectorsSymbol [
-	"Answer if the current mode is Selectors"
-	^self currentSearchMode = #Selectors
+
+	^ self searchStrategy isSelectorsSearch
 ]
 
 { #category : #checkbox }
 Finder >> isSourceSymbol [
-	"Answer if the current mode is Source"
-	^self currentSearchMode = #Source
+
+	^ self searchStrategy isSourceSearch
 ]
 
 { #category : #'private - selector' }
@@ -414,6 +416,18 @@ Finder >> resultDictionary: aDictionary [
 	self selectedMethod: nil.
 	self selectedClass: nil.
 	self triggerEvent: #updateSourceCode
+]
+
+{ #category : #accessing }
+Finder >> searchStrategy [
+
+	^ searchStrategy
+]
+
+{ #category : #accessing }
+Finder >> searchStrategy: anObject [
+
+	searchStrategy := anObject
 ]
 
 { #category : #accessing }

@@ -9,3 +9,9 @@ FinderClassesSearchStrategy class >> strategyName [
 
 	^ #Classes
 ]
+
+{ #category : #testing }
+FinderClassesSearchStrategy >> isClassesSearch [
+
+	^ true
+]

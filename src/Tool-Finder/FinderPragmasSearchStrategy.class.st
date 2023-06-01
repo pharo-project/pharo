@@ -9,3 +9,9 @@ FinderPragmasSearchStrategy class >> strategyName [
 
 	^ #Pragmas
 ]
+
+{ #category : #testing }
+FinderPragmasSearchStrategy >> isPragmasSearch [
+
+	^ true
+]
