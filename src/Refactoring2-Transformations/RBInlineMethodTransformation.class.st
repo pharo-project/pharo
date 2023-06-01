@@ -424,11 +424,6 @@ RBInlineMethodTransformation >> rewriteInlinedTree [
 ]
 
 { #category : #adding }
-RBInlineMethodTransformation >> shouldInlineExpression: aString [
-	^(self options at: #inlineExpression) value: self value: aString
-]
-
-{ #category : #adding }
 RBInlineMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
