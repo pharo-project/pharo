@@ -105,13 +105,13 @@ OSWorldRenderer >> deactivate [
 	display := nil
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 OSWorldRenderer >> defaultWindowIcon [
 
 	^ self iconNamed: #pharoBig
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 OSWorldRenderer >> defaultWindowTitle [
 
 	^ Smalltalk image imageFile fullName
