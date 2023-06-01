@@ -76,9 +76,7 @@ FLBehaviorCluster >> materializeReferencesStepWith: aDecoder [
 { #category : #analyzing }
 FLBehaviorCluster >> referencesOf: aClassOrTrait do: aBlock [
 
-	aBlock
-		value: aClassOrTrait methodDictionary;
-		value: aClassOrTrait
+	aBlock value: aClassOrTrait methodDictionary
 ]
 
 { #category : #'serialize/materialize' }
