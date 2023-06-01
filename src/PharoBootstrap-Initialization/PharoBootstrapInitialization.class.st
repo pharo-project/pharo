@@ -80,10 +80,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Stdio initialize.
 	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
-	
-	"Register all KernelGroup classes needing registrations to the SessionManager"
-	SessionManager initializeKernelRegistrations.
-	
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
