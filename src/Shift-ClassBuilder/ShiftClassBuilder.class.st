@@ -208,9 +208,8 @@ ShiftClassBuilder >> compileMethods [
 
 { #category : #building }
 ShiftClassBuilder >> copyOrganization [
-
-	newClass copyFrom: oldClass.
-	newClass class copyFrom: oldClass class
+	newClass organization copyFrom: oldClass organization.
+	newClass class organization copyFrom: oldClass class organization
 ]
 
 { #category : #installing }
