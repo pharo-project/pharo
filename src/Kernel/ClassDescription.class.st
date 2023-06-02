@@ -12,7 +12,7 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'organization'
+		'protocols'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -70,13 +70,26 @@ ClassDescription >> addMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods"
 
-	self organization addProtocol: aSymbol
+	self addProtocol: aSymbol
 ]
 
 { #category : #protocols }
 ClassDescription >> addProtocol: aProtocol [
 
-	^ self organization addProtocol: aProtocol
+	| oldProtocols protocol |
+	
+	(self hasProtocol: aProtocol) ifTrue: [
+		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+
+	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
+
+	oldProtocols := self protocolNames copy.
+
+	protocols := protocols copyWith: protocol.
+
+	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
+	SystemAnnouncer announce: (ClassReorganized class: self).
+	^ protocol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -455,7 +468,7 @@ ClassDescription >> ensureProtocol: aProtocol [
 		(self protocols includes: aProtocol)
 			ifTrue: [ ^ aProtocol ]
 			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self organization addProtocol: aProtocol ]
+	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #private }
@@ -540,6 +553,13 @@ ClassDescription >> includesSharedPoolNamed:  aSharedPoolString [
 	"Answer whether the receiver uses the shared pool named aSharedPoolString"
 
 	^ self sharedPools anySatisfy: [:each | each name = aSharedPoolString]
+]
+
+{ #category : #initialization }
+ClassDescription >> initialize [
+
+	super initialize.
+	self resetProtocols
 ]
 
 { #category : #'instance variables' }
@@ -803,25 +823,6 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
-{ #category : #organization }
-ClassDescription >> organization [
-	"Answer the instance of ClassOrganizer that represents the organization
-	of the messages of the receiver."
-
-	^ organization ifNil: [
-		  self organization: ClassOrganization new.
-		  self isTrait ifFalse: [ organization initializeClass: self ].
-		  organization ]
-]
-
-{ #category : #organization }
-ClassDescription >> organization: aClassOrg [
-	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
-
-	aClassOrg ifNotNil: [ aClassOrg setSubject: self ].
-	organization := aClassOrg
-]
-
 { #category : #printing }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
@@ -871,7 +872,13 @@ ClassDescription >> protocols [
 	"I return all the protocols contained in me.
 	In the past I was returning the protocol names but now I am returning the instances directly. If you want to deal with the names you can use #protocolNames."
 
-	^ self organization protocols
+	^ protocols
+]
+
+{ #category : #protocols }
+ClassDescription >> protocols: aCollection [
+	
+	protocols := aCollection
 ]
 
 { #category : #compiling }
@@ -928,9 +935,19 @@ ClassDescription >> removeProtocol: aProtocol [
 
 { #category : #protocols }
 ClassDescription >> removeProtocolIfEmpty: aProtocol [
-	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
+	"I take a protocol or a protocol name and remvoe it if it is empty."
 
-	self organization removeProtocolIfEmpty: aProtocol
+	| protocol oldProtocolNames |
+	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
+
+	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
+
+	protocol isEmpty ifFalse: [ ^ self ].
+
+	oldProtocolNames := self protocolNames.
+	protocols := protocols copyWithout: protocol.
+	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol).
+	SystemAnnouncer announce: (ClassReorganized class: self)
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -958,22 +975,55 @@ ClassDescription >> removeSlot: aSlot [
 { #category : #protocols }
 ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
-	^ self organization renameProtocol: anOldProtocol as: aNewProtocol
+	| oldProtocol newProtocol |
+	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
+
+	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+
+	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
+	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
+		oldProtocol := self ensureProtocol: anOldProtocol.
+
+		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
+	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
+		(self hasProtocol: aNewProtocol)
+			ifTrue: [
+				newProtocol := self ensureProtocol: aNewProtocol.
+
+				oldProtocol = newProtocol ifTrue: [ ^ self ].
+
+				newProtocol addAllMethodsFrom: oldProtocol ]
+			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
+				| newProtocolName |
+				newProtocolName := aNewProtocol isString
+					                   ifTrue: [ aNewProtocol ]
+					                   ifFalse: [ aNewProtocol name ].
+				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
+				newProtocol := oldProtocol copy
+					               name: newProtocolName;
+					               yourself.
+				protocols := protocols copyWith: newProtocol ].
+		oldProtocol resetMethodSelectors.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+	"Announce the changes in the system"
+	SystemAnnouncer announce: (ClassReorganized class: self).
+
+	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #organization }
 ClassDescription >> reorganize [
 	"During fileIn, !Rectangle reorganize! allows Rectangle to seize control and treat the next chunk as its organization.  See the transfer of control where ReadWriteStream fileIn calls scanFrom:"
 
-	^self organization
+	^ self
 ]
 
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInCategory: aName [
+{ #category : #protocols }
+ClassDescription >> resetProtocols [
 
-	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
-
-	^ self selectorsInProtocol: aName
+	protocols := Array new
 ]
 
 { #category : #protocols }
@@ -1101,8 +1151,9 @@ ClassDescription >> superclass: aSuperclass layout: aLayout [
 { #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
+
 	super superclass: aClass methodDictionary: mDict format: fmt.
-	self organization: nil
+	self resetProtocols
 ]
 
 { #category : #initialization }
@@ -1210,13 +1261,6 @@ ClassDescription >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
 
 	^ true
-]
-
-{ #category : #organization }
-ClassDescription >> whichCategoryIncludesSelector: aSelector [
-
-	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
-	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #queries }

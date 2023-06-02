@@ -41,22 +41,22 @@ ClassOrganizationChunk >> description [
 { #category : #importing }
 ClassOrganizationChunk >> importFor: aRequestor logSource: logSource [
 
-	| organization protocolSpecs |
+	| targetClass protocolSpecs |
 	self existsBehavior ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString }) ].
 
-	organization := self targetClass organization.
+	targetClass := self targetClass.
 	protocolSpecs := contents parseLiterals.
 
-	organization reset.
+	targetClass resetProtocols.
 
 	"If nothing was scanned and I had no elements before, then default me"
-	(protocolSpecs isEmpty and: [ organization protocols isEmpty ]) ifTrue: [ ^ self ].
+	(protocolSpecs isEmpty and: [ targetClass protocols isEmpty ]) ifTrue: [ ^ self ].
 
 	protocolSpecs do: [ :spec |
 		| protocolName methods |
 		protocolName := spec first asSymbol.
 		methods := spec allButFirst asSet.
-		organization addProtocol: (Protocol name: protocolName methodSelectors: methods) ]
+		targetClass addProtocol: (Protocol name: protocolName methodSelectors: methods) ]
 ]
 
 { #category : #testing }

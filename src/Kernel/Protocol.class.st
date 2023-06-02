@@ -11,7 +11,7 @@ Class {
 		'name',
 		'methodSelectors'
 	],
-	#category : #'Kernel-Protocols'
+	#category : #'Kernel-Classes'
 }
 
 { #category : #'instance creation' }

@@ -5,8 +5,7 @@ Class {
 	#name : #RGClassDescriptionDefinition,
 	#superclass : #RGBehaviorDefinition,
 	#instVars : [
-		'instanceVariables',
-		'organization'
+		'instanceVariables'
 	],
 	#category : #'Ring-Definitions-Core-Base'
 }
@@ -137,26 +136,6 @@ RGClassDescriptionDefinition >> methodsInProtocol: aString [
 	"Retrieves the methods classified in protocol named aString"
 
 	^methods select: [ :each | each protocol = aString ]
-]
-
-{ #category : #organization }
-RGClassDescriptionDefinition >> organization [
-	"Answer the instance of ClassOrganizer that represents the organization
-	of the messages of the receiver."
-
-	organization ifNil: [
-		self organization: (ClassOrganization forClass: self) ].
-	"Making sure that subject is set correctly. It should not be necessary."
-	organization ifNotNil: [ organization setSubject: self ].
-	^ organization
-]
-
-{ #category : #accessing }
-RGClassDescriptionDefinition >> organization: aClassOrg [
-	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
-
-	aClassOrg ifNotNil: [aClassOrg setSubject: self].
-	organization := aClassOrg
 ]
 
 { #category : #'instance variables' }

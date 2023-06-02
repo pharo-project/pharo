@@ -348,7 +348,7 @@ EpApplyTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
@@ -363,10 +363,10 @@ EpApplyTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
 	self assert: (aClass hasProtocol: 'protocol').
