@@ -215,9 +215,8 @@ CompiledMethod >> cachePragmas [
 
 { #category : #'accessing - backward compatible' }
 CompiledMethod >> category [
-	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 
-	^ self methodClass protocolNameOfSelector: self selector
+	^ self protocolName
 ]
 
 { #category : #accessing }
@@ -794,6 +793,13 @@ CompiledMethod >> protocol [
 { #category : #accessing }
 CompiledMethod >> protocol: aProtocol [
 	^ self methodClass classify: self selector under: aProtocol
+]
+
+{ #category : #accessing }
+CompiledMethod >> protocolName [
+	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
+
+	^ self methodClass protocolNameOfSelector: self selector
 ]
 
 { #category : #scanning }
