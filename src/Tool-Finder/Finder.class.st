@@ -129,13 +129,13 @@ Finder >> initialize [
 ]
 
 { #category : #checkbox }
-Finder >> isClassNamesSymbol [
+Finder >> isClassSearch [
 
 	^ self searchStrategy isClassesSearch
 ]
 
 { #category : #checkbox }
-Finder >> isPragmasSymbol [
+Finder >> isPragmasSearch [
 
 	^ self searchStrategy isPragmaSearch
 ]

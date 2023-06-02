@@ -569,7 +569,8 @@ FinderUI >> implementorsButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> implementorsButtonState [
-	^ self selectedMethod isNil | self isClassNamesSymbol
+
+	^ self selectedMethod isNil or: [ self isClassSearch ]
 ]
 
 { #category : #private }
@@ -592,7 +593,8 @@ FinderUI >> inheritanceButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> inheritanceButtonState [
-	^ self selectedClass isNil | self isClassNamesSymbol
+
+	^ self selectedClass isNil or: [ self isClassSearch ]
 ]
 
 { #category : #display }
@@ -607,14 +609,14 @@ FinderUI >> initialize [
 ]
 
 { #category : #'mode list' }
-FinderUI >> isClassNamesSymbol [
+FinderUI >> isClassSearch [
 
-	^self finder isClassNamesSymbol
+	^self finder isClassSearch
 ]
 
 { #category : #'mode list' }
-FinderUI >> isPragmasSymbol [
-	^self finder isPragmasSymbol
+FinderUI >> isPragmasSearch [
+	^self finder isPragmasSearch
 ]
 
 { #category : #private }
@@ -796,7 +798,8 @@ FinderUI >> sendersButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> sendersButtonState [
-	^ self selectedMethod isNil | self isClassNamesSymbol
+
+	^ self selectedMethod isNil or: [ self isClassSearch ]
 ]
 
 { #category : #'text areas behavior' }
@@ -863,7 +866,8 @@ FinderUI >> versionsButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> versionsButtonState [
-	^self selectedClass isNil | self isClassNamesSymbol
+
+	^ self selectedClass isNil or: [ self isClassSearch ]
 ]
 
 { #category : #'events handling' }
