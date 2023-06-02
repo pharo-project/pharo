@@ -11,28 +11,28 @@ FinderClassesSearchStrategy class >> strategyName [
 ]
 
 { #category : #actions }
-FinderClassesSearchStrategy >> computeListOfClassesFor: aFinder [
+FinderClassesSearchStrategy >> computeListOfClasses [
 
 	| regex result |
-	regex := aFinder searchingString asRegex.
+	regex := finder searchingString asRegex.
 
 	result := OrderedCollection new.
 
-	aFinder packagesSelection classesAndTraitsDo: [ :class |
-		(aFinder useRegEx
+	finder packagesSelection classesAndTraitsDo: [ :class |
+		(finder useRegEx
 			 ifTrue: [ regex search: class name ]
-			 ifFalse: [ class name includesSubstring: aFinder searchingString caseSensitive: false ]) ifTrue: [ result add: class ] ].
+			 ifFalse: [ class name includesSubstring: finder searchingString caseSensitive: false ]) ifTrue: [ result add: class ] ].
 
 	^ result
 ]
 
 { #category : #actions }
-FinderClassesSearchStrategy >> constructDictionaryOf: aFinder [
+FinderClassesSearchStrategy >> constructDictionary [
 
 	| result |
 	result := Dictionary new.
-	(self computeListOfClassesFor: aFinder) do: [ :class | result at: class put: (class selectors sort: #yourself ascending) ].
-	aFinder resultDictionary: result
+	self computeListOfClasses do: [ :class | result at: class put: (class selectors sort: #yourself ascending) ].
+	finder resultDictionary: result
 ]
 
 { #category : #testing }

@@ -52,34 +52,6 @@ Finder class >> registerToolsOn: registry [
 	registry register: self as: #finder
 ]
 
-{ #category : #'private - example' }
-Finder >> computeWithMethodFinder: aString [
-	"Compute the selectors for the single example of receiver and args, in the very top pane"
-
-	| data result dataObjects |
-	(aString includes: $.)
-		ifFalse: [ ^ #() ].	"delete trailing period. This should be fixed in the Parser!"
-	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
-
-	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
-		on: CodeError, RuntimeSyntaxError
-		do: [ :e |
-			self inform: 'Error: ' , e messageText.
-			^ #() ].	"#( data1 data2 result )"
-
-	dataObjects size < 2
-		ifTrue: [
-			self
-				inform:
-					'If you are giving an example of receiver, \args, and result, please put periods between the parts.\Otherwise just type one selector fragment'
-						withCRs.
-			^ #() ].
-
-	result := MethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
-	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
-	^ result
-]
-
 { #category : #private }
 Finder >> constructDictionary [
 	"I construct the adequate dictionary regarding the search mode"
@@ -87,88 +59,7 @@ Finder >> constructDictionary [
 	self searchingString isEmpty ifTrue: [ ^ self resultDictionary: Dictionary new ].
 	[ :job |
 	job title: 'Searching...' translated.
-	self isSelectorsSymbol ifTrue: [ self constructDictionaryWithMessagesNameSearch: self searchingString ].
-	self isClassNamesSymbol ifTrue: [ self searchStrategy constructDictionaryOf: self ].
-	self isSourceSymbol ifTrue: [ self constructSourceDictionary ].
-	self isExamplesSymbol ifTrue: [ self constructDictionaryWithMethodFinder: self searchingString ].
-	self isPragmasSymbol ifTrue: [ self constructDictionaryWithPragmaSearch: self searchingString ] ] asJob run
-]
-
-{ #category : #'private - selector' }
-Finder >> constructDictionaryWithMessagesNameSearch: aString [
-	"Construct dictionary when searching for selector"
-
-	| result listOfMethods |
-	result := Dictionary new.
-	listOfMethods := self messagesNameSearch: aString.
-	listOfMethods do: [:method || key value |
-			key := method selector.
-			value := method methodClass.
-			(result includesKey: key)
-				ifTrue: [ (result at: key) add: value]
-				ifFalse: [ result at: key put: (OrderedCollection new add: value; yourself)]].
-	self resultDictionary: result
-]
-
-{ #category : #'private - example' }
-Finder >> constructDictionaryWithMethodFinder: aString [
-	"construct dictionary when searching patterns"
-
-	| result listOfResults listOfSelectors |
-	result := Dictionary new.
-	listOfResults := self computeWithMethodFinder: aString.
-	listOfSelectors := listOfResults collect: [ :each | each selector ].
-	self packagesSelection classesDo:[ :class |
-			class methodsDo:  [ :method |
-					| index |
-					(index := listOfSelectors indexOf: method selector) = 0
-						ifFalse: [
-							| key value |
-							key := listOfResults at: index.
-							value := method methodClass.
-							(result includesKey: key)
-								ifTrue: [ (result at: key) add: value ]
-								ifFalse: [
-									result
-										at: key
-										put:
-											(OrderedCollection new
-												add: value;
-												yourself) ] ] ] ].
-	self resultDictionary: result
-]
-
-{ #category : #'private - pragma' }
-Finder >> constructDictionaryWithPragmaSearch: aString [
-	"construct dictionary when searching for pragmas"
-
-	| dictionary |
-	dictionary := self pragmaSearch: aString.
-	dictionary keysDo:[ :k || result |
-		result := Dictionary new.
-		(dictionary at: k) do: [:method || key value |
-				key := method selector.
-				value := method methodClass.
-				(result
-					at: key
-					ifAbsentPut: OrderedCollection new ) add: value].
-		dictionary at: k put: result ].
-	self resultDictionary: dictionary
-]
-
-{ #category : #private }
-Finder >> constructSourceDictionary [
-"construct dictionary when searching source"
-	| result listOfMethods |
-	result := Dictionary new.
-	listOfMethods := self sourceSearch: self searchingString.
-	listOfMethods do: [:method || key value |
-		key := method selector.
-		value := method methodClass.
-		(result includesKey: key)
-			ifTrue: [ (result at: key) add: value]
-			ifFalse: [ result at: key put: (OrderedCollection new add: value; yourself)]].
-	self resultDictionary: result
+	self searchStrategy constructDictionary ] asJob run
 ]
 
 { #category : #accessing }
@@ -190,7 +81,7 @@ Finder >> currentSearchMode: aSymbol [
 
 	"If #Examples is selected, I disable the RegEx checkbo. Then I rebuild the resultDictionary"
 
-	searchStrategy := (FinderSearchStrategy strategyNamed: aSymbol) new.
+	searchStrategy := (FinderSearchStrategy strategyNamed: aSymbol) finder: self.
 	self isExamplesSymbol
 		ifTrue: [ self disableUseRegEx ]
 		ifFalse: [ self enableUseRegEx ].
@@ -240,12 +131,13 @@ Finder >> environment: aCollection [
 
 { #category : #initialization }
 Finder >> initialize [
+
 	super initialize.
 	searchingString := self defaultString.
 	environment := self defaultEnvironment.
 	packagesSelection := self defaultPackagesSelection.
 	resultDictionary := Dictionary new.
-	searchStrategy := FinderSelectorsSearchStrategy new.
+	searchStrategy := FinderSelectorsSearchStrategy finder: self.
 	useRegEx := false
 ]
 
@@ -279,42 +171,6 @@ Finder >> isSourceSymbol [
 	^ self searchStrategy isSourceSearch
 ]
 
-{ #category : #'private - selector' }
-Finder >> messageSearchBlockFrom: aString [
-	| exactMatch |
-	exactMatch := aString first = $" and: [ aString last = $" ].
-
-	exactMatch ifFalse: [ ^ [ :method | method selector includesSubstring: aString caseSensitive: false ] ].
-
-	^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1)) ifNotNil: [ :aSymbol | [ :method | method selector = aSymbol ] ]
-]
-
-{ #category : #'private - selector' }
-Finder >> messagesNameSearch: aString [
-	"I'm searching for selectors"
-	^ self useRegEx
-		ifTrue: [ | regex |
-			regex := aString asRegex.
-			self methodSearch: [ :method| 	regex search: method selector asString ]]
-		ifFalse: [
-			self methodSearch: (self messageSearchBlockFrom: aString)]
-]
-
-{ #category : #private }
-Finder >> methodSearch: aSelectBlock [
-	| result |
-	result := OrderedCollection new.
-	aSelectBlock ifNil: [ ^result ].
-	self packagesSelection classesAndTraits do:[ :class |
-			class methodsDo: [ :method |
-				(aSelectBlock value: method) ifTrue: [ result add: method ]].
-			class classSide methodsDo: [ :method |
-				(aSelectBlock value: method) ifTrue: [ result add: method ]]
-			]
-			displayingProgress: [ :aClass | aClass name ].
-	^ result
-]
-
 { #category : #display }
 Finder >> open [
 	<script: 'self new open'>
@@ -334,23 +190,6 @@ Finder >> packagesSelection: aCollection [
 
 	packagesSelection :=  aCollection.
 	self constructDictionary
-]
-
-{ #category : #'private - pragma' }
-Finder >> pragmaSearch: aString [
-	| result byCondition |
-	"I choose a dictionary here because the next step is to group result by pragmas."
-	result := Dictionary new.
-
-	byCondition :=  self useRegEx
-		ifTrue: [[ :pragma | pragma selector matchesRegexIgnoringCase: aString ]]
-		ifFalse: [[ :pragma | pragma selector includesSubstring: aString caseSensitive: false ]].
-
-	(Pragma all select: byCondition)
-		do: [ :pragma |
-			(result at: (pragma selector) ifAbsentPut: OrderedCollection new)
-				add: pragma method ].
-	^ result
 ]
 
 { #category : #private }
@@ -480,28 +319,6 @@ Finder >> selection: aSelectionHolder [
 	self selectedMethod: method.
 
 	self triggerEvent: #updateSourceCode
-]
-
-{ #category : #private }
-Finder >> sourceRegexSearch: aSearchString [
-	| regex |
-	regex := aSearchString asRegex.
-	^ self methodSearch: [ :method | regex search: method sourceCode ]
-]
-
-{ #category : #private }
-Finder >> sourceSearch: aSearchString [
-	"I'm searching in sources"
-	^ self useRegEx
-		ifTrue: [ self sourceRegexSearch: aSearchString ]
-		ifFalse:[ self sourceStringSearch: aSearchString ]
-]
-
-{ #category : #private }
-Finder >> sourceStringSearch: aSearchString [
-	^ self
-		methodSearch: [ :method |
-			method sourceCode includesSubstring: aSearchString caseSensitive: false ]
 ]
 
 { #category : #accessing }

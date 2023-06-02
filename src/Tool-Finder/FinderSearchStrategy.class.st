@@ -1,8 +1,19 @@
 Class {
 	#name : #FinderSearchStrategy,
 	#superclass : #Object,
+	#instVars : [
+		'finder'
+	],
 	#category : #'Tool-Finder-Base'
 }
+
+{ #category : #accessing }
+FinderSearchStrategy class >> finder: aFinder [
+
+	^ self new
+		  finder: aFinder;
+		  yourself
+]
 
 { #category : #testing }
 FinderSearchStrategy class >> isAbstract [
@@ -23,9 +34,21 @@ FinderSearchStrategy class >> strategyNamed: aSymbol [
 ]
 
 { #category : #actions }
-FinderSearchStrategy >> constructDictionaryOf: aFinder [
+FinderSearchStrategy >> constructDictionary [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+FinderSearchStrategy >> finder [
+
+	^ finder
+]
+
+{ #category : #accessing }
+FinderSearchStrategy >> finder: anObject [
+
+	finder := anObject
 ]
 
 { #category : #testing }
@@ -56,4 +79,18 @@ FinderSearchStrategy >> isSelectorsSearch [
 FinderSearchStrategy >> isSourceSearch [
 
 	^ false
+]
+
+{ #category : #actions }
+FinderSearchStrategy >> methodSearch: aSelectBlock [
+
+	| result |
+	result := OrderedCollection new.
+	aSelectBlock ifNil: [ ^ result ].
+	finder packagesSelection classesAndTraits
+		do: [ :class |
+			class methodsDo: [ :method | (aSelectBlock value: method) ifTrue: [ result add: method ] ].
+			class classSide methodsDo: [ :method | (aSelectBlock value: method) ifTrue: [ result add: method ] ] ]
+		displayingProgress: [ :aClass | aClass name ].
+	^ result
 ]
