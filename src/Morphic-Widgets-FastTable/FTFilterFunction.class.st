@@ -22,6 +22,12 @@ Class {
 	#category : #'Morphic-Widgets-FastTable-Functions'
 }
 
+{ #category : #'class initialization' }
+FTFilterFunction class >> initialize [
+
+	self deprecatedAliases: { #FTFunctionWithField }
+]
+
 { #category : #updating }
 FTFilterFunction >> colorText: aText [
 	table dataSource numberOfRows ~= 0

@@ -390,12 +390,15 @@ KeyboardKey class >> home [
 
 { #category : #'class initialization' }
 KeyboardKey class >> initialize [
+
 	self
 		initializeKeyTable;
 		initializeMacOSVirtualKeyTable;
 		initializeUnixVirtualKeyTable;
 		initializeWindowsVirtualKeyTable;
-		initializeKeyFromCharacterCompatibilityTable
+		initializeKeyFromCharacterCompatibilityTable.
+
+	self deprecatedAliases: { #Key }
 ]
 
 { #category : #'key table' }
