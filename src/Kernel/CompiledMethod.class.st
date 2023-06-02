@@ -555,11 +555,6 @@ CompiledMethod >> literalsToSkip [
 	^ 2
 ]
 
-{ #category : #lookup }
-CompiledMethod >> lookupVar: aString [
-	^self ast scope lookupVar: aString
-]
-
 { #category : #private }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self

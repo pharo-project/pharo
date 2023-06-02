@@ -250,7 +250,7 @@ FLEnvironmentProtectingWrapper >> keyAtValue: anObject ifAbsent: aBlock [
 				ifAbsent: aBlock ]
 ]
 
-{ #category : #binding }
+{ #category : #lookup }
 FLEnvironmentProtectingWrapper >> lookupVar: aString [
 	^ (overlay lookupVar: aString) ifNil: [
 		environment lookupVar: aString ]
