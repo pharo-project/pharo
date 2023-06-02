@@ -135,13 +135,13 @@ zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 # Installing RPackage
 echo $(date -u) "[Compiler] Initializing Bootstraped Image"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SessionManager initializeKernelRegistrations." # While the SessionManager is still in the kernel group, let's initialize it here.
 
 echo $(date -u) "[Compiler] Adding more Kernel packages"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Hermes-Extensions.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes Multilingual-Encodings.hermes ReflectionMirrors-Primitives.hermes --save --no-fail-on-undeclared
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes InitializePackagesCommandLineHandler.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SessionManager initializeKernelRegistrations." # While the SessionManager is still in the kernel group, let's initialize it here.
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes System-SourcesCondenser.hermes --save --no-fail-on-undeclared
 
