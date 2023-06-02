@@ -1,3 +1,6 @@
+"
+I am a Finder search mode used when looking for methods in the system.
+"
 Class {
 	#name : #FinderSelectorsSearchStrategy,
 	#superclass : #FinderSearchStrategy,
@@ -46,12 +49,6 @@ FinderSelectorsSearchStrategy >> findSelectedMethodIn: path [
 	^ path first isSingle
 		  ifTrue: [ path first itemMethod selector ]
 		  ifFalse: [ path first item ]
-]
-
-{ #category : #testing }
-FinderSelectorsSearchStrategy >> isSelectorsSearch [
-
-	^ true
 ]
 
 { #category : #actions }

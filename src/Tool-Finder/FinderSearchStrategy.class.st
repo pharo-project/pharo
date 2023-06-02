@@ -1,3 +1,8 @@
+"
+I am an abstract class to define the behavior of the Finder related to the search strategy used.
+
+I implement a strategy design pattern and my subclasses will manage the different search modes.
+"
 Class {
 	#name : #FinderSearchStrategy,
 	#superclass : #Object,
@@ -85,30 +90,6 @@ FinderSearchStrategy >> finder: anObject [
 
 { #category : #testing }
 FinderSearchStrategy >> isClassesSearch [
-
-	^ false
-]
-
-{ #category : #testing }
-FinderSearchStrategy >> isExamplesSearch [
-
-	^ false
-]
-
-{ #category : #testing }
-FinderSearchStrategy >> isPragmasSearch [
-
-	^ false
-]
-
-{ #category : #testing }
-FinderSearchStrategy >> isSelectorsSearch [
-
-	^ false
-]
-
-{ #category : #testing }
-FinderSearchStrategy >> isSourceSearch [
 
 	^ false
 ]

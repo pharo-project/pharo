@@ -92,16 +92,6 @@ Finder >> defaultEnvironment [
 	 ^ RBBrowserEnvironment new
 ]
 
-{ #category : #default }
-Finder >> defaultPackagesSelection [
-	 ^ self environment
-]
-
-{ #category : #default }
-Finder >> defaultString [
-	^ ''
-]
-
 { #category : #private }
 Finder >> disableUseRegEx [
 	"send a disable useRegEx dropbox event"
@@ -130,9 +120,9 @@ Finder >> environment: aCollection [
 Finder >> initialize [
 
 	super initialize.
-	searchingString := self defaultString.
+	searchingString := ''.
 	environment := self defaultEnvironment.
-	packagesSelection := self defaultPackagesSelection.
+	packagesSelection := self environment.
 	resultDictionary := Dictionary new.
 	searchStrategy := FinderSelectorsSearchStrategy finder: self.
 	useRegEx := false

@@ -1,3 +1,6 @@
+"
+I am a Finder search mode when we are looking for classes in the system.
+"
 Class {
 	#name : #FinderClassesSearchStrategy,
 	#superclass : #FinderSearchStrategy,

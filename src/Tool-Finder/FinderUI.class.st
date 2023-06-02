@@ -385,7 +385,8 @@ FinderUI >> buildVersionsButton [
 
 { #category : #'text areas behavior' }
 FinderUI >> collectFromPackages: aCollection [
-	self packagesSelection: (self environment forPackageNames: aCollection)
+
+	self finder packagesSelection: (self environment forPackageNames: aCollection)
 ]
 
 { #category : #'text areas behavior' }
@@ -658,12 +659,6 @@ FinderUI >> openPackageChooser [
 { #category : #private }
 FinderUI >> packagesSelection [
 	^self finder packagesSelection
-]
-
-{ #category : #private }
-FinderUI >> packagesSelection: aCollection [
-
-	self finder packagesSelection: aCollection
 ]
 
 { #category : #private }

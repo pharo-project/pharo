@@ -1,3 +1,6 @@
+"
+I am a finder search mode used when searching the system based on a example
+"
 Class {
 	#name : #FinderExamplesSearchStrategy,
 	#superclass : #FinderSearchStrategy,
@@ -134,12 +137,6 @@ FinderExamplesSearchStrategy >> findSelectedClassIn: path [
 FinderExamplesSearchStrategy >> findSelectedMethodIn: path [
 
 	^ path first item
-]
-
-{ #category : #testing }
-FinderExamplesSearchStrategy >> isExamplesSearch [
-
-	^ true
 ]
 
 { #category : #accessing }

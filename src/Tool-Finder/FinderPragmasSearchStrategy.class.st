@@ -1,3 +1,6 @@
+"
+I am a Finder search mode used when looking for the pragmas in the system.
+"
 Class {
 	#name : #FinderPragmasSearchStrategy,
 	#superclass : #FinderSearchStrategy,
@@ -43,12 +46,6 @@ FinderPragmasSearchStrategy >> findSelectedMethodIn: path [
 		  at: 2
 		  ifPresent: [ :node | node item ]
 		  ifAbsent: [ nil ]
-]
-
-{ #category : #testing }
-FinderPragmasSearchStrategy >> isPragmasSearch [
-
-	^ true
 ]
 
 { #category : #actions }

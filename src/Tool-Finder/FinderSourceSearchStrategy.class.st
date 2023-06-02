@@ -1,3 +1,6 @@
+"
+I am a Finder search mode used to look for a string inside the whole Pharo image source code.
+"
 Class {
 	#name : #FinderSourceSearchStrategy,
 	#superclass : #FinderSearchStrategy,
@@ -43,12 +46,6 @@ FinderSourceSearchStrategy >> findSelectedClassIn: path [
 FinderSourceSearchStrategy >> findSelectedMethodIn: path [
 
 	^ path first item
-]
-
-{ #category : #testing }
-FinderSourceSearchStrategy >> isSourceSearch [
-
-	^ true
 ]
 
 { #category : #accessing }
