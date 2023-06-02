@@ -919,8 +919,9 @@ Context >> home [
 
 	closureOrNil ifNil: [ ^ self ].
 	"this happens for clean blocks, we try to find the home on the stack"
-	closureOrNil outerContext ifNil: [ ^ self activeHome ].
-	^ closureOrNil outerContext home
+	^ closureOrNil outerContext 
+		ifNil: [ self activeHome ]
+		ifNotNil: [:outer | outer home ]
 ]
 
 { #category : #accessing }

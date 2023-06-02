@@ -60,11 +60,6 @@ Context >> lookupTempVar: aSymbol [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> lookupVar: aSymbol [
-	^ self astScope lookupVar: aSymbol
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."

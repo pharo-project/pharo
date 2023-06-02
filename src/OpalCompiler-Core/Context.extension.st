@@ -60,6 +60,11 @@ Context >> isReturnAt: aPC [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+Context >> lookupVar: aSymbol [
+	^ self astScope lookupVar: aSymbol
+]
+
+{ #category : #'*OpalCompiler-Core' }
 Context >> sourceNode [
 	"Return the source node that created the method or the block of this context"
 
