@@ -165,14 +165,6 @@ RGBehavior >> addLocalMethod: anRGMethod [
 ]
 
 { #category : #'accessing - backend' }
-RGBehavior >> addMethodTag: aSymbol [
-
-	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addMethodTag: `@arg' -> '`@rcv addProtocol: `@arg'.
-
-	self addProtocol: aSymbol
-]
-
-{ #category : #'accessing - backend' }
 RGBehavior >> addProtocol: aSymbol [
 
 	self announceDefinitionChangeDuring: [ self backend forBehavior addMethodTag: aSymbol to: self ]

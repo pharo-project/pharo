@@ -8,6 +8,14 @@ ClassDescription >> addCategory: aString [
 ]
 
 { #category : #'*Deprecated12' }
+ClassDescription >> addMethodTag: aSymbol [
+
+	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addMethodTag: `@arg' -> '`@rcv addProtocol: `@arg'.
+
+	self addProtocol: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
 ClassDescription >> allCategories [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolNames'.

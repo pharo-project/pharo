@@ -65,14 +65,6 @@ ClassDescription >> addInstVarNamed: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> addMethodTag: aSymbol [
-
-	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addMethodTag: `@arg' -> '`@rcv addProtocol: `@arg'.
-
-	self addProtocol: aSymbol
-]
-
 { #category : #protocols }
 ClassDescription >> addProtocol: aProtocol [
 
