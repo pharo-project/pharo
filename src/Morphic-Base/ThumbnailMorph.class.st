@@ -94,7 +94,7 @@ ThumbnailMorph >> drawForForm: aForm on: aCanvas [
 	interimCanvas := Display defaultCanvasClass extent: viewedObjectBox extent depth: aCanvas depth.
 	interimCanvas translateBy: viewedObjectBox topLeft negated
 				during: [:tempCanvas | tempCanvas drawImage: aForm at: 0@0].
-	shrunkForm := interimCanvas form magnify: interimCanvas form boundingBox by: scale smoothing: 1.
+	shrunkForm := interimCanvas form magnifyBy: scale smoothing: 1.
 	lastFormShown := shrunkForm.
 
 	aCanvas paintImage: shrunkForm at: self center - shrunkForm boundingBox center
@@ -106,35 +106,35 @@ ThumbnailMorph >> drawMeOn: aCanvas [
 
 	| viewedMorphBox scale c shrunkForm aWorld aFormOrMorph |
 	super drawOn: aCanvas.
-	(aFormOrMorph := self formOrMorphToView) isForm ifTrue: [
-		^ self drawForForm: aFormOrMorph on: aCanvas ].
+
+	((aFormOrMorph := self formOrMorphToView) isForm)
+		ifTrue: [^self drawForForm: aFormOrMorph on: aCanvas].
 	(aFormOrMorph isNotNil and: [
 		 (aWorld := aFormOrMorph world) isNotNil and: [
 			 (aWorld ~~ aFormOrMorph or: [ lastFormShown isNil ]) and: [
 				 RecursionDepth + 1 < RecursionMax ] ] ])
-		ifTrue: [
-			RecursionDepth := RecursionDepth + 1.
-			viewedMorphBox := aFormOrMorph fullBounds.
-			scale := self scaleFor: viewedMorphBox in: self innerBounds.
-			c := Display defaultCanvasClass
-				     extent: viewedMorphBox extent
-				     depth: aCanvas depth.
-			c
-				translateBy: viewedMorphBox topLeft negated
-				during: [ :tempCanvas | "recursion happens here"
-					tempCanvas fullDrawMorph: aFormOrMorph ].
-			shrunkForm := c form
-				              magnify: c form boundingBox
-				              by: scale
-				              smoothing: 1.
-			lastFormShown := shrunkForm.
-			RecursionDepth := RecursionDepth - 1 ]
-		ifFalse: [ "This branch used if we've recurred, or if the thumbnail views a World that's already been rendered once, or if the referent is not in a world at the moment"
-			lastFormShown ifNotNil: [ shrunkForm := lastFormShown ] ].
-	shrunkForm ifNotNil: [
-		aCanvas
-			paintImage: shrunkForm
-			at: self center - shrunkForm boundingBox center ]
+			ifTrue:
+				[RecursionDepth := RecursionDepth + 1.
+				viewedMorphBox := aFormOrMorph fullBounds.
+			scale :=  self scaleFor: viewedMorphBox in: self innerBounds.
+				c := Display defaultCanvasClass extent: viewedMorphBox extent
+							depth: aCanvas depth.
+				c translateBy: viewedMorphBox topLeft negated
+					during:
+						[:tempCanvas |
+						"recursion happens here"
+						tempCanvas fullDrawMorph: aFormOrMorph].
+				shrunkForm := c form
+							magnifyBy: scale
+							smoothing: 1.
+				lastFormShown := shrunkForm.
+				RecursionDepth := RecursionDepth - 1]
+			ifFalse:
+				["This branch used if we've recurred, or if the thumbnail views a World that's already been rendered once, or if the referent is not in a world at the moment"
+				lastFormShown ifNotNil: [shrunkForm := lastFormShown]].
+	shrunkForm ifNotNil:
+			[aCanvas paintImage: shrunkForm
+				at: self center - shrunkForm boundingBox center]
 ]
 
 { #category : #drawing }

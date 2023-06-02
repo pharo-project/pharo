@@ -86,7 +86,17 @@ RPackageTag >> extendedClasses [
 
 { #category : #accessing }
 RPackageTag >> extensionCategoriesForClass: aClass [
-	^ self package extensionCategoriesForClass: aClass
+
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
+]
+
+{ #category : #accessing }
+RPackageTag >> extensionProtocolsForClass: aClass [
+
+	^ self package extensionProtocolsForClass: aClass
 ]
 
 { #category : #testing }

@@ -19,7 +19,7 @@ BaselineOfMonticello class >> remoteRepositoriesPackageNames [
 	^ self packagesOfGroupNamed: #RemoteRepositories
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfMonticello >> baseline: spec [
 	<baseline>
 
@@ -27,7 +27,7 @@ BaselineOfMonticello >> baseline: spec [
 		spec 
 			package: 'Ring-Definitions-Core';
 			package: 'Ring-Definitions-Containers';
-			package: 'Ring-OldChunkImporter';
+			package: 'Ring-OldChunkImporter' with: [ spec requires: #('Ring-Definitions-Core') ];
 			package: 'Zinc-Resource-Meta-Core';
 			package: 'System-Changes';
 			package: 'Compression';

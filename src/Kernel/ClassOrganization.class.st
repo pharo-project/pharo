@@ -24,7 +24,7 @@ ClassOrganization >> addProtocol: aProtocol [
 	| oldProtocols protocol |
 	
 	(self organizedClass hasProtocol: aProtocol) ifTrue: [
-		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+		^ self organizedClass protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
 
 	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
 
@@ -44,54 +44,10 @@ ClassOrganization >> allMethodSelectors [
 	^ self organizedClass selectors
 ]
 
-{ #category : #classification }
-ClassOrganization >> classify: selector under: aProtocol [
-
-	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
-
-	oldProtocol ifNotNil: [
-		oldProtocol removeMethodSelector: selector.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	newProtocol addMethodSelector: selector.
-
-	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
-	oldProtocol ifNotNil: [ self organizedClass notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
-]
-
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 
 	protocols := otherOrganization protocols copy
-]
-
-{ #category : #accessing }
-ClassOrganization >> ensureProtocol: aProtocol [
-	"I can take a Protocol or a protocol name as paramater.
-	
-	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
-	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error.
-	If I receive nil, I return the unclassified protocol"
-
-	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
-
-	aProtocol isString ifFalse: [
-		(self protocols includes: aProtocol)
-			ifTrue: [ ^ aProtocol ]
-			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> extensionProtocols [
-	^ self protocols select: #isExtensionProtocol
-]
-
-{ #category : #testing }
-ClassOrganization >> includesSelector: selector [
-
-	^ self protocols anySatisfy: [ :each | each includesSelector: selector ]
 ]
 
 { #category : #initialization }
@@ -106,7 +62,7 @@ ClassOrganization >> initializeClass: aClass [
 
 	self initialize.
 	organizedClass := aClass.
-	organizedClass selectors do: [ :each | self classify: each under: Protocol unclassified ]
+	organizedClass selectors do: [ :each | self organizedClass classify: each under: Protocol unclassified ]
 ]
 
 { #category : #accessing }
@@ -124,26 +80,6 @@ ClassOrganization >> printOn: aStream [
 		nextPutAll: ' (';
 		print: self organizedClass;
 		nextPut: $)
-]
-
-{ #category : #accessing }
-ClassOrganization >> protocolNamed: aString [
-
-	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
-]
-
-{ #category : #accessing }
-ClassOrganization >> protocolNamed: aString ifAbsent: aBlock [
-
-	^ self protocols
-		  detect: [ :e | e name = aString ]
-		  ifNone: aBlock
-]
-
-{ #category : #inlined }
-ClassOrganization >> protocolOfSelector: aSelector [
-
-	^ self organizedClass protocolOfSelector: aSelector
 ]
 
 { #category : #accessing }
@@ -165,7 +101,7 @@ ClassOrganization >> removeProtocolIfEmpty: aProtocol [
 	| protocol oldProtocolNames |
 	(self organizedClass hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
-	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
+	protocol := aProtocol isString ifTrue: [ self organizedClass protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
 
 	protocol isEmpty ifFalse: [ ^ self ].
 
@@ -185,13 +121,13 @@ ClassOrganization >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
 	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
-		oldProtocol := self ensureProtocol: anOldProtocol.
+		oldProtocol := self organizedClass ensureProtocol: anOldProtocol.
 
 		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
 	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
 		(self organizedClass hasProtocol: aNewProtocol)
 			ifTrue: [
-				newProtocol := self ensureProtocol: aNewProtocol.
+				newProtocol := self organizedClass ensureProtocol: aNewProtocol.
 
 				oldProtocol = newProtocol ifTrue: [ ^ self ].
 

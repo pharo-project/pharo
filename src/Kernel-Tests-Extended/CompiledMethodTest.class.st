@@ -9,7 +9,8 @@ Class {
 	#superclass : #ClassTestCase,
 	#instVars : [
 		'x',
-		'y'
+		'y',
+		'class'
 	],
 	#category : #'Kernel-Tests-Extended-Methods'
 }
@@ -247,6 +248,7 @@ CompiledMethodTest >> shouldNotImplementMethod [
 { #category : #running }
 CompiledMethodTest >> tearDown [
 	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
+	class ifNotNil: [ class removeFromSystem].
 	super tearDown
 ]
 
@@ -889,10 +891,10 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 { #category : #'tests - literals' }
 CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 
-	| method method2 method3 method4 class receiver |
+	| method method2 method3 method4 receiver |
 
 	Smalltalk globals at: #TestUndeclaredVariableClass ifPresent: [ :c | c removeFromSystem ].
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	class := (Object << #TestUndeclaredVariableClass package: '') install.
 	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 0.
 	receiver := class new.
 
@@ -902,7 +904,7 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	self should: [ receiver executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Update the class (same identity, not a new class)"
-	self assert: (Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: '') equals: class.
+	self assert: (Object << #TestUndeclaredVariableClass slots: { #TestUndeclaredVariable}; package: '') install equals: class.
 	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 1.
 	receiver instVarAt: 1 put: 42.
 
@@ -914,58 +916,61 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	self assert: (receiver executeMethod: method2) equals: 42.
 
 	"Removal of ivar DOES recompile a new new one"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	class := (Object << #TestUndeclaredVariableClass package: '') install.
 	self deny: method2 equals: (method3 := class>>#x). "It is a new method"
 	self assert: method3 usesUndeclareds.
 	self should: [ receiver executeMethod: method3 ] raise: UndeclaredVariableRead.
 
 	"Thus adding back DOES recompile again"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: ''.
+	class := (Object << #TestUndeclaredVariableClass slots: {#TestUndeclaredVariable}; package: '') install.
 	receiver instVarAt: 1 put: 421.
 	self deny: method3 equals: (method4 := class>>#x). "It is a new method"
 	self deny: method4 usesUndeclareds.
 	self assert: (receiver executeMethod: method4) equals: 421.
 
-	"cleanup"
-	class removeFromSystem
+
 ]
 
 { #category : #'tests - literals' }
 CompiledMethodTest >> testUndeclaredReparationWithShared [
 
-	| method class |
-
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
-	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
-
-	method := class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
-	self assert: method usesUndeclareds.
-	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
-
+	| method |
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         package: '') install.
+	method := class compiler
+		          permitFaulty: true;
+		          compile:
+			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	"Add and initialize a shared"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
-	(class bindingOf: #TestUndeclaredVariable) value: 42.
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         sharedVariables:  {#TestUndeclaredVariable};
+		         package: '') install.
 
-	"Method is repaired"
-	self deny: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: 42.
+	nil executeMethod: method.
+	nil executeMethod: method
+]
 
-	"Remove shared from class"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
-	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithSharedWasCrashingOnOldVM1001 [
 
-	"Removal of shared DOES NOT undeclare users"
-	self deny: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: 42.
+	| method |
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         package: '') install.
+	method := class compiler
+		          permitFaulty: true;
+		          compile:
+			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	"Add and initialize a shared"
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         sharedVariables:  {#TestUndeclaredVariable};
+		         package: '') install.
 
-	"Thus, adding back DOES NOT repair"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
-	(class bindingOf: #TestUndeclaredVariable) value: 421.
-	self deny: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: 42.
-
-	"cleanup"
-	class removeFromSystem
+	nil executeMethod: method.
+	nil executeMethod: method
 ]
 
 { #category : #'tests - testing' }

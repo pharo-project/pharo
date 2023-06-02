@@ -63,7 +63,7 @@ SystemAnnouncerTest >> testProtocolRemoved [
 	class := factory newClass.
 	class organization addProtocol: 'shiny-new-category'.
 
-	class organization removeProtocolIfEmpty: 'shiny-new-category'.
+	class removeProtocolIfEmpty: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classRemoved equals: class.

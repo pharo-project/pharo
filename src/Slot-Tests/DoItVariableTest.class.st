@@ -43,9 +43,8 @@ DoItVariableTest >> testDoItCompilation [
 	| temp var doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	doIt := thisContext class compiler
+	doIt := thisContext compiler
 		source: 'temp + 2';
-		context: thisContext;
 		isScripting: true;
 		bindings: { var };
 		compile.

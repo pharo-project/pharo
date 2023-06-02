@@ -307,12 +307,9 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	yetAnotherClass classLayout checkIntegrity.
 
 	"level 4"
-	yetYetAnotherClass := yetAnotherClass
-		subclass: self yetYetAnotherClassName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self aCategory.
+	yetYetAnotherClass := (yetAnotherClass
+		<< self yetYetAnotherClassName
+		package: self aCategory) install.
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assert: anotherClass subclasses equals: {yetAnotherClass}.

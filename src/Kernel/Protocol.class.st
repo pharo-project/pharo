@@ -1,6 +1,8 @@
 "
-A Protocol is a simple value holder representing a protocol.
-It's composed of a name and a set of method selectors
+A Protocol is a categorization of methods in Pharo. 
+A class has methods, and the methods are classified into protocols.
+A class holds my instances (for now through ClassOrganization but we want to remove this class in the future) and I hold the selectors of the methods that are inside me.
+I have a name that is used in browsers to display the different protocols.
 "
 Class {
 	#name : #Protocol,
@@ -53,11 +55,6 @@ Protocol >> addMethodSelector: aSymbol [
 ]
 
 { #category : #testing }
-Protocol >> canBeRenamed [
-	^ true
-]
-
-{ #category : #testing }
 Protocol >> includesSelector: selector [
 
 	^ self methodSelectors includes: selector
@@ -79,6 +76,10 @@ Protocol >> isEmpty [
 
 { #category : #testing }
 Protocol >> isExtensionProtocol [
+	"For now, extension methods are managed via protocols. 
+	
+	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
+
 	^ self name first = $*
 ]
 
@@ -86,12 +87,6 @@ Protocol >> isExtensionProtocol [
 Protocol >> isUnclassifiedProtocol [
 
 	^ self name = self class unclassified
-]
-
-{ #category : #testing }
-Protocol >> isVirtualProtocol [
-	"A virtual protocol is a calculated one (it does not have any methods by it self)"
-	^ false
 ]
 
 { #category : #accessing }

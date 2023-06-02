@@ -392,24 +392,6 @@ RBMoveMethodTransformation >> replaceVariableReferences [
 	parseTree := replacer tree
 ]
 
-{ #category : #option }
-RBMoveMethodTransformation >> requestMethodNameFor: aMethodName [
-	^(self options at: #methodName) cull: aMethodName cull: self
-]
-
-{ #category : #option }
-RBMoveMethodTransformation >> requestSelfArgumentName [
-	^(self options at: #selfArgumentName) value: self
-]
-
-{ #category : #requests }
-RBMoveMethodTransformation >> selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection [
-	^ (self options at: #variableTypes)
-		value: self
-		value: initialTypeCollection
-		value: selectedTypeCollection
-]
-
 { #category : #transforming }
 RBMoveMethodTransformation >> selector: aSymbol class: aClass variable: aVariableName [
 	selector := aSymbol.
