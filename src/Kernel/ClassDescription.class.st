@@ -67,8 +67,8 @@ ClassDescription >> addInstVarNamed: aString [
 
 { #category : #'accessing - tags' }
 ClassDescription >> addMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods"
+
+	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addMethodTag: `@arg' -> '`@rcv addProtocol: `@arg'.
 
 	self addProtocol: aSymbol
 ]
