@@ -36,7 +36,7 @@ SycAddNewMethodTagCommand >> defaultMenuItemName [
 { #category : #execution }
 SycAddNewMethodTagCommand >> execute [
 
-	targetClass addMethodTag: tagName asSymbol
+	targetClass addProtocol: tagName
 ]
 
 { #category : #execution }

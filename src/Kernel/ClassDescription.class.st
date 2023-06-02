@@ -65,14 +65,6 @@ ClassDescription >> addInstVarNamed: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> addMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods"
-
-	self addProtocol: aSymbol
-]
-
 { #category : #protocols }
 ClassDescription >> addProtocol: aProtocol [
 
