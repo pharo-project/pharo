@@ -65,3 +65,9 @@ FinderPragmasSearchStrategy >> pragmaSearch [
 	(Pragma all select: byCondition) do: [ :pragma | (result at: pragma selector ifAbsentPut: OrderedCollection new) add: pragma method ].
 	^ result
 ]
+
+{ #category : #accessing }
+FinderPragmasSearchStrategy >> rootNodeClassForResult: aCollection [
+
+	^ FinderPragmaNode
+]

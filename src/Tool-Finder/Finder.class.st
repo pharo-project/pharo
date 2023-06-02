@@ -82,9 +82,6 @@ Finder >> currentSearchMode: aSymbol [
 	"If #Examples is selected, I disable the RegEx checkbo. Then I rebuild the resultDictionary"
 
 	searchStrategy := (FinderSearchStrategy strategyNamed: aSymbol) finder: self.
-	self isExamplesSymbol
-		ifTrue: [ self disableUseRegEx ]
-		ifFalse: [ self enableUseRegEx ].
 
 	self update: #sourceCode.
 	self constructDictionary
@@ -289,9 +286,7 @@ Finder >> selection: aSelectionHolder [
 		^ self ].
 	path := aSelectionHolder selectedNodePath.
 
-
 	self selectedClass: (self searchStrategy findSelectedClassIn: path).
-
 	self selectedMethod: (self searchStrategy findSelectedMethodIn: path).
 
 	self triggerEvent: #updateSourceCode

@@ -55,3 +55,9 @@ FinderClassesSearchStrategy >> isClassesSearch [
 
 	^ true
 ]
+
+{ #category : #accessing }
+FinderClassesSearchStrategy >> rootNodeClassForResult: aCollection [
+
+	^ FinderClassNode
+]

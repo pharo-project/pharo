@@ -606,21 +606,6 @@ FinderUI >> finder: aFinder [
 	finder := aFinder
 ]
 
-{ #category : #searching }
-FinderUI >> forSelectorsDo: selectorBlock forClassNamesDo: classNamesBlock forSourceDo: sourceBlock forExamplesDo: exampleBlock forPragmasDo: pragmaBlock [
-
-	self isSelectorsSymbol
-		ifTrue: [^selectorBlock value].
-	self isClassNamesSymbol
-		ifTrue: [^classNamesBlock value].
-	self isSourceSymbol
-		ifTrue: [^sourceBlock value].
-	self isExamplesSymbol
-		ifTrue: [^exampleBlock value].
-	self isPragmasSymbol
-		ifTrue: [^pragmaBlock value]
-]
-
 { #category : #accessing }
 FinderUI >> forceSearch [
 	^ forceSearch ifNil: [ forceSearch := false ]
@@ -741,7 +726,7 @@ FinderUI >> labelFont [
 	^StandardFonts defaultFont
 ]
 
-{ #category : #'t - accessing' }
+{ #category : #accessing }
 FinderUI >> menu: menu shifted: b [
 	self selectedNode ifNil: [ ^menu ].
 	^ self selectedNode menu: menu shifted: b
@@ -796,19 +781,12 @@ FinderUI >> rootItems [
 	^ self resultDictionary keys sort: [ :a :b | a asString < b asString ]
 ]
 
-{ #category : #'t - accessing' }
+{ #category : #accessing }
 FinderUI >> rootNodeClassFromItem: anItem [
 	"To have the good class for my nodes, I ask my owner,
 	because he is the only one who knows his state"
 
-	^ self
-		forSelectorsDo: [ (self resultDictionary at: anItem) size > 1
-				ifTrue: [ FinderMethodNode ]
-				ifFalse: [ FinderSingleMethodNode ] ]
-		forClassNamesDo: [ FinderClassNode ]
-		forSourceDo: [ FinderMethodNode ]
-		forExamplesDo: [ FinderExampleMethodNode ]
-		forPragmasDo: [ FinderPragmaNode ]
+	^ self finder searchStrategy rootNodeClassForResult: (self resultDictionary at: anItem)
 ]
 
 { #category : #'buttons behavior' }

@@ -10,7 +10,7 @@ FinderExamplesSearchStrategy class >> strategyName [
 	^ #Examples
 ]
 
-{ #category : #'private - example' }
+{ #category : #private }
 FinderExamplesSearchStrategy >> computeWithMethodFinder [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
@@ -78,4 +78,16 @@ FinderExamplesSearchStrategy >> findSelectedMethodIn: path [
 FinderExamplesSearchStrategy >> isExamplesSearch [
 
 	^ true
+]
+
+{ #category : #accessing }
+FinderExamplesSearchStrategy >> rootNodeClassForResult: aCollection [
+
+	^ FinderExampleMethodNode
+]
+
+{ #category : #private }
+FinderExamplesSearchStrategy >> updateRegexUsage [
+
+	finder disableUseRegEx
 ]

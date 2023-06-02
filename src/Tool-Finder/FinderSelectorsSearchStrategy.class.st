@@ -77,3 +77,11 @@ FinderSelectorsSearchStrategy >> messagesNameSearch [
 			  self methodSearch: [ :method | regex search: method selector asString ] ]
 		  ifFalse: [ self methodSearch: self messageSearchBlock ]
 ]
+
+{ #category : #accessing }
+FinderSelectorsSearchStrategy >> rootNodeClassForResult: aCollection [
+
+	^ aCollection size > 1
+		  ifTrue: [ FinderMethodNode ]
+		  ifFalse: [ FinderSingleMethodNode ]
+]

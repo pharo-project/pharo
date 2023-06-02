@@ -60,7 +60,8 @@ FinderSearchStrategy >> finder [
 { #category : #accessing }
 FinderSearchStrategy >> finder: anObject [
 
-	finder := anObject
+	finder := anObject.
+	self updateRegexUsage
 ]
 
 { #category : #testing }
@@ -105,4 +106,16 @@ FinderSearchStrategy >> methodSearch: aSelectBlock [
 			class classSide methodsDo: [ :method | (aSelectBlock value: method) ifTrue: [ result add: method ] ] ]
 		displayingProgress: [ :aClass | aClass name ].
 	^ result
+]
+
+{ #category : #accessing }
+FinderSearchStrategy >> rootNodeClassForResult: aCollection [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #private }
+FinderSearchStrategy >> updateRegexUsage [
+
+	finder enableUseRegEx
 ]

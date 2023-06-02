@@ -51,6 +51,12 @@ FinderSourceSearchStrategy >> isSourceSearch [
 	^ true
 ]
 
+{ #category : #accessing }
+FinderSourceSearchStrategy >> rootNodeClassForResult: aCollection [
+
+	^ FinderMethodNode
+]
+
 { #category : #actions }
 FinderSourceSearchStrategy >> sourceRegexSearch [
 
