@@ -24,14 +24,12 @@ Class {
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> of: aMethod [
-	| methodPackage methodClass methodProtocol |
-	methodPackage := aMethod package.
+
+	| methodPackage methodClass |
 	methodClass := aMethod origin.
-	methodProtocol := aMethod protocol.
+	methodPackage := aMethod package ifNil: [ methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
 
-	methodPackage ifNil: [ methodPackage := methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
-
-	^ self package: methodPackage class: methodClass protocol: methodProtocol
+	^ self package: methodPackage class: methodClass protocol: aMethod protocolName
 ]
 
 { #category : #'instance creation' }

@@ -18,11 +18,9 @@ ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
 
 	| condition badCases |
-	condition := [ :protocol |
-	             (protocol beginsWith: '*') and: [
-		             protocol second isLowercase ] ].
-	badCases := CompiledMethod allInstances select: [ :each |
-		         each protocol notNil and: [ condition value: each protocol ] ].
+	self flag: #CompileMethodProtocolMiration.
+	condition := [ :protocol | (protocol beginsWith: '*') and: [ protocol second isLowercase ] ].
+	badCases := CompiledMethod allInstances select: [ :method | condition value: method protocol ].
 
 	self assert: badCases isEmpty
 ]

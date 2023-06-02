@@ -47,6 +47,7 @@ ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
 	method := class >> #wammawink.
 
 	self assert: method sourceCode equals: 'wammawink ^ self'.
+	self flag: #CompileMethodProtocolMiration.
 	self assert: method protocol equals: Protocol unclassified.
 	self assert: (class protocolOfSelector: #wammawink) name equals: Protocol unclassified
 ]
@@ -66,7 +67,7 @@ ClassDescriptionTest >> testCompileClassified [
 	method := class >> #foo.
 
 	self assert: method sourceCode equals: 'foo ^3'.
-	self assert: method protocol equals: #protocol
+	self assert: method protocolName equals: #protocol
 ]
 
 { #category : #'tests - compilation' }
@@ -80,6 +81,7 @@ ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 	method := class >> #foo.
 
 	self assert: method sourceCode equals: 'foo ^3'.
+	self flag: #CompileMethodProtocolMiration.
 	self assert: method protocol equals: protocol name
 ]
 

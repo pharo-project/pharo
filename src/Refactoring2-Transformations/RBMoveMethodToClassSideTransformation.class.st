@@ -97,7 +97,7 @@ RBMoveMethodToClassSideTransformation >> preconditions [
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
-	originalProtocol := method protocol.
+	originalProtocol := method protocolName.
 	oldClass := class.
 	self removeInstVariableReferences.
 	method := class methodFor: method selector.
