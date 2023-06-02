@@ -27,6 +27,24 @@ FinderPragmasSearchStrategy >> constructDictionary [
 	finder resultDictionary: dictionary
 ]
 
+{ #category : #accessing }
+FinderPragmasSearchStrategy >> findSelectedClassIn: path [
+
+	^ path
+		  at: 3
+		  ifPresent: [ :node | node item ]
+		  ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+FinderPragmasSearchStrategy >> findSelectedMethodIn: path [
+
+	^ path
+		  at: 2
+		  ifPresent: [ :node | node item ]
+		  ifAbsent: [ nil ]
+]
+
 { #category : #testing }
 FinderPragmasSearchStrategy >> isPragmasSearch [
 

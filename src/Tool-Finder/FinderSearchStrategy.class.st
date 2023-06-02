@@ -40,6 +40,18 @@ FinderSearchStrategy >> constructDictionary [
 ]
 
 { #category : #accessing }
+FinderSearchStrategy >> findSelectedClassIn: path [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+FinderSearchStrategy >> findSelectedMethodIn: path [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 FinderSearchStrategy >> finder [
 
 	^ finder

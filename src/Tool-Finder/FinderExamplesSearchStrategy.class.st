@@ -59,6 +59,21 @@ FinderExamplesSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
+{ #category : #accessing }
+FinderExamplesSearchStrategy >> findSelectedClassIn: path [
+
+	^ path
+		  at: 2
+		  ifPresent: [ :node | node item ]
+		  ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+FinderExamplesSearchStrategy >> findSelectedMethodIn: path [
+
+	^ path first item
+]
+
 { #category : #testing }
 FinderExamplesSearchStrategy >> isExamplesSearch [
 

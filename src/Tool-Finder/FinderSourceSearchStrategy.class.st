@@ -30,6 +30,21 @@ FinderSourceSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
+{ #category : #accessing }
+FinderSourceSearchStrategy >> findSelectedClassIn: path [
+
+	^ path
+		  at: 2
+		  ifPresent: [ :node | node item ]
+		  ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+FinderSourceSearchStrategy >> findSelectedMethodIn: path [
+
+	^ path first item
+]
+
 { #category : #testing }
 FinderSourceSearchStrategy >> isSourceSearch [
 

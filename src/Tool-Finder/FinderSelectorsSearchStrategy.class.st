@@ -28,6 +28,26 @@ FinderSelectorsSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
+{ #category : #accessing }
+FinderSelectorsSearchStrategy >> findSelectedClassIn: path [
+
+	^ path first isSingle
+		  ifTrue: [ path first itemMethod methodClass ]
+		  ifFalse: [
+			  path
+				  at: 2
+				  ifPresent: [ :node | node item ]
+				  ifAbsent: [ nil ] ]
+]
+
+{ #category : #accessing }
+FinderSelectorsSearchStrategy >> findSelectedMethodIn: path [
+
+	^ path first isSingle
+		  ifTrue: [ path first itemMethod selector ]
+		  ifFalse: [ path first item ]
+]
+
 { #category : #testing }
 FinderSelectorsSearchStrategy >> isSelectorsSearch [
 

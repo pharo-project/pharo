@@ -35,6 +35,21 @@ FinderClassesSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
+{ #category : #accessing }
+FinderClassesSearchStrategy >> findSelectedClassIn: path [
+
+	^ path first item
+]
+
+{ #category : #accessing }
+FinderClassesSearchStrategy >> findSelectedMethodIn: path [
+
+	^ path
+		  at: 2
+		  ifPresent: [ :node | node item ]
+		  ifAbsent: [ nil ]
+]
+
 { #category : #testing }
 FinderClassesSearchStrategy >> isClassesSearch [
 
