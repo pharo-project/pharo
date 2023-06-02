@@ -52,29 +52,6 @@ Finder class >> registerToolsOn: registry [
 	registry register: self as: #finder
 ]
 
-{ #category : #private }
-Finder >> classSearch: aSelectBlock [
-	| result |
-	result := OrderedCollection new.
-	self packagesSelection classesAndTraitsDo:[ :class |
-			(aSelectBlock value: class)
-				ifTrue: [ result add: class ] ].
-	^ result
-]
-
-{ #category : #'private - class' }
-Finder >> computeListOfClasses: aString [
-	"Compute in the case I'm searching class names"
-
-	^ self useRegEx
-		ifTrue: [ | regex |
-			regex := aString asRegex.
-			self classSearch: [ :class | regex search: class name ]]
-		ifFalse: [
-			self classSearch: [ :class |
-				class name includesSubstring: aString caseSensitive: false ]]
-]
-
 { #category : #'private - example' }
 Finder >> computeWithMethodFinder: aString [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
@@ -103,36 +80,18 @@ Finder >> computeWithMethodFinder: aString [
 	^ result
 ]
 
-{ #category : #'private - class' }
-Finder >> constructClassNamesDictionary [
-	"Construct the dictionary in the case I'm searching in class names"
-
-	| result listOfClasses |
-	listOfClasses := self computeListOfClasses: self searchingString.
-	result := Dictionary new.
-	listOfClasses do: [:each |
-		result at: each put: (each selectors sort: [:a :b | a < b])].
-	self resultDictionary: result
-]
-
 { #category : #private }
 Finder >> constructDictionary [
 	"I construct the adequate dictionary regarding the search mode"
 
-	self searchingString isEmpty ifTrue: [ ^self resultDictionary: Dictionary new ].
-	[ :job|
-		job title: 'Searching...' translated.
-		self isSelectorsSymbol
-			ifTrue: [ self constructDictionaryWithMessagesNameSearch: self searchingString ].
-		self isClassNamesSymbol
-			ifTrue: [ self constructClassNamesDictionary ].
-		self isSourceSymbol
-			ifTrue: [ self constructSourceDictionary ].
-		self isExamplesSymbol
-			ifTrue: [ self constructDictionaryWithMethodFinder: self searchingString].
-		self isPragmasSymbol
-			ifTrue: [ self constructDictionaryWithPragmaSearch: self searchingString ].
-	] asJob run
+	self searchingString isEmpty ifTrue: [ ^ self resultDictionary: Dictionary new ].
+	[ :job |
+	job title: 'Searching...' translated.
+	self isSelectorsSymbol ifTrue: [ self constructDictionaryWithMessagesNameSearch: self searchingString ].
+	self isClassNamesSymbol ifTrue: [ self searchStrategy constructDictionaryOf: self ].
+	self isSourceSymbol ifTrue: [ self constructSourceDictionary ].
+	self isExamplesSymbol ifTrue: [ self constructDictionaryWithMethodFinder: self searchingString ].
+	self isPragmasSymbol ifTrue: [ self constructDictionaryWithPragmaSearch: self searchingString ] ] asJob run
 ]
 
 { #category : #'private - selector' }

@@ -22,6 +22,12 @@ FinderSearchStrategy class >> strategyNamed: aSymbol [
 	^ self subclasses detect: [ :class | class strategyName = aSymbol ]
 ]
 
+{ #category : #actions }
+FinderSearchStrategy >> constructDictionaryOf: aFinder [
+
+	self subclassResponsibility
+]
+
 { #category : #testing }
 FinderSearchStrategy >> isClassesSearch [
 
