@@ -64,7 +64,9 @@ FLBehaviorCluster >> materializePostInstancesStepWith: aDecoder [
 { #category : #'serialize/materialize' }
 FLBehaviorCluster >> materializeReferencesOf: aClassOrTrait with: aDecoder [
 
-	aClassOrTrait methodDictionary: aDecoder nextEncodedReference
+	aClassOrTrait
+		methodDictionary: aDecoder nextEncodedReference;
+		protocols: aDecoder nextEncodedReference
 ]
 
 { #category : #'serialize/materialize' }
@@ -76,7 +78,9 @@ FLBehaviorCluster >> materializeReferencesStepWith: aDecoder [
 { #category : #analyzing }
 FLBehaviorCluster >> referencesOf: aClassOrTrait do: aBlock [
 
-	aBlock value: aClassOrTrait methodDictionary
+	aBlock
+		value: aClassOrTrait methodDictionary;
+		value: aClassOrTrait protocols
 ]
 
 { #category : #'serialize/materialize' }
@@ -112,7 +116,9 @@ FLBehaviorCluster >> serializePostInstancesStepWith: anEncoder [
 { #category : #'serialize/materialize' }
 FLBehaviorCluster >> serializeReferencesOf: aClassOrTrait with: anEncoder [
 
-	anEncoder encodeReferenceTo: aClassOrTrait methodDictionary
+	anEncoder
+		encodeReferenceTo: aClassOrTrait methodDictionary;
+		encodeReferenceTo: aClassOrTrait protocols
 ]
 
 { #category : #'serialize/materialize' }
