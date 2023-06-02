@@ -258,9 +258,9 @@ ReflectivityReificationTest >> testReifyArguments2level [
 	self assert: (ReflectivityExamples >> #exampleSendTwoArgs) class equals: ReflectiveMethod.
 	self assert: tag isNil.
 	instance := ReflectivityExamples new.
-	self deny: (Processor activeProcess isMeta).
+	self deny: thisProcess isMeta.
 	self assert: instance exampleSendTwoArgs equals: #(1 2).
-	self deny: (Processor activeProcess isMeta).
+	self deny: thisProcess isMeta.
 	self assert: tag equals: #(1 2)
 ]
 
