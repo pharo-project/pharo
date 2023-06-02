@@ -145,27 +145,9 @@ Finder >> isClassNamesSymbol [
 ]
 
 { #category : #checkbox }
-Finder >> isExamplesSymbol [
-
-	^ self searchStrategy isExamplesSearch
-]
-
-{ #category : #checkbox }
 Finder >> isPragmasSymbol [
 
 	^ self searchStrategy isPragmaSearch
-]
-
-{ #category : #checkbox }
-Finder >> isSelectorsSymbol [
-
-	^ self searchStrategy isSelectorsSearch
-]
-
-{ #category : #checkbox }
-Finder >> isSourceSymbol [
-
-	^ self searchStrategy isSourceSearch
 ]
 
 { #category : #display }
