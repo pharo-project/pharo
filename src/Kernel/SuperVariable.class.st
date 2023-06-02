@@ -30,7 +30,9 @@ SuperVariable >> isSuperVariable [
 
 { #category : #debugging }
 SuperVariable >> readInContext: aContext [
-	^aContext receiver
+	"self in a block is the receiver of the home context
+	For clean blocks it might not be known (nil)"
+	^aContext home ifNotNil: [:home | home receiver ]
 ]
 
 { #category : #queries }
