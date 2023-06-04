@@ -135,11 +135,10 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> allSelectorsInProtocol: aName [
-	"Answer a list of all the methods of the receiver and all its
-	superclasses that are in the protocol named aName"
+ClassDescription >> allSelectorsInProtocol: protocol [
+	"Answer a list of all the method selectors of the receiver and all its superclasses that are in the protocol as parameter."
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: protocol ]
 ]
 
 { #category : #'pool variable' }
