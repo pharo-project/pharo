@@ -212,8 +212,8 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 	events := self allLogEventsWith: EpMethodModification.
 	self assert: events size equals: 1.
 	event := events anyOne.
-	self assert: event oldMethod protocolName equals: 'old'.
-	self assert: event newMethod protocolName equals: 'new'
+	self assert: event oldMethod protocol equals: 'old'.
+	self assert: event newMethod protocol equals: 'new'
 ]
 
 { #category : #tests }
