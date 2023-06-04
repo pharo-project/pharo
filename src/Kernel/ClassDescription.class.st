@@ -678,10 +678,10 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
-{ #category : #organization }
-ClassDescription >> methodsInProtocol: aString [
+{ #category : #protocols }
+ClassDescription >> methodsInProtocol: protocol [
 
-	^ (self selectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self selectorsInProtocol: protocol) collect: [ :selector | self compiledMethodAt: selector ]
 ]
 
 { #category : #'accessing - tags' }
