@@ -339,7 +339,6 @@ RGClassTest >> testTagsForMethods [
 RGClassTest >> testTagsForMethodsCollection [
 
 	| class env tag1 tag2 tag3 |
-
 	class := RGClass unnamed.
 	env := class environment.
 
@@ -347,17 +346,17 @@ RGClassTest >> testTagsForMethodsCollection [
 	self assert: (class hasUnresolved: #tagsForMethods).
 
 	tag1 := #tag1.
-	class addMethodTag: #tag1.
+	class addProtocol: #tag1.
 	self assert: class tagsForMethods size equals: 1.
 
 	self assert: (class hasResolved: #tagsForMethods).
 
 	tag2 := #tag2.
-	class addMethodTag: tag2.
+	class addProtocol: tag2.
 	self assert: class tagsForMethods size equals: 2.
 
 	tag3 := #tag3.
-	class addMethodTag: tag3.
+	class addProtocol: tag3.
 	self assert: class tagsForMethods size equals: 3.
 
 	class removeMethodTag: tag3.

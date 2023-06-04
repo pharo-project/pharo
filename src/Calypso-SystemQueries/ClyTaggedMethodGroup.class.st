@@ -44,16 +44,18 @@ ClyTaggedMethodGroup >> removeWithMethods [
 
 { #category : #operations }
 ClyTaggedMethodGroup >> renameMethodTagTo: newTag [
-	newTag = self tag ifTrue: [ ^self ].
+
+	newTag = self tag ifTrue: [ ^ self ].
 
 	self methods do: [ :method |
-		method tagWith: newTag.
-		method untagFrom: self tag].
+		method
+			tagWith: newTag;
+			untagFrom: self tag ].
 
-	methodQuery scope classesDo:  [ :class |
-		(class tagsForMethods includes: newTag)
-			ifFalse: [ class addMethodTag: newTag ].
-		class removeProtocolIfEmpty: self tag]
+	methodQuery scope classesDo: [ :class |
+		class
+			addProtocol: newTag;
+			removeProtocolIfEmpty: self tag ]
 ]
 
 { #category : #accessing }

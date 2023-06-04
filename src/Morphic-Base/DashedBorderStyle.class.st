@@ -11,6 +11,12 @@ Class {
 	#category : #'Morphic-Base-Borders'
 }
 
+{ #category : #'class initialization' }
+DashedBorderStyle class >> initialize [
+	"Deprecated in Pharo 11"
+	self deprecatedAliases: { #DashedBorder }
+]
+
 { #category : #'instance creation' }
 DashedBorderStyle class >> width: width dashColors: cols dashLengths: lens [
 	"Answer a new instance of the receiver with the given

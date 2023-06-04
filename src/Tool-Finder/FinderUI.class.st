@@ -34,72 +34,6 @@ FinderUI class >> icon [
 	^ self iconNamed: #smallFind
 ]
 
-{ #category : #explanations }
-FinderUI class >> methodFinderExplanation [
-	"The comment in the bottom pane"
-
-	MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3.
-		"to keep the method methodFor: from being removed from the system"
-
-	^ 'Use an example to find a method in the system.
-
-   ''a''. ''b''. ''ab''       will find the message #, for strings concatenation
-   2. -2                will find the message #negated
-   3. 6                 will find the message #factorial
-   20. 10. 15. 15       will find the message #min:max:
-
-It works on collections too:
-
-   {2. 4. 5. 1}. 5. 3   will find the message #indexOf:
-   {2. 5. 1}. 5. true   will find the message #includes:
-
-An example is made up of the following two or more items separated by a period:
-
-	receiver. answer
-	receiver. argument1. answer
-	receiver. argument1. argument2. answer
-	etc...
-
-For example, type: 3. 4. 7. into the search box and click <Search>
-
-Take care on separating spaces because of floating point numbers.
-
- 	3.4.7      will find nothing, it is interpreted two numbers, 3.4 and. 7
-	3. 4. 7    will find you the message #+
-
-The examples array should contain one object for the receiver, one object per expected argument and then a final object with the expected result.
-
-In other words
- - a unary method example expects an array of input objects #( receiver ) and an expected result
- - a binary method example expects an array with two input objects #( receiver argument ) and an expected result
- - a keyword method example expects an array with at least two elements  #( receiver argument1 argument2 ... ) and an expected results
-
-The method finder will take the input objects (receiver and arguments) and perform their permutation to be able to find more results.
-Then, it will lookup in the receiver''s hierarchy the approved and forbidden methods to run on the hierarchy and run them on the permutation of objects.
-
-Receiver and arguments do not have to be in the right order.
-
-Alternatively, in this bottom pane or in the Playground, use #findMethodsByExampleInput:andExpectedResult: directly to find a method in the system.  Select this line of code and choose "print it" or "inspect it.
-
-	MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3.
-
-It is useful when you want to look for computed objects:
-
-	MethodFinder new
-		findMethodsByExampleInput: {''29 Apr 1999'' asDate}
-		andExpectedResult: ''30 Apr 1999'' asDate.
-
-This will find the message #next.
-
-	MethodFinder new
-		findMethodsByExampleInput: {''30 Apr 1999'' asDate}
-		andExpectedResult: ''Friday''.
-
-This will find the message #dayOfWeekName
-
-The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist. '
-]
-
 { #category : #'instance creation' }
 FinderUI class >> on: aFinder [
 
@@ -451,7 +385,8 @@ FinderUI >> buildVersionsButton [
 
 { #category : #'text areas behavior' }
 FinderUI >> collectFromPackages: aCollection [
-	self packagesSelection: (self environment forPackageNames: aCollection)
+
+	self finder packagesSelection: (self environment forPackageNames: aCollection)
 ]
 
 { #category : #'text areas behavior' }
@@ -495,25 +430,6 @@ FinderUI >> currentSearchMode: aSymbol [
 	self finder searchingStringSilently: self searchingTextArea contentMorph textMorph text asString.
 	self searchingTextArea contentMorph hasUnacceptedEdits: false.
 	self finder currentSearchMode: aSymbol
-]
-
-{ #category : #private }
-FinderUI >> defaultExplanation [
-^
-'The Finder can be used in 4 different ways:
-	- Selectors: your research is done among selectors
-	- Classes : your research is done among classes names
-	- Source : your research is done among all the source code
-	- Pragmas: your research is done among pragmas
-	- Examples : your research uses the Method Finder behavior
-			   (for further informations, print ''FinderUI methodFinderExplanation'')
-
-
-In these four modes, you can also tick the ''Use RegEx'' checkbox.
-If you pick this box, your search will be done using regular expressions instead of just matching.
-
-The ''Select classes'' button opened a dialog window  to select which classes will be used for the search.
-The ''All classes'' button is used to reset the classes selection.'
 ]
 
 { #category : #'items creation' }
@@ -606,21 +522,6 @@ FinderUI >> finder: aFinder [
 	finder := aFinder
 ]
 
-{ #category : #searching }
-FinderUI >> forSelectorsDo: selectorBlock forClassNamesDo: classNamesBlock forSourceDo: sourceBlock forExamplesDo: exampleBlock forPragmasDo: pragmaBlock [
-
-	self isSelectorsSymbol
-		ifTrue: [^selectorBlock value].
-	self isClassNamesSymbol
-		ifTrue: [^classNamesBlock value].
-	self isSourceSymbol
-		ifTrue: [^sourceBlock value].
-	self isExamplesSymbol
-		ifTrue: [^exampleBlock value].
-	self isPragmasSymbol
-		ifTrue: [^pragmaBlock value]
-]
-
 { #category : #accessing }
 FinderUI >> forceSearch [
 	^ forceSearch ifNil: [ forceSearch := false ]
@@ -668,7 +569,8 @@ FinderUI >> implementorsButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> implementorsButtonState [
-	^ self selectedMethod isNil | self isClassNamesSymbol
+
+	^ self selectedMethod isNil or: [ self isClassSearch ]
 ]
 
 { #category : #private }
@@ -691,7 +593,8 @@ FinderUI >> inheritanceButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> inheritanceButtonState [
-	^ self selectedClass isNil | self isClassNamesSymbol
+
+	^ self selectedClass isNil or: [ self isClassSearch ]
 ]
 
 { #category : #display }
@@ -706,29 +609,14 @@ FinderUI >> initialize [
 ]
 
 { #category : #'mode list' }
-FinderUI >> isClassNamesSymbol [
+FinderUI >> isClassSearch [
 
-	^self finder isClassNamesSymbol
+	^self finder isClassSearch
 ]
 
 { #category : #'mode list' }
-FinderUI >> isExamplesSymbol [
-	^self finder isExamplesSymbol
-]
-
-{ #category : #'mode list' }
-FinderUI >> isPragmasSymbol [
-	^self finder isPragmasSymbol
-]
-
-{ #category : #'mode list' }
-FinderUI >> isSelectorsSymbol [
-	^self finder isSelectorsSymbol
-]
-
-{ #category : #'mode list' }
-FinderUI >> isSourceSymbol [
-	^self finder isSourceSymbol
+FinderUI >> isPragmasSearch [
+	^self finder isPragmasSearch
 ]
 
 { #category : #private }
@@ -741,7 +629,7 @@ FinderUI >> labelFont [
 	^StandardFonts defaultFont
 ]
 
-{ #category : #'t - accessing' }
+{ #category : #accessing }
 FinderUI >> menu: menu shifted: b [
 	self selectedNode ifNil: [ ^menu ].
 	^ self selectedNode menu: menu shifted: b
@@ -776,12 +664,6 @@ FinderUI >> packagesSelection [
 ]
 
 { #category : #private }
-FinderUI >> packagesSelection: aCollection [
-
-	self finder packagesSelection: aCollection
-]
-
-{ #category : #private }
 FinderUI >> resetEnvironment [
 	self triggerEvent: #resetEnvironment
 ]
@@ -796,19 +678,12 @@ FinderUI >> rootItems [
 	^ self resultDictionary keys sort: [ :a :b | a asString < b asString ]
 ]
 
-{ #category : #'t - accessing' }
+{ #category : #accessing }
 FinderUI >> rootNodeClassFromItem: anItem [
 	"To have the good class for my nodes, I ask my owner,
 	because he is the only one who knows his state"
 
-	^ self
-		forSelectorsDo: [ (self resultDictionary at: anItem) size > 1
-				ifTrue: [ FinderMethodNode ]
-				ifFalse: [ FinderSingleMethodNode ] ]
-		forClassNamesDo: [ FinderClassNode ]
-		forSourceDo: [ FinderMethodNode ]
-		forExamplesDo: [ FinderExampleMethodNode ]
-		forPragmasDo: [ FinderPragmaNode ]
+	^ self finder searchStrategy rootNodeClassForResult: (self resultDictionary at: anItem)
 ]
 
 { #category : #'buttons behavior' }
@@ -923,7 +798,8 @@ FinderUI >> sendersButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> sendersButtonState [
-	^ self selectedMethod isNil | self isClassNamesSymbol
+
+	^ self selectedMethod isNil or: [ self isClassSearch ]
 ]
 
 { #category : #'text areas behavior' }
@@ -939,20 +815,11 @@ FinderUI >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 FinderUI >> sourceCode [
 
 	^ self selectedClass
-		ifNil: [
-			self isExamplesSymbol
-				ifTrue: [ self class methodFinderExplanation ]
-				ifFalse: [ self defaultExplanation]]
-		ifNotNil:[
-			self selectedMethod
-				ifNil: [
-					self buildDescriptionOf: self selectedClass]
-				ifNotNil:[
-					| selector |
-					selector := self isExamplesSymbol
-								ifTrue: [self selectedMethod selector]
-								ifFalse: [self selectedMethod].
-					(self selectedClass >> selector) sourceCode]]
+		  ifNil: [ self finder searchStrategy defaultExplanation ]
+		  ifNotNil: [ :class |
+			  self selectedMethod
+				  ifNil: [ self buildDescriptionOf: class ]
+				  ifNotNil: [ :method | self finder searchStrategy sourceCodeClass: class method: method ] ]
 ]
 
 { #category : #accessing }
@@ -999,7 +866,8 @@ FinderUI >> versionsButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> versionsButtonState [
-	^self selectedClass isNil | self isClassNamesSymbol
+
+	^ self selectedClass isNil or: [ self isClassSearch ]
 ]
 
 { #category : #'events handling' }

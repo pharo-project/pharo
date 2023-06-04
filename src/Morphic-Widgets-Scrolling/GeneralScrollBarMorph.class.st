@@ -10,6 +10,12 @@ Class {
 	#category : #'Morphic-Widgets-Scrolling'
 }
 
+{ #category : #'class initialization' }
+GeneralScrollBarMorph class >> initialize [
+
+	self deprecatedAliases: { #GeneralScrollBarMorph }
+]
+
 { #category : #initialization }
 GeneralScrollBarMorph >> initialize [
 	"Initialize the receiver."
