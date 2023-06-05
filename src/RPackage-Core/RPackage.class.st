@@ -847,17 +847,16 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 	^ sels includes: aSelector
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not]]
-]
-
 { #category : #testing }
 RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
+]
+
+{ #category : #'system compatibility' }
+RPackage >> includesProtocol: categoryName ofClass: aClass [
+
+	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
 ]
 
 { #category : #testing }
