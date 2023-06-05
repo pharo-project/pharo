@@ -137,7 +137,7 @@ Finder >> isClassSearch [
 { #category : #checkbox }
 Finder >> isPragmasSearch [
 
-	^ self searchStrategy isPragmaSearch
+	^ self searchStrategy isPragmasSearch
 ]
 
 { #category : #display }
