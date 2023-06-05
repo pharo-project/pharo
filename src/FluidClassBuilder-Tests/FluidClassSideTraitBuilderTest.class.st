@@ -3,10 +3,7 @@ This class contains tests for `FluidClassSideTraitBuilder`
 "
 Class {
 	#name : #FluidClassSideTraitBuilderTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'builder'
-	],
+	#superclass : #FluidClassBuilderAbstractTest,
 	#category : #'FluidClassBuilder-Tests-Base'
 }
 

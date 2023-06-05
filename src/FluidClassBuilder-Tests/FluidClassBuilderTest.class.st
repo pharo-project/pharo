@@ -3,33 +3,9 @@ This class contains tests for `FluidClassBuilder`
 "
 Class {
 	#name : #FluidClassBuilderTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'builder'
-	],
+	#superclass : #FluidClassBuilderAbstractTest,
 	#category : #'FluidClassBuilder-Tests-Base'
 }
-
-{ #category : #accessing }
-FluidClassBuilderTest >> builder [
-
-	^ builder
-]
-
-{ #category : #accessing }
-FluidClassBuilderTest >> packageNameForTest [
-
-	^ #FakedCore
-]
-
-{ #category : #'private - cleanup' }
-FluidClassBuilderTest >> removeTestArtifactsFromSystem [
-
-	self class environment
-		at: #MyClass
-		ifPresent: [ :p | p removeFromSystem: false ]
-		ifAbsent: [  ]
-]
 
 { #category : #running }
 FluidClassBuilderTest >> setUp [
@@ -39,14 +15,6 @@ FluidClassBuilderTest >> setUp [
 		           superclassToBuild: Object;
 		           nameToBuild: #Point33;
 		           package: 'FakedPackage'
-]
-
-{ #category : #running }
-FluidClassBuilderTest >> tearDown [
-
-	(Smalltalk organization packageNamed: self packageNameForTest ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
-
-	super tearDown
 ]
 
 { #category : #'tests - hidden protocols' }
@@ -186,6 +154,7 @@ FluidClassBuilderTest >> testBuilderWithTag [
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
+	"Next line is a hack because of the category mess of RPackage."
 	Smalltalk organization registerPackageNamed: self packageNameForTest.
 
 	instBuilder := (Object << #Point2)
@@ -457,8 +426,6 @@ FluidClassBuilderTest >> testFillShiftClassBuilder [
 FluidClassBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |
-	self removeTestArtifactsFromSystem.
-	[
 	builder := self class compilerClass new evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
@@ -479,7 +446,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	self assert: installedClass slots isEmpty.
 	self assert: installedClass traitComposition isEmpty.
 	self assert: installedClass classVariables isEmpty.
-	self assert: installedClass sharedPools isEmpty ] ensure: [ self removeTestArtifactsFromSystem ]
+	self assert: installedClass sharedPools isEmpty
 ]
 
 { #category : #'tests - classBuilder generation' }
