@@ -115,10 +115,9 @@ RPackageTag >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RPackageTag >> includesMethodCategory: aProtocol ofClass: aClass [
-	^ self package
-		includesMethodCategory: aProtocol
-		ofClass: aClass
+RPackageTag >> includesProtocol: aProtocol ofClass: aClass [
+
+	^ self package includesProtocol: aProtocol ofClass: aClass
 ]
 
 { #category : #testing }

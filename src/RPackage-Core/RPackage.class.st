@@ -306,7 +306,7 @@ RPackage >> basicImportClass: aClass [
 	aClass protocolNames do: [ :protocolName | (self isYourClassExtension: protocolName) ifTrue: [ aClass renameProtocol: protocolName as: Protocol unclassified ] ].
 	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :protocol | self importProtocol: protocol name forClass: aClass ]
+		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
 ]
 
 { #category : #'add method - selector' }
@@ -760,9 +760,11 @@ RPackage >> importPackage: anRPackage [
 
 { #category : #private }
 RPackage >> importProtocol: aProtocol forClass: aClass [
-	"import all the methods of a protocol as defined in the receiver."
+	"import all the local methods of a protocol as defined in the receiver."
 
-	(aClass methodsInProtocol: aProtocol) do: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ]
+	(aClass methodsInProtocol: aProtocol)
+		reject: [ :method | method isFromTrait ]
+		thenDo: [ :method | self addMethod: method ]
 ]
 
 { #category : #testing }
@@ -845,17 +847,16 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 	^ sels includes: aSelector
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not]]
-]
-
 { #category : #testing }
 RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
+]
+
+{ #category : #'system compatibility' }
+RPackage >> includesProtocol: categoryName ofClass: aClass [
+
+	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
 ]
 
 { #category : #testing }

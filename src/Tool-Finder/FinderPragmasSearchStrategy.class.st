@@ -48,6 +48,12 @@ FinderPragmasSearchStrategy >> findSelectedMethodIn: path [
 		  ifAbsent: [ nil ]
 ]
 
+{ #category : #testing }
+FinderPragmasSearchStrategy >> isPragmasSearch [
+
+	^ true
+]
+
 { #category : #actions }
 FinderPragmasSearchStrategy >> pragmaSearch [
 

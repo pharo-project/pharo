@@ -221,7 +221,7 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
 
 	| packageName |
-	packageName := ((Smalltalk organization packageForProtocol: aMethodInAnObsoleteBehavior protocol inClass: aMethodInAnObsoleteBehavior methodClass) ifNil: [
+	packageName := ((Smalltalk organization packageForProtocol: aMethodInAnObsoleteBehavior protocolName inClass: aMethodInAnObsoleteBehavior methodClass) ifNil: [
 		                aMethodInAnObsoleteBehavior methodClass package ]) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
@@ -229,7 +229,7 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 
 	self addEvent: (EpMethodRemoval method: (aMethodInAnObsoleteBehavior asEpiceaRingDefinition
 				  parentName: aMethodInAnObsoleteBehavior methodClass originalName;
-				  protocol: aMethodInAnObsoleteBehavior protocol;
+				  protocol: aMethodInAnObsoleteBehavior protocolName;
 				  package: packageName;
 				  yourself))
 ]
