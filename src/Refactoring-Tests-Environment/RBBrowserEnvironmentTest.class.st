@@ -341,7 +341,7 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 	self assert: orEnvironment classNames asSortedCollection equals: universalEnvironment classNames asSortedCollection.
 	self
 		assert: (orEnvironment protocolsFor: Object)
-		equals: ((universalEnvironment protocolsFor: Object) reject: [ :each | (Object allSelectorsInProtocol: each) isEmpty ])
+		equals: ((universalEnvironment protocolsFor: Object) reject: [ :protocolName | (Object allSelectorsInProtocol: protocolName) isEmpty ])
 ]
 
 { #category : #'tests - environments' }

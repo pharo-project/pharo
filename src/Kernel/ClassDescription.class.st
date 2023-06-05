@@ -135,11 +135,10 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> allSelectorsInProtocol: aName [
-	"Answer a list of all the methods of the receiver and all its
-	superclasses that are in the protocol named aName"
+ClassDescription >> allSelectorsInProtocol: protocol [
+	"Answer a list of all the method selectors of the receiver and all its superclasses that are in the protocol as parameter."
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: protocol ]
 ]
 
 { #category : #'pool variable' }
@@ -679,10 +678,10 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
-{ #category : #organization }
-ClassDescription >> methodsInProtocol: aString [
+{ #category : #protocols }
+ClassDescription >> methodsInProtocol: protocol [
 
-	^ (self selectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self selectorsInProtocol: protocol) collect: [ :selector | self compiledMethodAt: selector ]
 ]
 
 { #category : #'accessing - tags' }

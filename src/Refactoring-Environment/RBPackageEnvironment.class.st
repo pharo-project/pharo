@@ -127,7 +127,7 @@ RBPackageEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBPackageEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass) and: [ self packages anySatisfy: [ :package | package includesMethodCategory: aProtocol ofClass: aClass ] ]
+	^ (environment includesProtocol: aProtocol in: aClass) and: [ self packages anySatisfy: [ :package | package includesProtocol: aProtocol ofClass: aClass ] ]
 ]
 
 { #category : #testing }
