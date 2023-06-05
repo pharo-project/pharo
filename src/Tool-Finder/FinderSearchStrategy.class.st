@@ -94,6 +94,12 @@ FinderSearchStrategy >> isClassesSearch [
 	^ false
 ]
 
+{ #category : #testing }
+FinderSearchStrategy >> isPragmasSearch [
+
+	^ false
+]
+
 { #category : #actions }
 FinderSearchStrategy >> methodSearch: aSelectBlock [
 
