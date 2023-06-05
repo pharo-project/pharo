@@ -18,6 +18,12 @@ Class {
 	#category : #'Morphic-Base-Kernel'
 }
 
+{ #category : #'class initialization' }
+ModelMorph class >> initialize [
+
+	self deprecatedAliases: { #MorphicModel }
+]
+
 { #category : #settings }
 ModelMorph class >> keyboardFocusOnMouseDown [
 	^ KeyboardFocusOnMouseDown ifNil: [KeyboardFocusOnMouseDown := true]

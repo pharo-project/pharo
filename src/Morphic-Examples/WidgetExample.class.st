@@ -444,3 +444,9 @@ WidgetExample class >> exampleWindowWithToolbars [
 		themeChanged;
 		openInWorld
 ]
+
+{ #category : #'class initialization' }
+WidgetExample class >> initialize [
+
+	self deprecatedAliases: { #WidgetExamples }
+]

@@ -128,13 +128,13 @@ EpApplyTest >> testCategoryRenameWithExtension [
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 
-	self assert: (aClass >> #fortyTwo) protocol equals: '*' , anotherCategory.
+	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory.
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
 	self assert: inputEntry content class equals: EpCategoryRename.
-	self assert: (aClass >> #fortyTwo) protocol equals: '*' , aCategory.
+	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , aCategory.
 	self applyInputEntry.
-	self assert: (aClass >> #fortyTwo) protocol equals: '*' , anotherCategory
+	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory
 ]
 
 { #category : #tests }
@@ -275,7 +275,7 @@ EpApplyTest >> testMethodAdditionWithMethodRemoved [
 	self deny: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -286,11 +286,11 @@ EpApplyTest >> testMethodAdditionWithProtocolChanged [
 	aClass compile: 'fortyTwo ^42' classified: 'number'.
 	self setHeadAsInputEntry.
 
-	(aClass>>#fortyTwo) protocol: 'none'.
+	aClass >> #fortyTwo protocol: 'none'.
 
-	self assert: (aClass>>#fortyTwo) protocol equals: 'none'.
+	self assert: (aClass >> #fortyTwo) protocolName equals: 'none'.
 	self applyInputEntry.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass >> #fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -323,7 +323,7 @@ EpApplyTest >> testMethodModificationWithMethodRemoved [
 	self deny: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass >> #fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -348,7 +348,7 @@ EpApplyTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
@@ -363,10 +363,10 @@ EpApplyTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
 	self assert: (aClass hasProtocol: 'protocol').

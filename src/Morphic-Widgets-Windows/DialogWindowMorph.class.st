@@ -12,6 +12,12 @@ Class {
 	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
+{ #category : #'class initialization' }
+DialogWindowMorph class >> initialize [
+
+	self deprecatedAliases: { #DialogWindow }
+]
+
 { #category : #actions }
 DialogWindowMorph >> acceptTextMorphs [
 	"Accept any text morphs except for those that have no edits."

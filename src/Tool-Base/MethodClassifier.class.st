@@ -284,18 +284,13 @@ MethodClassifier >> protocolByKnownPrefix: aMethod [
 
 { #category : #'classification-rules' }
 MethodClassifier >> protocolByOtherImplementors: aMethod [
-	| protocolBag |
 
+	| protocolBag |
 	protocolBag := Bag new.
 
-	aMethod implementors
-		ifEmpty: [ ^ self ]
-		ifNotEmpty: [ :methods |
-			methods
-				do: [ :method |
-					((method protocol beginsWith: '*') or: [ method isClassified not ])
-						ifFalse: [ protocolBag add: method protocol ]]
-				without: aMethod ].
+	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :methods |
+		self flag: #CompileMethodProtocolMiration.
+		methods do: [ :method | ((method protocol beginsWith: '*') or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ] without: aMethod ].
 
 	protocolBag ifEmpty: [ ^ self ].
 	protocol := protocolBag sortedCounts first value
@@ -356,17 +351,16 @@ MethodClassifier >> suggestProtocolFor: aMethod [
 
 { #category : #classification }
 MethodClassifier >> superclassProtocol: aMethod [
+
 	| currentClass |
 	currentClass := aMethod methodClass.
 
 	[ currentClass superclass isNil ] whileFalse: [
 		currentClass := currentClass superclass.
-		(currentClass includesSelector: aMethod selector)
-			ifTrue: [
-				| possibleProtocol |
-				possibleProtocol := (currentClass >> aMethod selector) protocol.
-				((possibleProtocol beginsWith: '*') or:
-					(possibleProtocol asSymbol = currentClass package name))
-						ifFalse: [ ^ possibleProtocol ]]].
+		(currentClass includesSelector: aMethod selector) ifTrue: [
+			| possibleProtocol |
+			self flag: #CompileMethodProtocolMiration.
+			possibleProtocol := (currentClass >> aMethod selector) protocol.
+			((possibleProtocol beginsWith: '*') or: possibleProtocol asSymbol = currentClass package name) ifFalse: [ ^ possibleProtocol ] ] ].
 	^ nil
 ]

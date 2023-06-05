@@ -18,13 +18,14 @@ RGBehaviorTest >> testBadInstantiation [
 
 { #category : #tests }
 RGBehaviorTest >> testBehaviorWithMethodTags [
+
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
-	self assert: (newBehavior hasUnresolvedAll: #(superclass localMethods protocols)).
+	self assert: (newBehavior hasUnresolvedAll: #( superclass localMethods protocols )).
 	self assert: newBehavior methods isEmpty.
 
-	1 to: 10 do: [ :i | newBehavior addMethodTag: ('tag' , i asString) asSymbol ].
+	1 to: 10 do: [ :i | newBehavior addProtocol: ('tag' , i asString) asSymbol ].
 
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 
@@ -39,13 +40,14 @@ RGBehaviorTest >> testBehaviorWithMethodTags [
 
 { #category : #tests }
 RGBehaviorTest >> testBehaviorWithProtocols [
+
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
-	self assert: (newBehavior hasUnresolvedAll: #(superclass localMethods protocols)).
+	self assert: (newBehavior hasUnresolvedAll: #( superclass localMethods protocols )).
 	self assert: newBehavior methods isEmpty.
 
-	1 to: 10 do: [ :i | newBehavior addMethodTag: ('tag' , i asString) asSymbol ].
+	1 to: 10 do: [ :i | newBehavior addProtocol: ('tag' , i asString) asSymbol ].
 
 	self assert: (newBehavior protocols allSatisfy: #isSymbol).
 

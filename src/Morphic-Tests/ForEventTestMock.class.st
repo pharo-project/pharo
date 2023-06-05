@@ -13,6 +13,12 @@ Class {
 	#category : #'Morphic-Tests-Event'
 }
 
+{ #category : #'class initialization' }
+ForEventTestMock class >> initialize [
+
+	self deprecatedAliases: { #MockObjectForEventTests }
+]
+
 { #category : #accessing }
 ForEventTestMock >> counter [
 	^ counter

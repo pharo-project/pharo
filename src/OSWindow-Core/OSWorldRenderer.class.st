@@ -105,6 +105,18 @@ OSWorldRenderer >> deactivate [
 	display := nil
 ]
 
+{ #category : #accessing }
+OSWorldRenderer >> defaultWindowIcon [
+
+	^ self iconNamed: #pharoBig
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> defaultWindowTitle [
+
+	^ Smalltalk image imageFile fullName
+]
+
 { #category : #operations }
 OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
@@ -113,26 +125,31 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
 { #category : #private }
 OSWorldRenderer >> doActivate [
-	| attributes initialExtent |
 
-	initialExtent := world worldState realWindowExtent ifNil: [ self class defaultExtent ].
+	| attributes initialExtent |
+	initialExtent := world worldState realWindowExtent ifNil: [
+		                 self class defaultExtent ].
 
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: initialExtent;
-		title: Smalltalk image imageFile fullName;
-		windowCentered:true;
-		icon: (self iconNamed: #pharoBig).
+		title: self defaultWindowTitle;
+		windowCentered: true;
+		icon: self defaultWindowIcon.
 
 	display := Form extent: initialExtent depth: 32.
 	world extent: initialExtent.
 
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
+	osWindow := OSWindow
+		            createWithAttributes: attributes
+		            eventHandler: (OSWindowMorphicEventHandler for: world).
 
 	driver afterMainPharoWindowCreated: osWindow.
-	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
+	driver
+		afterSetWindowTitle: self defaultWindowTitle
+		onWindow: osWindow.
 	driver startUp: true.
 
 	world worldState doFullRepaint.

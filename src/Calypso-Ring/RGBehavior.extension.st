@@ -20,12 +20,9 @@ RGBehavior >> canUnderstand: selector [
 { #category : #'*Calypso-Ring' }
 RGBehavior >> categoryOfElement: aSymbol ifAbsent: aBlockClosure [
 
-	| aMethod |
-
-	aMethod := (self localMethodNamed: aSymbol ifAbsent: nil).
-	^ aMethod
-		ifNotNil: [ aMethod protocol ]
-		ifNil: aBlockClosure
+	^ (self localMethodNamed: aSymbol ifAbsent: nil)
+		  ifNotNil: [ :method | method protocol ]
+		  ifNil: aBlockClosure
 ]
 
 { #category : #'*Calypso-Ring' }

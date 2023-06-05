@@ -248,9 +248,9 @@ EpRevertTest >> testMethodModificationWithProtocolChanged [
 
 	(aClass>>#fortyTwo) protocol: 'three'.
 
-	self assert: (aClass>>#fortyTwo) protocol equals: 'three'.
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'three'.
 	self revertInputEntry.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'one'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'one'
 ]
 
 { #category : #tests }
@@ -267,7 +267,7 @@ EpRevertTest >> testMethodRemoval [
 	self revertInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -286,7 +286,7 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 	self revertInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -294,7 +294,7 @@ EpRevertTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
@@ -308,7 +308,7 @@ EpRevertTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocol: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 

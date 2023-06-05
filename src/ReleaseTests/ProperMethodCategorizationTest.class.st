@@ -13,8 +13,8 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 	| violating |
 	violating := OrderedCollection new.
 	aClass allSubclassesDo: [:cls | cls methods do: [:method |
-			(method selector = selector and: [ method protocol ~= protocol ])
-				ifTrue: [ violating add: method -> method protocol ] ] ].
+			(method selector = selector and: [ method protocolName ~= protocol ])
+				ifTrue: [ violating add: method -> method protocolName ] ] ].
 	self
 		assert: violating isEmpty
 		description: ('Violations: {1}.
@@ -28,15 +28,15 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 
 	| violating |
 	violating := OrderedCollection new.
-	aClass allSubclassesDo: [:cls | cls methods do: [:method |
-			(method selector = selector
-				and: [ (protocols includes: method protocol) not ])
-					ifTrue: [ violating add: method -> method protocol ] ] ].
-	self
-		assert: violating isEmpty
-		description: ('Violations are: {1}.
-		Reason: {2} subclasses should have #{3} in protocols: {4}'
-			format: { self explanationFrom: violating . aClass asString. selector. protocols })
+	aClass allSubclassesDo: [ :cls |
+		cls methods do: [ :method |
+			(method selector = selector and: [ (protocols includes: method protocolName) not ]) ifTrue: [ violating add: method -> method protocolName ] ] ].
+	self assert: violating isEmpty description: ('Violations are: {1}.
+		Reason: {2} subclasses should have #{3} in protocols: {4}' format: {
+				 (self explanationFrom: violating).
+				 aClass asString.
+				 selector.
+				 protocols })
 ]
 
 { #category : #utilities }
@@ -66,7 +66,7 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 		cls methods do: [:method | 
 			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
 				ifTrue: [ classSideInitializeMethods add: method ]]].
-	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
+	violating := classSideInitializeMethods select: [:m | m protocolName ~= #'class initialization' ].
 
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
@@ -127,7 +127,7 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 				instanceSideInitializeMethods add: method ] ] ].
 
 	"NSLnScale is an external project and is the last failure of this test."
-	violating := instanceSideInitializeMethods select: [ :m | m protocol ~= #initialization and: [ (m methodClass name = 'NSLnScale') not ] ].
+	violating := instanceSideInitializeMethods select: [ :m | m protocolName ~= #initialization and: [ (m methodClass name = 'NSLnScale') not ] ].
 
 	self assert: violating isEmpty description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]
