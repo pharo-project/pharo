@@ -4,7 +4,7 @@ A FinderNode is an abstract class used by the tree of FinderUI
 Class {
 	#name : #FinderNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : #'Tool-Finder-Tree'
+	#category : #'Tool-Finder-UI'
 }
 
 { #category : #'event handling' }

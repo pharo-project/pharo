@@ -115,12 +115,6 @@ FinderSearchStrategy >> methodSearch: aSelectBlock [
 ]
 
 { #category : #accessing }
-FinderSearchStrategy >> rootNodeClassForResult: aCollection [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 FinderSearchStrategy >> sourceCodeClass: class method: method [
 
 	^ (class >> method) sourceCode
