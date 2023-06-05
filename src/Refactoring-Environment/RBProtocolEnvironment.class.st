@@ -101,8 +101,8 @@ RBProtocolEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBProtocolEnvironment >> includesProtocol: aProtocol in: aClass [
-	^aClass == class and: [(super includesProtocol: aProtocol in: aClass)
-			and: [protocols includes: aProtocol]]
+
+	^ aClass == class and: [ (super includesProtocol: aProtocol in: aClass) and: [ protocols includes: aProtocol ] ]
 ]
 
 { #category : #testing }

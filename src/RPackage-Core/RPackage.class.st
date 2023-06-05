@@ -839,9 +839,9 @@ RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> includesProtocol: categoryName ofClass: aClass [
+RPackage >> includesProtocol: protocol ofClass: aClass [
 
-	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
+	^ (self isYourClassExtension: protocol) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
 ]
 
 { #category : #testing }
@@ -906,8 +906,11 @@ RPackage >> isEmpty [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> isForeignClassExtension: categoryName [
-	^ categoryName first = $* and: [(self isYourClassExtension: categoryName) not]
+RPackage >> isForeignClassExtension: protocol [
+
+	protocol ifNil: [ ^ false ].
+
+	^ protocol isExtensionProtocol and: [ (self isYourClassExtension: protocol) not ]
 ]
 
 { #category : #testing }
@@ -924,9 +927,11 @@ RPackage >> isTestPackage [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> isYourClassExtension: protocolName [
+RPackage >> isYourClassExtension: protocol [
 
-	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
+	protocol ifNil: [ ^ false ].
+
+	^ protocol name asLowercase isCategoryOf: self methodCategoryPrefix
 ]
 
 { #category : #queries }

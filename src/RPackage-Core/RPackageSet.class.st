@@ -134,9 +134,9 @@ RPackageSet >> includesClass: aClass [
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> includesProtocol: categoryName ofClass: aClass [
+RPackageSet >> includesProtocol: protocol ofClass: aClass [
 
-	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
+	^ (self isYourClassExtension: protocol) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
 ]
 
 { #category : #'system compatibility' }
@@ -155,14 +155,19 @@ RPackageSet >> initialize: aString [
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isForeignClassExtension: categoryName [
-	^ categoryName first = $* and: [(self isYourClassExtension: categoryName) not]
+RPackageSet >> isForeignClassExtension: protocol [
+
+	protocol ifNil: [ ^ false ].
+
+	^ protocol isExtensionProtocol and: [ (self isYourClassExtension: protocol) not ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isYourClassExtension: protocolName [
+RPackageSet >> isYourClassExtension: protocol [
 
-	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
+	protocol ifNil: [ ^ false ].
+
+	^ protocol name asLowercase isCategoryOf: self methodCategoryPrefix
 ]
 
 { #category : #'system compatibility' }

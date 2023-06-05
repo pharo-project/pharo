@@ -648,7 +648,7 @@ RBBrowserEnvironment >> problemCount [
 { #category : #accessing }
 RBBrowserEnvironment >> protocolsFor: aClass [
 
-	^ aClass protocolNames select: [ :protocolName | self includesProtocol: protocolName in: aClass ]
+	^ aClass protocols select: [ :protocol | self includesProtocol: protocol in: aClass ]
 ]
 
 { #category : #queries }
@@ -774,7 +774,7 @@ RBBrowserEnvironment >> selectorsDo: aBlock [
 { #category : #accessing }
 RBBrowserEnvironment >> selectorsFor: aProtocol in: aClass [
 
-	^ (aClass selectorsInProtocol: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
+	^ (aClass selectorsInProtocol: aProtocol) select: [ :selector | self includesSelector: selector in: aClass ]
 ]
 
 { #category : #accessing }
