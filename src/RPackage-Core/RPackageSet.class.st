@@ -125,7 +125,7 @@ RPackageSet >> extensionMethods [
 { #category : #'system compatibility' }
 RPackageSet >> extensionProtocolsForClass: aClass [
 
-	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol name ]
+	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]
 ]
 
 { #category : #testing }
