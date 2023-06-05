@@ -207,7 +207,7 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 	| events event |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42' classified: 'old'.
-	(aClass>>#fortyTwo) protocol: 'new'.
+	aClass >> #fortyTwo protocol: 'new'.
 
 	events := self allLogEventsWith: EpMethodModification.
 	self assert: events size equals: 1.

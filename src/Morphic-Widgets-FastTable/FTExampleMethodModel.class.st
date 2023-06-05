@@ -57,5 +57,5 @@ FTExampleMethodModel >> origin [
 
 { #category : #accessing }
 FTExampleMethodModel >> protocol [
-	^ self method protocol
+	^ self method protocolName
 ]

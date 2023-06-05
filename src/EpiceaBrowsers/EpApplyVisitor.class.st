@@ -94,10 +94,7 @@ EpApplyVisitor >> visitMethodAddition: aMethodCreated [
 
 	self
 		behaviorNamed: aMethodCreated behaviorAffectedName
-		ifPresent: [ :behavior |
-			behavior
-				compile: aMethodCreated sourceCode
-				classified: aMethodCreated protocol ]
+		ifPresent: [ :behavior | behavior compile: aMethodCreated sourceCode classified: aMethodCreated protocol ]
 ]
 
 { #category : #visitor }
@@ -128,10 +125,8 @@ EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
 
 { #category : #visitor }
 EpApplyVisitor >> visitProtocolRemoval: aProtocolRemoved [
-	self
-		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior |
-			behavior removeProtocol: aProtocolRemoved protocol ]
+
+	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior | behavior removeProtocol: aProtocolRemoved protocol ]
 ]
 
 { #category : #visitor }
