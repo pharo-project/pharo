@@ -559,14 +559,15 @@ OpalCompiler >> install [
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
 
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+
 	logSource ifTrue: [
+		"For the log we do not use `protocol` because in case it is nil, we keep the current classification or we classify under uncategorize in the method is not present in a protocol yet. So we ask to the method its protocol after classifying it."
 		class
 			logMethodSource: source
 			forMethod: method
-			inProtocol: protocol
+			inProtocol: (class protocolOfSelector: method selector) "This should just be `method protocol` when it will return a real protocol and not a name."
 			withStamp: changeStamp ].
-
-	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 
