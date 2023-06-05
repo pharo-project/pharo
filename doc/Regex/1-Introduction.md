@@ -8,7 +8,7 @@ expressions can greatly simplify and speed up development of such
 code.  As an example, here is how to verify that a string is a valid
 hexadecimal number in smalltalk notation, using this matcher package:
 
-```
+```st
 	astring matchesregex: '16r[[:xdigit:]]+'
 ```
 

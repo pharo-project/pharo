@@ -46,7 +46,8 @@ ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody: aBoolean [
 { #category : #'class initialization' }
 ReCompactSourceCodeRule class >> initialize [
 
-	CriticizeFinalDotInMethodBody := true
+	CriticizeFinalDotInMethodBody := true.
+	self enabled: false
 ]
 
 { #category : #running }

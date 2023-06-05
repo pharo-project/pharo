@@ -17,19 +17,6 @@ Class {
 	#category : #'Kernel-Classes'
 }
 
-{ #category : #cleanup }
-Behavior class >> cleanUp [
-	"Flush the obsolete subclasses."
-
-	self flushObsoleteSubclasses
-]
-
-{ #category : #'class initialization' }
-Behavior class >> flushObsoleteSubclasses [
-	"Behavior flushObsoleteSubclasses"
-	ObsoleteSubclasses finalizeValues
-]
-
 { #category : #'class initialization' }
 Behavior class >> initialize [
 	"Behavior initialize"
@@ -37,15 +24,13 @@ Behavior class >> initialize [
 	ObsoleteSubclasses
 		ifNil: [ self initializeObsoleteSubclasses ]
 		ifNotNil: [ | newDict |
-			newDict := WeakKeyToCollectionDictionary newFrom: ObsoleteSubclasses.
-			newDict rehash.
+			newDict := WeakIdentityKeyDictionary newFrom: ObsoleteSubclasses.
 			ObsoleteSubclasses := newDict ].
 
 	ClassProperties
 		ifNil: [ self initializeClassProperties ]
 		ifNotNil: [ | newDict |
 			newDict := WeakIdentityKeyDictionary newFrom: ClassProperties.
-			newDict rehash.
 			ClassProperties := newDict ]
 ]
 
@@ -56,7 +41,7 @@ Behavior class >> initializeClassProperties [
 
 { #category : #'class initialization' }
 Behavior class >> initializeObsoleteSubclasses [
-	ObsoleteSubclasses := WeakKeyToCollectionDictionary new
+	ObsoleteSubclasses := WeakIdentityKeyDictionary new
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -71,13 +56,12 @@ Behavior >> >> selector [
 { #category : #'obsolete subclasses' }
 Behavior >> addObsoleteSubclass: aClass [
 	"Weakly remember that aClass was a subclass of the receiver and is now obsolete"
-	| obs |
 
-	obs := self basicObsoleteSubclasses at: self ifAbsent:[WeakArray new].
-	(obs includes: aClass) ifTrue:[^self].
-	obs := obs copyWithout: nil.
-	obs := obs copyWith: aClass.
-	self basicObsoleteSubclasses at: self put: obs
+	| obsoleteSubclasses |
+	obsoleteSubclasses := self basicObsoleteSubclasses
+		                      at: self
+		                      ifAbsent: [ WeakSet new ].
+	obsoleteSubclasses add: aClass
 ]
 
 { #category : #'adding-removing methods' }
@@ -489,11 +473,7 @@ Behavior >> classAndMethodFor: aSymbol do: binaryBlock ifAbsent: absentBlock [
 	with the class that defines the selector and the associated method. Otherwise
 	absentBlock is evaluated."
 
-
-	self withAllSuperclassesDo: [:class | | method |
-		method := class compiledMethodAt: aSymbol ifAbsent: [nil].
-		method ifNotNil: [^ binaryBlock value: class value: method].
-	].
+	self withAllSuperclassesDo: [ :class | class compiledMethodAt: aSymbol ifPresent: [ :method | ^ binaryBlock value: class value: method ] ].
 	^ absentBlock value
 ]
 
@@ -777,6 +757,11 @@ Behavior >> hasAbstractMethods [
 
 	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
 	^false
+]
+
+{ #category : #binding }
+Behavior >> hasBindingOf: aString [
+	^ (self bindingOf: aString) notNil
 ]
 
 { #category : #'testing - method dictionary' }
@@ -1168,6 +1153,14 @@ Behavior >> lookupSelector: selector [
 	^ nil
 ]
 
+{ #category : #lookup }
+Behavior >> lookupVar: aName [
+	^ self classLayout
+		resolveSlot: aName asSymbol
+		ifFound: [:var | var]
+		ifNone: [self bindingOf: aName]
+]
+
 { #category : #accessing }
 Behavior >> methodDict [
        "The method dictionary of a class can be nil when we want to use the #cannotInterpret: hook. Indeed when a class dictionary is nil, the VM sends the message cannotInterpret: to the receiver but starting the look up in the superclass of the class whose method dictionary was nil.
@@ -1266,9 +1259,8 @@ Behavior >> obsolete [
 { #category : #'obsolete subclasses' }
 Behavior >> obsoleteSubclasses [
 	"Return all the weakly remembered obsolete subclasses of the receiver"
-	| obs |
-	obs := self basicObsoleteSubclasses at: self ifAbsent: [^ #()].
-	^ obs copyWithout: nil
+
+	^ self basicObsoleteSubclasses at: self ifAbsent: [ #(  ) ]
 ]
 
 { #category : #initialization }
@@ -1341,7 +1333,8 @@ Behavior >> realClass [
 { #category : #'obsolete subclasses' }
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
-	self basicObsoleteSubclasses removeKey: self ifAbsent: []
+
+	self basicObsoleteSubclasses removeKey: self ifAbsent: [  ]
 ]
 
 { #category : #'accessing - properties' }
@@ -1518,29 +1511,6 @@ Behavior >> sourceCodeTemplate [
 
 	| temporary variable names |
 	statements'
-]
-
-{ #category : #testing }
-Behavior >> sourceMatchesBytecodeAt: selector [
-	"Answers true if the source code at the selector compiles to the bytecode at the selector, and false
-	otherwise. Implemented to detect an error where Monticello did not recompile sources when the class
-	shape changed"
-
-	"This code was copied from #recompile:from:, with few changes. Several methods would benefit from a
-	method which turned a selector and class into a CompiledMethod, without  installing it into the
-	methodDictionary"
-
-	| method newMethod |
-
-	method := self compiledMethodAt: selector.
-	newMethod := self compiler
-			source: (self sourceCodeAt: selector);
-			class: self;
-			failBlock: [^ false];
-			compiledMethodTrailer: method trailer;
-			compile.   "Assume OK after proceed from SyntaxError"
-	selector == newMethod selector ifFalse: [self error: 'selector changed!!'].
-	^ newMethod = method
 ]
 
 { #category : #private }

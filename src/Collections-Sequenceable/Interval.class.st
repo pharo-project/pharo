@@ -378,12 +378,6 @@ Interval >> setFrom: startInteger to: stopInteger by: stepInteger [
 	step isZero ifTrue: [ ^ DomainError signal: 'Zero size steps not allowed' ]
 ]
 
-{ #category : #copying }
-Interval >> shuffled [
-	"Return an array that contains my elements shuffled in a random order"
-	^ self asArray shuffle
-]
-
 { #category : #accessing }
 Interval >> size [
 	"Answer how many elements the receiver contains."

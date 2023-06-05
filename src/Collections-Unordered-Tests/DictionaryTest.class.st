@@ -265,7 +265,7 @@ DictionaryTest >> otherDictionaryClasses [
 	"(DictionaryTest withAllSubclasses collect: [:each | each new classToBeTested]) asArray"
 	^ {SmallDictionary. IdentityDictionary. PluggableDictionary.
 		WeakValueDictionary. SystemDictionary. WeakKeyDictionary. SmallIdentityDictionary.
-		WeakIdentityKeyDictionary. WeakKeyToCollectionDictionary. Dictionary}
+		WeakIdentityKeyDictionary. Dictionary}
 			reject: [:each | each new species == self classToBeTested new species]
 ]
 
@@ -443,7 +443,7 @@ DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 	{(dict -> Dictionary).
 	(dict class -> Dictionary class)}
 		do: [ :assoc |
-			assoc value protocols
+			assoc value protocolNames
 				reject: [ :protocol |
 					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
 						anySatisfy: [ :each | protocol asString beginsWith: each ] ]
@@ -752,8 +752,9 @@ DictionaryTest >> testStoreOnWithNegativeInteger [
 
 { #category : #requirements }
 DictionaryTest >> valueNotIn [
-" return a value not included in nonEmpty "
-^valueNotIn
+	" return a value not included in nonEmpty "
+
+	^ valueNotIn
 ]
 
 { #category : #requirements }

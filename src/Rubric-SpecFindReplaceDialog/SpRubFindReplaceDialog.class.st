@@ -15,7 +15,7 @@ Class {
 		'entireCheckBox',
 		'replaceButton',
 		'replaceAllButton',
-		'cancelButton',
+		'closeButton',
 		'replaceTextInput',
 		'replaceLabel'
 	],
@@ -54,20 +54,17 @@ SpRubFindReplaceDialog class >> defaultLayout [
 
 { #category : #'morphic dependencies' }
 SpRubFindReplaceDialog >> assignEnterKeystrokeEventFor: aPresenter [
-
 	"Morphic dependent!"
 
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann |
-		self find ] ]
+	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann | self find ] for: self ]
 ]
 
 { #category : #'morphic dependencies' }
 SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
-
 	"Morphic dependent!"
 
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubKeystroke do: [ :ann |
-		ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] ]
+	aPresenter whenBuiltDo: [ :this |
+		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
 ]
 
 { #category : #operations }
@@ -105,7 +102,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 			self replace ].
 	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter |
 			self replaceAll ].
-	cancelButton := aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
+	closeButton := aDialogWindowPresenter addButton: 'Close' do: [ :presenter |
 			presenter triggerCancelAction.
 			presenter close ].
 
@@ -113,7 +110,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 		add: findButton;
 		add: replaceButton;
 		add: replaceAllButton;
-		add: cancelButton.
+		add: closeButton.
 
 	aDialogWindowPresenter
 		title: self title;

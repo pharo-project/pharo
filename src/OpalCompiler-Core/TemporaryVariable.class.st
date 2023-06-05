@@ -15,7 +15,7 @@ TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 { #category : #queries }
 TemporaryVariable >> definingNode [
 	^ scope node temporaries
-		detect: [ :each | each name = name ]
+		detect: [ :each | each variable == self ]
 		ifNone: [ nil ]
 ]
 

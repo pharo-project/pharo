@@ -131,14 +131,14 @@ ZnCharacterEncoder >> asZnCharacterEncoder [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> backOnStream: stream [
 	"Move back one character on stream, assuming stream understands #back"
 
 	self subclassResponsibility
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnCharacterEncoder >> beLenient [
 	"Don't be strict, which is the default"
 ]
@@ -182,7 +182,7 @@ ZnCharacterEncoder >> encodeString: string [
 		self next: string size putAll: string startingAt: 1 toStream: stream ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> encodedByteCountFor: character [
 	"Return how many bytes are needed to encode character"
 
@@ -191,7 +191,7 @@ ZnCharacterEncoder >> encodedByteCountFor: character [
 	^ self encodedByteCountForCodePoint: character asInteger
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
@@ -216,6 +216,15 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 		inject: 0
 		into: [ :sum :each |
 			sum + (self encodedByteCountFor: each) ]
+]
+
+{ #category : #'encoding - decoding' }
+ZnCharacterEncoder >> ensureAtBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further backwards. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	self subclassResponsibility
 ]
 
 { #category : #'error handling' }
@@ -243,6 +252,20 @@ ZnCharacterEncoder >> identifier [
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+ZnCharacterEncoder >> isFixedLength [
+	"Return true when I am a fixed length encoding"
+
+	^ true
+]
+
+{ #category : #testing }
+ZnCharacterEncoder >> isVariableLength [
+	"Return true when I am a variable length encoding"
+
+	^ self isFixedLength not
+]
+
 { #category : #convenience }
 ZnCharacterEncoder >> next: count putAll: string startingAt: offset toStream: stream [
 	"Write count characters from string starting at offset to stream."
@@ -251,14 +274,14 @@ ZnCharacterEncoder >> next: count putAll: string startingAt: offset toStream: st
 		self nextPut: (string at: index) toStream: stream ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> nextFromStream: stream [
 	"Read and return the next character from stream"
 
@@ -267,7 +290,7 @@ ZnCharacterEncoder >> nextFromStream: stream [
 	^ Character value: (self nextCodePointFromStream: stream)
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> nextPut: character toStream: stream [
 	"Write the encoding for character to stream"
 
@@ -276,7 +299,7 @@ ZnCharacterEncoder >> nextPut: character toStream: stream [
 	self nextPutCodePoint: character asInteger toStream: stream
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnCharacterEncoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for Integer code point to stream"
 
@@ -292,4 +315,13 @@ ZnCharacterEncoder >> readInto: string startingAt: offset count: requestedCount 
 		stream atEnd ifTrue: [ ^ index - offset ].
 		string at: index put: (self nextFromStream: stream) ].
 	^ requestedCount
+]
+
+{ #category : #'encoding - decoding' }
+ZnCharacterEncoder >> skipToBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further forward. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	self subclassResponsibility
 ]

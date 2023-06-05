@@ -122,7 +122,9 @@ ScrollBarMorph class >> cleanUp [
 { #category : #'class initialization' }
 ScrollBarMorph class >> initialize [
 
-	self initializeImagesCache
+	self initializeImagesCache.
+
+	self deprecatedAliases: { #ScrollBar }
 ]
 
 { #category : #'private - initialization' }

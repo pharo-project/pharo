@@ -17,20 +17,11 @@ Class {
 		'errorMessage',
 		'value',
 		'start',
-		'stop'
+		'stop',
+		'errorPosition'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
-
-{ #category : #'instance creation' }
-RBParseErrorNode class >> errorMessage: aString value: aValue at: aPosition [
-
-	^ self new
-		errorMessage: aString;
-		value: aValue;
-		start: aPosition;
-		yourself
-]
 
 { #category : #comparing }
 RBParseErrorNode >> = anObject [
@@ -71,9 +62,35 @@ RBParseErrorNode >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
+{ #category : #accessing }
+RBParseErrorNode >> errorPosition [
+
+	^ errorPosition
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> errorPosition: anObject [
+
+	errorPosition := anObject
+]
+
+{ #category : #testing }
+RBParseErrorNode >> hasTemporaries [
+
+	^ false
+]
+
 { #category : #comparing }
 RBParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
+]
+
+{ #category : #initialization }
+RBParseErrorNode >> initialize [
+
+	super initialize.
+	"Add its own notice"
+	self addNotice: (RBSyntaxErrorNotice new)
 ]
 
 { #category : #errors }
@@ -127,12 +144,9 @@ RBParseErrorNode >> source: aString [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> start [
-	^ start
-]
-
-{ #category : #accessing }
 RBParseErrorNode >> start: aPosition [
+	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+
 	start := aPosition
 ]
 
@@ -142,20 +156,23 @@ RBParseErrorNode >> startWithoutParentheses [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> stop [
+RBParseErrorNode >> stop: aStopPosition [
+	"Beware, stop is in fact `stopWithoutParentheses` as in RBValueNode, stop includes parentheses"
+
+	stop := aStopPosition
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> stopWithoutParentheses [
 	^ stop
 		ifNil: [start + value size - 1]
 		ifNotNil: [ stop ]
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> stop: aStopPosition [
-	stop := aStopPosition
-]
+RBParseErrorNode >> temporaries [
 
-{ #category : #accessing }
-RBParseErrorNode >> stopWithoutParentheses [
-	^ self stop
+	^ #()
 ]
 
 { #category : #evaluating }

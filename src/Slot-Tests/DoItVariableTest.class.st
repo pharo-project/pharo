@@ -43,10 +43,9 @@ DoItVariableTest >> testDoItCompilation [
 	| temp var doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	doIt := thisContext class compiler
+	doIt := thisContext compiler
 		source: 'temp + 2';
-		context: thisContext;
-		noPattern: true;
+		isScripting: true;
 		bindings: { var };
 		compile.
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
@@ -85,11 +84,9 @@ DoItVariableTest >> testReadCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
@@ -119,11 +116,9 @@ DoItVariableTest >> testWriteCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 	doIt valueWithReceiver: self arguments: #().
 
 	self assert: temp equals: 500

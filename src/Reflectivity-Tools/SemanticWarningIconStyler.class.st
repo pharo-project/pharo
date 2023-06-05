@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+SemanticWarningIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 SemanticWarningIconStyler >> highlightColor [
 	^(Color yellow alpha: 0.3)
@@ -19,10 +25,12 @@ SemanticWarningIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 SemanticWarningIconStyler >> iconLabel: aNode [
-	^'Semantic warning: ', (aNode propertyAt: #semanticWarning) asString
+
+	self flag: 'What if more than one warning?'.
+	^ aNode warningNotices first messageText
 ]
 
 { #category : #testing }
 SemanticWarningIconStyler >> shouldStyleNode: aNode [
-	^aNode hasProperty: #semanticWarning
+	^aNode warningNotices isNotEmpty
 ]

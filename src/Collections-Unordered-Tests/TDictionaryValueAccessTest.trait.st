@@ -15,11 +15,12 @@ TDictionaryValueAccessTest >> keyNotIn [
 { #category : #requirements }
 TDictionaryValueAccessTest >> nonEmpty [
 
-^ self explicitRequirement
+	^ self explicitRequirement
 ]
 
 { #category : #requirements }
 TDictionaryValueAccessTest >> supportsNilKey [
+
 	^ true
 ]
 
@@ -225,5 +226,6 @@ TDictionaryValueAccessTest >> testAtPutNil [
 
 { #category : #requirements }
 TDictionaryValueAccessTest >> valueNotIn [
+
 	self explicitRequirement
 ]

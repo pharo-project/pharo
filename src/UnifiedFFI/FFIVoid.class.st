@@ -60,9 +60,14 @@ FFIVoid >> emitPointerReturn: aBuilder resultTempVar: resultVar context: aContex
 ]
 
 { #category : #'emitting code' }
-FFIVoid >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
-	self isPointer
-		ifTrue: [ ^ super emitReturn: aBuilder resultTempVar: resultVar context: aContext ].
+FFIVoid >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
+	self isPointer ifTrue: [
+		aCallout shouldAutoReleaseReturnedValue ifTrue: [
+			aBuilder
+				pushDup;
+				send: #autoRelease;
+				popTop ].
+		^ aBuilder returnTop ].
 	^ self emitSelfReturn: aBuilder
 ]
 

@@ -11,7 +11,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'packages',
-		'classMapping'
+		'classMapping',
+		'shouldComputeMessageSendDependencies'
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }
@@ -239,7 +240,8 @@ DAPackageRelationGraph >> computeStaticDependencies: aPackage [
 	self addReferenceDependencies: aPackage.
 	self addPoolDictionaryDependencies: aPackage.
 	self addTraitDependencies: aPackage.
-	self addMessageSendDependencies: aPackage
+	self shouldComputeMessageSendDependencies 
+		ifTrue: [ self addMessageSendDependencies: aPackage ]
 ]
 
 { #category : #accessing }
@@ -455,6 +457,18 @@ DAPackageRelationGraph >> seenPackagesWithoutExtension [
 ]
 
 { #category : #accessing }
+DAPackageRelationGraph >> shouldComputeMessageSendDependencies [
+
+	^ shouldComputeMessageSendDependencies ifNil: [ true ]
+]
+
+{ #category : #accessing }
+DAPackageRelationGraph >> shouldComputeMessageSendDependencies: aBoolean [
+
+	shouldComputeMessageSendDependencies := aBoolean
+]
+
+{ #category : #accessing }
 DAPackageRelationGraph >> successors: aPackage [
 	"answer a collection with the successors of aPackage in the graph"
 
@@ -469,11 +483,12 @@ DAPackageRelationGraph >> successors: aPackage [
 
 { #category : #queries }
 DAPackageRelationGraph >> systemPackageContaining: aClass [
+
 	| packageName |
-	packageName := (RPackageOrganizer default packageOf: aClass) packageName.
+	packageName := (Smalltalk organization packageOf: aClass) packageName.
 	^ packageName
-		ifNil: [ self error: 'Package for ' , aClass name , ' not found.' ]
-		ifNotNil: [ DAPackage on: (RPackageSet named: packageName asString) ]
+		  ifNil: [ self error: 'Package for ' , aClass name , ' not found.' ]
+		  ifNotNil: [ DAPackage on: (RPackageSet named: packageName asString) ]
 ]
 
 { #category : #computing }

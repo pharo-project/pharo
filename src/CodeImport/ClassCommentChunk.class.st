@@ -40,7 +40,7 @@ ClassCommentChunk >> importFor: aRequestor logSource: logSource [
 		ifFalse: [ self error: ('Cannot install comment in unexistent behavior {1}' format: { behaviorName asString } ) ].
 
 	^self targetClass instanceSide
-						classComment: contents
+						comment: contents
 						stamp: stamp
 ]
 

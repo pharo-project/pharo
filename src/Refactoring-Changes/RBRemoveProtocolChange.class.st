@@ -31,7 +31,7 @@ RBRemoveProtocolChange >> changeString [
 { #category : #private }
 RBRemoveProtocolChange >> primitiveExecute [
 
-	self changeClass organization removeProtocol: ( self changeClass organization protocolNamed: protocol )
+	self changeClass removeProtocolIfEmpty: protocol
 ]
 
 { #category : #printing }

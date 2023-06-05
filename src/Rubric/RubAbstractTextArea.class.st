@@ -1236,7 +1236,6 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 			self showOverEditableTextCursor ]
 		ifFalse: [
 			self hasFocus: false.
-			self requestStopTextEditing.
 			editing = true ifTrue: [ editing := false ].
 			self hideOverEditableTextCursor ].
 	super keyboardFocusChange: aBoolean
@@ -1438,24 +1437,24 @@ RubAbstractTextArea >> mouseLeave: evt [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> mouseMove: evt [
-
+	
    self paragraph move: evt for: model controller: self editor.
 	evt redButtonPressed ifFalse: [ ^ self ].
 	
 	hasDragDoubleClick ifNil: [ hasDragDoubleClick := false ].
 	hasDragDoubleClick ifTrue: [
-		^ editor
+		^ editor 
 			selectWordMark: (self paragraph characterBlockAtPoint: mouseDownPoint) stringIndex
 			point: (self paragraph characterBlockAtPoint: evt cursorPoint) stringIndex ].
-
+	
 	evt shiftPressed
 		ifTrue: [ self modifySelection: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
 		ifFalse: [mouseDownPoint
-				ifNotNil: [
+				ifNotNil: [ 
 					self markBlock: (self paragraph characterBlockAtPoint: mouseDownPoint) pointBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ]
 				ifNil: [  self markBlock: (self paragraph characterBlockAtPoint: evt cursorPoint) ] ].
-
-	self editor storeSelectionInText
+			
+	self editor storeSelectionInText.
 ]
 
 { #category : #'event handling' }

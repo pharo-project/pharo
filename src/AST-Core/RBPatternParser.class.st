@@ -115,7 +115,7 @@ RBPatternParser >> parseUnaryMessage [
 	currentToken isIdentifier]
 			whileTrue: [
 				currentToken isKeywordPattern
-					ifTrue: [ self parserError: ' incomplete keyword pattern ' ].
+					ifTrue: [ self parseErrorNode: ' incomplete keyword pattern ' ].
 				node := self parseUnaryMessageWith: node].
 	self addCommentsTo: node.
 	^node
@@ -131,13 +131,6 @@ RBPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 		node wrappedNode: wrappedNode ].
 
 	^ node
-]
-
-{ #category : #private }
-RBPatternParser >> patchLiteralArrayToken [
-	(currentToken isIdentifier and: [currentToken isPatternVariable])
-		ifTrue: [^self].
-	super patchLiteralArrayToken
 ]
 
 { #category : #'private - classes' }

@@ -16,10 +16,6 @@ Class {
 	#name : #CompilationContext,
 	#superclass : #Object,
 	#instVars : [
-		'requestor',
-		'failBlock',
-		'logged',
-		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -27,7 +23,6 @@ Class {
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
 		'bytecodeGeneratorClass',
-		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
 		'astParseTransformPlugins',
@@ -94,7 +89,7 @@ CompilationContext class >> default [
 
 { #category : #options }
 CompilationContext class >> defaultOptions [
-	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self fallBackDefaultOptions ]
+	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self initialDefaultOptions ]
 ]
 
 { #category : #accessing }
@@ -117,7 +112,8 @@ CompilationContext class >> defaultTransformationPlugins: anObject [
 ]
 
 { #category : #options }
-CompilationContext class >> fallBackDefaultOptions [
+CompilationContext class >> initialDefaultOptions [
+	"Skip the comment of each option"
 	^ (self optionsDescription collect: [ :each | each allButLast ]) flattened
 ]
 
@@ -155,16 +151,6 @@ CompilationContext class >> optionConstantBlockClosure [
 { #category : #'options - settings API' }
 CompilationContext class >> optionConstantBlockClosure: aBoolean [
 	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources [
-	^ self readDefaultOption: #optionEmbeddSources
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources: aBoolean [
-	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -267,6 +253,20 @@ CompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
 	^ self writeDefaultOption: #optionLongIvarAccessBytecodes value: aBoolean
 ]
 
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends [
+
+	^ self readDefaultOption: #optionOptimiseSpecialSends
+]
+
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends: aBoolean [
+
+	^ self
+		  writeDefaultOption: #optionOptimiseSpecialSends
+		  value: aBoolean
+]
+
 { #category : #'options - settings API' }
 CompilationContext class >> optionOptimizeIR [
 	^ self readDefaultOption: #optionOptimizeIR
@@ -315,6 +315,7 @@ CompilationContext class >> optionsDescription [
 
 	"each entry is fall-back default value (+/-), option name, description"
 	^ #(
+	(+ optionOptimiseSpecialSends 'Use optimised bytecodes for special selectors. These bytecodes hint the VM to do static type predictions')
 	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
 	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
 	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
@@ -325,7 +326,6 @@ CompilationContext class >> optionsDescription [
 	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
 	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
@@ -418,16 +418,6 @@ CompilationContext >> class: aClass [
 ]
 
 { #category : #accessing }
-CompilationContext >> compiledMethod [
-	^ compiledMethod
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod: anObject [
-	compiledMethod := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> compiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 	^ compiledMethodClass ifNil: [
@@ -441,16 +431,6 @@ CompilationContext >> compiledMethodClass: aCompiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 
 	compiledMethodClass := aCompiledMethodClass
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer [
-	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer: anObject [
-	compiledMethodTrailer := anObject
 ]
 
 { #category : #options }
@@ -470,27 +450,12 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := semanticScope targetEnvironment ]
+	^ environment ifNil: [ environment := semanticScope environment ]
 ]
 
 { #category : #accessing }
 CompilationContext >> environment: anObject [
 	environment := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock [
-	^ failBlock
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock: anObject [
-	failBlock := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> getClass [
-	^ semanticScope targetClass
 ]
 
 { #category : #initialization }
@@ -503,48 +468,15 @@ CompilationContext >> initialize [
 ]
 
 { #category : #accessing }
-CompilationContext >> interactive [
-
-	requestor ifNil: [ ^ false ].
-	"we asume requestors are interactive, but they can override.
-	this should be simplified "
-	^ (requestor respondsTo: #interactive)
-		  ifTrue: [ requestor interactive ]
-		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logDoItEvaluation: aSourceString [
-	self logged ifFalse: [ ^self ].
-
-	Smalltalk globals
-			at: #SystemAnnouncer
-			ifPresent: [ :sysAnn |
-				semanticScope announceDoItEvaluation: aSourceString by: sysAnn uniqueInstance ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logged [
-	^logged ifNil: [ false ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logged: anObject [
-	logged := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> noPattern [
 	^semanticScope isDoItScope
 ]
 
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
-	anObject ifTrue: [
-		semanticScope := semanticScope asDoItScope.
-		"when we compile an expression, embedd sources, as the resulting method will never be installed"
-		self parseOptions: #(+ #optionEmbeddSources).
-	 ]
+
+	(anObject and: [ self noPattern not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : #options }
@@ -560,11 +492,6 @@ CompilationContext >> optionCleanBlockClosure [
 { #category : #options }
 CompilationContext >> optionConstantBlockClosure [
 	^ options includes: #optionConstantBlockClosure
-]
-
-{ #category : #options }
-CompilationContext >> optionEmbeddSources [
-	^ options includes: #optionEmbeddSources
 ]
 
 { #category : #options }
@@ -618,6 +545,11 @@ CompilationContext >> optionLongIvarAccessBytecodes [
 ]
 
 { #category : #options }
+CompilationContext >> optionOptimiseSpecialSends [
+	^ options includes: #optionOptimiseSpecialSends
+]
+
+{ #category : #options }
 CompilationContext >> optionOptimizeIR [
 	^ options includes: #optionOptimizeIR
 ]
@@ -639,6 +571,7 @@ CompilationContext >> optionSkipSemanticWarnings [
 
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
+
 	options parseOptions: optionsArray
 ]
 
@@ -663,16 +596,6 @@ CompilationContext >> productionEnvironment: aDictionary [
 ]
 
 { #category : #accessing }
-CompilationContext >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor: anObject [
-	requestor := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> requestorScopeClass [
 	^ requestorScopeClass ifNil: [ requestorScopeClass := OCRequestorScope ]
 ]
@@ -681,25 +604,6 @@ CompilationContext >> requestorScopeClass [
 CompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> scope [
-	| newScope |
-
-	newScope := semanticScope.
-	requestor ifNotNil: [
-		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"
-		newScope := (self requestorScopeClass new
-			compilationContext: self;
-			requestor: requestor) outerScope: newScope].
-
-	bindings ifNotNil: [
-		"if we passed additional bindings in, setup a scope here"
-		newScope := (OCExtraBindingScope  new
-			bindings: bindings) outerScope: newScope].
-
-	^newScope
 ]
 
 { #category : #accessing }

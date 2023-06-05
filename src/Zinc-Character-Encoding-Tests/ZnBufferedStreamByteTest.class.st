@@ -74,7 +74,7 @@ ZnBufferedStreamByteTest >> integerEncodingSpec [
 )
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedStreamByteTest >> testInt16Aliases [
 	| input writer |
 	writer := [ :block |
@@ -96,7 +96,7 @@ ZnBufferedStreamByteTest >> testInt16Aliases [
 	self assert: (writer value: [ :out | out int16: -1234 ]) equals: input
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedStreamByteTest >> testInt32Aliases [
 	| input writer |
 	writer := [ :block |
@@ -120,7 +120,7 @@ ZnBufferedStreamByteTest >> testInt32Aliases [
 	self assert: (writer value: [ :out | out nextInt32Put: -1234567890 ]) equals: input
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedStreamByteTest >> testInt8 [
 	| bytes readStream |
 	bytes := ByteArray streamContents: [ :out |
@@ -136,7 +136,7 @@ ZnBufferedStreamByteTest >> testInt8 [
 	self assert: readStream int8 equals: -123
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 	self integerEncodingSpec do: [ :spec |
 		| input integer |
@@ -148,7 +148,7 @@ ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 		self assert: integer equals: spec second ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndianPut [
 	self integerEncodingSpec do: [ :spec |
 		| input output |

@@ -48,6 +48,11 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
+	"If `aSelector` is defined in `targetSuperclass` or one of its superclasses check for
+	super sends to `aSelector` in `targetSuperclass` hierarchy.
+	Display an error to the user about potential breaking changes with overriding `aSelector`
+	in `targetSuperclass` "
+
 	| definingClass pushUpParseTree |
 	definingClass := targetSuperclass whoDefinesMethod: aSelector.
 	definingClass ifNil: [^self].
@@ -79,6 +84,8 @@ RBPullUpMethodRefactoring >> checkClassVars [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkClassVarsFor: aSelector [
+	"Checks if `aSelector` refers to any of the class variables."
+
 	class instanceSide classVariableNames do:
 		[ :each |
 		((class whichSelectorsReferToClassVariable: each) includes: aSelector) ifTrue:
@@ -95,6 +102,9 @@ RBPullUpMethodRefactoring >> checkInstVars [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkInstVarsFor: aSelector [
+	"Checks if `aSelector` refers to one of the instance variables and offers to perform
+	`PushUpInstanceVariableRefactoring` refactoring such variables exist."
+
 	class instanceVariableNames do:
 			[:each |
 			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue:
@@ -109,6 +119,12 @@ RBPullUpMethodRefactoring >> checkInstVarsFor: aSelector [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkSiblingSuperSendsFrom: aRBClass [
+	"Checks if `aRBClass` selector sends super message to one of the methods selected to be push up
+	from the `class`.
+	If that stands and the super message selector is defined in `class` or one of its superclasses
+	warn the user.
+	Repeat the process for all subclasses of `aRBClass`"
+
 	aRBClass selectors do:
 			[:each |
 			| tree |
@@ -138,6 +154,8 @@ RBPullUpMethodRefactoring >> checkSuperMessages [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkSuperSendsFromPushedUpMethods [
+	"Check if one of the selectors sends a super message to a method defined in `targetSuperclass`."
+
 	selectors do:
 			[:each |
 			| parseTree |
@@ -152,6 +170,9 @@ RBPullUpMethodRefactoring >> checkSuperSendsFromPushedUpMethods [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkSuperSendsFromSiblings [
+	"Checks if a class in the `targetClass` subclasses (except for `class` and its subclasses)
+	send super message to one of the selected messages."
+
 	| siblings |
 	siblings := targetSuperclass subclasses reject: [:each | each = class].
 	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]
@@ -159,6 +180,11 @@ RBPullUpMethodRefactoring >> checkSuperSendsFromSiblings [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkSuperclass [
+	"Checks if one of the methods to push up is overriden from the `targetSuperclass`.
+	If there are overrides and `targetSuperclass` is not abstract a pop-up warns the user.
+	Also, if there are overrides check for back references (that is if one of the other classes in
+	`targetSuperclass` hierarchy depends on original method defined in `targetSuperclass`)."
+
 	| overrideSelectors |
 	overrideSelectors := selectors
 		select: [ :each | targetSuperclass directlyDefinesMethod: each ].
@@ -186,7 +212,7 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
 	oldSource ifNil:
 			[ self
-				refactoringFailure: ('Source code for <1s> superclass method not available'
+				refactoringError: ('Source code for <1s> superclass method not available'
 						expandMacrosWith: aSelector)].
 	oldProtocol := superclassDefiner protocolsFor: aSelector.
 	subclasses := targetSuperclass subclasses
@@ -216,6 +242,14 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 	selectors do: [:each | self copyDownMethod: each]
 ]
 
+{ #category : #actions }
+RBPullUpMethodRefactoring >> generateChanges [
+
+	self primitiveExecute.
+
+	^ self changes
+]
+
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> preconditions [
 	self requestSuperClass.
@@ -233,7 +267,7 @@ RBPullUpMethodRefactoring >> preconditions [
 RBPullUpMethodRefactoring >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
-	source ifNil: [self refactoringFailure: 'Source for method not available'].
+	source ifNil: [self refactoringError: 'Source for method not available'].
 	refactoring := RBExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (class parseTreeForSelector: aSelector)

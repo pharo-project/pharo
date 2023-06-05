@@ -10,6 +10,12 @@ Class {
 	#category : #'Calypso-Browser-Tabs'
 }
 
+{ #category : #'class initialization' }
+ClyTabActivationStrategyAnnotation class >> initialize [
+
+	self deprecatedAliases: { #ClyTabActivationStrategy }
+]
+
 { #category : #operations }
 ClyTabActivationStrategyAnnotation >> createToolFor: aBrowser inContext: aBrowserContext [
 

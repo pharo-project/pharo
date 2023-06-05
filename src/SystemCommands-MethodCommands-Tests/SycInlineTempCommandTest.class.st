@@ -6,19 +6,20 @@ Class {
 
 { #category : #tests }
 SycInlineTempCommandTest >> testCanExecuteOnArgumentNode [
+
 	| argNode sourceCodeContext |
 	"we don't need to set the tools"
-	argNode := RBArgumentNode new.
+	argNode := RBVariableNode new variable: ArgumentVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: argNode.
-	self deny: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext).
-
+	self deny: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext)
 ]
 
 { #category : #tests }
 SycInlineTempCommandTest >> testCanExecuteOnTemporaryNode [
+
 	| sourceCodeContext tempNode |
 	"we don't need to set the tools"
-	tempNode := RBTemporaryNode new.
+	tempNode := RBVariableNode new variable: TemporaryVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: tempNode.
-	self assert: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext).
+	self assert: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext)
 ]

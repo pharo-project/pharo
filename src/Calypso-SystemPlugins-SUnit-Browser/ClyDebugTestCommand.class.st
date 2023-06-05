@@ -35,7 +35,11 @@ ClyDebugTestCommand >> runTest: testSelector of: testClass [
 
 	| breakpoint |
 	breakpoint := Breakpoint new
-		node: (testClass lookupSelector: testSelector) ast;
-		install.
-	[super runTest: testSelector of: testClass] ensure: [ breakpoint remove ]
+		              node: (testClass lookupSelector: testSelector) ast;
+		              install.
+	[ super runTest: testSelector of: testClass ] ensure: [
+		[ breakpoint remove ]
+			on: NotFound
+			do: [ "If the test under debug has been recompiled, the breakpoint doesn't exist anymore"
+				self inform: 'The breakpoint already doesn''t exist anymore' ] ]
 ]

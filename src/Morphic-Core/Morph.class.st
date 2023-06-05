@@ -2560,14 +2560,8 @@ Morph >> fitInWorld [
 
 { #category : #macpal }
 Morph >> flash [
-	| originalFill flashFill |
 
-	flashFill := self flashFillStyle.
-	originalFill := self fillStyle.
-
-	self fillStyle: flashFill.
-
-	self addAlarm: #flashFinished:original: withArguments: { flashFill . originalFill } after: 50
+	self flashColor: self flashFillStyle
 ]
 
 { #category : #drawing }
@@ -2576,6 +2570,17 @@ Morph >> flashBounds [
 
 	5 timesRepeat:
 		[Display flash: self boundsInWorld  andWait: 120]
+]
+
+{ #category : #macpal }
+Morph >> flashColor: aColor [
+	| originalFill |
+
+	originalFill := self fillStyle.
+
+	self fillStyle: aColor.
+
+	self addAlarm: #flashFinished:original: withArguments: { aColor . originalFill } after: 50
 ]
 
 { #category : #macpal }
@@ -4474,7 +4479,11 @@ Morph >> okayToRotateEasily [
 
 { #category : #announcements }
 Morph >> onAnnouncement: anAnnouncement do: aValuable [
-	self announcer when: anAnnouncement do: aValuable
+
+	self announcer
+		when: anAnnouncement
+		do: aValuable
+		for: aValuable receiver
 ]
 
 { #category : #announcements }
@@ -4887,7 +4896,7 @@ Morph >> privateAddMorph: aMorph atIndex: index [
 					oldOwner privateRemove: aMorph.
 					oldOwner removedMorph: aMorph ].
 			aMorph privateOwner: self.
-			submorphs := submorphs copyReplaceFrom: index to: index - 1 with: (Array with: aMorph).
+			submorphs := submorphs copyReplaceFrom: index to: index - 1 with: { aMorph } .
 			itsWorld == myWorld
 				ifFalse: [ aMorph intoWorld: myWorld ] ].
 	myWorld ifNotNil: [ self privateInvalidateMorph: aMorph ].
@@ -5265,7 +5274,7 @@ Morph >> replaceSubmorph: oldMorph by: newMorph [
 Morph >> requestStopTextEditing [
 
 	"Used by a morph to request stop text edition capabilities.
-	The rendering backend can use this, for example, close the IME (input-method-editor).
+	The rendering backend uses this to stop all text input.
 	Use it in pair with requestTextEditingAt:
 
 	By default, propagate the request to the owner.

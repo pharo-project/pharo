@@ -110,7 +110,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 
 	self assert: (materializedClassOrTrait classSide includesSelector: #fortyTwo).
 	self assertCollection: #(fortyTwo) hasSameElements: materializedClassOrTrait classSide localSelectors.
-	self assert: category equals: (materializedClassOrTrait classSide whichCategoryIncludesSelector: #fortyTwo).
+	self assert: category equals: (materializedClassOrTrait classSide protocolNameOfSelector: #fortyTwo).
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
 ]
 
@@ -145,8 +145,10 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
-	self assert: 'test comment' = materializedClassOrTrait comment asString.
-	self assert: 'test stamp' = materializedClassOrTrait organization commentStamp.
+	"we do not store the commentSourePointer, as is would be invalid in anther image.
+	see https://github.com/theseion/Fuel/issues/270"
+	self assert: '' = materializedClassOrTrait comment.
+	self assert: '' = materializedClassOrTrait commentStamp.
 ]
 
 { #category : #tests }
@@ -232,7 +234,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 
 	self assert: (materializedClassOrTrait includesSelector: #fortyTwo).
 	self assertCollection: #(fortyTwo) hasSameElements: materializedClassOrTrait localSelectors.
-	self assert: category equals: (materializedClassOrTrait whichCategoryIncludesSelector: #fortyTwo).
+	self assert: category equals: (materializedClassOrTrait protocolNameOfSelector: #fortyTwo).
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo).
 ]
 

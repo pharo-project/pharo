@@ -18,15 +18,22 @@ Class {
 DTTestCoverageResult >> buildTreeForUI [
 	<dtTestCoverageResultTreeNamed: 'List of uncovered methods' order: 1>
 	^ DTTreeNode new
-		subResults:
-			{(DTTreeNode new
-				name: (percent * 100 printShowingDecimalPlaces: 2) , ' % Code Coverage';
-				subResults: {};
-				yourself).
-			(DTTreeNode new
-				name: 'Uncovered methods';
-				subResults: (self methodList collect: [:each | each asResultForDrTest]);
-				yourself)}
+		subResults: (self methodList 
+		ifNotNil: [
+        {(DTTreeNode new
+            name: (percent * 100 printShowingDecimalPlaces: 2) , ' % Code Coverage';
+            subResults: {};
+            yourself).
+        (DTTreeNode new
+            name: 'Uncovered methods';
+            subResults: (self methodList collect: [:each | each asResultForDrTest]);
+            yourself)}
+    	]ifNil: [
+       	 {(DTTreeNode new
+        	    name: 'no package has been selected';
+      	 	    subResults: {};
+             yourself)}
+    	])
 ]
 
 { #category : #accessing }

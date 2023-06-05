@@ -25,10 +25,6 @@ and pressing the reset button. Or simply executing  ReRuleManager reset
 
 
 When you load complete rules into the system, the cache will be reset automatically. But as you are creating a new rule and it is in the incomplete state you have to reset the cache once you are ready.
-
-If you want to learn more about the features of rules or how to create your own, please read:
-
-RenrakuRuleHelp readInHelpBrowser
 "
 Class {
 	#name : #ReAbstractRule,

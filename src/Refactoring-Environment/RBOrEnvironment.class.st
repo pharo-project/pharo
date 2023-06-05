@@ -64,6 +64,17 @@ RBOrEnvironment >> includesSelector: aSelector in: aClass [
 ]
 
 { #category : #accessing }
+RBOrEnvironment >> methodsForClass: aClass do: aBlock [
+
+	| enumerated |
+	enumerated := IdentitySet new.
+	environment methodsForClass: aClass do: [ :method |
+		enumerated add: method.
+		aBlock value: method ].
+	self orEnvironment methodsForClass: aClass do: [ :method | (enumerated includes: method) ifFalse: [ aBlock value: method ] ]
+]
+
+{ #category : #accessing }
 RBOrEnvironment >> operator [
 	^ ' | '
 ]

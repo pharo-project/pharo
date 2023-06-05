@@ -12,7 +12,6 @@ BaselineOfGeneralTests >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 'Debugging-Utils-Tests';
-			package: 'Tests';
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';			
 			package: 'RPackage-Tests';

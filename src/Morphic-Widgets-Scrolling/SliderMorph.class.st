@@ -13,6 +13,12 @@ Class {
 	#category : #'Morphic-Widgets-Scrolling'
 }
 
+{ #category : #'class initialization' }
+SliderMorph class >> initialize [
+
+	self deprecatedAliases: { #Slider }
+]
+
 { #category : #geometry }
 SliderMorph >> computeSlider [
 	| r |

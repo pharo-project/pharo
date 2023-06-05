@@ -145,9 +145,9 @@ MCPackageLoader >> installSnapshot: aSnapshot [
 
 { #category : #public }
 MCPackageLoader >> load [
+
 	self validate.
-	self useNewChangeSetDuring: [self basicLoad].
-	MCMethodDefinition cachedDefinitions finalizeValues.
+	self useNewChangeSetDuring: [ self basicLoad ]
 ]
 
 { #category : #private }
@@ -222,8 +222,8 @@ MCPackageLoader >> tryToLoad: aDefinition [
 
 { #category : #public }
 MCPackageLoader >> unloadPackage: aPackage [
-	self updatePackage: aPackage withSnapshot: MCSnapshot empty.
-	MCMethodDefinition cachedDefinitions finalizeValues.
+
+	self updatePackage: aPackage withSnapshot: MCSnapshot empty
 ]
 
 { #category : #public }

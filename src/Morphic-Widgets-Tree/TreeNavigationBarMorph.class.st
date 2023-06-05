@@ -27,6 +27,12 @@ TreeNavigationBarMorph class >> createIconMethods [
 			self class compile: (n, 'Icon', String cr, String tab, '^ ', form storeString) classified: #icons]
 ]
 
+{ #category : #'class initialization' }
+TreeNavigationBarMorph class >> initialize [
+
+	self deprecatedAliases: { #MorphTreeNavigationBar }
+]
+
 { #category : #'instance creation' }
 TreeNavigationBarMorph class >> on: aTreeMorph pageSize: aPageSize [
 	^ self new treeMorph: aTreeMorph  pageSize: aPageSize

@@ -73,6 +73,13 @@ ZnHTTPSTest >> testGForceInria [
 ]
 
 { #category : #testing }
+ZnHTTPSTest >> testGetPharoVersion [
+	"Make sure to overwrite on older test"
+
+	self skip
+]
+
+{ #category : #testing }
 ZnHTTPSTest >> testGmailEncrypted [
 
 	| client |

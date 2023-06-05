@@ -13,27 +13,6 @@ RPackageOrganizer >> allManagers [
 ]
 
 { #category : #'*Monticello-RPackage' }
-RPackageOrganizer >> basicInitializeFromMC [
-
-	self basicInitializeFromPackagesList: (self allManagers collect: [ :workingCopy | workingCopy packageName]).
-]
-
-{ #category : #'*Monticello-RPackage' }
-RPackageOrganizer class >> initializeDefaultFromMC [
-
-	"self initializeDefaultFromMC"
-	self setDefault:  self new initializeFromMC.
-]
-
-{ #category : #'*Monticello-RPackage' }
-RPackageOrganizer >> initializeFromMC [
- 	self packageClass 
-		withOrganizer: self  
-		do:  [  self basicInitializeFromMC ].
-
-]
-
-{ #category : #'*Monticello-RPackage' }
 RPackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
 	"a category has been added. "
 	

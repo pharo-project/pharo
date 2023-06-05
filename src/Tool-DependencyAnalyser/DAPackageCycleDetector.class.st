@@ -50,7 +50,7 @@ DAPackageCycleDetector class >> onPackagesNamed: aCollection [
 { #category : #'instance creation' }
 DAPackageCycleDetector class >> system [
 	^ (self onPackagesNamed:
-		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])) runAlgorithm
+		(Smalltalk organization packages collect: [ :package | package packageName asString ])) runAlgorithm
 ]
 
 { #category : #adding }

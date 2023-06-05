@@ -49,28 +49,6 @@ CompiledCode >> localHasInstVarRef [
 ]
 
 { #category : #'*Debugging-Core' }
-CompiledCode >> localMessages [
-	"Answer a Set of all the message selectors sent by this method."
-
-	| scanner aSet |
-	aSet := IdentitySet new.
-	scanner := InstructionStream on: self.
-	scanner	scanFor: [:x | 
-			scanner addSelectorTo: aSet.
-			false	"keep scanning"].
-	^aSet
-]
-
-{ #category : #'*Debugging-Core' }
-CompiledCode >> messages [
-	"Answer a Set of all the message selectors sent by this method."
-	| aSet |
-	aSet := self localMessages.
-	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
-	^ aSet
-]
-
-{ #category : #'*Debugging-Core' }
 CompiledCode >> pcPreviousTo: pc [
 	| scanner prevPc |
 	pc > self endPC ifTrue: [^self endPC].

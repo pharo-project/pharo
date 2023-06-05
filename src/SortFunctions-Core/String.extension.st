@@ -9,5 +9,5 @@ String >> threeWayCompareTo: aString [
 	This assumes a total order in accordance with the mathematical law of trichotomy.
 	See also:  http://en.wikipedia.org/wiki/Three-way_comparison"
 
-	 ^ (self compare: self with: aString collated: AsciiOrder) - 2
+	^ (self compare: self with: aString) sign
 ]

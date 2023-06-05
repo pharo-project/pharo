@@ -25,7 +25,7 @@ RBCommentChange class >> comment: aString in: aClass [
 RBCommentChange >> asUndoOperation [
 
 	^ self copy
-		  comment: self changeClass organization classComment;
+		  comment: self changeClass comment;
 		  yourself
 ]
 
@@ -57,7 +57,7 @@ RBCommentChange >> comment: aString [
 { #category : #private }
 RBCommentChange >> primitiveExecute [
 
-	self changeClass classComment: comment stamp: self changeStamp.
+	self changeClass comment: comment stamp: self changeStamp.
 	SystemAnnouncer uniqueInstance classCommented: self changeClass
 ]
 

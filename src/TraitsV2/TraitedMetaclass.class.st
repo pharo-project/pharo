@@ -25,14 +25,11 @@ TraitedMetaclass class >> traitedClassTrait [
 ]
 
 { #category : #'accessing - method dictionary' }
-TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
+TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 
 	self localMethodDict at: selector put: compiledMethod.
 
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aCategory.
+	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
 	TraitChange addSelector: selector on: self
 ]
@@ -47,12 +44,9 @@ TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
 { #category : #'accessing - method dictionary' }
 TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [
 
-	compiledMethod isFromTrait
-		ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
+	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
 
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withRecompiledMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
+	self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #querying }
@@ -267,31 +261,27 @@ TraitedMetaclass >> rebuildMethodDictionary [
 
 	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
-	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ].
+	removedSelectors do: [ :aSelector |
+		self methodDict removeKey: aSelector.
+		self removeFromProtocols: aSelector  ].
 
 	^ modified
 ]
 
 { #category : #categories }
-TraitedMetaclass >> recategorizeSelector: selector from: oldCategory to: newCategory [
-	| original |
-
+TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
 
-	original := self organization categoryOfElement: selector ifAbsent: [ ^ self ].
-
+	| originalProtocol |
 	"If it is nil is because it is a removal. It will removed when the method is removed."
-	newCategory ifNil: [ ^ self ].
+	newProtocol ifNil: [ ^ self ].
 
-	original = oldCategory
-		ifTrue: [ self organization classify: selector under: newCategory suppressIfDefault: true ].
+	originalProtocol := (self protocolOfSelector: selector) ifNil: [ ^ self ].
+	originalProtocol name = oldProtocol name ifTrue: [ self classify: selector under: newProtocol name ].
 
-	(self traitComposition reverseAlias: selector) do: [ :e |
-		self recategorizeSelector: e from: oldCategory to: newCategory.
-		self notifyOfRecategorizedSelector: e from: oldCategory to: newCategory ].
-
-	self organization removeEmptyCategories
+	(self traitComposition reverseAlias: selector) do: [ :selectorAlias |
+		self recategorizeSelector: selectorAlias from: oldProtocol to: newProtocol.
+		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #recompilation }
@@ -300,13 +290,7 @@ TraitedMetaclass >> recompile: selector from: oldClass [
 
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
-	newMethod := self compiler
-				source: (oldClass sourceCodeAt: selector);
-				class: self;
-				failBlock: [^ self];
-				compiledMethodTrailer: method trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
-	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
+	newMethod := self recompileBasic: selector from: oldClass.
 
 	method properties
 		at: #traitSource

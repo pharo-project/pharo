@@ -18,13 +18,13 @@ You start with a default environment containing all classes from the system and 
 
 For example, creating an environment for all classes in package 'Kernel':
 
-```
+```st
 RBBrowserEnvironment new forPackageNames:{'Kernel'}.
 ```
 
 You can query the environment.
 
-```
+```st
 | env |
 env := RBBrowserEnvironment new forPackageNames:{'Kernel'}.
 env allClasses 
@@ -33,26 +33,26 @@ env allClasses
 
 or open a browser
 
-```
+```st
 env browse 
 -> starts Calypso showing only this package
 ```
 
 and you can further restrict this package environment by calling one of the other factory methods:
 
-```
+```st
 env class 
 -> a RBPackageEnvironment
 ```
 
-```
+```st
 (env implementorsOf:#collect:) class
 ->  RBSelectorEnvironment
 ```
 
 Another way to combine or further restrict environments is to use boolean operations and, not or or.
 
-```
+```st
 | implDrawOn callsDrawOn implAndCalls |
 callsDrawOn := RBBrowserEnvironment new referencesTo: #drawOn:.
 implDrawOn :=  RBBrowserEnvironment new implementorsOf: #drawOn:.
@@ -64,7 +64,7 @@ MessageBrowser browse: implAndCalls methods.
 
 This opens a MessageBrowser on all methods in the system that implement `#drawOn:` and calls `drawOn:`.
 
-```
+```st
 | implPrintOn notImplPrintOn |
 implPrintOn := RBBrowserEnvironment new implementorsOf: #printOn:.
 "create a 'not'-environment"
@@ -79,7 +79,7 @@ Classes implementing `#printOn:` are not in the 'not'-environment.
 
 A more generic way to create an environment by giving an explicit 'test'-block to select methods for this environment:
 
-```
+```st
 | implementedByMe |
 implementedByMe := RBBrowserEnvironment new 
 			selectMethods: [:m | m author = Author fullName ].

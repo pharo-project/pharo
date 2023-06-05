@@ -101,24 +101,6 @@ MetacelloMCVersionSpec >> currentlyLoadedClassesInVersion [
 ]
 
 { #category : #querying }
-MetacelloMCVersionSpec >> currentlyLoadedExtensionClassesInVersion [
-	| classes |
-	classes := Dictionary new.
-	self
-		projectDo: [ :ignored |  ]
-		packageDo: [ :packageSpec | 
-			([ packageSpec workingCopy ]
-				on: Error
-				do: [ :ex | ex return: nil ])
-				ifNotNil: [ :workingCopy | 
-					| packageInfo |
-					packageInfo := MetacelloPlatform current packageInfoFor: workingCopy.
-					packageInfo extendedClasses do: [ :cl | classes at: cl put: (packageInfo extensionCategoriesForClass: cl) ] ] ]
-		groupDo: [ :ignored |  ].
-	^ classes
-]
-
-{ #category : #querying }
 MetacelloMCVersionSpec >> difference: otherVersionSpec [
     "Return a dictionary of additions, removals and modifications"
 

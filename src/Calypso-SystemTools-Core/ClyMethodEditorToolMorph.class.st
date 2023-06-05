@@ -90,8 +90,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
-		  source: self pendingText;
-		  options: #( + optionParseErrors + optionSkipSemanticWarnings );
+		  source: self pendingText asString;
 		  parse
 ]
 

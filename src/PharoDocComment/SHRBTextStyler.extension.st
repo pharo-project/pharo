@@ -29,8 +29,7 @@ SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
 ]
 
 { #category : #'*PharoDocComment' }
-SHRBTextStyler >> visitMethodComments: comments [
-	comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
-	PharoDocCommentNode docCommentEnabled
-		ifTrue: [ comments do: [ :comment | self styleDocComment: comment ] ]
+SHRBTextStyler >> visitMethodComments: aNode [
+
+	PharoDocCommentNode docCommentEnabled ifTrue: [ aNode comments do: [ :comment | self styleDocComment: comment ] ]
 ]

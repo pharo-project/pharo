@@ -34,7 +34,7 @@ ZnNullEncoder class >> newForEncoding: string [
 	^ self new
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnNullEncoder >> backOnStream: stream [
 	"Move back one character on stream"
 
@@ -57,7 +57,7 @@ ZnNullEncoder >> encodeString: string [
 	^ string asByteArray
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnNullEncoder >> encodedByteCountFor: character [
 	"Return how many bytes are needed to encode character"
 	"Overwritten for performance reasons"
@@ -65,7 +65,7 @@ ZnNullEncoder >> encodedByteCountFor: character [
 	^ 1
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnNullEncoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
@@ -88,6 +88,15 @@ ZnNullEncoder >> encodedByteCountForString: string [
 	^ string size
 ]
 
+{ #category : #'encoding - decoding' }
+ZnNullEncoder >> ensureAtBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further backwards. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
+]
+
 { #category : #accessing }
 ZnNullEncoder >> identifier [
 	^ #ascii
@@ -106,14 +115,14 @@ ZnNullEncoder >> next: count putAll: string startingAt: offset toStream: stream 
 			super next: count putAll: string startingAt: offset toStream: stream ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnNullEncoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
 	^ stream next
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnNullEncoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for Integer code point to stream"
 
@@ -132,4 +141,13 @@ ZnNullEncoder >> readInto: string startingAt: offset count: requestedCount fromS
 		stream atEnd ifTrue: [ ^ index - offset ].
 		string byteAt: index put: stream next ].
 	^ requestedCount
+]
+
+{ #category : #'encoding - decoding' }
+ZnNullEncoder >> skipToBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further forward. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
 ]

@@ -76,6 +76,12 @@ RBAndEnvironment >> includesSelector: aSelector in: aClass [
 		and: [ self andedEnvironment includesSelector: aSelector in: aClass ]
 ]
 
+{ #category : #accessing }
+RBAndEnvironment >> methodsForClass: aClass do: aBlock [
+
+	environment methodsForClass: aClass do: [ :method | (self andedEnvironment includesSelector: method selector in: aClass) ifTrue: [ aBlock value: method ] ]
+]
+
 { #category : #printing }
 RBAndEnvironment >> operator [
 	^ ' & '

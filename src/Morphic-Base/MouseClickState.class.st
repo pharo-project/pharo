@@ -263,11 +263,11 @@ MouseClickState >> handleEvent: evt from: aHand [
 	"Process the given mouse event to detect a click, double-click, or drag.
 	Return true if the event should be processed by the sender, false if it shouldn't.
 	NOTE: This method heavily relies on getting *all* mouse button events."
-	| localEvt timedOut isDrag |
+	| localEvt timedOut isDrag isDragSecond |
 	timedOut := (evt timeStamp - firstClickTime) > doubleClickTime.
 	localEvt := evt transformedBy: (clickClient transformedFrom: aHand owner).
 	isDrag := (localEvt position - firstClickDown position) r > dragThreshold.
-
+	isDragSecond := localEvt position ~= firstClickDown position.
 	clickState == #firstClickDown ifTrue: [
 		"Careful here - if we had a slow cycle we may have a timedOut mouseUp event"
 		(timedOut and:[localEvt isMouseUp not]) ifTrue:[
@@ -323,15 +323,16 @@ MouseClickState >> handleEvent: evt from: aHand [
 			^true].
 		localEvt isMouseDown ifTrue:["double click"
 			clickState := #secondClickDown.
-			self doubleClick.
-			^false]].
+			"We should not double click if not on the same element"
+			(clickClient containsPoint: localEvt position) ifTrue: [
+				self doubleClick.
+				^false] ] ].
 
 	clickState == #secondClickDown ifTrue: [
-		isDrag ifTrue: ["drag start"
+		isDragSecond ifTrue: ["drag start"
 			self doubleClickTimeout. "***"
 			aHand resetClickState.
-			dragSelector "If no drag selector send #click instead"
-				ifNil: [self click]
+			dragDoubleClickSelector
 				ifNotNil: [self dragDoubleClick: firstClickDown].
 			^true].
 		localEvt isMouseUp ifTrue: ["double click"

@@ -18,7 +18,7 @@ RBVariableNode >> classVarEntriesForClass: lookupClass [
 RBVariableNode >> completionEntries: offset [
 	| methodNode lookupClass |
 	methodNode := self methodNode.
-	lookupClass := methodNode compilationContext getClass.
+	lookupClass := methodNode methodClass.
 	self isDefinition
 		ifTrue: [ ^ self possibleSelectorEntries ].
 

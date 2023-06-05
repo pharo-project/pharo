@@ -52,20 +52,6 @@ ClyClassCommentsQueryTest >> testFromClassScope [
 ]
 
 { #category : #tests }
-ClyClassCommentsQueryTest >> testFromClassWithoutCommentWhenPatternSatisfiesCommentTemplate [
-
-	| noCommentClass substring |
-	noCommentClass := Object newAnonymousSubclass.
-	self deny: noCommentClass hasComment.
-	substring := noCommentClass comment copyFrom: 4 to: 30.
-
-	query pattern: (ClySubstringPattern with: substring).
-	self queryFromScope: ClyClassScope of: noCommentClass.
-
-	self assert: resultItems isEmpty
-]
-
-{ #category : #tests }
 ClyClassCommentsQueryTest >> testThisClassShouldIncludeExpectedComment [
 
 	self assert: (self class comment

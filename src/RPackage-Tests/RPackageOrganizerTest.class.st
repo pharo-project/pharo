@@ -358,7 +358,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self packageOrganizer basicRegisterPackage: p2.
 	self packageOrganizer basicRegisterPackage: p3.
 	self assert: self packageOrganizer packageNames size equals: 4.
-	self packageOrganizer basicUnregisterPackage: p3.
+	self packageOrganizer basicUnregisterPackageNamed: p3 name.
 	self assert: self packageOrganizer packageNames size equals: 3
 ]
 
@@ -370,21 +370,6 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
-]
-
-{ #category : #'tests - extensions' }
-RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
-
-	| class |
-
-	class := self createNewClassNamed: #ClassForTestAboutSilentRecategorization inCategory: 'RPackage-Tests'.
-	class organization addCategory:#foo.
-	self assert: (class organization categories includes: #foo).
-	self deny: (class organization categories includes: #bar).
-	class organization silentlyRenameCategory: #foo toBe: #bar.
-
-	self assert: (class organization categories includes: #bar).
-	self deny: (class organization categories includes: #foo)
 ]
 
 { #category : #tests }

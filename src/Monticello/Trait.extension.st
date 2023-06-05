@@ -20,8 +20,8 @@ Trait >> asClassDefinition [
 				instVarNames: (self localSlots collect: [:each |each definitionString])
 				classInstVarNames: (self classSide localSlots collect: [:each |each definitionString])
 				classTraitComposition: classTraitCompositionToUse
-				comment: self organization classComment asString
-				commentStamp: self organization commentStamp ]
+				comment: self comment
+				commentStamp: self commentStamp ]
 		 ifFalse: [  
 			MCTraitDefinition
 				name: self name
@@ -30,8 +30,8 @@ Trait >> asClassDefinition [
 				instVarNames: (self localSlots collect: [ :each | each name ])
 				classInstVarNames: (self class localSlots collect: [ :each | each name ])
 				classTraitComposition: classTraitCompositionToUse
-				comment: self organization classComment asString
-				commentStamp: self organization commentStamp
+				comment: self comment
+				commentStamp: self commentStamp
 				]
 		
 	

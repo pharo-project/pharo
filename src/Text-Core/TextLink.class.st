@@ -10,13 +10,6 @@ Class {
 	#category : #'Text-Core-Attributes'
 }
 
-{ #category : #'instance creation' }
-TextLink class >> scanFrom: strm [
-	"read a link in the funny format used by Text styles on files. LPoint +;LPoint Comment;"
-
-	^ self new classAndMethod: (strm upTo: $;)
-]
-
 { #category : #comparing }
 TextLink >> = anotherObject [
 

@@ -281,12 +281,6 @@ SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
 ]
 
-{ #category : #'private helpers' }
-SettingBrowser class >> viewAllSettings [
-	"self viewAllSettings"
-	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
-]
-
 { #category : #menu }
 SettingBrowser >> about [
 	self inform: 'Here you can browse, query and change all system settings' translated

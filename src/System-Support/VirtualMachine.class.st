@@ -317,6 +317,21 @@ VirtualMachine >> imagePath [
 	^ Smalltalk image imagePath
 ]
 
+{ #category : #accessing }
+VirtualMachine >> imageVersionInImageHeader [
+
+	^ self parameterAt: 79
+]
+
+{ #category : #accessing }
+VirtualMachine >> imageVersionInImageHeader: aValue [
+
+	(aValue between: 0 and: 65535)
+		ifFalse: [ self error: 'The image version should be an integer positive of 16bits' ].
+	
+	^ self parameterAt: 79 put: aValue
+]
+
 { #category : #parameters }
 VirtualMachine >> imageVersionNumber [
 	"Image version number (6505 means the Squeak V3 format with BlockClosure support (but _without_ BlockContext support)"
@@ -774,6 +789,7 @@ VirtualMachine >> parameterLabels [
 		76 'total milliseconds spent on JIT compiled methods since startup (read-only)'
 		77 'number of JIT compiled block since startup (read-only)'
 		78 'total milliseconds spent on JIT compiled block since startup (read-only)'
+		79 'Image version stored in the header of the image file'
 		)
 ]
 
@@ -825,6 +841,19 @@ VirtualMachine >> processPreemptionYields: aBoolean [
 	"The Cog VM can be instructed not to yield on process preemption, i.e. not to put a preempted process at the back of its run queue.  By default preempting a process causes it to yield (Blue Book semantics) which can have unfortunate effects. This flag persists across snapshots, stored in the image header."
 
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 4) + (aBoolean ifTrue: [0] ifFalse: [2r100])
+]
+
+{ #category : #accessing }
+VirtualMachine >> saveImageVersionInImageHeader [
+
+	| currentVersion |
+	currentVersion := SystemVersion current.
+
+	"If the primitive is not available we return false"
+	[	self imageVersionInImageHeader: (currentVersion major * 10) + currentVersion minor.
+		^ true ]
+		onErrorDo: [ ^ false ]. 
+		
 ]
 
 { #category : #gc }

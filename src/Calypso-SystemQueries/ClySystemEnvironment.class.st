@@ -189,7 +189,11 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 	"Note: newClassDefinitionString can be a fluid class of a standars one"
 
 	| newClass |
-	[
+	"On parser & semantic errors (including undeclared because we are in the legacy scripting interactive mode),
+	there is UI notification.
+	On execution, some methods might be recompiled and cause issues:
+	* Warnings (undeclared/shadowed) are sillently passed, but should be fixed by the user later.
+	* Errors are unlikely (method should be already broken), but cause (resumable) syntax error for now."
 	newClass := (self classCompilerFor: oldClass)
 		            source: newClassDefinitionString;
 		            requestor: aController;
@@ -197,17 +201,7 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 		            logged: true;
 		            evaluate.
 	"mild ugly hack for fluid classes (and traits)"
-	(newClass isKindOf: FluidClassBuilder) ifTrue: [ newClass := newClass install ]
-	]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |
-			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
-			"Note: this currently prevents legitimate(?) reparations on the superclass name"
-
-			"Note: I hate inserted `->` error messages, but the presentation of errors is the responsibility of `aController`.
-			 and because consistency is a virtue, we should not hack an ad hoc error reporting here"
-			aController notify: ex errorMessage , '->' at: ex location in: newClassDefinitionString.
-			^ nil ].
+	(newClass isKindOf: FluidClassBuilder) ifTrue: [ newClass := newClass install ].
 
 	^ newClass isBehavior
 		  ifTrue: [ newClass ]

@@ -10,87 +10,17 @@ Note, that list and next must be first instance variables.
 "
 Class {
 	#name : #WeakAnnouncementSubscription,
-	#superclass : #Object,
+	#superclass : #AbstractAnnouncementSubscription,
 	#type : #weak,
 	#instVars : [
-		'list',
-		'next',
-		'announcer',
-		'announcementClass',
-		'action'
-	],
-	#classVars : [
-		'FinalizationList'
+		'next'
 	],
 	#category : #'Announcements-Core-Subscription'
 }
 
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizationList [
-
-	^ FinalizationList ifNil: [ FinalizationList := WeakFinalizationList new ]
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizeValues [
-
-	| head |
-
-	head := self finalizationList swapWithNil.
-
-	[ head notNil ] whileTrue: [
-		head finalize.
-		head := head next
-	]
-]
-
 { #category : #'instance creation' }
 WeakAnnouncementSubscription class >> new [
 	^ (self basicNew: 1) initialize
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> action [
-
-	^ action
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> action: anObject [
-
-	action := anObject
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcementClass [
-
-	^ announcementClass
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcementClass: anObject [
-
-	announcementClass := anObject
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcer [
-
-	^ announcer
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcer: anAnnouncer [
-	announcer := anAnnouncer
-]
-
-{ #category : #announcing }
-WeakAnnouncementSubscription >> deliver: anAnnouncement [
-	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
-
-	^ (self handlesAnnouncement: anAnnouncement ) ifTrue: [
-		[action cull: anAnnouncement cull: announcer]
-			on: UnhandledError fork: [:ex | ex pass ]]
 ]
 
 { #category : #finalization }
@@ -102,17 +32,6 @@ WeakAnnouncementSubscription >> finalizationRegistry [
 WeakAnnouncementSubscription >> finalize [
 
 	announcer removeSubscription: self
-]
-
-{ #category : #'error handling' }
-WeakAnnouncementSubscription >> handlesAnnouncement: anAnnouncement [
-
-	^ announcementClass handlesAnnouncement: anAnnouncement
-]
-
-{ #category : #initialization }
-WeakAnnouncementSubscription >> initialize [
-	list := self class finalizationList
 ]
 
 { #category : #converting }
@@ -141,17 +60,6 @@ WeakAnnouncementSubscription >> next [
 	^ next
 ]
 
-{ #category : #printing }
-WeakAnnouncementSubscription >> printOn: stream [
-
-	super printOn: stream.
-
-	stream
-		nextPut: $(;
-		print: action;
-		nextPut: $)
-]
-
 { #category : #finalization }
 WeakAnnouncementSubscription >> register [
 
@@ -176,11 +84,4 @@ WeakAnnouncementSubscription >> subscriber: anObject [
 WeakAnnouncementSubscription >> unregister [
 
 	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> valuable: aValuable [
-	"Used when subscriber should be extracted from valuable object"
-	self action:  aValuable.
-	self subscriber: aValuable receiver
 ]

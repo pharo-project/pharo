@@ -4,7 +4,7 @@ Class {
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 ZnFastLineReaderTest >> testLinesDo [
 	| lines reader |
 	lines := #( 'foo' 'bar' 'last').
@@ -15,7 +15,7 @@ ZnFastLineReaderTest >> testLinesDo [
 		equals: lines
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnFastLineReaderTest >> testNextLine [
 	| reader |
 	reader := ZnFastLineReader on: 'abc' readStream.

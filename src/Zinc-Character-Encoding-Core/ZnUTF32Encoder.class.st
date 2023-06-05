@@ -27,20 +27,31 @@ ZnUTF32Encoder class >> knownEncodingIdentifiers [
 	^ #( 'utf32' 'utf32be' 'utf32le' 'ucs4' 'ucs4be' 'ucs4le')
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF32Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
 	4 timesRepeat: [ stream back ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF32Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer codePoint"
 
 	codePoint > self maximumUTFCode
 		ifTrue: [ ^ self errorOutsideRange ].
 	^ 4
+]
+
+{ #category : #'encoding - decoding' }
+ZnUTF32Encoder >> ensureAtBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further backwards. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Each code point is encoded using exaxtly 4 bytes, move backwards until our position is divisible by 4"
+
+	[ stream position \\ 4 = 0 ] whileFalse: [ stream back ]
 ]
 
 { #category : #'error handling' }
@@ -53,7 +64,7 @@ ZnUTF32Encoder >> identifier [
 	^ #utf32
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF32Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
@@ -66,7 +77,7 @@ ZnUTF32Encoder >> nextCodePointFromStream: stream [
 	^ codePoint
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnUTF32Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
@@ -103,6 +114,17 @@ ZnUTF32Encoder >> readCodePointFrom: stream [
 			(byte1 bitShift: 24) + (byte2 bitShift: 16) + (byte3 bitShift: 8) + byte4 ]
 		ifFalse: [
 			(byte4 bitShift: 24) + (byte3 bitShift: 16) + (byte2 bitShift: 8) + byte1 ]
+]
+
+{ #category : #'encoding - decoding' }
+ZnUTF32Encoder >> skipToBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further forward. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Each code point is encoded using exaxtly 4 bytes, move forward until our position is divisible by 4"
+
+	[ stream position \\ 4 = 0 ] whileFalse: [ stream next ]
 ]
 
 { #category : #private }

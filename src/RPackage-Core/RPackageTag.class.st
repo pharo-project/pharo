@@ -74,7 +74,9 @@ RPackageTag >> classes [
 
 { #category : #accessing }
 RPackageTag >> ensureSystemCategory [
-	SystemOrganization addCategory: self categoryName
+	"We should not hardcode the global variable but ask the package organizer for the organization."
+
+	Smalltalk organization addCategory: self categoryName
 ]
 
 { #category : #accessing }
@@ -84,7 +86,17 @@ RPackageTag >> extendedClasses [
 
 { #category : #accessing }
 RPackageTag >> extensionCategoriesForClass: aClass [
-	^ self package extensionCategoriesForClass: aClass
+
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
+]
+
+{ #category : #accessing }
+RPackageTag >> extensionProtocolsForClass: aClass [
+
+	^ self package extensionProtocolsForClass: aClass
 ]
 
 { #category : #testing }

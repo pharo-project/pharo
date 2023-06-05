@@ -110,7 +110,7 @@ RBMoveMethodsToClassSideDriver >> refactoringError [
 		                errorStrings
 			                do: [ :str | stream << str ]
 			                separatedBy: [ stream << String cr ] ].
-	RBRefactoringFailure signal: errorStrings
+	RBRefactoringError signal: errorStrings
 ]
 
 { #category : #accessing }

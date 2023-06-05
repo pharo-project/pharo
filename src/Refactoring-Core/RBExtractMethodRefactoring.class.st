@@ -104,7 +104,7 @@ RBExtractMethodRefactoring >> checkSpecialExtractions [
 	node := self placeholderNode parent.
 	node ifNil: [^self].
 	(node isAssignment and: [node variable = self placeholderNode]) ifTrue:
-			[self refactoringFailure: 'Cannot extract left hand side of an assignment'].
+			[self refactoringError: 'Cannot extract left hand side of an assignment'].
 	node isCascade ifTrue:
 			[self refactoringError: 'Cannot extract first message of a cascaded message']
 ]
@@ -151,18 +151,16 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> extractMethod [
-	| parseTree isSequence extractCode subtree newCode errorMessage |
+	| parseTree isSequence extractCode subtree newCode |
 	extractCode := self getExtractedSource.
-	extractedParseTree := self parserClass
-		parseExpression: extractCode
-		onError: [ :string :pos :parser |
-			errorMessage := string.
-			parser parseErrorNode: string ].
+	extractedParseTree := self parserClass new
+		source: extractCode;
+		parseExpression.
 	extractedParseTree
-		ifNil: [ self refactoringFailure: 'Invalid source to extract' ].
+		ifNil: [ self refactoringError: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
 		ifTrue: [ self
-				refactoringFailure: 'Invalid source to extract - ' , errorMessage ].
+				refactoringError: 'Invalid source to extract - ' , extractedParseTree allErrorNotices first messageText ].
 	(extractedParseTree isSequence
 		and: [ extractedParseTree statements isEmpty ])
 		ifTrue: [ self refactoringError: 'Select some code to extract' ].
@@ -182,7 +180,7 @@ RBExtractMethodRefactoring >> extractMethod [
 	extractedParseTree source: extractCode.
 	parseTree := class parseTreeForSelector: selector.
 	parseTree
-		ifNil: [ self refactoringFailure: 'Could not parse ' , selector printString ].
+		ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
 	subtree := isSequence
 		ifTrue: [ self parseTreeSearcherClass
 				treeMatchingStatements: extractedParseTree body formattedCode
@@ -190,7 +188,7 @@ RBExtractMethodRefactoring >> extractMethod [
 		ifFalse:
 			[ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
 	subtree
-		ifNil: [ self refactoringFailure: 'Could not extract code from method' ].
+		ifNil: [ self refactoringError: 'Could not extract code from method' ].
 	newCode := self methodDelimiter.
 	isSequence
 		ifTrue: [ | stmts |
@@ -226,7 +224,7 @@ RBExtractMethodRefactoring >> getExtractedSource [
 	source := class sourceCodeFor: selector.
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
-			ifFalse: [self refactoringFailure: 'Invalid interval'].
+			ifFalse: [self refactoringError: 'Invalid interval'].
 	^source copyFrom: extractionInterval first to: extractionInterval last
 ]
 
@@ -237,7 +235,7 @@ RBExtractMethodRefactoring >> getNewMethodName [
 	methodName arguments: parameters.
 
 	[newMethodName := self requestMethodNameFor: methodName.
-	newMethodName ifNil: [self refactoringFailure: 'Did not extract code'].
+	newMethodName ifNil: [self refactoringError: 'Did not extract code'].
 	newSelector := newMethodName selector.
 	(self checkMethodName: newSelector in: class)
 		ifFalse:
@@ -346,7 +344,7 @@ RBExtractMethodRefactoring >> placeholderNode [
 	node := self parseTreeSearcherClass
 		treeMatching: self methodDelimiter
 		in: modifiedParseTree.
-	node ifNil: [ self refactoringFailure: 'Cannot extract code' ].
+	node ifNil: [ self refactoringError: 'Cannot extract code' ].
 	^ node
 ]
 
@@ -399,7 +397,7 @@ RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [
 					dictionary at: each name
 						ifAbsent:
 							[self
-								refactoringFailure: 'An internal error occured, please report this error.']]
+								refactoringError: 'An internal error occured, please report this error.']]
 ]
 
 { #category : #transforming }
@@ -471,7 +469,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 	conditions check
 		ifFalse: [ block := conditions errorBlock.
 			block
-				ifNotNil: [ self refactoringError: conditions errorString with: block ]
+				ifNotNil: [ self refactoringWarning: conditions errorString with: block ]
 				ifNil: [ self refactoringError: conditions errorString ] ].
 	(self parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].

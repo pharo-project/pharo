@@ -39,7 +39,7 @@ RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aC
 
 	aCollection do: [ : className |
 		| refactoring |
-		refactoring := RBInsertClassTransformation
+		refactoring := RBInsertNewClassTransformation
 						addClass: className
 						superclass: #Object
 						subclasses: #()

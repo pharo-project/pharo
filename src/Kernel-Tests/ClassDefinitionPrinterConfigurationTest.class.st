@@ -50,5 +50,5 @@ ClassDefinitionPrinterConfigurationTest >> testToggleIsWorking [
 	| value |
 	value := ClassDefinitionPrinter showFluidClassDefinition.
 	ClassDefinitionPrinter toggleShowFluidClassDefinition.
-	self assert: ClassDefinitionPrinter showFluidClassDefinition equals: value not
+	self deny: ClassDefinitionPrinter showFluidClassDefinition equals: value
 ]

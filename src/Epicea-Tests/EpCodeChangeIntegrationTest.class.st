@@ -26,7 +26,7 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 	aClass := classFactory newClass.
 	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 0.
 
-	aClass classComment: 'hey!' stamp: DateAndTime now.
+	aClass comment: 'hey!' stamp: DateAndTime now.
 	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 1
 ]
 
@@ -267,7 +267,7 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 EpCodeChangeIntegrationTest >> testProtocolAddition [
 
 	aClass := classFactory newClass.
-	aClass organization addCategory: #testing42.
+	aClass addProtocol: #testing42.
 
 	self assert: (self countLogEventsWith: EpProtocolAddition) equals: 1
 ]

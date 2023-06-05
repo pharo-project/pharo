@@ -22,23 +22,30 @@ OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 	"This method intercepts the SyntaxErrorNotification and prevent the SyntaxError morph to open.
 	The notification errorCode hold the source of evaluated sub-selection with inserted error message.
 	This can be compared to expected error notification."
-	1 to: self numberOfSelections do: [:n |
+
+	1 to: self numberOfSelections do: [ :n |
 		| result |
-		result := [self evaluateSelectionNumber: n] on: SyntaxErrorNotification do: [:exc |
-			| expectedNotification expectedNotificationLocation |
-			expectedNotification := (expectedErrors at: n) allButFirst allButLast: 3.
-			expectedNotificationLocation := (expectedErrorPositions at: n) - (morph editor startIndex - 1).
-			self assert: exc location equals: expectedNotificationLocation.
-			self assert: exc errorMessage asString equals: expectedNotification.
-			exc return: nil]]
+		result := [ self evaluateSelectionNumber: n ]
+			          on: CodeError
+			          do: [ :exc |
+				          | expectedNotification expectedNotificationLocation |
+				          expectedNotification := (expectedErrors at: n)
+					                                  allButFirst allButLast: 3.
+				          expectedNotificationLocation := (expectedErrorPositions
+					                                           at: n)
+				                                          -
+				                                          (morph editor startIndex
+				                                           - 1).
+				          self
+					          assert: exc location
+					          equals: expectedNotificationLocation.
+				          self
+					          assert: exc messageText asString
+					          equals: expectedNotification.
+				          exc return: nil ] ]
 ]
 
 { #category : #private }
 OCCompilerSyntaxErrorNotifyingTest >> evaluateSelection [
-	^ OpalCompiler new
-		source: morph editor selection readStream;
-		"Note subtle difference versus  (morph editor selectionAsStream).
-		The later does not answer the same contents and would raise a SyntaxErrorNotification with wrong sub-selection"
-		failBlock: [^failure];
-		evaluate
+	^ OpalCompiler new evaluate: morph editor selection
 ]

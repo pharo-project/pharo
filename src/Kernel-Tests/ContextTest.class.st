@@ -164,7 +164,7 @@ ContextTest >> testAstScope [
 	self assert: scope isOptimized.
 
 	"test that we do not get a block scope when pushing a block on the stack"
-	aMethodContext pc: 92 + 1.
+	aMethodContext pc: 95 + 1.
 	scope := aMethodContext astScope.
 	self assert: aMethodContext sourceNodeExecuted isBlock.
 	self deny: scope isBlockScope
@@ -184,11 +184,11 @@ ContextTest >> testHasNonLocalReturn [
 	self deny: thisContext hasNonLocalReturn.
 	"this block context has no non-local return"
 	[ self deny: thisContext hasNonLocalReturn] value.
-	"but this"
-	[ self assert: thisContext hasNonLocalReturn. ^self] value.
 	"again, this is about the context locally, nested blocks to not count"
-	[ self deny: thisContext hasNonLocalReturn. [^self]] value.
-	[ self deny: thisContext hasNonLocalReturn. [self assert: thisContext hasNonLocalReturn. ^self]] value
+	[ self deny: thisContext hasNonLocalReturn. [ ^ self ] ] value.
+	[ self deny: thisContext hasNonLocalReturn ] value.
+	"We need to have the ^ self but as this assertion is at the end is not a problem if we return"
+	[ self assert: thisContext hasNonLocalReturn. ^ self ] value.
 ]
 
 { #category : #tests }

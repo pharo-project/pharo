@@ -27,7 +27,7 @@ ZnCharacterEncoderTest class >> unicodeCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '         ', 'éèçüäßñα', '€∏'
 ]
 
-{ #category : #private }
+{ #category : #'test support' }
 ZnCharacterEncoderTest >> decodeBytes: bytes with: encoder [
 	| input |
 	input := bytes readStream.
@@ -36,7 +36,7 @@ ZnCharacterEncoderTest >> decodeBytes: bytes with: encoder [
 			stream nextPut: (encoder nextFromStream: input) ] ]
 ]
 
-{ #category : #private }
+{ #category : #'test support' }
 ZnCharacterEncoderTest >> encodeString: string with: encoder [
 	^ ByteArray streamContents: [ :stream |
 		string do: [ :each |

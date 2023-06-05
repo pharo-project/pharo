@@ -277,11 +277,9 @@ NECMenuMorph >> delete [
 { #category : #drawing }
 NECMenuMorph >> detailMessage [
 
-	^ String streamContents: [:stream |
-		NECPreferences captureNavigationKeys ifTrue: [
-			stream << (detailMorph
-				ifNil: ['cmd-> open detail']
-				ifNotNil: ['cmd<- close detail']	) ] ]
+	^ self itemsCount isZero
+		  ifTrue: [ 'no entries' ]
+		  ifFalse: [ 'cmd+B browse entry' ]
 ]
 
 { #category : #accessing }
@@ -436,6 +434,12 @@ NECMenuMorph >> gotoPage: anInteger [
 { #category : #'event handling' }
 NECMenuMorph >> handlesMouseDown: anEvent [
 	^ true
+]
+
+{ #category : #actions }
+NECMenuMorph >> hasDetail [
+
+	^ detailMorph notNil
 ]
 
 { #category : #drawing }
@@ -657,6 +661,7 @@ NECMenuMorph >> takesKeyboardFocus [
 NECMenuMorph >> updateDetail [
 	detailMorph
 		ifNil: [^ self].
+	detailPosition ifNil: [^ self].
 	detailMorph
 		entryDescription: (self selectedEntry description);
 		position: detailPosition menuWidth: self width;

@@ -6,16 +6,10 @@ Class {
 
 { #category : #utilities }
 MethodMapTest >> compileAndRunExample: aSelector [
-	| cm |
-
-	cm := self compileMethod:  MethodMapExamples>>aSelector.
-	^cm valueWithReceiver:  MethodMapExamples new arguments: #()
-]
-
-{ #category : #utilities }
-MethodMapTest >> compileMethod: aMethod [
-
-	^aMethod parseTree generate: aMethod trailer
+	| oldMethod recompiledMethod |
+	oldMethod := MethodMapExamples>>aSelector.
+	recompiledMethod := oldMethod methodClass compiler compile: oldMethod sourceCode.
+	^recompiledMethod valueWithReceiver: MethodMapExamples new
 ]
 
 { #category : #'tests - ast mapping' }
@@ -70,6 +64,17 @@ MethodMapTest >> testBlockWithTempsSourceNode [
 	| sourceNode |
 	sourceNode := [ | t1 t2 | ] sourceNode.
 	self assert: sourceNode equals: (self parseExpression: '[ | t1 t2 | ]')
+]
+
+{ #category : #'tests - ast mapping' }
+MethodMapTest >> testCompiledBlockSourceNode [
+
+	| method block |
+	"if we compile a method, but to not install it, make sure that we can map the block to the AST"
+
+	method := OpalCompiler new compile: 'foo Object. [ self ]. ^ #bar'.
+	block := method literals detect: #isCompiledBlock.
+	self assert: block sourceNode equals: (self parseExpression: '[ self ]')
 ]
 
 { #category : #'tests - temp access' }

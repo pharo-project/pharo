@@ -5,8 +5,8 @@ Class {
 	#name : #BlockClosureTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'aBlockContext',
-		'contextOfaBlockContext'
+		'aBlock',
+		'contextOfaBlock'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -21,8 +21,8 @@ BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 BlockClosureTest >> setUp [
 	super setUp.
 	"we reference self to force a full block"
-	aBlockContext := [self . 100@100 corner: 200@200].
-	contextOfaBlockContext := thisContext
+	aBlock := [self . 100@100 corner: 200@200].
+	contextOfaBlock := thisContext
 ]
 
 { #category : #'tests - evaluating' }
@@ -187,7 +187,7 @@ BlockClosureTest >> testIsClean [
 	self deny: [^nil] isClean. "closes over home (^-return)"
 	self deny: [self] isClean. "closes over the receiver"
 	self deny: [super testIsClean] isClean. "closes over the receiver"
-	self deny: [contextOfaBlockContext] isClean. "closes over the receiver (to access the inst var contextOfaBlockContext)"
+	self deny: [contextOfaBlock] isClean. "closes over the receiver (to access the inst var contextOfaBlockContext)"
 	self deny: [local] isClean. "closes over local variable of outer context"
 ]
 
@@ -359,29 +359,24 @@ BlockClosureTest >> testPrintOn [
 
 { #category : #'tests - printing' }
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
-	| method copy start block |
-	"Generating method with source code"
-	UndefinedObject compile: 'method ^ [ 1 + 2 ]'.
-	method := UndefinedObject >> #method.
-	["Removing the source code of method"
-		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
-		start := method endPC + 1.
-		method replaceFrom: start to: method size with: copy startingAt: start.
-		block := nil method.
-
-		self deny: method hasSourceCode.
-		self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
-	] ensure: [ method removeFromSystem ]
+	| method block |
+	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
+	method removeProperty: #source.
+	self deny: method hasSourceCode.
+	
+	block := method valueWithReceiver: nil.
+	"we compare the ast to not depend on pretty printer settings"
+	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
 ]
 
 { #category : #tests }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
 
-	self assert: aBlockContext home equals: contextOfaBlockContext.
-	self assert: aBlockContext receiver equals: self.
+	self assert: aBlock home equals: contextOfaBlock.
+	self assert: aBlock receiver equals: self.
 	"Depending on the closure implementation, it's either a compiled block, a compiled method or nil."
-	self assert: (aBlockContext method isNil or: [ aBlockContext method isKindOf: CompiledCode ])
+	self assert: (aBlock method isNil or: [ aBlock method isKindOf: CompiledCode ])
 ]
 
 { #category : #tests }
@@ -478,9 +473,9 @@ BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
 { #category : #'tests - evaluating' }
 BlockClosureTest >> testValueWithArguments [
 
-	self shouldnt: [ aBlockContext valueWithArguments: #() ] raise: ArgumentsCountMismatch.
+	self shouldnt: [ aBlock valueWithArguments: #() ] raise: ArgumentsCountMismatch.
 
-	self should: [ aBlockContext valueWithArguments: #(1) ] raise: ArgumentsCountMismatch
+	self should: [ aBlock valueWithArguments: #(1) ] raise: ArgumentsCountMismatch
 		withExceptionDo: [ :err |
 			self assert: err expectedArgumentsCount equals: 0.
 			self assert: err calledArgumentsCount equals: 1 ].
@@ -495,11 +490,11 @@ BlockClosureTest >> testValueWithArguments [
 BlockClosureTest >> testValueWithArgumentsWithOrderedCollection [
 
 	self
-		shouldnt: [ aBlockContext valueWithArguments: #() asOrderedCollection ]
+		shouldnt: [ aBlock valueWithArguments: #() asOrderedCollection ]
 		raise: ArgumentsCountMismatch.
 
 	self
-		should: [ aBlockContext valueWithArguments: #(1) asOrderedCollection ]
+		should: [ aBlock valueWithArguments: #(1) asOrderedCollection ]
 		raise: ArgumentsCountMismatch
 		withExceptionDo: [ :err |
 			self assert: err expectedArgumentsCount equals: 0.

@@ -35,15 +35,14 @@ ClassHierarchyTest >> testObjectFormatInstSize [
 
 { #category : #tests }
 ClassHierarchyTest >> testSubclassInstVar [
+
 	| subclasses |
-	SystemNavigation new
-		allClassesDo: [ :cls |
-			subclasses := cls subclasses.
-			self assert: subclasses isNil not.
-			subclasses
-				do: [ :subclass |
-					self assert: (subclasses occurrencesOf: subclass) equals: 1.
-					self assert: subclass superclass identicalTo: cls ] ]
+	SystemNavigation new allClassesDo: [ :cls |
+		subclasses := cls subclasses.
+		self deny: subclasses isNil.
+		subclasses do: [ :subclass |
+			self assert: (subclasses occurrencesOf: subclass) equals: 1.
+			self assert: subclass superclass identicalTo: cls ] ]
 ]
 
 { #category : #tests }

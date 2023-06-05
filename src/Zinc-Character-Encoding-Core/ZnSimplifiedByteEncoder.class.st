@@ -152,12 +152,12 @@ ZnSimplifiedByteEncoder >> = anObject [
 	^ super = anObject and: [ self identifier = anObject identifier ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnSimplifiedByteEncoder >> backOnStream: stream [
 	stream back
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnSimplifiedByteEncoder >> beLenient [
 	"Don't be strict, which is the default.
 	This means that holes in the mapping are let to pass through."
@@ -172,7 +172,7 @@ ZnSimplifiedByteEncoder >> byteDomain [
 	^ (0 to: 127) asArray , ((byteToUnicode withIndexCollect: [ :each :index | each ifNotNil: [ index + 127 ] ]) reject: [ :each | each isNil ])
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnSimplifiedByteEncoder >> byteToUnicode: map [
 	byteToUnicode := map
 ]
@@ -184,16 +184,25 @@ ZnSimplifiedByteEncoder >> characterDomain [
 	^ ((0 to: 127) asSet, unicodeToByte keys) collect: [ :each | Character value: each  ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnSimplifiedByteEncoder >> encodedByteCountFor: character [
 	"Overwritten for performance reasons"
 
 	^ 1
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnSimplifiedByteEncoder >> encodedByteCountForCodePoint: character [
 	^ 1
+]
+
+{ #category : #'encoding - decoding' }
+ZnSimplifiedByteEncoder >> ensureAtBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further backwards. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
 ]
 
 { #category : #comparing }
@@ -206,7 +215,7 @@ ZnSimplifiedByteEncoder >> identifier [
 	^ identifier
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ZnSimplifiedByteEncoder >> identifier: object [
 	identifier := object
 ]
@@ -227,7 +236,7 @@ ZnSimplifiedByteEncoder >> isStrict [
 	^ strict
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnSimplifiedByteEncoder >> nextCodePointFromStream: stream [
 	"In non-strict mode, we let byte values for holes in our mapping pass through"
 
@@ -243,7 +252,7 @@ ZnSimplifiedByteEncoder >> nextCodePointFromStream: stream [
 						ifFalse: [ byteValue ] ] ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnSimplifiedByteEncoder >> nextFromStream: stream [
 	"In non-strict mode, we let byte values for holes in our mapping pass through.
 	Overwritten for performance reasons"
@@ -260,7 +269,7 @@ ZnSimplifiedByteEncoder >> nextFromStream: stream [
 						ifFalse: [ Character value: byteValue ] ] ]
 ]
 
-{ #category : #converting }
+{ #category : #'encoding - decoding' }
 ZnSimplifiedByteEncoder >> nextPutCodePoint: codePoint toStream: stream [
 	"In non-strict mode, we let code points for holes in our mapping table pass through"
 
@@ -285,7 +294,16 @@ ZnSimplifiedByteEncoder >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'encoding - decoding' }
+ZnSimplifiedByteEncoder >> skipToBeginOfCodePointOnStream: stream [
+	"Ensure that the current position of stream is a the beginning of an encoded code point,
+	if not move further forward. This is necessary when a position in the binary stream is set,
+	not knowing if that position is on a proper encoded character boundary."
+
+	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
+]
+
+{ #category : #initialization }
 ZnSimplifiedByteEncoder >> unicodeToByte: map [
 	unicodeToByte := map
 ]

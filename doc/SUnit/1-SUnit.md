@@ -11,7 +11,7 @@ You write a method, accept the code and test it by writing a small script in a w
 
 SUnit allows writing tests on Smalltalk source code and checking results. This is usually done in a tool called TestRunner which you can either open from the Pharo world menu or by evaluating:
 
-```
+```st
    TestRunner open
 ```
 

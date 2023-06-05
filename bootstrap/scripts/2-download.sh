@@ -7,6 +7,8 @@
 set -x
 set -e
 
+echo $(date -u) "Bootstrap: Beginning to download resources required for bootstrap process"
+
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 . ${SCRIPTS}/envvars.sh
@@ -33,7 +35,8 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 	set_version_variables
 	TEST_VM_KIND="vmLatest"
 	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT_VERSION} ${TEST_VM_KIND} $BOOTSTRAP_ARCH
-	cd -
+
+  cd -
 	echo "Target VM: $(${VM} --version)"
 fi
 

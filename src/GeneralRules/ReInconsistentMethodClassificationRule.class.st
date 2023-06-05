@@ -42,16 +42,12 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 
 { #category : #helpers }
 ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
-	| supercategory |
-	supercategory := (aMethod methodClass superclass lookupSelector:
-		                  aMethod selector) protocol.
 
-	^ (ReRefactoringCritique
-		   withAnchor: (self anchorFor: aMethod)
-		   by: self) refactoring: (RBMethodProtocolTransformation
-			   protocol: { supercategory }
-			   inMethod: aMethod selector
-			   inClass: aMethod methodClass name) asRefactoring
+	| protocolInSuperclass |
+	protocolInSuperclass := (aMethod methodClass superclass lookupSelector: aMethod selector) protocol.
+
+	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
+		  (RBMethodProtocolTransformation protocol: { protocolInSuperclass } inMethod: aMethod selector inClass: aMethod methodClass name) asRefactoring
 ]
 
 { #category : #accessing }

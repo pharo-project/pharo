@@ -28,9 +28,8 @@ DoItChunk >> importFor: requestor logSource: logSource [
 
 	(contents beginsWith: '----') ifTrue: [ ^self ].
 
-	SystemAnnouncer uniqueInstance announce: (DoItChunkImported new
+	SystemAnnouncer announce: (DoItChunkImported new
 		contents: contents;
-		requestor: requestor;
 		logSource: logSource;
 		yourself).
 
