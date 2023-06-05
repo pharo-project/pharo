@@ -13,7 +13,7 @@ Class {
 
 { #category : #tagging }
 ReflectivityControlTest >> recordLevel [
-	tag := Processor activeProcess level
+	tag := thisProcess level
 ]
 
 { #category : #tagging }
@@ -847,7 +847,7 @@ ReflectivityControlTest >> testConditionMetaLevel [
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
-		condition: [ self assert: Processor activeProcess level identicalTo: 1.
+		condition: [ self assert: thisProcess level identicalTo: 1.
 			true ];
 		level: 0;
 		arguments: #(#node).
