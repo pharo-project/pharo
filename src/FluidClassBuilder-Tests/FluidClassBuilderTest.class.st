@@ -16,6 +16,12 @@ FluidClassBuilderTest >> builder [
 	^ builder
 ]
 
+{ #category : #accessing }
+FluidClassBuilderTest >> packageNameForTest [
+
+	^ #FakedCore
+]
+
 { #category : #'private - cleanup' }
 FluidClassBuilderTest >> removeTestArtifactsFromSystem [
 
@@ -38,13 +44,7 @@ FluidClassBuilderTest >> setUp [
 { #category : #running }
 FluidClassBuilderTest >> tearDown [
 
-	self class environment at: #Point2 ifPresent: [ :cl | cl removeFromSystem ].
-
-	(Smalltalk organization packageNamed: #Mock ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
-
-	(Smalltalk organization packageNamed: #FakedCore ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
-
-
+	(Smalltalk organization packageNamed: self packageNameForTest ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
 
 	super tearDown
 ]
@@ -58,7 +58,7 @@ FluidClassBuilderTest >> testBuildClassSlotsAPI [
 	builder classSlots: {#classX . #classY}.
 	"pay attention classSlots: is not to be sent by the user.
 	users should only send slots:"
-	builder package: 'FakedCore'.
+	builder package: self packageNameForTest.
 	clas := builder build.
 
 	self assert: clas superclass equals: Object.
@@ -75,7 +75,7 @@ FluidClassBuilderTest >> testBuildClassTraitsAPI [
 	builder classTraits: { TViewModelMock2 classTrait }.
 	"pay attention classTraits: is not to be sent by the user.
 	users should only send traits:"
-	builder package: 'FakedCore'.
+	builder package: self packageNameForTest.
 	clas := builder build.
 
 	self assert: clas superclass equals: Object.
@@ -99,14 +99,14 @@ FluidClassBuilderTest >> testBuildSimplePoint2 [
 	| clas |
 	builder := Object << #Point2.
 	builder slots: { #x . #y }.
-	builder package: 'FakedCore'.
+	builder package: self packageNameForTest.
 	clas := builder build.
 
 	self assert: clas superclass equals: Object.
 	self assert: clas name equals: #Point2.
 	self assert: clas slots size equals: 2.
 	self flag: #askPablo.
-	"self assert: clas package packageName equals: 'FakedCore'"
+	"self assert: clas package packageName equals: self packageNameForTest"
 ]
 
 { #category : #'tests - gathering' }
@@ -186,7 +186,7 @@ FluidClassBuilderTest >> testBuilderWithTag [
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
-	Smalltalk organization registerPackageNamed: #Mock.
+	Smalltalk organization registerPackageNamed: self packageNameForTest.
 
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
@@ -195,7 +195,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 		               sharedVariables: { #AAA };
 		               sharedPools: { #TextConstants };
 		               tag: 'boring';
-		               package: 'Mock'.
+		               package: self packageNameForTest.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
@@ -223,8 +223,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 
 	| instBuilder newClass clasBuilder |
-	instBuilder := (Object << #Point2
-		package: 'Mock').
+	instBuilder := Object << #Point2 package: self packageNameForTest.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
@@ -282,19 +281,17 @@ FluidClassBuilderTest >> testCreateBuilderWithNil [
 
 { #category : #'tests - mandatory' }
 FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimum [
-
 	"check ClassDescription>>#definitionFullExpanded"
 
 	| shiftClassBuilder |
-	builder := self class compilerClass new
-		           evaluate: 'Object << #MyClass
+	builder := self class compilerClass new evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
 	slots: {};
 	sharedVariables: {};
 	tag: '''' ;
 	sharedPools: {};
-	package: ''Mock'''.
+	package: ''' , self packageNameForTest , ''''.
 	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 
@@ -312,14 +309,17 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 FluidClassBuilderTest >> testCreatedClassHasAllElements [
 
 	| instBuilder newClass |
-	instBuilder := (Object << #Point2
-		slots: { #a. #b };
-		layout: WeakLayout;
-		traits: {TViewModelMock };
-		sharedVariables: { #AAA};
-		sharedPools: { #TextConstants};
-		tag: 'boring' ;
-		package: 'Mock').
+	"Next line is a hack because of the category mess of RPackage."
+	Smalltalk organization registerPackageNamed: self packageNameForTest.
+
+	instBuilder := (Object << #Point2)
+		               slots: { #a. #b };
+		               layout: WeakLayout;
+		               traits: { TViewModelMock };
+		               sharedVariables: { #AAA };
+		               sharedPools: { #TextConstants };
+		               tag: 'boring';
+		               package: self packageNameForTest.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
@@ -328,21 +328,20 @@ FluidClassBuilderTest >> testCreatedClassHasAllElements [
 
 	self assert: newClass name equals: #Point2.
 	self assert: newClass slots size equals: 2.
-	self assert: newClass slotNames equals: #(a b).
+	self assert: newClass slotNames equals: #( a b ).
 	self assert: newClass classLayout class equals: WeakLayout.
-	self assert: newClass traitComposition equals: {TViewModelMock} asTraitComposition.
-	self assert: newClass class traitComposition equals: {TViewModelMock classSide} asTraitComposition.
-	self assert: newClass classVarNames equals: #(AAA).
-	self assertCollection: newClass sharedPools hasSameElements: {TextConstants}.
-	self assert: newClass category equals: 'Mock-boring'
+	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
+	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
+	self assert: newClass classVarNames equals: #( AAA ).
+	self assertCollection: newClass sharedPools hasSameElements: { TextConstants }.
+	self assert: newClass category equals: self packageNameForTest , '-boring'
 ]
 
 { #category : #'tests - class creation' }
 FluidClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 
 	| instBuilder newClass |
-	instBuilder := (Object << #Point2
-		package: 'Mock').
+	instBuilder := Object << #Point2 package: self packageNameForTest.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
@@ -350,32 +349,33 @@ FluidClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 	newClass := instBuilder install.
 
 	self assert: newClass name equals: #Point2.
-	self assert: newClass slotNames equals: #().
+	self assert: newClass slotNames equals: #(  ).
 	self assert: newClass classLayout class equals: FixedLayout.
-	self assert: newClass traitComposition equals: {} asTraitComposition.
-	self assert: newClass class traitComposition equals: {} asTraitComposition.
-	self assert: newClass classVarNames equals: #().
-	self assertCollection: newClass sharedPools hasSameElements: {}.
-	self assert: newClass category equals: 'Mock'
+	self assert: newClass traitComposition equals: {  } asTraitComposition.
+	self assert: newClass class traitComposition equals: {  } asTraitComposition.
+	self assert: newClass classVarNames equals: #(  ).
+	self assertCollection: newClass sharedPools hasSameElements: {  }.
+	self assert: newClass category equals: self packageNameForTest
 ]
 
 { #category : #'tests - class creation' }
 FluidClassBuilderTest >> testExistingClassWithClassSlot [
 
 	| instBuilder newClass |
+	"Next line is a hack because of the category mess of RPackage."
+	Smalltalk organization registerPackageNamed: self packageNameForTest.
 
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	When redefining the instance side, the class slot should not be lost."
-
-	instBuilder := (Object << #Point2
-		slots: { #a. #b };
-		layout: WeakLayout;
-		traits: {TViewModelMock };
-		sharedVariables: { #BBB};
-		classSlots: #(AAA);
-		sharedPools: { #TextConstants};
-		tag: 'boring' ;
-		package: 'Mock').
+	instBuilder := (Object << #Point2)
+		               slots: { #a. #b };
+		               layout: WeakLayout;
+		               traits: { TViewModelMock };
+		               sharedVariables: { #BBB };
+		               classSlots: #( AAA );
+		               sharedPools: { #TextConstants };
+		               tag: 'boring';
+		               package: self packageNameForTest.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
@@ -384,14 +384,14 @@ FluidClassBuilderTest >> testExistingClassWithClassSlot [
 
 	self assert: newClass class slots first name equals: #AAA.
 
-	instBuilder := (Object << #Point2
-		slots: { #a. #b. #c };
-		layout: WeakLayout;
-		traits: {TViewModelMock };
-		sharedVariables: { #BBB};
-		sharedPools: { #TextConstants};
-		tag: 'boring' ;
-		package: 'Mock').
+	instBuilder := (Object << #Point2)
+		               slots: { #a. #b. #c };
+		               layout: WeakLayout;
+		               traits: { TViewModelMock };
+		               sharedVariables: { #BBB };
+		               sharedPools: { #TextConstants };
+		               tag: 'boring';
+		               package: 'Mock'.
 
 	newClass := instBuilder install.
 
@@ -402,19 +402,21 @@ FluidClassBuilderTest >> testExistingClassWithClassSlot [
 FluidClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 
 	| instBuilder newClass classBuilder |
+	"Next line is a hack because of the category mess of RPackage."
+	Smalltalk organization registerPackageNamed: self packageNameForTest.
 
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	Then we are removing the classSlot, it should remove it"
 
-	instBuilder := (Object << #Point2
-		slots: { #a. #b };
-		layout: WeakLayout;
-		traits: {TViewModelMock };
-		sharedVariables: { #BBB};
-		classSlots: #(AAA);
-		sharedPools: { #TextConstants};
-		tag: 'boring' ;
-		package: 'Mock').
+	instBuilder := (Object << #Point2)
+		               slots: { #a. #b };
+		               layout: WeakLayout;
+		               traits: { TViewModelMock };
+		               sharedVariables: { #BBB };
+		               classSlots: #( AAA );
+		               sharedPools: { #TextConstants };
+		               tag: 'boring';
+		               package: self packageNameForTest.
 
 	"Ideally we should not install the class but just build it (sending instBuilder build)
 	the problem is that category and tag are lost by the class builder.
@@ -427,7 +429,7 @@ FluidClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 
 	newClass := classBuilder install.
 
-	self assert: newClass class slots equals: #()
+	self assert: newClass class slots equals: #(  )
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -439,16 +441,16 @@ FluidClassBuilderTest >> testFillShiftClassBuilder [
 	builder sharedVariables: {  #Share1 . #Share2 }.
 	builder sharedPools: { ChronologyConstants }.
 	builder tag: 'Mafia'.
-	builder package: 'FakedCore'.
+	builder package: self packageNameForTest.
 	builder fillShiftClassBuilder.
 	shift := builder shiftClassBuilder.
 	self assert: shift superclass equals: Object.
 	self assert: shift name equals: #Point2.
 	self assert: shift slots size equals: 2.
 	self assert: shift sharedPools equals: {ChronologyConstants}.
-	self assert: shift category equals: 'FakedCore-Mafia'.
+	self assert: shift category equals: self packageNameForTest, '-Mafia'.
 	self flag: #askPablo.
-	"self assert: clas package packageName equals: 'FakedCore'"
+	"self assert: clas package packageName equals: self packageNameForTest"
 ]
 
 { #category : #'tests - mandatory' }
@@ -457,20 +459,19 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	| shiftClassBuilder installedClass |
 	self removeTestArtifactsFromSystem.
 	[
-	builder := self class compilerClass new
-		           evaluate: 'Object << #MyClass
+	builder := self class compilerClass new evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
 	slots: {};
 	sharedVariables: {};
 	tag: '''' ;
 	sharedPools: {};
-	package: ''MyPackage'''.
+	package: ''' , self packageNameForTest , ''''.
 	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
 
-	installedClass := self class environment at: #MyClass ifAbsent: [self fail].
+	installedClass := self class environment at: #MyClass ifAbsent: [ self fail ].
 
 	self assert: installedClass superclass equals: Object.
 	self assert: installedClass name equals: #MyClass.
@@ -478,8 +479,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	self assert: installedClass slots isEmpty.
 	self assert: installedClass traitComposition isEmpty.
 	self assert: installedClass classVariables isEmpty.
-	self assert: installedClass sharedPools isEmpty]
-		ensure: [ self removeTestArtifactsFromSystem ]
+	self assert: installedClass sharedPools isEmpty ] ensure: [ self removeTestArtifactsFromSystem ]
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -490,7 +490,7 @@ FluidClassBuilderTest >> testInstallSimplePoint2 [
 	self assert: (self class environment at: #Point2 ifAbsent: [ true ]).
 	builder := Object << #Point2.
 	builder slots: { #x. #y }.
-	builder package: 'FakedCore'.
+	builder package: self packageNameForTest.
 	builder install.
 
 	pt2Class := self class environment at: #Point2.

@@ -41,7 +41,7 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 	| trait |
 	builder := Trait << #TPoint2
 					slots: { #x . #y };
-					package: 'FakedCore'.
+					package: self packageNameForTest.
 	trait := builder build.
 
 	self assert: trait name equals: #TPoint2.
@@ -151,14 +151,14 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 	builder slots: { #x. #y }.
 	builder traits: { TViewModelMock }.
 	builder tag: 'Mafia'.
-	builder package: 'FakedCore'.
+	builder package: self packageNameForTest.
 	builder fillShiftClassBuilder.
 	shift := builder shiftClassBuilder.
 	self assert: shift name equals: #TPoint2.
 	self assert: shift slots size equals: 2.
-	self assert: shift category equals: 'FakedCore-Mafia'.
+	self assert: shift category equals: self packageNameForTest , '-Mafia'.
 	self flag: #askPablo
-	"self assert: clas package packageName equals: 'FakedCore'"
+	"self assert: clas package packageName equals: self packageNameForTest"
 ]
 
 { #category : #'tests - install' }
@@ -188,18 +188,19 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 { #category : #'tests - install' }
 FluidTraitBuilderTest >> testInstallSimplePoint2 [
 
-	[ | trait |
+	[
+	| trait |
 	self assert: (self class environment at: #TPoint2 ifAbsent: [ true ]).
 
-	builder := Trait << #TPoint2
-					slots: { #x . #y };
-					package: 'FakedCore'.
+	builder := (Trait << #TPoint2)
+		           slots: { #x. #y };
+		           package: self packageNameForTest.
 	builder install.
 	trait := self class environment at: #TPoint2.
 	self assert: trait name equals: #TPoint2.
 	self assert: trait slots size equals: 2 ] ensure: [
-			self class environment removeKey: #TPoint2 ifAbsent: [self fail].
-			self assert: (self class environment at: #TPoint2 ifAbsent: [ true ])]
+		self class environment removeKey: #TPoint2 ifAbsent: [ self fail ].
+		self assert: (self class environment at: #TPoint2 ifAbsent: [ true ]) ]
 ]
 
 { #category : #tests }
