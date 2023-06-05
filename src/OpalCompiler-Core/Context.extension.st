@@ -19,6 +19,14 @@ Context >> astScope [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+Context >> compiler [
+	"Return a compiler set up to parse/compile/evaluate scripts on the current context.
+	The compiler is also setup according to the class of the receiver"
+
+	^ self receiver class compiler context: self
+]
+
+{ #category : #'*OpalCompiler-Core' }
 Context >> executedPC [
 	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
 	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
@@ -49,6 +57,11 @@ Context >> isPushTemp: aPC [
 { #category : #'*OpalCompiler-Core' }
 Context >> isReturnAt: aPC [
 	^method encoderClass isReturnAt: aPC in: method
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Context >> lookupVar: aSymbol [
+	^ self astScope lookupVar: aSymbol
 ]
 
 { #category : #'*OpalCompiler-Core' }

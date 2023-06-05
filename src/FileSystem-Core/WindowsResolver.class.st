@@ -32,5 +32,6 @@ WindowsResolver >> preferences [
 
 { #category : #origins }
 WindowsResolver >> temp [
-	^ self directoryFromEnvVariableNamed: 'TEMP' or: [ FileLocator C / 'windows' / 'temp' ]
+
+	^ self resolveString: Smalltalk os getTempPath
 ]

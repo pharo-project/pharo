@@ -8,6 +8,12 @@ Class {
 	#category : #'Morphic-Widgets-FastTable-Selection'
 }
 
+{ #category : #'class initialization' }
+FTMultipleSelectionStrategy class >> initialize [
+
+	self deprecatedAliases: { #FTMultipleSelection }
+]
+
 { #category : #testing }
 FTMultipleSelectionStrategy >> isMultiple [
 	^ true

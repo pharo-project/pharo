@@ -468,6 +468,12 @@ RBParserTest >> testCreationThisContexNodeWithExpression [
 ]
 
 { #category : #'tests - CreationProtocol' }
+RBParserTest >> testCreationThisProcessNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'thisProcess')
+		  to: RBVariableNode thisProcessNode 
+]
+
+{ #category : #'tests - CreationProtocol' }
 RBParserTest >> testCreationVariableNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'variable')
 		  to: (RBVariableNode named: #variable start: 1)
@@ -1013,8 +1019,9 @@ RBParserTest >> testMethodNodeStartAtOne [
 	tree := (self parserClass parseExpression: 'foo koong. ^foo').
 	self assert: tree parent start equals: 1.
 
+	"DoItMethod do not start at 1"
 	tree := (self parserClass parseExpression: '  foo koong. ^foo').
-	self assert: tree parent start equals: 1.
+	self assert: tree parent start equals: 3.
 
 	"parseMethod always return a method node."
 	tree := (self parserClass parseMethod: 'foo koong. ^foo').
@@ -1293,6 +1300,44 @@ RBParserTest >> testParseGivesMethod [
 
 	tree := (self parserClass parseMethod: 'foo koong foo').
 	self assert: tree isMethod
+]
+
+{ #category : #tests }
+RBParserTest >> testParseLiterals [
+
+	self assert: (RBParser parseLiterals: '') equals: #(  ).
+	self
+		assert: (RBParser parseLiterals: '10 1.1 true nil false')
+		equals: #( 10 1.1 true nil false ).
+	self
+		assert: (RBParser parseLiterals: '#foo #foo: #foo:bar:baz')
+		equals: #( #foo #foo: #'foo:bar:baz' ).
+	self
+		assert: (RBParser parseLiterals: 'foo foo: foo:bar:baz')
+		equals: #( #foo #foo: #'foo:bar:baz' ).
+	self
+		assert: (RBParser parseLiterals:
+				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
+		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
+	self
+		assert: (RBParser parseLiterals: '(1 2) #(1 2) #[1 2]')
+		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
+	self
+		assert: (RBParser parseLiterals: '.[];::=^')
+		equals: #( #'.' #'[' #']' #';' #':' #':=' #'^' ).
+
+	self
+		should: [ RBParser parseLiterals: '#( unclosed' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: ') unopened' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
+		raise: CodeError.
+	self
+		should: [ RBParser parseLiterals: 'syntax¿error' ]
+		raise: CodeError
 ]
 
 { #category : #'tests - Pattern' }

@@ -137,15 +137,6 @@ ClassFactoryForTestCase >> deleteTraits [
 	self createdTraits do: [ :trait | self delete: trait ]
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> duplicateClass: aClass withNewName: name [
-
-	| newClass |
-	newClass := aClass duplicateClassWithNewName: name.
-	self createdClasses add: newClass.
-	^ newClass
-]
-
 { #category : #initialization }
 ClassFactoryForTestCase >> initialize [
 

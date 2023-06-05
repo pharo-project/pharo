@@ -1,7 +1,7 @@
 Class {
 	#name : #Win32WideStringTest,
 	#superclass : #TestCase,
-	#category : #'System-Platforms-Tests-Win32'
+	#category : #'System-Platforms-Tests-Windows'
 }
 
 { #category : #tests }

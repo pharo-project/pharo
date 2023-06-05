@@ -11,7 +11,7 @@ RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
 
 	^ (RBCondition
 		withBlock: [ (variableName = newVariableName)
-			ifTrue: [ self refactoringFailure: 'The variable merged must be different' ].
+			ifTrue: [ self refactoringError: 'The variable merged must be different' ].
 		true ])
 	& (isClassVariable
 		ifTrue: [ (RBCondition isMetaclass: class) not

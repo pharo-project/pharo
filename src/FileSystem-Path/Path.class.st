@@ -132,10 +132,9 @@ Path class >> isAbsoluteWindowsPath: aString [
 	(aString first = $\ and: [
 		 aString size = 1 or: [ aString second ~= $\ ] ]) ifTrue: [ ^ true ]. "e.g. \file"
 
-	^ (aString size > 2 and: [ aString first isLetter ])
-		  ifTrue: [ "e.g. C:\..."
-		  aString second = $: and: [ aString third = $\ ] ]
-		  ifFalse: [ false ]
+	^ aString size > 2 and: [ aString first isLetter 
+		  and: [ "e.g. C:\..."
+		  aString second = $: and: [ aString third = $\ ] ] ]
 ]
 
 { #category : #'instance creation' }

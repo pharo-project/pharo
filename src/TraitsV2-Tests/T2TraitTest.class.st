@@ -285,16 +285,15 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 
 { #category : #tests }
 T2TraitTest >> testRemovingTraitsUpdatesCategories [
-	| t1 t2 c1 |
 
+	| t1 t2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {  }.
 
-	c1 organization allMethodSelectors do: [:each | self assert: (c1 includesSelector: each) ].
-	c1 class organization allMethodSelectors do: [:each |
-		self assert: (c1 class includesSelector: each) ]
+	c1 selectors do: [ :selector | self assert: (c1 includesSelector: selector) ].
+	c1 class selectors do: [ :selector | self assert: (c1 class includesSelector: selector) ]
 ]
 
 { #category : #tests }

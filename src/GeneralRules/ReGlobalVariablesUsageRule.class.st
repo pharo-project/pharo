@@ -43,7 +43,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Processor
 			Smalltalk
 			SourceFiles
-			SystemOrganization
 			Transcript
 			Undeclared
 			World

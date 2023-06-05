@@ -44,7 +44,7 @@ DAWelcomePresenter >> initialExtent [
 DAWelcomePresenter >> initializePresenters [
 
 	choosePresenter := SpChooserPresenter new
-		sourceItems: RPackageOrganizer default packages;
+		sourceItems: Smalltalk organization packages;
 		displayBlock: #packageName;
 		yourself.
 

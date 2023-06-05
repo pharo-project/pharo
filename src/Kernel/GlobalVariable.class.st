@@ -32,8 +32,21 @@ GlobalVariable >> emitValue: methodBuilder [
 ]
 
 { #category : #testing }
+GlobalVariable >> isDeprecated [
+
+	^ (self propertyAt: #isDeprecated ifAbsent: [ false ]) or: [ self value isClass and: [ self value isDeprecated ] ]
+]
+
+{ #category : #accessing }
+GlobalVariable >> isDeprecated: aBoolean [
+
+	self propertyAt: #isDeprecated put: aBoolean
+]
+
+{ #category : #testing }
 GlobalVariable >> isGlobalVariable [
-	^true
+
+	^ true
 ]
 
 { #category : #accessing }

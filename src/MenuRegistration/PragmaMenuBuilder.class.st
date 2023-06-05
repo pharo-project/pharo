@@ -97,7 +97,7 @@ PragmaMenuBuilder class >> orderAssignBlock [
 { #category : #'instance creation' }
 PragmaMenuBuilder class >> pragmaKeyword: aPragmaKeyword model: aModel [
 	"Build a builder using aPragmaKeyword as the pragma keyword and aModel a the model of the resulting builder"
-	^ self withAllPragmaKeywords: (Array with: aPragmaKeyword) model: aModel
+	^ self withAllPragmaKeywords: {aPragmaKeyword} model: aModel
 ]
 
 { #category : #'instance creation' }

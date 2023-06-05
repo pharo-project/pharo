@@ -36,6 +36,18 @@ Class {
 }
 
 { #category : #'instance creation' }
+CompiledCode class >> basicNew [
+
+	self error: 'CompiledMethods and CompiledBlocks may only be created with newMethod:header:'
+]
+
+{ #category : #'instance creation' }
+CompiledCode class >> basicNew: size [
+
+	self error: 'CompiledMethods and CompiledBlocks may only be created with newMethod:header:'
+]
+
+{ #category : #'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	"Primitive. Answer an instance of me. The number of literals (and other
 	 information) is specified by the headerWord (see my class comment).
@@ -530,6 +542,19 @@ CompiledCode >> literalsToSkip [
 ]
 
 { #category : #scanning }
+CompiledCode >> localMessages [
+	"Answer a Set of all the message selectors sent by this method."
+
+	| scanner aSet |
+	aSet := IdentitySet new.
+	scanner := InstructionStream on: self.
+	scanner scanFor: [:x | 
+			scanner addSelectorTo: aSet.
+			false	"keep scanning"].
+	^aSet
+]
+
+{ #category : #scanning }
 CompiledCode >> localReadsRef: literalAssociation [
 	"Answer whether the receiver loads the argument."
 	| litIndex scanner |
@@ -589,6 +614,15 @@ CompiledCode >> longPrintOn: aStream [
 		self printPrimitiveOn: aStream.
 	].
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
+]
+
+{ #category : #scanning }
+CompiledCode >> messages [
+	"Answer a Set of all the message selectors sent by this method."
+	| aSet |
+	aSet := self localMessages.
+	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
+	^ aSet
 ]
 
 { #category : #accessing }

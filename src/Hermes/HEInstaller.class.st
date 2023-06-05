@@ -170,10 +170,9 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 
 { #category : #'installing package' }
 HEInstaller >> installPackage: aHEPackage [
-	| storedAnnouncements |
 
-	storedAnnouncements := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ].
-	storedAnnouncements do: [ :e | SystemAnnouncer uniqueInstance announce: e ]
+	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ])
+		do: [ :storedAnnouncement | SystemAnnouncer announce: storedAnnouncement ]
 ]
 
 { #category : #messages }
@@ -213,7 +212,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+	newMethod := CompiledMethod newMethod: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 

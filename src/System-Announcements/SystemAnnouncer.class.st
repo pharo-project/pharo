@@ -17,6 +17,12 @@ Class {
 	#category : #'System-Announcements-Core'
 }
 
+{ #category : #announcer }
+SystemAnnouncer class >> announce: anAnnouncement [
+
+	^ self uniqueInstance announce: anAnnouncement
+]
+
 { #category : #accessing }
 SystemAnnouncer class >> announcer: anAnnouncer [
 	announcer := anAnnouncer
@@ -231,33 +237,6 @@ SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 { #category : #accessing }
 SystemAnnouncer >> private [
 	^private ifNil: [ private := Announcer new ]
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> protocolAdded: aString inClass: aClass [
-	self announce: (ProtocolAdded new
-		classReorganized: aClass;
-		protocol: aString;
-		yourself)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> protocolRemoved: aString inClass: aClass [
-	self announce: (ProtocolRemoved new
-		classReorganized: aClass;
-		protocol: aString;
-		yourself)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> protocolRenamedFrom: oldName to: newName inClass: aClass [
-	self
-		announce:
-			(ProtocolRenamed new
-				classReorganized: aClass;
-				oldProtocolName: oldName;
-				newProtocolName: newName;
-				yourself)
 ]
 
 { #category : #triggering }

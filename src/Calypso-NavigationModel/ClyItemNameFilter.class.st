@@ -12,5 +12,5 @@ Class {
 { #category : #testing }
 ClyItemNameFilter >> matches: anEnvironmentItem [
 
-	^pattern matches: anEnvironmentItem name
+	^pattern matches: anEnvironmentItem calypsoName
 ]

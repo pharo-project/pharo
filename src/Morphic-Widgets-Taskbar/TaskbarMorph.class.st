@@ -428,7 +428,7 @@ TaskbarMorph >> updateTasks [
 	task will be considered dead along with a new replacement."
 
 	| wm deadTasks newTasks taskbarTasksFromWorldMorph |
-	wm := self worldMorphs asOrderedCollection.
+	wm := self windows.
 	taskbarTasksFromWorldMorph := (wm collect: [ :m | m taskbarTask ])
 		reject: [ :m | m isNil ].
 	self tasks: taskbarTasksFromWorldMorph.
@@ -437,10 +437,10 @@ TaskbarMorph >> updateTasks [
 	(newTasks isEmpty and: [ deadTasks isEmpty ])
 		ifTrue: [ ^ self ].	"no changes"
 	newTasks copy
-		do: [ :t |
+		do: [ :t | 
 			self orderedTasks
 				detect: [ :ot | ot morph = t morph ]
-				ifFound: [ :ot |
+				ifFound: [ :ot | 
 					self orderedTasks replaceAll: ot with: t.
 					deadTasks remove: ot.
 					newTasks remove: t ] ].	"replace in order any changed tasks."
@@ -458,6 +458,12 @@ TaskbarMorph >> wantsToBeTopmost [
 	objects in its owner."
 
 	^ true
+]
+
+{ #category : #taskbar }
+TaskbarMorph >> windows [
+
+	^ self worldMorphs asOrderedCollection
 ]
 
 { #category : #taskbar }

@@ -10,6 +10,9 @@ Class {
 	#instVars : [
 		'protocol'
 	],
+	#classVars : [
+		'ShouldAlwaysClassify'
+	],
 	#classInstVars : [
 		'prefixMapping',
 		'keywordSuffixMapping',
@@ -165,6 +168,31 @@ MethodClassifier class >> prefixMapping [
 		prefixMapping]
 ]
 
+{ #category : #accessing }
+MethodClassifier class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #shouldAlwaysClassify)
+		parent: #Calypso;
+		label: 'Automatically classify methods instead of using the selected protocol.';
+		default: false;
+		description: 'If true, the system browser will try to classify the methods using their name instead of using the currently selected protocol.';
+		target: self
+]
+
+{ #category : #accessing }
+MethodClassifier class >> shouldAlwaysClassify [
+	"When enabled I'll try to classify all new methods in the code browser instead of using the selected protocol."
+
+	^ ShouldAlwaysClassify ifNil: [ ShouldAlwaysClassify := false ]
+]
+
+{ #category : #accessing }
+MethodClassifier class >> shouldAlwaysClassify: anObject [
+
+	ShouldAlwaysClassify := anObject
+]
+
 { #category : #classification }
 MethodClassifier class >> suggestProtocolFor: aMethod [
 	^ (self new suggestProtocolFor: aMethod) ifNil: [ 'as yet unclassified' ]
@@ -179,8 +207,11 @@ MethodClassifier >> classify: aMethod [
 { #category : #classification }
 MethodClassifier >> classify: aMethod fallbackProtocol: fallbackProtocol [
 	"fallback protocol is the protocol that was selected at method creation.
-	It will only be used if standard rules do not find a protocol for this method.
+	It will only be used if standard rules do not find a protocol for this method or if automatic classification is disabled.
 	It allows to have consistency for well known method names / prefixes."
+
+	"If the #shouldAlwaysClassify setting is off, we classify only if the given protocol is nil"
+	(self class shouldAlwaysClassify or: [ fallbackProtocol isNil ]) ifFalse: [ ^ aMethod protocol: fallbackProtocol ].
 
 	self suggestProtocolFor: aMethod.
 	protocol ifNotNil: [ ^ aMethod protocol: protocol ].
@@ -198,8 +229,14 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 { #category : #accessing }
 MethodClassifier >> listToFindProtocols [
 
-	^ #( #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma: #protocolByKnownPrefix: #protocolByOtherImplementors:
-	     #protocolInSuperclassProtocol: )
+	^ #( #protocolInSuperclassProtocol: #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma:
+	     #protocolByKnownPrefix: #protocolByOtherImplementors: )
+]
+
+{ #category : #accessing }
+MethodClassifier >> protocol [
+
+	^ protocol
 ]
 
 { #category : #'classification-rules' }
@@ -247,18 +284,13 @@ MethodClassifier >> protocolByKnownPrefix: aMethod [
 
 { #category : #'classification-rules' }
 MethodClassifier >> protocolByOtherImplementors: aMethod [
-	| protocolBag |
 
+	| protocolBag |
 	protocolBag := Bag new.
 
-	aMethod implementors
-		ifEmpty: [ ^ self ]
-		ifNotEmpty: [ :methods |
-			methods
-				do: [ :method |
-					((method protocol beginsWith: '*') or: [ method protocol = Protocol unclassified ])
-						ifFalse: [ protocolBag add: method protocol ]]
-				without: aMethod ].
+	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :methods |
+		self flag: #CompileMethodProtocolMiration.
+		methods do: [ :method | ((method protocol beginsWith: '*') or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ] without: aMethod ].
 
 	protocolBag ifEmpty: [ ^ self ].
 	protocol := protocolBag sortedCounts first value
@@ -319,17 +351,16 @@ MethodClassifier >> suggestProtocolFor: aMethod [
 
 { #category : #classification }
 MethodClassifier >> superclassProtocol: aMethod [
+
 	| currentClass |
 	currentClass := aMethod methodClass.
 
 	[ currentClass superclass isNil ] whileFalse: [
 		currentClass := currentClass superclass.
-		(currentClass includesSelector: aMethod selector)
-			ifTrue: [
-				| possibleProtocol |
-				possibleProtocol := (currentClass >> aMethod selector) protocol.
-				((possibleProtocol beginsWith: '*') or:
-					(possibleProtocol asSymbol = currentClass package name))
-						ifFalse: [ ^ possibleProtocol ]]].
+		(currentClass includesSelector: aMethod selector) ifTrue: [
+			| possibleProtocol |
+			self flag: #CompileMethodProtocolMiration.
+			possibleProtocol := (currentClass >> aMethod selector) protocol.
+			((possibleProtocol beginsWith: '*') or: possibleProtocol asSymbol = currentClass package name) ifFalse: [ ^ possibleProtocol ] ] ].
 	^ nil
 ]

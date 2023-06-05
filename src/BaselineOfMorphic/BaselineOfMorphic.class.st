@@ -136,7 +136,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
 	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
-	Behavior flushObsoleteSubclasses.
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
@@ -152,8 +151,8 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	"Remove empty packages and protocols"
 	Smalltalk organization removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
-		class organization removeEmptyProtocols.
-    class class organization removeEmptyProtocols  ].
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols  ].
   
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.

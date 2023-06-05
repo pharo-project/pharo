@@ -488,7 +488,7 @@ TestRunner >> excludeClassesNotUnderTestFrom: methods [
 { #category : #processing }
 TestRunner >> executeSuite: aTestSuite as: aBlock [
 " The block defines how to interact with the suite. run with a result or debug "
-	aTestSuite when:TestAnnouncement do: self updateUIBlock.
+	aTestSuite when:TestAnnouncement do: self updateUIBlock for: self.
 	[ aBlock cull: aTestSuite cull: result  ] ensure: [
 		aTestSuite unsubscribe:TestAnnouncement.
 	]

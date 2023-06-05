@@ -176,8 +176,8 @@ InstructionStreamTest >> testStepContextTakenConditionalJumpBytecodes [
 	"Assume ifTrue: conditional jumps are compiled as jumpIfFalse"
 	context := [ false ifTrue: [ 1 ]. 2 ] asContext.
 
-	3 timesRepeat: [
-		"push false, jump, push 2"
+	5 timesRepeat: [
+		"push false, jump, push nil, pop, push 2"
 		context step ].
 
 	self assert: context top equals: 2
@@ -232,8 +232,8 @@ InstructionStreamTest >> testStepTakenConditionalJumpBytecodes [
 	context := [ false ifTrue: [ 1 ]. 2 ] asContext.
 	stream := InstructionStream on: context method.
 
-	3 timesRepeat: [
-		"push false, jump, push 2"
+	5 timesRepeat: [
+		"push false, jump, push nil, pop, push 2"
 		stream interpretNextInstructionFor: context ].
 
 	self assert: context top equals: 2

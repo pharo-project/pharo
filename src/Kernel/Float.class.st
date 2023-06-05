@@ -649,11 +649,11 @@ Float >> asApproximateFractionAtOrder: maxOrder [
 								^ Fraction numerator: num1 denominator: denom1].
 					^ Fraction numerator: num2 denominator: denom2]].
 	"If fractional part is zero, return the first ratio"
-	denom1 = 1
+	^ denom1 = 1
 		ifTrue: ["Am I really an Integer?"
-				^ num1 "Yes, return Integer result"]
+				num1 "Yes, return Integer result"]
 		ifFalse: ["Otherwise return Fraction result"
-				^ Fraction numerator: num1 denominator: denom1]
+				Fraction numerator: num1 denominator: denom1]
 ]
 
 { #category : #converting }

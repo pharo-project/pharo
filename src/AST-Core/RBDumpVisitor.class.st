@@ -37,6 +37,13 @@ RBDumpVisitor >> stream [
 ]
 
 { #category : #visiting }
+RBDumpVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+	stream
+		nextPutAll: aRBAnnotationValueNode class name;
+		nextPutAll: ' new'
+]
+
+{ #category : #visiting }
 RBDumpVisitor >> visitArrayNode: anArrayNode [
 	stream
 		nextPutAll: anArrayNode class name;

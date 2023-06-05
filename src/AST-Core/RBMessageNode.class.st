@@ -6,7 +6,7 @@ Instance Variables:
 	receiver	<RBValueNode>	the receiver's node
 	selector	<Symbol>	the selector we're sending
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
-
+	superOf <Behavior> the current class (for super-send messages)
 
 "
 Class {
@@ -16,7 +16,8 @@ Class {
 		'receiver',
 		'selector',
 		'keywordsPositions',
-		'arguments'
+		'arguments',
+		'superOf'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -151,6 +152,11 @@ RBMessageNode >> hash [
 ]
 
 { #category : #testing }
+RBMessageNode >> isAnnotation [
+	^ self receiver isAnnotationMark
+]
+
+{ #category : #testing }
 RBMessageNode >> isBinary [
 	^(self isUnary or: [self isKeyword]) not
 ]
@@ -180,17 +186,13 @@ RBMessageNode >> isFirstCascaded [
 { #category : #testing }
 RBMessageNode >> isHaltNode [
 
-	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: )
-		   includes: self selector) or: [
-		  self receiver isGlobalVariable and: [
-			  self receiver variable value = Halt and: [
-				  (Halt class selectorsInCategory: #halting) includes:
-					  self selector ] ] ]
+	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
+		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
 ]
 
 { #category : #testing }
 RBMessageNode >> isKeyword [
-	^(self selector indexOf: $:) ~= 0
+	^ self selector isKeyword
 ]
 
 { #category : #testing }
@@ -359,7 +361,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 		ifTrue:
 			[self receiver: anotherNode.
 			(parent notNil and: [parent isCascade])
-				ifTrue: [parent messages do: [:each | each receiver: anotherNode]]].
+				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
@@ -494,4 +496,16 @@ RBMessageNode >> stopWithoutParentheses [
 	^arguments isEmpty
 		ifTrue: [self keywordsIntervals first last]
 		ifFalse: [arguments last stop]
+]
+
+{ #category : #accessing }
+RBMessageNode >> superOf [
+
+	^ superOf
+]
+
+{ #category : #accessing }
+RBMessageNode >> superOf: anObject [
+
+	superOf := anObject
 ]

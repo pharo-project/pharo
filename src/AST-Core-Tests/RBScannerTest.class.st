@@ -989,13 +989,13 @@ RBScannerTest >> testNextMultipleKeywordColonIsSufficientAfterFirstKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken::'.
 	token := scanner next.
-	self assert: token isMultiKeyword.
-	self assert: token value equals: 'firstToken::'.
+	self assert: token isKeyword.
+	self assert: token value equals: 'firstToken:'.
 
 	scanner := self buildScannerForText: 'firstToken::::::'.
 	token := scanner next.
-	self assert: token isMultiKeyword.
-	self assert: token value equals: 'firstToken::::::'
+	self assert: token isKeyword.
+	self assert: token value equals: 'firstToken:'
 ]
 
 { #category : #'tests - Start' }
@@ -1003,7 +1003,7 @@ RBScannerTest >> testNextMultipleKeywordStartAtFirstLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:secondToken:'.
 	token := scanner next.
-	self assert: token isMultiKeyword.
+	self assert: token isKeyword.
 	self assert: token start equals: 1
 ]
 
@@ -1012,8 +1012,8 @@ RBScannerTest >> testNextMultipleKeywordStopAtLastLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:secondToken:'.
 	token := scanner next.
-	self assert: token isMultiKeyword.
-	self assert: token stop equals: 23
+	self assert: token isKeyword.
+	self assert: token stop equals: 11
 ]
 
 { #category : #'tests - NumberLiteral' }
@@ -1440,8 +1440,8 @@ RBScannerTest >> testNextTwoKeywordIsMultipleKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:secondToken:'.
 	token := scanner next.
-	self assert: token isMultiKeyword.
-	self assert: token value equals: 'firstToken:secondToken:'
+	self assert: token isKeyword.
+	self assert: token value equals: 'firstToken:'
 ]
 
 { #category : #'tests - Identifiers' }

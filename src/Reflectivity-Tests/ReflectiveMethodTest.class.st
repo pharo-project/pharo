@@ -1,18 +1,11 @@
 Class {
 	#name : #ReflectiveMethodTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'selector'
 	],
 	#category : #'Reflectivity-Tests-Base'
 }
-
-{ #category : #running }
-ReflectiveMethodTest >> tearDown [
-	selector ifNotNil: [
-		ReflectivityExamples recompile: selector].
-	super tearDown
-]
 
 { #category : #tests }
 ReflectiveMethodTest >> testASTCacheIsCleanedAfterMetaLinkRemoval [
@@ -146,7 +139,9 @@ ReflectiveMethodTest >> testSetLinkOnClassVariable [
 
 	self assert: (classVar links includes: link).
 	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: ReflectiveMethod.
-	classVar removeProperty: #links
+	link uninstall.
+	classVar removeProperty: #links.
+
 ]
 
 { #category : #'tests - variables' }

@@ -19,7 +19,7 @@ MCStWriterTest >> assertChunkIsWellFormed: chunk [
 	self class compiler
 		source: chunk;
 		class: UndefinedObject;
-		noPattern: true;
+		isScripting: true;
 		compile
 ]
 

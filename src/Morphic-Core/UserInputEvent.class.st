@@ -86,6 +86,11 @@ UserInputEvent >> buttons [
 	^ buttons
 ]
 
+{ #category : #accessing }
+UserInputEvent >> buttons: anInteger [ 
+	buttons := anInteger
+]
+
 { #category : #'modifier state' }
 UserInputEvent >> commandKeyPressed [
 	"Answer true if the command key on the keyboard was being held down when this event occurred."

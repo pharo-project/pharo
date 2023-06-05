@@ -56,6 +56,31 @@ CompiledCodeTest >> testBlockReturnSpecial [
 	self deny: [ ^ Object ] compiledBlock isReturnSpecial
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testEquivalentTo [
+
+	| aClass origin |
+	aClass := Object newAnonymousSubclass.
+	aClass compile: 'm1 ^ self'.
+	origin := aClass >> #m1.
+	self assert: (origin equivalentTo: origin).
+	self assert: (origin equivalentTo: origin copy).
+
+	aClass compile: 'm1 "with comment" ^ self'.
+	self assert: (origin equivalentTo: aClass >> #m1).
+	self assert: (origin equivalentTo: (aClass >> #m1) copy).
+
+	aClass compile: 'm2 ^ self'.
+	self deny: (origin equivalentTo: aClass >> #m2).
+
+	aClass compile: 'm1 <pragma: 1> ^ self'.
+	self deny: (origin equivalentTo: aClass >> #m1).
+
+	origin := aClass >> #m1.
+	aClass compile: 'm1 <pragma: 2> ^ self'.
+	self deny: (origin equivalentTo: aClass >> #m1)
+]
+
 { #category : #'tests - literals' }
 CompiledCodeTest >> testHasLiteral [
 
@@ -298,6 +323,21 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testLocalMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assert: method localMessages asArray equals: #(#doit) .
+	
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
 ]
 
 { #category : #'tests - testing' }

@@ -20,11 +20,6 @@ Class {
 	#category : #'Metacello-MC-Specs'
 }
 
-{ #category : #'instance creation' }
-MetacelloMCPartiallyLoadedStatus class >> new [
-	^ self basicNew initialize
-]
-
 { #category : #accessing }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsCurrent [
 	^ aLoadedPackageIsCurrent

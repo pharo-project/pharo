@@ -47,23 +47,27 @@ DebugContext class >> forContext: aContext [
 DebugContext >> blockNotFoundDialog: aMethod with: aText [
 
 	| message result newMethod |
-
 	message := 'Method for block not found on stack, can''t edit and continue'.
 
 	"shouldn't edit doits"
-	aMethod selector isDoIt
-		ifTrue: [ ^ self inform: message ].
+	aMethod selector isDoIt ifTrue: [ ^ self inform: message ].
 
-	result := UIManager default
-						confirm: message
-						trueChoice: 'Compile and Browse'
-						falseChoice: 'Cancel'.
+	result := self
+		          confirm: message
+		          trueChoice: 'Compile and Browse'
+		          falseChoice: 'Cancel'.
 
 	"possible return values are true | false | nil"
 	result ifFalse: [ ^ self ].
 
 	newMethod := self recompileCurrentMethodTo: aText notifying: nil.
-	newMethod ifNotNil: [newMethod browse]
+	newMethod ifNotNil: [ self browseMethod: newMethod ]
+]
+
+{ #category : #private }
+DebugContext >> browseMethod: aMethod [
+
+	aMethod browse
 ]
 
 { #category : #private }
@@ -74,6 +78,15 @@ DebugContext >> checkSelectorUnchanged: aSelector [
 	unchanged
 		ifFalse: [ self inform: 'can''t change selector' ].
 	^ unchanged
+]
+
+{ #category : #'ui requests' }
+DebugContext >> confirm: message trueChoice: trueChoice falseChoice: falseChoice [
+
+	^ UIManager default
+		confirm: message
+		trueChoice: trueChoice
+		falseChoice: falseChoice
 ]
 
 { #category : #private }
@@ -100,11 +113,7 @@ DebugContext >> context [
 
 { #category : #'evaluating actions' }
 DebugContext >> evaluate: expression [
-	^ Smalltalk compiler
-		source: expression;
-		context: context;
-		receiver: context receiver;
-		evaluate
+	^ context compiler evaluate: expression
 ]
 
 { #category : #initialization }
@@ -149,18 +158,27 @@ DebugContext >> receiverClass [
 DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 	| classOrTraitOfMethod selector |
 
-	selector := self selectedClass compiler parseSelector: aText.
-	(self checkSelectorUnchanged: selector) ifFalse: [ ^ nil ].
+	self context method isDoIt ifFalse: [
+		selector := self selectedClass compiler parseSelector: aText.
+		(self checkSelectorUnchanged: selector) ifFalse: [ ^ nil ] ].
+
+	self context method isInstalled ifFalse: [
+		^ self selectedClass compiler
+			protocol: self selectedMessageCategoryName;
+			isScripting: self selectedMessageName isDoIt;
+			requestor: aNotifyer;
+			compile: aText.
+	].
+	
 	classOrTraitOfMethod := self confirmOnTraitOverwrite: selector inClass: self selectedClass.
+	classOrTraitOfMethod ifNil:[ ^ nil] .
 
-	classOrTraitOfMethod ifNil:[ ^ nil].
+	^ classOrTraitOfMethod compiler
+		protocol: self selectedMessageCategoryName;
+		isScripting: self selectedMessageName isDoIt;
+		requestor: aNotifyer;
+		install: aText.
 
-	selector := classOrTraitOfMethod
-		compile: aText
-		classified: self selectedMessageCategoryName
-		notifying: aNotifyer.
-	^ selector
-		ifNotNil: [ classOrTraitOfMethod compiledMethodAt: selector ]
 ]
 
 { #category : #accessing }
@@ -174,7 +192,7 @@ DebugContext >> selectedClass [
 DebugContext >> selectedMessageCategoryName [
 	"Answer the name of the message category of the message of the current context."
 
-	^ self selectedClass organization protocolNameOfElement: self selectedMessageName
+	^ self selectedClass protocolNameOfSelector: self selectedMessageName
 ]
 
 { #category : #accessing }

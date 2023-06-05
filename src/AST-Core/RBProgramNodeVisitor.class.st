@@ -21,6 +21,10 @@ RBProgramNodeVisitor >> visit: aRBMessageNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 	"Sent *each time* an argument node is found"
 
@@ -66,6 +70,12 @@ RBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 RBProgramNodeVisitor >> visitClassVariableNode: aNode [
 
 	^ self visitLiteralVariableNode: aNode
+]
+
+{ #category : #visiting }
+RBProgramNodeVisitor >> visitCommentNode: aRBComment [
+	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
+	This method can still be reached by custom visitors and direct visit on a comment node."
 ]
 
 { #category : #visiting }

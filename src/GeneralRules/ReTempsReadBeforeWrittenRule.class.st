@@ -32,8 +32,23 @@ ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-ReTempsReadBeforeWrittenRule >> basicCheck: aMethod [
-	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) isNotEmpty
+ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
+
+	(self findReadsBeforeWrittenTemporariesIn: aMethod) ifNotEmpty: [
+		:temps |
+		aCriticBlock cull: ((self critiqueFor: aMethod)
+				 tinyHint: (String streamContents: [ :stream |
+							  temps
+								  do: [ :temporary | stream nextPutAll: temporary ]
+								  separatedBy: [ stream nextPutAll: ', ' ] ]);
+				 yourself) ]
+]
+
+{ #category : #running }
+ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
+
+	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
+		   aMethod ast) array select: #isNotNil
 ]
 
 { #category : #accessing }
@@ -43,5 +58,6 @@ ReTempsReadBeforeWrittenRule >> group [
 
 { #category : #accessing }
 ReTempsReadBeforeWrittenRule >> name [
+
 	^ 'Temporaries may be read before written'
 ]

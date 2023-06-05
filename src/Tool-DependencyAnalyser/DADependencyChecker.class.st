@@ -12,14 +12,17 @@ Class {
 	#name : #DADependencyChecker,
 	#superclass : #Object,
 	#instVars : [
-		'report'
+		'report',
+		'shouldComputeMessageSendDependencies'
 	],
 	#category : #'Tool-DependencyAnalyser-Report'
 }
 
 { #category : #private }
 DADependencyChecker >> buildPackageRelationGraphFor: aPackageName [
-	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName }) build ]
+	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName })
+		 	shouldComputeMessageSendDependencies: self shouldComputeMessageSendDependencies;
+			build ]
 		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | report addWarning: ex. ex resume ]
 ]
@@ -47,15 +50,14 @@ DADependencyChecker >> computeDependenciesOf: aPackageName visitedPackages: visi
 
 { #category : #'computing - dependencies' }
 DADependencyChecker >> computeImageDependencies [
+
 	| visited |
 	self newReport.
 	report
 		analysisRunString: 'Pharo image dependencies';
 		imageVersion: SystemVersion current.
 	visited := Set new.
-	RPackageOrganizer default packageNames
-		do: [ :packageName |
-			self computeDependenciesOf: packageName visitedPackages: visited ].
+	Smalltalk organization packageNames do: [ :packageName | self computeDependenciesOf: packageName visitedPackages: visited ].
 	^ report
 ]
 
@@ -121,6 +123,16 @@ DADependencyChecker >> shortestPathToPackageIntroducingDependency: dependencyPac
 			dijkstra edges: { packageName } from: [ :ignored | packageName ] to: [ :ignored | dependency ] ] ].
 	dijkstra runFrom: aPackageName to: dependencyPackageName.
 	^ dijkstra reconstructPath
+]
+
+{ #category : #accessing }
+DADependencyChecker >> shouldComputeMessageSendDependencies [
+	^ shouldComputeMessageSendDependencies ifNil: [ true ]
+]
+
+{ #category : #accessing }
+DADependencyChecker >> shouldComputeMessageSendDependencies: aBoolean [
+	shouldComputeMessageSendDependencies := aBoolean 
 ]
 
 { #category : #'computing - dependencies' }

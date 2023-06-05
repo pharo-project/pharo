@@ -275,7 +275,10 @@ ClyMethodCodeEditorToolMorph >> printContext [
 { #category : #initialization }
 ClyMethodCodeEditorToolMorph >> resetASTCache [
 	"when the AST cache is cleared, we have to rescue the AST we are looking at"
-	ASTCache default at: ast compiledMethod ifAbsentPut: ast
+	| cm |
+	cm := ast compiledMethod.
+	cm ifNil: [  ^ self ].
+	ASTCache default at: cm ifAbsentPut: ast
 ]
 
 { #category : #'selecting text' }
@@ -324,7 +327,7 @@ ClyMethodCodeEditorToolMorph >> setMethodProtocol: currentMethod [
 
 	MethodClassifier
 		classify: currentMethod
-		fallbackProtocol: editingMethod protocol
+		fallbackProtocol: editingMethod protocolName
 ]
 
 { #category : #initialization }

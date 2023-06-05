@@ -72,9 +72,9 @@ RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 	imps := ( self model allImplementorsOf: self inlineSelector ) asOrderedCollection.
 	imps size = 1
 		ifTrue: [ ^ classOfTheMethodToInline := imps first ].
-	imps ifEmpty: [ self refactoringFailure: 'Nobody defines a method named ' , self inlineSelector ].
+	imps ifEmpty: [ self refactoringError: 'Nobody defines a method named ' , self inlineSelector ].
 	classOfTheMethodToInline := self requestImplementorToInline: imps.
-	classOfTheMethodToInline ifNil: [ self refactoringFailure: 'No implementor selected' ].
+	classOfTheMethodToInline ifNil: [ self refactoringError: 'No implementor selected' ].
 	^ classOfTheMethodToInline
 ]
 
@@ -82,14 +82,14 @@ RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
+	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage
-		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
 	sourceMessage isCascade
 		ifTrue: [ sourceMessage := sourceMessage messages last ].
 	sourceMessage isMessage
-		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ]
+		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ]
 ]
 
 { #category : #testing }

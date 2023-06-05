@@ -51,6 +51,12 @@ CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
 ]
 
+{ #category : #replacement }
+CompletionContext >> completionTokenStart [
+	
+	^ engine completionTokenStart
+]
+
 { #category : #accessing }
 CompletionContext >> engine [
 	^ engine
@@ -124,7 +130,7 @@ CompletionContext >> node [
 CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
-		noPattern: self isScripting;
+		isScripting: self isScripting;
 		parse.
 	TypingVisitor new visitNode: ast
 ]

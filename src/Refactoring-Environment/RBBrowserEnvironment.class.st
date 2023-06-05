@@ -648,7 +648,7 @@ RBBrowserEnvironment >> problemCount [
 { #category : #accessing }
 RBBrowserEnvironment >> protocolsFor: aClass [
 
-	^ aClass organization protocolNames select: [ :each | self includesProtocol: each in: aClass ]
+	^ aClass protocolNames select: [ :protocolName | self includesProtocol: protocolName in: aClass ]
 ]
 
 { #category : #queries }
@@ -774,7 +774,7 @@ RBBrowserEnvironment >> selectorsDo: aBlock [
 { #category : #accessing }
 RBBrowserEnvironment >> selectorsFor: aProtocol in: aClass [
 
-	^ (aClass organization methodSelectorsInProtocol: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
+	^ (aClass selectorsInProtocol: aProtocol) select: [ :each | self includesSelector: each in: aClass ]
 ]
 
 { #category : #accessing }
@@ -877,8 +877,11 @@ RBBrowserEnvironment >> whichCategoryIncludes: aClassName [
 
 { #category : #accessing }
 RBBrowserEnvironment >> whichProtocolIncludes: aSelector in: aClass [
+	"CyrilFerlicot: We should check if it is not better to return a protocol instead of a protocol name here and adapt the clients."
 
-	^ aClass organization protocolNameOfElement: aSelector ifAbsent: [ Protocol unclassified ]
+	^ (aClass protocolOfSelector: aSelector)
+		  ifNotNil: [ :protocol | protocol name ]
+		  ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #environments }

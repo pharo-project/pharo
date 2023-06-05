@@ -68,11 +68,20 @@ CoASTResultSetBuilder >> node: aNode [
 { #category : #'API - building' }
 CoASTResultSetBuilder >> parseNode [
 
+	| n |
 	^ node ifNil: [
-		(completionContext completionClass compiler
+		n := completionContext completionClass compiler
 			source: completionContext source;
-			noPattern: completionContext isScripting;
-			parse) nodeForOffset: completionContext position ]
+			isScripting: completionContext isScripting;
+			parse.
+		ASTTypingVisitor new visit: n.
+		(n nodeBeforeOffset: completionContext position) ifNil: [ n ] ]
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+
+	^ self visitValueNode: aRBAnnotationMarkNode
 ]
 
 { #category : #visiting }
@@ -84,31 +93,37 @@ CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
 { #category : #visiting }
 CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [
 
-	^ self visitNode: aRBArrayNode
+	^ self visitValueNode: aRBArrayNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [
 
-	^ self visitNode: aRBAssignmentNode
+	^ self visitValueNode: aRBAssignmentNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitBlockNode: aRBBlockNode [
 
-	^ self visitNode: aRBBlockNode
+	^ self visitValueNode: aRBBlockNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 
-	^ self visitNode: aRBCascadeNode
+	^ self visitValueNode: aRBCascadeNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
 
 	^ self visitVariableNode: aRBVariableNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitCommentNode: aRBComment [ 
+
+	^ self visitNode: aRBComment
 ]
 
 { #category : #visiting }
@@ -130,13 +145,13 @@ CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [
 { #category : #visiting }
 CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
-	^ self visitNode: aRBLiteralArrayNode
+	^ self visitValueNode: aRBLiteralArrayNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
 
-	^ self visitNode: aRBLiteralValueNode
+	^ self visitValueNode: aRBLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -147,7 +162,7 @@ CoASTResultSetBuilder >> visitLiteralVariableNode: aRBVariableNode [
 { #category : #visiting }
 CoASTResultSetBuilder >> visitMessageNode: aRBMessageNode [
 
-	^ self visitNode: aRBMessageNode
+	^ self visitValueNode: aRBMessageNode
 ]
 
 { #category : #visiting }
@@ -183,7 +198,7 @@ CoASTResultSetBuilder >> visitReturnNode: aRBReturnNode [
 { #category : #visiting }
 CoASTResultSetBuilder >> visitSelfNode: aRBSelfNode [
 
-	^ self visitNode: aRBSelfNode
+	^ self visitValueNode: aRBSelfNode
 ]
 
 { #category : #visiting }
@@ -195,7 +210,7 @@ CoASTResultSetBuilder >> visitSequenceNode: aRBSequenceNode [
 { #category : #visiting }
 CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
 
-	^ self visitNode: aRBSuperNode
+	^ self visitValueNode: aRBSuperNode
 ]
 
 { #category : #visiting }
@@ -207,11 +222,17 @@ CoASTResultSetBuilder >> visitTemporaryVariableNode: anArgumentNode [
 { #category : #visiting }
 CoASTResultSetBuilder >> visitThisContextNode: aRBThisContextNode [
 
-	^ self visitNode: aRBThisContextNode
+	^ self visitValueNode: aRBThisContextNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitValueNode: aRBVariableNode [
+
+	^ self visitNode: aRBVariableNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitVariableNode: aRBVariableNode [
 
-	^ self visitNode: aRBVariableNode
+	^ self visitValueNode: aRBVariableNode
 ]

@@ -46,7 +46,7 @@ RBRemoveClassParametrizedTest >> testRemoveClassWithBadNameRaisesRBRefactoringEr
 
 { #category : #'failure tests' }
 RBRemoveClassParametrizedTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
-	self shouldFail: (self createRefactoringWithModel: model
+	self shouldWarn: (self createRefactoringWithModel: model
 		andArguments: #(#RBBasicLintRuleTestData ))
 ]
 

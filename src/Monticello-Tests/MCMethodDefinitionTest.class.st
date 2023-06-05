@@ -1,16 +1,28 @@
 Class {
 	#name : #MCMethodDefinitionTest,
 	#superclass : #MCTestCase,
-	#instVars : [
-		'navigation',
-		'isModified',
-		'extensionPackage'
-	],
 	#category : #'Monticello-Tests-Base'
 }
 
-{ #category : #mocks }
-MCMethodDefinitionTest >> override [ ^ 1
+{ #category : #running }
+MCMethodDefinitionTest >> extensionPackageName [
+
+	^ 'MonticelloTestsFirstExtensionMockPackage'
+]
+
+{ #category : #accessing }
+MCMethodDefinitionTest >> mockClass [
+
+	^ self class classInstaller make: [ :builder |
+		  builder
+			  name: 'MonticelloTestsMockClass';
+			  package: self mockPackageName ]
+]
+
+{ #category : #accessing }
+MCMethodDefinitionTest >> mockPackageName [
+
+	^ 'MonticelloTestsMockPackage'
 ]
 
 { #category : #running }
@@ -19,46 +31,30 @@ MCMethodDefinitionTest >> ownPackage [
 ]
 
 { #category : #running }
-MCMethodDefinitionTest >> setUp [
-	super setUp.
-	extensionPackage := (MCWorkingCopy forPackage: (MCPackage named: 'FooBarBaz')).
-	navigation := (testingEnvironment hasClassNamed: #SystemNavigation)
-		ifTrue: [ (testingEnvironment at: #SystemNavigation) new ]
-		ifFalse: [ Smalltalk ].
-	isModified := self ownPackage modified
+MCMethodDefinitionTest >> secondExtensionPackageName [
+
+	^ 'MonticelloTestsSecondExtensionMockPackage-override'
 ]
 
 { #category : #running }
 MCMethodDefinitionTest >> tearDown [
-      self restoreMocks.
-      extensionPackage unregister.
-		extensionPackage := nil.
-      self class compile: 'override ^ 1' classified: 'mocks'.
-      self ownPackage modified: isModified.
-		super tearDown
-       "FIXME: Unregister Monticellomocks if it got created implicitly.
-       This avoids a nasty failure of MCChangeNotificationTest due to
-       some inconsistency about whether package names are case sensitive
-       or not. They're treated as case insensitive in some name lookups but not
-       in others; most importantly PackageOrganizer default treats package
-       names as being case sensitive. The package created here is Monticellomocks
-       (lower case mocks) and an instance of PackageInfo; the package expected
-       in MCChangeNotificationTest is MonticelloMocks and an instance of
-       MCMockPackageInfo. Since *that* lookup is case insensitive it can
-       find Monticellomocks instead of MonticelloMocks and fail."
-       "PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
+
+	{ self secondExtensionPackageName . self extensionPackageName . self mockPackageName }
+		do: [ :packageName | (packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ].
+	super tearDown
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testCannotLoad [
+
 	| definition |
 	definition := self
-		mockMethod: #kjahs87
-		class: 'NoSuchClass'
-		source: 'kjahs87 ^self'
-		meta: false.
+		              mockMethod: #kjahs87
+		              class: 'NoSuchClass'
+		              source: 'kjahs87 ^self'
+		              meta: false.
 	self should: [ definition load ] raise: Error.
-	self assertEmpty: (navigation allImplementorsOf: #kjahs87)
+	self assertEmpty: (SystemNavigation new allImplementorsOf: #kjahs87)
 ]
 
 { #category : #testing }
@@ -81,64 +77,81 @@ MCMethodDefinitionTest >> testComparison [
 
 { #category : #testing }
 MCMethodDefinitionTest >> testLoadAndUnload [
-	|definition|
-	definition := self mockMethod: #one class: 'MCMockClassA' source: 'one ^2' meta: false.
-	self assert: self mockInstanceA one equals: 1.
+
+	| definition mockClass mockClassInstance |
+	mockClass := self mockClass.
+	mockClassInstance := mockClass new.
+	mockClass compile: 'one ^ 1'.
+	definition := self
+		              mockMethod: #one
+		              class: mockClass name
+		              source: 'one ^2'
+		              meta: false.
+	self assert: mockClassInstance one equals: 1.
 	definition load.
-	self assert: self mockInstanceA one equals: 2.
+	self assert: mockClassInstance one equals: 2.
 	definition unload.
-	self deny: (self mockInstanceA respondsTo: #one)
+	self deny: (mockClassInstance respondsTo: #one)
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsYetUnclassified [
 
 	| methodDef |
-	methodDef := (MCMethodDefinition
-			className: #Object
-			classIsMeta: false
-			selector: #name
-			category: '' 
-			timeStamp: nil
-			source: 'name
-	^ self printString').
-	self assert: methodDef category equals: #'as yet unclassified'.
+	methodDef := MCMethodDefinition
+		             className: #Object
+		             classIsMeta: false
+		             selector: #name
+		             category: ''
+		             timeStamp: nil
+		             source: 'name
+	^ self printString'.
+	self assert: methodDef protocol equals: Protocol unclassified
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
-	| definition |
-	self class compile: 'override ^ 2' classified: '*foobarbaz'.
-	self class compile: 'override ^ 3' classified: self mockOverrideMethodCategory.
-	self class compile: 'override ^ 4' classified: self mockOverrideMethodCategory.
-	definition := (self class>>#override) asMCMethodDefinition.
+
+	| definition mockClass mockClassInstance |
+	mockClass := self mockClass.
+	mockClassInstance := mockClass new.
+	mockClass compile: 'override ^ 2' classified: '*' , self extensionPackageName.
+	mockClass compile: 'override ^ 3' classified: '*' , self secondExtensionPackageName.
+	mockClass compile: 'override ^ 4' classified: '*' , self secondExtensionPackageName.
+	definition := (mockClass >> #override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
-	self assert: self override equals: 4.
+	self assert: mockClassInstance override equals: 4.
 	definition unload.
-	self assert: self override equals: 2.
-	self assert: (self class>>#override) category equals: '*foobarbaz'
+	self assert: mockClassInstance override equals: 2.
+	self assert: (mockClass >> #override) protocolName equals: '*' , self extensionPackageName
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testRevertOldMethod [
 
-	| definition changeRecord |
-	Object compile: 'yourself ^ self' classified: '*MonticelloMocks'.
-	definition := (Object >> #yourself) asMCMethodDefinition.
+	| definition changeRecord mockClass |
+	mockClass := self mockClass.
+	mockClass compile: 'yourself ^ self' classified: 'accessing'.
+	mockClass compile: 'yourself ^ self' classified: '*MonticelloMocks'.
+	definition := (mockClass >> #yourself) asMCMethodDefinition.
 	changeRecord := definition overridenMethodOrNil.
-	self assert: changeRecord notNil.
+	self assert: changeRecord isNotNil.
 	self assert: changeRecord protocol equals: 'accessing'.
 	changeRecord fileIn
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testRevertOverrideMethod [
-	| definition |
-	self class compile: 'override ^ 2' classified: self mockOverrideMethodCategory.
-	definition := (self class>>#override) asMCMethodDefinition.
+
+	| definition mockClass mockClassInstance |
+	mockClass := self mockClass.
+	mockClassInstance := mockClass new.
+	mockClass compile: 'override ^ 1' classified: 'mocks'.
+	mockClass compile: 'override ^ 2' classified: '*' , self secondExtensionPackageName.
+	definition := (mockClass >> #override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
-	self assert: self override equals: 2.
+	self assert: mockClassInstance override equals: 2.
 	definition unload.
-	self assert: self override equals: 1.
-	self assert: (RGMethodDefinition realClass: self class selector: #override) category equals: 'mocks'
+	self assert: mockClassInstance override equals: 1.
+	self assert: (RGMethodDefinition realClass: mockClass selector: #override) protocol equals: 'mocks'
 ]

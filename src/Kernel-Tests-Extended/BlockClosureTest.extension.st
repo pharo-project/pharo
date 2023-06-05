@@ -25,19 +25,17 @@ BlockClosureTest >> testBenchForException [
 BlockClosureTest >> testCannotReturn [
 
 	| block p |
-	p := [block := self blockWithNonLocalReturn: #result] fork.
-	[p isTerminated] whileFalse: [ 10 milliSeconds wait ].
+	p := [ block := self blockWithNonLocalReturn: #result ] fork.
+	[ p isTerminated ] whileFalse: [ 10 milliSeconds wait ].
 
-	[ block value.
-	self assert: false description: 'BlockCannotReturn should be signaled' ]
-		 on: BlockCannotReturn do: [ :err |
-			self assert: err result equals: #result.
-			self assert: err home equals: block home]
+	self should: [ block value ] raise: BlockCannotReturn withExceptionDo: [ :err |
+		self assert: err result equals: #result.
+		self assert: err home equals: block home ]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testRunSimulated [
-	self assert: (Context runSimulated: aBlockContext) class equals: Rectangle
+	self assert: (Context runSimulated: aBlock) class equals: Rectangle
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -53,14 +51,14 @@ BlockClosureTest >> testTallyInstructions [
 	| expected |
 	expected := Smalltalk compiler compilationContext
 		            optionCleanBlockClosure
-		            ifTrue: [ 27 ]
-		            ifFalse: [ 28 ].
+		            ifTrue: [ 26 ]
+		            ifFalse: [ 27 ].
 	self
-		assert: (Context tallyInstructions: aBlockContext) size
+		assert: (Context tallyInstructions: aBlock) size
 		equals: expected
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyMethods [
-	self assert: (Context tallyMethods: aBlockContext) size equals: 7
+	self assert: (Context tallyMethods: aBlock) size equals: 7
 ]

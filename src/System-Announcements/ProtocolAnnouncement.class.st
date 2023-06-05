@@ -11,6 +11,15 @@ Class {
 	#category : #'System-Announcements-System-Protocols'
 }
 
+{ #category : #'class initialization' }
+ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
+
+	^ self new
+		  classReorganized: aClass;
+		  protocol: aProtocol;
+		  yourself
+]
+
 { #category : #testing }
 ProtocolAnnouncement >> affectsMethodTagIn: aClass [
 

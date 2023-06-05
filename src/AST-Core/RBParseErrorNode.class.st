@@ -144,12 +144,9 @@ RBParseErrorNode >> source: aString [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> start [
-	^ start
-]
-
-{ #category : #accessing }
 RBParseErrorNode >> start: aPosition [
+	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+
 	start := aPosition
 ]
 
@@ -159,20 +156,17 @@ RBParseErrorNode >> startWithoutParentheses [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> stop [
-	^ stop
-		ifNil: [start + value size - 1]
-		ifNotNil: [ stop ]
-]
-
-{ #category : #accessing }
 RBParseErrorNode >> stop: aStopPosition [
+	"Beware, stop is in fact `stopWithoutParentheses` as in RBValueNode, stop includes parentheses"
+
 	stop := aStopPosition
 ]
 
 { #category : #accessing }
 RBParseErrorNode >> stopWithoutParentheses [
-	^ self stop
+	^ stop
+		ifNil: [start + value size - 1]
+		ifNotNil: [ stop ]
 ]
 
 { #category : #accessing }

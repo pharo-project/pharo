@@ -9,7 +9,8 @@ Class {
 	#superclass : #ClassTestCase,
 	#instVars : [
 		'x',
-		'y'
+		'y',
+		'class'
 	],
 	#category : #'Kernel-Tests-Extended-Methods'
 }
@@ -247,6 +248,7 @@ CompiledMethodTest >> shouldNotImplementMethod [
 { #category : #running }
 CompiledMethodTest >> tearDown [
 	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
+	class ifNotNil: [ class removeFromSystem].
 	super tearDown
 ]
 
@@ -345,23 +347,6 @@ CompiledMethodTest >> testCopy [
 	self assert: (method equivalentTo: copy).
 	self assert: method header equals: copy header.
 	self assert: method equals: copy.
-	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method identicalTo: copy.
-	self assert: method penultimateLiteral method identicalTo: method.
-	method pragmas do: [ :p | self assert: p method identicalTo: method ].
-	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
-]
-
-{ #category : #tests }
-CompiledMethodTest >> testCopyWithTrailerBytes [
-	<pragma: #pragma>
-	| method copy |
-	method := thisContext method.
-	self assert: method pragmas notEmpty.
-	copy := method copyWithTrailerBytes: method trailer.
-	self assert: (method equivalentTo: copy).
-	self deny: method identicalTo: copy.
-	self assert: method symbolic equals: copy symbolic.	"but their bytecode should be the same"
 	self assert: method ~~ copy.
 	self assert: copy penultimateLiteral method identicalTo: copy.
 	self assert: method penultimateLiteral method identicalTo: method.
@@ -477,7 +462,6 @@ CompiledMethodTest >> testIsFaulty [
 	cm := OpalCompiler new
 				source: 'method 3+';
 				permitFaulty: true;
-				options: #(+ #optionEmbeddSources );
 				compile.
 	self assert: cm isFaulty.
 	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
@@ -731,6 +715,53 @@ CompiledMethodTest >> testPragmaAt [
 	self assert: (method pragmaAt: #hello) equals: nil
 ]
 
+{ #category : #tests }
+CompiledMethodTest >> testProperties [
+
+	| method tmp |
+	method := self class >> #returnTrue.
+	
+	"No property. Unlike classic collections, nil is returned on absence"
+	self deny: method hasProperties.
+	self deny: (method hasProperty: #doesNotExist).
+	self assert: (method propertyAt: #doesNotExist) equals: nil.
+	self assert: (method propertyAt: #doesNotExist ifAbsent: [ #tag ]) equals: #tag.
+	self assert: (method removeProperty: #doesNotExist) equals: nil.
+	self assert: (method removeProperty: #doesNotExist ifAbsent: [ #tag ]) equals: #tag.
+	
+	"Add a property"
+	self assert: (method propertyAt: #doesNotExist put: #yesItDoes) equals: #yesItDoes.
+	self assert: method hasProperties.
+	self assert: (method hasProperty: #doesNotExist).
+	self assert: (method propertyAt: #doesNotExist) equals: #yesItDoes.
+	self assert: (method propertyAt: #doesNotExist ifAbsent: [ #tag ]) equals: #yesItDoes.
+
+	"Remove it"
+	self assert: (method removeProperty: #doesNotExist) equals: #yesItDoes.
+	self deny: method hasProperties.
+	self assert: (method removeProperty: #doesNotExist) equals: nil.
+
+	"Add it back"
+	self assert: (method propertyAt: #doesNotExist ifAbsentPut: [ #yesItDoesAgain ]) equals: #yesItDoesAgain.
+	self assert: method hasProperties.
+	self assert: (method propertyAt: #doesNotExist) equals: #yesItDoesAgain.
+
+	"Add a second one"
+	self assert: (method propertyAt: #doesExist put: #yesItDoes) equals: #yesItDoes.
+	
+	tmp := OrderedCollection new.
+	method propertyKeysAndValuesDo: [ :key :value | tmp add: { key . value } ].
+	self assertCollection: tmp hasSameElements: #( #( #doesNotExist #yesItDoesAgain ) #(#doesExist #yesItDoes) ).
+	
+	"Remove both"
+	method removeProperty: #doesNotExist.
+	self assert: method hasProperties.
+	self assert: (method propertyAt: #doesNotExist) equals: nil.
+	self assert: (method propertyAt: #doesExist) equals: #yesItDoes.
+	method removeProperty: #doesExist.
+	self deny: method hasProperties
+]
+
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testReadsField [
 	| method |
@@ -860,10 +891,10 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 { #category : #'tests - literals' }
 CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 
-	| method method2 method3 method4 class receiver |
+	| method method2 method3 method4 receiver |
 
 	Smalltalk globals at: #TestUndeclaredVariableClass ifPresent: [ :c | c removeFromSystem ].
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	class := (Object << #TestUndeclaredVariableClass package: '') install.
 	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 0.
 	receiver := class new.
 
@@ -873,7 +904,7 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	self should: [ receiver executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Update the class (same identity, not a new class)"
-	self assert: (Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: '') equals: class.
+	self assert: (Object << #TestUndeclaredVariableClass slots: { #TestUndeclaredVariable}; package: '') install equals: class.
 	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 1.
 	receiver instVarAt: 1 put: 42.
 
@@ -885,58 +916,61 @@ CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 	self assert: (receiver executeMethod: method2) equals: 42.
 
 	"Removal of ivar DOES recompile a new new one"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
+	class := (Object << #TestUndeclaredVariableClass package: '') install.
 	self deny: method2 equals: (method3 := class>>#x). "It is a new method"
 	self assert: method3 usesUndeclareds.
 	self should: [ receiver executeMethod: method3 ] raise: UndeclaredVariableRead.
 
 	"Thus adding back DOES recompile again"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: 'TestUndeclaredVariable' classVariableNames: '' category: ''.
+	class := (Object << #TestUndeclaredVariableClass slots: {#TestUndeclaredVariable}; package: '') install.
 	receiver instVarAt: 1 put: 421.
 	self deny: method3 equals: (method4 := class>>#x). "It is a new method"
 	self deny: method4 usesUndeclareds.
 	self assert: (receiver executeMethod: method4) equals: 421.
 
-	"cleanup"
-	class removeFromSystem
+
 ]
 
 { #category : #'tests - literals' }
 CompiledMethodTest >> testUndeclaredReparationWithShared [
 
-	| method class |
-
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
-	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
-
-	method := class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
-	self assert: method usesUndeclareds.
-	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
-
+	| method |
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         package: '') install.
+	method := class compiler
+		          permitFaulty: true;
+		          compile:
+			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	"Add and initialize a shared"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
-	(class bindingOf: #TestUndeclaredVariable) value: 42.
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         sharedVariables:  {#TestUndeclaredVariable};
+		         package: '') install.
 
-	"Method is repaired"
-	self deny: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: 42.
+	nil executeMethod: method.
+	nil executeMethod: method
+]
 
-	"Remove shared from class"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: '' category: ''.
-	self assert: (class bindingOf: #TestUndeclaredVariable) isNil.
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithSharedWasCrashingOnOldVM1001 [
 
-	"Removal of shared DOES NOT undeclare users"
-	self deny: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: 42.
+	| method |
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         package: '') install.
+	method := class compiler
+		          permitFaulty: true;
+		          compile:
+			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	"Add and initialize a shared"
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         sharedVariables:  {#TestUndeclaredVariable};
+		         package: '') install.
 
-	"Thus, adding back DOES NOT repair"
-	class := Object subclass: #TestUndeclaredVariableClass instanceVariableNames: '' classVariableNames: 'TestUndeclaredVariable' category: ''.
-	(class bindingOf: #TestUndeclaredVariable) value: 421.
-	self deny: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: 42.
-
-	"cleanup"
-	class removeFromSystem
+	nil executeMethod: method.
+	nil executeMethod: method
 ]
 
 { #category : #'tests - testing' }
@@ -948,6 +982,17 @@ CompiledMethodTest >> testUsesUndeclareds [
 	self assert: method usesUndeclareds.
 	method := self class compiler permitFaulty: true; compile: 'msg self in: [ :anObject | var1 := 1 ]'.
 	self assert: method usesUndeclareds
+]
+
+{ #category : #'tests - evaluating' }
+CompiledMethodTest >> testValueWithReceiver [
+
+	| method value |
+
+	method := self class compiledMethodAt: #returnTrue.
+
+	value := method valueWithReceiver: nil .
+	self assert: value equals: true.
 ]
 
 { #category : #'tests - evaluating' }

@@ -8,8 +8,8 @@ Class {
 MCPackageTest >> aMethodRemoved: anEvent [
 	"Force cleaning of the protocol."
 
-	(anEvent protocol = self mockExtensionMethodCategory and: [ anEvent methodClass == MCSnapshotTest ])
-		ifTrue: [ anEvent methodClass organization removeProtocolIfEmpty: self mockExtensionMethodCategory ]
+	(anEvent protocol name = self mockExtensionMethodCategory and: [ anEvent methodClass == MCSnapshotTest ]) ifTrue: [
+		anEvent methodClass removeProtocolIfEmpty: self mockExtensionMethodCategory ]
 ]
 
 { #category : #running }
@@ -26,7 +26,7 @@ MCPackageTest >> testUnload [
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
-	self deny: (MCSnapshotTest organization hasProtocolNamed: self mockExtensionMethodCategory).
+	self deny: (MCSnapshotTest hasProtocol: self mockExtensionMethodCategory).
 	mock := testingEnvironment at: #MCMock.
 	self assert: (mock subclasses
 			 detect: [ :c | c name = #MCMockClassA ]
@@ -43,7 +43,7 @@ MCPackageTest >> testUnloadWithAdditionalTracking [
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
-	self deny: (MCSnapshotTest organization hasProtocolNamed: self mockExtensionMethodCategory).
+	self deny: (MCSnapshotTest hasProtocol: self mockExtensionMethodCategory).
 	mock := testingEnvironment at: #MCMock.
 	self assert: (mock subclasses
 			 detect: [ :c | c name = #MCMockClassA ]

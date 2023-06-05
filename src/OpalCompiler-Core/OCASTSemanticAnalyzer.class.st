@@ -7,6 +7,7 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'scope',
+		'outerScope',
 		'compilationContext',
 		'blockCounter',
 		'undeclared',
@@ -18,8 +19,6 @@ Class {
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 
-	"Policy: simple semantic analysis is faulty by default"
-	compilationContext permitFaulty ifNil: [ compilationContext permitFaulty: true ].
 	self visitNode: aNode.
 	OCASTClosureAnalyzer new visitNode: aNode.
 	OCASTMethodMetadataAnalyser new visitNode: aNode
@@ -89,7 +88,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	| name var shadowing |
 	name := aVariableNode name.
 	"check if another variable with same name is visible"
-	shadowing := scope lookupVarForDeclaration: name.
+	shadowing := scope lookupVar: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
 	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
@@ -105,6 +104,18 @@ OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
 { #category : #accessing }
 OCASTSemanticAnalyzer >> invalidVariables [
 	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> outerScope [
+
+	^ outerScope
+]
+
+{ #category : #accessing }
+OCASTSemanticAnalyzer >> outerScope: anObject [
+
+	outerScope := anObject
 ]
 
 { #category : #variables }
@@ -180,6 +191,17 @@ OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	(aRBAnnotationValueNode parent isNotNil and: [
+		 aRBAnnotationValueNode parent isMessage ]) ifTrue: [
+		aRBAnnotationValueNode isHandled ifFalse: [
+			self error: 'Unknown annotation' forNode: aRBAnnotationValueNode parent ].
+		^ self ].
+	self error: 'Unexpected token' forNode: aRBAnnotationValueNode
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	self visitNode: anAssignmentNode value.
@@ -227,11 +249,18 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
+	
+	super visitMessageNode: aMessageNode.
+	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: scope targetClass ]
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
@@ -245,7 +274,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 	super visitPragmaNode: aPragmaNode.
 	aPragmaNode selector = #compilerOptions: ifTrue: [
 		aPragmaNode asPragma sendTo:
-			aPragmaNode methodNode compilationContext ].
+			self compilationContext ].
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp
 	for it"

@@ -10,36 +10,12 @@ Class {
 		'replaceStart',
 		'replaceStop'
 	],
-	#classVars : [
-		'MinTextSizeForStylingInBackground'
-	],
 	#category : #'Rubric-Styling'
 }
 
 { #category : #querying }
 RubShoutStylerDecorator class >> key [
 	^ #shoutStyler
-]
-
-{ #category : #settings }
-RubShoutStylerDecorator class >> minTextSizeForStylingInBackground [
-	^ MinTextSizeForStylingInBackground ifNil: [ MinTextSizeForStylingInBackground := 4000 ]
-]
-
-{ #category : #settings }
-RubShoutStylerDecorator class >> minTextSizeForStylingInBackground: anInteger [
-	MinTextSizeForStylingInBackground := anInteger
-]
-
-{ #category : #settings }
-RubShoutStylerDecorator class >> rubricSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #minTextSizeForStylingInBackground)
-		target: self;
-		parent: #Rubric;
-		default: 4000;
-		description: 'Set the minimum text size imposed to allow background styling';
-		label: 'Min text size for background styling'
 ]
 
 { #category : #private }
@@ -65,11 +41,6 @@ RubShoutStylerDecorator >> classOrMetaClass: aBehavior [
 { #category : #accessing }
 RubShoutStylerDecorator >> defaultStyler [
 	^SHRBTextStyler new view: self; yourself
-]
-
-{ #category : #shout }
-RubShoutStylerDecorator >> minTextSizeForStylingInBackground [
-	^ self class minTextSizeForStylingInBackground
 ]
 
 { #category : #accessing }

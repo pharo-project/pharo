@@ -55,9 +55,15 @@ RBParser class >> parseFaultyMethod: aString [
 
 { #category : #parsing }
 RBParser class >> parseLiterals: aString [
-	^ self new
-		  initializeParserWith: aString;
-		  parseLiterals: aString
+
+	| scanner parser |
+	parser := self new.
+	scanner := parser scannerClass on: (ReadStream on: aString).
+	scanner state: #literalArray.
+	^ parser
+		  source: aString;
+		  scanner: scanner;
+		  parseLiterals
 ]
 
 { #category : #parsing }
@@ -318,13 +324,13 @@ RBParser >> parseBinaryMessageWith: aNode [
 	| binaryNode |
 	binaryNode := self selectorNodeClass
 		value: currentToken value
-		keywordPositions: (Array with: currentToken start).
+		keywordPositions: { currentToken start }.
 	self step.
 	^self messageNodeClass
 		receiver: aNode
 		selector:  binaryNode
 		keywordsPositions: binaryNode keywordPositions
-		arguments: (Array with: self parseUnaryMessage)
+		arguments: { self parseUnaryMessage }
 ]
 
 { #category : #'private - parsing' }
@@ -496,7 +502,6 @@ RBParser >> parseDoIt [
 	| methodNode |
 	methodNode := self doItMethodNodeClass new.
 	self parseMethodBodyInto: methodNode.
-	methodNode addReturn.
 	^methodNode
 ]
 
@@ -540,8 +545,7 @@ RBParser >> parseErrorNode: aMessageString [
 RBParser >> parseExpression [
 	"Parse and return an AST node corresponding to the expression passed as a #source"
 	| methodNode |
-	methodNode := self doItMethodNodeClass new.
-	self parseMethodBodyInto: methodNode.
+	methodNode := self parseDoIt.
 	^(methodNode statements size == 1 and: [ methodNode temporaries isEmpty ])
 		  ifTrue: [ methodNode statements first ]
 		  ifFalse: [ methodNode body ]
@@ -635,7 +639,9 @@ RBParser >> parseKeywordPragma [
 
 { #category : #'private - parsing' }
 RBParser >> parseLiteralArray [
-	| literals startToken stop faulty value |
+	| literals startToken stop faulty value prevState |
+	prevState := scanner state.
+	scanner state: #literalArray.
 	startToken := currentToken.
 	literals := (OrderedCollection new: 5).
 	faulty := false.
@@ -647,21 +653,22 @@ RBParser >> parseLiteralArray [
 	stop := currentToken stop.
 	(currentToken isSpecial: $))
 		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
+	scanner state: prevState.
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralArrayErrorNode new
-			value: '#(';
+			value: startToken value asString;
 		 	start: startToken start;
 			contents: literals;
 			valueAfter: ')';
 			stop: stop;
 			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
-	^self literalArrayNodeClass
+	^(self literalArrayNodeClass
 		startPosition: startToken start
 		contents: literals
 		stopPosition: stop
-		isByteArray: false
+		isByteArray: false) openerSize: startToken length.
 ]
 
 { #category : #'private - parsing' }
@@ -675,9 +682,22 @@ RBParser >> parseLiteralArrayObject [
 			[^currentToken isForByteArray
 				ifTrue: [self parseLiteralByteArray]
 				ifFalse: [self parseLiteralArray]].
+
 	currentToken isError ifTrue:[ |errorNode| errorNode :=  self parseErrorNode: currentToken cause.
 		 ^ errorNode].
-	currentToken isLiteralToken ifFalse: [self patchLiteralArrayToken].
+
+	"For the moment, special tokens are transformed into symbol."
+	(currentToken isAssignment or: [ currentToken isSpecial ])
+		ifTrue: [
+			|node|
+			node := self literalValueNodeClass
+				value: currentToken value asSymbol
+				start: currentToken start
+				stop: currentToken stop.
+			node addWarning: 'Use a proper symbol literal'.
+			self step. "special"
+			^node ].
+
 	^self parsePrimitiveLiteral
 ]
 
@@ -702,18 +722,18 @@ RBParser >> parseLiteralByteArray [
 	self step.
 	faulty ifTrue: [
 		^ RBLiteralByteArrayErrorNode new
-			value: '#[';
+			value: startToken value asString;
 		 	start: startToken start;
 			contents: stream contents;
 			valueAfter: ']';
 			stop: stop;
 			propertyAt: #notices put: OrderedCollection new;
 			yourself ].
-	^self literalArrayNodeClass
+	^(self literalArrayNodeClass
 		startPosition: startToken start
 		contents: stream contents
 		stopPosition: stop
-		isByteArray: true
+		isByteArray: true) openerSize: startToken length.
 ]
 
 { #category : #'private - parsing' }
@@ -734,13 +754,19 @@ RBParser >> parseLiteralByteArrayObject [
 ]
 
 { #category : #'private - parsing' }
-RBParser >> parseLiterals: aString [
+RBParser >> parseLiterals [
+
 	| stream |
 	stream := (Array new: 5) writeStream.
-	[self atEnd or: [currentToken isSpecial: $)]]
-		whileFalse: [stream nextPut: self parseLiteralArrayObject].
-	self atEnd ifFalse: [ ^ self parseErrorNode: 'Unknown input at end'].
-	^stream contents collect: [ :each | each value ]
+	[ self atEnd ] whileFalse: [
+		| node |
+		node := (currentToken isSpecial: $))
+			        ifTrue: [
+			        self parseErrorNode: 'Unexpected closing parenthesis' ]
+			        ifFalse: [ self parseLiteralArrayObject ].
+		node isError ifTrue: [ node checkFaulty: nil ].
+		stream nextPut: node value ].
+	^ stream contents
 ]
 
 { #category : #'private - parsing' }
@@ -800,7 +826,7 @@ RBParser >> parsePragma [
 	startToken := currentToken.
 	self step. "<"
 	pragma := self basicParsePragma.
-	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+	(currentToken isBinary: #>) ifFalse: [
 		pragma isPragma ifTrue: [
 			pragma
 				left: startToken start;
@@ -835,7 +861,7 @@ RBParser >> parsePragmaLiteral [
 { #category : #'private - parsing' }
 RBParser >> parsePragmas [
 
-	[ currentToken isBinary and: [ currentToken value = #< ] ]
+	[ currentToken isBinary: #< ]
 		whileTrue: [ self parsePragma ]
 ]
 
@@ -887,8 +913,7 @@ RBParser >> parsePrimitiveLiteral [
 RBParser >> parsePrimitiveObject [
 	| errorNode |
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
-	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
-		ifTrue: [^self parsePrimitiveLiteral].
+	currentToken isLiteralToken ifTrue: [^self parsePrimitiveLiteral].
 	currentToken isLiteralArrayToken
 		ifTrue:
 			[^currentToken isForByteArray
@@ -899,6 +924,13 @@ RBParser >> parsePrimitiveObject [
 			[currentToken value = $[ ifTrue: [^self saveCommentsDuring:[self parseBlock]].
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
+
+	"Annotations are implemented as a magic receiver '@'"
+	(currentToken isBinary: #@) ifTrue: [
+		| position |
+		position := currentToken start.
+		self step. "@"
+		^ RBAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
@@ -1107,7 +1139,7 @@ RBParser >> parseUnaryMessage [
 { #category : #'private - parsing' }
 RBParser >> parseUnaryMessageWith: aNode [
 	| selector |
-	selector := self selectorNodeClass value: currentToken value keywordPositions: (Array with: currentToken start).
+	selector := self selectorNodeClass value: currentToken value keywordPositions: {currentToken start}.
 	self step.
 	^self messageNodeClass
 		receiver: aNode
@@ -1123,7 +1155,7 @@ RBParser >> parseUnaryPattern [
 	self step.
 	^self methodNodeClass
 		selector: selector value asSymbol
-		keywordsPositions: (Array with: selector start)
+		keywordsPositions: {selector start}
 		arguments: #()
 ]
 
@@ -1159,56 +1191,6 @@ RBParser >> parseVariableNode [
 			self step ] ].
 
 	^ errorNode
-]
-
-{ #category : #private }
-RBParser >> patchLiteralArrayToken [
-	(currentToken isIdentifier and:
-			[self nextToken isAssignment
-				and: [currentToken stop + 1 = self nextToken start]])
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: (currentToken value , ':') asSymbol
-						start: currentToken start
-						stop: self nextToken start.
-			nextToken := RBLiteralToken
-						value: #=
-						start: nextToken stop
-						stop: nextToken stop.
-			^self].
-	currentToken isAssignment
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: #':'
-						start: currentToken start
-						stop: currentToken start.
-			nextToken := RBLiteralToken
-						value: #=
-						start: currentToken stop
-						stop: currentToken stop.
-			^self].
-	currentToken isSpecial
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: (String with: currentToken value) asSymbol
-						start: currentToken start
-						stop: currentToken stop.
-			^self].
-	(currentToken isIdentifier and: [currentToken value includes: $.])
-		ifTrue:
-			[currentToken := RBLiteralToken
-						value: currentToken value
-						start: currentToken start
-						stop: currentToken stop.
-			^self].
-	(currentToken isIdentifier
-		or: [currentToken isBinary or: [currentToken isKeyword]])
-			ifFalse: [^self parseErrorNode: 'Invalid token'].
-	currentToken := RBLiteralToken
-				value: currentToken value asSymbol
-				start: currentToken start
-				stop: currentToken stop
-				source: currentToken value asString
 ]
 
 { #category : #private }

@@ -156,17 +156,13 @@ Context class >> initializePrimitiveSimulators [
 
 { #category : #simulation }
 Context class >> initializeTryNamedPrimitiveTemplateMethod [
-	| source method |
+	| source |
 	source := 'tryNamedPrimitive
 	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
 	<primitive:'' module:'' error: errorCode>
 	^ Context primitiveFailTokenFor: errorCode'.
-	method := Smalltalk compiler
-				class: UndefinedObject;
-				source: source;
-				compile.
-	TryNamedPrimitiveTemplateMethod := method copyWithSource: source
+	TryNamedPrimitiveTemplateMethod := Smalltalk compiler compile: source
 ]
 
 { #category : #'instance creation' }
@@ -775,6 +771,16 @@ Context >> failPrimitiveWith: maybePrimFailToken [
 		[self at: stackp put: maybePrimFailToken last]
 ]
 
+{ #category : #'debugger access' }
+Context >> filterDebuggerStack [
+	"Answer self or the first sender that do not have the pragma `debuggerCompleteToSender` or belong to the `Exception` class hierarchy"
+
+	^ ((self method methodClass instanceSide includesBehavior: Exception)
+		   or: [ self method hasPragmaNamed: #debuggerCompleteToSender ])
+		  ifTrue: [ sender ifNotNil: [ sender filterDebuggerStack ] ]
+		  ifFalse: [ self ]
+]
+
 { #category : #query }
 Context >> findContextSuchThat: testBlock [
 	"Search self and my sender chain for first one that satisfies testBlock.  Return nil if none satisfy"
@@ -912,9 +918,10 @@ Context >> home [
 	"Answer the context in which the receiver was defined, i.e. the context from which an ^-return ] should return from."
 
 	closureOrNil ifNil: [ ^ self ].
-	"this happens for clean blocks. We should later check if it is not better to return nil"
-	closureOrNil outerContext ifNil: [ ^ self ].
-	^ closureOrNil outerContext home
+	"this happens for clean blocks, we try to find the home on the stack"
+	^ closureOrNil outerContext 
+		ifNil: [ self activeHome ]
+		ifNotNil: [:outer | outer home ]
 ]
 
 { #category : #accessing }

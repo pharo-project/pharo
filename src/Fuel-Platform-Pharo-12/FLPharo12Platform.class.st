@@ -12,7 +12,9 @@ FLPharo12Platform class >> addHacks [
 { #category : #testing }
 FLPharo12Platform class >> isResponsibleForCurrentPlatform [
 
-	^ super isResponsibleForCurrentPlatform and: [ SystemVersion current type = 'Pharo' and: [ SystemVersion current major = 12 ] ]
+	^ super isResponsibleForCurrentPlatform 
+		and: [ SystemVersion current type = 'Pharo' 
+		and: [ SystemVersion current major = 12 ] ]
 ]
 
 { #category : #'accessing-files' }
@@ -84,12 +86,9 @@ FLPharo12Platform >> readStreamForFilePath: aString [
 
 { #category : #'accessing-compiler' }
 FLPharo12Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
-	aClass
-		addSelector: aSymbol
-		withMethod: aCompiledMethod.
-	aClass organization
-		classify: aSymbol
-		under: aString
+
+	aClass addSelector: aSymbol withMethod: aCompiledMethod.
+	aClass classify: aSymbol under: aString
 ]
 
 { #category : #'accessing-kernel' }

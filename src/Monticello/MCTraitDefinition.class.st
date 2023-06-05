@@ -234,7 +234,7 @@ MCTraitDefinition >> requirements [
 	(and thus not a special character such as {, # etc.)"
 
 	self hasTraitComposition
-		ifFalse: [ ^ Array new ].
+		ifFalse: [ ^ #() ].
 
 	^ (((RBParser parseExpression: self traitCompositionString)
 		allChildren select: [ :e | e isVariable ])

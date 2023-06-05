@@ -14,6 +14,12 @@ Class {
 	#category : #'OSWindow-Core-Utilities'
 }
 
+{ #category : #'class initialization' }
+OSBackendWindow class >> initialize [
+
+	self deprecatedAliases: { #OSWindowHandle }
+]
+
 { #category : #accessing }
 OSBackendWindow >> borderless [
 	^ false
