@@ -420,6 +420,16 @@ FinderUI >> constructPackagesSet: aPackageEnvironment [
 	^ (result reject: [ :each | each isNil ]) asSet asSortedCollection: [ :a :b | a < b ]
 ]
 
+{ #category : #private }
+FinderUI >> createWindow [
+
+	| window |
+	window := StandardWindow new model: self.
+	self addAllItems: window.
+	window setLabel: self defaultWindowLabel.
+	^ window
+]
+
 { #category : #accessing }
 FinderUI >> currentSearchMode [
 	^self finder currentSearchMode
@@ -639,10 +649,17 @@ FinderUI >> menu: menu shifted: b [
 FinderUI >> open [
 
 	| window |
-	window := StandardWindow new model: self.
-	self addAllItems: window.
-	window setLabel: self defaultWindowLabel.
+	window := self createWindow .
 	window openInWorld.
+	self searchingTextArea contentMorph takeKeyboardFocus
+]
+
+{ #category : #display }
+FinderUI >> openInWorld: aWorld [
+
+	| window |
+	window := self createWindow .
+	window openInWorld: aWorld.
 	self searchingTextArea contentMorph takeKeyboardFocus
 ]
 

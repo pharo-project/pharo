@@ -803,6 +803,12 @@ WorldState >> stopStepping: aMorph selector: aSelector [
 	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph and:[stepMsg selector == aSelector]])
 ]
 
+{ #category : #accessing }
+WorldState >> tools [
+
+	^ self world tools
+]
+
 { #category : #alarms }
 WorldState >> triggerAlarmsBefore: nowTime [
 	"Trigger all pending alarms that are to be executed before nowTime."
@@ -833,6 +839,12 @@ WorldState >> updateToNewResolution: originalEvent [
 WorldState >> viewBox [
 
 	^ self worldRenderer viewBox
+]
+
+{ #category : #accessing }
+WorldState >> world [
+	
+	^ worldRenderer world
 ]
 
 { #category : #'worldmenu building' }

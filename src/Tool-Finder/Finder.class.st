@@ -25,7 +25,7 @@ Finder class >> finderMenuOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #Finder)
-		action: [self open];
+		action: [:worldstate | worldstate tools openFinder ];
 		order: 2;
 		parent: #Searching;
 		help: 'Looking for something ?';
@@ -40,9 +40,15 @@ Finder class >> icon [
 
 { #category : #menu }
 Finder class >> open [
-	<script>
 
+	<script>
 	^ self new open
+]
+
+{ #category : #menu }
+Finder class >> openInWorld: aWorld [
+
+	^ self new openInWorld: aWorld
 ]
 
 { #category : #'tools registry' }
@@ -145,6 +151,12 @@ Finder >> open [
 	<script: 'self new open'>
 
 	^ (FinderUI on: self) open
+]
+
+{ #category : #display }
+Finder >> openInWorld: aWorld [
+
+	^ (FinderUI on: self) openInWorld: aWorld
 ]
 
 { #category : #accessing }

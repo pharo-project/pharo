@@ -106,6 +106,12 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
+{ #category : #'extra worlds' }
+WorldMorph class >> extraWorldListMutex [
+
+	^ ExtraWorldListMutex
+]
+
 { #category : #'class initialization' }
 WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion
@@ -555,6 +561,12 @@ WorldMorph >> stopStepping: aMorph selector: aSelector [
 	"Remove the given morph from the step list."
 
 	worldState stopStepping: aMorph selector: aSelector
+]
+
+{ #category : #accessing }
+WorldMorph >> tools [ 
+
+	^ Smalltalk tools
 ]
 
 { #category : #'menu & halo' }

@@ -121,8 +121,10 @@ OSWindowAttributes class >> newWithNullDriver [
 
 { #category : #accessing }
 OSWindowAttributes >> applyTo: window [
-	window title: self title;
-		icon: self icon.
+
+	window
+		title: self title;
+		icon: self icon
 ]
 
 { #category : #accessing }
@@ -132,7 +134,9 @@ OSWindowAttributes >> borderless [
 
 { #category : #accessing }
 OSWindowAttributes >> borderless: anObject [
-	^ borderless := anObject
+
+	borderless := anObject
+
 ]
 
 { #category : #accessing }
@@ -145,8 +149,8 @@ OSWindowAttributes >> bounds: aRectangle [
 
 	self position: aRectangle origin.
 	extent := aRectangle extent.
-	self windowCentered: false.
-	^ aRectangle
+	self windowCentered: false
+
 ]
 
 { #category : #private }
@@ -210,6 +214,7 @@ OSWindowAttributes >> icon: anObject [
 
 { #category : #initialization }
 OSWindowAttributes >> initialize [
+
 	visible := self class defaultVisible.
 	position := self class defaultPosition.
 	extent := self class defaultExtent.

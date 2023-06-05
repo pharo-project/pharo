@@ -4508,6 +4508,11 @@ Morph >> openInHand [
 ]
 
 { #category : #opening }
+Morph >> openInWindowOnWorld: aWorld [
+	^ self openInWindowLabeled: self defaultLabel inWorld: aWorld
+]
+
+{ #category : #opening }
 Morph >> openInWorld [
 	self openInWorld: self currentWorld
 ]
@@ -6698,7 +6703,9 @@ Morph >> veryDeepInner: deepCopier [
 
 { #category : #'base - worlds' }
 Morph >> viewBox [
-	^ self pasteUpMorph viewBox
+
+	owner ifNil: [ ^ nil ].
+	^ owner viewBox
 ]
 
 { #category : #drawing }

@@ -16,11 +16,13 @@ MorphicNativeWindowTest >> setUp [
 
 { #category : #tests }
 MorphicNativeWindowTest >> testMaximizeWindow [
+
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
 	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+
 
 	window open.
 	window maximize.
@@ -30,11 +32,13 @@ MorphicNativeWindowTest >> testMaximizeWindow [
 
 { #category : #tests }
 MorphicNativeWindowTest >> testMinimizeWindow [
+
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
 	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+
 	window open.
 
 	window minimize.
@@ -46,11 +50,13 @@ MorphicNativeWindowTest >> testMinimizeWindow [
 
 { #category : #tests }
 MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMaximize [
+
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
 	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+
 	window open.
 
 	self assert: window isMaximized equals: false

@@ -6,7 +6,8 @@ Class {
 	#name : #PharoCommonTools,
 	#superclass : #ToolRegistry,
 	#instVars : [
-		'recentTools'
+		'recentTools',
+		'world'
 	],
 	#category : #'Tool-Registry'
 }
@@ -101,7 +102,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'System Browser')
 		parent: #Browsing;
-		action: [ Smalltalk tools openClassBrowser ];
+		action: [ :worldState | worldState tools openClassBrowser ];
 		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
@@ -289,6 +290,12 @@ PharoCommonTools >> register: anTool as: aNameSelector [
 ]
 
 { #category : #'registry access' }
+PharoCommonTools >> spotter [
+
+	^ self toolNamed: #spotter
+]
+
+{ #category : #'registry access' }
 PharoCommonTools >> testRunner [
 
 	^ self toolNamed: #testRunner
@@ -338,4 +345,17 @@ PharoCommonTools >> workspaceTool [
 { #category : #tools }
 PharoCommonTools >> workspaceTool: aTool [
 	^ self register: aTool as: #workspace
+]
+
+{ #category : #accessing }
+PharoCommonTools >> world [
+
+	world ifNil: [ ^ self currentWorld ].
+	^ world
+]
+
+{ #category : #accessing }
+PharoCommonTools >> world: aDesktopMorph [
+
+	world := aDesktopMorph
 ]

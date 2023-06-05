@@ -206,6 +206,13 @@ FileList class >> openEditorOn: aFileStream editString: editString [
 ]
 
 { #category : #'morphic ui' }
+FileList class >> openInWorld: aWorld [
+	"Open a view of an instance of me on the default directory."
+	"FileList open openInWorld"
+	^ self new morphicView openInWorld: aWorld
+]
+
+{ #category : #'morphic ui' }
 FileList class >> openMorphOn: aFileStream editString: editString [
 	"Open a morphic view of a FileList on the given file."
 	^ (self new setFileStream: aFileStream)

@@ -63,12 +63,27 @@ ClyFullBrowserMorph class >> open [
 ]
 
 { #category : #opening }
+ClyFullBrowserMorph class >> openInWorld: aWorld [
+	^ self openOn: ClyNavigationEnvironment currentImage inWorld: aWorld
+]
+
+{ #category : #opening }
 ClyFullBrowserMorph class >> openOn: aNavigationEnvironment [
 
 	| browser |
 	browser := self on: aNavigationEnvironment.
 	browser open.
 	^browser
+]
+
+{ #category : #opening }
+ClyFullBrowserMorph class >> openOn: aNavigationEnvironment inWorld: aWorld [
+
+	| browser |
+	browser := self on: aNavigationEnvironment.
+	browser ensureInitialState .
+	browser openInWindowOnWorld: aWorld.
+	^ browser
 ]
 
 { #category : #opening }

@@ -81,6 +81,16 @@ MenubarMorph class >> open [
 		open
 ]
 
+{ #category : #'instance creation' }
+MenubarMorph class >> openInWorld: aWorld [
+
+	self showMenubar ifFalse: [ ^ self ].
+
+	self new
+		menuBarItems: aWorld worldState menuBuilder menuSpec items;
+		openInWorld: aWorld
+]
+
 { #category : #'class initialization' }
 MenubarMorph class >> reset [
 

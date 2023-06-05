@@ -1,11 +1,18 @@
 Extension { #name : #ThreadSafeTranscript }
 
 { #category : #'*Transcript-Tool' }
-ThreadSafeTranscript class >> ensureOpen [
-	"Open a Transcript only if not opened yet. If it is already open, bring it as top window."
+ThreadSafeTranscript >> createWindow: aString [
 
-	<script>
-	^ self new ensureOpen
+	| window m |
+	window := (SystemWindow labelled: aString) model: self.
+	m := RubPluggableTextMorph new
+		     getTextSelector: #contents;
+		     setTextSelector: #clear;
+		     on: self;
+		     beForSmalltalkScripting.
+	m onAnnouncement: MorphDeleted do: [ self announcer unsubscribe: m ].
+	window addMorph: m frame: (0 @ 0 corner: 1 @ 1).
+	^ window 
 ]
 
 { #category : #'*Transcript-Tool' }
@@ -23,6 +30,14 @@ ThreadSafeTranscript >> ensureOpen [
 ]
 
 { #category : #'*Transcript-Tool' }
+ThreadSafeTranscript class >> ensureOpen [
+	"Open a Transcript only if not opened yet. If it is already open, bring it as top window."
+
+	<script>
+	^ self new ensureOpen
+]
+
+{ #category : #'*Transcript-Tool' }
 ThreadSafeTranscript >> interactionModel [
 	^ self
 ]
@@ -31,7 +46,7 @@ ThreadSafeTranscript >> interactionModel [
 ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Transcript')
-		action: [ Smalltalk tools transcript open ];
+		action: [ :worldState | worldState tools openTranscript ];
 		order: 2;
 		parent: #InputOutput;
 		help: 'Transcript';
@@ -56,15 +71,23 @@ ThreadSafeTranscript >> open [
 ]
 
 { #category : #'*Transcript-Tool' }
+ThreadSafeTranscript >> openInWorld: aWorld [
+
+	^ self openLabel: self title inWorld: aWorld
+]
+
+{ #category : #'*Transcript-Tool' }
 ThreadSafeTranscript >> openLabel: aString [
-	| window m |
-	window := (SystemWindow labelled: aString) model: self.
-	m := RubPluggableTextMorph new
-		getTextSelector: #contents;
-		setTextSelector: #clear;
-		on: self;
-		beForSmalltalkScripting.
-	m onAnnouncement: MorphDeleted do: [ self announcer unsubscribe: m  ].
-	window addMorph: m frame: (0 @ 0 corner: 1 @ 1).
+
+	| window |
+	window := self createWindow: aString.
 	^ window openInWorld
+]
+
+{ #category : #'*Transcript-Tool' }
+ThreadSafeTranscript >> openLabel: aString inWorld: aWorld [
+
+	| window |
+	window := self createWindow: aString.
+	^ window openInWorld: aWorld
 ]

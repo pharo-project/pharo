@@ -34,7 +34,7 @@ MCWorkingCopyBrowser class >> menuCommandOn: aBuilder [
 	
 	(aBuilder item: #'Monticello Browser (Legacy)')
 		parent: #Versioning;
-		action: [ Smalltalk tools openMonticelloBrowser ];
+		action: [ :worldState | worldState tools openMonticelloBrowser ];
 		order: 2;
 		keyText: 'o, p';
 		help: '(Deprecated) Source code versioning system to manage Smalltalk code.';
@@ -45,6 +45,12 @@ MCWorkingCopyBrowser class >> menuCommandOn: aBuilder [
 MCWorkingCopyBrowser class >> open [
 	<script>
 	self new show
+]
+
+{ #category : #'instance creation' }
+MCWorkingCopyBrowser class >> openInWorld: aWorld [
+
+	self new showInWorld: aWorld
 ]
 
 { #category : #settings }

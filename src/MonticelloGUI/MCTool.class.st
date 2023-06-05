@@ -326,6 +326,16 @@ MCTool >> show [
 ]
 
 { #category : #opening }
+MCTool >> showInWorld: aWorld [
+	"Open the tool returning the window."
+
+	modal := false.
+	self window openInWorld: aWorld.
+	self setDefaultFocus.
+	^ self window
+]
+
+{ #category : #opening }
 MCTool >> showLabelled: labelString [
 	
 	modal := false.

@@ -44,7 +44,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 
 	(aBuilder item: #'Test Runner')
 		parent: #Testing;
-		action: [ Smalltalk tools openTestRunner ];
+		action: [ :worldState | worldState tools openTestRunner ];
 		order: 1;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
@@ -56,6 +56,12 @@ TestRunner class >> open [
 	<script>
 
 	^ self new open
+]
+
+{ #category : #'instance creation' }
+TestRunner class >> openInWorld: aWorld [
+
+	^ self new openInWorld: aWorld
 ]
 
 { #category : #initialization }
@@ -703,6 +709,12 @@ TestRunner >> open [
 	<script: 'self new open'>
 
 	^ self build openInWorld
+]
+
+{ #category : #building }
+TestRunner >> openInWorld: aWorld [
+
+	^ self build openInWorld: aWorld
 ]
 
 { #category : #'accessing - packages' }

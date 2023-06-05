@@ -94,15 +94,11 @@ MorphicWindowManager >> deleteAll [
 	self closeAllWindows.
 
 	"Call doDelete because the taskbar window is not subscribed to manager"
+
 	taskBarWindow ifNotNil: [ taskBarWindow doDelete ]
 ]
 
-{ #category : #accessing }
-MorphicWindowManager >> ensureCloseAllWindow [
 
-	windows size to: 1 by: -1 do: [ :m | (windows at: m) ensureDelete ].
-	self updateTasksBar
-]
 
 { #category : #accessing }
 MorphicWindowManager >> ensureCloseAllWindows [
@@ -118,13 +114,13 @@ MorphicWindowManager >> ensureDeleteAll [
 
 	"Call ensureDelete because the taskbar window is not subscribed to manager"
 	taskBarWindow ifNotNil: [ taskBarWindow ensureDelete ]
+
 ]
 
 { #category : #initialization }
 MorphicWindowManager >> initialize [
 
 	windows := OrderedCollection new.
-
 ]
 
 { #category : #testing }
@@ -177,28 +173,21 @@ MorphicWindowManager >> openNewWindowWithRoot: aMorph [
 
 	| newWindow |
 	newWindow := (self newWindowWithRoot: aMorph) open.
-
 	self updateTasksBar.
+
 	^ newWindow
 ]
 
 { #category : #saving }
 MorphicWindowManager >> saveAllAttributes [
 	
-	allAttributes := windows collect: [  :w | w attributsSave ].
+	allAttributes := windows collect: [  :w | w attributesSave ].
 ]
 
 { #category : #saving }
 MorphicWindowManager >> saveAllRoot [
 	
 	rootSave := windows collect: [ :m | m window ]
-]
-
-{ #category : #startup }
-MorphicWindowManager >> startupOpenWithAttributes [
-
-	1 to: allAttributes size do: [ :a | 
-	(windows at: a) openWithAttributes: (allAttributes at: a) ]
 ]
 
 { #category : #'startup - shutdown' }

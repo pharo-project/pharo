@@ -10,7 +10,6 @@ Class {
 { #category : #tests }
 AbstractWindowManagerTest >> runCaseManaged [
 
-	super runCaseManaged .
 	self runCase
 ]
 
