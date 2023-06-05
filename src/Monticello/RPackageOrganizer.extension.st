@@ -15,11 +15,8 @@ RPackageOrganizer >> allManagers [
 { #category : #'*Monticello-RPackage' }
 RPackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
 	"a category has been added. "
-	
-	^ self allManagers anySatisfy: [ :each | 
-		self 
-			category: each packageName asSymbol 
-			matches: aSymbol ]
+
+	^ self allManagers anySatisfy: [ :manager | manager packageName isCategoryOf: aSymbol ]
 ]
 
 { #category : #'*Monticello-RPackage' }
