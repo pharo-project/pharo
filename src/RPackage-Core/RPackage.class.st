@@ -342,22 +342,6 @@ RPackage >> basicRemoveTag: tag [
 		classTagRemoved: tag name fromPackage: self
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> category: categoryName matches: prefix [
-	"self default category: 'Compression-Archives' matches: 'Compression'"
-	"self default category: 'Compression' matches: 'Compression-Archives'"
-	"self default category: 'Compression' matches: 'Compression'"
-	"self default category: 'Compression-Arh' matches: 'Compression'"
-	| prefixSize catSize |
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
-]
-
 { #category : #slices }
 RPackage >> classDefinedSlicesDo: aBlock [
 	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
@@ -704,9 +688,10 @@ RPackage >> extensionSelectorsForClass: aClass [
 { #category : #'class tags' }
 RPackage >> extensionsForTag: aRPackageTag [
 
-	^ self extensionMethods select: [ :extensionMethod | | category |
-		category := extensionMethod protocol allButFirst.
-		self category: category matches: aRPackageTag categoryName ]
+	^ self extensionMethods select: [ :extensionMethod |
+		  | protocolName |
+		  protocolName := extensionMethod protocol allButFirst.
+		  protocolName isCategoryOf: aRPackageTag categoryName ]
 ]
 
 { #category : #properties }
@@ -886,7 +871,8 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #'system compatibility' }
 RPackage >> includesSystemCategory: categoryName [
-	^ self category: categoryName matches: self systemCategoryPrefix
+
+	^ categoryName isCategoryOf: self systemCategoryPrefix
 ]
 
 { #category : #initialization }
@@ -940,7 +926,7 @@ RPackage >> isTestPackage [
 { #category : #'system compatibility' }
 RPackage >> isYourClassExtension: protocolName [
 
-	^ protocolName isNotNil and: [ self category: protocolName asLowercase matches: self methodCategoryPrefix ]
+	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
 ]
 
 { #category : #queries }

@@ -208,12 +208,12 @@ RPackageMCSynchronisationTest >> tearDown [
 
 { #category : #tests }
 RPackageMCSynchronisationTest >> testCategoryMatching [
-	
-	self assert: (self organizer category: 'Compression-Archives' matches: 'Compression').
-	self deny: (self organizer category: 'Compression' matches: 'Compression-Archives').
-	self assert: (self organizer category: 'Compression' matches: 'Compression').
-	self assert: (self organizer category: 'Compression-Arh' matches: 'Compression').
-	self deny: (self organizer category: 'XXXX' matches: 'Compression-Archives').
+
+	self assert: ('Compression-Archives' isCategoryOf: 'Compression').
+	self deny: ('Compression' isCategoryOf: 'Compression-Archives').
+	self assert: ('Compression' isCategoryOf: 'Compression').
+	self assert: ('Compression-Arh' isCategoryOf: 'Compression').
+	self deny: ('XXXX' isCategoryOf: 'Compression-Archives')
 ]
 
 { #category : #tests }
