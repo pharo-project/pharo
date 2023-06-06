@@ -92,7 +92,7 @@ TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [
 			package methods
 				reject: [ :method | (#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
 												or: [ method  isAbstract
-													or: [ (method  refersToLiteral: #ignoreForCoverage)
+													or: [ (method  hasPragmaNamed: #ignoreForCoverage)
 														or: [ method methodClass isTestCase ] ] ] ]
 				thenDo: [:method | methods add: method ] ]
 ]

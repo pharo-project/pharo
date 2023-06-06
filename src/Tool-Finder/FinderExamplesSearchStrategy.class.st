@@ -140,12 +140,6 @@ FinderExamplesSearchStrategy >> findSelectedMethodIn: path [
 ]
 
 { #category : #accessing }
-FinderExamplesSearchStrategy >> rootNodeClassForResult: aCollection [
-
-	^ FinderExampleMethodNode
-]
-
-{ #category : #accessing }
 FinderExamplesSearchStrategy >> sourceCodeClass: class method: method [
 
 	^ (class >> method selector) sourceCode

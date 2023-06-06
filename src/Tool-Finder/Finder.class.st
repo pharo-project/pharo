@@ -20,31 +20,6 @@ Class {
 	#category : #'Tool-Finder-Base'
 }
 
-{ #category : #menu }
-Finder class >> finderMenuOn: aBuilder [
-	<worldMenu>
-
-	(aBuilder item: #Finder)
-		action: [self open];
-		order: 2;
-		parent: #Searching;
-		help: 'Looking for something ?';
-		icon: self icon
-]
-
-{ #category : #menu }
-Finder class >> icon [
-
-	^ FinderUI icon
-]
-
-{ #category : #menu }
-Finder class >> open [
-	<script>
-
-	^ self new open
-]
-
 { #category : #'tools registry' }
 Finder class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
@@ -138,13 +113,6 @@ Finder >> isClassSearch [
 Finder >> isPragmasSearch [
 
 	^ self searchStrategy isPragmasSearch
-]
-
-{ #category : #display }
-Finder >> open [
-	<script: 'self new open'>
-
-	^ (FinderUI on: self) open
 ]
 
 { #category : #accessing }
