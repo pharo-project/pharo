@@ -67,6 +67,12 @@ RBAbstractTransformation class >> initializeRefactoringOptions [
 		put: [ self error: #searchInWholeHierarchy ]
 ]
 
+{ #category : #testing }
+RBAbstractTransformation class >> isTransformation [
+
+	^ false
+]
+
 { #category : #displaying }
 RBAbstractTransformation class >> menuItemString [
 

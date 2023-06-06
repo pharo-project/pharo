@@ -36,13 +36,6 @@ RBRefactoring class >> isAbstract [
 	^ self == RBRefactoring
 ]
 
-{ #category : #accessing }
-RBRefactoring class >> isTransformation [
-	"Tells if this refactoring is a refactoring or a transformation."
-
-	^ false
-]
-
 { #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
