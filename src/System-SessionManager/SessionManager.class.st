@@ -124,9 +124,6 @@ SessionManager class >> initializeKernelRegistrations [
 	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
 	I am here to manage those regristrations of the classes that were loaded before I am suppose to be in the image."
 
-	Stdio stdout
-		nextPutAll: 'SessionManager kernel init.';
-		lf.
 	self default registerSystemClassNamed: #Symbol
 ]
 

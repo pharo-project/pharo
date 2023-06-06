@@ -153,7 +153,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes OpalCompiler-Co
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "OpalCompiler register. CompilationContext initialize. OCASTTranslator initialize."
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SessionManager initializeKernelRegistrations. SessionManager default systemCategory storeString" # While the SessionManager is still in the kernel group, let's initialize it here.
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SessionManager initializeKernelRegistrations" # While the SessionManager is still in the kernel group, let's initialize it here.
 
 echo $(date -u) "[Compiler] Initializing Unicode"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
