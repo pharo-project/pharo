@@ -72,14 +72,12 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	SmallInteger initialize.
 
 	"FFI"
-	ExternalObject initialize.
 	ExternalType initialize.
 	FFIBackend initialize.
-
-	"Initialize basic command line behaviour"
-	Stdio initialize.
+	
+	"Trascript"
 	NonInteractiveTranscript initialize.
-	BasicCommandLineHandler initialize.
+	
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]

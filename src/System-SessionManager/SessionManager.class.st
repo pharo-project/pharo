@@ -124,7 +124,25 @@ SessionManager class >> initializeKernelRegistrations [
 	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
 	I am here to manage those regristrations of the classes that were loaded before I am suppose to be in the image."
 
-	self default registerSystemClassNamed: #Symbol
+	self default
+		registerSystemClassNamed: #SmallInteger atPriority: 10;
+		registerSystemClassNamed: #Delay atPriority: 20;
+		registerSystemClassNamed: #ProcessorScheduler atPriority: 30;
+		registerSystemClassNamed: #OSPlatform atPriority: 50;
+		registerSystemClassNamed: #ExternalObject atPriority: 60;
+		registerSystemClassNamed: #FFIBackend atPriority: 60;
+		registerSystemClassNamed: #Symbol;
+		registerSystemClassNamed: #SourceFileArray;
+		registerSystemClassNamed: #WeakArray;
+		registerSystemClassNamed: #File;
+		registerSystemClassNamed: #Stdio;
+		registerSystemClassNamed: #SharedRandom;
+		registerSystemClassNamed: #BasicCommandLineHandler;
+		registerSystemClassNamed: #EndianDetector;
+		
+		registerGuiClassNamed: #Color;
+		
+		registerNetworkClassNamed: #UUIDGenerator
 ]
 
 { #category : #'deferred startup actions' }

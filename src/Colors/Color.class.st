@@ -437,9 +437,7 @@ Color class >> initialize [
 	self
 		initializeIndexedColors;
 		initializeColorRegistry;
-		initializeGrayToIndexMap.
-
-	SessionManager default registerGuiClassNamed: self name
+		initializeGrayToIndexMap
 ]
 
 { #category : #'private - initialization' }
