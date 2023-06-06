@@ -449,6 +449,16 @@ TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 		  do: [ :ex | ex return: true ]
 ]
 
+{ #category : #private }
+TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
+
+	^ [
+	  aBlock value.
+	  false ]
+		  on: anExceptionalEvent
+		  do: [ :ex | ex return: (ex description includesSubstring: aString) ]
+]
+
 { #category : #asserting }
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: aString [
 	"I check if the giving block (aBlock) evaluation raises the giving exception (anExceptionalEvent)"

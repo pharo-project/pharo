@@ -90,9 +90,9 @@ BehaviorWithCompilerTest >> testCanUnderstandInSubclass [
 
 { #category : #tests }
 BehaviorWithCompilerTest >> testCompile [
-
+	<ignoreNotImplementedSelectors: #(thisIsATest)>
 	| behavior |
-
+	
 	behavior := Behavior new.
 	behavior compile: 'thisIsATest ^2'.
 	behavior new thisIsATest
