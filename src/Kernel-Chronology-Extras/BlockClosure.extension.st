@@ -2,9 +2,7 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*Kernel-Chronology-Extras' }
 BlockClosure >> bench [
-	"Return how many times the receiver can get executed in 5 seconds.
-	Answer a string with meaningful description.
-	See #benchFor: which returns a BenchmarkResult"
+	"Answer a BenchmarkResult with the number of times the receiver was executed in 5 seconds"
 
 	"[3.14 printString] bench"
 
