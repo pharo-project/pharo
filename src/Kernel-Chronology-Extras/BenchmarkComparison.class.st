@@ -27,7 +27,7 @@ BenchmarkComparison >> comparisonResult: aBenchmarkResult [
 	comparisonResult := aBenchmarkResult
 ]
 
-{ #category : #printing }
+{ #category : #comparing }
 BenchmarkComparison >> frequencyFactor [
 
 	^ comparisonResult frequency / referenceResult frequency
@@ -38,6 +38,12 @@ BenchmarkComparison >> isEmpty [
 
 	^ (referenceResult isNil | comparisonResult isNil or: [
 		   referenceResult isEmpty or: [ comparisonResult isEmpty ] ]) not
+]
+
+{ #category : #comparing }
+BenchmarkComparison >> periodFactor [
+
+	^ comparisonResult period / referenceResult period
 ]
 
 { #category : #printing }
