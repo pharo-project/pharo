@@ -146,12 +146,6 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 	variableNode addError: 'Assignment to read-only variable'
 ]
 
-{ #category : #'error handling' }
-OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
-
-	variableNode addError: 'Assigment to reserved variable'
-]
-
 { #category : #accessing }
 OCASTSemanticAnalyzer >> undeclared [
 

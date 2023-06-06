@@ -1747,24 +1747,21 @@ RBCodeSnippet class >> badSemantic [
 			         styled: 'XXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
-			         notices: #( #( 1 4 1 'Assigment to reserved variable' )
-				            #( 1 4 1 'Assignment to read-only variable' ) )).
+			         notices: #(#( 1 4 1 'Assignment to read-only variable' ) )).
 		        (self new
 			         source: 'super := super';
 			         nodeAt: '22222000011111';
 			         styled: 'XXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
-			         notices: #( #( 1 5 1 'Assigment to reserved variable' )
-				            #( 1 5 1 'Assignment to read-only variable' ) )).
+			         notices: #( #( 1 5 1 'Assignment to read-only variable' ) )).
 		        (self new
 			         source: 'thisContext := thisContext';
 			         nodeAt: '22222222222000011111111111';
 			         styled: 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
-			         notices: #( #( 1 11 1 'Assigment to reserved variable' )
-				            #( 1 11 1 'Assignment to read-only variable' ) )).
+			         notices: #(#( 1 11 1 'Assignment to read-only variable' ) )).
 		        (self new
 			         source: 'Object := Object';
 			         nodeAt: '2222220000111111';
