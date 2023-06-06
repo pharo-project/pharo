@@ -19,7 +19,7 @@ FluidClassBuilderAbstractTest >> categoryHack [
 	This is due to the category mess in RPackage and it will not be fixed until the category mess is cleaned. Until then, to make sure the tests are in a right state, we register the package without the tag before creating the class to ensure the tag is not added as part of the package name.
 	This is ugly but it is currently hard to do better."
 
-	Smalltalk organization registerPackageNamed: self packageNameForTest
+	self packageOrganizer registerPackageNamed: self packageNameForTest
 ]
 
 { #category : #accessing }
@@ -31,7 +31,7 @@ FluidClassBuilderAbstractTest >> packageNameForTest [
 { #category : #running }
 FluidClassBuilderAbstractTest >> tearDown [
 
-	(Smalltalk organization packageNamed: self packageNameForTest ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
+	(self packageOrganizer packageNamed: self packageNameForTest ifAbsent: [ nil ]) ifNotNil: [ :x | x removeFromSystem ].
 
 	super tearDown
 ]
