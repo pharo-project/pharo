@@ -1,3 +1,10 @@
+"
+I am the BenchmarkComparison class, responsible for comparing two BenchmarkResult instances and providing insight into their relative performance.
+
+My instances can be created using `BlockClosure>>#benchCompareTo:`, which takes another block as an argument.
+
+I provide the #frequencyFactor and #periodFactor methods to access and analyze the comparison factors.
+"
 Class {
 	#name : #BenchmarkComparison,
 	#superclass : #Object,
