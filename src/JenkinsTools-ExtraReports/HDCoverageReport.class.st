@@ -144,7 +144,7 @@ HDCoverageReport >> methodsIn: aPackage [
 	^ aPackage methods reject: [ :method | 
 		(self ignoredSelectors includes: method selector)
 			or: [ method compiledMethod isAbstract
-			or: [ method compiledMethod refersToLiteral: #ignoreForCoverage ] ] ]
+			or: [ method compiledMethod hasPragmaNamed: #ignoreForCoverage ] ] ]
 ]
 
 { #category : #private }
