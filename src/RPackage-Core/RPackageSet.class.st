@@ -84,11 +84,6 @@ RPackageSet >> asRPackageSet [
 	^self
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> category: categoryName matches: prefix [
-	^ RPackageOrganizer default category: categoryName matches: prefix
-]
-
 { #category : #accessing }
 RPackageSet >> categoryNames [
 	^  self packages
@@ -165,8 +160,9 @@ RPackageSet >> isForeignClassExtension: categoryName [
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isYourClassExtension: categoryName [
-	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
+RPackageSet >> isYourClassExtension: protocolName [
+
+	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
 ]
 
 { #category : #'system compatibility' }
