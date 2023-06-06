@@ -4,7 +4,7 @@ A FinderPragmaMethodNode is a method node for a selector name found by the pragm
 Class {
 	#name : #FinderPragmaMethodNode,
 	#superclass : #FinderMethodNode,
-	#category : #'Tool-Finder-Tree'
+	#category : #'Tool-Finder-UI'
 }
 
 { #category : #'event handling' }

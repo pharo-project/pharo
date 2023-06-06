@@ -191,18 +191,6 @@ IconStyler >> visitEnglobingErrorNode: anEnglobingNode [
 ]
 
 { #category : #visiting }
-IconStyler >> visitGlobalNode: aSelfNode [
-	self addIconStyle: aSelfNode.
-	super visitGlobalNode: aSelfNode
-]
-
-{ #category : #visiting }
-IconStyler >> visitInstanceVariableNode: aSelfNode [
-	self addIconStyle: aSelfNode.
-	super visitInstanceVariableNode: aSelfNode
-]
-
-{ #category : #visiting }
 IconStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	self addIconStyle: aRBLiteralArrayNode.
 	super visitLiteralArrayNode: aRBLiteralArrayNode
@@ -245,31 +233,13 @@ IconStyler >> visitReturnNode: aReturnNode [
 ]
 
 { #category : #visiting }
-IconStyler >> visitSelfNode: aSelfNode [
-	self addIconStyle: aSelfNode.
-	super visitSelfNode: aSelfNode
-]
-
-{ #category : #visiting }
 IconStyler >> visitSequenceNode: aSequenceNode [
 	self addIconStyle: aSequenceNode.
 	super visitSequenceNode: aSequenceNode
 ]
 
 { #category : #visiting }
-IconStyler >> visitSuperNode: aSuperNode [
+IconStyler >> visitVariableNode: aSuperNode [
 	self addIconStyle: aSuperNode.
-	super visitSuperNode: aSuperNode
-]
-
-{ #category : #visiting }
-IconStyler >> visitTemporaryNode: aNode [
-	self addIconStyle: aNode.
-	super visitTemporaryNode: aNode
-]
-
-{ #category : #visiting }
-IconStyler >> visitThisContextNode: aThisContextNode [
-	self addIconStyle: aThisContextNode.
-	super visitThisContextNode: aThisContextNode
+	super visitVariableNode: aSuperNode
 ]

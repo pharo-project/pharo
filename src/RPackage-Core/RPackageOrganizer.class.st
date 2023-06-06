@@ -283,19 +283,6 @@ RPackageOrganizer >> categoriesMatching: matchString [
 	^ self categories select: [ :c | matchString match: c ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageOrganizer >> category: categoryName matches: prefix [
-	| prefixSize catSize |
-
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
-]
-
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categoryOfBehavior: behavior [
 	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
@@ -319,8 +306,8 @@ RPackageOrganizer >> categoryOfElement: behaviorName [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
-	(self packages
-		anySatisfy: [ :each | self category: packageName matches: each packageName ])
+
+	(self packages anySatisfy: [ :package | packageName isCategoryOf: package packageName ])
 		ifFalse: [ (self packageClass named: packageName capitalized) register ]
 ]
 

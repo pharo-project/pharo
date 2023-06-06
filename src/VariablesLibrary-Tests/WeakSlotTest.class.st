@@ -7,6 +7,7 @@ Class {
 { #category : #tests }
 WeakSlotTest >> testReadWeakSlotCompiled [
 	| object slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
@@ -47,6 +48,7 @@ WeakSlotTest >> testWeakSlotIsWeak [
 { #category : #tests }
 WeakSlotTest >> testWriteWeakSlotCompiled [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
