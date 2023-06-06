@@ -1,13 +1,13 @@
 "
 I am BenchmarkResult. 
 
-I know how many iterations where executed in a specific elapsed time duration.
+I know how many iterations have been executed in a given elapsed time.
 
 I am the result of running the same piece of code multiple times.
 
-I can compute my average #frequencey (#executionsPerSecond) and #period (#timePerExecution).
+I can calculate my average #frequency (#executionsPerSecond) and #period (#timePerExecution).
 
-I have a human friendly print representation.
+I have a human-readable print representation.
 
 BenchmarkResult new
 	iterations: 20000;
