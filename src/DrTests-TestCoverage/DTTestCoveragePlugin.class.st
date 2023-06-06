@@ -43,7 +43,8 @@ DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 	methods := aDTpluginConfiguration items flatCollect: [ :p |
 		           p methods reject: [ :meth |
 			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
-	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
+	methods := methods reject: [ :method | method isAbstract or: [ (method  refersToLiteral: #ignoreForCoverage) ] ] .
+	
 	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [
 		               :p | p classes ]
 ]
