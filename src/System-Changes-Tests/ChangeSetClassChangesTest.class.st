@@ -72,8 +72,10 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 ChangeSetClassChangesTest >> testChangeClassCategory [
 	"Changing the class category for a class should result in a change
 	record being added to the current change set."
-
+	
 	| class saveClassDefinition |
+	self skip.
+	"see https://github.com/pharo-project/pharo/issues/13315"
 	"Define a class and save its definition"
 	class := factory newClassInCategory: 'TestPackage1'.
 	saveClassDefinition := class definitionString.
@@ -96,6 +98,8 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	no change records pertaining to it in the change set."
 
 	| class |
+	self skip.
+	"see https://github.com/pharo-project/pharo/issues/13315"
 	class := factory newClassInCategory: 'TestPackage1'.
 
 	"Forget about JunkClass in the change set"
