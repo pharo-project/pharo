@@ -27,7 +27,10 @@ EpCategoryChange class >> named: aName packageName: aPackageName [
 
 { #category : #private }
 EpCategoryChange class >> packageNameFromCategoryName: aName [
-	^ (RPackage organizer packageMatchingExtensionName: aName) ifNotNil: [ :package | package name ] ifNil: [ aName ]
+
+	^ (self packageOrganizer packageMatchingExtensionName: aName)
+		  ifNotNil: [ :package | package name ]
+		  ifNil: [ aName ]
 ]
 
 { #category : #accessing }

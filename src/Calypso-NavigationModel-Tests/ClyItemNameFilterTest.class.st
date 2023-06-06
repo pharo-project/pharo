@@ -40,6 +40,6 @@ ClyItemNameFilterTest >> testFilterPackageWithName [
 
 	filter := ClyItemNameFilter substringPattern: 'kernel'.
 
-	self assert: (filter matches: (RPackage organizer packageNamed: #Kernel)).
-	self deny: (filter matches: (RPackage organizer packageNamed: #Jobs))
+	self assert: (filter matches: (self packageOrganizer packageNamed: #Kernel)).
+	self deny: (filter matches: (self packageOrganizer packageNamed: #Jobs))
 ]

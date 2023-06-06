@@ -104,13 +104,15 @@ RBCopyPackageRefactoring >> copyPackage: aString1 in: aString2 [
 
 { #category : #preconditions }
 RBCopyPackageRefactoring >> preconditions [
-	^ super preconditions & (RBCondition withBlock: [ newName = packageName ifTrue:
-		[ self refactoringError: 'Use a different name' ].
-		true ]) &
-	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
-			on: Error
-			do: [ :e | self refactoringError: e messageText ]
-		])
+
+	^ super preconditions & (RBCondition withBlock: [
+		   newName = packageName ifTrue: [ self refactoringError: 'Use a different name' ].
+		   true ]) & (RBCondition withBlock: [
+		   [
+		   self packageOrganizer validatePackageDoesNotExist: newName.
+		   true ]
+			   on: Error
+			   do: [ :e | self refactoringError: e messageText ] ])
 ]
 
 { #category : #renaming }

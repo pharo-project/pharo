@@ -66,7 +66,7 @@ RPackageIncrementalTest >> tearDown [
 		 		unregisterExtendingPackage: each forClass: extendedClass.]].
 	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
 	(createdClasses reject: [:c| c isObsolete]) do: [:cls|
-		"(RPackage organizer includesPackageBackPointerForClass: cls)
+		"(self packageOrganizer includesPackageBackPointerForClass: cls)
 			ifTrue: [cls package unregisterClass: cls.].
 		when RPackageOrganizer was not looking at system event we had to do the commented actions"
 		logging := false.

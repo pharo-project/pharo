@@ -41,8 +41,9 @@ RBPackageTransformation >> packageName: anObject [
 
 { #category : #preconditions }
 RBPackageTransformation >> preconditions [
-	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error
-			do: [ :e | self refactoringError: e messageText ]
-		])
+
+	^ RBCondition withBlock: [
+		  [ self packageOrganizer includesPackageNamed: packageName ]
+			  on: Error
+			  do: [ :e | self refactoringError: e messageText ] ]
 ]

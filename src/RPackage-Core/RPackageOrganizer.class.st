@@ -8,7 +8,7 @@ The classPackageMapping and the classExtendingPackageMapping should be moved in 
 For tests or actions that could destroy the package organizer,  do not access directly the singleton of RPackageOrganizer.
 Use instead 
 		RPackage withOrganizer: aNewOrganizer do: ablock
-			or via RPackage organizer
+			or via self packageOrganizer
 		
 	
 RPackageOrganizer fillUp will fill up the system from the current PackageOrganizer
@@ -479,13 +479,6 @@ RPackageOrganizer >> hasRegistered [
 	"return true if this package organizer has already registered interest to system events and Monticello changes "
 
 	^ self announcer hasSubscriber: self
-
-	"|actionSequence|
-	self announcer subscriptions ifNil: [^ true].
-	actionSequence := self announcer subscriptions values
-								detect: [:each | each anySatisfy: [:anAction | anAction receiver = RPackage organizer]] ifNone: [nil].
-	self flag: #cyril.
-	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }

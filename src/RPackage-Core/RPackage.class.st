@@ -212,55 +212,35 @@ RPackage >> addClassDefinitionName: aClassName toClassTag: aSymbol [
 { #category : #'class tags' }
 RPackage >> addClassTag: aSymbol [
 	"Add the class tag from the receiver, if already added do nothing."
-	| tagName newTag |
 
+	| tagName newTag |
 	"strip package name if needed"
 	tagName := self toTagName: aSymbol.
 
-	^ self
-		classTagNamed: tagName
-		ifAbsent: [
-			self class organizer
-				validateCanBeAddedPackage: self
-				tagName: tagName.
-			newTag := self basicAddClassTag: tagName.
-			SystemAnnouncer uniqueInstance classTagAdded: tagName inPackage: self.
-			^newTag]
+	^ self classTagNamed: tagName ifAbsent: [
+		  self packageOrganizer validateCanBeAddedPackage: self tagName: tagName.
+		  newTag := self basicAddClassTag: tagName.
+		  SystemAnnouncer uniqueInstance classTagAdded: tagName inPackage: self.
+		  ^ newTag ]
 ]
 
 { #category : #'add method - compiled method' }
 RPackage >> addMethod: aCompiledMethod [
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
-	| methodClass |
 
+	| methodClass |
 	methodClass := aCompiledMethod methodClass.
-	(self includesClass: methodClass )
+	(self includesClass: methodClass)
 		ifTrue: [
 			methodClass isMeta
-				ifTrue: [
-					(metaclassDefinedSelectors
-						at: methodClass instanceSide name
-						ifAbsentPut: [ Set new ])
-						add: aCompiledMethod selector]
-				ifFalse: [
-					(classDefinedSelectors
-						at: methodClass name
-						ifAbsentPut: [ Set new ])
-						add: aCompiledMethod selector ] ]
-		ifFalse:  [
+				ifTrue: [ (metaclassDefinedSelectors at: methodClass instanceSide name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ]
+				ifFalse: [ (classDefinedSelectors at: methodClass name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ] ]
+		ifFalse: [
 			methodClass isMeta
-				ifTrue: [
-					(metaclassExtensionSelectors
-						at: methodClass instanceSide name
-						ifAbsentPut: [ Set new ])
-						add: aCompiledMethod selector.]
-				ifFalse: [
-					(classExtensionSelectors
-						at: methodClass name
-						ifAbsentPut: [ Set new ])
-						add: aCompiledMethod selector].
-				"we added a method extension so the receiver is an extending package of the class"
-				self organizer registerExtendingPackage: self forClass: methodClass ].
+				ifTrue: [ (metaclassExtensionSelectors at: methodClass instanceSide name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ]
+				ifFalse: [ (classExtensionSelectors at: methodClass name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ].
+			"we added a method extension so the receiver is an extending package of the class"
+			self packageOrganizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -545,21 +525,15 @@ RPackage >> definesOrExtendsClass: aClass [
 
 { #category : #converting }
 RPackage >> demoteToTagInPackageNamed: aString [
-	| newRPackage |
 
+	| newRPackage |
 	aString = self name ifTrue: [ ^ self ].
 
 	self unregister.
-	newRPackage := self class organizer
-		packageNamed: aString
-		ifAbsent:  [ (self class named: aString) register ].
+	newRPackage := self packageOrganizer packageNamed: aString ifAbsent: [ (self class named: aString) register ].
 	newRPackage importPackage: self.
 
-	newRPackage classes do: [ :each |
-		SystemAnnouncer uniqueInstance
-			classRepackaged: each
-			from: self
-			to: newRPackage ]
+	newRPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newRPackage ]
 ]
 
 { #category : #properties }
@@ -1098,21 +1072,22 @@ RPackage >> propertyAt: propName put: propValue [
 
 { #category : #register }
 RPackage >> register [
-	self organizer registerPackage: self
+
+	self packageOrganizer registerPackage: self
 ]
 
 { #category : #'private - register' }
 RPackage >> registerClass: aClass [
 	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClass: aClass
+
+	self packageOrganizer registerPackage: self forClass: aClass
 ]
 
 { #category : #'private - register' }
 RPackage >> registerClassName: aClassNameSymbol [
 	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClassName: aClassNameSymbol
+
+	self packageOrganizer registerPackage: self forClassName: aClassNameSymbol
 ]
 
 { #category : #'private - register' }
@@ -1251,7 +1226,7 @@ RPackage >> removeFromSystem [
 	extendedClasses do: [ :class | class removeProtocolIfEmpty: ('*' , name) asSymbol ].
 	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
 	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
-	categories do: [ :cat | self organizer removeCategory: cat ].
+	categories do: [ :cat | self packageOrganizer removeCategory: cat ].
 	self unregister
 ]
 
@@ -1308,17 +1283,11 @@ RPackage >> removeSelector: aSelector ofClassName: aClassName [
 	"Remove the method in the package but does not propagate to the class itself.  Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore."
 
 	self basicRemoveSelector: aSelector ofClassName: aClassName.
-	(classExtensionSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		classExtensionSelectors removeKey: aClassName ifAbsent: [].
-	].
-	(classDefinedSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		classDefinedSelectors removeKey: aClassName ifAbsent: [].
-	].
+	(classExtensionSelectors at: aClassName ifAbsent: [ #(  ) ]) ifEmpty: [ classExtensionSelectors removeKey: aClassName ifAbsent: [  ] ].
+	(classDefinedSelectors at: aClassName ifAbsent: [ #(  ) ]) ifEmpty: [ classDefinedSelectors removeKey: aClassName ifAbsent: [  ] ].
 
-	((metaclassExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty and: [(classExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty])
-		ifTrue: [
-				self organizer unregisterExtendingPackage: self forClassName: aClassName
-	]
+	((metaclassExtensionSelectors at: aClassName ifAbsent: [ #(  ) ]) isEmpty and: [ (classExtensionSelectors at: aClassName ifAbsent: [ #(  ) ]) isEmpty ])
+		ifTrue: [ self packageOrganizer unregisterExtendingPackage: self forClassName: aClassName ]
 ]
 
 { #category : #'add method - selector' }
@@ -1326,17 +1295,11 @@ RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
 	"Remove the method in the package. Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as removeSelector: #new ofMetaclassName: #Point"
 
 	self basicRemoveSelector: aSelector ofMetaclassName: aClassName.
-	(metaclassExtensionSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		metaclassExtensionSelectors removeKey: aClassName ifAbsent: [].
-	].
-	(metaclassDefinedSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		metaclassDefinedSelectors removeKey: aClassName ifAbsent: [].
-	].
+	(metaclassExtensionSelectors at: aClassName ifAbsent: [ #(  ) ]) ifEmpty: [ metaclassExtensionSelectors removeKey: aClassName ifAbsent: [  ] ].
+	(metaclassDefinedSelectors at: aClassName ifAbsent: [ #(  ) ]) ifEmpty: [ metaclassDefinedSelectors removeKey: aClassName ifAbsent: [  ] ].
 
-	((metaclassExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty and: [(classExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty])
-		ifTrue: [
-				self organizer unregisterExtendingPackage: self forClassName: aClassName
-	]
+	((metaclassExtensionSelectors at: aClassName ifAbsent: [ #(  ) ]) isEmpty and: [ (classExtensionSelectors at: aClassName ifAbsent: [ #(  ) ]) isEmpty ])
+		ifTrue: [ self packageOrganizer unregisterExtendingPackage: self forClassName: aClassName ]
 ]
 
 { #category : #private }
@@ -1376,26 +1339,21 @@ RPackage >> renameTo: aSymbol [
 	oldName := self name.
 	newName := aSymbol asSymbol.
 	repositoryGroup := self mcPackage workingCopy repositoryGroup.
-	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: [:each | each categoryName] as: Set)
-		add: self name;
-		difference: {newName}.
+	self packageOrganizer validatePackageDoesNotExist: aSymbol.
+	oldCategoryNames := (self classTags collect: [ :each | each categoryName ] as: Set)
+		                    add: self name;
+		                    difference: { newName }.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ self definedClasses
-				do:
-					[ :each | each category: newName , (each category allButFirst: oldName size) ].
-			oldCategoryNames
-				do: [ :each | self organizer removeCategory: each ] ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ].
+		oldCategoryNames do: [ :each | self packageOrganizer removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
-	self organizer
+	self packageOrganizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
 	self mcPackage workingCopy repositoryGroup: repositoryGroup.
-	SystemAnnouncer uniqueInstance
-		announce:
-			(RPackageRenamed to: self oldName: oldName newName: newName)
+	SystemAnnouncer uniqueInstance announce: (RPackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #private }
@@ -1437,7 +1395,7 @@ RPackage >> selectorsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> systemCategories [
 
-	^ self organizer categories select: [:cat | self includesSystemCategory: cat]
+	^ self packageOrganizer categories select: [ :cat | self includesSystemCategory: cat ]
 ]
 
 { #category : #'system compatibility' }

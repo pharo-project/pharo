@@ -147,11 +147,12 @@ RPackageSet >> includesSystemCategory: categoryName [
 
 { #category : #initialization }
 RPackageSet >> initialize: aString [
+
 	self initialize.
 	packageName := aString asSymbol.
-	packages := (RPackage organizer packageNamed: aString ifAbsent: [  nil ])
-		ifNotNil: [ :package | { package }  ]
-		ifNil: [ {} ]
+	packages := (self packageOrganizer packageNamed: aString ifAbsent: [ nil ])
+		            ifNotNil: [ :package | { package } ]
+		            ifNil: [ {  } ]
 ]
 
 { #category : #'system compatibility' }

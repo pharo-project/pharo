@@ -71,7 +71,7 @@ ClapTestRunner >> packagePatterns [
 ClapTestRunner >> packages [
 	^ self packagePatterns
 		flatCollect: [ :regex |
-			RPackage organizer packages
+			self packageOrganizer packages
 				select: [ :package | regex matches: package name ]]
 		as: Set
 ]

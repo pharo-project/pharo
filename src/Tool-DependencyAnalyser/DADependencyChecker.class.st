@@ -84,7 +84,7 @@ DADependencyChecker >> dependenciesOf: aPackageName [
 
 { #category : #private }
 DADependencyChecker >> ignoredDependenciesOf: aPackageName [
-	^ (RPackage organizer packageNamed: aPackageName) ignoredDependencies
+	^ (self packageOrganizer packageNamed: aPackageName) ignoredDependencies
 ]
 
 { #category : #initialization }
@@ -95,7 +95,7 @@ DADependencyChecker >> initialize [
 
 { #category : #private }
 DADependencyChecker >> manuallyResolvedDependenciesOf: aPackageName [
-	^ (RPackage organizer packageNamed: aPackageName) manuallyResolvedDependencies
+	^ (self packageOrganizer packageNamed: aPackageName) manuallyResolvedDependencies
 ]
 
 { #category : #initialization }

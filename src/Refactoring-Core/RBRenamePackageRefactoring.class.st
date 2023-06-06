@@ -52,13 +52,15 @@ RBRenamePackageRefactoring >> packageName: aName newName: aNewName [
 
 { #category : #preconditions }
 RBRenamePackageRefactoring >> preconditions [
-	^ super preconditions & (RBCondition withBlock: [ newName = package name ifTrue:
-		[ self refactoringError: 'Use a different name' ].
-		true ]) &
-	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
-			on: Error
-			do: [ :e | self refactoringError: e messageText ]
-		])
+
+	^ super preconditions & (RBCondition withBlock: [
+		   newName = package name ifTrue: [ self refactoringError: 'Use a different name' ].
+		   true ]) & (RBCondition withBlock: [
+		   [
+		   self packageOrganizer validatePackageDoesNotExist: newName.
+		   true ]
+			   on: Error
+			   do: [ :e | self refactoringError: e messageText ] ])
 ]
 
 { #category : #transforming }
