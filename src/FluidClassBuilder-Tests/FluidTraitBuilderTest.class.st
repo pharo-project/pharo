@@ -66,8 +66,7 @@ FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 
 	| instBuilder newTrait |
-	"Next line is a hack because of the category mess of RPackage."
-	Smalltalk organization registerPackageNamed: self packageNameForTest.
+	self categoryHack.
 	instBuilder := (Trait << #TTestTrait)
 		               slots: #( a b c );
 		               traits: { TViewModelMock };
@@ -136,8 +135,7 @@ FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 FluidTraitBuilderTest >> testFillShiftClassBuilder [
 
 	| shift |
-	"Next line is a hack because of the category mess of RPackage."
-	Smalltalk organization registerPackageNamed: self packageNameForTest.
+	self categoryHack.
 	builder := (Trait << #TPoint2)
 		           slots: { #x. #y };
 		           traits: { TViewModelMock };

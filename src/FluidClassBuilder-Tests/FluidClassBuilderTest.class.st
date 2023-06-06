@@ -154,8 +154,7 @@ FluidClassBuilderTest >> testBuilderWithTag [
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
-	"Next line is a hack because of the category mess of RPackage."
-	Smalltalk organization registerPackageNamed: self packageNameForTest.
+	self categoryHack.
 
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
@@ -278,8 +277,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 FluidClassBuilderTest >> testCreatedClassHasAllElements [
 
 	| instBuilder newClass |
-	"Next line is a hack because of the category mess of RPackage."
-	Smalltalk organization registerPackageNamed: self packageNameForTest.
+	self categoryHack.
 
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
@@ -331,8 +329,7 @@ FluidClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 FluidClassBuilderTest >> testExistingClassWithClassSlot [
 
 	| instBuilder newClass |
-	"Next line is a hack because of the category mess of RPackage."
-	Smalltalk organization registerPackageNamed: self packageNameForTest.
+		self categoryHack.
 
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	When redefining the instance side, the class slot should not be lost."
@@ -371,8 +368,7 @@ FluidClassBuilderTest >> testExistingClassWithClassSlot [
 FluidClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 
 	| instBuilder newClass classBuilder |
-	"Next line is a hack because of the category mess of RPackage."
-	Smalltalk organization registerPackageNamed: self packageNameForTest.
+	self categoryHack.
 
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	Then we are removing the classSlot, it should remove it"
