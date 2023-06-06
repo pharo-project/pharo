@@ -6,8 +6,8 @@ RPackageOrganizer >> fileOut [
 
 	| internalStream |
 	internalStream := (String new: 30000) writeStream.
-	internalStream nextPutAll: 'Smalltalk organization changeFromCategorySpecs: #('; cr;
-		print: Smalltalk organization;  "ends with a cr"
+	internalStream nextPutAll: 'self packageOrganizer changeFromCategorySpecs: #('; cr;
+		print: self packageOrganizer;  "ends with a cr"
 		nextPutAll: ')!'; cr.
 
 	CodeExporter

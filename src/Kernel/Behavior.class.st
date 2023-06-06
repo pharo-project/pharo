@@ -1273,6 +1273,12 @@ Behavior >> originalName [
 	^obsName asSymbol
 ]
 
+{ #category : #accessing }
+Behavior >> packageOrganizer [
+
+	^ self environment organization
+]
+
 { #category : #copying }
 Behavior >> postCopy [
 	super postCopy.

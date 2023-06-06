@@ -49,7 +49,7 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	"test if we have 0 outgoing dependencies in each SCC after the algorithm"
 
 	| aRelation aCollection sccs |
-	aCollection := OrderedCollection withAll: (Smalltalk organization packages
+	aCollection := OrderedCollection withAll: (self packageOrganizer packages
 			                select: [ :package | '*Collections*' match: package packageName asString ]
 			                thenCollect: [ :package | package packageName ]).
 	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).

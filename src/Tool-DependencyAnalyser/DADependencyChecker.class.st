@@ -57,7 +57,7 @@ DADependencyChecker >> computeImageDependencies [
 		analysisRunString: 'Pharo image dependencies';
 		imageVersion: SystemVersion current.
 	visited := Set new.
-	Smalltalk organization packageNames do: [ :packageName | self computeDependenciesOf: packageName visitedPackages: visited ].
+	self packageOrganizer packageNames do: [ :packageName | self computeDependenciesOf: packageName visitedPackages: visited ].
 	^ report
 ]
 

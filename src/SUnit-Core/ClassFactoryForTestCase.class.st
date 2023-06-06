@@ -128,7 +128,7 @@ ClassFactoryForTestCase >> deleteClasses [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	Smalltalk organization removeCategoriesMatching: self packageName , '-*'
+	self packageOrganizer removeCategoriesMatching: self packageName , '-*'
 ]
 
 { #category : #cleaning }
