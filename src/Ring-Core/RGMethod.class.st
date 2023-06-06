@@ -489,8 +489,7 @@ RGMethod >> tagWith: aSymbol [
 
 	self changeProtocolDuring: [
 		self backend forMethod tagMethod: self with: aSymbol.
-		self parent addMethodTag: aSymbol.
-	]
+		self parent addProtocol: aSymbol ]
 ]
 
 { #category : #'accessing - model' }

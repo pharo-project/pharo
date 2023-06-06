@@ -113,13 +113,13 @@ Color class >> colorFrom: parm [
 	"(Color colorFrom: #(0.0 0.0 1.0)) >>> (Color blue)"
 
 	| aColor firstParm |
-	(parm isKindOf: Color)
+	(parm isKindOf: self)
 		ifTrue: [ ^ parm ].
 	parm isSymbol
 		ifTrue: [ ^ self perform: parm ].
 	parm isString
 		ifTrue: [ ^ self fromString: parm ].
-	((parm isKindOf: SequenceableCollection) and: [ parm size > 0 ])
+	((parm isKindOf: SequenceableCollection) and: [ parm isNotEmpty ])
 		ifTrue: [ firstParm := parm first.
 			(firstParm isKindOf: Number)
 				ifTrue: [ ^ self fromRgbTriplet: parm ].
@@ -143,7 +143,7 @@ Color class >> colorFromPixelValue: p depth: d [
 	d = 4 ifTrue: [ ^ IndexedColors at: (p bitAnd: 15) + 1 ].
 	d = 2 ifTrue: [ ^ IndexedColors at: (p bitAnd: 3) + 1 ].
 	d = 1 ifTrue: [ ^ IndexedColors at: (p bitAnd: 1) + 1 ].
-	d = 16 | (d = 15)
+	(d = 16 or: [d = 15])
 		ifTrue: [ "five bits per component"
 			r := (p bitShift: -10) bitAnd: 31.
 			g := (p bitShift: -5) bitAnd: 31.
@@ -278,8 +278,7 @@ Color class >> defaultColors4 [
 Color class >> fromArray: colorDef [
 	colorDef size = 3
 			ifTrue: [^self r: (colorDef at: 1) g: (colorDef at: 2) b: (colorDef at: 3)].
-	colorDef size = 0
-			ifTrue: [^self transparent].
+	colorDef ifEmpty: [^self transparent].
 	colorDef size = 4
 			ifTrue: [^(self r: (colorDef at: 1) g: (colorDef at: 2) b: (colorDef at: 3)) alpha: (colorDef at: 4)].
 	self error: 'Undefined color definition'
@@ -622,7 +621,7 @@ Color class >> initializeIndexedColors [
 				[ grayVal := v / 32.0.
 				a
 					at: index
-					put: (Color
+					put: (self
 							r: grayVal
 							g: grayVal
 							b: grayVal).
@@ -1353,9 +1352,9 @@ Color >> duller [
 	"Answer a darker, desaturated color.  If the original color isn't very saturated, desaturate it by less (otherwise will just end up with grey)."
 
 	| sat adjust |
-	(sat := self saturation) > 0.3
-		ifTrue: [adjust := -0.1]
-		ifFalse: [adjust := 0.1 - sat max: 0.0].
+	adjust := (sat := self saturation) > 0.3
+		          ifTrue: [ -0.1 ]
+		          ifFalse: [ 0.1 - sat max: 0.0 ].
 	^ self adjustSaturation: adjust brightness: -0.1
 
 	"^ self adjustSaturation: -0.03 brightness: -0.2"
@@ -1414,7 +1413,9 @@ Color >> hsvSaturation [
 { #category : #accessing }
 Color >> hue [
 	"Return the hue of this color, an angle in the range [0.0..360.0]."
+
 	"Color red hue >>> 0.0"
+
 	"(Color r: 0.5 g: 0.5 b: 1) hue >>> 240.0"
 
 	| r g b max min span h |
@@ -1425,12 +1426,12 @@ Color >> hue [
 	min := (r min: g) min: b.
 	span := (max - min) asFloat.
 	span = 0.0 ifTrue: [ ^ 0.0 ].
-	r = max
-		ifTrue: [ h := (g - b) asFloat / span * 60.0 ]
-		ifFalse:
-			[ g = max
-				ifTrue: [ h := 120.0 + ((b - r) asFloat / span * 60.0) ]
-				ifFalse: [ h := 240.0 + ((r - g) asFloat / span * 60.0) ] ].
+	h := r = max
+		     ifTrue: [ (g - b) asFloat / span * 60.0 ]
+		     ifFalse: [
+			     g = max
+				     ifTrue: [ 120.0 + ((b - r) asFloat / span * 60.0) ]
+				     ifFalse: [ 240.0 + ((r - g) asFloat / span * 60.0) ] ].
 	h < 0.0 ifTrue: [ h := 360.0 + h ].
 	^ h
 ]
@@ -1454,8 +1455,7 @@ Color >> initializeHue: hue saturation: saturation brightness: brightness alpha:
 	"Initialize this color to the given hue, saturation, and brightness. See the comment in the instance creation method for details."
 
 	| s v hf i f p q t |
-	rgb == nil
-		ifFalse: [ self attemptToMutateError ].
+	rgb ifNotNil: [ self attemptToMutateError ].
 	s := saturation asFloat min: 1.0 max: 0.0.
 	v := brightness asFloat min: 1.0 max: 0.0.
 
@@ -1525,38 +1525,73 @@ Color >> initializeHue: hue saturation: saturation lightness: lightness alpha: a
 	"Initialize this color to the given hue, saturation, and lightness. See the comment in the instance creation method for details."
 
 	| s l hf i f lo hi up dn |
-	rgb == nil
-		ifFalse: [ self attemptToMutateError ].
+	rgb ifNotNil: [ self attemptToMutateError ].
 	s := saturation asFloat min: 1.0 max: 0.0.
 	l := lightness asFloat min: 1.0 max: 0.0.
 
 	"zero saturation yields gray with the given lightness"
-	s = 0.0
-		ifTrue: [ ^ self initializeRed: l green: l blue: l alpha: anAlpha ].
+	s = 0.0 ifTrue: [
+		^ self
+			  initializeRed: l
+			  green: l
+			  blue: l
+			  alpha: anAlpha ].
 
 	hf := hue asFloat \\ 360.0 / 60.0.
-	i := hf asInteger.	"integer part of hue"
-	f := hf fractionPart.	"fractional part of hue"
+	i := hf asInteger. "integer part of hue"
+	f := hf fractionPart. "fractional part of hue"
 
 	"Color components follow a step function between levels hi & lo with sloped transitions up & dn. Each component is phased according to hue."
-	hi := l < 0.5 ifTrue: [(1.0 + s) * l] ifFalse: [l + s - (l * s)].
+	hi := l < 0.5
+		      ifTrue: [ 1.0 + s * l ]
+		      ifFalse: [ l + s - (l * s) ].
 	lo := 2.0 * l - hi.
-	up := (hi - lo) * f + lo.
-	dn := (lo - hi) * f + hi.
+	up := hi - lo * f + lo.
+	dn := lo - hi * f + hi.
 
-	0 = i ifTrue: [ ^ self initializeRed: hi green: up blue: lo alpha: anAlpha ].
-	1 = i ifTrue: [ ^ self initializeRed: dn green: hi blue: lo alpha: anAlpha ].
-	2 = i ifTrue: [ ^ self initializeRed: lo green: hi blue: up alpha: anAlpha ].
-	3 = i ifTrue: [ ^ self initializeRed: lo green: dn blue: hi alpha: anAlpha ].
-	4 = i ifTrue: [ ^ self initializeRed: up green: lo blue: hi alpha: anAlpha ].
-	5 = i ifTrue: [ ^ self initializeRed: hi green: lo blue: dn alpha: anAlpha ].
+	0 = i ifTrue: [
+		^ self
+			  initializeRed: hi
+			  green: up
+			  blue: lo
+			  alpha: anAlpha ].
+	1 = i ifTrue: [
+		^ self
+			  initializeRed: dn
+			  green: hi
+			  blue: lo
+			  alpha: anAlpha ].
+	2 = i ifTrue: [
+		^ self
+			  initializeRed: lo
+			  green: hi
+			  blue: up
+			  alpha: anAlpha ].
+	3 = i ifTrue: [
+		^ self
+			  initializeRed: lo
+			  green: dn
+			  blue: hi
+			  alpha: anAlpha ].
+	4 = i ifTrue: [
+		^ self
+			  initializeRed: up
+			  green: lo
+			  blue: hi
+			  alpha: anAlpha ].
+	5 = i ifTrue: [
+		^ self
+			  initializeRed: hi
+			  green: lo
+			  blue: dn
+			  alpha: anAlpha ].
 	self error: 'implementation error'
 ]
 
 { #category : #initialization }
 Color >> initializePrivateRed: r green: g blue: b [
 	"Initialize this color's r, g, and b components to the given values in the range [0..ComponentMax].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
+	rgb ifNotNil: [ self attemptToMutateError ].
 	rgb := ((r
 		min: ComponentMask
 		max: 0) bitShift: RedShift) + ((g
@@ -1571,8 +1606,14 @@ Color >> initializePrivateRed: r green: g blue: b [
 { #category : #initialization }
 Color >> initializeRed: r green: g blue: b alpha: anAlpha [
 	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift: RedShift) + (((g * ComponentMax) rounded bitAnd: ComponentMask) bitShift: GreenShift) + ((b * ComponentMax) rounded bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       (((g * ComponentMax) rounded bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + ((b * ComponentMax) rounded bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil.
 	self setAlpha: anAlpha
@@ -1581,8 +1622,14 @@ Color >> initializeRed: r green: g blue: b alpha: anAlpha [
 { #category : #initialization }
 Color >> initializeRed: r green: g blue: b range: range [
 	"Initialize this color's r, g, and b components to the given values in the range [0..r]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift: RedShift) + ((g * ComponentMask // range bitAnd: ComponentMask) bitShift: GreenShift) + (b * ComponentMask // range bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       ((g * ComponentMask // range bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + (b * ComponentMask // range bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil.
 	self setAlpha: 1.0
@@ -1746,7 +1793,7 @@ Color >> muchDarker [
 { #category : #transformations }
 Color >> muchLighter [
 
-	^ self alphaMixed: 0.233 with: Color white
+	^ self alphaMixed: 0.233 with: self class white
 ]
 
 { #category : #accessing }
@@ -1757,7 +1804,7 @@ Color >> name [
 { #category : #transformations }
 Color >> negated [
 	"Return an RGB inverted color"
-	^Color
+	^ self class
 		r: 1.0 - self red
 		g: 1.0 - self green
 		b: 1.0 - self blue
@@ -1794,21 +1841,14 @@ Color >> pixelValueForDepth: d [
 { #category : #'pixels handling' }
 Color >> pixelWordFor: depth filledWith: pixelValue [
 	"Return to a 32-bit word that concatenates enough copies of the given pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
+
 	| halfword |
 	depth = 32 ifTrue: [ ^ pixelValue ].
-	depth = 16
-		ifTrue: [ halfword := pixelValue ]
-		ifFalse:
-			[ halfword := pixelValue * (#(
-					65535
-					21845
-					#-
-					4369
-					#-
-					#-
-					#-
-					257
-				) at: depth)	"replicates at every bit"	"replicates every 2 bits"	"replicates every 4 bits"	"replicates every 8 bits" ].
+	halfword := depth = 16
+		            ifTrue: [ pixelValue ]
+		            ifFalse: [
+			            pixelValue
+			            * (#( 65535 21845 #- 4369 #- #- #- 257 ) at: depth) "replicates at every bit" "replicates every 2 bits" "replicates every 4 bits" "replicates every 8 bits" ].
 	^ halfword bitOr: (halfword bitShift: 16)
 ]
 
@@ -2002,29 +2042,33 @@ Color >> setHue: hue saturation: saturation brightness: brightness [
 { #category : #private }
 Color >> setPrivateRed: r green: g blue: b [
 	"Initialize this color's r, g, and b components to the given values in the range [0..ComponentMax].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r
-		min: ComponentMask
-		max: 0) bitShift: RedShift) + ((g
-			min: ComponentMask
-			max: 0) bitShift: GreenShift) + (b
-			min: ComponentMask
-			max: 0).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r min: ComponentMask max: 0) bitShift: RedShift)
+	       + ((g min: ComponentMask max: 0) bitShift: GreenShift)
+	       + (b min: ComponentMask max: 0).
 	cachedDepth := nil.
 	cachedBitPattern := nil
 ]
 
 { #category : #private }
 Color >> setRGB: rgb0 [
-	rgb == nil ifFalse: [ self attemptToMutateError ].
+
+	rgb ifNotNil: [ self attemptToMutateError ].
 	rgb := rgb0
 ]
 
 { #category : #private }
 Color >> setRed: r green: g blue: b [
 	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift: RedShift) + (((g * ComponentMax) rounded bitAnd: ComponentMask) bitShift: GreenShift) + ((b * ComponentMax) rounded bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       (((g * ComponentMax) rounded bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + ((b * ComponentMax) rounded bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil
 ]
@@ -2032,8 +2076,14 @@ Color >> setRed: r green: g blue: b [
 { #category : #private }
 Color >> setRed: r green: g blue: b range: range [
 	"Initialize this color's r, g, and b components to the given values in the range [0..r]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift: RedShift) + ((g * ComponentMask // range bitAnd: ComponentMask) bitShift: GreenShift) + (b * ComponentMask // range bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       ((g * ComponentMask // range bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + (b * ComponentMask // range bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil
 ]

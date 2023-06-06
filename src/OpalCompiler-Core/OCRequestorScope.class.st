@@ -23,9 +23,13 @@ OCRequestorScope >> allTemps [
 { #category : #testing }
 OCRequestorScope >> canAddBindingOf: name [
 	"Test for free workspace declaration"
-
+	
+	"MD: Question: Do we really need to delegate this to the requestor?"
+	
 	"Empty names come from faulty parameters. Ignore them"
 	name ifEmpty: [ ^ false ].
+	"names startign with digits are variables from optimized contructs"
+	name startsWithDigit ifTrue: [ ^false ].
 
 	"Because requestor do not have a real API, introspection is used."
 	(requestor respondsTo: #canAddBindingOf:) ifFalse: [ ^ false ].

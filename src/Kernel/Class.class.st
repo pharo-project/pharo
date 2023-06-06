@@ -517,19 +517,16 @@ Class >> compileAllFrom: oldClass [
 Class >> copyForAnnouncement [
 	"Answer a copy of the receiver to be used in the announcement of changes.
 	You should not use this class for anything else, it is invalid."
+
 	| newClass |
-
-
 	newClass := self class copy new
-		basicSuperclass: superclass;
-		methodDict: self methodDict copy;
-		setFormat: format;
-		setName: name;
-		organization: self organization copy;
-		classPool: classPool copy;
-		sharedPools: sharedPools copy.
-	self class instSize+1 to: self class instSize do:
-		[:offset | newClass instVarAt: offset put: (self instVarAt: offset)].
+		            basicSuperclass: superclass;
+		            methodDict: self methodDict copy;
+		            setFormat: format;
+		            setName: name;
+		            classPool: classPool copy;
+		            sharedPools: sharedPools copy.
+	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
 ]
@@ -862,14 +859,17 @@ Class >> newSubclass [
 	i := 1.
 	[ className := (self name , i printString) asSymbol.
 	self environment includesKey: className ] whileTrue: [ i := i + 1 ].
-	^ self
-		subclass: className
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: className;
+				category: 'Unclassified';
+				environment: self environment ]
 
 	"Point newSubclass new"
+	
+
 ]
 
 { #category : #initialization }
@@ -968,21 +968,24 @@ Class >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing  instances will refer to an obsolete version of the receiver.
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
+
 	| myCategory |
 	self release.
 	self unload.
 
-	self superclass ifNotNil:
-		["If we have no superclass there's nothing to be remembered"
-		self superclass addObsoleteSubclass: self].
+	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed
 	if this class is loaded again. We do not check if references exist as it is too slow"
 	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	myCategory := self category.
 	self environment forgetClass: self logged: logged.
+
+	"In case the class has deprecated aliases we need to remove them from the system dictionary.
+	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
+	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory]
+	logged ifTrue: [ SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory ]
 ]
 
 { #category : #initialization }
@@ -1125,56 +1128,71 @@ Class >> sharing: poolString [
 
 { #category : #'subclass creation' }
 Class >> subclass: t [
-	^ self
-		subclass: t
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: t;
+				category: 'Unclassified';
+				environment: self environment ]
+
+	
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
-	^ self
-		subclass: t
-		instanceVariableNames: ins
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: t;
+				slots: ins asSlotCollection;
+				category: 'Unclassified';
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aCategorySymbol
+		^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: aSubclassSymbol;
+				sharedVariablesFromString: classVarNames;
+				slots: instVarNameList asSlotCollection;
+				category: 'Unclassified';
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aPackageSymbol
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: aSubclassSymbol;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
+				category: aPackageSymbol;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		subclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: t;
+				slots: f asSlotCollection;
+				sharedVariablesFromString: d;
+				sharedPools: s;
+				category: cat;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation' }

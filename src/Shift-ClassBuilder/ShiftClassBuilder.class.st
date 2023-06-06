@@ -89,7 +89,7 @@ ShiftClassBuilder >> build [
 
 	self oldClass ifNotNil: [
 		self newClass basicCategory: self oldClass basicCategory.
-		self copyOrganization.
+		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
 	self createSharedVariables.
@@ -207,9 +207,10 @@ ShiftClassBuilder >> compileMethods [
 ]
 
 { #category : #building }
-ShiftClassBuilder >> copyOrganization [
-	newClass organization copyFrom: oldClass organization.
-	newClass class organization copyFrom: oldClass class organization
+ShiftClassBuilder >> copyProtocols [
+
+	newClass protocols: oldClass protocols copy.
+	newClass class protocols: oldClass class protocols copy
 ]
 
 { #category : #installing }

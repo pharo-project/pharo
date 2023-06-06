@@ -11,6 +11,12 @@ Class {
 	#category : #'Morphic-Widgets-Tree'
 }
 
+{ #category : #'class initialization' }
+TreeColumnButtonMorph class >> initialize [
+
+	self deprecatedAliases: { #MorphTreeColumnButton }
+]
+
 { #category : #accessing }
 TreeColumnButtonMorph >> acceptDroppingMorph: aMorph event: evt [
 	self model container swapColumn: self model withColumn: aMorph passenger.

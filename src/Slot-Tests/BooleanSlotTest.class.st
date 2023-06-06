@@ -10,6 +10,7 @@ Class {
 { #category : #tests }
 BooleanSlotTest >> testExampleBooleanSlot [
 	| object slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => BooleanSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 

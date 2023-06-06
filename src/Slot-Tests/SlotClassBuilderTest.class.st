@@ -104,7 +104,7 @@ SlotClassBuilderTest >> tearDown [
 		cleanUpTrait: TOne;
 		cleanUpTrait: TTwo.
 
-	Smalltalk organization removeCategory: self aCategory.
+	self packageOrganizer removeCategory: self aCategory.
 	(RPackageOrganizer default
 		packageNamed: self aCategory
 		ifAbsent: [ ^ self ])

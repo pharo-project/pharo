@@ -10,6 +10,7 @@ Class {
 { #category : #tests }
 WriteOnceSlotTest >> testRead [
 	| slot |
+	<ignoreNotImplementedSelectors: #(slot1:)>
 	slot := #slot1 => WriteOnceSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -21,6 +22,7 @@ WriteOnceSlotTest >> testRead [
 { #category : #tests }
 WriteOnceSlotTest >> testWriteAndRead [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => WriteOnceSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -35,6 +37,7 @@ WriteOnceSlotTest >> testWriteAndRead [
 { #category : #tests }
 WriteOnceSlotTest >> testWriteTwice [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => WriteOnceSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 

@@ -48,7 +48,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 			subResults: ((anOrderedColletion groupedBy: #class) associations collect: [ :assoc |
 				DTTreeNode new
 					name: assoc key name;
-					subResults: ((assoc value groupedBy: [ :testCase | (testCase class lookupSelector: testCase selector) protocol ]) associations collect: [ :protocolToTest |
+					subResults: ((assoc value groupedBy: [ :testCase | (testCase class lookupSelector: testCase selector) protocolName ]) associations collect: [ :protocolToTest |
 						DTTreeNode new
 							name: protocolToTest key;
 							subResults: (self buildLeavesFrom: protocolToTest value type: testResultType) ]);

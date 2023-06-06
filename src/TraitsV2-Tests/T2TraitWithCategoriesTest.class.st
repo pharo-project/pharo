@@ -49,17 +49,17 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChanged [
 
 { #category : #tests }
 T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChangedWithoutCompile [
-	| t1 t2 |
+	| trait1 trait2 |
 
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
+	trait1 := self newTrait: #T1 with: #() uses: {}.
+	trait1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
-	t2 := self newTrait: #T2 with: #() uses: t1.
+	trait2 := self newTrait: #T2 with: #() uses: trait1.
 
-	t1 organization classify: #m1 under: 'anotherProtocol'.
+	trait1 classify: #m1 under: 'anotherProtocol'.
 
-	self assert: (t1 >> #m1) protocol equals: 'anotherProtocol'.
-	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'
+	self assert: (trait1 >> #m1) protocol equals: 'anotherProtocol'.
+	self assert: (trait2 >> #m1) protocol equals: 'anotherProtocol'
 ]
 
 { #category : #tests }
@@ -86,7 +86,7 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsRenamedCategory [
 
 	t2 := self newTrait: #T2 with: #(  ) uses: t1.
 
-	t1 organization renameProtocol: 'aProtocol' as: 'anotherProtocol'.
+	t1 renameProtocol: 'aProtocol' as: 'anotherProtocol'.
 
 	self assert: (t1 >> #m1) protocol equals: 'anotherProtocol'.
 	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'.

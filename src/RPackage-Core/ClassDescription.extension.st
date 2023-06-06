@@ -47,12 +47,6 @@ ClassDescription >> packageFromOrganizer: anOrganizer [
 ]
 
 { #category : #'*RPackage-Core' }
-ClassDescription >> packageOrganizer [
-	"Returns the organizer of this class"
-	^ RPackage organizer
-]
-
-{ #category : #'*RPackage-Core' }
 ClassDescription >> packageTag [
 
 	| packageTag |

@@ -43,15 +43,14 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 	extent = self extent ifTrue: [^ self].
 
 	(self height isZero or: [self width isZero])
-		ifTrue: [^ Form extent: extent depth: self depth].
+		ifTrue: [^ self class extent: extent depth: self depth].
 
 	scale := extent y / self height min: extent x / self width.
 	scaledForm := self
-				magnify: self boundingBox
-				by: scale
+				magnifyBy: scale
 				smoothing: 8.
 
-	result := Form extent: extent depth: 32.
+	result := self class extent: extent depth: 32.
 	result getCanvas
 		translucentImage: scaledForm
 		at: extent - scaledForm extent // 2.

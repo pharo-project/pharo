@@ -33,7 +33,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization addProtocol: #king.
+	class addProtocol: #king.
 	self assert: numberOfAnnouncements equals: 2
 ]
 
@@ -46,7 +46,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement2 [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization addProtocol: (Protocol named: #king).
+	class addProtocol: (Protocol named: #king).
 	self assert: numberOfAnnouncements equals: 2
 ]
 
@@ -59,14 +59,14 @@ ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization classify: #king under: #titan.
+	class classify: #king under: #titan.
 	self assert: numberOfAnnouncements equals: 2
 ]
 
 { #category : #'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement [
 
-	organization addProtocol: #titan.
+	class addProtocol: #titan.
 
 	self when: ProtocolRemoved do: [ :ann |
 		self assert: ann protocol name equals: #titan.
@@ -82,7 +82,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement [
 { #category : #'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 
-	organization addProtocol: #titan.
+	class addProtocol: #titan.
 
 	self when: ProtocolRemoved do: [ :ann |
 		self assert: ann protocol name equals: #titan.
@@ -90,7 +90,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	class removeProtocolIfEmpty: (organization protocolNamed: #titan).
+	class removeProtocolIfEmpty: (class protocolNamed: #titan).
 
 	self assert: numberOfAnnouncements equals: 2
 ]
@@ -98,7 +98,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 { #category : #'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement3 [
 
-	organization addProtocol: #titan.
+	class addProtocol: #titan.
 	class compiler
 		protocol: #titan;
 		install: 'king ^ 1'.
@@ -117,7 +117,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement3 [
 { #category : #'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement4 [
 
-	organization addProtocol: #titan.
+	class addProtocol: #titan.
 
 	self when: ProtocolRemoved do: [ :ann |
 		self assert: ann protocol name equals: #titan.
@@ -133,7 +133,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement4 [
 { #category : #'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonEmptyProtocolDoesNotAnnounceAnything [
 
-	organization addProtocol: #titan.
+	class addProtocol: #titan.
 	class compiler
 		protocol: #titan;
 		install: 'king ^ 1'.
@@ -175,11 +175,11 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoe
 ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceClassReorganizedOnce [
 	"This is a regerssion test because at some point the class reorganized announcement got duplicated."
 
-	organization classify: #king under: #demon.
+	class classify: #king under: #demon.
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization renameProtocol: #demon as: #titan.
+	class renameProtocol: #demon as: #titan.
 
 	self assert: numberOfAnnouncements equals: 1
 ]
@@ -190,7 +190,7 @@ ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
 	self skip. "This hihglight the problem of https://github.com/pharo-project/pharo/pull/13494
 	But we still need to work on this to fix this test."
 
-	organization classify: #king under: #demon.
+	class classify: #king under: #demon.
 
 	self when: ProtocolAdded do: [ :ann |
 		self assert: ann protocol name equals: #titan.
@@ -198,7 +198,7 @@ ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
 
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
-	organization renameProtocol: #demon as: #titan.
+	class renameProtocol: #demon as: #titan.
 
 	self assert: numberOfAnnouncements equals: 2
 ]

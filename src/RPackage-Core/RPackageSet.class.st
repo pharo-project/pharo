@@ -84,11 +84,6 @@ RPackageSet >> asRPackageSet [
 	^self
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> category: categoryName matches: prefix [
-	^ RPackageOrganizer default category: categoryName matches: prefix
-]
-
 { #category : #accessing }
 RPackageSet >> categoryNames [
 	^  self packages
@@ -114,7 +109,10 @@ RPackageSet >> extendedClasses [
 { #category : #'system compatibility' }
 RPackageSet >> extensionCategoriesForClass: aClass [
 
-	^ aClass organization protocolNames select: [ :cat | self isYourClassExtension: cat ]
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -124,16 +122,21 @@ RPackageSet >> extensionMethods [
 		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
 ]
 
+{ #category : #'system compatibility' }
+RPackageSet >> extensionProtocolsForClass: aClass [
+
+	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol name ]
+]
+
 { #category : #testing }
 RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not ]]
+RPackageSet >> includesProtocol: categoryName ofClass: aClass [
+
+	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
 ]
 
 { #category : #'system compatibility' }
@@ -157,8 +160,9 @@ RPackageSet >> isForeignClassExtension: categoryName [
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isYourClassExtension: categoryName [
-	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
+RPackageSet >> isYourClassExtension: protocolName [
+
+	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
 ]
 
 { #category : #'system compatibility' }

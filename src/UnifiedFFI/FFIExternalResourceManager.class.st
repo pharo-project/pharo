@@ -112,6 +112,12 @@ FFIExternalResourceManager >> addResource: anObject executor: anExecutor [
 	registry add: anObject finalizer: anExecutor
 ]
 
+{ #category : #testing }
+FFIExternalResourceManager >> includes: anObject [
+
+	^ registry includes: anObject
+]
+
 { #category : #initialization }
 FFIExternalResourceManager >> initialize [ 
 	registry := FinalizationRegistry new

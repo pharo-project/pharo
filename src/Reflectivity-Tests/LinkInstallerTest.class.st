@@ -144,7 +144,7 @@ LinkInstallerTest >> testLinkOnTempVar [
 	| methodNode link variable |
 	methodNode := (ReflectivityExamples2 >> #methodWithTempVarAccess) ast.
 	link := MetaLink new.
-	variable := (ReflectivityExamples2 >> #methodWithTempVarAccess) temporaryVariableNamed: #temp.
+	variable := (ReflectivityExamples2 >> #methodWithTempVarAccess) lookupVar: #temp.
 
 	link installOnVariable: variable
 		for: ReflectivityExamples2
@@ -157,7 +157,7 @@ LinkInstallerTest >> testLinkOnTempVar [
 	link uninstall.
 	self assert: link nodes isEmpty.
 
-	variable := (ReflectivityExamples2 >> #methodWithTempVarAccess) temporaryVariableNamed: #temp.
+	variable := (ReflectivityExamples2 >> #methodWithTempVarAccess) lookupVar: #temp.
 	link installOnVariable: variable
 		for: ReflectivityExamples2
 		option: #write
@@ -169,7 +169,7 @@ LinkInstallerTest >> testLinkOnTempVar [
 	link uninstall.
 	self assert: link nodes isEmpty.
 
-	variable := (ReflectivityExamples2 >> #methodWithTempVarAccess) temporaryVariableNamed: #temp.
+	variable := (ReflectivityExamples2 >> #methodWithTempVarAccess) lookupVar: #temp.
 	link installOnVariable: variable
 		for: ReflectivityExamples2
 		option: #all

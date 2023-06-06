@@ -23,18 +23,6 @@ CompiledMethod class >> abstractMarker [
 	^ #subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> basicNew [
-
-	self error: 'CompiledMethods may only be created with newMethod:header:'
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> basicNew: size [
-
-	self error: 'CompiledMethods may only be created with newMethod:header:'
-]
-
 { #category : #'class initialization' }
 CompiledMethod class >> checkBytecodeSetConflictsInMethodsWith: aBlock [
 
@@ -227,9 +215,8 @@ CompiledMethod >> cachePragmas [
 
 { #category : #'accessing - backward compatible' }
 CompiledMethod >> category [
-	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 
-	^ self methodClass protocolNameOfSelector: self selector
+	^ self protocolName
 ]
 
 { #category : #accessing }
@@ -401,6 +388,7 @@ CompiledMethod >> isClassSide [
 { #category : #testing }
 CompiledMethod >> isClassified [
 
+	self flag: #CompileMethodProtocolMiration.
 	^ self protocol ~= Protocol unclassified
 ]
 
@@ -547,7 +535,8 @@ CompiledMethod >> isSubclassResponsibility: marker [
 { #category : #testing }
 CompiledMethod >> isTaggedWith: aSymbol [
 	"Not methods tags implemented by protocols. Look #tags comment"
-	^self protocol == aSymbol
+
+	^ self protocolName == aSymbol
 ]
 
 { #category : #'source code management' }
@@ -565,11 +554,6 @@ CompiledMethod >> linesOfCode [
 CompiledMethod >> literalsToSkip [
 
 	^ 2
-]
-
-{ #category : #lookup }
-CompiledMethod >> lookupVar: aString [
-	^self ast scope lookupVar: aString
 ]
 
 { #category : #private }
@@ -805,7 +789,14 @@ CompiledMethod >> protocol [
 
 { #category : #accessing }
 CompiledMethod >> protocol: aProtocol [
-	^ self methodClass organization classify: self selector under: aProtocol
+	^ self methodClass classify: self selector under: aProtocol
+]
+
+{ #category : #accessing }
+CompiledMethod >> protocolName [
+	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
+
+	^ self methodClass protocolNameOfSelector: self selector
 ]
 
 { #category : #scanning }
@@ -999,7 +990,7 @@ CompiledMethod >> tags [
 	For now we only define API to manage them implemented on top of method protocols.
 	Protocol unclassified means that method is not tagged by anything"
 	| protocol |
-	protocol := self protocol.
+	protocol := self protocolName.
 	protocol ifNil: [ ^#() ].
 	protocol = Protocol unclassified ifTrue: [ ^#() ].
 	^{protocol}
@@ -1022,7 +1013,7 @@ CompiledMethod >> untagFrom: aSymbol [
 	This method should remove given tag from it. All other tags should not be changed.
 	But now we could implemented tags with protocols which allow only tag for method.
 	And to remove tag from method we must change it protocol to Protocol unclassified"
-	self protocol = aSymbol ifTrue: [
+	self protocolName = aSymbol ifTrue: [
 		self protocol: Protocol unclassified]
 ]
 

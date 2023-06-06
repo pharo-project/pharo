@@ -118,7 +118,7 @@ RPackage class >> named: aString [
 { #category : #'protected only for tests' }
 RPackage class >> organizer [
 
-	^ PackageGlobalOrganizer ifNil: [ Smalltalk organization ]
+	^ PackageGlobalOrganizer ifNil: [ self packageOrganizer ]
 ]
 
 { #category : #'protected only for tests' }
@@ -302,12 +302,11 @@ RPackage >> basicImportClass: aClass [
 
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
-	| protocols |
 	self addClassDefinition: aClass.
-	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
-	protocols := aClass organization protocolNames reject: [ :each | each first = $* ].
-	protocols do: [ :each | self importProtocol: each forClass: aClass ]
+	aClass protocolNames do: [ :protocolName | (self isYourClassExtension: protocolName) ifTrue: [ aClass renameProtocol: protocolName as: Protocol unclassified ] ].
+	aClass protocols
+		reject: [ :protocol | protocol isExtensionProtocol ]
+		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
 ]
 
 { #category : #'add method - selector' }
@@ -341,22 +340,6 @@ RPackage >> basicRemoveTag: tag [
 
 	SystemAnnouncer uniqueInstance
 		classTagRemoved: tag name fromPackage: self
-]
-
-{ #category : #'system compatibility' }
-RPackage >> category: categoryName matches: prefix [
-	"self default category: 'Compression-Archives' matches: 'Compression'"
-	"self default category: 'Compression' matches: 'Compression-Archives'"
-	"self default category: 'Compression' matches: 'Compression'"
-	"self default category: 'Compression-Arh' matches: 'Compression'"
-	| prefixSize catSize |
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
 { #category : #slices }
@@ -650,8 +633,10 @@ RPackage >> extendsClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> extensionCategoriesForClass: aClass [
 
-	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
-	^ aClass organization protocolNames select: [ :cat | self isYourClassExtension: cat ]
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -673,6 +658,12 @@ RPackage >> extensionMethodsForClass: aClass [
 	"Change the set of extensions selectors to an Array to avoid compiled methods collisions in the resulting set."
 
 	^ (self extensionSelectorsForClass: aClass) asArray collect: [ :each | aClass >> each ]
+]
+
+{ #category : #'system compatibility' }
+RPackage >> extensionProtocolsForClass: aClass [
+
+	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol name ]
 ]
 
 { #category : #accessing }
@@ -697,9 +688,10 @@ RPackage >> extensionSelectorsForClass: aClass [
 { #category : #'class tags' }
 RPackage >> extensionsForTag: aRPackageTag [
 
-	^ self extensionMethods select: [ :extensionMethod | | category |
-		category := extensionMethod protocol allButFirst.
-		self category: category matches: aRPackageTag categoryName ]
+	^ self extensionMethods select: [ :extensionMethod |
+		  | protocolName |
+		  protocolName := extensionMethod protocol allButFirst.
+		  protocolName isCategoryOf: aRPackageTag categoryName ]
 ]
 
 { #category : #properties }
@@ -753,9 +745,11 @@ RPackage >> importPackage: anRPackage [
 
 { #category : #private }
 RPackage >> importProtocol: aProtocol forClass: aClass [
-	"import all the methods of a protocol as defined in the receiver."
+	"import all the local methods of a protocol as defined in the receiver."
 
-	(aClass methodsInProtocol: aProtocol) do: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ]
+	(aClass methodsInProtocol: aProtocol)
+		reject: [ :method | method isFromTrait ]
+		thenDo: [ :method | self addMethod: method ]
 ]
 
 { #category : #testing }
@@ -838,17 +832,16 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 	^ sels includes: aSelector
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not]]
-]
-
 { #category : #testing }
 RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
+]
+
+{ #category : #'system compatibility' }
+RPackage >> includesProtocol: categoryName ofClass: aClass [
+
+	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
 ]
 
 { #category : #testing }
@@ -878,7 +871,8 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #'system compatibility' }
 RPackage >> includesSystemCategory: categoryName [
-	^ self category: categoryName matches: self systemCategoryPrefix
+
+	^ categoryName isCategoryOf: self systemCategoryPrefix
 ]
 
 { #category : #initialization }
@@ -930,8 +924,9 @@ RPackage >> isTestPackage [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> isYourClassExtension: categoryName [
-	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
+RPackage >> isYourClassExtension: protocolName [
+
+	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
 ]
 
 { #category : #queries }
@@ -1134,8 +1129,8 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
-	aClass organization protocolNames do: [ :each |
-		(self isYourClassExtension: each) ifTrue: [ aClass organization renameProtocol: each as: Protocol unclassified ] ].
+	aClass protocolNames do: [ :each |
+		(self isYourClassExtension: each) ifTrue: [ aClass renameProtocol: each as: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
@@ -1253,7 +1248,7 @@ RPackage >> removeFromSystem [
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	extendedClasses do: [ :each | each organization removeProtocolIfEmpty: ('*' , name) asSymbol ].
+	extendedClasses do: [ :class | class removeProtocolIfEmpty: ('*' , name) asSymbol ].
 	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
 	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
 	categories do: [ :cat | self organizer removeCategory: cat ].
@@ -1348,9 +1343,9 @@ RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
 RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 
 	| protocols |
-	protocols := self extensionMethods collect: [ :each | each origin organization protocolNamed: each protocol ] as: Set.
+	protocols := self extensionMethods collect: [ :method | method origin protocolNamed: method protocol ] as: Set.
 
-	protocols do: [ :each | each rename: '*' , newName , (each name allButFirst: oldName size + 1) ]
+	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
 ]
 
 { #category : #private }

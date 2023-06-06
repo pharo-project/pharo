@@ -189,26 +189,9 @@ AthensCairoSurface class >> finalizeResourceData: data [
 	id := data second.
 	contextHandle := data third.
 
-	(self findSurface: id) = handle value ifFalse: [
-		"self error: 'surface is not registered with surface plugin'."
-		^ self ].
-
 	self unregisterSurfaceWithId: id.
 	self destroyContextHandle: contextHandle value.
 	self destroySurfaceHandle: handle value
-]
-
-{ #category : #private }
-AthensCairoSurface class >> findSurface: surfaceId [
-	| buf |
-	buf := ByteArray new: 4.  "sizeof(int)"
-
-
-	(self primFindSurface: surfaceId handle: buf) ifTrue: [
-		^ buf unsignedLongAt: 1
-		].
-
-	^ nil
 ]
 
 { #category : #'instance creation' }
@@ -267,16 +250,6 @@ AthensCairoSurface class >> initializeForNewSession [
 { #category : #private }
 AthensCairoSurface class >> primCreateFromFile: aFileName [
 	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_from_png (char* aFileName))
-]
-
-{ #category : #private }
-AthensCairoSurface class >> primFindSurface: id handle: handlePtr [
-		"Find the surface with the given ID, and, optionally,
-		the given set of surface functions. The registered handle
-		is returned in surfaceHandle. Return true if successful
-		(e.g., the surface has been found), false otherwise."
-
-	<primitive: 'primitiveFindSurface' module: 'SurfacePlugin'>
 ]
 
 { #category : #private }
@@ -343,7 +316,8 @@ AthensCairoSurface class >> registerSurface: anAthensCairoSurface [
 	address := anAthensCairoSurface getHandle.
 	(self primRegisterSurface: address dispatch: dispatch surfaceId: id)
 		ifFalse: [ self error: 'Unable to register surface with SurfacePlugin' ].
-	id := id signedLongAt: 1.
+
+	id := id signedLongAt: 1.	
 
 	^ id
 ]

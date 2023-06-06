@@ -12,7 +12,7 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'organization'
+		'protocols'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -35,12 +35,12 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	oldProtocol := self protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-		self organization classify: selector under: ((protocol isString
+		self classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
 				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
-	newProtocol := self organization protocolOfSelector: selector.
+	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
@@ -65,12 +65,23 @@ ClassDescription >> addInstVarNamed: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> addMethodTag: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	In class we could define what tags could be used for methods"
+{ #category : #protocols }
+ClassDescription >> addProtocol: aProtocol [
 
-	self organization addProtocol: aSymbol
+	| oldProtocols protocol |
+	
+	(self hasProtocol: aProtocol) ifTrue: [
+		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+
+	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
+
+	oldProtocols := self protocolNames copy.
+
+	protocols := protocols copyWith: protocol.
+
+	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
+	SystemAnnouncer announce: (ClassReorganized class: self).
+	^ protocol
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -81,7 +92,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 	oldProtocol := self protocolOfSelector: selector.
 
 	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
-	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self organization classify: selector under: nil ] ].
+	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self classify: selector under: nil ] ].
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 	priorMethodOrNil
@@ -124,11 +135,10 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 ]
 
 { #category : #'accessing - method dictionary' }
-ClassDescription >> allSelectorsInProtocol: aName [
-	"Answer a list of all the methods of the receiver and all its
-	superclasses that are in the protocol named aName"
+ClassDescription >> allSelectorsInProtocol: protocol [
+	"Answer a list of all the method selectors of the receiver and all its superclasses that are in the protocol as parameter."
 
-	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: aName ]
+	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: protocol ]
 ]
 
 { #category : #'pool variable' }
@@ -254,6 +264,22 @@ ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
 
 	^ String streamContents: [ :stream | self classVariablesOn: stream ]
+]
+
+{ #category : #protocols }
+ClassDescription >> classify: selector under: aProtocol [
+
+	| oldProtocol newProtocol |
+	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+
+	oldProtocol ifNotNil: [
+		oldProtocol removeMethodSelector: selector.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+	newProtocol addMethodSelector: selector.
+
+	"During the first classification of a method we dont need to announce the classification because users can subscribe to the method added announcement."
+	oldProtocol ifNotNil: [ self notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #compiling }
@@ -385,14 +411,55 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocols }
+{ #category : #accessing }
+ClassDescription >> deprecatedAliases [
+	"I return a potential list of alias names for myself that are deprecated."
+
+	^ self propertyAt: #deprecatedAliases ifAbsent: [ {  } ]
+]
+
+{ #category : #accessing }
+ClassDescription >> deprecatedAliases: aCollection [
+	"I allow one to declare deperecated names for myself. Typically, in case I get renamed, I can be used to declare the old name as a deprecated name.
+	Compared to the use of #isDeprecated, I have some advantages such as:
+	- Not needing to maintain a deprecated class
+	- Keep #isKindOf: working
+	- Keep #on:do: working
+	- And more cases like the previous two.
+	
+	In the future this should be improved so that we can declare the deprecated aliases in the FluidClassBuilder. But it requires a way to persist this information in Tonel.
+	Maybe we should also do another improvement that is to remove from the system dectionary the aliases if we set some aliases while I already had some set before."
+
+	| environment |
+	environment := self class environment.
+	
+	"If a global already has the name of an alias then we should warn the user."
+	aCollection do: [ :alias |
+		environment at: alias asSymbol ifPresent: [ :class |
+			"If the global exists but points to the same class then it means that we are just reaaplying the aliases."
+			class ~= self ifTrue: [
+				self notify: alias , ' is been applied as a deprecated alias for ' , self class name , ' but a global already exists under this name.' ] ] ].
+
+	self propertyAt: #deprecatedAliases put: (aCollection collect: [ :name | name asSymbol ]).
+	self deprecatedAliases do: [ :deprecatedName |
+		environment at: deprecatedName put: self.
+		(environment lookupVar: deprecatedName) isDeprecated: true ]
+]
+
+{ #category : #'queries - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
 	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
 	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
 
-	^ self organization ensureProtocol: aProtocol
+	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
+
+	aProtocol isString ifFalse: [
+		(self protocols includes: aProtocol)
+			ifTrue: [ ^ aProtocol ]
+			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
+	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
 ]
 
 { #category : #private }
@@ -411,6 +478,12 @@ ClassDescription >> expandedDefinitionString [
 ClassDescription >> expandedDefinitionStringFor: aPrinter [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #protocols }
+ClassDescription >> extensionProtocols [
+
+	^ self protocols select: [ :protocol | protocol isExtensionProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -471,6 +544,13 @@ ClassDescription >> includesSharedPoolNamed:  aSharedPoolString [
 	"Answer whether the receiver uses the shared pool named aSharedPoolString"
 
 	^ self sharedPools anySatisfy: [:each | each name = aSharedPoolString]
+]
+
+{ #category : #initialization }
+ClassDescription >> initialize [
+
+	super initialize.
+	self resetProtocols
 ]
 
 { #category : #'instance variables' }
@@ -598,10 +678,10 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
-{ #category : #organization }
-ClassDescription >> methodsInProtocol: aString [
+{ #category : #protocols }
+ClassDescription >> methodsInProtocol: protocol [
 
-	^ (self selectorsInProtocol: aString) collect: [ :each | self compiledMethodAt: each ]
+	^ (self selectorsInProtocol: protocol) collect: [ :selector | self compiledMethodAt: selector ]
 ]
 
 { #category : #'accessing - tags' }
@@ -734,25 +814,6 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
-{ #category : #organization }
-ClassDescription >> organization [
-	"Answer the instance of ClassOrganizer that represents the organization
-	of the messages of the receiver."
-
-	^ organization ifNil: [
-		  self organization: ClassOrganization new.
-		  self isTrait ifFalse: [ organization initializeClass: self ].
-		  organization ]
-]
-
-{ #category : #organization }
-ClassDescription >> organization: aClassOrg [
-	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
-
-	aClassOrg ifNotNil: [ aClassOrg setSubject: self ].
-	organization := aClassOrg
-]
-
 { #category : #printing }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
@@ -767,10 +828,24 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 ]
 
 { #category : #protocols }
+ClassDescription >> protocolNamed: aString [
+
+	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
+]
+
+{ #category : #protocols }
+ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
+
+	^ self protocols
+		  detect: [ :e | e name = aString ]
+		  ifNone: aBlock
+]
+
+{ #category : #protocols }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
-	^ self organization protocolNames copy
+	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
 { #category : #protocols }
@@ -778,9 +853,23 @@ ClassDescription >> protocolOfSelector: aSelector [
 	"Return the protocol including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
 
-	^ self organization protocols
+	^ self protocols
 		  detect: [ :each | each includesSelector: aSelector ]
 		  ifNone: [ nil ]
+]
+
+{ #category : #protocols }
+ClassDescription >> protocols [
+	"I return all the protocols contained in me.
+	In the past I was returning the protocol names but now I am returning the instances directly. If you want to deal with the names you can use #protocolNames."
+
+	^ protocols
+]
+
+{ #category : #protocols }
+ClassDescription >> protocols: aCollection [
+	
+	protocols := aCollection
 ]
 
 { #category : #compiling }
@@ -794,7 +883,7 @@ ClassDescription >> reformatAll [
 ClassDescription >> removeEmptyProtocols [
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
 
-	self organization protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
+	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : #protocols }
@@ -817,9 +906,10 @@ ClassDescription >> removeInstVarNamed: aString [
 ClassDescription >> removeNonexistentSelectorsFromProtocols [
 	"For each protocol, remove the selectors that are not present in the class."
 
-	self organization allMethodSelectors
-		reject: [ :selector | self includesSelector: selector ]
-		thenDo: [ :selector | self removeFromProtocols: selector ]
+	self protocols do: [ :protocol |
+		protocol methodSelectors
+			reject: [ :selector | self includesSelector: selector ]
+			thenDo: [ :selector | self removeFromProtocols: selector ] ]
 ]
 
 { #category : #protocols }
@@ -836,9 +926,19 @@ ClassDescription >> removeProtocol: aProtocol [
 
 { #category : #protocols }
 ClassDescription >> removeProtocolIfEmpty: aProtocol [
-	"Remove a given protocol (the argument can also be a protocol name) if no method is present in it."
+	"I take a protocol or a protocol name and remvoe it if it is empty."
 
-	self organization removeProtocolIfEmpty: aProtocol
+	| protocol oldProtocolNames |
+	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
+
+	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
+
+	protocol isEmpty ifFalse: [ ^ self ].
+
+	oldProtocolNames := self protocolNames.
+	protocols := protocols copyWithout: protocol.
+	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol).
+	SystemAnnouncer announce: (ClassReorganized class: self)
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -863,19 +963,58 @@ ClassDescription >> removeSlot: aSlot [
 	^self subclassResponsibility
 ]
 
+{ #category : #protocols }
+ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
+
+	| oldProtocol newProtocol |
+	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
+
+	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+
+	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
+	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
+		oldProtocol := self ensureProtocol: anOldProtocol.
+
+		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
+	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
+		(self hasProtocol: aNewProtocol)
+			ifTrue: [
+				newProtocol := self ensureProtocol: aNewProtocol.
+
+				oldProtocol = newProtocol ifTrue: [ ^ self ].
+
+				newProtocol addAllMethodsFrom: oldProtocol ]
+			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
+				| newProtocolName |
+				newProtocolName := aNewProtocol isString
+					                   ifTrue: [ aNewProtocol ]
+					                   ifFalse: [ aNewProtocol name ].
+				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
+				newProtocol := oldProtocol copy
+					               name: newProtocolName;
+					               yourself.
+				protocols := protocols copyWith: newProtocol ].
+		oldProtocol resetMethodSelectors.
+		self removeProtocolIfEmpty: oldProtocol ].
+
+	"Announce the changes in the system"
+	SystemAnnouncer announce: (ClassReorganized class: self).
+
+	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
+]
+
 { #category : #organization }
 ClassDescription >> reorganize [
 	"During fileIn, !Rectangle reorganize! allows Rectangle to seize control and treat the next chunk as its organization.  See the transfer of control where ReadWriteStream fileIn calls scanFrom:"
 
-	^self organization
+	^ self
 ]
 
-{ #category : #'accessing - method dictionary' }
-ClassDescription >> selectorsInCategory: aName [
+{ #category : #protocols }
+ClassDescription >> resetProtocols [
 
-	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
-
-	^ self selectorsInProtocol: aName
+	protocols := Array new
 ]
 
 { #category : #protocols }
@@ -1003,8 +1142,9 @@ ClassDescription >> superclass: aSuperclass layout: aLayout [
 { #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
+
 	super superclass: aClass methodDictionary: mDict format: fmt.
-	self organization: nil
+	self resetProtocols
 ]
 
 { #category : #initialization }
@@ -1054,7 +1194,7 @@ ClassDescription >> tagsForMethods [
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
 	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
+	allProtocols := self protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
 
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
@@ -1112,13 +1252,6 @@ ClassDescription >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
 
 	^ true
-]
-
-{ #category : #organization }
-ClassDescription >> whichCategoryIncludesSelector: aSelector [
-
-	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.
-	^ self protocolNameOfSelector: aSelector
 ]
 
 { #category : #queries }

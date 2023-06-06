@@ -351,12 +351,6 @@ RBExtractMethodTransformation >> preconditions [
 				ifEmpty: [ true ] ])
 ]
 
-{ #category : #requesting }
-RBExtractMethodTransformation >> shouldUseExistingMethod: aSelector [
-
-	^(self options at: #useExistingMethod) value: self value: aSelector
-]
-
 { #category : #printing }
 RBExtractMethodTransformation >> storeOn: aStream [
 

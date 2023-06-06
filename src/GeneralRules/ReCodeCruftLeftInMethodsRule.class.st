@@ -46,8 +46,7 @@ ReCodeCruftLeftInMethodsRule >> debuggingPatterns [
 { #category : #private }
 ReCodeCruftLeftInMethodsRule >> debuggingSelectors [
 
-	^ (Object allSelectorsInProtocol: 'flagging'),
-	(Object allSelectorsInProtocol: 'debugging')
+	^ (Object allSelectorsInProtocol: 'flagging') , (Object allSelectorsInProtocol: 'debugging')
 ]
 
 { #category : #accessing }

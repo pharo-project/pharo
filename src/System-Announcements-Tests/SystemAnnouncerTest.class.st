@@ -40,7 +40,7 @@ SystemAnnouncerTest >> testProtocolAdded [
 		for: self.
 
 	class := factory newClass.
-	class organization addProtocol: 'shiny-new-category'.
+	class addProtocol: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classReorganized equals: class.
@@ -61,9 +61,9 @@ SystemAnnouncerTest >> testProtocolRemoved [
 		for: self.
 
 	class := factory newClass.
-	class organization addProtocol: 'shiny-new-category'.
+	class addProtocol: 'shiny-new-category'.
 
-	class organization removeProtocolIfEmpty: 'shiny-new-category'.
+	class removeProtocolIfEmpty: 'shiny-new-category'.
 
 	self assert: pass.
 	self assert: classRemoved equals: class.

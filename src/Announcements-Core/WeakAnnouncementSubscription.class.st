@@ -24,11 +24,6 @@ WeakAnnouncementSubscription class >> new [
 ]
 
 { #category : #finalization }
-WeakAnnouncementSubscription >> finalizationRegistry [
-	^ FinalizationRegistry default
-]
-
-{ #category : #finalization }
 WeakAnnouncementSubscription >> finalize [
 
 	announcer removeSubscription: self

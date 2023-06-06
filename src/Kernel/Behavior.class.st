@@ -1153,6 +1153,14 @@ Behavior >> lookupSelector: selector [
 	^ nil
 ]
 
+{ #category : #lookup }
+Behavior >> lookupVar: aName [
+	^ self classLayout
+		resolveSlot: aName asSymbol
+		ifFound: [:var | var]
+		ifNone: [self bindingOf: aName]
+]
+
 { #category : #accessing }
 Behavior >> methodDict [
        "The method dictionary of a class can be nil when we want to use the #cannotInterpret: hook. Indeed when a class dictionary is nil, the VM sends the message cannotInterpret: to the receiver but starting the look up in the superclass of the class whose method dictionary was nil.
@@ -1263,6 +1271,12 @@ Behavior >> originalName [
  	[obsName beginsWith: 'AnObsolete']
  		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
 	^obsName asSymbol
+]
+
+{ #category : #accessing }
+Behavior >> packageOrganizer [
+
+	^ self environment organization
 ]
 
 { #category : #copying }

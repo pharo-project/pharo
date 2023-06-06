@@ -117,9 +117,9 @@ Class {
 
 { #category : #singleton }
 RPackageOrganizer class >> default [
-	"Warning: Use 'Smalltalk organization' since I will be removed in the future."
+	"Warning: Use 'self packageOrganizer' since I will be removed in the future."
 
-	^ Smalltalk organization
+	^ self packageOrganizer
 ]
 
 { #category : #'class initialization' }
@@ -146,7 +146,7 @@ RPackageOrganizer class >> methodAdded: anEvent [
 	(methodCategory isEmptyOrNil or:[ methodCategory first ~= $* ])
 		ifFalse: [
 			(self isPackageDefinedForClass: anEvent methodClass)
-					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfBehavior: anEvent methodClass instanceSide) ].
+					ifFalse: [self packageClass new named: (self packageOrganizer categoryOfBehavior: anEvent methodClass instanceSide) ].
 		]
 ]
 
@@ -159,9 +159,9 @@ RPackageOrganizer class >> packageClass [
 { #category : #'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
-	Smalltalk organization unregisterInterestToSystemAnnouncement.
+	self packageOrganizer unregisterInterestToSystemAnnouncement.
 	"To make sure that we do not have it twice registered"
-	Smalltalk organization registerInterestToSystemAnnouncement
+	self packageOrganizer registerInterestToSystemAnnouncement
 ]
 
 { #category : #'class initialization' }
@@ -213,32 +213,21 @@ RPackageOrganizer >> announcer [
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
-		do: [ :packageName |
-		  | package |
-		  package := (self packageClass named: packageName).
-		  packages at: packageName asSymbol put: package. ]
+		do: [ :packageName | packages at: packageName asSymbol put: (self packageClass named: packageName) ]
 		displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior | self initializeFor: eachBehavior ]
-		displayingProgress: 'Importing behaviors'.
+	Smalltalk allClassesAndTraits do: [ :behavior | self initializeFor: behavior ] displayingProgress: 'Importing behaviors'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			self initializeMethodsFor: eachBehavior.
-			self initializeMethodsFor: eachBehavior classSide ]
+		do: [ :behavior |
+			self initializeMethodsFor: behavior.
+			self initializeMethodsFor: behavior classSide ]
 		displayingProgress: 'Importing methods'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :eachBehavior |
-			eachBehavior organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior
-					protocol: eachProtocol ].
-			eachBehavior classSide organization extensionProtocols do: [ :eachProtocol |
-				self
-					initializeExtensionsFor: eachBehavior classSide
-					protocol: eachProtocol ] ]
+		do: [ :behavior |
+			behavior extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior protocol: protocol ].
+			behavior classSide extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior classSide protocol: protocol ] ]
 		displayingProgress: 'Importing extensions'.
 
 	"I reset the cache of names"
@@ -294,19 +283,6 @@ RPackageOrganizer >> categoriesMatching: matchString [
 	^ self categories select: [ :c | matchString match: c ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageOrganizer >> category: categoryName matches: prefix [
-	| prefixSize catSize |
-
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
-]
-
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categoryOfBehavior: behavior [
 	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
@@ -330,8 +306,8 @@ RPackageOrganizer >> categoryOfElement: behaviorName [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
-	(self packages
-		anySatisfy: [ :each | self category: packageName matches: each packageName ])
+
+	(self packages anySatisfy: [ :package | packageName isCategoryOf: package packageName ])
 		ifFalse: [ (self packageClass named: packageName capitalized) register ]
 ]
 
@@ -587,13 +563,13 @@ RPackageOrganizer >> initializeFor: aBehavior [
 
 { #category : #'initialization - data' }
 RPackageOrganizer >> initializeMethodsFor: aBehavior [
-	| package |
 
+	| package |
 	package := aBehavior package.
-	(aBehavior organization protocols
-		select: [ :each | each isExtensionProtocol not ])
-		do: [ :eachProtocol |
-			 (eachProtocol methodSelectors
+	(aBehavior protocols
+		reject: [ :each | each isExtensionProtocol ])
+		do: [ :protocol |
+			 (protocol methodSelectors
 				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
 				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
 ]
@@ -1008,7 +984,7 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 
 	"we also rename all the extension protocols in the system with the new name"
 	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
-	classesAndProtocolsToRename do: [ :method | method methodClass organization renameProtocol: method category as: '*' , newName ]
+	classesAndProtocolsToRename do: [ :method | method methodClass renameProtocol: method category as: '*' , newName ]
 ]
 
 { #category : #private }
@@ -1181,7 +1157,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
-	ann classReorganized organization protocolNames do: [ :each | (each beginsWith: '*') ifTrue: [ self checkPackageExistsOrRegister: each allButFirst ] ]
+	ann classReorganized extensionProtocols do: [ :protocol | self checkPackageExistsOrRegister: protocol name allButFirst ]
 ]
 
 { #category : #'system integration' }
