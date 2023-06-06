@@ -1,7 +1,7 @@
 "
 I am BenchmarkResult. 
 
-I know how much iterations where executed in a specific elapsed time duration.
+I know how many iterations where executed in a specific elapsed time duration.
 
 I am the result of running the same piece of code multiple times.
 
@@ -93,7 +93,7 @@ BenchmarkResult >> printFrequenceOn: stream [
 BenchmarkResult >> printOn: stream [
 	self isEmpty
 		ifTrue: [
-			stream << ' empty' ]
+			stream << 'empty' ]
 		ifFalse: [
 			iterations printWithCommasOn: stream.
 			stream space; << ('iteration' asPluralBasedOn: iterations).
