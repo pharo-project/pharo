@@ -25,6 +25,14 @@ Class {
 	#category : #'Kernel-Chronology-Extras'
 }
 
+{ #category : #comparing }
+BenchmarkResult >> compareTo: aBenchmarkResult [
+
+	^ BenchmarkComparison new
+		  referenceResult: self;
+		  comparisonResult: aBenchmarkResult
+]
+
 { #category : #accessing }
 BenchmarkResult >> elapsedTime [
 	"Return the duration of the total execution time"

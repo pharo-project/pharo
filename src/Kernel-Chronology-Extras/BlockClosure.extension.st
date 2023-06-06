@@ -10,6 +10,13 @@ BlockClosure >> bench [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
+BlockClosure >> benchCompareTo: aBlock [
+	"Answer a BenchmarkComparison of the receiver to the argument."
+
+	^ self bench compareTo: aBlock bench
+]
+
+{ #category : #'*Kernel-Chronology-Extras' }
 BlockClosure >> benchFor: duration [
 
 	"Run me for duration and return a BenchmarkResult"
