@@ -190,7 +190,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	self assert: (trait methodDict at: #m12) sourceCode equals: 'm12 ^12'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
 	<ignoreNotImplementedSelectors: #(zork m21 m12)>
 	| aC2 |
