@@ -20,11 +20,11 @@ RPackageTest >> tearDown [
 RPackageTest >> testActualClassTags [
 
 	| packageWithoutClassTags packageWithClassTags |
-	packageWithoutClassTags := Smalltalk organization packageOf: StartupAction.
+	packageWithoutClassTags := self packageOrganizer packageOf: StartupAction.
 	self denyEmpty: packageWithoutClassTags classTags.
 	self assertEmpty: packageWithoutClassTags actualClassTags.
 
-	packageWithClassTags := Smalltalk organization packageOf: Object.
+	packageWithClassTags := self packageOrganizer packageOf: Object.
 	self assert: packageWithClassTags actualClassTags equals: packageWithClassTags classTags
 ]
 
@@ -221,7 +221,7 @@ RPackageTest >> testHasProperty [
 RPackageTest >> testHierarchyRoots [
 
 	| roots |
-	roots := (Smalltalk organization packageNamed: #'RPackage-Tests') hierarchyRoots.
+	roots := (self packageOrganizer packageNamed: #'RPackage-Tests') hierarchyRoots.
 	roots := roots collect: [ :each | each name ].
 	#( RPackageTestCase ) do: [ :each | roots includes: each ]
 ]
@@ -293,7 +293,7 @@ RPackageTest >> testRenameToMakesMCDirty [
 RPackageTest >> testRoots [
 
 	| roots |
-	roots := (Smalltalk organization packageNamed: #'RPackage-Tests') roots.
+	roots := (self packageOrganizer packageNamed: #'RPackage-Tests') roots.
 	roots := roots collect: [ :each | each name ].
 	#( RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites RPackageTestCase RPackageWithDoTest ) do: [ :each | roots includes: each ]
 ]

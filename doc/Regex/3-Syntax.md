@@ -226,7 +226,7 @@ been written in alternative ways.
 Checking if aString may represent a nonnegative integer number:
 
 ```st
-    "All of these are equivelent"
+    "All of these are equivalent"
 	'' matchesRegex: ':isDigit:+'
 	'' matchesRegex: '[0-9]+'
 	'' matchesRegex: '\d+'

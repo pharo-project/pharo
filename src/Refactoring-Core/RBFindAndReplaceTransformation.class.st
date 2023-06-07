@@ -64,6 +64,11 @@ RBFindAndReplaceTransformation class >> find: aMethod of: aClass inWholeHierarch
 ]
 
 { #category : #'instance creation' }
+RBFindAndReplaceTransformation class >> isTransformation [ 
+	^ true
+]
+
+{ #category : #'instance creation' }
 RBFindAndReplaceTransformation class >> model: aModel find: aMethod of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		model: aModel;

@@ -29,6 +29,18 @@ FinderUI class >> doAllSubscriptionsOn: aFinder to: anInstance [
 	self subscribesUpdateListOn: aFinder to: anInstance
 ]
 
+{ #category : #menu }
+FinderUI class >> finderMenuOn: aBuilder [
+
+	<worldMenu>
+	(aBuilder item: #Finder)
+		action: [ self open ];
+		order: 2;
+		parent: #Searching;
+		help: 'Looking for something ?';
+		icon: self icon
+]
+
 { #category : #icons }
 FinderUI class >> icon [
 	^ self iconNamed: #smallFind
@@ -41,6 +53,13 @@ FinderUI class >> on: aFinder [
 	instance := self new finder: aFinder.
 	self doAllSubscriptionsOn: aFinder to: instance.
 	^instance
+]
+
+{ #category : #'instance creation' }
+FinderUI class >> open [
+
+	<script: 'self open'>
+	^ (self on: Finder new) open
 ]
 
 { #category : #'event subscriptions' }

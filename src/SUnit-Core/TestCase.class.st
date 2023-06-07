@@ -681,16 +681,6 @@ TestCase >> defaultTimeLimit [
 	^self class defaultTimeLimit
 ]
 
-{ #category : #private }
-TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
-
-	^ [
-	  aBlock value.
-	  false ]
-		  on: anExceptionalEvent
-		  do: [ :ex | ex return: (ex description includesSubstring: aString) ]
-]
-
 { #category : #accessing }
 TestCase >> executionEnvironment [
 	^CurrentExecutionEnvironment value

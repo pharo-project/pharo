@@ -93,10 +93,10 @@ RPackageWithDoTest >> testOnDo [
 RPackageWithDoTest >> testOrganizerContainsPackages [
 
 	self
-		assert: Smalltalk organization packageNames isNotEmpty
+		assert: self packageOrganizer packageNames isNotEmpty
 		description: 'RPackageOrganizer should contains package names since an image should at least contains one package.'.
 	self
-		assert: Smalltalk organization packages isNotEmpty
+		assert: self packageOrganizer packages isNotEmpty
 		description: 'RPackageOrganizer should not be empty since an image should at least contains one package.'
 ]
 
@@ -104,7 +104,7 @@ RPackageWithDoTest >> testOrganizerContainsPackages [
 RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
 
 	| current empty |
-	current := Smalltalk organization.
+	current := self packageOrganizer.
 	empty := self packageOrganizerClass basicNew initialize.
 	empty debuggingName: 'empty from PackageWithDoTest'.
 	self packageClass withOrganizer: empty do: [
@@ -126,7 +126,7 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
 RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefaultEvenIfHalt [
 
 	| current empty |
-	current := Smalltalk organization.
+	current := self packageOrganizer.
 	empty := self packageOrganizerClass basicNew initialize.
 	[
 	self packageClass withOrganizer: empty do: [

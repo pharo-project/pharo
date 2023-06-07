@@ -48,12 +48,6 @@ FinderSourceSearchStrategy >> findSelectedMethodIn: path [
 	^ path first item
 ]
 
-{ #category : #accessing }
-FinderSourceSearchStrategy >> rootNodeClassForResult: aCollection [
-
-	^ FinderMethodNode
-]
-
 { #category : #actions }
 FinderSourceSearchStrategy >> sourceRegexSearch [
 
