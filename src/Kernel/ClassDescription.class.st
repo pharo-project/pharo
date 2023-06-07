@@ -411,6 +411,26 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : #dependencies }
+ClassDescription >> dependentClasses [
+	"Return the list of classes used myself"
+
+	| classes |
+	classes := Set new.
+
+	"A class depends on its superclass"
+	self superclass ifNotNil: [ :class | classes add: class ].
+
+	"We unify a class and its metaclass"
+	self methods , self classSide methods do: [ :method |
+		method literalsDo: [ :literal | "We also check if the method is not an extension"
+			self flag: #CompileMethodProtocolMiration.
+			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method protocolName isNotEmpty and: [ method protocolName first ~= $* ] ] ])
+				ifTrue: [ classes add: literal value ] ] ].
+
+	^ classes asArray
+]
+
 { #category : #accessing }
 ClassDescription >> deprecatedAliases [
 	"I return a potential list of alias names for myself that are deprecated."
