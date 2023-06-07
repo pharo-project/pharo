@@ -576,27 +576,6 @@ Behavior >> definedVariables [
 	^ self slots
 ]
 
-{ #category : #dependencies }
-Behavior >> dependentClasses [
-	"Return the list of classes used myself"
-
-	"Morph dependentClasses"
-	| cll |
-	cll := Set new.
-	"A class depends on its superclass"
-	self superclass ifNotNil: [ cll add: self superclass ].
-
-	"We unify a class and its metaclass"
-	(self methods, self classSide methods)
-		do: [ :m | m literalsDo: [ :l |
-					"We also check if the method is not an extension"
-					(l isVariableBinding
-					and: [ l isGlobalClassNameBinding
-					and: [ m category notEmpty
-					and: [ m category first ~= $* ]]])  ifTrue: [ cll add: l value ] ] ] .
-	^ cll asArray
-]
-
 { #category : #'accessing - instances and variables' }
 Behavior >> elementSize [
 	"Answer the size in bytes of an element in the receiver.  The formats are
