@@ -3356,7 +3356,7 @@ UITheme >> newTaskListButtonIn: aTasklist for: aTask [
 		ifTrue: [ lab emphasis: 1 "1 -> bold" ].
 	lm := self
 		newRowIn: aTasklist
-		for: {(aTask icon ifNil: [self smallWindowIcon]) asMorph. lab}.
+		for: {(aTask icon ifNil: [self iconNamed: #smallWindow]) asMorph. lab}.
 	button := self
 		newButtonIn: aTasklist
 		for: aTask morph

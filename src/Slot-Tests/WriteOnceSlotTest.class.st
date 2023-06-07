@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 WriteOnceSlotTest >> testRead [
 	| slot |
-	<ignoreNotImplementedSelectors: #(slot1:)>
+	<ignoreNotImplementedSelectors: #(slot1)>
 	slot := #slot1 => WriteOnceSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 

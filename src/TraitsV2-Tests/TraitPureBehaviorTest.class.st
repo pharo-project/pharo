@@ -192,6 +192,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 
 { #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
+	<ignoreNotImplementedSelectors: #(zork m21 m12)>
 	| aC2 |
 	aC2 := self c2 new.
 	self assert: self c2 methodDict size equals: 9.
@@ -209,6 +210,7 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
 { #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethods [
 	| anObject |
+	<ignoreNotImplementedSelectors: #(m22Alias)>
 	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t6) new.
 	self assert: anObject m22Alias equals: 22.
 
@@ -268,7 +270,7 @@ TraitPureBehaviorTest >> testRemovingMethods [
 	"When removing a local method, assure that the method
 	from the trait is installed instead and that the users are
 	updated."
-
+	<ignoreNotImplementedSelectors: #(m12)>
 	"Classes"
 	self c2 compile: 'm12 ^0' classified: #xxx.
 	self assert: (self c2 includesLocalSelector: #m12).
@@ -308,7 +310,7 @@ TraitPureBehaviorTest >> testReshapeClass [
 
 { #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testSuperSends [
-
+	<ignoreNotImplementedSelectors: #(m51)>
 	| aC2 |
 	aC2 := self c2 new.
 	self assert: aC2 m51.
@@ -354,28 +356,4 @@ TraitPureBehaviorTest >> testUpdateWhenLocalMethodRemoved [
 	self deny: aC2 foo.
 	self c2 removeSelector: #foo.
 	self assert: aC2 foo equals: 123
-]
-
-{ #category : #tests }
-TraitPureBehaviorTest >> traitOrClassOfSelector [
-
-	"locally defined in trait or class"
-	self assert: (self t1 traitOrClassOfSelector: #m12) equals: self t1.
-	self assert: (self c1 traitOrClassOfSelector: #foo) equals: self c1.
-
-	"not locally defined - simple"
-	self assert: (self t4 traitOrClassOfSelector: #m21) equals: self t2.
-	self assert: (self c2 traitOrClassOfSelector: #m51) equals: self t5.
-
-	"not locally defined - into nested traits"
-	self assert: (self c2 traitOrClassOfSelector: #m22) equals: self t2.
-
-	"not locally defined - aliases"
-	self assert: (self t6 traitOrClassOfSelector: #m22Alias) equals: self t2.
-
-	"class side"
-	self assert: (self t2 classSide traitOrClassOfSelector: #m2ClassSide:)
-		  equals: self t2 classSide.
-	self assert: (self t6 classSide traitOrClassOfSelector: #m2ClassSide:)
-		  equals: self t2 classSide
 ]
