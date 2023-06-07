@@ -7,6 +7,13 @@ SHRBTextStyler >> font: aFont [
 ]
 
 { #category : #'*Deprecated12' }
+SHRBTextStyler >> format: aText [
+
+	self deprecated: 'This method does nothing except returning the argument and should be inlined' transformWith: '`@rcv format: `@arg' -> '`@arg'.
+	^ aText
+]
+
+{ #category : #'*Deprecated12' }
 SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [
 
 	self deprecated: 'Use #initialTextAttributes instead.' transformWith: '`@rcv initialTextAttributesForPixelHeight: `@arg1' -> '`@rcv initialTextAttributes'.

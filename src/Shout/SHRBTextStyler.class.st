@@ -688,12 +688,6 @@ SHRBTextStyler >> classOrMetaClass: aBehavior [
 	classOrMetaClass := aBehavior
 ]
 
-{ #category : #formatting }
-SHRBTextStyler >> format: aText [
-
-	^ aText
-]
-
 { #category : #visiting }
 SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
 
