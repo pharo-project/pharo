@@ -137,7 +137,6 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #File;
 		registerSystemClassNamed: #Stdio;
 		registerSystemClassNamed: #SharedRandom;
-		registerSystemClassNamed: #BasicCommandLineHandler;
 		registerSystemClassNamed: #EndianDetector;
 		
 		registerGuiClassNamed: #Color;
