@@ -29,6 +29,15 @@ T2TraitWithPackagesTest >> packageUnderTest2 [
 	^ self packageOrganizer packageNamed: self packageName2
 ]
 
+{ #category : #running }
+T2TraitWithPackagesTest >> tearDown [
+
+	(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	(self packageName2 asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+
+	super tearDown
+]
+
 { #category : #tests }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraits [
 	| t1 t2 |
