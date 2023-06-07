@@ -119,6 +119,14 @@ SessionManager class >> default: aSessionManager [
 	Default := aSessionManager
 ]
 
+{ #category : #initialization }
+SessionManager class >> initializeKernelRegistrations [
+	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
+	I am here to manage those regristrations of the classes that were loaded before I am suppose to be in the image."
+
+	self default registerSystemClassNamed: #Symbol
+]
+
 { #category : #'deferred startup actions' }
 SessionManager >> addDeferredStartupAction: aBlock [
 	"Add the block to the list of actions that we will be performed immediately after the startup list is executed."
