@@ -16,8 +16,8 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraits [
 
 	t2 := self newTrait: #T2 with: #() uses: t1.
 
-	self assert: (t1 >> #m1) protocol equals: 'aProtocol'.
-	self assert: (t2 >> #m1) protocol equals: 'aProtocol'
+	self assert: (t1 >> #m1) protocolName equals: 'aProtocol'.
+	self assert: (t2 >> #m1) protocolName equals: 'aProtocol'
 ]
 
 { #category : #tests }
@@ -28,8 +28,8 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsAfterCreation [
 	t2 := self newTrait: #T2 with: #() uses: t1.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
-	self assert: (t1 >> #m1) protocol equals: 'aProtocol'.
-	self assert: (t2 >> #m1) protocol equals: 'aProtocol'
+	self assert: (t1 >> #m1) protocolName equals: 'aProtocol'.
+	self assert: (t2 >> #m1) protocolName equals: 'aProtocol'
 ]
 
 { #category : #tests }
@@ -43,8 +43,8 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChanged [
 
 	t1 compile: 'm1 ^42.' classified: 'anotherProtocol'.
 
-	self assert: (t1 >> #m1) protocol equals: 'anotherProtocol'.
-	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'
+	self assert: (t1 >> #m1) protocolName equals: 'anotherProtocol'.
+	self assert: (t2 >> #m1) protocolName equals: 'anotherProtocol'
 ]
 
 { #category : #tests }
@@ -58,8 +58,8 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChangedWithoutCompile 
 
 	trait1 classify: #m1 under: 'anotherProtocol'.
 
-	self assert: (trait1 >> #m1) protocol equals: 'anotherProtocol'.
-	self assert: (trait2 >> #m1) protocol equals: 'anotherProtocol'
+	self assert: (trait1 >> #m1) protocolName equals: 'anotherProtocol'.
+	self assert: (trait2 >> #m1) protocolName equals: 'anotherProtocol'
 ]
 
 { #category : #tests }
@@ -72,8 +72,8 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsOverriden [
 	t2 := self newTrait: #T2 with: #() uses: t1.
 	t2 compile: 'm1 ^42.' classified: 'anotherProtocol'.
 
-	self assert: (t1 >> #m1) protocol equals: 'aProtocol'.
-	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'
+	self assert: (t1 >> #m1) protocolName equals: 'aProtocol'.
+	self assert: (t2 >> #m1) protocolName equals: 'anotherProtocol'
 ]
 
 { #category : #tests }
@@ -88,8 +88,8 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsRenamedCategory [
 
 	t1 renameProtocol: 'aProtocol' as: 'anotherProtocol'.
 
-	self assert: (t1 >> #m1) protocol equals: 'anotherProtocol'.
-	self assert: (t2 >> #m1) protocol equals: 'anotherProtocol'.
-	self assert: (t1 >> #m2) protocol equals: 'anotherProtocol'.
-	self assert: (t2 >> #m2) protocol equals: 'anotherProtocol'
+	self assert: (t1 >> #m1) protocolName equals: 'anotherProtocol'.
+	self assert: (t2 >> #m1) protocolName equals: 'anotherProtocol'.
+	self assert: (t1 >> #m2) protocolName equals: 'anotherProtocol'.
+	self assert: (t2 >> #m2) protocolName equals: 'anotherProtocol'
 ]

@@ -199,17 +199,13 @@ EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 { #category : #visitor }
 EpMorphVisitor >> visitProtocolAddition: aProtocolChange [
 
-	^ self
-		displayClass: aProtocolChange behaviorAffectedName
-		protocol: aProtocolChange protocol asString
+	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitProtocolRemoval: aProtocolChange [
 
-	^ self
-		displayClass: aProtocolChange behaviorAffectedName
-		protocol: aProtocolChange protocol asString
+	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol
 ]
 
 { #category : #visitor }
