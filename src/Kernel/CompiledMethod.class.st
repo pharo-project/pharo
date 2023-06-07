@@ -389,7 +389,7 @@ CompiledMethod >> isClassSide [
 CompiledMethod >> isClassified [
 
 	self flag: #CompileMethodProtocolMiration.
-	^ self protocol ~= Protocol unclassified
+	^ self protocolName ~= Protocol unclassified
 ]
 
 { #category : #testing }
