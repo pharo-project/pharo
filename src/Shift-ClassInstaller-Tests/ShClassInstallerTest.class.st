@@ -295,13 +295,13 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 	newClass compile: 'aMethod ^ 42' classified: #'useful-message' notifying: nil.
 	newClass class compile: 'aClassMethod ^ 21' classified: #'useful-message' notifying: nil.
 
-	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'.
+	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
+	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'.
 
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(aSlot).
 
-	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'
+	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
+	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'
 ]
 
 { #category : #tests }
