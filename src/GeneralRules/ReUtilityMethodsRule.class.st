@@ -24,7 +24,7 @@ ReUtilityMethodsRule >> basicCheck: aMethod [
 
 	aMethod methodClass isMeta ifTrue: [ ^ false ].
 	aMethod selector isUnary ifTrue: [ ^ false ].
-	(self utilityProtocols includes: aMethod protocol) ifTrue: [ ^ false ].
+	(self utilityProtocols includes: aMethod protocolName) ifTrue: [ ^ false ].
 	aMethod isOverridden ifTrue: [ ^ false ].
 	aMethod isOverriding ifTrue: [ ^ false ].
 	aMethod readsSelf ifTrue: [ ^ false ].
