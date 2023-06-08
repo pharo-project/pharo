@@ -91,10 +91,15 @@ CoverageCollectorTest >> testExample [
 
 	| collector coverage |
 	collector := CoverageCollector new. "Instantiate"
-	collector methods: Point methods, Rectangle methods.  "Configure with the methods to watch."	
-	coverage := collector runOn: [ (1@1 corner: 2@2) center ].  "Setup, execute and teardown."
-	self assert: (coverage methods includes: Point>>#x).  "Inspect the results"
-	self assert: (coverage nodes size > 10). "Covered paths are also available"
+	"We skip the method with special selectors because them might not be detected by the coverage collector in case they are optimized by the VM."
+	collector methods: (Point methods , Rectangle methods reject: [ :method | BytecodeEncoder specialSelectors includes: method selector ]). "Configure with the methods to watch."
+	coverage := collector runOn: [ (1 @ 1 corner: 2 @ 2) center ]. "Setup, execute and teardown."
+	self
+		assertCollection: (coverage methods collect: [ :method | method name ])
+		hasSameElements:
+			#( 'Point>>#corner:' 'Point>>#isPoint' 'Rectangle>>#setPoint:point:' 'Rectangle>>#topLeft'
+			   'Rectangle>>#bottomRight' 'Rectangle>>#center' ). "Inspect the results"
+	self assert: coverage nodes size equals: 6 "Covered paths are also available"
 ]
 
 { #category : #tests }
