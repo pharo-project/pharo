@@ -370,7 +370,7 @@ TaAbstractComposition >> protocolForMethod: method [
 	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
 	The basic implementation returns the protocol of the method"
 
-	^ method protocol
+	^ method protocolName
 ]
 
 { #category : #querying }

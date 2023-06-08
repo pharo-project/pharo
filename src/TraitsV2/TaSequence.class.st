@@ -195,7 +195,7 @@ TaSequence >> protocolForMethod: aMethod [
 	originalSelector := aMethod selector.
 	protocols := (self methods
 		              select: [ :method | method selector = originalSelector ]
-		              thenCollect: #protocol) asSet.
+		              thenCollect: #protocolName) asSet.
 
 	"If we have more than a protocol, for example if there is an alias or if multiple traits have the same method, we return a conflicting protocol name."
 	^ protocols size = 1
