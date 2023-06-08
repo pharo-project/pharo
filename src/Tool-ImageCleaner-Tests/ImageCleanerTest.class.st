@@ -13,7 +13,7 @@ ImageCleanerTest >> imageCleanerClass [
 	^ ImageCleaner
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ImageCleanerTest >> testTestPackages [
 	"ImageCleaner testPackages method returns just symbols. Maybe it should be renamed."
 

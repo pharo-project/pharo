@@ -1,5 +1,5 @@
 Class {
-	#name : #MyClassUsingMock2,
+	#name : #MyClassUsingMock2Test,
 	#superclass : #TestCase,
 	#instVars : [
 		'mock'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #running }
-MyClassUsingMock2 >> setUp [
+MyClassUsingMock2Test >> setUp [
 
 	super setUp.
 	mock := MockObject new.
@@ -25,14 +25,14 @@ MyClassUsingMock2 >> setUp [
 ]
 
 { #category : #running }
-MyClassUsingMock2 >> testMeaningOfLife [
+MyClassUsingMock2Test >> testMeaningOfLife [
 
 	self assert: (mock meaningOfLife: 22) equals: 42.
 	self assert: (mock secondMeaning: 32 and: 64) equals: 84
 ]
 
 { #category : #running }
-MyClassUsingMock2 >> testMeaningOfLifeDoesNotPassCorrectValue [
+MyClassUsingMock2Test >> testMeaningOfLifeDoesNotPassCorrectValue [
 
 	self should: [ self assert: (mock meaningOfLife: 33) equals: 42] raise: TestFailure
 

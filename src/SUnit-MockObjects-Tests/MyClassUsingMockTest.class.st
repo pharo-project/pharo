@@ -1,5 +1,5 @@
 Class {
-	#name : #MyClassUsingMock,
+	#name : #MyClassUsingMockTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'mock'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #running }
-MyClassUsingMock >> setUp [
+MyClassUsingMockTest >> setUp [
 
 	super setUp.
 	mock := MockObject new.
@@ -22,7 +22,7 @@ MyClassUsingMock >> setUp [
 ]
 
 { #category : #running }
-MyClassUsingMock >> testMeaningOfLife [
+MyClassUsingMockTest >> testMeaningOfLife [
 
 	self assert: mock meaningOfLife equals: 42.
 	self should: [ self verify: mock ] raise: TestFailure.
@@ -30,7 +30,7 @@ MyClassUsingMock >> testMeaningOfLife [
 ]
 
 { #category : #running }
-MyClassUsingMock >> testMeaningOfLifeIsFirst [
+MyClassUsingMockTest >> testMeaningOfLifeIsFirst [
 
 	self assert: mock meaningOfLife equals: 42.
 	self assert: mock secondMeaning equals: 84.
@@ -38,7 +38,7 @@ MyClassUsingMock >> testMeaningOfLifeIsFirst [
 ]
 
 { #category : #running }
-MyClassUsingMock >> testMeaningOfLifeIsSentOnce [
+MyClassUsingMockTest >> testMeaningOfLifeIsSentOnce [
 	"A simple mock object can answer a message only once and in the same order."
 	
 	self assert: mock meaningOfLife equals: 42.
@@ -47,7 +47,7 @@ MyClassUsingMock >> testMeaningOfLifeIsSentOnce [
 ]
 
 { #category : #running }
-MyClassUsingMock >> testMeaningOfLifeIsSentTwice [
+MyClassUsingMockTest >> testMeaningOfLifeIsSentTwice [
 	
 	mock meaningOfLife.
 	self should: [self assert: mock meaningOfLife equals: 42] raise: TestFailure.
@@ -56,7 +56,7 @@ MyClassUsingMock >> testMeaningOfLifeIsSentTwice [
 ]
 
 { #category : #running }
-MyClassUsingMock >> testVerifyChecksThatAllTheMessageGotSent [
+MyClassUsingMockTest >> testVerifyChecksThatAllTheMessageGotSent [
 
 	self assert: mock meaningOfLife equals: 42.
 	self assert: mock secondMeaning equals: 84.
@@ -65,7 +65,7 @@ MyClassUsingMock >> testVerifyChecksThatAllTheMessageGotSent [
 ]
 
 { #category : #running }
-MyClassUsingMock >> testVerifyFailsWhenMessageShouldBeSent [
+MyClassUsingMockTest >> testVerifyFailsWhenMessageShouldBeSent [
 
 	self assert: mock meaningOfLife equals: 42.
 	self should: [ self verify: mock ] raise: TestFailure.
