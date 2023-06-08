@@ -229,7 +229,10 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	newClass subclasses: oldClass subclasses.
 
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
-	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
+	slotsToMigrate do: [ :newSlot | 
+		"the slot might need to initialize the new class"
+		newSlot wantsInitialization ifTrue: [ newSlot initialize: newClass ].
+		oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 
 	oldClassVariables := OrderedCollection new.
 	newClassVariables := OrderedCollection new.
