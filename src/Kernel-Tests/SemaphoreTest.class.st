@@ -18,7 +18,7 @@ SemaphoreTest >> classToBeTested [
 
 { #category : #private }
 SemaphoreTest >> criticalError [
-	Processor activeProcess terminate
+	thisProcess terminate
 ]
 
 { #category : #tests }
@@ -132,10 +132,10 @@ SemaphoreTest >> testSchedulesFIFO [
 
 	[
 		semaphore wait.
-		waitingLongestResumed := true ] forkAt: Processor activeProcess priority + 10.
+		waitingLongestResumed := true ] forkAt: thisProcess priority + 10.
 	[
 		semaphore wait.
-		higherPriorityResumed := true ] forkAt: Processor activeProcess priority + 20.
+		higherPriorityResumed := true ] forkAt: thisProcess priority + 20.
 
 	self deny: waitingLongestResumed.
 	self deny: higherPriorityResumed.

@@ -37,7 +37,7 @@ OutOfMemoryTest >> testSignalOfTheLowSpaceFromTheVM [
 	"I emulate the execution when the signal is send by the VM"
 
 	self should: [
-		Smalltalk specialObjectsArray at: 23 put: Processor activeProcess.
+		Smalltalk specialObjectsArray at: 23 put: thisProcess.
 		Smalltalk signalLowSpace.
 		s wait] raise: OutOfMemory
 ]

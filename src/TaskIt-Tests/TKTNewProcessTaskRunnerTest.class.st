@@ -29,7 +29,7 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsInNewProcessEveryTime
 	runner := TKTNewProcessTaskRunner new.
 	hashes := AtomicSharedQueue new.
 
-	futures := (1 to: 10) collect: [ :i | (runner future: [ Processor activeProcess identityHash ]) onSuccessDo: [ :v | hashes nextPut: v ] ].
+	futures := (1 to: 10) collect: [ :i | (runner future: [ thisProcess identityHash ]) onSuccessDo: [ :v | hashes nextPut: v ] ].
 
 	futures do: [ :each | each waitForCompletion: 2 seconds ].
 
@@ -45,7 +45,7 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsNeverInLocalProcess [
 	runner := TKTNewProcessTaskRunner new.
 	hashes := AtomicSharedQueue new.
 
-	futures := (1 to: 10) collect: [ :i | (runner future: [ Processor activeProcess identityHash ]) onSuccessDo: [ :v | hashes nextPut: v ] ].
+	futures := (1 to: 10) collect: [ :i | (runner future: [ thisProcess identityHash ]) onSuccessDo: [ :v | hashes nextPut: v ] ].
 
 	futures do: [ :each | each waitForCompletion: 2 seconds ].
 

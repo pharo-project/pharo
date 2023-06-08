@@ -66,7 +66,7 @@ ProcessSpecificTest >> testDynamicVariableAccessFromDifferentProcess [
 	sem := Semaphore new.
 	process := [ TestDynamicVariable value: 123 during: [ sem wait ] ] fork.
 	Processor yield.
-	Processor activeProcess evaluate: [ result := TestDynamicVariable value ] onBehalfOf: process.
+	thisProcess evaluate: [ result := TestDynamicVariable value ] onBehalfOf: process.
 	sem signal.
 	self assert: result equals: 123
 ]
@@ -84,7 +84,7 @@ ProcessSpecificTest >> testDynamicVariableRemovedAfterUse [
 		value: 3
 		during: [  ].
 
-	self assert: (Processor activeProcess psValueAt: TestDynamicVariable soleInstance index) equals: nil
+	self assert: (thisProcess psValueAt: TestDynamicVariable soleInstance index) equals: nil
 ]
 
 { #category : #testing }

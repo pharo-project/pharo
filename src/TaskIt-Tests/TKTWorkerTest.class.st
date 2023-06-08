@@ -103,7 +103,7 @@ TKTWorkerTest >> testWorkerRunsAlwaysInSameProcess [
 	worker := TKTWorker new.
 	worker start.
 
-	futures := (1 to: 10) collect: [ :i | worker future: [ hash := Processor activeProcess identityHash ] ].
+	futures := (1 to: 10) collect: [ :i | worker future: [ hash := thisProcess identityHash ] ].
 	hashes := futures collect: [ :each | each synchronizeTimeout: 1 hour ].
 
 	self assert: hashes asSet size equals: 1
@@ -116,8 +116,8 @@ TKTWorkerTest >> testWorkerRunsInSeparateProcess [
 	worker := TKTWorker new.
 	worker start.
 
-	future := worker future: [ hash := Processor activeProcess identityHash ].
+	future := worker future: [ hash := thisProcess identityHash ].
 	future waitForCompletion: 1 hour.
 
-	self assert: hash ~= Processor activeProcess identityHash
+	self assert: hash ~= thisProcess identityHash
 ]

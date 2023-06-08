@@ -13,8 +13,8 @@ DebugSessionContextsTest >> setUp [
 
 	super setUp.
 	process := [ | debugSession |
-	debugSession := Processor activeProcess newDebugSessionNamed: 'test' startedAt: (debuggedThisContext := thisContext).
-	Processor activeProcess suspend ] fork.
+	debugSession := thisProcess newDebugSessionNamed: 'test' startedAt: (debuggedThisContext := thisContext).
+	thisProcess suspend ] fork.
 	"The line under is a bit dirty. It is to make sure that the debugged process has suspended itself before it is being examined by the test methods."
 	[ process isSuspended ] whileFalse: [ 100 milliSeconds wait ]
 ]

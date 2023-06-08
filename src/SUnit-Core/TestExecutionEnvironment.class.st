@@ -211,7 +211,7 @@ TestExecutionEnvironment >> isMainTestProcess: aProcess [
 
 { #category : #testing }
 TestExecutionEnvironment >> isMainTestProcessActive [
-	^self isMainTestProcess: Processor activeProcess
+	^self isMainTestProcess: thisProcess
 ]
 
 { #category : #testing }

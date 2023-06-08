@@ -11,7 +11,7 @@ Class {
 { #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherProcess [
 
-	Processor activeProcess suspend.
+	thisProcess suspend.
 
 	aProcess terminate.
 
@@ -23,21 +23,21 @@ ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 
 	<haltOrBreakpointForTesting>
 
-	Processor activeProcess suspend.
+	thisProcess suspend.
 	self halt
 ]
 
 { #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithMNU [
 
-	Processor activeProcess suspend.
+	thisProcess suspend.
 	self iAmAnMNUMessage
 ]
 
 { #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithMustBeBooleanMNU [
 
-	Processor activeProcess suspend.
+	thisProcess suspend.
 
 	^ 2 ifTrue: [ 5 ] ifFalse: [ 7 ]
 ]

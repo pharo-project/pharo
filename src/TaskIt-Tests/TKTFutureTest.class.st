@@ -539,7 +539,7 @@ TKTFutureTest >> testFutureSuccessCallbackExecutesInNewProcess [
 	future := runner future: [ 1 + 1 ].
 
 	30 timesRepeat: [
-		future onSuccessDo: [ :r | processIds nextPut: Processor activeProcess identityHash ] ].
+		future onSuccessDo: [ :r | processIds nextPut: thisProcess identityHash ] ].
 
 	1 second wait.
 

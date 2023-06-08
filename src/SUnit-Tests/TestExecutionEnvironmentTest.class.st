@@ -62,7 +62,7 @@ TestExecutionEnvironmentTest >> testActivationShouldSetUpMainTestProcess [
 
 	executionEnvironment activated.
 
-	self assert: executionEnvironment mainTestProcess equals: Processor activeProcess
+	self assert: executionEnvironment mainTestProcess equals: thisProcess
 ]
 
 { #category : #tests }
@@ -239,7 +239,7 @@ TestExecutionEnvironmentTest >> testIgnoreLongTestWhenItIsSuspendedAsUnderDebug 
 		executionEnvironment activated.
 		[ self runTestWith: [
 				executionEnvironment maxTimeForTest: 10 milliSeconds.
-				Processor activeProcess suspend "it simulates the under debugger condition"]
+				thisProcess suspend "it simulates the under debugger condition"]
 		] on: TestTookTooMuchTime do: [ :err | timeOutSignaled := true ]
 	] forkAt: Processor activePriority + 1.
 
@@ -260,7 +260,7 @@ TestExecutionEnvironmentTest >> testIsMainTestProcess [
 
 	executionEnvironment activated.
 
-	self assert: (executionEnvironment isMainTestProcess: Processor activeProcess).
+	self assert: (executionEnvironment isMainTestProcess: thisProcess).
 
 	self deny: (executionEnvironment isMainTestProcess: [] newProcess)
 ]
