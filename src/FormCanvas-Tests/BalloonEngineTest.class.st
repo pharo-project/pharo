@@ -4,7 +4,7 @@ A BalloonEngineTest is a test class for testing the behavior of BalloonEngine
 Class {
 	#name : #BalloonEngineTest,
 	#superclass : #TestCase,
-	#category : #'FormCanvas-Core-Tests-BalloonEngine'
+	#category : #'FormCanvas-Tests'
 }
 
 { #category : #tests }
