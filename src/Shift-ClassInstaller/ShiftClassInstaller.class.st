@@ -94,8 +94,8 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	"the initialize all visible slots"
 	newClass allSlots do: [ :newSlot |
+		newSlot initialize: newObject.
 		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
-			newSlot initialize: newObject.
 			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
