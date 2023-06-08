@@ -62,11 +62,10 @@ ImageCleaner class >> shareLiterals [
 
 { #category : #accessing }
 ImageCleaner class >> testPackages [
+	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	"All test packages to wipe out, except ReleeaseTests package."
-	^ RPackageOrganizer default testPackageNames copyWithout:
-		  'ReleaseTests'
+	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
 { #category : #api }
