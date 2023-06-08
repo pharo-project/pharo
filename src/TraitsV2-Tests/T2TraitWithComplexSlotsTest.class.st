@@ -30,7 +30,7 @@ T2TraitWithComplexSlotsTest >> createSlotClass [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testNormalClassWithComplexSlot [
 	| c1 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	c1 := self newClass: #C1 with: { #aSlot. #otherSlot => (slotClass associatedSlotName: #aSlot) } uses: #().
 	c1 compile: 'initialize
@@ -47,7 +47,7 @@ T2TraitWithComplexSlotsTest >> testNormalClassWithComplexSlot [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlot [
 	| t1 c1 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }.
 	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1}.
@@ -91,7 +91,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAddSlot [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAfter [
 	| t1 c1 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: {}.
 	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1}.
@@ -113,7 +113,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAfter [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotInSuperclass [
 	| t1 c1 c2 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }.
 	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1}.
@@ -133,7 +133,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotInSuperclass [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUpdatedAfter [
 	| t1 c1 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: {}.
 	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1}.
@@ -154,7 +154,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUpdatedAfter [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlot [
 	| t1 t2 c1 obj |
-
+		<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }.
 	t2 := self newTrait: #T2 with: { #otherSlot }.
@@ -175,7 +175,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlot [
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotInSuperclass [
 	| t1 t2 c1 c2 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }.
 	t2 := self newTrait: #T2 with: { #otherSlot }.
@@ -198,7 +198,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotInSupercla
 { #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotWithoutTraitComposition [
 	| t1 t2 c1 obj |
-
+	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }.
 	t2 := self newTrait: #T2 with: { #otherSlot }.

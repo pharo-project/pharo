@@ -8,7 +8,7 @@ Class {
 TraitPureBehaviorTest >> testChangeSuperclass [
 	"Test that when the superclass of a class is changed the non-local methods
 	of the class sending super are recompiled to correctly store the new superclass."
-
+	<ignoreNotImplementedSelectors: #(m51)>
 	| aC2 newSuperclass |
 	aC2 := self c2 new.
 
@@ -227,8 +227,9 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethods [
 TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethodsWhenOriginalMethodIsExcluded [
 	"Assert that alias method is updated although
 	the original method is excluded from this user."
-
+		
 	| anObject |
+	<ignoreNotImplementedSelectors: #(aliasM11)>
 	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t1 @ {(#aliasM11 -> #m11)} - {#m11}) new.
 	self assert: anObject aliasM11 equals: 11.
 	self deny: (anObject class methodDict includesKey: #m11).
