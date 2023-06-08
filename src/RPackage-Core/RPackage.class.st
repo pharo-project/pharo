@@ -688,10 +688,7 @@ RPackage >> extensionSelectorsForClass: aClass [
 { #category : #'class tags' }
 RPackage >> extensionsForTag: aRPackageTag [
 
-	^ self extensionMethods select: [ :extensionMethod |
-		  | protocolName |
-		  protocolName := extensionMethod protocol allButFirst.
-		  protocolName isCategoryOf: aRPackageTag categoryName ]
+	^ self extensionMethods select: [ :extensionMethod | extensionMethod protocolName allButFirst isCategoryOf: aRPackageTag categoryName ]
 ]
 
 { #category : #properties }
