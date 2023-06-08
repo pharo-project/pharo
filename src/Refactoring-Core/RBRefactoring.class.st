@@ -93,28 +93,6 @@ RBRefactoring >> classObjectFor: anObject [
 ]
 
 { #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
-	(self model allReferencesTo: aSymbol in: classes)
-		do:
-			[:method |
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer]
-]
-
-{ #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
-
-	(self model allReferencesTo: aSymbol)
-		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
-			rbMethod method
-				ifNil: [ false ]
-				ifNotNil: #isFromTrait ]
-		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
-]
-
-{ #category : #support }
 RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
 		do:
