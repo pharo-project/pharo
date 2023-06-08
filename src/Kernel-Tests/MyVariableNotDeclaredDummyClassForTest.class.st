@@ -1,6 +1,6 @@
 Class {
 	#name : #MyVariableNotDeclaredDummyClassForTest,
-	#superclass : #VariableNotDeclared,
+	#superclass : #MessageNotUnderstood,
 	#category : #'Kernel-Tests-Exceptions'
 }
 

@@ -204,7 +204,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
-	aClass classify: aSelector under: aCompiledMethod protocol.
+	aClass classify: aSelector under: aCompiledMethod protocolName.
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 

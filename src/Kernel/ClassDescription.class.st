@@ -424,9 +424,7 @@ ClassDescription >> dependentClasses [
 	"We unify a class and its metaclass"
 	self methods , self classSide methods do: [ :method |
 		method literalsDo: [ :literal | "We also check if the method is not an extension"
-			self flag: #CompileMethodProtocolMiration.
-			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method protocolName isNotEmpty and: [ method protocolName first ~= $* ] ] ])
-				ifTrue: [ classes add: literal value ] ] ].
+			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method isExtension not ] ]) ifTrue: [ classes add: literal value ] ] ].
 
 	^ classes asArray
 ]

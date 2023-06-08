@@ -359,8 +359,7 @@ MethodClassifier >> superclassProtocol: aMethod [
 		currentClass := currentClass superclass.
 		(currentClass includesSelector: aMethod selector) ifTrue: [
 			| possibleProtocol |
-			self flag: #CompileMethodProtocolMiration.
-			possibleProtocol := (currentClass >> aMethod selector) protocolName.
-			((possibleProtocol beginsWith: '*') or: possibleProtocol asSymbol = currentClass package name) ifFalse: [ ^ possibleProtocol ] ] ].
+			possibleProtocol := (currentClass >> aMethod selector) protocol.
+			(possibleProtocol isExtensionProtocol or: [ possibleProtocol name = currentClass package name ]) ifFalse: [ ^ possibleProtocol name ] ] ].
 	^ nil
 ]

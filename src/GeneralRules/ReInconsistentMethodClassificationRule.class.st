@@ -41,7 +41,6 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 
 	| protocolInSuperclass |
-	self flag: #CompileMethodProtocolMiration.
 	protocolInSuperclass := (aMethod methodClass superclass lookupSelector: aMethod selector) protocolName.
 
 	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
