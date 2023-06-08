@@ -26,7 +26,7 @@ MyClassUsingMock2Test >> setUp [
 
 { #category : #running }
 MyClassUsingMock2Test >> testMeaningOfLife [
-
+	<ignoreNotImplementedSelectors: #(meaningOfLife: secondMeaning:and:)>
 	self assert: (mock meaningOfLife: 22) equals: 42.
 	self assert: (mock secondMeaning: 32 and: 64) equals: 84
 ]
@@ -34,6 +34,6 @@ MyClassUsingMock2Test >> testMeaningOfLife [
 { #category : #running }
 MyClassUsingMock2Test >> testMeaningOfLifeDoesNotPassCorrectValue [
 
-	self should: [ self assert: (mock meaningOfLife: 33) equals: 42] raise: TestFailure
-
+	<ignoreNotImplementedSelectors: #(meaningOfLife:)>
+	self should: [ self assert: (mock meaningOfLife: 33) equals: 42 ] raise: TestFailure
 ]

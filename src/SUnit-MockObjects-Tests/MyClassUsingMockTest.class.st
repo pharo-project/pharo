@@ -24,6 +24,7 @@ MyClassUsingMockTest >> setUp [
 { #category : #running }
 MyClassUsingMockTest >> testMeaningOfLife [
 
+	<ignoreNotImplementedSelectors: #(meaningOfLife secondMeaning)>
 	self assert: mock meaningOfLife equals: 42.
 	self should: [ self verify: mock ] raise: TestFailure.
 	self assert: mock secondMeaning equals: 84
@@ -32,42 +33,40 @@ MyClassUsingMockTest >> testMeaningOfLife [
 { #category : #running }
 MyClassUsingMockTest >> testMeaningOfLifeIsFirst [
 
+	<ignoreNotImplementedSelectors: #( meaningOfLife secondMeaning )>
 	self assert: mock meaningOfLife equals: 42.
-	self assert: mock secondMeaning equals: 84.
-		
+	self assert: mock secondMeaning equals: 84
 ]
 
 { #category : #running }
 MyClassUsingMockTest >> testMeaningOfLifeIsSentOnce [
 	"A simple mock object can answer a message only once and in the same order."
-	
-	self assert: mock meaningOfLife equals: 42.
 
-	
+	<ignoreNotImplementedSelectors: #( meaningOfLife )>
+	self assert: mock meaningOfLife equals: 42
 ]
 
 { #category : #running }
 MyClassUsingMockTest >> testMeaningOfLifeIsSentTwice [
-	
-	mock meaningOfLife.
-	self should: [self assert: mock meaningOfLife equals: 42] raise: TestFailure.
 
-	
+	<ignoreNotImplementedSelectors: #( meaningOfLife )>
+	mock meaningOfLife.
+	self should: [ self assert: mock meaningOfLife equals: 42 ] raise: TestFailure
 ]
 
 { #category : #running }
 MyClassUsingMockTest >> testVerifyChecksThatAllTheMessageGotSent [
 
+	<ignoreNotImplementedSelectors: #( meaningOfLife secondMeaning )>
 	self assert: mock meaningOfLife equals: 42.
 	self assert: mock secondMeaning equals: 84.
 	self verify: mock
-		
 ]
 
 { #category : #running }
 MyClassUsingMockTest >> testVerifyFailsWhenMessageShouldBeSent [
 
+	<ignoreNotImplementedSelectors: #( meaningOfLife )>
 	self assert: mock meaningOfLife equals: 42.
-	self should: [ self verify: mock ] raise: TestFailure.
-		
+	self should: [ self verify: mock ] raise: TestFailure
 ]

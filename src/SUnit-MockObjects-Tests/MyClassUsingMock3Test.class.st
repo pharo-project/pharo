@@ -21,13 +21,15 @@ MyClassUsingMock3Test >> setUp [
 { #category : #running }
 MyClassUsingMock3Test >> testVerify [
 
-	mock meaningOfLife: 3.
+	<ignoreNotImplementedSelectors: #( meaningOfLife: )>
+	mock meaningOfLife: 3
 ]
 
 { #category : #running }
 MyClassUsingMock3Test >> testVerify2 [
 	"When the arguments are correct, the verify block is executed and it should return true."
-	
+
+	<ignoreNotImplementedSelectors: #( meaningOfLife: )>
 	mock meaningOfLife: 12.
-	self verify: mock.
+	self verify: mock
 ]
