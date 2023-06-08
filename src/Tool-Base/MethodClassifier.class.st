@@ -288,9 +288,10 @@ MethodClassifier >> protocolByOtherImplementors: aMethod [
 	| protocolBag |
 	protocolBag := Bag new.
 
-	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :methods |
-		self flag: #CompileMethodProtocolMiration.
-		methods do: [ :method | ((method protocolName beginsWith: '*') or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ] without: aMethod ].
+	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :implementor |
+		implementor
+			do: [ :method | (method protocol isExtensionProtocol or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ]
+			without: aMethod ].
 
 	protocolBag ifEmpty: [ ^ self ].
 	protocol := protocolBag sortedCounts first value
