@@ -480,6 +480,19 @@ BagTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
+{ #category : #tests }
+BagTest >> testKeys [
+	| bag |
+	bag := Bag new.
+	bag
+		add: #a;
+		add: #b.
+	bag add: #a.
+	bag add: #b.
+	bag add: #c.
+	self assert: bag keys asSet equals: #(#a #b #c) asSet.
+]
+
 { #category : #'basic tests' }
 BagTest >> testOccurrencesOf [
 

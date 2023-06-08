@@ -171,7 +171,16 @@ Bag >> includes: anObject [
 ]
 
 { #category : #enumerating }
-Bag >> keysAndValuesDo: aTwoArgBlock [
+Bag >> keys [
+	"Returns the keys of the receiver."
+	
+	"(Bag new add: #a; add: #a; add: #b; keys) >>> #(#a #b)"
+	
+	^ contents keys
+]
+
+{ #category : #enumerating }
+Bag >> keysAndValuesDo: aTwoArgBlock [ 
     "Iterate over the receiver and apply a two argument block on the element and its occurrences."
 
     contents associationsDo: [:assoc | aTwoArgBlock value: assoc key value: assoc value ]
