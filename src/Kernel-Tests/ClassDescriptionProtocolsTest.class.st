@@ -34,6 +34,20 @@ ClassDescriptionProtocolsTest >> testAddProtocolWithExistingProtocol [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocolWithProtocolFromOtherClass [
+
+	| titan |
+	"This protocol is not from the class we are testing."
+	titan := Protocol named: #titan.
+
+	class addProtocol: titan.
+
+	"The class should have created a new protocol of the same name."
+	self assert: (class hasProtocol: #titan).
+	self deny: (class protocolNamed: #titan) identicalTo: titan
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testAddProtocolWithRealProtocol [
 
 	| titan |

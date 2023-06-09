@@ -68,12 +68,12 @@ ClassDescription >> addInstVarNamed: aString [
 { #category : #protocols }
 ClassDescription >> addProtocol: aProtocol [
 
-	| oldProtocols protocol |
-	
-	(self hasProtocol: aProtocol) ifTrue: [
-		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+	| oldProtocols protocol protocolName |
+	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
 
-	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
+	(self hasProtocol: aProtocol) ifTrue: [ ^ self protocolNamed: protocolName ].
+
+	protocol := Protocol named: protocolName.
 
 	oldProtocols := self protocolNames copy.
 
