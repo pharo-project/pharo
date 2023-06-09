@@ -21,7 +21,9 @@ ReSendsUnknownMessageToGlobalRule >> basicCheck: aNode [
 	aNode receiver isLiteralVariable ifFalse: [ ^ false ].
 	aNode receiver isUndeclaredVariable ifTrue: [ ^false ].
 	aNode receiver isClassVariable ifTrue: [ ^false ].
-
+	
+	"if we know that the selector does not exist, we ignore"
+	(aNode methodNode compiledMethod allIgnoredNotImplementedSelectors includes: aNode selector) ifTrue: [ ^false ].
 	^ (aNode receiver variable value respondsTo: aNode selector) not
 ]
 
