@@ -11,9 +11,6 @@ RBRemoveSenderMethodParametrizedTest class >> testParameters [
 		addCase: { #rbClass -> RBRemoveSenderRefactoring .
 					  #constructor -> #remove:inMethod:forClass: .
 					  #index -> 1};
-		addCase: { #rbClass -> RBRemoveMessageSendTransformation .
-					  #constructor -> #messageSend:inMethod:inClass: .
-					  #index -> 2};
 		yourself
 ]
 
