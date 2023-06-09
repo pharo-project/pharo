@@ -187,7 +187,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 
 { #category : #plugins }
 OpalCompiler >> addPlugin: aClass [ 
-	compilationContext addASTTransformationPlugin: aClass
+	self compilationContext addASTTransformationPlugin: aClass
 ]
 
 { #category : #private }
