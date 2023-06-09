@@ -54,8 +54,10 @@ UUIDGeneratorTest >> testTwoDifferentGenerator [
 	| generator1 generator2 uuid1 uuid2 time1 time2 |
 	generator1 := UUIDGenerator new.
 	generator2 := UUIDGenerator new.
-	uuid1 := UUID new.
-	uuid2 := UUID new.
+	uuid1 := NilUUID new.
+	uuid2 := NilUUID new.
+	generator1 placeFields: uuid1 uuidData.
+	generator2 placeFields: uuid2 uuidData.
 	"different UUIDs"
 	self deny: uuid1 equals: uuid2.
 	"different generators, different node id"

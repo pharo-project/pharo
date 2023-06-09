@@ -1,6 +1,5 @@
 "
 I am UUID.
-I am a ByteArray.
 
 An RFC4122 Universally Unique Identifier (UUID) is an opaque 128-bit number that can be used for identification purposes. Concretely, a UUID is a 16 element byte array.
 
@@ -10,9 +9,7 @@ Usage:
 
 	UUID new.
 	
-Whenever you create a new UUID, the shared, default UUIDGenerator will be used to generate a new, unique UUID.
-
-See UUIDGenerator for extensive documentation on how UUIDs are actually generated.
+Whenever you create a new UUID it will use your default UUID system library to generate one. If for some reason it is unable to work, the shared, default UUIDGenerator will be used to generate a new, unique UUID.
 
 UUIDs have a standard string representation, like this:
 
@@ -26,7 +23,7 @@ Alternatively, my base 36 number representation is  the shortest representation 
 
 See #asString36 and my class' #fromString36:
 
-UUIDs are basically opaque (contain no interesting content) and should be treated as indivisable values. Do not use parts of them, since these will most probably no longer be unique.
+For time-based UUID (version 1) it is possible to recover a timestamp corresponding to the creation of the UUID.
 
 See also:
 
@@ -50,7 +47,7 @@ UUID class >> fromString36: aString [
 	that might cause problems."
 
 	| object array num |
-	object := self nilUUID.
+	object := NilUUID new.
 	array := object uuidData.
 	num := Integer readFrom: aString asUppercase readStream base: 36.
 	1 to: 16 do: [:i | array at: i put: (num byteAt: i)].
@@ -64,7 +61,7 @@ UUID class >> fromString: aString [
 
 	| uuid |
 	aString size ~= 36 ifTrue: [ self error: 'a UUID should be 36 characters' ].
-	uuid := self nilUUID.
+	uuid := NilUUID new.
 	uuid readFrom: aString readStream.
 	^ uuid
 ]
@@ -144,12 +141,31 @@ UUID >> asString36 [
 
 { #category : #accessing }
 UUID >> at: aNumber [
-	^ uuidData at: aNumber 
+	
+	"Should be deprecated, but is still used by iceberg."
+	"self
+		deprecated:
+		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'."
+	^ uuidData at: aNumber
 ]
 
 { #category : #accessing }
 UUID >> at: aNumber put: aByte [
-	uuidData at: aNumber put: aByte.
+	
+	"Should be deprecated, but is still used by iceberg."
+	"self
+		deprecated:
+		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'."
+	uuidData at: aNumber put: aByte
+]
+
+{ #category : #comparing }
+UUID >> clockSequence [
+	"Returns the clock sequence for Verison 1 UUIDs. See https://tools.ietf.org/html/rfc4122"
+
+	self isTimeBased ifFalse: [
+		self error: 'Only time-based UUIDs have a timestamp.' ].
+	^ (uuidData at: 9) & 16r3f << 8 + (uuidData at: 10)
 ]
 
 { #category : #comparing }
@@ -163,6 +179,20 @@ UUID >> initialize [
 	uuidData generateUUIDInPlace
 ]
 
+{ #category : #comparing }
+UUID >> isDCEBased [
+	"Checks if UUID is version 2. See https://tools.ietf.org/html/rfc4122"
+	
+	^ self isRFC4122 and: (self version = 2)
+]
+
+{ #category : #comparing }
+UUID >> isMD5NameBased [
+	"Checks if UUID is version 3. See https://tools.ietf.org/html/rfc4122"
+
+	^ self isRFC4122 and: (self version = 3)
+]
+
 { #category : #testing }
 UUID >> isNilUUID [
 	"Return true when I am equal to the nilUUID, 00000000-0000-0000-0000-000000000000, false otherwise"
@@ -172,12 +202,36 @@ UUID >> isNilUUID [
 
 { #category : #comparing }
 UUID >> isRFC4122 [
+	"Checks if UUID is built according to RFC 4122. See https://tools.ietf.org/html/rfc4122"
 
 	^ self variant & 2r110 = 2r100
 ]
 
 { #category : #comparing }
+UUID >> isRandomBased [
+	"Checks if UUID is version 4. See https://tools.ietf.org/html/rfc4122"
+
+	^ self isRFC4122 and: (self version = 4)
+]
+
+{ #category : #comparing }
+UUID >> isSHA1NameBased [
+	"Checks if UUID is version 5. See https://tools.ietf.org/html/rfc4122"
+
+	^ self isRFC4122 and: (self version = 5)
+]
+
+{ #category : #comparing }
+UUID >> isTimeBased [
+	"Checks if UUID is version 1. See https://tools.ietf.org/html/rfc4122"
+
+	^ self isRFC4122 and: (self version = 1)
+]
+
+{ #category : #comparing }
 UUID >> node [
+	"Returns the node of the UUID as a ByteArray. See https://tools.ietf.org/html/rfc4122"
+
 	^uuidData copyFrom: 11 to: 16.
 ]
 
@@ -224,17 +278,30 @@ UUID >> readFrom: aStream [
 UUID >> size [
 
 	self
-		deprecated: 'The UUIDs are no longer a subclass of ByteArray'
+		deprecated:
+		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'
 		transformWith: '`@receiver size' -> '`@receiver uuidData size'.
 	^ 16
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 UUID >> timestamp [
+	"Returns the timestamp of the version 1 UUID as a local DateAndTime. See https://tools.ietf.org/html/rfc4122"
 
-	^ (uuidData integerAt: 5 size: 2 signed: false) & 16rfff << 48
-	  + (uuidData integerAt: 5 size: 2 signed: false) << 32
-	  + (uuidData integerAt: 1 size: 4 signed: false)
+	| timestamp |
+	self isTimeBased ifFalse: [
+		self error: 'Only time-based UUIDs have a timestamp.' ].
+
+	timestamp := (uuidData at: 7) & 16r0f.
+	#( 8 5 6 1 2 3 4 ) do: [ :i |
+		timestamp := timestamp << 8 + (uuidData at: i) ].
+
+	^ (DateAndTime
+		   year: 1582
+		   month: 10
+		   day: 15
+		   offset: 0 hours) + (timestamp * 100) nanoSeconds offset:
+		  DateAndTime localOffset
 ]
 
 { #category : #accessing }
@@ -251,12 +318,14 @@ UUID >> uuidData: anObject [
 
 { #category : #comparing }
 UUID >> variant [
+	"Returns the variant of the UUID. See https://tools.ietf.org/html/rfc4122"
 
 	^ (uuidData at: 9) >> 5
 ]
 
 { #category : #comparing }
 UUID >> version [
+	"Returns the version of the UUID. See https://tools.ietf.org/html/rfc4122"
 
 	^ (uuidData at: 7) >> 4
 ]

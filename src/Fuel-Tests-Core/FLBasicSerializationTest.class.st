@@ -796,7 +796,7 @@ FLBasicSerializationTest >> testTrue [
 FLBasicSerializationTest >> testUUID [
 
 	self assertSerializationEqualityOf: (UUID fromString: 'a3b64357-377a-5b41-b575-1c653084a121').
-	self assertSerializationEqualityOf: UUID nilUUID.
+	self assertSerializationEqualityOf: NilUUID new.
 	self assertSerializationEqualityOf: UUID new.
 ]
 

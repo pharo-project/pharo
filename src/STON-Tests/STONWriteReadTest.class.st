@@ -483,7 +483,7 @@ STONWriteReadTest >> testUUIDs [
 	uuids := STON listClass withAll: {
 		UUID new.
 		UUID new.
-		UUID nilUUID }.
+		NilUUID new }.
 	self serializeAndMaterialize: uuids
 ]
 
