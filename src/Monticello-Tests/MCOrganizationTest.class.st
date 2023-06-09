@@ -9,9 +9,9 @@ MCOrganizationTest >> testLoadAndUnload [
 
 	| category |
 	category := 'TestPackageToUnload'.
-	Smalltalk organization addCategory: category.
+	self packageOrganizer addCategory: category.
 	(MCOrganizationDefinition categories: { category }) unload.
-	self deny: (Smalltalk organization includesCategory: category)
+	self deny: (self packageOrganizer includesCategory: category)
 ]
 
 { #category : #tests }

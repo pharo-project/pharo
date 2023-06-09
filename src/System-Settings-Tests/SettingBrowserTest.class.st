@@ -21,7 +21,7 @@ SettingBrowserTest >> testOpening [
 SettingBrowserTest >> testOpeningOnPackage [
 
 	settingBrowser := SettingBrowser new
-		                  changePackageSet: { (Smalltalk organization packageNamed: 'System-Settings-Core') };
+		                  changePackageSet: { (self packageOrganizer packageNamed: 'System-Settings-Core') };
 		                  open.
 	settingBrowser close
 ]

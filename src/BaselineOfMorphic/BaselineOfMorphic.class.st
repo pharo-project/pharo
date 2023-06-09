@@ -149,7 +149,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Symbol rehash.
 
 	"Remove empty packages and protocols"
-	Smalltalk organization removeEmptyPackages.
+	self packageOrganizer removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
 		class removeEmptyProtocols.
 		class class removeEmptyProtocols  ].

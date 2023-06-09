@@ -9,9 +9,7 @@ Class {
 		'parentheseLevel',
 		'bracketLevel',
 		'classOrMetaClass',
-		'font',
 		'isForWorkspace',
-		'pixelHeight',
 		'workspace',
 		'plugins',
 		'braceLevel',
@@ -21,41 +19,32 @@ Class {
 	],
 	#classInstVars : [
 		'styleTable',
-		'textAttributesByPixelHeight',
-		'formatIncompleteIdentifiers'
+		'formatIncompleteIdentifiers',
+		'textAttributes'
 	],
 	#category : #'Shout-Styling'
 }
 
 { #category : #attributes }
-SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil font: aTextStyleOrFontOrNil [
+SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil [
 
 	| emphArray answer |
 	answer := Array new.
-	aColorOrNil ifNotNil: [ answer := answer , {TextColor color: aColorOrNil}].
+	aColorOrNil ifNotNil: [ answer := answer , { (TextColor color: aColorOrNil) } ].
 
-	anEmphasisSymbolOrArrayorNil
-		ifNotNil: [
-			emphArray := anEmphasisSymbolOrArrayorNil isSymbol
-						ifTrue: [{anEmphasisSymbolOrArrayorNil}]
-						ifFalse: [anEmphasisSymbolOrArrayorNil].
-			emphArray do: [:each |
-				each ~= #normal
-					ifTrue: [answer := answer , {TextEmphasis perform: each}]]].
-
-	aTextStyleOrFontOrNil
-		ifNotNil: [ answer := answer , {TextFontReference toFont: aTextStyleOrFontOrNil}].
+	anEmphasisSymbolOrArrayorNil ifNotNil: [
+		emphArray := anEmphasisSymbolOrArrayorNil isSymbol
+			             ifTrue: [ { anEmphasisSymbolOrArrayorNil } ]
+			             ifFalse: [ anEmphasisSymbolOrArrayorNil ].
+		emphArray do: [ :each | each ~= #normal ifTrue: [ answer := answer , { (TextEmphasis perform: each) } ] ] ].
 
 	^ answer
 ]
 
-{ #category : #attributes }
-SHRBTextStyler class >> attributesFor: aSymbol pixelHeight: aNumber [
-	^ (self textAttributesByPixelHeight
-		at: aNumber
-		ifAbsentPut: [self initialTextAttributesForPixelHeight: aNumber])
-		at: aSymbol
-		ifAbsent: [#()]
+{ #category : #private }
+SHRBTextStyler class >> attributesFor: aSymbol [
+
+	^ self textAttributes at: aSymbol ifAbsent: [ #(  ) ]
 ]
 
 { #category : #styles }
@@ -264,47 +253,33 @@ SHRBTextStyler class >> formatIncompleteIdentifiers: aValue [
 ]
 
 { #category : #attributes }
-SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [
+SHRBTextStyler class >> initialTextAttributes [
+
+	^ self initialTextAttributesForStyleTable: self styleTable
+]
+
+{ #category : #attributes }
+SHRBTextStyler class >> initialTextAttributesForStyleTable: aStyleTable [
+
 	| d |
 	d := IdentityDictionary new.
-	self styleTable
-		do: [:each |
-			| textStyle element emphasis font pixelHeight attrArray color textStyleName |
-			element := each first.
-			color := each
-						at: 2
-						ifAbsent: [].
-			color := color
-						ifNotNil: [Color colorFrom: color].
-			emphasis := each
-						at: 3
-						ifAbsent: [].
-			textStyleName := each
-						at: 4
-						ifAbsent: [].
-			pixelHeight := each
-						at: 5
-						ifAbsent: [aNumber].
-			textStyleName
-				ifNil: [pixelHeight := nil].
-			textStyle := TextStyle named: textStyleName.
-			font := textStyle
-						ifNotNil: [pixelHeight
-								ifNotNil: [textStyle fontOfSize: pixelHeight]].
-			attrArray := self
-						attributeArrayForColor: color
-						emphasis: emphasis
-						font: font.
-			attrArray notEmpty
-				ifTrue: [d at: element put: attrArray]].
+	aStyleTable do: [ :each |
+		| element emphasis color |
+		element := each first.
+		color := each at: 2 ifAbsent: [  ].
+		color := color ifNotNil: [ Color colorFrom: color ].
+		emphasis := each at: 3 ifAbsent: [  ].
+
+		(self attributeArrayForColor: color emphasis: emphasis) ifNotEmpty: [ :attrArray | d at: element put: attrArray ] ].
+
 	^ d
 ]
 
-{ #category : #'class initialization' }
-SHRBTextStyler class >> initialize [
+{ #category : #initialization }
+SHRBTextStyler class >> resetTextAttributesCaches [
 
-	styleTable := nil.
-	textAttributesByPixelHeight := nil
+	<script>
+	textAttributes := nil
 ]
 
 { #category : #styles }
@@ -420,8 +395,9 @@ SHRBTextStyler class >> styleTable [
 
 { #category : #accessing }
 SHRBTextStyler class >> styleTable: anArray [
+
 	styleTable := anArray.
-	textAttributesByPixelHeight := nil
+	self resetTextAttributesCaches
 ]
 
 { #category : #styles }
@@ -519,10 +495,10 @@ SHRBTextStyler class >> tangoStyleTable [
 			(pragma 						(green muchDarker)))
 ]
 
-{ #category : #attributes }
-SHRBTextStyler class >> textAttributesByPixelHeight [
-	^ textAttributesByPixelHeight
-		ifNil: [textAttributesByPixelHeight := Dictionary new]
+{ #category : #accessing }
+SHRBTextStyler class >> textAttributes [
+
+	^ textAttributes ifNil: [ textAttributes := self initialTextAttributes ]
 ]
 
 { #category : #styles }
@@ -683,7 +659,8 @@ SHRBTextStyler >> addStyle: styleSymbol from: start to: end [
 
 { #category : #private }
 SHRBTextStyler >> attributesFor: aSymbol [
-	^ self class attributesFor: aSymbol pixelHeight: self pixelHeight
+
+	^ self class attributesFor: aSymbol
 ]
 
 { #category : #accessing }
@@ -709,17 +686,6 @@ SHRBTextStyler >> bracketStyleName [
 { #category : #accessing }
 SHRBTextStyler >> classOrMetaClass: aBehavior [
 	classOrMetaClass := aBehavior
-]
-
-{ #category : #accessing }
-SHRBTextStyler >> font: aFont [
-	font := aFont
-]
-
-{ #category : #formatting }
-SHRBTextStyler >> format: aText [
-
-	^ aText
 ]
 
 { #category : #visiting }
@@ -784,11 +750,6 @@ SHRBTextStyler >> parenthesisStyleName [
 	^ (#parenthesis , (level isZero
 		    ifTrue: [ '' ]
 		    ifFalse: [ level asString ])) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> pixelHeight [
-	^ pixelHeight ifNil: [ pixelHeight := (font ifNil: [ TextStyle defaultFont ]) pixelSize ]
 ]
 
 { #category : #private }

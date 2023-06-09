@@ -76,7 +76,7 @@ RPackageTag >> classes [
 RPackageTag >> ensureSystemCategory [
 	"We should not hardcode the global variable but ask the package organizer for the organization."
 
-	Smalltalk organization addCategory: self categoryName
+	self packageOrganizer addCategory: self categoryName
 ]
 
 { #category : #accessing }

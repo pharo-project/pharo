@@ -19,7 +19,8 @@ Class {
 		'popupAutomaticDelay',
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
-		'smartCharactersWithDoubleSpace'
+		'smartCharactersWithDoubleSpace',
+		'showCompletionDetails'
 	],
 	#category : #'NECompletion-Preferences'
 }
@@ -80,6 +81,12 @@ NECPreferences class >> defaultPopupShowAutomatic [
 ]
 
 { #category : #defaults }
+NECPreferences class >> defaultShowCompletionDetails [
+
+	^ true
+]
+
+{ #category : #defaults }
 NECPreferences class >> defaultSpaceAfterCompletion [
 	^ true
 ]
@@ -132,6 +139,7 @@ NECPreferences class >> initialize [
 	popupShowWithShortcut := self defaultPopupShortcut.
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
+	showCompletionDetails := self defaultShowCompletionDetails.
 	NECEntry spaceAfterCompletion: true
 ]
 
@@ -207,6 +215,10 @@ NECPreferences class >> settingsOn: aBuilder [
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.
+					(aBuilder setting: #showCompletionDetails)
+						label: 'Show completion details';
+						description: 'Show detailed information about completion entries';
+						default: self defaultShowCompletionDetails.
 					(aBuilder setting: #caseSensitive)
 						label: 'Case Sensitive';
 						default: true;
@@ -238,6 +250,16 @@ NECPreferences class >> settingsOn: aBuilder [
 						default: self defaultSpaceAfterCompletion;
 						label: 'Put a space after completion'
 					 ]
+]
+
+{ #category : #accessing }
+NECPreferences class >> showCompletionDetails [
+	^ showCompletionDetails
+]
+
+{ #category : #accessing }
+NECPreferences class >> showCompletionDetails: aBoolean [
+	showCompletionDetails := aBoolean
 ]
 
 { #category : #accessing }

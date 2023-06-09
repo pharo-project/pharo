@@ -126,6 +126,7 @@ TraitFileOutTest >> testRemovingMethods [
 	updated."
 
 	"Classes"
+	<ignoreNotImplementedSelectors: #(m12)>
 	self c2 compile: 'm12 ^0' classified: #xxx.
 	self assert: (self c2 includesLocalSelector: #m12).
 	self c2 removeSelector: #m12.

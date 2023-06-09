@@ -11,7 +11,7 @@ Class {
 GoferCleanup >> cleanup: aWorkingCopy [
 
 	| packageOrganizer |
-	packageOrganizer := Smalltalk organization.
+	packageOrganizer := self packageOrganizer.
 	aWorkingCopy packageSet systemCategories
 		select: [ :category | (packageOrganizer classesInCategory: category) isEmpty ]
 		thenDo: [ :category | packageOrganizer removeSystemCategory: category ]

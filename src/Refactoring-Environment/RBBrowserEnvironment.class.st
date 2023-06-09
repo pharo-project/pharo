@@ -596,12 +596,6 @@ RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
 		ifFalse: absentBlock
 ]
 
-{ #category : #private }
-RBBrowserEnvironment >> packageOrganizer [
-
-	^ RPackageOrganizer default
-]
-
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packages [
 

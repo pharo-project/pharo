@@ -62,11 +62,10 @@ ImageCleaner class >> shareLiterals [
 
 { #category : #accessing }
 ImageCleaner class >> testPackages [
+	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	"All test packages to wipe out, except ReleeaseTests package."
-	^ RPackageOrganizer default testPackageNames copyWithout:
-		  'ReleaseTests'
+	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
 { #category : #api }
@@ -211,7 +210,7 @@ ImageCleaner >> removeEmptyCategories [
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
 
-	Smalltalk organization removeEmptyPackages.
+	self packageOrganizer removeEmptyPackages.
 	Smalltalk allClassesAndTraitsDo: [ :class |
 		class removeEmptyProtocols.
 		class class removeEmptyProtocols ]

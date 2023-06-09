@@ -32,9 +32,16 @@ MorphicEventHandlerTest >> testClickFromMorph [
 
 { #category : #tests }
 MorphicEventHandlerTest >> testDoubleClickFromMorph [
+	| event |
+	event := MouseButtonEvent new
+		setType: #mouseDown
+		position: 0@0
+		which: 0
+		buttons: 4
+		hand: morph eventHandler
+		stamp: Time millisecondClockValue.
 	morph eventHandler on: #doubleClick send: #value to: true.
-
-	self assert: (morph doubleClick: nil) identicalTo: true
+	self assert: (morph doubleClick: event) identicalTo: true
 ]
 
 { #category : #tests }

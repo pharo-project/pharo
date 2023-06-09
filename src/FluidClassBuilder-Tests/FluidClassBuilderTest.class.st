@@ -357,7 +357,7 @@ FluidClassBuilderTest >> testExistingClassWithClassSlot [
 		               sharedVariables: { #BBB };
 		               sharedPools: { #TextConstants };
 		               tag: 'boring';
-		               package: 'Mock'.
+		               package: self packageNameForTest..
 
 	newClass := instBuilder install.
 

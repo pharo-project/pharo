@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'class'
 	],
-	#category : #'Kernel-Tests-Protocols'
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #helpers }

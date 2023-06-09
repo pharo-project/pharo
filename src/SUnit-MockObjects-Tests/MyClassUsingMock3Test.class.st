@@ -1,5 +1,5 @@
 Class {
-	#name : #MyClassUsingMock3,
+	#name : #MyClassUsingMock3Test,
 	#superclass : #TestCase,
 	#instVars : [
 		'mock'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #running }
-MyClassUsingMock3 >> setUp [
+MyClassUsingMock3Test >> setUp [
 
 	super setUp.
 	mock := MockObject new.
@@ -19,15 +19,17 @@ MyClassUsingMock3 >> setUp [
 ]
 
 { #category : #running }
-MyClassUsingMock3 >> testVerify [
+MyClassUsingMock3Test >> testVerify [
 
-	mock meaningOfLife: 3.
+	<ignoreNotImplementedSelectors: #( meaningOfLife: )>
+	mock meaningOfLife: 3
 ]
 
 { #category : #running }
-MyClassUsingMock3 >> testVerify2 [
+MyClassUsingMock3Test >> testVerify2 [
 	"When the arguments are correct, the verify block is executed and it should return true."
-	
+
+	<ignoreNotImplementedSelectors: #( meaningOfLife: )>
 	mock meaningOfLife: 12.
-	self verify: mock.
+	self verify: mock
 ]

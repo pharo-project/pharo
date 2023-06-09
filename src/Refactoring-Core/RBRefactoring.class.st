@@ -36,13 +36,6 @@ RBRefactoring class >> isAbstract [
 	^ self == RBRefactoring
 ]
 
-{ #category : #accessing }
-RBRefactoring class >> isTransformation [
-	"Tells if this refactoring is a refactoring or a transformation."
-
-	^ false
-]
-
 { #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
@@ -97,28 +90,6 @@ RBRefactoring >> classObjectFor: anObject [
 	anObject isString ifTrue: [
 		^ self model classNamed: anObject asSymbol ].
 	^ anObject
-]
-
-{ #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
-	(self model allReferencesTo: aSymbol in: classes)
-		do:
-			[:method |
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer]
-]
-
-{ #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
-
-	(self model allReferencesTo: aSymbol)
-		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
-			rbMethod method
-				ifNil: [ false ]
-				ifNotNil: #isFromTrait ]
-		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
 ]
 
 { #category : #support }
@@ -182,7 +153,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
 		do:
 			[:ex |
-			errorBlock value.
+			errorBlock cull: ex.
 			ex return: nil]
 ]
 
