@@ -22,25 +22,11 @@ TraitCompositionTest >> testAliasCompositions [
 	self should: [ self t2 setTraitComposition: self t1 @ {(#x: -> #x:y:z:)} ] raise: Error.
 	self should: [ self t2 setTraitComposition: self t1 @ {(#x:y: -> #x:y:z:)} ] raise: Error.
 	self t2 setTraitComposition: self t1 @ {(#myX:y:z: -> #x:y:z:)}.	"alias same as selector"
-	self should: [ self t2 setTraitComposition: self t1 @ {(#m11 -> #m11)} ] raise: Error.	"same alias name used twice"
-	self
-		should: [
-			self t2
-				setTraitCompositionFrom:
-					self t1
-						@
-							{(#alias -> #m11).
-							(#alias -> #m12)} ]
-		raise: Error.	"aliasing an alias"
-	self
-		should: [
-			self t2
-				setTraitCompositionFrom:
-					self t1
-						@
-							{(#alias -> #m11).
-							(#alias2 -> #alias)} ]
-		raise: Error
+	self should: [ self t2 setTraitComposition: self t1 @ {(#m11 -> #m11)} ] raise: Error.	
+	"same alias name used twice, the last on wins"
+	self t2 setTraitComposition: self t1 @ {(#alias -> #m11). (#alias -> #m12)}.
+	"aliasing an alias is an error"
+	self should: [ self t2 setTraitComposition: self t1 @ {(#alias -> #m11). (#alias2 -> #alias)} ] raise: Error
 ]
 
 { #category : #'tests - enquiries' }
