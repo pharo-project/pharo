@@ -13,9 +13,13 @@ RBReplaceSendersMethodParametrizedTest class >> testParameters [
 
 { #category : #'failure tests' }
 RBReplaceSendersMethodParametrizedTest >> testIncompleteInitializers [
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
+	
 	self shouldFail: (rbClass
 				model: model
 				replaceMethod: ('called:', 'on:') asSymbol
+				
 				in: RBRefactoryTestDataApp
 				to: ('textInput:', 'name:', 'symbol:') asSymbol
 				permutation: #(-1 2 1)
@@ -45,6 +49,8 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodOnlyInClass [
 RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithLessArgs [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('called:', 'on:') asSymbol.
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
 	newSelector := ('foo:') asSymbol.
 	sendersNewSelector := (model allReferencesTo: newSelector) size.
 	sendersLastSelector := (model allReferencesTo: selector) size.
@@ -64,6 +70,8 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithLessArgs [
 RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('called:', 'on:') asSymbol.
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
 	newSelector := ('textInput:', 'name:', 'symbol:') asSymbol.
 	sendersNewSelector := (model allReferencesTo: newSelector) size.
 	sendersLastSelector := (model allReferencesTo: selector) size.
@@ -84,6 +92,8 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithSameArgs [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('called:', 'on:') asSymbol.
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
 	newSelector := ('called:', 'on1:') asSymbol.
 	sendersNewSelector := (model allReferencesTo: newSelector) size.
 	sendersLastSelector := (model allReferencesTo: selector) size.
