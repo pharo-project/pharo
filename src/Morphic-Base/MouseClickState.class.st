@@ -323,10 +323,9 @@ MouseClickState >> handleEvent: evt from: aHand [
 			^true].
 		localEvt isMouseDown ifTrue:["double click"
 			clickState := #secondClickDown.
-			"We should not double click if not on the same element"
-			(clickClient containsPoint: localEvt position) ifTrue: [
-				self doubleClick.
-				^false] ] ].
+			self doubleClick.
+			^false]
+	].
 
 	clickState == #secondClickDown ifTrue: [
 		isDragSecond ifTrue: ["drag start"
