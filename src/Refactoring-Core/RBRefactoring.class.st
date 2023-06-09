@@ -153,7 +153,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
 		do:
 			[:ex |
-			errorBlock value.
+			errorBlock cull: ex.
 			ex return: nil]
 ]
 
