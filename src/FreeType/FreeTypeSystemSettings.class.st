@@ -15,7 +15,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
 		target: self;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		type: #Label;
 		label: 'Free type';
 		default: 'Free type fonts are not available';
@@ -28,7 +28,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		target: self;
 		default: true;
 		dialog: [ self ft2LibraryVersion ];
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		label: 'Use Free type';
 		description:
 			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';
@@ -96,11 +96,11 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 
 { #category : #settings }
 FreeTypeSystemSettings class >> ft2LibraryVersion [
-	^ Smalltalk ui theme 
-		newLabelIn: self 
-		for: self 
-		label: 'Available version: ', FT2Version current asString 
-		getEnabled: nil.
+	^ Smalltalk ui theme
+		newLabelIn: self
+		for: self
+		label: 'Available version: ', FT2Version current asString
+		getEnabled: nil
 ]
 
 { #category : #settings }
@@ -114,7 +114,7 @@ FreeTypeSystemSettings class >> noFt2Library [
 ]
 
 { #category : #settings }
-FreeTypeSystemSettings class >> noFt2Library: aBoolean [ 
+FreeTypeSystemSettings class >> noFt2Library: aBoolean [
 
 	"ignore it for now"
 ]

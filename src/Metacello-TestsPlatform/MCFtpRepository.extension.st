@@ -1,12 +1,12 @@
 Extension { #name : #MCFtpRepository }
 
-{ #category : #'*metacello-testsplatform' }
+{ #category : #'*Metacello-TestsPlatform' }
 MCFtpRepository >> directory [
 
 	^directory
 ]
 
-{ #category : #'*metacello-testsplatform' }
+{ #category : #'*Metacello-TestsPlatform' }
 MCFtpRepository >> host [
 
 	^host

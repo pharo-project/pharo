@@ -23,7 +23,7 @@ JoinSection >> addHighlightsFrom: srcBlock to: dstBlock to: aCollection color: a
 	"Add the highlights required for the given character blocks
 	of a paragraph. May be up to three highlights depending
 	on the line spans."
-	
+
 	srcBlock textLine = dstBlock textLine
 		ifTrue: [aCollection add: (TextHighlightByBounds new
 				color: aColor;
@@ -70,7 +70,7 @@ JoinSection >> borderColor: aColor [
 { #category : #accessing }
 JoinSection >> borderColorToUse [
 	"Answer the border color to use."
-	
+
 	^self borderColor
 ]
 
@@ -138,14 +138,14 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	| s d si di srcText dstText diffs i sb eb line |
 	self createHighlights.
 	self src lineRange notEmpty
-		ifTrue: [ 
+		ifTrue: [
 			line := srcPara lines at: self src lineRange first.
 			si := line first.
 			line := srcPara lines at: self src lineRange last.
 			srcText := srcPara string copyFrom: si to: line last ]
 		ifFalse: [ srcText := '' ].
 	self dst lineRange notEmpty
-		ifTrue: [ 
+		ifTrue: [
 			line := dstPara lines at: self dst lineRange first.
 			di := line first.
 			line := dstPara lines at: self dst lineRange last.
@@ -159,15 +159,15 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	d := self dst highlights.
 	diffs := (InlineTextDiffBuilder from: srcText to: dstText) buildPatchSequence groupByRuns: [ :e | e key ].
 	diffs
-		do: [ :c | 
+		do: [ :c |
 			c first key = #match
-				ifTrue: [ 
+				ifTrue: [
 					c
-						do: [ :a | 
+						do: [ :a |
 							si := si + a value size.
 							di := di + a value size ] ].
 			c first key = #insert
-				ifTrue: [ 
+				ifTrue: [
 					i := di.
 					c do: [ :a | di := di + a value size ].
 					sb := dstPara characterBlockForIndex: i.
@@ -178,7 +178,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 						to: d
 						color: self additionHighlightColor ].
 			c first key = #remove
-				ifTrue: [ 
+				ifTrue: [
 					i := si.
 					c do: [ :a | si := si + a value size ].
 					sb := srcPara characterBlockForIndex: i.
@@ -193,7 +193,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 { #category : #drawing }
 JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 	"Draw the join on the given canvas scaled into the given rectangle."
-	
+
 	self type = #match ifTrue: [^self].
 	aCanvas
 		frameAndFillRectangle: (rect left @ (((self dst range first max: 0) * scale) truncated + rect top)
@@ -206,7 +206,7 @@ JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 { #category : #drawing }
 JoinSection >> drawOn: aCanvas [
 	"Draw the join on the given canvas."
-	
+
 	|v bc|
 	(self src color isTransparent and: [self dst color isTransparent])
 		ifTrue: [^self].
@@ -274,7 +274,7 @@ JoinSection >> dstRange: anInterval [
 { #category : #accessing }
 JoinSection >> fillStyleFor: rect [
 	"Answer the fillStyle to use for the given rectangle."
-	
+
 	^self src color = self dst color
 		ifTrue: [self src color]
 		ifFalse: [(GradientFillStyle ramp: {0.0 -> self src color. 1.0 -> self dst color})
@@ -315,7 +315,7 @@ JoinSection >> removalHighlightColor [
 { #category : #accessing }
 JoinSection >> removalHighlightColor: anObject [
 	removalHighlightColor := anObject.
-	self updateHighlights.
+	self updateHighlights
 ]
 
 { #category : #accessing }

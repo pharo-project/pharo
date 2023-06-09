@@ -3,11 +3,11 @@ A trait to setUp refactorings for tests purposes
 "
 Trait {
 	#name : #TSetUpRefactorings,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Data'
 }
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupExtractionClassFor: aRefactoring toReturn: aClass [ 
+TSetUpRefactorings >> setupExtractionClassFor: aRefactoring toReturn: aClass [
 	| options |
 	options := aRefactoring options copy.
 	options at: #extractionClass
@@ -16,7 +16,7 @@ TSetUpRefactorings >> setupExtractionClassFor: aRefactoring toReturn: aClass [
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [ 
+TSetUpRefactorings >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [
 	| options |
 	options := aRefactoring options copy.
 	options at: #implementorToInline put: [:ref :imps | anObject].
@@ -24,7 +24,7 @@ TSetUpRefactorings >> setupImplementorToInlineFor: aRefactoring toReturn: anObje
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [ 
+TSetUpRefactorings >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
 	| options |
 	options := aRefactoring options copy.
 	options at: #inlineExpression put: [:ref :string | aBoolean].
@@ -32,12 +32,12 @@ TSetUpRefactorings >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean 
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector [ 
+TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 	| options |
 	options := aRefactoring options copy.
 	options at: #methodName
-		put: 
-			[:aMethodName :ref | 
+		put:
+			[:aMethodName :ref |
 			aMethodName
 				selector: aSelector;
 				yourself].
@@ -45,12 +45,12 @@ TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection [ 
+TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection [
 	| options |
 	options := aRefactoring options copy.
 	options at: #methodName
-		put: 
-			[ :aMethodName :ref | 
+		put:
+			[ :aMethodName :ref |
 			aMethodName
 				selector: aSelector;
 				arguments: stringCollection;
@@ -59,7 +59,7 @@ TSetUpRefactorings >> setupMethodNameFor: aRefactoring toReturn: aSelector withA
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [ 
+TSetUpRefactorings >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [
 	| options |
 	options := aRefactoring options copy.
 	options at: #searchInWholeHierarchy put: [ :ref :cls | aBoolean ].
@@ -67,7 +67,7 @@ TSetUpRefactorings >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBool
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [ 
+TSetUpRefactorings >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
 	| options |
 	options := aRefactoring options copy.
 	options at: #selfArgumentName put: [:ref | aString].
@@ -75,7 +75,7 @@ TSetUpRefactorings >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [ 
+TSetUpRefactorings >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [
 	| options |
 	options := aRefactoring options copy.
 	options at: #useExistingMethod put: [ :ref :cls | aBoolean ].
@@ -83,7 +83,7 @@ TSetUpRefactorings >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aB
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupVariableToMoveToFor: aRefactoring toReturn: aString [ 
+TSetUpRefactorings >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
 	| options |
 	options := aRefactoring options copy.
 	options at: #selectVariableToMoveTo put: [:ref :class :selector | aString].
@@ -91,7 +91,7 @@ TSetUpRefactorings >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
 ]
 
 { #category : #'set up' }
-TSetUpRefactorings >> setupVariableTypesFor: aRefactoring toReturn: anObject [ 
+TSetUpRefactorings >> setupVariableTypesFor: aRefactoring toReturn: anObject [
 	| options |
 	options := aRefactoring options copy.
 	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].

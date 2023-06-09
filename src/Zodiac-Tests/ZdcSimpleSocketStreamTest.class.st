@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #testing }
-ZdcSimpleSocketStreamTest class >> isAbstract [ 
+ZdcSimpleSocketStreamTest class >> isAbstract [
 	^ false
 ]
 
 { #category : #accessing }
 ZdcSimpleSocketStreamTest >> socketStreamClass [
-	^ ZdcSimpleSocketStream 
+	^ ZdcSimpleSocketStream
 ]

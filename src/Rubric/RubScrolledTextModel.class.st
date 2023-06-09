@@ -25,12 +25,12 @@ RubScrolledTextModel >> acceptEdits [
 
 { #category : #'text managing' }
 RubScrolledTextModel >> acceptEditsInView [
-	self reconfigureViewWith:  [ :view | 
+	self reconfigureViewWith:  [ :view |
 		view textArea announce: (RubTextAcceptRequest morph: view textArea) ]
 ]
 
 { #category : #accessing }
-RubScrolledTextModel >> announce: anAnnouncement [ 
+RubScrolledTextModel >> announce: anAnnouncement [
 	self announcer announce: anAnnouncement
 ]
 
@@ -40,7 +40,7 @@ RubScrolledTextModel >> announcer [
 ]
 
 { #category : #binding }
-RubScrolledTextModel >> bindingOf: aString [ 
+RubScrolledTextModel >> bindingOf: aString [
 	^ interactionModel ifNotNil:  [ interactionModel bindingOf: aString  ]
 ]
 
@@ -77,7 +77,7 @@ RubScrolledTextModel >> defaultAnnouncer [
 ]
 
 { #category : #accessing }
-RubScrolledTextModel >> defaultAnnouncerClass [ 
+RubScrolledTextModel >> defaultAnnouncerClass [
 	^Announcer
 ]
 
@@ -93,7 +93,7 @@ RubScrolledTextModel >> doItReceiver [
 
 { #category : #formatting }
 RubScrolledTextModel >> formatSourceCode [
-	self interactionModel formatSourceCode .
+	self interactionModel formatSourceCode
 ]
 
 { #category : #'view updating' }
@@ -133,8 +133,13 @@ RubScrolledTextModel >> interactionModel [
 ]
 
 { #category : #accessing }
-RubScrolledTextModel >> interactionModel: anObject [ 	
+RubScrolledTextModel >> interactionModel: anObject [
 	interactionModel := anObject
+]
+
+{ #category : #testing }
+RubScrolledTextModel >> isScripting [
+	^interactionModel isScripting
 ]
 
 { #category : #menu }
@@ -168,7 +173,7 @@ RubScrolledTextModel >> selectedClassOrMetaClass [
 ]
 
 { #category : #'text managing' }
-RubScrolledTextModel >> setInitialText: aText [ 
+RubScrolledTextModel >> setInitialText: aText [
 	self setText:  aText.
 	self clearUserEdits.
 	^ true
@@ -182,7 +187,7 @@ RubScrolledTextModel >> setPrimarySelectionInterval: anInterval [
 ]
 
 { #category : #'text managing' }
-RubScrolledTextModel >> setText: aText [ 
+RubScrolledTextModel >> setText: aText [
 	self text:  aText.
 	self announcer announce: RubTextUpdatedInModel.
 	^ true

@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 ClyNotebookMorph >> addActions: aCollection [
 
-	self toolbarMorph 
+	self toolbarMorph
 		removeAllMorphs;
 		addAllMorphs: aCollection
 ]
@@ -25,13 +25,13 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 		vResizing: #spaceFill.
 	self pages add: aMorph.
 	aMorph privateOwner: self.
-	
+
 	index := self pages indexOf: aMorph.
 	self tabSelectorMorph addTab: aStringOrMorph beforeIndex: index
 ]
 
 { #category : #'adding-removing' }
-ClyNotebookMorph >> addToSelection: aPage [ 
+ClyNotebookMorph >> addToSelection: aPage [
 
 	self selectedPageIndex: (pageMorphs indexOf: aPage)
 ]
@@ -46,9 +46,9 @@ ClyNotebookMorph >> initialize [
 { #category : #private }
 ClyNotebookMorph >> newHeaderMorph [
 
-	^ (self theme newRowIn: self theme for: { self tabSelectorMorph. self toolbarMorph }) 
-		cellInset: 0; 
-		cellPositioning: #bottomCenter; 
+	^ (self theme newRowIn: self theme for: { self tabSelectorMorph. self toolbarMorph })
+		cellInset: 0;
+		cellPositioning: #bottomCenter;
 		borderWidth: 0
 ]
 
@@ -83,17 +83,17 @@ ClyNotebookMorph >> postAddPage: aPage [
 ]
 
 { #category : #'adding-removing' }
-ClyNotebookMorph >> removeFromSelection: aPage [ 
+ClyNotebookMorph >> removeFromSelection: aPage [
 
 	self selectedPageIndex = (pageMorphs indexOf: aPage)
-		ifTrue: [ self selectedPageIndex: 0 ].
+		ifTrue: [ self selectedPageIndex: 0 ]
 ]
 
 { #category : #theme }
 ClyNotebookMorph >> themeChanged [
 
 	super themeChanged.
-	self toolbarMorph 
+	self toolbarMorph
 		fillStyle: (SolidFillStyle color: self theme baseColor);
 		borderColor: self theme baseColor.
 	self tabSelectorMorph
@@ -108,7 +108,7 @@ ClyNotebookMorph >> toolbarMorph [
 ]
 
 { #category : #accessing }
-ClyNotebookMorph >> useSortedTabsBy: aBlock [ 
-	
+ClyNotebookMorph >> useSortedTabsBy: aBlock [
+
 	self pageMorphs: (SortedCollection sortBlock: aBlock)
 ]

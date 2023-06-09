@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReCodeCruftLeftInMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'CodeCruftLeftInMethodsRule'
 ]
 
@@ -33,7 +33,7 @@ ReCodeCruftLeftInMethodsRule >> anchorFor: aNode [
 	"we do not use the method of the superclass as it hightlights far too much"
     ^ ReIntervalSourceAnchor
             entity: aNode
-            interval: (1 to: aNode methodNode selector size).
+            interval: (1 to: aNode methodNode selector size)
 ]
 
 { #category : #private }
@@ -45,9 +45,8 @@ ReCodeCruftLeftInMethodsRule >> debuggingPatterns [
 
 { #category : #private }
 ReCodeCruftLeftInMethodsRule >> debuggingSelectors [
-	
-	^ (Object allSelectorsInProtocol: 'flagging'),
-	(Object allSelectorsInProtocol: 'debugging')
+
+	^ (Object allSelectorsInProtocol: 'flagging') , (Object allSelectorsInProtocol: 'debugging')
 ]
 
 { #category : #accessing }
@@ -95,12 +94,12 @@ ReCodeCruftLeftInMethodsRule >> patternForKeywordSelector: selector [
 		str nextPutAll: '`@object '.
 		index := 1.
 		selector keywords
-			do: [ :keyword | 
+			do: [ :keyword |
 				str
 					nextPutAll: keyword;
 					nextPutAll: ' `@arg';
 					print: index ]
-			separatedBy: [ 
+			separatedBy: [
 				index := index + 1.
 				str space ] ]
 ]

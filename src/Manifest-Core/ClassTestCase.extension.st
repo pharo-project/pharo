@@ -4,7 +4,7 @@ Extension { #name : #ClassTestCase }
 ClassTestCase >> assertValidLintRule: aLintRule [
 	| runner |
 	runner := ReSmalllintChecker new.
-	runner 
+	runner
 		rule: {aLintRule};
 		environment: self targetClassEnvironment;
 		run.
@@ -15,5 +15,5 @@ ClassTestCase >> assertValidLintRule: aLintRule [
 
 { #category : #'*Manifest-Core' }
 ClassTestCase >> targetClassEnvironment [
-	^RBClassEnvironment class: self targetClass.
+	^RBClassEnvironment class: self targetClass
 ]

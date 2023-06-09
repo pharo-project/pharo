@@ -14,11 +14,11 @@ Class {
 { #category : #private }
 KMShortcutPrinter class >> createSymbolTable [
 
-	^ Dictionary newFromPairs: { 
+	^ Dictionary newFromPairs: {
 		#Cmd. 		(Character value: 16r2318) asString.
 		#Meta. 	(Character value: 16r2318) asString.
-		#Alt. 		(Character value: 16r2325) asString. 
-		#Ctrl.  	(Character value: 16r2303) asString. 
+		#Alt. 		(Character value: 16r2325) asString.
+		#Ctrl.  	(Character value: 16r2303) asString.
 		#Shift. 	(Character value: 16r21E7) asString.
 		#Enter. 	(Character value: 16r23ce) asString }
 ]
@@ -32,8 +32,8 @@ KMShortcutPrinter class >> symbolTable [
 { #category : #private }
 KMShortcutPrinter class >> symbolTableAt: anObject ifAbsent: aBlock [
 
-	^ self symbolTable 
-		at: anObject 
+	^ self symbolTable
+		at: anObject
 		ifAbsent: aBlock
 ]
 
@@ -45,12 +45,12 @@ KMShortcutPrinter class >> toString: aShortcut [
 
 { #category : #private }
 KMShortcutPrinter >> basicModifierStringsOf: aShortcut [
-		
+
 	^ (aShortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth]
 ]
 
 { #category : #visiting }
-KMShortcutPrinter >> mapSpecialCharacter: char [ 
+KMShortcutPrinter >> mapSpecialCharacter: char [
 
 	char = KeyboardKey enter ifTrue: [ ^ 'Enter' ].
 	char = (KeyboardKey fromCharacter: Character space) ifTrue: [ ^ 'Space' ].
@@ -60,15 +60,15 @@ KMShortcutPrinter >> mapSpecialCharacter: char [
 { #category : #private }
 KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	| modifiers |
-	
+
 	modifiers := self basicModifierStringsOf: aShortcut.
 	modifiers replaceAll: 'Meta' with: 'Ctrl'.
-	
+
 	"Ensure shift is first"
-	((modifiers includes: 'Shift') 
+	((modifiers includes: 'Shift')
 		and: [ modifiers first ~= 'Shift' ])
 		ifTrue: [ modifiers := (modifiers copyWithout: 'Shift') copyWithFirst: 'Shift' ].
-	
+
 	^ modifiers
 ]
 
@@ -83,8 +83,8 @@ KMShortcutPrinter >> visitSingleShortcut: aShortcut [
 
 	| char |
 	char := self mapSpecialCharacter: aShortcut platformCharacter.
-	^ String streamContents: [ :stream | 
-		(self shortcutModifiersOf: aShortcut) ifNotEmpty: [ :modifiers |  
+	^ String streamContents: [ :stream |
+		(self shortcutModifiersOf: aShortcut) ifNotEmpty: [ :modifiers |
 			modifiers
 			  do: [ :each | stream << each ]
 			  separatedBy: [ stream << '+' ].

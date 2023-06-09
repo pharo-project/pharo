@@ -54,7 +54,7 @@ ClapDocumentationFormatter >> section: titleString with: contentsBlock [
 	| contents |
 	contents := self class new.
 	contentsBlock value: contents.
-	
+
 	contents isEmpty ifFalse: [
 		stream
 			nextPutAll: titleString; nextPut: $:;

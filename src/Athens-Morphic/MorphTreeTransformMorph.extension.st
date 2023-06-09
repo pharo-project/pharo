@@ -8,11 +8,11 @@ MorphTreeTransformMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 		transformBy: self transform
 		withClip: clip
 		in: self innerBounds
-		during: [ :canvas | 
+		during: [ :canvas |
 			| top bottom |
 			top := self topVisibleRowForCanvas: canvas.
 			bottom := self bottomVisibleRowForCanvas: canvas startingAt: top.
-			bottom to: top by: -1 do: [ :row | 
+			bottom to: top by: -1 do: [ :row |
 				| m |
 				m := submorphs basicAt: row.
 				self drawRawColorOn: anAthensCanvas asCanvasWrapper forSubmorph: m.

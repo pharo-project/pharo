@@ -29,7 +29,7 @@ WorldMorph class >> addExtraWorld: aWorld [
 { #category : #accessing }
 WorldMorph class >> allowDropFiles [
 	"If this option is set to false, the world morph will no longer be able to receive droped files. This help to protect private code while deploying an application."
-	
+
 	^ AllowDropFiles ifNil: [ AllowDropFiles := true ]
 ]
 
@@ -50,8 +50,8 @@ WorldMorph class >> cursorOwnerWorld [
 
 { #category : #'extra worlds' }
 WorldMorph class >> cursorOwnerWorld: aWorld [
-	
-	CursorOwnerWorld := aWorld.
+
+	CursorOwnerWorld := aWorld
 ]
 
 { #category : #setting }
@@ -73,9 +73,9 @@ WorldMorph class >> displayScaleFactor: aNumber [
 ]
 
 { #category : #setting }
-WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [ 
+WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder range: #scaleFactor)
 		parent: #appearance;
 		order: 3;
@@ -89,14 +89,14 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 { #category : #updating }
 WorldMorph class >> doOneCycle [
 
-	WorldState doDrawCycleWith: [ 
+	WorldState doDrawCycleWith: [
 		| extraWorldsToDraw |
-		extraWorldsToDraw := ExtraWorldListMutex critical: [ 
+		extraWorldsToDraw := ExtraWorldListMutex critical: [
 			                     self extraWorldList ].
 		extraWorldsToDraw do: [ :world | world doOneCycle ].
 
-		(self currentWorld isNotNil and: [ 
-			 (extraWorldsToDraw includes: self currentWorld) not ]) ifTrue: [ 
+		(self currentWorld isNotNil and: [
+			 (extraWorldsToDraw includes: self currentWorld) not ]) ifTrue: [
 			self currentWorld doOneCycle ] ]
 ]
 
@@ -108,7 +108,7 @@ WorldMorph class >> extraWorldList [
 
 { #category : #'class initialization' }
 WorldMorph class >> initialize [
-	ExtraWorldListMutex := Semaphore forMutualExclusion.
+	ExtraWorldListMutex := Semaphore forMutualExclusion
 ]
 
 { #category : #'extra worlds' }
@@ -116,18 +116,18 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	ExtraWorldListMutex critical: [
 		ExtraWorldList := self extraWorldList copyWithout: aWorld.
 	].
-	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ].
+	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
 ]
 
 { #category : #setting }
 WorldMorph class >> scaleFactor [
-	
+
 	^ World scaleFactor
 ]
 
 { #category : #setting }
 WorldMorph class >> scaleFactor: aValue [
-	
+
 	World scaleFactor: aValue
 ]
 
@@ -158,14 +158,14 @@ WorldMorph >> actualScreenSize [
 { #category : #'alarms - scheduler' }
 WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"
-	worldState addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime.
+	worldState addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime
 ]
 
 { #category : #'submorphs - add/remove' }
 WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
-	array do: [:m | self startSteppingSubmorphsOf: m]
+	array do: [ :m | m startSteppingSubmorphs ]
 ]
 
 { #category : #'world state' }
@@ -214,9 +214,10 @@ WorldMorph >> becomeActiveDuring: aBlock [
 	ActiveWorld := self.
 	aBlock
 		on: Error
-		do: [ :ex | 
+		do: [ :ex |
 			ActiveWorld := priorWorld.
-			ex pass ]
+			ex pass ].
+	ActiveWorld := priorWorld
 ]
 
 { #category : #'meta-actions' }
@@ -242,31 +243,37 @@ WorldMorph >> contentsMenu: aMenu [
 	expanded := self windowsSatisfying: [ :w | w isCollapsed not ].
 	collapsed := self windowsSatisfying: [ :w | w isCollapsed ].
 	(expanded asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
-		do: [ :w | 
+		do: [ :w |
 			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #activateAndForceLabelToShow.
-			aMenu lastItem icon: w taskbarIcon.
-			w model canDiscardEdits 
+			aMenu lastItem icon: (self iconNamed: w taskbarIconName).
+			w model canDiscardEdits
 				ifFalse: [ aMenu lastItem color: Color red ] ].
 	aMenu addLine.
 	(collapsed asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
-		do: [ :w | 
+		do: [ :w |
 			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #collapseOrExpand.
-			aMenu lastItem icon: w taskbarIcon.
+			aMenu lastItem icon: (self iconNamed: w taskbarIconName).
 			w model canDiscardEdits
 				ifFalse: [ aMenu lastItem color: Color red ] ].
 	aMenu addLine.
 	((self submorphs reject: [ :sm | (expanded includes: sm) or: [ collapsed includes: sm ] ])
 		asSortedCollection: [ :w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name ])
-		do: [ :w | 
+		do: [ :w |
 			aMenu add: (self truncatedMenuLabelFor: w class name) target: w selector: #comeToFront.
-			aMenu lastItem icon: w taskbarIcon ].
-		
+			aMenu lastItem icon: (self iconNamed: w taskbarIconName) ].
+
 	^ aMenu
 ]
 
 { #category : #'menu & halo' }
 WorldMorph >> contentsMenuTitle [
 	^ 'World contents' translated
+]
+
+{ #category : #screenshot }
+WorldMorph >> copyRectangle: aRectangle into: aForm [
+
+	^ worldState worldRenderer copyRectangle: aRectangle into: aForm
 ]
 
 { #category : #'world state' }
@@ -295,7 +302,7 @@ WorldMorph >> discoveredWorldMenu [
 { #category : #accessing }
 WorldMorph >> displayArea [
 
-	^ self worldState worldRenderer usableArea.
+	^ self worldState worldRenderer usableArea
 ]
 
 { #category : #geometry }
@@ -312,7 +319,7 @@ WorldMorph >> displayWorld [
 
 { #category : #'world state' }
 WorldMorph >> displayWorldSafely [
-	worldState displayWorldSafely: self.
+	worldState displayWorldSafely: self
 ]
 
 { #category : #'world state' }
@@ -323,13 +330,13 @@ WorldMorph >> doOneCycle [
 { #category : #'interaction loop' }
 WorldMorph >> doOneCycleNow [
 	"see the comment in doOneCycleNowFor:"
-	worldState doOneCycleFor: self.
+	worldState doOneCycleFor: self
 ]
 
 { #category : #geometry }
 WorldMorph >> extent: aPoint [
 	super extent: aPoint.
-	worldState viewBox ifNotNil: [ 
+	worldState viewBox ifNotNil: [
 		worldState invalidate ]
 ]
 
@@ -380,10 +387,10 @@ WorldMorph >> handsReverseDo: aBlock [
 ]
 
 { #category : #initialization }
-WorldMorph >> initialize [ 
+WorldMorph >> initialize [
 	worldState := WorldState new.
  	super initialize.
-	
+
 	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
 ]
 
@@ -401,7 +408,7 @@ WorldMorph >> isCursorOwner [
 
 { #category : #'world menu' }
 WorldMorph >> isEasySelecting [
-	"This is to isolate easySelection predicate. 
+	"This is to isolate easySelection predicate.
 	Selectors in holders make no sense so we are limiting easy
 	selection to the worldMorph.
 	It would also make sense in playfield so feel free to adjust this
@@ -443,19 +450,19 @@ WorldMorph >> printOn: aStream [
 
 { #category : #private }
 WorldMorph >> privateMoveBy: delta [
-	super privateMoveBy: delta.
+	super privateMoveBy: delta
 ]
 
 { #category : #'event handling' }
 WorldMorph >> releaseCachedState [
 	super releaseCachedState.
-	self cleanseStepList.
+	self cleanseStepList
 ]
 
 { #category : #'alarms - scheduler' }
 WorldMorph >> removeAlarm: aSelector for: aTarget [
 	"Remove the alarm with the given selector"
-	
+
 	worldState removeAlarm: aSelector for: aTarget
 ]
 
@@ -468,6 +475,18 @@ WorldMorph >> removeHand: aHandMorph [
 	aHandMorph dropMorphs.
 	self invalidRect: aHandMorph fullBounds.
 	worldState removeHand: aHandMorph
+]
+
+{ #category : #'event handling' }
+WorldMorph >> requestStopTextEditing [
+
+	self worldState worldRenderer requestStopTextEditing
+]
+
+{ #category : #'event handling' }
+WorldMorph >> requestTextEditingAt: aRectangle [
+
+	self worldState worldRenderer requestTextEditingAt: aRectangle
 ]
 
 { #category : #'world state' }
@@ -501,7 +520,7 @@ WorldMorph >> startStepping: aMorph [
 
 { #category : #stepping }
 WorldMorph >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
-	worldState startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime.
+	worldState startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime
 ]
 
 { #category : #stepping }
@@ -577,13 +596,13 @@ WorldMorph >> wantsDirectionHandles [
 { #category : #'event handling' }
 WorldMorph >> wantsDropFiles: anEvent [
 	"We check if the WorldMorph is configured to be able to receive droped files. During the deployment of an application this option might be disabled."
-	
+
 	^ self class allowDropFiles
 ]
 
 { #category : #private }
 WorldMorph >> wantsDroppedMorph: aMorph event: evt [
-	
+
 	^ true
 ]
 
@@ -594,7 +613,7 @@ WorldMorph >> wantsWindowEvent: anEvent [
 
 { #category : #structure }
 WorldMorph >> world [
-	
+
 	^self
 ]
 
@@ -605,6 +624,6 @@ WorldMorph >> worldMenu [
 
 { #category : #accessing }
 WorldMorph >> worldState [
-	
+
 	^ worldState
 ]

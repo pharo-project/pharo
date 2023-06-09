@@ -5,6 +5,7 @@ requestor <Object> usually a textEditor. This can be used to bind editor variabl
 failBlock <BlockClosure> block with non local return used to abort the compilation (like an exception).
 noPattern <Boolean> false if compiling a method which has selector and arguments at the beginning (the so-called pattern) and true if compiling something without selector and arguments (such as a DoIt).
 class <Behavior> the behavior in which the code is compiled into (used to know inst var names & methodClass for example)
+semanticScope <SemapticScope> defines the meaning of the code which is compiled into (used to know inst var names & methodClass for example)
 logged <Boolean> true if the sources will be logged in external logging system (change file, epicea, ...)
 interactive <Boolean> Interactive mode is typically used in the IDE (showing errors when compiling code inlined,  pop-ups for some errors/warnings, ...), non-interactive mode is used for headless & code loading to compile code by logging into stdout or Transcript but no interaction required by the user.
 options <Set of Symbols> See optionsDescription method comment class side
@@ -15,13 +16,6 @@ Class {
 	#name : #CompilationContext,
 	#superclass : #Object,
 	#instVars : [
-		'requestor',
-		'failBlock',
-		'noPattern',
-		'class',
-		'logged',
-		'interactive',
-		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -29,19 +23,27 @@ Class {
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
 		'bytecodeGeneratorClass',
-		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
+		'astParseTransformPlugins',
 		'requestorScopeClass',
 		'bindings',
-		'compiledMethodClass'
+		'compiledMethodClass',
+		'semanticScope'
 	],
 	#classVars : [
 		'DefaultOptions',
+		'DefaultParseTransformationPlugins',
 		'DefaultTransformationPlugins'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
+
+{ #category : #adding }
+CompilationContext class >> addDefaultParseTransformationPlugin: aPlugin [
+
+	self defaultParseTransformationPlugins add: aPlugin
+]
 
 { #category : #adding }
 CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
@@ -79,7 +81,7 @@ CompilationContext class >> compilerSettingsOn: aBuilder [
 ]
 
 { #category : #'instance creation' }
-CompilationContext class >> default [ 
+CompilationContext class >> default [
 	^ self new
 		setOptions: self defaultOptions copy;
 		yourself
@@ -87,12 +89,21 @@ CompilationContext class >> default [
 
 { #category : #options }
 CompilationContext class >> defaultOptions [
-	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self fallBackDefaultOptions ]
+	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self initialDefaultOptions ]
+]
+
+{ #category : #accessing }
+CompilationContext class >> defaultParseTransformationPlugins [
+
+	^ DefaultParseTransformationPlugins
+		ifNil: [ DefaultParseTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : #accessing }
 CompilationContext class >> defaultTransformationPlugins [
-	^ DefaultTransformationPlugins ifNil: [ DefaultTransformationPlugins := OrderedCollection new ]
+
+	^ DefaultTransformationPlugins ifNil: [
+		DefaultTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -101,7 +112,8 @@ CompilationContext class >> defaultTransformationPlugins: anObject [
 ]
 
 { #category : #options }
-CompilationContext class >> fallBackDefaultOptions [
+CompilationContext class >> initialDefaultOptions [
+	"Skip the comment of each option"
 	^ (self optionsDescription collect: [ :each | each allButLast ]) flattened
 ]
 
@@ -109,6 +121,16 @@ CompilationContext class >> fallBackDefaultOptions [
 CompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
 	DefaultTransformationPlugins := OrderedCollection new
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter [
+	^ self readDefaultOption: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
+	^ self writeDefaultOption: #optionBlockClosureOptionalOuter value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -122,13 +144,13 @@ CompilationContext class >> optionCleanBlockClosure: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources [
-	^ self readDefaultOption: #optionEmbeddSources
+CompilationContext class >> optionConstantBlockClosure [
+	^ self readDefaultOption: #optionConstantBlockClosure
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources: aBoolean [
-	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
+CompilationContext class >> optionConstantBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -231,6 +253,20 @@ CompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
 	^ self writeDefaultOption: #optionLongIvarAccessBytecodes value: aBoolean
 ]
 
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends [
+
+	^ self readDefaultOption: #optionOptimiseSpecialSends
+]
+
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends: aBoolean [
+
+	^ self
+		  writeDefaultOption: #optionOptimiseSpecialSends
+		  value: aBoolean
+]
+
 { #category : #'options - settings API' }
 CompilationContext class >> optionOptimizeIR [
 	^ self readDefaultOption: #optionOptimizeIR
@@ -274,29 +310,31 @@ CompilationContext class >> optionSkipSemanticWarnings: aBoolean [
 { #category : #options }
 CompilationContext class >> optionsDescription [
 	"Default options are held by DefaultOptions class variable.
-	 The description of default options here is only used as a 
+	 The description of default options here is only used as a
 	 fall-back if DefaultOptions is not initialized (bootstrap, ...)"
-	
+
 	"each entry is fall-back default value (+/-), option name, description"
 	^ #(
+	(+ optionOptimiseSpecialSends 'Use optimised bytecodes for special selectors. These bytecodes hint the VM to do static type predictions')
 	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
 	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
 	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
 	(+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
 	(+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
 	(+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
-	(- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
-	(- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
+	(+ optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
+	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
-	
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
+
+	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
+	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
 	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
 	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
-		
+
 	)
 ]
 
@@ -312,19 +350,33 @@ CompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
 
 { #category : #'options - settings API' }
 CompilationContext class >> writeDefaultOption: option value: boolean [
-	boolean 
+	boolean
 		ifTrue: [ self defaultOptions add: option ]
 		ifFalse: [ self defaultOptions remove: option ifAbsent: []]
 ]
 
 { #category : #plugins }
 CompilationContext >> addASTTransformationPlugin: aPlugin [
+
 	astTransformPlugins add: aPlugin
 ]
 
 { #category : #plugins }
+CompilationContext >> addParseASTTransformationPlugin: aPlugin [
+
+	astParseTransformPlugins add: aPlugin
+]
+
+{ #category : #plugins }
+CompilationContext >> astParseTransformPlugins [
+
+	^ astParseTransformPlugins
+]
+
+{ #category : #plugins }
 CompilationContext >> astTransformPlugins [
-	^astTransformPlugins
+
+	^ astTransformPlugins
 ]
 
 { #category : #accessing }
@@ -361,24 +413,14 @@ CompilationContext >> bytecodeGeneratorClass: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> class: anObject [
-	class := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod [
-	^ compiledMethod
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod: anObject [
-	compiledMethod := anObject
+CompilationContext >> class: aClass [
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : #accessing }
 CompilationContext >> compiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
-	^ compiledMethodClass ifNil: [ 
+	^ compiledMethodClass ifNil: [
 		self productionEnvironment
 			at: #CompiledMethod
 			ifAbsent: [ CompiledMethod ] ]
@@ -387,18 +429,8 @@ CompilationContext >> compiledMethodClass [
 { #category : #accessing }
 CompilationContext >> compiledMethodClass: aCompiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
-	
+
 	compiledMethodClass := aCompiledMethodClass
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer [
-	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer: anObject [
-	compiledMethodTrailer := anObject
 ]
 
 { #category : #options }
@@ -418,7 +450,7 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := self getClass environment ]
+	^ environment ifNil: [ environment := semanticScope environment ]
 ]
 
 { #category : #accessing }
@@ -426,55 +458,30 @@ CompilationContext >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #accessing }
-CompilationContext >> failBlock [
-	^ failBlock
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock: anObject [
-	failBlock := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> getClass [
-	^ class ifNil: [ UndefinedObject ]
-]
-
 { #category : #initialization }
 CompilationContext >> initialize [
+
 	options := Set new.
-	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins
-]
-
-{ #category : #accessing }
-CompilationContext >> interactive [
-	^ interactive ifNil: [ false ]
-]
-
-{ #category : #accessing }
-CompilationContext >> interactive: anObject [
-	interactive := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> logged [
-	^logged ifNil: [ false ].
-]
-
-{ #category : #accessing }
-CompilationContext >> logged: anObject [
-	logged := anObject
+	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
+	astParseTransformPlugins := OrderedCollection withAll: self class defaultParseTransformationPlugins.
+	semanticScope := OCMethodSemanticScope targetingClass: nil class
 ]
 
 { #category : #accessing }
 CompilationContext >> noPattern [
-	^noPattern ifNil: [ false ].
+	^semanticScope isDoItScope
 ]
 
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
-	noPattern := anObject
+
+	(anObject and: [ self noPattern not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
+]
+
+{ #category : #options }
+CompilationContext >> optionBlockClosureOptionalOuter [
+	^ options includes: #optionBlockClosureOptionalOuter
 ]
 
 { #category : #options }
@@ -483,8 +490,8 @@ CompilationContext >> optionCleanBlockClosure [
 ]
 
 { #category : #options }
-CompilationContext >> optionEmbeddSources [
-	^ options includes: #optionEmbeddSources
+CompilationContext >> optionConstantBlockClosure [
+	^ options includes: #optionConstantBlockClosure
 ]
 
 { #category : #options }
@@ -538,6 +545,11 @@ CompilationContext >> optionLongIvarAccessBytecodes [
 ]
 
 { #category : #options }
+CompilationContext >> optionOptimiseSpecialSends [
+	^ options includes: #optionOptimiseSpecialSends
+]
+
+{ #category : #options }
 CompilationContext >> optionOptimizeIR [
 	^ options includes: #optionOptimizeIR
 ]
@@ -559,6 +571,7 @@ CompilationContext >> optionSkipSemanticWarnings [
 
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
+
 	options parseOptions: optionsArray
 ]
 
@@ -583,16 +596,6 @@ CompilationContext >> productionEnvironment: aDictionary [
 ]
 
 { #category : #accessing }
-CompilationContext >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor: anObject [
-	requestor := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> requestorScopeClass [
 	^ requestorScopeClass ifNil: [ requestorScopeClass := OCRequestorScope ]
 ]
@@ -604,25 +607,6 @@ CompilationContext >> requestorScopeClass: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> scope [
-	| newScope |
-
-	newScope := self getClass.
-	requestor ifNotNil: [
-		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
-		newScope := (self requestorScopeClass new
-			compilationContext: self;
-			requestor: requestor) outerScope: newScope].
-		
-	bindings ifNotNil: [
-		"if we passed additional bindings in, setup a scope here"  
-		newScope := (OCExtraBindingScope  new
-			bindings: bindings) outerScope: newScope].	
-		
-	^newScope
-]
-
-{ #category : #accessing }
 CompilationContext >> semanticAnalyzerClass [
 	^ semanticAnalyzerClass ifNil: [ semanticAnalyzerClass := OCASTSemanticAnalyzer  ]
 ]
@@ -630,6 +614,18 @@ CompilationContext >> semanticAnalyzerClass [
 { #category : #accessing }
 CompilationContext >> semanticAnalyzerClass: anObject [
 	semanticAnalyzerClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> semanticScope [
+
+	^ semanticScope
+]
+
+{ #category : #accessing }
+CompilationContext >> semanticScope: anObject [
+
+	semanticScope := anObject
 ]
 
 { #category : #options }

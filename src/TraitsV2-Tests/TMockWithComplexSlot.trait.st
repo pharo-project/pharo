@@ -18,7 +18,6 @@ TMockWithComplexSlot >> complexSlot [
 { #category : #initialization }
 TMockWithComplexSlot >> initialize [
 
-	super initialize.	
+	super initialize.
 	self class initializeSlots: self
-
 ]

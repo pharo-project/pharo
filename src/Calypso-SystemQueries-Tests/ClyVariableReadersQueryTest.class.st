@@ -30,7 +30,7 @@ ClyVariableReadersQueryTest >> targetVarName [
 ClyVariableReadersQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: self class >> #reader1OfVar1 in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope of: self class >> #writerOfVar1 in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -39,8 +39,8 @@ ClyVariableReadersQueryTest >> testCheckIfEmpty [
 ClyVariableReadersQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
-	
-	self assert: resultItems size equals: 2.	
+
+	self assert: resultItems size equals: 2.
 	self assert: foundSelectors equals: #(reader1OfVar1 reader2OfVar1)
 ]
 
@@ -56,8 +56,8 @@ ClyVariableReadersQueryTest >> testFromMethodScope [
 ClyVariableReadersQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: foundSelectors equals: #(reader1OfVar1 reader2OfVar1 supeclassReaderOfVar1)
 ]
 

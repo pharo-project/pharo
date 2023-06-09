@@ -80,7 +80,7 @@ ClySystemEnvironmentTest >> testIsFluidClassDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
-	
+
 	self deny:
 		(dummySystemEnvironment isFluidClassDefinition: 'Trait << #TMyTrait
 	traits: {};
@@ -112,7 +112,7 @@ ClySystemEnvironmentTest >> testIsFluidDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
-	
+
 	self assert:
 		(dummySystemEnvironment isFluidDefinition: 'Trait << #TMyTrait
 	traits: {};
@@ -177,7 +177,7 @@ ClySystemEnvironmentTest >> testIsOldTraitDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
-	
+
 	self deny: (dummySystemEnvironment isOldTraitDefinition:
 			 'Trait << #TMyTrait
 	traits: {};
@@ -209,14 +209,14 @@ ClySystemEnvironmentTest >> testIsTraitDefinition [
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''').
-	
+
 	self assert: (dummySystemEnvironment isTraitDefinition:
 			 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Domain''').
-	
+
 	self assert: (dummySystemEnvironment isTraitDefinition:
 			 'Trait named: #TMyTraits
 	traits: {}

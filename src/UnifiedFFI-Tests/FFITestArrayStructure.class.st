@@ -23,9 +23,9 @@ FFITestArrayStructure class >> fieldsDesc [
 ]
 
 { #category : #'class initialization' }
-FFITestArrayStructure class >> initialize [ 
+FFITestArrayStructure class >> initialize [
 	Char5 := FFITypeArray ofType: 'char' size: 5.
-	Byte10 := FFITypeArray ofType: 'byte' size: 10.
+	Byte10 := FFITypeArray ofType: 'byte' size: 10
 ]
 
 { #category : #'accessing - structure variables' }

@@ -81,10 +81,10 @@ MethodDictionaryTest >> keyNotInNonEmptyDict [
 { #category : #setUps }
 MethodDictionaryTest >> modifiedMethodDictionaryCopy [
 	| copy |
-	
+
 	copy := self class methodDict copy.
 	copy at: #methodAddedToIncreaseTheDict put: Object >> #=.
-	^copy.
+	^copy
 ]
 
 { #category : #requirements }
@@ -114,7 +114,7 @@ MethodDictionaryTest >> setUp [
 	super setUp.
 	nonEmptyDict := MethodDictionary new.
 	nonEmptyDict at: #setUp put: (self class >> #setUp).
-	nonEmptyDict at: #nonEmpty put: (self class >> #nonEmpty).
+	nonEmptyDict at: #nonEmpty put: (self class >> #nonEmpty)
 ]
 
 { #category : #requirement }
@@ -146,10 +146,10 @@ MethodDictionaryTest >> testAssociationAtNonexistantKeyExecutesFailBlock [
 MethodDictionaryTest >> testAssociationsDoGoesOverEntireDictionary [
 	| associations |
 	associations := MethodDictionary new.
-	
+
 	self class methodDict associationsDo:[ :association | associations add: association ].
-	
-	self assertPreservesElements: self class methodDict comparedTo: associations.
+
+	self assertPreservesElements: self class methodDict comparedTo: associations
 ]
 
 { #category : #'tests - others' }
@@ -195,7 +195,7 @@ MethodDictionaryTest >> testGrowPreservesElements [
 	growedMethodDictionary := methodDictionary copy; grow; yourself.
 
 	self assertPreservesElements: methodDictionary comparedTo: growedMethodDictionary.
-	self assertPreservesElements: growedMethodDictionary comparedTo: methodDictionary.
+	self assertPreservesElements: growedMethodDictionary comparedTo: methodDictionary
 ]
 
 { #category : #'tests - others' }
@@ -234,7 +234,7 @@ MethodDictionaryTest >> testIdentityKeyAtNonExistantValueReturnsFailBlock [
 { #category : #tests }
 MethodDictionaryTest >> testIncludesKeyLocalyDefined [
 
-	self assert: (self class includesSelector: #testIncludesKeyLocalyDefined).
+	self assert: (self class includesSelector: #testIncludesKeyLocalyDefined)
 ]
 
 { #category : #'tests - others' }
@@ -281,19 +281,19 @@ MethodDictionaryTest >> testRehashPreservesCapacity [
 	oldDictionary := self modifiedMethodDictionaryCopy.
 
 	rehashedDictionary := oldDictionary copy rehash.
-	
-	self assertPreservesCapacity: oldDictionary comparedTo: rehashedDictionary.
+
+	self assertPreservesCapacity: oldDictionary comparedTo: rehashedDictionary
 ]
 
 { #category : #'tests - rehashing' }
 MethodDictionaryTest >> testRehashPreservesElements [
 	| oldDictionary rehashedDictionary |
 	oldDictionary := self modifiedMethodDictionaryCopy.
-	
+
 	rehashedDictionary := oldDictionary copy rehash.
-	
+
 	self assertPreservesElements: oldDictionary comparedTo: rehashedDictionary.
-	self assertPreservesElements: rehashedDictionary comparedTo: oldDictionary.
+	self assertPreservesElements: rehashedDictionary comparedTo: oldDictionary
 ]
 
 { #category : #'tests - removing' }

@@ -63,23 +63,26 @@ ClyOldMessageBrowserAdapter class >> browse: methods title: aString autoSelect: 
 ]
 
 { #category : #opening }
-ClyOldMessageBrowserAdapter class >> browseClasses: classes [ 
+ClyOldMessageBrowserAdapter class >> browseClasses: classes [
 	^ClyQueryBrowserMorph browseClasses: classes
 ]
 
 { #category : #opening }
-ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol [ 
-	^ClyQueryBrowserMorph browseImplementorsOf: aSymbol
+ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol inNameResolver: methodContext [
+
+	^ ClyQueryBrowserMorph
+		  browseImplementorsOf: aSymbol
+		  inNameResolver: methodContext
 ]
 
 { #category : #opening }
-ClyOldMessageBrowserAdapter class >> browseSendersOf: aSymbol [ 
+ClyOldMessageBrowserAdapter class >> browseSendersOf: aSymbol [
 	^ClyQueryBrowserMorph browseSendersOf: aSymbol
 ]
 
 { #category : #'tools registration' }
 ClyOldMessageBrowserAdapter class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]" 
+	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #messageList
 ]
 
@@ -101,7 +104,7 @@ ClyOldMessageBrowserAdapter >> close [
 { #category : #initialization }
 ClyOldMessageBrowserAdapter >> initialize [
 	super initialize.
-	
+
 	title := 'MessageBrowser'
 ]
 
@@ -118,17 +121,17 @@ ClyOldMessageBrowserAdapter >> messages: anObject [
 { #category : #opening }
 ClyOldMessageBrowserAdapter >> open [
 	| query methods comments |
-	methods := messages 
+	methods := messages
 		select: [:each | (each isRingObject and: [ each isMethod ]) or: [ each isCompiledMethod  ] ]
 		thenCollect: [ :each | each compiledMethod ].
-	comments := messages 
+	comments := messages
 		select: [:each | each isRingObject and: [ each isComment  ]]
 		thenCollect: [ :each | ClyClassComment of: each realParent ].
 	query := ClyOldMessageBrowserQuery named: title with: methods asOrderedCollection, comments.
 	query
 		criteriaString: autoSelect;
 		criteriaBlock: refreshingBlock.
-	openedBrowser := ClyQueryBrowserMorph openOn: query.
+	openedBrowser := ClyQueryBrowserMorph openOn: query
 ]
 
 { #category : #accessing }

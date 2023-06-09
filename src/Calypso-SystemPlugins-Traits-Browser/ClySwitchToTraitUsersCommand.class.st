@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClySwitchToTraitUsersCommand class >> canBeExecutedInContext: aToolContext [
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
-	
+
 	^aToolContext isTraitSelected
 ]
 

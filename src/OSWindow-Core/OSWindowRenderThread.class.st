@@ -28,7 +28,7 @@ OSWindowRenderThread class >> animationStep [
 
 { #category : #'session management' }
 OSWindowRenderThread class >> checkSession [
-	RenderSession ~~ Smalltalk session ifTrue: [ 
+	RenderSession ~~ Smalltalk session ifTrue: [
 		UniqueInstance := self new.
 	]
 ]
@@ -94,17 +94,17 @@ OSWindowRenderThread >> animationStep [
 OSWindowRenderThread >> createRenderThread [
 	RenderThreadProcess ifNotNil: [ RenderThreadProcess terminate ].
 	ActiveRenderThreadProcess := nil.
-	
+
 	renderThreadQueue := AtomicSharedQueue new.
 	operationAvailableSemaphore := Semaphore new.
-	
+
 	registeredWindows := WeakSet new.
 	registeredWindowsMutex := Semaphore forMutualExclusion.
-	
+
 	activeRenderThreadProcessMutex := Mutex new.
-	
+
 	RenderThreadProcess := [ self renderThreadProcess ] forkAt: Processor userSchedulingPriority.
-	RenderThreadProcess name:  'OS Window Renderer Loop'; resume.
+	RenderThreadProcess name:  'OS Window Renderer Loop'; resume
 ]
 
 { #category : #'window animation' }
@@ -129,7 +129,7 @@ OSWindowRenderThread >> critical: aBlock [
 
 { #category : #'window animation' }
 OSWindowRenderThread >> destroyedWindow: window [
-	registeredWindowsMutex critical:  [ 
+	registeredWindowsMutex critical:  [
 		registeredWindows remove: window ifAbsent: [ nil ]
 	]
 ]
@@ -165,7 +165,7 @@ OSWindowRenderThread >> enqueueOperation: operation blocking: blocking ifError: 
 	" If this is in the RenderThread, execute directly"
 	| operationHandle |
 	Processor activeProcess == RenderThreadProcess ifTrue: [ ^ operation value ].
-	
+
 	"Enqueue the operation"
 	operationHandle := OSWindowRenderThreadOperation new: operation blocking: blocking.
 	renderThreadQueue nextPut: operationHandle.
@@ -175,7 +175,7 @@ OSWindowRenderThread >> enqueueOperation: operation blocking: blocking ifError: 
 	blocking ifTrue: [
 		operationHandle wait.
 		operationHandle failed ifTrue: aBlock
-	].
+	]
 ]
 
 { #category : #'render thread' }
@@ -184,14 +184,14 @@ OSWindowRenderThread >> executeRenderOperations [
 	[ operation := renderThreadQueue nextOrNil.
 	  operation  ~~ nil ] whileTrue: [
 		operation execute.
-	].
+	]
 ]
 
 { #category : #initialization }
 OSWindowRenderThread >> initialize [
 	super initialize.
 	self createRenderThread.
-	RenderSession := Smalltalk session.
+	RenderSession := Smalltalk session
 ]
 
 { #category : #initialization }
@@ -207,37 +207,37 @@ OSWindowRenderThread >> isThisThread [
 { #category : #'window animation' }
 OSWindowRenderThread >> performAnimationFrames [
 	| windows |
-	
+
 	" Copy the registered windows. "
-	registeredWindowsMutex critical: [ 
+	registeredWindowsMutex critical: [
 		windows := registeredWindows copy.
 	].
 
 	" Try to animate them. "
 	hasAnimatedWindowsInThisPeriod := false.
 	windows do: [ :window |
-		(window isValid) ifTrue: [ 
+		(window isValid) ifTrue: [
 			hasAnimatedWindowsInThisPeriod := true.
 			self doAnimationFrameFor: window.
 		]
-	].
+	]
 ]
 
 { #category : #'render thread' }
 OSWindowRenderThread >> renderThreadProcess [
 	| session |
 	session := Smalltalk session.
-	
+
 	[session == Smalltalk session] whileTrue: [
 		"Execute the enqueued rendering operations"
 		operationAvailableSemaphore consumeAllSignals.
 		self critical: [
 			self executeRenderOperations.
-		
+
 			"Animations must be refreshed periodically"
 			self performAnimationFrames
 		].
-	
+
 		self waitMoreOperations
 	]
 ]
@@ -249,7 +249,7 @@ OSWindowRenderThread >> waitMoreOperations [
 		"TODO: Compute a better time for the Delay. Thedelay is required to give time to threads with a lower priority."
 		(Delay forMilliseconds: self animationStep) wait.
 		operationAvailableSemaphore waitTimeoutMSecs: self animationStep.
-	] ifFalse: [ 
+	] ifFalse: [
 		operationAvailableSemaphore wait.
 	]
 ]

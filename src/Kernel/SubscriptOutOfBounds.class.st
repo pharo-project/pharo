@@ -22,18 +22,18 @@ Class {
 
 { #category : #signaling }
 SubscriptOutOfBounds class >> signalFor: subscript [
-	^ self 
-		signalFor: subscript 
-		lowerBound: nil 
+	^ self
+		signalFor: subscript
+		lowerBound: nil
 		upperBound: nil
 ]
 
 { #category : #signaling }
 SubscriptOutOfBounds class >> signalFor: subscript lowerBound: lowerBound upperBound: upperBound [
-	^ self 
-		signalFor: subscript 
-		lowerBound: lowerBound 
-		upperBound: upperBound 
+	^ self
+		signalFor: subscript
+		lowerBound: lowerBound
+		upperBound: upperBound
 		in: nil
 ]
 
@@ -60,26 +60,28 @@ SubscriptOutOfBounds >> lowerBound: anObject [
 { #category : #accessing }
 SubscriptOutOfBounds >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #printing }
 SubscriptOutOfBounds >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
-		self subscript 
-			ifNil: [
-				stream << 'subscript' ]
-			ifNotNil: [ 
-				stream print: self subscript ].
-		(self lowerBound notNil and: [ self upperBound notNil])
-			ifTrue: [
-				stream << ' is not between '.
-				stream print: self lowerBound.
-				stream << ' and '.
-				stream print: self upperBound ] ]
+		  self subscript
+			  ifNil: [ stream << 'subscript' ]
+			  ifNotNil: [ stream print: self subscript ].
+		  (self lowerBound notNil and: [ self upperBound notNil ]) ifTrue: [
+			  stream
+				  << ' is not between ';
+				  print: self lowerBound;
+				  << ' and ';
+				  print: self upperBound ].
+		  self signaler ifNotNil: [
+			  stream
+				  nextPutAll: ' in ';
+				  print: self signaler ] ]
 ]
 
 { #category : #accessing }

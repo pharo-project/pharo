@@ -132,7 +132,7 @@ OSWindowAttributes >> borderless [
 
 { #category : #accessing }
 OSWindowAttributes >> borderless: anObject [
-	borderless := anObject
+	^ borderless := anObject
 ]
 
 { #category : #accessing }
@@ -142,8 +142,11 @@ OSWindowAttributes >> bounds [
 
 { #category : #accessing }
 OSWindowAttributes >> bounds: aRectangle [
-	position := aRectangle origin.
+
+	self position: aRectangle origin.
 	extent := aRectangle extent.
+	self windowCentered: false.
+	^ aRectangle
 ]
 
 { #category : #private }
@@ -161,7 +164,7 @@ OSWindowAttributes >> extent [
 
 { #category : #accessing }
 OSWindowAttributes >> extent: newExtent [
-	extent := newExtent
+	^ extent := newExtent
 ]
 
 { #category : #accessing }
@@ -247,7 +250,7 @@ OSWindowAttributes >> position [
 
 { #category : #accessing }
 OSWindowAttributes >> position: aPoint [
-	position := aPoint
+	^ position := aPoint
 ]
 
 { #category : #accessing }

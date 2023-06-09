@@ -66,7 +66,7 @@ BasicBehaviorClassMetaclassTest >> testMetaclassSuperclassHierarchy [
 	self assert: Collection class instanceCount equals: 1.
 	self assert: Object class instanceCount equals: 1.
 	self assert: ProtoObject class instanceCount equals: 1.
-	
+
 	s := (OrderedCollection new)
 				add: SequenceableCollection class;
 				add: Collection class;
@@ -94,7 +94,7 @@ BasicBehaviorClassMetaclassTest >> testObjectAllSubclasses [
 BasicBehaviorClassMetaclassTest >> testSuperclass [
 	| s b |
 	s := OrderedCollection new.
-	b := [ :cls | 
+	b := [ :cls |
 	cls
 		ifNotNil: [ s add: cls.
 			b value: cls superclass ] ].

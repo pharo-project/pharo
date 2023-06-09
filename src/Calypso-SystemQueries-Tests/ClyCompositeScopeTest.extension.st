@@ -6,9 +6,9 @@ ClyCompositeScopeTest >> testConvertingToInheritedScope [
 	scope := ClyCompositeScope on: {
 		ClyInstanceSideScope of: Object in: environment.
 		ClyClassSideScope of: Array in: environment}.
-		
+
 	convertedScope := scope asInheritedScope.
-	
+
 	self assert: convertedScope class equals: ClyCompositeScope.
 	self assert: (convertedScope subscopes first representsScope: ClySuperclassScope).
 	self assert: (convertedScope subscopes last representsScope: ClySuperclassScope).
@@ -25,9 +25,9 @@ ClyCompositeScopeTest >> testConvertingToInheritingScope [
 	scope := ClyCompositeScope on: {
 		ClyInstanceSideScope of: Object in: environment.
 		ClyClassSideScope of: Array in: environment}.
-		
+
 	convertedScope := scope asInheritingScope.
-	
+
 	self assert: convertedScope class equals: ClyCompositeScope.
 	self assert: (convertedScope subscopes first representsScope: ClySubclassScope).
 	self assert: (convertedScope subscopes last representsScope: ClySubclassScope).
@@ -41,19 +41,19 @@ ClyCompositeScopeTest >> testConvertingToInheritingScope [
 { #category : #'*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToInterestingClassScope [
 	| convertedScope |
-	scope := ClyCompositeScope on: { 
+	scope := ClyCompositeScope on: {
 		ClySuperclassScope of: String in: environment localScope: ClyInstanceSideScope.
 		ClySubclassScope of: Array in: environment localScope: ClyClassSideScope }.
-	
+
 	convertedScope := scope asInterestingClassScope.
-	
+
 	self assert: convertedScope class equals: ClyCompositeScope.
-	self 
-		assert: convertedScope subscopes asSet 
+	self
+		assert: convertedScope subscopes asSet
 		equals: {
 			ClyInterestingSuperclassScope of: String localScope: ClyInstanceSideScope.
 			ClySubclassScope of: Array localScope: ClyClassSideScope} asSet.
-	self assert: convertedScope environment equals: environment.
+	self assert: convertedScope environment equals: environment
 ]
 
 { #category : #'*Calypso-SystemQueries-Tests' }
@@ -62,9 +62,9 @@ ClyCompositeScopeTest >> testConvertingToInterestingClassScopeShouldKeepScopeNam
 	scope := ClyCompositeScope on: {
 		ClySuperclassScope of: String. ClySubclassScope of: Array}.
 	scope name: 'test scope'.
-	
+
 	convertedScope := scope asInterestingClassScope.
-	
+
 	self assert: convertedScope name equals: 'test scope'
 ]
 
@@ -74,9 +74,9 @@ ClyCompositeScopeTest >> testConvertingToNewMetaLevel [
 	scope := ClyCompositeScope on: {
 		ClyClassScope of: Object in: environment.
 		ClySubclassScope of: Array in: environment}.
-		
+
 	convertedScope := scope withMetaLevel: ClyInstanceSideScope.
-	
+
 	self assert: convertedScope class equals: ClyCompositeScope.
 	self
 		assert: convertedScope subscopes first
@@ -100,8 +100,8 @@ ClyCompositeScopeTest >> testConvertingToNewMetaLevelShouldKeepScopeName [
 		ClyClassScope of: Object in: environment.
 		ClySubclassScope of: Array in: environment}.
 	scope name: 'test scope'.
-		
+
 	convertedScope := scope withMetaLevel: ClyInstanceSideScope.
-	
+
 	self assert: convertedScope name equals: 'test scope'
 ]

@@ -48,7 +48,7 @@ PSMCChangeWrapper >> model: anObject [
 PSMCChangeWrapper >> operation [
 	"Answer the underlying operation."
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

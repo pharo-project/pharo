@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Watches'
 }
 
+{ #category : #testing }
+CounterIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 CounterIconStyler >> iconBlock: aNode [
 	^[ :seg | ExecutionCounter removeFrom: aNode. seg delete]
@@ -14,7 +20,7 @@ CounterIconStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 CounterIconStyler >> iconFor: aNode [
-	^ self iconNamed: #classIcon
+	^ self iconNamed: #class
 ]
 
 { #category : #defaults }

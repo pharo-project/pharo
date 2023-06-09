@@ -53,16 +53,16 @@ NewValueHolder >> handleCircularReferencesWhile: aBlock [
 
 	lock ifTrue: [ ^ self ].
 	lock := true.
-	
-	aBlock ensure: [ lock := false ].
+
+	aBlock ensure: [ lock := false ]
 ]
 
 { #category : #initialization }
 NewValueHolder >> initialize [
 
 	super initialize.
-	
-	lock := false.
+
+	lock := false
 ]
 
 { #category : #testing }
@@ -74,9 +74,9 @@ NewValueHolder >> isValueHolder [
 { #category : #printing }
 NewValueHolder >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
-		nextPutAll: '[ '; 
+
+	aStream
+		nextPutAll: '[ ';
 		print: self value;
 		nextPutAll: ' ]'
 ]
@@ -95,27 +95,27 @@ NewValueHolder >> value [
 
 { #category : #accessing }
 NewValueHolder >> value: anObject [
-	
+
 	self handleCircularReferencesWhile: [ | oldValue |
 		oldValue := value.
 		value := anObject.
-		self valueChanged: oldValue ].
+		self valueChanged: oldValue ]
 ]
 
 { #category : #accessing }
 NewValueHolder >> valueChanged [
-	
+
 	self announcer announce: (ValueChanged newValue: self value)
 ]
 
 { #category : #accessing }
 NewValueHolder >> valueChanged: oldValue [
-	
+
 	self valueChanged: oldValue to: self value
 ]
 
 { #category : #accessing }
 NewValueHolder >> valueChanged: oldValue to: newValue [
-	
+
 	self announcer announce: (ValueChanged oldValue: oldValue newValue: newValue)
 ]

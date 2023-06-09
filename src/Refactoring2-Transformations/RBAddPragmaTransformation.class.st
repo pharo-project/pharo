@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -50,7 +50,7 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 
 	self className: aClassName.
 	selector := aSelector.
-	pragma := aString.
+	pragma := aString
 ]
 
 { #category : #preconditions }
@@ -87,7 +87,7 @@ RBAddPragmaTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddPragmaTransformation >> storeOn: aStream [ 
+RBAddPragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -11,15 +11,15 @@ CheckboxButtonMorph >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas drawShape: self bounds.
 	img := self imageToUse.
 	img
-		ifNotNil: [ 
+		ifNotNil: [
 			anAthensCanvas setPaint: img.
 			anAthensCanvas drawShape: (self innerBounds center - (img extent // 2) extent: img extent) ].
 	((self state == #pressed or: [ self state == #repressed ]) and: [ image isNil ])
-		ifTrue: [ 
+		ifTrue: [
 			anAthensCanvas setPaint: (self paneColor alpha: 0.3).
 			anAthensCanvas drawShape: self innerBounds ].
 	(self enabled not and: [ self theme fadeCheckboxWhenDisabled ])
-		ifTrue: [ 
+		ifTrue: [
 			anAthensCanvas setPaint: (self paneColor alpha: 0.4).
 			anAthensCanvas drawShape: self innerBounds ]
 ]

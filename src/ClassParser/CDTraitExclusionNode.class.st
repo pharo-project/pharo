@@ -11,18 +11,18 @@ Class {
 }
 
 { #category : #accessing }
-CDTraitExclusionNode >> exclusions: aCollection [ 
+CDTraitExclusionNode >> exclusions: aCollection [
 	exclusions := aCollection
 ]
 
 { #category : #testing }
 CDTraitExclusionNode >> isTraitExclusionNode [
-	
+
 	^ true
 ]
 
 { #category : #printing }
 CDTraitExclusionNode >> toString [
 	"should replace Exclusions"
-	^ subject name ,' - ', exclusions asString.
+	^ subject name ,' - ', exclusions asString
 ]

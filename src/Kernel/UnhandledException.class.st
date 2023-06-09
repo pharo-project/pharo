@@ -18,8 +18,8 @@ Class {
 { #category : #handling }
 UnhandledException >> defaultAction [
 	"If none handles this either then open debugger.
-	
-	Note about naming here: 
+
+	Note about naming here:
 	Even if not all exceptions are errors the absence of a handler for signaled exception is considered as an error by default. Therefore #defaultAction for UnhandledException performs the #unhandledErrorAction"
  	^ self unhandledErrorAction
 ]

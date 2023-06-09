@@ -12,7 +12,7 @@ Trait {
 TConvertAsSetForMultiplinessIdentityTest >> collectionWithCopy [
 	"Return a collection of type 'self collectionWIithoutEqualsElements class' containing no elements equals (with identity equality)
 	but 2 elements only equals with classic equality"
-	
+
 	| result collection |
 	collection := OrderedCollection withAll: self elementsCopyNonIdenticalWithoutEqualElements.
 	collection add: collection first copy.
@@ -82,10 +82,10 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithIdentityEqualsE
 	result := self collectionWithIdentical asIdentitySet.
 	" Only one element should have been removed as two elements are equals with Identity equality"
 	self assert: result size = (self collectionWithIdentical size - 1).
-	self collectionWithIdentical do: 
-		[ :each | 
-		(self collectionWithIdentical occurrencesOf: each) > 1 
-			ifTrue: 
+	self collectionWithIdentical do:
+		[ :each |
+		(self collectionWithIdentical occurrencesOf: each) > 1
+			ifTrue:
 				[ "the two elements equals only with classic equality shouldn't 'have been removed"
 				self assert: (result asOrderedCollection occurrencesOf: each) = 1
 				" the other elements are still here" ]
@@ -101,8 +101,8 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithoutIdentityEqua
 	result := collection asIdentitySet.
 	" no elements should have been removed as no elements are equels with Identity equality"
 	self assert: result size = collection size.
-	collection do: 
-		[ :each | 
+	collection do:
+		[ :each |
 		(collection occurrencesOf: each) = (result asOrderedCollection occurrencesOf: each) ].
 	self assert: result class = IdentitySet
 ]

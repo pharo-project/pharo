@@ -24,30 +24,28 @@ Class {
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> of: aMethod [
-	| methodPackage methodClass methodProtocol |
-	methodPackage := aMethod package.
+
+	| methodPackage methodClass |
 	methodClass := aMethod origin.
-	methodProtocol := aMethod protocol.
-	
-	methodPackage ifNil: [ methodPackage := methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
-	
-	^ self package: methodPackage class: methodClass protocol: methodProtocol
+	methodPackage := aMethod package ifNil: [ methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
+
+	^ self package: methodPackage class: methodClass protocol: aMethod protocolName
 ]
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> package: aPackage class: aClass [
-	
+
 	^(super package: aPackage class: aClass)
 		isExtension: aClass package ~~ aPackage
 ]
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> package: aPackage class: aClass protocol: aProtocol [
-	
+
 	^(super package: aPackage class: aClass)
 		isExtension: aClass package ~~ aPackage;
 		protocol: aProtocol;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }

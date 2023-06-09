@@ -33,8 +33,7 @@ ZnLimitedReadStreamTest >> testMatch [
 	self assert: stream atEnd.
 	stream := ZnLimitedReadStream on: 'ababcabc' readStream limit: 8.
 	self deny: (stream match: 'xx').
-	self assert: stream atEnd.
-
+	self assert: stream atEnd
 ]
 
 { #category : #testing }

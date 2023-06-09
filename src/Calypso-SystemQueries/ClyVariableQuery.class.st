@@ -26,11 +26,11 @@ ClyVariableQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 
 { #category : #'system changes' }
 ClyVariableQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^scope includesVariablesAffectedBy: aSystemAnnouncement
 ]
 
 { #category : #converting }
-ClyVariableQuery >> withMetaLevelScope: aScopeClass [ 
+ClyVariableQuery >> withMetaLevelScope: aScopeClass [
 	^self withScope: (scope withMetaLevel: aScopeClass)
 ]

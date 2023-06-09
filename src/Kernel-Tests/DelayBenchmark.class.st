@@ -19,7 +19,7 @@ Class {
 { #category : #action }
 DelayBenchmark class >> run [
 	"DelayBenchmark run"
-	self new bench.
+	self new bench
 ]
 
 { #category : #action }
@@ -43,12 +43,12 @@ DelayBenchmark >> bench [
 	self
 		crTrace: String cr , 'Benchmarking ' , Delay delaySchedulerClass printString.
 	[ trialOfNumberConcurrent
-		do: [ :numberConcurrent | 
+		do: [ :numberConcurrent |
 			self
 				crTrace: '#ConcurrentDelays: ' , numberConcurrent printString , String space.
 			EnterCount := ExitCount := 0.
 			sampleSetSeeds
-				do: [ :seed | 
+				do: [ :seed |
 					self trace: '.'.
 					self
 						trialConcurrent: numberConcurrent
@@ -69,63 +69,63 @@ DelayBenchmark >> bench [
 { #category : #benchmarks }
 DelayBenchmark >> bench: aDelaySchedulerClass [
 	| schedulerClassToRestore |
-	
+
 	self assert: (aDelaySchedulerClass inheritsFrom: DelayNullScheduler).
 	schedulerClassToRestore := Delay delaySchedulerClass.
-	
+
 	[	Delay delaySchedulerClass: aDelaySchedulerClass.
 		self bench.
-	] ensure: [ Delay delaySchedulerClass: schedulerClassToRestore].
+	] ensure: [ Delay delaySchedulerClass: schedulerClassToRestore]
 ]
 
 { #category : #support }
-DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority maxDuration: maxDuration fromSeed: seed [ 
-	| randomGenerator sampleDurations sampleIndex | 
-	"Pre-generate a series of random durations to remove such time for such generation from trial" 
+DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority maxDuration: maxDuration fromSeed: seed [
+	| randomGenerator sampleDurations sampleIndex |
+	"Pre-generate a series of random durations to remove such time for such generation from trial"
 	"Seed to help reproducability between trials."
 	randomGenerator := Random seed: seed.
-	sampleDurations := Array new: 1000.  
+	sampleDurations := Array new: 1000.
 	1 to: sampleDurations size do:
-	[  	:index | 
+	[  	:index |
 		sampleDurations at: index put: (randomGenerator nextInteger: maxDuration).
 	].
 	sampleIndex := 0.
 
-	"Avoid instantiating new Delay objects inside the inner whileTrue loop, to eliminate such time from trial. 
+	"Avoid instantiating new Delay objects inside the inner whileTrue loop, to eliminate such time from trial.
 	Reuse Delay object with modified duration each loop."
-    ^ (1 to: numberConcurrent) collect: 
-			[ 	:each | 
-				[					
-					[	| delay | 	
+    ^ (1 to: numberConcurrent) collect:
+			[ 	:each |
+				[
+					[	| delay |
 						sampleIndex := (sampleIndex rem: sampleDurations size) + 1.
 						delay := Delay forMilliseconds: (sampleDurations at: sampleIndex).
-						EnterCount := EnterCount + 1. 	
+						EnterCount := EnterCount + 1.
 						delay wait.
 						ExitCount := ExitCount + 1.
-						Running.  "Repeat until not running." 
+						Running.  "Repeat until not running."
 					] whileTrue.
  				] newProcess priority: priority
 			]
 ]
 
 { #category : #support }
-DelayBenchmark >> trialConcurrent: numberConcurrentDelays priority: priority maxDuration: maxDuration fromSeed: seed [ 
+DelayBenchmark >> trialConcurrent: numberConcurrentDelays priority: priority maxDuration: maxDuration fromSeed: seed [
 
 	| delayProcesses |
-	delayProcesses := self 
-		generateDelayProcesses: numberConcurrentDelays 
-		priority: priority 
-		maxDuration: maxDuration 
+	delayProcesses := self
+		generateDelayProcesses: numberConcurrentDelays
+		priority: priority
+		maxDuration: maxDuration
 		fromSeed: seed.
-	
-	Running := false.			
-	
-	[	Running := true. 
+
+	Running := false.
+
+	[	Running := true.
 		delayProcesses do: [  :process | process resume ]. "Start counting delays"
 		(Delay forSeconds: 1) wait. "Count the number of delays in one second"
 	] ensure: [ Running := false ].  "All processes should exit cleanly here."
-	(Delay forSeconds: 1) wait.	 "but give some time for clean exit"	
+	(Delay forSeconds: 1) wait.	 "but give some time for clean exit"
 	delayProcesses do: [  :process | process terminate ]. "and cleanup any deadlocks."
-	
-	Smalltalk garbageCollect. Smalltalk garbageCollect. Smalltalk garbageCollect.
+
+	Smalltalk garbageCollect. Smalltalk garbageCollect. Smalltalk garbageCollect
 ]

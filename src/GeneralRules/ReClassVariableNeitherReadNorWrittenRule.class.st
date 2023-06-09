@@ -20,6 +20,11 @@ ReClassVariableNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriti
 ]
 
 { #category : #accessing }
+ReClassVariableNeitherReadNorWrittenRule >> group [
+	^ 'Clean Code'
+]
+
+{ #category : #accessing }
 ReClassVariableNeitherReadNorWrittenRule >> name [
 
 	^ 'Class variable not read or not written'

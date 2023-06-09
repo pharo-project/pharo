@@ -21,7 +21,7 @@ ClyNavigateBrowserForwardCommand >> defaultMenuIconName [
 ]
 
 { #category : #accessing }
-ClyNavigateBrowserForwardCommand >> defaultMenuItemName [ 
+ClyNavigateBrowserForwardCommand >> defaultMenuItemName [
 	^'go forward'
 ]
 

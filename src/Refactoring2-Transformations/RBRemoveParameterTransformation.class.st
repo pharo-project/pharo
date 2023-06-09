@@ -5,11 +5,11 @@ Class {
 		'parameterIndex',
 		'argument'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #'instance creation' }
-RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		removeParameter: aString
@@ -20,9 +20,9 @@ RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aS
 
 { #category : #'instance creation' }
 RBRemoveParameterTransformation class >> removeParameter: aString in: aClass selector: aSelector [
-	^ self new 
-		removeParameter: aString 
-		in: aClass 
+	^ self new
+		removeParameter: aString
+		in: aClass
 		selector: aSelector
 ]
 
@@ -30,9 +30,9 @@ RBRemoveParameterTransformation class >> removeParameter: aString in: aClass sel
 RBRemoveParameterTransformation >> computeNewSelector [
 	| keywords |
 	oldSelector numArgs == 0
-		ifTrue: [ self refactoringFailure: 'This method contains no arguments' ].
+		ifTrue: [ self refactoringError: 'This method contains no arguments' ].
 	oldSelector isInfix
-		ifTrue: [ self refactoringFailure: 'Cannot remove parameters of infix selectors' ].
+		ifTrue: [ self refactoringError: 'Cannot remove parameters of infix selectors' ].
 	keywords := oldSelector keywords asOrderedCollection.
 	keywords size = 1
 		ifTrue: [ ^ (keywords first copyWithout: $:) asSymbol ].
@@ -44,11 +44,11 @@ RBRemoveParameterTransformation >> computeNewSelector [
 RBRemoveParameterTransformation >> getNewSelector [
 	| tree |
 	(class directlyDefinesMethod: oldSelector)
-		ifFalse: [ self refactoringFailure: 'Method doesn''t exist' ].
-	tree := class parseTreeFor: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
-	argument ifNil:[ self refactoringFailure: 'This method does not have an argument' ].
-	parameterIndex := tree argumentNames indexOf: argument ifAbsent: [ self refactoringFailure: 'Select a parameter!!' ].
+		ifFalse: [ self refactoringError: 'Method doesn''t exist' ].
+	tree := class parseTreeForSelector: oldSelector.
+	tree ifNil: [ self refactoringError: 'Cannot parse sources' ].
+	argument ifNil:[ self refactoringError: 'This method does not have an argument' ].
+	parameterIndex := tree argumentNames indexOf: argument ifAbsent: [ self refactoringError: 'Select a parameter!!' ].
 	permutation := (1 to: oldSelector numArgs) copyWithout: parameterIndex.
 	newSelector := self computeNewSelector
 ]
@@ -58,8 +58,8 @@ RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 
 	| tree |
 
-	tree := each parseTreeFor: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
+	tree := each parseTreeForSelector: oldSelector.
+	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
@@ -69,22 +69,22 @@ RBRemoveParameterTransformation >> myConditions [
 	imps := self model allImplementorsOf: oldSelector.
 	self getNewSelector.
 	^imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into: 
-			[:cond :each | 
-			cond 
+		into:
+			[:cond :each |
+			cond
 				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	argument := aString
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> storeOn: aStream [ 
+RBRemoveParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

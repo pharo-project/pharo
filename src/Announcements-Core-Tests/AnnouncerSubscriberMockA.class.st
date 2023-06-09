@@ -22,5 +22,6 @@ AnnouncerSubscriberMockA >> announcer: anAnnouncer [
 
 { #category : #events }
 AnnouncerSubscriberMockA >> registerEvents [
-	self announcer when: AnnouncementMockA do: [ :evt | " something" ].
+
+	self announcer when: AnnouncementMockA do: [ nil ] for: self
 ]

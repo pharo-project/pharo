@@ -9,24 +9,24 @@ Class {
 
 { #category : #sample }
 ReGlobalVariablesUsageRuleTest >> sampleMethod [
-	"Global variable are stored in Smalltalk globals, and one should avoid them when possible. 
+	"Global variable are stored in Smalltalk globals, and one should avoid them when possible.
 	Examples are Display and Sensor"
-	
+
 	"Note: we compile this method in #setUp and #tearDown to add
 	a global variable that would otherwise be undeclared"
-	Smalltalk value.
+	Smalltalk value
 ]
 
 { #category : #running }
 ReGlobalVariablesUsageRuleTest >> setUp [
 	super setUp.
-	
+
 	"Register a new unknown global"
 	Smalltalk globals
 		at: #MyGlobal
 		put: (self class >> #sampleMethod) sourceCode.
-		
-	self class compile: 'sampleMethod
+
+	self class compiler permitFaulty: true; install: 'sampleMethod
 	sampleMethod
 		Smalltalk value.
 		MyGlobal value'

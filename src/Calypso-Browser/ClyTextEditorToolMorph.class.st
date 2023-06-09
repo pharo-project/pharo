@@ -37,7 +37,7 @@ ClyTextEditorToolMorph class >> isAbstract [
 ]
 
 { #category : #accessing }
-ClyTextEditorToolMorph >> activationPriorityInNonActiveContext [ 
+ClyTextEditorToolMorph >> activationPriorityInNonActiveContext [
 
 	^applyingChanges
 		ifTrue: [ Float infinity ]
@@ -57,7 +57,7 @@ ClyTextEditorToolMorph >> applyChangesBy: aBlock [
 ]
 
 { #category : #'rubric interaction model' }
-ClyTextEditorToolMorph >> bindingOf: aString [ 
+ClyTextEditorToolMorph >> bindingOf: aString [
 	^self selectedClassOrMetaClass bindingOf: aString
 ]
 
@@ -69,18 +69,18 @@ ClyTextEditorToolMorph >> bindings [
 
 { #category : #updating }
 ClyTextEditorToolMorph >> browserContextWasChanged [
-	"We should ignore any notifications during applying changes 
+	"We should ignore any notifications during applying changes
 	because applied changes can cause them which can lead to wrong recursive updates"
 	applyingChanges ifFalse: [ super browserContextWasChanged ]
 ]
 
 { #category : #building }
-ClyTextEditorToolMorph >> build [	
+ClyTextEditorToolMorph >> build [
 	self buildTextMorph.
 	textModel clearUndoManager.
 	self subscribeOnTextChanges.
-	
-	textMorph 
+
+	textMorph
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	self addMorph: textMorph
@@ -103,7 +103,7 @@ ClyTextEditorToolMorph >> buildTextMorph [
 		editingMode: self editingMode.
 	CmdKMDispatcher attachedTo: textMorph textArea withCommandsFrom: self. "It overrides default text morph shortcuts with Commander"
 	self buildLeftSideBar.
-	textModel setInitialText: self editingText.
+	textModel setInitialText: self editingText
 ]
 
 { #category : #operations }
@@ -119,31 +119,31 @@ ClyTextEditorToolMorph >> cancelChanges [
 ClyTextEditorToolMorph >> changesAccepted [
 
 	| applied |
-	^self applyChangesBy: [ 
+	^self applyChangesBy: [
 		textMorph hasUnacceptedEdits: true.
 		[self changesAreAboutApply.
-		applied := self applyChanges] on: Error do: [ :err | 
-			textModel text: self editingText. 
+		applied := self applyChanges] on: Error do: [ :err |
+			textModel text: self editingText.
 			textMorph hasUnacceptedEdits: true.
-			err pass].	
-		applied 
-			ifTrue: [ textMorph hasUnacceptedEdits: false. 
+			err pass].
+		applied
+			ifTrue: [ textMorph hasUnacceptedEdits: false.
 				self textUpdated.
 				browser focusActiveTab ]
-			ifFalse: [ 
-				textModel text: self editingText. 
+			ifFalse: [
+				textModel text: self editingText.
 				textMorph hasUnacceptedEdits: true].
 	]
 ]
 
 { #category : #'events handling' }
 ClyTextEditorToolMorph >> changesAreAboutApply [
-	"it is a hook method to allow subclasses prepare state 
+	"it is a hook method to allow subclasses prepare state
 	just before applying changes"
 ]
 
 { #category : #'events handling' }
-ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [ 
+ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [
 
 	changesCancelRequested := true
 ]
@@ -151,6 +151,8 @@ ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [
 { #category : #'events handling' }
 ClyTextEditorToolMorph >> changesCancelled [
 
+	"Avoid clearing the dirty flag if the pending text differs from the current text (issue#11649)"
+	self pendingText = self editingText ifFalse: [ ^self ].
 	textMorph hasUnacceptedEdits: false.
 	self textUpdated
 ]
@@ -181,7 +183,7 @@ ClyTextEditorToolMorph >> editingMode [
 	editingMode := ClyTextEditingMode browserTool: self.
 	editingMode
 		classOrMetaClass: self selectedClassOrMetaClass;
-		isForScripting: self isForScripting.
+		isScripting: self isScripting.
 	^editingMode
 ]
 
@@ -194,22 +196,24 @@ ClyTextEditorToolMorph >> editingText [
 ClyTextEditorToolMorph >> findAnyString: strings in: text [
 
 	| index |
-	strings do: [ :each | 
+	strings do: [ :each |
 		index := text findString: each startingAt: 1.
 		index > 0 ifTrue: [^index to: index + each size]].
-	
+
 	^0 to: -1
 ]
 
 { #category : #'rubric interaction model' }
-ClyTextEditorToolMorph >> hasBindingOf: aString [ 
-	^self selectedClassOrMetaClass hasBindingOf: aString
+ClyTextEditorToolMorph >> hasBindingOf: aString [
+	^self selectedClassOrMetaClass 
+		ifNil: [ false ]
+		ifNotNil: [:class | class hasBindingOf: aString]
 ]
 
 { #category : #testing }
 ClyTextEditorToolMorph >> hasUnacceptedEdits [
 	textMorph ifNil: [ ^false ].
-	
+
 	^textMorph hasUnacceptedEdits
 ]
 
@@ -221,7 +225,7 @@ ClyTextEditorToolMorph >> initialize [
 ]
 
 { #category : #'rubric interaction model' }
-ClyTextEditorToolMorph >> isForScripting [
+ClyTextEditorToolMorph >> isScripting [
 	^true
 ]
 
@@ -250,7 +254,7 @@ ClyTextEditorToolMorph >> pendingText: aText [
 { #category : #initialization }
 ClyTextEditorToolMorph >> resetStateForSnapshot [
 	super resetStateForSnapshot.
-	
+
 	textMorph := nil.
 	textModel := nil
 ]
@@ -279,25 +283,25 @@ ClyTextEditorToolMorph >> shoutAboutToStyle: aMorph [
 { #category : #building }
 ClyTextEditorToolMorph >> subscribeOnTextChanges [
 
-	textMorph announcer 		
+	textMorph announcer
 		when: RubTextAccepted send: #changesAccepted to: self;
 		when: RubTextChanged send: #textChanged: to: self;
 		when: RubCancelEditRequested send: #changesCancelRequested: to: self
 ]
 
 { #category : #'focus management' }
-ClyTextEditorToolMorph >> takeKeyboardFocus [ 
+ClyTextEditorToolMorph >> takeKeyboardFocus [
 	textMorph ifNotNil: [ textMorph takeKeyboardFocus]
 ]
 
 { #category : #'events handling' }
 ClyTextEditorToolMorph >> textChanged: aTextChanged [
 
-	changesCancelRequested ifTrue: [ 
+	changesCancelRequested ifTrue: [
 		"user cancel changes and now text morph shows original text model".
 		changesCancelRequested := false.
 		^self changesCancelled ].
-	
+
 	self updateDirtyState
 ]
 
@@ -314,7 +318,7 @@ ClyTextEditorToolMorph >> textMorph [
 { #category : #updating }
 ClyTextEditorToolMorph >> textUpdated [
 	self applyDecorations.
-	self updateDirtyState.
+	self updateDirtyState
 ]
 
 { #category : #updating }
@@ -327,7 +331,7 @@ ClyTextEditorToolMorph >> update [
 	| unacceptedText newText |
 	super update.
 	newText := self editingText.
-	self pendingText asString = newText ifTrue: [ 
+	self pendingText asString = newText ifTrue: [
 		self applyDecorations.
 		^self ].
 

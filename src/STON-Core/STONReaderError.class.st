@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-STONReaderError class >> signal: aString streamPosition: streamPosition [ 
+STONReaderError class >> signal: aString streamPosition: streamPosition [
 	^ self new
 		streamPosition: streamPosition;
 		signal: aString;
@@ -21,10 +21,10 @@ STONReaderError class >> signal: aString streamPosition: streamPosition [
 
 { #category : #accessing }
 STONReaderError >> messageText [
-	^ streamPosition 
-		ifNil: [ 
-			super messageText ] 
-		ifNotNil: [ :pos | 
+	^ streamPosition
+		ifNil: [
+			super messageText ]
+		ifNotNil: [ :pos |
 			'At character <1P>: <2P>' expandMacrosWith: pos with: super messageText ]
 ]
 

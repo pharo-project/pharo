@@ -46,14 +46,14 @@ ZnUnexpectedContentType >> expectedContentType: anObject [
 { #category : #accessing }
 ZnUnexpectedContentType >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #accessing }
 ZnUnexpectedContentType >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		self expectedContentType ifNotNil: [ :contentType |
 			stream << 'expected '; print: contentType ].

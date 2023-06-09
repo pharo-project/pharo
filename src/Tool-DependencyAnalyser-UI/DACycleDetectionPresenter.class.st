@@ -15,7 +15,7 @@ DACycleDetectionPresenter class >> collections [
 
 { #category : #'instance creation' }
 DACycleDetectionPresenter class >> onPackagesMatch: match [
-	^ (self onPackagesNamed:	self systemPackages) 
+	^ (self onPackagesNamed:	self systemPackages)
 		open
 ]
 
@@ -45,15 +45,15 @@ DACycleDetectionPresenter >> initializeWithFilter: aCollection [
 { #category : #'initialization - union' }
 DACycleDetectionPresenter >> initializeWithPackageNames: aCollection [
 	self model: (DACycleDetectionTreePresenter onPackagesNamed: aCollection).
-	self buildandAddAllMorph 
+	self buildandAddAllMorph
 ]
 
 { #category : #'initialization - filter' }
 DACycleDetectionPresenter >> initializeWithSystemCycles [
-	self model: DACycleDetectionTreePresenter system.
+	self model: DACycleDetectionTreePresenter system
 ]
 
 { #category : #update }
 DACycleDetectionPresenter >> updateWithFilter: aCollectionOfPDPackages [
-	self dependenciesPresenter filterWithPackages: aCollectionOfPDPackages.
+	self dependenciesPresenter filterWithPackages: aCollectionOfPDPackages
 ]

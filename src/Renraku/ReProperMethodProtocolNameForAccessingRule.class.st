@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #idioms }
-ReProperMethodProtocolNameForAccessingRule class >> protocolIdiom [ 
+ReProperMethodProtocolNameForAccessingRule class >> protocolIdiom [
 
-	^self use: 'accessing' insteadOf: #('accessor' 'accessors' 'acessing' 'acccessing' 'accesing' 'acesing')
+	^self use: #accessing insteadOf: #(#'accessor' #'accessors' #'acessing' #'acccessing' #'accesing' #'acesing')
 ]

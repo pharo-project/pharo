@@ -49,7 +49,7 @@ RubTextComposer >> addNullLineForIndex: index [
 		ifFalse: [ ^ self ].
 	oldLastLine last = (index - 1)
 		ifFalse: [ ^ self ].
-	r := oldLastLine left @ oldLastLine bottom extent: oldLastLine right @ (oldLastLine bottom - oldLastLine top).	
+	r := oldLastLine left @ oldLastLine bottom extent: oldLastLine right @ (oldLastLine bottom - oldLastLine top).
 	"Even though we may be below the bottom of the container,
 	it is still necessary to compose the last line for consistency..."
 	self addNullLineWithIndex: index andRectangle: r
@@ -102,7 +102,7 @@ RubTextComposer >> completeComposition [
 	numberOfPhysicalLines := 1.
 	actualWidth := 1.
 	self lines
-		do: [ :line | 
+		do: [ :line |
 			line lineNumber: numberOfPhysicalLines.
 			line stopCondition = #cr
 				ifTrue: [ numberOfPhysicalLines := numberOfPhysicalLines + 1 ].
@@ -112,7 +112,7 @@ RubTextComposer >> completeComposition [
 { #category : #'private - composition' }
 RubTextComposer >> composeAllLines [
 	[ currCharIndex <= theText size and: [ currentY + defaultLineHeight <= theContainer bottom ] ]
-		whileTrue: [ 
+		whileTrue: [
 			(nowSliding
 				ifTrue: [ self slideOneLineDown ]
 				ifFalse: [ self composeOneLine ]) ifNil: [ ^ nil ] ]
@@ -127,13 +127,13 @@ RubTextComposer >> composeAllRectangles: rectangles [
 	self composeEachRectangleIn: rectangles.
 	currentY := currentY + actualHeight.
 	currentY > theContainer bottom
-		ifTrue: [ 
+		ifTrue: [
 			"Oops -- the line is really too high to fit -- back out"
 			currCharIndex := charIndexBeforeLine.
 			lines size - numberOfLinesBefore timesRepeat: [ lines removeLast ].
 			^ self ].	"It's OK -- the line still fits."
 	maxRightX := maxRightX max: scanner rightX.
-	1 to: rectangles size - 1 do: [ :i | 
+	1 to: rectangles size - 1 do: [ :i |
 		"Adjust heights across rectangles if necessary"
 		(lines at: lines size - rectangles size + i) lineHeight: lines last lineHeight baseline: lines last baseline ].
 	isFirstLine := false.
@@ -146,23 +146,23 @@ RubTextComposer >> composeEachRectangleIn: rectangles [
 
 	| myLine lastChar |
 
-	1 to: rectangles size do: [:i | 
+	1 to: rectangles size do: [:i |
 		currCharIndex <= theText size ifFalse: [ ^ false ].
-		myLine := scanner 
-			composeFrom: currCharIndex 
-			inRectangle: (rectangles at: i)				
-			firstLine: isFirstLine 
-			leftSide: i=1 
+		myLine := scanner
+			composeFrom: currCharIndex
+			inRectangle: (rectangles at: i)
+			firstLine: isFirstLine
+			leftSide: i=1
 			rightSide: i=rectangles size.
 		myLine actualWidth: scanner rightX - theContainer left.
-		
+
 		lines addLast: myLine.
 		actualHeight := actualHeight max: myLine lineHeight.  "includes font changes"
 		currCharIndex := myLine last + 1.
-		
+
 		"This happens if the text is just one line long"
 		(myLine last = 0) ifTrue: [ ^ false ].
-		
+
 		lastChar := theText at: myLine last.
 		(CharacterSet crlf includes: lastChar) ifTrue: [^#cr].
 	].
@@ -178,7 +178,7 @@ RubTextComposer >> composeLinesFrom: start to: stop delta: delta into: lineColl 
 	copy the old lines from there to the end of the container, with
 	adjusted indices and y-values"
 
-	self 
+	self
 		composeLinesFrom: start
 		to: stop
 		delta: delta
@@ -213,7 +213,7 @@ RubTextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: 
 	isFirstLine := true.
 	self composeAllLines.
 	isFirstLine
-		ifTrue: [ 
+		ifTrue: [
 			"No space in container or empty text"
 			self addNullLineWithIndex: startCharIndex andRectangle: (theContainer topLeft extent: theContainer width @ defaultLineHeight) ]
 		ifFalse: [ self fixupLastLineIfCR ].
@@ -236,7 +236,7 @@ RubTextComposer >> container [
 ]
 
 { #category : #accessing }
-RubTextComposer >> container: aRectangle [ 
+RubTextComposer >> container: aRectangle [
 	theContainer := aRectangle
 ]
 
@@ -272,7 +272,7 @@ RubTextComposer >> fastFindFirstLineSuchThat: lineBlock [
 	high := self lines size.
 	[index := high + low // 2.
 	low > high]
-		whileFalse: 
+		whileFalse:
 			[(lineBlock value: (self lines at: index))
 				ifTrue: [high := index - 1]
 				ifFalse: [low := index + 1]].
@@ -301,8 +301,8 @@ RubTextComposer >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	 first > 1 and: [crlf includes: (self text string at: first - 1)]] whileTrue: "word wrap"
 		[arrayIndex := arrayIndex - 1].
 	last := (self lines at: arrayIndex) last.
-	
-	^(self text string copyFrom: first to: last) indentationIfBlank: aBlock.
+
+	^(self text string copyFrom: first to: last) indentationIfBlank: aBlock
 ]
 
 { #category : #querying }
@@ -322,7 +322,7 @@ RubTextComposer >> lineIndexForPoint: aPoint [
 ]
 
 { #category : #querying }
-RubTextComposer >> lineIndexOfCharacterIndex: characterIndex [ 
+RubTextComposer >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	^ (self fastFindFirstLineSuchThat: [:line | line first > characterIndex]) - 1 max: 1
 ]
@@ -397,14 +397,14 @@ RubTextComposer >> recomposeFrom: start to: stop delta: delta [
 		delta: delta
 		into: newLines
 		priorLines: self lines
-		atY: (self lines at: startLine) top.
+		atY: (self lines at: startLine) top
 ]
 
 { #category : #composition }
 RubTextComposer >> replaceFrom: start to: stop with: aText [
 	"Edit the text, and then recompose the lines."
 	self text replaceFrom: start to: stop with: aText.
-	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1).
+	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1)
 ]
 
 { #category : #private }
@@ -457,7 +457,7 @@ RubTextComposer >> textStyle [
 ]
 
 { #category : #accessing }
-RubTextComposer >> textStyle: aTextStyle [ 
+RubTextComposer >> textStyle: aTextStyle [
 	theTextStyle := aTextStyle
 ]
 

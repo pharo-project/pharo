@@ -14,6 +14,11 @@ MCGitHubRepository class >> basicDescription [
   ^ 'github'
 ]
 
+{ #category : #'instance creation' }
+MCGitHubRepository class >> basicFromUrl: aZnUrl [ 
+	^ self location: aZnUrl asString
+]
+
 { #category : #private }
 MCGitHubRepository class >> cacheDirectory [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
@@ -27,13 +32,6 @@ MCGitHubRepository class >> cacheDirectory: aDirectory [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
   CacheDirectory := aDirectory
-]
-
-{ #category : #accessing }
-MCGitHubRepository class >> cacheDirectoryPath [
-  <preference: 'GitHub Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
 ]
 
 { #category : #'instance creation' }
@@ -101,6 +99,11 @@ MCGitHubRepository class >> resetCacheDirectoryIfInvalid [
     and: [ 
       (MCFileTreeFileUtils current directoryExists: CacheDirectory)
         ifFalse: [ CacheDirectory := nil ] ]
+]
+
+{ #category : #accessing }
+MCGitHubRepository class >> urlSchemes [
+	^ #(github)
 ]
 
 { #category : #private }

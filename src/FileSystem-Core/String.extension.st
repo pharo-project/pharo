@@ -24,7 +24,7 @@ String >> asPath [
 ]
 
 { #category : #'*Filesystem-Core-converting' }
-String >> asPathWith: anObject [ 
+String >> asPathWith: anObject [
 	^ anObject pathFromString: self
 ]
 

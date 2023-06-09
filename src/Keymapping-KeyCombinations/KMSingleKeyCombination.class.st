@@ -23,7 +23,7 @@ Class {
 KMSingleKeyCombination class >> from: aCharacterOrInteger [
 	| aCharacter |
 	aCharacter := aCharacterOrInteger asCharacter.
-	
+
 	^ (KeyboardKey fromCharacter: aCharacter) asKeyCombination
 ]
 
@@ -64,7 +64,7 @@ KMSingleKeyCombination >> key [
 
 { #category : #accessing }
 KMSingleKeyCombination >> key: aKeyString [
-	key := aKeyString.
+	key := aKeyString
 ]
 
 { #category : #matching }
@@ -80,7 +80,7 @@ KMSingleKeyCombination >> modifiedBy: aModifier [
 { #category : #accessing }
 KMSingleKeyCombination >> modifier [
 
-	^ KMNoModifier new.
+	^ KMNoModifier new
 ]
 
 { #category : #accessing }

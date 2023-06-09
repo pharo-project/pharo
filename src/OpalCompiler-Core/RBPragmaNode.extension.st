@@ -15,7 +15,7 @@ RBPragmaNode >> asIRPrimitive [
 				num: 117;
 				spec: spec;
 				yourself ]
-		ifFalse: [ 
+		ifFalse: [
 			"these are standard numbered primitives"
 			IRPrimitive new
 				num: args first;

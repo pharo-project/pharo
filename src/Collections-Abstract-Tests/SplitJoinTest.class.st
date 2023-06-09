@@ -39,7 +39,7 @@ Class {
 SplitJoinTest class >> documentation [
 	<ignoreForCoverage>
 	"self showDocumentation"
-	
+
 	^ '"This package provides functionality for splitting and joining strings similarly to that offered by Perl, Python and Ruby. In addition, split and join work for any kind of sequence, and offer the possibility to split strings using regular expressions.
 
 Suppose object A is a SequenceableCollection of elements of type T (let''s call its type S[T]), and B is a splitter of type either T or S[T]. Then A splitOn: B yields an object C of type OC[S[T]] (OC=OrderedCollection). B can be either an element or a subsequence, so:"
@@ -172,14 +172,14 @@ SplitJoinTest >> testJoinStringUsingString [
 
 { #category : #running }
 SplitJoinTest >> testJoinUsingLastOnArray [
-	
+
 	{	{  1. 2. 3 } 	-> '1, 2 and 3' .
 		{  1. 2 } 	-> '1 and 2' .
 		{  1 } 		-> '1' .
 		{  }			-> ''.
-	} 	asDictionary keysAndValuesDo: 
+	} 	asDictionary keysAndValuesDo:
 		[ 	:testCollection :resultString |
-			self	 assert: ( testCollection joinUsing: ', ' last: ' and ') equals: resultString. 
+			self	 assert: ( testCollection joinUsing: ', ' last: ' and ') equals: resultString.
 		]
 ]
 
@@ -213,12 +213,12 @@ SplitJoinTest >> testSplitJoinBoundaryCases [
 	"Empty splitter, joiner or sequence."
 	self assert: (#() join: (#() split: #())) equals: #().
 	self assert: ('' join: ('' split: '')) equals: ''.
-	self assert: ('' join: #('')) equals: ''. 
+	self assert: ('' join: #('')) equals: ''.
 
 	"Overlapping splitters, or at end of sequence"
 	self assert: ('an' join: ('an' split: 'banana')) equals: 'banana'.
 	self assert: ('na' join: ('na' split: 'banana')) equals: 'banana'.
-	self assert: ('ana' join: ('ana' split: 'banana')) equals: 'banana'.
+	self assert: ('ana' join: ('ana' split: 'banana')) equals: 'banana'
 ]
 
 { #category : #running }
@@ -229,7 +229,7 @@ SplitJoinTest >> testSplitJoinIdentity [
 	self assert: (1 join: (1 split: array)) equals: array.
 	self assert: (#(1 3) join: (#(1 3) split: array)) equals: array.
 	self assert: ($o join: ($o split: string)) equals: string.
-	self assert: ('ow' join: ('ow' split: string)) equals: string.
+	self assert: ('ow' join: ('ow' split: string)) equals: string
 ]
 
 { #category : #running }
@@ -259,25 +259,25 @@ SplitJoinTest >> testSplitJoinStringOnString [
 { #category : #running }
 SplitJoinTest >> testSplitOrderedCollectionOnElement [
 	self assert: (((1 to: 10) asOrderedCollection) splitOn: 4)
-		equals: {(1 to: 3) asOrderedCollection . (5 to: 10) asOrderedCollection} asOrderedCollection.
+		equals: {(1 to: 3) asOrderedCollection . (5 to: 10) asOrderedCollection} asOrderedCollection
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitOrderedCollectionOnOrderedCollection [
 	self assert: (((1 to: 10) asOrderedCollection) splitOn: ((4 to: 5) asOrderedCollection))
-		equals: {(1 to: 3) asOrderedCollection . (6 to: 10) asOrderedCollection} asOrderedCollection.
+		equals: {(1 to: 3) asOrderedCollection . (6 to: 10) asOrderedCollection} asOrderedCollection
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitSortedCollectionOnElement [
 	self assert: (((1 to: 10) asSortedCollection) splitOn: 4)
-		equals: {(1 to: 3) asSortedCollection . (5 to: 10) asSortedCollection} asOrderedCollection.
+		equals: {(1 to: 3) asSortedCollection . (5 to: 10) asSortedCollection} asOrderedCollection
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitSortedCollectionOnSortedCollection [
 	self assert: (((1 to: 10) asSortedCollection) splitOn: ((4 to: 5) asSortedCollection))
-		equals: {(1 to: 3) asSortedCollection . (6 to: 10) asSortedCollection} asOrderedCollection.
+		equals: {(1 to: 3) asSortedCollection . (6 to: 10) asSortedCollection} asOrderedCollection
 ]
 
 { #category : #running }

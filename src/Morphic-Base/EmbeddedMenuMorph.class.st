@@ -49,14 +49,14 @@ EmbeddedMenuMorph >> keyDown: evt [
 	"Handle tabbing and arrows and cr/space."
 
 	| key |
-		
+
 	key := evt key.
 	(key isArrowLeft or: [ key isArrowRight ])
 		ifTrue: [ (selectedItem notNil and: [ selectedItem hasSubMenu ])
 				ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
 					selectedItem subMenu moveSelectionDown: 1 event: evt.
 					^ evt hand newKeyboardFocus: selectedItem subMenu ] ].
-	
+
 	key isArrowUp ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
 	key isArrowDown ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
 	key = KeyboardKey pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
@@ -64,7 +64,7 @@ EmbeddedMenuMorph >> keyDown: evt [
 
 	self window ifNotNil: [:win |
 		(win handlesKeyDown: evt) ifTrue: [
-			(win keyDown: evt) ifTrue: [^true]]].
+			(win keyDown: evt) ifTrue: [^true]]]
 ]
 
 { #category : #events }
@@ -83,7 +83,7 @@ EmbeddedMenuMorph >> keyStroke: event [
 						selectedItem subMenu takeKeyboardFocus ]
 					ifFalse: [ selectedItem invokeWithEvent: event ] ].
 		(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: event ].
-		^ self ].
+		^ self ]
 ]
 
 { #category : #'keyboard control' }
@@ -121,7 +121,7 @@ EmbeddedMenuMorph >> moveSelectionDown: anInteger event: anEvent [
 { #category : #control }
 EmbeddedMenuMorph >> selectItem: aMenuItem event: anEvent [
 	"Deselect any sibling menus."
-	
+
 	self owner ifNotNil: [
 		|menus|
 		menus := self owner submorphs select: [:m | (m isKindOf: self class) and: [m ~~ self]].
@@ -130,7 +130,7 @@ EmbeddedMenuMorph >> selectItem: aMenuItem event: anEvent [
 				perform: #selectItem:event:
 				withArguments: {nil. anEvent}
 				inSuperclass: self class superclass] ].
-		
+
 	^super selectItem: aMenuItem event: anEvent
 ]
 

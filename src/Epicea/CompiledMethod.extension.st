@@ -10,5 +10,5 @@ CompiledMethod >> asEpiceaRingDefinition [
 		sourceCode: self sourceCode;
 		stamp: self timeStamp;
 		package: (self package ifNotNil: [:package | package name]);
-		yourself.
+		yourself
 ]

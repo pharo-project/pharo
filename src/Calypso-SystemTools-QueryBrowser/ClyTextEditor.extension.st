@@ -24,8 +24,10 @@ ClyTextEditor >> classNamesContainingIt [
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOf: selectedSelector [
-	
-	self browser browseImplementorsOf: selectedSelector
+
+	self browser
+		browseImplementorsOf: selectedSelector
+		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -34,7 +36,7 @@ ClyTextEditor >> implementorsOfIt [
 	| selector |
 	(selector := self selectedSelector) ifNil: [ ^ textArea flash ].
 	selector isCharacter ifTrue: [ ^ textArea flash ].
-	self browser browseImplementorsOf: selector
+	self implementorsOf: selector
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -55,12 +57,12 @@ ClyTextEditor >> referencesTo: aVariableName [
 	" ugly dispatch, but current Browser protocol names aren't really cool "
 	class := self modelCurrentSelectedClass.
 
-	class isBehavior ifTrue: [ 
-		class slotNamed: aVariableName ifFound: [:slot | 
+	class isBehavior ifTrue: [
+		class slotNamed: aVariableName ifFound: [:slot |
 			var := ClyInstanceVariable on: slot visibleFrom: class.
 			^self browser spawnQueryBrowserOn: (ClyVariableReferencesQuery of: var)]].
-	
-	self browser browseReferencesTo: aVariableName asSymbol from: class
+
+	self browser browseReferencesTo: aVariableName asSymbol inNameResolver: class
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -68,14 +70,16 @@ ClyTextEditor >> referencesToIt [
 	| selector |
 	"self lineSelectAndEmptyCheck: [^ self]."
 	(selector := self selectedSelector) == nil ifTrue: [^ textArea flash].
-	
+
 	self referencesTo: selector
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
 
-	self browser browseReferencesTo: selectedSelector
+	self browser
+		browseReferencesTo: selectedSelector
+		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }

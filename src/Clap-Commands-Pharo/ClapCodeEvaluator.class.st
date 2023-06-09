@@ -25,7 +25,7 @@ ClapCodeEvaluator class >> evaluate [
 				String space join: (match allOccurrencesCollect: #word) ];
 			implicitMeaning: [ :match | "in the absence of an explicit argument, read from standard input"
 				match context stdin upToEnd ]);
-		meaning: [ :args | 
+		meaning: [ :args |
 			args	at: #helpFlag ifPresent: [ :help | help value; exitSuccess ].
 			(self with: args) execute ]
 ]
@@ -34,7 +34,7 @@ ClapCodeEvaluator class >> evaluate [
 ClapCodeEvaluator >> execute [
 	| result |
 	result := Smalltalk compiler evaluate: self source.
-	
+
 	self context hasSessionChanged "we might be waking up after a #save:andQuit:"
 		ifFalse: [ self outputStreamDo: [ :out | out print: result; lf ] ]
 ]

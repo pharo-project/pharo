@@ -29,7 +29,7 @@ QuotedPrintableMimeConverterTest >> setUp [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeCRLF [
 
-	self 
+	self
 		assert: (self decode: 'This is the first line=0D=0A and this is the second')
 		equals: 'This is the first line
  and this is the second'
@@ -40,12 +40,12 @@ QuotedPrintableMimeConverterTest >> testDecodeCustomNewline [
 	| decoder output |
 	decoder := coder new.
 	output := String new writeStream.
-	decoder 
+	decoder
 		newline: String lf;
 		mimeStream: 'foo=0D=0Abar' readStream;
 		dataStream: output;
 		mimeDecode.
-	self 
+	self
 		assert: output contents
 		equals: 'foo', String lf, 'bar'
 ]
@@ -53,7 +53,7 @@ QuotedPrintableMimeConverterTest >> testDecodeCustomNewline [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeDecodedStrings [
 
-	self 
+	self
 		assert: (self decode: 'Hätten Hüte ein ß im Namen, wären sie möglicherweise keine Hüte mehr')
 		equals: 'Hätten Hüte ein ß im Namen, wären sie möglicherweise keine Hüte mehr'
 ]
@@ -61,18 +61,18 @@ QuotedPrintableMimeConverterTest >> testDecodeDecodedStrings [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeSimpleStrings [
 
-	self 
-		assert: (self decode: 'Z=FCrich') 
+	self
+		assert: (self decode: 'Z=FCrich')
 		equals: 'Zürich'.
-	self 
-		assert: (self decode: 'H=E4tten H=FCte ein =DF im Namen, w=E4ren sie m=F6glicherweise keine H=FCte mehr') 
+	self
+		assert: (self decode: 'H=E4tten H=FCte ein =DF im Namen, w=E4ren sie m=F6glicherweise keine H=FCte mehr')
 		equals: 'Hätten Hüte ein ß im Namen, wären sie möglicherweise keine Hüte mehr'
 ]
 
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreak [
 
-	self 
+	self
 		assert: (self decode: 'This is text may not be=
  decoded as two lines')
 		equals: 'This is text may not be decoded as two lines'
@@ -81,7 +81,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreak [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCR [
 
-	self 
+	self
 		assert: (self decode: 'This is text may not be=', String cr, ' decoded as two lines')
 		equals: 'This is text may not be decoded as two lines'
 ]
@@ -89,7 +89,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCR [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCRLF [
 
-	self 
+	self
 		assert: (self decode: 'This is text may not be=', String crlf, ' decoded as two lines')
 		equals: 'This is text may not be decoded as two lines'
 ]
@@ -97,7 +97,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCRLF [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakLF [
 
-	self 
+	self
 		assert: (self decode: 'This is text may not be=', String lf, ' decoded as two lines')
 		equals: 'This is text may not be decoded as two lines'
 ]
@@ -105,7 +105,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakLF [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testEncodeCR [
 
-	self 
+	self
 		assert: (self encode: 'This is the first line', String cr, 'and this is the second')
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
@@ -113,7 +113,7 @@ QuotedPrintableMimeConverterTest >> testEncodeCR [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testEncodeCRLF [
 
-	self 
+	self
 		assert: (self encode: 'This is the first line', String crlf, 'and this is the second')
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
@@ -130,7 +130,7 @@ QuotedPrintableMimeConverterTest >> testEncodeEncodedStrings [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testEncodeLF [
 
-	self 
+	self
 		assert: (self encode: 'This is the first line', String lf, 'and this is the second')
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
@@ -138,13 +138,13 @@ QuotedPrintableMimeConverterTest >> testEncodeLF [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testEncodeLongLine [
 	| input output |
-	
+
 	input := (String new: 74 withAll: $A), (String new: 47 withAll: $B).
-	
+
 	output := (String new: 74 withAll: $A), '=
 ', (String new: 47 withAll: $B).
-	
-	self 
+
+	self
 		assert: (self encode: input)
 		equals: output
 ]
@@ -152,10 +152,10 @@ QuotedPrintableMimeConverterTest >> testEncodeLongLine [
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testEncodeSimpleStrings [
 
-	self 
+	self
 		assert: (self encode: 'Zürich')
 		equals: 'Z=FCrich'.
-	self 
+	self
 		assert: (self encode: 'Über die Fährverbindungen nach Föhr wüßte ich nicht viel')
 		equals: '=DCber die F=E4hrverbindungen nach F=F6hr w=FC=DFte ich nicht viel'
 ]
@@ -180,7 +180,7 @@ d, will come when it will come'.
 	account when calculating the maximum line length."
 	self assert: (original lines anySatisfy: [ :line | line size > 76 ]).
 	self deny: (encoded lines anySatisfy: [ :line | line size > 76 ]).
-	
+
 	self assert: (self encode: original) equals: encoded.
 	self assert: (self decode: encoded) equals: original
 ]
@@ -188,13 +188,13 @@ d, will come when it will come'.
 { #category : #testing }
 QuotedPrintableMimeConverterTest >> testLongLine [
 	| input output |
-	
+
 	input := (String new: 74 withAll: $A), (String new: 47 withAll: $B).
-	
+
 	output := (String new: 74 withAll: $A), '=
 ', (String new: 47 withAll: $B).
-	
-	self 
+
+	self
 		assert: (self encode: input)
 		equals: output
 ]

@@ -10,21 +10,21 @@ Class {
 { #category : #testing }
 WBWindowsWebBrowser class >> isForCurrentSystem [
 
-	^Smalltalk os isWindows   
+	^ Smalltalk os isWindows
 ]
 
 { #category : #private }
 WBWindowsWebBrowser class >> openNativeWebBrowserOn: anURLString [
 
-	^self shellExecute: 'open' file: anURLString parameters: '' directory: '' show: 5 "SW_SHOW"
+	^ self shellExecute: 'open' file: anURLString parameters: '' directory: '' show: 5 "SW_SHOW"
 ]
 
 { #category : #'private - uffi' }
-WBWindowsWebBrowser class >> shellExecute: lpOperation file: lpFile parameters: lpParameters directory: lpDirectory show: nShowCmd [	
-	
-	^self ffiCall: #( 
+WBWindowsWebBrowser class >> shellExecute: lpOperation file: lpFile parameters: lpParameters directory: lpDirectory show: nShowCmd [
+
+	^ self ffiCall: #(
 			FFIConstantHandle ShellExecuteA(
-     				0,
+     				0, "Operation is not associated with a window"
      				String* lpOperation,
          			String* lpFile,
      				String* lpParameters,

@@ -17,8 +17,8 @@ ClyGroupedExtendingPackagesResult >> defaultItems [
 { #category : #building }
 ClyGroupedExtendingPackagesResult >> fillWith: packages [
 	| group |
-	packages do: [ :each | 
-		group := ClyExternalPackageMethodGroup 
+	packages do: [ :each |
+		group := ClyExternalPackageMethodGroup
 			withMethodsFrom: self scope packagedIn: each.
 		items add: group]
 ]

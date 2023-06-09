@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMergeInstanceVariableIntoAnotherTransformation,
 	#superclass : #RBRenameVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Migrated'
+	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }
 
 { #category : #preconditions }
@@ -9,15 +9,15 @@ RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
 
 	class := self model classObjectFor: className.
 
-	^ (RBCondition 
-		withBlock: [ (variableName = newVariableName) 
-			ifTrue: [ self refactoringFailure: 'The variable merged must be different' ].
+	^ (RBCondition
+		withBlock: [ (variableName = newVariableName)
+			ifTrue: [ self refactoringError: 'The variable merged must be different' ].
 		true ])
 	& (isClassVariable
-		ifTrue: [ (RBCondition isMetaclass: class) not 
-					& (RBCondition definesClassVariable: newVariableName asString in: class) 
+		ifTrue: [ (RBCondition isMetaclass: class) not
+					& (RBCondition definesClassVariable: newVariableName asString in: class)
 					& (RBCondition definesClassVariable: variableName asString in: class) ]
-		ifFalse: [ (RBCondition definesInstanceVariable: newVariableName in: class) 
+		ifFalse: [ (RBCondition definesInstanceVariable: newVariableName in: class)
 					& (RBCondition definesInstanceVariable: variableName in: class) ])
 		& (RBCondition isGlobal: newVariableName in: self model) not
 ]

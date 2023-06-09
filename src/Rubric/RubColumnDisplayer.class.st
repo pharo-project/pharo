@@ -28,7 +28,7 @@ RubColumnDisplayer >> drawOn: aCanvas [
 	dc := {(self tabLineColor). (Color transparent)}.
 	lw := self tabLineWidth.
 	nb := cwidth // cw.
-	nb timesRepeat: [ 
+	nb timesRepeat: [
 			| b |
 			b :=  (bnds topLeft + (col @ 0) ) corner: (bnds bottomLeft + ((col + lw) @ 0) ).
 			b := b translateBy: (((cw - gap) - cw)@ 0).
@@ -57,7 +57,7 @@ RubColumnDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 		dashes: self tabLineDashes offset: 0;
 		width: 1.
 	nb
-		timesRepeat: [ 
+		timesRepeat: [
 			| b |
 			b := bnds topLeft + (col @ 0) corner: bnds bottomLeft + ((col + lw) @ 0).
 			b := b translateBy: (cw - gap - cw) @ 0.
@@ -85,7 +85,7 @@ RubColumnDisplayer >> tabLineColor: aColor [
 
 { #category : #accessing }
 RubColumnDisplayer >> tabLineDashes [
-	^ tabLineDashes ifNil: [tabLineDashes := {self tabLineWidth. self tabLineWidth*3}].
+	^ tabLineDashes ifNil: [tabLineDashes := {self tabLineWidth. self tabLineWidth*3}]
 ]
 
 { #category : #accessing }
@@ -94,8 +94,8 @@ RubColumnDisplayer >> tabLineDashes: anArray [
 ]
 
 { #category : #accessing }
-RubColumnDisplayer >> tabLineDashesColors [ 
-	^ tabLineDashesColors ifNil: [tabLineDashesColors := {(self tabLineColor). (Color transparent)}].
+RubColumnDisplayer >> tabLineDashesColors [
+	^ tabLineDashesColors ifNil: [tabLineDashesColors := {(self tabLineColor). (Color transparent)}]
 ]
 
 { #category : #accessing }

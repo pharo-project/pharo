@@ -4,22 +4,20 @@ I am a command to push down given methods
 Class {
 	#name : #SycPushDownMethodCommand,
 	#superclass : #SysRefactoringMethodCommand,
+	#instVars : [
+		'refactoringScopes'
+	],
 	#category : #'SystemCommands-MethodCommands'
 }
 
 { #category : #execution }
 SycPushDownMethodCommand >> asRefactorings [
-	"Return push down method refactoring using method"
-	| refactoring |
-	refactoring := RBPushDownMethodRefactoring 
-		model: model
-		pushDown: (methods collect: [ :each | each selector ])
-		from: methods first origin.
-	^ OrderedCollection with: refactoring
+
+	^ self shouldNotImplement
 ]
 
 { #category : #accessing }
-SycPushDownMethodCommand >> defaultMenuIconName [ 
+SycPushDownMethodCommand >> defaultMenuIconName [
 	^ #down
 ]
 
@@ -29,19 +27,22 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	self selectMethods.
+SycPushDownMethodCommand >> executeRefactorings [
+
+	(RBPushDownMethodDriver
+		model: model
+		scopes: refactoringScopes
+		pushDown: methods) execute
+]
+
+{ #category : #testing }
+SycPushDownMethodCommand >> isComplexRefactoring [
+
+	^ false
 ]
 
 { #category : #execution }
-SycPushDownMethodCommand >> selectMethods [
-	| dialog class|
-	class := methods first origin.
-	dialog := RBMethodsSelectionPresenter 
-		   label: 'Push down methods from ', class name
-			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: methods asOrderedCollection. 
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	methods := dialog presenter selectedItems.
+SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
+	super prepareFullExecutionInContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes
 ]

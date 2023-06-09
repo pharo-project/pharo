@@ -14,15 +14,15 @@ Class {
 { #category : #examples }
 MergeDiffMorph class >> example [
 
-	MergeDiffMorph new openInWindow 
+	MergeDiffMorph new openInWindow
 ]
 
 { #category : #examples }
 MergeDiffMorph class >> example2 [
 
-	(MergeDiffMorph 
+	(MergeDiffMorph
 		from: 'test' to: 'test2')
-		openInWindow 
+		openInWindow
 ]
 
 { #category : #accessing }
@@ -42,7 +42,7 @@ MergeDiffMorph >> allowJoinClicks: anObject [
 { #category : #actions }
 MergeDiffMorph >> calculatedJoinMappings [
 	"Specify click allowance for each section."
-	
+
 	^super calculatedJoinMappings do: [:j |
 		j allowClick: self allowJoinClicks]
 ]
@@ -53,7 +53,6 @@ MergeDiffMorph >> compositeText [
 	of the joins."
 
 	^self joinMorph compositeText
-	
 ]
 
 { #category : #obsolete }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetStrategy'
 	],
-	#category : #'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }
 
 { #category : #'instance creation' }
@@ -26,17 +26,11 @@ FLGZipStrategy >> initializeWith: aStreamStrategy [
 ]
 
 { #category : #reading }
-FLGZipStrategy >> readStreamDo: aValuable [
-	"Evaluates the argument with a read stream. Answers the result."
-	
-	targetStrategy readStreamDo: [:aStream |
-		^ GZipReadStream with: aStream do: aValuable]
+FLGZipStrategy >> readStream [
+	^ GZipReadStream on: targetStrategy readStream
 ]
 
 { #category : #writing }
-FLGZipStrategy >> writeStreamDo: aValuable [
-	"Evaluates the argument with a write stream. Answers the result."
-	
-	targetStrategy writeStreamDo: [:aStream |
-		^ GZipWriteStream with: aStream do: aValuable]
+FLGZipStrategy >> writeStream [
+	^ GZipWriteStream on: targetStrategy writeStream
 ]

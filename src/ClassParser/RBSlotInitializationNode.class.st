@@ -44,7 +44,7 @@ RBSlotInitializationNode class >> selectorParts: selectors argumentParts: aColle
 ]
 
 { #category : #comparing }
-RBSlotInitializationNode >> = anObject [ 
+RBSlotInitializationNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
  	(self selectorParts = anObject selectorParts) ifFalse: [^false].
@@ -63,7 +63,7 @@ RBSlotInitializationNode >> argumentParts [
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> argumentParts: aCollection [ 
+RBSlotInitializationNode >> argumentParts: aCollection [
 	argumentParts := aCollection
 ]
 
@@ -73,28 +73,28 @@ RBSlotInitializationNode >> hash [
 ]
 
 { #category : #initialization }
-RBSlotInitializationNode >> initialize [ 
-	
+RBSlotInitializationNode >> initialize [
+
 	super initialize.
 	selectorParts := #().
 	argumentParts := #()
 ]
 
 { #category : #testing }
-RBSlotInitializationNode >> isNull [ 
+RBSlotInitializationNode >> isNull [
 	^ selectorParts isEmpty
 ]
 
 { #category : #printing }
 RBSlotInitializationNode >> printOn: aStream [
 	"We make sure that the result is empty to be used like a bad null pattern now."
-	
-	self isNull 
-		ifFalse: [ 
+
+	self isNull
+		ifFalse: [
 				| size |
-				size := selectorParts size. 
+				size := selectorParts size.
 				selectorParts withIndexDo: [ :each :i |
-							aStream 
+							aStream
 								nextPutAll:  each asString  ;
 								<< ' ';
 								print: (argumentParts at: i) .
@@ -107,12 +107,12 @@ RBSlotInitializationNode >> selectorParts [
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> selectorParts: aCollection [ 
+RBSlotInitializationNode >> selectorParts: aCollection [
 	selectorParts := aCollection
 ]
 
 { #category : #accessing }
 RBSlotInitializationNode >> selectorString [
-	^ String streamContents: [ :s |  
+	^ String streamContents: [ :s |
 			selectorParts do: [ :e | s <<e ] ]
 ]

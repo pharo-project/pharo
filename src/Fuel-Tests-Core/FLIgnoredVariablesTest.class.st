@@ -11,8 +11,10 @@ Class {
 FLIgnoredVariablesTest >> testAllVariablesIgnored [
 
 	| anObject result aClass |
-	aClass := self newClassWithInstanceVariableNames: 'a b'.
-	aClass class duringTestCompileSilently: 'fuelIgnoredInstanceVariableNames ^#(a b)'.
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b'.
+	self classFactory
+		silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a b)'
+		in: aClass class.
 	anObject := aClass new
 		instVarAt: 1 put: $A;
 		instVarAt: 2 put: $B;
@@ -27,24 +29,28 @@ FLIgnoredVariablesTest >> testAllVariablesIgnored [
 { #category : #tests }
 FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 
-	| anObject materializedInstances aClass |
-	aClass := self newClassWithInstanceVariableNames: 'a'.
-	aClass class duringTestCompileSilently: 'fuelIgnoredInstanceVariableNames ^#(a)'.
+	| anObject materialized aClass |
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a'.
+	self classFactory
+		silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a)'
+		in: aClass class.
 	anObject := aClass new
 		instVarAt: 1 put: #A;
 		yourself.
 
 	self serialize: anObject.
-	materializedInstances := self materializedObjects.
+	materialized := self materialized.
 
-	self deny: (materializedInstances includes: #A)
+	self deny: (materialized instVarAt: 1) identicalTo: #A
 ]
 
 { #category : #tests }
 FLIgnoredVariablesTest >> testOneIgnoredVariable [
 	| anObject result aClass |
-	aClass := self newClassWithInstanceVariableNames: 'a b c'.
-	aClass class duringTestCompileSilently: 'fuelIgnoredInstanceVariableNames ^#(b)'.
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b c'.
+	self classFactory
+		silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(b)'
+		in: aClass class.
 	anObject := aClass new
 		instVarAt: 1 put: $A;
 		instVarAt: 2 put: $B;
@@ -61,8 +67,10 @@ FLIgnoredVariablesTest >> testOneIgnoredVariable [
 { #category : #tests }
 FLIgnoredVariablesTest >> testTwoIgnoredVariables [
 	| anObject result aClass |
-	aClass := self newClassWithInstanceVariableNames: 'a b c'.
-	aClass class duringTestCompileSilently: 'fuelIgnoredInstanceVariableNames ^#(a c)'.
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b c'.
+	self classFactory
+		silentlyCompile:  'fuelIgnoredInstanceVariableNames ^#(a c)'
+		in: aClass class.
 	anObject := aClass new
 		instVarAt: 1 put: $A;
 		instVarAt: 2 put: $B;

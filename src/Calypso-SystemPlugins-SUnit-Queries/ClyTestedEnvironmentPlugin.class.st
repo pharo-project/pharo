@@ -22,7 +22,7 @@ ClyTestedEnvironmentPlugin class >> isSlow [
 { #category : #controlling }
 ClyTestedEnvironmentPlugin >> attachToSystem [
 
-	TestCase historyAnnouncer 
+	TestCase historyAnnouncer
 		weak when: TestSuiteEnded send: #testRan: to: self
 ]
 
@@ -33,7 +33,7 @@ ClyTestedEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 	aClass isTestCase ifTrue: [ ^self ].
 
 	testCase := self findTestCaseCovering: aClass ifAbsent: [^self].
-	
+
 	anItem addProperty: (ClyTestedClassProperty coveringTestCase: testCase)
 ]
 
@@ -44,7 +44,7 @@ ClyTestedEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 	aMethod isTestMethod ifTrue: [ ^self ].
 
 	testMethod := self findTestMethodCovering: aMethod ifAbsent: [^self].
-	
+
 	testResult := (ClyTestResultProperty ofMethod: testMethod).
 	anItem addProperty: (ClyTestedMethodProperty coveringTest: testMethod result: testResult)
 ]
@@ -60,8 +60,8 @@ ClyTestedEnvironmentPlugin >> findTestCaseCovering: aClass ifAbsent: absentBlock
 
 	| className |
 	className := aClass instanceSide name.
-	
-	^environment system classNamed: (className , 'Test') asSymbol ifAbsent: [ 
+
+	^environment system classNamed: (className , 'Test') asSymbol ifAbsent: [
 		environment system classNamed: (className , 'Tests') asSymbol ifAbsent: absentBlock ]
 ]
 
@@ -70,9 +70,9 @@ ClyTestedEnvironmentPlugin >> findTestMethodCovering: aMethod ifAbsent: aBlock [
 	| selectorString testCase |
 	aMethod isTestMethod ifTrue: [ ^ aBlock value ].
 	testCase := self findTestCaseCovering: aMethod methodClass ifAbsent: [^aBlock value].
-	
+
 	selectorString := 'test', (self normalizeSelectorForComparison: aMethod selector).
-	
+
 	^ testCase methods
 		detect: [ :each | (self normalizeSelectorForComparison: each selector) = selectorString ]
 		ifNone: aBlock
@@ -83,10 +83,10 @@ ClyTestedEnvironmentPlugin >> findTestedClassCoveredBy: aTestClass ifAbsent: abs
 
 	| className |
 	className := aTestClass instanceSide name.
-	(className endsWith: 'Test') ifTrue: [ 
-		^environment system 
+	(className endsWith: 'Test') ifTrue: [
+		^environment system
 			classNamed: (className allButLast: 4) asSymbol  ifAbsent: absentBlock ].
-	
+
 	^absentBlock value
 ]
 
@@ -101,7 +101,7 @@ ClyTestedEnvironmentPlugin >> normalizeSelectorForComparison: aString [
 	normalizedSelectorStringSize := 0.
 	"this inlined to:do: loop with direct string manipulation is faster than
 	using copyWithout:, which relies on reject:"
-	1 to: selectorStringSize do: [ :i | 
+	1 to: selectorStringSize do: [ :i |
 		| nextChar |
 		(nextChar := selectorString at: i) == $:
 			ifFalse: [
@@ -118,12 +118,12 @@ ClyTestedEnvironmentPlugin >> normalizeSelectorForComparison: aString [
 { #category : #controlling }
 ClyTestedEnvironmentPlugin >> testRan: aTestSuiteEnded [
 	| event runTestCase testedClass |
-	
-	"testResult actually returns the TestCase class ran"	
+
+	"testResult actually returns the TestCase class ran"
 	runTestCase := aTestSuiteEnded testResult.
 	testedClass := self findTestedClassCoveredBy: runTestCase ifAbsent: [ ^self ].
 	"Here we just reuse normal event with tested class which is covered by runTestCase.
-	Logic for updates is same in that case"	
+	Logic for updates is same in that case"
 	event := ClyTestCaseRan testCase: testedClass.
 	environment systemChanged: event
 ]

@@ -28,7 +28,7 @@ EpLogBrowserToolbarPresenter >> activeFiltersString [
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beApplyMode [
 	filtersButton
-		icon: (self iconNamed: #smallRedoIcon);
+		icon: (self iconNamed: #smallRedo);
 		label: 'Confirm All Changes';
 		action: [ logBrowserPresenter applyAllChangesAndCloseWindow ]
 ]
@@ -36,7 +36,7 @@ EpLogBrowserToolbarPresenter >> beApplyMode [
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beHistoryMode [
 	filtersButton
-		icon: (self iconNamed: #smallFindIcon);
+		icon: (self iconNamed: #smallFind);
 		action: [
 			logBrowserPresenter filtersSubMenu
 				openWithSpecAt: self currentWorld activeHand position ]
@@ -45,7 +45,7 @@ EpLogBrowserToolbarPresenter >> beHistoryMode [
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beRevertMode [
 	filtersButton
-		icon: (self iconNamed: #smallUndoIcon);
+		icon: (self iconNamed: #smallUndo);
 		label: 'Confirm All Changes';
 		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]
@@ -70,7 +70,7 @@ EpLogBrowserToolbarPresenter >> refresh [
 { #category : #refreshing }
 EpLogBrowserToolbarPresenter >> statusString [
 	^ String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			| filtered total |
 			filtered := logBrowserPresenter filteredEntriesCount.
 			total := logBrowserPresenter totalEntriesCount.

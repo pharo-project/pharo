@@ -24,7 +24,7 @@ ClyConvertMethodGroupToTagCommand class >> canBeExecutedInContext: aToolContext 
 { #category : #activation }
 ClyConvertMethodGroupToTagCommand class >> fullBrowserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
 ]
 
@@ -42,14 +42,14 @@ ClyConvertMethodGroupToTagCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyConvertMethodGroupToTagCommand >> execute [
-	
+
 	methodGroups do: [ :each | each convertToMethodTag: tagName]
 ]
 
 { #category : #execution }
 ClyConvertMethodGroupToTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	tagName := aToolContext requestSingleMethodTag: 'New protocol name'
 ]
 

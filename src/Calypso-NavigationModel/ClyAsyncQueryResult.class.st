@@ -48,19 +48,19 @@ ClyAsyncQueryResult >> actualResult [
 
 { #category : #converting }
 ClyAsyncQueryResult >> adoptForBrowser [
-	"In case when actual query produces browser items 
+	"In case when actual query produces browser items
 	we should adopt our own interface to the interface of ClyBrowserQueryResult.
-	Otherwise when actual query do not produce browser items 
+	Otherwise when actual query do not produce browser items
 	we just use superclass adapter for raw items"
-	buildingQuery retrievesBrowserItems ifTrue: [ 
+	buildingQuery retrievesBrowserItems ifTrue: [
 		^ClyAsyncBrowserQueryResultAdapter for: self ].
-	
+
 	^super adoptForBrowser
 ]
 
 { #category : #building }
 ClyAsyncQueryResult >> buildActualResult [
-	"The loop here prevents the race condition when actual query is just executed 
+	"The loop here prevents the race condition when actual query is just executed
 	but system is changed and this change reset built result which means nil returned from #items.
 	In that case we just repeat query again"
 	[actualResult := buildingQuery execute.
@@ -83,11 +83,11 @@ ClyAsyncQueryResult >> buildProcess [
 
 { #category : #building }
 ClyAsyncQueryResult >> collectMetadata [
-	"In async query we always collect metadata in background 
+	"In async query we always collect metadata in background
 	and full execution process completes only after this.
 	So no protection is needed here and no lazy logic over metadata variable"
 	metadata := ClyQueryResultMetadata new.
-	environment pluginsDo: [:each | 
+	environment pluginsDo: [:each |
 		buildingQuery collectMetadataOf: self by: each	]
 ]
 
@@ -98,27 +98,27 @@ ClyAsyncQueryResult >> fillWith: queriedObjects [
 
 { #category : #building }
 ClyAsyncQueryResult >> forceLazyRebuild [
-	"Async result never reset own items. 
+	"Async result never reset own items.
 	They should keep previous values until actual result will built new one"
-	
-	self protectAccessWhile: [ 	
-		needsRebuild := true].
+
+	self protectAccessWhile: [
+		needsRebuild := true]
 ]
 
 { #category : #'system changes' }
 ClyAsyncQueryResult >> handleSystemChange: aSystemAnnouncement byProcessingList: allProcessingResults [
 	| expectedResult |
 	super handleSystemChange: aSystemAnnouncement byProcessingList: allProcessingResults.
-	
+
 	expectedResult := environment cachedResultOf: buildingQuery.
 	expectedResult ifNil: [ ^self ].
-	
-	needsRebuild ifTrue: [ 
-		buildProcess ifNotNil: [ 
+
+	needsRebuild ifTrue: [
+		buildProcess ifNotNil: [
 			buildProcess terminate.
 			metadata removeProperty: ClyBackgroundProcessingTag instance].
 		expectedResult itemsChanged].
-	
+
 	allProcessingResults remove: expectedResult ifAbsent: [  ]
 ]
 
@@ -131,23 +131,23 @@ ClyAsyncQueryResult >> initializeItems [
 
 { #category : #testing }
 ClyAsyncQueryResult >> isBuilt [
-	^super isBuilt 
+	^super isBuilt
 		and: [(self hasMetaProperty: ClyBackgroundProcessingTag) not]
 ]
 
 { #category : #accessing }
 ClyAsyncQueryResult >> rawItems [
-	^buildingQuery retrievesBrowserItems 
+	^buildingQuery retrievesBrowserItems
 		ifTrue: [ items collect: [ :each | each actualObject ] ]
 		ifFalse: [ items]
 ]
 
 { #category : #building }
 ClyAsyncQueryResult >> rebuild [
-	self initializeItems.	
+	self initializeItems.
 	metadata ifNil: [metadata := ClyQueryResultMetadata new].
 	metadata addProperty: ClyBackgroundProcessingTag instance.
-	
+
 	self runBuildProcess
 ]
 
@@ -155,7 +155,7 @@ ClyAsyncQueryResult >> rebuild [
 ClyAsyncQueryResult >> runBuildProcess [
 
 	buildProcess := [self buildActualResult] newProcess.
-	buildProcess 
+	buildProcess
 		name: 'Build result of ', buildingQuery printString;
 		priority: Processor userBackgroundPriority.
 	buildProcess resume

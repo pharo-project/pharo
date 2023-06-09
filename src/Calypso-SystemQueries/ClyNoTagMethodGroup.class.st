@@ -30,6 +30,6 @@ ClyNoTagMethodGroup class >> withMethodsFrom: aMethodQuery [
 
 { #category : #operations }
 ClyNoTagMethodGroup >> renameMethodTagTo: newTag [
-	
+
 	self methods do: [ :each | each tagWith: newTag]
 ]

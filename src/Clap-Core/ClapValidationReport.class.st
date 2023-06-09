@@ -17,7 +17,7 @@ ClapValidationReport class >> success [
 
 { #category : #controlling }
 ClapValidationReport >> add: aDiagnostic [
-	aDiagnostic isFailure ifTrue: [ problems add: aDiagnostic ].
+	aDiagnostic isFailure ifTrue: [ problems add: aDiagnostic ]
 ]
 
 { #category : #controlling }

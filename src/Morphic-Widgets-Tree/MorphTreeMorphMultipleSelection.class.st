@@ -39,7 +39,7 @@ MorphTreeMorphMultipleSelection >> selectedItemOrItemsOrNil [
 
 { #category : #accessing }
 MorphTreeMorphMultipleSelection >> selectedNodeList [
-	^ self selectedNodePathList 
+	^ self selectedNodePathList
 		ifNil: [#()]
 		ifNotNil: [:l | l collect: [:path | path last]]
 ]

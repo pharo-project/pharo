@@ -20,7 +20,7 @@ EpCategoryChange class >> named: aName [
 { #category : #'instance creation' }
 EpCategoryChange class >> named: aName packageName: aPackageName [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeNamed: aName packageName: aPackageName;
 		yourself
 ]
@@ -31,7 +31,7 @@ EpCategoryChange class >> packageNameFromCategoryName: aName [
 ]
 
 { #category : #accessing }
-EpCategoryChange >> affectedPackageName [ 
+EpCategoryChange >> affectedPackageName [
 
 	^ affectedPackageName
 ]
@@ -43,7 +43,7 @@ EpCategoryChange >> categoryName [
 ]
 
 { #category : #testing }
-EpCategoryChange >> doesOverride: aCodeChange [ 
+EpCategoryChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpCategoryChange and: [
 		aCodeChange affectedPackageName = self affectedPackageName ]
@@ -54,7 +54,7 @@ EpCategoryChange >> initializeNamed: aName packageName: aPackageName [
 
 	self initialize.
 	classCategoryName := aName.
-	affectedPackageName := aPackageName.
+	affectedPackageName := aPackageName
 ]
 
 { #category : #testing }

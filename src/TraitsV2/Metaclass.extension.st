@@ -6,26 +6,26 @@ Metaclass >> baseLocalMethods [
 ]
 
 { #category : #'*TraitsV2' }
-Metaclass >> initializeBasicMethods [ 
-	
+Metaclass >> initializeBasicMethods [
+
 	"Nothing to do in the metaclass"
 ]
 
 { #category : #'*TraitsV2' }
 Metaclass >> setTraitComposition: aTraitCompositionOrArray [
-	
-	^ self trait: aTraitCompositionOrArray slots: self slots.
+
+	^ self trait: aTraitCompositionOrArray slots: self slots
 ]
 
 { #category : #'*TraitsV2' }
 Metaclass >> trait: aTraitCompositionOrArray [
-	
-	^ self trait: aTraitCompositionOrArray slots: #().
+
+	^ self trait: aTraitCompositionOrArray slots: #()
 ]
 
 { #category : #'*TraitsV2' }
-Metaclass >> trait: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
-	
+Metaclass >> trait: aTraitCompositionOrArray instanceVariableNames: instVarString [
+
 	^ self trait: aTraitCompositionOrArray slots: instVarString asSlotCollection
 ]
 
@@ -33,13 +33,13 @@ Metaclass >> trait: aTraitCompositionOrArray instanceVariableNames: instVarStrin
 Metaclass >> trait: aTraitCompositionOrArray slots: slotArray [
 	| theClass |
 	theClass := self instanceSide.
-	
+
 	theClass := theClass classInstaller
 		update: theClass
-		to: [ :builder | 
+		to: [ :builder |
 			builder
 				fillFor: theClass;
-				classTraitComposition: aTraitCompositionOrArray asTraitComposition;				
+				classTraitComposition: aTraitCompositionOrArray asTraitComposition;
 				classSlots: slotArray ].
 	^ theClass classSide
 ]
@@ -47,12 +47,12 @@ Metaclass >> trait: aTraitCompositionOrArray slots: slotArray [
 { #category : #'*TraitsV2' }
 Metaclass >> uses: aTraitCompositionOrArray [
 	"This method will be deprecated better use trait."
-	
-	self trait: aTraitCompositionOrArray slots: #().
+
+	self trait: aTraitCompositionOrArray slots: #()
 ]
 
 { #category : #'*TraitsV2' }
-Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
+Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [
 	"This method will be deprecated better use trait:slots: or trait:instanceVariableNames:"
 	^ self uses: aTraitCompositionOrArray slots: instVarString asSlotCollection
 ]
@@ -61,13 +61,13 @@ Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString
 Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
 	| theClass |
 	theClass := self instanceSide.
-	
+
 	theClass := theClass classInstaller
 		update: theClass
-		to: [ :builder | 
+		to: [ :builder |
 			builder
 				fillFor: theClass;
-				classTraitComposition: aTraitCompositionOrArray asTraitComposition;				
+				classTraitComposition: aTraitCompositionOrArray asTraitComposition;
 				classSlots: slotArray ].
 	^ theClass classSide
 ]

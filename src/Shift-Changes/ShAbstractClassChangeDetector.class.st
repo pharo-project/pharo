@@ -32,7 +32,7 @@ ShAbstractClassChangeDetector class >> isAbstract [
 ShAbstractClassChangeDetector >> compareClass [
 	oldValue := classAccessor value: builder oldClass.
 	newValue := builderAccessor value: builder.
-	
+
 	^ (comparer value: oldValue value: newValue)
 		ifTrue: [ #() ]
 		ifFalse: [ self newChanges ]
@@ -40,10 +40,10 @@ ShAbstractClassChangeDetector >> compareClass [
 
 { #category : #changes }
 ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
-	
+
 	(a size = b size) ifFalse: [ ^ false].
 
-	a with: b do: [ :aSlot :bSlot | 
+	a with: b do: [ :aSlot :bSlot |
 			(aSlot hasSameDefinitionAs: bSlot) ifFalse: [ ^ false ] ].
 
 	^ true
@@ -52,12 +52,12 @@ ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
 { #category : #initialization }
 ShAbstractClassChangeDetector >> initialize [
 	super initialize.
-	comparer := [:a :b | a = b ].
+	comparer := [:a :b | a = b ]
 ]
 
 { #category : #changes }
 ShAbstractClassChangeDetector >> newChanges [
 	^ {ShClassChanged new
 		builder: builder;
-		yourself}.
+		yourself}
 ]

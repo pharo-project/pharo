@@ -54,7 +54,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyDataSourceItem class >> of: aDataSource value: anEnvironmentItem [
-	^self new 
+	^self new
 		ownerDataSource: aDataSource;
 		browserItem: anEnvironmentItem
 ]
@@ -108,7 +108,7 @@ ClyDataSourceItem >> childrenDataSource [
 { #category : #accessing }
 ClyDataSourceItem >> childrenDataSource: aDataSource [
 	childrenDataSource := aDataSource.
-	childrenDataSource ifNotNil: [ 
+	childrenDataSource ifNotNil: [
 		childrenDataSource parentItem: self.
 		childrenDataSource depth: self depth + 1]
 ]
@@ -147,12 +147,12 @@ ClyDataSourceItem >> copyForBrowserStateSnapshot [
 { #category : #copying }
 ClyDataSourceItem >> copyForBrowserStateSnapshotOf: rootDataSourceSnapshot [
 	| copy ownerDataSourceSnapshot |
-	ownerDataSourceSnapshot := rootDataSourceSnapshot 
-		findDataSourceSameAs: ownerDataSource 
-		ifNone: [ self error: 'should not happen' ].	
+	ownerDataSourceSnapshot := rootDataSourceSnapshot
+		findDataSourceSameAs: ownerDataSource
+		ifNone: [ self error: 'should not happen' ].
 	copy := self copy.
 	copy ownerDataSource: ownerDataSourceSnapshot.
-	childrenDataSource ifNotNil: [ 
+	childrenDataSource ifNotNil: [
 		copy childrenDataSource: childrenDataSource copyForBrowserStateSnapshot].
 	^copy
 ]
@@ -165,13 +165,13 @@ ClyDataSourceItem >> depth [
 { #category : #controlling }
 ClyDataSourceItem >> expand [
 	self isExpanded ifTrue: [ ^self ].
-	
+
 	ownerDataSource expand: self
 ]
 
 { #category : #controlling }
 ClyDataSourceItem >> expandChildren [
-	
+
 	self childrenDataSource: (ownerDataSource retrieveChildrenOf: self)
 ]
 
@@ -180,7 +180,7 @@ ClyDataSourceItem >> findParentItemOf: itemTypeClass [
 	| parent |
 	parent := self parentItem ifNil: [ ^nil ].
 	(parent isBasedOnItemType: itemTypeClass) ifTrue: [ ^parent ].
-	
+
 	^parent findParentItemOf: itemTypeClass
 ]
 
@@ -250,8 +250,8 @@ ClyDataSourceItem >> isMarkedWith: propertyClass [
 
 { #category : #testing }
 ClyDataSourceItem >> isRemoved [
-	^browserItem isNil 
-		or: [ ownerDataSource isParentRemoved 
+	^browserItem isNil
+		or: [ ownerDataSource isParentRemoved
 				or: [ ownerDataSource isParentCollapsed] ]
 ]
 
@@ -287,7 +287,7 @@ ClyDataSourceItem >> ownerDataSource: anObject [
 
 { #category : #accessing }
 ClyDataSourceItem >> parentItem [
-	^ ownerDataSource isRoot 
+	^ ownerDataSource isRoot
 		ifTrue: [ nil ]
 		ifFalse: [ ownerDataSource parentItem]
 ]
@@ -300,12 +300,12 @@ ClyDataSourceItem >> position [
 { #category : #printing }
 ClyDataSourceItem >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
-	browserItem 
+	browserItem
 		ifNil: [ nil printOn: aStream ]
 		ifNotNil: [ aStream nextPutAll: browserItem name ].
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
@@ -315,14 +315,14 @@ ClyDataSourceItem >> queryView [
 
 { #category : #accessing }
 ClyDataSourceItem >> rootDataSource [
-	^ ownerDataSource isRoot 
+	^ ownerDataSource isRoot
 		ifTrue: [ ownerDataSource ]
 		ifFalse: [ ownerDataSource parentItem rootDataSource ]
 ]
 
 { #category : #accessing }
 ClyDataSourceItem >> rootParentItem [
-	^ ownerDataSource isRoot 
+	^ ownerDataSource isRoot
 		ifTrue: [ self ]
 		ifFalse: [ self parentItem rootParentItem ]
 ]

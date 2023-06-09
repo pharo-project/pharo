@@ -14,11 +14,11 @@ Class {
 		'extractionInterval',
 		'extractedMethodSelector'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
-RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
 		from: aSelector
@@ -26,7 +26,7 @@ RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelect
 ]
 
 { #category : #'instance creation' }
-RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
@@ -36,7 +36,7 @@ RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anIn
 ]
 
 { #category : #initialization }
-RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	extractionInterval := anInterval
@@ -45,15 +45,15 @@ RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in:
 { #category : #transforming }
 RBExtractMethodToComponentRefactoring >> extractMethod [
 	| refactoring |
-	refactoring := RBExtractMethodRefactoring 
+	refactoring := RBExtractMethodRefactoring
 				model: self model
 				extract: extractionInterval
 				from: selector
 				in: class.
 	refactoring setOption: #methodName
-		toUse: 
-			[:methodName :ref | 
-			extractedMethodSelector := self 
+		toUse:
+			[:methodName :ref |
+			extractedMethodSelector := self
 						uniqueMethodNameFor: methodName arguments size.
 			methodName
 				selector: extractedMethodSelector;
@@ -64,7 +64,7 @@ RBExtractMethodToComponentRefactoring >> extractMethod [
 { #category : #transforming }
 RBExtractMethodToComponentRefactoring >> inlineForwarder [
 	| refactoring |
-	refactoring := RBInlineAllSendersRefactoring 
+	refactoring := RBInlineAllSendersRefactoring
 				model: self model
 				sendersOf: extractedMethodSelector
 				in: class.
@@ -78,7 +78,7 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 	| variable refactoring |
 
 	variable := self selectVariableToMoveMethodTo: extractedMethodSelector class: class.
-	variable ifNil: [ self refactoringFailure: 'Did not extract method' ].
+	variable ifNil: [ self refactoringError: 'Did not extract method' ].
 	refactoring := RBMoveMethodRefactoring
 		model: self model
 		selector: extractedMethodSelector
@@ -94,7 +94,7 @@ RBExtractMethodToComponentRefactoring >> preconditions [
 ]
 
 { #category : #printing }
-RBExtractMethodToComponentRefactoring >> storeOn: aStream [ 
+RBExtractMethodToComponentRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' extract: '.

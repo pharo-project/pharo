@@ -10,16 +10,16 @@ Class {
 
 { #category : #'accessing - defaults' }
 ReadStreamTest >> emptyStream [
-	^ ReadStream on: String new.
+	^ ReadStream on: String new
 ]
 
 { #category : #utilities }
-ReadStreamTest >> streamOn: collection upToAll: subcollection [ 
+ReadStreamTest >> streamOn: collection upToAll: subcollection [
 	^ collection readStream upToAll: subcollection
 ]
 
 { #category : #utilities }
-ReadStreamTest >> streamOn: collection upToAll: subcollection1 upToAll: subcollection2 [ 
+ReadStreamTest >> streamOn: collection upToAll: subcollection1 upToAll: subcollection2 [
 	^ collection readStream
 		upToAll: subcollection1;
 		upToAll: subcollection2
@@ -27,12 +27,12 @@ ReadStreamTest >> streamOn: collection upToAll: subcollection1 upToAll: subcolle
 
 { #category : #'accessing - defaults' }
 ReadStreamTest >> streamOnArray [
-	^ ReadStream on: (Array with: 1 with: #(a b c) with: false).
+	^ ReadStream on: (Array with: 1 with: #(a b c) with: false)
 ]
 
 { #category : #'accessing - defaults' }
 ReadStreamTest >> streamOnString [
-	^ ReadStream on: 'abcde'.
+	^ ReadStream on: 'abcde'
 ]
 
 { #category : #'tests - testing' }
@@ -46,7 +46,7 @@ ReadStreamTest >> testBack [
 	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream back equals: $c.
+	self assert: stream back equals: $c
 ]
 
 { #category : #tests }
@@ -55,7 +55,7 @@ ReadStreamTest >> testBackOnPosition1 [
 	| stream |
 	stream := 'abc' readStream.
 	stream next.
-	self assert: stream back equals: $a.
+	self assert: stream back equals: $a
 ]
 
 { #category : #'tests - accessing' }
@@ -71,18 +71,18 @@ ReadStreamTest >> testContents [
 ReadStreamTest >> testIsEmpty [
 	| stream |
 	self assert: self emptyStream isEmpty.
-	
+
 	stream := self streamOnArray.
 	self deny: stream isEmpty.
 	stream skip: 3.
 	self deny: stream isEmpty.
-	
+
 	stream := self streamOnString.
 	self deny: stream isEmpty.
 	stream next;next;next.
 	self deny: stream isEmpty.
 	stream setToEnd.
-	self deny: stream isEmpty.
+	self deny: stream isEmpty
 ]
 
 { #category : #tests }
@@ -91,7 +91,7 @@ ReadStreamTest >> testOldBack [
 	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream oldBack equals: $b.
+	self assert: stream oldBack equals: $b
 ]
 
 { #category : #tests }
@@ -110,7 +110,7 @@ ReadStreamTest >> testOldPeekBack [
 	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream oldPeekBack equals: $b.
+	self assert: stream oldPeekBack equals: $b
 ]
 
 { #category : #tests }
@@ -119,17 +119,17 @@ ReadStreamTest >> testPeekBack [
 	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream peekBack equals: $c.
+	self assert: stream peekBack equals: $c
 ]
 
 { #category : #tests }
 ReadStreamTest >> testPositionOfSubCollection [
-	
+
 	self assert: ('xyz' readStream positionOfSubCollection: 'q' ) equals: 0.
 	self assert: ('xyz' readStream positionOfSubCollection: 'x' ) equals: 1.
 
 	self assert: ('xyz' readStream positionOfSubCollection: 'y' ) equals: 2.
-	self assert: ('xyz' readStream positionOfSubCollection: 'z' ) equals: 3.
+	self assert: ('xyz' readStream positionOfSubCollection: 'z' ) equals: 3
 ]
 
 { #category : #'tests - accessing' }

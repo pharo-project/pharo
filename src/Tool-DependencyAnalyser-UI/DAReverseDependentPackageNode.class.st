@@ -19,7 +19,7 @@ DAReverseDependentPackageNode >> children [
 
 { #category : #private }
 DAReverseDependentPackageNode >> dependenciesToParentNode [
-	^ self content daPackage 
+	^ self content daPackage
 		compositeDependencyTo: (self parentNode content daPackage)
 ]
 

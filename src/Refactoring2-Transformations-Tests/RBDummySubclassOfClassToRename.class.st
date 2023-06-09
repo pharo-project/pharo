@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'rewriteRule10'
 	],
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Data'
 }
 
 { #category : #accessing }

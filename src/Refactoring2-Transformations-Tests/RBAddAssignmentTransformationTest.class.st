@@ -1,7 +1,7 @@
 Class {
 	#name : #RBAddAssignmentTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #utilities }
@@ -9,14 +9,14 @@ RBAddAssignmentTransformationTest >> methodAfter [
 
 	| variable |
 	variable := 'String'.
-	variable := 1 asString.
+	variable := 1 asString
 ]
 
 { #category : #utilities }
 RBAddAssignmentTransformationTest >> methodBefore [
 
 	| variable |
-	variable := 'String'.
+	variable := 'String'
 ]
 
 { #category : #tests }
@@ -51,13 +51,13 @@ RBAddAssignmentTransformationTest >> testRefactoring [
 						inMethod: #methodBefore
 						inClass: #RBAddAssignmentTransformationTest)
 						asRefactoring transform.
-	
+
 	self assert: refactoring model changes changes size equals: 1.
-	
+
 	class := refactoring model classNamed: #RBAddAssignmentTransformationTest.
 	self assert: (class directlyDefinesMethod: #methodBefore).
-	self assert: (class parseTreeFor: #methodBefore) body statements size equals: 2.
-	self assert: (class parseTreeFor: #methodBefore) body statements last value sourceCode equals: '1 asString'
+	self assert: (class parseTreeForSelector: #methodBefore) body statements size equals: 2.
+	self assert: (class parseTreeForSelector: #methodBefore) body statements last value sourceCode equals: '1 asString'
 ]
 
 { #category : #tests }
@@ -70,12 +70,12 @@ RBAddAssignmentTransformationTest >> testTransform [
 		inMethod: #methodBefore
 		inClass: self class name)
 		transform.
-	
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeFor: #methodBefore) body
-			equals: (class parseTreeFor: #methodAfter) body.
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }

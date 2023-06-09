@@ -129,7 +129,7 @@ ZipEncoderNode >> printOn: aStream [
 		nextPutAll:', freq = '; print: frequency;
 		nextPutAll:', bitLength = '; print: bitLength;
 		nextPutAll:', code = '; print: code;
-		nextPutAll:', height = '; print: height; 
+		nextPutAll:', height = '; print: height;
 	nextPut:$)
 ]
 

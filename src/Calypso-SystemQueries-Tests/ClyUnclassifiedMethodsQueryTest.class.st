@@ -24,8 +24,8 @@ ClyUnclassifiedMethodsQueryTest >> testCheckIfEmpty [
 ClyUnclassifiedMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString. 
+		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString.
 		ClyClass2FromP1Mock >> #instanceSideClassVar1Reader}.
-	
+
 	self assert: foundSelectors equals: #(instanceSideClassVar1Reader)
 ]

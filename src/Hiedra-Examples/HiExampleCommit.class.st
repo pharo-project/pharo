@@ -40,7 +40,7 @@ HiExampleCommit class >> randomlyGenerated [
 	| values random |
 	values := 60 to: 1 by: -1.
 	random := Random new.
-	^ (values collect: [ :value | 
+	^ (values collect: [ :value |
 		self new
 			id: value;
 			comment: 'Randomly Connected Element #', value asString;
@@ -90,5 +90,5 @@ HiExampleCommit >> printOn: aStream [
 		print: id;
 		nextPutAll: ' -> ';
 		print: parentIds asArray;
-		nextPut: $).
+		nextPut: $)
 ]

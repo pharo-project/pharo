@@ -63,7 +63,7 @@ StdioStreamTestResource >> setUp [
 
 	fileReference := FileReference newTempFilePrefix: 'StdioStreamTest.' suffix: '.bin'.
 	contents := '01234567890123456789'.
-	
+
 	fileStream := (File named: fileReference pathString) openForWrite.
 	fileStream
 		nextPutAll: contents;
@@ -82,7 +82,7 @@ StdioStreamTestResource >> stdioStream [
 { #category : #running }
 StdioStreamTestResource >> tearDown [
 	"Close the receiver's resources"
-	
+
 	stdioStream := nil.
 	fileStream close.
 	fileReference ensureDelete

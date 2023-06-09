@@ -15,6 +15,6 @@ Class {
 
 { #category : #visitor }
 CDTraitDefinitionNode >> acceptVisitor: aProgramNodeVisitor [
-	
+
 	self visitTraitDefinition: self
 ]

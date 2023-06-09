@@ -15,14 +15,13 @@ Implementation:
 
 Instance variables:
 	outerContext <Context|nil> context that defined me
-	startpc: <SmallInteger> (pc = program counter) offset of my first bytecode instruction in the compiledMethod bytecode  
+	compiledBlock <CompiledBlock>  
 	numArgs: <SmallInteger> my number of arguments
 
-I am created at runtime through a special bytecode:
-closureNumCopied: x numArgs: y bytes z1 to z2
-On creation, the currently executed context is set to my outerContext, z1 is set as my startpc and y is set as my numArgs. After my creation, the current execution flow jumps to my last bytecode, z2, to skip the execution of my bytecode which is deferred until I execute a variant of #value.
+I am created at runtime through a special pushFullBlock: bytecode.
+On creation, the currently executed context is set to my outerContext and the compiledBlock is taken from the literals.
 
-I am executed when I receive a variant of the message value. This message creates a new context, a block context <MethodContext>, which reference me in its variable closureOrNil. This new context executes my bytecode, which correspond to a subset of the bytecode of my enclosing method, starting at startpc and ending in blockReturn/return bytecode.
+I am executed when I receive a variant of the message value. This message creates a new context, a block context <Context>, which reference me in its variable closureOrNil.
 
 Accessing variables of the my enclosing context is different depending on variables because of various optimizations:
 - self: I access the receiver of my enclosing method by accessing my context's receiver, which is always set to the enclosing method receiver.
@@ -39,11 +38,17 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'outerContext',
-		'startpc',
+		'compiledBlock',
 		'numArgs'
 	],
 	#category : #'Kernel-Methods'
 }
+
+{ #category : #testing }
+BlockClosure class >> isAbstract [
+
+	^ self == BlockClosure
+]
 
 { #category : #accessing }
 BlockClosure >> argumentCount [
@@ -101,21 +106,19 @@ BlockClosure >> assertWithDescription: aStringOrABlock [
 
 { #category : #private }
 BlockClosure >> clearTemporariesOn: aContext [
- 
-	(self numArgs + self numCopiedValues + 1) to: self numTemps do: [ :anIndex |  
+
+	(self numArgs + self numCopiedValues + 1) to: self numTemps do: [ :anIndex |
 		aContext tempAt: anIndex put: nil ]
 ]
 
 { #category : #accessing }
 BlockClosure >> compiledBlock [
-	"To be able to inherit from BlockClosure"
-	^ startpc
+	^ compiledBlock
 ]
 
 { #category : #accessing }
 BlockClosure >> compiledBlock: aCompiledMethod [
-	"To be able to inherit from BlockClosure"
-	startpc := aCompiledMethod
+	compiledBlock := aCompiledMethod
 ]
 
 { #category : #accessing }
@@ -139,7 +142,7 @@ BlockClosure >> cull: anArg [
 	"Execute the receiver with one or zero arguments depending on the receiver"
 	"([ 12 ] cull: 13)>>> 12 "
 	"([:x | x + 12] cull: 3)>>> 15"
-	^numArgs = 0 
+	^numArgs = 0
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
 ]
@@ -151,14 +154,14 @@ BlockClosure >> cull: firstArg cull: secondArg [
 	"
 	"([:x :y | x + y] cull: 3 cull: 2) >>> 5
 	"
-	^numArgs < 2 
+	^numArgs < 2
 		ifTrue: [self cull: firstArg]
 		ifFalse: [self value: firstArg value: secondArg]
 ]
 
 { #category : #evaluating }
 BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
-	^numArgs < 3 
+	^numArgs < 3
 		ifTrue: [self cull: firstArg cull: secondArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg]
 ]
@@ -166,8 +169,8 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
 { #category : #evaluating }
 BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	"Execute the receiver with four or less arguments. Check cull:cull: for examples"
-	
-	^numArgs < 4 
+
+	^numArgs < 4
 		ifTrue: [self cull: firstArg cull: secondArg cull: thirdArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
 ]
@@ -186,7 +189,7 @@ BlockClosure >> doPrintOn: aStream [
 { #category : #controlling }
 BlockClosure >> doWhileFalse: conditionBlock [
 	"Evaluate the receiver once, then again as long the value of conditionBlock is false."
- 
+
 	| result |
 	[result := self value.
 	conditionBlock value] whileFalse.
@@ -197,7 +200,7 @@ BlockClosure >> doWhileFalse: conditionBlock [
 { #category : #controlling }
 BlockClosure >> doWhileTrue: conditionBlock [
 	"Evaluate the receiver once, then again as long the value of conditionBlock is true."
- 
+
 	| result |
 	[result := self value.
 	conditionBlock value] whileTrue.
@@ -248,11 +251,11 @@ BlockClosure >> forkAndWait [
 	| semaphore |
 	semaphore := Semaphore new.
 	[self ensure: [semaphore signal]] fork.
-	semaphore wait.
+	semaphore wait
 ]
 
 { #category : #scheduling }
-BlockClosure >> forkAt: priority [ 
+BlockClosure >> forkAt: priority [
 	"Create and schedule a Process running the code in the receiver at the given priority. Answer the newly created process."
 
 	^ self newProcess
@@ -264,7 +267,7 @@ BlockClosure >> forkAt: priority [
 BlockClosure >> forkAt: priority named: name [
 
 	"Create and schedule a Process running the code in the receiver at the
-	given priority and having the given name. Answer the newly created 
+	given priority and having the given name. Answer the newly created
 	process."
 
 	| forkedProcess |
@@ -284,6 +287,14 @@ BlockClosure >> forkNamed: aString [
 
 { #category : #testing }
 BlockClosure >> hasMethodReturn [
+	self
+		deprecated: 'use #hasNonLocalReturn'
+		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
+	^self hasNonLocalReturn
+]
+
+{ #category : #testing }
+BlockClosure >> hasNonLocalReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	self withAllBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
 	^false
@@ -292,6 +303,14 @@ BlockClosure >> hasMethodReturn [
 { #category : #accessing }
 BlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
+]
+
+{ #category : #accessing }
+BlockClosure >> homeMethod [
+	"return the home method. If no #home is available due to no outerContext, use the compiledBlock"
+	^ (self home
+		   ifNotNil: [ :homeContext | homeContext ]
+		   ifNil: [ self compiledBlock ]) method
 ]
 
 { #category : #exceptions }
@@ -315,7 +334,7 @@ BlockClosure >> initialStackPointer [
 	^ self numTemps
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 BlockClosure >> isBlock [
 
 	^ true
@@ -323,13 +342,9 @@ BlockClosure >> isBlock [
 
 { #category : #testing }
 BlockClosure >> isClean [
-	"Answer if the receiver does not close-over any variables other than globals, and does
-	 not ^-return (does not close over the home context).  Clean blocks are amenable to
-	 being created at compile-time."
-	self numCopiedValues > 0 ifTrue:
-		[^false].
-
-	^ CleanBlockChecker check: self method
+	"for now we forward to the AST. When clean blocks are enabled, we can just return false
+	as CleanBlockClosure returns true"
+	^self sourceNode isClean
 ]
 
 { #category : #testing }
@@ -362,13 +377,13 @@ BlockClosure >> method [
 
 { #category : #scheduling }
 BlockClosure >> newProcess [
-	"Answer a Process running the code in the receiver. The process is not 
+	"Answer a Process running the code in the receiver. The process is not
 	scheduled.
 	IMPORTANT! Debug stepping this deep infrastructure may lock your Image
   	If you are not sure what you are doing, close the debugger now."
 	<primitive: 19> "Simulation guard"
 	^Process
-		forContext: 
+		forContext:
 			[self value.
 			"IMPORTANT: Do not step over next line of code. See method comments for details"
 			Processor terminateRealActive] asContext
@@ -376,13 +391,13 @@ BlockClosure >> newProcess [
 ]
 
 { #category : #scheduling }
-BlockClosure >> newProcessWith: anArray [ 
-	"Answer a Process running the code in the receiver. The receiver's block 
-	arguments are bound to the contents of the argument, anArray. The 
+BlockClosure >> newProcessWith: anArray [
+	"Answer a Process running the code in the receiver. The receiver's block
+	arguments are bound to the contents of the argument, anArray. The
 	process is not scheduled."
 	<primitive: 19> "Simulation guard"
 	^Process
-		forContext: 
+		forContext:
 			[self valueWithArguments: anArray.
 			"IMPORTANT: Do not step over next line of code. See method comments for details"
 			Processor terminateRealActive] asContext
@@ -411,7 +426,7 @@ BlockClosure >> numArgsError: numArgsForInvocation [
 BlockClosure >> numCopiedValues [
 	"Answer the number of copied values of the receiver.  Since these are
 	 stored in the receiver's indexable fields this is the receiver's basic size.
-	 Primitive. Answer the number of indexable variables in the receiver. 
+	 Primitive. Answer the number of indexable variables in the receiver.
 	 This value is the same as the largest legal subscript."
 
 	<primitive: 62>
@@ -426,9 +441,9 @@ BlockClosure >> numTemps [
 { #category : #exceptions }
 BlockClosure >> on: exception do: handlerAction [
 	"Evaluate the receiver in the scope of an exception handler.
-	The following primitive is just a marker used to find the error handling context. 
+	The following primitive is just a marker used to find the error handling context.
 	See MethodContext>>#isHandlerOrSignalingContext. "
-	<primitive: 199>  
+	<primitive: 199>
 	^ self value
 ]
 
@@ -437,9 +452,9 @@ BlockClosure >> on: exception fork: handlerAction [
 	"Activate the receiver. In case of exception, fork a new process, which will handle an error.
 	An original process will continue running as if receiver evaluation finished and answered nil,
 	i.e., an expression like:
-	
-	[ self error: 'some error'] on: Error fork: [:ex |  123 ] 
-	
+
+	[ self error: 'some error'] on: Error fork: [:ex |  123 ]
+
 	will always answer nil for original process, not 123.
 
 	The context stack , starting from context which sent this message to receiver and
@@ -449,17 +464,17 @@ BlockClosure >> on: exception fork: handlerAction [
 
 	^ self
 		  on: exception
-		  do: [ :ex | 
+		  do: [ :ex |
 			  | onDoCtx handler bottom thisCtx |
 			  onDoCtx := thisContext.
 			  thisCtx := onDoCtx home.
 
 			  "find the context on stack for which this method's is sender"
 
-			  [ onDoCtx sender == thisCtx ] whileFalse: [ 
+			  [ onDoCtx sender == thisCtx ] whileFalse: [
 				  onDoCtx := onDoCtx sender.
 				  onDoCtx ifNil: [ "Can't find our home context. seems like we're already forked
-				and handling another exception in new thread. In this case, just pass it through handler." 
+				and handling another exception in new thread. In this case, just pass it through handler."
 					  ^ handlerAction cull: ex ] ].
 
 			  bottom := [ Processor terminateRealActive ] asContext.
@@ -477,20 +492,20 @@ BlockClosure >> on: exception fork: handlerAction [
 
 { #category : #exceptions }
 BlockClosure >> on: exception fork: handlerAction return: answerAction [
-	"This is the same as #on:fork: but instead just fork and letting the flow continues, in 
+	"This is the same as #on:fork: but instead just fork and letting the flow continues, in
 	 case of an error it also evaluates answerAction and returns its result."
-		
+
 	^ self on: exception do: [:ex |
 		| onDoCtx handler bottom thisCtx |
-		
+
 		onDoCtx := thisContext.
 		thisCtx := onDoCtx home.
 
 		"find the context on stack for which this method's is sender"
 
-		[ onDoCtx sender == thisCtx] whileFalse: [ 
+		[ onDoCtx sender == thisCtx] whileFalse: [
 			onDoCtx := onDoCtx sender.
-			onDoCtx ifNil: [ 
+			onDoCtx ifNil: [
 				"Can't find our home context. seems like we're already forked
 				and handling another exception in new thread. In this case, just pass it through handler."
 				^ handlerAction cull: ex ] ].
@@ -506,7 +521,6 @@ BlockClosure >> on: exception fork: handlerAction return: answerAction [
 		"cut the stack of current process"
 		thisContext privSender: thisCtx.
 		answerAction cull: exception ]
-
 ]
 
 { #category : #exceptions }
@@ -546,9 +560,9 @@ BlockClosure >> outerContext: ctxt [
 
 { #category : #printing }
 BlockClosure >> printOn: aStream [
-		
-	[self doPrintOn: aStream] 
-		onErrorDo: [ aStream 
+
+	[self doPrintOn: aStream]
+		onErrorDo: [ aStream
 				nextPutAll: '<Error printing blockClosure in: ';
 				print: self method;
 				nextPutAll: ' >' ]
@@ -556,7 +570,7 @@ BlockClosure >> printOn: aStream [
 
 { #category : #accessing }
 BlockClosure >> receiver [
-	^outerContext receiver
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
@@ -582,11 +596,9 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
-{ #category : #'debugger access' }
+{ #category : #accessing }
 BlockClosure >> sender [
-	"Answer the context that sent the message that created the receiver."
-
-	^outerContext sender
+	^ self subclassResponsibility
 ]
 
 { #category : #evaluating }
@@ -617,7 +629,7 @@ BlockClosure >> startpc [
 
 { #category : #accessing }
 BlockClosure >> startpcOrOuterCode [
-	^ startpc
+	^ compiledBlock
 ]
 
 { #category : #accessing }
@@ -718,11 +730,11 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthAr
 { #category : #evaluating }
 BlockClosure >> valueAfterWaiting: aDelay [
 	"Waits for a delay, then executes the block. Answers the process so you can terminate it"
-	
-	^ [ aDelay wait. self value ] 
+
+	^ [ aDelay wait. self value ]
 		forkAt: Processor userBackgroundPriority
 		named: (String streamContents: [ :s |
-				s 
+				s
 					<< 'After ';
 					print: aDelay;
 					<<' do: ';
@@ -765,11 +777,11 @@ BlockClosure >> valueSupplyingAnswers: aListOfPairs [
 
 	^ self
 		on: ProvideAnswerNotification
-		do: [ :notify | 
+		do: [ :notify |
 			| caption |
 			caption := notify messageText withSeparatorsCompacted.	"to remove new lines"
 			aListOfPairs
-				detect: [ :each | 
+				detect: [ :each |
 					caption = each first
 						or: [ (caption includesSubstring: each first caseSensitive: false)
 								or: [ (each first match: caption)
@@ -816,21 +828,33 @@ BlockClosure >> valueUninterruptably [
 { #category : #private }
 BlockClosure >> valueUnpreemptively [
 	"Evaluate the receiver (block), without the possibility of preemption by higher priority processes. Use this facility VERY sparingly!"
-	"Think about using Block>>valueUninterruptably first, and think about using Semaphore>>critical: before that, and think about redesigning your application even before that! 
+	"Think about using Block>>valueUninterruptably first, and think about using Semaphore>>critical: before that, and think about redesigning your application even before that!
 	After you've done all that thinking, go right ahead and use it..."
 	| activeProcess oldPriority result semaphore |
 	activeProcess := Processor activeProcess.
 	oldPriority := activeProcess priority.
 	activeProcess priority: Processor highestPriority.
 	result := self ensure: [activeProcess priority: oldPriority].
-	
+
 	"Yield after restoring priority to give the preempted processes a chance to run.
 	We inline the code of Processor yield here, but without the primitive.
-	The reason: the yield primitive does not take into account a change of priority as done above" 
+	The reason: the yield primitive does not take into account a change of priority as done above"
 	semaphore := Semaphore new.
 	[semaphore signal] fork.
 	semaphore wait.
 	^result
+]
+
+{ #category : #scheduling }
+BlockClosure >> valueUnwindInContext: ctxt [ 
+	"Create a context for the unwind block and execute it on the unwind block's stack.
+	Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
+	the unwind on the wrong stack preventing the correct execution of non-local returns."
+			
+	| ensureContext |
+	ensureContext := self asContextWithSender: ctxt.
+	ensureContext runUntilErrorOrReturnFrom: ensureContext
+
 ]
 
 { #category : #evaluating }
@@ -843,7 +867,7 @@ BlockClosure >> valueWithArguments: anArray [
 	numArgs ~= anArray size ifTrue:
 		[self numArgsError: anArray size].
 
-	anArray isArray 
+	anArray isArray
 		ifTrue: [self primitiveFailed]
 		ifFalse: [
 			"Retrying with an array as parameter. As the primitive only supports arrays"
@@ -875,11 +899,11 @@ BlockClosure >> valueWithExit [
 { #category : #evaluating }
 BlockClosure >> valueWithInterval: aDelay [
 	"Executes the block every x milliseconds specified in arguments. Answers the process, so you can terminate it"
-	
-	^ [ [ self value. aDelay wait. ] repeat ] 
-		forkAt: Processor userBackgroundPriority 
+
+	^ [ [ self value. aDelay wait. ] repeat ]
+		forkAt: Processor userBackgroundPriority
 		named: (String streamContents: [ :s |
-				s 
+				s
 					<< 'every ';
 					print: aDelay;
 					<<' do: ';
@@ -887,7 +911,7 @@ BlockClosure >> valueWithInterval: aDelay [
 ]
 
 { #category : #evaluating }
-BlockClosure >> valueWithPossibleArgs: anArray [ 
+BlockClosure >> valueWithPossibleArgs: anArray [
 	"Execute the receiver with the correct number of arguments taken from the argument."
 	"([:x | x + 1] valueWithPossibleArgs: #( 13 12 15)) >>> 14
 	"
@@ -910,8 +934,8 @@ BlockClosure >> valueWithPossibleArgs: anArray [
 ]
 
 { #category : #evaluating }
-BlockClosure >> valueWithPossibleArgument: anArg [ 
-	"Evaluate the block represented by the receiver. 
+BlockClosure >> valueWithPossibleArgument: anArg [
+	"Evaluate the block represented by the receiver.
 	 If the block requires one argument, use anArg, if it requires more than one,
 	 fill up the rest with nils."
 
@@ -940,7 +964,7 @@ BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 	"make a watchdog process"
 	watchdog := [
 		delay wait. 	"wait for timeout or completion"
-		theProcess ifNotNil:[ theProcess signalException: (TimedOut new tag: tag)] 
+		theProcess ifNotNil:[ theProcess signalException: (TimedOut new tag: tag)]
 	] newProcess.
 
 	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
@@ -951,10 +975,10 @@ BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 		self ensure:[						"evaluate the receiver"
 			theProcess := nil.				"it has completed, so ..."
 			delay delaySemaphore signal.	"arrange for the watchdog to exit"
-		]] on: TimedOut do: [ :e | 
-			e tag == tag 
+		]] on: TimedOut do: [ :e |
+			e tag == tag
 				ifTrue:[ timeoutBlock value ]
-				ifFalse:[ e pass]].
+				ifFalse:[ e pass]]
 ]
 
 { #category : #controlling }
@@ -962,12 +986,12 @@ BlockClosure >> whileFalse [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
 	Evaluate the receiver, as long as its value is false."
- 
+
 	self value ifFalse: [ self whileFalse ]
 ]
 
 { #category : #controlling }
-BlockClosure >> whileFalse: aBlock [ 
+BlockClosure >> whileFalse: aBlock [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
 	Evaluate the argument, aBlock, as long as the value of the receiver is false."
@@ -977,13 +1001,13 @@ BlockClosure >> whileFalse: aBlock [
 ]
 
 { #category : #controlling }
-BlockClosure >> whileNil: aBlock [ 
+BlockClosure >> whileNil: aBlock [
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value isNil] whileTrue: [aBlock value]
 ]
 
 { #category : #controlling }
-BlockClosure >> whileNotNil: aBlock [ 
+BlockClosure >> whileNotNil: aBlock [
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value notNil] whileTrue: [aBlock value]
 ]
@@ -993,12 +1017,12 @@ BlockClosure >> whileTrue [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
 	Evaluate the receiver, as long as its value is true."
- 
+
 	self value ifTrue: [ self whileTrue ]
 ]
 
 { #category : #controlling }
-BlockClosure >> whileTrue: aBlock [ 
+BlockClosure >> whileTrue: aBlock [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
 	Evaluate the argument, aBlock, as long as the value of the receiver is true."

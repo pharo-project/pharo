@@ -33,7 +33,7 @@ ClyInheritedTraitScope class >> defaultName [
 { #category : #'inherited scope' }
 ClyInheritedTraitScope class >> inheritedScopeProvider [
 	<classAnnotation>
-	
-	^ClyInheritedScopeProviderAnnotation new 
+
+	^ClyInheritedScopeProviderAnnotation new
 		priority: 100
 ]

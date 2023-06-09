@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 ThisContextVariable class >> variableName [
-	^'thisContext'
+	^#thisContext
 ]
 
 { #category : #visiting }
@@ -17,7 +17,7 @@ ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
 ]
 
-{ #category : #emitting }
+{ #category : #'code generation' }
 ThisContextVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushThisContext
@@ -35,6 +35,6 @@ ThisContextVariable >> readInContext: aContext [
 
 { #category : #queries }
 ThisContextVariable >> usingMethods [
-	^ environment allMethods select: [ :method | 
+	^ environment allMethods select: [ :method |
 		  method readsThisContext ]
 ]

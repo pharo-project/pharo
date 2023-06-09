@@ -14,7 +14,7 @@ Class {
 ExceptionSetWithExclusions >> - exception [
 	"Add exception as an exclusion to me.
 	I will explicitly not handle my exclusion exceptions."
-	
+
 	self addExclusion: exception
 ]
 
@@ -22,17 +22,17 @@ ExceptionSetWithExclusions >> - exception [
 ExceptionSetWithExclusions >> addExclusion: exception [
 	"Add exception as an exclusion to me.
 	I will explicitly not handle my exclusion exceptions."
-	
+
 	^ exclusions add: exception
 ]
 
 { #category : #exceptionselector }
 ExceptionSetWithExclusions >> handles: exception [
 	"Return true when I will handled exception.
-	I extend my superclass behavior by explicitly 
+	I extend my superclass behavior by explicitly
 	not handling a number of exclusion exceptions."
 
-	^ (super handles: exception) 
+	^ (super handles: exception)
 			and: [ exclusions noneSatisfy: [ :each | each handles: exception ] ]
 ]
 

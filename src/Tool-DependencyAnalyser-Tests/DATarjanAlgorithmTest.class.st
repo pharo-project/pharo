@@ -36,7 +36,7 @@ DATarjanAlgorithmTest >> setUp [
 	anArray at: 5 put: packageE.
 	anArray at: 6 put: packageF.
 	anArray at: 7 put: packageG.
-	anArray at: 8 put:packageH.
+	anArray at: 8 put:packageH
 ]
 
 { #category : #utilities }
@@ -49,21 +49,18 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	"test if we have 0 outgoing dependencies in each SCC after the algorithm"
 
 	| aRelation aCollection sccs |
-	aCollection := OrderedCollection
-		withAll:
-			(RPackageOrganizer default packages
-				select: [ :package | '*Collections*' match: package packageName asString ]
-				thenCollect: [ :package | package packageName ]).
-	aRelation := DAPackageRelationGraph
-		onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
+	aCollection := OrderedCollection withAll: (self packageOrganizer packages
+			                select: [ :package | '*Collections*' match: package packageName asString ]
+			                thenCollect: [ :package | package packageName ]).
+	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
 	aRelation
 		computeStaticDependencies;
 		removeInternalDependencies;
 		removeOutgoingDependencies;
 		combineDependencies.
-		
+
 	sccs := tarjanPackage runOnDAPackageRelationGraph: aRelation.
-	
+
 	self assert: (sccs anySatisfy: [ :scc | scc outgoing isEmpty ])
 ]
 
@@ -82,17 +79,10 @@ DATarjanAlgorithmTest >> testRunTarjan [
 	packageH add: (DAPackageDependency from: packageH to: packageG).
 	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
 	sccs := tarjanPackage runOnDAPackageRelationGraph: aPDPackageRelation.
-	
+
 	"we must find 3 sccs, five two and one nodes"
 	self assert: sccs size equals: 3.
 	self assert: (sccs anySatisfy: [ :each | each packages size = 5 ]).
 	self assert: (sccs anySatisfy: [ :each | each packages size = 2 ]).
-	self assert: (sccs anySatisfy: [ :each | each packages size = 1 ]).
-	
-	
-	
-	
-
-	
-	
+	self assert: (sccs anySatisfy: [ :each | each packages size = 1 ])
 ]

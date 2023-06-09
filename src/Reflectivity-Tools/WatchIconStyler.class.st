@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Watches'
 }
 
+{ #category : #testing }
+WatchIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 WatchIconStyler >> highlightColor [
 	^(Color purple alpha: 0.1)
@@ -21,13 +27,13 @@ WatchIconStyler >> iconBlock: aNode [
 WatchIconStyler >> iconFor: aNode [
 	^aNode watch isRecording
 		ifTrue: [ self iconNamed: #testGreen]
-		ifFalse: [ self iconNamed: #testNotRunIcon ]
+		ifFalse: [ self iconNamed: #testNotRun ]
 ]
 
 { #category : #defaults }
 WatchIconStyler >> iconLabel: aNode [
 
-	^ aNode watch asString.
+	^ aNode watch asString
 ]
 
 { #category : #testing }

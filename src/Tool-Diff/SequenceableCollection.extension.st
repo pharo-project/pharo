@@ -15,7 +15,7 @@ SequenceableCollection >> groupByRuns: aBlock [
 	r := nil.
 	eStr := Array new writeStream.
 	self
-		do: [ :e | 
+		do: [ :e |
 			| t |
 			(t := aBlock value: e) = r
 				ifFalse: [ r := t.

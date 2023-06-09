@@ -36,7 +36,7 @@ FT2GlyphRenderer class >> forFont: aFont surface: aSurface [
 
 { #category : #private }
 FT2GlyphRenderer >> clearBitmap [
-	
+
 	form bits atAllPut: 0
 ]
 
@@ -60,11 +60,11 @@ FT2GlyphRenderer >> getAdvance [
 FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 
 	self assert: (aFont class == FreeTypeFont).
-	
+
 	surface := aSurface.
 	font := aFont.
 	slot := SimpleTextGlyphInfo new.
-	
+
 	pixelSize := font pixelSize rounded.
 
 	blt := BitBlt toForm: surface form.
@@ -72,8 +72,8 @@ FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 	self loadSurfaceTransform.
 
 	colorMap := Bitmap new: 256.
-	
-	blt 
+
+	blt
 		sourceForm: form;
 		sourceX: 0;
 		sourceY: 0;
@@ -85,7 +85,7 @@ FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 		height: form height;
 		colorMap: colorMap;
 		clipRect: surface clipRect.
-	
+
 	translation := IntegerArray new: 2
 ]
 
@@ -98,12 +98,12 @@ FT2GlyphRenderer >> loadSlotInfo [
 { #category : #private }
 FT2GlyphRenderer >> loadSurfaceTransform [
 	| m org xaxis yaxis sum xmin xmax ymin ymax formW formH fix face bbox |
-	
+
 	face := font face.
 
-	face 
+	face
 		setPixelWidth: pixelSize height: pixelSize.
-	
+
 	bbox := face bbox.
 	m := surface pathTransform copy transposed.
 
@@ -111,7 +111,7 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 	xaxis := (m transform: bbox right - bbox left * pixelSize / face unitsPerEm @ 0) - org.
 	yaxis := (m transform: 0 @ (bbox bottom - bbox top * pixelSize / face unitsPerEm)) - org.
 	sum := xaxis + yaxis.
-	
+
 	xmin := 0 min: ((xaxis x min: yaxis x) min: sum x).
 	ymin := 0 min: ((xaxis y min: yaxis y) min: sum y).
 	xmax := 0 max: ((xaxis x max: yaxis x) max: sum x).
@@ -120,7 +120,7 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 	formW := (xmax - xmin) ceiling + 1.
 	formH := (ymax - ymin) ceiling  + 1.
 
-" freetype 'zero' points to bottom-left point on form" 
+" freetype 'zero' points to bottom-left point on form"
 
 	"calculate bitmap translation relative to top-left corner of glyph"
 	bitmapX := (yaxis x negated + xmin * 64.0) rounded.
@@ -133,19 +133,19 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 
 	form := Form extent: formW @ formH depth: 8.
 
-	blt 
+	blt
 		sourceForm: form;
 		width: form width;
 		height: form height.
 
 	"prepare transformation matrix for freetype"
-	
+
 	matrix := IntegerArray new: 4.
 
-	"values in matrix are 16.16 fixed point floating values" 
+	"values in matrix are 16.16 fixed point floating values"
 	fix := 65536. "(2 raisedTo: 16)."
-	
-	matrix 
+
+	matrix
 		at: 1 put: (m sx * fix) rounded;
 		at: 2 put: (m shx * fix) rounded;
 		at: 3 put: (m shy * fix) rounded;
@@ -156,7 +156,7 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 FT2GlyphRenderer >> loadUnicode: unicode [
 
 	| flags face |
-	
+
 	face := font face.
 
 "	hintingFlags := FreeTypeSettings current hintingFlags."
@@ -169,7 +169,7 @@ FT2GlyphRenderer >> loadUnicode: unicode [
 
 { #category : #private }
 FT2GlyphRenderer >> pixelValue32Of: aColor [
- 
+
 	^ aColor pixelWordForDepth: 32
 ]
 
@@ -182,19 +182,19 @@ FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
 		setPixelWidth: pixelSize height: pixelSize.
 "
 	start to: stop do: [:i | | bx by |
-		
+
 		bx := penX + bitmapX.
 		by := penY + bitmapY.
 
 		"add a small shift, to incorporate subpixel position"
-		
+
 		translation at: 1 put: descend x + (bx bitAnd: 2r111111).
-		translation at: 2 put: descend y - (by bitAnd: 2r111111). 
+		translation at: 2 put: descend y - (by bitAnd: 2r111111).
 
 		face primSetTransform: matrix delta: translation.
 
 		self loadUnicode: (text at: i) asUnicode.
-	
+
 		self clearBitmap.
 		face renderGlyphIntoForm: form.
 
@@ -206,20 +206,20 @@ FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
 	"increment x by horizontal advance"
 		penX := penX + slot advanceX.
 		penY := penY - slot advanceY
-	].
+	]
 ]
 
 { #category : #accessing }
 FT2GlyphRenderer >> setColor: color [
 	"Set the color which will be used to render glyphs."
-	
+
 	| clr rgb alpha |
 	currentColor = color ifTrue: [ ^ self ].
 	currentColor := color.
-	clr := self pixelValue32Of: color. 
+	clr := self pixelValue32Of: color.
 	rgb := clr bitAnd: 16rFFFFFF.
 	alpha := clr >> 24.
-	
+
  	0 to: 255 do:[:i | | a |
 		a :=  (i+1) * alpha bitAnd: 16rFF00.
 		colorMap at: i+1 put: ( (a<<16) + rgb ).
@@ -234,16 +234,16 @@ FT2GlyphRenderer >> setPosition: aPoint advance: advancePt baseline: baselineOff
 	and andvance is accumulated advance came from another renderer instance, expressed in surface's coordinate system"
 
 	| pt offset |
-	
+
 	offset :=  baselineOffset - font getPreciseAscent "(font face ascender  * pixelSize / font face unitsPerEm)".
 
 	pt := aPoint + (0@offset).
 	pt := surface pathTransform transform: pt.
 	origin := pt.
 	pt := pt + advancePt.
-	
+
 	"remember the origin, so on #getAdvance , we will answer the current advance for renderer in surface coordinate system"
-	
+
 "	2 raisedTo: 6 "
 	penX := (pt x * 64) rounded.
 	penY := (pt y * 64) rounded

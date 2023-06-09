@@ -27,7 +27,7 @@ AbstractInitializedClassVariable >> default: anObject [
 
 { #category : #printing }
 AbstractInitializedClassVariable >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;

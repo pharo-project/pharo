@@ -15,16 +15,22 @@ ReSentNotImplementedRule class >> checksMethod [
 { #category : #accessing }
 ReSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'SentNotImplementedRule'
 ]
 
 { #category : #running }
 ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	| problemSends |
-	problemSends := aMethod sendNodes reject: [ :msgSend | 
+	| ignored problemSends |
+
+	ignored := aMethod allIgnoredNotImplementedSelectors.
+	ignored := ignored , #(!= !== <>). "See ReNotEqualityOperatorsRule"
+
+	problemSends := aMethod sendNodes reject: [ :msgSend |
 		                msgSend selector isSelectorSymbol ].
-	problemSends do: [ :msgSend | 
+	problemSends := problemSends reject: [:each | ignored includes: each selector].
+
+	problemSends do: [ :msgSend |
 		aCriticBlock cull: (self
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend

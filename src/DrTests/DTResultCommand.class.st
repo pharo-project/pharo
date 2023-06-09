@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-DTResultCommand class >> isAbstract [ 
+DTResultCommand class >> isAbstract [
 
 	^ self name = #DTResultCommand
 ]

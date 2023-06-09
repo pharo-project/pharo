@@ -4,7 +4,7 @@ I am a strategy that help tests for writing (and then reading) on streams.
 Class {
 	#name : #FLStreamStrategy,
 	#superclass : #Object,
-	#category : #'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }
 
 { #category : #serializing }
@@ -15,19 +15,11 @@ FLStreamStrategy >> fuelAccept: aGeneralMapper [
 ]
 
 { #category : #reading }
-FLStreamStrategy >> readStreamDo: aValuable [
-	"Evaluates the argument with a read stream. Answer the result."
-	
+FLStreamStrategy >> readStream [
 	self subclassResponsibility
 ]
 
-{ #category : #'test support' }
-FLStreamStrategy >> tearDown [
-]
-
 { #category : #writing }
-FLStreamStrategy >> writeStreamDo: aValuable [
-	"Evaluates the argument with a write stream. Answer the result."
-	
+FLStreamStrategy >> writeStream [
 	self subclassResponsibility
 ]

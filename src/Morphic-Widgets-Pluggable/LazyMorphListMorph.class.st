@@ -16,19 +16,19 @@ LazyMorphListMorph >> adjustHeight [
 { #category : #private }
 LazyMorphListMorph >> adjustWidth [
 	"private.  Adjust our height to match the length of the underlying list"
-	
-	self width: (listSource innerBounds width max: self hUnadjustedScrollRange).
+
+	self width: (listSource innerBounds width max: self hUnadjustedScrollRange)
 ]
 
 { #category : #drawing }
 LazyMorphListMorph >> display: item  atRow: row on: aCanvas [
 	"Display the given item at the given row on the given canvas."
-	
+
 	|c frame|
 	row = self mouseDownRow ifFalse: [^self].
 	frame := self selectionFrameForRow: row.
 	c := self colorForRow: row.
-	aCanvas 
+	aCanvas
 		frameRectangle: frame
 		width: 1
 		colors: {c. Color transparent}
@@ -38,14 +38,14 @@ LazyMorphListMorph >> display: item  atRow: row on: aCanvas [
 { #category : #drawing }
 LazyMorphListMorph >> drawBoundsForRow: row [
 	"Calculate the bounds that row should be drawn at.  This might be outside our bounds!"
-	
+
 	(row between: 1 and: listItems size)
 		ifFalse: [^0@0 corner: 0@0].
 	^(listItems at: row) bounds
 ]
 
 { #category : #drawing }
-LazyMorphListMorph >> drawSubmorphsOn: aCanvas [ 
+LazyMorphListMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front"
 
 	| drawBlock|
@@ -54,7 +54,7 @@ LazyMorphListMorph >> drawSubmorphsOn: aCanvas [
 		(self topVisibleRowForCanvas: aCanvas) to: (self bottomVisibleRowForCanvas: aCanvas) do: [ :row |
 			i := self item: row.
 			canvas fullDrawMorph: i]].
-	self clipSubmorphs 
+	self clipSubmorphs
 		ifTrue: [aCanvas clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone: [ ^ self ]) during: drawBlock]
 		ifFalse: [drawBlock value: aCanvas]
 ]
@@ -99,7 +99,7 @@ LazyMorphListMorph >> listChanged [
 		adjustHeight;
 		adjustWidth.
 	listItems do: [:i | i layoutChanged].
-	self changed.
+	self changed
 ]
 
 { #category : #accessing }
@@ -142,8 +142,8 @@ LazyMorphListMorph >> userString [
 	"Do I have a text string to be searched on?"
 
 	^ String
-		streamContents: [ :stream | 
-			1 to: self getListSize do: [ :i | 
+		streamContents: [ :stream |
+			1 to: self getListSize do: [ :i |
 				(self getListItem: i) submorphs detect: [ :morph | morph userString notNil ] ifFound: [ :morph | stream nextPutAll: morph userString ].
 				stream cr ] ]
 ]

@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 HistoryIteratorTest >> setUp [
 	super setUp.
-	historyList := HistoryIterator new.
+	historyList := HistoryIterator new
 ]
 
 { #category : #testing }
@@ -132,6 +132,6 @@ HistoryIteratorTest >> testUndo2 [
 
 	historyList undo.
 
-	self assert: aCollection size equals: 3.	
+	self assert: aCollection size equals: 3.
 	self assert: aCollection last equals: 3
 ]

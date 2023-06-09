@@ -43,7 +43,7 @@ FFIExternalValueHolderType >> offsetWriteFieldAt: offsetVariableName with: value
 ]
 
 { #category : #'emitting code' }
-FFIExternalValueHolderType >> readFieldAt: byteOffset [	
+FFIExternalValueHolderType >> readFieldAt: byteOffset [
 	^ self notYetImplemented
 ]
 

@@ -55,7 +55,7 @@ EpPluggableFilter class >> isBehaviorNamed: aString [
 		condition: [ :entry |
 			| event |
 			event := entry content.
-			(event isEpBehaviorChange or: [ event isEpMethodChange ]) and: [ 
+			(event isEpBehaviorChange or: [ event isEpMethodChange ]) and: [
 			event behaviorAffectedName asInstanceSideBehaviorName = instanceSideBehaviorName ] ]
 ]
 
@@ -64,19 +64,19 @@ EpPluggableFilter class >> isMethod: aMethod [
 
 	^ self
 		title: 'is ', aMethod printString
-		condition: [ :e | 
-			e content isEpMethodChange and: [ 
-			e content behaviorAffectedName = aMethod parentName and: [ 
+		condition: [ :e |
+			e content isEpMethodChange and: [
+			e content behaviorAffectedName = aMethod parentName and: [
 			e content methodAffectedSelector = aMethod selector ] ] ]
 ]
 
 { #category : #'special filters' }
-EpPluggableFilter class >> isPackageNamed: packageName [ 
+EpPluggableFilter class >> isPackageNamed: packageName [
 
 	^ self
 		title: 'belongs to package named ', packageName
-		condition: [ :e | 
-			e content isCodeChange and: [ 
+		condition: [ :e |
+			e content isCodeChange and: [
 			e content affectedPackageName = packageName ] ]
 ]
 
@@ -98,13 +98,13 @@ EpPluggableFilter class >> methodFilter [
 EpPluggableFilter class >> noTriggerFilter [
 	^ self
 		title: 'Hide non-manual changes (e.g. changes produced by Monticello)'
-		condition: [ :e | 
+		condition: [ :e |
 			e content isCodeChange and: [
 			(e tags includesKey: EpLog triggererReferenceKey) not ] ]
 ]
 
 { #category : #'instance creation' }
-EpPluggableFilter class >> title: aString condition: aBlockClosure [ 
+EpPluggableFilter class >> title: aString condition: aBlockClosure [
 	^ self new
 		title: aString;
 		condition: aBlockClosure;
@@ -135,7 +135,7 @@ EpPluggableFilter >> condition [
 ]
 
 { #category : #accessing }
-EpPluggableFilter >> condition: aBlockClosure [ 
+EpPluggableFilter >> condition: aBlockClosure [
 	condition := aBlockClosure
 ]
 
@@ -147,7 +147,7 @@ EpPluggableFilter >> hash [
 { #category : #printing }
 EpPluggableFilter >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self title;
 		nextPut: $)
@@ -159,6 +159,6 @@ EpPluggableFilter >> title [
 ]
 
 { #category : #accessing }
-EpPluggableFilter >> title: aString [ 
+EpPluggableFilter >> title: aString [
 	title := aString
 ]

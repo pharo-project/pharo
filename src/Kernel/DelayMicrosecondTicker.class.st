@@ -29,7 +29,7 @@ DelayMicrosecondTicker >> primSignal: aSemaphore atUTCMicroseconds: aLargePositi
 	"Signal the semaphore when the microsecond clock reaches the value of the second argument. Fail if the first argument is neither a Semaphore nor nil. Essential. See Object documentation whatIsAPrimitive."
 	<primitive: 242>
 	^ self primitiveFailed
-	
+
 "primitiveSignalAtUTCMicroseconds
 	Cause the time semaphore, if one has been registered, to be
 	 signalled when the microsecond clock is greater than or equal to
@@ -63,14 +63,14 @@ DelayMicrosecondTicker >> tickAfterMilliseconds: milliseconds [
 DelayMicrosecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	|nextTick|
 	"Sleep until the active delay is due, or timingSemaphore signalled by DelayScheduler user-api."
-	
+
 	"We sleep at most 1sec here as a soft busy-loop so that we don't accidentally miss signals."
 	nextTick := self nowTick + (1"sec" * 1000"msecs" * 1000"usecs").
 	activeDelay ifNotNil: [
 		nextTick := nextTick min: activeDelay resumptionTick ].
-		
+
 	timingSemaphore initSignals.
 	self primSignal: timingSemaphore atUTCMicroseconds: nextTick.
 	"WARNING! Stepping <Over> the following line may lock the Image. Use <Proceed>."
-	timingSemaphore wait.
+	timingSemaphore wait
 ]

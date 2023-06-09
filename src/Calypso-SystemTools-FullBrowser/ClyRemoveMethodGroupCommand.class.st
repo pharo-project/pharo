@@ -10,14 +10,14 @@ Class {
 { #category : #activation }
 ClyRemoveMethodGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #activation }
 ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
 ]
 
@@ -33,7 +33,7 @@ ClyRemoveMethodGroupCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyRemoveMethodGroupCommand >> execute [
-	
+
 	methodGroups do: #removeWithMethods
 ]
 
@@ -41,11 +41,11 @@ ClyRemoveMethodGroupCommand >> execute [
 ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	| tagsString confirmed |
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	tagsString := ', ' join: (methodGroups collect: [:each | each name]).
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0])
 		ifTrue: [
-			confirmed := UIManager default 
+			confirmed := UIManager default
 					confirm: 'Are you sure you want to remove methods tagged with ', tagsString, '?'.
 			confirmed ifFalse: [CmdCommandAborted signal]]
 ]

@@ -47,40 +47,6 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #layout }
-SycMethodNameEditorPresenter class >> defaultLayout [
-	<spec>
-	^ SpBoxLayout newTopToBottom
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Selector'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #selectorInput;
-				yourself);
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Arguments'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #argumentsList;
-				add:
-					(SpBoxLayout newTopToBottom
-						add: #upButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						add: #downButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						add: #addButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						yourself)
-					withConstraints: [ :aConstraints | aConstraints width: 30 ];
-				yourself);
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Preview'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #previewResult yourself);
-		yourself
-]
-
 { #category : #examples }
 SycMethodNameEditorPresenter class >> example2 [
 	<script>
@@ -118,7 +84,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
 	temp := self on: aMethod.
-	temp invalidArgNames: aSet. 
+	temp invalidArgNames: aSet.
 	temp canRenameArgs: aBoolean1.
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
@@ -198,21 +164,21 @@ SycMethodNameEditorPresenter >> argumentsList [
 { #category : #accessing }
 SycMethodNameEditorPresenter >> argumentsListMenu [
 	^ self newMenu
-		addGroup: [ :aGroup | 
+		addGroup: [ :aGroup |
 			aGroup
-				addItem: [ :anItem | 
+				addItem: [ :anItem |
 					anItem
 						name: 'Rename';
 						visibleIf: [ argumentsList selectedItem canBeRenamed ];
 						iconName: #edit;
 						action: [ self renameArgument: argumentsList selectedItem ] ];
-				addItem: [ :anItem | 
+				addItem: [ :anItem |
 					anItem
 						name: 'Add';
 						visibleIf: [ self canAddArgs ];
 						iconName: #add;
 						action: [ self addArgumentAfter: argumentsList selectedItem ] ];
-				addItem: [ :anItem | 
+				addItem: [ :anItem |
 					anItem
 						name: 'Remove';
 						visibleIf: [ argumentsList selectedItem canBeRemoved ];
@@ -230,7 +196,7 @@ SycMethodNameEditorPresenter >> canAddArgs [
 { #category : #accessing }
 SycMethodNameEditorPresenter >> canAddArgs: aBoolean [
 	canAddArgs := aBoolean.
-	addButton enabled: canAddArgs.
+	addButton enabled: canAddArgs
 ]
 
 { #category : #accessing }
@@ -241,7 +207,7 @@ SycMethodNameEditorPresenter >> canEditName [
 { #category : #accessing }
 SycMethodNameEditorPresenter >> canEditName: aBoolean [
 	canEditName := aBoolean.
-	selectorInput enabled: canEditName .
+	selectorInput enabled: canEditName
 ]
 
 { #category : #accessing }
@@ -260,20 +226,45 @@ SycMethodNameEditorPresenter >> canRenameArgs: anObject [
 SycMethodNameEditorPresenter >> computePermutation [
 	| index |
 	index := 0.
-	^ argumentsList items collect: [ :e | 
+	^ argumentsList items collect: [ :e |
 		args indexOf: e name ifAbsent: [ index := index -1. index ]
 	 ]
 ]
 
 { #category : #accessing }
-SycMethodNameEditorPresenter >> connectPresenters [ 
-	
-	selectorInput 
-		bindKeyCombination: Character cr asKeyCombination 
+SycMethodNameEditorPresenter >> connectPresenters [
+
+	selectorInput
+		bindKeyCombination: Character cr asKeyCombination
 		toAction: [ :p | self renameMethodAndClose: self owner ];
-	
-		bindKeyCombination: Character escape asKeyCombination 
+
+		bindKeyCombination: Character escape asKeyCombination
 			toAction: [ self owner triggerCancelAction; close ]
+]
+
+{ #category : #layout }
+SycMethodNameEditorPresenter >> defaultLayout [
+	| argumentsEditor |
+
+	argumentsEditor := SpBoxLayout newLeftToRight
+		add: argumentsList;
+		add: (SpBoxLayout newTopToBottom
+				add: upButton expand: false;
+				add: downButton expand: false;
+				add: addButton expand: false;
+				yourself)
+			expand: false;
+		yourself.
+
+	^ SpGridLayout new
+		borderWidth: 5;
+		beColumnNotHomogeneous;
+		column: 2 expand: true;
+		build: [ :builder | builder
+			add: 'Selector'; add: selectorInput; nextRow;
+			add: 'Arguments'; add: argumentsEditor; nextRow;
+			add: 'Preview'; add: previewResult; nextRow ];
+		yourself
 ]
 
 { #category : #'accessing - ui' }
@@ -308,51 +299,49 @@ SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		initialExtent: 600 @ 300 ;
-		title: 'Method name editor', (methodName selector 
-					ifNil: [ '' ] 
+		title: 'Method name editor', (methodName selector
+					ifNil: [ '' ]
 					ifNotNil: [ :selector | ' : "', selector, '"' ])
 ]
 
 { #category : #initialization }
-SycMethodNameEditorPresenter >> initializePresenter [
+SycMethodNameEditorPresenter >> initializePresenters [
+
+	selectorInput := self newTextInput.
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	selectorInput editable: self canEditName.
-	upButton action: [ self pushUpSelectedArgument ].
-	downButton action: [ self pushDownSelectedArgument ].
-	addButton action: [ argumentsList items 
-		ifEmpty: [ self addArgument ] 
-		ifNotEmpty: [ self addArgumentAfter: argumentsList items last ] ].
+	selectorInput editable: self canEditName.
 
-	argumentsList
-		whenModelChangedDo: [ :model | 
-			model
-				ifEmpty: [ upButton disable.
-					downButton disable ] ].
+	previewResult := self newLabel.
 
+	upButton := self newButton.
+	upButton
+		addStyle: 'small';
+		label: 'Up';
+		action: [ self pushUpSelectedArgument ].
+	downButton := self newButton.
+	downButton
+		addStyle: 'small';
+		label: 'Dn';
+		action: [ self pushDownSelectedArgument ].
+	addButton := self newButton.
+	addButton
+		addStyle: 'small';
+		label: '+';
+		action: [
+			argumentsList items
+				ifEmpty: [ self addArgument ]
+				ifNotEmpty: [ self addArgumentAfter: argumentsList items last ] ].
+
+	argumentsList := self newList.
+	argumentsList addStyle: 'rows8'.
+	argumentsList whenModelChangedDo: [ :model |
+		model ifEmpty: [
+			upButton disable.
+			downButton disable ] ].
 	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
 		contextMenu: self argumentsListMenu.
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
-]
-
-{ #category : #initialization }
-SycMethodNameEditorPresenter >> initializeWidgets [
-	selectorInput := self newTextInput.
-	selectorInput editable: self canEditName.
-	argumentsList := self newList.
-	previewResult := self newLabel.
-	upButton := self newButton.
-	downButton := self newButton.
-	addButton := self newButton.
-	
-	selectorInput autoAccept: true.
-	upButton label: 'Up'.
-	downButton label: 'Dn'.
-	addButton label: '+'.
-	selectorInput text: methodName selector.
-	previewResult label: methodName methodName.
-	"selectorInput beNotEditable."
-	
-	self setFocus
 ]
 
 { #category : #accessing }
@@ -370,8 +359,8 @@ SycMethodNameEditorPresenter >> newArgName [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
 	index := 0.
-	[ self invalidArgNames, (self newArgs collect: #name) includes: newString ] 
-		whileTrue: 
+	[ self invalidArgNames, (self newArgs collect: #name) includes: newString ]
+		whileTrue:
 			[index := index + 1.
 			newString := baseString , index printString].
 	^ newString
@@ -397,7 +386,7 @@ SycMethodNameEditorPresenter >> pushDownSelectedArgument [
 		ifTrue: [ ^ self inform: 'The argument is already the last of the list.' ].
 	argumentsList items swap: selectedIndex with: selectedIndex + 1.
 	argumentsList selectIndex: selectedIndex + 1.
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #action }
@@ -410,7 +399,7 @@ SycMethodNameEditorPresenter >> pushUpSelectedArgument [
 		ifTrue: [ ^ self inform: 'The argument is already the first of the list.' ].
 	argumentsList items swap: selectedIndex with: selectedIndex - 1.
 	argumentsList selectIndex: selectedIndex - 1.
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #accessing }
@@ -419,7 +408,7 @@ SycMethodNameEditorPresenter >> removeArgument: anItem [
 	selectedIndex := argumentsList selection selectedIndex.
 	argumentsList items: (argumentsList items copyUpTo: anItem), (argumentsList items copyAfter: anItem).
 	argumentsList selectIndex: selectedIndex - 1.
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #action }
@@ -430,13 +419,13 @@ SycMethodNameEditorPresenter >> renameArgument: anItem [
 	argName := self uiManager
 		request: 'Enter default name of argument' initialAnswer: anItem.
 	argName ifNil: [ CmdCommandAborted signal ].
-	(self invalidArgNames includes: argName) ifTrue: [ 
+	(self invalidArgNames includes: argName) ifTrue: [
 		self inform: 'It''s a invalid name'.
 		CmdCommandAborted signal ].
 	anItem newName: argName.
 	argumentsList items: (argumentsList items copyUpTo: anItem), {anItem}, (argumentsList items copyAfter: anItem).
 	argumentsList selectIndex: selectedIndex.
-	self updateLabel.
+	self updateLabel
 ]
 
 { #category : #services }
@@ -465,20 +454,10 @@ SycMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
 
-{ #category : #action }
-SycMethodNameEditorPresenter >> setFocus [
-	self focusOrder
-		add: selectorInput;
-		add: argumentsList;
-		add: upButton;
-		add: downButton;
-		add: addButton
-]
-
 { #category : #'accessing - model' }
 SycMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName.
-	args := methodName arguments copy.
+	args := methodName arguments copy
 ]
 
 { #category : #'accessing - ui' }
@@ -495,4 +474,11 @@ SycMethodNameEditorPresenter >> updateLabel [
 			(RBMethodName
 				selector: (self selectorInput text ifNil: [''])
 				arguments: (argumentsList items collect: #newName) ) methodName
+]
+
+{ #category : #initialization }
+SycMethodNameEditorPresenter >> updatePresenter [
+
+	selectorInput text: methodName selector.
+	previewResult label: methodName methodName
 ]

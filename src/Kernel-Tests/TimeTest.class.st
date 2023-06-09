@@ -30,9 +30,9 @@ TimeTest >> selectorsToBeIgnored [
 	special := #( #< #= #new #printOn: #storeOn: ).
 	primitives := #( #primMillisecondClock #primSecondsClock #primUTCSecondsClock #primUTCMicrosecondsClock #primUTCMillisecondsClock).
 	timing := #( #millisecondClockValue #milliseconds:since: #millisecondsSince: ).
-	benchmarks := #( #benchmarkMillisecondClock #benchmarkPrimitiveResponseDelay ). 
+	benchmarks := #( #benchmarkMillisecondClock #benchmarkPrimitiveResponseDelay ).
 
-	^ super selectorsToBeIgnored, deprecated, private, special, primitives, timing, benchmarks.
+	^ super selectorsToBeIgnored, deprecated, private, special, primitives, timing, benchmarks
 ]
 
 { #category : #running }
@@ -64,12 +64,12 @@ TimeTest >> testAddSeconds [
 	self assert: (aTime addSeconds: 1) equals: (Time readFrom: '12:34:57' readStream).
 	self assert: (aTime addSeconds: 60) equals: (Time readFrom: '12:35:56' readStream).
 	self assert: (aTime addSeconds: 3600) equals: (Time readFrom: '13:34:56' readStream).
-	self assert: (aTime addSeconds: 24 * 60 * 60) equals: (Time readFrom: '12:34:56' readStream)
+	self should: [aTime addSeconds: 24 * 60 * 60]  raise:  TimeError
 ]
 
 { #category : #tests }
 TimeTest >> testAddTime [
-	self assert: (aTime addTime: aTime) equals: (Time readFrom: '01:09:52' readStream)
+	self assert: (aTime addTime: '2:30:17' asTime) equals: ('15:05:13' asTime)
 ]
 
 { #category : #tests }
@@ -182,13 +182,11 @@ TimeTest >> testFromSeconds [
 TimeTest >> testGeneralInquiries [
 	| date aDateAndTime |
 
-	self should: [ self timeClass timeWords ] raise: MessageNotUnderstood.
-
 	date := '2 June 1973' asDate.
 	time := '4:02:47 am' asTime.
 	aDateAndTime := self timeClass dateAndTimeFromSeconds: (2285280000 + 14567).
 	self
-		assert: aDateAndTime equals: {date. time}.
+		assert: aDateAndTime equals: {date. time}
 ]
 
 { #category : #tests }
@@ -298,15 +296,15 @@ TimeTest >> testReadFrom [
 
 { #category : #'tests - input' }
 TimeTest >> testReadFromWithError [
-		
-	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each | 
+
+	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each |
 	self should: [self timeClass readFrom: each readStream] raise: Error.]
 ]
 
 { #category : #'tests - input' }
 TimeTest >> testReadFromWithNanos [
 	#('4:02:47.5 am' '4:02:55.521 pm')
-		do: [ :each | 
+		do: [ :each |
 			| t |
 			t := self timeClass readFrom: each readStream.
 			self assert: t printString equals: each ]
@@ -345,6 +343,38 @@ TimeTest >> testSubtractTime [
 TimeTest >> testTicks [
 	self assert: aTime ticks equals: #(0 45296 0).
 	self assert: aTime equals: (Time new ticks: #(0 45296 0))
+]
+
+{ #category : #tests }
+TimeTest >> testValidationSeconds [
+	| day |
+	day := 24*60*60.
+	self should: [ Time seconds: day] raise: TimeError.
+	self should: [ Time seconds: -1] raise: TimeError.
+	self should: [ Time seconds: day nanoSeconds: 0] raise: TimeError.
+	self should: [ Time seconds: -1 nanoSeconds: 0] raise: TimeError.
+	self should: [ Time new seconds: day nanoSeconds: 0] raise: TimeError.
+	self should: [ Time new seconds: -1 nanoSeconds: 0] raise: TimeError
+]
+
+{ #category : #tests }
+TimeTest >> testValidationTicks [
+	| day |
+	day := 24*60*60.
+	self should: [ Time new ticks: {0. day. 0}] raise: TimeError.
+	self should: [ Time new ticks: {0. -1. 0}] raise: TimeError.
+	self should: [ Time new ticks: {0. 0. 1000000000}] raise: TimeError.
+	self should: [ Time new ticks: {0. 0. -1}] raise: TimeError
+]
+
+{ #category : #tests }
+TimeTest >> testValidationWallClock [
+	self should: [ Time hour: 24 minute: 0 second: 0] raise: TimeError.
+	self should: [ Time hour: -1 minute: 0 second: 0] raise: TimeError.
+	self should: [ Time hour: 0 minute: 60 second: 0] raise: TimeError.
+	self should: [ Time hour: 0 minute: -1 second: 0] raise: TimeError.
+	self should: [ Time hour: 0 minute: 0 second: 60] raise: TimeError.
+	self should: [ Time hour: 0 minute: 0 second: -1] raise: TimeError
 ]
 
 { #category : #setup }

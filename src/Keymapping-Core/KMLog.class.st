@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'class initialization' }
-KMLog class >> initialize [ 
+KMLog class >> initialize [
 	debug := false
 ]
 
@@ -30,7 +30,7 @@ KMLog class >> logCompleteMatch: aKeymap [
 
 { #category : #logging }
 KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
-	debug 
+	debug
 		ifFalse: [ ^ self ].
 	self
 		traceCr: aMorph printString , ' Complete match: ' , aKeymap printString
@@ -38,7 +38,7 @@ KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
 
 { #category : #logging }
 KMLog class >> logPartialMatch: anEvent [
-	debug 
+	debug
 		ifFalse: [ ^ self ].
 	self traceCr: 'Partial match: ' , anEvent printString
 ]

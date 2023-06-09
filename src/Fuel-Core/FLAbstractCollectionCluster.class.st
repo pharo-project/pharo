@@ -4,7 +4,7 @@ A FLAbstractCollectionCluster is the common behavior for all cluster collections
 Class {
 	#name : #FLAbstractCollectionCluster,
 	#superclass : #FLObjectCluster,
-	#category : #'Fuel-Core-Clusters-Optionals'
+	#category : #'Fuel-Core-Clusters-Optimized'
 }
 
 { #category : #analyzing }
@@ -18,6 +18,15 @@ FLAbstractCollectionCluster class >> clusterBucketIn: aClusterization [
 FLAbstractCollectionCluster >> afterMaterializationStepWith: aDecoder [  
 
 	objects do: [ :anObject | anObject fuelAfterMaterialization ]
+]
+
+{ #category : #'serialize/materialize' }
+FLAbstractCollectionCluster >> encodeExtraInformationForReferencesFor: anObject with: anEncoder [
+]
+
+{ #category : #'serialize/materialize' }
+FLAbstractCollectionCluster >> encodeSizeOf: anObject with: anEncoder [
+	anEncoder encodeUint32: anObject size
 ]
 
 { #category : #'serialize/materialize' }
@@ -41,22 +50,22 @@ FLAbstractCollectionCluster >> materializeReferencesStepWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> serializeInstance: anObject with: anEncoder [
-	anEncoder encodeUint32: anObject size
+	self
+		encodeSizeOf: anObject
+		with: anEncoder
 ]
 
 { #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> serializeReferencesOf: anObject with: anEncoder [
-	| refs |
-	refs := self references
-		at: anObject
-		ifAbsent: [ ^ self ].
+	self
+		encodeExtraInformationForReferencesFor: anObject with: anEncoder;
+		encodeSizeOf: anObject with: anEncoder.
 	
-	anEncoder encodeUint32: refs first.
-
-	refs
-		from: 2
-		to: refs size
-		do: [ :ref | anEncoder encodeReferenceTo: ref ]
+	self references
+		at: anObject
+		ifPresent: [ :refs |
+			refs do: [ :ref |
+				anEncoder encodeReferenceTo: ref ] ]
 ]
 
 { #category : #'serialize/materialize' }

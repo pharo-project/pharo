@@ -11,53 +11,53 @@ Class {
 
 { #category : #building }
 CDTraitCompositionBuilder >> buildFrom: aNode [
-	
+
 	^ aNode acceptVisitor: self
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [ 
+CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [
 	| parent argumentName |
-	self flag: #todo. 
+	self flag: #todo.
 	"It needs to be refactored. I do not know how it was supposed to be handle properly.
 	Here is workaround to fix issue with empty #uses section"
 	parent := aRBArrayNode parent.
-	parent isMessage ifTrue: [ 
+	parent isMessage ifTrue: [
 		argumentName := parent keywords at: (parent arguments indexOf: aRBArrayNode).
-		(argumentName = #uses:) | (argumentName = #traits:) ifTrue: [ 
-			aRBArrayNode statements 
-				ifEmpty: [ 
-					^CDTraitCompositionSequenceNode new 
+		(argumentName = #uses:) | (argumentName = #traits:) ifTrue: [
+			aRBArrayNode statements
+				ifEmpty: [
+					^CDTraitCompositionSequenceNode new
 						sequence: #();
 						originalNode: aRBArrayNode;
 						yourself]
-				ifNotEmpty: [ :stm | ^ CDTraitCompositionSequenceNode new 
+				ifNotEmpty: [ :stm | ^ CDTraitCompositionSequenceNode new
 											sequence: {stm first acceptVisitor: self} ;
 											originalNode: aRBArrayNode;
 											yourself
 									]]].
-	
-	^aRBArrayNode statements collect: [ :each | 
+
+	^aRBArrayNode statements collect: [ :each |
 		each isLiteralNode
 			ifTrue: [ each value ]
 			ifFalse: [ each receiver value -> each arguments first value ] ]
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitGlobalNode: aRBGlobalNode [ 
-	
+CDTraitCompositionBuilder >> visitGlobalNode: aRBGlobalNode [
+
 	^self visitVariableNode: aRBGlobalNode
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitGlobalVariableNode: aRBGlobalNode [ 
-	
+CDTraitCompositionBuilder >> visitGlobalVariableNode: aRBGlobalNode [
+
 	^self visitVariableNode: aRBGlobalNode
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitLiteralNode: aRBLiteralValueNode [ 
-	
+CDTraitCompositionBuilder >> visitLiteralNode: aRBLiteralValueNode [
+
 	^ aRBLiteralValueNode value
 ]
 
@@ -69,34 +69,34 @@ CDTraitCompositionBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitLiteralVariableNode: aRBGlobalNode [ 
-	
+CDTraitCompositionBuilder >> visitLiteralVariableNode: aRBGlobalNode [
+
 	^self visitVariableNode: aRBGlobalNode
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitMessageNode: aRBMessageNode [ 
-	
+CDTraitCompositionBuilder >> visitMessageNode: aRBMessageNode [
+
 	| node receiver argument |
-	
+
 	aRBMessageNode selector = #classTrait
-		ifTrue: [ 
+		ifTrue: [
 			^ CDClassTraitNode new
 				originalNode: aRBMessageNode;
 				name: aRBMessageNode receiver name;
 				yourself  ].
-	
+
 	receiver := aRBMessageNode receiver acceptVisitor: self.
 	argument := aRBMessageNode arguments first acceptVisitor: self.
-	
+
 	node := receiver perform: aRBMessageNode selector with: argument.
 	node originalNode: aRBMessageNode.
 	^ node
 ]
 
 { #category : #visiting }
-CDTraitCompositionBuilder >> visitVariableNode: aRBVariableNode [ 
-	
+CDTraitCompositionBuilder >> visitVariableNode: aRBVariableNode [
+
 	^ CDTraitNode new
 		originalNode: aRBVariableNode;
 		name: aRBVariableNode name;

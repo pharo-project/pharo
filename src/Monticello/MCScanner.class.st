@@ -19,12 +19,6 @@ MCScanner class >> scan: aStream [
 	^ (self new stream: aStream) next
 ]
 
-{ #category : #'public api' }
-MCScanner class >> scanTokens: aString [
-	"compatibility"
-	^ Array with: (self scan: aString readStream)
-]
-
 { #category : #actions }
 MCScanner >> next [
 	"This would be slightly simpler using recursion but it risks a stack overflow 

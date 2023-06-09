@@ -23,18 +23,18 @@ FFISelfArgument >> emitArgument: aBuilder context: aContext [
 { #category : #'emitting code' }
 FFISelfArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	"If argument is an object, I need to send value of instVar handle instead it self"
-	aBuilder pushInstVar: (objectClass 
-		instVarIndexFor: aName 
+	aBuilder pushInstVar: (objectClass
+		instVarIndexFor: aName
 		ifAbsent: [ self error: 'No ', aName, ' instVar' ])
 ]
 
 { #category : #'private - emitting code' }
 FFISelfArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
-	aBuilder 
+	aBuilder
 		pushReceiver;
-		pushLiteral: (objectClass 
-			instVarIndexFor: aName 
+		pushLiteral: (objectClass
+			instVarIndexFor: aName
 			ifAbsent: [ self error: 'No ', aName, ' instVar' ])
 ]
 

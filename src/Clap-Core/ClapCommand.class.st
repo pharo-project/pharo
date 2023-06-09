@@ -83,7 +83,7 @@ ClapCommand >> flags [
 ClapCommand >> initialize [
 	super initialize.
 	subcommands := OrderedCollection new.
-	flags := OrderedCollection new.
+	flags := OrderedCollection new
 ]
 
 { #category : #enumerating }

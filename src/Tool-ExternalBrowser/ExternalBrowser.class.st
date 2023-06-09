@@ -35,9 +35,9 @@ ExternalBrowser class >> browseStream: aStream [
 { #category : #layout }
 ExternalBrowser class >> defaultLayout [
 	<spec: #default>
-	
-	^ SpPanedLayout newTopToBottom 
-		add: (SpBoxLayout newTopToBottom  
+
+	^ SpPanedLayout newTopToBottom
+		add: (SpBoxLayout newTopToBottom
 			add: (
 				SpPanedLayout newLeftToRight
 					add:(
@@ -45,7 +45,7 @@ ExternalBrowser class >> defaultLayout [
 							add: #packages;
 							add: #classes;
 							yourself);
-					add: (	
+					add: (
 						SpPanedLayout newLeftToRight
 							add: #protocols;
 							add: #selectors;
@@ -89,7 +89,7 @@ ExternalBrowser class >> serviceBrowseCode [
 	"Answer the service of opening a file-contents browser"
 
 	^ (SimpleServiceEntry
-		provider: self 
+		provider: self
 		label: 'Code-file browser'
 		selector: #browseStream:
 		description: 'Open a "file-contents browser" on this file, allowing you to view and selectively load its code'
@@ -101,15 +101,13 @@ ExternalBrowser class >> serviceBrowseCode [
 ExternalBrowser class >> services [
 	"Answer potential file services associated with this class"
 
-	^ {self serviceBrowseCode}.
+	^ {self serviceBrowseCode}
 ]
 
 { #category : #'System-FileRegistry' }
 ExternalBrowser class >> sourceFileSuffixes [
 
 	^#('st' 'cs')
-
-
 ]
 
 { #category : #accessing }
@@ -132,26 +130,26 @@ ExternalBrowser >> connectPresenters [
 
 	packages display: [ :m | m name ].
 
-	packages whenSelectionChangedDo: [ :selection | 
+	packages whenSelectionChangedDo: [ :selection |
 		self refreshClasses: selection selectedItem ].
 
-	classes whenSelectionChangedDo: [ :selection | 
+	classes whenSelectionChangedDo: [ :selection |
 		self refreshProtocols: selection ].
 
-	protocols whenSelectionChangedDo: [ :selection | 
+	protocols whenSelectionChangedDo: [ :selection |
 		self selectors resetListSelection.
 		selection selectedItem
 			ifNil: [ selectors items: #(  ) ]
-			ifNotNil: [ 
+			ifNotNil: [
 			selectors items: (self selectorsOfProtocol: selection selectedItem) ] ].
 
-	selectors whenSelectionChangedDo: [ :selection | 
+	selectors whenSelectionChangedDo: [ :selection |
 		selection selectedItem
-			ifNil: [ 
+			ifNil: [
 				self method text: '' ]
 			ifNotNil: [ method text: (self methodFor: selection selectedItem) ] ].
 
-	showClassSide whenChangedDo: [ 
+	showClassSide whenChangedDo: [
 		self refreshClasses: self packages selectedItem ]
 ]
 
@@ -162,7 +160,7 @@ ExternalBrowser >> initializePresenter [
 	classes := self newList.
 	protocols := self newList.
 	selectors := self newList.
-	method := self newCode.
+	method := self newCode withoutSyntaxHighlight.
 
 	showClassSide := self newCheckBox.
 	showClassSide label: 'Class side'.
@@ -173,7 +171,7 @@ ExternalBrowser >> initializePresenter [
 		add: classes;
 		add: protocols;
 		add: selectors;
-		add: method.
+		add: method
 ]
 
 { #category : #initialization }
@@ -197,7 +195,6 @@ ExternalBrowser >> method: anObject [
 ExternalBrowser >> methodFor: aSelector [
 
 	^ (self classes selectedItem methodNamed: aSelector) sourceCode
-			
 ]
 
 { #category : #accessing }
@@ -215,16 +212,15 @@ ExternalBrowser >> protocols [
 { #category : #'structure accessing' }
 ExternalBrowser >> protocolsOfClass: aClass [
 
-	^ aClass protocols
+	^ aClass protocolNames
 ]
 
 { #category : #refresh }
 ExternalBrowser >> refreshClasses: pack [
 	self classes resetListSelection .
-	pack 
-		ifNil: [ classes items: #() ] 
-		ifNotNil: [ classes items: (self classesOfPackage: pack) asOrderedCollection]. 
-
+	pack
+		ifNil: [ classes items: #() ]
+		ifNotNil: [ classes items: (self classesOfPackage: pack) asOrderedCollection].
 ]
 
 { #category : #initialize }
@@ -233,8 +229,8 @@ ExternalBrowser >> refreshProtocols: selection [
 	self protocols resetListSelection.
 	^ selection selectedItem
 		  ifNil: [ protocols items: #(  ) ]
-		  ifNotNil: [ 
-			  protocols items: (self protocolsOfClass: selection selectedItem).
+		  ifNotNil: [
+			  protocols items: (self protocolsOfClass: selection selectedItem) asSortedCollection.
 			  self showClassDefinition ]
 ]
 
@@ -249,21 +245,20 @@ ExternalBrowser >> selectors: anObject [
 ]
 
 { #category : #'structure accessing' }
-ExternalBrowser >> selectorsOfProtocol: aProtocol [ 
-	
+ExternalBrowser >> selectorsOfProtocol: aProtocol [
+
 	| theSelectedClass |
 	theSelectedClass := self showClassSide state
 		ifFalse: [ self classes selectedItem ]
 		ifTrue: [ self classes selectedItem classSide ].
-	^ (theSelectedClass 
-		methodsInProtocol: self protocols selectedItem) collect: [:each | each selector]
+	^ (theSelectedClass
+		methodsInProtocol: self protocols selectedItem) asArray collect: [:each | each selector]
 ]
 
 { #category : #'structure accessing' }
 ExternalBrowser >> showClassDefinition [
 
-	method text:
-		(self classes selectedItem definitionString ifNil: [ '' ])
+	method text: (self classes selectedItem definitionString ifNil: [ '' ])
 ]
 
 { #category : #accessing }
@@ -273,8 +268,7 @@ ExternalBrowser >> showClassSide [
 ]
 
 { #category : #updating }
-ExternalBrowser >> updatePresenter [ 
+ExternalBrowser >> updatePresenter [
 
-	packages items: self model packages.
-
+	packages items: self model packages
 ]

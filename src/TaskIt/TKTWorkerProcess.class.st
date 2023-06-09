@@ -38,25 +38,25 @@ TKTWorkerProcess >> isFree [
 
 { #category : #testing }
 TKTWorkerProcess >> isRunning [
-	
+
 	^ process notNil and: [ process isTerminated not ]
 ]
 
 { #category : #'start-stop' }
 TKTWorkerProcess >> kill [
 	self stop.
-	taskQueue := nil. 
+	taskQueue := nil.
 ]
 
 { #category : #accessing }
-TKTWorkerProcess >> name [ 
-	
+TKTWorkerProcess >> name [
+
 	^ name
 ]
 
 { #category : #accessing }
-TKTWorkerProcess >> name: aString [ 
-	
+TKTWorkerProcess >> name: aString [
+
 	name := aString
 ]
 
@@ -66,8 +66,8 @@ TKTWorkerProcess >> priority [
 ]
 
 { #category : #accessing }
-TKTWorkerProcess >> priority: anInteger [ 
-	self process priority: anInteger .
+TKTWorkerProcess >> priority: anInteger [
+	self process priority: anInteger
 ]
 
 { #category : #'start-stop' }

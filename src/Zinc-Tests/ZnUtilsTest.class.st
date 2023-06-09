@@ -29,6 +29,30 @@ ZnUtilsTest >> testCapitalizeString [
 ]
 
 { #category : #testing }
+ZnUtilsTest >> testDefaultJSONReader [
+	"System should provide a JSON parser"
+	| reader expectedParserClass |
+	reader := ZnUtils defaultJSONReader.
+	expectedParserClass := self class environment at: #NeoJSONObject ifAbsent: [
+		          self class environment at: #STONJSON ifAbsent:[nil]].
+
+	self assert: reader notNil.
+	self assert: reader equals: expectedParserClass
+]
+
+{ #category : #testing }
+ZnUtilsTest >> testDefaultJSONWriter [
+	"System should provide a JSON parser"
+	| writer expectedParserClass |
+	writer := ZnUtils defaultJSONWriter.
+	expectedParserClass := self class environment at: #NeoJSONWriter ifAbsent: [
+		          self class environment at: #STONJSON ifAbsent:[nil]].
+
+	self assert: writer notNil.
+	self assert: writer equals: expectedParserClass
+]
+
+{ #category : #testing }
 ZnUtilsTest >> testHttpDate [
 	| timestamp string |
 	timestamp := DateAndTime
@@ -152,14 +176,14 @@ ZnUtilsTest >> testStreamingBinary [
 { #category : #testing }
 ZnUtilsTest >> testStreamingBinaryWithoutSize [
 	| data in out |
-	data := ByteArray streamContents: [ :stream | 
+	data := ByteArray streamContents: [ :stream |
 		1 to: 10000 do: [ :each |
 			stream nextPut: #(1 2 3) atRandom ] ].
 	in := data readStream.
 	out := WriteStream on: (ByteArray new: data size).
 	ZnUtils streamFrom: in to: out.
 	self assert: in atEnd.
-	self assert: out contents equals: data 
+	self assert: out contents equals: data
 ]
 
 { #category : #testing }
@@ -176,12 +200,12 @@ ZnUtilsTest >> testStreamingNonBinary [
 { #category : #testing }
 ZnUtilsTest >> testStreamingNonBinaryWithoutSize [
 	| data in out |
-	data := String streamContents: [ :stream | 
-		1 to: 10000 do: [ :each | 
+	data := String streamContents: [ :stream |
+		1 to: 10000 do: [ :each |
 			stream nextPut: 'abc' atRandom ] ].
 	in := data readStream.
 	out := WriteStream on: (String new: data size).
 	ZnUtils streamFrom: in to: out.
 	self assert: in atEnd.
-	self assert: out contents equals: data 
+	self assert: out contents equals: data
 ]

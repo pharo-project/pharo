@@ -87,14 +87,13 @@ FTTreeDataSource class >> defaultSearchStrategies [
 { #category : #'utilities - morph creation' }
 FTTreeDataSource class >> emptyMorph [
 	| icon |
-	icon := (Smalltalk ui icons iconNamed: #emptyIcon) asMorph.
-	icon form: (icon form scaledToSize: 16 @ 16).
+	icon := (Smalltalk ui icons iconNamed: #empty) asMorph.
+	icon form: (icon form scaledToSize: 16 @ 16 * self currentWorld displayScaleFactor).
 	^ icon
 ]
 
 { #category : #'class initialization' }
 FTTreeDataSource class >> initialize [
-	"self initialize"
 
 	SearchStrategies := nil
 ]
@@ -136,6 +135,12 @@ FTTreeDataSource >> addSourceToRootItem [
 ]
 
 { #category : #accessing }
+FTTreeDataSource >> allShownItems [
+
+	^ rootItem children flatCollect: [ :e | e withExpandedChildren ]
+]
+
+{ #category : #accessing }
 FTTreeDataSource >> buttonFor: item [
 	^ ( (self canDisplayChildrenOf: item) and: [item children isNotEmpty])
 		ifTrue: [ item generateButton ]
@@ -153,7 +158,7 @@ FTTreeDataSource >> cellColumn: column row: rowIndex [
 	item := self elementAt: rowIndex.
 	cell := FTIndentedCellMorph new.
 	cell indentBy: item depth * 16.
-	
+
 	cell addMorphBack: (self buttonFor: item).
 	cell addMorphBack: (self toString: item data) asMorph.
 	^ cell
@@ -206,10 +211,10 @@ FTTreeDataSource >> headerColumn: column [
 FTTreeDataSource >> indexOfChangedItem [
 	"I should be call when the user of the Fast Tree collapse or extand an Item. I return the index of the changed item. I should not be used by an other method than #updateSelectionWithCollectBlock:."
 
-	1 to: self numberOfRows do: [ :index | 
+	1 to: self numberOfRows do: [ :index |
 		(self elementAt: index) recentlyChanged
 			ifTrue: [ ^ index ] ].
-		
+
 	^ self errorSubscriptBounds: self numberOfRows + 1
 ]
 
@@ -227,7 +232,7 @@ FTTreeDataSource >> maxDepth: anObject [
 FTTreeDataSource >> menuColumn: column row: rowIndex [
 	rowIndex = 0
 		ifTrue: [ ^ nil ].	"I could answer a menu without selection, but in this case I will just answer nil, which means 'no menu'"
-			
+
 	^ (UIManager default newMenuIn: self table for: self)
 		add: 'Expand All ' target: self selector: #expandAll;
 		add: 'Collapse All' target: self selector: #collapseAll;
@@ -244,6 +249,29 @@ FTTreeDataSource >> newDataSourceMatching: aFTFilter [
 { #category : #accessing }
 FTTreeDataSource >> numberOfRows [
 	^ self rootItem numberOfVisibleChildren
+]
+
+{ #category : #'expanding-collapsing' }
+FTTreeDataSource >> preservingScrollbarPositionDo: aBlock [
+
+	| oldScroll oldItems newScroll newItems |
+	oldItems := self allShownItems size.
+	oldScroll := self table verticalScrollBar value asFraction.
+
+	aBlock value.
+
+	newItems := self allShownItems size.
+	newScroll := oldScroll = 0
+		             ifTrue: [ 0 ]
+		             ifFalse: [
+			             oldScroll = 1
+				             ifTrue: [ oldItems / newItems ]
+				             ifFalse: [
+					             oldScroll numerator
+					             * (oldItems / oldScroll denominator)
+					             / newItems ] ].
+
+	self table verticalScrollBar setValue: newScroll
 ]
 
 { #category : #accessing }
@@ -307,17 +335,17 @@ FTTreeDataSource >> updateData [
 
 { #category : #updating }
 FTTreeDataSource >> updateSelectionWithCollectBlock: aBlock [
-	"I take a block with two parameters, the index of a selected element and 
-	the index of the item that collapsed/expanded. This block needs to return 
+	"I take a block with two parameters, the index of a selected element and
+	the index of the item that collapsed/expanded. This block needs to return
 	the index of the new selected element. I do not ensure that any of the
 	newly selected elements are visible. Use #ensureVisibleFirstSelection for that."
 
 	| index |
 	self table selectedIndexes ifEmpty: [ ^ self ].
-	
+
 	index := self indexOfChangedItem.
-	self table 
-		selectIndexes: ((self table selectedIndexes collect: [ :ind | 
-			aBlock value: ind value: index ]) asSet) asArray 
+	self table
+		selectIndexes: ((self table selectedIndexes collect: [ :ind |
+			aBlock value: ind value: index ]) asSet) asArray
 		andMakeVisibleIf: false
 ]

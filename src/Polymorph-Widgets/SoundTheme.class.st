@@ -46,13 +46,6 @@ SoundTheme class >> current: aSoundTheme [
 ]
 
 { #category : #testing }
-SoundTheme class >> isAbstract [
-	"Answer whether the receiver is considered to be abstract."
-
-	^false
-]
-
-{ #category : #testing }
 SoundTheme class >> isCurrent [
 	"Answer whether an instance of the receiver is the current theme."
 

@@ -9,14 +9,15 @@ Class {
 
 { #category : #tests }
 MessageNotUnderstoodTest >> testDescription [
-
+	
 	| defaultDescription messageNotUndestoodDescription |
+	<ignoreNotImplementedSelectors: #(aMessageThatDoesntExistsIntentiallyRequested)>
 	defaultDescription := ''.
 	messageNotUndestoodDescription := ''.
 	"Note that in the following line, the IDE complaints that the method doesn't exists. This is intentional."
 	[ Object aMessageThatDoesntExistsIntentiallyRequested ]
 		on: MessageNotUnderstood
-		do: [ :ex | 
+		do: [ :ex |
 			defaultDescription := ex defaultDescription.
 			messageNotUndestoodDescription := ex description ].
 	self deny: defaultDescription equals: messageNotUndestoodDescription

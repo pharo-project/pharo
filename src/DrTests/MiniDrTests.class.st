@@ -10,45 +10,39 @@ Class {
 	#category : #'DrTests-Spec'
 }
 
-{ #category : #layout }
-MiniDrTests class >> defaultLayout [
-	^ SpBoxLayout newTopToBottom
-		add: (SpBoxLayout newLeftToRight
-				add: #switchButton;
-				yourself)
-		expand: false
-		fill: true
-		padding: 1;
-		add: #startButton;
-		yourself
-]
-
 { #category : #accessing }
 MiniDrTests >> currentPlugin: anObject [
 
 	currentPlugin := anObject
 ]
 
-{ #category : #accessing }
-MiniDrTests >> evaluateBackgroundColor [
+{ #category : #layout }
+MiniDrTests >> defaultLayout [
 
-	^ pluginResult backgroundColor
+	^ SpBoxLayout newTopToBottom
+		spacing: 5;
+		add: switchButton expand: false;
+		add: startButton;
+		yourself
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #accessing }
+MiniDrTests >> evaluateStyle [
+
+	^ pluginResult backgroundColorStyle
+]
+
+{ #category : #initialization }
 MiniDrTests >> initializeButtons [
+
 	super initializeButtons.
+	switchButton label: 'Maximize'.
 
-	startButton := self newButton.
-
-	startButton
+	startButton := self newButton
 		label: 'run';
 		icon: (self iconNamed: #smallUpdate);
-		color: (Color gray).
-	switchButton
-		label: 'Maximize'.
-		
-	startButton action: [ self runPlugin ]
+		action: [ self runPlugin ];
+		yourself
 ]
 
 { #category : #initialization }
@@ -57,7 +51,8 @@ MiniDrTests >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
 		title: self title;
-		initialExtent: 200 @ 200
+		initialExtent: 200@180;
+		windowIcon: (self iconNamed: self class systemIconName)
 ]
 
 { #category : #accessing }
@@ -68,10 +63,11 @@ MiniDrTests >> startButton [
 { #category : #'private - actions' }
 MiniDrTests >> switchToDrTest [
 
-	DrTests
+	(DrTests newApplication: self application)
 		reloadConfiguration: testsConfiguration
-		withResults: pluginResult
-		andPlugin: currentPlugin
+			withResults: pluginResult
+			andPlugin: currentPlugin;
+		open
 ]
 
 { #category : #actions }
@@ -84,22 +80,22 @@ MiniDrTests >> switchUI [
 { #category : #accessing }
 MiniDrTests >> title [
 
-	^ 'MiniDrTests - ' , currentPlugin pluginName
+	^ 'DrTests'
 ]
 
 { #category : #updating }
 MiniDrTests >> updateUI [
 
 	super updateUI.
-	startButton color: self evaluateBackgroundColor.
-	startButton label: pluginResult summarizeInfo.
-	"The next line doesn't work because Spec2 does not handle button label's styles.
-	Should be changed at some point"
-	startButton label makeAllColor: pluginResult textColor.
+	startButton styles copy
+		do: [ :each | startButton removeStyle: each ].
+	startButton addStyle: self evaluateStyle.
+	startButton label: pluginResult summarizeInfo
 ]
 
 { #category : #initialization }
 MiniDrTests >> updateWithResults: results [
+
 	self pluginResult: results.
 	self updateUI
 ]

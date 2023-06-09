@@ -88,7 +88,7 @@ ExternalStructure class >> checkFieldLayoutChange [
 	This is usefull at system startup if some structure are machine dependent.
 	No provision is made for correct initialization order of nested structures.
 	The correct order of invocation is left at upper responsibility."
-	
+
 	| newCompiledSpec oldCompiledSpec |
 	oldCompiledSpec := compiledSpec.
 	newCompiledSpec := self compileFields: self fields withAccessors: #never.
@@ -134,7 +134,7 @@ ExternalStructure class >> compileAllFields [
 	"ExternalStructure compileAllFields"
 	self withAllSubclassesDo:[:cls|
 		cls compileFields.
-	].
+	]
 ]
 
 { #category : #'field definition' }
@@ -154,7 +154,7 @@ ExternalStructure class >> compileFields: fieldSpec [
 ]
 
 { #category : #'field definition' }
-ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [ 
+ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 	"Compile a type specification for the FFI machinery.
 	Return the newly compiled spec.
 	Eventually generate the field accessors according to following rules:
@@ -210,7 +210,7 @@ ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 { #category : #'field definition' }
 ExternalStructure class >> compiledSpec [
 	"Return the compiled spec of the receiver"
-	^compiledSpec ifNil:[self compileFields].
+	^compiledSpec ifNil:[self compileFields]
 ]
 
 { #category : #converting }
@@ -225,12 +225,12 @@ ExternalStructure class >> defineAliasAccessorsFor: fieldName type: type [
 	(type isVoid and:[type isPointerType not]) ifTrue:[^self].
 	refClass := type referentClass.
 	code := String streamContents:[:s|
-		s 
+		s
 			nextPutAll: fieldName; crtab;
 			nextPutAll:'"This method was automatically generated"'; crtab;
 			nextPut: $<; nextPutAll: #generated; nextPut: $>; crtab.
-		refClass == nil 
-			ifTrue:[(type isAtomic and:[type isPointerType not]) 
+		refClass == nil
+			ifTrue:[(type isAtomic and:[type isPointerType not])
 				ifTrue:[s nextPutAll:'^handle']
 				ifFalse:[s nextPutAll:'^ExternalData fromHandle: handle'.
 						type isPointerType ifTrue:[s nextPutAll:' asExternalPointer'].
@@ -241,7 +241,7 @@ ExternalStructure class >> defineAliasAccessorsFor: fieldName type: type [
 	self compile: code classified: 'accessing'.
 
 	code := String streamContents:[:s|
-		argName := refClass == nil 
+		argName := refClass == nil
 			ifTrue:[(type isAtomic and:[type isPointerType not])
 				ifTrue:['anObject']
 				ifFalse:['anExternalData']]
@@ -254,7 +254,7 @@ ExternalStructure class >> defineAliasAccessorsFor: fieldName type: type [
 			ifTrue:[s nextPutAll:'handle := ', argName]
 			ifFalse:[s nextPutAll:'handle := ', argName,' getHandle'.
 					type isPointerType ifTrue:[s nextPutAll:' asByteArrayPointer']]].
-	self compile: code classified: 'accessing'.
+	self compile: code classified: 'accessing'
 ]
 
 { #category : #'field definition' }
@@ -274,7 +274,7 @@ ExternalStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOf
 { #category : #'field definition' }
 ExternalStructure class >> defineFields [
 	"Define all the fields in the receiver"
-	self defineFields: self fields.
+	self defineFields: self fields
 ]
 
 { #category : #'field definition' }
@@ -288,7 +288,7 @@ ExternalStructure class >> defineFields: fieldSpec [
 { #category : #'class management' }
 ExternalStructure class >> doneCompiling [
 	"I have been recompiled. Update any types that reference me."
-	ExternalType noticeModificationOf: self.
+	ExternalType noticeModificationOf: self
 ]
 
 { #category : #'instance creation' }
@@ -315,7 +315,7 @@ ExternalStructure class >> fileOutInitializerOn: aFileStream [
 	aFileStream cr.
 	aFileStream cr.
 	aFileStream nextChunkPut: self name , ' compileFields'.
-	aFileStream cr.
+	aFileStream cr
 ]
 
 { #category : #'class management' }
@@ -324,7 +324,7 @@ ExternalStructure class >> fileOutOn: aFileStream moveSource: moveSource toFile:
 		moveSource: moveSource
 		toFile: fileIndex
 		initializing: aBool.
-	(aBool and:[moveSource not]) ifTrue: 
+	(aBool and:[moveSource not]) ifTrue:
 		[aFileStream cr.
 		aFileStream cr.
 		aFileStream nextChunkPut: self name , ' compileFields'.
@@ -351,7 +351,7 @@ ExternalStructure class >> install [
 ExternalStructure class >> maybeCompileAccessor: aString withSelector: selector [
 	(self compiledMethodAt: selector ifAbsent: []) ifNotNil:
 		[:existingMethod|
-		existingMethod getSourceFromFile asString = aString ifTrue:
+		existingMethod sourceCode = aString ifTrue:
 			[^self]].
 	self compile: aString classified: #accessing
 ]
@@ -363,7 +363,7 @@ ExternalStructure class >> new [
 
 { #category : #'class management' }
 ExternalStructure class >> obsolete [
-	"The receiver is becoming obsolete. 
+	"The receiver is becoming obsolete.
 	NOTE: You if you remove the whole class category at once, you cannot
 	assume that the ExternalType class is still present."
 
@@ -383,7 +383,7 @@ ExternalStructure class >> pointerSize [
 ExternalStructure class >> recompileStructures [
 	"Check and update the layout of all subclasses for host machine dependency.
 	Arrange to check the inner nested structures first."
-	
+
 	"ExternalStructure recompileStructures"
 	| sorted unsorted |
 	unsorted := self withAllSubclasses.
@@ -397,11 +397,11 @@ ExternalStructure class >> rename: aString [
 	| oldName |
 	oldName := name.
 	super rename: aString.
-	oldName = name ifFalse:[ExternalType noticeRenamingOf: self from: oldName to: name].
+	oldName = name ifFalse:[ExternalType noticeRenamingOf: self from: oldName to: name]
 ]
 
 { #category : #'field definition' }
-ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [ 
+ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 	"Answer true if the field accessors must be compiled.
 	Do so according to the following rules:
 	- aSymbol = #always always generate the accessors
@@ -419,13 +419,13 @@ ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 ]
 
 { #category : #'field definition' }
-ExternalStructure class >> sortStructs: structureClasses into: sortedClasses [ 
+ExternalStructure class >> sortStructs: structureClasses into: sortedClasses [
 	"Sort the structure definitions so as to obtain a correct initialization order."
-	
+
 	[| structClass prevStructClass dependsOnOtherTypes |
 	structureClasses isEmpty ifTrue: [^ self].
 	structClass := structureClasses anyOne.
-	
+
 	[dependsOnOtherTypes := structClass typeNamesFromWhichIDepend.
 	prevStructClass := structureClasses detect: [:c | c ~~ structClass and: [dependsOnOtherTypes includes: c name]] ifNone: [nil].
 	prevStructClass isNil]
@@ -459,11 +459,11 @@ ExternalStructure >> compositeName [
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
 	(handle notNil and:[handle isExternalAddress]) ifTrue:[handle free].
-	handle := nil.
+	handle := nil
 ]
 
 { #category : #printing }
-ExternalStructure >> longPrintOn: aStream [ 
+ExternalStructure >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all the record's variables."
 	| fields |
 	fields := self class fields.
@@ -474,5 +474,5 @@ ExternalStructure >> longPrintOn: aStream [
 		field first ifNotNil:
 			[aStream nextPutAll: field first; nextPut: $:; space; tab.
 			(self perform: field first) printOn: aStream.
-			aStream cr]].
+			aStream cr]]
 ]

@@ -3,7 +3,7 @@ A FullBlockClosure is a closure that can be independent of any outerContext if d
 
 Instance Variables
 	outerContext 	<Context>
-	(startpc) compiledBlock <CompiledBlock> for compatibility, this is startpc.
+	compiledBlock <CompiledBlock>
 	numArgs 		<SmallInteger>
 	receiver:		<Object>
 "
@@ -25,4 +25,11 @@ FullBlockClosure >> receiver [
 { #category : #accessing }
 FullBlockClosure >> receiver: anObject [
 	receiver := anObject
+]
+
+{ #category : #accessing }
+FullBlockClosure >> sender [
+	"Answer the context that sent the message that created the receiver."
+
+	^outerContext sender
 ]

@@ -18,8 +18,8 @@ Class {
 { #category : #'instance creation' }
 ClyNotebookPageMorph class >> newLabel: aString icon: anIcon provider: aBlock [
 
-	^ self new 
-		label: aString; 
+	^ self new
+		label: aString;
 		icon: anIcon;
 		lazyPageMorphCreation: aBlock;
 		yourself
@@ -39,7 +39,7 @@ ClyNotebookPageMorph >> actions: aCollection [
 
 { #category : #'adding-removing' }
 ClyNotebookPageMorph >> addToSelection [
-	
+
 	owner addToSelection: self
 ]
 
@@ -75,11 +75,11 @@ ClyNotebookPageMorph >> initialize [
 	super initialize.
 	closeable := false.
 	labelPresenter := ClyNotebookPageHeaderPresenter on: self.
-	self flag: #TODO. "I'm hardcoding this width because I need to keep this sizes consistent. 
+	self flag: #TODO. "I'm hardcoding this width because I need to keep this sizes consistent.
 	But this is not good, think a better way."
 	labelMorph := labelPresenter build
 		              hResizing: #rigid;
-		              width: 120;
+		              width: 120 * self currentWorld displayScaleFactor;
 		              yourself
 ]
 
@@ -106,7 +106,7 @@ ClyNotebookPageMorph >> markDirty: dirty [
 
 	dirty
 		ifTrue: [ self label: '*', self label ]
-		ifFalse: [ 
+		ifFalse: [
 			(self label beginsWith: '*')
 				ifTrue: [  self label: self label allButFirst ] ].
 	labelPresenter updatePresenter

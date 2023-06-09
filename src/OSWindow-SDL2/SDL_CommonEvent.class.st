@@ -31,7 +31,7 @@ SDL_CommonEvent >> accept: aVisitor [
 SDL_CommonEvent >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream print: { self timestamp }.
+	aStream print: { self timestamp }
 ]
 
 { #category : #'accessing - structure variables' }

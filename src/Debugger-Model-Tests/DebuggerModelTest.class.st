@@ -16,11 +16,11 @@ Class {
 DebuggerModelTest >> setUp [
 	super setUp.
 	context := [ Set new ] asContext.
-	process := Process 
-		forContext: context 
+	process := Process
+		forContext: context
 		priority: Processor userInterruptPriority.
-		
-	session:= process newDebugSessionNamed: 'test session' startedAt: context.
+
+	session:= process newDebugSessionNamed: 'test session' startedAt: context
 ]
 
 { #category : #tests }
@@ -35,10 +35,10 @@ DebuggerModelTest >> testClearDebugSession [
 { #category : #tests }
 DebuggerModelTest >> testCorrectlyCreateDebugSession [
 
-	self assert: session isNotNil.	
+	self assert: session isNotNil.
 	self assert: process isSuspended.
 	self assert: session interruptedContext equals: context.
-	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'.
+	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'
 ]
 
 { #category : #tests }
@@ -48,11 +48,11 @@ DebuggerModelTest >> testStepInto [
 	self assert: session interruptedContext equals: context.
 	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp' .
 
-	session 
+	session
 		stepInto;
 		stepInto.
 
-	self assert: session interruptedContext printString equals: 'Set class(HashedCollection class)>>new'.
+	self assert: session interruptedContext printString equals: 'Set class(HashedCollection class)>>new'
 ]
 
 { #category : #tests }
@@ -63,24 +63,24 @@ DebuggerModelTest >> testStepOver [
 
 	session stepOver.
 
-	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'.
+	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'
 ]
 
 { #category : #tests }
 DebuggerModelTest >> testUnwindAndRestartToContext [
-	
+
 	context := [ 2 squared ] asContext.
-	process := Process 
-		forContext: context 
+	process := Process
+		forContext: context
 		priority: Processor userInterruptPriority.
-		
+
 	session:= process newDebugSessionNamed: 'test session' startedAt: context.
-	
+
 	context := context step.
 	context := context step.
 	process suspendedContext: context.
-	session updateContextTo: context.		
-	
+	session updateContextTo: context.
+
 	session unwindAndRestartToContext: session interruptedContext.
 	self assert: session interruptedContext method equals: (Number >> #squared).
 	"After restarting a context, we step to the first interesting bytecode, that is either a send or a return.
@@ -91,20 +91,20 @@ DebuggerModelTest >> testUnwindAndRestartToContext [
 
 { #category : #tests }
 DebuggerModelTest >> testUnwindAndRestartToQuickMethodContext [
-	
+
 	context := [ #foo asSymbol ] asContext.
-	process := Process 
-		forContext: context 
+	process := Process
+		forContext: context
 		priority: Processor userInterruptPriority.
-		
+
 	session:= process newDebugSessionNamed: 'test session' startedAt: context.
-	
-	context := context step.			
+
+	context := context step.
 	context stepIntoQuickMethod: true.
 	context := context step.
 	process suspendedContext: context.
-	session updateContextTo: context.	
-	
+	session updateContextTo: context.
+
 	session unwindAndRestartToContext: session interruptedContext.
 	self assert: session interruptedContext method equals: (Symbol >> #asSymbol).
 	self assert: session interruptedContext pc equals: (Symbol >> #asSymbol) endPC

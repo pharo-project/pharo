@@ -10,17 +10,13 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SycCopyPackageCommand,
 	#superclass : #CmdCommand,
-	#instVars : [
-		'package',
-		'newName'
-	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : #'SystemCommands-PackageCommands-Scope'
 }
 
 { #category : #testing }
 SycCopyPackageCommand class >> canBeExecutedInContext: aToolContext [
-	"^aToolContext isPackageSelected"
-	^ false
+
+	^ aToolContext isPackageSelected
 ]
 
 { #category : #accessing }
@@ -34,19 +30,19 @@ SycCopyPackageCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycCopyPackageCommand >> execute [
-
-	(RBCopyPackageRefactoring copyPackage: package name in: newName) execute
-]
-
-{ #category : #execution }
 SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
+
+	| dialog package newName |
+
 	super prepareFullExecutionInContext: aToolContext.
-	
-	package := aToolContext lastSelectedPackage.	
-	newName := UIManager default 
-		request: 'New name of copied package' 
-		initialAnswer: package name 
+
+	package := aToolContext lastSelectedPackage.
+	newName := UIManager default
+		request: 'New name of copied package'
+		initialAnswer: package name
 		title: 'Copy package'.
-	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ]
+	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ].
+
+	dialog := SycCopyClassUsingPatternPresenter openOn: package -> newName.
+	dialog cancelled ifTrue: [ ^ CmdCommandAborted signal ]
 ]

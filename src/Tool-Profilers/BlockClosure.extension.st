@@ -8,7 +8,6 @@ BlockClosure >> timeProfile [
 { #category : #'*Tool-Profilers' }
 BlockClosure >> timeToRunWithoutGC [
 	"Answer the number of milliseconds taken to execute this block without GC time."
- 
-	^ Smalltalk vm totalGCTime + self timeToRun asMilliSeconds -  Smalltalk vm totalGCTime
 
+	^ Smalltalk vm totalGCTime + self timeToRun asMilliSeconds -  Smalltalk vm totalGCTime
 ]

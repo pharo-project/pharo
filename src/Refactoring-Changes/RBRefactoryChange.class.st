@@ -61,12 +61,12 @@ RBRefactoryChange >> execute [
 ]
 
 { #category : #private }
-RBRefactoryChange >> executeNotifying: aBlock [ 
+RBRefactoryChange >> executeNotifying: aBlock [
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
-RBRefactoryChange >> initialize [ 
+RBRefactoryChange >> initialize [
 	super initialize.
 	onSystemDictionary := Smalltalk globals.
 	changeFactory := RBRefactoryChangeManager changeFactory

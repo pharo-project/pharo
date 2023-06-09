@@ -17,7 +17,7 @@ Class {
 DailyNonInteractiveTranscript class >> defaultLogFileName [
 	"The default file name that will be used to write to.
 	This needs to have a slot where the date will come."
-	
+
 	^ 'PharoTranscript-{1}.log'
 ]
 
@@ -25,8 +25,8 @@ DailyNonInteractiveTranscript class >> defaultLogFileName [
 DailyNonInteractiveTranscript >> fileNameWithDate [
 	| newName |
 	newName := self fileName format: { date yyyymmdd }.
-	self 
-		assert: self fileName ~= newName 
+	self
+		assert: self fileName ~= newName
 		description: 'The filename should include a {1} slot for the date'.
 	^ newName
 ]
@@ -42,22 +42,22 @@ DailyNonInteractiveTranscript >> initializeStream [
 	"Open the file stream that I write to or connect to #stdout/#stderr.
 	I will use the platform line end convention.
 	I will append to regular files.
-	Overwrtitten to use #fileNameWithDate"
-	
-	^ stream := self isStdout 
+	Overwritten to use #fileNameWithDate"
+
+	^ stream := self isStdout
 		ifTrue: [ Stdio stdout ]
-		ifFalse: [ 
+		ifFalse: [
 			self isStderr
 				ifTrue: [ Stdio stderr ]
 				ifFalse: [ (File named: self fileNameWithDate) openForAppend ] ]
 ]
 
 { #category : #accessing }
-DailyNonInteractiveTranscript >> stream [ 
+DailyNonInteractiveTranscript >> stream [
 	"Overwritten to check if the date changed on each access"
-	
+
 	Date today > date
-		ifTrue: [ 
+		ifTrue: [
 			"The date changed: close the old file and advance the date"
 			self close.
 			date := Date today ].

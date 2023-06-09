@@ -11,31 +11,27 @@ Class {
 { #category : #running }
 FLCompiledMethodSerializationTest >> setUp [
 	super setUp.
-	theClass := self newClass class
+	theClass := self classFactory silentlyNewClass class
 ]
 
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testDoIt [
 	| materialized |
-	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
-	That means we have to store the source too."
 	self useDoIt.
 
 	theCompiledMethod selector: #DoIt.
 	self assert: theCompiledMethod isDoIt.
 	self assert: theCompiledMethod isInstalled.
-	self deny: theCompiledMethod trailer hasSource.
-	self assert: theCompiledMethod trailer isEmpty.
-	self deny: theCompiledMethod trailer hasSourcePointer.
+	self deny: theCompiledMethod sourceCode isNil.
+	self deny: theCompiledMethod hasSourcePointer.
 
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
 	"not possible since it's a different instance"
 	self deny: materialized isInstalled.
 	self assert: materialized isDoIt.
-	"we serialized the source"
-	self assert: materialized trailer hasSource.
-	self deny: materialized trailer isEmpty.
-	self deny: materialized trailer hasSourcePointer.
+	"we serialized the source, trailer is cleared"
+	self assert: materialized sourceCode notNil.
+	self deny: materialized hasSourcePointer.
 
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
 ]
@@ -43,15 +39,12 @@ FLCompiledMethodSerializationTest >> testDoIt [
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testInstalled [
 	| materialized |
-	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
-	That means we have to store the source too."
 	self useInstalled.
 
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer hasSource.
-	self deny: theCompiledMethod trailer isEmpty.
-	self assert: theCompiledMethod trailer hasSourcePointer.
+	self deny: theCompiledMethod sourceCode isNil.
+	self assert: theCompiledMethod hasSourcePointer.
 
 	"if installed but not different, the installed instance will be answered"
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
@@ -67,17 +60,14 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer hasSource.
-	self deny: theCompiledMethod trailer isEmpty.
-	self assert: theCompiledMethod trailer hasSourcePointer.
+	self assert: theCompiledMethod hasSourcePointer.
 
 	copy := theCompiledMethod copy.
 	"different instance can not be installed at the same time."
 	self deny: copy isInstalled.
 	self deny: copy isDoIt.
-	self deny: copy trailer hasSource.
-	self deny: copy trailer isEmpty.
-	self assert: copy trailer hasSourcePointer.
+	self deny: theCompiledMethod sourceCode isNil.
+	self assert: copy hasSourcePointer.
 
 	"if installed but not different, the installed instance will be answered"
 	materialized := self resultOfSerializeAndMaterialize: copy.
@@ -86,20 +76,17 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	self deny: materialized isInstalled.
 	self deny: materialized isDoIt.
 	"we serialized the source"
-	self assert: materialized trailer hasSource.
-	self deny: materialized trailer isEmpty.
-	self deny: materialized trailer hasSourcePointer
+	self assert: materialized sourceCode notNil.
 ]
 
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self
-		newSubclassOf: Object 
-		instanceVariableNames: '' 
-		classVariableNames: 'A'.
+	aClassWithVariable := self classFactory silentlyNewClassWithClassVariableNames: 'A'.
 
-	aClassWithVariable compileSilently: 'm1 A:= 3'.
+	self classFactory
+		silentlyCompile: 'm1 A:= 3'
+		in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #m1.
 	aClassWithVariable classVarNamed: #A put: 7. 
 	
@@ -112,12 +99,11 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self
-		newSubclassOf: Object 
-		instanceVariableNames: '' 
-		classVariableNames: 'A'.
+	aClassWithVariable := self classFactory silentlyNewClassWithClassVariableNames: 'A'.
 
-	aClassWithVariable compileSilently: 'DoIt A:= 3'.
+	self classFactory
+		silentlyCompile: 'DoIt A:= 3'
+		in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #DoIt.
 	aClassWithVariable classVarNamed: #A put: 7. 
 	
@@ -136,26 +122,24 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	
 	self deny: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
-	self deny: theCompiledMethod trailer hasSource.
-	self assert: theCompiledMethod trailer isEmpty.
-	self deny: theCompiledMethod trailer hasSourcePointer.
+	self deny: theCompiledMethod hasSourcePointer.
 	
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
 	self deny: materialized isInstalled.
 	self deny: materialized isDoIt.
-	"we serialized the source"
-	self assert: materialized trailer hasSource.
-	self deny: materialized trailer isEmpty.
-	self deny: materialized trailer hasSourcePointer.
+	"we serialized the source, trailer is empty"
+	self assert: materialized sourceCode notNil.
+	self deny: materialized hasSourcePointer.
 	
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
 ]
 
 { #category : #helpers }
 FLCompiledMethodSerializationTest >> useDoIt [
-	theClass 
-		duringTestCompileSilently: 'm  ^ 42'
-		storeSource: false.
+	self classFactory 
+		silentlyCompile: 'm  ^ 42'
+		in: theClass
+		storingSource: false.
 	theCompiledMethod := theClass methodNamed: #m.
 	theClass methodDict
 		at: #DoIt
@@ -164,17 +148,19 @@ FLCompiledMethodSerializationTest >> useDoIt [
 
 { #category : #helpers }
 FLCompiledMethodSerializationTest >> useInstalled [
-	theClass 
-		duringTestCompileSilently: 'm  ^ 42'
-		storeSource: true.
+	self classFactory
+		silentlyCompile: 'm  ^ 42'
+		in: theClass
+		storingSource: true.
 	theCompiledMethod := theClass methodNamed: #m
 ]
 
 { #category : #helpers }
 FLCompiledMethodSerializationTest >> useNotInstalled [
-	theClass 
-		duringTestCompileSilently: 'm  ^ 42'
-		storeSource: false.
+	self classFactory
+		silentlyCompile: 'm  ^ 42'
+		in: theClass
+		storingSource: false.
 	theCompiledMethod := theClass methodNamed: #m.
 	theClass methodDict removeKey: #m
 ]

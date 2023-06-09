@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #initialization }
-TFUFFIFailingCallbackWithDefault >> initialize [ 
-	
+TFUFFIFailingCallbackWithDefault >> initialize [
+
 	self signature: #(int (int)) block: [ :a | self error: 'An error in a callback' ]
 ]
 

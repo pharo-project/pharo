@@ -44,7 +44,7 @@ WaitfreeQueueTest >> testNextOrNil [
 	"There should be 0 entries left with no zombies"
 	self assert: queue size equals: 0.
 	"But a zombie is always left behind"
-	self assert: queue itemCount equals: 1.
+	self assert: queue itemCount equals: 1
 ]
 
 { #category : #tests }
@@ -88,7 +88,7 @@ WaitfreeQueueTest >> testNextOrNilSuchThat [
 
 	"There should be 0 elements left with one zombie"
 	self assert: queue size equals: 0.
-	self assert: queue itemCount equals: 1.
+	self assert: queue itemCount equals: 1
 ]
 
 { #category : #tests }
@@ -118,7 +118,7 @@ WaitfreeQueueTest >> testZombieFirst [
 	self assert: real equals: #real.
 	self assert: queue size equals: 0.
 	self assert: queue itemCount equals: 1.
-	self assert: items last isZombie.
+	self assert: items last isZombie
 ]
 
 { #category : #tests }
@@ -152,7 +152,7 @@ WaitfreeQueueTest >> testZombieLast [
 	real := queue nextOrNilSuchThat: [ :v | v = #real ].
 	self assert: real isNil.
 	self assert: queue size equals: 0.
-	self assert: queue itemCount equals: 1.
+	self assert: queue itemCount equals: 1
 ]
 
 { #category : #tests }
@@ -192,5 +192,5 @@ WaitfreeQueueTest >> testZombieMiddle [
 	self assert: real equals: #real2.
 	self assert: queue size equals: 0.
 	self assert: queue itemCount equals: 1.
-	self assert: items last isZombie.
+	self assert: items last isZombie
 ]

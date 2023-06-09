@@ -9,7 +9,7 @@ Class {
 
 { #category : #creation }
 ZipFileSystemDirectory >> ensureCreateFile: aFileName [
-	^ self 
-		fileEntryAt: aFileName 
+	^ self
+		fileEntryAt: aFileName
 		put: (ZipFileSystemFile named: aFileName)
 ]

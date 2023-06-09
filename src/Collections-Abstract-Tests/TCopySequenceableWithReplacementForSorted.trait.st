@@ -14,7 +14,7 @@ self explicitRequirement
 
 { #category : #requirements }
 TCopySequenceableWithReplacementForSorted >> empty [
-self explicitRequirement.
+self explicitRequirement
 ]
 
 { #category : #requirements }

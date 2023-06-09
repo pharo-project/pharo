@@ -5,25 +5,25 @@ Class {
 }
 
 { #category : #running }
-ClyClassScopeTest >> scopeClass [	
+ClyClassScopeTest >> scopeClass [
 	^ClyClassScope
 ]
 
 { #category : #tests }
 ClyClassScopeTest >> testClassEnumeration [
 	scope := ClyClassScope ofAll: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}.
-	
+
 	scope classesDo: [ :each | result add: each ].
-	
+
 	self assert: result asArray equals: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}
 ]
 
 { #category : #tests }
 ClyClassScopeTest >> testClassVarsEnumeration [
 	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1Mock}.	"last one has no class vars"
-		
+
 	scope classVariablesDo: [ :each | result add: each ].
-	
+
 	self assert: result size equals: 1.
 	self
 		assert: result anyOne
@@ -33,9 +33,9 @@ ClyClassScopeTest >> testClassVarsEnumeration [
 { #category : #tests }
 ClyClassScopeTest >> testClassVarsEnumerationFromClassSideOfDefiningClass [
 	scope := ClyClassScope of: Object class.
-	
+
 	scope classVariablesDo: [ :each | result add: each ].
-	
+
 	self assert: result size equals: 1.
 	self
 		assert: result anyOne
@@ -45,9 +45,9 @@ ClyClassScopeTest >> testClassVarsEnumerationFromClassSideOfDefiningClass [
 { #category : #tests }
 ClyClassScopeTest >> testClassVarsEnumerationWhenTheyNotExist [
 	scope := ClyClassScope of: ClyClass1FromP1Mock.
-	
+
 	scope classVariablesDo: [ :each | result add: each ].
-	
+
 	self assert: result isEmpty
 ]
 
@@ -66,9 +66,9 @@ ClyClassScopeTest >> testInstVarsEnumeration [
 { #category : #tests }
 ClyClassScopeTest >> testInstVarsEnumerationWhenThereAreNoVariables [
 	scope := ClyClassScope of: Object.
-	
+
 	scope instanceVariablesDo: [ :each | result add: each ].
-	
+
 	self assert: result isEmpty
 ]
 
@@ -76,9 +76,9 @@ ClyClassScopeTest >> testInstVarsEnumerationWhenThereAreNoVariables [
 ClyClassScopeTest >> testMethodGroupsEnumeration [
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
 	scope := ClyClassScope of: ClyClass1FromP1Mock in: environment.
-	
+
 	scope methodGroupsDo: [ :each | result add: each ].
-	
+
 	self
 		assert: (result collect: #class as: Set)
 		equals: {ClyAllMethodGroup. ClyTaggedMethodGroup} asSet.
@@ -102,9 +102,9 @@ ClyClassScopeTest >> testMethodsEnumeration [
 { #category : #tests }
 ClyClassScopeTest >> testVariablesEnumerationForClassWithInstanceVariables [
 	scope := ClyClassScope of: ClyClass1FromP1Mock.
-	
+
 	scope variablesDo: [ :each | result add: each ].
-	
+
 	self assert: (result as: Set) equals: {
 		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
 		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock
@@ -114,9 +114,9 @@ ClyClassScopeTest >> testVariablesEnumerationForClassWithInstanceVariables [
 { #category : #tests }
 ClyClassScopeTest >> testVariablesEnumerationForObject [
 	scope := ClyClassScope of: Object.
-	
+
 	scope variablesDo: [ :each | result add: each ].
-	
+
 	self assert: result size equals: 1.
 	self
 		assert: result anyOne
@@ -126,9 +126,9 @@ ClyClassScopeTest >> testVariablesEnumerationForObject [
 { #category : #tests }
 ClyClassScopeTest >> testVariablesEnumerationForTwoClassesWithClassAndInstanceVars [
 	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1Mock}.
-	
+
 	scope variablesDo: [ :each | result add: each ].
-	
+
 	self assert: (result as: Set) equals: {
 		ClyClassVariable named: #DependentsFields definedIn: Object.
 		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
@@ -139,8 +139,8 @@ ClyClassScopeTest >> testVariablesEnumerationForTwoClassesWithClassAndInstanceVa
 { #category : #tests }
 ClyClassScopeTest >> testVariablesEnumerationWhenThereAreNoVariables [
 	scope := ClyClassScope of: ProtoObject.
-	
+
 	scope variablesDo: [ :each | result add: each ].
-	
+
 	self assert: result isEmpty
 ]

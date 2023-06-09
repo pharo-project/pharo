@@ -16,14 +16,14 @@ Class {
 { #category : #accessing }
 GoferVersionReference >> author [
 	"Answer the author of the receiver."
-	
+
 	^ author
 ]
 
 { #category : #accessing }
 GoferVersionReference >> branch [
 	"Answer the branch of the receiver."
-	
+
 	^ branch
 ]
 

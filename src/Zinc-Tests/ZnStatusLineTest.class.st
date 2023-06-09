@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 ZnStatusLineTest >> testInitialization [
 	"Make sure everything is properly initialized"
-	
+
 	ZnConstants officialHTTPStatusCodesSpec pairsDo: [ :code :reason |
 		| statusLine |
 		statusLine := ZnStatusLine code: code.
@@ -39,7 +39,7 @@ ZnStatusLineTest >> testReadingNonStandardCode [
 ZnStatusLineTest >> testReadingWrongCode [
 	| string |
 	string := 'HTTP/1.0 1000 OK', String crlf.
-	self should: [ ZnStatusLine readFrom: string readStream ] raise: ZnUnknownHttpStatusCode 
+	self should: [ ZnStatusLine readFrom: string readStream ] raise: ZnUnknownHttpStatusCode
 ]
 
 { #category : #testing }

@@ -24,9 +24,9 @@
 set -x
 set -e
 
-SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+echo $(date -u) "Bootstrap: Starting bootstrap"
 
-. ${SCRIPTS}/envvars.sh
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 #
 # Remove any artifacts from previous runs
@@ -45,3 +45,4 @@ ${SCRIPTS}/3-prepare.sh
 #
 ${SCRIPTS}/4-build.sh
 
+echo $(date -u) "Bootstrap: End of the bootstrap"

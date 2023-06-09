@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 	#(#('a ifTrue: [^self]' true) #('self foo. a := b' false) #('condition ifTrue: [a := b] ifFalse: [self foo: a]' true) #('condition ifTrue: [a := b] ifFalse: [self foo]. a isNil' true) #('condition ifTrue: [a := b]. a := c' false) #('[a := b] whileFalse: [a isNil]' false) #('self foo: b' false))
-		do: [ :each | 
+		do: [ :each |
 			self assert: ((RBReadBeforeWrittenTester readBeforeWritten: #('a') in: (self parseExpression: each first)) includes: 'a') identicalTo: each last.
 			self assert: (RBReadBeforeWrittenTester isVariable: 'a' readBeforeWrittenIn: (self parseExpression: each first)) equals: each last ].
 	#('| temp read written written1 |
@@ -27,7 +27,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 			self do: [:each | | read | each & read]' '| read |
 			self do: [:each | read := each].
 			self do: [:each | each & read]')
-		do: [ :each | 
+		do: [ :each |
 			| read |
 			read := RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self parseExpression: each).
 			self assert: (read size = 1 and: [ read includes: 'read' ]) ]
@@ -41,7 +41,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
 				variablesReadBeforeWrittenIn:
 					(self
 						parseMethod:
-							'addAll: aCollection 
+							'addAll: aCollection
 	"Answer aCollection, having added all elements
 	 of aCollection to the receiver.
 
@@ -52,22 +52,22 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
 	(newSize := aCollection size * 2) > elements size ifTrue: [self rehash: newSize].
 	elementsSize := elements size.
 	growSize := elementsSize // 2.
-	aCollection do: 
-			[:newObject | 
+	aCollection do:
+			[:newObject |
 			| hashIndex element |
-			newObject == nil ifFalse: 
+			newObject == nil ifFalse:
 					[hashIndex := self hashIndexFor: newObject.
-					
+
 					[(element := elements at: hashIndex) == nil
-						ifTrue: 
+						ifTrue:
 							[elements at: hashIndex put: newObject.
-							(elementCount := elementCount + 1) > growSize ifTrue: 
+							(elementCount := elementCount + 1) > growSize ifTrue:
 									[self expand.
 									elementsSize := elements size.
 									growSize := elementsSize // 2].
 							true]
 						ifFalse: [element == newObject]]
-							whileFalse: 
+							whileFalse:
 								[(hashIndex := hashIndex + 1) > elementsSize ifTrue: [hashIndex := 1]]]].
 	^aCollection'))
 ]

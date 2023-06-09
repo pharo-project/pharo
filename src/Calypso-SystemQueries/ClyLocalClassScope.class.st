@@ -42,21 +42,21 @@ Class {
 ClyLocalClassScope class >> metaLevelForHierarchyOf: aClass [
 	"Subclasses should decide what meta level of given class
 	should be used to retrieve/build hierarchy.
-	For example superclass hierarchy of ProtoObject class 
-	can stop at it according to instance side hierarchy 
-		ProtoObject superclass >>> nil
-	Or it can follow full superclass chain which will ends at Object and ProtoObject
-		ProtoObject class superclass >>> Class
-	This method adds such decision to concrete kind of local scope
+	For example superclass hierarchy of ProtoObject class
+	can stop at it according to instance side hierarchy"
+		"ProtoObject superclass >>> nil"
+	"Or it can follow full superclass chain which will ends at Object and ProtoObject"
+		"ProtoObject class superclass >>> Class"
+	"This method adds such decision to concrete kind of local scope
 	which allows to use scopes to restrict visibility of class hierarchy"
 	self subclassResponsibility
 ]
 
 { #category : #'meta level' }
 ClyLocalClassScope class >> metaLevelsOf: aClass do: aBlock [
-	"Subclasses should decide what class meta level is visible. 
+	"Subclasses should decide what class meta level is visible.
 	For example it can be instance side, class side or both"
-	
+
 	self subclassResponsibility
 ]
 
@@ -70,8 +70,8 @@ ClyLocalClassScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 ClyLocalClassScope >> asFullHierarchyScope [
 	| subclassScope fullScope |
 	subclassScope := self asScope: ClySubclassScope.
-		
-	fullScope := self withInheritedScope, subclassScope. 
+
+	fullScope := self withInheritedScope, subclassScope.
 	fullScope name: self class hierarchyScopeName.
 	^fullScope
 ]
@@ -83,7 +83,7 @@ ClyLocalClassScope >> asLocalClassScope [
 
 { #category : #queries }
 ClyLocalClassScope >> classesDo: aBlock [
-	basisObjects do: [:each | 
+	basisObjects do: [:each |
 		self metaLevelsOf: each do: aBlock]
 ]
 
@@ -94,17 +94,17 @@ ClyLocalClassScope >> localScopeClass [
 
 { #category : #'meta level' }
 ClyLocalClassScope >> metaLevelsOf: aClass do: aBlock [
-	"Subclasses can define what meta level is visible. 
+	"Subclasses can define what meta level is visible.
 	For example it can be instance side, class side or both.
 	By default given class is its own meta level"
-	
+
 	self class metaLevelsOf: aClass do: aBlock
 ]
 
 { #category : #queries }
 ClyLocalClassScope >> methodsDo: aBlock [
 
-	self classesDo: [ :eachClass | 
+	self classesDo: [ :eachClass |
 		self metaLevelsOf: eachClass do: [ :concreteMetaLevelClass |
 			concreteMetaLevelClass methods do: aBlock ] ]
 ]
@@ -113,7 +113,7 @@ ClyLocalClassScope >> methodsDo: aBlock [
 ClyLocalClassScope >> withInheritedScope [
 
 	| fullScope |
-	fullScope := self , self asInheritedScope. 
+	fullScope := self , self asInheritedScope.
 	fullScope name: self class hierarchyScopeName.
 	^fullScope
 ]
@@ -122,12 +122,12 @@ ClyLocalClassScope >> withInheritedScope [
 ClyLocalClassScope >> withInheritingScope [
 
 	| fullScope |
-	fullScope := self , self asInheritingScope. 
+	fullScope := self , self asInheritingScope.
 	fullScope name: self class userHierarchyScopeName.
 	^fullScope
 ]
 
 { #category : #converting }
-ClyLocalClassScope >> withMetaLevel: aScopeClass [ 
+ClyLocalClassScope >> withMetaLevel: aScopeClass [
 	^self asScope: aScopeClass
 ]

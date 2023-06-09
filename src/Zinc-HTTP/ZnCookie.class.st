@@ -19,8 +19,8 @@ Class {
 
 { #category : #'instance creation' }
 ZnCookie class >> fromString: aString [
-	^ self new 
-		fromString: aString; 
+	^ self new
+		fromString: aString;
 		yourself
 ]
 
@@ -45,7 +45,6 @@ ZnCookie class >> name: nameString value: value [
 ZnCookie >> = aCookie [
 	(aCookie isKindOf: self class) ifFalse: [ ^ false ].
 	^ (aCookie name = self name) & (aCookie path = self path) & (aCookie domain = self domain)
-	
 ]
 
 { #category : #'initialize-release' }
@@ -78,7 +77,7 @@ ZnCookie >> expiresTimeStamp [
 	"Return the DateAndTime when I will expire.
 	Throw an exception when no expiration is set or the expiration cannot be parsed.
 	See #isExpired"
-	
+
 	^ ZnUtils parseHttpDate: self expires
 ]
 
@@ -99,21 +98,21 @@ ZnCookie >> fromString: aString [
 	tokens := aString substrings: ';'.
 	i := tokens first indexOf: $=.
 	val := tokens first copyFrom: 1 to: i - 1.
-	data := tokens first copyFrom: i + 1 to: tokens first size. 
+	data := tokens first copyFrom: i + 1 to: tokens first size.
 	self name: val trimBoth; value: data trimBoth.
-	2 to: tokens size do: [ :index | 
+	2 to: tokens size do: [ :index |
 		self readAttribute: (tokens at: index) ]
 ]
 
 { #category : #converting }
 ZnCookie >> fullString [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		self writeOn: stream ]
 ]
 
 { #category : #testing }
 ZnCookie >> hasAttribute: attributeName [
-	^ attributes includesKey: attributeName asLowercase 
+	^ attributes includesKey: attributeName asLowercase
 ]
 
 { #category : #comparing }
@@ -134,8 +133,8 @@ ZnCookie >> httponly: aBoolean [
 ]
 
 { #category : #initialization }
-ZnCookie >> initialize [ 
-	attributes := Dictionary new.
+ZnCookie >> initialize [
+	attributes := Dictionary new
 ]
 
 { #category : #testing }
@@ -154,13 +153,11 @@ ZnCookie >> isInDomain: urlObject [
 		ifTrue: [ self domain copyFrom: 2 to: self domain size ]
 		ifFalse: [ self domain ].
 	^ urlObject host includesSubstring: domain
-	
 ]
 
 { #category : #testing }
 ZnCookie >> isInPath: urlObject [
 	^ urlObject pathPrintString includesSubstring: self path
-	
 ]
 
 { #category : #accessing }
@@ -171,7 +168,7 @@ ZnCookie >> maxage [
 { #category : #accessing }
 ZnCookie >> maxage: numberOfSeconds [
 	"To be able to use this to validate expiration, a time of creation has to be recorded, so right now, this is not really usable."
-	
+
 	^ attributes at: 'max-age' put: numberOfSeconds asString
 ]
 
@@ -187,7 +184,7 @@ ZnCookie >> name: aName [
 
 { #category : #converting }
 ZnCookie >> nameValueString [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		self writeNameAndValueOn: stream ]
 ]
 
@@ -214,7 +211,7 @@ ZnCookie >> readAttribute: aToken [
 		ifTrue: [
 			key := (aToken copyFrom: 1 to: i - 1) trimBoth asLowercase.
 			data := (aToken copyFrom: i + 1 to: aToken size) trimBoth ]
-		ifFalse: [ 
+		ifFalse: [
 			key := (aToken copyFrom: 1 to: aToken size) trimBoth asLowercase.
 			data := true ].
 	attributes at: key put: data
@@ -243,12 +240,12 @@ ZnCookie >> value: aValue [
 { #category : #printing }
 ZnCookie >> writeExtraAttributesOn: aStream [
 	self extraAttributes
-		associationsDo: [ :ea | 
+		associationsDo: [ :ea |
 			aStream
 				nextPutAll: '; ';
 				nextPutAll: ea key.
 			(ea value isKindOf: Boolean)
-				ifFalse: [ 
+				ifFalse: [
 					aStream
 						nextPutAll: '=';
 						nextPutAll: ea value ] ]
@@ -266,5 +263,5 @@ ZnCookie >> writeNameAndValueOn: aStream [
 ZnCookie >> writeOn: aStream [
 	self
 		writeNameAndValueOn: aStream;
-		writeExtraAttributesOn: aStream 
+		writeExtraAttributesOn: aStream
 ]

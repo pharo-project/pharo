@@ -13,9 +13,9 @@ Class {
 { #category : #accessing }
 TextStyleAsFontFamily >> members [
 
-	^ members ifNil: [ 
-		  members := #( 'Regular' 'Italic' 'Bold' 'Bold Italic' ) collect: [ 
-			             :each | 
+	^ members ifNil: [
+		  members := #( 'Regular' 'Italic' 'Bold' 'Bold Italic' ) collect: [
+			             :each |
 			             TextStyleAsFontFamilyMember new
 				             family: self;
 				             styleName: each;

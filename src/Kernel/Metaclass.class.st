@@ -25,7 +25,7 @@ Metaclass >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'instance variables' }
-Metaclass >> addInstVarNamed: aString [ 
+Metaclass >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
 
 	| fullString |
@@ -52,17 +52,17 @@ Metaclass >> addSubclass: aClass [
 ]
 
 { #category : #'initialize-release' }
-Metaclass >> adoptInstance: oldInstance from: oldMetaClass [ 
-	"Recreate any existing instances of the argument, oldClass, as instances of 
-	the receiver, which is a newly changed class. Permute variables as 
+Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
+	"Recreate any existing instances of the argument, oldClass, as instances of
+	the receiver, which is a newly changed class. Permute variables as
 	necessary."
 	thisClass class == self ifTrue:[^self error:'Metaclasses have only one instance'].
 	oldMetaClass isMeta ifFalse:[^self error:'Argument must be Metaclass'].
 	oldInstance class == oldMetaClass ifFalse:[^self error:'Not the class of argument'].
-	^thisClass := self 
-		newInstanceFrom: oldInstance 
-		variable: self isVariable 
-		size: self instSize 
+	^thisClass := self
+		newInstanceFrom: oldInstance
+		variable: self isVariable
+		size: self instSize
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
@@ -70,7 +70,7 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 Metaclass >> binding [
 	"return an association that can be used as the binding
 	 To share it between methods, reuse an existing one if possible"
-	^self methodDict 
+	^self methodDict
 		ifEmpty: [LiteralVariable key: nil value: self]
 		ifNotEmpty: [:dict | dict anyOne classBinding]
 ]
@@ -98,15 +98,15 @@ Metaclass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
 	"Point class classSide >>> Point class"
-	
+
 	^ self
 ]
 
 { #category : #'accessing - instances and variables' }
 Metaclass >> classVarNames [
 	"Answer the names of the class variables defined in the receiver's instance."
-	
-	^self instanceSide 
+
+	^self instanceSide
 		ifNil: [ #() ]
 		ifNotNil: [ :class | class classVarNames ]
 ]
@@ -118,6 +118,46 @@ Metaclass >> classVariables [
 	^ self instanceSide
 		ifNil: [ #() ]
 		ifNotNil: [ :class | class classVariables ]
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment [
+    ^ self instanceSide comment
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment: aStringOrText [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self instanceSide comment: aStringOrText
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment: aStringOrText stamp: aStamp [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self instanceSide comment: aStringOrText stamp: aStamp
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentSourcePointer [
+	^ self instanceSide commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentSourcePointer: anObject [
+	^ self instanceSide commentSourcePointer: anObject
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentStamp [
+
+	^ self instanceSide commentStamp
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentStamp: changeStamp [
+	self instanceSide commentStamp: changeStamp
 ]
 
 { #category : #fileout }
@@ -152,9 +192,15 @@ Metaclass >> hasClassSide [
 { #category : #'accessing - instances and variables' }
 Metaclass >> hasClassVarNamed: aString [
 
-	^self instanceSide 
+	^self instanceSide
 		ifNil: [ false ]
 		ifNotNil: [ :class | class hasClassVarNamed: aString ]
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> hasComment [
+	"Return whether this class truly has a comment other than the default"
+	^ self instanceSide hasComment
 ]
 
 { #category : #compiling }
@@ -168,7 +214,7 @@ Metaclass >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
 	"Point class instanceSide >>> Point"
-	
+
 	^ self soleInstance
 ]
 
@@ -190,9 +236,9 @@ Metaclass >> isMeta [
 
 { #category : #'class hierarchy' }
 Metaclass >> isMetaclassOfClassOrNil [
-	
-	^ self instanceSide 
-		ifNil: [ true ] 
+
+	^ self instanceSide
+		ifNil: [ true ]
 		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ]
 ]
 
@@ -224,7 +270,7 @@ Metaclass >> isUsed [
 { #category : #accessing }
 Metaclass >> name [
 
-	"Answer a String that is the name of the receiver, either 'Metaclass' or 
+	"Answer a String that is the name of the receiver, either 'Metaclass' or
 	the name of the receiver's class followed by ' class'."
 
 	^ thisClass ifNil: [ 'a Metaclass' ] ifNotNil: [ thisClass name asString , ' class' ]
@@ -266,7 +312,7 @@ Metaclass >> postCopy [
 
 	super postCopy.
 	self classLayout: (layout copy host: self).
-	thisClass := nil.
+	thisClass := nil
 ]
 
 { #category : #'instance variables' }
@@ -286,11 +332,11 @@ Metaclass >> sharedPoolNames [
 ]
 
 { #category : #initialization }
-Metaclass >> slots: slotCollection [ 
+Metaclass >> slots: slotCollection [
 
 	| theClass |
 	theClass := self instanceSide.
-		
+
 	theClass := theClass classInstaller update: theClass to: [ :builder |
 		builder
 			fillFor: theClass;
@@ -307,13 +353,13 @@ Metaclass >> soleInstance [
 
 { #category : #compiling }
 Metaclass >> sourceCodeTemplate [
-	"Answer an expression to be edited and evaluated in order to define 
+	"Answer an expression to be edited and evaluated in order to define
 	methods in this class or trait."
 
 	^ 'methodSelectorAndArgumentNames
 	"comment stating purpose of class-side method"
-	"scope: class-variables  &  class-instance-variables"	
-			
+	"scope: class-variables  &  class-instance-variables"
+
 	| temporary variable names |
 	statements'
 ]
@@ -321,15 +367,15 @@ Metaclass >> sourceCodeTemplate [
 { #category : #'class hierarchy' }
 Metaclass >> subclasses [
 	"Answer the receiver's subclasses."
-	
+
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ].
+	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
 { #category : #'class hierarchy' }
 Metaclass >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
-	
+
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
 ]

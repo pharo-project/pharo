@@ -16,5 +16,5 @@ MyHalt >> defaultAction [
 	debugSession := Processor activeProcess newDebugSessionNamed: 'test' startedAt: self signalerContext.
 	"Storing the debug session in this class variable so that it can be recovered by the test"
 	DebugSessionContexts2Test debugSession: debugSession.
-	Processor activeProcess suspend.
+	Processor activeProcess suspend
 ]

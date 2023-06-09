@@ -23,7 +23,7 @@ DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
 
 { #category : #accessing }
 DAMethodImplementationNode >> icon [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #displaying }

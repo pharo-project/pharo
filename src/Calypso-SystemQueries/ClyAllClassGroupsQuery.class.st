@@ -27,13 +27,13 @@ ClyAllClassGroupsQuery class >> resultItemsType [
 ]
 
 { #category : #execution }
-ClyAllClassGroupsQuery >> buildResult: aQueryResult [ 
+ClyAllClassGroupsQuery >> buildResult: aQueryResult [
 
 	| groups |
 	groups := OrderedCollection new.
-	
+
 	scope classGroupsDo: [ :each | groups add: each].
-	
+
 	aQueryResult fillWith: groups
 ]
 
@@ -41,7 +41,7 @@ ClyAllClassGroupsQuery >> buildResult: aQueryResult [
 ClyAllClassGroupsQuery >> checkEmptyResult [
 
 	scope classGroupsDo: [ :each | ^false].
-	
+
 	^true
 ]
 
@@ -58,6 +58,6 @@ ClyAllClassGroupsQuery >> description [
 
 { #category : #'system changes' }
 ClyAllClassGroupsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^scope includesClassGroupsAffectedBy: aSystemAnnouncement
 ]

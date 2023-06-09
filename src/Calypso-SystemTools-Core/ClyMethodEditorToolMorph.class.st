@@ -52,7 +52,7 @@ ClyMethodEditorToolMorph >> allowsDifferentActivationPriority [
 { #category : #testing }
 ClyMethodEditorToolMorph >> belongsToRemovedBrowserContext [
 	super belongsToRemovedBrowserContext ifTrue: [ ^true ].
-	
+
 	^self methodClass isObsolete
 ]
 
@@ -60,28 +60,28 @@ ClyMethodEditorToolMorph >> belongsToRemovedBrowserContext [
 ClyMethodEditorToolMorph >> buildTextMorph [
 	super buildTextMorph.
 	ast := self initializeAST.
-	self formatTextIfNeeded.
+	self formatTextIfNeeded
 ]
 
 { #category : #'events handling' }
 ClyMethodEditorToolMorph >> changesAreAboutApply [
 	| tagsEditor |
 	super changesAreAboutApply.
-	
+
 	tagsEditor := statusBar findDeeplyA: ClyMethodTagsEditorMorph.
 	tagsEditor ifNil: [ ^self ].
-	
+
 	tagsEditor acceptTags
 ]
 
 { #category : #operations }
 ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
-	
+
 	targetClasses size = 1 ifTrue: [ ^ targetClasses first].
 
-	^[self browser searchDialog 
+	^[self browser searchDialog
 			requestSingleObject: 'Where to install new method?'
-			from: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult) 
+			from: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult)
 			inScope: (ClyClassScope ofAll: targetClasses)]
 		on: CmdCommandAborted do: [:err | aBlock value ]
 ]
@@ -90,13 +90,12 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
-		  source: self pendingText;
-		  options: #( + optionParseErrors + optionSkipSemanticWarnings );
+		  source: self pendingText asString;
 		  parse
 ]
 
 { #category : #accessing }
-ClyMethodEditorToolMorph >> editingClass [ 
+ClyMethodEditorToolMorph >> editingClass [
 	^self methodClass
 ]
 
@@ -108,21 +107,21 @@ ClyMethodEditorToolMorph >> extendingPackage [
 { #category : #accessing }
 ClyMethodEditorToolMorph >> extendingPackage: aPackage [
 	extendingPackage := aPackage.
-	methodTags := #().
+	methodTags := #()
 ]
 
 { #category : #building }
 ClyMethodEditorToolMorph >> fillStatusBar [
 	| position |
 	super fillStatusBar.
-	
+
 	position := statusBar addContextItem: (ClyCursorPositionLabelMorph of: textMorph).
 	position comeToFront.
 	statusBar addCommandItem: (ClyTextWrapModeSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyTextLineNumbersSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
-	
-	statusBar addCommandItem: (ClyMethodTagsAndPackageEditorMorph for: self).
+
+	statusBar addCommandItem: (ClyMethodTagsAndPackageEditorMorph for: self)
 ]
 
 { #category : #operations }
@@ -133,15 +132,15 @@ ClyMethodEditorToolMorph >> formatSourceCode [
 { #category : #building }
 ClyMethodEditorToolMorph >> formatTextIfNeeded [
 	RBProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
-	
-	textMorph formatSourceCode. 
+
+	textMorph formatSourceCode.
 	textModel clearUserEdits
 ]
 
 { #category : #initialization }
 ClyMethodEditorToolMorph >> initialize [
 	super initialize.
-	
+
 	methodTags := #()
 ]
 
@@ -152,13 +151,13 @@ ClyMethodEditorToolMorph >> initializeAST [
 ]
 
 { #category : #testing }
-ClyMethodEditorToolMorph >> isCommandAvailable: aCommand [ 
+ClyMethodEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInMethodEditor: self
 ]
 
 { #category : #'rubric interaction model' }
-ClyMethodEditorToolMorph >> isForScripting [
+ClyMethodEditorToolMorph >> isScripting [
 	^false
 ]
 
@@ -188,14 +187,14 @@ ClyMethodEditorToolMorph >> modifiesExtension [
 
 { #category : #operations }
 ClyMethodEditorToolMorph >> packageEditingMethod: aMethod [
-	
-	self applyChangesBy: [ 
+
+	self applyChangesBy: [
 		(extendingPackage notNil and: [aMethod package ~~ extendingPackage]) ifTrue: [
-			^(SycMoveMethodsToPackageCommand for: {aMethod} to: extendingPackage) 
+			^(SycMoveMethodsToPackageCommand for: {aMethod} to: extendingPackage)
 				execute].
-	
-		(extendingPackage isNil and: [ aMethod isExtension ]) ifTrue: [ 
-			(SycMoveMethodsToPackageDefiningClassCommand for: {aMethod}) 
+
+		(extendingPackage isNil and: [ aMethod isExtension ]) ifTrue: [
+			(SycMoveMethodsToPackageDefiningClassCommand for: {aMethod})
 				execute]
 	]
 ]
@@ -220,9 +219,9 @@ ClyMethodEditorToolMorph >> setUpTargetClasses [
 { #category : #operations }
 ClyMethodEditorToolMorph >> tagAndPackageEditingMethod: aMethod [
 	self tagEditingMethod: aMethod.
-	"Tagging should be performed before package movement 
-	because extending package is still based on protocol begining with star. 
-	So it should override manual tagging"	
+	"Tagging should be performed before package movement
+	because extending package is still based on protocol begining with star.
+	So it should override manual tagging"
 	self packageEditingMethod: aMethod
 ]
 
@@ -233,7 +232,7 @@ ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
 		existingTags := aMethod tags reject: [:each | each beginsWith: '*'].
 		removedTags := existingTags reject: [ :each | methodTags includes: each ].
 		newTags := methodTags reject: [ :each | existingTags includes: each ].
-	
+
 		newTags do: [ :each | aMethod tagWith: each asSymbol].
 		removedTags do: [ :each | aMethod untagFrom: each asSymbol]
 	]
@@ -250,7 +249,7 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 	ast := self currentEditedAST.
 	textMorph segments copy do: #delete.
 	IconStyler new
-	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticVariableIconStyler }; 
+	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticWarningIconStyler };
 		styleText: textModel withAst: ast.
 	^ ast
 ]
@@ -259,7 +258,7 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 ClyMethodEditorToolMorph >> toggleExtendingPackage [
 
 	extendingPackage ifNotNil: [ ^extendingPackage := nil ].
-	
-	extendingPackage := browser searchDialog 
+
+	extendingPackage := browser searchDialog
 		requestSingleObject: 'Choose package for method' from: ClyAllPackagesQuery sorted
 ]

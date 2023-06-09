@@ -33,7 +33,7 @@ ZnClientTransactionEvent >> printContentsOn: stream [
 	request requestLine printMethodAndUriOn: stream.
 	stream space; print: response code.
 	response hasEntity
-		ifTrue: [ 
+		ifTrue: [
 			stream space; print: response entity contentLength; nextPut: $B ].
 	stream space; print: self duration; nextPutAll: 'ms'
 ]

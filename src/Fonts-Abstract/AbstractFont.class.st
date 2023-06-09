@@ -38,7 +38,7 @@ AbstractFont class >> initialize [
 ]
 
 { #category : #testing }
-AbstractFont class >> isAbstract [ 
+AbstractFont class >> isAbstract [
 
 	^self == AbstractFont
 ]
@@ -47,33 +47,33 @@ AbstractFont class >> isAbstract [
 AbstractFont class >> update: anAspect [
 
 	anAspect == #textDPIChanged ifTrue: [
-		AbstractFont allSubInstancesDo: [ :font | font pixelsPerInchChanged ]].
+		AbstractFont allSubInstancesDo: [ :font | font pixelsPerInchChanged ]]
 ]
 
 { #category : #measuring }
-AbstractFont >> approxWidthOfText: aText [ 
+AbstractFont >> approxWidthOfText: aText [
 	"Return the width of aText -- quickly, and a little bit dirty. Used by lists morphs containing Text objects to get a quick, fairly accurate measure of the width of a list item."
 	| w |
 	(aText isNil or: [ aText size = 0 ]) ifTrue: [ ^ 0 ].
 	w := self widthOfString: aText asString.
 
-	"If the text has no emphasis, just return the string size.  If it is empasized, 
+	"If the text has no emphasis, just return the string size.  If it is empasized,
     just approximate the width by adding about 20% to the width"
-	((aText runLengthFor: 1) = aText size and: [ (aText emphasisAt: 1) = 0 ]) 
-		ifTrue: [ ^ w ]
-		ifFalse: [ ^ w * 6 // 5 ]
+	^ ((aText runLengthFor: 1) = aText size and: [ (aText emphasisAt: 1) = 0 ])
+		ifTrue: [ w ]
+		ifFalse: [ w * 6 // 5 ]
 ]
 
 { #category : #accessing }
 AbstractFont >> ascent [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 AbstractFont >> ascentOf: aCharacter [
 
-	^ self ascent.
+	^ self ascent
 ]
 
 { #category : #accessing }
@@ -84,13 +84,13 @@ AbstractFont >> baseKern [
 { #category : #accessing }
 AbstractFont >> basicAscentOf: aCharacter [
 
-	^ self ascent.
+	^ self ascent
 ]
 
 { #category : #accessing }
 AbstractFont >> basicDescentOf: aCharacter [
 
-	^ self descent.
+	^ self descent
 ]
 
 { #category : #'glyph lookup' }
@@ -103,14 +103,14 @@ AbstractFont >> characterRenderingOptimizedFormAt: aCharacter [
 	"This method returns a version of the character form which is optimized for rendering
 	through an accelerated alpha blending equation in the style of the OpenGL glBlendFuncSeparate."
 
-	^ (self characterFormAt: aCharacter) 
+	^ (self characterFormAt: aCharacter)
 			ifNotNil: [:form | form invertedAndAlphaMultiplied]
 ]
 
 { #category : #accessing }
 AbstractFont >> characterToGlyphMap [
 	"Return the character to glyph mapping table. If the table is not provided the character scanner will query the font directly for the width of each individual character."
-	
+
 	^nil
 ]
 
@@ -133,7 +133,7 @@ AbstractFont >> descentOf: aCharacter [
 
 { #category : #displaying }
 AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	"Draw the given string from startIndex to stopIndex 
+	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) display context."
 	^self subclassResponsibility
 ]
@@ -141,14 +141,14 @@ AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: 
 { #category : #displaying }
 AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
 	"Draw the given string from startIndex to stopIndex at aPoint on the (already prepared) display context."
-	
+
 	^self subclassResponsibility
 ]
 
 { #category : #accessing }
 AbstractFont >> familyName [
 	"Answer the name to be used as a key in the TextConstants dictionary."
-	
+
 	^self subclassResponsibility
 ]
 
@@ -160,7 +160,7 @@ AbstractFont >> hasSubPixelAntiAliasing [
 
 { #category : #accessing }
 AbstractFont >> height [
-	"Answer the height of the receiver, total of maximum extents of 
+	"Answer the height of the receiver, total of maximum extents of
 	characters above and below the baseline."
 
 	^self subclassResponsibility
@@ -267,15 +267,15 @@ AbstractFont >> widthOfString: aString [
 		TextStyle default defaultFont widthOfString: 'zort' 21
 	"
 	aString ifNil: [^0].
-	^self widthOfString: aString from: 1 to: aString size.
+	^self widthOfString: aString from: 1 to: aString size
 ]
 
 { #category : #measuring }
-AbstractFont >> widthOfString: aString from: firstIndex to: lastIndex [ 
+AbstractFont >> widthOfString: aString from: firstIndex to: lastIndex [
 	"Measure the length of the given string between start and stop index"
 	| resultX |
 	resultX := 0.
-	firstIndex 
+	firstIndex
 		to: lastIndex
 		do: [ :i | resultX := resultX + (self widthOf: (aString at: i)) ].
 	^ resultX
@@ -293,6 +293,6 @@ AbstractFont >> widthOfStringOrText: aStringOrText [
 { #category : #accessing }
 AbstractFont >> xTable [
 	"Return the xTable for the font. The xTable defines the left x-value for each individual glyph in the receiver. If such a table is not provided, the character scanner will ask the font directly for the appropriate width of each individual character."
-	
+
 	^nil
 ]

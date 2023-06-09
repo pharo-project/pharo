@@ -56,24 +56,19 @@ RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
 	| superclass superclassName name class |
 	(self model includesClassNamed: aSymbol)
 		ifTrue: [ ^ nil ].
-	superclass := aClass superclass 
+	superclass := aClass superclass
 		ifNil: [ self rootClass ].
 	superclassName := (self model includesClassNamed: superclass name)
 		ifFalse: [ superclass name ]
-		ifTrue: [ 
+		ifTrue: [
 			(name := self execute: superclass name) = superclass name
 				ifFalse: [ self duplicate: superclass name: name deep: aBoolean ].
 			name ].
-	self model defineClass: ('<1s>
-		subclass: #<2s>
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: <3p>' 
-			expandMacrosWith: superclassName 
+	self model defineClass: ('<1s> %<%< #<2s> package: <3p>'
+			expandMacrosWith: superclassName
 			with: aSymbol with: aClass category asString).
 	aBoolean ifTrue: [
-		(class := self model classNamed: aSymbol) 
+		(class := self model classNamed: aSymbol)
 			ifNil: [ ^ self ].
 		self copyFrom: aClass to: class.
 		self copyFrom: aClass classSide to: class classSide ].
@@ -88,9 +83,9 @@ RBClassRegexRefactoring >> initialize [
 
 { #category : #transforming }
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
-	^ RBRenameClassRefactoring 
+	^ RBRenameClassRefactoring
 		model: self model
-		rename: aClass
+		rename: aClass name
 		to: aSymbol
 ]
 

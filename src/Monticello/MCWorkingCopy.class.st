@@ -70,11 +70,11 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 			stepChildren: (self ancestorsFromArray: (aDictionary at: #stepChildren ifAbsent: []) cache: cache)]
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 MCWorkingCopy class >> initialize [
-	"self initialize"
+
 	registry ifNotNil: [ registry rehash ].
-	self registerForNotifications.
+	self registerForNotifications
 ]
 
 { #category : #'event registration' }

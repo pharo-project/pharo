@@ -67,7 +67,7 @@ AsyncFile >> open: fullFileName forWrite: aBoolean [
 		              primOpen: name asVmPathName
 		              forWrite: writeable
 		              semaIndex: semaIndex.
-	fileHandle ifNil: [ 
+	fileHandle ifNil: [
 		Smalltalk unregisterExternalObject: semaphore.
 		semaphore := nil.
 		^ nil ]
@@ -102,7 +102,7 @@ AsyncFile >> primReadResult: fHandle intoBuffer: buffer at: startIndex count: co
 AsyncFile >> primReadStart: fHandle fPosition: fPosition count: count [
 	"Start a read operation of count bytes starting at the given offset in the given file."
 
-	<primitive: 'primitiveAsyncFileReadStart' module: 'AsynchFilePlugin'>	
+	<primitive: 'primitiveAsyncFileReadStart' module: 'AsynchFilePlugin'>
 	self error: 'READ THE COMMENT FOR THIS METHOD.'
 
 "NOTE: This method will fail if there is insufficient C heap to allocate an internal buffer of the required size (the value of count).  If you are trying to read a movie file, then the buffer size will be height*width*2 bytes.  Each image retains a value to be used for this allocation, and it it initially set to 0.  If you are wish to play a 640x480 movie, you need room for a buffer of 640*480*2 = 614400 bytes.  You should execute the following...
@@ -151,7 +151,7 @@ AsyncFile >> readByteCount: byteCount fromFilePosition: fPosition onCompletionDo
 		] whileTrue.  "loop while busy in case the semaphore had excess signals"
 		n = ErrorCode ifTrue: [^ self error: 'asynchronous read operation failed'].
 		aBlock value: buffer.
-	] forkAt: Processor userInterruptPriority.
+	] forkAt: Processor userInterruptPriority
 ]
 
 { #category : #tests }
@@ -170,7 +170,7 @@ AsyncFile >> test: byteCount fileName: fileName [
 	semaphore wait.
 	bytesWritten := self primWriteResult: fileHandle.
 	self close.
-	
+
 	self open: fileName asFileReference fullName forWrite: false.
 	self primReadStart: fileHandle fPosition: 0 count: byteCount.
 	semaphore wait.

@@ -52,7 +52,7 @@ KMComposedModifier >> hash [
 { #category : #initialization }
 KMComposedModifier >> initialize [
 	super initialize.
-	modifiers := OrderedCollection new.
+	modifiers := OrderedCollection new
 ]
 
 { #category : #matching }
@@ -69,7 +69,7 @@ KMComposedModifier >> meta [
 { #category : #combining }
 KMComposedModifier >> modifiedBy: modifier [
 	modifiers add: modifier.
-	self updateIdentifier.
+	self updateIdentifier
 ]
 
 { #category : #accessing }
@@ -81,7 +81,7 @@ KMComposedModifier >> modifiers [
 KMComposedModifier >> printOn: aStream [
 	modifiers
 		do: [ :modifier| modifier printOn: aStream ]
-		separatedBy: [ aStream << ' + ' ].
+		separatedBy: [ aStream << ' + ' ]
 ]
 
 { #category : #printing }
@@ -90,7 +90,7 @@ KMComposedModifier >> printOsRepresentationOn: aStream [
 	modifiersSorted := modifiers asSortedCollection: [ : a : b | a printingPosition < b printingPosition ].
 	modifiersSorted
 		do: [ :modifier| modifier printOsRepresentationOn: aStream ]
-		separatedBy: [ aStream << $+ ].
+		separatedBy: [ aStream << $+ ]
 ]
 
 { #category : #combining }
@@ -100,15 +100,15 @@ KMComposedModifier >> shift [
 
 { #category : #printing }
 KMComposedModifier >> symbol [
-	^ String streamContents: [ :stream | 
-		self modifiers do: [ :e | 
+	^ String streamContents: [ :stream |
+		self modifiers do: [ :e |
 			stream << e symbol ] ]
 ]
 
 { #category : #accessing }
 KMComposedModifier >> updateIdentifier [
 	identifier := String streamContents: [ :aStream|
-			modifiers do: [ :modifier| 
+			modifiers do: [ :modifier|
 				aStream << modifier identifier]].
 	identifier := identifier asSymbol
 ]

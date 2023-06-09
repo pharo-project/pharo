@@ -12,7 +12,7 @@ RGClassVariable >> addoptToParentStub [
 
 	super addoptToParentStub.
 	self environment backend createUnresolvedClassGroupFor: self parent.
-	self parent addClassVariable: self.
+	self parent addClassVariable: self
 ]
 
 { #category : #'managing container' }

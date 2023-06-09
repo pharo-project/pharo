@@ -10,8 +10,8 @@ Class {
 { #category : #execution }
 ClyShowOverridingMethodsCommand >> createInheritanceScopeFrom: classes [
 
-	^ClySubclassScope 
-		ofAll: classes 
+	^ClySubclassScope
+		ofAll: classes
 		in: browser navigationEnvironment
 ]
 
@@ -21,6 +21,6 @@ ClyShowOverridingMethodsCommand >> defaultMenuIconName [
 ]
 
 { #category : #accessing }
-ClyShowOverridingMethodsCommand >> defaultMenuItemName [ 
+ClyShowOverridingMethodsCommand >> defaultMenuItemName [
 	^'Overriding methods'
 ]

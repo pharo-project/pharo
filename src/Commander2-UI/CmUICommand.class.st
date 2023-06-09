@@ -66,7 +66,7 @@ CmUICommand >> hasShortcutKey [
 { #category : #accessing }
 CmUICommand >> icon [
 	self iconName ifNil: [ ^ nil ].
-	
+
 	^ self iconNamed: self iconName
 ]
 
@@ -76,14 +76,14 @@ CmUICommand >> iconName [
 ]
 
 { #category : #accessing }
-CmUICommand >> iconName: aSymbol [ 
+CmUICommand >> iconName: aSymbol [
 	iconName := aSymbol
 ]
 
 { #category : #configuring }
-CmUICommand >> iconName: aString from: anIconProvider [ 
+CmUICommand >> iconName: aString from: anIconProvider [
 	self iconProvider: anIconProvider.
-	self iconName: aString.
+	self iconName: aString
 ]
 
 { #category : #accessing }
@@ -102,7 +102,7 @@ CmUICommand >> iconProvider: anObject [
 ]
 
 { #category : #initialization }
-CmUICommand >> initialize [ 
+CmUICommand >> initialize [
 
 	super initialize.
 	self beDisabledWhenCantBeRun.
@@ -115,7 +115,7 @@ CmUICommand >> positionStrategy [
 ]
 
 { #category : #printing }
-CmUICommand >> printOn: stream [ 
+CmUICommand >> printOn: stream [
 
 	super printOn: stream.
 	stream << '(' << self name << ')'

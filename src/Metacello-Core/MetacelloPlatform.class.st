@@ -18,7 +18,7 @@ MetacelloPlatform class >> current [
 	^ Current
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPlatform class >> initialize [
   "noop ... use #select"
 ]
@@ -43,7 +43,7 @@ MetacelloPlatform >> authorName [
 
 { #category : #utilities }
 MetacelloPlatform >> authorName: aString [
-	"Primarily used for testing"
+	"Used by SmalltalkCI"
 
 	self subclassResponsibility
 ]
@@ -402,15 +402,6 @@ MetacelloPlatform >> processPID [
   "return pid of process as string if available"
 
   ^ ''
-]
-
-{ #category : #'file system' }
-MetacelloPlatform >> readStreamOn: aFileHandle do: aBlock [
-	"Get a read stream on the file handle and execute some actions on it."
-	| stream |
-	stream := aFileHandle readStream.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
 ]
 
 { #category : #'file system' }

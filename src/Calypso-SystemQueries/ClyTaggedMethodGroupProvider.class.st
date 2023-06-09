@@ -14,10 +14,10 @@ Class {
 ClyTaggedMethodGroupProvider >> buildGroupsFrom: aClassScope [
 	| groups |
 	groups := IdentityDictionary new.
-	
+
 	aClassScope classesDo: [ :eachClass |
-		eachClass tagsForAllMethods do: [ :eachTag | 
-			groups at: eachTag ifAbsentPut: [ 
+		eachClass tagsForAllMethods do: [ :eachTag |
+			groups at: eachTag ifAbsentPut: [
 				ClyTaggedMethodGroup withMethodsFrom: aClassScope taggedBy: eachTag ] ] ].
 
 	^ groups values
@@ -26,7 +26,7 @@ ClyTaggedMethodGroupProvider >> buildGroupsFrom: aClassScope [
 { #category : #'system changes' }
 ClyTaggedMethodGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aClassScope [
 
-	aClassScope classesDo: [ :each | 
+	aClassScope classesDo: [ :each |
 		(aSystemAnnouncement affectsMethodTagIn: each) ifTrue: [ ^true ]
 	].
 

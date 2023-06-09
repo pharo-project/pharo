@@ -37,7 +37,7 @@ ShiftClassInstaller class >> example [
 			superclass: Object;
 			name: #MyClass;
 			slots: #(varA varB);
-			category: 'My-Category' ].
+			category: 'My-Category' ]
 ]
 
 { #category : #building }
@@ -47,14 +47,14 @@ ShiftClassInstaller class >> make: aBlock [
 
 { #category : #building }
 ShiftClassInstaller class >> update: oldClass to: aBlock [
-	^ self new 
+	^ self new
 		oldClass: oldClass;
 		make:aBlock
 ]
 
 { #category : #validating }
-ShiftClassInstaller class >> validateClassName: aString [ 
-	ShiftClassBuilder new name: aString.
+ShiftClassInstaller class >> validateClassName: aString [
+	ShiftClassBuilder new name: aString
 ]
 
 { #category : #accessing }
@@ -64,7 +64,7 @@ ShiftClassInstaller >> builder [
 
 { #category : #accessing }
 ShiftClassInstaller >> comment: newClass [
-	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
+	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
 ]
 
 { #category : #building }
@@ -74,26 +74,29 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-	| newObject hiddenSlots |
-	
-	newObject := (newClass isVariable and: [oldClass isVariable])
-		ifTrue: [ newClass basicNew: oldObject size ]
-		ifFalse: [ newClass basicNew ].
+
+	| newObject |
+	newObject := (newClass isVariable and: [ oldClass isVariable ])
+		             ifTrue: [
+			             | createdObject |
+			             createdObject := newClass basicNew: oldObject basicSize.
+			             "Copying the variabls"
+			             1 to: oldObject basicSize do: [ :offset | createdObject basicAt: offset put: (oldObject basicAt: offset) ].
+			             createdObject ]
+		             ifFalse: [ newClass basicNew ].
 
 	"first initialize all hidden slots"
-	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
-	hiddenSlots do: [ :newSlot | 
-			newSlot initialize: newObject.
-			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
-				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
+	newClass classLayout allSlots
+		reject: [ :aSlot | aSlot isVisible ]
+		thenDo: [ :newHiddenSlot |
+			newHiddenSlot initialize: newObject.
+			oldObject class slotNamed: newHiddenSlot name ifFound: [ :oldSlot | newHiddenSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"the initialize all visible slots"
-	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
-			newSlot initialize: newObject.
-		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
-
-	newClass isVariable
-		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
+	newClass allSlots do: [ :newSlot |
+		newSlot initialize: newObject.
+		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
+			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
 	oldObject setIsReadOnlyObject: false.
@@ -108,8 +111,8 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 
 	newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope
 		ifFalse: [ newClass classLayout slotScope parentScope: newClass superclass classLayout slotScope ].
-		
-	self assert: newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope.
+
+	self assert: newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope
 ]
 
 { #category : #initialization }
@@ -167,7 +170,7 @@ ShiftClassInstaller >> make [
 
 	self lookupOldClass.
 
-	[	
+	[
 		builder oldClass: oldClass.
 		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
@@ -175,12 +178,12 @@ ShiftClassInstaller >> make [
 		self installInEnvironment: newClass.
 
 		self installSubclassInSuperclass: newClass.
-	
+
 		builder builderEnhancer beforeMigratingClass: builder installer: self.
 
 		builder builderEnhancer migrateToClass: newClass installer: self.
 
-		builder builderEnhancer afterMigratingClass: builder installer: self.	
+		builder builderEnhancer afterMigratingClass: builder installer: self.
 
 		builder builderEnhancer propagateChangesToRelatedClasses: newClass installer: self.
 	] on: ShNoChangesInClass do:[
@@ -201,7 +204,7 @@ ShiftClassInstaller >> make [
 
 { #category : #building }
 ShiftClassInstaller >> make: aBlock [
-	
+
 	aBlock value: builder.
 
 	^self make
@@ -209,7 +212,7 @@ ShiftClassInstaller >> make: aBlock [
 
 { #category : #'to sort' }
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
-	
+
 	builder := aBuilder.
 	^ self make
 ]
@@ -220,31 +223,34 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 
 	oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
-		
+
 	oldClass 	superclass removeSubclass: oldClass.
 
 	newClass subclasses: oldClass subclasses.
 
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
-	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
-	
+	slotsToMigrate do: [ :newSlot | 
+		"the slot might need to initialize the new class"
+		newSlot wantsInitialization ifTrue: [ newSlot initialize: newClass ].
+		oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
+
 	oldClassVariables := OrderedCollection new.
 	newClassVariables := OrderedCollection new.
-	
+
 	oldClass classVariables do: [ :oldVar | | newVar |
 		(newClass hasClassVarNamed: oldVar key)
-			ifTrue: [ 
+			ifTrue: [
 				newVar := newClass classVariableNamed: oldVar key.
 				newVar write: oldVar read.
 				newClassVariables add: newVar.
 				oldClassVariables add: oldVar. ]].
-	
-	[ 	
-		(self builder hasToMigrateInstances) 
+
+	[
+		(self builder hasToMigrateInstances)
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
 		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
-			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.	
+			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.
 
 		newClass classPool rehash.
 	] valueUninterruptably
@@ -255,15 +261,15 @@ ShiftClassInstaller >> migrateInstancesTo: newClass [
 	| oldObjects newObjects readOnlyOldObjectsFlags |
 	oldObjects := oldClass allInstances.
 	oldObjects ifEmpty: [ ^ self ].
-	
+
 	readOnlyOldObjectsFlags := OrderedCollection new: oldObjects size.
 
-	newObjects := oldObjects collect: [ :e | 
+	newObjects := oldObjects collect: [ :e |
 		(readOnlyOldObjectsFlags add: e isReadOnlyObject).
 		self copyObject: e to: newClass ].
 
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true.
-	
+
 	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ]
 ]
 
@@ -303,7 +309,7 @@ ShiftClassInstaller >> remake: aClass [
 	self class new
 		oldClass: aClass;
 		installingEnvironment: self installingEnvironment;
-		make: [ :anotherBuilder | 
+		make: [ :anotherBuilder |
 			anotherBuilder fillFor: aClass.
 			anotherBuilder buildEnvironment: builder buildEnvironment.
 			anotherBuilder markIsInRemake.

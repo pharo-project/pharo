@@ -21,12 +21,12 @@ Class {
 
 { #category : #accessing }
 AthensTigerPart >> addFill [
-	fill := true.
+	fill := true
 ]
 
 { #category : #accessing }
 AthensTigerPart >> addStroke [
-	stroke := true.
+	stroke := true
 ]
 
 { #category : #accessing }
@@ -36,11 +36,11 @@ AthensTigerPart >> capStyle [
 
 { #category : #accessing }
 AthensTigerPart >> capStyle: cap [
-	capStyle := cap.
+	capStyle := cap
 ]
 
 { #category : #accessing }
-AthensTigerPart >> fillPaint: aColor [ 
+AthensTigerPart >> fillPaint: aColor [
 	fillPaint := aColor
 ]
 
@@ -50,13 +50,13 @@ AthensTigerPart >> fillRule [
 ]
 
 { #category : #accessing }
-AthensTigerPart >> fillRule: rule [ 
-	fillRule := rule.
+AthensTigerPart >> fillRule: rule [
+	fillRule := rule
 ]
 
 { #category : #initialization }
-AthensTigerPart >> initialize [ 
-	fill := stroke := false.
+AthensTigerPart >> initialize [
+	fill := stroke := false
 ]
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ AthensTigerPart >> joinStyle [
 
 { #category : #accessing }
 AthensTigerPart >> joinStyle: join [
-	joinStyle := join.
+	joinStyle := join
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ AthensTigerPart >> miterLimit [
 
 { #category : #accessing }
 AthensTigerPart >> miterLimit: lim [
-	miterLimit := lim.
+	miterLimit := lim
 ]
 
 { #category : #rendering }
@@ -86,22 +86,22 @@ AthensTigerPart >> prepareFor: surface [
 	].
 
 	stroke ifTrue: [
-		strokePaint := 
+		strokePaint :=
 			surface createStrokePaintFor: (surface createSolidColorPaint: strokePaint).
-	].
+	]
 ]
 
 { #category : #rendering }
 AthensTigerPart >> renderOn: can [
 
-	fill ifTrue: [ 
+	fill ifTrue: [
 		can setPaint: fillPaint.
-		can drawShape: path.	
+		can drawShape: path.
 	].
 
 	stroke ifTrue: [
-		can setStrokePaint: strokePaint.	
-		can drawShape: path.	
+		can setStrokePaint: strokePaint.
+		can drawShape: path.
 	]
 ]
 
@@ -111,7 +111,7 @@ AthensTigerPart >> setPath: anAthensCairoPath [
 ]
 
 { #category : #accessing }
-AthensTigerPart >> strokePaint: aColor [ 
+AthensTigerPart >> strokePaint: aColor [
 	strokePaint := aColor
 ]
 

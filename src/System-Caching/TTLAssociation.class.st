@@ -21,7 +21,7 @@ TTLAssociation >> isStale: timeToLive [
 ]
 
 { #category : #accessing }
-TTLAssociation >> key: aKey value: anObject [ 
+TTLAssociation >> key: aKey value: anObject [
 	super key: aKey value: anObject.
 	timestamp := self now
 ]

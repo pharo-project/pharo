@@ -17,7 +17,7 @@ ShClassChanged >> announceChanges [
 { #category : #announcing }
 ShClassChanged >> builder: anObject [
 	builder := anObject.
-	oldClass := builder oldClass copyForAnnouncement.
+	oldClass := builder oldClass copyForAnnouncement
 ]
 
 { #category : #propagating }
@@ -27,5 +27,5 @@ ShClassChanged >> propagateToSubclasses: anotherBuilder [
 		builder: builder;
 		oldClass: oldClass;
 		yourself
-	).
+	)
 ]

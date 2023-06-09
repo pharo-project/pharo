@@ -52,12 +52,6 @@ SDL2MappedEvent >> isUserInterrupt [
 	^ false
 ]
 
-{ #category : #testing }
-SDL2MappedEvent >> isUserInterruptKillAll [
-
-	^ false
-]
-
 { #category : #accessing }
 SDL2MappedEvent >> windowID [
 	^ nil

@@ -32,8 +32,29 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
+	#classInstVars : [
+		'contextModelClass'
+	],
 	#category : #'Debugger-Model-Core'
 }
+
+{ #category : #accessing }
+DebugSession class >> contextModelClass [
+
+	^ contextModelClass ifNil: [ self defaultContextModelClass ]
+]
+
+{ #category : #accessing }
+DebugSession class >> contextModelClass: anObject [
+
+	contextModelClass := anObject
+]
+
+{ #category : #accessing }
+DebugSession class >> defaultContextModelClass [
+
+	^ DebugContext
+]
 
 { #category : #settings }
 DebugSession class >> logDebuggerStackToFile [
@@ -77,7 +98,7 @@ DebugSession >> contextChanged [
 { #category : #accessing }
 DebugSession >> createModelForContext: aContext [
 
-	^ (DebugContext forContext: aContext) topContext: interruptedContext
+	^ (self class contextModelClass forContext: aContext)
 ]
 
 { #category : #initialization }
@@ -88,7 +109,7 @@ DebugSession >> detectUIProcess [
 
 { #category : #accessing }
 DebugSession >> errorWasInUIProcess [
-	
+
 	^ errorWasInUIProcess
 ]
 
@@ -99,7 +120,7 @@ DebugSession >> errorWasInUIProcess: aBoolean [
 ]
 
 { #category : #accessing }
-DebugSession >> exception [ 
+DebugSession >> exception [
 	^ exception
 ]
 
@@ -110,7 +131,7 @@ DebugSession >> exception: anObject [
 
 { #category : #evaluating }
 DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forContext: aContext [
-	
+
 	aClass
 		compile: (DynamicMessageImplementor for: aMessage in: aClass) value
 		classified: aSymbol.
@@ -120,20 +141,39 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 		[aMessage arguments withIndexDo:
 			[:arg :index|
 				aContext tempAt: index put: arg]].
-		
+
 	self updateContextTo: aContext.
 	self contextChanged
 ]
 
+{ #category : #'debug - session' }
+DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
+	| method |
+	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
+	method := aClass lookupSelector: aMessage selector.
+
+	MethodClassifier classify: method.
+
+	aContext privRefreshWith: method.
+	aContext method numArgs > 0 ifTrue:
+		[aMessage arguments withIndexDo:
+			[:arg :index|
+				aContext tempAt: index put: arg]].
+
+	self updateContextTo: aContext.
+	self contextChanged.
+	^ method
+]
+
 { #category : #private }
-DebugSession >> installAlarm: aSelector [ 
-	
+DebugSession >> installAlarm: aSelector [
+
 	self installAlarm: aSelector withArgument: #()
 ]
 
 { #category : #private }
 DebugSession >> installAlarm: aSelector withArgument: args [
-	
+
 	self currentWorld
 		addAlarm: aSelector
 		withArguments: args
@@ -165,7 +205,7 @@ DebugSession >> isContextPostMortem: selectedContext [
 	| suspendedContext |
 	suspendedContext := interruptedProcess suspendedContext.
 	suspendedContext ifNil: [ ^ false ].
-	^ (suspendedContext hasContext: selectedContext) not.
+	^ (suspendedContext hasContext: selectedContext) not
 ]
 
 { #category : #testing }
@@ -175,8 +215,8 @@ DebugSession >> isInterruptedContextATest [
 ]
 
 { #category : #testing }
-DebugSession >> isInterruptedContextDoesNotUnderstand [	
-	
+DebugSession >> isInterruptedContextDoesNotUnderstand [
+
 	^ self interruptedContext selector == #doesNotUnderstand:
 ]
 
@@ -201,7 +241,7 @@ DebugSession >> isTestObject: anObject [
 { #category : #logging }
 DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
-	
+
 	[[Smalltalk logError: name inContext: interruptedContext  ] onErrorDo: [ ]]
 		valueWithin: 100 milliSeconds onTimeout: [  ]
 ]
@@ -218,7 +258,7 @@ DebugSession >> name: aString [
 
 { #category : #context }
 DebugSession >> pcRangeForContext: aContext [
-	"Answer the indices in the source code for the method corresponding to 
+	"Answer the indices in the source code for the method corresponding to
 	aContext's program counter value."
 
 	(aContext isNil or: [ aContext isDead ])
@@ -231,7 +271,7 @@ DebugSession >> peelToFirstLike: aContext [
 	"Peel the stack back to the second occurance of the currently selected message.  Very useful for an infinite recursion.  Gets back to the second call so you can see one complete recursion cycle, and how it was called at the beginning.  Also frees a lot of space!"
 
 	| ctxt |
-	self flag: 'should be called only on the selected context'.	
+	self flag: 'should be called only on the selected context'.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
 	ctxt := interruptedProcess popTo: aContext findSecondToOldestSimilarSender.
@@ -266,17 +306,13 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 
 	| newMethod recompilationContext canRewind |
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
-	"Do not try to recompile a doIt method"
-	aContext method isDoIt
-		ifTrue: [ UIManager default alert:  'Can not modify a DoIt-Method.'.
-			^ false ].
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
 	canRewind
 		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
-	
+
 	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
 	newMethod ifNil: [ ^ false ].
-		
+
 	(self isContextPostMortem: self interruptedContext)
 		ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ].
 
@@ -288,21 +324,21 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 
 { #category : #'debugging actions' }
 DebugSession >> restart: aContext [
-	"Proceed from the initial state of selectedContext." 
+	"Proceed from the initial state of selectedContext."
 	"Closing now depends on a setting (RestartAlsoProceeds class variable) --> not supported in this version"
 
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
 	"Issue 3015 - Hernan"
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ].
-	self unwindAndRestartToContext: aContext.	
+	self unwindAndRestartToContext: aContext.
 
 	self triggerEvent: #restart
 ]
 
 { #category : #'debugging actions' }
 DebugSession >> resume [
-	"Proceed execution of the receiver's model, starting after the expression at 
+	"Proceed execution of the receiver's model, starting after the expression at
 	which an interruption occurred."
 
 	"If the user of this session does not plan to reuse it, it should call 'self clean' "
@@ -317,7 +353,7 @@ DebugSession >> resume [
 
 { #category : #'debugging actions' }
 DebugSession >> resume: aValue [
-	"Proceed execution of the receiver's model, starting after the expression at 
+	"Proceed execution of the receiver's model, starting after the expression at
 	which an interruption occurred."
 
 	"If the user of this session does not plan to reuse it, it should call 'self clean' "
@@ -333,9 +369,9 @@ DebugSession >> resume: aValue [
 { #category : #private }
 DebugSession >> resumeProcess [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
-	
+
 	interruptedProcess isTerminated
-		ifFalse: [ 
+		ifFalse: [
 			errorWasInUIProcess
 				ifTrue: [ UIManager default resumeUIProcess: interruptedProcess ]
 				ifFalse: [ interruptedProcess resume ]].
@@ -347,7 +383,7 @@ DebugSession >> resumeProcess [
 { #category : #private }
 DebugSession >> resumeProcessWithValue: aValue [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
-	
+
 	self returnValue: aValue from: interruptedProcess suspendedContext.
 	self resumeProcess
 ]
@@ -357,7 +393,7 @@ DebugSession >> returnValue: anObject from: aContext [
 	"Force a return of a given value to the previous context!"
 
 	| previous |
-	self flag: 'should be called only on the selected context. WHY?'.	
+	self flag: 'should be called only on the selected context. WHY?'.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
 	previous := aContext sender.
@@ -373,7 +409,7 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 	in order to return to the context containg the compiled method."
 	| ctxt |
 	ctxt :=  interruptedProcess popTo: aContext.
-	
+
 	ctxt == aContext
 		ifFalse: [
 			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
@@ -381,23 +417,23 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 			interruptedProcess restartTopWith: aMethod.
 			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
 	self updateContextTo:  ctxt.
-	
+
 	"Issue 3015 - Hernan"
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ]
 ]
 
 { #category : #'debugging actions' }
-DebugSession >> runToSelection: selectionInterval inContext: aContext [ 
-	"Attempt to step over instructions in selectedContext until the 
+DebugSession >> runToSelection: selectionInterval inContext: aContext [
+	"Attempt to step over instructions in selectedContext until the
 	execution reaches the selected instruction. This happens when the
 	program counter passes the begining of selectionInterval.
-	
-	A not nill and valid interval is expected." 
-	
-	(self pcRangeForContext: aContext) first >= selectionInterval first 
+
+	A not nill and valid interval is expected."
+
+	(self pcRangeForContext: aContext) first >= selectionInterval first
 		ifTrue: [ ^self ].
 	self stepOver: aContext.
-	[ aContext == self interruptedContext and: [ (self pcRangeForContext: aContext) first < selectionInterval first ] ] 
+	[ aContext == self interruptedContext and: [ (self pcRangeForContext: aContext) first < selectionInterval first ] ]
 		whileTrue: [ self stepOver: aContext ]
 ]
 
@@ -411,7 +447,7 @@ DebugSession >> selectedCodeRangeForContext: selectedContext [
 DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	"Return true if all filters match the given context, or false otherwise.
 	True is returned if there are no filters."
-		
+
 	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
 ]
 
@@ -438,8 +474,8 @@ DebugSession >> stackOfSize: size [
 { #category : #accessing }
 DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 	"Answer an OrderedCollection of the top 'limit' contexts on the receiver's sender chain, according to the given filters.
-	
-	Consider the following stack:   
+
+	Consider the following stack:
 		a <-- top of the stack
 		b
 		a
@@ -449,7 +485,7 @@ DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 		d
 		e
 		a <-- bottom of the stack
-		
+
 	If the given filters do not match context 'a' and 'b' the following stack will be returned:
 		a <-- top of the stack
 		b
@@ -457,8 +493,8 @@ DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 		c
 		d
 		e <-- bottom of the stack
-		
-	First all consecutive contexts starting from the top of the stack for which a filter does not match are 
+
+	First all consecutive contexts starting from the top of the stack for which a filter does not match are
 	added to the result (a b a in the example). Then from the remaining stack only the context for which all
 	filters match are added to the  result.
 	"
@@ -466,7 +502,7 @@ DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 	| stack context |
 	stack := OrderedCollection new.
 	context := interruptedContext.
-	
+
 	"Starting from the top of the stack add all consecutive contexts that should not be displayed."
 	[ context ~~ nil
 	 	and: [(stack size < limit)
@@ -477,7 +513,7 @@ DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 	"Add all contexts that should be displayed. (the current context is checked again)"
 	[context ~~ nil
 		and: [stack size < limit ] ] whileTrue: [
-			(self shouldDisplayContext: context basedOnFilters: stackFilters) 
+			(self shouldDisplayContext: context basedOnFilters: stackFilters)
 				ifTrue: [ stack addLast: context ].
 			context := context sender ].
 	^ stack
@@ -491,14 +527,14 @@ DebugSession >> stepInto [
 
 { #category : #'debugging actions' }
 DebugSession >> stepInto: aContext [
-	"Send the selected message in selectedContext, and take control in 
+	"Send the selected message in selectedContext, and take control in
 	the method invoked to allow further step or send."
 
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
 	interruptedProcess step: aContext.
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
-	
+
 	self triggerEvent: #stepInto
 ]
 
@@ -516,15 +552,15 @@ DebugSession >> stepOver [
 
 { #category : #'debugging actions' }
 DebugSession >> stepOver: aContext [
-	"Send the selected message in selectedContext, and regain control 
+	"Send the selected message in selectedContext, and regain control
 	after the invoked method returns."
-	
+
 	| newContext |
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
-	
+
 	newContext := interruptedProcess completeStep: aContext.
-	self updateContextTo:  
+	self updateContextTo:
 		(newContext == aContext
 			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
 			ifFalse: [ newContext ]).
@@ -544,44 +580,44 @@ DebugSession >> stepThrough: aContext [
 	 Used to step into a block in the method."
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
-	
+
 	interruptedProcess stepToHome: aContext.
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
-			
+
 	self triggerEvent: #stepThrough
 ]
 
 { #category : #private }
 DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
-	"After a restart of a method activation step to the first 
+	"After a restart of a method activation step to the first
 	bytecode instruction that is of interest for the debugger.
-	
+
 	In this case step until a bytecode that causes a context switch,
-	as otherwise one will have to press may time step into without 
+	as otherwise one will have to press may time step into without
 	seeing any visible results."
-	
+
 	"If we are are stepping into a quick method,
 	make sure that we step correctly over the first primitive bytecode"
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
 	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
-	
+
 	^ aProcess stepToSendOrReturn
 ]
 
 { #category : #'debugging actions' }
 DebugSession >> terminate [
-	"Action that needs to be executed after the window containing this debug session is closed, 
+	"Action that needs to be executed after the window containing this debug session is closed,
 	in order to terminate the right process."
-	
-	self interruptedProcess 
-		ifNotNil: [ 
+
+	self interruptedProcess
+		ifNotNil: [
 			"Assume the user closed the debugger. Simply kill the interrupted process."
 			self interruptedProcess terminate.
 			self clear.
 			Smalltalk installLowSpaceWatcher.  "restart low space handler" ]
-		ifNil: [ 
+		ifNil: [
 			"Assume the interrupted process was resumed."
 			"Kill the active process if the error was in the UI as there should be only one UI process."
 			self isAboutUIProcess

@@ -70,7 +70,7 @@ WidgetExample class >> exampleBasicControls [
 	|dialog builder radioModel treeModel|
 	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
-	radioModel := ExampleRadioButtonModel new.
+	radioModel := RadioButtonModelExample new.
 	treeModel := Array with:(MorphWithSubmorphsWrapper with: self currentWorld).
 	dialog contentMorph: ((dialog newRow: {
 		dialog newLabelGroup: {
@@ -179,7 +179,7 @@ WidgetExample class >> exampleDialogs [
 	"Open an example of each services dialog"
 	"self exampleDialogs"
 	<script>
-	
+
 	self builder
 		chooseFont: TextStyle default defaultFont;
 		chooseColor: (Color r: 0.529 g: 0.611 b: 0.004);
@@ -350,11 +350,11 @@ WidgetExample class >> exampleTextEntryWithCompletionDialog [
 
 	| applicants entryCompletion |
 	applicants := Smalltalk globals classNames sorted.
-	
+
 	entryCompletion := EntryCompletion new
 		                   dataSourceBlock: [ :currText | applicants ];
-		                   filterBlock: [ :currApplicant :currText | 
-			                   currText size > 3 and: [ 
+		                   filterBlock: [ :currApplicant :currText |
+			                   currText size > 3 and: [
 					                   currApplicant asUppercase includesSubstring:
 							                   currText asString asUppercase ] ].
 	UIManager default
@@ -369,14 +369,14 @@ WidgetExample class >> exampleWindowWithToolbars [
 	"Open an example window with toolbars."
 	"self exampleWindowWithToolbars"
 	<script>
-	
+
 	| win fileMenu tools dock text holder |
 	win := StandardWindow new.
 	fileMenu := win newMenu.
 	fileMenu addToggle: 'Open' translated target: nil selector: #openFile.	"would be model"
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallOpenIcon);
+		icon: (self iconNamed: #smallOpen);
 		keyText: 'Ctrl+O'.
 	fileMenu
 		addToggle: 'Save' translated
@@ -386,7 +386,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		enablementSelector: nil.
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallSaveIcon);
+		icon: (self iconNamed: #smallSave);
 		keyText: 'Ctrl+S'.
 	fileMenu
 		addToggle: 'Print...' translated
@@ -394,7 +394,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		selector: #print.
 	fileMenu lastItem
 		font: win theme menuFont;
-		icon: (self iconNamed: #smallPrintIcon);
+		icon: (self iconNamed: #smallPrint);
 		keyText: 'Ctrl+P'.
 	tools := win
 		newToolbar:
@@ -404,7 +404,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #openFile
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallOpenIcon)
+				labelForm: (self iconNamed: #smallOpen)
 				help: 'Open file' translated).	"if we had a model it would go here"
 			(win
 				newButtonFor: nil
@@ -412,7 +412,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #saveFile
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallSaveIcon)
+				labelForm: (self iconNamed: #smallSave)
 				help: 'Save file' translated).
 			(win
 				newButtonFor: nil
@@ -420,7 +420,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				action: #print
 				arguments: nil
 				getEnabled: nil
-				labelForm: (self iconNamed: #smallPrintIcon)
+				labelForm: (self iconNamed: #smallPrint)
 				help: 'Print' translated)}.
 	holder := NewValueHolder new.
 	text := win
@@ -431,7 +431,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 	dock
 		add: 'File' translated
 			font: win theme menuBarFont
-			icon: (self iconNamed: #smallOpenIcon)
+			icon: (self iconNamed: #smallOpen)
 			help: 'File operations' translated
 			subMenu: fileMenu;
 		addMorphBack: tools.
@@ -443,4 +443,10 @@ WidgetExample class >> exampleWindowWithToolbars [
 	win
 		themeChanged;
 		openInWorld
+]
+
+{ #category : #'class initialization' }
+WidgetExample class >> initialize [
+
+	self deprecatedAliases: { #WidgetExamples }
 ]

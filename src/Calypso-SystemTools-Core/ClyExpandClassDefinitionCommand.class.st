@@ -20,7 +20,7 @@ ClyExpandClassDefinitionCommand class >> sourceCodeShortcutActivation [
 { #category : #accessing }
 ClyExpandClassDefinitionCommand >> applyResultInContext: aToolContext [
 
-	super applyResultInContext: aToolContext. 
+	super applyResultInContext: aToolContext.
 	aToolContext tool pendingText: aToolContext tool editingClass expandedDefinitionString
 ]
 

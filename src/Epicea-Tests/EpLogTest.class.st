@@ -11,16 +11,16 @@ Class {
 { #category : #running }
 EpLogTest >> setUp [
 	super setUp.
-	
+
 	logBuilder := EpTestLogBuilder new.
-	log := logBuilder oneTriggerWithFourChildrenLog.
+	log := logBuilder oneTriggerWithFourChildrenLog
 ]
 
 { #category : #running }
 EpLogTest >> tearDown [
-		
+
 	logBuilder cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -39,20 +39,20 @@ EpLogTest >> testEntryReferences [
 	| entryReferences entries |
 	entryReferences := log entryReferences.
 	entries := log entries.
-	
+
 	entryReferences withIndexDo: [:each :index |
 		log
 			entryFor: each
 			ifPresent: [:entry | self assert: entry equals: (entries at: index) ]
 			ifAbsent: [ self fail ] ].
 
-	self assert: entryReferences size equals: 5.
+	self assert: entryReferences size equals: 5
 ]
 
 { #category : #tests }
 EpLogTest >> testFirstEntryIfAbsent [
-	self 
-		assert: (log firstEntryIfAbsent: [ self fail ]) 
+	self
+		assert: (log firstEntryIfAbsent: [ self fail ])
 		equals: log entries first
 ]
 
@@ -74,7 +74,7 @@ EpLogTest >> testFromDetect [
 				isPrior
 					ifFalse: [ isPrior := true. false ]
 					ifTrue: [ true ] ])
-		equals: (log entryFor: (log priorReferenceAt: entry)).
+		equals: (log entryFor: (log priorReferenceAt: entry))
 ]
 
 { #category : #tests }
@@ -87,7 +87,7 @@ EpLogTest >> testFromDetectIfNotFound [
 			from: reference
 			detect: [ :dummy | false ]
 			ifNotFound: [ 42 ])
-		equals: 42.
+		equals: 42
 ]
 
 { #category : #tests }
@@ -96,7 +96,7 @@ EpLogTest >> testFromHeadDetect [
 	" Assert for head "
 	self
 		assert: (log fromHeadDetect: [ :dummy | true ])
-		equals: log head.
+		equals: log head
 ]
 
 { #category : #tests }
@@ -107,7 +107,7 @@ EpLogTest >> testFromHeadDetectIfNotFound [
 		assert: (log
 			fromHeadDetect: [ :dummy | false ]
 			ifNotFound: [ 42 ])
-		equals: 42.
+		equals: 42
 ]
 
 { #category : #tests }
@@ -136,7 +136,7 @@ EpLogTest >> testShouldKeepHeadReferenceAfterReOpen [
 
 	anotherLog := EpLog newWithStore: log store copy refresh.
 
-	self assert: anotherLog headReference equals: log headReference.
+	self assert: anotherLog headReference equals: log headReference
 ]
 
 { #category : #tests }
@@ -146,5 +146,5 @@ EpLogTest >> testShouldKeepHeadReferenceAfterRefresh [
 
 	log refresh.
 
-	self assert: log headReference equals: headReference.
+	self assert: log headReference equals: headReference
 ]

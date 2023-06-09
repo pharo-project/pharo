@@ -52,7 +52,7 @@ VTermOutputStyleElement >> color [
 VTermOutputStyleElement >> color: aColor [
 	"Change the current color of writing"
 
-	color := aColor.
+	color := aColor
 ]
 
 { #category : #'text coloring' }
@@ -106,7 +106,7 @@ VTermOutputStyleElement >> magenta: aString [
 
 { #category : #copying }
 VTermOutputStyleElement >> postCopy [
-	color := self color copy.
+	color := self color copy
 ]
 
 { #category : #'text coloring' }
@@ -124,7 +124,7 @@ VTermOutputStyleElement >> red: aString [
 ]
 
 { #category : #styling }
-VTermOutputStyleElement >> setInDriver: aVTermOutputDriver [ 
+VTermOutputStyleElement >> setInDriver: aVTermOutputDriver [
 	self subclassResponsibility
 ]
 

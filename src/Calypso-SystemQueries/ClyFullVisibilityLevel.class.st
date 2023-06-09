@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyFullVisibilityLevel class >> of: aClassScope [
-	
+
 	^(super of: aClassScope)
 		extraClassScope: aClassScope asInheritedScope
 ]

@@ -16,7 +16,7 @@ BytecodeEncoder class >> extensionsFor: pc in: aCompiledMethod into: trinaryBloc
 	"If the bytecode at pc is an extension, or if the bytecode at pc is preceeded by extensions,
 	 then evaluate aTrinaryBlock with the values of extA and extB and number of extension *bytes*.
 	 If the bytecode at pc is neither an extension or extended then evaluate with 0, 0, 0."
- 
+
 	| prevPC |
 	"If there is what appears to be an extension bytecode before this bytecode
 	 then scan for the previous pc to confirm."
@@ -48,7 +48,7 @@ BytecodeEncoder class >> isExtension: byte [
 
 { #category : #accessing }
 BytecodeEncoder class >> literalMethodBytecodes [
-	"A literal method is a method that just answers a literal value. 
+	"A literal method is a method that just answers a literal value.
 	 This is a constant sequence of bytecodes but it changes between enconders"
 
 	^ self subclassResponsibility
@@ -81,12 +81,12 @@ BytecodeEncoder class >> quickPrimSpecialConstants [
 ]
 
 { #category : #'bytecode decoding' }
-BytecodeEncoder class >> specialSelectors [	
+BytecodeEncoder class >> specialSelectors [
 	^ #(#+ #- #< #> #'<=' #'>=' #= #'~=' #* #/ #'\\' #@ #bitShift: #'//' #bitAnd: #bitOr: #at: #at:put: #size #next #nextPut: #atEnd #'==' nil "class" #'~~' #value #value: #do: #new #new: #x #y)
 ]
 
 { #category : #'bytecode decoding' }
-BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [ 
+BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 	"This is the default implementation. Subclasses with inline primitives
 	will need to override."
 	^ 0
@@ -118,7 +118,7 @@ BytecodeEncoder >> nextPut: aByte [
 { #category : #'bytecode generation' }
 BytecodeEncoder >> outOfRangeError: string index: index range: rangeStart to: rangeEnd [
 	"For now..."
-	^self error: thisContext sender compiledCode method selector, ' ', string
+	^self error: thisContext sender homeMethod selector, ' ', string
 				, ' index ', index printString
 				, ' is out of range ', rangeStart printString, ' to ', rangeEnd printString
 ]
@@ -307,7 +307,7 @@ BytecodeEncoder >> sizeStoreTemp: tempIndex [
 ]
 
 { #category : #'opcode sizing' }
-BytecodeEncoder >> sizeTrapIfNotInstanceOf: litIndex [ 
+BytecodeEncoder >> sizeTrapIfNotInstanceOf: litIndex [
 	^ self sizeOpcodeSelector: #genTrapIfNotInstanceOf: withArguments: {litIndex}
 ]
 

@@ -29,7 +29,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyPackageChange class >> of: aPackage [
-	^self new 
+	^self new
 		affectedPackage: aPackage
 ]
 

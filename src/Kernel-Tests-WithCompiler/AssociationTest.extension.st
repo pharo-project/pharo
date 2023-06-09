@@ -4,11 +4,11 @@ Extension { #name : #AssociationTest }
 AssociationTest >> testStoreOnNegativeIntegerRoundtrip [
 	| association storeString evaluated |
 	association := 'a'-> -1.
-	
+
 	storeString := String streamContents: [ :s | association storeOn: s ].
-	
+
 	evaluated := Smalltalk compiler evaluate: storeString.
-	
+
 	self assert: association equals: evaluated
 ]
 
@@ -17,8 +17,8 @@ AssociationTest >> testStoreOnPositiveIntegerRoundtrip [
 	| association storeString evaluated |
 	association := 'a'-> 1.
 	storeString := String streamContents: [ :s | association storeOn: s ].
-	
+
 	evaluated := Smalltalk compiler evaluate: storeString.
-	
+
 	self assert: association equals: evaluated
 ]

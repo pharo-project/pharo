@@ -14,7 +14,7 @@ TTaskExecutor classSide >> isDebuggingCompatible [
 { #category : #accessing }
 TTaskExecutor >> exceptionHandler [
 
-	self shouldBeImplemented 
+	self shouldBeImplemented
 ]
 
 { #category : #executing }

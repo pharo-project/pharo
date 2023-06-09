@@ -9,10 +9,10 @@ Class {
 
 { #category : #execution }
 ClyAddOnceBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
-	aBreakpoint once
+	aBreakpoint once: true
 ]
 
 { #category : #accessing }
-ClyAddOnceBreakpointCommand >> defaultMenuItemName [ 
+ClyAddOnceBreakpointCommand >> defaultMenuItemName [
 	^'Break on  ', sourceNode displaySourceCode, '  once'
 ]

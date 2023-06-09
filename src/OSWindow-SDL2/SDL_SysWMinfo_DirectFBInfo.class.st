@@ -43,7 +43,7 @@ SDL_SysWMinfo_DirectFBInfo >> dfb [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_DirectFBInfo >> dfb: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_DFB put: anObject getHandle.
+	handle pointerAt: OFFSET_DFB put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -55,7 +55,7 @@ SDL_SysWMinfo_DirectFBInfo >> surface [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_DirectFBInfo >> surface: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_SURFACE put: anObject getHandle.
+	handle pointerAt: OFFSET_SURFACE put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -67,5 +67,5 @@ SDL_SysWMinfo_DirectFBInfo >> window [
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo_DirectFBInfo >> window: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
+	handle pointerAt: OFFSET_WINDOW put: anObject getHandle
 ]

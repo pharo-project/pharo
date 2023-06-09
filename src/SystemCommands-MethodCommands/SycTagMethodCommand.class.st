@@ -40,8 +40,8 @@ SycTagMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycTagMethodCommand >> execute [
-	
-	methods do: [ :aMethod | 
+
+	methods do: [ :aMethod |
 		| oldTags |
 		oldTags := aMethod tags.
 		aMethod tagWith: targetTag asSymbol.
@@ -51,7 +51,7 @@ SycTagMethodCommand >> execute [
 { #category : #execution }
 SycTagMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	targetTag := aToolContext requestSingleMethodTag: 'New protocol name'
 ]
 

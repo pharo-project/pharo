@@ -15,14 +15,14 @@ ReSendsMethodDictRule class >> checksMethod [
 { #category : #accessing }
 ReSendsMethodDictRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'NobodyShouldSendMethodDict'
 ]
 
 { #category : #running }
 ReSendsMethodDictRule >> basicCheck: aMethod [
 	"in the Behavior classes we want to use the accessor (see comment #methodDict)"
-	({Behavior . ClassDescription . Class. Metaclass. TraitedMetaclass. MetaclassForTraits} includes: aMethod methodClass) 
+	({Behavior . ClassDescription . Class. Metaclass. TraitedMetaclass. MetaclassForTraits} includes: aMethod methodClass)
 		ifTrue: [ ^ false ].
 	^(aMethod refersToLiteral: #methodDict) and: [aMethod messages includes: #methodDict]
 ]

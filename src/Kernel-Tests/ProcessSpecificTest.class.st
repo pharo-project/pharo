@@ -52,12 +52,12 @@ ProcessSpecificTest >> testDynamicVariable [
 		s2 signal.
 	] fork.
 
-	"Set a maximum wait timeout so that the test case will complete 
+	"Set a maximum wait timeout so that the test case will complete
 	 even if the processes fail to signal us."
 	s1 waitTimeoutSeconds: 10.
 	s2 waitTimeoutSeconds: 10.
 	self assert: p1stopped.
-	self assert: p2stopped.
+	self assert: p2stopped
 ]
 
 { #category : #testing }
@@ -83,7 +83,7 @@ ProcessSpecificTest >> testDynamicVariableRemovedAfterUse [
 	TestDynamicVariable
 		value: 3
 		during: [  ].
-		
+
 	self assert: (Processor activeProcess psValueAt: TestDynamicVariable soleInstance index) equals: nil
 ]
 
@@ -92,13 +92,13 @@ ProcessSpecificTest >> testExecutionEnvironment [
 
 	| newEnv |
 	newEnv := ExecutionEnvironmentStub new.
-	newEnv beActiveDuring: [  
-		self assert: CurrentExecutionEnvironment value equals: newEnv.	
-	
-		DefaultExecutionEnvironment beActiveDuring: [ 
+	newEnv beActiveDuring: [
+		self assert: CurrentExecutionEnvironment value equals: newEnv.
+
+		DefaultExecutionEnvironment beActiveDuring: [
 			self assert: CurrentExecutionEnvironment value equals: DefaultExecutionEnvironment instance].
-	
-		self assert: CurrentExecutionEnvironment value equals: newEnv.		
+
+		self assert: CurrentExecutionEnvironment value equals: newEnv.
 	]
 ]
 
@@ -109,7 +109,7 @@ ProcessSpecificTest >> testInheritableVariable [
 	s1 := Semaphore new.
 	s2 := Semaphore new.
 	TestInheritableVariable enable.
-	
+
 	[ TestInheritableVariable value: #inheritedVar.
 		parentVar := TestInheritableVariable value.
 		[ childVar := TestInheritableVariable value. s2 signal ] fork.
@@ -119,7 +119,7 @@ ProcessSpecificTest >> testInheritableVariable [
 	s1 waitTimeoutSeconds: 2.
 	s2 waitTimeoutSeconds: 2.
 	TestInheritableVariable disable.
-	
+
 	self assert: parentVar equals: #inheritedVar.
 	self assert: childVar equals: #inheritedVar
 ]
@@ -129,7 +129,7 @@ ProcessSpecificTest >> testInheritingExecutionEnvironment [
 
 	| newEnv p |
 	newEnv := ExecutionEnvironmentStub new.
-	newEnv beActiveDuring: [  
+	newEnv beActiveDuring: [
 		p := [self assert: CurrentExecutionEnvironment value equals: newEnv] fork.
 	].
 
@@ -168,10 +168,10 @@ ProcessSpecificTest >> testLocalVariable [
 		s2 signal.
 	] fork.
 
-	"Set a maximum wait timeout so that the test case will complete 
+	"Set a maximum wait timeout so that the test case will complete
 	 even if the processes fail to signal us."
 	s1 waitTimeoutMSecs: 5000.
 	s2 waitTimeoutMSecs: 5000.
 	self assert: p1stopped.
-	self assert: p2stopped.
+	self assert: p2stopped
 ]

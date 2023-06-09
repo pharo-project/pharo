@@ -10,5 +10,5 @@ CoAvoidRepeatedFetcherTest >> setUp [
 	super setUp.
 	fetcher := CoAvoidRepeatedFetcher new
 		decoree: (CoCollectionFetcher onCollection: #( a b b a c )).
-	expectedElements := #(a b c).
+	expectedElements := #(a b c)
 ]

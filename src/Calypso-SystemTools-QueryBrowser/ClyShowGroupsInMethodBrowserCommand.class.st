@@ -20,7 +20,7 @@ Class {
 { #category : #activation }
 ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 	<classAnnotation>
-	
+
 	^(CmdDoubleClickActivation for: ClyFullBrowserMethodGroupContext)
 		priority: 10000
 ]
@@ -28,7 +28,7 @@ ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivatio
 { #category : #activation }
 ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext
 ]
 
@@ -48,13 +48,13 @@ ClyShowGroupsInMethodBrowserCommand >> execute [
 	| queries fullQuery |
 	queries := methodGroups collect: [:each | each methodQuery].
 	fullQuery := ClyQuery unionFrom: queries.
-	
+
 	browser spawnQueryBrowserOn: fullQuery
 ]
 
 { #category : #execution }
 ClyShowGroupsInMethodBrowserCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]

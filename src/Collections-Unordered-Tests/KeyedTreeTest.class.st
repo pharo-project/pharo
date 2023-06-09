@@ -25,7 +25,7 @@ KeyedTreeTest >> testAtPath [
 	self should: [(tree atPath: #(2)) = 'Two'].
 	self should: [tree atPath: #(2 4)] raise: self defaultTestError.
 	self should: [tree atPath: #(1 two three)] raise: self defaultTestError.
-	self should: [tree atPath: #(3)] raise: self defaultTestError.
+	self should: [tree atPath: #(3)] raise: self defaultTestError
 ]
 
 { #category : #tests }
@@ -46,7 +46,7 @@ KeyedTreeTest >> testAtPathIfAbsent [
 	self should: [(tree atPath: #(2) ifAbsent: []) = 'Two'].
 	self should: [(tree atPath: #(2 4) ifAbsent: [#missing]) = #missing].
 	self should: [(tree atPath: #(1 two three) ifAbsent: [#missing]) = #missing] raise: self defaultTestError.
-	self should: [(tree atPath: #(3) ifAbsent: [#missing]) = #missing].
+	self should: [(tree atPath: #(3) ifAbsent: [#missing]) = #missing]
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ KeyedTreeTest >> testAtPathIfAbsentPut [
 	self should: [(tree atPath: #(1 four one) ifAbsentPut: [#anotherNew]) = #anotherNew].
 	self should: [(tree atPath: #(1 four one)) = #anotherNew].
 	self should: [(tree atPath: #(3) ifAbsentPut: [#yetAnotherNew]) = #yetAnotherNew].
-	self should: [(tree atPath: #(3)) = #yetAnotherNew].
+	self should: [(tree atPath: #(3)) = #yetAnotherNew]
 ]
 
 { #category : #tests }
@@ -92,7 +92,7 @@ KeyedTreeTest >> testAtPathPut [
 	self should: [(tree atPath: #(1 three $1)) = #anotherNew].
 	self should: [tree atPath: #(2 4) put: [#new]] raise: self defaultTestError.
 	self should: [(tree atPath: #(1 four one) put: #anotherNew) = #anotherNew].
-	self should: [(tree atPath: #(1 four one)) = #anotherNew].
+	self should: [(tree atPath: #(1 four one)) = #anotherNew]
 ]
 
 { #category : #tests }
@@ -114,7 +114,7 @@ KeyedTreeTest >> testCopy [
 	self should: [(c at: 1) = t2].
 	self shouldnt: [(c at: 1) == t2].
 	self should: [(c atPath: #(1 four)) = t3].
-	self shouldnt: [(c atPath: #(1 four)) == t3].
+	self shouldnt: [(c atPath: #(1 four)) == t3]
 ]
 
 { #category : #tests }
@@ -150,7 +150,7 @@ KeyedTreeTest >> testMerge [
 	self should: [(m atPath: #(1 1 1)) = '1-1-1'].
 	self should: [(m atPath: #(1 1 2)) = '1-1-2'].
 	self should: [(m atPath: #(1 3 1)) = '1-3-1'].
-	self should: [(m atPath: #(1 3 2)) = '1-3-2'].
+	self should: [(m atPath: #(1 3 2)) = '1-3-2']
 ]
 
 { #category : #tests }
@@ -170,7 +170,7 @@ KeyedTreeTest >> testRemovePath [
 	self should: [(tree removePath: #(1 two)) = 'One-Two'].
 	self should: [(tree atPath: #(1 two) ifAbsent: []) = nil].
 	self should: [(tree removePath: #(2)) = 'Two'].
-	self should: [(tree atPath: #(2) ifAbsent: []) = nil].
+	self should: [(tree atPath: #(2) ifAbsent: []) = nil]
 ]
 
 { #category : #tests }
@@ -190,7 +190,7 @@ KeyedTreeTest >> testRemovePathIfAbsent [
 	self should: [(tree removePath: #(1 two) ifAbsent: [#none]) = 'One-Two'].
 	self should: [(tree atPath: #(1 two) ifAbsent: []) = nil].
 	self should: [(tree removePath: #(2) ifAbsent: [#none]) = 'Two'].
-	self should: [(tree atPath: #(2) ifAbsent: []) = nil].
+	self should: [(tree atPath: #(2) ifAbsent: []) = nil]
 ]
 
 { #category : #tests }
@@ -214,5 +214,5 @@ KeyedTreeTest >> testSubtrees [
 					yourself);
 		yourself.
 	self should: [t1 subtrees = {t2. t4}].
-	self should: [(t1 at: 1) subtrees = {t3}].
+	self should: [(t1 at: 1) subtrees = {t3}]
 ]

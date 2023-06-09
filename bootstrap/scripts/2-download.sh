@@ -7,6 +7,8 @@
 set -x
 set -e
 
+echo $(date -u) "Bootstrap: Beginning to download resources required for bootstrap process"
+
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 . ${SCRIPTS}/envvars.sh
@@ -23,12 +25,19 @@ function download_to {
 }
 
 if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
-    # Downloads a SPUR vm for the configured architecture
-    mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
-    cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
-    ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm $BOOTSTRAP_ARCH
-    cd -
-    echo "Target VM: $(${VM} --version)"
+	rm -rf "${BOOTSTRAP_DOWNLOADS}/vmtarget"
+	# Downloads a SPUR vm for the configured architecture
+	mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
+	cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
+	# Extract the VM version from the image file version, avoiding going to git to extract the tags
+
+	#Odd PR builds use the the latest VM, else use the stable VM
+	set_version_variables
+	TEST_VM_KIND="vmLatest"
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT_VERSION} ${TEST_VM_KIND} $BOOTSTRAP_ARCH
+
+  cd -
+	echo "Target VM: $(${VM} --version)"
 fi
 
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then

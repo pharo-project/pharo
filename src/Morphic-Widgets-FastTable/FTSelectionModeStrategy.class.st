@@ -129,7 +129,7 @@ FTSelectionModeStrategy >> selectableIndexAbove: anIndex [
 { #category : #accessing }
 FTSelectionModeStrategy >> selectableIndexAfter: anIndex [
 	"When getting in this method we should already know there is a selectable after this one."
-	
+
 	^ self subclassResponsibility
 ]
 

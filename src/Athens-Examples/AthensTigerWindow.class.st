@@ -34,18 +34,18 @@ AthensTigerWindow class >> surfaceExtent [
 AthensTigerWindow >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
-	aCanvas drawImage: surface asForm at: self layoutBounds origin.
+	aCanvas drawImage: surface asForm at: self layoutBounds origin
 ]
 
 { #category : #initialization }
-AthensTigerWindow >> initialize [ 
+AthensTigerWindow >> initialize [
 
 	super initialize.
 	surface := AthensCairoSurface extent: self class surfaceExtent.
 	example := AthensTiger on: surface.
 	scale := surface extent x / AthensTiger tigerMaxY.
 	rotation := 0.
-	frames := 0.
+	frames := 0
 ]
 
 { #category : #stepping }
@@ -54,12 +54,12 @@ AthensTigerWindow >> rotationSpeed [
 ]
 
 { #category : #'stepping and presenter' }
-AthensTigerWindow >> step [ 
+AthensTigerWindow >> step [
 	| zoom |
 	rotation := rotation + self rotationSpeed.
 	frames := frames + 1.
 	zoom := (frames / 100) sin abs.
-	
+
 	example
 		rotation: rotation;
 		zoom: zoom;

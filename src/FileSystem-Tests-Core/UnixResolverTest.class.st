@@ -13,6 +13,20 @@ UnixResolverTest >> createResolver [
 	^ UnixResolver new
 ]
 
+{ #category : #running }
+UnixResolverTest >> testGetTempFromTMPDIR [
+
+	| expected |
+	OSPlatform current isUnix ifFalse: [ ^ self skip ].
+	
+	expected := '/tmp/foo'.
+	OSEnvironment current setEnv: 'TMPDIR' value: expected during: [ 
+		| actual |
+		actual := self createResolver temp.
+		self assert: actual fullName equals: expected ]
+
+]
+
 { #category : #tests }
 UnixResolverTest >> testXdgParseUserDirLineDocuments [
 	"Ensure that a path of the form '$HOME/Documents' answers the expected value.
@@ -22,7 +36,7 @@ UnixResolverTest >> testXdgParseUserDirLineDocuments [
 	stream := '"$HOME/Documents"' readStream.
 	path := resolver xdgParseUserDirLine: stream.
 	relativePath := path relativeTo: resolver home.
-	self assert: relativePath pathString equals: 'Documents'.
+	self assert: relativePath pathString equals: 'Documents'
 ]
 
 { #category : #tests }
@@ -33,5 +47,5 @@ UnixResolverTest >> testXdgParseUserDirLineNotRoot [
 
 	stream := '"$HOME/"' readStream.
 	path := resolver xdgParseUserDirLine: stream.
-	self deny: path isRoot.
+	self deny: path isRoot
 ]

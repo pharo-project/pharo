@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #displaying }
-AlphaInfiniteForm >> computeBoundingBox [ 
+AlphaInfiniteForm >> computeBoundingBox [
 	"Refer to the comment in DisplayObject|computeBoundingBox."
 
 	^self origin extent: self extent
@@ -50,7 +50,7 @@ AlphaInfiniteForm >> displayOnPort: aPort offsetBy: offset [
 	left to: (targetBox right - 1) by: patternBox width do:
 		[:x | top to: (targetBox bottom - 1) by: patternBox height do:
 			[:y | aPort destOrigin: x@y; copyBits]].
-	aPort colorMap: savedMap.
+	aPort colorMap: savedMap
 ]
 
 { #category : #accessing }
@@ -70,7 +70,7 @@ AlphaInfiniteForm >> extent: anObject [
 { #category : #accessing }
 AlphaInfiniteForm >> origin [
 	"Answer the origin."
-	
+
 	^origin ifNil: [0@0]
 ]
 

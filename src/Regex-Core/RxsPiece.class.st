@@ -51,7 +51,7 @@ RxsPiece >> initializeAtom: anAtom [
 
 { #category : #initialization }
 RxsPiece >> initializeAtom: anAtom min: minOccurrences max: maxOccurrences [
-	"This piece is from <minOccurrences> to <maxOccurrences> 
+	"This piece is from <minOccurrences> to <maxOccurrences>
 	occurrences of the specified RxsAtom."
 
 	atom := anAtom.
@@ -90,7 +90,7 @@ RxsPiece >> isAtomic [
 
 { #category : #testing }
 RxsPiece >> isNullable [
-	"A piece is nullable if it allows 0 matches. 
+	"A piece is nullable if it allows 0 matches.
 	This is often handy to know for optimization."
 
 	^min = 0 or: [atom isNullable]

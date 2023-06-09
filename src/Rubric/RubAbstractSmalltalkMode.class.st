@@ -9,18 +9,12 @@ Class {
 
 { #category : #accessing }
 RubAbstractSmalltalkMode >> editorClass [
-	^ RubSmalltalkEditor.
+	^ RubSmalltalkEditor
 ]
 
 { #category : #testing }
 RubAbstractSmalltalkMode >> isCompletionEnabled [
 	^ true
-]
-
-{ #category : #testing }
-RubAbstractSmalltalkMode >> isForScripting [
-	"needs to be unified is #isScripting"
-	^ self isScripting
 ]
 
 { #category : #testing }

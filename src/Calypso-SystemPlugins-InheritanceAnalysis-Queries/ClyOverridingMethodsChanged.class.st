@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyOverridingMethodsChanged class >> initiatedBy: anInheritenceAnalysisPlugin forOverriddenMethod: aMethod [
-	^self new 
+	^self new
 		method: aMethod;
 		announcerPlugin: anInheritenceAnalysisPlugin
 ]

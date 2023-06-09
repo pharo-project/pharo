@@ -31,13 +31,14 @@ Class {
 { #category : #'world menu' }
 MCWorkingCopyBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #'Monticello Browser (Legacy)')
 		parent: #Versioning;
 		action: [ Smalltalk tools openMonticelloBrowser ];
 		order: 2;
 		keyText: 'o, p';
 		help: '(Deprecated) Source code versioning system to manage Smalltalk code.';
-		icon: Smalltalk tools monticelloBrowser taskbarIcon
+		icon: (aBuilder iconNamed:Smalltalk tools monticelloBrowser taskbarIconName)
 ]
 
 { #category : #'instance creation' }
@@ -82,7 +83,7 @@ MCWorkingCopyBrowser class >> repositorySearchMaxSize [
 MCWorkingCopyBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#versionControlIcon
+	^#versionControl
 ]
 
 { #category : #settings }
@@ -156,7 +157,7 @@ MCWorkingCopyBrowser >> addRepositoryToPackage [
 
 	self repository
 		ifNotNil: [ :repos | 
-			((SearchFacade mcPackageSearchRejectAll: [ :aPackage | aPackage repositoryGroup includes: repos ] withInitialFilter: nil)
+			((MCSearchFacade mcPackageSearchRejectAll: [ :aPackage | aPackage repositoryGroup includes: repos ] withInitialFilter: nil)
 				chooseFromOwner: self window)
 				ifNotNil: [ :wc | 
 					workingCopy := wc.
@@ -200,7 +201,7 @@ MCWorkingCopyBrowser >> addRequiredPackage [
 	| chosen |
 	workingCopy
 		ifNotNil: [ :wc | 
-			chosen := (SearchFacade mcPackageSearchRejectAll: [ :ea | ea = wc or: [ wc requiredPackages includes: ea package ] ])
+			chosen := (MCSearchFacade mcPackageSearchRejectAll: [ :ea | ea = wc or: [ wc requiredPackages includes: ea package ] ])
 				chooseFromOwner: self window.
 			chosen
 				ifNotNil: [ 
@@ -930,17 +931,6 @@ MCWorkingCopyBrowser >> workingCopySearchAccept: string [
 		
 	packageProcess ifNotNil: [ packageProcess terminate ].	
 	packageProcess := [ self workingCopyListChanged ] fork.
-]
-
-{ #category : #'morphic ui' }
-MCWorkingCopyBrowser >> workingCopySearchAdd: aString [ 
-	self workingCopySearchList: (self workingCopySearchList
-			remove: aString
-			ifAbsent: [];
-			 yourself).
-	self workingCopySearchList size = self workingCopySearchMaxSize
-		ifTrue: [self workingCopySearchList removeLast].
-	self workingCopySearchList addFirst: aString 
 ]
 
 { #category : #'morphic ui' }

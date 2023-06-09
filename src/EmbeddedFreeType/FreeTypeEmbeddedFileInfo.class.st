@@ -3,7 +3,7 @@ File info for embbeded FreeType fonts
 "
 Class {
 	#name : #FreeTypeEmbeddedFileInfo,
-	#superclass : #FreeTypeFileInfoAbstract,
+	#superclass : #AbstractFreeTypeFileInfo,
 	#instVars : [
 		'fileContents',
 		'baseName'

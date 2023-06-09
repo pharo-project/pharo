@@ -10,7 +10,7 @@ Class class >> fromSton: stonReader [
 
 { #category : #'*STON-Core' }
 Class >> stonOn: stonWriter [
-	stonWriter 
-		writeObject: self 
+	stonWriter
+		writeObject: self
 		listSingleton: self name asSymbol
 ]

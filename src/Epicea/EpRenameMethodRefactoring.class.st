@@ -15,8 +15,8 @@ Class {
 { #category : #'instance creation' }
 EpRenameMethodRefactoring class >> renameMethod: oldSelector in: affectedClassName to: newSelector [
 	^ self basicNew
-		initializeFrom: oldSelector 
-		to: newSelector 
+		initializeFrom: oldSelector
+		to: newSelector
 		in: affectedClassName;
 		yourself
 ]
@@ -24,16 +24,16 @@ EpRenameMethodRefactoring class >> renameMethod: oldSelector in: affectedClassNa
 { #category : #converting }
 EpRenameMethodRefactoring >> asRBRefactoring [
 	^ RBRenameMethodRefactoring
-		renameMethod: oldSelector 
-		in: affectedClassName 
-		to: newSelector 
+		renameMethod: oldSelector
+		in: affectedClassName
+		to: newSelector
 		permutation: #()
 ]
 
 { #category : #initialization }
 EpRenameMethodRefactoring >> initializeFrom: anOldSelector to: aNewSelector in: aClassName [
 	self initialize.
-	
+
 	oldSelector := anOldSelector.
 	newSelector := aNewSelector.
 	affectedClassName := aClassName

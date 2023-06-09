@@ -26,14 +26,15 @@ OCASTTranslatorTest >> compilationContext [
 	context := CompilationContext new
 		encoderClass: self encoder;
 		bindings: globals;
-		interactive: true;
-		yourself.
+		parseOptions: { #'+' . optimization };
+		yourself.	
+	
 	^ context
 ]
 
 { #category : #support }
 OCASTTranslatorTest >> compileExample: aSelector [
-	
+
 	^ self compileSource: (OCOpalExamples>> aSelector) sourceCode
 ]
 
@@ -42,7 +43,12 @@ OCASTTranslatorTest >> compileSource: source [
 	| ir ast |
 	ast := RBParser parseMethod: source.
 	ast compilationContext: self compilationContext.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ast compiler
+		class: OCOpalExamples;
+		bindings: globals;
+		doSemanticAnalysis.
+	ast checkFaulty: nil.
+	ir := ast ir.
 	^ 	method := ir compiledMethod
 ]
 
@@ -133,7 +139,7 @@ OCASTTranslatorTest >> setUp [
 
 	super setUp.
 	instance := OCOpalExamples new.
-	globals := SystemDictionary new.
+	globals := SystemDictionary new
 ]
 
 { #category : #running }
@@ -166,7 +172,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorCode [
 	| ast ir newMethod |
 	method := OCOpalExamples >> #examplePrimitiveErrorCode.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 
 	newMethod := ir compiledMethod.
 	self assert: method primitive equals: newMethod primitive
@@ -177,7 +183,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorCodeModule [
 	| ast ir newMethod |
 	method := OCOpalExamples >> #examplePrimitiveErrorCodeModule.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 
 	newMethod := ir compiledMethod.
 
@@ -193,7 +199,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorModule [
 	| ast ir |
 	method := OCOpalExamples >> #examplePrimitiveErrorModule.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 	self assert: ir tempKeys equals: #(#errorCode)
 ]
 
@@ -205,15 +211,8 @@ OCASTTranslatorTest >> testExamplePrimitiveModuleError [
 	| ast ir |
 	method := OCOpalExamples >> #examplePrimitiveModuleError.
 	ast := method parseTree.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ir := ast ir.
 	self assert: ir tempKeys equals: #(#errorCode)
-]
-
-{ #category : #'tests - simple' }
-OCASTTranslatorTest >> testSendSpecialBinaryMessage [
-
-	self assert: (Smalltalk specialSelectors includes: #+).
-	self assert: (self testExample: #exampleReturn1plus2) equals: 3
 ]
 
 { #category : #support }

@@ -15,7 +15,7 @@ ClyUnclassifiedMethodsQuery >> description [
 
 { #category : #testing }
 ClyUnclassifiedMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^aSystemAnnouncement affectsMethods
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]

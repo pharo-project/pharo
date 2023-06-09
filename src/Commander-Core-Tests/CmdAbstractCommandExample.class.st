@@ -7,7 +7,7 @@ Class {
 { #category : #activation }
 CmdAbstractCommandExample class >> activationExample1 [
 	<classAnnotation>
-	
+
 	^CmdCommandActivationExample for: CmdToolContextStub1
 ]
 

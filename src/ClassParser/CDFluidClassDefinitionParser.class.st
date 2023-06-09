@@ -39,14 +39,43 @@ Class {
 		'classNameNode',
 		'superclassNode'
 	],
+	#classInstVars : [
+		'unrestrictedVariableDefinitions'
+	],
 	#category : #'ClassParser-Parser'
 }
+
+{ #category : #settings }
+CDFluidClassDefinitionParser class >> settingsOn: aBuilder [
+	
+	<systemsettings>
+	(aBuilder setting: #unrestrictedVariableDefinitions)
+		parent: #codeBrowsing;
+		default: false;
+		label: 'Unrestricted Slots/Class Variable Definitions';
+		description: 'EXPERIMENTAL: If true, the system will allow any expression as 
+a Variable Definition (for Slots and Classvariables) that evaluates to a valid instance. 
+		
+WARNING1: you have to load all the Variable implementation classes *before* any users. 
+WARNING2: the definition will be loaded by *unchecked* evaluation';
+		target: self.
+]
+
+{ #category : #settings }
+CDFluidClassDefinitionParser class >> unrestrictedVariableDefinitions [
+	^ unrestrictedVariableDefinitions ifNil: [ false ]
+]
+
+{ #category : #settings }
+CDFluidClassDefinitionParser class >> unrestrictedVariableDefinitions: aBoolean [
+	unrestrictedVariableDefinitions := aBoolean
+]
 
 { #category : #parsing }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 	superclassNode ifNotNil: [ self handleSuperclassNode: superclassNode ].
-	self handleClassName: classNameNode.
+	self handleClassName: classNameNode
 ]
 
 { #category : #parsing }
@@ -55,10 +84,10 @@ CDFluidClassDefinitionParser >> handleLayout: aNode [
 ]
 
 { #category : #parsing }
-CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [ 
+CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
 
 	| className classNode node |
-	node := aRBCascadeNode receiver arguments first. 
+	node := aRBCascadeNode receiver arguments first.
 	className := node receiver binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
@@ -67,10 +96,10 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
 ]
 
 { #category : #parsing }
-CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [ 
+CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [
 
 	| className classNode node |
-	node := aNode arguments first receiver. 
+	node := aNode arguments first receiver.
 	className := node binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
@@ -82,33 +111,169 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [
 CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| sharedPoolNodes |
 	sharedPoolNodes := aNode children
-		collect: [ :aPoolNode | 
+		collect: [ :aPoolNode |
 			self sharedPoolNodeClass
 				node: aPoolNode
 				name: aPoolNode name
-				start: aPoolNode start 
+				start: aPoolNode start
 				stop: aPoolNode start + aPoolNode name size
 			].
 	classDefinition sharedPools: sharedPoolNodes
 ]
 
-{ #category : #parsing }
-CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [ 
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSharedVarableNodeSimple: slotDefNode [
+
+	"when a class variable is just #Name"
+
+	^ CDSharedVariableNode new
+		  node: slotDefNode;
+		  name: slotDefNode value;
+		  variableClassName: #ClassVariable;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSharedVariabeNode: variableDefNode [
+	 | variable |
+	"when a class variable is just #ClassVars"
+	variableDefNode isLiteralNode ifTrue: [ variable := self handleSharedVarableNodeSimple: variableDefNode].
+	"#ClassVar => SomeVar default: 5; default2: 4"
+	variableDefNode isCascade ifTrue: [ variable := self handleSharedVariableNodeCascade: variableDefNode].
+	"when a class var is just #var => SomeVar"
+	(variableDefNode isMessage and: [ variableDefNode selector = '=>'  ])ifTrue: [  variable := self handleSharedVariableNodeSimpleClass: variableDefNode].
+	"When a class variable is #Var => SomeVar default: 5"
+	(variableDefNode isMessage and: [ variableDefNode selector ~= '=>'  ]) ifTrue:  [ variable := self handleSharedVariableNodeSimpleClassArgument: variableDefNode].
+
+	variable ifNil: [ ^self error: 'Variable definion can not be parsed' ].
+	classDefinition addSharedVariable: variable
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSharedVariableNodeCascade: slotDefNode [
+
+	"#ClassVar => SomeVar default: 5; default2: 4"
+
+	^ CDSharedVariableNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver receiver value;
+		  variableClassName: slotDefNode receiver arguments first value name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClass: slotDefNode [
+
+	"when a calss var is just #var => SomeVar"
+
+	^ CDSharedVariableNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver value;
+		  variableClassName: slotDefNode arguments first name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClassArgument: slotDefNode [
+
+	"When a class variable is #Var => SomeVar default: 5"
+
+	^ CDSharedVariableNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver receiver value;
+		  variableClassName: slotDefNode receiver arguments first name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSharedVariableNodesFromArrayNode: aRBArrayNode [
+
+	aRBArrayNode statements do: [ :slotStatement |
+		self handleSharedVariabeNode: slotStatement ]
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSlotNode: slotDefNode [
+	 | slot |
 	
-	| slotNodes classVariablesString |
-	classVariablesString := aNode sourceCode.
-	slotNodes := aNode statements
-		collect: [ :literalNode | 		
-			| start literalName |
-			literalName := literalNode value.
-			start := aNode start + (classVariablesString findString: literalName).
-			CDSharedVariableNode
-				node: aNode
-				name: literalName
-				slotClassName: 'ClassVariableSlot'
-				start: start
-				stop: start + literalNode size ].
-	classDefinition sharedSlots: slotNodes
+	"Setting, default off, to allow experiments"
+	self class unrestrictedVariableDefinitions ifTrue: [ 
+		^ classDefinition addSlot: (self handleUnrestrictedSlotDefinition: slotDefNode) ].
+	
+	"when a slot is just #inst"
+	slotDefNode isLiteralNode ifTrue: [ slot := self handleSlotNodeSimple: slotDefNode].
+	"#inst => InstanceVariableSlot default: 5; default2: 4"
+	slotDefNode isCascade ifTrue: [ slot := self handleSlotNodeCascade: slotDefNode].
+	"when a slot is just #inst => InstanceVariableSlot."
+	(slotDefNode isMessage and: [ slotDefNode selector = '=>'  ])ifTrue: [  slot := self handleSlotNodeSimpleClass: slotDefNode].
+	"when a slot is #inst => InstanceVariableSlot default: 5."
+	(slotDefNode isMessage and: [ slotDefNode selector ~= '=>'  ]) ifTrue:  [ slot := self handleSlotNodeSimpleClassArgument: slotDefNode].
+
+	slot ifNil: [ ^self error: 'Slot definion can not be parsed' ].
+	classDefinition addSlot: slot
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSlotNodeCascade: slotDefNode [
+
+	"#inst => InstanceVariableSlot default: 5; default2: 4"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver receiver value;
+		  variableClassName: slotDefNode receiver arguments first value name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSlotNodeSimple: slotDefNode [
+
+	"when a slot is just #inst"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode value;
+		  variableClassName: #InstanceVariableSlot;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSlotNodeSimpleClass: slotDefNode [
+
+	"when a variable is just #var => InstanceVariableSlot"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver value;
+		  variableClassName: slotDefNode arguments first name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSlotNodeSimpleClassArgument: slotDefNode [
+
+	"When a vaiable is #var => InstanceVariableSlot default: 5"
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotDefNode receiver receiver value;
+		  variableClassName: slotDefNode receiver arguments first name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
+
+	aRBArrayNode statements do: [ :slotStatement |
+		self handleSlotNode: slotStatement ]
 ]
 
 { #category : #parsing }
@@ -132,71 +297,91 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 	classDefinition tag: (CDClassTagNode new name: aNode value)
 ]
 
+{ #category : #'parsing - variables' }
+CDFluidClassDefinitionParser >> handleUnrestrictedSlotDefinition: slotDefNode [
+
+	"If the preference is enabled, allow unrestricted slot definitions. 
+	TAKE CARE: There is no way to know the name nor the class witout executing the code of the defintion.
+	This means that a) code will be evaluated which could have side effects and b) you need to load the Slot Class
+	before any users, as an UndefinedSlot can not be created, as we do not know the name"
+
+	| slotInstance |
+	"create the instance of the slot for real, we use this to fill out the name and variableClassName"
+	slotInstance := slotDefNode evaluate.
+
+	^ CDSlotNode new
+		  node: slotDefNode;
+		  name: slotInstance name;
+		  variableClassName: slotInstance class name;
+		  start: slotDefNode start;
+		  stop: slotDefNode stop
+]
+
 { #category : #parsing }
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
-	
+
 	| searcher |
 	searcher := RBParseTreeSearcher new.
 	searcher
-		matches: 'Trait << `#name' do: [:aNode :answer | 
+		matches: 'Trait << `#name' do: [:aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
 			self beTraitDefinition ];
-		matches: 'Trait << `name classTrait' do: [:aNode :answer | 
+		matches: 'Trait << `name classTrait' do: [:aNode :answer |
 			classNameNode := searcher variableNamed: '`name'.
 			self beClassSideTraitDefinition ];
-		matches: '`superclass << `#name' do: [:aNode :answer | 
-			classNameNode := searcher variableNamed: '`#name'.			
+		matches: '`superclass << `#name' do: [:aNode :answer |
+			classNameNode := searcher variableNamed: '`#name'.
 			superclassNode := searcher variableNamed: '`superclass'.
 			self beClassDefinition ];
-		matches: '`superclass class << `name class' do: [:aNode :answer | 
-			classNameNode := searcher variableNamed: '`name'.			
+		matches: '`superclass class << `name class' do: [:aNode :answer |
+			classNameNode := searcher variableNamed: '`name'.
 			self beMetaclassDefinition ].
-		
+
 	searcher executeTree: expressionTree.
-	
+
 	classDefinition originalNode: expressionTree.
 	expressionTree acceptVisitor: self.
 	^ classDefinition
 ]
 
 { #category : #parsing }
-CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
+CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
-	
+
 	aString =	 #slots:
 		ifTrue: [ ^ self handleSlotsNodesFromArrayNode: aNode ].
-	aString =	 #sharedVariables: 
-		ifTrue: [ ^ self handleSharedVariableNames: aNode ].	
+	aString =	 #sharedVariables:
+		ifTrue: [ ^ self handleSharedVariableNodesFromArrayNode: aNode ].
 	aString =	 #package:
 		ifTrue: [ ^ self handlePackage: aNode ].
 	aString = #layout:
-		ifTrue: [ ^ self handleLayout: aNode ].	
-	aString = #tag: 
+		ifTrue: [ ^ self handleLayout: aNode ].
+	aString = #tag:
 		ifTrue: [  ^self handleTag: aNode ].
 	aString =	 #traits:
 		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
 	aString =	 #sharedPools:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
-	
+
 	CDUnrecognizedClassPart new
-		classDefinition: self; 
+		classDefinition: self;
 		unrecognizedPart: aString;
 		signal
 ]
 
 { #category : #parsing }
-CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [ 
+CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 	"See class comment. Here we handle the cascade version of the class definition."
-	" 
+	"
 	Object << #Point
 			trait: TraitX;
 			slots: { #foo };
 			package: ''Kernel-BasicObjects'''
 	"
-	
-	self handleClassAndSuperclassOf: aRBCascadeNode.	
-	aRBCascadeNode messages do: 
+
+	self handleClassAndSuperclassOf: aRBCascadeNode.
+	aRBCascadeNode messages do:
 		[:msg | msg selectorParts
 					with: msg arguments
 					do: [ :selectorPart :argument |
@@ -209,10 +394,10 @@ CDFluidClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	"
 	Object << #Point
 			package: ''Kernel-BasicObjects'''
-	"		
+	"
 
 	self handleClassAndSuperclassOf: aRBMessageNode.
-	
+
 	aRBMessageNode arguments ifEmpty: [ ^ self ].
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments

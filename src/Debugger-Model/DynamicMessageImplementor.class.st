@@ -23,10 +23,10 @@ DynamicMessageImplementor class >> for: aMessage in: aClass [
 DynamicMessageImplementor >> argumentNameAt: anIndex [
 
 	| argumentName argument |
-	
+
 	argument := message arguments at: anIndex.
 	argumentName := argument class canonicalArgumentName.
-	
+
 	[ argumentNames includes: argumentName ] whileTrue: [ argumentName := argumentName , anIndex asString ].
 	argumentNames add: argumentName.
 
@@ -48,19 +48,19 @@ DynamicMessageImplementor >> initializeFor: aMessage in: aClass [
 
 { #category : #testing }
 DynamicMessageImplementor >> isMessageAGetter [
-	
+
 	^ message numArgs = 0 and: [ class instVarNames includes: message selector ]
 ]
 
 { #category : #testing }
 DynamicMessageImplementor >> isMessageASetter [
-	
+
 	^ message numArgs = 1 and: [ class instVarNames includes: message selector allButLast ]
 ]
 
 { #category : #testing }
 DynamicMessageImplementor >> messageShouldBeImplemented [
-	
+
 	^ (self isMessageAGetter | self isMessageASetter) not
 ]
 
@@ -70,7 +70,7 @@ DynamicMessageImplementor >> value [
 	argumentNames := Set new.
 	stream := WriteStream on: String new.
 	self writeSourceCode.
-	
+
 	^ stream contents
 ]
 
@@ -85,7 +85,7 @@ DynamicMessageImplementor >> write: aKeyword of: anIndex [
 DynamicMessageImplementor >> writeArgumentNameAt: anIndex [
 
 	| argumentName |
-	
+
 	argumentName := self argumentNameAt: anIndex.
 	stream
 		nextPutAll: ' ';
@@ -102,7 +102,7 @@ DynamicMessageImplementor >> writeArgumentNameIfNecessaryOf: aKeyword at: anInde
 { #category : #'evaluating-private' }
 DynamicMessageImplementor >> writeGetterSourceCode [
 
-	stream 
+	stream
 		cr;
 		tab;
 		nextPutAll: '^ ';
@@ -124,7 +124,7 @@ DynamicMessageImplementor >> writeMethodName [
 { #category : #'evaluating-private' }
 DynamicMessageImplementor >> writeSetterSourceCode [
 
-	stream 
+	stream
 		cr;
 		tab;
 		nextPutAll: message selector allButLast;

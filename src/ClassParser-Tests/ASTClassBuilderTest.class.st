@@ -9,7 +9,7 @@ Class {
 
 { #category : #environmentSetUp }
 ASTClassBuilderTest >> environment [
-	^ ShSmalltalkGlobalsEnvironment new.
+	^ ShSmalltalkGlobalsEnvironment new
 ]
 
 { #category : #running }
@@ -111,15 +111,14 @@ ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 
 	| ast class |
 	ast := self parserClass parse: 'Xcrd subclass: #TestSubClass'.
+	[
 	class := ShiftClassBuilder new
 		         useUndefinedClass;
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
 		         build.
 
-	self
-		assert: class superclass
-		equals: (self environment classNamed: 'Xcrd')
+	self assert: class superclass equals: (self environment classNamed: 'Xcrd') ] ensure: [ (self environment classNamed: 'Xcrd') ifNotNil: #removeFromSystem ]
 ]
 
 { #category : #tests }
@@ -346,7 +345,7 @@ ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 	self assert: class name equals: #TestSubClass.
 	self assert: class instanceVariablesString equals: ''.
 	self assert: class classVarNames equals: #( #classVar #pouet #var ).
-	self assert: class classLayout class equals: WordLayout.
+	self assert: class classLayout class equals: WordLayout
 ]
 
 { #category : #running }
@@ -390,7 +389,7 @@ ASTClassBuilderTest >> testDefaultResolve [
 	ast := self parserClass parse: 'cdfgdf subclass: #TestSubClass
 															uses: TOccurrencesTest'.
 	self
-		should: [ 
+		should: [
 			ShiftClassBuilder new
 				buildEnvironment: self environment;
 				buildFromAST: ast;
@@ -403,11 +402,12 @@ ASTClassBuilderTest >> testUseUndefinedClass [
 
 	| ast |
 	ast := self parserClass parse: 'PoPouet subclass: #TestClass'.
-	ShiftClassInstaller new make: [ :builder | 
+	[
+	ShiftClassInstaller new make: [ :builder |
 		builder
 			useUndefinedClass;
 			buildEnvironment: self environment;
 			buildFromAST: ast ].
-	self assert: [ 
-		(ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) isUndefined ]
+	self assert: [ (ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) isUndefined ] ] ensure: [
+		(ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) ifNotNil: #removeFromSystem ]
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #adding }
-HistoryLeaf >> addItem: anHistoryItem [ 
+HistoryLeaf >> addItem: anHistoryItem [
 	^ false
 ]
 

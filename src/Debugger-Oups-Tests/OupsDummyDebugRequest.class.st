@@ -15,7 +15,7 @@ OupsDummyDebugRequest >> computePreDebugActions [
 
 	"For test purposes. Instead of computing preDebugActions as usual, insert a dummy pre debug action"
 
-	self preDebugActions add: [ :dbSession | 
+	self preDebugActions add: [ :dbSession |
 		dummyPreDebugActionExecutedCount := self dummyPreDebugActionExecutedCount	+ 1 ]
 ]
 

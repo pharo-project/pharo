@@ -17,7 +17,7 @@ KMDispatcherTest >> testBuffering [
 	| morph flag category event1 event2 event3|
 	category := KMCategory named: #TestBlah.
 	KMRepository default addCategory: category.
-	
+
 	morph := BorderedMorph new.
 	morph kmDispatcher reset.
 	flag := false.
@@ -31,19 +31,19 @@ KMDispatcherTest >> testBuffering [
 		dispatchKeystroke: event1.
 	self assert: morph kmDispatcher buffer size equals: 1.
 	self assert: morph kmDispatcher buffer first equals: event1.
-	
+
 	event2 := self eventKey: $b.
 	morph kmDispatcher
 		dispatchKeystroke: event2.
 	self assert: morph kmDispatcher buffer size equals: 2.
 	self assert: morph kmDispatcher buffer first equals: event1.
 	self assert: morph kmDispatcher buffer second equals: event2.
-	
+
 	event3 := self eventKey: $c.
 	morph kmDispatcher
 		dispatchKeystroke: event3.
 	self assert: morph kmDispatcher buffer isEmpty.
-	
+
 	self assert: flag
 ]
 
@@ -61,7 +61,7 @@ KMDispatcherTest >> testDetach [
 	morph attachKeymapCategory: #TestAnother.
 	morph kmDispatcher targets size = 2 ifFalse: [ self error: 'should have one category attached' ].
 
-	morph detachKeymapCategory: #TestBlah.	
+	morph detachKeymapCategory: #TestBlah.
 	attachedCategories := morph kmDispatcher targets collect: [ :e | e category name ].
 	self assert: attachedCategories asArray equals: { #TestAnother }.
 	self should: [ morph detachKeymapCategory: #NonExistent ] raise: Error
@@ -74,7 +74,7 @@ KMDispatcherTest >> testNoMultiTrigger [
 	otherCategory := KMCategory named: #TestFoo.
 	KMRepository default addCategory: category.
 	KMRepository default addCategory: otherCategory.
-	
+
 	bm1 := BorderedMorph new.
 	bm1 attachKeymapCategory: #TestBlah.
 	flag1 := false.
@@ -82,12 +82,12 @@ KMDispatcherTest >> testNoMultiTrigger [
 	category addKeymapEntry: (KMKeymap named: #Foo shortcut: $a asKeyCombination, $b asKeyCombination, $c asKeyCombination action: [flag1 := true]).
 	bm2 := Morph new.
 	bm2 attachKeymapCategory: #TestFoo.
-	
+
 	flag2 := false.
 
 	otherCategory addKeymapEntry: (KMKeymap named: #Bar shortcut: $a asKeyCombination, $b asKeyCombination, $c asKeyCombination action: [flag2 := true]).
 	bm1 addMorphBack: bm2.
-	
+
 	{self eventKey: $a. self eventKey: $b. self eventKey: $c}
 		do: [:e | bm2 dispatchKeystrokeForEvent: e].
 	self deny: flag1.
@@ -96,19 +96,19 @@ KMDispatcherTest >> testNoMultiTrigger [
 
 { #category : #tests }
 KMDispatcherTest >> testNoStaggeredTrigger [
-	"Once a key sequence is recognized by a keymapper, all other  
+	"Once a key sequence is recognized by a keymapper, all other
 	keymappers should clear their buffers"
 	| bm1 bm2 flag1 flag2 category otherCategory bufferBefore |
-	
+
 	category := KMCategory named: #TestBlah.
 	otherCategory := KMCategory named: #TestFoo.
-	
+
 	KMRepository default addCategory: category.
 	KMRepository default addCategory: otherCategory.
-	
+
 	bm1 := BorderedMorph new.
 	bm1 attachKeymapCategory: category.
-	
+
 	flag1 := false.
 	category addKeymapEntry: ( KMKeymap named: #Foo shortcut: $a asKeyCombination, $b asKeyCombination, $c asKeyCombination action: [flag1 := true]).
 

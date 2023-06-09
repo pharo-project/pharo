@@ -19,7 +19,7 @@ Class {
 		'afterNodes',
 		'ancestorNode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
@@ -32,7 +32,7 @@ RBSplitCascadeRefactoring class >> model: aNamespace split: anInterval from: aSe
 
 { #category : #'instance creation' }
 RBSplitCascadeRefactoring class >> split: anInterval from: aSelector in: aClass [
-	^ self new 
+	^ self new
 		split: anInterval from: aSelector in: aClass;
 		yourself
 ]
@@ -42,13 +42,13 @@ RBSplitCascadeRefactoring >> extractReceiver [
 	| name |
 	(cascadeNode receiver isLiteralNode or: [ cascadeNode receiver isVariable ])
 		ifTrue: [ ^ self ].
-	name := self 
-		safeVariableNameFor: class 
-		temporaries: self parseTree allDefinedVariables 
+	name := self
+		safeVariableNameFor: class
+		temporaries: self parseTree allDefinedVariables
 		basedOn: 'receiver'.
 	ancestorNode parent
 		addTemporaryNamed: name;
-		addNode: (RBAssignmentNode 
+		addNode: (RBAssignmentNode
 			variable: (RBVariableNode named: name)
 			value: cascadeNode receiver)
 		before: ancestorNode.
@@ -66,7 +66,7 @@ RBSplitCascadeRefactoring >> findAncestorNode [
 	[ ancestorNode parent isSequence not and: [ ancestorNode parent isReturn ] ]
 		whileTrue: [ ancestorNode := ancestorNode parent ].
 	ancestorNode parent isSequence
-		ifFalse: [ self refactoringFailure: 'To split this cascade, you must extract it to a temporary first' ]
+		ifFalse: [ self refactoringError: 'To split this cascade, you must extract it to a temporary first' ]
 ]
 
 { #category : #preconditions }
@@ -78,7 +78,7 @@ RBSplitCascadeRefactoring >> findCascadeNode [
 	[ cascadeNode isNil or: [ cascadeNode isCascade ] ]
 		whileFalse: [ cascadeNode := cascadeNode parent ].
 	cascadeNode
-		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be within a cascade' ]
+		ifNil: [ self refactoringError: 'The selection doesn''t appear to be within a cascade' ]
 ]
 
 { #category : #preconditions }
@@ -90,25 +90,25 @@ RBSplitCascadeRefactoring >> findMessageNodes [
 	afterNodes := cascadeNode messages
 		select: [ :each | selectedInterval last <= each keywordsPositions first].
 	(beforeNodes isEmpty or: [ afterNodes isEmpty ])
-		ifTrue: [ self refactoringFailure: 'Splitting a cascade into the whole cascade and an empty one is pointless' ].
+		ifTrue: [ self refactoringError: 'Splitting a cascade into the whole cascade and an empty one is pointless' ].
 	(beforeNodes size + afterNodes size = cascadeNode messages size)
-		ifFalse: [ self refactoringFailure: 'To set the split boundary place the cursor inbetween two cascaded messages' ]
+		ifFalse: [ self refactoringError: 'To set the split boundary place the cursor inbetween two cascaded messages' ]
 ]
 
 { #category : #accessing }
 RBSplitCascadeRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
+		ifNil: [ parseTree := class parseTreeForSelector: selector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse sources' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
 RBSplitCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [ 
-		self findCascadeNode; findAncestorNode; findMessageNodes. 
+	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
+		self findCascadeNode; findAncestorNode; findMessageNodes.
 		true ])
 ]
 
@@ -133,7 +133,7 @@ RBSplitCascadeRefactoring >> splitCascade [
 ]
 
 { #category : #printing }
-RBSplitCascadeRefactoring >> storeOn: aStream [ 
+RBSplitCascadeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' split: '.

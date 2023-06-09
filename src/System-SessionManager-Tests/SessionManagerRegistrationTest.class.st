@@ -28,9 +28,9 @@ SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandler
 
 	manager registerSystemClassNamed: #Foo.
 	manager renamedClass: self from: #Foo to: #Bar.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar ).
+		equals: #( Bar )
 ]
 
 { #category : #tests }
@@ -40,9 +40,9 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategorie
 	manager registerSystemClassNamed: #Bar.
 	manager registerGuiClassNamed: #Foo atPriority: 30.
 	manager registerGuiClassNamed: #Foo atPriority: 50.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar Foo ).
+		equals: #( Bar Foo )
 ]
 
 { #category : #tests }
@@ -51,9 +51,9 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryAtDiff
 	manager registerSystemClassNamed: #Bar atPriority: 15.
 	manager registerSystemClassNamed: #Foo atPriority: 10.
 	manager registerSystemClassNamed: #Foo atPriority: 20.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar Foo ).
+		equals: #( Bar Foo )
 ]
 
 { #category : #tests }
@@ -62,9 +62,9 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryShoudl
 	manager registerSystemClassNamed: #Bar.
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Foo.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar Foo ).
+		equals: #( Bar Foo )
 ]
 
 { #category : #tests }

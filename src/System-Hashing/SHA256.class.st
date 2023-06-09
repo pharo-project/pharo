@@ -107,13 +107,13 @@ SHA256 class >> hashSize [
 { #category : #constants }
 SHA256 class >> roundConstants [
 	"2 raisedTo: 32 times the cube root of the first 64 primes 2..311"
-	"(Integer primesUpTo: 311) collect: [:x | ((x raisedTo: 1/3) * (2.0 raisedTo: 32)) truncated hex] \\ 32 bits" 
+	"(Integer primesUpTo: 311) collect: [:x | ((x raisedTo: 1/3) * (2.0 raisedTo: 32)) truncated hex] \\ 32 bits"
 	^#(16r428A2F98 16r71374491 16rB5C0FBCF 16rE9B5DBA5 16r3956C25B 16r59F111F1 16r923F82A4 16rAB1C5ED5 16rD807AA98 16r12835B01 16r243185BE 16r550C7DC3 16r72BE5D74 16r80DEB1FE 16r9BDC06A7 16rC19BF174 16rE49B69C1 16rEFBE4786 16r0FC19DC6 16r240CA1CC 16r2DE92C6F 16r4A7484AA 16r5CB0A9DC 16r76F988DA 16r983E5152 16rA831C66D 16rB00327C8 16rBF597FC7 16rC6E00BF3 16rD5A79147 16r06CA6351 16r14292967 16r27B70A85 16r2E1B2138 16r4D2C6DFC 16r53380D13 16r650A7354 16r766A0ABB 16r81C2C92E 16r92722C85 16rA2BFE8A1 16rA81A664B 16rC24B8B70 16rC76C51A3 16rD192E819 16rD6990624 16rF40E3585 16r106AA070 16r19A4C116 16r1E376C08 16r2748774C 16r34B0BCB5 16r391C0CB3 16r4ED8AA4A 16r5B9CCA4F 16r682E6FF3 16r748F82EE 16r78A5636F 16r84C87814 16r8CC70208 16r90BEFFFA 16rA4506CEB 16rBEF9A3F7 16rC67178F2)
 ]
 
 { #category : #private }
 SHA256 >> expandedBlock: aByteArray [
-	"Convert the given 64 byte buffer into 80 32-bit registers and answer the result." 
+	"Convert the given 64 byte buffer into 80 32-bit registers and answer the result."
 	| out src |
 	out := Array new: 64.
 	src := 1.
@@ -144,12 +144,12 @@ SHA256 >> finalHash [
 
 		^ (totalA asInteger bitShift: 224) +
 		  (totalB asInteger bitShift: 192) +
-		  (totalC asInteger bitShift: 160) +	
+		  (totalC asInteger bitShift: 160) +
 		  (totalD asInteger bitShift: 128) +
 		  (totalE asInteger bitShift:  96) +
 		  (totalF asInteger bitShift:  64) +
 		  (totalG asInteger bitShift:  32) +
-		  (totalH asInteger).
+		  (totalH asInteger)
 ]
 
 { #category : #accessing }
@@ -187,7 +187,7 @@ SHA256 >> initializeTotals [
 	totalF := ThirtyTwoBitRegister new load: self class h5.
 	totalG := ThirtyTwoBitRegister new load: self class h6.
 	totalH := ThirtyTwoBitRegister new load: self class h7.
-	self initializeTotalsArray.
+	self initializeTotalsArray
 ]
 
 { #category : #private }
@@ -202,7 +202,7 @@ SHA256 >> initializeTotalsArray [
 	totals at: 5 put: totalE asInteger.
 	totals at: 6 put: totalF asInteger.
 	totals at: 7 put: totalG asInteger.
-	totals at: 8 put: totalH asInteger.
+	totals at: 8 put: totalH asInteger
 ]
 
 { #category : #private }
@@ -212,7 +212,7 @@ SHA256 >> processBuffer: aByteArray [
 	| a b c d e f g h w |
 	totals := nil.
 
-	"initialize registers a through e from the current totals" 
+	"initialize registers a through e from the current totals"
 	a := totalA copy.
 	b := totalB copy.
 	c := totalC copy.
@@ -257,7 +257,7 @@ SHA256 >> processBuffer: aByteArray [
 	totalE += e.
 	totalF += f.
 	totalG += g.
-	totalH += h.
+	totalH += h
 ]
 
 { #category : #private }
@@ -284,7 +284,7 @@ SHA256 >> processFinalBuffer: buffer bitLength: bitLength [
 		"add trailing one bit that didn't fit in final data block"
 		out at: 1 put: 128].
 	self storeLength: bitLength in: out.
-	self processBuffer: out.
+	self processBuffer: out
 ]
 
 { #category : #private }
@@ -297,5 +297,5 @@ SHA256 >> storeLength: bitLength in: aByteArray [
 	[n > 0] whileTrue: [
 		aByteArray at: i put: (n bitAnd: 16rFF).
 		n := n bitShift: -8.
-		i := i - 1].
+		i := i - 1]
 ]

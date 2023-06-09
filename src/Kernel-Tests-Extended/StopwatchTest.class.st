@@ -25,7 +25,7 @@ StopwatchTest >> classToBeTested [
 { #category : #coverage }
 StopwatchTest >> selectorsToBeIgnored [
 
-	| private | 
+	| private |
 	private := #( #printOn: #state: ).
 
 	^ super selectorsToBeIgnored, private
@@ -35,7 +35,7 @@ StopwatchTest >> selectorsToBeIgnored [
 StopwatchTest >> setUp [
 	super setUp.
 	aStopwatch := Stopwatch new.
-	aDelay := Delay forMilliseconds: 1.
+	aDelay := Delay forMilliseconds: 1
 ]
 
 { #category : #tests }
@@ -96,13 +96,13 @@ StopwatchTest >> testReActivate [
 
 	| sw |
 	sw := Stopwatch new.
-	sw 
+	sw
 		activate;
 		suspend;
 		reActivate.
-	
-	self 
-		assert: (sw isActive).
+
+	self
+		assert: (sw isActive)
 ]
 
 { #category : #tests }

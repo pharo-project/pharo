@@ -17,11 +17,23 @@ RBTemporariesErrorNode class >> error: aToken withNodes: aCollection [
 	 Since the closure is a |, the default assumption is that it's a binary selector."
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty
-		ifTrue: [ self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: '''|'' expected' ]
-		ifFalse: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''|'' expected' ]
+		ifTrue: [ self new contents: aCollection; start: aToken start; stop: aToken stop; errorMessage: '''|'' or variable expected' ]
+		ifFalse: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''|'' or variable expected' ]
+]
+
+{ #category : #testing }
+RBTemporariesErrorNode >> hasTemporaries [
+	^true
 ]
 
 { #category : #testing }
 RBTemporariesErrorNode >> isTemporariesError [
 	^true
+]
+
+{ #category : #accessing }
+RBTemporariesErrorNode >> temporaries [
+	"Consider the content to act as bad temporaries variables"
+
+	^ contents
 ]

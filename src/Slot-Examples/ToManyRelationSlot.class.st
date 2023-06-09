@@ -17,7 +17,7 @@ ToManyRelationSlot >> add: newObject to: collectionOwner [
 
 { #category : #initialization }
 ToManyRelationSlot >> initialize: anObject [
-	self write: (RelationSet owner: anObject slot: self) to: anObject.
+	self write: (RelationSet owner: anObject slot: self) to: anObject
 ]
 
 { #category : #internal }

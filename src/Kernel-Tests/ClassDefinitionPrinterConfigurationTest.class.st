@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 ClassDefinitionPrinterConfigurationTest >> testFluidConfiguration [
 
-	self 
+	self
 		assert: (ClassDefinitionPrinter fluid
  						for: Array;
 						definitionString)
@@ -20,7 +20,7 @@ ClassDefinitionPrinterConfigurationTest >> testFluidConfiguration [
 { #category : #tests }
 ClassDefinitionPrinterConfigurationTest >> testLegacyPharoConfiguration [
 
-	self 
+	self
 		assert: (ClassDefinitionPrinter legacy
  						for: Array;
 						definitionString)
@@ -34,7 +34,7 @@ ClassDefinitionPrinterConfigurationTest >> testLegacyPharoConfiguration [
 { #category : #tests }
 ClassDefinitionPrinterConfigurationTest >> testOldPharoConfiguration [
 
-	self 
+	self
 		assert: (ClassDefinitionPrinter oldPharo
  						for: Array;
 						definitionString)
@@ -50,5 +50,5 @@ ClassDefinitionPrinterConfigurationTest >> testToggleIsWorking [
 	| value |
 	value := ClassDefinitionPrinter showFluidClassDefinition.
 	ClassDefinitionPrinter toggleShowFluidClassDefinition.
-	self assert: ClassDefinitionPrinter showFluidClassDefinition equals: value not.
+	self deny: ClassDefinitionPrinter showFluidClassDefinition equals: value
 ]

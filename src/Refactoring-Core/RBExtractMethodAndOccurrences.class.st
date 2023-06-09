@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: aClass [
 	^self new
 		extract: anInterval
 		from: aSelector
@@ -22,7 +22,7 @@ RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: a
 ]
 
 { #category : #'instance creation' }
-RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
@@ -32,7 +32,7 @@ RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval f
 ]
 
 { #category : #'instance creation' }
-RBExtractMethodAndOccurrences >> extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodAndOccurrences >> extract: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	extractionInterval := anInterval
@@ -70,7 +70,7 @@ RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 { #category : #transforming }
 RBExtractMethodAndOccurrences >> findOccurrencesClass [
 
-	^ RBFindAndReplaceRefactoring
+	^ RBFindAndReplaceTransformation
 ]
 
 { #category : #transforming }
@@ -78,15 +78,15 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 
 	| refactoring |
 	(self findImplementorOf: aSelector)
-		ifTrue: [ 
+		ifTrue: [
 			refactoring := self findOccurrencesClass
 				               model: self model
 				               find: aSelector
 				               of: class
 				               inWholeHierarchy: self shouldSearchInHierarchy.
 			self performCompositeRefactoring: refactoring ]
-		ifFalse: [ 
-			self refactoringFailure:
+		ifFalse: [
+			self refactoringError:
 				aSelector , ' is not a valid selector name.' ]
 ]
 
@@ -102,7 +102,7 @@ RBExtractMethodAndOccurrences >> shouldSearchInHierarchy [
 ]
 
 { #category : #printing }
-RBExtractMethodAndOccurrences >> storeOn: aStream [ 
+RBExtractMethodAndOccurrences >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' extract: '.
@@ -116,8 +116,8 @@ RBExtractMethodAndOccurrences >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBExtractMethodAndOccurrences >> transform [ 
+RBExtractMethodAndOccurrences >> transform [
 	| newExtractedSelector |
 	newExtractedSelector := self extractMethod.
-	self findOccurrencesOf: newExtractedSelector.
+	self findOccurrencesOf: newExtractedSelector
 ]

@@ -33,7 +33,7 @@ ColorPresenterMorph class >> hatchForm [
 { #category : #'graphics constants' }
 ColorPresenterMorph class >> newHatchForm [
 	"Answer a new hatch form."
-	
+
 	^(Form
 	extent: 8@8
 	depth: 1
@@ -45,11 +45,11 @@ ColorPresenterMorph class >> newHatchForm [
 ColorPresenterMorph class >> on: anObject color: getSel [
 	"Answer a new instance of the receiver on the given model using
 	the given selectors as the interface."
-	
+
 	"(ColorPresenterMorph on: (BorderedMorph new) color: #color) openInWorld"
-	
+
 	^self new
-		on: anObject 
+		on: anObject
 		color: getSel
 ]
 
@@ -191,10 +191,10 @@ ColorPresenterMorph >> solidLabelMorph: anObject [
 ]
 
 { #category : #updating }
-ColorPresenterMorph >> update: aSymbol [ 
+ColorPresenterMorph >> update: aSymbol [
 	"Refer to the comment in View|update:."
 
-	aSymbol == self getColorSelector ifTrue: 
+	aSymbol == self getColorSelector ifTrue:
 		[self updateColor.
 		^ self]
 ]

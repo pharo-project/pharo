@@ -38,7 +38,7 @@ TaskbarTask >> = aTaskbarTask [
 { #category : #activation }
 TaskbarTask >> activate [
 	"Activate the task."
-	
+
 	(self morph respondsTo: #restoreAndActivate)
 		ifTrue: [self morph restoreAndActivate]
 ]
@@ -46,14 +46,14 @@ TaskbarTask >> activate [
 { #category : #'user-interface' }
 TaskbarTask >> buttonClickedForTaskList: aTasklist [
 	"Notify the tasklist."
-	
+
 	aTasklist taskClicked: self
 ]
 
 { #category : #comparing }
 TaskbarTask >> hash [
 	"Hash is implemented because #= is implemented."
-	
+
 	^self morph hash
 		bitXor: (self state hash
 		bitXor: (self icon hash
@@ -133,7 +133,7 @@ TaskbarTask >> state: anObject [
 { #category : #'user-interface' }
 TaskbarTask >> taskListButtonFor: aTasklist [
 	"Answer a button for the task."
-	
+
 	^self theme
 		newTaskListButtonIn: aTasklist
 		for: self
@@ -142,7 +142,7 @@ TaskbarTask >> taskListButtonFor: aTasklist [
 { #category : #'user-interface' }
 TaskbarTask >> taskbarButtonFor: aTaskBar [
 	"Answer a button for the task."
-	
+
 	^self morph taskbarButtonFor: aTaskBar
 ]
 

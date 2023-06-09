@@ -84,9 +84,9 @@ Array2D class >> rowVector: aCollection [
 { #category : #'instance creation' }
 Array2D class >> rows: rowNumber columns: columnNumber [
 	"Create a Matrix of rowNUmber rows and columnNumber columns."
-	^ self 
-		rows: rowNumber 
-		columns: columnNumber 
+	^ self
+		rows: rowNumber
+		columns: columnNumber
 		contents: (Array new: rowNumber*columnNumber)
 ]
 
@@ -99,8 +99,8 @@ Array2D class >> rows: rowNumber columns: columnNumber contents: contents [
 { #category : #'instance creation' }
 Array2D class >> rows: rowNumber columns: columnNumber element: element [
 	"Create a Matrix of rowNumber rows and columnNumber columns filled with element."
-	^ self 
-		rows: rowNumber 
+	^ self
+		rows: rowNumber
 		columns: columnNumber
 		contents: ((Array new: rowNumber * columnNumber) atAllPut: element; yourself)
 ]
@@ -159,8 +159,8 @@ Array2D >> ,, aMatrix [
 	 its rows being the rows of the receiver followed by the rows of aMatrix."
 
 	[numberOfColumns = aMatrix numberOfColumns] assert.
-	^self class 
-			rows: numberOfRows + aMatrix numberOfRows 
+	^self class
+			rows: numberOfRows + aMatrix numberOfRows
 			columns: numberOfColumns
 			contents: contents , aMatrix privateContents
 ]
@@ -169,7 +169,7 @@ Array2D >> ,, aMatrix [
 Array2D >> = aMatrix [
 	^ aMatrix class == self class
 		and: [ aMatrix numberOfRows = numberOfRows
-				and: [ aMatrix numberOfColumns = numberOfColumns 
+				and: [ aMatrix numberOfColumns = numberOfColumns
 					and: [ aMatrix privateContents = contents ] ] ]
 ]
 
@@ -309,8 +309,8 @@ Array2D >> atRandom: aGenerator [
 Array2D >> atRow: rowNumber [
 	(rowNumber between: 1 and: numberOfRows)
 		ifFalse: [self error: '1st subscript out of range'].
-	^ contents 
-			copyFrom: (rowNumber - 1) * numberOfColumns + 1 
+	^ contents
+			copyFrom: (rowNumber - 1) * numberOfColumns + 1
 			to: rowNumber*numberOfColumns
 ]
 
@@ -373,9 +373,9 @@ Array2D >> atRows: r1 to: r2 columns: c1 to: c2 put: aMatrix [
 Array2D >> collect: aBlock [
 	"Answer a new matrix with transformed elements; transformations should be independent."
 
-	^self class 
-		rows: numberOfRows 
-		columns: numberOfColumns 
+	^self class
+		rows: numberOfRows
+		columns: numberOfColumns
 		contents: (contents collect: aBlock)
 ]
 
@@ -429,7 +429,7 @@ Array2D >> identityIncludes: anObject [
 
 { #category : #accessing }
 Array2D >> identityIndexOf: anElement [
-	
+
 	^ self identityIndexOf: anElement ifAbsent: [ 0@0 ]
 ]
 
@@ -480,7 +480,7 @@ Array2D >> indexOf: anElement ifAbsent: anExceptionBlock [
 
 { #category : #enumerating }
 Array2D >> indicesCollect: aBlock [
-	
+
 	| r i |
 	r := Array new: numberOfRows * numberOfColumns.
 	i := 0.
@@ -494,7 +494,7 @@ Array2D >> indicesCollect: aBlock [
 Array2D >> indicesDo: aBlock [
 	1 to: numberOfRows do: [ :row |
 		1 to: numberOfColumns do: [ :column |
-			aBlock value: row value: column]].
+			aBlock value: row value: column]]
 ]
 
 { #category : #enumerating }
@@ -570,9 +570,9 @@ Array2D >> preMultiplyByMatrix: m [
 	"Answer m +* self where m is a Matrix."
 	|s|
 	numberOfRows = m numberOfColumns ifFalse: [self error: 'dimensions do not conform'].
-	^ Array2D 
-		rows: m numberOfRows 
-		columns: numberOfColumns 
+	^ Array2D
+		rows: m numberOfRows
+		columns: numberOfColumns
 		tabulate: [:row :col |
 			s := 0.
 			1 to: numberOfRows do: [:k | s := (m at: row at: k) * (self at: k at: col) + s].
@@ -583,13 +583,13 @@ Array2D >> preMultiplyByMatrix: m [
 Array2D >> printOn: aStream [
 
 	aStream nextPutAll: '('.
-	(1 to: self numberOfRows) 
-		do: [ :r | 
-				(self atRow: r) 
-					do: [ :each | aStream print: each ] 
+	(1 to: self numberOfRows)
+		do: [ :r |
+				(self atRow: r)
+					do: [ :each | aStream print: each ]
 					separatedBy: [ aStream space ]]
 		separatedBy: [ aStream cr ].
-	aStream nextPutAll: ' )'.
+	aStream nextPutAll: ' )'
 ]
 
 { #category : #private }
@@ -657,16 +657,6 @@ Array2D >> select: aBlock [
 	self shouldNotImplement
 ]
 
-{ #category : #copying }
-Array2D >> shuffled [
-	^self class rows: numberOfRows columns: numberOfColumns contents: (contents shuffled)
-]
-
-{ #category : #copying }
-Array2D >> shuffledBy: aRandom [
-	^self class rows: numberOfRows columns: numberOfColumns contents: (contents copy shuffleBy: aRandom)
-]
-
 { #category : #accessing }
 Array2D >> size [
 	^ contents size
@@ -696,7 +686,7 @@ Array2D >> swapColumn: anIndex withColumn: anotherIndex [
 	numberOfRows timesRepeat: [
 		contents swap: a with: b.
 		a := a + numberOfColumns.
-		b := b + numberOfColumns].
+		b := b + numberOfColumns]
 ]
 
 { #category : #'row/column operations' }
@@ -707,7 +697,7 @@ Array2D >> swapRow: anIndex withRow: anotherIndex [
 	numberOfColumns timesRepeat: [
 		contents swap: a with: b.
 		a := a + 1.
-		b := b + 1].
+		b := b + 1]
 ]
 
 { #category : #'row/column operations' }
@@ -729,7 +719,7 @@ Array2D >> with: aCollection do: aBlock [
 	"aCollection must support #at:at: and be at least as large as the receiver."
 
 	self withIndicesDo: [:each :row :column |
-		aBlock value: each value: (aCollection at: row at: column)].
+		aBlock value: each value: (aCollection at: row at: column)]
 ]
 
 { #category : #enumerating }
@@ -742,7 +732,7 @@ Array2D >> with: aCollection inject: startingValue into: aBlock [
 
 { #category : #enumerating }
 Array2D >> withIndicesCollect: aBlock [
-	
+
 	|i r|
 	i := 0.
 	r := contents shallowCopy.
@@ -755,25 +745,25 @@ Array2D >> withIndicesCollect: aBlock [
 
 { #category : #enumerating }
 Array2D >> withIndicesDo: aBlock [
-	
+
 	| i |
 	i := 0.
 	1 to: numberOfRows do: [:row |
 		1 to: numberOfColumns do: [:column |
-			aBlock value: (contents at: (i := i+1)) value: row value: column]].
+			aBlock value: (contents at: (i := i+1)) value: row value: column]]
 ]
 
 { #category : #enumerating }
 Array2D >> withIndicesInject: start into: aBlock [
-	
+
 	| i current |
 	i := 0.
 	current := start.
 	1 to: numberOfRows do: [ :row |
 		1 to: numberOfColumns do: [ :column |
-			current := aBlock 
-								value: current 
-								value: (contents at: (i := i+1)) 
+			current := aBlock
+								value: current
+								value: (contents at: (i := i+1))
 								value: row value: column ] ].
 	^ current
 ]

@@ -27,15 +27,15 @@ SycFormatSourceCodeCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycFormatSourceCodeCommand >> execute [
-	
+
 	sourceCodeEditor formatSourceCode
 ]
 
 { #category : #execution }
 SycFormatSourceCodeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	sourceCodeEditor := aToolContext methodEditor
+
+	sourceCodeEditor := aToolContext editor
 ]
 
 { #category : #accessing }

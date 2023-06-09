@@ -10,53 +10,19 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Editors-Classes'
 }
 
-{ #category : #building }
+{ #category : #operations }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
-	| text |
-	text := self pendingText copy.
-	^ self applyChangesAsClassDefinition or: [ 
-		  self pendingText: text.
-		  self applyChangesAsMethodDefinition ]
-]
-
-{ #category : #building }
-ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
-
-	| newClass oldText |
-	oldText := self pendingText copy.
+	| newClass |
 	newClass := browser
 		            compileANewClassFrom: self pendingText asString
 		            notifying: textMorph
 		            startingFrom: editingClass.
-	
-	"This was indeed a class, however, there is a syntax error somewhere"
-	textMorph text = oldText ifFalse: [ ^ true ].
-	
+
 	newClass ifNil: [ ^ false ].
 
 	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
-	^ true
-]
-
-{ #category : #building }
-ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
-
-	| newMethod selector selectedClass |
-	selectedClass := self editingClass.
-
-	selector := selectedClass
-		            compile: self pendingText asString
-		            notifying: textMorph.
-
-	selector ifNil: [ ^ false ].
-	newMethod := selectedClass >> selector.
-	MethodClassifier classify: newMethod.
-
-	self removeFromBrowser.
-	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
-	browser selectMethod: newMethod.
 	^ true
 ]
 
@@ -73,7 +39,7 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	super decorateContainerTab.
 	title := editingClass name.
 
-	editingClass isClassSide 
+	editingClass isClassSide
 		ifTrue: [ title := title asText allBold ].
 
 	containerTab label: title
@@ -81,23 +47,24 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 
 { #category : #initialization }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
-	^#classIcon
+	^#class
 ]
 
 { #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> editingText [
-	
+	"Answer a <String> with the receivers class definition"
+
 	^ editingClass definitionString
 ]
 
 { #category : #building }
-ClyClassDefinitionEditorToolMorph >> fillStatusBar [ 
+ClyClassDefinitionEditorToolMorph >> fillStatusBar [
 	super fillStatusBar.
 	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : #testing }
-ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [ 
+ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInClassEditor: self
 ]
@@ -105,21 +72,21 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 { #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
 
-	self editingClass needsSlotClassDefinition 
+	self editingClass needsSlotClassDefinition
 		ifTrue: [ ^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText].
 	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
 ]
 
 { #category : #'selecting text' }
-ClyClassDefinitionEditorToolMorph >> selectSourceNode: aCDNode [ 
+ClyClassDefinitionEditorToolMorph >> selectSourceNode: aCDNode [
 	textMorph setSelection: aCDNode sourceInterval
 ]
 
 { #category : #'selecting text' }
-ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [ 
+ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 	| classDefinition varNode |
 	classDefinition := self parseClassDefinition.
-	varNode := classDefinition children 
+	varNode := classDefinition children
 		detect: [ :each | each isVariable and: [each name = aString]]
 		ifNone: [ ^self ].
 	self selectSourceNode: varNode
@@ -130,7 +97,7 @@ ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
 	| selectedInterval definitionNode |
 	selectedInterval := self selectedTextInterval.
 	definitionNode := self parseClassDefinition.
-	
+
 	^(definitionNode bestNodeFor: selectedInterval)
 		ifNil: [ definitionNode ]
 ]

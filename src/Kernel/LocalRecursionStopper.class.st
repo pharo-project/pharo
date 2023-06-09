@@ -21,7 +21,7 @@ LocalRecursionStopper class >> activeMethods [
 { #category : #api }
 LocalRecursionStopper class >> during: aBlock [
 	<debuggerCompleteToSender>
-	self stopMethod: thisContext sender compiledCode method during: aBlock
+	self stopMethod: thisContext sender homeMethod during: aBlock
 ]
 
 { #category : #private }
@@ -30,8 +30,8 @@ LocalRecursionStopper class >> stopMethod: aMethod during: aBlock [
 	| activeMethods |
 	activeMethods := self activeMethods.
 	(activeMethods includes: aMethod) ifTrue: [ ^ self ].
-	
+
 	activeMethods add: aMethod.
-	
+
 	aBlock ensure: [ activeMethods remove: aMethod ]
 ]

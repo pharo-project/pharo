@@ -14,13 +14,13 @@ ClySwitchToPackagesCommand class >> toolbarOrder [
 
 { #category : #accessing }
 ClySwitchToPackagesCommand >> defaultMenuItemName [
-	
+
 	^ 'All Packages'
 ]
 
 { #category : #accessing }
 ClySwitchToPackagesCommand >> description [
-	^ 'Click to show all packages'.
+	^ 'Click to show all packages'
 ]
 
 { #category : #execution }

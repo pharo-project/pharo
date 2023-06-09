@@ -80,7 +80,7 @@ Exception class >> signal: message [
 Exception class >> signal: message in: context [
 	"Signal the occurrence of an exceptional condition with a specified textual description in the given context."
 
-	^ self new 
+	^ self new
 		messageText: message;
 		signalIn: context
 ]
@@ -89,9 +89,9 @@ Exception class >> signal: message in: context [
 Exception class >> signal: message withTag: aTag [
 	"Signal the occurrence of an exceptional condition with a specified textual description including a tag for the exception."
 
-	^ self new 
+	^ self new
 		messageText: message;
-		tag: aTag; 
+		tag: aTag;
 		signal
 ]
 
@@ -105,7 +105,7 @@ Exception class >> signalIn: context [
 { #category : #private }
 Exception >> completeProcess: aProcess with: aContext [
 	"I am a hook during process completion in case one of my subclass wants to plug a special behavior.
-	
+
 	By default I return my signal context"
 
 	^ self signalContext
@@ -122,10 +122,10 @@ Exception >> debug [
 
 { #category : #handling }
 Exception >> defaultAction [
-	"No one has handled this error, but now give them a chance to decide how to debug it. 
+	"No one has handled this error, but now give them a chance to decide how to debug it.
 	If none handles this either then open debugger (see UnhandedError-defaultAction).
-	
-	Note about naming here: 
+
+	Note about naming here:
 	Even if not all exceptions are errors the absence of a handler for signaled exception is considered as an error by default. Therefore #defaultAction for Exception raises an error, an UnhandledError"
 
 	^ self raiseUnhandledError
@@ -144,14 +144,14 @@ Exception >> defaultDescription [
 { #category : #private }
 Exception >> defaultResumeValue [
 	"Answer the value that by default should be returned if the exception is resumed"
-	
+
 	^ nil
 ]
 
 { #category : #private }
 Exception >> defaultReturnValue [
 	"Answer the value that by default should be returned if the exception is returned"
-	
+
 	^ nil
 ]
 
@@ -175,7 +175,7 @@ Exception >> freeze [
 { #category : #handling }
 Exception >> freezeUpTo:  aContext [
 	"Freeze the signal context up to the given context so the exception is usable outside the catch block"
-	
+
 	signalContext := signalContext copyTo: aContext
 ]
 
@@ -226,12 +226,12 @@ Exception >> originException [
 Exception >> outer [
 	"Evaluate the enclosing exception action and return to here instead of signal if it resumes (see #resumeUnchecked:)."
 	| prevOuterContext currentHandler |
-	self isResumable 
+	self isResumable
 		ifTrue: [
 			prevOuterContext := outerContext. "required and accessed in resumeUnchecked:"
 			outerContext := thisContext contextTag ].
 	currentHandler := handlerContext.
-	[self pass] ensure: [handlerContext := currentHandler].
+	[self pass] ensure: [handlerContext := currentHandler]
 ]
 
 { #category : #handling }
@@ -300,9 +300,9 @@ Exception >> resumeUnchecked: resumptionValue [
 	"Return resumptionValue as the value of #signal, unless this was called after an #outer message, then return resumptionValue as the value of #outer."
 
 	| ctxt |
-	outerContext 
+	outerContext
 		ifNil: [
-			signalContext return: resumptionValue ] 
+			signalContext return: resumptionValue ]
 		ifNotNil: [
 			ctxt := outerContext.
 			outerContext := ctxt tempAt: 1. "prevOuterContext in #outer"
@@ -349,7 +349,7 @@ Exception >> signal: signalerText [
 
 { #category : #signaling }
 Exception >> signalIn: context [
-	"Ask ContextHandlers in the sender chain starting at the given context to handle this signal. 
+	"Ask ContextHandlers in the sender chain starting at the given context to handle this signal.
 	The default is to execute and return my defaultAction."
 
 	signalContext := context.
@@ -381,7 +381,7 @@ Exception >> signalerContext [
 	This will make sure that the same context is found for both, `Error signal` and `Error new signal`"
 
 	^ signalContext findContextSuchThat: [ :context |
-		(context receiver == self 
+		(context receiver == self
 		or: [ context receiver == self class ]) not ]
 ]
 
@@ -389,7 +389,7 @@ Exception >> signalerContext [
 Exception >> tag [
 	"Return an exception's tag value."
 
-	^ tag 
+	^ tag
 		ifNil: [ self messageText ]
 		ifNotNil: [ tag ]
 ]

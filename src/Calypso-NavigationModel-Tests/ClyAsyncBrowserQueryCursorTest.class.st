@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #testing }
-ClyAsyncBrowserQueryCursorTest class >> shouldInheritSelectors [ 
+ClyAsyncBrowserQueryCursorTest class >> shouldInheritSelectors [
 	^true
 ]
 

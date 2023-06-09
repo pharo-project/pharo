@@ -47,7 +47,7 @@ ClyClassComment class >> match: aClassComment forQueryBrowserFilter: aQueryBrows
 
 { #category : #'instance creation' }
 ClyClassComment class >> of: aClass [
-	^self new 
+	^self new
 		definingClass: aClass
 ]
 
@@ -87,8 +87,8 @@ ClyClassComment >> hash [
 { #category : #printing }
 ClyClassComment >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	definingClass printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]

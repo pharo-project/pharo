@@ -1,3 +1,8 @@
+"
+I am a mock used to simlify testing.
+	
+A mock is an object that simulates the behavior of a real object or component in a controlled manner. It is used in unit testing to isolate the code being tested from its dependencies, allowing the code to be tested in isolation.
+"
 Class {
 	#name : #CoMockASTResultSetBuilder,
 	#superclass : #CoASTResultSetBuilder,
@@ -35,7 +40,7 @@ CoMockASTResultSetBuilder >> visitBlockNode: aNode [
 ]
 
 { #category : #accessing }
-CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [ 
+CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 
 	heuristic := #cascade.
 	^ super visitCascadeNode: aRBCascadeNode
@@ -77,7 +82,7 @@ CoMockASTResultSetBuilder >> visitParseErrorNode: aNode [
 ]
 
 { #category : #visiting }
-CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [ 
+CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
 
 	heuristic := #pragma.
 	^ super visitPragmaNode: aRBPragmaNode

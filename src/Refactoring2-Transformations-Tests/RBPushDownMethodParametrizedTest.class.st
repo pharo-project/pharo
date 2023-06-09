@@ -13,28 +13,28 @@ RBPushDownMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBPushDownMethodParametrizedTest >> constructor [ 
+RBPushDownMethodParametrizedTest >> constructor [
 	^ #pushDown:from:
 ]
 
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethod [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ #(#name: ) . RBLintRuleTestData }.
 	self executeRefactoring: refactoring asRefactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
-	class subclasses do: 
-		[ :each | 
-		self assert: (each parseTreeFor: #name:)
+	class subclasses do:
+		[ :each |
+		self assert: (each parseTreeForSelector: #name:)
 			equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
 { #category : #'failure tests' }
 RBPushDownMethodParametrizedTest >> testPushDownMethodOnNonAbstractClass [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ #(#isArray) . Array }.
 	self shouldFail: refactoring asRefactoring
 ]
@@ -42,25 +42,13 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodOnNonAbstractClass [
 { #category : #'failure tests' }
 RBPushDownMethodParametrizedTest >> testPushDownMethodSubclassesReferToSelector [
 	| refactoring |
-	model defineClass: 'Object subclass: #Superclass 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Superclass subclass: #Foo1 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
-	model defineClass: 'Superclass subclass: #Foo2 
-		instanceVariableNames: '''' 
-		classVariableNames: '''' 
-		poolDictionaries: '''' 
-		category: #''Refactory-Test data'''.
+	model defineClass: 'Object << #Superclass package: #''Refactory-Test data'''.
+	model defineClass: 'Superclass << #Foo1 package: #''Refactory-Test data'''.
+	model defineClass: 'Superclass << #Foo2 package: #''Refactory-Test data'''.
 	(model classNamed: #Superclass) compile: 'yourself ^1' classified: #(#accessing).
 	(model classNamed: #Foo1) compile: 'method1 ^super yourself' classified: #(#accessing).
-	
-	refactoring := rbClass 
+
+	refactoring := rbClass
 		model: model
 		pushDown: #(#yourself)
 		from: (model classNamed: #Superclass).
@@ -70,22 +58,22 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodSubclassesReferToSelector 
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictionary [
 	| refactoring class parseTree |
-	parseTree := RBLintRuleTestData parseTreeFor: #junk.
-	refactoring := self createRefactoringWithArguments: 
+	parseTree := RBLintRuleTestData parseTreeForSelector: #junk.
+	refactoring := self createRefactoringWithArguments:
 		{ #(#junk ) . RBLintRuleTestData }.
 	self executeRefactoring: refactoring asRefactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).
-	class subclasses do: 
-		[ :each | 
-		self assert: (each parseTreeFor: #junk) equals: parseTree.
+	class subclasses do:
+		[ :each |
+		self assert: (each parseTreeForSelector: #junk) equals: parseTree.
 		self assert: (each definesPoolDictionary: 'TextConstants' asSymbol) ]
 ]
 
 { #category : #'failure tests' }
 RBPushDownMethodParametrizedTest >> testPushDownNonExistantMenu [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ #(#someMethodThatDoesNotExist ) . RBLintRuleTestData }.
 	self shouldFail: refactoring asRefactoring
 ]

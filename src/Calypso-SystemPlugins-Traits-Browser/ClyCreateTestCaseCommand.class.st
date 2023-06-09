@@ -11,14 +11,14 @@ Class {
 { #category : #testing }
 ClyCreateTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
-	
+
 	^aBrowserContext isPackageSelected
 ]
 
 { #category : #activation }
 ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
 ]
 
@@ -53,8 +53,8 @@ ClyCreateTestCaseCommand >> execute [
 { #category : #execution }
 ClyCreateTestCaseCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
-	
+
 	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isClassTagSelected ifTrue: [ 
+	aBrowserContext isClassTagSelected ifTrue: [
 		classTag := aBrowserContext lastSelectedClassTag]
 ]

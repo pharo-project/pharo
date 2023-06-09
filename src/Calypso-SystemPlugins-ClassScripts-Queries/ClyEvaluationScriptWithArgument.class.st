@@ -12,7 +12,7 @@ Class {
 
 { #category : #'script detection' }
 ClyEvaluationScriptWithArgument class >> canBeProvidedByMethod: aMethod [
-	"Parametric script can be used in any method. 
+	"Parametric script can be used in any method.
 	It is retrieved from pragma argument and method itself is not used for execution"
 	^ true
 ]
@@ -34,6 +34,6 @@ ClyEvaluationScriptWithArgument >> executeOn: aClass [
 
 { #category : #testing }
 ClyEvaluationScriptWithArgument >> isImplementedByClass: aClass [
-	
+
 	^ aClass instanceSide includesBehavior: self implementorClass instanceSide
 ]

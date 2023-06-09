@@ -14,14 +14,14 @@ Class {
 SycAddProtocolScopeCommand >> execute [
 	| scope protocols |
 	self prepareFullExecution.
-	protocols := methodGroups select: [:each | each isKindOf: ClyTaggedMethodGroup] 
+	protocols := methodGroups select: [:each | each isKindOf: ClyTaggedMethodGroup]
 		thenCollect: [ :each | each tag].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
 	RefactoringSettings addScope: scope
 ]
 
 { #category : #accessing }
-SycAddProtocolScopeCommand >> icon [ 
+SycAddProtocolScopeCommand >> icon [
 	^ self iconNamed: #add
 ]
 
@@ -33,5 +33,5 @@ SycAddProtocolScopeCommand >> name [
 { #category : #execution }
 SycAddProtocolScopeCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	class := context lastSelectedClass.
+	class := context lastSelectedClass
 ]

@@ -69,7 +69,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueW
 		testComposedExample: 'example
 	{definition}.
 	^false ifFalse: {argument}'
-		withBlock: '[ | temp | 
+		withBlock: '[ | temp |
 			temp := 1.
 			temp ]'.
 	self assert: result equals: 1
@@ -84,7 +84,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueW
 	{definition}.
 	^false ifFalse: {argument}'
 		withTemps: #( 'temp' )
-		withBlock: '[ 
+		withBlock: '[
 			temp := 1.
 			temp ]'.
 	self assert: result equals: 1
@@ -127,7 +127,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNilEvaluatesBlock [
 { #category : #'tests - ifNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNilReturnsBlockValue [
 	| result |
-	
+
 	result := self
 		testComposedExample: 'example
 	{definition}.
@@ -152,7 +152,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilDoesNotEvaluateBloc
 { #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilReturnsNil [
 	| result |
-	
+
 	result := self
 		testComposedExample: 'example
 	{definition}.
@@ -163,7 +163,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilReturnsNil [
 
 { #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilWithArgumentDoesNotEvaluateBlock [
-	self shouldnt: [ 
+	self shouldnt: [
 		self
 			testComposedExample: 'example
 		{definition}.
@@ -186,7 +186,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilWithArgumentReturns
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNilDoesNotEvaluateBlock [
 
 	self
-		shouldnt: [ 
+		shouldnt: [
 			self
 				testComposedExample: 'example
 			{definition}.

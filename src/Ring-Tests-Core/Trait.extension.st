@@ -4,5 +4,5 @@ Extension { #name : #Trait }
 Trait >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
-		RGTrait named: self name asSymbol parent: anRGEnvironment].
+		RGTrait named: self name asSymbol parent: anRGEnvironment]
 ]

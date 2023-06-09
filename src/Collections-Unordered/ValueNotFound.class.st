@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 ValueNotFound >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		stream << 'value '.
 		stream print: self object.

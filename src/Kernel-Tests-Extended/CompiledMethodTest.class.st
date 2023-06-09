@@ -9,7 +9,8 @@ Class {
 	#superclass : #ClassTestCase,
 	#instVars : [
 		'x',
-		'y'
+		'y',
+		'class'
 	],
 	#category : #'Kernel-Tests-Extended-Methods'
 }
@@ -17,14 +18,14 @@ Class {
 { #category : #'tests - performing' }
 CompiledMethodTest >> a1: a1 a2: a2 a3: a3 a4: a4 a5: a5 a6: a6 a7: a7 a8: a8 a9: a9 a10: a10 a11: a11 a12: a12 a13: a13 a14: a14 a15: a15 [
 	"I'm a method with the maximum size of arguments that can be executed via normal send but crash on perform :)"
-	
+
 	^ a1 + a2 - a2
 ]
 
 { #category : #examples }
 CompiledMethodTest >> abstractMethod [
 	"I am an abstract method"
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -37,7 +38,7 @@ CompiledMethodTest >> categoryNameForTemporaryClasses [
 
 { #category : #coverage }
 CompiledMethodTest >> classToBeTested [
-	
+
 	^ CompiledMethod
 ]
 
@@ -54,7 +55,7 @@ CompiledMethodTest >> deprecatedMethod2 [
 	"Used to test sends of deprecation messages;
 	do not recategorize in one of the 'deprecated' categories."
 
-	self deprecated: 'example of a deprecated method' on: 'date' in: 'someversion'.
+	self deprecated: 'example of a deprecated method' on: 'date' in: 'someversion'
 ]
 
 { #category : #examples }
@@ -64,8 +65,8 @@ CompiledMethodTest >> deprecatedMethod3 [
 
 	self
 		deprecated: 'Example of a deprecated method with transform'
-		transformWith: '`@receiver deprecatedMethod3' 
-						-> '`@receiver deprecatedMethod3'.
+		transformWith: '`@receiver deprecatedMethod3'
+						-> '`@receiver deprecatedMethod3'
 ]
 
 { #category : #examples }
@@ -74,12 +75,12 @@ CompiledMethodTest >> deprecatedMethod4 [
 	do not recategorize in one of the 'deprecated' categories."
 
 	self
-	
+
 		deprecated: 'Example of a deprecated method with transform'
 		on: '01/01/1970'
 		in: #Pharo6
-		transformWith: '`@receiver deprecatedMethod4' 
-						-> '`@receiver deprecatedMethod4'.
+		transformWith: '`@receiver deprecatedMethod4'
+						-> '`@receiver deprecatedMethod4'
 ]
 
 { #category : #'examples - linesofcode' }
@@ -87,20 +88,20 @@ CompiledMethodTest >> locComplex [
 
 	"A multiline
 	comment"
-	
+
 "Non-indented Comment"
-	
+
 	| a b |
 	a := 1.
 	b :=
 	a + 2.
-	
-	10 timesRepeat: [ 
+
+	10 timesRepeat: [
 		"Comment inside a block"
 		#(1 2 3) collect: [ :each |
 			| c |
 			c := each + b.
-			c "Comment at the end of a line" ] ].
+			c "Comment at the end of a line" ] ]
 ]
 
 { #category : #'examples - linesofcode' }
@@ -129,7 +130,7 @@ CompiledMethodTest >> locEmptyLineWithTabInTheEnd [
 CompiledMethodTest >> locEmptyLineWithTabInTheMiddle [
 	| a |
 	a := 1.
-	
+
 	^ a
 ]
 
@@ -210,7 +211,7 @@ CompiledMethodTest >> locSingleLineMethodCommentWithoutWhitespace [
 { #category : #examples }
 CompiledMethodTest >> nonAbstractMethod [
 	"I am not an abstract method"
-	
+
 	^ 4 + 5
 ]
 
@@ -223,13 +224,13 @@ CompiledMethodTest >> readX [
 
 { #category : #examples }
 CompiledMethodTest >> readXandY [
-	
+
 	^ x + y
 ]
 
 { #category : #examples }
 CompiledMethodTest >> returnPlusOne: anInteger [
-	^anInteger + 1.
+	^anInteger + 1
 ]
 
 { #category : #examples }
@@ -240,33 +241,34 @@ CompiledMethodTest >> returnTrue [
 { #category : #examples }
 CompiledMethodTest >> shouldNotImplementMethod [
 	"I am not an abstract method"
-	
+
 	^ self shouldNotImplement
 ]
 
 { #category : #running }
 CompiledMethodTest >> tearDown [
 	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
+	class ifNotNil: [ class removeFromSystem].
 	super tearDown
 ]
 
 { #category : #'tests - instance variable' }
-CompiledMethodTest >> testAccessesField [		
+CompiledMethodTest >> testAccessesField [
 	| method |
 	method := self class compiledMethodAt: #readX.
 	self assert: (method accessesField: 4).
-	
+
 	method := self class compiledMethodAt: #readXandY.
 	self assert: (method accessesField: 5).
-	
-	
+
+
 	"read is not write"
 	method := self class compiledMethodAt: #writeX.
 	self assert: (method accessesField: 4).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
 	self assert: (method accessesField: 4).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
 	self assert: (method accessesField: 5)
 ]
@@ -275,12 +277,12 @@ CompiledMethodTest >> testAccessesField [
 CompiledMethodTest >> testAccessesSlot [
 
 	"Check the source code availability to do not fail on images without sources"
-	({ Point>>#x. Point>>#setX:setY: } allSatisfy: #hasSourceCode) 
+	({ Point>>#x. Point>>#setX:setY: } allSatisfy: #hasSourceCode)
 		ifFalse: [ ^ self ].
-	
+
 	self assert: ((Point>>#x) accessesSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) accessesSlot: (Point slotNamed: #y)).
-	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y)).
+	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y))
 ]
 
 { #category : #'tests - converting' }
@@ -291,22 +293,22 @@ CompiledMethodTest >> testAsString [
 
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testBytecode [
-	"The result of this test depends on the used bytecode set. 
-	
+	"The result of this test depends on the used bytecode set.
+
 	 Because there are multiple versions of the encoders currently depending on the compiler used, we test the class name instead of the encoder class itself"
 	| method expectedResult |
 	method := Object>>#halt.
 	expectedResult := (method encoderClass name endsWith: 'SistaV1')
 		ifTrue: [#[16 129 216 88]]
 		ifFalse: [#[64 209 135 120]].
-	self assertCollection: (Object>>#halt) bytecode equals: expectedResult
+	self assertCollection: (Object>>#halt) bytecodes equals: expectedResult
 ]
 
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testComments [
 	"I am the first comment to be found in this test"
 	self
-		assert: (CompiledMethodTest >> #testComments) comments first 
+		assert: (CompiledMethodTest >> #testComments) comments first
 	"And I am the second comment to be found in this test"
 		equals: 'I am the first comment to be found in this test'.
 	self
@@ -328,7 +330,7 @@ CompiledMethodTest >> testComparison [
 	self deny: method2 equals: method1.
 
 	Object methods
-		do: [ :each | 
+		do: [ :each |
 			self deny: method1 equals: each.
 			self deny: each equals: method1.
 			self deny: method2 equals: each.
@@ -352,34 +354,17 @@ CompiledMethodTest >> testCopy [
 	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
-{ #category : #tests }
-CompiledMethodTest >> testCopyWithTrailerBytes [
-	<pragma: #pragma>
-	| method copy |
-	method := thisContext method.
-	self assert: method pragmas notEmpty.
-	copy := method copyWithTrailerBytes: method trailer.
-	self assert: (method equivalentTo: copy).
-	self deny: method identicalTo: copy.
-	self assert: method symbolic equals: copy symbolic.	"but their bytecode should be the same"
-	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method identicalTo: copy.
-	self assert: method penultimateLiteral method identicalTo: method.
-	method pragmas do: [ :p | self assert: p method identicalTo: method ].
-	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
-]
-
 { #category : #'tests - comparing' }
 CompiledMethodTest >> testEqualityClassSideMethod [
    	| method1 method2 |
 
 	method1 := TestCase class compiler
 			compile: 'aMethod'.
-		
+
 	method2 := TestCase class compiler
 			compile: 'aMethod'.
-			
- 	self assert: method1 equals: method2.
+
+ 	self assert: method1 equals: method2
 ]
 
 { #category : #'tests - comparing' }
@@ -399,28 +384,41 @@ CompiledMethodTest >> testHasComment [
 
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testHasInstVarRef [
-		
+
 	| method  |
 	method := self class compiledMethodAt: #readX.
 	self assert: (method hasInstVarRef).
 
 	method := self class compiledMethodAt: #readXandY.
 	self assert: (method hasInstVarRef).
-	
+
 	method := self class compiledMethodAt: #writeX.
 	self assert: (method hasInstVarRef).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
-	self assert: (method hasInstVarRef).
+	self assert: (method hasInstVarRef)
 ]
 
 { #category : #'tests - literals' }
 CompiledMethodTest >> testHasLiteralSuchThat [
-	"#literals should not expose implementation hack that the last two literals are 
+	"#literals should not expose implementation hack that the last two literals are
 	used for name of method and class"
 
 	self deny: (Object >> #yourself hasLiteralSuchThat: [ :lit | lit == #yourself ]).
-	self assert: (Object >> #halt hasLiteralSuchThat: [ :lit | lit == #now ]).
+	self assert: (Object >> #halt hasLiteralSuchThat: [ :lit | lit == #now ])
+]
+
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testHasNonLocalReturn [
+	| method |
+	method := self class compiler compile: 'm ^1'.
+	self deny: [method hasNonLocalReturn ].
+	method := self class compiler compile: 'm self doSomething'.
+	self deny: [method hasNonLocalReturn ].
+	method := self class compiler compile: 'm []'.
+	self deny: [method hasNonLocalReturn ].
+	method := self class compiler compile: 'm [^self]'.
+	self assert: [method hasNonLocalReturn ]
 ]
 
 { #category : #'tests - testing' }
@@ -429,7 +427,7 @@ CompiledMethodTest >> testHasPragma [
 	| methodWithPragma methodWithOutPragma |
 	methodWithPragma := (SmallInteger >> #+).
 	methodWithOutPragma := thisContext method.
-	
+
 	self assert: methodWithPragma hasPragma.
 	self deny: methodWithOutPragma hasPragma
 ]
@@ -445,7 +443,7 @@ CompiledMethodTest >> testIsAbstract [
 { #category : #'tests - testing' }
 CompiledMethodTest >> testIsClassSide [
 	self deny: (Object>>#yourself) isClassSide.
-	self assert: (Object class>>#initialize) isClassSide.
+	self assert: (Object class>>#initialize) isClassSide
 ]
 
 { #category : #'tests - testing' }
@@ -463,7 +461,7 @@ CompiledMethodTest >> testIsFaulty [
 	|  cm |
 	cm := OpalCompiler new
 				source: 'method 3+';
-				options: #(+ optionParseErrors +optionEmbeddSources);
+				permitFaulty: true;
 				compile.
 	self assert: cm isFaulty.
 	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
@@ -476,12 +474,12 @@ CompiledMethodTest >> testIsInstalled [
 	method := (self class)>>#returnTrue.
 	self assert: method isInstalled.
 
-	
+
 
 	Smalltalk removeClassNamed: #TUTU.
 
-	cls := self class classInstaller make: [ :aBuilder | 
-		aBuilder 
+	cls := self class classInstaller make: [ :aBuilder |
+		aBuilder
 			name: #TUTU;
 			package: self categoryNameForTemporaryClasses].
 
@@ -490,9 +488,9 @@ CompiledMethodTest >> testIsInstalled [
 
 	"now make an orphaned method by just deleting the method."
 	cls removeSelector: #foo.
-	
-	self deny: method isInstalled. 
-	Smalltalk removeClassNamed: #TUTU.
+
+	self deny: method isInstalled.
+	Smalltalk removeClassNamed: #TUTU
 ]
 
 { #category : #'tests - testing' }
@@ -503,131 +501,131 @@ CompiledMethodTest >> testIsQuick [
 	self assert: (method isQuick).
 
 	method := self class compiledMethodAt: #returnPlusOne:.
-	self deny: (method isQuick).
+	self deny: (method isQuick)
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeAllInOne [
 	| method |
 	method := self class >> #locComplex.
-	self assert: method linesOfCode equals: 14.
+	self assert: method linesOfCode equals: 14
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyLineInTheEnd [
 	| method |
 	method := self class >> #locEmptyLineInTheEnd.
-	self assert: method linesOfCode equals: 4.
+	self assert: method linesOfCode equals: 4
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyLineInTheMiddle [
 	| method |
 	method := self class >> #locEmptyLineInTheMiddle.
-	self assert: method linesOfCode equals: 4.
+	self assert: method linesOfCode equals: 4
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyLineWithTabInTheEnd [
 	| method |
 	method := self class >> #locEmptyLineWithTabInTheEnd.
-	self assert: method linesOfCode equals: 4.
+	self assert: method linesOfCode equals: 4
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyLineWithTabInTheMiddle [
 	| method |
 	method := self class >> #locEmptyLineWithTabInTheMiddle.
-	self assert: method linesOfCode equals: 4.
+	self assert: method linesOfCode equals: 4
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyMethod [
 	| method |
 	method := self class >> #locEmptyMethod.
-	self assert: method linesOfCode equals: 1.
+	self assert: method linesOfCode equals: 1
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyMethodWithNewline [
 	| method |
 	method := self class >> #locEmptyMethodWithNewline.
-	self assert: method linesOfCode equals: 1.
+	self assert: method linesOfCode equals: 1
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeEmptyMethodWithNewlineAndTab [
 	| method |
 	method := self class >> #locEmptyMethodWithNewlineAndTab.
-	self assert: method linesOfCode equals: 1.
+	self assert: method linesOfCode equals: 1
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeMultilineComment [
 	| method |
 	method := self class >> #locMultilineComment.
-	self assert: method linesOfCode equals: 4.
+	self assert: method linesOfCode equals: 4
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeMultilineCommentWithoutWhitespace [
 	| method |
 	method := self class >> #locMultilineCommentWithoutWhitespace.
-	self assert: method linesOfCode equals: 6.
+	self assert: method linesOfCode equals: 6
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeMultilineMethodComment [
 	| method |
 	method := self class >> #locMultilineMethodComment.
-	self assert: method linesOfCode equals: 4.
+	self assert: method linesOfCode equals: 4
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeMultilineMethodCommentWithoutWhitespace [
 	| method |
 	method := self class >> #locMultilineMethodCommentWithoutWhitespace.
-	self assert: method linesOfCode equals: 3.
+	self assert: method linesOfCode equals: 3
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeSimpleCase [
 	| method |
 	method := self class >> #locSimple.
-	self assert: method linesOfCode equals: 6.
+	self assert: method linesOfCode equals: 6
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeSingleLineComment [
 	| method |
 	method := self class >> #locSingleLineComment.
-	self assert: method linesOfCode equals: 3.
+	self assert: method linesOfCode equals: 3
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeSingleLineCommentWithoutWhitespace [
 	| method |
 	method := self class >> #locSingleLineCommentWithoutWhitespace.
-	self assert: method linesOfCode equals: 3.
+	self assert: method linesOfCode equals: 3
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeSingleLineMethodComment [
 	| method |
 	method := self class >> #locSingleLineMethodComment .
-	self assert: method linesOfCode equals: 3.
+	self assert: method linesOfCode equals: 3
 ]
 
 { #category : #'tests - linesofcode' }
 CompiledMethodTest >> testLinesOfCodeSingleLineMethodCommentWithoutWhitespace [
 	| method |
 	method := self class >> #locSingleLineMethodCommentWithoutWhitespace.
-	self assert: method linesOfCode equals: 3.
+	self assert: method linesOfCode equals: 3
 ]
 
 { #category : #'tests - literals' }
 CompiledMethodTest >> testLiterals [
-	"#literals should not expose implementation hack that the last two literals are 
+	"#literals should not expose implementation hack that the last two literals are
 	used for name of method and class"
 
 	self assertEmpty: (Object >> #yourself) literals.
@@ -645,8 +643,8 @@ CompiledMethodTest >> testMethodClass [
 	new semantics: return Absolete class"
 	Smalltalk removeClassNamed: #TUTU.
 
-	cls := self class classInstaller make: [ :aBuilder | 
-		aBuilder 
+	cls := self class classInstaller make: [ :aBuilder |
+		aBuilder
 			name: #TUTU;
 			package: self categoryNameForTemporaryClasses].
 
@@ -680,26 +678,26 @@ CompiledMethodTest >> testOrigin [
 ]
 
 { #category : #'tests - performing' }
-CompiledMethodTest >> testPerformCanExecutelongMethodWithTemps [	
+CompiledMethodTest >> testPerformCanExecutelongMethodWithTemps [
 	"the perform: primitive reuses the context of the method calling it. The primitive adds performed selector arguments to the context variables list. So this means that you can execute some methods but not performed them if the calling methods defined too many temps "
-	
+
 	| temp1 temp2 temp3 |
 	temp1 := 33.
 	temp2 := 666.
-	temp3 := 42. 
+	temp3 := 42.
 	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)) equals: 1.
 	self assert: (self class>>#testPerformCanExecutelongMethodWithTemps) frameSize equals: CompiledMethod smallFrameSize.
-	self assert: (self class>>#a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:) frameSize equals: CompiledMethod fullFrameSize.
+	self assert: (self class>>#a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:) frameSize equals: CompiledMethod fullFrameSize
 ]
 
 { #category : #'tests - performing' }
-CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [	
+CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 	"the perform: primitive reuses the context of the method calling it. The primitive adds performed selector arguments to the context variables list. So this means that you can execute some methods but not performed them if the calling methods defined too many temps "
-	
+
 	| temp1 temp2 temp3 |
 	temp1 := 33.
 	temp2 := 666.
-	temp3 := 42. 
+	temp3 := 42.
 	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) inSuperclass: self class) equals: 1
 ]
 
@@ -717,23 +715,70 @@ CompiledMethodTest >> testPragmaAt [
 	self assert: (method pragmaAt: #hello) equals: nil
 ]
 
+{ #category : #tests }
+CompiledMethodTest >> testProperties [
+
+	| method tmp |
+	method := self class >> #returnTrue.
+	
+	"No property. Unlike classic collections, nil is returned on absence"
+	self deny: method hasProperties.
+	self deny: (method hasProperty: #doesNotExist).
+	self assert: (method propertyAt: #doesNotExist) equals: nil.
+	self assert: (method propertyAt: #doesNotExist ifAbsent: [ #tag ]) equals: #tag.
+	self assert: (method removeProperty: #doesNotExist) equals: nil.
+	self assert: (method removeProperty: #doesNotExist ifAbsent: [ #tag ]) equals: #tag.
+	
+	"Add a property"
+	self assert: (method propertyAt: #doesNotExist put: #yesItDoes) equals: #yesItDoes.
+	self assert: method hasProperties.
+	self assert: (method hasProperty: #doesNotExist).
+	self assert: (method propertyAt: #doesNotExist) equals: #yesItDoes.
+	self assert: (method propertyAt: #doesNotExist ifAbsent: [ #tag ]) equals: #yesItDoes.
+
+	"Remove it"
+	self assert: (method removeProperty: #doesNotExist) equals: #yesItDoes.
+	self deny: method hasProperties.
+	self assert: (method removeProperty: #doesNotExist) equals: nil.
+
+	"Add it back"
+	self assert: (method propertyAt: #doesNotExist ifAbsentPut: [ #yesItDoesAgain ]) equals: #yesItDoesAgain.
+	self assert: method hasProperties.
+	self assert: (method propertyAt: #doesNotExist) equals: #yesItDoesAgain.
+
+	"Add a second one"
+	self assert: (method propertyAt: #doesExist put: #yesItDoes) equals: #yesItDoes.
+	
+	tmp := OrderedCollection new.
+	method propertyKeysAndValuesDo: [ :key :value | tmp add: { key . value } ].
+	self assertCollection: tmp hasSameElements: #( #( #doesNotExist #yesItDoesAgain ) #(#doesExist #yesItDoes) ).
+	
+	"Remove both"
+	method removeProperty: #doesNotExist.
+	self assert: method hasProperties.
+	self assert: (method propertyAt: #doesNotExist) equals: nil.
+	self assert: (method propertyAt: #doesExist) equals: #yesItDoes.
+	method removeProperty: #doesExist.
+	self deny: method hasProperties
+]
+
 { #category : #'tests - instance variable' }
-CompiledMethodTest >> testReadsField [		
+CompiledMethodTest >> testReadsField [
 	| method |
 	method := self class compiledMethodAt: #readX.
 	self assert: (method readsField: 4).
-	
+
 	method := self class compiledMethodAt: #readXandY.
 	self assert: (method readsField: 5).
-	
-	
+
+
 	"read is not write"
 	method := self class compiledMethodAt: #writeX.
 	self deny: (method readsField: 4).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
 	self deny: (method readsField: 4).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
 	self deny: (method readsField: 5)
 ]
@@ -742,12 +787,12 @@ CompiledMethodTest >> testReadsField [
 CompiledMethodTest >> testReadsSlot [
 
 	"Check the source code availability to do not fail on images without sources"
-	({ Point>>#x. Point>>#setX:setY: } allSatisfy: #hasSourceCode) 
+	({ Point>>#x. Point>>#setX:setY: } allSatisfy: #hasSourceCode)
 		ifFalse: [ ^ self ].
 
 	self assert: ((Point>>#x) readsSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) readsSlot: (Point slotNamed: #y)).
-	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y)).
+	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
 ]
 
 { #category : #'tests - accessing' }
@@ -761,8 +806,8 @@ CompiledMethodTest >> testSelector [
 			"now make an orphaned method. new semantics: return corrent name"
 			Smalltalk removeClassNamed: #TUTU.
 
-			cls := self class classInstaller make: [ :aBuilder | 
-				aBuilder 
+			cls := self class classInstaller make: [ :aBuilder |
+				aBuilder
 					name: #TUTU;
 					package: self categoryNameForTemporaryClasses].
 
@@ -781,20 +826,178 @@ CompiledMethodTest >> testSendsSelector [
 	self deny: ((CompiledCode >> #sendsSelector:) sendsSelector: #doBreakfastForMe)
 ]
 
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithClass [
+
+	| method c c2 |
+
+	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
+	Undeclared removeKey: #TestUndeclaredVariable ifAbsent: []. "Because obsolete may remain"
+
+	method := self class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	self assert: method usesUndeclareds.
+	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
+
+	"Adding a class DOES repair"
+	c := Object subclass: #TestUndeclaredVariable.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: c.
+
+	"Removal of class DOES undeclare users"
+	c removeFromSystem.
+	self assert: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: c.
+
+	"Thus, adding back repair DOES repair again"
+	c2 := Object subclass: #TestUndeclaredVariable.
+	self deny: c equals: c2.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: c2.
+
+	"cleanup"
+	Smalltalk globals removeKey: #TestUndeclaredVariable
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithGlobal [
+
+	| method |
+
+	Smalltalk globals removeKey: #TestUndeclaredVariable ifAbsent: [].
+
+	method := self class compiler permitFaulty: true; compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	self assert: method usesUndeclareds.
+	self should: [ nil executeMethod: method ] raise: UndeclaredVariableRead.
+
+	"Adding a global DOES repair"
+	Smalltalk globals at: #TestUndeclaredVariable put: 42.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"Removal of globals DOES NOT undeclare users"
+	Smalltalk globals removeKey: #TestUndeclaredVariable.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"Thus, adding back DOES NOT repair"
+	Smalltalk globals at: #TestUndeclaredVariable put: 421.
+	self deny: method usesUndeclareds.
+	self assert: (nil executeMethod: method) equals: 42.
+
+	"cleanup"
+	Smalltalk globals removeKey: #TestUndeclaredVariable
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
+
+	| method method2 method3 method4 receiver |
+
+	Smalltalk globals at: #TestUndeclaredVariableClass ifPresent: [ :c | c removeFromSystem ].
+	class := (Object << #TestUndeclaredVariableClass package: '') install.
+	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 0.
+	receiver := class new.
+
+	"Note: unlike related tests, we need here a reveiver (see above) and to install the method in the class"
+	method := class compiler permitFaulty: true; install: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	self assert: method usesUndeclareds.
+	self should: [ receiver executeMethod: method ] raise: UndeclaredVariableRead.
+
+	"Update the class (same identity, not a new class)"
+	self assert: (Object << #TestUndeclaredVariableClass slots: { #TestUndeclaredVariable}; package: '') install equals: class.
+	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 1.
+	receiver instVarAt: 1 put: 42.
+
+	"Adding ivars DOES not repair the CompiledMethod"
+	self assert: method usesUndeclareds.
+	"But recompile and install a NEW method"
+	self deny: method equals: (method2 := class>>#x). "It is a new method"
+	self deny: method2 usesUndeclareds.
+	self assert: (receiver executeMethod: method2) equals: 42.
+
+	"Removal of ivar DOES recompile a new new one"
+	class := (Object << #TestUndeclaredVariableClass package: '') install.
+	self deny: method2 equals: (method3 := class>>#x). "It is a new method"
+	self assert: method3 usesUndeclareds.
+	self should: [ receiver executeMethod: method3 ] raise: UndeclaredVariableRead.
+
+	"Thus adding back DOES recompile again"
+	class := (Object << #TestUndeclaredVariableClass slots: {#TestUndeclaredVariable}; package: '') install.
+	receiver instVarAt: 1 put: 421.
+	self deny: method3 equals: (method4 := class>>#x). "It is a new method"
+	self deny: method4 usesUndeclareds.
+	self assert: (receiver executeMethod: method4) equals: 421.
+
+
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithShared [
+
+	| method |
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         package: '') install.
+	method := class compiler
+		          permitFaulty: true;
+		          compile:
+			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	"Add and initialize a shared"
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         sharedVariables:  {#TestUndeclaredVariable};
+		         package: '') install.
+
+	nil executeMethod: method.
+	nil executeMethod: method
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testUndeclaredReparationWithSharedWasCrashingOnOldVM1001 [
+
+	| method |
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         package: '') install.
+	method := class compiler
+		          permitFaulty: true;
+		          compile:
+			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	"Add and initialize a shared"
+	class := (Object
+		         << #TestUndeclaredVariableClass
+		         sharedVariables:  {#TestUndeclaredVariable};
+		         package: '') install.
+
+	nil executeMethod: method.
+	nil executeMethod: method
+]
+
 { #category : #'tests - testing' }
 CompiledMethodTest >> testUsesUndeclareds [
 	| method |
 	method := self class compiler compile: 'x ^x'.
 	self deny: method usesUndeclareds.
-	method := self class compiler compile: 'z ^z'.
+	method := self class compiler permitFaulty: true; compile: 'z ^z'.
 	self assert: method usesUndeclareds.
-	method := self class compiler compile: 'msg self in: [ :anObject | var1 := 1 ]'.
-	self assert: method usesUndeclareds.
+	method := self class compiler permitFaulty: true; compile: 'msg self in: [ :anObject | var1 := 1 ]'.
+	self assert: method usesUndeclareds
+]
+
+{ #category : #'tests - evaluating' }
+CompiledMethodTest >> testValueWithReceiver [
+
+	| method value |
+
+	method := self class compiledMethodAt: #returnTrue.
+
+	value := method valueWithReceiver: nil .
+	self assert: value equals: true.
 ]
 
 { #category : #'tests - evaluating' }
 CompiledMethodTest >> testValueWithReceiverArguments [
-	
+
 	| method value |
 
 	method := self class compiledMethodAt: #returnTrue.
@@ -804,56 +1007,88 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method valueWithReceiver: nil arguments: #(1).
-	self assert: value equals: 2.
+	self assert: value equals: 2
 ]
 
 { #category : #'tests - instance variable' }
-CompiledMethodTest >> testWritesField [	
+CompiledMethodTest >> testWritesField [
 	| method |
 	method := self class compiledMethodAt: #writeX.
 	self assert: (method writesField: 4).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
 	self assert: (method writesField: 4).
-	
+
 	method := self class compiledMethodAt: #writeXandY.
 	self assert: (method writesField: 5).
-	
+
 	"write is not read"
-	
+
 	method := self class compiledMethodAt: #readX.
 	self deny: (method writesField: 4).
-	
+
 	method := self class compiledMethodAt: #readXandY.
 	self deny: (method writesField: 4).
-	
+
 	method := self class compiledMethodAt: #readXandY.
-	self deny: (method writesField: 5).
+	self deny: (method writesField: 5)
 ]
 
 { #category : #'tests - slots' }
 CompiledMethodTest >> testWritesSlot [
 
 	"Check the source code availability to do not fail on images without sources"
-	({ Point>>#x. Point>>#setX:setY: } allSatisfy: #hasSourceCode) 
+	({ Point>>#x. Point>>#setX:setY: } allSatisfy: #hasSourceCode)
 		ifFalse: [ ^ self ].
 
 	self deny: ((Point>>#x) writesSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) writesSlot: (Point slotNamed: #y)).
-	
+
 	self assert: ((Point>>#setX:setY:) writesSlot: (Point slotNamed: #y)).
-	self assert: ((Point>>#setX:setY:) writesSlot: (Point slotNamed: #x)).
+	self assert: ((Point>>#setX:setY:) writesSlot: (Point slotNamed: #x))
+]
+
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testWritesUndeclared [
+	| method |
+	
+	"x is an ivar"
+	method := self class compiler compile: 'x ^ x := 0'.
+	self deny: method usesUndeclareds.
+	self assert: (self executeMethod: method) equals: 0.
+
+	"undeclaredxyz is not declared"
+	method := self class compiler permitFaulty: true; compile: 'z ^ undeclaredxyz := 1'.
+	self assert: method usesUndeclareds.
+	self should: [ self executeMethod: method ] raise: UndeclaredVariableWrite.
+	self
+		assert:
+			([ self executeMethod: method ]
+				on: UndeclaredVariableWrite
+				do: [:e | e resume])
+		equals: 1.
+
+	"check same behavior in blocks"
+	method := self class compiler permitFaulty: true; compile: 'msg ^ self in: [ :anObject | undeclaredxyz := 2 ]'.
+	self assert: method usesUndeclareds.
+	self should: [ self executeMethod: method ] raise: UndeclaredVariableWrite.
+	self
+		assert:
+			([ self executeMethod: method ]
+				on: UndeclaredVariableWrite
+				do: [:e | e resume])
+		equals: 2
 ]
 
 { #category : #examples }
 CompiledMethodTest >> writeX [
-	
+
 	x := 33
 ]
 
 { #category : #examples }
 CompiledMethodTest >> writeXandY [
-	
+
 	x := 33.
 	y := 66
 ]

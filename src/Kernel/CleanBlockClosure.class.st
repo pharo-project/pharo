@@ -16,18 +16,24 @@ at compile time instead.
 CleanBlockClosure is exactly that: a closure created at compile time, it is stored in the literal frame and just
 pushed on the stack.
 
-For debugging, it does implement all needed machinary to read temps (via tempNamed:) just like a FullBlockClosure.
-
-
-Cleanup for later:
-- This should not be a subclass of FullBlock (as it does not need the receiver ivar, for example)
+For debugging, it does implement all needed machinary to read temps (via tempNamed:) just like a FullBlockClosure
 "
 Class {
 	#name : #CleanBlockClosure,
-	#superclass : #FullBlockClosure,
+	#superclass : #BlockClosure,
 	#type : #variable,
+	#instVars : [
+		'literal'
+	],
 	#category : #'Kernel-Methods'
 }
+
+{ #category : #accessing }
+CleanBlockClosure class >> compiledBlock: aCompiledBlock [
+	^self new
+		numArgs: aCompiledBlock numArgs;
+		compiledBlock: aCompiledBlock
+]
 
 { #category : #printing }
 CleanBlockClosure >> doPrintOn: aStream [
@@ -66,13 +72,26 @@ CleanBlockClosure >> isEmbeddedBlock [
 ]
 
 { #category : #accessing }
+CleanBlockClosure >> literal [
+	"The variable and accessor should be in the subclass ConstantBlockClosure.
+	It seems that the VM expects closures to have 4 ivars
+	We should check if we can fix that."
+	^literal
+]
+
+{ #category : #accessing }
 CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
 	^self compiledBlock literalsEvenTheOnesInTheInnerBlocks
 ]
 
 { #category : #accessing }
-CleanBlockClosure >> messages [ 
+CleanBlockClosure >> messages [
 	^self compiledBlock messages
+]
+
+{ #category : #accessing }
+CleanBlockClosure >> outerCode [
+	^self compiledBlock outerCode
 ]
 
 { #category : #accessing }
@@ -81,18 +100,27 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 ]
 
 { #category : #scanning }
-CleanBlockClosure >> readsField: varIndex [ 
-	^self compiledBlock readsField: varIndex
+CleanBlockClosure >> readsField: varIndex [
+	"Clean blocks by definition do not read fields"
+	^false
 ]
 
 { #category : #scanning }
 CleanBlockClosure >> readsSelf [
-	^self compiledBlock readsSelf
+	"Clean blocks by definition do not access self"
+	^false
 ]
 
 { #category : #scanning }
 CleanBlockClosure >> readsThisContext [
+	"Clean blocks can access thisContext, we have to forward to the compiled block to check"
 	^self compiledBlock readsThisContext
+]
+
+{ #category : #accessing }
+CleanBlockClosure >> receiver [
+	"Clean blocks do not know the receiver"
+	^ nil
 ]
 
 { #category : #accessing }
@@ -113,10 +141,12 @@ CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 
 { #category : #scanning }
 CleanBlockClosure >> sendsToSuper [
-	^self compiledBlock sendsToSuper
+	"Clean blocks by definition do not access super"
+	^false
 ]
 
 { #category : #scanning }
-CleanBlockClosure >> writesField: varIndex [ 
-	^self compiledBlock writesField: varIndex
+CleanBlockClosure >> writesField: varIndex [
+	"Clean blocks by definition do not read fields"
+	^false
 ]

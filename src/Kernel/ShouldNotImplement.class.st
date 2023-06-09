@@ -12,7 +12,7 @@ Class {
 { #category : #printing }
 ShouldNotImplement >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		stream print: self selector.
 		stream << ' should not have been implemented in '.

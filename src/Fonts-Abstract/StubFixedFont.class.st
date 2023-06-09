@@ -41,7 +41,7 @@ StubFixedFont >> descentKern [
 ]
 
 { #category : #displaying }
-StubFixedFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [ 
+StubFixedFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
 	"Ignore"
 ]
 
@@ -61,13 +61,13 @@ StubFixedFont >> familyName [
 ]
 
 { #category : #accessing }
-StubFixedFont >> familySizeFace [ 
+StubFixedFont >> familySizeFace [
 
 	^ #('Stub Fixed Font' 10 0)
 ]
 
 { #category : #accessing }
-StubFixedFont >> fontSize: aNumber [ 
+StubFixedFont >> fontSize: aNumber [
 	"Ignore"
 ]
 

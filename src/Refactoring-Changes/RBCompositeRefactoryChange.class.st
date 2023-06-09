@@ -25,7 +25,7 @@ RBCompositeRefactoryChange class >> named: aString [
 ]
 
 { #category : #comparing }
-RBCompositeRefactoryChange >> = aRefactoryBuilder [ 
+RBCompositeRefactoryChange >> = aRefactoryBuilder [
 	self class = aRefactoryBuilder class
 		ifFalse: [ ^ false ].
 	changes size = aRefactoryBuilder changes size
@@ -71,6 +71,19 @@ RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [
 ]
 
 { #category : #accessing }
+RBCompositeRefactoryChange >> addProtocolNamed: aString in: aClass [
+
+	^ self addChange:
+		  (RBAddProtocolChange addProtocolNamed: aString in: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> category: aString for: aClass [
+
+	^ self addChange: (RBClassCategoryChange category: aString for: aClass)
+]
+
+{ #category : #accessing }
 RBCompositeRefactoryChange >> changeClass [
 
 	^ self subclassResponsibility
@@ -79,7 +92,7 @@ RBCompositeRefactoryChange >> changeClass [
 { #category : #accessing }
 RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [
 
-	changes reverseDo: [ :each | 
+	changes reverseDo: [ :each |
 		| change |
 		change := each changeForClass: aClassName selector: aSelector.
 		change notNil ifTrue: [ ^ change ] ].
@@ -89,7 +102,7 @@ RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [
 { #category : #accessing }
 RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
 
-	changes reverseDo: [ :each | 
+	changes reverseDo: [ :each |
 		| change |
 		change := each changeForMetaclass: aClassName selector: aSelector.
 		change notNil ifTrue: [ ^ change ] ].
@@ -244,10 +257,17 @@ RBCompositeRefactoryChange >> removePool: aPoolVariable from: aClass [
 ]
 
 { #category : #accessing }
+RBCompositeRefactoryChange >> removeProtocolNamed: aString in: aClass [
+	self flag: #todo.
+	"This change is not made via the changefactory!!!"
+	^ self addChange: (RBRemoveProtocolChange removeProtocolNamed: aString in: aClass)
+]
+
+{ #category : #accessing }
 RBCompositeRefactoryChange >> renameChangesForClass: oldClassName to: newClassName [
 
 	^ self copy
-		  changes: (self changes collect: [ :each | 
+		  changes: (self changes collect: [ :each |
 					   each renameChangesForClass: oldClassName to: newClassName ]);
 		  yourself
 ]
@@ -274,4 +294,14 @@ RBCompositeRefactoryChange >> renameInstanceVariable: oldNameLocal to: newNameLo
 			   renameInstanceVariable: oldNameLocal
 			   to: newNameLocal
 			   in: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> selector: aSelector in: aClass classified: aProtocol [
+	self flag: #todo.
+	"This change is not made via the changefactory!!!"
+	^ self addChange: (RBMethodProtocolChange
+							selector: aSelector
+							in: aClass
+							classified: aProtocol)
 ]

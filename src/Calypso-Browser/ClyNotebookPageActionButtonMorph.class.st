@@ -33,35 +33,35 @@ ClyNotebookPageActionButtonMorph >> drawOn: aCanvas [
 { #category : #'instance creation' }
 ClyNotebookPageActionButtonMorph >> forAction: anAction [
 	| baseColor |
-	
+
 	baseColor := self theme baseColor.
 	self extent: anAction icon extent.
-	
+
 	self activeEnabledNotOverUpFillStyle: baseColor.
-	
+
 	self activeDisabledNotOverUpFillStyle: (self theme buttonDisabledFillStyleFor: self).
 	self passiveEnabledNotOverUpFillStyle: baseColor.
 	self passiveDisabledNotOverUpFillStyle: baseColor.
-	
+
 	self
 		activeEnabledOverUpFillStyle: (self theme buttonMouseOverFillStyleFor: self);
 		passiveEnabledOverUpFillStyle: (self theme buttonMouseOverFillStyleFor: self).
-	
+
 	self
 		activeEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self);
 		passiveEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self);
 		addUpAction: [ anAction action value ];
 		setBalloonText: anAction label;
-		extent: 16@16.
-		
+		extent: 16@16 * self currentWorld displayScaleFactor.
+
 	icon := anAction icon.
-		
+
 	^ self
 ]
 
 { #category : #accessing }
 ClyNotebookPageActionButtonMorph >> icon: anObject [
-	
+
 	icon := anObject
 ]
 

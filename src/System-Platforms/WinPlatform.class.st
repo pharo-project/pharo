@@ -22,7 +22,7 @@ WinPlatform >> accept: aVisitor [
 { #category : #accessing }
 WinPlatform >> defaultMaximumPathLength [
 		"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. Windows default PATH_MAX is 260.  PATH_MAX is needed to avoid buffer overflow.  In case PATH_MAX is not sufficient the method currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size. The path can include unicode characters, so it can be longer than 260, doubling it should be enough"
-		
+
 	 ^ 260 * 2
 ]
 
@@ -37,10 +37,55 @@ WinPlatform >> ffiLibraryName [
 	^ #Kernel32
 ]
 
+{ #category : #'error handling' }
+WinPlatform >> formatMessage: dwFlags _: lpSource _: dwMessageId _: dwLanguageId _: lpBuffer _: nSize _: arguments [
+
+    self ffiCall: #(long FormatMessageW(long   dwFlags,
+                            void* lpSource,
+                            long   dwMessageId,
+                            long   dwLanguageId,
+                            void*  lpBuffer,
+                            long   nSize,
+                            void*  arguments))
+]
+
 { #category : #'environment-variables' }
 WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 	"Primitive to obtain an environment variable using windows Wide Strings"
 	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
+]
+
+{ #category : #'error handling' }
+WinPlatform >> getErrorMessage: anInteger [
+
+    | buffer |
+    buffer := (String new: 500) asWin32WideString.
+    self formatMessage: 16r1000 "Format Message From System"
+                        _: ExternalAddress null
+                        _: anInteger
+                        _: 0
+                        _: buffer
+                        _: 500
+                        _: ExternalAddress null.
+
+    ^ buffer asString
+]
+
+{ #category : #'file paths' }
+WinPlatform >> getTempPath [
+
+  | buffer length |
+	length := self defaultMaximumPathLength.
+	buffer := (String new: length) asWin32WideString.
+	self getTempPath: length buffer: buffer.
+	^buffer asString
+]
+
+{ #category : #'file paths' }
+WinPlatform >> getTempPath: bufferLength buffer: buffer [
+
+    self ffiCall: #(long GetTempPath2W(long bufferLength,
+                            void*  buffer))
 ]
 
 { #category : #testing }
@@ -50,7 +95,7 @@ WinPlatform >> isWindows [
 
 { #category : #accessing }
 WinPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForWindowsPlatform: aKeyValue.
+	^KeyboardKey valueForWindowsPlatform: aKeyValue
 ]
 
 { #category : #accessing }
@@ -95,7 +140,7 @@ WinPlatform >> virtualKey: virtualKeyCode [
 	(virtualKeyCode between: 65 "$A charCode" and: 90 "$Z")
 		ifFalse: [^nil].
 	"#($a $b $c $d $e $f $g $h $i $j $k $l $m $n $o $p $q $r $s $t $u $v $w $x $y $z)"
-	
+
 	^(#($a nil $c $d nil $f $g nil nil nil nil $l $m $n nil $p nil nil $s nil nil $v nil $x nil $z)
 		at: virtualKeyCode-64) ifNotNil: [:char | char charCode]
 ]

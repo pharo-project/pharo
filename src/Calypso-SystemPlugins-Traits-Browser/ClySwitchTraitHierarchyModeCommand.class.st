@@ -24,8 +24,8 @@ ClySwitchTraitHierarchyModeCommand class >> isAbstract [
 ClySwitchTraitHierarchyModeCommand >> execute [
 	| classScope |
 	classScope := browser classSelection asItemsScope: ClyClassScope.
-	
-	browser 
+
+	browser
 		switchClassViewTo: self requiredQueryResult
 		inScope: classScope, (classScope asScope: self traitScopeClass)
 ]

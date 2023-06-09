@@ -31,7 +31,7 @@ SDL_MouseMotionEvent class >> fieldsDesc [
 	^ #(
     Uint32 type;
     Uint32 timestamp;
-    Uint32 windowID; 
+    Uint32 windowID;
     Uint32 which;
     Uint32 state;
     Sint32 x;

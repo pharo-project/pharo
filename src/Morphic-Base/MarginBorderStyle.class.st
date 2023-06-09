@@ -10,17 +10,23 @@ Class {
 	#category : #'Morphic-Base-Borders'
 }
 
+{ #category : #'class initialization' }
+MarginBorderStyle class >> initialize [
+	"Deprecated in Pharo 11"
+	self deprecatedAliases: { #MarginBorder }
+]
+
 { #category : #accessing }
 MarginBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	"Reduce the width by the margin."
-	
+
 	| lineColor |
-	lineColor := (stopPoint truncated quadrantOf: startPoint truncated) > 2 
+	lineColor := (stopPoint truncated quadrantOf: startPoint truncated) > 2
 				ifTrue: [self topLeftColor]
 				ifFalse: [self bottomRightColor].
-	aCanvas 
+	aCanvas
 		line: startPoint
-		to: stopPoint 
+		to: stopPoint
 		width: (self width - self margin max: 0)
 		color: lineColor
 ]
@@ -28,12 +34,12 @@ MarginBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 { #category : #accessing }
 MarginBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Reduce width by the margin."
-	
+
 	aCanvas frameAndFillRectangle: aRectangle
 		fillColor: Color transparent
 		borderWidth: (self width - self margin max: 0)
 		topLeftColor: self topLeftColor
-		bottomRightColor: self bottomRightColor.
+		bottomRightColor: self bottomRightColor
 ]
 
 { #category : #initialization }

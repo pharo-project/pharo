@@ -25,7 +25,7 @@ ClyFullEnvironmentUpdateStrategy >> announceChangesOf: aQueryResult [
 { #category : #initialization }
 ClyFullEnvironmentUpdateStrategy >> initialize [
 	super initialize.
-	
+
 	changes := IdentitySet new
 ]
 

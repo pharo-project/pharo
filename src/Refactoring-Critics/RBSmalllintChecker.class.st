@@ -43,32 +43,31 @@ RBSmalllintChecker class >> runRule: aLintRule onEnvironment: aBrowserEnvironmen
 ]
 
 { #category : #private }
-RBSmalllintChecker >> checkClass: aClass [ 
+RBSmalllintChecker >> checkClass: aClass [
 	(environment includesClass: aClass) ifTrue: [rule checkClass: aClass]
 ]
 
 { #category : #private }
 RBSmalllintChecker >> checkMethodsForClass: aClass [
-	^ environment
-		selectorsForClass: aClass
-		do: [ :each | 
-			rule checkMethod: aClass>>each.
-			methodBlock value ]
+
+	^ environment methodsForClass: aClass do: [ :method |
+		  rule checkMethod: method.
+		  methodBlock value ]
 ]
 
 { #category : #private }
 RBSmalllintChecker >> checkPackage: aRPackage [
-	(environment includesPackage: aRPackage) 
+	(environment includesPackage: aRPackage)
 		ifTrue: [rule checkPackage: aRPackage]
 ]
 
 { #category : #accessing }
-RBSmalllintChecker >> context: aSmalllintContext [ 
+RBSmalllintChecker >> context: aSmalllintContext [
 	context := aSmalllintContext
 ]
 
 { #category : #accessing }
-RBSmalllintChecker >> environment: aBrowserEnvironment [ 
+RBSmalllintChecker >> environment: aBrowserEnvironment [
 	environment := aBrowserEnvironment
 ]
 
@@ -80,7 +79,7 @@ RBSmalllintChecker >> initialize [
 ]
 
 { #category : #accessing }
-RBSmalllintChecker >> methodBlock: aBlock [ 
+RBSmalllintChecker >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
@@ -91,7 +90,7 @@ RBSmalllintChecker >> release [
 ]
 
 { #category : #accessing }
-RBSmalllintChecker >> rule: aLintRule [ 
+RBSmalllintChecker >> rule: aLintRule [
 	rule := aLintRule
 ]
 
@@ -101,11 +100,11 @@ RBSmalllintChecker >> run [
 		do: [ :class |
 			self checkClass: class.
 			self checkMethodsForClass: class.
-			
+
 			self checkClass: class classSide.
 			self checkMethodsForClass: class classSide ]
 		displayingProgress: [ :class | 'Running critics on: ', class name ].
-	environment packages 
+	environment packages
 		do: [ :package | self checkPackage: package ]
-		displayingProgress: [ :package | 'Running critics on: ', package name ].
+		displayingProgress: [ :package | 'Running critics on: ', package name ]
 ]

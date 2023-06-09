@@ -28,7 +28,7 @@ RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArgumen
 
 { #category : #parsing }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute.
+	aRefactoring primitiveExecute
 ]
 
 { #category : #parsing }
@@ -57,7 +57,7 @@ RBAbstractRefactoringTest >> parserClass [
 ]
 
 { #category : #actions }
-RBAbstractRefactoringTest >> proceedThroughWarning: aBlock [ 
+RBAbstractRefactoringTest >> proceedThroughWarning: aBlock [
 	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]
 
@@ -74,23 +74,25 @@ RBAbstractRefactoringTest >> setUp [
 ]
 
 { #category : #actions }
-RBAbstractRefactoringTest >> shouldFail: aRefactoring [ 
+RBAbstractRefactoringTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
-		self should: [ aRefactoring primitiveExecute ] 
-		raise: RBRefactoringError ]
+		self
+			should: [ aRefactoring primitiveExecute ]
+			raise: RBRefactoringError
+	]
 ]
 
 { #category : #actions }
-RBAbstractRefactoringTest >> shouldWarn: aRefactoringColl [ 
-	self 
+RBAbstractRefactoringTest >> shouldWarn: aRefactoringColl [
+	self
 		should: [ self executeRefactoring: aRefactoringColl ]
 		raise: RBRefactoringWarning
 ]
 
 { #category : #actions }
-RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [ 
-	self 
+RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [
+	self
 		shouldnt: [ self executeRefactoring: aRefactoring ]
 		raise: RBRefactoringWarning
 ]
@@ -98,19 +100,14 @@ RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [
 { #category : #tests }
 RBAbstractRefactoringTest >> testConditions [
 	| condition newCondition |
-	condition := RBCondition new 
-				type: #false
+	condition := RBCondition new
 				block: [false]
 				errorString: 'false'.
 	condition errorMacro: '<1?true:false>'.
 	self deny: condition check.
 	self assert: condition errorString equals: 'false'.
 	self assert: condition not check.
-	self assert: condition printString equals: 'false'.
-	self assert: condition not printString equals: 'NOT false'.
 	self deny: (condition not & condition) check.
-	self 
-		assert: (condition not & condition) printString equals: 'NOT false & false'.
 	self assert: (condition & condition) not check.
 	self assert: (condition | condition not) check.
 	self deny: (newCondition := condition | condition) check.

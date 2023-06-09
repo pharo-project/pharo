@@ -71,7 +71,7 @@ MCDataStream class >> fileNamed: fileName do: aBlock [
 	^ self detectFile: [ self fileNamed: fileName ] do: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MCDataStream class >> initialize [
 	self initializeTypeMap 
 ]

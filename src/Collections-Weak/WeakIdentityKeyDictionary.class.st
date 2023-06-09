@@ -1,50 +1,51 @@
 "
-This class represents an identity dictionary with weak keys.
+I am an identity dictionary holding only weakly on my keys.
+When one of my keys is garbage collected, the key->value association is removed from the dictionary.
+
+Internally I use WeakKeyAssociation objects that know myself as their container.
+WeakKeyAssociation are implemented as ephemerons and get mourned when their key is only known from itself.
+On mourn, the association asks the container to remove itself.
 "
 Class {
 	#name : #WeakIdentityKeyDictionary,
-	#superclass : #WeakKeyDictionary,
+	#superclass : #IdentityDictionary,
 	#category : #'Collections-Weak-Dictionaries'
 }
 
-{ #category : #private }
-WeakIdentityKeyDictionary >> compare: object1 to: object2 [
-	^ object1 == object2
-]
-
-{ #category : #private }
-WeakIdentityKeyDictionary >> scanForEmptySlotFor: aKey [
-	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
+{ #category : #adding }
+WeakIdentityKeyDictionary >> add: anAssociation [
 	
-	| index start |
-	index := start := aKey identityHash \\ array size + 1.
-	[ 
-		(array at: index) ifNil: [ ^index ].
-		(index := index \\ array size + 1) = start ] whileFalse.
-	self errorNoFreeSpace
+	"Installs a copy of the association in myself.
+	I cannot add the association because they are not shareable between weak key dictionaries, it needs myself as container.
+	Moreover, I can only contain weak key associations, and not any association."
+	self at: anAssociation key put: anAssociation value.
+
+	"Return a copy of the association.
+	This is not the real association in the weak dictionary"
+	^ anAssociation
 ]
 
-{ #category : #private }
-WeakIdentityKeyDictionary >> startIndexFor: anObject [
-	"Return the index at which the scan for anObject should start."
-	
-	^(anObject identityHash \\ array size) + 1
+{ #category : #accessing }
+WeakIdentityKeyDictionary >> at: key put: anObject [
+	"Set the value at key to be anObject.  If key is not found, create a
+	new entry for key and set is value to anObject. Answer anObject."
+
+	| index assoc |
+	index := self findElementOrNil: key.
+	assoc := self array at: index.
+	assoc
+		ifNil: [self atNewIndex: index put: ((WeakKeyAssociation key: key value: anObject) container: self)]
+		ifNotNil: [assoc value: anObject].
+	^ anObject
 ]
 
-{ #category : #enumeration }
-WeakIdentityKeyDictionary >> valuesDo: aBlock [ 
-	"See comments in Dictionary>>valuesDo:.  The code keeps the key so it's
-	not collected during the evaluation of aBlock"
+{ #category : #copying }
+WeakIdentityKeyDictionary >> postCopy [
+	"Must copy the associations and tell them I (the copy) am their new container"
 
-	tally = 0 ifTrue: [ ^self ].
-	1 to: array size do:
-		[ :eachIndex | 
-			| eachAssociation eachKey |
-			eachAssociation := array at: eachIndex.
-			nil == eachAssociation ifFalse:
-				[
-					eachKey := eachAssociation key.
-					nil == eachKey ifFalse: [ aBlock value: eachAssociation value ]
-				]
-		]
+	array := self array collect: [ :assoc |
+		         assoc ifNotNil: [
+			         assoc copy
+				         container: self;
+				         yourself ] ]
 ]

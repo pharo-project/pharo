@@ -1,5 +1,5 @@
 "
-my subclasses used internally in balloon backend for Athens to represenet gradient paints.
+My subclasses used internally in balloon backend for Athens to represent gradient paints.
 "
 Class {
 	#name : #AthensBalloonGradientPaint,
@@ -9,6 +9,12 @@ Class {
 	],
 	#category : #'Athens-Balloon-Paint'
 }
+
+{ #category : #testing }
+AthensBalloonGradientPaint class >> isAbstract [
+
+	^ self == AthensBalloonGradientPaint
+]
 
 { #category : #accessing }
 AthensBalloonGradientPaint >> colorRamp [

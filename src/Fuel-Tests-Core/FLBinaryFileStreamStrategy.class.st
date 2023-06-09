@@ -4,37 +4,30 @@ Specific to BinaryFileStream
 Class {
 	#name : #FLBinaryFileStreamStrategy,
 	#superclass : #FLStreamStrategy,
-	#category : #'Fuel-Tests-Core-StreamStrategies'
+	#instVars : [
+		'fileName'
+	],
+	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }
 
-{ #category : #'test support' }
+{ #category : #accessing }
 FLBinaryFileStreamStrategy >> fileName [
-	"Answer a filename to serialize and materialize using it."
+	^ fileName
+]
 
-	^ FLPlatform current absolutePathOf: (FLPlatform current imageName, '-tests.fuel')
+{ #category : #initialization }
+FLBinaryFileStreamStrategy >> initialize [
+	super initialize.
+	
+	fileName := UUID new asString
 ]
 
 { #category : #reading }
-FLBinaryFileStreamStrategy >> readStreamDo: aValuable [
-	"Evaluates the argument with a read stream. Answers the result."
-	
-	^ FLPlatform current
-		fileNamed: self fileName
-		readStreamDo: [ :aStream |
-			aValuable value: aStream binary ]
-]
-
-{ #category : #'test support' }
-FLBinaryFileStreamStrategy >> tearDown [
-	FLPlatform current deleteFileNamed: self fileName
+FLBinaryFileStreamStrategy >> readStream [
+	^ FLFilePoolTestResource current readStreamForFilePath: self fileName
 ]
 
 { #category : #writing }
-FLBinaryFileStreamStrategy >> writeStreamDo: aValuable [
-	"Evaluates the argument with a write stream. Answers the result."
-
-	^ FLPlatform current
-		fileNamed: self fileName
-		writeStreamDo: [ :aStream | 
-			aValuable value: aStream binary ]
+FLBinaryFileStreamStrategy >> writeStream [
+	^ FLFilePoolTestResource current writeStreamForFilePath: self fileName
 ]

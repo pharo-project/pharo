@@ -22,14 +22,14 @@ LIFOQueue >> fastPeek [
 	"Answer a top-most value without removing it from queue.
 	Answer nil, if queue is empty or currently blocked by other process,
 	which reading from queue"
-	
+
 	| item result |
 	item := head.
-	
-	[ (result := item object) == item ] whileTrue: [ 
+
+	[ (result := item object) == item ] whileTrue: [
 		item isCircular ifTrue: [ ^ nil ].
 		(item := item next) ifNil: [ ^ nil ] ].
-	
+
 	^ result
 ]
 
@@ -38,7 +38,7 @@ LIFOQueue >> initialize [
 	| dummy |
 	dummy := self newItem.
 	dummy next: nil; object: dummy.
-	head := dummy.
+	head := dummy
 ]
 
 { #category : #accessing }
@@ -53,13 +53,13 @@ LIFOQueue >> next [
 	head := dummy.
 
 	"skip over dummies"
-	[ tail object == tail ] whileTrue: [ 
+	[ tail object == tail ] whileTrue: [
 		[ tail isCircular ] whileTrue: [ self yield ].
 		(tail := tail next) ifNil: [  | result |
 			"queue is empty. block until new items appear"
 			head == dummy ifTrue: [ self signalNoMoreItems ].
 			[ head == dummy ] whileTrue: [ self waitForNewItems ].
-			dummy next: nil. 
+			dummy next: nil.
 			result := self next.
 			^ result ] ].
 
@@ -79,10 +79,10 @@ LIFOQueue >> nextIfNone: aBlock [
 	head := dummy.
 
 	"skip over dummies"
-	[ tail object == tail ] whileTrue: [ 
+	[ tail object == tail ] whileTrue: [
 		[ tail isCircular ] whileTrue: [ self yield ].
-		(tail := tail next) ifNil: [ 
-			dummy next: nil. 
+		(tail := tail next) ifNil: [
+			dummy next: nil.
 			dummy == head ifTrue: [ self signalNoMoreItems].
 			^ aBlock value ] ].
 
@@ -98,7 +98,7 @@ LIFOQueue >> nextOrNil [
 
 { #category : #accessing }
 LIFOQueue >> nextPut: anObject [
-	
+
 	| newItem oldHead |
 
 	newItem := self newItem.
@@ -107,9 +107,9 @@ LIFOQueue >> nextPut: anObject [
 	"this is atomic"
 	oldHead := head.
 	head := newItem.
-	
+
 	newItem next: oldHead.
-	
+
 	self signalAddedNewItem.
 	^ anObject
 ]
@@ -118,14 +118,14 @@ LIFOQueue >> nextPut: anObject [
 LIFOQueue >> peek [
 	"answer a top-most value without removing it,  or nil, if queue is empty.
 	May block if there's another process reading from queue"
-	
+
 	| item result |
 	item := head.
-	
-	[ (result := item object) == item ] whileTrue: [ 
+
+	[ (result := item object) == item ] whileTrue: [
 		[ item isCircular ] whileTrue: [ self yield ].
 		(item := item next) ifNil: [ ^ nil ] ].
-	
+
 	^ result
 ]
 

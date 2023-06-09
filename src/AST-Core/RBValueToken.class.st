@@ -22,7 +22,7 @@ RBValueToken class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBValueToken class >> value: aString start: anInteger [ 
+RBValueToken class >> value: aString start: anInteger [
 	^self new value: aString start: anInteger
 ]
 
@@ -55,7 +55,7 @@ RBValueToken >> value: anObject [
 ]
 
 { #category : #initialization }
-RBValueToken >> value: aString start: anInteger [ 
+RBValueToken >> value: aString start: anInteger [
 	value := aString.
 	sourcePointer := anInteger
 ]

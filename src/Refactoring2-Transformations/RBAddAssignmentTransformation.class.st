@@ -25,7 +25,7 @@ Class {
 		'variableName',
 		'value'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -90,7 +90,7 @@ RBAddAssignmentTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddAssignmentTransformation >> storeOn: aStream [ 
+RBAddAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

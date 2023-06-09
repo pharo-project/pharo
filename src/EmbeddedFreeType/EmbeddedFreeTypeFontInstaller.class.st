@@ -27,12 +27,12 @@ Class {
 
 { #category : #accessing }
 EmbeddedFreeTypeFontInstaller class >> current [
-	current ifNil: [ 
-		current := self new 
-			provider: FreeTypeFontProvider current; 
+	current ifNil: [
+		current := self new
+			provider: FreeTypeFontProvider current;
 			yourself.
 		FreeTypeFontProvider current addFontInstaller: self current ].
-	^ current.
+	^ current
 ]
 
 { #category : #'class initialization' }
@@ -46,7 +46,7 @@ EmbeddedFreeTypeFontInstaller class >> initialize [
 { #category : #'extra fonts registration' }
 EmbeddedFreeTypeFontInstaller class >> registerFont: aClassWithFont [
 	"Do nothing if freetype is disabled currently"
-	FreeTypeSystemSettings loadFt2Library 
+	FreeTypeSystemSettings loadFt2Library
 		ifTrue: [  aClassWithFont installFontsIn: self current ]
 ]
 
@@ -56,11 +56,11 @@ EmbeddedFreeTypeFontInstaller class >> resetCurrent [
 	current ifNil: [ ^ self ].
 	tmpCurrent := current.
 	current := nil.
-	FreeTypeFontProvider current removeFontInstaller: tmpCurrent.
+	FreeTypeFontProvider current removeFontInstaller: tmpCurrent
 ]
 
 { #category : #adding }
-EmbeddedFreeTypeFontInstaller >> addFirstFileInfo: aFreeTypeEmbeddedFileInfo index: anInteger [ 
+EmbeddedFreeTypeFontInstaller >> addFirstFileInfo: aFreeTypeEmbeddedFileInfo index: anInteger [
 	provider addFirstFileInfo: aFreeTypeEmbeddedFileInfo index: anInteger
 ]
 
@@ -80,16 +80,16 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 	face := FreeTypeFace basicNew fileContentsExternalMemory: externalMem .
 	[ "we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
 	face newFaceFromExternalMemory: externalMem index: i.
-	face loadFields] 
-		on: FT2Error, PrimitiveFailed 
-		do:[:e | 
+	face loadFields]
+		on: FT2Error, PrimitiveFailed
+		do:[:e |
 			self failedToOpen:face index: i.
 			^ self].
 	(face height notNil  and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
 		ifFalse:[
 			self failedToOpen:face index: i.
 			^ self]
-		ifTrue:[ 
+		ifTrue:[
 			numFaces ifNil: [numFaces := face numFaces].
 			info := FreeTypeEmbeddedFileInfo new
 				baseName: originalFileBaseName;
@@ -108,7 +108,7 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 			self cacheEmbeddedFileInfo: info index: i.
 			"Transcript show: 'from file : ', info asString."].
 	i := i + 1.
-	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[].
+	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[]
 ]
 
 { #category : #accessing }
@@ -121,21 +121,21 @@ EmbeddedFreeTypeFontInstaller >> cacheEmbeddedFileInfo: aFreeTypeEmbeddedFileInf
 { #category : #accessing }
 EmbeddedFreeTypeFontInstaller >> embedFilesInDirectory: aDirectory [
 	"embed all the files in aDirectory
-	EmbeddedFreeTypeFontInstaller new 
+	EmbeddedFreeTypeFontInstaller new
 		provider: FreeTypeFontProvider current;
 		embedFilesInDirectory: (FileSystem disk workingDirectory / 'Fonts')
 	"
-	
+
 	aDirectory files do:[:file |
 		file readStreamDo: [ :fileStream|.
 			fileStream binary.
-			self 
-				addFromFileContents: fileStream contents 
+			self
+				addFromFileContents: fileStream contents
 				baseName: file basename]].
-	
+
 	"update so that missing text styles are created."
 	self updateFromSystem.
-	
+
 	"clear all the logicalFonts realFonts so that embedded fonts take precedence over external ones"
 	LogicalFont allInstances do:[:logFont | logFont clearRealFont]
 ]
@@ -155,7 +155,7 @@ EmbeddedFreeTypeFontInstaller >> initialize [
 { #category : #accessing }
 EmbeddedFreeTypeFontInstaller >> installAllFontsIn: aProvider [
 	self provider: aProvider.
-	EmbeddedFreeTypeFontDescription installAllFontsIn: self.	
+	EmbeddedFreeTypeFontDescription installAllFontsIn: self.
 	embeddedFileInfoCache valuesDo: [ :eachSet | eachSet do: [ :each | provider addFileInfo: each ] ]
 ]
 

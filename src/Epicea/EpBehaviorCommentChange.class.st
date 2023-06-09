@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpBehaviorCommentChange class >> newWith: aClassCommentedAnnouncement [ 
+EpBehaviorCommentChange class >> newWith: aClassCommentedAnnouncement [
 
 	^self
 		newWithBehavior: aClassCommentedAnnouncement classCommented asEpiceaRingDefinition
@@ -38,7 +38,7 @@ EpBehaviorCommentChange class >> newWithBehavior: aBehavior oldComment: anOldCom
 ]
 
 { #category : #visitor }
-EpBehaviorCommentChange >> accept: aChangeVisitor [ 
+EpBehaviorCommentChange >> accept: aChangeVisitor [
 	^ aChangeVisitor visitBehaviorCommentChange: self
 ]
 
@@ -60,7 +60,7 @@ EpBehaviorCommentChange >> initializeWithBehavior: aBehavior oldComment: anOldCo
 	oldComment := anOldComment.
 	newComment := aNewComment.
 	oldStamp := anOldStamp.
-	newStamp := aNewStamp.
+	newStamp := aNewStamp
 ]
 
 { #category : #accessing }

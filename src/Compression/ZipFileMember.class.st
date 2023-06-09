@@ -29,13 +29,13 @@ ZipFileMember >> canonicalizeFileName [
 
 { #category : #initialization }
 ZipFileMember >> close [
-	stream ifNotNil:[stream close].
+	stream ifNotNil:[stream close]
 ]
 
 { #category : #'private - writing' }
 ZipFileMember >> copyDataTo: aStream [
 
-	self copyRawDataTo: aStream.
+	self copyRawDataTo: aStream
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ ZipFileMember >> initialize [
 	super initialize.
 	crc32 := 0.
 	localHeaderRelativeOffset := 0.
-	dataOffset := 0.
+	dataOffset := 0
 ]
 
 { #category : #'private - writing' }
@@ -97,17 +97,17 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 ]
 
 { #category : #'private - reading' }
-ZipFileMember >> readFrom: aStream [ 
+ZipFileMember >> readFrom: aStream [
 	"assumes aStream positioned after CD header; leaves stream positioned after my CD entry"
 
 	self readCentralDirectoryFileHeaderFrom: aStream.
 	self readLocalDirectoryFileHeaderFrom: aStream.
 	self endRead.
-	self canonicalizeFileName.
+	self canonicalizeFileName
 ]
 
 { #category : #'private - reading' }
-ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [ 
+ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	"Positions stream as necessary. Will return stream to its original position"
 
 	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos endianStream |
@@ -145,7 +145,7 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 		uncompressedSize := xuncompressedSize.
 	].
 
-	aStream position: oldPos.
+	aStream position: oldPos
 ]
 
 { #category : #'private - reading' }
@@ -159,28 +159,28 @@ ZipFileMember >> rewindData [
 	(stream isNil or: [ stream closed ])
 		ifTrue: [ self error: 'stream missing or closed' ].
 	stream position: (localHeaderRelativeOffset + 4).
-	self skipLocalDirectoryFileHeaderFrom: stream.
+	self skipLocalDirectoryFileHeaderFrom: stream
 ]
 
 { #category : #'private - reading' }
-ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [ 
+ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [
 	"Assumes that stream is positioned after signature."
 
 	|  extraFieldLength fileNameLength endianStream |
 	aStream next: 22.
-	
+
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	fileNameLength := endianStream nextLittleEndianNumber: 2.
 	extraFieldLength := endianStream nextLittleEndianNumber: 2.
 	aStream next: fileNameLength.
 	aStream next: extraFieldLength.
-	dataOffset := aStream position.
+	dataOffset := aStream position
 ]
 
 { #category : #initialization }
 ZipFileMember >> stream: aStream externalFileName: aFileName [
 	stream := aStream.
-	externalFileName := aFileName.
+	externalFileName := aFileName
 ]
 
 { #category : #'private - writing' }
@@ -217,7 +217,7 @@ ZipFileMember >> uncompressDataTo: aStream from: start to: finish [
 		buffer := decoder next: chunkSize into: buffer startingAt: 1.
 		aStream next: chunkSize putAll: buffer startingAt: 1.
 		readDataRemaining := readDataRemaining - chunkSize.
-	].
+	]
 ]
 
 { #category : #'private - reading' }

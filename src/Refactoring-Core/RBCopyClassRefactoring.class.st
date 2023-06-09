@@ -63,18 +63,19 @@ RBCopyClassRefactoring >> category: aSymbol [
 
 { #category : #transforming }
 RBCopyClassRefactoring >> copyClass [
-	self performCompositeRefactoring: (RBAddClassRefactoring
+	self performCompositeRefactoring: (RBInsertNewClassRefactoring
 		model: self model
 		addClass: className
 		superclass: aClass superclass
 		subclasses: #()
-		category: self category).
+		category: self category
+		comment: aClass comment)
 ]
 
 { #category : #copying }
 RBCopyClassRefactoring >> copyClass: cls withName: aName [
 	self className: aName.
-	aClass := self classObjectFor: cls.
+	aClass := self classObjectFor: cls
 ]
 
 { #category : #transforming }
@@ -90,9 +91,9 @@ RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
 		self performCompositeRefactoringThroughWarning:
-			(RBAddMethodRefactoring 
+			(RBAddMethodRefactoring
 				model: self model
-				addMethod: rbMethod source 
+				addMethod: rbMethod source
 				toClass: rbClass2
 				inProtocols: rbMethod protocols)
 	]
@@ -114,8 +115,8 @@ RBCopyClassRefactoring >> copyVariables [
 ]
 
 { #category : #preconditions }
-RBCopyClassRefactoring >> preconditions [ 
-	^ (RBCondition isValidClassName: className) 
+RBCopyClassRefactoring >> preconditions [
+	^ (RBCondition isValidClassName: className)
 		& (RBCondition isGlobal: className in: self model) not
 ]
 
@@ -123,5 +124,5 @@ RBCopyClassRefactoring >> preconditions [
 RBCopyClassRefactoring >> transform [
 	self copyClass.
 	self copyVariables.
-	self copyMethods.
+	self copyMethods
 ]

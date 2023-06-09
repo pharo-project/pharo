@@ -12,13 +12,15 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodNotFoundAfterRemova
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	classOrTrait classSide duringTestCompileSilently: 'you'.
+	self classFactory
+		silentlyCompile: 'you'
+		in: classOrTrait classSide.
 	
 	self serialize: classOrTrait classSide >> #you.
 	classOrTrait classSide removeSelectorSilently: #you.
 	
 	self 
-		should: [self materialized] 
+		should: [ self materialized ] 
 		raise: FLMethodNotFound
 		whoseDescriptionIncludes: classOrTrait classSide printString 
 		description: 'Should raise an error when method is not present.'
@@ -30,7 +32,9 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodPreservesIdentity [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	classOrTrait classSide duringTestCompileSilently: 'you'.
+	self classFactory
+		silentlyCompile:  'you'
+		in: classOrTrait classSide.
 	self assertSerializationIdentityOf: classOrTrait classSide >> #you
 ]
 
@@ -40,7 +44,7 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideObsolete [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	self removeFromSystem: classOrTrait.
+	self classFactory deleteBehavior: classOrTrait.
 
 	self 
 		should: [self serialize: classOrTrait ] 
@@ -62,7 +66,9 @@ FLTGlobalClassOrTraitSerializationTest >> testMethodNotFoundAfterRemoval [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	classOrTrait duringTestCompileSilently: 'you'.
+	self classFactory
+		silentlyCompile: 'you'
+		in: classOrTrait.
 	
 	self serialize: classOrTrait >> #you.
 	classOrTrait removeSelectorSilently: #you.
@@ -80,7 +86,9 @@ FLTGlobalClassOrTraitSerializationTest >> testMethodPreservesIdentity [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	classOrTrait duringTestCompileSilently: 'you'.
+	self classFactory
+		silentlyCompile: 'you'
+		in: classOrTrait.
 	self assertSerializationIdentityOf: classOrTrait >> #you
 ]
 
@@ -92,7 +100,7 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRemoval [
 	classOrTrait := self newClassOrTrait.
 	
 	self serialize: classOrTrait.
-	self removeFromSystem: classOrTrait.
+	self classFactory 	deleteBehavior: classOrTrait.
 	
 	self should: [self materialized] raise: FLClassNotFound.
 ]
@@ -105,9 +113,11 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRename [
 	classOrTrait := self newClassOrTrait.
 	
 	self serialize: classOrTrait.
-	classOrTrait renameSilently: (classOrTrait name, 'Renamed') asSymbol.
+	self classFactory
+		silentlyRename: classOrTrait
+		to: classOrTrait name, 'Renamed'.
 	
-	self should: [self materialized] raise: FLClassNotFound.
+	self should: [ self materialized ] raise: FLClassNotFound
 ]
 
 { #category : #tests }
@@ -116,7 +126,7 @@ FLTGlobalClassOrTraitSerializationTest >> testObsolete [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	self removeFromSystem: classOrTrait.
+	self classFactory deleteBehavior: classOrTrait.
 
 	self 
 		should: [self serialize: classOrTrait ] 

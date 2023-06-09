@@ -30,7 +30,7 @@ Class {
 { #category : #'instance creation' }
 CmdMenu class >> activatedBy: aCommandActivationStrategyClass [
 
-	^self new 
+	^self new
 		activationStrategyClass: aCommandActivationStrategyClass
 ]
 
@@ -49,7 +49,7 @@ CmdMenu >> buildCommandItemInContext: aToolContext activatingBy: anActivationStr
 
 	| commandActivator group |
 	commandActivator := anActivationStrategy newActivatorFor: aToolContext.
-	
+
 	group := self ensureGroup: anActivationStrategy menuGroup.
 	group addItem: (CmdCommandMenuItem activatingBy: commandActivator)
 ]
@@ -57,9 +57,9 @@ CmdMenu >> buildCommandItemInContext: aToolContext activatingBy: anActivationStr
 { #category : #building }
 CmdMenu >> buildInContext: aToolContext [
 
-	activationStrategyClass 
+	activationStrategyClass
 		visibleInstancesInContext: aToolContext
-		do: [ :activation | 
+		do: [ :activation |
 			self buildCommandItemInContext: aToolContext activatingBy: activation]
 ]
 
@@ -69,7 +69,7 @@ CmdMenu >> ensureGroup: menuGroupClass [
 	| parentGroup group |
 	rootGroup class = menuGroupClass ifTrue: [ ^rootGroup ].
 	rootGroup findGroupLike: menuGroupClass ifExists: [:existing | ^existing].
-	
+
 	parentGroup := self ensureGroup: menuGroupClass parentGroup.
 	group := menuGroupClass new.
 	parentGroup addItem: group.
@@ -77,8 +77,8 @@ CmdMenu >> ensureGroup: menuGroupClass [
 ]
 
 { #category : #accessing }
-CmdMenu >> groupsWithCommandLike: aCommandClass [ 
-	
+CmdMenu >> groupsWithCommandLike: aCommandClass [
+
 	| result |
 	result := rootGroup allGroupsWhich: [ :each | each includesCommand: aCommandClass ].
 	(rootGroup includesCommand: aCommandClass)
@@ -89,7 +89,7 @@ CmdMenu >> groupsWithCommandLike: aCommandClass [
 { #category : #initialization }
 CmdMenu >> initialize [
 	super initialize.
-	
+
 	rootGroup := CmdRootMenuGroup new
 ]
 
@@ -104,10 +104,10 @@ CmdMenu >> isEmpty [
 ]
 
 { #category : #accessing }
-CmdMenu >> itemsWithCommandLike: aCommandClass [ 
+CmdMenu >> itemsWithCommandLike: aCommandClass [
 	| groups |
 	groups := self groupsWithCommandLike: aCommandClass.
-	^groups 
+	^groups
 		flatCollect: [ :each | { each. each commandItemLike: aCommandClass } ]
 ]
 

@@ -40,7 +40,7 @@ OrientedFillStyle >> direction: aPoint [
 { #category : #comparing }
 OrientedFillStyle >> hash [
 	"Hash is implemented because #= is implemented."
-	
+
 	^self species hash
 		bitXor: (self origin hash
 		bitXor: (self direction hash
@@ -50,7 +50,8 @@ OrientedFillStyle >> hash [
 { #category : #testing }
 OrientedFillStyle >> isOrientedFill [
 	"Return true if the receiver keeps an orientation (e.g., origin, direction, and normal)"
-	^true
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -70,5 +71,5 @@ OrientedFillStyle >> origin [
 
 { #category : #accessing }
 OrientedFillStyle >> origin: aPoint [
-	origin := aPoint.
+	origin := aPoint
 ]

@@ -17,7 +17,7 @@ Class {
 ClassVariableTest >> testIsReadInMethod [
 
 	DefaultTimeLimit printString. "reading class variable".
-	
+
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isReadIn: self class >> testSelector)
 ]
 
@@ -43,7 +43,7 @@ ClassVariableTest >> testIsShadowing [
 ClassVariableTest >> testIsWrittenInMethod [
 
 	DefaultTimeLimit := DefaultTimeLimit. "writing class variable".
-	
+
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
@@ -57,7 +57,7 @@ ClassVariableTest >> testNotReadInMethod [
 ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 
 	DefaultTimeLimit printString. "reading class variable".
-	
+
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
@@ -89,27 +89,36 @@ ClassVariableTest >> testPossiblyUsingClasses [
 	self assert: (variable possiblyUsingClasses includes: CompositionScanner class)
 ]
 
+{ #category : #tests }
+ClassVariableTest >> testPrintOn [
+	| variable |
+	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	self assert: variable definitionString equals: '#CompilerClass'.
+	"but we print as a self-evaluation varibale defition"
+	self assert: variable printString equals: '#CompilerClass => ClassVariable'
+]
+
 { #category : #'tests - properties' }
 ClassVariableTest >> testPropertyAtPut [
 
 	| testValue classVariable |
-	
+
 	testValue := Date today.
 	classVariable := self class classVariableNamed: #TestVariable.
-	
+
 	classVariable propertyAt: #testKeySelector put: testValue.
 	self
 		assert: (classVariable propertyAt: #testKeySelector)
 		equals: testValue.
 
 	TestVariable := 5. "of course changing the var does not change the property"
-	
+
 	self
 		assert: (classVariable propertyAt: #testKeySelector)
 		equals: testValue.
-		
+
 	classVariable removeProperty: #testKeySelector.
-	self assert: classVariable properties isNil.
+	self assert: classVariable properties isNil
 ]
 
 { #category : #'tests - properties' }
@@ -118,7 +127,7 @@ ClassVariableTest >> testReadingFromContext [
 	| classVariable |
 	TestVariable := #testValue.
 	classVariable := self class classVariableNamed: #TestVariable.
-	
+
 	self
 		assert: (classVariable readInContext: thisContext)
 		equals: #testValue
@@ -134,7 +143,7 @@ ClassVariableTest >> testRemoveProperty [
 	self
 		assert: (classVariable propertyAt: #testKeySelector)
 		equals: nil.
-	self assert: classVariable properties isNil.
+	self assert: classVariable properties isNil
 ]
 
 { #category : #tests }
@@ -149,10 +158,10 @@ ClassVariableTest >> testScope [
 ClassVariableTest >> testUsingMethods [
 	| variable |
 	"The semantics of where to search is tested as part of #testPossiblyUsingClasses"
-	
+
 	variable := CharacterScanner classVariableNamed: #CompositionStopConditions.
 	self assert: (variable usingMethods includes: CompositionScanner>>#setStopConditions).
-	 
+
 	variable := TextConstants classVariableNamed: #DefaultMarginTabsArray.
 	self assert: variable isPoolVariable.
 	self assert: (variable usingMethods includes: TextConstants class>>#DefaultMarginTabsArray).
@@ -165,7 +174,7 @@ ClassVariableTest >> testWritingToContext [
 	| classVariable |
 	classVariable := self class classVariableNamed: #TestVariable.
 	classVariable write: #testValue inContext: thisContext.
-	
+
 	self assert: TestVariable equals: #testValue
 ]
 
@@ -175,5 +184,5 @@ ClassVariableTest >> testisPoolVariable [
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
 	self deny: variable isPoolVariable.
 	variable := TextConstants classVariableNamed: #Basal.
-	self assert: variable isPoolVariable.
+	self assert: variable isPoolVariable
 ]

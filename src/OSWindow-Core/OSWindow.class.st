@@ -46,7 +46,8 @@ Class {
 		'initialAttributes',
 		'eventHandler',
 		'currentCursor',
-		'backendWindow'
+		'backendWindow',
+		'announcer'
 	],
 	#classVars : [
 		'TraceEvents'
@@ -100,6 +101,11 @@ OSWindow class >> traceEvents: aBoolean [
 	TraceEvents := aBoolean
 ]
 
+{ #category : #'accessing - arguments' }
+OSWindow >> announcer [
+	^ announcer
+]
+
 { #category : #accessing }
 OSWindow >> backendWindow [
 	^ backendWindow
@@ -107,7 +113,7 @@ OSWindow >> backendWindow [
 
 { #category : #accessing }
 OSWindow >> borderless [
-	^ self validHandle borderless
+	^ self initialAttributes borderless: (self validHandle borderless)
 ]
 
 { #category : #accessing }
@@ -117,7 +123,7 @@ OSWindow >> borderless: aBoolean [
 
 { #category : #accessing }
 OSWindow >> bounds [
-	^ self validHandle bounds
+	^ self initialAttributes bounds: (self validHandle bounds)
 ]
 
 { #category : #accessing }
@@ -144,6 +150,7 @@ OSWindow >> clipboardText [
 { #category : #'clipboard handling' }
 OSWindow >> clipboardText: aString [
 	^ self validHandle clipboardText: aString
+	
 ]
 
 { #category : #private }
@@ -177,9 +184,11 @@ OSWindow >> deliverGlobalEvent: aGlobalEvent [
 
 { #category : #private }
 OSWindow >> destroy [
+	announcer  announce: DeleteWindowByCrossAnnouncement .
 	self validHandle destroy.
 	backendWindow := nil.
 	eventHandler := nil.
+	
 ]
 
 { #category : #accessing }
@@ -201,7 +210,7 @@ OSWindow >> eventHandler: anObject [
 
 { #category : #accessing }
 OSWindow >> extent [
-	^ self validHandle extent
+	^ self initialAttributes extent: (self validHandle extent)
 ]
 
 { #category : #accessing }
@@ -249,6 +258,18 @@ OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	self initialize
 ]
 
+{ #category : #accessing }
+OSWindow >> initialAttributes [
+
+	^ initialAttributes
+]
+
+{ #category : #initialization }
+OSWindow >> initialize [
+
+	announcer := Announcer new.
+]
+
 { #category : #private }
 OSWindow >> invalidHandle [
 	self error: 'Invalid window handle'
@@ -273,14 +294,14 @@ OSWindow >> isVisible [
 
 { #category : #'window management' }
 OSWindow >> maximize [
-
 	self validHandle maximize.
+	initialAttributes maximized: true.
 ]
 
 { #category : #'window management' }
 OSWindow >> minimize [
-
 	self validHandle minimize.
+	initialAttributes minimized: true.
 ]
 
 { #category : #'instance creation' }
@@ -310,7 +331,7 @@ OSWindow >> platformSpecificHandle [
 
 { #category : #accessing }
 OSWindow >> position [
-	^ self validHandle position
+	^ self initialAttributes position: (self validHandle position)
 ]
 
 { #category : #accessing }
@@ -414,6 +435,17 @@ OSWindow >> startTextInput [
 ]
 
 { #category : #'text input' }
+OSWindow >> startTextInputAtRectangle: aRectangle [
+
+	"Start accepting Unicode text input events.
+	I will start accepting Unicode text input events in the focused window, and start emitting text input and text editing events.
+	Please use me in pair with stopTextInput.
+	On some platforms I may activate the screen keyboard."
+
+	self validHandle startTextInputAtRectangle: aRectangle
+]
+
+{ #category : #'text input' }
 OSWindow >> stopTextInput [
 	"Stop receiving any text input events"
 
@@ -422,7 +454,7 @@ OSWindow >> stopTextInput [
 
 { #category : #accessing }
 OSWindow >> title [
-	^ self validHandle title
+	^ initialAttributes title: (self validHandle title)
 ]
 
 { #category : #accessing }

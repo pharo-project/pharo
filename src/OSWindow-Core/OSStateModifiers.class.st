@@ -26,7 +26,7 @@ OSStateModifiers >> alt [
 ]
 
 { #category : #accessing }
-OSStateModifiers >> any [ 
+OSStateModifiers >> any [
 
 	^ self cmd | self alt | self ctrl
 ]
@@ -38,13 +38,13 @@ OSStateModifiers >> buttons [
 
 { #category : #accessing }
 OSStateModifiers >> capsLock [
-	
+
 	^ capsLock
 ]
 
 { #category : #accessing }
 OSStateModifiers >> capsLock: anObject [
-	
+
 	capsLock := anObject
 ]
 
@@ -62,66 +62,66 @@ OSStateModifiers >> ctrl [
 OSStateModifiers >> initialize [
 	leftAlt := leftCmd := leftCtrl := leftShift := rightAlt := rightCmd := rightCtrl := rightShift :=
 	capsLock := numLock := false.
-	buttons := OSButtonState new.
+	buttons := OSButtonState new
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftAlt [
-	
+
 	^ leftAlt
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftAlt: anObject [
-	
+
 	leftAlt := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftCmd [
-	
+
 	^ leftCmd
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftCmd: anObject [
-	
+
 	leftCmd := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftCtrl [
-	
+
 	^ leftCtrl
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftCtrl: anObject [
-	
+
 	leftCtrl := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftShift [
-	
+
 	^ leftShift
 ]
 
 { #category : #accessing }
 OSStateModifiers >> leftShift: anObject [
-	
+
 	leftShift := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> numLock [
-	
+
 	^ numLock
 ]
 
 { #category : #accessing }
 OSStateModifiers >> numLock: anObject [
-	
+
 	numLock := anObject
 ]
 
@@ -138,55 +138,55 @@ OSStateModifiers >> printOn: aStream [
 	rightShift ifTrue: [ aStream nextPutAll: 'rightShift'; space ].
 	capsLock ifTrue: [ aStream nextPutAll: 'capsLock'; space ].
 	numLock ifTrue: [ aStream nextPutAll: 'numLock'; space ].
-	
+
 	aStream nextPut: $]; space; print: buttons
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightAlt [
-	
+
 	^ rightAlt
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightAlt: anObject [
-	
+
 	rightAlt := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightCmd [
-	
+
 	^ rightCmd
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightCmd: anObject [
-	
+
 	rightCmd := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightCtrl [
-	
+
 	^ rightCtrl
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightCtrl: anObject [
-	
+
 	rightCtrl := anObject
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightShift [
-	
+
 	^ rightShift
 ]
 
 { #category : #accessing }
 OSStateModifiers >> rightShift: anObject [
-	
+
 	rightShift := anObject
 ]
 

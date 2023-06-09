@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-Fraction class >> numerator: numInteger denominator: denInteger [ 
+Fraction class >> numerator: numInteger denominator: denInteger [
 	"Answer an instance of me (numInteger/denInteger).
 	NOTE: This primitive initialization method will not reduce improper fractions,
 	so normal usage should be coded as, eg,
@@ -33,10 +33,10 @@ Fraction class >> numerator: numInteger denominator: denInteger [
 ]
 
 { #category : #arithmetic }
-Fraction >> * aNumber [ 
+Fraction >> * aNumber [
 	"Answer the result of multiplying the receiver by aNumber."
 	| d1 d2 |
-	aNumber isFraction ifTrue: 
+	aNumber isFraction ifTrue:
 		[d1 := numerator gcd: aNumber denominator.
 		d2 := denominator gcd: aNumber numerator.
 		(d2 = denominator and: [d1 = aNumber denominator])
@@ -47,12 +47,12 @@ Fraction >> * aNumber [
 ]
 
 { #category : #arithmetic }
-Fraction >> + aNumber [ 
+Fraction >> + aNumber [
 	"Answer the sum of the receiver and aNumber."
 	| n d d1 d2 |
 	aNumber isInteger ifTrue:
 		[^Fraction numerator: numerator + (denominator * aNumber) denominator: denominator].
-	aNumber isFraction ifTrue: 
+	aNumber isFraction ifTrue:
 		[d := denominator gcd: aNumber denominator.
 		n := numerator * (d1 := aNumber denominator // d) + (aNumber numerator * (d2 := denominator // d)).
 		d1 := d1 * d2.
@@ -138,7 +138,7 @@ Fraction >> asFloat [
 	b := denominator.	"denominator is always positive"
 	ha := a highBitOfMagnitude.
 	hb := b highBitOfMagnitude.
-	
+
 	"Number of bits to keep in mantissa plus one to handle rounding."
 	n := 1 + Float precision.
 
@@ -155,7 +155,7 @@ Fraction >> asFloat [
 	mantissa := a quo: b.
 	hasTruncatedBits := a > (mantissa * b).
 	hm := mantissa highBit.
-	
+
 	"Check for gradual underflow, in which case the mantissa will loose bits.
 	Keep at least one bit to let underflow preserve the sign of zero."
 	lostBit := Float emin - (exponent + hm - 1).
@@ -181,7 +181,7 @@ Fraction >> asFloat [
 ]
 
 { #category : #converting }
-Fraction >> asFraction [	
+Fraction >> asFraction [
 	"Answer the receiver itself."
 
 	^self
@@ -192,7 +192,7 @@ Fraction >> asLargerPowerOfTwo [
 	"Convert the receiver into a power of two which is not less than the receiver"
 	| quotient |
 	(numerator = 0 or: [numerator sign ~= denominator sign]) ifTrue: [^DomainError signal: 'Value outside (0 , infinity)' from: 0].
-	^(quotient := denominator // numerator) > 0 
+	^(quotient := denominator // numerator) > 0
 		ifTrue: [Fraction numerator: 1 denominator:  (1 bitShift: (quotient highBit -1))]
 		ifFalse: [quotient := numerator // denominator.
 				"If my quotient is a power of two, we, we need to check remainder, to see if we should shift by highbit or not.
@@ -207,7 +207,7 @@ Fraction >> asScaledDecimal [
 	"Convert the receiver to a ScaledDecimal.
 	If there is a finite decimal representation of the receiver, then use the exact number of decimal places required.
 	Else, use a default number of decimals."
-	
+
 	| pow2 pow5 q q5 |
 	pow2 := denominator lowBit - 1.
 	q := denominator bitShift: pow2 negated.
@@ -226,13 +226,13 @@ Fraction >> asSmallerPowerOfTwo [
 	"Convert the receiver into a power of two which is not larger than the receiver"
 	| quotient |
 	(numerator = 0 or: [numerator sign ~= denominator sign]) ifTrue: [^DomainError signal: 'Value outside (0 , infinity)' from: 0].
-	^(quotient := denominator // numerator) > 0 
+	^(quotient := denominator // numerator) > 0
 		ifTrue: [	"If my quotient is a power of two, we, we need to check remainder, to see if we should shift by highbit or not.
 				 (This is equivalent to Integer asSmallerPowerOfTwo returning self when receiver is power of two) "
-				 (quotient isPowerOfTwo and: [denominator \\ numerator = 0]) 
+				 (quotient isPowerOfTwo and: [denominator \\ numerator = 0])
 					ifTrue: [Fraction numerator: 1 denominator: quotient]
 					ifFalse:[Fraction numerator: 1 denominator:  (1 bitShift: quotient highBit)]]
-					
+
 		ifFalse: [1 bitShift: ((numerator // denominator) highBit -1)]
 ]
 
@@ -252,7 +252,7 @@ Fraction >> hash [
 		"If denominator is a power of two, I can be exactly equal to a Float"
 		tmp := self asFloat.
 		tmp isFinite ifTrue: [^tmp hash]].
-	
+
 	"Else, I cannot be exactly equal to a Float, use own hash algorithm.
 	(Assume the fraction is already reduced)"
 	^numerator hash bitXor: denominator hash
@@ -269,12 +269,12 @@ Fraction >> isPowerOfTwo [
 ]
 
 { #category : #'self evaluating' }
-Fraction >> isSelfEvaluating [ 
+Fraction >> isSelfEvaluating [
 	^ true
 ]
 
 { #category : #arithmetic }
-Fraction >> negated [ 
+Fraction >> negated [
 	"Refer to the comment in Number|negated."
 
 	^ Fraction
@@ -301,7 +301,7 @@ Fraction >> printOn: aStream [
 	numerator printOn: aStream.
 	aStream nextPut: $/.
 	denominator printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #printing }
@@ -311,13 +311,13 @@ Fraction >> printOn: aStream base: base [
 	numerator printOn: aStream base: base.
 	aStream nextPut: $/.
 	denominator printOn: aStream base: base.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #printing }
 Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
 	"Same as super, but provides a faster implementation by inlining some Fraction protocol thus avoiding intermediate Fraction creation."
-	
+
 	| roundedFractionPart integerPart scaling |
 	placesDesired <= 0
 		ifTrue: [self rounded printOn: aStream]
@@ -333,12 +333,12 @@ Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
 			(numerator negative and: [integerPart > 0 or: [roundedFractionPart > 0]]) ifTrue: [aStream nextPut: $-].
 			integerPart printOn: aStream.
 			aStream nextPut: $..
-			roundedFractionPart printOn: aStream base: 10 length: placesDesired padded: true].
+			roundedFractionPart printOn: aStream base: 10 length: placesDesired padded: true]
 ]
 
 { #category : #private }
 Fraction >> reciprocal [
-	
+
 	numerator abs = 1 ifTrue: [^denominator * numerator].
 	^self class numerator: denominator denominator: numerator
 ]
@@ -358,9 +358,9 @@ Fraction >> reduced [
 { #category : #'truncation and round off' }
 Fraction >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
-   "(1/3 round: 2) >>> (33/100) "   
+   "(1/3 round: 2) >>> (33/100) "
 	"(111/100 round: 2) >>> (111/100) "
-	
+
 	^self roundTo: (10 raisedTo: numberOfWishedDecimal negated)
 ]
 
@@ -369,7 +369,7 @@ Fraction >> setNumerator: n denominator: d [
 
 	d = 0
 		ifTrue: [^(ZeroDivide dividend: n) signal]
-		ifFalse: 
+		ifFalse:
 			[numerator := n asInteger.
 			denominator := d asInteger abs. "keep sign in numerator"
 			d < 0 ifTrue: [numerator := numerator negated]]
@@ -382,11 +382,11 @@ Fraction >> storeOn: aStream base: base [
 	numerator storeOn: aStream base: base.
 	aStream nextPut: $/.
 	denominator storeOn: aStream base: base.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #'truncation and round off' }
-Fraction >> truncated [ 
+Fraction >> truncated [
 	"Refer to the comment in Number|truncated."
 
 	^numerator quo: denominator

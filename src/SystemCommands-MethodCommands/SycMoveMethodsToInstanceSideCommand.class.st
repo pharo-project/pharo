@@ -14,7 +14,7 @@ SycMoveMethodsToInstanceSideCommand class >> canBeExecutedInContext: aToolContex
 ]
 
 { #category : #accessing }
-SycMoveMethodsToInstanceSideCommand >> defaultMenuIconName [ 
+SycMoveMethodsToInstanceSideCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
@@ -25,8 +25,8 @@ SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToInstanceSideCommand >> execute [
-	
-	methods 
+
+	methods
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: each origin instanceSide]
 		thenDo: [ :each | each execute ]
 ]

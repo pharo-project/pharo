@@ -15,8 +15,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'sourceNode',
-		'expression',
-		'result'
+		'expression'
 	],
 	#classVars : [
 		'DocCommentEnabled'
@@ -34,35 +33,20 @@ PharoDocCommentNode class >> docCommentEnabled: aBoolean [
 	DocCommentEnabled := aBoolean
 ]
 
-{ #category : #parsing }
-PharoDocCommentNode class >> docCommentRangesIn: aText [
-	^ '(([^[:cntrl:]]*)>>>\3?([^[:cntrl:]]*))' asRegex matchingRangesIn: aText
-]
-
 { #category : #'instance creation' }
-PharoDocCommentNode class >> expression: aDocExpression result: anotherDocExpression inComment: aRBComment [
+PharoDocCommentNode class >> expression: aDocExpression inComment: aRBComment [
 	^ self new
 		expression: aDocExpression;
-		result: anotherDocExpression;
 		sourceNode: aRBComment
 		yourself
 ]
 
 { #category : #parsing }
 PharoDocCommentNode class >> parseDocComments: aRBCommentNode [
-	| ranges |
-	ranges := self docCommentRangesIn: aRBCommentNode contents.
-	^ ranges
-		collect: [ :range | 
-			| expression result exps |
-			exps := '>>>' split: (aRBCommentNode contents copyFrom: range first to: range last).
-			expression := PharoDocCommentExpression new
-				expressionInterval: (range first to: range first + exps first size - 1);
-				source: aRBCommentNode contents.
-			result := PharoDocCommentExpression new
-				expressionInterval: (1 + range last - exps last size to: range last);
-				source: aRBCommentNode contents.
-			self expression: expression result: result inComment: aRBCommentNode ]
+
+	| expression |
+	expression := PharoDocCommentExpression new source: aRBCommentNode contents.
+	^ { (self expression: expression inComment: aRBCommentNode) }
 ]
 
 { #category : #settings }
@@ -72,20 +56,11 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		target: self;
 		default: true;
 		description:
-			'Allow styled and executable example expressions within method comments. 
-		Example: 
+			'Allow styled and executable example expressions within method comments.
+		Example:
 		"3+4 >>> 7."';
 		label: 'Pharo doc comments';
 		parent: #codeBrowsing
-]
-
-{ #category : #converting }
-PharoDocCommentNode >> asTriplet [
-	"Return the expression, its returned value and its expected result."
-	
-	^ { self expression expressionCode formattedCode. 
-		 self expression evaluate. 
-		 self result expressionCode formattedCode }
 ]
 
 { #category : #private }
@@ -110,21 +85,10 @@ PharoDocCommentNode >> expression: anObject [
 PharoDocCommentNode >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: '(';
 		nextPutAll: self expression source;
 		nextPutAll: ')'
-]
-
-{ #category : #accessing }
-PharoDocCommentNode >> result [
-	^ result
-]
-
-{ #category : #accessing }
-PharoDocCommentNode >> result: anObject [
-	result := anObject.
-	anObject node: self
 ]
 
 { #category : #accessing }

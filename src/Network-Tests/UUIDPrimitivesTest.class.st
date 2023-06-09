@@ -9,17 +9,17 @@ Class {
 
 { #category : #tests }
 UUIDPrimitivesTest >> testComparison [
-	
+
 	|a b|
 	a := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df641'.
 	b := UUID fromString: 'e85ae7ba-3ca3-4bae-9f62-cc2ce51c525e'.
 	self assert: a < b.
 	self deny: a> b.
-	
+
 	a := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df641'.
 	b := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df642'.
 	self assert: a < b.
-	
+
 	a := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df641'.
 	b := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df640'.
 	self assert: a > b
@@ -75,7 +75,7 @@ UUIDPrimitivesTest >> testCreationFromString36With0 [
 
 { #category : #tests }
 UUIDPrimitivesTest >> testCreationFromString36WithNillUUID [
-	
+
 	UUID fromString36: UUID nilUUID asString36
 ]
 
@@ -101,7 +101,7 @@ UUIDPrimitivesTest >> testCreationNil [
 
 { #category : #tests }
 UUIDPrimitivesTest >> testCreationNodeBased [
-	
+
 
 	(UUID new asString last: 12) = (UUID new asString last: 12) ifFalse: [^self].
 	1000 timesRepeat:
@@ -116,10 +116,10 @@ UUIDPrimitivesTest >> testDuplicationsKinda [
 
 	size := 5000.
 	check := Set new: size.
-	size timesRepeat: 
+	size timesRepeat:
 		[ | uuid |uuid := UUID new.
 		self deny: (check includes: uuid).
-		check add: uuid].
+		check add: uuid]
 ]
 
 { #category : #tests }
@@ -135,9 +135,9 @@ UUIDPrimitivesTest >> testOrder [
 ]
 
 { #category : #tests }
-UUIDPrimitivesTest >> testUniqueness [ 
+UUIDPrimitivesTest >> testUniqueness [
 	"Test uniqueness for a given number of generated values"
-	
+
 	|maxTestValue|
 	maxTestValue := 1000.
 	self assert: ((1 to: maxTestValue) collect: [ :i | UUID new asString ]) asSet size equals: maxTestValue

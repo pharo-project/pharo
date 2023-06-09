@@ -10,7 +10,7 @@ Class {
 	#superclass : #OCAbstractScope,
 	#instVars : [
 		'requestor',
-		'compilationContext'
+		'variables'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -20,42 +20,46 @@ OCRequestorScope >> allTemps [
 	^#()
 ]
 
-{ #category : #accessing }
-OCRequestorScope >> compilationContext [
-	^ compilationContext
-]
+{ #category : #testing }
+OCRequestorScope >> canAddBindingOf: name [
+	"Test for free workspace declaration"
+	
+	"MD: Question: Do we really need to delegate this to the requestor?"
+	
+	"Empty names come from faulty parameters. Ignore them"
+	name ifEmpty: [ ^ false ].
+	"names startign with digits are variables from optimized contructs"
+	name startsWithDigit ifTrue: [ ^false ].
 
-{ #category : #accessing }
-OCRequestorScope >> compilationContext: anObject [
-	compilationContext := anObject
+	"Because requestor do not have a real API, introspection is used."
+	(requestor respondsTo: #canAddBindingOf:) ifFalse: [ ^ false ].
+	^ requestor canAddBindingOf: name
 ]
 
 { #category : #lookup }
-OCRequestorScope >> lookupVar: name declare: aBoolean [
+OCRequestorScope >> lookupVar: name [
 
-	"the system normally allows any object as the name, but the requestor uses some 
-	heuristics based on names of variables"
-	
-	name isString ifFalse: [ ^ outerScope lookupVar: name declare: aBoolean ].
-	name isEmpty ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
+	(requestor hasBindingOf: name) ifTrue: [ ^ requestor bindingOf: name ].
+	"Note that is an outerscope is a requestor tant can declare, it will win the declaration.
+	But maybe it is better this way."
+	(super lookupVar: name) ifNotNil: [ :binding | ^ binding ].
 
-	"reserved Variables are defined by the global scope, thus we look up in the outer scope"
-	(ReservedVariable nameIsReserved: name) ifTrue: [ 
-		^ outerScope lookupVar: name declare: aBoolean ].
-	
-	"generated temps (e.g. for limits in to:do: should not create bindings"
-	name first = $0 ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
-	"We do not want to auto define bindings for unknown Globals"
-	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean].
-	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
-	((compilationContext optionSkipSemanticWarnings or: [aBoolean not])
-		and: [ (requestor hasBindingOf: name) not ])
-		ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
+	"Can we have a free workspace variable or not?"
+	(self canAddBindingOf: name) ifFalse: [ ^nil ].
+	"We do not register it yet, to not fill the requestor with garbage variable during styling for instance"
+	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
+]
 
-	"the requestors #bindingOf may create a binding for not yet existing variables"
-	^(requestor bindingOf: name)
-		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name declare: aBoolean ]
+{ #category : #lookup }
+OCRequestorScope >> registerVariables [
+
+	self variables do: [ :each |
+		| var |
+		"Force the declaraction, if needed"
+		var := requestor bindingOf: each name.
+		"Because we no non control how requestor handle its variables, just update the one we used locally"
+		(var isNotNil and: [ var ~~ each ]) ifTrue: [ each becomeForward: var ] ].
+	super registerVariables
 ]
 
 { #category : #accessing }
@@ -69,6 +73,7 @@ OCRequestorScope >> requestor: anObject [
 ]
 
 { #category : #accessing }
-OCRequestorScope >> scopeLevel [
-	^ 0
+OCRequestorScope >> variables [
+
+	^ variables ifNil: [ variables := Dictionary new ].
 ]

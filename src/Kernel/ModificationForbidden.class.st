@@ -23,7 +23,7 @@ Class {
 { #category : #'instance creation' }
 ModificationForbidden class >> for: anObject at: fieldIndex with: newValue retrySelector: selector [
 
-	^self new 
+	^self new
 		object: anObject;
 		fieldIndex: fieldIndex;
 		newValue: newValue;
@@ -44,7 +44,7 @@ ModificationForbidden >> fieldIndex: anObject [
 ModificationForbidden >> indexedMessageText [
 	^ String streamContents: [ :s |
 		s << ' '.
-		self printObject: object on: s. 
+		self printObject: object on: s.
 		s << ' is read-only, hence its field '.
 		fieldIndex printOn: s.
 		s << ' cannot be modified with '.
@@ -54,7 +54,7 @@ ModificationForbidden >> indexedMessageText [
 { #category : #printing }
 ModificationForbidden >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
@@ -72,7 +72,7 @@ ModificationForbidden >> newValue: anObject [
 ModificationForbidden >> nonIndexedMessageText [
 	^ String streamContents: [ :s |
 		s << ' '.
-		self printObject: object on: s. 
+		self printObject: object on: s.
 		s << ' is read-only, hence its selector '.
 		s << retrySelector.
 		s << ' cannot be executed with '.

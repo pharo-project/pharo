@@ -22,7 +22,7 @@ LargeNegativeInteger >> asFloat [
 LargeNegativeInteger >> bitAt: anInteger [
 	"super would not work because we have to pretend we are in two-complement.
 	this has to be tricky..."
-	
+
 	| digitIndex bitIndex i |
 	digitIndex := anInteger - 1 // 8 + 1.
 	digitIndex > self bytesCount ifTrue: [^1].
@@ -41,7 +41,7 @@ LargeNegativeInteger >> bitAt: anInteger [
 			0 bitInvert -> 2r11111111.  2r11111111 + 1 -> 0 with carry...
 			Thus we must inquire one digit forward"
 			i := i + 1].
-	
+
 	"We escaped the while loop, because there is no more carry.
 	Do a simple bitInvert without a carry"
 	^1 - ((self byteAt: digitIndex) bitAt: bitIndex)
@@ -49,10 +49,10 @@ LargeNegativeInteger >> bitAt: anInteger [
 
 { #category : #'bit manipulation' }
 LargeNegativeInteger >> highBit [
-	"Answer the index of the high order bit of the receiver, or zero if the  
-	receiver is zero. Raise an error if the receiver is negative, since  
-	negative integers are defined to have an infinite number of leading 1's 
-	in 2's-complement arithmetic. Use >>highBitOfMagnitude if you want to  
+	"Answer the index of the high order bit of the receiver, or zero if the
+	receiver is zero. Raise an error if the receiver is negative, since
+	negative integers are defined to have an infinite number of leading 1's
+	in 2's-complement arithmetic. Use >>highBitOfMagnitude if you want to
 	get the highest bit of the magnitude."
 
 	^ self shouldNotImplement
@@ -125,7 +125,7 @@ LargeNegativeInteger >> positive [
 { #category : #printing }
 LargeNegativeInteger >> printOn: aStream base: b [
 	"Append a representation of this number in base b on aStream."
-	
+
 	aStream nextPut: $-.
 	self abs printOn: aStream base: b
 ]

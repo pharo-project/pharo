@@ -1,76 +1,26 @@
+"
+This class models definiton of instance Variables (Slots)
+"
 Class {
 	#name : #CDSlotNode,
-	#superclass : #CDNode,
-	#instVars : [
-		'node',
-		'start',
-		'stop',
-		'name',
-		'initializationMessage',
-		'slotClassName'
-	],
+	#superclass : #CDVariableNode,
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #'instance creation' }
-CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol initializationMessage: aMessageNode start: start stop: stop [
-	
-	^ self new
-		node: aNode;
-		name: aName;
-		slotClassName: aSymbol;
-		initializationMessage: aMessageNode;
-		start: start;
-		stop: stop;
-		yourself
-]
-
-{ #category : #'instance creation' }
-CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
-	
-	^ self new
-		node: aNode;
-		name: aName;
-		slotClassName: aSymbol;
-		start: start;
-		stop: stop;
-		yourself
-]
-
 { #category : #transforming }
 CDSlotNode >> asSlot [
-	"for not this only supports instance variable slots. 
-	We need to create a slot here using the slot class and initialization message"
-	^InstanceVariableSlot named: name
-]
 
-{ #category : #accessing }
-CDSlotNode >> binding [
-	"To be polymorphic to RB method nodes"
-	^self
-]
+	"when parsing old style definitions, the node is just the string of all ivars"
+	node isLiteralNode ifTrue: [ ^InstanceVariableSlot named: name ]
 
-{ #category : #accessing }
-CDSlotNode >> initializationMessage [
-	"Return the message node representing the initialization part of a slot."
-	
-	^ initializationMessage
-]
-
-{ #category : #accessing }
-CDSlotNode >> initializationMessage: aMessageNode [ 
-	
-	initializationMessage := aMessageNode
+	"As we controll the creation of the AST, it is safe to evaluate it. The
+	only thing that can go wrong is that the class of the slot is not yet loaded,
+	we crate an UndefinedSlot for that case".
+	^ [ node evaluate ] on: Error do: [ UndefinedSlot named: self name ast: node ]
 ]
 
 { #category : #testing }
 CDSlotNode >> isClassVariable [
-	"To be polymorphic to RB method nodes"
-	^false
-]
-
-{ #category : #testing }
-CDSlotNode >> isGlobalVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
@@ -85,106 +35,4 @@ CDSlotNode >> isInstanceVariable [
 CDSlotNode >> isLiteralVariable [
 	"To be polymorphic to RB method nodes"
 	^false
-]
-
-{ #category : #testing }
-CDSlotNode >> isTempVariable [
-	"To be polymorphic to RB method nodes"
-	^false
-]
-
-{ #category : #testing }
-CDSlotNode >> isUndeclaredVariable [
-	"To be polymorphic to RB method nodes"
-	^false
-]
-
-{ #category : #testing }
-CDSlotNode >> isVariable [
-	"To be polymorphic to RB method nodes"
-	| existingClass |
-	existingClass := self classDefinitionNode existingClassIfAbsent: [   
-		"Until class will be created the variables does not exist yet" 
-		^false ].
-	^existingClass 
-		slotNamed: name asSymbol 
-		ifFound: [true] 
-		ifNone: [
-			"Until class will be compiled with new slot the new slot does not exist yet"
-			false]
-]
-
-{ #category : #testing }
-CDSlotNode >> isWorkspaceVariable [
-	^ false
-]
-
-{ #category : #accessing }
-CDSlotNode >> name [
-
-	^ name
-]
-
-{ #category : #accessing }
-CDSlotNode >> name: aString [
-
-	name := aString
-]
-
-{ #category : #accessing }
-CDSlotNode >> node: aNode [ 
-	node := aNode
-]
-
-{ #category : #printing }
-CDSlotNode >> printOn: aStream [
-
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: '(';
-		print: name ;
-		nextPutAll: ' => ';
-		print: slotClassName;
-		nextPutAll: ')'
-]
-
-{ #category : #accessing }
-CDSlotNode >> slotClassName [
-	"Return a symbol representing the class of the slot: i.e., 'x' => InstanceVariableSlot slotClassName returns 
-	#InstanceVariableSlot"
-	
-	^ slotClassName
-]
-
-{ #category : #accessing }
-CDSlotNode >> slotClassName: aSymbol [ 
-	
-	slotClassName := aSymbol
-]
-
-{ #category : #accessing }
-CDSlotNode >> sourceInterval [
-	^start to: stop
-]
-
-{ #category : #selection }
-CDSlotNode >> start [
-
-	^ start
-]
-
-{ #category : #accessing }
-CDSlotNode >> start: anInteger [ 
-	start := anInteger
-]
-
-{ #category : #selection }
-CDSlotNode >> stop [
-	^ stop
-]
-
-{ #category : #accessing }
-CDSlotNode >> stop: anInteger [ 
-	
-	stop := anInteger
 ]

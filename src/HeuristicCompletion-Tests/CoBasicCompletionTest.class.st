@@ -20,7 +20,7 @@ CoBasicCompletionTest >> assertCollectionOfEntry: aCollection equals: anotherCol
 	self assert: aCollection size equals: anotherCollection size.
 
 	aCollection with: anotherCollection do: [ :a :b |
-		self assertEntry: a equals: b ].
+		self assertEntry: a equals: b ]
 ]
 
 { #category : #tests }
@@ -28,7 +28,7 @@ CoBasicCompletionTest >> assertEntry: anEntry equals: expectedEntry [
 
 	"Entries do not define equality :("
 	self assert: anEntry class equals: expectedEntry class.
-	self assert: anEntry contents equals: expectedEntry contents.
+	self assert: anEntry contents equals: expectedEntry contents
 ]
 
 { #category : #tests }
@@ -64,7 +64,7 @@ CoBasicCompletionTest >> setUp [
 		instanceVariables: #(a b c);
 		selectors: #(ma mb mc);
 		classVariables: #(Ca Cb Cc);
-		sharedPools: { 
+		sharedPools: {
 			CoMockClass new
 				classVariables: #(Sa Sb);
 				superclass: (CoMockClass new
@@ -84,7 +84,7 @@ CoBasicCompletionTest >> setUp [
 			classVariables: #(SuperCa SuperCb SuperCc);
 			yourself)
 		yourself.
-	
+
 	systemNavigation := CoMockSystemNavigation new
 		globals: {'A' . 'B' . 'C'};
 		yourself

@@ -32,7 +32,7 @@ RBLintRuleTestData class >> name1: anObject [
 ]
 
 { #category : #parsing }
-RBLintRuleTestData class >> parseTreeSearcher [ 
+RBLintRuleTestData class >> parseTreeSearcher [
 	^ self parseTreeSearcherClass new
 ]
 
@@ -99,7 +99,7 @@ RBLintRuleTestData >> isEmpty [
 
 { #category : #testing }
 RBLintRuleTestData >> junk [
-	^ RBRefactoryTestDataApp printString 
+	^ RBRefactoryTestDataApp printString
 		copyFrom: 1
 		to: CR
 ]
@@ -110,7 +110,7 @@ RBLintRuleTestData >> name [
 ]
 
 { #category : #accessing }
-RBLintRuleTestData >> name: aString [ 
+RBLintRuleTestData >> name: aString [
 	name := aString
 ]
 
@@ -143,7 +143,7 @@ RBLintRuleTestData >> run [
 ]
 
 { #category : #accessing }
-RBLintRuleTestData >> runOnEnvironment: anEnvironment [ 
+RBLintRuleTestData >> runOnEnvironment: anEnvironment [
 	^Object printOn: self onEnvironment: anEnvironment
 ]
 

@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #running }
-RBNamespaceTest >> setUp [ 
+RBNamespaceTest >> setUp [
 	super setUp.
-	modelFactory := RBClassModelFactory new.
+	modelFactory := RBClassModelFactory new
 ]
 
 { #category : #'class tests' }
@@ -18,8 +18,8 @@ RBNamespaceTest >> testAllClassesDo [
 	| model classes |
 	classes := 0.
 	model := modelFactory rbNamespace new.
-	model allClassesDo: 
-			[:each | 
+	model allClassesDo:
+			[:each |
 			each name = #Object ifTrue: [each allSubclasses].
 			classes := classes + 1].
 	RBBrowserEnvironment new classesDo: [:each | classes := classes - 1].
@@ -57,12 +57,9 @@ RBNamespaceTest >> testDefineClassAfterDeletedChange [
 RBNamespaceTest >> testDefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
-	st 
-		defineClass: 'RefactoringBrowserTest subclass: #SmalltalkTestXXX
-				instanceVariableNames: ''''
-				classVariableNames: ''''
-				poolDictionaries: ''''
-				category: #''Refactory-Testing'''.
+	st
+		defineClass: 'RefactoringBrowserTest << #SmalltalkTestXXX
+				package: #''Refactory-Testing'''.
 	self assert: (st includesClassNamed: #SmalltalkTestXXX).
 	self assert: (st classNamed: #SmalltalkTestXXX) notNil
 ]
@@ -71,10 +68,10 @@ RBNamespaceTest >> testDefineClassChange [
 RBNamespaceTest >> testImplementors [
 	| st |
 	st := modelFactory rbNamespace new.
-	self assert: ((st allImplementorsOf: #printString) 
+	self assert: ((st allImplementorsOf: #printString)
 				includes: (st classNamed: #Object)).
 	(st classNamed: #Object) removeMethod: #printString.
-	self deny: ((st allImplementorsOf: #printString) 
+	self deny: ((st allImplementorsOf: #printString)
 				includes: (st classNamed: #Object))
 ]
 
@@ -82,10 +79,10 @@ RBNamespaceTest >> testImplementors [
 RBNamespaceTest >> testIncludesClass [
 	self assert: (modelFactory rbNamespace new includesClassNamed: #Object).
 	self deny: (modelFactory rbNamespace new includesClassNamed: #Object1).
-	self 
-		deny: ((modelFactory rbNamespace 
+	self
+		deny: ((modelFactory rbNamespace
 				onEnvironment: (RBClassEnvironment onEnvironment: RBBrowserEnvironment new
-						classes: (Array with: Object))) 
+						classes: (Array with: Object)))
 					includesClassNamed: #OrderedCollection)
 ]
 
@@ -93,28 +90,24 @@ RBNamespaceTest >> testIncludesClass [
 RBNamespaceTest >> testModelImplementorsSenders [
 	| model class modelImps refs found |
 	model := modelFactory rbNamespace new.
-	model 
-		defineClass: 'Object subclass: #Asdf
-			instanceVariableNames: ''''
-			classVariableNames: ''''
-			poolDictionaries: ''''
-			category: #''Refactory-Testing'''.
+	model
+		defineClass: 'Object << #Asdf package: #''Refactory-Testing'''.
 	class := model classNamed: #Asdf.
 	class compile: 'storeOn: aStream ^super storeOn: aStream'
 		classified: #(#printing).
 	modelImps := model allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
-	self assert: modelImps size - 1 
+	self assert: modelImps size - 1
 				equals: (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
 	refs := RBBrowserEnvironment new referencesTo: #storeOn:.
 	found := false.
 	model allReferencesTo: #storeOn:
-		do: 
-			[:each | 
-			each modelClass = class 
+		do:
+			[:each |
+			each modelClass = class
 				ifTrue: [found := true]
-				ifFalse: 
-					[	self 
+				ifFalse:
+					[	self
 						assert: (refs includesSelector: each selector in: each modelClass realClass)]].
 	self assert: found
 ]
@@ -123,11 +116,11 @@ RBNamespaceTest >> testModelImplementorsSenders [
 RBNamespaceTest >> testRedefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
-	st defineClass: 'nil subclass: #Object
-				instanceVariableNames: ''a''
-				classVariableNames: ''A''
-				poolDictionaries: ''TextConstants''
-				category: #''Refactory-Testing'''.
+	st defineClass: 'nil << #Object
+				slots: { #a};
+				sharedVariables: {#A};
+				sharedPools: {TextConstants};
+				package: #''Refactory-Testing'''.
 	self assert: (st includesClassNamed: #Object).
 	self assert: (st classNamed: #Object) notNil
 ]
@@ -138,12 +131,12 @@ RBNamespaceTest >> testReferencesPrintOn [
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	smalltalk := modelFactory rbNamespace new.
-	smalltalk allReferencesTo: #printOn: do: [ :each | 
+	smalltalk allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
-			or: [ each selector = #fullPrintString 
+			or: [ each selector = #fullPrintString
 			and: [each modelClass = (smalltalk classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #testReferencesPrintOn 
+			or: [ each selector = #testReferencesPrintOn
 			and: [ each modelClass = (smalltalk classNamed: self class name) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf
@@ -155,18 +148,18 @@ RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	smalltalk := modelFactory rbNamespace new.
-	(smalltalk classNamed: #Object) 
+	(smalltalk classNamed: #Object)
 		compile: 'someTestReference self printOn: nil'
 		classified: #(testing).
 	(smalltalk classNamed: self class name)
 		compile: 'someTestReference ^ #printOn:'
 		classified: #(testing).
-	smalltalk allReferencesTo: #printOn: do: [ :each | 
-		hasFoundObject := hasFoundObject 
-			or: [ each selector = #someTestReference 
+	smalltalk allReferencesTo: #printOn: do: [ :each |
+		hasFoundObject := hasFoundObject
+			or: [ each selector = #someTestReference
 			and: [ each modelClass = (smalltalk classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #someTestReference 
+			or: [ each selector = #someTestReference
 			and: [ each modelClass = (smalltalk classNamed: self class name) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf
@@ -178,16 +171,16 @@ RBNamespaceTest >> testReferencesPrintOnAfterRemove [
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	smalltalk := modelFactory rbNamespace new.
-	(smalltalk classNamed: #Object) 
+	(smalltalk classNamed: #Object)
 		removeMethod: #printString.
-	(smalltalk classNamed: self class name) 
+	(smalltalk classNamed: self class name)
 		removeMethod: #testReferencesPrintOnAfterRemove.
-	smalltalk allReferencesTo: #printOn: do: [ :each | 
+	smalltalk allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
-			or: [ each selector = #printString 
+			or: [ each selector = #printString
 			and: [ each modelClass = (smalltalk classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #testReferencesPrintOnAfterRemove 
+			or: [ each selector = #testReferencesPrintOnAfterRemove
 			and: [ each modelClass = (smalltalk classNamed: self class name) ] ] ].
 	self deny: hasFoundObject.
 	self deny: hasFoundSelf
@@ -216,9 +209,9 @@ RBNamespaceTest >> testReparentSuperclassChange [
 RBNamespaceTest >> testRoots [
 	| model |
 	model := modelFactory rbNamespace new.
-	self 
-		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) 
-				asArray 
-		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each]) 
+	self
+		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name])
+				asArray
+		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 							asSortedCollection: [:a :b | a name < b name]) asArray
 ]

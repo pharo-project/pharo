@@ -25,11 +25,11 @@ CDFluidClassParserTest >> testClassSideEmpty [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object class << AlignmentMorph class
-		'.		
+		'.
 	def := parser parse: defString.
-	self assert: def class equals: CDMetaclassDefinitionNode.
+	self assert: def class equals: CDMetaclassDefinitionNode
 ]
 
 { #category : #'tests - (r) class side' }
@@ -37,11 +37,11 @@ CDFluidClassParserTest >> testClassSideWithTraits [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object class << AlignmentMorph class
 		traits: TableRotate classTrait;
 		slots: { #x . #y}'.
-		
+
 	def := parser parse: defString.
 	self assert: def class equals: CDMetaclassDefinitionNode.
 	self assert: def hasTraitComposition.
@@ -51,17 +51,33 @@ CDFluidClassParserTest >> testClassSideWithTraits [
 ]
 
 { #category : #'tests - (r) class variables' }
-CDFluidClassParserTest >> testClassVariables [
+CDFluidClassParserTest >> testComplexClassVariables [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
-		sharedVariables: { #A . #B };
+		sharedVariables: { #A => ClassVar default: 5 };
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def sharedSlots first name equals: #A. 
-	self assert: def sharedSlots second name equals: #B.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
+	self assert: def sharedVariables first name equals: #A.
+	self assert: def sharedVariables first variableClassName equals: #ClassVar
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testComplexClassVariablesCascae [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		sharedVariables: { #A => ClassVar default: 5; default2: 4 };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
+	self assert: def sharedVariables first name equals: #A.
+	self assert: def sharedVariables first variableClassName equals: #ClassVar
 ]
 
 { #category : #'tests - (r) slots' }
@@ -69,15 +85,59 @@ CDFluidClassParserTest >> testComplexSlots [
 
 	| parser defString def slot |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
-		slots: { #inst => (InstanceVariableSlot default: 5) };
+		slots: { #inst => Slot default: 5 };
 		package: #MyPackage'.
 	def := parser parse: defString.
 	slot := def slots first.
-	self assert: slot name equals: #inst. 
-	self assert: slot initializationMessage selectorParts equals: #(#default:).
-	self assert: (slot initializationMessage argumentParts collect: [:each | each value]) equals: #(5) asOrderedCollection
+	self assert: slot name equals: #inst.
+	self assert: slot node selector equals: #default:.
+	self assert: slot variableClassName equals: #Slot
+]
+
+{ #category : #'tests - (r) slots' }
+CDFluidClassParserTest >> testComplexSlotsCascade [
+
+	| parser defString def slot |
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		slots: { #inst => Slot default: 5; default2: 4};
+		package: #MyPackage'.
+	def := parser parse: defString.
+	slot := def slots first.
+	self assert: slot name equals: #inst.
+	self assert: slot node messages first selector equals: #default:.
+	self assert: slot variableClassName equals: #Slot
+]
+
+{ #category : #'tests - (r) slots' }
+CDFluidClassParserTest >> testComplexSlotsClass [
+
+	| parser defString def slot |
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		slots: { #inst => Slot };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	slot := def slots first.
+	self assert: slot name equals: #inst.
+	self assert: slot variableClassName equals: #Slot
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testEmptyClassVariable [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		sharedVariables: {  };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables isEmpty
 ]
 
 { #category : #'tests - (r) slots' }
@@ -85,7 +145,7 @@ CDFluidClassParserTest >> testEmptySlots [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		slots: {};
 		package: #MyPackage'.
@@ -98,7 +158,7 @@ CDFluidClassParserTest >> testEphemeronSubclass [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		layout: EphemeronLayout;
 		package: #MyPackage'.
@@ -121,7 +181,7 @@ CDFluidClassParserTest >> testNormalSubclass [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		layout: FixedLayout;
 		package: #MyPackage'.
@@ -134,13 +194,44 @@ CDFluidClassParserTest >> testSharedPools [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 	   sharedPools: {TextConstants};
 		package: #MyPackage'.
-	
+
 	def := parser parse: defString.
 	self assert: def sharedPools first name equals: 'TextConstants'
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testSimpleClassVariableClass [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		sharedVariables: { #A => ClassVar };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first name equals: #A.
+	self assert: def sharedVariables first variableClassName equals: #ClassVar.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode
+]
+
+{ #category : #'tests - (r) class variables' }
+CDFluidClassParserTest >> testSimpleClassVariables [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		sharedVariables: { #A . #B };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first name equals: #A.
+	self assert: def sharedVariables second name equals: #B.
+	self assert: def sharedVariables first variableClassName equals: #ClassVariable.
+	self assert: def sharedVariables second variableClassName equals: #ClassVariable
 ]
 
 { #category : #'tests - (r) simple class definition' }
@@ -149,8 +240,8 @@ CDFluidClassParserTest >> testSimpleDefinition [
 	| def |
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
-			
-	self assert: def className equals: #Point.
+
+	self assert: def className equals: #Point
 ]
 
 { #category : #'tests - (r) simple class definition' }
@@ -161,25 +252,25 @@ CDFluidClassParserTest >> testSimpleDefinitionClassNode [
 			package: ''Kernel-BasicObjects'''.
 
 	self assert: def classNameNode className equals: #Point.
-	
-	"The following cannot work 
-	
-		self assert: def classNameNode binding value equals: Point. 
-	
-	because binding is defined as 
-	
+
+	"The following cannot work
+
+		self assert: def classNameNode binding value equals: Point.
+
+	because binding is defined as
+
 		existingBindingIfAbsent: aBlock
 
 			| binding |
 			binding := originalNode methodNode compilationContext environment bindingOf: className.
 			^ binding ifNil: aBlock
-	
+
 	"
 ]
 
 { #category : #'tests - (r) simple class definition' }
 CDFluidClassParserTest >> testSimpleDefinitionPackageIsCorrect [
-	
+
 	| def |
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
@@ -192,7 +283,7 @@ CDFluidClassParserTest >> testSimpleDefinitionSuperclassName [
 	| def |
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
-			
+
 	self assert: def superclassName equals: 'Object'
 ]
 
@@ -201,14 +292,16 @@ CDFluidClassParserTest >> testSimpleSlots [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		slots: { #a. #b };
 		package: #MyPackage'.
 	def := parser parse: defString.
 	self assert: def slots size equals: 2.
-	self assert: def slots first name equals: #a. 
+	self assert: def slots first name equals: #a.
 	self assert: def slots second name equals: #b.
+	self assert: def slots first variableClassName equals: #InstanceVariableSlot.
+	self assert: def slots second variableClassName equals: #InstanceVariableSlot
 ]
 
 { #category : #'tests - (r) tags' }
@@ -228,16 +321,16 @@ CDFluidClassParserTest >> testTraitAlias [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		traits: MyTrait @ {#foo -> #bar};
 		package: #MyPackage'.
-	
+
 	def := parser parse: defString.
-	self assert: def traitDefinition class equals: CDTraitAliasNode. 
+	self assert: def traitDefinition class equals: CDTraitAliasNode.
 	self assert: (def traitDefinition aliases values) equals: #(bar).
 	self assert: (def traitDefinition aliases keys) equals: #(foo).
-	self assert: def traitDefinition subject name equals: #MyTrait.
+	self assert: def traitDefinition subject name equals: #MyTrait
 ]
 
 { #category : #'tests - (r) traits' }
@@ -245,11 +338,11 @@ CDFluidClassParserTest >> testTraitEmpty [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		uses: {};
 		package: #MyPackage'.
-		
+
 	def := parser parse: defString.
 	self assert: def traitDefinition equals: nil
 ]
@@ -259,13 +352,13 @@ CDFluidClassParserTest >> testTraitPlainSimple [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		traits: MyTrait;
 		package: #MyPackage'.
-		
+
 	def := parser parse: defString.
-	self assert: def traitDefinition name equals: #MyTrait.
+	self assert: def traitDefinition name equals: #MyTrait
 ]
 
 { #category : #'tests - (r) traits' }
@@ -278,25 +371,32 @@ CDFluidClassParserTest >> testTraitSequence [
 		package: #MyPackage'.
 
 	def := parser parse: defString.
-	self assert: def traitDefinition class equals: CDTraitCompositionSequenceNode. 
+	self assert: def traitDefinition class equals: CDTraitCompositionSequenceNode.
 	self assert: def traitDefinition sequence size equals: 2.
 	self assert: (def traitDefinition sequence second aliases values) equals: #(selector).
 	self assert: (def traitDefinition sequence second aliases keys) equals: #(selector1).
-	self assert: def traitDefinition sequence first name equals: #MyTrait.
+	self assert: def traitDefinition sequence first name equals: #MyTrait
 ]
 
 { #category : #'tests - (r) slots' }
-CDFluidClassParserTest >> testTypedSlots [
+CDFluidClassParserTest >> testUnrestrictedSlots [
 
-	| parser defString def |
+	| parser defString def slot |
 	parser := self classDefinitionParserClass new.
 	
+	"check that we can experiment with if we enable the setting"
+	self classDefinitionParserClass  unrestrictedVariableDefinitions: true.
+	
 	defString := 'Object << #MyObject
-		slots: { #inst => InstanceVariableSlot };
+		slots: { Slot named: #slotName  };
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def slots size equals: 1.
-	self assert: def slots first name equals: #inst.
+	slot := def slots first.
+	self assert: slot name equals: #slotName. 
+	self assert: slot variableClassName equals: #Slot.
+	self classDefinitionParserClass  unrestrictedVariableDefinitions: false.
+	"if it is the default false, we do no allow it"
+	self should: [ 	def := parser parse: defString ] raise: Error
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -304,7 +404,7 @@ CDFluidClassParserTest >> testVariableByteSubclass [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		layout: ByteLayout;
 		package: #MyPackage'.
@@ -317,7 +417,7 @@ CDFluidClassParserTest >> testVariableSubclass [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		layout: VariableLayout;
 		package: #MyPackage'.
@@ -330,7 +430,7 @@ CDFluidClassParserTest >> testVariableWordSubclass [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		layout: WordLayout;
 		package: #MyPackage'.
@@ -343,7 +443,7 @@ CDFluidClassParserTest >> testWeakSubclass [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	
+
 	defString := 'Object << #MyObject
 		layout: WeakLayout;
 		package: #MyPackage'.
@@ -356,16 +456,16 @@ CDFluidClassParserTest >> testWithRB [
 
 	| dict searcher |
 	searcher := RBParseTreeSearcher new.
-	searcher 
+	searcher
 		matches: '`superklass << `#ClassName
 		slots: {};
 		sharedVariables: {};
-		package: ''''' 
+		package: '''''
 	 	do: [ :aNode :answer |  dict:= searcher context ].
 	dict := searcher executeTree: (RBParser parseExpression: 'Object << #MyClass
 		slots: {};
 		sharedVariables: {};
-		package: ''''').
+		package: ''''')
 ]
 
 { #category : #'tests - rb xp' }
@@ -382,6 +482,9 @@ CDFluidClassParserTest >> testWithRB10 [
 		Trait << TViewModelMock3 classTrait
 	') .
 	self assert: kind equals: #traitClass.
+
+	"reference to TViewModelMock3 is just in the string, add it here so we can find it"
+	TViewModelMock3.
 ]
 
 { #category : #'tests - rb xp' }
@@ -389,6 +492,7 @@ CDFluidClassParserTest >> testWithRB10WithError [
 
 	| searcher kind |
 	searcher := RBParseTreeSearcher new.
+
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
@@ -398,6 +502,9 @@ CDFluidClassParserTest >> testWithRB10WithError [
 		Trait << TViewModelMock3 class
 	') .
 	self assert: kind isNil.
+
+	"reference to TViewModelMock3 is just in the string, add it here so we can find it"
+	TViewModelMock3.
 ]
 
 { #category : #'tests - rb xp' }
@@ -405,12 +512,12 @@ CDFluidClassParserTest >> testWithRB3 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: '^self' do: [:aNode :answer | coll add: aNode ];
 		matches: '^`@anything' do: [:aNode :answer |  coll add: aNode].
-	searcher executeTree: (RBParser parseMethod: 'foo 
-	|tmp| 
+	searcher executeTree: (RBParser parseMethod: 'foo
+	|tmp|
 	tmp := 22.
 	^ 42').
 	self assert: coll size equals: 1
@@ -421,12 +528,12 @@ CDFluidClassParserTest >> testWithRB4 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm := `@val' do: [:aNode :answer | coll add: aNode ];
 		matches: '^`@anything' do: [:aNode :answer | coll add: aNode].
-	searcher executeTree: (RBParser parseMethod: 'foo 
-	| tmp | 
+	searcher executeTree: (RBParser parseMethod: 'foo
+	| tmp |
 	tmp := 22.
 	tmp := 55.
 	^ 42').
@@ -438,7 +545,7 @@ CDFluidClassParserTest >> testWithRB5 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
@@ -450,7 +557,7 @@ CDFluidClassParserTest >> testWithRB5 [
 			package: ''Foo''
 	') .
 	self assert: coll first equals: #instance.
-	self assert: coll size equals: 1.
+	self assert: coll size equals: 1
 ]
 
 { #category : #'tests - rb xp' }
@@ -458,7 +565,7 @@ CDFluidClassParserTest >> testWithRB6 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
@@ -470,7 +577,7 @@ CDFluidClassParserTest >> testWithRB6 [
 			package: ''Foo''
 	') .
 	self assert: coll first equals: #class.
-	self assert: coll size equals: 1.
+	self assert: coll size equals: 1
 ]
 
 { #category : #'tests - rb xp' }
@@ -478,7 +585,7 @@ CDFluidClassParserTest >> testWithRB7 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
@@ -490,7 +597,7 @@ CDFluidClassParserTest >> testWithRB7 [
 			package: ''Foo''
 	') .
 	self assert: coll first equals: #traitClass.
-	self assert: coll size equals: 1.
+	self assert: coll size equals: 1
 ]
 
 { #category : #'tests - rb xp' }
@@ -498,7 +605,7 @@ CDFluidClassParserTest >> testWithRB8 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
@@ -510,7 +617,7 @@ CDFluidClassParserTest >> testWithRB8 [
 			package: ''Foo''
 	') .
 	self assert: coll size equals: 1.
-	self assert: coll first equals: #traitInstance.
+	self assert: coll first equals: #traitInstance
 ]
 
 { #category : #'tests - rb xp' }
@@ -518,7 +625,7 @@ CDFluidClassParserTest >> testWithRB9 [
 
 	| searcher coll|
 	searcher := RBParseTreeSearcher new.
-	coll := OrderedCollection new. 
+	coll := OrderedCollection new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
@@ -530,5 +637,5 @@ CDFluidClassParserTest >> testWithRB9 [
 		package: ''MyPackage''
 	') .
 	self assert: coll size equals: 1.
-	self assert: coll first equals: #instance.
+	self assert: coll first equals: #instance
 ]

@@ -23,12 +23,12 @@ HiRulerTest >> testEmpty [
 HiRulerTest >> testTwoMergedForks [
 	"
 	c
-	|\ 
-	| | 
-	| b 
-	| | 
-	|/ 
-	a 
+	|\
+	| |
+	| b
+	| |
+	|/
+	a
 	"
 
 	| ruler c b a |

@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 KMKeymapBuilder class >> for: aShortcutName platform: aPlatform [
-	^self new 
+	^self new
 		shortcutName: aShortcutName;
 		platform: aPlatform;
 		yourself

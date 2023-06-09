@@ -27,14 +27,14 @@ TabState class >> tab: tab [
 
 { #category : #protocol }
 TabState >> backgroundColor [
-	
+
 	^ self subclassResponsibility
 ]
 
 { #category : #protocol }
 TabState >> buildBorderVertices [
 	| borderVertices |
-	
+
 	borderVertices := OrderedCollection new.
 	borderVertices
 		add: tab bottomLeft;
@@ -94,6 +94,6 @@ TabState >> tab [
 
 { #category : #accessing }
 TabState >> tab: anObject [
-	
+
 	tab := anObject
 ]

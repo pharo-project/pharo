@@ -25,12 +25,12 @@ ClyClosedBrowserCursor >> close [
 ]
 
 { #category : #queries }
-ClyClosedBrowserCursor >> findItemsWith: aCollection [ 
+ClyClosedBrowserCursor >> findItemsWith: aCollection [
 	^Array new: aCollection size withAll: nil
 ]
 
 { #category : #testing }
-ClyClosedBrowserCursor >> hasMetaProperty: aPropertyClass [ 
+ClyClosedBrowserCursor >> hasMetaProperty: aPropertyClass [
 	^false
 ]
 

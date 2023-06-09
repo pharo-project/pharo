@@ -34,7 +34,7 @@ SocketAddress class >> fromDottedString: string [
 	| integers |
 	integers := ($. split: string) collect: [ :each | Integer readFrom: each ].
 	integers size = 4 ifFalse: [ SizeMismatch signal ].
-	integers do: [ :each | 
+	integers do: [ :each |
 		(each between: 0 and: 255)
 			ifFalse: [ DomainError signalFrom: 0 to: 255 ] ].
 	^ self newFrom: integers
@@ -43,7 +43,7 @@ SocketAddress class >> fromDottedString: string [
 { #category : #'instance creation' }
 SocketAddress class >> fromOldByteAddress: byteArray [
 	"Create a SocketAddress from byteArray, enforcing the correc length, 4"
-	
+
 	byteArray size = 4 ifFalse: [ SizeMismatch signal ].
 	^ self newFrom: byteArray
 ]
@@ -51,7 +51,7 @@ SocketAddress class >> fromOldByteAddress: byteArray [
 { #category : #'instance creation' }
 SocketAddress class >> zero [
 	"Return the zero SocketAddress, 0.0.0.0"
-	
+
 	^ self basicNew: 4
 ]
 
@@ -62,7 +62,7 @@ SocketAddress >> asSocketAddress [
 { #category : #printing }
 SocketAddress >> displayStringOn: stream [
 	"Overwrite to get standard object behaviour"
-	
+
 	^ self printOn: stream
 ]
 
@@ -75,7 +75,7 @@ SocketAddress >> isPrivateAddress [
 
 { #category : #printing }
 SocketAddress >> printOn: stream [
-	self 
-		do: [ :each | each printOn: stream ] 
+	self
+		do: [ :each | each printOn: stream ]
 		separatedBy: [ stream nextPut: $. ]
 ]

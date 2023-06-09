@@ -15,7 +15,7 @@ Class {
 
 { #category : #initialization }
 InitializedSlot >> initialize: anObject [
-	default isBlock 
+	default isBlock
 		ifTrue: [ self write: (default cull: anObject) to: anObject ]
 		ifFalse: [ self write: default to: anObject ]
 ]

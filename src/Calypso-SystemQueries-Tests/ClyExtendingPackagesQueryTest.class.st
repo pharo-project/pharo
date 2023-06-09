@@ -13,7 +13,7 @@ ClyExtendingPackagesQueryTest >> createQuery [
 ClyExtendingPackagesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: ClySubclassLOfClass0FromPExtendedByP1Mock in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyClassScope of: ClyClass1FromP1Mock in: environment).
 	self assert: query checkEmptyResult
 ]

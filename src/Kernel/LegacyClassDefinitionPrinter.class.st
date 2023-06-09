@@ -15,7 +15,7 @@ Class {
 LegacyClassDefinitionPrinter >> classDefinitionString [
 
 	"Answer a String that defines the receiver in the old format using poolDictionaries and category.
-	e.g,  
+	e.g,
 	'Object subclass: #Point
 		instanceVariableNames: ''x y''
 		classVariableNames: ''''
@@ -42,7 +42,7 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 	aStream cr; tab; nextPutAll: 'category: ';
 			store: forClass category asString.
 
-	forClass superclass ifNil: [ 
+	forClass superclass ifNil: [
 		aStream nextPutAll: '.'; cr.
 		aStream nextPutAll: forClass name.
 		aStream space; nextPutAll: 'superclass: nil'. ].
@@ -51,11 +51,11 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #template }
-LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
+LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Object subclass: #MyClass' ; crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
+			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
+			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
 			s nextPutAll: 'classVariableNames: '''''; crtab.
 			s nextPutAll: 'poolDictionaries: '''''; crtab.
 			s nextPutAll: 'category ''', aString, '''' ]
@@ -83,7 +83,7 @@ LegacyClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
 
 	^ String streamContents: [ :s |
 			s nextPutAll: 'TestCase subclass: #MyTest' ; crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
+			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
 			s nextPutAll: 'classVariableNames: '''''; crtab.
 			s nextPutAll: 'poolDictionaries: '''''; crtab.
 			s nextPutAll: 'category ''', aString, '''' ]
@@ -92,13 +92,13 @@ LegacyClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
 { #category : #'public API' }
 LegacyClassDefinitionPrinter >> traitDefinitionString [
 
-	^ String streamContents: [ :s | 
-		s 
+	^ String streamContents: [ :s |
+		s
 			nextPutAll: 'Trait named: ';
 			nextPutAll:	forClass name printString;
-			cr; tab; 
+			cr; tab;
 			nextPutAll: ' uses: ';
-			nextPutAll: forClass traitComposition traitCompositionExpression; 
+			nextPutAll: forClass traitComposition traitCompositionExpression;
 			cr;
 			tab;
 			nextPutAll: ' package: ';

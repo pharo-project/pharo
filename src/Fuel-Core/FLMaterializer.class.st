@@ -1,231 +1,232 @@
 "
-I am a binary object materializer. 
+I am the configuration for materialization.
 
-See an example of use in FLSerializer's documentation.
-
-
+I hold all the configuration information necessary for materializing objects.
 "
 Class {
 	#name : #FLMaterializer,
-	#superclass : #Object,
-	#instVars : [
-		'materializationFactory',
-		'signature',
-		'version',
-		'migrations',
-		'globalEnvironment'
-	],
-	#category : #'Fuel-Core-Base'
+	#superclass : #FLConfiguration,
+	#category : #'Fuel-Core-Public'
 }
 
-{ #category : #protected }
-FLMaterializer class >> currentVersion [
-	^ 303
+{ #category : #'accessing-defaults' }
+FLMaterializer class >> defaultMethodChangedWarningDisabled [
+	^ false
 ]
 
-{ #category : #protected }
-FLMaterializer class >> defaultSignature [
-	^ 'FUEL'
+{ #category : #'accessing-defaults' }
+FLMaterializer class >> defaultShouldMaterializeHeaderOnly [
+	^ false
 ]
 
-{ #category : #'materializing-shortcuts' }
-FLMaterializer class >> materializationFromFileNamed: aFilename [
-	^ FLPlatform current
-		fileNamed: aFilename 
-		readStreamDo: [ :aFileStream | 
-			self newDefault materializeFrom: aFileStream ]
+{ #category : #convenience }
+FLMaterializer class >> materializeFrom: aStream [
+	^ self new
+		onStream: aStream;
+		materializeRoot
 ]
 
-{ #category : #'materializing-shortcuts' }
-FLMaterializer class >> materializationHeaderFromFileNamed: aFilename [
-
-	^ FLPlatform current
-		fileNamed: aFilename 
-		readStreamDo: [ :aFileStream | 
-			self newDefault materializeHeaderFrom: aFileStream ]
+{ #category : #convenience }
+FLMaterializer class >> materializeFromByteArray: aByteArray [
+	^ self materializeFrom: aByteArray readStream
 ]
 
-{ #category : #'materializing-shortcuts' }
-FLMaterializer class >> materializeFromByteArray: byteArray [
+{ #category : #convenience }
+FLMaterializer class >> materializeFromFileNamed: aFilePath [
+	^ self new
+		filePath: aFilePath;
+		materializeRoot
 
-	^(self newDefault materializeFrom: byteArray readStream) root
 ]
 
-{ #category : #'materializing-shortcuts' }
-FLMaterializer class >> materializeFromFileNamed: aFilename [
-
-	^ (self materializationFromFileNamed: aFilename) root
+{ #category : #convenience }
+FLMaterializer class >> materializeHeaderFrom: aStream [
+	^ self new
+		onStream: aStream;
+		materializeHeader
 ]
 
-{ #category : #'materializing-shortcuts' }
-FLMaterializer class >> materializeHeaderFromFileNamed: aFilename [
-
-	^ self materializationHeaderFromFileNamed: aFilename
+{ #category : #convenience }
+FLMaterializer class >> materializeHeaderFromByteArray: aByteArray [
+	^ self materializeHeaderFrom: aByteArray readStream
 ]
 
-{ #category : #'instance creation' }
-FLMaterializer class >> newDefault [
-
-	^self new
+{ #category : #convenience }
+FLMaterializer class >> materializeHeaderFromFileNamed: aFilePath [
+	^ self new
+		filePath: aFilePath;
+		materializeHeader
 ]
 
-{ #category : #protected }
-FLMaterializer >> decodeHeaderWith: aDecoder [
-	"See FLSerializer>>encodeHeaderWith:"
+{ #category : #private }
+FLMaterializer >> basicMigrateClassNamed: aSymbol toClass: aClass variables: aDictionary [
+	self
+		validateMigrationFrom: aSymbol
+		to: aClass.
 	
-	"todo: fix"
-	"Here I cannot use #materializeFrom: again because I will end up in an infinitive loop. Therefore, I use #materializationFactory."
-	^(aDecoder nextEncodedByte = 0) 
-		ifTrue: [ FLHeader new ]
-		ifFalse: [ (self class newDefault materializationFactory value: aDecoder) root ]
+	self migrations add: (FLMigration 
+		fromClassNamed: aSymbol 
+		toClass: aClass
+		variables: aDictionary)
 ]
 
-{ #category : #hooks }
-FLMaterializer >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
+{ #category : #configuring }
+FLMaterializer >> disableMethodChangedWarning [
+	"Setting this to true will prevent Fuel from signalling FLMethodChanged exceptions
+	when the method of a block has changed upon materialization."
+
+	map
+		at: #methodChangedWarningDisabled
+		put: true
 ]
 
-{ #category : #accessing }
-FLMaterializer >> globalEnvironment [
-	"Answer a dictionary where the look up for global symbols will be done during materialization."
+{ #category : #testing }
+FLMaterializer >> isMethodChangedWarningDisabled [
+	^ map
+		at: #methodChangedWarningDisabled
+		ifAbsent: [ self class defaultMethodChangedWarningDisabled ]
+]
+
+{ #category : #running }
+FLMaterializer >> materialize [
+	^ self useDuring: [
+		FLMaterialization run ]
+]
+
+{ #category : #running }
+FLMaterializer >> materializeHeader [
+	map
+		at: #shouldMaterializeHeaderOnly
+		put: true.
+		
+	^ self materialize header
+]
+
+{ #category : #running }
+FLMaterializer >> materializeObjectCollection [
+	map
+		at: #hasMultipleObjects
+		put: true.
 	
-	^ globalEnvironment
+	^ self materialize
 ]
 
-{ #category : #accessing }
-FLMaterializer >> globalEnvironment: aDictionary [
-	"Set the dictionary where the look up for global symbols will be done during materialization."
+{ #category : #running }
+FLMaterializer >> materializeRoot [
+	^ self materialize root
+]
+
+{ #category : #'configuring-migrations' }
+FLMaterializer >> migrateClassNamed: aSymbol toClass: aClassOrSymbol [
+	"Use aClassOrSymbol instead of aSymbol after materialization. This only changes the class name.
+	The target class is expected to exist in the target system's global environment.
+	Variables are expected to be unchanged. Extra variables will be nil, missing variables will
+	be ignored.
+	Example (change name of class #MyPoint to #YourPoint):
+		configuration
+			migrateClassNamed: #MyPoint
+			toClass: #YourPoint }"
+
+	self
+		migrateClassNamed: aSymbol
+		toClass: aClassOrSymbol
+		variables: Dictionary new
+]
+
+{ #category : #'configuring-migrations' }
+FLMaterializer >> migrateClassNamed: aSymbol toClass: aClassOrSymbol variables: aDictionary [
+	"Use aClassOrSymbol instead of aSymbol after materialization and migrate variable names as defined in 
+	aDictionary. The new class is expected to exist in the target system's global environment.
+	Variables are expected to be unchanged with exception to those in aDictionary. Extra variables will 
+	be nil, missing variables will be ignored.
+	Example (change class name from #MyPoint to #YourPoint and change name of variable 'x' to 'xCoordinate'):
+		configuration
+			migrateClassNamed: #MyPoint
+			toClass: #YourPoint
+			variables: { x -> xCoordinate }"
+
+	| class |
+	self
+		validateMigrationArgumentsFrom: aSymbol
+		to: aClassOrSymbol
+		variables: aDictionary.
 	
-	globalEnvironment := aDictionary
-]
-
-{ #category : #initialization }
-FLMaterializer >> initialize [
-
-	super initialize.
-	self setDefaultMaterialization.
-	self signature: self class defaultSignature.
-	self version: self class currentVersion.
-	migrations := Dictionary new.
-	globalEnvironment := self class environment.
-]
-
-{ #category : #accessing }
-FLMaterializer >> materializationFactory [
-	^ materializationFactory
-]
-
-{ #category : #materializing }
-FLMaterializer >> materializeFrom: aStream [
-
-	| aDecoder materialization header |
-	aDecoder := 
-		FLDecoder 
-			on: aStream 
-			migrations: migrations 
-			globalEnvironment: globalEnvironment.
-	self verifySignatureFrom: aDecoder.
-	self verifyVersionFrom: aDecoder.
-	header := self decodeHeaderWith: aDecoder.
-	header executePreMaterializationActions.
-	materialization := materializationFactory value: aDecoder.
-	"This is useful because when the user materialize something, what it is answered is the materialization objet, and not the materializer. Hence, it is difficult to query the header (like asking the additionalObjects) because materializer is lost. Therefore, we also set the header to the materialization."
-	materialization header: header. 
-	"This is useful because the postMaterializationActions may need to have access to the state of the materialization, for example, to the root"
-	header materialization: materialization.
-	header executePostMaterializationActions.
-	^ materialization
-]
-
-{ #category : #materializing }
-FLMaterializer >> materializeHeaderFrom: aStream [
-
-	| aDecoder |
-	aDecoder := 
-		FLDecoder 
-			on: aStream 
-			migrations: migrations 
-			globalEnvironment: globalEnvironment.
-	self verifySignatureFrom: aDecoder.
-	self verifyVersionFrom: aDecoder.
-	^ self decodeHeaderWith: aDecoder
-]
-
-{ #category : #'configuring-migration' }
-FLMaterializer >> migrateClassNamed: aSymbol toClass: aClass [
-
-	self 
-		migrateClassNamed: aSymbol 
-		toClass: aClass 
-		variables: #()
-]
-
-{ #category : #'configuring-migration' }
-FLMaterializer >> migrateClassNamed: aSymbol toClass: aClass variables: aDictionary [ 
-
-	migrations
-		at: aSymbol
-		put: (FLMigration fromClassNamed: aSymbol toClass: aClass variables: aDictionary)
-]
-
-{ #category : #'configuring-migration' }
-FLMaterializer >> migrateClassNamed: aSymbol variables: aDictionary [ 
-
-	self 
-		migrateClassNamed: aSymbol 
-		toClass: (self class environment at: aSymbol)
+	class := aClassOrSymbol isString
+		ifTrue: [
+			self environment
+				at: aClassOrSymbol asSymbol
+				ifPresent: [ :global |
+					global isClass
+						ifTrue: [ global ]
+						ifFalse: [
+							FLConfigurationError signal: 'Target global must be a class' ] ]
+				ifAbsent: [
+					FLConfigurationError signal: 'Global not found: ', aClassOrSymbol ] ]
+		ifFalse: [ aClassOrSymbol ].
+	
+	self
+		basicMigrateClassNamed: aSymbol asSymbol
+		toClass: class
 		variables: aDictionary
 ]
 
-{ #category : #protected }
-FLMaterializer >> setDefaultMaterialization [
-
-	materializationFactory := [:aDecoder | 
-		(FLMaterialization 
-			with: aDecoder)
-			run; 
-			yourself ]
+{ #category : #'configuring-migrations' }
+FLMaterializer >> migrateClassNamed: aSymbol variables: aDictionary [
+	"Migrates variable names as defined in aDictionary.
+	Variables are expected to be unchanged with exception to those in aDictionary. Extra variables will 
+	be nil, missing variables will be ignored.
+	Example (change name of variable 'x' to 'xCoordinate'):
+		configuration
+			migrateClassNamed: #MyPoint
+			variables: { x -> xCoordinate }"
+	
+	self
+		migrateClassNamed: aSymbol
+		toClass: aSymbol
+		variables: aDictionary
 ]
 
 { #category : #accessing }
-FLMaterializer >> signature [
-	^ signature
+FLMaterializer >> migrations [
+	^ map
+		at: #migrations
+		ifAbsentPut: [ OrderedCollection new ]
 ]
 
-{ #category : #accessing }
-FLMaterializer >> signature: anObject [
-	signature := anObject
+{ #category : #testing }
+FLMaterializer >> shouldMaterializeHeaderOnly [
+	^ map
+		at: #shouldMaterializeHeaderOnly
+		ifAbsent: [ self class defaultShouldMaterializeHeaderOnly ]
 ]
 
-{ #category : #protected }
-FLMaterializer >> verifySignatureFrom: aDecoder [
-
-	| streamSignature |
-	streamSignature := ByteArray new: self signature size.
-	aDecoder nextEncodedBytesInto: streamSignature.
-	(self signature asByteArray = streamSignature) ifFalse: [ 
-		FLBadSignature 
-			signalCurrentSignature: self signature 
-			streamSignature: streamSignature  ].
+{ #category : #private }
+FLMaterializer >> streamFactoryForFilePath: aString [
+	^ [ FLPlatform current readStreamForFilePath: aString ]
 ]
 
-{ #category : #protected }
-FLMaterializer >> verifyVersionFrom: aDecoder [
-
-	| streamVersion |
-	streamVersion := aDecoder nextEncodedUint16.
-	(self version = streamVersion) ifFalse: [ 
-		FLBadVersion 
-			signalCurrentVersion: self version 
-			streamVersion: streamVersion ]
+{ #category : #private }
+FLMaterializer >> validateMigrationArgumentsFrom: aSymbol to: aClassOrSymbol variables: aDictionary [
+	aSymbol isString ifFalse: [
+		FLConfigurationError signal: 'Source must be a symbol' ].
+	
+	(aClassOrSymbol isString or: [
+		aClassOrSymbol isClass ]) ifFalse: [
+			FLConfigurationError signal: 'Target must be a class or symbol' ].
+		
+	aDictionary isDictionary ifFalse: [
+		FLConfigurationError signal: 'Variable map must be a dictionary' ]
 ]
 
-{ #category : #accessing }
-FLMaterializer >> version [
-	^ version
-]
-
-{ #category : #accessing }
-FLMaterializer >> version: anObject [
-	version := anObject
+{ #category : #private }
+FLMaterializer >> validateMigrationFrom: aSymbol to: aClass [
+	aSymbol isString ifFalse: [
+		FLConfigurationError signal: 'Source class name must be a symbol' ].
+		
+	self migrations
+		detect: [ :migration | migration sourceClassName = aSymbol ]
+		ifNone: [ ^ self ].
+		
+	FLConfigurationError signal: 'Existing migration for ', aSymbol, ' found.',
+		' You can''t register more than one migration for every source class'
 ]

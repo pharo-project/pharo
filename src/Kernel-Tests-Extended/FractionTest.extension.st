@@ -84,7 +84,7 @@ FractionTest >> testExactRaisedTo [
 
 		"No exact result => Float result"
 		self assert: ((f raisedTo: 3) +1 raisedTo: 5/3) isFloat.
-		self assert: ((f negated raisedTo: 3) -1 raisedTo: 5/3) isFloat ].
+		self assert: ((f negated raisedTo: 3) -1 raisedTo: 5/3) isFloat ]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

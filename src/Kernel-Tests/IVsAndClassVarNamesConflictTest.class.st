@@ -26,7 +26,7 @@ IVsAndClassVarNamesConflictTest >> tearDown [
 { #category : #tests }
 IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedInstanceVariables [
 	| class |
-	[ 
+	[
 		class := classFactory
 			newSubclassOf: classFactory defaultSuperclass
 			instanceVariableNames: 'X Y'
@@ -40,7 +40,7 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedIn
 { #category : #tests }
 IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingClasseVariablesBeginingWithLowerCaseCharacters [
 	| class |
-	[ 
+	[
 		class := classFactory
 			newSubclassOf: classFactory defaultSuperclass
 			instanceVariableNames: 'a BVarName'

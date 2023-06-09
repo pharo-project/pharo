@@ -50,5 +50,5 @@ OSTouchGestureNeedingThresholdDetector >> eachFingersHadTravelledEnough [
 { #category : #initialization }
 OSTouchGestureNeedingThresholdDetector >> initialize [
 	super initialize.
-	minDistBeforeDetection := self class minDistanceBeforeDetection.
+	minDistBeforeDetection := self class minDistanceBeforeDetection
 ]

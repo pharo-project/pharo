@@ -32,7 +32,7 @@ CairoFreetypeFontRenderer >> advance [
 ]
 
 { #category : #accessing }
-CairoFreetypeFontRenderer >> advance: aPoint [ 
+CairoFreetypeFontRenderer >> advance: aPoint [
 	advance := aPoint
 ]
 
@@ -53,14 +53,14 @@ CairoFreetypeFontRenderer >> applyKerningOn: aGlyphs of: aString from: start to:
 
 { #category : #accessing }
 CairoFreetypeFontRenderer >> canvas: aCairoCanvas [
-	
-	canvas := aCairoCanvas.
+
+	canvas := aCairoCanvas
 ]
 
 { #category : #private }
 CairoFreetypeFontRenderer >> convertString: utf8String len: strlen ofFont: aScaledFont toGlyphs: glyphs numGlyphs: numGlyphs x: x y: y [
 "
-all of this for using 
+all of this for using
 http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font-text-to-glyphs-func-t
 
 "
@@ -78,11 +78,11 @@ http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font
 ]
 
 { #category : #accessing }
-CairoFreetypeFontRenderer >> font: aFreetypeFont [ 
+CairoFreetypeFontRenderer >> font: aFreetypeFont [
 
 	font := CairoScaledFont fromFreetypeFont: aFreetypeFont.
 	fontExtents := font extents.
-	originalFont := aFreetypeFont.
+	originalFont := aFreetypeFont
 ]
 
 { #category : #'accessing - font metrics' }
@@ -117,43 +117,43 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 	ptr := ExternalAddress new.
 	lenValue := ByteArray new: 4.
 	lenValue unsignedLongAt: 1 put: len.
-	
+
 	"somehow scaled font is buggy and calculated glyphs have wrong extents,
 	setting font size manually and retrieving 'fixed' scaled font solves the problem"
 	canvas
 		setScaledFont: font;
 		setFontSize: originalFont pixelSize.
-	
-	error := self 
-		convertString: utfConverter buffer 
+
+	error := self
+		convertString: utfConverter buffer
 		len: utf8Len
-		ofFont: canvas getScaledFont 
+		ofFont: canvas getScaledFont
 		toGlyphs: ptr
-		numGlyphs: lenValue 
-		x: 0.0 
+		numGlyphs: lenValue
+		x: 0.0
 		y: 0.0.
-		
+
 	error = CAIRO_STATUS_SUCCESS ifFalse: [  ^ CairoGlyphsArray new: 0 ].
 
 	glyphsSize := lenValue unsignedLongAt: 1.
    font getExtentsOfGlyphs: ptr ofLength: glyphsSize into: glyphExtents.
 	advance := glyphExtents width @ glyphExtents height.
-	
+
 	glyphs := CairoGlyphsArray new: glyphsSize.
 	LibC memCopy: ptr to: glyphs getHandle size: (glyphsSize * glyphs typeSize).
 	"Apply kerning on glyphs if font supports it"
 	originalFont face hasKerning
 		ifTrue: [ self applyKerningOn: glyphs of: aString from: start to: end ].
 	self freeGlyphs: ptr.
-		
+
 	^ glyphs
 ]
 
 { #category : #initialization }
-CairoFreetypeFontRenderer >> initialize [ 
+CairoFreetypeFontRenderer >> initialize [
 	utfConverter := CairoUTF8Converter new.
 	advance := 0@0.
-	glyphExtents := CairoTextExtents new.
+	glyphExtents := CairoTextExtents new
 ]
 
 { #category : #rendering }
@@ -175,16 +175,16 @@ CairoFreetypeFontRenderer >> renderCharacters: aString from: start to: end [
 CairoFreetypeFontRenderer >> renderGlyphs: cairoGlyphs [
 
 	font lock.
-	canvas 
+	canvas
 		setPathMatrix;
 		setScaledFont: font.
 	canvas paint loadOnCairoCanvas: canvas.
 
 	canvas showGlyphs: cairoGlyphs getHandle size: cairoGlyphs size.
-	font unlock.
+	font unlock
 ]
 
 { #category : #accessing }
-CairoFreetypeFontRenderer >> setColor: aColor [ 
+CairoFreetypeFontRenderer >> setColor: aColor [
 	(canvas setPaint: aColor )
 ]

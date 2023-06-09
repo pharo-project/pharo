@@ -19,24 +19,24 @@ Class {
 ClyExtendingPackagesQuery >> buildResult: aQueryResult [
 	| packages classPackage |
 	packages := IdentitySet new.
-	
-	scope methodsDo: [ :eachMethod | 
+
+	scope methodsDo: [ :eachMethod |
 		classPackage := eachMethod origin package.
-		(eachMethod isDefinedInPackage: classPackage) ifFalse: [ 
+		(eachMethod isDefinedInPackage: classPackage) ifFalse: [
 			eachMethod package ifNotNil: [ :p | packages add: p]]].
-		
+
 	aQueryResult fillWith: packages
 ]
 
 { #category : #execution }
 ClyExtendingPackagesQuery >> checkEmptyResult [
-	
+
 	| classPackage |
-	scope methodsDo: [ :eachMethod | 
+	scope methodsDo: [ :eachMethod |
 		classPackage := eachMethod origin package.
-		(eachMethod isDefinedInPackage: classPackage) ifFalse: [ 
+		(eachMethod isDefinedInPackage: classPackage) ifFalse: [
 			eachMethod package ifNotNil: [ :p | ^false]]].
-		
+
 	^true
 ]
 
@@ -48,6 +48,6 @@ ClyExtendingPackagesQuery >> description [
 
 { #category : #'system changes' }
 ClyExtendingPackagesQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^scope includesMethodsAffectedBy: aSystemAnnouncement
 ]

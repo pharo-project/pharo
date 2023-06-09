@@ -37,7 +37,7 @@ KMMetaModifier >> identifier [
 KMMetaModifier >> initialize [
 	super initialize.
 	identifier := #m.
-	name := 'Meta'.
+	name := 'Meta'
 ]
 
 { #category : #matching }

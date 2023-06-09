@@ -41,11 +41,11 @@ SearchMorph >> addToList: aString [
 	list size = self maxSize
 		ifTrue: [ self searchList removeLast].
 	list addFirst: aString.
-	self changed: #list.
+	self changed: #list
 ]
 
 { #category : #accessing }
-SearchMorph >> content: anObject [ 
+SearchMorph >> content: anObject [
 	content := anObject asString trimBoth.
 	self addToList: content.
 	self listSelectionIndex: (self list indexOf: content).
@@ -62,10 +62,10 @@ SearchMorph >> contentChanged: aString [
 { #category : #private }
 SearchMorph >> currentTabCompletion [
 	self searchList ifEmpty: [ ^ ''].
-	
+
 	currentCompletionIndex > self searchList
 		ifTrue: [ currentCompletionIndex := 1].
-	
+
 	^ self searchList at: currentCompletionIndex
 ]
 
@@ -89,13 +89,13 @@ SearchMorph >> listSelectionIndex: anInteger [
 	"Set the list selection."
 
 	self hideList.
-	anInteger = 0 
+	anInteger = 0
 		ifTrue: [
-			self model ifNotNil: [:m | 
+			self model ifNotNil: [:m |
 				self setIndexSelector ifNotNil: [:s |
-					self useSelectionIndex 
+					self useSelectionIndex
 						ifFalse: [m perform: s with: nil]]]]
-		ifFalse: [ ^ super listSelectionIndex: anInteger ].
+		ifFalse: [ ^ super listSelectionIndex: anInteger ]
 ]
 
 { #category : #accessing }
@@ -113,7 +113,7 @@ SearchMorph >> newContentMorph [
 	| editorMorph|
 	editorMorph := super newContentMorph.
 
-	editorMorph 
+	editorMorph
 		autoAccept: false;
 		withoutAdornment;
 		changedAction: [:aString| self contentChanged: aString asString].
@@ -129,7 +129,7 @@ SearchMorph >> nextCompletion [
 
 { #category : #accessing }
 SearchMorph >> searchList [
-	^ list ifNil: [ list := OrderedCollection new].
+	^ list ifNil: [ list := OrderedCollection new]
 ]
 
 { #category : #accessing }
@@ -151,12 +151,12 @@ SearchMorph >> selectionInterval [
 SearchMorph >> showList [
 	"trigger a list update so that shared search results are updated properly"
 	self changed: #list.
-	super showList.
+	super showList
 ]
 
 { #category : #protocol }
 SearchMorph >> takeKeyboardFocus [
-	contentMorph takeKeyboardFocus.
+	contentMorph takeKeyboardFocus
 ]
 
 { #category : #accessing }
@@ -165,7 +165,7 @@ SearchMorph >> updateSelector [
 ]
 
 { #category : #accessing }
-SearchMorph >> updateSelector: aSymbol [ 
+SearchMorph >> updateSelector: aSymbol [
 	updateSelector := aSymbol
 ]
 

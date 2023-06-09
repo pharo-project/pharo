@@ -27,7 +27,7 @@ FBDLoopScanner class >> scan: method [
 { #category : #'instruction decoding' }
 FBDLoopScanner >> interpretMethod: method [
 	[ instructionStream pc > method endPC ]
-		whileFalse: [ 
+		whileFalse: [
 			currentPC := self pc.
 			instructionStream interpretNextInstructionFor: self ]
 ]
@@ -41,9 +41,9 @@ FBDLoopScanner >> jump: offset [
 		ifNil: [ FBDLoop new ].
 	backjumpTarget := self pc + offset.
 	loop backjump: currentPC.
-	(loops at: backjumpTarget) 
+	(loops at: backjumpTarget)
 		ifNil: [ loops at: backjumpTarget put: (OrderedCollection with: loop) ]
-		ifNotNil: [ :col | col add: loop ].
+		ifNotNil: [ :col | col add: loop ]
 ]
 
 { #category : #'instruction decoding' }

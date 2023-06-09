@@ -44,7 +44,7 @@ MessageSend class >> receiver: anObject selector: aSymbol arguments: anArray [
 
 { #category : #comparing }
 MessageSend >> = anObject [
-	^ anObject species == self species 
+	^ anObject species == self species
 		and: [receiver == anObject receiver
 		and: [selector == anObject selector
 		and: [arguments = anObject arguments]]]
@@ -78,37 +78,35 @@ MessageSend >> asWeakMessageSend [
 MessageSend >> collectArguments: anArgArray [
 	"Private"
 
-    | staticArgs |
-    staticArgs := self arguments.
-    ^(anArgArray size = staticArgs size)
-        ifTrue: [anArgArray]
-        ifFalse:
-            [(staticArgs isEmpty
-                ifTrue: [ staticArgs := Array new: selector numArgs]
-                ifFalse: [staticArgs copy] )
-                    replaceFrom: 1
-                    to: (anArgArray size min: staticArgs size)
-                    with: anArgArray
-                    startingAt: 1]
+	| staticArgs |
+	staticArgs := self arguments.
+	^ anArgArray size = staticArgs size
+		  ifTrue: [ anArgArray ]
+		  ifFalse: [
+			  (staticArgs ifEmpty: [ staticArgs := Array new: selector numArgs ] ifNotEmpty: [ staticArgs copy ])
+				  replaceFrom: 1
+				  to: (anArgArray size min: staticArgs size)
+				  with: anArgArray
+				  startingAt: 1 ]
 ]
 
 { #category : #evaluating }
 MessageSend >> cull: arg [
-	^ selector numArgs = 0 
+	^ selector numArgs = 0
 		ifTrue: [ self value ]
-		ifFalse: [ self value: arg ].
+		ifFalse: [ self value: arg ]
 ]
 
 { #category : #evaluating }
 MessageSend >> cull: arg1 cull: arg2 [
-	^ selector numArgs < 2 
+	^ selector numArgs < 2
 		ifTrue: [ self cull: arg1]
 		ifFalse: [ self value: arg1 value: arg2 ]
 ]
 
 { #category : #evaluating }
 MessageSend >> cull: arg1 cull: arg2 cull: arg3 [
-	^ selector numArgs < 3 
+	^ selector numArgs < 3
 		ifTrue: [ self cull: arg1 cull: arg2 ]
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
 ]
@@ -178,24 +176,24 @@ MessageSend >> value [
 
   arguments ifNil: [^ receiver perform: selector].
 
-  ^ receiver 
-    perform: selector 
+  ^ receiver
+    perform: selector
     withArguments: (self collectArguments: arguments)
 ]
 
 { #category : #evaluating }
 MessageSend >> value: anObject [
 
-  ^ receiver 
-    perform: selector 
+  ^ receiver
+    perform: selector
     with: anObject
 ]
 
 { #category : #evaluating }
 MessageSend >> value: anObject1 value: anObject2 [
 
-	^ receiver 
-		perform: selector 
+	^ receiver
+		perform: selector
 		with: anObject1
 		with: anObject2
 ]
@@ -203,8 +201,8 @@ MessageSend >> value: anObject1 value: anObject2 [
 { #category : #evaluating }
 MessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 
-	^ receiver 
-		perform: selector 
+	^ receiver
+		perform: selector
 		with: anObject1
 		with: anObject2
 		with: anObject3
@@ -213,8 +211,8 @@ MessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 { #category : #evaluating }
 MessageSend >> valueWithArguments: anArray [
 
-	^ receiver 
-		perform: selector 
+	^ receiver
+		perform: selector
 		withArguments: (self collectArguments: anArray)
 ]
 

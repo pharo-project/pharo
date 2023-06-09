@@ -22,7 +22,7 @@ RBTransformationRule class >> checksMethod [
 
 { #category : #cleanup }
 RBTransformationRule class >> cleanUp [
-	RecursiveSelfRule := nil.
+	RecursiveSelfRule := nil
 ]
 
 { #category : #'class initialization' }
@@ -33,9 +33,9 @@ RBTransformationRule class >> initialize [
 { #category : #'private - initialization' }
 RBTransformationRule class >> initializeRecursiveSelfRule [
 	RecursiveSelfRule := RBParseTreeSearcher new.
-	RecursiveSelfRule 
+	RecursiveSelfRule
 		matchesAnyMethodOf: #(
-			'`@methodName: `@args | `@temps | self `@methodName: `@args1' 
+			'`@methodName: `@args | `@temps | self `@methodName: `@args1'
 			'`@methodName: `@args | `@temps | ^ self `@methodName: `@args1')
 		do: [ :node :answer | true ].
 	^ RecursiveSelfRule
@@ -54,15 +54,15 @@ RBTransformationRule class >> recursiveSelfRule [
 { #category : #accessing }
 RBTransformationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'TransformationRule'
 ]
 
 { #category : #running }
-RBTransformationRule >> basicCheck: aMethod [ 
+RBTransformationRule >> basicCheck: aMethod [
 	aMethod isFromTrait
 		ifTrue: [ ^ false ].
-	(self rewriteRule canMatchMethod: aMethod) 
+	(self rewriteRule canMatchMethod: aMethod)
 		ifFalse: [ ^ false ].
 	class := aMethod methodClass.
 	^ (self rewriteRule executeTree: aMethod ast copy) and: [
@@ -74,7 +74,7 @@ RBTransformationRule >> basicCheck: aMethod [
 { #category : #accessing }
 RBTransformationRule >> builder [
 	^ builder
-		ifNil: [ 
+		ifNil: [
 			self resetResult.
 			builder ]
 ]
@@ -85,7 +85,7 @@ RBTransformationRule >> changes [
 ]
 
 { #category : #running }
-RBTransformationRule >> checkMethod: aMethod [ 
+RBTransformationRule >> checkMethod: aMethod [
 	(self basicCheck: aMethod) ifTrue: [
 		self builder compile: rewriteRule tree newSource in: class classified: aMethod protocol ]
 ]

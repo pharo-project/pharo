@@ -7,39 +7,36 @@ RGBehavior >> calypsoEnvironmentType [
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> canUnderstand: selector [
-	"Answer whether the receiver can respond to the message whose selector 
+	"Answer whether the receiver can respond to the message whose selector
 	is the argument."
-	
+
 	self allSuperclassesDo: [ :each |
 		(each methods anySatisfy: [ :method | method name = selector ])
 			ifTrue: [ ^ true ] ].
 
-	^ self methods anySatisfy: [ :method | method name = selector ].
+	^ self methods anySatisfy: [ :method | method name = selector ]
 ]
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> categoryOfElement: aSymbol ifAbsent: aBlockClosure [
-	
-	| aMethod |
-	
-	aMethod := (self localMethodNamed: aSymbol ifAbsent: nil).
-	^ aMethod 
-		ifNotNil: [ aMethod protocol ]
-		ifNil: aBlockClosure
+
+	^ (self localMethodNamed: aSymbol ifAbsent: nil)
+		  ifNotNil: [ :method | method protocol ]
+		  ifNil: aBlockClosure
 ]
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
-	
-	
+
+
 	^ false
 "	^ (self methods anySatisfy: [:cm | cm sendsSelector: #subclassResponsibility ])"
 ]
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> includesLocalSelector: aSymbol [
-	^self localMethods anySatisfy: [ :each | each name = aSymbol ].
+	^self localMethods anySatisfy: [ :each | each name = aSymbol ]
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -50,12 +47,12 @@ RGBehavior >> includesMethodsAffectedBy: aSystemAnnouncement [
 { #category : #'*Calypso-Ring' }
 RGBehavior >> includesVariablesAffectedByModificationOf: modifiedClass [
 	"Any class has ClassVariables which are visible from instance side and class side. That's why here we must check both class and metaclass"
-	
+
 	self instanceSide = modifiedClass instanceSide ifTrue: [ ^true ].
 	self classSide = modifiedClass classSide ifTrue: [ ^true ].
-	
+
 	self isRootInEnvironment ifTrue: [ ^false ].
-	
+
 	^self superclass includesVariablesAffectedByModificationOf: modifiedClass
 ]
 
@@ -74,8 +71,8 @@ RGBehavior >> lookupSelector: selector [
 	| lookupClass |
 	lookupClass := self.
 	[lookupClass == nil]
-		whileFalse: [ 
-			lookupClass methodDict 
+		whileFalse: [
+			lookupClass methodDict
 				at: selector
 				ifPresent: [ :method | ^ method ].
 			lookupClass := lookupClass superclass].
@@ -115,14 +112,14 @@ RGBehavior >> removeFromSystem [
 RGBehavior >> sourceCodeAt: aSymbol [
 
 	| method |
-	method :=  self localMethodNamed: aSymbol 
+	method :=  self localMethodNamed: aSymbol
 						 ifAbsent: [ self error: 'Selector #', aSymbol asString, ' not found in RGClass "', self name, '"' ].
 	^ method sourceCode
 ]
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> sourceCodeTemplate [
-	"Answer an expression to be edited and evaluated in order to define 
+	"Answer an expression to be edited and evaluated in order to define
 	methods in this class or trait."
 
 	^ 'messageSelectorAndArgumentNames
@@ -139,15 +136,15 @@ RGBehavior >> subclassDefinerClass [
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> traitCompositionIncludes: aTrait [
-	^self == aTrait or: 
-		[self hasTraitComposition and: 
+	^self == aTrait or:
+		[self hasTraitComposition and:
 			[self traitComposition allTraits includes: aTrait]]
 ]
 
 { #category : #'*Calypso-Ring' }
 RGBehavior >> withAllSubclasses [
 
-	^ self subclasses asOrderedCollection 
-		add: self; 
+	^ self subclasses asOrderedCollection
+		add: self;
 		yourself
 ]

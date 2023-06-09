@@ -15,7 +15,7 @@ ReAddRemoveDependentsRule class >> checksClass [
 { #category : #accessing }
 ReAddRemoveDependentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'AddRemoveDependentsRule'
 ]
 
@@ -25,7 +25,7 @@ ReAddRemoveDependentsRule >> basicCheck: aClass [
 	addSends := 0.
 	removeSends := 0.
 	methods := (aClass whichMethodsReferTo: #addDependent:) asSet, (aClass whichMethodsReferTo: #removeDependent:).
-	
+
 	methods do: [ :method | | messages |
 			messages := method ast allChildren select: [ :each | each isMessage ].
 				addSends := addSends + (messages count: [ :each | each selector == #addDependent:]).

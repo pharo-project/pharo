@@ -4,39 +4,54 @@ I implement the algorithm for serializing an object graph on a stream. FLSeriali
 Class {
 	#name : #FLSerialization,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'encoder',
-		'root',
-		'clusters',
-		'analyzer'
+		'clusters'
 	],
 	#category : #'Fuel-Core-Base'
 }
 
 { #category : #'instance creation' }
-FLSerialization class >> with: anEncoder root: anObject analyzer: anAnalyzer [
-	
-	^ self basicNew
-		initializeWith: anEncoder
-		root: anObject
-		analyzer: anAnalyzer;
+FLSerialization class >> basicRun [
+	^ self new
+		run;
 		yourself
+]
+
+{ #category : #'instance creation' }
+FLSerialization class >> detectResponsibleSerialization [
+	^ self allSubclasses
+		detect: [ :class | class isResponsible ]
+		ifNone: [ self ]
+]
+
+{ #category : #'instance creation' }
+FLSerialization class >> isResponsible [
+	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+FLSerialization class >> run [
+	^ self detectResponsibleSerialization basicRun
 ]
 
 { #category : #private }
 FLSerialization >> analysisStep [
 
 	| anAnalysis |
-	anAnalysis := analyzer analysisFor: root.
+	anAnalysis := FLAnalysis run.
 	clusters := anAnalysis clusterization clusters.
-	encoder objectCount: anAnalysis clusterization objectCount
+	encoder objectCount: anAnalysis clusterization objectCount.
+	self possiblySubstituteRootFrom: anAnalysis
 ]
 
 { #category : #private }
 FLSerialization >> clusterInstancesStepOf: aCluster [
 
 	encoder encodeClusterClass: aCluster class.
-	aCluster clusterSerializeStepWith: self.
+	aCluster clusterSerializeStepWith: encoder.
 	aCluster serializeInstancesStepWith: encoder.
 	aCluster serializePostInstancesStepWith: encoder.
 ]
@@ -51,30 +66,34 @@ FLSerialization >> clustersSortedByAmountOfObjects [
 	^ self clusters sorted: [ :a :b | a objects size > b objects size ]
 ]
 
-{ #category : #accessing }
-FLSerialization >> encoder [
-	^ encoder
-]
-
-{ #category : #hooks }
-FLSerialization >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
-]
-
 { #category : #private }
-FLSerialization >> headerStep [
+FLSerialization >> encoderHeaderStep [
 	encoder
 		encodeYourself;
 		encodeUint32: clusters size
 ]
 
-{ #category : #'initialize-release' }
-FLSerialization >> initializeWith: anEncoder root: anObject analyzer: anAnalyzer [
-			
-	self initialize.
-	encoder := anEncoder.
-	root := anObject fuelReplacement.
-	analyzer := anAnalyzer.
+{ #category : #private }
+FLSerialization >> fileHeaderStep [
+	encoder
+		encodeSignature;
+		encodeVersion
+]
+
+{ #category : #private }
+FLSerialization >> headerStep [
+	"Make sure the contents of the encoder have been written to the stream
+	so that the header encoder writes it's contents after those."
+	encoder flush.
+	
+	FLHeaderSerializer new serialize
+]
+
+{ #category : #initialization }
+FLSerialization >> initialize [
+	super initialize.
+	
+	encoder := FLEncoder new
 ]
 
 { #category : #private }
@@ -92,6 +111,19 @@ FLSerialization >> objects [
 ]
 
 { #category : #private }
+FLSerialization >> possiblySubstituteRootFrom: anAnalysis [
+	"The root object may have been substituted. We need to update the
+	object in the configuration to reflect the actual root object"
+	anAnalysis clusterization substitutionsBucket
+		at: FLSubstitutionCluster
+		ifPresent: [ :cluster |
+			cluster substitutions
+				at: self configuration object
+				ifPresent: [ :substitute |
+					self configuration object: substitute ] ]
+]
+
+{ #category : #private }
 FLSerialization >> prepareObjectsStep [
 	clusters do: [ :aCluster |
 		aCluster prepareObjectsStep ]
@@ -103,18 +135,28 @@ FLSerialization >> referencesStep [
 	clusters do: [ :aCluster | aCluster serializeReferencesStepWith: encoder ]
 ]
 
-{ #category : #accessing }
-FLSerialization >> root [
-	^ root
-]
-
 { #category : #serializing }
 FLSerialization >> run [
-	"Serialize the graph starting at the root object."
+	"Serialize the graph starting at the root object received and answers the FLSerialization object"
+	^ self configuration hasMultipleObjects
+		ifFalse: [ self runSteps ]
+		ifTrue: [
+			| numberOfObjects |
+			numberOfObjects := self context object size.
+			self context object withIndexDo: [ :object :index |
+				FLContext new
+					stream: self context stream;
+					object: object;
+					useDuring: [ self runSteps ] ] ]
+]
 
+{ #category : #private }
+FLSerialization >> runSteps [
 	self
 		analysisStep;
 		prepareObjectsStep;
+		fileHeaderStep;
+		encoderHeaderStep;
 		headerStep;
 		instancesStep;
 		referencesStep;
@@ -123,6 +165,5 @@ FLSerialization >> run [
 
 { #category : #private }
 FLSerialization >> trailerStep [
-
-	encoder encodeReferenceTo: root
+	encoder encodeReferenceTo: self context object
 ]

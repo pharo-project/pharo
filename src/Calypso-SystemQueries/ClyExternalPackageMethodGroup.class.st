@@ -24,17 +24,17 @@ ClyExternalPackageMethodGroup class >> withMethodsFrom: aClassScope packagedIn: 
 
 	| methodQuery |
 	methodQuery := ClyPackageExtensionMethodsQuery of: aPackage from: aClassScope.
-	
-	"Priority is the value to be greater than all extensions group 
+
+	"Priority is the value to be greater than all extensions group
 	in case when they are in same list (when extended class is selected)"
 	^self named: aPackage name priority: 8.9 on: methodQuery
 ]
 
 { #category : #operations }
-ClyExternalPackageMethodGroup >> importMethod: aMethod [ 
+ClyExternalPackageMethodGroup >> importMethod: aMethod [
 	super importMethod: aMethod.
-	
-	self package addMethod: aMethod.	
+
+	self package addMethod: aMethod.
 	aMethod tagWith: ('*', self package name) asSymbol
 ]
 

@@ -40,7 +40,7 @@ ClyFullBrowserContext >> isMethodGroupSelected [
 ClyFullBrowserContext >> isMethodTagSelected [
 
 	self isMethodGroupSelected ifFalse: [ ^false ].
-	
+
 	^self selectedMethodGroupClass isBasedOnMethodTag
 ]
 
@@ -56,9 +56,9 @@ ClyFullBrowserContext >> isProjectSelected [
 
 { #category : #'selection-method groups' }
 ClyFullBrowserContext >> isSelectedMethodGroupEditable [
-	
+
 	self isMethodGroupSelected ifFalse: [ ^false ].
-	
+
 	^self selectedMethodGroupClass isEditableGroup
 ]
 
@@ -71,7 +71,7 @@ ClyFullBrowserContext >> isSimilarTo: anotherBrowserContext [
 { #category : #'selection-packages' }
 ClyFullBrowserContext >> lastSelectedClassTag [
 	| tagItem |
-	tagItem := tool classGroupSelection items 
+	tagItem := tool classGroupSelection items
 		detect: [ :each | each type isBasedOnClassTag ].
 	^tagItem name
 ]

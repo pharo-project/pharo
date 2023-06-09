@@ -12,12 +12,12 @@ Class {
 }
 
 { #category : #running }
-CopyVisitorTest >> createDirectory: aString [ 
+CopyVisitorTest >> createDirectory: aString [
 	source createDirectory: (source store pathFromString: aString)
 ]
 
 { #category : #running }
-CopyVisitorTest >> createFile: aString [ 
+CopyVisitorTest >> createFile: aString [
 	source store createFile: (source store pathFromString: aString)
 ]
 
@@ -31,8 +31,8 @@ CopyVisitorTest >> setUp [
 { #category : #tests }
 CopyVisitorTest >> testAll [
 	self setUpGreek.
-	CopyVisitor 
-		copy: (source / 'alpha') 
+	CopyVisitor
+		copy: (source / 'alpha')
 		to: (dest / 'alpha').
 	self assert: (dest isDirectory: '/alpha').
 	self assert: (dest isFile: '/alpha/beta/gamma')

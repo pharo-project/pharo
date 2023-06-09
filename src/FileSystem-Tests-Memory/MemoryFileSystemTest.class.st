@@ -20,9 +20,9 @@ MemoryFileSystemTest >> createFilesIn: root from: anArray [
 
 	dir := (root / anArray first) createDirectory.
 	anArray allButFirstDo: [ :each |
-		each isArray ifTrue: 
+		each isArray ifTrue:
 			[ self createFilesIn: dir from: each ]
-		ifFalse: 
+		ifFalse:
 			[ (path := dir / each) writeStreamDo: [ :stream |
 				stream nextPutAll: path pathString ] ] ]
 ]
@@ -43,9 +43,9 @@ MemoryFileSystemTest >> testCopyFromto [
 	fileReference := filesystem root / 'test.file'.
 	buffer := 'test data'.
 	filesystem
-		copyFrom: buffer readStream 
+		copyFrom: buffer readStream
 		to: fileReference path.
-	self assert: fileReference contents equals: buffer.
+	self assert: fileReference contents equals: buffer
 ]
 
 { #category : #tests }
@@ -90,9 +90,9 @@ MemoryFileSystemTest >> testDirectoryMoveTo [
 	self assert: (dest / 'src') allChildren size equals: count.
 	self assert: f33 exists.
 	self assert: f33 contents equals: '/src/d11/d22/f33']
-		ensure: 
+		ensure:
 			[ src exists ifTrue: [ src deleteAll ].
-			dest exists ifTrue: [ dest deleteAll ] ].
+			dest exists ifTrue: [ dest deleteAll ] ]
 ]
 
 { #category : #tests }
@@ -128,9 +128,9 @@ MemoryFileSystemTest >> testDirectoryMoveToRename [
 	self assert: dest allChildren size equals: count.
 	self assert: f33 exists.
 	self assert: f33 contents equals: '/src/d11/d22/f33']
-		ensure: 
+		ensure:
 			[ src exists ifTrue: [ src deleteAll ].
-			dest exists ifTrue: [ dest deleteAll ] ].
+			dest exists ifTrue: [ dest deleteAll ] ]
 ]
 
 { #category : #tests }
@@ -139,15 +139,15 @@ MemoryFileSystemTest >> testEnsureCreateFileDoesNotOverwriteExistingContent [
 	file := filesystem root / 'a.txt'.
 	file writeStreamDo: [ :s | s nextPutAll: 'ok' ].
 	self assert: file contents equals: 'ok'.
-	
+
 	file ensureCreateFile.
 
-	self assert: file contents equals: 'ok'.
+	self assert: file contents equals: 'ok'
 ]
 
 { #category : #tests }
 MemoryFileSystemTest >> testIsMemoryFileSystem [
-	self assert: filesystem isMemoryFileSystem.
+	self assert: filesystem isMemoryFileSystem
 ]
 
 { #category : #tests }
@@ -218,7 +218,7 @@ MemoryFileSystemTest >> testNotEqualWhenRequestingMemoryFileSystem [
 { #category : #tests }
 MemoryFileSystemTest >> testStreamWriteAndRead [
 	"Test writing custom collection and reading it [partially] back."
-	
+
 	| writer reader testData |
 	testData := ByteArray new: 50 streamContents: [ :out |
 						1 to: 50 do: [ :i | out nextPut: i ]

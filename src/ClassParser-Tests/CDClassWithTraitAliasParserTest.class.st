@@ -6,13 +6,13 @@ Class {
 
 { #category : #helpers }
 CDClassWithTraitAliasParserTest >> aliasName [
-	
+
 	^ #alias
 ]
 
 { #category : #accessing }
 CDClassWithTraitAliasParserTest >> existingSelectorName [
-	
+
 	^ #existing
 ]
 
@@ -38,7 +38,7 @@ CDClassWithTraitAliasParserTest >> testTraitDefinitionNodeIsTraitAliasNode [
 CDClassWithTraitAliasParserTest >> traitDefinition [
 
 	^ 'MyTrait @ \{#''{aliasName}'' -> #''{existingSelectorName}''\}'
-		format: { 
+		format: {
 			'aliasName' -> self aliasName.
 			'existingSelectorName' -> self existingSelectorName. } asDictionary
 ]

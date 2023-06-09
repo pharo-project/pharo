@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-DTTreeLeafNode class >> content: aRottenTest [ 
+DTTreeLeafNode class >> content: aRottenTest [
 	^ self new
 		content: aRottenTest;
 		yourself
@@ -25,6 +25,7 @@ DTTreeLeafNode >> acceptVisitor: aDTResultsTreeVisitor [
 
 { #category : #testing }
 DTTreeLeafNode >> canBeBrowsed [
+
 	^ true
 ]
 
@@ -60,5 +61,6 @@ DTTreeLeafNode >> drTestsName [
 
 { #category : #testing }
 DTTreeLeafNode >> isLeaf [
+
 	^ true
 ]

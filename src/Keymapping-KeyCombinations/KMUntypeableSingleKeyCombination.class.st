@@ -137,7 +137,7 @@ KMUntypeableSingleKeyCombination class >> pageUp [
 { #category : #accessing }
 KMUntypeableSingleKeyCombination class >> specialKeys [
 	^specialKeys
-		ifNil: [ 
+		ifNil: [
 			specialKeys := self newSpecialKeys ]
 ]
 
@@ -168,6 +168,6 @@ KMUntypeableSingleKeyCombination >> symbol [
 
 { #category : #accessing }
 KMUntypeableSingleKeyCombination >> symbol: aString [
-	
+
 	symbol := aString
 ]

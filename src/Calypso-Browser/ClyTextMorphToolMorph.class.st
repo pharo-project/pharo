@@ -24,7 +24,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyTextMorphToolMorph class >> of: aTextMorph [
-	^self new 
+	^self new
 		textMorph: aTextMorph
 ]
 
@@ -43,8 +43,8 @@ ClyTextMorphToolMorph >> detachFromTextMorph [
 
 { #category : #initialization }
 ClyTextMorphToolMorph >> initialize [
-	super initialize.	
-	self 
+	super initialize.
+	self
 		changeTableLayout;
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap
@@ -53,7 +53,7 @@ ClyTextMorphToolMorph >> initialize [
 { #category : #controlling }
 ClyTextMorphToolMorph >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
-	
+
 	self detachFromTextMorph
 ]
 

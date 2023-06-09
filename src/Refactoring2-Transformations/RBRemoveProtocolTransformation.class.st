@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -47,17 +47,14 @@ RBRemoveProtocolTransformation >> preconditions [
 
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]
-			errorString: 'Class named ', className, ' does not exist' ) 
+			errorString: 'Class named ', className, ' does not exist' )
 		& ( RBCondition
-			withBlock: [ ( model environment 
+			withBlock: [ ( model environment
 			protocolsFor: self definingClass realClass )
 			includes: protocol ]
 			errorString: 'Protocol named ', protocol, ' does not exist' )
 		& ( RBCondition
-			withBlock: [ (self definingClass realClass organization protocolNamed: protocol ) canBeRemoved ]
-			errorString: 'Protocol named ', protocol, ' is a virtual protocol and it cannot be removed' ) 
-		& ( RBCondition
-			withBlock: [ (self definingClass realClass organization protocolNamed: protocol ) isEmpty ]
+			withBlock: [ (self definingClass realClass protocolNamed: protocol ) isEmpty ]
 			errorString: 'Protocol named ', protocol, ' is not empty and it cannot be removed' )
 ]
 
@@ -75,7 +72,7 @@ RBRemoveProtocolTransformation >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #printing }
-RBRemoveProtocolTransformation >> storeOn: aStream [ 
+RBRemoveProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

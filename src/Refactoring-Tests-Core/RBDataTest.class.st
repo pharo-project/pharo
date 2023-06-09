@@ -32,5 +32,5 @@ RBDataTest >> testExample2 [
 	aString := 'sa'.
 	self someMethod.
 	aNumber := 4.
-	self assert: aString isNotEmpty.
+	self assert: aString isNotEmpty
 ]

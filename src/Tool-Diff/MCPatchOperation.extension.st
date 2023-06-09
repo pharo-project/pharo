@@ -3,20 +3,19 @@ Extension { #name : #MCPatchOperation }
 { #category : #'*Tool-Diff' }
 MCPatchOperation >> diff [
 	"Open a diff browser on the changes."
-
 ]
 
 { #category : #'*Tool-Diff' }
 MCPatchOperation >> diffFromSource [
 	"Answer fromSource of the operation for a diff tool."
-	
+
 	^self fromSource
 ]
 
 { #category : #'*Tool-Diff' }
 MCPatchOperation >> diffToSource [
 	"Answer toSource of the operation for a diff tool."
-	
+
 	^self toSource
 ]
 
@@ -53,6 +52,6 @@ MCPatchOperation >> shortSummarySuffix [
 { #category : #'*Tool-Diff' }
 MCPatchOperation >> targetClassName [
 	"Answer the full class *name* of the target since the class may no longer exist."
-	
+
 	^self definition fullClassName
 ]

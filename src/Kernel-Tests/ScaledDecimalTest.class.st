@@ -9,8 +9,15 @@ Class {
 
 { #category : #coverage }
 ScaledDecimalTest >> classToBeTested [
-	
+
 	^ ScaledDecimal
+]
+
+{ #category : #'tests - arithmetic' }
+ScaledDecimalTest >> testAbs [
+
+	self assert: 1.40s2 abs equals: 1.40s2.
+	self assert: -1.40s2 abs equals: 1.40s2
 ]
 
 { #category : #tests }
@@ -21,7 +28,7 @@ ScaledDecimalTest >> testAsNumber [
 	sd := '1.40s2' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 2.
-	self assert: '1.40s2' equals: sd printString.
+	self assert: '1.40s2' equals: sd printString
 ]
 
 { #category : #tests }
@@ -31,7 +38,7 @@ ScaledDecimalTest >> testAsNumberNegatedWithoutDecimalPoint [
 	sd := '-123s0' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 0.
-	self assert: '-123s0' equals: sd printString.
+	self assert: '-123s0' equals: sd printString
 ]
 
 { #category : #tests }
@@ -41,7 +48,7 @@ ScaledDecimalTest >> testAsNumberNegatedWithoutDecimalPoint2 [
 	sd := '-123s2' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 2.
-	self assert: '-123.00s2' equals: sd printString.
+	self assert: '-123.00s2' equals: sd printString
 ]
 
 { #category : #tests }
@@ -51,7 +58,7 @@ ScaledDecimalTest >> testAsNumberWithExtendedScale [
 	sd := '123s2' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 2.
-	self assert: '123.00s2' equals: sd printString.
+	self assert: '123.00s2' equals: sd printString
 ]
 
 { #category : #tests }
@@ -61,7 +68,7 @@ ScaledDecimalTest >> testAsNumberWithRadix [
 	sd := '10r-22.2s5' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 5.
-	self assert: '-22.20000s5' equals: sd printString.
+	self assert: '-22.20000s5' equals: sd printString
 ]
 
 { #category : #tests }
@@ -69,7 +76,7 @@ ScaledDecimalTest >> testAsNumberWithSuperfluousDecimalPoint [
 
 	| sd |
 	sd := '123.s2' asNumber.
-	self deny: ScaledDecimal == sd class description: 'It used to, but this syntax is not valid Smalltalk'.
+	self deny: ScaledDecimal == sd class description: 'It used to, but this syntax is not valid Smalltalk'
 ]
 
 { #category : #tests }
@@ -79,7 +86,7 @@ ScaledDecimalTest >> testAsNumberWithoutDecimalPoint [
 	sd := '123s0' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 0.
-	self assert: '123s0' equals: sd printString.
+	self assert: '123s0' equals: sd printString
 ]
 
 { #category : #tests }
@@ -89,7 +96,7 @@ ScaledDecimalTest >> testAsNumberWithoutDecimalPoint2 [
 	sd := '123s2' asNumber.
 	self assert: ScaledDecimal identicalTo: sd class.
 	self assert: sd scale equals: 2.
-	self assert: '123.00s2' equals: sd printString.
+	self assert: '123.00s2' equals: sd printString
 ]
 
 { #category : #tests }
@@ -98,7 +105,7 @@ ScaledDecimalTest >> testCoercion [
 		self assert: (1.0s1 perform: op with: 2) class equals: ScaledDecimal.
 		self assert: (1.0s1 perform: op with: 1/2) class equals: ScaledDecimal.
 		self deny: (1.0s1 perform: op with: 1.0) class equals: ScaledDecimal.
-		
+
 		self assert: (1 perform: op with: 2.0s1) class equals: ScaledDecimal.
 		self assert: (1/2 perform: op with: 2.0s1) class equals: ScaledDecimal.
 		self deny: (1.0 perform: op with: 1.0s1) class equals: ScaledDecimal]
@@ -114,7 +121,7 @@ ScaledDecimalTest >> testConvertFromDecimalFraction [
 			sd := fraction asScaledDecimal.
 			self assert: sd scale equals: (pow2 max: pow5).
 			sd2 := ScaledDecimal readFrom: sd printString.
-			self assert: sd equals: sd2]].
+			self assert: sd equals: sd2]]
 ]
 
 { #category : #tests }
@@ -200,15 +207,15 @@ ScaledDecimalTest >> testConvertFromNonDecimalFraction [
 { #category : #tests }
 ScaledDecimalTest >> testIsLiteral [
 	"This test is related to http://bugs.squeak.org/view.php?id=6796"
-	
+
 	self assert: 1.00s2 isLiteral description: 'every literal obviously isLiteral'.
-	
+
 	"Note that (1 / 3.00s2) is not a well behaved literal,
 	because it does not re-evaluate to self...
 	Every literal should be evaluated as self (see isSelfEvaluating).
 	There is currently no way to print it as a literal.
 	So i propose it shall not answer true."
-	self deny: (1/3.00s2) isLiteral description: 'this number cannot represent itself as a literal'.
+	self deny: (1/3.00s2) isLiteral description: 'this number cannot represent itself as a literal'
 ]
 
 { #category : #tests }
@@ -224,14 +231,14 @@ ScaledDecimalTest >> testLiteral [
 { #category : #tests }
 ScaledDecimalTest >> testMultiplicationDoesNotLoosePrecision [
 	"Check that not only the largest scale is considered but the sum of the two scales. See issue #8668"
-	
+
 	self assert: 1.003s3 * 1.006s4 equals: 1.0090180s7
 ]
 
 { #category : #tests }
 ScaledDecimalTest >> testOneRaisedToInteger [
 	"One might be handled specially"
-	
+
 	self assert: (1.0s1 raisedToInteger: -1) scale equals: 1.
 	self assert: (1.0s1 raisedToInteger: -1) equals: 1.
 	self assert: (1.0s1 raisedToInteger: 0) scale equals: 1.
@@ -239,7 +246,7 @@ ScaledDecimalTest >> testOneRaisedToInteger [
 	self assert: (1.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (1.0s1 raisedToInteger: 1) equals: 1.
 	self assert: (1.0s1 raisedToInteger: 2) scale equals: 1.
-	self assert: (1.0s1 raisedToInteger: 2) equals: 1.
+	self assert: (1.0s1 raisedToInteger: 2) equals: 1
 ]
 
 { #category : #tests }
@@ -259,7 +266,7 @@ ScaledDecimalTest >> testPrintString [
 { #category : #tests }
 ScaledDecimalTest >> testRaisedToInteger [
 	"Raising to integer should preserve class and scale"
-	
+
 	self assert: (3.0s1 raisedToInteger: -1) scale equals: 1.
 	self assert: (3.0s1 raisedToInteger: -1) equals: (1/3).
 	self assert: (3.0s1 raisedToInteger: 0) scale equals: 1.
@@ -267,17 +274,17 @@ ScaledDecimalTest >> testRaisedToInteger [
 	self assert: (3.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (3.0s1 raisedToInteger: 1) equals: 3.
 	self assert: (3.0s1 raisedToInteger: 2) scale equals: 1.
-	self assert: (3.0s1 raisedToInteger: 2) equals: 9.
+	self assert: (3.0s1 raisedToInteger: 2) equals: 9
 ]
 
 { #category : #tests }
 ScaledDecimalTest >> testReadFrom [
 	"This is related to http://bugs.squeak.org/view.php?id=6779"
-	
+
 	self should: [(ScaledDecimal readFrom: '5.3') isKindOf: ScaledDecimal]
 		description: 'Reading a ScaledDecimal should answer a ScaledDecimal'.
 	self should: [((ScaledDecimal readFrom: '5.3') asScaledDecimal: 1) = (53/10 asScaledDecimal: 1)]
-		description: 'ScaledDecimal readFrom: should not use Float intermediate because it would introduce round off errors'.
+		description: 'ScaledDecimal readFrom: should not use Float intermediate because it would introduce round off errors'
 ]
 
 { #category : #tests }
@@ -300,12 +307,12 @@ ScaledDecimalTest >> testScaleExtension [
 { #category : #tests }
 ScaledDecimalTest >> testZeroRaisedToInteger [
 	"Zero might be handle specially"
-	
+
 	self should: [0.0s1 raisedToInteger: -1] raise: Error.
 	self assert: (0.0s1 raisedToInteger: 0) equals: 1.
 	self assert: (0.0s1 raisedToInteger: 0) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 1) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
-	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1.
+	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1
 ]

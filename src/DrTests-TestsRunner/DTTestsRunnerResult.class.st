@@ -16,10 +16,11 @@ Class {
 }
 
 { #category : #accessing }
-DTTestsRunnerResult >> backgroundColor [
-	testsResult errors ifNotEmpty: [ ^ DTErrorResultType backgroundColor ].
-	testsResult failures ifNotEmpty: [ ^ DTFailResultType backgroundColor  ].
-	^ DTPassResultType backgroundColor
+DTTestsRunnerResult >> backgroundColorStyle [
+
+	testsResult errors ifNotEmpty: [ ^ 'testError' ].
+	testsResult failures ifNotEmpty: [ ^ 'testFail'  ].
+	^ 'testPass'
 ]
 
 { #category : #'tree building' }
@@ -47,7 +48,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 			subResults: ((anOrderedColletion groupedBy: #class) associations collect: [ :assoc |
 				DTTreeNode new
 					name: assoc key name;
-					subResults: ((assoc value groupedBy: [ :testCase | (testCase class lookupSelector: testCase selector) protocol ]) associations collect: [ :protocolToTest |
+					subResults: ((assoc value groupedBy: [ :testCase | (testCase class lookupSelector: testCase selector) protocolName ]) associations collect: [ :protocolToTest |
 						DTTreeNode new
 							name: protocolToTest key;
 							subResults: (self buildLeavesFrom: protocolToTest value type: testResultType) ]);
@@ -59,21 +60,31 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 DTTestsRunnerResult >> buildTreeForUI [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
-		subResults:
-			{DTTreeNode new
+		subResults: {
+			DTTreeNode new
 				name: DTTestResultType error pluralName;
-				subResults: (self buildLeavesFrom: self testResults errors asOrderedCollection type: DTTestResultType error);
+				subResults: (self buildLeavesFrom: self errors type: DTTestResultType error);
+				startExpanded;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForErrorTest;
 				yourself.
 			DTTreeNode new
 				name: DTTestResultType fail pluralName;
-				subResults: (self buildLeavesFrom: self testResults failures asOrderedCollection type: DTTestResultType fail).
+				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail);
+				startExpanded;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForFailureTest.
 			DTTreeNode new
 				name: DTTestResultType skipped pluralName;
-				subResults: (self buildLeavesFrom: self testResults skipped asOrderedCollection type: DTTestResultType skipped).
+				subResults: (self buildLeavesFrom: self skipped type: DTTestResultType skipped).
 			DTTreeNode new
 				name: DTTestResultType pass pluralName;
-				subResults: (self buildLeavesFrom: self testResults passed asOrderedCollection type: DTTestResultType pass)
-		};
+				subResults: (self buildLeavesFrom: self passed type: DTTestResultType pass);
+				displayColorIfNotEmpty:  TestResult defaultColorBackGroundForPassingTest.
+			DTTreeNode new
+				name: DTTestResultType expectedFailure pluralName;
+				subResults: (self buildLeavesFrom: self expectedFailures type: DTTestResultType expectedFailure).
+			DTTreeNode new
+				name: DTTestResultType unexpectedPass pluralName;
+				subResults: (self buildLeavesFrom: self unexpectedPassed type: DTTestResultType unexpectedPass) };
 		yourself
 ]
 
@@ -114,11 +125,39 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 ]
 
 { #category : #accessing }
+DTTestsRunnerResult >> errors [
+
+	^ self testResults errors asOrderedCollection
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> expectedFailures [
+	^ self testResults expectedDefects
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> failures [
+	^ self testResults failures asOrderedCollection
+	   select: [ :t | t shouldPass ]
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> passed [
+	^ self testResults passed asOrderedCollection
+		select: [ :t | t shouldPass]
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> skipped [
+	^ self testResults skipped
+]
+
+{ #category : #accessing }
 DTTestsRunnerResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				print: self testResults passed size;
 				<< ' passed';
@@ -148,4 +187,9 @@ DTTestsRunnerResult >> textColor [
 	testsResult errors ifNotEmpty: [ ^ DTErrorResultType textColor ].
 	testsResult failures ifNotEmpty: [ ^ DTFailResultType textColor  ].
 	^ DTPassResultType textColor
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> unexpectedPassed [
+	^ self testResults unexpectedPasses asOrderedCollection
 ]

@@ -22,6 +22,6 @@ ClyTraitEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 { #category : #'item decoration' }
 ClyTraitEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	aMethod origin isTrait ifTrue: [ 
+	aMethod origin isTrait ifTrue: [
 		anItem systemDefinition definingClassItem markWith: ClyTraitTag ]
 ]

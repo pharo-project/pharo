@@ -17,7 +17,7 @@ TestCaseTest >> testAnnouncement [
 	self deny: unitTest shouldAnnounce.
 	self deny: unitTest new shouldAnnounce.
 
-	unitTest announcer when: TestCaseAnnouncement do: [ :ann | collection add: ann ].
+	unitTest announcer when: TestCaseAnnouncement do: [ :ann | collection add: ann ] for: self.
 
 	self assert: unitTest shouldAnnounce.
 	self assert: unitTest new shouldAnnounce.
@@ -40,13 +40,13 @@ TestCaseTest >> testAnnouncement [
 
 { #category : #testing }
 TestCaseTest >> testAssertEqualsActualAndExpectedOrder [
-	self 
+	self
 		should: [
 			self assert: 'actual' equals: 'expected with fairly long print string'
 		]
-		raise: TestFailure 
-		whoseDescriptionIncludes: 'Got ''actual'' instead of ''expected with fairly long print string''.' 
-		description: 'In #assert:equals: the first argument is the actual value and the second one is the expected.'.
+		raise: TestFailure
+		whoseDescriptionIncludes: 'Got ''actual'' instead of ''expected with fairly long print string''.'
+		description: 'In #assert:equals: the first argument is the actual value and the second one is the expected.'
 ]
 
 { #category : #testing }

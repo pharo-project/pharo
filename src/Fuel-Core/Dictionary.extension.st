@@ -19,3 +19,13 @@ Dictionary >> fuelAfterMaterialization [
 		ifFalse: [ self rehash ] 
 		ifTrue: [ self ]
 ]
+
+{ #category : #'*Fuel-Core' }
+Dictionary >> keyAtIdentityValue: anObject ifPresent: presentBlock ifAbsent: absentBlock [
+	| value |
+	value := self
+		keyAtIdentityValue: anObject
+		ifAbsent: [ ^ absentBlock value ].
+	
+	^ presentBlock cull: value
+]

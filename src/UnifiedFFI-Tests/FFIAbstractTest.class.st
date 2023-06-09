@@ -29,7 +29,7 @@ FFIAbstractTest >> externalTypeAlias: aTypeName [
 
 { #category : #private }
 FFIAbstractTest >> ffiBindingOf: aString [
-	
+
 	aString = '_test_type_int'
 		ifTrue: [ ^ aString -> intType ].
 	aString = '_test_type_bool'
@@ -53,5 +53,5 @@ FFIAbstractTest >> setUp [
 	int32Type := FFIInt32.
 	uint32Type := FFIUInt32.
 	voidType := FFIVoid.
-	charType := FFICharacterType.
+	charType := FFICharacterType
 ]

@@ -7,7 +7,7 @@ Class {
 { #category : #activation }
 ClyResetMethodTagForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $e meta, $r meta for: ClyTextEditorContext
 ]
 

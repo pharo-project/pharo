@@ -1,6 +1,6 @@
 Extension { #name : #MCFtpRepository }
 
-{ #category : #'*metacello-pharocommonplatform' }
+{ #category : #'*Metacello-PharoCommonPlatform' }
 MCFtpRepository >> asRepositorySpecFor: aMetacelloMCProject [
 	| dir |
 	dir := directory.

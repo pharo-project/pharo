@@ -23,12 +23,12 @@ SycRemoveClassStrategy class >> createForBrowser: aBrowser references: hasRefere
 
 	| strategies |
 	strategies := SortedCollection sortBlock: #orderForBrowser ascending.
-	
+
 	self allSubclassesDo: [ :each |
 		(each isAbstract not and: [
 			each canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers])
 				ifTrue: [ strategies add: (each newForBrowser: aBrowser) ]].
-	
+
 	^strategies
 ]
 

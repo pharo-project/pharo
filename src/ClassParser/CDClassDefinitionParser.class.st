@@ -17,10 +17,10 @@ CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 	| layoutClass |
 	self handleClassName: aNode.
 	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
-	
+
 	"if we get back CompiledMethodLayout or ByteLayout, we need to check the class name"
-	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [ 
-		layoutClass := (classDefinition className = 'CompiledMethod') 
+	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [
+		layoutClass := (classDefinition className = 'CompiledMethod')
 					ifTrue:  [  CompiledMethodLayout ]
 					ifFalse: [  ByteLayout ]].
 	classDefinition layoutClass: (layoutClass)
@@ -32,7 +32,7 @@ CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	sharedPoolString := aNode value.
 	shareds := sharedPoolString substrings.
 	sharedPoolNodes := shareds
-		collect: [ :slotName | 
+		collect: [ :slotName |
 			| start |
 			start := aNode start + (sharedPoolString findString: slotName).
 			self sharedPoolNodeClass
@@ -59,10 +59,10 @@ CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
-	
+
 	| traitComposition |
-	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
-	classDefinition traitDefinition: traitComposition.
+	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.
+	classDefinition traitDefinition: traitComposition
 ]
 
 { #category : #testing }
@@ -80,11 +80,11 @@ CDClassDefinitionParser >> parseRootNode: expressionTree [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
-	
+CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
+
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
-	
+
 	(ObjectLayout allSubclassDefiningSymbols includes: aString)
 		ifTrue: [ ^ self handleClassName: aNode withType: aString  ].
 	aString =	 #instanceVariableNames:
@@ -92,16 +92,16 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #classVariableNames:
 		ifTrue: [ ^ self handleSharedVariableNames: aNode ].
 	aString =	 #category:
-		ifTrue: [ ^ self handlePackage: aNode ].	
+		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #package:
 		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #uses:
 		ifTrue: [ ^ self handleTraitDefinitionFromNode: aNode ].
 	aString =	 #poolDictionaries:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
-	
+
 	CDUnrecognizedClassPart new
-		classDefinition: self; 
+		classDefinition: self;
 		unrecognizedPart: aString;
 		signal
 ]
@@ -120,7 +120,7 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	(self isInstanceSideDefinition: aRBMessageNode)
 		ifTrue: [ self handleSuperclassNode: aRBMessageNode receiver ]
 		ifFalse: [ self handleClassName: aRBMessageNode receiver receiver ].
-	
+
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments
 		do: [ :selectorPart :argument |

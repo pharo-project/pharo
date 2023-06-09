@@ -4,12 +4,12 @@ Extension { #name : #CompiledMethod }
 CompiledMethod >> asActiveRingDefinition [
 	"Retrieves an active RGMethodDefinition object based on the data of the receiver.
 	Source, protocol and stamp are retrieved from the compiled method"
-	
-	^ RGMethodDefinition new 
+
+	^ RGMethodDefinition new
 			name: self selector;
 			parentName: self methodClass name;
 			isMetaSide: self methodClass isMeta;
-			asActive.
+			asActive
 ]
 
 { #category : #'*Ring-Definitions-Core' }
@@ -40,10 +40,10 @@ CompiledMethod >> asHistoricalRingDefinition [
 			ring protocol: self category;
 				sourceCode: self sourceCode;
 				stamp: self timeStamp ]
-		ifFalse: [ 
+		ifFalse: [
 			ring sourcePointer: self sourcePointer ].
-	ring asHistorical.	
-	
+	ring asHistorical.
+
 	^ ring
 ]
 
@@ -51,22 +51,22 @@ CompiledMethod >> asHistoricalRingDefinition [
 CompiledMethod >> asPassiveRingDefinition [
 	"Retrieves a passive RGMethodDefinition object based on the data of the receiver.
 	Source, protocol and stamp are retrieved from value assigned in creation"
-	
-	^RGMethodDefinition new 
+
+	^RGMethodDefinition new
 		 	name: self selector;
 			parentName: self methodClass name;
 			isMetaSide: self methodClass isMeta;
 			protocol: self category;
 			sourceCode: self sourceCode;
 			stamp: self timeStamp;
-			asPassive.
+			asPassive
 ]
 
 { #category : #'*Ring-Definitions-Core' }
 CompiledMethod >> asRingDefinition [
 	"Retrieves an active RGMethodDefinition object based on the receiver.
 	Note that its class is not converted."
-	
+
 	^ self asActiveRingDefinition
 ]
 
@@ -76,13 +76,13 @@ CompiledMethod >> methodReference [
 	| class selector |
 	class := self methodClass ifNil: [^nil].
 	selector := self selector ifNil: [^nil].
-	^(RGMethodDefinition realClass: class selector: selector) 
+	^(RGMethodDefinition realClass: class selector: selector)
 		package: self package asRingDefinition; yourself
 ]
 
 { #category : #'*Ring-Definitions-Core' }
 CompiledMethod >> realClass [
 	"answer the class that I am installed in"
-	
+
 	^ self methodClass
 ]

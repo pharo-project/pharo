@@ -18,7 +18,8 @@ KMShortcutTest >> testAsString [
 	self assert: $b command asString equals: 'Cmd + B'.
 	self assert: $c shift asString equals: 'Shift + C'.
 	self assert: $d alt asString equals: 'Alt + D'.
-	self assert: $e ctrl command asString equals: (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + E')
+	self assert: $e ctrl command asString equals: (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + E').
+	self assert: ($o command, $i command) asString equals: 'Cmd + (O , I)'
 ]
 
 { #category : #tests }
@@ -59,11 +60,11 @@ KMShortcutTest >> testCmdShiftSucceds [
 { #category : #tests }
 KMShortcutTest >> testComplexChainMatches [
 	|eCtrl eShift f|
-	
+
 	f := self eventKey: $f.
 	eCtrl := self eventKey: $e ctrl: true.
 	eShift := self eventKey: $e shift: true.
-		
+
 	self assert: (($e ctrl, $e shift, $f) matches: {eCtrl}).
 	self assert: (($e ctrl, $e shift, $f) matches: {eCtrl. eShift}).
 	self assert: (($e ctrl, $e shift, $f) matches: {eCtrl. eShift. f}).
@@ -77,35 +78,35 @@ KMShortcutTest >> testComplexChainMatches [
 KMShortcutTest >> testCreation [
 	self assert: ($e asKeyCombination isKindOf: KMSingleKeyCombination).
 	self assert: ($e ctrl isKindOf: KMModifiedKeyCombination).
-	self assert: ($e ctrl alt shift command isKindOf: KMModifiedKeyCombination).
+	self assert: ($e ctrl alt shift command isKindOf: KMModifiedKeyCombination)
 ]
 
 { #category : #tests }
 KMShortcutTest >> testEventCodes [
-	self assert: $s meta modifier eventCode 
+	self assert: $s meta modifier eventCode
 		  equals: OSPlatform current defaultModifier eventCode
 ]
 
 { #category : #tests }
 KMShortcutTest >> testModifiedShortcutsMatch [
 	|a oneShift oneCommand oneCommandShift|
-	
+
 	a := self eventKey: $a ctrl: true.
 	oneShift := self eventKey: $1 shift: true.
 	oneCommand := self eventKey: $1 command: true.
 	oneCommandShift := self eventKey: $1 alt: false ctrl: false command: true shift: true.
-	
+
 	self assert: ($a ctrl matches: {a}).
 	self assert: ($1 shift matches: {oneShift}).
 	self assert: ($1 command matches: {oneCommand}).
 	self assert: ($1 command shift matches: {oneCommandShift}).
-	
+
 	self deny: ($a ctrl matches: {self eventKey: $a command: true}).
-	
+
 	self deny: ($i command shift matches: {self eventKey: $i command: true}).
 	self assert: ($i ctrl shift matches: {self eventKey: $i alt: false ctrl: true command: false shift: true}).
 	self deny: ($i ctrl matches: {self eventKey: $i alt: false ctrl: true command: false shift: true}).
-	
+
 	self assert: ($a ctrl matchesCompletely: {a}).
 	self assert: ($1 shift matchesCompletely: {oneShift}).
 	self assert: ($1 command matchesCompletely: {oneCommand}).
@@ -122,12 +123,12 @@ KMShortcutTest >> testSimpleChainMatches [
 	|e eCtrl |
 	e := self eventKey: $e.
 	eCtrl := self eventKey: $e ctrl: true.
-	
+
 	self assert: (($e ctrl, $e) matches: {eCtrl}).
-	
+
 	"A full shortcut should not match a bigger buffer ever"
 	self deny: ($e ctrl matches: {eCtrl. e}).
-	
+
 	self deny: (($e ctrl, $e) matches: {eCtrl. self eventKey: $a}).
 	self deny: ($e ctrl matches: {e})
 ]
@@ -138,13 +139,13 @@ KMShortcutTest >> testSingleShortcutsMatch [
 	a := self eventKey: $a.
 	one := self eventKey: 1 asCharacter.
 	home := self eventKey: Character home.
-	
+
 	self assert: ($a asKeyCombination matches: {a}).
 	self assert: (1 asKeyCombination matches: {one}).
 	self assert: (Character home asKeyCombination matches: {home}).
-	
+
 	self deny: ($b asKeyCombination matches: {a}).
-	
+
 	self assert: ($a asKeyCombination matchesCompletely: {a}).
 	self assert: (1 asKeyCombination matchesCompletely: {one})
 ]

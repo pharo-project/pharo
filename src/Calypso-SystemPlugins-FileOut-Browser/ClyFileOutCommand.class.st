@@ -19,7 +19,7 @@ Class {
 { #category : #activation }
 ClyFileOutCommand class >> browserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClySystemBrowserContext
 ]
 
@@ -35,13 +35,13 @@ ClyFileOutCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyFileOutCommand >> execute [
-	
+
 	codeObjects do: [ :each | each fileOut ]
 ]
 
 { #category : #execution }
 ClyFileOutCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	codeObjects := aToolContext selectedObjects
 ]

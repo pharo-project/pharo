@@ -86,7 +86,7 @@ MCTraitDefinition >> createClass [
 
 
 	trait ifNotNil: [
-		trait classComment: comment stamp: commentStamp.
+		trait comment: comment stamp: commentStamp.
 		self classInstanceVariables ifNotEmpty: [
 			trait classSide slots: self classInstanceVariables ]].
 	^trait
@@ -234,7 +234,7 @@ MCTraitDefinition >> requirements [
 	(and thus not a special character such as {, # etc.)"
 
 	self hasTraitComposition
-		ifFalse: [ ^ Array new ].
+		ifFalse: [ ^ #() ].
 
 	^ (((RBParser parseExpression: self traitCompositionString)
 		allChildren select: [ :e | e isVariable ])

@@ -51,7 +51,7 @@ ClyMessageSendersQueryTest >> senderOfMessage2 [
 ClyMessageSendersQueryTest >> testCheckIfEmpty [
 	query scope:	(ClyMethodScope of: (self class >> #sender1OfMessage1) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope of: (self class >> #senderOfMessage2) in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -79,8 +79,8 @@ ClyMessageSendersQueryTest >> testDetectingSpecialSelectorLikeIfTrue [
 ClyMessageSendersQueryTest >> testFromLocalClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
-	
-	self assert: foundSelectors equals: #(classSideSender1OfMessage1 classSideSender2OfMessage1 
+
+	self assert: foundSelectors equals: #(classSideSender1OfMessage1 classSideSender2OfMessage1
 		sender1OfMessage1 sender2OfMessage1)
 ]
 
@@ -94,20 +94,20 @@ ClyMessageSendersQueryTest >> testFromMethodScope [
 
 { #category : #tests }
 ClyMessageSendersQueryTest >> testFromPackageScope [
-	
-	self queryFromScope: ClyPackageScope of: self class package.	
-		
-	self assert: foundSelectors equals: #(classSideSender1OfMessage1 classSideSender2OfMessage1 
-		sender1OfMessage1 sender2OfMessage1 
+
+	self queryFromScope: ClyPackageScope of: self class package.
+
+	self assert: foundSelectors equals: #(classSideSender1OfMessage1 classSideSender2OfMessage1
+		sender1OfMessage1 sender2OfMessage1
 		superclassSenderOfMessage1)
 ]
 
 { #category : #tests }
 ClyMessageSendersQueryTest >> testFromSystemScope [
-	
-	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.	
-	
-	self assert: foundSelectors equals: #(classSideSender1OfMessage1 classSideSender2OfMessage1 
-		sender1OfMessage1 sender2OfMessage1 
+
+	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.
+
+	self assert: foundSelectors equals: #(classSideSender1OfMessage1 classSideSender2OfMessage1
+		sender1OfMessage1 sender2OfMessage1
 		superclassSenderOfMessage1)
 ]

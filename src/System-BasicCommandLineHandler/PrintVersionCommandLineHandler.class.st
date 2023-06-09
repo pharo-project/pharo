@@ -43,46 +43,46 @@ PrintVersionCommandLineHandler class >> description [
 PrintVersionCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
-		
+
 	(self hasOption: 'numeric')
-		ifTrue: [ 
+		ifTrue: [
 			self printNumericVersion.
 			^ self exitSuccess].
 	(self hasOption: 'release')
-		ifTrue: [ 
+		ifTrue: [
 			self printRelease.
 			^ self exitSuccess ].
 	self hasArguments
-		ifFalse: [ 
+		ifFalse: [
 			self printVersion.
 			^ self exitSuccess ].
-	
+
 	self printHelp.
 	^ self exitFailure
 ]
 
 { #category : #actions }
 PrintVersionCommandLineHandler >> printNumericVersion [
-	self stdout 
+	self stdout
 		print: SystemVersion current highestUpdate;
 		lf
 ]
 
 { #category : #actions }
 PrintVersionCommandLineHandler >> printRelease [
-	self stdout 
+	self stdout
 		print: SystemVersion current major;
 		nextPutAll: '.';
 		print: SystemVersion current minor;
-		lf.
+		lf
 ]
 
 { #category : #actions }
 PrintVersionCommandLineHandler >> printVersion [
-	self stdout 
+	self stdout
 		nextPutAll: '[version] ';
 		print: SystemVersion current majorMinorVersion;
 		nextPutAll: ' ';
 		print: SystemVersion current asString;
-		nextPutAll: OSPlatform current lineEnding.
+		nextPutAll: OSPlatform current lineEnding
 ]

@@ -11,36 +11,38 @@ Class {
 { #category : #testing }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecutedInContext: aToolContext [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ 
-		  aToolContext isVariableSelected and: [ 
+	^ (super canBeExecutedInContext: aToolContext) and: [
+		  aToolContext isVariableSelected and: [
 			  aToolContext isGlobalVariableSelected not ] ]
 ]
 
 { #category : #activation }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext
 ]
 
 { #category : #converting }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 
-	^ { (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+	^ { (self refactoringClass
 		variable: variable name
-		class: variable definingClass 
+		class: variable definingClass
 		classVariable: variable isClassVariable
 		defaultValue: value) }
 ]
 
 { #category : #accessing }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [ 
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
 { #category : #accessing }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuItemName [
-	^'Generate accessors (lazy)'
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
 ]
 
 { #category : #testing }
@@ -58,4 +60,10 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutio
 		           initialAnswer: 'nil'
 		           title: 'Default variable''s value'.
 	value isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
+]
+
+{ #category : #'factory method' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> refactoringClass [
+
+	^ RBCreateLazyAccessorsForVariableTransformation
 ]

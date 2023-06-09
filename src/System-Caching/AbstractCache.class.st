@@ -30,8 +30,8 @@ Class {
 AbstractCache >> addAll: keyedCollection [
 	"Populate me with all key/value pairs from keyedCollection.
 	Does not affect statistics."
-	
-	keyedCollection keysAndValuesDo: [ :key :value | 
+
+	keyedCollection keysAndValuesDo: [ :key :value |
 		self at: key put: value ]
 ]
 
@@ -41,12 +41,12 @@ AbstractCache >> at: key [
 	This is a hit and makes that key/value pair the most recently used.
 	If key is absent, use the factory to compute a new value and cache it.
 	This is a miss and will create a new key/value pair entry.
-	Furthermore this could result in the least recently used key/value pair 
+	Furthermore this could result in the least recently used key/value pair
 	being removed when the specified maximum cache weight is exceeded.
 	If there is no factory and the key is not present, signal a KeyNotFound exception."
-	
-	^ self 
-		at: key 
+
+	^ self
+		at: key
 		ifAbsentPut: (factory ifNil: [ [ :k | KeyNotFound signalFor: k in: self ] ])
 ]
 
@@ -55,9 +55,9 @@ AbstractCache >> at: key ifAbsentPut: block [
 	"If key is present in the cache, return the associated value.
 	This is a hit and makes that key/value pair the most recently used.
 	If key is absent, use block to compute a new value and cache it.
-	Block can optionally take one argument, the key. 
+	Block can optionally take one argument, the key.
 	This is a miss and will create a new key/value pair entry.
-	Furthermore this could result in the least recently used key/value pair 
+	Furthermore this could result in the least recently used key/value pair
 	being removed when the specified maximum cache weight is exceeded."
 
 	self subclassResponsibility
@@ -65,12 +65,12 @@ AbstractCache >> at: key ifAbsentPut: block [
 
 { #category : #accessing }
 AbstractCache >> at: key put: value [
-	"Populate me by storing value for key. Return value. 
+	"Populate me by storing value for key. Return value.
 	This is neither a hit nor a miss. Statistics remain unchanged.
-	Overwrite if already present without promotion. 
-	This could result in the least recently used key/value pair 
+	Overwrite if already present without promotion.
+	This could result in the least recently used key/value pair
 	being removed when the specified maximum cache weight is exceeded."
-	
+
 	self subclassResponsibility
 ]
 
@@ -78,7 +78,7 @@ AbstractCache >> at: key put: value [
 AbstractCache >> beThreadSafe [
 	"Configure me so that I can be safely used from multiple threads/processes
 	during important operations. Note that this slows down these operations."
-	
+
 	access := Monitor new
 ]
 
@@ -90,14 +90,14 @@ AbstractCache >> computeWeight: valuable [
 	the least recently used key/value pair will be removed.
 	The default way to compute the weight returns 1 for each value,
 	effectively counting the number of cached values."
-	
+
 	weight compute: valuable
 ]
 
 { #category : #private }
 AbstractCache >> critical: block [
 	^ access
-		ifNil: block
+		ifNil: [ block value ]
 		ifNotNil: [ access critical: block ]
 ]
 
@@ -106,7 +106,7 @@ AbstractCache >> factory: block [
 	"Set the factory to compute values from keys to block.
 	The factory will be evaluated for each key not present.
 	Only my #at: message will use the factory."
-	
+
 	factory := block
 ]
 
@@ -115,7 +115,7 @@ AbstractCache >> hitRatio [
 	"Return the ratio of hits against total calls I received.
 	This will be a number between 0 and 1.
 	When I am empty, return 0."
-	
+
 	^ statistics hitRatio
 ]
 
@@ -137,7 +137,7 @@ AbstractCache >> initialize [
 AbstractCache >> keysAndValuesDo: block [
 	"Execute block with each key and value present in me.
 	This will be from least to most recently used."
-	
+
 	self subclassResponsibility
 ]
 
@@ -147,14 +147,14 @@ AbstractCache >> maximumWeight: limit [
 	If the total weight is no longer below limit,
 	the least recently used key/value pair will be removed.
 	The default maximum weight limit is 16."
-	
+
 	weight maximum: limit
 ]
 
 { #category : #'accessing - statistics' }
 AbstractCache >> misses [
 	"Return how many misses, requests for keys not present I received."
-	
+
 	^ statistics misses
 ]
 
@@ -188,9 +188,9 @@ AbstractCache >> removeKey: key [
 	"If I currently cache key, remove the entry.
 	Signal a KeyNotFound when I currently do not cache key.
 	Return the removed value."
-	
-	^ self 
-		removeKey: key 
+
+	^ self
+		removeKey: key
 		ifAbsent: [ KeyNotFound signalFor: key in: self ]
 ]
 
@@ -199,20 +199,20 @@ AbstractCache >> removeKey: key ifAbsent: block [
 	"If I currently cache key, remove the entry.
 	Execute block when key is currently absent.
 	Return the removed value."
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #'accessing - statistics' }
 AbstractCache >> size [
 	"Return the count of items currently present."
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #'accessing - statistics' }
 AbstractCache >> totalWeight [
 	"Return the total weight of all cached values currently present."
-	
+
 	^ weight total
 ]

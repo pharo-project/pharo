@@ -5,12 +5,12 @@ RGEnvironment >> adoptForBrowser [
 	| unresolved extensionsPackage |
 	extensionsPackage := self ensurePackageNamed: '*Extensions*'.
 	unresolved := packages reject: [ :each | each hasResolved: #name ].
-	unresolved do: [ :each | 
-		each classes 
-			select: [ :eachClass | (eachClass hasResolved: #name) and: [ 
-					eachClass extensions notEmpty or: [ eachClass classSide extensions notEmpty ] ] ] 
+	unresolved do: [ :each |
+		each classes
+			select: [ :eachClass | (eachClass hasResolved: #name) and: [
+					eachClass extensions notEmpty or: [ eachClass classSide extensions notEmpty ] ] ]
 			thenDo: [ :eachClass | eachClass package: extensionsPackage] ].
-	unresolved do: [ :each | self removePackage: each ].
+	unresolved do: [ :each | self removePackage: each ]
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -26,10 +26,10 @@ RGEnvironment >> at: aSymbol [
 ]
 
 { #category : #'*Calypso-Ring' }
-RGEnvironment >> at: aString ifAbsent: aBlockClosure [ 
+RGEnvironment >> at: aString ifAbsent: aBlockClosure [
 	| association |
 	association := self bindingOf: aString.
-	^ association 
+	^ association
 		ifNotNil: [ association value ]
 		ifNil: aBlockClosure
 ]
@@ -40,12 +40,12 @@ RGEnvironment >> bindings [
 	"TODO:"
 
 	| dict |
-	
+
 	dict := Dictionary new.
-	self globalVariablesDo: [ :each | 
+	self globalVariablesDo: [ :each |
 		each name -> each ].
-	
-	^ dict.
+
+	^ dict
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -67,15 +67,15 @@ RGEnvironment >> browseAs: browserTitleString [
 		addPlugin: ClyDefaultSystemEnvironmentPlugin new;
 	   attachToSystem.
 
-	browser := ClyFullBrowserMorph new 
+	browser := ClyFullBrowserMorph new
 		navigationEnvironment: clyNavEnv;
 		addPlugin: ClyStandardBrowserPlugin new.
 
-	^ browser open.
+	^ browser open
 ]
 
 { #category : #'*Calypso-Ring' }
-RGEnvironment >> classNamed: aString [ 
+RGEnvironment >> classNamed: aString [
 	| association |
 	association := self bindingOf: aString.
 	^ association ifNotNil: [ association value ]
@@ -85,11 +85,11 @@ RGEnvironment >> classNamed: aString [
 { #category : #'*Calypso-Ring' }
 RGEnvironment >> classNames [
 
-	^ self allClasses collect: [ :each | each name ].
+	^ self allClasses collect: [ :each | each name ]
 ]
 
 { #category : #'*Calypso-Ring' }
-RGEnvironment >> defineClass: aString withController: anObject [ 
+RGEnvironment >> defineClass: aString withController: anObject [
 	^ self compileANewClassFrom: aString notifying: nil startingFrom: nil
 ]
 

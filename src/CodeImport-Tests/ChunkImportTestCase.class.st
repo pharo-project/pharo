@@ -14,7 +14,7 @@ ChunkImportTestCase >> importAClass [
 			instanceVariableNames: ''var1 var2 var3''
 			classVariableNames: ''''
 			poolDictionaries: ''''
-			category: ''CodeImport-Tests-Garbage''!'.
+			category: ''CodeImport-Tests-Garbage''!'
 ]
 
 { #category : #'importing-code' }
@@ -70,7 +70,7 @@ ChunkImportTestCase >> testExportAMethodWithLangTag [
     พูดจาให้จ๊ะ ๆ จ๋า ๆ น่าฟังเอยฯ'';
 		add: ''Turkish'' -> ''Pijamalı hasta, yağız şoföre çabucak güvendi'';
 		yourself'.
-	
+
 	self assert: stream contents equals: 'pangrams
 	^ OrderedCollection new
 		add: ''English'' -> ''the quick brown fox jumps over the lazy dog'';
@@ -131,30 +131,30 @@ ChunkImportTestCase >> testImportAClass [
 		self assert: (class instVarNames includes: 'var2').
 		self assert: (class instVarNames includes: 'var3').
 		self assert: class category equals: 'CodeImport-Tests-Garbage'.
-		
+
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
 { #category : #'importing-code' }
 ChunkImportTestCase >> testImportAClassCategory [
+
 	| class classOrganizationString chunk |
 	classOrganizationString := '(#testing testImportAMethod testImportAClass)
 (#auxiliar importAClass)'.
 	chunk := '!{1} reorganize!'.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		[
 		class := self importAClass.
-		
+
 		"we write the methods we will categorize"
 		class compileSilently: 'testImportAClass'.
 		class compileSilently: 'testImportAMethod'.
 		class compileSilently: 'importAClass'.
-		
-		CodeImporter evaluateString: (chunk format: { class name asString }), classOrganizationString.
+
+		CodeImporter evaluateString: (chunk format: { class name asString }) , classOrganizationString.
 		"we do not care about the order of the output just that all the elements are present"
-		self 
-			assertCollection: (classOrganizationString trimBoth findTokens: String cr, ' ()') sorted
-			equals: (class organization stringForFileOut findTokens: String cr, ' ()') sorted.
-	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+		self assert: (((String streamContents: [ :s | class fileOutProtocolsOn: s ]) findTokens: String cr , ' ()') includesAll:
+				 (classOrganizationString trimBoth findTokens: String cr , ' ()')) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
 { #category : #'importing-code' }
@@ -184,8 +184,8 @@ ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 ChunkImportTestCase >> testImportAMethod [
 	| class |
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ 
-			[ 
+		suspendAllWhile: [
+			[
 			class := self importAClass.
 			CodeImporter
 				evaluateString:
@@ -258,8 +258,8 @@ ChunkImportTestCase >> testImportAMethodWithLangTag [
 ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
 	| class |
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ 
-			[ 
+		suspendAllWhile: [
+			[
 			class := self importAClass.
 			CodeImporter
 				evaluateString:
@@ -273,8 +273,8 @@ ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
 ChunkImportTestCase >> testImportAMethodWithSpacesInItsCategory [
 	| class |
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ 
-			[ 
+		suspendAllWhile: [
+			[
 			class := self importAClass.
 			CodeImporter
 				evaluateString:

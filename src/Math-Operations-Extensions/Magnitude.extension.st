@@ -5,7 +5,7 @@ Magnitude >> compareWith: anotherMagnitude ifLesser: lesserBlock ifEqual: equalB
 
 	^ self < anotherMagnitude
 		ifTrue: lesserBlock
-		ifFalse: [ 
+		ifFalse: [
 			self = anotherMagnitude
 				ifTrue: equalBlock
 				ifFalse: greaterBlock ]

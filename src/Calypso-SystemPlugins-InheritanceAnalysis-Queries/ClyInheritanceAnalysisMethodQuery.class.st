@@ -12,7 +12,7 @@ Class {
 { #category : #testing }
 ClyInheritanceAnalysisMethodQuery >> isFromScopeWithClassKindOf: aClass [
 	scope
-		classesDo: [ :each | 
+		classesDo: [ :each |
 			(each includesBehavior: aClass)
 				ifTrue: [ ^ true ] ].
 	^ false
@@ -24,9 +24,9 @@ ClyInheritanceAnalysisMethodQuery >> isResult: aQueryResult affectedBy: aSystemA
 	because it analyses methods from scope classes together with all superclasses.
 	So the result can be affected by the changes out of query scope.
 	And here we omit scope logic and rely completely on event.
-	So the actual decision about affect 
+	So the actual decision about affect
 	is based on #isAffectedByChangedMethod: method
 	and generally on any class change"
-	^aSystemAnnouncement affectsClasses 
+	^aSystemAnnouncement affectsClasses
 		or: [ aSystemAnnouncement canAffectResultOfMethodQuery: self]
 ]

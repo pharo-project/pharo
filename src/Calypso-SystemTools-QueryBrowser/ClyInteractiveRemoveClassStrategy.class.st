@@ -20,7 +20,7 @@ ClyInteractiveRemoveClassStrategy class >> isAbstract [
 { #category : #'instance creation' }
 ClyInteractiveRemoveClassStrategy class >> newForBrowser: aBrowser [
 
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 

@@ -46,7 +46,7 @@ BMPReadWriter class >> displayAllFrom: fd [
 	].
 	fd directoryNames do:[:fdName|
 		self displayAllFrom: (fd / fdName)
-	].
+	]
 ]
 
 { #category : #testing }
@@ -59,7 +59,7 @@ BMPReadWriter class >> readAllFrom: fd [
 	].
 	fd directoryNames do:[:fdName|
 		self readAllFrom: (fd / fdName)
-	].
+	]
 ]
 
 { #category : #'image reading/writing' }
@@ -141,18 +141,18 @@ BMPReadWriter >> nextPutImage: aForm [
 BMPReadWriter >> read24BmpFile [
 	"Read 24-bit pixel data from the given a BMP stream."
 	| form formBits pixelLine bitsIndex bitBlt |
-	form := Form 
+	form := Form
 		extent: biWidth @ biHeight
 		depth: 32.
 	pixelLine := ByteArray new: (24 * biWidth + 31) // 32 * 4.
 	bitsIndex := (form height - 1) * biWidth + 1.
 	formBits := form bits.
-	1 
+	1
 		to: biHeight
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			pixelLine := stream nextInto: pixelLine.
-			self 
+			self
 				read24BmpLine: pixelLine
 				into: formBits
 				startingAt: bitsIndex
@@ -169,7 +169,7 @@ BMPReadWriter >> read24BmpFile [
 BMPReadWriter >> read24BmpLine: pixelLine into: formBits startingAt: formBitsIndex width: width [
 	"Swizzles the bytes in a 24bpp scanline and fills in the given 32bpp form bits. Ensures that color black is represented as 16rFF000001 so that Form paint works properly."
 	<primitive: 'primitiveRead24BmpLine' module:'BMPReadWriterPlugin'>
-	
+
 	| pixIndex rgb bitsIndex |
 	pixIndex := 0. "pre-increment"
 	bitsIndex := formBitsIndex-1. "pre-increment"
@@ -178,7 +178,7 @@ BMPReadWriter >> read24BmpLine: pixelLine into: formBits startingAt: formBitsInd
 				((pixelLine at: (pixIndex := pixIndex+1)) bitShift: 8) +
 				((pixelLine at: (pixIndex := pixIndex+1)) bitShift: 16).
 		rgb = 0 ifTrue:[rgb := 16rFF000001] ifFalse:[rgb := rgb + 16rFF000000].
-		formBits at: (bitsIndex := bitsIndex+1) put: rgb].
+		formBits at: (bitsIndex := bitsIndex+1) put: rgb]
 ]
 
 { #category : #reading }
@@ -188,11 +188,11 @@ BMPReadWriter >> readColorMap [
 	colorCount := (bfOffBits - 54) // 4.
 	"Note: some programs (e.g. Photoshop 4.0) apparently do not set colorCount; assume that any data between the end of the header and the start of the pixel data is the color map"
 	biBitCount >= 16 ifTrue: [ ^ nil ].
-	colorCount = 0 ifTrue: 
+	colorCount = 0 ifTrue:
 		[ "this BMP file does not have a color map"
 		"default monochrome color map"
-		biBitCount = 1 ifTrue: 
-			[ ^ Array 
+		biBitCount = 1 ifTrue:
+			[ ^ Array
 				with: Color white
 				with: Color black ].
 		"default gray-scale color map"
@@ -200,17 +200,17 @@ BMPReadWriter >> readColorMap [
 		^ (0 to: maxLevel) collect: [ :level | Color gray: level asFloat / maxLevel ] ].
 	ccStream := (stream next: colorCount * 4) readStream.
 	colors := Array new: colorCount.
-	1 
+	1
 		to: colorCount
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			b := ccStream next.
 			g := ccStream next.
 			r := ccStream next.
 			ccStream next.	"skip reserved"
-			colors 
+			colors
 				at: i
-				put: (Color 
+				put: (Color
 						r: r
 						g: g
 						b: b
@@ -220,7 +220,7 @@ BMPReadWriter >> readColorMap [
 
 { #category : #reading }
 BMPReadWriter >> readHeader [
- 
+
 	bfType := self nextLittleEndianNumber: 2.
 	bfSize := self nextLittleEndianNumber: 4.
 	self nextLittleEndianNumber: 4. "reserved, do nothing with it"
@@ -239,51 +239,51 @@ BMPReadWriter >> readHeader [
 ]
 
 { #category : #reading }
-BMPReadWriter >> readIndexedBmpFile: colors [ 
+BMPReadWriter >> readIndexedBmpFile: colors [
 	"Read uncompressed pixel data of depth d from the given BMP stream, where d is 1, 4, 8, or 16"
 	| form bytesPerRow pixelData pixelLine startIndex map bitBlt mask |
-	colors 
-		ifNil: 
-			[ form := Form 
+	colors
+		ifNil:
+			[ form := Form
 				extent: biWidth @ biHeight
 				depth: biBitCount ]
-		ifNotNil: 
-			[ form := ColorForm 
+		ifNotNil:
+			[ form := ColorForm
 				extent: biWidth @ biHeight
 				depth: biBitCount.
 			form colors: colors ].
 	bytesPerRow := (biBitCount * biWidth + 31) // 32 * 4.
 	pixelData := ByteArray new: bytesPerRow * biHeight.
-	biHeight 
+	biHeight
 		to: 1
 		by: -1
-		do: 
-			[ :y | 
+		do:
+			[ :y |
 			pixelLine := stream next: bytesPerRow.
 			startIndex := (y - 1) * bytesPerRow + 1.
-			pixelData 
+			pixelData
 				replaceFrom: startIndex
 				to: startIndex + bytesPerRow - 1
 				with: pixelLine
 				startingAt: 1 ].
 	form bits copyFromByteArray: pixelData.
-	biBitCount = 16 ifTrue: 
-		[ map := ColorMap 
+	biBitCount = 16 ifTrue:
+		[ map := ColorMap
 			shifts: #(8 -8 0 0 )
 			masks: #(255 65280 0 0 ).
 		mask := 2147516416 ].
-	biBitCount = 32 ifTrue: 
-		[ map := ColorMap 
+	biBitCount = 32 ifTrue:
+		[ map := ColorMap
 			shifts: #(24 8 -8 -24 )
 			masks: #(255 65280 16711680 4278190080 ).
 		mask := 4278190080 ].
-	map ifNotNil: 
+	map ifNotNil:
 		[ bitBlt := BitBlt toForm: form.
 		bitBlt sourceForm: form.
 		bitBlt colorMap: map.
 		bitBlt combinationRule: Form over.
 		bitBlt copyBits ].
-	mask ifNotNil: 
+	mask ifNotNil:
 		[ bitBlt := BitBlt toForm: form.
 		bitBlt combinationRule: 7.	"bitOr:with:"
 		bitBlt halftoneForm: (Bitmap with: mask).
@@ -296,7 +296,7 @@ BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBit
 	"Stores a single scanline containing 32bpp RGBA values in a 24bpp scanline. Swizzles the bytes as needed."
 	<primitive: 'primitiveWrite24BmpLine' module:'BMPReadWriterPlugin'>
 
-	| pixIndex rgb bitsIndex |	
+	| pixIndex rgb bitsIndex |
 	pixIndex := 0. "pre-increment"
 	bitsIndex := formBitsIndex-1. "pre-increment"
 	1 to: width do: [:j |
@@ -304,7 +304,7 @@ BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBit
 		pixelLine at: (pixIndex := pixIndex+1) put: (rgb bitAnd: 255).
 		pixelLine at: (pixIndex := pixIndex+1) put: ((rgb bitShift: -8) bitAnd: 255).
 		pixelLine at: (pixIndex := pixIndex+1) put: ((rgb bitShift: -16) bitAnd: 255).
-	].
+	]
 ]
 
 { #category : #testing }

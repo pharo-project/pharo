@@ -45,9 +45,22 @@ ExternalData class >> new [
 	^self shouldNotImplement
 ]
 
+{ #category : #accessing }
+ExternalData >> bytesFromCString [
+	"Assume that the receiver represents a C string and convert it to a Smalltalk string."
+
+	self isNull ifTrue: [ ^ nil ].
+	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
+
+	^ handle bytesFromCString
+]
+
 { #category : #converting }
 ExternalData >> fromCString [
-	"Assume that the receiver represents a C string and convert it to a Smalltalk string. hg 2/25/2000 14:18"
+	self
+		deprecated:  'Please use #bytesFromCString instead'
+		transformWith:  '`@receiver fromCString'
+						-> '`@receiver bytesFromCString utf8Decoded'.
 
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
 
@@ -59,6 +72,10 @@ ExternalData >> fromCStrings [
 	"Assume that the receiver represents a set of C strings and is terminated by a empty string and convert it to a Smalltalk ordered collection of strings"
 
 	| stream index char strings str |
+
+	self
+		deprecated:  'This method returns strings that are not decoded. Please use #bytesFromCString with the rifght decoder instead'.
+
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
 	strings := OrderedCollection new.
 	index := 1.
@@ -79,15 +96,23 @@ ExternalData >> fromCStrings [
 { #category : #printing }
 ExternalData >> printOn: stream [
 
-	stream 
+	stream
 		nextPut: $(;
-		print: type; 
-		nextPut: $). 
-	self getHandle printOn: stream.
+		print: type;
+		nextPut: $).
+	self getHandle printOn: stream
 ]
 
 { #category : #private }
 ExternalData >> setHandle: aHandle type: aType [
 	handle := aHandle.
-	type := aType.
+	type := aType
+]
+
+{ #category : #accessing }
+ExternalData >> utf8StringFromCString [
+	"Assume that the receiver represents a C string containing UTF8 characters and convert
+	 it to a Smalltalk string."
+
+	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
 ]

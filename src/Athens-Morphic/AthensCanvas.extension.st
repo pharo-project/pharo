@@ -19,7 +19,7 @@ AthensCanvas >> morphicDrawString: string at: position font: aFont color: aColor
 
 	self pathTransform restoreAfter: [
 		self pathTransform translateX: position x Y: position y + aFont getPreciseAscent.
-		self 
+		self
 			setFont: aFont;
 			setPaint: aColor;
 			drawString: string.
@@ -30,9 +30,9 @@ AthensCanvas >> morphicDrawString: string at: position font: aFont color: aColor
 AthensCanvas >> morphicDrawString: string in: rect font: aFont color: aColor [
 	self
 		clipBy: rect
-		during: [ 
+		during: [
 			self pathTransform
-				restoreAfter: [ 
+				restoreAfter: [
 					self pathTransform translateX: rect left Y: rect top.
 					self setFont: aFont.
 					self pathTransform translateX: 0 Y: aFont getPreciseAscent.

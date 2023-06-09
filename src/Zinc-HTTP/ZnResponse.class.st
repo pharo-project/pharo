@@ -26,8 +26,8 @@ ZnResponse class >> badRequest: request [
 	message := String streamContents: [ :out |
 		out << 'Bad Request '; << request method; space.
 		request uri printPathQueryFragmentOn: out ].
-	^ self 
-		badRequest: request 
+	^ self
+		badRequest: request
 		entity: (ZnEntity textCRLF: message)
 ]
 
@@ -40,8 +40,8 @@ ZnResponse class >> badRequest: request entity: entity [
 
 { #category : #'instance creation' }
 ZnResponse class >> created: url [
-	^ self 
-		created: url 
+	^ self
+		created: url
 		entity: (ZnEntity textCRLF: 'Created ' , url asString)
 ]
 
@@ -59,7 +59,7 @@ ZnResponse class >> methodNotAllowed: request [
 	message := String streamContents: [ :out |
 		out << 'Method Not Allowed '; << request method; space.
 		request uri printPathQueryFragmentOn: out ].
-	^ self 
+	^ self
 		methodNotAllowed: request
 		entity: (ZnEntity textCRLF: message)
 ]
@@ -177,7 +177,6 @@ ZnResponse >> = other [
 { #category : #accessing }
 ZnResponse >> addCookie: cookie [
 	self headers at: 'Set-Cookie' add: cookie fullString
-
 ]
 
 { #category : #accessing }
@@ -198,8 +197,8 @@ ZnResponse >> cookies [
 { #category : #private }
 ZnResponse >> entityReaderOn: stream [
 	"Reading undefined content is allowed for responses"
-	
-	^ (super entityReaderOn: stream)  
+
+	^ (super entityReaderOn: stream)
 		allowReadingUpToEnd;
 		yourself
 ]
@@ -221,7 +220,7 @@ ZnResponse >> hash [
 
 { #category : #testing }
 ZnResponse >> isAuthenticationRequired [
-	^ self code = 401 
+	^ self code = 401
 ]
 
 { #category : #testing }
@@ -251,7 +250,7 @@ ZnResponse >> isNoContent [
 
 { #category : #testing }
 ZnResponse >> isNotFound [
-	^ self code = 404 
+	^ self code = 404
 ]
 
 { #category : #testing }
@@ -285,11 +284,10 @@ ZnResponse >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
 	self statusLine printCodeAndReasonOn: stream.
-	self hasEntity ifTrue: [ 
+	self hasEntity ifTrue: [
 		stream space.
 		self entity printContentTypeAndLengthOn: stream ].
 	stream nextPut: $)
-	
 ]
 
 { #category : #'initialize-release' }
@@ -302,12 +300,11 @@ ZnResponse >> readEntityFrom: stream [
 ZnResponse >> readHeaderFrom: stream [
 	self statusLine: (ZnStatusLine readFrom: stream).
 	super readHeaderFrom: stream
-	
 ]
 
 { #category : #accessing }
 ZnResponse >> setConnectionCloseFor: request [
-	request wantsConnectionClose 
+	request wantsConnectionClose
 		ifTrue: [ self setConnectionClose ]
 ]
 
@@ -320,7 +317,6 @@ ZnResponse >> setContentEncodingGzip [
 ZnResponse >> setKeepAliveFor: request [
 	(request isHttp10 and: [ request isConnectionKeepAlive ])
 		ifTrue: [ self setConnectionKeepAlive ]
-	
 ]
 
 { #category : #accessing }
@@ -330,7 +326,7 @@ ZnResponse >> setLocation: uriString [
 
 { #category : #accessing }
 ZnResponse >> setTransferEncodingChunked [
-	self headers 
+	self headers
 		at: 'Transfer-Encoding' put: 'chunked';
 		clearContentLength
 ]
@@ -357,7 +353,7 @@ ZnResponse >> statusLine: object [
 
 { #category : #accessing }
 ZnResponse >> useConnection: connection [
-	"Hook method that can be overwritten to give subclasses the chance to 
+	"Hook method that can be overwritten to give subclasses the chance to
 	keep using connection in the current thread/process after the server wrote the response"
 ]
 

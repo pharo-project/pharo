@@ -11,8 +11,8 @@ Class {
 RBCommentTest >> testIntersectsInterval [
 	| node |
 	node:= RBComment with: (RBCommentToken value: 'Some sample text' start: 5 stop: 21).
-	
-	self 
+
+	self
 		assert: (node intersectsInterval: (4 to: 6)) description: 'either side of interval';
 		assert: (node intersectsInterval: (4 to: 5)) description: 'before and on interval';
 		assert: (node intersectsInterval: (5 to: 6)) description: 'and and after interval';

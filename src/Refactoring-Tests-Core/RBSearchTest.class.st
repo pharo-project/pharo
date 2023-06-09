@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 RBSearchTest >> buildArgumentSearch [
-	self 
+	self
 		createArgumentSearchWith: 'aSmalllintContext'
 		selectors: #(#checkMethod: #checkClass: )
 		inClass: RBBasicLintRuleTestData
@@ -18,7 +18,7 @@ RBSearchTest >> buildArgumentSearch [
 
 { #category : #accessing }
 RBSearchTest >> buildMessageSearch [
-	self 
+	self
 		createSearchWith: '``@receiver -> ``@arg'
 		selectors: #(#superSends #superSends )
 		inClass: RBTransformationRuleTestData
@@ -27,7 +27,7 @@ RBSearchTest >> buildMessageSearch [
 { #category : #accessing }
 RBSearchTest >> buildMethodArgumentSearch [
 	"Two argument methods"
-	self 
+	self
 		createMethodSearchWith: '`arg1: `arg1 `arg2: `arg2 | `@temps | `@.Stmts'
 		selectors: #(
 				#subclassOf:overrides:
@@ -40,7 +40,7 @@ RBSearchTest >> buildMethodArgumentSearch [
 { #category : #accessing }
 RBSearchTest >> buildMethodSearch [
 	"Simple forwarders"
-	self 
+	self
 		createMethodSearchWith: '`@methodName: `@args ^`@object `@methodName: `@args'
 		selectors: #(#problemCount #isEmpty )
 		inClass: RBTransformationRuleTestData
@@ -48,7 +48,7 @@ RBSearchTest >> buildMethodSearch [
 
 { #category : #accessing }
 RBSearchTest >> buildMethodTitleSearch [
-	self 
+	self
 		createMethodSearchWith: 'initialize | `@temps | `@.Stmts'
 		selectors: #(#initialize )
 		inClass: RBBasicLintRuleTestData
@@ -65,7 +65,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 					(RBParser
 						parseExpression:
 							'#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
 				yourself ].
@@ -77,7 +77,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 
 { #category : #accessing }
 RBSearchTest >> buildSimpleVariableSearch [
-	self 
+	self
 		createSearchWith: 'result'
 		selectors: #(
 				#checkClass:
@@ -99,7 +99,7 @@ RBSearchTest >> buildSimpleVariableSearch [
 { #category : #accessing }
 RBSearchTest >> buildStatementSearch [
 	"Two or more statements"
-	self 
+	self
 		createSearchWith: '| `@temps | ``@.Stmts1. ``.Stmt1. ``@.Stmts2. ``.Stmt2. ``@.Stmts3'
 		selectors: #(
 				#checkMethod:
@@ -116,7 +116,7 @@ RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollect
 	search := self parseTreeSearcher.
 	search
 		matchesAnyArgumentOf: (Array with: aCodeString)
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
 				yourself ].
@@ -130,7 +130,7 @@ RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollectio
 	search := self parseTreeSearcher.
 	search
 		matchesAnyMethodOf: (Array with: aCodeString)
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
 				yourself ].
@@ -144,7 +144,7 @@ RBSearchTest >> createSearchWith: aCodeString selectors: selectorCollection inCl
 	search := self parseTreeSearcher.
 	search
 		matches: aCodeString
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
 				yourself ].
@@ -180,10 +180,10 @@ RBSearchTest >> setUp [
 { #category : #tests }
 RBSearchTest >> testAllSearches [
 	classSearches
-		keysAndValuesDo: [ :class :searches | 
+		keysAndValuesDo: [ :class :searches |
 			class selectors
-				do: [ :sel | 
+				do: [ :sel |
 					currentSelector := sel.
-					searches do: [ :each | each executeTree: (class parseTreeFor: sel) initialAnswer: each answer ] ] ].
+					searches do: [ :each | each executeTree: (class parseTreeForSelector: sel) initialAnswer: each answer ] ] ].
 	classSearches do: [ :searches | searches do: [ :each | self assertEmpty: each answer ] ]
 ]

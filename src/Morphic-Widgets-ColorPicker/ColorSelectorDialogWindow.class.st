@@ -32,7 +32,7 @@ ColorSelectorDialogWindow >> basicSelectedColor: anObject [
 	"Set the value of selectedColor"
 
 	selectedColor := anObject.
-	
+
 	self
 		changed: #selectedColor;
 		changed: #red;
@@ -42,8 +42,8 @@ ColorSelectorDialogWindow >> basicSelectedColor: anObject [
 		changed: #saturation;
 		changed: #brightness;
 		changed: #alpha.
-		
-	self announcer announce: (ColorChanged to: selectedColor).
+
+	self announcer announce: (ColorChanged to: selectedColor)
 ]
 
 { #category : #constants }
@@ -184,7 +184,7 @@ ColorSelectorDialogWindow >> newColorPresenterMorph [
 
 	^self
 		newColorPresenterFor: self
-		getColor: #selectedColor 
+		getColor: #selectedColor
 		help: 'Shows the selected color' translated
 ]
 
@@ -202,7 +202,7 @@ ColorSelectorDialogWindow >> newContentMorph [
 					vResizing: #shrinkWrap.
 				self newColorPickerButtonMorph})
 				cellPositioning: #leftCenter}.
-		(self newGroupbox: 'Values' translated for: 
+		(self newGroupbox: 'Values' translated for:
 			(self newLabelGroup: {
 				'Red' translated -> (self newColorComponentFieldMorph: #red).
 				'Green' translated -> (self newColorComponentFieldMorph: #green).
@@ -233,7 +233,7 @@ ColorSelectorDialogWindow >> pickColor [
 		showTemporaryCursor: (self iconNamed: #eyedropperIcon)
 		hotSpotOffset: 6 @ 31.
 	h
-		captureEventsUntil: [ :evt | 
+		captureEventsUntil: [ :evt |
 			evt isMove
 				ifTrue: [ p := evt position.
 					(self hsvaMorph containsPoint: p)

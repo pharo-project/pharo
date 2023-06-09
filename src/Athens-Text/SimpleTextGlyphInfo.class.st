@@ -11,7 +11,7 @@ Class {
 SimpleTextGlyphInfo class >> fromFace: anFT2Face [
 	^(self new)
 		loadFrom: anFT2Face;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -22,8 +22,8 @@ SimpleTextGlyphInfo >> face [
 { #category : #initialization }
 SimpleTextGlyphInfo >> loadFrom: anFT2Face [
 	"Same as in superclass, but avoid converting coordinates to not waste CPU cycles"
-	
+
 	face := anFT2Face.
 	anFT2Face fillGlyph: self.
-	format := (EndianDetector isLittleEndian ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
+	format := (EndianDetector isLittleEndian ifTrue: [ format reversed ] ifFalse: [ format ]) asString
 ]

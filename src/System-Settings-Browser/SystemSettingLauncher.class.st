@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 SystemSettingLauncher >> defaultIcon [
-	^ self iconNamed: #smallDoItIcon
+	^ self iconNamed: #smallDoIt
 ]
 
 { #category : #accessing }
@@ -31,19 +31,19 @@ SystemSettingLauncher >> inputWidget [
 				newRowIn: self
 				for:
 					{(AlphaImageMorph new
-						image: (self iconNamed: #smallRedoIcon)).
+						image: (self iconNamed: #smallRedo)).
 					(self theme buttonLabelForText: 'Launch' translated)});
 		yourself
 ]
 
 { #category : #accessing }
 SystemSettingLauncher >> launch [
-	self script 
-			ifNotNil: [:s | s isSymbol 
-				ifTrue: [s numArgs = 0 
+	self script
+			ifNotNil: [:s | s isSymbol
+				ifTrue: [s numArgs = 0
 					ifTrue: [self settingReceiver perform: s]
 					ifFalse: [self settingReceiver perform: s with: self]]
-				ifFalse: [s numArgs = 0 
+				ifFalse: [s numArgs = 0
 					ifTrue: [s value]
 					ifFalse: [s value: self]]]
 ]

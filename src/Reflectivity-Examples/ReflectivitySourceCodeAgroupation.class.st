@@ -7,9 +7,10 @@ Class {
 	#category : #'Reflectivity-Examples'
 }
 
-{ #category : #initialize }
+{ #category : #'accessing - defaults' }
 ReflectivitySourceCodeAgroupation >> defaultColor [
-	^UITheme current class baseColor
+
+	^ UITheme current baseColor
 ]
 
 { #category : #initialization }
@@ -17,9 +18,9 @@ ReflectivitySourceCodeAgroupation >> initialize [
 	super initialize.
 	self
  		layoutPolicy: TableLayout new;
-		hResizing: #spaceFill; 
+		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		cellInset: 10.
+		cellInset: 10
 ]
 
 { #category : #'instance creation' }

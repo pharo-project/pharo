@@ -29,25 +29,25 @@ Class {
 
 { #category : #'scope creation' }
 ClyInheritedScopeProviderAnnotation class >> createInheritedScopeFrom: aClassScope [
-	"We just search first most priority annotation 
+	"We just search first most priority annotation
 	which class defines inherited scope.
-	So plugin packages can introduce and override inherited scope by annotating 
+	So plugin packages can introduce and override inherited scope by annotating
 	factory classes with greater priority value"
-	self registeredInstancesDo: [ :each | 
+	self registeredInstancesDo: [ :each |
 		^each createInheritedScopeFrom: aClassScope].
-	
+
 	self error: 'No scope is found which defines inherited class scope'
 ]
 
 { #category : #'scope creation' }
 ClyInheritedScopeProviderAnnotation class >> createInheritingScopeFrom: aClassScope [
-	"We just search first most priority annotation 
+	"We just search first most priority annotation
 	which class defines inherited scope. Such classes must also define inverse inheriting scope.
-	So plugin packages can introduce and override inherited scope by annotating 
+	So plugin packages can introduce and override inherited scope by annotating
 	factory classes with greater priority value"
-	self registeredInstancesDo: [ :each | 
+	self registeredInstancesDo: [ :each |
 		^each createInheritingScopeFrom: aClassScope].
-	
+
 	self error: 'No scope is found which defines inheriting class scope'
 ]
 

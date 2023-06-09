@@ -15,10 +15,10 @@ RBPullUpClassVariableRefactoring >> preconditions [
 { #category : #'private - accessing' }
 RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	| subclasses |
-	subclasses := class allSubclasses 
+	subclasses := class allSubclasses
 		select: [ :each | each isMeta not and: [ each directlyDefinesClassVariable: variableName ] ].
-	subclasses ifEmpty: [ self refactoringFailure: 'Could not find a class defining ' , variableName ].
-	subclasses size > 1 
+	subclasses ifEmpty: [ self refactoringError: 'Could not find a class defining ' , variableName ].
+	subclasses size > 1
 		ifTrue: [ self refactoringError: 'Multiple subclasses define ' , variableName ].
 	^ subclasses asArray first
 ]

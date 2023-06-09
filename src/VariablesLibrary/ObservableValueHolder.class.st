@@ -40,9 +40,9 @@ ObservableValueHolder >> initialize [
 { #category : #printing }
 ObservableValueHolder >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
-		nextPutAll: '[ '; 
+
+	aStream
+		nextPutAll: '[ ';
 		print: self value;
 		nextPutAll: ' ]'
 ]
@@ -76,9 +76,9 @@ ObservableValueHolder >> value [
 ObservableValueHolder >> value: anObject [
 	"Handle circular references as explained in the class comment"
 	lock ifTrue: [ ^ self ].
-	
+
 	lock := true.
-	
+
 	[ | oldValue |
 	oldValue := value.
 	value := anObject.

@@ -18,16 +18,16 @@ InstVarRefLocatorTest >> example1 [
 	<sampleInstance>
 	| ff |
 	(1 < 2) ifTrue: [tt ifNotNil: [ff := 'hallo']].
-	^ ff.
+	^ ff
 ]
 
 { #category : #examples }
 InstVarRefLocatorTest >> example2 [
 	<sampleInstance>
-	| ff |	
+	| ff |
 	ff := 1.
 	(1 < 2) ifTrue: [ff ifNotNil: [ff := 'hallo']].
-	^ ff.
+	^ ff
 ]
 
 { #category : #private }
@@ -51,7 +51,7 @@ InstVarRefLocatorTest >> testExample1 [
 	| method |
 
 	method := self class compiledMethodAt: #example1.
-	self assert: (self hasInstVarRef: method).
+	self assert: (self hasInstVarRef: method)
 ]
 
 { #category : #tests }
@@ -59,13 +59,13 @@ InstVarRefLocatorTest >> testExample2 [
 	| method |
 
 	method := self class compiledMethodAt: #example2.
-	self deny: (self hasInstVarRef: method).
+	self deny: (self hasInstVarRef: method)
 ]
 
 { #category : #tests }
 InstVarRefLocatorTest >> testInstructions [
 	Object methods
-		do: [ :method | 
+		do: [ :method |
 			| scanner printer end |
 			scanner := InstructionStream on: method.
 			printer := InstVarRefLocator new.

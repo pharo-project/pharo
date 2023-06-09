@@ -21,7 +21,7 @@ MonitorDelay class >> signalLock: aSemaphore afterMSecs: anInteger inMonitor: aM
 MonitorDelay >> setDelay: anInteger forSemaphore: aSemaphore monitor: aMonitor queue: anOrderedCollection [
 	monitor := aMonitor.
 	queue := anOrderedCollection.
-	self setDelay: anInteger forSemaphore: aSemaphore.
+	self setDelay: anInteger forSemaphore: aSemaphore
 ]
 
 { #category : #private }
@@ -29,5 +29,5 @@ MonitorDelay >> timingPrioritySignalExpired [
 	"The delay time has elapsed; signal the waiting process."
 
 	beingWaitedOn := false.
-	monitor signalLock: delaySemaphore inQueue: queue.
+	monitor signalLock: delaySemaphore inQueue: queue
 ]

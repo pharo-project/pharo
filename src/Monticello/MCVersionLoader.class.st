@@ -47,7 +47,7 @@ MCVersionLoader >> announceLoad: aString do: aBlock [
 
 { #category : #private }
 MCVersionLoader >> announceLoadStart: aString [
-	SystemAnnouncer uniqueInstance announce: (MCVersionLoaderStarted new
+	SystemAnnouncer announce: (MCVersionLoaderStarted new
 		versionLoader: self;
 		label: aString; 
 		yourself)
@@ -55,7 +55,7 @@ MCVersionLoader >> announceLoadStart: aString [
 
 { #category : #private }
 MCVersionLoader >> announceLoadStop: aString [
-	SystemAnnouncer uniqueInstance announce: (MCVersionLoaderStopped new
+	SystemAnnouncer announce: (MCVersionLoaderStopped new
 		versionLoader: self;
 		label: aString; 
 		yourself)

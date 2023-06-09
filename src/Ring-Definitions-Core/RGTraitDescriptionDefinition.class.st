@@ -55,7 +55,7 @@ RGTraitDescriptionDefinition >> removeUser: aRGBehavior [
 { #category : #accessing }
 RGTraitDescriptionDefinition >> traitUsers [
 	"Retrieves the receiver's classes and traits"
-	
+
 	^users ifNil:[ users := OrderedCollection new ]
 ]
 
@@ -68,7 +68,7 @@ RGTraitDescriptionDefinition >> traitUsers: aCollection [
 { #category : #accessing }
 RGTraitDescriptionDefinition >> users [
 	"Retrieves the receiver's classes and traits"
-	
+
 	^users ifNil:[ users := OrderedCollection new ]
 ]
 

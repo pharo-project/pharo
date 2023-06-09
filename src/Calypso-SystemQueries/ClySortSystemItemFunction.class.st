@@ -25,10 +25,10 @@ Class {
 ClySortSystemItemFunction >> collate: systemObject1 with: systemObject2 [
 
 	| function |
-	systemObject1 calypsoEnvironmentType = systemObject2 calypsoEnvironmentType ifTrue: [ 
+	systemObject1 calypsoEnvironmentType = systemObject2 calypsoEnvironmentType ifTrue: [
 		function := self sortFunctionFor: systemObject1.
 		^function collate: systemObject1 with: systemObject2 ].
-	
+
 	^systemObject1 calypsoEnvironmentType itemsSortOrderForCalypso
 		threeWayCompareTo: systemObject2 calypsoEnvironmentType itemsSortOrderForCalypso
 ]
@@ -36,14 +36,14 @@ ClySortSystemItemFunction >> collate: systemObject1 with: systemObject2 [
 { #category : #initialization }
 ClySortSystemItemFunction >> initialize [
 	super initialize.
-	
-	functionsForTypes := IdentityDictionary new.
+
+	functionsForTypes := IdentityDictionary new
 ]
 
 { #category : #evaluating }
 ClySortSystemItemFunction >> sortFunctionFor: systemObject [
 
-	^functionsForTypes 
-		at: systemObject calypsoEnvironmentType 
-		ifAbsentPut: [ systemObject calypsoEnvironmentType defaultSortFunctionForCalypso].
+	^functionsForTypes
+		at: systemObject calypsoEnvironmentType
+		ifAbsentPut: [ systemObject calypsoEnvironmentType defaultSortFunctionForCalypso]
 ]

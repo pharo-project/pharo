@@ -23,7 +23,7 @@ Class {
 { #category : #'instance creation' }
 ClyTaggedMethodsQuery class >> by: tagName [
 
-	^self new 
+	^self new
 		tag: tagName
 ]
 
@@ -58,7 +58,7 @@ ClyTaggedMethodsQuery >> hash [
 
 { #category : #'system changes' }
 ClyTaggedMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	
+
 	^(aSystemAnnouncement affectsMethodsTaggedWith: tag)
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]

@@ -57,10 +57,10 @@ OupsDebugRequest class >> newForContext: aContext [
 OupsDebugRequest class >> newForException: anException [
 	"By default we assume that the debugger is requested from the process itself as the result of anException. In that case we must use #realActiveProcess instead of #activeProcess.
 	When debugger opens it must stop the current process. Otherwise the error signal will return to the sender and it will continue execution. Obviously it may cause an unexpected behavior and in worst case it may break the system completely (with some infinite recursion triggering debuggers at every step).
-	Therefore in this scenario we use #realActiveProcess to reliably get a really running process. 
+	Therefore in this scenario we use #realActiveProcess to reliably get a really running process.
 	For more details see #realActiveProcess and #terminateRealActive comments"
 	<debuggerCompleteToSender>
-	^ self basicNew 
+	^ self basicNew
 			exception: anException;
 			process: Processor realActiveProcess;
 			yourself
@@ -157,8 +157,8 @@ OupsDebugRequest >> preDebugActionForDebugItMethod: aCompiledMethod [
 
 	"Return a PreDebug action that will step the debugged execution until it is in a call to aCompiledMethod"
 
-	^ [ :session | 
-	  session stepIntoUntil: [ :currentContext | 
+	^ [ :session |
+	  session stepIntoUntil: [ :currentContext |
 		  currentContext method == aCompiledMethod ] ]
 ]
 

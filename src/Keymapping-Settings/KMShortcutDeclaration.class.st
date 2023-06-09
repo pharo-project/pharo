@@ -38,7 +38,7 @@ KMShortcutDeclaration >> realValue [
 
 { #category : #accessing }
 KMShortcutDeclaration >> realValue: aShortcut [
-	self realValue accept: aShortcut.
+	self realValue accept: aShortcut
 ]
 
 { #category : #accessing }

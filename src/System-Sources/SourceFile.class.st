@@ -23,7 +23,7 @@ SourceFile class >> on: aPath potentialLocations: locations [
 
 { #category : #testing }
 SourceFile >> atEnd [
-	
+
 	^ stream atEnd
 ]
 
@@ -31,11 +31,11 @@ SourceFile >> atEnd [
 SourceFile >> close [
 
 	stream ifNil: [ ^ self ].
-	stream closed ifTrue: [ 
+	stream closed ifTrue: [
 		stream := nil.
 		^ self ].
 	stream close.
-	stream := nil.
+	stream := nil
 ]
 
 { #category : #accessing }
@@ -59,7 +59,7 @@ SourceFile >> discardBuffer [
 SourceFile >> ensureWrittenPosition: aPosition [
 
 	self isReadOnly ifTrue: [ ^ false ].
-	
+
 	^ stream ensureWrittenPosition: aPosition
 ]
 
@@ -68,7 +68,7 @@ SourceFile >> flush [
 
 	(stream isNil or: [ stream isReadOnly ])
 		ifTrue: [ ^ self ].
-	
+
 	stream flush
 ]
 
@@ -84,7 +84,7 @@ SourceFile >> getPreambleAt: startingPosition [
 	A method preamble looks like: MyClass methodsFor: 'test' stamp: 'author 1/27/2019 12:27'
 	but with exclamation marks ($!) around it (the contents excluding the $!'s is returned).
 	startingPosition should be set one position before the closing $!"
-	
+
 	| characterReadStream binaryStream encoder position |
 	"I hold either a ZnCharacterReadStream or a ZnCharacterReadWriteStream (see #tryOpenReadOnly:)
 	Use #isReadOnly and #readOnlyCopy to access the ZnCharacterReadStream in both cases"
@@ -97,10 +97,10 @@ SourceFile >> getPreambleAt: startingPosition [
 	Although the underlying encoding is UTF-8 we can still operate/move at the byte level
 	since $! code 33 cannot occur in code points encoded using 2, 3 or 4 bytes"
 	position := startingPosition.
-	[ position >= 0 
-		and: [ 
-			binaryStream position: position. 
-			binaryStream next ~= 33 "$!" ] ] 
+	[ position >= 0
+		and: [
+			binaryStream position: position.
+			binaryStream next ~= 33 "$!" ] ]
 		whileTrue: [ position := position - 1 ].
 	"Now that we found the byte range, extract and decode it"
 	^ encoder decodeBytes: (binaryStream next: startingPosition - position)
@@ -172,7 +172,7 @@ SourceFile >> path: aPath [
 
 { #category : #accessing }
 SourceFile >> peek [
-	
+
 	^ stream peek
 ]
 
@@ -263,13 +263,13 @@ SourceFile >> tryOpenReadOnly: readOnly [
 	We need to create the encoding and buffering streams manually because we need a read write stream."
 	readOnly ifFalse: [
 		potentialLocations
-			do: [ :each | 
+			do: [ :each |
 				[ stream := SourceFileCharacterReadWriteStream
 					on: (SourceFileBufferedReadWriteStream on:(each asFileReference / basename) unbufferedBinaryWriteStream)
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
-	potentialLocations do: [ :each | 
+	potentialLocations do: [ :each |
 			[ stream := ZnCharacterReadStream
 					on: (each asFileReference / basename) binaryReadStream
 					encoding: 'utf8'.
@@ -278,6 +278,6 @@ SourceFile >> tryOpenReadOnly: readOnly [
 
 { #category : #accessing }
 SourceFile >> upToEnd [
-	
+
 	^ stream upToEnd
 ]

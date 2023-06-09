@@ -41,6 +41,8 @@ PlatformResolver >> cantFindOriginError [
 
 { #category : #origins }
 PlatformResolver >> desktop [
+
+	<origin>
 	^ self home / 'Desktop'
 ]
 

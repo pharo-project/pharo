@@ -10,9 +10,11 @@ Class {
 		'engine',
 		'source',
 		'position',
+		'completionTokenStart',
 		'completionBuilder',
 		'completionClass',
-		'completion'
+		'completion',
+		'completionToken'
 	],
 	#category : #'HeuristicCompletion-Model-SystemIntegration'
 }
@@ -53,9 +55,9 @@ CoCompletionContext >> completion: anObject [
 { #category : #accessing }
 CoCompletionContext >> completionAt: aNumber [
 	| entry |
-	
+
 	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECEntry spaceAfterCompletion 
+	^ NECEntry spaceAfterCompletion
 		ifTrue: [ entry, ' ' ]
 		ifFalse: [ entry ]
 ]
@@ -66,26 +68,32 @@ CoCompletionContext >> completionBuilder [
 ]
 
 { #category : #accessing }
-CoCompletionContext >> completionBuilder: anUndefinedObject [ 
+CoCompletionContext >> completionBuilder: anUndefinedObject [
 	completionBuilder := anUndefinedObject
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionClass [
-	
+
 	^ completionClass
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionClass: aClass [
-	
+
 	^ completionClass := aClass
 ]
 
 { #category : #accessing }
 CoCompletionContext >> completionToken [
 
-	^ self engine completionToken
+	^ completionToken
+]
+
+{ #category : #accessing }
+CoCompletionContext >> completionTokenStart [
+
+	^ completionTokenStart
 ]
 
 { #category : #accessing }
@@ -107,7 +115,9 @@ CoCompletionContext >> engine [
 
 { #category : #accessing }
 CoCompletionContext >> engine: anObject [
-	engine := anObject
+	engine := anObject.
+	completionTokenStart := anObject completionTokenStart.
+	completionToken := anObject completionToken
 ]
 
 { #category : #accessing }
@@ -122,8 +132,8 @@ CoCompletionContext >> entryCount [
 ]
 
 { #category : #accessing }
-CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [ 
-	
+CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [
+
 	^ self systemNavigation environmentAt: aString ifPresent: aBlockClosure
 ]
 
@@ -135,7 +145,7 @@ CoCompletionContext >> hasEntries [
 
 { #category : #menu }
 CoCompletionContext >> hasMessage [
-	
+
 	^ false
 ]
 
@@ -147,15 +157,16 @@ CoCompletionContext >> initialize [
 ]
 
 { #category : #testing }
-CoCompletionContext >> isWorkspace [
-	
+CoCompletionContext >> isScripting [
+
 	^ engine notNil and: [ engine isScripting ]
 ]
 
 { #category : #narrowing }
-CoCompletionContext >> narrowWith: aString [ 
+CoCompletionContext >> narrowWith: aString [
 
-	self completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: aString)
+	completionToken := aString.
+	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
 ]
 
 { #category : #accessing }
@@ -170,7 +181,7 @@ CoCompletionContext >> position: anObject [
 
 { #category : #replacing }
 CoCompletionContext >> replaceTokenInEditorWith: aString [
-	
+
 	engine replaceTokenInEditorWith: aString
 ]
 
@@ -186,7 +197,7 @@ CoCompletionContext >> source: anObject [
 
 { #category : #accessing }
 CoCompletionContext >> systemNavigation [
-	
+
 	^ CoSystemEnvironment new
 ]
 

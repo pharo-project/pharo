@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReSmalltalkGlobalsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^ 'SmalltalkGlobalsRule'
 ]
 
@@ -34,7 +34,7 @@ ReSmalltalkGlobalsRule >> initialize [
 		replace: 'Smalltalk flushClassNameCache'
 			with: 'Smalltalk globals flushClassNameCache';
 		replace: 'Smalltalk includesKey: `@statements'
-			with: 'Smalltalk globals includesKey: `@statements'.
+			with: 'Smalltalk globals includesKey: `@statements'
 ]
 
 { #category : #accessing }

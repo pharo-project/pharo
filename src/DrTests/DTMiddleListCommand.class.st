@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-DTMiddleListCommand class >> isAbstract [ 
+DTMiddleListCommand class >> isAbstract [
 
 	^ self name = #DTMiddleListCommand
 ]

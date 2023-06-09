@@ -16,11 +16,11 @@ GoferUnload >> defaultModel [
 { #category : #running }
 GoferUnload >> execute [
 
-	self workingCopies 
+	self workingCopies
 		do: [ :copy | self unload: copy ].
 	self model load.
 	self gofer cleanup.
-	self workingCopies 
+	self workingCopies
 		do: [ :copy | self unregister: copy ]
 ]
 
@@ -48,7 +48,7 @@ GoferUnload >> unloadPackage: aWorkingCopy [
 { #category : #unregistering }
 GoferUnload >> unregister: aWorkingCopy [
 
-	self 
+	self
 		unregisterWorkingCopy: aWorkingCopy;
 		unregisterRepositories: aWorkingCopy;
 		unregisterPackageSet: aWorkingCopy;

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMethodProtocolTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }
@@ -26,46 +26,33 @@ RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 
 { #category : #tests }
 RBMethodProtocolTransformationTest >> testRefactoring [
+
 	| refactoring |
-	self assert: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty.
+	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2').
 
 	refactoring := (RBMethodProtocolTransformation protocol: 'empty protocol 2' inMethod: #someMethod inClass: #RBDummyEmptyClass) asRefactoring transform.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
-	self deny: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty.
+	self deny: (RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
 
 	refactoring := (RBMethodProtocolTransformation protocol: 'empty protocol 1' inMethod: #someMethod inClass: #RBDummyEmptyClass) asRefactoring transform.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
-	self assert: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty
+	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
 ]
 
 { #category : #tests }
 RBMethodProtocolTransformationTest >> testTransform [
 
 	| transformation |
-	self assert: ( RBDummyEmptyClass
-		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty.
-	
-	transformation := (RBMethodProtocolTransformation new
-		protocol: 'empty protocol 2'
-		inMethod: #someMethod
-		inClass: #RBDummyEmptyClass)
-		transform.
+	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2').
+
+	transformation := (RBMethodProtocolTransformation new protocol: 'empty protocol 2' inMethod: #someMethod inClass: #RBDummyEmptyClass) transform.
 	RBRefactoryChangeManager instance performChange: transformation changes.
 
-	self assert: ( RBDummyEmptyClass
-		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty not.
-	
-	transformation := (RBMethodProtocolTransformation new
-		protocol: 'empty protocol 1'
-		inMethod: #someMethod
-		inClass: #RBDummyEmptyClass)
-		transform.
-	RBRefactoryChangeManager instance performChange: transformation changes.	
-	self assert: ( RBDummyEmptyClass
-		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty.
+	self deny: (RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
+
+	transformation := (RBMethodProtocolTransformation new protocol: 'empty protocol 1' inMethod: #someMethod inClass: #RBDummyEmptyClass) transform.
+	RBRefactoryChangeManager instance performChange: transformation changes.
+	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
 ]

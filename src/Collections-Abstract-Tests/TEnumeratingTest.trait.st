@@ -9,22 +9,22 @@ Trait {
 
 { #category : #requirements }
 TEnumeratingTest >> collectionOfCollectionsOfInts [
-	^self explicitRequirement.
+	^self explicitRequirement
 ]
 
 { #category : #requirements }
 TEnumeratingTest >> collectionOfCollectionsOfStrings [
-	^self explicitRequirement.
+	^self explicitRequirement
 ]
 
 { #category : #requirements }
 TEnumeratingTest >> collectionWithCharacters [
-	^self explicitRequirement.
+	^self explicitRequirement
 ]
 
 { #category : #requirements }
 TEnumeratingTest >> simpleCollection [
-	^self explicitRequirement.
+	^self explicitRequirement
 ]
 
 { #category : #'tests - enumerating' }
@@ -32,28 +32,28 @@ TEnumeratingTest >> testFlatCollect [
 
 	self assert: (self simpleCollection flatCollect: [ :x | { x } ]) equals: self simpleCollection.
 	self assert: (self simpleCollection flatCollect: [ :x | { x } ]) species = self simpleCollection species.
-	
-	self 
-		assert: (self collectionOfCollectionsOfInts flatCollect: [ :x | { x } ]) 
+
+	self
+		assert: (self collectionOfCollectionsOfInts flatCollect: [ :x | { x } ])
 		equals: self collectionOfCollectionsOfInts.
-	self 
-		assert: (self collectionWithCharacters flatCollect: [ :x | { x } ]) 
+	self
+		assert: (self collectionWithCharacters flatCollect: [ :x | { x } ])
 		equals: self collectionWithCharacters.
-	self 
-		assert: (self collectionOfCollectionsOfStrings flatCollect: [ :x | { x } ]) 
+	self
+		assert: (self collectionOfCollectionsOfStrings flatCollect: [ :x | { x } ])
 		equals: self collectionOfCollectionsOfStrings
 ]
 
 { #category : #'tests - enumerating' }
 TEnumeratingTest >> testFlatCollectAs [
 
-	self 
-		assert: (self simpleCollection flatCollect: [ :x | { x }, { x } ] as: IdentitySet) 
+	self
+		assert: (self simpleCollection flatCollect: [ :x | { x }, { x } ] as: IdentitySet)
 		equals: self simpleCollection asIdentitySet.
 	self
 		assert: (#(foo bar baz) flatCollect: #yourself as: String)
 		equals: 'foobarbaz'.
-	self 
+	self
 		assert: (#(#(1 2) #(4 3)) flatCollect: #yourself as: Array)
 		equals: #(1 2 4 3)
 ]
@@ -61,16 +61,16 @@ TEnumeratingTest >> testFlatCollectAs [
 { #category : #'tests - enumerating' }
 TEnumeratingTest >> testFlatCollectAsSet [
 
-	self 
-		assert: (self simpleCollection flatCollectAsSet: [ :x | { x }, { x } ]) 
+	self
+		assert: (self simpleCollection flatCollectAsSet: [ :x | { x }, { x } ])
 		equals: self simpleCollection asSet
 ]
 
 { #category : #'tests - enumerating' }
 TEnumeratingTest >> testFlatCollectAsWithEmptyCollection [
 
-	self 
-		assert: (self empty flatCollect: [ :x | { x }, { x } ] as: IdentitySet) 
+	self
+		assert: (self empty flatCollect: [ :x | { x }, { x } ] as: IdentitySet)
 		equals: self empty asIdentitySet
 ]
 
@@ -82,5 +82,5 @@ TEnumeratingTest >> testFlattened [
 	self assert: self collectionWithCharacters flattened equals: #($a $x $d $c $m).
 	self assert: self collectionOfCollectionsOfStrings flattened equals: #('foo' 'bar' 'zorg').
 	"we do not try to flatten CompiledMethods"
-	self assert: { Object>>#halt } flattened equals:  { Object>>#halt }.
+	self assert: { Object>>#halt } flattened equals:  { Object>>#halt }
 ]

@@ -52,8 +52,7 @@ FLSubstitutionCluster >> initializeAnalyzing [
 
 { #category : #accessing }
 FLSubstitutionCluster >> isSubstitute: anObject [
-
-	^ substitutes identityIncludes: anObject
+	^ substitutes includes: anObject
 ]
 
 { #category : #accessing }

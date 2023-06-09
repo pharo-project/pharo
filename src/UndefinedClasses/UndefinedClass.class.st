@@ -17,16 +17,12 @@ UndefinedClass class >> basicNew [
 
 { #category : #building }
 UndefinedClass class >> createUndefinedClassNamed: aString package: aPackageName [
-	
-	^ self
-		subclass: aString
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: aPackageName
+
+	^ (self << aString package: aPackageName) install
 ]
 
 { #category : #'reflective operations' }
 UndefinedClass >> doesNotUnderstand: aMessage [
-	
+
 	UndefinedClassError signal
 ]

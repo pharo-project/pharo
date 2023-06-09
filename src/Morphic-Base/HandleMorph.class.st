@@ -26,7 +26,7 @@ HandleMorph >> forEachPointDo: aBlock lastPointDo: otherBlock [
 
 { #category : #initialization }
 HandleMorph >> initialize [
-	
+
 	super initialize.
 	self extent: 8 @ 8
 ]
@@ -71,6 +71,6 @@ HandleMorph >> step [
 { #category : #stepping }
 HandleMorph >> stepTime [
 	"Update every hundredth of a second."
-	
+
 	^ 10
 ]

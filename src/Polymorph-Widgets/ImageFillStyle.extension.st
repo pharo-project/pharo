@@ -3,7 +3,7 @@ Extension { #name : #ImageFillStyle }
 { #category : #'*Polymorph-Widgets' }
 ImageFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
-	
+
 	self extent
 		ifNil: [aCanvas
 				translucentImage: self form

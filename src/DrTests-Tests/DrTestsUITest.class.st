@@ -63,10 +63,10 @@ DrTestsUITest >> testInitialSelectedPluginIsFirstPluginInList [
 DrTestsUITest >> testInitialStatusIsInitialStatusPluginName [
 	|status|
 	status:= (drTestsUI currentPlugin pluginName , ' plugin is ready to work!') translated.
-			
+
 	self
 		assert: drTestsUI statusLabel label
-		equals: ('{1}: {2}' format: { (drTestsUI  dateAndTimeString ). status }).
+		equals: ('{1}: {2}' format: { (drTestsUI  dateAndTimeString ). status })
 ]
 
 { #category : #tests }
@@ -128,6 +128,10 @@ DrTestsUITest >> testSelectingPluginWillUpdateCurrentPluginInstanceVariable [
 
 { #category : #tests }
 DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
+
+	"this test do not has sense anymore (since we do not change package list all the time)"
+	self skip.
+
 	drTestsUI pluginsDropList selectItem: plugin2.
 	self
 		assertCollection: drTestsUI pluginPresenter packagesList items
@@ -145,7 +149,7 @@ DrTestsUITest >> testSelectingPluginWillUpdateWindowTitle [
 
 { #category : #tests }
 DrTestsUITest >> testStartButtonHelpIsCurrentPluginStartButtonHelp [
-	
+
 	self
 		assert: drTestsUI pluginPresenter startButton help
 		equals: drTestsUI currentPlugin startButtonHelp
@@ -153,7 +157,7 @@ DrTestsUITest >> testStartButtonHelpIsCurrentPluginStartButtonHelp [
 
 { #category : #tests }
 DrTestsUITest >> testStartButtonLabelIsCurrentPluginStartButtonLabel [
-	
+
 	self
 		assert: drTestsUI pluginPresenter startButton label
 		equals: drTestsUI currentPlugin startButtonLabel

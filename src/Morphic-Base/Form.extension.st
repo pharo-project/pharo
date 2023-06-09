@@ -22,19 +22,19 @@ Form >> floodFillTolerance [
 ]
 
 { #category : #'*Morphic-Base' }
-Form >> iconOrThumbnailOfSize: aNumberOrPoint [ 
+Form >> iconOrThumbnailOfSize: aNumberOrPoint [
 	"Answer an appropiate form to represent the receiver"
 	^ self scaledIntoFormOfSize: aNumberOrPoint
 ]
 
 { #category : #'*Morphic-Base' }
 Form >> scaledByDisplayScaleFactor [
-	
-	^ self scaledToSize: self extent * self currentWorld displayScaleFactor.
+
+	^ self scaledToSize: self extent * self currentWorld displayScaleFactor
 ]
 
 { #category : #'*Morphic-Base' }
-Form >> scaledIntoFormOfSize: aNumberOrPoint [ 
+Form >> scaledIntoFormOfSize: aNumberOrPoint [
 	"Scale and center the receiver into a form of a given size"
 
 	| extent scale scaledForm result |
@@ -43,15 +43,14 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 	extent = self extent ifTrue: [^ self].
 
 	(self height isZero or: [self width isZero])
-		ifTrue: [^ Form extent: extent depth: self depth].
+		ifTrue: [^ self class extent: extent depth: self depth].
 
 	scale := extent y / self height min: extent x / self width.
 	scaledForm := self
-				magnify: self boundingBox
-				by: scale
+				magnifyBy: scale
 				smoothing: 8.
 
-	result := Form extent: extent depth: 32.
+	result := self class extent: extent depth: 32.
 	result getCanvas
 		translucentImage: scaledForm
 		at: extent - scaledForm extent // 2.
@@ -67,7 +66,7 @@ Form >> stencil [
 	canvas := FormCanvas extent: self extent depth: 1.
 	canvas fillColor: (Color white).
 
-	canvas stencil: self at: 0@0  
+	canvas stencil: self at: 0@0
 				sourceRect: (Rectangle origin: 0@0 corner: self extent) color: Color black.
 
 	^ canvas form

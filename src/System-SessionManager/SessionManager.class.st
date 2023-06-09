@@ -119,89 +119,31 @@ SessionManager class >> default: aSessionManager [
 	Default := aSessionManager
 ]
 
-{ #category : #'compatibility - startupList' }
-SessionManager class >> initializedSessionManager [
-	| manager |
-	manager := SessionManager new.
-	manager
-		registerSystemClassNamed: #SmallInteger atPriority: 10; "System - 10"
-		registerSystemClassNamed: #Delay atPriority: 20; "System - 20"
-		registerSystemClassNamed: #ProcessorScheduler atPriority: 30; "System - 30"
-		registerSystemClassNamed: #OSPlatform atPriority: 50; "System - 50"
+{ #category : #initialization }
+SessionManager class >> initializeKernelRegistrations [
+	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
+	I am here to manage those regristrations of the classes that were loaded before I am suppose to be in the image."
 
-		registerSystemClassNamed: #ExternalObject atPriority: 60; "System - 60"
-		registerSystemClassNamed: #FFIBackend atPriority: 60; "System - 60"
-		registerSystemClassNamed: #FFIMethodRegistry atPriority: 60; "System - 60"
-		registerSystemClassNamed: #FileLocator atPriority: 90; "System - 90"
-		
-		registerSystemClassNamed: #Stdio; "System"
-		registerSystemClassNamed: #LanguageEnvironment	; "System"
-		registerSystemClassNamed: #ShortIntegerArray; "System"
-		registerSystemClassNamed: #DiskStore; "System"
-		registerSystemClassNamed: #MemoryStore; "System"
-		registerSystemClassNamed: #SmalltalkImage; "System"
-		registerSystemClassNamed: #WeakFinalizationList; "System"
-		registerSystemClassNamed: #Clipboard; "System"
-		registerSystemClassNamed: #MCMethodDefinition; "System"
-		registerSystemClassNamed: #Symbol; "System"
-		registerSystemClassNamed: #Locale; "System"
-		registerSystemClassNamed: #WeakArray; "System"
-		registerSystemClassNamed: #BasicCommandLineHandler; "System"
-		registerSystemClassNamed: #NonInteractiveTranscript; "System"
-		registerSystemClassNamed: #ASTCache; "System"
-		registerSystemClassNamed: #OSEnvironment; "System"
-		registerSystemClassNamed: #EndianDetector; "System"
-
-		registerNetworkClassNamed: #InternetConfiguration; "Network"
-		registerNetworkClassNamed: #ZnServer; "Network"
-		registerNetworkClassNamed: #MCGitHubRepository; "Network"
-		registerNetworkClassNamed: #MCGitBasedNetworkRepository; "Network"
-		registerNetworkClassNamed: #ZnLogEvent; "Network"
-		registerSystemClassNamed: #UUIDGenerator; "Network"
-
-		registerGuiClassNamed: #DisplayScreen atPriority: 10; "GUI - 10"
-		
-		registerGuiClassNamed: #Cursor; "GUI"	
-		registerGuiClassNamed: #Form; "GUI"
-		registerGuiClassNamed: #StrikeFont; "GUI"
-		registerGuiClassNamed: #Color; "GUI"
-		registerGuiClassNamed: #FreeTypeCache; "GUI"
-		registerGuiClassNamed: #LogicalFont; "GUI"
-		registerGuiClassNamed: #FT2Handle; "GUI"
-		registerGuiClassNamed: #FreeTypeSettings; "GUI"
-		registerGuiClassNamed: #WorldMorph atPriority: 110; "GUI"
-		"It Should run at the end of everything to correctly handle the errors"
-		registerLast: UIManagerSessionHandler uniqueInstance
-			inCategory: manager userCategory; 
-
-		registerToolClassNamed: #CPUWatcher; "Tools"
-		registerToolClassNamed: #PharoCommonTools; "Tool"
-		registerToolClassNamed: #GTPlayBook; "Tools"
-
-		registerLast: (ClassSessionHandler forClassNamed: #SystemSettingsPersistence)
-			inCategory: manager userCategory; "Preferences loading may need to have anything else well initialized before."
-		
-		yourself.
-	^ manager
+	self default registerSystemClassNamed: #Symbol
 ]
 
 { #category : #'deferred startup actions' }
 SessionManager >> addDeferredStartupAction: aBlock [
 	"Add the block to the list of actions that we will be performed immediately after the startup list is executed."
-	self currentSession 
+	self currentSession
 		addDeferredStartupAction: aBlock
 ]
 
 { #category : #'category management' }
-SessionManager >> basicCreateCategory: aString [ 
+SessionManager >> basicCreateCategory: aString [
 	^ SessionCategory new
 		name: aString;
 		yourself
 ]
 
 { #category : #accessing }
-SessionManager >> categoryNamed: aString [ 
-	^ categories 
+SessionManager >> categoryNamed: aString [
+	^ categories
 		detect: [ :each | each name = aString ]
 		ifNone: [ NotFound signalFor: aString ]
 ]
@@ -217,8 +159,8 @@ SessionManager >> createCategory: aCategoryName [
 { #category : #'category management' }
 SessionManager >> createCategory: aCategoryName after: anotherCategoryName [
 	| category |
-	category := self basicCreateCategory: aCategoryName.	
-	categories 
+	category := self basicCreateCategory: aCategoryName.
+	categories
 		add: category
 		after: (self categoryNamed: anotherCategoryName).
 	^ category
@@ -243,8 +185,8 @@ SessionManager >> guiCategory [
 { #category : #registration }
 SessionManager >> hasRegistered: handledId [
 	"handledId, in most cases, will be a class name"
-	
-	^ self startupList 
+
+	^ self startupList
 			anySatisfy: [ :handler | handler handledId = handledId ]
 ]
 
@@ -252,21 +194,21 @@ SessionManager >> hasRegistered: handledId [
 SessionManager >> initialize [
 	super initialize.
 	categories := OrderedCollection new.
-		
+
 	systemCategory := self createCategory: 'System'.
 	networkCategory := self createCategory: 'Network'.
 	guiCategory := self createCategory: 'Graphical User Interface'.
 	toolsCategory := self createCategory: 'Tools'.
-	userCategory := self createCategory: 'User'.
+	userCategory := self createCategory: 'User'
 ]
 
 { #category : #'session management' }
 SessionManager >> installNewSession [
-	self installSession: self newSession.
+	self installSession: self newSession
 ]
 
 { #category : #'session management' }
-SessionManager >> installSession: aWorkingSession [ 
+SessionManager >> installSession: aWorkingSession [
 	currentSession := aWorkingSession
 ]
 
@@ -274,7 +216,7 @@ SessionManager >> installSession: aWorkingSession [
 SessionManager >> launchSnapshot: save andQuit: quit [
 	| isImageStarting snapshotResult |
 	ChangesLog default logSnapshot: save andQuit: quit.
-	
+
 	self currentSession stop: quit.	"Image not usable from here until the session is restarted!"
 	save
 		ifTrue: [
@@ -288,11 +230,11 @@ SessionManager >> launchSnapshot: save andQuit: quit [
 	isImageStarting ifTrue: [ self installNewSession ].
 
 	self currentSession start: isImageStarting.
-	snapshotResult 
+	snapshotResult
 		ifNil: [ self error: 'Failed to write image file (disk full?)' ]
-		ifNotNil: [ 
+		ifNotNil: [
 			SystemAnnouncer uniqueInstance snapshotDone: isImageStarting ].
-	
+
 	"We return the resuming state, which may be useful for users to know the state of the image"
 	^ isImageStarting
 ]
@@ -326,95 +268,95 @@ SessionManager >> register: aSessionHandler [
 
 { #category : #registration }
 SessionManager >> register: aSessionHandler inCategory: aCategory [
-	aCategory 
+	aCategory
 		register: aSessionHandler
 		atPriority: aCategory defaultPriority
 ]
 
 { #category : #registration }
-SessionManager >> register: aSessionHandler inCategory: aCategory atPriority: anInteger [ 
+SessionManager >> register: aSessionHandler inCategory: aCategory atPriority: anInteger [
 	self unregisterHandler: aSessionHandler handledId.
-	aCategory 
+	aCategory
 		register: aSessionHandler
 		atPriority: anInteger
 ]
 
 { #category : #registration }
 SessionManager >> registerGuiClassNamed: aClassName [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self guiCategory 
+		inCategory: self guiCategory
 		atPriority: self defaultPriority
 ]
 
 { #category : #registration }
 SessionManager >> registerGuiClassNamed: aClassName atPriority: anInteger [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self guiCategory 
+		inCategory: self guiCategory
 		atPriority: anInteger
 ]
 
 { #category : #registration }
 SessionManager >> registerLast: aSessionHandler inCategory: aCategory [
-	self 
+	self
 		register: aSessionHandler
-		inCategory: aCategory 
+		inCategory: aCategory
 		atPriority: self maxPriority
 ]
 
 { #category : #registration }
 SessionManager >> registerNetworkClassNamed: aClassName [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self networkCategory 
+		inCategory: self networkCategory
 		atPriority: self defaultPriority
 ]
 
 { #category : #registration }
 SessionManager >> registerSystemClassNamed: aClassName [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self systemCategory 
+		inCategory: self systemCategory
 		atPriority: self defaultPriority
 ]
 
 { #category : #registration }
 SessionManager >> registerSystemClassNamed: aClassName atPriority: anInteger [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self systemCategory 
+		inCategory: self systemCategory
 		atPriority: anInteger
 ]
 
 { #category : #registration }
 SessionManager >> registerToolClassNamed: aClassName [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self toolsCategory 
+		inCategory: self toolsCategory
 		atPriority: self defaultPriority
 ]
 
 { #category : #registration }
 SessionManager >> registerUserClassNamed: aClassName [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self userCategory 
+		inCategory: self userCategory
 		atPriority: self defaultPriority
 ]
 
 { #category : #registration }
 SessionManager >> registerUserClassNamed: aClassName atPriority: anInteger [
-	self 
+	self
 		register: (ClassSessionHandler forClassNamed: aClassName)
-		inCategory: self userCategory 
+		inCategory: self userCategory
 		atPriority: anInteger
 ]
 
 { #category : #registration }
 SessionManager >> renamedClass: aClass from: oldName to: newName [
 	"Inform SessionManager that aClass has been renamed"
-	
+
 	categories do: [ :category |
 		category renamedClass: aClass from: oldName to: newName ]
 ]
@@ -437,10 +379,10 @@ SessionManager >> snapshot: save andQuit: quit [
 	[ isImageStarting := self launchSnapshot: save andQuit: quit.
 	  wait signal. ] forkAt: Processor timingPriority - 1.
 	wait wait.
-	
+
 	"The execution of the deferred startup actions are executed in the caller thread."
 	self currentSession executeDeferredStartupActions: isImageStarting.
-	
+
 	^ isImageStarting
 ]
 
@@ -461,17 +403,17 @@ SessionManager >> toolsCategory [
 ]
 
 { #category : #'session management' }
-SessionManager >> uninstallSession: aWorkingSession [ 
+SessionManager >> uninstallSession: aWorkingSession [
 	currentSession := nil
 ]
 
 { #category : #registration }
-SessionManager >> unregisterClassNamed: aClassName [ 
+SessionManager >> unregisterClassNamed: aClassName [
 	self unregisterHandler: aClassName
 ]
 
 { #category : #registration }
-SessionManager >> unregisterHandler: anHandledId [ 
+SessionManager >> unregisterHandler: anHandledId [
 	categories do: [ :each | each unregisterHandler: anHandledId ]
 ]
 

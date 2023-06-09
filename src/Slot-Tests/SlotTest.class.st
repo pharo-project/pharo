@@ -12,7 +12,7 @@ Class {
 
 { #category : #'tests - misc' }
 SlotTest >> testAsSlotCollection [
-	
+
  	self assert: 'a b' asSlotCollection equals: {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
 	self assert: ('a _a a_a b b_' asSlotCollection collect: [ :i | i name ]) equals: #(#a #_a #a_a #b #b_) .
 	self should: ['1' asSlotCollection] raise: Error.
@@ -22,7 +22,7 @@ SlotTest >> testAsSlotCollection [
 
 { #category : #'tests - read/write' }
 SlotTest >> testIsReadInMethod [
-	
+
 	ivarForTesting printString.
 	self assert: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
@@ -34,20 +34,20 @@ SlotTest >> testIsReferenced [
 
 { #category : #'tests - read/write' }
 SlotTest >> testIsWrittenInMethod [
-	
+
 	ivarForTesting := #test.
 	self assert: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
 ]
 
 { #category : #'tests - read/write' }
 SlotTest >> testNotReadInMethod [
-	
+
 	self deny: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
 
 { #category : #'tests - read/write' }
 SlotTest >> testNotWrittenInMethodWhenItIsOnlyRead [
-	
+
 	ivarForTesting printString.
 	self deny: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
 ]
@@ -56,10 +56,10 @@ SlotTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 SlotTest >> testPropertyAtPut [
 
 	| testValue ivar |
-	
+
 	testValue := Date today.
 	ivar := self class slotNamed: #ivarForTesting.
-	
+
 	ivar propertyAt: #testKeySelector put: testValue.
 	self
 		assert: (ivar propertyAt: #testKeySelector)
@@ -69,27 +69,27 @@ SlotTest >> testPropertyAtPut [
 ]
 
 { #category : #'tests - read/write' }
-SlotTest >> testReadFromContext [ 
-	
+SlotTest >> testReadFromContext [
+
 	| slot |
 	ivarForTesting := #testValue.
 	slot := self class slotNamed: #ivarForTesting.
-	
+
 	self assert: (slot readInContext: thisContext) equals: #testValue
 ]
 
 { #category : #'tests - properties' }
 SlotTest >> testRemoveProperty [
-	| ivar | 
+	| ivar |
 	ivar := self class slotNamed: #ivarForTesting.
-	
+
 	ivar propertyAt: #testKeySelector put: 1.
-		
+
 	ivar removeProperty: #testKeySelector.
 	self
 		assert: (ivar propertyAt: #testKeySelector)
 		equals: nil.
-		
+
 	self assert: ivar properties isNil
 ]
 
@@ -98,7 +98,7 @@ SlotTest >> testScope [
 	| variable |
 	variable := self class slotNamed: #ivarForTesting.
 	self assert: variable scope equals: self class.
-	
+
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
@@ -109,12 +109,12 @@ SlotTest >> testSlotUsers [
 ]
 
 { #category : #'tests - read/write' }
-SlotTest >> testWriteToContext [ 
-	
+SlotTest >> testWriteToContext [
+
 	| slot |
 	slot := self class slotNamed: #ivarForTesting.
 	slot write: #testValue inContext: thisContext.
-	
+
 	self assert: ivarForTesting equals: #testValue
 ]
 

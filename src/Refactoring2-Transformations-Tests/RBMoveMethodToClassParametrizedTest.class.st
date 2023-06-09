@@ -7,13 +7,13 @@ Class {
 { #category : #tests }
 RBMoveMethodToClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveMethodToClassRefactoring };		
+		addCase: { #rbClass -> RBMoveMethodToClassRefactoring };
 		addCase: { #rbClass -> RBMoveMethodToClassTransformation };
 		yourself
 ]
 
 { #category : #tests }
-RBMoveMethodToClassParametrizedTest >> constructor [ 
+RBMoveMethodToClassParametrizedTest >> constructor [
 	^ #method:class:
 ]
 
@@ -21,11 +21,11 @@ RBMoveMethodToClassParametrizedTest >> constructor [
 RBMoveMethodToClassParametrizedTest >> testMethodAlreadyDefined [
 	| method someClass |
 	someClass := model classNamed: #RBFooLintRuleTestData.
-	method := RBClassModelFactory rbMethod 
-		for: someClass 
-		source: 'foo' , String cr , String tab , '^ 6' 
+	method := RBClassModelFactory rbMethod
+		for: someClass
+		source: 'foo' , String cr , String tab , '^ 6'
 		selector: #foo.
-		
-	self shouldFail: (self createRefactoringWithArguments: 
+
+	self shouldFail: (self createRefactoringWithArguments:
 		{ method . someClass })
 ]

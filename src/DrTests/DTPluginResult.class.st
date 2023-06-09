@@ -8,8 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-DTPluginResult >> backgroundColor [
-	^ Color named: 'gray'
+DTPluginResult >> backgroundColorStyle [
+
+	^ 'testResult'
 ]
 
 { #category : #accessing }

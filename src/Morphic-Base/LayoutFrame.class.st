@@ -5,12 +5,36 @@ Do not use fractions: fractionsOrNil offsets: offsetsOrNil or fractions: fractio
 
 If you are creating the rectangles representing the numbers you need, better use the accessors. For example like this.  
 
+```
 	(LayoutFrame identity
 			topOffset: topHeight;
 			bottomFraction: 0;
 			bottomOffset: self buttonsBarHeight;
 			leftOffset: -1;
 			rightOffset: 1)	
+```
+
+Here is an example so that you can play with all the parameters:
+
+```
+| m s frame |
+s := Morph new color: Color yellow.
+frame := LayoutFrame identity.
+frame leftFraction: 0.1.
+frame rightFraction: 0.9.
+frame bottomFraction: 0.9.
+frame bottomOffset: 30 negated.
+frame rightOffset: 20 negated.
+frame topOffset: 5 .
+frame leftOffset: 5 .
+m := Morph new
+        extent: 200@200;
+        color: Color lightGray;
+        layoutPolicy: ProportionalLayout new;
+        addMorph: s fullFrame: frame.
+m openInWorld
+```
+
 
 Use printOnForHelpingMigration: if you want to inspect the object.
 
@@ -41,6 +65,44 @@ Class {
 }
 
 { #category : #'instance creation' }
+LayoutFrame class >> example [
+	<script>
+	| m s frame |
+	s := Morph new color: Color yellow.
+	frame := self identity.
+	frame leftFraction: 0.1.
+	frame rightFraction: 0.9.
+	frame bottomFraction: 0.9.
+	frame bottomOffset: 30 negated.
+	frame rightOffset: 20 negated.
+	frame topOffset: 5 .
+	frame leftOffset: 5 .
+	m := Morph new
+        extent: 200@200;
+        color: Color lightGray;
+        layoutPolicy: ProportionalLayout new;
+        addMorph: s fullFrame: frame.
+	m openInWorld
+]
+
+{ #category : #'instance creation' }
+LayoutFrame class >> example2 [
+	<script>
+	| m s frame |
+	s := Morph new color: Color yellow.
+	frame := self identity.
+	frame leftFraction: 0.1.
+	frame rightFraction: 0.9.
+	frame bottomFraction: 0.9.
+	m := Morph new
+        extent: 200@200;
+        color: Color lightGray;
+        layoutPolicy: ProportionalLayout new;
+        addMorph: s fullFrame: frame.
+	m openInWorld
+]
+
+{ #category : #'instance creation' }
 LayoutFrame class >> identity [
 	"by default a layout frame is initialized to represent the identity transformation"
 	^ self new
@@ -61,11 +123,11 @@ LayoutFrame >> = aFrame [
 
 { #category : #converting }
 LayoutFrame >> asArray [
-	 
-	^ { leftFraction . 
+
+	^ { leftFraction .
 		topFraction .
 		rightFraction .
-		bottomFraction .	
+		bottomFraction .
 		leftOffset .
 		topOffset .
 		rightOffset .
@@ -106,32 +168,32 @@ LayoutFrame >> bottomOffset: anInteger [
 
 { #category : #accessing }
 LayoutFrame >> bottomRightOffset: aPoint [
-	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e. 
+	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e.
 	bottomRightOffset: 100 @ 200
-	=> 
+	=>
 	bottomOffset: 200.
-	rightOffset: 100. 
+	rightOffset: 100.
 	"
 
 	bottomOffset := aPoint y.
-	rightOffset := aPoint x.
+	rightOffset := aPoint x
 ]
 
 { #category : #layout }
 LayoutFrame >> center: targetMorph with: anotherMorph [
-	"Change the receiver to center the targetMorph with anotherMorph. 
+	"Change the receiver to center the targetMorph with anotherMorph.
 	Note the targetMorph is the morph on which the receiver will be applied.
-	anotherMorph is often the morph containing the targetMorph. 
+	anotherMorph is often the morph containing the targetMorph.
 	"
-	
+
 	self topOffset: (anotherMorph height - targetMorph height) // 2.
-	self leftOffset: (anotherMorph width - targetMorph width) // 2.
+	self leftOffset: (anotherMorph width - targetMorph width) // 2
 ]
 
 { #category : #accessing }
 LayoutFrame >> fractionRectangle [
 	"Return a rectangle representing the fraction part of layout frame: i.e left@top corner: right@bottom"
-	
+
 	^ leftFraction @ topFraction corner: rightFraction @ bottomFraction
 ]
 
@@ -139,16 +201,16 @@ LayoutFrame >> fractionRectangle [
 LayoutFrame >> fromArray: anArray [
 	| str |
 	str := anArray readStream.
-	
+
 	#( leftFraction: topFraction: rightFraction: bottomFraction: leftOffset: topOffset: rightOffset: bottomOffset: ) do: [:sel |
-		str next ifNil: [ ^ self ] ifNotNil: [:value | self perform: sel with: value ]	
+		str next ifNil: [ ^ self ] ifNotNil: [:value | self perform: sel with: value ]
 	 ]
 ]
 
 { #category : #testing }
 LayoutFrame >> hasNoOffsets [
 
-	^ leftOffset = 0 and: [rightOffset = 0  and: [ topOffset = 0 and: [ bottomOffset = 0 ]]].
+	^ leftOffset = 0 and: [rightOffset = 0  and: [ topOffset = 0 and: [ bottomOffset = 0 ]]]
 ]
 
 { #category : #comparing }
@@ -170,9 +232,9 @@ LayoutFrame >> initialize [
 	 - all offsets are zero
 	 - fraction frame is maximum"
 	leftOffset := rightOffset := topOffset := bottomOffset := 0.
-	
+
 	leftFraction := topFraction := 0.
-	rightFraction := bottomFraction := 1.
+	rightFraction := bottomFraction := 1
 ]
 
 { #category : #printing }
@@ -218,7 +280,7 @@ LayoutFrame >> leftOffset: anInteger [
 LayoutFrame >> negateBottomRightOffsets [
 
 	bottomOffset := bottomOffset negated.
-	rightOffset := rightOffset negated.
+	rightOffset := rightOffset negated
 ]
 
 { #category : #printing }
@@ -227,11 +289,11 @@ LayoutFrame >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' ( '.
 	aStream
-		print: self leftFraction @ self topFraction; 
+		print: self leftFraction @ self topFraction;
 		nextPutAll: ' + ';
 		print: self leftOffset  @ self topOffset ;
 		nextPutAll: 'px corner: ';
-		print: self rightFraction @ self bottomFraction; 
+		print: self rightFraction @ self bottomFraction;
 		nextPutAll: ' + ';
 		print: self rightOffset  @ self bottomOffset ;
 		nextPutAll: 'px ) '
@@ -302,14 +364,14 @@ LayoutFrame >> topFraction: aNumber offset: anInteger [
 
 { #category : #accessing }
 LayoutFrame >> topLeftOffset: aPoint [
-	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e. 
+	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e.
 	topLeftOffset: 100 @ 200
-	=> 
+	=>
 	topOffset: 200.
-	leftOffset: 100. 
+	leftOffset: 100.
 	"
 	topOffset := aPoint y.
-	leftOffset := aPoint x.
+	leftOffset := aPoint x
 ]
 
 { #category : #accessing }
@@ -326,15 +388,15 @@ LayoutFrame >> topOffset: anInteger [
 LayoutFrame >> transform: outerReferenceRectangle [
 	"Answer a new rectangle which transformed by receiver relative to outerReferenceRectangle.
 	If it is not possible to place a outerReferenceRectangle *inside*  this reference rectangle, then result will be zero-width (or zero-height) rectangle. Basically you transform to obtain a subrectangle area inside the reference rectangle"
-	
+
 	|  left right top bottom |
 	left := (outerReferenceRectangle left + (outerReferenceRectangle width * leftFraction) + leftOffset) rounded asInteger.
 	right := (outerReferenceRectangle right - (outerReferenceRectangle width * (1 - rightFraction)) + rightOffset) rounded asInteger.
 	top:= (outerReferenceRectangle top + (outerReferenceRectangle height * topFraction) + topOffset ) rounded asInteger.
-	bottom:= (outerReferenceRectangle bottom - (outerReferenceRectangle height * (1 - bottomFraction)) + bottomOffset) rounded asInteger. 
-	
+	bottom:= (outerReferenceRectangle bottom - (outerReferenceRectangle height * (1 - bottomFraction)) + bottomOffset) rounded asInteger.
+
 	right < left ifTrue: [ right := left ].
 	bottom < top ifTrue: [ bottom := top ].
-	
+
 	^ Rectangle left: left right: right top: top bottom: bottom
 ]

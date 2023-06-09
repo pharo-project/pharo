@@ -16,7 +16,7 @@ MultipleSettingDeclaration >> domainValues [
 ]
 
 { #category : #accessing }
-MultipleSettingDeclaration >> domainValues: aCollection [ 
+MultipleSettingDeclaration >> domainValues: aCollection [
 	domainValues := aCollection asArray collect: [ :v | v settingFixedDomainValueNodeFrom: self]
 ]
 
@@ -27,7 +27,7 @@ MultipleSettingDeclaration >> domainValuesLabels [
 ]
 
 { #category : #'user interface' }
-MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation [ 
+MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation [
 	| s |
 	^ (s := (SettingDeclaration new name: anAssociation key translated))
 		target: s;
@@ -36,7 +36,7 @@ MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation 
 ]
 
 { #category : #'user interface' }
-MultipleSettingDeclaration >> fixedDomainValueNodeForObject: anObject [ 
+MultipleSettingDeclaration >> fixedDomainValueNodeForObject: anObject [
 	| s |
 	^ (s := (SettingDeclaration new name: anObject asString))
 		target: s;

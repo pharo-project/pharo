@@ -16,11 +16,11 @@ RBClassTest >> setUp [
 	rbNamespace := RBClassModelFactory rbNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
-	rbNamespace defineClass: 'Object subclass: #SomeClassName
-	instanceVariableNames: ''instanceVariable1 instanceVariable2''
-	classVariableNames: ''ClassVariable1''
-	poolDictionaries: ''TextConstants''
-	category: #''Refactory-Testing'''.
+	rbNamespace defineClass: 'Object << #SomeClassName
+	slots: { #instanceVariable1 . #instanceVariable2};
+	sharedVariables: { #ClassVariable1};
+	sharedPools: {TextConstants};
+	package: #''Refactory-Testing'''.
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
@@ -30,7 +30,7 @@ RBClassTest >> testDefinesClassVariable [
 	self assert: (objectClass definesClassVariable: self objectClassVariable).
 	self assert: (newClass definesClassVariable: #ClassVariable1).
 	self deny: (messageNodeClass definesClassVariable: #ClassVariable1).
-	self 
+	self
 		assert: (messageNodeClass definesClassVariable: self objectClassVariable)
 ]
 
@@ -55,7 +55,7 @@ RBClassTest >> testDefinesPoolDictionary [
 	self deny: (objectClass definesPoolDictionary: #OpcodePool).
 	self assert: (newClass definesPoolDictionary: #TextConstants).
 	self deny: (messageNodeClass definesPoolDictionary: #OpcodePool).
-	self assert: ((RBClassModelFactory rbNamespace new classNamed: #Text) 
+	self assert: ((RBClassModelFactory rbNamespace new classNamed: #Text)
 				definesPoolDictionary: #TextConstants)
 ]
 
@@ -71,7 +71,7 @@ RBClassTest >> testDefinesTraitMethod [
 	self assert: (user methodFor: #c3) isNil. "we use nil to represent alias"
 	trait := rbNamespace classNamed: #Trait2.
 	self assert: (user methodFor: #c2) modelClass equals: trait.
-	self assert: (user methodFor: #c) modelClass equals: trait.
+	self assert: (user methodFor: #c) modelClass equals: trait
 ]
 
 { #category : #'method tests' }
@@ -85,5 +85,5 @@ RBClassTest >> testHierarchy [
 { #category : #tests }
 RBClassTest >> testObjectIsNotAbstract [
 	self deny: objectClass isAbstract.
-	self deny: objectClass classSide isAbstract.
+	self deny: objectClass classSide isAbstract
 ]

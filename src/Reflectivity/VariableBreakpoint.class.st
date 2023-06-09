@@ -41,12 +41,12 @@ VariableBreakpoint class >> newForClass: aClass [
 
 { #category : #observers }
 VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
-	| announcement |	
+	| announcement |
 	announcement := BreakpointHit
 		on: aBreakpoint
 		nodes: {node}.
 	announcement valueOrNil: (node variableValueInContext: aContext).
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #API }
@@ -152,7 +152,7 @@ VariableBreakpoint >> breakLink [
 		  yourself
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 VariableBreakpoint >> initialize [
 	super initialize.
 	accessStrategy := #all.
@@ -165,14 +165,14 @@ VariableBreakpoint >> install [
 	self isInstalled
 		ifTrue: [ ^ self ].
 	targetVariableNames
-		do: [ :vName | 
+		do: [ :vName |
 			targetClassOrMethod
 				link: self link
 				toVariableNamed: vName
 				option: self accessStrategy ].
 	isInstalled := true.
 	self setAsNodeProperty.
-	self class addBreakpoint: self.
+	self class addBreakpoint: self
 ]
 
 { #category : #testing }
@@ -198,15 +198,15 @@ VariableBreakpoint >> removeFromClass: aClass [
 	"If we're targeting a temp var in a method,
 	then we got here because we detected that method belong to the class
 	passed as parameter. We need to uninstall."
-	self targetClassOrMethod isCompiledMethod ifTrue: [ 
+	self targetClassOrMethod isCompiledMethod ifTrue: [
 		self remove.
 		^ self ].
 
 	"If the removed class is the class we target or one of its superclasses,
 	then after that class is removed we have no reason to exist. We need to uninstall."
-	(self targetClassOrMethod = aClass or: [ 
-		 self targetClassOrMethod allSuperclasses includes: aClass ]) 
-		ifTrue: [ 
+	(self targetClassOrMethod = aClass or: [
+		 self targetClassOrMethod allSuperclasses includes: aClass ])
+		ifTrue: [
 			self remove.
 			^ self ].
 
@@ -214,14 +214,16 @@ VariableBreakpoint >> removeFromClass: aClass [
 	It is then one of its subclasses, we can continue to exist since the variable
 	we target still exist in the target class.
 	However, we need to remove the nodes of the removed class from our metalink"
-	(self link nodes select: [ :n | n methodNode methodClass == aClass ]) 
+	(self link nodes select: [ :n | n methodNode methodClass == aClass ])
 		do: [ :n | self link removeNode: n ]
 ]
 
 { #category : #removing }
 VariableBreakpoint >> removeFromMethod: aMethod [
-	(self link nodes select: [ :n | n methodNode method == aMethod ]) 
-		do: [ :n | self link removeNode: n ]
+
+	(self link nodes select: [ :n |
+		 n methodNode compiledMethod == aMethod ]) do: [ :n |
+		self link removeNode: n ]
 ]
 
 { #category : #removing }

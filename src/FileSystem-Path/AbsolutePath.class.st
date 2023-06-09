@@ -16,7 +16,7 @@ AbsolutePath class >> addEmptyElementTo: result [
 AbsolutePath class >> from: aString delimiter: aDelimiterCharater [
 	aString = '/'
 		ifTrue: [ ^ self root ].
-		
+
 	^ super from: aString delimiter: aDelimiterCharater
 ]
 
@@ -38,7 +38,7 @@ AbsolutePath >> printOn: aStream [
 		ifFalse:
 			[1 to: self size do:
 				[:i |
-				aStream 
+				aStream
 					nextPutAll: ' / ''';
 				 	nextPutAll: (self at: i);
 					nextPut: $']]

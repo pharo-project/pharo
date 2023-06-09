@@ -28,7 +28,7 @@ Class {
 
 { #category : #visitor }
 CDClassTagNode >> acceptVisitor: aProgramNodeVisitor [
-	
+
 	aProgramNodeVisitor visitTag: self
 ]
 
@@ -38,6 +38,6 @@ CDClassTagNode >> name [
 ]
 
 { #category : #accessing }
-CDClassTagNode >> name: aString [ 
+CDClassTagNode >> name: aString [
 	name := aString
 ]

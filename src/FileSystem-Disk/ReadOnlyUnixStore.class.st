@@ -22,18 +22,18 @@ ReadOnlyUnixStore class >> writableVariant [
 { #category : #public }
 ReadOnlyUnixStore >> basicOpen: aPath writable: aBoolean [
 
-	aBoolean ifTrue: [ 
+	aBoolean ifTrue: [
 		ReadOnlyFileException signal: 'Attempt to open file ', aPath pathString, ' as writable on a read-only file system'.
 		^ self ].
-		
-	^ super basicOpen: aPath writable: aBoolean.
+
+	^ super basicOpen: aPath writable: aBoolean
 ]
 
 { #category : #public }
 ReadOnlyUnixStore >> createDirectory: path [
 
 	ReadOnlyFileException signal: 'Attempt crate directory ', path pathString, ' on a read-only file system'.
-	
+
 	^ self
 ]
 
@@ -41,7 +41,7 @@ ReadOnlyUnixStore >> createDirectory: path [
 ReadOnlyUnixStore >> delete: path [
 
 	ReadOnlyFileException signal: 'Attempt delete ', path pathString, ' on a read-only file system'.
-	
+
 	^ self
 ]
 
@@ -49,7 +49,7 @@ ReadOnlyUnixStore >> delete: path [
 ReadOnlyUnixStore >> file: path posixPermissions: anInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
-	
+
 	^ self
 ]
 
@@ -57,7 +57,7 @@ ReadOnlyUnixStore >> file: path posixPermissions: anInteger [
 ReadOnlyUnixStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
-	
+
 	^ self
 ]
 
@@ -65,7 +65,7 @@ ReadOnlyUnixStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 ReadOnlyUnixStore >> file: path uid: uidInteger gid: gidInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
-	
+
 	^ self
 ]
 
@@ -90,6 +90,6 @@ ReadOnlyUnixStore >> isWritable: aPath [
 ReadOnlyUnixStore >> rename: sourcePath to: destinationPath [
 
 	ReadOnlyFileException signal: 'Attempt to rename file ' , sourcePath pathString, ' on a read-only file system'.
-	
+
 	^ self
 ]

@@ -22,13 +22,13 @@ RBRemoveClassRefactoring class >> cannotRemoveTopLevelClassErrorMesssage [
 ]
 
 { #category : #'instance creation' }
-RBRemoveClassRefactoring class >> classNames: aClassNameCollection [ 
+RBRemoveClassRefactoring class >> classNames: aClassNameCollection [
 	^ self new
 		classNames: aClassNameCollection
 ]
 
 { #category : #'instance creation' }
-RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameCollection [ 
+RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameCollection [
 	^ self new
 		model: aRBSmalltalk;
 		classNames: aClassNameCollection;
@@ -36,21 +36,21 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 ]
 
 { #category : #initialization }
-RBRemoveClassRefactoring >> classNames: aClassNameCollection [ 
+RBRemoveClassRefactoring >> classNames: aClassNameCollection [
 	classNames := aClassNameCollection
 ]
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> environmentWithReferencesTo: aClass [
-	^ RBBrowserEnvironment new 
-		referencesTo: (Smalltalk globals 
-			associationAt: aClass 
+	^ RBBrowserEnvironment new
+		referencesTo: (Smalltalk globals
+			associationAt: aClass
 			ifAbsent: [ aClass ])
 ]
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> environmentWithUsersOf: aTrait [
-	^ RBClassEnvironment 
+	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		classes: aTrait realClass users
 ]
@@ -93,11 +93,11 @@ RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditions [
 
-	^ classNames inject: self emptyCondition into: [ :sum :each | 
+	^ classNames inject: self emptyCondition into: [ :sum :each |
 		  | aClassOrTrait |
 		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [ 
-			  self refactoringFailure: 'No such class or trait' ].
+		  aClassOrTrait ifNil: [
+			  self refactoringError: 'No such class or trait' ].
 		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
 		   & (self preconditionHasNoReferences: each)
 		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
@@ -111,15 +111,15 @@ RBRemoveClassRefactoring >> removeClasses [
 
 { #category : #transforming }
 RBRemoveClassRefactoring >> reparentSubclasses [
-	classNames do: 
-			[:each | 
+	classNames do:
+			[:each |
 			| class |
 			class := self model classNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]
 ]
 
 { #category : #printing }
-RBRemoveClassRefactoring >> storeOn: aStream [ 
+RBRemoveClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' classNames: '.

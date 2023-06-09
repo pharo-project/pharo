@@ -49,7 +49,7 @@ StrikeFont class >> actualFamilyNames [
 StrikeFont class >> cleanUp: aggressive [
 	"Flush synthesized strike fonts"
 
-	self allInstancesDo: [:sf| sf reset].
+	self allInstancesDo: [:sf| sf reset]
 ]
 
 { #category : #accessing }
@@ -114,13 +114,13 @@ StrikeFont class >> familyNames [
 ]
 
 { #category : #'font creation' }
-StrikeFont class >> fromHostFont: fontName size: fontSize flags: fontFlags weight: fontWeight [ 
+StrikeFont class >> fromHostFont: fontName size: fontSize flags: fontFlags weight: fontWeight [
 	"
 		^StrikeFont fromHostFont: (StrikeFont hostFontFromUser)
 					size: 12 flags: 0 weight: 4.
 	"
 	| fontHandle glyphs xTable xStart maxWidth w glyphForm ascent descent fontHeight |
-	fontHandle := self 
+	fontHandle := self
 		primitiveCreateFont: fontName
 		size: fontSize
 		flags: fontFlags
@@ -130,57 +130,57 @@ StrikeFont class >> fromHostFont: fontName size: fontSize flags: fontFlags weigh
 	fontHeight := ascent + descent.
 	xTable := Array new: 258.
 	xStart := maxWidth := 0.
-	0 
+	0
 		to: 255
-		do: 
-			[ :i | 
-			xTable 
+		do:
+			[ :i |
+			xTable
 				at: i + 1
 				put: xStart.
-			w := self 
+			w := self
 				primitiveFont: fontHandle
 				widthOfChar: i.
 			w > maxWidth ifTrue: [ maxWidth := w ].
 			xStart := xStart + w ].
-	xTable 
+	xTable
 		at: 256
 		put: xStart.
-	xTable 
+	xTable
 		at: 257
 		put: xStart.
-	xTable 
+	xTable
 		at: 258
 		put: xStart.
-	glyphs := Form 
+	glyphs := Form
 		extent: xTable last @ fontHeight
 		depth: 1.
-	glyphForm := Form 
+	glyphForm := Form
 		extent: maxWidth @ fontHeight
 		depth: 1.
-	0 
+	0
 		to: 255
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			glyphForm fillWhite.
-			self 
+			self
 				primitiveFont: fontHandle
 				glyphOfChar: i
 				into: glyphForm.
 			xStart := xTable at: i + 1.
-			glyphForm 
+			glyphForm
 				displayOn: glyphs
 				at: xStart @ 0.
-			glyphForm 
+			glyphForm
 				displayOn: Display
 				at: xStart @ 0 ].
 	self primitiveDestroyFont: fontHandle.
-	^ Array 
+	^ Array
 		with: glyphs
 		with: xTable
 ]
 
 { #category : #'font creation' }
-StrikeFont class >> fromStrike: fileName [ 
+StrikeFont class >> fromStrike: fileName [
 	"Read a font from disk in the old ST-80 'strike' format.
 	Note: this is an old format; use strike2 format instead"
 
@@ -193,10 +193,10 @@ StrikeFont class >> hostFontFromUser [
 	| fontNames index labels |
 	fontNames := self listFontNames asSortedCollection.
 	labels := (String new: 100) writeStream.
-	fontNames 
+	fontNames
 		do: [ :fn | labels nextPutAll: fn ]
 		separatedBy: [ labels cr ].
-	index := UIManager default 
+	index := UIManager default
 		chooseFrom: labels contents substrings
 		title: 'Choose your font'.
 	index = 0 ifTrue: [ ^ nil ].
@@ -211,11 +211,11 @@ StrikeFont class >> initialize [
 { #category : #removing }
 StrikeFont class >> limitTo16Bits [
 	"Limit glyph depth to 16 bits (it is usually 16 or 32).
-	
+
 	StrikeFont limitTo16Bits
 	"
 	StrikeFont allInstances do: [ :f | f
-		setGlyphsDepthAtMost: 16 ].
+		setGlyphsDepthAtMost: 16 ]
 ]
 
 { #category : #'font creation' }
@@ -231,9 +231,9 @@ StrikeFont class >> listFontNames [
 	| font fontNames index |
 	fontNames := Array new writeStream.
 	index := 0.
-	
+
 	[ font := self listFont: index.
-	font == nil ] whileFalse: 
+	font == nil ] whileFalse:
 		[ fontNames nextPut: font.
 		index := index + 1 ].
 	^ fontNames contents
@@ -290,7 +290,7 @@ StrikeFont class >> makeTabVisible [
 ]
 
 { #category : #'instance creation' }
-StrikeFont class >> passwordFontSize: aSize [ 
+StrikeFont class >> passwordFontSize: aSize [
 	^ FixedFaceFont new passwordFont fontSize: aSize
 ]
 
@@ -337,16 +337,16 @@ StrikeFont class >> primitiveFontEncoding: fontHandle [
 ]
 
 { #category : #examples }
-StrikeFont class >> readStrikeFont2Family: familyName [ 
+StrikeFont class >> readStrikeFont2Family: familyName [
 	"StrikeFont readStrikeFont2Family: 'Lucida'"
 	^self readStrikeFont2Family: familyName fromDirectory: FileSystem workingDirectory
 ]
 
 { #category : #examples }
-StrikeFont class >> readStrikeFont2Family: familyName fromDirectory: aDirectory [ 
+StrikeFont class >> readStrikeFont2Family: familyName fromDirectory: aDirectory [
 	"StrikeFont readStrikeFont2Family: 'Lucida' fromDirectory: FileDirectory default"
-	"This utility reads all available .sf2 StrikeFont files for a given family from  
-	the current directory. It returns an Array, sorted by size, suitable for handing 
+	"This utility reads all available .sf2 StrikeFont files for a given family from
+	the current directory. It returns an Array, sorted by size, suitable for handing
 	to TextStyle newFontArray: ."
 	"For this utility to work as is, the .sf2 files must be named 'familyNN.sf2'."
 	| files strikeFonts fontArray |
@@ -357,7 +357,7 @@ StrikeFont class >> readStrikeFont2Family: familyName fromDirectory: aDirectory 
 	fontArray := strikeFonts asArray.
 	^ fontArray
 
-	"TextConstants at: #Lucida put: (TextStyle fontArray: (StrikeFont 
+	"TextConstants at: #Lucida put: (TextStyle fontArray: (StrikeFont
 	readStrikeFont2Family: 'Lucida'))."
 ]
 
@@ -366,12 +366,12 @@ StrikeFont class >> saveSpace [
 	"Removes glyphs over 128, leaving only lower ascii.
 	Also limit glyph depth to 4 bits (it is usually 16 or 32).
 	This effectively turns off subpixel rendering, as glyphs will only have 16 shades of gray.
-	
+
 	StrikeFont saveSpace
 	"
 	StrikeFont allInstances do: [ :f | f
 		stripHighGlyphs;
-		setGlyphsDepthAtMost: 4 ].
+		setGlyphsDepthAtMost: 4 ]
 ]
 
 { #category : #accessing }
@@ -382,11 +382,11 @@ StrikeFont class >> setupDefaultFallbackFont [
 	(self defaultFallbackFontKeys
 		collect: [:e | TextStyle named: e])
 		do: [:style | style fontArray
-				do: [:e | 
+				do: [:e |
 					e reset.
 					(e respondsTo: #fontArray)
-						ifTrue: [e fontArray 
-								do: [:f | f setupDefaultFallbackFont]]]].
+						ifTrue: [e fontArray
+								do: [:f | f setupDefaultFallbackFont]]]]
 ]
 
 { #category : #'system startup' }
@@ -394,12 +394,12 @@ StrikeFont class >> shutDown [
 	"StrikeFont shutDown"
 	"Deallocate synthetically derived copies of base fonts to save space"
 	self allSubInstancesDo: [ :sf | sf reset ].
-	StrikeFontSet allSubInstancesDo: [ :sf | sf reset ].
+	StrikeFontSet allSubInstancesDo: [ :sf | sf reset ]
 ]
 
 { #category : #'character shapes' }
 StrikeFont class >> useUnderscoreIfOver1bpp [
-	"Sets underscore and caret glyphs for chars 95 and 94. 
+	"Sets underscore and caret glyphs for chars 95 and 94.
 	Only for enhanced StrikeFonts, i.e. those with glyphs of more than 1bpp.
 	ASCII standard glyphs"
 	"
@@ -410,7 +410,7 @@ StrikeFont class >> useUnderscoreIfOver1bpp [
 
 { #category : #'character shapes' }
 StrikeFont >> alter: char formBlock: formBlock [
-	self characterFormAt: char 
+	self characterFormAt: char
 		put: (formBlock value: (self characterFormAt: char))
 ]
 
@@ -436,29 +436,29 @@ StrikeFont >> ascentOf: aCharacter [
 			^ fallbackFont ascentOf: aCharacter.
 		].
 	].
-	^ self ascent.
+	^ self ascent
 ]
 
 { #category : #accessing }
 StrikeFont >> baseKern [
 	"Return the base kern value to be used for all characters."
-	
+
 	| italic |
 
-	italic := emphasis allMask: 2.	
+	italic := emphasis allMask: 2.
 	"Are we a bitmapped font with alpha, whose italic property is not synthetic?"
 	(self isSyntheticItalic not and: [ glyphs depth > 1 ]) ifTrue: [
 		^(italic or: [ pointSize < 9 ])
 			ifTrue: [ 1 ]
 			ifFalse: [ 0] ].
-	
+
 	italic ifFalse: [^ 0].
 	^ ((self height-1-self ascent+4)//4 max: 0)  "See makeItalicGlyphs"
 		+ (((self ascent-5+4)//4 max: 0))
 ]
 
 { #category : #emphasis }
-StrikeFont >> bonk: glyphForm with: bonkForm [ 
+StrikeFont >> bonk: glyphForm with: bonkForm [
 	"Bonking means to run through the glyphs clearing out black pixels
 	between characters to prevent them from straying into an adjacent
 	character as a result of, eg, bolding or italicizing"
@@ -472,27 +472,27 @@ StrikeFont >> bonk: glyphForm with: bonkForm [
 		combinationRule: Form erase;
 		destY: 0.
 	x := self xTable.
-	(x isMemberOf: SparseLargeTable) 
-		ifTrue: 
-			[ x base 
+	(x isMemberOf: SparseLargeTable)
+		ifTrue:
+			[ x base
 				to: x size - 1
-				do: 
-					[ :i | 
+				do:
+					[ :i |
 					bb
 						destX: (x at: i) + offset;
 						copyBits ] ]
-		ifFalse: 
-			[ 1 
+		ifFalse:
+			[ 1
 				to: x size - 1
-				do: 
-					[ :i | 
+				do:
+					[ :i |
 					bb
 						destX: (x at: i) + offset;
 						copyBits ] ]
 ]
 
 { #category : #building }
-StrikeFont >> buildFromForm: allGlyphs data: data name: aString [ 
+StrikeFont >> buildFromForm: allGlyphs data: data name: aString [
 	| x |
 	pointSize := data first.
 	ascent := data second.
@@ -508,15 +508,15 @@ StrikeFont >> buildFromForm: allGlyphs data: data name: aString [
 	maxWidth := 0.
 	glyphs := allGlyphs.
 	x := 0.
-	minAscii 
+	minAscii
 		to: maxAscii + 1
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			x := data at: i - minAscii + 4.
-			xTable 
+			xTable
 				at: i + 1
 				put: x ].
-	xTable 
+	xTable
 		at: 258
 		put: x.
 	self reset.
@@ -524,7 +524,7 @@ StrikeFont >> buildFromForm: allGlyphs data: data name: aString [
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> buildfontNamed: nm fromForms: forms startingAtAscii: startAscii ascent: a descent: d maxWid: m [ 
+StrikeFont >> buildfontNamed: nm fromForms: forms startingAtAscii: startAscii ascent: a descent: d maxWid: m [
 	"This builds a StrikeFont instance from existing forms."
 	| lastAscii width ascii charForm missingForm tempGlyphs |
 	name := nm.
@@ -532,7 +532,7 @@ StrikeFont >> buildfontNamed: nm fromForms: forms startingAtAscii: startAscii as
 	descent := 3.
 	maxWidth := 16.
 	pointSize := 8.
-	name := (name copyWithout: Character space) , (pointSize < 10 
+	name := (name copyWithout: Character space) , (pointSize < 10
 			ifTrue: [ '0' , pointSize printString ]
 			ifFalse: [ pointSize printString ]).
 	minAscii := 258.
@@ -543,89 +543,89 @@ StrikeFont >> buildfontNamed: nm fromForms: forms startingAtAscii: startAscii as
 	type := 0.	"ignored for now"
 	tempGlyphs := Form extent: (maxWidth * 257) @ self height.
 	xTable := (Array new: 258) atAllPut: 0.
-	xTable 
+	xTable
 		at: 1
 		put: 0.
 
 	"Read character forms and blt into tempGlyphs"
 	lastAscii := -1.
-	1 
+	1
 		to: forms size
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			charForm := forms at: i.
 			width := charForm width.
 			ascii := startAscii - 1 + i.
-			self 
+			self
 				displayChar: ascii
 				form: charForm.
-			ascii = 256 
+			ascii = 256
 				ifTrue: [ missingForm := charForm deepCopy ]
-				ifFalse: 
+				ifFalse:
 					[ minAscii := minAscii min: ascii.
 					maxAscii := maxAscii max: ascii.
-					lastAscii + 1 
+					lastAscii + 1
 						to: ascii - 1
-						do: 
-							[ :as | 
-							xTable 
+						do:
+							[ :as |
+							xTable
 								at: as + 2
 								put: (xTable at: as + 1) ].
-					tempGlyphs 
+					tempGlyphs
 						copy: ((xTable at: ascii + 1) @ 0 extent: charForm extent)
 						from: 0 @ 0
 						in: charForm
 						rule: Form over.
-					xTable 
+					xTable
 						at: ascii + 2
 						put: (xTable at: ascii + 1) + width.
 					lastAscii := ascii ] ].
-	lastAscii + 1 
+	lastAscii + 1
 		to: maxAscii + 1
-		do: 
-			[ :as | 
-			xTable 
+		do:
+			[ :as |
+			xTable
 				at: as + 2
 				put: (xTable at: as + 1) ].
-	missingForm == nil ifFalse: 
-		[ tempGlyphs 
+	missingForm == nil ifFalse:
+		[ tempGlyphs
 			copy: missingForm boundingBox
 			from: missingForm
 			to: (xTable at: maxAscii + 2) @ 0
 			rule: Form over.
-		xTable 
+		xTable
 			at: maxAscii + 3
 			put: (xTable at: maxAscii + 2) + missingForm width ].
 	glyphs := Form extent: (xTable at: maxAscii + 3) @ self height.
-	glyphs 
+	glyphs
 		copy: glyphs boundingBox
 		from: 0 @ 0
 		in: tempGlyphs
 		rule: Form over.
-	xTable := xTable 
+	xTable := xTable
 		copyFrom: 1
 		to: maxAscii + 3.
 	characterToGlyphMap := nil
 ]
 
 { #category : #'character shapes' }
-StrikeFont >> characterForm: char pixelValueAt: pt put: val [ 
+StrikeFont >> characterForm: char pixelValueAt: pt put: val [
 	| f |
 	f := self characterFormAt: char.
-	f 
+	f
 		pixelAt: pt
 		put: val.
-	self 
+	self
 		characterFormAt: char
 		put: val
 ]
 
 { #category : #'character shapes' }
-StrikeFont >> characterFormAt: character [ 
+StrikeFont >> characterFormAt: character [
 	"Answer a Form copied out of the glyphs for the argument, character."
 	| ascii leftX rightX |
 	ascii := character charCode.
-	(ascii 
+	(ascii
 		between: minAscii
 		and: maxAscii) ifFalse: [ ascii := maxAscii + 1 ].
 	leftX := xTable at: ascii + 1.
@@ -635,30 +635,30 @@ StrikeFont >> characterFormAt: character [
 ]
 
 { #category : #'character shapes' }
-StrikeFont >> characterFormAt: character put: characterForm [ 
+StrikeFont >> characterFormAt: character put: characterForm [
 	"Copy characterForm over the glyph for the argument, character."
 	| ascii leftX rightX widthDif newGlyphs |
 	ascii := character asciiValue.
 	ascii < minAscii ifTrue: [ ^ self error: 'Cant store characters below min ascii' ].
-	ascii > maxAscii ifTrue: 
+	ascii > maxAscii ifTrue:
 		[ (self confirm: 'This font does not accomodate ascii values higher than ' , maxAscii printString , '.
-Do you wish to extend it permanently to handle values up to ' , ascii printString) 
+Do you wish to extend it permanently to handle values up to ' , ascii printString)
 			ifTrue: [ self extendMaxAsciiTo: ascii ]
 			ifFalse: [ ^ self error: 'No change made' ] ].
 	leftX := xTable at: ascii + 1.
 	rightX := xTable at: ascii + 2.
 	widthDif := characterForm width - (rightX - leftX).
-	widthDif ~= 0 ifTrue: 
+	widthDif ~= 0 ifTrue:
 		[ "Make new glyphs with more or less space for this char"
-		newGlyphs := Form 
+		newGlyphs := Form
 			extent: (glyphs width + widthDif) @ glyphs height
 			depth: glyphs depth.
-		newGlyphs 
+		newGlyphs
 			copy: (0 @ 0 corner: leftX @ glyphs height)
 			from: 0 @ 0
 			in: glyphs
 			rule: Form over.
-		newGlyphs 
+		newGlyphs
 			copy: ((rightX + widthDif) @ 0 corner: newGlyphs width @ glyphs height)
 			from: rightX @ 0
 			in: glyphs
@@ -666,14 +666,14 @@ Do you wish to extend it permanently to handle values up to ' , ascii printStrin
 		glyphs := newGlyphs.
 		"adjust further entries on xTable"
 		xTable := xTable copy.
-		ascii + 2 
+		ascii + 2
 			to: xTable size
-			do: 
-				[ :i | 
-				xTable 
+			do:
+				[ :i |
+				xTable
 					at: i
 					put: (xTable at: i) + widthDif ] ].
-	glyphs 
+	glyphs
 		copy: (leftX @ 0 extent: characterForm extent)
 		from: 0 @ 0
 		in: characterForm
@@ -685,11 +685,11 @@ f characterFormAt: $  put: (Form extent: (f widthOf: $ )+10@f height)
 ]
 
 { #category : #'character shapes' }
-StrikeFont >> characterFormAtMulti: character [ 
+StrikeFont >> characterFormAtMulti: character [
 	"Answer a Form copied out of the glyphs for the argument, character."
 	| ascii leftX rightX |
 	ascii := character charCode.
-	(ascii 
+	(ascii
 		between: minAscii
 		and: maxAscii) ifFalse: [ ascii := maxAscii + 1 ].
 	leftX := xTable at: ascii + 1.
@@ -703,18 +703,18 @@ StrikeFont >> characterToGlyphMap [
 ]
 
 { #category : #accessing }
-StrikeFont >> characterToGlyphMap: anArray [ 
+StrikeFont >> characterToGlyphMap: anArray [
 	characterToGlyphMap := anArray
 ]
 
 { #category : #displaying }
-StrikeFont >> characters: anInterval in: sourceString displayAt: aPoint clippedBy: clippingRectangle rule: ruleInteger fillColor: aForm kernDelta: kernDelta on: aBitBlt [ 
+StrikeFont >> characters: anInterval in: sourceString displayAt: aPoint clippedBy: clippingRectangle rule: ruleInteger fillColor: aForm kernDelta: kernDelta on: aBitBlt [
 	"Simple, slow, primitive method for displaying a line of characters.
 	No wrap-around is provided."
 	| destPoint |
 	destPoint := aPoint.
-	anInterval do: 
-		[ :i | | rightX sourceRect leftX ascii | 
+	anInterval do:
+		[ :i | | rightX sourceRect leftX ascii |
 		self flag: #yoDisplay.
 		"if the char is not supported, fall back to the specified fontset."
 		ascii := (sourceString at: i) charCode.
@@ -722,7 +722,7 @@ StrikeFont >> characters: anInterval in: sourceString displayAt: aPoint clippedB
 		leftX := xTable at: ascii + 1.
 		rightX := xTable at: ascii + 2.
 		sourceRect := leftX @ 0 extent: (rightX - leftX) @ self height.
-		aBitBlt 
+		aBitBlt
 			copyFrom: sourceRect
 			in: glyphs
 			to: destPoint.
@@ -733,7 +733,7 @@ StrikeFont >> characters: anInterval in: sourceString displayAt: aPoint clippedB
 
 { #category : #testing }
 StrikeFont >> checkCharacter: character [
-	"Answer a Character that is within the ascii range of the receiver--either 
+	"Answer a Character that is within the ascii range of the receiver--either
 	character or the last character in the receiver."
 
 	| ascii |
@@ -748,12 +748,12 @@ StrikeFont >> createCharacterToGlyphMap [
         "Private. Create the character to glyph mapping for a font that didn't have any before. This is basically equivalent to what the former setStopCondition did, only based on indexes."
 
         maxAscii < 256 ifTrue: [^ (1 to: 256) collect: [:i | i - 1]].
-        ^ nil.
+        ^ nil
 ]
 
 { #category : #copying }
 StrikeFont >> deepCopy [
- " there is a circular reference from the derivative fonts back to the receiver. It is therefore not possible to make a deep copy. We make a sahllow copy. The method postCopy can be used to modify the shallow copy. " 
+ " there is a circular reference from the derivative fonts back to the receiver. It is therefore not possible to make a deep copy. We make a sahllow copy. The method postCopy can be used to modify the shallow copy. "
   ^self copy
 ]
 
@@ -761,7 +761,7 @@ StrikeFont >> deepCopy [
 StrikeFont >> derivativeFont: aStrikeFont at: index [
 
 	| newDeriv |
-	(aStrikeFont isNil and: [ index = 0 ]) 
+	(aStrikeFont isNil and: [ index = 0 ])
 		ifTrue: [derivativeFonts := nil. ^ self].
 	derivativeFonts ifNil: [derivativeFonts := Array new: 32].
 	derivativeFonts size < 32 ifTrue: [
@@ -769,7 +769,7 @@ StrikeFont >> derivativeFont: aStrikeFont at: index [
 		newDeriv replaceFrom: 1 to: derivativeFonts size with: derivativeFonts.
 		derivativeFonts := newDeriv.
 	].
-	derivativeFonts at: index put: aStrikeFont.
+	derivativeFonts at: index put: aStrikeFont
 ]
 
 { #category : #accessing }
@@ -801,29 +801,28 @@ StrikeFont >> descentOf: aCharacter [
 			^ fallbackFont descentOf: aCharacter.
 		].
 	].
-	^ self descent.
+	^ self descent
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> displayChar: ascii form: charForm [ 
-	"Convenience utility used during conversion of BitFont files"
+StrikeFont >> displayChar: ascii form: charForm [
+
 	| m bigForm |
 	Display fillBlack: (0 @ 0 extent: 20 @ 14).
 	ascii printString displayAt: 0 @ 2.
-	charForm width > 0 ifTrue: 
-		[ m := 5.
-		bigForm := charForm 
-			magnify: charForm boundingBox
-			by: m @ m.
-		Display 
-			border: ((bigForm boundingBox expandBy: m) translateBy: 50 @ 2)
-			width: m.
-		bigForm displayAt: 50 @ 2.
-		Display fillBlack: (50 @ 2 + ((m * charForm width) @ 0) extent: 1 @ (m * self height)) ]
+	charForm width > 0 ifFalse: [ ^ self ].
+	m := 5.
+	bigForm := charForm magnifyBy: m @ m.
+	Display
+		border: ((bigForm boundingBox expandBy: m) translateBy: 50 @ 2)
+		width: m.
+	bigForm displayAt: 50 @ 2.
+	Display fillBlack:
+		(50 @ 2 + (m * charForm width @ 0) extent: 1 @ (m * self height))
 ]
 
 { #category : #displaying }
-StrikeFont >> displayLine: aString at: aPoint [ 
+StrikeFont >> displayLine: aString at: aPoint [
 	"Display the characters in aString, starting at position aPoint."
 
 	self characters: (1 to: aString size)
@@ -833,30 +832,30 @@ StrikeFont >> displayLine: aString at: aPoint [
 		rule: Form over
 		fillColor: nil
 		kernDelta: 0
-		on: (BitBlt toForm: Display).
+		on: (BitBlt toForm: Display)
 ]
 
 { #category : #displaying }
-StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [ 
+StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
 	| nextWide destX leftX rightX glyphInfo char destY gfont charIndex |
 	destX := aPoint x.
 	charIndex := startIndex.
 	glyphInfo := Array new: 5.
-	[ charIndex <= stopIndex ] whileTrue: 
+	[ charIndex <= stopIndex ] whileTrue:
 		[ nextWide := aString indexOfWideCharacterFrom: charIndex to: stopIndex.
 		nextWide = 0 ifTrue: [nextWide := stopIndex +1].
-		nextWide > charIndex ifTrue: [ destX := (aBitBlt displayString: aString 
-			from: charIndex 
+		nextWide > charIndex ifTrue: [ destX := (aBitBlt displayString: aString
+			from: charIndex
 			to: nextWide -1
 			at: destX @ aPoint y
 			strikeFont: self
 			kern: kernDelta) x.
-			charIndex := nextWide]. 
+			charIndex := nextWide].
 		nextWide > stopIndex ifFalse: [
 		char := aString at: charIndex.
 		(self hasGlyphOf: char)
-			ifTrue: 
-				[ self 
+			ifTrue:
+				[ self
 					glyphInfoOf: char
 					into: glyphInfo.
 				leftX := glyphInfo at: 2.
@@ -866,73 +865,73 @@ StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopI
 				(gfont == aBitBlt lastFont) ifFalse: [gfont installOn: aBitBlt].
 				aBitBlt displayGlyph: (glyphInfo at: 1) at: (destX @ (baselineY - destY)) left: leftX right: rightX font: self.
 				destX := destX + (rightX - leftX + kernDelta).
-				 ] 
-			ifFalse: 
+				 ]
+			ifFalse:
 				[fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX@destY kern: kernDelta baselineY: baselineY.
 				destX := destX + (fallbackFont widthOf: char) + kernDelta.
 				charIndex := charIndex + 1]]].
-	^ Array 
+	^ Array
 		with: charIndex
 		with: aPoint + (destX @ 0)
 ]
 
 { #category : #displaying }
 StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	"Draw the given string from startIndex to stopIndex 
+	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) BitBlt."
-	
+
 		"Somewhat of a hack:
 	The scanner seem to only pass in runs of either all ASCII or all non-ASCII characters. If all characters are ascii, then it's safe to use basic rendering-method."
 	(aString hasWideCharacterFrom: startIndex to: stopIndex) ifTrue:  [^ self displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: aPoint y + self ascent.].
 
-	^ aBitBlt displayString: aString 
-			from: startIndex 
-			to: stopIndex 
-			at: aPoint 
+	^ aBitBlt displayString: aString
+			from: startIndex
+			to: stopIndex
+			at: aPoint
 			strikeFont: self
-			kern: kernDelta.
+			kern: kernDelta
 ]
 
 { #category : #displaying }
 StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-	"Draw the given string from startIndex to stopIndex 
+	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) BitBlt."
-	
+
 	"Somewhat of a hack:
 	The scanner seem to only pass in runs of either all ASCII or all non-ASCII characters. If all characters are ascii, then it's safe to use basic rendering-method."
-	(aString hasWideCharacterFrom: startIndex to: stopIndex) ifTrue: [^self displayMultiString: aString 
-						on: aBitBlt 
-						from: startIndex 
-						to: stopIndex 
-						at: aPoint 
-						kern: kernDelta 
+	(aString hasWideCharacterFrom: startIndex to: stopIndex) ifTrue: [^self displayMultiString: aString
+						on: aBitBlt
+						from: startIndex
+						to: stopIndex
+						at: aPoint
+						kern: kernDelta
 						baselineY: baselineY.].
 
-	^ aBitBlt displayString: aString 
-			from: startIndex 
+	^ aBitBlt displayString: aString
+			from: startIndex
 			to: stopIndex
-			at: aPoint 
+			at: aPoint
 			strikeFont: self
-			kern: kernDelta.
+			kern: kernDelta
 ]
 
 { #category : #emphasis }
 StrikeFont >> emphasis [
-	"Answer the integer code for synthetic bold, italic, underline, and 
+	"Answer the integer code for synthetic bold, italic, underline, and
 	strike-out."
 
 	^emphasis
 ]
 
 { #category : #emphasis }
-StrikeFont >> emphasis: code [ 
-	"Set the integer code for synthetic bold, itallic, underline, and strike-out, 
+StrikeFont >> emphasis: code [
+	"Set the integer code for synthetic bold, itallic, underline, and strike-out,
 	where bold=1, italic=2, underlined=4, and struck out=8."
 	emphasis := code
 ]
 
 { #category : #emphasis }
-StrikeFont >> emphasized: code [ 
+StrikeFont >> emphasized: code [
 	"Answer a copy of the receiver with emphasis set to include code."
 	| derivative addedEmphasis base safeCode |
 	code = 0 ifTrue: [ ^ self ].
@@ -943,23 +942,23 @@ StrikeFont >> emphasized: code [
 	"Dont have it -- derive from another with one with less emphasis"
 	addedEmphasis := 1 bitShift: safeCode highBit - 1.
 	base := self emphasized: safeCode - addedEmphasis.	"Order is Bold, Ital, Under, Narrow"
-	addedEmphasis = 1 ifTrue: 
+	addedEmphasis = 1 ifTrue:
 		[ "Compute synthetic bold version of the font"
 		derivative := (base copy ensureCleanBold name: base name , 'B') makeBoldGlyphs ].
-	addedEmphasis = 2 ifTrue: 
+	addedEmphasis = 2 ifTrue:
 		[ "Compute synthetic italic version of the font"
 		derivative := (base copy name: base name , 'I') makeItalicGlyphs ].
-	addedEmphasis = 4 ifTrue: 
+	addedEmphasis = 4 ifTrue:
 		[ "Compute underlined version of the font"
 		derivative := (base copy name: base name , 'U') makeUnderlinedGlyphs ].
-	addedEmphasis = 8 ifTrue: 
+	addedEmphasis = 8 ifTrue:
 		[ "Compute narrow version of the font"
 		derivative := (base copy name: base name , 'N') makeCondensedGlyphs ].
-	addedEmphasis = 16 ifTrue: 
+	addedEmphasis = 16 ifTrue:
 		[ "Compute struck-out version of the font"
 		derivative := (base copy name: base name , 'X') makeStruckOutGlyphs ].
 	derivative emphasis: safeCode.
-	derivativeFonts 
+	derivativeFonts
 		at: safeCode
 		put: derivative.
 	^ derivative
@@ -971,18 +970,18 @@ StrikeFont >> ensureCleanBold [
 	so as not to cause artifacts in neighboring characters in bold or italic."
 	| wider glyph |
 	emphasis = 0 ifFalse: [ ^ self ].
-	minAscii 
+	minAscii
 		to: maxAscii
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			glyph := self characterFormAt: (Character value: i).
-			(glyph copy: (glyph boundingBox topRight - (1 @ 0) corner: glyph boundingBox bottomRight)) isAllWhite ifFalse: 
-				[ wider := Form 
+			(glyph copy: (glyph boundingBox topRight - (1 @ 0) corner: glyph boundingBox bottomRight)) isAllWhite ifFalse:
+				[ wider := Form
 					extent: (glyph width + 1) @ glyph height
 					depth: glyph depth.
 				glyph depth > 1 ifTrue: [ wider fillWhite ].
 				glyph displayOn: wider.
-				self 
+				self
 					characterFormAt: (Character value: i)
 					put: wider ] ]
 	"
@@ -993,13 +992,13 @@ StrikeFont shutDown.  'Flush synthetic fonts'.
 ]
 
 { #category : #'character shapes' }
-StrikeFont >> extendMaxAsciiTo: newMax [ 
+StrikeFont >> extendMaxAsciiTo: newMax [
 	"Extend the range of this font so that it can display glyphs up to newMax."
 	newMax + 3 <= xTable size ifTrue: [ ^ self ].	"No need to extend."
 	xTable size = (maxAscii + 3) ifFalse: [ ^ self error: 'This font is not well-formed.' ].
 
 	"Insert a bunch of zero-width characters..."
-	xTable := (xTable 
+	xTable := (xTable
 		copyFrom: 1
 		to: maxAscii + 2) , ((maxAscii + 1 to: newMax) collect: [ :i | xTable at: maxAscii + 2 ]) , {  (xTable at: maxAscii + 3)  }.
 	maxAscii := newMax.
@@ -1013,7 +1012,7 @@ StrikeFont >> fallbackFont [
 ]
 
 { #category : #accessing }
-StrikeFont >> fallbackFont: aFontSetOrNil [ 
+StrikeFont >> fallbackFont: aFontSetOrNil [
 	fallbackFont := aFontSetOrNil
 ]
 
@@ -1045,25 +1044,25 @@ StrikeFont >> fillZeroWidthSlots [
 	| nullGlyph |
 	nullGlyph := (Form extent: 1 @ glyphs height) fillGray.
 	"Now fill the empty slots with narrow box characters."
-	minAscii 
+	minAscii
 		to: maxAscii
-		do: 
-			[ :i | 
-			(self widthOf: (Character value: i)) = 0 ifTrue: 
-				[ self 
+		do:
+			[ :i |
+			(self widthOf: (Character value: i)) = 0 ifTrue:
+				[ self
 					characterFormAt: (Character value: i)
 					put: nullGlyph ] ]
 ]
 
 { #category : #'multibyte character methods' }
-StrikeFont >> fixAscent: a andDescent: d head: h [ 
+StrikeFont >> fixAscent: a andDescent: d head: h [
 	"(a + d) = (ascent + descent) ifTrue: ["
 	| bb newGlyphs |
 	ascent := a.
 	descent := d.
 	newGlyphs := Form extent: glyphs width @ (h + glyphs height).
 	bb := BitBlt toForm: newGlyphs.
-	bb 
+	bb
 		copy: (0 @ h extent: glyphs extent)
 		from: 0 @ 0
 		in: glyphs
@@ -1078,16 +1077,16 @@ StrikeFont >> fixOneWideChars [
 	"This fixes all 1-wide characters to be 2 wide with blank on the right
 	so as not to cause artifacts in neighboring characters in bold or italic."
 	| twoWide |
-	minAscii 
+	minAscii
 		to: maxAscii
-		do: 
-			[ :i | 
-			(self widthOf: (Character value: i)) = 1 ifTrue: 
+		do:
+			[ :i |
+			(self widthOf: (Character value: i)) = 1 ifTrue:
 				[ twoWide := Form extent: 2 @ glyphs height.
-				(self characterFormAt: (Character value: i)) 
+				(self characterFormAt: (Character value: i))
 					displayOn: twoWide
 					at: 0 @ 0.
-				self 
+				self
 					characterFormAt: (Character value: i)
 					put: twoWide ] ]
 	"
@@ -1101,19 +1100,19 @@ StrikeFont >> fixXTable [
 	| newXTable val |
 	xTable size >= 258 ifTrue: [ ^ self ].
 	newXTable := Array new: 258.
-	1 
+	1
 		to: xTable size
-		do: 
-			[ :i | 
-			newXTable 
+		do:
+			[ :i |
+			newXTable
 				at: i
 				put: (xTable at: i) ].
 	val := xTable at: xTable size.
-	xTable size + 1 
+	xTable size + 1
 		to: 258
-		do: 
-			[ :i | 
-			newXTable 
+		do:
+			[ :i |
+			newXTable
 				at: i
 				put: val ].
 	minAscii := 0.
@@ -1137,8 +1136,8 @@ StrikeFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 		].
 		code := 0.
 	] ifTrue: [
-		code := characterToGlyphMap 
-				ifNotNil: [:map | map at: aCharacter charCode +1] 
+		code := characterToGlyphMap
+				ifNotNil: [:map | map at: aCharacter charCode +1]
 				ifNil: [aCharacter charCode].
 	].
 	glyphInfoArray at: 1 put: glyphs;
@@ -1146,14 +1145,14 @@ StrikeFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 		at: 3 put: (xTable at: code + 2);
 		at: 4 put: (self ascentOf: aCharacter);
 		at: 5 put: self.
-	^ glyphInfoArray.
+	^ glyphInfoArray
 ]
 
 { #category : #accessing }
-StrikeFont >> glyphOf: aCharacter [ 
+StrikeFont >> glyphOf: aCharacter [
 	"Answer the width of the argument as a character in the receiver."
 	| code |
-	(self hasGlyphOf: aCharacter) ifFalse: 
+	(self hasGlyphOf: aCharacter) ifFalse:
 		[ fallbackFont ifNotNil: [ ^ fallbackFont glyphOf: aCharacter ].
 		^ (Form extent: 1 @ self height) fillColor: Color white ].
 	code := aCharacter charCode.
@@ -1162,7 +1161,7 @@ StrikeFont >> glyphOf: aCharacter [
 
 { #category : #accessing }
 StrikeFont >> glyphs [
-	"Answer a Form containing the bits representing the characters of the 
+	"Answer a Form containing the bits representing the characters of the
 	receiver."
 
 	^glyphs
@@ -1182,7 +1181,7 @@ StrikeFont >> hasGlyphOf: aCharacter [
 
 { #category : #accessing }
 StrikeFont >> height [
-	"Answer the height of the receiver, total of maximum extents of 
+	"Answer the height of the receiver, total of maximum extents of
 	characters above and below the baseline."
 
 	^self ascent + self descent
@@ -1196,20 +1195,20 @@ StrikeFont >> heightOf: aCharacter [
 			^ fallbackFont heightOf: aCharacter.
 		].
 	].
-	^ self height.
+	^ self height
 ]
 
 { #category : #displaying }
 StrikeFont >> installOn: aDisplayContext [
 
-	^aDisplayContext installStrikeFont: self.
+	^aDisplayContext installStrikeFont: self
 ]
 
 { #category : #displaying }
 StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
-	^aDisplayContext 
+	^aDisplayContext
 		installStrikeFont: self
-		foregroundColor: foregroundColor 
+		foregroundColor: foregroundColor
 		backgroundColor: backgroundColor
 ]
 
@@ -1219,8 +1218,8 @@ StrikeFont >> isSynthetic [
 ]
 
 { #category : #emphasis }
-StrikeFont >> isSynthetic: aBoolean [ 
-	type := aBoolean 
+StrikeFont >> isSynthetic: aBoolean [
+	type := aBoolean
 		ifTrue: [ 3 ]
 		ifFalse: [ 0 ]
 ]
@@ -1231,8 +1230,8 @@ StrikeFont >> isSyntheticItalic [
 ]
 
 { #category : #emphasis }
-StrikeFont >> isSyntheticItalic: aBoolean [ 
-	aBoolean 
+StrikeFont >> isSyntheticItalic: aBoolean [
+	aBoolean
 		ifTrue: [type :=  5]
 ]
 
@@ -1253,21 +1252,21 @@ StrikeFont >> makeAssignArrow [
 	arrowRight := arrowForm width - 2.
 	arrowHeadLength := (arrowRight - arrowLeft) * 2 // 5.
 	"Draw the lines"
-	arrowCanvas 
+	arrowCanvas
 		line: arrowLeft @ arrowY
 		to: arrowRight @ arrowY
 		color: Color black.
-	arrowCanvas 
+	arrowCanvas
 		line: arrowLeft @ arrowY
 		to: (arrowLeft + arrowHeadLength) @ (arrowY - arrowHeadLength)
 		color: Color black.
-	arrowCanvas 
+	arrowCanvas
 		line: arrowLeft @ arrowY
 		to: (arrowLeft + arrowHeadLength) @ (arrowY + arrowHeadLength)
 		color: Color black.
 
 	"Replace the glyph"
-	self 
+	self
 		characterFormAt: $_
 		put: arrowForm
 ]
@@ -1279,31 +1278,31 @@ StrikeFont >> makeBoldGlyphs [
 	| g bonkForm |
 	g := glyphs deepCopy.
 	bonkForm := (Form extent: 1 @ 16) fillBlack offset: -1 @ 0.
-	self 
+	self
 		bonk: g
 		with: bonkForm.
-	glyphs depth = 1 
-		ifTrue: 
-			[ g 
+	glyphs depth = 1
+		ifTrue:
+			[ g
 				copyBits: g boundingBox
 				from: g
 				at: 1 @ 0
 				clippingBox: g boundingBox
 				rule: Form under
 				fillColor: nil ]
-		ifFalse: 
-			[ 0 
+		ifFalse:
+			[ 0
 				to: g width - 2
-				do: 
-					[ :x | 
-					0 
+				do:
+					[ :x |
+					0
 						to: g height - 1
-						do: 
-							[ :y | 
-							(glyphs colorAt: x @ y) = Color white ifFalse: 
-								[ g 
+						do:
+							[ :y |
+							(glyphs colorAt: x @ y) = Color white ifFalse:
+								[ g
 									colorAt: (x + 1) @ y
-									put: ((glyphs colorAt: (x + 1) @ y) = Color white 
+									put: ((glyphs colorAt: (x + 1) @ y) = Color white
 											ifTrue: [ glyphs colorAt: x @ y ]
 											ifFalse: [ Color black ]) ] ] ] ].
 	glyphs := g.
@@ -1317,7 +1316,7 @@ StrikeFont >> makeCarriageReturnsWhite [
 	| crForm |
 	crForm := self characterFormAt: 13 asCharacter.
 	crForm fillWhite.
-	self 
+	self
 		characterFormAt: 13 asCharacter
 		put: crForm
 ]
@@ -1329,22 +1328,22 @@ StrikeFont >> makeCondensedGlyphs [
 	| g newXTable x x1 w |
 	g := glyphs deepCopy.
 	newXTable := Array new: xTable size.
-	newXTable 
+	newXTable
 		at: 1
 		put: (x := xTable at: 1).
-	1 
+	1
 		to: xTable size - 1
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			x1 := xTable at: i.
 			w := (xTable at: i + 1) - x1.
 			w > 1 ifTrue: [ w := w - 1 ].	"Shrink every character wider than 1"
-			g 
+			g
 				copy: (x @ 0 extent: w @ g height)
 				from: x1 @ 0
 				in: glyphs
 				rule: Form over.
-			newXTable 
+			newXTable
 				at: i + 1
 				put: (x := x + w) ].
 	xTable := newXTable.
@@ -1364,11 +1363,11 @@ StrikeFont >> makeControlCharsVisible [
 	| glyph |
 	self characterToGlyphMap.
 	glyph := self characterFormAt: Character space.
-	glyph 
+	glyph
 		border: glyph boundingBox
 		width: 1
 		fillColor: Color blue.
-	self 
+	self
 		characterFormAt: (Character value: 133)
 		put: glyph.
 
@@ -1403,9 +1402,9 @@ StrikeFont >> makeControlCharsVisible [
 		29
 		30
 		31
-	) do: 
-		[ :ascii | 
-		characterToGlyphMap 
+	) do:
+		[ :ascii |
+		characterToGlyphMap
 			at: ascii + 1
 			put: 133 ]
 ]
@@ -1418,49 +1417,49 @@ StrikeFont >> makeItalicGlyphs [
 	| extraWidth newGlyphs newXTable x newX w extraOnLeft |
 	extraOnLeft := (self height - 1 - self ascent + 4) // 4 max: 0.
 	extraWidth := ((self ascent - 5 + 4) // 4 max: 0) + extraOnLeft.
-	newGlyphs := Form 
+	newGlyphs := Form
 		extent: (glyphs width + ((maxAscii + 1 - minAscii) * extraWidth)) @ glyphs height
 		depth: glyphs depth.
 	newGlyphs fillWhite.
 	newXTable := xTable copy.
 
 	"Copy glyphs into newGlyphs with room on left and right for overlap."
-	minAscii 
+	minAscii
 		to: maxAscii + 1
-		do: 
-			[ :ascii | 
+		do:
+			[ :ascii |
 			x := xTable at: ascii + 1.
 			w := (xTable at: ascii + 2) - x.
 			newX := newXTable at: ascii + 1.
-			newGlyphs 
+			newGlyphs
 				copy: ((newX + extraOnLeft) @ 0 extent: w @ glyphs height)
 				from: x @ 0
 				in: glyphs
 				rule: Form over.
-			newXTable 
+			newXTable
 				at: ascii + 2
 				put: newX + w + extraWidth ].
 	glyphs := newGlyphs.
 	xTable := newXTable.
 	"Slide the bitmaps left and right for synthetic italic effect."
-	4 
+	4
 		to: self ascent - 1
 		by: 4
-		do: 
-			[ :y | 
+		do:
+			[ :y |
 			"Slide ascenders right..."
-			glyphs 
+			glyphs
 				copy: (1 @ 0 extent: glyphs width @ (self ascent - y))
 				from: 0 @ 0
 				in: glyphs
 				rule: Form over ].
-	self ascent 
+	self ascent
 		to: self height - 1
 		by: 4
-		do: 
-			[ :y | 
+		do:
+			[ :y |
 			"Slide descenders left..."
-			glyphs 
+			glyphs
 				copy: (0 @ y extent: glyphs width @ glyphs height)
 				from: 1 @ y
 				in: glyphs
@@ -1480,15 +1479,15 @@ StrikeFont >> makeLfVisible [
 	| glyph |
 	self characterToGlyphMap.
 	glyph := self characterFormAt: (Character value: 163).
-	glyph 
+	glyph
 		border: glyph boundingBox
 		width: 1
 		fillColor: Color blue.
 	"	glyph := glyph reverse."
-	self 
+	self
 		characterFormAt: (Character value: 132)
 		put: glyph.
-	characterToGlyphMap 
+	characterToGlyphMap
 		at: 11
 		put: 132
 ]
@@ -1507,21 +1506,21 @@ StrikeFont >> makeReturnArrow [
 	arrowBottom := (arrowBottom min: arrowForm height) max: arrowForm height * 2 // 3.
 
 	"Draw the lines"
-	arrowCanvas 
+	arrowCanvas
 		line: arrowX @ arrowTop
 		to: arrowX @ arrowBottom
 		color: Color black.
-	arrowCanvas 
+	arrowCanvas
 		line: arrowX @ arrowTop
 		to: (arrowX - arrowHeadLength) @ (arrowTop + arrowHeadLength)
 		color: Color black.
-	arrowCanvas 
+	arrowCanvas
 		line: arrowX @ arrowTop
 		to: (arrowX + arrowHeadLength) @ (arrowTop + arrowHeadLength)
 		color: Color black.
 
 	"Replace the glyph"
-	self 
+	self
 		characterFormAt: $^
 		put: arrowForm
 ]
@@ -1589,13 +1588,13 @@ StrikeFont >> name [
 ]
 
 { #category : #accessing }
-StrikeFont >> name: aString [ 
+StrikeFont >> name: aString [
 	"Set the receiver's name."
 	name := aString
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> newFromStrike: fileName [ 
+StrikeFont >> newFromStrike: fileName [
 	"Build an instance from the strike font file name. The '.strike' extension
 	is optional."
 	| strike startName raster16  |
@@ -1604,9 +1603,9 @@ StrikeFont >> newFromStrike: fileName [
 
 	"strip off direcory name if any"
 	startName := name size.
-	
+
 	[ startName > 0 and: [ (name at: startName) ~= $> & ((name at: startName) ~= $]) ] ] whileTrue: [ startName := startName - 1 ].
-	name := name 
+	name := name
 		copyFrom: startName + 1
 		to: name size.
 	type := strike nextWord.	"type is ignored now -- simplest
@@ -1624,24 +1623,24 @@ StrikeFont >> newFromStrike: fileName [
 	superscript := (ascent - descent) // 3.
 	subscript := (descent - ascent) // 3.
 	emphasis := 0.
-	glyphs := Form 
+	glyphs := Form
 		extent: (raster16 * 16) @ self height
 		offset: 0 @ 0.
 	glyphs bits fromByteStream: strike.
 	xTable := (Array new: maxAscii + 3) atAllPut: 0.
-	(minAscii + 1 to: maxAscii + 3) do: 
-		[ :index | 
-		xTable 
+	(minAscii + 1 to: maxAscii + 3) do:
+		[ :index |
+		xTable
 			at: index
 			put: strike nextWord ].
 
 	"Set up space character"
-	((xTable at: Space asciiValue + 2) = 0 or: [ (xTable at: Space asciiValue + 2) = (xTable at: Space asciiValue + 1) ]) ifTrue: 
-		[ Space asciiValue + 2 
+	((xTable at: Space asciiValue + 2) = 0 or: [ (xTable at: Space asciiValue + 2) = (xTable at: Space asciiValue + 1) ]) ifTrue:
+		[ Space asciiValue + 2
 			to: xTable size
-			do: 
-				[ :index | 
-				xTable 
+			do:
+				[ :index |
+				xTable
 					at: index
 					put: (xTable at: index) + DefaultSpace ] ].
 	strike close.
@@ -1654,18 +1653,18 @@ StrikeFont >> pointSize [
 ]
 
 { #category : #accessing }
-StrikeFont >> pointSize: anInteger [ 
+StrikeFont >> pointSize: anInteger [
 	pointSize := anInteger
 ]
 
 { #category : #copying }
 StrikeFont >> postCopy [
- " the receiver is a just created shallow copy. This method gives it the final touch. " 
- 
+ " the receiver is a just created shallow copy. This method gives it the final touch. "
+
     glyphs := glyphs copy.
     xTable := xTable copy.
     characterToGlyphMap := characterToGlyphMap copy.
- 
+
     self reset.  " takes care of the derivative fonts "
 ]
 
@@ -1688,23 +1687,23 @@ StrikeFont >> raster [
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> readBFHeaderFrom: f [ 
-	name := self 
+StrikeFont >> readBFHeaderFrom: f [
+	name := self
 		restOfLine: 'Font name = '
 		from: f.
-	ascent := (self 
+	ascent := (self
 		restOfLine: 'Ascent = '
 		from: f) asNumber.
-	descent := (self 
+	descent := (self
 		restOfLine: 'Descent = '
 		from: f) asNumber.
-	maxWidth := (self 
+	maxWidth := (self
 		restOfLine: 'Maximum width = '
 		from: f) asNumber.
-	pointSize := (self 
+	pointSize := (self
 		restOfLine: 'Font size = '
 		from: f) asNumber.
-	name := (name copyWithout: Character space) , (pointSize < 10 
+	name := (name copyWithout: Character space) , (pointSize < 10
 			ifTrue: [ '0' , pointSize printString ]
 			ifFalse: [ pointSize printString ]).
 	minAscii := 258.
@@ -1716,22 +1715,22 @@ StrikeFont >> readBFHeaderFrom: f [
 ]
 
 { #category : #'multibyte character methods' }
-StrikeFont >> readCharacter: aBits from: aStream [ 
+StrikeFont >> readCharacter: aBits from: aStream [
 	| pos |
 	pos := 0.
-	12 timesRepeat: 
-		[ 1 
+	12 timesRepeat:
+		[ 1
 			to: 2
-			do: 
-				[ :w | 
-				aBits 
+			do:
+				[ :w |
+				aBits
 					byteAt: pos + w
 					put: aStream next ].
 		pos := pos + 4 ]
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> readFromBitFont: fileName [ 
+StrikeFont >> readFromBitFont: fileName [
 	"This builds a StrikeFont instance by reading the data file format
 	produced by BitFont, a widely available font conversion utility
 	written by Peter DiCamillo at Brown University"
@@ -1742,13 +1741,13 @@ StrikeFont >> readFromBitFont: fileName [
 
 	"NOTE: if font has been scaled (and in any case),
 	the REAL bitmap dimensions come after the header."
-	self 
+	self
 		restOfLine: 'Extent information for entire font'
 		from: f.
 	"Parse the following line (including mispelling!)"
 	"Image rectange: left = -2, right = 8, bottom = -2, top = 7"
 	tokens := f nextLine findTokens: ' '.
-	iRect := Rectangle 
+	iRect := Rectangle
 		left: (tokens at: 5) asNumber
 		right: (tokens at: 8) asNumber
 		top: (tokens at: 14) asNumber
@@ -1757,111 +1756,111 @@ StrikeFont >> readFromBitFont: fileName [
 	descent := iRect bottom negated.
 	tempGlyphs := Form extent: (maxWidth * 257) @ self height.
 	xTable := (Array new: 258) atAllPut: 0.
-	xTable 
+	xTable
 		at: 1
 		put: 0.
 
 	"Read character forms and blt into tempGlyphs"
 	lastAscii := -1.
-	
-	[ charLine := self 
+
+	[ charLine := self
 		restOfLine: 'Character: '
 		from: f.
-	charLine == nil ifFalse: 
+	charLine == nil ifFalse:
 		[ p := f position.
 		rectLine := f nextLine.
-		(rectLine beginsWith: 'Image rectange: left = ') 
-			ifTrue: 
+		(rectLine beginsWith: 'Image rectange: left = ')
+			ifTrue:
 				[ tokens := rectLine findTokens: ' '.
 				left := (tokens at: 5) asNumber.
 				right := (tokens at: 8) asNumber ]
-			ifFalse: 
+			ifFalse:
 				[ left := right := 0.
 				f position: p ].
-		width := (self 
+		width := (self
 			restOfLine: 'Width (final pen position) = '
 			from: f) asNumber - left max: right - left + 1.
 		(charLine beginsWith: 'Missing character') ifTrue: [ ascii := 256 ].
-		('x''*' match: charLine) ifTrue: 
-			[ ascii := Number 
-				readFrom: (charLine 
+		('x''*' match: charLine) ifTrue:
+			[ ascii := Number
+				readFrom: (charLine
 					copyFrom: 3
 					to: 4) asUppercase
 				base: 16 ].
 		charForm := Form extent: width @ self height.
-		('*[all blank]' match: charLine) ifFalse: 
-			[ self 
+		('*[all blank]' match: charLine) ifFalse:
+			[ self
 				restOfLine: '  +'
 				from: f.
-			1 
+			1
 				to: self height
-				do: 
-					[ :y | 
+				do:
+					[ :y |
 					line := f nextLine.
-					4 
+					4
 						to: (width + 3 min: line size + iRect left - left)
-						do: 
-							[ :x | 
-							(line at: x - iRect left + left) = $* ifTrue: 
-								[ charForm 
+						do:
+							[ :x |
+							(line at: x - iRect left + left) = $* ifTrue:
+								[ charForm
 									pixelValueAt: (x - 4) @ (y - 1)
 									put: 1 ] ] ] ] ].
-	charLine == nil ] whileFalse: 
-		[ self 
+	charLine == nil ] whileFalse:
+		[ self
 			displayChar: ascii
 			form: charForm.
-		ascii = 256 
+		ascii = 256
 			ifTrue: [ missingForm := charForm deepCopy ]
-			ifFalse: 
+			ifFalse:
 				[ minAscii := minAscii min: ascii.
 				maxAscii := maxAscii max: ascii.
-				lastAscii + 1 
+				lastAscii + 1
 					to: ascii - 1
-					do: 
-						[ :a | 
-						xTable 
+					do:
+						[ :a |
+						xTable
 							at: a + 2
 							put: (xTable at: a + 1) ].
-				tempGlyphs 
+				tempGlyphs
 					copy: ((xTable at: ascii + 1) @ 0 extent: charForm extent)
 					from: 0 @ 0
 					in: charForm
 					rule: Form over.
-				xTable 
+				xTable
 					at: ascii + 2
 					put: (xTable at: ascii + 1) + width.
 				lastAscii := ascii ] ].
 	f close.
-	lastAscii + 1 
+	lastAscii + 1
 		to: maxAscii + 1
-		do: 
-			[ :a | 
-			xTable 
+		do:
+			[ :a |
+			xTable
 				at: a + 2
 				put: (xTable at: a + 1) ].
-	missingForm == nil ifFalse: 
-		[ tempGlyphs 
+	missingForm == nil ifFalse:
+		[ tempGlyphs
 			copy: missingForm boundingBox
 			from: missingForm
 			to: (xTable at: maxAscii + 2) @ 0
 			rule: Form over.
-		xTable 
+		xTable
 			at: maxAscii + 3
 			put: (xTable at: maxAscii + 2) + missingForm width ].
 	glyphs := Form extent: (xTable at: maxAscii + 3) @ self height.
-	glyphs 
+	glyphs
 		copy: glyphs boundingBox
 		from: 0 @ 0
 		in: tempGlyphs
 		rule: Form over.
-	xTable := xTable 
+	xTable := xTable
 		copyFrom: 1
 		to: maxAscii + 3.
 	characterToGlyphMap := nil
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> readFromStrike2: fileName [ 
+StrikeFont >> readFromStrike2: fileName [
 	"StrikeFont new readFromStrike2: 'Palatino14.sf2'"
 	"Build an instance from the strike font stored in strike2 format.
 	fileName is of the form: <family name><pointSize>.sf2"
@@ -1873,10 +1872,10 @@ StrikeFont >> readFromStrike2: fileName [
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> readFromStrike2Stream: file [ 
+StrikeFont >> readFromStrike2Stream: file [
 	"Build an instance from the supplied binary stream on data in strike2 format"
 	type := file nextInt32.
-	type = 2 ifFalse: 
+	type = 2 ifFalse:
 		[ file close.
 		self error: 'not strike2 format' ].
 	minAscii := file nextInt32.
@@ -1889,20 +1888,20 @@ StrikeFont >> readFromStrike2Stream: file [
 	subscript := (descent - ascent) // 3.
 	emphasis := file nextInt32.
 	xTable := (Array new: maxAscii + 3) atAllPut: 0.
-	(minAscii + 1 to: maxAscii + 3) do: 
-		[ :index | 
-		xTable 
+	(minAscii + 1 to: maxAscii + 3) do:
+		[ :index |
+		xTable
 			at: index
 			put: file nextInt32 ].
 	glyphs := Form new readFrom: file.
 
 	"Set up space character"
-	((xTable at: Space asciiValue + 2) = 0 or: [ (xTable at: Space asciiValue + 2) = (xTable at: Space asciiValue + 1) ]) ifTrue: 
-		[ Space asciiValue + 2 
+	((xTable at: Space asciiValue + 2) = 0 or: [ (xTable at: Space asciiValue + 2) = (xTable at: Space asciiValue + 1) ]) ifTrue:
+		[ Space asciiValue + 2
 			to: xTable size
-			do: 
-				[ :index | 
-				xTable 
+			do:
+				[ :index |
+				xTable
 					at: index
 					put: (xTable at: index) + DefaultSpace ] ].
 	characterToGlyphMap := nil
@@ -1911,24 +1910,24 @@ StrikeFont >> readFromStrike2Stream: file [
 { #category : #emphasis }
 StrikeFont >> releaseCachedState [
 
-	self reset.
+	self reset
 ]
 
 { #category : #initialization }
 StrikeFont >> reset [
 	"Reset the cache of derivative emphasized fonts"
 	fallbackFont class = FixedFaceFont ifTrue: [ fallbackFont := nil ].
-	derivativeFonts notNil ifTrue: 
-		[ derivativeFonts withIndexDo: 
-			[ :f :i | 
-			(f notNil and: [ f isSynthetic ]) ifTrue: 
-				[ derivativeFonts 
+	derivativeFonts notNil ifTrue:
+		[ derivativeFonts withIndexDo:
+			[ :f :i |
+			(f notNil and: [ f isSynthetic ]) ifTrue:
+				[ derivativeFonts
 					at: i
 					put: nil ] ] ]
 	"
 	derivativeFonts := Array new: 32.
 	#('B' 'I' 'BI') doWithIndex:
-		[:tag :index | 
+		[:tag :index |
 		(style := TextStyle named: self familyName) ifNotNil:
 			[(font := style fontArray
 				detect: [:each | each name = (self name , tag)]
@@ -1937,27 +1936,27 @@ StrikeFont >> reset [
 ]
 
 { #category : #'file in/out' }
-StrikeFont >> restOfLine: leadString from: file [ 
+StrikeFont >> restOfLine: leadString from: file [
 	"Utility method to assist reading of BitFont data files"
 	| line |
-	
+
 	[ line := file nextLine.
-	line size < leadString size or: [ leadString ~= (line 
+	line size < leadString size or: [ leadString ~= (line
 			copyFrom: 1
 			to: leadString size) ] ] whileTrue: [ file atEnd ifTrue: [ ^ nil ] ].
-	^ line 
+	^ line
 		copyFrom: leadString size + 1
 		to: line size
 ]
 
 { #category : #accessing }
-StrikeFont >> setGlyphs: newGlyphs [ 
+StrikeFont >> setGlyphs: newGlyphs [
 	"Replace the glyphs form.  Used to make a synthetic bold or italic font quickly."
 	glyphs := newGlyphs
 ]
 
 { #category : #building }
-StrikeFont >> setGlyphsDepthAtMost: aNumber [ 
+StrikeFont >> setGlyphsDepthAtMost: aNumber [
 	glyphs depth > aNumber ifTrue: [ glyphs := glyphs asFormOfDepth: aNumber ]
 ]
 
@@ -1966,7 +1965,7 @@ StrikeFont >> setupDefaultFallbackFont [
 	| fonts f |
 	fonts := TextStyle default fontArray.
 	f := fonts first.
-	1 
+	1
 		to: fonts size
 		do: [ :i | self height > (fonts at: i) height ifTrue: [ f := fonts at: i ] ].
 	self fallbackFont: f.
@@ -1978,19 +1977,19 @@ StrikeFont >> stripHighGlyphs [
 	"Remove glyphs for characters above 128"
 	| i |
 	maxAscii := 127.
-	xTable := xTable 
+	xTable := xTable
 		copyFrom: 1
 		to: maxAscii + 3.
 	i := xTable at: maxAscii + 1.
-	xTable 
+	xTable
 		at: maxAscii + 2
 		put: i.
-	xTable 
+	xTable
 		at: maxAscii + 3
 		put: i.
 	glyphs := glyphs copy: (0 @ 0 extent: i @ glyphs height).
 	maxWidth := 0.
-	2 
+	2
 		to: xTable size
 		do: [ :ii | maxWidth := maxWidth max: (xTable at: ii) - (xTable at: ii - 1) - 1 ].
 	characterToGlyphMap := nil.
@@ -1999,7 +1998,7 @@ StrikeFont >> stripHighGlyphs [
 
 { #category : #accessing }
 StrikeFont >> subscript [
-	"Answer an integer that is the further vertical offset relative to the 
+	"Answer an integer that is the further vertical offset relative to the
 	baseline for positioning characters as subscripts."
 
 	^subscript
@@ -2007,7 +2006,7 @@ StrikeFont >> subscript [
 
 { #category : #accessing }
 StrikeFont >> superscript [
-	"Answer an integer that is the further vertical offset relative to the 
+	"Answer an integer that is the further vertical offset relative to the
 	baseline for positioning characters as superscripts."
 
 	^superscript
@@ -2037,11 +2036,11 @@ StrikeFont >> useUnderscore [
 StrikeFont >> useUnderscoreIfOver1bpp [
 
 	glyphs depth = 1 ifTrue: [
-		characterToGlyphMap ifNotNil: [	
+		characterToGlyphMap ifNotNil: [
 			characterToGlyphMap at: 96 put: 95.
 			characterToGlyphMap at: 95 put: 94 ].
 		^self ].
-	
+
 	self characterToGlyphMap.
 	characterToGlyphMap at: 96 put: 129.
 	characterToGlyphMap at: 95 put: 128
@@ -2053,12 +2052,12 @@ StrikeFont >> veryDeepCopyWith: deepCopier [
 ]
 
 { #category : #'character shapes' }
-StrikeFont >> widen: char by: delta [ 
-	
-	^ self 
+StrikeFont >> widen: char by: delta [
+
+	^ self
 		alter: char
-		formBlock: 
-			[ :charForm | | newForm | 
+		formBlock:
+			[ :charForm | | newForm |
 			"Make a new form, wider or narrower..."
 			newForm := Form extent: charForm extent + (delta @ 0).
 			charForm displayOn: newForm.	"Copy this image into it"
@@ -2066,13 +2065,13 @@ StrikeFont >> widen: char by: delta [
 ]
 
 { #category : #accessing }
-StrikeFont >> widthOf: aCharacter [ 
+StrikeFont >> widthOf: aCharacter [
 	"Answer the width of the argument as a character in the receiver."
 	| code |
 	code := aCharacter charCode.
 	self characterToGlyphMap size > code ifTrue: [
 		code := characterToGlyphMap at: code + 1 ].
-	((code < minAscii or: [maxAscii < code]) 
+	((code < minAscii or: [maxAscii < code])
 		or: [(xTable at: code + 1) < 0])
 			ifTrue: [^ self fallbackFont widthOf: aCharacter].
 	^ (xTable at: code + 2) - (xTable at: code + 1)
@@ -2086,6 +2085,6 @@ StrikeFont >> xTable [
 ]
 
 { #category : #accessing }
-StrikeFont >> xTable: anObject [ 
+StrikeFont >> xTable: anObject [
 	xTable := anObject
 ]

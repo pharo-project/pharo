@@ -20,7 +20,8 @@ Class {
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
-		'originalMessage'
+		'originalMessage',
+		'refactoringScopes'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -74,7 +75,7 @@ SycChangeMessageSignatureCommand >> createRefactoring [
 
 { #category : #execution }
 SycChangeMessageSignatureCommand >> execute [
-	
+
 	self executeRefactorings
 ]
 
@@ -97,24 +98,31 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes.
 	originalMessage := aToolContext lastSelectedMessage
 ]
 
 { #category : #requesting }
 SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
+
 	| methodName dialog invalidArgNames |
 	invalidArgNames := self computeInvalidArgNamesForSelector: originalMessage selector.
-	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames.
-	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
-		canRenameArgs: self canRenameArgs
-		canRemoveArgs: self canRemoveArgs
-		canAddArgs: self canAddArgs
-		canEditName: self canEditName .
-	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
-	
-	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
-		ifTrue: [ CmdCommandAborted signal].	
-	^methodName
+	methodName := RBMethodName
+		              selector: originalMessage selector
+		              arguments: originalMessage argumentNames.
+	dialog := SycMethodNameEditorPresenter
+		          openOn: methodName
+		          withInvalidArgs: invalidArgNames
+		          canRenameArgs: self canRenameArgs
+		          canRemoveArgs: self canRemoveArgs
+		          canAddArgs: self canAddArgs
+		          canEditName: self canEditName.
+	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+
+	originalMessage selector = methodName selector
+	& (originalMessage argumentNames = methodName arguments) ifTrue: [
+		CmdCommandAborted signal ].
+	^ methodName
 ]
 
 { #category : #execution }

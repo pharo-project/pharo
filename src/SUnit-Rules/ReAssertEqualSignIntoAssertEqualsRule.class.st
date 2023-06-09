@@ -12,7 +12,7 @@ Class {
 { #category : #accessing }
 ReAssertEqualSignIntoAssertEqualsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'AssertEqualSignIntoAssertEquals'
 ]
 
@@ -20,7 +20,7 @@ ReAssertEqualSignIntoAssertEqualsRule class >> uniqueIdentifierName [
 ReAssertEqualSignIntoAssertEqualsRule >> afterCheck: aNode mappings: mappingDict [
 	"would be nice to test if the class uses TAssertable,
 	 but it is more complicated"
-	
+
 	^ [ aNode methodNode methodClass canUnderstand: #assert:equals: ]
 		on: MessageNotUnderstood "methodNode or methodClass may be nil"
 		do: [ false ]

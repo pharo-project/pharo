@@ -33,17 +33,17 @@ MorphEventSubscription class >> on: anEvent send: aMessageSelector to: anObject 
 ]
 
 { #category : #'events-triggering' }
-MorphEventSubscription >> click: anEvent fromMorph: aMorph [ 
+MorphEventSubscription >> click: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
 { #category : #'events-triggering' }
-MorphEventSubscription >> doubleClick: anEvent fromMorph: aMorph [ 
+MorphEventSubscription >> doubleClick: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
 { #category : #'events-triggering' }
-MorphEventSubscription >> doubleClickTimeout: anEvent fromMorph: aMorph [ 
+MorphEventSubscription >> doubleClickTimeout: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
@@ -60,12 +60,12 @@ MorphEventSubscription >> event: anEvent [
 ]
 
 { #category : #'events-triggering' }
-MorphEventSubscription >> mouseEnter: anEvent fromMorph: aMorph [ 
+MorphEventSubscription >> mouseEnter: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
 { #category : #'events-triggering' }
-MorphEventSubscription >> mouseLeave: anEvent fromMorph: aMorph [ 
+MorphEventSubscription >> mouseLeave: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 

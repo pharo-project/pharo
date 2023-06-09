@@ -31,30 +31,41 @@ FT2Error class >> errorCode: code signal: message [
 
 { #category : #accessing }
 FT2Error >> errorCode [
+
 	^ errorCode
 ]
 
 { #category : #accessing }
 FT2Error >> errorCode: anObject [
+
 	errorCode := anObject
 ]
 
 { #category : #accessing }
 FT2Error >> errorString [
+
 	^ errorString
 ]
 
 { #category : #accessing }
-FT2Error >> errorString: anObject [
-	errorString := anObject
+FT2Error >> errorString: aString [
+
+	errorString := aString
 ]
 
 { #category : #accessing }
 FT2Error >> messageText [
-	^String streamContents: [ :strm |
-		messageText ifNotNil: [ strm nextPutAll: messageText; space ].
-		self errorCode isZero ifFalse: [
-			strm nextPutAll: '[error '; print: self errorCode; nextPutAll: '][';
-				nextPutAll: self errorString;
-				nextPut: $] ]]
+
+	^ String streamContents: [ :strm |
+		  messageText ifNotNil: [
+			  strm
+				  nextPutAll: messageText;
+				  space ].
+		  self errorCode isZero ifFalse: [
+			  strm
+				  nextPutAll: '[error ';
+				  print: self errorCode;
+				  nextPutAll: '][';
+				  nextPutAll: self errorString;
+				  nextPut: $] ] ]
 ]

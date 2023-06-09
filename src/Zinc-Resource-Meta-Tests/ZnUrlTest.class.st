@@ -7,8 +7,8 @@ Class {
 { #category : #testing }
 ZnUrlTest >> testAsFileUrl [
 	self assert: 'http://localhost:80/foo/bar/doc.txt' asZnUrl asFileUrl isFile.
-	self 
-		assert: 'http://localhost:80/foo/bar/doc.txt' asZnUrl path 
+	self
+		assert: 'http://localhost:80/foo/bar/doc.txt' asZnUrl path
 		equals: 'http://localhost:80/foo/bar/doc.txt' asZnUrl asFileUrl path
 ]
 
@@ -42,7 +42,7 @@ ZnUrlTest >> testBogusBackups [
 { #category : #testing }
 ZnUrlTest >> testComponentSpecifcEncoding [
 	"In a URL the safe set of percent encoding depends on where we are"
-	
+
 	| url |
 	url := 'http://foo.com/bar@xx=2?yy=/#$1'.
 	self assert: url asZnUrl printString equals: url
@@ -50,58 +50,57 @@ ZnUrlTest >> testComponentSpecifcEncoding [
 
 { #category : #testing }
 ZnUrlTest >> testConcatenation [
-	self 
-		assert: 'http://example.com/foo/bar' asZnUrl / 'xyz' 
+	self
+		assert: 'http://example.com/foo/bar' asZnUrl / 'xyz'
 		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
 	self
-		assert: 'http://example.com/foo/bar/' asUrl / 'xyz' 
+		assert: 'http://example.com/foo/bar/' asUrl / 'xyz'
 		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
 	self
-		assert: 'http://example.com/foo/bar' asUrl + 'xyz' 
+		assert: 'http://example.com/foo/bar' asUrl + 'xyz'
 		equals: 'http://example.com/foo/xyz' asZnUrl.
 	self
-		assert: 'http://example.com/foo/bar/' asUrl + 'xyz' 
-		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
-	
-	self 
-		assert: ('http://example.com/foo/bar' asZnUrl addPathSegment: 'xyz') 
-		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
-	self
-		assert: ('http://example.com/foo/bar/' asUrl addPathSegment: 'xyz') 
-		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
-	self
-		assert: ('http://example.com/foo/bar' asUrl withRelativeReference: 'xyz') 
-		equals: 'http://example.com/foo/xyz' asZnUrl.
-	self
-		assert: ('http://example.com/foo/bar/' asUrl withRelativeReference: 'xyz') 
+		assert: 'http://example.com/foo/bar/' asUrl + 'xyz'
 		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
 
+	self
+		assert: ('http://example.com/foo/bar' asZnUrl addPathSegment: 'xyz')
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	self
+		assert: ('http://example.com/foo/bar/' asUrl addPathSegment: 'xyz')
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl.
+	self
+		assert: ('http://example.com/foo/bar' asUrl withRelativeReference: 'xyz')
+		equals: 'http://example.com/foo/xyz' asZnUrl.
+	self
+		assert: ('http://example.com/foo/bar/' asUrl withRelativeReference: 'xyz')
+		equals: 'http://example.com/foo/bar/xyz' asZnUrl
 ]
 
 { #category : #testing }
 ZnUrlTest >> testConvenienceMethods [
 	| baseUrl |
 	baseUrl := 'http://api.host.com' asZnUrl.
-	self 
-		assert: baseUrl 
+	self
+		assert: baseUrl
 		equals: 'http://api.host.com' asZnUrl.
-	self 
+	self
 		assert: baseUrl / 'doc' / 'file.html'
 		equals: 'http://api.host.com/doc/file.html' asZnUrl.
-	self 
+	self
 		assert: baseUrl / 'doc/file.html'
 		equals: 'http://api.host.com/doc/file.html' asZnUrl.
-	self 
+	self
 		assert: baseUrl / #( 'doc' 'file.html' )
 		equals: 'http://api.host.com/doc/file.html' asZnUrl.
-	self 
+	self
 		assert: baseUrl / 'doc/file.html' asZnUrl
 		equals: 'http://api.host.com/doc/file.html' asZnUrl.
-	self 
+	self
 		assert: (baseUrl / 'search' ? (#q -> 'Smalltalk') & (#lang -> #en))
 		equals: 'http://api.host.com/search?q=Smalltalk&lang=en' asZnUrl.
-	self 
-		assert: baseUrl 
+	self
+		assert: baseUrl
 		equals: 'http://api.host.com' asZnUrl
 ]
 
@@ -115,7 +114,7 @@ ZnUrlTest >> testDefaultPortUnknownScheme [
 	self assert: url portOrDefault isNil.
 	self deny: url hasPort.
 	self assert: url equals: url.
-	self should: [ url enforceKnownScheme ] raise: ZnUnknownScheme 
+	self should: [ url enforceKnownScheme ] raise: ZnUnknownScheme
 ]
 
 { #category : #testing }
@@ -176,13 +175,13 @@ ZnUrlTest >> testFileUrl [
 	url := 'file:/Users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self deny: url hasHost.
-	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection  
+	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection
 ]
 
 { #category : #testing }
 ZnUrlTest >> testImage [
 	self assert: ZnUrl image isFile.
-	self assert: ZnUrl image isFilePath.
+	self assert: ZnUrl image isFilePath
 ]
 
 { #category : #testing }
@@ -200,7 +199,7 @@ ZnUrlTest >> testIsSlash [
 	self assert: '' asZnUrl isSlash.
 	self assert: '/' asZnUrl isSlash.
 	self assert: '/foo' asZnUrl isSlash not.
-	self assert: 'http://host/foo' asZnUrl isSlash not.
+	self assert: 'http://host/foo' asZnUrl isSlash not
 ]
 
 { #category : #testing }
@@ -209,7 +208,7 @@ ZnUrlTest >> testLocalHost [
 	self assert: 'http://127.0.0.1:8080/foo' asZnUrl isLocalHost.
 	self assert: 'http://LOCALHOST:8080/foo' asZnUrl isLocalHost.
 	self deny: 'http://zn.stx.eu' asZnUrl isLocalHost.
-	self deny: '' asZnUrl isLocalHost.
+	self deny: '' asZnUrl isLocalHost
 ]
 
 { #category : #testing }
@@ -224,11 +223,11 @@ ZnUrlTest >> testMailto [
 
 { #category : #testing }
 ZnUrlTest >> testNoScheme [
-	"When there is no scheme, there is no host:port interpretation, 
+	"When there is no scheme, there is no host:port interpretation,
 	but instead the input is seen a a path - externalize this in test code"
-	
+
 	#('foo' 'localhost' 'www.foo.com' 'foo.txt' 'foo:1')
-		do: [ :input | 
+		do: [ :input |
 			| url |
 			url := input asZnUrl.
 			self deny: url hasScheme.
@@ -241,7 +240,7 @@ ZnUrlTest >> testNoScheme [
 			self assert: url firstPathSegment equals: input ].
 
 	#('/dir/foo.txt' 'dir/foo.txt')
-		do: [ :input | 
+		do: [ :input |
 			| url |
 			url := input asZnUrl.
 			self deny: url hasScheme.
@@ -320,17 +319,17 @@ ZnUrlTest >> testParsingSimple [
 
 { #category : #testing }
 ZnUrlTest >> testParsingWrongEscape [
-	self should: [ ZnUrl fromString: 'http://foo:8080/foo%%bar' ] raise: ZnCharacterEncodingError 
+	self should: [ ZnUrl fromString: 'http://foo:8080/foo%%bar' ] raise: ZnCharacterEncodingError
 ]
 
 { #category : #testing }
 ZnUrlTest >> testParsingWrongEscapeQuery [
-	self should: [ ZnUrl fromString: 'http://foo:8080/foo?%%bar=1' ] raise: ZnCharacterEncodingError 
+	self should: [ ZnUrl fromString: 'http://foo:8080/foo?%%bar=1' ] raise: ZnCharacterEncodingError
 ]
 
 { #category : #testing }
 ZnUrlTest >> testParsingWrongPort [
-	self should: [ ZnUrl fromString: 'http://foo:bar' ] raise: ZnPortNotANumber   
+	self should: [ ZnUrl fromString: 'http://foo:bar' ] raise: ZnPortNotANumber
 ]
 
 { #category : #testing }
@@ -341,7 +340,7 @@ ZnUrlTest >> testParsingWrongScheme [
 	self assert: url username equals: 'user'.
 	self assert: url host equals: 'foo.com'.
 	self assert: url path equals: 'bar'.
-	self should: [ url enforceKnownScheme ] raise: ZnUnknownScheme 
+	self should: [ url enforceKnownScheme ] raise: ZnUnknownScheme
 ]
 
 { #category : #testing }
@@ -364,8 +363,8 @@ ZnUrlTest >> testPathRemoval [
 
 { #category : #testing }
 ZnUrlTest >> testPathSegments [
-	self 
-		assert: 'http://foo.com/x/y/z' asZnUrl pathSegments 
+	self
+		assert: 'http://foo.com/x/y/z' asZnUrl pathSegments
 		equals: #('x' 'y' 'z') asOrderedCollection.
 	self assert: 'http://foo.com/' asZnUrl pathSegments isEmpty.
 	self assert: 'http://foo.com' asZnUrl pathSegments isEmpty
@@ -375,7 +374,7 @@ ZnUrlTest >> testPathSegments [
 ZnUrlTest >> testPlus [
 	| base |
 	base := 'myscheme://user:password@localhost:8888/v1/bar' asZnUrl.
-	
+
 	self assert: (base + 'foo') scheme equals: #myscheme.
 	self assert: (base + 'foo') host equals: 'localhost'.
 	self assert: (base + 'foo') port equals: 8888.
@@ -383,44 +382,43 @@ ZnUrlTest >> testPlus [
 	self assert: (base + 'foo') password equals: 'password'.
 	self assert: (base + 'foo') directory equals: 'v1'.
 	self assert: (base + 'foo') file equals: 'foo'.
-	
+
 	self assert: (base + '/foo') path equals: 'foo'.
 	self assert: (base + '/foo') host equals: 'localhost'.
 	self assert: (base + '/foo') port equals: 8888.
-	
+
 	self assert: (base + '//foo') scheme equals: #myscheme.
 	self assert: (base + '//foo') host equals: 'foo'.
 	"According to RFC 3986 section 5.2.2 the whole authority is replaced"
 	self deny: (base + '//foo') hasPort
 	"Use #portIfAbsent: to use a default port"
-
 ]
 
 { #category : #testing }
 ZnUrlTest >> testPlusHandling [
-	"While percent decoding, a + is translated as a space only in the context of 
+	"While percent decoding, a + is translated as a space only in the context of
 	application/x-www-form-urlencoded get/post requests:
 	http://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type
 	ZnUrl interprets its query part as key value pairs where this translation is applicable,
 	even though strictly speaking + (and =, &) are plain unreserved characters in the query part"
-	
+
 	"$+ is not special in the path part of the URL and it remains itself"
-	self 
-		assert: 'http://localhost/foo+bar' asZnUrl firstPathSegment 
+	self
+		assert: 'http://localhost/foo+bar' asZnUrl firstPathSegment
 		equals: 'foo+bar'.
-	self 
-		assert: 'http://localhost/foo+bar' asZnUrl printString 
+	self
+		assert: 'http://localhost/foo+bar' asZnUrl printString
 		equals: 'http://localhost/foo+bar'.
-	"$+ gets decoded to space in the interpreted query part of the URL, 
+	"$+ gets decoded to space in the interpreted query part of the URL,
 	and becomes an encoded space if needed"
-	self 
+	self
 		assert: ('http://localhost/test?q=foo+bar' asZnUrl queryAt: #q)
 		equals: 'foo bar'.
-	self 
+	self
 		assert: 'http://localhost/test?q=foo+bar' asZnUrl printString
 		equals: 'http://localhost/test?q=foo%20bar'.
 	"to pass $+ as $+ in a query, it has to be encoded"
-	self 
+	self
 		assert: 'http://localhost/test?q=foo%2Bbar' asZnUrl printString
 		equals: 'http://localhost/test?q=foo%2Bbar'
 ]
@@ -428,7 +426,7 @@ ZnUrlTest >> testPlusHandling [
 { #category : #testing }
 ZnUrlTest >> testPortIfAbsent [
 	self assert: ('scheme://host' asZnUrl portIfAbsent: 123) equals: 123.
-	self assert: ('scheme://host' asZnUrl portIfAbsent: [ 123 ]) equals: 123.
+	self assert: ('scheme://host' asZnUrl portIfAbsent: [ 123 ]) equals: 123
 ]
 
 { #category : #testing }
@@ -503,7 +501,7 @@ ZnUrlTest >> testQueryEncoding [
 ZnUrlTest >> testQueryEncodingExtended [
 	| url |
 	url := 'http://server.com/foo' asZnUrl.
-	url 
+	url
 		queryAt: 'one' put: '1';
 		queryAt: 'equalSign' put: 'a=0';
 		queryAt: 'ampersand' put: 'm&m';
@@ -513,7 +511,6 @@ ZnUrlTest >> testQueryEncodingExtended [
 	self assert: (url queryAt: 'equalSign') equals: 'a=0'.
 	self assert: (url queryAt: 'ampersand') equals: 'm&m'.
 	self assert: (url queryAt: 'questionMark') equals: 'x?-1'
-
 ]
 
 { #category : #testing }
@@ -539,7 +536,7 @@ ZnUrlTest >> testQueryParametersOrderPreserving [
 { #category : #testing }
 ZnUrlTest >> testQueryRemoveAll [
 	#('http://foo.com/test' 'http://foo.com/test?')
-		do: [ :each | 
+		do: [ :each |
 			| url |
 			url := 'http://foo.com/test?name=value' asZnUrl.
 			self deny: url equals: each asZnUrl.
@@ -552,11 +549,11 @@ ZnUrlTest >> testQueryRemoveAll [
 { #category : #testing }
 ZnUrlTest >> testReferenceResolution [
 	"RFC 3986 Section 5"
-	
+
 	| baseUri specification result succeeded failed |
 	baseUri := 'http://a/b/c/d;p?q' asZnUrl.
 	specification := {
-		"Examples 5.4.1 - Normal" 
+		"Examples 5.4.1 - Normal"
 		" 'g:h' -> 'g:h'. " "we do not support unknown schemes without //"
 		'mailto:john@acme.com' -> 'mailto:john@acme.com'. "this we can do"
 		'g' -> 'http://a/b/c/g'.
@@ -582,7 +579,7 @@ ZnUrlTest >> testReferenceResolution [
 		'../..' -> 'http://a/'.
 		'../../' -> 'http://a/'.
 		'../../g' -> 'http://a/g'.
-		"Examples 5.4.2 - Abnormal" 
+		"Examples 5.4.2 - Abnormal"
 		'../../../g' -> 'http://a/g'.
 		'../../../../g' -> 'http://a/g'.
 		'/./g' -> 'http://a/g'.
@@ -657,7 +654,7 @@ ZnUrlTest >> testWindowsFileUrl [
 	url := 'file://localhost/C:/users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self assert: url host equals: 'localhost'.
-	self assert: url pathSegments equals: #( 'C:' 'users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection 
+	self assert: url pathSegments equals: #( 'C:' 'users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection
 ]
 
 { #category : #testing }

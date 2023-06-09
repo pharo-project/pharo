@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 FloatReferencesRuleTest >> setUp [
 	super setUp.
-	testClass := Object newAnonymousSubclass.
+	testClass := Object newAnonymousSubclass
 ]
 
 { #category : #running }
@@ -25,7 +25,7 @@ FloatReferencesRuleTest >> testBasicCheck [
 
 	| testMethod |
 	testMethod := testClass >> (testClass compile: 'testMethod BoxedFloat64').
-	
+
 	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first )
 ]
 
@@ -33,8 +33,8 @@ FloatReferencesRuleTest >> testBasicCheck [
 FloatReferencesRuleTest >> testBasicCheck1 [
 
 	| testMethod |
-	testMethod := testClass >> (testClass compile: 'testMethod SmallFloat64').  
-	
+	testMethod := testClass >> (testClass compile: 'testMethod SmallFloat64').
+
 	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first)
 ]
 
@@ -42,7 +42,7 @@ FloatReferencesRuleTest >> testBasicCheck1 [
 FloatReferencesRuleTest >> testBasicCheck2 [
 
 	| testMethod |
-	testMethod := testClass >> (testClass compile: 'testMethod').  
-	
+	testMethod := testClass >> (testClass compile: 'testMethod').
+
 	self deny: (FloatReferencesRule new basicCheck: testMethod ast)
 ]

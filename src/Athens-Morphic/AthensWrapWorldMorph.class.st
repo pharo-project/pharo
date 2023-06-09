@@ -38,7 +38,7 @@ AthensWrapWorldMorph >> initialize [
 { #category : #layout }
 AthensWrapWorldMorph >> layoutChanged [
 	super layoutChanged.
-	worldmorph ifNotNil:[:w |  w extent: self extent].
+	worldmorph ifNotNil:[:w |  w extent: self extent]
 ]
 
 { #category : #stepping }

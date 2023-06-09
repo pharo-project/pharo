@@ -31,8 +31,8 @@ MetaclassForTraits >> @ anArray [
 ]
 
 { #category : #users }
-MetaclassForTraits >> addUser: aClass [ 
-	
+MetaclassForTraits >> addUser: aClass [
+
 	self users add: aClass
 ]
 
@@ -49,24 +49,23 @@ MetaclassForTraits >> expandedDefinitionStringFor: aPrinter [
 
 { #category : #testing }
 MetaclassForTraits >> isBaseTrait [
-	
+
 	^ false
 ]
 
 { #category : #testing }
 MetaclassForTraits >> isClassTrait [
-	
+
 	^ true
 ]
 
 { #category : #testing }
-MetaclassForTraits >> isEmpty [ 
-	"Since we can have potential an empty array in the fluid definition (to be revisited) 
+MetaclassForTraits >> isEmpty [
+	"Since we can have potential an empty array in the fluid definition (to be revisited)
 	when the trait composition is aTrait it received the message isEmpty and would break
-	traitComposition 
+	traitComposition
 		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]]."
 	^ false
-	
 ]
 
 { #category : #testing }
@@ -97,10 +96,11 @@ MetaclassForTraits >> name [
 ]
 
 { #category : #'organization updating' }
-MetaclassForTraits >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+MetaclassForTraits >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
-	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
-	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
+
+	super notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol.
+	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #printing }
@@ -120,7 +120,7 @@ MetaclassForTraits >> rebuildMethodDictionary [
 
 { #category : #users }
 MetaclassForTraits >> removeUser: aClass [
-	
+
 	self users remove: aClass ifAbsent: [  ]
 ]
 

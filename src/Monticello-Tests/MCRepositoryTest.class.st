@@ -85,6 +85,44 @@ MCRepositoryTest >> testAddAndLoad [
 ]
 
 { #category : #tests }
+MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrl [
+
+	repository := MCBitbucketRepository location: 'bitbucket://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
+	
+	self assert: repository projectPath equals: 'dalehenrich/MetacelloRepository'.
+	self assert: repository projectVersion equals: 'master'.
+	self assert: repository repoPath equals: 'monticello/repos/itory/path'.
+	
+	self assert: repository hostname equals: 'bitbucket.org'.
+]
+
+{ #category : #tests }
+MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrlWithExplicitHost [
+
+	repository := MCBitbucketRepository location: 'bitbucket://one.other.host:dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
+
+	self assert: repository projectPath equals: 'dalehenrich/MetacelloRepository'.
+	self assert: repository projectVersion equals: 'master'.
+	self assert: repository repoPath equals: 'monticello/repos/itory/path'.
+	
+	self assert: repository hostname equals: 'one.other.host'.
+	self assert: repository sshPort equals: nil.
+]
+
+{ #category : #tests }
+MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrlWithExplicitHostAndPort [
+
+	repository := MCBitbucketRepository location: 'bitbucket://one.other.host:220:dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
+
+	self assert: repository projectPath equals: 'dalehenrich/MetacelloRepository'.
+	self assert: repository projectVersion equals: 'master'.
+	self assert: repository repoPath equals: 'monticello/repos/itory/path'.
+	
+	self assert: repository hostname equals: 'one.other.host'.
+	self assert: repository sshPort equals: '220'.
+]
+
+{ #category : #tests }
 MCRepositoryTest >> testCanCreateFileRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'file:///tmp'.
 	self assert: (repository isKindOf: MCFileBasedRepository) 

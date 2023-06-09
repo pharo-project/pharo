@@ -40,22 +40,22 @@ FreeTypeSettings class >> current [
 
 { #category : #'class initialization' }
 FreeTypeSettings class >> initialize [
-	SessionManager default 
-		registerGuiClassNamed: self name 
-		atPriority: 10.
+	SessionManager default
+		registerGuiClassNamed: self name
+		atPriority: 10
 ]
 
 { #category : #'system startup' }
-FreeTypeSettings class >> shutDown: quitting [ 
-	quitting ifFalse: [ ^ self ]. 
+FreeTypeSettings class >> shutDown: quitting [
+	quitting ifFalse: [ ^ self ].
 
-	self current 
+	self current
 		clearBitBltSubPixelAvailable;
 		clearForceNonSubPixelCount.
 	"FreeTypeCache clearCacheOnShutdown
-		ifTrue: [ FreeTypeCache clearCurrent ].	
+		ifTrue: [ FreeTypeCache clearCurrent ].
 	FT2Handle clearRegistry.
-	FreeTypeFontProvider resetCurrent. 
+	FreeTypeFontProvider resetCurrent.
 	EmbeddedFreeTypeFontInstaller resetCurrent."
 ]
 
@@ -76,25 +76,25 @@ FreeTypeSettings class >> updateFontsAtImageStartup: aBoolean [
 
 { #category : #'system startup' }
 FreeTypeSettings class >> updateFreeType [
-	self current 
+	self current
 		clearBitBltSubPixelAvailable;
 		clearForceNonSubPixelCount.
 	"Embeded fonts update always"
-	FreeTypeFontProvider current updateEmbeddedFreeTypeFonts. 
-	self updateFontsAtImageStartup 
+	FreeTypeFontProvider current updateEmbeddedFreeTypeFonts.
+	self updateFontsAtImageStartup
 		ifTrue: [ FreeTypeFontProvider current updateFromSystem ]
 ]
 
 { #category : #accessing }
-FreeTypeSettings >> clearBitBltSubPixelAvailable [	
-	
-	bitBltSubPixelAvailable := nil.
+FreeTypeSettings >> clearBitBltSubPixelAvailable [
+
+	bitBltSubPixelAvailable := nil
 ]
 
 { #category : #accessing }
 FreeTypeSettings >> clearForceNonSubPixelCount [
-	
-	forceNonSubPixelCount := nil.
+
+	forceNonSubPixelCount := nil
 ]
 
 { #category : #accessing }
@@ -147,10 +147,10 @@ FreeTypeSettings >> hinting [
 { #category : #accessing }
 FreeTypeSettings >> hintingFlags [
 	| answer |
-	answer := 0. 	
-	self hinting 
+	answer := 0.
+	self hinting
 		ifTrue:[
-			self forceAutoHinting ifTrue:[answer := answer bitOr: 32 "forceAutoHinting"].	
+			self forceAutoHinting ifTrue:[answer := answer bitOr: 32 "forceAutoHinting"].
 			self lightHinting ifTrue:[answer := answer bitOr: LoadTargetLight].
 			self monoHinting ifTrue:[answer := answer bitOr: LoadTargetMono].
 			self lcdHinting ifTrue:[answer := answer bitOr: LoadTargetLCD].
@@ -162,13 +162,13 @@ FreeTypeSettings >> hintingFlags [
 { #category : #accessing }
 FreeTypeSettings >> hintingSymbol [
 	"#Full, #Light, #Normal or #None"
-	^ self monoHinting 
+	^ self monoHinting
 		ifTrue: [#Full]
 		ifFalse: [
-			self lightHinting 
+			self lightHinting
 				ifTrue: [#Light]
 				ifFalse: [
-					self hinting 
+					self hinting
 						ifTrue: [#Normal]
 						ifFalse: [#None]]]
 ]
@@ -182,9 +182,9 @@ FreeTypeSettings >> hintingSymbol: aSymbol [
 	hinting := monoHinting or: [ lightHinting or: [ aSymbol = #Normal ] ].
 	FreeTypeCache current removeAll.
 	FreeTypeFont allSubInstances do:[:each | each clearCachedMetrics ].
-	
+
 	self flag: #DEPENDENCY. "This is a hidden dependency on morphic :("
-	self class environment 
+	self class environment
 		at: #Paragraph
 		ifPresent: [ :aClass | aClass refreshAllCompositions ]
 ]
@@ -214,7 +214,7 @@ FreeTypeSettings >> monitorType [
 FreeTypeSettings >> monitorType: aSymbol [
 	"#LCD or #CRT"
 	subPixelAntiAliasing := aSymbol = #LCD.
-	self currentWorld restoreMorphicDisplay.
+	self currentWorld restoreMorphicDisplay
 ]
 
 { #category : #accessing }
@@ -223,18 +223,18 @@ FreeTypeSettings >> monoHinting [
 ]
 
 { #category : #accessing }
-FreeTypeSettings >> pretendBitBltSubPixelUnavailableDuring: aBlock [	
+FreeTypeSettings >> pretendBitBltSubPixelUnavailableDuring: aBlock [
 	"
-	For testing/profiling only. 
-	
+	For testing/profiling only.
+
 	Answer true if the the subPixel combination rule is available, false otherwise.
 	to test :-
-	
-	bitBltSubPixelAvailable := false. 
+
+	bitBltSubPixelAvailable := false.
 	FreeTypeCache current removeAll.
 	Smalltalk isMorphic
 		ifTrue:[World restoreMorphicDisplay]
-		
+
 	"
 	| old |
 	old := bitBltSubPixelAvailable.
@@ -273,13 +273,13 @@ FreeTypeSettings >> setSubPixelFilter: ratiosArray [
 	"Set the subPixelFilters from ratiosArray.
 	the ratiosArray can specify the red, green, and blue filter ratios separately.
 	e.g. #((1 3 5 3 1) (1 4 7 4 1) (1 2 3 2 1))
-	or, as single set of ratios e.g. #(1 3 5 3 1)" 
-	
+	or, as single set of ratios e.g. #(1 3 5 3 1)"
+
 	| validArray newFilters |
 	validArray := ratiosArray.
 	(ratiosArray size = 5)
 		ifTrue:[validArray := {ratiosArray. ratiosArray. ratiosArray}].
-	newFilters := self subPixelFiltersFromRatios: validArray. 
+	newFilters := self subPixelFiltersFromRatios: validArray.
 	(newFilters = subPixelFilters)
 		ifFalse:[
 			subPixelFilters := newFilters.
@@ -308,9 +308,9 @@ FreeTypeSettings >> subPixelFiltersFromRatios: anArray [
 	Example:
 	if <array3ofArrays5> = #((1 3 5 3 1) (1 3 5 3 1) (1 3 5 3 1))
 	Then the answer is #(#(0.0769230769230769 0.2307692307692308 0.3846153846153846 0.2307692307692308 0.0769230769230769) #(0.0769230769230769 0.2307692307692308 0.3846153846153846 0.2307692307692308 0.0769230769230769) #(0.0769230769230769 0.2307692307692308 0.3846153846153846 0.2307692307692308 0.0769230769230769))"
-	
+
 	| r g b rRatios gRatios bRatios rsum gsum bsum rfilter gfilter bfilter blurR blurG blurB |
-		
+
 	r := "Color red luminance" 1.0 .
 	g := "Color green luminance" 1.0 .
 	b := "Color blue luminance"1.0 .
@@ -320,7 +320,7 @@ FreeTypeSettings >> subPixelFiltersFromRatios: anArray [
 	rRatios := blurR collect:[:i | r*i].
 	gRatios := blurG collect:[:i | g*i].
 	bRatios := blurB collect:[:i | b*i].
-	"rRatios := 	{g*blurR first .	b*blurR second.	r*blurR third.	g*bl.	b*blur*blur }.							
+	"rRatios := 	{g*blurR first .	b*blurR second.	r*blurR third.	g*bl.	b*blur*blur }.
 	gRatios := 	{b*blur*blur.	r*blur.	g.		b*blur.	r*blur*blur}.
 	bRatios :=	{r*blur*blur.	g*blur.	b.		r*blur.	g*blur*blur }."
 	rsum := rRatios inject:0 into:[:t :i | t+i].

@@ -32,7 +32,7 @@ ReExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock
 
 	explicitRequirementMethods
 		select: [ :method | aClass withAllSuperclasses noneSatisfy: [ :superclass | superclass canPerform: method selector ] ]
-		thenDo: [ :method | 
+		thenDo: [ :method |
 			aCritiqueBlock
 				cull:
 					((self critiqueFor: aClass)

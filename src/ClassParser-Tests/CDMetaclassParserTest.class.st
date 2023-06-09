@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #testing }
-CDMetaclassParserTest class >> isAbstract [ 
+CDMetaclassParserTest class >> isAbstract [
 	^ self == CDMetaclassParserTest
 ]
 
@@ -19,5 +19,5 @@ CDMetaclassParserTest >> className [
 { #category : #tests }
 CDMetaclassParserTest >> testClassDefFromLegacyStringHasClassNameNode [
 
-	self assert: classDefinition classNameNode value equals: self className.
+	self assert: classDefinition classNameNode value equals: self className
 ]

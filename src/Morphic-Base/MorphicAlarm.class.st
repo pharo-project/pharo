@@ -32,7 +32,7 @@ Class {
 { #category : #'instance creation' }
 MorphicAlarm class >> scheduledAt: scheduledTime receiver: aTarget selector: aSelector arguments: argArray [
 	^(self receiver: aTarget selector: aSelector arguments: argArray)
-		scheduledTime: scheduledTime.
+		scheduledTime: scheduledTime
 ]
 
 { #category : #accessing }

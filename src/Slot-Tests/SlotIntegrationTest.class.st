@@ -10,9 +10,9 @@ Class {
 { #category : #tests }
 SlotIntegrationTest >> testAddAndAddInstVarNamedWithTrait2 [
 	"Add instance variables using the builder interface"
-	
+
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
 			traitComposition: TOne;
 			slots: #( x )
@@ -20,20 +20,20 @@ SlotIntegrationTest >> testAddAndAddInstVarNamedWithTrait2 [
 
 	self assertTraitIntegrity.
 	self assert: aClass instVarNames equals: #(x).
-	
+
 	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1.
 
 	aClass addInstVarNamed: #y.
 	self assertTraitIntegrity.
 	aClass addInstVarNamed: #z.
-	
+
 	self assert: aClass instVarNames equals: #(x y z).
-	
+
 	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1
 ]
@@ -41,30 +41,30 @@ SlotIntegrationTest >> testAddAndAddInstVarNamedWithTrait2 [
 { #category : #tests }
 SlotIntegrationTest >> testAddAndRemoveInstVarNamedWithTrait2 [
 	"Add instance variables using the builder interface"
-	
+
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
 			traitComposition: TOne;
 			slots: #( x )
 		].
-	
+
 	self assertTraitIntegrity.
 	self assert: aClass instVarNames equals: #(x).
-	
+
 	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1.
 
 	aClass addInstVarNamed: #y.
 	self assertTraitIntegrity.
 	aClass	removeInstVarNamed: #x.
-	
+
 	self assert: aClass instVarNames equals: #(y).
-	
+
 	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1
 ]
@@ -72,46 +72,46 @@ SlotIntegrationTest >> testAddAndRemoveInstVarNamedWithTrait2 [
 { #category : #tests }
 SlotIntegrationTest >> testAddInstVarNamed [
 	"Add instance variables using the builder interface"
-	
+
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
 			slots: #( x )
 		].
 
-	self assert: aClass instVarNames equals: #(x).	
+	self assert: aClass instVarNames equals: #(x).
 
 
 	anotherClass := self make: [ :builder |
-		builder 
+		builder
 			superclass: aClass;
 			name: self anotherClassName;
 			slots: #( y )
 		].
-	
-	self assert: anotherClass instVarNames equals: #(y).
+
+	self assert: anotherClass instVarNames equals: #(y)
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testAddInstVarNamedClassInterface [
 
 	"Add instance variables using the class interface"
-	
+
 	aClass := self make: [ :builder |
-		builder name: self aClassName 
+		builder name: self aClassName
 		].
 	aClass addInstVarNamed: 'x'.
 
-	self assert: aClass instVarNames equals: #(x).	
+	self assert: aClass instVarNames equals: #(x).
 
 
 	anotherClass := self make: [ :builder |
-		builder 
+		builder
 			superclass: aClass;
 			name: self anotherClassName.
 		].
 	anotherClass addInstVarNamed: 'y'.
-	
+
 	self assert: anotherClass instVarNames equals: #(y)
 ]
 
@@ -120,7 +120,7 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait [
 	"Add instance variables using the builder interface"
 
 	aClass := self
-		make: [ :builder | 
+		make: [ :builder |
 			builder
 				name: self aClassName;
 				traitComposition: TOne;
@@ -134,7 +134,7 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait [
 	self assert: aClass new one equals: 1.
 
 	aClass := self
-		make: [ :builder | 
+		make: [ :builder |
 			builder
 				name: self aClassName;
 				traitComposition: TOne;
@@ -152,9 +152,9 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait [
 { #category : #tests }
 SlotIntegrationTest >> testAddInstVarNamedWithTrait2 [
 	"Add instance variables using the builder interface"
-	
+
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
 			traitComposition: TOne;
 			slots: #( x )
@@ -162,19 +162,19 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait2 [
 
 	self assertTraitIntegrity.
 	self assert: aClass instVarNames equals: #(x).
-	
+
 	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1.
 
 	aClass addInstVarNamed: #y.
-	
+
 	self assertTraitIntegrity.
 	self assert: aClass instVarNames equals: #(x y).
-	
+
 	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1
 ]
@@ -182,7 +182,7 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait2 [
 { #category : #tests }
 SlotIntegrationTest >> testAnonymousSubclass [
 	aClass := self
-		make: [ :builder | 
+		make: [ :builder |
 			builder
 				name: self aClassName;
 				slots: #(x) ].
@@ -206,22 +206,22 @@ SlotIntegrationTest >> testRemoveInstVarNamed [
 	| answer |
 
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
-			slots: #(a) 
+			slots: #(a)
 		].
 
-	answer := 
-		aClass 
-			slotNamed: 'a' 
-			ifFound: [ #found ] 
+	answer :=
+		aClass
+			slotNamed: 'a'
+			ifFound: [ #found ]
 			ifNone: [ #none ].
 	self assert: answer equals: #found.
 
-	answer := 
-		aClass 
-			slotNamed: 'b' 
-			ifFound: [ #found ] 
+	answer :=
+		aClass
+			slotNamed: 'b'
+			ifFound: [ #found ]
 			ifNone: [ #none ].
 	self assert: answer equals: #none
 ]
@@ -230,13 +230,13 @@ SlotIntegrationTest >> testRemoveInstVarNamed [
 SlotIntegrationTest >> testRemoveInstVarNamedClassInterface [
 
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
-			slots: #(x y z) 
+			slots: #(x y z)
 		].
 	aClass removeInstVarNamed: #y.
 
-	self assert: aClass instVarNames equals: #(x z).
+	self assert: aClass instVarNames equals: #(x z)
 ]
 
 { #category : #tests }
@@ -244,7 +244,7 @@ SlotIntegrationTest >> testRemoveInstVarNamedWithTrait2 [
 	"Add instance variables using the builder interface"
 
 	aClass := self
-		make: [ :builder | 
+		make: [ :builder |
 			builder
 				name: self aClassName;
 				traitComposition: TOne;
@@ -273,16 +273,16 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 	"level 1"
 
-	aClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: self aClassName;
 			package: self aCategory ].
 
 	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
 
-	anotherClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	anotherClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: self anotherClassName;
 			superclass: aClass;
 			package: self aCategory ].
@@ -292,8 +292,8 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 
-	yetAnotherClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	yetAnotherClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: self yetAnotherClassName;
 			superclass: anotherClass;
 			package: self aCategory ].
@@ -307,12 +307,9 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	yetAnotherClass classLayout checkIntegrity.
 
 	"level 4"
-	yetYetAnotherClass := yetAnotherClass
-		subclass: self yetYetAnotherClassName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self aCategory.
+	yetYetAnotherClass := (yetAnotherClass
+		<< self yetYetAnotherClassName
+		package: self aCategory) install.
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assert: anotherClass subclasses equals: {yetAnotherClass}.
@@ -324,8 +321,8 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	yetYetAnotherClass classLayout checkIntegrity.
 
 	"reshape level 1"
-	aClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: self aClassName;
 			slots: 'x' asSlotCollection;
 			package: self aCategory ].
@@ -339,40 +336,40 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 { #category : #tests }
 SlotIntegrationTest >> testReshapeClassWithClassSlot [
-					
-	aClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: self aClassName;
-			package: self aCategory ].		
-				
-	aClass class 
+			package: self aCategory ].
+
+	aClass class
 		instanceVariableNames: #x.
-	
+
 	self assert: aClass class instVarNames equals: #(x).
-	
-	aClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: self aClassName;
 			slots: 'x' asSlotCollection;
-			package: self aCategory ].	
-			
-	self assert: aClass class instVarNames equals: #(x).
+			package: self aCategory ].
+
+	self assert: aClass class instVarNames equals: #(x)
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testSlotNamedIfFoundIfNone [
 
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
-			slots: #(a) 
+			slots: #(a)
 		].
 
-	self 
+	self
 		assert: (aClass slotNamed: 'a' ifFound: [ #found ] ifNone: [ #none ])
 		equals: #found.
 
-	self 
+	self
 		assert: (aClass slotNamed: 'b' ifFound: [ #found ] ifNone: [ #none ])
 		equals: #none
 ]
@@ -384,11 +381,11 @@ SlotIntegrationTest >> testSlotScopeParallelism [
 	| classesAndMetaclasses candidates classWithWrongSlotScope |
 	classesAndMetaclasses := Smalltalk allClasses flatCollect: [ :each | { each. each class } ].
 
-	candidates := classesAndMetaclasses reject: [ :each | 
-		each superclass isNil or: [ 
+	candidates := classesAndMetaclasses reject: [ :each |
+		each superclass isNil or: [
 			each classLayout slotScope isKindOf: LayoutEmptyScope ] ].
 
-	classWithWrongSlotScope := candidates reject: [ :each | 
+	classWithWrongSlotScope := candidates reject: [ :each |
 		each superclass classLayout slotScope == each classLayout slotScope parentScope ].
 
 	self assert: classWithWrongSlotScope asArray equals: #()
@@ -398,12 +395,12 @@ SlotIntegrationTest >> testSlotScopeParallelism [
 SlotIntegrationTest >> testSlotsAreInitializedWithDefiningAnonimousClass [
 	"All slots should include reference to defining class"
 	aClass := self make: [ :builder |
-		builder 
+		builder
 			name: self aClassName;
 			slots: #(x)
 		].
 	self assert: aClass slots first owningClass equals: aClass.
-	
+
 	aClass addInstVarNamed: 'y'.
 	self assert: aClass slots size equals: 2.
 	self assert: (aClass slots collect: #owningClass as: Set) equals: {aClass} asSet

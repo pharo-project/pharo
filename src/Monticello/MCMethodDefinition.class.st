@@ -75,7 +75,7 @@ MCMethodDefinition class >> flushMethodCache [
 	Definitions := nil.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCMethodDefinition class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
@@ -128,7 +128,6 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 		compile: source
 		classified: category
 		withStamp: timeStamp
-		notifying: nil
 		logSource: true
 		inClass: self actualClass.
 	"This might raise an exception and never return"
@@ -203,11 +202,12 @@ timeStamp: timeString
 source: sourceString [
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := (catString asSymbol) ifEmpty: [#'as yet unclassified'].
+	category := catString
+		ifNil: [ #'as yet unclassified']
+		ifNotNil: [ (catString asSymbol) ifEmpty: [#'as yet unclassified']].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
-	source := sourceString withInternalLineEndings.
-
+	source := sourceString withInternalLineEndings
 ]
 
 { #category : #testing }
@@ -255,13 +255,19 @@ MCMethodDefinition >> isOverrideMethod [
 	^ self isExtensionMethod and: [category endsWith: '-override']
 ]
 
-{ #category : #accessing }
+{ #category : #installing }
 MCMethodDefinition >> load [
-	self actualClass
-		compile: source
-		classified: category
-		withStamp: timeStamp
-		notifying: nil
+	| sel |
+	sel := (self actualClass compiler
+		protocol: category;
+		changeStamp: timeStamp;
+		permitUndeclared: true;
+		install: source) selector.
+	sel = selector ifTrue: [ ^ self ].
+	Warning signal: (
+		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
+		format: { sel. selector. self actualClass name }).
+	selector := sel
 ]
 
 { #category : #installing }
@@ -320,22 +326,20 @@ MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 	Be careful not to remove the selector when it has wandered
 	to another package, but remove the category if it is empty."
 
-	| newProtocol |
-	newProtocol := aClass organization categoryOfElement: aSelector.
-	newProtocol
-		ifNotNil: [ 
-			"If moved to and fro extension, ignore removal"
-			(category beginsWith: '*') = (newProtocol beginsWith: '*')
-				ifFalse: [ ^ self ].	"Check if moved between different extension categories"
-			((category beginsWith: '*') and: [ category ~= newProtocol ])
-				ifTrue: [ ^ self ] ].
-	aClass removeSelector: aSelector.
-	aClass organization removeProtocolIfEmpty: category
+	(aClass protocolOfSelector: aSelector) ifNotNil: [ :newProtocol |
+		"If moved to and from extension, ignore removal"
+		(category beginsWith: '*') = newProtocol isExtensionProtocol ifFalse: [ ^ self ].
+		"Check if moved between different extension protocol"
+		((category beginsWith: '*') and: [ category ~= newProtocol name ]) ifTrue: [ ^ self ] ].
+
+	aClass
+		removeSelector: aSelector;
+		removeProtocolIfEmpty: category
 ]
 
 { #category : #comparing }
 MCMethodDefinition >> requirements [
-	^ Array with: className
+	^ { className }
 ]
 
 { #category : #accessing }

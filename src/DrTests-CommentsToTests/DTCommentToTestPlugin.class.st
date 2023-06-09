@@ -38,8 +38,11 @@ DTCommentToTestPlugin >> firstListLabel [
 { #category : #api }
 DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
-	^ packagesSelected flatCollect: [ :package | 
-		  package definedClasses select: [ :class | class hasDocComment ] ]
+	"note `asSet` is used to avoid duplication if a class is defined/extended in more than one package"
+
+	^ packagesSelected asSet flatCollect: [ :package |
+		  package definedOrExtendedClasses select: [ :class |
+			  class hasDocComment or: [ class class hasDocComment ] ] ]
 ]
 
 { #category : #api }
@@ -69,8 +72,9 @@ DTCommentToTestPlugin >> runForConfiguration: aDTpluginConfiguration [
 DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
-		do: [ :testAnnouncement | 
-			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ].
+		do: [ :testAnnouncement |
+			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ]
+		for: self.
 	[ aTestSuite run: aResult ]
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
 ]

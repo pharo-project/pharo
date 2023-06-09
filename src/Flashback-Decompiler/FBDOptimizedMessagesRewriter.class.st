@@ -27,12 +27,12 @@ FBDOptimizedMessagesRewriter >> analyseSeq: seq [
 	| currentCascade |
 	currentCascade := OrderedCollection new.
 	seq statements
-		do: [ :each | 
+		do: [ :each |
 			(each isMessage and: [ each selector ~= #ifTrue:ifFalse: ])
 				ifFalse: [ self rewriteSeq: seq with: currentCascade ]
-				ifTrue: [ 
+				ifTrue: [
 					currentCascade
-						ifNotEmpty: [ 
+						ifNotEmpty: [
 							currentCascade last receiver = each receiver
 								ifFalse: [ self rewriteSeq: seq with: currentCascade ] ].
 					currentCascade add: each ] ].
@@ -93,10 +93,10 @@ FBDOptimizedMessagesRewriter >> convertWhileTrueToToByDo: msgNode start: start e
 	loopBlock arguments: {incrVar}.
 	loopBlock statements removeLast.
 	incrValue value = 1
-		ifTrue: [ 
+		ifTrue: [
 			selector := #to:do: .
 			arguments := {end . loopBlock} ]
-		ifFalse: [ 
+		ifFalse: [
 			selector := #to:by:do: .
 			arguments := {end . incrValue . loopBlock} ].
 	msgNode
@@ -131,7 +131,7 @@ FBDOptimizedMessagesRewriter >> handleBigArray: msgNode [
 { #category : #handling }
 FBDOptimizedMessagesRewriter >> handleIfFalse: msgNode [
 	(self isIfNilIfNotNil: msgNode)
-		ifTrue: [ 
+		ifTrue: [
 			msgNode receiver: msgNode receiver receiver.
 			msgNode selector: #ifNotNil: ]
 ]
@@ -147,7 +147,7 @@ FBDOptimizedMessagesRewriter >> handleIfNilIfNotNil: msgNode [
 { #category : #handling }
 FBDOptimizedMessagesRewriter >> handleIfTrue: msgNode [
 	(self isIfNilIfNotNil: msgNode)
-		ifTrue: [ 
+		ifTrue: [
 			msgNode receiver: msgNode receiver receiver.
 			msgNode selector: #ifNil: ]
 ]
@@ -336,8 +336,8 @@ FBDOptimizedMessagesRewriter >> visitBlockNode: block [
 
 { #category : #visiting }
 FBDOptimizedMessagesRewriter >> visitMessageNode: msgNode [
-	"Do not add return statements. 
-	ifTrue:ifFalse: handling may change the current message node into an ifTrue: , an ifFalse: or an ifNil:ifNotNil: message. 
+	"Do not add return statements.
+	ifTrue:ifFalse: handling may change the current message node into an ifTrue: , an ifFalse: or an ifNil:ifNotNil: message.
 	whileTrue are used to detect to:do: and to: by: do."
 
 	super visitMessageNode: msgNode.

@@ -31,8 +31,8 @@ CDBehaviorParserTest >> firstInstanceVariableName [
 ]
 
 { #category : #helpers }
-CDBehaviorParserTest >> nodeFor: aString [ 
-	
+CDBehaviorParserTest >> nodeFor: aString [
+
 	^ classDefinition bestNodeFor: (self selectionOf: aString)
 ]
 
@@ -75,9 +75,9 @@ CDBehaviorParserTest >> testBestNodeForClassNameSelectionShouldBeClassNameNode [
 { #category : #tests }
 CDBehaviorParserTest >> testBestNodeForInstanceVariableSelectionShouldBeSlotNode [
 
-	| selectedNode selection |	
+	| selectedNode selection |
 	selection := self selectionOf: self firstInstanceVariableName.
-	
+
 	selectedNode := classDefinition bestNodeFor: selection.
 	self assert: selectedNode equals: classDefinition slotNodes first
 ]
@@ -87,7 +87,7 @@ CDBehaviorParserTest >> testBestNodeForSecondInstanceVariableSelectionShouldBeSe
 
 	| selectedNode selection |
 	selection := self selectionOf: self secondInstanceVariableName.
-	
+
 	selectedNode := classDefinition bestNodeFor: selection.
 	self assert: selectedNode equals: classDefinition slotNodes second
 ]
@@ -102,7 +102,7 @@ CDBehaviorParserTest >> testClassDefFromLegacyStringHasClassName [
 CDBehaviorParserTest >> testClassDefFromLegacyStringHasSlots [
 
 	self assert: classDefinition slotNodes first name equals: self firstInstanceVariableName.
-	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName.
+	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName
 ]
 
 { #category : #tests }
@@ -110,7 +110,7 @@ CDBehaviorParserTest >> testClassNameNodeHaveParentReference [
 
 	| nameNode |
 	nameNode := classDefinition classNameNode.
-	
+
 	self assert: nameNode parent identicalTo: classDefinition.
 	self assert: nameNode classDefinitionNode identicalTo: classDefinition.
 	self assert: (classDefinition children includes: nameNode)
@@ -121,7 +121,7 @@ CDBehaviorParserTest >> testSlotNodesHaveParentReference [
 
 	| slotNode |
 	slotNode := classDefinition slotNodes first.
-	
+
 	self assert: slotNode parent identicalTo: classDefinition.
 	self assert: slotNode classDefinitionNode identicalTo: classDefinition.
 	self assert: (classDefinition children includes: slotNode)

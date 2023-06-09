@@ -35,5 +35,5 @@ ClySampleInstanceScript >> executeOn: aClass [
 
 { #category : #accessing }
 ClySampleInstanceScript >> iconName [
-	^ #smallDoItIcon
+	^ #smallDoIt
 ]

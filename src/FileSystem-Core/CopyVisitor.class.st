@@ -19,7 +19,7 @@ CopyVisitor class >> copy: source to: dest [
 { #category : #'instance creation' }
 CopyVisitor class >> from: srcReference to: dstReference [
 	^ self basicNew
-		initializeWithSource: srcReference 
+		initializeWithSource: srcReference
 		dest: dstReference
 ]
 
@@ -46,7 +46,7 @@ CopyVisitor >> initializeWithSource: srcReference dest: dstReference [
 
 { #category : #visiting }
 CopyVisitor >> visit [
-	(PreorderGuide for: self) 
+	(PreorderGuide for: self)
 		show: source
 ]
 

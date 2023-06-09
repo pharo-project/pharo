@@ -18,7 +18,7 @@ Class {
 { #category : #convenience }
 ZnByteStringBecameWideString class >> convert: byteString [
 	"Convert byteString to a wideString, signalling a resumable error"
-	
+
 	| wideString |
 	wideString := WideString from: byteString.
 	self new
@@ -32,7 +32,7 @@ ZnByteStringBecameWideString class >> convert: byteString [
 ZnByteStringBecameWideString >> becomeForward [
 	"Switch the identities of byteString and wideString using #becomeForward:"
 
-	byteString becomeForward: wideString 
+	byteString becomeForward: wideString
 ]
 
 { #category : #accessing }

@@ -12,3 +12,8 @@ Class {
 RBBinarySelectorToken >> isBinary [
 	^true
 ]
+
+{ #category : #testing }
+RBBinarySelectorToken >> isBinary: aString [
+	^ value = aString
+]

@@ -20,6 +20,6 @@ SDLNullPlatform >> initPlatformSpecific [
 
 	"For windows and Unix, we activate linearization.
 	This does not work properly on OSX with retina display, blurrying the rendering"
-	
+
 	SDL2 setHint: SDL_HINT_RENDER_SCALE_QUALITY value: '1'
 ]

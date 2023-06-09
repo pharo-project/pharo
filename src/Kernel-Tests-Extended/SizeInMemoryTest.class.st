@@ -9,9 +9,10 @@ Class {
 
 { #category : #utilities }
 SizeInMemoryTest >> align64Bits: size [
-	size % 8 = 0
-		ifTrue: [ ^ size ]
-		ifFalse:[ ^ size + 8 - (size % 8) ].
+
+	^ size % 8 = 0
+		  ifTrue: [ size ]
+		  ifFalse: [ size + 8 - (size % 8) ]
 ]
 
 { #category : #utilities }
@@ -21,12 +22,12 @@ SizeInMemoryTest >> headerSize [
 ]
 
 { #category : #utilities }
-SizeInMemoryTest >> paddedByteStringSize: numberOfChars [ 
+SizeInMemoryTest >> paddedByteStringSize: numberOfChars [
 	"64 bits for the header"
 	| originalSize  |
 	originalSize := self headerSize + (numberOfChars = 0 ifTrue:[1] ifFalse:[numberOfChars]).
-		
-	^ self align64Bits: originalSize.
+
+	^ self align64Bits: originalSize
 ]
 
 { #category : #tests }
@@ -66,7 +67,7 @@ SizeInMemoryTest >> testSizeInMemoryOfByteObjects [
 	self assert: 'abcd' sizeInMemory equals: (self paddedByteStringSize: 4).
 	self assert: '' sizeInMemory equals: (self paddedByteStringSize: 0).
 	self assert: 'abcde' sizeInMemory equals: (self paddedByteStringSize: 5).
-	self assert: 'abcdefghi' sizeInMemory equals: (self paddedByteStringSize: 9).
+	self assert: 'abcdefghi' sizeInMemory equals: (self paddedByteStringSize: 9)
 ]
 
 { #category : #tests }

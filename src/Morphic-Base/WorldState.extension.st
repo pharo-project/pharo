@@ -3,12 +3,12 @@ Extension { #name : #WorldState }
 { #category : #'*Morphic-Base' }
 WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"
-	self alarms add: 
-		(MorphicAlarm 
+	self alarms add:
+		(MorphicAlarm
 			scheduledAt: scheduledTime
 			receiver: aTarget
 			selector: aSelector
-			arguments: argArray).
+			arguments: argArray)
 ]
 
 { #category : #'*Morphic-Base' }
@@ -17,7 +17,7 @@ WorldState class >> browseWorldMenuOn: aBuilder [
 	(aBuilder item: #Browse)
 		order: 10;
 		help: 'Tools to explore and modify the image';
-		with: [ 
+		with: [
 			(aBuilder group: #Browsing)
 				order: 1;
 				withSeparatorAfter.
@@ -72,7 +72,7 @@ WorldState class >> sourcesWorldMenuOn: aBuilder [
 	(aBuilder item: #Sources)
 		order: 50;
 		help: 'Source Management Tools';
-		with: [ 
+		with: [
 			(aBuilder group: #Versioning)
 				order: 1;
 				withSeparatorAfter.
@@ -87,22 +87,22 @@ WorldState class >> sourcesWorldMenuOn: aBuilder [
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState >> startMessageTally [
+
+	self class startMessageTally
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState class >> startMessageTally [
 
 	(self confirm: 'MessageTally will start now,
 and stop when the cursor goes
-to the top of the screen' translated) 
+to the top of the screen' translated)
 		ifFalse: [ ^ self ].
 
 	TimeProfiler spyAllOn: [
-		MorphicRenderLoop new doOneCycleWhile: [ 
+		MorphicRenderLoop new doOneCycleWhile: [
 			self currentWorld activeHand position y > 0 ] ]
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState >> startMessageTally [
-
-	self class startMessageTally
 ]
 
 { #category : #'*Morphic-Base' }
@@ -112,7 +112,7 @@ WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector argume
 	self stopStepping: aMorph selector: aSelector.
 	self adjustWakeupTimesIfNecessary.
 	stepList add:(
-		StepMessage 
+		StepMessage
 			scheduledAt: scheduledTime
 			stepTime: stepTime
 			receiver: aMorph
@@ -121,22 +121,22 @@ WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector argume
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState >> startThenBrowseMessageTally [
+
+	self class startThenBrowseMessageTally
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState class >> startThenBrowseMessageTally [
 	"Tally only the UI process"
-	
+
 	(self confirm: 'MessageTally the UI process until the
 mouse pointer goes to the top of the screen')
 		ifFalse: [ ^ self ].
 
 	TimeProfiler onBlock: [
-		MorphicRenderLoop new doOneCycleWhile: [ 
+		MorphicRenderLoop new doOneCycleWhile: [
 			self currentWorld activeHand position y > 10 ] ]
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState >> startThenBrowseMessageTally [
-
-	self class startThenBrowseMessageTally
 ]
 
 { #category : #'*Morphic-Base' }
@@ -190,7 +190,7 @@ WorldState class >> windowsOn: aBuilder [
 				action: [ self currentWorld collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
 			(aBuilder item: #'Expand all windows')
-				iconName: #expandBoxIcon;
+				iconName: #expandBox;
 				action: [ self currentWorld expandAll ];
 				help: 'Expand all collapsed windows back to their expanded forms' translated.
 			(aBuilder item: #'Fit all windows')

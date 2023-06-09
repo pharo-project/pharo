@@ -112,7 +112,7 @@ DrTestsPlugin >> pluginName [
 
 { #category : #ui }
 DrTestsPlugin >> pluginPresenterClass [
-	
+
 	^ DTDefaultPluginPresenter
 ]
 
@@ -139,7 +139,7 @@ DrTestsPlugin >> resultButtonHelp [
 { #category : #accessing }
 DrTestsPlugin >> resultTreeViews [
 	"Return result tree views available."
-	
+
 	| pragmas |
 	pragmas := Pragma allNamed: self pragmaForResultTrees in: self pluginResultClass.
 

@@ -34,12 +34,13 @@ Class {
 	#name : #Float,
 	#superclass : #Number,
 	#classVars : [
+		'DefaultComparisonPrecision',
 		'E',
-		'Epsilon',
 		'Halfpi',
 		'Infinity',
 		'Ln10',
 		'Ln2',
+		'MathApproximationEpsilon',
 		'MaxVal',
 		'MaxValLn',
 		'MinValLogBase2',
@@ -66,9 +67,15 @@ Float class >> basicNew: anInteger [
 ]
 
 { #category : #constants }
+Float class >> defaultComparisonPrecision [
+
+	^ DefaultComparisonPrecision
+]
+
+{ #category : #constants }
 Float class >> denormalized [
 	"Answer whether implementation supports denormalized numbers (also known as gradual underflow)."
-	
+
 	^true
 ]
 
@@ -82,14 +89,14 @@ Float class >> e [
 { #category : #constants }
 Float class >> emax [
 	"Answer exponent of maximal representable value"
-	
+
 	^1023
 ]
 
 { #category : #constants }
 Float class >> emin [
 	"Answer exponent of minimal normalized representable value"
-	
+
 	^-1022
 ]
 
@@ -97,8 +104,8 @@ Float class >> emin [
 Float class >> fromIEEE32Bit: word [
 	"Convert the given 32 bit word (which is supposed to be a positive 32-bit value) from
 	 a 32 bit IEEE floating point representation into an actual float object (being
-	 64 bits wide). Should only be used for conversion in FloatArrays or likewise objects."
-	
+	 64 bits wide). Should only be used for conversion in Float32Arrays or likewise objects."
+
 	| sign mantissa exponent delta |
 	word <= 0 ifTrue:
 		[^word negative
@@ -107,14 +114,14 @@ Float class >> fromIEEE32Bit: word [
 	sign := word bitAnd: 16r80000000.
 	word = sign ifTrue:
 		[^self negativeZero].
-	
+
 	exponent := ((word bitShift: -23) bitAnd: 16rFF) - 127.
 	mantissa := word bitAnd:  16r7FFFFF.
 
 	exponent = 128 ifTrue: "Either NAN or INF"
 		[^mantissa = 0
 			ifTrue:
-				[sign = 0 
+				[sign = 0
 					ifTrue: [self infinity]
 					ifFalse: [self negativeInfinity]]
 			ifFalse: [self nan]].
@@ -125,7 +132,7 @@ Float class >> fromIEEE32Bit: word [
 		[delta := mantissa highBit.
 		 mantissa := (mantissa bitAnd: (1 bitShift: delta - 1) - 1) bitShift: 24 - delta.
 		 exponent := exponent + delta - 23].
-	
+
 	"Create new float"
 	^(self basicNew: 2)
 		basicAt: 1 put: ((sign bitOr: (1023 + exponent bitShift: 20)) bitOr: (mantissa bitShift: -3));
@@ -137,6 +144,22 @@ Float class >> fromIEEE32Bit: word [
 Float class >> fromIEEE64Bit: doubleWord [
 
     ^ (self new: 2) basicAt: 1 put: (doubleWord bitShift: -32); basicAt: 2 put: (doubleWord bitAnd: 16rFFFFFFFF); yourself
+]
+
+{ #category : #'instance creation' }
+Float class >> fromIEEE64BitWord: anInteger [
+	"Convert the given 64 bit word from a 64 bit IEEE floating point representation
+	into an actual float object.
+	Should only be used for conversion in Float64Arrays or likewise objects."
+
+	| value |
+	value := self basicNew: 2.
+	value
+		basicAt: 1 put: (anInteger bitShift: -32);
+		basicAt: 2 put: (anInteger bitAnd: 16rFFFFFFFF).
+	^value isFinite
+		ifTrue: [value * 1.0] "reduce to SmallFloat64 if possible"
+		ifFalse: [value]
 ]
 
 { #category : #constants }
@@ -173,7 +196,12 @@ Float class >> initialize [
 	Sqrt2 := 1.41421356237309504880168872420969808.
 	E := 2.718281828459045235360287471353.
 
-	Epsilon := 0.000000000001.  "Defines precision of mathematical functions"
+	"Defines precision of approximated mathematical functions such as trigonometric functions.
+	Use a small enough epsilon value to make approximations as good as possible."
+	MathApproximationEpsilon := 0.000000000001.
+	
+	"Default precision used for comparing two float numbers"
+	DefaultComparisonPrecision := 0.0001.
 
 	MaxVal := 1.7976931348623157e308.
 	MaxValLn := 709.782712893384.
@@ -182,7 +210,18 @@ Float class >> initialize [
 	Infinity := MaxVal * MaxVal.
 	NegativeInfinity := 0.0 - Infinity.
 	NaN := Infinity - Infinity.
-	NegativeZero := 1.0 / Infinity negated.
+	NegativeZero := 1.0 / Infinity negated
+]
+
+{ #category : #constants }
+Float class >> machineEpsilon [
+	"Answer the machine epsilon or macheps, defined by wikipedia (https://en.wikipedia.org/wiki/Machine_epsilon) as:
+
+	*an upper bound on the relative approximation error due to rounding in floating point arithmetic*
+
+	Compute it as the difference between 1.0 and previous representable value"
+
+	^1.0 timesTwoPower: 1 - self precision
 ]
 
 { #category : #constants }
@@ -213,7 +252,7 @@ Float class >> negativeZero [
 
 { #category : #constants }
 Float class >> one [
-	
+
 	^1.0
 ]
 
@@ -231,19 +270,19 @@ Float class >> precision [
 	Technically, 52 bits are stored in the representation, and normalized numbers have an implied leading 1 that does not need to be stored.
 	Note that denormalized floating point numbers don't have the implied leading 1, and thus gradually loose precision.
 	This format conforms IEEE 754 double precision standard."
-	
+
 	^53
 ]
 
 { #category : #constants }
 Float class >> radix [
 	"Answer the radix used for internal floating point representation."
-	
+
 	^2
 ]
 
 { #category : #'instance creation' }
-Float class >> readFrom: aStream [ 
+Float class >> readFrom: aStream [
 	"Answer a new Float as described on the stream, aStream."
 
 	^(super readFrom: aStream) asFloat
@@ -276,9 +315,9 @@ Float class >> zero [
 { #category : #arithmetic }
 Float >> abs [
 	"This is faster than using Number abs and works for negativeZero."
-	self <= 0.0
-		ifTrue: [^ 0.0 - self]
-		ifFalse: [^ self]
+	^ self <= 0.0
+		ifTrue: [0.0 - self]
+		ifFalse: [self]
 ]
 
 { #category : #printing }
@@ -343,7 +382,7 @@ Float >> absPrintExactlyOn: aStream base: base [
 			baseExpEstimate <= 0
 				ifTrue: [aStream nextPutAll: ('0.000000' truncateTo: 2 - baseExpEstimate)]]
 		ifFalse:
-			[decPointCount := 1]. 
+			[decPointCount := 1].
 	[d := r // s.
 	r := r \\ s.
 	(tc1 := (r < mMinus) | (roundingIncludesLimits & (r = mMinus))) |
@@ -451,7 +490,7 @@ Float >> absPrintInexactlyOn: aStream base: base [
 ]
 
 { #category : #private }
-Float >> absPrintOn: aStream base: base digitCount: digitCount [ 
+Float >> absPrintOn: aStream base: base digitCount: digitCount [
 	"Print me in the given base, using digitCount significant figures."
 
 	| fuzz x exp q fBase scale logScale xi |
@@ -470,22 +509,22 @@ Float >> absPrintOn: aStream base: base digitCount: digitCount [
 	"round the last digit to be printed"
 	x := 0.5 * fuzz + x.
 	x >= fBase
-		ifTrue: 
+		ifTrue:
 			["check if rounding has unnormalized x"
 			x := x / fBase.
 			exp := exp + 1].
 	(exp < 6 and: [exp > -4])
-		ifTrue: 
+		ifTrue:
 			["decimal notation"
 			q := 0.
 			exp < 0 ifTrue: [1 to: 1 - exp do: [:i | aStream nextPut: ('0.0000'
 at: i)]]]
-		ifFalse: 
+		ifFalse:
 			["scientific notation"
 			q := exp.
 			exp := 0].
 	[x >= fuzz]
-		whileTrue: 
+		whileTrue:
 			["use fuzz to track significance"
 			xi := x asInteger.
 			aStream nextPut: (Character digitValue: xi).
@@ -494,21 +533,21 @@ at: i)]]]
 			exp := exp - 1.
 			exp = -1 ifTrue: [aStream nextPut: $.]].
 	[exp >= -1]
-		whileTrue: 
+		whileTrue:
 			[aStream nextPut: $0.
 			exp := exp - 1.
 			exp = -1 ifTrue: [aStream nextPut: $.]].
 	q ~= 0
-		ifTrue: 
+		ifTrue:
 			[aStream nextPut: $e.
 			q printOn: aStream]
 ]
 
 { #category : #converting }
-Float >> adaptToFraction: rcvr andCompare: selector [ 
+Float >> adaptToFraction: rcvr andCompare: selector [
 	"If I am involved in comparison with a Fraction, convert myself to a
 	Fraction. This way, no bit is lost and comparison is exact."
-	
+
 	self isFinite
 		ifFalse: [
 			selector == #= ifTrue: [^false].
@@ -519,7 +558,7 @@ Float >> adaptToFraction: rcvr andCompare: selector [
 			(selector = #> or: [selector = #'>='])
 				ifTrue: [^ self positive not].
 			^self error: 'unknow comparison selector'].
-		
+
 	"Try to avoid asTrueFraction because it can cost"
 	selector == #= ifTrue: [
 		rcvr denominator isPowerOfTwo ifFalse: [^false]].
@@ -536,10 +575,10 @@ Float >> adaptToFraction: rcvr andSend: selector [
 ]
 
 { #category : #converting }
-Float >> adaptToInteger: rcvr andCompare: selector [ 
+Float >> adaptToInteger: rcvr andCompare: selector [
 	"If I am involved in comparison with an Integer, convert myself to a
 	Fraction. This way, no bit is lost and comparison is exact."
-	
+
 	self isFinite
 		ifFalse: [
 			selector == #= ifTrue: [^false].
@@ -550,13 +589,13 @@ Float >> adaptToInteger: rcvr andCompare: selector [
 			(selector = #> or: [selector = #'>='])
 				ifTrue: [^ self positive not].
 			^self error: 'unknow comparison selector'].
-		
+
 	"Try to avoid asTrueFraction because it can cost"
 	selector == #= ifTrue: [
 		self fractionPart = 0.0 ifFalse: [^false]].
 	selector == #~= ifTrue: [
 		self fractionPart = 0.0 ifFalse: [^true]].
-	
+
 	^ rcvr perform: selector with: self asTrueFraction
 ]
 
@@ -568,7 +607,7 @@ Float >> adaptToInteger: rcvr andSend: selector [
 
 { #category : #converting }
 Float >> asApproximateFraction [
-	"Answer a Fraction approximating the receiver. This conversion uses the 
+	"Answer a Fraction approximating the receiver. This conversion uses the
 	continued fraction method to approximate a floating point number."
 
 	^ self asApproximateFractionAtOrder: 0
@@ -576,7 +615,7 @@ Float >> asApproximateFraction [
 
 { #category : #converting }
 Float >> asApproximateFractionAtOrder: maxOrder [
-	"Answer a Fraction approximating the receiver. This conversion uses the 
+	"Answer a Fraction approximating the receiver. This conversion uses the
 	continued fraction method to approximate a floating point number. If maxOrder
 	is zero, use maximum order"
 
@@ -589,7 +628,7 @@ Float >> asApproximateFractionAtOrder: maxOrder [
 	frac := self fractionPart.		"The fractional part of self"
 	order := maxOrder = 0 ifTrue: [-1] ifFalse: [maxOrder].
 	[frac = 0 or: [order = 0] ]
-		whileFalse: 
+		whileFalse:
 			["repeat while the fractional part is not zero and max order is not reached"
 			order := order - 1.
 			newD := 1.0 / frac.			"Take reciprocal of the fractional part"
@@ -602,19 +641,19 @@ Float >> asApproximateFractionAtOrder: maxOrder [
 			denom2 := denom1.			"Set second denominator to first"
 			denom1 := int * denom1 + temp.		"Update first denominator"
 			10000000000.0 < denom1
-				ifTrue: 
-					["Is ratio past float precision?  If so, pick which 
+				ifTrue:
+					["Is ratio past float precision?  If so, pick which
 					of the two ratios to use"
-					num2 = 0.0 
+					num2 = 0.0
 						ifTrue: ["Is second denominator 0?"
 								^ Fraction numerator: num1 denominator: denom1].
 					^ Fraction numerator: num2 denominator: denom2]].
 	"If fractional part is zero, return the first ratio"
-	denom1 = 1
+	^ denom1 = 1
 		ifTrue: ["Am I really an Integer?"
-				^ num1 "Yes, return Integer result"]
+				num1 "Yes, return Integer result"]
 		ifFalse: ["Otherwise return Fraction result"
-				^ Fraction numerator: num1 denominator: denom1]
+				Fraction numerator: num1 denominator: denom1]
 ]
 
 { #category : #converting }
@@ -691,8 +730,8 @@ Float >> asMinimalDecimalFraction [
 	shead := s bitShift: slowbit.
 	[d := (r bitShift: slowbit) // shead.
 	r := r - (d * s).
-	(tc1 := (r > mMinus) not and: [roundingIncludesLimits or: [r < mMinus]]) |
-	(tc2 := (r + mPlus < s) not and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
+	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]]) |
+	(tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
 		[numerator := 10 * numerator + d.
 		denominator := 10 * denominator.
 		r := r * 10.
@@ -719,11 +758,11 @@ Float >> asMinimalDecimalFraction [
 Float >> asScaledDecimal [
 
 	"Answer a scaled decimal number approximating the receiver.
-	
+
 	IEEE 754 double precision numbers use 53 bits to encode mantissa. This means
 	that the maximum amount of decimal digits that can be represented is log10(2^53).
-	
-	Due to the fact that at least one of the decimal digits has to be placed to 
+
+	Due to the fact that at least one of the decimal digits has to be placed to
 	the left of the decimal point, the scale was set to 15 - 1 = 14."
 
 	^ self asScaledDecimal: 14
@@ -757,7 +796,7 @@ Float >> asTrueFraction [
 		ifTrue: [fractionPart bitShift: 1]
 		ifFalse: [fractionPart bitOr: 16r0010000000000000].
 	signedFraction := positive ifTrue: [fraction] ifFalse: [fraction negated].
-	
+
 	"Unbias exponent: 16r3FF is bias; 52 is fraction width"
 	exp := 16r3FF + 52 - expPart.
 
@@ -790,20 +829,20 @@ exp) ] ].
 ]
 
 { #category : #accessing }
-Float >> at: index [ 
+Float >> at: index [
 	^self basicAt: index
 ]
 
 { #category : #accessing }
-Float >> at: index put: value [ 
+Float >> at: index put: value [
 	^self basicAt: index put: value
 ]
 
 { #category : #accessing }
 Float >> basicAt: index [
-	"Primitive. Assumes receiver is indexable. Answer the value of an 
-	indexable element in the receiver. Fail if the argument index is not an 
-	Integer or is out of bounds. Essential. Do not override in a subclass. See 
+	"Primitive. Assumes receiver is indexable. Answer the value of an
+	indexable element in the receiver. Fail if the argument index is not an
+	Integer or is out of bounds. Essential. Do not override in a subclass. See
 	Object documentation whatIsAPrimitive.
 
 	This version of basicAt: is specifically for floats, answering the most significant
@@ -812,16 +851,16 @@ Float >> basicAt: index [
 	they are always in big-endian/PowerPC order."
 
 	<primitive: 38>
-	^super basicAt: index.
+	^super basicAt: index
 ]
 
 { #category : #accessing }
 Float >> basicAt: index put: value [
-	"Primitive. Assumes receiver is indexable. Store the second argument 
-	value in the indexable element of the receiver indicated by index. Fail 
-	if the index is not an Integer or is out of bounds. Or fail if the value is 
-	not of the right type for this kind of collection. Answer the value that 
-	was stored. Essential. Do not override in a subclass. See Object 
+	"Primitive. Assumes receiver is indexable. Store the second argument
+	value in the indexable element of the receiver indicated by index. Fail
+	if the index is not an Integer or is out of bounds. Or fail if the value is
+	not of the right type for this kind of collection. Answer the value that
+	was stored. Essential. Do not override in a subclass. See Object
 	documentation whatIsAPrimitive.
 
 	This version of basicAt: is specifically for floats, answering the most significant
@@ -869,13 +908,13 @@ Float >> hash [
 ]
 
 { #category : #printing }
-Float >> hex [  
+Float >> hex [
 
 	^ String streamContents:
 		[:strm | | word nibble |
 		1 to: 2 do:
 			[:i | word := self at: i.
-			1 to: 8 do: 
+			1 to: 8 do:
 				[:s | nibble := (word bitShift: -8+s*4) bitAnd: 16rF.
 				strm nextPut: ('0123456789ABCDEF' at: nibble+1)]]]
 "
@@ -907,7 +946,7 @@ Float >> isLiteral [
 	"There is no literal representation of NaN.
 	However, there are literal representations of Infinity, like 1.0e1000.
 	But since they are not able to print properly, only case of finite Float is considered."
-	
+
 	^self isFinite
 ]
 
@@ -965,7 +1004,7 @@ Float >> printBinaryLiteralOn: stream [
 	exponentBits := ((self basicAt: 1) bitShift: -20) bitAnd: 2r11111111111.
 	fractionBits := (((self basicAt: 1) bitAnd: 2r11111111111111111111) bitShift: 32) bitOr: (self basicAt: 2).
 
-	(exponentBits = 2047) ifTrue: [ 
+	(exponentBits = 2047) ifTrue: [
 		(fractionBits = 0) ifTrue: [
 			stream nextPutAll: 'Float infinity'.
 			(signBit = 1) ifTrue: [ stream nextPutAll: ' negated' ].
@@ -976,7 +1015,7 @@ Float >> printBinaryLiteralOn: stream [
 	].
 
 	(signBit = 1) ifTrue: [ stream nextPut: $- ].
-	(exponentBits = 0) ifTrue: [ 
+	(exponentBits = 0) ifTrue: [
 		(fractionBits = 0) ifTrue: [
 			stream nextPutAll: '0.0'
 		] ifFalse: [
@@ -990,16 +1029,16 @@ Float >> printBinaryLiteralOn: stream [
 	stream nextPutAll: '2r1.'.
 	fractionBits printOn: stream base: 2 length: (Float precision - 1) padded: true.
 	stream nextPut: $e.
-	(exponentBits - 1023) printOn: stream base: 10.
+	(exponentBits - 1023) printOn: stream base: 10
 ]
 
 { #category : #printing }
 Float >> printOn: stream base: base [
-	"Handle sign, zero, and NaNs; all other values passed to FloatPrintPolicy" 
+	"Handle sign, zero, and NaNs; all other values passed to FloatPrintPolicy"
 
 	self isNaN ifTrue: [ ^ stream nextPutAll: 'Float nan' ]. "check for NaN before sign"
-	self isInfinite 
-		ifTrue: [ 
+	self isInfinite
+		ifTrue: [
 			stream nextPutAll: 'Float infinity'.
 			^ self sign = -1 ifTrue: [ stream nextPutAll: ' negated' ] ].
 	self > 0.0
@@ -1012,13 +1051,13 @@ Float >> printOn: stream base: base [
 ]
 
 { #category : #printing }
-Float >> printPaddedWith: aCharacter to: aNumber [ 
-	"Answer the string containing the ASCII representation of the receiver 
-	padded on the left with aCharacter to be at least on aNumber 
-	integerPart characters and padded the right with aCharacter to be at 
+Float >> printPaddedWith: aCharacter to: aNumber [
+	"Answer the string containing the ASCII representation of the receiver
+	padded on the left with aCharacter to be at least on aNumber
+	integerPart characters and padded the right with aCharacter to be at
 	least anInteger fractionPart characters."
 	| aStream digits fPadding fLen iPadding iLen curLen periodIndex |
-	#Numeric.
+
 	"2000/03/04  Harmon R. Added Date and Time support"
 	aStream := (String new: 10) writeStream.
 	self printOn: aStream.
@@ -1046,12 +1085,12 @@ Float >> printPaddedWith: aCharacter to: aNumber [
 { #category : #printing }
 Float >> printShowingDecimalPlaces: placesDesired [
 	"This implementation avoids any rounding error caused by rounded or roundTo:"
-	
+
 	^self asTrueFraction printShowingDecimalPlaces: placesDesired
 ]
 
 { #category : #'mathematical functions' }
-Float >> reciprocalFloorLog: radix [ 
+Float >> reciprocalFloorLog: radix [
 	"Quick computation of (self log: radix) floor, when self < 1.0.
 	Avoids infinite recursion problems with denormalized numbers"
 
@@ -1105,14 +1144,14 @@ Float >> significandAsInteger [
 ]
 
 { #category : #printing }
-Float >> storeOn: aStream [ 
+Float >> storeOn: aStream [
 	"Print the Number exactly so it can be interpreted back unchanged"
-	
+
 	self storeOn: aStream base: 10
 ]
 
 { #category : #printing }
-Float >> storeOn: aStream base: base [ 
+Float >> storeOn: aStream base: base [
 	"Print the Number exactly so it can be interpreted back unchanged"
 	self isFinite
 		ifTrue: [self signBit = 1 ifTrue: [aStream nextPutAll: ' -'].
@@ -1128,7 +1167,7 @@ Float >> storeOn: aStream base: base [
 ]
 
 { #category : #'mathematical functions' }
-Float >> timesTwoPower: anInteger [ 
+Float >> timesTwoPower: anInteger [
 	^ self subclassResponsibility
 ]
 

@@ -13,9 +13,9 @@ Class {
 }
 
 { #category : #signalling }
-ArgumentsCountMismatch class >> signalExpectedArgumentsCount: expected calledArgumentsCount: called [ 
+ArgumentsCountMismatch class >> signalExpectedArgumentsCount: expected calledArgumentsCount: called [
 
-	self new 
+	self new
 		expectedArgumentsCount: expected;
 		calledArgumentsCount: called;
 		signal
@@ -44,12 +44,12 @@ ArgumentsCountMismatch >> expectedArgumentsCount: anObject [
 { #category : #accessing }
 ArgumentsCountMismatch >> messageText [
 
-	^ 'This block accepts ', (self printArgumentsCount: expectedArgumentsCount),  
+	^ 'This block accepts ', (self printArgumentsCount: expectedArgumentsCount),
 			', but was called with ', (self printArgumentsCount: calledArgumentsCount), '.'
 ]
 
 { #category : #accessing }
 ArgumentsCountMismatch >> printArgumentsCount: aNumber [
-			
+
 	^ aNumber printString, ' argument', (aNumber = 1 ifTrue: [''] ifFalse:['s'])
 ]

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'selectors'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #removing }
@@ -14,25 +14,25 @@ RBRemoveHierarchyMethodTransformation class >> removeMethods: selectorCollection
 ]
 
 { #category : #executing }
-RBRemoveHierarchyMethodTransformation >> buildTransformations [ 
+RBRemoveHierarchyMethodTransformation >> buildTransformations [
 	transformations := OrderedCollection new.
-	self deleteSelectors. 
+	self deleteSelectors.
 	^ transformations
 ]
 
 { #category : #transforming }
 RBRemoveHierarchyMethodTransformation >> delete: aSelector in: aClass [
-	 (aClass realClass includesSelector: aSelector) ifTrue: [ 
-		[transformations add: (RBRemoveMethodTransformation 
+	 (aClass realClass includesSelector: aSelector) ifTrue: [
+		[transformations add: (RBRemoveMethodTransformation
 		model: self model
 		selector: aSelector
 		from: aClass).]
-		 "formCompositeRefactoring: (RBRemoveMethodRefactoring 
+		 "formCompositeRefactoring: (RBRemoveMethodRefactoring
 									model: self model
 									removeMethods: { aSelector }
 									from: aClass) ]"
-		on: RBRefactoringError 
-			do: [ :ex | ( self confirm: 
+		on: RBRefactoringWarning
+			do: [ :ex | ( self confirm:
 				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
 				ifTrue:[ ex resume ] ] ]
 ]
@@ -49,18 +49,18 @@ RBRemoveHierarchyMethodTransformation >> deleteSelectors [
 { #category : #preconditions }
 RBRemoveHierarchyMethodTransformation >> preconditions [
 
-	^ selectors inject: self emptyCondition into: [ :cond :aSelector | 
+	^ selectors inject: self emptyCondition into: [ :cond :aSelector |
 		  cond & (RBCondition definesSelector: aSelector in: class) ]
 ]
 
 { #category : #removing }
-RBRemoveHierarchyMethodTransformation >> removeMethods: selectorCollection from: aClass [ 
+RBRemoveHierarchyMethodTransformation >> removeMethods: selectorCollection from: aClass [
 	class := self model classObjectFor: aClass.
 	selectors := selectorCollection
 ]
 
 { #category : #printing }
-RBRemoveHierarchyMethodTransformation >> storeOn: aStream [ 
+RBRemoveHierarchyMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeMethods: '.

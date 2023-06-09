@@ -7,8 +7,7 @@ Class {
 	#superclass : #DrTestsPlugin,
 	#instVars : [
 		'methods',
-		'testClasses',
-		'link'
+		'testClasses'
 	],
 	#category : #'DrTests-TestCoverage'
 }
@@ -41,15 +40,13 @@ DTTestCoveragePlugin >> allowMultipleSelectionInSecondList [
 { #category : #api }
 DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 
-	methods := aDTpluginConfiguration items flatCollect: [ :p | 
-		           p methods reject: [ :meth | 
+	methods := aDTpluginConfiguration items flatCollect: [ :p |
+		           p methods reject: [ :meth |
 			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
-	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
-	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [ 
-		               :p | p classes ].
-	link := MetaLink new
-		        selector: #tagExecuted;
-		        metaObject: #node
+	methods := methods reject: [ :method | method isAbstract or: [ (method hasPragmaNamed: #ignoreForCoverage) ] ] .
+	
+	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [
+		               :p | p classes ]
 ]
 
 { #category : #accessing }
@@ -75,30 +72,29 @@ DTTestCoveragePlugin >> resultButtonHelp [
 
 { #category : #api }
 DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
-	| suite notExecuted result |
+	| suite collector coverage notExecuted result |
 	result := self pluginResultClass new.
 	self defineData: aDTpluginConfiguration.
 	suite := self suiteFor: testClasses.
-	[ methods do: [ :meth | meth ast link: link ].
-	[ self runTestSuites: {suite} ]
-		ensure: [ link uninstall ] ] valueUnpreemptively.
-	notExecuted := methods reject: [ :each | each ast hasBeenExecuted ].
+	collector := CoverageCollector new.
+	collector methods: methods.
+	coverage := collector runOn: [ self runTestSuites: {suite} ].
+	notExecuted := coverage uncoveredMethods.
 	notExecuted isEmpty
 		ifTrue: [ result percent: 1s2 ]
 		ifFalse: [ result
 				percent: 1s2 - (notExecuted size / methods size asScaledDecimal: 2);
-				methodList: notExecuted ].	"cleanup the annotations"
-	methods
-		do: [ :each | each ast removeProperty: #tagExecuted ifAbsent: [  ] ].
+				methodList: notExecuted ].
 	^ result
 ]
 
 { #category : #api }
 DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
 
-	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
-		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ].
-	[ aTestSuite run: aResult ] ensure: [ 
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
+		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ]
+	for: self.
+	[ aTestSuite run: aResult ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
@@ -109,7 +105,7 @@ DTTestCoveragePlugin >> runTestSuites: testSuites [
 	CurrentExecutionEnvironment
 		runTestsBy: [ testSuites
 				do: [ :testSuite | self runSuite: testSuite withResult: result ]
-				displayingProgress: 'Running Tests' ].
+				displayingProgress: 'Running Tests' ]
 ]
 
 { #category : #accessing }
@@ -139,9 +135,9 @@ DTTestCoveragePlugin >> suiteFor: classesSelected [
 
 	"Return the suite for all the selected test case classes"
 
-	^ TestSuite new in: [ :suite | 
-		  classesSelected do: [ :each | 
-			  each isAbstract ifFalse: [ 
+	^ TestSuite new in: [ :suite |
+		  classesSelected do: [ :each |
+			  each isAbstract ifFalse: [
 				  each isTestCase ifTrue: [ each addToSuiteFromSelectors: suite ] ] ].
 		  suite name: 'Test' ]
 ]

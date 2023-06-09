@@ -1,16 +1,34 @@
+"
+Class: RBRealizeClassTransformation
+                                                                                                    
+Complete the set of defined methods of this class, by generating a ""self shouldBeImplemented"" method for all abstract methods defined in its superclass hierarchy. Where an abstract method is a method sending ""self subclassResponsibilty.
+Shows a warning if this class has abstract methods on its own.
+"
 Class {
 	#name : #RBRealizeClassTransformation,
 	#superclass : #RBClassTransformation,
 	#category : #'Refactoring2-Transformations-Model'
 }
 
+{ #category : #displaying }
+RBRealizeClassTransformation class >> basicMenuItemString [
+
+	^ 'Realize class'
+]
+
 { #category : #api }
 RBRealizeClassTransformation class >> className: aName [
 	^ self new className: aName
 ]
 
+{ #category : #testing }
+RBRealizeClassTransformation class >> isTransformation [
+
+	^ true
+]
+
 { #category : #api }
-RBRealizeClassTransformation class >> model: aRBModel className: aName [ 
+RBRealizeClassTransformation class >> model: aRBModel className: aName [
 	^ self new
 		model: aRBModel;
 		className: aName;
@@ -20,13 +38,13 @@ RBRealizeClassTransformation class >> model: aRBModel className: aName [
 { #category : #preconditions }
 RBRealizeClassTransformation >> preconditions [
 	^ RBCondition
-		withBlock: [ 
+		withBlock: [
 			(self theClass withAllSubclasses
-				detect: [ :each | 
-					(each whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty 
+				detect: [ :each |
+					(each whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty
 						or: [ (each classSide whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty ] ]
-				ifNone: [ nil ]) ifNotNil: 
-				[ self refactoringWarning: 
+				ifNone: [ nil ]) ifNotNil:
+				[ self refactoringWarning:
 				self theClass printString ,
 					' is abstract or has abstract subclasses. Do you want to proceed?']. true ]
 ]
@@ -34,11 +52,11 @@ RBRealizeClassTransformation >> preconditions [
 { #category : #executing }
 RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass.
-	self transform: self theClass classSide.
+	self transform: self theClass classSide
 ]
 
 { #category : #printing }
-RBRealizeClassTransformation >> storeOn: aStream [ 
+RBRealizeClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' className: '.
@@ -54,9 +72,9 @@ RBRealizeClassTransformation >> theClass [
 { #category : #accessing }
 RBRealizeClassTransformation >> transform: targetClass [
 	| aClass method parseTree  |
-	targetClass allSelectors do: [ :selector | 
+	targetClass allSelectors do: [ :selector |
 		aClass := targetClass whoDefinesMethod: selector.
-		(aClass notNil and: [ aClass ~= targetClass ]) ifTrue: [ 
+		(aClass notNil and: [ aClass ~= targetClass ]) ifTrue: [
 			method := aClass methodFor: selector.
 			(method notNil and: [ method refersToSymbol: #subclassResponsibility ]) ifTrue: [
 				parseTree := method parseTree.

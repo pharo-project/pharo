@@ -16,7 +16,7 @@ MorphicEventHandler >> addSubscription: aSubscription toEvent: eventName [
 	(subscriptions includesKey: eventName)
 		ifFalse: [ subscriptions at: eventName put: Set new. ].
 	(subscriptions at: eventName)
-		add: aSubscription.
+		add: aSubscription
 ]
 
 { #category : #accessing }
@@ -25,17 +25,17 @@ MorphicEventHandler >> allRecipients [
 ]
 
 { #category : #events }
-MorphicEventHandler >> click: event fromMorph: sourceMorph [ 
+MorphicEventHandler >> click: event fromMorph: sourceMorph [
 	^self notifyMorphsOfEvent: event ofType: #click from: sourceMorph
 ]
 
 { #category : #events }
-MorphicEventHandler >> doubleClick: event fromMorph: sourceMorph [ 
+MorphicEventHandler >> doubleClick: event fromMorph: sourceMorph [
 	^self notifyMorphsOfEvent: event ofType: #doubleClick from: sourceMorph
 ]
 
 { #category : #events }
-MorphicEventHandler >> doubleClickTimeout: event fromMorph: sourceMorph [ 
+MorphicEventHandler >> doubleClickTimeout: event fromMorph: sourceMorph [
 	^self notifyMorphsOfEvent: event ofType: #doubleClickTimeout from: sourceMorph
 ]
 
@@ -47,8 +47,8 @@ MorphicEventHandler >> existsSubscriptionsFor: anEvent [
 { #category : #testing }
 MorphicEventHandler >> handlesClickOrDrag: evt [
 	^(self existsSubscriptionsFor: #click)
-		or: [ (self existsSubscriptionsFor: #doubleClick) 
-			or: [(self existsSubscriptionsFor: #startDrag)]].
+		or: [ (self existsSubscriptionsFor: #doubleClick)
+			or: [(self existsSubscriptionsFor: #startDrag)]]
 ]
 
 { #category : #testing }
@@ -75,7 +75,7 @@ MorphicEventHandler >> handlesKeyUp: evt [
 MorphicEventHandler >> handlesKeyboard: evt [
 	^(self handlesKeyDown: evt)
 		or: [ (self handlesKeyUp: evt)
-			or: [ self handlesKeyStroke: evt ]].
+			or: [ self handlesKeyStroke: evt ]]
 ]
 
 { #category : #testing }
@@ -84,7 +84,7 @@ MorphicEventHandler >> handlesMouseDown: evt [
 		or: [ (self existsSubscriptionsFor: #mouseStillDown)
 			or: [ (self existsSubscriptionsFor: #mouseUp)
 				or: [ (self handlesClickOrDrag: evt)
-					or: [ self handlesGestureStart: evt]]]].
+					or: [ self handlesGestureStart: evt]]]]
 ]
 
 { #category : #testing }
@@ -97,7 +97,7 @@ MorphicEventHandler >> handlesMouseOver: evt [
 	(self existsSubscriptionsFor: #mouseEnter) ifTrue: [ ^true ].
 	(self existsSubscriptionsFor: #mouseLeave)  ifTrue: [ ^true ].
 	(self existsSubscriptionsFor: #mouseOver) ifTrue: [ ^true ].
-	^false.
+	^false
 ]
 
 { #category : #testing }
@@ -108,12 +108,12 @@ MorphicEventHandler >> handlesMouseOverDragging: evt [
 
 { #category : #testing }
 MorphicEventHandler >> handlesMouseStillDown: evt [
-	^self existsSubscriptionsFor: #mouseStillDown.
+	^self existsSubscriptionsFor: #mouseStillDown
 ]
 
 { #category : #initialization }
 MorphicEventHandler >> initialize [
-	subscriptions := Dictionary new.
+	subscriptions := Dictionary new
 ]
 
 { #category : #events }
@@ -138,8 +138,8 @@ MorphicEventHandler >> methodRefList [
 	list := OrderedCollection new.
 	subscriptions do: [
 		:subscriptionSet |
-		
-		subscriptionSet do: [ 	 :s | 
+
+		subscriptionSet do: [ 	 :s |
 			s  ifNotNil: [list
 						add: (RGMethodDefinition
 								realClass: (s recipient class whichClassIncludesSelector: s selector)
@@ -150,7 +150,7 @@ MorphicEventHandler >> methodRefList [
 ]
 
 { #category : #events }
-MorphicEventHandler >> mouseDown: event fromMorph: sourceMorph [ 
+MorphicEventHandler >> mouseDown: event fromMorph: sourceMorph [
 	"Take double-clicks into account."
 	((self handlesClickOrDrag: event) and:[event redButtonPressed]) ifTrue:[
 		event hand waitForClicksOrDrag: sourceMorph event: event.
@@ -202,9 +202,9 @@ MorphicEventHandler >> mouseSelectorsInclude: selector [
 		mouseEnterDragging
 		mouseLeaveDragging
 		doubleClick).
-	
+
 	allSubscriptions := subscriptions values flatCollect: [ :e | e ].
-	^ allSubscriptions anySatisfy: [ :e | (mouseEventTypes includes: e event) and: [ e selector = selector ] ].
+	^ allSubscriptions anySatisfy: [ :e | (mouseEventTypes includes: e event) and: [ e selector = selector ] ]
 ]
 
 { #category : #events }
@@ -231,21 +231,21 @@ MorphicEventHandler >> notifyMorphsOfEvent: anEvent ofType: eventType from: sour
 MorphicEventHandler >> on: eventName send: selector to: recipient [
 	self
 		addSubscription: (MorphEventSubscription on: eventName send: selector to: recipient)
-		toEvent: eventName.
+		toEvent: eventName
 ]
 
 { #category : #initialization }
 MorphicEventHandler >> on: eventName send: selector to: recipient withValue: value [
-	
+
 	selector numArgs = 3 ifFalse:
 		[self error: 'Warning: value parameters are passed as first of 3 arguments'].
 	self
 		addSubscription: (MorphEventSubscription on: eventName send: selector to: recipient withValue: value)
-		toEvent: eventName.
+		toEvent: eventName
 ]
 
 { #category : #events }
-MorphicEventHandler >> startDrag: event fromMorph: sourceMorph [ 
+MorphicEventHandler >> startDrag: event fromMorph: sourceMorph [
 	^self notifyMorphsOfEvent: event ofType: #startDrag from: sourceMorph
 ]
 
@@ -255,8 +255,8 @@ MorphicEventHandler >> veryDeepFixupWith: deepCopier [
 	"ALL inst vars were weakly copied.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
 	super veryDeepFixupWith: deepCopier.
-	1 to: self class instSize do: [:ii | 
+	1 to: self class instSize do: [:ii |
 		old := self instVarAt: ii.
 		self instVarAt: ii put: (deepCopier references at: old ifAbsent: [old])
-		].
+		]
 ]

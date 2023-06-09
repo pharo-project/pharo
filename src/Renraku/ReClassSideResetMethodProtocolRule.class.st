@@ -6,15 +6,15 @@ Class {
 
 { #category : #'testing - interest' }
 ReClassSideResetMethodProtocolRule class >> checksMethod [
-	
+
 	^ true
 ]
 
 { #category : #running }
 ReClassSideResetMethodProtocolRule >> basicCheck: aMethod [
 
-	^ aMethod isClassSide and: [ 
-		  aMethod selector = #reset and: [ 
+	^ aMethod isClassSide and: [
+		  aMethod selector = #reset and: [
 			  aMethod protocol ~= #'class initialization' ] ]
 ]
 
@@ -31,6 +31,11 @@ ReClassSideResetMethodProtocolRule >> critiqueFor: aMethod [
 			   protocol: 'class initialization'
 			   inMethod: methodSymbol
 			   inClass: classSymbol) asRefactoring
+]
+
+{ #category : #accessing }
+ReClassSideResetMethodProtocolRule >> group [
+	^ 'Clean Code'
 ]
 
 { #category : #accessing }

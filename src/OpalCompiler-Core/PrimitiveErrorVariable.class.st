@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 PrimitiveErrorVariable class >> node: aVariableNode [
-	^self new 
+	^self new
 		name: aVariableNode name;
 		node: aVariableNode;
 		markWrite;

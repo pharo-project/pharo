@@ -13,7 +13,7 @@ Class {
 { #category : #drawing }
 BracketMorph >> drawOn: aCanvas [
 	"Draw triangles at the edges."
-	
+
 	|r|
 	r := self horizontal
 		ifTrue: [self bounds insetBy: (2@1 corner: 2@1)]
@@ -32,14 +32,14 @@ BracketMorph >> drawOn: aCanvas [
 { #category : #accessing }
 BracketMorph >> horizontal [
 	"Answer whether horizontal or vertical."
-	
+
 	^self orientation == #horizontal
 ]
 
 { #category : #accessing }
 BracketMorph >> horizontal: aBoolean [
 	"Set whether horizontal or vertical."
-	
+
 	^self orientation: (aBoolean ifTrue: [#horizontal] ifFalse: [#vertical])
 ]
 
@@ -55,7 +55,7 @@ BracketMorph >> initialize [
 { #category : #geometry }
 BracketMorph >> leftOrTopVertices: r [
 	"Answer the vertices for a left or top bracket in the given rectangle."
-	
+
 	^self orientation == #vertical
 		ifTrue: [{r topLeft - (0@1). r left + (r height // 2 + (r height \\ 2))@(r center y - (r height + 1 \\ 2)).
 				r left + (r height // 2 + (r height \\ 2))@(r center y). r bottomLeft}]
@@ -81,7 +81,7 @@ BracketMorph >> orientation: anObject [
 { #category : #geometry }
 BracketMorph >> rightOrBottomVertices: r [
 	"Answer the vertices for a right or bottom bracket in the given rectangle."
-	
+
 	^self orientation == #vertical
 		ifTrue: [{r topRight - (0@1). r right - (r height // 2 + (r height \\ 2))@(r center y - (r height + 1 \\ 2)).
 				r right - (r height // 2 + (r height \\ 2))@(r center y). r bottomRight}]

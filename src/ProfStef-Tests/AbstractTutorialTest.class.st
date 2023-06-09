@@ -20,21 +20,21 @@ AbstractTutorialTest >> testLessonsReturnsAllLessonInstances [
 { #category : #tests }
 AbstractTutorialTest >> testTitleHumanizeClassName [
 	self assert: 'How To Make Your Own Tutorial' equals: HowToMakeYourOwnTutorial title.
-	self assert: 'Pharo Syntax Tutorial' equals: PharoSyntaxTutorial title.
+	self assert: 'Pharo Syntax Tutorial' equals: PharoSyntaxTutorial title
 ]
 
 { #category : #tests }
 AbstractTutorialTest >> testTutorialRaisesShouldBeImplemented [
 	| tutorial |
 	tutorial := AbstractTutorial new.
-	self 
+	self
 		should: [tutorial tutorial]
 		raise: Error
-		withExceptionDo: [:anException | 
-			self 
-				assert:  ShouldBeImplemented 
+		withExceptionDo: [:anException |
+			self
+				assert:  ShouldBeImplemented
 				equals: anException class
-		].
+		]
 ]
 
 { #category : #tests }
@@ -43,5 +43,5 @@ AbstractTutorialTest >> testTutorialsReturnsAllButMockTutorial [
 	tutorials := AbstractTutorial tutorials.
 	self assert: (tutorials includes: PharoSyntaxTutorial).
 	self assert: (tutorials includes: HowToMakeYourOwnTutorial).
-	self deny: (tutorials includes: MockTutorial).
+	self deny: (tutorials includes: MockTutorial)
 ]

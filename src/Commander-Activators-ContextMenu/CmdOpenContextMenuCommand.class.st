@@ -41,7 +41,7 @@ CmdOpenContextMenuCommand >> context: anObject [
 ]
 
 { #category : #'context menu' }
-CmdOpenContextMenuCommand >> createContextMenu [ 
+CmdOpenContextMenuCommand >> createContextMenu [
 
 	^self activationStrategy buildContextMenuFor: context tool inContext: context
 ]
@@ -53,11 +53,11 @@ CmdOpenContextMenuCommand >> defaultMenuItemName [
 
 { #category : #execution }
 CmdOpenContextMenuCommand >> execute [
-	
+
 	| menu |
 	menu := self createContextMenu.
 	menu hasItems ifFalse: [^self].
-	
+
 	menu setInvokingView: context tool.
 	menu invokeModal
 ]
@@ -65,14 +65,14 @@ CmdOpenContextMenuCommand >> execute [
 { #category : #'context menu' }
 CmdOpenContextMenuCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	"Here we need to take care because this command itself is added to menu of same context.
-	So we will always enter into this method during submenu generation. 
-	We catch this recursion using RecursionStopper. 
-	It is easier than adding extra logic to menu building process"	
+	So we will always enter into this method during submenu generation.
+	We catch this recursion using RecursionStopper.
+	It is easier than adding extra logic to menu building process"
 	| submenu |
-	RecursionStopper during: [ 
+	RecursionStopper during: [
 		submenu := self createContextMenu.
 		submenu hasItems ifFalse: [ ^self ].
-		
+
 		super fillContextMenu: aMenu using: aCommandActivator.
 		aMenu lastItem subMenu: submenu
 	]
@@ -81,23 +81,23 @@ CmdOpenContextMenuCommand >> fillContextMenu: aMenu using: aCommandActivator [
 { #category : #execution }
 CmdOpenContextMenuCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.
-	
+
 	context := aToolContext
 ]
 
 { #category : #'context menu' }
 CmdOpenContextMenuCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 	"Here we need to take care because this command itself is added to menu of same context.
-	So we will always enter into this method during submenu generation. 
-	We catch this recursion using RecursionStopper. 
-	It is easier than adding extra logic to menu registration process"	
+	So we will always enter into this method during submenu generation.
+	We catch this recursion using RecursionStopper.
+	It is easier than adding extra logic to menu registration process"
 	| submenu |
-	RecursionStopper during: [ 		
-		submenu := self activationStrategy buildMenuInContext: context.		 
-		submenu isActive ifTrue: [ 					
+	RecursionStopper during: [
+		submenu := self activationStrategy buildMenuInContext: context.
+		submenu isActive ifTrue: [
 			self doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder.
 			"Registration builder uses #name to bind children to parent"
 			submenu rootGroup name: aCommandItem name.
-			submenu registerContextMenuItemsWithBuilder: aBuilder]		
+			submenu registerContextMenuItemsWithBuilder: aBuilder]
 	]
 ]

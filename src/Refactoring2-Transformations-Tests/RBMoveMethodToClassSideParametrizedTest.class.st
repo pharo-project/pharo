@@ -13,7 +13,7 @@ RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBMoveMethodToClassSideParametrizedTest >> constructor [ 
+RBMoveMethodToClassSideParametrizedTest >> constructor [
 	^ #method:class:
 ]
 
@@ -25,7 +25,7 @@ RBMoveMethodToClassSideParametrizedTest >> testClassIsNotMeta [
 	someClass compile: 'threeElementPoint ^ self new' classified: {#example}.
 	method := someClass methodFor: ('threeElement', 'Point') asSymbol.
 	refactoring := self createRefactoringWithModel: model andArguments: { method . className }.
-	self shouldFail: refactoring.
+	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
@@ -37,7 +37,7 @@ RBMoveMethodToClassSideParametrizedTest >> testExistsMethodInClassSide [
 	model := refactoring model.
 	someClass := model classNamed: className name, ' class'.
 	someClass compile: 'threeElementPoint ^ self new' classified: {#example}.
-	self shouldFail: refactoring.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
@@ -49,9 +49,9 @@ RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	self executeRefactoring: refactoring.
 	model := refactoring model.
 	someClass := model classNamed: className name.
-	self assert: (someClass parseTreeFor: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^ self class threeElementPoint').
+	self assert: (someClass parseTreeForSelector: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^ self class threeElementPoint').
 	someClass := model classNamed: className name, ' class'.
-	self assert: (someClass parseTreeFor: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^5 @ 5 + 6 @ 6').
+	self assert: (someClass parseTreeForSelector: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^5 @ 5 + 6 @ 6')
 ]
 
 { #category : #tests }
@@ -63,13 +63,13 @@ RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSideWithInsAndMe
 	self executeRefactoring: refactoring.
 	model := refactoring model.
 	someClass := model classNamed: className name.
-	self assert: (someClass parseTreeFor: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
+	self assert: (someClass parseTreeForSelector: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
 	^ self class rewriteUsing: searchReplacer').
 	someClass := model classNamed: className name, ' class'.
-	self assert: (someClass parseTreeFor: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
+	self assert: (someClass parseTreeForSelector: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
 
 	| aRBTransformationRuleTestData |
 	aRBTransformationRuleTestData := self new.
 	aRBTransformationRuleTestData rewriteRule: searchReplacer.
-	aRBTransformationRuleTestData resetResult').
+	aRBTransformationRuleTestData resetResult')
 ]

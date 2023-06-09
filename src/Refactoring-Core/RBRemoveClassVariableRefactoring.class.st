@@ -18,12 +18,12 @@ RBRemoveClassVariableRefactoring >> preconditions [
 			( RBCondition
 				withBlock: [ | block |
 
-					block := [ :each | 
+					block := [ :each |
 					( each whichSelectorsReferToClassVariable: variableName ) isEmpty
 						ifFalse: [ class realClass
-								ifNil: [ self refactoringError: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]
+								ifNil: [ self refactoringError: ( '<1s> is referenced.' expandMacrosWith: variableName ). ]
 								ifNotNil: [ self
-										refactoringError: ( '<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName )
+										refactoringWarning: ( '<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName )
 										with: [ self
 												openBrowserOn:
 													( RBVariableEnvironment referencesToClassVariable: variableName in: class realClass )

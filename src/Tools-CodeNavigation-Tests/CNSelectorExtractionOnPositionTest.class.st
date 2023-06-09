@@ -16,26 +16,26 @@ CNSelectorExtractionOnPositionTest >> caretAfter: aNode [
 ]
 
 { #category : #helpers }
-CNSelectorExtractionOnPositionTest >> caretAt: aPosition [ 
+CNSelectorExtractionOnPositionTest >> caretAt: aPosition [
 
 	position := aPosition
 ]
 
 { #category : #helpers }
-CNSelectorExtractionOnPositionTest >> caretBefore: aNode [ 
+CNSelectorExtractionOnPositionTest >> caretBefore: aNode [
 
 	self caretAt: aNode start
 ]
 
 { #category : #helpers }
-CNSelectorExtractionOnPositionTest >> caretInMiddleOf: aNode [ 
-	
+CNSelectorExtractionOnPositionTest >> caretInMiddleOf: aNode [
+
 	self caretAt: aNode start + 1
 ]
 
 { #category : #helpers }
-CNSelectorExtractionOnPositionTest >> caretInMiddleOfCascadeMessage: aRBMessageNode [ 
-	
+CNSelectorExtractionOnPositionTest >> caretInMiddleOfCascadeMessage: aRBMessageNode [
+
 	self flag: #bug.
 	"The start of a selector node should not be an integer array. That will change in the future and this test will break because of that."
 	^ self caretAt: aRBMessageNode selectorNode start
@@ -49,7 +49,7 @@ CNSelectorExtractionOnPositionTest >> messageNodeToTest [
 
 { #category : #helpers }
 CNSelectorExtractionOnPositionTest >> method: a zkx: bsq pn: c [
-
+	<ignoreNotImplementedSelectors: #(aMethod:with:x: something:)>
 	^ self aMethod: a with: (self something: bsq) x:(self perform: #selector)
 ]
 
@@ -65,7 +65,7 @@ CNSelectorExtractionOnPositionTest >> methodWithCascade [
 CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 
 	self isInteger
-		ifTrue: [ 
+		ifTrue: [
 			#(1 2) first.
 			self printString ]
 		ifFalse: [ self yourself ]
@@ -74,13 +74,12 @@ CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 { #category : #helpers }
 CNSelectorExtractionOnPositionTest >> methodWithSpacesAtTheEnd [
 	"Please do not remove the leading spaces"
+	<ignoreNotImplementedSelectors: #(someMessageFollowedBySpaces)>
 	^ 1 someMessageFollowedBySpaces  
 ]
 
 { #category : #helpers }
 CNSelectorExtractionOnPositionTest >> methodX:a [
-
-	
 ]
 
 { #category : #helpers }
@@ -96,8 +95,8 @@ CNSelectorExtractionOnPositionTest >> selectedSelector [
 ]
 
 { #category : #helpers }
-CNSelectorExtractionOnPositionTest >> sourceCodeOf: aMethod [ 
-	
+CNSelectorExtractionOnPositionTest >> sourceCodeOf: aMethod [
+
 	sourceCode := aMethod sourceCode.
 	ast := aMethod ast
 ]
@@ -109,7 +108,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlock [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -119,7 +118,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlockWithArgument [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -129,7 +128,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArray [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -139,7 +138,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArrayWithAnElement [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -149,7 +148,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArray [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -159,7 +158,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArrayWithAnElement [
 	sourceCode := selector.
 	ast := (RBParser parseFaultyExpression: selector).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -170,7 +169,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterFirstMessageInBlock [
 	firstBlock := ast statements first arguments first.
 	messageInsideBlock := firstBlock statements first.
 	self caretAfter: messageInsideBlock.
-	
+
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
@@ -182,7 +181,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterLastMessageInBlock [
 	firstBlock := ast statements first arguments first.
 	messageInsideBlock := firstBlock statements last.
 	self caretAfter: messageInsideBlock.
-	
+
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
@@ -194,7 +193,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterMessageInBlock [
 	firstBlock := ast statements first arguments first.
 	messageInsideBlock := firstBlock statements first.
 	self caretAfter: messageInsideBlock.
-	
+
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
@@ -202,10 +201,10 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterMessageInBlock [
 CNSelectorExtractionOnPositionTest >> testCaretAfterNestedMessageReceiverInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
-	
+
 	"The argument is a message node, we should match it instead of the parent"
 	self caretAfter: self messageNodeToTest receiver.
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
@@ -213,10 +212,10 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterNestedMessageReceiverInMiddl
 CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChild [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
-	
+
 	"Caret in middle of should put the caret after the ^"
 	self caretInMiddleOf: self returnNodeToTest.
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
@@ -225,10 +224,10 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChildCascad
 
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
-	
+
 	"Caret in middle of should put the caret after the ^"
 	self caretInMiddleOf: self returnNodeToTest.
-	
+
 	cascade := self returnNodeToTest value.
 	self assert: self selectedSelector equals: cascade messages first selector
 ]
@@ -248,9 +247,9 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterVariableNode [
 CNSelectorExtractionOnPositionTest >> testCaretAtEndOfMethodShouldMatchMethodNode [
 
 	self sourceCodeOf: self class >> #methodWithSpacesAtTheEnd.
-	
+
 	self caretAfter: self returnNodeToTest methodNode.
-	
+
 	self assert: self selectedSelector equals: #methodWithSpacesAtTheEnd
 ]
 
@@ -262,7 +261,7 @@ CNSelectorExtractionOnPositionTest >> testCaretBeforeMessageInBlock [
 	firstBlock := ast statements first arguments first.
 	messageInsideBlock := firstBlock statements first.
 	self caretBefore: messageInsideBlock.
-	
+
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
@@ -270,10 +269,10 @@ CNSelectorExtractionOnPositionTest >> testCaretBeforeMessageInBlock [
 CNSelectorExtractionOnPositionTest >> testCaretBeforeNestedMessageReceiverInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
-	
+
 	"The argument is a message node, we should match it instead of the parent"
 	self caretBefore: self messageNodeToTest receiver.
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
@@ -282,7 +281,7 @@ CNSelectorExtractionOnPositionTest >> testCaretBeforeReturnShouldMatchChild [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretBefore: self returnNodeToTest.
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
@@ -291,10 +290,10 @@ CNSelectorExtractionOnPositionTest >> testCaretInCascadeFirstMessageShouldMatchF
 
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
-	
+
 	cascade := ast statements first value.
 	self caretInMiddleOfCascadeMessage: cascade messages first.
-	
+
 	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
@@ -303,10 +302,10 @@ CNSelectorExtractionOnPositionTest >> testCaretInCascadeReceiverShouldMatchFirst
 
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
-	
+
 	cascade := ast statements first value.
 	self caretInMiddleOf: cascade receiver.
-	
+
 	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
@@ -315,10 +314,10 @@ CNSelectorExtractionOnPositionTest >> testCaretInCascadeSecondMessageShouldMatch
 
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
-	
+
 	cascade := ast statements first value.
 	self caretInMiddleOfCascadeMessage: cascade messages second.
-	
+
 	self assert: self selectedSelector equals: cascade messages second selector
 ]
 
@@ -327,7 +326,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderAfterArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretAfter: (ast arguments at: 1).
-	
+
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
@@ -336,7 +335,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInBeforeArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretBefore: (ast arguments at: 1).
-	
+
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
@@ -345,7 +344,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInBeforeArgumentWithoutSp
 
 	self sourceCodeOf: self class >> #methodX:.
 	self caretBefore: (ast arguments at: 1).
-	
+
 	self assert: self selectedSelector equals: #methodX:
 ]
 
@@ -354,7 +353,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretInMiddleOf: (ast arguments at: 2).
-	
+
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
@@ -372,7 +371,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfSelectorHeader 
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretInMiddleOf: ast.
-	
+
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
@@ -381,7 +380,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageAfterArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretAfter: (self messageNodeToTest arguments at: 1).
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
@@ -390,7 +389,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageInBeforeArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretBefore: (self messageNodeToTest arguments at: 1).
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
@@ -402,7 +401,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageInBlock [
 	firstBlock := ast statements first arguments first.
 	messageInsideBlock := firstBlock statements first.
 	self caretInMiddleOf: messageInsideBlock.
-	
+
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
@@ -410,10 +409,10 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageInBlock [
 CNSelectorExtractionOnPositionTest >> testCaretInNestedMessageInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
-	
+
 	"The argument is a message node, we should match it instead of the parent"
 	self caretInMiddleOf: (self messageNodeToTest arguments at: 2).
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest arguments second selector
 ]
 
@@ -421,10 +420,10 @@ CNSelectorExtractionOnPositionTest >> testCaretInNestedMessageInMiddleOfArgument
 CNSelectorExtractionOnPositionTest >> testCaretInNestedPerformMessageInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
-	
+
 	"The argument is a message node, we should match it instead of the parent"
 	self caretInMiddleOf: self messageNodeToTest arguments third.
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest arguments third selector
 ]
 
@@ -433,11 +432,11 @@ CNSelectorExtractionOnPositionTest >> testCaretInSymbol [
 
 	| performSymbolArgumentNode |
 	self sourceCodeOf: self class >> #method:zkx:pn:.
-	
+
 	"The argument is a message node, we should match it instead of the parent"
 	performSymbolArgumentNode := self messageNodeToTest arguments third arguments first.
 	self caretInMiddleOf: performSymbolArgumentNode.
-	
+
 	self assert: self selectedSelector equals: performSymbolArgumentNode value
 ]
 
@@ -445,10 +444,10 @@ CNSelectorExtractionOnPositionTest >> testCaretInSymbol [
 CNSelectorExtractionOnPositionTest >> testCaretInTheMiddleOfNestedMessageReceiverInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
-	
+
 	"The argument is a message node, we should match it instead of the parent"
 	self caretInMiddleOf: self messageNodeToTest receiver.
-	
+
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
@@ -456,11 +455,11 @@ CNSelectorExtractionOnPositionTest >> testCaretInTheMiddleOfNestedMessageReceive
 CNSelectorExtractionOnPositionTest >> testCaretOnNonValidCode [
 	"Code has invalid code (no selectors at all)"
 
-	
+
 	sourceCode := 'anObjectdo : 2'.
 	ast := (RBParser parseFaultyExpression: sourceCode).
 	self caretAfter: ast.
-	self assert: self selectedSelector equals: #noMethod.
+	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
 { #category : #'tests - no selection - withOutMessage' }
@@ -478,6 +477,6 @@ CNSelectorExtractionOnPositionTest >> testExtractSelectorWithPositionAtFirstChar
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
 	self caretAt: 1.
-	
+
 	self assert: self selectedSelector equals: #methodWithIfTrueIfFalse
 ]

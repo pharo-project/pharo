@@ -12,15 +12,15 @@ Class {
 { #category : #tests }
 PharoSyntaxTutorialTest >> testDivideTwoByZeroSignalsZeroDivide [
 	[self testedTutorial divideTwoByZero.
-	self fail] 
-	on: ZeroDivide 
+	self fail]
+	on: ZeroDivide
 	do: []
 ]
 
 { #category : #tests }
 PharoSyntaxTutorialTest >> testEachSelectorExists [
 	self testedTutorial tutorial do: [:aSelector|
-		self assert: (self testedTutorial respondsTo: aSelector) 
+		self assert: (self testedTutorial respondsTo: aSelector)
 	]
 ]
 

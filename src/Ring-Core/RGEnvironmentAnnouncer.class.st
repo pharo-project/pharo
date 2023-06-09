@@ -16,13 +16,13 @@ Class {
 
 { #category : #announce }
 RGEnvironmentAnnouncer >> announce: anAnnouncement [
-	self isSuspended 
-		ifFalse: [ 
+	self isSuspended
+		ifFalse: [
 			self private announce: anAnnouncement.
 			super announce: anAnnouncement ]
 		ifTrue:[
 			storedAnnouncements ifNotNil:[ storedAnnouncements add: anAnnouncement ]
-		].
+		]
 ]
 
 { #category : #triggering }
@@ -40,7 +40,7 @@ RGEnvironmentAnnouncer >> behaviorCommentModified: anRGBehavior [
 { #category : #triggering }
 RGEnvironmentAnnouncer >> behaviorDefinitionChangedFrom: oldRGBehavior to: newRGBehavior [
 
-	self announce: (ClassModifiedClassDefinition  
+	self announce: (ClassModifiedClassDefinition
 		classDefinitionChangedFrom:  oldRGBehavior
 		to: newRGBehavior)
 ]
@@ -60,35 +60,35 @@ RGEnvironmentAnnouncer >> behaviorModificationAppliedTo: anRGBehavior [
 { #category : #triggering }
 RGEnvironmentAnnouncer >> behaviorParentRenamed: anRGBehavior from: oldName [
 
-	self announce: (ClassParentRenamed 
+	self announce: (ClassParentRenamed
 		classParentOf: anRGBehavior
 		renamedFrom: oldName
 		to: anRGBehavior name)
 ]
 
 { #category : #triggering }
-RGEnvironmentAnnouncer >> behaviorRecategorized: anRGBehavior [ 
+RGEnvironmentAnnouncer >> behaviorRecategorized: anRGBehavior [
 
-	self announce: (ClassRecategorized 
-		class: anRGBehavior 
-		recategorizedFrom: nil 
+	self announce: (ClassRecategorized
+		class: anRGBehavior
+		recategorizedFrom: nil
 		to: anRGBehavior category)
 ]
 
 { #category : #triggering }
 RGEnvironmentAnnouncer >> behaviorRemoved: anRGBehavior [
 
-	self announce: (ClassRemoved 
+	self announce: (ClassRemoved
 		class: anRGBehavior category: anRGBehavior category)
 ]
 
 { #category : #triggering }
 RGEnvironmentAnnouncer >> behaviorRenamed: anRGBehavior from: oldName [
 
-	self announce: (ClassRenamed 
-		class: anRGBehavior 
-		category: anRGBehavior category 
-		oldName: oldName 
+	self announce: (ClassRenamed
+		class: anRGBehavior
+		category: anRGBehavior category
+		oldName: oldName
 		newName: anRGBehavior name)
 ]
 
@@ -104,15 +104,22 @@ RGEnvironmentAnnouncer >> isSuspended [
 ]
 
 { #category : #triggering }
-RGEnvironmentAnnouncer >> methodAdded: aMethod [ 
+RGEnvironmentAnnouncer >> methodAdded: aMethod [
 
 	self announce: (MethodAdded method: aMethod)
 ]
 
 { #category : #triggering }
-RGEnvironmentAnnouncer >> methodRemoved: aMethod [ 
+RGEnvironmentAnnouncer >> methodRemoved: aMethod [
+	"For the protocol we should just send #protocol to the method when #protocol will return a protocol and not a symbol."
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: aMethod protocol origin: aMethod parent)
+	self announce: (MethodRemoved
+			 methodRemoved: aMethod
+			 protocol: (self class environment
+					  at: aMethod methodClass
+					  ifPresent: [ :class | class protocolNamed: aMethod protocol ]
+					  ifAbsent: [ aMethod protocol ])
+			 origin: aMethod parent)
 ]
 
 { #category : #accessing }
@@ -132,14 +139,14 @@ RGEnvironmentAnnouncer >> suspendAllWhile: aBlock [
 RGEnvironmentAnnouncer >> suspendAllWhileStoring: aBlock [
 	| reentring |
 	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
-	
+
 	reentring := storedAnnouncements isNotNil.
-	
+
 	reentring ifFalse:[
 		storedAnnouncements := OrderedCollection new.
 	].
 
-	[ 
+	[
 		self suspendAllWhile: aBlock.
 		^ storedAnnouncements.
 	] ensure:[
@@ -151,6 +158,6 @@ RGEnvironmentAnnouncer >> suspendAllWhileStoring: aBlock [
 
 { #category : #subscription }
 RGEnvironmentAnnouncer >> unsubscribe: anObject [
-	self private unsubscribe: anObject.	
-	super unsubscribe: anObject.
+	self private unsubscribe: anObject.
+	super unsubscribe: anObject
 ]

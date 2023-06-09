@@ -21,23 +21,23 @@ RBSelectorEnvironment class >> defaultName [
 
 { #category : #'instance creation' }
 RBSelectorEnvironment class >> implementorsMatching: aString [
-	^ self 
-		implementorsMatching: aString 
+	^ self
+		implementorsMatching: aString
 		in: self default
 ]
 
 { #category : #'instance creation' }
-RBSelectorEnvironment class >> implementorsMatching: aString in: anEnvironment [ 
+RBSelectorEnvironment class >> implementorsMatching: aString in: anEnvironment [
 	| classDict metaDict |
 	classDict := IdentityDictionary new.
 	metaDict := IdentityDictionary new.
-	anEnvironment classesDo: [ :class | 
+	anEnvironment classesDo: [ :class |
 		| selectors |
 		selectors := IdentitySet new.
 		anEnvironment selectorsForClass: class
 			do: [ :each | (aString match: each) ifTrue: [ selectors add: each ] ].
 		selectors isEmpty ifFalse: [
-			class isMeta 
+			class isMeta
 				ifTrue: [ metaDict at: class soleInstance name put: selectors ]
 				ifFalse: [ classDict at: class name put: selectors ] ] ].
 	^ (self onEnvironment: anEnvironment)
@@ -54,15 +54,15 @@ RBSelectorEnvironment class >> implementorsOf: aSelector [
 ]
 
 { #category : #'instance creation' }
-RBSelectorEnvironment class >> implementorsOf: aSelector in: anEnvironment [ 
+RBSelectorEnvironment class >> implementorsOf: aSelector in: anEnvironment [
 	| classDict metaDict selectors |
 	classDict := IdentityDictionary new.
 	metaDict := IdentityDictionary new.
 	selectors := IdentitySet with: aSelector.
-	anEnvironment classesDo: [ :class | 
-		((class includesLocalSelector: aSelector) and: [ anEnvironment includesSelector: aSelector in: class ]) 
+	anEnvironment classesDo: [ :class |
+		((class includesLocalSelector: aSelector) and: [ anEnvironment includesSelector: aSelector in: class ])
 			ifTrue: [
-				class isMeta 
+				class isMeta
 					ifTrue: [ metaDict at: class soleInstance name put: selectors copy ]
 					ifFalse: [ classDict at: class name put: selectors copy ] ] ].
 	^ (self onEnvironment: anEnvironment)
@@ -79,16 +79,16 @@ RBSelectorEnvironment class >> matches: aString [
 ]
 
 { #category : #'instance creation' }
-RBSelectorEnvironment class >> matches: aString in: anEnvironment [ 
+RBSelectorEnvironment class >> matches: aString in: anEnvironment [
 	| newEnvironment |
 	newEnvironment := (self onEnvironment: anEnvironment)
 		label: 'Matching: ' , aString;
 		searchStrings: (Array with: aString);
 		yourself.
-	anEnvironment classesAndSelectorsDo: [ :class :selector | 
+	anEnvironment classesAndSelectorsDo: [ :class :selector |
 		| method |
 		method := class compiledMethodAt: selector.
-		method withAllNestedLiteralsDo: [ :literal | 
+		method withAllNestedLiteralsDo: [ :literal |
 			literal isString ifTrue: [
 				(aString match: literal)
 					ifTrue: [ newEnvironment addClass: class selector: selector ] ] ] ].
@@ -104,7 +104,7 @@ RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass [
 ]
 
 { #category : #'instance creation' }
-RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass in: anEnvironment [ 
+RBSelectorEnvironment class >> onMethods: selectorCollection forClass: aClass in: anEnvironment [
 	| environemnt |
 	environemnt := self onEnvironment: anEnvironment.
 	selectorCollection do: [ :each | environemnt addClass: aClass selector: each ].
@@ -119,7 +119,7 @@ RBSelectorEnvironment class >> referencesTo: aLiteral [
 ]
 
 { #category : #'instance creation' }
-RBSelectorEnvironment class >> referencesTo: aLiteral in: anEnvironment [ 
+RBSelectorEnvironment class >> referencesTo: aLiteral in: anEnvironment [
 	| classDict literalPrintString |
 	literalPrintString := aLiteral isVariableBinding
 		ifTrue: [ aLiteral key asString ]
@@ -128,11 +128,11 @@ RBSelectorEnvironment class >> referencesTo: aLiteral in: anEnvironment [
 				ifTrue: [ aLiteral ]
 				ifFalse: [ aLiteral printString ] ].
 	classDict := IdentityDictionary new.
-	anEnvironment classesDo: [ :class | 
+	anEnvironment classesDo: [ :class |
 		| selectors |
 		selectors := (class thoroughWhichSelectorsReferTo: aLiteral)
 			select: [ :selector | anEnvironment includesSelector: selector in: class ].
-		selectors isEmpty 
+		selectors isEmpty
 			ifFalse: [ classDict at: class put: selectors asIdentitySet ] ].
 	^ (self onEnvironment: anEnvironment)
 		on: classDict;
@@ -142,15 +142,15 @@ RBSelectorEnvironment class >> referencesTo: aLiteral in: anEnvironment [
 ]
 
 { #category : #adding }
-RBSelectorEnvironment >> addClass: aClass [ 
-	aClass isMeta 
+RBSelectorEnvironment >> addClass: aClass [
+	aClass isMeta
 		ifTrue: [ metaClassSelectors at: aClass soleInstance name put: aClass selectors asIdentitySet ]
 		ifFalse: [ classSelectors at: aClass name put: aClass selectors asIdentitySet ]
 ]
 
 { #category : #adding }
-RBSelectorEnvironment >> addClass: aClass selector: aSymbol [ 
-	(aClass isMeta 
+RBSelectorEnvironment >> addClass: aClass selector: aSymbol [
+	(aClass isMeta
 		ifTrue: [ metaClassSelectors at: aClass soleInstance name ifAbsentPut: [ IdentitySet new ] ]
 		ifFalse: [ classSelectors at: aClass name ifAbsentPut: [ IdentitySet new ] ])
 			add: aSymbol
@@ -159,7 +159,7 @@ RBSelectorEnvironment >> addClass: aClass selector: aSymbol [
 { #category : #adding }
 RBSelectorEnvironment >> addMethod: aMethod [
 	"this is a method to improve addition of methods, as class and selector data can be retrieved from a single compiled method"
-	
+
 	self addClass: aMethod methodClass selector: aMethod selector
 ]
 
@@ -177,31 +177,31 @@ RBSelectorEnvironment >> classNames [
 ]
 
 { #category : #'initialize-release' }
-RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [ 
+RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [
 	classSelectors := classSelectorDictionary.
 	metaClassSelectors := metaClassSelectorDictionary
 ]
 
 { #category : #initialization }
-RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [ 
+RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [
 	"Used to recreate an environment from its storeString"
 
 	classSelectors := IdentityDictionary new.
 	metaClassSelectors := IdentityDictionary new.
-	classArray 
+	classArray
 		do: [ :each | classSelectors at: each first put: each last asIdentitySet ].
-	metaArray 
+	metaArray
 		do: [ :each | metaClassSelectors at: each first put: each last asIdentitySet ]
 ]
 
 { #category : #'accessing - classes' }
-RBSelectorEnvironment >> classesDo: aBlock [ 
-	classSelectors keysDo: [ :each | 
+RBSelectorEnvironment >> classesDo: aBlock [
+	classSelectors keysDo: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class notNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
-	metaClassSelectors keysDo: [ :each | 
+	metaClassSelectors keysDo: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class notNil and: [ environment includesClass: class class ])
@@ -214,29 +214,29 @@ RBSelectorEnvironment >> defaultLabel [
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesCategory: aCategory [ 
-	^(super includesCategory: aCategory) and: 
-			[(self classNamesFor: aCategory) anySatisfy: 
-					[:className | 
-					(classSelectors includesKey: className) 
+RBSelectorEnvironment >> includesCategory: aCategory [
+	^(super includesCategory: aCategory) and:
+			[(self classNamesFor: aCategory) anySatisfy:
+					[:className |
+					(classSelectors includesKey: className)
 						or: [metaClassSelectors includesKey: className]]]
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesClass: aClass [ 
-	^(self privateSelectorsForClass: aClass) isNotEmpty 
+RBSelectorEnvironment >> includesClass: aClass [
+	^(self privateSelectorsForClass: aClass) isNotEmpty
 		and: [super includesClass: aClass]
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesProtocol: aProtocol in: aClass [ 
+RBSelectorEnvironment >> includesProtocol: aProtocol in: aClass [
 	^(super includesProtocol: aProtocol in: aClass)
 		and: [(environment selectorsFor: aProtocol in: aClass)
 				anySatisfy: [:aSelector | self privateIncludesSelector: aSelector inClass: aClass]]
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesSelector: aSelector in: aClass [ 
+RBSelectorEnvironment >> includesSelector: aSelector in: aClass [
 	^(environment includesSelector: aSelector in: aClass)
 		and: [self privateIncludesSelector: aSelector inClass: aClass]
 ]
@@ -259,9 +259,9 @@ RBSelectorEnvironment >> isSelectorEnvironment [
 ]
 
 { #category : #initialization }
-RBSelectorEnvironment >> on: aDictionary [ 
-	aDictionary keysAndValuesDo: [ :class :selectors | 
-		class isMeta 
+RBSelectorEnvironment >> on: aDictionary [
+	aDictionary keysAndValuesDo: [ :class :selectors |
+		class isMeta
 			ifTrue: [ metaClassSelectors at: class soleInstance name put: selectors asIdentitySet ]
 			ifFalse: [ classSelectors at: class name put: selectors asIdentitySet ] ]
 ]
@@ -273,12 +273,12 @@ RBSelectorEnvironment >> packages [
 	| pSet |
 	pSet := Set new.
 	self classes
-		do: [ :each | 
+		do: [ :each |
 			each packages
-				do: [ :p | 
+				do: [ :p |
 					self
 						selectorsForClass: each
-						do: [ :s | 
+						do: [ :s |
 							(p includesSelector: s ofClass: each)
 								ifTrue: [ pSet add: p ] ] ] ].
 	^ pSet
@@ -297,20 +297,20 @@ RBSelectorEnvironment >> postCopy [
 ]
 
 { #category : #private }
-RBSelectorEnvironment >> privateIncludesSelector: aSelector inClass: aClass [ 
+RBSelectorEnvironment >> privateIncludesSelector: aSelector inClass: aClass [
 	^(self privateSelectorsForClass: aClass) includes: aSelector
 ]
 
 { #category : #private }
-RBSelectorEnvironment >> privateSelectorsForClass: aClass [ 
-	^aClass isMeta 
+RBSelectorEnvironment >> privateSelectorsForClass: aClass [
+	^aClass isMeta
 		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [#()]]
 		ifFalse: [classSelectors at: aClass name ifAbsent: [#()]]
 ]
 
 { #category : #removing }
-RBSelectorEnvironment >> removeClass: aClass [ 
-	aClass isMeta 
+RBSelectorEnvironment >> removeClass: aClass [
+	aClass isMeta
 		ifTrue: [metaClassSelectors removeKey: aClass soleInstance name ifAbsent: []]
 		ifFalse: [classSelectors removeKey: aClass name ifAbsent: []]
 ]
@@ -320,11 +320,11 @@ RBSelectorEnvironment >> removeClass: aClass selector: aSelector [
 
 	| class |
 	class := aClass isMeta
-		         ifTrue: [ 
+		         ifTrue: [
 			         metaClassSelectors
 				         at: aClass soleInstance name
 				         ifAbsent: [ ^ self ] ]
-		         ifFalse: [ 
+		         ifFalse: [
 		         classSelectors at: aClass name ifAbsent: [ ^ self ] ].
 	class remove: aSelector ifAbsent: [  ].
 	class ifEmpty: [ self removeClass: aClass ]
@@ -333,12 +333,12 @@ RBSelectorEnvironment >> removeClass: aClass selector: aSelector [
 { #category : #accessing }
 RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [
 
-	^ (self privateSelectorsForClass: aClass) copy do: [ :each | 
+	^ (self privateSelectorsForClass: aClass) copy do: [ :each |
 		  (aClass includesSelector: each) ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #printing }
-RBSelectorEnvironment >> storeOn: aStream [ 
+RBSelectorEnvironment >> storeOn: aStream [
 	| classBlock |
 	aStream
 		nextPutAll: '((';
@@ -348,14 +348,14 @@ RBSelectorEnvironment >> storeOn: aStream [
 	aStream
 		nextPut: $);
 		nextPutAll: ' classes: #('.
-	classBlock := 
-			[:key :value | 
+	classBlock :=
+			[:key :value |
 			aStream
 				nextPutAll: '#(';
 				nextPutAll: key;
 				nextPutAll: ' #('.
-			value do: 
-					[:each | 
+			value do:
+					[:each |
 					aStream
 						nextPutAll: each;
 						nextPut: $ ].

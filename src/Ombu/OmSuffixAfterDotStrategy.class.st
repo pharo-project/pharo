@@ -17,7 +17,7 @@ OmSuffixAfterDotStrategy >> nextSuffix [
 
 { #category : #accessing }
 OmSuffixAfterDotStrategy >> nextTo: aName in: aDirectory [
-	
+
 	^ String streamContents: [ :stream |
 		stream
 			nextPutAll: (aName copyUpToLast: $.);

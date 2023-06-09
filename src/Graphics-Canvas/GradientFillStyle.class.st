@@ -45,18 +45,17 @@ GradientFillStyle class >> initPixelRampCache [
 	When a new pixel ramp is needed, a temporary GradientFillStyle
 	is created so that it can be used to create a new pixel ramp"
 
-	^ PixelRampCache := LRUCache new 
+	^ PixelRampCache := LRUCache new
 		maximumWeight: 32;
-		factory: [ :key | 
-			(GradientFillStyle new colorRamp: key) 
+		factory: [ :key |
+			(GradientFillStyle new colorRamp: key)
 				computePixelRampOfSize: 512 ];
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 GradientFillStyle class >> initialize [
-	"GradientFillStyle initialize"
-	
+
 	self initPixelRampCache
 ]
 
@@ -112,7 +111,7 @@ GradientFillStyle >> colorRamp [
 GradientFillStyle >> colorRamp: anArray [
 	colorRamp := anArray.
 	pixelRamp := nil.
-	isTranslucent := nil.
+	isTranslucent := nil
 ]
 
 { #category : #private }
@@ -152,13 +151,14 @@ GradientFillStyle >> computePixelRampOfSize: length [
 { #category : #comparing }
 GradientFillStyle >> hash [
 	"Hash is implemented because #= is implemented."
-	
+
 	^super hash bitXor: self pixelRamp hash
 ]
 
 { #category : #testing }
 GradientFillStyle >> isGradientFill [
-	^true
+
+	^ true
 ]
 
 { #category : #testing }
@@ -168,7 +168,8 @@ GradientFillStyle >> isRadialFill [
 
 { #category : #testing }
 GradientFillStyle >> isTranslucent [
-	^isTranslucent ifNil:[isTranslucent := self checkTranslucency]
+
+	^ isTranslucent ifNil: [ isTranslucent := self checkTranslucency ]
 ]
 
 { #category : #converting }

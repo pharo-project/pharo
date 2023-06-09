@@ -14,20 +14,20 @@ Class {
 		'smartCharactersMapping',
 		'backgroundColor',
 		'expandPrefixes',
-		'captureNavigationKeys',
 		'useEnterToAccept',
 		'popupShowAutomatic',
 		'popupAutomaticDelay',
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
-		'smartCharactersWithDoubleSpace'
+		'smartCharactersWithDoubleSpace',
+		'showCompletionDetails'
 	],
 	#category : #'NECompletion-Preferences'
 }
 
 { #category : #private }
 NECPreferences class >> availableEngines [
-	^ AbstractCompletionEngine allSubclasses
+	^ CompletionEngine allSubclasses
 ]
 
 { #category : #accessing }
@@ -46,18 +46,8 @@ NECPreferences class >> backgroundColor [
 ]
 
 { #category : #accessing }
-NECPreferences class >> backgroundColor: aColor [ 
+NECPreferences class >> backgroundColor: aColor [
 	backgroundColor := aColor
-]
-
-{ #category : #accessing }
-NECPreferences class >> captureNavigationKeys [
-	^ captureNavigationKeys
-]
-
-{ #category : #accessing }
-NECPreferences class >> captureNavigationKeys: aBoolean [
-	captureNavigationKeys := aBoolean
 ]
 
 { #category : #accessing }
@@ -91,6 +81,12 @@ NECPreferences class >> defaultPopupShowAutomatic [
 ]
 
 { #category : #defaults }
+NECPreferences class >> defaultShowCompletionDetails [
+
+	^ true
+]
+
+{ #category : #defaults }
 NECPreferences class >> defaultSpaceAfterCompletion [
 	^ true
 ]
@@ -107,7 +103,7 @@ NECPreferences class >> enabled [
 
 { #category : #accessing }
 NECPreferences class >> enabled: aBoolean [
-	enabled := aBoolean.
+	enabled := aBoolean
 ]
 
 { #category : #accessing }
@@ -126,7 +122,6 @@ NECPreferences class >> initialize [
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
-	captureNavigationKeys := true.
 	useEnterToAccept := self defaultUseEnterToAccept.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
@@ -144,6 +139,7 @@ NECPreferences class >> initialize [
 	popupShowWithShortcut := self defaultPopupShortcut.
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
+	showCompletionDetails := self defaultShowCompletionDetails.
 	NECEntry spaceAfterCompletion: true
 ]
 
@@ -185,13 +181,13 @@ NECPreferences class >> settingsOn: aBuilder [
 		parentName: #codeBrowsing;
 		selector: #enabled;
 		default: true;
-		iconName: #smallConfigurationIcon;
+		iconName: #smallConfiguration;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
-		with: [ 
+		with: [
 					| availableControllers availableSorters |
 					availableControllers := self availableEngines.
 					availableControllers size > 1
-						ifTrue: [ 
+						ifTrue: [
 							(aBuilder pickOne: #completionEngineClass)
 								order: -1;
 								label: 'CompletionEngine';
@@ -202,7 +198,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								domainValues: availableControllers ].
 					availableSorters := self availableSorters.
 					availableSorters size > 1
-						ifTrue: [ 
+						ifTrue: [
 							(aBuilder pickOne: #completionSorter)
 								order: -1;
 								label: 'Sorter';
@@ -211,17 +207,18 @@ NECPreferences class >> settingsOn: aBuilder [
 								setSelector: #sorterClass:;
 								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
-						default: (Color 
-							r: 0.823069403714565 
-							g: 0.823069403714565 
+						default: (Color
+							r: 0.823069403714565
+							g: 0.823069403714565
 							b: 0.823069403714565 alpha: 1.0);
 						label: 'Background Color'.
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.
-					(aBuilder setting: #captureNavigationKeys)
-						default: true;
-						label: 'Use navigation keys for extended completion functionality'.
+					(aBuilder setting: #showCompletionDetails)
+						label: 'Show completion details';
+						description: 'Show detailed information about completion entries';
+						default: self defaultShowCompletionDetails.
 					(aBuilder setting: #caseSensitive)
 						label: 'Case Sensitive';
 						default: true;
@@ -234,7 +231,7 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Smart Characters with Single Space';
 						default: '';
 				 		description: 'Enumerate the characters which are automatically inserted with a single space in between.'.
-					(aBuilder setting: #smartCharactersWithDoubleSpace) 
+					(aBuilder setting: #smartCharactersWithDoubleSpace)
 						label: 'Smart Characters with Double Space';
 						default: '[]{}';
 				 		description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
@@ -252,7 +249,17 @@ NECPreferences class >> settingsOn: aBuilder [
 						target: NECEntry;
 						default: self defaultSpaceAfterCompletion;
 						label: 'Put a space after completion'
-					 ].
+					 ]
+]
+
+{ #category : #accessing }
+NECPreferences class >> showCompletionDetails [
+	^ showCompletionDetails
+]
+
+{ #category : #accessing }
+NECPreferences class >> showCompletionDetails: aBoolean [
+	showCompletionDetails := aBoolean
 ]
 
 { #category : #accessing }
@@ -297,7 +304,7 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 
 { #category : #accessing }
 NECPreferences class >> spaceAfterCompletion [
-	
+
 	^ NECEntry spaceAfterCompletion
 ]
 

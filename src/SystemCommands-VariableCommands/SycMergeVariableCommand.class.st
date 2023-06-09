@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-SycMergeVariableCommand class >> defaultMenuIconName [ 
+SycMergeVariableCommand class >> defaultMenuIconName [
 	^ #merge
 ]
 
@@ -44,5 +44,5 @@ SycMergeVariableCommand >> newVariableName [
 SycMergeVariableCommand >> requestNewNameIn: aToolContext [
 	newName := aToolContext
 		           requestSimpleVariable: 'Select a variable'
-		           from: (Array with: variable definingClass).
+		           from: (Array with: variable definingClass)
 ]

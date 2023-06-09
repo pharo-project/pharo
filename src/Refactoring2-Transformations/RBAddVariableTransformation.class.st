@@ -17,27 +17,27 @@ Preconditions:
 Class {
 	#name : #RBAddVariableTransformation,
 	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #preconditions }
 RBAddVariableTransformation >> preconditions [
 
 	class := self definingClass.
-	
-	^ (isClassVariable 
+
+	^ (isClassVariable
 		ifTrue: [ (RBCondition isMetaclass: class)
 					& (RBCondition isValidClassVarName: variableName for: class) ]
 		ifFalse: [ (RBCondition isMetaclass: class) not
 					& (RBCondition isValidInstanceVariableName: variableName for: class) ])
-		& (RBCondition hierarchyOf: class definesVariable: variableName asString) not 
+		& (RBCondition hierarchyOf: class definesVariable: variableName asString) not
 		& (RBCondition isGlobal: variableName in: self model) not
 ]
 
 { #category : #executing }
 RBAddVariableTransformation >> privateTransform [
-	
+
 	isClassVariable
-		ifTrue: [ self definingClass theNonMetaClass addClassVariable: variableName ]
+		ifTrue: [ self definingClass instanceSide addClassVariable: variableName ]
 		ifFalse: [ self definingClass addInstanceVariable: variableName ]
 ]

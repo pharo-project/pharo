@@ -54,10 +54,10 @@ TIndexAccess >> testIdentityIndexOfIAbsent [
 	| collection element |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
-	self assert: (collection identityIndexOf: element ifAbsent: [ 0 ]) 
+	self assert: (collection identityIndexOf: element ifAbsent: [ 0 ])
 	     equals: 1.
 
-	self assert: (collection identityIndexOf: self elementNotInForIndexAccessing ifAbsent: [ 55 ]) 
+	self assert: (collection identityIndexOf: self elementNotInForIndexAccessing ifAbsent: [ 55 ])
 		  equals: 55
 ]
 
@@ -67,8 +67,8 @@ TIndexAccess >> testIndexOf [
 	| tmp index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	tmp := collection size.
-	collection reverseDo: 
-		[ :each | 
+	collection reverseDo:
+		[ :each |
 		each = self elementInForIndexAccessing ifTrue: [ index := tmp ].
 		tmp := tmp - 1 ].
 	self assert: (collection indexOf: self elementInForIndexAccessing) equals: index
@@ -79,10 +79,10 @@ TIndexAccess >> testIndexOfIfAbsent [
 
 	| collection |
 	collection := self collectionMoreThan1NoDuplicates.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: collection first
 			ifAbsent: [ 33 ]) equals: 1.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: self elementNotInForIndexAccessing
 			ifAbsent: [ 33 ]) equals: 33
 ]
@@ -93,15 +93,15 @@ TIndexAccess >> testIndexOfStartingAt [
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: element
 			startingAt: 2
 			ifAbsent: [ 99 ]) equals: 99.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: element
 			startingAt: 1
 			ifAbsent: [ 99 ]) equals: 1.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: self elementNotInForIndexAccessing
 			startingAt: 1
 			ifAbsent: [ 99 ]) equals: 99
@@ -113,15 +113,15 @@ TIndexAccess >> testIndexOfStartingAtIfAbsent [
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: element
 			startingAt: 2
 			ifAbsent: [ 99 ]) equals: 99.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: element
 			startingAt: 1
 			ifAbsent: [ 99 ]) equals: 1.
-	self assert: (collection 
+	self assert: (collection
 			indexOf: self elementNotInForIndexAccessing
 			startingAt: 1
 			ifAbsent: [ 99 ]) equals: 99
@@ -133,11 +133,11 @@ TIndexAccess >> testIndexOfSubCollectionStartingAt [
 	| subcollection index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
-	index := collection 
+	index := collection
 		indexOfSubCollection: subcollection
 		startingAt: 1.
 	self assert: index equals: 1.
-	index := collection 
+	index := collection
 		indexOfSubCollection: subcollection
 		startingAt: 2.
 	self assert: index equals: 0
@@ -172,10 +172,10 @@ TIndexAccess >> testLastIndexOfIfAbsent [
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
-	self assert: (collection 
+	self assert: (collection
 			lastIndexOf: element
 			ifAbsent: [ 99 ]) equals: 1.
-	self assert: (collection 
+	self assert: (collection
 			lastIndexOf: self elementNotInForIndexAccessing
 			ifAbsent: [ 99 ]) equals: 99
 ]
@@ -186,15 +186,15 @@ TIndexAccess >> testLastIndexOfStartingAt [
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection last.
-	self assert: (collection 
+	self assert: (collection
 			lastIndexOf: element
 			startingAt: collection size
 			ifAbsent: [ 99 ]) equals: collection size.
-	self assert: (collection 
+	self assert: (collection
 			lastIndexOf: element
 			startingAt: collection size - 1
 			ifAbsent: [ 99 ]) equals: 99.
-	self assert: (collection 
+	self assert: (collection
 			lastIndexOf: self elementNotInForIndexAccessing
 			startingAt: collection size
 			ifAbsent: [ 99 ]) equals: 99

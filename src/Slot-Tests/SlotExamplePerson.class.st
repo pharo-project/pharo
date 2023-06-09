@@ -47,7 +47,7 @@ SlotExamplePerson >> initialize [
 
 { #category : #accessing }
 SlotExamplePerson >> name [
-	
+
 	^name
 ]
 

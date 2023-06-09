@@ -29,7 +29,7 @@ SpRubFindReplaceService >> dialogIsActiveFor: aTextArea [
 SpRubFindReplaceService >> discardDialog [
 
 	dialog := nil.
-	dialogWindow := nil.
+	dialogWindow := nil
 ]
 
 { #category : #services }
@@ -78,7 +78,7 @@ SpRubFindReplaceService >> findPolicyChanged [
 
 { #category : #accessing }
 SpRubFindReplaceService >> findText: aStringOrText [
-	
+
 	super findText: aStringOrText.
 	self textArea whenFindTextChanged: RubFindTextChanged new.
 	^ true
@@ -87,7 +87,7 @@ SpRubFindReplaceService >> findText: aStringOrText [
 { #category : #initialization }
 SpRubFindReplaceService >> initialize [
 	super initialize.
-	
+
 	textAreaHolder := WeakArray new: 1
 ]
 
@@ -104,8 +104,8 @@ SpRubFindReplaceService >> openDialog [
 
 { #category : #services }
 SpRubFindReplaceService >> replace [
-	findStartIndex := self searchBackwards 
-		ifTrue: [self textArea editor stopIndex] 
+	findStartIndex := self searchBackwards
+		ifTrue: [self textArea editor stopIndex]
 		ifFalse: [self textArea editor startIndex].
 	(self find)
 		ifNotNil: [self textArea replaceSelectionWith: self replaceText]
@@ -140,15 +140,19 @@ SpRubFindReplaceService >> textArea [
 
 { #category : #services }
 SpRubFindReplaceService >> textArea: aTextArea [
+	| oldTextArea |
+	oldTextArea := textAreaHolder at: 1 ifAbsent: nil.
+	oldTextArea == aTextArea ifTrue: [ ^ self ].
+	oldTextArea ifNotNil: [ oldTextArea announcer unsubscribe: self ].
 	textAreaHolder at: 1 put: aTextArea.
-	aTextArea announcer 
-		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self.
+	aTextArea announcer
+		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self
 ]
 
 { #category : #updating }
 SpRubFindReplaceService >> updateFindStartIndex [
 	| si |
-	self textArea 
+	self textArea
 		ifNil: [ ^self ]
 		ifNotNil: [ :aTextArea |
 			aTextArea changed.
@@ -172,7 +176,7 @@ SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 
 { #category : #'events handling' }
 SpRubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
-	self textArea: anAnnounce morph.
+	self textArea: anAnnounce morph
 ]
 
 { #category : #'events handling' }
@@ -180,6 +184,6 @@ SpRubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 ]
 
 { #category : #'events handling' }
-SpRubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [ 
+SpRubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [
 	self updateFindStartIndex
 ]

@@ -82,7 +82,7 @@ CoverageDemo >> coverageCode: anObject [
 { #category : #examples }
 CoverageDemo >> exampleMethod [
 
-	self open.
+	self open
 ]
 
 { #category : #examples }
@@ -90,8 +90,8 @@ CoverageDemo >> exampleNotCompleteCoverage [
 
 	self coverageCode: [ CoverageDemo exampleIfTrueIfFalse. ].
 	self compiledMethods add: CoverageDemo class >>#exampleIfTrueIfFalse.
-	
-	self open.
+
+	self open
 ]
 
 { #category : #initialization }
@@ -157,21 +157,21 @@ CoverageDemo >> open [
 
 { #category : #action }
 CoverageDemo >> removeMetalink [
-	
-	compiledMethods do:[:method| method methodClass recompile].
+
+	compiledMethods do:[:method| method methodClass recompile]
 ]
 
 { #category : #action }
 CoverageDemo >> runCoverageCode [
 
 	coverageCode value.
-	self updateRubricStyle.
+	self updateRubricStyle
 ]
 
 { #category : #styling }
 CoverageDemo >> updateRubricStyle [
 	codePanelMorph morph submorphs
-		do: [ :card | 
+		do: [ :card |
 			| conf ast |
 			"delete previous styling"
 			conf := RubConfigurationChange new.

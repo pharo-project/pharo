@@ -30,7 +30,7 @@ RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: u
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: self currentWorld currentHand 
+		hand: self currentWorld currentHand
 		stamp: Time now.
 	event key: (KeyboardKey fromCharacter: aCharacter).
 	^ event
@@ -62,7 +62,7 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl:
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: self currentWorld currentHand 
+		hand: self currentWorld currentHand
 		stamp: Time now.
 	^ event
 ]
@@ -121,7 +121,7 @@ RubTextFieldAreaTest >> testKeyStrokeWithMaxLength [
 	m keyStroke: (self simulatedKeyStrokeFromChar: $b).
 	self assert: m string equals: 'ab'.
 	m keyStroke: (self simulatedKeyStrokeFromChar: $c).
-	self assert: m string equals: 'ab'.
+	self assert: m string equals: 'ab'
 ]
 
 { #category : #tests }
@@ -132,7 +132,7 @@ RubTextFieldAreaTest >> testMaxLengthIsNegative [
 		maxLength: -10;
 		yourself.
 	m setTextWith: '01234567890123456'.
-	self assert: m text size equals: 0.
+	self assert: m text size equals: 0
 ]
 
 { #category : #tests }
@@ -155,14 +155,14 @@ RubTextFieldAreaTest >> testMaxLengthTruncatesText [
 	m setTextWith: '01234567890123456'.
 	" the text should be truncated "
 	self assert: m text size equals: 15.
-	
+
 	" the text is different to ensure that the input is validate and update is sent instead of set "
 	m updateTextWith: '7890123456789012345'.
 	self assert: m text size equals: 15.
-	
+
 	" with a text of size less than maxlength  to check that maxLength has no effect "
 	m setTextWith: ''.
-	self assert: m text size equals: 0.	
+	self assert: m text size equals: 0.
 	m setTextWith: 'A'.
 	self assert: m text size equals: 1.
 	m updateTextWith: ''.
@@ -209,8 +209,8 @@ RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHo
 	| dropList widthOfButton |
 
 	"The drop list has two morphs inside, one RubTextFieldArea and a Button.
-	The button has a fixed side. 
-	The text field takes all the remaining size."	
+	The button has a fixed side.
+	The text field takes all the remaining size."
 	dropList := DropListMorph new
 		     list: { (String loremIpsum: 100) };
 		     enabled: true;
@@ -218,14 +218,14 @@ RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHo
 		     yourself.
 
 	dropList extent: 100 @ 18.
-	dropList computeBounds. 
-	
+	dropList computeBounds.
+
 	self assert: dropList extent x equals: 100.
 
 	widthOfButton := (dropList submorphs at: 2) extent x.
-	
-	"The text area should take the remaining size without overlapping in the button"	
-	self assert: (dropList submorphs at: 1) extent x equals: 74.
+
+	"The text area should take the remaining size without overlapping in the button"
+	self assert: (dropList submorphs at: 1) extent x equals: 74
 ]
 
 { #category : #tests }
@@ -244,7 +244,7 @@ RubTextFieldAreaTest >> testnewSizeAfterUpdate [
 	m setTextWith: 'AAAA'.
 	self assert: m string equals: 'AAAA'.
 	"the receiver text  size after the replacement 'BBB' would be 4 "
-	self 
+	self
 		assert: (m newSizeAfterUpdateFrom: 1 to: 3 with: 'BBB')
 		equals: 4.
 	self

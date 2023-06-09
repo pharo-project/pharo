@@ -10,7 +10,7 @@ Trait {
 
 { #category : #requirements }
 TConcatenationEqualElementsRemovedTest >> empty [
-	self explicitRequirement.
+	self explicitRequirement
 ]
 
 { #category : #requirements }
@@ -44,7 +44,7 @@ collection2 := self secondCollection .
 result := collection1 , collection2.
 
 collection1 do:[ :each | self assert: (result includes: each)].
-collection2 do:[ :each | self assert: (result includes: each)].
+collection2 do:[ :each | self assert: (result includes: each)]
 ]
 
 { #category : #'tests - concatenation' }
@@ -57,7 +57,7 @@ collection2 := self firstCollection  .
 result := collection1 , collection2.
 
 collection1 do:[ :each | self assert: (result includes: each)].
-self assert: result size = collection1 size.
+self assert: result size = collection1 size
 ]
 
 { #category : #'tests - concatenation' }

@@ -17,8 +17,8 @@ Class {
 { #category : #examples }
 ColorChooserMorph class >> example [
 	<sampleInstance>
-	^ (ColorChooserMorph 
-		on: (BorderedMorph new) 
+	^ (ColorChooserMorph
+		on: (BorderedMorph new)
 		color: #color changeColor: #color:) openInWorld
 ]
 
@@ -28,7 +28,7 @@ ColorChooserMorph class >> on: anObject color: getSel changeColor: setSel [
 	the given selectors as the interface."
 	"(ColorChooserMorph on: (BorderedMorph new) color: #color changeColor: #color:) openInWorld"
 	^self new
-		on: anObject 
+		on: anObject
 		color: getSel
 		changeColor: setSel
 ]
@@ -51,7 +51,7 @@ ColorChooserMorph >> chooseColor [
 { #category : #accessing }
 ColorChooserMorph >> enabled [
 	"Answer the enabled state of the receiver."
-	
+
 	^enabled
 ]
 
@@ -130,11 +130,11 @@ ColorChooserMorph >> setColorSelector: anObject [
 ]
 
 { #category : #updating }
-ColorChooserMorph >> update: aSymbol [ 
+ColorChooserMorph >> update: aSymbol [
 	"Refer to the comment in View|update:."
 
 	super update: aSymbol.
-	aSymbol == self getEnabledSelector ifTrue: 
+	aSymbol == self getEnabledSelector ifTrue:
 		[self updateEnabled.
 		^ self]
 ]

@@ -12,6 +12,12 @@ DTAbstractTreeNode >> canBeBrowsed [
 	^ self subclassResponsibility
 ]
 
+{ #category : #api }
+DTAbstractTreeNode >> displayColor [
+
+	^ nil
+]
+
 { #category : #actions }
 DTAbstractTreeNode >> drTestsBrowse [
 	"Actions to perform in order to browse the result.
@@ -32,6 +38,12 @@ DTAbstractTreeNode >> drTestsName [
 
 { #category : #testing }
 DTAbstractTreeNode >> isLeaf [
+	^ false
+]
+
+{ #category : #testing }
+DTAbstractTreeNode >> shouldStartExpanded [
+
 	^ false
 ]
 

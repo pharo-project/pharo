@@ -115,8 +115,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
-		spec package: 'Unicode-Initialization'.
-
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
@@ -138,9 +136,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
 	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
-	Behavior flushObsoleteSubclasses.
 	World cleanseOtherworldlySteppers.
-	Smalltalk organization removeEmptyCategories.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
@@ -148,27 +144,20 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Smalltalk globals flushClassNameCache.
 	ScrollBarMorph initializeImagesCache.
 
-	3 timesRepeat: [ 
-		Smalltalk garbageCollect.
-	 	Symbol compactSymbolTable ].
-	 	HashedCollection rehashAll.
-	  
-	  "Remove empty categories, which are not in MC packages, because MC does
-	  not do this (this script does not make packages dirty)"
-	  Smalltalk organization removeEmptyCategories.
-	  Smalltalk
-	    allClassesAndTraitsDo: [ :class |
-	      [ :each |
-	        each
-	          removeEmptyCategories;
-	          sortCategories ]
-	            value: class organization;
-	            value: class class organization ].
-	Smalltalk organization sortCategories.
+	Smalltalk garbageCollect.
+	HashedCollection rehashAll.
+	Symbol rehash.
+
+	"Remove empty packages and protocols"
+	self packageOrganizer removeEmptyPackages.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols  ].
+  
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Smalltalk garbageCollect.
-	Author reset.
+	Author reset
 ]
 
 { #category : #fonts }
@@ -373,6 +362,10 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	SystemNotification signal: 'Starting preload action'.
+
+	"Declare global variables"
+	Smalltalk globals at: #World put: nil.
+	Smalltalk globals at: #ActiveWorld put: nil.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.

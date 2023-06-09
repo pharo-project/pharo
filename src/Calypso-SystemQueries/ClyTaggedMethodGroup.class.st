@@ -29,30 +29,33 @@ ClyTaggedMethodGroup >> convertToMethodTag: aTagName [
 ]
 
 { #category : #operations }
-ClyTaggedMethodGroup >> importMethod: aMethod [ 
+ClyTaggedMethodGroup >> importMethod: aMethod [
 	super importMethod: aMethod.
-	
+
 	aMethod tagWith: self tag
 ]
 
 { #category : #operations }
 ClyTaggedMethodGroup >> removeWithMethods [
+
 	super removeWithMethods.
-	methodQuery scope classesDo: [ :each | each removeMethodTag: self tag ]
+	methodQuery scope classesDo: [ :class | class removeProtocolIfEmpty: self tag ]
 ]
 
 { #category : #operations }
-ClyTaggedMethodGroup >> renameMethodTagTo: newTag [ 
-	newTag = self tag ifTrue: [ ^self ].
-	
-	self methods do: [ :each |
-		each tagWith: newTag.
-		each untagFrom: self tag].
-	
-	methodQuery scope classesDo:  [ :each | 
-		(each tagsForMethods includes: newTag) 
-			ifFalse: [ each addMethodTag: newTag ].
-		each removeMethodTag: self tag]
+ClyTaggedMethodGroup >> renameMethodTagTo: newTag [
+
+	newTag = self tag ifTrue: [ ^ self ].
+
+	self methods do: [ :method |
+		method
+			tagWith: newTag;
+			untagFrom: self tag ].
+
+	methodQuery scope classesDo: [ :class |
+		class
+			addProtocol: newTag;
+			removeProtocolIfEmpty: self tag ]
 ]
 
 { #category : #accessing }

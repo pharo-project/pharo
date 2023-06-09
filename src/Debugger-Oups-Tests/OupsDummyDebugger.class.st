@@ -80,7 +80,7 @@ OupsDummyDebugger >> findContextSuchThat: aBlock [
 ]
 
 { #category : #testing }
-OupsDummyDebugger >> handlesContext: aContext [
+OupsDummyDebugger >> handlesDebugSession: aContext [
 	^self isUsable
 ]
 

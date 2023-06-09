@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-OSWindowWorldMorphWithModel >> model [ 
+OSWindowWorldMorphWithModel >> model [
     ^ model
 ]
 
@@ -21,5 +21,5 @@ OSWindowWorldMorphWithModel >> model: anObject [
 
     model ifNotNil: [model removeDependent: self].
     anObject ifNotNil: [anObject addDependent: self].
-    model := anObject.
+    model := anObject
 ]

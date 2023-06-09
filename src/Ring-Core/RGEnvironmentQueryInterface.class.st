@@ -11,9 +11,9 @@ Class {
 { #category : #'instance creation' }
 RGEnvironmentQueryInterface class >> for: anRGEnvironment [
 
-	^ self new 
+	^ self new
 		environment: anRGEnvironment;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -37,38 +37,38 @@ RGEnvironmentQueryInterface >> behaviorNamed: aSymbol [
 { #category : #classes }
 RGEnvironmentQueryInterface >> behaviorNamed: aSymbol ifAbsent: aBlock [
 
-	| found siblingName | 
-	
+	| found siblingName |
+
 	found := self behaviorNamedExactlyAs: aSymbol ifAbsent: [nil].
 	found ifNotNil: [ ^ found ].
-	
-	(aSymbol endsWith: ' class') 
-		ifTrue: [ 
+
+	(aSymbol endsWith: ' class')
+		ifTrue: [
 			siblingName := (aSymbol withoutSuffix: ' class').
 			found := self behaviorNamedExactlyAs: siblingName ifAbsent: [nil].
-			found ifNotNil: [ 
+			found ifNotNil: [
 				found isClass ifTrue: [ ^ found metaclass ]]].
 
-	(aSymbol endsWith: ' classTrait') 
-		ifTrue: [ 
+	(aSymbol endsWith: ' classTrait')
+		ifTrue: [
 			siblingName := (aSymbol withoutSuffix: ' classTrait').
 			found := self behaviorNamedExactlyAs: siblingName ifAbsent: [nil].
-			found ifNotNil: [ 
+			found ifNotNil: [
 				found isTrait ifTrue: [ ^ found classTrait ]]].
-		
+
 	siblingName := (aSymbol, ' class').
 	found := self behaviorNamedExactlyAs: siblingName ifAbsent: [nil].
-	found ifNotNil: [ ^ found baseClass ].		
+	found ifNotNil: [ ^ found baseClass ].
 
 	siblingName := (aSymbol, ' classTrait').
 	found := self behaviorNamedExactlyAs: siblingName ifAbsent: [nil].
-	found ifNotNil: [ ^ found baseTrait ].		
-					
-	^ aBlock value.
+	found ifNotNil: [ ^ found baseTrait ].
+
+	^ aBlock value
 ]
 
 { #category : #classes }
-RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol [ 
+RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol [
 
 	^ self behaviorNamedExactlyAs: aSymbol ifAbsent: [nil]
 ]
@@ -77,10 +77,10 @@ RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol [
 RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol ifAbsent: aBlock [
 
 	^ self behaviorsDictionary at: aSymbol asSymbol ifAbsent: aBlock
-	"	
+	"
 	self behaviorsDo: [:each |
 		(each name = aSymbol) ifTrue: [ ^ each ] ].
-	
+
 	^ nil
 	"
 ]
@@ -98,10 +98,10 @@ RGEnvironmentQueryInterface >> behaviors [
 { #category : #caching }
 RGEnvironmentQueryInterface >> behaviorsDictionary [
 
-	^ behaviorsDictionary ifNil: [ 
+	^ behaviorsDictionary ifNil: [
 		behaviorsDictionary := IdentityDictionary new.
 		self behaviorsDo: [:each |
-			behaviorsDictionary at: each name put: each ]. 
+			behaviorsDictionary at: each name put: each ].
 		behaviorsDictionary
 		]
 ]
@@ -120,7 +120,7 @@ RGEnvironmentQueryInterface >> classNamed: aSymbol [
 
 { #category : #classes }
 RGEnvironmentQueryInterface >> classOrTraitNamed: aSymbol [
-	
+
 	^ self behaviorNamed: aSymbol
 ]
 
@@ -151,19 +151,19 @@ RGEnvironmentQueryInterface >> globalVariablesDo: aBlock [
 ]
 
 { #category : #testing }
-RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [ 
+RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 
 	self globalVariablesDo: [ :var |
 		var name = aSymbol ifTrue: [ ^ true ] ].
 
-	^ self behaviorsDictionary 
-		at: aSymbol asSymbol 
+	^ self behaviorsDictionary
+		at: aSymbol asSymbol
 		ifPresent: [ :element | true ]
 		ifAbsent: [ false ]
-	"	
+	"
 	self behaviorsDo: [:each |
 		(each name = aSymbol) ifTrue: [ ^ each ] ].
-	
+
 	^ nil
 	"
 ]
@@ -176,10 +176,10 @@ RGEnvironmentQueryInterface >> invalidateName: aSymbol [
 
 { #category : #packages }
 RGEnvironmentQueryInterface >> packageNamed: aString [
-	
+
 	self packagesDo: [:each |
 		(each name = aString) ifTrue: [ ^ each ] ].
-	
+
 	^ nil
 ]
 
@@ -204,7 +204,7 @@ RGEnvironmentQueryInterface >> replaceName: aSymbol with: aNewSymbol [
 
 	| anRGBehavior |
 	anRGBehavior := behaviorsDictionary at: aSymbol ifAbsent: [ nil ].
-	anRGBehavior ifNotNil: [ 
+	anRGBehavior ifNotNil: [
 		behaviorsDictionary removeKey: aSymbol.
 		behaviorsDictionary at: aNewSymbol put: anRGBehavior.
 		 ]
@@ -218,9 +218,9 @@ RGEnvironmentQueryInterface >> resetBehaviorsDictionary [
 
 { #category : #classes }
 RGEnvironmentQueryInterface >> traitNamed: traitName [
-	"Retrieves an RGTrait object. The traitName could be theMetaClass name"
+	"Retrieves an RGTrait object. The traitName could be classSide name"
 	| trait |
-	
+
 	^(trait:= self classOrTraitNamed: traitName) isTrait
 		ifTrue:[ trait ]
 		ifFalse:[ nil ]

@@ -81,7 +81,7 @@ ExternalType class >> char [
 { #category : #housekeeping }
 ExternalType class >> cleanupUnusedTypes [
 	<script>
-	
+
 	| value |
 	StructTypes keysDo: [:key|
 		value := StructTypes at: key.
@@ -107,7 +107,7 @@ ExternalType class >> forceTypeNamed: aString [
 ExternalType class >> initialize [
 	"ExternalType initialize"
 	self initializeFFIConstants.
-	self initializeDefaultTypes.
+	self initializeDefaultTypes
 ]
 
 { #category : #'class initialization' }
@@ -141,7 +141,7 @@ ExternalType class >> initializeAtomicTypes [
 		compiled := WordArray with: ((self pointerSpec bitOr: FFIFlagAtomic) bitOr:
 				(atomicType bitShift: FFIAtomicTypeShift)).
 		type asPointerType compiledSpec: compiled.
-	].
+	]
 ]
 
 { #category : #'class initialization' }
@@ -216,14 +216,14 @@ ExternalType class >> initializeStructureTypes [
 		(referentClass isBehavior and:[
 			referentClass includesBehavior: ExternalStructure])
 				ifFalse:[referentClass := nil].
-		type compiledSpec: 
+		type compiledSpec:
 			(WordArray with: self structureSpec).
 		type newReferentClass: referentClass.
 		pointerType := type asPointerType.
-		pointerType compiledSpec: 
+		pointerType compiledSpec:
 			(WordArray with: self pointerSpec).
 		pointerType newReferentClass: referentClass.
-	].
+	]
 ]
 
 { #category : #'type constants' }
@@ -248,9 +248,9 @@ ExternalType class >> newTypeNamed: aString force: aBool [
 		ifFalse:[referentClass := nil].
 	"If we don't have a referent class and are not forced to create a type get out"
 	(referentClass == nil and:[aBool not]) ifTrue:[^nil].
-	type := self basicNew compiledSpec: 
+	type := self basicNew compiledSpec:
 		(WordArray with: self structureSpec).
-	pointerType := self basicNew compiledSpec: 
+	pointerType := self basicNew compiledSpec:
 		(WordArray with: self pointerSpec).
 	type setReferencedType: pointerType.
 	pointerType setReferencedType: type.
@@ -271,7 +271,7 @@ ExternalType class >> noticeModificationOf: aClass [
 		type == nil ifFalse:[
 			type newReferentClass: cls.
 			type asPointerType newReferentClass: cls].
-	].
+	]
 ]
 
 { #category : #housekeeping }
@@ -282,7 +282,7 @@ ExternalType class >> noticeRemovalOf: aClass [
 	type := StructTypes at: aClass name ifAbsent:[nil].
 	type == nil ifFalse:[
 		type newReferentClass: nil.
-		type asPointerType newReferentClass: nil].
+		type asPointerType newReferentClass: nil]
 ]
 
 { #category : #housekeeping }
@@ -292,7 +292,7 @@ ExternalType class >> noticeRenamingOf: aClass from: oldName to: newName [
 	| type |
 	type := StructTypes at: oldName ifAbsent:[nil].
 	type == nil ifFalse:[StructTypes at: newName put: type].
-	StructTypes removeKey: oldName ifAbsent:[].
+	StructTypes removeKey: oldName ifAbsent:[]
 ]
 
 { #category : #private }
@@ -399,17 +399,19 @@ ExternalType class >> void [
 { #category : #converting }
 ExternalType >> asNonPointerType [
 	"convert the receiver into a non pointer type"
-	self isPointerType
-		ifTrue:[^referencedType]
-		ifFalse:[^self]
+
+	^ self isPointerType
+		  ifTrue: [ referencedType ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #converting }
 ExternalType >> asPointerType [
 	"convert the receiver into a pointer type"
-	self isPointerType
-		ifTrue:[^self]
-		ifFalse:[^referencedType]
+
+	^ self isPointerType
+		  ifTrue: [ self ]
+		  ifFalse: [ referencedType ]
 ]
 
 { #category : #converting }
@@ -442,7 +444,7 @@ ExternalType >> compiledSpec [
 
 { #category : #private }
 ExternalType >> compiledSpec: aWordArray [
-	compiledSpec := aWordArray.
+	compiledSpec := aWordArray
 ]
 
 { #category : #private }
@@ -634,7 +636,7 @@ ExternalType >> printTypedefOn: s [
 
 { #category : #private }
 ExternalType >> readFieldAt: byteOffset [
-	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset. 
+	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset.
 	 Private. Used for field definition only."
 	self isPointerType ifTrue:
 		[| accessor |
@@ -673,7 +675,7 @@ ExternalType >> readFieldAt: byteOffset [
 		[:s|
 		s nextPutAll:'^handle ';
 			nextPutAll: (AtomicSelectors at: self atomicType);
-			space; print: byteOffset].
+			space; print: byteOffset]
 ]
 
 { #category : #accessing }
@@ -719,7 +721,7 @@ ExternalType >> typedef [
 
 { #category : #private }
 ExternalType >> writeFieldAt: byteOffset with: valueName [
-	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset. 
+	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset.
 	 Private. Used for field definition only."
 	self isPointerType ifTrue:
 		[| accessor |
@@ -751,5 +753,5 @@ ExternalType >> writeFieldAt: byteOffset with: valueName [
 			nextPutAll: (AtomicSelectors at: self atomicType);
 			space; print: byteOffset;
 			nextPutAll:' put: ';
-			nextPutAll: valueName].
+			nextPutAll: valueName]
 ]

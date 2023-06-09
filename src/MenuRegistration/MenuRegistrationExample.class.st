@@ -12,20 +12,24 @@ Class {
 }
 
 { #category : #'menu declaring' }
-MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [ 
+MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder group: #Tools)
 		withSeparatorAfter;
 		order: 0;
 		target: Smalltalk tools;
 		with: [
-			(aBuilder item: #'System browser') selector: #openClassBrowser; icon: Smalltalk tools browser taskbarIcon.
-			(aBuilder item: #Workspace) selector: #openWorkspace; icon: Smalltalk tools workspace taskbarIcon.
+			(aBuilder item: #'System browser')
+				selector: #openClassBrowser;
+				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
+			(aBuilder item: #Workspace)
+				selector: #openWorkspace;
+				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
 			]
 ]
 
 { #category : #'menu declaring' }
-MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [ 
+MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #MyOwnCoolMenu)
 		parent: #Tools; "place me as a child of the #Tools node (declared by #toolsOn:)"
@@ -39,28 +43,28 @@ MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 ]
 
 { #category : #'menu declaring' }
-MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [ 
-	<worldMenuExample> 
+MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
+	<worldMenuExample>
 	(aBuilder item: #MyOwnCoolTool)
 		parent: #Tools;
 		label: 'My own cool tool';
-		target: Smalltalk tools workspace; 
+		target: Smalltalk tools workspace;
 		selector: #openContents: ;
 		arguments: #('yep, my own cool tool can be opened from the world menu ! :)')
 ]
 
 { #category : #'menu declaring' }
-MenuRegistrationExample class >> pharoItemsOn: aBuilder [ 
-	<worldMenuExample> 
+MenuRegistrationExample class >> pharoItemsOn: aBuilder [
+	<worldMenuExample>
 	(aBuilder group: #QuitPharo)
-		order: 9999; 
+		order: 9999;
 		with: [{
 				{'Save'. {Smalltalk. #saveSession}. 'save the current version of the image on disk'}.
 				{'Save as...'. {self. #saveAs}. 'save the current version of the image on disk under a new name.'}.
 				{'Save and quit'. {self. #saveAndQuit}. 'save the current image on disk, and quit Pharo.'}.
 	 			{'Quit'. {self. #quitSession}. 'quit Pharo.'}
 			} do: [:triplet |
-					(aBuilder item: triplet first asSymbol) 
+					(aBuilder item: triplet first asSymbol)
 						target: triplet second first;
 				 		selector: triplet second second;
 						help: (triplet size > 2 ifTrue: [triplet third] ifFalse: [nil])]]
@@ -68,7 +72,7 @@ MenuRegistrationExample class >> pharoItemsOn: aBuilder [
 
 { #category : #'menu declaring' }
 MenuRegistrationExample class >> pragmaKeyword [
-	^ 'worldMenuExample'
+	^ #worldMenuExample
 ]
 
 { #category : #'menu actions' }
@@ -85,7 +89,7 @@ MenuRegistrationExample class >> saveAndQuit [
 
 { #category : #'menu actions' }
 MenuRegistrationExample class >> saveAs [
-	Smalltalk saveAs.
+	Smalltalk saveAs
 ]
 
 { #category : #'menu declaring' }
@@ -96,15 +100,22 @@ MenuRegistrationExample class >> theme [
 ]
 
 { #category : #'menu declaring' }
-MenuRegistrationExample class >> toolsOn: aBuilder [ 
+MenuRegistrationExample class >> toolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #Tools)
 		order: 1.0;
 		target: Smalltalk tools;
-		iconName: #smallDoItIcon;
+		iconName: #smallDoIt;
 		withSeparatorAfter;
-		with: [(aBuilder item: #Transcript) selector: #openTranscript; icon: Smalltalk tools transcript  taskbarIcon. 
-			(aBuilder item: #'File Browser') selector: #openFileList; icon: Smalltalk tools fileList taskbarIcon.
-			(aBuilder item: #'Process Browser') selector: #openProcessBrowser; icon: Smalltalk tools processBrowser taskbarIcon;
-				 withSeparatorAfter]
+		with: [
+			(aBuilder item: #Transcript)
+				selector: #openTranscript;
+				icon: (aBuilder iconNamed: Smalltalk tools transcript  taskbarIconName).
+			(aBuilder item: #'File Browser')
+				selector: #openFileList;
+				icon: (aBuilder iconNamed: Smalltalk tools fileList taskbarIconName).
+			(aBuilder item: #'Process Browser')
+				selector: #openProcessBrowser;
+				icon: (aBuilder iconNamed: Smalltalk tools processBrowser taskbarIconName);
+				withSeparatorAfter]
 ]

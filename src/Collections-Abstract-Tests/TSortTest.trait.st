@@ -25,7 +25,7 @@ TSortTest >> test0SortingArrayedTest [
 	self sortedInAscendingOrderCollection do: [ :each | each isNumber ].
 	tmp := self sortedInAscendingOrderCollection at: 1.
 	self sortedInAscendingOrderCollection
-		do: [ :each | 
+		do: [ :each |
 			self assert: each >= tmp.
 			tmp := each ]
 ]
@@ -39,7 +39,7 @@ TSortTest >> testIsSorted [
 { #category : #'tests - sorting' }
 TSortTest >> testIsSortedBy [
 	self assert: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a<b]).
-	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b]).
+	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b])
 ]
 
 { #category : #'tests - sorting' }
@@ -48,7 +48,7 @@ TSortTest >> testSort [
 	result := self unsortedCollection sort.
 	tmp := result at: 1.
 	result do:
-		[:each | self assert: each>=tmp. tmp:= each. ].
+		[:each | self assert: each>=tmp. tmp:= each. ]
 ]
 
 { #category : #'tests - sorting' }
@@ -57,7 +57,7 @@ TSortTest >> testSortUsingSortBlock [
 	result := self unsortedCollection sort: [:a :b | a>b].
 	tmp := result at: 1.
 	result do:
-		[:each | self assert: each<=tmp. tmp:= each. ].
+		[:each | self assert: each<=tmp. tmp:= each. ]
 ]
 
 { #category : #tests }
@@ -68,7 +68,7 @@ TSortTest >> testSorted [
 	self deny: unsorted == result.
 	tmp := result at: 1.
 	result
-		do: [ :each | 
+		do: [ :each |
 			self assert: each >= tmp.
 			tmp := each ]
 ]
@@ -79,7 +79,7 @@ TSortTest >> testSortedUsingBlock [
 	result := self unsortedCollection sorted:  [:a :b | a>b]..
 	tmp := result at: 1.
 	result do:
-		[:each | self assert: each<=tmp. tmp:= each. ].
+		[:each | self assert: each<=tmp. tmp:= each. ]
 ]
 
 { #category : #requirements }

@@ -48,7 +48,7 @@ Class {
 { #category : #'instance creation' }
 SimpleButtonMorph class >> newWithLabel: labelString [
 
-	^(self new) 
+	^(self new)
 		label: labelString;
 		yourself
 ]
@@ -66,7 +66,7 @@ SimpleButtonMorph >> actWhen: condition [
 	actWhen := condition.
 	actWhen == #startDrag
 		ifFalse: [self on: #startDrag send: nil to: nil ]
-		ifTrue:[self on: #startDrag send: #doButtonAction to: self].
+		ifTrue:[self on: #startDrag send: #doButtonAction to: self]
 ]
 
 { #category : #accessing }
@@ -83,7 +83,7 @@ SimpleButtonMorph >> actionSelector: aSymbolOrString [
 	 [aSymbolOrString isEmpty]])
 		ifTrue: [^ actionSelector := nil].
 
-	actionSelector := aSymbolOrString asSymbol.
+	actionSelector := aSymbolOrString asSymbol
 ]
 
 { #category : #menu }
@@ -94,16 +94,16 @@ SimpleButtonMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'change action selector' selector: #setActionSelector.
 	aCustomMenu add: 'change arguments' selector: #setArguments.
 	aCustomMenu add: 'change when to act' selector: #setActWhen.
-	self addTargetingMenuItems: aCustomMenu hand: aHandMorph.
+	self addTargetingMenuItems: aCustomMenu hand: aHandMorph
 ]
 
 { #category : #menu }
-SimpleButtonMorph >> addLabelItemsTo: aCustomMenu hand: aHandMorph [ 
+SimpleButtonMorph >> addLabelItemsTo: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'change label' selector: #setLabel
 ]
 
 { #category : #menu }
-SimpleButtonMorph >> addTargetingMenuItems: aCustomMenu hand: aHandMorph [ 
+SimpleButtonMorph >> addTargetingMenuItems: aCustomMenu hand: aHandMorph [
 	"Add targeting menu items"
 	aCustomMenu addLine.
 	aCustomMenu add: 'set target' selector: #targetWith:.
@@ -120,27 +120,27 @@ SimpleButtonMorph >> arguments [
 { #category : #accessing }
 SimpleButtonMorph >> arguments: aCollection [
 
-	arguments := aCollection asArray copy.
+	arguments := aCollection asArray copy
 ]
 
 { #category : #menu }
 SimpleButtonMorph >> clearTarget [
 
-	target := nil.
+	target := nil
 ]
 
 { #category : #initialization }
 SimpleButtonMorph >> defaultLabel [
-	^ 'Flash'.
+	^ 'Flash'
 ]
 
 { #category : #button }
 SimpleButtonMorph >> doButtonAction [
 	"Perform the action of this button. Subclasses may override this method. The default behavior is to send the button's actionSelector to its target object with its arguments."
 
-	(target notNil and: [actionSelector notNil]) 
-		ifTrue: 
-			[Cursor normal 
+	(target notNil and: [actionSelector notNil])
+		ifTrue:
+			[Cursor normal
 				showWhile: [target perform: actionSelector withArguments: arguments]].
 	actWhen == #startDrag ifTrue: [oldColor ifNotNil: [self color: oldColor]]
 ]
@@ -149,7 +149,7 @@ SimpleButtonMorph >> doButtonAction [
 SimpleButtonMorph >> extent: newExtent [
 
 	super extent: newExtent.
-	label ifNotNil: [label position: self center - (label extent // 2)].
+	label ifNotNil: [label position: self center - (label extent // 2)]
 ]
 
 { #category : #accessing }
@@ -239,23 +239,23 @@ SimpleButtonMorph >> mouseDown: evt [
 
 	super mouseDown: evt.
 	evt yellowButtonPressed ifTrue: [ ^self ] .
-	oldColor := self fillStyle. 
+	oldColor := self fillStyle.
 	actWhen == #buttonDown
 		ifTrue: [ self doButtonAction]
 		ifFalse: [ self updateVisualState: evt ].
-	self mouseStillDown: evt.
+	self mouseStillDown: evt
 ]
 
 { #category : #'event handling' }
 SimpleButtonMorph >> mouseMove: evt [
 	actWhen == #buttonDown ifTrue: [^ self].
-	self updateVisualState: evt.
+	self updateVisualState: evt
 ]
 
 { #category : #'event handling' }
 SimpleButtonMorph >> mouseStillDown: evt [
 	actWhen == #whilePressed ifFalse:[^self].
-	(self containsPoint: evt cursorPoint) ifTrue:[self doButtonAction].
+	(self containsPoint: evt cursorPoint) ifTrue:[self doButtonAction]
 ]
 
 { #category : #'events-processing' }
@@ -273,8 +273,8 @@ SimpleButtonMorph >> mouseUp: evt [
 		to avoid triggering the action!"
 		self color: oldColor.
 		oldColor := nil.
-		(self containsPoint: evt cursorPoint) 
-				ifTrue: [ actWhen == #buttonUp 
+		(self containsPoint: evt cursorPoint)
+				ifTrue: [ actWhen == #buttonUp
 							ifTrue: [self doButtonAction]  ]
 				ifFalse: [ self mouseLeave: evt "This is a balk. Note that we have left." ]]
 ]
@@ -298,7 +298,7 @@ SimpleButtonMorph >> setActionSelector [
 'Please type the selector to be sent to
 the target when this button is pressed' translated
 		initialAnswer: actionSelector.
-	newSel isEmptyOrNil ifFalse: [self actionSelector: newSel].
+	newSel isEmptyOrNil ifFalse: [self actionSelector: newSel]
 ]
 
 { #category : #menu }
@@ -309,7 +309,7 @@ SimpleButtonMorph >> setArguments [
 			'Please type the arguments to be sent to the target
 when this button is pressed separated by periods' translated
 		initialAnswer: (String streamContents: [ :str | arguments do: [ :arg | arg printOn: str. str nextPutAll: '. ' ] ]).
-	newArgs isEmptyOrNil ifFalse: [ 
+	newArgs isEmptyOrNil ifFalse: [
 			newArgsArray := self class compiler
 				source: '{' , newArgs , '}';
 				receiver: self;
@@ -329,11 +329,11 @@ SimpleButtonMorph >> setLabel [
 	newLabel := UIManager default
 		request: 'Please enter a new label for this button' translated
 		initialAnswer: self label.
-	newLabel isEmptyOrNil ifFalse: [self labelString: newLabel].
+	newLabel isEmptyOrNil ifFalse: [self labelString: newLabel]
 ]
 
 { #category : #menu }
-SimpleButtonMorph >> setTarget: evt [ 
+SimpleButtonMorph >> setTarget: evt [
 	| rootMorphs |
 	rootMorphs := self world rootMorphsAt: evt hand targetPoint.
 	target := rootMorphs size > 1
@@ -359,7 +359,7 @@ SimpleButtonMorph >> themeChanged [
 	layoutInset: (self theme buttonLabelInsetFor: self);
 	cornerStyle: (self theme buttonCornerStyleIn: self window);
 	fillStyle: self themedFillStyle.
-	
+
 	label ifNotNil: [ label color: self fillStyle asColor contrastingBlackAndWhiteColor ].
 
 	super themeChanged
@@ -373,9 +373,9 @@ SimpleButtonMorph >> themedFillStyle [
 
 { #category : #'visual properties' }
 SimpleButtonMorph >> updateVisualState: evt [
-	
+
 	oldColor ifNotNil: [
-		 self color: 
+		 self color:
 			((self containsPoint: evt cursorPoint)
 				ifTrue: [oldColor mixed: 0.5 with: Color white]
 				ifFalse: [oldColor])]
@@ -388,7 +388,7 @@ SimpleButtonMorph >> veryDeepFixupWith: deepCopier [
 	super veryDeepFixupWith: deepCopier.
 	target := deepCopier references at: target ifAbsent: [target].
 	arguments := arguments collect: [:each |
-		deepCopier references at: each ifAbsent: [each]].
+		deepCopier references at: each ifAbsent: [each]]
 ]
 
 { #category : #copying }
@@ -401,5 +401,5 @@ super veryDeepInner: deepCopier.
 "arguments := arguments.		All weakly copied"
 actWhen := actWhen veryDeepCopyWith: deepCopier.
 oldColor := oldColor veryDeepCopyWith: deepCopier.
-label := label veryDeepCopyWith: deepCopier.
+label := label veryDeepCopyWith: deepCopier
 ]

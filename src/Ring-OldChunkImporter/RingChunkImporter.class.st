@@ -19,7 +19,7 @@ Class {
 RingChunkImporter class >> example [
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
-	SystemOrganization
+	self packageOrganizer
 		fileOutCategory: 'Ring-Deprecated-ChunkImporter-Base'
 		on: internalStream.
 	(RingChunkImporter fromStream: internalStream contents readStream)
@@ -41,29 +41,29 @@ RingChunkImporter class >> fromStream: aStream [
 { #category : #private }
 RingChunkImporter >> classDefinition: aString with: chgRec [
 	| tokens theClass |
-	
+
 	tokens := self scannedSource: aString.
 	theClass := self classNamed: tokens third.
 	theClass superclassName: tokens first;
 			 definitionSource: aString;
 			 category: tokens last.
-	
+
 	tokens size = 11
 	ifTrue:[ theClass instanceVariables: (tokens fifth findTokens: ' ');
 			 	classVariables: (tokens seventh findTokens: ' ');
 				 sharedPools: (tokens ninth findTokens: ' ') ].
-	
+
 	tokens size = 13
-	ifTrue:[ theClass traitCompositionSource: (tokens fifth);  
+	ifTrue:[ theClass traitCompositionSource: (tokens fifth);
 				instanceVariables: (tokens seventh findTokens: ' ');
 			 	classVariables: (tokens ninth findTokens: ' ');
-				 sharedPools: ((tokens at: 11) findTokens: ' ') ].
+				 sharedPools: ((tokens at: 11) findTokens: ' ') ]
 ]
 
 { #category : #private }
 RingChunkImporter >> classNamed: className [
 
-	(package includesClassNamed: className) 
+	(package includesClassNamed: className)
 		ifTrue:[ ^ package classNamed: className ].
 	^ self createClassNamed: className
 ]
@@ -79,7 +79,7 @@ RingChunkImporter >> createClassNamed: className [
 	rgClass := RGClassDefinition named: className.
 	rgClass withMetaclass.
 	package addClass: rgClass.
-	^ rgClass.
+	^ rgClass
 ]
 
 { #category : #private }
@@ -89,7 +89,7 @@ RingChunkImporter >> createTraitNamed: traitName [
 	trait := RGTraitDefinition named: traitName.
 	trait withMetaclass.
 	package addTrait: trait.
-	^ trait.
+	^ trait
 ]
 
 { #category : #accessing }
@@ -102,29 +102,29 @@ RingChunkImporter >> fileInFrom: aStream [
 
 	| changes |
 	changes := (CodeImporter readStream: aStream) parseChunks.
-	changes do: [ :change | change accept: self ].
+	changes do: [ :change | change accept: self ]
 ]
 
 { #category : #reading }
 RingChunkImporter >> fromFileNamed: aName [
-	
+
 	package := RGPackageDefinition named: aName.
-	self fileInFrom: aName asFileReference readStream.
+	self fileInFrom: aName asFileReference readStream
 ]
 
 { #category : #initialization }
 RingChunkImporter >> initialize [
 	super initialize.
 	package := RGPackageDefinition named: 'ChangeSet'.
-	doIts := Set new.
+	doIts := Set new
 ]
 
 { #category : #private }
 RingChunkImporter >> metaClassDefinition: string with: chgRec [
 	| tokens theClass |
-	
+
 	tokens := self scannedSource: string.
-	
+
 	theClass := self classNamed: tokens first.
 	theClass classSide definitionSource: string;
 			  instanceVariables: (tokens fourth findTokens: ' ')
@@ -133,13 +133,13 @@ RingChunkImporter >> metaClassDefinition: string with: chgRec [
 { #category : #private }
 RingChunkImporter >> metaTraitDefinition: string with: chgRec [
 	| tokens trait |
-	
+
 	tokens := self scannedSource: string.
-	
+
 	trait := self classNamed: tokens first.
 	trait isTrait
 		ifFalse:[ trait:= self createTraitNamed: tokens first ].
-	
+
 	trait classSide definitionSource: string
 ]
 
@@ -148,7 +148,7 @@ RingChunkImporter >> msgClassComment: string with: chgRec [
 
 	| tokens theClass |
 	tokens := self scannedSource: string.
-	
+
 	(tokens size >= 3
 		and:[ tokens last isString ])
 	ifTrue:[
@@ -160,17 +160,17 @@ RingChunkImporter >> msgClassComment: string with: chgRec [
 
 { #category : #accessing }
 RingChunkImporter >> packages [
-	
+
 	^ { package }
 ]
 
 { #category : #private }
 RingChunkImporter >> removedMethod: string with: aChunk [
-	
+
 	| orClass tokens |
 	tokens := self scannedSource: string.
 	tokens size >= 3
-		ifTrue:[ orClass := self classNamed: tokens first. 
+		ifTrue:[ orClass := self classNamed: tokens first.
 		^ (tokens second == #class
 			ifTrue: [ orClass classSide ]
 			ifFalse:[ orClass ]) removeSelector: tokens last ].
@@ -201,7 +201,7 @@ RingChunkImporter >> visitClassCommentChunk: aChunk [
 
 	(self classNamed: aChunk behaviorName)
 		comment: aChunk contents;
-		stamp: aChunk stamp.
+		stamp: aChunk stamp
 ]
 
 { #category : #visitor }
@@ -215,21 +215,21 @@ RingChunkImporter >> visitDoItChunk: aChunk [
 
 	| contents |
 	contents := aChunk contents.
-	('*ubclass:*instanceVariableNames:*classVariableNames:*poolDictionaries:*category:*'
+	('*ubclass:*instanceVariableNames:*'
 		match: contents) ifTrue:[^self classDefinition: contents with: aChunk].
 	('* class*instanceVariableNames:*'
-		match: contents) ifTrue:[^self metaClassDefinition: contents with: aChunk].		
+		match: contents) ifTrue:[^self metaClassDefinition: contents with: aChunk].
 	('Trait*named:*uses:*category:*'
 		match: contents) ifTrue:[^self traitDefinition: contents with: aChunk].
 	('* classTrait*uses:*'
-		match: contents) ifTrue:[^self metaTraitDefinition: contents with: aChunk].	
+		match: contents) ifTrue:[^self metaTraitDefinition: contents with: aChunk].
 	('* removeSelector:*'
 		match: contents) ifTrue:[^self removedMethod: contents with: aChunk].
 	('* comment:*'
 		match: contents) ifTrue:[^self msgClassComment: contents with: aChunk].
 	('* initialize'
 		match: contents) ifTrue:[^self]. "Initialization is done based on class>>initialize"
-	doIts add: aChunk.
+	doIts add: aChunk
 ]
 
 { #category : #visitor }
@@ -243,10 +243,10 @@ RingChunkImporter >> visitMethodChunk: aChunk [
 							protocol: aChunk category;
 							sourceCode: aChunk contents;
 							stamp: aChunk stamp.
-	aChunk isMeta 
-		ifTrue: [ 
+	aChunk isMeta
+		ifTrue: [
 			theMethod isMetaSide: true.
-			theClass classSide addMethod: theMethod. ] 
+			theClass classSide addMethod: theMethod. ]
 		ifFalse:[ theClass addMethod: theMethod ]
 ]
 

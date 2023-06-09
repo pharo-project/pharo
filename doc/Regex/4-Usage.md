@@ -2,7 +2,7 @@
 
 The preceding section covered the syntax of regular expressions. It
 used the simplest possible interface to the matcher: sending
-#matchesRegex: message to the sample string, with regular expression
+`#matchesRegex:` message to the sample string, with regular expression
 string as the argument.  This section explains hairier ways of using
 the matcher.
 
@@ -10,16 +10,20 @@ the matcher.
 
 A `String` also understands these messages:
 
+```st
 	prefixMatchesRegex: 'regexString'
 	matchesRegexIgnoringCase: 'regexString'
 	prefixMatchesRegexIgnoringCase: 'regexString'
+```
 
 `String>>#prefixMatchesRegex:` is just like `String>>#matchesRegex:`, except that the whole
 receiver is not expected to match the regular expression passed as the
 argument; matching just a prefix of it is enough.  For example:
 
+```st
 	'abcde' matchesRegex: '(a|b)+'		"false"
 	'abcde' prefixMatchesRegex: '(a|b)+'	"true"
+```
 
 The last two messages are case-insensitive versions of matching.
 
@@ -50,7 +54,9 @@ It is possible to replace all matches of a regular expression with a
 certain string using the `String>>#copyWithRegex:matchesReplacedWith:` message.
 For example:
 
+```st
 	'ab cd ab' copyWithRegex: '(a|b)+' matchesReplacedWith: 'foo'
+```
 
 A more general substitution is match translation using `String>>#copyWithRegex:matchesTranslatedUsing:`.
 
@@ -59,7 +65,9 @@ expression in the receiver string and answers a copy of the receiver
 with the block results spliced into it in place of the respective
 matches.  For example:
 
+```st
 	'ab cd ab' copyWithRegex: '(a|b)+' matchesTranslatedUsing: [:each | each asUppercase]
+```
 
 All messages of enumeration and replacement protocols perform a
 case-sensitive match.  Case-insensitive versions are not provided as
@@ -108,10 +116,12 @@ understood by String.
 
 Here are four examples of creating a matcher:
 
+```st
 	hexRecognizer := RxMatcher forString: '16r[0-9A-Fa-f]+'
 	hexRecognizer := RxMatcher forString: '16r[0-9A-Fa-f]+' ignoreCase: false
 	hexRecognizer := '16r[0-9A-Fa-f]+' asRegex
 	hexRecognizer := '16r[0-9A-F]+' asRegexIgnoringCase
+```
 
 #### Matching
 
@@ -154,7 +164,7 @@ subexpressions with these indices:
 4.	`c|d`
 
 After a successful match, the matcher can report what part of the
-original string matched what subexpression. It understandards these
+original string matched what subexpression. It understands these
 messages:
 
 `RxMatcher>>#subexpressionCount` answers the total number of subexpressions: the highest value that
@@ -176,6 +186,7 @@ uses the 'MMM DD, YYYY' date format recognizer example from the
 'Syntax' section to convert a date to a three-element array with year,
 month, and day strings (you can select and evaluate it right here):
 
+```st
 	| matcher |
 	matcher := RxMatcher forString: '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[ ]+(:isDigit::isDigit:?)[ ]*,[ ]*(19|20)(:isDigit::isDigit:)'.
 	(matcher matches: 'Aug 6, 1996')
@@ -185,7 +196,7 @@ month, and day strings (you can select and evaluate it right here):
 				with: (matcher subexpression: 2)
 				with: (matcher subexpression: 3)]
 		ifFalse: ['no match']
-
+```
 (should answer ` #('96' 'Aug' '6')').
 
 #### Enumeration And Replacement
@@ -194,6 +205,7 @@ The enumeration and replacement protocols exposed in `String`
 are actually implemented by the matcher.  The following messages are
 understood:
 
+```st
 	#matchesIn: aString
 	#matchesIn: aString do: aBlock
 	#matchesIn: aString collect: aBlock
@@ -206,6 +218,7 @@ understood:
 	#matchesOnStream: aStream collect: aBlock
 	#copy: sourceStream to: targetStream replacingMatchesWith: replacementString
 	#copy: sourceStream to: targetStream translatingMatchesWith: aBlock
+```
 
 Note that in those methods that take a block, the block may refer to the `RxMatcher` itself,
 e.g. to collect information about the position the match occurred at, or the
@@ -213,8 +226,7 @@ subexpressions of the match. An example can be seen in `RxMatcher>>#matchingRang
 
 ## Error Handling
 
-Exceptions  are
-accessible through `RxParser` class protocol. To handle possible errors, use
+Exceptions  are accessible through `RxParser` class protocol. To handle possible errors, use
 the protocol described below to obtain the exception objects and use the
 protocol of the native Smalltalk implementation to handle them.
 
@@ -231,16 +243,3 @@ internal error), `RxParser>>#matchErrorSignal` is raised
 `RxParser>>#regexErrorSignal` is the parent of all three.  Since any of
 the three signals can be raised within a call to `String>>#matchesRegex:`, it is
 handy if you want to catch them all.  For example:
-
-VisualWorks:
-
-	RxParser regexErrorSignal
-		handle: [:ex | ex returnWith: nil]
-		do: ['abc' matchesRegex: '))garbage[']
-
-VisualAge:
-
-	['abc' matchesRegex: '))garbage[']
-		when: RxParser regexErrorSignal
-		do: [:signal | signal exitWith: nil]
-

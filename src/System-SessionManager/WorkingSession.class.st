@@ -48,10 +48,10 @@ WorkingSession >> errorHandler [
 
 { #category : #'deferred startup actions' }
 WorkingSession >> executeDeferredStartupActions: resuming [
-	"Execute the deferred actions which where added during startup, 
+	"Execute the deferred actions which where added during startup,
 	resuming is true if the image was started fresh, false if we just saved an image"
 
-	[ deferredStartupActions notEmpty ] 
+	[ deferredStartupActions notEmpty ]
 		whileTrue: [ | action |
 			action := deferredStartupActions removeFirst.
 			action cull: resuming
@@ -69,7 +69,7 @@ WorkingSession >> initialize [
 	super initialize.
 	deferredStartupActions := OrderedCollection new.
 	creationTime := DateAndTime now.
-	properties := Dictionary new.
+	properties := Dictionary new
 ]
 
 { #category : #'startup - shutdown' }
@@ -102,7 +102,7 @@ WorkingSession >> isWriteOnlyAccessMode [
 ]
 
 { #category : #accessing }
-WorkingSession >> manager: aSessionManager [ 
+WorkingSession >> manager: aSessionManager [
 	manager := aSessionManager
 ]
 
@@ -114,8 +114,8 @@ WorkingSession >> properties [
 
 { #category : #'startup - shutdown' }
 WorkingSession >> runList: aList do: aBlock [
-	aList do: [ :each | 
-		[aBlock value: each] 
+	aList do: [ :each |
+		[aBlock value: each]
 			on: Exception
 			do: [ :error | self errorHandler handleError: error] ]
 ]
@@ -131,7 +131,7 @@ WorkingSession >> runShutdown: isImageQuitting [
 WorkingSession >> runStartup: isImageStarting [
 	self
 		runList: manager startupList
-		do: [ :each | each startup: isImageStarting ].
+		do: [ :each | each startup: isImageStarting ]
 ]
 
 { #category : #'startup - shutdown' }
@@ -139,15 +139,15 @@ WorkingSession >> start: isImageStarting [
 	Smalltalk vm setGCParameters.
 	isImageStarting
 		ifTrue: [ Smalltalk clearExternalObjects ].
-	
-	self runStartup: isImageStarting.
+
+	self runStartup: isImageStarting
 ]
 
 { #category : #'startup - shutdown' }
 WorkingSession >> stop: isImageQuitting [
 
 	Object flushDependents.
-	self runShutdown: isImageQuitting.
+	self runShutdown: isImageQuitting
 ]
 
 { #category : #'startup - shutdown' }

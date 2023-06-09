@@ -1,13 +1,13 @@
 "
 I am BenchmarkResult. 
 
-I know how much iterations where executed in a specific elapsed time duration.
+I know how many iterations have been executed in a given elapsed time.
 
 I am the result of running the same piece of code multiple times.
 
-I can compute my average #frequencey (#executionsPerSecond) and #period (#timePerExecution).
+I can calculate my average #frequency (#executionsPerSecond) and #period (#timePerExecution).
 
-I have a human friendly print representation.
+I have a human-readable print representation.
 
 BenchmarkResult new
 	iterations: 20000;
@@ -25,17 +25,25 @@ Class {
 	#category : #'Kernel-Chronology-Extras'
 }
 
+{ #category : #comparing }
+BenchmarkResult >> compareTo: aBenchmarkResult [
+
+	^ BenchmarkComparison new
+		  referenceResult: self;
+		  comparisonResult: aBenchmarkResult
+]
+
 { #category : #accessing }
 BenchmarkResult >> elapsedTime [
 	"Return the duration of the total execution time"
-	
+
 	^ elapsedTime
 ]
 
 { #category : #accessing }
 BenchmarkResult >> elapsedTime: duration [
 	"Set the duration of the total execution time"
-	
+
 	elapsedTime := duration
 ]
 
@@ -49,15 +57,15 @@ BenchmarkResult >> executionsPerSecond [
 { #category : #accessing }
 BenchmarkResult >> frequency [
 	"Return the average number of executions per second"
-	
+
 	^ iterations / elapsedTime totalSeconds
 ]
 
 { #category : #testing }
 BenchmarkResult >> isEmpty [
-	iterations isNil | elapsedTime isNil 
+	iterations isNil | elapsedTime isNil
 		ifTrue: [ ^ true ].
-	iterations isZero | elapsedTime isZero 
+	iterations isZero | elapsedTime isZero
 		ifTrue: [ ^ true ].
 	^ false
 ]
@@ -65,7 +73,7 @@ BenchmarkResult >> isEmpty [
 { #category : #accessing }
 BenchmarkResult >> iterations [
 	"Return the number of iterations that were executed"
-	
+
 	^ iterations
 ]
 
@@ -79,7 +87,7 @@ BenchmarkResult >> iterations: integer [
 { #category : #accessing }
 BenchmarkResult >> period [
 	"Return the average duration of one iteration"
-	
+
 	^ elapsedTime / iterations
 ]
 
@@ -91,19 +99,16 @@ BenchmarkResult >> printFrequenceOn: stream [
 
 { #category : #printing }
 BenchmarkResult >> printOn: stream [
-	super printOn: stream.
-	stream nextPut: $(.
 	self isEmpty
-		ifTrue: [ 
-			stream << ' empty' ]
-		ifFalse: [ 
+		ifTrue: [
+			stream << 'empty' ]
+		ifFalse: [
 			iterations printWithCommasOn: stream.
 			stream space; << ('iteration' asPluralBasedOn: iterations).
 			stream << ' in '.
 			elapsedTime printHumanReadableOn: stream.
 			stream << '. '.
-			self printFrequenceOn: stream ].
-	stream nextPut: $)
+			self printFrequenceOn: stream ]
 ]
 
 { #category : #printing }

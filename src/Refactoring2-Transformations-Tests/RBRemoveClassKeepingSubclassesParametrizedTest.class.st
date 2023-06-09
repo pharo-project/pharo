@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveClassKeepingSubclassesParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
@@ -12,7 +12,7 @@ RBRemoveClassKeepingSubclassesParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBRemoveClassKeepingSubclassesParametrizedTest >> constructor [ 
+RBRemoveClassKeepingSubclassesParametrizedTest >> constructor [
 	^ #classNames:
 ]
 
@@ -26,15 +26,15 @@ RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveClassWithReferencesR
 RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveNotEmptySuperclass [
 
 	| refactoring class removedClass subclass |
-	
+
 	removedClass := ('RBTransformation' , 'RuleTestData1') asSymbol.
 	subclass := ('RBTransformation' , 'RuleTestData2') asSymbol.
-	refactoring := self createRefactoringWithArguments: { {removedClass} }. 
+	refactoring := self createRefactoringWithArguments: { {removedClass} }.
 	class := refactoring model classNamed: subclass.
 	self deny: (class directlyDefinesMethod: #foo).
-	
+
 	self executeRefactoring: refactoring.
-	
+
 	self assert: (refactoring model classNamed: removedClass) isNil.
 	self assert: class superclass
 		equals: (refactoring model classNamed: #RBFooLintRuleTestData1).

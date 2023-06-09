@@ -14,9 +14,9 @@ ClapPositionalTest >> testMatches [
 	| subject argv match |
 	subject := self namedSubject.
 	argv := { 'bar'. #remainder } readStream.
-	
+
 	match := subject matchOn: argv.
-	
+
 	self deny: match isMismatch.
 	self
 		assert: match specification

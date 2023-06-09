@@ -5,14 +5,14 @@ WordArray >> * other [
 	| result |
 	other isNumber
 		ifTrue: [ result := (other isFloat
-				ifTrue: [ FloatArray ]
+				ifTrue: [ Float32Array ]
 				ifFalse: [ WordArray ]) new: self size.
 			^ self primMulScalar: self and: other into: result ].
 	(other isMemberOf: WordArray)
 		ifTrue: [ result := WordArray new: self size.
 			^ self primMulArray: self and: other into: result ].
-	(other isMemberOf: FloatArray)
-		ifTrue: [ result := FloatArray new: self size.
+	(other isMemberOf: Float32Array)
+		ifTrue: [ result := Float32Array new: self size.
 			^ self primMulArray: self and: other into: result ].
 	^ super * other
 ]
@@ -22,14 +22,14 @@ WordArray >> + other [
 	| result |
 	other isNumber
 		ifTrue: [ result := (other isFloat
-				ifTrue: [ FloatArray ]
+				ifTrue: [ Float32Array ]
 				ifFalse: [ WordArray ]) new: self size.
 			^ self primAddScalar: self and: other into: result ].
 	(other isMemberOf: WordArray)
 		ifTrue: [ result := WordArray new: self size.
 			^ self primAddArray: self and: other into: result ].
-	(other isMemberOf: FloatArray)
-		ifTrue: [ result := FloatArray new: self size.
+	(other isMemberOf: Float32Array)
+		ifTrue: [ result := Float32Array new: self size.
 			^ self primAddArray: self and: other into: result ].
 	^ super + other
 ]
@@ -39,14 +39,14 @@ WordArray >> - other [
 	| result |
 	other isNumber
 		ifTrue: [ result := (other isFloat
-				ifTrue: [ FloatArray ]
+				ifTrue: [ Float32Array ]
 				ifFalse: [ WordArray ]) new: self size.
 			^ self primSubScalar: self and: other into: result ].
 	(other isMemberOf: WordArray)
 		ifTrue: [ result := WordArray new: self size.
 			^ self primSubArray: self and: other into: result ].
-	(other isMemberOf: FloatArray)
-		ifTrue: [ result := FloatArray new: self size.
+	(other isMemberOf: Float32Array)
+		ifTrue: [ result := Float32Array new: self size.
 			^ self primSubArray: self and: other into: result ].
 	^ super - other
 ]
@@ -56,14 +56,14 @@ WordArray >> / other [
 	| result |
 	other isNumber
 		ifTrue: [ result := (other isFloat
-				ifTrue: [ FloatArray ]
+				ifTrue: [ Float32Array ]
 				ifFalse: [ WordArray ]) new: self size.
 			^ self primDivScalar: self and: other into: result ].
 	(other isMemberOf: WordArray)
 		ifTrue: [ result := WordArray new: self size.
 			^ self primDivArray: self and: other into: result ].
-	(other isMemberOf: FloatArray)
-		ifTrue: [ result := FloatArray new: self size.
+	(other isMemberOf: Float32Array)
+		ifTrue: [ result := Float32Array new: self size.
 			^ self primDivArray: self and: other into: result ].
 	^ super / other
 ]

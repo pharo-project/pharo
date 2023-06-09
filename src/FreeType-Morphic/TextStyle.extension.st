@@ -11,10 +11,10 @@ TextStyle class >> emphasisMenuForFont: font target: target selector: selector h
 	aMenu addTitle: 'emphasis'.
 	derivs := derivs asOrderedCollection.
 	derivs addFirst: font.
-	derivs do: [ :df | 
-			aMenu 
+	derivs do: [ :df |
+			aMenu
 				add: df emphasisString
-				target: target 
+				target: target
 				selector: selector
 				argument: df.
                 aMenu lastItem font: df.

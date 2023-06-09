@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #idioms }
-ReProperMethodProtocolNameForRemovalRule class >> protocolIdiom [ 
+ReProperMethodProtocolNameForRemovalRule class >> protocolIdiom [
 
-	^self use: 'removing' insteadOf: #('remove' 'removal')
+	^self use: #'removing' insteadOf: #(#'remove' #'removal')
 ]

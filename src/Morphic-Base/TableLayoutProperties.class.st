@@ -49,7 +49,7 @@ TableLayoutProperties >> cellSpacing [
 
 { #category : #accessing }
 TableLayoutProperties >> cellSpacing: aSymbol [
-	cellSpacing := aSymbol.
+	cellSpacing := aSymbol
 ]
 
 { #category : #testing }
@@ -96,7 +96,7 @@ TableLayoutProperties >> listDirection [
 
 { #category : #accessing }
 TableLayoutProperties >> listDirection: aSymbol [
-	listDirection := aSymbol.
+	listDirection := aSymbol
 ]
 
 { #category : #'table defaults' }
@@ -116,7 +116,7 @@ TableLayoutProperties >> maxCellSize [
 
 { #category : #accessing }
 TableLayoutProperties >> maxCellSize: aNumber [
-	maxCellSize := aNumber.
+	maxCellSize := aNumber
 ]
 
 { #category : #'table defaults' }
@@ -126,7 +126,7 @@ TableLayoutProperties >> minCellSize [
 
 { #category : #accessing }
 TableLayoutProperties >> minCellSize: aNumber [
-	minCellSize := aNumber.
+	minCellSize := aNumber
 ]
 
 { #category : #'table defaults' }
@@ -146,7 +146,7 @@ TableLayoutProperties >> rubberBandCells [
 
 { #category : #accessing }
 TableLayoutProperties >> rubberBandCells: aBool [
-	rubberBandCells := aBool.
+	rubberBandCells := aBool
 ]
 
 { #category : #'table defaults' }

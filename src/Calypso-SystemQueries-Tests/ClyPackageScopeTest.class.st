@@ -24,14 +24,14 @@ ClyPackageScopeTest >> singleBasisSample [
 ClyPackageScopeTest >> testClassGroupEnumeration [
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
 	scope := ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
-	
+
 	scope classGroupsDo: [ :each | result add: each ].
-	
+
 	self
 		assert: (result collect: #class as: Set)
 		equals: {ClyNoTagClassGroup. ClyTaggedClassGroup. ClyClassGroup} asSet.
 	self
-		assert: 
+		assert:
 			(result
 				select: [ :each | each class = ClyTaggedClassGroup ]
 				thenCollect: #tag) sorted asArray
@@ -41,9 +41,9 @@ ClyPackageScopeTest >> testClassGroupEnumeration [
 { #category : #tests }
 ClyPackageScopeTest >> testClassesEnumeration [
 	scope := ClyPackageScope of: ClyClass1FromP1Mock package.
-	
+
 	scope classesDo: [ :each | result add: each ].
-	
+
 	self assert: (result includesAll: ClyClass1FromP1Mock package definedClasses).
 	self deny: (result includesAll: ClyClass1FromP1Mock package extendedClasses)
 ]
@@ -51,9 +51,9 @@ ClyPackageScopeTest >> testClassesEnumeration [
 { #category : #tests }
 ClyPackageScopeTest >> testMethodsEnumeration [
 	scope := ClyPackageScope of: ClyClass1FromP1Mock package.
-	
+
 	scope methodsDo: [ :each | result add: each ].
-	
+
 	self assert: (result includesAll: ClyClass1FromP1Mock localMethods).
 	self assert: (result includesAll: ClyClass2FromP1Mock localMethods).
 	self
@@ -67,8 +67,8 @@ ClyPackageScopeTest >> testMethodsEnumeration [
 { #category : #tests }
 ClyPackageScopeTest >> testPackageEnumeration [
 	scope := ClyPackageScope ofAll: {Array package. Object package}.
-	
+
 	scope packagesDo: [ :each | result add: each ].
-	
+
 	self assert: result asArray equals: {Array package. Object package}
 ]

@@ -10,7 +10,7 @@ Class {
 { #category : #settings }
 DebuggerSettings class >> availableDebuggers [
 
-	^ (self systemDebuggers select: [ :dbgClass | 
+	^ (self systemDebuggers select: [ :dbgClass |
 		   dbgClass availableAutomatically ]) asOrderedCollection
 ]
 
@@ -20,18 +20,18 @@ DebuggerSettings class >> debuggerRankSettingsOn: aBuilder [
 	(aBuilder group: #debuggers)
 		label: 'Debuggers';
 		parent: #debugging.
-	self systemDebuggers do: [ :debuggerClass | 
+	self systemDebuggers do: [ :debuggerClass |
 		(aBuilder group: debuggerClass name asSymbol)
 			label: debuggerClass name;
 			parent: #debuggers;
-			with: [ 
+			with: [
 				(aBuilder pickOne: #rank)
 					label: 'Priority';
 					target: debuggerClass;
 					default: debuggerClass defaultDebuggerRank;
 					domainValues: (1 to: 10);
 					description:
-						'Debugger priority: a debugger with a high priority will be chosen for debugging over a debugger with a low priority. 
+						'Debugger priority: a debugger with a high priority will be chosen for debugging over a debugger with a low priority.
 Lowest priority: 1. Highest priority: 10'.
 				(aBuilder setting: #availableAutomatically)
 					label: 'Available';
@@ -67,12 +67,12 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 		label: 'Debugging';
 		parent: #tools;
 		description: 'All Debugger settings';
-		with: [ 
+		with: [
 			(aBuilder group: #deprecationHandling)
 				label: 'Deprecation handling';
 				description: 'How deprecation are handled';
 				target: Deprecation;
-				with: [ 
+				with: [
 					(aBuilder setting: #activateTransformations)
 						label:
 							'Performs automatic transformations on deprecated methods';
@@ -109,6 +109,6 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 { #category : #settings }
 DebuggerSettings class >> systemDebuggers [
 
-	^ (TDebugger users flatCollect: [ :class | class withAllSubclasses ]) 
+	^ (TDebugger users flatCollect: [ :class | class withAllSubclasses ])
 		  reject: [ :class | class isTestCase ]
 ]

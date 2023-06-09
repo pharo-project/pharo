@@ -21,7 +21,7 @@ STONTestUser2 >> fromSton: stonReader [
 ]
 
 { #category : #'ston-core' }
-STONTestUser2 >> stonOn: stonWriter [	
+STONTestUser2 >> stonOn: stonWriter [
 	stonWriter writeObject: self streamMap: [ :dictionary |
 		dictionary
 			at: #username put: username;

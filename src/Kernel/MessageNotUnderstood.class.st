@@ -12,11 +12,17 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #'class initialization' }
+MessageNotUnderstood class >> initialize [
+
+	self deprecatedAliases: { #VariableNotDeclared }
+]
+
 { #category : #accessing }
 MessageNotUnderstood >> defaultAction [
 
 	reachedDefaultHandler := true.
-	super defaultAction.
+	super defaultAction
 ]
 
 { #category : #accessing }
@@ -25,7 +31,7 @@ MessageNotUnderstood >> description [
 	"Returns a textual description of the exception (based on the message instance variable). If message is nil, it returns the defaultDescription instead."
 
 	message ifNil: [ ^ self defaultDescription ].
-	message lookupClass == UndefinedObject ifTrue: [ 
+	message lookupClass == UndefinedObject ifTrue: [
 		^ message selector printString , ' was sent to nil' ].
 
 	^ 'Instance of ' , message lookupClass printString
@@ -39,11 +45,11 @@ MessageNotUnderstood >> initialize [
 	reachedDefaultHandler := false
 ]
 
-{ #category : #private }
+{ #category : #'private - testing' }
 MessageNotUnderstood >> isResumable [
 	"Determine whether an exception is resumable."
 
-	^true
+	^ true
 ]
 
 { #category : #accessing }
@@ -62,10 +68,10 @@ MessageNotUnderstood >> message: aMessage [
 { #category : #accessing }
 MessageNotUnderstood >> messageText [
 	"Return an exception's message text."
-	
-	^ messageText 
+
+	^ messageText
 			ifNil:
-				[message 
+				[message
 					ifNil: [super messageText]
 					ifNotNil: [
 						message lookupClass == UndefinedObject

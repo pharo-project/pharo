@@ -3,7 +3,7 @@ Extension { #name : #FTTableMorph }
 { #category : #'*Calypso-Browser' }
 FTTableMorph >> activateFilterWith: patternString [
 	(function isKindOf: FTFilterFunction) ifFalse: [ ^self ].
-	
+
 	function filterNowWith: patternString
 ]
 
@@ -22,8 +22,15 @@ FTTableMorph >> filterField [
 ]
 
 { #category : #'*Calypso-Browser' }
+FTTableMorph >> filterFieldHasKeyboardFocus [
+	| field |
+	field := self filterField.
+	^ field isNotNil and: [ field hasKeyboardFocus ]
+]
+
+{ #category : #'*Calypso-Browser' }
 FTTableMorph >> filterString [
-	(function isKindOf: FTFilterFunction) ifFalse: [ ^'' ]. 
+	(function isKindOf: FTFilterFunction) ifFalse: [ ^'' ].
 	^function pattern ifNil: [ '' ]
 ]
 

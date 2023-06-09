@@ -108,66 +108,66 @@ OSWindowGLAttributes class >> initialize [
 	DefaultMajorVersion := nil.
 	DefaultMinorVersion := nil.
 	DefaultProfileType := nil.
-	DefaultSRGBFramebuffer := false.
+	DefaultSRGBFramebuffer := false
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> alphaSize [
-	
+
 	^ alphaSize
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> alphaSize: anObject [
-	
+
 	alphaSize := anObject
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> blueSize [
-	
+
 	^ blueSize
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> blueSize: anObject [
-	
+
 	blueSize := anObject
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> depthSize [
-	
+
 	^ depthSize
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> depthSize: anObject [
-	
+
 	depthSize := anObject
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> doubleBuffer [
-	
+
 	^ doubleBuffer
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> doubleBuffer: anObject [
-	
+
 	doubleBuffer := anObject
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> greenSize [
-	
+
 	^ greenSize
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> greenSize: anObject [
-	
+
 	greenSize := anObject
 ]
 
@@ -199,7 +199,7 @@ OSWindowGLAttributes >> initialize [
 	minorVersion := DefaultMinorVersion.
 	majorVersion := DefaultMajorVersion.
 	profileType := DefaultProfileType.
-	srgbFramebuffer := DefaultSRGBFramebuffer.
+	srgbFramebuffer := DefaultSRGBFramebuffer
 ]
 
 { #category : #accessing }
@@ -234,13 +234,13 @@ OSWindowGLAttributes >> profileType: anObject [
 
 { #category : #accessing }
 OSWindowGLAttributes >> redSize [
-	
+
 	^ redSize
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> redSize: anObject [
-	
+
 	redSize := anObject
 ]
 
@@ -297,12 +297,12 @@ OSWindowGLAttributes >> stencilSize: aStencilSize [
 
 { #category : #accessing }
 OSWindowGLAttributes >> swapControl [
-	
+
 	^ swapControl
 ]
 
 { #category : #accessing }
 OSWindowGLAttributes >> swapControl: anObject [
-	
+
 	swapControl := anObject
 ]

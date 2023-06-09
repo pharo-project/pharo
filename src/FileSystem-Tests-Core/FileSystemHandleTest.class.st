@@ -18,7 +18,7 @@ FileSystemHandleTest class >> isAbstract [
 ]
 
 { #category : #testing }
-FileSystemHandleTest class >> shouldInheritSelectors [ 
+FileSystemHandleTest class >> shouldInheritSelectors [
 	^ true
 ]
 
@@ -85,8 +85,8 @@ FileSystemHandleTest >> testClose [
 
 { #category : #tests }
 FileSystemHandleTest >> testCreatedOpen [
-	
-	
+
+
 	self flag: 'TODO: activated once FileHandle is in use again!'.
 	"self assert: handle isOpen"
 ]
@@ -131,9 +131,9 @@ FileSystemHandleTest >> testReadBufferTooLarge [
 FileSystemHandleTest >> testReadOnly [
 	handle close.
 	handle := reference openWritable: false.
-	self 
-		should: 
-			[ handle 
+	self
+		should:
+			[ handle
 				at: 1
 				write: #(1 2 3 )
 				startingAt: 1

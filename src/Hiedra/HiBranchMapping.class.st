@@ -15,26 +15,26 @@ Class {
 }
 
 { #category : #convenience }
-HiBranchMapping class >> builtFor: aHiRuler [ 
+HiBranchMapping class >> builtFor: aHiRuler [
 	^ (self newFor: aHiRuler)
 		build;
 		yourself
 ]
 
 { #category : #'instance creation' }
-HiBranchMapping class >> newFor: aHiRuler [ 
+HiBranchMapping class >> newFor: aHiRuler [
 	^ self basicNew
 		initializeWith: aHiRuler;
 		yourself
 ]
 
 { #category : #convenience }
-HiBranchMapping >> allLinksWithSameBranchAs: aHiLink [ 
+HiBranchMapping >> allLinksWithSameBranchAs: aHiLink [
 	| branch |
 	branch := self branchAtLink: aHiLink.
 	^ Array streamContents: [:stream |
 		branchByLink keysAndValuesDo: [:link :branchNumber |
-			branchNumber = branch ifTrue: [ stream nextPut: link ] ] ].
+			branchNumber = branch ifTrue: [ stream nextPut: link ] ] ]
 ]
 
 { #category : #accessing }
@@ -69,16 +69,16 @@ HiBranchMapping >> branchCount [
 { #category : #building }
 HiBranchMapping >> build [
 	"Build the internal collaborators that will know the branch numbers for each node and link in the ruler. Required after instance creation."
-	
+
 	branchCount := 0.
 	self buildBranchByLink.
-	self buildBranchByNode.
+	self buildBranchByNode
 ]
 
 { #category : #building }
 HiBranchMapping >> buildBranchByLink [
 	"Build a dictionary that maps each link to a branch number."
-	
+
 	branchByLink := Dictionary new.
 	ruler nodes reverseDo: [ :node |
 		node incomingLinks do: [ :link |
@@ -88,10 +88,10 @@ HiBranchMapping >> buildBranchByLink [
 { #category : #building }
 HiBranchMapping >> buildBranchByNode [
 	"Build a dictionary that maps each node to a branch number."
-	
+
 	branchByNode := Dictionary new.
 	ruler nodes reverseDo: [ :node |
-		self markNode: node ].
+		self markNode: node ]
 ]
 
 { #category : #initialization }
@@ -123,7 +123,7 @@ HiBranchMapping >> markBranchLinksFrom: link [
 { #category : #private }
 HiBranchMapping >> markNode: aHiNode [
 	| branch |
-	branch := aHiNode hasAnyLink 
+	branch := aHiNode hasAnyLink
 		ifTrue: [ branchCount := branchCount + 1 ]
 		ifFalse: [ self branchAtLink: aHiNode anyLink ].
 	branchByNode

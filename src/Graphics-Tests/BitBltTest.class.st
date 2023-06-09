@@ -9,7 +9,7 @@ Class {
 
 { #category : #coverage }
 BitBltTest >> classToBeTested [
-	
+
 	^BitBlt
 ]
 
@@ -19,7 +19,7 @@ BitBltTest >> testAlphaCompositing [
 	f1 := Form extent: 1 @ 1 depth: 32.
 	f2 := Form extent: 1 @ 1 depth: 32.
 	eps := 0.5 / 255.
-	0 to: 255 do: [ :i | 
+	0 to: 255 do: [ :i |
 		f1 colorAt: 0 @ 0 put: Color blue.
 		mixColor := Color red alpha: i / 255.0.
 		f2 colorAt: 0 @ 0 put: mixColor.
@@ -40,7 +40,7 @@ BitBltTest >> testAlphaCompositing2 [
 	f1 := Form extent: 1 @ 1 depth: 32.
 	f2 := Form extent: 1 @ 1 depth: 32.
 	eps := 0.5 / 255.
-	0 to: 255 do: [ :i | 
+	0 to: 255 do: [ :i |
 		f1 colorAt: 0 @ 0 put: Color transparent.
 		mixColor := Color red alpha: i / 255.0.
 		f2 colorAt: 0 @ 0 put: mixColor.
@@ -58,12 +58,12 @@ BitBltTest >> testAlphaCompositing2 [
 BitBltTest >> testAlphaCompositing2Simulated [
 	testingEnvironment
 		at: #BitBltSimulation
-		ifPresent: [ :bitblt | 
+		ifPresent: [ :bitblt |
 			| bb f1 mixColor f2 result eps |
 			f1 := Form extent: 1 @ 1 depth: 32.
 			f2 := Form extent: 1 @ 1 depth: 32.
 			eps := 0.5 / 255.
-			0 to: 255 do: [ :i | 
+			0 to: 255 do: [ :i |
 				f1 colorAt: 0 @ 0 put: Color transparent.
 				mixColor := Color red alpha: i / 255.0.
 				f2 colorAt: 0 @ 0 put: mixColor.
@@ -80,12 +80,12 @@ BitBltTest >> testAlphaCompositing2Simulated [
 BitBltTest >> testAlphaCompositingSimulated [
 	testingEnvironment
 		at: #BitBltSimulation
-		ifPresent: [ :bitblt | 
+		ifPresent: [ :bitblt |
 			| mixColor result eps f1 bb f2 |
 			f1 := Form extent: 1 @ 1 depth: 32.
 			f2 := Form extent: 1 @ 1 depth: 32.
 			eps := 0.5 / 255.
-			0 to: 255 do: [ :i | 
+			0 to: 255 do: [ :i |
 				f1 colorAt: 0 @ 0 put: Color blue.
 				mixColor := Color red alpha: i / 255.0.
 				f2 colorAt: 0 @ 0 put: mixColor.

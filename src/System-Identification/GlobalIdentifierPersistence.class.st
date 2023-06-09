@@ -70,11 +70,11 @@ GlobalIdentifierPersistence >> delete [
 ]
 
 { #category : #'load and saving' }
-GlobalIdentifierPersistence >> ensure: existingDictionary [
+GlobalIdentifierPersistence >> ensure: globalIdentifier [
 	"It proceeds all backward compatibility work."
-	self shouldCallPreviousPersistence ifTrue: [ 
-		previousPersistence ensure: existingDictionary ].
-	self load: existingDictionary
+	self shouldCallPreviousPersistence ifTrue: [
+		previousPersistence ensure: globalIdentifier ].
+	self load: globalIdentifier
 ]
 
 { #category : #operations }
@@ -107,32 +107,41 @@ GlobalIdentifierPersistence >> load [
 ]
 
 { #category : #'load and saving' }
-GlobalIdentifierPersistence >> load: existingDictionary [
+GlobalIdentifierPersistence >> load: globalIdentifier [
 	"It loads stored information into existingDictionary."
 	self isEnabled ifFalse: [ ^ self ].
 	self preferences ifAbsent: [
 		"This is a new computer, so we define new computer UUID.
 		User still has to agree about sending data if it is not has been done yet."
-		^ self save: existingDictionary ].
-	[ (self mergeExisting: existingDictionary stored: self load)
-			ifTrue: [ self save: existingDictionary ].
-	] on: Error do: [ 
+		globalIdentifier ensureComputerAndSecretValues.
+		^ self save: globalIdentifier persistedInformation ].
+	[ (self mergeExisting: globalIdentifier stored: self load)
+			ifTrue: [
+				self save: globalIdentifier persistedInformation ].
+	] on: Error do: [
 		"Preferences likely contains a different settings version, so we store the actual one.
 		We should keep the preferences as stable as possible."
-		self mayOverwrite: existingDictionary ]
+		globalIdentifier ensureComputerAndSecretValues.
+		self mayOverwrite: globalIdentifier persistedInformation ]
 ]
 
 { #category : #'load and saving' }
 GlobalIdentifierPersistence >> mayOverwrite: aDictionary [
 	"If I keep previous persistence strategy, I am the main one and I can overwrite the current preference file.
 	I am called only on loading failure; it means when I cannot load preference file."
-	self hasPreviousPersistence ifTrue: [ self save: aDictionary ].
+	self hasPreviousPersistence ifTrue: [ self save: aDictionary ]
 ]
 
 { #category : #merging }
-GlobalIdentifierPersistence >> mergeExisting: existingDictionary stored: storedDictionary [
+GlobalIdentifierPersistence >> mergeExisting: globalIdentifier stored: storedDictionary [
+
+	"If the stored version does not have a computerUUID, we have to ensure the new one
+	has it"
+	(storedDictionary includesKey: #computerUUID)
+		ifFalse: [ globalIdentifier ensureComputerAndSecretValues ].
+
 	^ GlobalIdentifierMerger new
-			existing: existingDictionary;
+			existing: globalIdentifier persistedInformation;
 			stored: storedDictionary;
 			merge
 ]
@@ -168,7 +177,7 @@ GlobalIdentifierPersistence >> save: aDictionary [
 	self isEnabled ifFalse: [ ^ self ].
 	self delete.
 	self ensureDirectory.
-	self preferences binaryWriteStreamDo: [ :aPreferenceStream | 
+	self preferences binaryWriteStreamDo: [ :aPreferenceStream |
 			self save: aDictionary into: aPreferenceStream ]
 ]
 

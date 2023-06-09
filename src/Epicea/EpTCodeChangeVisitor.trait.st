@@ -37,6 +37,12 @@ EpTCodeChangeVisitor >> visitCategoryChange: aChange [
 ]
 
 { #category : #visitor }
+EpTCodeChangeVisitor >> visitCategoryRegistration: aChange [
+
+	^ self visitCategoryChange: aChange
+]
+
+{ #category : #visitor }
 EpTCodeChangeVisitor >> visitCategoryRemoval: aChange [
 	^ self visitCategoryChange: aChange
 ]
@@ -98,7 +104,7 @@ EpTCodeChangeVisitor >> visitProtocolAddition: aProtocolAddition [
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitProtocolChange: aProtocolAddition [
-	^ self visitBehaviorChange: aProtocolAddition.
+	^ self visitBehaviorChange: aProtocolAddition
 ]
 
 { #category : #visitor }

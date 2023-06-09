@@ -7,20 +7,15 @@ Class {
 	#instVars : [
 		'inMemoryStream'
 	],
-	#category : #'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }
 
 { #category : #reading }
-FLByteArrayStreamStrategy >> readStreamDo: aValuable [
-	"Evaluates the argument with a read stream. Answers the result."
-	
-	^aValuable value: inMemoryStream contents readStream
+FLByteArrayStreamStrategy >> readStream [
+	^ inMemoryStream contents readStream
 ]
 
 { #category : #writing }
-FLByteArrayStreamStrategy >> writeStreamDo: aValuable [
-	"Evaluates the argument with a write stream. Answers the result."
-	
-	inMemoryStream := ByteArray new writeStream.
-	^aValuable value: inMemoryStream binary
+FLByteArrayStreamStrategy >> writeStream [
+	^ inMemoryStream := ByteArray new writeStream
 ]

@@ -1,109 +1,79 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutCategory: catName [ 
-
-	self organization fileOutCategory: catName
-]
-
-{ #category : #'*CodeExport' }
-ClassDescription >> fileOutCategory: aSymbol on: aFileStream [
-	"File a description of the receiver's category, aString, onto aFileStream. If 
-	moveSource, is true, then set the method source pointer to the new file position.
-	Note when this method is called with moveSource=true, it is condensing the
-	.sources file, and should only write one preamble per method category."
-
-	| selectors |
-	aFileStream cr.
-	selectors := self selectorsToFileOutCategory: aSymbol.
-
-	"Overridden to preserve author stamps in sources file regardless"
-	selectors do: [:sel |
-		self printMethodChunk: sel on: aFileStream ].
-	^ self
-]
-
-{ #category : #'*CodeExport' }
 ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
-	"File a description of the messages of this class that have been 
+	"File a description of the messages of this class that have been
 	changed (i.e., are entered into the argument, aSet) onto aFileStream."
 
-	| org |
-	(org := self organization) categories
-		do: [ :cat | 
-			| sels |
-			sels := (org listAtCategoryNamed: cat) select: [ :sel | aSet includes: sel ].
-			sels do: [ :sel | self printMethodChunk: sel on: aFileStream ] ]
+	self protocols do: [ :protocol |
+		protocol methodSelectors
+			select: [ :selector | aSet includes: selector ]
+			thenDo: [ :selector | self printMethodChunk: selector on: aFileStream ] ]
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
-	"File out methods for this category."
-	
-	| selectors |
-	aFileStream cr.
-	selectors := self selectorsToFileOutCategory: aSymbol.
+ClassDescription >> fileOutLocalMethodsInProtocol: protocol on: aFileStream [
+	"File out methods for this protocol."
 
-	selectors do: [:sel | self printMethodChunk: sel on: aFileStream ].
-	^ self
+	aFileStream cr.
+
+	protocol methodSelectors do: [ :selector | self printMethodChunk: selector on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutMethod: selector [
 	"Write source code of a single method on a file.  Make up a name for the file."
-	
+
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutMethod: selector on: internalStream.
-	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '..')) isSt: true.
+	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '..')) isSt: true
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutMethod: selector on: aStream [
-	
-	(selector == #Comment) ifTrue: [^ self inform: 'Sorry, cannot file out class comment in isolation.'].
-	(self includesSelector: selector) ifFalse: [^ self error: 'Selector ', selector asString, ' not found'].
-	aStream header; timeStamp.
-	self printMethodChunk: selector on: aStream.
+
+	selector == #Comment ifTrue: [ ^ self inform: 'Sorry, cannot file out class comment in isolation.' ].
+	(self includesSelector: selector) ifFalse: [ ^ self error: 'Selector ' , selector asString , ' not found' ].
+	aStream
+		header;
+		timeStamp.
+	self printMethodChunk: selector on: aStream
 ]
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
-	
+
 	"we for now file out old style class definitions"
+
 	aFileStream nextChunkPut: self oldPharoDefinition.
-	self organization putCommentOnFile: aFileStream forClass: self.
-	self organization categories 
-		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]
+	self putCommentOnFile: aFileStream.
+	self protocols do: [ :protocol | self fileOutLocalMethodsInProtocol: protocol on: aFileStream ]
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> fileOutOrganizationOn: aFileStream [
+ClassDescription >> fileOutProtocolsOn: aFileStream [
 	"File a description of the receiver's organization on aFileStream."
 
-	aFileStream cr; nextPut: $!.
-	aFileStream nextChunkPut: self name, ' reorganize'; cr.
-	aFileStream nextChunkPut: self organization stringForFileOut ; cr
-]
-
-{ #category : #'*CodeExport' }
-ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: changeStamp priorMethod: priorMethod [ 
-	"Print a method category preamble.  This must have a category name.
-	It may have an author/date stamp, and it may have a prior source link.
-	If it has a prior source link, it MUST have a stamp, even if it is empty."
-
-"The current design is that changeStamps and prior source links are preserved in the changes file.  All fileOuts include changeStamps.  Condensing sources, however, eliminates all stamps (and links, natch)."
-
-	aFileStream cr; nextPut: $!.
-	aFileStream nextChunkPut: (String streamContents:
-		[:strm |
-		strm nextPutAll: self name; nextPutAll: ' methodsFor: '; print: category asString.
-		(changeStamp ~~ nil and:
-			[changeStamp size > 0 or: [priorMethod ~~ nil]]) ifTrue:
-			[strm nextPutAll: ' stamp: '; print: changeStamp].
-		priorMethod ~~ nil ifTrue:
-			[strm nextPutAll: ' prior: '; print: priorMethod sourcePointer]]).
+	aFileStream
+		cr;
+		nextPut: $!;
+		nextChunkPut: self name , ' reorganize';
+		cr;
+		nextChunkPut: (String streamContents: [ :aStream |
+					 self protocols do: [ :protocol |
+							 aStream
+								 nextPut: $(;
+								 nextPutAll: protocol name printString.
+							 protocol methodSelectors do: [ :selector |
+								 aStream
+									 space;
+									 nextPutAll: selector ].
+							 aStream
+								 nextPut: $);
+								 cr ] ]);
+		cr
 ]
 
 { #category : #'*CodeExport' }
@@ -111,10 +81,10 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	"Copy the source code for the method associated with selector onto the fileStream."
 
 	| preamble method |
-	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
+	preamble := self name, ' methodsFor: ', (self protocolOfSelector: selector) name asString printString.
 	method := self methodDict
 		at: selector
-		ifAbsent: [ 
+		ifAbsent: [
 			outStream
 				nextPutAll: selector;
 				cr.
@@ -128,23 +98,72 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 
 	"Print the preamble"
 	outStream cr; nextChunkPut: ''.
-	outStream nextChunkPut: (String streamContents: [ :strm | 
+	outStream nextChunkPut: (String streamContents: [ :strm |
 		strm nextPutAll: preamble.
-		method stamp ifNotEmpty: [ :stamp | 
+		method stamp ifNotEmpty: [ :stamp |
 			strm
 				nextPutAll: ' stamp: ';
 				print: stamp ] ]).
 	outStream cr.
 
 	"Print the source code"
-	outStream 
+	outStream
 		nextChunkPut: method sourceCode;
 		nextChunkPut: ' '; cr.
-	
+
 	^ outStream
 ]
 
 { #category : #'*CodeExport' }
-ClassDescription >> selectorsToFileOutCategory: aSymbol [
-	^ self organization listAtCategoryNamed: aSymbol
+ClassDescription >> printProtocolChunk: protocol on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
+	"Print a method preamble.  This must have a protocol name.
+	It may have an author/date stamp, and it may have a prior source link.
+	If it has a prior source link, it MUST have a stamp, even if it is empty."
+
+	"The current design is that changeStamps and prior source links are preserved in the changes file.  All fileOuts include changeStamps.  Condensing sources, however, eliminates all stamps (and links, natch)."
+
+	aFileStream
+		cr;
+		nextPut: $!.
+	aFileStream nextChunkPut: (String streamContents: [ :strm |
+			 strm
+				 nextPutAll: self name;
+				 nextPutAll: ' methodsFor: ';
+				 print: (protocol isString
+						  ifTrue: [ protocol asString ]
+						  ifFalse: [ protocol name ]).
+			 (changeStamp isNotNil and: [ changeStamp size > 0 or: [ priorMethod isNotNil ] ]) ifTrue: [
+				 strm
+					 nextPutAll: ' stamp: ';
+					 print: changeStamp ].
+			 priorMethod ifNotNil: [
+				 strm
+					 nextPutAll: ' prior: ';
+					 print: priorMethod sourcePointer ] ])
+]
+
+{ #category : #'*CodeExport' }
+ClassDescription >> putCommentOnFile: aFileStream [ 
+	"Store the comment about the class onto file, aFileStream."
+
+	| header |
+	self comment isEmptyOrNil ifTrue: [ ^ self ].
+
+	aFileStream
+		cr;
+		nextPut: $!.
+	header := String streamContents: [ :strm |
+		          strm
+			          nextPutAll: self name;
+			          nextPutAll: ' commentStamp: '.
+		          self commentStamp storeOn: strm.
+		          strm
+			          nextPutAll: ' prior: ';
+			          nextPutAll: '0' ].
+	aFileStream nextChunkPut: header.
+	self comment ifNotNil: [ :comment |
+		aFileStream
+			cr;
+			nextChunkPut: comment string ].
+	aFileStream cr
 ]

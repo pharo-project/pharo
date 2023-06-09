@@ -98,16 +98,16 @@ RubEditingArea >> editorClass: aClass [
 
 { #category : #highlighting }
 RubEditingArea >> ensureAndGetNewHighlightSegmentFrom: startIndex to: stopIndex [
-	
-	^ self 
+
+	^ self
 		removeHighlightSegment;
 		addSegment: (RubHighlightSegmentMorph from: startIndex to: stopIndex)
 ]
 
 { #category : #highlighting }
 RubEditingArea >> ensureAndGetNewHoverHighlightSegmentFrom: startIndex to: stopIndex [
-	
-	^ self 
+
+	^ self
 		removeHoverHighlightSegment;
 		addSegment: (RubHoverHighlightSegmentMorph from: startIndex to: stopIndex)
 ]
@@ -128,6 +128,11 @@ RubEditingArea >> getHoverHighlightSegment [
 RubEditingArea >> getSegmentOfClass: aClass [
 
 	^ self segments detect: [ :each | each class = aClass ] ifNone: [ nil ]
+]
+
+{ #category : #binding }
+RubEditingArea >> hasBindingOf: aString [
+	^ self editingMode hasBindingOf: aString
 ]
 
 { #category : #highlighting }
@@ -162,14 +167,14 @@ RubEditingArea >> newParagraph [
 RubEditingArea >> removeHighlightSegment [
 
 	(self getHighlightSegment)
-		ifNotNil: [ :aSegment | aSegment delete ].
+		ifNotNil: [ :aSegment | aSegment delete ]
 ]
 
 { #category : #highlighting }
 RubEditingArea >> removeHoverHighlightSegment [
 
 	(self getHoverHighlightSegment)
-		ifNotNil: [ :aSegment | aSegment delete ].
+		ifNotNil: [ :aSegment | aSegment delete ]
 ]
 
 { #category : #styler }

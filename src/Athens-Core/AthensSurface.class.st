@@ -25,9 +25,9 @@ Class {
 
 { #category : #'instance creation' }
 AthensSurface class >> extent: aPoint [
-	"Create a new surface with given extent. 
+	"Create a new surface with given extent.
 	Note that some surfaces may not support this method, since they may represent an infinite surface."
-	
+
 	self subclassResponsibility
 ]
 
@@ -57,39 +57,39 @@ AthensSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 { #category : #public }
 AthensSurface >> clear [
 	"clear the surface"
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #public }
 AthensSurface >> clear: clearColor [
 	"clear the surface"
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #clipping }
-AthensSurface >> clipBy: aRectangle during: aBlockClosure [ 
-	self subclassResponsibility.
+AthensSurface >> clipBy: aRectangle during: aBlockClosure [
+	self subclassResponsibility
 ]
 
 { #category : #paints }
-AthensSurface >> createFormPaint: aForm [ 
-	self subclassResponsibility.
+AthensSurface >> createFormPaint: aForm [
+	self subclassResponsibility
 ]
 
 { #category : #paints }
 AthensSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
- 
+
 	"This protocol is deprecated. Use #createLinearGradient: start:stop: instead"
-	
-	
+
+
 	self shouldNotImplement
 ]
 
 { #category : #paints }
-AthensSurface >> createMeshGradientWithPatches: aListOfMeshPatches [ 
-	self subclassResponsibility.
+AthensSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
+	self subclassResponsibility
 ]
 
 { #category : #paths }
@@ -106,26 +106,26 @@ AthensSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius
 
 { #category : #paints }
 AthensSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius focalPoint: fp [
- 
+
 	self subclassResponsibility
 ]
 
 { #category : #paths }
-AthensSurface >> createRectanglePath: aRectangle [ 
+AthensSurface >> createRectanglePath: aRectangle [
 	^ aRectangle
 ]
 
 { #category : #paints }
-AthensSurface >> createShadowPaint: aColor [ 
+AthensSurface >> createShadowPaint: aColor [
 	 "Answer an instance of AthensPaint, valid for use with given surface"
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #paints }
-AthensSurface >> createSolidColorPaint: aColor [ 
+AthensSurface >> createSolidColorPaint: aColor [
 	 "Answer an instance of AthensPaint, valid for use with given surface"
-	
+
 	self subclassResponsibility
 ]
 
@@ -133,7 +133,7 @@ AthensSurface >> createSolidColorPaint: aColor [
 AthensSurface >> createStrokePaintFor: aPaint [
 	 "Answer an instance of AthensPaint, valid for use as stroke paint on receiver,
 	using an argument, paint for fills"
-	
+
 	self subclassResponsibility
 ]
 
@@ -150,14 +150,14 @@ AthensSurface >> drawDuring: aBlock [
 
 
 	currentCanvas ifNotNil: [ self attemptToRecurseDrawing ].
-	
+
 	[
 		currentCanvas := self newCanvas.
 		aBlock value: currentCanvas.
 	] ensure: [
 		self releaseCanvas.
 		currentCanvas := nil.
-	].
+	]
 ]
 
 { #category : #masking }
@@ -166,7 +166,7 @@ AthensSurface >> enableMask [
 ]
 
 { #category : #'rendering dispatch' }
-AthensSurface >> fillPath: aPath withSolidColor: aColor [ 
+AthensSurface >> fillPath: aPath withSolidColor: aColor [
 
 	self subclassResponsibility
 ]

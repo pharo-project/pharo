@@ -100,11 +100,6 @@ RubTextAreaExamples class >> centered [
 		openInWorld
 ]
 
-{ #category : #shout }
-RubTextAreaExamples class >> hasBindingOf: aString [
-	^ (self bindingOf: aString) notNil
-]
-
 { #category : #accessing }
 RubTextAreaExamples class >> interactionModel [
 	^ ModelForShout
@@ -124,7 +119,7 @@ RubTextAreaExamples class >> nicolaiAttributeFix [
 	font2 := TextFontReference toFont: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10).
 	{font1.
 	font2}
-		do: [ :f | 
+		do: [ :f |
 			| t1 t2 t3 t4 t5 t6 |
 			tMorph := RubEditingArea new.
 			t1 := 'normal\' withCRs asText addAttribute: f.
@@ -151,12 +146,12 @@ RubTextAreaExamples class >> nicolaiAttributeFix [
 RubTextAreaExamples class >> presentationInput [
 	<sampleInstance>
 	"
-	
+
 	self presentationInput.
-	
+
 	Thanks to Tudor Girba aka Doru
 	Then Shift+Tab makes the editing area appear at the center of the screen.
-	Useful to input explanations during a presentation 
+	Useful to input explanations during a presentation
 	"
 
 	KMRepository reset.
@@ -251,8 +246,8 @@ RubTextAreaExamples class >> show: aMessage while: aBlock [
 		openInWorld;
 		centered;
 		yourself.
-	
-	[ aBlock ensure: [ m delete ] ] fork.
+
+	[ aBlock ensure: [ m delete ] ] fork
 ]
 
 { #category : #examples }
@@ -384,10 +379,10 @@ RubTextAreaExamples class >> smalltalkCodeWrappedWithSegments [
 RubTextAreaExamples class >> someSmallSmalltalkCode [
 	^ '
 WorldState
-	addDeferredUIMessage: [ 
+	addDeferredUIMessage: [
 		World displayWorldSafely.
 		Cursor wait
-			showWhile: [ 
+			showWhile: [
 				aBlock
 					ensure: [ m delete ] ] ]'
 ]

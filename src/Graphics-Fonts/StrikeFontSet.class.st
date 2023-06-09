@@ -35,7 +35,7 @@ StrikeFontSet class >> familyName: aName size: aSize [
 	].
 	collection := collection asSortedCollection: [:a :b | a pointSize <= b pointSize].
 	collection do: [:s | (s pointSize >= aSize) ifTrue: [^ s]].
-	^ TextStyle defaultFont.
+	^ TextStyle defaultFont
 ]
 
 { #category : #'instance creation' }
@@ -51,13 +51,13 @@ StrikeFontSet class >> findMaximumLessThan: f in: array [
 	array size to: 1 by: -1 do: [:i |
 		f height >= (array at: i) height ifTrue: [^ array at: i].
 	].
-	^ array first.
+	^ array first
 ]
 
 { #category : #'file in/out' }
 StrikeFontSet class >> installNewFontAtIndex: newIndex fromOld: oldIndex [
 
-	
+
 	self allInstances do: [:set | | newArray fontArray |
 		fontArray := set fontArray.
 		newIndex + 1 > fontArray size ifTrue: [
@@ -78,7 +78,7 @@ StrikeFontSet installNewFontAtIndex: UnicodeKorean leadingChar fromOld: UnicodeJ
 
 { #category : #'instance creation' }
 StrikeFontSet class >> newFontArray: anArray [
- 
+
 	^super new initializeWithFontArray: anArray
 ]
 
@@ -102,7 +102,7 @@ StrikeFontSet class >> removeFontsForEncoding: leadingChar encodingName: encodin
 		].
 	].
 
-	TextSharedInformation removeKey: encodingSymbol asSymbol ifAbsent: [].
+	TextSharedInformation removeKey: encodingSymbol asSymbol ifAbsent: []
 ]
 
 { #category : #private }
@@ -118,19 +118,19 @@ StrikeFontSet >> addNewFont: aFont at: encodingIndex [
 
 	newArray at: encodingIndex put: aFont.
 
-	self initializeWithFontArray: newArray.
+	self initializeWithFontArray: newArray
 ]
 
 { #category : #accessing }
 StrikeFontSet >> ascent [
 
-	^ (fontArray  at: 1) ascent.
+	^ (fontArray  at: 1) ascent
 ]
 
 { #category : #accessing }
 StrikeFontSet >> ascentKern [
 
-	^ (fontArray  at: 1) ascentKern.
+	^ (fontArray  at: 1) ascentKern
 ]
 
 { #category : #accessing }
@@ -141,7 +141,7 @@ StrikeFontSet >> ascentOf: aCharacter [
 { #category : #accessing }
 StrikeFontSet >> baseKern [
 
-	^ (fontArray  at: 1) baseKern.
+	^ (fontArray  at: 1) baseKern
 ]
 
 { #category : #accessing }
@@ -162,11 +162,11 @@ StrikeFontSet >> bonk: glyphForm with: bonkForm at: j [
 		x base to: x size-1 do: [:i | bb destX: (x at: i) + offset; copyBits].
 	] ifFalse: [
 		1 to: x size-1 do: [:i | bb destX: (x at: i) + offset; copyBits].
-	].
+	]
 ]
 
 { #category : #'character shapes' }
-StrikeFontSet >> characterFormAt: character [ 
+StrikeFontSet >> characterFormAt: character [
 
 	| encoding ascii xTable leftX rightX |
 	encoding := 1.
@@ -176,11 +176,11 @@ StrikeFontSet >> characterFormAt: character [
 	xTable := (fontArray at: encoding) xTable.
 	leftX := xTable at: ascii + 1.
 	rightX := xTable at: ascii + 2.
-	^ (fontArray at: encoding) glyphs copy: (leftX @ 0 corner: rightX @ self height).
+	^ (fontArray at: encoding) glyphs copy: (leftX @ 0 corner: rightX @ self height)
 ]
 
 { #category : #'character shapes' }
-StrikeFontSet >> characterFormAt: character put: characterForm [ 
+StrikeFontSet >> characterFormAt: character put: characterForm [
 
 	| ascii leftX rightX widthDif newGlyphs encoding xTable glyphs |
 	encoding := 1.
@@ -208,18 +208,18 @@ StrikeFontSet >> characterFormAt: character put: characterForm [
 		xTable := xTable copy.
 		ascii + 2 to: xTable size do: [:i |
 			xTable at: i put: (xTable at: i) + widthDif]].
-	glyphs copy: (leftX @ 0 extent: characterForm extent) from: 0 @ 0 in: characterForm rule: Form over.
+	glyphs copy: (leftX @ 0 extent: characterForm extent) from: 0 @ 0 in: characterForm rule: Form over
 ]
 
 { #category : #accessing }
 StrikeFontSet >> characterToGlyphMap [
-	"used in 
+	"used in
 	primDisplayString: aString from: startIndex to: stopIndex
 			map: font characterToGlyphMap xTable: font xTable
 			kern: kernDelta.
-	
+
 	Since 'font xTable' using a first font xtable, we could use the same glyph mapping for it'
-	
+
 	This should allow a primitive to not fail, because of characterToGlyphMap == nil
 	"
 	^ (fontArray at: 1) characterToGlyphMap
@@ -230,7 +230,7 @@ StrikeFontSet >> characters: anInterval in: sourceString displayAt: aPoint clipp
 	"Simple, slow, primitive method for displaying a line of characters.
 	No wrap-around is provided."
 
-	^anInterval inject: aPoint into: 
+	^anInterval inject: aPoint into:
 		[:destPoint :i |
 		| f xTable leftX noFont sourceRect ascii rightX |
 		noFont := false.
@@ -247,7 +247,7 @@ StrikeFontSet >> characters: anInterval in: sourceString displayAt: aPoint clipp
 		sourceRect := leftX @ 0 extent: (rightX - leftX) @ self height.
 		aBitBlt copyFrom: sourceRect in: f glyphs to: destPoint.
 		destPoint x + (rightX - leftX + kernDelta) @ destPoint y.
-	].
+	]
 ]
 
 { #category : #copying }
@@ -263,7 +263,7 @@ StrikeFontSet >> copy [
 		a at: i put: (fontArray at: i) copy.
 	].
 	s fontArray: a.
-	^ s.
+	^ s
 ]
 
 { #category : #accessing }
@@ -274,13 +274,13 @@ StrikeFontSet >> derivativeFonts [
 { #category : #accessing }
 StrikeFontSet >> descent [
 
-	^ (fontArray  at: 1) descent.
+	^ (fontArray  at: 1) descent
 ]
 
 { #category : #accessing }
 StrikeFontSet >> descentKern [
 
-	^ (fontArray at: 1) descentKern.
+	^ (fontArray at: 1) descentKern
 ]
 
 { #category : #accessing }
@@ -289,7 +289,7 @@ StrikeFontSet >> descentOf: aCharacter [
 ]
 
 { #category : #displaying }
-StrikeFontSet >> displayLine: aString at: aPoint [ 
+StrikeFontSet >> displayLine: aString at: aPoint [
 	"Display the characters in aString, starting at position aPoint."
 
 	self characters: (1 to: aString size)
@@ -299,7 +299,7 @@ StrikeFontSet >> displayLine: aString at: aPoint [
 		rule: Form over
 		fillColor: nil
 		kernDelta: 0
-		on: (BitBlt toForm: Display).
+		on: (BitBlt toForm: Display)
 ]
 
 { #category : #displaying }
@@ -323,34 +323,34 @@ StrikeFontSet >> displayMultiString: aString on: aBitBlt from: startIndex to: st
 		aBitBlt copyBits.
 		destPoint := destPoint x + (rightX - leftX + kernDelta) @ destPoint y.
 	].
-	^ destPoint.
+	^ destPoint
 ]
 
 { #category : #displaying }
-StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta [ 
+StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta [
 
-	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: aPoint y + self ascent.
+	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: aPoint y + self ascent
 ]
 
 { #category : #displaying }
 StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-	"Draw the given string from startIndex to stopIndex 
+	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) BitBlt."
-	
+
 	"Look for an excuse to use the fast primitive"
  	(aString hasWideCharacterFrom: startIndex to: stopIndex) ifTrue:[
-		^ self displayMultiString: aString 
-				on: aBitBlt 
-				from: startIndex 
-				to: stopIndex 
-				at: aPoint 
-				kern: kernDelta 
+		^ self displayMultiString: aString
+				on: aBitBlt
+				from: startIndex
+				to: stopIndex
+				at: aPoint
+				kern: kernDelta
 				baselineY: baselineY].
 
-	^ aBitBlt displayString: aString 
-			from: startIndex 
-			to: stopIndex 
-			at: aPoint 
+	^ aBitBlt displayString: aString
+			from: startIndex
+			to: stopIndex
+			at: aPoint
 			strikeFont: self
 			kern: kernDelta
 ]
@@ -358,7 +358,7 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 { #category : #displaying }
 StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont baselineY: baselineY [
 
-	| destPoint leftX rightX glyphInfo g char destY rIndex| 
+	| destPoint leftX rightX glyphInfo g char destY rIndex|
 	destPoint := aPoint.
 	rIndex := startIndex.
 	glyphInfo := Array new: 5.
@@ -373,7 +373,7 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 			glyphInfo fifth installOn: aBitBlt.
 		].
 		aBitBlt sourceForm: g.
-		destY := baselineY - (glyphInfo at: 4). 
+		destY := baselineY - (glyphInfo at: 4).
 		aBitBlt destX: destPoint x.
 		aBitBlt destY: destY.
 		aBitBlt sourceOrigin: leftX @ 0.
@@ -383,27 +383,27 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 		destPoint := destPoint + (rightX - leftX + kernDelta @ 0).
 		rIndex := rIndex + 1.
 	].
-	^ Array with: rIndex with: destPoint.
+	^ Array with: rIndex with: destPoint
 ]
 
 { #category : #accessing }
 StrikeFontSet >> emphasis [
-	"Answer the integer code for synthetic bold, italic, underline, and 
+	"Answer the integer code for synthetic bold, italic, underline, and
 	strike-out."
 
-	^ emphasis.
+	^ emphasis
 ]
 
 { #category : #accessing }
-StrikeFontSet >> emphasis: code [ 
-	"Set the integer code for synthetic bold, itallic, underline, and strike-out, 
+StrikeFontSet >> emphasis: code [
+	"Set the integer code for synthetic bold, itallic, underline, and strike-out,
 	where bold=1, italic=2, underlined=4, and struck out=8."
 
-	emphasis := code.
+	emphasis := code
 ]
 
 { #category : #accessing }
-StrikeFontSet >> emphasized: code [ 
+StrikeFontSet >> emphasized: code [
 
 	"Answer a copy of the receiver with emphasis set to include code."
 	| derivative addedEmphasis base safeCode |
@@ -433,7 +433,7 @@ StrikeFontSet >> emphasized: code [
 { #category : #accessing }
 StrikeFontSet >> familyName [
 
-	^ (fontArray at: 1) familyName.
+	^ (fontArray at: 1) familyName
 ]
 
 { #category : #accessing }
@@ -454,13 +454,13 @@ StrikeFontSet >> fontArray [
 { #category : #accessing }
 StrikeFontSet >> fontArray: anArray [
 
-	fontArray := anArray.
+	fontArray := anArray
 ]
 
 { #category : #accessing }
 StrikeFontSet >> fontNameWithPointSize [
 
-	^ (fontArray at: 1) fontNameWithPointSize.
+	^ (fontArray at: 1) fontNameWithPointSize
 ]
 
 { #category : #accessing }
@@ -474,7 +474,7 @@ StrikeFontSet >> fontOf: aCharacter ifAbsent: aBlock [
 	"Answer the actual font to use for aCharacter"
 	| encoding font |
 	encoding := 1.
-	encoding <= fontArray size 
+	encoding <= fontArray size
 		ifTrue:[font := fontArray at: encoding].
 	font ifNil:[^aBlock value].
 	^font
@@ -511,13 +511,13 @@ StrikeFontSet >> glyphs [
 { #category : #accessing }
 StrikeFontSet >> glyphsEncoding: anInteger [
 
-	^ (fontArray at: (anInteger+1)) glyphs.
+	^ (fontArray at: (anInteger+1)) glyphs
 ]
 
 { #category : #accessing }
 StrikeFontSet >> height [
 
-	^ (fontArray  at: 1) height.
+	^ (fontArray  at: 1) height
 ]
 
 { #category : #accessing }
@@ -526,8 +526,8 @@ StrikeFontSet >> heightOf: aCharacter [
 ]
 
 { #category : #'private - initialization' }
-StrikeFontSet >> initializeWithFontArray: anArray [ 
-	"Initialize with given font array, the ascent of primary font is modified 
+StrikeFontSet >> initializeWithFontArray: anArray [
+	"Initialize with given font array, the ascent of primary font is modified
 	if another font has higher size"
 	| primaryFont maxHeight newFont |
 	fontArray := anArray.
@@ -552,22 +552,22 @@ StrikeFontSet >> initializeWithFontArray: anArray [
 { #category : #displaying }
 StrikeFontSet >> installOn: aDisplayContext [
 
-	^ aDisplayContext installStrikeFont: self.
+	^ aDisplayContext installStrikeFont: self
 ]
 
 { #category : #displaying }
-StrikeFontSet >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [ 
+StrikeFontSet >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
 
 	^ aDisplayContext
 		installStrikeFont: self
 		foregroundColor: foregroundColor
-		backgroundColor: backgroundColor.
+		backgroundColor: backgroundColor
 ]
 
 { #category : #testing }
 StrikeFontSet >> isFontSet [
 
-	^ true.
+	^ true
 ]
 
 { #category : #testing }
@@ -587,7 +587,7 @@ StrikeFontSet >> lineGrid [
 
 	| f |
 	f := fontArray at: 1.
-	^ f ascent + f descent.
+	^ f ascent + f descent
 ]
 
 { #category : #emphasis }
@@ -606,7 +606,7 @@ StrikeFontSet >> makeBoldGlyphs [
 				clippingBox: g boundingBox rule: Form under fillColor: nil.
 			(fontArray at: i) setGlyphs: g.
 		].
-	].
+	]
 ]
 
 { #category : #emphasis }
@@ -643,7 +643,7 @@ StrikeFontSet >> makeItalicGlyphs [
 			font bonk: g with: bonkForm.
 			font setGlyphs: g
 		].
-	].
+	]
 ]
 
 { #category : #emphasis }
@@ -658,7 +658,7 @@ StrikeFontSet >> makeStruckOutGlyphs [
 			g fillBlack: (0 @ (font ascent - (font ascent//3)) extent: g width @ 1).
 			font setGlyphs: g
 		].
-	].
+	]
 ]
 
 { #category : #emphasis }
@@ -673,7 +673,7 @@ StrikeFontSet >> makeUnderlinedGlyphs [
 			g fillBlack: (0 @ (font ascent+1) extent: g width @ 1).
 			font setGlyphs: g
 		].
-	].
+	]
 ]
 
 { #category : #accessing }
@@ -682,19 +682,19 @@ StrikeFontSet >> maxAsciiFor: encoding [
 	| f |
 	f := (fontArray at: encoding+1).
 	f ifNotNil: [^ f maxAscii].
-	^ 0.
+	^ 0
 ]
 
 { #category : #accessing }
 StrikeFontSet >> maxEncoding [
 
-	^ fontArray size.
+	^ fontArray size
 ]
 
 { #category : #accessing }
 StrikeFontSet >> maxWidth [
 
-	^ (fontArray at: 1) maxWidth.
+	^ (fontArray at: 1) maxWidth
 ]
 
 { #category : #testing }
@@ -712,7 +712,7 @@ StrikeFontSet >> name: aString [
 { #category : #accessing }
 StrikeFontSet >> pointSize [
 
-	^ (fontArray  at: 1) pointSize.
+	^ (fontArray  at: 1) pointSize
 ]
 
 { #category : #copying }
@@ -729,7 +729,7 @@ StrikeFontSet >> printOn: aStream [
 	aStream nextPutAll: '(' , self name.
 	aStream space.
 	self height printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #private }
@@ -743,14 +743,14 @@ StrikeFontSet >> questionGlyphInfoInto: glyphInfoArray [
 		at: 3 put: (f xTable at: ascii + 2);
 		at: 4 put: (self ascentOf: $?);
 		at: 5 put: self.
-	^ glyphInfoArray.
+	^ glyphInfoArray
 ]
 
 { #category : #initialization }
 StrikeFontSet >> reset [
 	"Reset the cache of derivative emphasized fonts"
 
-	derivativeFonts := Array new: 32.
+	derivativeFonts := Array new: 32
 ]
 
 { #category : #accessing }
@@ -769,11 +769,11 @@ StrikeFontSet >> superscript [
 StrikeFontSet >> textStyle [
 
 	^ TextStyle actualTextStyles detect: [:aStyle | (aStyle fontArray collect: [:s | s name]) includes: self name]
-		ifNone: [].
+		ifNone: []
 ]
 
 { #category : #accessing }
-StrikeFontSet >> widthOf: aCharacter [ 
+StrikeFontSet >> widthOf: aCharacter [
 	"Answer the width of the argument as a character in the receiver."
 	^(self fontOf: aCharacter) widthOf: aCharacter
 ]
@@ -795,12 +795,12 @@ StrikeFontSet >> widthOfString: aString [
 StrikeFontSet >> xTable [
 	"Answer an Array of the left x-coordinate of characters in glyphs."
 
-	^ (fontArray  at: 1) xTable.
+	^ (fontArray  at: 1) xTable
 ]
 
 { #category : #private }
 StrikeFontSet >> xTableEncoding: anInteger [
 	"Answer an Array of the left x-coordinate of characters in glyphs."
 
-	^(fontArray at: anInteger + 1) xTable.
+	^(fontArray at: anInteger + 1) xTable
 ]

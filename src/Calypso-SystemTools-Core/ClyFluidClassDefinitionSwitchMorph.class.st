@@ -17,8 +17,8 @@ Class {
 
 { #category : #building }
 ClyFluidClassDefinitionSwitchMorph >> build [
-	
-	checkbox := CheckboxMorph 
+
+	checkbox := CheckboxMorph
 		on: self selected: #usesSlotBasedDefinition changeSelected: #toggle.
 	checkbox
 		getLabelSelector: #definitionTypeLabel;

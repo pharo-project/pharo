@@ -39,11 +39,11 @@ Class {
 		'referenceVariableName',
 		'newClass'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
-RBSplitClassRefactoring class >> class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
+RBSplitClassRefactoring class >> class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 	^ self new
 		class: class
 			instanceVariables: instVars
@@ -53,8 +53,8 @@ RBSplitClassRefactoring class >> class: class instanceVariables: instVars newCla
 ]
 
 { #category : #'instance creation' }
-RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
-	^ self new 
+RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
+	^ self new
 		model: aRBSmalltalk;
 		class: class
 			instanceVariables: instVars
@@ -64,27 +64,28 @@ RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariab
 ]
 
 { #category : #'private - transforming' }
-RBSplitClassRefactoring >> abstractReferenceTo: each [ 
+RBSplitClassRefactoring >> abstractReferenceTo: each [
+
 	| setterMethod replacer accessorRef getterMethod |
-	accessorRef := RBCreateAccessorsForVariableRefactoring 
-				variable: each
-				class: newClass
-				classVariable: false.
+	accessorRef := RBCreateAccessorsForVariableTransformation
+		               variable: each
+		               class: newClass
+		               classVariable: false.
 	self performCompositeRefactoring: accessorRef.
-	getterMethod := accessorRef getterMethod.
-	setterMethod := accessorRef setterMethod.
-	replacer := self parseTreeRewriterClass 
-				variable: each
-				getter: getterMethod
-				setter: setterMethod
-				receiver: referenceVariableName.
-	self 
+	getterMethod := accessorRef getterMethodName.
+	setterMethod := accessorRef setterMethodName.
+	replacer := self parseTreeRewriterClass
+		            variable: each
+		            getter: getterMethod
+		            setter: setterMethod
+		            receiver: referenceVariableName.
+	self
 		convertClasses: class withAllSubclasses
-		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: each]
+		select: [ :aClass |
+		aClass whichSelectorsReferToInstanceVariable: each ]
 		using: replacer.
-	self performCompositeRefactoring: (RBRemoveInstanceVariableRefactoring 
-				remove: each
-				from: class)
+	self performCompositeRefactoring:
+		(RBRemoveInstanceVariableRefactoring remove: each from: class)
 ]
 
 { #category : #transforming }
@@ -94,7 +95,7 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 
 { #category : #'private - transforming' }
 RBSplitClassRefactoring >> addClass [
-	self performCompositeRefactoring: (RBAddClassRefactoring 
+	self performCompositeRefactoring: (RBInsertNewClassRefactoring
 				model: self model
 				addClass: newClassName
 				superclass: Object
@@ -105,16 +106,16 @@ RBSplitClassRefactoring >> addClass [
 
 { #category : #'private - transforming' }
 RBSplitClassRefactoring >> addInstanceVariables [
-	instanceVariables do: 
-			[:each | 
-			self performCompositeRefactoring: (RBAddInstanceVariableRefactoring 
+	instanceVariables do:
+			[:each |
+			self performCompositeRefactoring: (RBAddInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newClass)]
 ]
 
 { #category : #initialization }
-RBSplitClassRefactoring >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
+RBSplitClassRefactoring >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 	class := self model classObjectFor: aClass.
 	instanceVariables := instVars.
 	newClassName := className.
@@ -130,25 +131,25 @@ RBSplitClassRefactoring >> createNewClass [
 
 { #category : #transforming }
 RBSplitClassRefactoring >> createReference [
-	self performCompositeRefactoring: (RBAddInstanceVariableRefactoring 
+	self performCompositeRefactoring: (RBAddInstanceVariableRefactoring
 				variable: referenceVariableName
 				class: class)
 ]
 
 { #category : #preconditions }
 RBSplitClassRefactoring >> preconditions [
-	^(RBCondition isValidClassName: newClassName) 
-		& (RBCondition isGlobal: newClassName in: self model) not 
-			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class) 
-			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName) 
-					not 
-			& (RBCondition isGlobal: referenceVariableName in: self model) not 
-			& (RBCondition definesTemporaryVariable: referenceVariableName in: class) 
+	^(RBCondition isValidClassName: newClassName)
+		& (RBCondition isGlobal: newClassName in: self model) not
+			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
+			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName)
+					not
+			& (RBCondition isGlobal: referenceVariableName in: self model) not
+			& (RBCondition definesTemporaryVariable: referenceVariableName in: class)
 					not
 ]
 
 { #category : #printing }
-RBSplitClassRefactoring >> storeOn: aStream [ 
+RBSplitClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' class: '.

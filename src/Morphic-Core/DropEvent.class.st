@@ -33,7 +33,7 @@ DropEvent >> contents [
 { #category : #initialize }
 DropEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
-	wasHandled := anEvent wasHandled.
+	wasHandled := anEvent wasHandled
 ]
 
 { #category : #accessing }
@@ -59,13 +59,13 @@ DropEvent >> printOn: aStream [
 	aStream print: self position ; space.
 	aStream nextPutAll: self type; space.
 	aStream print: self windowIndex .
-	aStream nextPut: $].
+	aStream nextPut: $]
 ]
 
 { #category : #initialize }
 DropEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
-	wasHandled := false.
+	wasHandled := false
 ]
 
 { #category : #dispatching }
@@ -79,13 +79,13 @@ DropEvent >> setPosition: pos contents: aMorph hand: aHand [
 	position := pos.
 	contents := aMorph.
 	source := aHand.
-	wasHandled := false.
+	wasHandled := false
 ]
 
 { #category : #transforming }
 DropEvent >> transformBy: aMorphicTransform [
 	"Transform the receiver into a local coordinate system."
-	position :=  aMorphicTransform globalPointToLocal: position.
+	position :=  aMorphicTransform globalPointToLocal: position
 ]
 
 { #category : #transforming }
@@ -106,5 +106,5 @@ DropEvent >> wasHandled [
 
 { #category : #accessing }
 DropEvent >> wasHandled: aBool [
-	wasHandled := aBool.
+	wasHandled := aBool
 ]

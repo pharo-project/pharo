@@ -11,20 +11,20 @@ Class {
 WeakAnnouncerTest >> benchManyWeakGuys [
 
 	| object ann time |
-	
+
 	object := Object new.
 	ann := Announcer new.
-	
+
 	50000 timesRepeat: [ (ann weak when: Announcement send: #value to: object) ].
-	
+
 	self assert: ann numberOfSubscriptions equals: 50000.
-	
+
 	Smalltalk garbageCollect.
-	
+
 	time := [object := nil.
-		Smalltalk garbageCollect. 
+		Smalltalk garbageCollect.
 		 ]timeToRun.
-	
+
 	self assert: ann numberOfSubscriptions equals: 0.
 	^ time
 ]
@@ -32,12 +32,12 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 { #category : #benchmarks }
 WeakAnnouncerTest >> benchWeakSubscriptionDynamic [
 	"Run me to see how expensive #becomeForward: is (compared to #benchWeakSubscriptionStatic )"
-	
+
 	| object ann |
-	
+
 	object := Object new.
 	ann := Announcer new.
-	
+
 	^[
 		1000 timesRepeat: [ (ann when: Announcement send: #value to: object) makeWeak ].
 	] timeToRun
@@ -48,10 +48,10 @@ WeakAnnouncerTest >> benchWeakSubscriptionStatic [
 	"Run me to see how cheap object creation is (compared to #benchWeakSubscriptionDynamic ) "
 
 	| object ann |
-	
+
 	object := Object new.
 	ann := Announcer new.
-	
+
 	^[
 		1000 timesRepeat: [ (ann weak when: Announcement send: #value to: object)  ].
 	] timeToRun
@@ -60,7 +60,7 @@ WeakAnnouncerTest >> benchWeakSubscriptionStatic [
 { #category : #utilities }
 WeakAnnouncerTest >> longTestCase [
 
-	self timeLimit: 60 seconds.
+	self timeLimit: 60 seconds
 ]
 
 { #category : #tests }
@@ -88,12 +88,12 @@ WeakAnnouncerTest >> testNoWeakBlock [
 
 	counter := 0.
 
-	(announcer when: AnnouncementMockA do: [ :ann | counter := counter + 1 ]) makeWeak.
-	
+	(announcer when: AnnouncementMockA do: [ :ann | counter := counter + 1 ] for: self) makeWeak.
+
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
 	self assert: counter equals: 1.
-	
+
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
 	self assert: counter equals: 2
@@ -103,38 +103,38 @@ WeakAnnouncerTest >> testNoWeakBlock [
 WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 
 	| a1 a2 o |
-	
+
 	self longTestCase.
 
 	a1 := Announcer new.
 	a2 := Announcer new.
-	
+
 	o := Object new.
-	
-	self 
+
+	self
 	assert: a1 subscriptions numberOfSubscriptions isZero;
 	assert: a2 subscriptions numberOfSubscriptions isZero.
-	
+
 	a1 weak when: Announcement send: #abcdef to: o.
-	a2 weak when: Announcement send: #abcdef to: o.	
-	
-	self 
+	a2 weak when: Announcement send: #abcdef to: o.
+
+	self
 	assert: a1 subscriptions numberOfSubscriptions equals: 1;
 	assert: a2 subscriptions numberOfSubscriptions equals: 1.
-	
+
 	3 timesRepeat: [ Smalltalk garbageCollect ].
-	
-	self 
+
+	self
 	assert: a1 subscriptions numberOfSubscriptions equals: 1;
-	assert: a2 subscriptions numberOfSubscriptions equals: 1.	
+	assert: a2 subscriptions numberOfSubscriptions equals: 1.
 
 	o := nil.
-	
+
 	3 timesRepeat: [ Smalltalk garbageCollect ].
-	
-	self 
+
+	self
 	assert: a1 subscriptions numberOfSubscriptions isZero;
-	assert: a2 subscriptions numberOfSubscriptions isZero.
+	assert: a2 subscriptions numberOfSubscriptions isZero
 ]
 
 { #category : #tests }
@@ -147,12 +147,12 @@ WeakAnnouncerTest >> testWeakObject [
 	collector := [ counter := counter + 1 ].
 	forwarder := MessageSend receiver: collector selector: #value.
 	(announcer when: AnnouncementMockA send: #value to: forwarder) makeWeak.
-	
+
 	" shouldn't go away, we are still holding a reference to 'forwarder': "
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
 	self assert: counter equals: 1.
-	
+
 	" should go away as we let the only reference to 'forwarder' go: "
 	forwarder := nil.
 	Smalltalk garbageCollect.

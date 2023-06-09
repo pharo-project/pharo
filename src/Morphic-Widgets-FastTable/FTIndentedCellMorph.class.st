@@ -32,22 +32,22 @@ FTIndentedCellMorph >> indentBy: aNumber [
 
 { #category : #initialization }
 FTIndentedCellMorph >> initialize [
-	
+
 	indentation := 0. "must be before super"
-	
+
 	super initialize.
-	
-	self cellInset: 2.
+
+	self cellInset: 2
 ]
 
 { #category : #layout }
 FTIndentedCellMorph >> layoutBounds [
 
-	| inner | 
-	
+	| inner |
+
 	inner := self innerBounds.
-	
-	^indentation = 0 
+
+	^indentation = 0
 		ifTrue: [ inner ]
 		ifFalse: [ ((indentation@0)+inner origin) corner: inner corner ]
 ]

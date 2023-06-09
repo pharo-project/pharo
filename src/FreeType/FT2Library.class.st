@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 FT2Library class >> current [
-	^ Current ifNil: [ Current := self basicNew ].
+	^ Current ifNil: [ Current := self basicNew ]
 ]
 
 { #category : #private }
@@ -83,11 +83,11 @@ FT2Library >> ffiOutline: outline getBitmap: abitmap [
 ]
 
 { #category : #reading }
-FT2Library >> getBitmap: ftBitmap fromOutline: outline [ 
+FT2Library >> getBitmap: ftBitmap fromOutline: outline [
 	|returnCode|
 	self checkLibrary.
 	returnCode := self ffiGetBitmap: ftBitmap fromOutline: outline.
-	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading bitmap from outline' ].
+	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading bitmap from outline' ]
 ]
 
 { #category : #testing }
@@ -102,13 +102,13 @@ FT2Library >> libraryVersion [
 	major := IntHolder new.
 	minor := IntHolder new.
 	patch := IntHolder new.
-	
+
 	self checkLibrary.
-	self ffiLibraryVersionMajor:major minor: minor patch: patch. 
-	
+	self ffiLibraryVersionMajor:major minor: minor patch: patch.
+
 	version := FT2Version new.
 	version major: major value.
 	version minor: minor value.
 	version patch: patch value.
-	^ version.
+	^ version
 ]

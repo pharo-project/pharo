@@ -8,21 +8,21 @@ Class {
 }
 
 { #category : #testing }
-RePatternCodeRule class >> isAbstract [ 
+RePatternCodeRule class >> isAbstract [
 
 	 ^ self = RePatternCodeRule
 ]
 
 { #category : #testing }
 RePatternCodeRule class >> isVisible [
-	
+
 	^ self name ~=  #RePatternCodeRule
 ]
 
 { #category : #testing }
 RePatternCodeRule class >> noteCompilationOf: aSelector meta: isMeta [
 
-	 aSelector == #initialize & isMeta not ifTrue: [ 
+	 aSelector == #initialize & isMeta not ifTrue: [
 		ReRuleManager reset ]
 ]
 
@@ -36,7 +36,7 @@ RePatternCodeRule >> afterCheck: aNode mappings: mappingDict [
 { #category : #private }
 RePatternCodeRule >> flattenMatchMap: aDictionary [
 	^ aDictionary keysAndValuesDo: [ :key :val |
-		((key isKindOf: RBProgramNode) and: [ 
+		((key isKindOf: RBProgramNode) and: [
 		 key isPatternNode ])
 			ifTrue: [
 				aDictionary

@@ -27,7 +27,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyItemLocalHierarchyProperty class >> size: subtreeSize [
-	^self new 
+	^self new
 		subtreeSize: subtreeSize
 ]
 
@@ -37,7 +37,7 @@ ClyItemLocalHierarchyProperty >> printOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: 'size: '.
 	subtreeSize printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

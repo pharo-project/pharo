@@ -11,7 +11,7 @@ Class {
 
 { #category : #testing }
 ClyVariableMethodGroup class >> isCalypsoItemType: aClass [
-	 
+
 	^self = aClass
 ]
 
@@ -22,8 +22,8 @@ ClyVariableMethodGroup class >> isEditableGroup [
 
 { #category : #'instance creation' }
 ClyVariableMethodGroup class >> withMethodsFrom: aClassScope referencedVar: aVariable [
-	^self 
-		named: aVariable name 
+	^self
+		named: aVariable name
 		on: (ClyVariableReferencesQuery of: aVariable from: aClassScope)
 ]
 

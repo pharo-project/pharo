@@ -19,8 +19,8 @@ Is this really what you want to do?') asText makeBoldFrom: 1 to: newTraitName si
 				ifFalse: [^ nil ]].
 
 	trait := self defaultClassCompiler
-		source: defString; requestor: aController; 
-		logged: true; 
+		source: defString; requestor: aController;
+		logged: true;
 		evaluate.
 	^trait isTrait ifTrue: [ trait ] ifFalse: [ nil ]
 ]

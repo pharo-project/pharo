@@ -16,7 +16,7 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass [
 
 	self shouldnt: [c2 >> #asd] raise: Error.
 	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests'.
-	self assert: (c2 >> #asd) package equals: c2 package.
+	self assert: (c2 >> #asd) package equals: c2 package
 ]
 
 { #category : #tests }
@@ -32,14 +32,14 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass2 [
 
 	self shouldnt: [c2 >> #asd] raise: Error.
 	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests'.
-	self assert: (c2 >> #asd) package equals: c2 package.
+	self assert: (c2 >> #asd) package equals: c2 package
 ]
 
 { #category : #tests }
 T2SubclassingTraitedClassTest >> testCreatingMethodInTraitClassSide [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
-	t1 class compile: 'someObject ^#executingOverridenMethod'.	
+	t1 class compile: 'someObject ^#executingOverridenMethod'.
 	c1 := self newClass: #C1 with: #() uses: t1.
-	self assert: c1 someObject equals: #executingOverridenMethod.
+	self assert: c1 someObject equals: #executingOverridenMethod
 ]

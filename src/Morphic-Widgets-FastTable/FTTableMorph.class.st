@@ -64,15 +64,15 @@ FTTableMorph class >> defaultBackgroundColor [
 ]
 
 { #category : #accessing }
-FTTableMorph class >> defaultColumn [	
+FTTableMorph class >> defaultColumn [
 	^ FTColumn new
 ]
 
 { #category : #accessing }
 FTTableMorph class >> defaultHeaderColor [
-	self flag: #pharoFixMe.	"I think we should deprecate all this headerColor stuff. This is 
+	self flag: #pharoFixMe.	"I think we should deprecate all this headerColor stuff. This is
 	responsibility of data source, after all.
-	
+
 	Cyril: I added a deprecation on #headerColor: explaining how to update the users of this method. In Pharo 9 we can remove all this."
 	^ self theme fastTableHeaderColor
 ]
@@ -134,7 +134,7 @@ FTTableMorph >> allowsDeselection: aBoolean [
 { #category : #configuring }
 FTTableMorph >> alternateRowsColor: shouldAlternate [
 	shouldAlternate ifFalse: [ ^ self ].
-	
+
 	self container alternateRowsColor
 ]
 
@@ -193,9 +193,9 @@ FTTableMorph >> beResizable [
 
 { #category : #accessing }
 FTTableMorph >> beRowNotHomogeneous [
-	"by default, tables have homogeneous row heigths, taken from rowHeight variable. 
-	 We can switch to variable size by sending this message. 
-	 The resulting table will be less effcicient than the first, but probably not in a way users 
+	"by default, tables have homogeneous row heigths, taken from rowHeight variable.
+	 We can switch to variable size by sending this message.
+	 The resulting table will be less effcicient than the first, but probably not in a way users
 	 can notice"
 	| oldContainer |
 
@@ -225,8 +225,8 @@ FTTableMorph >> click: event [
 
 { #category : #'accessing - colors' }
 FTTableMorph >> colorForSelection: primarySelection [
-	
-	^primarySelection 
+
+	^primarySelection
 		ifTrue: [ self selectionColor ]
 		ifFalse: [ self secondarySelectionColor ]
 ]
@@ -237,18 +237,18 @@ FTTableMorph >> columns [
 ]
 
 { #category : #accessing }
-FTTableMorph >> columns: aCollection [ 
+FTTableMorph >> columns: aCollection [
 	columns := aCollection asArray
 ]
 
 { #category : #private }
-FTTableMorph >> container [ 
+FTTableMorph >> container [
 	^ container
 ]
 
 { #category : #accessing }
 FTTableMorph >> dataSource [
-	"Answers a dataSource: the component responsible of providing data to the table. 
+	"Answers a dataSource: the component responsible of providing data to the table.
 	 Check FTDataSource and subclasses as reference."
 	^ dataSource
 ]
@@ -265,7 +265,7 @@ FTTableMorph >> dataSource: anObject [
 { #category : #initialization }
 FTTableMorph >> defaultColor [
 
-	^self class defaultBackgroundColor 
+	^self class defaultBackgroundColor
 ]
 
 { #category : #accessing }
@@ -279,7 +279,7 @@ FTTableMorph >> denyDeselection [
 ]
 
 { #category : #'accessing - selection' }
-FTTableMorph >> deselectAll [ 
+FTTableMorph >> deselectAll [
 	self selectIndexes: #()
 ]
 
@@ -299,7 +299,7 @@ FTTableMorph >> doubleClick: event [
 ]
 
 { #category : #drawing }
-FTTableMorph >> drawSubmorphsOn: aCanvas [ 
+FTTableMorph >> drawSubmorphsOn: aCanvas [
 	"Draw the focus here since we are using inset bounds
 	for the focus rectangle."
 	"1haltOnce."
@@ -374,7 +374,7 @@ FTTableMorph >> extent: aPoint [
 
 { #category : #accessing }
 FTTableMorph >> firstVisibleRowIndex [
-	
+
 	^ self container firstVisibleRowIndex
 ]
 
@@ -474,9 +474,9 @@ FTTableMorph >> horizontalScrollBar [
 
 { #category : #private }
 FTTableMorph >> horizontalScrollBarHeight [
-	^horizontalScrollBar 
-		ifNil: [ 0 ] 
-		ifNotNil: [ 
+	^horizontalScrollBar
+		ifNil: [ 0 ]
+		ifNotNil: [
 			self isHorizontalScrollBarVisible ifFalse: [ ^ 0 ].
 			self scrollBarThickness
 			]
@@ -484,9 +484,9 @@ FTTableMorph >> horizontalScrollBarHeight [
 
 { #category : #private }
 FTTableMorph >> horizontalScrollBarValue: aNumber [
-	horizontalScrollBar ifNotNil: [ 
+	horizontalScrollBar ifNotNil: [
 	self container adjustToHorizontalScrollBarValue: aNumber.
-	].
+	]
 ]
 
 { #category : #initialization }
@@ -517,46 +517,62 @@ FTTableMorph >> initializeContainer [
 FTTableMorph >> initializeKeyBindings [
 	"add keybindings used by table"
 
-	self 
+	self
 		bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination
 		toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
-	self 
+	self
 		bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination
 		toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
-	self 
+	self
 		bindKeyCombination: Character arrowLeft shift | Character arrowLeft asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowLeft: event ].
-	self 
+		toAction: [ :target :morph :event |
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorBy: -1 ]
+				ifFalse: [ self keyStrokeArrowLeft: event ]
+		].
+	self
 		bindKeyCombination: Character arrowRight shift | Character arrowRight asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowRight: event ].
-	self 
+		toAction: [ :target :morph :event |
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorBy: 1 ]
+				ifFalse: [ self keyStrokeArrowRight: event ]
+		].
+	self
 		bindKeyCombination: Character home asKeyCombination
-		toAction: [ self selectFirst ].
-	self 
+		toAction: [
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorToIndex: 0 ]
+				ifFalse: [ self selectFirst ]
+			].
+	self
 		bindKeyCombination: Character end asKeyCombination
-		toAction: [ self selectLast ].
-	self 
+		toAction: [
+			self filterFieldHasKeyboardFocus
+				ifTrue: [ self filterField moveCursorToIndex: #last ]
+				ifFalse: [ self selectLast ]
+		].
+	self
 		bindKeyCombination: self shortcutProvider selectAllShortcut
 		toAction: [ self selectAll ]
 ]
 
 { #category : #initialization }
 FTTableMorph >> initializeScrollBars [
-	verticalScrollBar := ScrollBarMorph new 
-		model: self; 
+	verticalScrollBar := ScrollBarMorph new
+		model: self;
 		setValueSelector: #verticalScrollBarValue:;
 		yourself.
 	self addMorph: verticalScrollBar.
 
-	"introducing horizontal scrolling gradually: 
+	"introducing horizontal scrolling gradually:
 	enable the feature only when the var is set during initialization"
-	horizontalScrollBar ifNotNil: [ 	
-		horizontalScrollBar := ScrollBarMorph new 
-			model: self; 
+	horizontalScrollBar ifNotNil: [
+		horizontalScrollBar := ScrollBarMorph new
+			model: self;
 			setValueSelector: #horizontalScrollBarValue:;
 			yourself.
 		self addMorph: horizontalScrollBar
-		].
+		]
 ]
 
 { #category : #initialization }
@@ -568,27 +584,27 @@ FTTableMorph >> initializeSelectedIndexes [
 { #category : #initialization }
 FTTableMorph >> initializeWithHorizontalScrollBar [
 	horizontalScrollBar := true.
-	self initialize.
+	self initialize
 ]
 
 { #category : #accessing }
-FTTableMorph >> intercellSpacing [ 
+FTTableMorph >> intercellSpacing [
 	^ intercellSpacing ifNil: [ self class defaultIntercellSpacing ]
 ]
 
 { #category : #accessing }
 FTTableMorph >> intercellSpacing: aNumberOrPoint [
-	"Determines cell spacing 
-		x: space between cells 
+	"Determines cell spacing
+		x: space between cells
 		y: space between rows"
 	intercellSpacing := aNumberOrPoint asPoint
 ]
 
 { #category : #private }
 FTTableMorph >> isHorizontalScrollBarVisible [
-	^horizontalScrollBar 
-		ifNil: [ false ] 
-		ifNotNil: [ 
+	^horizontalScrollBar
+		ifNil: [ false ]
+		ifNotNil: [
 			self horizontalScrollBar owner isNotNil.
 			]
 ]
@@ -632,12 +648,12 @@ FTTableMorph >> isVerticalScrollBarVisible [
 { #category : #private }
 FTTableMorph >> isYellowButtonReallyPressed: anEvent [
 	anEvent yellowButtonPressed ifFalse: [ ^false ].
-	"this is shitty fix for VM bug. 
+	"this is shitty fix for VM bug.
 	Now if you will press left mouse button together with pressed cmd (on Mac)
 	then you will got right mouse button event.
 	Interesting that it is not a problem in case of external SDL2 window.
 	Try check it from OSWindowWorldMorph new open"
-	^ (Smalltalk os isMacOS) 
+	^ (Smalltalk os isMacOS)
 		ifTrue: [ anEvent commandKeyPressed not]
 		ifFalse: [ anEvent controlKeyPressed not]
 ]
@@ -647,7 +663,7 @@ FTTableMorph >> keyDown: event [
 	self flag: #pharoTodo. "If the function is explicit this should be redirect to the function widget."
 	((super keyDown: event) or: [ self navigationKey: event ])
 		ifTrue: [ ^ true ].
-		
+
 	^ self keyDownSearch: event
 ]
 
@@ -661,7 +677,7 @@ FTTableMorph >> keyStroke: event [
 	self flag: #pharoTodo. "If the function is explicit this should be redirect to the function widget."
 	((super keyStroke: event) or: [ self navigationKey: event ])
 		ifTrue: [ ^ true ].
-		
+
 	^ self keyStrokeSearch: event
 ]
 
@@ -674,14 +690,20 @@ FTTableMorph >> keyStrokeArrowDown: event [
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowLeft: event [
-	(self selectionModeStrategy is: self selectedIndex afterColumn: 1) ifFalse: [ ^ self ].
+	(self selectionModeStrategy is: self selectedIndex afterColumn: 1) ifFalse: [
+		self announcer announce: (FTSelectionRejected withDirection: #left).
+		^ self
+	].
 	self resetFunction.
 	self selectIndex: (self selectionModeStrategy selectableIndexBefore: self selectedIndex) event: event
 ]
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowRight: event [
-	(self selectionModeStrategy is: self selectedIndex beforeColumn: self numberOfColumns) ifFalse: [ ^ self ].
+	(self selectionModeStrategy is: self selectedIndex beforeColumn: self numberOfColumns) ifFalse: [
+		self announcer announce: (FTSelectionRejected withDirection: #right).
+		^ self
+	].
 	self resetFunction.
 	self selectIndex: (self selectionModeStrategy selectableIndexAfter: self selectedIndex) event: event
 ]
@@ -695,6 +717,11 @@ FTTableMorph >> keyStrokeArrowUp: event [
 
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeSearch: event [
+	^ function keyStroke: event
+]
+
+{ #category : #'event handling' }
+FTTableMorph >> keyUpSearch: event [
 	^ function keyStroke: event
 ]
 
@@ -713,11 +740,11 @@ FTTableMorph >> lastVisibleRowIndex [
 ]
 
 { #category : #layout }
-FTTableMorph >> minHeight [ 
+FTTableMorph >> minHeight [
 	"Ceiling is required because there is strange behavior when this method return float.
 	In that case table stop respond to any events like clicks"
-	
-	^ self 
+
+	^ self
 		valueOfProperty: #minHeight
 		ifAbsent:[ self class defaultRowHeight ceiling ]
 ]
@@ -735,11 +762,12 @@ FTTableMorph >> mouseDown: event [
 	needToggleAtMouseUp ifTrue: [ ^ self ].
 
 	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint)
-		ifNotNil: [ :index | 
+		ifNotNil: [ :index |
+			"If the cell is selected we let the mouse up toggle to avoid any problem with
+			 the drag and drop"
 			(self selectedIndexes includes: index)
 				ifFalse: [ self selectIndex: index event: event ]
-				ifTrue: [ needToggleAtMouseUp := true ] "If the cell is selected we let the mouse up toggle to avoid any problem with the drag and drop" ]
-		ifNil: [ ^ self ].
+				ifTrue: [ needToggleAtMouseUp := true ] ].
 
 	self wantsKeyboardFocus ifTrue: [ self takeKeyboardFocus ].
 	event hand waitForClicksOrDrag: self event: event
@@ -748,8 +776,8 @@ FTTableMorph >> mouseDown: event [
 { #category : #'event handling' }
 FTTableMorph >> mouseEnterDragging: event [
 	self enabled ifFalse: [ ^ self ].
-	(event hand hasSubmorphs and: [ self dropEnabled ]) 
-		ifFalse: [ "no d&d" ^ super mouseEnterDragging: event ].
+	(event hand hasSubmorphs and: [ self dropEnabled ])
+		ifFalse: [ "no d&d" ^ super mouseEnterDragging: event ]
 ]
 
 { #category : #'event handling' }
@@ -770,7 +798,7 @@ FTTableMorph >> mouseMove: event [
 	(self wantsDroppedMorph: event hand submorphs first event: event) ifFalse: [ ^ self ].
 
 	(self container rowIndexContainingPoint: event position)
-		ifNotNil: [ :rowIndex | 
+		ifNotNil: [ :rowIndex |
 			self basicHighlightIndexes: {rowIndex}.
 			self refresh ].
 
@@ -794,25 +822,25 @@ FTTableMorph >> mouseUp: event [
 FTTableMorph >> mouseWheel: event [
 
 	"I tried scrolling up/down with a calculated value (check #scrollUpByPageDelta implementor)
-	 but the scrollbar proved been more intelligent than me... looks like hardcoded values 
+	 but the scrollbar proved been more intelligent than me... looks like hardcoded values
 	 work better :/"
-	event isUp ifTrue: [ 
+	event isUp ifTrue: [
 		self verticalScrollBar scrollRestrictedUp: 3.
 		^ self
 	].
-	event isDown ifTrue: [ 
+	event isDown ifTrue: [
 		self verticalScrollBar scrollRestrictedDown: 3.
 		^ self
 	].
-	
+
 	super mouseWheel: event
 ]
 
 { #category : #private }
 FTTableMorph >> moveShowIndexTo: arg [
-	"I move the showing index to a specific row, and perform a refresh of subviews. 
-	 I should not be used directly, and most methods that need to move the 
-	 showing pointer should do it directly. 
+	"I move the showing index to a specific row, and perform a refresh of subviews.
+	 I should not be used directly, and most methods that need to move the
+	 showing pointer should do it directly.
 	 Use me just in case you need to force a refresh after settign the index"
 
 	| index oldIndex |
@@ -821,36 +849,36 @@ FTTableMorph >> moveShowIndexTo: arg [
 	self basicMoveShowIndexTo: index.
 	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: index).
 	self refresh.
-	
-	self announceScrollChangedFrom: oldIndex to: index.
+
+	self announceScrollChangedFrom: oldIndex to: index
 ]
 
 { #category : #accessing }
-FTTableMorph >> numberOfColumns [ 
+FTTableMorph >> numberOfColumns [
 	^ columns size
 ]
 
 { #category : #accessing }
 FTTableMorph >> numberOfRows [
-	self hasDataSource ifFalse: [ ^ 0 ]. 
+	self hasDataSource ifFalse: [ ^ 0 ].
 	^ self dataSource numberOfRows
 ]
 
 { #category : #private }
 FTTableMorph >> recalculateVerticalScrollBar [
 	| interval delta pageDelta visibleRows numberOfRows |
-	
+
 	self hasDataSource ifFalse: [ ^ self ].
 
 	self recalculateVerticalScrollBarVisibilityIfHidden: [ ^ self ].
-	 
-	visibleRows := self container calculateExactVisibleRows.	
+
+	visibleRows := self container calculateExactVisibleRows.
 	numberOfRows := self dataSource numberOfRows.
 	numberOfRows = 0 ifTrue: [ ^self ].
 	interval := (visibleRows / numberOfRows) asFloat.
 	delta := 1/numberOfRows.
 	pageDelta := ((visibleRows-1) floor)*delta.
-	self verticalScrollBar 
+	self verticalScrollBar
 		scrollDelta: delta pageDelta: pageDelta;
 		interval: interval
 ]
@@ -858,16 +886,16 @@ FTTableMorph >> recalculateVerticalScrollBar [
 { #category : #private }
 FTTableMorph >> recalculateVerticalScrollBarVisibilityIfHidden: aBlock [
 	self container calculateExactVisibleRows >= self dataSource numberOfRows
-		ifTrue: [ 
+		ifTrue: [
 			(self isVerticalScrollBarVisible)
 				ifTrue: [ self removeMorph: self verticalScrollBar ].
-			self resizeContainer. "it changed... I need to resize it immediately because 
-			otherwise it does not work fine with first show... this can cause two sends to 
+			self resizeContainer. "it changed... I need to resize it immediately because
+			otherwise it does not work fine with first show... this can cause two sends to
 			#resizeContainer but the case is minimal and not expensive, so we can ignore it"
 			aBlock value ]
-		ifFalse: [ 
+		ifFalse: [
 			(self isVerticalScrollBarVisible)
-				ifFalse: [ 
+				ifFalse: [
 					self resizeVerticalScrollBar.
 					self addMorph: self verticalScrollBar ] ]
 ]
@@ -894,14 +922,14 @@ FTTableMorph >> resetPosition [
 	self verticalScrollBar value: 0.
 	horizontalScrollBar ifNotNil: [	self horizontalScrollBar value: 0 ].
 	self container setNeedsRefreshExposedRows.
-	self container updateExposedRows.
+	self container updateExposedRows
 ]
 
 { #category : #private }
 FTTableMorph >> resizeAllSubviews [
 	self resizeVerticalScrollBar.
 	horizontalScrollBar ifNotNil: [ self resizeHorizontalScrollBar ].
-	"if we resized scrollbar, we need to recalculate it because values change (and now visibility 
+	"if we resized scrollbar, we need to recalculate it because values change (and now visibility
 	 can be toggled, shown items can change, etc.)"
 	self recalculateVerticalScrollBar.
 	self resizeContainer.
@@ -913,10 +941,10 @@ FTTableMorph >> resizeAllSubviews [
 ]
 
 { #category : #private }
-FTTableMorph >> resizeContainer [ 
+FTTableMorph >> resizeContainer [
 	| topLeft bottomRight |
 	topLeft := (self bounds left - self borderWidth) @ self bounds top - self borderWidth.
-	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth) 
+	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth)
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
@@ -928,7 +956,7 @@ FTTableMorph >> resizeContainer [
 { #category : #private }
 FTTableMorph >> resizeHorizontalScrollBar [
 	| width height corner |
-	horizontalScrollBar ifNotNil: [ 
+	horizontalScrollBar ifNotNil: [
 		width := self bounds width - (self borderWidth * 2) - self verticalScrollBarWidth.
 		height := self scrollBarThickness.
 		corner := self bounds bottomLeft - ((width + self borderWidth)@(0 - self borderWidth)).
@@ -949,7 +977,7 @@ FTTableMorph >> resizeVerticalScrollBar [
 { #category : #accessing }
 FTTableMorph >> rowHeight [
 	"This is the row height your rows will have. Cells answered in dataSource will be forced to have
-	 this height number... We force it instead allowing lists to have any height because the logic to 
+	 this height number... We force it instead allowing lists to have any height because the logic to
 	 calculate rows becomes complicated. Possible, but complicated :)"
 	^ rowHeight ifNil: [ rowHeight := self class defaultRowHeight ]
 ]
@@ -983,7 +1011,7 @@ FTTableMorph >> scrollToIndex: anIndex [
 ]
 
 { #category : #'accessing - colors' }
-FTTableMorph >> secondarySelectionColor [ 
+FTTableMorph >> secondarySelectionColor [
 	^ secondarySelectionColor ifNil: [ self class defaultSecondarySelectionColor ]
 ]
 
@@ -1100,7 +1128,7 @@ FTTableMorph >> shortcutProvider [
 
 { #category : #accessing }
 FTTableMorph >> showColumnHeaders [
-	"Indicates table will show column headers. 
+	"Indicates table will show column headers.
 	 See #hideColumnHeaders"
 	showColumnHeaders ifTrue: [ ^ self ].
 	showColumnHeaders := true.
@@ -1114,26 +1142,26 @@ FTTableMorph >> showFirstSelection [
 ]
 
 { #category : #private }
-FTTableMorph >> showIndex [ 
+FTTableMorph >> showIndex [
 	^ showIndex
 ]
 
 { #category : #menu }
 FTTableMorph >> showMenuForIndex: aTuple [
 	| menu rowIndex columnIndex |
-	
+
 	rowIndex := aTuple first.
 	columnIndex := aTuple second.
 
-	(rowIndex notNil and: [ (self isIndexSelected: rowIndex) not ]) ifTrue: [ 
+	(rowIndex notNil and: [ (self isIndexSelected: rowIndex) not ]) ifTrue: [
 		self selectIndex: (self selectionModeStrategy indexFromPosition: aTuple) ].
 
-	menu := self dataSource 
+	menu := self dataSource
 		menuColumn: (columnIndex ifNotNil: [self columns at: columnIndex])
 		row: (rowIndex ifNil: [0]).
-		
+
 	(menu isNil or: [ menu isInWorld ]) ifTrue: [ ^ self ].
-	
+
 	menu popUpInWorld: self currentWorld
 ]
 
@@ -1149,17 +1177,17 @@ FTTableMorph >> startDrag: event [
 
 	| passengers transferMorph |
 
-	event hand hasSubmorphs ifTrue: [^ self]. 
+	event hand hasSubmorphs ifTrue: [^ self].
 	self dragEnabled ifFalse: [^ self].
 	"Here I ensure at least one element is selected "
 	event hand anyButtonPressed ifFalse: [ ^self ].
 	self hasSelection ifFalse: [ ^ self ].
-			
+
 	passengers := self selectedIndexes collect: [ :each | self dataSource passengerAt: each ].
 	transferMorph := self dataSource transferFor: passengers from: self.
 	transferMorph align: transferMorph draggedMorph topLeft with: event position.
 	transferMorph dragTransferType: self dataSource dragTransferType.
-	
+
 	event hand grabMorph: transferMorph
 ]
 
@@ -1190,9 +1218,9 @@ FTTableMorph >> verticalScrollBar [
 FTTableMorph >> verticalScrollBarValue: aNumber [
 
 	self hasDataSource ifFalse: [ ^ self ].
-	
+
 	showIndex := self verticalScrollBarValueToRowIndex: aNumber.
-	
+
 	self container changed
 ]
 
@@ -1217,7 +1245,7 @@ FTTableMorph >> visibleRowMorphAtIndex: index [
 { #category : #'drag and drop' }
 FTTableMorph >> wantsDroppedMorph: aMorph event: event [
 	aMorph isTransferable ifFalse: [ ^false ].
-	^ self dataSource 
+	^ self dataSource
 		wantsDropElements: aMorph passenger
 		type: aMorph dragTransferType
 		index: ((self container rowIndexContainingPoint: event position) ifNil: [ 0 ])

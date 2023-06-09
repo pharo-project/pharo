@@ -17,23 +17,14 @@ Class {
 		'errorMessage',
 		'value',
 		'start',
-		'stop'
+		'stop',
+		'errorPosition'
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'instance creation' }
-RBParseErrorNode class >> errorMessage: aString value: aValue at: aPosition [
-
-	^ self new
-		errorMessage: aString;
-		value: aValue;
-		start: aPosition;
-		yourself
-]
-
 { #category : #comparing }
-RBParseErrorNode >> = anObject [ 
+RBParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	^anObject value = value and: [ anObject errorMessage = errorMessage ]
@@ -46,23 +37,13 @@ RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #accessing }
 RBParseErrorNode >> arguments [
-	
+
 	"A parse error node has no arguments"
 	^ #()
 ]
 
-{ #category : #converting }
-RBParseErrorNode >> asSyntaxErrorNotification [
-	^SyntaxErrorNotification new
-		setClass: self methodNode methodClass
-		code: self methodNode source
-		doitFlag: false
-		errorMessage: errorMessage
-		location: self start
-]
-
 { #category : #accessing }
-RBParseErrorNode >> binding: anOCTempVariable [ 
+RBParseErrorNode >> binding: anOCTempVariable [
 	"only for compatibility"
 ]
 
@@ -81,12 +62,43 @@ RBParseErrorNode >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
+{ #category : #accessing }
+RBParseErrorNode >> errorPosition [
+
+	^ errorPosition
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> errorPosition: anObject [
+
+	errorPosition := anObject
+]
+
+{ #category : #testing }
+RBParseErrorNode >> hasTemporaries [
+
+	^ false
+]
+
 { #category : #comparing }
 RBParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
+RBParseErrorNode >> initialize [
+
+	super initialize.
+	"Add its own notice"
+	self addNotice: (RBSyntaxErrorNotice new)
+]
+
+{ #category : #errors }
+RBParseErrorNode >> isError [
+	^true
+]
+
+{ #category : #errors }
 RBParseErrorNode >> isFaulty [
 	^true
 ]
@@ -98,7 +110,7 @@ RBParseErrorNode >> isParseError [
 
 { #category : #testing }
 RBParseErrorNode >> isUnary [
-	
+
 	^ false
 ]
 
@@ -122,7 +134,7 @@ RBParseErrorNode >> selector [
 
 { #category : #accessing }
 RBParseErrorNode >> selectorParts [
-	
+
 	^ #()
 ]
 
@@ -132,12 +144,9 @@ RBParseErrorNode >> source: aString [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> start [
-	^ start
-]
-
-{ #category : #accessing }
 RBParseErrorNode >> start: aPosition [
+	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+
 	start := aPosition
 ]
 
@@ -147,28 +156,31 @@ RBParseErrorNode >> startWithoutParentheses [
 ]
 
 { #category : #accessing }
-RBParseErrorNode >> stop [
-	^ stop 
-		ifNil: [start + value size - 1]
-		ifNotNil: [ stop ]
-]
-
-{ #category : #accessing }
 RBParseErrorNode >> stop: aStopPosition [
+	"Beware, stop is in fact `stopWithoutParentheses` as in RBValueNode, stop includes parentheses"
+
 	stop := aStopPosition
 ]
 
 { #category : #accessing }
 RBParseErrorNode >> stopWithoutParentheses [
-	^ self stop
+	^ stop
+		ifNil: [start + value size - 1]
+		ifNotNil: [ stop ]
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> temporaries [
+
+	^ #()
 ]
 
 { #category : #evaluating }
 RBParseErrorNode >> value [
-	^value.
+	^value
 ]
 
 { #category : #accessing }
 RBParseErrorNode >> value: aString [
-	value := aString.
+	value := aString
 ]

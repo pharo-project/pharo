@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 DAPackageItemDiffNode >> icon [
-	self content isNew ifTrue: [ ^ self iconNamed: #changeAddIcon ].
-	self content isRemoved ifTrue: [^ self iconNamed: #smallCancelIcon ].
+	self content isNew ifTrue: [ ^ self iconNamed: #changeAdd ].
+	self content isRemoved ifTrue: [^ self iconNamed: #smallCancel].
 	^ self iconNamed: #forwardIcon
 ]

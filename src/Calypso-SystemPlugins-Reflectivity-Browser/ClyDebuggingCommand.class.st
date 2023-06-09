@@ -11,14 +11,15 @@ Class {
 ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	| node |
-	^ self isAbstract not and: [ 
+	^ self isAbstract not and: [
 		  node := aBrowserContext lastSelectedSourceNode.
 
-		  node isCommentNode not and: [ 
-			  node isPragma not and: [ 
-				  node isSequence not and: [ 
-					  node isLiteralNode not and: [ 
-						  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ]
+		  node isNotNil and: [
+			  node isCommentNode not and: [
+				  node isPragma not and: [
+					  node isSequence not and: [
+						  node isLiteralNode not and: [
+							  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
 ]
 
 { #category : #activation }
@@ -35,23 +36,23 @@ ClyDebuggingCommand class >> isAbstract [
 { #category : #activation }
 ClyDebuggingCommand class >> methodContextMenuActivation [
 	<classAnnotation>
-	
-	^SycDebuggingMenuActivation 
+
+	^SycDebuggingMenuActivation
 		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyDebuggingCommand class >> methodEditorLeftBarMenuActivation [
 	<classAnnotation>
-	
-	^CmdTextLeftBarMenuActivation 
+
+	^CmdTextLeftBarMenuActivation
 		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
 { #category : #activation }
 ClyDebuggingCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
-	^SycDebuggingMenuActivation 
+
+	^SycDebuggingMenuActivation
 		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]

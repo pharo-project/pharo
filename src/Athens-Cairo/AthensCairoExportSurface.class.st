@@ -51,7 +51,7 @@ AthensCairoExportSurface class >> finalizeResourceData: data [
 	surfaceHandle isNull ifTrue: [ ^self ].
 	self destroySurfaceHandle: surfaceHandle value.
 	self destroyContextHandle: contextHandleValue.
-	surfaceHandle beNull.
+	surfaceHandle beNull
 ]
 
 { #category : #private }
@@ -88,7 +88,7 @@ AthensCairoExportSurface >> height [
 { #category : #initialization }
 AthensCairoExportSurface >> initializeWith: anExtent [
 	self initialize.
-	
+
 	"We keep the extent to override related accessors because superclass uses cairo_image_surface_get_width and similar for height which don't give the right answer."
 	extent := anExtent
 ]

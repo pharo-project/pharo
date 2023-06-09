@@ -24,7 +24,7 @@ Class {
 { #category : #accessing }
 ReAllAnyNoneSatisfyRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'AllAnyNoneSatisfyRule'
 ]
 
@@ -37,7 +37,7 @@ ReAllAnyNoneSatisfyRule >> group [
 ReAllAnyNoneSatisfyRule >> initialize [
 	super initialize.
 	self
-	
+
 		" allSatisfy: "
 		addMatchingMethod: '`@method: `@args
 			| `@temps |
@@ -50,7 +50,7 @@ ReAllAnyNoneSatisfyRule >> initialize [
 			^ true'
 		rewriteTo: '`@method: `@args
 			| `@temps |
-			`@.statements. 
+			`@.statements.
 			^ `@collection allSatisfy: [ :`each |
 				| `@blocktemps |
 				`@.blockstatements.
@@ -69,7 +69,7 @@ ReAllAnyNoneSatisfyRule >> initialize [
 		rewriteTo: '`@method: `@args
 			| `@temps |
 			`@.statements.
-			^ `@collection anySatisfy: [ :`each | 
+			^ `@collection anySatisfy: [ :`each |
 				| `@blocktemps |
 				`@.blockstatements.
 				`@condition ]';
@@ -87,9 +87,9 @@ ReAllAnyNoneSatisfyRule >> initialize [
 		rewriteTo: '`@method: `@args
 			| `@temps |
 			`@.statements.
-			^ `@collection noneSatisfy: [ :`each | 
+			^ `@collection noneSatisfy: [ :`each |
 				| `@blocktemps |
-				`@.blockstatements.				
+				`@.blockstatements.
 				`@condition ]'
 ]
 

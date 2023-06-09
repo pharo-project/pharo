@@ -10,13 +10,13 @@ Class {
 
 { #category : #'instance creation' }
 CoFilter class >> empty [
-	
+
 	^ CoCaseSensitiveBeginsWithFilter filterString: ''
 ]
 
 { #category : #testing }
 CoFilter >> accepts: aCandidate [
-	
+
 	self subclassResponsibility
 ]
 

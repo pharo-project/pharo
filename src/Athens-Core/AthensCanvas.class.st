@@ -40,10 +40,10 @@ AthensCanvas >> cacheAt: anObject ifAbsentPut: aBlock [
 ]
 
 { #category : #clipping }
-AthensCanvas >> clipBy: aRectangle during: aBlock [	
+AthensCanvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle during drawing operations performed in aBlock.
 	Note that the clipping rectangle is intersected with the currently active clipping rectangle"
-	
+
 	 ^surface clipBy: aRectangle during: aBlock
 ]
 
@@ -53,12 +53,12 @@ AthensCanvas >> createPath: aPathCreatingBlock [
 	which will get a path builder instance as argument. See AthensPathBuilder
 	for available protocol.
 	The resulting path object can be later used for drawing.
-	" 
+	"
 	^ surface createPath: aPathCreatingBlock
 ]
 
 { #category : #paths }
-AthensCanvas >> createRectanglePath: aRectangle [ 
+AthensCanvas >> createRectanglePath: aRectangle [
 	^ surface createRectanglePath: aRectangle
 ]
 
@@ -70,13 +70,13 @@ AthensCanvas >> disableMask [
 { #category : #drawing }
 AthensCanvas >> draw [
 	"Fill the currently selected shape with currently selected paint"
-	
+
 	^ shape paintFillsUsing: paint on: self
 ]
 
 { #category : #drawing }
 AthensCanvas >> draw: anObject [
-	"A generic dispatch method to draw anObject on receiver. 
+	"A generic dispatch method to draw anObject on receiver.
 	the object should understand #drawOnAthensCanvas: message"
 	^ anObject drawOnAthensCanvas: self
 ]
@@ -84,8 +84,8 @@ AthensCanvas >> draw: anObject [
 { #category : #drawing }
 AthensCanvas >> drawShape: anObject [
 	"A convenience method, which sets the current shape to anObject and then fills it
-	with currently selected paint" 
-	self 
+	with currently selected paint"
+	self
 		setShape: anObject;
 		draw
 ]
@@ -121,14 +121,14 @@ AthensCanvas >> flushCacheAt: anObject [
 ]
 
 { #category : #initialization }
-AthensCanvas >> initializeWithSurface: anAthensSurface [	
+AthensCanvas >> initializeWithSurface: anAthensSurface [
 	surface := anAthensSurface
 ]
 
 { #category : #clipping }
-AthensCanvas >> isVisible: aRectangle [ 
+AthensCanvas >> isVisible: aRectangle [
 	"Check if rectangle are not fully clipped by current clipping coordinates"
-	
+
 	^ true
 ]
 
@@ -138,10 +138,10 @@ AthensCanvas >> paint [
 ]
 
 { #category : #paint }
-AthensCanvas >> paintCache [ 
+AthensCanvas >> paintCache [
 
-	^ paintCache ifNil: [ 
-		paintCache := LRUCache new maximumWeight: 100 ].
+	^ paintCache ifNil: [
+		paintCache := LRUCache new maximumWeight: 100 ]
 ]
 
 { #category : #accessing }
@@ -170,8 +170,8 @@ AthensCanvas >> pathTransform [
 { #category : #'drawing text' }
 AthensCanvas >> setFont: aFont [
 	"Set the current font of receiver. Font object should answer a glyph renderer instance,
-	compatible with glyph renderer protocol" 
-	^ fontRenderer := aFont glyphRendererOn: surface.
+	compatible with glyph renderer protocol"
+	^ fontRenderer := aFont glyphRendererOn: surface
 ]
 
 { #category : #paint }

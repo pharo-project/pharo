@@ -18,7 +18,7 @@ OpenToolTest >> testInspectArray [
 	| inspector |
 	inspector := self openInspectorOn: (1 to: 1000) asArray.
 	inspector changed.
-	inspector close.
+	inspector close
 ]
 
 { #category : #'tests - inspect' }
@@ -58,7 +58,7 @@ OpenToolTest >> testOpenBrowseOnClass [
 	| browser |
 	browser := Object browse.
 	browser changed.
-	browser close.
+	browser close
 ]
 
 { #category : #'tests - browse' }
@@ -66,7 +66,7 @@ OpenToolTest >> testOpenBrowseOnInstalledTraitMethod [
 	| browser |
 	browser := (Class>>#hasClassSide) browse.
 	browser changed.
-	browser close.
+	browser close
 ]
 
 { #category : #'tests - browse' }
@@ -74,7 +74,7 @@ OpenToolTest >> testOpenBrowseOnMethod [
 	| browser |
 	browser := (Object>>#yourself) browse.
 	browser changed.
-	browser close.
+	browser close
 ]
 
 { #category : #'tests - browse' }
@@ -82,7 +82,7 @@ OpenToolTest >> testOpenBrowseOnTraitMethod [
 	| browser |
 	browser := (TSortable>>#isSorted) browse.
 	browser changed.
-	browser close.
+	browser close
 ]
 
 { #category : #'tests - senders' }
@@ -90,5 +90,5 @@ OpenToolTest >> testSendersOfAt [
 	| senders |
 	senders := SystemNavigation default browseAllSendersOf: #name.
 	senders changed.
-	senders close.
+	senders close
 ]

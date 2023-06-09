@@ -19,12 +19,12 @@ MockSocketStream class >> on: socket [
 
 { #category : #testing }
 MockSocketStream >> atEnd [
-	^self inStream atEnd.
+	^self inStream atEnd
 ]
 
 { #category : #accessing }
 MockSocketStream >> atEnd: aBoolean [
-	atEnd := aBoolean.
+	atEnd := aBoolean
 ]
 
 { #category : #accessing }
@@ -36,7 +36,7 @@ MockSocketStream >> inStream [
 MockSocketStream >> initialize [
 	super initialize.
 	self resetInStream.
-	self resetOutStream.
+	self resetOutStream
 ]
 
 { #category : #'stream in' }
@@ -46,7 +46,7 @@ MockSocketStream >> nextLine [
 
 { #category : #'stream in' }
 MockSocketStream >> nextLineCrLf [
-	^(self upToAll: String crlf).
+	^(self upToAll: String crlf)
 ]
 
 { #category : #accessing }
@@ -56,22 +56,22 @@ MockSocketStream >> outStream [
 
 { #category : #'stream in' }
 MockSocketStream >> resetInStream [
-	inStream := String new writeStream.
+	inStream := String new writeStream
 ]
 
 { #category : #'stream out' }
 MockSocketStream >> resetOutStream [
-	outStream := String new writeStream.
+	outStream := String new writeStream
 ]
 
 { #category : #'stream out' }
 MockSocketStream >> sendCommand: aString [
 	self outStream
 		nextPutAll: aString;
-		nextPutAll: String crlf.
+		nextPutAll: String crlf
 ]
 
 { #category : #'stream in' }
 MockSocketStream >> upToAll: delims [
-	^self inStream upToAll: delims.
+	^self inStream upToAll: delims
 ]

@@ -34,18 +34,18 @@ Class {
 ClyUnionQuery class >> merge: queries [
 	| result queryGroups |
 	queries size = 1 ifTrue: [ ^{queries anyOne} ].
-	
+
 	result := OrderedCollection new.
 	queryGroups := queries groupedBy: [ :each | each class ].
-	queryGroups keysAndValuesDo: [ :queryClass :groupedQueries | 
+	queryGroups keysAndValuesDo: [ :queryClass :groupedQueries |
 		result addAll: (queryClass mergeOwnInstances: groupedQueries)].
-	
+
 	^result
 ]
 
 { #category : #'merging queries' }
 ClyUnionQuery class >> mergeOwnInstances: queries [
-	
+
 	| allSubqueries |
 	allSubqueries := queries flatCollect: [ :each | each subqueries ].
 	^self merge: allSubqueries
@@ -55,10 +55,10 @@ ClyUnionQuery class >> mergeOwnInstances: queries [
 ClyUnionQuery class >> with: subqueries [
 	| mergedQueries |
 	subqueries ifEmpty: [ ^ClyUnknownQuery instance ].
-	
+
 	mergedQueries := self merge: subqueries.
 	mergedQueries size = 1 ifTrue: [ ^mergedQueries anyOne copy].
-	
+
 	^(super with: mergedQueries)
 		requiredResult: subqueries anyOne requiredResult
 ]
@@ -70,12 +70,12 @@ ClyUnionQuery >> , anotherQuery [
 
 { #category : #execution }
 ClyUnionQuery >> buildResult: aQueryResult [
-	
+
 	| subResult allItems |
-	allItems := subqueries flatCollect: [ :each | 
+	allItems := subqueries flatCollect: [ :each |
 		subResult := each execute.
 		subResult items].
-	
+
 	aQueryResult fillWith: allItems asIdentitySet
 ]
 

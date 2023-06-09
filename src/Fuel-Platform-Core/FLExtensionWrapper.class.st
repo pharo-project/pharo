@@ -5,7 +5,8 @@ Class {
 		'targetClass',
 		'method',
 		'selector',
-		'isSource'
+		'isSource',
+		'isClassSide'
 	],
 	#category : #'Fuel-Platform-Core'
 }
@@ -19,14 +20,12 @@ FLExtensionWrapper class >> fromPragma: aPragma [
 
 { #category : #private }
 FLExtensionWrapper >> compileInTarget [
+
 	| source |
-	source := self method methodClass instanceSide
-		perform: self method selector
-		withArguments: (1 to: self method selector numArgs) asArray.
-	self targetClass compile: source.
-	self targetClass organization
-		classify: self selector
-		under: self extensionProtocolName
+	source := self method methodClass instanceSide perform: self method selector withArguments: (1 to: self method selector numArgs) asArray.
+	self targetClass
+		compile: source;
+		classify: self selector under: self extensionProtocolName
 ]
 
 { #category : #private }
@@ -62,6 +61,10 @@ FLExtensionWrapper >> initializeWithPragma: aPragma [
 			readSelectorFrom: aPragma
 			argumentNames: argumentNamesAndValues first
 			argumentValues: argumentNamesAndValues second);
+		isClassSide: (self
+			readIsClassSideFrom: aPragma
+			argumentNames: argumentNamesAndValues first
+			argumentValues: argumentNamesAndValues second);
 		isSource: (self
 			readIsSourceFrom: aPragma
 			argumentNames: argumentNamesAndValues first
@@ -80,6 +83,16 @@ FLExtensionWrapper >> install [
 	self selector = self method selector ifFalse: [ ^ self renameAndCompileInTarget ].
 	
 	self copyToTarget
+]
+
+{ #category : #accessing }
+FLExtensionWrapper >> isClassSide [
+	^ isClassSide
+]
+
+{ #category : #accessing }
+FLExtensionWrapper >> isClassSide: aBoolean [
+	isClassSide := aBoolean
 ]
 
 { #category : #accessing }
@@ -110,6 +123,16 @@ FLExtensionWrapper >> readArgumentsFrom: aPragma [
 ]
 
 { #category : #'initialize-release' }
+FLExtensionWrapper >> readIsClassSideFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
+	| index |
+	index := argumentNames
+		indexOf: 'isClassSide:'
+		ifAbsent: [ ^ false ].
+	
+	^ argumentValues at: index
+]
+
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> readIsSourceFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
 	| index |
 	index := argumentNames
@@ -136,10 +159,9 @@ FLExtensionWrapper >> readTargetClassFrom: aPragma argumentNames: argumentNames 
 		at: (argumentValues at: (argumentNames indexOf: 'flExtensionOf:'))
 		ifAbsent: [ ^ nil ].
 		
-	^ (aPragma method pragmas anySatisfy: [ :pragma |
-		pragma key = #flExtensionClassSide ])
-			ifTrue: [ class class ]
-			ifFalse: [ class ]
+	^ self isClassSide
+		ifTrue: [ class classSide ]
+		ifFalse: [ class instanceSide ]
 ]
 
 { #category : #private }

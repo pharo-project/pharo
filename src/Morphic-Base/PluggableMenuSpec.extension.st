@@ -10,9 +10,9 @@ PluggableMenuSpec >> asMenuMorphOfKind: aMorphClass [
 	| prior menu myitems |
 	prior := parentMenu.
 	parentMenu := menu := aMorphClass new.
-	self label ifNotNil: [ 
-		parentMenu buildTitle: [ :titleMorph | 
-			titleMorph bigTitle: self label 
+	self label ifNotNil: [
+		parentMenu buildTitle: [ :titleMorph |
+			titleMorph bigTitle: self label
 		]
 	].
 	myitems := self items.
@@ -44,7 +44,7 @@ PluggableMenuSpec class >> exampleWithSubMenu [
 	self exampleWithSubMenu
 	"
 	| s i sub |
-	s := (self withModel: nil ) label: 'Tools'. 
+	s := (self withModel: nil ) label: 'Tools'.
 	i := s add: 'Tools'.
 	sub := (self withModel: nil ).
 	sub add: 'System browser'  target: Smalltalk tools selector: #openClassBrowser argumentList: #().

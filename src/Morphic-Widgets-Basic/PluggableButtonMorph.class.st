@@ -64,7 +64,7 @@ PluggableButtonMorph class >> buildPluggableButtonShortcutsOn: aBuilder [
 	(aBuilder shortcut: #action1)
 		category: #PluggableButtonMorph
 		default: Character space asKeyCombination | Character cr asKeyCombination
-		do: [ :target :morph :event | morph performAction ].
+		do: [ :target :morph :event | morph performAction ]
 ]
 
 { #category : #examples }
@@ -87,7 +87,7 @@ PluggableButtonMorph class >> newButtonFor: aModel action: actionSel label: stri
 		getState: nil
 		action: actionSel
 		arguments: nil
-		getEnabled: nil 
+		getEnabled: nil
 		label: stringOrText
 		help: helpText
 ]
@@ -173,10 +173,10 @@ PluggableButtonMorph >> action [
 ]
 
 { #category : #accessing }
-PluggableButtonMorph >> action: aSymbol [ 
+PluggableButtonMorph >> action: aSymbol [
 	"Set actionSelector to be the action defined by aSymbol."
 
-	actionSelector := aSymbol.
+	actionSelector := aSymbol
 ]
 
 { #category : #accessing }
@@ -188,7 +188,7 @@ PluggableButtonMorph >> actionBlock [
 { #category : #accessing }
 PluggableButtonMorph >> actionBlock: aBlock [
 	"an action can be either specified by a block or a selector. If the block is set it takes priority over selector."
-	
+
 	actionBlock := aBlock
 ]
 
@@ -200,11 +200,11 @@ PluggableButtonMorph >> actionSelector [
 ]
 
 { #category : #accessing }
-PluggableButtonMorph >> actionSelector: aSymbol [ 
+PluggableButtonMorph >> actionSelector: aSymbol [
 	"Set actionSelector to be the action defined by aSymbol.
 	SimpleButtonMorph cross-compatibility"
 
-	actionSelector := aSymbol.
+	actionSelector := aSymbol
 ]
 
 { #category : #'event handling' }
@@ -212,13 +212,13 @@ PluggableButtonMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 
 	aMenu add: 'browse action' selector: #browseAction.
 	aMenu addLine.
-	super addStandardHaloMenuItemsTo: aMenu hand: aHandMorph.
+	super addStandardHaloMenuItemsTo: aMenu hand: aHandMorph
 ]
 
 { #category : #updating }
 PluggableButtonMorph >> adoptColor: aColor [
 	"Go through paneColorChanged instead."
-	
+
 	self paneColorChanged
 ]
 
@@ -263,14 +263,14 @@ PluggableButtonMorph >> askBeforeChanging [
 PluggableButtonMorph >> askBeforeChanging: aBoolean [
 	"If this preference is turned on, then give the model an opportunity to ask the user before accepting a change that might cause unaccepted edits to be lost."
 
-	askBeforeChanging := aBoolean.
+	askBeforeChanging := aBoolean
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> availableBorderStyles [
 	"Return the selectors of the the available border styles for each state.
 	Must match the order of interactionStates."
-	
+
 	^#(normalBorderStyle mouseOverBorderStyle pressedBorderStyle disabledBorderStyle
 		selectedBorderStyle selectedPressedBorderStyle selectedMouseOverBorderStyle selectedDisabledBorderStyle)
 ]
@@ -279,7 +279,7 @@ PluggableButtonMorph >> availableBorderStyles [
 PluggableButtonMorph >> availableFillStyles [
 	"Return the selectors of the the available fill styles for each state.
 	Must match the order of interactionStates."
-	
+
 	^#(normalFillStyle mouseOverFillStyle pressedFillStyle disabledFillStyle
 		selectedFillStyle selectedPressedFillStyle selectedMouseOverFillStyle selectedDisabledFillStyle)
 ]
@@ -324,7 +324,7 @@ PluggableButtonMorph >> browseAction [
 
 	| classDefiningAction |
 	classDefiningAction := self model class whichClassIncludesSelector: self actionSelector.
-	Smalltalk tools browser openOnClass: classDefiningAction selector: self actionSelector.
+	Smalltalk tools browser openOnClass: classDefiningAction selector: self actionSelector
 ]
 
 { #category : #updating }
@@ -357,7 +357,7 @@ PluggableButtonMorph >> color: aColor [
 
 	aColor ifNil: [ ^ self ].
 	(aColor = self color and: [ self getModelState = self lastState ]) ifTrue: [ ^ self ].
-	
+
 	super color: aColor
 ]
 
@@ -417,19 +417,19 @@ PluggableButtonMorph >> disable [
 { #category : #accessing }
 PluggableButtonMorph >> disabledBorderStyle [
 	"Return the disabled borderStyle of the receiver."
-	
+
 	^self theme buttonDisabledBorderStyleFor: self
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> disabledFillStyle [
 	"Return the disabled fillStyle of the receiver."
-	
+
 	^self theme buttonDisabledFillStyleFor: self
 ]
 
 { #category : #drawing }
-PluggableButtonMorph >> drawSubmorphsOn: aCanvas [ 
+PluggableButtonMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front.
 	Draw the focus here since we are using inset bounds
 	for the focus rectangle."
@@ -453,7 +453,7 @@ PluggableButtonMorph >> enabled [
 { #category : #accessing }
 PluggableButtonMorph >> enabled: aBoolean [
 	"Set the enabled state of the receiver."
-	
+
 	enabled = aBoolean ifTrue: [^self].
 	enabled := aBoolean.
 	self updateLabelEnablement.
@@ -465,13 +465,13 @@ PluggableButtonMorph >> feedbackColor: aColor [
 	"Set the color of this button's selection feedback border."
 
 	feedbackColor := aColor.
-	self changed.
+	self changed
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> fillStyleToUse [
 	"Return the fillStyle to use for the receiver."
-	
+
 	^self perform: (self availableFillStyles at: (
 			self interactionStates indexOf: self interactionState))
 ]
@@ -506,7 +506,7 @@ PluggableButtonMorph >> font [
 { #category : #accessing }
 PluggableButtonMorph >> font: anObject [
 	font := anObject.
-	self update: getLabelSelector.
+	self update: getLabelSelector
 ]
 
 { #category : #accessing }
@@ -517,7 +517,7 @@ PluggableButtonMorph >> getColorSelector [
 { #category : #accessing }
 PluggableButtonMorph >> getColorSelector: aSymbol [
 	getColorSelector := aSymbol.
-	self update: getColorSelector.
+	self update: getColorSelector
 ]
 
 { #category : #accessing }
@@ -528,7 +528,7 @@ PluggableButtonMorph >> getEnabledSelector [
 { #category : #accessing }
 PluggableButtonMorph >> getEnabledSelector: aSymbol [
 	getEnabledSelector := aSymbol.
-	self update: aSymbol.
+	self update: aSymbol
 ]
 
 { #category : #accessing }
@@ -539,7 +539,7 @@ PluggableButtonMorph >> getFontSelector [
 { #category : #accessing }
 PluggableButtonMorph >> getFontSelector: anObject [
 	getFontSelector := anObject.
-	self update: getFontSelector.
+	self update: getFontSelector
 ]
 
 { #category : #private }
@@ -583,7 +583,7 @@ PluggableButtonMorph >> getModelState [
 PluggableButtonMorph >> handlesKeyboard: evt [
 	"Answer true, we'll handle spacebar for pressing plus the usual
 	tab navigation."
-	
+
 	^true
 ]
 
@@ -606,7 +606,7 @@ PluggableButtonMorph >> handlesMouseOverDragging: evt [
 ]
 
 { #category : #balloon }
-PluggableButtonMorph >> helpText [ 
+PluggableButtonMorph >> helpText [
 	^ self balloonText
 ]
 
@@ -628,9 +628,9 @@ PluggableButtonMorph >> icon: anIcon [
 
 { #category : #accessing }
 PluggableButtonMorph >> iconPosition [
-	"Position of the icon. 
+	"Position of the icon.
 	  #left - Icon will be left to the label
-	  #right - Icon will be right to the label 
+	  #right - Icon will be right to the label
 	  #top - Icon will be top to the label"
 	^ iconPosition ifNil: [ iconPosition := #left ]
 ]
@@ -638,7 +638,7 @@ PluggableButtonMorph >> iconPosition [
 { #category : #drawing }
 PluggableButtonMorph >> indicateModalChild [
 	"Flash the button border."
-	
+
 	|fs c w d|
 	fs := self fillStyle.
 	c := self color alphaMixed: 0.5 with: Color black.
@@ -682,7 +682,7 @@ PluggableButtonMorph >> initialize [
 		lastState: false;
 		cornerStyle: (self theme buttonCornerStyleIn: nil);
 		borderStyle: (self theme buttonNormalBorderStyleFor: self).
-		
+
 	self clipSubmorphs: true
 ]
 
@@ -703,11 +703,11 @@ PluggableButtonMorph >> initializeShortcuts: aKMDispatcher [
 { #category : #accessing }
 PluggableButtonMorph >> interactionState [
 	"Return the state that the receiver is in, #pressed, #normal etc.."
-	
+
 	|state mo|
 	state := self getModelState.
 	mo := (self valueOfProperty: #mouseEntered) == true.
-	
+
 	^(self enabled ifNil: [true])
 		ifTrue: [showSelectionFeedback
 			ifTrue: [state
@@ -728,7 +728,7 @@ PluggableButtonMorph >> interactionState [
 { #category : #accessing }
 PluggableButtonMorph >> interactionStates [
 	"Return all the states that the receiver may be in at any given moment."
-	
+
 	^#(normal mouseOver pressed disabled
 		selected selectedPressed selectedMouseOver selectedDisabled)
 ]
@@ -759,18 +759,18 @@ PluggableButtonMorph >> isDefault: aBoolean [
 ]
 
 { #category : #keyboard }
-PluggableButtonMorph >> keyDown: event [ 
+PluggableButtonMorph >> keyDown: event [
 	"Process spacebar for action and tab keys for navigation."
-	
+
 	(self navigationKey: event) ifTrue: [^self].
 	event keyCharacter = Character cr
 		ifTrue: [self performAction]
 ]
 
 { #category : #keyboard }
-PluggableButtonMorph >> keyStroke: event [ 
+PluggableButtonMorph >> keyStroke: event [
 	"Process spacebar for action and tab keys for navigation."
-	
+
 	event keyCharacter = Character space
 		ifTrue: [self performAction]
 ]
@@ -816,13 +816,13 @@ PluggableButtonMorph >> label: aStringOrTextOrMorph font: aFont [
 		listCentering: #center;
 		cellPositioning: #center;
 		yourself.
-		
-	(self iconPosition == #top or: [ self iconPosition == #bottom ]) 
+
+	(self iconPosition == #top or: [ self iconPosition == #bottom ])
 		ifTrue: [ containerMorph setAsColumn ]
 		ifFalse: [ containerMorph setAsRow ].
 
-	label := aStringOrTextOrMorph.	
-	self label ifNotNil: [ 
+	label := aStringOrTextOrMorph.
+	self label ifNotNil: [
 		labelMorph := self label isMorph
 			ifTrue: [ self label ]
 			ifFalse: [ self newLabel: aFont ].
@@ -833,7 +833,7 @@ PluggableButtonMorph >> label: aStringOrTextOrMorph font: aFont [
 		((self iconPosition == #right) or: [ self iconPosition == #bottom ])
 			ifTrue: [ containerMorph addMorphBack: iconMorph ]
 			ifFalse: [ containerMorph addMorphFront: iconMorph ] ].
-	
+
 	self addMorph: containerMorph.
 	self updateLabelEnablement
 ]
@@ -872,7 +872,7 @@ PluggableButtonMorph >> minWidth [
 { #category : #accessing }
 PluggableButtonMorph >> model [
 	"Answer the receiver's model."
-	
+
 	^model
 ]
 
@@ -882,7 +882,7 @@ PluggableButtonMorph >> model: anObject [
 
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
-	model := anObject.
+	model := anObject
 ]
 
 { #category : #'event handling' }
@@ -898,7 +898,7 @@ PluggableButtonMorph >> mouseDown: evt [
 		ifTrue: [ self performAction: evt ]
 		ifFalse: [
 			allButtons := owner submorphs select: [:m | m class = self class].
-			self updateFeedbackForEvt: evt].
+			self updateFeedbackForEvt: evt]
 ]
 
 { #category : #'event handling' }
@@ -933,20 +933,20 @@ PluggableButtonMorph >> mouseLeaveDragging: evt [
 PluggableButtonMorph >> mouseMove: evt [
 
 	allButtons ifNil: [^ self].
-	allButtons do: [:m | m updateFeedbackForEvt: evt].
+	allButtons do: [:m | m updateFeedbackForEvt: evt]
 ]
 
 { #category : #style }
 PluggableButtonMorph >> mouseOverBorderStyle [
 	"Return the mouse over borderStyle of the receiver."
-	
+
 	^self theme buttonMouseOverBorderStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> mouseOverFillStyle [
 	"Return the mouse over fillStyle of the receiver."
-	
+
 	^self theme buttonMouseOverFillStyleFor: self
 ]
 
@@ -954,7 +954,7 @@ PluggableButtonMorph >> mouseOverFillStyle [
 PluggableButtonMorph >> mouseUp: evt [
 	"Perform the button action if the mouse pointer is in a button in the group.
 	Optimised feedback updates."
-	
+
 	|all|
 	all := allButtons copy.
 	all ifNotNil: [all do: [:m |
@@ -988,21 +988,21 @@ PluggableButtonMorph >> newLabel: aFont [
 { #category : #style }
 PluggableButtonMorph >> normalBorderStyle [
 	"Return the normal borderStyle of the receiver."
-	
+
 	^self theme buttonNormalBorderStyleFor: self
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> normalColor [
 	"Return the normal colour for the receiver."
-	
+
 	^self theme buttonColorFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
-	
+
 	^self theme buttonNormalFillStyleFor: self
 ]
 
@@ -1022,7 +1022,7 @@ PluggableButtonMorph >> offColor: colorWhenOff [
 PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel label: labelSel icon: iconSel menu: menuSel [
 	"Set up the pluggable parameters.
 	Update label and state."
-	
+
 	self model: anObject.
 	getStateSelector := getStateSel.
 	actionSelector := actionSel.
@@ -1037,19 +1037,19 @@ PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel lab
 { #category : #accessing }
 PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel label: labelSel menu: menuSel [
 	"This method is for backward compatibility."
-	self 
-		on: anObject 
-		getState: getStateSel 
-		action: actionSel 
-		label: labelSel 
-		icon: nil 
+	self
+		on: anObject
+		getState: getStateSel
+		action: actionSel
+		label: labelSel
+		icon: nil
 		menu: menuSel
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> onColor [
 	"Answer the on color."
-	
+
 	^onColor
 ]
 
@@ -1060,7 +1060,7 @@ PluggableButtonMorph >> onColor: colorWhenOn offColor: colorWhenOff [
 	onColor := colorWhenOn.
 	offColor := colorWhenOff.
 	self update: #onOffColor.
-	self update: getStateSelector.
+	self update: getStateSelector
 ]
 
 { #category : #updating }
@@ -1073,7 +1073,7 @@ PluggableButtonMorph >> paneColorChanged [
 { #category : #accessing }
 PluggableButtonMorph >> performAction [
 	"backward compatibility"
-	
+
 	self performAction: nil
 ]
 
@@ -1087,7 +1087,7 @@ PluggableButtonMorph >> performAction: event [
 	actionSelector ifNotNil:
 		[actionSelector numArgs = 0
 			ifTrue: [model perform: actionSelector]
-			ifFalse: 
+			ifFalse:
 				[argumentsProvider ifNotNil:
 					[arguments := argumentsProvider perform: argumentsSelector].
 					model perform: actionSelector withArguments: arguments]]
@@ -1096,14 +1096,14 @@ PluggableButtonMorph >> performAction: event [
 { #category : #style }
 PluggableButtonMorph >> pressedBorderStyle [
 	"Return the pressed borderStyle of the receiver."
-	
+
 	^self theme buttonPressedBorderStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
-	
+
 	^self theme buttonPressedFillStyleFor: self
 ]
 
@@ -1118,56 +1118,56 @@ PluggableButtonMorph >> roundedCorners: anArray [
 { #category : #accessing }
 PluggableButtonMorph >> selectedBorderStyle [
 	"Return the selected borderStyle of the receiver."
-	
+
 	^self theme buttonSelectedBorderStyleFor: self
 ]
 
 { #category : #accessing }
 PluggableButtonMorph >> selectedDisabledBorderStyle [
 	"Return the selected disabled borderStyle of the receiver."
-	
+
 	^self theme buttonSelectedDisabledBorderStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> selectedDisabledFillStyle [
 	"Return the selected disabled fillStyle of the receiver."
-	
+
 	^self theme buttonSelectedDisabledFillStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> selectedFillStyle [
 	"Return the selected fillStyle of the receiver."
-	
+
 	^self theme buttonSelectedFillStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> selectedMouseOverBorderStyle [
 	"Return the selected mouse over borderStyle of the receiver."
-	
+
 	^self theme buttonSelectedMouseOverBorderStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> selectedMouseOverFillStyle [
 	"Return the selected mouse over fillStyle of the receiver."
-	
+
 	^self theme buttonSelectedMouseOverFillStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> selectedPressedBorderStyle [
 	"Return the selected pressed borderStyle of the receiver."
-	
+
 	^self theme buttonSelectedPressedBorderStyleFor: self
 ]
 
 { #category : #style }
 PluggableButtonMorph >> selectedPressedFillStyle [
 	"Return the selected pressed fillStyle of the receiver."
-	
+
 	^self theme buttonSelectedPressedFillStyleFor: self
 ]
 
@@ -1179,10 +1179,10 @@ PluggableButtonMorph >> shortcutCharacter [
 ]
 
 { #category : #accessing }
-PluggableButtonMorph >> shortcutCharacter: aCharacter [ 
+PluggableButtonMorph >> shortcutCharacter: aCharacter [
 	"Set the character to be used as a keyboard shortcut for turning on this switch."
 
-	shortcutCharacter := aCharacter.
+	shortcutCharacter := aCharacter
 ]
 
 { #category : #accessing }
@@ -1218,7 +1218,7 @@ PluggableButtonMorph >> themeChanged [
 		layoutInset: (self theme buttonLabelInsetFor: self);
 		cornerStyle: (self theme buttonCornerStyleIn: self window);
 		borderStyle: (self theme buttonNormalBorderStyleFor: self).
-		
+
 	(self labelMorph isNil or: [self label isMorph ]) ifFalse: [
 		self label: self label font: self labelMorph font.
 		self labelMorph color: self theme textColor
@@ -1237,37 +1237,37 @@ PluggableButtonMorph >> triggerOnMouseDown [
 PluggableButtonMorph >> triggerOnMouseDown: aBoolean [
 	"If this preference is turned on, then trigger my action immediately when the mouse goes down."
 
-	triggerOnMouseDown := aBoolean.
+	triggerOnMouseDown := aBoolean
 ]
 
 { #category : #updating }
-PluggableButtonMorph >> update: aParameter [ 
+PluggableButtonMorph >> update: aParameter [
 	|state|
-	
+
 	aParameter ifNil: [^self].
-	"I associate label and icon because both are part of a 'complex' label... and update one 
+	"I associate label and icon because both are part of a 'complex' label... and update one
 	 means update the other"
 	((aParameter == getLabelSelector) or: [ (aParameter == getIconSelector) ]) ifTrue: [
 		getIconSelector ifNotNil: [ self icon: (model perform: getIconSelector) ].
 		self label: (getLabelSelector ifNotNil: [ model perform: getLabelSelector])].
 	aParameter == getFontSelector ifTrue: [ self font: (model perform: getFontSelector) ].
 	state := self getModelState.
-	(state ~= (self lastState) 
+	(state ~= (self lastState)
 		or: [ getStateSelector isNil and: [aParameter == #onOffColor]])
 		ifTrue: [
 			self color: self colorToUse.
 			self lastState: state].
 	aParameter == getEnabledSelector ifTrue: [^self enabled: (model perform: getEnabledSelector)].
 	getColorSelector ifNotNil: [ | cc |
-		color = (cc := model perform: getColorSelector) 
+		color = (cc := model perform: getColorSelector)
 			ifFalse: [
 				self privateColor: cc.
 				self onColor: color offColor: color.
 				self changed ]].
-		
+
 	aParameter isArray ifFalse: [ ^ self ].
 	aParameter size == 2 ifFalse: [ ^ self ].
-	
+
 	aParameter first = #askBeforeChanging: ifTrue: [ self askBeforeChanging: aParameter second ]
 ]
 
@@ -1278,13 +1278,13 @@ PluggableButtonMorph >> updateFeedbackForEvt: evt [
 	newState := self containsPoint: evt cursorPoint.
 	newState = showSelectionFeedback ifFalse: [
 		self showSelectionFeedback: newState.
-		self changed; layoutChanged].
+		self changed; layoutChanged]
 ]
 
 { #category : #updating }
 PluggableButtonMorph >> updateLabelEnablement [
 	"Set the enabled state of the label if possible."
-	
+
 	self labelMorph enabled: self enabled
 ]
 
@@ -1293,7 +1293,7 @@ PluggableButtonMorph >> veryDeepFixupWith: deepCopier [
 	"If fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
 super veryDeepFixupWith: deepCopier.
-model := deepCopier references at: model ifAbsent: [model].
+model := deepCopier references at: model ifAbsent: [model]
 ]
 
 { #category : #copying }

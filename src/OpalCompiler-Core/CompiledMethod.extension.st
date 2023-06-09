@@ -2,33 +2,22 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> decompile [
-	^Smalltalk globals 
+	^Smalltalk globals
 		at: #FBDDecompiler
-		ifPresent: [ :decompiler | decompiler new  decompile: self]  
+		ifPresent: [ :decompiler | decompiler new  decompile: self]
 		ifAbsent: [ RBParser parseMethod: self selector asMethodPreamble, '
 	self noSourceAvailable' ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> decompileIR [
-	
+
 	^ IRBytecodeDecompiler new decompile: self
 ]
 
 { #category : #'*OpalCompiler-Core' }
-CompiledMethod >> ir [
-	"We as the AST for the IR... for decompiling ir from bytecode, look at IRBytecodeDecompiler"
-	^ self ast ir
-]
-
-{ #category : #'*OpalCompiler-Core' }
-CompiledMethod >> irPrimitive [
-
-	| primNode n |
-	primNode := IRPrimitive new num: (n := self primitive).
-	(n = 117 or: [n = 120]) ifTrue: [
-		primNode spec: (self literalAt: 1)].
-	^ primNode
+CompiledMethod >> lookupVar: aString [
+	^self ast scope lookupVar: aString
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -44,7 +33,7 @@ CompiledMethod >> recompile [
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> reformat [
-	self methodClass compile: self ast formattedCode classified:  self category.
+	self methodClass compile: self ast formattedCode classified:  self category
 ]
 
 { #category : #'*OpalCompiler-Core' }

@@ -45,7 +45,7 @@ SDL2Example >> simpleBlackWindow [
 			  present.
 	SDL2 delay: 3000.
 	renderer destroy.
-	window destroy.
+	window destroy
 ]
 
 { #category : #examples }
@@ -54,7 +54,7 @@ SDL2Example >> simpleDrawDisplay [
 	self new simpleDrawDisplay
 	"
 	| window renderer texture   |
-	
+
 	"Create the window and the renderer."
 	SDL2 initVideo.
 	window := SDL2 createWindow: 'Test Window'
@@ -64,21 +64,21 @@ SDL2Example >> simpleDrawDisplay [
 					height: 480
 					flags: SDL_WINDOW_SHOWN.
 	renderer := window createDefaultRenderer.
-	
+
 	"Create the texture"
 	texture := renderer createTextureFormat: SDL_PIXELFORMAT_XRGB8888
 						access: SDL_TEXTUREACCESS_STREAMING width: Display width height: Display height.
 	texture updateTexturePixels: Display bits pitch: Display width*4.
-	
+
 	"Render"
 	renderer copy: texture;
 			  present.
 	SDL2 delay: 3000.
-	
+
 	"Quit"
 	texture destroy.
 	renderer destroy.
-	window destroy.
+	window destroy
 ]
 
 { #category : #examples }
@@ -99,7 +99,7 @@ SDL2Example >> simpleDrawWindow [
 	renderer drawColorR: 0 g: 0 b: 0 a: 0;
 			  clear;
 			  drawColorR: 0 g: 255 b: 0 a: 255;
-			  drawPointX: 50 y: 50;  
+			  drawPointX: 50 y: 50;
 			  present.
 	SDL2 delay: 1000.
 	renderer
@@ -108,7 +108,7 @@ SDL2Example >> simpleDrawWindow [
 			  present.
 	SDL2 delay: 3000.
 	renderer destroy.
-	window destroy.
+	window destroy
 ]
 
 { #category : #examples }
@@ -125,5 +125,5 @@ SDL2Example >> simpleWindow [
 					height: 480
 					flags: SDL_WINDOW_SHOWN.
 	SDL2 delay: 3000.
-	window destroy.
+	window destroy
 ]

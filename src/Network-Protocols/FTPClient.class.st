@@ -92,7 +92,7 @@ FTPClient >> binary [
 { #category : #protocol }
 FTPClient >> changeDirectoryTo: newDirName [
 	self sendCommand: 'CWD ' , newDirName.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #private }
@@ -116,13 +116,13 @@ FTPClient >> dataSocket: aSocket [
 { #category : #protocol }
 FTPClient >> deleteDirectory: dirName [
 	self sendCommand: 'RMD ' , dirName.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #protocol }
 FTPClient >> deleteFileNamed: fileName [
 	self sendCommand: 'DELE ' , fileName.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #'private - protocol' }
@@ -133,7 +133,7 @@ FTPClient >> get: limit dataInto: dataStream [
 	| buf bytesRead currentlyRead |
 	currentlyRead := 0.
 	buf := String new: 4000.
-	[currentlyRead < limit and: 
+	[currentlyRead < limit and:
 	[self dataSocket isConnected or: [self dataSocket dataAvailable]]]
 		whileTrue: [
 			self checkForPendingError.
@@ -165,7 +165,6 @@ FTPClient >> getDataInto: dataStream [
 			self checkForPendingError.
 			bytesRead := self dataSocket receiveDataWithTimeoutInto: buf.
 			1 to: bytesRead do: [:ii | dataStream nextPut: (buf at: ii)]].
-	dataStream reset.	"position: 0."
 	^ dataStream
 ]
 
@@ -266,16 +265,16 @@ FTPClient >> loginUser: userName password: passwdString [
 ]
 
 { #category : #'private - protocol' }
-FTPClient >> lookForCode: code ifDifferent: handleBlock [ 
-	"We are expecting a certain numeric code next.  
-	However, in the FTP protocol, multiple lines are allowed.  
-	If the response is multi-line, the fourth character of the first line is a  
-	$- and the last line repeats the numeric code but the code is followed by 
-	a space. So it's possible that there are more lines left of the last response that 
+FTPClient >> lookForCode: code ifDifferent: handleBlock [
+	"We are expecting a certain numeric code next.
+	However, in the FTP protocol, multiple lines are allowed.
+	If the response is multi-line, the fourth character of the first line is a
+	$- and the last line repeats the numeric code but the code is followed by
+	a space. So it's possible that there are more lines left of the last response that
 	we need to throw away. We use peekForAll: so that we don't discard the
 	next response that is not a continuation line."
 
-	
+
 	"check for multi-line response"
 	(self lastResponse size > 3
 			and: [(self lastResponse at: 4) = $-])
@@ -292,7 +291,7 @@ FTPClient >> lookForCode: code ifDifferent: handleBlock [
 { #category : #protocol }
 FTPClient >> makeDirectory: newDirName [
 	self sendCommand: 'MKD ' , newDirName.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #protocol }
@@ -350,7 +349,7 @@ FTPClient >> putFileStreamContents: fileStream as: fileNameOnServer [
 		ensure: [self closeDataSocket].
 
 	self checkResponse.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #protocol }
@@ -371,7 +370,7 @@ FTPClient >> quit [
 { #category : #protocol }
 FTPClient >> removeFileNamed: remoteFileName [
 	self sendCommand: 'DELE ', remoteFileName.
-	self checkResponse.
+	self checkResponse
 ]
 
 { #category : #protocol }

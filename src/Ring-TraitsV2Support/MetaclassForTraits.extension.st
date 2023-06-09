@@ -3,13 +3,13 @@ Extension { #name : #MetaclassForTraits }
 { #category : #'*Ring-TraitsV2Support' }
 MetaclassForTraits >> asRGDefinition [
 
-	^ self instanceSide asRGDefinition theMetaClass
+	^ self instanceSide asRGDefinition classSide
 ]
 
 { #category : #'*Ring-TraitsV2Support' }
 MetaclassForTraits >> asRingDefinitionIn: anRGEnvironment [
 
-	^ RGMetaclassTrait named: self name parent: anRGEnvironment.
+	^ RGMetaclassTrait named: self name parent: anRGEnvironment
 ]
 
 { #category : #'*Ring-TraitsV2Support' }

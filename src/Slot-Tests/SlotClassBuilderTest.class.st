@@ -41,7 +41,7 @@ SlotClassBuilderTest >> assertTraitIntegrity [
 SlotClassBuilderTest >> cleanUpTrait: trait [
 	"During development some tests might invalidate the trait internal state.
 	To avoid follow-up failures we reset the trait state here as good as possible."
-	
+
 	trait traitUsers removeAll.
 	trait classTrait traitUsers removeAll
 ]
@@ -93,23 +93,23 @@ SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each | 
+		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each |
 			testingEnvironment
-				at: each 
+				at: each
 				ifPresent: [ :class | class removeFromSystem ]]].
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	
-	self 
+
+	self
 		cleanUpTrait: TOne;
 		cleanUpTrait: TTwo.
-		
-	Smalltalk organization removeCategory: self aCategory.
-	(RPackageOrganizer default 
+
+	self packageOrganizer removeCategory: self aCategory.
+	(RPackageOrganizer default
 		packageNamed: self aCategory
-		ifAbsent: [ ^ self ]) 
+		ifAbsent: [ ^ self ])
 		unregister.
-		
+
 	super tearDown
 ]
 

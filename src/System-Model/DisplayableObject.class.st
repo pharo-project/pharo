@@ -12,6 +12,6 @@ Class {
 
 { #category : #accessing }
 DisplayableObject >> theme [
-	
+
 	^ Smalltalk ui theme
 ]

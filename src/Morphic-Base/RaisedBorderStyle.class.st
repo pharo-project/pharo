@@ -7,12 +7,18 @@ Class {
 	#category : #'Morphic-Base-Borders'
 }
 
+{ #category : #'class initialization' }
+RaisedBorderStyle class >> initialize [
+	"Deprecated in Pharo 11"
+	self deprecatedAliases: { #RaisedBorder }
+]
+
 { #category : #accessing }
 RaisedBorderStyle >> bottomRightColor [
 	"Changed from direct access to color since, if nil,
 	self color is transparent."
-	
-	^width = 1 
+
+	^width = 1
 		ifTrue: [self color twiceDarker]
 		ifFalse: [self color darker]
 ]
@@ -35,12 +41,12 @@ RaisedBorderStyle >> topLeftColor [
 	"Changed from direct access to color since, if nil,
 	self color is transparent."
 
-	^width = 1 
+	^width = 1
 		ifTrue: [self color twiceLighter]
 		ifFalse: [self color lighter]
 ]
 
 { #category : #'color tracking' }
 RaisedBorderStyle >> trackColorFrom: aMorph [
-	baseColor ifNil:[self color: aMorph raisedColor].
+	baseColor ifNil:[self color: aMorph raisedColor]
 ]

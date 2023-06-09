@@ -24,59 +24,59 @@ Class {
 
 { #category : #private }
 RPackageSet class >> basicNamed: aString [
-	^ self basicNew 
+	^ self basicNew
 		initialize: aString;
 		yourself
 ]
 
 { #category : #private }
-RPackageSet class >> cacheActive: aBoolean [ 
+RPackageSet class >> cacheActive: aBoolean [
 	cacheActive := aBoolean
 ]
 
 { #category : #private }
 RPackageSet class >> cachePackageAt: aString ifAbsentPut: aBlock [
 	"self addCount: aString."
-	^ self cachePackages 
+	^ self cachePackages
 		at: aString asSymbol
 		ifAbsentPut: aBlock
 ]
 
 { #category : #private }
-RPackageSet class >> cachePackages [ 
+RPackageSet class >> cachePackages [
 	^ cachePackages ifNil: [ cachePackages := IdentityDictionary new ]
 ]
 
 { #category : #testing }
-RPackageSet class >> isCacheActive [ 
-	^ cacheActive ifNil: [ cacheActive := false ].
+RPackageSet class >> isCacheActive [
+	^ cacheActive ifNil: [ cacheActive := false ]
 ]
 
 { #category : #'instance creation' }
 RPackageSet class >> named: aString [
 
-	^ self isCacheActive 
-		ifTrue: [ 
-			self 
-				cachePackageAt: aString 
+	^ self isCacheActive
+		ifTrue: [
+			self
+				cachePackageAt: aString
 				ifAbsentPut: [ self basicNamed: aString ] ]
-		ifFalse: [ self basicNamed: aString ].
+		ifFalse: [ self basicNamed: aString ]
 ]
 
 { #category : #private }
-RPackageSet class >> resetCache [ 
-	cachePackages := nil.
+RPackageSet class >> resetCache [
+	cachePackages := nil
 ]
 
 { #category : #accessing }
-RPackageSet class >> withCacheDo: aBlock [ 
+RPackageSet class >> withCacheDo: aBlock [
 	| oldActive |
-	
+
 	oldActive := self isCacheActive.
 	self cacheActive: true.
-	aBlock ensure: [ 
+	aBlock ensure: [
 		self cacheActive: oldActive.
-		self isCacheActive ifFalse: [ self resetCache ] ].
+		self isCacheActive ifFalse: [ self resetCache ] ]
 ]
 
 { #category : #'system compatibility' }
@@ -84,14 +84,9 @@ RPackageSet >> asRPackageSet [
 	^self
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> category: categoryName matches: prefix [
-	^ RPackageOrganizer default category: categoryName matches: prefix
-]
-
 { #category : #accessing }
 RPackageSet >> categoryNames [
-	^  self packages 	
+	^  self packages
 		inject:  #()
 		into: [ :all :each | all, (each classTagCategoryNames asArray) ]
 ]
@@ -113,7 +108,11 @@ RPackageSet >> extendedClasses [
 
 { #category : #'system compatibility' }
 RPackageSet >> extensionCategoriesForClass: aClass [
-	^ aClass organization categories select: [:cat | self isYourClassExtension: cat]
+
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -123,21 +122,26 @@ RPackageSet >> extensionMethods [
 		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
 ]
 
+{ #category : #'system compatibility' }
+RPackageSet >> extensionProtocolsForClass: aClass [
+
+	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol name ]
+]
+
 { #category : #testing }
 RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not ]]
+RPackageSet >> includesProtocol: categoryName ofClass: aClass [
+
+	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
 ]
 
 { #category : #'system compatibility' }
 RPackageSet >> includesSystemCategory: categoryName [
-	^self packages anySatisfy: [ :each | 
+	^self packages anySatisfy: [ :each |
 		each includesSystemCategory: categoryName ]
 ]
 
@@ -156,8 +160,9 @@ RPackageSet >> isForeignClassExtension: categoryName [
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isYourClassExtension: categoryName [
-	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
+RPackageSet >> isYourClassExtension: protocolName [
+
+	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
 ]
 
 { #category : #'system compatibility' }

@@ -30,7 +30,7 @@ ClyUnknownQueryTest >> testCreationUnifiedInstance [
 
 { #category : #tests }
 ClyUnknownQueryTest >> testDoesNotExecuteAnyQuery [
-	
+
 	self deny: (query executesQuery: #any)
 ]
 

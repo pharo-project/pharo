@@ -8,6 +8,14 @@ Class {
 	#category : #'Debugger-Oups-Tests-Tests - strategies'
 }
 
+{ #category : #private }
+OupsSingleDebuggerSelectorTest >> performTest [
+	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
+
+	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	self perform: testSelector asSymbol
+]
+
 { #category : #running }
 OupsSingleDebuggerSelectorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
@@ -20,7 +28,7 @@ OupsSingleDebuggerSelectorTest >> setUp [
 { #category : #running }
 OupsSingleDebuggerSelectorTest >> tearDown [
 	debuggers
-		do: [ :dbg | 
+		do: [ :dbg |
 			(dbg tag isKindOf: DebugSession)
 				ifTrue: [ dbg tag terminate ] ].
 	super tearDown
@@ -35,9 +43,9 @@ OupsSingleDebuggerSelectorTest >> testError [
 OupsSingleDebuggerSelectorTest >> testErrorWhenOpeningDebugger [
 	| session |
 	session := OupsDummyDebugger dummySession.
-	debuggers first beError.	
+	debuggers first beError.
 	debuggerSelector openDebuggerForSession: session.
-	
+
 	self assert: debuggerSelector hasErrors.
 	self assert: debuggerSelector error class identicalTo: Error.
 	self deny: debuggerSelector handled
@@ -48,9 +56,9 @@ OupsSingleDebuggerSelectorTest >> testHandled [
 	| session |
 	session := OupsDummyDebugger dummySession.
 	debuggers first beError.
-	
+
 	self assert: debuggerSelector handled.
-	
+
 	debuggerSelector openDebuggerForSession: session.
 	self deny: debuggerSelector handled
 ]
@@ -72,17 +80,17 @@ OupsSingleDebuggerSelectorTest >> testNextDebugger [
 OupsSingleDebuggerSelectorTest >> testOpenDebuggerForSession [
 	| session |
 	session := OupsDummyDebugger dummySession.
-	
+
 	debuggerSelector openDebuggerForSession: session.
-	self assert: debuggers first tag identicalTo: session.	
-	
+	self assert: debuggers first tag identicalTo: session.
+
 	debuggers first tag: nil.
 	debuggerSelector openDebuggerForSession: session.
-	self assert: debuggers first tag identicalTo: session.	
+	self assert: debuggers first tag identicalTo: session.
 	self assert: debuggers second tag equals: nil.
-	
+
 	debuggers first tag: nil.
 	debuggerSelector openDebuggerForSession: session.
-	self assert: debuggers first tag identicalTo: session.	
-	self assert: debuggers third tag equals: nil.
+	self assert: debuggers first tag identicalTo: session.
+	self assert: debuggers third tag equals: nil
 ]

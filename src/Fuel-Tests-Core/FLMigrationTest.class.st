@@ -9,25 +9,28 @@ Class {
 
 { #category : #running }
 FLMigrationTest >> redefined: aClass with: instanceVariableNames [
-
 	| name |
 	name := aClass name.
-	self removeFromSystem: aClass.
+	self classFactory deleteBehavior: aClass.
 	"In this case we need to create a class with notifications"
-	^ (self withNotificationsNewClassWithInstanceVariableNames: instanceVariableNames) renameSilently: name.
+	^ self classFactory
+		silentlyRename: (self classFactory newClassWithInstanceVariableNames: instanceVariableNames)
+		to: name
 ]
 
 { #category : #'tests-manual' }
 FLMigrationTest >> testBadDestinationVariableRename [
 	
 	| pointClass aPoint pointClassName |
-	pointClass := self newClassWithInstanceVariableNames: 'x y'.
+	pointClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'x y'.
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	
-	self materializer 
+	self materializer
 		migrateClassNamed: pointClassName 
-		variables: {('x' -> 'posX')}.
+		variables: (Dictionary new
+			at: 'x' put: 'posX';
+			yourself).
 		
 	self serialize: aPoint.
 	self should: [ self materialized ] raise: Error. 
@@ -40,8 +43,8 @@ FLMigrationTest >> testChangeInSuperclass [
 	"Tests that serializer tolarates when there is a change in the superclass between serialization and materialization"
 
 	| aClass aClassSubclass instance materializedInstance |
-	aClass := self newClassWithInstanceVariableNames: 'a b c' superclass: Object.
-	aClassSubclass := self newClassWithInstanceVariableNames: 'd e' superclass: aClass.
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b c'.
+	aClassSubclass := self classFactory silentlyNewSubclassOf: aClass instanceVariableNames: 'd e'.
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -69,17 +72,25 @@ FLMigrationTest >> testChangeInSuperclass [
 { #category : #'tests-manual' }
 FLMigrationTest >> testClassAndVariableRename [
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self newClassWithInstanceVariableNames: 'x y'.
+	pointClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'x y'.
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
 	aPoint instVarNamed: 'y' put: 11.
 
 	self serialize: aPoint.
-	pointClass renameSilently: (pointClassName , 'Renamed') asSymbol.
+	self classFactory
+		silentlyRename: pointClass
+		to: (pointClassName , 'Renamed') asSymbol.
 	pointClass := self redefined: pointClass with: 'posY posX'.
 
-	self materializer migrateClassNamed: pointClassName toClass: pointClass variables: {('x' -> 'posX') . ('y' -> 'posY')}.
+	self materializer
+		migrateClassNamed: pointClassName
+		toClass: pointClass
+		variables: (Dictionary new
+			at: 'x' put: 'posX';
+			at: 'y' put: 'posY';
+			yourself).
 
 	resultPoint := self materialized.
 
@@ -90,16 +101,20 @@ FLMigrationTest >> testClassAndVariableRename [
 { #category : #'tests-manual' }
 FLMigrationTest >> testClassRename [
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self newClassWithInstanceVariableNames: 'x y'.
+	pointClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'x y'.
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
 	aPoint instVarNamed: 'y' put: 11.
 
 	self serialize: aPoint.
-	pointClass renameSilently: (pointClassName , 'Renamed') asSymbol.
+	self classFactory
+		silentlyRename: pointClass
+		to: pointClassName, 'Renamed'.
 
-	self materializer migrateClassNamed: pointClassName toClass: pointClass.
+	self materializer
+		migrateClassNamed: pointClassName
+		toClass: pointClass.
 
 	resultPoint := self materialized.
 
@@ -112,10 +127,17 @@ FLMigrationTest >> testFormatFixedToVariable [
 	"Tests that serializer can tolerate a format change from a *fixed* class to *weak/variable*.
 	Notice, however, that the other way around (variable to fixed) doesn't work so far"
 
-	| materialized |
+	self environmentOfTest
+		at: FLPair name
+		put: FLPair.
+	
 	self serialize: FLPair new.
-	materialized := self during: [ self materialized ] rename: FLPair as: FLWeakClassMock.
-	self assert: materialized size equals: 0
+	
+	self environmentOfTest
+		at: FLPair name
+		put: FLWeakClassMock.
+
+	self assert: self materialized size equals: 0
 ]
 
 { #category : #'tests-automatic' }
@@ -123,9 +145,11 @@ FLMigrationTest >> testSuperclassChange [
 	"Tests that serializer tolarates when the superclass changed between serialization and materialization"
 
 	| aClass aClassSubclass instance materializedInstance anotherSuperclass |
-	aClass := self newClassWithInstanceVariableNames: 'a b c' superclass: Object.
-	aClassSubclass := self newClassWithInstanceVariableNames: 'd e' superclass: aClass.
-	anotherSuperclass := self newClassWithInstanceVariableNames: 'x' superclass: Object.
+	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b c'.
+	aClassSubclass := self classFactory
+		silentlyNewSubclassOf: aClass
+		instanceVariableNames: 'd e'.
+	anotherSuperclass := self classFactory silentlyNewClassWithInstanceVariableNames: 'x'.
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -151,7 +175,7 @@ FLMigrationTest >> testVariableInsertion [
 	"Tests that serializer tolarates when there is a new instance variable on materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self newClassWithInstanceVariableNames: 'left right'.
+	pairClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'left right'.
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
@@ -170,7 +194,7 @@ FLMigrationTest >> testVariableOrderChange [
 	"Tests that serializer tolarates when the order in the instance variables changed between serialization and materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self newClassWithInstanceVariableNames: 'left right'.
+	pairClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'left right'.
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
@@ -188,7 +212,7 @@ FLMigrationTest >> testVariableRemoved [
 	"Tests that serializer tolarates when an instance variable is missing on materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self newClassWithInstanceVariableNames: 'left right'.
+	pairClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'left right'.
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
@@ -203,7 +227,7 @@ FLMigrationTest >> testVariableRemoved [
 { #category : #'tests-manual' }
 FLMigrationTest >> testVariableRename [
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self newClassWithInstanceVariableNames: 'x y'.
+	pointClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'x y'.
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
@@ -212,7 +236,12 @@ FLMigrationTest >> testVariableRename [
 	self serialize: aPoint.
 	self redefined: pointClass with: 'posY posX'.
 
-	self materializer migrateClassNamed: pointClassName variables: {('x' -> 'posX') . ('y' -> 'posY')}.
+	self materializer
+		migrateClassNamed: pointClassName
+		variables: (Dictionary new
+			at: 'x' put: 'posX';
+			at: 'y' put: 'posY';
+			yourself).
 
 	resultPoint := self materialized.
 

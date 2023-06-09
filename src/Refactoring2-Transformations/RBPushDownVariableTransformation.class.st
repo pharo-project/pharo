@@ -14,7 +14,7 @@ overriden from RBAddVariableTransformation and RBRemoveVariableAccessorTransform
 Class {
 	#name : #RBPushDownVariableTransformation,
 	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #converting }
@@ -35,7 +35,7 @@ RBPushDownVariableTransformation >> buildTransformations [
 				class: className
 				classVariable: isClassVariable);
 		addAll: (self variableDefinitionsInHierarchy
-			collect: [ :each | 
+			collect: [ :each |
 				RBAddVariableTransformation
 				model: self model
 				variable: variableName
@@ -64,19 +64,19 @@ RBPushDownVariableTransformation >> preconditionsForClassVariable [
 			numSubclassesAccessing := self definingClass subclasses count: [ :subclass |
 				subclass withAllSubclasses anySatisfy: [ :e |
 					(e whichSelectorsReferToClassVariable: variableName) isNotEmpty
-					or: [ (e theMetaClass whichSelectorsReferToClassVariable: variableName) isNotEmpty ] ] ].
+					or: [ (e classSide whichSelectorsReferToClassVariable: variableName) isNotEmpty ] ] ].
 			numSubclassesAccessing < 2 ])
 ]
 
 { #category : #preconditions }
 RBPushDownVariableTransformation >> preconditionsForInstanceVariable [
 
-	^ (RBCondition definesInstanceVariable: variableName in: self definingClass) 
+	^ (RBCondition definesInstanceVariable: variableName in: self definingClass)
 		& (RBCondition accessesInstanceVariable: variableName in: self definingClass showIn: self)
 ]
 
 { #category : #printing }
-RBPushDownVariableTransformation >> storeOn: aStream [ 
+RBPushDownVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -94,7 +94,7 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]
 
 { #category : #private }
@@ -104,6 +104,6 @@ RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
 	^ isClassVariable
 		ifTrue: [ self definingClass allSubclasses reject: [ :each |
 			(each whichSelectorsReferToClassVariable: variableName) isEmpty
-			and: [ (each theMetaClass whichSelectorsReferToClassVariable: variableName) isEmpty ] ] ]
+			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ] ]
 		ifFalse: [ self definingClass subclasses ]
 ]

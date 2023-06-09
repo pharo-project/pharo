@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-WideString class >> from: aString [ 
+WideString class >> from: aString [
 
 	| newString |
 	(aString isMemberOf: self)
@@ -21,14 +21,14 @@ WideString class >> from: aString [
 ]
 
 { #category : #'instance creation' }
-WideString class >> fromByteArray: aByteArray [ 
+WideString class >> fromByteArray: aByteArray [
 
 	| inst |
 	aByteArray size \\ 4 = 0 ifFalse: [^ ByteString fromByteArray: aByteArray ].
 	inst := self new: aByteArray size // 4.
 	4 to: aByteArray size by: 4 do: [:i |
 		inst basicAt: i // 4
-			put: ((aByteArray at: i - 3) << 24) + 
+			put: ((aByteArray at: i - 3) << 24) +
 				((aByteArray at: i - 2) << 16) +
 				 ((aByteArray at: i - 1) << 8) +
 				(aByteArray at: i)
@@ -38,7 +38,7 @@ WideString class >> fromByteArray: aByteArray [
 ]
 
 { #category : #'instance creation' }
-WideString class >> fromString: aString [ 
+WideString class >> fromString: aString [
 	"Answer an instance of me that is a copy of the argument, aString."
 
 	| inst |
@@ -49,11 +49,11 @@ WideString class >> fromString: aString [
 	1 to: aString size do: [:pos |
 		inst basicAt: pos put: (aString basicAt: pos).
 	].
-	^ inst.
+	^ inst
 ]
 
 { #category : #converting }
-WideString >> asByteArray [ 
+WideString >> asByteArray [
 	"Convert to a ByteArray with the ascii values of the string."
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
@@ -71,9 +71,9 @@ WideString >> asFourCode [
 	| result |
 	self size = 1 ifFalse: [^ Error signal: 'must be exactly four octets' ].
 	result := self basicAt: 1.
-	(result bitAnd: 16r80000000) = 0 
+	(result bitAnd: 16r80000000) = 0
 		ifFalse: [ Error signal: 'cannot resolve fourcode' ].
-	(result bitAnd: 16r40000000) = 0 
+	(result bitAnd: 16r40000000) = 0
 		ifFalse: [ ^ result - 16r80000000 ].
 	^ result
 ]
@@ -82,7 +82,7 @@ WideString >> asFourCode [
 WideString >> asLowercase [
 	"Answer a copy of self with all characters in a lower case.
 	This might be a difficult task, ask Unicode."
-	
+
 	^ Unicode toLowercaseString: self
 ]
 
@@ -90,14 +90,14 @@ WideString >> asLowercase [
 WideString >> asUppercase [
 	"Answer a copy of self with all characters in an upper case.
 	This might be a difficult task, ask Unicode."
-	
+
 	^ Unicode toUppercaseString: self
 ]
 
 { #category : #converting }
-WideString >> asWideString [ 
+WideString >> asWideString [
 
-	^ self.
+	^ self
 ]
 
 { #category : #accessing }
@@ -129,8 +129,8 @@ WideString >> at: index put: aCharacter [
 				ifFalse: [ ^ self errorNonIntegerIndex ]]
 		ifFalse:
 			[ ^ self errorImproperStore ].
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ].
+	self isReadOnlyObject
+		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ]
 ]
 
 { #category : #accessing }
@@ -139,7 +139,7 @@ WideString >> byteAt: index [
 	| d r |
 	d := (index + 3) // 4.
 	r := (index - 1) \\ 4 + 1.
-	^ (self wordAt: d) byteAt: ((4 - r) + 1).
+	^ (self wordAt: d) byteAt: ((4 - r) + 1)
 ]
 
 { #category : #accessing }
@@ -151,13 +151,13 @@ WideString >> byteAt: index put: aByte [
 	w := (self wordAt: d) bitAnd: ((16rFF<<((4 - r)*8)) bitInvert32).
 	w := w + (aByte<<((4 - r)*8)).
 	self basicAt: d put: w.
-	^ aByte.
+	^ aByte
 ]
 
 { #category : #accessing }
 WideString >> byteSize [
 
-	^ self size * 4.
+	^ self size * 4
 ]
 
 { #category : #copying }
@@ -166,12 +166,21 @@ WideString >> copyFrom: start to: stop [
 	| n |
 	n := super copyFrom: start to: stop.
 	n isOctetString ifTrue: [^ n asOctetString].
-	^ n.
+	^ n
+]
+
+{ #category : #converting }
+WideString >> createSymbol [
+	"We have to check if the string can be represented by a Bytesymbol to avoid two symbols
+	that represent the same string"
+	^ ((self isOctetString
+		    ifTrue: [ ByteSymbol ]
+		    ifFalse: [ WideSymbol ]) basicNew: self size) string: self
 ]
 
 { #category : #comparing }
 WideString >> findIn: body startingAt: start matchTable: matchTable [
-	
+
 	^ self findSubstring: self in: body startingAt: start matchTable: matchTable
 ]
 
@@ -182,24 +191,24 @@ WideString >> isWideString [
 ]
 
 { #category : #accessing }
-WideString >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+WideString >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 
 	<primitive: 105>
 	replacement class == String ifTrue: [
 		^ self replaceFrom: start to: stop with: (replacement asWideString) startingAt: repStart.
-	]. 
+	].
 
-	^ super replaceFrom: start to: stop with: replacement startingAt: repStart.
+	^ super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
 { #category : #accessing }
 WideString >> wordAt: index [
 	<primitive: 60>
-	^ (self basicAt: index).
+	^ (self basicAt: index)
 ]
 
 { #category : #accessing }
 WideString >> wordAt: index put: anInteger [
 	<primitive: 61>
-	self basicAt: index put: anInteger.
+	self basicAt: index put: anInteger
 ]

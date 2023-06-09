@@ -1,13 +1,13 @@
 Class {
 	#name : #RBMoveTemporaryVariableDefinitionTransformationTest,
 	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 
-	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation 
+	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
 							inMethod: #name1
 							inClass: #RBDummyLintRuleTest)
@@ -22,17 +22,17 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 							inMethod: #moveDefinition
 							inClass: #RBDummyRefactoryTestDataApp)
 							transform.
-		
+
 	class := transformation model classNamed: #RBDummyRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #moveDefinition)
+	self assert: (class parseTreeForSelector: #moveDefinition)
 		  equals: (self parseMethod: 'moveDefinition
-								^(self collect: 
-										[:each | 
+								^(self collect:
+										[:each |
 										| temp |
 										temp := each printString.
-										temp , temp]) 
-									select: 
-										[:each | 
+										temp , temp])
+									select:
+										[:each |
 										| temp |
 										temp := each size.
 										temp odd]')
@@ -41,21 +41,21 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 { #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 
-	| transformation class |				
-	transformation := (RBMoveTemporaryVariableDefinitionTransformation 
+	| transformation class |
+	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #association
-							inMethod: #referencesConditionFor: 
+							inMethod: #referencesConditionFor:
 							inClass: #RBDummyRefactoryTestDataApp)
 							asRefactoring transform.
-							
+
 	class := transformation model classNamed: #RBDummyRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #referencesConditionFor:)
-		  equals: (self parseMethod: 'referencesConditionFor: aClass 
+	self assert: (class parseTreeForSelector: #referencesConditionFor:)
+		  equals: (self parseMethod: 'referencesConditionFor: aClass
 						| environment  |
-						^(RBCondition withBlock: 
+						^(RBCondition withBlock:
 								[| association |association := Smalltalk associationAt: aClass name
 											ifAbsent: [self refactoringError: ''Could not find class''].
-								environment := (self environment referencesTo: association) 
+								environment := (self environment referencesTo: association)
 											| (self environment referencesTo: aClass name).
 								environment isEmpty])
 							errorMacro: aClass , '' is referenced.<n>Browse references?'';
@@ -67,15 +67,15 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 
 	| transformation |
-	transformation := (RBMoveTemporaryVariableDefinitionTransformation 
+	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
-							inMethod: #noMoveDefinition 
+							inMethod: #noMoveDefinition
 							inClass: #RBDummyRefactoryTestDataApp).
-	self assert: transformation model changes changes size equals: 0.	
-	
-	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation 
+	self assert: transformation model changes changes size equals: 0.
+
+	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
-							inMethod: #noMoveDefinition 
+							inMethod: #noMoveDefinition
 							inClass: #RBDummyRefactoryTestDataApp)
 							asRefactoring
 ]
@@ -83,11 +83,11 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 { #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testVariableDoesNotExist [
 
-	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation 
+	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
 							inMethod: #displayName
 							inClass: #RBDummyLintRuleTest).
-	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation 
+	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
 							inMethod: #displayName
 							inClass: #RBDummyLintRuleTest)

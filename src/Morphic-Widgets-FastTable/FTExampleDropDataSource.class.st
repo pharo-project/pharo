@@ -14,11 +14,11 @@ Class {
 FTExampleDropDataSource >> dropElements: aCollection index: rowIndex [
 	self elements: (rowIndex = 0
 		ifTrue: [ self elements, aCollection ]
-		ifFalse: [ (self elements first: rowIndex), aCollection, (self elements allButFirst: rowIndex) ]).
+		ifFalse: [ (self elements first: rowIndex), aCollection, (self elements allButFirst: rowIndex) ])
 ]
 
 { #category : #initialization }
-FTExampleDropDataSource >> initialize [ 
+FTExampleDropDataSource >> initialize [
 	super initialize.
 	self elements: #()
 ]

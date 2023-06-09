@@ -12,8 +12,8 @@ Class {
 
 { #category : #accessing }
 ZnCodePointWriteStream >> nextPut: object [
-	self encoder 
-		nextPutCodePoint: object 
+	self encoder
+		nextPutCodePoint: object
 		toStream: stream.
 	^ object
 ]

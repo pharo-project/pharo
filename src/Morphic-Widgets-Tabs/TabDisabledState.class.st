@@ -7,6 +7,12 @@ Class {
 	#category : #'Morphic-Widgets-Tabs-States'
 }
 
+{ #category : #'class initialization' }
+TabDisabledState class >> initialize [
+
+	self deprecatedAliases: { #TabDisabled }
+]
+
 { #category : #protocol }
 TabDisabledState >> backgroundColor [
 	^ Smalltalk ui theme disabledColor
@@ -33,6 +39,6 @@ TabDisabledState >> newStateForEnabled: aBoolean [
 { #category : #protocol }
 TabDisabledState >> newStateForSelected: aBoolean [
 	"An disabled tab can not be selected"
-	
+
 	^ self
 ]

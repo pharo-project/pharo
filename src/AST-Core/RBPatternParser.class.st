@@ -27,33 +27,32 @@ RBPatternParser >> parseError: aString [
 { #category : #'private - parsing' }
 RBPatternParser >> parseLiteralByteArrayObject [
 	| node |
-	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
-		ifTrue: 
+	(currentToken isIdentifier and: [currentToken isPatternVariable])
+		ifTrue:
 			[node := self variableNodeClass identifierNamed: currentToken value at: currentToken start.
-			node isLiteralNode 
-				ifTrue: 
+			node isLiteralNode
+				ifTrue:
 					[self step.
 					^node]].
 	^super parseLiteralByteArrayObject
 ]
 
 { #category : #'private - parsing' }
-RBPatternParser >> parsePatternBlock: aClass [ 
+RBPatternParser >> parsePatternBlock: aClass [
 	| position node |
 	position := currentToken start.
 	self step.
 	node := aClass new.
 	self parseBlockArgsInto: node.
 	node left: position.
-	
+
 	node body: self sequenceNodeClass new.
 	self
 		parseStatements: false
 		into: node body
-		until: [ currentToken isSpecial
-			and: [ currentToken value = $} ] ].
-	
-	(currentToken isSpecial and: [currentToken value = $}]) 
+		untilAnyCloserOf: '}'.
+
+	(currentToken isSpecial: $})
 		ifFalse: [ self addParserError: '''}'' expected' to: node body.
 			^ node ].
 	node right: currentToken start.
@@ -64,11 +63,11 @@ RBPatternParser >> parsePatternBlock: aClass [
 { #category : #'private - parsing' }
 RBPatternParser >> parsePragmaLiteral [
 	| node |
-	currentToken isPatternBlock 
+	currentToken isPatternBlock
 		ifTrue: [ ^ self parsePatternBlock: RBPatternBlockNode ].
 	(currentToken isIdentifier and: [ currentToken isPatternVariable ]) ifTrue: [
 		node := self variableNodeClass identifierNamed: currentToken value at: currentToken start.
-		node isLiteralNode 
+		node isLiteralNode
 			ifFalse: [ self parseError: 'Literal pattern expected' ].
 		self step.
 		currentToken isPatternBlock ifTrue: [
@@ -82,14 +81,14 @@ RBPatternParser >> parsePragmaLiteral [
 { #category : #'private - parsing' }
 RBPatternParser >> parsePrimitiveLiteral [
 	| node |
-	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
-		ifTrue: 
+	(currentToken isIdentifier and: [currentToken isPatternVariable])
+		ifTrue:
 			[node := self variableNodeClass identifierNamed: currentToken value at: currentToken start.
-			node isLiteralNode 
-				ifTrue: 
+			node isLiteralNode
+				ifTrue:
 					[self step.
 					^node].
-			currentToken := RBLiteralToken 
+			currentToken := RBLiteralToken
 						value: currentToken value asSymbol
 						start: currentToken start
 						stop: currentToken stop].
@@ -98,7 +97,7 @@ RBPatternParser >> parsePrimitiveLiteral [
 
 { #category : #'private - parsing' }
 RBPatternParser >> parsePrimitiveObject [
-	currentToken isPatternBlock 
+	currentToken isPatternBlock
 		ifTrue: [^self parsePatternBlock: RBPatternBlockNode].
 	^super parsePrimitiveObject
 ]
@@ -108,15 +107,15 @@ RBPatternParser >> parseUnaryMessage [
 	| node |
 	node := self parsePrimitiveObject.
 	self addCommentsTo: node.
-	
+
 	[currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
-	currentToken isPatternBlock 
-		ifTrue: 
+	currentToken isPatternBlock
+		ifTrue:
 			[node := self parseWrapperPatternBlockWith: node ].
-	currentToken isIdentifier] 
+	currentToken isIdentifier]
 			whileTrue: [
 				currentToken isKeywordPattern
-					ifTrue: [ self parserError: ' incomplete keyword pattern ' ].
+					ifTrue: [ self parseErrorNode: ' incomplete keyword pattern ' ].
 				node := self parseUnaryMessageWith: node].
 	self addCommentsTo: node.
 	^node
@@ -127,18 +126,11 @@ RBPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 	| node |
 
 	node := self parsePatternBlock: RBPatternWrapperBlockNode.
-	node class == RBPatternWrapperBlockNode ifTrue: [ 
+	node class == RBPatternWrapperBlockNode ifTrue: [
 		self flag: 'I think this is ugly, but I don''t know how to avoid checking the result of #parsePatternBlock:'.
 		node wrappedNode: wrappedNode ].
-	
-	^ node
-]
 
-{ #category : #private }
-RBPatternParser >> patchLiteralArrayToken [
-	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
-		ifTrue: [^self].
-	super patchLiteralArrayToken
+	^ node
 ]
 
 { #category : #'private - classes' }

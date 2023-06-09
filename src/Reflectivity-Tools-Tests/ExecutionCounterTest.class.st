@@ -19,7 +19,7 @@ ExecutionCounterTest >> setUp [
 ]
 
 { #category : #running }
-ExecutionCounterTest >> tearDown [ 	
+ExecutionCounterTest >> tearDown [
 	counter ifNotNil:[counter uninstall].
 	counter2 ifNotNil:[counter2 uninstall].
 	super tearDown

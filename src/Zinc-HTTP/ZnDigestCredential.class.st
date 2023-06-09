@@ -52,7 +52,7 @@ ZnDigestCredential >> authTokenForUrl: urlObject method: method [
 		nextPutAll: (self responseForUrl: urlObject method: method);
 		nextPutAll: '", '.
 	self opaque
-		ifNotNil: [:opaqueValue | 
+		ifNotNil: [:opaqueValue |
 			result
 				nextPutAll: 'opaque="';
 				nextPutAll: opaqueValue;
@@ -62,8 +62,8 @@ ZnDigestCredential >> authTokenForUrl: urlObject method: method [
 ]
 
 { #category : #testing }
-ZnDigestCredential >> isComplete [ 
-	^ super isComplete & nonce notNil 
+ZnDigestCredential >> isComplete [
+	^ super isComplete & nonce notNil
 ]
 
 { #category : #operations }

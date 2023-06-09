@@ -10,8 +10,8 @@ Path class >> fromSton: stonReader [
 
 { #category : #'*STON-Core' }
 Path >> stonOn: stonWriter [
-	stonWriter 
-		writeObject: self 
-		streamShortList: [ :listWriter | 
+	stonWriter
+		writeObject: self
+		streamShortList: [ :listWriter |
 			self do: [ :each | listWriter add: each ] ]
 ]

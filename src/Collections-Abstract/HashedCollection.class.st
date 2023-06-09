@@ -31,20 +31,20 @@ Class {
 HashedCollection class >> cleanUp: aggressive [
 	"Rehash all instances when cleaning aggressively"
 
-	aggressive ifTrue: [self compactAll].
+	aggressive ifTrue: [self compactAll]
 ]
 
 { #category : #cleanup }
 HashedCollection class >> compactAll [
-	"HashedCollection compactAll"	
-		
+	"HashedCollection compactAll"
+
 	self allSubclassesDo: #compactAllInstances
 ]
 
 { #category : #cleanup }
 HashedCollection class >> compactAllInstances [
 	"Do not use #allInstancesDo: because rehash may create new instances."
-	
+
 	self allInstances do: [ :each | each compact ]
 ]
 
@@ -75,29 +75,29 @@ HashedCollection class >> new: nElements [
 ]
 
 { #category : #'instance creation' }
-HashedCollection class >> newFrom: aCollection [ 
+HashedCollection class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	^self subclassResponsibility
 ]
 
 { #category : #cleanup }
 HashedCollection class >> rehashAll [
-	"HashedCollection rehashAll"	
-		
+	"HashedCollection rehashAll"
+
 	self allSubclassesDo: #rehashAllInstances
 ]
 
 { #category : #cleanup }
 HashedCollection class >> rehashAllInstances [
 	"Do not use #allInstancesDo: because rehash may create new instances."
-	
+
 	self allInstances do: [ :each | each rehash ]
 ]
 
 { #category : #'instance creation' }
 HashedCollection class >> sizeFor: nElements [
 	"Large enough size to hold nElements with some slop (see fullCheck)"
-	
+
 	nElements < 4 ifTrue: [ ^5 ].
 	^ HashTableSizes atLeast: nElements +1 * 4 // 3
 ]
@@ -105,7 +105,7 @@ HashedCollection class >> sizeFor: nElements [
 { #category : #adding }
 HashedCollection >> add: newObject withOccurrences: anInteger [
 	"Add newObject anInteger times to the receiver. Do nothing if anInteger is less than one. Answer newObject."
-	
+
 	anInteger < 1 ifTrue: [ ^newObject ].
 	"I can only store an object once."
 	^ self add: newObject
@@ -133,7 +133,7 @@ HashedCollection >> capacity [
 { #category : #private }
 HashedCollection >> compact [
 	"Reduce the size of array so that the load factor will be ~75%."
-	
+
 	| newCapacity |
 	newCapacity := HashTableSizes atLeast: tally * 4 // 3.
 	self growTo: newCapacity
@@ -157,7 +157,7 @@ HashedCollection >> findElementOrNil: anObject [
 	"Bad scene.  Neither have we found a matching element
 	nor even an empty slot.  No hashed set is ever supposed to get
 	completely full."
-	self error: 'There is no free space in this set!'.
+	self error: 'There is no free space in this set!'
 ]
 
 { #category : #private }
@@ -165,7 +165,7 @@ HashedCollection >> fixCollisionsFrom: start [
 	"The element at start has been removed and replaced by nil.
 	This method moves forward from there, relocating any entries
 	that had been placed below due to collisions with this one."
-	
+
 	self subclassResponsibility
 ]
 
@@ -186,7 +186,7 @@ HashedCollection >> grow [
 	tally := 0.
 	oldElements
 		do:
-			[ :each | 
+			[ :each |
 			each ifNotNil: [ self noCheckAdd: each ] ]
 ]
 
@@ -200,7 +200,7 @@ HashedCollection >> growSize [
 { #category : #private }
 HashedCollection >> growTo: anInteger [
 	"Grow the elements array and reinsert the old elements"
-	
+
 	| oldElements |
 	oldElements := array.
 	array := Array new: anInteger.
@@ -223,7 +223,7 @@ HashedCollection >> noCheckAdd: anObject [
 { #category : #private }
 HashedCollection >> noCheckNoGrowFillFrom: anArray [
 	"Add the elements of anArray except nils to me assuming that I don't contain any of them, they are unique and I have more free space than they require."
-	
+
 	self subclassResponsibility
 ]
 
@@ -236,24 +236,24 @@ HashedCollection >> rehash [
 HashedCollection >> removeAll [
 	"remove all elements from this collection.
 	Preserve the capacity"
-	
+
 	self initialize: self capacity
 ]
 
 { #category : #private }
 HashedCollection >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or raise an error if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #private }
 HashedCollection >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
-	
+
 	| index start |
 	index := start := aKey hash \\ array size + 1.
-	[ 
+	[
 		(array at: index) ifNil: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

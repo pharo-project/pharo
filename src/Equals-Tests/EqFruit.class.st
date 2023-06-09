@@ -14,12 +14,6 @@ Class {
 	#category : #'Equals-Tests'
 }
 
-{ #category : #comparing }
-EqFruit >> = anObject [ 
-	self species = anObject species ifFalse: [^false].
-	^self valuesToCompareForEquality = anObject valuesToCompareForEquality
-]
-
 { #category : #staging }
 EqFruit >> beRipe [
 	stage := #ripe
@@ -40,14 +34,7 @@ EqFruit >> color [
 	^self subclassResponsibility
 ]
 
-{ #category : #comparing }
-EqFruit >> hash [
-	^self valuesToCompareForEquality inject: self species hash into: [:hash :comparisonValue|
-		(hash bitXor: comparisonValue hash) hashMultiply]
-
-]
-
-{ #category : #'initialize - release' }
+{ #category : #initialization }
 EqFruit >> initialize [
 	super initialize.
 	self beUnripe

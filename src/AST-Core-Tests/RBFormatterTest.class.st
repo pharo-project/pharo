@@ -32,7 +32,7 @@ RBFormatterTest >> formatterClass [
 { #category : #tests }
 RBFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
-		do: [ :each | 
+		do: [ :each |
 			| class |
 			class := testingEnvironment classNamed: each.
 			self
@@ -47,19 +47,19 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	inputSource := 'foo  <selector: #= > ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
-	
+	self shouldnt: [self parseMethod: outputSource] raise: CodeError.
+
 	"already worked and still should for non-symbol arguments"
 	inputSource := 'foo  <selector: 0 > ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
-	
+	self shouldnt: [self parseMethod: outputSource] raise: CodeError.
+
 	"already worked and should still work for pragmas without arguments"
 	inputSource := 'foo  <selector> ^ self'.
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification
+	self shouldnt: [self parseMethod: outputSource] raise: CodeError
 ]
 
 { #category : #tests }
@@ -72,20 +72,11 @@ RBFormatterTest >> testLiteralDynamicArray [
 
 { #category : #tests }
 RBFormatterTest >> testParseError [
-	| inputSource errorNode |
-	"parse error nodes should have the faulty code"
-	inputSource := ')'.
-   errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
-]
 
-{ #category : #tests }
-RBFormatterTest >> testParseError2 [
-	| inputSource errorNode |
-	"parse error nodes should have the faulty code"
-	inputSource := '( 1 + 2'.
-   errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
+	| source node |
+	source := ' +  foo:  )'.
+	node := self parseFaultyExpression: source.
+	self assert: node formattedCode equals: source
 ]
 
 { #category : #tests }

@@ -54,7 +54,7 @@ PluggableCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect f
 { #category : #accessing }
 PluggableCanvas >> extent [
 
-	self apply: [ :c | ^c extent ].
+	self apply: [ :c | ^c extent ]
 ]
 
 { #category : #'drawing - ovals' }
@@ -72,10 +72,10 @@ PluggableCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw bo
 	(aFillStyle isSolidFill) ifTrue:[
 		^self fillOval: aRectangle color: aFillStyle asColor borderWidth: bw borderColor: bc].
 	"Use a BalloonCanvas instead"
-	
-	self apply: [ :c | 
+
+	self apply: [ :c |
 		c drawOval: (aRectangle insetBy: bw // 2)
-			color: aFillStyle 
+			color: aFillStyle
 			borderWidth: bw
 			borderColor: bc ]
 ]
@@ -95,13 +95,13 @@ PluggableCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"We have a very special case for filling with infinite forms"
 	(aFillStyle isBitmapFill and:[aFillStyle origin = (0@0)]) ifTrue:[
 		pattern := aFillStyle form.
-		(aFillStyle direction = (pattern width @ 0) 
+		(aFillStyle direction = (pattern width @ 0)
 			and:[aFillStyle normal = (0@pattern height)]) ifTrue:[
 				"Can use an InfiniteForm"
 				^self fillRectangle: aRectangle color: (InfiniteForm with: pattern)].
 	].
 
-	self apply: [ :c | 
+	self apply: [ :c |
 		c drawRectangle: aRectangle
 			color: aFillStyle
 			borderWidth: 0
@@ -147,7 +147,7 @@ PluggableCanvas >> line: pt1 to: pt2 width: w color: c [
 { #category : #accessing }
 PluggableCanvas >> origin [
 
-	self apply: [ :c | ^c origin ].
+	self apply: [ :c | ^c origin ]
 ]
 
 { #category : #'drawing - images' }

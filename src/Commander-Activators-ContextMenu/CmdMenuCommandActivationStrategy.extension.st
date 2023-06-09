@@ -4,7 +4,7 @@ Extension { #name : #CmdMenuCommandActivationStrategy }
 CmdMenuCommandActivationStrategy class >> buildContextMenuFor: aMorph inContext: aToolContext [
 
 	| menu |
-	menu := self buildMenuInContext: aToolContext.	
+	menu := self buildMenuInContext: aToolContext.
 	^menu buildContextMenuFor: aMorph
 ]
 

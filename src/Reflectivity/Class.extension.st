@@ -8,7 +8,7 @@ Class >> intanceSpecificMetaLinksAvailable [
 { #category : #'*Reflectivity' }
 Class >> isInClassHierarchyOf: aClass [
 
-	^ (self includesBehavior: aClass) or: [ 
+	^ (self includesBehavior: aClass) or: [
 		  aClass includesBehavior: self ]
 ]
 

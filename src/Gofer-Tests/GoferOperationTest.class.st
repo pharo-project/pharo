@@ -62,7 +62,7 @@ GoferOperationTest >> setUp [
 { #category : #running }
 GoferOperationTest >> setUpEnvironment [
 
-	environment := self class environment.
+	environment := self class environment
 ]
 
 { #category : #running }
@@ -86,12 +86,12 @@ GoferOperationTest >> testCleanup [
 		load.
 	class := environment classNamed: #GoferFoo.
 	environment organization addCategory: #'GoferFoo-Empty'.
-	class organization addCategory: #empty.
-	class class organization addCategory: #empty.
+	class addProtocol: #empty.
+	class class addProtocol: #empty.
 	gofer cleanup.
-	self deny: (Smalltalk organization categories includes: #'GoferFoo-Empty').
-	self deny: (class organization categories includes: #'GoferFoo-Empty').
-	self deny: (class class organization categories includes: #'GoferFoo-Empty')
+	self deny: (self packageOrganizer categories includes: #'GoferFoo-Empty').
+	self deny: (class hasProtocol: #'GoferFoo-Empty').
+	self deny: (class class hasProtocol: #'GoferFoo-Empty')
 ]
 
 { #category : #tests }
@@ -103,7 +103,7 @@ GoferOperationTest >> testCommit [
 		package: 'GoferFoo';
 		load.
 	gofer := Gofer new.
-	gofer 
+	gofer
 		disablePackageCache;
 		repository: repository;
 		package: 'GoferFoo';
@@ -114,7 +114,7 @@ GoferOperationTest >> testCommit [
 { #category : #tests }
 GoferOperationTest >> testFetch [
 
-	gofer 
+	gofer
 		package: 'GoferFoo';
 		fetch
 ]

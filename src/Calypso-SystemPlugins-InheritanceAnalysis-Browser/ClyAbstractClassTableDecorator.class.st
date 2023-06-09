@@ -16,7 +16,7 @@ ClyAbstractClassTableDecorator class >> browserPluginClass [
 { #category : #decoration }
 ClyAbstractClassTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
-		
+
 	nameMorph := anItemCellMorph label.
 	nameMorph emphasis: TextEmphasis italic emphasisCode.
 	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment

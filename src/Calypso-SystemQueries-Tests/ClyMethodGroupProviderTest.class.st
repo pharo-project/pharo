@@ -25,6 +25,6 @@ ClyMethodGroupProviderTest >> classSampleWhichHasGroup [
 ClyMethodGroupProviderTest >> testBuildingGroups [
 
 	self buildGroupsFor: self classSampleWhichHasGroup.
-	
+
 	self assert: builtGroups notEmpty
 ]

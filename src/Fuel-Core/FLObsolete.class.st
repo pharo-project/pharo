@@ -11,3 +11,9 @@ Class {
 FLObsolete class >> signalWithName: classOrTraitName [
 	^ self signal: classOrTraitName printString, ' can not be serialized as global because it is obsolete.'
 ]
+
+{ #category : #testing }
+FLObsolete >> isResumable [
+	"Allow users to ignore errors if they know what they are doing"
+	^ true
+]

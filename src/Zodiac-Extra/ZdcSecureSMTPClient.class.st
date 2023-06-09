@@ -37,17 +37,16 @@ ZdcSecureSMTPClient class >> defaultPortForStartTLS [
 ZdcSecureSMTPClient class >> sendUsingGMailAccount: senderAddress password: password to: receiverAddress message: mailMessage [
 	| smtpClient |
 	(smtpClient := self new)
-		user: senderAddress; 
+		user: senderAddress;
 		password: password.
 	smtpClient openOnHost: (NetNameResolver addressForName: 'smtp.gmail.com') port: 465.
 	mailMessage setField: 'from' toString: senderAddress.
 	mailMessage setField: 'to' toString: receiverAddress.
-	^ smtpClient 
+	^ smtpClient
 		mailFrom: senderAddress to: { receiverAddress } text: mailMessage text;
-		quit; 
+		quit;
 		close;
 		yourself
-
 ]
 
 { #category : #'private - protocol' }
@@ -65,7 +64,7 @@ ZdcSecureSMTPClient >> alternativeLogin [
 { #category : #private }
 ZdcSecureSMTPClient >> ensureConnection [
 	"Overwritten & refactored"
-		
+
 	self isConnected ifTrue: [ ^ self].
 	self stream ifNotNil: [ self stream close ].
 	self setupStream.
@@ -77,21 +76,21 @@ ZdcSecureSMTPClient >> ensureConnection [
 { #category : #'private - protocol' }
 ZdcSecureSMTPClient >> fetchNextResponse [
 	"The FTP and similar protocols allow multi-line responses.
-	If the response is multi-line, the fourth character of the first line is a  
-	$- and the last line repeats the numeric code but the code is followed by 
+	If the response is multi-line, the fourth character of the first line is a
+	$- and the last line repeats the numeric code but the code is followed by
 	a space."
 
 	| response result firstLine |
 	result := '' writeStream.
 	firstLine := self nextLineFromStream.
 	result nextPutAll: firstLine.
-	(self responseIsContinuation: firstLine) 
+	(self responseIsContinuation: firstLine)
 		ifTrue: [
 			"continued over multiple lines. Discard continuation lines."
 			[response := self nextLineFromStream.
 			response ifNil: [ ^ nil ].
-			response size > 3 and: 
-					[ (response copyFrom: 1 to: 3) = (firstLine copyFrom: 1 to: 3) 
+			response size > 3 and:
+					[ (response copyFrom: 1 to: 3) = (firstLine copyFrom: 1 to: 3)
 						and: [ (response at: 4) = Character space ] ] ] whileFalse: [
 							result cr; nextPutAll: response ] ].
 	self lastResponse: result contents
@@ -129,18 +128,16 @@ ZdcSecureSMTPClient >> nextLineFromStream [
 { #category : #'private - protocol' }
 ZdcSecureSMTPClient >> requireStartTLS [
 	(self lastResponse includesSubstring: 'STARTTLS')
-		ifFalse: [ ^ self error: 'Server does not seem to support STARTTLS' ].
-
+		ifFalse: [ ^ self error: 'Server does not seem to support STARTTLS' ]
 ]
 
 { #category : #'private - protocol' }
 ZdcSecureSMTPClient >> sendCommand: aString [
 	self logVerbose: aString.
-	self stream 
+	self stream
 		nextPutAll: aString;
 		nextPutAll: #[13 10];
 		flush
-
 ]
 
 { #category : #private }
@@ -155,8 +152,7 @@ ZdcSecureSMTPClient >> setupStreamForSSL [
 	self stream connect.
 	self logVerbose: 'SSL Connect OK.'.
 	"as we connect directly with SSL the first message will be a 220 server greeting"
-	self checkResponse.
-
+	self checkResponse
 ]
 
 { #category : #private }
@@ -172,11 +168,11 @@ ZdcSecureSMTPClient >> setupStreamForStartTLS [
 
 { #category : #'private - protocol' }
 ZdcSecureSMTPClient >> startTLS [
-	"Send a STARTTLS command and after the response, 
+	"Send a STARTTLS command and after the response,
 	switch to a SecureSocketStream and do the client handshake"
-	
+
 	self sendCommand: 'STARTTLS'.
-	self checkResponse.	
+	self checkResponse.
 	self stream: (ZdcSecureSocketStream on: self stream socket).
 	self stream connect.
 	self logVerbose: 'SSL Connect OK.'

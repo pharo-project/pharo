@@ -13,7 +13,7 @@ Class {
 { #category : #decoration }
 ClyProjectTableIndentationDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
+
 	anItemCellMorph useFullIndentation
 ]
 
@@ -24,7 +24,7 @@ ClyProjectTableIndentationDecorator class >> decorateTableCell: anItemCellMorph 
 { #category : #decoration }
 ClyProjectTableIndentationDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserContext
 ]
 

@@ -17,26 +17,26 @@ STONLargeWriteReadTest >> materialize: string [
 
 { #category : #private }
 STONLargeWriteReadTest >> reader: string [
-	^ (super reader: string) 
-		optimizeForLargeStructures; 
+	^ (super reader: string)
+		optimizeForLargeStructures;
 		yourself
 ]
 
 { #category : #private }
 STONLargeWriteReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream; 
-			optimizeForLargeStructures; 
+		STON writer
+			on: stream;
+			optimizeForLargeStructures;
 			nextPut: anObject ]
 ]
 
 { #category : #private }
 STONLargeWriteReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
-		STON jsonWriter 
-			on: stream; 
+		STON jsonWriter
+			on: stream;
 			prettyPrint: true;
-			optimizeForLargeStructures; 
+			optimizeForLargeStructures;
 			nextPut: anObject ]
 ]

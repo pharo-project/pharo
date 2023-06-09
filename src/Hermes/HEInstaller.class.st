@@ -71,44 +71,10 @@ HEInstaller >> build: aHEClass [
 		sharedPools: aHEClass sharedPools;
 		category: aHEClass category;
 		classSlots: (self asSlots: aHEClass classInstancevariables) ].
-	
+
 	self processTraitsFrom: aHEClass in: newClass.
-	
-	^newClass.
-]
 
-{ #category : #'creating traits' }
-HEInstaller >> buildTrait: aTraitDefinition [
-	| newTrait traitComposition traitClass|
-	
-	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
-	
-	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
-	
-	traitComposition := self buildTraitCompositionFor: aTraitDefinition traitComposition.	
-	
-	newTrait := traitClass
-		named: aTraitDefinition traitName
-		uses: traitComposition
-		package: aTraitDefinition category
-		env: environment.
-
-	newTrait classTrait traitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition).
-
-	^ newTrait
-]
-
-{ #category : #'creating traits' }
-HEInstaller >> buildTraitCompositionFor: traitComposition [
-
-	| aLiteral |
-	
-	aLiteral := (traitComposition asLiteralIn: environment).
-	aLiteral isArray 
-		ifTrue: [ ^ aLiteral 
-							ifEmpty: [ self emptyTraitCompositionClass new ]
-							ifNotEmpty: [ self traitSequenceClass withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
-		ifFalse: [ ^ aLiteral asTraitComposition ]
+	^newClass
 ]
 
 { #category : #accessing }
@@ -144,16 +110,10 @@ HEInstaller >> doInstallPackage: aHEPackage [
 
 	"6. Install extension methods"
 	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
-	
+
 	"7. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
 	self validateNoNewUndeclared
-]
-
-{ #category : #'creating traits' }
-HEInstaller >> emptyTraitCompositionClass [
-
-	^ Smalltalk at: #TaEmptyComposition ifAbsent: [ self error: 'Trait support has not been loaded' ]
 ]
 
 { #category : #accessing }
@@ -176,10 +136,10 @@ HEInstaller >> existingClass: aHEClass [
 
 { #category : #'validating existence' }
 HEInstaller >> existingTrait: aHETrait [
-	(environment includesKey: aHETrait traitName) ifTrue:[ 
+	(environment includesKey: aHETrait traitName) ifTrue:[
 		self error: (self messageExistingTrait: aHETrait)
 	].
-	
+
 	^nil
 ]
 
@@ -187,17 +147,17 @@ HEInstaller >> existingTrait: aHETrait [
 HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
-	hasTraits := Smalltalk globals hasClassNamed: #Trait.
+	hasTraits := Smalltalk globals hasClassNamed: #Trait
 ]
 
 { #category : #'installing methods' }
 HEInstaller >> installExtensionMethod: extensionMethod [
 	| aClass |
 	aClass := self environment classNamed: extensionMethod className.
-	
+
 	aClass ifNil: [ self error: 'Required class named: ' , extensionMethod className, ' does not exists.' ].
-	
-	self rebuildMethod: extensionMethod into: aClass.
+
+	self rebuildMethod: extensionMethod into: aClass
 ]
 
 { #category : #'installing methods' }
@@ -210,10 +170,9 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 
 { #category : #'installing package' }
 HEInstaller >> installPackage: aHEPackage [
-	| storedAnnouncements |
-	
-	storedAnnouncements := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ].	
-	storedAnnouncements do: [ :e | SystemAnnouncer uniqueInstance announce: e ].
+
+	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ])
+		do: [ :storedAnnouncement | SystemAnnouncer announce: storedAnnouncement ]
 ]
 
 { #category : #messages }
@@ -239,21 +198,21 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 	hasTraits ifFalse: [ ^ self ].
 
 	newClass setTraitComposition: (self buildTraitCompositionFor: aHEClass traitComposition).
-	newClass class setTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition).
+	newClass class setTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition)
 ]
 
 { #category : #'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
-	
-	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].	
+
+	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+	newMethod := CompiledMethod newMethod: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
@@ -281,22 +240,16 @@ HEInstaller >> reportNewUndeclareds: newUndeclareds [
 HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	aClass
 		compiledMethodAt: aHEMethod name
-		ifPresent: [ :m | 
-			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].  	
+		ifPresent: [ :m |
+			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].
 			self error: (self messageMethod: aHEMethod alreadyExistsIn: aClass ) ]
 		ifAbsent: [ ^ true ]
-]
-
-{ #category : #'creating traits' }
-HEInstaller >> traitSequenceClass [
-
-	^ Smalltalk at: #TaSequence ifAbsent: [ self error: 'Trait support has not been loaded' ]
 ]
 
 { #category : #'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
 	self reportNewUndeclareds: self createdUndeclared.
-	
+
 	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
 		, Undeclared keys printString)
 ]

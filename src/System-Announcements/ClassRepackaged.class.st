@@ -18,7 +18,7 @@ ClassRepackaged class >> classRepackaged: aClass oldPackage: oldPackage newPacka
 			classRepackaged: aClass;
 			oldPackage: oldPackage;
 			newPackage: newPackage;
-			yourself.
+			yourself
 ]
 
 { #category : #testing }
@@ -46,43 +46,43 @@ ClassRepackaged >> affectsMethodsTaggedWith: tagName [
 
 { #category : #accessing }
 ClassRepackaged >> classAffected [
-	
+
 	^ classRepackaged
 ]
 
 { #category : #accessing }
 ClassRepackaged >> classRepackaged [
-	
+
 	^ classRepackaged
 ]
 
 { #category : #accessing }
 ClassRepackaged >> classRepackaged: anObject [
-	
+
 	classRepackaged := anObject
 ]
 
 { #category : #accessing }
 ClassRepackaged >> newPackage [
-	
+
 	^ newPackage
 ]
 
 { #category : #accessing }
 ClassRepackaged >> newPackage: anObject [
-	
+
 	newPackage := anObject
 ]
 
 { #category : #accessing }
 ClassRepackaged >> oldPackage [
-	
+
 	^ oldPackage
 ]
 
 { #category : #accessing }
 ClassRepackaged >> oldPackage: anObject [
-	
+
 	oldPackage := anObject
 ]
 

@@ -23,7 +23,7 @@ MockMessageSend class >> on: aSymbol with: anArray do: aBlock [
 { #category : #testing }
 MockMessageSend >> matches: aMessage [
 
-	^ (self matchesSelector: aMessage selector) and: [ 
+	^ (self matchesSelector: aMessage selector) and: [
 		  self matchesArguments: aMessage arguments ]
 ]
 
@@ -32,8 +32,8 @@ MockMessageSend >> matchesArguments: anArray [
 
 	arguments ifNil: [ ^ true ].
 	arguments size = anArray size ifFalse: [ ^ false ].
-	anArray with: arguments do: [ :actual :expected | 
-		(expected ~= MockObject any and: [ actual ~= expected ]) ifTrue: [ 
+	anArray with: arguments do: [ :actual :expected |
+		(expected ~= MockObject any and: [ actual ~= expected ]) ifTrue: [
 			^ false ] ].
 	^ true
 ]

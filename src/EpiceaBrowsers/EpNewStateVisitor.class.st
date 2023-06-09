@@ -32,6 +32,12 @@ EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
 ]
 
 { #category : #visitor }
+EpNewStateVisitor >> visitCategoryRegistration: aClassCategoryCreatedChange [
+
+	^ aClassCategoryCreatedChange categoryName
+]
+
+{ #category : #visitor }
 EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
 
 	^ aClassCategoryRenamedChange newCategoryName
@@ -56,21 +62,20 @@ EpNewStateVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 ]
 
 { #category : #visitor }
-EpNewStateVisitor >> visitLogCommentModification: anEvent [ 
+EpNewStateVisitor >> visitLogCommentModification: anEvent [
 	^ anEvent newComment
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitMethodAddition: aMethodCreatedChange [
-	^ self 
-		printProtocol: aMethodCreatedChange protocol
-		sourceCode: aMethodCreatedChange sourceCode
+
+	^ self printProtocol: aMethodCreatedChange protocol sourceCode: aMethodCreatedChange sourceCode
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitMethodModification: aMethodModification [
 
-	^ self 
+	^ self
 		printProtocol: aMethodModification newProtocol
 		sourceCode: aMethodModification newSourceCode
 ]

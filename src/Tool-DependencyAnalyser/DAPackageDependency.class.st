@@ -48,7 +48,7 @@ DAPackageDependency >> isExternal [
 
 { #category : #testing }
 DAPackageDependency >> isInheritanceDependency [
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -58,7 +58,7 @@ DAPackageDependency >> isInternal [
 
 { #category : #testing }
 DAPackageDependency >> isMessageSendDependency [
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -88,7 +88,7 @@ DAPackageDependency >> printOn: aStream [
 
 { #category : #printing }
 DAPackageDependency >> printReasonOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: source packageName;
 		nextPutAll: ' -> ';
 		nextPutAll: target packageName

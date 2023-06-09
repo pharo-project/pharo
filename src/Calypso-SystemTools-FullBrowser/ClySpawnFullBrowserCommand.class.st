@@ -22,14 +22,14 @@ Class {
 { #category : #activation }
 ClySpawnFullBrowserCommand class >> browserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClySystemBrowserContext
 ]
 
 { #category : #activation }
 ClySpawnFullBrowserCommand class >> browserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $b meta for: ClySystemBrowserContext
 ]
 
@@ -41,7 +41,7 @@ ClySpawnFullBrowserCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdDoubleClickActivation for: ClyFullBrowserContext
 ]
 
@@ -64,6 +64,6 @@ ClySpawnFullBrowserCommand >> execute [
 { #category : #execution }
 ClySpawnFullBrowserCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]

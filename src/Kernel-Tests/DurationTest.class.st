@@ -19,7 +19,7 @@ DurationTest >> classToBeTested [
 { #category : #coverage }
 DurationTest >> selectorsToBeIgnored [
 
-	| private | 
+	| private |
 	private := #( #printOn: ).
 
 	^ super selectorsToBeIgnored, private
@@ -61,6 +61,24 @@ DurationTest >> testAsDelay [
 { #category : #tests }
 DurationTest >> testAsDuration [
 	self assert: aDuration asDuration equals: aDuration
+]
+
+{ #category : #tests }
+DurationTest >> testAsMicroseconds [
+
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: (Duration seconds: 1) asMicroseconds equals: 1000000.
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
+	self assert: aDuration asMicroseconds equals: 93784000000.
+	self assert: (Duration microSeconds: 3775) asSeconds equals: 0.
+	self assert: (Duration microSeconds: 3775000) asSeconds equals: 3.
+	self assert: (Duration microSeconds: 3775) nanoSeconds equals: 3775000.
+	self assert: (Duration microSeconds: -3775) asSeconds equals: 0.
+	self assert: (Duration microSeconds: -3775000) asSeconds equals: -3.
+	self assert: (Duration microSeconds: -3775000) nanoSeconds equals: -775000000.
+	"but"
+	self assert: (Duration microSeconds: -3775000) asNanoSeconds equals: -3775000000
 ]
 
 { #category : #tests }
@@ -219,6 +237,36 @@ DurationTest >> testDivide [
 ]
 
 { #category : #tests }
+DurationTest >> testEqualsSign [
+
+	self
+		assert: aDuration
+		equals:
+			(Duration
+				days: 1
+				hours: 2
+				minutes: 3
+				seconds: 4
+				nanoSeconds: 5).
+
+	self assert: aDuration equals: aDuration.
+
+	self
+		deny: aDuration
+		equals:
+			(Duration
+				days: 1
+				hours: 2
+				minutes: 3
+				seconds: 4
+				nanoSeconds: 4).
+
+	self assert: (Time seconds: 1) asNanoSeconds equals: (Duration seconds: 1) asNanoSeconds.
+	"but"
+	self deny: (Time seconds: 1) equals: (Duration seconds: 1)
+]
+
+{ #category : #tests }
 DurationTest >> testFromString [
 	self assert: aDuration equals: (Duration fromString: '1:02:03:04.000000005')
 ]
@@ -247,17 +295,17 @@ DurationTest >> testHumanReadablePrintString [
 	self assert: 0 seconds humanReadablePrintString equals: '0 seconds'.
 	self assert: 1 second humanReadablePrintString equals: '1 second'.
 	self assert: 1 second negated humanReadablePrintString equals: '- 1 second'.
-	self 
-		assert: 1002003004 nanoSeconds humanReadablePrintString 
+	self
+		assert: 1002003004 nanoSeconds humanReadablePrintString
 		equals: '1 second 2 milliseconds 3 microseconds 4 nanoseconds'.
-	self 
-		assert: (Duration days: 1 hours: 1 minutes: 1 seconds: 1) humanReadablePrintString 
+	self
+		assert: (Duration days: 1 hours: 1 minutes: 1 seconds: 1) humanReadablePrintString
 		equals: '1 day 1 hour 1 minute 1 second'.
-	self 
-		assert: (Duration days: 2 hours: 4 minutes: 8 seconds: 16) humanReadablePrintString 
+	self
+		assert: (Duration days: 2 hours: 4 minutes: 8 seconds: 16) humanReadablePrintString
 		equals: '2 days 4 hours 8 minutes 16 seconds'.
-		
-	self shouldnt: [ 17.6782 years humanReadablePrintString ] raise: MessageNotUnderstood .
+
+	self shouldnt: [ 17.6782 years humanReadablePrintString ] raise: MessageNotUnderstood
 ]
 
 { #category : #tests }
@@ -276,13 +324,24 @@ DurationTest >> testIsZero [
 { #category : #tests }
 DurationTest >> testLessThan [
 	self assert: aDuration  < (aDuration + 1 day ).
-	self deny: aDuration < aDuration.
+	self deny: aDuration < aDuration
+]
+
+{ #category : #tests }
+DurationTest >> testMicroSeconds [
+	#(#(5 0 5000) #(1000005 1 5000) #(-5 0 -5000) #(-1000005 -1 -5000) #(1234000567 1234 567000) #(-1234000567 -1234 -567000))
+		do: [ :each |
+			| duration |
+			duration := Duration microSeconds: each first.
+			self assert: duration asSeconds equals: each second.
+			self assert: duration nanoSeconds equals: each third ]
+	"argument (milliseconds)        seconds nanoseconds"
 ]
 
 { #category : #tests }
 DurationTest >> testMilliSeconds [
 	#(#(5 0 5000000) #(1005 1 5000000) #(-5 0 -5000000) #(-1005 -1 -5000000) #(1234567 1234 567000000) #(-1234567 -1234 -567000000))
-		do: [ :each | 
+		do: [ :each |
 			| duration |
 			duration := Duration milliSeconds: each first.
 			self assert: duration asSeconds equals: each second.
@@ -380,6 +439,21 @@ DurationTest >> testModulo [
 				minutes: 0
 				seconds: 0
 				nanoSeconds: 1)
+]
+
+{ #category : #tests }
+DurationTest >> testMultiplication [
+
+	self assert: aDuration * 1 equals: aDuration.
+	self assert: aDuration * 2 equals: (Duration
+				days: 2
+				hours: 4
+				minutes: 6
+				seconds: 8
+				nanoSeconds: 10).
+	self assert: 1 nanoSecond * 2 equals: 2 nanoSeconds.
+	"but"
+	self assert: 1 nanoSecond * 1.99 equals: 1 nanoSecond
 ]
 
 { #category : #tests }
@@ -527,20 +601,20 @@ DurationTest >> testReadFromMillisecond [
 ]
 
 { #category : #tests }
-DurationTest >> testReadFromNoException [	
+DurationTest >> testReadFromNoException [
 
-	#(	'0:00:00:00' 
-		'0:00:00:00.000000001' 
-		'0:00:00:00.999999999' 
-		'0:00:00:00.100000000' 
-		'0:00:00:00.10' 
-		'0:00:00:00.1' 
-		'0:00:00:01' 
-		'0:12:45:45' 
-		'1:00:00:00' 
-		'365:00:00:00' 
-		'-7:09:12:06.10' 
-		'+0:01:02:55' 
+	#(	'0:00:00:00'
+		'0:00:00:00.000000001'
+		'0:00:00:00.999999999'
+		'0:00:00:00.100000000'
+		'0:00:00:00.10'
+		'0:00:00:00.1'
+		'0:00:00:01'
+		'0:12:45:45'
+		'1:00:00:00'
+		'365:00:00:00'
+		'-7:09:12:06.10'
+		'+0:01:02:55'
 		'+0:01:02:3') do: [:each | each asDuration printString = each]
 ]
 
@@ -605,6 +679,21 @@ DurationTest >> testSecondsNanoSeconds [
 	self assert: (Duration seconds: 0 nanoSeconds: 5) equals: (Duration nanoSeconds: 5).
 	"not sure I should include in sunit since its Private "
 	self assert: (aDuration seconds: 0 nanoSeconds: 1) equals: (Duration nanoSeconds: 1)
+]
+
+{ #category : #tests }
+DurationTest >> testStar [
+
+	self assert: aDuration * 1 equals: aDuration.
+	self assert: aDuration * 2 equals: (Duration
+				days: 2
+				hours: 4
+				minutes: 6
+				seconds: 8
+				nanoSeconds: 10).
+	self assert: 1 nanoSecond * 2 equals: 2 nanoSeconds.
+	"but"
+	self assert: 1 nanoSecond * 1.99 equals: 1 nanoSecond
 ]
 
 { #category : #tests }

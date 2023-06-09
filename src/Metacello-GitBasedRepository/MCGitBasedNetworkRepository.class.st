@@ -87,11 +87,10 @@ MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: vers
   ^ projectPath , ':::' , versionString
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCGitBasedNetworkRepository class >> flushDownloadCache [
-  "self flushDownloadCache"
 
-  repoDownloadCache := nil
+	repoDownloadCache := nil
 ]
 
 { #category : #utilities }
@@ -99,9 +98,8 @@ MCGitBasedNetworkRepository class >> flushProjectEntry: projectPath version: ver
     self downloadCache removeKey: (self downloadCacheKey: projectPath version: versionString) ifAbsent: [  ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCGitBasedNetworkRepository class >> initialize [
-  "self initialize"
 
 	(Smalltalk classNamed: #SessionManager)
 		ifNotNil: [ :c | c default perform: #registerNetworkClassNamed: with: self name ]
@@ -114,7 +112,7 @@ MCGitBasedNetworkRepository class >> initialize [
 MCGitBasedNetworkRepository class >> isAbstract [
     "abstract as far as creating new repositories interactively? yes"
 
-    ^ true
+    ^ self == MCGitBasedNetworkRepository
 ]
 
 { #category : #testing }

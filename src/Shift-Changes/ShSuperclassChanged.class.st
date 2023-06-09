@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 ShSuperclassChanged >> hasToMigrateInstances [
-	^ true.
+	^ true
 ]
 
 { #category : #testing }

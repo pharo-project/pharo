@@ -7,37 +7,38 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#classInstVars : [
-		'instance'
-	],
 	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }
-ReservedVariable class >> instance [ 
-	^instance ifNil: [ instance := self new ]
+ReservedVariable class >> instance [
+	self deprecated: 'use new to get a new instance or #lookupVar: for the shared instance'.
+	^self new.
 ]
 
 { #category : #testing }
-ReservedVariable class >> isAbstract [ 
+ReservedVariable class >> isAbstract [
 	^self = ReservedVariable
 ]
 
 { #category : #compiler }
 ReservedVariable class >> lookupDictionary [
 	"create a loopup table name -> instance for Semantic Analysis"
-	^ (self subclasses collect: [ :class | 
-		   class instance name -> class instance ]) asDictionary
-]
 
-{ #category : #testing }
-ReservedVariable class >> nameIsReserved: aName [
-	^self subclasses anySatisfy: [ :class | class variableName = aName ]
+	^ (self subclasses collect: [ :class |
+		   | instance |
+		   instance := class new.
+		   instance name -> instance ]) asDictionary
 ]
 
 { #category : #accessing }
 ReservedVariable class >> variableName [
 	^self subclassResponsibility
+]
+
+{ #category : #converting }
+ReservedVariable >> asDoItVariableFrom: aContext [
+	^ DoItVariable fromContext: aContext variable: self
 ]
 
 { #category : #converting }
@@ -94,6 +95,6 @@ ReservedVariable >> usingMethods [
 
 { #category : #debugging }
 ReservedVariable >> write: aValue inContext: aContext [
-	
+
 	self error: name, ' is reserved word and cant be modified'
 ]

@@ -45,25 +45,27 @@ Class {
 }
 
 { #category : #copying }
-FluidClassBuilder >> fillInstanceSideFromClass: aClass [ 
+FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 
 	super fillInstanceSideFromClass: aClass.
 	self superclass: aClass superclass.
 
 	self layout: aClass classLayout class.
-		
-	self sharedVariables: (aClass classVariables collect: [ :e | e key ]) .
-	self sharedPools: (aClass sharedPools collect: [:each | each name ]) asArray.
+
+	self sharedVariables: (aClass classVariables collect: [ :e | e key ]).
+	self sharedPools: 	(aClass sharedPools collect: [ :each | each name ]) asArray
 ]
 
 { #category : #building }
-FluidClassBuilder >> fillShiftClassBuilder [ 
+FluidClassBuilder >> fillShiftClassBuilder [
 
 	super fillShiftClassBuilder.
-	shiftClassBuilder superclass: superclassToBuild.
-	shiftClassBuilder sharedVariables: sharedVariables.
-	shiftClassBuilder sharedPoolsCollectionOfSymbols: sharedPools.
-	shiftClassBuilder layoutClass: layout.
+
+	shiftClassBuilder
+		superclass: superclassToBuild;
+		sharedVariables: sharedVariables;
+		sharedPoolsCollectionOfSymbols: sharedPools;
+		layoutClass: layout.
 
 	^ shiftClassBuilder
 ]
@@ -78,12 +80,14 @@ FluidClassBuilder >> initialize [
 ]
 
 { #category : #API }
-FluidClassBuilder >> layout: aClass [ 
+FluidClassBuilder >> layout: aClass [
+
 	layout := aClass
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> layoutToBuild [
+
 	^ layout
 ]
 

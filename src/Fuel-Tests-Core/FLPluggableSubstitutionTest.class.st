@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 FLPluggableSubstitutionTest >> testAvoidRecursion [
 	| result |
-	self analyzer when: [ :x | x < 10 ] substituteBy: [ :x | x + 1 ].
+	self serializer when: [ :x | x < 10 ] substituteBy: [ :x | x + 1 ].
 
 	result := self resultOfSerializeAndMaterialize: 1.
 
@@ -20,8 +20,9 @@ FLPluggableSubstitutionTest >> testAvoidRecursion [
 { #category : #tests }
 FLPluggableSubstitutionTest >> testLowercaseSomeSymbols [
 	| result |
-	self analyzer when: [ :x | #A = x ] substituteBy: [ :x | #a ].
-	self analyzer when: [ :x | #B = x ] substituteBy: [ :x | #b ].
+	self serializer
+		when: [ :x | #A = x ] substituteBy: [ :x | #a ];
+		when: [ :x | #B = x ] substituteBy: [ :x | #b ].
 
 	result := self resultOfSerializeAndMaterialize: #(A B C).
 
@@ -31,7 +32,9 @@ FLPluggableSubstitutionTest >> testLowercaseSomeSymbols [
 { #category : #tests }
 FLPluggableSubstitutionTest >> testPrivateExcluded [
 	| result |
-	self analyzer when: [ :x | x isBehavior ] substituteBy: [ :x | FLWeakClassMock ].
+	self serializer
+		when: [ :x | x isBehavior ]
+		substituteBy: [ :x | FLWeakClassMock ].
 
 	result := self resultOfSerializeAndMaterialize: {String new . FLPair}.
 
@@ -44,7 +47,9 @@ FLPluggableSubstitutionTest >> testPrivateExcludedAndWithConflicts [
 	"Tests issue #209"
 
 	| result |
-	self analyzer when: [ :x | FLPair == x ] substituteBy: [ :x | FLWeakClassMock ].
+	self serializer
+		when: [ :x | FLPair == x ]
+		substituteBy: [ :x | FLWeakClassMock ].
 
 	result := self resultOfSerializeAndMaterialize: {FLPair new . FLPair}.
 
@@ -55,7 +60,9 @@ FLPluggableSubstitutionTest >> testPrivateExcludedAndWithConflicts [
 { #category : #tests }
 FLPluggableSubstitutionTest >> testSimple [
 	| result |
-	self analyzer when: [ :x | x < 0 ] substituteBy: [ :x | 0 ].
+	self serializer
+		when: [ :x | x < 0 ]
+		substituteBy: [ :x | 0 ].
 
 	result := self resultOfSerializeAndMaterialize: -1.
 
@@ -66,7 +73,9 @@ FLPluggableSubstitutionTest >> testSimple [
 FLPluggableSubstitutionTest >> testSubstitute: anObject inPresenceOf: anotherObject [
 
 	| result |
-	self analyzer when: [:x | x == anObject ] substituteBy: [:x | 424242 ].
+	self serializer
+		when: [:x | x == anObject ]
+		substituteBy: [:x | 424242 ].
 
 	result := self resultOfSerializeAndMaterialize: {anObject. anotherObject}.
 	
@@ -77,7 +86,9 @@ FLPluggableSubstitutionTest >> testSubstitute: anObject inPresenceOf: anotherObj
 { #category : #tests }
 FLPluggableSubstitutionTest >> testSubstituteByItself [
 	| result |
-	self analyzer when: [ :x | true ] substituteBy: [ :x | x ].
+	self serializer
+		when: [ :x | true ]
+		substituteBy: [ :x | x ].
 
 	result := self resultOfSerializeAndMaterialize: 1.
 
@@ -109,7 +120,9 @@ FLPluggableSubstitutionTest >> testSubstituteUndefinedObjectInPresenceOfNil [
 FLPluggableSubstitutionTest >> testTransientPair [
 
 	| result |
-	self analyzer when: [:x | FLPair = x class] substituteBy: [:x | nil].
+	self serializer
+		when: [:x | FLPair = x class]
+		substituteBy: [:x | nil].
 
 	result := self resultOfSerializeAndMaterialize: FLPair new.
 	
@@ -120,7 +133,9 @@ FLPluggableSubstitutionTest >> testTransientPair [
 FLPluggableSubstitutionTest >> testTransientPairLeft [
 
 	| result |
-	self analyzer when: [:x | FLPair = x class and: [x left isNil not]] substituteBy: [:x | x copy left: nil].
+	self serializer
+		when: [:x | FLPair = x class and: [x left isNil not]]
+		substituteBy: [:x | x copy left: nil].
 
 	result := self resultOfSerializeAndMaterialize: (FLPair new left: $A; yourself).
 	
@@ -132,7 +147,9 @@ FLPluggableSubstitutionTest >> testUniqueSubstitution [
 	"Tests that an object with two occurrences in the graph is substituted to the *same* object."
 
 	| result |
-	self analyzer when: [ :x | x isNumber ] substituteBy: [ :x | x printString ].
+	self serializer
+		when: [ :x | x isNumber ]
+		substituteBy: [ :x | x printString ].
 
 	"This line demonstrates that behavior being tested is not trivial"
 	self deny: 1 printString identicalTo: 1 printString.

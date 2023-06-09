@@ -64,7 +64,7 @@ EpMonitorLogNode >> modificationTimeString [
 EpMonitorLogNode >> referencedGlobalNamesIfEmptyLog [
 
 	^ headReference isNull
-		ifTrue: [ #() ] 
+		ifTrue: [ #() ]
 		ifFalse: [ { headReference globalName } ]
 ]
 

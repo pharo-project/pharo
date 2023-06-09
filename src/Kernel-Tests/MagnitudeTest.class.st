@@ -22,14 +22,15 @@ MagnitudeTest >> testBeBetweenAnd [
 	self assert: (1 beBetween: 20 and: 5) equals: 5.
 	"above"
 	self assert: (30 beBetween: 5 and: 20) equals: 20.
-	self assert: (30 beBetween: 20 and: 5) equals: 20.
+	self assert: (30 beBetween: 20 and: 5) equals: 20
 ]
 
 { #category : #tests }
 MagnitudeTest >> testBetweenAnd [
+
 	self assert: (3 between: 0 and: 5).
 	self assert: (5.0 between: 5.0 and: 5.0).
-	self assert: (Date today between: Date today +1 and: Date today +3) not
+	self deny: (Date today between: Date today + 1 and: Date today + 3)
 ]
 
 { #category : #tests }
@@ -37,7 +38,7 @@ MagnitudeTest >> testCompareWithIfLesserIfEqualIfGreater [
 
 	self assert: ($b compareWith: $a ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 3.
 	self assert: ($a compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 1.
-	self assert: ($b compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 2.
+	self assert: ($b compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 2
 ]
 
 { #category : #tests }
@@ -78,5 +79,5 @@ MagnitudeTest >> testThreeWayCompareTo [
 
 	self assert: ($b threeWayCompareTo: $a) equals: 1.
 	self assert: ($a threeWayCompareTo: $b) equals: -1.
-	self assert: ($b threeWayCompareTo: $b ) equals: 0.
+	self assert: ($b threeWayCompareTo: $b ) equals: 0
 ]

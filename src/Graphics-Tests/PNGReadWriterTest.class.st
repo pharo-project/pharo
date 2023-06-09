@@ -23,7 +23,7 @@ PNGReadWriterTest >> coloredFiles16 [
 				(Base64MimeConverter mimeEncode: (bytes contents readStream)) contents
 		].
 	"
-	^{Color red-> 
+	^{Color red->
 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQFBQUBSsjp7wAAADZJ
 REFUeF7lziEBAAAMAjD6J8b9MRAT80uT65Af8AN+wA/4AT/gB/yAH/ADfsAP+AE/4AfmgQdc
 z9xqBS2pdAAAAABJRU5ErkJggg=='.
@@ -162,7 +162,7 @@ CiHUAAAAGUlEQVR4XmNgZMQPGBhHvoKRr2DkKxihCgBEmAQBphO0cAAAAABJRU5ErkJggg=='
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
 	colorsAndFiles
-		do: [ :assoc | 
+		do: [ :assoc |
 			| bytes color form |
 			color := assoc key.
 			bytes := assoc value base64Decoded.
@@ -243,7 +243,7 @@ PNGReadWriterTest >> encodeAndDecode: original [
 	original isColorForm
 		ifTrue: [ original colors
 				with: decoded colors
-				do: [ :c1 :c2 | 
+				do: [ :c1 :c2 |
 					| maxErr |
 					"we must round here due to encoding errors"
 					maxErr := 1.	"max. error for 8bit rgb component"
@@ -258,7 +258,7 @@ PNGReadWriterTest >> encodeAndDecode: original [
 PNGReadWriterTest >> encodeAndDecodeAlpha: original [
 	fileName := 'testAlpha', original depth printString,'.png'.
 	self encodeAndDecode: original.
-	self deleteFile.
+	self deleteFile
 ]
 
 { #category : #helpers }
@@ -268,7 +268,7 @@ PNGReadWriterTest >> encodeAndDecodeColor: aColor depth: aDepth [
 	aForm := Form extent: 32@32 depth: aDepth.
 	aForm fillColor: aColor.
 	self encodeAndDecode: aForm.
-	self deleteFile.
+	self deleteFile
 ]
 
 { #category : #helpers }
@@ -278,14 +278,14 @@ PNGReadWriterTest >> encodeAndDecodeDisplay: depth [
 	form := Form extent: (Display extent min: 560@560) depth: depth.
 	self currentWorld fullDrawOn: form getCanvas.
 	self encodeAndDecode: form.
-	self deleteFile.
+	self deleteFile
 ]
 
 { #category : #helpers }
 PNGReadWriterTest >> encodeAndDecodeForm: original [
 	fileName := 'testForm', original depth printString,'.png'.
 	self encodeAndDecode: original.
-	self deleteFile.
+	self deleteFile
 ]
 
 { #category : #helpers }
@@ -326,7 +326,7 @@ PNGReadWriterTest >> encodeAndDecodeReverse: original [
 	original isColorForm
 		ifTrue: [ original colors
 				with: decoded colors
-				do: [ :c1 :c2 | 
+				do: [ :c1 :c2 |
 					| maxErr |
 					"we must round here due to encoding errors"
 					maxErr := 1.	"max. error for 8bit rgb component"
@@ -346,7 +346,7 @@ PNGReadWriterTest >> encodeAndDecodeStream: file [
 	aForm := (PNGReadWriter new on: file) nextImage.
 	aForm ifNil:[^self error: 'nil form' ].
 	aForm display.
-	self encodeAndDecode: aForm.
+	self encodeAndDecode: aForm
 ]
 
 { #category : #helpers }
@@ -369,7 +369,7 @@ PNGReadWriterTest >> encodeAndDecodeWithColors: aColorForm [
 	max to: nColors do:[:i|
 		colors nextPut: (indexedColors atRandom: myRandom).
 	].
-	self deleteFile.
+	self deleteFile
 ]
 
 { #category : #helpers }
@@ -380,7 +380,7 @@ PNGReadWriterTest >> encodeAndDecodeWithError: aStream [
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
 	colorsAndFiles
-		do: [ :assoc | 
+		do: [ :assoc |
 			| original encoded color ff |
 			color := assoc key.
 			original := assoc value base64Decoded.
@@ -402,7 +402,7 @@ PNGReadWriterTest >> readEncoded: bytes [
 { #category : #running }
 PNGReadWriterTest >> setUp [
 	super setUp.
-	fileName := nil.
+	fileName := nil
 ]
 
 { #category : #running }
@@ -607,37 +607,37 @@ PNGReadWriterTest >> testNewFromSampleBytes [
 
 	png := PNGReadWriter on: sampleBytes readStream.
 	form := png nextImage.
-	self assert: Form equals: form class.
+	self assert: Form equals: form class
 ]
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngDecodingColors16 [
-	self decodeColors: self coloredFiles16 depth: 16.
+	self decodeColors: self coloredFiles16 depth: 16
 ]
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngDecodingColors32 [
-	self decodeColors: self coloredFiles32 depth: 32.
+	self decodeColors: self coloredFiles32 depth: 32
 ]
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngDecodingColors8 [
-	self decodeColors: self coloredFiles8 depth: 8.
+	self decodeColors: self coloredFiles8 depth: 8
 ]
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors16 [
-	self encodeColors: self coloredFiles16 depth: 16.
+	self encodeColors: self coloredFiles16 depth: 16
 ]
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors32 [
-	self encodeColors: self coloredFiles32 depth: 32.
+	self encodeColors: self coloredFiles32 depth: 32
 ]
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors8 [
-	self encodeColors: self coloredFiles8 depth: 8.
+	self encodeColors: self coloredFiles8 depth: 8
 ]
 
 { #category : #'tests - colors' }
@@ -657,7 +657,7 @@ PNGReadWriterTest >> testRed8 [
 
 { #category : #helpers }
 PNGReadWriterTest >> writeEncoded: bytes [
-	
+
 	fileName ifNil: [ ^self ].
 	fileName asFileReference
 		ensureDelete;

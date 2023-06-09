@@ -26,7 +26,7 @@ CDCompiledMethodClassParserTest >> superclassName [
 { #category : #tests }
 CDCompiledMethodClassParserTest >> testBestNodeForClassVariableSelectionShouldBeClassSlotNode [
 	"no Class Variables in CompileMethod"
-	self assert: classDefinition sharedSlotNodes isEmpty
+	self assert: classDefinition sharedVariableNodes isEmpty
 ]
 
 { #category : #tests }
@@ -44,7 +44,7 @@ CDCompiledMethodClassParserTest >> testBestNodeForSecondInstanceVariableSelectio
 { #category : #tests }
 CDCompiledMethodClassParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 	"no Class Variables in CompileMethod"
-	self assert: classDefinition sharedSlotNodes isEmpty
+	self assert: classDefinition sharedVariableNodes isEmpty
 ]
 
 { #category : #tests }

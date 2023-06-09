@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 InterpolatedGradientFillStyle >> computePixelRampOfSize: length [
 	"Compute the pixel ramp in the receiver."
-	
+
 	| bits ramp lastColor lastIndex lastWord |
 	ramp := colorRamp asSortedCollection:[:a1 :a2| a1 key < a2 key].
 	bits := Bitmap new: length.
@@ -56,7 +56,7 @@ InterpolatedGradientFillStyle >> interpolatedAlphaMix: ratio of: rgba1 and: rgba
 ]
 
 { #category : #private }
-InterpolatedGradientFillStyle >> pixelWord32Of: aColor [ 
+InterpolatedGradientFillStyle >> pixelWord32Of: aColor [
 	"Returns an integer representing the bits that appear in a single pixel of this color in a Form of depth 32.
 	Transparency: The pixel value zero is reserved for transparent. For depths greater than 8, black maps to the darkest possible blue.
 	Just a little quicker if we are dealing with RGBA colors at 32 bit depth."

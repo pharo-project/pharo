@@ -11,20 +11,20 @@ Class {
 GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 
 	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.4) #(#large 1.6) #(veryLarge 2) #(huge 2.7))
-		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
+		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: [])
 			ifNotNil: [:info | info second]
 ]
 
 { #category : #fonts }
 GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 	| label |
-	label := StringMorph 
-				contents: aLabel asString 
+	label := StringMorph
+				contents: aLabel asString
 				font: (TextStyle default fontOfPointSize: (StandardFonts pointSizeForStyleNamed: aSymbol)).
-	^ (self theme 
+	^ (self theme
 		newButtonIn: self
 		for: self
-		getState: nil 
+		getState: nil
 		action: #setFontsToStyleNamed:
 		arguments: { aSymbol }
 		getEnabled: nil
@@ -50,7 +50,7 @@ GraphicFontSettings class >> fontSizeRow [
 GraphicFontSettings class >> resetAllFontToDefault [
 	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
 	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp.
+	EditorFindReplaceDialogWindow cleanUp
 ]
 
 { #category : #fonts }
@@ -69,7 +69,7 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 				newRowIn: self
 				for:
 					{(AlphaImageMorph new
-						image: (self iconNamed: #smallRedoIcon)).
+						image: (self iconNamed: #smallRedo)).
 					(self theme buttonLabelForText: 'Force all' translated)});
 		yourself
 ]
@@ -80,11 +80,11 @@ GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 	(self class environment includesKey: #SourceCodeFonts)
 		ifTrue: [ (self environment at: #SourceCodeFonts) setFontsToStyleNamed: aSymbol ]
 		ifFalse: [ StandardFonts setFontsToStyleNamed: aSymbol ].
-		
+
 	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
 
 	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp.
+	EditorFindReplaceDialogWindow cleanUp
 ]
 
 { #category : #fonts }
@@ -96,14 +96,14 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 		dialog: [self fontSizeRow];
 		parent: #appearance;
 		order: 4;
-		with: [ 
+		with: [
 			(aBuilder setting: #defaultFont)
 				order: 1;
 				description: 'The default text font' ;
 				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				dialog: (MessageSend receiver: self selector: #resetAllFontToDefaultButton);
 				label: 'Default'.
-			(aBuilder setting: #codeFont) 
+			(aBuilder setting: #codeFont)
 				description: 'The standard code font' ;
 				default: (LogicalFont familyName: 'Source Code Pro' pointSize: 10);
 				label: 'Code'.

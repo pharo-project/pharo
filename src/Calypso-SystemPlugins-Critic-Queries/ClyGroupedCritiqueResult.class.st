@@ -11,10 +11,10 @@ Class {
 { #category : #building }
 ClyGroupedCritiqueResult >> buildMethodGroupWithCritique: aCritique on: resultDictionary [
 	| critiqueGroupName group |
-	
+
 	critiqueGroupName := aCritique rule group.
-	group := resultDictionary at: critiqueGroupName ifAbsentPut: [ 
-		ClyConcreteCritiqueMethodGroup 
+	group := resultDictionary at: critiqueGroupName ifAbsentPut: [
+		ClyConcreteCritiqueMethodGroup
 			basedOn: aCritique withMethodsFrom: self scope].
 	group addCritique: aCritique
 ]
@@ -28,9 +28,9 @@ ClyGroupedCritiqueResult >> defaultItems [
 ClyGroupedCritiqueResult >> fillWith: critiques [
 	| groups |
 	groups := Dictionary new.
-	
+
 	critiques do: [ :eachCritique |
 		self buildMethodGroupWithCritique: eachCritique on: groups ].
-	
+
 	groups do: [ :each | items add: each  ]
 ]

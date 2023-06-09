@@ -21,11 +21,6 @@ BlockClosure >> assertWellMaterializedInto: aBlockClosure in: aTestCase [
 ]
 
 { #category : #'*Fuel-Tests-Core' }
-BlockClosure >> fuelValueWithoutNotifications [
-	SystemAnnouncer uniqueInstance suspendAllWhile: self
-]
-
-{ #category : #'*Fuel-Tests-Core' }
 BlockClosure >> isEqualRegardlessTrailerTo: anObject [
 	^ self = anObject
 ]

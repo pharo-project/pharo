@@ -15,19 +15,19 @@ NullTaskList class >> in: world [
 
 	^ self new
 		world: world;
-		yourself.
+		yourself
 ]
 
 { #category : #'event handling' }
-NullTaskList >> handleEvent: aKeyboardEvent [ 
+NullTaskList >> handleEvent: aKeyboardEvent [
 
 	(TaskListMorph isNavigationEvent: aKeyboardEvent) ifFalse: [ ^ false ].
 	world theme openTaskListIn: world from: aKeyboardEvent.
-	^ true.
+	^ true
 ]
 
 { #category : #private }
-NullTaskList >> world: aWorldMorph [ 
+NullTaskList >> world: aWorldMorph [
 
-	world := aWorldMorph.
+	world := aWorldMorph
 ]

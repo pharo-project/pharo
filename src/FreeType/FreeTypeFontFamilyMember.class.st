@@ -19,17 +19,17 @@ Class {
 
 { #category : #'instance creation' }
 FreeTypeFontFamilyMember class >> fromFileInfo: aFreeTypeFileInfo [
-	
-	^self new
-		fileInfo: aFreeTypeFileInfo;	 
-		styleName: aFreeTypeFileInfo styleNameExtracted;
-		stretchName: aFreeTypeFileInfo stretch;
-		stretchValue: aFreeTypeFileInfo stretchValue;
-		weightName: aFreeTypeFileInfo weight;
-		weightValue: aFreeTypeFileInfo weightValue;
-		slantName: aFreeTypeFileInfo slant;
-		slantValue: aFreeTypeFileInfo slantValue;
-		yourself
+
+	^ self new
+		  fileInfo: aFreeTypeFileInfo;
+		  styleName: aFreeTypeFileInfo styleNameExtracted;
+		  stretchName: aFreeTypeFileInfo stretch;
+		  stretchValue: aFreeTypeFileInfo stretchValue;
+		  weightName: aFreeTypeFileInfo weight;
+		  weightValue: aFreeTypeFileInfo weightValue;
+		  slantName: aFreeTypeFileInfo slant;
+		  slantValue: aFreeTypeFileInfo slantValue;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -39,7 +39,7 @@ FreeTypeFontFamilyMember >> <= aFreeTypeFontFamilyMember [
 
 { #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedBold [
-	^self copy 
+	^self copy
 		weightValue: LogicalFont weightBold;
 		styleName: (fileInfo styleNameWithWeightForcedToBe: 'Bold');
 		beSimulatedStyle;
@@ -48,7 +48,7 @@ FreeTypeFontFamilyMember >> asSimulatedBold [
 
 { #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
-	^self copy 
+	^self copy
 		slantValue: LogicalFont slantItalic; "treat italic and oblique the same"
 		weightValue:LogicalFont weightBold;
 		styleName: (fileInfo styleNameWithWeightForcedToBe: 'Bold' italicForcedToBe: 'Oblique');
@@ -58,7 +58,7 @@ FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 
 { #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedOblique [
-	^self copy 
+	^self copy
 		slantValue: LogicalFont slantItalic;  "treat italic and oblique the same"
 		styleName: (fileInfo styleNameWithItalicForcedToBe: 'Oblique');
 		beSimulatedStyle;
@@ -93,9 +93,9 @@ FreeTypeFontFamilyMember >> initialize [
 ]
 
 { #category : #testing }
-FreeTypeFontFamilyMember >> isSimulatedStyle [ 
+FreeTypeFontFamilyMember >> isSimulatedStyle [
 	"Return true if the receiver is a simulated style"
-	
+
 	^isSimulatedStyle
 ]
 
@@ -129,11 +129,11 @@ FreeTypeFontFamilyMember >> slantValue: anObject [
 
 { #category : #comparing }
 FreeTypeFontFamilyMember >> sortValue [
-	| v normalizedWeight | 
+	| v normalizedWeight |
 	normalizedWeight := weightValue.
-	normalizedWeight = LogicalFont weightMedium 
+	normalizedWeight = LogicalFont weightMedium
 		ifTrue:["sort medium and regular weights as though they were the same"
-			normalizedWeight := LogicalFont weightRegular]. 
+			normalizedWeight := LogicalFont weightRegular].
 	v :=self isSimulatedStyle ifTrue:[ 10000 ] ifFalse:[ 0 ].
 	v := v + (stretchValue * 1000).
 	v := v + (normalizedWeight).

@@ -7,8 +7,8 @@ This is the unit test for the class Array. Unit tests are a good way to exercise
 Class {
 	#name : #ArrayTest,
 	#superclass : #CollectionRootTest,
-	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + TConvertTest + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest',
-	#classTraits : 'TEmptySequenceableTest classTrait + TSequencedElementAccessTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCopyTest classTrait + TCreationWithTest classTrait + TPutBasicTest classTrait + TConvertTest classTrait + TOccurrencesForMultiplinessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TReplacementSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TBeginsEndsWith classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSubCollectionAccess classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TSortTest classTrait + TSetArithmetic classTrait + TEnumeratingTest classTrait',
+	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + TConvertTest + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest + TSequenceableTruncatedToSize',
+	#classTraits : 'TEmptySequenceableTest classTrait + TSequencedElementAccessTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCopyTest classTrait + TCreationWithTest classTrait + TPutBasicTest classTrait + TConvertTest classTrait + TOccurrencesForMultiplinessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TReplacementSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TBeginsEndsWith classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSubCollectionAccess classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TSortTest classTrait + TSetArithmetic classTrait + TEnumeratingTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'example1',
 		'literalArray',
@@ -47,7 +47,8 @@ Class {
 		'collectionOfCollectionsOfInts',
 		'simpleCollection',
 		'stringCollectionWithSameBeginingAnEnd',
-		'collectionOfFloat'
+		'collectionOfFloat',
+		'recursiveArray'
 	],
 	#category : #'Collections-Sequenceable-Tests-Base'
 }
@@ -78,7 +79,7 @@ ArrayTest >> anotherElementNotIn [
 { #category : #requirements }
 ArrayTest >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
-	^ self collection anyOne.
+	^ self collection anyOne
 ]
 
 { #category : #requirements }
@@ -104,26 +105,26 @@ ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 
 { #category : #coverage }
 ArrayTest >> classToBeTested [
-	
+
 	^ Array
 ]
 
 { #category : #initialization }
-ArrayTest >> collection [ 
+ArrayTest >> collection [
 
 	^ collectionWith4Elements
 ]
 
 { #category : #'tests - creation' }
-ArrayTest >> collectionClass [ 
+ArrayTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-		
+
 	^ Array
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionInForIncluding [
-	^ self nonEmpty copyWithoutFirst.
+	^ self nonEmpty copyWithoutFirst
 ]
 
 { #category : #requirements }
@@ -135,23 +136,23 @@ ArrayTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
-	
+
 	^ collection5Elements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionNotIncluded [
-	^ collectionNotIncluded.
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionOfCollectionsOfInts [
-	^collectionOfCollectionsOfInts.
+	^collectionOfCollectionsOfInts
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionOfCollectionsOfStrings [
-	^ collectionOfCollectionsOfStrings.
+	^ collectionOfCollectionsOfStrings
 ]
 
 { #category : #requirements }
@@ -161,17 +162,23 @@ ArrayTest >> collectionOfFloat [
 
 { #category : #requirements }
 ArrayTest >> collectionWith1TimeSubcollection [
-	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst).
+	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst)
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWith2TimeSubcollection [
-	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst),self oldSubCollection .
+	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst),self oldSubCollection
+]
+
+{ #category : #requirements }
+ArrayTest >> collectionWith5Elements [
+
+	^ collection5Elements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithCharacters [
-	^ withCharacters.
+	^ withCharacters
 ]
 
 { #category : #requirements }
@@ -187,7 +194,7 @@ ArrayTest >> collectionWithElementsToRemove [
 
 { #category : #requirements }
 ArrayTest >> collectionWithEqualElements [
-	^ withEqualElements.
+	^ withEqualElements
 ]
 
 { #category : #requirements }
@@ -345,24 +352,24 @@ ArrayTest >> firstOdd [
 
 { #category : #requirements }
 ArrayTest >> indexArray [
-	^ indexArray .
+	^ indexArray
 ]
 
 { #category : #requirements }
 ArrayTest >> indexInForCollectionWithoutDuplicates [
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
 ArrayTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
-	
+
 	^ 2
 ]
 
 { #category : #requirements }
 ArrayTest >> integerCollection [
-	^example1 .
+	^example1
 ]
 
 { #category : #requirements }
@@ -402,7 +409,7 @@ ArrayTest >> nonEmpty1Element [
 
 { #category : #requirements }
 ArrayTest >> nonEmptyMoreThan1Element [
-	^nonEmptyMoreThan1Element .
+	^nonEmptyMoreThan1Element
 ]
 
 { #category : #requirements }
@@ -412,7 +419,7 @@ ArrayTest >> oldSubCollection [
 
 { #category : #requirements }
 ArrayTest >> replacementCollection [
-	^replacementCollection .
+	^replacementCollection
 ]
 
 { #category : #requirements }
@@ -422,7 +429,7 @@ ArrayTest >> replacementCollectionSameSize [
 
 { #category : #initialization }
 ArrayTest >> result [
-	
+
 	^ collectResult
 ]
 
@@ -439,7 +446,7 @@ ArrayTest >> secondIndex [
 { #category : #parameters }
 ArrayTest >> selectorToAccessValuePutIn [
 	"return the selector of the method that should be invoked to access an element"
-	
+
 	^ #second
 ]
 
@@ -459,9 +466,9 @@ ArrayTest >> setUp [
 	subCollectionNotIn:= {1. 8. 3.}.
 	collectionNotIncluded:= {7. 8. 9.}.
 	removedCollection:=  { 2. 4. }.
-	
+
 	example2 := {1. 2. 3/4. 4. 5}.
-	collectionWith4Elements := #(1 -2 3 1). 
+	collectionWith4Elements := #(1 -2 3 1).
 	collectionWithoutNil := #( 1 2 3 4).
 	simpleCollection := #( 1 8 3).
 	collectionOfCollectionsOfInts := { 1. { 2. 3 }. { 4. { 5. 6} } }.
@@ -479,18 +486,21 @@ ArrayTest >> setUp [
 	firstIndex:= 2.
 	secondIndex:= 4.
 	replacementCollection:= {4. 3. 2. 1.}.
-	replacementCollectionSameSize := {5. 4. 3.}.	
+	replacementCollectionSameSize := {5. 4. 3.}.
 	nonEmpty1Element:={ 5.}.
 	collectionOfCollection:={'a'. 'b'. 'c'.}.
 	collectionOfFloat:={1.5. 5.5. 6.5.}.
 	collectionOfFloatWithEqualElements:={1.5. 5.5. 6.5. 1.5}.
 	stringCollectionWithSameBeginingAnEnd := {'c'. 's'. 'c' copy}.
 	collection5Elements := { 1. 2. 5. 3. 4.}.
+
+	recursiveArray := example1 copy.
+	recursiveArray at: 5 put: recursiveArray
 ]
 
 { #category : #requirements }
 ArrayTest >> simpleCollection [
-	^simpleCollection.
+	^simpleCollection
 ]
 
 { #category : #requirements }
@@ -506,12 +516,12 @@ ArrayTest >> smallerIndex [
 
 { #category : #requirements }
 ArrayTest >> sortedInAscendingOrderCollection [
-	^sortedInAscendingOrderCollection .
+	^sortedInAscendingOrderCollection
 ]
 
 { #category : #'tests - iterate' }
 ArrayTest >> speciesClass [
-	
+
 	^ Array
 ]
 
@@ -578,7 +588,7 @@ ArrayTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 ArrayTest >> testAnySatisfy [
 
 	self assert: ( self collection anySatisfy: [:each | each = -2]).
-	self deny: (self collection anySatisfy: [:each | each isString]).
+	self deny: (self collection anySatisfy: [:each | each isString])
 ]
 
 { #category : #'tests - converting' }
@@ -623,17 +633,6 @@ ArrayTest >> testCombinationsTaken [
 	self
 		assertCollection: ((1 to: 4) combinations: 3)
 		hasSameElements: #( #( 1 2 3 ) #( 1 2 4 ) #( 1 3 4 ) #( 2 3 4 ) )
-]
-
-{ #category : #tests }
-ArrayTest >> testComplexIsSelfEvaluating [
-	| complexArray restoredArray |
-	complexArray := {1 . true . false . nil . #a . 'a' . $a . Float pi . Float halfPi . (4 / 5) . Float infinity negated . (1 @ 2) . (0 @ 0 extent: 1 @ 1).
-	('hola' -> 0) . Object . Object class}.
-	complexArray := complexArray copyWith: complexArray.
-	self assert: complexArray isSelfEvaluating.
-	restoredArray := self class evaluate: complexArray printString.
-	self assert: restoredArray equals: complexArray
 ]
 
 { #category : #'tests - copy' }
@@ -704,29 +703,32 @@ ArrayTest >> testIdentityIndexOf [
 
 { #category : #tests }
 ArrayTest >> testIsArray [
-	
+
 	self assert: example1 isArray
 ]
 
 { #category : #tests }
 ArrayTest >> testIsLiteral [
 	"We work with a copy of literalArray, to avoid corrupting the code."
-	
+
 	| aLiteralArray |
 	aLiteralArray := literalArray copy.
 	self assert: aLiteralArray isLiteral.
 	aLiteralArray at: 1 put: self class.
 	self deny: aLiteralArray isLiteral.
 	self deny: (literalArray as: WeakArray) isLiteral description: 'instances of Array subclasses are not literal'.
+	self deny: recursiveArray isLiteral
 ]
 
 { #category : #tests }
 ArrayTest >> testIsSelfEvaluating [
 
-	self assert: example1 isSelfEvaluating.
-	example1 at: 1 put: Bag new.
-	self deny: example1 isSelfEvaluating.
-	example1 at: 1 put: 1.
+	self assert: selfEvaluatingArray isSelfEvaluating.
+
+	selfEvaluatingArray at: 1 put: Bag new.
+	self deny: selfEvaluatingArray isSelfEvaluating.
+
+	self deny: recursiveArray isSelfEvaluating
 ]
 
 { #category : #tests }
@@ -773,12 +775,94 @@ ArrayTest >> testPremultiply [
 ]
 
 { #category : #tests }
+ArrayTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each |
+		                       String streamContents: [ :stream |
+			                       each printOn: stream ] ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self
+		assert: printed
+		equals:
+		$# asString , '(' asString , (' ' join: allElementsAsString)
+		, ')' asString
+]
+
+{ #category : #tests }
 ArrayTest >> testPrinting [
+
 	self assert: literalArray printString equals: '#(1 true 3 #four)'.
+	self assert: collectionOfCollectionsOfInts printString equals: '#(1 #(2 3) #(4 #(5 6)))'.
+	self assert: nonSEarray2 printString equals: '{#Array->Array}'.
+	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'
+]
+
+{ #category : #tests }
+ArrayTest >> testPrintingRecursive [
+
+	| printStringLimit |
+	printStringLimit := 50000. "Max limit"
+
+	self assert: recursiveArray printString size equals: printStringLimit.
+
+	"Indirect recursion"
+	recursiveArray at: 1 put: example2.
+	example2 at: 1 put: recursiveArray.
+	self assert: recursiveArray printString size equals: printStringLimit
+]
+
+{ #category : #tests }
+ArrayTest >> testSelfEvaluating [
+
+	self assert: selfEvaluatingArray isSelfEvaluating.
 	self assert: literalArray equals: (self class compiler evaluate: literalArray printString).
 	self assert: selfEvaluatingArray equals: (self class compiler evaluate: selfEvaluatingArray printString).
-	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'.
-	self assert: nonSEarray2 printString equals: '{#Array->Array}'
+
+	self deny: recursiveArray isSelfEvaluating.
+	self deny: nonSEArray1 isSelfEvaluating
+]
+
+{ #category : #tests }
+ArrayTest >> testSelfEvaluatingComplexCase [
+
+	| complexArray restoredArray |
+	complexArray := {
+		                1.
+		                true.
+		                false.
+		                nil.
+		                #a.
+		                'a'.
+		                $a.
+		                Float pi.
+		                Float halfPi.
+		                (4 / 5).
+		                Float infinity negated.
+		                (1 @ 2).
+		                (0 @ 0 extent: 1 @ 1).
+		                ('hola' -> 0).
+		                Object.
+		                Object class }.
+	complexArray := complexArray copyWith: complexArray.
+	self assert: complexArray isSelfEvaluating.
+
+	restoredArray := self class compiler evaluate:
+		                 complexArray printString.
+	self assert: restoredArray equals: complexArray
+]
+
+{ #category : #tests }
+ArrayTest >> testShouldBePrintedAsLiteral [
+
+	self assert: empty shouldBePrintedAsLiteral.
+	self assert: literalArray shouldBePrintedAsLiteral.
+
+	self deny: (literalArray copyWith: 3/4) shouldBePrintedAsLiteral.
+	self deny: recursiveArray shouldBePrintedAsLiteral
 ]
 
 { #category : #'tests - shuffling' }
@@ -788,8 +872,8 @@ ArrayTest >> testShuffleBy [
 	base := #(1 2 3 4 5) copy.
 	random := (Random seed: 42).
 	shuffleByResult := #(2 5 4 3 1) copy.
-	
-	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult).
+
+	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult)
 ]
 
 { #category : #'tests - shuffling' }
@@ -807,26 +891,26 @@ ArrayTest >> testShuffleModifyTheReceiver [
 	| array shuffled |
 	array := #( 1 2 3 4 5) copy.
 	shuffled := array shuffle.
-	self assert: array == shuffled.
+	self assert: array == shuffled
 ]
 
 { #category : #'tests - arithmetic' }
 ArrayTest >> testSumNumberItemsWithoutBlock [
-	
+
 	self assert: #() sumNumbers equals: 0.
-	
+
 	self assert: #(1 2 3) sumNumbers equals: 6
 ]
 
 { #category : #requirements }
 ArrayTest >> unsortedCollection [
-	^unsortedCollection .
+	^unsortedCollection
 ]
 
 { #category : #parameters }
 ArrayTest >> valuePutIn [
 	"the value that we will put in the non empty collection"
-	
+
 	^ 2
 ]
 

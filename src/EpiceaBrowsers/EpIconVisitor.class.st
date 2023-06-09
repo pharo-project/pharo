@@ -14,7 +14,7 @@ EpIconVisitor >> additionIcon [
 
 { #category : #private }
 EpIconVisitor >> emptyIcon [
-	^ self iconNamed: #emptyIcon
+	^ self iconNamed: #empty
 ]
 
 { #category : #private }
@@ -53,13 +53,19 @@ EpIconVisitor >> visitCategoryAddition: aCategoryChange [
 ]
 
 { #category : #visitor }
+EpIconVisitor >> visitCategoryRegistration: aCategoryChange [
+
+	^ self additionIcon
+]
+
+{ #category : #visitor }
 EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
 	^ self removalIcon
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitCategoryRename: aCategoryChange [
-	^ self modificationIcon.
+	^ self modificationIcon
 ]
 
 { #category : #visitor }
@@ -78,13 +84,13 @@ EpIconVisitor >> visitClassRemoval: aClassRemovedChange [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitEvent: anEvent [ 
-	^ self emptyIcon
+EpIconVisitor >> visitEvent: anEvent [
+	^ self empty
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
-	^ self iconNamed: #workspaceIcon
+	^ self iconNamed: #workspace
 ]
 
 { #category : #visitor }
@@ -109,12 +115,12 @@ EpIconVisitor >> visitMethodRemoval: aMethodRemoved [
 
 { #category : #visitor }
 EpIconVisitor >> visitMonticelloVersionSave: aChange [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
-	^ self iconNamed: #packageIcon
+	^ self iconNamed: #package
 ]
 
 { #category : #visitor }
@@ -129,7 +135,7 @@ EpIconVisitor >> visitProtocolRemoval: aProtocolChange [
 
 { #category : #visitor }
 EpIconVisitor >> visitRedo: aRedoEvent [
-	^ self iconNamed: #smallRedoIcon
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : #visitor }
@@ -139,17 +145,17 @@ EpIconVisitor >> visitRefactoring: aRefactoring [
 
 { #category : #visitor }
 EpIconVisitor >> visitSessionEnd: anEvent [
-	^ self iconNamed: #smallQuitIcon
+	^ self iconNamed: #smallQuit
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitSessionSnapshot: aSnapshotChange [
-	^ self iconNamed: #smallSaveIcon
+	^ self iconNamed: #smallSave
 ]
 
 { #category : #visitor }
 EpIconVisitor >> visitSessionStart: anEvent [
-	^ self iconNamed: #smallDoItIcon
+	^ self iconNamed: #smallDoIt
 ]
 
 { #category : #visitor }
@@ -169,5 +175,5 @@ EpIconVisitor >> visitTraitRemoval:  aTraitRemoval [
 
 { #category : #visitor }
 EpIconVisitor >> visitUndo: anUndoEvent [
-	^ self iconNamed: #smallUndoIcon
+	^ self iconNamed: #smallUndo
 ]

@@ -106,7 +106,7 @@ RubPluggableTextFieldMorph >> getColorSelector [
 { #category : #accessing }
 RubPluggableTextFieldMorph >> getColorSelector: aSymbol [
 	self getBackgroundColorSelector: aSymbol.
-	self update: self getColorSelector.
+	self update: self getColorSelector
 ]
 
 { #category : #accessing }
@@ -152,9 +152,9 @@ RubPluggableTextFieldMorph >> model: anObject [
 ]
 
 { #category : #'set and get' }
-RubPluggableTextFieldMorph >> setTextAndAccept: aText [ 
-	
-	self 
+RubPluggableTextFieldMorph >> setTextAndAccept: aText [
+
+	self
 		setText: aText;
 		hasUnacceptedEdits: true;
 		accept
@@ -164,7 +164,7 @@ RubPluggableTextFieldMorph >> setTextAndAccept: aText [
 RubPluggableTextFieldMorph >> textChanged [
 	super textChanged.
 	self checkTextWithConverter.
-	changedAction ifNotNil: [changedAction value: self getText ].
+	changedAction ifNotNil: [changedAction value: self getText ]
 ]
 
 { #category : #updating }

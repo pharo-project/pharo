@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #methods }
-ReferencedClassesTestClass >> methodReferencingDirectly [ 
+ReferencedClassesTestClass >> methodReferencingDirectly [
 	^ Object
 ]
 

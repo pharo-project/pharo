@@ -18,7 +18,7 @@ SycMoveMethodsToPackageDefiningClassCommand class >> canBeExecutedInContext: aTo
 ]
 
 { #category : #accessing }
-SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuIconName [ 
+SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
@@ -31,7 +31,7 @@ SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuItemName [
 SycMoveMethodsToPackageDefiningClassCommand >> execute [
 
 	| classPackage |
-	methods do: [ :each | 
+	methods do: [ :each |
 		classPackage := each origin package.
 		self moveMethod: each toPackage: classPackage.
 		each tagWith: targetTagName]
@@ -40,7 +40,7 @@ SycMoveMethodsToPackageDefiningClassCommand >> execute [
 { #category : #execution }
 SycMoveMethodsToPackageDefiningClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	targetTagName := aToolContext requestSingleMethodTag: 'Choose protocol for methods'
 ]
 

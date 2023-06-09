@@ -7,7 +7,7 @@ PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 	it := self morphClass new.
 	lbl := self label ifNil: [''].
 	"here checked can be nil, true, false"
-	checked notNil 
+	checked notNil
 		ifTrue: [ lbl := self hasCheckBox -> lbl].
 	it contents: lbl.
 	it icon: self icon.
@@ -15,12 +15,12 @@ PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 	it isEnabled: self enabled.
 	it balloonText: self help.
 	(act := self action) ifNotNil: [
-				it 
+				it
 					target: act receiver;
 					selector: act selector;
 					arguments: act arguments ].
 	(menu := self subMenu) ifNotNil: [ self enabled ifTrue: [ it subMenu: (menu asMenuMorphOfKind: parentMenu class) ]].
-		
+
 	parentMenu ifNotNil: [ parentMenu addMorphBack: it ].
 	aBoolean ifFalse: [ self separator ifTrue: [ parentMenu addLine ] ].
 	^it

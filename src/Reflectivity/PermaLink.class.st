@@ -23,7 +23,7 @@ Class {
 	#category : #'Reflectivity-Installer'
 }
 
-{ #category : #initalize }
+{ #category : #initialization }
 PermaLink >> initialize [
 	isInstanceSpecific := false
 ]
@@ -59,7 +59,7 @@ PermaLink >> persistenceType: anObject [
 ]
 
 { #category : #accessing }
-PermaLink >> slotOrVarClass [ 
+PermaLink >> slotOrVarClass [
 	^ slotOrVarClass nonAnonymousClass
 ]
 

@@ -48,8 +48,8 @@ Class {
 
 { #category : #'instance creation' }
 ClyItemDefinitionProperty class >> package: aPackage class: aClass [
-	
-	^self new 
+
+	^self new
 		definingClass: aClass instanceSide;
 		isInstanceSide: aClass isInstanceSide;
 		definingPackage: aPackage
@@ -73,7 +73,7 @@ ClyItemDefinitionProperty >> definingClassItem [
 
 { #category : #accessing }
 ClyItemDefinitionProperty >> definingMetaLevelScope [
-	^isInstanceSide 
+	^isInstanceSide
 		ifTrue: [ ClyInstanceSideScope ]
 		ifFalse: [ ClyClassSideScope  ]
 ]
@@ -107,7 +107,7 @@ ClyItemDefinitionProperty >> isInstanceSide: anObject [
 { #category : #printing }
 ClyItemDefinitionProperty >> printDefiningClass [
 
-	^isInstanceSide 
+	^isInstanceSide
 		ifTrue: [ definingClassItem name]
 		ifFalse: [ definingClassItem name, ' class']
 ]

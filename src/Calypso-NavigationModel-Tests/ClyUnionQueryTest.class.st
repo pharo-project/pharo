@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyUnionQueryTest >> createQuery [
-	^ClyUnionQuery with: { 
+	^ClyUnionQuery with: {
 		ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: self class in: environment.
 		ClyReturningScopeBasis2ExampleQuery from: ClyExample2Scope of: self class superclass in: environment}
 ]
@@ -34,9 +34,9 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndNewDifferentSubquer
 	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
 	subquery2 := self subqueryFromScope: ClyExample2Scope of: String.
 	subquery3 := ClyReturningScopeBasis2ExampleQuery from: ClyExampleScope of: Object in: environment.
-	
+
 	query := subquery1, subquery2, subquery3.
-	
+
 	self assert: query class equals: ClyUnionQuery.
 	self assert: query subqueries equals: {subquery1. subquery2. subquery3} asSet.
 	self assert: query requiredResult equals: subquery1 requiredResult
@@ -48,12 +48,12 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndSimilarQuery [
 	| subquery1 subquery2 subquery3 |
 	subquery1 := self subqueryFromScopeOf: Array.
 	subquery2 := self subqueryFromScope: ClyExample2Scope of: String.
-	subquery3 := self subqueryFromScopeOf: Object.	
-		
+	subquery3 := self subqueryFromScopeOf: Object.
+
 	query := subquery1, subquery2, subquery3.
-	
+
 	self assert: query class equals: self queryClass.
-	self assert: query subqueries equals: { 
+	self assert: query subqueries equals: {
 		self subqueryFromScope: (ClyExampleScope ofAll: { Array. Object }). subquery2} asSet.
 	self assert: query requiredResult equals: subquery1 requiredResult
 ]
@@ -174,18 +174,18 @@ ClyUnionQueryTest >> testCreationWithSingleSubqueryButAnotherResult [
 ClyUnionQueryTest >> testEmptySubqueriesAreForbidden [
 
 	[query subqueries: {}.
-	self assert: false description: 'empty subqueries should be forbidden'] onErrorDo: [].
+	self assert: false description: 'empty subqueries should be forbidden'] onErrorDo: []
 ]
 
 { #category : #tests }
 ClyUnionQueryTest >> testExecution [
 
-	query subqueries: { 
+	query subqueries: {
 		self subqueryFromScope: ClyExampleScope of: self class.
 		self subqueryFromScope: ClyExample2Scope of: self class superclass.
 	}.
 	self executeQuery.
-	
+
 	self assert: resultItems size equals: 2.
 	self assert: resultItems asSet equals: {self class. self class superclass} asSet
 ]
@@ -193,12 +193,12 @@ ClyUnionQueryTest >> testExecution [
 { #category : #tests }
 ClyUnionQueryTest >> testExecutionShouldRemoveDuplication [
 
-	query subqueries: { 
+	query subqueries: {
 		self subqueryFromScope: ClyExampleScope of: self class.
 		self subqueryFromScope: ClyExample2Scope of: self class.
 	}.
 	self executeQuery.
-	
+
 	self assert: resultItems asArray equals: {self class }
 ]
 
@@ -208,7 +208,7 @@ ClyUnionQueryTest >> testIsEmptyWhenAllSubqueriesAreEmpty [
 		(self subqueryFromScope: ClyExampleScope empty).
 		(self subqueryFromScope: ClyExample2Scope empty)
 	}.
-	
+
 	self assert: query checkEmptyResult
 ]
 
@@ -218,6 +218,6 @@ ClyUnionQueryTest >> testNotEmptyWhenThereIsNotEmptySubquery [
 		(self subqueryFromScope: ClyExampleScope empty).
 		(self subqueryFromScope: ClyExample2Scope of: self class superclass)
 	}.
-	
+
 	self deny: query checkEmptyResult
 ]

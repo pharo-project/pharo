@@ -17,7 +17,7 @@ TaRemoveSlot class >> remove: anArrayOfSlotNames from: aTrait [
 	^ self new
 		removedSlots: anArrayOfSlotNames;
 		inner: aTrait;
-		yourself.
+		yourself
 ]
 
 { #category : #copying }
@@ -49,8 +49,8 @@ TaRemoveSlot >> traitCompositionExpression [
 
 	removedSlots size = 1
 		           ifTrue: [^ self inner traitCompositionExpressionWithParens , ' -- ' , removedSlots first printString].
-			
-	^ String streamContents: [ :s | 
+
+	^ String streamContents: [ :s |
 		  s
 			  nextPutAll: self inner traitCompositionExpressionWithParens;
 			  nextPutAll: ' -- '.

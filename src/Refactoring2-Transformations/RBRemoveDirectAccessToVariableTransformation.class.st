@@ -22,13 +22,13 @@ Class {
 		'setterMethod',
 		'receiver'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #private }
 RBRemoveDirectAccessToVariableTransformation >> getterMethod [
 
-	^ getterMethod ifNil: [ 
+	^ getterMethod ifNil: [
 		getterMethod := (self definingClass getterMethodFor: variableName)
 			ifNil: [ variableName uncapitalized asSymbol ] ]
 ]
@@ -40,9 +40,9 @@ RBRemoveDirectAccessToVariableTransformation >> preconditions [
 
 	^ (isClassVariable
 		ifTrue: [ (RBCondition isMetaclass: class) not
-			& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class) 
-			& ((RBCondition withBlock: 
-				[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not]) 
+			& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
+			& ((RBCondition withBlock:
+				[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not])
 				errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')]
 		ifFalse: [ (RBCondition directlyDefinesInstanceVariable: variableName in: class) ])
 		& (RBCondition canUnderstand: self getterMethod in: self definingClass)
@@ -51,9 +51,9 @@ RBRemoveDirectAccessToVariableTransformation >> preconditions [
 
 { #category : #executing }
 RBRemoveDirectAccessToVariableTransformation >> privateTransform [
-	
+
 	self replaceInstanceAccesses.
-	isClassVariable ifTrue: [ self replaceClassAccesses ].
+	isClassVariable ifTrue: [ self replaceClassAccesses ]
 ]
 
 { #category : #private }
@@ -78,11 +78,11 @@ RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 		setter: self setterMethod
 		receiver: self receiver.
 	self model
-		convertClasses: self definingClass theMetaClass withAllSubclasses
-		select: [ :aClass | 
+		convertClasses: self definingClass classSide withAllSubclasses
+		select: [ :aClass |
 			(aClass whichSelectorsReferToClassVariable: variableName)
-				reject: [ :each | 
-					aClass == self definingClass theMetaClass
+				reject: [ :each |
+					aClass == self definingClass classSide
 						and: [ each == self getterMethod or: [ each == self setterMethod ] ] ] ]
 		using: replacer.
 
@@ -92,7 +92,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 		getter: 'class ' , self getterMethod
 		setter: 'class ' , self setterMethod.
 	self model
-		convertClasses: self definingClass theNonMetaClass withAllSubclasses
+		convertClasses: self definingClass instanceSide withAllSubclasses
 		select: [ :aClass | aClass whichSelectorsReferToClassVariable: variableName ]
 		using: replacer
 ]
@@ -102,21 +102,21 @@ RBRemoveDirectAccessToVariableTransformation >> replaceInstanceAccesses [
 
 	| replacer includeGettersAndSetters |
 	includeGettersAndSetters := receiver isNotNil.
-	replacer := self parseTreeRewriterClass  
+	replacer := self parseTreeRewriterClass
 				variable: variableName
 				getter: self getterMethod
 				setter: self setterMethod
-				receiver: self receiver.	
-	
+				receiver: self receiver.
+
 	self model
 		convertClasses: self definingClass withAllSubclasses
-		select: [ :aClass | 
+		select: [ :aClass |
 			| allReferences |
 			allReferences := aClass whichSelectorsReferToInstanceVariable: variableName.
 			includeGettersAndSetters
 				ifTrue: [ allReferences ]
 				ifFalse: [ allReferences
-					reject: [ :each | 
+					reject: [ :each |
 						aClass == self definingClass
 						and: [ each == self getterMethod
 						or: [ each == self setterMethod ] ] ] ] ]
@@ -126,7 +126,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceInstanceAccesses [
 { #category : #private }
 RBRemoveDirectAccessToVariableTransformation >> setterMethod [
 
-	^ setterMethod ifNil: [ 
+	^ setterMethod ifNil: [
 		setterMethod := (self definingClass setterMethodFor: variableName)
 			ifNil: [ 	(variableName uncapitalized, ':') asSymbol ] ]
 ]

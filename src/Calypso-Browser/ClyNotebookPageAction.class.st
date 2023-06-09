@@ -47,7 +47,7 @@ ClyNotebookPageAction >> icon [
 ClyNotebookPageAction >> icon: aForm [
 
 	icon image: aForm.
-	label 
+	label
 		ifNotNil: [ icon setBalloonText: label maxLineLength: 100 ].
 	action ifNotNil: [ icon on: #click send: #value to: action ]
 ]

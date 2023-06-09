@@ -32,14 +32,14 @@ ClyMethodCallCountersQueryTest >> methodWithoutCounter [
 { #category : #running }
 ClyMethodCallCountersQueryTest >> setUp [
 	super setUp.
-	
+
 	installedCounters := OrderedCollection new
 ]
 
 { #category : #running }
 ClyMethodCallCountersQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
+
 	environment addPlugin: ClyReflectiveEnvironmentPlugin new
 ]
 
@@ -47,17 +47,17 @@ ClyMethodCallCountersQueryTest >> setUpEnvironment [
 ClyMethodCallCountersQueryTest >> tearDown [
 	installedCounters do: [ :each | each uninstall ].
 	installedCounters removeAll.
-	
+
 	super tearDown
 ]
 
 { #category : #tests }
 ClyMethodCallCountersQueryTest >> testCheckIfEmpty [
 	self installCounterInto: #methodWithCounter.
-	query scope: (ClyMethodScope 
+	query scope: (ClyMethodScope
 		of: (self class >> #methodWithCounter) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithBreakpointsMock >> #methodWithoutBreakpoints) in: environment).
 	self assert: query checkEmptyResult
@@ -71,9 +71,9 @@ ClyMethodCallCountersQueryTest >> testDecoratingMethodWithExecutionCounter [
 	self installCounterInto: #methodWithCounter.
 	method := self class >> #methodWithCounter.
 	methodItem := method asCalypsoBrowserItem.
-		
+
 	plugin decorateBrowserItem: methodItem ofMethod: method.
-	
+
 	self assert: (methodItem isMarkedWith: ClyMethodWithExecutionCounterTag)
 ]
 
@@ -81,9 +81,9 @@ ClyMethodCallCountersQueryTest >> testDecoratingMethodWithExecutionCounter [
 ClyMethodCallCountersQueryTest >> testFromTwoMethods [
 	self installCounterInto: #methodWithCounter.
 	self queryFromScope: ClyMethodScope ofAll: {
-		self class >> #methodWithCounter. 
+		self class >> #methodWithCounter.
 		self class >> #methodWithoutCounter}.
-	
+
 	self assert: foundSelectors sorted asArray equals: #(#methodWithCounter)
 ]
 

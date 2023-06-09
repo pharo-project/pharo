@@ -1,6 +1,6 @@
 Class {
 	#name : #MCBitbucketRepository,
-	#superclass : #MCGitBasedNetworkRepository,
+	#superclass : #MCPrivateHostableRepository,
 	#category : #'Metacello-Bitbucket'
 }
 
@@ -9,11 +9,9 @@ MCBitbucketRepository class >> basicDescription [
   ^ 'bitbucket'
 ]
 
-{ #category : #accessing }
-MCBitbucketRepository class >> cacheDirectoryPath [
-  <preference: 'BitBucket Cache' category: 'Metacello' description: '' type:
-    #'String'>
-  ^ super cacheDirectoryPath
+{ #category : #'instance creation' }
+MCBitbucketRepository class >> basicFromUrl: aZnUrl [ 
+	^ self location: aZnUrl asString
 ]
 
 { #category : #'instance creation' }
@@ -21,20 +19,24 @@ MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPl
 	^ aPlatform createBitbucketRepository: aRepositorySpec
 ]
 
+{ #category : #private }
+MCBitbucketRepository class >> defaultHostname [
+	^ 'bitbucket.org'
+]
+
 { #category : #testing }
 MCBitbucketRepository class >> isAvailableFor: type [
 	^ type = 'bitbucket'
 ]
 
-{ #category : #testing }
-MCBitbucketRepository class >> isEnabled [
-
-	^true
-]
-
 { #category : #private }
 MCBitbucketRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   ^ 'https://bitbucket.org/' , projectPath , '/get/' , versionString , '.zip'
+]
+
+{ #category : #accessing }
+MCBitbucketRepository class >> urlSchemes [
+	^ #(bitbucket)
 ]
 
 { #category : #private }

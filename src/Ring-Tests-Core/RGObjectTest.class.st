@@ -7,14 +7,14 @@ Class {
 { #category : #tests }
 RGObjectTest >> testFullCopy [
 
-	| def fullCopy | 
-	
+	| def fullCopy |
+
 	"we cannot test RGObject directly here"
 	def := RGClass named: #SomeDefinition.
-	
+
 	fullCopy := def fullCopy.
 	self assert: (fullCopy ~~ def).
-	self assert: fullCopy name equals: def name.
+	self assert: fullCopy name equals: def name
 ]
 
 { #category : #tests }
@@ -81,7 +81,7 @@ RGObjectTest >> testProperties [
 RGObjectTest >> testResolveability [
 
 	"test if we can resolve standard objects. They should be all resolved"
-	
+
 	{ Object. 42. 'aString'. #aSymbol } do: [ :each |
 		self deny: each isRGObject.
 		self assert: each isRingFullyResolved.
@@ -93,23 +93,23 @@ RGObjectTest >> testResolvedNameOrNil [
 
 	"should return nil for unresolved names"
 
-	| def | 
-	
+	| def |
+
 	def := RGClass unresolved.
 	self assert: def resolvedNameOrNil equals: nil.
-	
+
 	def := RGClass named: #SomeName.
-	self assert: def resolvedNameOrNil equals: #SomeName.
+	self assert: def resolvedNameOrNil equals: #SomeName
 ]
 
 { #category : #tests }
 RGObjectTest >> testTrivialMethods [
 
-	| def | 
-	
+	| def |
+
 	def := RGObject named: #SomeDefinition.
 
-	self deny: (def unresolvedValue isRingResolved).
+	self deny: (def unresolvedValue isRingResolved)
 ]
 
 { #category : #tests }
@@ -117,10 +117,10 @@ RGObjectTest >> testTypes [
 
 	"check all testing methods"
 
-	| def | 
-	
+	| def |
+
 	def := RGObject new.
-	
+
 	self deny: def isComment.
 	self deny: def isEnvironment.
 	self deny: def isGlobalVariable.
@@ -140,7 +140,7 @@ RGObjectTest >> testTypes [
 	self deny: def isTraitComposition.
 	self deny: def isTraitExclusion.
 	self deny: def isTraitTransformation.
-	self deny: def isVariable.
+	self deny: def isVariable
 ]
 
 { #category : #tests }
@@ -148,8 +148,8 @@ RGObjectTest >> testUnresolveName [
 
 	"The name of any Ring object should be unresolveable"
 
-	| def result | 
-	
+	| def result |
+
 	"try to unresolve already unresolved"
 	def := RGComment unresolved.
 	self deny: (def hasResolvedName).
@@ -161,15 +161,15 @@ RGObjectTest >> testUnresolveName [
 	self assert: (def hasResolvedName).
 	result := def unresolveName.
 	self deny: (def hasResolvedName).
-	self assert: result isRGUnresolvedValue.
+	self assert: result isRGUnresolvedValue
 ]
 
 { #category : #tests }
 RGObjectTest >> testUnresolvedValue [
 
-	| def | 
-	
+	| def |
+
 	def := RGObject named: #SomeDefinition.
 
-	self deny: (def unresolvedValue isRingResolved).
+	self deny: (def unresolvedValue isRingResolved)
 ]

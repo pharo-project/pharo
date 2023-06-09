@@ -20,27 +20,27 @@ Class {
 		'sourceCode',
 		'protocols'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
-RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: protocols [
+RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: aCollection [
 
 	^ self new
 		model: aRBModel;
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocols;
+		withProtocols: aCollection;
 		yourself
 ]
 
 { #category : #api }
-RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: protocols [
+RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: aCollection [
 
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocols;
+		withProtocols: aCollection;
 		yourself
 ]
 
@@ -49,7 +49,7 @@ RBAddMethodTransformation >> preconditions [
 	| rbMethod |
 	rbMethod := self parserClass
 		parseMethod: sourceCode
-		onError: [ :string :position | 
+		onError: [ :string :position |
 			^ RBCondition
 				withBlock: [ self
 						refactoringError: 'The content of this method cannot be parsed.' ] ].
@@ -77,7 +77,7 @@ RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocols: s
 ]
 
 { #category : #printing }
-RBAddMethodTransformation >> storeOn: aStream [ 
+RBAddMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

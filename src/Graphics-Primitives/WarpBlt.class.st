@@ -27,20 +27,20 @@ Class {
 }
 
 { #category : #'form rotation' }
-WarpBlt class >> rotate: srcForm degrees: angleInDegrees center: aPoint scaleBy: scalePoint smoothing: cellSize [ 
+WarpBlt class >> rotate: srcForm degrees: angleInDegrees center: aPoint scaleBy: scalePoint smoothing: cellSize [
 	"Rotate the given Form the given number of degrees about the given center and scale its width and height by x and y of the given scale point. Smooth using the given cell size, an integer between 1 and 3, where 1 means no smoothing. Return a pair where the first element is the rotated Form and the second is the position offset required to align the center of the rotated Form with that of the original. Note that the dimensions of the resulting Form generally differ from those of the original."
 	| srcRect center radians dstOrigin dstCorner p dstRect inverseScale quad dstForm newCenter warpSrc |
 	srcRect := srcForm boundingBox.
 	center := srcRect center.
 	radians := angleInDegrees degreesToRadians.
 	dstOrigin := dstCorner := center.
-	srcRect corners do: 
-		[ :corner | 
+	srcRect corners do:
+		[ :corner |
 		"find the limits of a rectangle that just encloses the rotated
 		 original; in general, this rectangle will be larger than the
 		 original (e.g., consider a square rotated by 45 degrees)"
 		p := (corner - center scaleBy: scalePoint) + center.
-		p := (p 
+		p := (p
 			rotateBy: radians
 			about: center) rounded.
 		dstOrigin := dstOrigin min: p.
@@ -49,33 +49,33 @@ WarpBlt class >> rotate: srcForm degrees: angleInDegrees center: aPoint scaleBy:
 	"rotate the enclosing rectangle back to get the source quadrilateral"
 	dstRect := dstOrigin corner: dstCorner.
 	inverseScale := (1.0 / scalePoint x) @ (1.0 / scalePoint y).
-	quad := dstRect innerCorners collect: 
-		[ :corner | 
-		p := corner 
+	quad := dstRect innerCorners collect:
+		[ :corner |
+		p := corner
 			rotateBy: radians negated
 			about: center.
 		(p - center scaleBy: inverseScale) + center ].
 
 	"make a Form to hold the result and do the rotation"
 	warpSrc := srcForm.
-	srcForm isColorForm 
-		ifTrue: 
-			[ cellSize > 1 | true 
-				ifTrue: 
+	srcForm isColorForm
+		ifTrue:
+			[ cellSize > 1 | true
+				ifTrue:
 					[ "ar 12/27/2001: Always enable - else sketches won't work"
-					warpSrc := Form 
+					warpSrc := Form
 						extent: srcForm extent
 						depth: 16.
 					srcForm displayOn: warpSrc.
-					dstForm := Form 
+					dstForm := Form
 						extent: dstRect extent
 						depth: 16	"use 16-bit depth to allow smoothing" ]
-				ifFalse: 
-					[ dstForm := srcForm class 
+				ifFalse:
+					[ dstForm := srcForm class
 						extent: dstRect extent
 						depth: srcForm depth ] ]
-		ifFalse: 
-			[ dstForm := srcForm class 
+		ifFalse:
+			[ dstForm := srcForm class
 				extent: dstRect extent
 				depth: srcForm depth ].
 	(WarpBlt toForm: dstForm)
@@ -86,10 +86,10 @@ WarpBlt class >> rotate: srcForm degrees: angleInDegrees center: aPoint scaleBy:
 		copyQuad: quad
 			toRect: dstForm boundingBox.	"installs a new colormap if cellSize > 1"
 	dstForm isColorForm ifTrue: [ dstForm colors: srcForm colors copy ].
-	newCenter := (center 
+	newCenter := (center
 		rotateBy: radians
 		about: aPoint) truncated.
-	^ Array 
+	^ Array
 		with: dstForm
 		with: dstRect origin + (newCenter - center)
 ]
@@ -106,10 +106,10 @@ WarpBlt >> cellSize [
 ]
 
 { #category : #setup }
-WarpBlt >> cellSize: s [ 
+WarpBlt >> cellSize: s [
 	cellSize := s.
 	cellSize = 1 ifTrue: [ ^ self ].
-	colorMap := Color 
+	colorMap := Color
 		colorMapIfNeededFrom: 32
 		to: destForm depth
 ]
@@ -145,7 +145,7 @@ WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 	r := 0.
 	g := 0.
 	b := 0.
-	1 to: nPix do: [ :i | 
+	1 to: nPix do: [ :i |
 		"Sum R, G, B values for each pixel"
 		rgb := sourceForm depth <= 8
 			ifTrue: [ sourceMap at: (pix at: i) + 1 ]
@@ -171,12 +171,8 @@ WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 
 { #category : #smoothing }
 WarpBlt >> rgbMap: sourcePixel from: nBitsIn to: nBitsOut [
-	"NOTE: This code is copied verbatim from BitBltSimulation so that it
-	may be removed from the system"
-
 	"Convert the given pixel value with nBitsIn bits for each color component to a pixel value with nBitsOut bits for each color component. Typical values for nBitsIn/nBitsOut are 3, 5, or 8."
 
-	<inline: true>
 	| mask d srcPix destPix |
 	^ (d := nBitsOut - nBitsIn) > 0
 		ifTrue: [ "Expand to more bits by zero-fill"
@@ -202,7 +198,7 @@ WarpBlt >> rgbMap: sourcePixel from: nBitsIn to: nBitsOut [
 ]
 
 { #category : #primitives }
-WarpBlt >> sourceForm: srcForm destRect: dstRectangle [ 
+WarpBlt >> sourceForm: srcForm destRect: dstRectangle [
 	"Set up a WarpBlt from the entire source Form to the given destination rectangle."
 	| w h |
 	sourceForm := srcForm.
@@ -225,11 +221,11 @@ WarpBlt >> sourceForm: srcForm destRect: dstRectangle [
 ]
 
 { #category : #primitives }
-WarpBlt >> sourceQuad: pts destRect: aRectangle [ 
+WarpBlt >> sourceQuad: pts destRect: aRectangle [
 	| fixedPt1 |
 	sourceX := sourceY := 0.
 	self destRect: aRectangle.
-	fixedPt1 := (pts at: 1) x isInteger 
+	fixedPt1 := (pts at: 1) x isInteger
 		ifTrue: [ 16384 ]
 		ifFalse: [ 16384.0 ].
 	p1x := (pts at: 1) x * fixedPt1.
@@ -259,60 +255,60 @@ WarpBlt >> warpBits [
 	cellSize < 1 ifTrue: [ ^self error: 'cellSize must be >= 1' ].
 
 	self warpBitsSmoothing: cellSize
-		sourceMap: (sourceForm colormapIfNeededForDepth: 32).
+		sourceMap: (sourceForm colormapIfNeededForDepth: 32)
 ]
 
 { #category : #primitives }
-WarpBlt >> warpBitsSmoothing: n sourceMap: sourceMap [ 
+WarpBlt >> warpBitsSmoothing: n sourceMap: sourceMap [
 	| deltaP12 deltaP43 pA pB deltaPAB sp fixedPtOne picker poker pix nSteps |
 	<primitive: 'primitiveWarpBits' module: 'BitBltPlugin'>
-	(sourceForm isForm and: 
+	(sourceForm isForm and:
 		[ "Check for compressed source, destination or halftone forms"
-		sourceForm unhibernate ]) ifTrue: 
-		[ ^ self 
+		sourceForm unhibernate ]) ifTrue:
+		[ ^ self
 			warpBitsSmoothing: n
 			sourceMap: sourceMap ].
-	(destForm isForm and: [ destForm unhibernate ]) ifTrue: 
-		[ ^ self 
+	(destForm isForm and: [ destForm unhibernate ]) ifTrue:
+		[ ^ self
 			warpBitsSmoothing: n
 			sourceMap: sourceMap ].
-	(halftoneForm isForm and: [ halftoneForm unhibernate ]) ifTrue: 
-		[ ^ self 
+	(halftoneForm isForm and: [ halftoneForm unhibernate ]) ifTrue:
+		[ ^ self
 			warpBitsSmoothing: n
 			sourceMap: sourceMap ].
 	width < 1 | (height < 1) ifTrue: [ ^ self ].
 	fixedPtOne := 16384.	"1.0 in fixed-pt representation"
-	n > 1 ifTrue: 
-		[ (destForm depth < 16 and: [ colorMap == nil ]) ifTrue: 
+	n > 1 ifTrue:
+		[ (destForm depth < 16 and: [ colorMap == nil ]) ifTrue:
 			[ "color map is required to smooth non-RGB dest"
 			^ self primitiveFailed ].
 		pix := Array new: n * n ].
 	nSteps := height - 1 max: 1.
-	deltaP12 := (self 
+	deltaP12 := (self
 		deltaFrom: p1x
 		to: p2x
-		nSteps: nSteps) @ (self 
+		nSteps: nSteps) @ (self
 			deltaFrom: p1y
 			to: p2y
 			nSteps: nSteps).
-	pA := (self 
+	pA := (self
 		startFrom: p1x
 		to: p2x
-		offset: nSteps * deltaP12 x) @ (self 
+		offset: nSteps * deltaP12 x) @ (self
 			startFrom: p1y
 			to: p2y
 			offset: nSteps * deltaP12 y).
-	deltaP43 := (self 
+	deltaP43 := (self
 		deltaFrom: p4x
 		to: p3x
-		nSteps: nSteps) @ (self 
+		nSteps: nSteps) @ (self
 			deltaFrom: p4y
 			to: p3y
 			nSteps: nSteps).
-	pB := (self 
+	pB := (self
 		startFrom: p4x
 		to: p3x
-		offset: nSteps * deltaP43 x) @ (self 
+		offset: nSteps * deltaP43 x) @ (self
 			startFrom: p4y
 			to: p3y
 			offset: nSteps * deltaP43 y).
@@ -320,48 +316,48 @@ WarpBlt >> warpBitsSmoothing: n sourceMap: sourceMap [
 	poker := BitBlt bitPokerToForm: destForm.
 	poker clipRect: self clipRect.
 	nSteps := width - 1 max: 1.
-	destY 
+	destY
 		to: destY + height - 1
-		do: 
-			[ :y | 
-			deltaPAB := (self 
+		do:
+			[ :y |
+			deltaPAB := (self
 				deltaFrom: pA x
 				to: pB x
-				nSteps: nSteps) @ (self 
+				nSteps: nSteps) @ (self
 					deltaFrom: pA y
 					to: pB y
 					nSteps: nSteps).
-			sp := (self 
+			sp := (self
 				startFrom: pA x
 				to: pB x
-				offset: nSteps * deltaPAB x) @ (self 
+				offset: nSteps * deltaPAB x) @ (self
 					startFrom: pA y
 					to: pB y
 					offset: nSteps * deltaPAB x).
-			destX 
+			destX
 				to: destX + width - 1
-				do: 
-					[ :x | 
-					n = 1 
-						ifTrue: 
-							[ poker 
+				do:
+					[ :x |
+					n = 1
+						ifTrue:
+							[ poker
 								pixelAt: x @ y
 								put: (picker pixelAt: sp // fixedPtOne asPoint) ]
-						ifFalse: 
-							[ 0 
+						ifFalse:
+							[ 0
 								to: n - 1
-								do: 
-									[ :dx | 
-									0 
+								do:
+									[ :dx |
+									0
 										to: n - 1
-										do: 
-											[ :dy | 
-											pix 
+										do:
+											[ :dy |
+											pix
 												at: dx * n + dy + 1
 												put: (picker pixelAt: (sp + (deltaPAB * dx // n) + (deltaP12 * dy // n)) // fixedPtOne asPoint) ] ].
-							poker 
+							poker
 								pixelAt: x @ y
-								put: (self 
+								put: (self
 										mixPix: pix
 										sourceMap: sourceMap
 										destMap: colorMap) ].

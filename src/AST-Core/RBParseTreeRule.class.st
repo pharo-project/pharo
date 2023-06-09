@@ -24,21 +24,21 @@ RBParseTreeRule class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBParseTreeRule class >> methodSearch: aString [ 
+RBParseTreeRule class >> methodSearch: aString [
 	^(self new)
 		methodSearchString: aString;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBParseTreeRule class >> search: aString [ 
+RBParseTreeRule class >> search: aString [
 	^(self new)
 		searchString: aString;
 		yourself
 ]
 
 { #category : #testing }
-RBParseTreeRule >> canMatch: aProgramNode [ 
+RBParseTreeRule >> canMatch: aProgramNode [
 	^true
 ]
 
@@ -68,10 +68,10 @@ RBParseTreeRule >> parserClass [
 ]
 
 { #category : #matching }
-RBParseTreeRule >> performOn: aProgramNode [ 
+RBParseTreeRule >> performOn: aProgramNode [
 	self context empty.
-	^((searchTree match: aProgramNode inContext: self context) 
-		and: [self canMatch: aProgramNode]) 
+	^((searchTree match: aProgramNode inContext: self context)
+		and: [self canMatch: aProgramNode])
 			ifTrue:
 				[owner recusivelySearchInContext.
 				self foundMatchFor: aProgramNode]

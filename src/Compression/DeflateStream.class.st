@@ -76,7 +76,7 @@ DeflateStream >> deflateBlock [
 			self flushBlock.
 			blockStart := blockPosition].
 		"Make room for more data"
-		self moveContentsToFront].
+		self moveContentsToFront]
 ]
 
 { #category : #deflating }
@@ -213,7 +213,7 @@ DeflateStream >> findMatch: here lastLength: lastLength lastMatch: lastMatch cha
 { #category : #initialization }
 DeflateStream >> flush [
 	"Force compression"
-	self deflateBlock.
+	self deflateBlock
 ]
 
 { #category : #deflating }
@@ -246,7 +246,7 @@ DeflateStream >> initialize [
 { #category : #initialization }
 DeflateStream >> initializeHashTables [
 	hashHead := WordArray new: 1 << HashBits.
-	hashTail := WordArray new: WindowSize.
+	hashTail := WordArray new: WindowSize
 ]
 
 { #category : #deflating }
@@ -259,7 +259,7 @@ DeflateStream >> insertStringAt: here [
 	hashValue := self updateHashAt: (here + MinMatch).
 	prevEntry := hashHead at: hashValue+1.
 	hashHead at: hashValue+1 put: here.
-	hashTail at: (here bitAnd: WindowMask)+1 put: prevEntry.
+	hashTail at: (here bitAnd: WindowMask)+1 put: prevEntry
 ]
 
 { #category : #private }
@@ -269,17 +269,17 @@ DeflateStream >> moveContentsToFront [
 	delta := (blockPosition - WindowSize).
 	delta <= 0 ifTrue:[^self].
 	"Move collection"
-	collection 
-		replaceFrom: 1 
-		to: collection size - delta 
-		with: collection 
+	collection
+		replaceFrom: 1
+		to: collection size - delta
+		with: collection
 		startingAt: delta+1.
 	position := position - delta.
 	"Move hash table entries"
 	blockPosition := blockPosition - delta.
 	blockStart := blockStart - delta.
 	self updateHashTable: hashHead delta: delta.
-	self updateHashTable: hashTail delta: delta.
+	self updateHashTable: hashTail delta: delta
 ]
 
 { #category : #accessing }
@@ -313,7 +313,7 @@ DeflateStream >> nextPutAll: aCollection [
 { #category : #initialization }
 DeflateStream >> on: aCollection [
 	self initialize.
-	super on: (aCollection species new: WindowSize * 2).
+	super on: (aCollection species new: WindowSize * 2)
 ]
 
 { #category : #initialization }
@@ -332,7 +332,7 @@ DeflateStream >> pastEndPut: anObject [
 DeflateStream >> updateHash: nextValue [
 	"Update the running hash value based on the next input byte.
 	Return the new updated hash value."
-	^((hashValue bitShift: HashShift) bitXor: nextValue) bitAnd: HashMask.
+	^((hashValue bitShift: HashShift) bitXor: nextValue) bitAnd: HashMask
 ]
 
 { #category : #deflating }
@@ -349,7 +349,7 @@ DeflateStream >> updateHashTable: table delta: delta [
 		"Discard entries that are out of range"
 		(pos := table at: i) >= delta
 			ifTrue:[table at: i put: pos - delta]
-			ifFalse:[table at: i put: 0]].
+			ifFalse:[table at: i put: 0]]
 ]
 
 { #category : #deflating }

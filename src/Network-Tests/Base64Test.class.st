@@ -35,7 +35,7 @@ Base64Test >> testRangeEncoding [
 { #category : #tests }
 Base64Test >> testWikipediaExampleQuote [
 	"https://en.wikipedia.org/wiki/Base64#Examples"
-	
+
 	| in out outAsOneLine |
 	in := 'Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.'.
 	out := 'TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz

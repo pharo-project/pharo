@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-ReSearchStringSourceAnchor class >> entity: anEntity string: aString [ 
-	
-	^ self basicNew 
+ReSearchStringSourceAnchor class >> entity: anEntity string: aString [
+
+	^ self basicNew
 		initializeEnitity: anEntity
 		searchString: aString;
 		yourself
 ]
 
 { #category : #initialization }
-ReSearchStringSourceAnchor >> initializeEnitity: anEntiy searchString: aString [ 
-	
+ReSearchStringSourceAnchor >> initializeEnitity: anEntiy searchString: aString [
+
 	self initializeEnitity: anEntiy.
 	searchString := aString
 ]

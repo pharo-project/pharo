@@ -19,7 +19,7 @@ Class {
 
 { #category : #'class initialization' }
 CollectionElement class >> initialize [
-	NilElement := self with: nil.
+	NilElement := self with: nil
 ]
 
 { #category : #'instance creation' }

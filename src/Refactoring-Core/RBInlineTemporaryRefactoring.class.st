@@ -18,15 +18,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aClass [ 
-	^ self new 
+RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aClass [
+	^ self new
 		inline: anInterval
 		from: aSelector
 		in: aClass
 ]
 
 { #category : #'instance creation' }
-RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [ 
+RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
@@ -51,7 +51,7 @@ RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 ]
 
 { #category : #initialization }
-RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [ 
+RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval
@@ -59,15 +59,15 @@ RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 
 { #category : #preconditions }
 RBInlineTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition withBlock: 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
 					[self verifySelectedInterval.
 					true])
 ]
 
 { #category : #transforming }
 RBInlineTemporaryRefactoring >> replaceAssignment [
-	assignmentNode parent isSequence 
+	assignmentNode parent isSequence
 		ifTrue: [assignmentNode parent removeNode: assignmentNode]
 		ifFalse: [assignmentNode replaceWith: assignmentNode value]
 ]
@@ -83,7 +83,7 @@ RBInlineTemporaryRefactoring >> replaceReferences [
 ]
 
 { #category : #printing }
-RBInlineTemporaryRefactoring >> storeOn: aStream [ 
+RBInlineTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' inline: '.
@@ -107,11 +107,11 @@ RBInlineTemporaryRefactoring >> transform [
 { #category : #preconditions }
 RBInlineTemporaryRefactoring >> verifySelectedInterval [
 
-	sourceTree := class parseTreeFor: selector.
-	sourceTree ifNil: [ self refactoringFailure: 'Could not parse source' ].
+	sourceTree := class parseTreeForSelector: selector.
+	sourceTree ifNil: [ self refactoringError: 'Could not parse source' ].
 	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
 	assignmentNode isAssignment
-		ifFalse: [ self refactoringFailure: 'The selected node is not an assignment statement' ].
+		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
 	definingNode := assignmentNode whoDefines: assignmentNode variable name.
 	self hasOnlyOneAssignment
 		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].

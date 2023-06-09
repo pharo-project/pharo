@@ -19,9 +19,9 @@ DeleteVisitor >> visit: aReference [
 	"Don't follow symbolic links:
 	- We shouldn't delete files outside the root's tree.
 	- Symbolic links that point to the containing directory create an infinite loop"
-	PostorderGuide 
-		show: aReference 
-		to: self 
+	PostorderGuide
+		show: aReference
+		to: self
 		selecting: [ :entry | entry isSymlink not ]
 ]
 

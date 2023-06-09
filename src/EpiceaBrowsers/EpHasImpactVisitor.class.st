@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 EpHasImpactVisitor class >> inEnvironment: anEnvironment [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeWith: anEnvironment;
 		yourself
 ]
@@ -23,7 +23,7 @@ EpHasImpactVisitor class >> inEnvironment: anEnvironment [
 { #category : #private }
 EpHasImpactVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
-	^ (environment classOrTraitNamed: aSymbol) 
+	^ (environment classOrTraitNamed: aSymbol)
 		ifNil: [ self ]
 		ifNotNil: presentBlock
 ]
@@ -32,7 +32,7 @@ EpHasImpactVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 EpHasImpactVisitor >> initializeWith: anEnvironment [
 
 	self initialize.
-	environment := anEnvironment.
+	environment := anEnvironment
 ]
 
 { #category : #visitor }
@@ -42,13 +42,13 @@ EpHasImpactVisitor >> visitBehaviorCategoryChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior |
 			^ behavior category ~= aChange behaviorAffected category ].
-			
+
 	^ true
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitBehaviorChange: aChange [
-	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior | 
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
 		^ behavior definitionString ~= aChange behaviorAffected definitionSource or: [
 			behavior classSide definitionString ~= aChange behaviorAffected classSide definitionSource ] ].
 
@@ -60,9 +60,9 @@ EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :aClass | 
+		ifPresent: [ :aClass |
 			^ aClass comment ~= aChange newComment or: [
-			aClass organization commentStamp ~= aChange newStamp ] ].
+			aClass commentStamp ~= aChange newStamp ] ].
 
 	^ true
 ]
@@ -70,7 +70,7 @@ EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 { #category : #visitor }
 EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange oldName
 		ifPresent: [ :behavior | ^ true ].
 
@@ -84,8 +84,14 @@ EpHasImpactVisitor >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
+EpHasImpactVisitor >> visitCategoryRegistration: aChange [
+
+	^ (environment organization includesCategory: aChange categoryName) not
+]
+
+{ #category : #visitor }
 EpHasImpactVisitor >> visitCategoryRemoval: aChange [
-	
+
 	^ environment organization includesCategory: aChange categoryName
 ]
 
@@ -98,7 +104,7 @@ EpHasImpactVisitor >> visitCategoryRename: aChange [
 { #category : #visitor }
 EpHasImpactVisitor >> visitClassRemoval: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior | ^ true ].
 
@@ -114,27 +120,27 @@ EpHasImpactVisitor >> visitCodeChange: aChange [
 EpHasImpactVisitor >> visitMethodChange: aChange [
 	"Addition and Modification come here"
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior | 
-			^ behavior 
+		ifPresent: [ :behavior |
+			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
 					method protocol ~= aChange methodAffectedProtocol or: [
 					method sourceCode ~= aChange methodAffectedSourceCode ] ]
 				ifAbsent: [ true ] ].
-			
+
 	^ true "If class is not present"
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitMethodRemoval: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior |
 			"If method comes from trait, removing has no impact."
-			^ behavior 
+			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method | method isFromTrait not ]
 				ifAbsent: [ false ] ].
@@ -145,29 +151,30 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
-	self 
+	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior |
-			^ (behavior organization protocolOrganizer hasProtocolNamed: aProtocolAddition protocol) not ].
-		
+		ifPresent: [ :behavior | ^ (behavior hasProtocol: aProtocolAddition protocol) not ].
+
 	^ true
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
+	"Protocol removal has an impact if:
+	- the protocl exists, and
+	- there are methods in the protocol that are not trait methods"
 
-	self 
-		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior | 
-			^ behavior organization protocolOrganizer hasProtocolNamed: aProtocolRemoved protocol ].
-		
+	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior |
+		(behavior hasProtocol: aProtocolRemoved protocol) ifFalse: [ ^ false ].
+		((behavior methodsInProtocol: aProtocolRemoved protocol) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
+
 	^ true
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitTraitRemoval: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior | ^ true ].
 

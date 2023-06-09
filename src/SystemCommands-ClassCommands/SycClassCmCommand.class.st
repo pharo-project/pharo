@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : #adding }
-SycClassCmCommand class >> activationStrategy [ 
+SycClassCmCommand class >> activationStrategy [
 	^ SycClassMenuActivation
 ]
 
 { #category : #preparation }
 SycClassCmCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	targetClass := context lastSelectedClass.
+	targetClass := context lastSelectedClass
 ]

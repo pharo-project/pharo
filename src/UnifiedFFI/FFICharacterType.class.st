@@ -55,6 +55,9 @@ FFICharacterType >> defaultReturnOnError [
 FFICharacterType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
 
 	| isString |
+	aCallout shouldAutoReleaseReturnedValue ifTrue: [
+		self error: 'Functions returning char* type cannot yet use +optAutoReleaseReturnedValue.' ].
+
 	isString := self pointerArity = 1.
 	^ isString
 		ifTrue: [
@@ -64,7 +67,7 @@ FFICharacterType >> emitReturn: aBuilder resultTempVar: resultVar context: aCont
 ]
 
 { #category : #callbacks }
-FFICharacterType >> extractFromCallbackOn: aCallbackArgumentReader [ 
+FFICharacterType >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractCharacterType
 ]

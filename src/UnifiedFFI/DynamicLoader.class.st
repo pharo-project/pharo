@@ -10,10 +10,9 @@ Class {
 
 { #category : #accessing }
 DynamicLoader class >> forCurrentPlatform [
-	^ (self allSubclasses 
+	^ (self allSubclasses
 		detect: [ :each | each isAvailable ])
 		uniqueInstance
-		
 ]
 
 { #category : #testing }
@@ -33,8 +32,8 @@ DynamicLoader class >> loadLibrary: path [
 
 { #category : #misc }
 DynamicLoader class >> loadLibrary: path flag: flag [
-	^ self forCurrentPlatform 
-		loadLibrary: path 
+	^ self forCurrentPlatform
+		loadLibrary: path
 		flag: flag
 ]
 

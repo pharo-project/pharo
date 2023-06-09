@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : #'item convertation' }
-ClyProjectChildItem class >> convertToCalypsoBrowserItem: aProjectChildItem [ 
+ClyProjectChildItem class >> convertToCalypsoBrowserItem: aProjectChildItem [
 	| item |
 	item := ClyBrowserItem named: aProjectChildItem name with: aProjectChildItem.
 	aProjectChildItem isEmpty ifFalse: [ item markWithChildrenOf: ClyProjectChildItem].
@@ -32,25 +32,25 @@ ClyProjectChildItem class >> convertToCalypsoBrowserItem: aProjectChildItem [
 ]
 
 { #category : #sorting }
-ClyProjectChildItem class >> defaultSortFunctionForCalypso [ 
+ClyProjectChildItem class >> defaultSortFunctionForCalypso [
 	^ClySortByNameFunction ascending
 ]
 
 { #category : #queries }
-ClyProjectChildItem class >> prepareClassQueriesFrom: projectItems in: aNavigationEnvironment [ 
+ClyProjectChildItem class >> prepareClassQueriesFrom: projectItems in: aNavigationEnvironment [
 	^{ClyAllClassesQuery from: ClyProjectScope ofAll: projectItems in: aNavigationEnvironment }
 ]
 
 { #category : #queries }
-ClyProjectChildItem class >> prepareProjectItemsQueryFrom: aProjectChildItem in: aNavigationEnvironment [ 
+ClyProjectChildItem class >> prepareProjectItemsQueryFrom: aProjectChildItem in: aNavigationEnvironment [
 
-	^ ClyProjectContentQuery 
+	^ ClyProjectContentQuery
 			sortedFrom: (ClyProjectScope of: aProjectChildItem in: aNavigationEnvironment)
 ]
 
 { #category : #'instance creation' }
 ClyProjectChildItem class >> project: aProject [
-	^self new 
+	^self new
 		project: aProject
 ]
 

@@ -23,7 +23,8 @@ Class {
 		'labelArea',
 		'expandBox',
 		'embeddable',
-		'isResizeable'
+		'isResizeable',
+		'taskbarTask'
 	],
 	#classVars : [
 		'CloseBoxImage',
@@ -53,7 +54,7 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 		category: #WindowShortcuts
 		default: PharoShortcuts current closeWindowShortcut
 		do: [ :target | SystemWindow closeTopWindow ]
-		description: 'Close this window'.
+		description: 'Close this window'
 ]
 
 { #category : #keymapping }
@@ -63,20 +64,20 @@ SystemWindow class >> buildWindowBottomEdgeShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowBottomEdgeUp)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomEdgeUpShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := 0@(target bounds height / 2) negated.
 			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
 		description: 'Move bottom edge of the window up by half of the window extent'.
-		
+
 	(aBuilder shortcut: #windowBottomEdgeDown)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomEdgeDownShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := 0@(target bounds height / 2).
 			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
-		description: 'Move bottXX edge of the window up by half of the window extent'.
+		description: 'Move bottXX edge of the window up by half of the window extent'
 ]
 
 { #category : #keymapping }
@@ -86,20 +87,20 @@ SystemWindow class >> buildWindowLeftEdgeShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowLeftEdgeLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowLeftEdgeLeftShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := (target bounds width / 2) negated @0.
 			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight ))]
 		description: 'Move left edge of the window left by half of the window extent'.
-		
+
 	(aBuilder shortcut: #windowLeftEdgeRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowLeftEdgeRightShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := (target bounds width / 2)@0.
 			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
-		description: 'Move left edge of the window right by half of the window extent'.
+		description: 'Move left edge of the window right by half of the window extent'
 ]
 
 { #category : #keymapping }
@@ -109,16 +110,16 @@ SystemWindow class >> buildWindowMovingShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowMoveLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMoveLeftShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := ((target bounds width / 2) negated)@0.
 			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
 		description: 'Move window left by half of its extent'.
-		
+
 	(aBuilder shortcut: #windowMoveRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMoveRightShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := ((target bounds width /2))@0.
 			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
@@ -127,20 +128,20 @@ SystemWindow class >> buildWindowMovingShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowMoveUp)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMoveUpShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := 0@((target bounds height / 2) negated).
 			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
 		description: 'Move window up by half of its extent'.
-		
+
 	(aBuilder shortcut: #windowMoveDown)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMoveDownShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := 0@(target bounds height / 2).
 			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
-		description: 'Move window down by half of its extent'.
+		description: 'Move window down by half of its extent'
 ]
 
 { #category : #keymapping }
@@ -150,20 +151,20 @@ SystemWindow class >> buildWindowRightEdgeShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowRightEdgeLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowRightEdgeLeftShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := (target bounds width / 2) negated @0.
 			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
 		description: 'Center the window with a default extent'.
-		
+
 	(aBuilder shortcut: #windowRightEdgeRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowRightEdgeRightShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := (target bounds width / 2)@0.
 			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
-		description: 'Center the window with a default extent'.
+		description: 'Center the window with a default extent'
 ]
 
 { #category : #keymapping }
@@ -181,7 +182,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 		default: PharoShortcuts current windowLeftShortcut
 		do: [ :target | target tileLeft ]
 		description: 'Move the window to the left half of the display'.
-	
+
 	(aBuilder shortcut: #windowBottomLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomLeftShortcut
@@ -234,7 +235,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowCenterShortcut
 		do: [ :target | target tileCenter]
-		description: 'Center the window with a default extent'.
+		description: 'Center the window with a default extent'
 ]
 
 { #category : #keymapping }
@@ -244,20 +245,20 @@ SystemWindow class >> buildWindowTopEdgeShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowTopEdgeUp)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopEdgeUpShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := 0@(target bounds height / 2) negated.
 			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
 		description: 'Move top edge of the window up by half of the window extent'.
-		
+
 	(aBuilder shortcut: #windowTopEdgeDown)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopEdgeDownShortcut
-		do: [ :target | 
+		do: [ :target |
 			| movement |
 			movement := 0@(target bounds height / 2).
 			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
-		description: 'Move top edge of the window down by half of the window extent'.
+		description: 'Move top edge of the window down by half of the window extent'
 ]
 
 { #category : #accessing }
@@ -274,8 +275,8 @@ SystemWindow class >> closeBoxImage [
 { #category : #'top window' }
 SystemWindow class >> closeTopWindow [
 	"Try to close the top window.  It may of course decline"
-	TopWindow ifNotNil: [ :window | 
-		TopWindow := nil. 
+	TopWindow ifNotNil: [ :window |
+		TopWindow := nil.
 		window delete.
 	]
 ]
@@ -314,7 +315,7 @@ SystemWindow class >> fullscreenMargin: anInteger [
 { #category : #'private-menu building' }
 SystemWindow class >> icons [
 
-	^ Smalltalk ui icons.
+	^ Smalltalk ui icons
 ]
 
 { #category : #'class initialization' }
@@ -342,9 +343,9 @@ SystemWindow class >> menuBoxImage [
 { #category : #'top window' }
 SystemWindow class >> noteTopWindowIn: aWorld [
 	"Clear the current top window and activate the topmost visible window"
-	
+
 	TopWindow := nil.
-	
+
 	aWorld ifNil: [^ self].
 	aWorld submorphsDo: [:m |
 		(m isSystemWindow and: [m isCollapsed not]) ifTrue: [
@@ -354,21 +355,21 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 { #category : #'top window' }
 SystemWindow class >> sendTopWindowToBack [
  	"Send the top window of the world to the back. Relies on #submorphs array being ordered top to bottom. "
-	self currentWorld submorphs 
-		detect: [ :morph | morph isSystemWindow ] 
-		ifFound: [ :morph | morph sendToBack ].
+	self currentWorld submorphs
+		detect: [ :morph | morph isSystemWindow ]
+		ifFound: [ :morph | morph sendToBack ]
 ]
 
 { #category : #'menu items - tiling' }
 SystemWindow class >> tilingMenuItemsOn: aBuilder [
 
 	<windowMenu>
-		
+
 	(aBuilder item: #tileLeft)
 		action: [ :target | target tileLeft ];
 		label: 'Left';
 		parent: #Tile;
-		icon: (self iconNamed: #blank); 
+		icon: (self iconNamed: #blank);
 		order: 1;
 		help: 'Move the window to the left half of the display'.
 
@@ -395,7 +396,7 @@ SystemWindow class >> tilingMenuItemsOn: aBuilder [
 		label: 'Top left';
 		parent: #Tile;
 		help: 'Move the window to the top left corner of the display'.
-		
+
 	(aBuilder item: #tileTopRight)
 		action: [ :target | target tileTopRight ];
 		label: 'Top right';
@@ -424,7 +425,7 @@ SystemWindow class >> tilingMenuItemsOn: aBuilder [
 		action: [ :target | target tileCenter ];
 		label: 'Center';
 		parent: #Tile;
-		help: 'Center the window with a default extent'.
+		help: 'Center the window with a default extent'
 ]
 
 { #category : #'menu items - tiling' }
@@ -433,7 +434,7 @@ SystemWindow class >> tilingMenuOn: aBuilder [
 	<windowMenu>
 
 	(aBuilder item: #Tile)
-		order: 10.5.
+		order: 10.5
 ]
 
 { #category : #'top window' }
@@ -463,7 +464,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		withSeparatorAfter.
 	(aBuilder item: #About)
 		action: [ aBuilder model showAbout ];
-		iconName: #smallHelpIcon;
+		iconName: #smallHelp;
 		withSeparatorAfter.
 	(aBuilder item: #'Change title')
 		action: [ aBuilder model relabel ].
@@ -482,9 +483,9 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifFalse: [ #'Make unclosable' ]
 		ifTrue: [ #'Make closable' ].
 	(aBuilder item: closableLabel)
-		action: [ 
+		action: [
 			(closableLabel = #'Make unclosable')
-				ifTrue: [ aBuilder model makeUnclosable ] 
+				ifTrue: [ aBuilder model makeUnclosable ]
 				ifFalse:[ aBuilder model makeClosable] ].
 	draggableLabel := aBuilder model isSticky
 		ifTrue: [ #'Make draggable' ]
@@ -520,20 +521,20 @@ SystemWindow class >> windowsIn: aWorld satisfying: windowBlock [
 { #category : #activation }
 SystemWindow >> activate [
 	"Activate the owner too."
-	
+
 	self activatedModalChild ifTrue: [ ^self ].
-	
+
 	self addPaneSplittersIfNeeded.
-		
+
 	super activate.
-	
+
 	self isEmbedded ifFalse: [
 		self basicActivate
-	].	
-	
+	].
+
 	self navigateFocus.
-	
-	self positionModalOwner.
+
+	self positionModalOwner
 ]
 
 { #category : #'top window' }
@@ -547,10 +548,10 @@ SystemWindow >> activateAndForceLabelToShow [
 SystemWindow >> activatedModalChild [
 
 	self modalChild ifNotNil: [ :modalChild |
-		modalChild owner ifNotNil: [ 
+		modalChild owner ifNotNil: [
 				modalChild activate.
 				modalChild modalChild ifNil: [ modalChild indicateModalChild ].
-				^true.			
+				^true.
 		]
 	].
 	^false
@@ -573,28 +574,28 @@ SystemWindow >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
 "template..."
 	aCustomMenu addLine.
-	aCustomMenu add: 'Edit label...' selector: #relabel.
+	aCustomMenu add: 'Edit label...' selector: #relabel
 ]
 
 { #category : #initialization }
 SystemWindow >> addLabelArea [
 
 	labelArea :=self theme newWindowHeaderFor: self.
-	self addMorph: labelArea.
+	self addMorph: labelArea
 ]
 
 { #category : #panes }
 SystemWindow >> addMorph: aMorph frame: rectangle [
-	
+
 	^ self addMorph: aMorph fullFrame: rectangle
 ]
 
 { #category : #activation }
 SystemWindow >> addPaneSplittersIfNeeded [
 
-	(isCollapsed not 
+	(isCollapsed not
 		and: [ self paneMorphs isNotEmpty and: [self splitters isEmpty]])
-			ifTrue: [self addPaneSplitters].
+			ifTrue: [self addPaneSplitters]
 ]
 
 { #category : #'top window' }
@@ -636,20 +637,20 @@ SystemWindow >> announce: anAnnouncement [
 SystemWindow >> announceActivated [
 
 	self announce: (
-		WindowActivated new 
-			window: self; 
+		WindowActivated new
+			window: self;
 			yourself
-	).
+	)
 ]
 
 { #category : #announcement }
 SystemWindow >> announceDeActivated [
 
 	self announce: (
-		WindowDeActivated new 
-			window: self; 
+		WindowDeActivated new
+			window: self;
 			yourself
-	).
+	)
 ]
 
 { #category : #announcement }
@@ -659,7 +660,7 @@ SystemWindow >> announceOpened [
 	self currentWorld announcer
 		announce: (WindowOpened new
 						window: self;
-						yourself).
+						yourself)
 ]
 
 { #category : #initialization }
@@ -672,26 +673,26 @@ SystemWindow >> basicActivate [
 	"Bring me to the front and make me able to respond to mouse and keyboard."
 
 	| outerMorph |
-	
+
 	outerMorph := self topRendererOrSelf.
 	outerMorph owner ifNil: [^ self "avoid spurious activate when drop in trash"].
 	self isTopWindow ifTrue: [^self].
-	
+
 	self beTopWindow.
-	
+
 	outerMorph owner firstSubmorph == outerMorph
 		ifFalse: ["Bring me (with any flex) to the top if not already"
 				outerMorph owner addMorphFront: outerMorph
 		].
-			
+
 	self submorphsDo: [:m | m unlock].
-	
+
 	labelArea ifNotNil: [
 		labelArea submorphsDo: [:m | m unlock].
 		self setStripeColorsFrom: self paneColorToUse
 	].
 
-	self isCollapsed ifFalse: [ 
+	self isCollapsed ifFalse: [
 		model modelWakeUpIn: self.
 		self positionSubmorphs.
 		labelArea ifNil: [ self adjustBorderUponActivationWhenLabeless ]
@@ -704,46 +705,46 @@ SystemWindow >> basicActivate [
 SystemWindow >> beResizeable [
 
 	isResizeable := true.
-	
+
 	"If isResizable is overriden to always return false, then it would break the invariant"
 	self isResizeable ifTrue: [ self addGripsIfWanted ]
 ]
 
 { #category : #activation }
 SystemWindow >> beTopWindow [
-	
+
 	| oldTopWindow |
-	
+
 	oldTopWindow := TopWindow.
 	TopWindow := self.
-	
+
 	oldTopWindow ifNotNil: [ oldTopWindow privateBePassive ].
-	
-	self announceActivated.
+
+	self announceActivated
 ]
 
 { #category : #controls }
 SystemWindow >> beUnresizeable [
 
 	isResizeable := false.
-	
+
 	"If isResizable is overriden to always return true, then it would break the invariant"
 	self isResizeable ifFalse: [ self removeGrips ]
 ]
 
 { #category : #initialization }
 SystemWindow >> boxExtent [
-	"answer the extent to use in all the buttons.  
+	"answer the extent to use in all the buttons.
 	The label height is used to be proportional to the standard window label font"
-	
+
 	label ifNil: [^(14 @ 14) * self displayScaleFactor].
 	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)
 ]
 
 { #category : #controls }
 SystemWindow >> buildWindowMenu [
-  
-	^ self menu.
+
+	^ self menu
 ]
 
 { #category : #testing }
@@ -766,57 +767,61 @@ SystemWindow >> close [
 
 { #category : #keymapping }
 SystemWindow >> closeWindowAction [
-"closed by a shortcut action. 
+"closed by a shortcut action.
  subclasses may overwrite this to do a different action (for example, cancel edits)"
 	self close
 ]
 
 { #category : #'resize/collapse' }
 SystemWindow >> collapse [
-	self isCollapsed ifFalse:[self collapseOrExpand].
+	self isCollapsed ifFalse:[self collapseOrExpand]
 ]
 
 { #category : #'resize/collapse' }
 SystemWindow >> collapseOrExpand [
+
 	"Collapse or expand the window, depending on existing state.
 	Use the taskbar if present, otherwise do as normal."
-	
+
 	| cf |
-	self isTaskbarPresent ifTrue: [^self minimizeOrRestore].
+	self isTaskbarPresent ifTrue: [ ^ self minimizeOrRestore ].
 	isCollapsed
-		ifTrue: 
-			["Expand -- restore panes to morphics structure"
+		ifTrue: [ "Expand -- restore panes to morphics structure"
 			isCollapsed := false.
-			self activate.  "Bring to frint first"
+			self activate. "Bring to frint first"
 			collapsedFrame := self getBoundsWithFlex.
-			collapseBox ifNotNil: [collapseBox setBalloonText: 'Collapse this window'].
+			collapseBox ifNotNil: [
+				collapseBox setBalloonText: 'Collapse this window' ].
 			self setBoundsWithFlex: fullFrame.
-			paneMorphs reverseDo: 
-					[:m |  self addMorph: m unlock.
-					self world startSteppingSubmorphsOf: m].
+			paneMorphs reverseDo: [ :m |
+				self addMorph: m unlock.
+				m startSteppingSubmorphs ].
 			self
 				addPaneSplitters;
-				addGripsIfWanted]
-		ifFalse: 
-			["Collapse -- remove panes from morphics structure"
+				addGripsIfWanted ]
+		ifFalse: [ "Collapse -- remove panes from morphics structure"
 			isCollapsed := true.
 			fullFrame := self getBoundsWithFlex.
 			"First save latest fullFrame"
-			paneMorphs do: [:m | m delete; releaseCachedState].
+			paneMorphs do: [ :m |
+				m
+					delete;
+					releaseCachedState ].
 			self removePaneSplitters.
 			self removeGrips.
 			cf := self getCollapsedFrame.
-			collapsedFrame ifNil: [collapsedFrame := cf].
+			collapsedFrame ifNil: [ collapsedFrame := cf ].
 			self setBoundsWithFlex: cf.
-			collapseBox ifNotNil: [collapseBox setBalloonText: 'expand this window'].
-			expandBox ifNotNil: [expandBox setBalloonText: 'expand to full screen']].
+			collapseBox ifNotNil: [
+				collapseBox setBalloonText: 'expand this window' ].
+			expandBox ifNotNil: [
+				expandBox setBalloonText: 'expand to full screen' ] ].
 	self layoutChanged.
-	
+
 	"This gets invoked only if the taskbar is not present, if it is, then minimizeOrRestore is invoked (cf beginning of this method)"
-	self announce: 
-		(WindowCollapsed new
-			window: self;
-			yourself).
+	self announce: (WindowCollapsed new
+			 window: self;
+			 yourself)
 ]
 
 { #category : #'resize/collapse' }
@@ -838,7 +843,7 @@ SystemWindow >> copyTitle [
 { #category : #initialization }
 SystemWindow >> createBox [
 	"create a button with default to be used in the label area"
-	"Transcript show: self paneColor asString;  
+	"Transcript show: self paneColor asString;
 	cr."
 	| box |
 	box := IconicButtonMorph new.
@@ -866,7 +871,7 @@ SystemWindow >> createWindowGroup [
 { #category : #initialization }
 SystemWindow >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
-	^ #raised.
+	^ #raised
 ]
 
 { #category : #initialization }
@@ -930,7 +935,7 @@ SystemWindow >> deleteDiscardingChanges [
 { #category : #'menu building' }
 SystemWindow >> discoveredMenuPragmaKeyword [
 
-	^ 'windowMenu'.
+	^ #windowMenu
 ]
 
 { #category : #events }
@@ -961,7 +966,7 @@ SystemWindow >> embeddable: aBoolean [
 SystemWindow >> embeddedWindowOrNil [
 
 	"answer nil for common morphs, yourself from system windows and first submorph for transformation morphs"
-	
+
 	^ self
 ]
 
@@ -972,16 +977,16 @@ SystemWindow >> existingPaneColor [
 	| aColor |
 	aColor := self valueOfProperty: #paneColor.
 	aColor ifNil: [self setProperty: #paneColor toValue: (aColor := self paneColor)].
-	^aColor.
+	^aColor
 ]
 
 { #category : #'resize/collapse' }
 SystemWindow >> expand [
-	self isCollapsed ifTrue:[self collapseOrExpand].
+	self isCollapsed ifTrue:[self collapseOrExpand]
 ]
 
 { #category : #'resize/collapse' }
-SystemWindow >> extent: aPoint [ 
+SystemWindow >> extent: aPoint [
 	"Set the receiver's extent to value provided. Respect my minimumExtent."
 
 	| newExtent w oldExtent|
@@ -990,7 +995,7 @@ SystemWindow >> extent: aPoint [
 		ifFalse: [aPoint max: self minimumExtent].
 	newExtent = self extent ifTrue: [^ self].
 
-	oldExtent := self extent.	
+	oldExtent := self extent.
 	isCollapsed
 		ifTrue: [super extent: newExtent x @ self labelHeight]
 		ifFalse: [super extent: newExtent].
@@ -1014,11 +1019,11 @@ SystemWindow >> extent: aPoint [
 					[collapsedFrame := collapsedFrame withWidth: label width + labelWidgetAllowance]].
 	self theme windowExtentChangedFor: self.
 
-	self announce: (WindowResizing new 
-						oldSize: oldExtent; 
-						newSize: newExtent; 
-						window: self; 
-						yourself).
+	self announce: (WindowResizing new
+						oldSize: oldExtent;
+						newSize: newExtent;
+						window: self;
+						yourself)
 ]
 
 { #category : #label }
@@ -1031,14 +1036,14 @@ SystemWindow >> externalName [
 { #category : #'menu building' }
 SystemWindow >> fallbackMenuOn: menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
-	
+
 	menu
 		addToggle: 'Close' translated
 		target: self
 		selector: #closeBoxHit
 		getStateSelector: nil
 		enablementSelector: #allowedToClose.
-	menu lastItem icon: self theme windowCloseForm.
+	menu lastItem icon: self theme windowCloseForm
 ]
 
 { #category : #'resize/collapse' }
@@ -1055,7 +1060,7 @@ SystemWindow >> fullFrame [
 { #category : #'menu actions' }
 SystemWindow >> fullscreenBounds [
 	"Answer the bounds that the receiver would take if expanded to fullscreen."
-	
+
 	^ (RealEstateAgent maximumUsableAreaInWorld: self world) insetBy: self fullscreenMargin
 ]
 
@@ -1076,19 +1081,19 @@ SystemWindow >> getBoundsWithFlex [
 { #category : #'resize/collapse' }
 SystemWindow >> getCollapsedFrame [
 
-	^RealEstateAgent assignCollapseFrameFor: self.
+	^RealEstateAgent assignCollapseFrameFor: self
 ]
 
 { #category : #events }
 SystemWindow >> grabSelfOrTopRenderer: evt [
 
 	| renderer |
-	
+
 	renderer := self topRendererOrSelf.
 
 	evt hand grabMorph: renderer.
-	
-	(renderer isKindOf: SystemWindow) ifTrue: [ 
+
+	(renderer isKindOf: SystemWindow) ifTrue: [
 		renderer position: evt hand position + (renderer position - evt startPoint)
 	]
 ]
@@ -1103,7 +1108,7 @@ SystemWindow >> gradientWithColor: aColor [
 		radial: true;
 		origin: self bounds origin;
 		direction: 0 @ 223;
-		normal: 223 @ 0.
+		normal: 223 @ 0
 ]
 
 { #category : #events }
@@ -1112,14 +1117,14 @@ SystemWindow >> handleListenEvent: evt [
 	evt isMouse ifFalse:[^self].
 	evt hand hasSubmorphs ifTrue:[^self]. "still dragging"
 	self isTopWindow ifFalse:[self lockInactivePortions].
-	evt hand removeMouseListener: self.
+	evt hand removeMouseListener: self
 ]
 
 { #category : #events }
-SystemWindow >> handlesMouseDown: evt [ 
+SystemWindow >> handlesMouseDown: evt [
 	"If I am not the topWindow, then I will only respond to dragging by the title bar.
 	Any other click will only bring me to the top"
-	
+
 	^ self isEmbedded not
 ]
 
@@ -1129,7 +1134,7 @@ SystemWindow >> handlesMouseOverDragging: evt [
 ]
 
 { #category : #compatibility }
-SystemWindow >> hasUnacceptedEdits [ 
+SystemWindow >> hasUnacceptedEdits [
 
 	^ (self submorphs select: [:e | e respondsTo: #hasUnacceptedEdits ]) anySatisfy: [:e | e hasUnacceptedEdits ]
 ]
@@ -1151,7 +1156,7 @@ SystemWindow >> initialExtent [
 { #category : #initialization }
 SystemWindow >> initialize [
 	"Initialize a system window. Add label, stripes, etc., if desired"
-	
+
 	super initialize.
 	labelString ifNil: [labelString := 'Untitled Window'].
 	isCollapsed := false.
@@ -1160,19 +1165,21 @@ SystemWindow >> initialize [
 	self clipSubmorphs: true.
 	self theme
 		configureWindowBorderFor: self;
-		configureWindowDropShadowFor: self.	
+		configureWindowDropShadowFor: self.
 	self initializeLabelArea.
 
 	self cellPositioning: #topLeft. "make the offsets easy to calculate!"
 	self addGripsIfWanted.
-	
+
 	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
-	updatablePanes := Array new
+	updatablePanes := Array new.
+	self bindKeyCombination: (Character arrowLeft meta shift alt ) toAction: [self taskbarMoveLeft ].
+	self bindKeyCombination: (Character arrowRight meta shift alt) toAction: [self taskbarMoveRight ]
 ]
 
 { #category : #keymapping }
-SystemWindow >> initializeShortcuts: aKMDispatcher [ 
+SystemWindow >> initializeShortcuts: aKMDispatcher [
 	"Where we may attach keymaps or even on:do: local shortcuts if needed."
 
 	super initializeShortcuts: aKMDispatcher.
@@ -1192,7 +1199,7 @@ SystemWindow >> isCollapsed [
 { #category : #testing }
 SystemWindow >> isDisplayed [
 	" Answer true if I am currently displayed in the World"
-	
+
 	^ self world notNil
 ]
 
@@ -1231,7 +1238,7 @@ SystemWindow >> label [
 
 { #category : #geometry }
 SystemWindow >> labelRect [
-	^ self innerBounds withHeight: self labelHeight.
+	^ self innerBounds withHeight: self labelHeight
 ]
 
 { #category : #label }
@@ -1249,7 +1256,7 @@ SystemWindow >> layoutBounds [
 ]
 
 { #category : #drawing }
-SystemWindow >> makeMeVisible [ 
+SystemWindow >> makeMeVisible [
 
 	self world extent > (0@0) ifFalse: [^ self].
 
@@ -1259,7 +1266,7 @@ SystemWindow >> makeMeVisible [
 	"window not on screen (probably due to reframe) -- move it now"
 	self isCollapsed
 		ifTrue: [self position: (RealEstateAgent assignCollapsePointFor: self)]
-		ifFalse: [self position: (RealEstateAgent initialFrameFor: self initialExtent: self extent world: self world) topLeft].
+		ifFalse: [self position: (RealEstateAgent initialFrameFor: self initialExtent: self extent world: self world) topLeft]
 ]
 
 { #category : #'menu actions' }
@@ -1268,7 +1275,7 @@ SystemWindow >> makeSecondTopmost [
 	aWorld := self world.
 	aWorld submorphs
 		detect: [ :m | m isSystemWindow and: [ m ~~ self ] ]
-		ifFound: [ :nextWindow | 
+		ifFound: [ :nextWindow |
 			nextWindow activate.
 			aWorld addMorph: self behind: nextWindow ]
 ]
@@ -1298,20 +1305,21 @@ SystemWindow >> maximumExtent: aPoint [
 { #category : #api }
 SystemWindow >> menu [
 
-	^(PragmaMenuBuilder 
-		pragmaKeyword: self discoveredMenuPragmaKeyword 
+	^(PragmaMenuBuilder
+		pragmaKeyword: self discoveredMenuPragmaKeyword
 		model: self) menu
 ]
 
 { #category : #'resize/collapse' }
 SystemWindow >> minimizeOrRestore [
+
 	"Collapse or expand the window, depending on existing state"
-	
-	|mc windowEvent |
+
+	| mc windowEvent |
 	isCollapsed
-		ifTrue: ["Expand -- restore panes to morphics structure"
-			self theme shouldUseAnimations 
-				ifTrue: [self animateRestoreFromMinimized].
+		ifTrue: [ "Expand -- restore panes to morphics structure"
+			self theme shouldUseAnimations ifTrue: [
+				self animateRestoreFromMinimized ].
 			isCollapsed := false.
 			"Bring to front first"
 			self
@@ -1319,34 +1327,33 @@ SystemWindow >> minimizeOrRestore [
 				comeToFront;
 				show.
 			mc := self modalChild.
-			paneMorphs reverseDo: [:m | 
-				mc ifNil: [m unlock].
+			paneMorphs reverseDo: [ :m |
+				mc ifNil: [ m unlock ].
 				self addMorph: m.
-				self world startSteppingSubmorphsOf: m].
-			self activate]
-		ifFalse: ["Collapse -- remove panes from morphics structure"
+				m startSteppingSubmorphs ].
+			self activate ]
+		ifFalse: [ "Collapse -- remove panes from morphics structure"
 			isCollapsed := true.
 			fullFrame := self getBoundsWithFlex.
 			"First save latest fullFrame"
-			paneMorphs
-				do: [:m | m delete; releaseCachedState].
+			paneMorphs do: [ :m |
+				m
+					delete;
+					releaseCachedState ].
 			self
-				setBoundsWithFlex: (-100 @ -100 extent: 2 @ 2); "place offscreen"
-				hide.
-			self theme shouldUseAnimations  
-				ifTrue: [self animateMinimize].
-			self isActive ifTrue: [
-				self world navigateVisibleWindowForward]].
+				setBoundsWithFlex: (-100 @ -100 extent: 2 @ 2);
+				"place offscreen"hide.
+			self theme shouldUseAnimations ifTrue: [ self animateMinimize ].
+			self isActive ifTrue: [ self world navigateVisibleWindowForward ] ].
 	self layoutChanged.
-	
+
 	"This gets invoked only if the taskbar is present, see sender of minimizeOrRestore"
-	windowEvent := 
-		self isMinimized 
-			ifTrue: [ WindowCollapsed new ]
-			ifFalse: [ WindowExpanded new ].
+	windowEvent := self isMinimized
+		               ifTrue: [ WindowCollapsed new ]
+		               ifFalse: [ WindowExpanded new ].
 
 	windowEvent window: self.
-	self announce: windowEvent.
+	self announce: windowEvent
 ]
 
 { #category : #'modal-windows' }
@@ -1362,11 +1369,11 @@ SystemWindow >> modalLockTo: aSystemWindow [
 
 	aSystemWindow setProperty: #modalOwner toValue: self.
 	self setProperty: #modalChild toValue: aSystemWindow.
-	
-	closeBox ifNotNil: [ 
+
+	closeBox ifNotNil: [
 		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
 		closeBox enabled: false
-	].
+	]
 ]
 
 { #category : #'modal-windows' }
@@ -1391,20 +1398,20 @@ SystemWindow >> modalUnlockFrom: aSystemWindow [
 SystemWindow >> mouseDown: evt [
 	"Changed to properly process the mouse down event if passing to
 	submorphs."
-		
+
 	self isEmbedded ifTrue: [^self].
-	
+
 	self isTopWindow
 		ifTrue: [self comeToFront] "rise above non-window morphs"
 		ifFalse:[	self activate].
 
 	evt hand waitForClicksOrDrag: self event: evt.  "allow double-click/drag response"
-	
+
 	evt wasHandled: false.
 	self submorphsDo: [ :morph | "but allow a submorph to process and override double-click/drag response."
 		(morph containsPoint: evt cursorPoint) ifTrue: [ morph processEvent: evt ]
 	].
-	evt wasHandled: true.
+	evt wasHandled: true
 ]
 
 { #category : #events }
@@ -1413,7 +1420,7 @@ SystemWindow >> mouseEnterDragging: evt [
 	(self isTopWindow not and:[evt hand hasSubmorphs]) ifTrue:[
 		self submorphsDo:[:m| m unlock].
 		evt hand addMouseListener: self. "for drop completion on submorph"
-	].
+	]
 ]
 
 { #category : #events }
@@ -1422,7 +1429,7 @@ SystemWindow >> mouseLeaveDragging: evt [
 	(self isTopWindow not and:[evt hand hasSubmorphs]) ifTrue:[
 		self lockInactivePortions.
 		evt hand removeMouseListener: self.
-	].
+	]
 ]
 
 { #category : #events }
@@ -1430,10 +1437,10 @@ SystemWindow >> mouseMove: evt [
 	"Handle a mouse-move event"
 
 	self basicIsSticky ifFalse:[
-		self fastFramingOn 
+		self fastFramingOn
 			ifTrue: [self doFastFrameDrag: evt startPoint ]
 			ifFalse: [ self grabSelfOrTopRenderer: evt	]
-	].
+	]
 ]
 
 { #category : #events }
@@ -1441,6 +1448,12 @@ SystemWindow >> mouseUp: evt [
 	| cp |
 	cp := evt cursorPoint.
 	submorphs do: [:m | (m containsPoint: cp) ifTrue: [m mouseUp: evt]]
+]
+
+{ #category : #move }
+SystemWindow >> moveTaskbarTaskToOffset: offset [
+
+	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar updateTasks; move: self taskbarTask withOffset: offset ]
 ]
 
 { #category : #'open/close' }
@@ -1461,7 +1474,7 @@ SystemWindow >> navigateFocus [
 						ifTrue: [keyboardFocus takeKeyboardFocus]
 						ifFalse: [self navigateFocusForward]
 					]
-		].
+		]
 ]
 
 { #category : #'menu actions' }
@@ -1486,7 +1499,7 @@ SystemWindow >> openModal: aSystemWindow [
 	Restore the original keyboard focus when closed."
 
 	| keyboardFocus |
-	
+
 	keyboardFocus := self activeHand keyboardFocus.
 	self modalLockTo: aSystemWindow.
 	[ aSystemWindow openModal ] ensure: [
@@ -1499,7 +1512,7 @@ SystemWindow >> openModal: aSystemWindow [
 SystemWindow >> paneColor: aColor [
 	self setProperty: #paneColor toValue: aColor.
 
-	self adoptPaneColor: aColor.
+	self adoptPaneColor: aColor
 ]
 
 { #category : #panes }
@@ -1519,12 +1532,12 @@ SystemWindow >> paneMorphSatisfying: aBlock [
 { #category : #geometry }
 SystemWindow >> paneMorphs [
 	"Nominally private but a need for obtaining this from the outside arose"
-	
+
 	^ paneMorphs
 ]
 
 { #category : #'resize/collapse' }
-SystemWindow >> paneWithLongestSide: sideBlock near: aPoint [ 
+SystemWindow >> paneWithLongestSide: sideBlock near: aPoint [
 	| thePane theSide theLen |
 	theLen := 0.
 	paneMorphs do:
@@ -1559,8 +1572,8 @@ SystemWindow >> position: newPos [
 		ifFalse: [fullFrame := self bounds].
 
 	(oldPos ~= newPos)
-		ifTrue: [ self announce: 
-					(WindowMoved new 
+		ifTrue: [ self announce:
+					(WindowMoved new
 						oldPosition: oldPos;
 						newPosition: newPos;
 						window: self)]
@@ -1570,7 +1583,7 @@ SystemWindow >> position: newPos [
 SystemWindow >> positionModalOwner [
 
 	self modalOwner ifNotNil: [ :modalOwner |
-		(modalOwner isKindOf: SystemWindow) ifTrue: [ 
+		(modalOwner isKindOf: SystemWindow) ifTrue: [
 			modalOwner bringBehind: self.
 		]
    ]
@@ -1598,13 +1611,13 @@ SystemWindow >> preOpenInWorld: aWorld [
 		initialFrameFor: self
 		initialExtent: self initialExtent
 		world: aWorld).
-	self playOpenSound.
+	self playOpenSound
 ]
 
 { #category : #printing }
 SystemWindow >> printOn: aStream [
 
-	super printOn: aStream. 
+	super printOn: aStream.
 	label ifNotNil: [ aStream nextPutAll: ' named: ', self labelString  ]
 ]
 
@@ -1612,8 +1625,8 @@ SystemWindow >> printOn: aStream [
 SystemWindow >> privateBePassive [
 	"private"
 	self isInWorld ifFalse: [ ^self ].
-	
-	self 
+
+	self
 	rememberKeyboardFocus: self activeHand keyboardFocus;
 	passivate;
 	announceDeActivated
@@ -1637,7 +1650,7 @@ SystemWindow >> raisedColor [
 ]
 
 { #category : #'resize/collapse' }
-SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [ 
+SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 	| delta newRect minDim theMin horiz |
 	growingPane ifNil: [^ self].  "As from click outside"
 	newRect := aDisplayBox.
@@ -1652,7 +1665,7 @@ SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 	"If so, amend newRect as required"
 	minDim > theMin ifFalse:
 		[delta := minDim - theMin.
-		newRect := newRect withSide: side setTo: 
+		newRect := newRect withSide: side setTo:
 				((newRect perform: side) > (growingPane bounds perform: side)
 					ifTrue: [(newRect perform: side) + delta]
 					ifFalse: [(newRect perform: side) - delta])].
@@ -1672,7 +1685,7 @@ SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 { #category : #label }
 SystemWindow >> relabel [
 	| newLabel |
-	newLabel := UIManager default 
+	newLabel := UIManager default
 		request: 'New title for this window' translated
 		initialAnswer: labelString.
 	newLabel isEmptyOrNil ifTrue: [^self].
@@ -1683,7 +1696,7 @@ SystemWindow >> relabel [
 SystemWindow >> removeMenuBox [
 	menuBox ifNotNil:
 		[menuBox delete.
-		menuBox := nil].
+		menuBox := nil]
 ]
 
 { #category : #panes }
@@ -1711,7 +1724,7 @@ SystemWindow >> replacePane: oldPane with: newPane [
 SystemWindow >> restoreDefaultPaneColor [
 	"Useful when changing from monochrome to color display"
 
-	self setStripeColorsFrom: self paneColor.
+	self setStripeColorsFrom: self paneColor
 ]
 
 { #category : #drawing }
@@ -1724,10 +1737,10 @@ SystemWindow >> sendToBack [
     "Relies on #submorphs array being ordered top to bottom."
 	| otherSystemWindows |
 	otherSystemWindows := self world submorphs select: [ :morph | morph isSystemWindow and: morph ~~ self ].
-	otherSystemWindows ifNotEmpty: 
+	otherSystemWindows ifNotEmpty:
 	[	otherSystemWindows first activate.
-		self world addMorph: self behind: otherSystemWindows last. 
-	].
+		self world addMorph: self behind: otherSystemWindows last.
+	]
 ]
 
 { #category : #'resize/collapse' }
@@ -1737,14 +1750,14 @@ SystemWindow >> setBoundsWithFlex: newFrame [
 	self isFlexed
 		ifTrue: [super bounds: ((owner transform globalPointToLocal: newFrame topLeft)
 										extent: newFrame extent)]
-		ifFalse: [super bounds: newFrame].
+		ifFalse: [super bounds: newFrame]
 ]
 
 { #category : #label }
 SystemWindow >> setLabel: aString [
 	| frame announcement |
 	labelString := aString.
-	announcement := (WindowLabelled new 
+	announcement := (WindowLabelled new
 						window: self;
 						label: aString;
 						yourself).
@@ -1770,14 +1783,14 @@ SystemWindow >> setLabel: aString [
 		 topFraction: 0.5;
 		 leftOffset: label width negated // 2;
 		 topOffset: label height negated // 2.
-	label layoutFrame: frame.
+	label layoutFrame: frame
 ]
 
 { #category : #label }
 SystemWindow >> setLabelFont: aFont [
 
 	label ifNil: [^ self].
-	label font: aFont.
+	label font: aFont
 ]
 
 { #category : #geometry }
@@ -1798,7 +1811,7 @@ SystemWindow >> setPaneRectsFromBounds [
 			frame topFraction: (top / layoutBounds height asFloat).
 			frame bottomFraction: (bottom / layoutBounds height asFloat).
 		].
-	].
+	]
 ]
 
 { #category : #panes }
@@ -1808,7 +1821,7 @@ SystemWindow >> setUpdatablePanesFrom: getSelectors [
 	aList := OrderedCollection new.
 	possibles := OrderedCollection new.
 	self
-		allMorphsDo: [ :pane | 
+		allMorphsDo: [ :pane |
 			(pane isKindOf: PluggableListMorph)
 				ifTrue: [ possibles add: pane ] ].
 	getSelectors
@@ -1821,7 +1834,7 @@ SystemWindow >> setWindowColor [
 	"Allow the user to select a new basic color for the window"
 
 	(UIManager default chooseColor: self paneColor)
-		ifNotNil: [:nc | self setWindowColor: nc].
+		ifNotNil: [:nc | self setWindowColor: nc]
 ]
 
 { #category : #testing }
@@ -1849,18 +1862,34 @@ SystemWindow >> stepTime [
 ]
 
 { #category : #icons }
-SystemWindow >> taskbarIcon [
+SystemWindow >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	self model ifNotNil: [self model taskbarIcon ifNotNil: [:ico | ^ico]].
-	^super taskbarIcon
+	self model ifNotNil: [
+		self model taskbarIconName
+			ifNotNil: [ :aName | ^aName ] ].
+
+	^ super taskbarIconName
+]
+
+{ #category : #move }
+SystemWindow >> taskbarMoveLeft [
+
+	self moveTaskbarTaskToOffset: -1
+]
+
+{ #category : #move }
+SystemWindow >> taskbarMoveRight [
+
+
+	self moveTaskbarTaskToOffset: 1
 ]
 
 { #category : #'open/close' }
 SystemWindow >> toggleClosable [
 	"Reinstate the close box. Go via theme to maintain box order."
-	
-	mustNotClose 
+
+	mustNotClose
 	ifTrue: [ self makeClosable ]
 	ifFalse: [ self makeUnclosable ]
 ]
@@ -1902,13 +1931,13 @@ SystemWindow >> update: aSymbol [
 SystemWindow >> updatePaneColors [
 	"Useful when changing from monochrome to color display"
 
-	self setStripeColorsFrom: self paneColorToUse.
+	self setStripeColorsFrom: self paneColorToUse
 ]
 
 { #category : #'top window' }
 SystemWindow >> updatePanesFromSubmorphs [
 	"Having removed some submorphs, make sure this is reflected in my paneMorphs."
-	paneMorphs := paneMorphs select: [ :pane | submorphs includes: pane ].
+	paneMorphs := paneMorphs select: [ :pane | submorphs includes: pane ]
 ]
 
 { #category : #'resize/collapse' }
@@ -1927,7 +1956,13 @@ SystemWindow >> wantsHalo [
 SystemWindow >> wantsSteps [
 	"Return true if the model wants its view to be stepped.  For an open system window, we give the model to offer an opinion"
 
-	^ isCollapsed not and: [model wantsStepsIn: self]
+	isCollapsed ifTrue: [ ^ false ].
+
+	model ifNil: [ ^ false ].
+
+	(model respondsTo: #wantsSteps) ifFalse: [ ^ false ].
+
+	^ model wantsSteps
 ]
 
 { #category : #stepping }
@@ -1948,9 +1983,9 @@ SystemWindow >> wantsToBeCachedByHand [
 	self bounds = self fullBounds
 		ifTrue: [ ^ true ].
 	self
-		submorphsDo: [ :m | 
+		submorphsDo: [ :m |
 			(self bounds containsRect: m fullBounds)
-				ifFalse: [ 
+				ifFalse: [
 					m wantsToBeCachedByHand
 						ifFalse: [ ^ false ] ] ].
 	^ true

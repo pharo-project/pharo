@@ -28,13 +28,6 @@ Class {
 	#category : #'System-CommandLineHandler-Base'
 }
 
-{ #category : #'instance creation' }
-PharoCommandLineHandler class >> activateWith: aCommandLine [	
-	"Make sure that the PharoCommandLineHandler starts at the top of the stack in the main UI thread."
-	UIManager default defer:  [ 
-		super activateWith: aCommandLine ]
-]
-
 { #category : #accessing }
 PharoCommandLineHandler class >> description [
 	^ 'responsible for the default options and activating other commands'
@@ -60,7 +53,7 @@ PharoCommandLineHandler class >> isResponsibleFor: aCommandLine [
 ]
 
 { #category : #accessing }
-PharoCommandLineHandler class >> priority [ 
+PharoCommandLineHandler class >> priority [
 	"Highest priority"
 	^ Float infinity
 ]
@@ -76,12 +69,12 @@ PharoCommandLineHandler >> activate [
 
 	self forcePreferencesOmission
 		ifTrue: [ self isChangingPreferences ifTrue: [ self copySubcommand ] ]
-		ifFalse: [ 
+		ifFalse: [
 			self isChangingPreferences
 				ifTrue: [ self changePreferences ]
-				ifFalse: [ self runPreferences ] 
+				ifFalse: [ self runPreferences ]
 		].
-	
+
 	^ super activate
 ]
 
@@ -91,18 +84,18 @@ PharoCommandLineHandler >> changePreferences [
 	self isOmittingPreferences
 		ifTrue: [ self copySubcommand.
 			^ self ].
-		
+
 	preferenceFile := (self optionAt: 'preferences-file') asFileReference.
 	self copySubcommand.
-	
+
 	StartupPreferencesLoader default load: {preferenceFile}
 ]
 
 { #category : #commands }
 PharoCommandLineHandler >> default [
-	Smalltalk isHeadless 
+	Smalltalk isHeadless
 		ifFalse: [ ^ self noQuit ].
-	
+
 	^ super default
 ]
 
@@ -132,8 +125,8 @@ PharoCommandLineHandler >> isOverridingPreferences [
 { #category : #'private - preferences' }
 PharoCommandLineHandler >> runPreferences [
 
-	Smalltalk at: #SystemSettingsPersistence ifPresent: [:persistence | 
+	Smalltalk at: #SystemSettingsPersistence ifPresent: [:persistence |
 		persistence resumeSystemSettings].
 	Smalltalk at: #StartupPreferencesLoader ifPresent: [:loader |
-		loader default loadFromDefaultLocations ].
+		loader default loadFromDefaultLocations ]
 ]

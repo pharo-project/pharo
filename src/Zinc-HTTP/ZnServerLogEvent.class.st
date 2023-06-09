@@ -14,7 +14,7 @@ Class {
 	#category : #'Zinc-HTTP-Logging'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnServerLogEvent >> initialize [
 	super initialize.
 	processId := ZnUtils currentProcessID

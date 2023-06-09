@@ -49,7 +49,7 @@ RuntimeTyperTest >> examplePlus: arg [
 	<sampleInstance>
 	| result |
 	result := arg + 1.
-	^result.
+	^result
 ]
 
 { #category : #tests }

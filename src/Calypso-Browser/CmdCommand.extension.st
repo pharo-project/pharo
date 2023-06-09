@@ -2,7 +2,7 @@ Extension { #name : #CmdCommand }
 
 { #category : #'*Calypso-Browser' }
 CmdCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
-	
+
 	| item |
 	item := self createToolbarItemFor: aCommandActivator.
 	self decorateToolbarItem: item.
@@ -17,8 +17,8 @@ CmdCommand >> browserTabActionIcon [
 
 { #category : #'*Calypso-Browser' }
 CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
-	
-	^ { ClyNotebookPageActionButtonMorph forAction: (ClyNotebookPageAction 
+
+	^ { ClyNotebookPageActionButtonMorph forAction: (ClyNotebookPageAction
 		action: [ aCommandActivator executeCommand ]
 		icon: self browserTabActionIcon
 		label: aCommandActivator commandDescription) }
@@ -28,7 +28,7 @@ CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
 CmdCommand >> buildBrowserTabActionsUsing: aCommandActivator [
 
 	^{
-		TabAction 
+		TabAction
 			action: [ aCommandActivator executeCommand ]
 			icon: self browserTabActionIcon
 			label: aCommandActivator commandDescription
@@ -40,8 +40,8 @@ CmdCommand >> createTableCellButtonUsing: aCommandActivator [
 
 	| icon |
 	icon := self tableCellIcon.
-	
-	^self createTableCellButtonWith: icon using: aCommandActivator.
+
+	^self createTableCellButtonWith: icon using: aCommandActivator
 ]
 
 { #category : #'*Calypso-Browser' }
@@ -59,7 +59,7 @@ CmdCommand >> createTableCellButtonWith: anIcon using: aCommandActivator [
 
 { #category : #'*Calypso-Browser' }
 CmdCommand >> createToolbarItemFor: aCommandActivator [
-	
+
 	^ClyBrowserButtonMorph activatingBy: aCommandActivator
 ]
 
@@ -68,7 +68,7 @@ CmdCommand >> decorateTableCell: anItemCellMorph using: aCommandActivator [
 
 	| button |
 	button := self createTableCellButtonUsing: aCommandActivator.
-		
+
 	self decorateTableCell: anItemCellMorph with: button
 ]
 
@@ -81,9 +81,9 @@ CmdCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 { #category : #'*Calypso-Browser' }
 CmdCommand >> decorateToolbarItem: aBrowserToolbarItem [
 
-	self description ifNotNil: [ :d | 
+	self description ifNotNil: [ :d |
 		aBrowserToolbarItem setBalloonText: d ].
-	
+
 	self defaultMenuIcon ifNotNil: [:icon |
 		aBrowserToolbarItem addIcon: icon asMorph]
 ]

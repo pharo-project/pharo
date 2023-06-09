@@ -41,7 +41,7 @@ DisplayScreen class >> actualScreenSize [
 
 { #category : #'display box access' }
 DisplayScreen class >> boundingBox [
-	"Answer the bounding box for the form representing the current display 
+	"Answer the bounding box for the form representing the current display
 	screen."
 
 	^Display boundingBox
@@ -57,7 +57,7 @@ DisplayScreen class >> deferUpdates: aBoolean [
 ]
 
 { #category : #settings }
-DisplayScreen class >> displaySettingsOn: aBuilder [ 
+DisplayScreen class >> displaySettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #displayFullscreen)
 		label: 'Fullscreen mode';
@@ -66,26 +66,27 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 		getSelector: #isFullscreen;
 		setSelector: #fullscreen:;
 		description: 'On platforms that support it, set fullscreen mode';
-		default: false.
+		default: false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 DisplayScreen class >> initialize [
+
 	| display |
 	display := self new.
 	display
 		setExtent: 0@0
-		depth: 32. 
+		depth: 32.
 	Smalltalk globals at: #Display put: display.
-	
-	self deferUpdates: false.
+
+	self deferUpdates: false
 ]
 
 { #category : #displaying }
 DisplayScreen >> addExtraRegion: aRectangle for: regionDrawer [
 	"Register the given rectangle as a region which is drawn by the specified region drawer. The region will be excluded from any updates when #forceDamageToScreen: is called. Note that the rectangle is only valid for a single update cycle; once #forceDamageToScreen: has been called, the region drawer and its region are being removed from the list"
 	extraRegions ifNil:[extraRegions := #()].
-	extraRegions := extraRegions copyWith: (Array with: regionDrawer with: aRectangle).
+	extraRegions := extraRegions copyWith: (Array with: regionDrawer with: aRectangle)
 ]
 
 { #category : #deferring }
@@ -118,7 +119,7 @@ DisplayScreen >> findAnyDisplayDepth [
 			logError:'Fatal error: This system has no support for any display depth at all.'
 			inContext: thisContext.
 		Smalltalk quitPrimitive. "There is no way to continue from here"
-	].
+	]
 ]
 
 { #category : #private }
@@ -126,18 +127,18 @@ DisplayScreen >> findAnyDisplayDepthIfNone: aBlock [
 	"Return any display depth that is supported on this system.
 	If there is none, evaluate aBlock.
 	First check higher values to avoid depth 1 to be always returned."
-	^ #(32 16 8 4 2 1 -32 -16 -8 -4 -2 -1) 
+	^ #(32 16 8 4 2 1 -32 -16 -8 -4 -2 -1)
 		detect:[ :bpp| self supportsDisplayDepth: bpp ]
 		ifNone: [ aBlock value ]
 ]
 
 { #category : #displaying }
-DisplayScreen >> flash: aRectangle [ 
+DisplayScreen >> flash: aRectangle [
 	"Flash the area of the screen defined by the given rectangle."
 
 	self reverse: aRectangle.
 	(Delay forMilliseconds: 100) wait.
-	self reverse: aRectangle.
+	self reverse: aRectangle
 ]
 
 { #category : #displaying }
@@ -149,7 +150,7 @@ DisplayScreen >> flash: aRectangle andWait: msecs [
 	(Delay forMilliseconds: msecs) wait.
 	self reverse: aRectangle.
 
-	(Delay forMilliseconds: msecs) wait.
+	(Delay forMilliseconds: msecs) wait
 ]
 
 { #category : #displaying }
@@ -161,7 +162,7 @@ DisplayScreen >> flashAll: rectangleList andWait: msecs [
 	(Delay forMilliseconds: msecs) wait.
 	rectangleList do: [:aRectangle | self reverse: aRectangle].
 
-	(Delay forMilliseconds: msecs) wait.
+	(Delay forMilliseconds: msecs) wait
 ]
 
 { #category : #other }
@@ -180,7 +181,7 @@ DisplayScreen >> fullscreen [
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	SystemAnnouncer uniqueInstance announce: (FullscreenAnnouncement new 
+	SystemAnnouncer announce: (FullscreenAnnouncement new
 		displayScreen: self;
 		fullscreen: (LastScreenModeSelected := aBoolean))
 ]
@@ -218,7 +219,7 @@ DisplayScreen >> isDisplayScreen [
 
 { #category : #'screen managing' }
 DisplayScreen >> isFullscreen [
-	^ self lastScreenModeSelected.
+	^ self lastScreenModeSelected
 ]
 
 { #category : #'screen managing' }
@@ -228,7 +229,7 @@ DisplayScreen >> lastScreenModeSelected [
 ]
 
 { #category : #other }
-DisplayScreen >> newDepth: pixelSize [ 
+DisplayScreen >> newDepth: pixelSize [
 	"
 	Display newDepth: 8.
 	Display newDepth: 1
@@ -241,7 +242,7 @@ DisplayScreen >> newDepth: pixelSize [
 
 { #category : #private }
 DisplayScreen >> newDepthNoRestore: pixelSize [
-	
+
 	UIManager default newDisplayDepthNoRestore: pixelSize
 ]
 
@@ -253,12 +254,12 @@ DisplayScreen >> replacedBy: aForm do: aBlock [
 	Display := aForm.
 	aBlock value.
 	Display := self.
-	ScreenSave := nil.
+	ScreenSave := nil
 ]
 
 { #category : #other }
 DisplayScreen >> restore [
-	
+
 	UIManager default restoreDisplay
 ]
 
@@ -278,27 +279,27 @@ DisplayScreen >> setExtent: aPoint depth: bitsPerPixel [  "DisplayScreen startUp
 	"RAA 27 Nov 99 - if depth and extent are the same and acceptable, why go through this.
 	also - record when we change so worlds can tell if it is time to repaint"
 
-	(depth == bitsPerPixel 
-		and: [ aPoint = self extent 
-		and: [ self supportsDisplayDepth: bitsPerPixel ] ]) 
+	(depth == bitsPerPixel
+		and: [ aPoint = self extent
+		and: [ self supportsDisplayDepth: bitsPerPixel ] ])
 		ifTrue: [ ^ self ].
-	
+
 	bits := nil.  "Free up old bitmap in case space is low"
 	DisplayChangeSignature := (DisplayChangeSignature ifNil: [ 0 ]) + 1.
 	(self supportsDisplayDepth: bitsPerPixel)
-		ifTrue:[ 
+		ifTrue:[
 			super setExtent: aPoint depth: bitsPerPixel ]
-		ifFalse:[ 
+		ifFalse:[
 			(self supportsDisplayDepth: bitsPerPixel negated)
-				ifTrue:[ 
+				ifTrue:[
 					super setExtent: aPoint depth: bitsPerPixel negated ]
-				ifFalse:[ 
+				ifFalse:[
 					"Search for a suitable depth"
 					super setExtent: aPoint depth: self findAnyDisplayDepth ] ]
 ]
 
 { #category : #initialization }
-DisplayScreen >> shutDown [ 
+DisplayScreen >> shutDown [
 	"Minimize Display memory saved in image"
 	self setExtent: 240@120 depth: depth
 ]
@@ -313,7 +314,6 @@ DisplayScreen >> supportedDisplayDepths [
 DisplayScreen >> supportsDisplayDepth: pixelDepth [
 	"Return true if this pixel depth is supported on the current host platform.
 	Primitive. Optional."
-	<primitive: 91>
 	^#(1 2 4 8 16 32) includes: pixelDepth
 ]
 

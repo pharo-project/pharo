@@ -18,7 +18,7 @@ ClapContextTest >> testMatch [
 	context
 		arguments: #('hello' 'world');
 		match.
-	
+
 	self assert: context isMatch.
 	self assert: context isValid.
 	self assert: context leftovers isEmpty
@@ -29,7 +29,7 @@ ClapContextTest >> testRootPositionalAfterSubcommand [
 	context
 		arguments: #('hello' 'world' '--directory' 'foo/bar/baz');
 		match.
-	
+
 	self assert: context isMatch.
 	self deny: context isValid.
 	self
@@ -42,7 +42,7 @@ ClapContextTest >> testWrongFlagMatchingButInvalid [
 	context
 		arguments: #('hello' '--inexistent');
 		match.
-	
+
 	self assert: context isMatch.
 	self deny: context isValid.
 	self

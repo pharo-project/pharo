@@ -52,9 +52,9 @@ AthensTransform >> getMatrix [
 	"Answer an affine transformation matrix currently used by receiver.
 	Note, that resulting matrix should be copied from receiver's data, i.e.
 	no future modifications of receiver should affect the answered object.
-	
+
 	The default implementation is to answer a copy of receiver"
-	
+
 	^ self copy
 ]
 
@@ -116,7 +116,7 @@ AthensTransform >> scaleX: fx Y: fy [
 ]
 
 { #category : #'vector - transform' }
-AthensTransform >> transform: aPoint [ 
+AthensTransform >> transform: aPoint [
 	self subclassResponsibility
 ]
 
@@ -131,7 +131,7 @@ AthensTransform >> transformRectangle: aRectangle [
 ]
 
 { #category : #'vector - transform' }
-AthensTransform >> transformX: px Y: py [ 
+AthensTransform >> transformX: px Y: py [
 	self subclassResponsibility
 ]
 

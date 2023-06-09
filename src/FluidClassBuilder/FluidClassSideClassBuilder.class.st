@@ -16,16 +16,16 @@ Class {
 	#category : #'FluidClassBuilder-Base'
 }
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassSideClassBuilder >> slots: anArray [
-	"pay attention on the class side we do not have to have classSlots: but slots:"
-	
+	"Pay attention on the class side we do not have to have classSlots: but slots:"
+
 	classSlotsToBuild := anArray collect: [ :each | each asSlot ]
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassSideClassBuilder >> traits: aCollection [
-	"pay attention that on class side we want to write traits: and not classTraits:"
-	
+	"Pay attention that on class side we want to write traits: and not classTraits:"
+
 	classTraitsToBuild := aCollection asTraitComposition
 ]

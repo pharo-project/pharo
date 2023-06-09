@@ -15,7 +15,7 @@ ReLocalMethodsSameThanTraitRule class >> checksClass [
 { #category : #accessing }
 ReLocalMethodsSameThanTraitRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'MethodInClassVsTrait'
 ]
 
@@ -26,7 +26,7 @@ ReLocalMethodsSameThanTraitRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass isTrait ifTrue: [ ^ self ].
 	aClass hasTraitComposition ifFalse: [ ^ self ].
 	aClass localMethods
-		select: [ :method | 
+		select: [ :method |
 			| traitCompositionMethod |
 			traitCompositionMethod := aClass traitComposition compiledMethodAt: method selector ifAbsent: [ nil ].
 			traitCompositionMethod notNil and: [ traitCompositionMethod ast = method ast ] ]

@@ -30,7 +30,7 @@ KMKeymapBuilderTest >> testAddKeymapCreatesShortcut [
 		doing: [ :receiver | "nothing" ]
 		inCategory: #Testing
 		platform: #all.
-	
+
 	self assert: (KMRepository default categoryForName: #Testing) allEntries size equals: 1
 ]
 
@@ -38,7 +38,7 @@ KMKeymapBuilderTest >> testAddKeymapCreatesShortcut [
 KMKeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
 	| executed morphToTest |
 	executed := false.
-	
+
 	KMFactory keymapContainer
 		initializeKeymap: #test
 		executingOn: $a asKeyCombination, $a asKeyCombination, $a asKeyCombination
@@ -47,12 +47,12 @@ KMKeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
 		platform: #all.
 
 	"KMFactory keymapContainer attachCategoryName: #Testing to: Morph."
-	
+
 	morphToTest := Morph new.
 	morphToTest attachKeymapCategory: #Testing.
-	
+
 	{self eventKey: $a. self eventKey: $a. self eventKey: $a}
 		do: [:e | morphToTest dispatchKeystrokeForEvent: e].
-		
+
 	self assert: executed
 ]

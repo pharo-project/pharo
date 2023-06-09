@@ -51,7 +51,7 @@ ClyMultipleClassRelationScope >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^false ].
-	
+
 	^ relationScopeClasses = anObject relationScopeClasses
 ]
 
@@ -63,7 +63,7 @@ ClyMultipleClassRelationScope >> asInterestingClassScope [
 
 { #category : #queries }
 ClyMultipleClassRelationScope >> classesRelatedTo: aClass do: aBlock [
-	relationScopeClasses do: [ :each | 
+	relationScopeClasses do: [ :each |
 		each classesRelatedTo: aClass do: aBlock ]
 ]
 

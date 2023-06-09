@@ -17,22 +17,28 @@ Class {
 { #category : #accessing }
 DTCommentToTestResult >> buildTreeForUI [
 	<dtCommentToTestResultTreeNamed: 'Grouped by type of result' order: 1>
+
 	^ DTTreeNode new
-		subResults:
-			{(DTTreeNode new
+		subResults: {
+			(DTTreeNode new
 				name: 'Errors';
 				subResults: (self testResults errors collect: [:each | each asResultForDrTest ]);
+				startExpanded;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForErrorTest;
 				yourself).
 			(DTTreeNode new
 				name: 'Failures';
-				subResults:
-					(self testResults failures collect:  [:each | each asResultForDrTest] )
-						asOrderedCollection;
+				subResults: (self testResults failures
+					collect:  [:each | each asResultForDrTest]
+					as: OrderedCollection);
+				startExpanded;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForFailureTest;
 				yourself).
 			(DTTreeNode new
 				name: 'Passed tests';
 				subResults: (self testResults passed collect:  [:each | each asResultForDrTest] );
-				yourself)};
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForPassingTest;
+				yourself) };
 		yourself
 ]
 

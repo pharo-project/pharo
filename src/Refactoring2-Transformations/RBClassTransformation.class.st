@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 RBClassTransformation >> className [
 
-	^ className ifNil: [ 
+	^ className ifNil: [
 		self uiManager
 			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])
 			title: 'Class name was not defined to perform ', self class baseClass name,
@@ -31,8 +31,8 @@ RBClassTransformation >> className: anObject [
 { #category : #accessing }
 RBClassTransformation >> definingClass [
 
-	^ class ifNil: [ 
-		class := self model 
+	^ class ifNil: [
+		class := self model
 					classObjectFor: self className ]
 ]
 
@@ -47,7 +47,7 @@ RBClassTransformation >> environment: anObject [
 ]
 
 { #category : #initialization }
-RBClassTransformation >> initialize [ 
+RBClassTransformation >> initialize [
 	super initialize.
 	environment := Smalltalk globals
 ]

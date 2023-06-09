@@ -42,20 +42,20 @@ BagTest >> anotherElementOrAssociationNotIn [
 
 { #category : #coverage }
 BagTest >> classToBeTested [
-	
+
 	^ Bag
 ]
 
 { #category : #setup }
 BagTest >> collection [
 
-	^ nonEmpty.
+	^ nonEmpty
 ]
 
 { #category : #'tests - set arithmetic' }
 BagTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Bag
 ]
 
@@ -67,7 +67,7 @@ BagTest >> collectionInForIncluding [
 { #category : #requirements }
 BagTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
-	
+
 	^ collectionWithoutNilMoreThan5
 ]
 
@@ -83,7 +83,7 @@ BagTest >> collectionOfFloat [
 
 { #category : #requirements }
 BagTest >> collectionWithCharacters [
-	^ collectionWithCharacters .
+	^ collectionWithCharacters
 ]
 
 { #category : #requirements }
@@ -145,7 +145,7 @@ BagTest >> elementInForIncludesTest [
 { #category : #requirements }
 BagTest >> elementInForOccurrences [
 " return an element included in nonEmpty"
-	^self nonEmpty anyOne.
+	^self nonEmpty anyOne
 ]
 
 { #category : #requirements }
@@ -189,8 +189,8 @@ BagTest >> empty [
 ]
 
 { #category : #setup }
-BagTest >> emptyButAllocatedWith20 [ 
-	
+BagTest >> emptyButAllocatedWith20 [
+
 		^ emptyButAllocatedWith20
 ]
 
@@ -219,7 +219,7 @@ BagTest >> nonEmpty [
 { #category : #requirements }
 BagTest >> nonEmpty1Element [
 
-	^ self speciesClass  new add: self element ;yourself.
+	^ self speciesClass  new add: self element ;yourself
 ]
 
 { #category : #requirements }
@@ -236,7 +236,7 @@ BagTest >> otherCollection [
 { #category : #setup }
 BagTest >> result [
 
-	^ collectResult.
+	^ collectResult
 ]
 
 { #category : #requirements }
@@ -318,7 +318,7 @@ BagTest >> sizeCollection [
 
 { #category : #requirements }
 BagTest >> speciesClass [
-	
+
 	^ Bag
 ]
 
@@ -329,7 +329,7 @@ BagTest >> testAdd [
 	aBag := Bag new.
 	aBag add: 'a'.
 	aBag add: 'b'.
-	
+
 	self assert: aBag size equals: 2.
 	aBag add: 'a'.
 	self assert: aBag size equals: 3.
@@ -348,7 +348,7 @@ BagTest >> testAddWithOccurrences [
 BagTest >> testAnySastify [
 
 	self assert: ( self collection anySatisfy: [:each | each = self element]).
-	self deny: (self collection anySatisfy: [:each | each isString]).
+	self deny: (self collection anySatisfy: [:each | each isString])
 ]
 
 { #category : #'basic tests' }
@@ -386,7 +386,7 @@ BagTest >> testAsSet [
 
 { #category : #'basic tests' }
 BagTest >> testCopy [
-	
+
 	| aBag newBag |
 	aBag := Bag new.
 	aBag add:'a' withOccurrences: 4.
@@ -415,9 +415,9 @@ BagTest >> testCumulativeCounts [
 	bag add: '1' withOccurrences: 50.
 	bag add: '2' withOccurrences: 40.
 	bag add: '3' withOccurrences: 10.
-	
+
 	cumulativeCounts := bag cumulativeCounts.
-	
+
 	self assert: cumulativeCounts size equals: 3.
 	self assert: cumulativeCounts first equals: (50 -> '1').
 	self assert: cumulativeCounts second equals: (90 -> '2').
@@ -474,28 +474,28 @@ BagTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 BagTest >> testIncludesElementIsNotThere [
-	
+
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
 { #category : #'basic tests' }
-BagTest >> testOccurrencesOf [	
+BagTest >> testOccurrencesOf [
 
 	| aBag |
- 	aBag := Bag new.	
+ 	aBag := Bag new.
 	aBag add: 'a' withOccurrences: 3.
 	aBag add: 'b'.
 	aBag add: 'b'.
 	aBag add: 'b'.
-	aBag add: 'b'.	
+	aBag add: 'b'.
 	self assert: (aBag occurrencesOf: 'a') equals: 3.
 	self assert: (aBag occurrencesOf: 'b') equals: 4.
 	self assert: (aBag occurrencesOf: 'c') equals: 0.
 	self assert: (aBag occurrencesOf: nil) equals: 0.
 	aBag add: nil.
-	self assert: (aBag occurrencesOf: nil) equals: 1.
+	self assert: (aBag occurrencesOf: nil) equals: 1
 ]
 
 { #category : #tests }
@@ -541,18 +541,33 @@ BagTest >> testRemoveElementThatExistsTwice [
 	self assert: size - 1 equals: self nonEmpty size
 ]
 
+{ #category : #'tests - remove' }
+BagTest >> testRemoveKey [
+
+	| aBag aSet |
+	aBag := Bag new.
+	aBag addAll: 'aaaabbcccdddda'.
+	self assert: (aBag occurrencesOf: $a) equals: 5.
+	aBag removeKey: $a ifAbsent: [nil].
+	self assert: (aBag occurrencesOf: $a) equals: 0.
+	aSet := Set new.
+	self
+		assertCollection: (aBag keysAndValuesDo: [ :k :v | aSet add: k ])
+		hasSameElements: #( $b $c $d) asSet
+]
+
 { #category : #tests }
 BagTest >> testSortedCounts [
-	
+
 	| bag sortedCounts|
 	bag := Bag new.
 	bag add: '1' withOccurrences: 10.
 	bag add: '2' withOccurrences: 1.
 	bag add: '3' withOccurrences: 5.
-	
+
 	sortedCounts := bag sortedCounts.
 	self assert: sortedCounts size equals: 3.
-	
+
 	self assert: sortedCounts first equals: (10->'1').
 	self assert: sortedCounts second equals: (5->'3').
 	self assert: sortedCounts third equals: (1->'2')
@@ -560,17 +575,17 @@ BagTest >> testSortedCounts [
 
 { #category : #tests }
 BagTest >> testSortedElements [
-	
+
 	| bag sortedElements|
 	bag := Bag new.
 	bag add: '2' withOccurrences: 1.
 	bag add: '1' withOccurrences: 10.
 	bag add: '3' withOccurrences: 5.
-	
+
 	sortedElements := bag sortedElements.
-	
+
 	self assert: sortedElements size equals: 3.
-	
+
 	self assert: sortedElements first equals: ('1'->10).
 	self assert: sortedElements second equals: ('2'->1).
 	self assert: sortedElements third equals: ('3'->5)
@@ -579,5 +594,5 @@ BagTest >> testSortedElements [
 { #category : #requirements }
 BagTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
-	^ nonEmpty .
+	^ nonEmpty
 ]

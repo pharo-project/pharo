@@ -13,31 +13,31 @@ Class {
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsFalse: anArgument [
-	
+
 	self assert: anArgument value equals: false
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsNULL: anArgument [
-	
+
 	self assert: anArgument value equals: 'NULL'
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsNil: anArgument [
-	
+
 	self assert: anArgument value equals: nil
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsSelf: anArgument [
-	
+
 	self assert: anArgument value equals: 'self'
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsTrue: anArgument [
-	
+
 	self assert: anArgument value equals: true
 ]
 
@@ -49,32 +49,32 @@ FFIFunctionParserTest >> assertIsVariable: argument named: aName [
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertType: anArgument arity: anArity [
-	
+
 	self assert: anArgument type arity equals: anArity
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertType: anArgument named: aTypeName [
-	
+
 	self assert: anArgument type name equals: aTypeName
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertUndefinedTypeOf: anFFIArgument [
-	
+
 	self assert: anFFIArgument type isUndefined
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertValue: aLiteralArgument is: aValue [
-	
+
 	self assert: aLiteralArgument value equals: aValue
 ]
 
 { #category : #helpers }
 FFIFunctionParserTest >> ffiInstVarArgument: argName generator: aGenerator [
-	
-	^ FFIInstVarArgument new 
+
+	^ FFIInstVarArgument new
 		argName: argName;
 		yourself
 ]
@@ -86,7 +86,7 @@ FFIFunctionParserTest >> newParser [
 
 { #category : #factory }
 FFIFunctionParserTest >> newParserWithRequestor [
-	
+
 	^ self newParser
 		requestor: resolver;
 		yourself
@@ -95,7 +95,7 @@ FFIFunctionParserTest >> newParserWithRequestor [
 { #category : #tests }
 FFIFunctionParserTest >> parseArgument: inputToParse [
 	| parser |
-	
+
 	parser := self newParser
 		setOn: inputToParse;
 		yourself.
@@ -112,7 +112,7 @@ FFIFunctionParserTest >> setUp [
 		receiver: FFITestObject new
 		method: FFITestObject>>#b:d:
 		arguments: #( 25 17 ).
-		
+
 	resolver := FFICallout new
 		sender: ctx;
 		yourself
@@ -142,42 +142,42 @@ FFIFunctionParserTest >> testEmptyArgumentReturnsNil [
 { #category : #tests }
 FFIFunctionParserTest >> testParseAnonymousFunction [
 	 | parser args |
-	
+
 	#((int * * ( 0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_))
-	  ' int * * (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )' ) 
+	  ' int * * (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )' )
 	do: [:spec |
 		parser := self newParser parseAnonymousFunction: spec.
-		
+
 		self assert: parser isAnonymous.
 		self assert: parser functionName isNil.
 		self assert: parser returnType asOldArraySpec equals: #('int' 2).
-		
+
 		args := parser arguments.
 		self assert: args size equals: 8.
 
 		self assert: (args at: 1) asOldArraySpec equals: #(nil nil 0 0).
 		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0).
 		self assert: (args at: 3) asOldArraySpec equals: #(nil nil -10 0).
-		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
-		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0). 
-		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1). 
-		self assert: (args at: 7) asOldArraySpec equals: #('c' nil 'char' 2). 
+		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0).
+		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0).
+		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1).
+		self assert: (args at: 7) asOldArraySpec equals: #('c' nil 'char' 2).
 		self assert: (args at: 8) asOldArraySpec equals: #('d_' nil 'void' 3 ) ]
 ]
 
 { #category : #tests }
 FFIFunctionParserTest >> testParseAnonymousFunctionNoArguments [
 	| parser args |
-	
+
 	#((int * * ( void ) )
-	  ' int * * ( void ) ') 
+	  ' int * * ( void ) ')
 	do: [:spec |
 		parser := self newParser parseAnonymousFunction: spec.
-		
+
 		self assert: parser isAnonymous.
 		self assert: parser functionName isNil.
 		self assert: parser returnType asOldArraySpec equals: #('int' 2).
-	
+
 		args := parser arguments.
 		self assert: args size equals: 0 ]
 ]
@@ -185,40 +185,39 @@ FFIFunctionParserTest >> testParseAnonymousFunctionNoArguments [
 { #category : #tests }
 FFIFunctionParserTest >> testParseFunction [
 	 | parser args |
-	
+
 	#((int * * #'function_n$a$m$e' ( 0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_))
-	  ' int * * #''function_n$a$m$e'' (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )' ) 
+	  ' int * * #''function_n$a$m$e'' (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )' )
 	do: [:spec |
 		parser := self newParser parseNamedFunction: spec.
-		
+
 		self assert: parser functionName equals: 'function_n$a$m$e'.
 		self assert: parser returnType asOldArraySpec equals: #('int' 2).
-		
+
 		args := parser arguments.
 		self assert: args size equals: 8.
 
-		self assert: (args at: 1) asOldArraySpec equals: #(nil nil 0 0). 
-		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
-		self assert: (args at: 3) asOldArraySpec equals: #(nil nil -10 0). 
-		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
-		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0). 
-		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1). 
-		self assert: (args at: 7) asOldArraySpec equals: #('c' nil 'char' 2). 
+		self assert: (args at: 1) asOldArraySpec equals: #(nil nil 0 0).
+		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0).
+		self assert: (args at: 3) asOldArraySpec equals: #(nil nil -10 0).
+		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0).
+		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0).
+		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1).
+		self assert: (args at: 7) asOldArraySpec equals: #('c' nil 'char' 2).
 		self assert: (args at: 8) asOldArraySpec equals: #('d_' nil 'void' 3 )
-	].
-
+	]
 ]
 
 { #category : #tests }
 FFIFunctionParserTest >> testParseFunction2 [
 	#((int * * #'function_n$a$m$e' ( self, 0, nil, -10, true, false, " FOO_BAR , "int a, int* _b, char** c, void* * * d_))
-	 " ' int * * function_n$a$m$e (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )'" ) 
+	 " ' int * * function_n$a$m$e (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )'" )
 	do: [:spec | | functionSpec1 functionSpec2 method1 method2 builder |
 		functionSpec1 := self newParser parseNamedFunction: spec.
 		functionSpec1 resolveUsing: resolver.
-		
+
 		functionSpec2 := self newParserWithRequestor parseNamedFunction: spec.
-		
+
 		builder := (FFIBackend current calloutAPIClass inContext: nil) newBuilder
 			sender: ctx;
 			yourself.
@@ -226,9 +225,8 @@ FFIFunctionParserTest >> testParseFunction2 [
 			sender: sender."
 		method1 := builder generateMethodFromSpec: functionSpec1.
 		method2 := builder generateMethodFromSpec: functionSpec2.
-		self assert: method1 bytecode equals: method2 bytecode.
-		self assert: (method1 literals allButFirst: 2) equals: (method1 literals allButFirst: 2)].
-
+		self assert: method1 bytecodes equals: method2 bytecodes.
+		self assert: (method1 literals allButFirst: 2) equals: (method1 literals allButFirst: 2)]
 ]
 
 { #category : #tests }
@@ -250,15 +248,15 @@ FFIFunctionParserTest >> testParseFunctionArrayWithPointerReturnTypeHasFunctionN
 { #category : #tests }
 FFIFunctionParserTest >> testParseFunctionNoArguments [
 	| parser args |
-	
+
 	#((int * * function_name ( void ) )
-	  ' int * * function_name  ( void ) ') 
+	  ' int * * function_name  ( void ) ')
 	do: [:spec |
 		parser := self newParser parseNamedFunction: spec.
-		
+
 		self assert: parser functionName equals: 'function_name'.
 		self assert: parser returnType asOldArraySpec equals: #('int' 2).
-	
+
 		args := parser arguments.
 		self assert: args size equals: 0 ]
 ]
@@ -434,7 +432,7 @@ FFIFunctionParserTest >> testUntypedConstantNegativeIntegerArgumentHasConstantVa
 { #category : #tests }
 FFIFunctionParserTest >> testUntypedConstantNegativeIntegerArgumentHasUndefinedType [
 	| argument |
-	
+
 	argument := self parseArgument: '-1'.
 	self assertUndefinedTypeOf: argument
 ]
@@ -442,7 +440,7 @@ FFIFunctionParserTest >> testUntypedConstantNegativeIntegerArgumentHasUndefinedT
 { #category : #tests }
 FFIFunctionParserTest >> testUntypedFalseArgumentHasUndefinedType [
 	| parser argument |
-	
+
 	parser := self newParser
 		setOn: 'false';
 		yourself.
@@ -454,7 +452,7 @@ FFIFunctionParserTest >> testUntypedFalseArgumentHasUndefinedType [
 { #category : #tests }
 FFIFunctionParserTest >> testUntypedFalseArgumentIsFalse [
 	| argument |
-	
+
 	argument := self parseArgument: 'false'.
 	self assertIsFalse: argument
 ]
@@ -462,7 +460,7 @@ FFIFunctionParserTest >> testUntypedFalseArgumentIsFalse [
 { #category : #tests }
 FFIFunctionParserTest >> testUntypedNilArgumentHasUndefinedType [
 	| argument |
-	
+
 	argument := self parseArgument: 'nil'.
 	self assertUndefinedTypeOf: argument
 ]
@@ -470,7 +468,7 @@ FFIFunctionParserTest >> testUntypedNilArgumentHasUndefinedType [
 { #category : #tests }
 FFIFunctionParserTest >> testUntypedNilArgumentIsNil [
 	| argument |
-	
+
 	argument := self parseArgument: 'nil'.
 	self assertIsNil: argument
 ]

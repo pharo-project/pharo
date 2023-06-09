@@ -16,7 +16,7 @@ ClyBreakOnVariableCommand class >> fullBrowserMenuActivation [
 ]
 
 { #category : #testing }
-ClyBreakOnVariableCommand class >> isAbstract [ 
+ClyBreakOnVariableCommand class >> isAbstract [
 	^self == ClyBreakOnVariableCommand
 ]
 

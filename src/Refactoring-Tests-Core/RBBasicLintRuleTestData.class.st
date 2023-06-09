@@ -27,7 +27,7 @@ RBBasicLintRuleTestData class >> classShouldNotOverride [
 ]
 
 { #category : #private }
-RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean [ 
+RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean [
 	| matcher |
 	matcher := self parseTreeSearcher.
 	aBoolean
@@ -37,20 +37,20 @@ RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean 
 ]
 
 { #category : #'instance creation' }
-RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings method: aBoolean name: aName [ 
+RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings method: aBoolean name: aName [
 	| detector matcher |
 	detector := self new.
 	detector name: aName.
 	matcher := self createMatcherFor: codeStrings method: aBoolean.
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector
 ]
 
 { #category : #'instance creation' }
-RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings name: aName [ 
+RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings name: aName [
 	^self createParseTreeRule: codeStrings
 		method: false
 		name: aName
@@ -62,8 +62,8 @@ RBBasicLintRuleTestData class >> justSendsSuper [
 	detector := self new.
 	detector name: 'Method just sends super message'.
 	matcher := self parseTreeSearcherClass justSendsSuper.
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			(context parseTree tag isNil
 				and: [matcher executeMethod: context parseTree initialAnswer: false])
 					ifTrue: [result addClass: context selectedClass selector: context selector]].
@@ -86,10 +86,10 @@ RBBasicLintRuleTestData class >> modifiesCollection [
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
 	addSearcher := RBBasicLintRuleTestData modifiesCollection.
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			addSearcher executeTree: context parseTree initialAnswer: false.
-			addSearcher answer 
+			addSearcher answer
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector
 ]
@@ -102,8 +102,8 @@ RBBasicLintRuleTestData class >> precedence [
 	matcher := self parseTreeSearcher.
 	matcher addSearches: #('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
 				-> [:aNode :answer | answer or: [aNode receiver parentheses isEmpty]].
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector
@@ -119,40 +119,40 @@ RBBasicLintRuleTestData class >> sentNotImplementedInApplication [
 	| detector |
 	detector := self new.
 	detector name: 'Messages sent but not implemented in application'.
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			| message class block |
 			message := context messages
 						detect: [:each | (context isItem: each in: context application) not]
 						ifNone: [nil].
 			class := context selectedClass.
-			block := 
-					[:each | 
+			block :=
+					[:each |
 					| app |
 					app := context application.
 					(self canCall: each
 						in: class
 						from: app) not].
 			message isNil ifTrue: [message := context selfMessages detect: block ifNone: [nil]].
-			message isNil ifTrue: 
+			message isNil ifTrue:
 					[class := class superclass.
 					class isNil
-						ifTrue: 
+						ifTrue:
 							[context superMessages isEmpty ifFalse: [message := context superMessages asArray first]]
 						ifFalse: [message := context superMessages detect: block ifNone: [nil]]].
-			message notNil ifTrue: 
+			message notNil ifTrue:
 					[result addSearchString: message.
 					result addClass: context selectedClass selector: context selector]].
 	^detector
 ]
 
 { #category : #private }
-RBBasicLintRuleTestData class >> subclassOf: aClass overrides: aSelector [ 
+RBBasicLintRuleTestData class >> subclassOf: aClass overrides: aSelector [
 	| subs |
 	subs := aClass subclasses.
 	1 to: subs size
-		do: 
-			[:i | 
+		do:
+			[:i |
 			| each |
 			each := subs at: i.
 			(each includesSelector: aSelector) ifTrue: [^true].
@@ -166,13 +166,13 @@ RBBasicLintRuleTestData class >> subclassResponsibilityNotDefined [
 	detector := self new.
 	subclassResponsibilitySymbol := 'subclassResponsibility' asSymbol.
 	detector name: 'Subclass responsibility not defined'.
-	detector classBlock: 
-			[:context :result | 
+	detector classBlock:
+			[:context :result |
 			(context selectedClass whichSelectorsReferTo: subclassResponsibilitySymbol)
-				do: 
-					[:each | 
-					(context selectedClass withAllSubclasses detect: 
-							[:class | 
+				do:
+					[:each |
+					(context selectedClass withAllSubclasses detect:
+							[:class |
 							class subclasses isEmpty
 								and: [(class whichClassIncludesSelector: each) == context selectedClass]]
 						ifNone: [nil]) notNil
@@ -190,13 +190,13 @@ RBBasicLintRuleTestData class >> superSends [
 	| detector |
 	detector := self new.
 	detector name: 'Missing super sends'.
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			(context selectedClass isMetaclass not
-				and: [self superMessages includes: context selector]) ifTrue: 
+				and: [self superMessages includes: context selector]) ifTrue:
 						[(context selectedClass superclass notNil
 							and: [context selectedClass superclass canUnderstand: context selector])
-								ifTrue: 
+								ifTrue:
 									[(context superMessages includes: context selector)
 										ifFalse: [result addClass: context selectedClass selector: context selector]]]].
 	^detector
@@ -209,17 +209,17 @@ RBBasicLintRuleTestData class >> toDo [
 	detector name: 'Uses to:do: instead of do:, with:do: or timesRepeat:'.
 	matcher := self parseTreeSearcher.
 	matcher
-		addSearch: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]' -> 
-					[:aNode :answer | 
-					answer or: 
+		addSearch: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]' ->
+					[:aNode :answer |
+					answer or:
 							[| varName variableMatcher |
 							varName := aNode arguments last arguments first name. "`each"
 							variableMatcher := self parseTreeSearcher.
 							variableMatcher addSearch: varName
 										-> [:node :ans | ans and: [node parent isMessage and: [node parent selector == #at:]]].
 							variableMatcher executeTree: aNode arguments last body initialAnswer: true]].
-	detector methodBlock: 
-			[:context :result | 
+	detector methodBlock:
+			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector
@@ -230,18 +230,18 @@ RBBasicLintRuleTestData class >> utilityMethods [
 	| detector |
 	detector := self new.
 	detector name: 'Utility methods'.
-	detector methodBlock: 
-			[:context :result | 
-			(context selectedClass isMetaclass | (context selector numArgs == 0) or: 
-					[(context protocols detect: 
-							[:each | 
+	detector methodBlock:
+			[:context :result |
+			(context selectedClass isMetaclass | (context selector numArgs == 0) or:
+					[(context protocols detect:
+							[:each |
 							(self utilityProtocols detect: [:protocol | protocol match: each]
 								ifNone: [nil]) notNil]
 						ifNone: [nil]) notNil])
-				ifFalse: 
+				ifFalse:
 					[(self subclassOf: context selectedClass overrides: context selector)
-						ifFalse: 
-							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue: 
+						ifFalse:
+							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue:
 									[(self parseTreeSearcherClass
 										references: context selectedClass allInstVarNames
 												, context selectedClass allClassVarNames asArray , #('self')
@@ -268,12 +268,12 @@ RBBasicLintRuleTestData >> anInstVar: anObject [
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTestData >> checkClass: aSmalllintContext [ 
+RBBasicLintRuleTestData >> checkClass: aSmalllintContext [
 	^classBlock value: aSmalllintContext value: result
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTestData >> checkMethod: aSmalllintContext [ 
+RBBasicLintRuleTestData >> checkMethod: aSmalllintContext [
 	^methodBlock value: aSmalllintContext value: result
 ]
 
@@ -318,7 +318,7 @@ RBBasicLintRuleTestData >> methodBlock: aBlock [
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTestData >> newResultClass: aClass [ 
+RBBasicLintRuleTestData >> newResultClass: aClass [
 "New one:)"
 	result := aClass new
 ]
@@ -340,12 +340,12 @@ RBBasicLintRuleTestData >> result [
 ]
 
 { #category : #'initialize-release' }
-RBBasicLintRuleTestData >> result: aResult [ 
+RBBasicLintRuleTestData >> result: aResult [
 	result := aResult copyEmpty
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTestData >> resultClass: aClass [ 
+RBBasicLintRuleTestData >> resultClass: aClass [
 	result := aClass new
 ]
 

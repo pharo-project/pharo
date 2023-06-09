@@ -18,13 +18,13 @@ Class {
 	#instVars : [
 		'parseTree'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> accessorsFor: variableName [
 
-	^ RBAddVariableAccessorTransformation 
+	^ RBAddVariableAccessorTransformation
 				model: self model
 				variable: variableName
 				class: class
@@ -34,14 +34,14 @@ RBMoveMethodToClassSideTransformation >> accessorsFor: variableName [
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
-	aClass compile: rbMethod source classified: {protocol}.
+	aClass compile: rbMethod source classified: {protocol}
 ]
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
-	(class whoDefinesInstanceVariable: aString) ifNotNil: 
+	(class whoDefinesInstanceVariable: aString) ifNotNil:
 			[^ true].
-	(class whoDefinesClassVariable: aString) ifNotNil: 
+	(class whoDefinesClassVariable: aString) ifNotNil:
 			[^ true].
 	^ (self parseTree allDefinedVariables includes: aString)
 ]
@@ -50,7 +50,7 @@ RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 RBMoveMethodToClassSideTransformation >> getNewInstSideSource [
 	| sender |
 	sender := ''.
-	method argumentNames isNotEmpty ifTrue: [ 
+	method argumentNames isNotEmpty ifTrue: [
 		method selector keywords with: (method argumentNames) do: [:a :b |
 		sender := sender, a, ' ', b, ' ']]
 	ifFalse: [ sender := method selector ].
@@ -66,7 +66,7 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 	node := RBParser parseMethod: method source.
 	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
-		ifTrue: [ 
+		ifTrue: [
 			node := RBParser parseMethod: rewriter tree formattedCode.
 			node body addNodeFirst:
 				(RBParser parseExpression: temp , ' := self new').
@@ -79,16 +79,16 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 RBMoveMethodToClassSideTransformation >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: method selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+		ifNil: [ parseTree := class parseTreeForSelector: method selector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> preconditions [
-	^(RBCondition 
-		definesSelector: method selector 
+	^(RBCondition
+		definesSelector: method selector
 		in: class classSide) not
 		& (RBCondition withBlock: [ class isMeta not ])
 ]
@@ -97,7 +97,7 @@ RBMoveMethodToClassSideTransformation >> preconditions [
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
-	originalProtocol := method protocol.
+	originalProtocol := method protocolName.
 	oldClass := class.
 	self removeInstVariableReferences.
 	method := class methodFor: method selector.
@@ -107,7 +107,7 @@ RBMoveMethodToClassSideTransformation >> privateTransform [
 	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
 	oldClass removeMethod: method selector.
 	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
-	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol.
+	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
 ]
 
 { #category : #refactoring }
@@ -118,21 +118,21 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 	references do: [ :e | |replacer accessorsRefactoring|
 		accessorsRefactoring := self accessorsFor: e.
 		accessorsRefactoring transform.
-		replacer := self parseTreeRewriterClass 
+		replacer := self parseTreeRewriterClass
 				variable: e
 				getter: accessorsRefactoring getterMethod
 				setter: accessorsRefactoring setterMethod.
-	   self convertMethod: method selector for: class using: replacer ].
+	   self convertMethod: method selector for: class using: replacer ]
 ]
 
 { #category : #refactoring }
-RBMoveMethodToClassSideTransformation >> storeOn: aStream [ 
+RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
 		nextPutAll: ' method: '.
 	method storeOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ' class: ';
 		nextPutAll: class name.
 	aStream

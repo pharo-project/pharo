@@ -30,7 +30,7 @@ EpLogNodeGraphPresenter class >> open [
 { #category : #accessing }
 EpLogNodeGraphPresenter >> directory [
 
-	^ directory ifNil: [ 
+	^ directory ifNil: [
 		directory := self monitor sessionStore baseLocator ]
 ]
 
@@ -38,8 +38,8 @@ EpLogNodeGraphPresenter >> directory [
 EpLogNodeGraphPresenter >> directory: aFileReference [
 
 	directory := aFileReference.
-	
-	self refresh.
+
+	self refresh
 ]
 
 { #category : #initialization }
@@ -54,7 +54,7 @@ EpLogNodeGraphPresenter >> initializeHiedraCheckBox [
 { #category : #initialization }
 EpLogNodeGraphPresenter >> initializeHiedraController [
 
-	hiedraColumnController := HiColumnController new.	
+	hiedraColumnController := HiColumnController new.
 	hiedraColumnController pageSize: 100.
 	hiedraColumnController renderer
 		rowHeight: self rowHeight;
@@ -62,7 +62,7 @@ EpLogNodeGraphPresenter >> initializeHiedraController [
 		arrowSize: 1.0;
 		nodeConnectionOffset: 2.5.
 
-	hiedraColumnController renderer rowHeight: FTTableMorph defaultRowHeight floor.
+	hiedraColumnController renderer rowHeight: FTTableMorph defaultRowHeight floor
 ]
 
 { #category : #initialization }
@@ -74,11 +74,11 @@ EpLogNodeGraphPresenter >> initializeLogNodesTable [
 		addColumn: ((SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ])
 			width: 50;
 			yourself);
-		addColumn: (SpStringTableColumn 
-			title: 'Modified' 
+		addColumn: (SpStringTableColumn
+			title: 'Modified'
 			evaluated: [ :item | item modificationTimeString ])
 			beNotExpandable;
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'File'
 			evaluated: [ :item | item smallName ])
 ]
@@ -106,7 +106,7 @@ EpLogNodeGraphPresenter >> isMonitorDirectory [
 
 { #category : #accessing }
 EpLogNodeGraphPresenter >> monitor [
-	
+
 	^ monitor ifNil: [ EpMonitor current ]
 ]
 

@@ -68,10 +68,39 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 ]
 
+{ #category : #notice }
+RBProgramNode >> addError: anErrorMessage [
+	"Add an error information to the node. Node with error information are considered faulty.
+	Semantic passes that check the validity of AST are the targetted clients of this method."
+
+	| notice |
+	notice := RBErrorNotice new messageText: anErrorMessage.
+	self addNotice: notice.
+	^ notice
+]
+
+{ #category : #notice }
+RBProgramNode >> addNotice: aRBNotice [
+
+	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
+	aRBNotice node: self
+]
+
 { #category : #replacing }
 RBProgramNode >> addReplacement: aStringReplacement [
 	parent ifNil: [^self].
 	parent addReplacement: aStringReplacement
+]
+
+{ #category : #notice }
+RBProgramNode >> addWarning: aMessage [
+
+	| notice |
+	"Add a warning information to the node.
+	Semantic passes that check the validity of AST are the targetted clients of this method."
+	notice := RBWarningNotice new messageText: aMessage.
+	self addNotice: notice.
+	^ notice
 ]
 
 { #category : #accessing }
@@ -80,8 +109,8 @@ RBProgramNode >> allArgumentVariables [
 	children := self children.
 	children isEmpty ifTrue: [^#()].
 	^children inject: OrderedCollection new
-		into: 
-			[:vars :each | 
+		into:
+			[:vars :each |
 			vars
 				addAll: each allArgumentVariables;
 				yourself]
@@ -108,18 +137,38 @@ RBProgramNode >> allDefinedVariables [
 	children := self children.
 	children isEmpty ifTrue: [^#()].
 	^children inject: OrderedCollection new
-		into: 
-			[:vars :each | 
+		into:
+			[:vars :each |
 			vars
 				addAll: each allDefinedVariables;
 				yourself]
 ]
 
+{ #category : #notice }
+RBProgramNode >> allErrorNotices [
+	"Include also error notices of all children"
+
+	| result |
+	result := OrderedCollection new.
+	self nodesPostorderDo: [ :node | result addAll: node errorNotices ].
+	^ result
+]
+
+{ #category : #notice }
+RBProgramNode >> allNotices [
+	"Include also notices of all children"
+
+	| result |
+	result := OrderedCollection new.
+	self nodesPostorderDo: [ :node | result addAll: node notices ].
+	^ result
+]
+
 { #category : #accessing }
 RBProgramNode >> allParents [
-	"return all my parents. 
+	"return all my parents.
 	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
-	^ parent 
+	^ parent
 		ifNil: [ OrderedCollection new ]
 		ifNotNil: [ parent withAllParents ]
 ]
@@ -130,8 +179,8 @@ RBProgramNode >> allStatements [
 	children := self children.
 	children isEmpty ifTrue: [^#()].
 	^children inject: OrderedCollection new
-		into: 
-			[:vars :each | 
+		into:
+			[:vars :each |
 			vars
 				addAll: each allStatements;
 				yourself]
@@ -143,8 +192,8 @@ RBProgramNode >> allTemporaryVariables [
 	children := self children.
 	children isEmpty ifTrue: [^#()].
 	^children inject: OrderedCollection new
-		into: 
-			[:vars :each | 
+		into:
+			[:vars :each |
 			vars
 				addAll: each allTemporaryVariables;
 				yourself]
@@ -157,40 +206,83 @@ RBProgramNode >> allVariables [
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
-{ #category : #accessing }
+{ #category : #replacing }
+RBProgramNode >> asDoit [
+	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
+
+	| source |
+	source := self source.
+	^ RBDoItMethodNode new
+		  body: self asSequenceNode;
+		  source: source
+]
+
+{ #category : #tests }
+RBProgramNode >> asPositionDebugString [
+	"Compute a string representing the positions of children nodes.
+	Each character is an identifier (0 to 9 then A to Z) that corresponds to the chidren node at the corresponding position.
+	Identifiers are assigned with a deep-first search: self is 0, first chisdren is 1, etc."
+
+	| cpt characters result |
+	"DFS to assign identifiers to nodes"
+	cpt := 0.
+	characters := IdentityDictionary new.
+	characters at: nil put: Character space.
+	self nodesDo: [ :each |
+		characters at: each put: cpt asCharacterDigit.
+		cpt := cpt + 1.
+		each comments do: [ :eachCmt |
+			characters at: eachCmt put: cpt asCharacterDigit.
+			cpt := cpt + 1 ] ].
+
+	"Fill the result string"
+	result := String new: self source size.
+	1 to: self source size do: [ :i |
+		result
+			at: i
+			put: (characters at: (self nodeForOffset: i)) ].
+	^ result
+]
+
+{ #category : #replacing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."
 
 	parent ifNil: [self error: 'Cannot change to a return without a parent node.'].
-	parent isSequence 
+	parent isSequence
 		ifFalse: [self error: 'Parent node must be a sequence node.'].
 	(parent isLast: self) ifFalse: [self error: 'Return node must be last.'].
 	^parent addReturn
 ]
 
+{ #category : #replacing }
+RBProgramNode >> asSequenceNode [
+	^RBSequenceNode statements: {self}
+]
+
 { #category : #querying }
 RBProgramNode >> assignmentNodes [
-	^self allChildren select: [:each | each isAssignment].
+	^self allChildren select: [:each | each isAssignment]
 ]
 
 { #category : #testing }
-RBProgramNode >> assigns: aVariableName [ 
+RBProgramNode >> assigns: aVariableName [
 	^self children anySatisfy: [:each | each assigns: aVariableName]
 ]
 
 { #category : #querying }
-RBProgramNode >> bestNodeFor: anInterval [ 
+RBProgramNode >> bestNodeFor: anInterval [
 	| selectedChildren selectedComments |
 	anInterval ifNil: [^nil ].
 	selectedComments := self getCommentsFor: anInterval.
 	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ nil ] ] ].
 	(self containedBy: anInterval) ifTrue: [^self].
-	
-	selectedChildren := self children select: [:each | 
+
+	selectedChildren := self children select: [:each |
 		each intersectsInterval: anInterval
 	].
 
-	^ selectedChildren size = 1 
+	^ selectedChildren size = 1
 		ifTrue: [ selectedChildren first bestNodeFor: anInterval ]
 		ifFalse: [ (selectedChildren isEmpty and: [ selectedComments size = 1 ])
 							ifTrue: [ selectedComments first ]
@@ -200,10 +292,10 @@ RBProgramNode >> bestNodeFor: anInterval [
 { #category : #querying }
 RBProgramNode >> bestNodeForPosition: aPosition [
 
-	"aPosition is an integer that represents the position of the caret. 
+	"aPosition is an integer that represents the position of the caret.
 	A value of N represents that the caret is between the characters N-1 and N.
 	The position 1 is at beginning of the text.
-	
+
 	Position Heuristic: If the previous character is not a separator, take selection one position before.
 		This heuristic is for the cases where the caret (|) is:
 		   |self foo  => the caret is before self, do not move
@@ -215,11 +307,11 @@ RBProgramNode >> bestNodeForPosition: aPosition [
 		For now we decided to favor foo: to motivate people to indent code correctly	"
 
 	| offset position precededBySeparator |
-	precededBySeparator := [ 
+	precededBySeparator := [
 	                       (aPosition
 		                        between: 2
-		                        and: self methodNode sourceCode size + 1) 
-		                       and: [ 
+		                        and: self methodNode sourceCode size + 1)
+		                       and: [
 		                       (self methodNode sourceCode at: aPosition - 1)
 			                       isSeparator ] ].
 	offset := (aPosition = 1 or: precededBySeparator)
@@ -233,7 +325,7 @@ RBProgramNode >> bestNodeForPosition: aPosition [
 
 { #category : #querying }
 RBProgramNode >> blockNodes [
-	^self allChildren select: [:each | each isBlock].
+	^self allChildren select: [:each | each isBlock]
 ]
 
 { #category : #accessing }
@@ -242,10 +334,10 @@ RBProgramNode >> blockVariables [
 ]
 
 { #category : #'testing - matching' }
-RBProgramNode >> canMatchMethod: aCompiledMethod [ 
-	^self sentMessages allSatisfy: 
-			[:each | 
-			(self class optimizedSelectors includes: each) 
+RBProgramNode >> canMatchMethod: aCompiledMethod [
+	^self sentMessages allSatisfy:
+			[:each |
+			(self class optimizedSelectors includes: each)
 				or: [aCompiledMethod refersToLiteral: each]]
 ]
 
@@ -254,9 +346,37 @@ RBProgramNode >> cascadeListCharacter [
 	^$;
 ]
 
+{ #category : #notice }
+RBProgramNode >> checkFaulty: aBlock [
+	"Helper method to evaluate errorBlock and/or signal SyntaxErrorNotification in case of a faulty AST"
+
+	| errorNotice |
+	"Fast noop case"
+	self isFaulty ifFalse: [ ^ self ].
+
+	"Search for the first error, to signal"
+	errorNotice := self allErrorNotices first.
+
+	aBlock ifNotNil: [ aBlock cull: errorNotice messageText cull: errorNotice position cull: self ].
+
+	errorNotice signalError.
+
+	"If resumed, just return"
+]
+
 { #category : #accessing }
 RBProgramNode >> children [
 	^#()
+]
+
+{ #category : #accessing }
+RBProgramNode >> childrenAndComments [
+	
+	| result |
+	result := self children.
+	result ifEmpty: [ ^ self comments ].
+	self comments ifEmpty: [ ^ result ].
+	^ result , self comments
 ]
 
 { #category : #replacing }
@@ -266,7 +386,7 @@ RBProgramNode >> clearReplacements [
 ]
 
 { #category : #enumeration }
-RBProgramNode >> collect: aBlock [ 
+RBProgramNode >> collect: aBlock [
 	"Hacked to fit collection protocols"
 
 	^aBlock value: self
@@ -275,7 +395,7 @@ RBProgramNode >> collect: aBlock [
 { #category : #accessing }
 RBProgramNode >> comments [
 	"Answer the comments of the receiving parse tree node"
-	
+
 	^ (self propertyAt: #comments ifAbsent: [ #() ]) ifNil:[ #() ]
 ]
 
@@ -283,12 +403,12 @@ RBProgramNode >> comments [
 RBProgramNode >> comments: aCollection [
 
 	(aCollection ifNil: [#()])
-		ifEmpty: [ self removeProperty: #comments ifAbsent: [] ] 
-		ifNotEmpty: [ self propertyAt: #comments put: aCollection ].
+		ifEmpty: [ self removeProperty: #comments ifAbsent: [] ]
+		ifNotEmpty: [ self propertyAt: #comments put: aCollection ]
 ]
 
 { #category : #testing }
-RBProgramNode >> containedBy: anInterval [ 
+RBProgramNode >> containedBy: anInterval [
 	^anInterval first <= self start and: [anInterval last >= self stop]
 ]
 
@@ -298,14 +418,14 @@ RBProgramNode >> containsReturn [
 ]
 
 { #category : #copying }
-RBProgramNode >> copyCommentsFrom: aNode [ 
+RBProgramNode >> copyCommentsFrom: aNode [
 	"Add all comments from aNode to us. If we already have the comment, then don't add it."
 
 	| newComments |
 	newComments := OrderedCollection new.
 	aNode nodesDo: [:each | newComments addAll: each comments].
-	self nodesDo: 
-			[:each | 
+	self nodesDo:
+			[:each |
 			each comments do: [:comment | newComments remove: comment ifAbsent: []]].
 	newComments isEmpty ifTrue: [^self].
 	newComments := newComments asSortedCollection: [:a :b | a start < b start].
@@ -318,11 +438,11 @@ RBProgramNode >> copyInContext: aDictionary [
 ]
 
 { #category : #matching }
-RBProgramNode >> copyList: matchNodes inContext: aDictionary [ 
+RBProgramNode >> copyList: matchNodes inContext: aDictionary [
 	| newNodes |
 	newNodes := OrderedCollection new.
-	matchNodes do: 
-			[:each | 
+	matchNodes do:
+			[:each |
 			| object |
 			object := each copyInContext: aDictionary.
 			newNodes addAll: object].
@@ -358,7 +478,7 @@ RBProgramNode >> directlyUses: aNode [
 ]
 
 { #category : #enumeration }
-RBProgramNode >> do: aBlock [ 
+RBProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
 
 	aBlock value: self
@@ -375,33 +495,47 @@ RBProgramNode >> dump [
 ]
 
 { #category : #comparing }
-RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [ 
+RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
 	| dictionary |
 	dictionary := Dictionary new.
 	(self equalTo: aNode withMapping: dictionary) ifFalse: [^false].
-	dictionary keysAndValuesDo: 
-			[:key :value | 
+	dictionary keysAndValuesDo:
+			[:key :value |
 			(key = value or: [variableNameCollection includes: key]) ifFalse: [^false]].
 	^true
 ]
 
 { #category : #comparing }
-RBProgramNode >> equalTo: aNode withMapping: aDictionary [ 
+RBProgramNode >> equalTo: aNode withMapping: aDictionary [
 	^self = aNode
 ]
 
+{ #category : #notice }
+RBProgramNode >> errorNotices [
+	"The errors attached to the receiver"
+
+	^ self notices select: #isError
+]
+
 { #category : #testing }
-RBProgramNode >> evaluatedFirst: aNode [ 
-	self children do: 
-			[:each | 
+RBProgramNode >> evaluatedFirst: aNode [
+	self children do:
+			[:each |
 			each == aNode ifTrue: [^true].
 			each isImmediateNode ifFalse: [^false]].
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 RBProgramNode >> formattedCode [
-	^ self formatterClass new format: self
+
+	^ self formattedCodeIn: self class
+]
+
+{ #category : #printing }
+RBProgramNode >> formattedCodeIn: context [
+
+	^ context formatter format: self
 ]
 
 { #category : #accessing }
@@ -413,15 +547,15 @@ RBProgramNode >> formatterClass [
 RBProgramNode >> getCommentsFor: anInterval [
 	| selectedComments |
 	selectedComments := OrderedCollection new.
-	self nodesDo: 
-		[ :each | 
-			| comments | 
-			comments := each comments select: 
-				[ :com | com intersectsInterval: anInterval ]. 
+	self nodesDo:
+		[ :each |
+			| comments |
+			comments := each comments select:
+				[ :com | com intersectsInterval: anInterval ].
 	"This precaution is taken to deal with cascades multiple visit of the receiver."
-			(selectedComments isNotEmpty 
-				and: [ comments isNotEmpty 
-				and: [ comments last = selectedComments last ]]) 
+			(selectedComments isNotEmpty
+				and: [ comments isNotEmpty
+				and: [ comments last = selectedComments last ]])
 					ifFalse: [selectedComments addAll: comments ] ].
 	^ selectedComments
 ]
@@ -429,7 +563,7 @@ RBProgramNode >> getCommentsFor: anInterval [
 { #category : #testing }
 RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
-	
+
 	^ self comments isNotEmpty
 ]
 
@@ -441,10 +575,17 @@ RBProgramNode >> hasMultipleReturns [
 	^count > 1
 ]
 
+{ #category : #testing }
+RBProgramNode >> hasNonLocalReturn [
+	"check if there is a non-local return anywhere
+	Note: returns in a method itself are local returns"
+	^ self children anySatisfy: [ :child | child hasNonLocalReturn ]
+]
+
 { #category : #properties }
 RBProgramNode >> hasProperty: aKey [
 	"Test if the property aKey is present."
-	
+
 	^ properties notNil and: [ properties includesKey: aKey ]
 ]
 
@@ -469,9 +610,14 @@ RBProgramNode >> instanceVariableWriteNodes [
 ]
 
 { #category : #testing }
-RBProgramNode >> intersectsInterval: anInterval [ 
-	^(anInterval first between: self start and: self stop) 
+RBProgramNode >> intersectsInterval: anInterval [
+	^(anInterval first between: self start and: self stop)
 		or: [self start between: anInterval first and: anInterval last]
+]
+
+{ #category : #testing }
+RBProgramNode >> isAnnotationMark [
+	^ false
 ]
 
 { #category : #testing }
@@ -496,6 +642,11 @@ RBProgramNode >> isBlockError [
 
 { #category : #testing }
 RBProgramNode >> isCascade [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isCascadeError [
 	^false
 ]
 
@@ -526,6 +677,13 @@ RBProgramNode >> isEnglobingError [
 	^false
 ]
 
+{ #category : #notice }
+RBProgramNode >> isError [
+	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
+
+	^ self errorNotices isNotEmpty
+]
+
 { #category : #testing }
 RBProgramNode >> isEvaluatedFirst [
 	"Return true if we are the first thing evaluated in this statement."
@@ -533,10 +691,11 @@ RBProgramNode >> isEvaluatedFirst [
 	^parent isNil or: [parent isSequence or: [parent evaluatedFirst: self]]
 ]
 
-{ #category : #testing }
+{ #category : #notice }
 RBProgramNode >> isFaulty [
-	"return true if the AST contains a RBParseErrorNode"
-	^false
+
+	"return true if the AST is or contains a isError node."
+	^ self isError
 ]
 
 { #category : #testing }
@@ -560,7 +719,7 @@ RBProgramNode >> isInstanceVariable [
 ]
 
 { #category : #testing }
-RBProgramNode >> isLast: aNode [ 
+RBProgramNode >> isLast: aNode [
 	| children |
 	children := self children.
 	^children notEmpty and: [children last == aNode]
@@ -693,9 +852,9 @@ RBProgramNode >> isUnfinishedStatement [
 
 { #category : #testing }
 RBProgramNode >> isUsed [
-	"Answer true if this node could be used as part of another expression. For example, you could use the 
-	result of this node as a receiver of a message, an argument, the right part of an assignment, or the 
-	return value of a block. This differs from isDirectlyUsed in that it is conservative since it also includes 
+	"Answer true if this node could be used as part of another expression. For example, you could use the
+	result of this node as a receiver of a message, an argument, the right part of an assignment, or the
+	return value of a block. This differs from isDirectlyUsed in that it is conservative since it also includes
 	return values of blocks."
 
 	^parent ifNil: [false] ifNotNil: [parent uses: self]
@@ -740,12 +899,12 @@ RBProgramNode >> mappingFor: aNode [
 ]
 
 { #category : #matching }
-RBProgramNode >> match: aNode inContext: aDictionary [ 
+RBProgramNode >> match: aNode inContext: aDictionary [
 	^ self = aNode
 ]
 
 { #category : #matching }
-RBProgramNode >> matchList: matchNodes against: programNodes inContext: aDictionary [ 
+RBProgramNode >> matchList: matchNodes against: programNodes inContext: aDictionary [
 	^self
 		matchList: matchNodes
 		index: 1
@@ -755,35 +914,35 @@ RBProgramNode >> matchList: matchNodes against: programNodes inContext: aDiction
 ]
 
 { #category : #matching }
-RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary [ 
+RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary [
 	| node currentIndex currentDictionary nodes |
 	matchNodes size < matchIndex ifTrue: [^programNodes size < programIndex].
 	node := matchNodes at: matchIndex.
-	node isList 
-		ifTrue: 
+	node isList
+		ifTrue:
 			[currentIndex := programIndex - 1.
-			
+
 			[currentDictionary := aDictionary copy.
-			programNodes size < currentIndex or: 
+			programNodes size < currentIndex or:
 					[nodes := programNodes copyFrom: programIndex to: currentIndex.
-					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and: 
-							[(self 
+					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and:
+							[(self
 								matchList: matchNodes
 								index: matchIndex + 1
 								against: programNodes
 								index: currentIndex + 1
-								inContext: currentDictionary) 
-									ifTrue: 
-										[currentDictionary 
+								inContext: currentDictionary)
+									ifTrue:
+										[currentDictionary
 											keysAndValuesDo: [:key :value | aDictionary at: key put: value].
 										^true].
-							false]]] 
+							false]]]
 					whileFalse: [currentIndex := currentIndex + 1].
 			^false].
 	programNodes size < programIndex ifTrue: [^false].
-	(node match: (programNodes at: programIndex) inContext: aDictionary) 
+	(node match: (programNodes at: programIndex) inContext: aDictionary)
 		ifFalse: [^false].
-	^self 
+	^self
 		matchList: matchNodes
 		index: matchIndex + 1
 		against: programNodes
@@ -807,20 +966,53 @@ RBProgramNode >> newSource [
 ]
 
 { #category : #'node access' }
+RBProgramNode >> nodeBeforeOffset: anInteger [
+	"Return the node at offset `anInteger` or at the first non-separator previous character.
+	Ignoring space corresponds to what is the visible current or previous node in IDE."
+
+	| offset |
+	offset := anInteger.
+	[
+	offset > 0 and: [ offset > self source size or: [ (self source at: offset) isSeparator ] ] ]
+		whileTrue: [ offset := offset - 1 ].
+	^ self nodeForOffset: offset.
+]
+
+{ #category : #'node access' }
 RBProgramNode >> nodeForOffset: anInteger [
-	| children |
-	"choosing the best node on the specific offset"
-	children := self children.
-	"when we are on a leaf, we take the leaf node"
-	(children isEmpty) ifTrue: [ (self sourceInterval includes: anInteger) ifTrue: [^self]].
-	"if the node has children then we check the children"
-	children do: [:each | (each sourceInterval includes: anInteger) ifTrue: [^each nodeForOffset: anInteger] ].
+	"Choose the best node on the specific offset, including comments.
+	Because comments can be oustide the span of sourceInterval, we have to visit all children.
+	Return nil if anInteger is out of range."
+
+	self childrenAndComments do: [ :each |
+		(each nodeForOffset: anInteger) ifNotNil: [ :node | ^ node ] ].
+
+	^ (self sourceInterval includes: anInteger)
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #iterating }
-RBProgramNode >> nodesDo: aBlock [ 
+RBProgramNode >> nodesDo: aBlock [
+	"Evaluate aBlock on self and all chindren nodes, including comments"
+
 	aBlock value: self.
-	self children do: [ :each | each nodesDo: aBlock ]
+	self childrenAndComments do: [ :each | each nodesDo: aBlock ]
+]
+
+{ #category : #iterating }
+RBProgramNode >> nodesPostorderDo: aBlock [
+	"Like RBProgramNode>>#nodesDo: but visit children first"
+
+	self childrenAndComments do: [ :each | each nodesPostorderDo: aBlock ].
+	aBlock value: self
+]
+
+{ #category : #notice }
+RBProgramNode >> notices [
+	"The notices attached to the receiver"
+
+	^ self propertyAt: #notices ifAbsent: #()
 ]
 
 { #category : #accessing }
@@ -829,7 +1021,7 @@ RBProgramNode >> parent [
 ]
 
 { #category : #accessing }
-RBProgramNode >> parent: aRBProgramNode [ 
+RBProgramNode >> parent: aRBProgramNode [
 	parent := aRBProgramNode
 ]
 
@@ -850,7 +1042,7 @@ RBProgramNode >> precedence [
 ]
 
 { #category : #printing }
-RBProgramNode >> printOn: aStream [ 
+RBProgramNode >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
 		nextPut: $(;
@@ -861,15 +1053,15 @@ RBProgramNode >> printOn: aStream [
 { #category : #properties }
 RBProgramNode >> propertyAt: aKey [
 	"Answer the property value associated with aKey."
-	
+
 	^ self propertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
 { #category : #properties }
 RBProgramNode >> propertyAt: aKey ifAbsent: aBlock [
 	"Answer the property value associated with aKey or, if aKey isn't found, answer the result of evaluating aBlock."
-	
-	^ properties 
+
+	^ properties
 		ifNil: aBlock
 		ifNotNil: [ properties at: aKey ifAbsent: aBlock ]
 ]
@@ -877,8 +1069,15 @@ RBProgramNode >> propertyAt: aKey ifAbsent: aBlock [
 { #category : #properties }
 RBProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
+
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
+]
+
+{ #category : #accessing }
+RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock [
+	"Evaluate aPresentBlock with the the property value associated with aKey. Return nil if aKey is not found."
+
+	^ properties ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: [ nil ] ]
 ]
 
 { #category : #properties }
@@ -907,7 +1106,7 @@ RBProgramNode >> recurseIntoCharacter [
 ]
 
 { #category : #testing }
-RBProgramNode >> references: aVariableName [ 
+RBProgramNode >> references: aVariableName [
 	^self children anySatisfy: [:each | each references: aVariableName]
 ]
 
@@ -919,14 +1118,14 @@ RBProgramNode >> removeDeadCode [
 { #category : #properties }
 RBProgramNode >> removeProperty: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."
-	
-	^ self removeProperty: aKey ifAbsent: [ self error: 'Property not found' ].
+
+	^ self removeProperty: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
 { #category : #properties }
 RBProgramNode >> removeProperty: aKey ifAbsent: aBlock [
 	"Remove the property with aKey. Answer the value or, if aKey isn't found, answer the result of evaluating aBlock."
-	
+
 	| answer |
 	properties ifNil: [ ^ aBlock value ].
 	answer := properties removeKey: aKey ifAbsent: aBlock.
@@ -935,22 +1134,22 @@ RBProgramNode >> removeProperty: aKey ifAbsent: aBlock [
 ]
 
 { #category : #replacing }
-RBProgramNode >> replaceMethodSource: aNode [ 
+RBProgramNode >> replaceMethodSource: aNode [
 	"We are being replaced with aNode -- if possible try to perform an in place edit of the source."
 
 	| method |
 	method := self methodNode.
-	method notNil ifTrue: [method map: self to: aNode].
+	method ifNotNil: [ method map: self to: aNode ].
 	aNode parent: self parent.
 	[self replaceSourceWith: aNode] on: Error
-		do: 
-			[:ex | 
+		do:
+			[:ex |
 			self clearReplacements.
 			ex return]
 ]
 
 { #category : #replacing }
-RBProgramNode >> replaceNode: aNode withNode: anotherNode [ 
+RBProgramNode >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
@@ -961,19 +1160,19 @@ RBProgramNode >> replaceSourceFrom: aNode [
 ]
 
 { #category : #'private - replacing' }
-RBProgramNode >> replaceSourceWith: aNode [ 
+RBProgramNode >> replaceSourceWith: aNode [
 	aNode replaceSourceFrom: self
 ]
 
 { #category : #replacing }
-RBProgramNode >> replaceWith: aNode [ 
+RBProgramNode >> replaceWith: aNode [
 	parent ifNil: [self error: 'This node doesn''t have a parent'].
 	self replaceMethodSource: aNode.
 	parent replaceNode: self withNode: aNode
 ]
 
 { #category : #enumeration }
-RBProgramNode >> reverseNodesDo: aBlock [ 
+RBProgramNode >> reverseNodesDo: aBlock [
 	self children reverseDo: [ :each | each reverseNodesDo: aBlock ].
 	aBlock value: self
 ]
@@ -985,14 +1184,14 @@ RBProgramNode >> selfMessages [
 
 { #category : #accessing }
 RBProgramNode >> sendNodes [
-	^self allChildren select: [:each | each isMessage].
+	^self allChildren select: [:each | each isMessage]
 ]
 
 { #category : #accessing }
 RBProgramNode >> sentMessages [
 	^ self children
 		inject: Set new
-		into: [ :messages :each | 
+		into: [ :messages :each |
 			messages
 				addAll: each sentMessages;
 				yourself ]
@@ -1016,8 +1215,8 @@ RBProgramNode >> sourceCode [
 	| interval |
 	interval := self sourceInterval.
 	interval ifEmpty: [ ^ '' ].
-	
-	^ self source 
+
+	^ self source
 		copyFrom: interval first
 		to: interval last
 ]
@@ -1034,7 +1233,7 @@ RBProgramNode >> start [
 
 { #category : #'accessing - meta variable' }
 RBProgramNode >> statementCharacter [
-	^$.
+	^ $.
 ]
 
 { #category : #accessing }
@@ -1085,14 +1284,14 @@ RBProgramNode >> uses: aNode [
 
 { #category : #querying }
 RBProgramNode >> variableDefinitionNodes [
-	^ self allChildren select: [ :each | 
+	^ self allChildren select: [ :each |
 		  each isVariable and: [ each isDefinition ] ]
 ]
 
 { #category : #querying }
 RBProgramNode >> variableNodes [
 
-	^ self allChildren select: [ :each | 
+	^ self allChildren select: [ :each |
 		  each isVariable and: [ each isDefinition not ] ]
 ]
 
@@ -1106,33 +1305,41 @@ RBProgramNode >> variableWriteNodes [
 		^self variableNodes select: [:each | each isWrite]
 ]
 
+{ #category : #notice }
+RBProgramNode >> warningNotices [
+	"The warnings attached to the receiver"
+
+	^ self notices select: #isWarning
+]
+
 { #category : #querying }
-RBProgramNode >> whichNodeIsContainedBy: anInterval [ 
+RBProgramNode >> whichNodeIsContainedBy: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
 	(self containedBy: anInterval) ifTrue: [^self].
-	selectedChildren := self children 
+	selectedChildren := self children
 				select: [:each | each intersectsInterval: anInterval].
-	^selectedChildren size == 1 
+	^selectedChildren size == 1
 		ifTrue: [selectedChildren first whichNodeIsContainedBy: anInterval]
 		ifFalse: [nil]
 ]
 
 { #category : #querying }
-RBProgramNode >> whoDefines: aName [ 
-	^(self defines: aName) 
-		ifTrue: [self]
-		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]
+RBProgramNode >> whoDefines: aName [
+
+	^ (self defines: aName)
+		  ifTrue: [ self ]
+		  ifFalse: [ parent ifNotNil: [ parent whoDefines: aName ] ]
 ]
 
 { #category : #accessing }
 RBProgramNode >> withAllParents [
 	"return me and all my parents. Topmost parent first, me last
 	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
-	^ parent 
+	^ parent
 		ifNil: [ OrderedCollection with: self ]
-		ifNotNil: [ 
-			parent withAllParents 
+		ifNotNil: [
+			parent withAllParents
 				addLast: self;
 				yourself ]
 ]

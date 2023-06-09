@@ -49,10 +49,10 @@ Class {
 
 { #category : #'class initialization' }
 FT2Types class >> initialize [
-	"self initialize"
+
 	IntHolder := FFIExternalValueHolder ofType: 'int'.
 	PointerHolder := FFIExternalValueHolder ofType: 'void*'.
-	
+
 	FT_Error := 'long'.
 	FT_Long := 'long'.
 	FT_ULong := 'ulong'.
@@ -60,10 +60,10 @@ FT2Types class >> initialize [
 	FT_Short := 'short'.
 	FT_UInt := 'uint'.
 	FT_Int32 := 'int32'.
-	
+
 	FT_Pos := 'long'.
 	FT_Encoding := 'int'.
-	
+
 	FT_String := 'String'.
 	FT_Int := 'int'.
 	FT_Bitmap_Size := 'FTBitmapSize'.
@@ -77,7 +77,7 @@ FT2Types class >> initialize [
 	FT_ListRec := 'FTListRec'.
 	FT_Face_Internal := 'void*'.
 	FT_Face := 'FTFaceRec*'.
-	
+
 	FT_Library := 'void*'.
 	FT_Glyph_Metrics := 'FTGlyphMetrics'.
 	FT_Fixed := 'long'.
@@ -90,7 +90,7 @@ FT2Types class >> initialize [
 	FT_Size := 'FTSizeRec*'.
 	FT_Size_Metrics := 'FTSizeMetrics'.
 	FT_Size_Internal := 'void*'.
-	
+
 	FT_ListNode := 'void*'.
-	FT_Matrix := 'FTMatrix'.
+	FT_Matrix := 'FTMatrix'
 ]

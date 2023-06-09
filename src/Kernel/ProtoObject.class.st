@@ -12,10 +12,10 @@ Class {
 }
 
 { #category : #comparing }
-ProtoObject >> == anObject [ 
-	"Primitive. Answer whether the receiver and the argument are the same 
-	object (have the same object pointer). Do not redefine the message == in 
-	any other class! Essential. No Lookup. Do not override in any subclass. 
+ProtoObject >> == anObject [
+	"Primitive. Answer whether the receiver and the argument are the same
+	object (have the same object pointer). Do not redefine the message == in
+	any other class! Essential. No Lookup. Do not override in any subclass.
 	See Object documentation whatIsAPrimitive."
 
 	<primitive: 110>
@@ -25,10 +25,10 @@ ProtoObject >> == anObject [
 { #category : #'reflective operations' }
 ProtoObject >> basicIdentityHash [
 	"Answer a 22 bits unsigned SmallInteger whose value is related to the receiver's identity.
-	
+
 	Primitive. Fails if the receiver is an immediate. Essential.
 	See Object documentation whatIsAPrimitive.
-	
+
 	Do not override, use #identityHash instead"
 
 	<primitive: 75>
@@ -38,7 +38,7 @@ ProtoObject >> basicIdentityHash [
 { #category : #'reflective operations' }
 ProtoObject >> become: otherObject [
 	"Primitive. Swap the object pointers of the receiver and the argument.
-	All variables in the entire system that used to point to the 
+	All variables in the entire system that used to point to the
 	receiver now point to the argument, and vice-versa.
 	Fails if either object is a SmallInteger"
 
@@ -46,7 +46,7 @@ ProtoObject >> become: otherObject [
 ]
 
 { #category : #'reflective operations' }
-ProtoObject >> becomeForward: otherObject [ 
+ProtoObject >> becomeForward: otherObject [
 	"Primitive. All variables in the entire system that used to point
 	to the receiver now point to the argument.
 	Fails if either argument is a SmallInteger."
@@ -64,7 +64,7 @@ ProtoObject >> becomeForward: otherObject copyHash: copyHash [
 ]
 
 { #category : #'reflective operations' }
-ProtoObject >> cannotInterpret: aMessage [ 
+ProtoObject >> cannotInterpret: aMessage [
 	 "Handle the fact that there was an attempt to send the given message to the receiver but a null methodDictionary was encountered while looking up the message selector.  Hopefully this is the result of encountering a stub for a swapped out class which induces this exception on purpose."
 
 "If this is the result of encountering a swap-out stub, then simulating the lookup in Smalltalk should suffice to install the class properly, and the message may be resent."
@@ -82,21 +82,11 @@ ProtoObject >> cannotInterpret: aMessage [
 
 { #category : #'class membership' }
 ProtoObject >> class [
-	"Primitive. Answer the object which is the receiver's class. Essential. See 
+	"Primitive. Answer the object which is the receiver's class. Essential. See
 	Object documentation whatIsAPrimitive."
 
 	<primitive: 111>
 	self primitiveFailed
-]
-
-{ #category : #debugging }
-ProtoObject >> doOnlyOnce: aBlock [
-	"If the 'one-shot' mechanism is armed, evaluate aBlock once and disarm the one-shot mechanism.  To rearm the mechanism, evaluate  'self rearmOneShot' manually."
-
-	(self class environment at: #OneShotArmed ifAbsent: [ true ])
-		ifTrue: [ 
-			self class environment at: #OneShotArmed put: false.
-			aBlock value ]
 ]
 
 { #category : #'reflective operations' }
@@ -104,7 +94,7 @@ ProtoObject >> doesNotUnderstand: aMessage [
 
 	<debuggerCompleteToSender>
 
-	^ MessageNotUnderstood new 
+	^ MessageNotUnderstood new
 		message: aMessage;
 		receiver: self;
 		signal
@@ -129,7 +119,7 @@ ProtoObject >> identityHash [
 	 This method must not be overridden, except by SmallInteger.  As of
 	 2014, the 32-bit Spur VM has 22 bits of hash and 31-bit SmallIntegers
 	 (30 bits + 1 sign bit).  Shifting by 8 will not create large integers.
-	
+
 	 Do not override."
 
 	^self basicIdentityHash bitShift: 8
@@ -146,10 +136,10 @@ ProtoObject >> ifNil: nilBlock [
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock [
 	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block"
 	"Might be compiled inline for speed, see RBMessageNode>>#isInlineIfNil"
-	
+
 	"(nil ifNil: [42] ifNotNil: [:o | o +3 ] ) >>> 42"
 	"(3  ifNil: [42] ifNotNil: [:o | o +3 ]) >>> 6"
-	
+
 	^ ifNotNilBlock cull: self
 ]
 
@@ -165,7 +155,7 @@ ProtoObject >> ifNotNil: ifNotNilBlock [
 ]
 
 { #category : #testing }
-ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [ 
+ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [
 	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block"
 	"Might be compiled inline for speed, see RBMessageNode>>#isInlineIfNil"
 
@@ -206,7 +196,7 @@ ProtoObject >> isNil [
 
 { #category : #'write barrier' }
 ProtoObject >> modificationForbiddenFor: selector index: index value: value [
-	^ (ModificationForbidden 
+	^ (ModificationForbidden
 		for: self
 		at: index
 		with: value
@@ -221,7 +211,7 @@ ProtoObject >> modificationForbiddenFor: selector value: value [
 { #category : #'block support' }
 ProtoObject >> mustBeBoolean [
 	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
-	
+
 	^ self mustBeBooleanHandler mustBeBooleanIn: thisContext sender
 ]
 
@@ -234,7 +224,7 @@ ProtoObject >> mustBeBooleanHandler [
 { #category : #'block support' }
 ProtoObject >> mustBeBooleanIn: context [
 	"context is the where the non-boolean error occurred. Rewind context to before jump then raise error."
-	
+
 	"Some constructs are optimized in the compiler :
 	#whileTrue:
 	#whileFalse:
@@ -243,15 +233,15 @@ ProtoObject >> mustBeBooleanIn: context [
 	#ifTrue:ifFalse:
 	#ifFalse:ifTrue:
 	So you cannot by default use them on non boolean objects."
-	
+
 	"If you really need to use optimized constructs, you can enable Opal compiler and do one of the following :
 		- recompile your method with the pragma : <compilerOptions: #(+ optIlineNone)>
-		- recompile your class with the method : MyClass class>>compiler 
+		- recompile your class with the method : MyClass class>>compiler
 			^ super compiler options: #(+ optIlineNone)
 		- enable the option mustBeBooleanDeOptimize to call mustBeBooleanDeOptimizeIn: instead of this method "
 
 	| proceedValue |
-	
+
 	"Set the pc back to the point just before the conditional jump that set off the must be boolean"
 	context pc: context instructionStream previousPc.
 	proceedValue := NonBooleanReceiver new
@@ -262,8 +252,8 @@ ProtoObject >> mustBeBooleanIn: context [
 
 { #category : #'memory scanning' }
 ProtoObject >> nextInstance [
-	"Primitive. Answer the next instance after the receiver in the 
-	enumeration of all instances of this class. Fails if all instances have been 
+	"Primitive. Answer the next instance after the receiver in the
+	enumeration of all instances of this class. Fails if all instances have been
 	enumerated. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 78>
@@ -272,12 +262,12 @@ ProtoObject >> nextInstance [
 
 { #category : #'memory scanning' }
 ProtoObject >> nextObject [
-	"Primitive. Answer the next object after the receiver in the 
-	enumeration of all objects. Return 0 when all objects have been 
+	"Primitive. Answer the next object after the receiver in the
+	enumeration of all objects. Return 0 when all objects have been
 	enumerated."
 
 	<primitive: 139>
-	self primitiveFailed.
+	self primitiveFailed
 ]
 
 { #category : #'pointing to' }
@@ -287,12 +277,12 @@ ProtoObject >> pointersTo [
 
 { #category : #'pointing to' }
 ProtoObject >> pointersToAmong: aCollectionOfObjects [
-	"Meant to be used as: 
+	"Meant to be used as:
 	Smalltalk garbageCollect.
 	objs := SystemNavigation default allObjects.
 	anyObject pointersToAmong: objs.
 	otherObject pointersToAmong: objs.
-	
+
 	Avoid multiple calls to allObjects Primitive and multiple gcs.
 	"
 
@@ -337,7 +327,7 @@ ProtoObject >> pointersToExcept: objectsToExclude among: aCollectionOfObjects [
 	thisContext sender sender.
 	objectsToExclude}.
 	^ (pointers
-		removeAllSuchThat: [ :ea | 
+		removeAllSuchThat: [ :ea |
 			ea == thisContext sender
 				or:
 					[ "warning: this expression is dependent on closure structure of this method"
@@ -347,9 +337,8 @@ ProtoObject >> pointersToExcept: objectsToExclude among: aCollectionOfObjects [
 
 { #category : #'pointing to' }
 ProtoObject >> pointsTo: anObject [
-	"Answers true if I hold a reference to anObject, or false otherwise
-	an object points to a class via the header either directly or indirectly 
-	via the compact classes array"
+	"Answers true if I hold a reference to anObject, or false otherwise.
+	Note: an object points to the class via the header"
 
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
 ]
@@ -357,7 +346,7 @@ ProtoObject >> pointsTo: anObject [
 { #category : #'primitive failure' }
 ProtoObject >> primitiveFail [
 	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
-	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
+	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is
 	implemented in Interpreter of VMMaker."
 
 	^ self primitiveFailed
@@ -373,23 +362,13 @@ ProtoObject >> primitiveFailed [
 { #category : #'primitive failure' }
 ProtoObject >> primitiveFailed: selector [
 	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-	
+
 	PrimitiveFailed signalFor: selector
-]
-
-{ #category : #debugging }
-ProtoObject >> rearmOneShot [
-	"Call this manually to arm the one-shot mechanism; use the mechanism in code by calling
-		self doOnlyOnce: <a block>"
-
-	self class environment at: #OneShotArmed put: true
-
-	"self rearmOneShot"
 ]
 
 { #category : #'apply primitives' }
 ProtoObject >> tryPrimitive: primIndex withArgs: argumentArray [
-	"This method is a template that the Smalltalk simulator uses to 
+	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
 
 	<primitive: 118 error: code >
@@ -407,10 +386,10 @@ ProtoObject >> withArgs: argArray executeMethod: compiledMethod [
 { #category : #comparing }
 ProtoObject >> ~~ anObject [
 	"Primitive. Answer whether the receiver and the argument are different objects
-	(do not have the same object pointer). Do not redefine the message ~~ in 
-	any other class! Optional (Assuming == is essential). No Lookup. Do not override in any subclass. 
+	(do not have the same object pointer). Do not redefine the message ~~ in
+	any other class! Optional (Assuming == is essential). No Lookup. Do not override in any subclass.
 	See Object documentation whatIsAPrimitive."
-	
+
 	<primitive: 169>
 	self == anObject
 		ifTrue: [^ false]

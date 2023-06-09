@@ -4,7 +4,7 @@ Extension { #name : #CmdCommand }
 CmdCommand >> doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 	| item itemOrder |
 	itemOrder := aCommandItem order.
-	aCommandItem parentGroup isRoot not & aCommandItem parentGroup isInlined ifTrue: [ 
+	aCommandItem parentGroup isRoot not & aCommandItem parentGroup isInlined ifTrue: [
 		"When we are inlining we should try keep order according to the order of parent.
 		So we just put item order as deimal addition to parent order"
 		itemOrder := aCommandItem parentGroup order + (itemOrder / 10000000.0)].
@@ -12,8 +12,8 @@ CmdCommand >> doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder 
 		parent: aCommandItem actualParentGroup name;
 		order: itemOrder;
 		help: aCommandItem description;
-		action: [aCommandItem executeCommand]. 
-	
+		action: [aCommandItem executeCommand].
+
 	aCommandItem setUpShortcutTipForMenuItem: item.
 	self setUpIconForMenuItem: item
 ]
@@ -21,12 +21,12 @@ CmdCommand >> doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder 
 { #category : #'*Commander-Activators-ContextMenu' }
 CmdCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	| item |
-	
-	item := aMenu 
+
+	item := aMenu
 		add: aCommandActivator menuItemName
-		target: aCommandActivator 
+		target: aCommandActivator
 		selector: #executeCommand.
-	
+
 	aCommandActivator setUpShortcutTipForMenuItem: item.
 	self setUpIconForMenuItem: item.
 	self description ifNotNil: [:d | item setBalloonText: d]
@@ -34,7 +34,7 @@ CmdCommand >> fillContextMenu: aMenu using: aCommandActivator [
 
 { #category : #'*Commander-Activators-ContextMenu' }
 CmdCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
-	
+
 	^ self doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder
 ]
 

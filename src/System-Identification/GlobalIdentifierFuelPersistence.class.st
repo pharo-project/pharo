@@ -8,18 +8,23 @@ Class {
 }
 
 { #category : #configuration }
-GlobalIdentifierFuelPersistence >> fileName [ 
+GlobalIdentifierFuelPersistence >> fileName [
 	^ 'org.pharo.gt.spotter.event.recorder.fuel'
 ]
 
 { #category : #'load and saving' }
 GlobalIdentifierFuelPersistence >> load [
-	^ FLMaterializer materializeFromFileNamed: self preferences fullName
+	^ FLMaterializer new
+		filePath: self preferences fullName;
+		materializeRoot
 ]
 
 { #category : #'load and saving' }
 GlobalIdentifierFuelPersistence >> save: aDictionary into: aWriteStream [
-	[ FLSerializer serialize: aDictionary on: aWriteStream ]
-		on: Error
-		do: [ :anError | "ignore" ]
+	[ FLSerializer new
+		onStream: aWriteStream;
+		object: aDictionary;
+		serialize ]
+			on: Error
+			do: [ :anError | "ignore" ]
 ]

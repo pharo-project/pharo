@@ -15,16 +15,6 @@ Class {
 	#category : #'DrTests-Spec'
 }
 
-{ #category : #layout }
-DTFilterableListPresenter class >> defaultLayout [
-
-	^ SpBoxLayout newTopToBottom
-		add: #labelPresenter withConstraints: [ :constraints | constraints height: self labelHeight ];
-		add: #listPresenter;
-		add: #filterTextInput withConstraints: [ :constraints | constraints height: self inputTextHeight ];
-		yourself
-]
-
 { #category : #accessing }
 DTFilterableListPresenter >> allItems [
 
@@ -55,10 +45,33 @@ DTFilterableListPresenter >> contextMenu: aBlock [
 	^ self listPresenter contextMenu: aBlock
 ]
 
+{ #category : #layout }
+DTFilterableListPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		spacing: 5;
+		add: labelPresenter expand: false;
+		add: listPresenter;
+		add: filterTextInput expand: false;
+		yourself
+]
+
 { #category : #accessing }
 DTFilterableListPresenter >> displayBlock: aBlock [
 
 	^ self listPresenter display: aBlock
+]
+
+{ #category : #api }
+DTFilterableListPresenter >> displayColor: aBlock [
+
+	self listPresenter displayColor: aBlock
+]
+
+{ #category : #accessing }
+DTFilterableListPresenter >> displayIcon: aFullBlockClosure [
+
+	self listPresenter displayIcon: aFullBlockClosure
 ]
 
 { #category : #private }
@@ -67,14 +80,14 @@ DTFilterableListPresenter >> filterList [
 
 	self unselectAll.
 	self filterStrings
-		ifEmpty: [ 
+		ifEmpty: [
 			self listPresenter
 				items: initialItems.
 			^ self ].
 	self listPresenter
 		items:
 			(initialItems
-				select: [ :each | 
+				select: [ :each |
 					self filterStrings
 						anySatisfy: [ :any | any match: (self listPresenter display value: each) ] ])
 ]
@@ -83,8 +96,8 @@ DTFilterableListPresenter >> filterList [
 DTFilterableListPresenter >> filterStrings [
 
 	^ (self filterTextInput text splitOn: $|)
-		reject: #isEmpty
-		thenCollect: [ :pattern | pattern , '*' ]
+		  reject: #isEmpty
+		  thenCollect: [ :pattern | '*' , pattern , '*' ]
 ]
 
 { #category : #accessing }
@@ -109,19 +122,18 @@ DTFilterableListPresenter >> help: aString [
 DTFilterableListPresenter >> initialize [
 
 	super initialize.
-	initialItems := #().
+	initialItems := #()
 ]
 
 { #category : #initialization }
-DTFilterableListPresenter >> initializeWidgets [
+DTFilterableListPresenter >> initializePresenters [
 
 	labelPresenter := self newLabel.
 	listPresenter := self newList.
 	filterTextInput := self newTextInput
-								placeholder: 'Filter...';
-								whenTextChangedDo: [ self filterList ];
-								autoAccept: true;
-								yourself
+		placeholder: 'Filter...';
+		whenTextChangedDo: [ self filterList ];
+		yourself
 ]
 
 { #category : #accessing }
@@ -165,7 +177,7 @@ DTFilterableListPresenter >> listPresenter [
 DTFilterableListPresenter >> resetFilter [
 
 	self filterTextInput text: ''.
-	self listPresenter items: initialItems.
+	self listPresenter items: initialItems
 ]
 
 { #category : #actions }

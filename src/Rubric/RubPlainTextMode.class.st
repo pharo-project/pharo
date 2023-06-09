@@ -20,14 +20,14 @@ RubPlainTextMode class >> editingModeMenuOn: aBuilder [
 { #category : #menu }
 RubPlainTextMode class >> fontMenuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'RubTextEditorShiftedMenu'
 		model: nil) menu popUpInWorld"
 
 	(aBuilder item: #'fontItems')
 		label: 'Font...';
 		withSeparatorAfter;
-		with: [ 
+		with: [
 					(aBuilder item: #'Set font...' translated)
 						keyText: 'k';
 						selector: #offerFontMenu.
@@ -49,60 +49,60 @@ RubPlainTextMode class >> menuKeyword [
 { #category : #menu }
 RubPlainTextMode class >> menuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'RubPlainTextMenu'
-		model: RubEditingArea new) menu popUpInWorld" 
+		model: RubEditingArea new) menu popUpInWorld"
 
 	<contextMenu>
 	<RubPlainTextMenu>
-	
+
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
 	aBuilder model canChangeText
-		ifTrue: [ 
+		ifTrue: [
 			(aBuilder item: #Undo translated)
 				keyText: 'z';
 				selector: #undo;
-				iconName: #smallUndoIcon;
+				iconName: #smallUndo;
 				withSeparatorAfter.
 			self fontMenuOn: aBuilder ].
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	aBuilder model canChangeText
-		ifTrue: [ 
+		ifTrue: [
 			(aBuilder item: #Cut translated)
 				keyText: 'x';
 				selector: #cut;
-				iconName: #smallCutIcon.
+				iconName: #smallCut.
 			(aBuilder item: #Paste translated)
 				keyText: 'v';
 				selector: #paste;
-				iconName: #smallPasteIcon.
+				iconName: #smallPaste.
 			(aBuilder item: #'Paste Recent' translated)
 				selector: #pasteRecent;
-				iconName: #smallCopyIcon;
+				iconName: #smallCopy;
 				withSeparatorAfter.
 			(aBuilder model model notNil and: [ aBuilder model acceptAllowed ])
-				ifTrue: [ 
+				ifTrue: [
 					(aBuilder item: #Accept translated)
 						keyText: 's';
 						selector: #accept;
-						iconName: #smallOkIcon.
+						iconName: #smallOk.
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;
-						iconName: #smallCancelIcon ] ]
+						iconName: #smallCancel ] ]
 ]
 
 { #category : #'text area font' }
@@ -112,12 +112,12 @@ RubPlainTextMode >> beAllFont: aFont [
 
 { #category : #'text area emphasis' }
 RubPlainTextMode >> bold [
-	
+
 	self changeEmphasis: #bold
 ]
 
 { #category : #'text area alignment' }
-RubPlainTextMode >> centered [ 
+RubPlainTextMode >> centered [
 	self changeAlignment: #centered
 ]
 
@@ -132,9 +132,9 @@ RubPlainTextMode >> changeAttribute: anAttribute [
 	"Change a TextAttribute  of the receiver. Emphasis, alignment..."
 
 	self textArea
-		beEditableWhile: [ 
+		beEditableWhile: [
 			self textArea
-				restoreSelectionIndexesAfter: [ 
+				restoreSelectionIndexesAfter: [
 					self textArea selectAll.
 					self editor applyAttribute: anAttribute ] ].
 	self textArea changed
@@ -151,7 +151,7 @@ RubPlainTextMode >> changeEmphasis: aSymbol [
 RubPlainTextMode >> fontName: fontName pointSize: pointSize [
 	| newTextStyle |
 	(LogicalFontManager current allFamilies detect: [ :f | f familyName = fontName ] ifNone: [  ])
-		ifNotNil: [ :fam | 
+		ifNotNil: [ :fam |
 			| style font |
 			style := fam members detect: [ :m | m styleName = 'Regular' ].
 			font := style asLogicalFontOfPointSize: pointSize.
@@ -165,7 +165,7 @@ RubPlainTextMode >> fontName: fontName pointSize: pointSize [
 RubPlainTextMode >> fontName: fontName size: pointSize [
 	| newTextStyle |
 	(LogicalFontManager current allFamilies detect: [ :f | f familyName = fontName ] ifNone: [  ])
-		ifNotNil: [ :fam | 
+		ifNotNil: [ :fam |
 			| style font |
 			style := fam members detect: [ :m | m styleName = 'Regular' ].
 			font := style asLogicalFontOfPointSize: pointSize.
@@ -182,47 +182,47 @@ RubPlainTextMode >> fontPointSize: pointSize [
 
 { #category : #'text area emphasis' }
 RubPlainTextMode >> italic [
-	
+
 	self changeEmphasis: #italic
 ]
 
 { #category : #'text area alignment' }
-RubPlainTextMode >> justified [ 
+RubPlainTextMode >> justified [
 	self changeAlignment: #justified
 ]
 
 { #category : #'text area alignment' }
-RubPlainTextMode >> leftFlush [ 
+RubPlainTextMode >> leftFlush [
 
 	self changeAlignment: #leftFlush
 ]
 
 { #category : #'text area emphasis' }
 RubPlainTextMode >> narrow [
-	
+
 	self changeEmphasis: #narrow
 ]
 
 { #category : #'text area emphasis' }
 RubPlainTextMode >> normal [
-	
+
 	self changeEmphasis: #normal
 ]
 
 { #category : #'text area alignment' }
-RubPlainTextMode >> rightFlush [ 
-	
+RubPlainTextMode >> rightFlush [
+
 	self changeAlignment: #rightFlush
 ]
 
 { #category : #'text area emphasis' }
 RubPlainTextMode >> struckOut [
-	
+
 	self changeEmphasis: #struckOut
 ]
 
 { #category : #'text area emphasis' }
 RubPlainTextMode >> underlined [
-	
+
 	self changeEmphasis: #underlined
 ]

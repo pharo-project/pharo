@@ -108,7 +108,7 @@ ClyScope >> = anObject [
 ClyScope >> adoptQuery: aQuery [
 	"Not all kind of scopes support any kind of query.
 	Idea is to be able adopt given query instance by target scope.
-	For example composite scope will create composite query 
+	For example composite scope will create composite query
 	on top of subqueries created for each subscope from given aQuery.
 	This method should return adopted query instance which can be given query itself
 	if it is appropriate"
@@ -154,7 +154,7 @@ ClyScope >> basisSize [
 { #category : #accessing }
 ClyScope >> bindTo: aNavigationEnvironment [
 	environment ifNil: [ environment := aNavigationEnvironment ].
-	
+
 	environment == aNavigationEnvironment
 		ifFalse: [ self error: 'Scope should never be rebound to new environment' ]
 ]
@@ -189,7 +189,7 @@ ClyScope >> isBasedOn: someBasisObject [
 
 { #category : #testing }
 ClyScope >> isBasedOnEmptyBasis [
-	
+
 	^self basisSize = 0
 ]
 
@@ -210,13 +210,13 @@ ClyScope >> isBoundToEnvironment [
 
 { #category : #queries }
 ClyScope >> isQueryEmpty: aQuery [
-	self isBasedOnEmptyBasis ifTrue: [ 
+	self isBasedOnEmptyBasis ifTrue: [
 		"It is optimization to prevent real query execution in remote scenario.
 		Any query is a priory empty when its scope is based on empty basis"
 		^true ].
-	
+
 	aQuery ensureScope: self.
-	
+
 	^environment isQueryEmpty: aQuery
 ]
 
@@ -239,11 +239,11 @@ ClyScope >> printBasisObject: anObject on: aStream [
 { #category : #printing }
 ClyScope >> printBasisOn: aStream [
 	basisObjects ifEmpty: [ ^self ].
-	
+
 	basisObjects do: [:each |
 		self printBasisObject: each on: aStream.
 		aStream nextPutAll: ', '].
-	aStream skip: -2.
+	aStream skip: -2
 ]
 
 { #category : #printing }
@@ -259,18 +259,18 @@ ClyScope >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	self printBasisOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #queries }
 ClyScope >> query: aQuery [
-	self isBasedOnEmptyBasis ifTrue: [ 
+	self isBasedOnEmptyBasis ifTrue: [
 		"It is optimization to prevent real query execution in remote scenario.
 		Any query is a priory empty when its scope is based on empty basis"
 		^ClyUnknownQueryResult instance ].
 
 	aQuery ensureScope: self.
-	
+
 	^environment query: aQuery
 ]
 

@@ -58,12 +58,12 @@ DiskFileAttributesTestsResource >> setUp [
 	"Round up to the next second"
 	afterCreationTime := DateAndTime
 		date: beforeCreationTime asDate
-		time: (Time seconds: afterCreationTime secondsSinceMidnightLocalTime + 1 nanoSeconds: 0).
+		time: (Time seconds: afterCreationTime secondsSinceMidnightLocalTime + 1 nanoSeconds: 0)
 ]
 
 { #category : #running }
 DiskFileAttributesTestsResource >> tearDown [
 
 	super tearDown.
-	file delete.
+	file delete
 ]

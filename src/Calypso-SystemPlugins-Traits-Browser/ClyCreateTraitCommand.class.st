@@ -23,14 +23,14 @@ Class {
 { #category : #testing }
 ClyCreateTraitCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
-	
+
 	^aBrowserContext isPackageSelected
 ]
 
 { #category : #activation }
 ClyCreateTraitCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyFullBrowserClassContext
 ]
 
@@ -65,8 +65,8 @@ ClyCreateTraitCommand >> execute [
 { #category : #execution }
 ClyCreateTraitCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
-	
+
 	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isClassTagSelected ifTrue: [ 
+	aBrowserContext isClassTagSelected ifTrue: [
 		classTag := aBrowserContext lastSelectedClassTag]
 ]

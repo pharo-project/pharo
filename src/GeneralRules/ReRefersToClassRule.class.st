@@ -16,23 +16,23 @@ ReRefersToClassRule class >> checksMethod [
 { #category : #accessing }
 ReRefersToClassRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'RefersToClassRule'
 ]
 
 { #category : #running }
 ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| class problemLiterals |
-	
-	"The class method #isAbstract needs to explicitly hardcode class references. 
+
+	"The class method #isAbstract needs to explicitly hardcode class references.
 	So we do not criticize this."
 	(aMethod isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ self ].
-	
+
 	class := aMethod methodClass instanceSide.
-	problemLiterals := (aMethod ast allChildren 
+	problemLiterals := (aMethod ast allChildren
 			select: [ :node | node isGlobalVariable ])
 			select: [ :var | var name = class name].
-		
+
 	problemLiterals do: [ :literal |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
 ]

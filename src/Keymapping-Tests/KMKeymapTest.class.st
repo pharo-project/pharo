@@ -33,14 +33,14 @@ KMKeymapTest >> testExecute [
 { #category : #tests }
 KMKeymapTest >> testMatching [
 	| category blockAction a b c p|
-	
+
 	a := self eventKey: $a.
 	b := self eventKey: $b.
 	c := self eventKey: $c.
 	p := self eventKey: $p.
-	
+
 	blockAction := [self error: 'error'].
-	
+
 	category := KMCategory named: #testCategory.
 	category addKeymapEntry:  (KMKeymap named: #Foo shortcut: $a asKeyCombination, $b asKeyCombination, $c asKeyCombination action: blockAction).
 	category addKeymapEntry:  (KMKeymap named: #Fum shortcut: $p asKeyCombination, $p asKeyCombination action: blockAction).

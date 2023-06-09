@@ -43,7 +43,7 @@ Class {
 { #category : #cleanup }
 HandMorph class >> cleanUp [
 	"Called from ImageCleaner>>cleanUpForRelease --> SmalltalkImage>>cleanUp:except:confirming:"
-	self logEventStatsStop.
+	self logEventStatsStop
 ]
 
 { #category : #accessing }
@@ -55,12 +55,12 @@ HandMorph class >> doubleClickTime [
 { #category : #accessing }
 HandMorph class >> doubleClickTime: milliseconds [
 
-	DoubleClickTime := milliseconds.
+	DoubleClickTime := milliseconds
 ]
 
 { #category : #'events - processing' }
 HandMorph class >> eventStats [
-	^ EventStats ifNil: [ 'EventStats are disabled' ].
+	^ EventStats ifNil: [ 'EventStats are disabled' ]
 ]
 
 { #category : #'class initialization' }
@@ -69,7 +69,7 @@ HandMorph class >> initialize [
 
 	PasteBuffer := nil.
 	DoubleClickTime := 350.
-	NormalCursor := CursorWithMask normal asCursorForm.
+	NormalCursor := CursorWithMask normal asCursorForm
 ]
 
 { #category : #'events - processing' }
@@ -77,7 +77,7 @@ HandMorph class >> logEventStats: evt [
 	EventStats ifNotNil: [
 		EventStats at: #count put: (EventStats at: #count ifAbsent:[0]) + 1.
 		EventStats at: evt type put: (EventStats at: evt type ifAbsent:[0]) + 1.
-		].
+		]
 ]
 
 { #category : #settings }
@@ -90,17 +90,17 @@ HandMorph class >> logEventStatsEnabled [
 HandMorph class >> logEventStatsEnabled: aBoolean [
 	aBoolean
 		ifTrue: [ self logEventStatsStart ]
-		ifFalse: [ self logEventStatsStop ].
+		ifFalse: [ self logEventStatsStop ]
 ]
 
 { #category : #'events - processing' }
 HandMorph class >> logEventStatsStart [
-	EventStats ifNil:[EventStats := IdentityDictionary new].
+	EventStats ifNil:[EventStats := IdentityDictionary new]
 ]
 
 { #category : #'events - processing' }
 HandMorph class >> logEventStatsStop [
-	EventStats := nil.
+	EventStats := nil
 ]
 
 { #category : #settings }
@@ -121,7 +121,7 @@ HandMorph class >> showEvents: aBool [
 	"HandMorph showEvents: true"
 	"HandMorph showEvents: false"
 	ShowEvents := aBool.
-	aBool ifFalse: [ self currentWorld invalidRect: (0@0 extent: 500@120) ].
+	aBool ifFalse: [ self currentWorld invalidRect: (0@0 extent: 500@120) ]
 ]
 
 { #category : #accessing }
@@ -181,7 +181,7 @@ HandMorph >> attachMorph: m [
 	m position: (self position - delta).
 	m formerPosition: m position.
 	targetOffset := m position - self position.
-	self addMorphBack: m.
+	self addMorphBack: m
 ]
 
 { #category : #'balloon help' }
@@ -210,11 +210,11 @@ HandMorph >> captureEventsUntil: aBlock [
 "
 
 	| release |
-	
+
 	release := false.
-	
+
 	captureBlock := [:evt | release := aBlock value: evt ].
-	
+
 	[
 		MorphicRenderLoop new doOneCycleWhile: [ release not ].
 	] ensure: [
@@ -236,7 +236,7 @@ HandMorph >> captureEventsWhile: aBlock [
 { #category : #updating }
 HandMorph >> changed [
 
-	hasChanged := true.
+	hasChanged := true
 ]
 
 { #category : #accessing }
@@ -251,7 +251,7 @@ HandMorph >> copyToPasteBuffer: aMorph [
 	aMorph ifNil:[^PasteBuffer := nil].
 	Cursor wait showWhile:[
 		PasteBuffer := aMorph topRendererOrSelf veryDeepCopy.
-		PasteBuffer privateOwner: nil].
+		PasteBuffer privateOwner: nil]
 ]
 
 { #category : #cursor }
@@ -284,7 +284,7 @@ HandMorph >> cursorPoint [
 { #category : #'balloon help' }
 HandMorph >> deleteBalloonTarget: aMorph [
 	"Delete any existing balloon help.  This is now done unconditionally, whether or not the morph supplied is the same as the current balloon target"
-	
+
 	self balloonHelp: nil
 
 "	| h |
@@ -293,11 +293,11 @@ HandMorph >> deleteBalloonTarget: aMorph [
 ]
 
 { #category : #drawing }
-HandMorph >> drawOn: aCanvas [ 
+HandMorph >> drawOn: aCanvas [
 	"Draw the hand itself (i.e., the cursor)."
 
-	temporaryCursor 
-		ifNotNil: [aCanvas paintImage: temporaryCursor at: bounds topLeft].
+	temporaryCursor
+		ifNotNil: [aCanvas paintImage: temporaryCursor at: bounds topLeft]
 ]
 
 { #category : #'grabbing/dropping' }
@@ -311,19 +311,19 @@ HandMorph >> dropMorph: aMorph event: anEvent [
 	aMorph privateOwner: self.
 
 	dropped := aMorph.
-	(dropped hasProperty: #addedFlexAtGrab) 
+	(dropped hasProperty: #addedFlexAtGrab)
 		ifTrue:[dropped := aMorph removeFlexShell].
 	event := DropEvent new setPosition: self position contents: dropped hand: self.
 	self sendEvent: event focus: nil.
 	event wasHandled ifFalse:[aMorph rejectDropMorphEvent: event].
 	aMorph owner == self ifTrue:[aMorph delete].
-	self mouseOverHandler processMouseOver: anEvent.
+	self mouseOverHandler processMouseOver: anEvent
 ]
 
 { #category : #'grabbing/dropping' }
 HandMorph >> dropMorphs [
 	"Drop the morphs at the hands position"
-	self dropMorphs: lastMouseEvent.
+	self dropMorphs: lastMouseEvent
 ]
 
 { #category : #'grabbing/dropping' }
@@ -332,7 +332,7 @@ HandMorph >> dropMorphs: anEvent [
 	self submorphsReverseDo:[:m|
 		"Drop back to front to maintain z-order"
 		self dropMorph: m event: anEvent.
-	].
+	]
 ]
 
 { #category : #listeners }
@@ -357,7 +357,7 @@ HandMorph >> fullBounds [
 ]
 
 { #category : #drawing }
-HandMorph >> fullDrawOn: aCanvas [ 
+HandMorph >> fullDrawOn: aCanvas [
 	"A HandMorph has unusual drawing requirements:
 		1. the hand itself (i.e., the cursor) appears in front of its submorphs
 		2. morphs being held by the hand cast a shadow on the world/morphs below
@@ -370,17 +370,17 @@ HandMorph >> fullDrawOn: aCanvas [
 	self visible ifFalse: [^self].
 	(aCanvas isVisible: self fullBounds) ifFalse: [^self].
 	disableCaching := false.
-	disableCaching 
-		ifTrue: 
+	disableCaching
+		ifTrue:
 			[self nonCachingFullDrawOn: aCanvas.
 			^self].
-	submorphs isEmpty 
-		ifTrue: 
+	submorphs isEmpty
+		ifTrue:
 			[cacheCanvas := nil.
 			^self drawOn: aCanvas].	"just draw the hand itself"
 	subBnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
 	self updateCacheCanvas: aCanvas.
-	(cacheCanvas isNil 
+	(cacheCanvas isNil
 		or: [cachedCanvasHasHoles and: [cacheCanvas depth = 1]]
 	)ifTrue: ["could not use caching due to translucency; do full draw"
 		self nonCachingFullDrawOn: aCanvas.
@@ -388,22 +388,22 @@ HandMorph >> fullDrawOn: aCanvas [
 	].
 
 	"--> begin rounded corners hack <---"
-	roundCorners := cachedCanvasHasHoles == false 
+	roundCorners := cachedCanvasHasHoles == false
 				and: [submorphs size = 1 and: [submorphs first wantsRoundedCorners]].
-	roundCorners 
-		ifTrue: 
+	roundCorners
+		ifTrue:
 			[rounded := submorphs first.
 			aCanvas asShadowDrawingCanvas translateBy: self shadowOffset
-				during: 
-					[:shadowCanvas | 
+				during:
+					[:shadowCanvas |
 					shadowCanvas roundCornersOf: rounded
-						during: 
-							[(subBnds areasOutside: (rounded boundsWithinCorners 
-										translateBy: self shadowOffset negated)) 
+						during:
+							[(subBnds areasOutside: (rounded boundsWithinCorners
+										translateBy: self shadowOffset negated))
 								do: [:r | shadowCanvas fillRectangle: r color: Color black]]].
 			aCanvas roundCornersOf: rounded
-				during: 
-					[aCanvas 
+				during:
+					[aCanvas
 						drawImage: cacheCanvas form
 						at: subBnds origin
 						sourceRect: cacheCanvas form boundingBox].
@@ -413,24 +413,24 @@ HandMorph >> fullDrawOn: aCanvas [
 	"draw the shadow"
 	(submorphs anySatisfy: [:m | m handlesDropShadowInHand not]) ifTrue: [
 		aCanvas asShadowDrawingCanvas translateBy: self shadowOffset
-		during: 
-			[:shadowCanvas | 
-			cachedCanvasHasHoles 
-				ifTrue: 
+		during:
+			[:shadowCanvas |
+			cachedCanvasHasHoles
+				ifTrue:
 					["Have to draw the real shadow of the form"
 
 					shadowCanvas paintImage: cacheCanvas form at: subBnds origin]
-				ifFalse: 
+				ifFalse:
 					["Much faster if only have to shade the edge of a solid rectangle"
 
-					(subBnds areasOutside: (subBnds translateBy: self shadowOffset negated)) 
+					(subBnds areasOutside: (subBnds translateBy: self shadowOffset negated))
 						do: [:r | shadowCanvas fillRectangle: r color: Color black]]]].
 
 	"draw morphs in front of the shadow using the cached Form"
-	cachedCanvasHasHoles 
+	cachedCanvasHasHoles
 		ifTrue: [aCanvas paintImage: cacheCanvas form at: subBnds origin]
 		ifFalse: 	[
-			aCanvas 
+			aCanvas
 			drawImage: cacheCanvas form
 			at: subBnds origin
 			sourceRect: cacheCanvas form boundingBox
@@ -441,7 +441,7 @@ HandMorph >> fullDrawOn: aCanvas [
 { #category : #'meta-actions' }
 HandMorph >> grabMorph: aMorph [
 	"Grab the given morph (i.e., add it to this hand and remove it from its current owner) without changing its position. This is used to pick up a morph under the hand's current position, versus attachMorph: which is used to pick up a morph that may not be near this hand."
-	
+
 	| grabbed |
 	aMorph = self world ifTrue: [^ self].
 	self releaseMouseFocus.
@@ -452,7 +452,7 @@ HandMorph >> grabMorph: aMorph [
 ]
 
 { #category : #'grabbing/dropping' }
-HandMorph >> grabMorph: aMorph from: formerOwner [ 
+HandMorph >> grabMorph: aMorph from: formerOwner [
 	"Grab the given morph (i.e., add it to this hand and remove it from its
 	current owner) without changing its position. This is used to pick up a
 	morph under the hand's current position, versus attachMorph: which
@@ -482,7 +482,7 @@ HandMorph >> grabMorph: aMorph from: formerOwner [
 		ifFalse: [grabbed setProperty: #addedFlexAtGrab toValue: true].
 	"offset target to compensate for differences in transforms"
 	grabbed position: grabbed position - offset asIntegerPoint.
-	"And compute distance from hand's position" 
+	"And compute distance from hand's position"
 	targetOffset := grabbed position - self position.
 	self addMorphBack: grabbed.
 	grabbed justGrabbedFrom: formerOwner
@@ -510,33 +510,36 @@ HandMorph >> handleEvent: anEvent [
 	| evt  |
 	owner ifNil:[^self].
 	evt := anEvent.
-	
+
 	"nil test here is for efficiency in the normal case"
-	EventStats ifNotNil: [ self class logEventStats: evt ]. 
-	
+	EventStats ifNotNil: [ self class logEventStats: evt ].
+
 	evt isMouse ifTrue:[
-		 "just for record, to be used by capture block" 
+		 "just for record, to be used by capture block"
 		lastMouseEvent := evt].
 
 	captureBlock ifNotNil: [ ^ captureBlock value: anEvent ].
 	evt isMouseOver ifTrue:[^self sendMouseEvent: evt].
-	
+
 	self showDebugEvent: evt.
-	
+
 	"Notify listeners"
 	self sendListenEvent: evt to: self eventListeners.
 
+	(evt isTextEditionEvent or: [evt isTextInputEvent]) ifTrue: [
+		^ self sendEvent: evt focus: keyboardFocus  ].
+
 	evt isWindowEvent ifTrue: [
 		^ self sendEvent: evt focus: nil ].
-	
+
 
 	evt isKeyboard ifTrue:[
-		
+
 		(evt isKeystroke and: [supressNextKeyPress == true])
 			ifTrue: [
 				supressNextKeyPress := false.
 				^ self ].
-		
+
 			self sendListenEvent: evt to: self keyboardListeners.
 			self sendKeyboardEvent: evt.
 			supressNextKeyPress := evt isKeyDown and: [evt supressNextKeyPress].
@@ -558,25 +561,25 @@ HandMorph >> handleEvent: anEvent [
 	evt isMove ifTrue:[
 		| pos |
 		pos := evt position.
-		evt isDraggingEvent ifTrue: [ 
+		evt isDraggingEvent ifTrue: [
 			| treshold |
 			treshold := 0.
 			(self submorphs at: 1 ifAbsent: [ nil ])
 				ifNotNil: [ :first | treshold := self top-first top ].
 			pos y < (self class upperHandLimit+treshold) ifTrue: [ pos := pos x @ (self class upperHandLimit + treshold)] ].
-		
+
 		self position: pos.
 		self sendMouseEvent: evt.
 	] ifFalse:[
 		"Issue a synthetic move event if we're not at the position of the event"
 		(evt position = self position) ifFalse:[self moveToEvent: evt].
 		"Drop submorphs on button events"
-		(self hasSubmorphs) 
+		(self hasSubmorphs)
 			ifTrue:[self dropMorphs: evt]
 			ifFalse:[self sendMouseEvent: evt].
 	].
 	self showMouseFocusEvent: evt.
-	self mouseOverHandler processMouseOver: lastMouseEvent.
+	self mouseOverHandler processMouseOver: lastMouseEvent
 ]
 
 { #category : #drawing }
@@ -592,7 +595,7 @@ HandMorph >> initForEvents [
 	lastMouseEvent := MouseEvent basicNew setType: #mouseMove position: 0@0 buttons: 0 hand: self.
 	lastEventBuffer := {1. 0. 0. 0. 0. 0. nil. nil}.
 	recentModifiers := 0.
-	self resetClickState.
+	self resetClickState
 ]
 
 { #category : #initialization }
@@ -608,7 +611,7 @@ HandMorph >> initialize [
 
 { #category : #initialization }
 HandMorph >> interrupted [
-	"Something went wrong - we're about to bring up a debugger. 
+	"Something went wrong - we're about to bring up a debugger.
 	Release some stuff that could be problematic."
 	self releaseAllFocus. "or else debugger might not handle clicks"
 ]
@@ -618,7 +621,7 @@ HandMorph >> invalidRect: damageRect from: aMorph [
 	"Note that a change has occurred and record the given damage rectangle relative to the origin this hand's cache."
 	hasChanged := true.
 	aMorph == self ifTrue:[^self].
-	damageRecorder recordInvalidRect: damageRect.
+	damageRecorder recordInvalidRect: damageRect
 ]
 
 { #category : #classification }
@@ -628,7 +631,7 @@ HandMorph >> isHandMorph [
 ]
 
 { #category : #'focus handling' }
-HandMorph >> keyboardFocus [ 
+HandMorph >> keyboardFocus [
 	^ keyboardFocus
 ]
 
@@ -692,17 +695,17 @@ HandMorph >> mouseListeners: anArrayOrNil [
 
 { #category : #accessing }
 HandMorph >> mouseOverHandler [
-	^mouseOverHandler ifNil:[mouseOverHandler := MouseOverHandler new].
+	^mouseOverHandler ifNil:[mouseOverHandler := MouseOverHandler new]
 ]
 
 { #category : #'private - events' }
 HandMorph >> moveToEvent: anEvent [
 	"Issue a mouse move event to make the receiver appear at the given position"
 	self handleEvent: (MouseMoveEvent basicNew
-		setType: #mouseMove 
-		startPoint: self position 
-		endPoint: anEvent position 
-		trail: (Array with: self position with: anEvent position)
+		setType: #mouseMove
+		startPoint: self position
+		endPoint: anEvent position
+		trail: {self position . anEvent position}
 		buttons: anEvent buttons
 		hand: self
 		stamp: anEvent timeStamp)
@@ -731,19 +734,19 @@ HandMorph >> newKeyboardFocus: aMorphOrNil [
 	keyboardFocus == aMorphOrNil ifTrue: [ ^self ].
 	oldFocus := keyboardFocus.
 	keyboardFocus := aMorphOrNil.
-	
+
 	oldFocus ifNotNil: [oldFocus keyboardFocusChange: false].
-	aMorphOrNil ifNotNil: [ aMorphOrNil keyboardFocusChange: true ].
+	aMorphOrNil ifNotNil: [ aMorphOrNil keyboardFocusChange: true ]
 ]
 
 { #category : #'focus handling' }
 HandMorph >> newMouseFocus: aMorphOrNil [
 	"Make the given morph the new mouse focus, canceling the previous mouse focus if any. If the argument is nil, the current mouse focus is cancelled."
-	self mouseFocus: aMorphOrNil.
+	self mouseFocus: aMorphOrNil
 ]
 
 { #category : #'focus handling' }
-HandMorph >> newMouseFocus: aMorph event: event [ 
+HandMorph >> newMouseFocus: aMorph event: event [
 	aMorph ifNotNil: [targetOffset := event cursorPoint - aMorph position].
 	^self newMouseFocus: aMorph
 ]
@@ -757,7 +760,7 @@ HandMorph >> noButtonPressed [
 
 { #category : #drawing }
 HandMorph >> nonCachingFullDrawOn: aCanvas [
-	
+
 	"A HandMorph has unusual drawing requirements:
 		1. the hand itself (i.e., the cursor) appears in front of its submorphs
 		2. morphs being held by the hand cast a shadow on the world/morphs below
@@ -785,7 +788,7 @@ shadowForm displayAt: shadowForm offset negated. Display forceToScreen: (0@0 ext
 { #category : #'event handling' }
 HandMorph >> noticeMouseOver: aMorph event: anEvent [
 	mouseOverHandler ifNil:[^self].
-	mouseOverHandler noticeMouseOver: aMorph event: anEvent.
+	mouseOverHandler noticeMouseOver: aMorph event: anEvent
 ]
 
 { #category : #'paste buffer' }
@@ -801,7 +804,7 @@ HandMorph >> obtainHalo: aHalo [
 	"Used for transfering halos between hands"
 
 	self halo == aHalo
-		ifTrue: [ ^ self ].	
+		ifTrue: [ ^ self ].
 	"Find former owner"
 	self world hands detect: [ :hand | hand halo == aHalo ] ifFound: [ :formerOwner | formerOwner releaseHalo: aHalo ].
 	self halo: aHalo
@@ -816,7 +819,7 @@ HandMorph >> pasteBuffer [
 { #category : #'paste buffer' }
 HandMorph >> pasteBuffer: aMorphOrNil [
 	"Set the contents of the paste buffer."
-	PasteBuffer := aMorphOrNil.
+	PasteBuffer := aMorphOrNil
 ]
 
 { #category : #'private - events' }
@@ -831,7 +834,7 @@ HandMorph >> position [
 	^temporaryCursor
 		ifNil: [bounds topLeft]
 		ifNotNil: [
-			temporaryCursorOffset 
+			temporaryCursorOffset
 				ifNil: [ bounds topLeft ]
 				ifNotNil: [ :anOffset | bounds topLeft - anOffset ] ]
 ]
@@ -855,7 +858,7 @@ HandMorph >> position: aPoint [
 	] ifFalse:[
 		self invalidRect: (box merge: (box translateBy: delta)).
 	].
-	self privateFullMoveBy: delta.
+	self privateFullMoveBy: delta
 ]
 
 { #category : #'private - events' }
@@ -864,21 +867,16 @@ HandMorph >> processEvents [
 	"Process user input events from the local input devices."
 
 	| evt |
-
-	[ (evt := self pendingEventQueue nextOrNil) notNil ] whileTrue: [ 
+	[ (evt := self pendingEventQueue nextOrNil) notNil ] whileTrue: [
 		evt == #invalid ifTrue: [ ^ self ].
 		evt ifNotNil: [ "Finally, handle it"
 			self handleEvent: evt.
 			"For better user feedback, return immediately after a mouse event has been processed."
-			( evt isMouse and: [ evt isMouseWheel not ] )
-				ifTrue: [ ^ self ]
-		]
-	].
-	
+			(evt isMouse and: [ evt isMouseWheel not ]) ifTrue: [ ^ self ] ] ].
+
 	"note: if we come here we didn't have any mouse events"
-	mouseClickState notNil ifTrue: [ 
-		"No mouse events during this cycle. Make sure click states time out accordingly"
-		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
+	mouseClickState ifNotNil: [ "No mouse events during this cycle. Make sure click states time out accordingly"
+		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ]
 ]
 
 { #category : #'private - events' }
@@ -894,7 +892,7 @@ HandMorph >> queuePendingEvent: aMorphicEvent [
 { #category : #'focus handling' }
 HandMorph >> releaseAllFocus [
 	mouseFocus := nil.
-	self newKeyboardFocus: nil.
+	self newKeyboardFocus: nil
 ]
 
 { #category : #caching }
@@ -906,7 +904,7 @@ HandMorph >> releaseCachedState [
 	self removeAllMorphs.
 	self initialize.	"nuke everything"
 	self privateOwner: oo.
-	self releaseAllFocus.
+	self releaseAllFocus
 ]
 
 { #category : #'halo handling' }
@@ -918,31 +916,31 @@ HandMorph >> releaseHalo: aHalo [
 { #category : #'focus handling' }
 HandMorph >> releaseKeyboardFocus [
 	"Release the current keyboard focus unconditionally"
-	self newKeyboardFocus: nil.
+	self newKeyboardFocus: nil
 ]
 
 { #category : #'focus handling' }
 HandMorph >> releaseKeyboardFocus: aMorph [
 	"If the given morph had the keyboard focus before, release it"
-	self keyboardFocus == aMorph ifTrue:[self releaseKeyboardFocus].
+	self keyboardFocus == aMorph ifTrue:[self releaseKeyboardFocus]
 ]
 
 { #category : #'focus handling' }
 HandMorph >> releaseMouseFocus [
 	"Release the current mouse focus unconditionally."
-	self newMouseFocus: nil.
+	self newMouseFocus: nil
 ]
 
 { #category : #'focus handling' }
 HandMorph >> releaseMouseFocus: aMorph [
 	"If the given morph had the mouse focus before, release it"
-	self mouseFocus == aMorph ifTrue:[self releaseMouseFocus].
+	self mouseFocus == aMorph ifTrue:[self releaseMouseFocus]
 ]
 
 { #category : #listeners }
 HandMorph >> removeEventListener: anObject [
 	"Remove anObject from the current event listeners."
-	self eventListeners: (self removeListener: anObject from: self eventListeners).
+	self eventListeners: (self removeListener: anObject from: self eventListeners)
 ]
 
 { #category : #'halo handling' }
@@ -961,11 +959,11 @@ HandMorph >> removeHaloAround: aMorph [
 	halo target == aMorph
 		ifFalse: [ ^ self ].
 	self removeProperty: #halo.
-	halo delete.
+	halo delete
 ]
 
 { #category : #'halo handling' }
-HandMorph >> removeHaloFromClick: anEvent on: aMorph [ 
+HandMorph >> removeHaloFromClick: anEvent on: aMorph [
 	| halo |
 	halo := self halo
 				ifNil: [^ self].
@@ -976,7 +974,7 @@ HandMorph >> removeHaloFromClick: anEvent on: aMorph [
 ]
 
 { #category : #listeners }
-HandMorph >> removeListener: anObject from: aListenerGroup [ 
+HandMorph >> removeListener: anObject from: aListenerGroup [
 	"Remove anObject from the given listener group. Return the new group."
 
 	| listeners |
@@ -991,36 +989,36 @@ HandMorph >> removeListener: anObject from: aListenerGroup [
 { #category : #listeners }
 HandMorph >> removeMouseListener: anObject [
 	"Remove anObject from the current mouse listeners."
-	self mouseListeners: (self removeListener: anObject from: self mouseListeners).
+	self mouseListeners: (self removeListener: anObject from: self mouseListeners)
 ]
 
 { #category : #'balloon help' }
 HandMorph >> removePendingBalloonFor: aMorph [
 	"Get rid of pending balloon help."
 	self removeAlarm: #spawnBalloonFor:.
-	self deleteBalloonTarget: aMorph.
+	self deleteBalloonTarget: aMorph
 ]
 
 { #category : #'double click support' }
 HandMorph >> resetClickState [
 	"Reset the double-click detection state to normal (i.e., not waiting for a double-click)."
-	mouseClickState := nil.
+	mouseClickState := nil
 ]
 
 { #category : #drawing }
-HandMorph >> restoreSavedPatchOn: aCanvas [ 
+HandMorph >> restoreSavedPatchOn: aCanvas [
 	"Clear the changed flag and restore the part of the given canvas under this hand from the previously saved patch. If necessary, handle the transition to using the hardware cursor."
 	| cursor |
 
 	hasChanged := false.
-	savedPatch ifNotNil: 
+	savedPatch ifNotNil:
 			[aCanvas drawImage: savedPatch at: savedPatch offset.
 			submorphs notEmpty ifTrue: [^self].
 			(temporaryCursor notNil and: [hardwareCursor isNil]) ifTrue: [^self].
 
 			"Make the transition to using hardware cursor. Clear savedPatch and
 		 report one final damage rectangle to erase the image of the software cursor."
-			super invalidRect: (savedPatch offset 
+			super invalidRect: (savedPatch offset
 						extent: savedPatch extent + self shadowOffset)
 				from: self.
 			cursor := hardwareCursor ifNil: [Cursor normal].
@@ -1029,17 +1027,17 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 ]
 
 { #category : #drawing }
-HandMorph >> savePatchFrom: aCanvas [ 
+HandMorph >> savePatchFrom: aCanvas [
 	"Save the part of the given canvas under this hand as a Form and return its bounding rectangle."
 
 	"Details: The previously used patch Form is recycled when possible to reduce the burden on storage management."
 
 	| damageRect myBnds |
 	damageRect := myBnds := self fullBounds.
-	savedPatch ifNotNil: 
+	savedPatch ifNotNil:
 			[damageRect := myBnds merge: (savedPatch offset extent: savedPatch extent)].
-	(savedPatch isNil or: [savedPatch extent ~= myBnds extent]) 
-		ifTrue: 
+	(savedPatch isNil or: [savedPatch extent ~= myBnds extent])
+		ifTrue:
 			["allocate new patch form if needed"
 
 			savedPatch := aCanvas form allocateForm: myBnds extent].
@@ -1077,7 +1075,7 @@ HandMorph >> sendEvent: anEvent focus: focusHolder clear: aBlock [
 HandMorph >> sendFocusEvent: anEvent to: focusHolder clear: aBlock [
 	"Send the event to the morph currently holding the focus"
 	| result w transformedEvent |
-	
+
 	w := focusHolder world ifNil:[^ aBlock value].
 	transformedEvent := anEvent transformedBy: (focusHolder transformedFrom: self).
 
@@ -1086,14 +1084,14 @@ HandMorph >> sendFocusEvent: anEvent to: focusHolder clear: aBlock [
 	].
 
 	"As I am copying the event, I have to propagate the supressNextKeyPress, so it is correctly handled."
-	anEvent isKeyboard 
-		ifTrue: [ anEvent supressNextKeyPress: transformedEvent supressNextKeyPress ]. 
+	anEvent isKeyboard
+		ifTrue: [ anEvent supressNextKeyPress: transformedEvent supressNextKeyPress ].
 
 	^result
 ]
 
 { #category : #'private - events' }
-HandMorph >> sendKeyboardEvent: anEvent [ 
+HandMorph >> sendKeyboardEvent: anEvent [
 	"Send the event to the morph currently holding the focus, or if none to
 	the owner of the hand."
 	^ self
@@ -1106,8 +1104,8 @@ HandMorph >> sendKeyboardEvent: anEvent [
 HandMorph >> sendListenEvent: anEvent to: listenerGroup [
 	"Send the event to the given group of listeners"
 	listenerGroup ifNil:[^self].
-	listenerGroup do:[:listener| 
-		listener ifNotNil:[listener handleListenEvent: anEvent copy]].
+	listenerGroup do:[:listener|
+		listener ifNotNil:[listener handleListenEvent: anEvent copy]]
 ]
 
 { #category : #'private - events' }
@@ -1121,7 +1119,7 @@ HandMorph >> shadowForm [
 	"Return a 1-bit shadow of my submorphs.  Assumes submorphs is not empty"
 	| bnds canvas |
 	bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
-	canvas := (Display defaultCanvasClass extent: bnds extent depth: 1) 
+	canvas := (Display defaultCanvasClass extent: bnds extent depth: 1)
 		asShadowDrawingCanvas: Color black.
 	canvas translateBy: bnds topLeft negated
 		during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
@@ -1143,21 +1141,21 @@ HandMorph >> shiftPressed [
 HandMorph >> showDebugEvent: evt [
 
 	ShowEvents == true ifTrue: [
-		| ofs| 
+		| ofs|
 		Display fill: (0@0 extent: 500@120) rule: Form over fillColor: Color white.
 		ofs := (owner hands indexOf: self) - 1 * 60.
 		evt printString displayAt: (0@ofs) + (evt isKeyboard ifTrue: [0@30] ifFalse: [0@0]).
 		self keyboardFocus printString displayAt: (0@ofs)+(0@45).
-		].
+		]
 ]
 
 { #category : #'events - processing' }
 HandMorph >> showMouseFocusEvent: evt [
 
 	ShowEvents == true ifTrue: [
-		| ofs| 
+		| ofs|
 		ofs := (owner hands indexOf: self) - 1 * 60.
-		self mouseFocus printString displayAt: (0@ofs) + (0@15)].
+		self mouseFocus printString displayAt: (0@ofs) + (0@15)]
 ]
 
 { #category : #cursor }
@@ -1168,16 +1166,16 @@ HandMorph >> showTemporaryCursor: cursorOrNil [
 ]
 
 { #category : #cursor }
-HandMorph >> showTemporaryCursor: cursorOrNil hotSpotOffset: hotSpotOffset [ 
+HandMorph >> showTemporaryCursor: cursorOrNil hotSpotOffset: hotSpotOffset [
 	"Set the temporary cursor to the given Form.
 	If the argument is nil, revert to the normal hardware cursor."
 
 	self changed.
-	temporaryCursorOffset 
+	temporaryCursorOffset
 		ifNotNil: [bounds := bounds translateBy: temporaryCursorOffset negated].
-	cursorOrNil 
+	cursorOrNil
 		ifNil: [temporaryCursor := temporaryCursorOffset := hardwareCursor := nil]
-		ifNotNil: 
+		ifNotNil:
 			[temporaryCursor := cursorOrNil asCursorForm.
 			temporaryCursorOffset := temporaryCursor offset - hotSpotOffset.
 			(cursorOrNil isKindOf: Cursor) ifTrue: [hardwareCursor := cursorOrNil]].
@@ -1189,7 +1187,7 @@ HandMorph >> showTemporaryCursor: cursorOrNil hotSpotOffset: hotSpotOffset [
 
 { #category : #'balloon help' }
 HandMorph >> spawnBalloonFor: aMorph [
-	aMorph showBalloon: aMorph balloonText hand: self.
+	aMorph showBalloon: aMorph balloonText hand: self
 ]
 
 { #category : #accessing }
@@ -1202,7 +1200,7 @@ HandMorph >> targetOffset [
 { #category : #accessing }
 HandMorph >> targetPoint [
 	"Return the new position of the target.
-	I.E. return the position of the hand less 
+	I.E. return the position of the hand less
 	the original distance between hand and target position"
 
 	^ self position - targetOffset
@@ -1216,11 +1214,11 @@ HandMorph >> temporaryCursor [
 { #category : #'balloon help' }
 HandMorph >> triggerBalloonFor: aMorph after: timeOut [
 	"Trigger balloon help after the given time out for some morph"
-	self addAlarm: #spawnBalloonFor: with: aMorph after: timeOut.
+	self addAlarm: #spawnBalloonFor: with: aMorph after: timeOut
 ]
 
 { #category : #drawing }
-HandMorph >> updateCacheCanvas: aCanvas [ 
+HandMorph >> updateCacheCanvas: aCanvas [
 	"Update the cached image of the morphs being held by this hand."
 
 	"Note: The following is an attempt to quickly get out if there's no change"
@@ -1229,31 +1227,31 @@ HandMorph >> updateCacheCanvas: aCanvas [
 	subBnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
 	rectList := damageRecorder invalidRectsFullBounds: subBnds.
 	damageRecorder reset.
-	(rectList isEmpty 
-		and: [cacheCanvas notNil and: [cacheCanvas extent = subBnds extent]]) 
+	(rectList isEmpty
+		and: [cacheCanvas notNil and: [cacheCanvas extent = subBnds extent]])
 			ifTrue: [^self].
 
 	"Always check for real translucency -- can't be cached in a form"
-	self submorphsDo: 
-			[:m | 
-			m wantsToBeCachedByHand 
-				ifFalse: 
+	self submorphsDo:
+			[:m |
+			m wantsToBeCachedByHand
+				ifFalse:
 					[cacheCanvas := nil.
 					cachedCanvasHasHoles := true.
 					^self]].
-	(cacheCanvas isNil or: [cacheCanvas extent ~= subBnds extent]) 
-		ifTrue: 
+	(cacheCanvas isNil or: [cacheCanvas extent ~= subBnds extent])
+		ifTrue:
 			[cacheCanvas := (aCanvas allocateForm: subBnds extent) getCanvas.
 			cacheCanvas translateBy: subBnds origin negated
 				during: [:tempCanvas | self drawSubmorphsOn: tempCanvas].
-			self submorphsDo: 
-					[:m | 
-					(m areasRemainingToFill: subBnds) isEmpty 
+			self submorphsDo:
+					[:m |
+					(m areasRemainingToFill: subBnds) isEmpty
 						ifTrue: [^cachedCanvasHasHoles := false]].
 			nPix := cacheCanvas form tallyPixelValues first.
 			"--> begin rounded corners hack <---"
-			cachedCanvasHasHoles := (nPix = 48 
-						and: [submorphs size = 1 and: [submorphs first wantsRoundedCorners]]) 
+			cachedCanvasHasHoles := (nPix = 48
+						and: [submorphs size = 1 and: [submorphs first wantsRoundedCorners]])
 							ifTrue: [false]
 							ifFalse: [nPix > 0].
 			"--> end rounded corners hack <---"
@@ -1261,13 +1259,13 @@ HandMorph >> updateCacheCanvas: aCanvas [
 
 	"incrementally update the cache canvas"
 	cacheCanvas translateBy: subBnds origin negated
-		during: 
-			[:cc | 
-			rectList do: 
-					[:r | 
+		during:
+			[:cc |
+			rectList do:
+					[:r |
 					cc clipBy: r
-						during: 
-							[:c | 
+						during:
+							[:c |
 							c fillColor: Color transparent.
 							self drawSubmorphsOn: c]]]
 ]
@@ -1300,6 +1298,6 @@ HandMorph >> waitForClicksOrDrag: aMorph event: evt [
 		#startDrag:	sent when the mouse moves more than 10 pixels from evt's position within DoubleClickTime.
 	Note that mouseMove: and mouseUp: events are not sent to aMorph until it becomes the mouse focus,
 	which is typically done by aMorph in its click:, doubleClick:, or drag: methods."
-	
+
 	^self waitForClicksOrDrag: aMorph event: evt selectors: #( #click: #doubleClick: #doubleClickTimeout: #startDrag:) threshold: 10
 ]

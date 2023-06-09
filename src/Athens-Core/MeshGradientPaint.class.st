@@ -20,7 +20,7 @@ MeshGradientPaint >> addCircleSliceCenter: center radius: radius startAngle: sli
 	f := ( ((sliceEndAngle - sliceStartAngle) / 4) tan) * 4 / 3.
 	sliceControlPoint1 := (sliceStartPoint x - (f * sliceStartPoint y)) @ (sliceStartPoint y + (f * sliceStartPoint x)).
 	sliceControlPoint2 := (sliceEndPoint x + (f * sliceEndPoint y)) @ (sliceEndPoint y - (f * sliceEndPoint x)).
-	
+
 	"Transform the control points to the actual center."
 	sliceCenter := center.
 	sliceStartPoint := sliceStartPoint + center.
@@ -36,7 +36,7 @@ MeshGradientPaint >> addCircleSliceCenter: center radius: radius startAngle: sli
 				curveVia: sliceControlPoint1 and: sliceControlPoint2 to: sliceEndPoint;
 				lineTo: sliceCenter;
 				colors: colors
-		].
+		]
 ]
 
 { #category : #adding }
@@ -72,7 +72,7 @@ MeshGradientPaint >> buildPatchWith: aBlock [
 { #category : #initialization }
 MeshGradientPaint >> initialize [
 	super initialize.
-	patches := OrderedCollection new.
+	patches := OrderedCollection new
 ]
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #testing }
-RBParseTreeTest class >> isAbstract [ 
+RBParseTreeTest class >> isAbstract [
 
 	^self name = #RBParseTreeTest
 ]

@@ -163,7 +163,7 @@ FLBufferedWriteStream >> nextPutAll: collection [
 FLBufferedWriteStream >> nextWordsPut: aWordObject [
 
 	| byteSize |
-	byteSize := aWordObject basicSize * 4.
+	byteSize := aWordObject byteSize.
 
 	"Ensure we are at bigger than the words added, with size next power-of-two"
 	byteSize > buffer size ifTrue: [ self sizeBuffer: 1 << (byteSize highBit)].

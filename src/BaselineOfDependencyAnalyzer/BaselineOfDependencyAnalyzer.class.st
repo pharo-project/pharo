@@ -15,8 +15,12 @@ BaselineOfDependencyAnalyzer >> baseline: spec [
 		spec 
 			package: 'Tool-DependencyAnalyser'
 				 with: [ spec requires: #('AIGraphAlgorithms') ];
-			package: 'Tool-DependencyAnalyser-UI';
-			package: 'Tool-DependencyAnalyser-Tests';
+			package: 'Tool-DependencyAnalyser-UI'
+				 with: [ spec requires: #('Tool-DependencyAnalyser') ];
+			package: 'Tool-DependencyAnalyser-UI-Tab'
+				 with: [ spec requires: #('Tool-DependencyAnalyser') ];
+			package: 'Tool-DependencyAnalyser-Tests'
+				 with: [ spec requires: #('Tool-DependencyAnalyser') ];
 			package: 'Tool-DependencyAnalyser-Tests-Data'.
 			
 		spec 
@@ -26,8 +30,8 @@ BaselineOfDependencyAnalyzer >> baseline: spec [
 ]
 
 { #category : #baselines }
-BaselineOfDependencyAnalyzer >> graphAlgorithms: spec [ 
+BaselineOfDependencyAnalyzer >> graphAlgorithms: spec [
 
 	spec baseline: 'AIGraphAlgorithms' with: [
-		spec repository: 'github://pharo-ai/graph-algorithms:v1.0.0/src' ].
+		spec repository: 'github://pharo-ai/graph-algorithms:v1.2.1/src' ]
 ]

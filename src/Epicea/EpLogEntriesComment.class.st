@@ -14,14 +14,14 @@ Class {
 { #category : #'instance creation' }
 EpLogEntriesComment class >> entryReferences: aCollection oldComment: aString newComment: anotherString [
 	^ self basicNew
-		initializeWithEntryReferences: aCollection 
-		oldComment: aString 
+		initializeWithEntryReferences: aCollection
+		oldComment: aString
 		newComment: anotherString;
 		yourself
 ]
 
 { #category : #visitor }
-EpLogEntriesComment >> accept: aVisitor [ 
+EpLogEntriesComment >> accept: aVisitor [
 	^ aVisitor visitLogCommentModification: self
 ]
 
@@ -39,10 +39,10 @@ EpLogEntriesComment >> copyWithEntryReferences: aCollection [
 ]
 
 { #category : #initialization }
-EpLogEntriesComment >> initializeWithEntryReferences: aCollection oldComment: theOldComment newComment: theNewComment [ 
+EpLogEntriesComment >> initializeWithEntryReferences: aCollection oldComment: theOldComment newComment: theNewComment [
 	self initializeWith: aCollection.
 	oldComment := theOldComment.
-	newComment := theNewComment.
+	newComment := theNewComment
 ]
 
 { #category : #testing }

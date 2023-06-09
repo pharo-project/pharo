@@ -8,25 +8,25 @@ Class {
 		'implementors',
 		'renameMap'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #support }
-RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [ 
+RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
-		do: 
-			[:eachMethod | 
-			self 
+		do:
+			[:eachMethod |
+			self
 				convertMethod: eachMethod selector
 				for: eachMethod modelClass
 				using: searchReplacer]
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol using: searchReplacer [ 
+RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol using: searchReplacer [
 	|aBlock|
-	aBlock := [:eachMethod | 
-			self 
+	aBlock := [:eachMethod |
+			self
 				convertMethod: eachMethod  selector
 				for: eachMethod modelClass
 				using: searchReplacer].
@@ -54,7 +54,7 @@ RBChangeMethodNameTransformation >> implementorsCanBePrimitives [
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aClass [ 
+RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
@@ -87,24 +87,24 @@ RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self myConditions 
-				& (RBCondition definesSelector: oldSelector in: class) 
+	conditions := self myConditions
+				& (RBCondition definesSelector: oldSelector in: class)
 				& (RBCondition isValidMethodName: newSelector for: class).
-					
-	conditions := self implementors 
-		inject: conditions into: [ :condition :each | 
+
+	conditions := self implementors
+		inject: conditions into: [ :condition :each |
 			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
-		
-	^conditions & (RBCondition withBlock: 
-		[self implementors size > 1 
-			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?' 
+
+	^conditions & (RBCondition withBlock:
+		[self implementors size > 1
+			ifTrue:
+				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?'
 							expandMacrosWith: self implementors size)].
 		true])
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> privateTransform [ 
+RBChangeMethodNameTransformation >> privateTransform [
 	self renameImplementors.
 	self renameMessageSends.
 	self removeRenamedImplementors
@@ -114,7 +114,7 @@ RBChangeMethodNameTransformation >> privateTransform [
 RBChangeMethodNameTransformation >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
-	self implementors 
+	self implementors
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
@@ -129,15 +129,15 @@ RBChangeMethodNameTransformation >> renameArgumentsIn: parseTree [
 RBChangeMethodNameTransformation >> renameImplementors [
 
 	self implementors
-		do: [ :each | 
+		do: [ :each |
 			| parseTree |
 
-			parseTree := each parseTreeFor: oldSelector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse source code.' ].
+			parseTree := each parseTreeForSelector: oldSelector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse source code.' ].
 			self implementorsCanBePrimitives
 				ifFalse: [ parseTree isPrimitive
 						ifTrue: [ self
-								refactoringFailure:
+								refactoringError:
 									( '<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each with: oldSelector )
 							]
 					].
@@ -167,9 +167,9 @@ RBChangeMethodNameTransformation >> renameMessageSendsIn: classes [
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [ 
+RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self model classObjectFor: aClass.
-	permutation := aMap.
+	permutation := aMap
 ]

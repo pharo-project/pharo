@@ -14,7 +14,7 @@ ErrorWasInUIProcessTest >> testErrorWasInUIProcessIsFalseWhenDebugSessionWasCrea
 { #category : #tests }
 ErrorWasInUIProcessTest >> testErrorWasInUIProcessIsTrueWhenDebugSessionWasCreatedByTheUIProcess [
 	"Test that errorWasInUIProcess is true when the DebugSession was created by the UI process"
-	
+
 	self skipOnPharoCITestingEnvironment.
 	SmalltalkImage current isHeadless ifFalse: [ ^ true ].
 	context := [ 1+1] asContext.

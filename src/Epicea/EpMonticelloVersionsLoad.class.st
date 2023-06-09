@@ -19,7 +19,7 @@ EpMonticelloVersionsLoad class >> versionNames: aCollectionOfVersionNames [
 ]
 
 { #category : #'instance creation' }
-EpMonticelloVersionsLoad class >> versions: aCollectionOfVersions [ 
+EpMonticelloVersionsLoad class >> versions: aCollectionOfVersions [
 
 	^ self versionNames: (aCollectionOfVersions collect: [ :version | version info name ])
 ]
@@ -32,7 +32,7 @@ EpMonticelloVersionsLoad >> = anObject [
 ]
 
 { #category : #visitor }
-EpMonticelloVersionsLoad >> accept: aChangeVisitor [ 
+EpMonticelloVersionsLoad >> accept: aChangeVisitor [
 	^ aChangeVisitor visitMonticelloVersionsLoad: self
 ]
 
@@ -72,7 +72,7 @@ EpMonticelloVersionsLoad >> packageNames [
 EpMonticelloVersionsLoad >> printOn: aStream [
 
 	super printOn: aStream.
-	versionNames printElementsOn: aStream.
+	versionNames printElementsOn: aStream
 ]
 
 { #category : #accessing }

@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : #testing }
-ZdcAbstractSSLSession class >> isAbstract [ 
+ZdcAbstractSSLSession class >> isAbstract [
 
 	^self == ZdcAbstractSSLSession
 ]
@@ -81,7 +81,7 @@ ZdcAbstractSSLSession >> decrypt: srcBuf from: start to: stop into: dstBuf [
 { #category : #initialization }
 ZdcAbstractSSLSession >> destroy [
 	"Do any necessary cleanup when I am no longer needed"
-	
+
 	self subclassResponsibility
 ]
 
@@ -110,16 +110,16 @@ ZdcAbstractSSLSession >> peerCertificateName [
 { #category : #accessing }
 ZdcAbstractSSLSession >> serverName [
 	"Get the Server Name Indication (SNI) property"
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 ZdcAbstractSSLSession >> serverName: serverName [
-	"Set the Server Name Indication (SNI) to serverName, 
+	"Set the Server Name Indication (SNI) to serverName,
 	the fully qualified domain name of the host to connect to.
 	This should be set by a client before #connect is attempted."
-	
+
 	self subclassResponsibility
 ]
 
@@ -130,6 +130,6 @@ ZdcAbstractSSLSession >> sslState [
 		1 - In accept handshake
 		2 - In connect handshake
 		3 - Connected"
-		
+
 	self subclassResponsibility
 ]

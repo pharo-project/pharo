@@ -13,7 +13,7 @@ MailAddressTokenizerTest >> testTokensInAscii [
 	tokens := MailAddressTokenizer tokensIn: 'first last <person@company.com>'.
 	tokensCollection := tokens collect: [ :each |
 		each type -> each text ] as: Array.
-	self 
+	self
 		assert: tokensCollection
 		equals: {#Atom->'first'. #Atom->'last'. $<->'<'. #Atom->'person'. $@->'@'. #Atom->'company'. $.->'.'. #Atom->'com'. $>->'>'}
 ]
@@ -32,21 +32,21 @@ MailAddressTokenizerTest >> testTokensInLatin [
 	tokens := MailAddressTokenizer tokensIn: email.
 	tokensCollection := tokens collect: [ :each |
 		each type -> each text ] as: Array.
-	self 
+	self
 		assert: tokensCollection
 		equals: {
 			#Atom->('first' copy
 				at: 2 put: 237 asCharacter;
-				yourself). 
-			#Atom->'last' copy. 
-			$<->'<'. 
+				yourself).
+			#Atom->'last' copy.
+			$<->'<'.
 			#Atom->('person' copy
 				at: 2 put: 233 asCharacter;
-				yourself). 
-			$@->'@'. 
-			#Atom->'company' copy. 
-			$.->'.'. 
-			#Atom->'com' copy. 
+				yourself).
+			$@->'@'.
+			#Atom->'company' copy.
+			$.->'.'.
+			#Atom->'com' copy.
 			$>->'>'}
 ]
 
@@ -64,20 +64,20 @@ MailAddressTokenizerTest >> testTokensInUnicode [
 	tokens := MailAddressTokenizer tokensIn: email.
 	tokensCollection := tokens collect: [ :each |
 		each type -> each text ] as: Array.
-	self 
+	self
 		assert: tokensCollection
 		equals: {
 			#Atom->('first' copy
 				at: 3 put: 345 asCharacter;
-				yourself). 
-			#Atom->'last' copy. 
-			$<->'<'. 
+				yourself).
+			#Atom->'last' copy.
+			$<->'<'.
 			#Atom->('person' copy
 				at: 3 put: 345 asCharacter;
-				yourself). 
-			$@->'@'. 
-			#Atom->'company'. 
-			$.->'.'. 
-			#Atom->'com'. 
+				yourself).
+			$@->'@'.
+			#Atom->'company'.
+			$.->'.'.
+			#Atom->'com'.
 			$>->'>'}
 ]

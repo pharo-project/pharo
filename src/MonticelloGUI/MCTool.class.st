@@ -299,6 +299,11 @@ MCTool >> preferredColor [
 	^ (Color r: 0.627 g: 0.69 b: 0.976)
 ]
 
+{ #category : #accessing }
+MCTool >> selectedClassOrMetaClass [
+	^nil
+]
+
 { #category : #'morphic ui' }
 MCTool >> setDefaultFocus [
 	"set the default focus on the morph elements.

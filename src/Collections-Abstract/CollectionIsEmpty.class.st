@@ -22,28 +22,28 @@ CollectionIsEmpty class >> signalWith: aCollection [
 { #category : #private }
 CollectionIsEmpty >> collection [
 	"Return the collection where something is not found in"
-	
+
 	^ self signaler
 ]
 
 { #category : #accessing }
 CollectionIsEmpty >> collection: aCollection [
 	"Set the collection where something is not found in"
-	
+
 	self signaler: aCollection
 ]
 
 { #category : #accessing }
 CollectionIsEmpty >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
-	
+
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
 { #category : #private }
 CollectionIsEmpty >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		stream print: self collection.
 		stream << ' is empty' ]

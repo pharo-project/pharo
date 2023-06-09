@@ -13,7 +13,7 @@ FFILibrary >> ffiCall: fnSpec [
 { #category : #'*ThreadedFFI' }
 FFILibrary >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
-	
+
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: (self ffiLibrary options), callOptions;

@@ -43,34 +43,34 @@ EDREPLInterface >> pushChar: aChar [
 
 { #category : #'command line' }
 EDREPLInterface >> readEvalPrint [
-	
+
 	[ debugger isRunning ]
-	whileTrue: [ 
+	whileTrue: [
 		debugger eval: self requestLine.
 		self resetREPL ].
-	
+
 	self terminateREPL
 ]
 
 { #category : #'command line' }
 EDREPLInterface >> requestLine [
 	| startPos char contents |
-	
+
 	startPos := position.
-	[ 	
+	[
 		self waitSemaphore wait.
-		(char := self inputBufferStream peekLast) = Character cr ] 
-	whileFalse: [ 
+		(char := self inputBufferStream peekLast) = Character cr ]
+	whileFalse: [
 		(debugger performActionForChar: char)
-			ifFalse: [ 
+			ifFalse: [
 				char = Character backspace
 					ifTrue: [ readLimit := position := position - 1 max: startPos ]
 					ifFalse: [ self nextPut: char ].
 				debugger updatePrompt: self contents ] ].
-	
+
 	contents := self contents.
-	^ contents 
-		copyFrom: startPos + 1 
+	^ contents
+		copyFrom: startPos + 1
 		to: contents size
 ]
 

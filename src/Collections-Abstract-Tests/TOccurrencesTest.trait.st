@@ -31,7 +31,7 @@ TOccurrencesTest >> test0FixtureOccurrencesTest [
 	self denyEmpty: self collectionWithoutEqualElements.
 	tmp := OrderedCollection new.
 	self collectionWithoutEqualElements
-		do: [ :each | 
+		do: [ :each |
 			self deny: (tmp includes: each).
 			tmp add: each ].
 	self elementNotInForOccurrences.
@@ -42,7 +42,7 @@ TOccurrencesTest >> test0FixtureOccurrencesTest [
 TOccurrencesTest >> testOccurrencesOf [
 	| collection |
 	collection := self collectionWithoutEqualElements .
-	
+
 	collection do: [ :each | self assert: (collection occurrencesOf: each) equals: 1 ]
 ]
 

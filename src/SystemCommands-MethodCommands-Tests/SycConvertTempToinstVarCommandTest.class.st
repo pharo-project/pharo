@@ -6,19 +6,20 @@ Class {
 
 { #category : #tests }
 SycConvertTempToinstVarCommandTest >> testCanExecuteOnArgumentNode [
+
 	| argNode sourceCodeContext |
 	"we don't need to set the tools"
-	argNode := RBArgumentNode new.
+	argNode := RBVariableNode new variable: ArgumentVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: argNode.
-	self deny: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext).
-
+	self deny: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext)
 ]
 
 { #category : #tests }
 SycConvertTempToinstVarCommandTest >> testCanExecuteOnTemporaryNode [
+
 	| sourceCodeContext tempNode |
 	"we don't need to set the tools"
-	tempNode := RBTemporaryNode new.
+	tempNode := RBVariableNode new variable: TemporaryVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: tempNode.
-	self assert: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext).
+	self assert: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext)
 ]

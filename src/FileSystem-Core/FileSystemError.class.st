@@ -28,6 +28,7 @@ FileSystemError >> initializeWithReference: aReference [
 
 { #category : #testing }
 FileSystemError >> isResumable [
+
 	^ true
 ]
 

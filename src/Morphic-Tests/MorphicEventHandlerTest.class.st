@@ -32,9 +32,16 @@ MorphicEventHandlerTest >> testClickFromMorph [
 
 { #category : #tests }
 MorphicEventHandlerTest >> testDoubleClickFromMorph [
+	| event |
+	event := MouseButtonEvent new
+		setType: #mouseDown
+		position: 0@0
+		which: 0
+		buttons: 4
+		hand: morph eventHandler
+		stamp: Time millisecondClockValue.
 	morph eventHandler on: #doubleClick send: #value to: true.
-
-	self assert: (morph doubleClick: nil) identicalTo: true
+	self assert: (morph doubleClick: event) identicalTo: true
 ]
 
 { #category : #tests }
@@ -103,16 +110,16 @@ MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
 
 	morph openInWorld.
 
-	event := (MouseButtonEvent new 
+	event := (MouseButtonEvent new
 		setType: #mouseDown
 		position: 0@0
 		which: MouseButtonEvent blueButton
-		buttons: 0
+		buttons: MouseButtonEvent blueButton
 		hand: morph world activeHand
 		stamp: Time millisecondClockValue).
-	
+
 	event sentTo: morph.
-			
+
 	self assert: (morph halo) isNotNil
 ]
 
@@ -120,7 +127,7 @@ MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
 MorphicEventHandlerTest >> testMouseDownFromMorph [
 	| event |
 
-	event := (MouseButtonEvent new 
+	event := (MouseButtonEvent new
 		setType: #mouseDown
 		position: 0@0
 		which: 0
@@ -131,7 +138,7 @@ MorphicEventHandlerTest >> testMouseDownFromMorph [
 		stamp: Time millisecondClockValue).
 
 	morph eventHandler on: #mouseDown send: #value to: true.
-	
+
 	self assert: (event sentTo: morph) identicalTo: true
 ]
 
@@ -174,7 +181,7 @@ MorphicEventHandlerTest >> testMouseEnterFromMorph [
 	| event |
 	morph eventHandler on: #mouseEnter send: #value to: true.
 
-	event := (MouseButtonEvent new 
+	event := (MouseButtonEvent new
 		setType: #mouseMove
 		position: 0@0
 		which: 0
@@ -192,7 +199,7 @@ MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 	| event |
 	morph eventHandler on: #mouseLeave send: #value to: true.
 
-	event := (MouseButtonEvent new 
+	event := (MouseButtonEvent new
 		setType: #mouseMove
 		position: 0@0
 		which: 0
@@ -209,7 +216,7 @@ MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 MorphicEventHandlerTest >> testMouseUpFromMorph [
 	| event |
 
-	event := (MouseButtonEvent new 
+	event := (MouseButtonEvent new
 		setType: #mouseUp
 		position: 0@0
 		which: 0
@@ -220,7 +227,7 @@ MorphicEventHandlerTest >> testMouseUpFromMorph [
 		stamp: Time millisecondClockValue).
 
 	morph eventHandler on: #mouseUp send: #value to: true.
-	
+
 	self assert: (event sentTo: morph) identicalTo: true
 ]
 
@@ -228,7 +235,7 @@ MorphicEventHandlerTest >> testMouseUpFromMorph [
 MorphicEventHandlerTest >> testTwoEventHandlersAreAttached [
 
 	| keyboardEvent first second |
-	keyboardEvent := KeyboardEvent new 
+	keyboardEvent := KeyboardEvent new
 							setType: #keystroke
 							buttons: 2
 							position: nil
@@ -242,7 +249,7 @@ MorphicEventHandlerTest >> testTwoEventHandlersAreAttached [
 	morph eventHandler on: #keyStroke send: #value to: [ first := true ].
 	morph eventHandler on: #keyStroke send: #value to: [ second := true ].
 	morph handleKeystroke: keyboardEvent.
-	
+
 	self assert: first.
-	self assert: second.
+	self assert: second
 ]

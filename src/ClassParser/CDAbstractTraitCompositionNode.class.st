@@ -10,44 +10,44 @@ Class {
 
 { #category : #testing }
 CDAbstractTraitCompositionNode class >> isAbstract [
-		
+
 	^ self == CDAbstractTraitCompositionNode
 ]
 
 { #category : #composing }
 CDAbstractTraitCompositionNode >> + aNode [
-	
+
 	^ CDTraitCompositionSequenceNode new
 		sequence: { self . aNode }
 ]
 
 { #category : #combining }
-CDAbstractTraitCompositionNode >> - aCollection [ 
-	
+CDAbstractTraitCompositionNode >> - aCollection [
+
 	^ CDTraitExclusionNode new
 		subject: self;
 		exclusions: aCollection
 ]
 
 { #category : #composing }
-CDAbstractTraitCompositionNode >> -- aCollection [ 
-	
+CDAbstractTraitCompositionNode >> -- aCollection [
+
 	^ CDTraitSlotRemoveNode new
 		subject: self;
 		removedSlots: aCollection
 ]
 
 { #category : #composing }
-CDAbstractTraitCompositionNode >> @ aCollection [ 
-	
+CDAbstractTraitCompositionNode >> @ aCollection [
+
 	^ CDTraitAliasNode new
 		subject: self;
 		aliases: aCollection
 ]
 
 { #category : #composing }
-CDAbstractTraitCompositionNode >> @@ aCollection [ 
-	
+CDAbstractTraitCompositionNode >> @@ aCollection [
+
 	^ CDTraitSlotRenameNode new
 		subject: self;
 		renames: aCollection
@@ -55,7 +55,7 @@ CDAbstractTraitCompositionNode >> @@ aCollection [
 
 { #category : #testing }
 CDAbstractTraitCompositionNode >> isTraitComposition [
-	
+
 	^ true
 ]
 

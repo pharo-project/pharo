@@ -11,6 +11,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+FlagIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 FlagIconStyler >> highlightColor [
 	^(Color yellow alpha: 0.3)
@@ -18,7 +24,7 @@ FlagIconStyler >> highlightColor [
 
 { #category : #defaults }
 FlagIconStyler >> iconFor: aNode [
-	^ self iconNamed: #flag.
+	^ self iconNamed: #flag
 ]
 
 { #category : #testing }

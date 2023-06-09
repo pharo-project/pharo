@@ -35,7 +35,8 @@ Class {
 		'menuSelectionTextColor',
 		'selectionTextColor',
 		'secondarySelectionTextColor',
-		'findReplaceSelectionTextColor'
+		'findReplaceSelectionTextColor',
+		'labelAreaLayout'
 	],
 	#category : #'Polymorph-Widgets-Themes'
 }
@@ -48,11 +49,20 @@ ThemeSettings >> animationSettings [
 { #category : #settings }
 ThemeSettings >> applySettingsFrom: aThemeSettings [
 	"Change the settings to be those of aThemeSettings."
-	
+
 	self
 		windowColor: aThemeSettings windowColor;
 		selectionColor: aThemeSettings selectionColor;
 		autoSelectionColor: aThemeSettings autoSelectionColor
+]
+
+{ #category : #updating }
+ThemeSettings >> applyToDisplayedWindows [
+
+	(SystemWindow withAllSubclasses
+		flatCollect: [ :sysWinClass | sysWinClass allInstances ])
+			select: [ :sysWin | sysWin isDisplayed ]
+				thenDo: [ :dispSysWin | dispSysWin themeChanged ]
 ]
 
 { #category : #menu }
@@ -161,7 +171,7 @@ ThemeSettings >> derivedMenuColor [
 	"Answer a selection colour based on the window color."
 
 	| autoColor worldColor |
-	autoColor := self autoMenuColor 
+	autoColor := self autoMenuColor
 				and: [Display depth > 4
 						and: [(worldColor := self currentWorld color) isColor]].
 
@@ -169,7 +179,7 @@ ThemeSettings >> derivedMenuColor [
 				ifTrue: [worldColor luminance > 0.7
 						ifTrue: [worldColor mixed: 0.85 with: Color black]
 						ifFalse: [worldColor mixed: 0.4 with: Color white]]
-				ifFalse: [self menuColor].
+				ifFalse: [self menuColor]
 ]
 
 { #category : #accessing }
@@ -213,7 +223,7 @@ ThemeSettings >> fallbackMenuColor [
 ]
 
 { #category : #accessing }
-ThemeSettings >> fastDragging [ 
+ThemeSettings >> fastDragging [
 		^ fastDragging ifNil: [fastDragging := false]
 ]
 
@@ -238,7 +248,7 @@ ThemeSettings >> findReplaceSelectionColor: anColor [
 ThemeSettings >> findReplaceSelectionTextColor [
 	"Answer the value of the selectionTextColor for find/replace"
 
-	^ findReplaceSelectionTextColor 
+	^ findReplaceSelectionTextColor
 		ifNil: [ self findReplaceSelectionColor contrastingBlackAndWhiteColor ]
 ]
 
@@ -250,7 +260,7 @@ ThemeSettings >> findReplaceSelectionTextColor: aColor [
 ]
 
 { #category : #menu }
-ThemeSettings >> flatMenu [ 
+ThemeSettings >> flatMenu [
 		^ flatMenu ifNil: [flatMenu := false]
 ]
 
@@ -262,7 +272,7 @@ ThemeSettings >> flatMenu: aBoolean [
 { #category : #settings }
 ThemeSettings >> fromConfiguration: tree [
 	"Update the settings from the given tree."
-	
+
 	(tree at: #windowColor ifAbsent: []) ifNotNil: [:v | self windowColor: v].
 	(tree at: #autoSelectionColor ifAbsent: []) ifNotNil: [:v | self autoSelectionColor: v].
 	(tree at: #selectionColor ifAbsent: []) ifNotNil: [:v | self selectionColor: v]
@@ -283,7 +293,7 @@ ThemeSettings >> haveSecondarySelectionTextColor [
 
 { #category : #accessing }
 ThemeSettings >> haveSelectionTextColor [
-	
+
 	^ selectionTextColor notNil
 ]
 
@@ -299,6 +309,21 @@ ThemeSettings >> initialize [
 		buttonColor: self defaultButtonColor;
 		scrollbarColor: self defaultScrollbarColor;
 		standardColorsOnly: false
+]
+
+{ #category : #accessing }
+ThemeSettings >> labelAreaLayout [
+	"Answer the value of labelAreaLayout"
+
+	^labelAreaLayout  ifNil: [labelAreaLayout  := #platformDependent]
+]
+
+{ #category : #accessing }
+ThemeSettings >> labelAreaLayout: aSelector [
+	"Set the value of labelAreaLayout"
+
+	labelAreaLayout  := aSelector.
+	self applyToDisplayedWindows
 ]
 
 { #category : #accessing }
@@ -322,9 +347,9 @@ ThemeSettings >> maxBalloonHelpLineLength: anInteger [
 ThemeSettings >> menuBorderColor [
 	"Answer the value of menuColor"
 
-	^ self flatMenu  
-		ifFalse: [#raised]
-		ifTrue: [self derivedMenuColor twiceDarker]
+	^ self flatMenu
+		ifFalse: [ #raised ]
+		ifTrue: [ self derivedMenuColor twiceDarker ]
 ]
 
 { #category : #menu }
@@ -405,10 +430,10 @@ ThemeSettings >> menuTitleColor [
 
 	Display depth = 1 ifTrue: [^ Color white].
 	Display depth = 2 ifTrue: [^ Color gray].
-	^menuTitleColor 
-		ifNil: [self menuColor 
-				ifNil: [Color gray] 
-				ifNotNil: [:mc | self preferGradientFill 
+	^menuTitleColor
+		ifNil: [self menuColor
+				ifNil: [Color gray]
+				ifNotNil: [:mc | self preferGradientFill
 					ifTrue: [mc]
 					ifFalse: [mc twiceDarker]]]
 ]
@@ -421,7 +446,7 @@ ThemeSettings >> menuTitleColor: anObject [
 ]
 
 { #category : #accessing }
-ThemeSettings >> preferGradientFill [ 
+ThemeSettings >> preferGradientFill [
 	"Answer the value of preferGradientFill "
 
 	^preferGradientFill  ifNil: [preferGradientFill := self preferGradientFillByDefault]
@@ -450,7 +475,8 @@ ThemeSettings >> preferRoundCorner [
 ThemeSettings >> preferRoundCorner: aBoolean [
 	"Set the value of preferRoundCorner"
 
-	preferRoundCorner := aBoolean
+	preferRoundCorner := aBoolean.
+	self applyToDisplayedWindows
 ]
 
 { #category : #accessing }
@@ -509,7 +535,7 @@ ThemeSettings >> scrollbarColor: anObject [
 ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
-	^ secondarySelectionTextColor 
+	^ secondarySelectionTextColor
 		ifNil: [self theme secondarySelectionColor contrastingBlackAndWhiteColor ]
 ]
 
@@ -533,7 +559,7 @@ ThemeSettings >> selectionBarColor: aColor [
 { #category : #accessing }
 ThemeSettings >> selectionColor [
 	"Answer the value of selectionColor"
-	
+
 	Display depth = 1 ifTrue: [^ Color veryLightGray].
 	Display depth = 2 ifTrue: [^ Color gray].
 	^self autoSelectionColor
@@ -550,7 +576,7 @@ ThemeSettings >> selectionColor: anObject [
 { #category : #accessing }
 ThemeSettings >> selectionTextColor [
 	"Answer the value of selectionTextColor"
-	
+
 	^selectionTextColor ifNil: [Color black ]
 ]
 
@@ -562,7 +588,7 @@ ThemeSettings >> selectionTextColor: aColor [
 { #category : #accessing }
 ThemeSettings >> standardColorsOnly [
 	"Answer the value of standardColorsOnly"
- 
+
 	^standardColorsOnly ifNil: [^false]
 ]
 
@@ -586,7 +612,7 @@ ThemeSettings >> tabAmongFields: aBoolean [
 { #category : #settings }
 ThemeSettings >> toConfiguration: tree [
 	"Update the tree from the receiver."
-	
+
 	tree at: #windowColor put: self windowColor.
 	tree at: #autoSelectionColor put: self autoSelectionColor.
 	tree at: #selectionColor put: self basicSelectionColor

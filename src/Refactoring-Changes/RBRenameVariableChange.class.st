@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameVariableChange class >> rename: oldName to: newName in: aClass [ 
+RBRenameVariableChange class >> rename: oldName to: newName in: aClass [
 	^ self new
 		oldName: oldName;
 		newName: newName;
@@ -27,11 +27,11 @@ RBRenameVariableChange class >> rename: oldName to: newName in: aClass [
 { #category : #comparing }
 RBRenameVariableChange >> = aRenameVariableChange [
 
-	self class = aRenameVariableChange class 
+	self class = aRenameVariableChange class
 		ifFalse: [ ^ false ].
-	^ className = aRenameVariableChange changeClassName 
-		and: [ isMeta = aRenameVariableChange isMeta 
-		and: [ oldName = aRenameVariableChange oldName 
+	^ className = aRenameVariableChange changeClassName
+		and: [ isMeta = aRenameVariableChange isMeta
+		and: [ oldName = aRenameVariableChange oldName
 		and: [ newName = aRenameVariableChange newName ] ] ]
 ]
 

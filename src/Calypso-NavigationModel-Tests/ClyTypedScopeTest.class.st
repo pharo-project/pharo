@@ -26,7 +26,7 @@ ClyTypedScopeTest >> extraBasisSample [
 
 { #category : #running }
 ClyTypedScopeTest >> multipleScopeSample [
-	^ self scopeClass 
+	^ self scopeClass
 		ofAll: {self singleBasisSample. self extraBasisSample}
 		in: environment
 ]
@@ -74,7 +74,7 @@ ClyTypedScopeTest >> testBasedOnEmptyBasis [
 
 	scope := self singleScopeSample.
 	self deny: scope isBasedOnEmptyBasis.
-	
+
 	scope := self emptyScopeSample.
 	self assert: scope isBasedOnEmptyBasis
 ]
@@ -87,7 +87,7 @@ ClyTypedScopeTest >> testBasedOnMultipleBasis [
 
 	scope := self singleScopeSample.
 	self deny: scope isBasedOnMultipleBasis.
-		
+
 	scope := self emptyScopeSample.
 	self deny: scope isBasedOnMultipleBasis
 ]
@@ -100,7 +100,7 @@ ClyTypedScopeTest >> testBasedOnSingleBasis [
 
 	scope := self multipleScopeSample.
 	self deny: scope isBasedOnSingleBasis.
-		
+
 	scope := self emptyScopeSample.
 	self deny: scope isBasedOnSingleBasis
 ]
@@ -110,11 +110,11 @@ ClyTypedScopeTest >> testConvertingAsRestrictedByAnotherScope [
 	| convertedScope restrictedScope |
 	scope := self multipleScopeSample.
 	restrictedScope := self singleScopeSample.
-	
+
 	convertedScope := scope restrictedBy: restrictedScope.
-	
+
 	self assert: convertedScope class equals: scope class.
-	self assert: convertedScope basisObjects equals: restrictedScope basisObjects.
+	self assert: convertedScope basisObjects equals: restrictedScope basisObjects
 ]
 
 { #category : #tests }
@@ -122,20 +122,20 @@ ClyTypedScopeTest >> testConvertingAsRestrictedByAnotherScope2 [
 	| convertedScope restrictedScope |
 	scope := self singleScopeSample.
 	restrictedScope := self multipleScopeSample.
-	
+
 	convertedScope := scope restrictedBy: restrictedScope.
-	
+
 	self assert: convertedScope class equals: scope class.
-	self assert: convertedScope basisObjects equals: restrictedScope basisObjects.
+	self assert: convertedScope basisObjects equals: restrictedScope basisObjects
 ]
 
 { #category : #tests }
 ClyTypedScopeTest >> testConvertingWithExtraBasisObject [
 	| convertedScope |
 	scope := self singleScopeSample.
-	
+
 	convertedScope := scope withExtraBasisObject: self extraBasisSample.
-	
+
 	self assert: convertedScope class equals: scope class.
 	self assert: (convertedScope basisObjects includesAll: scope basisObjects).
 	self assert: (convertedScope basisObjects includes: self extraBasisSample).
@@ -146,19 +146,19 @@ ClyTypedScopeTest >> testConvertingWithExtraBasisObject [
 ClyTypedScopeTest >> testConvertingWithExtraBasisObjectIfItIsAlreadyBasis [
 	| convertedScope |
 	scope := self createSampleScope.
-	
+
 	convertedScope := scope withExtraBasisObject: scope basisObjects anyOne.
-	
-	self assert: convertedScope basisObjects equals: scope basisObjects.
+
+	self assert: convertedScope basisObjects equals: scope basisObjects
 ]
 
 { #category : #tests }
 ClyTypedScopeTest >> testConvertingWithExtraBasisObjects [
 	| convertedScope |
 	scope := self singleScopeSample.
-	
+
 	convertedScope := scope withExtraBasisObjects: {self singleBasisSample. self extraBasisSample}.
-	
+
 	self assert: convertedScope class equals: scope class.
 	self assert: (convertedScope basisObjects asIdentitySet includesAll: scope basisObjects).
 	self assert: (convertedScope basisObjects asIdentitySet includes: self extraBasisSample).
@@ -169,12 +169,12 @@ ClyTypedScopeTest >> testConvertingWithExtraBasisObjects [
 ClyTypedScopeTest >> testConvertingWithNewBasisObjects [
 	| convertedScope |
 	scope := self singleScopeSample.
-	
+
 	convertedScope := scope withNewBasisObjects: {self extraBasisSample}.
-	
+
 	self assert: convertedScope class equals: scope class.
-	self 
-		assert: convertedScope basisObjects asSet 
+	self
+		assert: convertedScope basisObjects asSet
 		equals: {self extraBasisSample} asSet.
 	self assert: convertedScope basisSize equals: 1.
 	self assert: convertedScope environment notNil.
@@ -185,9 +185,9 @@ ClyTypedScopeTest >> testConvertingWithNewBasisObjects [
 ClyTypedScopeTest >> testConvertingWithoutAbsentBasisObject [
 	| convertedScope |
 	scope := self createSampleScope.
-	
+
 	convertedScope := scope withoutBasisObject: #notExistedBasis.
-	
+
 	self assert: convertedScope class equals: scope class.
 	self assert: convertedScope basisObjects equals: scope basisObjects
 ]
@@ -196,34 +196,34 @@ ClyTypedScopeTest >> testConvertingWithoutAbsentBasisObject [
 ClyTypedScopeTest >> testConvertingWithoutBasisObjectsWhenSomeIsNotExist [
 	| convertedScope |
 	scope := self createSampleScope.
-	
+
 	convertedScope := scope withoutBasisObjects: {#absentObject. scope basisObjects anyOne}.
-	
+
 	self assert: convertedScope class equals: scope class.
-	self deny: (convertedScope basisObjects includes: scope basisObjects anyOne).
+	self deny: (convertedScope basisObjects includes: scope basisObjects anyOne)
 ]
 
 { #category : #tests }
 ClyTypedScopeTest >> testConvertingWithoutExistingBasisObject [
 	| convertedScope |
 	scope := self multipleScopeSample.
-	
+
 	convertedScope := scope withoutBasisObject: self extraBasisSample.
-	
+
 	self assert: convertedScope class equals: scope class.
 	self deny: (convertedScope basisObjects includes: self extraBasisSample).
-	self assert: (convertedScope basisObjects includes: self singleBasisSample).
+	self assert: (convertedScope basisObjects includes: self singleBasisSample)
 ]
 
 { #category : #tests }
 ClyTypedScopeTest >> testConvertingWithoutExistingBasisObjects [
 	| convertedScope |
 	scope := self multipleScopeSample.
-	
+
 	convertedScope := scope withoutBasisObjects: scope basisObjects.
-	
+
 	self assert: convertedScope class equals: scope class.
-	self deny: (convertedScope basisObjects includesAll: scope basisObjects).
+	self deny: (convertedScope basisObjects includesAll: scope basisObjects)
 ]
 
 { #category : #tests }
@@ -241,7 +241,7 @@ ClyTypedScopeTest >> testCreationUnifiedInstance [
 	| unifiedInstance |
 	scope := self multipleScopeSample.
 	unifiedInstance := scope asUnifiedInstance.
-	
+
 	self assert: unifiedInstance class equals: scope class.
 	self assert: unifiedInstance environment equals: environment.
 	self assert: unifiedInstance basisObjects isEmpty
@@ -253,6 +253,6 @@ ClyTypedScopeTest >> testRepresentsClassOfScope [
 	scope := self createSampleScope.
 	self assert: (scope representsScope: self scopeClass).
 	self assert: (scope representsScope: ClyTypedScope).
-	
+
 	self deny: (scope representsScope: ClyCompositeScope). "Class of scope which are not the class of subscopes"
 ]

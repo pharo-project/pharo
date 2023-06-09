@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 RFCondition class >> for: aCondition [
-	^self new originalLinkCondition: aCondition.
+	^self new originalLinkCondition: aCondition
 ]
 
 { #category : #accessing }
@@ -37,7 +37,7 @@ RFCondition >> cull: arguments [
 
 { #category : #'enable/disable' }
 RFCondition >> disable [
-	condition := false.
+	condition := false
 ]
 
 { #category : #'enable/disable' }
@@ -52,7 +52,7 @@ RFCondition >> initialize [
 
 { #category : #accessing }
 RFCondition >> linkCondition [
-	^ self originalLinkCondition ifNil: [ [ true ] ].
+	^ self originalLinkCondition ifNil: [ [ true ] ]
 ]
 
 { #category : #accessing }
@@ -68,7 +68,7 @@ RFCondition >> originalLinkCondition: aCondition [
 { #category : #accessing }
 RFCondition >> reifications [
 	(condition isKindOf: Boolean) ifTrue: [ ^#() ].
-	^condition argumentNames.
+	^condition argumentNames
 ]
 
 { #category : #evaluating }

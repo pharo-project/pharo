@@ -21,7 +21,7 @@ Float >> arcSin [
 Float >> arcTan: denominator [
 	"Answer the angle in radians.
 	Implementation note: use sign in order to catch cases of negativeZero"
-	
+
 	"(-0.5 arcTan: -0.5) >>> -2.356194490192345"
 	"(1.2 arcTan: 1.5) >>>  0.6747409422235526"
 	"(1.2 arcTan: -1.5) >>> 2.4668517113662407"
@@ -45,17 +45,17 @@ Float >> arcTan: denominator [
 { #category : #'*Math-Operations-Extensions' }
 Float >> asIEEE32BitWord [
 	"Convert the receiver into a 32 bit Integer value representing the same number in IEEE 32 bit format.
-	Used for conversion in FloatArrays only."
-	
+	Used for conversion in Float32Arrays only."
+
 	| word1 word2 sign mantissa exponent destWord truncatedBits mask roundToUpper |
-	
+
 	"skip fast positive and nnegative zero"
 	self = 0.0 ifTrue: [^self basicAt: 1].
-	
+
 	"retrieve 64 bits of IEEE 754 double"
 	word1 := self basicAt: 1.
 	word2 := self basicAt: 2.
-	
+
 	"prepare sign exponent and mantissa of 32 bits float"
 	sign := word1 bitAnd: 16r80000000.
 	exponent := ((word1 bitShift: -20) bitAnd: 16r7FF) - 1023 + 127.
@@ -63,10 +63,10 @@ Float >> asIEEE32BitWord [
 	truncatedBits := (word2 bitAnd: 16r1FFFFFFF).
 
 	"We must now honour default IEEE rounding mode (round to nearest even)"
-	
+
 	"we are below gradual underflow, even if rounded to upper mantissa"
 	exponent < -24 ifTrue: [^sign "this can be negative zero"].
-	
+
 	"BEWARE: rounding occurs on less than 23bits when gradual underflow"
 	exponent <= 0
 		ifTrue:
@@ -83,7 +83,7 @@ Float >> asIEEE32BitWord [
 				and: [(mantissa bitAnd: 16r1) isZero not
 					or: [(truncatedBits bitAnd: 16r0FFFFFFF) isZero not]]
 			].
-		
+
 	"adjust mantissa and exponent due to IEEE rounding mode"
 	roundToUpper
 		ifTrue:
@@ -100,28 +100,34 @@ Float >> asIEEE32BitWord [
 				ifTrue: ["BEWARE: do not convert a NaN to infinity due to truncatedBits"
 					mantissa := 1]]
 			ifFalse: [mantissa := 0]].
-		
+
 	"Encode the word"
 	destWord := (sign bitOr: ((exponent max: 0) bitShift: 23)) bitOr: mantissa.
 	^ destWord
 ]
 
 { #category : #'*Math-Operations-Extensions' }
+Float >> asIEEE64BitWord [
+	"Convert the receiver into a 64 bit Integer value representing the same number in IEEE 64 bit format.
+	Used for conversion in Float64Arrays only."
+
+	^ ((self basicAt: 1) bitShift: 32) + (self basicAt: 2)
+]
+
+{ #category : #'*Math-Operations-Extensions' }
 Float >> closeTo: num [
  	"Tell whether the receiver and arguments are close from each."
-	
-	^ self closeTo: num precision: 0.0001
+
+	^ self closeTo: num precision: DefaultComparisonPrecision
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Float >> closeTo: num precision: aPrecision [
- 	"Tell whether the receiver and arguments are close from each other given a precision"
-	
-	num isNumber ifFalse: [ ^ [self = num] onErrorDo: [false]].
-	self = 0.0 ifTrue: [^ num abs < aPrecision].
-	num = 0 ifTrue: [^self abs < aPrecision].
-	^self = num asFloat
-		or: [(self - num) abs / (self abs max: num abs) < aPrecision]
+	"Tell whether the receiver and arguments are close from each other given a precision"
+
+	num isNumber ifFalse: [ ^ false ].
+
+	^ self = num asFloat or: [ (self - num) abs <= aPrecision ]
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -134,7 +140,7 @@ Float >> cos [
 { #category : #'*Math-Operations-Extensions' }
 Float >> degreeCos [
 	"Take care of exceptional values"
-	
+
 	self isFinite ifTrue: [^super degreeCos].
 	^self degreesToRadians cos
 ]
@@ -142,7 +148,7 @@ Float >> degreeCos [
 { #category : #'*Math-Operations-Extensions' }
 Float >> degreeSin [
 	"Take care of exceptional values"
-	
+
 	self isFinite ifTrue: [^super degreeSin].
 	^self degreesToRadians sin
 ]
@@ -156,22 +162,24 @@ Float >> degreesToRadians [
 
 { #category : #'*Math-Operations-Extensions' }
 Float class >> epsilon [
-	"Answer difference between 1.0 and previous representable value"
-	
-	^1.0 timesTwoPower: 1 - self precision
+
+	self
+		deprecated: 'Use machineEpsilon instead'
+		transformWith: '`@receiver epsilon' -> '`@receiver machineEpsilon'.
+	^ self machineEpsilon
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Float class >> fmax [
 	"Answer the maximum finite floating point value representable."
-	
+
 	^MaxVal
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Float class >> fmin [
 	"Answer minimum positive representable value."
-	
+
 	^self denormalized
 		ifTrue: [self fminDenormalized]
 		ifFalse: [self fminNormalized]
@@ -180,14 +188,14 @@ Float class >> fmin [
 { #category : #'*Math-Operations-Extensions' }
 Float class >> fminDenormalized [
 	"Answer the minimum denormalized value representable."
-	
+
 	^1.0 timesTwoPower: MinValLogBase2
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Float class >> fminNormalized [
 	"Answer the minimum normalized value representable."
-	
+
 	^1.0 timesTwoPower: -1022
 ]
 
@@ -206,6 +214,13 @@ Float >> log [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
+Float class >> maxLog [
+	"Answer maximum log value representable"
+
+	^ MaxValLn
+]
+
+{ #category : #'*Math-Operations-Extensions' }
 Float >> nthRoot: aPositiveInteger [
 	"Answer the nth root of the receiver."
 	aPositiveInteger = 2 ifTrue: [
@@ -213,7 +228,7 @@ Float >> nthRoot: aPositiveInteger [
 
 	(aPositiveInteger isInteger not or: [ aPositiveInteger negative ])
 		ifTrue: [^ ArithmeticError signal: 'nth root only defined for positive Integer n.'].
-	
+
 	^self negative
 		ifTrue: [
 			aPositiveInteger odd
@@ -247,7 +262,7 @@ Float >> reciprocal [
 
 	"Returns the reciprocal.
 	If self is 0.0 the / signals a ZeroDivide"
-	
+
 	^1.0 / self
 ]
 
@@ -262,7 +277,7 @@ Float >> reduce [
 Float >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
    "(10.12345 round: 2) >>> 10.12 "
-        
+
 	^(self asFraction round: numberOfWishedDecimal) asFloat
 ]
 
@@ -310,7 +325,7 @@ Float >> tan [
 { #category : #'*Math-Operations-Extensions' }
 Float >> ulp [
 	"Answer the unit of least precision of self (the power of two corresponding to last bit of mantissa)"
-	
+
 	| exponent |
 	self isFinite ifFalse: [
 		self isNaN ifTrue: [^self].
@@ -319,5 +334,5 @@ Float >> ulp [
 	exponent := self exponent.
 	^exponent < self class emin
 		ifTrue: [Float fminDenormalized]
- 		ifFalse: [Float epsilon timesTwoPower: exponent]
+ 		ifFalse: [Float machineEpsilon timesTwoPower: exponent]
 ]

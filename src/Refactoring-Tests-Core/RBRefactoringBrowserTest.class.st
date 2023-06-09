@@ -36,6 +36,6 @@ RBRefactoringBrowserTest >> parserClass [
 ]
 
 { #category : #private }
-RBRefactoringBrowserTest >> proceedThroughWarning: aBlock [ 
+RBRefactoringBrowserTest >> proceedThroughWarning: aBlock [
 	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]

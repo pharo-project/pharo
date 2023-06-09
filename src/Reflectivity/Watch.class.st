@@ -29,7 +29,7 @@ Watch class >> allWatches [
 { #category : #cleanup }
 Watch class >> deleteAllHistory [
 
-	self allWatches valuesDo: [ :aWatch| aWatch deleteHistory].
+	self allWatches valuesDo: [ :aWatch| aWatch deleteHistory]
 ]
 
 { #category : #cleanup }
@@ -40,32 +40,32 @@ Watch class >> deleteHistoryFrom: aNode [
 
 { #category : #accessing }
 Watch class >> from: aNode [
-	^self allWatches at: aNode.
+	^self allWatches at: aNode
 ]
 
 { #category : #accessing }
 Watch class >> from: aNode ifAbsent: aBlock [
-	^self allWatches at: aNode ifAbsent: aBlock.
+	^self allWatches at: aNode ifAbsent: aBlock
 ]
 
 { #category : #'instance creation' }
 Watch class >> in: aRBProgramNode [
-	^self in: aRBProgramNode named: ''.
+	^self in: aRBProgramNode named: ''
 ]
 
 { #category : #'instance creation' }
 Watch class >> in: aRBProgramNode named: aName [
 	aRBProgramNode hasWatch ifTrue: [ ^ aRBProgramNode watch ].
-	^self new 
+	^self new
 		node: aRBProgramNode;
 		tagname: aName;
-		install.
+		install
 ]
 
 { #category : #cleanup }
 Watch class >> removeAll [
 	self allWatches values do: [ :aWatchpoint| aWatchpoint uninstall].
-	Watches := nil.
+	Watches := nil
 ]
 
 { #category : #cleanup }
@@ -76,34 +76,34 @@ Watch class >> removeFrom: aNode [
 
 { #category : #adding }
 Watch >> addValue: anObject [
-	values add: 
+	values add:
 		(DateAndTime now -> anObject).
-	^anObject.
+	^anObject
 ]
 
 { #category : #accessing }
-Watch >> compiledMethod [ 
+Watch >> compiledMethod [
 	^self node methodNode method
 ]
 
 { #category : #cleanup }
 Watch >> deleteHistory [
-	values := OrderedCollection new.
+	values := OrderedCollection new
 ]
 
 { #category : #initialization }
 Watch >> initialize [
 	super initialize.
 	values := OrderedCollection new.
-	recording := true.
+	recording := true
 ]
 
 { #category : #install }
 Watch >> install [
 
 	node hasWatch ifTrue: [ self error: 'Node already has a Watchpoint'].
-	
-	link := MetaLink new 
+
+	link := MetaLink new
 				metaObject: self;
 				selector: #addValue:;
 				arguments: #(value);
@@ -111,7 +111,7 @@ Watch >> install [
 				condition: [ recording ];
 				option: #(+ optionWeakAfter +optionAnnounce).
 	node link: link.
-	self class allWatches at: node put: self.
+	self class allWatches at: node put: self
 ]
 
 { #category : #recording }
@@ -133,18 +133,18 @@ Watch >> node: anObject [
 Watch >> printLastValue [
 	values ifNil: [ ^''].
 	values ifEmpty: [ ^'not run' ].
-	^values last value printStringLimitedTo: 5.
+	^values last value printStringLimitedTo: 5
 ]
 
 { #category : #printing }
 Watch >> printOn: aStream [
 	aStream nextPutAll: 'WP'.
-	tagname isAllSeparators 
-		ifFalse: [ 
+	tagname isAllSeparators
+		ifFalse: [
 			aStream nextPutAll: ' '.
-			aStream nextPutAll: tagname ]. 
+			aStream nextPutAll: tagname ].
 	aStream nextPutAll: ': '.
-	aStream nextPutAll: (self printLastValue).
+	aStream nextPutAll: (self printLastValue)
 ]
 
 { #category : #recording }
@@ -173,10 +173,10 @@ Watch >> tagname: anObject [
 Watch >> uninstall [
 	node hasWatch ifFalse: [ ^self ].
 	link uninstall.
-	self class allWatches removeKey: node.
+	self class allWatches removeKey: node
 ]
 
 { #category : #accessing }
 Watch >> values [
-	^values.
+	^values
 ]

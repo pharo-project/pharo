@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 ReShouldTransformedIntoAssertRule class >> uniqueIdentifierName [
-	
+
 	^'ShouldTransformedIntoAssert'
 ]
 

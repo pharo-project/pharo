@@ -5,6 +5,9 @@ Class {
 	#name : #'SDL_MouseWheelEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
+		'OFFSET_DIRECTION',
+		'OFFSET_PRECISEX',
+		'OFFSET_PRECISEY',
 		'OFFSET_TIMESTAMP',
 		'OFFSET_TYPE',
 		'OFFSET_WHICH',
@@ -23,7 +26,7 @@ SDL_MouseWheelEvent class >> eventType [
 { #category : #'fields description' }
 SDL_MouseWheelEvent class >> fieldsDesc [
 	"
-	self initializeAccessors
+	self rebuildFieldAccessors
 	"
 	^ #(
     Uint32 type;
@@ -32,12 +35,51 @@ SDL_MouseWheelEvent class >> fieldsDesc [
     Uint32 which;
     Sint32 x;
     Sint32 y;
+    SDL_MouseWheelDirection direction;
+    float preciseX;
+    float preciseY;
  	)
 ]
 
 { #category : #visitor }
 SDL_MouseWheelEvent >> accept: aVisitor [
 	^ aVisitor visitMouseWheelEvent: self
+]
+
+{ #category : #'accessing - structure variables' }
+SDL_MouseWheelEvent >> direction [
+	"This method was automatically generated"
+	^SDL_MouseWheelDirection fromInteger: (handle unsignedLongAt: OFFSET_DIRECTION)
+]
+
+{ #category : #'accessing - structure variables' }
+SDL_MouseWheelEvent >> direction: anObject [
+	"This method was automatically generated"
+	handle unsignedLongAt: OFFSET_DIRECTION put: anObject value
+]
+
+{ #category : #'accessing - structure variables' }
+SDL_MouseWheelEvent >> preciseX [
+	"This method was automatically generated"
+	^handle floatAt: OFFSET_PRECISEX
+]
+
+{ #category : #'accessing - structure variables' }
+SDL_MouseWheelEvent >> preciseX: anObject [
+	"This method was automatically generated"
+	handle floatAt: OFFSET_PRECISEX put: anObject
+]
+
+{ #category : #'accessing - structure variables' }
+SDL_MouseWheelEvent >> preciseY [
+	"This method was automatically generated"
+	^handle floatAt: OFFSET_PRECISEY
+]
+
+{ #category : #'accessing - structure variables' }
+SDL_MouseWheelEvent >> preciseY: anObject [
+	"This method was automatically generated"
+	handle floatAt: OFFSET_PRECISEY put: anObject
 ]
 
 { #category : #'accessing - structure variables' }

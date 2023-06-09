@@ -15,7 +15,7 @@ ClyFFIMethodsTest >> testCheckIfEmpty [
 		of: (ClyClassWithFFIMethods >> #ffiMethod)
 		in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithFFIMethods >> #notFFIMethod)
 		in: environment).
@@ -26,9 +26,9 @@ ClyFFIMethodsTest >> testCheckIfEmpty [
 ClyFFIMethodsTest >> testFromTwoMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClassWithFFIMethods >> #ffiMethod. 
+		ClyClassWithFFIMethods >> #ffiMethod.
 		ClyClassWithFFIMethods >> #notFFIMethod}.
-	
+
 	self assert: foundSelectors sorted asArray equals: #(ffiMethod)
 ]
 

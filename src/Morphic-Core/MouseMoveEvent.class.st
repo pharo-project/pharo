@@ -47,14 +47,14 @@ MouseMoveEvent >> printOn: aStream [
 	aStream nextPutAll: self buttonString.
 	aStream print: timeStamp ; space.
 	aStream print: self windowIndex .
-	aStream nextPut: $].
+	aStream nextPut: $]
 ]
 
 { #category : #dispatching }
 MouseMoveEvent >> sentTo: anObject [
 	"Dispatch the receiver into anObject"
 	type == #mouseMove ifTrue:[^anObject handleMouseMove: self].
-	^super sentTo: anObject.
+	^super sentTo: anObject
 ]
 
 { #category : #private }
@@ -66,7 +66,7 @@ MouseMoveEvent >> setType: evtType startPoint: evtStart endPoint: evtEnd trail: 
 	buttons := evtButtons.
 	source := evtHand.
 	wasHandled := false.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #accessing }
@@ -96,12 +96,12 @@ MouseMoveEvent >> trail [
 MouseMoveEvent >> transformBy: aMorphicTransform [
 	"Transform the receiver into a local coordinate system."
 	position :=  aMorphicTransform globalPointToLocal: position.
-	startPoint :=  aMorphicTransform globalPointToLocal: startPoint.
+	startPoint :=  aMorphicTransform globalPointToLocal: startPoint
 ]
 
 { #category : #transforming }
 MouseMoveEvent >> translateBy: delta [
 	"add delta to cursorPoint, and return the new event"
 	position := position + delta.
-	startPoint := startPoint + delta.
+	startPoint := startPoint + delta
 ]

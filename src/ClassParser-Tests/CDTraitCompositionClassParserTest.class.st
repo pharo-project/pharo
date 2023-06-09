@@ -30,17 +30,17 @@ CDTraitCompositionClassParserTest >> classDefinitionString [
 { #category : #tests }
 CDTraitCompositionClassParserTest >> testBestNodeForTraitCompositionSelectionShouldBeTraitComposition [
 
-	| selectedNode start selection |	
+	| selectedNode start selection |
 	start := self traitDefinitionIndex.
 	selection := start to: start.
-	
+
 	selectedNode := classDefinition bestNodeFor: selection.
 	self assert: selectedNode isTraitComposition
 ]
 
 { #category : #helpers }
 CDTraitCompositionClassParserTest >> traitCompositionNode [
-	
+
 	^ self nodeFor: self traitDefinition
 ]
 

@@ -9,7 +9,7 @@ See FLBlockClosureSerializationTest>>testBlockClosureChangeDifferentBytecodes an
 Class {
 	#name : #FLGlobalCompiledBlockCluster,
 	#superclass : #FLGlobalCompiledCodeCluster,
-	#category : #'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters-Global'
 }
 
 { #category : #'serialize/materialize' }

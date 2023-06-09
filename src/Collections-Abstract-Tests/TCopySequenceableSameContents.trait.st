@@ -34,10 +34,10 @@ TCopySequenceableSameContents >> test0FixtureCopySameContentsTest [
 TCopySequenceableSameContents >> testReverse [
 
 	| result |
-	result := self nonEmpty reversed.	
+	result := self nonEmpty reversed.
 	"verify content of 'result: '"
 	1 to: result size do:
-		[:i | self assert: ((result at: i) 
+		[:i | self assert: ((result at: i)
 			= (self nonEmpty at: (self nonEmpty size - i + 1)))].
 	"verify size of 'result' :"
 	self assert: result size=self nonEmpty size
@@ -48,13 +48,13 @@ TCopySequenceableSameContents >> testReversed [
 
 	| result |
 	result := self nonEmpty reversed.
-	
+
 	"Verify content"
 	result withIndexDo:
 		[:el :i | self assert: el equals: (self nonEmpty at: (self nonEmpty size - i + 1))].
 
 	"Verify size"
-	self assert: result size=self nonEmpty size.
+	self assert: result size=self nonEmpty size
 ]
 
 { #category : #'tests - copying same contents' }
@@ -62,13 +62,13 @@ TCopySequenceableSameContents >> testShallowCopy [
 
 	| result |
 	result := self nonEmpty shallowCopy.
-	
+
 	"Verfy content"
 	self nonEmpty withIndexDo:
 		[:el :i | self assert: (result at:i) equals: (self nonEmpty at:i)].
-	
+
 	"Verify size"
-	self assert: result size equals: self nonEmpty size.
+	self assert: result size equals: self nonEmpty size
 ]
 
 { #category : #'tests - copying same contents' }
@@ -82,9 +82,9 @@ TCopySequenceableSameContents >> testShallowCopyEmpty [
 TCopySequenceableSameContents >> testShuffled [
 	| result |
 	result := self nonEmpty shuffled .
-	
+
 	"verify content of 'result: '"
 	result do: [:each | self assert: (self nonEmpty occurrencesOf: each)=(result occurrencesOf: each)].
 	"verify size of 'result' :"
-	self assert: result size=self nonEmpty size.
+	self assert: result size=self nonEmpty size
 ]

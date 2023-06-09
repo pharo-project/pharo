@@ -65,7 +65,7 @@ RubFindReplaceDialogWindow >> caseSensitive [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> caseSensitive: aBoolean [
-	self model caseSensitive: aBoolean.
+	self model caseSensitive: aBoolean
 ]
 
 { #category : #'user-interface' }
@@ -87,7 +87,7 @@ RubFindReplaceDialogWindow >> delete [
 	| m |
 	m := model.
 	[ super delete ]
-		ensure: [ 
+		ensure: [
 			model := m.
 			model textArea ifNotNil: [ :ta | ta takeKeyboardFocus ] ]
 ]
@@ -99,7 +99,7 @@ RubFindReplaceDialogWindow >> entireWordsOnly [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> entireWordsOnly: aBoolean [
-	self model entireWordsOnly: aBoolean.
+	self model entireWordsOnly: aBoolean
 ]
 
 { #category : #'user-interface' }
@@ -143,7 +143,7 @@ RubFindReplaceDialogWindow >> findText [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> findText: aStringOrText [
-	^ self model findText: aStringOrText.
+	^ self model findText: aStringOrText
 ]
 
 { #category : #'user-interface' }
@@ -152,7 +152,7 @@ RubFindReplaceDialogWindow >> findTextFieldMorph [
 ]
 
 { #category : #'user-interface' }
-RubFindReplaceDialogWindow >> initialExtent [ 
+RubFindReplaceDialogWindow >> initialExtent [
 	^ 400 @ super initialExtent y
 ]
 
@@ -163,7 +163,7 @@ RubFindReplaceDialogWindow >> isRegex [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> isRegex: aBoolean [
-	self model isRegex: aBoolean.
+	self model isRegex: aBoolean
 ]
 
 { #category : #'user-interface' }
@@ -187,8 +187,8 @@ RubFindReplaceDialogWindow >> newButtons [
 
 { #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newContentMorph [
-	^(self newColumn: {	
-			(self newGroupbox: nil for: 
+	^(self newColumn: {
+			(self newGroupbox: nil for:
 				(self newColumn: {
 					self newFindTextEntryMorph.
 					(self newRow: {
@@ -200,7 +200,7 @@ RubFindReplaceDialogWindow >> newContentMorph [
 						(self newColumn: {
 							(self newCheckboxFor: self getSelected: #searchBackwards setSelected: #searchBackwards: getEnabled: nil label: 'Search backwards'  translated help: nil).
 							(self newCheckboxFor: self getSelected: #wrapAround setSelected: #wrapAround: getEnabled: nil label: 'Wrap around'  translated help: nil) }
-						) }	
+						) }
 					) }
 				)
 			).
@@ -233,10 +233,10 @@ RubFindReplaceDialogWindow >> newFindTextEntryMorph [
 	pt := (self newAutoAcceptTextEntryFor: self
 			get: #findText
 			set: #findText:
-			class: String 
+			class: String
 			getEnabled: nil
 			help: 'Enter the text to find' translated
-			entryCompletion: entryCompletion) 
+			entryCompletion: entryCompletion)
 		acceptOnCR: false;
 		ghostText: 'Text to find';
 		withDropListButton;
@@ -276,7 +276,7 @@ RubFindReplaceDialogWindow >> newReplaceButton [
 		newButtonIn: self
 		for: self
 		getState: nil
-		action: #replace 
+		action: #replace
 		arguments: nil
 		getEnabled: #replaceEnabled
 		label: 'Replace' translated
@@ -375,7 +375,7 @@ RubFindReplaceDialogWindow >> searchBackwards [
 { #category : #accessing }
 RubFindReplaceDialogWindow >> searchBackwards: aBoolean [
 	self searchBackwards = aBoolean
-		ifFalse: [ 
+		ifFalse: [
 			self model searchBackwards: aBoolean.
 			self findPolicyChanged ]
 ]
@@ -393,7 +393,7 @@ RubFindReplaceDialogWindow >> textView [
 
 { #category : #'user-interface' }
 RubFindReplaceDialogWindow >> title [
-	^ 'Find & Replace' translated.
+	^ 'Find & Replace' translated
 ]
 
 { #category : #updating }
@@ -415,5 +415,5 @@ RubFindReplaceDialogWindow >> wrapAround [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow >> wrapAround: aBoolean [
-	self model wrapAround: aBoolean.
+	self model wrapAround: aBoolean
 ]

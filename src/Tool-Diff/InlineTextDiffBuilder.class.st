@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 InlineTextDiffBuilder >> split: aString [
 	"Answer the split 'lines' by splitting on whitespace."
-	
+
 	|str lines sep|
 	lines := OrderedCollection new.
 	sep := Character separators, '^()[]{}''"`;.'.

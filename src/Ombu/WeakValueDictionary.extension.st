@@ -3,9 +3,9 @@ Extension { #name : #WeakValueDictionary }
 { #category : #'*Ombu' }
 WeakValueDictionary >> at: key ifPresent: presentBlock ifAbsentOrNil: absentBlock [
 
-	^ self 
+	^ self
 		at: key
-		ifPresent: [:valueOrNil | 
+		ifPresent: [:valueOrNil |
 			valueOrNil
 				ifNotNil: presentBlock
 				ifNil: absentBlock ]

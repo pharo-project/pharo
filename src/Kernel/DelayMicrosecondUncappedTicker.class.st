@@ -14,15 +14,15 @@ Class {
 DelayMicrosecondUncappedTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	|nextTick|
 	"Sleep until the active delay is due, or timingSemaphore signalled by DelayScheduler user-api."
-	
-	"Signal when the next request is due. We trust our VM and will sleep as long as needed. 
+
+	"Signal when the next request is due. We trust our VM and will sleep as long as needed.
 	 If there is no activeDelay, nextTick = 0 will turn off the timer interrupt."
 	nextTick := 0.
 	activeDelay ifNotNil: [
 		nextTick := nextTick min: activeDelay resumptionTick ].
-		
+
 	timingSemaphore initSignals.
 	self primSignal: timingSemaphore atUTCMicroseconds: nextTick.
 	"WARNING! Stepping <Over> the following line may lock the Image. Use <Proceed>."
-	timingSemaphore wait.
+	timingSemaphore wait
 ]

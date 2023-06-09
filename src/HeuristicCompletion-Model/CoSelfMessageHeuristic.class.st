@@ -19,7 +19,7 @@ CoSelfMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 { #category : #requests }
 CoSelfMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 	| completionClass |
-	
+
 	"When in the playground, the completion class is not available.
 	But self is bound to nil"
 	completionClass := completionContext completionClass ifNil: [ nil class ].

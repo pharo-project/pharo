@@ -38,13 +38,13 @@ SDL_SysWMmsg_Windows >> hwnd [
 { #category : #'accessing - structure variables' }
 SDL_SysWMmsg_Windows >> hwnd: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_HWND put: anObject getHandle.
+	handle pointerAt: OFFSET_HWND put: anObject getHandle
 ]
 
 { #category : #testing }
 SDL_SysWMmsg_Windows >> isDisplayChanged [
 
-	^ self msg = WM_DISPLAYCHANGE.
+	^ self msg = WM_DISPLAYCHANGE
 ]
 
 { #category : #'accessing - structure variables' }
@@ -75,8 +75,8 @@ SDL_SysWMmsg_Windows >> msg: anObject [
 SDL_SysWMmsg_Windows >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream 
+
+	aStream
 		nextPutAll: ' msg: ';
 		print: (SDL2WindowsMessages translateId: self msg) asString;
 		nextPutAll: ' wParam: ';

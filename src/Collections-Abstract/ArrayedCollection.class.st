@@ -21,15 +21,15 @@ ArrayedCollection class >> new [
 ]
 
 { #category : #'instance creation' }
-ArrayedCollection class >> new: size withAll: value [ 
-	"Answer an instance of me, with number of elements equal to size, each 
+ArrayedCollection class >> new: size withAll: value [
+	"Answer an instance of me, with number of elements equal to size, each
 	of which refers to the argument, value."
 
 	^(self new: size) atAllPut: value
 ]
 
 { #category : #'instance creation' }
-ArrayedCollection class >> newFrom: aCollection [ 
+ArrayedCollection class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	| newArray |
 	newArray := self new: aCollection size.
@@ -45,7 +45,17 @@ ArrayedCollection class >> newFrom: aCollection [
 ]
 
 { #category : #'instance creation' }
-ArrayedCollection class >> with: anObject [ 
+ArrayedCollection class >> newFromArray: anArray [
+
+	| newCollection size |
+	size := anArray size.
+	newCollection := self new: size.
+	1 to: size do: [ :i | newCollection at: i put: (anArray at: i) ].
+	^ newCollection
+]
+
+{ #category : #'instance creation' }
+ArrayedCollection class >> with: anObject [
 	"Answer a new instance of me, containing only anObject."
 
 	| newCollection |
@@ -55,7 +65,7 @@ ArrayedCollection class >> with: anObject [
 ]
 
 { #category : #'instance creation' }
-ArrayedCollection class >> with: firstObject with: secondObject [ 
+ArrayedCollection class >> with: firstObject with: secondObject [
 	"Answer a new instance of me, containing firstObject and secondObject."
 
 	| newCollection |
@@ -66,7 +76,7 @@ ArrayedCollection class >> with: firstObject with: secondObject [
 ]
 
 { #category : #'instance creation' }
-ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject [ 
+ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject [
 	"Answer a new instance of me, containing only the three arguments as
 	elements."
 
@@ -79,7 +89,7 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 ]
 
 { #category : #'instance creation' }
-ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [ 
+ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [
 	"Answer a new instance of me, containing only the three arguments as
 	elements."
 
@@ -126,7 +136,7 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 ArrayedCollection class >> with: anObject withAll: aCollection [
 	"Creates an array with anObject followed by elements contained in aCollection."
 	"(Array with: 1 withAll: #(2 3 4)) >>> #(1 2 3 4)"
-	
+
 	| newArray |
 	newArray := self new: aCollection size + 1.
 	newArray at: 1 put: anObject.
@@ -171,7 +181,7 @@ ArrayedCollection >> defaultElement [
 
 { #category : #private }
 ArrayedCollection >> fillFrom: aCollection with: aBlock [
-	"Evaluate aBlock with each of aCollections's elements as the argument.  
+	"Evaluate aBlock with each of aCollections's elements as the argument.
 	Collect the resulting values into self. Answer self."
 
 	| index |
@@ -200,11 +210,11 @@ ArrayedCollection >> storeElementsFrom: firstIndex to: lastIndex on: aStream [
 	| noneYet defaultElement arrayElement |
 	noneYet := true.
 	defaultElement := self defaultElement.
-	firstIndex to: lastIndex do: 
-		[:index | 
+	firstIndex to: lastIndex do:
+		[:index |
 		arrayElement := self at: index.
 		arrayElement = defaultElement
-			ifFalse: 
+			ifFalse:
 				[noneYet
 					ifTrue: [noneYet := false]
 					ifFalse: [aStream nextPut: $;].
@@ -229,9 +239,9 @@ ArrayedCollection >> storeOn: aStream [
 ]
 
 { #category : #'objects from disk' }
-ArrayedCollection >> writeOn: aStream [ 
+ArrayedCollection >> writeOn: aStream [
 	"Store the array of bits onto the argument, aStream.  (leading byte ~= 16r80) identifies this as raw bits (uncompressed).  Always store in Big Endian (Mac) byte order.  Do the writing at BitBlt speeds. We only intend this for non-pointer arrays.  Do nothing if I contain pointers."
 	(self class isPointers or: [ self class isWords not ]) ifTrue: [^ self ].
 	aStream nextInt32Put: self basicSize.
-	aStream nextWordsPutAll: self.
+	aStream nextWordsPutAll: self
 ]

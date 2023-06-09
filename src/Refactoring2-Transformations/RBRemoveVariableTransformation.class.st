@@ -16,13 +16,13 @@ Preconditions:
 Class {
 	#name : #RBRemoveVariableTransformation,
 	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditions [
 
-	class := self definingClass theNonMetaClass.
+	class := self definingClass instanceSide.
 
 	^ isClassVariable
 		ifTrue: [ self preconditionsForClassVariable ]
@@ -31,7 +31,7 @@ RBRemoveVariableTransformation >> preconditions [
 
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditionsForClassVariable [
-	
+
 	^ (RBCondition isMetaclass: class) not
 		& (RBCondition definesClassVariable: variableName in: class)
 		& (RBCondition accessesClassVariable: variableName in: class showIn: self)
@@ -40,7 +40,7 @@ RBRemoveVariableTransformation >> preconditionsForClassVariable [
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
 
-	^ (RBCondition definesInstanceVariable: variableName asString in: class) 
+	^ (RBCondition definesInstanceVariable: variableName asString in: class)
 		& (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
 ]
 
@@ -48,6 +48,6 @@ RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
 RBRemoveVariableTransformation >> privateTransform [
 
 	isClassVariable
-		ifTrue: [ self definingClass theNonMetaClass removeClassVariable: variableName ]
+		ifTrue: [ self definingClass instanceSide removeClassVariable: variableName ]
 		ifFalse: [ self definingClass removeInstanceVariable: variableName ]
 ]

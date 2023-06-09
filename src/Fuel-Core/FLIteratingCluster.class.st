@@ -19,10 +19,9 @@ FLIteratingCluster >> add: anObject traceWith: aAnalysis [
 
 	self 
 		referencesOf: anObject 
-		do: [ :aChild || actual |
-			actual := aChild fuelReplacement.
-			self addReferenceFrom: anObject to: actual.
-			aAnalysis trace: actual ]
+		do: [ :aChild |
+			self addReferenceFrom: anObject to: aChild.
+			aAnalysis trace: aChild ]
 ]
 
 { #category : #analyzing }
@@ -42,17 +41,17 @@ FLIteratingCluster >> addReferencesFrom: anObject to: aCollection [
 ]
 
 { #category : #'serialize/materialize' }
-FLIteratingCluster >> clusterMaterializeStepWith: aMaterialization [
+FLIteratingCluster >> clusterMaterializeStepWith: aDecoder [
 
-	super clusterMaterializeStepWith: aMaterialization.
-	objects := Array new: aMaterialization decoder nextEncodedUint32
+	super clusterMaterializeStepWith: aDecoder.
+	objects := Array new: aDecoder nextEncodedUint32
 ]
 
 { #category : #'serialize/materialize' }
-FLIteratingCluster >> clusterSerializeStepWith: aSerialization [
+FLIteratingCluster >> clusterSerializeStepWith: anEncoder [
 
-	super clusterSerializeStepWith: aSerialization.
-	aSerialization encoder encodeUint32: objects size
+	super clusterSerializeStepWith: anEncoder.
+	anEncoder encodeUint32: objects size
 ]
 
 { #category : #'initialize-release' }

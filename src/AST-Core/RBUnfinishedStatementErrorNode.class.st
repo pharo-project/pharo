@@ -6,12 +6,12 @@ Class {
 
 { #category : #testing }
 RBUnfinishedStatementErrorNode >> isUnfinishedStatement [
-	
+
 	^ true
 ]
 
 { #category : #accessing }
 RBUnfinishedStatementErrorNode >> statement [
-	
-	^ content first
+
+	^ contents first
 ]

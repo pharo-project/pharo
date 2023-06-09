@@ -19,7 +19,7 @@ Class {
 { #category : #accessing }
 ReCascadedNextPutAllsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'CascadedNextPutAllsRule'
 ]
 
@@ -42,6 +42,6 @@ ReCascadedNextPutAllsRule >> name [
 ]
 
 { #category : #accessing }
-ReCascadedNextPutAllsRule >> rationale [ 
+ReCascadedNextPutAllsRule >> rationale [
 	^ 'Use cascaded nextPutAll:''s instead of #, in #nextPutAll:.'
 ]

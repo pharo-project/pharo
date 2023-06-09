@@ -24,31 +24,40 @@ Class {
 		'firstClickUp',
 		'firstClickTime',
 		'clickSelector',
-		'dblClickSelector',
-		'dblClickTime',
-		'dblClickTimeoutSelector',
 		'dragSelector',
 		'dragThreshold',
-		'localStamp'
+		'localStamp',
+		'dragDoubleClickSelector',
+		'doubleClickSelector',
+		'doubleClickTime',
+		'doubleClickTimeoutSelector'
 	],
 	#category : #'Morphic-Base-ProgressBar'
 }
 
+{ #category : #'instance creation' }
+MouseClickState class >> client: aMorph event: aMouseEvent [
+	^ self new
+		clickClient: aMorph;
+		event: aMouseEvent;
+		yourself
+]
+
 { #category : #'event handling' }
 MouseClickState >> checkTimeoutFrom: aHand [
-	
+
 	localStamp ifNil: [ localStamp := Time millisecondClockValue. ^ self ].
-	
-	(Time millisecondClockValue - localStamp ) > dblClickTime ifFalse: [ ^ self ].
-	
-	clickState == #firstClickDown ifTrue: [ 
+
+	(Time millisecondClockValue - localStamp ) > doubleClickTime ifFalse: [ ^ self ].
+
+	clickState == #firstClickDown ifTrue: [
 		clickState := #firstClickTimedOut.
-		dragSelector ifNotNil: [ ^ self ]. 
+		dragSelector ifNotNil: [ ^ self ].
 	].
 
 	aHand resetClickState.
 	self doubleClickTimeout.
-	
+
 	clickState == #firstClickTimedOut ifTrue:[ self click ]
 ]
 
@@ -58,32 +67,103 @@ MouseClickState >> click [
 	clickSelector ifNotNil: [clickClient perform: clickSelector with: firstClickDown]
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
+MouseClickState >> clickClient [
+
+	^ clickClient
+]
+
+{ #category : #accessing }
+MouseClickState >> clickClient: anObject [
+
+	clickClient := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> clickSelector [
+
+	^ clickSelector
+]
+
+{ #category : #accessing }
+MouseClickState >> clickSelector: anObject [
+
+	clickSelector := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> clickState [
+
+	^ clickState
+]
+
+{ #category : #accessing }
+MouseClickState >> clickState: anObject [
+
+	clickState := anObject
+]
+
+{ #category : #initialization }
 MouseClickState >> client: aMorph click: aClickSelector dblClick: aDblClickSelector dblClickTime: timeOut dblClickTimeout: aDblClickTimeoutSelector drag: aDragSelector threshold: aNumber event: firstClickEvent [
 	clickClient := aMorph.
 	clickSelector := aClickSelector.
-	dblClickSelector := aDblClickSelector.
-	dblClickTime := timeOut.
-	dblClickTimeoutSelector := aDblClickTimeoutSelector.
+	doubleClickSelector := aDblClickSelector.
+	doubleClickTime := timeOut.
+	doubleClickTimeoutSelector := aDblClickTimeoutSelector.
 	dragSelector := aDragSelector.
 	dragThreshold := aNumber.
 	firstClickDown := firstClickEvent.
 	firstClickTime := firstClickEvent timeStamp.
 	clickState := #firstClickDown.
-	localStamp := Time millisecondClockValue.
+	localStamp := Time millisecondClockValue
 ]
 
 { #category : #'event handling' }
 MouseClickState >> doubleClick [
 
-	dblClickSelector ifNotNil: [clickClient perform: dblClickSelector with: firstClickDown]
+	doubleClickSelector ifNotNil: [clickClient perform: doubleClickSelector with: firstClickDown]
+]
+
+{ #category : #accessing }
+MouseClickState >> doubleClickSelector [
+	^ doubleClickSelector
+]
+
+{ #category : #accessing }
+MouseClickState >> doubleClickSelector: anObject [
+
+	doubleClickSelector := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> doubleClickTime [
+
+	^ doubleClickTime
+]
+
+{ #category : #accessing }
+MouseClickState >> doubleClickTime: anObject [
+
+	doubleClickTime := anObject
 ]
 
 { #category : #'event handling' }
 MouseClickState >> doubleClickTimeout [
 
-	dblClickTimeoutSelector ifNotNil: [
-		clickClient perform: dblClickTimeoutSelector with: firstClickDown]
+	doubleClickTimeoutSelector ifNotNil: [
+		clickClient perform: doubleClickTimeoutSelector with: firstClickDown]
+]
+
+{ #category : #accessing }
+MouseClickState >> doubleClickTimeoutSelector [
+
+	^ doubleClickTimeoutSelector
+]
+
+{ #category : #accessing }
+MouseClickState >> doubleClickTimeoutSelector: anObject [
+
+	doubleClickTimeoutSelector := anObject
 ]
 
 { #category : #'event handling' }
@@ -93,14 +173,101 @@ MouseClickState >> drag: event [
 ]
 
 { #category : #'event handling' }
+MouseClickState >> dragDoubleClick: event [
+	dragDoubleClickSelector
+		ifNil: [ self drag: event ]
+		ifNotNil: [clickClient perform: dragDoubleClickSelector with: event]
+]
+
+{ #category : #accessing }
+MouseClickState >> dragDoubleClickSelector [
+
+	^ dragDoubleClickSelector
+]
+
+{ #category : #accessing }
+MouseClickState >> dragDoubleClickSelector: anObject [
+
+	dragDoubleClickSelector := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> dragSelector [
+
+	^ dragSelector
+]
+
+{ #category : #accessing }
+MouseClickState >> dragSelector: anObject [
+
+	dragSelector := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> dragThreshold [
+
+	^ dragThreshold
+]
+
+{ #category : #accessing }
+MouseClickState >> dragThreshold: anObject [
+
+	dragThreshold := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> event: aMouseEvent [
+	self
+		firstClickDown: aMouseEvent;
+		firstClickTime: aMouseEvent timeStamp
+]
+
+{ #category : #accessing }
+MouseClickState >> firstClickDown [
+
+	^ firstClickDown
+]
+
+{ #category : #accessing }
+MouseClickState >> firstClickDown: anObject [
+
+	firstClickDown := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> firstClickTime [
+
+	^ firstClickTime
+]
+
+{ #category : #accessing }
+MouseClickState >> firstClickTime: anObject [
+
+	firstClickTime := anObject
+]
+
+{ #category : #accessing }
+MouseClickState >> firstClickUp [
+
+	^ firstClickUp
+]
+
+{ #category : #accessing }
+MouseClickState >> firstClickUp: anObject [
+
+	firstClickUp := anObject
+]
+
+{ #category : #'event handling' }
 MouseClickState >> handleEvent: evt from: aHand [
 	"Process the given mouse event to detect a click, double-click, or drag.
 	Return true if the event should be processed by the sender, false if it shouldn't.
 	NOTE: This method heavily relies on getting *all* mouse button events."
-	| localEvt timedOut isDrag |
-	timedOut := (evt timeStamp - firstClickTime) > dblClickTime.
+	| localEvt timedOut isDrag isDragSecond |
+	timedOut := (evt timeStamp - firstClickTime) > doubleClickTime.
 	localEvt := evt transformedBy: (clickClient transformedFrom: aHand owner).
 	isDrag := (localEvt position - firstClickDown position) r > dragThreshold.
+	isDragSecond := localEvt position ~= firstClickDown position.
 	clickState == #firstClickDown ifTrue: [
 		"Careful here - if we had a slow cycle we may have a timedOut mouseUp event"
 		(timedOut and:[localEvt isMouseUp not]) ifTrue:[
@@ -112,7 +279,7 @@ MouseClickState >> handleEvent: evt from: aHand [
 			^true].
 		localEvt isMouseUp ifTrue:[
 
-			(timedOut or:[dblClickSelector isNil]) ifTrue:[
+			(timedOut or:[doubleClickSelector isNil]) ifTrue:[
 				self click.
 				aHand resetClickState.
 				^true].
@@ -124,9 +291,9 @@ MouseClickState >> handleEvent: evt from: aHand [
 			firstClickUp := evt copy.
 			"If timedOut or the client's not interested in dbl clicks get outta here"
 			aHand queuePendingEvent: firstClickUp.
-			
+
 			self click.
-			
+
 			^false].
 		isDrag ifTrue:["drag start"
 			self doubleClickTimeout. "***"
@@ -156,32 +323,53 @@ MouseClickState >> handleEvent: evt from: aHand [
 			^true].
 		localEvt isMouseDown ifTrue:["double click"
 			clickState := #secondClickDown.
-			^false]].
+			self doubleClick.
+			^false]
+	].
 
 	clickState == #secondClickDown ifTrue: [
-		timedOut ifTrue:[
-			"timed out after second mouseDown - pass event after signaling timeout"
-			aHand resetClickState.
-			self doubleClickTimeout. "***"
-			^true].
-		isDrag ifTrue: ["drag start"
+		isDragSecond ifTrue: ["drag start"
 			self doubleClickTimeout. "***"
 			aHand resetClickState.
-			dragSelector "If no drag selector send #click instead"
-				ifNil: [self click]
-				ifNotNil: [self drag: firstClickDown].
+			dragDoubleClickSelector
+				ifNotNil: [self dragDoubleClick: firstClickDown].
 			^true].
 		localEvt isMouseUp ifTrue: ["double click"
 			aHand resetClickState.
-			self doubleClick.
 			^false]
 	].
 
 	^true
 ]
 
+{ #category : #initialization }
+MouseClickState >> initialize [
+	super initialize.
+	clickState := #firstClickDown.
+	doubleClickTime := HandMorph doubleClickTime.
+	localStamp := Time millisecondClockValue.
+	dragThreshold := 5
+]
+
+{ #category : #accessing }
+MouseClickState >> localStamp [
+
+	^ localStamp
+]
+
+{ #category : #accessing }
+MouseClickState >> localStamp: anObject [
+
+	localStamp := anObject
+]
+
 { #category : #printing }
 MouseClickState >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $[; print: clickState; nextPut: $]
+]
+
+{ #category : #accessing }
+MouseClickState >> threshold: aNumber [
+	self dragThreshold: aNumber
 ]

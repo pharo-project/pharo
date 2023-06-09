@@ -10,9 +10,9 @@ Class {
 { #category : #styling }
 CoverageRubricStyler >> addIconStyle: aNode from: start to: stop [
 	|rejectClass|
-	
+
 	rejectClass := { RBMethodNode . RBSequenceNode }.
-	(rejectClass includes: aNode class) ifTrue: [ ^self ]. "do nothing" 
+	(rejectClass includes: aNode class) ifTrue: [ ^self ]. "do nothing"
 	aNode hasBeenExecuted ifTrue: [  super addIconStyle: aNode from: start to: stop]
 ]
 
@@ -23,7 +23,7 @@ CoverageRubricStyler >> iconBlock: aNode [
 
 { #category : #defaults }
 CoverageRubricStyler >> iconFor: aNode [
-	^ self iconNamed: #arrowUpIcon.
+	^ self iconNamed: #arrowUpIcon
 ]
 
 { #category : #defaults }

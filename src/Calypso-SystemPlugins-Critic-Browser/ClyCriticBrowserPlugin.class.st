@@ -13,8 +13,8 @@ Class {
 ClyCriticBrowserPlugin >> decorateTool: aBrowserTool [
 
 	aBrowserTool supportsCriticDecoration ifFalse: [ ^self ].
-		
-	aBrowserTool addDecorator: ClyCriticDecorator new.
+
+	aBrowserTool addDecorator: ClyCriticDecorator new
 ]
 
 { #category : #testing }

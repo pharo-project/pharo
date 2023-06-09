@@ -26,7 +26,7 @@ Class {
 	#category : #'Graphics-Canvas-Canvases'
 }
 
-{ #category : #all }
+{ #category : #'class initialization' }
 CornerRounder class >> initialize [  "CornerRounder initialize"
 
 	CR0 := CR1 := self new
@@ -46,7 +46,7 @@ CornerRounder class >> initialize [  "CornerRounder initialize"
 		masterOverlay:
 			(Form extent: 6@6
 				fromArray: #(2r1e26 2r111e26 2r1111e26 2r11100e26 2r11000e26 2r111000e26)
-				offset: 0@0).
+				offset: 0@0)
 ]
 
 { #category : #all }
@@ -90,7 +90,7 @@ CornerRounder >> masterMask: maskForm masterOverlay: overlayForm [
 	cornerMasks := #(none left pi right) collect:
 		[:dir | (maskForm rotateBy: dir centerAt: 0@0) offset: 0@0].
 	cornerOverlays := #(none left pi right) collect:
-		[:dir | (overlayForm rotateBy: dir centerAt: 0@0) offset: 0@0].
+		[:dir | (overlayForm rotateBy: dir centerAt: 0@0) offset: 0@0]
 ]
 
 { #category : #all }
@@ -111,7 +111,7 @@ CornerRounder >> saveBitsUnderCornersOf: aMorph on: aCanvas in: bounds corners: 
 		(aCanvas isVisible: rect) ifTrue:[
 			form := aCanvas contentsOfArea: rect.
 			form copyBits: form boundingBox from: mask at: 0@0 clippingBox: form boundingBox rule: Form and fillColor: nil map: (Bitmap with: 16rFFFFFFFF with: 0).
-			underBits at: i put: form]].
+			underBits at: i put: form]]
 ]
 
 { #category : #all }
@@ -142,9 +142,9 @@ CornerRounder >> tweakCornersOf: aMorph on: aCanvas in: bounds borderWidth: w co
 			aCanvas drawImage: outBits at: corner + offset.
 
 			w > 0 ifTrue:[
-				
+
 				aCanvas stencil: (cornerOverlays at: i) at: corner + offset
-						color: (fourColors at: i)]]].
+						color: (fourColors at: i)]]]
 ]
 
 { #category : #all }
@@ -175,7 +175,7 @@ CornerRounder >> tweakShadowCornersOf: aMorph on: aCanvas in: bounds borderWidth
 			aCanvas drawImage: outBits at: corner + offset.
 
 			w > 0 ifTrue:[
-				
+
 				aCanvas stencil: (cornerOverlays at: i) at: corner + offset
-						color: (fourColors at: i)]]].
+						color: (fourColors at: i)]]]
 ]

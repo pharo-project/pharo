@@ -38,9 +38,9 @@ STONTestDomainObject class >> dummy [
 		bytes: (ByteArray streamContents: [ :out | 32 timesRepeat: [ out nextPut: 255 atRandom ] ]);
 		description: (String streamContents: [ :out | 16 atRandom timesRepeat: [ out nextPutAll: 'Blah' ] ]);
 		color: #(#red #green #blue) atRandom;
-		tags: (Array 
+		tags: (Array
 			with: #(#one #two #three) atRandom
- 			with: #(#alpha #beta #gamma) atRandom 
+ 			with: #(#alpha #beta #gamma) atRandom
 			with: #(#low #medium #high) atRandom);
 		yourself
 ]
@@ -59,20 +59,20 @@ STONTestDomainObject >> = anObject [
 	self class = anObject class
 		ifFalse: [ ^ false ].
 	^ color = anObject color
-		and: [ 
+		and: [
 			modified = anObject modified
-				and: [ 
+				and: [
 					created = anObject created
-						and: [ 
+						and: [
 							description = anObject description
-								and: [ 
+								and: [
 									boolean = anObject boolean
-										and: [ 
+										and: [
 											(float closeTo: anObject float) 		"Use #closeTo: instead of #= to increase portability"
-												and: [ 
-													bytes = anObject bytes 
-														and: [ 
-															integer = anObject integer 
+												and: [
+													bytes = anObject bytes
+														and: [
+															integer = anObject integer
 																and: [ tags = anObject tags ] ] ] ] ] ] ] ]
 ]
 
@@ -150,9 +150,9 @@ STONTestDomainObject >> hash [
 								bitXor: (boolean hash bitXor: (float hash bitXor: (bytes hash bitXor: (integer hash bitXor: tags hash)))))))
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONTestDomainObject >> initialize [
-	created := modified := DateAndTime now.
+	created := modified := DateAndTime now
 ]
 
 { #category : #accessing }

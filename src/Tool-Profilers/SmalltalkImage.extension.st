@@ -27,7 +27,7 @@ SmalltalkImage >> profileSample [
 
 { #category : #'*Tool-Profilers' }
 SmalltalkImage >> profileSemaphore: aSemaphore [
-	"Primitive. Install the semaphore to be used for profiling, 
+	"Primitive. Install the semaphore to be used for profiling,
 	or nil if no semaphore should be used.
 	See also primitiveProfileStart."
 	<primitive: 'primitiveProfileSemaphore'>
@@ -48,15 +48,15 @@ SmalltalkImage >> reportCPUandRAM [
 	"Write several text files with useful analysis for profiling purposes.
 	Overwrites any existing report.
 	SmalltalkImage current reportCPUandRAM
-	"	
+	"
 
 	"VM statistics (Memory use and GC, mainly)"
-	'Log-MemoryStats.txt' asFileReference writeStreamDo: [ :aStream | 
+	'Log-MemoryStats.txt' asFileReference writeStreamDo: [ :aStream |
 		aStream nextPutAll: self vm statisticsReport ].
-	
+
 	"Process list"
 	'Log-ProcessList.txt' asFileReference writeStreamDo: [ :aStream |
-		self tools processBrowser new processNameList do: [ :each | 
+		self tools processBrowser new processNameList do: [ :each |
 			aStream nextPutAll: each; cr ] ].
 
 "Fork all these, so they run in sequence, as the system is back running"
@@ -64,7 +64,7 @@ SmalltalkImage >> reportCPUandRAM [
 	"Process taking most CPU"
 	'Log-ThePig.txt' asFileReference writeStreamDo: [ :aStream |
 		self tools processBrowser dumpPigStackOn: aStream ].
-	
+
 	"Tally of all processes"
 	'Log-FullTally.txt' asFileReference writeStreamDo: [ :aStream |
 		| tally |

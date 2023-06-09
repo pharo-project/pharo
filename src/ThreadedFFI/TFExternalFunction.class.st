@@ -70,14 +70,14 @@ TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: 
 
 	| definition |
 
-	definition := fixedArgumentCount = 0 
-		ifTrue:[	
-			TFFunctionDefinition 
+	definition := fixedArgumentCount = 0
+		ifTrue:[
+			TFFunctionDefinition
 				parameterTypes: parameterTypes
 				returnType: returnType
 				abi: abiType]
-		ifFalse:[	
-			TFVariadicFunctionDefinition 
+		ifFalse:[
+			TFVariadicFunctionDefinition
 				parameterTypes: parameterTypes
 				returnType: returnType
 				fixedArgumentCount: fixedArgumentCount
@@ -95,7 +95,6 @@ TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: 
 	^ (self name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType)
 		type: aFunctionCallType;
 		yourself
-
 ]
 
 { #category : #accessing }

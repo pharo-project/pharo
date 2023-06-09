@@ -2,55 +2,66 @@ Extension { #name : #Object }
 
 { #category : #'*Reflectivity' }
 Object >> asLiteralNode [
-	^RBLiteralNode value: self
+
+	^ RBLiteralNode value: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> asMethodConstant [
+
 	| const constNode link |
 	"this method will replace full sender message send of sender with me (or my value which usefull for block). So following sender method execution will not evaluate my receiver expresion but instead push precomputed literal with me"
 	const := self value.
 	constNode := thisContext sender sourceNodeExecuted.
 	link := MetaLink new
-		metaObject: const;
-		control: #instead.
+		        metaObject: const;
+		        control: #instead.
 	constNode link: link.
-	^const
+	^ const
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnAccess [
+
 	^ VariableBreakpoint watchVariablesInObject: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnAccessTo: aVariableName [
-	^VariableBreakpoint watchVariable: aVariableName inObject: self
+
+	^ VariableBreakpoint watchVariable: aVariableName inObject: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnCallTo: aSelector [
-	^Breakpoint breakOn: aSelector inObject: self
+
+	^ Breakpoint breakOn: aSelector inObject: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnRead [
-	^VariableBreakpoint watchVariablesReadsInObject: self
+
+	^ VariableBreakpoint watchVariablesReadsInObject: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnReadTo: aVariableName [
-	^VariableBreakpoint watchVariableReads: aVariableName inObject: self
+
+	^ VariableBreakpoint watchVariableReads: aVariableName inObject: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnWrite [
-	^VariableBreakpoint watchVariablesWritesInObject: self
+
+	^ VariableBreakpoint watchVariablesWritesInObject: self
 ]
 
 { #category : #'*Reflectivity' }
 Object >> haltOnWriteTo: aVariableName [
-	^VariableBreakpoint watchVariableWrites: aVariableName inObject: self
+
+	^ VariableBreakpoint
+		  watchVariableWrites: aVariableName
+		  inObject: self
 ]
 
 { #category : #'*Reflectivity' }
@@ -134,7 +145,7 @@ Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName [
 { #category : #'*Reflectivity' }
 Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName option: option [
 	| variable |
-	
+
 	variable := (self nonAnonymousClass lookupSelector: aMethodName) lookupVar: aTempVarName.
 
 	aMetaLink

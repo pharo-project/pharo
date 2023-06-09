@@ -7,7 +7,7 @@ Class {
 { #category : #annotations }
 ClassWithBrokenAnnotatingMethod class >> brokenAnnotation [
 	<classAnnotation>
-	
+
 	self error: self brokenAnnotationMessage
 ]
 

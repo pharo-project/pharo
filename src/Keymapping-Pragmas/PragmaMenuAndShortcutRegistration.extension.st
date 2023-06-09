@@ -1,9 +1,9 @@
 Extension { #name : #PragmaMenuAndShortcutRegistration }
 
 { #category : #'*Keymapping-Pragmas' }
-PragmaMenuAndShortcutRegistration >> attachShortcutCategory: aSymbol to: aClass [ 
+PragmaMenuAndShortcutRegistration >> attachShortcutCategory: aSymbol to: aClass [
 
-	KMRepository default attachCategoryName: aSymbol to: aClass.
+	KMRepository default attachCategoryName: aSymbol to: aClass
 ]
 
 { #category : #'*Keymapping-Pragmas' }

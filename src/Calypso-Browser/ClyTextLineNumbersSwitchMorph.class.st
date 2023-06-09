@@ -26,44 +26,44 @@ ClyTextLineNumbersSwitchMorph class >> settingsOn: aBuilder [
 		parent: #Calypso;
 		default: false;
 		target: self;
-		description: 'If true, line numbers will appear in new system browsers for method editor'.
+		description: 'If true, line numbers will appear in new system browsers for method editor'
 ]
 
 { #category : #settings }
 ClyTextLineNumbersSwitchMorph class >> showLineNumbers [
-	^ showLineNumbers ifNil: [ false ].
+	^ showLineNumbers ifNil: [ false ]
 ]
 
 { #category : #settings }
 ClyTextLineNumbersSwitchMorph class >> showLineNumbers: aBoolean [
 	showLineNumbers := aBoolean.
-	self allInstancesDo: [ :inst | 
+	self allInstancesDo: [ :inst |
 		| textMorph |
 		textMorph := inst textMorph.
 		(showLineNumbers and: [textMorph lineNumbersRuler isNil])
 			ifTrue: [ textMorph withLineNumbers ].
 		(showLineNumbers not and: [ textMorph lineNumbersRuler isNotNil ])
 			ifTrue: [ textMorph withoutLineNumbers ].
-		inst updateLabel ].
+		inst updateLabel ]
 ]
 
 { #category : #controlling }
-ClyTextLineNumbersSwitchMorph >> attachToTextMorph [ 
+ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 	super attachToTextMorph.
-	
+
 	label := StringMorph new.
 	label setBalloonText:
 			'Let you decide if the code pane should show the line numbers at the left of the code pane or not. +L: Click to add the lines number/L: Click to hide them.'.
 	label on: #mouseDown send: #toggle to: self.
 	self updateLabel.
 	self addMorph: label.
-	self class showLineNumbers 
-		ifTrue: [ self toggle ].
+	self class showLineNumbers
+		ifTrue: [ textMorph withLineNumbers ]
 ]
 
 { #category : #operations }
 ClyTextLineNumbersSwitchMorph >> toggle [
-	textMorph lineNumbersRuler 
+	textMorph lineNumbersRuler
 		ifNil: [ textMorph withLineNumbers ]
 		ifNotNil: [ textMorph withoutLineNumbers ].
 	self updateLabel

@@ -18,7 +18,7 @@ FFILiteralArgument class >> value: aValue [
 
 { #category : #'instance creation' }
 FFILiteralArgument class >> value: anObject type: aType [
-	^ self new 
+	^ self new
 		value: anObject;
 		type: aType;
 		yourself
@@ -37,13 +37,13 @@ FFILiteralArgument >> emitArgument: aBuilder context: aContext objectClass: aCla
 ]
 
 { #category : #unpacking }
-FFILiteralArgument >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [ 
-	
+FFILiteralArgument >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [
+
 	"Nothing to do here"
 ]
 
 { #category : #'emitting code' }
-FFILiteralArgument >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [ 
+FFILiteralArgument >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	self error: 'Literals cannot be used as return'
 ]
 
@@ -53,7 +53,7 @@ FFILiteralArgument >> emitReturnArgument: builder context: aContext [
 ]
 
 { #category : #accessing }
-FFILiteralArgument >> externalType [ 
+FFILiteralArgument >> externalType [
 
 	^ self type externalType
 ]
@@ -71,7 +71,7 @@ FFILiteralArgument >> externalTypeSize [
 ]
 
 { #category : #accessing }
-FFILiteralArgument >> loader [ 
+FFILiteralArgument >> loader [
 	^ self
 ]
 
@@ -83,7 +83,6 @@ FFILiteralArgument >> pointerArity: additionalArity [
 { #category : #'stack parameter classification' }
 FFILiteralArgument >> stackValueParameterClass [
 	^ value isFloat ifTrue: [#float] ifFalse: [#integer]
-
 ]
 
 { #category : #accessing }

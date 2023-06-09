@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 FTExampleMethodModel class >> method: aMethod [
-	^ self basicNew 
+	^ self basicNew
 		initializeMethod: aMethod;
 		yourself
 ]
@@ -31,7 +31,7 @@ FTExampleMethodModel >> actionOn: aBrowser [
 
 { #category : #factory }
 FTExampleMethodModel >> createActionIconOn: aBrowser [
-	^Smalltalk ui icons iconNamed: #scriptManagerIcon
+	^Smalltalk ui icons iconNamed: #scriptManager
 ]
 
 { #category : #initialization }
@@ -57,5 +57,5 @@ FTExampleMethodModel >> origin [
 
 { #category : #accessing }
 FTExampleMethodModel >> protocol [
-	^ self method protocol
+	^ self method protocolName
 ]

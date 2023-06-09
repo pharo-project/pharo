@@ -27,7 +27,7 @@ ReRefersToClassRuleTest >> testIsAbstractNotDetected [
 	| critiques|
  	critiques := self myCritiquesOnMethod: self class class >> #isAbstract.
 
- 	self assert: critiques size equals: 0.
+ 	self assert: critiques size equals: 0
 ]
 
 { #category : #tests }
@@ -36,5 +36,5 @@ ReRefersToClassRuleTest >> testRuleDetectHardCodedClass [
  	critiques := self myCritiquesOnMethod: self class >> #referToClassName.
 
  	self assert: critiques size equals: 2.
- 	self assert: (self sourceAtChritique:  critiques first) equals: ReRefersToClassRuleTest name asString.
+ 	self assert: (self sourceAtChritique:  critiques first) equals: ReRefersToClassRuleTest name asString
 ]

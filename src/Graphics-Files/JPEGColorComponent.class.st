@@ -45,7 +45,7 @@ JPEGColorComponent >> acTableIndex [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> acTableIndex: anInteger [ 
+JPEGColorComponent >> acTableIndex: anInteger [
 	acTableIndex := anInteger
 ]
 
@@ -56,7 +56,7 @@ JPEGColorComponent >> dcTableIndex [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> dcTableIndex: anInteger [ 
+JPEGColorComponent >> dcTableIndex: anInteger [
 	dcTableIndex := anInteger
 ]
 
@@ -67,7 +67,7 @@ JPEGColorComponent >> heightInBlocks [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> heightInBlocks: anInteger [ 
+JPEGColorComponent >> heightInBlocks: anInteger [
 	heightInBlocks := anInteger
 ]
 
@@ -78,18 +78,18 @@ JPEGColorComponent >> id [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> id: anObject [ 
+JPEGColorComponent >> id: anObject [
 	id := anObject
 ]
 
 { #category : #'sample streaming' }
-JPEGColorComponent >> initializeSampleStreamBlocks: aCollection [ 
+JPEGColorComponent >> initializeSampleStreamBlocks: aCollection [
 	mcuBlocks := aCollection.
 	self resetSampleStream
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> mcuWidth: mw mcuHeight: mh dctSize: ds [ 
+JPEGColorComponent >> mcuWidth: mw mcuHeight: mh dctSize: ds [
 	mcuWidth := mw.
 	mcuHeight := mh.
 	dctSize := ds.
@@ -106,14 +106,14 @@ JPEGColorComponent >> nextSample [
 	sampleIndex := dy \\ dctSize * dctSize + (dx \\ dctSize) + 1.
 	sample := (mcuBlocks at: blockIndex) at: sampleIndex.
 	currentX := currentX + 1.
-	currentX < (mcuWidth * dctSize) ifFalse: 
+	currentX < (mcuWidth * dctSize) ifFalse:
 		[ currentX := 0.
 		currentY := currentY + 1 ].
 	^ sample
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> priorDCValue: aNumber [ 
+JPEGColorComponent >> priorDCValue: aNumber [
 	priorDCValue := aNumber
 ]
 
@@ -123,7 +123,7 @@ JPEGColorComponent >> qTableIndex [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> qTableIndex: anInteger [ 
+JPEGColorComponent >> qTableIndex: anInteger [
 	qTableIndex := anInteger
 ]
 
@@ -140,7 +140,7 @@ JPEGColorComponent >> totalMcuBlocks [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> updateDCValue: aNumber [ 
+JPEGColorComponent >> updateDCValue: aNumber [
 	priorDCValue := priorDCValue + aNumber.
 	^ priorDCValue
 ]
@@ -152,6 +152,6 @@ JPEGColorComponent >> widthInBlocks [
 ]
 
 { #category : #accessing }
-JPEGColorComponent >> widthInBlocks: anInteger [ 
+JPEGColorComponent >> widthInBlocks: anInteger [
 	widthInBlocks := anInteger
 ]

@@ -1,5 +1,5 @@
 "
-I am a command to launch the Remove All Senders Refactoring: the call to this method in all senders is removed (as long as possible)
+I am a command to launch the Remove All Senders Refactoring: removes all possible senders from a method.
 "
 Class {
 	#name : #SycRemoveAllSendersCommand,
@@ -25,7 +25,7 @@ SycRemoveAllSendersCommand >> createRefactoring [
 ]
 
 { #category : #accessing }
-SycRemoveAllSendersCommand >> defaultMenuIconName [ 
+SycRemoveAllSendersCommand >> defaultMenuIconName [
 	^#remove
 ]
 

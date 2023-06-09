@@ -11,7 +11,7 @@ RubFindReplaceServiceTest >> defaultFindReplaceServiceClass [
 ]
 
 { #category : #tests }
-RubFindReplaceServiceTest >> testCaseSensitive [ 
-	
+RubFindReplaceServiceTest >> testCaseSensitive [
+
 	self deny: ( self defaultFindReplaceServiceClass newFor: self) caseSensitive
 ]

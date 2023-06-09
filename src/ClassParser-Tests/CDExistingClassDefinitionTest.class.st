@@ -18,7 +18,7 @@ CDExistingClassDefinitionTest >> className [
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> firstInstanceVariableName [
-	
+
 	^ 'instVar1'
 ]
 
@@ -30,7 +30,7 @@ CDExistingClassDefinitionTest >> secondInstanceVariableName [
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToRBVariableNode [
-	
+
 	| nameNode |
 	nameNode := classDefinition classNameNode.
 	self assert: nameNode isVariable. "It is polymorphic to class reference nodes in method sources"
@@ -39,7 +39,7 @@ CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToRBVariableNode 
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testGettingExistingClass [
-	
+
 	| class |
 	class := classDefinition existingClassIfAbsent: [].
 	self assert: class equals: CDClassWithFullDefinitionExample
@@ -47,31 +47,31 @@ CDExistingClassDefinitionTest >> testGettingExistingClass [
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
-	
+
 	| binding |
 	binding := classDefinition classNameNode binding.
-	
+
 	self assert: binding identicalTo: CDClassWithFullDefinitionExample binding
 ]
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNodes [
-	
+
 	| classVarNode |
-	classVarNode := classDefinition sharedSlotNodes first.
-	
+	classVarNode := classDefinition sharedVariableNodes first.
+
 	self assert: classVarNode isVariable.
 	self deny: classVarNode isTempVariable.
 	self deny: classVarNode isGlobalVariable.
 	self assert: classVarNode isClassVariable.
 	self deny: classVarNode isInstanceVariable.
 	self assert: classVarNode isLiteralVariable.
-	self deny: classVarNode isUndeclaredVariable.
+	self deny: classVarNode isUndeclaredVariable
 ]
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
-	
+
 	| slotNode |
 	slotNode := classDefinition slotNodes first.
 	self assert: slotNode isVariable.
@@ -80,12 +80,12 @@ CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
 	self deny: slotNode isClassVariable.
 	self assert: slotNode isInstanceVariable.
 	self deny: slotNode isLiteralVariable.
-	self deny: slotNode isUndeclaredVariable.
+	self deny: slotNode isUndeclaredVariable
 ]
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testSlotNodeBinding [
-	
+
 	| slotNode |
 	slotNode := classDefinition slotNodes first.
 	self assert: slotNode binding identicalTo: slotNode

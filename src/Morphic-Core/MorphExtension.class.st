@@ -28,7 +28,7 @@ Class {
 MorphExtension >> actionMap [
 	"Answer the value of actionMap"
 
-	^actionMap ifNil: [self valueOfProperty: #actionMap ifAbsent: []]
+	^actionMap ifNil: [self valueOfProperty: #actionMap]
 ]
 
 { #category : #accessing }
@@ -89,7 +89,7 @@ MorphExtension >> copyWeakly [
 	"list of names of properties whose values should be weak-copied when veryDeepCopying a morph.  See DeepCopier."
 
 	^ #(formerOwner)
-	"add yours to this list" 
+	"add yours to this list"
 
 	"formerOwner should really be nil at the time of the copy, but this will work just fine."
 ]
@@ -125,7 +125,7 @@ MorphExtension >> externalName [
 ]
 
 { #category : #accessing }
-MorphExtension >> externalName: aString [ 
+MorphExtension >> externalName: aString [
 	"change the receiver's externalName"
 	externalName := aString
 ]
@@ -156,19 +156,19 @@ MorphExtension >> hasProperty: aSymbol [
 
 { #category : #initialization }
 MorphExtension >> initialize [
-	
+
 	locked := false.
 	visible := true.
-	sticky := false.
+	sticky := false
 ]
 
 { #category : #other }
 MorphExtension >> inspectElement [
-	"Create and schedule an Inspector on the otherProperties and the 
+	"Create and schedule an Inspector on the otherProperties and the
 	named properties."
 	| key obj |
-	key := UIManager default 
-				chooseFrom: self sortedPropertyNames 
+	key := UIManager default
+				chooseFrom: self sortedPropertyNames
 				values: self sortedPropertyNames
 				title: 'Inspect which property?' translated.
 	key
@@ -217,8 +217,8 @@ MorphExtension >> layoutPolicy [
 ]
 
 { #category : #'accessing - layout properties' }
-MorphExtension >> layoutPolicy: aLayoutPolicy [ 
-	
+MorphExtension >> layoutPolicy: aLayoutPolicy [
+
 	layoutPolicy := aLayoutPolicy
 ]
 
@@ -229,7 +229,7 @@ MorphExtension >> layoutProperties [
 ]
 
 { #category : #'accessing - layout properties' }
-MorphExtension >> layoutProperties: newProperties [ 
+MorphExtension >> layoutProperties: newProperties [
 	"Return the current layout properties associated with the receiver"
 
 	layoutProperties := newProperties
@@ -242,7 +242,7 @@ MorphExtension >> locked [
 ]
 
 { #category : #accessing }
-MorphExtension >> locked: aBoolean [ 
+MorphExtension >> locked: aBoolean [
 	"change the receiver's locked property"
 	locked := aBoolean
 ]
@@ -255,7 +255,7 @@ MorphExtension >> otherProperties [
 
 { #category : #printing }
 MorphExtension >> printOn: aStream [
-	"Append to the argument, aStream, a sequence of characters that 
+	"Append to the argument, aStream, a sequence of characters that
 	identifies the receiver."
 
 	super printOn: aStream.
@@ -272,24 +272,24 @@ MorphExtension >> printOn: aStream [
 		ifTrue: [ aStream nextPutAll: ' [sticky] ' ].
 	balloonText ifNotNil: [ aStream nextPutAll: ' [balloonText] ' ].
 	externalName
-		ifNotNil: [ 
+		ifNotNil: [
 			aStream
-				nextPutAll: ' [externalName = ' ; 
+				nextPutAll: ' [externalName = ' ;
 					nextPutAll:  externalName;
 				nextPutAll: ' ] ' ].
 	eventHandler
-		ifNotNil: [ 
+		ifNotNil: [
 			aStream
-				nextPutAll:  ' [eventHandler = ' ; 
+				nextPutAll:  ' [eventHandler = ' ;
 				print: eventHandler ;
 				nextPutAll: '] ' ].
 	(otherProperties isNil or: [ otherProperties isEmpty ])
 		ifTrue: [ ^ self ].
 	aStream nextPutAll: ' [other: '.
 	self otherProperties
-		keysDo: [ :aKey | 
+		keysDo: [ :aKey |
 			aStream
-				nextPutAll: ' (' ; 
+				nextPutAll: ' (' ;
 					nextPutAll:  aKey; nextPutAll:  ' -> ' ; print: (self otherProperties at: aKey) ;
 				nextPutAll: ')' ].
 	aStream nextPut: $]
@@ -311,7 +311,7 @@ MorphExtension >> removeOtherProperties [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> removeProperty: aSymbol [ 
+MorphExtension >> removeProperty: aSymbol [
 	"removes the property named aSymbol if it exists"
 	otherProperties ifNil: [^ self].
 	otherProperties removeKey: aSymbol ifAbsent: [].
@@ -319,7 +319,7 @@ MorphExtension >> removeProperty: aSymbol [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> setProperty: aSymbol toValue: abObject [ 
+MorphExtension >> setProperty: aSymbol toValue: abObject [
 	"change the receiver's property named aSymbol to anObject"
 	self assureOtherProperties at: aSymbol put: abObject
 ]
@@ -346,24 +346,23 @@ MorphExtension >> sticky [
 ]
 
 { #category : #accessing }
-MorphExtension >> sticky: aBoolean [ 
+MorphExtension >> sticky: aBoolean [
 	"change the receiver's sticky property"
 	sticky := aBoolean
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> valueOfProperty: aSymbol [ 
-"answer the value of the receiver's property named aSymbol"
-	^ self
-		valueOfProperty: aSymbol
-		ifAbsent: []
+MorphExtension >> valueOfProperty: aSymbol [
+	"Answer the value of the receiver's property named aSymbol"
+
+	^ otherProperties ifNotNil: [ :prop | prop at: aSymbol ifAbsent: nil ]
 ]
 
 { #category : #'accessing - other properties' }
 MorphExtension >> valueOfProperty: aSymbol ifAbsent: aBlock [
 
-	"if the receiver possesses a property of the given name, answer  
-	its value. If not then evaluate aBlock and answer the result of  
+	"if the receiver possesses a property of the given name, answer
+	its value. If not then evaluate aBlock and answer the result of
 	this block evaluation"
 
 	^ otherProperties
@@ -372,16 +371,16 @@ MorphExtension >> valueOfProperty: aSymbol ifAbsent: aBlock [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
-	"If the receiver possesses a property of the given name, answer  
-	its value. If not, then create a property of the given name, give 
-	it the value obtained by evaluating aBlock, then answer that  
+MorphExtension >> valueOfProperty: aSymbol ifAbsentPut: aBlock [
+	"If the receiver possesses a property of the given name, answer
+	its value. If not, then create a property of the given name, give
+	it the value obtained by evaluating aBlock, then answer that
 	value"
 	^self assureOtherProperties at: aSymbol ifAbsentPut: aBlock
 ]
 
 { #category : #'connectors - copying' }
-MorphExtension >> veryDeepFixupWith: deepCopier [ 
+MorphExtension >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.
 	If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
@@ -392,11 +391,11 @@ MorphExtension >> veryDeepFixupWith: deepCopier [
 	self copyWeakly do: [ :propertyName |
 		otherProperties at: propertyName ifPresent: [ :property |
 			otherProperties at: propertyName
-				put: (deepCopier references at: property ifAbsent: [ property ])]].
+				put: (deepCopier references at: property ifAbsent: [ property ])]]
 ]
 
 { #category : #'connectors - copying' }
-MorphExtension >> veryDeepInner: deepCopier [ 
+MorphExtension >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.
 	Some otherProperties need to be not copied at all, but shared. Their names are given by copyWeakly.
 	Some otherProperties should not be copied or shared. Their names are given by propertyNamesNotCopied.
@@ -410,7 +409,7 @@ MorphExtension >> veryDeepInner: deepCopier [
 	balloonText := balloonText veryDeepCopyWith: deepCopier.
 	externalName := externalName veryDeepCopyWith: deepCopier.
 	eventHandler := eventHandler veryDeepCopyWith: deepCopier. 	"has its own restrictions"
-	
+
 	fillStyle := fillStyle veryDeepCopyWith: deepCopier.
 	layoutPolicy := layoutPolicy veryDeepCopyWith: deepCopier.
 	layoutFrame := layoutFrame veryDeepCopyWith: deepCopier.
@@ -432,7 +431,7 @@ MorphExtension >> veryDeepInner: deepCopier [
 	otherProperties := otherProperties veryDeepCopyWith: deepCopier.
 
 	"And replace the weak ones."
-	namesOfWeaklyCopiedProperties with: weaklyCopiedValues do: [ :name :value | value ifNotNil: [ otherProperties at: name put: value ]].
+	namesOfWeaklyCopiedProperties with: weaklyCopiedValues do: [ :name :value | value ifNotNil: [ otherProperties at: name put: value ]]
 ]
 
 { #category : #accessing }

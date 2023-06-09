@@ -45,7 +45,7 @@ Variable class >> initialize [
 ]
 
 { #category : #testing }
-Variable class >> isAbstract [ 
+Variable class >> isAbstract [
 	^self = Variable
 ]
 
@@ -62,7 +62,7 @@ Variable >> = other [
 	"Every subclass that adds state must redefine this method"
 	self == other
 		ifTrue: [ ^ true ].
-	^ (self species == other species) 
+	^ (self species == other species)
 			and: [ name = other name ]
 ]
 
@@ -91,6 +91,12 @@ Variable >> definingNode [
 	^ nil
 ]
 
+{ #category : #printing }
+Variable >> definitionOn: aStream [
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printOn: aStream
+]
+
 { #category : #'code generation' }
 Variable >> emitStore: methodBuilder [
 
@@ -111,7 +117,7 @@ Variable >> ensureProperties [
 { #category : #properties }
 Variable >> hasProperty: aKey [
 	"Test if the property aKey is present."
-	^self properties 
+	^self properties
 		ifNil: [false]
 		ifNotNil: [:prop | prop includesKey: aKey]
 ]
@@ -155,8 +161,13 @@ Variable >> isInstanceVariable [
 ]
 
 { #category : #testing }
+Variable >> isInvalidVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isLiteralVariable [
-	"returns true for Global Variables, Class Variables and some others 
+	"returns true for Global Variables, Class Variables and some others
 	(e.g. Workspace bindings and Undeclared variables, see subclasses)"
 	^false
 ]
@@ -221,6 +232,11 @@ Variable >> isThisContextVariable [
 ]
 
 { #category : #testing }
+Variable >> isThisProcessVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isUndeclaredVariable [
 
 	^ false
@@ -233,7 +249,7 @@ Variable >> isUninitialized [
 ]
 
 { #category : #testing }
-Variable >> isUsed [ 
+Variable >> isUsed [
 	^ self isReferenced
 ]
 
@@ -269,6 +285,14 @@ Variable >> needsFullDefinition [
 	^true
 ]
 
+{ #category : #accessing }
+Variable >> originalVar [
+	"Because some AST analysis optimize temps representatipn, specific implementation-dependant variables cas apears in AST. This method return the original temp.
+	On other varialbes, it's just self."
+
+	^ self
+]
+
 { #category : #properties }
 Variable >> properties [
 	^ Properties at: self ifAbsent: nil
@@ -292,7 +316,7 @@ Variable >> propertyAt: propName ifAbsent: aBlock [
 { #category : #properties }
 Variable >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
+
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
 ]
 

@@ -25,10 +25,10 @@ IntegerDigitLogicTest >> testLargeShift [
 	"129 bits or less"
 	suite := suite , (suite collect: [ :e | e , e ]).
 	suite
-		do: [ :bits | 
+		do: [ :bits |
 			| num ls rs |
 			num := Integer readFrom: bits readStream base: 2.
-			0 to: bits size - 1 do: [ :shift | 
+			0 to: bits size - 1 do: [ :shift |
 				ls := (num bitShift: shift) printStringBase: 2.
 				rs := (num bitShift: 0 - shift) printStringBase: 2.
 				self assert: ls equals: bits , (String new: shift withAll: $0).
@@ -47,7 +47,7 @@ IntegerDigitLogicTest >> testNBitAndNNegatedEqualsN [
 	"Verify that (n bitAnd: n negated) = n for single bits"
 
 	| n |
-	1 to: 100 do: [ :i | 
+	1 to: 100 do: [ :i |
 		n := 1 bitShift: i.
 		self assert: (n bitAnd: n negated) equals: n ]
 ]
@@ -57,7 +57,7 @@ IntegerDigitLogicTest >> testNNegatedEqualsNComplementedPlusOne [
 	"Verify that n negated = (n complemented + 1) for single bits"
 
 	| n |
-	1 to: 100 do: [ :i | 
+	1 to: 100 do: [ :i |
 		n := 1 bitShift: i.
 		self assert: n negated equals: (n bitXor: -1) + 1 ]
 ]

@@ -20,30 +20,30 @@ Array2DTest >> setUp [
 	matrix1 at:1 at:2 put: 3.
 	matrix1 at:2 at:1 put: 2.
 	matrix1 at:2 at:2 put: 4.
-	
+
 	matrix2 := Array2D new: 2.
 	matrix2 at:1 at:1 put: 3.
 	matrix2 at:1 at:2 put: 7.
 	matrix2 at:2 at:1 put: 4.
 	matrix2 at:2 at:2 put: 8.
-	
+
 	matrix23 := Array2D rows: 3 columns: 2.
 	matrix23 at: 1 at: 1 put: 11.
 	matrix23 at: 1 at: 2 put: 21.
 	matrix23 at: 2 at: 1 put: 12.
 	matrix23 at: 2 at: 2 put: 22.
 	matrix23 at: 3 at: 1 put: 13.
-	matrix23 at: 3 at: 2 put: 23.
+	matrix23 at: 3 at: 2 put: 23
 ]
 
 { #category : #'tests - accessing' }
 Array2DTest >> testAtAllPut [
 
-	| m | 
-	m := Array2D new: 3. 
+	| m |
+	m := Array2D new: 3.
 	m do: [ :each | self assert: each equals: nil ].
 	m atAllPut: 1.
-	m do: [ :each | self assert: each equals: 1 ].
+	m do: [ :each | self assert: each equals: 1 ]
 ]
 
 { #category : #'tests - accessing' }
@@ -54,21 +54,21 @@ Array2DTest >> testAtAt [
 	self should:[matrix1 at: 0 at: 1] raise: Error.
 	self should:[matrix1 at: 1 at: 0] raise: Error.
 	self should:[matrix1 at: 0 at: 0] raise: Error.
-	
+
 	self assert: (matrix1 at: 1 at: 1) equals: 1.
 	self assert: (matrix23 at: 1 at: 1) equals: 11.
 	self assert: (matrix23 at: 1 at: 2) equals: 21.
 	self assert: (matrix23 at: 2 at: 1) equals: 12.
 	self assert: (matrix23 at: 2 at: 2) equals: 22.
 	self assert: (matrix23 at: 3 at: 1) equals: 13.
-	self assert: (matrix23 at: 3 at: 2) equals: 23.
+	self assert: (matrix23 at: 3 at: 2) equals: 23
 ]
 
 { #category : #'tests - accessing' }
 Array2DTest >> testAtColumn [
 
 	self assert: (matrix23 atColumn: 1) equals: #(11 12 13).
-	self assert: (matrix23 atColumn: 2) equals: #(21 22 23).
+	self assert: (matrix23 atColumn: 2) equals: #(21 22 23)
 ]
 
 { #category : #'tests - accessing' }
@@ -76,14 +76,14 @@ Array2DTest >> testAtRow [
 
 	self assert: (matrix23 atRow: 1) equals: #(11 21).
 	self assert: (matrix23 atRow: 2) equals: #(12 22).
-	self assert: (matrix23 atRow: 3) equals: #(13 23).
+	self assert: (matrix23 atRow: 3) equals: #(13 23)
 ]
 
 { #category : #'tests - accessing' }
 Array2DTest >> testCollectCreatesANewMatrix [
 
-	| m m2 | 
-	m := Array2D new: 3. 
+	| m m2 |
+	m := Array2D new: 3.
 	m atAllPut: -1.
 	self assert: (m occurrencesOf: -1) equals: 9.
 	m2 := m collect: [ :each | each abs ].
@@ -94,7 +94,7 @@ Array2DTest >> testCollectCreatesANewMatrix [
 { #category : #'tests - instance creation' }
 Array2DTest >> testColumnVector [
 
-	| m m2 | 
+	| m m2 |
 
 	m := Array2D columnVector: #(1 2 3 4 5).
 
@@ -106,7 +106,7 @@ Array2DTest >> testColumnVector [
 	m2 := Array2D columnVector: Array new.
 
 	self assert: m2 numberOfColumns equals: 1.
-	self assert: m2 numberOfRows equals: 0.
+	self assert: m2 numberOfRows equals: 0
 ]
 
 { #category : #'tests - accessing' }
@@ -125,7 +125,7 @@ Array2DTest >> testCopy [
 { #category : #'tests - instance creation' }
 Array2DTest >> testDiagonal [
 
-	| m m2 | 
+	| m m2 |
 
 	m := Array2D diagonal: #(1 2 3 4 5).
 
@@ -138,7 +138,7 @@ Array2DTest >> testDiagonal [
 	m2 := Array2D diagonal: Array new.
 
 	self assert: m2 numberOfColumns equals: 0.
-	self assert: m2 numberOfRows equals: 0.
+	self assert: m2 numberOfRows equals: 0
 ]
 
 { #category : #'tests - instance creation' }
@@ -156,12 +156,12 @@ Array2DTest >> testIdentity [
 { #category : #'tests - instance creation' }
 Array2DTest >> testIdentityOtherTest [
 
-	| m | 
+	| m |
 	m := Array2D identity: 3.
 	self assert: (m at: 1 at:1) equals: 1.
 	self assert: (m at: 2 at:2) equals: 1.
 	self assert: (m at: 3 at:3) equals: 1.
-	self assert: (m occurrencesOf: 1) equals: 3.
+	self assert: (m occurrencesOf: 1) equals: 3
 ]
 
 { #category : #'tests - testing' }
@@ -186,7 +186,7 @@ Array2DTest >> testMultiply [
 { #category : #'tests - instance creation' }
 Array2DTest >> testNewTabulate [
 
-	| m m2 | 
+	| m m2 |
 
 	m := Array2D new: 5 tabulate: [ :a :b | a*b ].
 
@@ -199,16 +199,16 @@ Array2DTest >> testNewTabulate [
 		self assert: (m at: i at: i) equals: i*i.].
 
 	m2 := Array2D new: 0 tabulate: [ :a :b | a*b ].
-	
+
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
-	self assert: (m2 occurrencesOf: 1) equals: 0.
+	self assert: (m2 occurrencesOf: 1) equals: 0
 ]
 
 { #category : #'tests - instance creation' }
 Array2DTest >> testOnes [
 
-	| m m2 | 
+	| m m2 |
 
 	m := Array2D ones: 10.
 
@@ -220,7 +220,7 @@ Array2DTest >> testOnes [
 
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
-	self assert: (m2 occurrencesOf: 1) equals: 0.
+	self assert: (m2 occurrencesOf: 1) equals: 0
 ]
 
 { #category : #'tests - accessing' }
@@ -230,13 +230,13 @@ Array2DTest >> testReplaceAll [
 	self assert: (matrix1 at: 1 at: 1) equals: 10.
 	self assert: (matrix1 at: 2 at: 1) equals: 2.
 	self assert: (matrix1 at: 1 at: 2) equals: 3.
-	self assert: (matrix1 at: 2 at: 2) equals: 4.
+	self assert: (matrix1 at: 2 at: 2) equals: 4
 ]
 
 { #category : #'tests - instance creation' }
 Array2DTest >> testRowVector [
 
-	| m m2 | 
+	| m m2 |
 
 	m := Array2D rowVector: #(1 2 3 4 5).
 
@@ -248,13 +248,13 @@ Array2DTest >> testRowVector [
 	m2 := Array2D rowVector: Array new.
 
 	self assert: m2 numberOfColumns equals: 0.
-	self assert: m2 numberOfRows equals: 1.
+	self assert: m2 numberOfRows equals: 1
 ]
 
 { #category : #'tests - accessing' }
 Array2DTest >> testSquaredWithAllElement [
 
-	self assert: ((Array2D new: 3 element: -1) occurrencesOf: -1) equals: 9.
+	self assert: ((Array2D new: 3 element: -1) occurrencesOf: -1) equals: 9
 ]
 
 { #category : #'tests - accessing' }
@@ -277,7 +277,7 @@ Array2DTest >> testTabulate [
 	self assert: (m at: 2 at: 1) equals: 12.
 	self assert: (m at: 2 at: 2) equals: 22.
 	self assert: (m at: 3 at: 1) equals: 13.
-	self assert: (m at: 3 at: 2) equals: 23.
+	self assert: (m at: 3 at: 2) equals: 23
 ]
 
 { #category : #'tests - testing' }
@@ -298,9 +298,9 @@ Array2DTest >> testTransposed [
 ]
 
 { #category : #'tests - instance creation' }
-Array2DTest >> testzeros [	
+Array2DTest >> testzeros [
 
-	| m m2 | 
+	| m m2 |
 
 	m := Array2D zeros: 5.
 
@@ -312,5 +312,5 @@ Array2DTest >> testzeros [
 
 	self assert: m2 numberOfColumns equals: 0.
 	self assert: m2 numberOfRows equals: 0.
-	self assert: (m2 occurrencesOf: 0) equals: 0.
+	self assert: (m2 occurrencesOf: 0) equals: 0
 ]

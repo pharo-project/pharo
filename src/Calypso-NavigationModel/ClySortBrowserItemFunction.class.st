@@ -26,7 +26,7 @@ Class {
 
 { #category : #'instance creation' }
 ClySortBrowserItemFunction class >> with: actualObjectSortFunction [
-	^self new 
+	^self new
 		actualObjectSortFunction: actualObjectSortFunction
 ]
 
@@ -51,8 +51,8 @@ ClySortBrowserItemFunction >> actualObjectSortFunction: anObject [
 
 { #category : #evaluating }
 ClySortBrowserItemFunction >> collate: aBrowserItem1 with: aBrowserItem2 [
-	^actualObjectSortFunction 
-		collate: aBrowserItem1 actualObject 
+	^actualObjectSortFunction
+		collate: aBrowserItem1 actualObject
 		with: aBrowserItem2 actualObject
 ]
 

@@ -7,7 +7,7 @@ CmdMenuGroup >> addToMenuPresenter: aSpMenuPresenter [
 	self contents
 		do: [ :each | each addToMenuPresenter: subMenuPresenter ].
 	aSpMenuPresenter
-		addItem: [ :item | 
+		addItem: [ :item |
 			item
 				name: self name;
 				icon: self icon;

@@ -45,7 +45,7 @@ RBClassEnvironment >> acceptVisitor: aEnvVisitor [
 ]
 
 { #category : #adding }
-RBClassEnvironment >> addClass: aClass [ 
+RBClassEnvironment >> addClass: aClass [
 	aClass isMeta
 		ifTrue: [ metaClasses add: aClass soleInstance name ]
 		ifFalse: [ classes add: aClass name ]
@@ -66,7 +66,7 @@ RBClassEnvironment >> asSelectorEnvironment [
 		label:self label;
 		onEnvironment: self environment;
 		classSelectors: self classSelectorDictionary metaClassSelectors: self metaClassSelectorDictionary;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -84,7 +84,7 @@ RBClassEnvironment >> classNames [
 
 { #category : #printing }
 RBClassEnvironment >> classSelectorDictionary [
-	^ classes 
+	^ classes
 		inject: (IdentityDictionary new: classes size)
 		into: [ :answer :class |
 			answer
@@ -93,18 +93,18 @@ RBClassEnvironment >> classSelectorDictionary [
 ]
 
 { #category : #initialization }
-RBClassEnvironment >> classes: aCollection [ 
+RBClassEnvironment >> classes: aCollection [
 	aCollection do: [ :each | self addClass: each ]
 ]
 
 { #category : #'accessing - classes' }
-RBClassEnvironment >> classesDo: aBlock [ 
-	classes do: [ :each | 
+RBClassEnvironment >> classesDo: aBlock [
+	classes do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class notNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
-		metaClasses do: [ :each | 
+		metaClasses do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class notNil and: [ environment includesClass: class classSide ])
@@ -115,8 +115,8 @@ RBClassEnvironment >> classesDo: aBlock [
 RBClassEnvironment >> defaultLabel [
 	| stream |
 	stream := String new writeStream.
-	classes do: 
-			[:each | 
+	classes do:
+			[:each |
 			stream nextPutAll: each;
 				nextPut: $ ].
 	^stream contents
@@ -124,7 +124,7 @@ RBClassEnvironment >> defaultLabel [
 
 { #category : #testing }
 RBClassEnvironment >> definesClass: aClass [
-	
+
 	^ self includesClass: aClass
 ]
 
@@ -137,13 +137,13 @@ RBClassEnvironment >> includesCategory: aCategory [
 				bool or: [
 					| class |
 					class := self systemDictionary at: each ifAbsent: [ nil ].
-					class notNil 
+					class notNil
 						and: [ (self includesClass: class)
 						or: [ self includesClass: class class ]]]]]
 ]
 
 { #category : #testing }
-RBClassEnvironment >> includesClass: aClass [ 
+RBClassEnvironment >> includesClass: aClass [
 	^(aClass isMeta
 		ifTrue: [metaClasses includes: aClass soleInstance name]
 		ifFalse: [classes includes: aClass name])
@@ -169,7 +169,7 @@ RBClassEnvironment >> isEmpty [
 
 { #category : #printing }
 RBClassEnvironment >> metaClassSelectorDictionary [
-	^ metaClasses 
+	^ metaClasses
 		inject: (IdentityDictionary new: metaClasses size)
 		into: [ :answer :class |
 			answer
@@ -208,7 +208,7 @@ RBClassEnvironment >> problemCount [
 ]
 
 { #category : #removing }
-RBClassEnvironment >> removeClass: aClass [ 
+RBClassEnvironment >> removeClass: aClass [
 	aClass isMeta
 		ifTrue: [metaClasses remove: aClass soleInstance name ifAbsent: []]
 		ifFalse: [classes remove: aClass name ifAbsent: []]
@@ -218,7 +218,7 @@ RBClassEnvironment >> removeClass: aClass [
 RBClassEnvironment >> selectors [
 
 	^ Array streamContents: [ :stream |
-		self classesDo: [ :class | 
+		self classesDo: [ :class |
 			self selectorsForClass: class do: [ :selector | stream nextPut: selector ] ] ]
 ]
 
@@ -228,13 +228,13 @@ RBClassEnvironment >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream nextPutAll: ' classes: (('.
 	classes asArray storeOn: aStream.
-	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each | 
+	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each |
 				| class |
 				class := Smalltalk at: each ifAbsent: [nil].
 				class notNil ifTrue: [sum add: class].
 				sum]) , ('.
 	metaClasses asArray storeOn: aStream.
-	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each | 
+	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each |
 				| class |
 				class := Smalltalk at: each ifAbsent: [nil].
 				class notNil ifTrue: [sum add: class class].

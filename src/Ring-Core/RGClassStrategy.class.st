@@ -11,23 +11,23 @@ Class {
 }
 
 { #category : #'private - backend access' }
-RGClassStrategy >> acceptVisitor: aVisitor [ 
+RGClassStrategy >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitClass: self owner
 ]
 
 { #category : #'private - backend access' }
-RGClassStrategy >> addClassVariable: anRGInstanceVariableDefinition [ 
+RGClassStrategy >> addClassVariable: anRGInstanceVariableDefinition [
 
-	self owner announceDefinitionChangeDuring: [ 
+	self owner announceDefinitionChangeDuring: [
 		self privAddClassVariable: anRGInstanceVariableDefinition ]
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> addSharedPool: anRGPoolVariable [
 
-	self owner announceDefinitionChangeDuring: [ 
-		self privAddSharedPool: anRGPoolVariable ].
+	self owner announceDefinitionChangeDuring: [
+		self privAddSharedPool: anRGPoolVariable ]
 ]
 
 { #category : #'private - backend access' }
@@ -40,7 +40,7 @@ RGClassStrategy >> allClassVarNames [
 RGClassStrategy >> allClassVariables [
 	"Answer a collection of the receiver's classVariables, including those defined its superclasses"
 
-	^ ((self owner superclass == nil) or: [ self owner superclass == self owner]) 
+	^ ((self owner superclass == nil) or: [ self owner superclass == self owner])
 		ifTrue: [ self classVariables ]
 		ifFalse: [ self owner superclass allClassVariables, self classVariables ]
 ]
@@ -48,7 +48,7 @@ RGClassStrategy >> allClassVariables [
 { #category : #'private - backend access' }
 RGClassStrategy >> bindingOf: varName [
 
-	| aSymbol | 
+	| aSymbol |
 	aSymbol := varName asSymbol.
 
 	^ (self innerBindingOf: aSymbol) ifNil: [
@@ -58,13 +58,13 @@ RGClassStrategy >> bindingOf: varName [
 { #category : #'private - backend access' }
 RGClassStrategy >> category [
 
-	^ self owner tags 
+	^ self owner tags
 		ifEmpty: [ self owner package categoryName ]
-		ifNotEmpty: [ 
-			(self owner package hasResolvedName) 
+		ifNotEmpty: [
+			(self owner package hasResolvedName)
 				ifTrue: [ self owner package categoryName, '-', self owner tags first  ]
-				ifFalse: [ self owner tags first  ]	] 
-	
+				ifFalse: [ self owner tags first  ]	]
+
 	"todo"
 ]
 
@@ -72,10 +72,10 @@ RGClassStrategy >> category [
 RGClassStrategy >> category: aString [
 
 	| aTag |
-		
+
 	self owner cleanTagsWithoutAnnouncemnt.
-	aTag := self owner package 
-		ifNotNil: [ 
+	aTag := self owner package
+		ifNotNil: [
 			self owner package name = aString
 				ifTrue: [ ^ self owner ] "category contains only the package name"
 				ifFalse: [ aString withoutPrefix: self package name, '-'  ]]
@@ -83,7 +83,7 @@ RGClassStrategy >> category: aString [
 	self owner tagWith: aTag asSymbol.
 
 "	self backend forBehavior setCategoryFor: self to: aaString.
-	
+
 	self announcer behaviorDefinitionModified: self.
 	self announcer behaviorRecategorized: self."
 ]
@@ -103,21 +103,21 @@ RGClassStrategy >> classVarNames [
 { #category : #'class variables' }
 RGClassStrategy >> classVariableDefinitionString [
 	"Answer a string that evaluates to the definition of the class Variables"
-	
+
 	^String streamContents: [ :str | | special |
 		str nextPutAll: '{ '.
 		self owner classVariables do: [:global |
 				str nextPutAll: global definitionString.
-				special := global needsFullDefinition]				
-			separatedBy: [ 
-				str nextPutAll: ' . '.  
+				special := global needsFullDefinition]
+			separatedBy: [
+				str nextPutAll: ' . '.
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> classVariables [
-	
+
 	^ Array streamContents: [ :str | self classVariablesDo: [ :each | str nextPut: each ] ]
 ]
 
@@ -126,7 +126,7 @@ RGClassStrategy >> classVariables: aCollectionOfSymbols [
 
 	self cleanClassVariables.
 	aCollectionOfSymbols do: [ :classVarName |
-		self addClassVariable: (RGClassVariable named: classVarName asSymbol parent: self).].
+		self addClassVariable: (RGClassVariable named: classVarName asSymbol parent: self).]
 ]
 
 { #category : #'private - backend access' }
@@ -138,14 +138,14 @@ RGClassStrategy >> classVariablesDo: aBlock [
 { #category : #'private - backend access' }
 RGClassStrategy >> cleanClassVariables [
 
-	self owner announceDefinitionChangeDuring: [ 
-		self backend forBehavior cleanClassVariablesFor: self owner ].
+	self owner announceDefinitionChangeDuring: [
+		self backend forBehavior cleanClassVariablesFor: self owner ]
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> cleanSharedPools [
 
-	self backend forBehavior cleanSharedPoolsFor: self owner.
+	self backend forBehavior cleanSharedPoolsFor: self owner
 ]
 
 { #category : #'private - backend access' }
@@ -158,8 +158,8 @@ RGClassStrategy >> comment [
 RGClassStrategy >> comment: anRGComment [
 
 	self backend forBehavior setCommentFor: self owner to: anRGComment.
-	
-	self owner announcer behaviorCommentModified: self.
+
+	self owner announcer behaviorCommentModified: self
 ]
 
 { #category : #'private - backend access' }
@@ -173,7 +173,7 @@ RGClassStrategy >> copyForBehaviorDefinitionPostCopy [
 	self pvtCleanClassVariables.
 	self pvtCleanSharedPools.
 	newVariables do: [ :each | self privAddClassVariable: each ].
-	newSharedPools do: [ :each | self privAddSharedPool: each ].
+	newSharedPools do: [ :each | self privAddSharedPool: each ]
 ]
 
 { #category : #'default model values' }
@@ -210,10 +210,10 @@ RGClassStrategy >> defaultSharedPools [
 RGClassStrategy >> definition [
 
 	| aStream poolString |
-	
-	self owner slotsNeedFullDefinition 
+
+	self owner slotsNeedFullDefinition
 		ifTrue: [ ^ self definitionWithSlots ].
-		
+
 	poolString := self owner sharedPoolsString.
 	aStream := (String new: 800) writeStream.
 	owner superclass
@@ -263,6 +263,23 @@ RGClassStrategy >> definition [
 	^ aStream contents
 ]
 
+{ #category : #fileout }
+RGClassStrategy >> definitionString [
+	"Answer the receiver's <String> class definition resolving it from the receiver's package information"
+
+	^ self package definitionFor: self
+]
+
+{ #category : #fileout }
+RGClassStrategy >> definitionStringFor: aRGPackage [
+	"Answer the receiver's definition <String> contained in aRGPackage Monticello snapshot information"
+
+	^ (aRGPackage asMCSnapshot
+		classDefinitionNamed: self owner name
+		ifAbsent: [ self error: 'No class definition found for the recever' ])
+			definitionString
+]
+
 { #category : #testing }
 RGClassStrategy >> definitionWithSlots [
 
@@ -271,15 +288,15 @@ RGClassStrategy >> definitionWithSlots [
 	poolString := self owner sharedPoolsString.
 
 	aStream := (String new: 800) writeStream.
-	self owner superclass 
+	self owner superclass
 		ifNil: [aStream nextPutAll: 'ProtoObject']
 		ifNotNil: [aStream nextPutAll: self owner superclass name].
 	aStream nextPutAll: ' subclass: ';
 			store: self owner name.
 	(self owner hasTraitComposition) ifTrue: [
 		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self owner traitCompositionString].		
-			
+			nextPutAll: self owner traitCompositionString].
+
 	(self layout layoutName = #FixedLayout) ifFalse: [
 		aStream cr; tab; nextPutAll: 'layout: ';
 			nextPutAll: self layout layoutName].
@@ -293,7 +310,7 @@ RGClassStrategy >> definitionWithSlots [
 	aStream cr; tab; nextPutAll: 'package: ';
 			store: self category asString.
 
-	self owner superclass ifNil: [ 
+	self owner superclass ifNil: [
 		aStream nextPutAll: '.'; cr.
 		aStream nextPutAll: self owner name.
 		aStream space; nextPutAll: 'superclass: nil'. ].
@@ -305,22 +322,22 @@ RGClassStrategy >> definitionWithSlots [
 RGClassStrategy >> initialize [
 
 	super initialize.
-	
-	comment := self unresolvedValue: self defaultComment.	
-	classVariables := self unresolvedValue: self defaultClassVariables.	
-	package := self unresolvedValue: self defaultPackage.	
-	sharedPools := self unresolvedValue: self defaultSharedPools.
+
+	comment := self unresolvedValue: self defaultComment.
+	classVariables := self unresolvedValue: self defaultClassVariables.
+	package := self unresolvedValue: self defaultPackage.
+	sharedPools := self unresolvedValue: self defaultSharedPools
 ]
 
 { #category : #initialization }
 RGClassStrategy >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	comment := self unresolvedValue: self defaultComment.	
-	classVariables := self unresolvedValue: self defaultClassVariables.	
-	package := self unresolvedValue: self defaultPackage.	
-	sharedPools := self unresolvedValue: self defaultSharedPools.
+
+	comment := self unresolvedValue: self defaultComment.
+	classVariables := self unresolvedValue: self defaultClassVariables.
+	package := self unresolvedValue: self defaultPackage.
+	sharedPools := self unresolvedValue: self defaultSharedPools
 ]
 
 { #category : #'private - backend access' }
@@ -328,11 +345,11 @@ RGClassStrategy >> innerBindingOf: aSymbol [
 
 	self classVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found | ^ found ].
 
-	self sharedPoolsDo: [:pool | 
+	self sharedPoolsDo: [:pool |
 		((self environment ask behaviorNamed: pool name) bindingOf: aSymbol) ifNotNil: [:binding | ^binding]].
 
-	((self owner superclass == self owner) or: [ self owner superclass isNil ]) ifFalse: [ ^ self owner superclass innerBindingOf: aSymbol].	
-		
+	((self owner superclass == self owner) or: [ self owner superclass isNil ]) ifFalse: [ ^ self owner superclass innerBindingOf: aSymbol].
+
 	^ nil
 ]
 
@@ -351,18 +368,18 @@ RGClassStrategy >> isClassStrategy [
 { #category : #'default model values' }
 RGClassStrategy >> makeResolved [
 
-	
+
 	"try to set the correct name before resolving of it"
-	((self owner hasResolvedName not) and: [ self owner metaclass isRingResolved and: [ self owner metaclass hasResolvedName ] ]) ifTrue: [ 
+	((self owner hasResolvedName not) and: [ self owner metaclass isRingResolved and: [ self owner metaclass hasResolvedName ] ]) ifTrue: [
 		self owner pvtName: (self owner metaclass name withoutSuffix: ' class') asSymbol.
 		 ].
-	
+
 	super makeResolved.
-	
+
 	comment := self comment markAsRingResolved.
 	classVariables := self classVariables markAsRingResolved.
 	package := self package markAsRingResolved.
-	sharedPools := self sharedPools markAsRingResolved.
+	sharedPools := self sharedPools markAsRingResolved
 ]
 
 { #category : #'accessing - backend' }
@@ -377,14 +394,14 @@ RGClassStrategy >> package: anRGPackage [
 	| oldPackage |
 	oldPackage := self package.
 
-	self owner announceDefinitionChangeDuring: [ 
+	self owner announceDefinitionChangeDuring: [
 		self owner backend forBehavior setPackageFor: self owner to: anRGPackage.
 		self owner environment addPackage: anRGPackage.
 		(oldPackage hasResolved: #definedBehaviors)
 			ifTrue: [ oldPackage removeDefinedBehavior: self owner ].
 		anRGPackage addDefinedBehavior: self owner. ].
-	
-	self owner announce: (ClassRepackaged 
+
+	self owner announce: (ClassRepackaged
 		classRepackaged: self owner
 		oldPackage: oldPackage
 		newPackage: anRGPackage)
@@ -392,19 +409,19 @@ RGClassStrategy >> package: anRGPackage [
 
 { #category : #accessing }
 RGClassStrategy >> parent [
-	
+
 	^ owner
 ]
 
 { #category : #'private - backend access' }
-RGClassStrategy >> privAddClassVariable: anRGInstanceVariableDefinition [ 
+RGClassStrategy >> privAddClassVariable: anRGInstanceVariableDefinition [
 
 	self backend forBehavior addClassVariable: anRGInstanceVariableDefinition to: self owner
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> privAddSharedPool: anRGPoolVariable [
-	
+
 	self backend forBehavior addSharedPool: anRGPoolVariable to: self owner
 ]
 
@@ -412,22 +429,22 @@ RGClassStrategy >> privAddSharedPool: anRGPoolVariable [
 RGClassStrategy >> pvtAddClassVariable: anRGInstanceVariableDefinition [
 
 	self owner environment verifyOwnership: anRGInstanceVariableDefinition.
-	
-	classVariables isRingResolved ifFalse: [ 
+
+	classVariables isRingResolved ifFalse: [
 		self pvtCleanClassVariables  ].
-	
-	classVariables add: anRGInstanceVariableDefinition.
+
+	classVariables add: anRGInstanceVariableDefinition
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> pvtAddSharedPool: anRGPoolVariable [
 
 	self owner environment verifyOwnership: anRGPoolVariable.
-	
-	sharedPools isRingResolved ifFalse: [ 
+
+	sharedPools isRingResolved ifFalse: [
 		self pvtCleanSharedPools  ].
-	
-	sharedPools add: anRGPoolVariable.
+
+	sharedPools add: anRGPoolVariable
 ]
 
 { #category : #'private - backend access' }
@@ -439,13 +456,13 @@ RGClassStrategy >> pvtClassVariablesDo: aBlock [
 { #category : #'private - backend access' }
 RGClassStrategy >> pvtCleanClassVariables [
 
-	classVariables := self defaultClassVariables.
+	classVariables := self defaultClassVariables
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> pvtCleanSharedPools [
 
-	sharedPools := self defaultSharedPools.
+	sharedPools := self defaultSharedPools
 ]
 
 { #category : #'private - backend access' }
@@ -480,26 +497,26 @@ RGClassStrategy >> pvtPackage: anRGPackage [
 RGClassStrategy >> pvtRemoveClassVariable: anRGInstanceVariableDefinition [
 
 	self owner environment verifyOwnership: anRGInstanceVariableDefinition.
-	
-	classVariables remove: anRGInstanceVariableDefinition.
+
+	classVariables remove: anRGInstanceVariableDefinition
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> pvtRemoveSharedPool: anRGPoolVariableDefinition [
 
 	self owner environment verifyOwnership: anRGPoolVariableDefinition.
-	
-	sharedPools remove: anRGPoolVariableDefinition.
+
+	sharedPools remove: anRGPoolVariableDefinition
 ]
 
 { #category : #initialization }
 RGClassStrategy >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#comment -> comment. 
-		#classVariables -> classVariables. 
-		#package -> package. 
-		#sharedPools -> sharedPools. 
+	^ super pvtResolvableProperties, {
+		#comment -> comment.
+		#classVariables -> classVariables.
+		#package -> package.
+		#sharedPools -> sharedPools.
 	}
 ]
 
@@ -512,15 +529,15 @@ RGClassStrategy >> pvtSharedPoolsDo: aBlock [
 { #category : #'private - backend access' }
 RGClassStrategy >> removeClassVariable: anRGInstanceVariableDefinition [
 
-	self owner announceDefinitionChangeDuring: [ 
-		self backend forBehavior removeClassVariable: anRGInstanceVariableDefinition from: self owner ].
+	self owner announceDefinitionChangeDuring: [
+		self backend forBehavior removeClassVariable: anRGInstanceVariableDefinition from: self owner ]
 ]
 
 { #category : #'private - backend access' }
 RGClassStrategy >> removeSharedPool: anRGPoolVariable [
 
-	self owner announceDefinitionChangeDuring: [ 
-		self backend forBehavior removeSharedPool: anRGPoolVariable from: self owner].
+	self owner announceDefinitionChangeDuring: [
+		self backend forBehavior removeSharedPool: anRGPoolVariable from: self owner]
 ]
 
 { #category : #'private - backend access' }
@@ -539,12 +556,12 @@ RGClassStrategy >> sharedPools [
 	allSharedPools := OrderedCollection new.
 	self sharedPoolsDo: [ :each | allSharedPools add: (
 		"use classes everywhare you can. TODO: really?"
-		each isSymbol 
+		each isSymbol
 			ifTrue: [ self environment ask behaviorNamed: each name ]
-			ifFalse: [ 
+			ifFalse: [
 				(each isVariable and: [each isPoolVariable ])
-					ifTrue: [ 
-						| beh | 
+					ifTrue: [
+						| beh |
 						beh := self environment ask behaviorNamed: each name.
 						beh ifNotNil: [ beh ] ifNil: [ each ] ]
 					ifFalse: [ each copy ]])].
@@ -556,7 +573,7 @@ RGClassStrategy >> sharedPools: aCollectionOfSymbols [
 
 	self cleanSharedPools.
 	aCollectionOfSymbols do: [ :poolName |
-		self addSharedPool: (RGPoolVariable named: poolName asSymbol parent: self).].
+		self addSharedPool: (RGPoolVariable named: poolName asSymbol parent: self).]
 ]
 
 { #category : #'private - backend access' }
@@ -568,7 +585,7 @@ RGClassStrategy >> sharedPoolsDo: aBlock [
 { #category : #'private - backend access' }
 RGClassStrategy >> sibling [
 
-	^ self owner metaclass.
+	^ self owner metaclass
 ]
 
 { #category : #testing }

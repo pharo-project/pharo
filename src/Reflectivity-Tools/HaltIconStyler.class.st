@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+HaltIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 HaltIconStyler >> highlightColor [
 	^(Color red alpha: 0.1)
@@ -14,7 +20,7 @@ HaltIconStyler >> highlightColor [
 
 { #category : #defaults }
 HaltIconStyler >> iconFor: aNode [
-	^ self iconNamed: #haltIcon
+	^ self iconNamed: #halt
 ]
 
 { #category : #defaults }
@@ -26,5 +32,5 @@ HaltIconStyler >> iconLabelBlock: aNode [
 HaltIconStyler >> shouldStyleNode: aNode [
 	| selectorsToBeHighlighted |
 	selectorsToBeHighlighted := { 'halt'. 'halt:'. 'haltIf:'. 'haltIfNil' }.
-	^aNode isMessage and: [ selectorsToBeHighlighted anySatisfy: [ :sel| sel = aNode selector ]].
+	^aNode isMessage and: [ selectorsToBeHighlighted anySatisfy: [ :sel| sel = aNode selector ]]
 ]

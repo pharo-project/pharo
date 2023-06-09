@@ -14,19 +14,19 @@ Class {
 }
 
 { #category : #visiting }
-RBPatternWrapperBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBPatternWrapperBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitPatternWrapperBlockNode: self
 ]
 
 { #category : #matching }
-RBPatternWrapperBlockNode >> copyInContext: aDictionary [ 
+RBPatternWrapperBlockNode >> copyInContext: aDictionary [
 	"I don't know what this would mean, so ignore it."
 
 	^ wrappedNode copyInContext: aDictionary
 ]
 
 { #category : #matching }
-RBPatternWrapperBlockNode >> match: aNode inContext: aDictionary [ 
+RBPatternWrapperBlockNode >> match: aNode inContext: aDictionary [
 	(wrappedNode match: aNode inContext: aDictionary) ifFalse: [^false].
 	^super match: aNode inContext: aDictionary
 ]
@@ -47,7 +47,7 @@ RBPatternWrapperBlockNode >> wrappedNode [
 ]
 
 { #category : #accessing }
-RBPatternWrapperBlockNode >> wrappedNode: aRBProgramNode [ 
+RBPatternWrapperBlockNode >> wrappedNode: aRBProgramNode [
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self
 ]

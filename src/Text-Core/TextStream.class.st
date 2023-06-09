@@ -24,14 +24,14 @@ TextStream >> applyAttribute: att beginningAt: startPos [
 ]
 
 { #category : #accessing }
-TextStream >> nextPutAll: aCollection [ 
+TextStream >> nextPutAll: aCollection [
  	"Optimized access to get around Text at:Put: overhead"
  	| n |
  	n := aCollection size.
       position + n > writeLimit
         ifTrue:
          [self growTo: position + n + 10].
- 	collection 
+ 	collection
  		replaceFrom: position+1
  		to: position + n
  		with: aCollection
@@ -51,7 +51,7 @@ TextStream >> withAttribute: att do: strmBlock [
 ]
 
 { #category : #private }
-TextStream >> withAttributes: attributes do: streamBlock [ 
+TextStream >> withAttributes: attributes do: streamBlock [
 "Add text to the stream with a block and apply its text attributes (in collection)"
 	| pos1 val |
 	pos1 := self position.

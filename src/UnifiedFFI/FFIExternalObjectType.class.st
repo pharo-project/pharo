@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-FFIExternalObjectType >> initialize [ 
+FFIExternalObjectType >> initialize [
 	super initialize.
 	pointerArity := self class naturalPointerArity
 ]

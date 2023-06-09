@@ -1,7 +1,7 @@
 Extension { #name : #TaSequence }
 
 { #category : #'*TraitsV2-Compatibility' }
-TaSequence >> includesElement: anElement [ 
+TaSequence >> includesElement: anElement [
 	^ members anySatisfy: [ :e | e includesElement: anElement ]
 ]
 

@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-FFIUInt64 class >> externalType [ 
+FFIUInt64 class >> externalType [
 	^ ExternalType unsignedLongLong
 ]
 
@@ -25,12 +25,10 @@ FFIUInt64 class >> externalTypeSize [
 
 { #category : #private }
 FFIUInt64 >> basicHandle: aHandle at: index [
-	^ aHandle signedLongLongAt: index	
-
+	^ aHandle signedLongLongAt: index
 ]
 
 { #category : #private }
-FFIUInt64 >> basicHandle: aHandle at: index put: value [ 
+FFIUInt64 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedLongLongAt: index	put: value
-
 ]

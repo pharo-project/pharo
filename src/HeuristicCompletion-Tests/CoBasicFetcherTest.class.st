@@ -20,7 +20,7 @@ CoBasicFetcherTest >> fetcher [
 
 { #category : #tests }
 CoBasicFetcherTest >> testConsumedFetcherShouldBeAtEnd [
-	
+
 	self fetcher upToEnd.
 	self assert: self fetcher atEnd
 ]

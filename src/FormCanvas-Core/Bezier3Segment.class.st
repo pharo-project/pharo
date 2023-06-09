@@ -47,7 +47,7 @@ Bezier3Segment class >> from: p1 via: p2 and: p3 to: p4 [
 Bezier3Segment class >> makeEllipseSegments: aRectangle [
 	"Answer a set of bezier segments approximating an ellipsoid fitting the given rectangle.
 	This method creates four bezier segments (one for each quadrant) approximating the oval."
-	"EXAMPLE: 
+	"EXAMPLE:
 	This example draws an oval with a red border and overlays the approximating bezier segments on top of the oval (drawn in black), thus giving an impression of how closely the bezier resembles the oval. Change the rectangle to see how accurate the approximation is for various radii of the oval.
 		| rect |
 		rect := 100@100 extent: 500@200.
@@ -56,7 +56,7 @@ Bezier3Segment class >> makeEllipseSegments: aRectangle [
 			seg lineSegmentsDo:[:last :next|
 				Display getCanvas line: last to: next width: 1 color: Color black]].
 	"
-	"EXAMPLE: 
+	"EXAMPLE:
 		| minRadius maxRadius |
 		maxRadius := 300.
 		minRadius := 20.
@@ -83,7 +83,7 @@ Bezier3Segment class >> makeEllipseSegments: aRectangle count: segmentCount [
 	^(1 to: count) collect:[:i| | seg |
 		seg := self makeUnitPieSegmentFrom: i-1*angle to: i*angle.
 		self controlPoints: (seg controlPoints collect:[:pt| pt * scale + center])
-	].
+	]
 ]
 
 { #category : #utilities }
@@ -106,7 +106,7 @@ Bezier3Segment class >> makePieSegments: aRectangle from: angle1 to: angle2 [
 	"Create a series of cubic bezier segments for the oval inscribed in aRectangle between angle1 and angle2. The segments are oriented clockwise, to get counter-clockwise segments simply switch angle1 and angle2."
 	angle2 < angle1 ifTrue:[
 		"ccw segments"
-		^(self makePieSegments: aRectangle from: angle2 to: angle1) 
+		^(self makePieSegments: aRectangle from: angle2 to: angle1)
 			reversed collect:[:seg| seg reversed]
 	].
 	"Split up segments if larger than 120 degrees"
@@ -186,7 +186,7 @@ Bezier3Segment >> asBezier2Points: error [
 		pts at: index-1 put: (4 * b - a - f) / 2.
 		prev := pts at: index.
 		].
-	^ pts.
+	^ pts
 ]
 
 { #category : #converting }
@@ -205,7 +205,7 @@ Bezier3Segment >> asBezierShape [
 Bezier3Segment >> asBezierShape: error [
 	"Demote a cubic bezier to a set of approximating quadratic beziers.
 	Should convert to forward differencing someday"
-	^(self asBezier2Points: error) asPointArray.
+	^(self asBezier2Points: error) asPointArray
 ]
 
 { #category : #converting }
@@ -221,8 +221,8 @@ Bezier3Segment >> asPointArray [
 
 { #category : #converting }
 Bezier3Segment >> asTangentSegment [
-	^Bezier2Segment 
-		from: via1-start 
+	^Bezier2Segment
+		from: via1-start
 		via: via2-via1
 		to: end-via2
 ]
@@ -241,12 +241,12 @@ Bezier3Segment >> bezier2SegmentCount: pixelError [
 	| a |
 	a := (start x negated @ start y negated) + (3 * via1) - (3 * via2) +
 (end).
-	^ (((a r / (20.0 * pixelError)) raisedTo: 0.333333) ceiling) max: 1.
+	^ (((a r / (20.0 * pixelError)) raisedTo: 0.333333) ceiling) max: 1
 ]
 
 { #category : #'bezier clipping' }
 Bezier3Segment >> bezierClipHeight: dir [
-	"Check if the argument overlaps the receiver somewhere 
+	"Check if the argument overlaps the receiver somewhere
 	along the line from start to end. Optimized for speed."
 	| u dirX dirY dx dy uMin uMax |
 	dirX := dir x.
@@ -303,7 +303,7 @@ Bezier3Segment >> initializeFrom: controlPoints [
 	start := controlPoints at: 1.
 	via1 := controlPoints at: 2.
 	via2 := controlPoints at: 3.
-	end := controlPoints at: 4.
+	end := controlPoints at: 4
 ]
 
 { #category : #accessing }
@@ -324,7 +324,7 @@ Bezier3Segment >> lineSegments: steps do: aBlock [
 		next := self valueAt: t.
 		aBlock value: last value: next.
 		last := next.
-		t := t + deltaStep].
+		t := t + deltaStep]
 ]
 
 { #category : #'vector functions' }
@@ -340,7 +340,7 @@ Bezier3Segment >> lineSegmentsDo: aBlock [
 		next := self valueAt: t.
 		aBlock value: last value: next.
 		last := next.
-		t := t + deltaStep].
+		t := t + deltaStep]
 ]
 
 { #category : #'vector functions' }
@@ -357,7 +357,7 @@ Bezier3Segment >> outlineSegment: width [
 	dist := (newStart distanceTo: newEnd) * 0.3.
 	newVia1 := newStart + (tan1 * dist).
 	newVia2 := newEnd - (tan2 * dist).
-	^self class from: newStart via: newVia1 and: newVia2 to: newEnd.
+	^self class from: newStart via: newVia1 and: newVia2 to: newEnd
 ]
 
 { #category : #'vector functions' }

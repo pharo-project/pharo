@@ -22,7 +22,7 @@ SycVariableBreakpointCommand class >> isAbstract [
 ]
 
 { #category : #accessing }
-SycVariableBreakpointCommand >> defaultMenuIconName [ 
+SycVariableBreakpointCommand >> defaultMenuIconName [
 	^ #halt
 ]
 

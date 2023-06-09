@@ -262,23 +262,24 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SDL2WindowsMessages class >> initialize [
 
-"Spliting the initialization of constants. 
+"Spliting the initialization of constants.
 The Pharo 9 bootstrap is still building the image first in V3 bytecode and the number of literals is limited.
 These methods can be inlined when V3 bytecode is left behind in the bootstrap."
 
-	self initializeVariablesSet1.
-	self initializeVariablesSet2.
-	self initializeVariablesSet3.
-	self initializeVariablesSet4.
-	self initializeVariablesSet5.
-	self initializeVariablesSet6.
-	self initializeVariablesSet7
+	self
+		initializeVariablesSet1;
+		initializeVariablesSet2;
+		initializeVariablesSet3;
+		initializeVariablesSet4;
+		initializeVariablesSet5;
+		initializeVariablesSet6;
+		initializeVariablesSet7
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet1 [
 
 	WM_NULL := 0.
@@ -344,10 +345,10 @@ SDL2WindowsMessages class >> initializeVariablesSet1 [
 	WM_TCARD := 82.
 	WM_HELP := 83.
 	WM_USERCHANGED := 84.
-	WM_NOTIFYFORMAT := 85.
+	WM_NOTIFYFORMAT := 85
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet2 [
 
 	WM_CONTEXTMENU := 123.
@@ -376,10 +377,10 @@ SDL2WindowsMessages class >> initializeVariablesSet2 [
 	WM_NCMBUTTONDBLCLK := 169.
 	WM_NCXBUTTONDOWN := 171.
 	WM_NCXBUTTONUP := 172.
-	WM_NCXBUTTONDBLCLK := 173.
+	WM_NCXBUTTONDBLCLK := 173
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet3 [
 
 	WM_INPUT_DEVICE_CHANGE := 254.
@@ -424,7 +425,7 @@ SDL2WindowsMessages class >> initializeVariablesSet3 [
 	WM_QUERYUISTATE := 297
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet4 [
 
 	WM_CTLCOLORMSGBOX := 306.
@@ -496,7 +497,7 @@ SDL2WindowsMessages class >> initializeVariablesSet4 [
 	DM_POINTERHITTEST := 592
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet5 [
 
 	WM_IME_SETCONTEXT := 641.
@@ -515,7 +516,7 @@ SDL2WindowsMessages class >> initializeVariablesSet5 [
 	WM_WTSSESSION_CHANGE := 689
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet6 [
 
 	WM_TABLET_FIRST := 704.
@@ -549,7 +550,7 @@ SDL2WindowsMessages class >> initializeVariablesSet6 [
 	WM_DWMNCRENDERINGCHANGED := 799
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 SDL2WindowsMessages class >> initializeVariablesSet7 [
 
 	WM_DWMCOLORIZATIONCOLORCHANGED := 800.

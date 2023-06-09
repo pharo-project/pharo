@@ -40,7 +40,6 @@ BaselineOfIDE >> additionalInitialization [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: SyntaxErrorDebugger as: #syntaxErrorDebugger.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
 	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
@@ -94,66 +93,68 @@ BaselineOfIDE >> additionalInitialization [
 	self makeCalypsoDefaultBrowser.
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> baseline: spec [
 	<baseline>
 	| repository |
+
 	repository := self packageRepositoryURL.
-	spec for: #common do: [ 
+	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
-		spec baseline: 'Shift' with: [ 
+		spec baseline: 'Shift' with: [
 			spec
 				repository: repository;
 				loads: 'shift-tests' ].
 
-		spec baseline: 'Traits' with: [ 
+		spec baseline: 'Traits' with: [
 			spec
 				repository: repository;
 				loads: 'traits-tests' ].
 
-		spec baseline: 'Slot' with: [ 
+		spec baseline: 'Slot' with: [
 			spec
 				repository: repository;
 				loads: 'slot-tests' ].
 
-		spec baseline: 'Clap' with: [ 
+		spec baseline: 'Clap' with: [
 			spec
 				repository: repository;
 				loads: 'development' ].
 
-		spec baseline: 'SUnit' with: [ 
+		spec baseline: 'SUnit' with: [
 			spec
 				repository: repository;
-				loads: 'Tests' ].				
+				loads: 'Tests' ].
 
-		spec baseline: 'EnlumineurFormatter' with: [ 
+		spec baseline: 'EnlumineurFormatter' with: [
 			spec
 				repository: repository;
-				loads: #( 'Tests' ) ].		
-					
-		spec baseline: 'Reflectivity' with: [ 
+				loads: #( 'Tests' ) ].
+
+		spec baseline: 'Reflectivity' with: [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-				
-				
+
+
+		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
-		spec baseline: 'Metacello' with: [ 
+		spec baseline: 'Metacello' with: [
 			spec
 				repository: repository;
 				loads: #( 'Tests' ) ].
 		spec package: 'MonticelloGUI-Tests'.
-		"Later we will load the UI of enlumineur probably here 
+		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
+
 		spec
 			baseline: 'ReflectionMirrors'
 			with: [ spec repository: repository ].
@@ -164,7 +165,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
-		spec baseline: 'Fuel' with: [ 
+		spec baseline: 'Fuel' with: [
 			spec
 				repository: repository;
 				loads: #( 'Tests' ) ].
@@ -173,9 +174,10 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Keymapping' with: [ spec repository: repository; loads: 'tests' ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec baseline: 'Equals' with: [ spec repository: repository ].
 		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'tests' ].
-		spec package: 'STON-Extensions'. 
-		
+		spec package: 'STON-Extensions'.
+
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
@@ -185,63 +187,107 @@ BaselineOfIDE >> baseline: spec [
 			with: [ spec repository: repository ].
 		spec baseline: 'Refactoring2' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
-		spec baseline: 'Calypso' with: [ 
+		spec baseline: 'Calypso' with: [
 			spec
 				repository: repository;
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository; loads: #('Tool-DependencyAnalyser-UI-Tab') ].
 		self specCode: spec.
 		self newTools: spec.
+		self drTests: spec.
 		self microdown: spec.
 		self beautifulComments: spec.
+		self documentBrowserCore: spec.
+		self welcomeBrowser: spec.
 		self roassal3: spec.
-	
-		spec 
-  			baseline: 'ThreadedFFI' 
-  			with: [ spec 
-				repository: repository ].
 
-		
-		spec package: 'Pharo-WelcomeHelp'.
-		spec package: 'Kernel-ExtraUtils' 
-		
+		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
+		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
+
+		spec package: 'Kernel-ExtraUtils'
+
 	]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> beautifulComments: spec [ 
 
 	spec baseline: 'BeautifulComments' with: [ 
 		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
+{ #category : #baselines }
+BaselineOfIDE >> documentBrowserCore: spec [
+
+	spec baseline: 'NewToolsDocumentBrowser' with: [
+		spec
+			repository: (self class environment at: #BaselineOfPharo) documentBrowserRepository;
+			loads: 'Core+Tests' ]
+]
+
+{ #category : #baselines }
+BaselineOfIDE >> drTests: spec [
+
+	spec 
+		baseline: 'DrTests' 
+		with: [ spec repository: self packageRepositoryURL ]
+]
+
 { #category : #actions }
 BaselineOfIDE >> loadExtraTools [
-	
-	"Metacello new
-		baseline: 'NewToolsDocumentationReader';
-		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
+	"Load NewTools-DocumentBrowser-GitHubResource packages depending on Iceberg GitHub plugin"
+
+	Metacello new
+		baseline: 'NewToolsDocumentBrowser';
+		repository: (self class environment at: #BaselineOfPharo)
+				documentBrowserRepository;
 		onConflictUseIncoming;
-		load."
+		load.
+
+	"Hack: Document Browser is loaded in 2 steps because of the dependency of some packages to Iceberg.
+	The 2nd load is done through Metacello that adds new project registrations in Iceberg (user, not system).
+	We then remove these last registrations."
+	#('NewTools-DocumentBrowser' 'Iceberg') do: [ :repositoryName | | repository |
+		repository := IceRepository registry 
+			detect: [ :repo | repo name = repositoryName ]
+			ifNone: [ self error: repositoryName , ' not found in Iceberg registry!' ].
+		IceRepository unregisterRepository: repository ifAbsent: [ "ignore" ] ].
 ]
 
 { #category : #actions }
 BaselineOfIDE >> loadIceberg [
-	
+
 	Metacello new
 		baseline: 'Iceberg';
 		repository: (self class environment at: #BaselineOfPharo) icebergRepository;
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
-	
-	self registerPharo.	
-	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').		
-	self registerProject: 'NewTools'.		
-	self registerProject: 'Roassal3'.		
+
+	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
+		| credentials |
+		credentials := (Smalltalk classNamed: #IceTokenCredentials) new
+			               username:
+				               (Smalltalk os environment
+					                at: #GITHUB_USER
+					                ifAbsent: [ self error: 'Github token was found but not the github user associated to this token.' ]);
+			               token: token;
+			               host: 'github.com';
+			               yourself.
+
+		(Smalltalk classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
+		'Using authentification for Github API' traceCr ].
+
+	self registerPharo.
+	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
+	self registerProject: 'NewTools'.
+	self registerProject: 'Roassal3'.
 	self registerProject: 'Microdown'.
-	self registerProject: 'BeautifulComments'.		
+	self registerProject: 'BeautifulComments'.
+	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
+	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
@@ -251,7 +297,7 @@ BaselineOfIDE >> makeCalypsoDefaultBrowser [
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> microdown: spec [ 
 
 	spec baseline: 'Microdown' with: [ 
@@ -260,7 +306,7 @@ BaselineOfIDE >> microdown: spec [
 			loads: #('RichText' 'Tests') ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> newTools: spec [ 
 
 	spec baseline: 'NewTools' with: [
@@ -384,19 +430,20 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 	| baselineClass className |
 
 	className := ('BaselineOf', baselineName) asSymbol.
-	baselineClass := Smalltalk classNamed: className. 
+	baselineClass := Smalltalk classNamed: className.
 	baselineClass ifNil: [ ^ self ].
 
-	self pharoPluginClass 
-		addProjectNamed: projectName 
-		commit: (self pharoPluginClass commitOfExternalProject: externalProject) 
-		baselines: { className }.
+	self pharoPluginClass
+		addProjectNamed: projectName
+		commit: (self pharoPluginClass commitOfExternalProject: externalProject)
+		baselines: { className }
+		tags: #(#system).
 	"Register baselines"
-	({baselineName}, anArray) do: [ :each | 
+	({baselineName}, anArray) do: [ :each |
 		Metacello new baseline: each; register ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> roassal3: spec [
 
 	spec 
@@ -407,7 +454,7 @@ BaselineOfIDE >> roassal3: spec [
     			loads: #( 'Core' 'Tests') ]
 ]
 
-{ #category : #baseline }
+{ #category : #baselines }
 BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
@@ -415,4 +462,11 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
+]
+
+{ #category : #baselines }
+BaselineOfIDE >> welcomeBrowser: spec [
+
+	spec baseline: 'WelcomeBrowser' with: [
+		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

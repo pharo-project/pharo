@@ -9,6 +9,6 @@ Class {
 
 { #category : #'instance creation' }
 ClyOverriddenMethodChanged class >> method: aMethod [
-	^self new 
+	^self new
 		method: aMethod
 ]

@@ -83,19 +83,19 @@ RBRemoveAllSendersRefactoring >> removeSelfSenders [
 	flag := false.
 	(self model allReferencesTo: selector) do: [ :e | | node index |
 		index := 1.
-		[ node := self selfSendIn: (e methodClass parseTreeFor: e selector). node size < index ] 
-			whileFalse: [ 
+		[ node := self selfSendIn: (e methodClass parseTreeForSelector: e selector). node size < index ]
+			whileFalse: [
 				self onError: [ self removeMethod: e of: (node at: index) ]
 					do: [ flag ifFalse: [ flag := true.
-							self refactoringWarning: 
+							self refactoringWarning:
 						'There are one or more senders that cannot be removed, <n>because their result is used or have direct references to method'' name. <n>Proceed anyway? '.].
 						index := index + 1] ].
-				].
+				]
 ]
 
 { #category : #removing }
 RBRemoveAllSendersRefactoring >> removeSendersOf: aSelector [
-	selector := aSelector.
+	selector := aSelector
 ]
 
 { #category : #transforming }
@@ -111,7 +111,7 @@ RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 ]
 
 { #category : #printing }
-RBRemoveAllSendersRefactoring >> storeOn: aStream [ 
+RBRemoveAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeSendersOf: '.

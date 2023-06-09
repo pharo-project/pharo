@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 StringSignal class >> emit: aString [
-	^ self new 
+	^ self new
 		message: aString;
 		emit
 ]

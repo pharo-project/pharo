@@ -23,10 +23,10 @@ SmallDictionaryTest >> classToBeTested [
 SmallDictionaryTest >> testAtUpdate [
 	| dict |
 	dict := SmallDictionary newFrom: {2->10. 100->5} .
-	
+
 	dict at: 2 update: [ :v | v+10 ].
 	self assert: (dict at: 2) equals: 20.
-	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound .
+	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound
 ]
 
 { #category : #tests }

@@ -12,8 +12,8 @@ Class {
 
 { #category : #bordering }
 DisplayMedium >> border: aRectangle margins: insets rule: combinationRule fillColor: aHalfTone [
-	"Paint a border whose rectangular area is defined by aRectangle. The 
-	width of each edge of the border is determined by the four coordinates 
+	"Paint a border whose rectangular area is defined by aRectangle. The
+	width of each edge of the border is determined by the four coordinates
 	of insets. Uses aHalfTone and combinationRule for drawing the border."
 
 	(aRectangle areasOutside: (insets insetRectangle: aRectangle )) do:
@@ -21,7 +21,7 @@ DisplayMedium >> border: aRectangle margins: insets rule: combinationRule fillCo
 ]
 
 { #category : #bordering }
-DisplayMedium >> border: aRectangle width: borderWidth fillColor: aHalfTone [ 
+DisplayMedium >> border: aRectangle width: borderWidth fillColor: aHalfTone [
 	"Paint a border whose rectangular area is defined by aRectangle. The width of the border of each side is borderWidth. Uses aHalfTone for drawing the border."
 
 	self border: aRectangle
@@ -31,11 +31,11 @@ DisplayMedium >> border: aRectangle width: borderWidth fillColor: aHalfTone [
 ]
 
 { #category : #bordering }
-DisplayMedium >> border: aRectangle width: borderWidth rule: combinationRule fillColor: aHalfTone [ 
+DisplayMedium >> border: aRectangle width: borderWidth rule: combinationRule fillColor: aHalfTone [
 	"Paint a border whose rectangular area is defined by aRectangle. The width of the border of each side is borderWidth. Uses aHalfTone for drawing the border."
 
 	self border: aRectangle
-		margins: 
+		margins:
 			(Margin
 				left: borderWidth
 				right: borderWidth
@@ -46,7 +46,7 @@ DisplayMedium >> border: aRectangle width: borderWidth rule: combinationRule fil
 ]
 
 { #category : #displaying }
-DisplayMedium >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRect rule: rule fillColor: aForm [ 
+DisplayMedium >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRect rule: rule fillColor: aForm [
 	"Make up a BitBlt table and copy the bits."
 
 	self subclassResponsibility
@@ -59,25 +59,25 @@ DisplayMedium >> deferUpdatesIn: aRectangle while: aBlock [
 ]
 
 { #category : #displaying }
-DisplayMedium >> drawLine: sourceForm from: beginPoint to: endPoint clippingBox: clipRect rule: anInteger fillColor: aForm [ 
-	"Draw line by copying the argument, sourceForm, starting at location 
-	beginPoint and ending at endPoint, clipped by the rectangle, clipRect. 
+DisplayMedium >> drawLine: sourceForm from: beginPoint to: endPoint clippingBox: clipRect rule: anInteger fillColor: aForm [
+	"Draw line by copying the argument, sourceForm, starting at location
+	beginPoint and ending at endPoint, clipped by the rectangle, clipRect.
 	The rule and mask for copying are the arguments anInteger and aForm."
 
 	self subclassResponsibility
 ]
 
 { #category : #coloring }
-DisplayMedium >> fill: aRectangle fillColor: aForm [ 
-	"Replace a rectangular area of the receiver with the pattern described by 
+DisplayMedium >> fill: aRectangle fillColor: aForm [
+	"Replace a rectangular area of the receiver with the pattern described by
 	aForm according to the rule over."
 
 	self fill: aRectangle rule: Form over fillColor: aForm
 ]
 
 { #category : #coloring }
-DisplayMedium >> fill: aRectangle rule: anInteger fillColor: aForm [ 
-	"Replace a rectangular area of the receiver with the pattern described by 
+DisplayMedium >> fill: aRectangle rule: anInteger fillColor: aForm [
+	"Replace a rectangular area of the receiver with the pattern described by
 	aForm according to the rule anInteger."
 
 	self subclassResponsibility
@@ -91,7 +91,7 @@ DisplayMedium >> fillBlack [
 ]
 
 { #category : #coloring }
-DisplayMedium >> fillBlack: aRectangle [ 
+DisplayMedium >> fillBlack: aRectangle [
 	"Set all bits in the receiver's area defined by aRectangle to black (ones)."
 
 	self fill: aRectangle rule: Form over fillColor: Color black
@@ -141,34 +141,34 @@ DisplayMedium >> fillShape: aShapeForm fillColor: aColor at: location [
 DisplayMedium >> fillWhite [
 	"Set all bits in the form to white."
 
-	self fill: self boundingBox fillColor: Color white.
+	self fill: self boundingBox fillColor: Color white
 ]
 
 { #category : #coloring }
 DisplayMedium >> fillWhite: aRectangle [
 	"Set all bits in the receiver's area defined by aRectangle to white."
 
-	self fill: aRectangle rule: Form over fillColor: Color white.
+	self fill: aRectangle rule: Form over fillColor: Color white
 ]
 
 { #category : #coloring }
 DisplayMedium >> fillWithColor: aColor [
 	"Fill the receiver's bounding box with the given color."
 
-	self fill: self boundingBox fillColor: aColor.
+	self fill: self boundingBox fillColor: aColor
 ]
 
 { #category : #private }
 DisplayMedium >> highLightBitmaps [
 	"Quickly return a Bitblt-ready raw colorValue for highlighting areas."
-	^HighLightBitmaps ifNil: [self initializeHighLights ].
+	^HighLightBitmaps ifNil: [self initializeHighLights ]
 ]
 
 { #category : #private }
-DisplayMedium >> initializeHighLights [ 
-	
+DisplayMedium >> initializeHighLights [
+
 	"Create a set of Bitmaps for quickly reversing areas of the screen without converting colors. "
-	
+
 	HighLightBitmaps := Array new: 32.
 	^HighLightBitmaps
 		at: 1 put: (Bitmap with: 4294967295);
@@ -177,7 +177,7 @@ DisplayMedium >> initializeHighLights [
 		at: 8 put: (Bitmap with: 117901063);
 		at: 16 put: (Bitmap with: 4294967295);
 		at: 32 put: (Bitmap with: 4294967295);
-		yourself.
+		yourself
 ]
 
 { #category : #private }
@@ -187,7 +187,7 @@ DisplayMedium >> quickHighLight: aDepth [
 
 { #category : #coloring }
 DisplayMedium >> reverse [
-	"Change all the bits in the receiver that are white to black, and the ones 
+	"Change all the bits in the receiver that are white to black, and the ones
 	that are black to white."
 
 "
@@ -199,17 +199,17 @@ Display reverse: (10@10 extent: 100@100)
 
 { #category : #coloring }
 DisplayMedium >> reverse: aRectangle [
-	"Change all the bits in the receiver's area that intersects with aRectangle 
+	"Change all the bits in the receiver's area that intersects with aRectangle
 	that are white to black, and the ones that are black to white."
 
 	self fill: aRectangle rule: Form reverse fillColor: (self quickHighLight: self depth)
 ]
 
 { #category : #coloring }
-DisplayMedium >> reverse: aRectangle fillColor: aMask [	
-	"Change all the bits in the receiver's area that intersects with aRectangle 
-	according to the mask. Black does not necessarily turn to white, rather it 
-	changes with respect to the rule and the bit in a corresponding mask 
+DisplayMedium >> reverse: aRectangle fillColor: aMask [
+	"Change all the bits in the receiver's area that intersects with aRectangle
+	according to the mask. Black does not necessarily turn to white, rather it
+	changes with respect to the rule and the bit in a corresponding mask
 	location. Bound to give a surprise."
 
 	self fill: aRectangle rule: Form reverse fillColor: aMask

@@ -34,7 +34,7 @@ NECTestClass class >> initialize [
 ]
 
 { #category : #initialization }
-NECTestClass >> initialize: aRectangle [ 
+NECTestClass >> initialize: aRectangle [
 	constantInteger := 15.
 	constantLargeInteger := 1152921504606846976. "(SmallInteger maxVal + 1) on 64-bit"
 	constantString := 'Ruben'.
@@ -52,7 +52,7 @@ NECTestClass >> initialize: aRectangle [
 	complexInit := 15 > 16
 				ifTrue: [#Symbol]
 				ifFalse: ['String'].
-	complexInit2 := Dictionary new: aRectangle origin x.
+	complexInit2 := Dictionary new: aRectangle origin x
 ]
 
 { #category : #utilities }
@@ -63,7 +63,7 @@ NECTestClass >> lowPriorityOverrides: aRectangle [
 ]
 
 { #category : #tests }
-NECTestClass >> testIt: anArgument [ 
+NECTestClass >> testIt: anArgument [
 	| loc1 x2 t |
 	x2 := [:bar :var | var < bar].
 	loc1 := constantArray.

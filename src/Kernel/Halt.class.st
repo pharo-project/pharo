@@ -94,14 +94,14 @@ Halt class >> haltIfBlock: aBlock withCallingObjectFrom: haltSenderContext [
 
 	(aBlock cull: haltSenderContext receiver)
 		ifTrue: [self signalIn: haltSenderContext]
-		ifFalse: [^ self].
+		ifFalse: [^ self]
 ]
 
 { #category : #private }
 Halt class >> haltIfCallChain: haltSenderContext contains: aSelector [
 	| cntxt |
 	cntxt := haltSenderContext.
-	[ cntxt isNil ] whileFalse: [ 
+	[ cntxt isNil ] whileFalse: [
 		cntxt selector = aSelector ifTrue: [ self signalIn: haltSenderContext ].
 		cntxt := cntxt sender ]
 ]
@@ -109,17 +109,17 @@ Halt class >> haltIfCallChain: haltSenderContext contains: aSelector [
 { #category : #halting }
 Halt class >> if: condition [
 	<debuggerCompleteToSender>
-	"This is the typical message to use for inserting breakpoints during 
+	"This is the typical message to use for inserting breakpoints during
 	debugging.
-	
+
 	The argument can be one of the following:
 		- a block: if the Block has one arg, the calling object is bound to that.
 		- an expression
  		- a selector: Halt if found in the call chain"
-	LocalRecursionStopper during: [ 
-		condition isSymbol ifTrue: [ 
+	LocalRecursionStopper during: [
+		condition isSymbol ifTrue: [
 			^ self haltIfCallChain: thisContext home sender contains: condition ].
-		condition isBlock ifTrue: [ 
+		condition isBlock ifTrue: [
 			^ self haltIfBlock: condition withCallingObjectFrom: thisContext home sender].
 		condition ifTrue: [self signalIn: thisContext home sender ].
 	]
@@ -129,20 +129,20 @@ Halt class >> if: condition [
 Halt class >> ifNotTest [
 	<debuggerCompleteToSender>
 	"Halt if execution was not started by a test"
-	CurrentExecutionEnvironment value isTest ifFalse: [self signalIn: thisContext home sender ].
+	CurrentExecutionEnvironment value isTest ifFalse: [self signalIn: thisContext home sender ]
 ]
 
 { #category : #halting }
 Halt class >> ifTest [
 	<debuggerCompleteToSender>
 	"Halt if execution was started by a test"
-	CurrentExecutionEnvironment value isTest ifTrue: [self signalIn: thisContext home sender ].
+	CurrentExecutionEnvironment value isTest ifTrue: [self signalIn: thisContext home sender ]
 ]
 
 { #category : #halting }
 Halt class >> now [
 	<debuggerCompleteToSender>
-	self signal.
+	self signal
 ]
 
 { #category : #halting }
@@ -185,37 +185,37 @@ Halt class >> once [
 
 	| callingContext senderContext node |
 	<debuggerCompleteToSender>
-		
+
 	"if the compiler is not loaded, we fall back on the standard halt "
-	self environment at: #OpalCompiler ifAbsent: [ ^self now ].	
-	
-	callingContext := (thisContext findContextSuchThat: [ :ctx | 
+	self environment at: #OpalCompiler ifAbsent: [ ^self now ].
+
+	callingContext := (thisContext findContextSuchThat: [ :ctx |
 		ctx compiledCode sendsAnySelectorOf: #(haltOnce) ]
 	) ifNil: [ thisContext sender ].
-	
+
 	senderContext := thisContext.
-	
+
 	LocalRecursionStopper during: [
 		"we need to ignore when the code below calls us again"
 		node := callingContext sourceNodeExecuted.
-		(node hasProperty: #Once) ifTrue: [ ^ self ]. 
+		(node hasProperty: #Once) ifTrue: [ ^ self ].
 		node propertyAt: #Once put: true.
-		
+
 		self signalIn: senderContext
-		
-	].
+
+	]
 ]
 
 { #category : #'once-reset' }
 Halt class >> resetHaltOnCount [
-	 #haltOnCount: senders do: [ :method | method ast removeProperty: #haltCount ifAbsent: [  ] ].
+	 #haltOnCount: senders do: [ :method | method ast removeProperty: #haltCount ifAbsent: [  ] ]
 ]
 
 { #category : #'once-reset' }
 Halt class >> resetOnce [
 	"Once stops an expression once and only once. Halt resetOnce will rearm and make sure that the execution of a method containing Halt once will stop another time."
-	 (#haltOnce senders, #inspectOnce senders) do: [ :method | 
-		method ast sendNodes do: [ :sendNode| 
+	 (#haltOnce senders, #inspectOnce senders) do: [ :method |
+		method ast sendNodes do: [ :sendNode|
 			sendNode removeProperty: #Once ifAbsent: [  ]]]
 ]
 

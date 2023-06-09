@@ -11,7 +11,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #parsing }
@@ -20,7 +20,7 @@ RBDummyLintRuleTest class >> parseTreeSearcher [
 ]
 
 { #category : #parsing }
-RBDummyLintRuleTest class >> parseTreeSearcherClass [ 
+RBDummyLintRuleTest class >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
@@ -82,7 +82,7 @@ RBDummyLintRuleTest >> isEmpty [
 
 { #category : #testing }
 RBDummyLintRuleTest >> junk [
-	^ RBDummyRefactoryTestDataApp printString 
+	^ RBDummyRefactoryTestDataApp printString
 		copyFrom: 1
 		to: CR
 ]
@@ -93,7 +93,7 @@ RBDummyLintRuleTest >> name [
 ]
 
 { #category : #accessing }
-RBDummyLintRuleTest >> name: aString [ 
+RBDummyLintRuleTest >> name: aString [
 	name := aString
 ]
 

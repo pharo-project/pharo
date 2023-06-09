@@ -3,7 +3,7 @@ Extension { #name : #Object }
 { #category : #'*Morphic-Core' }
 Object >> complexContents [
 
-	^self
+	^ self
 ]
 
 { #category : #'*Morphic-Core' }

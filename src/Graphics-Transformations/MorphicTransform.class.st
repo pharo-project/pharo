@@ -73,7 +73,7 @@ MorphicTransform >> composedWithLocal: aTransform [
 		^aTransform withOffset: aTransform offset + self offset].
 	aTransform isPureTranslation ifTrue:[
 		^self withOffset: (self localPointToGlobal: aTransform offset negated) negated].
-	^super composedWithLocal: aTransform.
+	^super composedWithLocal: aTransform
 ]
 
 { #category : #'transforming points' }
@@ -92,7 +92,7 @@ MorphicTransform >> inverseTransformation [
 ]
 
 { #category : #transformations }
-MorphicTransform >> invert: aPoint [ 
+MorphicTransform >> invert: aPoint [
 	"Transform the given point from local to global coordinates."
 	| p3 p2 |
 	self isPureTranslation ifTrue: [ ^ aPoint - offset ].
@@ -160,7 +160,7 @@ MorphicTransform >> printOn: aStream [
 		nextPutAll:'angle = '; print: angle;
 		nextPutAll:'; scale = '; print: scale;
 		nextPutAll:'; offset = '; print: offset;
-		nextPut:$).
+		nextPut:$)
 ]
 
 { #category : #accessing }
@@ -181,7 +181,7 @@ MorphicTransform >> setIdentiy [
 ]
 
 { #category : #private }
-MorphicTransform >> setOffset: aPoint [ 
+MorphicTransform >> setOffset: aPoint [
 	offset := aPoint
 ]
 
@@ -193,12 +193,12 @@ MorphicTransform >> setOffset: aPoint angle: radians scale: aNumberOrPoint [
 ]
 
 { #category : #private }
-MorphicTransform >> setScale: aNumberOrPoint [ 
+MorphicTransform >> setScale: aNumberOrPoint [
 	scale := aNumberOrPoint
 ]
 
 { #category : #transformations }
-MorphicTransform >> transform: aPoint [ 
+MorphicTransform >> transform: aPoint [
 	"Transform the given point from global to local coordinates."
 	| p2 p3 |
 	self isPureTranslation ifTrue: [ ^ aPoint + offset ].

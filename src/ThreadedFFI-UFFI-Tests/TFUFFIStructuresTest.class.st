@@ -30,7 +30,7 @@ TFUFFIStructuresTest >> passingLongStructByReference: st b: b c: c d: d [
 
 { #category : #'private - ffi' }
 TFUFFIStructuresTest >> passingNestedStructByCopy: st a: a y: y [
- 
+
 	^ self ffiCall: #(int passingNestedStruct(TFNestedTestStruct st, char a, double y))
 ]
 
@@ -59,13 +59,12 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInC [
 	aPoint := TFPointTestStruct externalNew
 					autoRelease;
 					yourself.
-	
+
 	aPoint x: 21.
 	aPoint y: 33.
-	
-	return := self passStructByParameter: aPoint x: 21 y: 33.
-	self assert: return equals: 1.
 
+	return := self passStructByParameter: aPoint x: 21 y: 33.
+	self assert: return equals: 1
 ]
 
 { #category : #tests }
@@ -73,13 +72,12 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInPharo [
 
 	| aPoint return |
 	aPoint := TFPointTestStruct new.
-	
+
 	aPoint x: 21.
 	aPoint y: 33.
-	
-	return := self passStructByParameter: aPoint x: 21 y: 33.
-	self assert: return equals: 1.
 
+	return := self passStructByParameter: aPoint x: 21 y: 33.
+	self assert: return equals: 1
 ]
 
 { #category : #tests }
@@ -89,13 +87,12 @@ TFUFFIStructuresTest >> testPassingByReferenceAStructInC [
 	aPoint := TFPointTestStruct externalNew
 					autoRelease;
 					yourself.
-	
+
 	aPoint x: 21.
 	aPoint y: 33.
-	
-	return := self passStructByReference: aPoint.
-	self assert: return asInteger equals: aPoint getHandle asInteger.
 
+	return := self passStructByReference: aPoint.
+	self assert: return asInteger equals: aPoint getHandle asInteger
 ]
 
 { #category : #tests }
@@ -105,14 +102,13 @@ TFUFFIStructuresTest >> testPassingLongStructByCopyInC [
 	aPoint := TFLongTestStruct externalNew
 					autoRelease;
 					yourself.
-	
+
 	aPoint b: 1.0.
 	aPoint c: 2.0.
 	aPoint d: 42.
-	
-	return := self passingLongStructByCopy: aPoint b: 1.0 c: 2.0 d: 42.
-	self assert: return equals: 1.
 
+	return := self passingLongStructByCopy: aPoint b: 1.0 c: 2.0 d: 42.
+	self assert: return equals: 1
 ]
 
 { #category : #tests }
@@ -120,14 +116,13 @@ TFUFFIStructuresTest >> testPassingLongStructByCopyInPharo [
 
 	| aPoint return |
 	aPoint := TFLongTestStruct new.
-	
+
 	aPoint b: 1.0.
 	aPoint c: 2.0.
 	aPoint d: 42.
-	
-	return := self passingLongStructByCopy: aPoint b: 1.0 c: 2.0 d: 42.
-	self assert: return equals: 1.
 
+	return := self passingLongStructByCopy: aPoint b: 1.0 c: 2.0 d: 42.
+	self assert: return equals: 1
 ]
 
 { #category : #tests }
@@ -137,14 +132,13 @@ TFUFFIStructuresTest >> testPassingLongStructByReferenceInC [
 	aPoint := TFLongTestStruct externalNew
 					autoRelease;
 					yourself.
-	
+
 	aPoint b: 1.0.
 	aPoint c: 2.0.
 	aPoint d: 42.
-	
-	return := self passingLongStructByReference: aPoint b: 1.0 c: 2.0 d: 42.
-	self assert: return equals: 1.
 
+	return := self passingLongStructByReference: aPoint b: 1.0 c: 2.0 d: 42.
+	self assert: return equals: 1
 ]
 
 { #category : #tests }
@@ -154,13 +148,12 @@ TFUFFIStructuresTest >> testPassingNestedStructByCopyInC [
 	st := TFNestedTestStruct externalNew
 					autoRelease;
 					yourself.
-	
+
 	st inner a: $a.
 	st y: 1.0.
-	
-	return := self passingNestedStructByCopy: st a: $a y: 1.0.
-	self assert: return equals: 1.
 
+	return := self passingNestedStructByCopy: st a: $a y: 1.0.
+	self assert: return equals: 1
 ]
 
 { #category : #tests }
@@ -170,5 +163,5 @@ TFUFFIStructuresTest >> testReturningAnStruct [
 	aPoint := self returnNewPointX: 1 Y: 2.
 
 	self assert: aPoint x equals: 1.
-	self assert: aPoint y equals: 2.	
+	self assert: aPoint y equals: 2.
 ]

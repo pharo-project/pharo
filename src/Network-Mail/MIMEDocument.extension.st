@@ -4,7 +4,7 @@ Extension { #name : #MIMEDocument }
 MIMEDocument >> parts [
 	"Return the parts of this message.  There is a far more reliable implementation of parts in MailMessage, but for now we are continuing to use this implementation"
 	| parseStream currLine separator msgStream messages currentLine |
-	self isMultipart ifFalse: 
+	self isMultipart ifFalse:
 		[ ^ #() ].
 	parseStream := self content readStream.
 	currLine := ''.
@@ -17,7 +17,7 @@ MIMEDocument >> parts [
 	[ parseStream atEnd or: [ currentLine beginsWith: separator ] ] whileFalse: [
 		| message |
 		message := String streamContents: [:strm |
-			[(currentLine := msgStream nextLine) isNil] whileFalse: [ 
+			[(currentLine := msgStream nextLine) isNil] whileFalse: [
 				strm nextPutAll: currentLine; cr]].
 		messages add: message.
 		currentLine := msgStream nextLine ].

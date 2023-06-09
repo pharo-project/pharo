@@ -25,7 +25,7 @@ CoGlobalVariableMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: c
 { #category : #requests }
 CoGlobalVariableMessageHeuristic >> newFetcherForGlobal: aGlobal inASTNode: ast [
 
-	"This is a class or trait. Autocomplete class-side messages" 
+	"This is a class or trait. Autocomplete class-side messages"
 	aGlobal isClassOrTrait ifTrue: [
 		^ CoClassImplementedMessagesFetcher new
 			astNode: ast;

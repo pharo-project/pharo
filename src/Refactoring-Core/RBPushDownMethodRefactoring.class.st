@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [ 
+RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		pushDown: selectorCollection from: aClass;
@@ -32,7 +32,7 @@ RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorColle
 ]
 
 { #category : #'instance creation' }
-RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [ 
+RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [
 	^ self new
 		pushDown: selectorCollection from: aClass
 ]
@@ -51,18 +51,29 @@ RBPushDownMethodRefactoring >> allClasses [
 
 { #category : #transforming }
 RBPushDownMethodRefactoring >> classes: aCollection [
-	classes := aCollection collect: [ :cls | 
+	classes := aCollection collect: [ :cls |
 		self classObjectFor: cls.
 	]
 ]
 
+{ #category : #actions }
+RBPushDownMethodRefactoring >> generateChanges [
+
+	self primitiveExecute.
+
+	^ self changes
+]
+
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> preconditions [
+	"Check that all selectors are defined in `class` and that none of the subclasses of `class`
+	refer to any of the selectors that will be pushed down.
+	Also, to ensure this is in fact refactoring we should only push down methods from abstract class."
 
 	| condition |
 	condition := selectors
 		             inject: self emptyCondition
-		             into: [ :cond :each | 
+		             into: [ :cond :each |
 			             cond & (RBCondition definesSelector: each in: class)
 			             &
 			             (RBCondition subclassesOf: class referToSelector: each)
@@ -78,17 +89,17 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 	protocols := class protocolsFor: aSelector.
 	refactoring := RBExpandReferencedPoolsRefactoring
 		               model: self model
-		               forMethod: (class parseTreeFor: aSelector)
+		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
 	self performCompositeRefactoring: refactoring.
-	self allClasses do: [ :each | 
-		(each directlyDefinesMethod: aSelector) ifFalse: [ 
+	self allClasses do: [ :each |
+		(each directlyDefinesMethod: aSelector) ifFalse: [
 			each compile: code classified: protocols ] ]
 ]
 
 { #category : #initialization }
-RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [ 
+RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection
 ]
@@ -97,7 +108,7 @@ RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
 RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass in: aCollection [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection.
-	self classes: aCollection.
+	self classes: aCollection
 ]
 
 { #category : #transforming }
@@ -111,7 +122,7 @@ RBPushDownMethodRefactoring >> selectors: aList [
 ]
 
 { #category : #printing }
-RBPushDownMethodRefactoring >> storeOn: aStream [ 
+RBPushDownMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' pushDown: '.

@@ -9,7 +9,7 @@ Class {
 
 { #category : #enumerating }
 CoInstanceVariableFetcher >> entriesDo: aBlock [
-	
+
 	self completionClass instVarNames do: [ :e |
 		aBlock value: (NECInstVarEntry contents: e node: astNode)]
 ]

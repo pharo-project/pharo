@@ -10,8 +10,8 @@ Class {
 { #category : #testing }
 SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ 
-		  aSourceCodeContext isMethodSelected not and: [ 
+	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
+		  aSourceCodeContext isMethodSelected not and: [
 			  aSourceCodeContext isMessageSelected ] ]
 ]
 
@@ -22,15 +22,15 @@ SycInlineMethodCommand >> asRefactorings [
 		    inline: sourceNode sourceInterval
 		    inMethod: method selector
 		    forClass: method origin)
-		   setOption: #inlineExpression toUse: [ :ref :aString | 
-			   (self confirm: 
+		   setOption: #inlineExpression toUse: [ :ref :aString |
+			   (self confirm:
 					('Do you want to extract the expression ''<1s>'' into a variable in the current method?'
 					 	expandMacrosWith: aString)) not ];
 		   yourself) }
 ]
 
 { #category : #accessing }
-SycInlineMethodCommand >> defaultMenuIconName [ 
+SycInlineMethodCommand >> defaultMenuIconName [
 	^ #smallRightFlushIcon
 ]
 

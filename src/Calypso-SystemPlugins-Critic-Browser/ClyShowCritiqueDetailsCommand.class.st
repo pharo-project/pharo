@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 ClyShowCritiqueDetailsCommand >> defaultMenuIconName [
-	^#smallQuestionIcon
+	^#smallQuestion
 ]
 
 { #category : #'table decoration' }

@@ -107,9 +107,7 @@ MCCodeTool >> fileOutMessage [
 					ifNotNil:
 						[internalStream nextChunkPut: patchOp definition actualClass definition.
 						 patchOp definition comment ifNotNil:
-							[patchOp definition actualClass organization
-								putCommentOnFile: internalStream
-								forClass: patchOp definition actualClass]]
+							[ patchOp definition actualClass putCommentOnFile: internalStream ] ]
 					ifNil:
 						[internalStream nextChunkPut: patchOp definition className, ' removeFromSystem']]].
 		CodeExporter writeSourceCodeFrom: internalStream baseName: fileName isSt: true]
@@ -162,12 +160,6 @@ MCCodeTool >> methodListMenu: aMenu [
 
 { #category : #subclassresponsibility }
 MCCodeTool >> selectedClass [
-	"Answer the class that is selected, or nil"
-	self subclassResponsibility
-]
-
-{ #category : #subclassresponsibility }
-MCCodeTool >> selectedClassOrMetaClass [
 	"Answer the class that is selected, or nil"
 	self subclassResponsibility
 ]

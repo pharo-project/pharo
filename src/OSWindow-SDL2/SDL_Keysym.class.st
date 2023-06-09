@@ -42,7 +42,7 @@ SDL_Keysym >> mod: anObject [
 SDL_Keysym >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream print: { self mod. self scancode. self sym }.
+	aStream print: { self mod. self scancode. self sym }
 ]
 
 { #category : #'accessing - structure variables' }

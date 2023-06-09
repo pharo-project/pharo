@@ -265,13 +265,6 @@ MetacelloSemanticVersionNumber >> asMetacelloSemanticVersionNumber [
     ^ self
 ]
 
-{ #category : #printing }
-MetacelloSemanticVersionNumber >> asString [
-	"Answer a string that represents the receiver."
-
-	^ self printString
-]
-
 { #category : #accessing }
 MetacelloSemanticVersionNumber >> buildVersion [
     buildVersion ifNil: [ buildVersion := #() ].

@@ -11,8 +11,8 @@ Class {
 { #category : #'argument loaders' }
 FFICalloutMethodBuilderTestRequestor >> loaderFromMethodArgsNamed: argName [
 	(argName beginsWith: 'var')
-		ifTrue: [ ^ 
-			FFIMethodArgument new  
+		ifTrue: [ ^
+			FFIMethodArgument new
 				argName: argName;
 				index: (argName allButFirst: 3) asInteger ].
 	^ nil

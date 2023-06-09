@@ -9,15 +9,15 @@ Class {
 }
 
 { #category : #converting }
-WideSymbol >> asWideString [ 
+WideSymbol >> asWideString [
 
-	^ self.
+	^ self
 ]
 
 { #category : #accessing }
-WideSymbol >> at: index [ 
+WideSymbol >> at: index [
 	"Answer the Character stored in the field of the receiver indexed by the argument."
-	^ Character value: (self wordAt: index).
+	^ Character value: (self wordAt: index)
 ]
 
 { #category : #accessing }
@@ -26,7 +26,7 @@ WideSymbol >> byteAt: index [
 	| d r |
 	d := (index + 3) // 4.
 	r := (index - 1) \\ 4 + 1.
-	^ (self wordAt: d) byteAt: ((4 - r) + 1).
+	^ (self wordAt: d) byteAt: ((4 - r) + 1)
 ]
 
 { #category : #accessing }
@@ -37,12 +37,12 @@ WideSymbol >> byteAt: index put: aByte [
 { #category : #accessing }
 WideSymbol >> byteSize [
 
-	^ self size * 4.
+	^ self size * 4
 ]
 
 { #category : #comparing }
 WideSymbol >> findIn: body startingAt: start matchTable: matchTable [
-	
+
 	^ self findSubstring: self in: body startingAt: start matchTable: matchTable
 ]
 
@@ -64,8 +64,8 @@ WideSymbol >> privateAt: index put: aCharacter [
 		ifTrue: [ (index between: 1 and: self size)
 			ifFalse: [ ^ self errorSubscriptBounds: index] ]
 		ifFalse: [^ self errorNonIntegerIndex].
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
+	self isReadOnlyObject
+		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ]
 ]
 
 { #category : #private }
@@ -76,7 +76,7 @@ WideSymbol >> species [
 
 { #category : #private }
 WideSymbol >> string: aString [
-	1 to: aString size do: [:j | 
+	1 to: aString size do: [:j |
 		self privateAt: j put: (aString at: j) asInteger].
 	^ self
 ]
@@ -84,7 +84,7 @@ WideSymbol >> string: aString [
 { #category : #accessing }
 WideSymbol >> wordAt: index [
 	<primitive: 60>
-	^ (self basicAt: index).
+	^ (self basicAt: index)
 ]
 
 { #category : #accessing }

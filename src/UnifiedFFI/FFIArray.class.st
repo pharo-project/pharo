@@ -66,37 +66,37 @@ Class {
 }
 
 { #category : #converting }
-FFIArray class >> asExternalTypeOn: generator [ 
+FFIArray class >> asExternalTypeOn: generator [
 	^ FFITypeArrayType objectClass: self
 ]
 
 { #category : #'instance creation' }
-FFIArray class >> externalNew [ 
-	"Create a new array in the C heap. 
+FFIArray class >> externalNew [
+	"Create a new array in the C heap.
 	 This array needs to be disposed (using #free method)... or you can declare it #autoRelease"
-	^ self basicNew 
+	^ self basicNew
 		initializeExternalType: self type size: self numberOfElements;
 		yourself
 ]
 
 { #category : #'instance creation' }
 FFIArray class >> fromHandle: aHandle [
-	^ self basicNew 
+	^ self basicNew
 		initializeHandle: aHandle type: self type size: self numberOfElements;
 		yourself
 ]
 
 { #category : #'instance creation' }
-FFIArray class >> new [ 
-	^ self basicNew 
+FFIArray class >> new [
+	^ self basicNew
 		initializeType: self type size: self numberOfElements;
 		yourself
 ]
 
 { #category : #'class factory' }
 FFIArray class >> newArrayTypeOf: aTypeName size: elements [
-	^ FFIArray newAnonymousSubclass 
-		type: (FFIExternalType resolveType: aTypeName)	
+	^ FFIArray newAnonymousSubclass
+		type: (FFIExternalType resolveType: aTypeName)
 		size: elements
 ]
 
@@ -107,13 +107,13 @@ FFIArray class >> numberOfElements [
 
 { #category : #'class factory' }
 FFIArray class >> ofType: aTypeName size: elements [
-	^ FFIArray newAnonymousSubclass 
-		type: (FFIExternalType resolveType: aTypeName)	
+	^ FFIArray newAnonymousSubclass
+		type: (FFIExternalType resolveType: aTypeName)
 		size: elements
 ]
 
 { #category : #private }
-FFIArray class >> type [ 
+FFIArray class >> type [
 	^ type
 ]
 
@@ -121,5 +121,4 @@ FFIArray class >> type [
 FFIArray class >> type: aType 	size: elements [
 	type := aType.
 	numberOfElements := elements
-		
 ]

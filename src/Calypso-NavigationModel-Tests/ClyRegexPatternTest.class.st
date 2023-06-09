@@ -9,7 +9,7 @@ ClyRegexPatternTest >> testMatchesAnyStringWhenItIsBadRegex [
 
 	| pattern |
 	pattern := ClyRegexPattern with: '!*'.
-	
+
 	self assert: (pattern matches: 'any string')
 ]
 
@@ -18,7 +18,7 @@ ClyRegexPatternTest >> testMatchesAnyStringWhenItIsEmpty [
 
 	| pattern |
 	pattern := ClyRegexPattern with: ''.
-	
+
 	self assert: (pattern matches: 'any string')
 ]
 
@@ -27,7 +27,7 @@ ClyRegexPatternTest >> testMatchesAnyStringWhenItIsOnlySpaces [
 
 	| pattern |
 	pattern := ClyRegexPattern with: '  '.
-	
+
 	self assert: (pattern matches: 'any string')
 ]
 
@@ -36,7 +36,7 @@ ClyRegexPatternTest >> testMatchesStringWhichMatchesCorrectRegex [
 
 	| pattern |
 	pattern := ClyRegexPattern with: '.abs'.
-	
+
 	self assert: (pattern matches: '1abs').
 	self deny: (pattern matches: 'abs')
 ]
@@ -46,7 +46,7 @@ ClyRegexPatternTest >> testTriesFixWronglyUsedStarInRegex [
 
 	| pattern |
 	pattern := ClyRegexPattern with: '*abs'.
-	
+
 	self assert: (pattern matches: 'abs').
 	self deny: (pattern matches: 'ert')
 ]

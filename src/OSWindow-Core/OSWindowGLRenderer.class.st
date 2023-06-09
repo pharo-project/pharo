@@ -55,10 +55,10 @@ OSWindowGLRenderer >> withWindow: aWindow do: aBlock [
 { #category : #'context activation' }
 OSWindowGLRenderer >> withWindow: aWindow do: aBlock ifFailure: aFailureBlock [
 	| oldContext oldWindow |
-	OSWindowRenderThread uniqueInstance critical: [ 
+	OSWindowRenderThread uniqueInstance critical: [
 		oldContext := CurrentContext.
 		oldWindow := CurrentWindow.
-		[ 
+		[
 			(self makeCurrent: aWindow) ifTrue: [
 				CurrentContext := self.
 				CurrentWindow := aWindow.
@@ -67,7 +67,7 @@ OSWindowGLRenderer >> withWindow: aWindow do: aBlock ifFailure: aFailureBlock [
 				aFailureBlock value
 			]
 		] ensure: [
-			(oldContext ~~ CurrentContext or: [ oldWindow ~~ CurrentWindow ]) ifTrue: [ 
+			(oldContext ~~ CurrentContext or: [ oldWindow ~~ CurrentWindow ]) ifTrue: [
 				CurrentContext := oldContext.
 				CurrentWindow := oldWindow.
 				CurrentContext ifNotNil: [ CurrentContext makeCurrent: CurrentWindow ]

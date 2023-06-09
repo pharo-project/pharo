@@ -55,7 +55,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyNotebookManager class >> of: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 
@@ -63,9 +63,9 @@ ClyNotebookManager class >> of: aBrowser [
 ClyNotebookManager >> activationPriorityOf: aBrowserTool [
 	| priority |
 
-	aBrowserTool belongsToCurrentBrowserContext 
+	aBrowserTool belongsToCurrentBrowserContext
 		ifFalse: [ ^ aBrowserTool activationPriorityInNonActiveContext ].
-	
+
 	priority := self overridenPriorityOf: aBrowserTool.
 	^ (desiredSelection includes: aBrowserTool class)
 		ifTrue: [ priority * 1000 ]
@@ -81,28 +81,27 @@ ClyNotebookManager >> activeStatusBar [
 { #category : #private }
 ClyNotebookManager >> addTool: aBrowserTool [
 	| tab |
-	
+
 	tools add: aBrowserTool.
 	"tab build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting for tool if needed"
 	aBrowserTool width: tabMorph width.
 	tab := aBrowserTool addNotebookPageOn: tabMorph.
-	tab 
+	tab
 		onClose: [ self closeTab: tab ];
 		onDoubleClick: [ browser toggleFullWindowTabs ]
 ]
 
 { #category : #updating }
 ClyNotebookManager >> basicUpdateTools [
-		| newTools needsNewSelection selectedTools currentTools |
-		newTools := OrderedCollection new.	
-		browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each].
+		| needsNewSelection selectedTools currentTools |
+
 		needsNewSelection := self requiresNewDesiredSelection.
 		selectedTools := self selectedTools.
 		currentTools := tools copy.
 
-		self updateTabsWith: newTools.
-		(needsNewSelection or: [ tools ~= currentTools ]) 
-			ifTrue: [ self restoreSelectedTools: selectedTools].
+		self updateTabs.
+		(needsNewSelection or: [ tools ~= currentTools ])
+			ifTrue: [ self restoreSelectedTools: selectedTools]
 ]
 
 { #category : #accessing }
@@ -118,9 +117,9 @@ ClyNotebookManager >> browser: anObject [
 { #category : #private }
 ClyNotebookManager >> buildToolsOn: toolsList for: aBrowserContext [
 	| tool |
-	ClyTabActivationStrategyAnnotation 
+	ClyTabActivationStrategyAnnotation
 		activeInstancesInContext: aBrowserContext
-		do: [ :strategy | 
+		do: [ :strategy |
 			tool := strategy createToolFor: browser inContext: aBrowserContext.
 			browser decorateTool: tool.
 			toolsList add: tool ]
@@ -128,7 +127,7 @@ ClyNotebookManager >> buildToolsOn: toolsList for: aBrowserContext [
 
 { #category : #private }
 ClyNotebookManager >> closeTab: tab [
-	
+
 	tab model okToClose ifFalse: [ ^ self ].
 	self tabMorph removePage: tab.
 	self tabDeleted: tab
@@ -150,7 +149,7 @@ ClyNotebookManager >> desiredSelection: toolClasses [
 	| currentSelection |
 
 	desiredSelection := toolClasses asIdentitySet.
-	shouldSkipCurrentDesiredSelection ifFalse: [ 
+	shouldSkipCurrentDesiredSelection ifFalse: [
 		currentSelection := self selectedTools collect: [ :each | each class ].
 		desiredSelection addAll: currentSelection ].
 	shouldSkipCurrentDesiredSelection := false "it is one time option"
@@ -160,16 +159,16 @@ ClyNotebookManager >> desiredSelection: toolClasses [
 ClyNotebookManager >> focusActiveTab [
 	| activeTool |
 
-	activeTool := self selectedTools detectMax: [ :each | 
+	activeTool := self selectedTools detectMax: [ :each |
 		self activationPriorityOf: each ].
-		
+
 	activeTool ifNotNil: [ tabMorph page: activeTool containerTab ]
 ]
 
 { #category : #initialization }
 ClyNotebookManager >> initialize [
 	super initialize.
-	
+
 	tools := SortedCollection sortBlock: [ :a :b | a tabOrder <= b tabOrder ].
 	selectionPriorities := IdentityDictionary new.
 	desiredSelection := IdentitySet new.
@@ -178,10 +177,10 @@ ClyNotebookManager >> initialize [
 	tabMorph := ClyNotebookMorph new.
 	tabMorph useSortedTabsBy: [ :a :b | (self tabOrderOf: a) <= (self tabOrderOf: b) ].
 	tabMorph announcer
-		when: SpNotebookPageChanged 
-		send: #pageChanged: 
+		when: SpNotebookPageChanged
+		send: #pageChanged:
 		to: self.
-	tabMorph 
+	tabMorph
 		hResizing: #spaceFill;
 		vResizing: #spaceFill
 ]
@@ -195,29 +194,29 @@ ClyNotebookManager >> okToChange [
 
 { #category : #private }
 ClyNotebookManager >> overridenPriorityOf: aBrowserTool [
-	
+
 	^selectionPriorities at: aBrowserTool class ifAbsent: [ aBrowserTool activationPriority  ]
 ]
 
 { #category : #private }
 ClyNotebookManager >> pageChanged: ann [
 	| selectedTool oldSelectedTools browserState |
-	
+
 	updatingStarted ifTrue: [ ^ self ].
 	selectedTool := ann page model.
-	oldSelectedTools := ann oldPage model 
-		ifNotNil: [ :aTool | { aTool } ] 
+	oldSelectedTools := ann oldPage model
+		ifNotNil: [ :aTool | { aTool } ]
 		ifNil: [ #() ].
 	"happens somehow during tabs rebuild".
-	(tools includes: selectedTool) ifFalse: [ ^ self ]. 
-	
+	(tools includes: selectedTool) ifFalse: [ ^ self ].
+
 	oldSelectedTools ifEmpty: [ ^ self ].
 	desiredSelection removeAll.
 	browserState := browser snapshotState.
 	browserState selectedTabs: oldSelectedTools.
 	browser recordNavigationState: browserState.
-	
-	self 
+
+	self
 		swapPrioritiesBetween: selectedTool
 		and: oldSelectedTools first
 ]
@@ -234,21 +233,21 @@ ClyNotebookManager >> removeTool: aTool [
 { #category : #testing }
 ClyNotebookManager >> requiresNewDesiredSelection [
 	desiredSelection ifEmpty: [ ^false ].
-	
+
 	^(self selectedTools allSatisfy: [ :each | desiredSelection includes: each class]) not
 ]
 
 { #category : #updating }
 ClyNotebookManager >> restoreBrowserState: aBrowserState [
 	| existingTools |
-	"Browser state do only hold selected tabs. 
+	"Browser state do only hold selected tabs.
 	So first we should restore all tools in new context and then restore selection"
 	self updateTools.
-	
+
 	existingTools := aBrowserState selectedTabs
 		collect: [ :oldTool | tools detect: [ :each | each isSimilarTo: oldTool ] ifNone: [ nil ] ]
 		thenSelect: #notNil.
-		
+
 	existingTools ifEmpty: [ ^ self ].
 	self tabMorph page: existingTools first.
 	existingTools allButFirstDo: [ :each | each selectAsExtraTab ]
@@ -260,23 +259,23 @@ ClyNotebookManager >> restoreSelectedTools: selectedTools [
 
 	tools ifEmpty: [ ^ self ].
 	mainTool := self selectMainTool.
-	
+
 	extraTools := selectedTools reject: [ :each | each class = mainTool class ].
-	extraTools size = selectedTools size 
+	extraTools size = selectedTools size
 		ifTrue: [ extraTools := #() ] "if main tool not existed before then we reset previously selected extra tools"
-		ifFalse: [ 
+		ifFalse: [
 			"To allow multiple selected tabs by cmd+click on table"
-			mainTool isExtraSelectionRequested 
+			mainTool isExtraSelectionRequested
 				ifTrue: [ extraTools := extraTools copyWith: mainTool ] ].
-	(tools copyWithout: mainTool) do: [ :currentTool | 
+	(tools copyWithout: mainTool) do: [ :currentTool |
 		"Generally if previously selected extra tab is found in new tools then it should be selected.
 		Other tools should be deselected"
-		extraTools 
+		extraTools
 			detect: [ :oldTool | oldTool class = currentTool class  ]
 			ifFound: [ self restoreSelectionOfExtraTool: currentTool ]
 			ifNone: [ "currentTool deselectTab" ] ].
-		
-	extraTools ifNotEmpty: [ 
+
+	extraTools ifNotEmpty: [
 		"last selected tab is looks different from others. We want main tool looks like last selected tab"
 		mainTool deselectTab.
 		mainTool selectAsExtraTab ].
@@ -286,9 +285,9 @@ ClyNotebookManager >> restoreSelectedTools: selectedTools [
 
 { #category : #private }
 ClyNotebookManager >> restoreSelectionOfExtraTool: aBrowserTool [
-	
+
 	aBrowserTool hasUnacceptedEdits ifFalse: [ aBrowserTool selectAsExtraTab. ^self ].
-	
+
 	(self countToolsSimilarTo: aBrowserTool) = 1
 		ifTrue: [ aBrowserTool selectAsExtraTab ]
 		ifFalse: [aBrowserTool deselectTab]
@@ -297,15 +296,15 @@ ClyNotebookManager >> restoreSelectionOfExtraTool: aBrowserTool [
 { #category : #private }
 ClyNotebookManager >> selectMainTool [
 	| desiredTools mainTool |
-	
+
 	desiredTools := tools select: [ :each | desiredSelection includes: each class ].
 	desiredTools ifEmpty: [ desiredTools := tools ].
 
-	mainTool := desiredTools detectMax: [ :each | 
+	mainTool := desiredTools detectMax: [ :each |
 		self activationPriorityOf: each ].
-	
+
 	tabMorph page: mainTool containerTab.
-	
+
 	^ mainTool
 ]
 
@@ -319,12 +318,12 @@ ClyNotebookManager >> selectedTools [
 
 { #category : #private }
 ClyNotebookManager >> selectsTools: toolsArray [
-	
+
 	| selectedTools |
 	selectedTools := self selectedTools.
 	selectedTools size = toolsArray size ifFalse: [ ^false ].
-	
-	^selectedTools allSatisfy: [ :existingTool | 
+
+	^selectedTools allSatisfy: [ :existingTool |
 		toolsArray anySatisfy: [ :each | existingTool isSimilarTo: each ]]
 ]
 
@@ -346,14 +345,14 @@ ClyNotebookManager >> skipCurrentDesiredSelection [
 { #category : #private }
 ClyNotebookManager >> swapPrioritiesBetween: aTool1 and: aTool2 [
 	| priority1 priority2 |
-	
+
 	aTool1 allowsDifferentActivationPriority ifFalse: [ ^self ].
 	aTool2 allowsDifferentActivationPriority ifFalse: [ ^self ].
-	
+
 	priority1 := self overridenPriorityOf: aTool1.
-	priority2 := self overridenPriorityOf: aTool2.	
+	priority2 := self overridenPriorityOf: aTool2.
 	selectionPriorities at: aTool1 class put: priority2.
-	selectionPriorities at: aTool2 class put: priority1.
+	selectionPriorities at: aTool2 class put: priority1
 ]
 
 { #category : #private }
@@ -375,8 +374,8 @@ ClyNotebookManager >> tabMorph [
 { #category : #private }
 ClyNotebookManager >> tabOrderOf: anObject [
 
-	^ anObject model 
-		ifNotNil: [ :model | model tabOrder ] 
+	^ anObject model
+		ifNotNil: [ :model | model tabOrder ]
 		ifNil: [ 0 ]
 ]
 
@@ -391,31 +390,30 @@ ClyNotebookManager >> tools: anObject [
 ]
 
 { #category : #updating }
-ClyNotebookManager >> updateTabsWith: newTools [
-	| toRemove toInstall |
+ClyNotebookManager >> updateTabs [
+	| toRemove toInstall recycler |
 
-	toRemove := OrderedCollection withAll: tools.
-	toInstall := OrderedCollection new.
-	newTools do: [ :new | 
-		tools 
-			detect: [ :existing | existing isSimilarTo: new ]
-			ifFound: [ :existing | toRemove remove: existing ]
-			ifNone: [ toInstall add: new ] ].
+	recycler := ClyNotebookPageRecycler on: tools contexts: browser navigationContexts.
+	toInstall := recycler toolsToInstall.
+	toRemove := recycler toolsToRemove.
 
 	"We need to install the new tabs before removing the old ones.
 	Because removing the old ones force to generate the content of the existing ones.
 	Even the ones we are going to remove"
-	toInstall do: [ :each | self addTool: each ].
-	toRemove 
+	toInstall do: [ :targetTool | | tool |
+		tool := targetTool createToolFor: browser.
+		browser decorateTool: tool.
+		self addTool: tool ].
+	toRemove
 		reject: [ :each | each wantsStayInDifferentContext ]
 		thenDo: [ :each | self removeTool: each ].
-	tools do: [ :each | each browserContextWasChanged ].
+	tools do: [ :each | each browserContextWasChanged ]
 ]
 
 { #category : #updating }
 ClyNotebookManager >> updateTools [
 
-	self updateToolsBy: [ 
+	self updateToolsBy: [
 		self basicUpdateTools ]
 ]
 
@@ -429,12 +427,12 @@ ClyNotebookManager >> updateToolsBy: aBlock [
 ClyNotebookManager >> updateToolsForChangedEnvironment [
 	| currentState |
 	currentState := OrderedCollection new: tools size.
-	tools do: [ :each | 
+	tools do: [ :each |
 		currentState add: each -> each isManagedByUser.
 		each isManagedByUser: true].
-	
+
 	self updateTools.
-	
+
 	currentState do: [ :each | each key isManagedByUser: each value ]
 ]
 

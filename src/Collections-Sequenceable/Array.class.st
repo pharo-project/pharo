@@ -61,64 +61,6 @@ Array class >> braceStream: nElements [
 	^ WriteStream basicNew braceArray: (self new: nElements)
 ]
 
-{ #category : #'brace support' }
-Array class >> braceWith: a [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 1.
-	array at: 1 put: a.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWith: a with: b [ 
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 2.
-	array at: 1 put: a.
-	array at: 2 put: b.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWith: a with: b with: c [ 
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 3.
-	array at: 1 put: a.
-	array at: 2 put: b.
-	array at: 3 put: c.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWith: a with: b with: c with: d [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	| array |
-	array := self new: 4.
-	array at: 1 put: a.
-	array at: 2 put: b.
-	array at: 3 put: c.
-	array at: 4 put: d.
-	^ array
-]
-
-{ #category : #'brace support' }
-Array class >> braceWithNone [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	^ self new: 0
-]
-
 { #category : #'instance creation' }
 Array class >> empty [
 	"A canonicalized empty Array instance."
@@ -126,14 +68,25 @@ Array class >> empty [
 ]
 
 { #category : #'instance creation' }
-Array class >> new: sizeRequested [ 
+Array class >> new: sizeRequested [
 	"Answer an instance of this class with the number of indexable
 	variables specified by the argument, sizeRequested.
-	
+
 	This is a shortcut (direct call of primitive, no #initialize, for performance"
 
 	<primitive: 71>  "This method runs primitively if successful"
 	^ self basicNew: sizeRequested  "Exceptional conditions will be handled in basicNew:"
+]
+
+{ #category : #converting }
+Array >> as: aSimilarClass [
+
+	"Specific classes can redefine newFromArray: by a faster implementation if they want.
+
+	Note: see Collection class>>newFromArray: for the rationale."
+
+	aSimilarClass == self class ifTrue: [ ^ self ].
+	^ aSimilarClass newFromArray: self
 ]
 
 { #category : #converting }
@@ -143,18 +96,36 @@ Array >> asArray [
 	^ self
 ]
 
+{ #category : #converting }
+Array >> asNewArray [
+
+	^ self clone
+]
+
+{ #category : #converting }
+Array >> asOrderedCollection [
+
+	^ OrderedCollection newFromArray: self
+]
+
+{ #category : #converting }
+Array >> asSet [
+
+	^ Set newFromArray: self
+]
+
 { #category : #accessing }
-Array >> atWrap: index [ 
+Array >> atWrap: index [
 
     "Answer the index'th element of the receiver.  If index is out of bounds,
     let it wrap around from the end to the beginning until it is in bounds."
-    
+
     "Optimized to go through the primitive if possible"
-    
+
     "(#(11 22 33) atWrap: 3) >>> 33"
     "(#(11 22 33) atWrap: 2) >>> 22"
     "(#(11 22 33) atWrap: 4) >>> 11"
-    
+
     <primitive: 60>
     ^ self at: index - 1 \\ self size + 1
 ]
@@ -205,14 +176,14 @@ Array >> elementsExchangeIdentityWith: otherArray [
 		[^self error: 'can''t become pinned objects'].
 	ec == #'insufficient object memory' ifTrue:
 		[
-			minimalRequiredSize := 
-				(self sumNumbers: [ :anElement | anElement sizeInMemory ]) 
+			minimalRequiredSize :=
+				(self sumNumbers: [ :anElement | anElement sizeInMemory ])
 				+ (otherArray sumNumbers: [ :anElement | anElement sizeInMemory ]).
-			
+
 			Smalltalk garbageCollect < minimalRequiredSize ifTrue:
 				[ (Smalltalk growMemoryByAtLeast: minimalRequiredSize) < minimalRequiredSize ifTrue:[
 					self error: 'Could not allocate enought memory for two way become']].
-		
+
 		 ^self elementsExchangeIdentityWith: otherArray].
 	self primitiveFailed
 ]
@@ -243,13 +214,13 @@ Array >> elementsForwardIdentityTo: otherArray copyHash: copyHash [
 
 { #category : #'literal testing' }
 Array >> hasLiteral: literal [
-	"Answer true if literal is identical to any literal in this array, even 
-	if imbedded in further array structure. This method is only intended 
+	"Answer true if literal is identical to any literal in this array, even
+	if imbedded in further array structure. This method is only intended
 	for private use by CompiledMethod hasLiteralSymbol:"
 
 	| lit |
-	1 to: self size do: 
-		[:index | 
+	1 to: self size do:
+		[:index |
 		((lit := self at: index) literalEqual: literal) ifTrue: [^true].
 		(Array == lit class and: [lit hasLiteral: literal]) ifTrue: [^true]].
 	^false
@@ -272,12 +243,36 @@ Array >> isArray [
 
 { #category : #testing }
 Array >> isLiteral [
-	^self class == Array and: [self allSatisfy: [:each | each isLiteral]]
+
+	^ self class == Array and: [ self isLiteral: {  } ]
+]
+
+{ #category : #testing }
+Array >> isLiteral: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be literals"
+		^ false ].
+
+	^ self allSatisfy: [ :each | each isLiteral: alreadyVisited , { self } ]
 ]
 
 { #category : #'self evaluating' }
 Array >> isSelfEvaluating [
-	^ (self allSatisfy: [:each | each isSelfEvaluating]) and: [self class == Array]
+
+	^ self class == Array and: [ self isSelfEvaluating: { } ]
+]
+
+{ #category : #'self evaluating' }
+Array >> isSelfEvaluating: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a self evaluated"
+		^ false ].
+
+	^ self allSatisfy: [ :each | each isSelfEvaluating: alreadyVisited , { self } ]
 ]
 
 { #category : #comparing }
@@ -317,19 +312,19 @@ Array >> recursiveDo: aBlock [
 
 	"execute the block for my content like do, but then recurse into nested arrays"
 
-	self do: [ :each | 
+	self do: [ :each |
 		aBlock value: each.
 		each isArray ifTrue: [ each recursiveDo: aBlock ] ]
 ]
 
 { #category : #'literal testing' }
 Array >> refersToLiteral: literal [
-	^ (self literalEqual: literal) 
+	^ (self literalEqual: literal)
 		or: [ self hasLiteral: literal ]
 ]
 
 { #category : #accessing }
-Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
@@ -338,7 +333,18 @@ Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 { #category : #'literal testing' }
 Array >> shouldBePrintedAsLiteral [
 
-	^self class == Array and: [ self allSatisfy: [ :each | each shouldBePrintedAsLiteral ] ]
+	^ self class == Array and: [ self shouldBePrintedAsLiteral: {  } ]
+]
+
+{ #category : #'literal testing' }
+Array >> shouldBePrintedAsLiteral: alreadyVisited [
+
+	"Do not call super! This logic ends with an infinite recursion"
+
+	(alreadyVisited identityIncludes: self) ifTrue: [ "Recursive structure cannot be a literal"
+		^ false ].
+
+	^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ]
 ]
 
 { #category : #printing }
@@ -347,7 +353,7 @@ Array >> storeOn: aStream [
 	"Use the literal form if possible."
 
 	self shouldBePrintedAsLiteral
-		ifTrue: [ 
+		ifTrue: [
 			aStream
 				nextPut: $#;
 				nextPut: $(.

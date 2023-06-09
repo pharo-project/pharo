@@ -14,8 +14,6 @@ ZnMessageBenchmarkTest >> testRequests [
 		bench writeRepresentation.
 		self assert: (bench read isKindOf: ZnRequest).
 		self assert: bench read equals: bench message ]
-		
-	
 ]
 
 { #category : #testing }
@@ -28,6 +26,4 @@ ZnMessageBenchmarkTest >> testResponses [
 		bench writeRepresentation.
 		self assert: (bench read isKindOf: ZnResponse).
 		self assert: bench read equals: bench message ]
-		
-	
 ]

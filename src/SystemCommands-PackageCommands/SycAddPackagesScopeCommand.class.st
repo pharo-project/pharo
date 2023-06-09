@@ -43,5 +43,5 @@ SycAddPackagesScopeCommand >> packages: anObject [
 SycAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
 
 	super prepareFullExecutionInContext: aBrowserContext.
-	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ].
+	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ]
 ]

@@ -22,19 +22,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-FFIUnknownLibrary class >> name: aString [ 
+FFIUnknownLibrary class >> name: aString [
 	^ self basicNew
 		initializeName: aString;
 		yourself
 ]
 
 { #category : #'instance creation' }
-FFIUnknownLibrary class >> new [ 
+FFIUnknownLibrary class >> new [
 	self error: 'Use #name:'
 ]
 
 { #category : #initialization }
-FFIUnknownLibrary >> initializeName: aString [ 
+FFIUnknownLibrary >> initializeName: aString [
 	libraryName := aString.
 	self initialize
 ]

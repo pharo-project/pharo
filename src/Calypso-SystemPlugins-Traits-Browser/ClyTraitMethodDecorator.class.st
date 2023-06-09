@@ -11,7 +11,7 @@ Class {
 { #category : #decoration }
 ClyTraitMethodDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
+
 	anItemCellMorph definitionIcon: #traitIcon
 ]
 
@@ -29,11 +29,11 @@ ClyTraitMethodDecorator class >> wantsDecorateTableCellInContext: methodItemCont
 	"Idea is to decorate trait methods only when browser do not selects their origin"
 	| definingClass |
 	(super wantsDecorateTableCellInContext: methodItemContext) ifFalse: [ ^false ].
-	
+
 	methodItemContext isClassSelected ifFalse: [ ^false ].
 	definingClass := methodItemContext selectedMethodItems last systemDefinition definingClassItem.
-	
+
 	(definingClass isMarkedWith: ClyTraitTag) ifFalse: [ ^false ].
-	 
+
 	^methodItemContext lastSelectedClass ~~ definingClass actualObject
 ]

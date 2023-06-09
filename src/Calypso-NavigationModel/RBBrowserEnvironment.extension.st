@@ -4,7 +4,7 @@ Extension { #name : #RBBrowserEnvironment }
 RBBrowserEnvironment >> systemChanged: aSystemAnnouncement [
 
 	self updateUsing: ClyFullEnvironmentUpdateStrategy new by: [
-		self handleSystemChange: aSystemAnnouncement 
+		self handleSystemChange: aSystemAnnouncement
 	]
 ]
 

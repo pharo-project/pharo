@@ -22,3 +22,8 @@ ManifestCollectionsUnordered class >> manuallyResolvedDependencies [
 ManifestCollectionsUnordered class >> packageName [
 	^ #'Collections-Unordered'
 ]
+
+{ #category : #'code-critics' }
+ManifestCollectionsUnordered class >> ruleDefinesEqualNotHashRuleV1FalsePositive [
+	^ #(#(#(#RGClassDefinition #(#Set)) #'2023-01-04T10:19:27.364+01:00') )
+]

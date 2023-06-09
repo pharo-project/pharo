@@ -51,18 +51,20 @@ SolidFillStyle >> isSolidFill [
 
 { #category : #testing }
 SolidFillStyle >> isTranslucent [
-	^color isTranslucent
+
+	^ color isTranslucent
 ]
 
 { #category : #testing }
 SolidFillStyle >> isTransparent [
-	^color isTransparent
+
+	^ color isTransparent
 ]
 
 { #category : #printing }
 SolidFillStyle >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPut:$(; print: color; nextPut:$).
+	aStream nextPut:$(; print: color; nextPut:$)
 ]
 
 { #category : #accessing }

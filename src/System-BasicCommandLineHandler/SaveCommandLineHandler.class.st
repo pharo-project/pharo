@@ -32,36 +32,36 @@ SaveCommandLineHandler class >> description [
 SaveCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
-	
-	((self hasOption: 'delete-old') 
+
+	((self hasOption: 'delete-old')
 		ifTrue: [ self arguments size = 2 ]
 		ifFalse: [ self arguments size = 1])
-			ifFalse: [ 
+			ifFalse: [
 				self printHelp.
 				^ self exitFailure: 'Missing Arguments' ].
-		
-	self saveImage.
+
+	self saveImage
 ]
 
 { #category : #actions }
 SaveCommandLineHandler >> saveImage [
 	| imageName oldImageFile oldChangesFile |
-	
+
 	imageName := self arguments detect: [ :arg| arg ~= '--delete-old' ].
 	oldImageFile := File named: Smalltalk imagePath.
 	oldChangesFile := File named: (Smalltalk imagePath copyUpToLast: '.') , '.changes'.
-	
+
 	(Smalltalk saveAs: imageName)
-		ifTrue: [ 
-			"rebooting, when executing this, we are already in the renamed image" 
+		ifTrue: [
+			"rebooting, when executing this, we are already in the renamed image"
 			^ self ].
-	
+
 	"...otherwise continuing"
 	(self hasOption: 'delete-old')
 		ifFalse: [ ^ self exitSuccess ].
-	
+
 	oldImageFile delete.
 	oldChangesFile delete.
-	
-	self exitSuccess.
+
+	self exitSuccess
 ]

@@ -31,25 +31,25 @@ TabBuildingIconMorph >> currentIcon [
 { #category : #initialization }
 TabBuildingIconMorph >> initialize [
 	super initialize.
-	self 
+	self
 		clipLayoutCells: true;
 		color: Color transparent.
 	progress := 1.
 	progressIconMorph := self currentIcon asMorph.
 	self addMorphBack: progressIconMorph.
-	self extent: progressIconMorph extent.
+	self extent: progressIconMorph extent
 ]
 
 { #category : #stepping }
 TabBuildingIconMorph >> step [
 	progress := progress + 1.
 	progress > 10 ifTrue: [ progress := 1 ].
-	
+
 	progressIconMorph form: self currentIcon
 ]
 
 { #category : #stepping }
 TabBuildingIconMorph >> stepTime [
-	
+
 	^ 100 "milliseconds"
 ]

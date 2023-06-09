@@ -30,25 +30,25 @@ Text >> embeddedMorphs [
 
 	| morphs |
 	morphs := IdentitySet new.
-	runs withStartStopAndValueDo: 
-			[:start :stop :attribs | 
-			attribs 
+	runs withStartStopAndValueDo:
+			[:start :stop :attribs |
+			attribs
 				do: [:attrib | attrib anchoredMorph ifNotNil: [morphs add: attrib anchoredMorph]]].
 	^morphs select: [:m | m isMorph]
 ]
 
 { #category : #'*Morphic-Base' }
-Text >> embeddedMorphsFrom: start to: stop [ 
+Text >> embeddedMorphsFrom: start to: stop [
 	"return the list of morphs embedded in me"
 
 	| morphs |
 	morphs := IdentitySet new.
-	runs 
+	runs
 		runsFrom: start
 		to: stop
-		do: 
-			[:attribs | 
-			attribs 
+		do:
+			[:attribs |
+			attribs
 				do: [:attr | attr anchoredMorph ifNotNil: [morphs add: attr anchoredMorph]]].
 	^morphs select: [:m | m isMorph]
 ]
@@ -63,7 +63,7 @@ Text >> heightToDisplayInList: aList [
 Text >> listRenderOn: aCanvas atRow: aRow bounds: bounds color: color backgroundColor: backgroundColor from: aMorph [
 	"Method extracted from LazyListMorph"
 	| attrs useDefaultFont f itemBounds |
-	
+
 	attrs := self attributesAt: 1.
 	useDefaultFont := true.
 	attrs

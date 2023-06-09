@@ -8,8 +8,14 @@ Class {
 	#category : #'Kernel-Numbers'
 }
 
+{ #category : #testing }
+LargeInteger class >> isAbstract [
+
+	^ self == LargeInteger
+]
+
 { #category : #arithmetic }
-LargeInteger >> * anInteger [ 
+LargeInteger >> * anInteger [
 	"Primitive. Multiply the receiver by the argument and answer with an
 	Integer result. Fail if either the argument or the result is not a
 	SmallInteger or a LargePositiveInteger less than 2-to-the-30th (1073741824). Optional. See
@@ -20,7 +26,7 @@ LargeInteger >> * anInteger [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> + anInteger [ 
+LargeInteger >> + anInteger [
 	"Primitive. Add the receiver to the argument and answer with an
 	Integer result. Fail if either the argument or the result is not a
 	SmallInteger or a LargePositiveInteger less than 2-to-the-30th (1073741824). Optional. See
@@ -31,7 +37,7 @@ LargeInteger >> + anInteger [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> - anInteger [ 
+LargeInteger >> - anInteger [
 	"Primitive. Subtract the argument from the receiver and answer with an
 	Integer result. Fail if either the argument or the result is not a
 	SmallInteger or a LargePositiveInteger less than 2-to-the-30th (1073741824). Optional. See
@@ -42,7 +48,7 @@ LargeInteger >> - anInteger [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> / anInteger [ 
+LargeInteger >> / anInteger [
 	"Primitive. Divide the receiver by the argument and answer with the
 	result if the division is exact. Fail if the result is not a whole integer.
 	Fail if the argument is 0. Fail if either the argument or the result is not
@@ -54,7 +60,7 @@ LargeInteger >> / anInteger [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> // anInteger [ 
+LargeInteger >> // anInteger [
 	"Primitive. Divide the receiver by the argument and return the result.
 	Round the result down towards negative infinity to make it a whole
 	integer. Fail if the argument is 0. Fail if either the argument or the
@@ -66,7 +72,7 @@ LargeInteger >> // anInteger [
 ]
 
 { #category : #comparing }
-LargeInteger >> < anInteger [ 
+LargeInteger >> < anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is less than the argument. Otherwise answer false. Fail if the
 	argument is not a SmallInteger or a LargePositiveInteger less than 2-to-the-30th (1073741824).
@@ -77,7 +83,7 @@ LargeInteger >> < anInteger [
 ]
 
 { #category : #comparing }
-LargeInteger >> <= anInteger [ 
+LargeInteger >> <= anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is less than or equal to the argument. Otherwise answer false.
 	Fail if the argument is not a SmallInteger or a LargePositiveInteger less
@@ -88,7 +94,7 @@ LargeInteger >> <= anInteger [
 ]
 
 { #category : #comparing }
-LargeInteger >> > anInteger [ 
+LargeInteger >> > anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is greater than the argument. Otherwise answer false. Fail if
 	the argument is not a SmallInteger or a LargePositiveInteger less than
@@ -99,7 +105,7 @@ LargeInteger >> > anInteger [
 ]
 
 { #category : #comparing }
-LargeInteger >> >= anInteger [ 
+LargeInteger >> >= anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is greater than or equal to the argument. Otherwise answer
 	false. Fail if the argument is not a SmallInteger or a LargePositiveInteger
@@ -110,7 +116,7 @@ LargeInteger >> >= anInteger [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> \\ aNumber [ 
+LargeInteger >> \\ aNumber [
 	"Primitive. Take the receiver modulo the argument. The result is the
 	remainder rounded towards negative infinity, of the receiver divided
 	by the argument. Fail if the argument is 0. Fail if either the argument
@@ -134,7 +140,7 @@ LargeInteger >> \\ aNumber [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> \\\ anInteger [ 
+LargeInteger >> \\\ anInteger [
 	"a faster modulo method for use in DSA. Be careful if you try to use this elsewhere"
 
 	^(self digitDiv: anInteger neg: false) second
@@ -145,7 +151,7 @@ LargeInteger >> asFloat [
 	"Answer a Float that best approximates the value of the receiver.
 	This algorithm is optimized to process only the significant digits of a LargeInteger.
 	And it does honour IEEE 754 round to nearest even mode in case of excess precision (see details below)."
-	
+
 	"How numbers are rounded in IEEE 754 default rounding mode:
 	A shift is applied so that the highest 53 bits are placed before the floating point to form a mantissa.
 	The trailing bits form the fraction part placed after the floating point.
@@ -162,13 +168,13 @@ LargeInteger >> asFloat [
 	Thus, if the next bit after floating point is 0, the mantissa is left unchanged.
 	If next bit after floating point is 1, an odd mantissa is always rounded upper.
 	An even mantissa is rounded upper only if the fraction part is not a tie."
-	
+
 	"Algorihm details:
 	The floating point hardware can perform the rounding correctly with several excess bits as long as there is a single inexact operation.
 	This can be obtained by splitting the mantissa plus excess bits in two part with less bits than Float precision.
 	Note 1: the inexact flag in floating point hardware must not be trusted because in some cases the operations would be exact but would not take into account some bits that were truncated before the Floating point operations.
 	Note 2: the floating point hardware is presumed configured in default rounding mode."
-	
+
 	| mantissa shift excess result n |
 
 	"Check how many bits excess the maximum precision of a Float mantissa."
@@ -191,11 +197,11 @@ LargeInteger >> asFloat [
 	result := (mantissa byteAt: (n := mantissa bytesCount)) asFloat.
 	[(n := n - 1) > 0] whileTrue: [
 		result := 256.0 * result + (mantissa byteAt: n) asFloat].
-	^result timesTwoPower: shift.
+	^result timesTwoPower: shift
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> byteAt: index [ 
+LargeInteger >> byteAt: index [
 	"Primitive. Answer the value of an indexable field in the receiver.   LargePositiveInteger uses bytes of base two number, and each is a 'digit' base 256.  Fail if the argument (the index) is not an Integer or is out of bounds. Essential.  See Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
@@ -205,11 +211,11 @@ LargeInteger >> byteAt: index [
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> byteAt: index put: value [ 
-	"Primitive. Store the second argument (value) in the indexable field of 
-	the receiver indicated by index. Fail if the value is negative or is larger 
-	than 255. Fail if the index is not an Integer or is out of bounds. Answer 
-	the value that was stored. Essential. See Object documentation 
+LargeInteger >> byteAt: index put: value [
+	"Primitive. Store the second argument (value) in the indexable field of
+	the receiver indicated by index. Fail if the value is negative or is larger
+	than 255. Fail if the index is not an Integer or is out of bounds. Answer
+	the value that was stored. Essential. See Object documentation
 	whatIsAPrimitive."
 
 	<primitive: 61>
@@ -218,8 +224,8 @@ LargeInteger >> byteAt: index put: value [
 
 { #category : #'system primitives' }
 LargeInteger >> bytesCount [
-	"Primitive. Answer the number of indexable fields in the receiver. This 
-	value is the same as the largest legal subscript. Essential. See Object 
+	"Primitive. Answer the number of indexable fields in the receiver. This
+	value is the same as the largest legal subscript. Essential. See Object
 	documentation whatIsAPrimitive."
 
 	<primitive: 62>
@@ -242,9 +248,9 @@ LargeInteger >> hashMultiply [
 
 { #category : #'bit manipulation' }
 LargeInteger >> highBitOfMagnitude [
-	"Answer the index of the high order bit of the magnitude of the  
-	receiver, or zero if the receiver is zero.  
-	This method is used for LargeNegativeIntegers as well,  
+	"Answer the index of the high order bit of the magnitude of the
+	receiver, or zero if the receiver is zero.
+	This method is used for LargeNegativeIntegers as well,
 	since LargeIntegers are sign/magnitude."
 	| realLength lastDigit |
 	realLength := self bytesCount.
@@ -268,11 +274,11 @@ LargeInteger >> printOn: aStream base: b nDigits: n [
 	"Append a representation of this number in base b on aStream using n digits.
 	In order to reduce cost of LargePositiveInteger ops, split the number of digts approximatily in two
 	Should be invoked with: 0 <= self < (b raisedToInteger: n)"
-	
+
 	| halfPower half head tail |
 	n <= 1 ifTrue: [
 		n <= 0 ifTrue: [self error: 'Number of digits n should be > 0'].
-		
+
 		"Note: this is to stop an infinite loop if one ever attempts to print with a huge base
 		This can happen because choice was to not hardcode any limit for base b
 		We let Character>>#digitValue: fail"
@@ -286,7 +292,7 @@ LargeInteger >> printOn: aStream base: b nDigits: n [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> quo: anInteger [ 
+LargeInteger >> quo: anInteger [
 	"Primitive. Divide the receiver by the argument and return the result.
 	Round the result down towards zero to make it a whole integer. Fail if
 	the argument is 0. Fail if either the argument or the result is not a
@@ -298,7 +304,7 @@ LargeInteger >> quo: anInteger [
 ]
 
 { #category : #arithmetic }
-LargeInteger >> rem: aNumber [ 
+LargeInteger >> rem: aNumber [
 	"Remainder defined in terms of quo:. See super rem:.
 	This is defined only to speed up case of large integers."
 
@@ -313,7 +319,7 @@ LargeInteger >> rem: aNumber [
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+LargeInteger >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	^ super replaceFrom: start to: stop with: replacement startingAt: repStart
@@ -327,9 +333,9 @@ LargeInteger >> withAtLeastNDigits: desiredLength [
 	self size >= desiredLength ifTrue: [^self].
 	new := self class new: desiredLength.
 	new
-		replaceFrom: 1 
-		to: self size 
-		with: self 
+		replaceFrom: 1
+		to: self size
+		with: self
 		startingAt: 1.
 	^new
 ]

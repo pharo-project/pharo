@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyOverriddenSuperclassesChanged class >> overridingSubclass: aClass [
-	^self new 
+	^self new
 		overridingSubclass: aClass
 ]
 
@@ -32,7 +32,7 @@ ClyOverriddenSuperclassesChanged >> affectsMethodsDefinedInClass: aClass [
 { #category : #testing }
 ClyOverriddenSuperclassesChanged >> affectsMethodsDefinedInPackage: aPackage [
 
-	overridingSubclass allSuperclassesDo: [:each | 
+	overridingSubclass allSuperclassesDo: [:each |
 		(each package = aPackage) ifTrue: [ ^true ] ].
 
 	^false
@@ -41,7 +41,7 @@ ClyOverriddenSuperclassesChanged >> affectsMethodsDefinedInPackage: aPackage [
 { #category : #testing }
 ClyOverriddenSuperclassesChanged >> affectsMethodsTaggedWith: tagName [
 
-	overridingSubclass allSuperclassesDo: [:each | 
+	overridingSubclass allSuperclassesDo: [:each |
 		(each tagsForMethods includes: tagName) ifTrue: [ ^true ] ].
 
 	^false

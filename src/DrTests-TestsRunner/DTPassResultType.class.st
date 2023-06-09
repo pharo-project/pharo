@@ -8,8 +8,9 @@ Class {
 }
 
 { #category : #factory }
-DTPassResultType class >> backgroundColor [
-	^ TestResult defaultColorBackGroundForPassingTest
+DTPassResultType class >> backgroundColorStyle [
+
+	^ 'testPass'
 ]
 
 { #category : #testing }

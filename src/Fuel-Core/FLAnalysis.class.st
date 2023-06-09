@@ -11,11 +11,12 @@ An example of use is:
 Class {
 	#name : #FLAnalysis,
 	#superclass : #Object,
+	#traits : 'TFLConfigurable',
+	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'objectStack',
 		'firstMapper',
 		'clusterization',
-		'root',
 		'privateObjectStack',
 		'privateFirstMapper'
 	],
@@ -23,11 +24,27 @@ Class {
 }
 
 { #category : #'instance creation' }
-FLAnalysis class >> newWith: aMapper private: privateMapper root: anObject [
+FLAnalysis class >> detectResponsibleAnalysis [
+	^ (self allSubclasses sort: [ :a :b | a priority <= b priority ])
+		detect: [ :class | class isResponsible ]
+		ifNone: [ self ]
+]
 
-	^self basicNew
-		initializeWith: aMapper private: privateMapper root: anObject;
-		yourself.
+{ #category : #'instance creation' }
+FLAnalysis class >> isResponsible [
+	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+FLAnalysis class >> priority [
+	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+FLAnalysis class >> run [
+	^ self detectResponsibleAnalysis new
+		run;
+		yourself
 ]
 
 { #category : #accessing }
@@ -36,30 +53,37 @@ FLAnalysis >> clusterization [
 	^clusterization
 ]
 
-{ #category : #hooks }
-FLAnalysis >> fuelAccept: aGeneralMapper [
-	^ aGeneralMapper visitSubstitution: self by: nil
-]
-
-{ #category : #'initialize-release' }
-FLAnalysis >> initializeWith: aMapper private: privateMapper root: anObject [
-
-	self initialize.
-	firstMapper := aMapper.
-	privateFirstMapper := privateMapper.
-	aMapper analysis: self.
-	privateMapper analysis: self.
-	root := anObject.
+{ #category : #initialization }
+FLAnalysis >> initialize [
+	super initialize.
+	
 	objectStack := FLSimpleStack new.
 	privateObjectStack := FLSimpleStack new.
 	clusterization := FLClusterization new.
+	
+	self context analysis: self.
+
+	self initializeMapperChains
+]
+
+{ #category : #initialization }
+FLAnalysis >> initializeMapperChains [
+	| standardMappers allMappers |
+	standardMappers := self standardMappers.
+	allMappers := self substitutionMappers asOrderedCollection
+		addAll: standardMappers;
+		reduceRight: [ :current :next | current next: next ];
+		yourself.
+	
+	firstMapper := allMappers first.
+	privateFirstMapper := standardMappers first
 ]
 
 { #category : #mapping }
 FLAnalysis >> mapAndTrace: anObject [
 	"Map an object to its cluster. Trace its references."
 
-	firstMapper mapAndTrace: anObject fuelReplacement
+	firstMapper mapAndTrace: anObject
 ]
 
 { #category : #mapping }
@@ -75,18 +99,40 @@ FLAnalysis >> privateTrace: anObject [
 	privateObjectStack push: anObject
 ]
 
-{ #category : #analyzing }
+{ #category : #running }
 FLAnalysis >> run [
 
-	objectStack push: root.
+	objectStack push: self context object.
 	[ objectStack isEmpty ] 
 		whileFalse: [ self mapAndTrace: objectStack pop ].
+	objectStack := nil.	
+	
 	[ privateObjectStack isEmpty ] 
 		whileFalse: [ self privateMapAndTrace: privateObjectStack pop ].
 ]
 
+{ #category : #accessing }
+FLAnalysis >> standardMappers [
+	^ {
+		FLLightGlobalMapper new.
+		FLFullGeneralMapper new.
+		FLLightGeneralMapper new
+	}
+]
+
+{ #category : #accessing }
+FLAnalysis >> substitutionMappers [
+	^ self configuration substitutions collect: [ :assoc |
+		FLPluggableSubstitutionMapper 
+			when: assoc key
+			substituteBy: assoc value ]
+]
+
 { #category : #tracing }
 FLAnalysis >> trace: anObject [
-
-	objectStack push: anObject
+	"It's possible to get here from #privateMapAndTrace: but then #mapAndTrace: will
+	not be sent again (see #run)"
+	objectStack
+		ifNil: [ self privateTrace: anObject ]
+		ifNotNil: [ objectStack push: anObject ]
 ]

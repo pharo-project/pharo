@@ -48,31 +48,31 @@ FontSet class >> fontNamed: fontName fromMimeLiteral: aString [
 
 	See the method installAsTextStyle to see how this can be used."
 
-	^ StrikeFont new 
+	^ StrikeFont new
 		name: fontName;
 		readFromStrike2Stream: aString base64Decoded readStream
 ]
 
 { #category : #installing }
-FontSet class >> installAsDefault [ 
+FontSet class >> installAsDefault [
 	"FontSetNewYork installAsDefault"
-	
+
 	(self confirm: 'Do you want to install' translated, '
 ''' , self fontName , ''' as default font?' translated)
 		ifFalse: [^ self].
 	self installAsTextStyle.
-	TextSharedInformation at: #DefaultTextStyle put: (TextStyle named: self fontName).
+	TextSharedInformation at: #DefaultTextStyle put: (TextStyle named: self fontName)
 ]
 
 { #category : #installing }
 FontSet class >> installAsTextStyle [
 	"FontSetNewYork installAsTextStyle"
 	| selectors |
-	(TextSharedInformation includesKey: self fontName) ifTrue: 
+	(TextSharedInformation includesKey: self fontName) ifTrue:
 		[ (self confirm: self fontName , ' is already defined in TextSharedInformation.
 Do you want to replace that definition?') ifFalse: [ ^ self ] ].
 	selectors := (self class selectors select: [ :s | s beginsWith: 'size' ]) asSortedCollection.
-	TextSharedInformation 
+	TextSharedInformation
 		at: self fontName
 		put: (TextStyle fontArray: (selectors collect: [ :each | self perform: each ]))
 ]

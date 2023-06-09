@@ -11,10 +11,10 @@ Class {
 
 { #category : #accessing }
 HESymbol class >> tag [
-	^ 9.
+	^ 9
 ]
 
 { #category : #reading }
 HESymbol >> doConvertValue: aValue [
-	^ aValue asSymbol.
+	^ aValue asSymbol
 ]

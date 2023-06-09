@@ -24,7 +24,7 @@ FFIExternalStructureFlatLayout >> addField: registerClass size: fieldSize alignm
 			offset: size
 			yourself
 		).
-	size := size + fieldSize.
+	size := size + fieldSize
 ]
 
 { #category : #building }
@@ -35,7 +35,7 @@ FFIExternalStructureFlatLayout >> addMemoryFieldSize: fieldSize alignment: field
 { #category : #building }
 FFIExternalStructureFlatLayout >> alignTo: anAlignment [
 	size := size alignedTo: anAlignment.
-	alignment := alignment max: anAlignment.
+	alignment := alignment max: anAlignment
 ]
 
 { #category : #accessing }
@@ -61,12 +61,12 @@ FFIExternalStructureFlatLayout >> combineSysVAMD64RegisterClass: leftClass with:
 	rightClass ifNil: [ ^ leftClass ].
 
 	"If one is memory, the result is memory."
-	( leftClass == #memory or: [ rightClass == #memory ] ) ifTrue: [ ^ #memory ].	
+	( leftClass == #memory or: [ rightClass == #memory ] ) ifTrue: [ ^ #memory ].
 
 	"If one is integer, the result is integer."
 	( leftClass == #integer or: [ rightClass == #integer ] ) ifTrue: [ ^ #integer ].
 
-	"TODO: If one of the classes is X87, X87UP, COMPLEX_X87 class, #memory is used as class."	
+	"TODO: If one of the classes is X87, X87UP, COMPLEX_X87 class, #memory is used as class."
 
 	"Otherwise, use the SSE class"
 	^ #float
@@ -107,7 +107,7 @@ FFIExternalStructureFlatLayout >> initialize [
 	size := 0.
 	alignment := 1.
 	integerRegisterCount := 0.
-	floatRegisterCount := 0.
+	floatRegisterCount := 0
 ]
 
 { #category : #accessing }
@@ -131,14 +131,14 @@ FFIExternalStructureFlatLayout >> reduce: sourceFields inGroupsOfSize: groupSize
 	reduced := nil.
 	nextGroupOffset := groupSize.
 	sourceFields do: [ :field |
-		field offset < nextGroupOffset ifFalse: [ 
+		field offset < nextGroupOffset ifFalse: [
 			reduced ifNotNil: [
 				fields add: reduced.
 				reduced := nil
 			].
 			nextGroupOffset := (field offset // groupSize + 1) * groupSize
 		].
-	
+
 		reduced ifNotNil: [
 			reduced
 				registerClass: (aBlock value: reduced value: field);
@@ -150,7 +150,6 @@ FFIExternalStructureFlatLayout >> reduce: sourceFields inGroupsOfSize: groupSize
 	].
 
 	reduced ifNotNil: [ fields add: reduced ]
-
 ]
 
 { #category : #accessing }
@@ -175,7 +174,7 @@ FFIExternalStructureFlatLayout >> sysVAMD64PostProcess [
 	].
 
 	"Post merger cleanup"
-	
+
 	"If there is any memory field, pass the whole structure in memory."
 	result fields detect: [ :field | field registerClass == #memory] ifFound: [
 		result fields: { FFIExternalStructureFlatLayoutField new
@@ -190,5 +189,4 @@ FFIExternalStructureFlatLayout >> sysVAMD64PostProcess [
 
 	result countRegisters.
 	^ result
-	
 ]

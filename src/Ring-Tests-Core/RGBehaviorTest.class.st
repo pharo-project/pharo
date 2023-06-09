@@ -18,13 +18,14 @@ RGBehaviorTest >> testBadInstantiation [
 
 { #category : #tests }
 RGBehaviorTest >> testBehaviorWithMethodTags [
+
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
-	self assert: (newBehavior hasUnresolvedAll: #(superclass localMethods protocols)).
+	self assert: (newBehavior hasUnresolvedAll: #( superclass localMethods protocols )).
 	self assert: newBehavior methods isEmpty.
 
-	1 to: 10 do: [ :i | newBehavior addMethodTag: ('tag' , i asString) asSymbol ].
+	1 to: 10 do: [ :i | newBehavior addProtocol: ('tag' , i asString) asSymbol ].
 
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 
@@ -39,13 +40,14 @@ RGBehaviorTest >> testBehaviorWithMethodTags [
 
 { #category : #tests }
 RGBehaviorTest >> testBehaviorWithProtocols [
+
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
-	self assert: (newBehavior hasUnresolvedAll: #(superclass localMethods protocols)).
+	self assert: (newBehavior hasUnresolvedAll: #( superclass localMethods protocols )).
 	self assert: newBehavior methods isEmpty.
 
-	1 to: 10 do: [ :i | newBehavior addMethodTag: ('tag' , i asString) asSymbol ].
+	1 to: 10 do: [ :i | newBehavior addProtocol: ('tag' , i asString) asSymbol ].
 
 	self assert: (newBehavior protocols allSatisfy: #isSymbol).
 
@@ -54,6 +56,13 @@ RGBehaviorTest >> testBehaviorWithProtocols [
 	self assert: newBehavior protocols size equals: 6.
 	newBehavior cleanProtocols.
 	self assert: newBehavior protocols isEmpty
+]
+
+{ #category : #tests }
+RGBehaviorTest >> testInheritsFromUnresolved [
+
+	self deny: (RGBehavior new inheritsFrom: RGClass unresolved).
+
 ]
 
 { #category : #tests }
@@ -107,16 +116,16 @@ RGBehaviorTest >> testSiblings [
 { #category : #tests }
 RGBehaviorTest >> testUnresolveSuperclass [
 	| env class1 class2 |
-	
+
 	env := RGEnvironment new.
 	class1 := env ensureClassNamed: #Superclass.
 	class2 := env ensureClassNamed: #Subclass.
-	
-	self deny: class2 hasResolvedSuperclass. 
+
+	self deny: class2 hasResolvedSuperclass.
 	class2 superclass: class1.
-	self assert: class2 hasResolvedSuperclass. 
+	self assert: class2 hasResolvedSuperclass.
 	class2 unresolveSuperclass.
-	self deny: class2 hasResolvedSuperclass. 
-	
-	self assert: class1 subclasses isEmpty.
+	self deny: class2 hasResolvedSuperclass.
+
+	self assert: class1 subclasses isEmpty
 ]

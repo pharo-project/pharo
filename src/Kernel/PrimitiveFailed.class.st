@@ -10,7 +10,7 @@ Class {
 { #category : #printing }
 PrimitiveFailed >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		stream << 'primitive '.
 		stream print: self selector.

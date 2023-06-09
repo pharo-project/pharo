@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 EdgeGripMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
-	
+
 	super adoptPaneColor: paneColor.
 	self fillStyle: self normalFillStyle
 ]
@@ -23,8 +23,8 @@ EdgeGripMorph >> adoptPaneColor: paneColor [
 { #category : #'accessing - layouts' }
 EdgeGripMorph >> bottomLayoutFrame [
 	"Answer the layout frame for a bottom edge."
-	
-	^ (0 @ 1 corner: 1 @ 1) asLayoutFrame 
+
+	^ (0 @ 1 corner: 1 @ 1) asLayoutFrame
 		topLeftOffset: 22 @ SystemWindow borderWidth negated ;
 		rightOffset: -22
 ]
@@ -32,14 +32,14 @@ EdgeGripMorph >> bottomLayoutFrame [
 { #category : #defaults }
 EdgeGripMorph >> defaultHeight [
 	"Answer the default height for the receiver."
-	
+
 	^ProportionalSplitterMorph splitterWidth
 ]
 
 { #category : #defaults }
 EdgeGripMorph >> defaultWidth [
 	"Answer the default width for the receiver."
-	
+
 	^ProportionalSplitterMorph splitterWidth
 ]
 
@@ -113,7 +113,7 @@ EdgeGripMorph >> fitTargetOwner: anObject [
 { #category : #'accessing - layouts' }
 EdgeGripMorph >> gripLayoutFrame [
 	"Answer the layout frame depending on our edge."
-	
+
 	self edgeName == #top ifTrue: [^self topLayoutFrame].
 	self edgeName == #bottom ifTrue: [^self bottomLayoutFrame].
 	self edgeName == #left ifTrue: [^self leftLayoutFrame].
@@ -123,7 +123,7 @@ EdgeGripMorph >> gripLayoutFrame [
 { #category : #initialization }
 EdgeGripMorph >> initialize [
 	"Initialize the receiver."
-	
+
 	super initialize.
 	self
 		fitTargetOwner: false;
@@ -136,7 +136,7 @@ EdgeGripMorph >> initialize [
 { #category : #testing }
 EdgeGripMorph >> isHorizontal [
 	"Answer true if the receiver has a horizontal layout."
-	
+
 	^self edgeName == #top
 		or: [self edgeName == #bottom]
 ]
@@ -144,16 +144,16 @@ EdgeGripMorph >> isHorizontal [
 { #category : #'accessing - layouts' }
 EdgeGripMorph >> leftLayoutFrame [
 	"Answer the layout frame for a left edge."
-	
-	^ (0 @ 0 corner: 0 @ 1) asLayoutFrame 
-		topOffset: -7; 
+
+	^ (0 @ 0 corner: 0 @ 1) asLayoutFrame
+		topOffset: -7;
 		bottomRightOffset: SystemWindow borderWidth @ (SystemWindow borderWidth - 26)
 ]
 
 { #category : #'event handling' }
 EdgeGripMorph >> mouseDown: anEvent [
 	"Remember the receiver and target offsets too."
-	
+
 	|cp|
 	(self bounds containsPoint: anEvent cursorPoint)
 		ifTrue: [self fillStyle: self pressedFillStyle].
@@ -166,20 +166,20 @@ EdgeGripMorph >> mouseDown: anEvent [
 { #category : #'event handling' }
 EdgeGripMorph >> mouseMove: anEvent [
 	"Track the mouse for resizing."
-	
+
 	target ifNil: [^self].
 	self theme settings fastDragging
-		ifTrue: [target doFastReframe: self edgeName] 
+		ifTrue: [target doFastReframe: self edgeName]
 		ifFalse: [
 			lastMouse at: 1 put: anEvent cursorPoint.
 			self targetPoint: lastMouse first - lastMouse last.
-			self positionPoint: (lastMouse first - lastMouse second)].
+			self positionPoint: (lastMouse first - lastMouse second)]
 ]
 
 { #category : #'event handling' }
 EdgeGripMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
-	
+
 	(self bounds containsPoint: anEvent cursorPoint)
 		ifFalse: [anEvent hand showTemporaryCursor: nil].
 	self adoptPaneColor: self paneColor
@@ -188,14 +188,14 @@ EdgeGripMorph >> mouseUp: anEvent [
 { #category : #accessing }
 EdgeGripMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
-	
+
 	^self theme splitterNormalFillStyleFor: self
 ]
 
 { #category : #accessing }
 EdgeGripMorph >> positionPoint: aPoint [
 	"Reposition based on ptName."
-	
+
 	(#(top bottom) includes: self edgeName)
 		ifTrue: [^self position: self left @ aPoint y].
 	(#(left right) includes: self edgeName)
@@ -206,7 +206,7 @@ EdgeGripMorph >> positionPoint: aPoint [
 { #category : #accessing }
 EdgeGripMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
-	
+
 	^self theme splitterPressedFillStyleFor: self
 ]
 
@@ -219,8 +219,8 @@ EdgeGripMorph >> resizeCursor [
 { #category : #'accessing - layouts' }
 EdgeGripMorph >> rightLayoutFrame [
 	"Answer the layout frame for a right edge."
-	
-	^ (1 @ 0 corner: 1 @ 1) asLayoutFrame 
+
+	^ (1 @ 0 corner: 1 @ 1) asLayoutFrame
 		topLeftOffset: SystemWindow borderWidth negated @ -7 ;
 		bottomOffset: SystemWindow borderWidth - 26
 ]
@@ -247,7 +247,7 @@ EdgeGripMorph >> setTargetBounds: aRect [
 { #category : #testing }
 EdgeGripMorph >> splitsTopAndBottom [
 	"Answer true if the receiver has a horizontal layout."
-	
+
 	^self isHorizontal
 ]
 
@@ -303,8 +303,8 @@ EdgeGripMorph >> themeChanged [
 { #category : #'accessing - layouts' }
 EdgeGripMorph >> topLayoutFrame [
 	"Answer the layout frame for a top edge."
-	
-	^ (0 @ 0 corner: 1 @ 0) asLayoutFrame 
+
+	^ (0 @ 0 corner: 1 @ 0) asLayoutFrame
 		topLeftOffset: 22 @ -29 ;
 		bottomRightOffset:  -22 @ (SystemWindow borderWidth - 29)
 ]

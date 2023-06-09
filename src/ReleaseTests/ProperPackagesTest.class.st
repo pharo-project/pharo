@@ -14,19 +14,32 @@ ProperPackagesTest >> testNoPackageNameEndsWithTest [
 ]
 
 { #category : #tests }
+ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
+	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
+
+	| condition badCases |
+	self flag: #CompileMethodProtocolMiration.
+	condition := [ :protocol | (protocol beginsWith: '*') and: [ protocol second isLowercase ] ].
+	badCases := CompiledMethod allInstances select: [ :method | method protocol isNotNil and: [ condition value: method protocolName ] ].
+
+	self assert: badCases isEmpty
+]
+
+{ #category : #tests }
 ProperPackagesTest >> testProperClassTagCasing [
-	|violations|
+
+	| violations |
 	violations := OrderedCollection new.
-	RPackageOrganizer default packages
-        do: [:package | package classTags do: [:classTag | classTag name first isLowercase ifTrue: [ violations add: (package -> classTag) ] ] ].
-	self assert:  violations isEmpty description: 'Class Tags should be uppercase'
+	self packageOrganizer packages do: [ :package |
+		package classTags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
+	self assert: violations isEmpty description: 'Class Tags should be uppercase'
 ]
 
 { #category : #'tests - manifest' }
 ProperPackagesTest >> testProperManifestCategorization [
-	"If a package provides a PackageManifest subclass then this manifest class should be packaged 
+	"If a package provides a PackageManifest subclass then this manifest class should be packaged
 	 with 'Manifest' tag similar to all other manifests."
-	
+
 	|violations|
 	violations := OrderedCollection new.
 	PackageManifest allSubclassesDo: [:each |
@@ -34,5 +47,5 @@ ProperPackagesTest >> testProperManifestCategorization [
   	      ifFalse: [ violations add: each ]
 	].
 
-	self assert: violations isEmpty.
+	self assert: violations isEmpty
 ]

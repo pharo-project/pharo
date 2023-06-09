@@ -9,6 +9,6 @@ Class {
 }
 
 { #category : #accessing }
-FFIInt64 class >> externalType [ 
+FFIInt64 class >> externalType [
 	^ ExternalType signedLongLong
 ]

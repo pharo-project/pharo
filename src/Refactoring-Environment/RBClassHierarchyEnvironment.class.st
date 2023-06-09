@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 RBClassHierarchyEnvironment class >> class: aClass [
-	^ self 
+	^ self
 		onEnvironment: self default
 		class: aClass
 ]
@@ -45,8 +45,8 @@ RBClassHierarchyEnvironment >> class: aClass [
 
 { #category : #testing }
 RBClassHierarchyEnvironment >> definesClass: aClass [
-	^ (aClass == class or: 
-		[ (class inheritsFrom: aClass) or: 
+	^ (aClass == class or:
+		[ (class inheritsFrom: aClass) or:
 			[ aClass inheritsFrom: class ] ]) and: [super definesClass: aClass]
 ]
 
@@ -63,8 +63,8 @@ RBClassHierarchyEnvironment >> includesCategory: aCategory [
 
 { #category : #testing }
 RBClassHierarchyEnvironment >> includesClass: aClass [
-	^ (aClass == class or: 
-		[ (class inheritsFrom: aClass) or: 
+	^ (aClass == class or:
+		[ (class inheritsFrom: aClass) or:
 			[ aClass inheritsFrom: class ] ]) and: [super includesClass: aClass]
 ]
 

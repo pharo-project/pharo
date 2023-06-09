@@ -26,7 +26,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserQueryUpdate class >> of: aBrowserQueryResult withItems: aBrowserQueryCache [
-	^self new 
+	^self new
 		metadata: aBrowserQueryResult metadata;
 		itemCache: aBrowserQueryCache;
 		totalItemCount: aBrowserQueryResult size

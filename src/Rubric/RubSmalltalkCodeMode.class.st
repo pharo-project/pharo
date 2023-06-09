@@ -27,7 +27,7 @@ RubSmalltalkCodeMode class >> label [
 
 { #category : #menu }
 RubSmalltalkCodeMode class >> menuKeyword [
-	^ 'RubSmalltalkCodeMenu'
+	^ #RubSmalltalkCodeMenu
 ]
 
 { #category : #menu }
@@ -41,84 +41,107 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
-		iconName: #smallDoItIcon.
-	(aBuilder item: #'Print it' translated)
+		iconName: #smallDoIt.
+	(aBuilder item: #'Do & print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
-		iconName: #smallPrintItIcon.
-	(aBuilder item: #'Inspect it' translated)
+		iconName: #smallPrintIt.
+	(aBuilder item: #'Do & inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		iconName: #smallInspectItIcon.
-	(aBuilder item: #'Basic Inspect it' translated)
+		iconName: #smallInspectIt.
+	(aBuilder item: #'Do & browse its class' translated)
+		keyText: 'b';
+		selector: #browseFullClass;
+		help: nil;
+		iconName: #smallSystemBrowser.
+	(aBuilder item: #'Do & basic inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
-		iconName: #smallInspectItIcon.
+		iconName: #smallInspectIt.
 	(aBuilder item: #'Debug it' translated)
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		iconName: #smallDebugIcon.
+		iconName: #smallDebug.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		iconName: #smallDebugIcon;
+		iconName: #smallProfile;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
 		help: nil;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
 		help: nil;
-		iconName: #smallFindIcon.
+		iconName: #smallFind.
 	self extendedSearchMenuOn: aBuilder.
 	(aBuilder item: #'Redo' translated)
 		keyText: 'Z';
 		selector: #redo;
 		help: nil;
-		iconName: #smallRedoIcon.
+		iconName: #smallRedo.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
 		help: nil;
-		iconName: #smallUndoIcon;
+		iconName: #smallUndo;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
 		help: nil;
-		iconName: #smallCopyIcon.
+		iconName: #smallCopy.
 	(aBuilder item: #Cut translated)
 		keyText: 'x';
 		selector: #cut;
 		help: nil;
-		iconName: #smallCutIcon.
+		iconName: #smallCut.
 	(aBuilder item: #Paste translated)
 		keyText: 'v';
 		selector: #paste;
 		help: nil;
-		iconName: #smallPasteIcon.
+		iconName: #smallPaste.
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
-		iconName: #smallCopyIcon;
+		iconName: #smallCopy.
+	(aBuilder item: #'Indent' translated)
+		keyText: 'R';
+		selector: #indent;
+		help: nil.
+	(aBuilder item: #'Outdent' translated)
+		keyText: 'L';
+		selector: #outdent;
+		help: nil.
+	(aBuilder item: #'Widen selection' translated)
+		keyText: '2';
+		selector: #widenSelectionOfIt;
+		help: nil;
+		iconName: #smallFullscreen.
+	(aBuilder item: #'Compare selection to clipboard' translated)
+		keyText: 'C';
+		selector: #compareToClipboard;
+		help: nil;
+		iconName: #diff;
 		withSeparatorAfter.
 	aBuilder model
-		ifNotNil: [ :mod | 
+		ifNotNil: [ :mod |
 			mod model
 				ifNotNil: [ (aBuilder item: #Accept translated)
 						keyText: 's';
 						selector: #accept;
-						iconName: #smallOkIcon.
+						iconName: #smallOk.
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;
-						iconName: #smallCancelIcon ] ]
+						iconName: #smallCancel ] ]
 ]
 
 { #category : #shout }
@@ -143,7 +166,7 @@ RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
 	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
-	formatted := tree formattedCode.
+	formatted := tree formattedCodeIn: classOrMetaclass.
 	formatted = source
 		ifTrue: [ ^ self ].
 	self textArea updateTextWith: formatted
@@ -170,7 +193,7 @@ RubSmalltalkCodeMode >> parseSource: aString [
 { #category : #shout }
 RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 	^ self model isNil
-		or: [ 
+		or: [
 			(self model interactionModel respondsTo: #shoutAboutToStyle:) not
 				or: [ self model interactionModel shoutAboutToStyle: self ] ]
 ]
@@ -202,7 +225,7 @@ RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 { #category : #shout }
 RubSmalltalkCodeMode >> withShoutStyler [
 	self textArea withDecoratorNamed: #shoutStyler.
-	self updateStyler.
+	self updateStyler
 ]
 
 { #category : #shout }

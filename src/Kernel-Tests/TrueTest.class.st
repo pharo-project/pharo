@@ -9,7 +9,7 @@ Class {
 
 { #category : #coverage }
 TrueTest >> classToBeTested [
-	
+
 	^ True new
 ]
 
@@ -17,7 +17,7 @@ TrueTest >> classToBeTested [
 TrueTest >> testAND [
 
 	self assert: (true & true).
-	self deny: (true & false).
+	self deny: (true & false)
 ]
 
 { #category : #'tests - controlling' }
@@ -33,8 +33,8 @@ TrueTest >> testAsBit [
 
 { #category : #'tests - controlling' }
 TrueTest >> testIfFalse [
-	
-	self assert: ((true ifFalse: ['alternativeBlock']) isNil).
+
+	self assert: ((true ifFalse: ['alternativeBlock']) isNil)
 ]
 
 { #category : #'tests - controlling' }
@@ -61,14 +61,14 @@ TrueTest >> testNew [
 { #category : #'tests - logical operations' }
 TrueTest >> testNot [
 
-	self deny: (true not).
+	self deny: (true not)
 ]
 
 { #category : #'tests - logical operations' }
 TrueTest >> testOR [
 
 	self assert: (true | true).
-	self assert: (true | false).
+	self assert: (true | false)
 ]
 
 { #category : #'tests - controlling' }

@@ -20,7 +20,7 @@ ClyClassSideScope class >> metaLevelOf: aClass [
 { #category : #queries }
 ClyClassSideScope >> methodsDo: aBlock [
 
-	self classesDo: [ :eachClass | 
+	self classesDo: [ :eachClass |
 		self metaLevelsOf: eachClass do: [ :concreteMetaLevelClass |
 			concreteMetaLevelClass visibleMethods do: aBlock ] ]
 ]

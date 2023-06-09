@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 ColorChanged class >> to: aColor [
-	^self new 
+	^self new
 		newColor: aColor
 ]
 

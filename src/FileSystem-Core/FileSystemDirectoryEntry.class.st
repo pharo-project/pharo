@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #accessing }
-FileSystemDirectoryEntry class >> allPosixPermissions [ 
+FileSystemDirectoryEntry class >> allPosixPermissions [
 	^8r777
 ]
 
@@ -22,7 +22,7 @@ FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath [
 	"Create a directory entry given a filesystem and a path in such filesystem.
 	This method is here for backward compatibility, the appropriate subclass should be called directly, and not rely on the switch statement here."
 
-	^ aFilesystem store isDiskFileSystem ifTrue: 
+	^ aFilesystem store isDiskFileSystem ifTrue:
 		[ DiskDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
 	ifFalse:
 		[ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
@@ -33,7 +33,7 @@ FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: 
 	"Create a directory entry given a filesystem and a path in such filesystem.
 	This method is here for backward compatibility.  All other file attributes are retrieved independently."
 
-	^ aFilesystem store isDiskFileSystem ifTrue: 
+	^ aFilesystem store isDiskFileSystem ifTrue:
 		[ DiskDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
 	ifFalse:
 		[ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
@@ -50,7 +50,7 @@ FileSystemDirectoryEntry class >> reference: ref creation: cTime modification: m
 	"Create a directory entry given a file reference.
 	This method is here for backward compatibility.  All other file attributes are retrieved independently."
 
-	^ ref store isDiskFileSystem ifTrue: 
+	^ ref store isDiskFileSystem ifTrue:
 		[ DiskDirectoryEntry reference: ref ]
 	ifFalse:
 		[ MemoryDirectoryEntry reference: ref ]
@@ -119,21 +119,21 @@ FileSystemDirectoryEntry >> fullName [
 { #category : #'cache management' }
 FileSystemDirectoryEntry >> getAccessAttributes [
 	"Noop by default"
-	
+
 	^self
 ]
 
 { #category : #'cache management' }
 FileSystemDirectoryEntry >> getAllAttributes [
 	"Noop by default"
-	
+
 	^self
 ]
 
 { #category : #'cache management' }
 FileSystemDirectoryEntry >> getStatAttributes [
 	"Noop by default"
-	
+
 	^self
 ]
 
@@ -165,10 +165,10 @@ FileSystemDirectoryEntry >> ifExists: aBlock ifAbsent: anotherBlock [
 ]
 
 { #category : #initialization }
-FileSystemDirectoryEntry >> initializeWithReference: ref [ 
+FileSystemDirectoryEntry >> initializeWithReference: ref [
 
-	super initialize.	
-	reference := ref.
+	super initialize.
+	reference := ref
 ]
 
 { #category : #accessing }
@@ -290,7 +290,7 @@ FileSystemDirectoryEntry >> permissions: permissions [
 FileSystemDirectoryEntry >> printAttribute: anAttribute on: aStream [
 
 	[ (anAttribute value: self) printOn: aStream ]
-		on: FileAttributeNotSupported 
+		on: FileAttributeNotSupported
 		do: [ aStream << '(not supported)' ]
 ]
 
@@ -298,12 +298,12 @@ FileSystemDirectoryEntry >> printAttribute: anAttribute on: aStream [
 FileSystemDirectoryEntry >> printAttributeNamed: attributeName on: aStream [
 
 	aStream
-		tab; 
+		tab;
 		<< attributeName;
 		<< ':';
 		tab.
 	self printAttribute: attributeName on: aStream.
-	aStream cr.
+	aStream cr
 ]
 
 { #category : #printing }
@@ -333,14 +333,14 @@ FileSystemDirectoryEntry >> printLongFormOn: aStream [
 		printAttributeNamed: #isReadable on: aStream;
 		printAttributeNamed: #isSocket on: aStream;
 		printAttributeNamed: #isSymlink on: aStream;
-		printAttributeNamed: #isWritable on: aStream.
+		printAttributeNamed: #isWritable on: aStream
 ]
 
 { #category : #printing }
 FileSystemDirectoryEntry >> printOn: aStream [
 
 	aStream << 'DirectoryEntry: '.
-	reference ifNotNil: [:ref | ref printOn: aStream].
+	reference ifNotNil: [:ref | ref printOn: aStream]
 ]
 
 { #category : #delegate }
@@ -362,8 +362,8 @@ FileSystemDirectoryEntry >> size [
 { #category : #accessing }
 FileSystemDirectoryEntry >> targetFileReference [
 	"Answer a FileReference representing the receivers target file"
-	
-	^FileReference fileSystem: reference fileSystem path: self targetPath.
+
+	^FileReference fileSystem: reference fileSystem path: self targetPath
 ]
 
 { #category : #accessing }

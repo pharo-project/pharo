@@ -13,13 +13,13 @@ Class {
 
 { #category : #'instance creation' }
 RBArgumentName class >> name: aString [
-	^ self new 
+	^ self new
 		name: aString
 ]
 
 { #category : #'instance creation' }
-RBArgumentName class >> name: aString value: anObject [ 
-	^self new 
+RBArgumentName class >> name: aString value: anObject [
+	^self new
 		name: aString;
 		value: anObject
 ]
@@ -49,7 +49,7 @@ RBArgumentName >> canBeRenamed: anObject [
 ]
 
 { #category : #testing }
-RBArgumentName >> hasNewName [ 
+RBArgumentName >> hasNewName [
 	^ self name ~= self newName
 ]
 
@@ -78,7 +78,7 @@ RBArgumentName >> newName: anObject [
 ]
 
 { #category : #printing }
-RBArgumentName >> printOn: aStream [ 
+RBArgumentName >> printOn: aStream [
 
 	aStream nextPutAll: self newName
 ]

@@ -25,7 +25,7 @@ SettingRegexpFilter >> keepSettingDeclaration: aSettingDeclaration [
 ]
 
 { #category : #filtering }
-SettingRegexpFilter >> keepSettingTreeNode: aSettingNode [ 
+SettingRegexpFilter >> keepSettingTreeNode: aSettingNode [
 	^ (({aSettingNode methodClass name. aSettingNode selector}
 			collect: [:e | e ifNil: ['']])
 			anySatisfy: [:token | token substrings anySatisfy: [:sub | sub matchesRegexIgnoringCase: self regexp]])

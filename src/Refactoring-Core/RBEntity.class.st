@@ -12,14 +12,14 @@ Class {
 }
 
 { #category : #initialization }
-RBEntity >> initialize [ 
+RBEntity >> initialize [
 	super initialize.
-	modelFactory := RBClassModelFactory new. 
+	modelFactory := RBClassModelFactory new.
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
 { #category : #initialization }
-RBEntity >> parserClass [ 
-	
+RBEntity >> parserClass [
+
 	^ RBParser
 ]

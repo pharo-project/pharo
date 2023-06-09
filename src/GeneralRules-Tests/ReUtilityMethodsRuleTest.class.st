@@ -8,7 +8,7 @@ Class {
 ReUtilityMethodsRuleTest >> myCritiques [
 	| critiques |
 	critiques := OrderedCollection new.
-	self subjectUnderTest  new 
+	self subjectUnderTest  new
 		check: (self class >> #sampleMethod: ) forCritiquesDo:[:critique | critiques add: critique].
 	^critiques
 ]

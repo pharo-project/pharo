@@ -7,10 +7,10 @@ Class {
 { #category : #tests }
 NullWorldRendererTest >> testConvertWindowMouseEventPosition [
 	| renderer |
-	
+
 
 	renderer := NullWorldRenderer new.
-	self 
+	self
 		assert: (renderer convertWindowMouseEventPosition: 0@0)
 		equals: 0@0
 ]

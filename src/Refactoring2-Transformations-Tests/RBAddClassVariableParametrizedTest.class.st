@@ -17,30 +17,30 @@ RBAddClassVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddClassVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self abstractVariableTestData
 ]
 
 { #category : #tests }
 RBAddClassVariableParametrizedTest >> testAddClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{'Asdf' . #RBTransformationRuleTestData }.
-		
+
 	self executeRefactoring: refactoring.
-	
-	self assert: ((refactoring model 
-		classNamed: #RBTransformationRuleTestData) 
+
+	self assert: ((refactoring model
+		classNamed: #RBTransformationRuleTestData)
 		directlyDefinesClassVariable: #Asdf)
 ]
 
 { #category : #'failure tests' }
 RBAddClassVariableParametrizedTest >> testAlreadyExistingName [
 
-	self shouldFail: 
+	self shouldFail:
 		(self createRefactoringWithArguments:
 			{ #RecursiveSelfRule . #RBTransformationRuleTestData }).
-	self shouldFail: 
-		(self createRefactoringWithArguments: 
+	self shouldFail:
+		(self createRefactoringWithArguments:
 			{ self objectClassVariable . #RBTransformationRuleTestData })
 ]
 
@@ -61,19 +61,19 @@ RBAddClassVariableParametrizedTest >> testMetaclass [
 { #category : #tests }
 RBAddClassVariableParametrizedTest >> testModelAddClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithModel: model 
+	refactoring := self createRefactoringWithModel: model
 		andArguments: { #ClassVarName3 . #Bar }.
-		
+
 	self executeRefactoring: refactoring.
-	
-	self assert: ((model classNamed: #Bar) 
+
+	self assert: ((model classNamed: #Bar)
 				directlyDefinesClassVariable: #ClassVarName3)
 ]
 
 { #category : #'failure tests' }
 RBAddClassVariableParametrizedTest >> testModelAlreadyExistingName [
-	self shouldFail: 
-		(self createRefactoringWithModel: model 
+	self shouldFail:
+		(self createRefactoringWithModel: model
 		andArguments: {#ClassVarName2 . #Bar })
 ]
 

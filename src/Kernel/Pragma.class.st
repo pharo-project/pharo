@@ -38,7 +38,7 @@ Pragma class >> addToCache: aPragma [
 { #category : #cache }
 Pragma class >> all [
 	"all pragmas whose methods are currently installed in the system"
-	^ self pragmaCache values flattened select: [ :each | 
+	^ self pragmaCache values flattened select: [ :each |
 		  each method isInstalled ]
 ]
 
@@ -51,7 +51,7 @@ Pragma class >> allNamed: aSymbol [
 	pragmas := self pragmaCache at: aSymbol ifAbsent: [ ^ #(  ) ].
 	"if there are none, we can remove the entry in the cache"
 	pragmas ifEmpty: [ self pragmaCache removeKey: aSymbol ifAbsent: [  ] ].
-	"we check if the pragma is really from an installed method 
+	"we check if the pragma is really from an installed method
 	(others will be cleaned up by the gc when the method is garbadge collected)"
 	^ (pragmas select: [ :each | each method isInstalled ]) asArray
 ]
@@ -61,10 +61,10 @@ Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass [
 	"Answer a collection of all pragmas found in methods of all classes between aSubClass and aSuperClass (inclusive) whose keyword is aSymbol."
 
 	^ Array
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			aSubClass
-				withAllSuperclassesDo: [ :class | 
-					class pragmasDo: [ :pragma | 
+				withAllSuperclassesDo: [ :class |
+					class pragmasDo: [ :pragma |
 							pragma selector = aSymbol
 								ifTrue: [ stream nextPut: pragma ] ].
 					aSuperClass = class
@@ -75,20 +75,20 @@ Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass [
 Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass sortedByArgument: anInteger [
 	"Answer a collection of all pragmas found in methods of all classes between aSubClass and aSuperClass (inclusive) whose keyword is aSymbol, sorted according to argument anInteger."
 
-	^ self allNamed: aSymbol from: aSubClass to: aSuperClass sortedUsing: [ :a :b | (a argumentAt: anInteger) < (b argumentAt: anInteger) ].
+	^ self allNamed: aSymbol from: aSubClass to: aSuperClass sortedUsing: [ :a :b | (a argumentAt: anInteger) < (b argumentAt: anInteger) ]
 ]
 
 { #category : #finding }
 Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass sortedUsing: aSortBlock [
 	"Answer a collection of all pragmas found in methods of all classes between aSubClass and aSuperClass (inclusive) whose keyword is aSymbol, sorted according to aSortBlock."
-	
-	^ (self allNamed: aSymbol from: aSubClass to: aSuperClass) sort: aSortBlock.
+
+	^ (self allNamed: aSymbol from: aSubClass to: aSuperClass) sort: aSortBlock
 ]
 
 { #category : #finding }
 Pragma class >> allNamed: aSymbol in: aClass [
 	"Answer a collection of all pragmas found in methods of aClass whose selector is aSymbol."
-	
+
 	^ Array streamContents: [ :stream |
 		 aClass pragmasDo: [ :pragma |
 			pragma selector = aSymbol
@@ -99,14 +99,14 @@ Pragma class >> allNamed: aSymbol in: aClass [
 Pragma class >> allNamed: aSymbol in: aClass sortedByArgument: anInteger [
 	"Answer a collection of all pragmas found in methods of aClass whose keyword is aSymbol, sorted according to argument anInteger."
 
-	^ self allNamed: aSymbol in: aClass sortedUsing: [ :a :b | (a argumentAt: anInteger) < (b argumentAt: anInteger) ].
+	^ self allNamed: aSymbol in: aClass sortedUsing: [ :a :b | (a argumentAt: anInteger) < (b argumentAt: anInteger) ]
 ]
 
 { #category : #finding }
 Pragma class >> allNamed: aSymbol in: aClass sortedUsing: aSortBlock [
 	"Answer a collection of all pragmas found in methods of aClass whose keyword is aSymbol, sorted according to aSortBlock."
-	
-	^ (self allNamed: aSymbol in: aClass) sort: aSortBlock.
+
+	^ (self allNamed: aSymbol in: aClass) sort: aSortBlock
 ]
 
 { #category : #'instance creation' }
@@ -143,11 +143,11 @@ Pragma >> = aPragma [
 	self selector = aPragma selector ifFalse: [^false].
 	self arguments = aPragma arguments ifFalse: [^false].
 
-	^true.
+	^true
 ]
 
 { #category : #comparing }
-Pragma >> analogousCodeTo: anObject [ 
+Pragma >> analogousCodeTo: anObject [
 	^self class == anObject class
 	  and: [self selector == anObject selector
 	  and: [arguments = anObject arguments]]
@@ -156,8 +156,8 @@ Pragma >> analogousCodeTo: anObject [
 { #category : #'accessing - pragma' }
 Pragma >> argumentAt: anInteger [
 	"Answer one of the arguments of the pragma."
-	
-	^ self arguments at: anInteger.
+
+	^ self arguments at: anInteger
 ]
 
 { #category : #'accessing - pragma' }
@@ -172,7 +172,7 @@ Pragma >> argumentNamed: aSymbol [
 Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 	"Answer the argument of the pragma after the keyword given as parameter.
 	If none, return the result of the block given as parameter.
-	
+
 	I am more readable than #argumentAt: but also slower."
 
 	^ self argumentAt:
@@ -184,7 +184,7 @@ Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 { #category : #'accessing - pragma' }
 Pragma >> arguments [
 	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
-	
+
 	^ arguments
 ]
 
@@ -202,7 +202,7 @@ Pragma >> displayStringOn: stream [
 
 { #category : #testing }
 Pragma >> hasLiteral: aLiteral [
-	^self selector == aLiteral 
+	^self selector == aLiteral
 	   or: [arguments hasLiteral: aLiteral]
 ]
 
@@ -214,7 +214,7 @@ Pragma >> hash [
 	hash := self method hash bitXor: self selector hash.
 	1 to: self basicSize do: [:index | hash := hash bitXor: (self basicAt: index) hash].
 
-	^hash.
+	^hash
 ]
 
 { #category : #querying }
@@ -227,14 +227,14 @@ Pragma >> key [
 { #category : #accessing }
 Pragma >> message [
 	"Answer the message of the receiving pragma."
-	
-	^ Message selector: self selector arguments: self arguments.
+
+	^ Message selector: self selector arguments: self arguments
 ]
 
 { #category : #'accessing - method' }
 Pragma >> method [
 	"Answer the compiled-method containing the pragma."
-	
+
 	^ method
 ]
 
@@ -246,7 +246,7 @@ Pragma >> method: aCompiledMethod [
 { #category : #'accessing - method' }
 Pragma >> methodClass [
 	"Answer the class of the method containing the pragma."
-	
+
 	^ method methodClass
 ]
 
@@ -254,7 +254,7 @@ Pragma >> methodClass [
 Pragma >> methodSelector [
 	"Answer the selector of the method containing the pragma.
 	 Do not confuse this with the selector of the pragma's message pattern."
-	
+
 	^method selector
 ]
 
@@ -262,7 +262,7 @@ Pragma >> methodSelector [
 Pragma >> numArgs [
 	"Answer the number of arguments in the pragma."
 
-	^ self arguments size.
+	^ self arguments size
 ]
 
 { #category : #printing }
@@ -274,12 +274,12 @@ Pragma >> printOn: aStream [
 			self selector keywords with: self arguments do: [ :key :arg |
 				aStream nextPutAll: key; space; print: arg; space ].
 			aStream skip: -1 ].
-	aStream nextPut: $>.
+	aStream nextPut: $>
 ]
 
 { #category : #testing }
 Pragma >> refersToLiteral: aLiteral [
-	^self selector == aLiteral 
+	^self selector == aLiteral
 	   or: [arguments hasLiteral: aLiteral]
 ]
 
@@ -287,7 +287,7 @@ Pragma >> refersToLiteral: aLiteral [
 Pragma >> selector [
 	"Answer the selector of the pragma.
 	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
-	
+
 	^ selector
 ]
 
@@ -299,13 +299,13 @@ Pragma >> selector: aSymbol [
 { #category : #sending }
 Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
-	
+
 	^ anObject perform: self selector withArguments: self arguments
 ]
 
 { #category : #processing }
 Pragma >> withArgumentsDo: aBlock [
 	"Pass the arguments of the receiving pragma into aBlock and answer the result."
-	
+
 	^ aBlock valueWithArguments: self arguments
 ]

@@ -14,8 +14,8 @@ KMShortcutPrinterTest class >> testParameters [
 	| cmd ctrl alt shift enter |
 
 	cmd :=	 (Character value: 16r2318) asString.
-	alt := (Character value: 16r2325) asString. 
-	ctrl := (Character value: 16r2303) asString. 
+	alt := (Character value: 16r2325) asString.
+	ctrl := (Character value: 16r2303) asString.
 	shift := (Character value: 16r21E7) asString.
 	enter := (Character value: 16r23ce) asString.
 
@@ -26,13 +26,13 @@ KMShortcutPrinterTest class >> testParameters [
 		addCase: { #platform -> UnixPlatform new. #shortcut -> $n control. #result -> 'Ctrl+N' };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> $n alt. #result -> 'Alt+N' };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> $n shift. #result -> 'Shift+N' };
-		addCase: { 
-			#platform -> UnixPlatform new. 
-			#shortcut -> $n shift alt control command. 
+		addCase: {
+			#platform -> UnixPlatform new.
+			#shortcut -> $n shift alt control command.
 			#result -> 'Shift+Alt+Ctrl+Cmd+N' };
-		addCase: { 
-			#platform -> UnixPlatform new. 
-			#shortcut -> Character cr shift. 
+		addCase: {
+			#platform -> UnixPlatform new.
+			#shortcut -> Character cr shift.
 			#result -> 'Shift+Enter' };
 		"windows"
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n meta. #result -> 'Ctrl+N' };
@@ -40,26 +40,26 @@ KMShortcutPrinterTest class >> testParameters [
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n control. #result -> 'Ctrl+N' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n alt. #result -> 'Alt+N' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n shift. #result -> 'Shift+N' };
-		addCase: { 
-			#platform -> WinPlatform new. 
-			#shortcut -> $n shift alt control command. 
+		addCase: {
+			#platform -> WinPlatform new.
+			#shortcut -> $n shift alt control command.
 			#result -> 'Shift+Alt+Ctrl+Cmd+N' };
-		addCase: { 
-			#platform -> WinPlatform new. 
-			#shortcut -> Character cr shift. 
+		addCase: {
+			#platform -> WinPlatform new.
+			#shortcut -> Character cr shift.
 			#result -> 'Shift+Enter' };
 		"mac"
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> $n command. #result -> (cmd, 'N') };
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> $n control. #result -> (ctrl, 'N') };
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> $n alt. #result -> (alt, 'N') };
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> $n shift. #result -> (shift, 'N') };
-		addCase: { 
-			#platform -> MacOSPlatform new. 
-			#shortcut -> $n shift alt control command. 
+		addCase: {
+			#platform -> MacOSPlatform new.
+			#shortcut -> $n shift alt control command.
 			#result -> (shift, alt, ctrl, cmd, 'N') };
-		addCase: { 
-			#platform -> MacOSPlatform new. 
-			#shortcut -> Character cr shift. 
+		addCase: {
+			#platform -> MacOSPlatform new.
+			#shortcut -> Character cr shift.
 			#result -> (shift, enter) };
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> ($n shift , $m shift). #result -> (shift, 'N' , ',' , shift , 'M') };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> ($n shift , $m shift). #result -> 'Shift+N,Shift+M' };
@@ -113,7 +113,7 @@ KMShortcutPrinterTest >> testSingleKeyCombinationIsPrintedWithoutSeparators [
 
 	printed := Character arrowLeft asKeyCombination acceptVisitor: platform shortcutPrinter.
 	self assert: printed equals: 'LEFT'.
-	
+
 	printed := Character arrowRight asKeyCombination acceptVisitor: platform shortcutPrinter.
 	self assert: printed equals: 'RIGHT'
 ]

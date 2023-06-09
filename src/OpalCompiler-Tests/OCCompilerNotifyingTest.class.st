@@ -42,17 +42,17 @@ Class {
 
 { #category : #private }
 OCCompilerNotifyingTest >> enumerateAllSelections [
-	1 to: self numberOfSelections do: [ :n | 
+	1 to: self numberOfSelections do: [ :n |
 		self assert: (self evaluateSelectionNumber: n) identicalTo: failure.
 		self assert: morph editor selection asString equals: (expectedErrors at: n).
-		self assert: (expectedErrorPositions at: n) equals: morph editor startIndex.
+		self assert: morph editor startIndex equals: (expectedErrorPositions at: n).
 		morph editor cut ]
 ]
 
 { #category : #private }
 OCCompilerNotifyingTest >> evaluateSelection [
 	^ OpalCompiler new
-		source: morph editor selectionAsStream;
+		source: morph editor selection;
 		requestor: morph editor;
 		failBlock: [^failure];
 		evaluate
@@ -81,7 +81,7 @@ OCCompilerNotifyingTest >> initializeTextWithoutError [
 	output := (String new: text size) writeStream.
 	errorStream := (Array new: self numberOfSelections) writeStream.
 	positionStream := (Array new: self numberOfSelections) writeStream.
-	
+
 	[output nextPutAll: (input upTo: $`).
 	input atEnd]
 		whileFalse:
@@ -100,7 +100,7 @@ OCCompilerNotifyingTest >> numberOfSelections [
 { #category : #running }
 OCCompilerNotifyingTest >> setUp [
 	super setUp.
-	failure := Object new.
+	failure := Object new
 ]
 
 { #category : #initialization }
@@ -109,20 +109,20 @@ OCCompilerNotifyingTest >> setUpForErrorsIn: aTextWithErrorsEnclosedInBackQuote 
   each section separated by % in aTextWithErrorsEnclosedInBackQuote will be evaluated separately.
   The expected error message should lie in aTextWithErrorsEnclosedInBackQuote at the expected position, and enclosed in back quotes."
   text := aTextWithErrorsEnclosedInBackQuote.
-  morph := MockSourceEditor new contents: self initializeTextWithoutError asString.
+  morph := MockSourceEditor new contents: self initializeTextWithoutError asString
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testAssignmentOfSelf [
 
-	self setUpForErrorsIn: '` Cannot store into ->`self := 1. ^self'.
-	self enumerateAllSelections.
+	self setUpForErrorsIn: '` Assigment to reserved variable ->`self := 1. ^self'.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testDigitTooLargeForARadix [
 
-	self setUpForErrorsIn: '2r` Reading a number failed: a digit between 0 and 1 expected ->`3'.
+	self setUpForErrorsIn: '2r` a digit between 0 and 1 expected ->`3'.
 	self enumerateAllSelections
 ]
 
@@ -136,17 +136,17 @@ OCCompilerNotifyingTest >> testEmptyCaseStatement [
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testExpectedExpressionInBraceArray [
-	
+
 	self setUpForErrorsIn: '{ 1. 2 ` End of statement expected ->`3 }'.
 	self enumerateAllSelections.
 	self setUpForErrorsIn: '{ 1. 2. ` Variable or expression expected ->`| x | x}'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testExtraneousStatementAfterAReturnInABlock [
 	self setUpForErrorsIn: '[ ^1 ` End of statement expected ->`2]'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
@@ -157,8 +157,8 @@ OCCompilerNotifyingTest >> testInvalidExternalFunctionDeclaration [
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testInvalidLiteralCharacter [
-	self setUpForErrorsIn: '^ #yourself , #` Expecting a literal type ->`) , #end'.
-	self enumerateAllSelections.
+	self setUpForErrorsIn: '^ #yourself , #` Literal expected ->`) , #end'.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
@@ -182,7 +182,7 @@ OCCompilerNotifyingTest >> testInvalidPrimitive [
 { #category : #tests }
 OCCompilerNotifyingTest >> testInvalidRadix [
 
-	self setUpForErrorsIn: '1` Reading a number failed: an integer greater than 1 as valid radix expected ->`r0'.
+	self setUpForErrorsIn: '1` an integer greater than 1 as valid radix expected ->`r0'.
 	self enumerateAllSelections.
 ]
 
@@ -210,7 +210,7 @@ OCCompilerNotifyingTest >> testMissingBlockArgumentName [
 { #category : #tests }
 OCCompilerNotifyingTest >> testMissingExpression [
 
-	
+
 	self setUpForErrorsIn: '| x | x := ` Variable or expression expected ->'.
 	self enumerateAllSelections
 ]
@@ -219,12 +219,12 @@ OCCompilerNotifyingTest >> testMissingExpression [
 OCCompilerNotifyingTest >> testMissingExpressionAfterAReturn [
 
 	self setUpForErrorsIn: '^ ` Variable or expression expected ->`. 1 + 2'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testMissingMessageAfterACascade [
-	
+
 	self setUpForErrorsIn: 'nil yourself; ` Cascade message expected ->`^ 2'.
 	self enumerateAllSelections
 ]
@@ -233,27 +233,27 @@ OCCompilerNotifyingTest >> testMissingMessageAfterACascade [
 OCCompilerNotifyingTest >> testMissingPeriodSeparatorBetweenStatements [
 
 	self setUpForErrorsIn: '1 + 2 ` End of statement expected ->`^nil'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testMissingSeparatorBetweenBlockArgumentAndStatements [
-	
-	self setUpForErrorsIn: '[ :x ` ''|'' expected ->`x + 1 ]'.
+
+	self setUpForErrorsIn: '[ :x ` ''|'' or parameter expected ->`x + 1 ]'.
 	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testTooLargeAnIntegerInALiteralByteArray [
 
-	self setUpForErrorsIn: '#[ 1 2 ` Expecting 8-bit integer ->`256 4 5]'.
+	self setUpForErrorsIn: '#[ 1 2 ` 8-bit integer expected ->`256 4 5]'.
 	self enumerateAllSelections
 ]
 
 { #category : #'tests - bytecode limits' }
 OCCompilerNotifyingTest >> testTooManyArguments [
 	self setUpForErrorsIn: '^ ` Too many arguments ->`[:x1 :x2 :x3 :x4 :x5 :x6 :x7 :x8 :x9 :x10 :x11 :x12 :x13 :x14 :x15 :x16 :x17 | ]'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #'tests - bytecode limits' }
@@ -268,14 +268,14 @@ OCCompilerNotifyingTest >> testTooManyTemporaries [
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedBlockBracket [
 	self setUpForErrorsIn: 'nil yourself. [` '']'' expected ->`'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedBraceArray [
-	self setUpForErrorsIn: '{ 1. 2` expected } ->`'.
+	self setUpForErrorsIn: '{ 1. 2` ''}'' expected ->`'.
 	self enumerateAllSelections.
-	self setUpForErrorsIn: '{ 1. 2 ` expected } ->`'.
+	self setUpForErrorsIn: '{ 1. 2 ` ''}'' expected ->`'.
 	self enumerateAllSelections
 ]
 
@@ -297,7 +297,7 @@ OCCompilerNotifyingTest >> testUnmatchedCommentQuote [
 OCCompilerNotifyingTest >> testUnmatchedExpressionParenthesis [
 
 	self setUpForErrorsIn: '1+(2 ` '')'' expected ->`. '.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
@@ -306,21 +306,21 @@ OCCompilerNotifyingTest >> testUnmatchedLiteralParenthesis [
 	self setUpForErrorsIn: '#( 1 2` '')'' expected ->`'.
 	self enumerateAllSelections.
 	self setUpForErrorsIn: '#( 1 2 ` '')'' expected ->`'.
-	self enumerateAllSelections.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLocalTempDeclaration [
 
-	self setUpForErrorsIn: '| x y ` ''|'' expected ->`'.
-	self enumerateAllSelections.
+	self setUpForErrorsIn: '| x y ` ''|'' or variable expected ->`'.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLocalTempDeclarationInABlock [
 
-	self setUpForErrorsIn: '[:z | | x y ` ''|'' expected ->`]'.
-	self enumerateAllSelections.
+	self setUpForErrorsIn: '[:z | | x y ` ''|'' or variable expected ->`]'.
+	self enumerateAllSelections
 ]
 
 { #category : #tests }

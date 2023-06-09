@@ -20,14 +20,14 @@ ClyWatchMethodGroupProviderTest >> groupProviderClass [
 { #category : #running }
 ClyWatchMethodGroupProviderTest >> setUp [
 	super setUp.
-	
+
 	installedWatchpoint := ClyMethodWatchQueryTest new setUp; installWatchInto: #methodWithWatch
 ]
 
 { #category : #running }
 ClyWatchMethodGroupProviderTest >> tearDown [
-	
+
 	installedWatchpoint uninstall.
-	
-	super tearDown.
+
+	super tearDown
 ]

@@ -10,14 +10,14 @@ Class {
 { #category : #accessing }
 FullscreenMorph >> contentMorph [
 	"Answer the current content."
-	
+
 	^self submorphs first
 ]
 
 { #category : #initialize }
 FullscreenMorph >> defaultColor [
 	"Return the receiver's default color."
-	
+
 	^Color white
 ]
 
@@ -41,14 +41,14 @@ FullscreenMorph >> initialize [
 { #category : #'private - layout' }
 FullscreenMorph >> layoutChanged [
 	"Don't pass to owner, since the receiver doesn't care! Improves frame rate."
-	
+
 	fullBounds := nil.
-	self layoutPolicy ifNotNil:[:l | l flushLayoutCache].
+	self layoutPolicy ifNotNil:[:l | l flushLayoutCache]
 ]
 
 { #category : #initialize }
 FullscreenMorph >> postOpenInWorld: aWorld [
-	
+
 	(self submorphs notEmpty and: [ self submorphs first isSystemWindow ])
 		ifTrue: [ self submorphs first openedFullscreen ].
 	super postOpenInWorld: aWorld
@@ -63,7 +63,7 @@ FullscreenMorph >> preOpenInWorld: aWorld [
 { #category : #accessing }
 FullscreenMorph >> setContentMorph: aMorph [
 	"Replace the submorphs with aMorph."
-	
+
 	self removeAllMorphs.
 	self
 		addMorph: aMorph

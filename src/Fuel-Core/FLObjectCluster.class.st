@@ -25,10 +25,10 @@ FLObjectCluster class >> newAnalyzing: aClass [
 ]
 
 { #category : #'serialize/materialize' }
-FLObjectCluster >> clusterMaterializeStepWith: aMaterialization [
+FLObjectCluster >> clusterMaterializeStepWith: aDecoder [
 
-	super clusterMaterializeStepWith: aMaterialization.
-	theClass := aMaterialization decoder nextEncodedReference.
+	super clusterMaterializeStepWith: aDecoder.
+	theClass := aDecoder nextEncodedReference
 ]
 
 { #category : #analyzing }
@@ -38,10 +38,10 @@ FLObjectCluster >> clusterReferencesDo: aBlock [
 ]
 
 { #category : #'serialize/materialize' }
-FLObjectCluster >> clusterSerializeStepWith: aSerialization [
+FLObjectCluster >> clusterSerializeStepWith: anEncoder [
 
-	super clusterSerializeStepWith: aSerialization.
-	aSerialization encoder encodeReferenceToClusterObjectClass: theClass
+	super clusterSerializeStepWith: anEncoder.
+	anEncoder encodeReferenceToClusterObjectClass: theClass
 ]
 
 { #category : #'initialize-release' }

@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #sample }
+{ #category : #'test-help' }
 ReMethodSourceContainsLinefeedsRuleTest >> sampleMethod [
 	"This method contains two linefeeds which should be carriage returns."
 	"There is one after this line" 7.
@@ -29,5 +29,5 @@ ReMethodSourceContainsLinefeedsRuleTest >> testRule [
  	critiques := self myCritiques .
 
  	self assert: critiques size equals: 2.
- 	self assert: (self sourceAtChritique:  critiques first) equals: String lf.
+ 	self assert: (self sourceAtChritique:  critiques first) equals: String lf
 ]

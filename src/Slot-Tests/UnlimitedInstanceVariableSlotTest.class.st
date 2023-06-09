@@ -7,6 +7,7 @@ Class {
 { #category : #'test - unlimited ivars' }
 UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	| object slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => UnlimitedInstanceVariableSlot.
 
 	aClass := self make: [ :builder | builder slots: {slot} ].

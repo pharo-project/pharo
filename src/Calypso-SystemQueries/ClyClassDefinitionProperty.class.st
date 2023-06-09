@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyClassDefinitionProperty class >> of: aClass [
-	
+
 	^self package: aClass package class: aClass
 ]
 
