@@ -140,6 +140,16 @@ UUID >> asString36 [
 ]
 
 { #category : #accessing }
+UUID >> asInteger [
+	
+	"Should be deprecated, but is still used by iceberg."
+	"self
+		deprecated:
+		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'."
+	^ uuidData asInteger
+]
+
+{ #category : #accessing }
 UUID >> at: aNumber [
 	
 	"Should be deprecated, but is still used by iceberg."
