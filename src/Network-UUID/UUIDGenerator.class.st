@@ -79,9 +79,12 @@ UUIDGenerator class >> next [
 
 	"self next"
 
-	"[ UUIDGenerator next ] bench"
+	self
+		deprecated:
+		'The UUIDGenerator method should not be used directly to generate new UUIDs'
+		transformWith: 'UUIDGenerator next' -> 'UUID new'.
 
-	^ self default next
+	^ UUID new
 ]
 
 { #category : #'system startup' }
@@ -134,10 +137,11 @@ UUIDGenerator >> initialize [
 UUIDGenerator >> next [
 	"Return the next UUID, see my class comment"
 
-	| uuid |
-	uuid := UUID nilUUID.
-	self placeFields: uuid.
-	^ uuid
+	self
+		deprecated:
+		'The UUIDGenerator method should not be used directly to generate new UUIDs'
+		transformWith: '`@receiver next' -> 'UUID new'.
+	^ UUID new
 ]
 
 { #category : #private }

@@ -11,7 +11,6 @@ Class {
 UUIDTest >> testBasic [
 	| uuid |
 	uuid := UUID new.
-	self assert: uuid size equals: 16.
 	self deny: uuid isNilUUID.
 	self deny: uuid equals: UUID new
 ]
@@ -39,30 +38,40 @@ UUIDTest >> testComparison [
 
 { #category : #testing }
 UUIDTest >> testNilUUID [
+
 	| nilUUIDRepresentation |
 	nilUUIDRepresentation := '00000000-0000-0000-0000-000000000000'.
-	self assert: UUID nilUUID isNilUUID.
-	self assert: UUID nilUUID asString equals: nilUUIDRepresentation.
-	self assert: (UUID fromString: nilUUIDRepresentation) equals: UUID nilUUID.
+	self assert: NilUUID new isNilUUID.
+	self assert: NilUUID new asString equals: nilUUIDRepresentation.
+	self
+		assert: (UUID fromString: nilUUIDRepresentation)
+		equals: NilUUID new.
 	self deny: UUID new isNilUUID
+]
+
+{ #category : #tests }
+UUIDTest >> testSpeed [
+
+	self
+		should: [ 100000 timesRepeat: [ UUID new ] ]
+		notTakeMoreThan: 1 second
 ]
 
 { #category : #testing }
 UUIDTest >> testString [
 
 	| s1 s2 s3 |
-
 	s1 := '0608b9dc-02e4-4dd0-9f8a-ea45160df641'.
 	s2 := 'e85ae7ba-3ca3-4bae-9f62-cc2ce51c525e'.
 	s3 := '00000000-0000-0000-0000-000000000000'.
 
 	self assert: (UUID fromString: s1) printString equals: s1.
 	self assert: (UUID fromString: s2) printString equals: s2.
-	self assert: UUID nilUUID printString equals: s3.
+	self assert: NilUUID new printString equals: s3.
 
 	self assert: (UUID fromString: s1) asString equals: s1.
 	self assert: (UUID fromString: s2) asString equals: s2.
-	self assert: UUID nilUUID asString equals: s3
+	self assert: NilUUID new asString equals: s3
 ]
 
 { #category : #testing }
@@ -72,6 +81,6 @@ UUIDTest >> testString36 [
 	self assert: (uuid asString36 allSatisfy: [ :e | e isAlphaNumeric ]).
 	self assert: (UUID fromString36: uuid asString36) equals: uuid.
 
-	self assert: UUID nilUUID asString36 equals: 0 asString.
-	self assert: (UUID fromString36: 0 asString) equals: UUID nilUUID
+	self assert: NilUUID new asString36 equals: 0 asString.
+	self assert: (UUID fromString36: 0 asString) equals: NilUUID new
 ]

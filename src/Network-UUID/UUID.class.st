@@ -35,8 +35,10 @@ See also:
 "
 Class {
 	#name : #UUID,
-	#superclass : #ByteArray,
-	#type : #bytes,
+	#superclass : #Object,
+	#instVars : [
+		'uuidData'
+	],
 	#category : #'Network-UUID-Base'
 }
 
@@ -47,10 +49,12 @@ UUID class >> fromString36: aString [
 	filenames etc since it does not depend on case nor characters
 	that might cause problems."
 
-	| object num |
+	| object array num |
 	object := self nilUUID.
+	array := object uuidData.
 	num := Integer readFrom: aString asUppercase readStream base: 36.
-	1 to: 16 do: [:i | object at: i put: (num byteAt: i)].
+	1 to: 16 do: [:i | array at: i put: (num byteAt: i)].
+	object uuidData: array.
 	^object
 ]
 
@@ -66,43 +70,29 @@ UUID class >> fromString: aString [
 ]
 
 { #category : #'instance creation' }
-UUID class >> new [
-	"Create and return a new UUID"
-
-	"self new"
-
-	^ (self new: 16)
-]
-
-{ #category : #'instance creation' }
-UUID class >> new: aSize [
-
-	(aSize == 16) ifFalse: [ self error: 'Wrong UUID size' ].
-
-	^ super new: aSize
-]
-
-{ #category : #'instance creation' }
 UUID class >> nilUUID [
 	"Return a empty un-initialized UUID, with all zero values, 00000000-0000-0000-0000-000000000000"
 
 	"self nilUUID"
 
-	"Must call basicNew: here because I have a non-trivial initialize method."
+	self
+		deprecated:
+		'The UUID class has been redesigned, now the nil UUID is its own subclass of UUID'
+		transformWith: 'UUID nilUUID' -> 'NilUUID new'.
 
-	^ self basicNew: 16
+	^ NilUUID new.
 ]
 
 { #category : #comparing }
 UUID >> < aMagnitude [
 	"Answer whether the receiver is less than the argument."
 
-	(self size = aMagnitude size) ifFalse: [
-		^ self size < aMagnitude size ].
-	1 to: self size do: [:i |
-		(self at: i) = (aMagnitude at: i) ifFalse: [
-			^ (self at: i) < (aMagnitude at: i) ]].
-	^false
+	uuidData size = aMagnitude uuidData size ifFalse: [
+		^ uuidData size < aMagnitude uuidData size ].
+	1 to: uuidData size do: [ :i |
+		(uuidData at: i) = (aMagnitude uuidData at: i) ifFalse: [
+			^ (uuidData at: i) < (aMagnitude uuidData at: i) ] ].
+	^ false
 ]
 
 { #category : #comparing }
@@ -110,6 +100,12 @@ UUID >> <= aMagnitude [
 	"Answer whether the receiver is less than or equal to the argument."
 
 	^(self > aMagnitude) not
+]
+
+{ #category : #comparing }
+UUID >> = anUUID [
+	^(self uuidData = anUUID uuidData)
+	
 ]
 
 { #category : #comparing }
@@ -142,36 +138,62 @@ UUID >> asString36 [
 
 	| num |
 	num := 0.
-	1 to: self size do: [ :i | num := num + ((256 raisedTo: i - 1) * (self at: i)) ].
+	1 to: uuidData size do: [ :i | num := num + ((256 raisedTo: i - 1) * (uuidData at: i)) ].
 	^ (num printStringBase: 36) asLowercase
+]
+
+{ #category : #accessing }
+UUID >> at: aNumber [
+	^ uuidData at: aNumber 
+]
+
+{ #category : #accessing }
+UUID >> at: aNumber put: aByte [
+	uuidData at: aNumber put: aByte.
+]
+
+{ #category : #comparing }
+UUID >> hash [
+	^uuidData hash
 ]
 
 { #category : #initialization }
 UUID >> initialize [
-	super initialize.
-	UUIDGenerator default placeFields: self
+	uuidData := ByteArray new: 16.
+	uuidData generateUUIDInPlace
 ]
 
 { #category : #testing }
 UUID >> isNilUUID [
 	"Return true when I am equal to the nilUUID, 00000000-0000-0000-0000-000000000000, false otherwise"
 
-	^ self allSatisfy: [ :each | each isZero ]
+	^ uuidData allSatisfy: [ :each | each isZero ]
+]
+
+{ #category : #comparing }
+UUID >> isRFC4122 [
+
+	^ self variant & 2r110 = 2r100
+]
+
+{ #category : #comparing }
+UUID >> node [
+	^uuidData copyFrom: 11 to: 16.
 ]
 
 { #category : #printing }
 UUID >> printOn: aStream [
 	"Print my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) on aStream"
 
-	1 to: 4 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
+	1 to: 4 do: [ :i | (uuidData at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	5 to: 6 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
+	5 to: 6 do: [ :i | (uuidData at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	7 to: 8 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
+	7 to: 8 do: [ :i | (uuidData at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	9 to: 10 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
+	9 to: 10 do: [ :i | (uuidData at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	11 to: 16 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ]
+	11 to: 16 do: [ :i | (uuidData at: i) printLowercaseHexByteOn: aStream ]
 ]
 
 { #category : #printing }
@@ -187,13 +209,54 @@ UUID >> printString [
 UUID >> readFrom: aStream [
 	"Read my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) from aStream"
 
-	1 to: 4 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
+	1 to: 4 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	5 to: 6 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
+	5 to: 6 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	7 to: 8 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
+	7 to: 8 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	9 to: 10 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
+	9 to: 10 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	11 to: 16 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ]
+	11 to: 16 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ]
+]
+
+{ #category : #accessing }
+UUID >> size [
+
+	self
+		deprecated: 'The UUIDs are no longer a subclass of ByteArray'
+		transformWith: '`@receiver size' -> '`@receiver uuidData size'.
+	^ 16
+]
+
+{ #category : #comparing }
+UUID >> timestamp [
+
+	^ (uuidData integerAt: 5 size: 2 signed: false) & 16rfff << 48
+	  + (uuidData integerAt: 5 size: 2 signed: false) << 32
+	  + (uuidData integerAt: 1 size: 4 signed: false)
+]
+
+{ #category : #accessing }
+UUID >> uuidData [
+
+	^ uuidData
+]
+
+{ #category : #accessing }
+UUID >> uuidData: anObject [
+
+	uuidData := anObject
+]
+
+{ #category : #comparing }
+UUID >> variant [
+
+	^ (uuidData at: 9) >> 5
+]
+
+{ #category : #comparing }
+UUID >> version [
+
+	^ (uuidData at: 7) >> 4
 ]
