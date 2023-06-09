@@ -4,7 +4,7 @@ I am a test case responsible of testing ClassDescription protocol management.
 Class {
 	#name : #ClassDescriptionProtocolsTest,
 	#superclass : #ProtocolTest,
-	#category : #'Kernel-Tests-Protocols'
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #private }
@@ -19,6 +19,30 @@ ClassDescriptionProtocolsTest >> testAddProtocol [
 	class addProtocol: #titan.
 
 	self assert: (class hasProtocol: #titan)
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocolWithExistingProtocol [
+
+	| titan |
+	titan := class addProtocol: #titan.
+
+	self assert: (class hasProtocol: titan).
+
+	"Adding a second time should just return the same instance."
+	self assert: (class addProtocol: #titan) identicalTo: titan
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocolWithRealProtocol [
+
+	| titan |
+	titan := class addProtocol: #titan.
+
+	self assert: (class hasProtocol: titan).
+
+	"Adding a second time should just return the same instance."
+	self assert: (class addProtocol: titan) identicalTo: titan
 ]
 
 { #category : #tests }
