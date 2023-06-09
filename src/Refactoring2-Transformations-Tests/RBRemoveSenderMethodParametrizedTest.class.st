@@ -29,14 +29,13 @@ RBRemoveSenderMethodParametrizedTest >> testClassDoesNotExist [
 { #category : #'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testIsDirectlyUsed [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
 		{ { (58 to: 73) . #foo: } .
 		methodName .
 		#RBRefactoryTestDataApp }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
-	self flag: 'TODO: refactoring2'.
-"	self shouldFail: refactoring."
+	self shouldFail: refactoring.
 ]
 
 { #category : #'failure tests' }
@@ -47,8 +46,7 @@ RBRemoveSenderMethodParametrizedTest >> testIsDirectlyUsed2 [
 		#returnsBooleanAndOther .
 		#RBRefactoryTestDataApp}.
 	self setupInlineExpressionFor: refactoring toReturn: false.
-	self flag: 'TODO: refactoring2'
-"	self shouldFail: refactoring."
+	self shouldFail: refactoring.
 ]
 
 { #category : #'failure tests' }
@@ -56,7 +54,8 @@ RBRemoveSenderMethodParametrizedTest >> testMethodDoesNotExist [
 	self shouldFail: (self createRefactoringWithArguments:
 		{{(14 to: 17) . #foo: }.
 		#badMessage1 .
-		#RBRefactoryTestDataApp})
+		#RBRefactoryTestDataApp}).
+	
 ]
 
 { #category : #'failure tests' }
@@ -70,9 +69,9 @@ RBRemoveSenderMethodParametrizedTest >> testNonExistantSelector [
 { #category : #tests }
 RBRemoveSenderMethodParametrizedTest >> testRemoveMessageInsideBlock [
 	| refactoring methodName |
-	methodName := ('caller', '1') asSymbol.
+	methodName := #caller1.
 	refactoring := self createRefactoringWithArguments:
-		{ { (	88 to: 104) .#printString } .
+		{ { (	88 to: 104) . #printString } .
 			methodName .
 			#RBRefactoryTestDataApp }.
 
@@ -161,7 +160,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 { #category : #tests }
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 	| refactoring methodName |
-	methodName := ('called:', 'on:') asSymbol.
+	methodName := #called:on:.
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
 			{{(	30 to: 74) . #cr}.
@@ -186,7 +185,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSimpleSenderOfMessage [
 	afterRefactoring2 :=  self parseMethod: 'caller1
 	| anObject |
 	anObject := 5'.
-	methodName := ('caller', '1') asSymbol.
+	methodName := #caller1.
 	refactoring := self createRefactoringWithArguments:
 			{{(	40 to: 120) . #called:on1:} .
 			methodName .

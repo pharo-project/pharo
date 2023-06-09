@@ -31,7 +31,7 @@ RBAddProtocolChange >> changeString [
 { #category : #private }
 RBAddProtocolChange >> primitiveExecute [
 
-	self changeClass organization addProtocol: protocol
+	self changeClass addProtocol: protocol
 ]
 
 { #category : #printing }
