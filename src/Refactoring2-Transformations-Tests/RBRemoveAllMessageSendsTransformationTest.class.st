@@ -137,12 +137,12 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage
 	| trans |
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #cr
-				inMethod: #called:on:
+				inMethod: (#called:, #on:) asSymbol
 				inClass: #RBRefactoryTestDataApp).
 	trans preconditionChecking: true.
 	trans transform.
 
-	self assert: ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #called:on: )
+	self assert: ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: (#called:, #on:) asSymbol)
 		equals: (self parseMethod: 'called: anObject on: aBlock
 			Transcript show: anObject printString.
 			aBlock value')

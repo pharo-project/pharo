@@ -164,12 +164,12 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
 			{{(	30 to: 74) . #cr}.
-			#called:on: .
+			(#called:, #on:) asSymbol .
 			#RBRefactoryTestDataApp}.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #called:on: )
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: (#called:, #on:) asSymbol )
 		equals: (self parseMethod: 'called: anObject on: aBlock
 			Transcript show: anObject printString.
 			aBlock value')
