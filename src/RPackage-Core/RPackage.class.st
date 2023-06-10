@@ -1395,7 +1395,7 @@ RPackage >> renameTo: aSymbol [
 	self mcPackage workingCopy repositoryGroup: repositoryGroup.
 	SystemAnnouncer uniqueInstance
 		announce:
-			(RPackageRenamed to: self oldName: oldName newName: newName)
+			(PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #private }

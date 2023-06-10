@@ -2,7 +2,7 @@
 Common superclass for package related announcements
 "
 Class {
-	#name : #RPackageAnnouncement,
+	#name : #PackageAnnouncement,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
 		'package'
@@ -10,26 +10,31 @@ Class {
 	#category : #'RPackage-Core-Announcements'
 }
 
+{ #category : #'class initialization' }
+PackageAnnouncement class >> initialize [
+	self deprecatedAliases: { #RPackageAnnouncement }
+]
+
 { #category : #'instance creation' }
-RPackageAnnouncement class >> to: aPackage [
+PackageAnnouncement class >> to: aPackage [
 
 	^ self new package: aPackage
 ]
 
 { #category : #testing }
-RPackageAnnouncement >> affectsPackages [
+PackageAnnouncement >> affectsPackages [
 
 	^true
 ]
 
 { #category : #accessing }
-RPackageAnnouncement >> package [
+PackageAnnouncement >> package [
 
 	^ package
 ]
 
 { #category : #accessing }
-RPackageAnnouncement >> package: anObject [
+PackageAnnouncement >> package: anObject [
 
 	package := anObject
 ]
