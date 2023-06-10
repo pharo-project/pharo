@@ -43,7 +43,7 @@ RBAddMethodParametrizedTest >> testBadMethod [
 ]
 
 { #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testExistingSelector [
+RBAddMethodParametrizedTest >> testFailureExistingSelector [
 	self shouldFail: (self createRefactoringWithArguments:
 		{'printString ^super printString' .
 		RBBasicLintRuleTestData .

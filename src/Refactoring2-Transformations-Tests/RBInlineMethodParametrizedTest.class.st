@@ -18,7 +18,7 @@ RBInlineMethodParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testBadInterval [
+RBInlineMethodParametrizedTest >> testFailureBadInterval [
 	self shouldFail:
 		(self createRefactoringWithArguments: { (13 to: 23) . #testMethod . RBRefactoryTestDataApp }).
 	self shouldFail:
@@ -27,6 +27,12 @@ RBInlineMethodParametrizedTest >> testBadInterval [
 		(self createRefactoringWithArguments: { (24 to: 30) . #testMethod . RBRefactoryTestDataApp }).
 	self shouldFail:
 		(self createRefactoringWithArguments: { (1 to: 30) . #testMethod . RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureNonExistantSelector [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (14 to: 17) . #checkClass1: . RBRefactoryTestDataApp })
 ]
 
 { #category : #tests }
@@ -229,12 +235,6 @@ RBInlineMethodParametrizedTest >> testModelInlineRecursiveMethod [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (14 to: 17) . #checkClass1: . RBRefactoryTestDataApp })
 ]
 
 { #category : #'failure tests' }

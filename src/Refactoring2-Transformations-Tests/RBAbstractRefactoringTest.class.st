@@ -36,6 +36,20 @@ RBAbstractRefactoringTest >> executeRefactorings: aRefactoringColl [
 	aRefactoringColl do: [ :ref | ref primitiveExecute]
 ]
 
+{ #category : #tests }
+RBAbstractRefactoringTest >> methodSignatureStringForSymbol: aSymbol withArgumentString: aString [
+	"The method is written this way to make sure that we can rename test input (methods) and do not break the tests."
+	
+	^ aSymbol asString, aString, Character cr asString
+]
+
+{ #category : #tests }
+RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
+	"The method is written this way to make sure that we can rename test input (methods) and do not break the tests."
+	
+	^ aSymbol asString, Character cr asString
+]
+
 { #category : #helpers }
 RBAbstractRefactoringTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]

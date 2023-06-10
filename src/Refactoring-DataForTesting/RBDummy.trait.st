@@ -3,7 +3,7 @@ Trait {
 	#instVars : [
 		'var1'
 	],
-	#category : #'Refactoring-Tests-Core-Data'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #'tests - some' }

@@ -4,7 +4,7 @@ This is a dummy class to test RenameClass transformation
 Class {
 	#name : #RBDummyClassToRename,
 	#superclass : #Model,
-	#category : #'Refactoring2-Transformations-Tests-Data'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #performing }

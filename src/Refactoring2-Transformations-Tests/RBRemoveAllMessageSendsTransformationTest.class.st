@@ -18,12 +18,12 @@ RBRemoveAllMessageSendsTransformationTest >> testClassDoesNotExist [
 ]
 
 { #category : #'failure tests' }
-RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
-		
+RBRemoveAllMessageSendsTransformationTest >> testFailureNonExistantSelector [
+
 	| trans |
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #foo:
-				inMethod: #badMessage1
+				inMethod: #checkClass1:
 				inClass: #RBRefactoryTestDataApp).
 	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
@@ -31,12 +31,12 @@ RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
 ]
 
 { #category : #'failure tests' }
-RBRemoveAllMessageSendsTransformationTest >> testNonExistantSelector [
-
+RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
+		
 	| trans |
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #foo:
-				inMethod: #checkClass1:
+				inMethod: #badMessage1
 				inClass: #RBRefactoryTestDataApp).
 	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.

@@ -18,17 +18,17 @@ RBRenameClassParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBRenameClassParametrizedTest >> testBadName [
+RBRenameClassParametrizedTest >> testExistingName [
+	self shouldFail:
+		(self createRefactoringWithArguments:  { self class name . #Object })
+]
+
+{ #category : #'failure tests' }
+RBRenameClassParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #RBLintRuleTestData . self objectClassVariable }).
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #RBLintRuleTestData . #'Ob ject' })
-]
-
-{ #category : #'failure tests' }
-RBRenameClassParametrizedTest >> testExistingName [
-	self shouldFail:
-		(self createRefactoringWithArguments:  { self class name . #Object })
 ]
 
 { #category : #'failure tests' }

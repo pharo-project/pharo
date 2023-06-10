@@ -16,7 +16,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 ]
 
 { #category : #tests }
-RBReplaceSubtreeTransformationTest >> testExtractFailure [
+RBReplaceSubtreeTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: ':= aSelector'

@@ -6,7 +6,7 @@ Class {
 	#pools : [
 		'RBSharedPoolForTestData'
 	],
-	#category : #'Refactoring-Tests-Core-Data'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #'accessing - instances and variables' }

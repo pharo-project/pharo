@@ -1,7 +1,7 @@
 Class {
 	#name : #RBDataTest,
 	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Core-Data'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #tests }
@@ -10,13 +10,13 @@ RBDataTest >> someMethod [
 ]
 
 { #category : #tests }
-RBDataTest >> testExample [
+RBDataTest >> testExtractSetupExample0 [
 	self someMethod.
 	self assert: true
 ]
 
 { #category : #tests }
-RBDataTest >> testExample1 [
+RBDataTest >> testExtractSetupExample1 [
 	| aString aNumber |
 	aString := 'Some string'.
 	self someMethod.
@@ -27,7 +27,7 @@ RBDataTest >> testExample1 [
 ]
 
 { #category : #tests }
-RBDataTest >> testExample2 [
+RBDataTest >> testExtractSetupExample2 [
 	| aString aNumber |
 	aString := 'sa'.
 	self someMethod.

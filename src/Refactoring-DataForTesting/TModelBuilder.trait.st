@@ -3,7 +3,7 @@ A trait to build models for tests purposes
 "
 Trait {
 	#name : #TModelBuilder,
-	#category : #'Refactoring2-Transformations-Tests-Data'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #mocking }
@@ -153,24 +153,17 @@ TModelBuilder >> extractMethodTestData [
 	newModel := self defaultNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 
-	#('Object subclass: #MyClassA
-		instanceVariableNames: ''instVarName1 instVarName2''
-		classVariableNames: ''ClassVarName1 ClassVarName2 ''
-		poolDictionaries: ''''
-		category: ''Testing'' '
-	'MyClassA subclass: #MyClassB
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' '
-	'MyClassB subclass: #MyClassC
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' '
+	#('Object << #MyClassA
+		slots: { #instVarName1 . #instVarName2};
+		sharedVariables: { ClassVarName1 . ClassVarName2};
+		package: ''Testing'' '
+	'MyClassA << #MyClassB
+		package: ''Testing'' '
+	'MyClassB << #MyClassC
+		package: ''Testing'' '
 	) do: [ :each |
 		newModel defineClass: each ].
-
+	
 	#(#(#MyClassA #(
 		#('bar
 			^ self' #tests)

@@ -226,7 +226,7 @@ RBAbstractTransformation >> refactoringError: aString [
 	^ RBRefactoringError signal: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBAbstractTransformation >> refactoringErrorClass [
 
 	^ RBRefactoringError 

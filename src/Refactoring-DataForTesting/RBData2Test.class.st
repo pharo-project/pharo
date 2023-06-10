@@ -1,43 +1,43 @@
 Class {
-	#name : #RBTest,
+	#name : #RBData2Test,
 	#superclass : #TestCase,
 	#instVars : [
 		'aString'
 	],
-	#category : #'Refactoring-Tests-Core-Data'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #running }
-RBTest >> someClasses [
+RBData2Test >> accessToAClass [
 	RBRefactoryTestDataApp new
 ]
 
 { #category : #running }
-RBTest >> testExample1 [
-	self someClasses.
+RBData2Test >> testExtractSetupExample1 [
+	self accessToAClass.
 	aString := 'Example'.
 	self assert: 4 > 5 equals: false
 ]
 
 { #category : #running }
-RBTest >> testExample2 [
+RBData2Test >> testExtractSetupExample2 [
 	"Example"
-	self someClasses.
+	self accessToAClass.
 	aString := 'Example'.
 	self assert: true
 ]
 
 { #category : #running }
-RBTest >> testExample3 [
+RBData2Test >> testExtractSetupExample3 [
 	"Example"
-	self someClasses.
+	self accessToAClass.
 	"Comment"
 	aString := 'Example'.
 	self deny: false
 ]
 
 { #category : #running }
-RBTest >> testExample4 [
+RBData2Test >> testExtractSetupExample4 [
 	self assert: true.
 	self deny: false
 ]
