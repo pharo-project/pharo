@@ -618,7 +618,7 @@ FinderUI >> inheritanceButtonState [
 
 { #category : #display }
 FinderUI >> initialExtent [
-	^ 700@500
+	^ (700@500) scaledByDisplayScaleFactor
 ]
 
 { #category : #initialization }

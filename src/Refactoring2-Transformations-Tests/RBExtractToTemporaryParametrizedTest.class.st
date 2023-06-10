@@ -40,7 +40,7 @@ RBExtractToTemporaryParametrizedTest >> testBadName [
 { #category : #tests }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementInBlock [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
 		{ (52 to: 73) . 'temp' . methodName . RBRefactoryTestDataApp }.
 	self executeRefactoring: refactoring.

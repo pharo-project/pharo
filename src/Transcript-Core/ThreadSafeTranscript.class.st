@@ -137,7 +137,7 @@ ThreadSafeTranscript >> flush [
 { #category : #'ui building' }
 ThreadSafeTranscript >> initialExtent [
 
-	^447@300
+	^ (447@300) scaledByDisplayScaleFactor
 ]
 
 { #category : #initialization }

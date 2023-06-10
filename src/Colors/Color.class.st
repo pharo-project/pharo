@@ -427,9 +427,10 @@ Color class >> initialize [
 	color models used here, see Chapter 17 of Foley and van Dam,
 	Fundamentals of Interactive Computer Graphics, Addison-Wesley,
 	1982."
+
 	ComponentMask := 1023.
-	HalfComponentMask := 512.	"used to round up in integer calculations"
-	ComponentMax := 1023.0.	"a Float used to normalize components"
+	HalfComponentMask := 512. "used to round up in integer calculations"
+	ComponentMax := 1023.0. "a Float used to normalize components"
 	RedShift := 20.
 	GreenShift := 10.
 	BlueShift := 0.
@@ -437,9 +438,7 @@ Color class >> initialize [
 	self
 		initializeIndexedColors;
 		initializeColorRegistry;
-		initializeGrayToIndexMap.
-
-	SessionManager default registerGuiClassNamed: self name
+		initializeGrayToIndexMap
 ]
 
 { #category : #'private - initialization' }
@@ -861,13 +860,6 @@ Color class >> registeredNameOf: aColor [
 			value = aColor
 				ifTrue: [ colorName := key ] ].
 	^ colorName
-]
-
-{ #category : #'system startup' }
-Color class >> shutDown [
-	"Color shutDown"
-	CachedColormaps := nil.	"Maps to translate between color depths"
-	MaskingMap := nil	"Maps all colors except transparent to black for creating a mask"
 ]
 
 { #category : #'accessing - defaults' }

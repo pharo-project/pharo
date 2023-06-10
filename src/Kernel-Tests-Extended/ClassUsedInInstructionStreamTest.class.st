@@ -29,8 +29,8 @@ ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 
 { #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithMNU [
-
-	Processor activeProcess suspend.
+	<ignoreNotImplementedSelectors: #(iAmAnMNUMessage)>
+	thisProcess suspend.
 	self iAmAnMNUMessage
 ]
 

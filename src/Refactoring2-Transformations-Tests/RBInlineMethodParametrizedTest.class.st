@@ -99,7 +99,7 @@ RBInlineMethodParametrizedTest >> testInlineMethod1 [
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineMethod2 [
 	| refactoring methodName |
-	methodName := ('caller', '1') asSymbol.
+	methodName := #caller1.
 	refactoring := self createRefactoringWithArguments:
 		{ (40 to: 120) .  methodName . RBRefactoryTestDataApp }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
@@ -120,7 +120,7 @@ RBInlineMethodParametrizedTest >> testInlineMethod2 [
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineMethod3 [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
 		{ (58 to: 73) . methodName . RBRefactoryTestDataApp }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
