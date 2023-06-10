@@ -2,8 +2,8 @@
 I am a public announcement sent when a new RPackage is renamed
 "
 Class {
-	#name : #RPackageRenamed,
-	#superclass : #RPackageAnnouncement,
+	#name : #PackageRenamed,
+	#superclass : #PackageAnnouncement,
 	#instVars : [
 		'oldName',
 		'newName'
@@ -11,8 +11,14 @@ Class {
 	#category : #'RPackage-Core-Announcements'
 }
 
+{ #category : #'class initialization' }
+PackageRenamed class >> initialize [
+
+	self deprecatedAliases: { #RPackageRenamed }
+]
+
 { #category : #'instance creation' }
-RPackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
+PackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
 
 	^ (self to: aPackage)
 		oldName: aSymbol;
@@ -21,54 +27,54 @@ RPackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
 ]
 
 { #category : #testing }
-RPackageRenamed >> affectsClass: aClass [
+PackageRenamed >> affectsClass: aClass [
 	^package == aClass package
 ]
 
 { #category : #testing }
-RPackageRenamed >> affectsMethod: aMethod [
+PackageRenamed >> affectsMethod: aMethod [
 	^package == aMethod package
 ]
 
 { #category : #testing }
-RPackageRenamed >> affectsMethods [
+PackageRenamed >> affectsMethods [
 	"methods belong to package which could be represented by tools as part of method"
 	^true
 ]
 
 { #category : #testing }
-RPackageRenamed >> affectsMethodsDefinedInClass: aClass [
+PackageRenamed >> affectsMethodsDefinedInClass: aClass [
 
 	^(package definesClass: aClass)
 		or: [ package extendsClass: aClass ]
 ]
 
 { #category : #testing }
-RPackageRenamed >> affectsMethodsDefinedInPackage: aPackage [
+PackageRenamed >> affectsMethodsDefinedInPackage: aPackage [
 
 	^package == aPackage
 ]
 
 { #category : #accessing }
-RPackageRenamed >> newName [
+PackageRenamed >> newName [
 
 	^ newName
 ]
 
 { #category : #accessing }
-RPackageRenamed >> newName: anObject [
+PackageRenamed >> newName: anObject [
 
 	newName := anObject
 ]
 
 { #category : #accessing }
-RPackageRenamed >> oldName [
+PackageRenamed >> oldName [
 
 	^ oldName
 ]
 
 { #category : #accessing }
-RPackageRenamed >> oldName: anObject [
+PackageRenamed >> oldName: anObject [
 
 	oldName := anObject
 ]
