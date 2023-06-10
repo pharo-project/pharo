@@ -7,7 +7,9 @@ Class {
 { #category : #baselines }
 BaselineOfRefactoring >> baseline: spec [
 	<baseline>
-	spec for: #'common' do: [
+
+	"What a super strange baseline it does not load the core engine :("
+	
 		spec 
 			package: 'SUnit-Rules';
 			package: 'SUnit-Rules-Tests' with: [ spec requires: #( 'SUnit-Rules' ) ];
@@ -16,7 +18,7 @@ BaselineOfRefactoring >> baseline: spec [
 			package: 'System-Settings-Rules';
 			package: 'GeneralRules';
 			package: 'Rubric-Rules';
-
+			package: 'Refactoring-DataForTesting';
 			package: 'Refactoring-Tests-Core';
 			package: 'Refactoring-Tests-Changes';
 			package: 'Refactoring-Tests-Critics';
@@ -24,5 +26,5 @@ BaselineOfRefactoring >> baseline: spec [
 		spec 
 			group: 'Rules' with: #('SUnit-Rules' 'Kernel-Tests-Rules' 'Polymorph-Widgets-Rules' 'System-Settings-Rules' 'GeneralRules' 'Rubric-Rules');
 			group: 'Tests' with: #('Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'SUnit-Rules-Tests');
-			group: 'default' with: #('Rules' 'Tests') ]
+			group: 'default' with: #('Rules' 'Tests') 
 ]
