@@ -27,6 +27,8 @@ RBAddParameterParametrizedTest >> setUp [
 RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
 	refactoring := self createRefactoringWithArguments:
@@ -52,6 +54,8 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
 	refactoring := self createRefactoringWithArguments:

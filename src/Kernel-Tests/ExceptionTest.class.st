@@ -302,6 +302,7 @@ ExceptionTest >> testNonResumablePass [
 ExceptionTest >> testResignalAs [
 
 	| answer |
+	<ignoreNotImplementedSelectors: #(zork)>
 	answer := [
 		[3 zork]
 			on: ZeroDivide
@@ -313,13 +314,20 @@ ExceptionTest >> testResignalAs [
 { #category : #'tests - resignal' }
 ExceptionTest >> testResignalAsUnwinds [
 
+	<ignoreNotImplementedSelectors: #( zork )>
 	| unwound answer |
 	unwound := false.
 	answer := [
-		[3 zork]
-			on: ZeroDivide do: [:ex | self assert: unwound.  ex return: 5]
-	] on: Error do: [:ex | [ex resignalAs: ZeroDivide] ifCurtailed: [unwound := true]].
-	self assert: answer == 5
+	          [ 3 zork ]
+		          on: ZeroDivide
+		          do: [ :ex |
+			          self assert: unwound.
+			          ex return: 5 ] ]
+		          on: Error
+		          do: [ :ex |
+			          [ ex resignalAs: ZeroDivide ] ifCurtailed: [
+				          unwound := true ] ].
+	self assert: answer identicalTo: 5
 ]
 
 { #category : #'tests - resignal' }

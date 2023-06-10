@@ -116,7 +116,7 @@ EpUnifiedBrowserPresenter >> initializeToolbar [
 EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Epicea - Code Changes';
-		initialExtent: 950 @ 650;
+		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
 		whenClosedDo: [ self updatesAnnouncer unsubscribe: self ]
 ]
 

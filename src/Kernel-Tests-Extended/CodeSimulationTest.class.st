@@ -30,6 +30,7 @@ CodeSimulationTest >> runSimulated: aBlock [
 
 { #category : #tests }
 CodeSimulationTest >> testDNU [
+	<ignoreNotImplementedSelectors: #(absentMethod)>
 	self should: [ self runSimulated: [ self absentMethod ] ] raise: MessageNotUnderstood
 ]
 

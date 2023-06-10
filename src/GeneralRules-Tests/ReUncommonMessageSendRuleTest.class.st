@@ -10,6 +10,7 @@ Class {
 { #category : #sample }
 ReUncommonMessageSendRuleTest >> sampleMethod [
 	"I check that no uncommon method sends occour. For instance using self or true as method names, or method names with capital - like '7 BadSelector'"
+	<ignoreNotImplementedSelectors: #(self BadSelector)>
 	99 self.
 	3 factorial.
 	7 BadSelector

@@ -1,14 +1,19 @@
 "
-I am responsible for removing a message send inside a method. In this implementation, only the selector of the message is necessary to execute this transformation.
+I am responsible for removing a message send inside a method. In this implementation, only the selector of the message is necessary to execute this transformation. Pay attention that I do not give any warranty on the result.
+It means that you can break hard your code applying blindly this transformation.
+
 
 Usage:
+
+```
 | transformation |
-transformation := (RBRemoveMessageSendTransformation
+transformation := (RBRemoveAllMessageSendsTransformation
 				messageSend: #byteAt:
 				inMethod: #methodBefore
 				inClass: #RBRemoveMessageSendTransformationTest)
 				transform.
 (ChangesBrowser changes: transformation model changes changes) open
+```
 
 Preconditions:
 - Check whether this method ever calls the given message.
@@ -18,7 +23,7 @@ Observations about the transformation:
 - Removing the message send means removing the receiver, too. The only exception occurs when the receiver is another message send (e.g., in a cascade)
 "
 Class {
-	#name : #RBRemoveMessageSendTransformation,
+	#name : #RBRemoveAllMessageSendsTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
 		'message'
@@ -27,7 +32,7 @@ Class {
 }
 
 { #category : #api }
-RBRemoveMessageSendTransformation class >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
+RBRemoveAllMessageSendsTransformation class >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	^ self new
 		messageSend: aMessageSend
@@ -37,7 +42,7 @@ RBRemoveMessageSendTransformation class >> messageSend: aMessageSend inMethod: a
 ]
 
 { #category : #api }
-RBRemoveMessageSendTransformation class >> model: aRBModel messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
+RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	^ self new
 		model: aRBModel;
@@ -48,7 +53,7 @@ RBRemoveMessageSendTransformation class >> model: aRBModel messageSend: aMessage
 ]
 
 { #category : #api }
-RBRemoveMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
+RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
 	selector := aSelector.
@@ -56,7 +61,7 @@ RBRemoveMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelect
 ]
 
 { #category : #preconditions }
-RBRemoveMessageSendTransformation >> preconditions [
+RBRemoveAllMessageSendsTransformation >> preconditions [
 
 	^ (RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -67,30 +72,31 @@ RBRemoveMessageSendTransformation >> preconditions [
 	  & (RBCondition
 			withBlock: [
 				(self definingMethod
-					allChildren select: #isMessage)
+					allChildren select: [:each | each isMessage] )
 					anySatisfy: [ :messageNode | messageNode selector = message asSymbol ] ]
 			errorString: ('Method named <1s> does not implement this message send <2s>'
-				expandMacrosWith: selector with: message))
+				expandMacrosWith: selector with: message)) 
+		
 ]
 
 { #category : #executing }
-RBRemoveMessageSendTransformation >> privateTransform [
+RBRemoveAllMessageSendsTransformation >> privateTransform [
 
 	| methodTree nodesToModify |
 	methodTree := self definingMethod.
 
 	"try to find a message node with the same selector"
 	nodesToModify := ( methodTree allChildren removeDuplicates
-		select: #isMessage )
+		select: [ :each | each isMessage] )
 		select: [ :node | node selector = message asSymbol ].
 
 	nodesToModify ifNotEmpty: [
-		nodesToModify do: #removeFromTree.
+		nodesToModify do: [:each | each removeFromTree].
 		self definingClass compileTree: methodTree ]
 ]
 
 { #category : #printing }
-RBRemoveMessageSendTransformation >> storeOn: aStream [
+RBRemoveAllMessageSendsTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

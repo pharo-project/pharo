@@ -101,7 +101,7 @@ T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 { #category : #tests }
 T2TraitTest >> testClassTraits [
 	| t1 t2 aClass |
-
+	<ignoreNotImplementedSelectors: #(otherSelector otherSelector2 anAlias aSelector)>
 	t1 := self newTrait: #T1 with: #().
 	t2 := self newTrait: #T2 with: #().
 

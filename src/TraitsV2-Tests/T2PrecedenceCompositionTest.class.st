@@ -106,7 +106,7 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithA
 T2PrecedenceCompositionTest >> testPrecedencesCanBeCombined [
 
 	| t1 t2 t3 c1 |
-
+	<ignoreNotImplementedSelectors: #(m1 m2)>
 	t1 := self newTrait: #T1 with: #() uses: #().
 	t1 classTrait uses: {} slots: #().
 
@@ -148,7 +148,7 @@ T2PrecedenceCompositionTest >> testWithPrecedenceIsNonAConflict [
 
 { #category : #tests }
 T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
-
+	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
 	t1 := self newTrait: #T1 with: #() uses: #().
@@ -167,7 +167,7 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
 
 { #category : #tests }
 T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaringOrderOfSequence [
-
+	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
 	t1 := self newTrait: #T1 with: #() uses: #().

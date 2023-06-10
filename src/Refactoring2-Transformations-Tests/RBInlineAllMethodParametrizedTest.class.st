@@ -59,7 +59,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 { #category : #tests }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
 		{ methodName . RBRefactoryTestDataApp }.
 	self executeRefactoring: refactoring.
