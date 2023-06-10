@@ -38,15 +38,7 @@ EndianDetector class >> calcEndianness [
 { #category : #accessing }
 EndianDetector class >> endianness [
 
-	EndianCache ifNil: [EndianCache := self calcEndianness].
-	^ EndianCache
-]
-
-{ #category : #'class initialization' }
-EndianDetector class >> initialize [
-
-	SessionManager default
-		registerSystemClassNamed: self name
+	^ EndianCache ifNil: [ EndianCache := self calcEndianness ]
 ]
 
 { #category : #testing }
