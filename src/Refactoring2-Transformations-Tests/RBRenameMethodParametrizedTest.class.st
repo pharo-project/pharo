@@ -48,7 +48,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	| refactoring class |
-	model := (RBClassModelFactory rbNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-Tests-Core')).
+	model := (RBClassModelFactory rbNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-DataForTesting')).
 	refactoring := self createRefactoringWithModel: model andArguments:
 		{ ('check', 'Class:') asSymbol . RBBasicLintRuleTestData . #checkClass1: . (1 to: 1) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
