@@ -23,15 +23,6 @@ RBChildrenToSiblingsParametrizedTest >> setUp [
 ]
 
 { #category : #'failure tests' }
-RBChildrenToSiblingsParametrizedTest >> testBadName [
-
-	self shouldFail: (self createRefactoringWithArguments:
-		{#'Obje ct' . RBLintRuleTestData . (Array
-					with: RBBasicLintRuleTestData
-					with: RBCompositeLintRuleTestData)})
-]
-
-{ #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testExistingName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #Object . RBLintRuleTestData . (Array
@@ -41,6 +32,15 @@ RBChildrenToSiblingsParametrizedTest >> testExistingName [
 		{ #Processor . RBLintRuleTestData . (Array
 						with: RBBasicLintRuleTestData
 						with: RBCompositeLintRuleTestData) })
+]
+
+{ #category : #'failure tests' }
+RBChildrenToSiblingsParametrizedTest >> testFailureBadName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+		{#'Obje ct' . RBLintRuleTestData . (Array
+					with: RBBasicLintRuleTestData
+					with: RBCompositeLintRuleTestData)})
 ]
 
 { #category : #'failure tests' }

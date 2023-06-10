@@ -71,12 +71,6 @@ RBCopyPackageParametrizedTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testBadName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})
-]
-
 { #category : #tests }
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
@@ -124,4 +118,10 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 RBCopyPackageParametrizedTest >> testExistingPackage [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
+]
+
+{ #category : #'failure tests' }
+RBCopyPackageParametrizedTest >> testFailureBadName [
+	self shouldFail: (self createRefactoringWithArguments:
+		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})
 ]

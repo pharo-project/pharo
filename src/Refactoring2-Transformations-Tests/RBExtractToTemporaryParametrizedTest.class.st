@@ -17,13 +17,6 @@ RBExtractToTemporaryParametrizedTest >> constructor [
 	^ #extract:to:from:in:
 ]
 
-{ #category : #'failure tests' }
-RBExtractToTemporaryParametrizedTest >> testBadName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ (14 to: 23) . 'a sdf' . #testMethod . RBRefactoryTestDataApp })
-]
-
 { #category : #tests }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementInBlock [
 	| refactoring methodName |
@@ -80,6 +73,13 @@ RBExtractToTemporaryParametrizedTest >> testFailureBadInterval [
 	self shouldFail:
 		(self createRefactoringWithArguments:
 			{ (61 to: 101) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
+RBExtractToTemporaryParametrizedTest >> testFailureBadName [
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			{ (14 to: 23) . 'a sdf' . #testMethod . RBRefactoryTestDataApp })
 ]
 
 { #category : #'failure tests' }

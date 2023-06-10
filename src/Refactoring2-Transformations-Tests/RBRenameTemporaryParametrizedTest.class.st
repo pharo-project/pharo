@@ -34,17 +34,6 @@ RBRenameTemporaryParametrizedTest >> testBadIntervalAndVariableDoesNotExist [
 ]
 
 { #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testBadName [
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
-				'DependentFields' . #RBLintRuleTestData . #openEditor });
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
-				'a b' . #RBLintRuleTestData . #openEditor })
-]
-
-{ #category : #'failure tests' }
 RBRenameTemporaryParametrizedTest >> testExistingVariable [
 	self
 		shouldFail:
@@ -53,6 +42,17 @@ RBRenameTemporaryParametrizedTest >> testExistingVariable [
 		shouldFail:
 			(self createRefactoringWithArguments: { { (15 to: 19). #rules }.
 				'rules' . #RBLintRuleTestData . #openEditor })
+]
+
+{ #category : #'failure tests' }
+RBRenameTemporaryParametrizedTest >> testFailureBadName [
+	self
+		shouldFail:
+			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
+				'DependentFields' . #RBLintRuleTestData . #openEditor });
+		shouldFail:
+			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
+				'a b' . #RBLintRuleTestData . #openEditor })
 ]
 
 { #category : #'failure tests' }

@@ -12,7 +12,7 @@ RBReplaceSendersMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBReplaceSendersMethodParametrizedTest >> testIncompleteInitializers [
+RBReplaceSendersMethodParametrizedTest >> testFailureIncompleteInitializers [
 	"please note that this strange way to create symbol is because some tests are counting symbol
 	and rewriting the code in a bad way so for now do not change them."
 	
@@ -24,6 +24,24 @@ RBReplaceSendersMethodParametrizedTest >> testIncompleteInitializers [
 				to: ('textInput:', 'name:', 'symbol:') asSymbol
 				permutation: #(-1 2 1)
 				inAllClasses: true)
+]
+
+{ #category : #'failure tests' }
+RBReplaceSendersMethodParametrizedTest >> testFailureNotUnderstandNewSelector [
+	self shouldFail: (rbClass
+			replaceCallMethod: #checkClass:
+			in: RBBasicLintRuleTestData
+			to: #checkMethod23:
+			permutation: (1 to: 1))
+]
+
+{ #category : #'failure tests' }
+RBReplaceSendersMethodParametrizedTest >> testFailureNotUnderstandSelector [
+	self shouldFail: (rbClass
+			replaceCallMethod: #checkClass123:
+			in: RBBasicLintRuleTestData
+			to: #checkMethod:
+			permutation: (1 to: 1))
 ]
 
 { #category : #tests }
@@ -107,24 +125,6 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithSameArgs [
 	self proceedThroughWarning: [ refactoring primitiveExecute ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
-]
-
-{ #category : #'failure tests' }
-RBReplaceSendersMethodParametrizedTest >> testNotUnderstandNewSelector [
-	self shouldFail: (rbClass
-			replaceCallMethod: #checkClass:
-			in: RBBasicLintRuleTestData
-			to: #checkMethod23:
-			permutation: (1 to: 1))
-]
-
-{ #category : #'failure tests' }
-RBReplaceSendersMethodParametrizedTest >> testNotUnderstandSelector [
-	self shouldFail: (rbClass
-			replaceCallMethod: #checkClass123:
-			in: RBBasicLintRuleTestData
-			to: #checkMethod:
-			permutation: (1 to: 1))
 ]
 
 { #category : #tests }

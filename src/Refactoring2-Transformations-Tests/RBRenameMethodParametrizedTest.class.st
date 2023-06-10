@@ -18,16 +18,22 @@ RBRenameMethodParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testExistingSelector [
+RBRenameMethodParametrizedTest >> testFailureExistingSelector [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #checkClass: . RBBasicLintRuleTestData . #runOnEnvironment: . (1 to: 1) })
 ]
 
 { #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testMultipleSelectors [
+RBRenameMethodParametrizedTest >> testFailureMultipleSelectors [
 	"Renaming a method with multiple selectors should raise warning"
 	self shouldWarn: (self createRefactoringWithArguments:
 		{ #checkClass: . RBBasicLintRuleTestData . #foo: . (1 to: 1) })
+]
+
+{ #category : #'failure tests' }
+RBRenameMethodParametrizedTest >> testFailureWithNonCorrectNumberOfArgs [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #checkClass: . RBBasicLintRuleTestData . #checkClass . (1 to: 1) })
 ]
 
 { #category : #tests }
@@ -36,13 +42,22 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 	refactoring := self createRefactoringWithArguments:
 		{ ('just', 'ForTest') asSymbol . RBClassToRename classSide . #justForTest1 . (1 to: 0)}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	
 	class := refactoring model classNamed: #'RBClassToRename class'.
 	self assert: (class parseTreeForSelector: #justForTest1)
-		equals: (self parseMethod: 'justForTest1 ^ 42').
-	self assert: ((refactoring model classNamed: #RBDummy) parseTreeForSelector: #methodFromTrait) equals: (self parseMethod: 'methodFromTrait
-	RBClassToRename justForTest1').
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #justForTest1), '^ 42').
+	
+	self 
+		assert: ((refactoring model classNamed: #RBDummy) 
+		parseTreeForSelector: #methodFromTrait) equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #methodFromTrait), 
+'	RBClassToRename justForTest1').
+	
 	self deny: (class directlyDefinesMethod: ('just', 'ForTest') asSymbol).
-	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBDummy
+	
+	self 
+		assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) 
+						methodFor: #methodFromTrait) modelClass name 
+		equals: #RBDummy
 ]
 
 { #category : #tests }
@@ -52,10 +67,13 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	refactoring := self createRefactoringWithModel: model andArguments:
 		{ ('check', 'Class:') asSymbol . RBBasicLintRuleTestData . #checkClass1: . (1 to: 1) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
-	self assert: (class parseTreeForSelector: #checkClass1:)
-		equals: (self parseMethod: 'checkClass1: aSmalllintContext
-	^classBlock value: aSmalllintContext value: result')
+	
+	self 
+		assert: (class parseTreeForSelector: #checkClass1:)
+		equals: (self parseMethod: (self methodSignatureStringForSymbol: #checkClass1: withArgumentString: ' aSmalllintContext'),
+'	^classBlock value: aSmalllintContext value: result')
 ]
 
 { #category : #tests }
@@ -69,16 +87,17 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	self
 		assert:
 			(class parseTreeForSelector: ('demoRenameMethod:' , 'PermuteArgs:') asSymbol)
-				equals:
-					(self
-						parseMethod:
-							'demoRenameMethod: arg2 PermuteArgs: arg1 self do: arg1.
+		equals:
+			(self
+				parseMethod:
+					'demoRenameMethod: arg2 PermuteArgs: arg1 self do: arg1.
 	self do: arg2.
 	^ arg1 > arg2').
+	
 	self
 		assert:
 			(class parseTreeForSelector: #demoExampleCall)
-				equals: (self parseMethod: 'demoExampleCall ^self demoRenameMethod: 2 PermuteArgs: 1')
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #demoExampleCall), ' ^self demoRenameMethod: 2 PermuteArgs: 1')
 ]
 
 { #category : #tests }
@@ -89,10 +108,14 @@ RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 		('rename:' , 'two:') asSymbol . #(2 1 ) }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeForSelector: ('rename:' , 'two:') asSymbol)
+	
+	self 
+		assert: (class parseTreeForSelector: ('rename:' , 'two:') asSymbol)
 		equals: (self parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
-	self assert: (class parseTreeForSelector: #exampleCall)
-		equals: (self parseMethod: 'exampleCall <sampleInstance> ^self rename: 2 two: 1')
+	
+	self 
+		assert: (class parseTreeForSelector: #exampleCall)
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #exampleCall), '<sampleInstance> ^self rename: 2 two: 1')
 ]
 
 { #category : #tests }
@@ -120,11 +143,19 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 		{ ('rename' , 'ThisMethod:') asSymbol . RBRefactoryTestDataApp . #renameThisMethod2: . (1 to: 1) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeForSelector: #renameThisMethod2:) equals: (self parseMethod: 'renameThisMethod2: anArg
+	
+	self 
+		assert: (class parseTreeForSelector: #renameThisMethod2:) 
+		equals: (self parseMethod: 'renameThisMethod2: anArg
 	^self').
-	self assert: (class parseTreeForSelector: #callMethod) equals: (self parseMethod: 'callMethod
+	
+	self 
+		assert: (class parseTreeForSelector: #callMethod) 
+		equals: (self parseMethod: 'callMethod
 	^(self renameThisMethod2: 5)').
-	self assert: (class parseTreeForSelector: #symbolReference) equals: (self parseMethod: 'symbolReference
+	self 
+		assert: (class parseTreeForSelector: #symbolReference) 
+		equals: (self parseMethod: 'symbolReference
 		^ #(#renameThisMethod2: #(4 #renameThisMethod2:))').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)
 ]
@@ -136,16 +167,16 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 		{ ('testMethod1') asSymbol . RBRefactoryTestDataApp . #testMethod2 . (1 to: 0) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeForSelector: #testMethod2)
-		equals: (self parseMethod: 'testMethod2
-	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeForSelector: #classBlock:) 		equals: (self parseMethod: 'classBlock: aBlock
-	classBlock := aBlock testMethod2').
-	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)
-]
+	
+	self 
+		assert: (class parseTreeForSelector: #testMethod2)
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #testMethod2), 
+'	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
 
-{ #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testWithNonCorrectNumberOfArgs [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #checkClass: . RBBasicLintRuleTestData . #checkClass . (1 to: 1) })
+	self 
+		assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeForSelector: #classBlock:) 	
+		equals: (self parseMethod: (self methodSignatureStringForSymbol: #classBlock: withArgumentString: ' aBlock'),
+'	classBlock := aBlock testMethod2').
+
+	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)
 ]
