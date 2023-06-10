@@ -68,12 +68,12 @@ ClassDescription >> addInstVarNamed: aString [
 { #category : #protocols }
 ClassDescription >> addProtocol: aProtocol [
 
-	| oldProtocols protocol |
-	
-	(self hasProtocol: aProtocol) ifTrue: [
-		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+	| oldProtocols protocol protocolName |
+	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
 
-	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
+	(self hasProtocol: aProtocol) ifTrue: [ ^ self protocolNamed: protocolName ].
+
+	protocol := Protocol named: protocolName.
 
 	oldProtocols := self protocolNames copy.
 
@@ -471,15 +471,11 @@ ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
 	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
-	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
+	If my parameter is a Protocol, I'll return it if it comes from me or I'll create one of the same name."
 
 	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
 
-	aProtocol isString ifFalse: [
-		(self protocols includes: aProtocol)
-			ifTrue: [ ^ aProtocol ]
-			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
+	^ self addProtocol: aProtocol
 ]
 
 { #category : #private }
@@ -951,7 +947,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 	| protocol oldProtocolNames |
 	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
-	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
+	protocol := self ensureProtocol: aProtocol.
 
 	protocol isEmpty ifFalse: [ ^ self ].
 

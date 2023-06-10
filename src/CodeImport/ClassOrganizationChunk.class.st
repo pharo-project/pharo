@@ -52,11 +52,7 @@ ClassOrganizationChunk >> importFor: aRequestor logSource: logSource [
 	"If nothing was scanned and I had no elements before, then default me"
 	(protocolSpecs isEmpty and: [ targetClass protocols isEmpty ]) ifTrue: [ ^ self ].
 
-	protocolSpecs do: [ :spec |
-		| protocolName methods |
-		protocolName := spec first asSymbol.
-		methods := spec allButFirst asSet.
-		targetClass addProtocol: (Protocol name: protocolName methodSelectors: methods) ]
+	protocolSpecs do: [ :spec | (targetClass addProtocol: (Protocol named: spec first)) methodSelectors: spec allButFirst asSet ]
 ]
 
 { #category : #testing }
