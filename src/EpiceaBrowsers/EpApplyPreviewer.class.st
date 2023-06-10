@@ -172,7 +172,7 @@ EpApplyPreviewer >> visitMethodChange: aChange [
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					(method protocol ~= aChange methodAffectedProtocol
+					(method protocol name ~= aChange methodAffectedProtocol
 						or: [ method sourceCode ~= aChange methodAffectedSourceCode ])
 						ifTrue: [ {(EpMethodModification
 								oldMethod: method
