@@ -58,9 +58,12 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	refactoring := self createRefactoringWithModel: model
 		andArguments: {#simpleMethod . class . false }.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: 'myMethod
+	
+	"Pay attention that method body is created this way to support potential selector rename"
+	
+	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: #myMethod asString, Character cr asString,
 
-	| token |
+'	| token |
 	token := (String new: 100) writeStream.
 	[ self simpleMethod ] whileTrue: [
 		token nextPut: currentChar.
@@ -77,9 +80,14 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 
 	^ currentChar isLetter not').
 	class := model classNamed: #MyClassC.
-	self assert: (class parseTreeForSelector: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
+	
+	
+	
+	self 
+		assert: (class parseTreeForSelector: #methodWithArg:) 
+		equals: (self parseMethod: #methodWithArg: asString, ' anArg', Character cr asString,
 
-	(currentChar isLetter and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
+'	(currentChar isLetter and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
 	^ nil')
 ]
 
