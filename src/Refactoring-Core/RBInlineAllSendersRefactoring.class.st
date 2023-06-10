@@ -91,7 +91,7 @@ RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSel
 									inMethod: aSelector
 									forClass: aClass) checkOverridden: false).
 						numberReplaced := numberReplaced + 1]
-					do: [ :e | ]].
+					do: [ ]].
 	numberNotReplaced := numberNotReplaced + messagesToInline
 ]
 

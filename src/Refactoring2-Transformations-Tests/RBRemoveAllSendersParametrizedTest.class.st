@@ -19,7 +19,7 @@ RBRemoveAllSendersParametrizedTest >> constructor [
 { #category : #tests }
 RBRemoveAllSendersParametrizedTest >> testRemoveMessageInsideBlock [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments: { methodName }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self proceedThroughWarning: [self executeRefactoring: refactoring ].

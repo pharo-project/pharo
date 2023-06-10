@@ -226,6 +226,12 @@ RBAbstractTransformation >> refactoringError: aString [
 	^ RBRefactoringError signal: aString
 ]
 
+{ #category : #'as yet unclassified' }
+RBAbstractTransformation >> refactoringErrorClass [
+
+	^ RBRefactoringError 
+]
+
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringWarning: aString [
 	^ RBRefactoringWarning signal: aString
