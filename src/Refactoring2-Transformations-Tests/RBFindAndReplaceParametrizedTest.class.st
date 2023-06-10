@@ -23,7 +23,7 @@ RBFindAndReplaceParametrizedTest >> setUp [
 ]
 
 { #category : #'failure tests' }
-RBFindAndReplaceParametrizedTest >> testBadSelector [
+RBFindAndReplaceParametrizedTest >> testFailureBadSelector [
 	|class|
 	class := model classNamed: #MyClassA.
 	self shouldFail: (self createRefactoringWithModel: model
@@ -31,7 +31,7 @@ RBFindAndReplaceParametrizedTest >> testBadSelector [
 ]
 
 { #category : #'failure tests' }
-RBFindAndReplaceParametrizedTest >> testFindOcurrencesFailureInHierarchy [
+RBFindAndReplaceParametrizedTest >> testFailureFindOcurrencesInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	class
@@ -49,19 +49,26 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesFailureInHierarchy [
 
 { #category : #tests }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
-	|class refactoring|
+
+	| class refactoring |
 	class := model classNamed: #MyClassA.
 	class
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model
+		
+	refactoring := self 
+		createRefactoringWithModel: model
 		andArguments: {#simpleMethod . class . false }.
 	self executeRefactoring: refactoring.
 	
+	
 	"Pay attention that method body is created this way to support potential selector rename"
 	
-	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: #myMethod asString, Character cr asString,
+	"the previous code of myMethod "
+	self 
+		assert: (class parseTreeForSelector: #myMethod) 
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #myMethod),
 
 '	| token |
 	token := (String new: 100) writeStream.
@@ -75,17 +82,16 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	token := self simpleMethod.
 	token := self simpleMethod example.
 	^ token contents').
+	
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: 'exampleMethod
+	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #exampleMethod),
 
-	^ currentChar isLetter not').
+'	^ currentChar isLetter not').
+	
 	class := model classNamed: #MyClassC.
-	
-	
-	
 	self 
 		assert: (class parseTreeForSelector: #methodWithArg:) 
-		equals: (self parseMethod: #methodWithArg: asString, ' anArg', Character cr asString,
+		equals: (self parseMethod: (self methodSignatureStringForSymbol: #methodWithArg:  withArgumentString: ' anArg'),
 
 '	(currentChar isLetter and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
 	^ nil')
@@ -93,7 +99,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 
 { #category : #tests }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
-	|class refactoring|
+	| class refactoring |
 	class := model classNamed: #MyClassA.
 	class
 		compile: 'simpleMethod
@@ -102,9 +108,12 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #simpleMethod . class . true }.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: 'myMethod
 
-	| token |
+	self 
+		assert: (class parseTreeForSelector: #myMethod) 
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #myMethod),
+
+'	| token |
 	token := (String new: 100) writeStream.
 	[ self simpleMethod ] whileTrue: [
 		token nextPut: currentChar.
@@ -116,10 +125,12 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	token := self simpleMethod.
 	token := self simpleMethod example.
 	^ token contents').
+	
 	class := model classNamed: #MyClassB.
 	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: 'exampleMethod
 
 	^ self simpleMethod not').
+	
 	class := model classNamed: #MyClassC.
 	self assert: (class parseTreeForSelector: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
 

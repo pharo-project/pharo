@@ -22,12 +22,6 @@ RBExtractSetUpMethodParametrizedTest >> testBadClass [
 		{ (78 to: 197) . #displayName . RBLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
-RBExtractSetUpMethodParametrizedTest >> testBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (14 to: 35) . #testExtractSetupExample0 . RBDataTest })
-]
-
 { #category : #tests }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUp [
 	| class refactoring |
@@ -117,6 +111,12 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWhenIsNotFirstsSentences
 
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (63 to: 77) . #testExtractSetupExample1 . RBDataTest })
+]
+
+{ #category : #'failure tests' }
+RBExtractSetUpMethodParametrizedTest >> testFailureBadInterval [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (14 to: 35) . #testExtractSetupExample0 . RBDataTest })
 ]
 
 { #category : #'failure tests' }

@@ -17,14 +17,6 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadInterval [
-	| refactoring |
-	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExtractSetupExample1 . RBData2Test }.
-	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadMethodName [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExample7 . RBData2Test }.
@@ -42,17 +34,31 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAnd
 	self assert: (class parseTreeForSelector: #setUp)
 		equals: (self parseMethod: 'setUp
 		super setUp. self accessToAClass. aString := ''Example''').
-	self assert: (class parseTreeForSelector: #testExtractSetupExample1)
-		equals: (self parseMethod: 'testExtractSetupExample1
-		self assert: 4 > 5 equals: false').
-	self assert: (class parseTreeForSelector: #testExtractSetupExample2)
-		equals: (self parseMethod: 'testExtractSetupExample2
-		self assert: true').
+		
+	self 
+		assert: (class parseTreeForSelector: #testExtractSetupExample1)
+		equals: (self parseMethod: #testExtractSetupExample1 asString, Character cr asString,
+'		self assert: 4 > 5 equals: false').
+	
+	self 
+		assert: (class parseTreeForSelector: #testExtractSetupExample2)
+		equals: (self parseMethod: #testExtractSetupExample2 asString, Character cr asString,
+'		self assert: true').
+	
 	self assert: (class parseTreeForSelector: #testExtractSetupExample3)
-		equals: (self parseMethod: 'testExtractSetupExample3
-		self deny: false').
+		equals: (self parseMethod: #testExtractSetupExample3 asString, Character cr asString,
+'		self deny: false').
+	
 	self assert: (class parseTreeForSelector: #testExtractSetupExample4)
-		equals: (self parseMethod: 'testExtractSetupExample4
-		self assert: true.
+		equals: (self parseMethod: #testExtractSetupExample4 asString, Character cr asString,
+'		self assert: true.
 		self deny: false')
+]
+
+{ #category : #'failure tests' }
+RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExtractSetupExample1 . RBData2Test }.
+	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
+	self shouldFail: refactoring
 ]

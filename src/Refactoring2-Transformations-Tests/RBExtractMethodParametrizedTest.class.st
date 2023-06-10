@@ -16,24 +16,6 @@ RBExtractMethodParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #'failure tests' }
-RBExtractMethodParametrizedTest >> testBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (24 to: 30) . #testMethod . RBRefactoryTestDataApp }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
-]
-
-{ #category : #'failure tests' }
-RBExtractMethodParametrizedTest >> testExtractFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (53 to: 56) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
-]
-
 { #category : #tests }
 RBExtractMethodParametrizedTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
 	| refactoring class |
@@ -168,6 +150,30 @@ RBExtractMethodParametrizedTest >> testExtractWithRenamingOfParameters [
 	newParameter nextPut: $).')
 ]
 
+{ #category : #'failure tests' }
+RBExtractMethodParametrizedTest >> testFailureBadInterval [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (24 to: 30) . #testMethod . RBRefactoryTestDataApp }).
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
+]
+
+{ #category : #'failure tests' }
+RBExtractMethodParametrizedTest >> testFailureExtract [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (53 to: 56) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
+]
+
+{ #category : #'failure tests' }
+RBExtractMethodParametrizedTest >> testFailureNonExistantSelector [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected [
 	| class refactoring |
@@ -179,10 +185,14 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected
 		andArguments: { (6 to: 36) . #foo . class }.
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #foo)
-			equals: (self parseMethod: 'foo [self foobar] value').
-	self assert: (class parseTreeForSelector: #foobar)
-			equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
+	
+	self 
+		assert: (class parseTreeForSelector: #foo)
+		equals: (self parseMethod: 'foo [self foobar] value').
+	
+	self
+		assert: (class parseTreeForSelector: #foobar)
+		equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
 ]
 
 { #category : #tests }
@@ -204,12 +214,6 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporaryAssigned [
 						parseMethod: 'foobar | bar temp | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')) |
 				((class parseTreeForSelector: #foobar) = (self
 						parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.'))
-]
-
-{ #category : #'failure tests' }
-RBExtractMethodParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }

@@ -18,19 +18,6 @@ RBExtractToTemporaryParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBExtractToTemporaryParametrizedTest >> testBadInterval [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ (24 to: 30) . 'asdf' . #testMethod . RBRefactoryTestDataApp }).
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ (14 to: 105) . 'asdf' . #testMethod1 . RBRefactoryTestDataApp }).
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ (61 to: 101) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testBadName [
 	self shouldFail:
 		(self createRefactoringWithArguments:
@@ -83,15 +70,28 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 ]
 
 { #category : #'failure tests' }
+RBExtractToTemporaryParametrizedTest >> testFailureBadInterval [
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			{ (24 to: 30) . 'asdf' . #testMethod . RBRefactoryTestDataApp }).
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			{ (14 to: 105) . 'asdf' . #testMethod1 . RBRefactoryTestDataApp }).
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			{ (61 to: 101) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
+RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
+	self shouldFail:
+		( self createRefactoringWithArguments:
+			{ (14 to: 23) . 'asdf' . #checkClass1: . RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testNoValidNameOfTemp [
 	self shouldFail:
 		(self createRefactoringWithArguments:
 			{ (51 to: 60) . 'collection' . #modifiesCollection . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBExtractToTemporaryParametrizedTest >> testNonExistantSelector [
-	self shouldFail:
-		( self createRefactoringWithArguments:
-			{ (14 to: 23) . 'asdf' . #checkClass1: . RBRefactoryTestDataApp })
 ]

@@ -22,14 +22,6 @@ RBExtractMethodAndOccurrencesParametrizedTest >> setUp [
 	model := self extractMethodTestData
 ]
 
-{ #category : #'failure tests' }
-RBExtractMethodAndOccurrencesParametrizedTest >> testBadInterval [
-	|class|
-	class := model classNamed: #MyClassA.
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: { (127 to: 136) . #myMethod . class })
-]
-
 { #category : #tests }
 RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAndOcurrences [
 	|class refactoring|
@@ -46,7 +38,10 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 		nextPutAll: '' (''.
 	self problemCount printOn: nameStream.
 	nameStream nextPut: $)').
-	self assert: (class parseTreeForSelector: #displayName) equals: (self parseMethod: 'displayName
+	
+	self 
+		assert: (class parseTreeForSelector: #displayName) 
+		equals: (self parseMethod: 'displayName
 
 	| nameStream string |
 	string := self name.
@@ -70,11 +65,17 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeForSelector: #extractedMethod) equals: (self parseMethod: 'extractedMethod
-	^ currentChar isLetter.').
-	self assert: (class parseTreeForSelector: #myMethod) equals: (self parseMethod: 'myMethod
 
-	| token |
+	self 
+		assert: (class parseTreeForSelector: #extractedMethod) 
+		equals: (self parseMethod: 'extractedMethod
+	^ currentChar isLetter.').
+
+	self 
+		assert: (class parseTreeForSelector: #myMethod) 
+		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #myMethod),
+
+'	| token |
 	token := (String new: 100) writeStream.
 	[ self extractedMethod ] whileTrue: [
 		token nextPut: currentChar.
@@ -86,13 +87,28 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	token := self extractedMethod.
 	token := self extractedMethod example.
 	^ token contents').
+	
+	
 	class := model classNamed: #MyClassB.
-	self assert: (class parseTreeForSelector: #exampleMethod) equals: (self parseMethod: 'exampleMethod
+	self assert: (class parseTreeForSelector: #exampleMethod) 
+	equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #exampleMethod),
 
-	^ self extractedMethod not').
+'	^ self extractedMethod not').
+	
+	
 	class := model classNamed: #MyClassC.
-	self assert: (class parseTreeForSelector: #methodWithArg:) equals: (self parseMethod: 'methodWithArg: anArg
+	self 
+		assert: (class parseTreeForSelector: #methodWithArg:) 
+		equals: (self parseMethod: (self methodSignatureStringForSymbol: #methodWithArg: withArgumentString: 'anArg'),
 
-	(self extractedMethod and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
+'	(self extractedMethod and: [ anArg isDecimal ]) ifTrue: [ ^ self ].
 	^ nil')
+]
+
+{ #category : #'failure tests' }
+RBExtractMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
+	|class|
+	class := model classNamed: #MyClassA.
+	self shouldFail: (self createRefactoringWithModel: model
+		andArguments: { (127 to: 136) . #myMethod . class })
 ]
