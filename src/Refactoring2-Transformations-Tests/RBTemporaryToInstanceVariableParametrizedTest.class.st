@@ -31,7 +31,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> constructor [
 { #category : #running }
 RBTemporaryToInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #'failure tests' }

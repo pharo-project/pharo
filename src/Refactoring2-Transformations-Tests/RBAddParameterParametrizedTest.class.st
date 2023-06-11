@@ -20,7 +20,7 @@ RBAddParameterParametrizedTest >> constructor [
 { #category : #running }
 RBAddParameterParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }

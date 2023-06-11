@@ -17,7 +17,7 @@ RBAddClassVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddClassVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }

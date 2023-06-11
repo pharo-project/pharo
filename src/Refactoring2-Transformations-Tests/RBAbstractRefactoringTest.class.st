@@ -81,7 +81,7 @@ RBAbstractRefactoringTest >> rbClass: anObject [
 { #category : #running }
 RBAbstractRefactoringTest >> setUp [
 	super setUp.
-	model := self defaultNamespace new
+	model := self defaultNamespaceClass new
 ]
 
 { #category : #'set up' }

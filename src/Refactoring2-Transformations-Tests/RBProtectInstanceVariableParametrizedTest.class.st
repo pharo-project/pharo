@@ -19,7 +19,7 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #'failure tests' }

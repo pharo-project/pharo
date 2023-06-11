@@ -20,7 +20,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> constructor [
 { #category : #running }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }

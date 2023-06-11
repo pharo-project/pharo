@@ -33,7 +33,7 @@ RBInlineMethodParametrizedTest >> testFailureBadInterval [
 RBInlineMethodParametrizedTest >> testFailureInlineMethodForSuperSendThatAlsoSendsSuper [
 
 	| refactoring |
-	model := self inlineMethodTestData.
+	model := self rbModelForInliningMethodTest.
 	refactoring := self createRefactoringWithArguments: {
 			               (102 to: 131).
 			               #executeNotifying:.
@@ -217,7 +217,7 @@ RBInlineMethodParametrizedTest >> testInlineMethod5 [
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineMethodForSuperSend [
 	| refactoring |
-	model := self inlineMethodTestData.
+	model := self rbModelForInliningMethodTest.
 	(model classNamed: #RBRenameVariableChange)
 		removeMethod: #executeNotifying:.
 	refactoring := self createRefactoringWithModel: model andArguments:

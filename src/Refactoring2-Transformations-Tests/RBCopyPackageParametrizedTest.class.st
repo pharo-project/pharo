@@ -56,7 +56,7 @@ RBCopyPackageParametrizedTest >> removePackageNamed: packageName [
 { #category : #running }
 RBCopyPackageParametrizedTest >> setUp [
 	super setUp.
-	model := self defaultNamespace new.
+	model := self defaultNamespaceClass new.
 	self
 		createPackageNamed: 'RefactoringSmallPackageForTest'
 		withClasses: #('RBFTTest1' 'RBFTTest2').

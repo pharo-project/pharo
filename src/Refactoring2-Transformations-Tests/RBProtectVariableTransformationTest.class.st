@@ -8,7 +8,7 @@ Class {
 RBProtectVariableTransformationTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
