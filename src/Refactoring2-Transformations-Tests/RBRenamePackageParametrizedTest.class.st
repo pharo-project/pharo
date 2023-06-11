@@ -29,6 +29,13 @@ RBRenamePackageParametrizedTest >> testFailureBadName [
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Core' })
 ]
 
+{ #category : #'failure tests' }
+RBRenamePackageParametrizedTest >> testFailureExistingPackage [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #'Refactoring-Tests-Core'. #'Refactoring-Tests-Changes' })
+]
+
 { #category : #tests }
 RBRenamePackageParametrizedTest >> testRenamePackage [
 	| refactoring aModel |

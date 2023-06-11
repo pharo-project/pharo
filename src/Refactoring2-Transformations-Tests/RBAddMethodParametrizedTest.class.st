@@ -43,11 +43,47 @@ RBAddMethodParametrizedTest >> testBadMethod [
 ]
 
 { #category : #'failure tests' }
+RBAddMethodParametrizedTest >> testFailureBadMethod [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'asdf ^super ^printString'.
+				 RBBasicLintRuleTestData.
+				 #( #accessing ) })
+]
+
+{ #category : #'failure tests' }
 RBAddMethodParametrizedTest >> testFailureExistingSelector [
 	self shouldFail: (self createRefactoringWithArguments:
 		{'printString ^super printString' .
 		RBBasicLintRuleTestData .
 		#(#accessing )})
+]
+
+{ #category : #'failure tests' }
+RBAddMethodParametrizedTest >> testFailureModelExistingSelector [
+
+	self
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 'classVarName1 ^super printString'.
+						 (model classNamed: #Bar).
+						 #( #accessing ) });
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 'printString ^super printString'.
+						 (model classNamed: #Bar).
+						 { #accessing } })
+]
+
+{ #category : #'failure tests' }
+RBAddMethodParametrizedTest >> testFailureModelInheritedSelector [
+
+	| refactoring |
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               'printString ^super printString'.
+				               (model classNamed: #Bar).
+				               #( #accessing ) }.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }

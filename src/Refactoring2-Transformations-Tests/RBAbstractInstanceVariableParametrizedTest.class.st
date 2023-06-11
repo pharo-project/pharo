@@ -92,6 +92,20 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithDefaultNamesUsed [
 ]
 
 { #category : #'failure tests' }
+RBAbstractInstanceVariableParametrizedTest >> testFailureInheritedName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'name'. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBAbstractInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testInheritedName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{'name' . #RBBasicLintRuleTestData})

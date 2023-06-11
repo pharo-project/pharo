@@ -21,6 +21,24 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest >> testEqualsVariables [
 ]
 
 { #category : #'failure tests' }
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureEqualsVariables [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'classBlock'.
+				 'classBlock'.
+				 RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureNonExistingVariable [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'classBlock'.
+				 'anInstVar1'.
+				 RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testNonExistingVariable [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ 'classBlock' . 'anInstVar1' . RBBasicLintRuleTestData })

@@ -18,6 +18,41 @@ RBSplitClassParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
+RBSplitClassParametrizedTest >> testFailureInvalidInstanceVariableName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBBasicLintRuleTestData.
+				 #( #inexistentVar #classBlock ).
+				 #Object.
+				 #blocks })
+]
+
+{ #category : #'failure tests' }
+RBSplitClassParametrizedTest >> testFailureInvalidNewClassName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBBasicLintRuleTestData.
+				 #( #methodBlock #classBlock ).
+				 #Object.
+				 #blocks })
+]
+
+{ #category : #'failure tests' }
+RBSplitClassParametrizedTest >> testFailureInvalidReferenceVariableName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBLintRuleTestData.
+				 #( #name #foo1 ).
+				 #ClassA.
+				 #result }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBLintRuleTestData.
+				 #( #name #foo1 ).
+				 #ClassA.
+				 #temp })
+]
+
+{ #category : #'failure tests' }
 RBSplitClassParametrizedTest >> testInvalidInstanceVariableName [
 	self shouldFail:
 		(self createRefactoringWithArguments:

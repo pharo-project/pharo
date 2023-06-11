@@ -16,6 +16,15 @@ RBInlineMethodFromComponentParametrizedTest >> constructor [
 	^ #inline:inMethod:forClass:
 ]
 
+{ #category : #'failure tests' }
+RBInlineMethodFromComponentParametrizedTest >> testFailureInlineMethodFromComponentFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (50 to: 64).
+				 #inlineFailed.
+				 RBRefactoryTestDataApp })
+]
+
 { #category : #tests }
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |

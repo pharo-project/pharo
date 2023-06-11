@@ -34,6 +34,34 @@ RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArg
 	] ]
 ]
 
+{ #category : #'failure tests' }
+RBRemoveMethodParametrizedTest >> testFailureRemoveNonExistingMethod [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArgumentsColl: #( #nonExistingMethod )
+			 andOtherArgs: { #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBRemoveMethodParametrizedTest >> testFailureRemoveReferenced [
+
+	self shouldWarn: (self
+			 createRefactoringWithModel: model
+			 andArgumentsColl: #( #checkClass: )
+			 andOtherArgs: { #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBRemoveMethodParametrizedTest >> testFailureRemoveSameMethodButSendsSuper [
+
+	<expectedFailure>
+	self shouldWarn: (self
+			 createRefactoringWithModel: model
+			 andArgumentsColl: #( #new )
+			 andOtherArgs: { #'RBBasicLintRuleTestData class' })
+]
+
 { #category : #tests }
 RBRemoveMethodParametrizedTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
 	| class otherClass |

@@ -83,6 +83,16 @@ RBExtractToTemporaryParametrizedTest >> testFailureBadName [
 ]
 
 { #category : #'failure tests' }
+RBExtractToTemporaryParametrizedTest >> testFailureNoValidNameOfTemp [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (51 to: 60).
+				 'collection'.
+				 #modifiesCollection.
+				 RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail:
 		( self createRefactoringWithArguments:

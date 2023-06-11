@@ -18,6 +18,38 @@ RBRemoveClassParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
+
+	| class |
+	class := ('RBTransformation' , 'RuleTestData1') asSymbol.
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: { class })
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRemoveClassWithBadNameRaisesRBRefactoringError [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: #( #RecursiveSelfRule ))
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRemoveClassWithReferencesRaisesRBRefactoringError [
+
+	self shouldWarn: (self
+			 createRefactoringWithModel: model
+			 andArguments: #( #RBBasicLintRuleTestData ))
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRemoveClassWithSubclasses [
+
+	self shouldFail:
+		(self createRefactoringWithArguments: { #RBFooLintRuleTestData1 })
+]
+
+{ #category : #'failure tests' }
 RBRemoveClassParametrizedTest >> testRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
 	|class|
 	class := ('RBTransformation', 'RuleTestData1') asSymbol.

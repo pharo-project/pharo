@@ -62,3 +62,15 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self shouldFail: refactoring
 ]
+
+{ #category : #'failure tests' }
+RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadMethodName [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               (36 to: 56).
+			               #testExample7.
+			               RBData2Test }.
+	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
+	self shouldFail: refactoring
+]

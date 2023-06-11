@@ -42,6 +42,22 @@ RBAddVariableAccessorsParametrizedTest >> testExistingInstanceVariableAccessors 
 	self assertEmpty: refactoring changes changes
 ]
 
+{ #category : #'failure tests' }
+RBAddVariableAccessorsParametrizedTest >> testFailureNonExistantClassVariable [
+
+	self shouldFail:
+		(rbClass classVariable: 'Foo' class: #RBBasicLintRuleTestData)
+			asRefactoring
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsParametrizedTest >> testFailureNonExistantInstanceVariable [
+
+	self shouldFail:
+		(rbClass instanceVariable: 'foo' class: #RBBasicLintRuleTestData)
+			asRefactoring
+]
+
 { #category : #tests }
 RBAddVariableAccessorsParametrizedTest >> testNewClassVariableAccessors [
 	| refactoring class |

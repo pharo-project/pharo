@@ -16,6 +16,16 @@ RBInlineAllMethodParametrizedTest >> constructor [
 	^ #sendersOf:in:
 ]
 
+{ #category : #'failure tests' }
+RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSelectorInClass [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               #caller3.
+			               RBRefactoryTestDataApp }.
+	self shouldFail: refactoring
+]
+
 { #category : #tests }
 RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	| class superclass |

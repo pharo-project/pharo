@@ -17,6 +17,50 @@ RBPushDownMethodParametrizedTest >> constructor [
 	^ #pushDown:from:
 ]
 
+{ #category : #'failure tests' }
+RBPushDownMethodParametrizedTest >> testFailurePushDownMethodOnNonAbstractClass [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               #( #isArray ).
+			               Array }.
+	self shouldFail: refactoring asRefactoring
+]
+
+{ #category : #'failure tests' }
+RBPushDownMethodParametrizedTest >> testFailurePushDownMethodSubclassesReferToSelector [
+
+	| refactoring |
+	model defineClass:
+		'Object << #Superclass package: #''Refactory-Test data'''.
+	model defineClass:
+		'Superclass << #Foo1 package: #''Refactory-Test data'''.
+	model defineClass:
+		'Superclass << #Foo2 package: #''Refactory-Test data'''.
+	(model classNamed: #Superclass)
+		compile: 'yourself ^1'
+		classified: #( #accessing ).
+	(model classNamed: #Foo1)
+		compile: 'method1 ^super yourself'
+		classified: #( #accessing ).
+
+	refactoring := rbClass
+		               model: model
+		               pushDown: #( #yourself )
+		               from: (model classNamed: #Superclass).
+	self shouldFail: refactoring asRefactoring
+]
+
+{ #category : #'failure tests' }
+RBPushDownMethodParametrizedTest >> testFailurePushDownNonExistantMenu [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               #( #someMethodThatDoesNotExist ).
+			               RBLintRuleTestData }.
+	self shouldFail: refactoring asRefactoring
+]
+
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethod [
 	| refactoring class |

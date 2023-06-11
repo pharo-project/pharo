@@ -49,6 +49,35 @@ RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
 ]
 
 { #category : #'failure tests' }
+RBAbstractClassVariableParametrizedTest >> testFailureInheritedName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #DependentsFields. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBAbstractClassVariableParametrizedTest >> testFailureInvalidClass [
+
+	self shouldFail:
+		(self createRefactoringWithArguments: { #DependentsFields.
+		 #Object })
+]
+
+{ #category : #'failure tests' }
+RBAbstractClassVariableParametrizedTest >> testFailureMetaClassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #RecursiveSelfRule. #'RBTransformationRuleTestData class' })
+]
+
+{ #category : #'failure tests' }
+RBAbstractClassVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #Foo. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testInheritedName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{#DependentsFields . #RBBasicLintRuleTestData})

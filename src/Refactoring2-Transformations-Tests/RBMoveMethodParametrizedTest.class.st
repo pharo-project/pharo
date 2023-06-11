@@ -17,6 +17,22 @@ RBMoveMethodParametrizedTest >> constructor [
 	^ #selector:class:variable:
 ]
 
+{ #category : #'failure tests' }
+RBMoveMethodParametrizedTest >> testFailureMovePrimitiveMethod [
+
+	| refactoring |
+	(model classNamed: #Object)
+		compile: 'foo <primitive: 100> ^#() primitiveFailed'
+		classified: #( #accessing ).
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               #foo.
+				               Object.
+				               'OrderedCollection' }.
+	self shouldFail: refactoring
+]
+
 { #category : #tests }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	| refactoring class |

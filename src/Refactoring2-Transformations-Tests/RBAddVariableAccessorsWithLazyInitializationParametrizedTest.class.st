@@ -62,6 +62,42 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInst
 		equals: (self parseMethod: 'name ^name ifNil: [name := nil]')
 ]
 
+{ #category : #'failure tests' }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadInitializationCode [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'Foo1'.
+				 RBLintRuleTestData.
+				 true.
+				 'foo:' })
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadInitializationCode1 [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'Foo1'.
+				 RBLintRuleTestData.
+				 true.
+				 '''string' })
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureNonExistantName [
+
+	self
+		shouldFail: (self createRefactoringWithArguments: {
+						 #Foo.
+						 RBBasicLintRuleTestData.
+						 true.
+						 nil });
+		shouldFail: (self createRefactoringWithArguments: {
+						 'foo'.
+						 RBBasicLintRuleTestData.
+						 true.
+						 nil })
+]
+
 { #category : #tests }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVariableAccessors [
 	| ref class |

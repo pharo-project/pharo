@@ -24,6 +24,29 @@ RBRenameInstanceVariableParametrizedTest >> testAlreadyExistingName [
 ]
 
 { #category : #'failure tests' }
+RBRenameInstanceVariableParametrizedTest >> testFailureAlreadyExistingName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'classBlock'. 'name'. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBRenameInstanceVariableParametrizedTest >> testFailureMetaclassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RecursiveSelfRule.
+				 #Foo.
+				 RBTransformationRuleTestData class name })
+]
+
+{ #category : #'failure tests' }
+RBRenameInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. 'newFoo'. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
 RBRenameInstanceVariableParametrizedTest >> testMetaclassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments:

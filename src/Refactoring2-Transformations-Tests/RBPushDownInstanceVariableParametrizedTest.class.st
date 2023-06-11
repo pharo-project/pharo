@@ -14,6 +14,13 @@ RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : #'failure tests' }
+RBPushDownInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
 	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
