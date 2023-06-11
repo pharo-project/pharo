@@ -58,16 +58,12 @@ RBAbstractEnvTestCase >> abstractVariableTestData [
 	newModel := self defaultNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 
-	#('Object subclass: #Foo
-		instanceVariableNames: ''instVarName1 instVarName2''
-		classVariableNames: ''ClassVarName1 ClassVarName2 ''
-		poolDictionaries: ''''
-		category: ''Testing'' '
-	'Foo subclass: #Bar
-		instanceVariableNames: ''''
-		classVariableNames: ''''
-		poolDictionaries: ''''
-		category: ''Testing'' '
+	#('Object << #Foo
+		slots: { #instVarName1 . #instVarName2};
+		sharedVariables: { #ClassVarName1 . #ClassVarName2 };
+		package: ''Testing'' '
+	'Foo << #Bar
+		package: ''Testing'' '
 	) do: [ :each | newModel defineClass: each ].
 
 	#(#(#Bar #(
@@ -137,34 +133,40 @@ RBAbstractEnvTestCase >> childrenToSiblingTestData [
 											sum]))
 						not)
 		name: ''Test''.
-#(''ConcreteSuperclass subclass: #NoMoveSubclass
-	instanceVariableNames: ''''''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Testing'''''' ''Object subclass: #ConcreteSuperclass
-	instanceVariableNames: ''''instVarName1 instVarName2 ''''
-	classVariableNames: ''''ClassVarName1 ClassVarName2 ''''
-	poolDictionaries: ''''''''
-	category: ''''Testing'''''' ''ConcreteSuperclass subclass: #ConcreteSubclass
-	instanceVariableNames: ''''''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Testing'''''')
+#(
+''ConcreteSuperclass << #NoMoveSubclass
+	package: ''''Testing'''''' 
+
+''Object << #ConcreteSuperclass
+	slots: {#instVarName1 . #instVarName2}; 
+	sharedVariables: { #ClassVarName1 . #ClassVarName2}; 
+	package: ''''Testing'''''' 
+	
+''ConcreteSuperclass << #ConcreteSubclass
+	package: ''''Testing'''''')
 	do: [:each | m defineClass: each].
 (m metaclassNamed: #ConcreteSuperclass)
 	addInstanceVariable: ''classInstVarName1''.
 #(#(#ConcreteSubclass #(#(''initialize
 	super initialize.
 	instVarName1 := nil'' #everyone) #(''different
-	^0'' #everyone))) #(#ConcreteSuperclass #(#(''same
+	^0'' #everyone))) 
+	
+	#(#ConcreteSuperclass #(#(''same
 	^self initialize isKindOf: ConcreteSuperclass'' #''one def'') #(''different
 	^instVarName1 + instVarName2'' #everyone) #(''initialize
-	instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0'' #everyone))) #(#NoMoveSubclass #(#(''same
-	^123'' #''one def''))) #(''ConcreteSubclass class'' #(#(''bar
-	^self storeString'' #testing))) #(''ConcreteSuperclass class'' #(#(''foo
+	instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0'' #everyone))) 
+	
+	#(#NoMoveSubclass #(#(''same
+	^123'' #''one def''))) 
+	#(''ConcreteSubclass class'' #(#(''bar
+	^self storeString'' #testing))) 
+	#(''ConcreteSuperclass class'' #(#(''foo
 	^classInstVarName1 + ClassVarName1 + ClassVarName2'' #testing) #(''new
-	^super new initialize'' #testing) #(''bar
-	^self printString'' #testing))) #(''NoMoveSubclass class'' #()))
+	^super new initialize'' #testing) 
+	#(''bar
+	^self printString'' #testing))) 
+	#(''NoMoveSubclass class'' #()))
 	do:
 		[:each |
 		| class |
@@ -200,7 +202,7 @@ RBAbstractEnvTestCase >> extractMethodTestData [
 
 	#('Object << #MyClassA
 		slots: { #instVarName1 . #instVarName2};
-		sharedVariables: { ClassVarName1 . ClassVarName2};
+		sharedVariables: { #ClassVarName1 . #ClassVarName2};
 		package: ''Testing'' '
 	'MyClassA << #MyClassB
 		package: ''Testing'' '
@@ -307,32 +309,31 @@ RBAbstractEnvTestCase >> inlineMethodTestData [
 											sum]))
 						not)
 		name: ''Test''.
-#(''Object subclass: #RBRefactoryChange
-	instanceVariableNames: ''''name ''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Refactory-Support'''''' ''RBRefactoryChange subclass: #RBCompositeRefactoryChange
-	instanceVariableNames: ''''changes ''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Refactory-Support'''''' ''RBCompositeRefactoryChange subclass: #RBVariableCompositeRefactoryChange
-	instanceVariableNames: ''''className isMeta ''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Refactory-Support'''''' ''RBVariableCompositeRefactoryChange subclass: #RBRenameVariableChange
-	instanceVariableNames: ''''oldName newName ''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Refactory-Support'''''' ''RBRenameVariableChange subclass: #RBRenameClassVariableChange
-	instanceVariableNames: ''''''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Refactory-Support'''''' ''RBRenameVariableChange subclass: #RBRenameInstanceVariableChange
-	instanceVariableNames: ''''''''
-	classVariableNames: ''''''''
-	poolDictionaries: ''''''''
-	category: ''''Refactory-Support'''''')
+#(
+
+''Object << #RBRefactoryChange
+	slots: {#name};
+	package: ''''Refactory-Support'''''' 
+	
+''RBRefactoryChange << #RBCompositeRefactoryChange
+	slots: { #changes };
+	package: ''''Refactory-Support'''''' 
+
+''RBCompositeRefactoryChange << #RBVariableCompositeRefactoryChange
+	slots: { #className . #isMeta };
+	package: ''''Refactory-Support'''''' 
+	
+''RBVariableCompositeRefactoryChange << #RBRenameVariableChange
+	slots: { #oldName .  #newName};
+	package: ''''Refactory-Support'''''' 
+
+''RBRenameVariableChange << #RBRenameClassVariableChange
+	package: ''''Refactory-Support'''''' 
+	
+''RBRenameVariableChange << #RBRenameInstanceVariableChange
+	package: ''''Refactory-Support'''''')
 	do: [:each | m defineClass: each].
+	
 #(#(#RBRenameClassVariableChange #(#(''removeOldVariable
 	(RBRemoveClassVariableChange remove: oldName from: self changeClass) execute'' #private) #(''addNewVariable
 	(RBAddClassVariableChange add: newName to: self changeClass) execute'' #private) #(''executeNotifying: aBlock
