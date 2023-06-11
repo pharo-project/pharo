@@ -82,7 +82,7 @@ RBDummyLintRuleTest >> isEmpty [
 
 { #category : #testing }
 RBDummyLintRuleTest >> junk [
-	^ RBDummyRefactoryTestDataApp printString
+	^ RBRefactoryTestDataApp printString
 		copyFrom: 1
 		to: CR
 ]
