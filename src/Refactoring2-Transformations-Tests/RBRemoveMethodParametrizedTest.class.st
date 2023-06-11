@@ -86,11 +86,11 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 	selectors := Array with: 'selectorNotReferenced' asSymbol.
 	refactoring := self createRefactoringWithModel: model
 		andArgumentsColl: selectors
-		andOtherArgs: { #RBRefactoryTestDataApp }.
+		andOtherArgs: { #RBClassDataForRefactoringTest }.
 
 	selectors do: [ :symbol |
 		self assert:
-			(( model classNamed: #RBRefactoryTestDataApp)
+			(( model classNamed: #RBClassDataForRefactoringTest)
 				directlyDefinesMethod: symbol).
 	].
 
@@ -98,7 +98,7 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 
 	selectors do: [ :symbol |
 		self deny:
-			(( model classNamed: #RBRefactoryTestDataApp)
+			(( model classNamed: #RBClassDataForRefactoringTest)
 				directlyDefinesMethod: symbol)
 	]
 ]

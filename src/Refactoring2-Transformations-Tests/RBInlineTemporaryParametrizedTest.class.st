@@ -23,7 +23,7 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryBadInterval [
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (29 to: 100).
 				 #moveDefinition.
-				 RBRefactoryTestDataApp })
+				 RBClassDataForRefactoringTest })
 ]
 
 { #category : #'failure tests' }
@@ -32,7 +32,7 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryMutlipleAssignmen
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (58 to: 81).
 				 #moveDefinition.
-				 RBRefactoryTestDataApp })
+				 RBClassDataForRefactoringTest })
 ]
 
 { #category : #'failure tests' }
@@ -41,18 +41,18 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryReadBeforeWritten
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (48 to: 56).
 				 #inlineTemporary.
-				 RBRefactoryTestDataApp })
+				 RBClassDataForRefactoringTest })
 ]
 
 { #category : #tests }
 RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (24 to: 72) . #inlineMethod . RBRefactoryTestDataApp }.
+		{ (24 to: 72) . #inlineMethod . RBClassDataForRefactoringTest }.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMethod) equals: (self parseMethod: 'inlineMethod
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMethod) equals: (self parseMethod: 'inlineMethod
 										^self
 													foo;
 													inlineMethod;

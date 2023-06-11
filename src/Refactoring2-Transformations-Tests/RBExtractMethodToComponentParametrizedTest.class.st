@@ -52,7 +52,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 { #category : #'failure tests' }
 RBExtractMethodToComponentParametrizedTest >> testFailureBadInterval [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ (24 to: 30) . #testMethod . RBRefactoryTestDataApp }).
+		{ (24 to: 30) . #testMethod . RBClassDataForRefactoringTest }).
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
 ]

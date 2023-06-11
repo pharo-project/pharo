@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 RBTestAsDataForExtractSetupTransformationTest >> accessToAClass [
-	RBRefactoryTestDataApp new
+	RBClassDataForRefactoringTest new
 ]
 
 { #category : #tests }

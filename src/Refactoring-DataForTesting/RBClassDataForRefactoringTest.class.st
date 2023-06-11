@@ -1,5 +1,5 @@
 Class {
-	#name : #RBRefactoryTestDataApp,
+	#name : #RBClassDataForRefactoringTest,
 	#superclass : #Object,
 	#instVars : [
 		'temporaryVariable'
@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #lint }
-RBRefactoryTestDataApp >> asOrderedCollectionNotNeeded [
+RBClassDataForRefactoringTest >> asOrderedCollectionNotNeeded [
 	self foo addAll: (1 to: 10) asOrderedCollection
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> assignmentInBlock [
+RBClassDataForRefactoringTest >> assignmentInBlock [
 	[^self printString] ensure: [self close]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> assignmentInIfTrue [
+RBClassDataForRefactoringTest >> assignmentInIfTrue [
 	| variable |
 	self isVariable
 		ifTrue: [variable := self]
@@ -27,7 +27,7 @@ RBRefactoryTestDataApp >> assignmentInIfTrue [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> atIfAbsent [
+RBClassDataForRefactoringTest >> atIfAbsent [
 	^ Smalltalk at: #MyTest
 		ifAbsent:
 			[| collection |
@@ -36,27 +36,27 @@ RBRefactoryTestDataApp >> atIfAbsent [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> badMessage [
+RBClassDataForRefactoringTest >> badMessage [
 	self become: String new
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> booleanPrecedence [
+RBClassDataForRefactoringTest >> booleanPrecedence [
 	^true & 4 = 45
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> callFoo [
+RBClassDataForRefactoringTest >> callFoo [
 	^self testFoo: 5
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> callMethod [
+RBClassDataForRefactoringTest >> callMethod [
 	^self renameThisMethod: 5
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> called: anObject on1: aBlock [
+RBClassDataForRefactoringTest >> called: anObject on1: aBlock [
 	| each |
 	each := anObject printString.
 	Transcript
@@ -66,7 +66,7 @@ RBRefactoryTestDataApp >> called: anObject on1: aBlock [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> called: anObject on: aBlock [
+RBClassDataForRefactoringTest >> called: anObject on: aBlock [
 	Transcript
 		show: anObject printString;
 		cr.
@@ -74,7 +74,7 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> caller [
+RBClassDataForRefactoringTest >> caller [
 	| anObject |
 	anObject := 5.
 	self
@@ -83,7 +83,7 @@ RBRefactoryTestDataApp >> caller [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> caller1 [
+RBClassDataForRefactoringTest >> caller1 [
 	| anObject |
 	anObject := 5.
 	self called: anObject + 1
@@ -94,22 +94,22 @@ RBRefactoryTestDataApp >> caller1 [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> caller2 [
+RBClassDataForRefactoringTest >> caller2 [
 	^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> collectSelectNotUsed [
+RBClassDataForRefactoringTest >> collectSelectNotUsed [
 	(1 to: 10) select: [:each | each = 4]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> collectionMessagesToExternalObject [
+RBClassDataForRefactoringTest >> collectionMessagesToExternalObject [
 	self someObject collection remove: 10
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> collectionProtocol [
+RBClassDataForRefactoringTest >> collectionProtocol [
 	| newCollection |
 	newCollection := OrderedCollection new.
 	(1 to: 10) asOrderedCollection do:
@@ -121,28 +121,28 @@ RBRefactoryTestDataApp >> collectionProtocol [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> consistencyCheck [
+RBClassDataForRefactoringTest >> consistencyCheck [
 	^(1 to: 10) size > 0
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> contains [
+RBClassDataForRefactoringTest >> contains [
 	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> cruft [
+RBClassDataForRefactoringTest >> cruft [
 	<haltOrBreakpointForTesting>
 	self halt
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> demoExampleCall [
+RBClassDataForRefactoringTest >> demoExampleCall [
 	^ self demoRenameMethod: 1 PermuteArgs: 2
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> demoMethodWithDuplicates [
+RBClassDataForRefactoringTest >> demoMethodWithDuplicates [
 	| a b result1 result2 answer |
 	a := 3.
 	b := a + 5.
@@ -153,19 +153,19 @@ RBRefactoryTestDataApp >> demoMethodWithDuplicates [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> demoRenameMethod: arg1 PermuteArgs: arg2 [
+RBClassDataForRefactoringTest >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1.
 	self do: arg2.
 	^ arg1 > arg2
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> detectContains [
+RBClassDataForRefactoringTest >> detectContains [
 	^(1 to: 10) do: [:each | each > 2 ifTrue: [^each]]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> endTrueFalse [
+RBClassDataForRefactoringTest >> endTrueFalse [
 	self isVariable
 		ifTrue:
 			[self printString.
@@ -176,7 +176,7 @@ RBRefactoryTestDataApp >> endTrueFalse [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> equalNotUsed [
+RBClassDataForRefactoringTest >> equalNotUsed [
 	| string |
 	string = '' yourself.
 	(1 to: 10) do: [:i | string := i printString].
@@ -184,23 +184,23 @@ RBRefactoryTestDataApp >> equalNotUsed [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> equalsTrue [
+RBClassDataForRefactoringTest >> equalsTrue [
 	^true == self
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> exampleCall [
+RBClassDataForRefactoringTest >> exampleCall [
 	<sampleInstance>
 	^self rename: 1 two: 2
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> extraBlock [
+RBClassDataForRefactoringTest >> extraBlock [
 	^[:arg | arg + 43] value: 45
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> fileBlocks [
+RBClassDataForRefactoringTest >> fileBlocks [
 	| file |
 	^
 	[file := 'asdf' asFileReference readStream.
@@ -208,17 +208,17 @@ RBRefactoryTestDataApp >> fileBlocks [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> foo: aValue [
+RBClassDataForRefactoringTest >> foo: aValue [
 	^(1 to: 10) inject: aValue into: [:sum :each | sum + each]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> fullBlocks [
+RBClassDataForRefactoringTest >> fullBlocks [
 	^[thisContext]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> guardingClause [
+RBClassDataForRefactoringTest >> guardingClause [
 	self isSymbol
 		ifFalse:
 			[self printString.
@@ -226,18 +226,18 @@ RBRefactoryTestDataApp >> guardingClause [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> ifTrueReturns [
+RBClassDataForRefactoringTest >> ifTrueReturns [
 	self isSymbol ifFalse: [^true].
 	^false
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> inlineBar: aSymbol [
+RBClassDataForRefactoringTest >> inlineBar: aSymbol [
 	^aSymbol isSymbol
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> inlineComponent [
+RBClassDataForRefactoringTest >> inlineComponent [
 	| a |
 	a := 5.
 	^a class
@@ -247,7 +247,7 @@ RBRefactoryTestDataApp >> inlineComponent [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> inlineFailed [
+RBClassDataForRefactoringTest >> inlineFailed [
 	| x y q |
 	x := 5.
 	y := 10.
@@ -256,7 +256,7 @@ RBRefactoryTestDataApp >> inlineFailed [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> inlineFoo: aBlock [
+RBClassDataForRefactoringTest >> inlineFoo: aBlock [
 	| bar baz asdf |
 	bar := aBlock value: self.
 	baz := bar + bar.
@@ -265,7 +265,7 @@ RBRefactoryTestDataApp >> inlineFoo: aBlock [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> inlineJunk [
+RBClassDataForRefactoringTest >> inlineJunk [
 	| asdf |
 	asdf := self inlineFoo:
 					[:each |
@@ -280,12 +280,12 @@ RBRefactoryTestDataApp >> inlineJunk [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> inlineLast [
+RBClassDataForRefactoringTest >> inlineLast [
 	5 = 3 ifTrue: [^self caller] ifFalse: [^self caller2]
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> inlineMax [
+RBClassDataForRefactoringTest >> inlineMax [
 	| x y q |
 	x := 5.
 	y := 10.
@@ -294,7 +294,7 @@ RBRefactoryTestDataApp >> inlineMax [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> inlineMethod [
+RBClassDataForRefactoringTest >> inlineMethod [
 	| temp |
 	temp := self
 				foo;
@@ -304,29 +304,29 @@ RBRefactoryTestDataApp >> inlineMethod [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> inlineParameterMethod: aSymbol [
+RBClassDataForRefactoringTest >> inlineParameterMethod: aSymbol [
 	^aSymbol isSymbol
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> inlineTemporary [
+RBClassDataForRefactoringTest >> inlineTemporary [
 	| temp |
 	self isNil ifTrue: [temp := 4].
 	^temp
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> justSendsSuper [
+RBClassDataForRefactoringTest >> justSendsSuper [
 	super justSendsSuper
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> literalArrayCharacters [
+RBClassDataForRefactoringTest >> literalArrayCharacters [
 	^#($a $b $c) includes: $a
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> literalArrayWithTrueFalseOrNil [
+RBClassDataForRefactoringTest >> literalArrayWithTrueFalseOrNil [
 	| a b c |
 	a := #(true false nil).
 	b := #(#true #false #nil).
@@ -335,7 +335,7 @@ RBRefactoryTestDataApp >> literalArrayWithTrueFalseOrNil [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> literalArrayWithTrueFalseOrNil2 [
+RBClassDataForRefactoringTest >> literalArrayWithTrueFalseOrNil2 [
 	| b c |
 	b := #(#true #false #nil).
 	c := #(#true (#true #false #nil) #false #nil).
@@ -343,7 +343,7 @@ RBRefactoryTestDataApp >> literalArrayWithTrueFalseOrNil2 [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> longMethods [
+RBClassDataForRefactoringTest >> longMethods [
 	self printString.
 	self printString.
 	self isVariable ifTrue: [self printString].
@@ -353,7 +353,7 @@ RBRefactoryTestDataApp >> longMethods [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> minMax [
+RBClassDataForRefactoringTest >> minMax [
 	"Bug in 3<5 ifTrue: [3]  ifFalse: [5]"
 
 ^3<5 ifTrue: [3]  ifFalse: [5]
@@ -364,7 +364,7 @@ RBRefactoryTestDataApp >> minMax [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> missingYourself [
+RBClassDataForRefactoringTest >> missingYourself [
 	^(OrderedCollection new)
 		add: 1;
 		add: 2;
@@ -372,7 +372,7 @@ RBRefactoryTestDataApp >> missingYourself [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> modifiesCollection [
+RBClassDataForRefactoringTest >> modifiesCollection [
 	| collection |
 	collection := (1 to: 10) asOrderedCollection.
 	collection do: [:each | each > 5 ifTrue: [collection remove: each]].
@@ -380,7 +380,7 @@ RBRefactoryTestDataApp >> modifiesCollection [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> moveDefinition [
+RBClassDataForRefactoringTest >> moveDefinition [
 	| temp |
 	^(self collect:
 			[:each |
@@ -393,13 +393,13 @@ RBRefactoryTestDataApp >> moveDefinition [
 ]
 
 { #category : #inline }
-RBRefactoryTestDataApp >> multipleCalls [
+RBClassDataForRefactoringTest >> multipleCalls [
 	self caller2.
 	self caller2
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> noMoveDefinition [
+RBClassDataForRefactoringTest >> noMoveDefinition [
 	| temp |
 	^(self collect:
 			[:each |
@@ -409,12 +409,12 @@ RBRefactoryTestDataApp >> noMoveDefinition [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> precedence [
+RBClassDataForRefactoringTest >> precedence [
 	^self isArray ifFalse: [self block + 5 * 34] ifTrue: [self printString = 10]
 ]
 
 { #category : #accessing }
-RBRefactoryTestDataApp >> referencesConditionFor: aClass [
+RBClassDataForRefactoringTest >> referencesConditionFor: aClass [
 	| environment association |
 	^(RBCondition withBlock:
 			[association := Smalltalk globals associationAt: aClass name
@@ -428,27 +428,27 @@ RBRefactoryTestDataApp >> referencesConditionFor: aClass [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> refersToClass [
-	^ RBRefactoryTestDataApp
+RBClassDataForRefactoringTest >> refersToClass [
+	^ RBClassDataForRefactoringTest
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> release [
+RBClassDataForRefactoringTest >> release [
 	self printString
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> rename: this two: argumentMethod [
+RBClassDataForRefactoringTest >> rename: this two: argumentMethod [
 	^self printString , this , argumentMethod
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> renameThisMethod: anArg [
+RBClassDataForRefactoringTest >> renameThisMethod: anArg [
 	^self
 ]
 
 { #category : #rendering }
-RBRefactoryTestDataApp >> renderContentOn: html [
+RBClassDataForRefactoringTest >> renderContentOn: html [
 	html
 		form: [ html text: 'Name:'.
 			html textInput on: #name of: self contact.
@@ -469,53 +469,53 @@ RBRefactoryTestDataApp >> renderContentOn: html [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> returnInEnsure [
+RBClassDataForRefactoringTest >> returnInEnsure [
 	[self error: 'asdf'] ensure: [^4]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> returnsBooleanAndOther [
+RBClassDataForRefactoringTest >> returnsBooleanAndOther [
 	self isVariable ifTrue: [^false].
 	self printString
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> returnsIfTrue [
+RBClassDataForRefactoringTest >> returnsIfTrue [
 	^self isNil ifTrue: [4]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> searchingLiteral [
+RBClassDataForRefactoringTest >> searchingLiteral [
 	^self printString = #a or: [#() = self printString | ( #() == self printString)]
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> selectorNotReferenced [
+RBClassDataForRefactoringTest >> selectorNotReferenced [
 	^self selectorNotReferenced + 4
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> sendInlineBar [
+RBClassDataForRefactoringTest >> sendInlineBar [
 	^ self inlineBar: #example1
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> sendInlineBar2 [
+RBClassDataForRefactoringTest >> sendInlineBar2 [
 	^ self inlineBar: 'example2'
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> sendInlineParameterMethod [
+RBClassDataForRefactoringTest >> sendInlineParameterMethod [
 	^self inlineParameterMethod: #(#asdf)
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> sendsDifferentSuper [
+RBClassDataForRefactoringTest >> sendsDifferentSuper [
 	super printString
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> sizeCheck [
+RBClassDataForRefactoringTest >> sizeCheck [
 	self isEmpty
 		ifFalse: [self do:
 					[:each |
@@ -525,7 +525,7 @@ RBRefactoryTestDataApp >> sizeCheck [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> stringConcatenation [
+RBClassDataForRefactoringTest >> stringConcatenation [
 	| string |
 	string := '' yourself.
 	(1 to: 10) do: [:i | string := string , i printString].
@@ -533,59 +533,59 @@ RBRefactoryTestDataApp >> stringConcatenation [
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> symbolReference [
+RBClassDataForRefactoringTest >> symbolReference [
 	^#(#renameThisMethod: #(4 #renameThisMethod:))
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> tempVarOverridesInstVar [
+RBClassDataForRefactoringTest >> tempVarOverridesInstVar [
 	| temporaryVariable |
 	temporaryVariable := 4.
 	^temporaryVariable
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> tempsReadBeforeWritten [
+RBClassDataForRefactoringTest >> tempsReadBeforeWritten [
 	| temp |
 	self isVariable ifTrue: [temp := 4].
 	^temp
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> testFoo: anObject [
+RBClassDataForRefactoringTest >> testFoo: anObject [
 	^self class + anObject
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> testMethod [
+RBClassDataForRefactoringTest >> testMethod [
 	^self class
 ]
 
 { #category : #tests }
-RBRefactoryTestDataApp >> testMethod1 [
+RBClassDataForRefactoringTest >> testMethod1 [
 	^self testMethod1
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))
 ]
 
 { #category : #rendering }
-RBRefactoryTestDataApp >> textInput: html name: aString symbol: aSymbol [
+RBClassDataForRefactoringTest >> textInput: html name: aString symbol: aSymbol [
 	html text: aString.
 	html textInput on: aSymbol of: self contact.
 	html break
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> threeElementPoint [
+RBClassDataForRefactoringTest >> threeElementPoint [
 	^5 @ 5 + 6 @ 6
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> toDo [
+RBClassDataForRefactoringTest >> toDo [
 	1 to: self size do: [:i | (self at: i) printString]
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> toDoCollect [
+RBClassDataForRefactoringTest >> toDoCollect [
 	| array |
 	array := Array new: 10.
 	1 to: 10 do: [:i | array at: i put: i * i].
@@ -593,7 +593,7 @@ RBRefactoryTestDataApp >> toDoCollect [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> toDoWithIncrement [
+RBClassDataForRefactoringTest >> toDoWithIncrement [
 	| counter |
 	counter := 0.
 	1 to: 10
@@ -603,17 +603,17 @@ RBRefactoryTestDataApp >> toDoWithIncrement [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> usesAdd [
+RBClassDataForRefactoringTest >> usesAdd [
 	^(1 to: 10) asOrderedCollection addAll: (11 to: 20)
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> variableAssignedLiteral [
+RBClassDataForRefactoringTest >> variableAssignedLiteral [
 	temporaryVariable := #()
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> whileTrue [
+RBClassDataForRefactoringTest >> whileTrue [
 	| i |
 	i := 1.
 	[i < self size] whileTrue:
@@ -622,7 +622,7 @@ RBRefactoryTestDataApp >> whileTrue [
 ]
 
 { #category : #lint }
-RBRefactoryTestDataApp >> yourselfNotUsed [
+RBClassDataForRefactoringTest >> yourselfNotUsed [
 	self
 		printString;
 		printString;

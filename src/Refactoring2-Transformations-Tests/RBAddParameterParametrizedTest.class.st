@@ -32,10 +32,10 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
 	refactoring := self createRefactoringWithArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector . #(1 -1 2) . { newArg }}.
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1 2) . { newArg }}.
 	refactoring renameMap: (Array with: ((RBArgumentName name: 'aBlock') newName: 'aBlock1')).
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
 							Transcript
 								show: anObject printString;
@@ -59,9 +59,9 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
 	refactoring := self createRefactoringWithArguments:
-		{oldSelector . RBRefactoryTestDataApp . newSelector . #(1 -1 2) . { newArg }}.
+		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1 2) . { newArg }}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
 							Transcript
 								show: anObject printString;
@@ -84,9 +84,9 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'anObject' value: 'OrderedCollection new: 5'.
 	refactoring := self createRefactoringWithArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector . #(1 -1) . {newArg} }.
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg} }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
@@ -106,9 +106,9 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesModelGlobal [
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'anObject' value:  'Bar new'.
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector . #(1 -1) . {newArg}}.
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
@@ -128,9 +128,9 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesSelf [
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'aFoo' value: 'self printString'.
 	refactoring := self createRefactoringWithArguments:
-		{oldSelector . RBRefactoryTestDataApp . newSelector . #(1 -1) . {newArg}}.
+		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
@@ -152,9 +152,9 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 	newArgs := Array with: (RBArgumentName name: 'aColl' value: 'OrderedCollection new: 5')
 		with: (RBArgumentName name: 'aString' value: '''string''').
 	refactoring := self createRefactoringWithArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector . #(-1 1 -2) . newArgs }.
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(-1 1 -2) . newArgs }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert: (class parseTreeForSelector: newSelector)
 		equals: (self parseMethod: 'testColl: aColl foo: anObject string: aString

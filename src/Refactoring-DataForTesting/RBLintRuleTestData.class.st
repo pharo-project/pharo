@@ -99,7 +99,7 @@ RBLintRuleTestData >> isEmpty [
 
 { #category : #testing }
 RBLintRuleTestData >> junk [
-	^ RBRefactoryTestDataApp printString
+	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
 		to: CR
 ]

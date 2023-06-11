@@ -22,10 +22,10 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementIn
 	| refactoring methodName |
 	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
-		{ (52 to: 73) . 'temp' . methodName . RBRefactoryTestDataApp }.
+		{ (52 to: 73) . 'temp' . methodName . RBClassDataForRefactoringTest }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller2
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller2
 	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')
 ]
 
@@ -33,10 +33,10 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementIn
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryInsideBlock [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (130 to: 138) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp }.
+		{ (130 to: 138) . 'asdf' . #noMoveDefinition . RBClassDataForRefactoringTest }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #noMoveDefinition) equals: (self parseMethod: 'noMoveDefinition
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #noMoveDefinition) equals: (self parseMethod: 'noMoveDefinition
 	| temp |
 	^(self collect:
 			[:each |
@@ -49,9 +49,9 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryInsideBlock [
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (73 to: 77) . 'temp' . #demoMethodWithDuplicates . RBRefactoryTestDataApp }.
+		{ (73 to: 77) . 'temp' . #demoMethodWithDuplicates . RBClassDataForRefactoringTest }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #demoMethodWithDuplicates) equals: (self parseMethod: 'demoMethodWithDuplicates
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #demoMethodWithDuplicates) equals: (self parseMethod: 'demoMethodWithDuplicates
 	| a b result1 result2 answer temp |
 	a := 3.
 	temp := a + 5.
@@ -66,20 +66,20 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 RBExtractToTemporaryParametrizedTest >> testFailureBadInterval [
 	self shouldFail:
 		(self createRefactoringWithArguments:
-			{ (24 to: 30) . 'asdf' . #testMethod . RBRefactoryTestDataApp }).
+			{ (24 to: 30) . 'asdf' . #testMethod . RBClassDataForRefactoringTest }).
 	self shouldFail:
 		(self createRefactoringWithArguments:
-			{ (14 to: 105) . 'asdf' . #testMethod1 . RBRefactoryTestDataApp }).
+			{ (14 to: 105) . 'asdf' . #testMethod1 . RBClassDataForRefactoringTest }).
 	self shouldFail:
 		(self createRefactoringWithArguments:
-			{ (61 to: 101) . 'asdf' . #noMoveDefinition . RBRefactoryTestDataApp })
+			{ (61 to: 101) . 'asdf' . #noMoveDefinition . RBClassDataForRefactoringTest })
 ]
 
 { #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureBadName [
 	self shouldFail:
 		(self createRefactoringWithArguments:
-			{ (14 to: 23) . 'a sdf' . #testMethod . RBRefactoryTestDataApp })
+			{ (14 to: 23) . 'a sdf' . #testMethod . RBClassDataForRefactoringTest })
 ]
 
 { #category : #'failure tests' }
@@ -89,12 +89,12 @@ RBExtractToTemporaryParametrizedTest >> testFailureNoValidNameOfTemp [
 				 (51 to: 60).
 				 'collection'.
 				 #modifiesCollection.
-				 RBRefactoryTestDataApp })
+				 RBClassDataForRefactoringTest })
 ]
 
 { #category : #'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail:
 		( self createRefactoringWithArguments:
-			{ (14 to: 23) . 'asdf' . #checkClass1: . RBRefactoryTestDataApp })
+			{ (14 to: 23) . 'asdf' . #checkClass1: . RBClassDataForRefactoringTest })
 ]

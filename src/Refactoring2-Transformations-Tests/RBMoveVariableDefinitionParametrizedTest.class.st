@@ -21,7 +21,7 @@ RBMoveVariableDefinitionParametrizedTest >> testFailureInvalidSelector [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (21 to: 24).
-				 RBRefactoryTestDataApp.
+				 RBClassDataForRefactoringTest.
 				 #caller3 })
 ]
 
@@ -30,7 +30,7 @@ RBMoveVariableDefinitionParametrizedTest >> testFailureNoMoveDefinition [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (21 to: 24).
-				 RBRefactoryTestDataApp.
+				 RBClassDataForRefactoringTest.
 				 #noMoveDefinition })
 ]
 
@@ -55,10 +55,10 @@ RBMoveVariableDefinitionParametrizedTest >> testFailureNonExistantName [
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (19 to: 22) . RBRefactoryTestDataApp . #moveDefinition }.
+		{ (19 to: 22) . RBClassDataForRefactoringTest . #moveDefinition }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #moveDefinition) equals: (self parseMethod: 'moveDefinition
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #moveDefinition) equals: (self parseMethod: 'moveDefinition
 								^(self collect:
 										[:each |
 										| temp |
@@ -75,9 +75,9 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (47 to: 57) . RBRefactoryTestDataApp . #referencesConditionFor: }.
+		{ (47 to: 57) . RBClassDataForRefactoringTest . #referencesConditionFor: }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
 								| environment  |
 								^(RBCondition withBlock:
 										[| association |association := Smalltalk globals associationAt: aClass name

@@ -22,7 +22,7 @@ RBInlineMethodFromComponentParametrizedTest >> testFailureInlineMethodFromCompon
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (50 to: 64).
 				 #inlineFailed.
-				 RBRefactoryTestDataApp })
+				 RBClassDataForRefactoringTest })
 ]
 
 { #category : #tests }
@@ -30,7 +30,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	| refactoring |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-				{(35 to: 79) . #inlineComponent . RBRefactoryTestDataApp}.
+				{(35 to: 79) . #inlineComponent . RBClassDataForRefactoringTest}.
 		(refactoring model classNamed: #Behavior)
 			compile: 'hasImmediateInstances ^self format = 0'
 			classified: #(#accessing ).
@@ -38,7 +38,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp)
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
 	| a aBehavior |
@@ -54,7 +54,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 	| refactoring |
 	self proceedThroughWarning: [ | class |
 			refactoring := self createRefactoringWithArguments:
-				{ (47 to: 58) . #inlineMax . RBRefactoryTestDataApp }.
+				{ (47 to: 58) . #inlineMax . RBClassDataForRefactoringTest }.
 			self setupInlineExpressionFor: refactoring toReturn: true.
 			class := refactoring model classNamed: #Magnitude.
 			class
@@ -71,7 +71,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 			setupImplementorToInlineFor: refactoring
 			toReturn: class.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
 								| x y q |
 								x := 5.
 								y := 10.
@@ -87,7 +87,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			 { (35 to: 91) . #inlineComponent . RBRefactoryTestDataApp }.
+			 { (35 to: 91) . #inlineComponent . RBClassDataForRefactoringTest }.
 		self
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
@@ -96,7 +96,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 			setupImplementorToInlineFor: refactoring
 			toReturn: (refactoring model classNamed: #Object).
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp)
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
 	| a anObject |

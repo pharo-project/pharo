@@ -20,7 +20,7 @@ RBReplaceSendersMethodParametrizedTest >> testFailureIncompleteInitializers [
 				model: model
 				replaceMethod: ('called:', 'on:') asSymbol
 				
-				in: RBRefactoryTestDataApp
+				in: RBClassDataForRefactoringTest
 				to: ('textInput:', 'name:', 'symbol:') asSymbol
 				permutation: #(-1 2 1)
 				inAllClasses: true)
@@ -75,7 +75,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithLessArgs [
 	refactoring := rbClass
 				model: model
 				replaceMethod: selector
-				in: RBRefactoryTestDataApp
+				in: RBClassDataForRefactoringTest
 				to: newSelector
 				permutation: #(2)
 				inAllClasses: true.
@@ -96,7 +96,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 	refactoring := rbClass
 				model: model
 				replaceMethod: selector
-				in: RBRefactoryTestDataApp
+				in: RBClassDataForRefactoringTest
 				to: newSelector
 				permutation: #(-1 2 1)
 				inAllClasses: true.
@@ -118,7 +118,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithSameArgs [
 	refactoring := rbClass
 				model: model
 				replaceMethod: selector
-				in: RBRefactoryTestDataApp
+				in: RBClassDataForRefactoringTest
 				to: newSelector
 				permutation: #(2 1)
 				inAllClasses: true.

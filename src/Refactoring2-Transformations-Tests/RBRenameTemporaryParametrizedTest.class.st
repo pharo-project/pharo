@@ -25,21 +25,21 @@ RBRenameTemporaryParametrizedTest >> testFailureBadIntervalAndVariableDoesNotExi
 					 (14 to: 17).
 					 #rule }.
 				 'asdf'.
-				 #RBRefactoryTestDataApp.
+				 #RBClassDataForRefactoringTest.
 				 #testMethod }).
 	self shouldFail: (self createRefactoringWithArguments: {
 				 {
 					 (17 to: 14).
 					 #xyz }.
 				 'asdf'.
-				 #RBRefactoryTestDataApp.
+				 #RBClassDataForRefactoringTest.
 				 #testMethod }).
 	self shouldFail: (self createRefactoringWithArguments: {
 				 {
 					 (19 to: 24).
 					 #temporaryVariable1 }.
 				 'asdf'.
-				 #RBRefactoryTestDataApp.
+				 #RBClassDataForRefactoringTest.
 				 #testMethod })
 ]
 

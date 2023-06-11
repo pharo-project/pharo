@@ -80,10 +80,10 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ ('demoRenameMethod:' , 'PermuteArgs:') asSymbol . RBRefactoryTestDataApp .
+		{ ('demoRenameMethod:' , 'PermuteArgs:') asSymbol . RBClassDataForRefactoringTest .
 		('demoRenameMethod:' , 'PermuteArgs:') asSymbol . #(2 1) }.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert:
 			(class parseTreeForSelector: ('demoRenameMethod:' , 'PermuteArgs:') asSymbol)
@@ -104,10 +104,10 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ ('rename:' , 'two:') asSymbol . RBRefactoryTestDataApp .
+		{ ('rename:' , 'two:') asSymbol . RBClassDataForRefactoringTest .
 		('rename:' , 'two:') asSymbol . #(2 1 ) }.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	
 	self 
 		assert: (class parseTreeForSelector: ('rename:' , 'two:') asSymbol)
@@ -140,9 +140,9 @@ RBRenameMethodParametrizedTest >> testRenamePrimitive [
 RBRenameMethodParametrizedTest >> testRenameTestMethod [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ ('rename' , 'ThisMethod:') asSymbol . RBRefactoryTestDataApp . #renameThisMethod2: . (1 to: 1) }.
+		{ ('rename' , 'ThisMethod:') asSymbol . RBClassDataForRefactoringTest . #renameThisMethod2: . (1 to: 1) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	
 	self 
 		assert: (class parseTreeForSelector: #renameThisMethod2:) 
@@ -164,9 +164,9 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ ('testMethod1') asSymbol . RBRefactoryTestDataApp . #testMethod2 . (1 to: 0) }.
+		{ ('testMethod1') asSymbol . RBClassDataForRefactoringTest . #testMethod2 . (1 to: 0) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	
 	self 
 		assert: (class parseTreeForSelector: #testMethod2)

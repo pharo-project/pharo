@@ -22,7 +22,7 @@ RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSele
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: {
 			               #caller3.
-			               RBRefactoryTestDataApp }.
+			               RBClassDataForRefactoringTest }.
 	self shouldFail: refactoring
 ]
 
@@ -63,11 +63,11 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod
 	| refactoring methodName |
 	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
-		{ methodName . RBRefactoryTestDataApp }.
+		{ methodName . RBClassDataForRefactoringTest }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]] ').
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #multipleCalls) equals: (self parseMethod: 'multipleCalls
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #multipleCalls) equals: (self parseMethod: 'multipleCalls
 	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)].
 	(1 to: 10) inject: 1 into: [:sum1 :each1 | sum1 * (self foo: each1)]')
 ]

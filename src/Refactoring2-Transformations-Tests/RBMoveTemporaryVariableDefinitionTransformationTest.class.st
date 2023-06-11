@@ -20,10 +20,10 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
 							inMethod: #moveDefinition
-							inClass: #RBRefactoryTestDataApp)
+							inClass: #RBClassDataForRefactoringTest)
 							transform.
 
-	class := transformation model classNamed: #RBRefactoryTestDataApp.
+	class := transformation model classNamed: #RBClassDataForRefactoringTest.
 	self 
 		assert: (class parseTreeForSelector: #moveDefinition)
 		equals: (self parseMethod: 'moveDefinition
@@ -46,10 +46,10 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #association
 							inMethod: #referencesConditionFor:
-							inClass: #RBRefactoryTestDataApp)
+							inClass: #RBClassDataForRefactoringTest)
 							asRefactoring transform.
 
-	class := transformation model classNamed: #RBRefactoryTestDataApp.
+	class := transformation model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: #referencesConditionFor:)
 		  equals: (self parseMethod: 'referencesConditionFor: aClass
 						| environment  |
@@ -71,7 +71,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
 							inMethod: #noMoveDefinition
-							inClass: #RBRefactoryTestDataApp).
+							inClass: #RBClassDataForRefactoringTest).
 	self 
 		assert: transformation model changes changes size 
 		equals: 0.
@@ -79,7 +79,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
 							variable: #temp
 							inMethod: #noMoveDefinition
-							inClass: #RBRefactoryTestDataApp)
+							inClass: #RBClassDataForRefactoringTest)
 							asRefactoring
 ]
 
