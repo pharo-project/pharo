@@ -11,7 +11,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #parsing }
