@@ -1,8 +1,8 @@
 Class {
 	#name : #RBAbstractRefactoringTest,
 	#superclass : #RBAbstractEnvTestCase,
-	#traits : 'TModelBuilder + TSetUpRefactorings',
-	#classTraits : 'TModelBuilder classTrait + TSetUpRefactorings classTrait',
+	#traits : 'TModelBuilder',
+	#classTraits : 'TModelBuilder classTrait',
 	#instVars : [
 		'model',
 		'rbClass'
@@ -85,6 +85,105 @@ RBAbstractRefactoringTest >> rbClass: anObject [
 RBAbstractRefactoringTest >> setUp [
 	super setUp.
 	model := self defaultNamespace new
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aClass [
+	| options |
+	options := aRefactoring options copy.
+	options at: #extractionClass
+		put: [:ref | aClass].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [
+	| options |
+	options := aRefactoring options copy.
+	options at: #implementorToInline put: [:ref :imps | anObject].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
+	| options |
+	options := aRefactoring options copy.
+	options at: #inlineExpression put: [:ref :string | aBoolean].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #methodName
+		put:
+			[:aMethodName :ref |
+			aMethodName
+				selector: aSelector;
+				yourself].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #methodName
+		put:
+			[ :aMethodName :ref |
+			aMethodName
+				selector: aSelector;
+				arguments: stringCollection;
+				yourself].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #searchInWholeHierarchy put: [ :ref :cls | aBoolean ].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #selfArgumentName put: [:ref | aString].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #useExistingMethod put: [ :ref :cls | aBoolean ].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #selectVariableToMoveTo put: [:ref :class :selector | aString].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObject [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].
+	aRefactoring options: options
 ]
 
 { #category : #actions }
