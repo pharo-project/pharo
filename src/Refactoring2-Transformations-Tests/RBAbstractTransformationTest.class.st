@@ -1,11 +1,6 @@
 Class {
 	#name : #RBAbstractTransformationTest,
 	#superclass : #RBAbstractEnvTestCase,
-	#traits : 'TModelBuilder',
-	#classTraits : 'TModelBuilder classTrait',
-	#instVars : [
-		'model'
-	],
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
