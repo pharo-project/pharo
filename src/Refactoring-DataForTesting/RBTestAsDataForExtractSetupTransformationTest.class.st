@@ -1,5 +1,5 @@
 Class {
-	#name : #RBData2Test,
+	#name : #RBTestAsDataForExtractSetupTransformationTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'aString'
@@ -8,24 +8,24 @@ Class {
 }
 
 { #category : #running }
-RBData2Test >> accessToAClass [
+RBTestAsDataForExtractSetupTransformationTest >> accessToAClass [
 	RBRefactoryTestDataApp new
 ]
 
 { #category : #tests }
-RBData2Test >> someMethod [
+RBTestAsDataForExtractSetupTransformationTest >> someMethod [
 	#'some.initializations'
 ]
 
 { #category : #running }
-RBData2Test >> testExtractSetupExample1 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample1 [
 	self accessToAClass.
 	aString := 'Example'.
 	self assert: 4 > 5 equals: false
 ]
 
 { #category : #running }
-RBData2Test >> testExtractSetupExample2 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample2 [
 	"Example"
 	self accessToAClass.
 	aString := 'Example'.
@@ -33,7 +33,7 @@ RBData2Test >> testExtractSetupExample2 [
 ]
 
 { #category : #running }
-RBData2Test >> testExtractSetupExample3 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample3 [
 	"Example"
 	self accessToAClass.
 	"Comment"
@@ -42,19 +42,19 @@ RBData2Test >> testExtractSetupExample3 [
 ]
 
 { #category : #running }
-RBData2Test >> testExtractSetupExample4 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample4 [
 	self assert: true.
 	self deny: false
 ]
 
 { #category : #tests }
-RBData2Test >> testExtractSetupExample5 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample5 [
 	self someMethod.
 	self assert: true
 ]
 
 { #category : #tests }
-RBData2Test >> testExtractSetupExample6 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample6 [
 	| aString2 aNumber |
 	aString2 := 'Some string'.
 	self someMethod.
@@ -65,7 +65,7 @@ RBData2Test >> testExtractSetupExample6 [
 ]
 
 { #category : #tests }
-RBData2Test >> testExtractSetupExample7 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample7 [
 	| aString2 aNumber |
 	aString2 := 'sa'.
 	self someMethod.
@@ -74,7 +74,7 @@ RBData2Test >> testExtractSetupExample7 [
 ]
 
 { #category : #tests }
-RBData2Test >> testExtractSetupExample8 [
+RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample8 [
 	| aString2 aNumber |
 	aString2 := 'Some string'.
 	self someMethod.

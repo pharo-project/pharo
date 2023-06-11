@@ -19,9 +19,9 @@ RBExtractSetUpMethodParametrizedTest >> constructor [
 { #category : #tests }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUp [
 	| class refactoring |
-	refactoring := self createRefactoringWithArguments: { (14+12 to: 29+12) . #testExtractSetupExample5 . RBData2Test}.
+	refactoring := self createRefactoringWithArguments: { (14+12 to: 29+12) . #testExtractSetupExample5 . RBTestAsDataForExtractSetupTransformationTest}.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBData2Test.
+	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 
 	"Pay attention that method body is created this way to support potential selector rename"
 	self 
@@ -39,9 +39,9 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUp [
 { #category : #tests }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVars [
 	| class refactoring |
-	refactoring := self createRefactoringWithArguments: { (35+12  to: 81+12) . #testExtractSetupExample6 . RBData2Test }.
+	refactoring := self createRefactoringWithArguments: { (35+12  to: 81+12) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBData2Test.
+	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	self assert: (class instanceVariableNames includes: #aString2).
 	
 	"Pay attention that method body is created this way to support potential selector rename"
@@ -75,9 +75,9 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVar
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInstVars [
 	| class refactoring |
 	self skip.
-	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBData2Test }.
+	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBData2Test.
+	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	self assert: (class instanceVariableNames includes: #aString2).
 	self assert: (class instanceVariableNames includes: #aNumber).
 	
@@ -133,9 +133,9 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWorksWellInOtherMethod [
 	So I skip it for now.
 	
 	"
-	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBData2Test }.
+	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBData2Test.
+	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	self assert: (class instanceVariableNames includes: #aString2).
 	self assert: (class instanceVariableNames includes: #aNumber).
 	
@@ -175,7 +175,7 @@ RBExtractSetUpMethodParametrizedTest >> testFailureBadClass [
 { #category : #'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureBadInterval [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ (14 to: 35) . #testExtractSetupExample1 . RBData2Test })
+		{ (14 to: 35) . #testExtractSetupExample1 . RBTestAsDataForExtractSetupTransformationTest })
 ]
 
 { #category : #'failure tests' }
@@ -184,7 +184,7 @@ RBExtractSetUpMethodParametrizedTest >> testFailureExtractSetUpWhenIsNotFirstsSe
 	self shouldFail: (self createRefactoringWithArguments: {
 				 (63 to: 77).
 				 #testExtractSetupExample1.
-				 RBData2Test })
+				 RBTestAsDataForExtractSetupTransformationTest })
 ]
 
 { #category : #'failure tests' }
@@ -192,11 +192,11 @@ RBExtractSetUpMethodParametrizedTest >> testFailureModelExistingSetUpMethod [
 
 	| class |
 	model := RBClassModelFactory rbNamespace new.
-	class := model classNamed: #RBData2Test.
+	class := model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	class compile: 'setUp #setUp' classified: #( #accessing ).
 	self shouldFail:
 		(self createRefactoringWithModel: model andArguments: {
 				 (14 to: 29).
 				 #testExtractSetupExample5.
-				 RBData2Test })
+				 RBTestAsDataForExtractSetupTransformationTest })
 ]
