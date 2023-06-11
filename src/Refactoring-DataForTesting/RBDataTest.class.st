@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #tests }
-RBDataTest >> someMethod [
-	#'some.initializations'
-]
-
-{ #category : #tests }
 RBDataTest >> testExtractSetupExample0 [
 	self someMethod.
 	self assert: true

@@ -1,8 +1,8 @@
 Class {
 	#name : #RBClassUsingSharedPoolForTestData,
 	#superclass : #Object,
-	#traits : 'RBDummy',
-	#classTraits : 'RBDummy classTrait',
+	#traits : 'RBTDummy',
+	#classTraits : 'RBTDummy classTrait',
 	#pools : [
 		'RBSharedPoolForTestData'
 	],

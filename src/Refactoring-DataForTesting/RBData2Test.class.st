@@ -12,6 +12,11 @@ RBData2Test >> accessToAClass [
 	RBRefactoryTestDataApp new
 ]
 
+{ #category : #tests }
+RBData2Test >> someMethod [
+	#'some.initializations'
+]
+
 { #category : #running }
 RBData2Test >> testExtractSetupExample1 [
 	self accessToAClass.
@@ -40,4 +45,30 @@ RBData2Test >> testExtractSetupExample3 [
 RBData2Test >> testExtractSetupExample4 [
 	self assert: true.
 	self deny: false
+]
+
+{ #category : #tests }
+RBData2Test >> testExtractSetupExample5 [
+	self someMethod.
+	self assert: true
+]
+
+{ #category : #tests }
+RBData2Test >> testExtractSetupExample6 [
+	| aString aNumber |
+	aString := 'Some string'.
+	self someMethod.
+	aNumber := 4.
+	self assert: aString isNotEmpty.
+	self deny: (aString, aNumber asString) isEmpty.
+	self assert: true
+]
+
+{ #category : #tests }
+RBData2Test >> testExtractSetupExample7 [
+	| aString aNumber |
+	aString := 'sa'.
+	self someMethod.
+	aNumber := 4.
+	self assert: aString isNotEmpty
 ]
