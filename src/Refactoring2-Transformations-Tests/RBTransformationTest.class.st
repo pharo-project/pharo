@@ -1,6 +1,6 @@
 Class {
 	#name : #RBTransformationTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#superclass : #RBAbstractEnvTestCase,
 	#traits : 'TModelBuilder',
 	#classTraits : 'TModelBuilder classTrait',
 	#instVars : [
