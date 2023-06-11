@@ -55,20 +55,29 @@ RBData2Test >> testExtractSetupExample5 [
 
 { #category : #tests }
 RBData2Test >> testExtractSetupExample6 [
-	| aString aNumber |
-	aString := 'Some string'.
+	| aString2 aNumber |
+	aString2 := 'Some string'.
 	self someMethod.
 	aNumber := 4.
-	self assert: aString isNotEmpty.
-	self deny: (aString, aNumber asString) isEmpty.
+	self assert: aString2 isNotEmpty.
+	self deny: (aString2, aNumber asString) isEmpty.
 	self assert: true
 ]
 
 { #category : #tests }
 RBData2Test >> testExtractSetupExample7 [
-	| aString aNumber |
-	aString := 'sa'.
+	| aString2 aNumber |
+	aString2 := 'sa'.
 	self someMethod.
 	aNumber := 4.
-	self assert: aString isNotEmpty
+	self assert: aString2 isNotEmpty
+]
+
+{ #category : #tests }
+RBData2Test >> testExtractSetupExample8 [
+	| aString2 aNumber |
+	aString2 := 'Some string'.
+	self someMethod.
+	aNumber := 4.
+	"this is an example to see if the extracted as setup expressions are also extracted from this one too."
 ]
