@@ -1,5 +1,5 @@
 Class {
-	#name : #RBTransformationTest,
+	#name : #RBAbstractTransformationTest,
 	#superclass : #RBAbstractEnvTestCase,
 	#traits : 'TModelBuilder',
 	#classTraits : 'TModelBuilder classTrait',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : #mocking }
-RBTransformationTest >> changeMock [
+RBAbstractTransformationTest >> changeMock [
 
 	^ testingEnvironment at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
-RBTransformationTest >> createMockClass [
+RBAbstractTransformationTest >> createMockClass [
 
 	self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
@@ -30,23 +30,23 @@ RBTransformationTest >> createMockClass [
 ]
 
 { #category : #mocking }
-RBTransformationTest >> objectClassVariable [
+RBAbstractTransformationTest >> objectClassVariable [
 
 	^ Object classPool keys detect: [:each | true]
 ]
 
 { #category : #parsing }
-RBTransformationTest >> parseMethod: aString [
+RBAbstractTransformationTest >> parseMethod: aString [
 	^ self parserClass parseMethod: aString
 ]
 
 { #category : #parsing }
-RBTransformationTest >> parserClass [
+RBAbstractTransformationTest >> parserClass [
 	^ RBParser
 ]
 
 { #category : #running }
-RBTransformationTest >> perform: aChange do: aBlock [
+RBAbstractTransformationTest >> perform: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."
 
 	| undo |
@@ -56,7 +56,7 @@ RBTransformationTest >> perform: aChange do: aBlock [
 ]
 
 { #category : #running }
-RBTransformationTest >> proceedThroughWarning: aBlock [
+RBAbstractTransformationTest >> proceedThroughWarning: aBlock [
 
 	aBlock
 		on: RBRefactoringWarning
@@ -64,13 +64,13 @@ RBTransformationTest >> proceedThroughWarning: aBlock [
 ]
 
 { #category : #mocking }
-RBTransformationTest >> removeMockClass [
+RBAbstractTransformationTest >> removeMockClass [
 
 	testingEnvironment removeClassNamed: #RBRefactoringChangeMock
 ]
 
 { #category : #running }
-RBTransformationTest >> setUp [
+RBAbstractTransformationTest >> setUp [
 
 	super setUp.
 	self createMockClass.
@@ -78,21 +78,21 @@ RBTransformationTest >> setUp [
 ]
 
 { #category : #running }
-RBTransformationTest >> shouldFail: aRefactoring [
+RBAbstractTransformationTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
 		self should: [ aRefactoring transform ] raise: RBRefactoringError ]
 ]
 
 { #category : #running }
-RBTransformationTest >> tearDown [
+RBAbstractTransformationTest >> tearDown [
 
 	self removeMockClass.
 	super tearDown
 ]
 
 { #category : #tests }
-RBTransformationTest >> testAPI [
+RBAbstractTransformationTest >> testAPI [
 	"all classes must implement #storeOn: and #transform"
 
 	| incompleteTransformations |

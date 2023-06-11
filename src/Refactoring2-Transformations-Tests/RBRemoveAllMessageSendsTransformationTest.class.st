@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRemoveAllMessageSendsTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 

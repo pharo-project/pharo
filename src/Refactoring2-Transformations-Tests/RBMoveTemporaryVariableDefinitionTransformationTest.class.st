@@ -1,6 +1,6 @@
 Class {
 	#name : #RBMoveTemporaryVariableDefinitionTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
