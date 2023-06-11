@@ -48,7 +48,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #justForTest1), '^ 42').
 	
 	self 
-		assert: ((refactoring model classNamed: #RBDummy) 
+		assert: ((refactoring model classNamed: #RBTDummy) 
 		parseTreeForSelector: #methodFromTrait) equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #methodFromTrait), 
 '	RBClassToRename justForTest1').
 	
@@ -57,7 +57,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 	self 
 		assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) 
 						methodFor: #methodFromTrait) modelClass name 
-		equals: #RBDummy
+		equals: #RBTDummy
 ]
 
 { #category : #tests }

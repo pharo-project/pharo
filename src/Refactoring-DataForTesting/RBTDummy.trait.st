@@ -1,5 +1,5 @@
 Trait {
-	#name : #RBDummy,
+	#name : #RBTDummy,
 	#instVars : [
 		'var1'
 	],
@@ -7,11 +7,11 @@ Trait {
 }
 
 { #category : #'tests - some' }
-RBDummy >> methodFromTrait [
+RBTDummy >> methodFromTrait [
 	RBClassToRename justForTest
 ]
 
 { #category : #accessing }
-RBDummy >> var1 [
+RBTDummy >> var1 [
 	^ var1
 ]

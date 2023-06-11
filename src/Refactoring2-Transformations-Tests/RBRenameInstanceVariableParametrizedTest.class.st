@@ -79,11 +79,11 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 	refactoring := self createRefactoringWithArguments:
 		{ 'var1' .
 		'var11' .
-		#RBDummy }.
+		#RBTDummy }.
 
 	self executeRefactoring: refactoring.
 
-	class := refactoring model classNamed: #RBDummy.
+	class := refactoring model classNamed: #RBTDummy.
 	self assert: (class directlyDefinesInstanceVariable: 'var11').
 	self deny: (class directlyDefinesInstanceVariable: 'var1').
 	self

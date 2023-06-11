@@ -118,7 +118,7 @@ RBRenameClassParametrizedTest >> testRenameClassFromTrait [
 
 	classA := ('RBClass', 'ToRename') asSymbol.
 	classB := ('RBNew', 'ClassName') asSymbol.
-	classC := #RBDummy.
+	classC := #RBTDummy.
 	refactoring := self createRefactoringWithArguments: { classA . classB }.
 	self executeRefactoring: refactoring.
 	aModel := refactoring model.
@@ -128,7 +128,7 @@ RBRenameClassParametrizedTest >> testRenameClassFromTrait [
 	self assert: (class parseTreeForSelector: #methodFromTrait)
 				equals: (self parseMethod: 'methodFromTrait
 	RBNewClassName justForTest').
-	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBDummy
+	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBTDummy
 ]
 
 { #category : #tests }
