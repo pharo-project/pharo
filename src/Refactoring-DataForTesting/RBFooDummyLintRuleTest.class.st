@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'result'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#category : #'Refactoring-DataForTesting'
 }
 
 { #category : #'as yet unclassified' }
