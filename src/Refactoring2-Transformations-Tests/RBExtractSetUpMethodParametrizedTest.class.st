@@ -114,9 +114,41 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWhenIsNotFirstsSentences
 ]
 
 { #category : #'failure tests' }
+RBExtractSetUpMethodParametrizedTest >> testFailureBadClass [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (78 to: 197).
+				 #displayName.
+				 RBLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureBadInterval [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (14 to: 35) . #testExtractSetupExample0 . RBDataTest })
+]
+
+{ #category : #'failure tests' }
+RBExtractSetUpMethodParametrizedTest >> testFailureExtractSetUpWhenIsNotFirstsSentences [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (63 to: 77).
+				 #testExtractSetupExample1.
+				 RBDataTest })
+]
+
+{ #category : #'failure tests' }
+RBExtractSetUpMethodParametrizedTest >> testFailureModelExistingSetUpMethod [
+
+	| class |
+	model := RBClassModelFactory rbNamespace new.
+	class := model classNamed: #RBDataTest.
+	class compile: 'setUp #setUp' classified: #( #accessing ).
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 (14 to: 29).
+				 #testExtractSetupExample0.
+				 RBDataTest })
 ]
 
 { #category : #'failure tests' }

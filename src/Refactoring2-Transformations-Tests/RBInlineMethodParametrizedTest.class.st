@@ -30,9 +30,48 @@ RBInlineMethodParametrizedTest >> testFailureBadInterval [
 ]
 
 { #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureInlineMethodForSuperSendThatAlsoSendsSuper [
+
+	| refactoring |
+	model := self inlineMethodTestData.
+	refactoring := self createRefactoringWithArguments: {
+			               (102 to: 131).
+			               #executeNotifying:.
+			               #RBRenameInstanceVariableChange }.
+	self shouldFail: refactoring
+]
+
+{ #category : #'failure tests' }
 RBInlineMethodParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (14 to: 17) . #checkClass1: . RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureOverriden [
+
+	self shouldWarn: (self createRefactoringWithArguments: {
+				 (15 to: 26).
+				 #failedRules.
+				 RBLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailurePrimitive [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (14 to: 23).
+				 #testMethod.
+				 RBRefactoryTestDataApp })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureReturn [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (418 to: 485).
+				 #utilityMethods.
+				 RBBasicLintRuleTestData class })
 ]
 
 { #category : #tests }

@@ -22,6 +22,15 @@ RBProtectInstanceVariableParametrizedTest >> setUp [
 	model := self abstractVariableTestData
 ]
 
+{ #category : #'failure tests' }
+RBProtectInstanceVariableParametrizedTest >> testFailureVariableNotDefined [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'rewrite'. #RBSubclassOfClassToRename }).
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	| refactoring class |

@@ -54,6 +54,42 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 ]
 
 { #category : #'failure tests' }
+RBDeprecateMethodParametrizedTest >> testFailureInvalidNewSelector [
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
+
+	| refactoring oldSelector newSelector |
+	oldSelector := ('called:' , 'on1:') asSymbol.
+	newSelector := 'inlineFoo1:' asSymbol.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               oldSelector.
+				               RBRefactoryTestDataApp.
+				               newSelector }.
+
+	self shouldFail: refactoring
+]
+
+{ #category : #'failure tests' }
+RBDeprecateMethodParametrizedTest >> testFailureInvalidNumArgsOfSelector [
+	"please note that this strange way to create symbol is because some tests are counting symbol
+	and rewriting the code in a bad way so for now do not change them."
+
+	| refactoring oldSelector newSelector |
+	oldSelector := ('called:' , 'on1:') asSymbol.
+	newSelector := 'inlineFoo:' asSymbol.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               oldSelector.
+				               RBRefactoryTestDataApp.
+				               newSelector }.
+
+	self shouldFail: refactoring
+]
+
+{ #category : #'failure tests' }
 RBDeprecateMethodParametrizedTest >> testInvalidNewSelector [
 	"please note that this strange way to create symbol is because some tests are counting symbol
 	and rewriting the code in a bad way so for now do not change them."

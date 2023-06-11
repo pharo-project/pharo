@@ -35,6 +35,46 @@ RBTemporaryToInstanceVariableParametrizedTest >> setUp [
 ]
 
 { #category : #'failure tests' }
+RBTemporaryToInstanceVariableParametrizedTest >> testFailureHierarchyDefinesVarableNamedAsTemporary [
+
+	| class |
+	self addClassHierarchy.
+	class := model classNamed: #Foo.
+	self shouldWarn: (self createRefactoringWithArguments: {
+				 class.
+				 #someMethod.
+				 'foo' })
+]
+
+{ #category : #'failure tests' }
+RBTemporaryToInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 RBBasicLintRuleTestData.
+				 #checkClass:.
+				 'asdf' }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 RBBasicLintRuleTestData.
+				 #checkClass1:.
+				 'aSmalllintContext' })
+]
+
+{ #category : #'failure tests' }
+RBTemporaryToInstanceVariableParametrizedTest >> testFailureRedefinedTemporary [
+
+	| class |
+	class := model classNamed: #Foo.
+	class
+		compile:
+		'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
+		classified: #( #accessing ).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 class.
+				 #someMethod.
+				 'instVarName1' })
+]
+
+{ #category : #'failure tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testHierarchyDefinesVarableNamedAsTemporary [
 	| class |
 	self addClassHierarchy.

@@ -53,6 +53,119 @@ RBPullUpMethodParametrizedTest >> testDoesntPullUpReferencesInstVar [
 	[ self shouldFail: refactoring ] valueSupplyingAnswer: false
 ]
 
+{ #category : #'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailureDoesntPullUpReferencesInstVar [
+
+	| refactoring class |
+	class := model classNamed:
+		         ('RBTransformation' , 'RuleTestData1') asSymbol.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               #( #foo ).
+				               class }.
+	[ self shouldFail: refactoring ] valueSupplyingAnswer: false
+]
+
+{ #category : #'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
+
+	| class |
+	class := model classNamed: #Object.
+	class addClassVariable: #Foo.
+	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #foo ).
+				 class classSide })
+]
+
+{ #category : #'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectlyImplement [
+
+	| classEnvironment classes |
+	classes := #( #ClassA #ClassB #ClassC )
+		           inject: OrderedCollection new
+		           into: [ :sum :each |
+			           testingEnvironment at: each ifPresent: [ :class |
+				           sum
+					           add: class;
+					           add: class class ].
+			           sum ].
+	classEnvironment := RBClassEnvironment classes: classes.
+	model name: 'Test'.
+	"Classes"
+	#( 'Object << #ClassA package: ''Testing'' '
+	   'ClassA << #ClassB package: ''Testing'' '
+	   'ClassB << #ClassC package: ''Testing'' ' ) do: [ :each |
+		model defineClass: each ].
+	#( #( #ClassA #( #( 'foo
+			^ ''ClassA foo''' #private ) ) ) #( #ClassC #( #( 'foo
+			^ ''ClassC foo''' #private ) ) ) ) do: [ :each |
+		| class |
+		class := model classNamed: each first.
+		each last do: [ :methodPair |
+			class compile: methodPair first classified: methodPair last ] ].
+	self shouldntWarn:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #foo ).
+				 (model classNamed: #ClassC) })
+]
+
+{ #category : #'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
+
+	| class |
+	self addClassHierarchy.
+	(model classNamed: #Foo2)
+		compile: 'yourself ^super yourself + 1'
+		classified: #( #accessing ).
+	class := model classNamed: #Foo1.
+	class compile: 'yourself ^1' classified: #( #accessing ).
+
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #yourself ).
+				 class })
+]
+
+{ #category : #'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailurePullUpWithMethodThatCannotBePullUp [
+
+	model defineClass: 'Object << #SomeClass
+		sharedVariables: {#Foo};
+		package: #''Refactory-Test data'''.
+	(model classNamed: #SomeClass)
+		compile: 'yourself ^54'
+		classified: #( #accessing ).
+
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #yourself ).
+				 (model classNamed: #SomeClass) })
+]
+
+{ #category : #'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopiedDown [
+
+	| class |
+	self addClassHierarchy.
+	(model classNamed: #Object)
+		compile: 'foo ^3'
+		classified: #( #accessing ).
+	(model classNamed: #Subclass)
+		compile: 'foo ^super foo'
+		classified: #( #accessing ).
+	(class := model classNamed: #Foo2)
+		compile: 'foo ^1'
+		classified: #( #accessing ).
+
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #foo ).
+				 class })
+]
+
 { #category : #tests }
 RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
 	| class |

@@ -32,6 +32,22 @@ RBRenameClassParametrizedTest >> testFailureBadName [
 ]
 
 { #category : #'failure tests' }
+RBRenameClassParametrizedTest >> testFailureExistingName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self class name.
+				 #Object })
+]
+
+{ #category : #'failure tests' }
+RBRenameClassParametrizedTest >> testFailureMetaClassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self class class name.
+				 #Foo })
+]
+
+{ #category : #'failure tests' }
 RBRenameClassParametrizedTest >> testMetaClassFailure [
 
 	self shouldFail:

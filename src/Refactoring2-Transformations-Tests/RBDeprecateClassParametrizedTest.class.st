@@ -25,6 +25,14 @@ RBDeprecateClassParametrizedTest >> testFailureBadName [
 ]
 
 { #category : #'failure tests' }
+RBDeprecateClassParametrizedTest >> testFailureMetaClassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self class class.
+				 #Foo })
+]
+
+{ #category : #'failure tests' }
 RBDeprecateClassParametrizedTest >> testMetaClassFailure [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ self class class . #Foo })

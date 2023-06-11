@@ -17,6 +17,22 @@ RBRemoveHierarchyMethodParametrizedTest >> constructor [
 	^ #removeMethods:from:
 ]
 
+{ #category : #'failure tests' }
+RBRemoveHierarchyMethodParametrizedTest >> testFailureRemoveNonExistantMethod [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #( #msg7 ).
+				 RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBRemoveHierarchyMethodParametrizedTest >> testFailureRemoveReferenced [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #( #msg1 ).
+				 RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBRemoveHierarchyMethodParametrizedTest >> testRemoveMethod [
 	| refactoring selectors |
