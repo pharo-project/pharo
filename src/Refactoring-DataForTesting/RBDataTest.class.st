@@ -1,7 +1,7 @@
 Class {
 	#name : #RBDataTest,
 	#superclass : #TestCase,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Refactorings'
 }
 
 { #category : #tests }

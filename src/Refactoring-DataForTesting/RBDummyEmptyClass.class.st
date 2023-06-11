@@ -4,7 +4,7 @@ MRDummyEmptyClass is a test class to exercise class transformations
 Class {
 	#name : #RBDummyEmptyClass,
 	#superclass : #Object,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Refactorings'
 }
 
 { #category : #'empty protocol 1' }

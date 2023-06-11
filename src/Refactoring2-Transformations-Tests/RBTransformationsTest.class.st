@@ -328,22 +328,27 @@ RBTransformationsTest >> testRemoveVariableTransform [
 { #category : #tests }
 RBTransformationsTest >> testRenameClassTransform [
 
-	| transformation class |
+	| transformation class newClassName oldClassName |
+	newClassName := #RBNewDummyClassName.
+	oldClassName := RBClassToRename name asSymbol.
 	transformation := (RBRenameClassTransformation
-							rename: 'RBDummyClassToRename' asSymbol
-							to: 'RBNewDummyClassName' asSymbol)
+							rename: oldClassName
+							to: newClassName)
 							transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: 'RBNewDummyClassName' asSymbol.
+	class := transformation model classNamed: newClassName.
 	self assert: (class parseTreeForSelector: #method1)
 		  equals: (self parseMethod: 'method1 ^ self method2').
-	self deny: (transformation model includesClassNamed: 'RBDummyClassToRename' asSymbol).
+		
+	self deny: (transformation model includesClassNamed: oldClassName).
 
-	class := transformation model classNamed: 'RBDummySubclassOfClassToRename' asSymbol.
+	class := transformation model classNamed: RBSubclassOfClassToRename name asSymbol.
+	
 	self assert: class superclass
 		  equals: (transformation model classNamed: 'RBNewDummyClassName' asSymbol).
+		
 	self assert: (class parseTreeForSelector: #symbolReference)
 		  equals: (self parseMethod: 'symbolReference ^ #RBNewDummyClassName').
 	self assert: (class parseTreeForSelector: #reference)

@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'A'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Lint'
 }
 
 { #category : #'as yet unclassified' }

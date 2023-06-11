@@ -1,5 +1,5 @@
 Class {
 	#name : #RBFooLintRuleTestData1,
 	#superclass : #RBLintRuleTestData,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Lint'
 }

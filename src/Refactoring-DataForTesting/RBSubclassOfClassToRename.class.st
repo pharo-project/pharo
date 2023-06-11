@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'rewriteRule1'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Refactorings'
 }
 
 { #category : #accessing }

@@ -16,7 +16,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Lint'
 }
 
 { #category : #accessing }

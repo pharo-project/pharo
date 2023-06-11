@@ -3,7 +3,7 @@ A trait to setUp refactorings for tests purposes
 "
 Trait {
 	#name : #TSetUpRefactorings,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-Refactorings'
 }
 
 { #category : #'set up' }
