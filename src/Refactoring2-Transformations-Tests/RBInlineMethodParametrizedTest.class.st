@@ -239,15 +239,6 @@ RBInlineMethodParametrizedTest >> testInlineMethodForSuperSend [
 									^undo')
 ]
 
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testInlineMethodForSuperSendThatAlsoSendsSuper [
-	| refactoring |
-	model := self inlineMethodTestData.
-	refactoring := self createRefactoringWithArguments:
-		{ (102 to: 131) . #executeNotifying: . #RBRenameInstanceVariableChange }.
-	self shouldFail: refactoring
-]
-
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineRecursiveCascadedMethod [
 	| refactoring |
@@ -274,22 +265,4 @@ RBInlineMethodParametrizedTest >> testModelInlineRecursiveMethod [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testOverriden [
-	self shouldWarn: (self createRefactoringWithArguments:
-		{ (15 to: 26) . #failedRules . RBLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testPrimitive [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (14 to: 23) . #testMethod . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testReturn [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (418 to: 485) . #utilityMethods . RBBasicLintRuleTestData class })
 ]

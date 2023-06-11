@@ -87,19 +87,3 @@ RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
 	self assert: (class parseTreeForSelector: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsParametrizedTest >> testNonExistantClassVariable [
-
-	self shouldFail: (rbClass
-		classVariable: 'Foo'
-		class: #RBBasicLintRuleTestData) asRefactoring
-]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsParametrizedTest >> testNonExistantInstanceVariable [
-
-	self shouldFail: (rbClass
-		instanceVariable: 'foo'
-		class: #RBBasicLintRuleTestData) asRefactoring
-]

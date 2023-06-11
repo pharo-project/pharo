@@ -16,14 +16,6 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #'failure tests' }
-RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadMethodName [
-	| refactoring |
-	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExample7 . RBData2Test }.
-	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
-	self shouldFail: refactoring
-]
-
 { #category : #tests }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|

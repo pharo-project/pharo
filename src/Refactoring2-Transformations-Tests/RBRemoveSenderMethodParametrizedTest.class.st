@@ -15,15 +15,6 @@ RBRemoveSenderMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBRemoveSenderMethodParametrizedTest >> testClassDoesNotExist [
-
-	self shouldFail: (self createRefactoringWithArguments:
-		{{(14 to: 17) . #byteAt:} .
-		#methodBefore .
-		#RBMessageSendTransformationTest})
-]
-
-{ #category : #'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testFailureClassDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -79,38 +70,6 @@ RBRemoveSenderMethodParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail: (self createRefactoringWithArguments:
 		{{(14 to: 17) . #foo: }.
 		#checkClass1: .
-		#RBRefactoryTestDataApp})
-]
-
-{ #category : #'failure tests' }
-RBRemoveSenderMethodParametrizedTest >> testIsDirectlyUsed [
-
-	| refactoring |
-	refactoring := self createRefactoringWithArguments:
-		{ { (58 to: 73) . #foo: } .
-		#caller2 .
-		#RBRefactoryTestDataApp }.
-	self setupInlineExpressionFor: refactoring toReturn: false.
-	self shouldFail: refactoring.
-]
-
-{ #category : #'failure tests' }
-RBRemoveSenderMethodParametrizedTest >> testIsDirectlyUsed2 [
-	| refactoring |
-	refactoring := self createRefactoringWithArguments:
-		{{(25 to: 39). #isVariable} .
-		#returnsBooleanAndOther .
-		#RBRefactoryTestDataApp}.
-	self setupInlineExpressionFor: refactoring toReturn: false.
-	self shouldFail: refactoring.
-]
-
-{ #category : #'failure tests' }
-RBRemoveSenderMethodParametrizedTest >> testMethodDoesNotExist [
-
-	self shouldFail: (self createRefactoringWithArguments:
-		{{(14 to: 17) . #foo: }.
-		#badMessage1 .
 		#RBRefactoryTestDataApp})
 ]
 

@@ -102,25 +102,3 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 				directlyDefinesMethod: symbol)
 	]
 ]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testRemoveNonExistingMethod [
-	self shouldFail: (self createRefactoringWithModel: model
-	andArgumentsColl: #(#nonExistingMethod )
-	andOtherArgs: {#RBBasicLintRuleTestData})
-]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testRemoveReferenced [
-	self shouldWarn: (self createRefactoringWithModel: model
-	andArgumentsColl:  #(#checkClass:)
-	andOtherArgs: { #RBBasicLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testRemoveSameMethodButSendsSuper [
-	<expectedFailure>
-	self shouldWarn: (self createRefactoringWithModel: model
-			andArgumentsColl: #(#new )
-			andOtherArgs: {#'RBBasicLintRuleTestData class'})
-]

@@ -98,10 +98,3 @@ RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
 		( self createRefactoringWithArguments:
 			{ (14 to: 23) . 'asdf' . #checkClass1: . RBRefactoryTestDataApp })
 ]
-
-{ #category : #'failure tests' }
-RBExtractToTemporaryParametrizedTest >> testNoValidNameOfTemp [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ (51 to: 60) . 'collection' . #modifiesCollection . RBRefactoryTestDataApp })
-]

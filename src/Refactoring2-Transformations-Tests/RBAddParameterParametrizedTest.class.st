@@ -167,17 +167,6 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 ]
 
 { #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testBadInitializationCode [
-	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'foo:'.
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #name . RBLintRuleTestData . #name: . #(-1) . {newArg}}).
-	newArg := RBArgumentName name: 'anObject' value: 'foo'.
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #name . RBLintRuleTestData . #name: . #(-1) . {newArg}})
-]
-
-{ #category : #'failure tests' }
 RBAddParameterParametrizedTest >> testFailureBadInitializationCode [
 
 	| newArg |
@@ -296,63 +285,4 @@ RBAddParameterParametrizedTest >> testFailureUseExistingNewSelector [
 				 #safeVariableNameFor:temporaries:.
 				 #( 1 -1 ).
 				 { newArg } })
-]
-
-{ #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testInvalidNumArgsOfNewSelector [
-	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	self shouldFail: (self createRefactoringWithArguments:
-		{#checkSendersAccessTo: . RBLintRuleTestData . #checkSendersAccessTo: . #(1 -1) . {newArg}})
-]
-
-{ #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testModelBadInitializationCode [
-	| refactoring newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'AddParameterRefactoring new'.
-	model removeClassNamed: #RBRefactoring.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{#name1 . RBLintRuleTestData . #name1: . #(-1) . {newArg}}.
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testModelNonExistantName [
-	| refactoring newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	(model classNamed: #RBLintRuleTestData) removeMethod: #name.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ #name . RBLintRuleTestData . #nameNew: . #(-1) . {newArg}}.
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testNonExistantName [
-	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #name1 . RBLintRuleTestData . #name1: . #(-1) . {newArg}})
-]
-
-{ #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testPrimitiveMethods [
-	| refactoring newArg |
-	newArg := RBArgumentName name: 'anObject' value: '1'.
-	(model classNamed: #Object)
-		compile: 'foo <primitive: 100> ^#() primitiveFailed'
-		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ #foo . Object . #foo123124321s: . #(-1) . {newArg}}.
-	self shouldFail: refactoring.
-	refactoring := self createRefactoringWithArguments:
-		{ #at: . Object . #at:foo: . #(1 -1) . {newArg}}.
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testUseExistingNewSelector [
-	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #checkSendersAccessTo: . RBLintRuleTestData . #safeVariableNameFor:temporaries: . #(1 -1) . {newArg}})
 ]

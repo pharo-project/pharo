@@ -23,12 +23,6 @@ RBRemoveClassKeepingSubclassesParametrizedTest >> testFailureRemoveClassWithRefe
 			 { #( #RBBasicLintRuleTestData ) })
 ]
 
-{ #category : #'failure tests' }
-RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#(#RBBasicLintRuleTestData )})
-]
-
 { #category : #tests }
 RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveNotEmptySuperclass [
 

@@ -35,14 +35,6 @@ RBAddMethodParametrizedTest >> testAddMethod [
 ]
 
 { #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testBadMethod [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'asdf ^super ^printString' .
-		RBBasicLintRuleTestData .
-		#(#accessing )})
-]
-
-{ #category : #'failure tests' }
 RBAddMethodParametrizedTest >> testFailureBadMethod [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -97,26 +89,4 @@ RBAddMethodParametrizedTest >> testModelAddMethod [
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeForSelector: #printString1)
 		  equals: (self parseMethod: 'printString1 ^super printString')
-]
-
-{ #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testModelExistingSelector [
-	self shouldFail: ( self createRefactoringWithModel: model
-			andArguments:
-				{'classVarName1 ^super printString' .
-				(model classNamed: #Bar) .
-				#(#accessing) });
-		  shouldFail: (self createRefactoringWithModel: model
-			andArguments:
-				{'printString ^super printString' .
-				(model classNamed: #Bar) .
-				{#accessing}})
-]
-
-{ #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testModelInheritedSelector [
-	| refactoring |
-	refactoring := self createRefactoringWithModel: model andArguments:
-				{ 'printString ^super printString' . (model classNamed: #Bar) . #(#accessing) }.
-	self shouldFail: refactoring
 ]

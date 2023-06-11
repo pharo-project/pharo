@@ -115,12 +115,6 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 ]
 
 { #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testExistingPackage [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
-]
-
-{ #category : #'failure tests' }
 RBCopyPackageParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})

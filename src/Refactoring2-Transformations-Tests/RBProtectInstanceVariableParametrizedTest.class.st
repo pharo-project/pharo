@@ -45,11 +45,3 @@ RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1') asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1:') asSymbol)
 ]
-
-{ #category : #'failure tests' }
-RBProtectInstanceVariableParametrizedTest >> testVariableNotDefined [
-	self shouldFail:
-		(self createRefactoringWithArguments: {'rewrite' . #RBSubclassOfClassToRename}).
-	self shouldFail:
-		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData})
-]

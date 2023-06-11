@@ -107,12 +107,6 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	^anObject')
 ]
 
-{ #category : #'failure tests' }
-RBInlineMethodFromComponentParametrizedTest >> testInlineMethodFromComponentFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (50 to: 64) . #inlineFailed . RBRefactoryTestDataApp })
-]
-
 { #category : #tests }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames [
 	| class refactoring |

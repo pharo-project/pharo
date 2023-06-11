@@ -67,12 +67,6 @@ RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #'failure tests' }
-RBPushDownInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail:
-		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData})
-]
-
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariable [
 	| refactoring |

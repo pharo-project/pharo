@@ -49,14 +49,6 @@ RBRemoveClassParametrizedTest >> testFailureRemoveClassWithSubclasses [
 		(self createRefactoringWithArguments: { #RBFooLintRuleTestData1 })
 ]
 
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
-	|class|
-	class := ('RBTransformation', 'RuleTestData1') asSymbol.
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: {class} )
-]
-
 { #category : #tests }
 RBRemoveClassParametrizedTest >> testRemoveAClassAndTheirSubclass [
 	|aRefactoringColl|
@@ -68,25 +60,6 @@ RBRemoveClassParametrizedTest >> testRemoveAClassAndTheirSubclass [
 
 	self assert: (model classNamed: #RBSharedPoolForTestData2) isNil.
 	self assert: (model classNamed: #RBSharedPoolForTestData1) isNil
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRemoveClassWithBadNameRaisesRBRefactoringError [
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: #(#RecursiveSelfRule))
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
-	self shouldWarn: (self createRefactoringWithModel: model
-		andArguments: #(#RBBasicLintRuleTestData ))
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRemoveClassWithSubclasses [
-
-	self shouldFail:
-		(self createRefactoringWithArguments: {#RBFooLintRuleTestData1})
 ]
 
 { #category : #tests }

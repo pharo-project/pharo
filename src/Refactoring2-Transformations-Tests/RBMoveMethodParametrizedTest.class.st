@@ -184,14 +184,3 @@ RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	^RBRefactoryTestDataApp printString copyFrom: 1 to: CR').
 	self assert: (class directlyDefinesPoolDictionary: 'TextConstants' asSymbol)
 ]
-
-{ #category : #'failure tests' }
-RBMoveMethodParametrizedTest >> testMovePrimitiveMethod [
-	| refactoring |
-	(model classNamed: #Object)
-		compile: 'foo <primitive: 100> ^#() primitiveFailed'
-		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { #foo . Object . 'OrderedCollection' }.
-	self shouldFail: refactoring
-]

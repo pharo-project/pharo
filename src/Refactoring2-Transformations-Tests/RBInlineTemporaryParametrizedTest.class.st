@@ -58,21 +58,3 @@ RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 													inlineMethod;
 													bar')
 ]
-
-{ #category : #'failure tests' }
-RBInlineTemporaryParametrizedTest >> testInlineTemporaryBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (29 to: 100) . #moveDefinition . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineTemporaryParametrizedTest >> testInlineTemporaryMutlipleAssignment [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (58 to: 81) . #moveDefinition . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineTemporaryParametrizedTest >> testInlineTemporaryReadBeforeWritten [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (48 to: 56) . #inlineTemporary . RBRefactoryTestDataApp })
-]

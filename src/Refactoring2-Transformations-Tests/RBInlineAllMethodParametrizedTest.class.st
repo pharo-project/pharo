@@ -40,14 +40,6 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 			equals: (self parseMethod: 'foo: arg1 bar: arg2 ^ (arg1 + arg2) - arg1')
 ]
 
-{ #category : #'failure tests' }
-RBInlineAllMethodParametrizedTest >> testInlineMethodCanNotUnderstandSelectorInClass [
-	| refactoring |
-	refactoring := self createRefactoringWithArguments:
-		{ #caller3 .RBRefactoryTestDataApp }.
-	self shouldFail: refactoring
-]
-
 { #category : #tests }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 	| class |
