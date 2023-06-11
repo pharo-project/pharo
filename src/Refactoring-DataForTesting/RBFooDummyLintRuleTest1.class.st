@@ -1,5 +1,5 @@
 Class {
 	#name : #RBFooDummyLintRuleTest1,
 	#superclass : #RBDummyLintRuleTest,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-LittleHierarchy'
 }

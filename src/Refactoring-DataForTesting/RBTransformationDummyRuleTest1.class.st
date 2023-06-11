@@ -1,7 +1,7 @@
 Class {
 	#name : #RBTransformationDummyRuleTest1,
 	#superclass : #RBFooDummyLintRuleTest1,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-LittleHierarchy'
 }
 
 { #category : #accessing }

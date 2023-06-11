@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'temporaryVariable'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-FatClasses'
 }
 
 { #category : #lint }

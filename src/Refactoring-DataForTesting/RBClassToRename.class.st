@@ -1,7 +1,7 @@
 Class {
 	#name : #RBClassToRename,
 	#superclass : #Model,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-MiniHierarchy'
 }
 
 { #category : #testing }

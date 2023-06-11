@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'aString'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-ForTestRelatedOperation'
 }
 
 { #category : #running }

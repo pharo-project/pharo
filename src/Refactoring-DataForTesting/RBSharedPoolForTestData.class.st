@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Var1'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-ForSharedPool'
 }
 
 { #category : #'tests - perform' }

@@ -7,7 +7,7 @@ Class {
 		'classBlock',
 		'anInstVar'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-LittleHierarchy'
 }
 
 { #category : #private }
