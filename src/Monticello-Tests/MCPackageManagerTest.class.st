@@ -76,7 +76,7 @@ MCPackageManagerTest >> testClassRemoved [
 ]
 
 { #category : #tests }
-MCPackageManagerTest >> testManagersForCategoryDo [
+MCPackageManagerTest >> testManagersForExtensionProtocolDo [
 	"Consider the following package structure:
 		Renraku
 		Renraku-Help
@@ -90,13 +90,13 @@ MCPackageManagerTest >> testManagersForCategoryDo [
 	self assert: (MCPackageManager registry includesKey: mcPackage2).
 
 	managers := OrderedCollection new.
-	MCPackageManager managersForCategory: mcPackage1 name do: [ :manager | managers add: manager ].
+	MCPackageManager managersForExtensionProtocol: (Protocol named: '*' , mcPackage1 name) do: [ :manager | managers add: manager ].
 
 	self assert: managers size equals: 1.
 	self assert: managers first package identicalTo: mcPackage1.
 
 	managers := OrderedCollection new.
-	MCPackageManager managersForCategory: mcPackage2 name do: [ :manager | managers add: manager ].
+	MCPackageManager managersForExtensionProtocol: (Protocol named: '*' , mcPackage2 name) do: [ :manager | managers add: manager ].
 
 	self assert: managers size equals: 1.
 	self assert: managers first package identicalTo: mcPackage2

@@ -110,40 +110,6 @@ MCPackageManager class >> initialize [
 ]
 
 { #category : #'system changes' }
-MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
-	"Got to be careful here - we might get method categories where capitalization is problematic."
-	| cat foundOne index |
-	foundOne := false.
-	cat := aSystemCategory ifNil: [ ^nil ]. "yes this happens; for example in eToy projects"
-	"first ask PackageInfos, their package name might not match the category"
-	self
-		bestMatchingManagerForCategory: aSystemCategory
-		do: [ :mgr |
-			aBlock value: mgr.
-			foundOne := true ].
-
-   foundOne ifTrue: [ ^self ].
-	[  "Loop over categories until we found a matching one"
-		self registry keys detect: [ :aPackage | aPackage name sameAs: cat ]
-			ifFound: [:aPackage | | mgr | 
-				mgr := self registry at: aPackage.
-				aBlock value: mgr. 
-				foundOne := true. 
-				false] 
-			ifNone: [ 
-				index := cat lastIndexOf: $-.
-				index > 0]
-	] whileTrue: [
-		"Step up to next level package"
-		cat := cat copyFrom: 1 to: index-1 ].
-	
-	foundOne ifFalse: [
-		"Create a new (but only top-level)"
-		aBlock value: (MCWorkingCopy forPackage: (MCPackage named: aSystemCategory capitalized)).
-	].
-]
-
-{ #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass do: aBlock [
 
 	| rPackage |
@@ -155,8 +121,40 @@ MCPackageManager class >> managersForClass: aClass do: aBlock [
 { #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass protocol: protocol do: aBlock [
 
-	(protocol isNil or: [ protocol isExtensionProtocol ]) ifTrue: [ "Not an extension method" ^ self managersForClass: aClass do: aBlock ].
-	self managersForCategory: protocol name allButFirst do: aBlock
+	protocol ifNil: [ ^ nil ]. "This can happen if we are removing a method. Then its protocol will be nil."
+
+	^ protocol isExtensionProtocol
+		  ifTrue: [ self managersForExtensionProtocol: protocol do: aBlock ]
+		  ifFalse: [ self managersForClass: aClass do: aBlock ]
+]
+
+{ #category : #'system changes' }
+MCPackageManager class >> managersForExtensionProtocol: protocol do: aBlock [
+	"We know that the protocol in parameter is an extension protocol. We just got to be careful because the capitalization can be problematic."
+
+	| packageName foundOne index |
+	foundOne := false.
+	packageName := protocol name allButFirst.
+	"first ask PackageInfos, their package name might not match the protocol"
+	self bestMatchingManagerForCategory: packageName do: [ :mgr |
+		aBlock value: mgr.
+		foundOne := true ].
+
+	foundOne ifTrue: [ ^ self ].
+	[ "Loop over categories until we found a matching one"
+	self registry keys
+		detect: [ :aPackage | aPackage name sameAs: packageName ]
+		ifFound: [ :aPackage |
+			| mgr |
+			mgr := self registry at: aPackage.
+			aBlock value: mgr.
+			foundOne := true.
+			false ]
+		ifNone: [
+			index := packageName lastIndexOf: $-.
+			index > 0 ] ] whileTrue: [ "Step up to next level package" packageName := packageName copyFrom: 1 to: index - 1 ].
+
+	foundOne ifFalse: [ "Create a new (but only top-level)" aBlock value: (MCWorkingCopy forPackage: (MCPackage named: packageName capitalized)) ]
 ]
 
 { #category : #'system changes' }
