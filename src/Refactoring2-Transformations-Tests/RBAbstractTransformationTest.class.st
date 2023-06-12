@@ -5,23 +5,9 @@ Class {
 }
 
 { #category : #mocking }
-RBAbstractTransformationTest >> changeMock [
+RBAbstractTransformationTest >> changeMockClass [
 
-	^ testingEnvironment at: #RBRefactoringChangeMock
-]
-
-{ #category : #mocking }
-RBAbstractTransformationTest >> createMockClass [
-
-	self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: 'RBRefactoringChangeMock';
-			sharedVariablesFromString: 'ClassVar';
-			slots: 'instVar' asSlotCollection;
-			classSlots: 'classInstVar' asSlotCollection;
-			package: 'Refactoring-Tests-Changes' ].
-
-	self changeMock compile: 'one ^ 1' classified: 'accessing'
+	^ RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -58,17 +44,10 @@ RBAbstractTransformationTest >> proceedThroughWarning: aBlock [
 		do: [ :ex | ex resume ]
 ]
 
-{ #category : #mocking }
-RBAbstractTransformationTest >> removeMockClass [
-
-	testingEnvironment removeClassNamed: #RBRefactoringChangeMock
-]
-
 { #category : #running }
 RBAbstractTransformationTest >> setUp [
 
 	super setUp.
-	self createMockClass.
 	model := RBNamespace new
 ]
 
@@ -77,13 +56,6 @@ RBAbstractTransformationTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
 		self should: [ aRefactoring transform ] raise: RBRefactoringError ]
-]
-
-{ #category : #running }
-RBAbstractTransformationTest >> tearDown [
-
-	self removeMockClass.
-	super tearDown
 ]
 
 { #category : #tests }
