@@ -7,6 +7,7 @@ Class {
 { #category : #tests }
 LazyClassVariableTest >> testLazyClassVarCompiled [
 	| classVar |
+	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
 	classVar := #ClassVar => LazyClassVariable default: 5.
 	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
 
