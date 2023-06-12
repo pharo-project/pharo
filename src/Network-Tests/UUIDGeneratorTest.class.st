@@ -62,8 +62,6 @@ UUIDGeneratorTest >> testTwoDifferentGenerator [
 	"same generators, similar clock, within 100 milliseconds (stored time is in microseconds)"
 	time1 := self timeFromUUID: uuid1.
 	time2 := self timeFromUUID: uuid2.
-	"self assert: (time2 - time1) abs < (100 * 1000)"
-	"UUID are not necessarly of version 1->3, time can be random"
 ]
 
 { #category : #testing }
