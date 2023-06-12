@@ -156,7 +156,7 @@ ClassTest >> testClassSide [
 { #category : #tests }
 ClassTest >> testClassVariableEntanglement [
 	| firstClassName firstClass secondClassName secondClass thirdClassName thirdClass |
-
+	<ignoreNotImplementedSelectors: #(myVar myVar:)>
 	firstClassName := 'MyFirstClass'.
 
 	firstClass := self class classInstaller make: [ :aBuilder |

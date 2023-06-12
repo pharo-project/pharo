@@ -113,6 +113,7 @@ MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsY
 MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 
 	| definition mockClass mockClassInstance |
+	<ignoreNotImplementedSelectors: #(override)>
 	mockClass := self mockClass.
 	mockClassInstance := mockClass new.
 	mockClass compile: 'override ^ 2' classified: '*' , self extensionPackageName.
@@ -144,6 +145,7 @@ MCMethodDefinitionTest >> testRevertOldMethod [
 MCMethodDefinitionTest >> testRevertOverrideMethod [
 
 	| definition mockClass mockClassInstance |
+	<ignoreNotImplementedSelectors: #(override)>
 	mockClass := self mockClass.
 	mockClassInstance := mockClass new.
 	mockClass compile: 'override ^ 1' classified: 'mocks'.
