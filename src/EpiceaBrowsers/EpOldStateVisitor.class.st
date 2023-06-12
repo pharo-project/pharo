@@ -66,9 +66,7 @@ EpOldStateVisitor >> visitMethodModification: aMethodModification [
 { #category : #visitor }
 EpOldStateVisitor >> visitMethodRemoval: aMethodRemoval [
 
-	^ self
-		printProtocol: aMethodRemoval protocol
-		sourceCode: aMethodRemoval sourceCode
+	^ self printProtocol: aMethodRemoval protocol sourceCode: aMethodRemoval sourceCode
 ]
 
 { #category : #visitor }

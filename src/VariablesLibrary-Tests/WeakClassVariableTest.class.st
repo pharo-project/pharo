@@ -18,6 +18,7 @@ WeakClassVariableTest >> testCreateClassWithWeakClassVariable [
 { #category : #tests }
 WeakClassVariableTest >> testReadWriteWeakClassVarCompiled [
 	| classVar object valuetoTest |
+	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
 	classVar := #ClassVar => WeakClassVariable.
 	aClass := self make: [ :builder | builder sharedVariables: {classVar} ].
 

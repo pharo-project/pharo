@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'numberOfAnnouncements'
 	],
-	#category : #'Kernel-Tests-Protocols'
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #running }

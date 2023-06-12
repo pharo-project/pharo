@@ -226,6 +226,12 @@ RBAbstractTransformation >> refactoringError: aString [
 	^ RBRefactoringError signal: aString
 ]
 
+{ #category : #accessing }
+RBAbstractTransformation >> refactoringErrorClass [
+
+	^ RBRefactoringError 
+]
+
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringWarning: aString [
 	^ RBRefactoringWarning signal: aString

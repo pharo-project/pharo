@@ -17,7 +17,7 @@ RBAbstractClassVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAbstractClassVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -49,21 +49,32 @@ RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
 ]
 
 { #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testInheritedName [
+RBAbstractClassVariableParametrizedTest >> testFailureInheritedName [
+
 	self shouldFail: (self createRefactoringWithArguments:
-		{#DependentsFields . #RBBasicLintRuleTestData})
+			 { #DependentsFields. #RBBasicLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testInvalidClass [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#DependentsFields . #Object })
+RBAbstractClassVariableParametrizedTest >> testFailureInvalidClass [
+
+	self shouldFail:
+		(self createRefactoringWithArguments: { #DependentsFields.
+		 #Object })
 ]
 
 { #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testMetaClassFailure [
+RBAbstractClassVariableParametrizedTest >> testFailureMetaClassFailure [
+
 	self shouldFail: (self createRefactoringWithArguments:
-	{ #RecursiveSelfRule . #'RBTransformationRuleTestData class'})
+			 { #RecursiveSelfRule. #'RBTransformationRuleTestData class' })
+]
+
+{ #category : #'failure tests' }
+RBAbstractClassVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #Foo. #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
@@ -104,10 +115,4 @@ RBAbstractClassVariableParametrizedTest >> testModelAbstractClassVariableOverrid
 "	self executeRefactoring: refactoring.
 	self assert: (meta parseTreeFor: #classVarName21) equals: (self parseMethod: 'classVarName21 ^ClassVarName2').
 	self assert: (meta parseTreeFor: #classVarName21:) equals: (self parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')"
-]
-
-{ #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#Foo . #RBBasicLintRuleTestData})
 ]

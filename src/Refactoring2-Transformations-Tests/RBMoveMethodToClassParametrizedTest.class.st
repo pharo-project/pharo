@@ -18,14 +18,16 @@ RBMoveMethodToClassParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBMoveMethodToClassParametrizedTest >> testMethodAlreadyDefined [
+RBMoveMethodToClassParametrizedTest >> testFailureMethodAlreadyDefined [
+
 	| method someClass |
 	someClass := model classNamed: #RBFooLintRuleTestData.
 	method := RBClassModelFactory rbMethod
-		for: someClass
-		source: 'foo' , String cr , String tab , '^ 6'
-		selector: #foo.
+		          for: someClass
+		          source: 'foo' , String cr , String tab , '^ 6'
+		          selector: #foo.
 
-	self shouldFail: (self createRefactoringWithArguments:
-		{ method . someClass })
+	self shouldFail: (self createRefactoringWithArguments: {
+				 method.
+				 someClass })
 ]

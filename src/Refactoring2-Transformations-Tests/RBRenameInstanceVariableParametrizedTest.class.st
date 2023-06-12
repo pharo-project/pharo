@@ -17,24 +17,26 @@ RBRenameInstanceVariableParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBRenameInstanceVariableParametrizedTest >> testAlreadyExistingName [
+RBRenameInstanceVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{'classBlock' . 'name' . #RBBasicLintRuleTestData } )
+			 { 'classBlock'. 'name'. #RBBasicLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBRenameInstanceVariableParametrizedTest >> testMetaclassFailure [
+RBRenameInstanceVariableParametrizedTest >> testFailureMetaclassFailure [
 
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #RecursiveSelfRule . #Foo . RBTransformationRuleTestData class name })
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RecursiveSelfRule.
+				 #Foo.
+				 RBTransformationRuleTestData class name })
 ]
 
 { #category : #'failure tests' }
-RBRenameInstanceVariableParametrizedTest >> testNonExistantName [
+RBRenameInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{ 'foo' . 'newFoo' . #RBBasicLintRuleTestData })
+			 { 'foo'. 'newFoo'. #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
@@ -79,11 +81,11 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 	refactoring := self createRefactoringWithArguments:
 		{ 'var1' .
 		'var11' .
-		#RBDummy }.
+		#RBTDummy }.
 
 	self executeRefactoring: refactoring.
 
-	class := refactoring model classNamed: #RBDummy.
+	class := refactoring model classNamed: #RBTDummy.
 	self assert: (class directlyDefinesInstanceVariable: 'var11').
 	self deny: (class directlyDefinesInstanceVariable: 'var1').
 	self

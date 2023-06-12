@@ -11,6 +11,7 @@ Class {
 { #category : #tests }
 AccessorInstanceVariableSlotTest >> testAccessorInstanceVariableSlot [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	aClass := self
 		make:
 			[ :builder | builder slots: {(#slot1 => AccessorInstanceVariableSlot)} ].

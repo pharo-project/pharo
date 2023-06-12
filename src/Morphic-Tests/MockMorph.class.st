@@ -28,5 +28,7 @@ MockMorph >> myMagicClick: event [
 
 { #category : #events }
 MockMorph >> myMagicDoubleClick: event [
+	"Each client should check if it contains the point"
+	(self containsPoint: event position) ifFalse: [ ^self ].
 	magicDoubleClick := event
 ]

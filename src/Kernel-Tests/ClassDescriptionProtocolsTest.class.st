@@ -4,7 +4,7 @@ I am a test case responsible of testing ClassDescription protocol management.
 Class {
 	#name : #ClassDescriptionProtocolsTest,
 	#superclass : #ProtocolTest,
-	#category : #'Kernel-Tests-Protocols'
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #private }
@@ -19,6 +19,44 @@ ClassDescriptionProtocolsTest >> testAddProtocol [
 	class addProtocol: #titan.
 
 	self assert: (class hasProtocol: #titan)
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocolWithExistingProtocol [
+
+	| titan |
+	titan := class addProtocol: #titan.
+
+	self assert: (class hasProtocol: titan).
+
+	"Adding a second time should just return the same instance."
+	self assert: (class addProtocol: #titan) identicalTo: titan
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocolWithProtocolFromOtherClass [
+
+	| titan |
+	"This protocol is not from the class we are testing."
+	titan := Protocol named: #titan.
+
+	class addProtocol: titan.
+
+	"The class should have created a new protocol of the same name."
+	self assert: (class hasProtocol: #titan).
+	self deny: (class protocolNamed: #titan) identicalTo: titan
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testAddProtocolWithRealProtocol [
+
+	| titan |
+	titan := class addProtocol: #titan.
+
+	self assert: (class hasProtocol: titan).
+
+	"Adding a second time should just return the same instance."
+	self assert: (class addProtocol: titan) identicalTo: titan
 ]
 
 { #category : #tests }
@@ -116,16 +154,31 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocol [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocolFromOtherClass [
+
+	| which |
+	class classify: #luz under: (which := Protocol named: #which).
+
+	self assertCollection: class protocolNames hasSameElements: #( #which ).
+	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #luz ).
+
+	"Since the protocol was not from the class, it should not be the same instance."
+	self deny: (class protocolNamed: #which) identicalTo: which
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testEnsureProtocol [
 
-	| protocol |
+	| protocol outsideProtocol |
 	class addProtocol: #titan.
 	protocol := class protocolNamed: #titan.
+	outsideProtocol := Protocol named: #titan.
 
 	self assertCollection: class protocolNames hasSameElements: { #titan }.
 	self assert: (class ensureProtocol: #titan) equals: protocol.
 	self assert: (class ensureProtocol: protocol) equals: protocol.
-	self should: [ class ensureProtocol: (Protocol named: #notFromClass) ] raise: Error.
+	self assert: (class ensureProtocol: outsideProtocol) equals: protocol.
+	self deny: (class ensureProtocol: outsideProtocol) identicalTo: outsideProtocol.
 
 	self assert: (class ensureProtocol: nil) name equals: Protocol unclassified.
 	self assertCollection: class protocolNames hasSameElements: {
@@ -161,6 +214,13 @@ ClassDescriptionProtocolsTest >> testHasProtocol [
 
 	self assert: (class hasProtocol: (class protocolNamed: #titan)).
 	self deny: (class hasProtocol: (Protocol named: #human))
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testHasProtocolWithProtocolFromOtherClass [
+
+	class addProtocol: #titan.
+	self assert: (class hasProtocol: (Protocol named: #titan))
 ]
 
 { #category : #tests }
@@ -337,6 +397,23 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyOnNonExistingProtocol 
 
 	self deny: (class hasProtocol: #titan).
 	self shouldnt: [ class removeProtocolIfEmpty: #titan ] raise: Error
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithProtocolFromOtherClass [
+
+	class addProtocol: #titan.
+	class addProtocol: #human.
+	class addProtocol: #witch.
+	class compiler
+		protocol: #titan;
+		install: 'king ^1'.
+	self assert: class protocolNames size equals: 3.
+	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king ).
+
+	"just ignore removing of non empty categories"
+	class removeProtocolIfEmpty: (Protocol named: #titan).
+	self assert: class protocolNames size equals: 3
 ]
 
 { #category : #tests }

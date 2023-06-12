@@ -8,9 +8,21 @@ Class {
 }
 
 { #category : #tests }
+WriteOnceSlotTest >> testClassSide [
+	"test that we can change a normal slot into a WriteOnceSlot. Tests class side slot init"
+	| slot |
+	slot := #slot1 => InstanceVariableSlot.
+	aClass := self make: [ :builder | builder classSlots: {slot} ].
+	slot := #slot1 => WriteOnceSlot.
+	aClass := self make: [ :builder | builder classSlots: {slot} ].
+
+	self assert: (aClass class hasSlotNamed: #slot1)
+]
+
+{ #category : #tests }
 WriteOnceSlotTest >> testRead [
 	| slot |
-	<ignoreNotImplementedSelectors: #(slot1:)>
+	<ignoreNotImplementedSelectors: #(slot1)>
 	slot := #slot1 => WriteOnceSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 

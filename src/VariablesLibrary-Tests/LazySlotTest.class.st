@@ -7,6 +7,7 @@ Class {
 { #category : #tests }
 LazySlotTest >> testLazySlotCompiled [
 	| slot object|
+	<ignoreNotImplementedSelectors: #(slot1)>
 	slot := #slot1 => LazySlot default: 5 .
 	aClass := self make: [ :builder | builder slots: {slot}].
 

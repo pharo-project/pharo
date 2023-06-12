@@ -74,11 +74,6 @@ Trait class >> named: aSymbol package: aString [
 ]
 
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol trait: aCompositionOrArray [
-	^ self named: aSymbol trait: aCompositionOrArray package: 'Unclassified'
-]
-
-{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
 	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]

@@ -265,7 +265,7 @@ RGPackage >> name: aString [
 	oldName := self name.
 	super name: aString.
 
-	self announce: (RPackageRenamed
+	self announce: (PackageRenamed
 			to: self
 			oldName: oldName
 			newName: aString)

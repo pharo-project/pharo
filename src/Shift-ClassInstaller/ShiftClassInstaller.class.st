@@ -94,8 +94,8 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	"the initialize all visible slots"
 	newClass allSlots do: [ :newSlot |
+		newSlot initialize: newObject.
 		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
-			newSlot initialize: newObject.
 			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
@@ -229,7 +229,10 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	newClass subclasses: oldClass subclasses.
 
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
-	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
+	slotsToMigrate do: [ :newSlot | 
+		"the slot might need to initialize the new class"
+		newSlot wantsInitialization ifTrue: [ newSlot initialize: newClass ].
+		oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 
 	oldClassVariables := OrderedCollection new.
 	newClassVariables := OrderedCollection new.
