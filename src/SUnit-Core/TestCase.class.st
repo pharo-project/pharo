@@ -644,6 +644,11 @@ TestCase >> announcer [
 ]
 
 { #category : #private }
+TestCase >> basicPerformTest [
+	self perform: testSelector asSymbol
+]
+
+{ #category : #private }
 TestCase >> cleanUpInstanceVariables [
 	self class allInstVarNames do: [ :name |
 		(self instanceVariablesToKeep includes: name) ifFalse: [
@@ -763,7 +768,8 @@ TestCase >> openDebuggerOnFailingTestMethod [
 
 { #category : #private }
 TestCase >> performTest [
-	self perform: testSelector asSymbol
+	"By default we avoid to log event in Epicea, subclasses may change this by overriding this method and invoking its companion method `TestCase>>#basicPerformTest`"
+	EpMonitor disableDuring: [ self basicPerformTest ]
 ]
 
 { #category : #running }
