@@ -39,13 +39,6 @@ RBCustomTransformation class >> with: aBlockWithOneArg [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBCustomTransformation >> preconditions [
-	"no precondition so far"
-
-	^ self emptyCondition
-]
-
 { #category : #executing }
 RBCustomTransformation >> privateTransform [
 
