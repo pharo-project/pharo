@@ -48,13 +48,6 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 	comment := aString
 ]
 
-{ #category : #preconditions }
-RBAddMethodCommentTransformation >> preconditions [
-	"no preconditions needed"
-
-	^ self emptyCondition
-]
-
 { #category : #executing }
 RBAddMethodCommentTransformation >> privateTransform [
 	| tree signature sourceCode |

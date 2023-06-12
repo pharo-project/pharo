@@ -160,12 +160,6 @@ RBAbstractVariablesTransformation >> parseTree [
 ]
 
 { #category : #executing }
-RBAbstractVariablesTransformation >> preconditions [
-
-	^ self emptyCondition
-]
-
-{ #category : #executing }
 RBAbstractVariablesTransformation >> privateTransform [
 	self hasVariablesToAbstract
 		ifTrue:
