@@ -137,6 +137,16 @@ UUID >> >= aMagnitude [
 	^(self < aMagnitude) not
 ]
 
+{ #category : #accessing }
+UUID >> asInteger [
+	
+	"Should be deprecated, but is still used by iceberg."
+	"self
+		deprecated:
+		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'."
+	^ uuidData asInteger
+]
+
 { #category : #converting }
 UUID >> asString [
 	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
