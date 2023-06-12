@@ -145,7 +145,7 @@ RBRefactoringChangeTest >> testAddClassTraitPattern [
 
 	self exampleTraits do: [ :trait |
 		| change |
-		change := changes defineClass: (ClassDefinitionPrinter oldPharo for: trait classTrait) definitionString.
+		change := changes defineClass:  trait classTrait oldDefinition.
 		self assert: (change isKindOf: RBAddClassTraitChange).
 		self assert: change changeClassName equals: trait name.
 		self universalTestFor: change ]
@@ -153,17 +153,19 @@ RBRefactoringChangeTest >> testAddClassTraitPattern [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testAddClassVariable [
+
 	| change |
-	change := changes addClassVariable: 'ClassVar' to: self class.
+	change := changes addClassVariable: 'SharedVarTheta' to: self class.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
-	self assert: change variable equals: 'ClassVar'.
+	self assert: change variable equals: 'SharedVarTheta'.
 	self universalTestFor: change
 ]
 
 { #category : #tests }
 RBRefactoringChangeTest >> testAddInstanceVariable [
+
 	| change |
 	change := changes addInstanceVariable: 'instVar' to: self class.
 	self assert: change changeClassName equals: self class name.
@@ -189,12 +191,13 @@ RBRefactoringChangeTest >> testAddMetaclassPattern [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testAddPool [
+
 	| change |
-	change := changes addPool: 'PoolDict' to: self class.
+	change := changes addPool: 'SharedPool' to: self class.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
-	self assert: change variable equals: 'PoolDict'.
+	self assert: change variable equals: 'SharedPool'.
 	self universalTestFor: change
 ]
 
@@ -213,6 +216,7 @@ RBRefactoringChangeTest >> testAddTraitPattern [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testComment [
+
 	| change |
 	change := changes comment: 'Some Comment' in: self class.
 	self assert: change changeClassName equals: self class name.
@@ -224,6 +228,7 @@ RBRefactoringChangeTest >> testComment [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testCompileInClass [
+	"note that this compile does not modify the class because the change is not performed"
 	| change |
 	change := changes compile: 'setUp' in: self class.
 	self assert: change controller isNil.
@@ -238,6 +243,7 @@ RBRefactoringChangeTest >> testCompileInClass [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testCompileInClassified [
+	"note that this compile does not modify the class because the change is not performed"
 	| change |
 	change := changes compile: 'setUp' in: self class classified: #accessing.
 	self assert: change controller isNil.
@@ -252,6 +258,8 @@ RBRefactoringChangeTest >> testCompileInClassified [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testCompileInInteractively [
+	"note that this compile does not modify the class because the change is not performed"
+	
 	| change |
 	change := changeFactory addMethodSource: 'setUp' in: self class classified: #running for: self.
 	self assert: change controller equals: self.
@@ -266,6 +274,8 @@ RBRefactoringChangeTest >> testCompileInInteractively [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testCompileInMetaclass [
+	"note that this compile does not modify the class because the change is not performed"
+	
 	| change |
 	change := changes compile: 'new' in: self class class.
 	self assert: change controller isNil.
@@ -280,6 +290,8 @@ RBRefactoringChangeTest >> testCompileInMetaclass [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testComposite [
+	"note that this compile does not modify the class because the change is not performed"
+	
 	changes
 		compile: 'method ^ 1' in: self class classified: #utilities;
 		compile: 'method ^ 2' in: self class class classified: #utilities.
@@ -482,6 +494,7 @@ RBRefactoringChangeTest >> testPerformRenameInstanceVariable [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemoveClass [
+
 	| change |
 	change := changes removeClass: self class.
 	self assert: change changeClassName equals: self class name.
@@ -492,6 +505,7 @@ RBRefactoringChangeTest >> testRemoveClass [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemoveClassInstanceVariable [
+
 	| change |
 	change := changes removeInstanceVariable: 'instVar' from: self class class.
 	self assert: change changeClassName equals: self class name.
@@ -503,6 +517,7 @@ RBRefactoringChangeTest >> testRemoveClassInstanceVariable [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemoveClassNamed [
+
 	| change |
 	change := changes removeClassNamed: self class name.
 	self assert: change changeClassName equals: self class name.
@@ -513,17 +528,19 @@ RBRefactoringChangeTest >> testRemoveClassNamed [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemoveClassVariable [
+
 	| change |
-	change := changes removeClassVariable: 'ClassVar' from: self class.
+	change := changes removeClassVariable: 'SharedVar' from: self class.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
-	self assert: change variable equals: 'ClassVar'.
+	self assert: change variable equals: 'SharedVar'.
 	self universalTestFor: change
 ]
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemoveInstanceVariable [
+
 	| change |
 	change := changes removeInstanceVariable: 'instVar' from: self class.
 	self assert: change changeClassName equals: self class name.
@@ -535,6 +552,7 @@ RBRefactoringChangeTest >> testRemoveInstanceVariable [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemoveMethod [
+
 	| change |
 	change := changes removeMethod: #setUp from: self class.
 	self assert: change changeClassName equals: self class name.
@@ -546,17 +564,19 @@ RBRefactoringChangeTest >> testRemoveMethod [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRemovePool [
+
 	| change |
-	change := changes removePool: 'PoolDict' from: self class.
+	change := changes removePool: 'SharedPool' from: self class.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
-	self assert: change variable equals: 'PoolDict'.
+	self assert: change variable equals: 'SharedPool'.
 	self universalTestFor: change
 ]
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRenameClass [
+
 	| change |
 	change := changes renameClass: self class to: self class name , 'Plus'.
 	self assert: change oldName equals: self class name.
@@ -567,6 +587,7 @@ RBRefactoringChangeTest >> testRenameClass [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRenameClassInstanceVariable [
+
 	| change |
 	change := changes renameInstanceVariable: 'instVar1' to: 'instVar2' in: self class class.
 	self assert: change changeClassName equals: self class name.
@@ -577,16 +598,18 @@ RBRefactoringChangeTest >> testRenameClassInstanceVariable [
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRenameClassVariable [
+
 	| change |
-	change := changes renameClassVariable: 'ClassVar1' to: 'ClassVar2' in: self class.
+	change := changes renameClassVariable: 'SharedVar1' to: 'SharedVar2' in: self class.
 	self assert: change changeClassName equals: self class name.
-	self assert: change oldName equals: 'ClassVar1'.
-	self assert: change newName equals: 'ClassVar2'.
+	self assert: change oldName equals: 'SharedVar1'.
+	self assert: change newName equals: 'SharedVar2'.
 	self universalTestFor: change
 ]
 
 { #category : #tests }
 RBRefactoringChangeTest >> testRenameInstanceVariable [
+
 	| change |
 	change := changes renameInstanceVariable: 'instVar1' to: 'instVar2' in: self class.
 	self assert: change changeClassName equals: self class name.

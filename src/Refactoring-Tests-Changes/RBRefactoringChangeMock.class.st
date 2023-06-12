@@ -5,6 +5,7 @@ Class {
 		'instVar'
 	],
 	#classVars : [
+		'ClassVarPlus',
 		'SharedVar'
 	],
 	#classInstVars : [
