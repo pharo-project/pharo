@@ -8,17 +8,10 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RBStaticModelCreationTest >> testPopulateModel [
 
-	| newModel classEnvironment classes |
-	"classes := #(#MyClassA #MyClassB #MyClassC )
-		inject: OrderedCollection new
-		into: [ :sum :each |
-			self environmentOfTest at: each ifPresent: [ :class |
-				sum add: class; add: class class ].
-			sum ]."
-	"classEnvironment := RBClassEnvironment classes: classes."
+	| newModel |
 	newModel := self defaultNamespaceClass onEnvironment: RBClassEnvironment new.
 	
 	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassA) classDefinitionString.
@@ -30,6 +23,5 @@ RBStaticModelCreationTest >> testPopulateModel [
 	self assert: (newModel classNamed: #MyClassA) name equals: 'MyClassA'.
 	self assert: (newModel classNamed: #MyClassB) superclass name equals: 'MyClassA'.
 	self assert: (newModel classNamed: #MyClassC) superclass name equals: 'MyClassA'.
-	
-self halt.
+
 ]

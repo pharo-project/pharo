@@ -1,3 +1,6 @@
+"
+This is a stupid comment for a stupid class.
+"
 Class {
 	#name : #MyClassA,
 	#superclass : #Object,
@@ -11,3 +14,9 @@ Class {
 	],
 	#category : #'Refactoring-DataForTesting-StaticModel'
 }
+
+{ #category : #'dummy methods' }
+MyClassA >> stupidMethodForStupidRule [
+
+	instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0
+]
