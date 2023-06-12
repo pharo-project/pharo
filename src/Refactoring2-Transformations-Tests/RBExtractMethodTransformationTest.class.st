@@ -191,7 +191,7 @@ RBExtractMethodTransformationTest >> testTransform [
 									temp := bar * bar.
 									Transcript show: temp printString; cr.
 									^temp * temp'
-					in: self changeMock name
+					in: self changeMockClass name
 					withProtocols: {#accessing})
 					transform.
 
@@ -202,12 +202,12 @@ RBExtractMethodTransformationTest >> testTransform [
 							Transcript show: temp printString; cr'
 				from: #foo
 				to: #foobar
-				in: self changeMock name)
+				in: self changeMockClass name)
 				transform.
 
 	self assert: transformation model changes changes size equals: 4.
 
-	class := transformation model classNamed: self changeMock name.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class parseTreeForSelector: #foo)
 		  equals: (self parseMethod: 'foo
 													| temp |
