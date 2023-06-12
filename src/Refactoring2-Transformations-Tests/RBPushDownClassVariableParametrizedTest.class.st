@@ -15,26 +15,41 @@ RBPushDownClassVariableParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBPushDownClassVariableParametrizedTest >> testModelNonExistantName [
-	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: { #Foo . #SomeClass })
+RBPushDownClassVariableParametrizedTest >> testFailureModelNonExistantName [
+
+	model defineClass:
+		'Object << #SomeClass package: #''Refactory-Test data'''.
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { #Foo. #SomeClass })
 ]
 
 { #category : #'failure tests' }
-RBPushDownClassVariableParametrizedTest >> testModelPushDownToMultipleSubclassesFailure [
+RBPushDownClassVariableParametrizedTest >> testFailureModelPushDownToMultipleSubclassesFailure [
+
 	model defineClass: 'Object << #SomeClass
 		sharedVariables: { #Foo } ;
 		package: #''Refactory-Test data'''.
 	model defineClass: 'SomeClass << #Subclass
 		package: #''Refactory-Test data'''.
-	(model classNamed: #Subclass) compile: 'foo ^Foo' classified: #(#accessing).
+	(model classNamed: #Subclass)
+		compile: 'foo ^Foo'
+		classified: #( #accessing ).
 	model defineClass: 'SomeClass << #AnotherSubclass
 		package: #''Refactory-Test data'''.
-	(model metaclassNamed: #AnotherSubclass) compile: 'bar ^Foo'
-		classified: #(#accessing).
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: { #Foo . #SomeClass })
+	(model metaclassNamed: #AnotherSubclass)
+		compile: 'bar ^Foo'
+		classified: #( #accessing ).
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { #Foo. #SomeClass })
+]
+
+{ #category : #'failure tests' }
+RBPushDownClassVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #Foo. #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
@@ -105,12 +120,6 @@ RBPushDownClassVariableParametrizedTest >> testModelRemoveUnusedVariable [
 		andArguments: { #Foo . #SomeClass }).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: #Foo).
 	self deny: ((model classNamed: #Subclass) directlyDefinesVariable: #Foo)
-]
-
-{ #category : #'failure tests' }
-RBPushDownClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail:
-		(self createRefactoringWithArguments: { #Foo . #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }

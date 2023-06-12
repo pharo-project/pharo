@@ -18,23 +18,33 @@ RBRenameTemporaryParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testBadIntervalAndVariableDoesNotExist [
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (14 to: 17) . #rule } .
-				'asdf' . #RBRefactoryTestDataApp .#testMethod }).
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (17 to: 14) . #xyz } .
-				'asdf' . #RBRefactoryTestDataApp . #testMethod }).
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (19 to: 24) . #temporaryVariable1 } .
-				'asdf' . #RBRefactoryTestDataApp . #testMethod })
+RBRenameTemporaryParametrizedTest >> testFailureBadIntervalAndVariableDoesNotExist [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 {
+					 (14 to: 17).
+					 #rule }.
+				 'asdf'.
+				 #RBClassDataForRefactoringTest.
+				 #testMethod }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 {
+					 (17 to: 14).
+					 #xyz }.
+				 'asdf'.
+				 #RBClassDataForRefactoringTest.
+				 #testMethod }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 {
+					 (19 to: 24).
+					 #temporaryVariable1 }.
+				 'asdf'.
+				 #RBClassDataForRefactoringTest.
+				 #testMethod })
 ]
 
 { #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testBadName [
+RBRenameTemporaryParametrizedTest >> testFailureBadName [
 	self
 		shouldFail:
 			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
@@ -45,35 +55,54 @@ RBRenameTemporaryParametrizedTest >> testBadName [
 ]
 
 { #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testExistingVariable [
+RBRenameTemporaryParametrizedTest >> testFailureExistingVariable [
+
 	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
-				'name' . #RBLintRuleTestData . #openEditor });
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19). #rules }.
-				'rules' . #RBLintRuleTestData . #openEditor })
+		shouldFail: (self createRefactoringWithArguments: {
+						 {
+							 (15 to: 19).
+							 #rules }.
+						 'name'.
+						 #RBLintRuleTestData.
+						 #openEditor });
+		shouldFail: (self createRefactoringWithArguments: {
+						 {
+							 (15 to: 19).
+							 #rules }.
+						 'rules'.
+						 #RBLintRuleTestData.
+						 #openEditor })
 ]
 
 { #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testModelBadName [
+RBRenameTemporaryParametrizedTest >> testFailureModelBadName [
+
 	| class |
 	model := RBNamespace new.
 	class := model classNamed: #Object.
 	class
-		compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
-		classified: #(#accessing).
+		compile:
+		'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
+		classified: #( #accessing ).
 	self
-		shouldFail: (self createRefactoringWithModel: model
-			andArguments: { { (20 to: 24) . #temp2 } .
-					'temp3' . #Object .  #aMethod: });
-		shouldFail: (self createRefactoringWithModel: model
-			andArguments: { { (20 to: 24) . #temp2 } .
-					'temp1' . #Object . #aMethod: })
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 {
+							 (20 to: 24).
+							 #temp2 }.
+						 'temp3'.
+						 #Object.
+						 #aMethod: });
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 {
+							 (20 to: 24).
+							 #temp2 }.
+						 'temp1'.
+						 #Object.
+						 #aMethod: })
 ]
 
 { #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testModelExistingVariable [
+RBRenameTemporaryParametrizedTest >> testFailureModelExistingVariable [
 
 	| transformation |
 	transformation := (RBAddMethodTransformation
@@ -89,7 +118,9 @@ RBRenameTemporaryParametrizedTest >> testModelExistingVariable [
 	self shouldFail: (self
 			 createRefactoringWithModel: transformation model
 			 andArguments: {
-					 { (16 to: 19) . #temp }.
+					 {
+						 (16 to: 19).
+						 #temp }.
 					 #bar.
 					 self class name.
 					 #foo })

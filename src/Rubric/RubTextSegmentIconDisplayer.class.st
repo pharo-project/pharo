@@ -133,12 +133,12 @@ RubTextSegmentIconDisplayer >> handlesMouseOver: evt [
 
 { #category : #geometry }
 RubTextSegmentIconDisplayer >> horizontalGapAfter [
-	^ 1
+	^ 1 scaledByDisplayScaleFactor
 ]
 
 { #category : #geometry }
 RubTextSegmentIconDisplayer >> horizontalGapBefore [
-	^ 1
+	^ 1 scaledByDisplayScaleFactor
 ]
 
 { #category : #drawing }
@@ -176,7 +176,7 @@ RubTextSegmentIconDisplayer >> invokeIconMenuOfSegments: aSegmentList event: anE
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> itemWidth [
-	^ 16
+	^ 16 scaledByDisplayScaleFactor
 ]
 
 { #category : #accessing }
@@ -232,5 +232,5 @@ RubTextSegmentIconDisplayer >> verticalSeparatorColor [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> verticalSeparatorWidth [
-	^ 1
+	^ 1 scaledByDisplayScaleFactor
 ]

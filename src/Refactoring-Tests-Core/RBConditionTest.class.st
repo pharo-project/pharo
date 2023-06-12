@@ -1,7 +1,7 @@
 Class {
 	#name : #RBConditionTest,
 	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #tests }

@@ -51,7 +51,7 @@ RGEnvironment >> addPackage: anRGPackage [
 
 	self backend forPackage addPackage: anRGPackage to: self.
 
-	self announce: (RPackageRegistered to: anRGPackage)
+	self announce: (PackageAdded to: anRGPackage)
 ]
 
 { #category : #accessing }
@@ -797,7 +797,7 @@ RGEnvironment >> removePackage: anRGPackage [
 
 	self backend forPackage removePackage: anRGPackage from: self.
 
-	self announce: (RPackageUnregistered to: anRGPackage)
+	self announce: (PackageRemoved to: anRGPackage)
 ]
 
 { #category : #unpackaged }

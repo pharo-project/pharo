@@ -17,7 +17,7 @@ RBAbstractInstanceVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAbstractInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -92,9 +92,17 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithDefaultNamesUsed [
 ]
 
 { #category : #'failure tests' }
-RBAbstractInstanceVariableParametrizedTest >> testInheritedName [
+RBAbstractInstanceVariableParametrizedTest >> testFailureInheritedName [
+
 	self shouldFail: (self createRefactoringWithArguments:
-		{'name' . #RBBasicLintRuleTestData})
+			 { 'name'. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBAbstractInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
@@ -115,10 +123,4 @@ RBAbstractInstanceVariableParametrizedTest >> testMetaclassInstanceVariables [
 						^foo := anObject').
 	self assert: (class parseTreeFor: #zzz)
 		  equals: (self parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')"
-]
-
-{ #category : #'failure tests' }
-RBAbstractInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{'foo' . #RBBasicLintRuleTestData})
 ]

@@ -76,7 +76,7 @@ RPackageTag >> classes [
 RPackageTag >> ensureSystemCategory [
 	"We should not hardcode the global variable but ask the package organizer for the organization."
 
-	Smalltalk organization addCategory: self categoryName
+	self packageOrganizer addCategory: self categoryName
 ]
 
 { #category : #accessing }
@@ -115,10 +115,9 @@ RPackageTag >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RPackageTag >> includesMethodCategory: aProtocol ofClass: aClass [
-	^ self package
-		includesMethodCategory: aProtocol
-		ofClass: aClass
+RPackageTag >> includesProtocol: aProtocol ofClass: aClass [
+
+	^ self package includesProtocol: aProtocol ofClass: aClass
 ]
 
 { #category : #testing }

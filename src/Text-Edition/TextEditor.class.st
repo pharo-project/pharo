@@ -75,11 +75,6 @@ TextEditor class >> buildTextEditorShortcutsOn: aBuilder [
 		default: PharoShortcuts current setSearchStringShortcut
 		do: [ :target | target setSearchString ].
 
-	(aBuilder shortcut: #cancel)
-		category: #TextEditor
-		default: PharoShortcuts current cancelShortcut
-		do: [ :target | target cancelWithoutConfirmation ].
-
 	(aBuilder shortcut: #paste)
 		category: #TextEditor
 		default: PharoShortcuts current pasteShortcut

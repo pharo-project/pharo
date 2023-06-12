@@ -118,7 +118,7 @@ RPackage class >> named: aString [
 { #category : #'protected only for tests' }
 RPackage class >> organizer [
 
-	^ PackageGlobalOrganizer ifNil: [ Smalltalk organization ]
+	^ PackageGlobalOrganizer ifNil: [ self packageOrganizer ]
 ]
 
 { #category : #'protected only for tests' }
@@ -306,7 +306,7 @@ RPackage >> basicImportClass: aClass [
 	aClass protocolNames do: [ :protocolName | (self isYourClassExtension: protocolName) ifTrue: [ aClass renameProtocol: protocolName as: Protocol unclassified ] ].
 	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :protocol | self importProtocol: protocol name forClass: aClass ]
+		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
 ]
 
 { #category : #'add method - selector' }
@@ -340,22 +340,6 @@ RPackage >> basicRemoveTag: tag [
 
 	SystemAnnouncer uniqueInstance
 		classTagRemoved: tag name fromPackage: self
-]
-
-{ #category : #'system compatibility' }
-RPackage >> category: categoryName matches: prefix [
-	"self default category: 'Compression-Archives' matches: 'Compression'"
-	"self default category: 'Compression' matches: 'Compression-Archives'"
-	"self default category: 'Compression' matches: 'Compression'"
-	"self default category: 'Compression-Arh' matches: 'Compression'"
-	| prefixSize catSize |
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
 { #category : #slices }
@@ -704,9 +688,10 @@ RPackage >> extensionSelectorsForClass: aClass [
 { #category : #'class tags' }
 RPackage >> extensionsForTag: aRPackageTag [
 
-	^ self extensionMethods select: [ :extensionMethod | | category |
-		category := extensionMethod protocol allButFirst.
-		self category: category matches: aRPackageTag categoryName ]
+	^ self extensionMethods select: [ :extensionMethod |
+		  | protocolName |
+		  protocolName := extensionMethod protocol allButFirst.
+		  protocolName isCategoryOf: aRPackageTag categoryName ]
 ]
 
 { #category : #properties }
@@ -760,9 +745,11 @@ RPackage >> importPackage: anRPackage [
 
 { #category : #private }
 RPackage >> importProtocol: aProtocol forClass: aClass [
-	"import all the methods of a protocol as defined in the receiver."
+	"import all the local methods of a protocol as defined in the receiver."
 
-	(aClass methodsInProtocol: aProtocol) do: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ]
+	(aClass methodsInProtocol: aProtocol)
+		reject: [ :method | method isFromTrait ]
+		thenDo: [ :method | self addMethod: method ]
 ]
 
 { #category : #testing }
@@ -845,17 +832,16 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 	^ sels includes: aSelector
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not]]
-]
-
 { #category : #testing }
 RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
+]
+
+{ #category : #'system compatibility' }
+RPackage >> includesProtocol: categoryName ofClass: aClass [
+
+	^ (self isYourClassExtension: categoryName) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: categoryName) not ] ]
 ]
 
 { #category : #testing }
@@ -885,7 +871,8 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #'system compatibility' }
 RPackage >> includesSystemCategory: categoryName [
-	^ self category: categoryName matches: self systemCategoryPrefix
+
+	^ categoryName isCategoryOf: self systemCategoryPrefix
 ]
 
 { #category : #initialization }
@@ -939,7 +926,7 @@ RPackage >> isTestPackage [
 { #category : #'system compatibility' }
 RPackage >> isYourClassExtension: protocolName [
 
-	^ protocolName isNotNil and: [ self category: protocolName asLowercase matches: self methodCategoryPrefix ]
+	^ protocolName isNotNil and: [ protocolName asLowercase isCategoryOf: self methodCategoryPrefix ]
 ]
 
 { #category : #queries }
@@ -1408,7 +1395,7 @@ RPackage >> renameTo: aSymbol [
 	self mcPackage workingCopy repositoryGroup: repositoryGroup.
 	SystemAnnouncer uniqueInstance
 		announce:
-			(RPackageRenamed to: self oldName: oldName newName: newName)
+			(PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #private }

@@ -16,19 +16,6 @@ RGContainer class >> allManagers [
 ]
 
 { #category : #'image package loading' }
-RGContainer class >> category: categoryName matches: prefix [
-
-	| prefixSize catSize |
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: true) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
-]
-
-{ #category : #'image package loading' }
 RGContainer class >> packageKeys [
 
 	^ self allManagers collect: [ :pck | pck package name asSymbol -> ('*', pck package name asLowercase) ]
@@ -48,14 +35,17 @@ RGContainer class >> packageOfClass: aRGBehaviorDefinition [
 
 { #category : #'image package loading' }
 RGContainer class >> packageOfClass: aRGBehaviorDefinition using: packageNames [
-
 	"Looks for the package of aRGBehaviorDefinition from the image"
+
 	| pName |
-	aRGBehaviorDefinition ifNil:[ ^nil ].
-	pName := (packageNames
-				detect: [ :each| each = aRGBehaviorDefinition category ]
-				ifNone: [ packageNames detect:[ :each| self category: aRGBehaviorDefinition category matches: each ] ifNone:[ nil ] ]).
-	^ pName ifNotNil:[ RGPackageDefinition named: pName ]
+	aRGBehaviorDefinition ifNil: [ ^ nil ].
+	pName := packageNames
+		         detect: [ :each | each = aRGBehaviorDefinition category ]
+		         ifNone: [
+			         packageNames
+				         detect: [ :each | aRGBehaviorDefinition category isCategoryOf: each ]
+				         ifNone: [ nil ] ].
+	^ pName ifNotNil: [ RGPackageDefinition named: pName ]
 ]
 
 { #category : #'image package loading' }
@@ -66,17 +56,18 @@ RGContainer class >> packageOfMethod: aRGMethodDefinition [
 
 { #category : #'image package loading' }
 RGContainer class >> packageOfMethod: aRGMethodDefinition using: packageKeys [
-
 	"Looks for the package of aRGMethodDefinition from the image"
+
 	| pName parentPackage |
-	(aRGMethodDefinition protocol notNil and:[ aRGMethodDefinition protocol beginsWith: '*' ]) ifFalse:[
-		parentPackage := (aRGMethodDefinition parent ifNotNil:[ aRGMethodDefinition parent package ]).
-		^ parentPackage ifNil:[ self packageOfClass: aRGMethodDefinition parent ] ].
+	(aRGMethodDefinition protocol notNil and: [ aRGMethodDefinition protocol beginsWith: '*' ]) ifFalse: [
+		parentPackage := aRGMethodDefinition parent ifNotNil: [ aRGMethodDefinition parent package ].
+		^ parentPackage ifNil: [ self packageOfClass: aRGMethodDefinition parent ] ].
 
 	aRGMethodDefinition protocol ifNil: [ ^ nil ].
-	pName := (packageKeys
-				detect: [ :each| self category: aRGMethodDefinition protocol asLowercase matches: each value ] ifNone:[ nil ]).
-	^ pName ifNotNil:[ RGPackageDefinition named: pName key ]
+	pName := packageKeys
+		         detect: [ :each | aRGMethodDefinition protocol asLowercase isCategoryOf: each value ]
+		         ifNone: [ nil ].
+	^ pName ifNotNil: [ RGPackageDefinition named: pName key ]
 ]
 
 { #category : #'adding-removing' }
@@ -264,25 +255,28 @@ RGContainer >> extensionMethods [
 
 { #category : #'image package loading' }
 RGContainer >> findPackageOfClass: aRGBehaviorDefinition using: packageKeys [
-
 	"Look for the package of a class. It is nil when there is not a package created for a category in MC"
-	| pair |
+
 	self packages isEmpty ifTrue: [ ^ nil ].
-	^ self packages at: aRGBehaviorDefinition category ifAbsent:[
-		pair := packageKeys detect:[ :each| self class category: aRGBehaviorDefinition category matches: each key ] ifNone:[ nil ].
-		pair ifNotNil:[ self packages at: pair key ] ]
+	^ self packages at: aRGBehaviorDefinition category ifAbsent: [
+		  packageKeys
+			  detect: [ :pair | aRGBehaviorDefinition category isCategoryOf: pair key ]
+			  ifFound: [ :pair | self packages at: pair key ]
+			  ifNone: [ nil ] ]
 ]
 
 { #category : #'image package loading' }
 RGContainer >> findPackageOfMethod: aRGMethodDefinition using: packageKeys [
-
 	"Look for the package of an extension method. nil otherwise"
+
 	| pair lname |
-	self packages isEmpty ifTrue: [ ^nil ].
-	(aRGMethodDefinition protocol beginsWith: '*') ifFalse:[ ^ nil ].
+	self packages ifEmpty: [ ^ nil ].
+	(aRGMethodDefinition protocol beginsWith: '*') ifFalse: [ ^ nil ].
 	lname := aRGMethodDefinition protocol asLowercase.
- 	pair := packageKeys detect:[ :assoc| self class category: lname matches: assoc value ] ifNone:[ nil ].
-	^ pair ifNotNil:[ self packages at: pair key ]
+	pair := packageKeys
+		        detect: [ :assoc | lname isCategoryOf: assoc value ]
+		        ifNone: [ nil ].
+	^ pair ifNotNil: [ self packages at: pair key ]
 ]
 
 { #category : #testing }

@@ -7,7 +7,7 @@ Class {
 { #category : #asserting }
 UndefinedClassTest >> assertClassDoesNotExist: aSymbol [
 
-	self assert: (self class environment at: aSymbol ifAbsent: [ true ])
+	self class environment at: aSymbol ifPresent: [ self fail ]
 ]
 
 { #category : #asserting }
@@ -34,9 +34,16 @@ UndefinedClassTest >> createClassFromDefinitionString: aString [
 			buildFromAST: (CDClassDefinitionParser parse: aString) ]
 ]
 
+{ #category : #asserting }
+UndefinedClassTest >> packageNameForTest [
+
+	^ 'UndefinedClasses-Generated-Test-Package'
+]
+
 { #category : #running }
 UndefinedClassTest >> tearDown [
 
+	(self packageNameForTest asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	self class environment at: #Foo ifPresent: [ :c | c removeFromSystem ].
 	self class environment at: #ColoredFoo ifPresent: [ :c | c removeFromSystem ].
 	super tearDown
@@ -58,12 +65,13 @@ UndefinedClassTest >> testCreateSubclassOfArbitraryExpressionReturningNilThrowsE
 
 	self assertClassDoesNotExist: #ColoredFoo.
 
-	self should: [
-		self createClassFromDefinitionString: '(Array new: 1) first subclass: #Box2
+	self
+		should: [
+			self createClassFromDefinitionString: '(Array new: 1) first subclass: #Box2
 			instanceVariableNames: ''''
 			classVariableNames:''''
-			package: ''Box'''.
-	] raise: Error.
+			package: ''' , self packageNameForTest , '''' ]
+		raise: Error.
 
 	self assertClassDoesNotExist: #ColoredFoo
 ]
@@ -76,7 +84,7 @@ UndefinedClassTest >> testCreateSubclassOfNilCreatesSubclassOfNil [
 	self createClassFromDefinitionString: 'nil subclass: #ColoredFoo
 		instanceVariableNames: ''''
 		classVariableNames:''''
-		package: ''Box'''.
+		package: ''' , self packageNameForTest , ''''.
 
 	self assertClassExist: #ColoredFoo.
 	self assert: (self class environment at: #ColoredFoo) superclass equals: nil
@@ -88,8 +96,8 @@ UndefinedClassTest >> testCreateTwoUndefinedClassesOfSameNameShouldBeSameClass [
 	| foo foo2 |
 	self assertClassDoesNotExist: #Foo.
 
-	foo := UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
-	foo2 := UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
+	foo := UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
+	foo2 := UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 
 	self assert: foo identicalTo: foo2
 ]
@@ -99,10 +107,10 @@ UndefinedClassTest >> testCreateUndefinedClassShouldCreateNewClassThatIsUndefine
 
 	self assertClassDoesNotExist: #Foo.
 
-	UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
+	UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 
 	self assertClassExist: #Foo.
-	self assert: [(ShSmalltalkGlobalsEnvironment new classNamed:#Foo) isUndefined]
+	self assert: [ (ShSmalltalkGlobalsEnvironment new classNamed: #Foo) isUndefined ]
 ]
 
 { #category : #tests }
@@ -125,14 +133,15 @@ UndefinedClassTest >> testInstallClassNameWithUnknownSuperclassName [
 
 { #category : #tests }
 UndefinedClassTest >> testRemoveUndefinedClassShouldRemoveIt [
+
 	self assertClassDoesNotExist: #Foo.
 
-	UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
+	UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 
 	self assertClassExist: #Foo.
-	self assert: [(ShSmalltalkGlobalsEnvironment new classNamed:#Foo) isUndefined].
+	self assert: [ (ShSmalltalkGlobalsEnvironment new classNamed: #Foo) isUndefined ].
 
-	(ShSmalltalkGlobalsEnvironment new classNamed:#Foo) removeFromSystem.
+	(ShSmalltalkGlobalsEnvironment new classNamed: #Foo) removeFromSystem.
 
 	self assertClassDoesNotExist: #Foo
 ]
@@ -149,7 +158,7 @@ UndefinedClassTest >> testUndefinedClassIsUndefined [
 	| undefinedClass |
 	self assertClassDoesNotExist: #Foo.
 
-	undefinedClass := UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
+	undefinedClass := UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 	self assert: undefinedClass isUndefined
 ]
 
@@ -165,7 +174,7 @@ UndefinedClassTest >> testUndefinedMetaclassIsUndefined [
 	| undefinedClass |
 	self assertClassDoesNotExist: #Foo.
 
-	undefinedClass := UndefinedClass createUndefinedClassNamed: #Foo package: #Foo.
+	undefinedClass := UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 	self assert: undefinedClass class isUndefined
 ]
 
@@ -193,5 +202,5 @@ UndefinedClassTest >> undefinedDefinition [
 	^ 'Foo subclass: #ColoredFoo
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ''UndefinedClasses'''
+	package: ''' , self packageNameForTest , ''''
 ]

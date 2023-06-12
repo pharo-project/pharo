@@ -62,7 +62,7 @@ ClyNotebookPageRecyclerTest >> testToolsToInstall [
 		contexts: { self methodContext }.
 	
 	self assert: recycler toolsToInstall size equals: 1.
-	self assert: recycler toolsToInstall anyOne equals: ClyMethodCodeEditorToolMorph.
+	self assert: recycler toolsToInstall anyOne activation toolClass equals: ClyMethodCodeEditorToolMorph.
 ]
 
 { #category : #tests }

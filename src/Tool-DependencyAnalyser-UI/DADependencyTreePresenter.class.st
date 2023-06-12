@@ -54,7 +54,7 @@ DADependencyTreePresenter class >> onPackages: aCollection [
 { #category : #examples }
 DADependencyTreePresenter class >> onPackagesMatch: match [
 
-	^ self onPackagesNamed: (Smalltalk organization packages
+	^ self onPackagesNamed: (self packageOrganizer packages
 			   select: [ :package | match match: package packageName asString ]
 			   thenCollect: [ :package | package packageName ])
 ]
@@ -276,7 +276,7 @@ DADependencyTreePresenter >> nodesFor: anItemList [
 { #category : #accessing }
 DADependencyTreePresenter >> packagesEntryCompletion [
 	| applicants |
-	applicants := (Smalltalk organization packages collect: [ :package | package packageName asString ]).
+	applicants := (self packageOrganizer packages collect: [ :package | package packageName asString ]).
 
 	^ EntryCompletion new
 				dataSourceBlock: [:currText | applicants];

@@ -117,9 +117,9 @@ Class {
 
 { #category : #singleton }
 RPackageOrganizer class >> default [
-	"Warning: Use 'Smalltalk organization' since I will be removed in the future."
+	"Warning: Use 'self packageOrganizer' since I will be removed in the future."
 
-	^ Smalltalk organization
+	^ self packageOrganizer
 ]
 
 { #category : #'class initialization' }
@@ -146,7 +146,7 @@ RPackageOrganizer class >> methodAdded: anEvent [
 	(methodCategory isEmptyOrNil or:[ methodCategory first ~= $* ])
 		ifFalse: [
 			(self isPackageDefinedForClass: anEvent methodClass)
-					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfBehavior: anEvent methodClass instanceSide) ].
+					ifFalse: [self packageClass new named: (self packageOrganizer categoryOfBehavior: anEvent methodClass instanceSide) ].
 		]
 ]
 
@@ -159,9 +159,9 @@ RPackageOrganizer class >> packageClass [
 { #category : #'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
-	Smalltalk organization unregisterInterestToSystemAnnouncement.
+	self packageOrganizer unregisterInterestToSystemAnnouncement.
 	"To make sure that we do not have it twice registered"
-	Smalltalk organization registerInterestToSystemAnnouncement
+	self packageOrganizer registerInterestToSystemAnnouncement
 ]
 
 { #category : #'class initialization' }
@@ -283,19 +283,6 @@ RPackageOrganizer >> categoriesMatching: matchString [
 	^ self categories select: [ :c | matchString match: c ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageOrganizer >> category: categoryName matches: prefix [
-	| prefixSize catSize |
-
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
-]
-
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categoryOfBehavior: behavior [
 	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
@@ -319,8 +306,8 @@ RPackageOrganizer >> categoryOfElement: behaviorName [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
-	(self packages
-		anySatisfy: [ :each | self category: packageName matches: each packageName ])
+
+	(self packages anySatisfy: [ :package | packageName isCategoryOf: package packageName ])
 		ifFalse: [ (self packageClass named: packageName capitalized) register ]
 ]
 
@@ -401,7 +388,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	package definedClasses do: [ :definedClass|
 			self registerPackage: package forClass: definedClass].
 
-	SystemAnnouncer announce: (RPackageRegistered to: package).
+	SystemAnnouncer announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -870,7 +857,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 	aPackage definedClasses
 		do: [ :definedClass | self registerPackage: aPackage forClass: definedClass].
 
-	SystemAnnouncer announce: (RPackageRegistered to: aPackage).
+	SystemAnnouncer announce: (PackageAdded to: aPackage).
 
 	^ aPackage
 ]
@@ -1339,7 +1326,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
 	aPackage definedClasses
 		do: [ :definedClass | self unregisterPackage: aPackage forClass: definedClass].
-	SystemAnnouncer announce: (RPackageUnregistered to: aPackage).
+	SystemAnnouncer announce: (PackageRemoved to: aPackage).
 
 	^ aPackage
 ]

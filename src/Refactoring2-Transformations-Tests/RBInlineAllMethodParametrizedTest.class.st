@@ -16,6 +16,16 @@ RBInlineAllMethodParametrizedTest >> constructor [
 	^ #sendersOf:in:
 ]
 
+{ #category : #'failure tests' }
+RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSelectorInClass [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               #caller3.
+			               RBClassDataForRefactoringTest }.
+	self shouldFail: refactoring
+]
+
 { #category : #tests }
 RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	| class superclass |
@@ -28,14 +38,6 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 		andArguments: { #foo:bar: . superclass }).
 	self assert: (class parseTreeForSelector: #foo:bar:)
 			equals: (self parseMethod: 'foo: arg1 bar: arg2 ^ (arg1 + arg2) - arg1')
-]
-
-{ #category : #'failure tests' }
-RBInlineAllMethodParametrizedTest >> testInlineMethodCanNotUnderstandSelectorInClass [
-	| refactoring |
-	refactoring := self createRefactoringWithArguments:
-		{ #caller3 .RBRefactoryTestDataApp }.
-	self shouldFail: refactoring
 ]
 
 { #category : #tests }
@@ -59,13 +61,13 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 { #category : #tests }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
-		{ methodName . RBRefactoryTestDataApp }.
+		{ methodName . RBClassDataForRefactoringTest }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]] ').
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #multipleCalls) equals: (self parseMethod: 'multipleCalls
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #multipleCalls) equals: (self parseMethod: 'multipleCalls
 	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)].
 	(1 to: 10) inject: 1 into: [:sum1 :each1 | sum1 * (self foo: each1)]')
 ]

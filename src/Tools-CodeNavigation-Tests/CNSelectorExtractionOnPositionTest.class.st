@@ -49,7 +49,7 @@ CNSelectorExtractionOnPositionTest >> messageNodeToTest [
 
 { #category : #helpers }
 CNSelectorExtractionOnPositionTest >> method: a zkx: bsq pn: c [
-
+	<ignoreNotImplementedSelectors: #(aMethod:with:x: something:)>
 	^ self aMethod: a with: (self something: bsq) x:(self perform: #selector)
 ]
 
@@ -74,6 +74,7 @@ CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 { #category : #helpers }
 CNSelectorExtractionOnPositionTest >> methodWithSpacesAtTheEnd [
 	"Please do not remove the leading spaces"
+	<ignoreNotImplementedSelectors: #(someMessageFollowedBySpaces)>
 	^ 1 someMessageFollowedBySpaces  
 ]
 

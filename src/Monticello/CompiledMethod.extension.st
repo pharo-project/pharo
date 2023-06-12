@@ -28,7 +28,7 @@ CompiledMethod >> basicAsMCMethodDefinition [
 		  className: self methodClass instanceSide name
 		  classIsMeta: self isClassSide
 		  selector: self selector
-		  category: self protocol
+		  category: self protocolName
 		  timeStamp: self stamp
 		  source: self sourceCode
 ]
@@ -40,6 +40,6 @@ CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
 		  anMCMethodDefinition className = self className and: [ 
 			  anMCMethodDefinition classIsMeta = self isClassSide 
 				  and: [ 
-					  anMCMethodDefinition category = self protocol and: [ 
+					  anMCMethodDefinition category = self protocolName and: [ 
 						  anMCMethodDefinition source = self sourceCode ] ] ] ]
 ]

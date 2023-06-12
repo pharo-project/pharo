@@ -15,16 +15,16 @@ RBPullUpClassVariableParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBPullUpClassVariableParametrizedTest >> testMetaClassFailure [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule . #'RBLintRuleTestData class'})
+RBPullUpClassVariableParametrizedTest >> testFailureMetaClassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #RecursiveSelfRule. #'RBLintRuleTestData class' })
 ]
 
 { #category : #'failure tests' }
-RBPullUpClassVariableParametrizedTest >> testNonExistantName [
-self flag: 'TODO: Some conditions are in transformation part'.
+RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 
+	self skip.
 	"self shouldFail: (self createRefactoringWithArguments:
 		{ #Foo . #RBLintRuleTestData })"
 ]

@@ -610,11 +610,6 @@ FBDDecompiler >> shouldUseOriginalMethod: aCompiledMethod [
 ]
 
 { #category : #'data flow instructions' }
-FBDDecompiler >> skipTemps: numTemps [
-	instructionStream method encoderClass skipTemps: numTemps for: self
-]
-
-{ #category : #'data flow instructions' }
 FBDDecompiler >> storeIntoLiteralVariable: association [
 	simulatedStack addLast: (builder codeAssignment: simulatedStack removeLast to: (builder codeVariable: association key))
 ]

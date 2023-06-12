@@ -94,6 +94,12 @@ FinderSearchStrategy >> isClassesSearch [
 	^ false
 ]
 
+{ #category : #testing }
+FinderSearchStrategy >> isPragmasSearch [
+
+	^ false
+]
+
 { #category : #actions }
 FinderSearchStrategy >> methodSearch: aSelectBlock [
 
@@ -106,12 +112,6 @@ FinderSearchStrategy >> methodSearch: aSelectBlock [
 			class classSide methodsDo: [ :method | (aSelectBlock value: method) ifTrue: [ result add: method ] ] ]
 		displayingProgress: [ :aClass | aClass name ].
 	^ result
-]
-
-{ #category : #accessing }
-FinderSearchStrategy >> rootNodeClassForResult: aCollection [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

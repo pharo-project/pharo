@@ -14,7 +14,7 @@ HDReport class >> runCategories: aCollectionOfStrings [
 
 { #category : #running }
 HDReport class >> runCategory: aString [
-	^ self runClasses: (Smalltalk organization classesInCategory: aString) named: aString
+	^ self runClasses: (self packageOrganizer classesInCategory: aString) named: aString
 ]
 
 { #category : #running }

@@ -327,7 +327,7 @@ ClyMethodCodeEditorToolMorph >> setMethodProtocol: currentMethod [
 
 	MethodClassifier
 		classify: currentMethod
-		fallbackProtocol: editingMethod protocol
+		fallbackProtocol: editingMethod protocolName
 ]
 
 { #category : #initialization }

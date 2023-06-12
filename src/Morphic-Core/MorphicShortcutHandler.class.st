@@ -7,12 +7,6 @@ Class {
 	#category : #'Morphic-Core-Events'
 }
 
-{ #category : #tools }
-MorphicShortcutHandler class >> registerToolsOn: aToolRegistry [
-	"commente out as Smalltalk resetTools might register this handler and break keybindings"
-	"aToolRegistry register: self new as: #shortcuts"
-]
-
 { #category : #'shortcut-handling' }
 MorphicShortcutHandler >> handleKeystroke: aKeystrokeEvent inMorph: aMorph [
 

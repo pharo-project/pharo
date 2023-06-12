@@ -11,7 +11,7 @@ Class {
 MethodClassifierTest >> testOverridenMethodProtocolHasPriority [
 
 	"We want to check that the superclass method protocol has the priority so let's ensure no one messed with the mock first."
-	self assert: (MethodClassifierMockSuperclass >> #initializeNotInInitialize) protocol equals: #protocol.
+	self assert: (MethodClassifierMockSuperclass >> #initializeNotInInitialize) protocolName equals: #protocol.
 
 	"To test that the priority works, we need to make sure that another protocol suggestion strategy works"
 	self assert: (MethodClassifier new protocolByKnownPrefix: MethodClassifierMock >> #initializeNotInInitialize) protocol equals: #initialization.

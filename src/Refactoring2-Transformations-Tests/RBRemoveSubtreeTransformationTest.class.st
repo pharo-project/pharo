@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRemoveSubtreeTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -14,7 +14,7 @@ RBRemoveSubtreeTransformationTest >> testEmptyCode [
 ]
 
 { #category : #tests }
-RBRemoveSubtreeTransformationTest >> testExtractFailure [
+RBRemoveSubtreeTransformationTest >> testFailureExtract [
 	| transformation |
 	transformation := (RBRemoveSubtreeTransformation code: ':= anInterval' from: #one in: self changeMock name) transform.
 	self assertEmpty: transformation model changes changes.

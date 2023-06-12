@@ -55,12 +55,6 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
-{ #category : #testing }
-RBTransformation class >> isTransformation [
-
-	^ false
-]
-
 { #category : #converting }
 RBTransformation >> asRefactoring [
 

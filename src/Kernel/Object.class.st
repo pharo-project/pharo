@@ -1540,6 +1540,12 @@ Object >> okToChange [
 	^ true
 ]
 
+{ #category : #accessing }
+Object >> packageOrganizer [
+
+	^ self class packageOrganizer
+]
+
 { #category : #'message performing' }
 Object >> perform: aSymbol [
 	"Send the unary selector, aSymbol, to the receiver.

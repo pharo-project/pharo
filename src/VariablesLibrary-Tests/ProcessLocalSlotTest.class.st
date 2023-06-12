@@ -6,6 +6,7 @@ Class {
 
 { #category : #tests }
 ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
+	<ignoreNotImplementedSelectors: #(slot1:)>
 	| slot writerString instance |
 	slot := #slot1 => ProcessLocalSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
@@ -30,6 +31,7 @@ ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
 { #category : #tests }
 ProcessLocalSlotTest >> testRead [
 	| slot |
+	<ignoreNotImplementedSelectors: #(slot1)>
 	slot := #slot1 => ProcessLocalSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -44,6 +46,7 @@ ProcessLocalSlotTest >> testRead [
 { #category : #tests }
 ProcessLocalSlotTest >> testWriteAndReadCompiled [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	slot := #slot1 => ProcessLocalSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	object := aClass new.
