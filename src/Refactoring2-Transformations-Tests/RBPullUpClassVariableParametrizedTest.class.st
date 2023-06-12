@@ -29,21 +29,6 @@ RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 		{ #Foo . #RBLintRuleTestData })"
 ]
 
-{ #category : #'failure tests' }
-RBPullUpClassVariableParametrizedTest >> testMetaClassFailure [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule . #'RBLintRuleTestData class'})
-]
-
-{ #category : #'failure tests' }
-RBPullUpClassVariableParametrizedTest >> testNonExistantName [
-self flag: 'TODO: Some conditions are in transformation part'.
-
-	"self shouldFail: (self createRefactoringWithArguments:
-		{ #Foo . #RBLintRuleTestData })"
-]
-
 { #category : #tests }
 RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
 	| refactoring |

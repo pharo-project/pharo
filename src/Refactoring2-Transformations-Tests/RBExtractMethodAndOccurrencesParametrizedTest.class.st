@@ -19,7 +19,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> constructor [
 { #category : #running }
 RBExtractMethodAndOccurrencesParametrizedTest >> setUp [
 	super setUp.
-	model := self extractMethodTestData
+	model := self rbModelForExtractMethodTest
 ]
 
 { #category : #tests }
@@ -27,7 +27,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	refactoring := self createRefactoringWithModel: model
-		andArguments: { (114 to: 231) . #displayName . class }.
+		andArguments: { (116 to: 245) . #displayName . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #stringArg:streamArg:.
 	self executeRefactoring: refactoring.
@@ -61,7 +61,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	refactoring := self createRefactoringWithModel: model
-		andArguments: { (281 to: 301) . #myMethod . class }.
+		andArguments: { (291 to: 311) . #myMethod . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBSharedPoolForTestData2,
 	#superclass : #RBSharedPoolForTestData1,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-ForSharedPool'
 }
 
 { #category : #'tests - perform' }

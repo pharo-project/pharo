@@ -63,19 +63,3 @@ RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 	self assert:
 		(newClass directlyDefinesInstanceVariable: 'methodBlock')"
 ]
-
-{ #category : #'failure tests' }
-RBMoveInstanceVariableToClassParametrizedTest >> testVariableAlreadyExists [
-
-	self shouldFail:
-		(self createRefactoringWithModel: model
-			andArguments: { 'result' . #RBFooLintRuleTestData . #RBBasicLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBMoveInstanceVariableToClassParametrizedTest >> testVariableDoesNotExistInOldClass [
-
-	self shouldFail:
-		(self createRefactoringWithModel: model
-			andArguments: { 'abc' . #RBFooLintRuleTestData . #RBBasicLintRuleTestData })
-]

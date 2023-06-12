@@ -25,10 +25,10 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumbe
 	oldSelector := #callMethod.
 	newSelector := #callFoo.
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector }.
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
 
 	self executeRefactoring: refactoring .
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert: ((class parseTreeForSelector: oldSelector ) statements anySatisfy:
 			[ :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ])
@@ -44,10 +44,10 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 	and rewriting the code in a bad way so for now do not change them."
 	newSelector := 'callFoo' asSymbol.
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector }.
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
 
 	self executeRefactoring: refactoring .
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert: ((class parseTreeForSelector: oldSelector ) statements anySatisfy:
 			[ :e | e isMessage and: [ e selector = #deprecated:on:in: ] ])
@@ -65,7 +65,7 @@ RBDeprecateMethodParametrizedTest >> testFailureInvalidNewSelector [
 		               createRefactoringWithModel: model
 		               andArguments: {
 				               oldSelector.
-				               RBRefactoryTestDataApp.
+				               RBClassDataForRefactoringTest.
 				               newSelector }.
 
 	self shouldFail: refactoring
@@ -83,36 +83,8 @@ RBDeprecateMethodParametrizedTest >> testFailureInvalidNumArgsOfSelector [
 		               createRefactoringWithModel: model
 		               andArguments: {
 				               oldSelector.
-				               RBRefactoryTestDataApp.
+				               RBClassDataForRefactoringTest.
 				               newSelector }.
-
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBDeprecateMethodParametrizedTest >> testInvalidNewSelector [
-	"please note that this strange way to create symbol is because some tests are counting symbol
-	and rewriting the code in a bad way so for now do not change them."
-	
-	| refactoring oldSelector newSelector |
-	oldSelector := ('called:', 'on1:') asSymbol.
-	newSelector := 'inlineFoo1:' asSymbol.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector }.
-
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBDeprecateMethodParametrizedTest >> testInvalidNumArgsOfSelector [
-	"please note that this strange way to create symbol is because some tests are counting symbol
-	and rewriting the code in a bad way so for now do not change them."
-	
-	| refactoring oldSelector newSelector |
-	oldSelector := ('called:', 'on1:') asSymbol.
-	newSelector := 'inlineFoo:' asSymbol.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBRefactoryTestDataApp . newSelector }.
 
 	self shouldFail: refactoring
 ]

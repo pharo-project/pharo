@@ -1,6 +1,6 @@
 Class {
 	#name : #RBTransformationsTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -8,7 +8,7 @@ Class {
 RBTransformationsTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -283,12 +283,12 @@ RBTransformationsTest >> testRemoveMessageSendTransform [
 	transformation := (RBRemoveAllMessageSendsTransformation new
 		messageSend: #cr
 		inMethod: (#called:, #on:) asSymbol
-		inClass: #RBRefactoryTestDataApp)
+		inClass: #RBClassDataForRefactoringTest)
 		transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: #RBRefactoryTestDataApp.
+	class := transformation model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: (#called:, #on:) asSymbol)
 			equals:  (self parseMethod: 'called: anObject on: aBlock
 	Transcript show: anObject printString.
@@ -328,22 +328,27 @@ RBTransformationsTest >> testRemoveVariableTransform [
 { #category : #tests }
 RBTransformationsTest >> testRenameClassTransform [
 
-	| transformation class |
+	| transformation class newClassName oldClassName |
+	newClassName := #RBNewDummyClassName.
+	oldClassName := RBClassToRename name asSymbol.
 	transformation := (RBRenameClassTransformation
-							rename: 'RBDummyClassToRename' asSymbol
-							to: 'RBNewDummyClassName' asSymbol)
+							rename: oldClassName
+							to: newClassName)
 							transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: 'RBNewDummyClassName' asSymbol.
+	class := transformation model classNamed: newClassName.
 	self assert: (class parseTreeForSelector: #method1)
 		  equals: (self parseMethod: 'method1 ^ self method2').
-	self deny: (transformation model includesClassNamed: 'RBDummyClassToRename' asSymbol).
+		
+	self deny: (transformation model includesClassNamed: oldClassName).
 
-	class := transformation model classNamed: 'RBDummySubclassOfClassToRename' asSymbol.
+	class := transformation model classNamed: RBSubclassOfClassToRename name asSymbol.
+	
 	self assert: class superclass
 		  equals: (transformation model classNamed: 'RBNewDummyClassName' asSymbol).
+		
 	self assert: (class parseTreeForSelector: #symbolReference)
 		  equals: (self parseMethod: 'symbolReference ^ #RBNewDummyClassName').
 	self assert: (class parseTreeForSelector: #reference)

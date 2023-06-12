@@ -17,7 +17,7 @@ RBAbstractClassVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAbstractClassVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -77,24 +77,6 @@ RBAbstractClassVariableParametrizedTest >> testFailureNonExistantName [
 			 { #Foo. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testInheritedName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#DependentsFields . #RBBasicLintRuleTestData})
-]
-
-{ #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testInvalidClass [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#DependentsFields . #Object })
-]
-
-{ #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-	{ #RecursiveSelfRule . #'RBTransformationRuleTestData class'})
-]
-
 { #category : #tests }
 RBAbstractClassVariableParametrizedTest >> testModelAbstractClassVariable [
 	| refactoring meta class |
@@ -133,10 +115,4 @@ RBAbstractClassVariableParametrizedTest >> testModelAbstractClassVariableOverrid
 "	self executeRefactoring: refactoring.
 	self assert: (meta parseTreeFor: #classVarName21) equals: (self parseMethod: 'classVarName21 ^ClassVarName2').
 	self assert: (meta parseTreeFor: #classVarName21:) equals: (self parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')"
-]
-
-{ #category : #'failure tests' }
-RBAbstractClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#Foo . #RBBasicLintRuleTestData})
 ]

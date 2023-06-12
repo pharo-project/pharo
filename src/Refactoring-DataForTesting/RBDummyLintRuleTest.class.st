@@ -11,7 +11,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#category : #'Refactoring-DataForTesting-LittleHierarchy'
 }
 
 { #category : #parsing }
@@ -82,7 +82,7 @@ RBDummyLintRuleTest >> isEmpty [
 
 { #category : #testing }
 RBDummyLintRuleTest >> junk [
-	^ RBDummyRefactoryTestDataApp printString
+	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
 		to: CR
 ]

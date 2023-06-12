@@ -18,33 +18,10 @@ RBMoveMethodToClassSideParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBMoveMethodToClassSideParametrizedTest >> testClassIsNotMeta [
-	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp class.
-	someClass := model classNamed: className name.
-	someClass compile: 'threeElementPoint ^ self new' classified: {#example}.
-	method := someClass methodFor: ('threeElement', 'Point') asSymbol.
-	refactoring := self createRefactoringWithModel: model andArguments: { method . className }.
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBMoveMethodToClassSideParametrizedTest >> testExistsMethodInClassSide [
-	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp.
-	method := className >> ('threeElement', 'Point') asSymbol.
-	refactoring := self createRefactoringWithArguments: { method . className }.
-	model := refactoring model.
-	someClass := model classNamed: className name, ' class'.
-	someClass compile: 'threeElementPoint ^ self new' classified: {#example}.
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
 RBMoveMethodToClassSideParametrizedTest >> testFailureClassIsNotMeta [
 
 	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp class.
+	className := RBClassDataForRefactoringTest class.
 	someClass := model classNamed: className name.
 	someClass
 		compile: 'threeElementPoint ^ self new'
@@ -62,7 +39,7 @@ RBMoveMethodToClassSideParametrizedTest >> testFailureClassIsNotMeta [
 RBMoveMethodToClassSideParametrizedTest >> testFailureExistsMethodInClassSide [
 
 	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp.
+	className := RBClassDataForRefactoringTest.
 	method := className >> ('threeElement' , 'Point') asSymbol.
 	refactoring := self createRefactoringWithArguments: {
 			               method.
@@ -78,7 +55,7 @@ RBMoveMethodToClassSideParametrizedTest >> testFailureExistsMethodInClassSide [
 { #category : #tests }
 RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp.
+	className := RBClassDataForRefactoringTest.
 	method := className >> ('threeElement', 'Point') asSymbol.
 	refactoring := self createRefactoringWithArguments: { method . className }.
 	self executeRefactoring: refactoring.

@@ -167,31 +167,20 @@ RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	| refactoring class |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			  { #junk . RBLintRuleTestData . 'RefactoryTestDataApp' }.
+			  { #junk . RBLintRuleTestData . RBClassDataForRefactoringTest name }.
 		self
 			setupSelfArgumentNameFor: refactoring
 			toReturn: 'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
-			toReturn: (Array with: (refactoring model classNamed: 'RBRefactoryTestDataApp class' asSymbol)).
+			toReturn: (Array with: (refactoring model classNamed: RBClassDataForRefactoringTest class name asSymbol)).
 		self
 			setupMethodNameFor: refactoring
 			toReturn: #junk1.
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class parseTreeForSelector: #junk) equals: (self parseMethod: 'junk ^RefactoryTestDataApp junk1').
-	self assert: ((refactoring model metaclassNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #junk1) equals: (self parseMethod: 'junk1
-	^RBRefactoryTestDataApp printString copyFrom: 1 to: CR').
+	self assert: (class parseTreeForSelector: #junk) equals: (self parseMethod: 'junk ^RBClassDataForRefactoringTest junk1').
+	self assert: ((refactoring model metaclassNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #junk1) equals: (self parseMethod: 'junk1
+	^self printString copyFrom: 1 to: CR').
 	self assert: (class directlyDefinesPoolDictionary: 'TextConstants' asSymbol)
-]
-
-{ #category : #'failure tests' }
-RBMoveMethodParametrizedTest >> testMovePrimitiveMethod [
-	| refactoring |
-	(model classNamed: #Object)
-		compile: 'foo <primitive: 100> ^#() primitiveFailed'
-		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { #foo . Object . 'OrderedCollection' }.
-	self shouldFail: refactoring
 ]

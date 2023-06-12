@@ -19,15 +19,15 @@ RBFindAndReplaceSetUpParametrizedTest >> constructor [
 { #category : #tests }
 RBFindAndReplaceSetUpParametrizedTest >> testClassDoesNotDefineSetUpMethod [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: { RBData2Test . true }.
+	refactoring := self createRefactoringWithArguments: { RBTestAsDataForExtractSetupTransformationTest . true }.
 	self shouldFail: refactoring
 ]
 
 { #category : #tests }
 RBFindAndReplaceSetUpParametrizedTest >> testReplaceSetUp [
 	| class refactoring |
-	refactoring := self createRefactoringWithArguments: { RBData2Test . true }.
-	class := refactoring model classNamed: #RBData2Test.
+	refactoring := self createRefactoringWithArguments: { RBTestAsDataForExtractSetupTransformationTest . true }.
+	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	class compile: 'setUp self accessToAClass. aString := ''Example''.'
 		classified: #(#accessing).
 	self executeRefactoring: refactoring.

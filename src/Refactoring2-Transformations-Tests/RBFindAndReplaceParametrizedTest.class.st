@@ -19,7 +19,7 @@ RBFindAndReplaceParametrizedTest >> constructor [
 { #category : #running }
 RBFindAndReplaceParametrizedTest >> setUp [
 	super setUp.
-	model := self extractMethodTestData
+	model := self rbModelForExtractMethodTest
 ]
 
 { #category : #'failure tests' }

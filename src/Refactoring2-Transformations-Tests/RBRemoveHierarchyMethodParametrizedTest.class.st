@@ -46,13 +46,3 @@ RBRemoveHierarchyMethodParametrizedTest >> testRemoveMethod [
 	self deny: ((refactoring model classNamed: #RBSharedPoolForTestData1) directlyDefinesMethod: selectors first).
 	self deny: ((refactoring model classNamed: #RBSharedPoolForTestData2) directlyDefinesMethod: selectors first)
 ]
-
-{ #category : #'failure tests' }
-RBRemoveHierarchyMethodParametrizedTest >> testRemoveNonExistantMethod [
-	self shouldFail: (self createRefactoringWithArguments: { #(#msg7) . RBBasicLintRuleTestData})
-]
-
-{ #category : #'failure tests' }
-RBRemoveHierarchyMethodParametrizedTest >> testRemoveReferenced [
-	self shouldFail: (self createRefactoringWithArguments: { #(#msg1) . RBBasicLintRuleTestData })
-]

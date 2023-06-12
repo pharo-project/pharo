@@ -52,30 +52,6 @@ RBSplitClassParametrizedTest >> testFailureInvalidReferenceVariableName [
 				 #temp })
 ]
 
-{ #category : #'failure tests' }
-RBSplitClassParametrizedTest >> testInvalidInstanceVariableName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBBasicLintRuleTestData . #(#inexistentVar #classBlock) . #Object . #blocks })
-]
-
-{ #category : #'failure tests' }
-RBSplitClassParametrizedTest >> testInvalidNewClassName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBBasicLintRuleTestData . #(#methodBlock #classBlock) . #Object . #blocks })
-]
-
-{ #category : #'failure tests' }
-RBSplitClassParametrizedTest >> testInvalidReferenceVariableName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBLintRuleTestData . #(#name #foo1) . #ClassA . #result }).
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBLintRuleTestData . #(#name #foo1) . #ClassA . #temp })
-]
-
 { #category : #tests }
 RBSplitClassParametrizedTest >> testSplitClass [
 	|ref aModel|

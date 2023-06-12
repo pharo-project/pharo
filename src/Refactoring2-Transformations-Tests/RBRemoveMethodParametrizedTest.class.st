@@ -86,11 +86,11 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 	selectors := Array with: 'selectorNotReferenced' asSymbol.
 	refactoring := self createRefactoringWithModel: model
 		andArgumentsColl: selectors
-		andOtherArgs: { #RBRefactoryTestDataApp }.
+		andOtherArgs: { #RBClassDataForRefactoringTest }.
 
 	selectors do: [ :symbol |
 		self assert:
-			(( model classNamed: #RBRefactoryTestDataApp)
+			(( model classNamed: #RBClassDataForRefactoringTest)
 				directlyDefinesMethod: symbol).
 	].
 
@@ -98,29 +98,7 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 
 	selectors do: [ :symbol |
 		self deny:
-			(( model classNamed: #RBRefactoryTestDataApp)
+			(( model classNamed: #RBClassDataForRefactoringTest)
 				directlyDefinesMethod: symbol)
 	]
-]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testRemoveNonExistingMethod [
-	self shouldFail: (self createRefactoringWithModel: model
-	andArgumentsColl: #(#nonExistingMethod )
-	andOtherArgs: {#RBBasicLintRuleTestData})
-]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testRemoveReferenced [
-	self shouldWarn: (self createRefactoringWithModel: model
-	andArgumentsColl:  #(#checkClass:)
-	andOtherArgs: { #RBBasicLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testRemoveSameMethodButSendsSuper [
-	<expectedFailure>
-	self shouldWarn: (self createRefactoringWithModel: model
-			andArgumentsColl: #(#new )
-			andOtherArgs: {#'RBBasicLintRuleTestData class'})
 ]

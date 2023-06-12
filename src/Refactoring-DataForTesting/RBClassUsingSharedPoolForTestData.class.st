@@ -1,12 +1,12 @@
 Class {
 	#name : #RBClassUsingSharedPoolForTestData,
 	#superclass : #Object,
-	#traits : 'RBDummy',
-	#classTraits : 'RBDummy classTrait',
+	#traits : 'RBTDummy',
+	#classTraits : 'RBTDummy classTrait',
 	#pools : [
 		'RBSharedPoolForTestData'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-ForSharedPool'
 }
 
 { #category : #'accessing - instances and variables' }

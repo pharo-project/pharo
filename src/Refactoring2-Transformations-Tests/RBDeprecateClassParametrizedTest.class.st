@@ -32,12 +32,6 @@ RBDeprecateClassParametrizedTest >> testFailureMetaClassFailure [
 				 #Foo })
 ]
 
-{ #category : #'failure tests' }
-RBDeprecateClassParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ self class class . #Foo })
-]
-
 { #category : #tests }
 RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	| refactoring replacement deprecated user |

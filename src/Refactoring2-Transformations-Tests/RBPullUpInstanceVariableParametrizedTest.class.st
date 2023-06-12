@@ -34,9 +34,3 @@ RBPullUpInstanceVariableParametrizedTest >> testPullUpInstVar [
 	self deny: ((refactoring model classNamed: #RBFooLintRuleTestData)
 		directlyDefinesInstanceVariable: 'result')
 ]
-
-{ #category : #'failure tests' }
-RBPullUpInstanceVariableParametrizedTest >> testPullUpVariableNotDefined [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'notDefinedVariable' . #RBLintRuleTestData })
-]

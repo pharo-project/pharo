@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRenameAndDeprecateClassTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 

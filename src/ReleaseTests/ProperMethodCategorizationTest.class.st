@@ -167,7 +167,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 
 	validExceptions := #( ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class'
 	                      MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest
-	                      'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand ).
+	                      'RBTransformationRuleTestData1' StInspectorMockObjectSubclass StDebuggerCommand ).
 
 	remaining := violating asOrderedCollection reject: [ :each | validExceptions includes: each name ].
 

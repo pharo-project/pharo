@@ -16,21 +16,13 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #'failure tests' }
-RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadMethodName [
-	| refactoring |
-	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExample7 . RBData2Test }.
-	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
-	self shouldFail: refactoring
-]
-
 { #category : #tests }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
-	refactoring := self createRefactoringWithArguments: { (15+12 to: 59+12) . #testExtractSetupExample1 . RBData2Test }.
+	refactoring := self createRefactoringWithArguments: { (15+12 to: 59+12) . #testExtractSetupExample1 . RBTestAsDataForExtractSetupTransformationTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBData2Test.
+	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	self assert: (class parseTreeForSelector: #setUp)
 		equals: (self parseMethod: 'setUp
 		super setUp. self accessToAClass. aString := ''Example''').
@@ -58,7 +50,7 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAnd
 { #category : #'failure tests' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExtractSetupExample1 . RBData2Test }.
+	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExtractSetupExample1 . RBTestAsDataForExtractSetupTransformationTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self shouldFail: refactoring
 ]
@@ -70,7 +62,7 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadMethodName [
 	refactoring := self createRefactoringWithArguments: {
 			               (36 to: 56).
 			               #testExample7.
-			               RBData2Test }.
+			               RBTestAsDataForExtractSetupTransformationTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self shouldFail: refactoring
 ]

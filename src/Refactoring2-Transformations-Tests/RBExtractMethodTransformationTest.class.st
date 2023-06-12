@@ -1,6 +1,6 @@
 Class {
 	#name : #RBExtractMethodTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -76,7 +76,7 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 	self shouldFail: (RBExtractMethodTransformation
 							extract: 'whatever'
 							from: #testMethod to: #bla
-							in: #RBRefactoryTestDataApp)
+							in: #RBClassDataForRefactoringTest)
 							asRefactoring.
 
 	self shouldFail: (RBExtractMethodTransformation

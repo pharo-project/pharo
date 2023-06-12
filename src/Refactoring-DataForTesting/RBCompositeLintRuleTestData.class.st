@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'rules'
 	],
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-LittleHierarchy'
 }
 
 { #category : #'instance creation' }

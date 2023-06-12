@@ -21,7 +21,7 @@ RBInlineParameterParametrizedTest >> testFailureInlineArgsWhitoutSameLiteral [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 'aSymbol'.
-				 RBRefactoryTestDataApp.
+				 RBClassDataForRefactoringTest.
 				 ('inline' , 'Bar:') asSymbol })
 ]
 
@@ -30,31 +30,19 @@ RBInlineParameterParametrizedTest >> testFailureInlineBlockFailure [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 'aBlock'.
-				 RBRefactoryTestDataApp.
+				 RBClassDataForRefactoringTest.
 				 ('inline' , 'Foo:') asSymbol })
-]
-
-{ #category : #'failure tests' }
-RBInlineParameterParametrizedTest >> testInlineArgsWhitoutSameLiteral [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'Bar:') asSymbol })
-]
-
-{ #category : #'failure tests' }
-RBInlineParameterParametrizedTest >> testInlineBlockFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'aBlock' . RBRefactoryTestDataApp . ('inline' , 'Foo:') asSymbol })
 ]
 
 { #category : #tests }
 RBInlineParameterParametrizedTest >> testInlineLiteralArray [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'ParameterMethod:') asSymbol }.
+		{ 'aSymbol' . RBClassDataForRefactoringTest . ('inline' , 'ParameterMethod:') asSymbol }.
 
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: #inlineParameterMethod) equals: (self parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
 	self assert: (class parseTreeForSelector: #sendInlineParameterMethod) equals: (self parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)

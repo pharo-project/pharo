@@ -1,10 +1,7 @@
 Class {
 	#name : #RBAbstractRefactoringTest,
 	#superclass : #RBAbstractEnvTestCase,
-	#traits : 'TModelBuilder',
-	#classTraits : 'TModelBuilder classTrait',
 	#instVars : [
-		'model',
 		'rbClass'
 	],
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
@@ -84,7 +81,7 @@ RBAbstractRefactoringTest >> rbClass: anObject [
 { #category : #running }
 RBAbstractRefactoringTest >> setUp [
 	super setUp.
-	model := self defaultNamespace new
+	model := self defaultNamespaceClass new
 ]
 
 { #category : #'set up' }

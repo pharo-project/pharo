@@ -17,15 +17,6 @@ RBRenameClassVariableParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBRenameClassVariableParametrizedTest >> testAlreadyExistingName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule .
-			self objectClassVariable .
-			#RBTransformationRuleTestData})
-]
-
-{ #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -48,25 +39,6 @@ RBRenameClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #foo. #newFoo. #RBBasicLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBRenameClassVariableParametrizedTest >> testMetaClassFailure [
-
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule .
-			#Foo .
-			RBTransformationRuleTestData class name asSymbol })
-]
-
-{ #category : #'failure tests' }
-RBRenameClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #foo .
-			#newFoo .
-			#RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }

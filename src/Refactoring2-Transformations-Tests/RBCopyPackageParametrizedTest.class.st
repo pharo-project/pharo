@@ -56,7 +56,7 @@ RBCopyPackageParametrizedTest >> removePackageNamed: packageName [
 { #category : #running }
 RBCopyPackageParametrizedTest >> setUp [
 	super setUp.
-	model := self defaultNamespace new.
+	model := self defaultNamespaceClass new.
 	self
 		createPackageNamed: 'RefactoringSmallPackageForTest'
 		withClasses: #('RBFTTest1' 'RBFTTest2').
@@ -112,12 +112,6 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 	self
 		assert: (aModel includesClassNamed: #RBFTTest2)
 		description: 'It test that original class where we copied from is still there'
-]
-
-{ #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testExistingPackage [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
 ]
 
 { #category : #'failure tests' }
