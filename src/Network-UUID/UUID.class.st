@@ -47,7 +47,7 @@ UUID class >> fromString36: aString [
 	that might cause problems."
 
 	| object array num |
-	object := NilUUID new.
+	object := self nilUUID.
 	array := object uuidData.
 	num := Integer readFrom: aString asUppercase readStream base: 36.
 	1 to: 16 do: [:i | array at: i put: (num byteAt: i)].
@@ -61,23 +61,41 @@ UUID class >> fromString: aString [
 
 	| uuid |
 	aString size ~= 36 ifTrue: [ self error: 'a UUID should be 36 characters' ].
-	uuid := NilUUID new.
+	uuid := self nilUUID.
 	uuid readFrom: aString readStream.
 	^ uuid
+]
+
+{ #category : #'instance creation' }
+UUID class >> new [
+	|uuid|
+	uuid := super new.
+	uuid uuidData generateUUIDInPlace.
+	^uuid
 ]
 
 { #category : #'instance creation' }
 UUID class >> nilUUID [
 	"Return a empty un-initialized UUID, with all zero values, 00000000-0000-0000-0000-000000000000"
 
-	"self nilUUID"
+	^ super new
+]
 
-	self
-		deprecated:
-		'The UUID class has been redesigned, now the nil UUID is its own subclass of UUID'
-		transformWith: 'UUID nilUUID' -> 'NilUUID new'.
+{ #category : #'instance creation' }
+UUID class >> nonStandardUUID [
+	"This method uses the legacy UUID generation method from Pharo."
+	
+	^ self nonStandardUUIDWithGenerator: UUIDGenerator default
+]
 
-	^ NilUUID new.
+{ #category : #'instance creation' }
+UUID class >> nonStandardUUIDWithGenerator: aGenerator [
+	"This method uses the legacy UUID generation method from Pharo."
+	
+	|uuid|
+	uuid := super new.
+	aGenerator placeFields: uuid uuidData.
+	^uuid
 ]
 
 { #category : #comparing }
@@ -176,7 +194,6 @@ UUID >> hash [
 { #category : #initialization }
 UUID >> initialize [
 	uuidData := ByteArray new: 16.
-	uuidData generateUUIDInPlace
 ]
 
 { #category : #comparing }

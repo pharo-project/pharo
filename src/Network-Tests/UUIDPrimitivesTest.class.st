@@ -49,10 +49,10 @@ UUIDPrimitivesTest >> testCreationEquality [
 UUIDPrimitivesTest >> testCreationFromString [
 
 	| uuid string |
-	string := NilUUID new asString.
+	string := UUID nilUUID asString.
 	uuid := UUID fromString: string.
 	self assert: uuid uuidData size equals: 16.
-	self assert: uuid equals: NilUUID new.
+	self assert: uuid equals: UUID nilUUID.
 	self assert: uuid isNilUUID.
 	self assert: uuid asString size equals: 36.
 	self assert: uuid uuidData asArray asSet size equals: 1.
@@ -77,7 +77,7 @@ UUIDPrimitivesTest >> testCreationFromString36With0 [
 { #category : #tests }
 UUIDPrimitivesTest >> testCreationFromString36WithNillUUID [
 
-	UUID fromString36: NilUUID new asString36
+	UUID fromString36: UUID nilUUID asString36
 ]
 
 { #category : #tests }
@@ -93,7 +93,7 @@ UUIDPrimitivesTest >> testCreationFromStringNotNil [
 UUIDPrimitivesTest >> testCreationNil [
 
 	| uuid |
-	uuid := NilUUID new.
+	uuid := UUID nilUUID.
 	self assert: uuid uuidData size equals: 16.
 	self assert: uuid isNilUUID.
 	self assert: uuid asString size equals: 36.

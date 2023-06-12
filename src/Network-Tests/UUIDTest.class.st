@@ -41,11 +41,11 @@ UUIDTest >> testNilUUID [
 
 	| nilUUIDRepresentation |
 	nilUUIDRepresentation := '00000000-0000-0000-0000-000000000000'.
-	self assert: NilUUID new isNilUUID.
-	self assert: NilUUID new asString equals: nilUUIDRepresentation.
+	self assert: UUID nilUUID isNilUUID.
+	self assert: UUID nilUUID asString equals: nilUUIDRepresentation.
 	self
 		assert: (UUID fromString: nilUUIDRepresentation)
-		equals: NilUUID new.
+		equals: UUID nilUUID.
 	self deny: UUID new isNilUUID
 ]
 
@@ -67,11 +67,11 @@ UUIDTest >> testString [
 
 	self assert: (UUID fromString: s1) printString equals: s1.
 	self assert: (UUID fromString: s2) printString equals: s2.
-	self assert: NilUUID new printString equals: s3.
+	self assert: UUID nilUUID printString equals: s3.
 
 	self assert: (UUID fromString: s1) asString equals: s1.
 	self assert: (UUID fromString: s2) asString equals: s2.
-	self assert: NilUUID new asString equals: s3
+	self assert: UUID nilUUID asString equals: s3
 ]
 
 { #category : #testing }
@@ -81,8 +81,8 @@ UUIDTest >> testString36 [
 	self assert: (uuid asString36 allSatisfy: [ :e | e isAlphaNumeric ]).
 	self assert: (UUID fromString36: uuid asString36) equals: uuid.
 
-	self assert: NilUUID new asString36 equals: 0 asString.
-	self assert: (UUID fromString36: 0 asString) equals: NilUUID new
+	self assert: UUID nilUUID asString36 equals: 0 asString.
+	self assert: (UUID fromString36: 0 asString) equals: UUID nilUUID
 ]
 
 { #category : #tests }

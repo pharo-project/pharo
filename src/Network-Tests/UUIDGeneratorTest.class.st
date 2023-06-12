@@ -20,14 +20,12 @@ UUIDGeneratorTest >> setUp [
 UUIDGeneratorTest >> testCounterRollover [
 
 	| previousUuid uuid |
-	previousUuid := ByteArray new: 16.
-	UUIDGenerator default placeFields: previousUuid.
+	previousUuid := UUID nonStandardUUID.
 	"the internal counter inside generator will rollover at 16r10000,
 	the least significant 10th byte rolls over every 16r100,
 	the internal counter starts at a random value"
 	2 * 16r10000 timesRepeat: [
-		uuid := ByteArray new: 16.
-		UUIDGenerator default placeFields: uuid.
+		uuid := UUID nonStandardUUID.
 		"same generator, consequetive counters (take roll-over into account)"
 		self assert: (previousUuid at: 10) + 1 \\ 256 equals: (uuid at: 10).
 		previousUuid := uuid ]
@@ -41,10 +39,9 @@ UUIDGeneratorTest >> testDefault [
 
 { #category : #testing }
 UUIDGeneratorTest >> testSpeed [
-	|array|
-	array := ByteArray new: 16.
+
 	self
-		should: [ 100000 timesRepeat: [ UUIDGenerator default placeFields: array ] ]
+		should: [ 100000 timesRepeat: [ UUID nonStandardUUID ] ]
 		notTakeMoreThan: 1 second
 ]
 
@@ -54,10 +51,8 @@ UUIDGeneratorTest >> testTwoDifferentGenerator [
 	| generator1 generator2 uuid1 uuid2 time1 time2 |
 	generator1 := UUIDGenerator new.
 	generator2 := UUIDGenerator new.
-	uuid1 := NilUUID new.
-	uuid2 := NilUUID new.
-	generator1 placeFields: uuid1 uuidData.
-	generator2 placeFields: uuid2 uuidData.
+	uuid1 := UUID nonStandardUUIDWithGenerator: generator1.
+	uuid2 := UUID nonStandardUUIDWithGenerator: generator2.
 	"different UUIDs"
 	self deny: uuid1 equals: uuid2.
 	"different generators, different node id"
@@ -75,10 +70,8 @@ UUIDGeneratorTest >> testTwoDifferentGenerator [
 UUIDGeneratorTest >> testTwoSameGenerator [
 
 	| uuid1 uuid2 time1 time2 |
-	uuid1 := NilUUID new.
-	uuid2 := NilUUID new.
-	UUIDGenerator default placeFields: uuid1 uuidData.
-	UUIDGenerator default placeFields: uuid2 uuidData.
+	uuid1 := UUID nonStandardUUID.
+	uuid2 := UUID nonStandardUUID.
 	"different UUIDs"
 	self deny: uuid1 equals: uuid2.
 	"same generator, same node id"
@@ -86,7 +79,9 @@ UUIDGeneratorTest >> testTwoSameGenerator [
 		assert: uuid1 uuidData reverse readStream uint32
 		equals: uuid2 uuidData reverse readStream uint32.
 	"same generator, consecutive counters (take roll-over into account)"
-	self assert: (uuid1 uuidData at: 10) + 1 \\ 256 equals: (uuid2 uuidData at: 10).
+	self
+		assert: (uuid1 uuidData at: 10) + 1 \\ 256
+		equals: (uuid2 uuidData at: 10).
 	"same generators, similar clock, within 100 milliseconds (stored time is in microseconds)"
 	time1 := self timeFromUUID: uuid1.
 	time2 := self timeFromUUID: uuid2.
