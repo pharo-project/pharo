@@ -5,7 +5,7 @@ Class {
 		'instVar'
 	],
 	#classVars : [
-		'ClassVar'
+		'SharedVar'
 	],
 	#classInstVars : [
 		'classInstVar'
@@ -14,10 +14,16 @@ Class {
 }
 
 { #category : #accessing }
+RBRefactoringChangeMock class >> classInsVar [
+
+	^ classInstVar
+]
+
+{ #category : #accessing }
 RBRefactoringChangeMock >> accessAll [ 
 	instVar := 0. 
-	ClassVar := 0.
-	^ instVar + ClassVar 
+	SharedVar := 0.
+	^ instVar + SharedVar 
 ]
 
 { #category : #accessing }
