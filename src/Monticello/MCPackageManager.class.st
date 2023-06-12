@@ -144,29 +144,19 @@ MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 ]
 
 { #category : #'system changes' }
-MCPackageManager class >> managersForClass: aClass category: methodCategory do: aBlock [
-	(methodCategory isEmptyOrNil or:[methodCategory first ~= $*]) ifTrue:[
-		"Not an extension method"
-		^self managersForClass: aClass do: aBlock.
-	].
-	self managersForCategory: methodCategory allButFirst do: aBlock.
-]
-
-{ #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass do: aBlock [
 
 	| rPackage |
 	rPackage := aClass package.
 
-	self registry do: [:mgr |
-		(mgr packageSet packages includes: rPackage)
-			ifTrue: [aBlock value: mgr]]
+	self registry do: [ :mgr | (mgr packageSet packages includes: rPackage) ifTrue: [ aBlock value: mgr ] ]
 ]
 
 { #category : #'system changes' }
-MCPackageManager class >> managersForClass: aClass selector: aSelector do: aBlock [
+MCPackageManager class >> managersForClass: aClass protocol: protocol do: aBlock [
 
-	^ self managersForClass: aClass category: (aClass protocolNameOfSelector: aSelector) do: aBlock
+	(protocol isNil or: [ protocol isExtensionProtocol ]) ifTrue: [ "Not an extension method" ^ self managersForClass: aClass do: aBlock ].
+	self managersForCategory: protocol name allButFirst do: aBlock
 ]
 
 { #category : #'system changes' }
@@ -192,7 +182,7 @@ MCPackageManager class >> methodModified: anEvent [
 		
 	^ self
 		managersForClass: anEvent methodClass
-		selector: anEvent selector
+		protocol: anEvent protocol
 		do: [ :mgr | mgr modified: true ]
 ]
 
@@ -205,7 +195,7 @@ MCPackageManager class >> methodMoved: anEvent [
 { #category : #'system changes' }
 MCPackageManager class >> methodRemoved: anEvent [
 
-	self managersForClass: anEvent methodClass category: anEvent protocol name do: [ :mgr | mgr modified: true ]
+	self managersForClass: anEvent methodClass protocol: anEvent protocol do: [ :mgr | mgr modified: true ]
 ]
 
 { #category : #'system changes' }
