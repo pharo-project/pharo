@@ -17,9 +17,10 @@ RBRemoveClassKeepingSubclassesParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
+RBRemoveClassKeepingSubclassesParametrizedTest >> testFailureRemoveClassWithReferencesRaisesRBRefactoringError [
+
 	self shouldFail: (self createRefactoringWithArguments:
-		{#(#RBBasicLintRuleTestData )})
+			 { #( #RBBasicLintRuleTestData ) })
 ]
 
 { #category : #tests }

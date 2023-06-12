@@ -17,7 +17,7 @@ RBDeprecateClassParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBDeprecateClassParametrizedTest >> testBadName [
+RBDeprecateClassParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ RBLintRuleTestData . self objectClassVariable }).
 	self shouldFail: (self createRefactoringWithArguments:
@@ -25,9 +25,11 @@ RBDeprecateClassParametrizedTest >> testBadName [
 ]
 
 { #category : #'failure tests' }
-RBDeprecateClassParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ self class class . #Foo })
+RBDeprecateClassParametrizedTest >> testFailureMetaClassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self class class.
+				 #Foo })
 ]
 
 { #category : #tests }

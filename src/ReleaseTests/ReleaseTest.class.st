@@ -326,8 +326,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	ASTCache reset.
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
-		RBDummyRefactoryTestDataApp>>#tempVarOverridesInstVar.
-		RBRefactoryTestDataApp>>#tempVarOverridesInstVar.
+		RBClassDataForRefactoringTest>>#tempVarOverridesInstVar.
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
 		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.
 

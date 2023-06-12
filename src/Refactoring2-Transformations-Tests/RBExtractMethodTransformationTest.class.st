@@ -1,6 +1,6 @@
 Class {
 	#name : #RBExtractMethodTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -9,48 +9,6 @@ RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelect
 
 	^ (aClass sourceCodeAt: aSelector)
 		copyFrom: anInterval first to: anInterval last
-]
-
-{ #category : #'tests - failures' }
-RBExtractMethodTransformationTest >> testBadInterval [
-
-	self shouldFail: (RBExtractMethodTransformation
-							extract: 'whatever'
-							from: #testMethod to: #bla
-							in: #RBRefactoryTestDataApp)
-							asRefactoring.
-
-	self shouldFail: (RBExtractMethodTransformation
-							extract: (self sourceCodeAt: (80 to: 147)
-								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
-							from: #subclassOf:overrides: to: #bla
-							in: #'RBBasicLintRuleTestData class')
-							asRefactoring
-]
-
-{ #category : #'tests - failures' }
-RBExtractMethodTransformationTest >> testExtractFailure [
-
-	self shouldFail: (RBExtractMethodTransformation
-			extract: (self sourceCodeAt: (80 to: 269)
-						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
-			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTestData class')
-			asRefactoring.
-
-	self shouldFail: (RBExtractMethodTransformation
-			extract: (self sourceCodeAt: (53 to: 56)
-						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
-			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTestData class')
-			asRefactoring.
-
-	self shouldFail: (RBExtractMethodTransformation
-			extract: (self sourceCodeAt: (77 to: 222)
-						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
-			from: #subclassResponsibilityNotDefined
-			to: #foo in: #'RBBasicLintRuleTestData class')
-			asRefactoring
 ]
 
 { #category : #tests }
@@ -110,6 +68,48 @@ RBExtractMethodTransformationTest >> testExtractWithoutUseExistingMethodRefactor
 		equals: (self parseMethod: 'bar
 		rewriteRule tree printString').
 	self assert: (class directlyDefinesMethod: #bar)
+]
+
+{ #category : #'tests - failures' }
+RBExtractMethodTransformationTest >> testFailureBadInterval [
+
+	self shouldFail: (RBExtractMethodTransformation
+							extract: 'whatever'
+							from: #testMethod to: #bla
+							in: #RBClassDataForRefactoringTest)
+							asRefactoring.
+
+	self shouldFail: (RBExtractMethodTransformation
+							extract: (self sourceCodeAt: (80 to: 147)
+								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
+							from: #subclassOf:overrides: to: #bla
+							in: #'RBBasicLintRuleTestData class')
+							asRefactoring
+]
+
+{ #category : #'tests - failures' }
+RBExtractMethodTransformationTest >> testFailureExtract [
+
+	self shouldFail: (RBExtractMethodTransformation
+			extract: (self sourceCodeAt: (80 to: 269)
+						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
+			from: #subclassOf:overrides:
+			to: #foo in: #'RBBasicLintRuleTestData class')
+			asRefactoring.
+
+	self shouldFail: (RBExtractMethodTransformation
+			extract: (self sourceCodeAt: (53 to: 56)
+						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
+			from: #subclassOf:overrides:
+			to: #foo in: #'RBBasicLintRuleTestData class')
+			asRefactoring.
+
+	self shouldFail: (RBExtractMethodTransformation
+			extract: (self sourceCodeAt: (77 to: 222)
+						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
+			from: #subclassResponsibilityNotDefined
+			to: #foo in: #'RBBasicLintRuleTestData class')
+			asRefactoring
 ]
 
 { #category : #'tests - failures' }

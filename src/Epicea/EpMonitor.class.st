@@ -524,8 +524,8 @@ EpMonitor >> subscribeToSystemAnnouncer [
 	{	CategoryAdded -> #categoryAdded:.
 		CategoryRemoved -> #categoryRemoved:.
 		CategoryRenamed -> #categoryRenamed:.
-		RPackageRegistered -> #categoryRegistered:.
-		RPackageRenamed -> #packageRenamed:.
+		PackageAdded -> #categoryRegistered:.
+		PackageRenamed -> #packageRenamed:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
 		MethodAdded -> #methodAdded:.

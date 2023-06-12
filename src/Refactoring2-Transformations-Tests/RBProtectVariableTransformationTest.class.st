@@ -1,6 +1,6 @@
 Class {
 	#name : #RBProtectVariableTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -8,7 +8,7 @@ Class {
 RBProtectVariableTransformationTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }

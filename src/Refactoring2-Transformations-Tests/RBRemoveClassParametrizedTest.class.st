@@ -18,11 +18,35 @@ RBRemoveClassParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
-	|class|
-	class := ('RBTransformation', 'RuleTestData1') asSymbol.
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: {class} )
+RBRemoveClassParametrizedTest >> testFailureRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
+
+	| class |
+	class := ('RBTransformation' , 'RuleTestData1') asSymbol.
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: { class })
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRemoveClassWithBadNameRaisesRBRefactoringError [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: #( #RecursiveSelfRule ))
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRemoveClassWithReferencesRaisesRBRefactoringError [
+
+	self shouldWarn: (self
+			 createRefactoringWithModel: model
+			 andArguments: #( #RBBasicLintRuleTestData ))
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testFailureRemoveClassWithSubclasses [
+
+	self shouldFail:
+		(self createRefactoringWithArguments: { #RBFooLintRuleTestData1 })
 ]
 
 { #category : #tests }
@@ -36,25 +60,6 @@ RBRemoveClassParametrizedTest >> testRemoveAClassAndTheirSubclass [
 
 	self assert: (model classNamed: #RBSharedPoolForTestData2) isNil.
 	self assert: (model classNamed: #RBSharedPoolForTestData1) isNil
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRemoveClassWithBadNameRaisesRBRefactoringError [
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: #(#RecursiveSelfRule))
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
-	self shouldWarn: (self createRefactoringWithModel: model
-		andArguments: #(#RBBasicLintRuleTestData ))
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testRemoveClassWithSubclasses [
-
-	self shouldFail:
-		(self createRefactoringWithArguments: {#RBFooLintRuleTestData1})
 ]
 
 { #category : #tests }

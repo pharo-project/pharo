@@ -16,6 +16,24 @@ RBMoveInstanceVariableToClassParametrizedTest >> constructor [
 	^ #variable:fromClass:toClass:
 ]
 
+{ #category : #'failure tests' }
+RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableAlreadyExists [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments:
+			 { 'result'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExistInOldClass [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments:
+			 { 'abc'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 
@@ -44,20 +62,4 @@ RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 	self deny: (oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self assert:
 		(newClass directlyDefinesInstanceVariable: 'methodBlock')"
-]
-
-{ #category : #'failure tests' }
-RBMoveInstanceVariableToClassParametrizedTest >> testVariableAlreadyExists [
-
-	self shouldFail:
-		(self createRefactoringWithModel: model
-			andArguments: { 'result' . #RBFooLintRuleTestData . #RBBasicLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBMoveInstanceVariableToClassParametrizedTest >> testVariableDoesNotExistInOldClass [
-
-	self shouldFail:
-		(self createRefactoringWithModel: model
-			andArguments: { 'abc' . #RBFooLintRuleTestData . #RBBasicLintRuleTestData })
 ]

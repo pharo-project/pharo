@@ -387,7 +387,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	package definedClasses do: [ :definedClass|
 			self registerPackage: package forClass: definedClass].
 
-	SystemAnnouncer announce: (RPackageRegistered to: package).
+	SystemAnnouncer announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -856,7 +856,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 	aPackage definedClasses
 		do: [ :definedClass | self registerPackage: aPackage forClass: definedClass].
 
-	SystemAnnouncer announce: (RPackageRegistered to: aPackage).
+	SystemAnnouncer announce: (PackageAdded to: aPackage).
 
 	^ aPackage
 ]
@@ -1325,7 +1325,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
 	aPackage definedClasses
 		do: [ :definedClass | self unregisterPackage: aPackage forClass: definedClass].
-	SystemAnnouncer announce: (RPackageUnregistered to: aPackage).
+	SystemAnnouncer announce: (PackageRemoved to: aPackage).
 
 	^ aPackage
 ]
