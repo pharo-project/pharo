@@ -1,6 +1,6 @@
 Class {
 	#name : #RBReplaceSubtreeTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -16,7 +16,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 ]
 
 { #category : #tests }
-RBReplaceSubtreeTransformationTest >> testExtractFailure [
+RBReplaceSubtreeTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: ':= aSelector'

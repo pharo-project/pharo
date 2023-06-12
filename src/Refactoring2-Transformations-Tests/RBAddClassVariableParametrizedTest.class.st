@@ -17,7 +17,7 @@ RBAddClassVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddClassVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -34,28 +34,50 @@ RBAddClassVariableParametrizedTest >> testAddClassVariable [
 ]
 
 { #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testAlreadyExistingName [
+RBAddClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule . #RBTransformationRuleTestData }).
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ self objectClassVariable . #RBTransformationRuleTestData })
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #RecursiveSelfRule. #RBTransformationRuleTestData }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self objectClassVariable.
+				 #RBTransformationRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testMetaClassFailure [
-	self flag: 'Broken ref2 test'
-"	self shouldFail: (self createRefactoringWithArguments: { #VariableName . #'RBTransformationRuleTestData class'})"
+RBAddClassVariableParametrizedTest >> testFailureMetaClassFailure [
+
+	self skip.
+	"	self shouldFail: (self createRefactoringWithArguments: { #VariableName . #'RBTransformationRuleTestData class'})"
 ]
 
 { #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testMetaclass [
+RBAddClassVariableParametrizedTest >> testFailureMetaclass [
+
 	| refactoring |
-	self flag: 'Broken ref2 test'.
-	refactoring := self createRefactoringWithModel: model andArguments: { #ClassVarName3 . #'Object class' }.
-"	self shouldFail: refactoring"
+	self skip.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: { #ClassVarName3. #'Object class' }
+	"	self shouldFail: refactoring"
+]
+
+{ #category : #'failure tests' }
+RBAddClassVariableParametrizedTest >> testFailureModelAlreadyExistingName [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { #ClassVarName2. #Bar })
+]
+
+{ #category : #'failure tests' }
+RBAddClassVariableParametrizedTest >> testFailureModelMetaclass [
+
+	| refactoring |
+	self skip.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: { #ClassVarName3. #'Bar class' }
+	"	self shouldFail: refactoring"
 ]
 
 { #category : #tests }
@@ -68,19 +90,4 @@ RBAddClassVariableParametrizedTest >> testModelAddClassVariable [
 
 	self assert: ((model classNamed: #Bar)
 				directlyDefinesClassVariable: #ClassVarName3)
-]
-
-{ #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testModelAlreadyExistingName [
-	self shouldFail:
-		(self createRefactoringWithModel: model
-		andArguments: {#ClassVarName2 . #Bar })
-]
-
-{ #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testModelMetaclass [
-	| refactoring |
-	self flag: 'Broken ref2 test'.
-	refactoring := self createRefactoringWithModel: model andArguments: { #ClassVarName3 . #'Bar class' }.
-"	self shouldFail: refactoring"
 ]

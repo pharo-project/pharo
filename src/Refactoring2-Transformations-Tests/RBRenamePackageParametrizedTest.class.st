@@ -18,15 +18,16 @@ RBRenamePackageParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBRenamePackageParametrizedTest >> testBadName [
+RBRenamePackageParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Core' })
 ]
 
 { #category : #'failure tests' }
-RBRenamePackageParametrizedTest >> testExistingPackage [
+RBRenamePackageParametrizedTest >> testFailureExistingPackage [
+
 	self shouldFail: (self createRefactoringWithArguments:
-		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes' })
+			 { #'Refactoring-Tests-Core'. #'Refactoring-Tests-Changes' })
 ]
 
 { #category : #tests }

@@ -221,7 +221,7 @@ MCPackageManager class >> packageRenamed: anAnnouncement [
 { #category : #'event registration' }
 MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
 	anAnnouncer weak
-		when: RPackageRenamed send: #packageRenamed: to: self;
+		when: PackageRenamed send: #packageRenamed: to: self;
 		when: ClassAdded, ClassModifiedClassDefinition, ClassCommented , ClassParentRenamed send: #classModified: to: self;
 		when: ClassRenamed send:#classRenamed: to:self;
 		when: ClassRepackaged send: #classMoved: to: self;

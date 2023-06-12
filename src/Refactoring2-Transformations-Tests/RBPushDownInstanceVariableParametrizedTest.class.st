@@ -14,6 +14,13 @@ RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : #'failure tests' }
+RBPushDownInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
 	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
@@ -58,12 +65,6 @@ RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
 		andArguments: {'foo' . #SomeClass}).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')
-]
-
-{ #category : #'failure tests' }
-RBPushDownInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail:
-		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData})
 ]
 
 { #category : #tests }

@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRemoveAllMessageSendsTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
@@ -18,26 +18,26 @@ RBRemoveAllMessageSendsTransformationTest >> testClassDoesNotExist [
 ]
 
 { #category : #'failure tests' }
-RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
-		
+RBRemoveAllMessageSendsTransformationTest >> testFailureNonExistantSelector [
+
 	| trans |
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #foo:
-				inMethod: #badMessage1
-				inClass: #RBRefactoryTestDataApp).
+				inMethod: #checkClass1:
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
 	self should: [ trans transform ] raise: trans refactoringErrorClass.
 ]
 
 { #category : #'failure tests' }
-RBRemoveAllMessageSendsTransformationTest >> testNonExistantSelector [
-
+RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
+		
 	| trans |
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #foo:
-				inMethod: #checkClass1:
-				inClass: #RBRefactoryTestDataApp).
+				inMethod: #badMessage1
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
 	self should: [ trans transform ] raise: trans refactoringErrorClass.
@@ -50,11 +50,11 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveMessageInsideBlock [
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #printString
 				inMethod: #caller1
-				inClass: #RBRefactoryTestDataApp).
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	trans transform.
 
-	self assert: ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #caller1) equals: (self parseMethod: 'caller1
+	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller1) equals: (self parseMethod: 'caller1
 	| anObject |
 	anObject := 5.
 	self called: anObject + 1
@@ -81,10 +81,10 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded2Messag
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #inlineMethod
 				inMethod: #inlineMethod
-				inClass: #RBRefactoryTestDataApp).
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	trans transform.
-	transformedMethod := ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMethod).
+	transformedMethod := ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMethod).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]
 
@@ -124,10 +124,10 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded3Messag
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #errorBlock:
 				inMethod: #referencesConditionFor:
-				inClass: #RBRefactoryTestDataApp).
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	trans transform.
-	transformedMethod := ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #referencesConditionFor:).
+	transformedMethod := ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #referencesConditionFor:).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]
 
@@ -138,11 +138,11 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #cr
 				inMethod: (#called:, #on:) asSymbol
-				inClass: #RBRefactoryTestDataApp).
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	trans transform.
 
-	self assert: ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: (#called:, #on:) asSymbol)
+	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called:, #on:) asSymbol)
 		equals: (self parseMethod: 'called: anObject on: aBlock
 			Transcript show: anObject printString.
 			aBlock value')
@@ -163,9 +163,9 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSimpleSenderOfMessage [
 	trans := (RBRemoveAllMessageSendsTransformation
 				messageSend: #called:on1:
 				inMethod: #caller1
-				inClass: #RBRefactoryTestDataApp).
+				inClass: #RBClassDataForRefactoringTest).
 	trans preconditionChecking: true.
 	trans transform.
-	transformedMethod := ((trans model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #caller1).
+	transformedMethod := ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller1).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]

@@ -17,7 +17,7 @@ RBMakeClassAbstractParametrizedTest class >> testParameters [
 { #category : #running }
 RBMakeClassAbstractParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self rbModelForVariableTest.
 
 	testClass := RBBasicLintRuleTestData.
 	testClass class removeSelector: #isAbstract

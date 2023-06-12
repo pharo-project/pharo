@@ -32,22 +32,22 @@ RBAddTemporaryVariableParametrizedTest >> testAddTemporaryRefactoring [
 ]
 
 { #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testClassDoesNotExist [
+RBAddTemporaryVariableParametrizedTest >> testFailureClassDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{ 'variable2' . #methodBefore . #RBReturnStatementTransformationTest })
+			 { 'variable2'. #methodBefore. #RBReturnStatementTransformationTest })
 ]
 
 { #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testMethodDoesNotExist [
+RBAddTemporaryVariableParametrizedTest >> testFailureMethodDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{ 'variable2' . #method . #RBAddReturnStatementTransformationTest })
+			 { 'variable2'. #method. #RBAddReturnStatementTransformationTest })
 ]
 
 { #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testVariableAlreadyExists [
+RBAddTemporaryVariableParametrizedTest >> testFailureVariableAlreadyExists [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{'variable' . #methodBefore . #RBAddReturnStatementTransformationTest })
+			 { 'variable'. #methodBefore. #RBAddReturnStatementTransformationTest })
 ]
