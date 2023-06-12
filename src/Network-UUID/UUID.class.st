@@ -318,6 +318,7 @@ UUID >> timestamp [
 		self error: 'Only time-based UUIDs have a timestamp.' ].
 
 	timestamp := (uuidData at: 7) & 16r0f.
+	"The timestamp bytes in the UUID bytearray are scrambled. Iterate them in the good order"
 	#( 8 5 6 1 2 3 4 ) do: [ :i |
 		timestamp := timestamp << 8 + (uuidData at: i) ].
 
