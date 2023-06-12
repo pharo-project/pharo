@@ -27,7 +27,7 @@ RBAbstractTransformationTest >> parserClass [
 ]
 
 { #category : #running }
-RBAbstractTransformationTest >> perform: aChange do: aBlock [
+RBAbstractTransformationTest >> performAndUndoChange: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."
 
 	| undo |

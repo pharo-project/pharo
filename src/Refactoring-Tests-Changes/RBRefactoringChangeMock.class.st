@@ -1,3 +1,6 @@
+"
+This class is used to test refactoring changes.
+"
 Class {
 	#name : #RBRefactoringChangeMock,
 	#superclass : #Object,
@@ -5,10 +8,11 @@ Class {
 		'instVar'
 	],
 	#classVars : [
-		'ClassVarPlus',
 		'SharedVar'
 	],
 	#classInstVars : [
+		'SharedVarPlus',
+		'instVarPlus',
 		'classInstVar'
 	],
 	#category : #'Refactoring-Tests-Changes'
