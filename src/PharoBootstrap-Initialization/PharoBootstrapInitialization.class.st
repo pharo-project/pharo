@@ -78,6 +78,8 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	"Initialize basic command line behaviour"
 	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
+
+	SessionManager initializeKernelRegistrations.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
