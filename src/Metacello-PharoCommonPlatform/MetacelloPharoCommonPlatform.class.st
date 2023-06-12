@@ -221,13 +221,6 @@ MetacelloPharoCommonPlatform >> newVersionForWorkingCopy: aWorkingCopy [
 	^aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup
 ]
 
-{ #category : #'repository creation' }
-MetacelloPharoCommonPlatform >> packageInfoFor: aMCWorkingCopy [
-  "MCPackageManager>>packageInfo is deprecated in Pharo2.0"
-
-  ^ aMCWorkingCopy packageSet
-]
-
 { #category : #'file system' }
 MetacelloPharoCommonPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."

@@ -392,7 +392,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFan [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -454,7 +454,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFoo [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -540,7 +540,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfLinearFoo [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -602,7 +602,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfProjectIssue86 [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -652,7 +652,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaA [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -702,7 +702,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaB [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
