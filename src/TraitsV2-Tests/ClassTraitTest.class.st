@@ -50,7 +50,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 { #category : #tests }
 ClassTraitTest >> testInitialization [
 	| classTrait |
-		<ignoreNotImplementedSelectors: #(m2ClassSide:)>
+	<ignoreNotImplementedSelectors: #(m2ClassSide:)>
 	classTrait := self t1 classTrait.
 	self assert: self t1 hasClassSide.
 	self assert: self t1 classTrait equals: classTrait.
