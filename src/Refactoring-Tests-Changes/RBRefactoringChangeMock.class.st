@@ -11,8 +11,6 @@ Class {
 		'SharedVar'
 	],
 	#classInstVars : [
-		'SharedVarPlus',
-		'instVarPlus',
 		'classInstVar'
 	],
 	#category : #'Refactoring-Tests-Changes'
