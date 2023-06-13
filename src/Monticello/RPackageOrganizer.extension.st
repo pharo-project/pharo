@@ -1,15 +1,15 @@
 Extension { #name : #RPackageOrganizer }
 
 { #category : #'*Monticello-RPackage' }
-RPackageOrganizer class >> allManagers [
-
-	^ MCWorkingCopy allManagers
-]
-
-{ #category : #'*Monticello-RPackage' }
 RPackageOrganizer >> allManagers [
 
 	^ self class allManagers 
+]
+
+{ #category : #'*Monticello-RPackage' }
+RPackageOrganizer class >> allManagers [
+
+	^ MCWorkingCopy allManagers
 ]
 
 { #category : #'*Monticello-RPackage' }
@@ -27,9 +27,4 @@ RPackageOrganizer >> updateAfterNewMCPackageRegistred: anAnnouncement [
 	name := anAnnouncement package name.
 	(self packageExactlyMatchingExtensionName: name) 
 		ifNil: [ self ensureExistAndRegisterPackageNamed: name ]
-]
-
-{ #category : #'*Monticello-RPackage' }
-RPackageOrganizer >> updateAfterNewMCPackageUnregistred: anAnnouncement [
-
 ]
