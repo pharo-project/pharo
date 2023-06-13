@@ -102,13 +102,6 @@ MCPackageManager class >> forPackage: aPackage [
 			mgr ]
 ]
 
-{ #category : #'class initialization' }
-MCPackageManager class >> initialize [
-	"Remove this later"
-
-	self unregisterForNotifications
-]
-
 { #category : #'system changes' }
 MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 	"Got to be careful here - we might get method categories where capitalization is problematic."
@@ -234,11 +227,6 @@ MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnounce
 { #category : #accessing }
 MCPackageManager class >> registry [
 	^ registry ifNil: [registry := Dictionary new]
-]
-
-{ #category : #'event registration' }
-MCPackageManager class >> unregisterForNotifications [
-	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #private }
