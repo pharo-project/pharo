@@ -166,6 +166,7 @@ T2TraitTest >> testEmptyCompositionManagesTEmpty [
 { #category : #tests }
 T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
+	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2)>
 
 	t1 := self createT1.
 	t2 := self createT2.
@@ -323,6 +324,7 @@ T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
 { #category : #tests }
 T2TraitTest >> testSequence [
 	| t1 t2 c1 obj |
+	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2 )>
 
 	t1 := self createT1.
 	t2 := self createT2.
