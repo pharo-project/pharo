@@ -85,8 +85,8 @@ RBBrowserEnvironmentWrapper >> includesPackage: aRPackage [
 
 { #category : #testing }
 RBBrowserEnvironmentWrapper >> includesProtocol: aProtocol in: aClass [
-	^(self includesClass: aClass)
-		and: [environment includesProtocol: aProtocol in: aClass]
+
+	^ (self includesClass: aClass) and: [ environment includesProtocol: aProtocol in: aClass ]
 ]
 
 { #category : #testing }

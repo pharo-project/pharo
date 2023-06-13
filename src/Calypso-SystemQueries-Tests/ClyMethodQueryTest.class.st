@@ -31,6 +31,7 @@ ClyMethodQueryTest >> setUpEnvironment [
 
 { #category : #'methods for tests' }
 ClyMethodQueryTest >> superclassSenderOfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 

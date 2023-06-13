@@ -30,7 +30,7 @@ MetacelloIssue108Resource >> setUpMonticelloRepository [
 	monticelloRepository := MCDictionaryRepository new.
 	versionReferences do: [ :reference |
 		monticelloRepository basicStoreVersion: (MCVersion new
-			setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+			setPackage:  (MCPackage new name: reference packageName)
 			info: (MCVersionInfo
 				name: reference name
 				id: UUID new

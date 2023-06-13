@@ -9,6 +9,7 @@ Class {
 
 { #category : #'tests - test data' }
 DASomeClass >> method1 [
+	<ignoreNotImplementedSelectors: #(unimplementedMethod)>
 	self unimplementedMethod
 ]
 

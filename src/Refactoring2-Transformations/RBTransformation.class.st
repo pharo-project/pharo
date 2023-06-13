@@ -142,6 +142,12 @@ RBTransformation >> preconditionChecking: aBoolean [
 	preconditionChecking := aBoolean
 ]
 
+{ #category : #preconditions }
+RBTransformation >> preconditions [
+
+	^ self emptyCondition
+]
+
 { #category : #executing }
 RBTransformation >> primitiveExecute [
 	"compatibility method RBRefactoring"

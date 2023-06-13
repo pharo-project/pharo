@@ -127,3 +127,25 @@ CollectionArithmeticTest >> testRunningMin [
 
 	self assert: result equals: {1 . 1 . 2 . 2}
 ]
+
+{ #category : #tests }
+CollectionArithmeticTest >> testStdev [
+
+	| collection |
+	collection := #(1 2 3).
+	self assert: collection stdev equals: 1
+]
+
+{ #category : #tests }
+CollectionArithmeticTest >> testStdevIfEmpty [
+
+	self should: [ #() stdev ] raise: CollectionIsEmpty
+]
+
+{ #category : #tests }
+CollectionArithmeticTest >> testStdevSingleElement [
+
+	| collection |
+	collection := #(1).
+	self assert: collection stdev equals: 0
+]

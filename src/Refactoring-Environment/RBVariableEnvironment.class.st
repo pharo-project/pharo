@@ -321,7 +321,8 @@ RBVariableEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBVariableEnvironment >> includesProtocol: aProtocol in: aClass [
-	^(self selectorsFor: aProtocol in: aClass) isNotEmpty
+
+	^ (self selectorsFor: aProtocol in: aClass) isNotEmpty
 ]
 
 { #category : #testing }

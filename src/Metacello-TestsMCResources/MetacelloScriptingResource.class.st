@@ -1012,7 +1012,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceIV [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1051,7 +1051,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceIX [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1090,7 +1090,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceV [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1129,7 +1129,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVI [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1168,7 +1168,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVII [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1207,7 +1207,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVIII [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1246,7 +1246,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXI [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1285,7 +1285,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXII [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1324,7 +1324,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXIII [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1363,7 +1363,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXX [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1424,7 +1424,7 @@ MetacelloScriptingResource >> setUpBaselineIssue215 [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1484,7 +1484,7 @@ MetacelloScriptingResource >> setUpBaselineIssue32 [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1524,7 +1524,7 @@ MetacelloScriptingResource >> setUpBaselineIssue399 [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1571,7 +1571,7 @@ MetacelloScriptingResource >> setUpBaselineIssue399Cypress [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1610,7 +1610,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalX [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1649,7 +1649,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalXX [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1695,7 +1695,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalXXX [
     externalRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1784,7 +1784,7 @@ MetacelloScriptingResource >> setUpConfiguration181 [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1830,7 +1830,7 @@ MetacelloScriptingResource >> setUpConfiguration63 [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1886,7 +1886,7 @@ MetacelloScriptingResource >> setUpConfigurationExternalRefdkh1 [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1940,7 +1940,7 @@ MetacelloScriptingResource >> setUpConfigurationExternalRefdkh2: ancestors [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1995,7 +1995,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue32 [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2037,7 +2037,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue339 [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2094,7 +2094,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue59 [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2142,7 +2142,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue84 [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2208,7 +2208,7 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh1 [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2263,7 +2263,7 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh2: ancestors [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2338,7 +2338,7 @@ MetacelloScriptingResource >> setUpConfigurationOfConflict [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2386,7 +2386,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalIV [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2441,7 +2441,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXX [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2480,7 +2480,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXXX [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2534,7 +2534,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh1 [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2602,7 +2602,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh2: ancestors [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2642,7 +2642,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternaldkh1 [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2689,7 +2689,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternaldkh2 [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2736,7 +2736,7 @@ MetacelloScriptingResource >> setUpExternalCore [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2783,7 +2783,7 @@ MetacelloScriptingResource >> setUpExternalCoreX [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2843,7 +2843,7 @@ MetacelloScriptingResource >> setUpInvalidConfigurations [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2894,7 +2894,7 @@ MetacelloScriptingResource >> setUpIssue399CoreExternaldkh1 [
   externalRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2933,7 +2933,7 @@ MetacelloScriptingResource >> setUpIssue399CoreSampledkh1 [
   sampleRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -2972,7 +2972,7 @@ MetacelloScriptingResource >> setUpIssue399CoreSampledkh2: ancestors [
   sampleRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -3055,7 +3055,7 @@ MetacelloScriptingResource >> setUpLockConfigurations [
   configurationRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -3104,7 +3104,7 @@ MetacelloScriptingResource >> setUpMarianosImage [
     configurationRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -3165,7 +3165,7 @@ MetacelloScriptingResource >> setUpSampleCore [
     sampleRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name

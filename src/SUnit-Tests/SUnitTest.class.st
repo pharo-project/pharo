@@ -62,6 +62,8 @@ SUnitTest >> error [
 
 { #category : #testing }
 SUnitTest >> errorShouldntRaise [
+	<ignoreNotImplementedSelectors: #(someMessageThatIsntUnderstood)>
+
 	self someMessageThatIsntUnderstood
 ]
 
