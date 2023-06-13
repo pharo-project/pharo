@@ -970,7 +970,7 @@ HaloMorph >> handleListenEvent: anEvent [
 { #category : #private }
 HaloMorph >> handleSize [
 
-	^ 30
+	^ 30 scaledByDisplayScaleFactor
 ]
 
 { #category : #'meta-actions' }
