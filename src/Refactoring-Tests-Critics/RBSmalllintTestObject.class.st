@@ -553,6 +553,7 @@ RBSmalllintTestObject >> unclassifiedMethods [
 
 { #category : #methods }
 RBSmalllintTestObject >> uncommonMessageSend [
+	<ignoreNotImplementedSelectors: #(#false)>
 	true false
 ]
 

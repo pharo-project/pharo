@@ -246,12 +246,16 @@ MetacelloPlatform >> defaultRepositoryDescription [
 
 { #category : #'file system' }
 MetacelloPlatform >> deleteFileNamed: filePath [
+	<ignoreNotImplementedSelectors: #(containingDirectory localNameFor:)>
+
 	(self fileDirectoryClass on: filePath) containingDirectory deleteFileNamed: (self fileDirectoryClass localNameFor: filePath)
 ]
 
 { #category : #'file system' }
 MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
 	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
+	<ignoreNotImplementedSelectors: #(directoryNamed:)>
+
 	^ anotherDirectoryPath directoryNamed: adirectoryPath
 ]
 
@@ -302,6 +306,7 @@ MetacelloPlatform >> downloadZipArchive: url to: outputFileName [
 { #category : #'file system' }
 MetacelloPlatform >> ensureDirectoryExists: aDirectoryHandle [
 	"Ensure the directory exists."
+	<ignoreNotImplementedSelectors: #(assureExistence)>
 
 	^ aDirectoryHandle assureExistence ; yourself
 ]
@@ -374,13 +379,15 @@ MetacelloPlatform >> globalNamed: globalName ifAbsent: absentBlock [
 
 { #category : #monticello }
 MetacelloPlatform >> newVersionForWorkingCopy: aWorkingCopy [
+	<ignoreNotImplementedSelectors: #(newVersion)>
   ^ aWorkingCopy newVersion
 ]
 
 { #category : #'file system' }
 MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."
-	
+	<ignoreNotImplementedSelectors: #(containingDirectory)>
+
 	^ aFileHandler containingDirectory
 ]
 
@@ -413,6 +420,7 @@ MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
 
 { #category : #'repository creation' }
 MetacelloPlatform >> registerPackageNamed: packageName [
+	<ignoreNotImplementedSelectors: #(registerPackageName:)>
   ^ (Smalltalk at: #'PackageInfo') registerPackageName: packageName
 ]
 
@@ -447,6 +455,8 @@ MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doi
 
 { #category : #utilities }
 MetacelloPlatform >> string: aString includesSubstring: aSubstring [
+	<ignoreNotImplementedSelectors: #(includesSubString:)>
+
 	"abstract String>>includesSubstring: to have the same message on all supported platforms."
 
 	^aString includesSubString: aSubstring
@@ -454,6 +464,7 @@ MetacelloPlatform >> string: aString includesSubstring: aSubstring [
 
 { #category : #system }
 MetacelloPlatform >> suspendSystemUpdateEventsDuring: aBlock [
+	<ignoreNotImplementedSelectors: #(doSilently:)>
 	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
 	(Smalltalk at: #SystemChangeNotifier) uniqueInstance doSilently: aBlock
 ]
