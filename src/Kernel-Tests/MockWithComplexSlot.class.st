@@ -15,6 +15,7 @@ Class {
 { #category : #initialization }
 MockWithComplexSlot >> initialize [
 
+	<ignoreUnusedVariables: #( #aComplexSlot )>
 	self class initializeSlots: self.
 	super initialize
 ]

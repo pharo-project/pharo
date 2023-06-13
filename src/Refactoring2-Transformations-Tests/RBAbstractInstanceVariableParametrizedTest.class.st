@@ -31,6 +31,7 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractInstanceVariable [
 	self assert: (class parseTreeForSelector: #name:) equals: (self parseMethod: 'name: aString
 	name := aString').
 	self assert: (class parseTreeForSelector: #initialize) equals: (self parseMethod: 'initialize
+	<ignoreUnusedVariables: #(#foo1)>
 	self name: ''''').
 	self assert: (class parseTreeForSelector: #printOn:) equals: (self parseMethod: 'printOn: aStream
 	self name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: self name ]')
