@@ -374,23 +374,14 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	"A new package is now available and declared in the receiver."
 
-	| package |
-
-	package := packages
-		at: aSymbol asSymbol
-		ifAbsentPut: [
-			"I add the package to the packageName cache"
-			self addPackageNameToCache: aSymbol asSymbol.
-			self packageClass named: aSymbol ].
-
-	package extendedClasses do: [ :extendedClass|
-			self registerExtendingPackage: package forClass: extendedClass].
-	package definedClasses do: [ :definedClass|
-			self registerPackage: package forClass: definedClass].
-
-	SystemAnnouncer announce: (PackageAdded to: package).
-
-	^ package
+	^ (self includesPackageNamed: aSymbol)
+		  ifFalse: [ self basicRegisterPackage: (RPackage named: aSymbol) ]
+		  ifTrue: [
+			  | package |
+			  package := self packageNamed: aSymbol.
+			  package extendedClasses do: [ :extendedClass | self registerExtendingPackage: package forClass: extendedClass ].
+			  package definedClasses do: [ :definedClass | self registerPackage: package forClass: definedClass ].
+			  package ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
