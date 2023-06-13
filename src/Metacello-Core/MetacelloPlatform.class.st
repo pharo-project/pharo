@@ -377,11 +377,6 @@ MetacelloPlatform >> newVersionForWorkingCopy: aWorkingCopy [
   ^ aWorkingCopy newVersion
 ]
 
-{ #category : #'repository creation' }
-MetacelloPlatform >> packageInfoFor: aMCWorkingCopy [
-  ^ aMCWorkingCopy packageInfo
-]
-
 { #category : #'file system' }
 MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."
